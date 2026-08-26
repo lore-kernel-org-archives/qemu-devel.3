@@ -4,113 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 688F2C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFF0C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzHg5-0005Ft-CD; Wed, 26 Aug 2026 13:44:45 -0400
+	id 1wzHdr-0008Sk-IS; Wed, 26 Aug 2026 13:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wzHfv-0004nt-R6; Wed, 26 Aug 2026 13:44:35 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wzHfu-0005Bt-6A; Wed, 26 Aug 2026 13:44:35 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QH1fNP3492819; Wed, 26 Aug 2026 17:44:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JWwRUU
- rIyxNecryzpojfdGJ4q/WUaMCAPCf23uYSqVM=; b=HTfU0nRCxcFYMh2C8OtxBq
- mwF37vd0HMDbkg3ho4+fk2A4MuSF6rhsUhT+srTNfBT0sOjGi+u8duAfYS1lmhhJ
- LmbcfTHaKzV7Zzjvf5GU8BE2Yg7mpyRa9NqvcSeBq7bnxYPBYEl+GRW+O84O0zsa
- s2uMn1WBJhr1H3lPrIcLi8Zf3uI15LKWUqdTEwxUqRN75BFKbWSwkmEqBAHyx3M2
- QnpLJcWLNLgz3INTLAasYoy9xPwjSWB1+w5MlGl0PArelM/J9q2pSsXjaNDrgWS8
- Ekbtf0sFvxIYYpsSIWFYBFmqkTMvy/pY3JvTzlatwHrTS2UrQ7qKKF1KcgbPXZ6Q
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726er4t2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 17:44:32 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QHfTKV002032;
- Wed, 26 Aug 2026 17:44:32 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k38jt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 17:44:32 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QHiUsh20775606
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 17:44:31 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94E2258058;
- Wed, 26 Aug 2026 17:44:30 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1D0458057;
- Wed, 26 Aug 2026 17:44:29 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 17:44:29 +0000 (GMT)
-Message-ID: <085b7ab3-a8a0-4170-8a35-bd1a723c8f02@linux.ibm.com>
-Date: Wed, 26 Aug 2026 13:44:29 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzHdo-0008QA-9w
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:42:24 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzHdm-0004kU-Hz
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:42:24 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-cc1bc88a20eso1374229a12.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:42:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787766141; x=1788370941; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SA8NuNbPWvaRSZTQw5oEPqkYFFMVFwD+KRwGTdCfjnk=;
+ b=vYdpk1kOfW/jq5olksVv1jcjScgRHVb4iUmoTjCrPMEllbXDXcdhPXNkPXvWEramwN
+ OSJftVTFgAl9dFpHoL6OS9kymI/oavLY9928j0IoWDcd5LmmM/mOnVacacPAbqgnLHjO
+ DllZsgfJaBSiVNdaRURwgH9BYpLer9anr8i/6eUlC3mEg+m+DYAAxqxY0/1H7wD2ch9S
+ 4ar4AH7oQ5ZdIbzMdY4dNDUaMeekQkAGCOKG6U6trPwSWUxSZFIn67TR8hpU97USxj09
+ hkzCH4KnelWnxPBe4Y4AE9vgC3BZDM3C3qlCmoHLKQ+4ct66PKMbppBx9ib3RDhGiReu
+ fYDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787766141; x=1788370941;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SA8NuNbPWvaRSZTQw5oEPqkYFFMVFwD+KRwGTdCfjnk=;
+ b=ruQH4ooRtM5MSSUcSEGpSkBAw1Kvuv+oW6OtNq5oz+AffjxMq6FGpEiAud9+WZCM4b
+ bBLlz6ng9novS1OeH/y1to78msX0d0JWsRC9Y4g6FIZgiCCqceEQkggIDayViYCFMFYF
+ C93iCIm7zPgpIfDL7PhvSCA8S0clmB8j1Gqjp/I8OZAJpT9LyNbxYOoWXGZ0B6+C55b4
+ jpX5hbfIv2D9StE6MEMa2leQZCbrYy2GGclJ8ujNF02Uio/ulKQQQsZ8ceoRRRDMXOZ8
+ 27bygZ1hAk3nIOz09urtKNfVXr584ffR3aNTp/u/beZTTNHoAKBx/mUSl6GbpUqjyIuK
+ NP7A==
+X-Gm-Message-State: AFuF++nj5qudMPZUsC2dU9LZc5Icj5W2T1SES50/ewSzOCD5I7HwwHmB
+ HrNhmAEdhqTlocvy8jpt+uGBafaope/pWzRbFFW/6TZDX9wX3MSuyV/Rz7885irng1VwiFYnBqN
+ hSDwE6iE=
+X-Gm-Gg: AR+sD12WB4S66vBbUnS+aKmZpgoZwFoRMVe6CJRCsPIgllXBFJlxjbL/0RabDEIQmj7
+ DDfbBTrzGiP/b7VHq990Afm1NWHqxa4fWBE9+6m9GgXrBKNAkz2h+qDCWCB847ZTcljz8KitQSO
+ TZ3WQYqu85xW6biO+TpQzGZru6MWnd7BTVtj7N+m69/sP62tovJsdbbbIlDalOxEWd6SRTptCJl
+ wvK+PkFl6gCxnPSLtc1OthLO7NL9yQznaD+Z32ZIw7VNdwAGsvyWxni80sPzPDcdZ7v1QASHRey
+ VQb8oV1qNlayhZ5bMjcHIe0XkEmU80MWkF+psZkFGtjWxV2sE0p9XTwBdZqkVoCXTFigKbl2601
+ cimMUtiqGKTXXUouQraDhCWnTkHET81+z7N7QnJSSK3fdgl1OBQYdWN8i70YmvZoGUooeUaXtLe
+ uR6DOqaRxxu5LXXoRudxk3sV8ftgs7xWhqWPGbcii159DhDwuOEknc74zIB3+1w9BoK1u0CzSC9
+ adOhnVSssiyyHXuig==
+X-Received: by 2002:a05:6a20:2587:b0:3cd:99d2:d534 with SMTP id
+ adf61e73a8af0-3cf7576c442mr15885012637.3.1787766141003; 
+ Wed, 26 Aug 2026 10:42:21 -0700 (PDT)
+Received: from stoup (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc1bec66020sm1260072a12.21.2026.08.26.10.42.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Aug 2026 10:42:20 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v2 04/25] target/arm: Implement FMUL (multiple/multiple and
+ single vectors)
+Date: Wed, 26 Aug 2026 10:41:51 -0700
+Message-ID: <20260826174213.614571-5-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260826174213.614571-1-richard.henderson@linaro.org>
+References: <20260826174213.614571-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/7] pc-bios/s390-ccw: Introduce virtio_tswap helpers
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
- jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com
-References: <20260818205324.580199-1-zycai@linux.ibm.com>
- <20260818205324.580199-4-zycai@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260818205324.580199-4-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f2600 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=t3pJS8pfw4iMo5hlopEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0NiBTYWx0ZWRfXzy4LOKveUUMW
- vsAZuAxTCizkhRItcJN5vdWJg3JYmbMJ4diKdDLuPgrfMhdCkefHQrO4OFVVDlo89/lDv2IZ/qU
- PAFLlwNAgIzXy7I5t6hqZ8Ne49asS9Q=
-X-Proofpoint-GUID: E7xhr2mfl6ZfExRwzp1IJ_6uX9CtfuR6
-X-Proofpoint-ORIG-GUID: E7xhr2mfl6ZfExRwzp1IJ_6uX9CtfuR6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0NiBTYWx0ZWRfX0H6xPTMJO1FD
- hEuaLjUOxzb5ul0rSP3g5VOBP8Q6UBfz/i2oG3SyS5z6amX8fPDoVv5OBSJ2hvIRbdzxtKTJhQl
- NTu+twD8ntEj59ngms6eJVHHUwVoQipP/30yXkiCrZjlskgz9KKPbDIWKVPDiFx2cX/yGF4RyVJ
- E+n4B4nOUvYbpS+e8SOwFEInE6LkW5sDnHMDyGz9nvLu6O5HE07O5anuSuaFORvsesCyQh2nlzt
- zNpd9t9Y5D+WY4EnDZ/2xBwTbXS1Q2gMxfCL7qDn7/ALPtHw2nM8sh1EFuwCxDYTjd1f6VQ7Hw0
- 3zIVOxgy25GYFCQhjdpVwHQx7vTODGYmN7cZB+Fvkv9lxttZfL2Zmj3lgkvHvpDVhY7PSYxr3cD
- 0bCdTQPCfh9CcVf6DNcnbx+QxcVOubWEOdzVo7jJuloJAEiCICACCeeJCOtcKYnmrtSpdW8G6Kw
- hJE5jTNn8JiuMjm/8sg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260146
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,22 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 4:53 PM, Zhuoying Cai wrote:
-> Replace the repeated pattern:
-> 
->     be_ipl() ? x : bswapN(x)
-> 
-> with helpers that conditionally byte-swap based on the virtio transport
-> endianness.
-> 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-sme.c |  9 +++++++++
+ target/arm/tcg/sme.decode      | 15 ++++++++++++---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-Maybe worth a mention that while the 16 variant is used immediately, the
-32 and 64 variants are setup for later use -- since they will
-technically be dead code at this point in git history.
-
-Otherwise:
-
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index db1950f407b..463754b057f 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -891,6 +891,15 @@ static gen_helper_gvec_3_ptr * const f_vector_fscale[4] = {
+ TRANS_FEAT(FSCALE_n1, aa64_sme2_f8cvt, do_zzz_n1_fpst, a, f_vector_fscale[a->esz])
+ TRANS_FEAT(FSCALE_nn, aa64_sme2_f8cvt, do_zzz_nn_fpst, a, f_vector_fscale[a->esz])
+ 
++static gen_helper_gvec_3_ptr * const f_vector_fmul[4] = {
++    NULL,
++    gen_helper_gvec_fmul_h,
++    gen_helper_gvec_fmul_s,
++    gen_helper_gvec_fmul_d,
++};
++TRANS_FEAT(FMUL_n1, aa64_sme2p2, do_zzz_n1_fpst, a, f_vector_fmul[a->esz])
++TRANS_FEAT(FMUL_nn, aa64_sme2p2, do_zzz_nn_fpst, a, f_vector_fmul[a->esz])
++
+ /* Add/Sub vector Z[m] to each Z[n*N] with result in ZA[d*N]. */
+ static bool do_azz_n1(DisasContext *s, arg_azz_n *a, int esz,
+                       GVecGen3FnVar *fn)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index e1bef9987b0..60c7cacc10e 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -219,6 +219,8 @@ UMOPA2_s        1010000 1 10 0 ..... ... ... ..... . 10 ..      @op_32
+ 
+ %zd_ax2         1:4 !function=times_2
+ %zd_ax4         2:3 !function=times_4
++%zn_ax2         6:4 !function=times_2
++%zn_ax4         7:3 !function=times_4
+ 
+ &zzz_en         zd zn zm esz n
+ 
+@@ -288,6 +290,11 @@ SQDMULH_n1     1100000 1 .. 10 .... 1010.1 00000 .... 0    @z2z_4x1
+ FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_2x1
+ FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_4x1
+ 
++FMUL_n1        1100000 1 esz:2 1 zm:4 0 111010 ....0 ....0 \
++               &zzz_en n=2 zd=%zd_ax2 zn=%zn_ax2
++FMUL_n1        1100000 1 esz:2 1 zm:4 1 111010 ...00 ...00 \
++               &zzz_en n=4 zd=%zd_ax4 zn=%zn_ax4
++
+ ### SME2 Multi-vector Multiple Vectors SVE Destructive
+ 
+ %zm_ax2         17:4 !function=times_2
+@@ -361,6 +368,11 @@ FAMIN_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 1    @z2z_4x4
+ FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_2x2
+ FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_4x4
+ 
++FMUL_nn        1100000 1 esz:2 1 ....0 111001 ....0 ....0  \
++               &zzz_en n=2 zd=%zd_ax2 zn=%zn_ax2 zm=%zm_ax2
++FMUL_nn        1100000 1 esz:2 1 ...01 111001 ...00 ...00  \
++               &zzz_en n=4 zd=%zd_ax4 zn=%zn_ax4 zm=%zm_ax4
++
+ ### SME2 Multi-vector Multiple and Single Array Vectors
+ 
+ &azz_n          n off rv zn zm
+@@ -521,9 +533,6 @@ FDOT_n1_hb      11000001 001 1 .... 0 .. 100 ..... 01 ...   @azz_nx1_o3 n=4
+ 
+ ### SME2 Multi-vector Multiple Array Vectors
+ 
+-%zn_ax2         6:4 !function=times_2
+-%zn_ax4         7:3 !function=times_4
+-
+ @azz_2x2_o3     ........ ... ..... . .. ... ..... .. off:3  \
+                 &azz_n n=2 rv=%mova_rv zn=%zn_ax2 zm=%zm_ax2
+ @azz_4x4_o3     ........ ... ..... . .. ... ..... .. off:3  \
+-- 
+2.53.0
 
 
