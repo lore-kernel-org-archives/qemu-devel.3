@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB901C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25759C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzBbf-0007wD-2C; Wed, 26 Aug 2026 07:15:47 -0400
+	id 1wzBbV-0007nq-CW; Wed, 26 Aug 2026 07:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBbb-0007qv-Ku
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:15:44 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBbT-0007mU-AD
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:15:35 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBbZ-0004LT-IX
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:15:43 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6a5e866bca0so804979a12.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 04:15:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBbR-0004GY-CU
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:15:34 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6a374bea882so989719a12.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 04:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787742940; x=1788347740; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787742932; x=1788347732; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=GiST71Yts4LfFL9lI6doSLjjmUxdiZhCirIUAPAqYHk=;
- b=E5nusgqc5l1Cycc+mZ59wc2pbx9FLDhQuey17SKl29hpYWi2QIRH0b7nKACJF4KmVJ
- 4BxWMNS3amTTMMU14jJkPruU9Fptl+zOdztXX4Ee7iG0fEUjs+OKGOEkYQsdWYTuJLL8
- B3TC7HhSVOWa4QITJj7CreLuhJKFRECsciw6O06S7hlGGi8fBIis3L8ZNHivTOgdpIEo
- JY8wBIwFnzJA8h5oIjXuLWWbP/2FBaWimjZnCy9jpxR9xa3M+OKsw0fg7OCl8AG8Ttxv
- sTwuX5dPrS2R/OnXcowELFYeImU3fUCP0rqtyxxXH8mRbsd7vfTTnfJZ5ainVf5/R/ud
- Gwjw==
+ bh=4OvjEK79iipyYsErass3i3smJBr1fz2J2WXOxSNzKOM=;
+ b=uE30UZhSOitISQ20PHbQe9utOCD4zQx0t3s7tUsrhuan7meAhKFMtA7L66/UFcx5Ud
+ 00oetdwomjuUT3DsDEOQq39eqpORNUiD4DWkrxQ71W3EV0P3sgpLh7xX0GnhB9JJn7EU
+ QqoI4Io+gp9ZRKk9zh9FqID7FE7m5YzIdoDm4QOKtzEQFcmqCTd+a37g3jm+8SzcWn0C
+ /g7N1p2O3cnWxEwttD9W8RY5LhAzLg579L4sJ+2jM43gQ3mMkairhb4uZg9KoXGMsHNy
+ j9AEg2aafhsBVxQ0o61CqIdroVgu4NtIhnQb+fmxPltBcAyP9CgzlzI05qYM5Lal1dJ/
+ lx5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787742940; x=1788347740;
+ d=1e100.net; s=20251104; t=1787742932; x=1788347732;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GiST71Yts4LfFL9lI6doSLjjmUxdiZhCirIUAPAqYHk=;
- b=Q2+sw0gO0Ar/UePzQvMCL+ierHO/7TnZeyqFRAXW/asP/8wsQSGHGV2BRooLlVplvy
- wy77X6MSzvoyvpNe0lr6YcWHUKCwd8MmMJTCdu4lIWqkWcgqAcQdcREUKH4/nQjWFl6r
- 6pMHyQU68bodx1iQV+Y0w6kEo+/x3dKYCrNgnmD4qvqw1sNfvUjpjVjAFMv11pG1aZym
- pJdcPd572Ts8eYxIbo4XkTDo+unSba37Utbd9TmJsIg9JBa3wP+FYZ4TKqFfrxZ29bjb
- FCTDfaL3/qVAovCbtU3ONkjU9/GXQV8dgY/DLhTv7tyedJXVhz7pbaJ5D6wBUgylXSLK
- jiyQ==
-X-Gm-Message-State: AFuF++lYtnTPZMCU3r+fxfpA9Z4qqmO2tkqaq8/pWSTIl118DPSkEaCO
- rUTBYB9q2QBEHdrFssyRe6FLAQrRly082BBj6xxLSToCrkx6AvPkkL5AW89FClDlxWhMSj1aQvK
- RvsKR
-X-Gm-Gg: AR+sD11daUNZT7nJlgid5hzqKXMpK5Q9Gj5vkH15udMklUcFB13dHVTNJ0fkCz5Lu3n
- CGVjzJO/dWP74um2xGprpiLp90TNb41FmgTuDvPh8okEQk3guhnmOGsh6UYnlRLj8Ri1OhJIgwI
- fSDRXwKcLHNQyQev8UtR+5WqI1y6v4XQXCKpXd/Xi2FVxykFqSM7VjyQ15coJAmDyzAyNwYuJvM
- dokjx9ld6DZt54Q+hf1BOvjuhDCkxKSEiZg0W5xVJx0jrxPOMOsMWXrfS2t65wtv7N1lMglX8p2
- WgsX6VBghjhVSOCKENnMyj7LXV5iotBNZuFmobmxawIRUJRn7hBWkR+JV1OHahveUHQexMq4hV+
- 6F3Ifwmo0t9jwnksn+O8yjQvmsJCG5YrTS26Q+TgW+FC47hI9KbQZuvKFa/09fZ/oEuszHVZY47
- 7pEOntrAZ3vw878DL8FZkFCD9Dp2iwhYDN6LkmhpOLF6aI8O0G
-X-Received: by 2002:a05:6402:a503:10b0:6a5:f1bb:8376 with SMTP id
- 4fb4d7f45d1cf-6a5f1bb857emr1082944a12.3.1787742940047; 
- Wed, 26 Aug 2026 04:15:40 -0700 (PDT)
+ bh=4OvjEK79iipyYsErass3i3smJBr1fz2J2WXOxSNzKOM=;
+ b=Gcy/amly1qbGB6K0jVbwjX6aKRvsPRDqoNpccjqDoDYqPq8f0hYEnMsoQMWBR5yzlq
+ Yv7IayyUPuqYmN75Ry1rgyMWji+EQs+eIA2oIt/75cK5jzQH7ZXv8IP5T+3y1aR2EpBc
+ pHFZgQZVWpS8YTsjuyACmJ6Cgs3pABGvJl0ZnhdIyXoqqhixsn09QWWmpYAiQDqHsDn5
+ ftJZD7Z2j5wJE2s2LW0Rn52cMNuacPybrC6V5UInz3TiHhkelvLAg4ztQNGVSvy1APhw
+ z7j+sk41pdH2CyoqKrwjY29Y+0+Kcc7lSuuy1Ir6Dk5+tpd0Zp1OhxtWMIZ2VAWqNJQE
+ dJVw==
+X-Gm-Message-State: AFuF++m9AWk28+zHciew697+J/Zee6XwP4bt4XFVmbLxqQSG2QFHM33e
+ foH9WeSPUXBjUyhSKK9HmsMLBbkNTdSBL4zFJSoMr8mM/WEfPd5pRAAcIAg0XeLLIzPuPZFrHIk
+ Rc6MU
+X-Gm-Gg: AR+sD110Kl4wRdEcHfNIwyp5eqV4nOrxibag5mne8SuMeF8ObjFNZB/qT0FBPm4xweM
+ s6WH2CpCuUwOh4m0HjnFK5lThWfITtSUk4+rfrq3r9nHsWuIRW33Z5LCBctlGaQLlpIenqyJNCh
+ PwF2xTxNz3r1NPHO+fPFLf9+tzg0yVZ2PIfGAq4Mbnqh45ZhzSqVmgxSmuN49V3oRgRsVg1DJQw
+ tupcwc+FRi9OAV3ds0o5CnsxVXOunJxlHZDb4T/BnH0LyPyre394RiOT+Ml8qrDC0s3StIYfOSr
+ 3XQ3UoPJxqreIxvrHdkli0Hp/xoc70smhNVYVjT/q+UAaIM2oNuGVUOeLY6KUU/OnLzGO/ElpVw
+ V3373Th0SibxJMlF6Z4lrUiPfoTTV3tvypSHMUidZL82cG3rMdYd2Vzfr8mjimVdMqVUTDgZzlA
+ cM2azNjKfvdrNHlzHimxXn12dW1hhnHyQ5EdfpMdA/e+m8XZ62
+X-Received: by 2002:a05:6402:a3da:b0:6a1:f8ad:6c0c with SMTP id
+ 4fb4d7f45d1cf-6a5df6a3028mr5467675a12.16.1787742931715; 
+ Wed, 26 Aug 2026 04:15:31 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:8a5:68e8:91b1:8a17])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a5de8ea655sm3951724a12.12.2026.08.26.04.15.38
+ 4fb4d7f45d1cf-6a5de8ea655sm3951724a12.12.2026.08.26.04.15.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 04:15:39 -0700 (PDT)
+ Wed, 26 Aug 2026 04:15:31 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 09/28] hw/ide: restore the power-on device state before loading
-Date: Wed, 26 Aug 2026 13:15:24 +0200
-Message-ID: <20260826111524.3383479-10-den@openvz.org>
+Subject: [PULL 03/28] tests/qtest/libqos/ahci: allow a count and an expected
+ error
+Date: Wed, 26 Aug 2026 13:15:18 +0200
+Message-ID: <20260826111524.3383479-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826111524.3383479-1-den@openvz.org>
 References: <20260826111524.3383479-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=den@openvz.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=den@openvz.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,65 +105,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Loading a snapshot reuses the IDEState of the machine it is loaded into:
-load_snapshot() resets the machine and then feeds the stream into the
-existing devices. The reset does not help, as ide_reset() restores the
-logical CHS translation only when the guest asked for power-on defaults to
-be reverted with SET FEATURES 0xCC.
+A command that transfers no data can still take an argument in the count
+register of the register FIS, and a test may well expect such a command
+to be aborted. AHCICommand is private to the library, so add two
+setters: ahci_command_set_count() writes the count of a non-data
+command, and ahci_command_expect_error() records the error register bits
+the command is expected to complete with, which is what
+ahci_atapi_test_ready() does inline for a sense key today.
 
-A guest that replaced the translation with INITIALIZE DEVICE PARAMETERS
-therefore keeps it across the load of a snapshot taken before it did,
-while the restored guest expects the geometry of that moment. Every CHS
-access then lands on a sector other than the one asked for, with no error
-reported. s->reset_reverts survives a load the same way.
-
-Add a pre_load restoring the defaults, which
-docs/devel/migration/main.rst recommends for state a stream need not
-carry, and which the following subsections rely on. The
-RESET_TYPE_SNAPSHOT_LOAD marking that reset would be another way to
-recognise the case, but no IDE controller can see it while they all use
-device_class_set_legacy_reset().
+INITIALIZE DEVICE PARAMETERS is the first user of both, so describe it
+in the command properties table as well.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- hw/ide/core.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tests/qtest/libqos/ahci.c | 14 ++++++++++++++
+ tests/qtest/libqos/ahci.h |  6 ++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 048655b2d0..28219f5ef8 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -2863,6 +2863,18 @@ static int transfer_end_table_idx(EndTransferFunc *fn)
-     return -1;
+diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+index e3019a1eca..50b63239c2 100644
+--- a/tests/qtest/libqos/ahci.c
++++ b/tests/qtest/libqos/ahci.c
+@@ -74,6 +74,7 @@ AHCICommandProp ahci_command_properties[] = {
+     { .cmd = CMD_READ_MAX,       .lba28 = true },
+     { .cmd = CMD_READ_MAX_EXT,   .lba48 = true },
+     { .cmd = CMD_FLUSH_CACHE,    .data = false },
++    { .cmd = CMD_INIT_DP,        .data = false },
+     { .cmd = CMD_PACKET,         .data = true,  .size = 16,
+                                  .atapi = true, .pio = true },
+     { .cmd = CMD_PACKET_ID,      .data = true,  .pio = true,
+@@ -1180,6 +1181,19 @@ void ahci_command_set_prd_size(AHCICommand *cmd, unsigned prd_size)
+     ahci_command_set_sizes(cmd, cmd->xbytes, prd_size);
  }
  
-+static int ide_drive_pre_load(void *opaque)
++/* For a no-data command, whose count carries an argument of its own */
++void ahci_command_set_count(AHCICommand *cmd, uint16_t count)
 +{
-+    IDEState *s = opaque;
-+
-+    /* The subsections below are sent only where the guest replaced these */
-+    s->heads = s->drive_heads;
-+    s->sectors = s->drive_sectors;
-+    s->reset_reverts = false;
-+
-+    return 0;
++    g_assert(!cmd->props->data);
++    cmd->fis.count = count;
 +}
 +
- static int ide_drive_post_load(void *opaque, int version_id)
++void ahci_command_expect_error(AHCICommand *cmd, uint8_t err)
++{
++    cmd->interrupts |= AHCI_PX_IS_TFES;
++    cmd->errors |= err;
++}
++
+ void ahci_command_adjust(AHCICommand *cmd, uint64_t offset, uint64_t buffer,
+                          uint64_t xbytes, unsigned prd_size)
  {
-     IDEState *s = opaque;
-@@ -2986,6 +2998,7 @@ const VMStateDescription vmstate_ide_drive = {
-     .name = "ide_drive",
-     .version_id = 3,
-     .minimum_version_id = 0,
-+    .pre_load = ide_drive_pre_load,
-     .post_load = ide_drive_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT32(mult_sectors, IDEState),
+diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
+index 2a48a7523d..6d861c79ee 100644
+--- a/tests/qtest/libqos/ahci.h
++++ b/tests/qtest/libqos/ahci.h
+@@ -278,6 +278,7 @@ enum {
+     CMD_READ_MAX       = 0xF8,
+     CMD_READ_MAX_EXT   = 0x27,
+     CMD_FLUSH_CACHE    = 0xE7,
++    CMD_INIT_DP        = 0x91, /* INITIALIZE DEVICE PARAMETERS */
+     CMD_IDENTIFY       = 0xEC,
+     CMD_PACKET         = 0xA0,
+     CMD_PACKET_ID      = 0xA1,
+@@ -324,6 +325,9 @@ enum {
+ #define ATA_DEVICE_DRIVE 0x10
+ #define ATA_DEVICE_HEAD  0x0F
+ 
++/* ATA error register bits */
++#define ATA_ERR_ABRT     0x04
++
+ /*** Structures ***/
+ 
+ typedef struct AHCIPortQState {
+@@ -638,6 +642,8 @@ void ahci_command_set_size(AHCICommand *cmd, uint64_t xbytes);
+ void ahci_command_set_prd_size(AHCICommand *cmd, unsigned prd_size);
+ void ahci_command_set_sizes(AHCICommand *cmd, uint64_t xbytes,
+                             unsigned prd_size);
++void ahci_command_set_count(AHCICommand *cmd, uint16_t count);
++void ahci_command_expect_error(AHCICommand *cmd, uint8_t err);
+ void ahci_command_set_acmd(AHCICommand *cmd, void *acmd);
+ void ahci_command_enable_atapi_dma(AHCICommand *cmd);
+ void ahci_command_adjust(AHCICommand *cmd, uint64_t lba_sect, uint64_t gbuffer,
 -- 
 2.53.0
 
