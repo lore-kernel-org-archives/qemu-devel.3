@@ -4,105 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E29C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E7AC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzD7C-0007WD-Q0; Wed, 26 Aug 2026 08:52:27 -0400
+	id 1wzD7b-0007rq-II; Wed, 26 Aug 2026 08:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD7A-0007Tt-6H; Wed, 26 Aug 2026 08:52:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wzD7X-0007pA-46; Wed, 26 Aug 2026 08:52:47 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD77-0002P0-Tu; Wed, 26 Aug 2026 08:52:23 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wzD7U-0002h2-HK; Wed, 26 Aug 2026 08:52:46 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCW1Yt2877762; Wed, 26 Aug 2026 12:52:18 GMT
+ 67QCVtRs2127719; Wed, 26 Aug 2026 12:52:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=vChXzio9eDtHZSOpEWhZkM9YvnIh
- mlTwpjkSfTDxdpY=; b=c8RiynBnC3xDowf39pPolhEQXEI/6VZtpbKXwAXDSJVN
- BcERWBO82ErDkD9QigGH3Mvd/gnlXdQUEl+uEKD9VhmYGQz2iidgS6oIp9oLHXOr
- UWES3VSM1EaHEsqTqnLOTSn2ta6bQwk/jB1PTRYZOcBfJfOm+MsXeOjY3w5I+LDq
- G+M4bHkirGQ1mbW+xPLTtkD7FLucSXuvq/eFapXiBf4FYeAqC2qxbgkKVylv0F83
- Vy0BeAdnBWgU/oM2e5LZ2K5GNwd2crHGLhL5lL/+bSc2pKLTCCjCo0bJEAv4w2IO
- zoapRwcJcSHUzvkGpx79RlAZtIZVpJwV92GNoHC0FA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726epkj1-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=semDCzLkOI8fXXMpM
+ DeIaY6EI7Q7Ey9Hvyag8eei41s=; b=qjXgjTytqj8SoVJUd+vlWFV1woTaWNbMO
+ aOJZsZ6ofxzjdGS2W1OYEAvUeNSO/KhRzWh6+K3J+PJDImN6/ta8Tkj4lpH2RqCL
+ o9NwB3hW8ZiFMszn+w/8oBZqAEyv4UeUAKEMLaRkj0fh5GRYmSeTVC+yTI+Q+yya
+ x3BWOvH7CBPJ8dcPSE++Yfi48kwav5fBH3A98kO8S3VbvoWZl4JyaGFaMVevkKR/
+ w0TBRjXftLzXNIfCOGgFA4qYHBnAu/f0xPa0FheEP2oZZZtcwJ0q/QK/D8AUvHDe
+ mPtPLWFeC/Kpxrtc5HznLczD7o24uGgbA6cudUm0oskLedOqFzsNA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqxm93-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:17 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfG6d032640;
- Wed, 26 Aug 2026 12:52:17 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkh9vk8-1
+ Wed, 26 Aug 2026 12:52:42 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfGfQ002326;
+ Wed, 26 Aug 2026 12:52:41 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k1xx5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:17 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:41 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QCqGrW8127088
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCqeLJ18088546
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 12:52:16 GMT
+ Wed, 26 Aug 2026 12:52:40 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B4DB58059;
- Wed, 26 Aug 2026 12:52:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ED56358059;
+ Wed, 26 Aug 2026 12:52:39 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 63C445805D;
- Wed, 26 Aug 2026 12:52:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A7F145805C;
+ Wed, 26 Aug 2026 12:52:38 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.78.161]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 12:52:15 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:38 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 00/37] s390x queue
-Date: Wed, 26 Aug 2026 08:51:35 -0400
-Message-ID: <20260826125213.1901252-1-farman@linux.ibm.com>
+ Cornelia Huck <cohuck@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Collin Walling <walling@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 19/37] hw/s390x/ipl: Add IPIB flags to IPL Parameter Block
+Date: Wed, 26 Aug 2026 08:51:54 -0400
+Message-ID: <20260826125213.1901252-20-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260826125213.1901252-1-farman@linux.ibm.com>
+References: <20260826125213.1901252-1-farman@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8ee181 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=MsItQQOMWyjzfmPdwrAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXx9o0Sh0BeI9f
- DvAlhoYtvTgVln4CwXDH7jRqO0GzC1pjqH/3NEZc7DgenzN1l3rKH5segTJDzzx2QVRghsPpHgg
- 2kPGE8Dup67+2Mm7SG3BpHn/j/4mGi8=
-X-Proofpoint-GUID: TO-aANU_0fzaQSrj0-LpcvQiXb-0njkb
-X-Proofpoint-ORIG-GUID: TO-aANU_0fzaQSrj0-LpcvQiXb-0njkb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX+oVccyIlhuNQ
- GkN71hJ/qEkO4BXBsUwR+bU9YTnyHE+DiFJlwLTyGUfNj0cmp+ZCNE8bnoMjVCNAratm7TJZtlU
- v86ima8qiu8TrpN/coyf2+a56FKH/K5plrNZzB05k/MH6ay/OR7dyIGpXXEk7mkH6WP98OnPP4m
- WrqxsaO4zhJz1CZOl4eppxkwuen5pAYoF6mQGBu9S0/d+7Gwj+hLj45WicpYn4SujcsjylxU8Ns
- tkNNKOys0ntZvp9TN0DnR4kKzVayRmwFLsqP3buaXL8WlW3Y272zue7AElLea/yDiPVLVOihRON
- a+N1hwAZ9jtBRaBF7e88iQFVitUuL3ixCZpVIiuOrymSZnWGK/CHQzfUS2EGA4OhJV8QIpxZ+Nm
- XU+Ayoye6pCPWqHXqJlQTaMQlX8ndGnwuj/XDu7ueYEx2j+i2k9/g/3UzjpvBlOszAUUsL+TJOv
- cV7fgU3AsK4AHB73oVw==
+X-Proofpoint-GUID: ekrd5Lc0OmkRukDJ_cNx2IutIimhGRwt
+X-Proofpoint-ORIG-GUID: ekrd5Lc0OmkRukDJ_cNx2IutIimhGRwt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX0MDsmFgjQDiV
+ HThXpwLAHs+ZODGIaaAedCzRCQy+pjLF8/00OzgmyklW6Zd79sgyrVY918HkV3QCF0DDNfOm/Pj
+ VCRpe+cZGSL67DCCYHM8VZe6NTCdB8Lm81ngJGYfIgU/kPUA7kVKTgf4wf51GdOWRNqtX9X0tEf
+ Aoj85MCHp6us6Rlv7GlnCpsMw0UdphLSfLRoW8Y6IkI7s0P/a7bB573oN7atUj0GfTJZO3zaJGW
+ 3Q9GLlzZ3BKVKZVM8zamhI5oIkCkP5G19E+RuKc1FVJqkLqgV+G5XvXZ/KmIOSnr3CkK7ZT5Ock
+ ioO0Rrw2zsUjgx6t3rj+sUmLXOzV1RVEGCkLbzW4MG+Fo0WgSKcaZQN4VnsZPhNychTrWWvpkkI
+ nIKW1RJxpbvmXyu9NrrIAHADWiIEG9Rwni2F6RkbvhVC9englU6EoF61a6RBz2B1yOwZyE8FgVe
+ M+Z6u241eu9fR3o533w==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8ee19a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=W_WZRTZ8rNWSny1drpEA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX8SEma5/BIDjx
+ 1KBv/9Q52I81yLpzF4wsYnNFaLGKXXvx6veu3NP/K8YvrK3s9IVL06x2wirpTfx5WFaj16csNEF
+ 4Ew1htpQcB6vPDfRjnjHFEPtJ4WW5CI=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260104
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,134 +122,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit fe11f459f640cd08f35c21f9d403517951bfd671:
+From: Zhuoying Cai <zycai@linux.ibm.com>
 
-  Merge tag 'fixes-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-08-25 06:48:55 -0700)
+Add IPIB flags to IPL Parameter Block to determine if IPL needs to
+perform securely and if IPL Information Report Block (IIRB) exists.
 
-are available in the Git repository at:
+Move DIAG308 flags to a separated header file and add flags for secure IPL.
+Move IPLB length related definitions to include/hw/s390x/ipl/qipl.h and
+add a maximum length constant to support secure IPL.
 
-  https://gitlab.com/efarman/qemu.git tags/s390x-20260826
+Secure boot in audit mode will perform if certificate(s) exist in the
+key store. IIRB will exist and results of verification will be stored in
+IIRB.
 
-for you to fetch changes up to 5c3c500cddbdea58bb76515847d1d515621dcf0b:
+To ensure proper alignment of the IIRB and prevent overlap, set
+iplb->len to the maximum length of the IPLB, allowing alignment
+constraints to be determined based on its size.
 
-  pc-bios/s390-ccw.img: update s390x bios (2026-08-26 07:05:48 -0400)
-
-----------------------------------------------------------------
-New s390x features for 11.2
- - hardening fixes in css/sclp code
- - enable secure IPL
- - regenerate s390-ccw.img
-
-----------------------------------------------------------------
-
-Christian Borntraeger (2):
-  s390x/sclp: pv: only copy the original SCCB buffer
-  s390x/css: Fix css stsch detection to go beyond 8192 devices
-
-Collin L. Walling (2):
-  s390x/diag: Introduce DIAG 508 for secure IPL operations
-  s390x/diag: Implement DIAG 508 subcode 1 for signature verification
-
-Eric Farman (1):
-  pc-bios/s390-ccw.img: update s390x bios
-
-Zhuoying Cai (32):
-  Add boot-certs to s390-ccw-virtio machine type option
-  crypto/x509-utils: Refactor with GNUTLS fallback
-  crypto/x509-utils: Add helper functions for certificate store
-  hw/s390x/ipl: Create certificate store
-  s390x/diag: Introduce DIAG 320 for Certificate Store Facility
-  s390x/diag: Refactor address validation check from diag308_parm_check
-  s390x/diag: Implement DIAG 320 subcode 1
-  crypto/x509-utils: Add helper functions for DIAG 320 subcode 2
-  s390x/diag: Implement DIAG 320 subcode 2
-  hw/s390x: Define finite size for single entry VCEntry
-  crypto/x509-utils: Add helper functions for DIAG 508 subcode 1
-  s390x/diag: Generalize s390_ipl_read/write to accept void *
-  s390x/ipl: Introduce IPL Information Report Block (IIRB)
-  pc-bios/s390-ccw: Define memory for IPLB and convert IPLB to pointers
-  hw/s390x/ipl: Add IPIB flags to IPL Parameter Block
-  hw/s390x/ipl: Rework s390_ipl_map_iplb_chain for certificate storage
-  s390x: Guest support for Secure-IPL Facility
-  pc-bios/s390-ccw: Refactor zipl_run()
-  pc-bios/s390-ccw: Rework zipl_load_segment function
-  pc-bios/s390-ccw: Introduce ZiplBootMode enum for IPL mode selection
-  pc-bios/s390-ccw: Add signature verification for secure IPL in audit
-    mode
-  pc-bios/s390-ccw: Add signed component address overlap checks
-  s390x: Guest support for Secure-IPL Code Loading Attributes Facility
-    (SCLAF)
-  pc-bios/s390-ccw: Add additional security checks for secure boot
-  Add secure-boot to s390-ccw-virtio machine type option
-  hw/s390x/ipl: Set IPIB flags for secure IPL
-  pc-bios/s390-ccw: Handle true secure IPL mode
-  hw/s390x/ipl: Handle secure boot with multiple boot devices
-  tests/functional/s390x: Add secure IPL functional test
-  docs/specs: Add secure IPL documentation
-  docs/system/s390x: Add secure IPL documentation
-  MAINTAINERS: Add secure IPL files to S390-ccw boot group
-
- MAINTAINERS                               |   5 +
- crypto/meson.build                        |   2 +-
- crypto/x509-utils.c                       | 409 +++++++++++++++
- docs/specs/index.rst                      |   1 +
- docs/specs/s390x-secure-ipl.rst           | 197 ++++++++
- docs/system/s390x/secure-ipl.rst          | 184 +++++++
- docs/system/target-s390x.rst              |   1 +
- hw/s390x/cert-store.c                     | 244 +++++++++
- hw/s390x/cert-store.h                     |  38 ++
- hw/s390x/css.c                            |   3 +-
- hw/s390x/ipl.c                            | 128 ++++-
- hw/s390x/ipl.h                            |  29 +-
- hw/s390x/meson.build                      |   1 +
- hw/s390x/s390-virtio-ccw.c                |  70 +++
- hw/s390x/sclp.c                           |   4 +-
- include/crypto/x509-utils.h               | 113 +++++
- include/hw/s390x/ipl/diag308.h            |  34 ++
- include/hw/s390x/ipl/diag320.h            | 118 +++++
- include/hw/s390x/ipl/diag508.h            |  45 ++
- include/hw/s390x/ipl/qipl.h               | 113 ++++-
- include/hw/s390x/s390-virtio-ccw.h        |   5 +
- include/hw/s390x/sclp.h                   |   6 +-
- pc-bios/s390-ccw.img                      | Bin 104216 -> 112408 bytes
- pc-bios/s390-ccw/Makefile                 |   2 +-
- pc-bios/s390-ccw/bootmap.c                | 108 +++-
- pc-bios/s390-ccw/bootmap.h                |  22 +
- pc-bios/s390-ccw/iplb.h                   |   9 +-
- pc-bios/s390-ccw/jump2ipl.c               |  13 +-
- pc-bios/s390-ccw/main.c                   |  59 ++-
- pc-bios/s390-ccw/netmain.c                |   8 +-
- pc-bios/s390-ccw/s390-ccw.h               |  27 +
- pc-bios/s390-ccw/sclp.c                   |  27 +
- pc-bios/s390-ccw/sclp.h                   |   7 +
- pc-bios/s390-ccw/secure-ipl.c             | 561 +++++++++++++++++++++
- pc-bios/s390-ccw/secure-ipl.h             | 183 +++++++
- qapi/machine-s390x.json                   |  23 +
- qapi/pragma.json                          |   1 +
- qemu-options.hx                           |  10 +-
- target/s390x/cpu_features.c               |   7 +
- target/s390x/cpu_features.h               |   1 +
- target/s390x/cpu_features_def.h.inc       |   5 +
- target/s390x/cpu_models.c                 |   7 +
- target/s390x/diag.c                       | 576 +++++++++++++++++++++-
- target/s390x/gen-features.c               |   7 +
- target/s390x/kvm/kvm.c                    |  34 ++
- target/s390x/s390x-internal.h             |   4 +
- target/s390x/tcg/misc_helper.c            |  14 +
- tests/functional/s390x/meson.build        |   2 +
- tests/functional/s390x/test_secure_ipl.py | 172 +++++++
- 49 files changed, 3539 insertions(+), 100 deletions(-)
- create mode 100644 docs/specs/s390x-secure-ipl.rst
- create mode 100644 docs/system/s390x/secure-ipl.rst
- create mode 100644 hw/s390x/cert-store.c
- create mode 100644 hw/s390x/cert-store.h
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-18-zycai@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+---
+ hw/s390x/ipl.c                 | 36 ++++++++++++++++++++++++++++++++++
+ hw/s390x/ipl.h                 | 24 -----------------------
+ include/hw/s390x/ipl/diag308.h | 34 ++++++++++++++++++++++++++++++++
+ include/hw/s390x/ipl/qipl.h    | 13 +++++++++++-
+ 4 files changed, 82 insertions(+), 25 deletions(-)
  create mode 100644 include/hw/s390x/ipl/diag308.h
- create mode 100644 include/hw/s390x/ipl/diag320.h
- create mode 100644 include/hw/s390x/ipl/diag508.h
- create mode 100644 pc-bios/s390-ccw/secure-ipl.c
- create mode 100644 pc-bios/s390-ccw/secure-ipl.h
- create mode 100755 tests/functional/s390x/test_secure_ipl.py
 
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 2cae089d98..627544b361 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -462,6 +462,34 @@ S390IPLCertificateStore *s390_ipl_get_certificate_store(void)
+     return &ipl->cert_store;
+ }
+ 
++static bool s390_has_certificate(void)
++{
++    S390IPLState *ipl = get_ipl_device();
++
++    return ipl->cert_store.count > 0;
++}
++
++static void s390_set_secure_boot_flags(IplParameterBlock *iplb,
++                                       bool audit_mode)
++{
++    if (!audit_mode) {
++        return;
++    }
++
++    /*
++     * For audit mode, enable the IPL Information
++     * Report (IPLIR) flag so that the firmware generates an IPL
++     * Information Report Block (IIRB).
++     *
++     * Results of secure boot will be stored in IIRB.
++     *
++     * Extend the IPL parameter block to its maximum length to ensure
++     * sufficient space for the BIOS to populate the IIRB.
++     */
++    iplb->hdr_flags |= DIAG308_IPIB_FLAGS_IPLIR;
++    iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
++}
++
+ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+ {
+     CcwDevice *ccw_dev = NULL;
+@@ -518,6 +546,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+         iplb->flags |= DIAG308_FLAGS_LP_VALID;
+ 
++        s390_set_secure_boot_flags(iplb, s390_has_certificate());
++
+         return true;
+     }
+ 
+@@ -654,6 +684,12 @@ void s390_ipl_update_diag308(IplParameterBlock *iplb)
+     } else {
+         ipl->iplb = *iplb;
+         ipl->iplb_valid = true;
++
++        /*
++         * The kernel does not preserve secure boot flags across a reboot.
++         * Re-apply them here based on the current machine configuration.
++         */
++        s390_set_secure_boot_flags(&ipl->iplb, s390_has_certificate());
+     }
+ 
+     update_machine_ipl_properties(iplb);
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index ec8ab153dc..5d54827b52 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -23,7 +23,6 @@
+ #include "qom/object.h"
+ #include "target/s390x/kvm/pv.h"
+ 
+-#define DIAG308_FLAGS_LP_VALID 0x80
+ #define MAX_BOOT_DEVS 8 /* Max number of devices that may have a bootindex */
+ 
+ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
+@@ -90,29 +89,6 @@ struct S390IPLState {
+ };
+ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
+ 
+-#define DIAG_308_RC_OK              0x0001
+-#define DIAG_308_RC_NO_CONF         0x0102
+-#define DIAG_308_RC_INVALID         0x0402
+-#define DIAG_308_RC_NO_PV_CONF      0x0902
+-#define DIAG_308_RC_INVAL_FOR_PV    0x0a02
+-
+-#define DIAG308_RESET_MOD_CLR       0
+-#define DIAG308_RESET_LOAD_NORM     1
+-#define DIAG308_LOAD_CLEAR          3
+-#define DIAG308_LOAD_NORMAL_DUMP    4
+-#define DIAG308_SET                 5
+-#define DIAG308_STORE               6
+-#define DIAG308_PV_SET              8
+-#define DIAG308_PV_STORE            9
+-#define DIAG308_PV_START            10
+-
+-#define S390_IPLB_HEADER_LEN 8
+-#define S390_IPLB_MIN_PV_LEN 148
+-#define S390_IPLB_MIN_CCW_LEN 200
+-#define S390_IPLB_MIN_FCP_LEN 384
+-#define S390_IPLB_MIN_PCI_LEN 376
+-#define S390_IPLB_MIN_QEMU_SCSI_LEN 200
+-
+ static inline bool iplb_valid_len(IplParameterBlock *iplb)
+ {
+     return be32_to_cpu(iplb->len) <= sizeof(IplParameterBlock);
+diff --git a/include/hw/s390x/ipl/diag308.h b/include/hw/s390x/ipl/diag308.h
+new file mode 100644
+index 0000000000..6e62f29215
+--- /dev/null
++++ b/include/hw/s390x/ipl/diag308.h
+@@ -0,0 +1,34 @@
++/*
++ * S/390 DIAGNOSE 308 definitions and structures
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef S390X_DIAG308_H
++#define S390X_DIAG308_H
++
++#define DIAG_308_RC_OK              0x0001
++#define DIAG_308_RC_NO_CONF         0x0102
++#define DIAG_308_RC_INVALID         0x0402
++#define DIAG_308_RC_NO_PV_CONF      0x0902
++#define DIAG_308_RC_INVAL_FOR_PV    0x0a02
++
++#define DIAG308_RESET_MOD_CLR       0
++#define DIAG308_RESET_LOAD_NORM     1
++#define DIAG308_LOAD_CLEAR          3
++#define DIAG308_LOAD_NORMAL_DUMP    4
++#define DIAG308_SET                 5
++#define DIAG308_STORE               6
++#define DIAG308_PV_SET              8
++#define DIAG308_PV_STORE            9
++#define DIAG308_PV_START            10
++
++#define DIAG308_FLAGS_LP_VALID 0x80
++
++#define DIAG308_IPIB_FLAGS_SIPL 0x40
++#define DIAG308_IPIB_FLAGS_IPLIR 0x20
++
++#endif
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index 39017fbba8..6dccc74a9e 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -12,6 +12,8 @@
+ #ifndef S390X_QIPL_H
+ #define S390X_QIPL_H
+ 
++#include "diag308.h"
++
+ /* Boot Menu flags */
+ #define QIPL_FLAG_BM_OPTS_CMD   0x80
+ #define QIPL_FLAG_BM_OPTS_ZIPL  0x40
+@@ -33,6 +35,14 @@ typedef enum S390IplType S390IplType;
+ 
+ #define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
+ 
++#define S390_IPLB_HEADER_LEN 8
++#define S390_IPLB_MIN_PV_LEN 148
++#define S390_IPLB_MIN_CCW_LEN 200
++#define S390_IPLB_MIN_FCP_LEN 384
++#define S390_IPLB_MIN_PCI_LEN 376
++#define S390_IPLB_MIN_QEMU_SCSI_LEN 200
++#define S390_IPLB_MAX_LEN 4096
++
+ #define MAX_CERTIFICATES  64
+ /* largest supported block size - same as VIRTIO_DASD_DEFAULT_BLOCK_SIZE */
+ #define VIRTIO_MAX_BLOCK_SIZE   4096
+@@ -127,7 +137,8 @@ typedef struct IplBlockPci IplBlockPci;
+ union IplParameterBlock {
+     struct {
+         uint32_t len;
+-        uint8_t  reserved0[3];
++        uint8_t  hdr_flags;
++        uint8_t  reserved0[2];
+         uint8_t  version;
+         uint32_t blk0_len;
+         uint8_t  pbt;
 -- 
 2.55.0
 
