@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA33CC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D67C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJXL-0000zn-LV; Wed, 26 Aug 2026 15:43:51 -0400
+	id 1wzJXC-0000FP-7K; Wed, 26 Aug 2026 15:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXK-0000qn-65
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXA-00008I-V1
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXI-0006kR-6e
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:49 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJX8-0006hm-JA
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773427;
+ s=mimecast20190719; t=1787773417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Vg4hY+AvTm5XkhoeGCLunTOI5DLh2OMWY4FplanPG4=;
- b=Stn0C+HklGa9uMWuJMzS+znPgjIdrKvs0z1oDxgKwxbOZc9xcHaSfD+yv8bZw+wUwHNNTd
- BHicF0pEO7OLPvXvE7JlpJC/20TCvclxd28iFXbXXVz4h58pMh2O3r+u8VYqgse2aRH1m/
- vGD4+WgQsch+h/pu6YwqBuSrif6rf8A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UCP7UVj7lY6yPKsok5GRRYDTHAJpEfy9IihCRm+r6Qo=;
+ b=hcA0xj1VRvvLHE4mGBzxDk40fJ62K9D96FldST5UCWtGgkaxxzZ11u7DHq9yfi7V0Cy8vx
+ xl/xW7QFwloxMEZHmBtnIi/ZSmT+hlMn8/hQUIOAqK1jH6t4tRdtjjhqcNKQfT/XV9d5QM
+ Zfbfg09mgvtMbAKK3I0XVCAREN5d5Bg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-h3YwAm4sOdyvT6WM2XKTIA-1; Wed,
- 26 Aug 2026 15:43:45 -0400
-X-MC-Unique: h3YwAm4sOdyvT6WM2XKTIA-1
-X-Mimecast-MFC-AGG-ID: h3YwAm4sOdyvT6WM2XKTIA_1787773421
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-TPhEUAQ-NQGc5-gbFi3Lxg-1; Wed,
+ 26 Aug 2026 15:43:33 -0400
+X-MC-Unique: TPhEUAQ-NQGc5-gbFi3Lxg-1
+X-Mimecast-MFC-AGG-ID: TPhEUAQ-NQGc5-gbFi3Lxg_1787773407
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 40543191FCE0; Wed, 26 Aug 2026 19:43:41 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0EC6F195423F; Wed, 26 Aug 2026 19:43:27 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 306A21800598; Wed, 26 Aug 2026 19:43:33 +0000 (UTC)
+ id 0E3C818005AD; Wed, 26 Aug 2026 19:43:21 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,24 +72,24 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 35/43] qapi: convert trivial intro sections for
- run-state.json
-Date: Wed, 26 Aug 2026 15:38:32 -0400
-Message-ID: <20260826193840.2152000-36-jsnow@redhat.com>
+Subject: [PATCH v3 33/43] qapi: convert trivial intro sections for crypto.json
+Date: Wed, 26 Aug 2026 15:38:30 -0400
+Message-ID: <20260826193840.2152000-34-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,350 +107,316 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/run-state.json | 113 ++++++++++++++++----------------------------
- 1 file changed, 42 insertions(+), 71 deletions(-)
+ qapi/crypto.json | 100 +++++++++++++++++------------------------------
+ 1 file changed, 36 insertions(+), 64 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index e4fdead1e0b..2a968a6bc0b 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -10,8 +10,7 @@
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index 6e3a98ff68b..5e395bc10c7 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -26,8 +26,7 @@
  
  ##
- # @RunState:
+ # @QCryptoSecretFormat:
 -#
--# An enumeration of VM run states.
-+#     An enumeration of VM run states.
+-# The data format that the secret is provided in
++#     The data format that the secret is provided in
  #
- # @debug: QEMU is running on a debugger
- #
-@@ -63,8 +62,7 @@
+ # @raw: raw bytes.  When encoded in JSON only valid UTF-8 sequences
+ #     can be used
+@@ -41,8 +40,7 @@
  
  ##
- # @ShutdownCause:
+ # @QCryptoHashAlgo:
 -#
--# An enumeration of reasons for a shutdown.
-+#     An enumeration of reasons for a shutdown.
+-# The supported algorithms for computing content digests
++#     The supported algorithms for computing content digests
  #
- # @none: No shutdown request pending
+ # @md5: MD5.  Should not be used in any new code, legacy compat only
  #
-@@ -103,8 +101,7 @@
+@@ -68,8 +66,7 @@
  
  ##
- # @StatusInfo:
+ # @QCryptoCipherAlgo:
 -#
--# Information about VM run state
-+#     Information about VM run state
+-# The supported algorithms for content encryption ciphers
++#     The supported algorithms for content encryption ciphers
  #
- # @running: true if all VCPUs are runnable, false if not runnable
+ # @aes-128: AES with 128 bit / 16 byte keys
  #
-@@ -118,8 +115,7 @@
+@@ -110,8 +107,7 @@
  
  ##
- # @query-status:
+ # @QCryptoCipherMode:
 -#
--# Query the run status of the VM
-+#     Query the run status of the VM
+-# The supported modes for content encryption ciphers
++#     The supported modes for content encryption ciphers
  #
- # Since: 0.14
+ # @ecb: Electronic Code Book
  #
-@@ -134,9 +130,8 @@
+@@ -150,8 +146,7 @@
  
  ##
- # @SHUTDOWN:
+ # @QCryptoBlockFormat:
 -#
--# Emitted when the virtual machine has shut down, indicating that QEMU
--# is about to exit.
-+#     Emitted when the virtual machine has shut down, indicating that
-+#     QEMU is about to exit.
+-# The supported full disk encryption formats
++#     The supported full disk encryption formats
  #
- # @guest: If true, the shutdown was triggered by a guest request (such
- #     as a guest-initiated ACPI shutdown request or other
-@@ -162,9 +157,8 @@
+ # @qcow: QCow/QCow2 built-in AES-CBC encryption.  Use only for
+ #     liberating data from old images.
+@@ -165,8 +160,8 @@
  
  ##
- # @POWERDOWN:
+ # @QCryptoBlockOptionsBase:
 -#
--# Emitted when the virtual machine is powered down through the power
--# control system, such as via ACPI.
-+#     Emitted when the virtual machine is powered down through the
-+#     power control system, such as via ACPI.
+-# The common options that apply to all full disk encryption formats
++#     The common options that apply to all full disk encryption
++#     formats
  #
- # Since: 0.12
+ # @format: the encryption format
  #
-@@ -177,8 +171,7 @@
+@@ -177,8 +172,7 @@
  
  ##
- # @RESET:
+ # @QCryptoBlockOptionsQCow:
 -#
--# Emitted when the virtual machine is reset
-+#     Emitted when the virtual machine is reset
+-# The options that apply to QCow/QCow2 AES-CBC encryption format
++#     The options that apply to QCow/QCow2 AES-CBC encryption format
  #
- # @guest: If true, the reset was triggered by a guest request (such as
- #     a guest-initiated ACPI reboot request or other hardware-specific
-@@ -199,8 +192,7 @@
+ # @key-secret: the ID of a QCryptoSecret object providing the
+ #     decryption key.  Mandatory except when probing image for
+@@ -191,8 +185,7 @@
  
  ##
- # @STOP:
+ # @QCryptoBlockOptionsLUKS:
 -#
--# Emitted when the virtual machine is stopped
-+#     Emitted when the virtual machine is stopped
+-# The options that apply to LUKS encryption format
++#     The options that apply to LUKS encryption format
  #
- # Since: 0.12
- #
-@@ -213,8 +205,7 @@
+ # @key-secret: the ID of a QCryptoSecret object providing the
+ #     decryption key.  Mandatory except when probing image for
+@@ -205,8 +198,7 @@
  
  ##
- # @RESUME:
+ # @QCryptoBlockCreateOptionsLUKS:
 -#
--# Emitted when the virtual machine resumes execution
-+#     Emitted when the virtual machine resumes execution
+-# The options that apply to LUKS encryption format initialization
++#     The options that apply to LUKS encryption format initialization
  #
- # Since: 0.12
- #
-@@ -227,9 +218,8 @@
+ # @cipher-alg: the cipher algorithm for data encryption.  Currently
+ #     defaults to 'aes-256'.
+@@ -239,9 +231,8 @@
  
  ##
- # @SUSPEND:
+ # @QCryptoBlockOpenOptions:
 -#
--# Emitted when guest enters a hardware suspension state, for example,
--# S3 state, which is sometimes called standby state
-+#     Emitted when guest enters a hardware suspension state, for
-+#     example, S3 state, which is sometimes called standby state
+-# The options that are available for all encryption formats when
+-# opening an existing volume
++#     The options that are available for all encryption formats when
++#     opening an existing volume
  #
- # Since: 1.1
- #
-@@ -261,9 +251,8 @@
+ # Since: 2.6
+ ##
+@@ -253,9 +244,8 @@
  
  ##
- # @WAKEUP:
+ # @QCryptoBlockCreateOptions:
 -#
--# Emitted when the guest has woken up from suspend state and is
--# running
-+#     Emitted when the guest has woken up from suspend state and is
-+#     running
+-# The options that are available for all encryption formats when
+-# initializing a new volume
++#     The options that are available for all encryption formats when
++#     initializing a new volume
  #
- # Since: 1.1
- #
-@@ -276,8 +265,7 @@
+ # Since: 2.6
+ ##
+@@ -267,9 +257,8 @@
  
  ##
- # @WATCHDOG:
+ # @QCryptoBlockInfoBase:
 -#
--# Emitted when the watchdog device's timer is expired
-+#     Emitted when the watchdog device's timer is expired
+-# The common information that applies to all full disk encryption
+-# formats
++#     The common information that applies to all full disk encryption
++#     formats
  #
- # @action: action that has been taken
+ # @format: the encryption format
  #
-@@ -300,9 +288,8 @@
+@@ -280,8 +269,7 @@
  
  ##
- # @WatchdogAction:
+ # @QCryptoBlockInfoLUKSSlot:
 -#
--# An enumeration of the actions taken when the watchdog device's timer
--# is expired
-+#     An enumeration of the actions taken when the watchdog device's
-+#     timer is expired
+-# Information about the LUKS block encryption key slot options
++#     Information about the LUKS block encryption key slot options
  #
- # @reset: system resets
+ # @active: whether the key slot is currently in use
  #
-@@ -330,8 +317,7 @@
+@@ -301,8 +289,7 @@
  
  ##
- # @RebootAction:
+ # @QCryptoBlockInfoLUKS:
 -#
--# Possible QEMU actions upon guest reboot
-+#     Possible QEMU actions upon guest reboot
+-# Information about the LUKS block encryption options
++#     Information about the LUKS block encryption options
  #
- # @reset: Reset the VM
+ # @cipher-alg: the cipher algorithm for data encryption
  #
-@@ -345,8 +331,7 @@
+@@ -340,8 +327,7 @@
  
  ##
- # @ShutdownAction:
+ # @QCryptoBlockInfo:
 -#
--# Possible QEMU actions upon guest shutdown
-+#     Possible QEMU actions upon guest shutdown
+-# Information about the block encryption options
++#     Information about the block encryption options
  #
- # @poweroff: Shutdown the VM and exit
- #
-@@ -377,8 +362,7 @@
+ # Since: 2.7
+ ##
+@@ -352,8 +338,7 @@
  
  ##
- # @watchdog-set-action:
+ # @QCryptoBlockLUKSKeyslotState:
 -#
--# Set watchdog action.
-+#     Set watchdog action.
+-# Defines state of keyslots that are affected by the update
++#     Defines state of keyslots that are affected by the update
  #
- # @action: `WatchdogAction` action taken when watchdog timer expires.
+ # @active: The slots contain the given password and marked as active
  #
-@@ -394,9 +378,8 @@
+@@ -367,9 +352,8 @@
  
  ##
- # @set-action:
+ # @QCryptoBlockAmendOptionsLUKS:
 -#
--# Set the actions that will be taken by the emulator in response to
--# guest events.
-+#     Set the actions that will be taken by the emulator in response
-+#     to guest events.
+-# This struct defines the update parameters that activate/de-activate
+-# set of keyslots
++#     This struct defines the update parameters that
++#     activate/de-activate set of keyslots
  #
- # @reboot: `RebootAction` action taken on guest reboot.
+ # @state: the desired state of the keyslots
  #
-@@ -427,8 +410,7 @@
+@@ -409,9 +393,8 @@
  
  ##
- # @GUEST_PANICKED:
+ # @QCryptoBlockAmendOptions:
 -#
--# Emitted when guest OS panic is detected
-+#     Emitted when guest OS panic is detected
+-# The options that are available for all encryption formats when
+-# amending encryption settings
++#     The options that are available for all encryption formats when
++#     amending encryption settings
  #
- # @action: action that has been taken, currently always "pause"
- #
-@@ -447,8 +429,7 @@
+ # Since: 5.1
+ ##
+@@ -423,8 +406,7 @@
  
  ##
- # @GUEST_CRASHLOADED:
+ # @SecretCommonProperties:
 -#
--# Emitted when guest OS crash loaded is detected
-+#     Emitted when guest OS crash loaded is detected
+-# Properties for objects of classes derived from secret-common.
++#     Properties for objects of classes derived from secret-common.
  #
- # @action: action that has been taken, currently always "run"
- #
-@@ -467,8 +448,8 @@
+ # @format: the data format that the secret is provided in
+ #     (default: raw)
+@@ -465,8 +447,7 @@
  
  ##
- # @GUEST_PVSHUTDOWN:
+ # @SecretKeyringProperties:
 -#
--# Emitted when guest submits a shutdown request via pvpanic interface
-+#     Emitted when guest submits a shutdown request via pvpanic
-+#     interface
+-# Properties for secret_keyring objects.
++#     Properties for secret_keyring objects.
  #
- # Since: 9.1
+ # @serial: serial number that identifies a key to get from the kernel
  #
-@@ -481,8 +462,8 @@
+@@ -479,8 +460,7 @@
  
  ##
- # @GuestPanicAction:
+ # @TlsCredsProperties:
 -#
--# An enumeration of the actions taken when guest OS panic is detected
-+#     An enumeration of the actions taken when guest OS panic is
-+#     detected
+-# Properties for objects of classes derived from tls-creds.
++#     Properties for objects of classes derived from tls-creds.
  #
- # @pause: system pauses
- #
-@@ -497,8 +478,7 @@
+ # @verify-peer: if true the peer credentials will be verified once the
+ #     handshake is completed.  This is a no-op for anonymous
+@@ -505,8 +485,7 @@
  
  ##
- # @GuestPanicInformationType:
+ # @TlsCredsAnonProperties:
 -#
--# An enumeration of the guest panic information types
-+#     An enumeration of the guest panic information types
+-# Properties for tls-creds-anon objects.
++#     Properties for tls-creds-anon objects.
  #
- # @hyper-v: hyper-v guest panic information type
- #
-@@ -515,8 +495,7 @@
+ # Since: 2.5
+ ##
+@@ -516,8 +495,7 @@
  
  ##
- # @GuestPanicInformation:
+ # @TlsCredsPskProperties:
 -#
--# Information about a guest panic
-+#     Information about a guest panic
+-# Properties for tls-creds-psk objects.
++#     Properties for tls-creds-psk objects.
  #
- # @type: Crash type that defines the hypervisor specific information
- #
-@@ -532,8 +511,7 @@
+ # @username: the username which will be sent to the server.  For
+ #     clients only.  If absent, "qemu" is sent and the property will
+@@ -531,8 +509,7 @@
  
  ##
- # @GuestPanicInformationHyperV:
+ # @TlsCredsX509Properties:
 -#
--# Hyper-V specific guest panic information (HV crash MSRs)
-+#     Hyper-V specific guest panic information (HV crash MSRs)
+-# Properties for tls-creds-x509 objects.
++#     Properties for tls-creds-x509 objects.
  #
- # @arg1: for Windows, `STOP` code for the guest crash.  For Linux,
- #     an error code.
-@@ -562,8 +540,7 @@
+ # @sanity-check: if true, perform some sanity checks before using the
+ #     credentials (default: true)
+@@ -552,8 +529,7 @@
  
  ##
- # @S390CrashReason:
+ # @QCryptoAkCipherAlgo:
 -#
--# Reason why the CPU is in a crashed state.
-+#     Reason why the CPU is in a crashed state.
+-# The supported algorithms for asymmetric encryption ciphers
++#     The supported algorithms for asymmetric encryption ciphers
  #
- # @unknown: no crash reason was set
+ # @rsa: RSA algorithm
  #
-@@ -588,8 +565,7 @@
+@@ -564,8 +540,7 @@
  
  ##
- # @GuestPanicInformationS390:
+ # @QCryptoAkCipherKeyType:
 -#
--# S390 specific guest panic information (PSW)
-+#     S390 specific guest panic information (PSW)
+-# The type of asymmetric keys.
++#     The type of asymmetric keys.
  #
- # @core: core id of the CPU that crashed
+ # @public: public key
  #
-@@ -632,9 +608,8 @@
+@@ -578,8 +553,7 @@
  
  ##
- # @GuestPanicInformationSev:
+ # @QCryptoRSAPaddingAlgo:
 -#
--# Information for AMD SEV-specific termination request (GHCB MSR
--# contents)
-+#     Information for AMD SEV-specific termination request (GHCB MSR
-+#     contents)
+-# The padding algorithm for RSA.
++#     The padding algorithm for RSA.
  #
- # @set: The reason code set provided by the guest
+ # @raw: no padding used
  #
-@@ -648,8 +623,7 @@
+@@ -592,8 +566,7 @@
  
  ##
- # @MEMORY_FAILURE:
+ # @QCryptoAkCipherOptionsRSA:
 -#
--# Emitted when a memory failure occurs on host side.
-+#     Emitted when a memory failure occurs on host side.
+-# Specific parameters for RSA algorithm.
++#     Specific parameters for RSA algorithm.
  #
- # @recipient: recipient is defined as `MemoryFailureRecipient`.
+ # @hash-alg: `QCryptoHashAlgo`
  #
-@@ -675,8 +649,7 @@
+@@ -607,9 +580,8 @@
  
  ##
- # @MemoryFailureRecipient:
+ # @QCryptoAkCipherOptions:
 -#
--# Hardware memory failure occurs, handled by recipient.
-+#     Hardware memory failure occurs, handled by recipient.
+-# The options that are available for all asymmetric key algorithms
+-# when creating a new QCryptoAkCipher.
++#     The options that are available for all asymmetric key algorithms
++#     when creating a new QCryptoAkCipher.
  #
- # @hypervisor: memory failure at QEMU process address space.  (none
- #     guest memory, but used by QEMU itself).
-@@ -691,8 +664,7 @@
- 
- ##
- # @MemoryFailureAction:
--#
--# Actions taken by QEMU in response to a hardware memory failure.
-+#     Actions taken by QEMU in response to a hardware memory failure.
+ # @alg: encryption cipher algorithm
  #
- # @ignore: the memory failure could be ignored.  This will only be the
- #     case for action-optional failures.
-@@ -719,8 +691,7 @@
- 
- ##
- # @MemoryFailureFlags:
--#
--# Additional information on memory failures.
-+#     Additional information on memory failures.
- #
- # @action-required: whether a memory failure event is action-required
- #     or action-optional (e.g. a failure during memory scrub).
-@@ -736,8 +707,8 @@
- 
- ##
- # @NotifyVmexitOption:
--#
--# An enumeration of the options specified when enabling notify VM exit
-+#     An enumeration of the options specified when enabling notify VM
-+#     exit
- #
- # @run: enable the feature, do nothing and continue if the notify VM
- #     exit happens.
 -- 
 2.55.0
 
