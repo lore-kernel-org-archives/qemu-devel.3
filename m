@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB00DC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 08:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EF3C61DC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 08:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz9Jf-00081R-Vh; Wed, 26 Aug 2026 04:49:03 -0400
+	id 1wz9Jh-000825-EX; Wed, 26 Aug 2026 04:49:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
- id 1wz9Je-00080o-HX
+ id 1wz9Je-00080v-P8
  for qemu-devel@nongnu.org; Wed, 26 Aug 2026 04:49:02 -0400
 Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <ewanhai-oc@zhaoxin.com>) id 1wz9Jc-0001ZO-0n
+ (envelope-from <ewanhai-oc@zhaoxin.com>) id 1wz9Jc-0001ZT-IL
  for qemu-devel@nongnu.org; Wed, 26 Aug 2026 04:49:02 -0400
 Received: from zhaoxin.com (unknown [127.0.0.1])
- by mx1.zhaoxin.com (MTA) with ESMTP id 4hVJGQ6cVHzcYn0Y;
+ by mx1.zhaoxin.com (MTA) with ESMTP id 4hVJGQ6cdCzcYn0c;
  Wed, 26 Aug 2026 16:48:46 +0800 (CST)
 Received: from zhaoxin.com (unknown [10.28.208.166])
- by mx1.zhaoxin.com (MTA) with ESMTP id 4hVJGP4DjLzbQJxB;
- Wed, 26 Aug 2026 16:48:45 +0800 (CST)
+ by mx1.zhaoxin.com (MTA) with ESMTP id 4hVJGQ4GZwzcYn0Y;
+ Wed, 26 Aug 2026 16:48:46 +0800 (CST)
 Received: from ewan-server.tailb932da.ts.net (ewan-server.tailb932da.ts.net
  [10.28.24.2])
- by zhaoxin.com (8.30) with ESMTP2ef6ef4893586330462470398f1a50d3
+ by zhaoxin.com (8.30) with ESMTPb7ffbebd428b1f166471ea09aacd50d3
  Wed, 26 Aug 2026 16:48:45 +0800
 X-Eyou-Smtpauth: ewanhai-oc@zhaoxin.com
 X-Eyou-EnvelopeSender: ewanhai-oc@zhaoxin.com
@@ -36,10 +36,9 @@ From: "=?UTF-8?B?RXdhbiBIYWktb2M=?=" <ewanhai-oc@zhaoxin.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, zhao1.liu@intel.com, ewanhai@zhaoxin.com,
  cobechen@zhaoxin.com, Ewan Hai <ewanhai-oc@zhaoxin.com>
-Subject: [PATCH v4 1/4] target/i386: Add cache model for Zhaoxin Shijidadao
- vCPUs
-Date: Wed, 26 Aug 2026 16:48:35 +0800
-Message-Id: <20260826084838.2107629-2-ewanhai-oc@zhaoxin.com>
+Subject: [PATCH v4 2/4] target/i386: Add Zhaoxin cryptographic CPUID features
+Date: Wed, 26 Aug 2026 16:48:36 +0800
+Message-Id: <20260826084838.2107629-3-ewanhai-oc@zhaoxin.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260826084838.2107629-1-ewanhai-oc@zhaoxin.com>
 References: <20260826084838.2107629-1-ewanhai-oc@zhaoxin.com>
@@ -68,129 +67,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhaoxin "Shijidadao" vCPUs require built-in cache enumeration in QEMU
-to properly report CPUID leaf 0x4 and 0x80000005/0x80000006 when
-'host-cache-info' is disabled.
+Add QEMU feature names and masks for the SM2, CCS, RNG2, PHE2 and RSA
+feature pairs in CPUID 0xC0000001 EDX. The matching KVM support exposes
+these bits through KVM_GET_SUPPORTED_CPUID.
 
-This patch defines the L1/L2/L3 cache parameters for the Shijidadao
-architecture, preparing for use in both client and server models.
+TCG does not currently implement these instructions. Keep
+TCG_EXT4_FEATURES at zero so QEMU filters the bits from realized TCG
+CPUs.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/all/20260610023512.3690734-1-ewanhai-oc@zhaoxin.com/
 Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
 ---
- target/i386/cpu.c | 99 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ target/i386/cpu.c | 10 +++++-----
+ target/i386/cpu.h | 20 ++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index e5ffb10d15..5408d851d1 100644
+index 5408d851d1..1107d1243c 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -3512,6 +3512,105 @@ static const CPUCaches yongfeng_cache_info = {
-     },
- };
+@@ -1120,14 +1120,14 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_C000_0001_EDX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+-            NULL, NULL, "xstore", "xstore-en",
+-            NULL, NULL, "xcrypt", "xcrypt-en",
++            "sm2", "sm2-en", "xstore", "xstore-en",
++            "ccs", "ccs-en", "xcrypt", "xcrypt-en",
+             "ace2", "ace2-en", "phe", "phe-en",
+             "pmm", "pmm-en", NULL, NULL,
+             NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, NULL, "rng2", "rng2-en",
++            NULL, "phe2", "phe2-en", "rsa",
++            "rsa-en", NULL, NULL, NULL,
+         },
+         .cpuid = { .eax = 0xC0000001, .reg = R_EDX, },
+         .tcg_features = TCG_EXT4_FEATURES,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 641f3ee5c2..60327688f4 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1243,10 +1243,18 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ /* CPUID[0x80000007].EDX flags: */
+ #define CPUID_APM_INVTSC       (1U << 8)
  
-+static const CPUCaches shijidadao_cache_info = {
-+    .l1d_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x0.EAX */
-+        .type = DATA_CACHE,
-+        .level = 1,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x0.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 8,
-+
-+        /* CPUID 0x4.0x0.ECX */
-+        .sets = 64,
-+
-+        /* CPUID 0x4.0x0.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
-+
-+        /* CPUID 0x80000005.ECX */
-+        .lines_per_tag = 1,
-+        .size = 32 * KiB,
-+
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l1i_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x1.EAX */
-+        .type = INSTRUCTION_CACHE,
-+        .level = 1,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x1.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 16,
-+
-+        /* CPUID 0x4.0x1.ECX */
-+        .sets = 64,
-+
-+        /* CPUID 0x4.0x1.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
-+
-+        /* CPUID 0x80000005.EDX */
-+        .lines_per_tag = 1,
-+        .size = 64 * KiB,
-+
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l2_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x2.EAX */
-+        .type = UNIFIED_CACHE,
-+        .level = 2,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x2.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 8,
-+
-+        /* CPUID 0x4.0x2.ECX */
-+        .sets = 1024,
-+
-+        /* CPUID 0x4.0x2.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = true,
-+        .complex_indexing = false,
-+
-+        /* CPUID 0x80000006.ECX */
-+        .size = 512 * KiB,
-+
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l3_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x3.EAX */
-+        .type = UNIFIED_CACHE,
-+        .level = 3,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x3.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 16,
-+
-+        /* CPUID 0x4.0x3.ECX */
-+        .sets = 32768,
-+
-+        /* CPUID 0x4.0x3.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = true,
-+        .complex_indexing = false,
-+
-+        .size = 32 * MiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-+    },
-+};
-+
- /* The following VMX features are not supported by KVM and are left out in the
-  * CPU definitions:
-  *
++/* SM2 algorithm */
++#define CPUID_C000_0001_EDX_SM2                (1U << 0)
++/* SM2 enabled */
++#define CPUID_C000_0001_EDX_SM2_EN             (1U << 1)
+ /* "rng" RNG present (xstore) */
+ #define CPUID_C000_0001_EDX_XSTORE             (1U << 2)
+ /* "rng_en" RNG enabled */
+ #define CPUID_C000_0001_EDX_XSTORE_EN          (1U << 3)
++/* SM3 and SM4 algorithms */
++#define CPUID_C000_0001_EDX_CCS                (1U << 4)
++/* CCS enabled */
++#define CPUID_C000_0001_EDX_CCS_EN             (1U << 5)
+ /* "ace" on-CPU crypto (xcrypt) */
+ #define CPUID_C000_0001_EDX_XCRYPT             (1U << 6)
+ /* "ace_en" on-CPU crypto enabled */
+@@ -1263,6 +1271,18 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_C000_0001_EDX_PMM                (1U << 12)
+ /* PMM enabled */
+ #define CPUID_C000_0001_EDX_PMM_EN             (1U << 13)
++/* Random Number Generator v2 */
++#define CPUID_C000_0001_EDX_RNG2               (1U << 22)
++/* RNG2 enabled */
++#define CPUID_C000_0001_EDX_RNG2_EN            (1U << 23)
++/* PadLock Hash Engine v2 */
++#define CPUID_C000_0001_EDX_PHE2               (1U << 25)
++/* PHE2 enabled */
++#define CPUID_C000_0001_EDX_PHE2_EN            (1U << 26)
++/* Big-number arithmetic */
++#define CPUID_C000_0001_EDX_RSA                (1U << 27)
++/* RSA enabled */
++#define CPUID_C000_0001_EDX_RSA_EN             (1U << 28)
+ 
+ #define CPUID_VENDOR_SZ     12
+ #define CPUID_MODEL_ID_SZ   48
 -- 
 2.34.1
 
