@@ -4,104 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00904C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E239AC61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIBv-0005Zc-Ce; Wed, 26 Aug 2026 14:17:39 -0400
+	id 1wzIH5-0007tH-L2; Wed, 26 Aug 2026 14:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzIBq-0005Yy-Ll
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:17:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1wzIH4-0007t2-35; Wed, 26 Aug 2026 14:22:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzIBp-0005Tg-8O
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:17:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787768251;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=yN24mDFpsvYWcO2byq9jA4bIJJM+NRMqBTCh6dwDx0s=;
- b=Yuu1NR/XbG5zEA/gQNnSz/ZfU7VSNbkDw/Yg3FCyIgxXd1yHEFPC7t8osUFX0JAyPfInfn
- l1/dakB3dHyRNJJYr1PzAiVPnL2fKYZQ/FHM2NguewVCx3H4EFWJqXQyTrV3IguUrTSmvp
- BU2he32ecqfgeujJmRBykkGcZCJMeXI=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-9fsxKaepPgCI9D0COqjeoA-1; Wed, 26 Aug 2026 14:17:30 -0400
-X-MC-Unique: 9fsxKaepPgCI9D0COqjeoA-1
-X-Mimecast-MFC-AGG-ID: 9fsxKaepPgCI9D0COqjeoA_1787768248
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-c160b9c0676so68213766b.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787768248; x=1788373048; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=yN24mDFpsvYWcO2byq9jA4bIJJM+NRMqBTCh6dwDx0s=;
- b=FKxpdun0ftSJ2d8aOcIbgryVnGAmi2WZNeppeuzeZXrUgHgh+ALeMUYcpSd8nyKrs8
- wUOQjve8tj6sem6nC8+zzE/A+XmATxp51NWgO4JulhuO6QfX8RYt4Ptd2yQ/Jvc1ne94
- Xs6zoOPyXcOgSmSF2YJh2sLpZCEpizaEH2GKrRnwy9mHraMvjar724mDOsIFeyCKFnfI
- wjbTL0EydXVviQwTMNp8R0K38StHT0gx1KTC3ppDxYAWDu3SR7XW9EzzVPJyHI3qnJTD
- Xs3IowvSAH2Siy5nu5TfoSRWlZspBg5OlGXQFEMIxnuFYBAobDjRJx5l4mBJQIpKGndq
- ocTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787768248; x=1788373048;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yN24mDFpsvYWcO2byq9jA4bIJJM+NRMqBTCh6dwDx0s=;
- b=IVb6I14ex2rIIPK6WPF7IzsoqbSFmp1DzXFCeG6GfR9uZBol3CRFWAXF/66IJ3Q2hy
- j7LKzeGJ1c+qqJ/+q+fPb5FU0/hsUruGyO3yU/kpAmsYHp3rYe71a4SOG33Qk+KZOZPp
- CM2RFOauAvHsPMxORfbdFlqO8Lxrr/eRLuSvY6xZgLneGKFG52ukiA4mfCMX0+iMrZAC
- 1ZV/3iE5mWETO6iulh0/HcnJuPLpwIxqh3YGjg1fHHh1u4TIV9O2dfUJ3WG/84p0hYIo
- af1WoJjmQzBds0f6HSV4cUw+Li8bu6dFb5QwRWgCMH3HGLXcocKX8B0HJVzgT0Lt1MGD
- sRXA==
-X-Gm-Message-State: AFuF++kV+WxYwB4BsopaZCPky6AE5A+EIp/zp/DEVotwzWujVVKxs1XU
- DSy4rL+cwsMeIWh6eO4u/LC7H5nNJ1iv5eXlZBB3Vb2Ipt08KTkw+F9N8oamHzP8Hov3sRbJTpm
- x9zj0++74gp81EYpZsPQ0UgdZ393yq57rPyTL/pNNGuZXMug5rFyPRafTVi9X6oziYSlVWYXFkb
- hO8L4j27irevXzx+doIbKG12zOt3Oz5dvc9xkqF+ec
-X-Gm-Gg: AR+sD13PqA0uc0LzGoyeFloy6g/2TYbE2pRMJ5J+2vrp2hP3QvITFU3AE3o2XKqamhD
- 6THk3I5pmhT30mugZQD6Yy3jy3xyREHDsfu1HFymYvf7/MGIPIq3iKW7CTwKhRBIfKdLVLBf8Ef
- 2/TerUsZTKuGhVfGU7MO7yU00fArTSy3k6p4htWHvFmUTpaMEbJJPCQKunknI0qers7X4WAxd66
- UJvwt9/udQjBf3YA3lqRDBUjYJ8Lpumf0uuI766YMapemLiI8k7hZHNUvU5YrLDEz8FFVcTxGYg
- h5OJrOdm+hcvRcdN3zYyVaq1qkNahYKUU1eAuavJptwFRLXQMgrIdSPgemNks8Mw+d24SPX7X7k
- ZWcA3oAQa9/hEGfy/+nehOKT793YEoeVEGK9waDI8eZQkTmfbNMdMg/LIdoa6Wz9SXxk0HuTqBL
- L3oQ==
-X-Received: by 2002:a17:907:6d0e:b0:c24:b11c:6c05 with SMTP id
- a640c23a62f3a-c250bc2df70mr1197761466b.14.1787768247774; 
- Wed, 26 Aug 2026 11:17:27 -0700 (PDT)
-X-Received: by 2002:a17:907:6d0e:b0:c24:b11c:6c05 with SMTP id
- a640c23a62f3a-c250bc2df70mr1197755366b.14.1787768247290; 
- Wed, 26 Aug 2026 11:17:27 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.34.92])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a9b4e9csm637533066b.54.2026.08.26.11.17.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 11:17:26 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH 0/2] scsi-disk: fix race between WRITE SAME and MODE SELECT
-Date: Wed, 26 Aug 2026 20:17:23 +0200
-Message-ID: <20260826181725.849718-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1wzIH2-0006No-Gb; Wed, 26 Aug 2026 14:22:57 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QH1f2c3492880; Wed, 26 Aug 2026 18:22:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cj7QMJ
+ DrOvUHrDn2U534Pk0p/r+66wfb7m33C8/6AYg=; b=Dpt+BBBeDjR/wq+zkZ2GIy
+ txcCc/b4OAfs4rfL8dp//bkoOoaOWCVwU2CLycCutrfjfadQrUKRzGe/hsES0PCI
+ FRgTl53k8davg9FuRMhtBk8A9dyaBMhhCB2vuKjhWcTU2tD+TLb1uUXygs2Uel/o
+ Q0r+eAor3zzWZ/PNXQqTJmbByptCStrwSNivE3CzpoO5EWauRQ3OWeCyOJfZQnTd
+ i0hg2gg6cw2H2f3VZ//nlz9TlTIp8hym5MRkP1iCJQ23CytX6/f6OIyUwVrVB6tH
+ zs9ESV6DBYlN4Trg9e8y/sRMrTpAr0/fYar58L9n8R/jdWFLtwoq6Yh+Zi5jKhxQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726erbay-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 18:22:54 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QHuK0v019423;
+ Wed, 26 Aug 2026 18:22:54 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkhbcgb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 18:22:54 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QIMpAh8847956
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 18:22:52 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BFEBA58059;
+ Wed, 26 Aug 2026 18:22:51 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D2775805B;
+ Wed, 26 Aug 2026 18:22:50 +0000 (GMT)
+Received: from [9.57.45.223] (unknown [9.57.45.223])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Aug 2026 18:22:50 +0000 (GMT)
+Message-ID: <fc52bb9a-7d1b-4ebe-87cc-faf218fca94e@linux.ibm.com>
+Date: Wed, 26 Aug 2026 14:22:50 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 7/7] tests/functional/s390x: Add tests for virtio net
+ PCI in test_pxelinux.py
+From: Joshua Daley <jdaley@linux.ibm.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
+ jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, pasic@linux.ibm.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com
+References: <20260818205324.580199-1-zycai@linux.ibm.com>
+ <20260818205324.580199-8-zycai@linux.ibm.com>
+ <7c7f089c-b01b-48da-b1ef-2f6aca096c44@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <7c7f089c-b01b-48da-b1ef-2f6aca096c44@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f2efe cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=L4DMIUeYWxJp4MNzNqsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE1MSBTYWx0ZWRfX9x40ubI4D34E
+ D/iCSPwMIJM/IIFb1vDrcLZP3TH+Yznf8t++3YpecBixyADBzn/88VWlsAkLlmBc5swQwSNb1fr
+ 2LS7X0BH4zKFo1rzSNif5S37YWy+pyc=
+X-Proofpoint-GUID: vWzl6N6Nsrm4-PicuA_WWOnP7D6zTOSZ
+X-Proofpoint-ORIG-GUID: vWzl6N6Nsrm4-PicuA_WWOnP7D6zTOSZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE1MSBTYWx0ZWRfX+ueRwf6TGsaV
+ r/84wwqf9JST0Kh38nX+7bOqlv2uBQ52b1a8luBVOyU5ua0IGS2jVLHprjaM6nK4IaQhP9d4/A0
+ wl9uYnHbas6o1Ntvp5hlCu5akvwYQcE7xyM0Mux3wniCMh1Y8ZkFsFz0no8F285DQzxHK0hy7Gd
+ N7TKjZRAOxhI2YeLmRYS9Y/i6XWdP7dQMZiQGEdyoMz9SklU76tb6YHmvVbSNPI/QX3Z5qu0Pp1
+ izl8VoJckBfSUGUBFUev/1ESrf0epTm9XKkugWs67DvN3DZisNV2pKO8ylADLjM6eUkMOeALxBT
+ 031zvB1/4oH6zB1ri2XaoMAhgVxXwmgwLpXWkKUTWRoWNEv6N9MvG5x/GFxDsJ9nNVFwey10ibo
+ UMO8QXKTpdLPLC7tZKUUDNCUWS7rJDhDjBZL90EqcuAKMcX4wPJFZ10KmNV+WfVlH9H70Hx9RwV
+ AA1U0MXy7IZkJ/Y+DFA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260151
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,25 +129,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
-to read roughly 60 KiB past the end of a heap buffer, copying that out
-of bounds host memory into the guest's own disk image.
+On 8/26/2026 2:17 PM, Joshua Daley wrote:
+> On 8/18/2026 4:53 PM, Zhuoying Cai wrote:
+>> Add test coverage for virtio-net-pci network booting on s390x by
+>> extending the pxelinux functional tests.
+>>
+>> This patch adds PCI variants of all existing pxelinux tests to verify
+>> that virtio-net-pci devices work correctly for network booting.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>   tests/functional/s390x/test_pxelinux.py | 71 ++++++++++++++++++++-----
+>>   1 file changed, 59 insertions(+), 12 deletions(-)
+>> Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+> 
+> 
+> make check-functional-s390x MTESTARGS="func-s390x-pxelinux"
+> 
+> ...
+> ok 1 test_pxelinux.S390PxeLinux.test_default
+> ok 2 test_pxelinux.S390PxeLinux.test_default_pci
+> ok 3 test_pxelinux.S390PxeLinux.test_ip
+> ok 4 test_pxelinux.S390PxeLinux.test_ip_pci
+> ok 5 test_pxelinux.S390PxeLinux.test_mac
+> ok 6 test_pxelinux.S390PxeLinux.test_mac_pci
+> ok 7 test_pxelinux.S390PxeLinux.test_menu
+> ok 8 test_pxelinux.S390PxeLinux.test_menu_pci
+> ok 9 test_pxelinux.S390PxeLinux.test_uuid
+> ok 10 test_pxelinux.S390PxeLinux.test_uuid_pci
+> 
 
-This is due to a race between WRITE SAME and an obscure MODE SELECT
-feature which can be restricted to the Q800 machine.
-
-Paolo
-
-Paolo Bonzini (2):
-  scsi-disk: fix out-of-bound read in WRITE SAME
-  scsi: hide MODE SELECT block size change behind a quirk
-
- include/hw/scsi/scsi.h |  1 +
- hw/m68k/q800.c         |  2 ++
- hw/scsi/scsi-disk.c    | 17 +++++++++++++----
- 3 files changed, 16 insertions(+), 4 deletions(-)
-
--- 
-2.55.0
-
+Sorry for the formatting error.
+Tested-by: Joshua Daley <jdaley@linux.ibm.com>
 
