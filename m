@@ -4,112 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1813BC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929B3C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz5wR-0005yu-Tq; Wed, 26 Aug 2026 01:12:51 -0400
+	id 1wz69L-0005FP-0X; Wed, 26 Aug 2026 01:26:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5wO-0005q3-Dx; Wed, 26 Aug 2026 01:12:49 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <neal.frager@amd.com>)
+ id 1wz69J-0005F7-Jn
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 01:26:09 -0400
+Received: from mail-northcentralusazon11010013.outbound.protection.outlook.com
+ ([52.101.193.13] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5wM-0005YU-0J; Wed, 26 Aug 2026 01:12:48 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q3Vjar1702355; Wed, 26 Aug 2026 05:12:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9ryX/ra1+Zx1b0GsV
- zF37jQiHctJoJuvxm3LSwsGMLk=; b=ejooqo7w2FoRiTL6usqVEnfCnF95ru26B
- Z2FFCmXrjuRN/R5Om0mrFjynM41GqWUyP7XugHQzJys7fi+ENPbjPUpFR/vHaBYp
- OnT3BuDsqJpb6N6s58ebf+UnuCGCb9ZvOwNKr6rlbOloUam/SmA76IG06vvUyNYK
- 8b+z7te8W1fdVWngrS8+emG86T7k1Y3r1o7NIWUl/GlZ5nVafjGHuccYOkeLUzie
- xsZMcYiHxBS7ALC4eYQsQt72qzFHgeOIRIRLn/HKcrtdpMo/Zn7ZdIq517/i9nCy
- L6bWOk6+GiCLJ0tMelNdM/H2KrWMu/34Yg/yEhV8ew5ZRBSpw/RGQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726emk6u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:12:44 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5BGSl029262;
- Wed, 26 Aug 2026 05:12:43 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3q8e55-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:12:43 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67Q5CaSm39715196
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 05:12:36 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A35D920040;
- Wed, 26 Aug 2026 05:12:36 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 179AF20043;
- Wed, 26 Aug 2026 05:12:31 +0000 (GMT)
-Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
- [9.124.215.63]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 05:12:30 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
- mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
- Vishal Chourasia <Vishal.Chourasia2@ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 29/37] target/ppc: Move system call and rfi instructions to
- decodetree
-Date: Wed, 26 Aug 2026 10:38:55 +0530
-Message-ID: <20260826050923.74756-30-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260826050923.74756-1-rathc@linux.ibm.com>
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <neal.frager@amd.com>)
+ id 1wz69H-0007uN-11
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 01:26:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uM+teSsEmwMJ3j/lpRMKgxFiy3b6UJH6v5d3SfppwyK779SRzgRKJOEDAKv1FUQKOz1j4XiBmNJusYU9UozvXI3ozLUlCwDY+PFO6WlSQpUxSJ7ckmk0eZUM1HSQCNEusi2bJvfOwpxvBLoH7XKFAYPpndowGX4mDnAB7f8dC0w18ciyMQjUiSyh54+y420bumMf3Xutwa8P3+NNvYYbKxsZegOs03z3hON81BB9LtgRk0H9ZAZY1aIcWup3ZpbF6eubaalz+akGuz0lgG8y1+5SVTynyxFi4DMce054Jp9GjUScmF/t/du2kX9NJghBImLar4T8QEa40C2cXRrUsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Qeph0ERCuFewIyge3tZoQqMVmcwLOq8YQEGPliQsyaQ=;
+ b=EvFPdjnbFeTNoBULv7ODpBm7dFuUcNyAfOWV2yOvJfsmOFTgFHlnXUTbHmb4/d7WqWL+1WMYqu9pkJf5F+Or5reE8NjnBMuJadcVIzhBzPwKC3Nfv7/Y2NmU9olw3y7DDinXJ7TT4v32UHv38s/sPAkaC6dqdKW3MzgrCIIwxjqtc4BT+MnL7TRfMeVehWsCicQIduR9Ub71ai01utTsZa6/II9zGFrQ2TIpad1pRLT+PUOdSxIf/eOBbduo9jNddIe117byvGYukakGY+vctsUYIUGNVQBv9CfvdYdua4GEzg+SJQbEADzILY+TPJn4fxvZS6OuqTHpl67Oe1C8XA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Qeph0ERCuFewIyge3tZoQqMVmcwLOq8YQEGPliQsyaQ=;
+ b=e7zuJ2N6p1jyyy5VfmQi2QKFSAejiON3n5XmxvAS8Ktgv58jPvF2wwpbzFdllFwU4Ab+1beI8I1X1LVLLNIW91hEwhB8ZBvC71s7wnQk1ORd1gaL4BwIyCotJfbI7flUGs+QJ9UMX361DZMU0jw7DiJeA7riH+sj14RQgcwbHNg=
+Received: from BL1PR12MB5032.namprd12.prod.outlook.com (2603:10b6:208:30a::12)
+ by CYYPR12MB8654.namprd12.prod.outlook.com (2603:10b6:930:c9::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Wed, 26 Aug
+ 2026 05:21:00 +0000
+Received: from BL1PR12MB5032.namprd12.prod.outlook.com
+ ([fe80::3c13:eeb6:d9ef:c95d]) by BL1PR12MB5032.namprd12.prod.outlook.com
+ ([fe80::3c13:eeb6:d9ef:c95d%6]) with mapi id 15.21.0360.005; Wed, 26 Aug 2026
+ 05:21:00 +0000
+From: "Frager, Neal" <neal.frager@amd.com>
+To: Andrew Cooper <andrew.cooper3@citrix.com>, Peter Maydell
+ <peter.maydell@linaro.org>
+CC: "Hildebrand, Stewart" <Stewart.Hildebrand@amd.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "sstabellini@kernel.org"
+ <sstabellini@kernel.org>, "anthony@xenproject.org" <anthony@xenproject.org>,
+ "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>,
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
+ "Stabellini, Stefano" <stefano.stabellini@amd.com>, "Saleab, Micheal"
+ <Micheal.Saleab@amd.com>, "john.ernberg@actia.se" <john.ernberg@actia.se>,
+ "matthew.l.weber3@boeing.com" <matthew.l.weber3@boeing.com>,
+ "vincent.stehle@arm.com" <vincent.stehle@arm.com>
+Subject: RE: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+Thread-Topic: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+Thread-Index: AQHdJJsckvnz/cO5N0ySs3v4A11/7LatQ5eAgAAFmcCAAAXOAIAAAMSQgAAMYwCAAD5WgIACUOOw
+Date: Wed, 26 Aug 2026 05:21:00 +0000
+Message-ID: <BL1PR12MB5032167D2EBD91C753110996F0AE2@BL1PR12MB5032.namprd12.prod.outlook.com>
+References: <20260805052723.2823538-1-neal.frager@amd.com>
+ <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
+ <BL1PR12MB5032F21E0E2A6F17398B6D76F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+ <CAFEAcA8sWn1vjm+OFYzwA-jko2vYkFcWPwT6g9=0AeO+JQo-JQ@mail.gmail.com>
+ <BL1PR12MB50322B1D97569B5CADEC8E55F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+ <CAFEAcA9rWqo92nt1StDuBwUjbV0eqdAA921nozpjQHDF_ARJyg@mail.gmail.com>
+ <ea290b1f-5d40-48e3-9a64-1799244c6e64@citrix.com>
+In-Reply-To: <ea290b1f-5d40-48e3-9a64-1799244c6e64@citrix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Enabled=True;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SetDate=2026-08-26T05:18:12.0000000Z;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Name=AMD General
+ v26; MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_ContentBits=3;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Method=Standard
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL1PR12MB5032:EE_|CYYPR12MB8654:EE_
+x-ms-office365-filtering-correlation-id: aa10cee5-8428-4d9c-c6b0-08df0331d0d3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|23010399003|38070700021|6133799003|10067099003|11063799006|4143699003|56012099006|22082099003|18002099003;
+x-microsoft-antispam-message-info: WyspDGisBZzsmrrFHlSSS8l5bib9ziBKo4p7yF2DkXrFMIRmatz/gZKY2LqMIJWnK4CJ67jJZu0GzQSxwlu7Iz3texf0KI9uaGCLAp5TOl6veKI0V6ygGK/h42qV0A/oj7+b8ok4PP/EFHJ1SOWEstA80caGrNgTLykKsrfJzEK5GStZQXWYUuxf8hxGPvnOgMpVlGW1+B6MIkYQ71t+BUN+OUsUrGGnL2stC0K7xfjAwDIvnEADFJeJmnSKXwuMSAVNd1uQx/d9oclF4eIKFVwsv7Qfn32vH81+c4wzkKGW1FFnkeHXT+KDcv53MvN5g87DbQDyYncUnLmCsEzOpNHuSTgdz4UhDq5GwbCRh3Xh2fX+rumNTNA6pJCGC8KB11QkXGJtaovsmPEy//ZJCxj6nQTAmQxkoDMDlIOsiAeSEdbBswC2mpmjI/yYHakFq1utmh2Q4QHInmfPtu1g9L1RJ57gtiD/dQH85JpazTObEwMW8ErfmL3BWfpSNYmwlXSb+7EXwK0JYaEl2eM8/SqMVJgthb6SaxMN4Vfc+hnOO/WX2Fi287T/jZj3RhgzOqWYE6X0l82qC35BMaJXcZbt130/Iuo9KMz3fjtDbAap4VOgKIRrPiezEFXc8UsdRVqzQOwybgNCrDXz53rmmiCruDuLXE4ja7ets8QCVx3LlfUBe+i209V6MfpCgVo5fVicUTiVVcNpvxtHNv0qWCehxDfNnrBr6upcB5zhLgk=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5032.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(23010399003)(38070700021)(6133799003)(10067099003)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?a2o4enlFUGkrM1cvQzRaOWk1WXFwNmhoa1FYNW5PN0VGdkFYUzRLaUtaaENw?=
+ =?utf-8?B?T25FaVdaUGlpc2F3ZG1tb3FlT3pLMW9zc1NUNFZrM3BUc1NxbmlZS3pJOU5a?=
+ =?utf-8?B?NUFsSzZHQTNkeit6VUJCSktPVE9yR2ZoZDN3Z2VUa3AyQzR1RFpSYVloNHl0?=
+ =?utf-8?B?UHBvR3poZ2xWSk5PTzg1SFo3R082UWZyemZnZTUyUzU4WXdBQXpzOVB1Mndm?=
+ =?utf-8?B?b3cxZ2RTY1dya0Mrd3g3ZEg4TXpRemkxVlNBbTBISnhseE1Sb0VEMUtTMzNi?=
+ =?utf-8?B?eXBxWm5ERFFKZVozMUp5SUUrbjFFVWF6emlaeTFQNHNNbkJSTUorSThmUStk?=
+ =?utf-8?B?UEtjamtZUHFzRjFVaklxekRpQTgvTHBKeW5lbjRBdUhHdTF5WWI1cmQvV1pE?=
+ =?utf-8?B?VWJtQ2p0MVg4K2RTcncvYjdNd2RJMTZSa05waDJHZ2ZQQThndm5nbGdZMzl0?=
+ =?utf-8?B?VTJOS2tta3V0T0tiT0VORXV1c3NhNXpMWndWSm5admJyZzZYRkxkemlOb3B5?=
+ =?utf-8?B?b3hYT2pqRTRJR1doOU14L2JSa2Z1SzZacWRqOXhqcTRua2RSRGowamVXNDRZ?=
+ =?utf-8?B?d3RkUHFGR2t6cG5KdjkxK1ZjcEl5WGc4NUdrZUhkL1JtRm4zamZncGloSkdq?=
+ =?utf-8?B?U3JHeldndHNCdjZ1eUhtRTkxUm52SGRKdUxrd2pwV0orSnIvNW1oUHp3aTRs?=
+ =?utf-8?B?U1Vyd292dDBMTTRnNHFyMlIrWG9oVC96N1lyTTZtR1VVS2pUTEVHaE8yNUVk?=
+ =?utf-8?B?cDh0aTNFV3E2alN5VTN2Uk0yb2VLd0lESmEvYlJzQitZZjRUYjU3TE1iczQ4?=
+ =?utf-8?B?K0F3amlXK0tDRVBKbmZVRnRTYUdySTEwdnZjdTA2dk1WT1RVUXdZWUhFK05M?=
+ =?utf-8?B?VGRha1I4ZnZiaTBIbXFzOEE0VHRmNERDTVQzb0dXTHJ2eVM0VitWNjM1c0dk?=
+ =?utf-8?B?QnlvTENlUE5MR3IzOTlaQ1F6aTZ5ZGxTekUvWWh1ekNGVFNicGJwT3BIbzcx?=
+ =?utf-8?B?N2ZZSmpHckZjREtyRnEzb3NIc1E3WGpCd1c3RWQrM21yU0Q4bEE4MEh2elgz?=
+ =?utf-8?B?dVV4WmVlWlFmK3dIYld0blRBaEZIaFNLYzJXVTczVzdlL2FKSUNneHJ2VTF5?=
+ =?utf-8?B?VmtBSEgrN3o0ODJLYmtLeVZkS1lONUN6Q3dwcnRrQVRMeXk0dGlrWkZkaSt5?=
+ =?utf-8?B?aVdSRUhMVDdNRWN2b1k2ZmdvcUVnZVZIRHNOdkw5UWtzQVd6Q1pXdVptY2F6?=
+ =?utf-8?B?Q2NiSXVSQ09GeFNKWGtNWWkxclROL0IySjJBVC83TDU0RVZXWDZwcXVzN21I?=
+ =?utf-8?B?Z3Z5RndQQlYySjJxSVlqWGxaMEgzdVU0aC9RTWk1V2x0YjJvVmpnTGs4K3hS?=
+ =?utf-8?B?Nk9mU3drOWZvVWIzQWUzMkhUNmRBYVBNWGZ5UVprN1VCMDI1cmhia1VlQ0FF?=
+ =?utf-8?B?RmRkeVpWcXJvMUhKUytJRHZ3SVZydVpodXRYM0s1TDlZL2dLb0JQOWU4Rm96?=
+ =?utf-8?B?WGl5QXVJQ0ltWkliV1BTYnFSK2NBMlpFcjZaNC9YUERjR04xc1UyRUlTQ1cr?=
+ =?utf-8?B?N3hsdTdTY2UvbEttak5ZVGpuN1JEV25MTGlnMFNrT3pMeHRwNzlkRjFCbjNI?=
+ =?utf-8?B?TmswYWxUOCtKam13YXpKYW5Ob09aNCs2c2ZIOE9nbkhxbGNpeVRUdDB4b291?=
+ =?utf-8?B?NHJsMFcyaGkvQWlUbmxhSlhCRkgwSGNqSC9SVzlaNCtrWlRSd0E2S08zSTBL?=
+ =?utf-8?B?eC9peWtCaG1TNDZnVXpyQzRleUFTT29HODJjMVBSMGZ1WER0elFRT2hkWjY2?=
+ =?utf-8?B?bnJKTE5wQWJuUFdhV25yYTQzS29FOFRKaUVNeWtxVHJIS1B5V0p5eGlTamFC?=
+ =?utf-8?B?NFpDeDQxWjlFUXFvdy8vUmdodWhLL2RBOUpBOTNOaHZLaXVPQW1BM1QzUHhZ?=
+ =?utf-8?B?MDdLYnhEWi9VcjhUWjN2YVV5MDdOeHorTXFNQUJUYjl1T3llWExMN1I1RTB5?=
+ =?utf-8?B?VVAyelJuUXE4YW9SNnZKMXNZOGU5WlI5Yk5sZ3h2TlR0SUpJTHgvOUkwb0pQ?=
+ =?utf-8?B?TURCUFpwTmVwd3RiZXpCL25NbS9WOHBrSUxIUjQ3b2lrWEFyeW1hY0dpZ1hi?=
+ =?utf-8?B?SVJFM0JUblJRL1ljZkVmNEQ3eFVHTHd3Z3h2WE5uRXRRaWllZC9JVnZmQVVy?=
+ =?utf-8?B?R003MXZtdlBjaUxmMzdQN0gxOWJhSFRpOHdadzFKLzluWnhHQ01DeVlvL3c3?=
+ =?utf-8?B?MG1IZG1OSzdyY3RzdVpVdjZaR3EzbkZJQllRVTlIZjFmaE1zaFQ2amJoSEFU?=
+ =?utf-8?Q?tOR5fUoUDYmZFFo2XX?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8e75cc cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=f6oIfxX2Cbx1L6vh3XkA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX+eljS9WCgDei
- ExCA3fVvlH+Cx5bsgOiYYU9bN4XLMscsnhzPaD2YO+FyMg9EpFDn0kqBd2lTc9PpzXsuzHgP1I7
- jJZQwItWf1K8YDxNJAtr7+CL2K9fcSc=
-X-Proofpoint-GUID: TYC20Iwcv7Fj_mNz2XjuxkbtLcCDyWcn
-X-Proofpoint-ORIG-GUID: BqsRDKL0MFoWgGLvIkWzgdshILoftYqr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX1fCqO30KpMIY
- 4AhHEda13Akp6ona9ElSRAGWxfj7gby5ipn5JF1ujZei2An6txevfJmYtQ1ohdrJOUtfUSyedqf
- KCGeMxyEUc+qEXolKdLmJCytiHF8CUaPrGEZwmIWFLdYeCFUNNIOMIMLht0RyongaD+o9HX9MAY
- 6a66FuMlxBC4h5sU5Wa6KjA08/4ZCjvms5Wg8cAUAJYHldPNz/KsY9nkf26KM6PWuyc8Gyryawq
- RoSUbmRKna7/h2hNQznO2852lUW+E1XvfUM7C23e+4ZqI67dKSGDVtADD6et1qT0/EhfuwCBd5C
- QgdwzAii2fwoQFKCnfOoo1AdWk3hNC1PHhbFDfffMyOeiDNZSrmkoWSkyel6Ob3e/NGIDyaf+YU
- LcanGgpyRaS5uv6TLSyQ3O6rWFiSGBeFZjhmYeWRDn/tkJfOugE07/hVExLeYtbUeYtO21x3cok
- 4JVk6pPw+vQ95K7otdA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260040
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5032.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa10cee5-8428-4d9c-c6b0-08df0331d0d3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2026 05:21:00.1379 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0StR98g12Wy1tJ8RZOksFvwRMZoEtfmT3+bwLcBETRoI2XI6SZpHCuQJrXvHlseE
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8654
+Received-SPF: permerror client-ip=52.101.193.13;
+ envelope-from=neal.frager@amd.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,390 +173,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vishal Chourasia <Vishal.Chourasia2@ibm.com>
-
-Moving the following instructions to decodetree specification:
-    sc, scv                         : SC-form
-    rfi, rfid, rfscv, hrfid         : XL-form
-
-This builds upon the previous work that moved mfmsr and mtmsr[d]
-instructions to decodetree.
-
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the
-`-d in_asm,op` flag, and also by booting a pseries qemu guest.
-
-This also includes improvements from review feedback:
-- Rename helpers to uppercase (RFI/RFID/RFSCV/HRFID) to match ISA mnemonics
-- Add TRANS64_FLAGS() macro variants
-- Add REQUIRE_INSNS_FLAGS_NOT() check for flag exclusion
-- Specify lev field as uint8_t in SC instruction format
-- Remove redundant masking in SCV since lev is already 7-bit
-- Replace TARGET_PPC64 ifdefs with REQUIRE_64BIT() macro
-- Gate SC, SCV, RFI, RFID, RFSCV, and HRFID with appropriate flags
-- Consolidate CONFIG_USER_ONLY guards into single block
-
-Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
----
- target/ppc/helper.h                  |   8 +-
- target/ppc/insn32.decode             |  11 +++
- target/ppc/tcg-excp_helper.c         |   8 +-
- target/ppc/translate.c               | 126 ++-------------------------
- target/ppc/translate/misc-impl.c.inc | 100 +++++++++++++++++++++
- 5 files changed, 126 insertions(+), 127 deletions(-)
-
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 3659408c46..f24a34cfa3 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -11,7 +11,7 @@ DEF_HELPER_4(HASHCHKP, void, env, tl, tl, tl)
- #if !defined(CONFIG_USER_ONLY)
- DEF_HELPER_2(store_msr, void, env, tl)
- DEF_HELPER_1(ppc_maybe_interrupt, void, env)
--DEF_HELPER_1(rfi, void, env)
-+DEF_HELPER_1(RFI, void, env)
- DEF_HELPER_1(40x_rfci, void, env)
- DEF_HELPER_1(rfci, void, env)
- DEF_HELPER_1(rfdi, void, env)
-@@ -19,9 +19,9 @@ DEF_HELPER_1(rfmci, void, env)
- #if defined(TARGET_PPC64)
- DEF_HELPER_2(scv, noreturn, env, i32)
- DEF_HELPER_2(PMINSN, void, env, i32)
--DEF_HELPER_1(rfid, void, env)
--DEF_HELPER_1(rfscv, void, env)
--DEF_HELPER_1(hrfid, void, env)
-+DEF_HELPER_1(RFID, void, env)
-+DEF_HELPER_1(RFSCV, void, env)
-+DEF_HELPER_1(HRFID, void, env)
- DEF_HELPER_2(rfebb, void, env, tl)
- DEF_HELPER_2(store_lpcr, void, env, tl)
- DEF_HELPER_2(store_pcr, void, env, tl)
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 7614655f72..9d6c4b550d 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -199,6 +199,9 @@
- &X_rs_l         rs l:bool
- @X_rs_l         ...... rs:5 .... l:1 ..... .......... .         &X_rs_l
- 
-+&SC             lev:uint8_t
-+@SC             ...... ..... ..... .... lev:7 ... . .           &SC
-+
- &X_uim5         xt uim:uint8_t
- @X_uim5         ...... ..... ..... uim:5 .......... .           &X_uim5 xt=%x_xt
- 
-@@ -320,6 +323,14 @@ MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
- MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
- MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
- 
-+### System Call and Return from Interrupt
-+SC              010001 ----- ----- ---- ....... --- 1 -         @SC
-+SCV             010001 ----- ----- ---- ....... --- 0 1         @SC
-+RFI             010011 ----- ----- ----- 0000110010 -
-+RFID            010011 ----- ----- ----- 0000010010 -
-+RFSCV           010011 ----- ----- ----- 0001010010 -
-+HRFID           010011 ----- ----- ----- 0100010010 -
-+
- ### Fixed-Point Byte-Reverse Instructions
- BRW             011111 ..... ..... ----- 0010011011 -   @X_sa
- BRD             011111 ..... ..... ----- 0010111011 -   @X_sa
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index c4ffa2dfbb..d06d3f8642 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -528,13 +528,13 @@ static void do_rfi(CPUPPCState *env, target_ulong nip, target_ulong msr)
-     check_tlb_flush(env, false);
- }
- 
--void helper_rfi(CPUPPCState *env)
-+void helper_RFI(CPUPPCState *env)
- {
-     do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1] & 0xfffffffful);
- }
- 
- #ifdef TARGET_PPC64
--void helper_rfid(CPUPPCState *env)
-+void helper_RFID(CPUPPCState *env)
- {
-     /*
-      * The architecture defines a number of rules for which bits can
-@@ -545,12 +545,12 @@ void helper_rfid(CPUPPCState *env)
-     do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
- }
- 
--void helper_rfscv(CPUPPCState *env)
-+void helper_RFSCV(CPUPPCState *env)
- {
-     do_rfi(env, env->lr, env->ctr);
- }
- 
--void helper_hrfid(CPUPPCState *env)
-+void helper_HRFID(CPUPPCState *env)
- {
-     do_rfi(env, env->spr[SPR_HSRR0], env->spr[SPR_HSRR1]);
- }
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 8950476be7..c6c87d3e33 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2679,110 +2679,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
-     tcg_gen_movi_tl(cpu_lr, nip);
- }
- 
--/***                           System linkage                              ***/
--
--/* rfi (supervisor only) */
--static void gen_rfi(DisasContext *ctx)
--{
--#if defined(CONFIG_USER_ONLY)
--    GEN_PRIV(ctx);
--#else
--    /*
--     * This instruction doesn't exist anymore on 64-bit server
--     * processors compliant with arch 2.x
--     */
--    if (is_book3s_arch2x(ctx)) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
--        return;
--    }
--    /* Restore CPU state */
--    CHK_SV(ctx);
--    translator_io_start(&ctx->base);
--    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
--    gen_helper_rfi(tcg_env);
--    ctx->base.is_jmp = DISAS_EXIT;
--#endif
--}
--
--#if defined(TARGET_PPC64)
--static void gen_rfid(DisasContext *ctx)
--{
--#if defined(CONFIG_USER_ONLY)
--    GEN_PRIV(ctx);
--#else
--    /* Restore CPU state */
--    CHK_SV(ctx);
--    translator_io_start(&ctx->base);
--    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
--    gen_helper_rfid(tcg_env);
--    ctx->base.is_jmp = DISAS_EXIT;
--#endif
--}
--
--#if !defined(CONFIG_USER_ONLY)
--static void gen_rfscv(DisasContext *ctx)
--{
--#if defined(CONFIG_USER_ONLY)
--    GEN_PRIV(ctx);
--#else
--    /* Restore CPU state */
--    CHK_SV(ctx);
--    translator_io_start(&ctx->base);
--    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
--    gen_helper_rfscv(tcg_env);
--    ctx->base.is_jmp = DISAS_EXIT;
--#endif
--}
--#endif
--
--static void gen_hrfid(DisasContext *ctx)
--{
--#if defined(CONFIG_USER_ONLY)
--    GEN_PRIV(ctx);
--#else
--    /* Restore CPU state */
--    CHK_HV(ctx);
--    translator_io_start(&ctx->base);
--    gen_helper_hrfid(tcg_env);
--    ctx->base.is_jmp = DISAS_EXIT;
--#endif
--}
--#endif
--
--/* sc */
--#if defined(CONFIG_USER_ONLY)
--#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL_USER
--#else
--#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL
--#endif
--static void gen_sc(DisasContext *ctx)
--{
--    uint32_t lev;
--
--    /*
--     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
--     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
--     * for Ultravisor which TCG does not support, so just ignore the top 6.
--     */
--    lev = (ctx->opcode >> 5) & 0x1;
--    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
--}
--
--#if defined(TARGET_PPC64)
--#if !defined(CONFIG_USER_ONLY)
--static void gen_scv(DisasContext *ctx)
--{
--    uint32_t lev = (ctx->opcode >> 5) & 0x7F;
--
--    /* Set the PC back to the faulting instruction. */
--    gen_update_nip(ctx, ctx->cia);
--    gen_helper_scv(tcg_env, tcg_constant_i32(lev));
--
--    ctx->base.is_jmp = DISAS_NORETURN;
--}
--#endif
--#endif
--
- /***                                Trap                                   ***/
- 
- /* Check for unconditional traps (always or never) */
-@@ -4125,6 +4021,13 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
- #define TRANS64(NAME, FUNC, ...) \
-     static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
-     { REQUIRE_64BIT(ctx); return FUNC(ctx, a, ##__VA_ARGS__); }
-+#define TRANS64_FLAGS(FLAGS, NAME, FUNC, ...) \
-+    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-+    {                                                           \
-+        REQUIRE_64BIT(ctx);                                     \
-+        REQUIRE_INSNS_FLAGS(ctx, FLAGS);                        \
-+        return FUNC(ctx, a, ##__VA_ARGS__);                     \
-+    }
- #define TRANS64_FLAGS2(FLAGS2, NAME, FUNC, ...) \
-     static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
-     {                                                          \
-@@ -4542,21 +4445,6 @@ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
- /* handles stfdp, stxsd, stxssp */
- GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
--/* ISA v3.0 changed the extended opcode from 62 to 30 */
--GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
--#if defined(TARGET_PPC64)
--GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
--#if !defined(CONFIG_USER_ONLY)
--/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
--GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
--#endif
--GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
--#endif
--/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
--GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
--GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
- GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
- GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
- GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
-diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
-index 54712f9b73..05757e8190 100644
---- a/target/ppc/translate/misc-impl.c.inc
-+++ b/target/ppc/translate/misc-impl.c.inc
-@@ -225,3 +225,103 @@ static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
- 
- TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
- TRANS64(MTMSRD, do_mtmsr, true)
-+
-+/*
-+ * System Call and Return from Interrupt Instructions
-+ */
-+
-+static bool do_SC(DisasContext *ctx, arg_SC * a, uint32_t excp)
-+{
-+    uint32_t lev;
-+
-+    /*
-+     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
-+     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
-+     * for Ultravisor which TCG does not support, so just ignore the top 6.
-+     */
-+    lev = a->lev & 0x1;
-+    gen_exception_err(ctx, excp, lev);
-+    return true;
-+}
-+
-+static bool do_SCV(DisasContext *ctx, arg_SC *a)
-+{
-+#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
-+    /* Set the PC back to the faulting instruction. */
-+    gen_update_nip(ctx, ctx->cia);
-+    gen_helper_scv(tcg_env, tcg_constant_i32(a->lev));
-+
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+    return true;
-+#else
-+    gen_invalid(ctx);
-+    return true;
-+#endif
-+}
-+
-+/*
-+ * Common helper for return-from-interrupt instructions
-+ */
-+enum {
-+    RFI = 0,
-+    RFID = 1,
-+    HRFID = 2,
-+    RFSCV = 3,
-+};
-+
-+static bool do_rfi(DisasContext *ctx, arg_RFID *a, int kind)
-+{
-+#if defined(CONFIG_USER_ONLY)
-+    gen_priv_opc(ctx);
-+    return true;
-+#else
-+    void (*helper)(TCGv_ptr);
-+
-+    switch (kind) {
-+    case RFI:
-+        if (is_book3s_arch2x(ctx)) {
-+            gen_invalid(ctx);
-+            return true;
-+        }
-+        REQUIRE_SV(ctx);
-+        helper = gen_helper_RFI;
-+        break;
-+#if defined(TARGET_PPC64)
-+    case HRFID:
-+        REQUIRE_HV(ctx);
-+        helper = gen_helper_HRFID;
-+        break;
-+    case RFID:
-+        REQUIRE_SV(ctx);
-+        helper = gen_helper_RFID;
-+        break;
-+    case RFSCV:
-+        REQUIRE_SV(ctx);
-+        helper = gen_helper_RFSCV;
-+        break;
-+#endif
-+    default:
-+        gen_invalid(ctx);
-+        return true;
-+    }
-+
-+    translator_io_start(&ctx->base);
-+    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
-+    helper(tcg_env);
-+    ctx->base.is_jmp = DISAS_EXIT;
-+    return true;
-+#endif
-+}
-+
-+#if defined(CONFIG_USER_ONLY)
-+TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL_USER)
-+#else
-+TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL)
-+#endif
-+
-+TRANS64_FLAGS2(ISA300, SCV, do_SCV)
-+
-+TRANS_FLAGS(FLOW, RFI, do_rfi, RFI)
-+TRANS64(RFID, do_rfi, RFID)
-+TRANS64_FLAGS(64H, HRFID, do_rfi, HRFID)
-+TRANS64_FLAGS2(ISA300, RFSCV, do_rfi, RFSCV)
--- 
-2.55.0
-
+QU1EIEdlbmVyYWwNCg0KSGkgQW5kcmV3LCBQZXRlciwNCg0KPiBPbiBNb24sIDI0IEF1ZyAyMDI2
+IGF0IDE0OjMxLCBGcmFnZXIsIE5lYWwgPG5lYWwuZnJhZ2VyQGFtZC5jb20+IHdyb3RlOg0KPj4g
+QU1EIEdlbmVyYWwNCj4+DQo+PiBIaSBQZXRlciwNCj4+DQo+Pj4gSGkgU3Rld2FydCwNCj4+Pg0K
+Pj4+PiBUaGUgLUkkKFhFTl9ST09UKS90b29scy9pbmNsdWRlIGFkZGVkIHRvIFFFTVUncyBleHRy
+YS1jZmxhZ3MgY2F1c2VzDQo+Pj4+IF9fWEVOX0lOVEVSRkFDRV9WRVJTSU9OX18gdG8gYmUgZGVm
+aW5lZCBiZWZvcmUgeGVuX25hdGl2ZS5oIGlzIGluY2x1ZGVkLA0KPj4+PiB0cmlnZ2VyaW5nIGFu
+IGluY2x1ZGUtb3JkZXIgYXNzZXJ0aW9uLiBEb3duZ3JhZGUgdG8gYSB3YXJuaW5nIHNpbmNlIHRo
+ZQ0KPj4+PiB2ZXJzaW9uIGlzIGNvbnNpc3RlbnQgaW4gY3Jvc3MtY29tcGlsZS4NCj4+Pj4gUmVm
+OiBodHRwczovL2dpdGh1Yi5jb20vcWVtdS9xZW11L2NvbW1pdC9lMmFiZmU1ZWM2DQo+Pj4+IFRo
+aXMgaXMgYSBidWlsZHJvb3QgaXNzdWUsIHNvIEkgZG9uJ3QgYmVsaWV2ZSBpdCdzIG5lY2Vzc2Fy
+eSB0byBmaXggZnJvbSB0aGUNCj4+Pj4gcWVtdSBzaWRlLg0KPj4+IEkgYW0gbm90IHN1cmUgSSBm
+dWxseSBhZ3JlZSBoZXJlLiBXaGlsZSB0aGlzIGlzIGEgYnVpbGRyb290IGlkZW50aWZpZWQgaXNz
+dWUsDQo+Pj4gdGhlcmUgY291bGQgYmUgb3RoZXIgdXNlIGNhc2VzIGZvciBfX1hFTl9JTlRFUkZB
+Q0VfVkVSU0lPTl9fIHRvIGJlIGRlZmluZWQNCj4+PiBiZWZvcmUgeGVuX25hdGl2ZS5oIGlzIGlu
+Y2x1ZGVkLg0KPj4+IEJ1dCB3aGF0LCB0aG91Z2g/DQo+Pj4gQW5kIHdoYXQgd2UgaGF2ZSBmb3Vu
+ZCBpcyB0aGF0IGlmDQo+Pj4gX19YRU5fSU5URVJGQUNFX1ZFUlNJT05fXyB0byBiZSBkZWZpbmVk
+IGJlZm9yZSB4ZW5fbmF0aXZlLmggaXMgaW5jbHVkZWQsIGl0DQo+Pj4gaXMgbm90IGEgaGFyZCBl
+cnJvci4gIEZvciBidWlsZHJvb3QsIHRoZSBxZW11IHdvcmtzIGp1c3QgZmluZSBpbiBzcGl0ZSBv
+Zg0KPj4+IHRoaXMuDQo+Pg0KPj4+IEkgdGhpbmsgdGhhdCBqdXN0IG1lYW5zIHlvdSBnb3QgbHVj
+a3kuIEVpdGhlciB0aGVyZSBpcyBhIGhhcmQgcmVxdWlyZW1lbnQNCj4+PiBmb3Igb25lIGhlYWRl
+ciB0byBiZSBpbmNsdWRlZCBiZWZvcmUgdGhlIG90aGVyIChpbiB3aGljaCBjYXNlIGl0IG11c3QN
+Cj4+PiBiZSBhICNlcnJvciwgYW5kIHdoYXRldmVyIGlzIGNhdXNpbmcgdGhlIG1pcy1vcmRlcmlu
+ZyB0byBoYXBwZW4gbXVzdCBiZQ0KPj4+IGZpeGVkKSwgb3IgaXQncyBmaW5lIGZvciB0aGUgb3Jk
+ZXJpbmcgdG8gYmUgZWl0aGVyIHdheSAoaW4gd2hpY2ggY2FzZSBpdA0KPj4+IGRvZXNuJ3QgZXZl
+biBuZWVkIHRvIGJlIGEgI3dhcm5pbmcpLg0KPj4gRnJvbSBteSB2aWV3LCB0aGUgb3JkZXIgdGhl
+IGhlYWRlciBmaWxlcyBhcmUgaW5jbHVkZWQgZG9lcyBub3QgbWF0dGVyLCBhbmQNCj4+IHRoaXMg
+c2hvdWxkIG5vdCBiZSBhbiBlcnJvci4gIEkgYWdyZWUgd2l0aCByZW1vdmluZyB0aGUgd2Fybmlu
+ZyBhcyB3ZWxsLCBpZg0KPj4gdGhhdCBpcyB3aGF0IHdlIGFsbCBhZ3JlZSBvbiBpbiB0aGUgZW5k
+Lg0KPiBUaGUgcmF0aW9uYWxlIGZvciB0aGUgaGVhZGVyIG9yZGVyaW5nIGlzIGluIHRoZSBjb21t
+ZW50IGluIGluY2x1ZGUvaHcveGVuL3hlbi5oOg0KPg0KPiAvKg0KPiAgKiBDIGZpbGVzIHVzaW5n
+IFhlbiB0b29sc3RhY2sgbGlicmFyaWVzIHdpbGwgaGF2ZSBpbmNsdWRlZCB0aG9zZSBoZWFkZXJz
+DQo+ICAqIGFscmVhZHkgdmlhIHhlbl9uYXRpdmUuaCwgYW5kIGhhdmluZyBfX1hFTV9UT09MU19f
+IGRlZmluZWQgd2lsbCBoYXZlDQoNCj4gTG92ZWx5IHR5cG8gdGhlcmUuDQoNCj4gVGhlIGRlZmlu
+ZSBfX1hFTl9UT09MU19fIGlzIHdvZWZ1bGx5IG1pc25hbWVkLiAgVGhpcyBpcyBhbiBlcnJvciBv
+Zg0KPiBYZW4ncywgd2hpY2ggSSd2ZSBub3QgaGFkIHRpbWUgdG8gZml4IHlldC4NCg0KPiBJdCBz
+aG91bGQgYmUgbmFtZWQgX19YRU5fVU5TVEFCTEVfQVBJU19fLCBhbmQgdGhpbmtpbmcgb2YgaXQg
+bGlrZSB0aGlzDQo+IHdpbGwgbWFrZSBpdCdzIHB1cnBvc2UgYSB3aG9sZSBsb3QgY2xlYXJlci4N
+Cg0KPiAgKiBhdXRvbWF0aWNhbGx5IHNldCBfX1hFTl9JTlRFUkZBQ0VfVkVSU0lPTl9fIHRvIHRo
+ZSBsYXRlc3Qgc3VwcG9ydGVkDQo+ICAqIGJ5IHRoZSAqc3lzdGVtKiBYZW4gaGVhZGVycyB3aGlj
+aCB3ZXJlIHRyYW5zaXRpdmVseSBpbmNsdWRlZC4NCj4gICoNCj4gICogQyBmaWxlcyB3aGljaCBh
+cmUgcGFydCBvZiB0aGUgaW50ZXJuYWwgZW11bGF0aW9uLCBhbmQgd2hpY2ggZGlkIG5vdA0KPiAg
+KiBpbmNsdWRlIHhlbl9uYXRpdmUuaCwgbWF5IG5lZWQgdGhpcyBkZWZpbmVkIHNvIHRoYXQgdGhl
+IFhlbiBoZWFkZXJzDQo+ICAqIGltcG9ydGVkIHRvIGluY2x1ZGUvaHcveGVuL2ludGVyZmFjZS8g
+d2lsbCBleHBvc2UgdGhlIGFwcHJvcHJpYXRlIEFQSQ0KPiAgKiB2ZXJzaW9uLg0KPiAgKg0KPiAg
+KiBUaGlzIGlzIHdoeSB0aGVyZSdzIGEgcnVsZSB0aGF0IHhlbl9uYXRpdmUuaCBtdXN0IGJlIGlu
+Y2x1ZGVkIGZpcnN0Lg0KPiAgKi8NCj4NCj4gLi4uYmFzaWNhbGx5LCBpZiBzb21ldGhpbmcgZG9l
+c24ndCBpbmNsdWRlIHhlbl9uYXRpdmUuaCBiZWZvcmUgeGVuLmgNCj4gdGhlbiBfX1hFTl9JTlRF
+UkZBQ0VfVkVSU0lPTl9fIGNhbiBlbmQgdXAgZGVmaW5lZCB0byB0aGUgd3JvbmcgdGhpbmcuDQo+
+IChEaXNjbGFpbWVyOiBJJ20gbm90IGEgWGVuIGV4cGVydCwgSSdtIGp1c3QgYXBwbHlpbmcgQ2hl
+c3RlcnRvbidzIEZlbmNlLikNCg0KPiBfX1hFTl9JTlRFUkZBQ0VfVkVSU0lPTl9fIGRvZXMgYWx0
+ZXIgc3RydWN0dXJlcy4gIEl0IG11c3QgYmUgY29uc2lzdGVudA0KPiBhY3Jvc3MgYSBjb2RlYmFz
+ZS4NCg0KU3Rld2FydCBpZGVudGlmaWVkIGEgYmV0dGVyIHNvbHV0aW9uIGZvciB0aGlzIGJ1aWxk
+cm9vdCBpc3N1ZSwgc28gSSBhbQ0Kd2l0aGRyYXdpbmcgdGhpcyBwYXRjaC4gIFRoaXMgcGF0Y2gg
+aXMgbm90IG5lY2Vzc2FyeS4gIFRoYW5rIHlvdS4NCg0KQmVzdCByZWdhcmRzLA0KTmVhbCBGcmFn
+ZXINCkFNRA0K
 
