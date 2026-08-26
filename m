@@ -4,80 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8F7C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C99C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:31:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzFUs-0004nm-Gb; Wed, 26 Aug 2026 11:25:02 -0400
+	id 1wzFap-0007CF-0i; Wed, 26 Aug 2026 11:31:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzFUp-0004iG-Ue
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:25:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzFan-0007C3-N1; Wed, 26 Aug 2026 11:31:09 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzFUk-0001jp-QR
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:24:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787757892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/iCEBqb1Q6lZ7HIRD7IoqIXVMCqF175NNgwLvBlKANw=;
- b=fZTXY2xwKt0KJK8kyZD5ujaUV8cStRQIuFoWEiHIid1nkJKfup2aoCNUVX0zt47Yqi6JTm
- ZgDd8gpsVndWXNnnKyRd5TyJBqUl74ul6Co3Pr8FfY9J7F6ubtSpJJbEeB6yH6Wq+EXV/V
- nh01Vd/Y43ipLf82ni1ggLln8e736YU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-r43-PyzsMj6otcQ9QmLtfA-1; Wed,
- 26 Aug 2026 11:24:44 -0400
-X-MC-Unique: r43-PyzsMj6otcQ9QmLtfA-1
-X-Mimecast-MFC-AGG-ID: r43-PyzsMj6otcQ9QmLtfA_1787757883
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0ECC6187CCC1; Wed, 26 Aug 2026 15:24:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01AA618005B9; Wed, 26 Aug 2026 15:24:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6D1DD21E6920; Wed, 26 Aug 2026 17:24:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: "Denis V. Lunev" <den@openvz.org>,  qemu-devel@nongnu.org,
- qemu-block@nongnu.org,  Andrey Drobyshev
- <andrey.drobyshev@virtuozzo.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Eric Blake <eblake@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
- writable
-In-Reply-To: <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com> (Denis
- V. Lunev's message of "Wed, 26 Aug 2026 15:49:56 +0200")
-References: <20260824133729.1141990-1-den@openvz.org>
- <20260824133729.1141990-6-den@openvz.org>
- <87ld9umth3.fsf@pond.sub.org>
- <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
-Date: Wed, 26 Aug 2026 17:24:36 +0200
-Message-ID: <8733w0j45n.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzFaj-00042A-Kv; Wed, 26 Aug 2026 11:31:09 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QE1Y1w2333826; Wed, 26 Aug 2026 15:31:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=G9+Mn0GDajXdRRdYTeaPGtx2eOPcps
+ /qE5ak8FrpxM8=; b=h6IJ5CxxGO80V2n90r7wCUokTI0Tsom3iC8nkHf5Nn4Rj6
+ 6jjYnO0kvJ6BcC0bOYzt21RB+hQaRG6tmIy7tip5sgn+dNoCFhQkx1qH/KZbKn3l
+ QaJ9wc63peunAAnWlZpCQWcXa7G+JldZZCgkAoyvpxjXPnzzJP371kJdXvNdpSiX
+ ymd+FfW0BdbzVRjQC4Ds9ehsPv5wJivwR2fovvxP8Iw3o1HpjCMTzXlhNoejFHwe
+ yAAh6dcV4KutlxuFWnIImnFz6nqkwHd4Qz2LR3nSvJKcVdtPzvllUm/0wjhxUxPm
+ Y7hfIOoqseDxbVTQRF9trgRa4J7WEN7hHQe+qMug==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqygts-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 15:31:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QFQH57024642;
+ Wed, 26 Aug 2026 15:30:59 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qawhr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 15:30:59 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QFUt9k39649722
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 15:30:55 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BEC472004B;
+ Wed, 26 Aug 2026 15:30:55 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6CC8D20043;
+ Wed, 26 Aug 2026 15:30:52 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 15:30:52 +0000 (GMT)
+Date: Wed, 26 Aug 2026 21:00:55 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 24/37] target/ppc: Move VMX integer arithmetic and BCD
+ instructions to decodetree.
+Message-ID: <20260826205946.f07bbc90-9e-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-25-rathc@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260826050923.74756-25-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: BFUYyAmvDmoeuQgSrjzbxPUnfgBdx6Ix
+X-Proofpoint-ORIG-GUID: H4VrvmyZlTDz_qOo5mb2d_by84dIIAuM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX5UZPH6Ou/JIu
+ S1/naUvG2FTBKHDVV9/hjPi5aQjuUBjzXmzG+u7HFgU6mHB+mHE85oIVl0CcTRKbaGrpziE46yy
+ 8Get5VLWTTqU7nqBF2U4+11bw26R86585SVOfbZUPQFRW1tijDFhJSCoGoZ974WfNRnpd/kPmGL
+ LztfMPkHaIrzSnbO/shEND42LxpI9jcznX4xGoWenCE00UNLUJzUdGB6t0uHRrWc36VJoF3gELj
+ r84uPHiVKs31TJmGqer7RellXJSj6AfaMKe+UYzEiBEJ5u5+3ql2rICG89jPBcXB/Uf5GKx5MXz
+ Wx8kr05gOzhRrFr1wvkGZZQtvCUEDAGnxYkYZW48HsB1GpPBv3NAGLkRIhY4Jloo7dgfYOhlTQI
+ uxq+r+NjRh5YeCKRsGHhC8DtuVdl+LKUhkOK0MZdzoejTNGuG7R/hkII6vc6o1Y0H6dA0n0VNnK
+ //LCgPnmZZ9absXC4uA==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8f06b5 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=pW4XwJMhgj2wpHQbM6gA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX5BWOm77zGRmT
+ DSdrPub61TXu7aWAVPuX8elmb2PdOgOXWFW9h5zA6pBncXnbCc+8dWqHiKy3AUXrIsEjrw6iM2H
+ 4Tl7SYILvug7/L7yqrRH/5qfgllqEds=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260125
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,223 +134,735 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Denis V. Lunev" <den@virtuozzo.com> writes:
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Shivang Upadhyay <shivangu@linux.ibm.com>
+> 
+> Move below instructions to decodetree specification :
+> 
+>         vadd{u, s}{b, h, w, d}m[.],
+>         vsub{u, s}{b, h, w, d}m[.],
+>         vmuluwm[.],
+>         vmul10{u, eu, ecu, cu}q[.]       : VX-form
+> 
+>         bcd{add, sub}[.],
+>         bcd{s, us}[.],
+>         bcdcpsgn[.],
+>         bcdct{sq, n}[.],
+>         bcdcf{sq, z, n}[.],
+>         bcdctz[.],
+>         bcdsetsgn[.],
+>         bcdsr[.],
+>         bcd{u,}trunc[.]                  : VX-form
+> 
+> The changes were verified by validating that the tcg ops generated by
+> those instructions remain the same, which were captured with the '-d
+> in_asm,op' flag.
+> 
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/helper.h                 |  30 +--
+>  target/ppc/insn32.decode            |  39 ++++
+>  target/ppc/int_helper.c             |  32 +--
+>  target/ppc/translate/vmx-impl.c.inc | 299 ++++++++++++----------------
+>  target/ppc/translate/vmx-ops.c.inc  |  22 --
+>  5 files changed, 199 insertions(+), 223 deletions(-)
+> 
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index 0e8b96d0ec..8425eceeb3 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -349,21 +349,21 @@ DEF_HELPER_FLAGS_3(vshasigmaw, TCG_CALL_NO_RWG, void, avr, avr, i32)
+>  DEF_HELPER_FLAGS_3(vshasigmad, TCG_CALL_NO_RWG, void, avr, avr, i32)
+>  DEF_HELPER_FLAGS_4(vpermxor, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
+>  
+> -DEF_HELPER_FLAGS_4(bcdadd, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdsub, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdcfn, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdctn, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdcfz, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdctz, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdcfsq, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdctsq, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdcpsgn, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdsetsgn, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcds, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdus, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdsr, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdtrunc, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdutrunc, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDADD, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDSUB, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCFN, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCTN, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCFZ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCTZ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCFSQ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCTSQ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDCPSGN, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDSETSGN, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDS, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDUS, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDSR, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDTRUNC, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDUTRUNC, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+>  
+>  DEF_HELPER_4(XSADDDP, void, env, vsr, vsr, vsr)
+>  DEF_HELPER_5(xsaddqp, void, env, i32, vsr, vsr, vsr)
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index e7b5d19cde..eed963bd71 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -90,6 +90,9 @@
+>  &VX             vrt vra vrb
+>  @VX             ...... vrt:5 vra:5 vrb:5 .......... .           &VX
+>  
+> +&VX_ps             vrt vra vrb ps
+> +@VX_ps             ...... vrt:5 vra:5 vrb:5 . ps:1 ........ .           &VX_ps
 
-> On 8/25/26 11:37, Markus Armbruster wrote:
->> "Denis V. Lunev" <den@openvz.org> writes:
->>
->>> From: Denis V. Lunev <den@openvz.org>
->>>
->>> A dirty image must be repaired before anything allocates a cluster in
->>> it. qcow2_do_open() does that, but only for a node that is writable
->>> from the start. A node opened read-only skips it, and nothing revisits
->>> the question once that node becomes writable, which block-commit does
->>> routinely: commit_active_start() and commit_start() reopen the base
->>> read-write for the duration of the job.
->>>
->>> With lazy refcounts the on-disk refcount block then still accounts for
->>> the metadata clusters only, so the allocator restarts at the front of
->>> the image and hands out clusters that L2 entries point at. Two guest
->>> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
->>> stays clear, and a clean close clears the dirty bit, so no later open
->>> repairs the image either. The bit also stays set for the whole writable
->>> session, so a node which is merely writable says nothing.
->>>
->>> Refusing the reopen instead is simpler and keeps it atomic, but it
->>> leaves nowhere to go: the base belongs to a chain the VM has open, so
->>> the qemu-img check -r such an error would ask for cannot take the write
->>> lock it needs. The repair does the trick in most cases anyway.
->>>
->>> Do the repair in qcow2_reopen_commit_post(), the earliest point where
->>> the node is writable. An inactive node is skipped: bdrv_activate() calls
->>> qcow2_do_open() again through qcow2_co_invalidate_cache().
->>>
->>> commit_post cannot reject the reopen, so a failed repair takes the
->>> driver away from the node instead, which is what stops writes from
->>> aliasing live clusters. qcow2_signal_corruption() does that as well,
->>> but it also sends BLOCK_IMAGE_CORRUPTED and sets the corrupt bit,
->>> which qcow2_do_open() honours by refusing every later read-write open.
->>> The image is dirty and unrepaired, not corrupt, and qemu-img check -r
->>> still fixes it, so neither belongs here. Return the error and skip
->>> the bitmaps.
->>>
->>> Signed-off-by: Denis V. Lunev <den@openvz.org>
->>> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>> CC: Kevin Wolf <kwolf@redhat.com>
->>> CC: Hanna Reitz <hreitz@redhat.com>
->>> CC: Eric Blake <eblake@redhat.com>
->>> CC: Markus Armbruster <armbru@redhat.com>
->>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>> Cc: qemu-stable@nongnu.org
->> [...]
->>
->>> diff --git a/qapi/block-core.json b/qapi/block-core.json
->>> index 199efc1e00..940249a5e5 100644
->>> --- a/qapi/block-core.json
->>> +++ b/qapi/block-core.json
->>> @@ -1852,6 +1852,9 @@
->>   ##
->>   # @change-backing-file:
->>   #
->>   # Change the backing file in the image file metadata.  This does not
->>   # cause QEMU to reopen the image file to reparse the backing filename
->>   # (it may, however, perform a reopen to change permissions from r/o ->
->>>  # r/w -> r/o, if needed).  The new backing file string is written into
->>>  # the image file metadata, and the QEMU internal strings are updated.
->>>  #
->>> +# A dirty qcow2 image is repaired during that reopen, which blocks
->>> +# other requests and can fail the command.
->>
->> Pardon my ignorance: what makes a qcow2 image dirty?
-> usual obvious reasons are SIGKILL to qemu process (f.e. from OOM)
-> or node crash.
+Alignment looks a bit off. Otherwise,
 
-So, you have to do some cleaning work before you can use it again, just
-like a dirty filesystem.  Correct?
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-Back to change-backing-file.  It operates on an open image.  Cleaning
-happens when that image is read-only and dirty.  Possible because you
-can open dirty images read-only, and that doesn't clean them.  Correct?
-
->> Can you give me an idea of what other requests could be blocked?
-> Before the patch reopen was smooth - we have just opened the
-> file again. After this patch in a very unlikely corner case
-> potentially lengthy procedure has been added - full image
-> consistency check. Guest IO is stuck until the check will be
-> completed.
->
-> The case is unfortunately real for production.
->
->> Double-checking: "that reopen" is the one to change permissions,
->> i.e. the parenthesis above.  Correct?
-> yes
->
->>> +#
->>>  # @image-node-name: The name of the block driver state node of the
->>>  #     image to modify.  The "device" argument is used to verify
->>>  #     "image-node-name" is in the chain described by "device".
->>> @@ -1891,6 +1894,9 @@
->>   ##
->>   # @block-commit:
->>   #
->>   # Live commit of data from overlay image nodes into backing nodes -
->>   # i.e., writes data between 'top' and 'base' into 'base'.
->>   #
->>   # If top =3D=3D base, that is an error.  If top has no overlays on top=
- of
->>   # it, or if it is in use by a writer, the job will not be completed by
->>   # itself.  The user needs to complete the job with the `job-complete`
->>   # command after getting the ready event.  (Since 2.0)
->>   #
->>   # If the base image is smaller than top, then the base image will be
->>   # resized to be the same size as top.  If top is smaller than the base
->>   # image, the base will not be truncated.  If you want the base image
->>>  # size to match the size of the smaller top, you can safely truncate
->>>  # it yourself once the commit operation successfully completes.
->>>  #
->>> +# The base is opened read-write.  A dirty qcow2 base is repaired
-
-Reopend, I presume?
-
->>> +# first, which blocks other requests and can fail the command.
->>> +#
->>>  # @job-id: identifier for the newly-created block job.  If omitted,
->>>  #     the device name will be used.  (Since 2.7)
->>>  #
-
-Like change-backing-file, block-commit operates on open images.  It
-copies down into a base image.  If the base image is read-only, it is
-reopened, and cleaning happens when it's dirty.  Correct?
-
-Can it happen in any other way?
-
->>> @@ -2902,6 +2908,9 @@
->>   ##
->>   # @block-stream:
->>   #
->>   # Copy data from a backing file into a block device.
->>
->> [...]
-
-Whereas block-commit copies down into a base image, block-stream copies
-up from a base image.  If the image copied to is read-only, it is
-reopened, and cleaning happens when it's dirty.  Correct?
-
-Can it happen in any other way?
-
->>>  # On successful completion the image file is updated to drop the
->>>  # backing file and the `BLOCK_JOB_COMPLETED` event is emitted.
->>>  #
->>> +# The top image is opened read-write.  A dirty qcow2 image is repaired
->>> +# first, which blocks other requests and can fail the command.
->>> +#
->>>  # In case @device is a filter node, `block-stream` modifies the first
->>>  # non-filter overlay node below it to point to the new backing node
->>>  # instead of modifying @device itself.
->>> @@ -4989,6 +4998,16 @@
->>   ##
->>   # @blockdev-reopen:
->>   #
->>   # Reopens one or more block devices using the given set of options.
->>   # Any option not specified will be reset to its default value
->>   # regardless of its previous status.  If an option cannot be changed
->>   # or a particular driver does not support reopening then the command
->>   # will return an error.  All devices in the list are reopened in one
->>>  # transaction, so if one of them fails then the whole transaction is
->>>  # cancelled.
-
-blockdev-reopen also operates on open images.  Cleaning happens when
-reopening a dirty read-only image read/write.  Correct?
-
-Can it happen in any other way?
-
->>>  #
->>> +# An error is also returned when a device cannot be used once it has
->>> +# been reopened.  Such a reopen is not undone, so an error does not
->>> +# always mean that nothing has changed.
->>
->> Could that be a problem?
-> Error reply as itself is not a problem. The situation as a whole
-> is a real pain in the ass.
->
-> The problem is that such images exists in production and there
-> is not way to handle this without downtime.
->
-> Under this patch we are trying to fix things hard and this is
-> correct thing to do - on RW image we are doing exactly the
-> same thing. If automation is unable to fix - the guest denies
-> starting.
->
-> Here we report an error and render guest as unusable. This
-> case is expected to be extremely rare but technically possible.
->
-> This is a problem.
-
-I'll come back to this as soon as I understand when exactly cleaning may
-happen.
-
->>> +#                                        A node the driver gave up on
->>> +# serves nothing at all: it keeps its image open, makes
->>> +# `query-named-block-nodes` fail for as long as it is in the graph,
->>> +# and `blockdev-del` removes it only once nothing refers to it.
->>> +#
->>> +# Reopening a dirty qcow2 image read-write repairs it first, which
->>> +# blocks other requests and can fail the command.
->>> +#
->>>  # The command receives a list of block devices to reopen.  For each
->>>  # one of them, the top-level @node-name option (from
->>>  # `BlockdevOptions`) must be specified and is used to select the block
->>
->> These documentation updates suggest the patch affects commands
->> change-backing-file, block-commit, block-stream, and blockdev-reopen.
->> Is that correct?
->>
->> Would it make sense to list them in the commit message?
-> That is simple thing. Will add :-)
->
-> Thank you,
-> =C2=A0 =C2=A0 Den
-
-Thanks!
-
+> +
+>  &VX_bf          bf vra vrb
+>  @VX_bf          ...... bf:3 .. vra:5 vrb:5 ...........          &VX_bf
+>  
+> @@ -108,6 +111,9 @@
+>  &VX_tb          vrt vrb
+>  @VX_tb          ...... vrt:5 ..... vrb:5 ...........            &VX_tb
+>  
+> +&VX_tb_ps       vrt vrb ps
+> +@VX_tb_ps       ...... vrt:5 ..... vrb:5 . ps:1 .........            &VX_tb_ps
+> +
+>  &X              rt ra rb
+>  @X              ...... rt:5 ra:5 rb:5 .......... .              &X
+>  
+> @@ -991,6 +997,10 @@ VADDSBS         000100 ..... ..... ..... 01100000000    @VX
+>  VADDSHS         000100 ..... ..... ..... 01101000000    @VX
+>  VADDSWS         000100 ..... ..... ..... 01110000000    @VX
+>  
+> +VADDUBM         000100 ..... ..... ..... 00000000000    @VX
+> +VADDUHM         000100 ..... ..... ..... 00001000000    @VX
+> +VADDUWM         000100 ..... ..... ..... 00010000000    @VX
+> +VADDUDM         000100 ..... ..... ..... 00011000000    @VX
+>  VADDUBS         000100 ..... ..... ..... 01000000000    @VX
+>  VADDUHS         000100 ..... ..... ..... 01001000000    @VX
+>  VADDUWS         000100 ..... ..... ..... 01010000000    @VX
+> @@ -1006,6 +1016,10 @@ VSUBSBS         000100 ..... ..... ..... 11100000000    @VX
+>  VSUBSHS         000100 ..... ..... ..... 11101000000    @VX
+>  VSUBSWS         000100 ..... ..... ..... 11110000000    @VX
+>  
+> +VSUBUBM         000100 ..... ..... ..... 10000000000    @VX
+> +VSUBUHM         000100 ..... ..... ..... 10001000000    @VX
+> +VSUBUWM         000100 ..... ..... ..... 10010000000    @VX
+> +VSUBUDM         000100 ..... ..... ..... 10011000000    @VX
+>  VSUBUBS         000100 ..... ..... ..... 11000000000    @VX
+>  VSUBUHS         000100 ..... ..... ..... 11001000000    @VX
+>  VSUBUWS         000100 ..... ..... ..... 11010000000    @VX
+> @@ -1099,6 +1113,13 @@ VMULHSD         000100 ..... ..... ..... 01111001001    @VX
+>  VMULHUD         000100 ..... ..... ..... 01011001001    @VX
+>  VMULLD          000100 ..... ..... ..... 00111001001    @VX
+>  
+> +VMULUWM         000100 ..... ..... ..... 00010001001    @VX
+> +
+> +VMUL10UQ        000100 ..... ..... ..... 01000000001    @VX
+> +VMUL10EUQ       000100 ..... ..... ..... 01001000001    @VX
+> +VMUL10ECUQ      000100 ..... ..... ..... 00001000001    @VX
+> +VMUL10CUQ       000100 ..... ..... ..... 00000000001    @VX
+> +
+>  ## Vector Multiply-Sum Instructions
+>  
+>  VMSUMUBM        000100 ..... ..... ..... ..... 100100   @VA
+> @@ -1141,6 +1162,24 @@ VPKSWSS         000100 ..... ..... ..... 0011100111 0    @VX
+>  VPKSDSS         000100 ..... ..... ..... 1011100111 0    @VX
+>  VPKPX           000100 ..... ..... ..... 0110000111 0    @VX
+>  
+> +## Decimal Integer Arithmetic Instructions
+> +
+> +BCDADD          000100 ..... ..... ..... 1.000000001    @VX_ps
+> +BCDSUB          000100 ..... ..... ..... 1.001000001    @VX_ps
+> +BCDUS           000100 ..... ..... ..... 10010000001    @VX
+> +BCDS            000100 ..... ..... ..... 1.011000001    @VX_ps
+> +BCDCTSQ         000100 ..... 00000 ..... 10110000001    @VX_tb
+> +BCDCTN          000100 ..... 00101 ..... 10110000001    @VX_tb
+> +BCDCFSQ         000100 ..... 00010 ..... 1.110000001    @VX_tb_ps
+> +BCDCTZ          000100 ..... 00100 ..... 1.110000001    @VX_tb_ps
+> +BCDCFZ          000100 ..... 00110 ..... 1.110000001    @VX_tb_ps
+> +BCDCFN          000100 ..... 00111 ..... 1.110000001    @VX_tb_ps
+> +BCDSETSGN       000100 ..... 11111 ..... 1.110000001    @VX_tb_ps
+> +BCDCPSGN        000100 ..... ..... ..... 01101000001    @VX
+> +BCDSR           000100 ..... ..... ..... 1.111000001    @VX_ps
+> +BCDTRUNC        000100 ..... ..... ..... 1.100000001    @VX_ps
+> +BCDUTRUNC       000100 ..... ..... ..... 10101000001    @VX
+> +
+>  # VSX Load/Store Instructions
+>  
+>  LXSD            111001 ..... ..... .............. 10    @DS
+> diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+> index 8e8076a92c..86346f5b9a 100644
+> --- a/target/ppc/int_helper.c
+> +++ b/target/ppc/int_helper.c
+> @@ -2348,7 +2348,7 @@ static void bcd_sub_mag(ppc_avr_t *t, ppc_avr_t *a, ppc_avr_t *b, int *invalid,
+>      *overflow = carry;
+>  }
+>  
+> -uint32_t helper_bcdadd(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDADD(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>  
+>      int sgna = bcd_get_sgn(a);
+> @@ -2395,7 +2395,7 @@ uint32_t helper_bcdadd(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdsub(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDSUB(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      ppc_avr_t bcopy = *b;
+>      int sgnb = bcd_get_sgn(b);
+> @@ -2406,10 +2406,10 @@ uint32_t helper_bcdsub(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      }
+>      /* else invalid ... defer to bcdadd code for proper handling */
+>  
+> -    return helper_bcdadd(r, a, &bcopy, ps);
+> +    return helper_BCDADD(r, a, &bcopy, ps);
+>  }
+>  
+> -uint32_t helper_bcdcfn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCFN(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr = 0;
+> @@ -2445,7 +2445,7 @@ uint32_t helper_bcdcfn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdctn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCTN(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr = 0;
+> @@ -2479,7 +2479,7 @@ uint32_t helper_bcdctn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdcfz(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCFZ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr = 0;
+> @@ -2523,7 +2523,7 @@ uint32_t helper_bcdcfz(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdctz(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCTZ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr = 0;
+> @@ -2582,7 +2582,7 @@ static inline int ucmp128(uint64_t alo, uint64_t ahi,
+>          (ahi > bhi ? 1 : -1);
+>  }
+>  
+> -uint32_t helper_bcdcfsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCFSQ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr;
+> @@ -2640,7 +2640,7 @@ uint32_t helper_bcdcfsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdctsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCTSQ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      uint8_t i;
+>      int cr;
+> @@ -2680,7 +2680,7 @@ uint32_t helper_bcdctsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdcpsgn(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCPSGN(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int invalid = 0;
+> @@ -2703,7 +2703,7 @@ uint32_t helper_bcdcpsgn(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return bcd_cmp_zero(r);
+>  }
+>  
+> -uint32_t helper_bcdsetsgn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDSETSGN(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int sgnb = bcd_get_sgn(b);
+>  
+> @@ -2717,7 +2717,7 @@ uint32_t helper_bcdsetsgn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return bcd_cmp_zero(r);
+>  }
+>  
+> -uint32_t helper_bcds(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDS(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int cr;
+>      int i = a->VsrSB(7);
+> @@ -2753,7 +2753,7 @@ uint32_t helper_bcds(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdus(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDUS(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int cr;
+>      int i;
+> @@ -2790,7 +2790,7 @@ uint32_t helper_bcdus(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdsr(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDSR(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int cr;
+>      int unused = 0;
+> @@ -2836,7 +2836,7 @@ uint32_t helper_bcdsr(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdtrunc(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDTRUNC(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      uint64_t mask;
+>      uint32_t ox_flag = 0;
+> @@ -2869,7 +2869,7 @@ uint32_t helper_bcdtrunc(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return bcd_cmp_zero(&ret) | ox_flag;
+>  }
+>  
+> -uint32_t helper_bcdutrunc(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDUTRUNC(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      uint64_t mask;
+> diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+> index 65230f3461..4e7fe22156 100644
+> --- a/target/ppc/translate/vmx-impl.c.inc
+> +++ b/target/ppc/translate/vmx-impl.c.inc
+> @@ -142,7 +142,8 @@ static void gen_mtvscr(DisasContext *ctx)
+>      gen_helper_mtvscr(tcg_env, val);
+>  }
+>  
+> -static void gen_vx_vmul10(DisasContext *ctx, bool add_cin, bool ret_carry)
+> +static bool do_vx_vmul10(DisasContext *ctx, arg_VX *a,
+> +                         bool add_cin, bool ret_carry)
+>  {
+>      TCGv_i64 t0;
+>      TCGv_i64 t1;
+> @@ -150,10 +151,7 @@ static void gen_vx_vmul10(DisasContext *ctx, bool add_cin, bool ret_carry)
+>      TCGv_i64 avr;
+>      TCGv_i64 ten, z;
+>  
+> -    if (unlikely(!ctx->altivec_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);
+> -        return;
+> -    }
+> +    REQUIRE_VECTOR(ctx);
+>  
+>      t0 = tcg_temp_new_i64();
+>      t1 = tcg_temp_new_i64();
+> @@ -163,54 +161,32 @@ static void gen_vx_vmul10(DisasContext *ctx, bool add_cin, bool ret_carry)
+>      z = tcg_constant_i64(0);
+>  
+>      if (add_cin) {
+> -        get_avr64(avr, rA(ctx->opcode), false);
+> +        get_avr64(avr, a->vra, false);
+>          tcg_gen_mulu2_i64(t0, t1, avr, ten);
+> -        get_avr64(avr, rB(ctx->opcode), false);
+> +        get_avr64(avr, a->vrb, false);
+>          tcg_gen_andi_i64(t2, avr, 0xF);
+>          tcg_gen_add2_i64(avr, t2, t0, t1, t2, z);
+> -        set_avr64(rD(ctx->opcode), avr, false);
+> +        set_avr64(a->vrt, avr, false);
+>      } else {
+> -        get_avr64(avr, rA(ctx->opcode), false);
+> +        get_avr64(avr, a->vra, false);
+>          tcg_gen_mulu2_i64(avr, t2, avr, ten);
+> -        set_avr64(rD(ctx->opcode), avr, false);
+> +        set_avr64(a->vrt, avr, false);
+>      }
+>  
+>      if (ret_carry) {
+> -        get_avr64(avr, rA(ctx->opcode), true);
+> +        get_avr64(avr, a->vra, true);
+>          tcg_gen_mulu2_i64(t0, t1, avr, ten);
+>          tcg_gen_add2_i64(t0, avr, t0, t1, t2, z);
+> -        set_avr64(rD(ctx->opcode), avr, false);
+> -        set_avr64(rD(ctx->opcode), z, true);
+> +        set_avr64(a->vrt, avr, false);
+> +        set_avr64(a->vrt, z, true);
+>      } else {
+> -        get_avr64(avr, rA(ctx->opcode), true);
+> +        get_avr64(avr, a->vra, true);
+>          tcg_gen_mul_i64(t0, avr, ten);
+>          tcg_gen_add_i64(avr, t0, t2);
+> -        set_avr64(rD(ctx->opcode), avr, true);
+> +        set_avr64(a->vrt, avr, true);
+>      }
+> -}
+> -
+> -#define GEN_VX_VMUL10(name, add_cin, ret_carry)                         \
+> -    static void glue(gen_, name)(DisasContext *ctx)                     \
+> -    { gen_vx_vmul10(ctx, add_cin, ret_carry); }
+> -
+> -GEN_VX_VMUL10(vmul10uq, 0, 0);
+> -GEN_VX_VMUL10(vmul10euq, 1, 0);
+> -GEN_VX_VMUL10(vmul10cuq, 0, 1);
+> -GEN_VX_VMUL10(vmul10ecuq, 1, 1);
+>  
+> -#define GEN_VXFORM_V(name, vece, tcg_op, opc2, opc3)                    \
+> -static void glue(gen_, name)(DisasContext *ctx)                         \
+> -{                                                                       \
+> -    if (unlikely(!ctx->altivec_enabled)) {                              \
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);                           \
+> -        return;                                                         \
+> -    }                                                                   \
+> -                                                                        \
+> -    tcg_op(vece,                                                        \
+> -           avr_full_offset(rD(ctx->opcode)),                            \
+> -           avr_full_offset(rA(ctx->opcode)),                            \
+> -           avr_full_offset(rB(ctx->opcode)),                            \
+> -           16, 16);                                                     \
+> +    return true;
+>  }
+>  
+>  #define GEN_VXFORM(name, opc2, opc3)                                    \
+> @@ -338,19 +314,6 @@ static void glue(gen_, name)(DisasContext *ctx)                         \
+>      gen_helper_##name(cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)], rb); \
+>  }
+>  
+> -GEN_VXFORM_V(vaddubm, MO_8, tcg_gen_gvec_add, 0, 0);
+> -GEN_VXFORM_DUAL_EXT(vaddubm, PPC_ALTIVEC, PPC_NONE, 0,       \
+> -                    vmul10cuq, PPC_NONE, PPC2_ISA300, 0x0000F800)
+> -GEN_VXFORM_V(vadduhm, MO_16, tcg_gen_gvec_add, 0, 1);
+> -GEN_VXFORM_DUAL(vadduhm, PPC_ALTIVEC, PPC_NONE,  \
+> -                vmul10ecuq, PPC_NONE, PPC2_ISA300)
+> -GEN_VXFORM_V(vadduwm, MO_32, tcg_gen_gvec_add, 0, 2);
+> -GEN_VXFORM_V(vaddudm, MO_64, tcg_gen_gvec_add, 0, 3);
+> -GEN_VXFORM_V(vsububm, MO_8, tcg_gen_gvec_sub, 0, 16);
+> -GEN_VXFORM_V(vsubuhm, MO_16, tcg_gen_gvec_sub, 0, 17);
+> -GEN_VXFORM_V(vsubuwm, MO_32, tcg_gen_gvec_sub, 0, 18);
+> -GEN_VXFORM_V(vsubudm, MO_64, tcg_gen_gvec_sub, 0, 19);
+> -
+>  static bool do_vmrg(DisasContext *ctx, arg_VX *a,
+>                      void (*helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
+>  {
+> @@ -370,6 +333,38 @@ TRANS_FLAGS(ALTIVEC, VMRGLB, do_vmrg, gen_helper_VMRGLB);
+>  TRANS_FLAGS(ALTIVEC, VMRGLH, do_vmrg, gen_helper_VMRGLH);
+>  TRANS_FLAGS(ALTIVEC, VMRGLW, do_vmrg, gen_helper_VMRGLW);
+>  
+> +static bool do_vx_vaddsubm(DisasContext *ctx, arg_VX *a, MemOp vece,
+> +                           void (*gen_op)(unsigned, uint32_t, uint32_t,
+> +                                          uint32_t, uint32_t, uint32_t))
+> +{
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    gen_op(vece,
+> +           avr_full_offset(a->vrt),
+> +           avr_full_offset(a->vra),
+> +           avr_full_offset(a->vrb),
+> +           16, 16);
+> +
+> +    return true;
+> +}
+> +
+> +TRANS_FLAGS(ALTIVEC, VADDUBM, do_vx_vaddsubm, MO_8, tcg_gen_gvec_add)
+> +TRANS_FLAGS(ALTIVEC, VADDUHM, do_vx_vaddsubm, MO_16, tcg_gen_gvec_add)
+> +TRANS_FLAGS(ALTIVEC, VADDUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_add)
+> +TRANS_FLAGS2(ALTIVEC_207, VADDUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_add)
+> +
+> +TRANS_FLAGS(ALTIVEC, VSUBUBM, do_vx_vaddsubm, MO_8, tcg_gen_gvec_sub)
+> +TRANS_FLAGS(ALTIVEC, VSUBUHM, do_vx_vaddsubm, MO_16, tcg_gen_gvec_sub)
+> +TRANS_FLAGS(ALTIVEC, VSUBUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_sub)
+> +TRANS_FLAGS2(ALTIVEC_207, VSUBUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_sub)
+> +
+> +TRANS_FLAGS2(ALTIVEC_207, VMULUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_mul)
+> +
+> +TRANS_FLAGS2(ISA300, VMUL10CUQ, do_vx_vmul10, false, true)
+> +TRANS_FLAGS2(ISA300, VMUL10ECUQ, do_vx_vmul10, true, true)
+> +TRANS_FLAGS2(ISA300, VMUL10UQ, do_vx_vmul10, false, false)
+> +TRANS_FLAGS2(ISA300, VMUL10EUQ, do_vx_vmul10, true, false)
+> +
+>  static void trans_vmrgew(DisasContext *ctx)
+>  {
+>      int VT = rD(ctx->opcode);
+> @@ -684,7 +679,6 @@ static void trans_vclzd(DisasContext *ctx)
+>      set_avr64(VT, avr, false);
+>  }
+>  
+> -GEN_VXFORM_V(vmuluwm, MO_32, tcg_gen_gvec_mul, 4, 2);
+>  GEN_VXFORM(vsrv, 2, 28);
+>  GEN_VXFORM(vslv, 2, 29);
+>  GEN_VXFORM(vslo, 6, 16);
+> @@ -2523,126 +2517,93 @@ GEN_VXFORM(vpmsumb, 4, 16)
+>  GEN_VXFORM(vpmsumh, 4, 17)
+>  GEN_VXFORM(vpmsumw, 4, 18)
+>  
+> -#define GEN_BCD(op)                                 \
+> -static void gen_##op(DisasContext *ctx)             \
+> -{                                                   \
+> -    TCGv_ptr ra, rb, rd;                            \
+> -    TCGv_i32 ps;                                    \
+> -                                                    \
+> -    if (unlikely(!ctx->altivec_enabled)) {          \
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);       \
+> -        return;                                     \
+> -    }                                               \
+> -                                                    \
+> -    ra = gen_avr_ptr(rA(ctx->opcode));              \
+> -    rb = gen_avr_ptr(rB(ctx->opcode));              \
+> -    rd = gen_avr_ptr(rD(ctx->opcode));              \
+> -                                                    \
+> -    ps = tcg_constant_i32((ctx->opcode & 0x200) != 0); \
+> -                                                    \
+> -    gen_helper_##op(cpu_crf[6], rd, ra, rb, ps);    \
+> -}
+> -
+> -#define GEN_BCD2(op)                                \
+> -static void gen_##op(DisasContext *ctx)             \
+> -{                                                   \
+> -    TCGv_ptr rd, rb;                                \
+> -    TCGv_i32 ps;                                    \
+> -                                                    \
+> -    if (unlikely(!ctx->altivec_enabled)) {          \
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);       \
+> -        return;                                     \
+> -    }                                               \
+> -                                                    \
+> -    rb = gen_avr_ptr(rB(ctx->opcode));              \
+> -    rd = gen_avr_ptr(rD(ctx->opcode));              \
+> -                                                    \
+> -    ps = tcg_constant_i32((ctx->opcode & 0x200) != 0); \
+> -                                                    \
+> -    gen_helper_##op(cpu_crf[6], rd, rb, ps);        \
+> -}
+> -
+> -GEN_BCD(bcdadd)
+> -GEN_BCD(bcdsub)
+> -GEN_BCD2(bcdcfn)
+> -GEN_BCD2(bcdctn)
+> -GEN_BCD2(bcdcfz)
+> -GEN_BCD2(bcdctz)
+> -GEN_BCD2(bcdcfsq)
+> -GEN_BCD2(bcdctsq)
+> -GEN_BCD2(bcdsetsgn)
+> -GEN_BCD(bcdcpsgn);
+> -GEN_BCD(bcds);
+> -GEN_BCD(bcdus);
+> -GEN_BCD(bcdsr);
+> -GEN_BCD(bcdtrunc);
+> -GEN_BCD(bcdutrunc);
+> -
+> -static void gen_xpnd04_1(DisasContext *ctx)
+> -{
+> -    switch (opc4(ctx->opcode)) {
+> -    case 0:
+> -        gen_bcdctsq(ctx);
+> -        break;
+> -    case 2:
+> -        gen_bcdcfsq(ctx);
+> -        break;
+> -    case 4:
+> -        gen_bcdctz(ctx);
+> -        break;
+> -    case 5:
+> -        gen_bcdctn(ctx);
+> -        break;
+> -    case 6:
+> -        gen_bcdcfz(ctx);
+> -        break;
+> -    case 7:
+> -        gen_bcdcfn(ctx);
+> -        break;
+> -    case 31:
+> -        gen_bcdsetsgn(ctx);
+> -        break;
+> -    default:
+> -        gen_invalid(ctx);
+> -        break;
+> -    }
+> +static bool do_bcd_ps(DisasContext *ctx, arg_VX_ps *a,
+> +                   void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr,
+> +                                  TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr ra, rb, rd;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    ra = gen_avr_ptr(a->vra);
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +    ps = tcg_constant_i32(a->ps);
+> +
+> +    helper(cpu_crf[6], rd, ra, rb, ps);
+> +    return true;
+>  }
+>  
+> -static void gen_xpnd04_2(DisasContext *ctx)
+> -{
+> -    switch (opc4(ctx->opcode)) {
+> -    case 0:
+> -        gen_bcdctsq(ctx);
+> -        break;
+> -    case 2:
+> -        gen_bcdcfsq(ctx);
+> -        break;
+> -    case 4:
+> -        gen_bcdctz(ctx);
+> -        break;
+> -    case 6:
+> -        gen_bcdcfz(ctx);
+> -        break;
+> -    case 7:
+> -        gen_bcdcfn(ctx);
+> -        break;
+> -    case 31:
+> -        gen_bcdsetsgn(ctx);
+> -        break;
+> -    default:
+> -        gen_invalid(ctx);
+> -        break;
+> -    }
+> +static bool do_bcd(DisasContext *ctx, arg_VX *a,
+> +                   void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr,
+> +                                  TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr ra, rb, rd;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    ra = gen_avr_ptr(a->vra);
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +    ps = tcg_constant_i32(0);
+> +
+> +    helper(cpu_crf[6], rd, ra, rb, ps);
+> +    return true;
+>  }
+>  
+> -GEN_VXFORM_DUAL(vsububm, PPC_ALTIVEC, PPC_NONE, \
+> -                bcdadd, PPC_NONE, PPC2_ALTIVEC_207)
+> -GEN_VXFORM_DUAL(vsubuhm, PPC_ALTIVEC, PPC_NONE, \
+> -                bcdsub, PPC_NONE, PPC2_ALTIVEC_207)
+> -GEN_VXFORM_DUAL(vsubudm, PPC2_ALTIVEC_207, PPC_NONE, \
+> -                bcds, PPC_NONE, PPC2_ISA300)
+> -GEN_VXFORM_DUAL(vsubuwm, PPC_ALTIVEC, PPC_NONE, \
+> -                bcdus, PPC_NONE, PPC2_ISA300)
+> +static bool do_bcd_tb(DisasContext *ctx, arg_VX_tb *a,
+> +                    void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr rd, rb;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +
+> +    ps = tcg_constant_i32(0);
+> +
+> +    helper(cpu_crf[6], rd, rb, ps);
+> +
+> +    return true;
+> +}
+> +
+> +static bool do_bcd_tb_ps(DisasContext *ctx, arg_VX_tb_ps *a,
+> +                    void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr rd, rb;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +
+> +    ps = tcg_constant_i32(a->ps);
+> +
+> +    helper(cpu_crf[6], rd, rb, ps);
+> +
+> +    return true;
+> +}
+> +
+> +TRANS_FLAGS2(ALTIVEC_207, BCDADD, do_bcd_ps, gen_helper_BCDADD)
+> +TRANS_FLAGS2(ALTIVEC_207, BCDSUB, do_bcd_ps, gen_helper_BCDSUB)
+> +TRANS_FLAGS2(ISA300, BCDUS, do_bcd, gen_helper_BCDUS)
+> +TRANS_FLAGS2(ISA300, BCDS, do_bcd_ps, gen_helper_BCDS)
+> +TRANS_FLAGS2(ISA300, BCDCFN, do_bcd_tb_ps, gen_helper_BCDCFN)
+> +TRANS_FLAGS2(ISA300, BCDCTN, do_bcd_tb, gen_helper_BCDCTN)
+> +TRANS_FLAGS2(ISA300, BCDCFZ, do_bcd_tb_ps, gen_helper_BCDCFZ)
+> +TRANS_FLAGS2(ISA300, BCDCTZ, do_bcd_tb_ps, gen_helper_BCDCTZ)
+> +TRANS_FLAGS2(ISA300, BCDCFSQ, do_bcd_tb_ps, gen_helper_BCDCFSQ)
+> +TRANS_FLAGS2(ISA300, BCDCTSQ, do_bcd_tb, gen_helper_BCDCTSQ)
+> +TRANS_FLAGS2(ISA300, BCDSETSGN, do_bcd_tb_ps, gen_helper_BCDSETSGN)
+> +TRANS_FLAGS2(ISA300, BCDCPSGN, do_bcd, gen_helper_BCDCPSGN)
+> +TRANS_FLAGS2(ISA300, BCDTRUNC, do_bcd_ps, gen_helper_BCDTRUNC)
+> +TRANS_FLAGS2(ISA300, BCDUTRUNC, do_bcd, gen_helper_BCDUTRUNC)
+> +TRANS_FLAGS2(ISA300, BCDSR, do_bcd_ps, gen_helper_BCDSR)
+>  
+>  static void gen_vsbox(DisasContext *ctx)
+>  {
+> @@ -3502,5 +3463,3 @@ TRANS_FLAGS2(ISA310, VMODUQ, do_vx_helper, gen_helper_VMODUQ)
+>  #undef GEN_VXFORM_NOA
+>  #undef GEN_VXFORM_UIMM
+>  #undef GEN_VAFORM_PAIRED
+> -
+> -#undef GEN_BCD2
+> diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+> index 2820976c0f..c1951c6975 100644
+> --- a/target/ppc/translate/vmx-ops.c.inc
+> +++ b/target/ppc/translate/vmx-ops.c.inc
+> @@ -24,39 +24,17 @@ GEN_HANDLER_E(name0##_##name1, 0x4, opc2, opc3, 0x00000000, type0, type1)
+>  GEN_HANDLER_E(name0##_##name1, 0x4, opc2, opc3, 0x00000000, tp0, tp1), \
+>  GEN_HANDLER_E(name0##_##name1, 0x4, opc2, (opc3 | 0x10), 0x00000000, tp0, tp1),
+>  
+> -GEN_VXFORM_DUAL(vaddubm, vmul10cuq, 0, 0, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM_DUAL(vadduhm, vmul10ecuq, 0, 1, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM(vadduwm, 0, 2),
+> -GEN_VXFORM_207(vaddudm, 0, 3),
+> -GEN_VXFORM_DUAL(vsububm, bcdadd, 0, 16, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM_DUAL(vsubuhm, bcdsub, 0, 17, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM_DUAL(vsubuwm, bcdus, 0, 18, PPC_ALTIVEC, PPC2_ISA300),
+> -GEN_VXFORM_DUAL(vsubudm, bcds, 0, 19, PPC2_ALTIVEC_207, PPC2_ISA300),
+> -GEN_VXFORM_300(bcds, 0, 27),
+>  GEN_VXFORM_300(vextublx, 6, 24),
+>  GEN_VXFORM_300(vextuhlx, 6, 25),
+>  GEN_VXFORM_DUAL(vmrgow, vextuwlx, 6, 26, PPC_NONE, PPC2_ALTIVEC_207),
+>  GEN_VXFORM_300(vextubrx, 6, 28),
+>  GEN_VXFORM_300(vextuhrx, 6, 29),
+>  GEN_VXFORM_DUAL(vmrgew, vextuwrx, 6, 30, PPC_NONE, PPC2_ALTIVEC_207),
+> -GEN_VXFORM_207(vmuluwm, 4, 2),
+>  GEN_VXFORM_300(vsrv, 2, 28),
+>  GEN_VXFORM_300(vslv, 2, 29),
+>  GEN_VXFORM(vslo, 6, 16),
+>  GEN_VXFORM(vsro, 6, 17),
+>  
+> -GEN_VXFORM(xpnd04_1, 0, 22),
+> -GEN_VXFORM_300(bcdsr, 0, 23),
+> -GEN_VXFORM_300(bcdsr, 0, 31),
+> -GEN_VXFORM_300_EXT(vmul10uq, 0, 8, 0x0000F800),
+> -GEN_VXFORM_300(vmul10euq, 0, 9),
+> -GEN_VXFORM_300(bcdcpsgn, 0, 13),
+> -GEN_VXFORM_207(bcdadd, 0, 24),
+> -GEN_VXFORM_207(bcdsub, 0, 25),
+> -GEN_VXFORM_300(bcdtrunc, 0, 28),
+> -GEN_VXFORM_300(xpnd04_2, 0, 30),
+> -GEN_VXFORM_300(bcdtrunc, 0, 20),
+> -GEN_VXFORM_300(bcdutrunc, 0, 21),
+>  GEN_VXFORM(vsl, 2, 7),
+>  GEN_VXFORM(vsr, 2, 11),
+>  GEN_VXFORM(vsum4ubs, 4, 24),
+> -- 
+> 2.55.0
+> 
 
