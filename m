@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA130C61DBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B856AC5DF97
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJVi-0001eG-Px; Wed, 26 Aug 2026 15:42:10 -0400
+	id 1wzJVR-0000jv-8C; Wed, 26 Aug 2026 15:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJVg-0001Sx-Tw
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:42:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJVP-0000iD-Rn
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJVf-0006Mg-5R
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:42:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJVO-0006KL-45
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773326;
+ s=mimecast20190719; t=1787773309;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QP7QUbGEfuohezFKRNTIokfJyo/v9qvglGiwlHcfMr4=;
- b=QSo7bzIjnwR9qy/7BTx9VpCajzOBfAJPNVJ5FWPWxiPMlPzFJH9xYGeuBlrMIvMSGOZQxA
- wVTLAKq0y9yV1JCn/np8vG7jVCrx5un2yv92KcczimGSywvFp2hUmPG6L9EqQHKt+DvqCb
- g/e8vJ+m+IkTMiSm67ehMPD7aLHbM/c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5E80AYcJQq1AFb1blKcFRy9kxc8JKyis50TCaxBSCf8=;
+ b=XAYG0Z5Mmro9GoEb1F2+kbFZ7pMSUpV71Lj47sp7oEmeeVCsiEB+eoLKnO8hqgA+2iS5XF
+ /hylxwOZpxexv6sKgsJFEa0EPeUljkcDt3M7silxKN7g8NeBLc0Q10BR7+L4SHMnz9AyZG
+ Ya6mJGu+cF/CSINm5e7lzh1tI/mi8ZI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-463-XG7GCazON9KfnsA_-NtzLQ-1; Wed,
- 26 Aug 2026 15:42:02 -0400
-X-MC-Unique: XG7GCazON9KfnsA_-NtzLQ-1
-X-Mimecast-MFC-AGG-ID: XG7GCazON9KfnsA_-NtzLQ_1787773319
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-7R5lkI-mNZqyK8XjM-t1CA-1; Wed,
+ 26 Aug 2026 15:41:46 -0400
+X-MC-Unique: 7R5lkI-mNZqyK8XjM-t1CA-1
+X-Mimecast-MFC-AGG-ID: 7R5lkI-mNZqyK8XjM-t1CA_1787773303
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4FB03184BAAB; Wed, 26 Aug 2026 19:41:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 84A0C1802149; Wed, 26 Aug 2026 19:41:43 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 395DA1800577; Wed, 26 Aug 2026 19:41:51 +0000 (UTC)
+ id A4C591800577; Wed, 26 Aug 2026 19:41:34 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,23 +72,23 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 21/43] qapi: convert trivial intro sections for sockets.json
-Date: Wed, 26 Aug 2026 15:38:18 -0400
-Message-ID: <20260826193840.2152000-22-jsnow@redhat.com>
+Subject: [PATCH v3 19/43] qapi: convert trivial intro sections for dump.json
+Date: Wed, 26 Aug 2026 15:38:16 -0400
+Message-ID: <20260826193840.2152000-20-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,99 +106,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/sockets.json | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ qapi/dump.json | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 473be2ac58a..210d07b5ef2 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -9,8 +9,7 @@
+diff --git a/qapi/dump.json b/qapi/dump.json
+index 690f3963fe1..520c58cbcd8 100644
+--- a/qapi/dump.json
++++ b/qapi/dump.json
+@@ -12,8 +12,7 @@
  
  ##
- # @NetworkAddressFamily:
+ # @DumpGuestMemoryFormat:
 -#
--# The network address family
-+#     The network address family
+-# An enumeration of guest-memory-dump's format.
++#     An enumeration of guest-memory-dump's format.
  #
- # @ipv4: IPV4 family
+ # @elf: elf format
  #
-@@ -41,9 +40,8 @@
+@@ -116,8 +115,8 @@
  
  ##
- # @InetSocketAddress:
+ # @DumpStatus:
 -#
--# Captures a socket address or address range in the Internet
--# namespace.
-+#     Captures a socket address or address range in the Internet
-+#     namespace.
+-# Describe the status of a long-running background guest memory dump.
++#     Describe the status of a long-running background guest memory
++#     dump.
  #
- # @numeric: true if the host/port are guaranteed to be numeric, false
- #     if name resolution should be attempted.  Defaults to false.
-@@ -98,8 +96,8 @@
+ # @none: no `dump-guest-memory` has started yet.
+ #
+@@ -134,8 +133,7 @@
  
  ##
- # @UnixSocketAddress:
+ # @DumpQueryResult:
 -#
--# Captures a socket address in the local ("Unix socket") namespace.
-+#     Captures a socket address in the local ("Unix socket")
-+#     namespace.
+-# The result format for `query-dump`.
++#     The result format for `query-dump`.
  #
- # @path: filesystem path to use
+ # @status: enum of `DumpStatus`, which shows current dump status
  #
-@@ -121,8 +119,7 @@
+@@ -152,8 +150,7 @@
  
  ##
- # @VsockSocketAddress:
+ # @query-dump:
 -#
--# Captures a socket address in the vsock namespace.
-+#     Captures a socket address in the vsock namespace.
+-# Query latest dump status.
++#     Query latest dump status.
  #
- # @cid: unique host identifier
+ # Returns: An object showing the dump status.
  #
-@@ -140,8 +137,7 @@
+@@ -169,8 +166,7 @@
  
  ##
- # @FdSocketAddress:
+ # @DUMP_COMPLETED:
 -#
--# A file descriptor name or number.
-+#     A file descriptor name or number.
+-# Emitted when background dump has completed
++#     Emitted when background dump has completed
  #
- # @str: decimal is for file descriptor number, otherwise it's a file
- #     descriptor name.  Named file descriptors are permitted in
-@@ -197,9 +193,8 @@
+ # @result: final dump status
+ #
+@@ -203,8 +199,7 @@
  
  ##
- # @SocketAddressLegacy:
+ # @query-dump-guest-memory-capability:
 -#
--# Captures the address of a socket, which could also be a named file
--# descriptor
-+#     Captures the address of a socket, which could also be a named
-+#     file descriptor
+-# Return the available formats for `dump-guest-memory`
++#     Return the available formats for `dump-guest-memory`
  #
- # @type: Transport type
- #
-@@ -219,8 +214,7 @@
- 
- ##
- # @SocketAddressType:
--#
--# Available `SocketAddress` types
-+#     Available `SocketAddress` types
- #
- # @inet: Internet address
- #
-@@ -237,9 +231,8 @@
- 
- ##
- # @SocketAddress:
--#
--# Captures the address of a socket, which could also be a socket file
--# descriptor
-+#     Captures the address of a socket, which could also be a socket
-+#     file descriptor
- #
- # @type: Transport type
+ # Returns: An object listing available formats for `dump-guest-memory`
  #
 -- 
 2.55.0
