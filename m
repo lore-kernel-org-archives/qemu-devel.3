@@ -4,86 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE696C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F447C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz5kz-0002jg-O5; Wed, 26 Aug 2026 01:01:01 -0400
+	id 1wz5ti-0005aH-G9; Wed, 26 Aug 2026 01:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3BHOOagsKCn8qdpdqjxodwljrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--namangulati.bounces.google.com>)
- id 1wz5kw-0002j0-4d
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 01:00:59 -0400
-Received: from mail-qt1-x848.google.com ([2607:f8b0:4864:20::848])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3BHOOagsKCn8qdpdqjxodwljrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--namangulati.bounces.google.com>)
- id 1wz5ks-0003sk-5R
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 01:00:56 -0400
-Received: by mail-qt1-x848.google.com with SMTP id
- d75a77b69052e-526da7e3c9dso5317901cf.1
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 22:00:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1787720452; x=1788325252; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=b12QXxLcUt6BFDnnymY2XfEHw+7hm2Vsk4uRaVQQ38k=;
- b=U8sjpstL9ZFid42vvPYBhWi3dJ3Km9E2AuQHv4L4zzG69Y6dOTqbSRXVPNe2sJJBHG
- xc3ePSfpjIbDJLQvtosA8Q9rDoKUWaAy8xPscdB9znrahU9X3q9LEwuxto22XQDpDj8c
- m5L4PDvUqz2ZygeKRju53Ym1JrWJx8rt2OtnG22FN7ZMh5RfuxBLLcjVsAXjPtCniBJ7
- o+8gWcGw25UtZUozIEHc5W4f/UatjaqPOkpjspbt5x3BNa4i530y0kptVxTQoXghNpaf
- lkFFFFTp0sNe/kXXX3ZaVT5mn+jhy6p7JM68BZ2byP+IZjiduxzXgsKFN8NOKIgbx0MS
- 9sow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787720452; x=1788325252;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=b12QXxLcUt6BFDnnymY2XfEHw+7hm2Vsk4uRaVQQ38k=;
- b=TFrxY6JIBD4pQ20z1v4zcxbiXXsFtMqF6Ls7d/QES6T0Dbqk96PDdv1MG1mZkRK6sb
- 2Twgi/EgGSCxLg78hASlDCPwX3s6NDfQtB6d2zBxiY+uNJHzjeAY2sLF4XkN+6JGKv7M
- rVndBVZBeBBHmxKqynJ0RvIm42dC/1K1IhKoNwAI4UsMLau4eoLqZGZVY0XODq3/cpq2
- jpap6qwYRClWb4/fCcKXhfJ8hTxC4eS6+hH345QkR8TRmB9SMnDEKwv38UoSgIW74RBz
- nxaj0y6nsTLzlnMR2Mp1FCRiK6sPK4fZhPXOmvMhNYSDd30mF6yoiSR9xY+Zfg8zbUqe
- h/Dw==
-X-Gm-Message-State: AFuF++nS7HVyFC68t89ci+PZiY2v/1iOMAOScn0J/YedDbasgsnwQxPi
- 77JDiFAYdd5pyLdsoSwLXORWCMokRJWb/5SlDS7L9Lveg5yVRP/OG6g41PJoYxUyOq82Ln4xOMS
- ulxzuvmmltCxrkhZEi4gU4akqJNodniMIfS5xprwzqrahAmvC2fnbHrjKir/BL3VUdkACbte5Il
- PWDqvL1h0qYCfKhdEvPDxDK1EGPJtZBsvB0xa6kB9zpbgweYyyQjvVQXsqCCW+cQ==
-X-Received: from qtbfc18.prod.google.com ([2002:a05:622a:4892:b0:51c:a432:e62])
- (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:622a:1347:b0:51c:8432:1753 with SMTP id
- d75a77b69052e-52e423a77e0mr36007831cf.30.1787720452021; 
- Tue, 25 Aug 2026 22:00:52 -0700 (PDT)
-Date: Wed, 26 Aug 2026 05:00:39 +0000
-In-Reply-To: <20260826050039.2068138-1-namangulati@google.com>
-Mime-Version: 1.0
-References: <20260826050039.2068138-1-namangulati@google.com>
-X-Mailer: git-send-email 2.55.0.860.g4b6b3295ed-goog
-Message-ID: <20260826050039.2068138-4-namangulati@google.com>
-Subject: [PATCH v2 3/3] vfio-user: implement client support for multi-fd
- region mmap
-From: Naman Gulati <namangulati@google.com>
-To: qemu-devel@nongnu.org
-Cc: John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- "=?UTF-8?q?C=C3=A9dric=20Le=20Goater?=" <clg@redhat.com>,
- Alex Williamson <alex@shazbot.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::848;
- envelope-from=3BHOOagsKCn8qdpdqjxodwljrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--namangulati.bounces.google.com;
- helo=mail-qt1-x848.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wz5th-0005Yb-6N; Wed, 26 Aug 2026 01:10:01 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wz5tf-0004w5-45; Wed, 26 Aug 2026 01:10:00 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67Q3Vfeh2830808; Wed, 26 Aug 2026 05:09:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=kAixphAUO2evXXSJl
+ iwax0daEhnn3+SSPIBx3wXHLwA=; b=mh7PvScBnFNlHI+QuMXZKiMuAvOc5Wu6v
+ fbL2MACR5EGiTNRsktro3EEyex7ZJrRNsmB7J4aK1SHHttmvSlE7MeuU6jk+U9x2
+ yobSRuTohvIOvWBarez0rvUlXOSWTo/SZcwRWIjZU5came68V+9mWNpjCBsLRsFl
+ YN00Pwc0d5Y1nKhCGOhjEHyIEA2okZo6Qu0Mzovo4h1yaDMAopmzmKi3TsvBakfR
+ EX6N9MI76vDh1ZNPrCH0daU01zS0uXJ74p2toYINJTRzs9sqHdcalsFe36rboYyp
+ 6Y+c8CxJR9ELLpN9Yzlp+N1JTwdNMhT5mNysbvRupcmriwbI6fvIg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4vnk9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 05:09:55 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q4uIJM021750;
+ Wed, 26 Aug 2026 05:09:54 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy7xh9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 05:09:54 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67Q59oWt45482304
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 05:09:50 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 84EBC20043;
+ Wed, 26 Aug 2026 05:09:50 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 46CA62004B;
+ Wed, 26 Aug 2026 05:09:45 +0000 (GMT)
+Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
+ [9.124.215.63]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Aug 2026 05:09:44 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com
+Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
+ aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
+ mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v2 02/37] target/ppc: Migrate atomic loads to decodetree
+Date: Wed, 26 Aug 2026 10:38:28 +0530
+Message-ID: <20260826050923.74756-3-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260826050923.74756-1-rathc@linux.ibm.com>
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: gp0JQ2C5XP9IQ5nWvChMl9LdcaG4ZlsK
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfXx0QnzDadmu5W
+ 4V8zuNqNf2p8EkGONTpv5xkIJRXoN5sKgUXhJuBLwdeQkz7Mt6F/e0OleRd+M4h7aV2ZloTgU0z
+ sVwqo+rtRuGyKh5NM4tNY6F9uiTLxfA=
+X-Proofpoint-GUID: wi6apombDHriS80APOvae6xIt5nAzprh
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8e7523 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=-DTolxHDGJQozeEdauoA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX5RjoXVHSWxQG
+ QjMD3k8TqgSzX1fqjjawTuXYBT+5+qT7r0ZBmn9V8+CdqN4YcSTcdqJPvDrTIeKm+9aGHtexlLD
+ p3MhF+cQ5rWu8fjlR+4Jac6ltfF43ja5m+beB0yRqpDvZkf9PtvPf/ifiN7REinXgLiicV6poXC
+ FFzD5hj8NIKcHRvclXajmEQMfnAVkifp1WSO7CSKudxREHMp52o1Uo1HY3iFiO1gqQ6gegE9OMt
+ OXxPKNy6GGXC/As8oX3GTVAJuNw8zsLWCp3dqBCOHLxlf7YEF0StxDMT8qIdutP5wxpduM4lUzb
+ 43LmfNkuCYqsMc3FUFVjI8J2RgyV9nAhmo4bQXexmmn7wkamFQpE3g5AzXNLvGP8gYSXBYgdxCG
+ 5MlgnXLoVynTEfsoJ91yTFKYnnPn2JROX7e6A3+TqKLPjbIg4TPZevtQU0mS0xLlWHnX9vIVzjZ
+ SkzIX0Vl3ws+f5QLvug==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260040
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,157 +124,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add client support for capability VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
-(capability ID 16) in vfio-user.
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
 
-Update vfio_user_device_io_get_region_info() to receive multiple file
-descriptors passed in SCM_RIGHTS ancillary data for a region, and
-implement setup_sparse_mmaps in vfio_user_device_io_ops_sock to parse
-per-area file descriptor indices and fd_offset values.
+Migrate load-and-reserve instructions (lbarx, lharx, lwarx, ldarx,
+lqarx) to decodetree using the X-form layout.
 
-Signed-off-by: Naman Gulati <namangulati@google.com>
+A shared helper (do_load_locked) is introduced for standard-width
+variants, while LQARX is handled separately due to its 128-bit
+semantics and register pairing constraints.
+
+The implementation preserves legacy behavior, including:
+  - Reservation granularity and overwrite semantics
+  - Alignment requirements
+  - Invalid instruction cases for LQARX
+
+Testing:
+  - Verified TCG equivalence with legacy implementation
+
+Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- hw/vfio-user/device.c   | 63 ++++++++++++++++++++++++++++++++++++-----
- hw/vfio-user/protocol.h | 20 +++++++++++++
- 2 files changed, 76 insertions(+), 7 deletions(-)
+ target/ppc/insn32.decode |   7 +++
+ target/ppc/translate.c   | 124 +++++++++++++++++++--------------------
+ 2 files changed, 69 insertions(+), 62 deletions(-)
 
-diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-index 03a7026778..58a691601c 100644
---- a/hw/vfio-user/device.c
-+++ b/hw/vfio-user/device.c
-@@ -14,6 +14,9 @@
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 342e65dadf..26948e08a7 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -1309,6 +1309,13 @@ XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+ ##Extend Sign Word and Shift Left Immediate XS-form
+ EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
  
- #include "hw/vfio-user/device.h"
- #include "hw/vfio-user/trace.h"
-+#include "hw/vfio/vfio-region.h"
-+#include "hw/vfio/vfio-helpers.h"
-+#include "hw/vfio/trace.h"
++## Load and Reserve Instructions
++LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
++LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
++LWARX           011111 ..... ..... ..... 0000010100 .   @X_rc
++LDARX           011111 ..... ..... ..... 0001010100 .   @X_rc
++LQARX           011111 ..... ..... ..... 0100010100 .   @X_rc
++
+ ## Vector Division Instructions
  
- /*
-  * These are to defend against a malign server trying
-@@ -172,8 +175,9 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
-                                                struct vfio_region_info *info,
-                                                struct VFIORegionFDs *region_fds)
+ VDIVSW          000100 ..... ..... ..... 00110001011    @VX
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index e627f48f9e..cc9287dcc5 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2947,30 +2947,6 @@ static void gen_isync(DisasContext *ctx)
+     ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+ }
+ 
+-static void gen_load_locked(DisasContext *ctx, MemOp memop)
+-{
+-    TCGv gpr = cpu_gpr[rD(ctx->opcode)];
+-    TCGv t0 = tcg_temp_new();
+-
+-    gen_set_access_type(ctx, ACCESS_RES);
+-    gen_addr_reg_index(ctx, t0);
+-    tcg_gen_qemu_ld_tl(gpr, t0, ctx->mem_idx, DEF_MEMOP(memop) | MO_ALIGN);
+-    tcg_gen_mov_tl(cpu_reserve, t0);
+-    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+-    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+-}
+-
+-#define LARX(name, memop)                  \
+-static void gen_##name(DisasContext *ctx)  \
+-{                                          \
+-    gen_load_locked(ctx, memop);           \
+-}
+-
+-/* lwarx */
+-LARX(lbarx, MO_UB)
+-LARX(lharx, MO_UW)
+-LARX(lwarx, MO_UL)
+-
+ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+                                       TCGv EA, TCGCond cond, int addend)
  {
--    int fd = -1;
--    VFIOUserFDs fds = { 0, 1, &fd };
-+    int fds[VFIO_USER_MAX_MAX_FDS];
-+    int num_fds = VFIO_USER_MAX_MAX_FDS;
-+    VFIOUserFDs user_fds = { 0, num_fds, fds };
-     int ret;
+@@ -3219,42 +3195,9 @@ STCX(sthcx_, MO_UW)
+ STCX(stwcx_, MO_UL)
  
-     region_fds->fds = NULL;
-@@ -183,7 +187,7 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
-         return -EINVAL;
-     }
+ #if defined(TARGET_PPC64)
+-/* ldarx */
+-LARX(ldarx, MO_UQ)
+ /* stdcx. */
+ STCX(stdcx_, MO_UQ)
  
--    ret = vfio_user_get_region_info(vbasedev->proxy, info, &fds);
-+    ret = vfio_user_get_region_info(vbasedev->proxy, info, &user_fds);
-     if (ret) {
-         return ret;
-     }
-@@ -194,10 +198,12 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
-         return -EINVAL;
-     }
- 
--    if (fds.recv_fds > 0) {
--        region_fds->fds = g_new0(int, 1);
--        region_fds->nr_fds = 1;
--        region_fds->fds[0] = fd;
-+    if (user_fds.recv_fds > 0) {
-+        region_fds->fds = g_new0(int, user_fds.recv_fds);
-+        region_fds->nr_fds = user_fds.recv_fds;
-+        for (int i = 0; i < user_fds.recv_fds; i++) {
-+            region_fds->fds[i] = fds[i];
-+        }
-     }
- 
- 
-@@ -483,9 +489,52 @@ static int vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
- /*
-  * Socket-based io_ops
-  */
-+static int vfio_user_device_io_setup_sparse_mmaps(VFIORegion *region,
-+                                                  struct vfio_region_info *info,
-+                                                  Error **errp)
-+{
-+    struct vfio_info_cap_header *hdr;
-+    int i, j = 0;
-+
-+    hdr = vfio_get_region_info_cap(info, VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS);
-+    if (hdr) {
-+        struct vfio_region_info_cap_sparse_mmap_fds *sparse_fds =
-+            container_of(hdr, struct vfio_region_info_cap_sparse_mmap_fds,
-+                         header);
-+
-+        trace_vfio_region_sparse_mmap_header(region->vbasedev->name,
-+                                             region->nr, sparse_fds->nr_areas);
-+
-+        region->mmaps = g_new0(VFIOMmap, sparse_fds->nr_areas);
-+
-+        for (i = 0; i < sparse_fds->nr_areas; i++) {
-+            if (sparse_fds->areas[i].size) {
-+                uint64_t end = sparse_fds->areas[i].offset +
-+                               sparse_fds->areas[i].size - 1;
-+
-+                trace_vfio_region_sparse_mmap_entry(i,
-+                                                    sparse_fds->areas[i].offset,
-+                                                    end);
-+                region->mmaps[j].offset = sparse_fds->areas[i].offset;
-+                region->mmaps[j].fd_offset = sparse_fds->areas[i].fd_offset;
-+                region->mmaps[j].size = sparse_fds->areas[i].size;
-+                region->mmaps[j].fd_index = sparse_fds->areas[i].fd_index;
-+                j++;
-+            }
-+        }
-+
-+        region->nr_mmaps = j;
-+        region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
-+        return 0;
-+    }
-+
-+    return vfio_default_setup_sparse_mmaps(region, info, errp);
-+}
-+
- VFIODeviceIOOps vfio_user_device_io_ops_sock = {
-     .device_feature = vfio_user_device_io_device_feature,
-     .get_region_info = vfio_user_device_io_get_region_info,
-+    .setup_sparse_mmaps = vfio_user_device_io_setup_sparse_mmaps,
-     .get_irq_info = vfio_user_device_io_get_irq_info,
-     .set_irqs = vfio_user_device_io_set_irqs,
-     .region_read = vfio_user_device_io_region_read,
-diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
-index c478d1353f..135b965d99 100644
---- a/hw/vfio-user/protocol.h
-+++ b/hw/vfio-user/protocol.h
-@@ -166,6 +166,26 @@ typedef struct {
-     uint64_t offset;
- } VFIOUserRegionInfo;
+-/* lqarx */
+-static void gen_lqarx(DisasContext *ctx)
+-{
+-    int rd = rD(ctx->opcode);
+-    TCGv EA, hi, lo;
+-    TCGv_i128 t16;
+-
+-    if (unlikely((rd & 1) || (rd == rA(ctx->opcode)) ||
+-                 (rd == rB(ctx->opcode)))) {
+-        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+-        return;
+-    }
+-
+-    gen_set_access_type(ctx, ACCESS_RES);
+-    EA = tcg_temp_new();
+-    gen_addr_reg_index(ctx, EA);
+-
+-    /* Note that the low part is always in RD+1, even in LE mode.  */
+-    lo = cpu_gpr[rd + 1];
+-    hi = cpu_gpr[rd];
+-
+-    t16 = tcg_temp_new_i128();
+-    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx, DEF_MEMOP(MO_128 | MO_ALIGN));
+-    tcg_gen_extr_i128_i64(lo, hi, t16);
+-
+-    tcg_gen_mov_tl(cpu_reserve, EA);
+-    tcg_gen_movi_tl(cpu_reserve_length, 16);
+-    tcg_gen_st_tl(hi, tcg_env, offsetof(CPUPPCState, reserve_val));
+-    tcg_gen_st_tl(lo, tcg_env, offsetof(CPUPPCState, reserve_val2));
+-}
+-
+ /* stqcx. */
+ static void gen_stqcx_(DisasContext *ctx)
+ {
+@@ -5741,6 +5684,68 @@ static bool trans_EXTSWSLI(DisasContext *ctx, arg_XS *a)
+     return true;
+ }
  
 +/*
-+ * VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
++ * Load-and-reserve core
 + */
-+#define VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS 16
++static bool do_load_locked(DisasContext *ctx, arg_X_rc *a, MemOp memop)
++{
++    TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    TCGv gpr = cpu_gpr[a->rt];
 +
-+struct vfio_region_sparse_mmap_fd_area {
-+    uint64_t offset;
-+    uint64_t fd_offset;
-+    uint64_t size;
-+    uint32_t fd_index;
-+    uint32_t pad;
-+};
++    gen_set_access_type(ctx, ACCESS_RES);
 +
-+struct vfio_region_info_cap_sparse_mmap_fds {
-+    struct vfio_info_cap_header header;
-+    uint32_t nr_areas;
-+    uint32_t reserved;
-+    struct vfio_region_sparse_mmap_fd_area areas[];
-+};
++    tcg_gen_qemu_ld_tl(gpr, EA, ctx->mem_idx, memop | MO_ALIGN);
 +
- /*
-  * VFIO_USER_DEVICE_GET_IRQ_INFO
-  * imported from struct vfio_irq_info
++    tcg_gen_mov_tl(cpu_reserve, EA);
++    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
++
++    tcg_gen_mov_tl(cpu_reserve_val, gpr);
++
++    return true;
++}
++
++TRANS_FLAGS2(ATOMIC_ISA206, LBARX, do_load_locked, DEF_MEMOP(MO_UB))
++TRANS_FLAGS2(ATOMIC_ISA206, LHARX, do_load_locked, DEF_MEMOP(MO_UW))
++TRANS(LWARX, do_load_locked, DEF_MEMOP(MO_UL))
++TRANS64(LDARX, do_load_locked, DEF_MEMOP(MO_UQ))
++
++static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
++#if defined(TARGET_PPC64)
++    TCGv EA;
++    TCGv_i128 t16;
++    /* Must use even register and avoid overlap */
++    if (unlikely((a->rt & 1) || (a->rt == a->ra) || (a->rt == a->rb))) {
++        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
++        return true;
++    }
++
++    gen_set_access_type(ctx, ACCESS_RES);
++    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    t16 = tcg_temp_new_i128();
++
++    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx,
++                         DEF_MEMOP(MO_128 | MO_ALIGN));
++
++    tcg_gen_extr_i128_i64(cpu_gpr[a->rt + 1],
++                         cpu_gpr[a->rt],
++                         t16);
++
++    tcg_gen_mov_tl(cpu_reserve, EA);
++    tcg_gen_movi_tl(cpu_reserve_length, 16);
++
++    tcg_gen_st_i64(cpu_gpr[a->rt],
++                   tcg_env, offsetof(CPUPPCState, reserve_val));
++    tcg_gen_st_i64(cpu_gpr[a->rt + 1],
++                   tcg_env, offsetof(CPUPPCState, reserve_val2));
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
+ #include "translate/fixedpoint-impl.c.inc"
+ 
+ #include "translate/fp-impl.c.inc"
+@@ -5853,9 +5858,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+ GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+ GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+-GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+-GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+-GEN_HANDLER(lwarx, 0x1F, 0x14, 0x00, 0x00000000, PPC_RES),
+ GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stbcx_, 0x1F, 0x16, 0x15, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+@@ -5864,8 +5866,6 @@ GEN_HANDLER2(stwcx_, "stwcx.", 0x1F, 0x16, 0x04, 0x00000000, PPC_RES),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER(ldarx, 0x1F, 0x14, 0x02, 0x00000000, PPC_64B),
+-GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+ GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+ GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+ #endif
 -- 
-2.55.0.860.g4b6b3295ed-goog
+2.55.0
 
 
