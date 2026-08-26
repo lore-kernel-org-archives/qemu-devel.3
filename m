@@ -4,109 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C1BEC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78745C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzD8K-0000HG-Hk; Wed, 26 Aug 2026 08:53:36 -0400
+	id 1wzD7G-0007Yw-Nn; Wed, 26 Aug 2026 08:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD88-0008SX-Ge; Wed, 26 Aug 2026 08:53:24 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wzD7D-0007WM-A6; Wed, 26 Aug 2026 08:52:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD7x-0002nO-EJ; Wed, 26 Aug 2026 08:53:18 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wzD7A-0002Qg-WA; Wed, 26 Aug 2026 08:52:27 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCVx162127759; Wed, 26 Aug 2026 12:52:51 GMT
+ 67QCW2NY2877774; Wed, 26 Aug 2026 12:52:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=TCzoDCBigZnHnzhP7
- O0NeyYg9pf+U7Zxai9zdUPXYgk=; b=Dkmtf3Qn9PaoC4tSUPAGXViX9zn2GBMMW
- Bpq88xoLvytSBCVcqbq3fCnBPhV64T24N7PDaoMqHV6auZVy6om8es7PM7T57xfY
- 3fI6dQQ5g2gPeGgg+tfYuFZcmprzaMHp1dCt5dOHN/m98xEk726SoHJUoTB6fTup
- 8DjYI5zJErz3mfpLTDqFQago5TEYCWYFCO6lVB1ECEL6uVbmK316SsM5+M+6LIJv
- 0ArTFTCr9fukMmEmTMike9+XCdnpA+rOQ/MtFGB5P0zKEQsWACiuUwsPJe0eQzs3
- 1J6EF2KmrN8+OvdiSadkV2MdpwH9L94ZqqT2wsWvjioKse2mcs+fQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqxma0-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3qT8/T
+ vKVN2eBp/bmmADAW3dCJWTTLMLC0e3i6BtHew=; b=Q6oDQ3peZL+/kkOqrstB3P
+ +4DaMqXMvsUwrNZLZ3zcOVL3d1gGbZr0bQzK9IGQIgnsNS576mCrEB06O3gF2SEZ
+ 2JTjLD5ZyVH7u8kOAS4OXHe2depBXxdk/vkvmpZ7Co3xkSKvLLCpFsKfTSs/Jxo9
+ NuGDfRcDsOOT9DGgf0cxcO4l/AqZJuZdsGqzEw7gdoYk/JYq5Fq+o19YX7Jf4Y/6
+ yqJ4KL9Tkl0iklWIUU4okdAUI/SaKMufLUNT8SjSoJIUafsmAAFK2oOpZQsUlJNE
+ kXSDPxmGD+CFtpG7JfLdeFGW+gLTZaiaqRTi9ZKq3YD/lfVJyAATSPYxTPsZexZg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726epkje-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:50 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfLbF003033;
- Wed, 26 Aug 2026 12:52:49 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qa5nk-1
+ Wed, 26 Aug 2026 12:52:23 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfGfI002326;
+ Wed, 26 Aug 2026 12:52:23 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k1xvp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:49 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:23 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QCqmwc65732900
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCqL5r42729818
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 12:52:49 GMT
+ Wed, 26 Aug 2026 12:52:22 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B54125805B;
- Wed, 26 Aug 2026 12:52:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E69EF5805B;
+ Wed, 26 Aug 2026 12:52:21 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B9D2B58059;
- Wed, 26 Aug 2026 12:52:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D018158059;
+ Wed, 26 Aug 2026 12:52:20 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.78.161]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 12:52:47 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:20 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Collin Walling <walling@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 26/37] pc-bios/s390-ccw: Add signed component address overlap
- checks
-Date: Wed, 26 Aug 2026 08:52:01 -0400
-Message-ID: <20260826125213.1901252-27-farman@linux.ibm.com>
+Subject: [PULL 05/37] crypto/x509-utils: Add helper functions for certificate
+ store
+Date: Wed, 26 Aug 2026 08:51:40 -0400
+Message-ID: <20260826125213.1901252-6-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826125213.1901252-1-farman@linux.ibm.com>
 References: <20260826125213.1901252-1-farman@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MmMOKVJSQxFBGTU1LXjfIDUMSCA3c2w_
-X-Proofpoint-ORIG-GUID: MmMOKVJSQxFBGTU1LXjfIDUMSCA3c2w_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXzT2iODYsxRZ2
- z//zrB0BRGsqUwfNwOp2IvCG+axSSDT3PzK7wDPNB1wlD38c0lNyy4Gfsvd7oIv27yrdUdctpuE
- 5aRn9T32iXwwMPZQin96IugyMnS6tn9EU1OsikbhmDDk6HZE2GPCQ1xVErspPFWJbr0J7IjMuB8
- VRFDzx8FXWRLDfRPHXfriotrDcdbA5aVv7vvVPqrMRP1Xyp0m+3Vu15EPZmn1/EQpPkx7MewBXw
- j8tksYX3iwGrvkFhZTZvZZj4Pn4BitUU00Xy6UhaVFuw+Du0EWynY7dL8b9bd/RSxjL3wqrQQ8W
- Eb1UGfoJ7R7f0/lhNpwC7xwdpgm5yO0pld53xS2DtW2VUlq/e6OVq82aQ2uGQz7aamuYe3z8W0D
- Ta6bA4RmoF4t3T9YRlxK1vFPuucRShBsgBJJ7P17VNY+ZcHANDP6q6wHARWIAzgIOriHcMT5wgX
- aPnvL1CR4buoN/dQmBQ==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8ee1a2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=NXXwFC7yLcffaugpo9UA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX58eolyh/9btE
- Xvd3/UHjLasG+JH4V7QETU2L1PmUn44rGsrdoWhze2ggTK4gkXGv+cTeVlPcEkLL/XjyYVcMBkm
- vdfSKCmKPMw8JU5q3QIYzf1dwPIej5s=
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8ee187 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=GV1Vcjpo_iY7pHGplTMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX5SLgJ6CwwsfH
+ 2d2f8loOBoFwCT8sz45XJTSGJ7mSVC1VuzSXToUPXthh0pmT9pn4oqf/j9vF8hALOGx1ATgwWmJ
+ YDgLKMGKPF0oWtQ84OJ1kidXAjps7fQ=
+X-Proofpoint-GUID: vK--Bq6tqAsYE-38wEMqB2P7-wscJvti
+X-Proofpoint-ORIG-GUID: vK--Bq6tqAsYE-38wEMqB2P7-wscJvti
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXw8BMVs5thHmx
+ Djg2FH1UWP6In4fQtX/bavjJ8krUoM+GQJl8nqtB8mRVLu6zg38h58c0xm7JWPA6AjhlJAW70gd
+ TuWcnhSIMJQ4a5qesLKYbI+JKb90/0WDsegC0+i3O3b3tvu7lpEYsw8eQAI6ATxOlO6Lq8b3iHQ
+ Z7+XMiDAW4fSSli4nfvtsiAJcBRbKyPKjDTSwjbE5XH8S51GdaYph6W/fp16qXyMyz+HyAYu6MB
+ l32O86C9tuKlXxqlTFBozd64mguIhQYxuEn9TXdO+0BaknLZ+BTKswVKvM4ZZofNRH5ugD5htao
+ 5Re2iS6OXigW18Uqcm22ErH+NtquELTB3JzzeFpBFULTefbJm5kAi7WqI2F+w1ZC11rOeWQFnCv
+ AyhOQg3Wj8w3tnmNZARelikF+H+yec3qWPzPkQYDiP4VIX59QR9cZajBR23lXiLC/4PMkAbJXUi
+ jOQ6ktr0oFAdfr/ALaw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260104
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,76 +129,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhuoying Cai <zycai@linux.ibm.com>
 
-Add address range tracking and overlap checks to ensure that no
-component overlaps with a signed component during secure IPL.
+Introduce new helper functions for x509 certificate, which will be used
+by the certificate store:
+
+qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+
+These functions provide support for certificate format conversion.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-25-zycai@linux.ibm.com
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-4-zycai@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- pc-bios/s390-ccw/secure-ipl.c | 19 +++++++++++++++++++
- pc-bios/s390-ccw/secure-ipl.h | 10 ++++++++++
- 2 files changed, 29 insertions(+)
+ crypto/x509-utils.c         | 49 +++++++++++++++++++++++++++++++++++++
+ include/crypto/x509-utils.h | 21 ++++++++++++++++
+ 2 files changed, 70 insertions(+)
 
-diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-index a03105cf5a..fd3455cf67 100644
---- a/pc-bios/s390-ccw/secure-ipl.c
-+++ b/pc-bios/s390-ccw/secure-ipl.c
-@@ -193,6 +193,23 @@ static void init_lists(IplDeviceComponentList *comp_list,
-     cert_list->ipl_info_header.len = sizeof(IplInfoBlockHeader);
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 1b497caae8..369e7ca6af 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -82,6 +82,46 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return ret;
  }
  
-+static void check_comp_overlap(IplDeviceComponentList *comp_list,
-+                               IplDeviceComponentEntry comp_entry)
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result, size_t *resultlen,
++                                  Error **errp)
 +{
-+    IplDeviceComponentEntry *comp;
++    int ret = -1;
++    int rc;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_datum_t datum_der = {.data = NULL, .size = 0};
 +
-+    /*
-+     * Check component's address range does not overlap with any
-+     * signed component's address range.
-+     */
-+    for_each_rb_entry(comp, comp_list) {
-+        if (comp->flags & S390_IPL_DEV_COMP_FLAG_SC &&
-+            intersects(comp->addr, comp->len, comp_entry.addr, comp_entry.len)) {
-+            zipl_secure_error("Component addresses overlap");
-+        }
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
 +    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_export2(crt, GNUTLS_X509_FMT_DER, &datum_der);
++    if (rc != 0) {
++        error_setg(errp, "Failed to convert certificate to DER format: %s",
++                   gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    *resultlen = datum_der.size;
++    *result = g_memdup2(datum_der.data, datum_der.size);
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    g_free(datum_der.data);
++    return ret;
 +}
 +
- static int zipl_load_signature(ComponentEntry *entry, uint64_t sig)
- {
-     if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
-@@ -294,6 +311,8 @@ int zipl_run_secure(ComponentEntry **entry_ptr, const uint8_t *tmp_sec,
-             comp_entry.addr = comp_addr;
-             comp_entry.len = (uint64_t)comp_len;
+ #else /* ! CONFIG_GNUTLS */
  
-+            check_comp_overlap(comp_list, comp_entry);
-+
-             /* no signature present (unsigned component) */
-             if (!sig_entry.len) {
-                 comp_list_add(comp_list, comp_entry);
-diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
-index b5a871a799..d495dd5d04 100644
---- a/pc-bios/s390-ccw/secure-ipl.h
-+++ b/pc-bios/s390-ccw/secure-ipl.h
-@@ -116,4 +116,14 @@ static inline bool verify_signature(IplDeviceComponentEntry comp_entry,
-     return false;
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+@@ -94,4 +134,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return -1;
  }
  
-+static inline bool intersects(uint64_t addr0, uint64_t size0,
-+                              uint64_t addr1, uint64_t size1)
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp)
 +{
-+    if (addr1 > addr0) {
-+        return addr1 - addr0 < size0;
-+    }
-+
-+    return addr0 - addr1 < size1;
++    error_setg(errp, "GNUTLS is required to export X.509 certificate");
++    return -1;
 +}
 +
- #endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index 1e99661a71..91ae79fb03 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -19,4 +19,25 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+                                       size_t *resultlen,
+                                       Error **errp);
+ 
++/**
++ * qcrypto_x509_convert_cert_der
++ * @cert: pointer to the raw certificate data in PEM format
++ * @size: size of the certificate
++ * @result: output location for the allocated buffer for the certificate
++ *          in DER format
++ *          (the function allocates memory which must be freed by the caller)
++ * @resultlen: pointer to the size of the buffer (will be updated with the
++ *             actual size of the DER-encoded certificate)
++ * @errp: error pointer
++ *
++ * Convert the given @cert from PEM to DER format.
++ *
++ * Returns: 0 on success,
++ *         -1 on error.
++ */
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp);
++
+ #endif
 -- 
 2.55.0
 
