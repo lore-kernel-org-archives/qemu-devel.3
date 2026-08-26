@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D85C5DF97
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857BEC61DBD
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz5wp-0007gT-ML; Wed, 26 Aug 2026 01:13:15 -0400
+	id 1wz5wk-00078J-G0; Wed, 26 Aug 2026 01:13:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5wo-0007Xd-M1; Wed, 26 Aug 2026 01:13:14 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wz5wj-00077K-7a; Wed, 26 Aug 2026 01:13:09 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5wm-0005b8-6Y; Wed, 26 Aug 2026 01:13:14 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wz5wg-0005ab-BD; Wed, 26 Aug 2026 01:13:08 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q3VeBa2830794; Wed, 26 Aug 2026 05:13:09 GMT
+ 67Q3ViKC2716420; Wed, 26 Aug 2026 05:13:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=t2Whdx0kK2rdimuiH
- gM7UTHUTpxE17XVBMluxby7i6Y=; b=ruom8lsMJxaaOyvX9AzpxIsQvyN80sWVu
- YbHvODVZY//X4xZHNaOEgpGs13Ge7mBRqR1wvfR7D/qfYTPpzVvm59WAUECsnsHj
- cqt5kqw7nbWG1cgUE3Jz/u6q6N0uTuXX9ozlVxdZEUqkVywsmsd0QmAnJG8C3BJw
- CczxZusa9WfG+YDk5loTkHm+4pcr4erokC6Zl0L4nAIylEX0PHcwx0fYS6IIbOJ3
- fGSgRf2hWYD7JF36AuKVwjNiiKowKw1/EBw1XgK97oOVhebQ7LQ/1GQYnguwjPbr
- L4RV2Mb709ZhS8Y6cU/DtUIg/fMsyXQXblktwP72xSpqcRz2NbtOw==
+ :mime-version:references:subject:to; s=pp1; bh=Hdi+OM6NzCs15lMw3
+ /hNlQ/yWyYzb2Xh9FX9+8jcgmg=; b=Ap3h5EsXiNDAqcA0ZOkZLhXyqcID1ltCx
+ bTEiRvHuVwXCxG3jUAK7G4sw+a2dOif0if4l04B6hFN+tbtFeP86oL4AxFfJscsG
+ lTGhp59n9AJ2DUfjbQD60bvlNf/bQdHDQos7+CqYgt8bHNMmMqxvQ6x4r4wkaPWi
+ agOsYfB6T85uRv0f82fwQH8p2jwjDrt/aWvs+mz3lIxflCJDJPG8yLPwpOy7C98h
+ oVB+tLTa8FEWp4jTFlv5DxojbAm9+y1EdhgLB9HO47TlcFbUZxXpySwLnJotdjCa
+ pIEBh0uzuXNO2fg9n6TVM5Bwb93JzeolYAv5P0Y7fKi5wgQV+ZFqw==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4vp1c-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hvrvd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:13:09 +0000 (GMT)
+ Wed, 26 Aug 2026 05:13:03 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5BMHS026933;
- Wed, 26 Aug 2026 05:13:08 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k07f2-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5BNwX026939;
+ Wed, 26 Aug 2026 05:13:02 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k07ek-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:13:07 +0000 (GMT)
+ Wed, 26 Aug 2026 05:13:02 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67Q5D4EO46072186
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67Q5Cw1H53019092
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 05:13:04 GMT
+ Wed, 26 Aug 2026 05:12:58 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EADE820043;
- Wed, 26 Aug 2026 05:13:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AC6BB20043;
+ Wed, 26 Aug 2026 05:12:58 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 30B5920040;
- Wed, 26 Aug 2026 05:12:59 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C29ED20040;
+ Wed, 26 Aug 2026 05:12:53 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.124.215.63]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 05:12:58 +0000 (GMT)
+ Wed, 26 Aug 2026 05:12:53 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -65,9 +65,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 34/37] target/ppc: Use PPC2_ISA207 instead of PPC2_ISA207S
-Date: Wed, 26 Aug 2026 10:39:00 +0530
-Message-ID: <20260826050923.74756-35-rathc@linux.ibm.com>
+Subject: [PATCH v2 33/37] target/ppc: Use PPC2_ISA207 instead of
+ PPC2_ALTIVEC_207
+Date: Wed, 26 Aug 2026 10:38:59 +0530
+Message-ID: <20260826050923.74756-34-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826050923.74756-1-rathc@linux.ibm.com>
 References: <20260826050923.74756-1-rathc@linux.ibm.com>
@@ -75,40 +76,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 9EEg2FAeF7E7d5BLy062p4PyFZkhwto4
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfXyuU9lhlhiffM
- USh6RkuOyvfN8K1Yx74XElnTX1Tr82V3+mKFGM703D0EE0syFKKzGNCd2SF2hn5cI5puMnAgS0/
- 8l55lTATN2JyaBSy/6u53j38X1YgzwQ=
-X-Proofpoint-GUID: cU_9uJJ2uvlOiuTh5v1RsoCv7odC8i7F
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8e75e5 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfXwGn5X5KK9Soe
+ Vtkd4Vt8d+X/TZ0pP8BRbpYyffMKlP0qy04LULHcBc6LTOvvUYnJtctrhQSHvGGmyC4r/RBBqDq
+ 8qvHIO47CUrST+aEYIYEL5sWf9tPEnw=
+X-Proofpoint-GUID: IAwH9ArJYyZvX0nXD7iOATyS5-B-jj1_
+X-Proofpoint-ORIG-GUID: hCEqiJkA-UCPgntQL1NHsn9zhhWkrm20
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX9Ik2GwJ9hXSf
+ TC0CKGdNEEnqA7A4m5xineYj53gzhIpftGUDGqetngdrH3knnghzIVwqEZEFibJw6aaPkn2iLWL
+ zNuRLqc/JvPbRge7YjGlIZZyLjBcByiDZsMCy8bfjKmdB3XXyS8mE4717Eth21g7TxAiAq7/zp9
+ GznXr1HDyUVJ+/EnQfam19fXJ3Qc9KSI7mn5iC7I1DpOzYojnkdVarrmqBqK6kARXUBm2Nk5+RB
+ tm5pPrrm9S/z1msvgLq6w1B141PbwWMTyQGQDSRO4c49ztu8yNbiA2fMwzqaTp7A3UbpA4wmLJF
+ fUSR3v+8EMgJkNZErmaERh+G7rZDsLnIqat3bwhmGF3EkJ4N0DjaTKJHfrJ8T+HFpeZE6it71cl
+ 5lYR8M4EV4AlgKLb3XkB7YYbvpncWFl4Fjt9MRNRxgnms29xBmlFAesgATo4Ku/FD0FdKlhieTU
+ q9XHoSt8JsZoViB6o+A==
+X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8e75df cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
- a=yMmXoBJQ3w1rxId9nhgA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX0srn3TPaViGH
- xCxBHeQMC6p2WXcMzjOl23z87kfPlr3l82of2HtjrpP/DcXeuAf2QR+LHxv6rqzrPLVSWH79hrG
- kVeKXLipzC8B6nqzWiO7A4OZWJpmons2g8GN9UJr5BBjGsBmToOFe8apBtQJMzjSlcVleGn9HQd
- cb9awAnXIrlyzo7ThM33VVsmXZnEG3T7XdgndWH5jEXFJ27dA0a97SxrRNfEJmMIiM9HhiUMbFP
- 979MV8mfxt53lqWVVToh1xnSLl5nvUee6AumZaNfLJMJvs1SDBXSM58n4yRfb5yZ3TMWZAaKT9a
- 2kxe7d7eb1HZjvAFUaxlVm5Vdtq2iNuk+dREf0wUTBj1yR5TG05mYHoV2aJIKx7nVfPwHWbB+W0
- OyPZ4HjwQAQHYqQc2qJ7c5UdSLxQxveNd70fI3U5EQRSxULTIi5tqGDPAymYwXBTzGXLffFzezB
- T7JKS5BIDVUKXkqsWeQ==
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
+ a=TVBnEkQHhD3h3QFkF50A:9 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260040
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,8 +126,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PPC2_ISA207S is only ever set in the CPUPPCState's insns_flags2
-alongside PPC2_ISA207. Checks made by PPC2_ISA207S could be
+PPC2_ALTIVEC_207 is only ever set in the CPUPPCState's insns_flags2
+alongside PPC2_ISA207. Checks made by PPC2_ALTIVEC_207 could be
 replaced with PPC2_ISA207, hence rendering it useless and apt for
 removal. This patch does the same.
 
@@ -134,240 +135,380 @@ Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- hw/ppc/spapr_caps.c                            | 2 +-
- linux-user/ppc/elfload.c                       | 2 +-
- target/ppc/cpu.h                               | 5 +----
- target/ppc/cpu_init.c                          | 3 +--
- target/ppc/cpu_init.h                          | 2 +-
- target/ppc/tcg-excp_helper.c                   | 8 ++++----
- target/ppc/translate.c                         | 6 +++---
- target/ppc/translate/bhrb-impl.c.inc           | 4 ++--
- target/ppc/translate/branch-impl.c.inc         | 2 +-
- target/ppc/translate/processor-ctrl-impl.c.inc | 8 ++++----
- 10 files changed, 19 insertions(+), 23 deletions(-)
+ linux-user/ppc/elfload.c            |   3 +-
+ target/ppc/cpu.h                    |   4 +-
+ target/ppc/cpu_init.c               |   2 +-
+ target/ppc/cpu_init.h               |   3 +-
+ target/ppc/translate/vmx-impl.c.inc | 102 ++++++++++++++--------------
+ target/ppc/translate/vmx-ops.c.inc  |  18 ++---
+ 6 files changed, 64 insertions(+), 68 deletions(-)
 
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index f4a26a85b5..0d659e9b02 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -676,7 +676,7 @@ static void cap_ail_mode_3_apply(SpaprMachineState *spapr,
- 
-     if (tcg_enabled()) {
-         /* AIL-3 is only supported on POWER8 and above CPUs. */
--        if (!(pcc->insns_flags2 & PPC2_ISA207S)) {
-+        if (!(pcc->insns_flags2 & PPC2_ISA207)) {
-             error_setg(errp, "TCG only supports cap-ail-mode-3 on POWER8 and later CPUs");
-             error_append_hint(errp, "Try appending -machine cap-ail-mode-3=off\n");
-             return;
 diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
-index 8c40f1a663..7bf49e7c0b 100644
+index 76ab9f43de..8c40f1a663 100644
 --- a/linux-user/ppc/elfload.c
 +++ b/linux-user/ppc/elfload.c
-@@ -116,7 +116,7 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
+@@ -116,8 +116,7 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
      do { if (cpu->env.insns_flags2 & flag) { features |= feature; } } while (0)
  
      GET_FEATURE(PPC_ISEL, QEMU_PPC_FEATURE2_HAS_ISEL);
--    GET_FEATURE2((PPC2_ISA207 | PPC2_ISA207S), (QEMU_PPC_FEATURE2_ARCH_2_07 |
-+    GET_FEATURE2(PPC2_ISA207, (QEMU_PPC_FEATURE2_ARCH_2_07 |
+-    GET_FEATURE2((PPC2_ISA207 | PPC2_ALTIVEC_207 |
+-                  PPC2_ISA207S), (QEMU_PPC_FEATURE2_ARCH_2_07 |
++    GET_FEATURE2((PPC2_ISA207 | PPC2_ISA207S), (QEMU_PPC_FEATURE2_ARCH_2_07 |
                    QEMU_PPC_FEATURE2_VEC_CRYPTO | QEMU_PPC_FEATURE2_HAS_TAR));
      GET_FEATURE2(PPC2_ISA300, QEMU_PPC_FEATURE2_ARCH_3_00 |
                   QEMU_PPC_FEATURE2_DARN | QEMU_PPC_FEATURE2_HAS_IEEE128);
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 00676cea2b..4a77607f80 100644
+index b3cd8d85df..00676cea2b 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
 @@ -2577,8 +2577,6 @@ enum {
      PPC2_FP_CVT_ISA206 = 0x0000000000000400ULL,
      /* ISA 2.06B floating point test instructions                            */
      PPC2_FP_TST_ISA206 = 0x0000000000000800ULL,
--    /* PowerISA 2.07 Book3s specification                                    */
--    PPC2_ISA207S       = 0x0000000000008000ULL,
+-    /* ISA 2.07 Altivec                                                      */
+-    PPC2_ALTIVEC_207   = 0x0000000000004000ULL,
+     /* PowerISA 2.07 Book3s specification                                    */
+     PPC2_ISA207S       = 0x0000000000008000ULL,
      /* Double precision floating point conversion for signed integer 64      */
-     PPC2_FP_CVT_S64    = 0x0000000000010000ULL,
-     /* Transactional Memory (ISA 2.07, Book II)                              */
-@@ -2603,8 +2601,7 @@ enum {
- #define PPC_TCG_INSNS2 (PPC2_BOOKE206 | PPC2_VSX | PPC2_PRCNTL | PPC2_DBRX | \
+@@ -2606,7 +2604,7 @@ enum {
                          PPC2_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
                          PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 | \
--                        PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | \
--                        PPC2_ISA207S | PPC2_DFP | \
-+                        PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_DFP | \
+                         PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | \
+-                        PPC2_ALTIVEC_207 | PPC2_ISA207S | PPC2_DFP | \
++                        PPC2_ISA207S | PPC2_DFP | \
                          PPC2_FP_CVT_S64 | PPC2_TM | PPC2_PM_ISA206 | \
                          PPC2_ISA300 | PPC2_ISA310 | PPC2_MEM_LWSYNC | \
                          PPC2_BCDA_ISA206 | PPC2_PPE42 | PPC2_PPE42X | \
 diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index c251426b2e..6c626843c9 100644
+index 4cc8b93dca..c251426b2e 100644
 --- a/target/ppc/cpu_init.c
 +++ b/target/ppc/cpu_init.c
-@@ -6349,8 +6349,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
+@@ -6349,7 +6349,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
      pcc->insns_flags2 = PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |
                          PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
                          PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
--                        PPC2_FP_TST_ISA206 |
--                        PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
-+                        PPC2_FP_TST_ISA206 | PPC2_ISA205 | PPC2_FP_CVT_S64 |
+-                        PPC2_FP_TST_ISA206 | PPC2_ALTIVEC_207 |
++                        PPC2_FP_TST_ISA206 |
+                         PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
                          PPC2_TM | PPC2_PM_ISA206 | PPC2_MEM_LWSYNC |
                          PPC2_BCDA_ISA206;
-     pcc->msr_mask = (1ull << MSR_SF) |
 diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
-index 73f014c82a..4ba559d8af 100644
+index 6961007926..73f014c82a 100644
 --- a/target/ppc/cpu_init.h
 +++ b/target/ppc/cpu_init.h
-@@ -18,7 +18,7 @@
+@@ -17,8 +17,7 @@
+ #define PPC_INSNS_FLAGS2_POWER_COMMON                                \
      (PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |                 \
       PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
-      PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_ISA205 |         \
--     PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
-+     PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |                   \
+-     PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 |                       \
+-     PPC2_ALTIVEC_207 | PPC2_ISA205 |                                \
++     PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_ISA205 |         \
+      PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
       PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206)
  
- #define PPC_INSNS_FLAGS2_POWER9                                      \
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index d06d3f8642..93aedb0c8e 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -314,7 +314,7 @@ void ppc_cpu_debug_excp_handler(CPUState *cs)
- #if defined(TARGET_PPC64)
-     CPUPPCState *env = cpu_env(cs);
+diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+index 4e7fe22156..486f5c2151 100644
+--- a/target/ppc/translate/vmx-impl.c.inc
++++ b/target/ppc/translate/vmx-impl.c.inc
+@@ -351,14 +351,14 @@ static bool do_vx_vaddsubm(DisasContext *ctx, arg_VX *a, MemOp vece,
+ TRANS_FLAGS(ALTIVEC, VADDUBM, do_vx_vaddsubm, MO_8, tcg_gen_gvec_add)
+ TRANS_FLAGS(ALTIVEC, VADDUHM, do_vx_vaddsubm, MO_16, tcg_gen_gvec_add)
+ TRANS_FLAGS(ALTIVEC, VADDUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_add)
+-TRANS_FLAGS2(ALTIVEC_207, VADDUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_add)
++TRANS_FLAGS2(ISA207, VADDUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_add)
  
--    if (env->insns_flags2 & PPC2_ISA207S) {
-+    if (env->insns_flags2 & PPC2_ISA207) {
-         if (cs->watchpoint_hit) {
-             if (cs->watchpoint_hit->flags & BP_CPU) {
-                 env->spr[SPR_DAR] = cs->watchpoint_hit->hitaddr;
-@@ -336,7 +336,7 @@ bool ppc_cpu_debug_check_breakpoint(CPUState *cs)
- #if defined(TARGET_PPC64)
-     CPUPPCState *env = cpu_env(cs);
+ TRANS_FLAGS(ALTIVEC, VSUBUBM, do_vx_vaddsubm, MO_8, tcg_gen_gvec_sub)
+ TRANS_FLAGS(ALTIVEC, VSUBUHM, do_vx_vaddsubm, MO_16, tcg_gen_gvec_sub)
+ TRANS_FLAGS(ALTIVEC, VSUBUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_sub)
+-TRANS_FLAGS2(ALTIVEC_207, VSUBUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_sub)
++TRANS_FLAGS2(ISA207, VSUBUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_sub)
  
--    if (env->insns_flags2 & PPC2_ISA207S) {
-+    if (env->insns_flags2 & PPC2_ISA207) {
-         target_ulong priv;
+-TRANS_FLAGS2(ALTIVEC_207, VMULUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_mul)
++TRANS_FLAGS2(ISA207, VMULUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_mul)
  
-         priv = env->spr[SPR_CIABR] & PPC_BITMASK(62, 63);
-@@ -365,7 +365,7 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-     bool wt, wti, hv, sv, pr;
-     uint32_t dawrx;
+ TRANS_FLAGS2(ISA300, VMUL10CUQ, do_vx_vmul10, false, true)
+ TRANS_FLAGS2(ISA300, VMUL10ECUQ, do_vx_vmul10, true, true)
+@@ -699,22 +699,22 @@ static bool do_vector_gvec3_VX(DisasContext *ctx, arg_VX *a, int vece,
+ TRANS_FLAGS(ALTIVEC, VSLB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_shlv);
+ TRANS_FLAGS(ALTIVEC, VSLH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_shlv);
+ TRANS_FLAGS(ALTIVEC, VSLW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_shlv);
+-TRANS_FLAGS2(ALTIVEC_207, VSLD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_shlv);
++TRANS_FLAGS2(ISA207, VSLD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_shlv);
  
--    if ((env->insns_flags2 & PPC2_ISA207S) &&
-+    if ((env->insns_flags2 & PPC2_ISA207) &&
-         (wp == env->dawr_watchpoint[0])) {
-         dawrx = env->spr[SPR_DAWRX0];
-     } else if ((env->insns_flags2 & PPC2_ISA310) &&
-@@ -849,7 +849,7 @@ void helper_book3s_msgsndp(CPUPPCState *env, target_ulong rb)
- void helper_book3s_trace(CPUPPCState *env, target_ulong prev_ip)
+ TRANS_FLAGS(ALTIVEC, VSRB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_shrv);
+ TRANS_FLAGS(ALTIVEC, VSRH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_shrv);
+ TRANS_FLAGS(ALTIVEC, VSRW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_shrv);
+-TRANS_FLAGS2(ALTIVEC_207, VSRD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_shrv);
++TRANS_FLAGS2(ISA207, VSRD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_shrv);
+ 
+ TRANS_FLAGS(ALTIVEC, VSRAB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_sarv);
+ TRANS_FLAGS(ALTIVEC, VSRAH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_sarv);
+ TRANS_FLAGS(ALTIVEC, VSRAW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_sarv);
+-TRANS_FLAGS2(ALTIVEC_207, VSRAD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_sarv);
++TRANS_FLAGS2(ISA207, VSRAD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_sarv);
+ 
+ TRANS_FLAGS(ALTIVEC, VRLB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_rotlv)
+ TRANS_FLAGS(ALTIVEC, VRLH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_rotlv)
+ TRANS_FLAGS(ALTIVEC, VRLW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_rotlv)
+-TRANS_FLAGS2(ALTIVEC_207, VRLD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_rotlv)
++TRANS_FLAGS2(ISA207, VRLD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_rotlv)
+ 
+ /* Logical operations */
+ TRANS_FLAGS(ALTIVEC, VAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_and);
+@@ -722,30 +722,30 @@ TRANS_FLAGS(ALTIVEC, VANDC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_andc);
+ TRANS_FLAGS(ALTIVEC, VOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_or);
+ TRANS_FLAGS(ALTIVEC, VXOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_xor);
+ TRANS_FLAGS(ALTIVEC, VNOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nor);
+-TRANS_FLAGS2(ALTIVEC_207, VEQV, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_eqv);
+-TRANS_FLAGS2(ALTIVEC_207, VNAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nand);
+-TRANS_FLAGS2(ALTIVEC_207, VORC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_orc);
++TRANS_FLAGS2(ISA207, VEQV, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_eqv);
++TRANS_FLAGS2(ISA207, VNAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nand);
++TRANS_FLAGS2(ISA207, VORC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_orc);
+ 
+ /* Integer Max/Min operations */
+ TRANS_FLAGS(ALTIVEC, VMAXUB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_umax);
+ TRANS_FLAGS(ALTIVEC, VMAXUH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_umax);
+ TRANS_FLAGS(ALTIVEC, VMAXUW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_umax);
+-TRANS_FLAGS2(ALTIVEC_207, VMAXUD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_umax);
++TRANS_FLAGS2(ISA207, VMAXUD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_umax);
+ 
+ TRANS_FLAGS(ALTIVEC, VMAXSB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_smax);
+ TRANS_FLAGS(ALTIVEC, VMAXSH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_smax);
+ TRANS_FLAGS(ALTIVEC, VMAXSW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_smax);
+-TRANS_FLAGS2(ALTIVEC_207, VMAXSD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_smax);
++TRANS_FLAGS2(ISA207, VMAXSD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_smax);
+ 
+ TRANS_FLAGS(ALTIVEC, VMINUB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_umin);
+ TRANS_FLAGS(ALTIVEC, VMINUH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_umin);
+ TRANS_FLAGS(ALTIVEC, VMINUW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_umin);
+-TRANS_FLAGS2(ALTIVEC_207, VMINUD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_umin);
++TRANS_FLAGS2(ISA207, VMINUD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_umin);
+ 
+ TRANS_FLAGS(ALTIVEC, VMINSB, do_vector_gvec3_VX, MO_8, tcg_gen_gvec_smin);
+ TRANS_FLAGS(ALTIVEC, VMINSH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_smin);
+ TRANS_FLAGS(ALTIVEC, VMINSW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_smin);
+-TRANS_FLAGS2(ALTIVEC_207, VMINSD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_smin);
++TRANS_FLAGS2(ISA207, VMINSD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_smin);
+ 
+ static TCGv_vec do_vrl_mask_vec(unsigned vece, TCGv_vec vrb)
  {
-     uint32_t error_code = 0;
--    if (env->insns_flags2 & PPC2_ISA207S) {
-+    if (env->insns_flags2 & PPC2_ISA207) {
-         /* Load/store reporting, SRR1[35, 36] and SDAR, are not implemented. */
-         env->spr[SPR_POWER_SIAR] = prev_ip;
-         error_code = PPC_BIT(33);
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index c6c87d3e33..bc23a71a2f 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2775,7 +2775,7 @@ static inline void gen_op_mfspr(DisasContext *ctx)
-         }
-     } else {
-         /* ISA 2.07 defines these as no-ops */
--        if ((ctx->insns_flags2 & PPC2_ISA207S) &&
-+        if ((ctx->insns_flags2 & PPC2_ISA207) &&
-             (sprn >= 808 && sprn <= 811)) {
-             /* This is a nop */
-             return;
-@@ -2841,7 +2841,7 @@ static void gen_mtspr(DisasContext *ctx)
-         }
-     } else {
-         /* ISA 2.07 defines these as no-ops */
--        if ((ctx->insns_flags2 & PPC2_ISA207S) &&
-+        if ((ctx->insns_flags2 & PPC2_ISA207) &&
-             (sprn >= 808 && sprn <= 811)) {
-             /* This is a nop */
-             return;
-@@ -4105,7 +4105,7 @@ TRANS64(LDARX, do_load_locked, DEF_MEMOP(MO_UQ))
- static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
- {
-     REQUIRE_64BIT(ctx);
--    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
- #if defined(TARGET_PPC64)
-     TCGv EA;
-     TCGv_i128 t16;
-diff --git a/target/ppc/translate/bhrb-impl.c.inc b/target/ppc/translate/bhrb-impl.c.inc
-index 3a19bc4555..4b3914a1f6 100644
---- a/target/ppc/translate/bhrb-impl.c.inc
-+++ b/target/ppc/translate/bhrb-impl.c.inc
-@@ -14,7 +14,7 @@
+@@ -1091,16 +1091,16 @@ static bool do_vpk(DisasContext *ctx, arg_VX *a,
  
- static bool trans_MFBHRBE(DisasContext *ctx, arg_XFX_bhrbe *arg)
- {
--    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
-     TCGv_i32 bhrbe = tcg_constant_i32(arg->bhrbe);
-     gen_helper_mfbhrbe(cpu_gpr[arg->rt], tcg_env, bhrbe);
-     return true;
-@@ -22,7 +22,7 @@ static bool trans_MFBHRBE(DisasContext *ctx, arg_XFX_bhrbe *arg)
+ TRANS_FLAGS(ALTIVEC, VPKUHUM, do_vpk_env, gen_helper_VPKUHUM)
+ TRANS_FLAGS(ALTIVEC, VPKUWUM, do_vpk_env, gen_helper_VPKUWUM)
+-TRANS_FLAGS2(ALTIVEC_207, VPKUDUM, do_vpk_env, gen_helper_VPKUDUM)
++TRANS_FLAGS2(ISA207, VPKUDUM, do_vpk_env, gen_helper_VPKUDUM)
+ TRANS_FLAGS(ALTIVEC, VPKUHUS, do_vpk_env, gen_helper_VPKUHUS)
+ TRANS_FLAGS(ALTIVEC, VPKUWUS, do_vpk_env, gen_helper_VPKUWUS)
+-TRANS_FLAGS2(ALTIVEC_207, VPKUDUS, do_vpk_env, gen_helper_VPKUDUS)
++TRANS_FLAGS2(ISA207, VPKUDUS, do_vpk_env, gen_helper_VPKUDUS)
+ TRANS_FLAGS(ALTIVEC, VPKSHUS, do_vpk_env, gen_helper_VPKSHUS)
+ TRANS_FLAGS(ALTIVEC, VPKSWUS, do_vpk_env, gen_helper_VPKSWUS)
+-TRANS_FLAGS2(ALTIVEC_207, VPKSDUS, do_vpk_env, gen_helper_VPKSDUS)
++TRANS_FLAGS2(ISA207, VPKSDUS, do_vpk_env, gen_helper_VPKSDUS)
+ TRANS_FLAGS(ALTIVEC, VPKSHSS, do_vpk_env, gen_helper_VPKSHSS)
+ TRANS_FLAGS(ALTIVEC, VPKSWSS, do_vpk_env, gen_helper_VPKSWSS)
+-TRANS_FLAGS2(ALTIVEC_207, VPKSDSS, do_vpk_env, gen_helper_VPKSDSS)
++TRANS_FLAGS2(ISA207, VPKSDSS, do_vpk_env, gen_helper_VPKSDSS)
+ TRANS_FLAGS(ALTIVEC, VPKPX, do_vpk, gen_helper_VPKPX)
+ GEN_VXFORM_ENV(vsum4ubs, 4, 24);
+ GEN_VXFORM_ENV(vsum4sbs, 4, 28);
+@@ -1114,12 +1114,12 @@ GEN_VXFORM_ENV(vminfp, 5, 17);
+ GEN_VXFORM_HETRO(vextublx, 6, 24)
+ GEN_VXFORM_HETRO(vextuhlx, 6, 25)
+ GEN_VXFORM_HETRO(vextuwlx, 6, 26)
+-GEN_VXFORM_TRANS_DUAL(vmrgow, PPC_NONE, PPC2_ALTIVEC_207,
++GEN_VXFORM_TRANS_DUAL(vmrgow, PPC_NONE, PPC2_ISA207,
+                 vextuwlx, PPC_NONE, PPC2_ISA300)
+ GEN_VXFORM_HETRO(vextubrx, 6, 28)
+ GEN_VXFORM_HETRO(vextuhrx, 6, 29)
+ GEN_VXFORM_HETRO(vextuwrx, 6, 30)
+-GEN_VXFORM_TRANS_DUAL(vmrgew, PPC_NONE, PPC2_ALTIVEC_207,
++GEN_VXFORM_TRANS_DUAL(vmrgew, PPC_NONE, PPC2_ISA207,
+                 vextuwrx, PPC_NONE, PPC2_ISA300)
  
- static bool trans_CLRBHRB(DisasContext *ctx, arg_CLRBHRB *arg)
- {
--    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
-     gen_helper_clrbhrb(tcg_env);
+ #define GEN_VXRFORM1(opname, name, str, opc2, opc3)                     \
+@@ -1209,16 +1209,16 @@ static bool do_vcmp(DisasContext *ctx, arg_VC *a, TCGCond cond, int vece)
+ TRANS_FLAGS(ALTIVEC, VCMPEQUB, do_vcmp, TCG_COND_EQ, MO_8)
+ TRANS_FLAGS(ALTIVEC, VCMPEQUH, do_vcmp, TCG_COND_EQ, MO_16)
+ TRANS_FLAGS(ALTIVEC, VCMPEQUW, do_vcmp, TCG_COND_EQ, MO_32)
+-TRANS_FLAGS2(ALTIVEC_207, VCMPEQUD, do_vcmp, TCG_COND_EQ, MO_64)
++TRANS_FLAGS2(ISA207, VCMPEQUD, do_vcmp, TCG_COND_EQ, MO_64)
+ 
+ TRANS_FLAGS(ALTIVEC, VCMPGTSB, do_vcmp, TCG_COND_GT, MO_8)
+ TRANS_FLAGS(ALTIVEC, VCMPGTSH, do_vcmp, TCG_COND_GT, MO_16)
+ TRANS_FLAGS(ALTIVEC, VCMPGTSW, do_vcmp, TCG_COND_GT, MO_32)
+-TRANS_FLAGS2(ALTIVEC_207, VCMPGTSD, do_vcmp, TCG_COND_GT, MO_64)
++TRANS_FLAGS2(ISA207, VCMPGTSD, do_vcmp, TCG_COND_GT, MO_64)
+ TRANS_FLAGS(ALTIVEC, VCMPGTUB, do_vcmp, TCG_COND_GTU, MO_8)
+ TRANS_FLAGS(ALTIVEC, VCMPGTUH, do_vcmp, TCG_COND_GTU, MO_16)
+ TRANS_FLAGS(ALTIVEC, VCMPGTUW, do_vcmp, TCG_COND_GTU, MO_32)
+-TRANS_FLAGS2(ALTIVEC_207, VCMPGTUD, do_vcmp, TCG_COND_GTU, MO_64)
++TRANS_FLAGS2(ISA207, VCMPGTUD, do_vcmp, TCG_COND_GTU, MO_64)
+ 
+ TRANS_FLAGS2(ISA300, VCMPNEB, do_vcmp, TCG_COND_NE, MO_8)
+ TRANS_FLAGS2(ISA300, VCMPNEH, do_vcmp, TCG_COND_NE, MO_16)
+@@ -2330,11 +2330,11 @@ static bool do_va_helper(DisasContext *ctx, arg_VA *a,
      return true;
  }
-diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
-index 77eac0a239..526525369e 100644
---- a/target/ppc/translate/branch-impl.c.inc
-+++ b/target/ppc/translate/branch-impl.c.inc
-@@ -14,7 +14,7 @@
  
- static bool trans_RFEBB(DisasContext *ctx, arg_XL_s *arg)
- {
--    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
+-TRANS_FLAGS2(ALTIVEC_207, VADDECUQ, do_va_helper, gen_helper_VADDECUQ)
+-TRANS_FLAGS2(ALTIVEC_207, VADDEUQM, do_va_helper, gen_helper_VADDEUQM)
++TRANS_FLAGS2(ISA207, VADDECUQ, do_va_helper, gen_helper_VADDECUQ)
++TRANS_FLAGS2(ISA207, VADDEUQM, do_va_helper, gen_helper_VADDEUQM)
  
-     translator_io_start(&ctx->base);
-     gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
-diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
-index 3b3ed3019a..155d728b02 100644
---- a/target/ppc/translate/processor-ctrl-impl.c.inc
-+++ b/target/ppc/translate/processor-ctrl-impl.c.inc
-@@ -23,7 +23,7 @@
+-TRANS_FLAGS2(ALTIVEC_207, VSUBEUQM, do_va_helper, gen_helper_VSUBEUQM)
+-TRANS_FLAGS2(ALTIVEC_207, VSUBECUQ, do_va_helper, gen_helper_VSUBECUQ)
++TRANS_FLAGS2(ISA207, VSUBEUQM, do_va_helper, gen_helper_VSUBEUQM)
++TRANS_FLAGS2(ISA207, VSUBECUQ, do_va_helper, gen_helper_VSUBECUQ)
  
- static bool trans_MSGCLR(DisasContext *ctx, arg_X_rb *a)
- {
--    if (!(ctx->insns_flags2 & PPC2_ISA207S)) {
-+    if (!(ctx->insns_flags2 & PPC2_ISA207)) {
-         /*
-          * Before Power ISA 2.07, processor control instructions were only
-          * implemented in the "Embedded.Processor Control" category.
-@@ -47,7 +47,7 @@ static bool trans_MSGCLR(DisasContext *ctx, arg_X_rb *a)
+ TRANS_FLAGS(ALTIVEC, VPERM, do_va_helper, gen_helper_VPERM)
+ TRANS_FLAGS2(ISA300, VPERMR, do_va_helper, gen_helper_VPERMR)
+@@ -2502,14 +2502,14 @@ GEN_VXFORM_NOA(vpopcntb, 1, 28)
+ GEN_VXFORM_NOA(vpopcnth, 1, 29)
+ GEN_VXFORM_NOA(vpopcntw, 1, 30)
+ GEN_VXFORM_NOA(vpopcntd, 1, 31)
+-GEN_VXFORM_DUAL(vclzb, PPC_NONE, PPC2_ALTIVEC_207, \
+-                vpopcntb, PPC_NONE, PPC2_ALTIVEC_207)
+-GEN_VXFORM_DUAL(vclzh, PPC_NONE, PPC2_ALTIVEC_207, \
+-                vpopcnth, PPC_NONE, PPC2_ALTIVEC_207)
+-GEN_VXFORM_DUAL(vclzw, PPC_NONE, PPC2_ALTIVEC_207, \
+-                vpopcntw, PPC_NONE, PPC2_ALTIVEC_207)
+-GEN_VXFORM_DUAL(vclzd, PPC_NONE, PPC2_ALTIVEC_207, \
+-                vpopcntd, PPC_NONE, PPC2_ALTIVEC_207)
++GEN_VXFORM_DUAL(vclzb, PPC_NONE, PPC2_ISA207, \
++                vpopcntb, PPC_NONE, PPC2_ISA207)
++GEN_VXFORM_DUAL(vclzh, PPC_NONE, PPC2_ISA207, \
++                vpopcnth, PPC_NONE, PPC2_ISA207)
++GEN_VXFORM_DUAL(vclzw, PPC_NONE, PPC2_ISA207, \
++                vpopcntw, PPC_NONE, PPC2_ISA207)
++GEN_VXFORM_DUAL(vclzd, PPC_NONE, PPC2_ISA207, \
++                vpopcntd, PPC_NONE, PPC2_ISA207)
+ GEN_VXFORM(vbpermd, 6, 23);
+ GEN_VXFORM(vbpermq, 6, 21);
+ GEN_VXFORM_TRANS(vgbbd, 6, 20);
+@@ -2589,8 +2589,8 @@ static bool do_bcd_tb_ps(DisasContext *ctx, arg_VX_tb_ps *a,
+     return true;
+ }
  
- static bool trans_MSGSND(DisasContext *ctx, arg_X_rb *a)
+-TRANS_FLAGS2(ALTIVEC_207, BCDADD, do_bcd_ps, gen_helper_BCDADD)
+-TRANS_FLAGS2(ALTIVEC_207, BCDSUB, do_bcd_ps, gen_helper_BCDSUB)
++TRANS_FLAGS2(ISA207, BCDADD, do_bcd_ps, gen_helper_BCDADD)
++TRANS_FLAGS2(ISA207, BCDSUB, do_bcd_ps, gen_helper_BCDSUB)
+ TRANS_FLAGS2(ISA300, BCDUS, do_bcd, gen_helper_BCDUS)
+ TRANS_FLAGS2(ISA300, BCDS, do_bcd_ps, gen_helper_BCDS)
+ TRANS_FLAGS2(ISA300, BCDCFN, do_bcd_tb_ps, gen_helper_BCDCFN)
+@@ -2622,10 +2622,10 @@ GEN_VXFORM(vcipherlast, 4, 20)
+ GEN_VXFORM(vncipher, 4, 21)
+ GEN_VXFORM(vncipherlast, 4, 21)
+ 
+-GEN_VXFORM_DUAL(vcipher, PPC_NONE, PPC2_ALTIVEC_207,
+-                vcipherlast, PPC_NONE, PPC2_ALTIVEC_207)
+-GEN_VXFORM_DUAL(vncipher, PPC_NONE, PPC2_ALTIVEC_207,
+-                vncipherlast, PPC_NONE, PPC2_ALTIVEC_207)
++GEN_VXFORM_DUAL(vcipher, PPC_NONE, PPC2_ISA207,
++                vcipherlast, PPC_NONE, PPC2_ISA207)
++GEN_VXFORM_DUAL(vncipher, PPC_NONE, PPC2_ISA207,
++                vncipherlast, PPC_NONE, PPC2_ISA207)
+ 
+ #define VSHASIGMA(op)                         \
+ static void gen_##op(DisasContext *ctx)       \
+@@ -2647,7 +2647,7 @@ VSHASIGMA(vshasigmad)
+ 
+ GEN_VXFORM3(vpermxor, 22, 0xFF)
+ GEN_VXFORM_DUAL(vsldoi, PPC_ALTIVEC, PPC_NONE,
+-                vpermxor, PPC_NONE, PPC2_ALTIVEC_207)
++                vpermxor, PPC_NONE, PPC2_ISA207)
+ 
+ static bool trans_VCFUGED(DisasContext *ctx, arg_VX *a)
  {
--    if (!(ctx->insns_flags2 & PPC2_ISA207S)) {
-+    if (!(ctx->insns_flags2 & PPC2_ISA207)) {
-         /*
-          * Before Power ISA 2.07, processor control instructions were only
-          * implemented in the "Embedded.Processor Control" category.
-@@ -72,7 +72,7 @@ static bool trans_MSGSND(DisasContext *ctx, arg_X_rb *a)
- static bool trans_MSGCLRP(DisasContext *ctx, arg_X_rb *a)
+@@ -2815,13 +2815,13 @@ static bool do_vx_helper(DisasContext *ctx, arg_VX *a,
+     return true;
+ }
+ 
+-TRANS_FLAGS2(ALTIVEC_207, VADDCUQ, do_vx_helper, gen_helper_VADDCUQ)
+-TRANS_FLAGS2(ALTIVEC_207, VADDUQM, do_vx_helper, gen_helper_VADDUQM)
++TRANS_FLAGS2(ISA207, VADDCUQ, do_vx_helper, gen_helper_VADDCUQ)
++TRANS_FLAGS2(ISA207, VADDUQM, do_vx_helper, gen_helper_VADDUQM)
+ 
+-TRANS_FLAGS2(ALTIVEC_207, VPMSUMD, do_vx_helper, gen_helper_VPMSUMD)
++TRANS_FLAGS2(ISA207, VPMSUMD, do_vx_helper, gen_helper_VPMSUMD)
+ 
+-TRANS_FLAGS2(ALTIVEC_207, VSUBCUQ, do_vx_helper, gen_helper_VSUBCUQ)
+-TRANS_FLAGS2(ALTIVEC_207, VSUBUQM, do_vx_helper, gen_helper_VSUBUQM)
++TRANS_FLAGS2(ISA207, VSUBCUQ, do_vx_helper, gen_helper_VSUBCUQ)
++TRANS_FLAGS2(ISA207, VSUBUQM, do_vx_helper, gen_helper_VSUBUQM)
+ 
+ static void gen_VADDCUW_vec(unsigned vece, TCGv_vec t, TCGv_vec a, TCGv_vec b)
  {
-     REQUIRE_64BIT(ctx);
--    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
-     REQUIRE_SV(ctx);
- #if !defined(CONFIG_USER_ONLY) && defined(TARGET_PPC64)
-     gen_helper_book3s_msgclrp(tcg_env, cpu_gpr[a->rb]);
-@@ -85,7 +85,7 @@ static bool trans_MSGCLRP(DisasContext *ctx, arg_X_rb *a)
- static bool trans_MSGSNDP(DisasContext *ctx, arg_X_rb *a)
- {
-     REQUIRE_64BIT(ctx);
--    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
-     REQUIRE_SV(ctx);
- #if !defined(CONFIG_USER_ONLY) && defined(TARGET_PPC64)
-     gen_helper_book3s_msgsndp(tcg_env, cpu_gpr[a->rb]);
+@@ -3092,10 +3092,10 @@ TRANS_FLAGS(ALTIVEC, VMULESH, do_vx_helper, gen_helper_VMULESH)
+ TRANS_FLAGS(ALTIVEC, VMULOSH, do_vx_helper, gen_helper_VMULOSH)
+ TRANS_FLAGS(ALTIVEC, VMULEUH, do_vx_helper, gen_helper_VMULEUH)
+ TRANS_FLAGS(ALTIVEC, VMULOUH, do_vx_helper, gen_helper_VMULOUH)
+-TRANS_FLAGS2(ALTIVEC_207, VMULESW, do_vx_helper, gen_helper_VMULESW)
+-TRANS_FLAGS2(ALTIVEC_207, VMULOSW, do_vx_helper, gen_helper_VMULOSW)
+-TRANS_FLAGS2(ALTIVEC_207, VMULEUW, do_vx_helper, gen_helper_VMULEUW)
+-TRANS_FLAGS2(ALTIVEC_207, VMULOUW, do_vx_helper, gen_helper_VMULOUW)
++TRANS_FLAGS2(ISA207, VMULESW, do_vx_helper, gen_helper_VMULESW)
++TRANS_FLAGS2(ISA207, VMULOSW, do_vx_helper, gen_helper_VMULOSW)
++TRANS_FLAGS2(ISA207, VMULEUW, do_vx_helper, gen_helper_VMULEUW)
++TRANS_FLAGS2(ISA207, VMULOUW, do_vx_helper, gen_helper_VMULOUW)
+ TRANS_FLAGS2(ISA310, VMULESD, do_vx_vmuleo, true , tcg_gen_muls2_i64)
+ TRANS_FLAGS2(ISA310, VMULOSD, do_vx_vmuleo, false, tcg_gen_muls2_i64)
+ TRANS_FLAGS2(ISA310, VMULEUD, do_vx_vmuleo, true , tcg_gen_mulu2_i64)
+diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+index c1951c6975..2facbc7cb4 100644
+--- a/target/ppc/translate/vmx-ops.c.inc
++++ b/target/ppc/translate/vmx-ops.c.inc
+@@ -2,7 +2,7 @@
+ GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_ALTIVEC)
+ 
+ #define GEN_VXFORM_207(name, opc2, opc3) \
+-GEN_HANDLER_E(name, 0x04, opc2, opc3, 0x00000000, PPC_NONE, PPC2_ALTIVEC_207)
++GEN_HANDLER_E(name, 0x04, opc2, opc3, 0x00000000, PPC_NONE, PPC2_ISA207)
+ 
+ #define GEN_VXFORM_300(name, opc2, opc3)                                \
+ GEN_HANDLER_E(name, 0x04, opc2, opc3, 0x00000000, PPC_NONE, PPC2_ISA300)
+@@ -26,10 +26,10 @@ GEN_HANDLER_E(name0##_##name1, 0x4, opc2, (opc3 | 0x10), 0x00000000, tp0, tp1),
+ 
+ GEN_VXFORM_300(vextublx, 6, 24),
+ GEN_VXFORM_300(vextuhlx, 6, 25),
+-GEN_VXFORM_DUAL(vmrgow, vextuwlx, 6, 26, PPC_NONE, PPC2_ALTIVEC_207),
++GEN_VXFORM_DUAL(vmrgow, vextuwlx, 6, 26, PPC_NONE, PPC2_ISA207),
+ GEN_VXFORM_300(vextubrx, 6, 28),
+ GEN_VXFORM_300(vextuhrx, 6, 29),
+-GEN_VXFORM_DUAL(vmrgew, vextuwrx, 6, 30, PPC_NONE, PPC2_ALTIVEC_207),
++GEN_VXFORM_DUAL(vmrgew, vextuwrx, 6, 30, PPC_NONE, PPC2_ISA207),
+ GEN_VXFORM_300(vsrv, 2, 28),
+ GEN_VXFORM_300(vslv, 2, 29),
+ GEN_VXFORM(vslo, 6, 16),
+@@ -113,10 +113,10 @@ GEN_VXFORM_UIMM(vctsxs, 5, 15),
+     GEN_HANDLER(name0##_##name1, 0x04, opc2, 0xFF, 0x00000000, PPC_ALTIVEC)
+ GEN_VAFORM_PAIRED(vmaddfp, vnmsubfp, 23),
+ 
+-GEN_VXFORM_DUAL(vclzb, vpopcntb, 1, 28, PPC_NONE, PPC2_ALTIVEC_207),
+-GEN_VXFORM_DUAL(vclzh, vpopcnth, 1, 29, PPC_NONE, PPC2_ALTIVEC_207),
+-GEN_VXFORM_DUAL(vclzw, vpopcntw, 1, 30, PPC_NONE, PPC2_ALTIVEC_207),
+-GEN_VXFORM_DUAL(vclzd, vpopcntd, 1, 31, PPC_NONE, PPC2_ALTIVEC_207),
++GEN_VXFORM_DUAL(vclzb, vpopcntb, 1, 28, PPC_NONE, PPC2_ISA207),
++GEN_VXFORM_DUAL(vclzh, vpopcnth, 1, 29, PPC_NONE, PPC2_ISA207),
++GEN_VXFORM_DUAL(vclzw, vpopcntw, 1, 30, PPC_NONE, PPC2_ISA207),
++GEN_VXFORM_DUAL(vclzd, vpopcntd, 1, 31, PPC_NONE, PPC2_ISA207),
+ 
+ GEN_VXFORM_300(vbpermd, 6, 23),
+ GEN_VXFORM_207(vbpermq, 6, 21),
+@@ -127,8 +127,8 @@ GEN_VXFORM_207(vpmsumw, 4, 18),
+ 
+ GEN_VXFORM_207(vsbox, 4, 23),
+ 
+-GEN_VXFORM_DUAL(vcipher, vcipherlast, 4, 20, PPC_NONE, PPC2_ALTIVEC_207),
+-GEN_VXFORM_DUAL(vncipher, vncipherlast, 4, 21, PPC_NONE, PPC2_ALTIVEC_207),
++GEN_VXFORM_DUAL(vcipher, vcipherlast, 4, 20, PPC_NONE, PPC2_ISA207),
++GEN_VXFORM_DUAL(vncipher, vncipherlast, 4, 21, PPC_NONE, PPC2_ISA207),
+ 
+ GEN_VXFORM_207(vshasigmaw, 1, 26),
+ GEN_VXFORM_207(vshasigmad, 1, 27),
 -- 
 2.55.0
 
