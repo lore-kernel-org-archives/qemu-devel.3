@@ -4,84 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F4BC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 09:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DECBC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 09:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz9YO-0004pj-25; Wed, 26 Aug 2026 05:04:16 -0400
+	id 1wz9fU-0005zy-L8; Wed, 26 Aug 2026 05:11:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wz9YM-0004p4-Bz
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:04:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wz9fT-0005zm-9T; Wed, 26 Aug 2026 05:11:35 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wz9YK-0003mL-LJ
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:04:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787735052;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dMUx3CkXN0hFHp2GTyMbE3ZjLMT8j6sNqup++Lhq3UU=;
- b=boksSymzMHTHwwuI0QXtw0qJae7TeB++X0xr4MTLT4ha4w8TIalVijsNywKOIXKmyqLPCS
- e+QtQHWH5CfHOcrIEg6j5lCclaY1df2tvqrpuJcac4c9sPVlK21GvZtk9rD7fyZ1EFvzrI
- kngaVSgm3vqJks+tXrZlJrwaAaDLHlY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-VIg-u96BNVaDP5wBPRPqIA-1; Wed,
- 26 Aug 2026 05:04:07 -0400
-X-MC-Unique: VIg-u96BNVaDP5wBPRPqIA-1
-X-Mimecast-MFC-AGG-ID: VIg-u96BNVaDP5wBPRPqIA_1787735046
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EBEFE1953996; Wed, 26 Aug 2026 09:04:05 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79316195422E; Wed, 26 Aug 2026 09:04:02 +0000 (UTC)
-Date: Wed, 26 Aug 2026 10:03:59 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, dave@treblig.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Markus Armbruster <armbru@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v4 42/49] hw: guard BusClass::print_dev with CONFIG_HMP
-Message-ID: <ao6r_y3LVtdhCnLj@redhat.com>
-References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-42-af60857c2fbe@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wz9fR-0005LD-HR; Wed, 26 Aug 2026 05:11:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1787735494; x=1819271494;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=enulYgN4bOHFj18b/dPnpcvAtknFGQvdJtJcUnxHILY=;
+ b=EpUfg9MChzhBBjPGzOkrXJCRDaTqLu2rZbUguPJTrgyIVBMG5X+7hH/y
+ Htp4tMB+oNHag883fOnI5drgBMTgmvfZjSgnpO/YZax/7dBrkhNTZKXn6
+ PolhJ2OYREN/Jgxez9FvqyaNQg3hX/Znrse9nxTZiF1dpSaGcvxK8jAdP
+ +NpZ/dAJq4GFQv1x/7An3/+ZLe6IHDp0hqlXVBJ19rYazdvTW9PfMntWv
+ HaAUxprhLrgE8MX283rDQBD2Qvr4DFZxCfb3c1OufLl22kGdwKRPpLhn9
+ gO6xJ1vGYq1OKs99FgpJvGC5efx63uwjyhofr/PzTuHjQtosQiBicu0/E Q==;
+X-CSE-ConnectionGUID: jFARUMOSSjeZSXbHzL2Pjg==
+X-CSE-MsgGUID: wmUIgxBIRsiuAifQHiGnlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="105736488"
+X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="105736488"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2026 02:11:28 -0700
+X-CSE-ConnectionGUID: QPahd9U1QYmmsjP+gBhDGw==
+X-CSE-MsgGUID: /vkprnWlSWucL+0J7komGg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="292379615"
+Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
+ by fmviesa001.fm.intel.com with ESMTP; 26 Aug 2026 02:11:27 -0700
+Date: Wed, 26 Aug 2026 17:11:26 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 8/9] scripts: rename get-wraps-from-cargo-registry.py
+Message-ID: <ao6tvhi/tOx2P+e7@intel.com>
+References: <20260821083925.2008135-1-pbonzini@redhat.com>
+ <20260821083925.2008135-9-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260825-qemu-no-hmp-v4-42-af60857c2fbe@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20260821083925.2008135-9-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,33 +76,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 11:09:49PM +0400, Marc-André Lureau wrote:
-> The print_dev callback is only used by HMP 'info qtree'. Guard the field
-> in BusClass, all implementations, and the caller with CONFIG_HMP.
+On Fri, Aug 21, 2026 at 10:39:23AM +0200, Paolo Bonzini wrote:
+> Date: Fri, 21 Aug 2026 10:39:23 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 8/9] scripts: rename get-wraps-from-cargo-registry.py
+> X-Mailer: git-send-email 2.55.0
 > 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> It does more than that now.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/char/virtio-serial-bus.c |  6 ++++++
->  hw/core/sysbus.c            |  6 ++++++
->  hw/misc/auxbus.c            | 16 +++++++++++-----
->  hw/pci/pci-hmp-cmds.c       |  2 ++
->  hw/pci/pci.c                |  2 ++
->  hw/usb/bus.c                |  6 ++++++
->  hw/xen/xen-bus.c            |  4 ++++
->  include/hw/core/qdev.h      |  2 ++
->  8 files changed, 39 insertions(+), 5 deletions(-)
+>  .../{get-wraps-from-cargo-registry.py => update-cargo-wraps.py}   | 0
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  rename scripts/{get-wraps-from-cargo-registry.py => update-cargo-wraps.py} (100%)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Just a nit, these places were missed ;).
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+$ grep -nr get-wraps-from-cargo-registry.py
+MAINTAINERS:3780:F: scripts/get-wraps-from-cargo-registry.py
+scripts/update-cargo-wraps.py:6:get-wraps-from-cargo-registry.py - Update Meson subprojects from a Cargo
+docs/about/build-platforms.rst:131:  script, ``scripts/get-wraps-from-cargo-registry.py``, that automatically
 
 
