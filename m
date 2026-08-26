@@ -4,142 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30041C61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D34C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzBFq-00037Y-2O; Wed, 26 Aug 2026 06:53:14 -0400
+	id 1wzBKc-0003lz-1M; Wed, 26 Aug 2026 06:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzBFo-000375-J7
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:53:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzBKa-0003lT-NF; Wed, 26 Aug 2026 06:58:08 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzBFm-0003ej-VG
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:53:12 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QAGdQG630882
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:53:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- JGF1mKMkt552WtF4eAslVoLboUzWc8SOsgIj2uWNIhc=; b=Rynb05M31uF3lKHi
- Ni/zvKkD1O6G6CdwO5ZWG2ZEz7IaXhHcIttfUlUYuPab7VphGTLpEDkrhUdtzS7c
- HZpdvBYuPp0/DePjRLjJNVn9UHo1LL2C5hC7hw26CQlFUpfoULa1wQt3xK6+7EUr
- s7xca4jU0gXjaFaUC7cQ1aXyrKUZYLwOSRMXk2gVTywJHlnXnLRtcmb8kd/yQwJP
- RcEsaMmEmKLez89B8UoZo4g0VvldemFLbuMn0m2oG1BiRQkPCwsH5MoppWDJ2exH
- 6od/p3OGUPF5yBR+x8zyjaeg0xztOv2A1KLwRJTaiIuEqkgFYw51ivHfPefsOlTv
- xxBT1w==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9r0k1r4m-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:53:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5174a236220so7483341cf.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 03:53:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787741588; x=1788346388; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JGF1mKMkt552WtF4eAslVoLboUzWc8SOsgIj2uWNIhc=;
- b=DEtbs2lpEbK9to1tml12v/Sp2dpgNcXhxZlhqS+9fV250aQS/4ZhlzGC5I7u1Z87sT
- RtcGeBqzP+FRgOLZwJsx6tyhzcgtkcQO3rPsc1hSUDV15hmpWHv8iQo+dSgLZADHDA3O
- s/fNHCTgHo7JXyf84qzjlTaZz4t21gWAjnCAl2KoS+H2n4/gOJyzJDO7Jy3I6klm5ClK
- laQ6aNf2Q1OLQjbL//oi2cnZc794wzB/t8A+XqgdLE2p/6VUd6IC1QfVrt1ltKMK91R2
- 5rmGMLbxQixWfXCyYoOMnLO1O3d0CobCpsdjiZvKLSxNi0yRLjmTDYCjnMvJ/g/Q38NG
- zdkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787741588; x=1788346388;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=JGF1mKMkt552WtF4eAslVoLboUzWc8SOsgIj2uWNIhc=;
- b=KLqGehSKh0owPbJ3JlsG/Nz0iFefasJk2otnOLwh2AoWEt9K32VIJOd+P42G9qgkS5
- n/f8ZFbGDznAI8aFWu50bfMmdmnrEmP/hxMo5T9nDBxfy1EUXyEqltQGpZKJXH8ZR27A
- O9qDVzjWrGS8vvLMP+38x5zxvXCK8ifriykaJHVoDnlzPKC6HTVRlvSmUNPZ+mn4OuUs
- 8FbocbWBRw+F9+cqm5RHzU9k4R54W8wj4s+nnBOKhPENXJUk4O8Ubfxc35dmP84RdiKB
- kAdAX/PPlJMrkxcWnuaTB5cLC6Y0ui+SdCFGY4D2T77M8KJmFZ47Y8ktYQVwjNeI5QGA
- U9rg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rop4iLlydHVvcbAWK4GRE8/2WSxSpl+6qgBMG7U2mQPBmKb4AuQ1nNactYkDcPJ6XdOAa65R+h26d0u@nongnu.org
-X-Gm-Message-State: AFuF++kAhX3GVzPB9XEl8nGsmFVXhiBzOtVv8wAMQ1vP4cA8h7uuAd5K
- 5V8ktXugayq3kTG815emkltpUw8xe9sP5vWy361EkjjOgFABaRrVNDRB7O0fqEP7TvMMnoVhlYQ
- h4CLQ7c9o5RU2VLdVnJsJqWlUn4r5oHrfO/GyxMLG46gzQPnec7Z67iV0TY6YAptKQg==
-X-Gm-Gg: AR+sD12NprEU/hZTzu0rtqUVNLv/xhpOB4Jw91SnEiXEeakSn490S/Zx5bAlwGvGh5U
- rRCbheuu1U0CGvvJuFtmdgKB3Kw/1ZzUm8uYzUzD/N+o4ejcujv3zRgGGkBUsymhcKflaec7LeE
- AIl1dTJQgXGhllv8dGJ5EmOUZbkAj99o90r9kQqrATUonlDWz1kOnTFj5n1LWc3ytdpZ0HdL+KG
- whDEEtEYjdEnR/20IK5bX/wfyNvChjCl+8lLAVgu9U1hrbQbA436DeVJawIkZ5yLQDOWZoSJfqX
- kry/zOETaHth340J03x+o3fkQNpVnRs9B/RQnrYvTc97Lp9dz5HPgwbl2t4UU7xcN8l8S6QJlfT
- lKsl1lhuvleOEPbK/i3BGj5lXFJe0jNcjOWkAvG6akFn8Fw==
-X-Received: by 2002:a05:622a:1b11:b0:52e:2e04:44f2 with SMTP id
- d75a77b69052e-52e4230bf1bmr55489891cf.20.1787741587772; 
- Wed, 26 Aug 2026 03:53:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:1b11:b0:52e:2e04:44f2 with SMTP id
- d75a77b69052e-52e4230bf1bmr55489541cf.20.1787741587271; 
- Wed, 26 Aug 2026 03:53:07 -0700 (PDT)
-Received: from [10.254.188.74] (31.18.205.77.rev.sfr.net. [77.205.18.31])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dc96bff9sm23098945e9.5.2026.08.26.03.53.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 03:53:05 -0700 (PDT)
-Message-ID: <5eceff75-8c15-45d4-9b16-25015a24e86d@oss.qualcomm.com>
-Date: Wed, 26 Aug 2026 12:53:04 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzBKY-0006HQ-GR; Wed, 26 Aug 2026 06:58:08 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QAWrAA2616596; Wed, 26 Aug 2026 10:58:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=c9vIrgBNirW0PKt9lkqcElPAnBqSqd
+ Kk7rIzOlvmZ18=; b=VuQ5YPZoiWyoGJ8V80qzGEimOK3oDiV+NputBF2iOGmm3c
+ k3AEATQTdRgEdWvGdAnYuLD6qBJU2FVYMya5+Hu310akRk92INTwwpZLzTJSx7OG
+ SYZJnguYjbfl0gR1POlsHWOjSzgj4ViSNIpSCrfjz21hFcIcG/xVyTSyidBhImvV
+ oQDzCIA5igwxuGhrngaFnPx1IgaaW6sM4YMpFLr90cjgHbWiK5UR5OKkRyIsfiVj
+ zW5hM2irbVaoUYbpfdS9y8LSHBaJc8Ow+PNq7DjQM7A/C5349T0KR8ExZKFhvmRJ
+ lRK5gYBL8In03zCCkpsU8zBjONsvi9EZLrHse9AQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726ep2rb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 10:58:03 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QAuGJE003496;
+ Wed, 26 Aug 2026 10:58:02 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3q9qxq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 10:58:02 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QAvxmW46596548
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 10:57:59 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EDC972004B;
+ Wed, 26 Aug 2026 10:57:58 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CC70020040;
+ Wed, 26 Aug 2026 10:57:55 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 10:57:55 +0000 (GMT)
+Date: Wed, 26 Aug 2026 16:27:58 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 04/37] target/ppc: Move vector merge instructions to
+ decodetree
+Message-ID: <20260826162734.f4434402-55-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-5-rathc@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] block: notify the parent when a replaced child has a
- different size
-Content-Language: en-US
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org
-References: <20260812121500.1034178-1-den@openvz.org>
- <20260812121500.1034178-2-den@openvz.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260812121500.1034178-2-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=fPEJG5ae c=1 sm=1 tr=0 ts=6a8ec594 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=3lFKFk2zyOZBiYL4tutsoA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=6rqHouBjAAAA:8 a=EUspDBNiAAAA:8 a=3fW5wxpIv8osULsFfy0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=Hx1yvPaMooE3kwe23bt7:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA5MCBTYWx0ZWRfX9Iqr5O83OyOE
- 8L25IagT/9CUnbfWYrXeRvW9peN8giHhCDd98Igrv9f7ZI/aS04dX5hsr8rV+HXjVRB3l9QYWeW
- lGY/SlHW1wOCDygS1CyWyNeadV4Ev4I=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA5MCBTYWx0ZWRfX4LqqlcoxN2SQ
- 3HQO+9jXYM3KVd5xb1sqMo2dJZLEvCQPulQ8CqQK1y4P0jVtTHqLbI7tfOmsPpNq8KWPUn7LggO
- ZtUV1caDRe5tXKWrzggya7VsPhD6wq4k/7m16jdV+GvmRJDee09rUhLK9TSCWt55EvhWxZjWRo9
- UFqy1qGNWodMKPWslQULqxo5GmETvVBv72m9+3Gl5QXDscNVNLp1QkbJsVc+S5CPFLW6JMh/JSq
- PejwNVwrwcz6u+gVLoKTKp7zDJLsv6GH6BCjWWHfrFn6UcJ9v043irTm/BqZ+WAd4bGttO2G65+
- hFQ2PhvlpXwtDreGIUm3CPVcvsL0Hc82npE5GcTbglImGEX2DkbHwoEH/tQEWXx/bzyemmPbe3t
- K8fOTeKd/AlGl1jqddVThjLzyylugDpeWxrA1GOV/5fmcMpuuuamchQ6Q46OxryYnGDtq7aJ+jW
- +vZQ1Ln1W0hyGxPgTng==
-X-Proofpoint-ORIG-GUID: ZXMRNp_KOI-ykAIO2osEVymp-cOa4H7N
-X-Proofpoint-GUID: ZXMRNp_KOI-ykAIO2osEVymp-cOa4H7N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260826050923.74756-5-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8ec6bc cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=l9WBXa9OT_98UvwR8SIA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA4NyBTYWx0ZWRfX1k0FNWsDLK34
+ /6g1wmh2ptwLQV0Q7jl3ZJPOem+EVYSV/Js5dEcckiaPLCm3GHZu4U3/H93x64+ZGGPbJmDTmJL
+ ZI+e2hLCiwO1naZrFnNdjrm99KGiees=
+X-Proofpoint-GUID: gcQcoX8gVrq806sksi00bdfYlRmb36Ci
+X-Proofpoint-ORIG-GUID: ck5RavwqExQbkrpr_5Bz1ZPgNRxZoy7w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA4NyBTYWx0ZWRfX4u71/+R+28cM
+ C9E+PkXjryRPmZTxaWlfgvYUAlYV+8j0qrigb7QzTOd54ChIL495C04vlVwhXB99Jl6H9F+SxYk
+ 72HfoAc1DR5PHOKwXTd3vea8I7iBdPoYO/T0Ira/2xqq/I1NTpULbNsc6LRTzaKY3vWDl7Yg9Yo
+ RiWaedbwHIqr4DxTQcCszWsbDWn6N8iuoHu/1a2TfFxVyAqoO4FJok+rYiv/PujmtyOff4+JGqC
+ v914AbyAXKIUieWtHvxqB05pJXA6Ij4CX9YUvTeF1J4kOms9wK/qpft3rW+3fMa2SW6jC/8/OEs
+ 3NbMN9iKoAWizT8wTeBmUHy10oxgbL7z6LDwylD37Yygz6rK7OpQW6mrq4Q95KWhVagTUlA/Bi8
+ 6B21Qy/Rz815Ig/wT0J+VbBeqgUtLeVj9ZDAkCJ5kyH/Dz9cLgG04yYduQOUvRsXaNpbFgHn0CW
+ cLJ5k5ojc5N7FmPlLfg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- clxscore=1015 adultscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260090
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260087
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,52 +134,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/26 14:14, Denis V. Lunev wrote:
-> bdrv_replace_child_bs() swaps the node a BdrvChild points to without
-> telling the parent anything about it, so a parent which tracks the size of
-> its child never learns that it changed. Every other way the size of a node
-> changes goes through bdrv_co_truncate(), which does notify.
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 > 
-> The device models which care all register the same BlockDevOps hook:
+> Move below instructions to decodetree specification:
 > 
->    virtio-blk  resize_cb = virtio_blk_resize(), ending up in
->                virtio_notify_config()
->    ide/ahci    resize_cb = ide_resize_cb(), refreshing the cached size
->                and the IDENTIFY data
->    scsi-disk   resize_cb = scsi_disk_resize_cb(), reporting
->                CAPACITY DATA HAS CHANGED
->    xen-block   resize_cb = xen_block_resize_cb()
+>         vmrg{hb, hh, hw, lb, lh, lw}           : VX-form
 > 
-> Only scsi-disk is really hurt by the missing notification, because it is
-> the one which validates guest requests against a cached size.
-> virtio_blk_sect_range_ok() and ide_sect_range_ok() both call
-> blk_get_geometry() for every request, so a missing notification leaves
-> those guests with a stale idea of the size but never refuses I/O which the
-> node underneath can serve. check_lba_range() compares against
-> SCSIDevice.max_lba, filled in by scsi_disk_reset() and updated only by the
-> READ CAPACITY(10) and (16) handlers, so with nothing to make the guest
-> re-read the capacity every request past the end of the old node is refused
-> for the whole life of the device.
+> The individual gen_vmrg* functions generated by GEN_VXFORM are
+> replaced by a shared do_vmrg() helper dispatching to the existing
+> gen_helper_VMRG* TCG helpers via the TRANS_FLAGS() macro, which
+> also handles the ALTIVEC facility check.
 > 
-> This is reachable with qom-set of the 'drive' property, which is allowed
-> on a realized device, and it is silent on the host: out-of-range requests
-> are answered by scsi_check_condition() and never reach
-> scsi_handle_rw_error(), so there is no BLOCK_IO_ERROR event and io-status
-> stays 'ok'. The guest sees ILLEGAL REQUEST / LOGICAL BLOCK ADDRESS OUT OF
-> RANGE, which Linux turns into EREMOTEIO for reads as well as writes.
+> The changes were verified by validating that the tcg ops generated by
+> those instructions remain the same, which were captured with the '-d
+> in_asm,op' flag.
 > 
-> Emit the notification from bdrv_replace_child_bs(), so that every device
-> model gets it through the path it already implements rather than any of
-> them being special cased. Send it only when the size really changed, which
-> keeps the callback out of the common case of a replacement by an equally
-> sized node.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+> Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->   block.c                      | 13 +++++++++++++
->   include/block/block_int-io.h |  3 +++
->   2 files changed, 16 insertions(+)
+>  target/ppc/helper.h                 | 12 ++++++------
+>  target/ppc/insn32.decode            |  9 +++++++++
+>  target/ppc/int_helper.c             | 12 ++++++------
+>  target/ppc/translate/vmx-impl.c.inc | 25 +++++++++++++++++++------
+>  target/ppc/translate/vmx-ops.c.inc  |  6 ------
+>  5 files changed, 40 insertions(+), 24 deletions(-)
 
-To the best of my block/ understanding:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+> 
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index 46ad78d1d4..6db917935c 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -173,12 +173,12 @@ DEF_HELPER_4(vcmpeqfp_dot, void, env, avr, avr, avr)
+>  DEF_HELPER_4(vcmpgefp_dot, void, env, avr, avr, avr)
+>  DEF_HELPER_4(vcmpgtfp_dot, void, env, avr, avr, avr)
+>  DEF_HELPER_4(vcmpbfp_dot, void, env, avr, avr, avr)
+> -DEF_HELPER_FLAGS_3(vmrglb, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> -DEF_HELPER_FLAGS_3(vmrglh, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> -DEF_HELPER_FLAGS_3(vmrglw, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> -DEF_HELPER_FLAGS_3(vmrghb, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> -DEF_HELPER_FLAGS_3(vmrghh, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> -DEF_HELPER_FLAGS_3(vmrghw, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> +DEF_HELPER_FLAGS_3(VMRGLB, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> +DEF_HELPER_FLAGS_3(VMRGLH, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> +DEF_HELPER_FLAGS_3(VMRGLW, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> +DEF_HELPER_FLAGS_3(VMRGHB, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> +DEF_HELPER_FLAGS_3(VMRGHH, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> +DEF_HELPER_FLAGS_3(VMRGHW, TCG_CALL_NO_RWG, void, avr, avr, avr)
+>  DEF_HELPER_FLAGS_3(VMULESB, TCG_CALL_NO_RWG, void, avr, avr, avr)
+>  DEF_HELPER_FLAGS_3(VMULESH, TCG_CALL_NO_RWG, void, avr, avr, avr)
+>  DEF_HELPER_FLAGS_3(VMULESW, TCG_CALL_NO_RWG, void, avr, avr, avr)
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 6b1cf9a0a9..8aca8a00c0 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -795,6 +795,15 @@ VNOR            000100 ..... ..... ..... 10100000100    @VX
+>  VXOR            000100 ..... ..... ..... 10011000100    @VX
+>  VEQV            000100 ..... ..... ..... 11010000100    @VX
+>  
+> +## Vector Merge Instructions
+> +
+> +VMRGHB          000100 ..... ..... ..... 00000001100    @VX
+> +VMRGHH          000100 ..... ..... ..... 00001001100    @VX
+> +VMRGHW          000100 ..... ..... ..... 00010001100    @VX
+> +VMRGLB          000100 ..... ..... ..... 00100001100    @VX
+> +VMRGLH          000100 ..... ..... ..... 00101001100    @VX
+> +VMRGLW          000100 ..... ..... ..... 00110001100    @VX
+> +
+>  ## Vector Integer Average Instructions
+>  
+>  VAVGSB          000100 ..... ..... ..... 10100000010    @VX
+> diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+> index ef4b2e75d6..a3adf746bd 100644
+> --- a/target/ppc/int_helper.c
+> +++ b/target/ppc/int_helper.c
+> @@ -950,7 +950,7 @@ void helper_VMLADDUHM(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, ppc_avr_t *c,
+>  }
+>  
+>  #define VMRG_DO(name, element, access, ofs)                                  \
+> -    void helper_v##name(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)            \
+> +    void helper_V##name(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)            \
+>      {                                                                        \
+>          ppc_avr_t result;                                                    \
+>          int i, half = ARRAY_SIZE(r->element) / 2;                            \
+> @@ -963,11 +963,11 @@ void helper_VMLADDUHM(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, ppc_avr_t *c,
+>      }
+>  
+>  #define VMRG(suffix, element, access)          \
+> -    VMRG_DO(mrgl##suffix, element, access, half)   \
+> -    VMRG_DO(mrgh##suffix, element, access, 0)
+> -VMRG(b, u8, VsrB)
+> -VMRG(h, u16, VsrH)
+> -VMRG(w, u32, VsrW)
+> +    VMRG_DO(MRGL##suffix, element, access, half)   \
+> +    VMRG_DO(MRGH##suffix, element, access, 0)
+> +VMRG(B, u8, VsrB)
+> +VMRG(H, u16, VsrH)
+> +VMRG(W, u32, VsrW)
+>  #undef VMRG_DO
+>  #undef VMRG
+>  
+> diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+> index 92d6e8c603..00b359f031 100644
+> --- a/target/ppc/translate/vmx-impl.c.inc
+> +++ b/target/ppc/translate/vmx-impl.c.inc
+> @@ -350,12 +350,25 @@ GEN_VXFORM_V(vsububm, MO_8, tcg_gen_gvec_sub, 0, 16);
+>  GEN_VXFORM_V(vsubuhm, MO_16, tcg_gen_gvec_sub, 0, 17);
+>  GEN_VXFORM_V(vsubuwm, MO_32, tcg_gen_gvec_sub, 0, 18);
+>  GEN_VXFORM_V(vsubudm, MO_64, tcg_gen_gvec_sub, 0, 19);
+> -GEN_VXFORM(vmrghb, 6, 0);
+> -GEN_VXFORM(vmrghh, 6, 1);
+> -GEN_VXFORM(vmrghw, 6, 2);
+> -GEN_VXFORM(vmrglb, 6, 4);
+> -GEN_VXFORM(vmrglh, 6, 5);
+> -GEN_VXFORM(vmrglw, 6, 6);
+> +
+> +static bool do_vmrg(DisasContext *ctx, arg_VX *a,
+> +                    void (*helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
+> +{
+> +    TCGv_ptr ra, rb, rd;
+> +    REQUIRE_VECTOR(ctx);
+> +    ra = gen_avr_ptr(a->vra);
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +    helper(rd, ra, rb);
+> +    return true;
+> +}
+> +
+> +TRANS_FLAGS(ALTIVEC, VMRGHB, do_vmrg, gen_helper_VMRGHB);
+> +TRANS_FLAGS(ALTIVEC, VMRGHH, do_vmrg, gen_helper_VMRGHH);
+> +TRANS_FLAGS(ALTIVEC, VMRGHW, do_vmrg, gen_helper_VMRGHW);
+> +TRANS_FLAGS(ALTIVEC, VMRGLB, do_vmrg, gen_helper_VMRGLB);
+> +TRANS_FLAGS(ALTIVEC, VMRGLH, do_vmrg, gen_helper_VMRGLH);
+> +TRANS_FLAGS(ALTIVEC, VMRGLW, do_vmrg, gen_helper_VMRGLW);
+>  
+>  static void trans_vmrgew(DisasContext *ctx)
+>  {
+> diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+> index e28958a126..b8f77d3d2c 100644
+> --- a/target/ppc/translate/vmx-ops.c.inc
+> +++ b/target/ppc/translate/vmx-ops.c.inc
+> @@ -33,12 +33,6 @@ GEN_VXFORM_DUAL(vsubuhm, bcdsub, 0, 17, PPC_ALTIVEC, PPC_NONE),
+>  GEN_VXFORM_DUAL(vsubuwm, bcdus, 0, 18, PPC_ALTIVEC, PPC2_ISA300),
+>  GEN_VXFORM_DUAL(vsubudm, bcds, 0, 19, PPC2_ALTIVEC_207, PPC2_ISA300),
+>  GEN_VXFORM_300(bcds, 0, 27),
+> -GEN_VXFORM(vmrghb, 6, 0),
+> -GEN_VXFORM(vmrghh, 6, 1),
+> -GEN_VXFORM(vmrghw, 6, 2),
+> -GEN_VXFORM(vmrglb, 6, 4),
+> -GEN_VXFORM(vmrglh, 6, 5),
+> -GEN_VXFORM(vmrglw, 6, 6),
+>  GEN_VXFORM_300(vextublx, 6, 24),
+>  GEN_VXFORM_300(vextuhlx, 6, 25),
+>  GEN_VXFORM_DUAL(vmrgow, vextuwlx, 6, 26, PPC_NONE, PPC2_ALTIVEC_207),
+> -- 
+> 2.55.0
+> 
 
