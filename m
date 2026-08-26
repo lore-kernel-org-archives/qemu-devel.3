@@ -4,98 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD0AC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 21:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D53E5C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 21:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzKpv-0002nM-4v; Wed, 26 Aug 2026 17:07:07 -0400
+	id 1wzKuh-0004Wv-Nl; Wed, 26 Aug 2026 17:12:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1wzKpt-0002mg-VO; Wed, 26 Aug 2026 17:07:05 -0400
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wzKuf-0004Wj-Ga; Wed, 26 Aug 2026 17:12:01 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1wzKps-0003YA-45; Wed, 26 Aug 2026 17:07:05 -0400
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wzKud-0004XQ-OO; Wed, 26 Aug 2026 17:12:01 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QL1nqi3280864; Wed, 26 Aug 2026 21:07:01 GMT
+ 67QL1X6Y3280452; Wed, 26 Aug 2026 21:11:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7jKLYN
- Tg0Z+cNk0WLKKwzg8OuZLFJv/b0DjrIjqFbmg=; b=EPd4DLZVqIvtPxiTFzCIf5
- uJv006HSOstiPRQDvdbXmfNqCcHMX2OnxO5ZEUZZb5f/0J9FE/8IJGoCJs4tjhPL
- +4YUkkESf3Pxl1HSkoiOkzlZrOjjZOgHEG3/EnfyddEnfb+gAe0nIFTtgA+3vBBU
- TIaqz/6XNqRQF3dBs7yGMKIOXNZR0/MRoaoNC6b1z9QJw+tC6DWOGnA56wutKe/X
- tKo81U07Ywww2LttEAvEHXZXoLJ610kqmp83a2V1RzUUNkbTGn4SI0bDu1BJn/Pp
- bTlyq03Q51aK7sGYHExqBogIrhbRb9fIXiCCqQ+EPJ1iQAqwLLs8fvTjzuOyKn2A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Aorf4v
+ uUfy0EWXP46xCccTZwriwyAjZQog1VR+Ijaio=; b=HdU5pxvpB1024raUKn9c7I
+ 1y55cpplFv3JOYwsPez2p//Gg/KoVN9u/NR7yhPtErWyuHevUlp13aOVkJ9X2IFR
+ ci0kanSNJ6VR3Y2W+BTBadWOd951iDNhhjCTjY/G3Hgq/tvlJJ70y2SnNRKCQM+m
+ +afXjTVSrX4haTFSq0FB0/A2IKgBRSkaFhQwnLtZgx1AmYY6VYNnPdTNJ+lfL1e3
+ cWnPCV4T39EvMK0+PJFGXO0GRGQq9Ag4iPL2lEieQJLQnvbRG0wOjW8LmW86CqNt
+ 20Xitzby0pSeI0MZtMSnhZOfx88nbBmfy0qezLOvWF6GH2v/3PhjfPDvDFnTncXA
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73er168r-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73er177h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 21:07:01 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QKuI8r016809;
- Wed, 26 Aug 2026 21:07:00 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragm2bq-1
+ Wed, 26 Aug 2026 21:11:57 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QLBJh6018750;
+ Wed, 26 Aug 2026 21:11:56 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkhc5xv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 21:07:00 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QL6wDZ65077550
+ Wed, 26 Aug 2026 21:11:56 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QLBtAC35521232
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 21:06:58 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F4A658045;
- Wed, 26 Aug 2026 21:06:58 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E16158050;
- Wed, 26 Aug 2026 21:06:57 +0000 (GMT)
-Received: from [9.61.176.10] (unknown [9.61.176.10])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 21:06:57 +0000 (GMT)
-Message-ID: <eee4b8dc-6cde-413f-9a58-67d792ab56d8@linux.ibm.com>
-Date: Wed, 26 Aug 2026 13:01:14 -0400
+ Wed, 26 Aug 2026 21:11:55 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E78135805A;
+ Wed, 26 Aug 2026 21:11:54 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62C725803F;
+ Wed, 26 Aug 2026 21:11:54 +0000 (GMT)
+Received: from [9.61.145.136] (unknown [9.61.145.136])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Aug 2026 21:11:54 +0000 (GMT)
+Message-ID: <4bbbb758-45bb-4b98-b782-966bfdf4e544@linux.ibm.com>
+Date: Wed, 26 Aug 2026 17:11:53 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/7] pc-bios/s390-ccw: Add dynamic net header size
- handling
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com
-References: <20260818205324.580199-1-zycai@linux.ibm.com>
- <20260818205324.580199-3-zycai@linux.ibm.com>
+Subject: Re: [PATCH v2 6/8] pc-bios/s390-ccw: Add support for virtio-scsi-pci
+ IPL
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ cohuck@redhat.com, mjrosato@linux.ibm.com
+Cc: zycai@linux.ibm.com
+References: <20260811144629.866641-1-jrossi@linux.ibm.com>
+ <20260811144629.866641-7-jrossi@linux.ibm.com>
 Content-Language: en-US
-From: "Jason J. Herne" <jjherne@linux.ibm.com>
-In-Reply-To: <20260818205324.580199-3-zycai@linux.ibm.com>
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260811144629.866641-7-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: IJSSTbK_6LollorJfAROdh_R4wKKS8Cr
-X-Proofpoint-ORIG-GUID: IJSSTbK_6LollorJfAROdh_R4wKKS8Cr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE3NiBTYWx0ZWRfX5MkkIQkFr3je
- jcmyn47NSbbHytm/0gxmEJOp1+wkpBXvn4jv2qXy+LT6fmhfyicOGeba3Cje45FsCTz6xmUGBtT
- 8PMmVFJkH3uUxSoJd/i3OP2oWUxyfFjKB28ZXIz6jwWSO4l5xTEL06yYDKBr6294K0cnN21Jz4f
- 5IKEqTrtvtzEBSAiy7HgCpax0pnIGi33mvtS5uKUGlDbIiD/YaBUu1oXoqZFC6SDL/FupfJaJM2
- 8KkOHm5Pzkk73W2QVKMNf22SzoAq9mlm8EJex7q5DKxnbow2ZkJC0iX+uCwNAY+jnCheiaJ1oiH
- +w8/NlyFlEAFnDbdiFjWiWAHpTRg0/8/5IOfOfj9rfD/7g6h3N9XkdMCMWFbStCjpXeFHDOzQTm
- 6ItlzJOlqhe3WT7l5qQfOSx3/6aHOiLqeuKcl3HKYTtpWcAUMPuIQx333g12F8XTTGsmWeh2UOS
- 2e93POhtKmvBLfM2jDQ==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8f5575 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: nqtT3ECh0QOlQM2w4jTBcv0rgLNK4tlV
+X-Proofpoint-ORIG-GUID: nqtT3ECh0QOlQM2w4jTBcv0rgLNK4tlV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE3NiBTYWx0ZWRfX+HiLSQbn7vUq
+ xHGy3sJTVpo/bDigkiNO7Q9Kr7M0TkZbzVeG6GokHbu+hBzkxtbN0GZe8/dnjsiYxuCGcdFNfl1
+ tgdAakBHn2717RfvVNHikr4vV9GvuwX/UY7/bm1j4tssklXMWhZX73KLsUDgj/ywsVNFYX1RWns
+ 44A8oJxq30odiVQ47D5VTS2bh9HxbIndFyweOlGutjKk7V8FAWmfw8oyOV2V6ZQ5/8f4uUgSchf
+ sYZdd3zdhgNsO2FisznxJChIohQlgD2q0lx/zcmEX1BJhKnscJ9tVMTvmMcGVp5Uok2Fmj+k6Cy
+ gfB423Y0eSpYtICAa772jAXqDnIzHpOclxJqYBHjmXJ43gPlvEAVDO8R6Adr+j280QLUVfvb2AC
+ M42RyByUqASYdiEXXoOKWNE6nO+I7shPoFnZ2Yii7G2SlaUYmV8J4OgDw77jve/ANYNtFDvaA6/
+ pKTFAS8F/069FfmXf5Q==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8f569d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=WlbtgAuzpxvzBHkL9eIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE3NiBTYWx0ZWRfXz+61NZvbg5F/
- GMtqUVqdUn/4Z4XvTq6tWU12yivubWwkepygN2IziMG9vUftaMLYGbnpdhRID0Bq6yCWmOofTUd
- 9tCQ/adJXizMOmFlxKaN8hhHLZBfmDs=
+ a=qqEM7WcOFFFwV34jMNkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE3NiBTYWx0ZWRfXwUr2+YlnIWb/
+ dx+yHdJfR3PyOzuQvA2/I64WkDxLRg/alGCcr62fTztXILUAG1h6633Vq08/mcTORiZnADVtj9+
+ CBbieFLWfO0PZyGGbBCMjUgq2Z/L3vk=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_06,2026-08-26_02,2025-10-01_01
@@ -104,15 +145,15 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260176
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,95 +171,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 8/18/26 4:53 PM, Zhuoying Cai wrote:
-> The virtio-net device used a fixed header size that did not account for
-> the num_buffers field used in VirtIO 1.0 or for the mergeable receive
-> buffers feature.
+On 8/11/26 10:46 AM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Use dynamic header sizing: 10 bytes for legacy mode and 12 bytes for
-> VirtIO 1.0 or when VIRTIO_NET_F_MRG_RXBUF is enabled. This ensures
-> correct packet handling across different VirtIO configurations.
+> Read virtio-pci configuration and configure virt-queue for scsi devices.
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/virtio-net.c | 26 +++++++++++++++++++-------
->   1 file changed, 19 insertions(+), 7 deletions(-)
+>   pc-bios/s390-ccw/main.c        |  3 ++-
+>   pc-bios/s390-ccw/virtio-pci.c  | 30 ++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/virtio-scsi.c | 12 +++++++++++-
+>   3 files changed, 43 insertions(+), 2 deletions(-)
 > 
-> diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-> index 0ee51653ab..3a9ae789cf 100644
-> --- a/pc-bios/s390-ccw/virtio-net.c
-> +++ b/pc-bios/s390-ccw/virtio-net.c
-> @@ -20,6 +20,7 @@
->   #include "s390-ccw.h"
->   #include "virtio.h"
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index 63692260a4..50f455324e 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -269,6 +269,7 @@ static bool find_boot_device(void)
+>           }
+>           break;
+>        case S390_IPL_TYPE_PCI:
+> +        vdev->scsi_device_selected = false;
+>           found = find_fid(iplb.pci.fid);
+>           break;
+>       default:
+> @@ -329,13 +330,13 @@ static void ipl_pci_device(void)
+>   {
+>       VDev *vdev = virtio_get_device();
+>       vdev->is_cdrom = false;
+> -    vdev->scsi_device_selected = false;
+>   
+>       if (virtio_pci_setup_device()) {
+>           return;
+>       }
+>   
+>       switch (vdev->dev_type) {
+> +    case VIRTIO_ID_SCSI:
+>       case VIRTIO_ID_BLOCK:
+>           if (virtio_setup() == 0) {
+>               zipl_load(); /* only return on error */
+> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+> index 231ab6e04d..277c3ea68d 100644
+> --- a/pc-bios/s390-ccw/virtio-pci.c
+> +++ b/pc-bios/s390-ccw/virtio-pci.c
+> @@ -52,6 +52,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+>       case 0x1001:
+>           vdev->dev_type = VIRTIO_ID_BLOCK;
+>           break;
+> +    case 0x1048:
+> +    case 0x1004:
+> +        vdev->dev_type = VIRTIO_ID_SCSI;
+> +        break;
+>       default:
+>           vdev->dev_type = 0;
+>       }
+> @@ -199,6 +203,26 @@ static int virtio_pci_get_blk_config(void)
+>       return rc;
+>   }
+>   
+> +static int virtio_pci_get_scsi_config(void)
+> +{
+> +    VirtioScsiConfig *cfg = &virtio_get_device()->config.scsi;
+> +    int rc = vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioScsiConfig));
+> +
+> +    /* all fields of scsi config must be byte swapped */
+> +    cfg->num_queues = bswap32(cfg->num_queues);
+> +    cfg->seg_max = bswap32(cfg->seg_max);
+> +    cfg->max_sectors = bswap32(cfg->max_sectors);
+> +    cfg->cmd_per_lun = bswap32(cfg->cmd_per_lun);
+> +    cfg->event_info_size = bswap32(cfg->event_info_size);
+> +    cfg->sense_size = bswap32(cfg->sense_size);
+> +    cfg->cdb_size = bswap32(cfg->cdb_size);
+> +    cfg->max_channel = bswap16(cfg->max_channel);
+> +    cfg->max_target = bswap16(cfg->max_target);
+> +    cfg->max_lun = bswap32(cfg->max_lun);
+> +
+> +    return rc;
+> +}
+> +
+>   static int virtio_pci_negotiate(void)
+>   {
+>       int i, rc;
+> @@ -330,6 +354,7 @@ bool virtio_pci_is_supported(VDev *vdev)
+>       if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
+>           switch (vdev->dev_type) {
+>           case VIRTIO_ID_BLOCK:
+> +        case VIRTIO_ID_SCSI:
+>               return true;
+>           default:
+>               return false;
+> @@ -384,6 +409,11 @@ int virtio_pci_setup(VDev *vdev)
+>           vdev->cmd_vr_idx = 0;
+>           virtio_pci_get_blk_config();
+>           break;
+> +    case VIRTIO_ID_SCSI:
+> +        vdev->nr_vqs = 3;
+> +        vdev->cmd_vr_idx = 2;
+> +        virtio_pci_get_scsi_config();
+> +        break;
+>       default:
+>           puts("Unsupported virtio device");
+>           return -ENODEV;
+> diff --git a/pc-bios/s390-ccw/virtio-scsi.c b/pc-bios/s390-ccw/virtio-scsi.c
+> index 9ea00c6fe6..095d7ac430 100644
+> --- a/pc-bios/s390-ccw/virtio-scsi.c
+> +++ b/pc-bios/s390-ccw/virtio-scsi.c
+> @@ -16,6 +16,7 @@
+>   #include "scsi.h"
+>   #include "virtio-scsi.h"
 >   #include "virtio-ccw.h"
 > +#include "virtio-pci.h"
 >   #include "s390-time.h"
 >   #include "helper.h"
 >   
-> @@ -28,10 +29,15 @@
->   #endif
+> @@ -479,7 +480,16 @@ static int virtio_scsi_setup(VDev *vdev)
 >   
->   #define VIRTIO_NET_F_MAC_BIT  (1 << 5)
-> +#define VIRTIO_NET_F_MRG_RXBUF_BIT (1 << 15)
->   
->   #define VQ_RX 0         /* Receive queue */
->   #define VQ_TX 1         /* Transmit queue */
->   
-> +/* Header sizes for different modes */
-> +#define VIRTIO_NET_HDR_SIZE_LEGACY  10  /* Without num_buffers */
-> +#define VIRTIO_NET_HDR_SIZE_V1      12  /* With num_buffers */
-> +
->   struct VirtioNetHdr {
->       uint8_t flags;
->       uint8_t gso_type;
-> @@ -39,11 +45,12 @@ struct VirtioNetHdr {
->       uint16_t gso_size;
->       uint16_t csum_start;
->       uint16_t csum_offset;
-> -    /*uint16_t num_buffers;*/ /* Only with VIRTIO_NET_F_MRG_RXBUF or VIRTIO1 */
-> +    uint16_t num_buffers; /* Only with VIRTIO_NET_F_MRG_RXBUF or VIRTIO1 */
->   };
->   typedef struct VirtioNetHdr VirtioNetHdr;
->   
->   static uint16_t rx_last_idx;  /* Last index in receive queue "used" ring */
-> +static int virtio_net_hdr_size;
->   
->   int virtio_net_init(void *mac_addr)
+>   int virtio_scsi_setup_device(VDev *vdev)
 >   {
-> @@ -62,12 +69,17 @@ int virtio_net_init(void *mac_addr)
->           return -1;
->       }
->   
-> +    virtio_net_hdr_size = ((vdev->guest_features[1] & VIRTIO_F_VERSION_1) ||
-> +                           (vdev->guest_features[0] & VIRTIO_NET_F_MRG_RXBUF_BIT))
-> +                          ? VIRTIO_NET_HDR_SIZE_V1
-> +                          : VIRTIO_NET_HDR_SIZE_LEGACY;
-> +
->       memcpy(mac_addr, vdev->config.net.mac, ETH_ALEN);
->   
->       for (i = 0; i < 64; i++) {
-> -        buf = malloc(ETH_MTU_SIZE + sizeof(VirtioNetHdr));
-> +        buf = malloc(ETH_MTU_SIZE + virtio_net_hdr_size);
->           IPL_assert(buf != NULL, "Can not allocate memory for receive buffers");
-> -        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + sizeof(VirtioNetHdr),
-> +        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + virtio_net_hdr_size,
->                          VRING_DESC_F_WRITE);
->       }
->       vring_notify(rxvq);
-> @@ -82,9 +94,9 @@ int send(int fd, const void *buf, int len, int flags)
->       VRing *txvq = &vdev->vrings[VQ_TX];
->   
->       /* Set up header - we do not use anything special, so simply clear it */
-> -    memset(&tx_hdr, 0, sizeof(tx_hdr));
-> +    memset(&tx_hdr, 0, virtio_net_hdr_size);
+> -    virtio_ccw_setup(vdev);
+> +    switch (vdev->ipl_type) {
+> +    case S390_IPL_TYPE_CCW:
+> +        virtio_ccw_setup(vdev);
+> +        break;
+> +    case S390_IPL_TYPE_PCI:
+> +        virtio_pci_setup(vdev);
+> +        break;
 
-I think you want to leave this line as-is. There's no harm in cleaning 
-the entire struct's memory even if we never end up using the final 
-field. But only partially cleaning the struct looks weird and could 
-potentially cause problems if subsequent code changes introduce code 
-that attempts to read uninitialized data from num_buffers later.
+Why was/is the return code from virtio_*_setup discarded? Shouldn't we 
+do -something- if it's nonzero instead of continuing on?
 
-With that change made:
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Besides that, this looks good to me.
+
+> +    default:
+> +        return 1;
+> +    }
+>   
+>       if (vdev->config.scsi.sense_size != VIRTIO_SCSI_SENSE_SIZE) {
+>           puts("Config: sense size mismatch");
+
 
