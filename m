@@ -4,122 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D846CC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC198C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzBQe-0004sq-Kt; Wed, 26 Aug 2026 07:04:24 -0400
+	id 1wzBbV-0007o8-V5; Wed, 26 Aug 2026 07:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzBQc-0004sZ-SP; Wed, 26 Aug 2026 07:04:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzBQa-0000Fn-Gy; Wed, 26 Aug 2026 07:04:22 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QAVapo3793856; Wed, 26 Aug 2026 11:04:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=x1HUKjDFA6PiRYdQa1Cs2Zmu0MpFgp
- 6a2DkLEs9mbjY=; b=pcIdnX13iqQNhf0ZYZrqL9daAhu8yKBvEuRaRl3U5Q8yuR
- K3VIlESDsIvNPWfjA65pIX3S1NeHFNboVgDJwiCnDJ9kW93c8F/oIDsPgNqLPx7r
- Ser7n55Fn/mspQ8DKZa1ME1jCDHLIkfpEslSMmnk4V4vj9s0gBJpXWU0A/WMN2lh
- px3yyuTr0/XI5Sg15IswTICamtolILfjGbuxNA21OLWlui/Ls/a0uCwTRgXFvGqB
- N4SD1HfRHW1QZ9hdO7Os+OJoZq4h5yiFgBUqwhVlv/wotQYdXWCgd7YXNC51WhMm
- VduNv9m3OZB8CqVYx52UhwxopmASGDDpXFL0BlHg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxdvb5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 11:04:17 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QAuLkD000625;
- Wed, 26 Aug 2026 11:04:17 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkh9fwy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 11:04:17 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QB4C0V37028280
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 11:04:12 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD79F2004E;
- Wed, 26 Aug 2026 11:04:12 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB55C20040;
- Wed, 26 Aug 2026 11:04:09 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 11:04:09 +0000 (GMT)
-Date: Wed, 26 Aug 2026 16:34:12 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Subject: Re: [PATCH v2 05/37] target/ppc: Move vector pack instructions to
- decodetree
-Message-ID: <20260826163344.8da7f783-8b-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-6-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBbR-0007kE-4P
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:15:33 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBbO-0004Eb-ON
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:15:32 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6a17cb94b26so1453038a12.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 04:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1787742928; x=1788347728; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ZvlcBzbv4P6JHFlvlxuJ9uFIQ4h7jCgOCygmVoGMpsg=;
+ b=Q7B5VwbDNzsJhrWslY6/2A8rbnUZ8wm8TH2lHPSUcVozV8QOuTyxr50MNNkmQZCszc
+ 8tl4Mmx2efg9NEZ+OQooF2TyJmjlGUC442vdVNFz1oUW2c37DdcAEK9yns7fNy+ZlN0s
+ QPik7NOLDyJ3tWu/7Dii00TCQiOZkp0gBWvOX9eS917nt2WdJncRHw5rr4j4s93sRd+l
+ MertvMXk/60IWG0eluEJ9oZzc0IPQcYfU1j1nNGsDzCrOKUYPWnLMKKAPMGvvuyb6Mfb
+ Gk5m+6N2lIG0zdLgj1Jv6ICtr16py/YEiAxMh5fzG7/qMN4w3KdVHsV67Nghd3YuGL48
+ 5uuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787742928; x=1788347728;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZvlcBzbv4P6JHFlvlxuJ9uFIQ4h7jCgOCygmVoGMpsg=;
+ b=N1xeLE6h+qy1psVyPbyPy6q8UirBLPOCX41GJthTe42knUNeZYOxebqn68oxSEqabC
+ qVMJqN24ESBluB4jS3C0dSCDvXx2m5SRDkAKcnv1MDstNyGV3unGfezInO5+hmbdf3EN
+ hwCQ2u3tThZI63QNtcS5UYVg4x4coA1dBNiF57+tr1lfdaLUslIP1of6LTyydXLWHCh5
+ 2fX3G1sGuTnaD3j+LFeqYQZjAWmY64dnoHmWAzxrXDEI3OJ/FsBSpbvugaR8WFpysg6q
+ U1r6QTUF4SqYlurgikaqIE4BgzALHRzjMaDsIUNw49ElMkGJr8zHPyhNSdU7IQyQ9OD2
+ xwEA==
+X-Gm-Message-State: AFuF++lI92SAWLD5HS6x8/vCb7BKyASvwP/H7utVEmWXWkJM5zwW25gr
+ rcW2YjbvBr7CftUk+vJUmpkWOZyCEuv/PQeZEqsSZq5S9TsExT56VPDPKpLoHklywA3hB7Q940v
+ S1Uth
+X-Gm-Gg: AR+sD13euMjQj1fDpqIxO2fwdcyyxSIYAww7TPBu1W5Zv698pGIHdd9RG6UopRx1PZr
+ Apn047gEb/DEQQRFxLv7wXDESLipfn8k5kZmP7GfxRiFelTC/TmOhB9sw2dVTxJbrco5E2y+n7g
+ 5SBBQlqkpCy6RCSp5JPLGKT4rCDMLqqQgGGmEAmrAkN7K2Wg68wBrA8ni2ZwW5m0xcFQaQHOPoe
+ X1S1LBQOgdCB6NuJSDsO+FmIJoHDZnLyu4Krwj8Xb2x2aq0Hh50dhlI7c6/Qy+5SXteM/QRJesm
+ YWlLhp9cklXQhMT4un4qvjmR03iwehtWlF21PkQz/QJ4uToyVDvYcPm/MSxzsT5fnZFG5gVZxhP
+ WfjJ6zYzUofDsFpr85SIREfpcjgWsz1WRBAmjNkTEDNyxIYN92nCRVWHnIrqT9IiR3iKKjVnaWE
+ 4lQ69zWT8L0aIX42MF7c7jvAU2w0hTDuDFXNLnBqjiu5a7klu4
+X-Received: by 2002:a05:6402:190e:b0:6a3:f63a:4978 with SMTP id
+ 4fb4d7f45d1cf-6a5df5d768dmr7970633a12.8.1787742927523; 
+ Wed, 26 Aug 2026 04:15:27 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:8a5:68e8:91b1:8a17])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a5de8ea655sm3951724a12.12.2026.08.26.04.15.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Aug 2026 04:15:26 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 00/28] IDE patches
+Date: Wed, 26 Aug 2026 13:15:15 +0200
+Message-ID: <20260826111524.3383479-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260826050923.74756-6-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA5MiBTYWx0ZWRfXwROE78NwQoEu
- VOVgS5LodwYU8AjEacCXDSCdRLzoVj3yv5nofMmeygd0+f1VIuuyqqXO2qXXHjGF2//AzbOv8pD
- Ax8nFbykOoimvab6v1bTGh1I9HNALxA=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8ec832 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=mW-bf7JonT9gH_IaHtMA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: HtELHuS6Y0m-oSNC3GFtfHYYf2oeMciG
-X-Proofpoint-GUID: HHxZWrgs8Gyffi7pAXRUZCouuR84nhhe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA5MiBTYWx0ZWRfXyJjRhSYsMkJN
- aHYYa73h0KzJeDkt73K40wMNixEF2kC7KiuJPesuPlETL9VOJO1BjxizseG0f4+NI9Qr/wIS8hS
- SV0+hFdGVcss/gIskc4E/pn1gn6aQ4V7n69juozSQLYEjnZrHwlSPe/8pC8K9ND9BxAzPePMCap
- S/0iCiEMgjrZZDkq7xhXZJj+X2YhcZXHwJ3BZaNjhx4fm8Ep3Cn2qykBNRdguD8BftEi1KwlZXd
- yEU39X+gmiRasCZVWy0jBJdyP5hWdkD+DjkoUWJqoWnlm9Wz8ICO6WIR4BTdH8CGBHY6e3ryjhR
- tww1CNY9Ewh2Pjzo+l6+pl9YfLm3nFffZ2rEMnulGWjXq5GBA3CHmLE/R+blfZHluo+uaGcVjXt
- zEatRFzLIHyVw6jgkOBlPTL51CgREZGtMpc70AOFWv13wYJ2yZlprTe/9oMiQutLSg69hE/J8v9
- fdLvbjSc5jGjh81ucjQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_03,2026-08-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608260092
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=den@openvz.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,246 +98,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:38 AM, Chinmay Rath wrote:
-> From: Aboorva Devarajan <aboorvad@linux.ibm.com>
-> 
-> Move below instructions to decodetree specification:
-> 
->         vpkuhum, vpkuwum, vpkuhus, vpkuwus  : VX-form (PPC_ALTIVEC)
->         vpkshus, vpkswus, vpkshss, vpkswss  : VX-form (PPC_ALTIVEC)
->         vpkpx                                : VX-form (PPC_ALTIVEC)
->         vpkudum, vpkudus, vpksdus, vpksdss  : VX-form (PPC2_ALTIVEC_207)
-> 
-> The legacy GEN_VXFORM_ENV/GEN_VXFORM macros that generated gen_vpk*()
-> functions reading register fields from ctx->opcode are replaced by new
-> do_vpk_env()/do_vpk() helpers in vmx-impl.c.inc that use the
-> pre-extracted decodetree argument fields (a->vrt, a->vra, a->vrb)
-> directly.  The existing gen_helper_vpk*() implementations in
-> int_helper.c are reused without changes.
-> 
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the '-d
-> in_asm,op' option before and after the patch.
-> 
-> Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-> Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h                 | 26 +++++++--------
->  target/ppc/insn32.decode            | 16 +++++++++
->  target/ppc/int_helper.c             | 28 ++++++++--------
->  target/ppc/translate/vmx-impl.c.inc | 51 +++++++++++++++++++++--------
->  target/ppc/translate/vmx-ops.c.inc  | 13 --------
->  5 files changed, 81 insertions(+), 53 deletions(-)
+The following changes since commit fe11f459f640cd08f35c21f9d403517951bfd671:
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+  Merge tag 'fixes-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-08-25 06:48:55 -0700)
 
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 6db917935c..6df3de6516 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -249,19 +249,19 @@ DEF_HELPER_FLAGS_4(VMSUMUBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
->  DEF_HELPER_FLAGS_4(VMSUMMBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
->  DEF_HELPER_FLAGS_4(VPERM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
->  DEF_HELPER_FLAGS_4(VPERMR, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
-> -DEF_HELPER_4(vpkshss, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkshus, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkswss, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkswus, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpksdss, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpksdus, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkuhus, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkuwus, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkudus, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkuhum, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkuwum, void, env, avr, avr, avr)
-> -DEF_HELPER_4(vpkudum, void, env, avr, avr, avr)
-> -DEF_HELPER_FLAGS_3(vpkpx, TCG_CALL_NO_RWG, void, avr, avr, avr)
-> +DEF_HELPER_4(VPKSHSS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKSHUS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKSWSS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKSWUS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKSDSS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKSDUS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKUHUS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKUWUS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKUDUS, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKUHUM, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKUWUM, void, env, avr, avr, avr)
-> +DEF_HELPER_4(VPKUDUM, void, env, avr, avr, avr)
-> +DEF_HELPER_FLAGS_3(VPKPX, TCG_CALL_NO_RWG, void, avr, avr, avr)
->  DEF_HELPER_5(VMHADDSHS, void, env, avr, avr, avr, avr)
->  DEF_HELPER_5(VMHRADDSHS, void, env, avr, avr, avr, avr)
->  DEF_HELPER_FLAGS_4(VMSUMUHM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 8aca8a00c0..c51efbfd33 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -1054,6 +1054,22 @@ VSTRIHR         000100 ..... 00011 ..... . 0000001101   @VX_tb_rc
->  VCLRLB          000100 ..... ..... ..... 00110001101    @VX
->  VCLRRB          000100 ..... ..... ..... 00111001101    @VX
->  
-> +## Vector Pack Instructions
-> +
-> +VPKUHUM         000100 ..... ..... ..... 0000000111 0    @VX
-> +VPKUWUM         000100 ..... ..... ..... 0000100111 0    @VX
-> +VPKUDUM         000100 ..... ..... ..... 1000100111 0    @VX
-> +VPKUHUS         000100 ..... ..... ..... 0001000111 0    @VX
-> +VPKUWUS         000100 ..... ..... ..... 0001100111 0    @VX
-> +VPKUDUS         000100 ..... ..... ..... 1001100111 0    @VX
-> +VPKSHUS         000100 ..... ..... ..... 0010000111 0    @VX
-> +VPKSWUS         000100 ..... ..... ..... 0010100111 0    @VX
-> +VPKSDUS         000100 ..... ..... ..... 1010100111 0    @VX
-> +VPKSHSS         000100 ..... ..... ..... 0011000111 0    @VX
-> +VPKSWSS         000100 ..... ..... ..... 0011100111 0    @VX
-> +VPKSDSS         000100 ..... ..... ..... 1011100111 0    @VX
-> +VPKPX           000100 ..... ..... ..... 0110000111 0    @VX
-> +
->  # VSX Load/Store Instructions
->  
->  LXSD            111001 ..... ..... .............. 10    @DS
-> diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-> index a3adf746bd..dc55ccadf7 100644
-> --- a/target/ppc/int_helper.c
-> +++ b/target/ppc/int_helper.c
-> @@ -1465,7 +1465,7 @@ void helper_VPMSUMD(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
->  #else
->  #define PKBIG 0
->  #endif
-> -void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
-> +void helper_VPKPX(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
->  {
->      int i, j;
->      ppc_avr_t result;
-> @@ -1488,7 +1488,7 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
->  }
->  
->  #define VPK(suffix, from, to, cvt, dosat)                               \
-> -    void helper_vpk##suffix(CPUPPCState *env, ppc_avr_t *r,             \
-> +    void helper_VPK##suffix(CPUPPCState *env, ppc_avr_t *r,             \
->                              ppc_avr_t *a, ppc_avr_t *b)                 \
->      {                                                                   \
->          int i;                                                          \
-> @@ -1507,18 +1507,18 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
->          }                                                               \
->      }
->  #define I(x, y) (x)
-> -VPK(shss, s16, s8, cvtshsb, 1)
-> -VPK(shus, s16, u8, cvtshub, 1)
-> -VPK(swss, s32, s16, cvtswsh, 1)
-> -VPK(swus, s32, u16, cvtswuh, 1)
-> -VPK(sdss, s64, s32, cvtsdsw, 1)
-> -VPK(sdus, s64, u32, cvtsduw, 1)
-> -VPK(uhus, u16, u8, cvtuhub, 1)
-> -VPK(uwus, u32, u16, cvtuwuh, 1)
-> -VPK(udus, u64, u32, cvtuduw, 1)
-> -VPK(uhum, u16, u8, I, 0)
-> -VPK(uwum, u32, u16, I, 0)
-> -VPK(udum, u64, u32, I, 0)
-> +VPK(SHSS, s16, s8, cvtshsb, 1)
-> +VPK(SHUS, s16, u8, cvtshub, 1)
-> +VPK(SWSS, s32, s16, cvtswsh, 1)
-> +VPK(SWUS, s32, u16, cvtswuh, 1)
-> +VPK(SDSS, s64, s32, cvtsdsw, 1)
-> +VPK(SDUS, s64, u32, cvtsduw, 1)
-> +VPK(UHUS, u16, u8, cvtuhub, 1)
-> +VPK(UWUS, u32, u16, cvtuwuh, 1)
-> +VPK(UDUS, u64, u32, cvtuduw, 1)
-> +VPK(UHUM, u16, u8, I, 0)
-> +VPK(UWUM, u32, u16, I, 0)
-> +VPK(UDUM, u64, u32, I, 0)
->  #undef I
->  #undef VPK
->  #undef PKBIG
-> diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-> index 00b359f031..65230f3461 100644
-> --- a/target/ppc/translate/vmx-impl.c.inc
-> +++ b/target/ppc/translate/vmx-impl.c.inc
-> @@ -1070,19 +1070,44 @@ TRANS(VRLQMI, do_vector_rotl_quad, false, true)
->  
->  GEN_VXFORM_TRANS(vsl, 2, 7);
->  GEN_VXFORM_TRANS(vsr, 2, 11);
-> -GEN_VXFORM_ENV(vpkuhum, 7, 0);
-> -GEN_VXFORM_ENV(vpkuwum, 7, 1);
-> -GEN_VXFORM_ENV(vpkudum, 7, 17);
-> -GEN_VXFORM_ENV(vpkuhus, 7, 2);
-> -GEN_VXFORM_ENV(vpkuwus, 7, 3);
-> -GEN_VXFORM_ENV(vpkudus, 7, 19);
-> -GEN_VXFORM_ENV(vpkshus, 7, 4);
-> -GEN_VXFORM_ENV(vpkswus, 7, 5);
-> -GEN_VXFORM_ENV(vpksdus, 7, 21);
-> -GEN_VXFORM_ENV(vpkshss, 7, 6);
-> -GEN_VXFORM_ENV(vpkswss, 7, 7);
-> -GEN_VXFORM_ENV(vpksdss, 7, 23);
-> -GEN_VXFORM(vpkpx, 7, 12);
-> +static bool do_vpk_env(DisasContext *ctx, arg_VX *a,
-> +                       void (*gen_helper)(TCGv_ptr, TCGv_ptr,
-> +                                          TCGv_ptr, TCGv_ptr))
-> +{
-> +    TCGv_ptr ra, rb, rd;
-> +    REQUIRE_VECTOR(ctx);
-> +    ra = gen_avr_ptr(a->vra);
-> +    rb = gen_avr_ptr(a->vrb);
-> +    rd = gen_avr_ptr(a->vrt);
-> +    gen_helper(tcg_env, rd, ra, rb);
-> +    return true;
-> +}
-> +
-> +static bool do_vpk(DisasContext *ctx, arg_VX *a,
-> +                   void (*gen_helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
-> +{
-> +    TCGv_ptr ra, rb, rd;
-> +    REQUIRE_VECTOR(ctx);
-> +    ra = gen_avr_ptr(a->vra);
-> +    rb = gen_avr_ptr(a->vrb);
-> +    rd = gen_avr_ptr(a->vrt);
-> +    gen_helper(rd, ra, rb);
-> +    return true;
-> +}
-> +
-> +TRANS_FLAGS(ALTIVEC, VPKUHUM, do_vpk_env, gen_helper_VPKUHUM)
-> +TRANS_FLAGS(ALTIVEC, VPKUWUM, do_vpk_env, gen_helper_VPKUWUM)
-> +TRANS_FLAGS2(ALTIVEC_207, VPKUDUM, do_vpk_env, gen_helper_VPKUDUM)
-> +TRANS_FLAGS(ALTIVEC, VPKUHUS, do_vpk_env, gen_helper_VPKUHUS)
-> +TRANS_FLAGS(ALTIVEC, VPKUWUS, do_vpk_env, gen_helper_VPKUWUS)
-> +TRANS_FLAGS2(ALTIVEC_207, VPKUDUS, do_vpk_env, gen_helper_VPKUDUS)
-> +TRANS_FLAGS(ALTIVEC, VPKSHUS, do_vpk_env, gen_helper_VPKSHUS)
-> +TRANS_FLAGS(ALTIVEC, VPKSWUS, do_vpk_env, gen_helper_VPKSWUS)
-> +TRANS_FLAGS2(ALTIVEC_207, VPKSDUS, do_vpk_env, gen_helper_VPKSDUS)
-> +TRANS_FLAGS(ALTIVEC, VPKSHSS, do_vpk_env, gen_helper_VPKSHSS)
-> +TRANS_FLAGS(ALTIVEC, VPKSWSS, do_vpk_env, gen_helper_VPKSWSS)
-> +TRANS_FLAGS2(ALTIVEC_207, VPKSDSS, do_vpk_env, gen_helper_VPKSDSS)
-> +TRANS_FLAGS(ALTIVEC, VPKPX, do_vpk, gen_helper_VPKPX)
->  GEN_VXFORM_ENV(vsum4ubs, 4, 24);
->  GEN_VXFORM_ENV(vsum4sbs, 4, 28);
->  GEN_VXFORM_ENV(vsum4shs, 4, 25);
-> diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
-> index b8f77d3d2c..2820976c0f 100644
-> --- a/target/ppc/translate/vmx-ops.c.inc
-> +++ b/target/ppc/translate/vmx-ops.c.inc
-> @@ -59,19 +59,6 @@ GEN_VXFORM_300(bcdtrunc, 0, 20),
->  GEN_VXFORM_300(bcdutrunc, 0, 21),
->  GEN_VXFORM(vsl, 2, 7),
->  GEN_VXFORM(vsr, 2, 11),
-> -GEN_VXFORM(vpkuhum, 7, 0),
-> -GEN_VXFORM(vpkuwum, 7, 1),
-> -GEN_VXFORM_207(vpkudum, 7, 17),
-> -GEN_VXFORM(vpkuhus, 7, 2),
-> -GEN_VXFORM(vpkuwus, 7, 3),
-> -GEN_VXFORM_207(vpkudus, 7, 19),
-> -GEN_VXFORM(vpkshus, 7, 4),
-> -GEN_VXFORM(vpkswus, 7, 5),
-> -GEN_VXFORM_207(vpksdus, 7, 21),
-> -GEN_VXFORM(vpkshss, 7, 6),
-> -GEN_VXFORM(vpkswss, 7, 7),
-> -GEN_VXFORM_207(vpksdss, 7, 23),
-> -GEN_VXFORM(vpkpx, 7, 12),
->  GEN_VXFORM(vsum4ubs, 4, 24),
->  GEN_VXFORM(vsum4sbs, 4, 28),
->  GEN_VXFORM(vsum4shs, 4, 25),
-> -- 
-> 2.55.0
-> 
+are available in the Git repository at:
+
+  https://gitlab.com/dlunev/qemu.git tags/pull-ide-2026-08-26
+
+for you to fetch changes up to dd90d3cd73b9b2b0f27a9e51bfe542b3a510545b:
+
+  tests/qtest/ide-test: cover the UDMA5 identify words (2026-08-26 12:59:19 +0200)
+
+----------------------------------------------------------------
+IDE patches
+
+- fix the logical CHS translation a guest selects with INITIALIZE
+  DEVICE PARAMETERS: reject a translation the device may not accept
+  instead of dying on a division by zero, report the default
+  translation in IDENTIFY DEVICE words 1, 3 and 6 and the one in
+  effect in words 54 to 58, keep those words in sync when the
+  translation changes, migrate both the translation and the SET
+  FEATURES 0xCC revert flag, and return the power-on defaults on a
+  hardware reset rather than on every reset
+- harden the IDE and AHCI state a guest or an incoming migration
+  stream can reach: reject an out-of-range PIO transfer window on
+  load, refuse a PIO transfer with no command header, clear cur_cmd
+  when the command list is unmapped, treat a failed PRDT walk as a
+  transfer failure, reject a command header with an invalid FIS
+  length, and drain the ports on teardown so that a request cannot
+  outlive an unplug
+- report ATAPI UDMA5 with a matching standard and cable
+- extend the IDE/AHCI qtest coverage for all of the above
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: John Snow <jsnow@redhat.com>
+CC: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+----------------------------------------------------------------
+Denis V. Lunev (28):
+      hw/ide: reject an unsupported CHS translation
+      tests/qtest/ide-test: cover a CHS translation with zero sectors
+      tests/qtest/libqos/ahci: allow a count and an expected error
+      tests/qtest/ahci: cover the sector count of INITIALIZE DEVICE PARAMETERS
+      hw/ide: report the default CHS translation in IDENTIFY DEVICE
+      hw/ide: name the retired IDENTIFY DEVICE words the device fills in
+      hw/ide: factor out the IDENTIFY DEVICE current geometry words
+      hw/ide: keep the IDENTIFY DEVICE current geometry in sync
+      hw/ide: restore the power-on device state before loading
+      hw/ide: migrate the logical CHS translation
+      hw/ide: migrate the power-on defaults revert flag
+      tests/qtest/ide-test: cover the CHS translation across migration
+      tests/qtest/ide-test: cover a rejected CHS translation in the stream
+      tests/qtest/ide-test: cover the IDENTIFY DEVICE geometry words
+      hw/ide: revert the CHS translation on a hardware reset
+      tests/qtest/ide-test: cover the CHS translation across resets
+      hw/ide: drop a redundant interrupt from INITIALIZE DEVICE PARAMETERS
+      hw/ide: reject an out-of-range PIO transfer window on load
+      tests/qtest/ide-test: cover the migrated PIO transfer window
+      hw/ide/ahci: refuse a PIO transfer with no command header
+      hw/ide/ahci: clear cur_cmd when the command list is unmapped
+      tests/qtest/ahci: regression test for a PIO write vs. engine stop
+      hw/ide/ahci: treat a failed PRDT walk as a PIO transfer failure
+      hw/ide/ahci: reject a command header with an invalid FIS length
+      hw/ide/ahci: drain the ports on teardown
+      tests/qtest/ahci: regression test for a request outliving an unplug
+      hw/ide: report ATAPI UDMA5 with a matching standard and cable
+      tests/qtest/ide-test: cover the UDMA5 identify words
+
+ hw/ide/ahci.c             | 148 ++++++++---
+ hw/ide/cmd646.c           |   2 +-
+ hw/ide/core.c             | 170 +++++++++---
+ hw/ide/ide-internal.h     |   7 +-
+ hw/ide/isa.c              |   2 +-
+ hw/ide/macio.c            |   2 +-
+ hw/ide/mmio.c             |   2 +-
+ hw/ide/piix.c             |   2 +-
+ hw/ide/sii3112.c          |   6 +-
+ hw/ide/trace-events       |   3 +
+ hw/ide/via.c              |   2 +-
+ include/hw/ide/ide-dma.h  |   3 +-
+ tests/qtest/ahci-test.c   | 187 ++++++++++++++
+ tests/qtest/ide-test.c    | 647 ++++++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqos/ahci.c |  14 +
+ tests/qtest/libqos/ahci.h |   6 +
+ 16 files changed, 1113 insertions(+), 90 deletions(-)
+
+-- 
+2.53.0
 
