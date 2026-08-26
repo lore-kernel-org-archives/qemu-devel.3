@@ -4,115 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10C0C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C34C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzGjd-0004XM-Fy; Wed, 26 Aug 2026 12:44:21 -0400
+	id 1wzGlP-0005PY-Fi; Wed, 26 Aug 2026 12:46:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wzGjb-0004Wd-90; Wed, 26 Aug 2026 12:44:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wzGlN-0005P5-Jd; Wed, 26 Aug 2026 12:46:09 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wzGjZ-0008C9-5o; Wed, 26 Aug 2026 12:44:19 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QE1cbO3084670; Wed, 26 Aug 2026 16:44:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Qzj8Cg
- wGqplz3ML+s5oZo5aGC6g6Tso3K6cdZMFAuxg=; b=MJz6CTxkzOVJqYvhGCS4KD
- YU3lZKrj5cojetQxQ20CF/QfjvhbslFWrisTDnlAak8WrL0ibplv7ZRbboF7npDR
- KinZihL4q4lpWNqlBogezjI62DQ8aAWpKbp0+6hgw5R/cqw9l9li5RmnMqadn8zQ
- GqO7wLMn3USvVxxKwGKzszj+RTI9iIPI/VhofYlT3niNfrBj6+DCFIJiVN9HcHbT
- 9ELasftIZtMRs1wCs5Fyj5ah960JKhb2gg+V07NwirGEaHTNRvXHd4lsuX5NqU29
- BYROH0yD+vxAmYuJnPHHtBZRW+6Q5fjVyfSFX8EJLhXbNtrIpW+n6lH8bgKryX4A
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726equwv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 16:44:15 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QGfMNf022906;
- Wed, 26 Aug 2026 16:44:14 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qb7er-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 16:44:14 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QGiDs523200418
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 16:44:13 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB6C558055;
- Wed, 26 Aug 2026 16:44:13 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 74D0758043;
- Wed, 26 Aug 2026 16:44:12 +0000 (GMT)
-Received: from [9.61.69.254] (unknown [9.61.69.254])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 16:44:12 +0000 (GMT)
-Message-ID: <5a7ed440-ed57-448a-9baa-4626464ee9f8@linux.ibm.com>
-Date: Wed, 26 Aug 2026 12:44:06 -0400
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wzGlI-0000Tx-HC; Wed, 26 Aug 2026 12:46:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dPrKD0kUGt9n0JUuDetmuBhWdOZOJv2qcsVEr0lmSJOD7A08H4PAirdgfb71mPs/rjen46RwkJG4Y12UvfsNZeqzANYodQvmMIVipHBzxd7sJEiDaxwj6QbSrLrzfQzcfDKvoAMyUUjXKpk4MWJP29NmEEedYYp4Jkopa3NllUke9QNG0f2pVOHLRexmG8xpg2tgKw96Uxn2m3P3eCelsNmZLAgDt2XPDczfgfi6AzDQpznnGUV2zc1OOrrpEZ8J3tcFsjQA2afLuSGZsTPv+kfgzNx9JL1gz+AcU4wOfkKD4rNvtwMGF3FdlN2QFEb7QHB7t+fK3xwEjGKYDOE46Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LFkPrccrcp4MyK6/yzlhhdHoywPR/9yqmjAYshBT8BE=;
+ b=dMqVIP6DOy+NoE40SyQHQmcFcwUIgmesKwQ8NXDV3zTLhEGAJA1wgo3WNHJf0kjAO5E/JFoGn6ECZfYRf7FJe1WsIoXZzXf4BP6KrUxSlZkVL6I7Sq/PGN3ii/uye9S/WAYKaf7ea8pXPa4w9lxCoZjeYB8LgfrI/owxGRnSHyXfY2gUb0BX6fEh8EgHToVVRZnl38YFbsiViC0lrdOod4hnE2ecGpVv/jj7fleFzdWkeSK5p8a3xMlTV+ZQ4N8PENsC/lLGwbuslYD9oEMEvSkyczNoC4UH33j/WvKpb2oNiVKgPqKNqexoq3+8qGdhEyUaagL8kQ6oBoURFhp31A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LFkPrccrcp4MyK6/yzlhhdHoywPR/9yqmjAYshBT8BE=;
+ b=roilazFYgZOQoQq63zrZJt/1rbCZGG/KRzkgrX2VWZOpxkMblhiVmNvN+S7ZM4cAG3xCPS/nM1jaHcURXUhfOQnk34/19Rn81RF0GAltVmJMCRgnkejmg4YWf8qKXlDpyjICxDWYA5LH+SmO0bhGCluoBn+sEt+44ufcMGyf4YkwBx5cO+aq1ZG5yPBspoA1zdTPJ3LWKj3u7Zg77fZ+FM2uH/0ggktBf11hHrzQFVHaAVqmajPHB4DGgQHd9PuDmp3YzBfEBXTttWNsyR2vbU3zlUXhCmmGuLgajJJAZr0WNVdD9OXiAhET+6NZjGt1TvEIeyBiVpK/c0v6Rizzpw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PAWPR08MB9517.eurprd08.prod.outlook.com (2603:10a6:102:2eb::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Wed, 26 Aug
+ 2026 16:45:59 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.004; Wed, 26 Aug 2026
+ 16:45:58 +0000
+Message-ID: <84b7646d-0567-4af5-be98-a62f49beb963@virtuozzo.com>
+Date: Wed, 26 Aug 2026 18:45:54 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/7] pc-bios/s390-ccw: Add support for virtio-net-pci
- IPL
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com
-References: <20260818205324.580199-1-zycai@linux.ibm.com>
- <20260818205324.580199-5-zycai@linux.ibm.com>
+Subject: Re: [PATCH v6 19/25] parallels: report the stored dirty bitmaps in
+ qemu-img info
+To: Markus Armbruster <armbru@redhat.com>, "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>
+References: <20260817185942.1065143-1-den@openvz.org>
+ <20260817185942.1065143-20-den@openvz.org> <878q5uo9a6.fsf@pond.sub.org>
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260818205324.580199-5-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <878q5uo9a6.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f17df cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=ctsVLiZ_AAAA:8 a=DwueQANkowgNhn0VcN8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=3VCIHQLkQthbvTRuo98s:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfXx6DdekL7yRUc
- 2EuISiGYa0xjYsFpgmvy+N4LfxwlMbNV2b2Yjr52etKjccQsTJkFXay1vxw3m2SlNOpB4ljOKfb
- TlPr/ZW+X9RWhLheT/2wjKd0ge55SC4=
-X-Proofpoint-GUID: XF8PuiH2XW5XJKOXL7O8BPW05KeFrrzc
-X-Proofpoint-ORIG-GUID: XF8PuiH2XW5XJKOXL7O8BPW05KeFrrzc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfX3IOevqpLoI5J
- rcV3B8TZMhSfa8q0iFvFderMUEbWcsEXq8Zzm/GT37+0MWwKbU6RPCejh7cp4KAIRmL9WB67MqY
- 2ZEYKErGPrveWRhq2DNMQ4d68ZpjpnilCrTa/zZ+2EZjmEmjsv8+e3adn8tbkYOoYp/Dkbd/5En
- BztWDsFVDPVb8SuReguKFGTGQRUbw8CtZ4LBVJ1if0TLAnxKcntg4raZIP8+twvpF3bc3UnD1sP
- wCLjGv2nOZwBWKZYq+Rwko9qnJP7cZTH/IRyFB9jschYVhOgAGDuVPw8f9pmfsCM8ikJHsqhv3R
- hqcAkAUu9mSYgas13c2g1+vCa/NMz7+nX4KPFXxXFv+2/oyeg6h0peFj/USHAfoRe4dBDvxosT8
- Z+Y0A59OrCQgNPZ+KMvQhmjFmf6GhvxCKrhjJIsE0CvNd6WiIjg2WaVqOIB5OU52JieDB3I810N
- Sx7OBcZ78XCF+AzCW7w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1011 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260138
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-ClientProxiedBy: VIUP296CA0124.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:350::9) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAWPR08MB9517:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1949d317-035d-4ebc-ab3f-08df0391810a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|10070799003|23010399003|366016|1800799024|18002099003|22082099003|56012099006|3023799007|4143699003|5023799004|6133799003|10067099003;
+X-Microsoft-Antispam-Message-Info: KMJMuoW44Wxkaa2F7lkFsEMuVMPDG7fRXPTlbDW7Xtw/Nb3F42HHC28EK7sEENwrOpDO9HKy6TLJJ3KOVbzVtoIHuXU/oyN3rU6qGU4ZJQ4ouzwvgnOnRrtn5k9yavQWoW/UPRHxeQ51tDEfjMXJREAL9onCkfUjiDw/7UxGb1U/WZ4ExKOxLUT+/Vdo8G7iEqwkYNBl+Z72XXTw7KFuybINfoxr4favovTbtopVOgJilH2RAclP0KfBhKlP28zqXDEm0XBPhUYFWRFZmUpqzSc8FU/fYdwQtVpFfv62V6rc6mQ4ii2mjdb++WHoF8ydovPc3WgzVmWM1PcpRC4eFgBwZI7CEFrZ/H8Zpe1rlt/E1MImV2AqsE1h8A5JQQGHv4gNuz3CD+mY/r1xJDu6LmZ87dHOmwFJWzjw7zWx9JxHfNGheZsrOgvX0A64SmF2hJ3voaPA1F88eyX9fTefV5JnIni1FHrUFXjCN6bwnZQUn8puj33JmpaaiBiHZF0TYaUi+y5oLbndzTN6XIG4mCFmA/tPM9Xtw5YubfKRrzaTycyeIyPMVN8lQAlRVmWNXB2HnXXQF/aG4Ymzo9pWSBYXIQlaGkOHuLtWvydT/7Y0WMTunO0TV1L7b39Nd9chjuHZ8GY2qdbvkNVoXjtPqODCk0o3IK0tww91GF/Q/A8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(10070799003)(23010399003)(366016)(1800799024)(18002099003)(22082099003)(56012099006)(3023799007)(4143699003)(5023799004)(6133799003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZVk5QzNMbit2SXJtNjZoZTJlNkNBZXphQk15Rldabm5vUGVSYjhSMHZRaG0y?=
+ =?utf-8?B?V294MkpYL2g0SGowZEQ2Z29vay9XK2VzbkE5QjRhOUJ6ei9pVDlodHJOTVI0?=
+ =?utf-8?B?OTF4SThTcU9qZ1F4UkhORTFuZEJqazVabmxzYUovWGhkZ0lwUFBUNzdZSldt?=
+ =?utf-8?B?dUZjc21wVXcrbUl1T3BkOUlONGZLYVVlL05iMWE5Y3FxZDl1Ym1saU9ZZjho?=
+ =?utf-8?B?SFdDSVBYbEE2TW5EN1NuQlN4amp1YjRxVmVpVlhZYmd2NGdrZE16TGJ3SFd6?=
+ =?utf-8?B?cHlCRnFabnNTalBZczdGVXdjMm9HRkY1dUR3UXNxSHJFcThJakhoOUtvYU1T?=
+ =?utf-8?B?UzBOcXpwODBiUXhNZUNybmNqYThPeS9vN2pNVlJGQUk4Wm1ZRjY0cXJuSklO?=
+ =?utf-8?B?VU5WbXJBZnMzc3Zhc3lMblE4bDdCa0NVUjY2aVlNWkJEY1I1VGJ4Ym1WOUxa?=
+ =?utf-8?B?UlRSWmo1Y1lSOEFsZTUwNzZSY2tMdUIyNDZzUGZCaFEyVlE3R0ZOdC9qMkw4?=
+ =?utf-8?B?NmhRUWtkelBUM05jdDY3ZlhBZVJlL1ZFTmp4Y3g3R01UMkNKUmRBcm9Fam1h?=
+ =?utf-8?B?VnpsaHpCOUJ1dXJId1l1OUlkcWJFcVZ5VEtsQjBaVjV3aUpGV01GQ0lEcGh4?=
+ =?utf-8?B?Y05SMVdVa2xCWWdLeWExSmUybzZoVUh1cWlPaDJDenJRZ1lvU2IxNjlsUkhr?=
+ =?utf-8?B?eFRIajNuYWp6TmVRWUFPSndITmtCMG1FTVJSTjFCbzVlQmdVMWFpQXZUZXVC?=
+ =?utf-8?B?dTEzdFdWYU5vTWJVaUFDRFZqODN6cHFhNWs1Tk1qUmR4aWFPRGFQM3NzZGF3?=
+ =?utf-8?B?dndOeVlwQTc1cy8zNy9PVDlndEc2blRUQjkvMEpQZlBWM2tTRm9LazVROVBH?=
+ =?utf-8?B?UTdQa0UyTVZzc3dEUzFla3l2eTJwOHNsREtMMDVBTFoxMk5talNnVGJrcFdp?=
+ =?utf-8?B?Z1NYRmsyaFhVM1NtcU8ycGxyOXd6akowbndoR0xnUXBjUXAxaTFhRm4yRStO?=
+ =?utf-8?B?ZUZQcVBCb2RUMUpJWU9kRkZsL3FUaDVFRkhnMGdLUzFLbU9Ia1FPaVIxTUVV?=
+ =?utf-8?B?VjJ4UWJqc0s4MzJOZTAzV3g0ZjB5Tm5MTDFlV3FuNWw5OGRueXZFQUd6aWdR?=
+ =?utf-8?B?cHJGb1FaeWFQRzY3ZmxCZnVFSWNSMHRYNnZnWTk2dVI2K01IeENydnYvTnFz?=
+ =?utf-8?B?QXRhaERGVEJlRDEzU1IxR1RsZ01UVkVFZktYTHY5SW1KZkk3VWpuZGFST21R?=
+ =?utf-8?B?YTEwZ2w4cktqMm5hU1lmS2JEK2pUTHE0aG5uV1VCS3VoNWdqY0E4TmxoaE96?=
+ =?utf-8?B?TFNyTUlXVXJDS05uNTZnOG15RkxDb05uTWVGakRwaGp0b1p6Z05sN3oycURs?=
+ =?utf-8?B?YVZFTlJFRXV5citRbkJJV3lRSU1nblZDSlA0eFEyMy8yUWdIeGVMb2UrWlFL?=
+ =?utf-8?B?Ujd6aVpoWEZrTjdiVUhSUS9nYmVsbzZwK1ZYZGR1K0VaYTA2eFBkcWhDLytE?=
+ =?utf-8?B?UWQ1VU1sUFJJU1U5eHo0N1pVUFNtMTByMXJ6UFh2RVhKL2lwSXNkaGVPanhR?=
+ =?utf-8?B?S2ZZeFRoT1BBWlZ2NHpwcWc3a0xjMHZZVlVUMjJuWTJQY3RWOVVOVVJsdlRq?=
+ =?utf-8?B?ckp1enljN0dTUlpNSTdiVEtKUyt0K1luQjU4eWhKekhObS82N3lXVzdsV0hW?=
+ =?utf-8?B?N3lDbXk0QlUrdGU1dCtEdE1wa010b0lTZGlmRWxyWXNrTmViaGZSUThxaDBI?=
+ =?utf-8?B?OUgvaXhCamJvMmlzRCthSTl0K204RmFRZnEwb21vLzYvZUJvdUxQV1orcHBw?=
+ =?utf-8?B?N3RZZVdraFlYUVJCWEdNNGdvNG44SHFyUDdBRElvL0xWSWtrQ1AxVktWWUdt?=
+ =?utf-8?B?eStiN0VoN2xaRlRtOXFFcXFrbGpBc3pFR1RSR09aWHphYWh5b2xWRlRUaURG?=
+ =?utf-8?B?RUNsY2t5M0MzWEJNS2twalE5WDdjKytMRncydkdzNkFDVTlOallOWEd4eWZX?=
+ =?utf-8?B?eWF1L1M3c1ZHOFZPY3V2WVNaMXpWSkFOcFAybVlXek1JdGU5b2ZsQ0FOK3lh?=
+ =?utf-8?B?ZExoVC9kT0tuTXVFZWVTRVpHRmhTNnRDVHB5ck5sUzRPNitZL3NEQWQ2S1g5?=
+ =?utf-8?B?VU4yaWtrb3lRYkZuU1JxSTBPR3F6eXhIcGtZQkhseDlmcTlxcTI4ek5BVFg4?=
+ =?utf-8?B?UXB2VmxWRFlYWG9GenV3RDVrNkMyN0VLN0o0M09PMi9Pci9PNko3YzMzY3or?=
+ =?utf-8?B?M29GQ2ZPM2ZoRWJZejZaYlgvbnlwaTZ0OStmSGJLWlR4SWdwcmplRTJtVXdt?=
+ =?utf-8?B?b0d3eWhlV2RFOFoyQkIrV3ROMy93SUxwUGVEb0V5cDNFbTVFTlFLZ1RWWENm?=
+ =?utf-8?Q?cJSrzUn7pM6FPIAjgozDYPZcZ9dToxtpe1VeXC7gb9AoM?=
+X-MS-Exchange-AntiSpam-MessageData-1: HZgchCjXUn1Pag==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1949d317-035d-4ebc-ab3f-08df0391810a
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2026 16:45:58.1275 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SyVuHg3sQzCFLbjlZm3pUmEHy3mPeCgkH08qBOtaeZWzUCr7I3E9IFWoRUZNTW+QKAK4W2OqTRAY4JnQTWAiFQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB9517
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=den@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,228 +153,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/18/26 4:53 PM, Zhuoying Cai wrote:
-> Enable network booting via virtio-net-pci by implementing PCI transport
-> support for virtio-net.
+On 8/25/26 11:10, Markus Armbruster wrote:
+> "Denis V. Lunev" <den@openvz.org> writes:
 >
-> This patch also adds endianness handling for virtio PCI ring operations in
-> little-endian to ensure correct behavior on s390x.
-
-Endianness handling was actually added in the previous patch.  Is this a
-misplaced message? Or perhaps it should say extends, rather than adds?
-
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/main.c       |  1 +
->   pc-bios/s390-ccw/virtio-net.c | 37 +++++++++++++++++++++++-------
->   pc-bios/s390-ccw/virtio-pci.c | 43 +++++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/virtio-pci.h |  2 ++
->   4 files changed, 75 insertions(+), 8 deletions(-)
+>> From: Denis V. Lunev <den@openvz.org>
+>>
+>> Nothing tells which persistent bitmaps an image carries. qemu-img info
+>> says nothing about them, and the only other way to see one is to export
+>> the image over NBD and ask for a bitmap by name, which needs the name
+>> beforehand.
+>>
+>> Add ImageInfoSpecificParallels with the bitmaps and their granularity,
+>> as qcow2 reports the contents of its bitmap directory:
+>>
+>>     Format specific information:
+>>         bitmaps:
+>>             [0]:
+>>                 name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
+>>                 granularity: 65536
+>>
+>> The list is built from the bitmaps loaded at open time rather than from
+>> a second pass over the Format Extension, as every bitmap the extension
+>> carries is loaded and marked persistent there. On a node which is open
+>> that also covers a bitmap which was created but not stored yet, which is
+>> what the field says: qemu-img info opens the image on its own, so there
+>> the two are the same thing.
+> The last sentence confuses me.
 >
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 8bc6e8eaa3..0eeb53a2bf 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -328,6 +328,7 @@ static void ipl_pci_device(void)
->       }
->   
->       switch (vdev->dev_type) {
-> +    case VIRTIO_ID_NET:
->       case VIRTIO_ID_BLOCK:
->           if (virtio_setup() == 0) {
->               zipl_load(); /* only return on error */
-> diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-> index 3a9ae789cf..209f98a0e3 100644
-> --- a/pc-bios/s390-ccw/virtio-net.c
-> +++ b/pc-bios/s390-ccw/virtio-net.c
-> @@ -62,7 +62,16 @@ int virtio_net_init(void *mac_addr)
->       rx_last_idx = 0;
->   
->       vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
-> -    virtio_ccw_setup(vdev);
-> +    switch (virtio_get_device()->ipl_type) {
-> +    case S390_IPL_TYPE_CCW:
-> +        virtio_ccw_setup(vdev);
-> +        break;
-> +    case S390_IPL_TYPE_PCI:
-> +        virtio_pci_setup(vdev);
-> +        break;
-> +    default:
-> +        return -1;
-> +    }
->   
->       if (!(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT)) {
->           puts("virtio-net device does not support the MAC address feature");
-> @@ -115,22 +124,30 @@ int recv(int fd, void *buf, int maxlen, int flags)
->       VRing *rxvq = &vdev->vrings[VQ_RX];
->       int len, id;
->       uint8_t *pkt;
-> +    uint16_t rx_used_idx, rx_avail_idx;
-> +    uint32_t rx_used_len, rx_used_id;
-> +    uint64_t rx_desc_addr;
->   
-> -    if (rx_last_idx == rxvq->used->idx) {
-> +    rx_used_idx = virtio_tswap16(rxvq->used->idx);
-> +    if (rx_last_idx == rx_used_idx) {
->           return 0;
->       }
->   
-> -    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
-> +    rx_used_len = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].len);
-> +    rx_used_id = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].id);
-> +
-> +    len = rx_used_len - virtio_net_hdr_size;
->       if (len > maxlen) {
->           puts("virtio-net: Receive buffer too small");
->           len = maxlen;
->       }
-> -    id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
-> -    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
-> +    id = rx_used_id % rxvq->num;
-> +    rx_desc_addr = virtio_tswap64(rxvq->desc[id].addr);
-> +    pkt = (uint8_t *)(rx_desc_addr + virtio_net_hdr_size);
->   
->   #if DEBUG_VIRTIO_NET   /* Dump packet */
->       int i;
-> -    printf("\nbuf %p: len=%i\n", (void *)rxvq->desc[id].addr, len);
-> +    printf("\nbuf %p: len=%i\n", (void *)rx_desc_addr, len);
->       for (i = 0; i < 64; i++) {
->           printf(" %02x", pkt[i]);
->           if ((i % 16) == 15) {
-> @@ -144,8 +161,10 @@ int recv(int fd, void *buf, int maxlen, int flags)
->       memcpy(buf, pkt, len);
->   
->       /* Mark buffer as available to the host again */
-> -    rxvq->avail->ring[rxvq->avail->idx % rxvq->num] = id;
-> -    rxvq->avail->idx = rxvq->avail->idx + 1;
-> +    rx_avail_idx = virtio_tswap16(rxvq->avail->idx);
-> +    rxvq->avail->ring[rx_avail_idx % rxvq->num] = virtio_tswap16(id);
-> +    rx_avail_idx++;
-> +    rxvq->avail->idx = virtio_tswap16(rx_avail_idx);
->       vring_notify(rxvq);
->   
->       /* Move index to next entry */
-> @@ -164,6 +183,8 @@ bool virtio_net_setup(void)
->       switch (virtio_get_device()->ipl_type) {
->       case S390_IPL_TYPE_CCW:
->           return virtio_ccw_net_setup();
-> +    case S390_IPL_TYPE_PCI:
-> +        return virtio_pci_net_setup();
->       default:
->           return false;
->       }
-> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-> index f501252c81..c7d62766b8 100644
-> --- a/pc-bios/s390-ccw/virtio-pci.c
-> +++ b/pc-bios/s390-ccw/virtio-pci.c
-> @@ -52,6 +52,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
->       case 0x1001:
->           vdev->dev_type = VIRTIO_ID_BLOCK;
->           break;
-> +    case 0x1041:
-> +    case 0x1000:
-> +        vdev->dev_type = VIRTIO_ID_NET;
-> +        break;
->       default:
->           vdev->dev_type = 0;
->       }
-> @@ -199,6 +203,14 @@ static int virtio_pci_get_blk_config(void)
->       return rc;
->   }
->   
-> +static int virtio_pci_get_net_config(void)
-> +{
-> +    VirtioNetConfig *cfg = &virtio_get_device()->config.net;
-> +    int rc = vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioNetConfig));
-> +
-> +    return rc;
-> +}
-> +
->   static int virtio_pci_negotiate(void)
->   {
->       int i, rc;
-> @@ -330,6 +342,7 @@ bool virtio_pci_is_supported(VDev *vdev)
->       if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
->           switch (vdev->dev_type) {
->           case VIRTIO_ID_BLOCK:
-> +        case VIRTIO_ID_NET:
->               return true;
->           default:
->               return false;
-> @@ -384,6 +397,11 @@ int virtio_pci_setup(VDev *vdev)
->           vdev->cmd_vr_idx = 0;
->           virtio_pci_get_blk_config();
->           break;
-> +    case VIRTIO_ID_NET:
-> +        vdev->nr_vqs = 2;
-> +        vdev->cmd_vr_idx = 0;
-> +        virtio_pci_get_net_config();
-> +        break;
->       default:
->           puts("Unsupported virtio device");
->           return -ENODEV;
-> @@ -458,3 +476,28 @@ int virtio_pci_setup_device(void)
->   
->       return 0;
->   }
-> +
-> +static bool find_pci_net_dev(void)
-> +{
-> +    if (!virtio_is_supported(virtio_get_device())) {
-> +        return false;
-> +    }
-> +
-> +    if (virtio_get_device_type() != VIRTIO_ID_NET) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +bool virtio_pci_net_setup(void)
-> +{
-> +    bool found = false;
-> +
-> +    if (have_iplb || store_iplb(&iplb)) {
-> +        IPL_assert(iplb.pbt == S390_IPL_TYPE_PCI, "IPL_TYPE_PCI expected");
-> +        found = find_pci_net_dev();
-> +    }
-> +
-> +    return found;
-> +}
+>> An image with no bitmaps leaves the structure empty, and
+>> bdrv_image_info_specific_dump() prints nothing for an empty one, so the
+>> output for such an image does not change.
+> Output of what?  I guess it's "info block" and "qemu-img info", because
+> these call bdrv_image_info_specific_dump().
+For the image (BDS) without dirty bitmaps the output
+of 'qemu-img info' would be the same as with and
+without a patch.
 
-As far as I can tell the net specific setup/find are not needed for PCI
-devices.  By the time we reach the the call to virtio_pci_net_setup() we
-know vdev->ipl_type == S390_IPL_TYPE_PCI because that is the prerequisite
-to call the function in the first place, and vdev->ipl_type was previously
-set based on the PBT.  We also already know that our device type is
-VIRTIO_ID_NET because otherwise the call to virtio_setup() in main.c
-would have fallen through to the default case and failed and/or netmain()
-would not be called from bootmap.c.
+>> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+>> Cc: Eric Blake <eblake@redhat.com>
+>> Cc: Markus Armbruster <armbru@redhat.com>
+>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> [...]
+>
+>> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> index 1f87b07850..4bc8b45efe 100644
+>> --- a/qapi/block-core.json
+>> +++ b/qapi/block-core.json
+>> @@ -200,7 +200,7 @@
+>>  # Since: 1.7
+>>  ##
+>>  { 'enum': 'ImageInfoSpecificKind',
+>> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
+>> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'parallels' ] }
+>>  
+>>  ##
+>>  # @ImageInfoSpecificQCow2Wrapper:
+>> @@ -255,6 +255,41 @@
+>>  { 'struct': 'ImageInfoSpecificFileWrapper',
+>>    'data': { 'data': 'ImageInfoSpecificFile' } }
+>>  
+>> +##
+>> +# @ParallelsBitmapInfo:
+>> +#
+>> +# Parallels dirty bitmap information.
+>> +#
+>> +# @name: the name of the bitmap
+>> +#
+>> +# @granularity: granularity of the bitmap in bytes
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'struct': 'ParallelsBitmapInfo',
+>> +  'data': { 'name': 'str', 'granularity': 'uint32' } }
+>> +
+>> +##
+>> +# @ImageInfoSpecificParallels:
+>> +#
+>> +# @bitmaps: A list of the persistent dirty bitmaps of the image,
+>> +#     including the ones which are not written out yet
+> Pardon my ignorance...  Is "not written out yet" relevant to a user /
+> management application?
+This means that the image on disk could contains
+bitmaps A and B while backup software has added
+bitmap C to BDS. The query will return A, B, C.
+This is same as for QCOW2.
 
-Although we haven't checked virtio_is_supported() yet, we will do that
-verification in virtio_net_init(), which is the very next step.
+> ImageInfoSpecificQCow2 also has a @bitmaps member.  Its documentation is
+>
+>    # @bitmaps: A list of qcow2 bitmap details (since 4.0)
+>
+> Are these "persistent dirty bitmaps" as well, or something else?
+same, as above
 
-For PCI devices, everything checked from virtio_net_setup() appears to be
-guaranteed by the call chain or validated by subsequent net code. Maybe
-virtio_net_setup() only needs to be called for CCW devices?
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'struct': 'ImageInfoSpecificParallels',
+>> +  'data': { '*bitmaps': ['ParallelsBitmapInfo'] } }
+> Please put these right after ImageInfoSpecificFile to preserve the
+> existing order of things:
+>
+>     All the ImageInfoSpecificFOO in order of
+>         ImageInfoSpecificKind members
+>     ImageInfoSpecificKind
+>     All the ImageInfoSpecificFOOWrapper in order of
+>         ImageInfoSpecificKind members
+>     ImageInfoSpecific
+clear, will do
 
-Regards,
-Jared Rossi
-> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
-> index 33b683bd92..2c3136fd05 100644
-> --- a/pc-bios/s390-ccw/virtio-pci.h
-> +++ b/pc-bios/s390-ccw/virtio-pci.h
-> @@ -70,6 +70,8 @@ long virtio_pci_notify(VRing *vr);
->   bool virtio_pci_is_supported(VDev *vdev);
->   int virtio_pci_setup(VDev *vdev);
->   int virtio_pci_setup_device(void);
-> +bool virtio_pci_is_supported(VDev *vdev);
-> +bool virtio_pci_net_setup(void);
->   
->   int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
->   int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
-
+>> +
+>> +##
+>> +# @ImageInfoSpecificParallelsWrapper:
+>> +#
+>> +# @data: image information specific to Parallels
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'struct': 'ImageInfoSpecificParallelsWrapper',
+>> +  'data': { 'data': 'ImageInfoSpecificParallels' } }
+>> +
+>>  ##
+>>  # @ImageInfoSpecific:
+>>  #
+>> @@ -273,7 +308,8 @@
+>>        'vmdk': 'ImageInfoSpecificVmdkWrapper',
+>>        'luks': 'ImageInfoSpecificLUKSWrapper',
+>>        'rbd': 'ImageInfoSpecificRbdWrapper',
+>> -      'file': 'ImageInfoSpecificFileWrapper'
+>> +      'file': 'ImageInfoSpecificFileWrapper',
+>> +      'parallels': 'ImageInfoSpecificParallelsWrapper'
+>>    } }
+>>  
+>>  ##
+> [...]
+>
+Thank you,
+    Den
 
