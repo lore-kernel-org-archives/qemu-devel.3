@@ -4,111 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2766C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10C0C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzGi3-0003sY-Op; Wed, 26 Aug 2026 12:42:44 -0400
+	id 1wzGjd-0004XM-Fy; Wed, 26 Aug 2026 12:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wzGht-0003rd-BD; Wed, 26 Aug 2026 12:42:33 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wzGjb-0004Wd-90; Wed, 26 Aug 2026 12:44:19 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wzGhq-0007LT-Uz; Wed, 26 Aug 2026 12:42:32 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wzGjZ-0008C9-5o; Wed, 26 Aug 2026 12:44:19 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QE1Upa2333650; Wed, 26 Aug 2026 16:42:29 GMT
+ 67QE1cbO3084670; Wed, 26 Aug 2026 16:44:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WFAgA4
- sKhm6TCPolRBTz7lIgd2EoPeC1C7sMB6Ena9s=; b=YTPAxBCQenbNouLoY1W+VN
- P8q/U7Y1TiwwI8+kT/PNC/cqQECVQCeEMgvKeQc3oTMbJAGCgKol5boHNO6S/Uwx
- PpCJU5pIdMVcR3WiyOjAfwACX824DSxyFbojzeRrQctTF0X9CwLBzIUQlCoX5u3i
- V/2ZlZz1qm1mYzmAyxl7gEpQ7swW/jxP8dPY+Dr3mulsGQI0DW8wf4ePM18hDRw2
- +tTb/Yrt5cdCvBJsnSafWL6jpEnWkyQQNUuo3ThlfTA9o0Ydu+7b0kiDYHXqyyr6
- lMMSU/IMMxaEDFsqL9OTLUwpQE04Ds4x97Cw9a5UPI98ybqwJt4M9+PWAcZpSLIg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Qzj8Cg
+ wGqplz3ML+s5oZo5aGC6g6Tso3K6cdZMFAuxg=; b=MJz6CTxkzOVJqYvhGCS4KD
+ YU3lZKrj5cojetQxQ20CF/QfjvhbslFWrisTDnlAak8WrL0ibplv7ZRbboF7npDR
+ KinZihL4q4lpWNqlBogezjI62DQ8aAWpKbp0+6hgw5R/cqw9l9li5RmnMqadn8zQ
+ GqO7wLMn3USvVxxKwGKzszj+RTI9iIPI/VhofYlT3niNfrBj6+DCFIJiVN9HcHbT
+ 9ELasftIZtMRs1wCs5Fyj5ah960JKhb2gg+V07NwirGEaHTNRvXHd4lsuX5NqU29
+ BYROH0yD+vxAmYuJnPHHtBZRW+6Q5fjVyfSFX8EJLhXbNtrIpW+n6lH8bgKryX4A
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqyvf9-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726equwv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 16:42:28 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QGfILq025794;
- Wed, 26 Aug 2026 16:42:27 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwb43n-1
+ Wed, 26 Aug 2026 16:44:15 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QGfMNf022906;
+ Wed, 26 Aug 2026 16:44:14 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qb7er-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 16:42:27 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QGgQwn22020666
+ Wed, 26 Aug 2026 16:44:14 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QGiDs523200418
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 16:42:26 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A697C58053;
- Wed, 26 Aug 2026 16:42:26 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1BB4958043;
- Wed, 26 Aug 2026 16:42:26 +0000 (GMT)
-Received: from [9.12.79.241] (unknown [9.12.79.241])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 16:42:25 +0000 (GMT)
-Message-ID: <114ff09c-3b52-4662-bd28-c025a1bf692e@linux.ibm.com>
-Date: Wed, 26 Aug 2026 12:42:25 -0400
+ Wed, 26 Aug 2026 16:44:13 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB6C558055;
+ Wed, 26 Aug 2026 16:44:13 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 74D0758043;
+ Wed, 26 Aug 2026 16:44:12 +0000 (GMT)
+Received: from [9.61.69.254] (unknown [9.61.69.254])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 16:44:12 +0000 (GMT)
+Message-ID: <5a7ed440-ed57-448a-9baa-4626464ee9f8@linux.ibm.com>
+Date: Wed, 26 Aug 2026 12:44:06 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] pc-bios/s390-ccw: Abstract virtio_run() for
- generic use
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com
-References: <20260811144629.866641-1-jrossi@linux.ibm.com>
- <20260811144629.866641-6-jrossi@linux.ibm.com>
+Subject: Re: [PATCH v1 4/7] pc-bios/s390-ccw: Add support for virtio-net-pci
+ IPL
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
+ cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com
+References: <20260818205324.580199-1-zycai@linux.ibm.com>
+ <20260818205324.580199-5-zycai@linux.ibm.com>
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <20260811144629.866641-6-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260818205324.580199-5-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: QUg5ijICziUfq_zHFUg3eftIhu1SyTVs
-X-Proofpoint-ORIG-GUID: QUg5ijICziUfq_zHFUg3eftIhu1SyTVs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfX8h0/igAm79/9
- RP1mzSPrbMFhEMXrgO+8DMQBTIPCpZfqejn0doJQ2ITCcUY1h/ee8zSqfUnJ7X581m/r+piFhgO
- t1qrRmXB4XlcXn3UH1VtALnSWETnRdb2kLKB5gY7b+X9GujVJinThcLP4D7DvjOtMv7iIZKb6AC
- GUji86MaxaDgLNFs1rp6En7G80WM68WcmXtowge+S1vLvLnnsAWa22QqcI+c5HEp8QtENGbmYTo
- 4ZjewQxrnL3IIjF8ogxROVkdN0JA7y09vTUKiKgZruGbTuDgChPlB7XqNKuQx/54VstNrwWL9PT
- Tj0IWss9CnrdnetOEvyRQrOkkU5kJz5mBK6ZimWvA0oLOtxVIq+shHlWPFoq10Hf2kkOGDfS6BH
- C1W/Mt8ZTF39JqkSApKp/rudszZagEvrqFxE7KCgEyxKCD09Is/DEwWxiF36QnjG4LPLkRspEa4
- 2pxrf6pQ/fP010QkU3w==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8f1775 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f17df cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=3P42ayun9Ii4-pH_0bUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfX4jTxukEGHSfv
- PcriglrgypzjB/cMUi5X0/FJ5J7B3wskcgxYxh/x6HZkhTPMpEa2ZTexxkWKOCX4bFc/uK9PZAQ
- ombTMX5ERPom99mjE0MCUNCxcYf/vcs=
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=ctsVLiZ_AAAA:8 a=DwueQANkowgNhn0VcN8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3VCIHQLkQthbvTRuo98s:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfXx6DdekL7yRUc
+ 2EuISiGYa0xjYsFpgmvy+N4LfxwlMbNV2b2Yjr52etKjccQsTJkFXay1vxw3m2SlNOpB4ljOKfb
+ TlPr/ZW+X9RWhLheT/2wjKd0ge55SC4=
+X-Proofpoint-GUID: XF8PuiH2XW5XJKOXL7O8BPW05KeFrrzc
+X-Proofpoint-ORIG-GUID: XF8PuiH2XW5XJKOXL7O8BPW05KeFrrzc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfX3IOevqpLoI5J
+ rcV3B8TZMhSfa8q0iFvFderMUEbWcsEXq8Zzm/GT37+0MWwKbU6RPCejh7cp4KAIRmL9WB67MqY
+ 2ZEYKErGPrveWRhq2DNMQ4d68ZpjpnilCrTa/zZ+2EZjmEmjsv8+e3adn8tbkYOoYp/Dkbd/5En
+ BztWDsFVDPVb8SuReguKFGTGQRUbw8CtZ4LBVJ1if0TLAnxKcntg4raZIP8+twvpF3bc3UnD1sP
+ wCLjGv2nOZwBWKZYq+Rwko9qnJP7cZTH/IRyFB9jschYVhOgAGDuVPw8f9pmfsCM8ikJHsqhv3R
+ hqcAkAUu9mSYgas13c2g1+vCa/NMz7+nX4KPFXxXFv+2/oyeg6h0peFj/USHAfoRe4dBDvxosT8
+ Z+Y0A59OrCQgNPZ+KMvQhmjFmf6GhvxCKrhjJIsE0CvNd6WiIjg2WaVqOIB5OU52JieDB3I810N
+ Sx7OBcZ78XCF+AzCW7w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1011 phishscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260138
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,91 +129,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/11/26 10:46 AM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> The existing virtio_ccw_run() actually has no dependency on CCW.  Rather
-> than add a case for non-ccw devices, we can just put main logic right in
 
-Small nit: "we can just put the main logic..."
 
-> the virtio_run() call so that it can be used for other bus types directly.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+On 8/18/26 4:53 PM, Zhuoying Cai wrote:
+> Enable network booting via virtio-net-pci by implementing PCI transport
+> support for virtio-net.
+>
+> This patch also adds endianness handling for virtio PCI ring operations in
+> little-endian to ensure correct behavior on s390x.
+
+Endianness handling was actually added in the previous patch.  Is this a
+misplaced message? Or perhaps it should say extends, rather than adds?
+
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->  pc-bios/s390-ccw/virtio-ccw.c | 17 -----------------
->  pc-bios/s390-ccw/virtio-ccw.h |  1 -
->  pc-bios/s390-ccw/virtio.c     | 16 +++++++++++-----
->  3 files changed, 11 insertions(+), 23 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/virtio-ccw.c b/pc-bios/s390-ccw/virtio-ccw.c
-> index 5cb2158ed2..ea5dbc2857 100644
-> --- a/pc-bios/s390-ccw/virtio-ccw.c
-> +++ b/pc-bios/s390-ccw/virtio-ccw.c
-> @@ -107,23 +107,6 @@ long virtio_ccw_notify(SubChannelId schid, int vq_idx, long cookie)
->                           vq_idx, cookie);
->  }
->  
-> -int virtio_ccw_run(VDev *vdev, int vqid, VirtioCmd *cmd)
-> -{
-> -    VRing *vr = &vdev->vrings[vqid];
-> -    int i = 0;
-> -
-> -    do {
-> -        vring_send_buf(vr, cmd[i].data, cmd[i].size,
-> -                       cmd[i].flags | (i ? VRING_HIDDEN_IS_CHAIN : 0));
-> -    } while (cmd[i++].flags & VRING_DESC_F_NEXT);
-> -
-> -    vring_wait_reply();
-> -    if (drain_irqs()) {
-> -        return -1;
-> -    }
-> -    return 0;
-> -}
-> -
->  int virtio_ccw_reset(VDev *vdev)
->  {
->      return run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
-> diff --git a/pc-bios/s390-ccw/virtio-ccw.h b/pc-bios/s390-ccw/virtio-ccw.h
-> index a506767eaa..43d21906e5 100644
-> --- a/pc-bios/s390-ccw/virtio-ccw.h
-> +++ b/pc-bios/s390-ccw/virtio-ccw.h
-> @@ -16,7 +16,6 @@ extern SubChannelId blk_schid;
->  /* virtio-ccw.c */
->  int drain_irqs_ccw(SubChannelId schid);
->  bool virtio_ccw_is_supported(VDev *vdev);
-> -int virtio_ccw_run(VDev *vdev, int vqid, VirtioCmd *cmd);
->  long virtio_ccw_notify(SubChannelId schid, int vq_idx, long cookie);
->  int virtio_ccw_setup(VDev *vdev);
->  int virtio_ccw_reset(VDev *vdev);
-> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-> index 0b33544144..34c5e6ee22 100644
-> --- a/pc-bios/s390-ccw/virtio.c
-> +++ b/pc-bios/s390-ccw/virtio.c
-> @@ -70,13 +70,19 @@ int drain_irqs(void)
->  
->  int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
->  {
-> -    switch (vdev->ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
-> -    case S390_IPL_TYPE_CCW:
-> -        return virtio_ccw_run(vdev, vqid, cmd);
-> -    default:
-> +    VRing *vr = &vdev->vrings[vqid];
-> +    int i = 0;
+>   pc-bios/s390-ccw/main.c       |  1 +
+>   pc-bios/s390-ccw/virtio-net.c | 37 +++++++++++++++++++++++-------
+>   pc-bios/s390-ccw/virtio-pci.c | 43 +++++++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/virtio-pci.h |  2 ++
+>   4 files changed, 75 insertions(+), 8 deletions(-)
+>
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index 8bc6e8eaa3..0eeb53a2bf 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -328,6 +328,7 @@ static void ipl_pci_device(void)
+>       }
+>   
+>       switch (vdev->dev_type) {
+> +    case VIRTIO_ID_NET:
+>       case VIRTIO_ID_BLOCK:
+>           if (virtio_setup() == 0) {
+>               zipl_load(); /* only return on error */
+> diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+> index 3a9ae789cf..209f98a0e3 100644
+> --- a/pc-bios/s390-ccw/virtio-net.c
+> +++ b/pc-bios/s390-ccw/virtio-net.c
+> @@ -62,7 +62,16 @@ int virtio_net_init(void *mac_addr)
+>       rx_last_idx = 0;
+>   
+>       vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+> -    virtio_ccw_setup(vdev);
+> +    switch (virtio_get_device()->ipl_type) {
+> +    case S390_IPL_TYPE_CCW:
+> +        virtio_ccw_setup(vdev);
+> +        break;
+> +    case S390_IPL_TYPE_PCI:
+> +        virtio_pci_setup(vdev);
+> +        break;
+> +    default:
+> +        return -1;
+> +    }
+>   
+>       if (!(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT)) {
+>           puts("virtio-net device does not support the MAC address feature");
+> @@ -115,22 +124,30 @@ int recv(int fd, void *buf, int maxlen, int flags)
+>       VRing *rxvq = &vdev->vrings[VQ_RX];
+>       int len, id;
+>       uint8_t *pkt;
+> +    uint16_t rx_used_idx, rx_avail_idx;
+> +    uint32_t rx_used_len, rx_used_id;
+> +    uint64_t rx_desc_addr;
+>   
+> -    if (rx_last_idx == rxvq->used->idx) {
+> +    rx_used_idx = virtio_tswap16(rxvq->used->idx);
+> +    if (rx_last_idx == rx_used_idx) {
+>           return 0;
+>       }
+>   
+> -    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
+> +    rx_used_len = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].len);
+> +    rx_used_id = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].id);
 > +
-> +    do {
-> +        vring_send_buf(vr, cmd[i].data, cmd[i].size,
-> +                       cmd[i].flags | (i ? VRING_HIDDEN_IS_CHAIN : 0));
-> +    } while (cmd[i++].flags & VRING_DESC_F_NEXT);
+> +    len = rx_used_len - virtio_net_hdr_size;
+>       if (len > maxlen) {
+>           puts("virtio-net: Receive buffer too small");
+>           len = maxlen;
+>       }
+> -    id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
+> -    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
+> +    id = rx_used_id % rxvq->num;
+> +    rx_desc_addr = virtio_tswap64(rxvq->desc[id].addr);
+> +    pkt = (uint8_t *)(rx_desc_addr + virtio_net_hdr_size);
+>   
+>   #if DEBUG_VIRTIO_NET   /* Dump packet */
+>       int i;
+> -    printf("\nbuf %p: len=%i\n", (void *)rxvq->desc[id].addr, len);
+> +    printf("\nbuf %p: len=%i\n", (void *)rx_desc_addr, len);
+>       for (i = 0; i < 64; i++) {
+>           printf(" %02x", pkt[i]);
+>           if ((i % 16) == 15) {
+> @@ -144,8 +161,10 @@ int recv(int fd, void *buf, int maxlen, int flags)
+>       memcpy(buf, pkt, len);
+>   
+>       /* Mark buffer as available to the host again */
+> -    rxvq->avail->ring[rxvq->avail->idx % rxvq->num] = id;
+> -    rxvq->avail->idx = rxvq->avail->idx + 1;
+> +    rx_avail_idx = virtio_tswap16(rxvq->avail->idx);
+> +    rxvq->avail->ring[rx_avail_idx % rxvq->num] = virtio_tswap16(id);
+> +    rx_avail_idx++;
+> +    rxvq->avail->idx = virtio_tswap16(rx_avail_idx);
+>       vring_notify(rxvq);
+>   
+>       /* Move index to next entry */
+> @@ -164,6 +183,8 @@ bool virtio_net_setup(void)
+>       switch (virtio_get_device()->ipl_type) {
+>       case S390_IPL_TYPE_CCW:
+>           return virtio_ccw_net_setup();
+> +    case S390_IPL_TYPE_PCI:
+> +        return virtio_pci_net_setup();
+>       default:
+>           return false;
+>       }
+> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+> index f501252c81..c7d62766b8 100644
+> --- a/pc-bios/s390-ccw/virtio-pci.c
+> +++ b/pc-bios/s390-ccw/virtio-pci.c
+> @@ -52,6 +52,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+>       case 0x1001:
+>           vdev->dev_type = VIRTIO_ID_BLOCK;
+>           break;
+> +    case 0x1041:
+> +    case 0x1000:
+> +        vdev->dev_type = VIRTIO_ID_NET;
+> +        break;
+>       default:
+>           vdev->dev_type = 0;
+>       }
+> @@ -199,6 +203,14 @@ static int virtio_pci_get_blk_config(void)
+>       return rc;
+>   }
+>   
+> +static int virtio_pci_get_net_config(void)
+> +{
+> +    VirtioNetConfig *cfg = &virtio_get_device()->config.net;
+> +    int rc = vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioNetConfig));
 > +
-> +    vring_wait_reply();
-> +    if (drain_irqs()) {
->          return -1;
->      }
-> +    return 0;
->  }
->  
->  void vring_init(VRing *vr, VqInfo *info)
+> +    return rc;
+> +}
+> +
+>   static int virtio_pci_negotiate(void)
+>   {
+>       int i, rc;
+> @@ -330,6 +342,7 @@ bool virtio_pci_is_supported(VDev *vdev)
+>       if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
+>           switch (vdev->dev_type) {
+>           case VIRTIO_ID_BLOCK:
+> +        case VIRTIO_ID_NET:
+>               return true;
+>           default:
+>               return false;
+> @@ -384,6 +397,11 @@ int virtio_pci_setup(VDev *vdev)
+>           vdev->cmd_vr_idx = 0;
+>           virtio_pci_get_blk_config();
+>           break;
+> +    case VIRTIO_ID_NET:
+> +        vdev->nr_vqs = 2;
+> +        vdev->cmd_vr_idx = 0;
+> +        virtio_pci_get_net_config();
+> +        break;
+>       default:
+>           puts("Unsupported virtio device");
+>           return -ENODEV;
+> @@ -458,3 +476,28 @@ int virtio_pci_setup_device(void)
+>   
+>       return 0;
+>   }
+> +
+> +static bool find_pci_net_dev(void)
+> +{
+> +    if (!virtio_is_supported(virtio_get_device())) {
+> +        return false;
+> +    }
+> +
+> +    if (virtio_get_device_type() != VIRTIO_ID_NET) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +bool virtio_pci_net_setup(void)
+> +{
+> +    bool found = false;
+> +
+> +    if (have_iplb || store_iplb(&iplb)) {
+> +        IPL_assert(iplb.pbt == S390_IPL_TYPE_PCI, "IPL_TYPE_PCI expected");
+> +        found = find_pci_net_dev();
+> +    }
+> +
+> +    return found;
+> +}
+
+As far as I can tell the net specific setup/find are not needed for PCI
+devices.  By the time we reach the the call to virtio_pci_net_setup() we
+know vdev->ipl_type == S390_IPL_TYPE_PCI because that is the prerequisite
+to call the function in the first place, and vdev->ipl_type was previously
+set based on the PBT.  We also already know that our device type is
+VIRTIO_ID_NET because otherwise the call to virtio_setup() in main.c
+would have fallen through to the default case and failed and/or netmain()
+would not be called from bootmap.c.
+
+Although we haven't checked virtio_is_supported() yet, we will do that
+verification in virtio_net_init(), which is the very next step.
+
+For PCI devices, everything checked from virtio_net_setup() appears to be
+guaranteed by the call chain or validated by subsequent net code. Maybe
+virtio_net_setup() only needs to be called for CCW devices?
+
+Regards,
+Jared Rossi
+> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+> index 33b683bd92..2c3136fd05 100644
+> --- a/pc-bios/s390-ccw/virtio-pci.h
+> +++ b/pc-bios/s390-ccw/virtio-pci.h
+> @@ -70,6 +70,8 @@ long virtio_pci_notify(VRing *vr);
+>   bool virtio_pci_is_supported(VDev *vdev);
+>   int virtio_pci_setup(VDev *vdev);
+>   int virtio_pci_setup_device(void);
+> +bool virtio_pci_is_supported(VDev *vdev);
+> +bool virtio_pci_net_setup(void);
+>   
+>   int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
+>   int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
 
 
