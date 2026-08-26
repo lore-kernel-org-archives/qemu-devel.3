@@ -4,145 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA6AFC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385F2C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzCut-000115-Er; Wed, 26 Aug 2026 08:39:43 -0400
+	id 1wzCvQ-0001OV-VM; Wed, 26 Aug 2026 08:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzCus-00010u-49
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:39:42 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzCvP-0001OF-ET
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:40:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzCuq-00061p-2I
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:39:41 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCNEsu295692
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 12:39:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pZyNP0sCBMMuY5+Csb6vyMw5V26TKU2er8wDT7hGl2k=; b=gbXIq6qsdJCe0Sti
- L1fF5/amkjq79UhZIoJuMkTISTOZaIAON/5EXkc4a1ZB2MrB6OqrUFfzuwrwfHYA
- qHxQWAV2h12UH949A/S9JQCL7Hspzv/pnmi6nKYRgQszubYgIGJvaF3XGdIOQil5
- 2jd99lEq5PlYxAQNDJeCpkXYATn7vy7sxQ/+JqkZWDMO2KbtEovirPmi4aWw80lC
- KfiOvOJMHtkCqhKC1NYH9yp9hFD8YAI4xHrWk1VoW/2HTGjPq8hYk6C/dmn6lU7g
- F/zPowH1bIWHgrCDQe1quolEypqgDHKqcuQLFA4MZzoEpeJdu4xsYUBj0fEhY4aR
- D/eqzw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga03u01vw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 12:39:38 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5174a23afcbso13453921cf.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 05:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787747977; x=1788352777; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pZyNP0sCBMMuY5+Csb6vyMw5V26TKU2er8wDT7hGl2k=;
- b=ARDT642hd8RfzH2X8CYaVVlkZURD9LD2K61qbEibdMDEr7EWGnR2ZnMzt31dinFzIM
- 4oXLlP4H5VGi4S6bWZinGGIfeFeDu+5KksFZvhBktaMysWdks2gjMbOgzu7nMq6KP5F2
- D8PH1xVpXp/D/B+huX4GPWB15IGvbjpBbIIgQS3iB6WYynsMclf8/vmoP5dNYtUPFEz6
- 3Bs/PMXY8nwC/vNQeUw4ibAUYMUn1bDY5tquW0DLL7scxALBcoV+SvIG8wZVYsy1R1LA
- tD81PEDRjU0BLdxdKOPVT8uS+CwqYOfo7DHw7W+yns2BbiBJn279f6XhnLVO1bRWts5G
- AQ0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787747977; x=1788352777;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pZyNP0sCBMMuY5+Csb6vyMw5V26TKU2er8wDT7hGl2k=;
- b=jAM2g86Pdkqa8l6c8NZReKRr/RfDtkH7hYaRpGpj3HiDxAu/rBJjiCwhzeVE5nb8fI
- lCzts2yMK/HCetkged6r0jyiWlyIshbXc4u9CJRNA87aG8s2752DoBRbzU6IyLJvPnfC
- N5BOO/TQTSOA3bgOGFJ5bB6CheZzIdgJ8KFsDrOOrcohssavxE0xZ+7pYpsn5R8Xbl9B
- UmClPaRJS0ZGmcdy9x6U8q59pKMeqEKJBE8y1B8oqh/HdLS5tkP5JcVzR1RcQ7Mqrrpz
- 3R1LfKLYhR/EUe/6J2hfLyc6bnETXYq8d0gU0wlCHgkG7leaSUuYNt6dAQu0WZGOIX+c
- 7KwA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqYu+jx7h1BPXE3AiHnc1hNAeIMw8zmWoWAUGAwt1hLNdfG0mNMU5W7OftD485RWOvqWJ/BalK43+yb@nongnu.org
-X-Gm-Message-State: AFuF++miwRXADz6M2QXAy8MgGXx/P9pD088NgsGroKZcD8ZEEd0ox+vd
- oDjWKsWfcc5Nt49Uaibd0evFTSZ8V42Cpl6Vj9eBbCuyuCHhkgYax8vDnFTr+PCnA2MaX41MZG6
- 2fMpj5AyLjleS0p9FM0Ov62ipkL5A08goR+oHIDPn3R7WWdlb/+xZKOG5bw==
-X-Gm-Gg: AR+sD105s+rU8P+VPHbNSZXe8UorIHbq94kfcBOjjmewTL/Qd1r1SBLTfBPbmiMfnkh
- gElSBxD6WkYjWREifrQsJ91FbQyrsEL2jTxt52QDq0NTR+hd/YxVjMMHoiR4DmF33PGSN2NCV0i
- SK0t2YZc2pni20ShqgJVDwr0HkqfGWdgv1FZ8A8LFis/B8LPk+53Intr18cS16d6WMIAYyJgfuA
- /VPTsa7mbbuOmUdgPgyK1uutGjDjeXDCns8n6gKNrTBiV0HtipXKMj/i15zjmXAatqg3IRz6euk
- af2aldhBFbEMwQxdyS7dmUJLLdeHjmjhuz4ep7qyov2y+zdKt5+1pWEGwblh9L1iAWzSaMeoe5M
- p4VItmmqD05/kr0e6VF8d
-X-Received: by 2002:a05:622a:1347:b0:52e:f66:f17d with SMTP id
- d75a77b69052e-52e42283a33mr60842921cf.12.1787747977026; 
- Wed, 26 Aug 2026 05:39:37 -0700 (PDT)
-X-Received: by 2002:a05:622a:1347:b0:52e:f66:f17d with SMTP id
- d75a77b69052e-52e42283a33mr60842411cf.12.1787747976329; 
- Wed, 26 Aug 2026 05:39:36 -0700 (PDT)
-Received: from [10.254.188.74] ([185.104.138.96])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a9b43absm470648866b.51.2026.08.26.05.39.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 05:39:35 -0700 (PDT)
-Message-ID: <a415e322-f75e-43bf-9f0b-beacdc04c33f@oss.qualcomm.com>
-Date: Wed, 26 Aug 2026 14:39:29 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzCvN-0006NE-Fn
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:40:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787748011;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=3IZbLtMK+eaeWJqSopYckXC2Rifx6mwRmusak3iCl3k=;
+ b=Rh3uaNbgfJh+KVxBZnxul/EZZvuOQZDPZa8fiXrzBgbiU26vPCcwfWnN4Rxgy9Gq+Ztk15
+ SkJDx7rWpKGprVJ3Ur7dZs8vJlEX7M4cOWoss16JS9fAZYwx195BZahpfBvas4PopFp4PN
+ QzttLDNTXgZ9v8yY2fwlkXVj9gA+SUM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-oqGOJo7BOWuwHfujpyszow-1; Wed,
+ 26 Aug 2026 08:33:20 -0400
+X-MC-Unique: oqGOJo7BOWuwHfujpyszow-1
+X-Mimecast-MFC-AGG-ID: oqGOJo7BOWuwHfujpyszow_1787747592
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9320119560A5; Wed, 26 Aug 2026 12:33:11 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFFCB1955F05; Wed, 26 Aug 2026 12:32:59 +0000 (UTC)
+Date: Wed, 26 Aug 2026 13:32:56 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
+Message-ID: <ao7c-FiawF9sMCGj@redhat.com>
+References: <20260823150731.896-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/49] monitor: move HMP-only fields from Monitor to
- MonitorHMP
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-8-af60857c2fbe@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260825-qemu-no-hmp-v4-8-af60857c2fbe@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwMyBTYWx0ZWRfXwRxigTMIr/2o
- kY2LIIvDLhtzKub3mntXf6U3JRenA8ufg/zDtRPdGP9/IrlBMHk2wqJqxf/bBBYWYp2jeyye3V3
- l8bECUOiqfhJbFIuAxldomKi3mvVpE7aFKA/bYd+mUJymhG98KXznSD2QBRG+mL8xHZV5pzAFQY
- f3/V42wm9YGWtV9XUBZWeB/ViImA2g1V89uz0m3RyroqDD/XewaCS1WnNwfPnEUyoRN1N30Ed7d
- 2CyWHQ9alRiLA8TOdVtPewy+jLyOpDsN9Denu1zWI3XmEnOT8SknB2mT9LqQN0lh+Vtkh4mFC8u
- 9EV9GEselSHrFCYT4vPJ0kMm0cMNW8kQ0YbCimYaO3HKtI7gSqI3HfRpkNduccGki7iFWTn/CuI
- Yxpqjn+oKukJBMnMaqG0n7Ntdhgfc6g6KdBVukw895gVMDUjqPfj1fA5fD8t181QCXkpUifmYSg
- AaQSPSAD4hvmrfYRGoQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwMyBTYWx0ZWRfX72pb8zVhcHME
- SfgDgduniXIhuFWa8nQvAAWj61opqXhcbeXs+2qMfEqDgu0GZC1E3M3f37Ac0Yhlcdnd5oAkt3F
- 7vmJjS5hrgXZEQ6AJ0vUBoi5O7nOOjo=
-X-Proofpoint-ORIG-GUID: jq0qcxoAQCnzDa2Yn33wuiMUQMVOHz_J
-X-Authority-Analysis: v=2.4 cv=RcqgzVtv c=1 sm=1 tr=0 ts=6a8ede8a cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=KRlTYBX1Q8J3JuxqD7zILw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=jsqAP7AhX1rkBFyPlasA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: jq0qcxoAQCnzDa2Yn33wuiMUQMVOHz_J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0 bulkscore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260103
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260823150731.896-1-luoyonggang@gmail.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,45 +111,155 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/8/26 21:09, Marc-AndrÃ© Lureau wrote:
-> mon_cpu_path and reset_seen are only used by HMP monitors; move them
-> from the base Monitor struct into MonitorHMP to properly encapsulate
-> HMP-specific state.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   monitor/hmp-cmds.c         | 16 +++++++++-------
->   monitor/hmp.c              |  9 +++++----
->   monitor/monitor-internal.h |  4 ++--
->   monitor/monitor.c          |  1 -
->   4 files changed, 16 insertions(+), 14 deletions(-)
-> 
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index 6b1114fdaf13..6718fec97047 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -499,31 +499,33 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
->   /* Set the current CPU defined by the user. Callers must hold BQL. */
->   int monitor_set_cpu(Monitor *mon, int cpu_index)
->   {
-> +    MonitorHMP *hmp_mon = MONITOR_HMP(mon);
+On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
 
-s/_mon// please
+snip,
 
->       CPUState *cpu;
->   
->       cpu = qemu_get_cpu(cpu_index);
->       if (cpu == NULL) {
->           return -1;
->       }
-> -    g_free(mon->mon_cpu_path);
-> -    mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
-> +    g_free(hmp_mon->mon_cpu_path);
-> +    hmp_mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
->       return 0;
->   }
+..to comment just on the end result for now..
+
+> The last patch builds qemu-system (and qemu-systemw on Windows) from
+> aarch64 common/system objects plus RISC-V arch objects, and installs
+> qemu-system-{arm,aarch64,riscv32,riscv64} as symlinks so argv[0] still
+> selects TargetInfo.
+> 
+> Examples:
+> 
+>   qemu-system -target aarch64 -M virt ...
+>   qemu-system-riscv64 -M virt ...
+> 
+> A basename that matches no registered token falls through to the unique
+> default. A combined binary with no suffix requires -target when more
+> than one default TargetInfo is registered.
+
+In testing and comparing  the new qemu-system-riscv64 symlink
+to qemu-system vs the current standalone qemu-system-riscv64
+binary there are some significant user visible changes.
+
+The simplest is 'qom-list-types' went from reporting approx
+770 classes, to reporting approx 1530 classes. IOW, the
+qemu-system-riscv64 binary is now reporting supporting for
+all the classes that were unique to arm.
+
+The '-device help' output similarly shows a great many more
+devices
+
+TL;DR introspecting qemu-system-riscv64 is no longer accurate
+wrt riscv64 capabilities. 
+
+This is not suprising, since we register all TypeInfo meaning
+we get all QOM classes present. Some of Pierricks patches try
+to filter places which iterate over classes, but this does not
+have full coverage.
+
+
+I think this is probably also what leads to the increased RAM
+usage in qemu-system-riscv64. Starting
+
+  qemu-system-riscv64 -nodefaults -display none -M none
+
+shows an increase in RAM usage from  17.3 to 20.7 MB which
+is about 15% increase. NB this is dirty, private RAM per
+process. The shared RAM pages also increase but that's not
+a concern since they're common to all QEMU processes.
+
+qemu-system-aarch64 shows a much smaller RAM increase, since
+it only grew from 1430 classes to 1530 classes.
+
+We have many more target though, so if we assume the end
+point where every single target is unified, the the union
+of all classes for all targets comes to approx 3600.
+
+My guesstimate is that would mean a memory increase for
+qemu-system-riscv64 from 17.3 to 39.9 MB, which is a
+72% increase.
+
+In absolute terms this is still modest, but for deployments
+with large VM counts  and small RAM sizes, that gets to be
+significant.
+
+
+None of this means single binary is a bad idea.
+
+
+My main takeaway is that we're creating uneccessary work
+for ourselves by trying to make 'qemu-sytem' identical
+in behaviour to qemu-system-$TARGET.
+
+The complex filtering patches / QOM interfaces that I
+found uncomfortable in Pierrick's base series are largely
+around the filtering needed to simulate qemu-system-$TARGET,
+and they're still incomplete. I don't have high confidence
+in our ability to avoid regressions if we go route this
+route.
+
+
+IMHO we should make a clean break with the past. Leave
+the existing qemu-system-$TARGET binaries being built
+from the same pieces they are today, such that there
+is better confidence that we are not making behavioural
+changes to them.
+
+
+qemu-system should be built alongside qemu-system-$TARGET
+and offer new semantics where it is documented as exposing
+everything from all targets whenever introspected and does
+not apply target type or target Kconfig filtering to inputs/
+outputs. 
+
+We still get the benefit of only building most  .o files
+once, so keeping qemu-system-$TARGET is only a small
+overhead in the final step of linking everything together.
+
+
+qemu-system will still have the increased memory overhead
+but that's fine as qemu-system-$TARGET will be unaffected.
+We can tackle the memory overhead of qemu-system at our
+leisure through use of loadable modules, and thus not have
+that as a task to think about today.
+
+
+With the clean break with the past, we also have the
+ability to tackle various long standing design mistakes
+present in qemu-system-$TARGET instead of carrying them
+over into the new binary.
+
+Specifically
+
+ * -nodefaults should become the default
+ 
+ * All CLI args should be processed in order from
+   the command line, so we eliminate the nonsense
+   where we process some -object, then -chardev,
+   then more -object through hand crafted deps
+
+ * No default machine type
+
+ * Drop all legacy syntax so we only have a single
+   QAPI based way of configuring.
+   eg drop -hda, -hdb, -cdrom, -drive, etc
+      only keeping -blockdev
+   eg drop -mon, -monitor, -qmp, etc only
+      keeping -object
+
+We don't have to do all that straightaway. If we declare
+qemu-system "experimental" initially we can iterate on
+that intentionally breaking compat in releases, without
+any impact on qemu-system-$TARGET.
+
+Avoiding the back compat task will give us more flexibility
+with the follow on work when people come to create new
+machine types with heterogenous CPU targets.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
