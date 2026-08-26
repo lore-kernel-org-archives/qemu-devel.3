@@ -4,88 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E07C61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC1DDC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzC80-0004C6-8X; Wed, 26 Aug 2026 07:49:12 -0400
+	id 1wzCBE-0005Cx-MD; Wed, 26 Aug 2026 07:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <olegendo1024@gmail.com>)
- id 1wz97V-0004mf-6o
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 04:36:29 -0400
-Received: from mail-pj2-x08.google.com ([2607:f8b0:4864:39::8])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <olegendo1024@gmail.com>)
- id 1wz97T-0000MV-FU
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 04:36:28 -0400
-Received: by mail-pj2-x08.google.com with SMTP id
- 98e67ed59e1d1-38fd9408220so261930a91.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 01:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787733385; x=1788338185; darn=nongnu.org;
- h=mime-version:user-agent:content-type:date:cc:to:from:subject
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=FdcSQjesoz+9FYN7UW7U4CgxyPrPxdykbOJMlbgdk1s=;
- b=N9yDiEP+2KJpx5stjXwYeJBvyBqp/onv5iuJNAC0AWtcA3ctxdbSTlHo4fmQnBJyBq
- RlwNLb/KGdzkfhtBnezx8SEEGxTVmofWn9PBHFRNXt1sKKG1hJjJ2YDFMn0+eu61AX2/
- nGvz+L59OcSieuEjpHuG36FKtXgRKkXGvEeiwotqk3ElwdjvQ0INj4ZghROlXA0jB+V+
- rKLIGbh7bSWeIqrbpokloyHVnlMsEsNpnUwjFjBEwUQgoRwFaCA1yzjgX1bE8eCr7CDH
- z2yhOf+4lizQIDk3gFoAyzuLsbSF4mrqvsDHrVh0u2vMjuWmrYJoQV3yz1M4xyK0fbeJ
- BmRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787733385; x=1788338185;
- h=mime-version:user-agent:content-type:date:cc:to:from:subject
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=FdcSQjesoz+9FYN7UW7U4CgxyPrPxdykbOJMlbgdk1s=;
- b=WVs5AZ5ZlBon94fOjeNic52+219MGaXkQ+ogSpH90BAAfzx2BLZoKlg6XV9vztdKCR
- PwqaiwG1FKMOKBdnEVLHVlrDwgX1/kNgrNtdzYOfSGlvCWZMIL1CsDd/m2d0DzN+ebBq
- IJfMGvI1rvdsUejuLy9jY4aYR4war7DKNRJTOQC3PZrpSZ+sj3e2d/6TWtZZ0oh/I5en
- jqdIC5qSItMRe1MdJj2ZHqsO2A251pYQVvNhgaFPLJ08n1M0bJ6WAYfU39tYFd+5Ahpt
- z57l6TdeFzMrgmEbyMq+pA4aJn+omh0AccWtAmmY+AUnavHd6aLCx5lXIh8+LBq936cr
- UUgw==
-X-Gm-Message-State: AFuF++mivdGEJISb2oKIbwwA4Yg9H7nA1m64K+tRoUrakP0OGIGqI2Ea
- txpEhbeIFkLsD+Zkqk55ielUFTUnTcnVwdZjY4ooNTlFdFf78EYgDSkd
-X-Gm-Gg: AR+sD11pnwB71c89+hDNGlj3EKl/vJdHuNcTkLyU1wZ44E1dbLJOIPQsxS3mV5/oX6z
- pizuQDouwS2xsu1kDR2fhEK5d6HIHVhf1XX1KT3VDKHA+A3OS3D9Ck2hNX6lzYsoTaegGsmFWb/
- ljjginNYPYt5ohCIRKdNkPXaJVrOcRRx2dpkJvvwON9s3wRHjDoSExEc/deWp8DqUnFk2f1Q8Kn
- 3mb4tbxk4DXY0ECNoVE/2qQUg1hEtyeap6gJyxE8hKGwxksvHD6Ec1E/2MKEF0CeB0VO0BvzmFE
- QAdahIeeICFj1TzNnalM3/pDEKEaOqyyLhV63hv1mN6jY+eTPfmh7CaSOfZtNpXfijNt+QXBKC6
- ZHMPHIizNyDJera+sOLKENuRgtGiU45+VGHgMLBCVYW+MGmm+63PPKSuk2JE2dV0YI8jYiYV5FO
- 7kw0gDIQtgHfQ9RcPkNeaCtiMH+EDNjacCkdeqUai6Dk2Mc25RW8zvbNqjtoMaZDSJOAkxffnvT
- qn6h9qT
-X-Received: by 2002:a17:90b:1dce:b0:381:cef1:11ac with SMTP id
- 98e67ed59e1d1-3966d3e1cfdmr10881157a91.10.1787733384914; 
- Wed, 26 Aug 2026 01:36:24 -0700 (PDT)
-Received: from localhost.localdomain ([2407:c800:3620:e800:7910:9280:8105:5a2])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3966875b967sm3195725a91.6.2026.08.26.01.36.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 01:36:23 -0700 (PDT)
-Message-ID: <4a86e81ffa5e392efa069463cd21457374915b93.camel@gmail.com>
-Subject: [PATCH][SH] Fix mac.w / mac.l insn
-From: Oleg Endo <olegendo1024@gmail.com>
-To: Yoshinori Sato <yoshinori.sato@nifty.com>
-Cc: qemu-devel@nongnu.org, John Paul Adrian Glaubitz
- <glaubitz@physik.fu-berlin.de>
-Date: Wed, 26 Aug 2026 17:36:22 +0900
-Content-Type: multipart/mixed; boundary="=-rzUUU0xZyoVLSsBniX/I"
-User-Agent: Evolution 3.54.3 (3.54.3-2.fc41) 
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzCBD-0005BL-Kg; Wed, 26 Aug 2026 07:52:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzCBC-0003tt-2r; Wed, 26 Aug 2026 07:52:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QAWRb02615729; Wed, 26 Aug 2026 11:52:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=QmRZc1gAcWITvcuX4Ds8B8Gcy0271J
+ Q4UGe94nNJ8YI=; b=fr3Xc1GJgUy8IMKrKd6YgeF59LiNxIKHpxfq67SSfBp/R5
+ 7nGUdoIDzg0VuwigFsQlEyxEbDEdSINzuPHQD0jyx2vcrXsCdc0aAqu+9CvLBmgq
+ /ztTdSVePjPERxzQ1wuJm/GYANRgEMSfpv2eonMuFD5p4WNIYM/f2uJp3gv+vxtR
+ QoEjvKcOxgwwyIlcWmzP4hYmQLoyTozRTevYOmKfTg0lkq5p61hUBK3ScY8KVSYn
+ sZ0fpICGZOaG+05F5BB3frXdOomGNii7KC6FIb/TYlN6ngUIP5T3qpS7KwqdEn4P
+ Y2PhjrHFXv/U/dKKL1tks0ILHo5jv07gCToFS+cQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726epae7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 11:52:27 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QBfPkp009755;
+ Wed, 26 Aug 2026 11:52:26 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy9fk2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 11:52:26 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QBqNYo34931146
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 11:52:23 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1E84D20043;
+ Wed, 26 Aug 2026 11:52:23 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E75DC20040;
+ Wed, 26 Aug 2026 11:52:19 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 11:52:19 +0000 (GMT)
+Date: Wed, 26 Aug 2026 17:22:22 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 09/37] target/ppc: Convert mcrf to decode tree
+Message-ID: <20260826172132.2c76bd2e-19-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-10-rathc@linux.ibm.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:39::8;
- envelope-from=olegendo1024@gmail.com; helo=mail-pj2-x08.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260826050923.74756-10-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8ed37c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=rYngLhrirbw-PHEOdeQA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA5NiBTYWx0ZWRfX4cY3GjTsRrIc
+ ZUTznJ//HLo6QxL4ibSUZ+OA7Kn+TTSlIE5RATLd1srIa5aXjOGTaQIZ0bvjgbpD85yfTu24jdA
+ 8bM57PZPXNnVaUAV2pOOeshk0P9Mt1U=
+X-Proofpoint-GUID: IBQ3BFmpDsGVE0effgwFFbJ6NERz3TkN
+X-Proofpoint-ORIG-GUID: Gv10q6ModiNXSEH0Vs1IyXGh1jgAHe4H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA5NiBTYWx0ZWRfX4tXTZHBzONht
+ fy6RtdCZZOoBvwtMkQPfTNBysiR6n/7GFbTK2Q7jWif43inGJngD6jc0Ca30HTO8SKF1/+i2FwS
+ D3Bu0Mie3/94aXS5l6kePogjc3djryF4kNwAzb/Og9W5G1vH8D55N1NFcojFOO048JNEDLoPghn
+ DOSbI8YW94yDSqs3joIhhlymj132hRaLHLm2igjQ1S8Qc3jYy456mt+ch2FhEy4yxUZ4yad7xC3
+ bAPitxrgAMaebnoZQ3reZD4rYf4BPeD7IJqHg5k+xsCfRLTAgxUR6SQp8GVBHC3s7l2HRYrqbCX
+ CXxTLAv6vViWg7vsec7qwjASVry/Ct54fWDurDBis2ZyAjBYJijRRzdt/rTdzKclyq3zisxyB/4
+ 5XYF+MMDPnY0AwpR+lxKKslqVCxN0sMtQT3r2GeC59BwTIqhszTI5Ac51xZF2OsVR0SJJ40RVB3
+ QrlL+kKXOjDVwsjaELQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_03,2026-08-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260096
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 26 Aug 2026 07:49:11 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,83 +133,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-rzUUU0xZyoVLSsBniX/I
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Shivani Nittor <shivani@linux.ibm.com>
+> 
+> Convert mcrf to decode tree specification.The functionality
 
-Hi!
+minor: s/The/ The/
 
-It seems the implementation of the mac.w / mac.l insn is wrong:
+> was tested by comparing the qemu -D log -d op,in_asm output
+> as well as single stepping gdb.
+> 
+> Signed-off-by: Shivani Nittor <shivani@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/insn32.decode             | 6 ++++++
+>  target/ppc/translate.c               | 7 -------
+>  target/ppc/translate/misc-impl.c.inc | 6 ++++++
+>  3 files changed, 12 insertions(+), 7 deletions(-)
 
-   mac.w  @Rm+,@Rn+
-   mac.l  @Rm+,@Rn+
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-Qemu's implementation first reads both mems, then applies the post-inc. =C2=
-=A0
-However,
-
-  mac.w   @R0+,@R0+
-
-should actually do:
-  read @(R0 + 0)
-  R0 +=3D 2
-  read @(R0 + 2)
-  R0 +=3D 2
-
-That's also how GDB sh-sim implements it.
-The attached patch fixes it.
-
-I ran into this issue recently when trying to use qemu for sh4.
-I'm not on the list, so please add me in CC in the reply.
-
-Best regards,
-Oleg Endo
-
---=-rzUUU0xZyoVLSsBniX/I
-Content-Disposition: attachment; filename="qemu-sh4-mac-same-reg.patch"
-Content-Type: text/x-patch; name="qemu-sh4-mac-same-reg.patch"; charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-ZGlmZiAtLWdpdCBhL3RhcmdldC9zaDQvdHJhbnNsYXRlLmMgYi90YXJnZXQvc2g0L3RyYW5zbGF0
-ZS5jCmluZGV4IDUzYjA5MjEuLmVmYmM4YWIgMTAwNjQ0Ci0tLSBhL3RhcmdldC9zaDQvdHJhbnNs
-YXRlLmMKKysrIGIvdGFyZ2V0L3NoNC90cmFuc2xhdGUuYwpAQCAtODA5LDggKzgwOSwxNyBAQCBz
-dGF0aWMgdm9pZCBfZGVjb2RlX29wYyhEaXNhc0NvbnRleHQgKiBjdHgpCiAgICAgICAgICAgICB0
-Y2dfZ2VuX3FlbXVfbGRfaTMyKGFyZzAsIFJFRyhCN180KSwgY3R4LT5tZW1pZHgsCiAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIE1PX1RFU0wgfCBNT19BTElHTik7CiAgICAgICAgICAg
-ICBhcmcxID0gdGNnX3RlbXBfbmV3KCk7Ci0gICAgICAgICAgICB0Y2dfZ2VuX3FlbXVfbGRfaTMy
-KGFyZzEsIFJFRyhCMTFfOCksIGN0eC0+bWVtaWR4LAotICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBNT19URVNMIHwgTU9fQUxJR04pOworICAgICAgICAgICAgaWYgKEI3XzQgPT0gQjEx
-XzgpIHsKKyAgICAgICAgICAgICAgICAvKiBXaGVuIFJtIGFuZCBSbiBhcmUgdGhlIHNhbWUgcmVn
-aXN0ZXIsIHRoZSBzZWNvbmQKKyAgICAgICAgICAgICAgICAgICBvcGVyYW5kIGlzIHJlYWQgYWZ0
-ZXIgdGhlIGZpcnN0IHBvc3QtaW5jcmVtZW50LiAgKi8KKyAgICAgICAgICAgICAgICBUQ0d2IGFk
-ZHIgPSB0Y2dfdGVtcF9uZXcoKTsKKyAgICAgICAgICAgICAgICB0Y2dfZ2VuX2FkZGlfaTMyKGFk
-ZHIsIFJFRyhCMTFfOCksIDQpOworICAgICAgICAgICAgICAgIHRjZ19nZW5fcWVtdV9sZF9pMzIo
-YXJnMSwgYWRkciwgY3R4LT5tZW1pZHgsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBNT19URVNMIHwgTU9fQUxJR04pOworICAgICAgICAgICAgfSBlbHNlIHsKKyAgICAgICAg
-ICAgICAgICB0Y2dfZ2VuX3FlbXVfbGRfaTMyKGFyZzEsIFJFRyhCMTFfOCksIGN0eC0+bWVtaWR4
-LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTU9fVEVTTCB8IE1PX0FMSUdO
-KTsKKyAgICAgICAgICAgIH0KICAgICAgICAgICAgIGdlbl9oZWxwZXJfbWFjbCh0Y2dfZW52LCBh
-cmcwLCBhcmcxKTsKICAgICAgICAgICAgIHRjZ19nZW5fYWRkaV9pMzIoUkVHKEI3XzQpLCBSRUco
-QjdfNCksIDQpOwogICAgICAgICAgICAgdGNnX2dlbl9hZGRpX2kzMihSRUcoQjExXzgpLCBSRUco
-QjExXzgpLCA0KTsKQEAgLTgyMyw4ICs4MzIsMTYgQEAgc3RhdGljIHZvaWQgX2RlY29kZV9vcGMo
-RGlzYXNDb250ZXh0ICogY3R4KQogICAgICAgICAgICAgdGNnX2dlbl9xZW11X2xkX2kzMihhcmcw
-LCBSRUcoQjdfNCksIGN0eC0+bWVtaWR4LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICBNT19URVNXIHwgTU9fQUxJR04pOwogICAgICAgICAgICAgYXJnMSA9IHRjZ190ZW1wX25ldygp
-OwotICAgICAgICAgICAgdGNnX2dlbl9xZW11X2xkX2kzMihhcmcxLCBSRUcoQjExXzgpLCBjdHgt
-Pm1lbWlkeCwKLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTU9fVEVTVyB8IE1PX0FM
-SUdOKTsKKyAgICAgICAgICAgIGlmIChCN180ID09IEIxMV84KSB7CisgICAgICAgICAgICAgICAg
-LyogU2VlIG1hYy5sIGFib3ZlLiAgKi8KKyAgICAgICAgICAgICAgICBUQ0d2IGFkZHIgPSB0Y2df
-dGVtcF9uZXcoKTsKKyAgICAgICAgICAgICAgICB0Y2dfZ2VuX2FkZGlfaTMyKGFkZHIsIFJFRyhC
-MTFfOCksIDIpOworICAgICAgICAgICAgICAgIHRjZ19nZW5fcWVtdV9sZF9pMzIoYXJnMSwgYWRk
-ciwgY3R4LT5tZW1pZHgsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBNT19U
-RVNXIHwgTU9fQUxJR04pOworICAgICAgICAgICAgfSBlbHNlIHsKKyAgICAgICAgICAgICAgICB0
-Y2dfZ2VuX3FlbXVfbGRfaTMyKGFyZzEsIFJFRyhCMTFfOCksIGN0eC0+bWVtaWR4LAorICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTU9fVEVTVyB8IE1PX0FMSUdOKTsKKyAgICAg
-ICAgICAgIH0KICAgICAgICAgICAgIGdlbl9oZWxwZXJfbWFjdyh0Y2dfZW52LCBhcmcwLCBhcmcx
-KTsKICAgICAgICAgICAgIHRjZ19nZW5fYWRkaV9pMzIoUkVHKEIxMV84KSwgUkVHKEIxMV84KSwg
-Mik7CiAgICAgICAgICAgICB0Y2dfZ2VuX2FkZGlfaTMyKFJFRyhCN180KSwgUkVHKEI3XzQpLCAy
-KTsK
-
-
---=-rzUUU0xZyoVLSsBniX/I--
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index af35a44223..7d792d2318 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -1455,6 +1455,12 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
+>  SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
+>  EIEIO           011111 ----- ----- ----- 1101010110 -
+>  
+> +# Condition Register Field Instruction
+> +
+> +&XL_bfa         bf bfa
+> +@XL_bfa         ...... bf:3 .. bfa:3 .. ..... ..... ..... .
+> +MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
+> +
+>  # Branch History Rolling Buffer (BHRB) Instructions
+>  
+>  &XFX_bhrbe      rt bhrbe
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index f00071aa91..55b515cec7 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -3642,12 +3642,6 @@ GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D);
+>  /* crxor */
+>  GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06);
+>  
+> -/* mcrf */
+> -static void gen_mcrf(DisasContext *ctx)
+> -{
+> -    tcg_gen_mov_i32(cpu_crf[crfD(ctx->opcode)], cpu_crf[crfS(ctx->opcode)]);
+> -}
+> -
+>  /***                           System linkage                              ***/
+>  
+>  /* rfi (supervisor only) */
+> @@ -5722,7 +5716,6 @@ GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
+>  GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
+>  GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
+>  GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
+> -GEN_HANDLER(mcrf, 0x13, 0x00, 0xFF, 0x00000001, PPC_INTEGER),
+>  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+>  #if defined(TARGET_PPC64)
+>  GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
+> index cbf82b1ea0..890fbb209e 100644
+> --- a/target/ppc/translate/misc-impl.c.inc
+> +++ b/target/ppc/translate/misc-impl.c.inc
+> @@ -155,3 +155,9 @@ static bool trans_ATTN(DisasContext *ctx, arg_ATTN *a)
+>      return false;
+>  #endif
+>  }
+> +
+> +static bool trans_MCRF(DisasContext *ctx, arg_MCRF *a)
+> +{
+> +    tcg_gen_mov_i32(cpu_crf[a->bf], cpu_crf[a->bfa]);
+> +    return true;
+> +}
+> -- 
+> 2.55.0
+> 
 
