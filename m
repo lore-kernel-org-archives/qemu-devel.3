@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17084C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD54C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:12:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz5u2-0005oi-4S; Wed, 26 Aug 2026 01:10:22 -0400
+	id 1wz5vn-000435-43; Wed, 26 Aug 2026 01:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5u1-0005oW-0u; Wed, 26 Aug 2026 01:10:21 -0400
+ id 1wz5vh-0003l6-La; Wed, 26 Aug 2026 01:12:05 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5ty-00059s-QH; Wed, 26 Aug 2026 01:10:20 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wz5vf-0005TS-ON; Wed, 26 Aug 2026 01:12:05 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q3VwXo956008; Wed, 26 Aug 2026 05:10:16 GMT
+ 67Q3Vcop2830759; Wed, 26 Aug 2026 05:12:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=97xrvvbHwFJ6jeJdk
- qXC035zwACdyEvyyeR9IA4XJio=; b=giF8bWMMCKjpd3FZ91HgynSx0dES2DyG3
- uvAyq8MtMLRHtRZiW9PpdmbRQiUnuKZoKzItp4ifTtuHHgAgxANjXQSSlr4nHvnd
- rZRKL29Gg6m8X7SR7GeXirvvjccFi3JXBe/WSUM4mt3yPFN5cPSFPD9CVMGIF8kL
- g7xU2h/n0f9gPohPFPGsJHetUJz5HvAP7ywI2AmW66KsdtFZG6ETsiqvprhKOeGa
- N1U9WxucYPwB6nR5gBP+NKnrs3YFU5Q+b830ND5rTO4jhJrJLnrTIoTQ34YplbrB
- +c/pvl6fUouO6RcTXlgwAk4RBYtw88i0eDQq/NVNtsk0F1Tnjx/SA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqvkpx-1
+ :mime-version:references:subject:to; s=pp1; bh=EhiYhRpiNeiHcmm2O
+ BOothJFWZi7xRbaXJN++PTV7OQ=; b=bQIptaJITTko0fyOtpVNMQv6Fr0AjxzQ+
+ UTTeLP5kAC9my5t/oQITPIeTL/h1q+qOKMz8IugMlclxjTnlRLJjsjemSrhYMyex
+ Dgq7glzbXr6l3Y4zmcBltfMmSp/tJUb5uL9MvXec2tSd5xG/aQv3kNIw3FsL+Xg7
+ E/vwsJxKfCxH/p9C1I94irxnbt4R+prBy+ZRNCbAuvh0jrdxWEvFMuK/iPxIKIgq
+ pZqOJACAT68/BcKr3844/4EPACd9fy3lDtnlEEWaFQoV0W71V4ZqbyYC+Efb2ARt
+ QfB0kng24aGGW1mDNxneZ35BpP5LvrK29ArsQqFJ4L7esMWlurBaw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4vnve-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:10:15 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q4fIGU020050;
- Wed, 26 Aug 2026 05:10:14 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k06ys-1
+ Wed, 26 Aug 2026 05:12:00 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5BHJI009635;
+ Wed, 26 Aug 2026 05:11:59 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy7xuj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:10:14 +0000 (GMT)
+ Wed, 26 Aug 2026 05:11:59 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67Q5AAQU38928856
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67Q5Bu2Q30605750
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 05:10:10 GMT
+ Wed, 26 Aug 2026 05:11:56 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DD63120043;
- Wed, 26 Aug 2026 05:10:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 193FF20043;
+ Wed, 26 Aug 2026 05:11:56 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D447420040;
- Wed, 26 Aug 2026 05:10:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E275220040;
+ Wed, 26 Aug 2026 05:11:50 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.124.215.63]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 05:10:04 +0000 (GMT)
+ Wed, 26 Aug 2026 05:11:50 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -65,10 +65,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 05/37] target/ppc: Move vector pack instructions to
- decodetree
-Date: Wed, 26 Aug 2026 10:38:31 +0530
-Message-ID: <20260826050923.74756-6-rathc@linux.ibm.com>
+Subject: [PATCH v2 22/37] target/ppc: make do_ea_calc_ra available for 32 bit
+ builds
+Date: Wed, 26 Aug 2026 10:38:48 +0530
+Message-ID: <20260826050923.74756-23-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826050923.74756-1-rathc@linux.ibm.com>
 References: <20260826050923.74756-1-rathc@linux.ibm.com>
@@ -76,29 +76,29 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: zJ_rIvHteAc1fbTsQVh0I6XjmapA5Xtb
-X-Proofpoint-ORIG-GUID: 9JkI61n6ZEv2cum2qqDGlgIhaYKLOdDU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfXyQB9WPyCY9xH
- TqTujnaiDsEC+fRyKcfYFyTpCy1osq+i4NpDkptrVY/LdG7orfO+sRBO2pXVvFYSc6kDm2Pjpcf
- k5WPFDyHu6f1ATuHW/KEOQ8kban0G6JvF78S+FWt0YH+2bJA3QqcJsqx5Qol4mILc19/KckwTEy
- nIkq7ZRmIaRBuKlv13W7CkQHyd0fARfTUzA/N9p2xF/MCVbmQTqAq0Ul+uL7XQO9XOFCA9Y3L+g
- vihi+R8BaioF2rRV071G74bq8nU3ZSPIMTASJAI0uRa8z77287NJHlHU5jjt5MQXHxNTWmpWH6R
- J6SW+Fe17TWrbPOOklMNDw5Es3RA08W6avS9wvseWR9XerdmYF3nNhuEpvThgHNuLqS/mFy3FXJ
- OnvvLk/zM0pBXmdFEbjq5g1iUnve4kKAfsBpRdfy5vf7Hb1gVnRSw3StIKBJjT4Pbiee2bqbA1q
- x4Xlb2K71nyY2ZovsGQ==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8e7537 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-ORIG-GUID: 0L5evjvn6Tmxbc33RaBaodJ3Lf30S3sV
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX/v7hudZIkPHo
+ XXUtpz+T7NoHO+SaMY+agUsN+m/lLOXyQ91b4kN7993k82zDz024sPiaQNktNxS7+vJRqWZd/fX
+ 5ctQZHzC5S3V5gQsZh8yDoapGhoaAIo=
+X-Proofpoint-GUID: yx4ffHq4M90wB1ZWtzK_cYaonqlxMqfw
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8e75a1 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=FELJdoV6w5lAa41aMJIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX+eJ6qhlvYHaj
- cHGbncWldVpxz7KmeP1oHkVB06i5BcbOn3pTMeTIpMeXVLDVKFIzOpHoPrnNVKDvm8sjNheqMZF
- PiuCYJRMYG6GhpQAZt4FqGu96a4WyvQ=
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=0RWl5roMYX471uEN2lYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX3hKrU3obYaLF
+ YyHQlEk2iMo+6DgTvsWc1XH1UNfGiVNuOz6ZpjA6J3YP+SyAWcoY9TgyiBlijL1bVAzYB4ILgZu
+ +lm54r/pCcd6rJB7LOZZEMICqRL/SrRD537p0X3D+kcEY0ubJUfmu3uzK3f21wFZDVbxE/Icj3d
+ 6SeWq+vEkBD6AqqpPucVyyzfC71blRbIDkceGYGKj5UqY7+XTHGh+8latxL4tquJ/JIkM4oEp8E
+ Trny1uScVY/8Qc3cnWKQQJZTDhepYxLA3KEQUSqsDKtQ5lrrH3aiH2ZuFeuJhtBvbnQW3zzqk+K
+ wHXWb0BAssuSS5g1GJw3oMBh5uxrKNTTygnRZafwAuebDzOvOd1fWBZ8SJHQZhmlq/pl6YS7ahC
+ NTB+d2zlFWLXcaauYnQ5yu19B/qj6azafkcQ034FU3GBjqOjwBzvIaJOy5+oQeqg+m+o6ucPG8d
+ MO8DgNHBHtYziUNWmTw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260040
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
@@ -125,241 +125,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+There is no reason to keep do_ea_calc_ra exclusive to TARGET_PPC64.
+Make it available for PPC32 builds.
 
-Move below instructions to decodetree specification:
-
-        vpkuhum, vpkuwum, vpkuhus, vpkuwus  : VX-form (PPC_ALTIVEC)
-        vpkshus, vpkswus, vpkshss, vpkswss  : VX-form (PPC_ALTIVEC)
-        vpkpx                                : VX-form (PPC_ALTIVEC)
-        vpkudum, vpkudus, vpksdus, vpksdss  : VX-form (PPC2_ALTIVEC_207)
-
-The legacy GEN_VXFORM_ENV/GEN_VXFORM macros that generated gen_vpk*()
-functions reading register fields from ctx->opcode are replaced by new
-do_vpk_env()/do_vpk() helpers in vmx-impl.c.inc that use the
-pre-extracted decodetree argument fields (a->vrt, a->vra, a->vrb)
-directly.  The existing gen_helper_vpk*() implementations in
-int_helper.c are reused without changes.
-
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the '-d
-in_asm,op' option before and after the patch.
-
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/helper.h                 | 26 +++++++--------
- target/ppc/insn32.decode            | 16 +++++++++
- target/ppc/int_helper.c             | 28 ++++++++--------
- target/ppc/translate/vmx-impl.c.inc | 51 +++++++++++++++++++++--------
- target/ppc/translate/vmx-ops.c.inc  | 13 --------
- 5 files changed, 81 insertions(+), 53 deletions(-)
+ target/ppc/translate.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 6db917935c..6df3de6516 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -249,19 +249,19 @@ DEF_HELPER_FLAGS_4(VMSUMUBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VMSUMMBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VPERM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VPERMR, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
--DEF_HELPER_4(vpkshss, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkshus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkswss, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkswus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpksdss, void, env, avr, avr, avr)
--DEF_HELPER_4(vpksdus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuhus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuwus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkudus, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuhum, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkuwum, void, env, avr, avr, avr)
--DEF_HELPER_4(vpkudum, void, env, avr, avr, avr)
--DEF_HELPER_FLAGS_3(vpkpx, TCG_CALL_NO_RWG, void, avr, avr, avr)
-+DEF_HELPER_4(VPKSHSS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSHUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSWSS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSWUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSDSS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKSDUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUHUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUWUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUDUS, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUHUM, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUWUM, void, env, avr, avr, avr)
-+DEF_HELPER_4(VPKUDUM, void, env, avr, avr, avr)
-+DEF_HELPER_FLAGS_3(VPKPX, TCG_CALL_NO_RWG, void, avr, avr, avr)
- DEF_HELPER_5(VMHADDSHS, void, env, avr, avr, avr, avr)
- DEF_HELPER_5(VMHRADDSHS, void, env, avr, avr, avr, avr)
- DEF_HELPER_FLAGS_4(VMSUMUHM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 8aca8a00c0..c51efbfd33 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -1054,6 +1054,22 @@ VSTRIHR         000100 ..... 00011 ..... . 0000001101   @VX_tb_rc
- VCLRLB          000100 ..... ..... ..... 00110001101    @VX
- VCLRRB          000100 ..... ..... ..... 00111001101    @VX
- 
-+## Vector Pack Instructions
-+
-+VPKUHUM         000100 ..... ..... ..... 0000000111 0    @VX
-+VPKUWUM         000100 ..... ..... ..... 0000100111 0    @VX
-+VPKUDUM         000100 ..... ..... ..... 1000100111 0    @VX
-+VPKUHUS         000100 ..... ..... ..... 0001000111 0    @VX
-+VPKUWUS         000100 ..... ..... ..... 0001100111 0    @VX
-+VPKUDUS         000100 ..... ..... ..... 1001100111 0    @VX
-+VPKSHUS         000100 ..... ..... ..... 0010000111 0    @VX
-+VPKSWUS         000100 ..... ..... ..... 0010100111 0    @VX
-+VPKSDUS         000100 ..... ..... ..... 1010100111 0    @VX
-+VPKSHSS         000100 ..... ..... ..... 0011000111 0    @VX
-+VPKSWSS         000100 ..... ..... ..... 0011100111 0    @VX
-+VPKSDSS         000100 ..... ..... ..... 1011100111 0    @VX
-+VPKPX           000100 ..... ..... ..... 0110000111 0    @VX
-+
- # VSX Load/Store Instructions
- 
- LXSD            111001 ..... ..... .............. 10    @DS
-diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-index a3adf746bd..dc55ccadf7 100644
---- a/target/ppc/int_helper.c
-+++ b/target/ppc/int_helper.c
-@@ -1465,7 +1465,7 @@ void helper_VPMSUMD(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
- #else
- #define PKBIG 0
- #endif
--void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
-+void helper_VPKPX(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
- {
-     int i, j;
-     ppc_avr_t result;
-@@ -1488,7 +1488,7 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 5b08d9b282..e40841b68e 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2397,7 +2397,6 @@ static TCGv do_ea_calc(DisasContext *ctx, int ra, TCGv displ)
+     return ea;
  }
  
- #define VPK(suffix, from, to, cvt, dosat)                               \
--    void helper_vpk##suffix(CPUPPCState *env, ppc_avr_t *r,             \
-+    void helper_VPK##suffix(CPUPPCState *env, ppc_avr_t *r,             \
-                             ppc_avr_t *a, ppc_avr_t *b)                 \
-     {                                                                   \
-         int i;                                                          \
-@@ -1507,18 +1507,18 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
-         }                                                               \
+-#if defined(TARGET_PPC64)
+ /* EA <- (ra == 0) ? 0 : GPR[ra] */
+ static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+ {
+@@ -2411,7 +2410,6 @@ static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
      }
- #define I(x, y) (x)
--VPK(shss, s16, s8, cvtshsb, 1)
--VPK(shus, s16, u8, cvtshub, 1)
--VPK(swss, s32, s16, cvtswsh, 1)
--VPK(swus, s32, u16, cvtswuh, 1)
--VPK(sdss, s64, s32, cvtsdsw, 1)
--VPK(sdus, s64, u32, cvtsduw, 1)
--VPK(uhus, u16, u8, cvtuhub, 1)
--VPK(uwus, u32, u16, cvtuwuh, 1)
--VPK(udus, u64, u32, cvtuduw, 1)
--VPK(uhum, u16, u8, I, 0)
--VPK(uwum, u32, u16, I, 0)
--VPK(udum, u64, u32, I, 0)
-+VPK(SHSS, s16, s8, cvtshsb, 1)
-+VPK(SHUS, s16, u8, cvtshub, 1)
-+VPK(SWSS, s32, s16, cvtswsh, 1)
-+VPK(SWUS, s32, u16, cvtswuh, 1)
-+VPK(SDSS, s64, s32, cvtsdsw, 1)
-+VPK(SDUS, s64, u32, cvtsduw, 1)
-+VPK(UHUS, u16, u8, cvtuhub, 1)
-+VPK(UWUS, u32, u16, cvtuwuh, 1)
-+VPK(UDUS, u64, u32, cvtuduw, 1)
-+VPK(UHUM, u16, u8, I, 0)
-+VPK(UWUM, u32, u16, I, 0)
-+VPK(UDUM, u64, u32, I, 0)
- #undef I
- #undef VPK
- #undef PKBIG
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index 00b359f031..65230f3461 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -1070,19 +1070,44 @@ TRANS(VRLQMI, do_vector_rotl_quad, false, true)
+     return EA;
+ }
+-#endif
  
- GEN_VXFORM_TRANS(vsl, 2, 7);
- GEN_VXFORM_TRANS(vsr, 2, 11);
--GEN_VXFORM_ENV(vpkuhum, 7, 0);
--GEN_VXFORM_ENV(vpkuwum, 7, 1);
--GEN_VXFORM_ENV(vpkudum, 7, 17);
--GEN_VXFORM_ENV(vpkuhus, 7, 2);
--GEN_VXFORM_ENV(vpkuwus, 7, 3);
--GEN_VXFORM_ENV(vpkudus, 7, 19);
--GEN_VXFORM_ENV(vpkshus, 7, 4);
--GEN_VXFORM_ENV(vpkswus, 7, 5);
--GEN_VXFORM_ENV(vpksdus, 7, 21);
--GEN_VXFORM_ENV(vpkshss, 7, 6);
--GEN_VXFORM_ENV(vpkswss, 7, 7);
--GEN_VXFORM_ENV(vpksdss, 7, 23);
--GEN_VXFORM(vpkpx, 7, 12);
-+static bool do_vpk_env(DisasContext *ctx, arg_VX *a,
-+                       void (*gen_helper)(TCGv_ptr, TCGv_ptr,
-+                                          TCGv_ptr, TCGv_ptr))
-+{
-+    TCGv_ptr ra, rb, rd;
-+    REQUIRE_VECTOR(ctx);
-+    ra = gen_avr_ptr(a->vra);
-+    rb = gen_avr_ptr(a->vrb);
-+    rd = gen_avr_ptr(a->vrt);
-+    gen_helper(tcg_env, rd, ra, rb);
-+    return true;
-+}
-+
-+static bool do_vpk(DisasContext *ctx, arg_VX *a,
-+                   void (*gen_helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
-+{
-+    TCGv_ptr ra, rb, rd;
-+    REQUIRE_VECTOR(ctx);
-+    ra = gen_avr_ptr(a->vra);
-+    rb = gen_avr_ptr(a->vrb);
-+    rd = gen_avr_ptr(a->vrt);
-+    gen_helper(rd, ra, rb);
-+    return true;
-+}
-+
-+TRANS_FLAGS(ALTIVEC, VPKUHUM, do_vpk_env, gen_helper_VPKUHUM)
-+TRANS_FLAGS(ALTIVEC, VPKUWUM, do_vpk_env, gen_helper_VPKUWUM)
-+TRANS_FLAGS2(ALTIVEC_207, VPKUDUM, do_vpk_env, gen_helper_VPKUDUM)
-+TRANS_FLAGS(ALTIVEC, VPKUHUS, do_vpk_env, gen_helper_VPKUHUS)
-+TRANS_FLAGS(ALTIVEC, VPKUWUS, do_vpk_env, gen_helper_VPKUWUS)
-+TRANS_FLAGS2(ALTIVEC_207, VPKUDUS, do_vpk_env, gen_helper_VPKUDUS)
-+TRANS_FLAGS(ALTIVEC, VPKSHUS, do_vpk_env, gen_helper_VPKSHUS)
-+TRANS_FLAGS(ALTIVEC, VPKSWUS, do_vpk_env, gen_helper_VPKSWUS)
-+TRANS_FLAGS2(ALTIVEC_207, VPKSDUS, do_vpk_env, gen_helper_VPKSDUS)
-+TRANS_FLAGS(ALTIVEC, VPKSHSS, do_vpk_env, gen_helper_VPKSHSS)
-+TRANS_FLAGS(ALTIVEC, VPKSWSS, do_vpk_env, gen_helper_VPKSWSS)
-+TRANS_FLAGS2(ALTIVEC_207, VPKSDSS, do_vpk_env, gen_helper_VPKSDSS)
-+TRANS_FLAGS(ALTIVEC, VPKPX, do_vpk, gen_helper_VPKPX)
- GEN_VXFORM_ENV(vsum4ubs, 4, 24);
- GEN_VXFORM_ENV(vsum4sbs, 4, 28);
- GEN_VXFORM_ENV(vsum4shs, 4, 25);
-diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
-index b8f77d3d2c..2820976c0f 100644
---- a/target/ppc/translate/vmx-ops.c.inc
-+++ b/target/ppc/translate/vmx-ops.c.inc
-@@ -59,19 +59,6 @@ GEN_VXFORM_300(bcdtrunc, 0, 20),
- GEN_VXFORM_300(bcdutrunc, 0, 21),
- GEN_VXFORM(vsl, 2, 7),
- GEN_VXFORM(vsr, 2, 11),
--GEN_VXFORM(vpkuhum, 7, 0),
--GEN_VXFORM(vpkuwum, 7, 1),
--GEN_VXFORM_207(vpkudum, 7, 17),
--GEN_VXFORM(vpkuhus, 7, 2),
--GEN_VXFORM(vpkuwus, 7, 3),
--GEN_VXFORM_207(vpkudus, 7, 19),
--GEN_VXFORM(vpkshus, 7, 4),
--GEN_VXFORM(vpkswus, 7, 5),
--GEN_VXFORM_207(vpksdus, 7, 21),
--GEN_VXFORM(vpkshss, 7, 6),
--GEN_VXFORM(vpkswss, 7, 7),
--GEN_VXFORM_207(vpksdss, 7, 23),
--GEN_VXFORM(vpkpx, 7, 12),
- GEN_VXFORM(vsum4ubs, 4, 24),
- GEN_VXFORM(vsum4sbs, 4, 28),
- GEN_VXFORM(vsum4shs, 4, 25),
+ /***                             Integer load                              ***/
+ #define DEF_MEMOP(op) ((op) | ctx->default_tcg_memop_mask)
 -- 
 2.55.0
 
