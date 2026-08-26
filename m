@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6780C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D7BC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 11:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzBfc-0005NP-AS; Wed, 26 Aug 2026 07:19:52 -0400
+	id 1wzBfY-0005CJ-KL; Wed, 26 Aug 2026 07:19:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBfX-00059s-TK
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:19:47 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBfW-00053R-E5
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:19:46 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBfU-0005rI-7d
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:19:47 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6a3819e8be8so1947053a12.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 04:19:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzBfT-0005qN-5E
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 07:19:46 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-6a41191c9a9so980919a12.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 04:19:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787743183; x=1788347983; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787743181; x=1788347981; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=JkvYru+AQEGMlynpUI5Ee0eR/pHZUMGShiT/2sIrv9g=;
- b=EPDk8Cr52WdJYIwiKqgzEv1D3zh8hrpYcCyYO8fnicHtv7eIQ5SPie25aGW11N461E
- eYieNY8lLjXQvFQC5Jd1TS2b383b3xwm3QiiCfKTqfTF6QVU4s2XlzKZL2tbMnksVV2q
- SsngHs679ftDNKyhgkWqU4ROF7RqnRYzZgzAR1eY0VLChIvMUj+6+DGlFAAf+TjjQuIF
- xbfbf6UiAxmO91Y0u48vgVdC03sMmrh6FHQG/JDjAlkL90iz+snO/l4X9LzKKD61UDLI
- fsGZAIVgIZAP0vwpXcUsrX+jwDJRGWWwRoJU2ZO19gNfPAolrFxNYupcLvNL4UaiBYTD
- n/dg==
+ bh=TJBKDx/NPPo3M962XW23quyF1pb9lG1A3xeKFPd765A=;
+ b=jpE8RjVzifcpaK9OmL5JUTixjOtlkLpEI8RcyyRjOV7TA6MVabC8zloBRXKKoQhfQZ
+ R2ze3CcFhYv3IMeD6IW8En6Avq2ijGOnXwmeP5+ppVeChrNGrcC8aYw0XPS6ZFbUmI52
+ OKD8ODzikaonesJB1iFZsD4m5jg/4kaJTgWwq+QIaeGmDqjGPwzonvfuWQHcIfi2qNxa
+ O/p04vmNawAv675BxUKY9VMskzwvaKmD0Csu5ktG88k2qatFJ/nfu2Und11FaH8PRzDQ
+ 9wvqc2c0UHiQQ3m2Nc+wcnRHoZ0slVkTm4Z5sJyNkPHXV7c/tSpQsttyO1owy1JUnVWJ
+ lBNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787743183; x=1788347983;
+ d=1e100.net; s=20251104; t=1787743181; x=1788347981;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=JkvYru+AQEGMlynpUI5Ee0eR/pHZUMGShiT/2sIrv9g=;
- b=Kfws3cYuSrQY+klQSIH3k6DnCohuwNp3p28+Iky/YFcOCL2TD2DRVxR7dDu2HZiG2l
- P++XC69Df0jBHBbNdcEWnOQKJkx5z8eeehGIro3GH+sTI3UbzkFsLg0KnPZXn0K0Dtaj
- namcjs+EgssKyGdrFf7b0iVSxuAulcRxM1M4J+P0zeqyM6PuVntZHqcRrWCcSNvilxzM
- yFSyfaAtaOr4JYWFtbBfBTcg+Tfr/iVjzaVRV/L5SWlE2W21rFvswU3Que9R5DN0FpPK
- SpdWnzQp3IZMXmMMMCby2E0pO3sLRaR1Ctxbf9zRsxt8aDqh5YYE+kgTxmniHqCKzrc4
- ppEg==
-X-Gm-Message-State: AFuF++lmZjsdD5azUYiYrqODvyS1AAuHB6tsh1GtfyJKW4BeiFTlyEMX
- R0hnsnETs7LDMc8hurlpnctC0IVG6AcftX6wXlA+fJNRyYFwODzyYypKDZdPF/FFPSyqG6+9vzi
- vAZIi
-X-Gm-Gg: AR+sD10WEmID8luXblNT0tILtRaX9qBIB+riffcWYzcbNq6lykxpEzq6FqrMAnFZ53E
- nGHL/odY/Yj1oJUyqlH5EEhbvu5I2DV3oyzdiC3FuDbzhpATbCjONySNaiMVBNrz4c7zWtH78Vc
- 6gabLp8oE9XecGOn4pKHtLP6D0C/7yJsV2AA62YAT3xnTff8ARQp2gIiqgbr4ZRlWV96ydIBBZP
- h8pPd/Yb27YYHIKOw5D4X9UrAtpWr7JH05JNPW/rCMEG7mN12gydMADZAFRYfNrZmR/WtcKX7E7
- 3PZdtNYHP2QxFE5GQlW0HThGcwM/S4Gng4S53sqR4eud+lA8D0qs84Ydxj7uZDFW5cCyhOCbiKf
- k9SVt6e0iu9lcsSvfmBklIbl8oOXV73oLP4rTVZl64j8ETnMj/bAws/kYEo6P4jxDf15G04rByJ
- CTAV2rQxkn1I9afwMGTpaX/z0/AtRhi0SRopqWnAHbXP4Q59au
-X-Received: by 2002:a05:6402:325a:b0:6a5:ccbd:c661 with SMTP id
- 4fb4d7f45d1cf-6a5df1cafc7mr6170597a12.4.1787743182602; 
- Wed, 26 Aug 2026 04:19:42 -0700 (PDT)
+ bh=TJBKDx/NPPo3M962XW23quyF1pb9lG1A3xeKFPd765A=;
+ b=WgevGZroNoW9M4gYO9dhAKBBwknRqOscJfCljcma9X0je9wlmFP23NkfLbjvMytLg7
+ EgMqjUzervfzDZX/0XYA/qLFxquxnDB+MzPDdOz6yNouCyM8aDWgsquJG+3WcNGM4d2e
+ AT9VWfDIE0rx+o5NNulgR6WhfORCYZm4mv5yfUfjPMCZiMS4rGZystg7BgcIwIwl6z3A
+ opSC5U8hxOtW2nm8xWav04Zw2nPDxbA/vAZp4uaYsqEYl63W9cV20j/COkudqwkEmzNK
+ wfGhgZIaq/sWrO10CoF5DghFVkQM4fNYR9CsGwBaK4lCBmiZb0A8y511bhmlIMZhV3Ij
+ Upcg==
+X-Gm-Message-State: AFuF++mBNbFbXRw87+h0Mw7/+jA0f8TNpIt5sSUBZ0T44Z6Z85P/Jo/C
+ uwRTBuf/YPXilxmCmKJY447n/KBX3SYRpvxeeqlOSxCaerFwuVaTkIGiv/8e+fu3AvkQh/sDYBd
+ GWP0a
+X-Gm-Gg: AR+sD10RGGUP+wWIwihgsFiCe+CH6UDtUc/l96WEQtcIYikY/rvn4ZFfOiubAFjBiem
+ +bThwkamfsEPcvH3EDkH/nrUcOelJi+Bj4eHQ0Iw/7E0T8FOaptx2/dbkuTgl8iej4dZa8Dgils
+ XFIAXiA9FdUkr+f3Hh2z9h8o42vMQUjga1rvB2wn3YFTU6/nABPSHZPDZNpo4HE6T9s/E3Mp8/I
+ prLXvVwxL0imipcpeJozlEMT00qpTgsWJZkDUnbhy8Tmqd1x8uQh9ZzHmRjFBs/mbW7Psrlad6U
+ rUF5LqdOtVDFj/Yjcl3MPMvgarPyIjq4Amz806Zt0l8D2pnG3F/MGYlHwzhtu7t4UC5BMweWqxp
+ fhPQv/XZVSdpGMbvkSaLkH1WoEmUtTm8PwC3KJ6gcv9Tb5CF3MiHn2OyTi+hplYz0Z4rQXA7yVe
+ fVFKnQ9+pm1Uko2Hq+qKYGtXtlEMFYm6OzKpac4JxLWR9NZlkC
+X-Received: by 2002:a05:6402:3245:b0:698:c13e:179a with SMTP id
+ 4fb4d7f45d1cf-6a5df653615mr7496309a12.10.1787743181426; 
+ Wed, 26 Aug 2026 04:19:41 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:8a5:68e8:91b1:8a17])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a5deaa8473sm4838366a12.21.2026.08.26.04.19.41
+ 4fb4d7f45d1cf-6a5deaa8473sm4838366a12.21.2026.08.26.04.19.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 04:19:42 -0700 (PDT)
+ Wed, 26 Aug 2026 04:19:41 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 28/28] tests/qtest/ide-test: cover the UDMA5 identify words
-Date: Wed, 26 Aug 2026 13:19:15 +0200
-Message-ID: <20260826111915.3387926-19-den@openvz.org>
+Subject: [PULL 27/28] hw/ide: report ATAPI UDMA5 with a matching standard and
+ cable
+Date: Wed, 26 Aug 2026 13:19:14 +0200
+Message-ID: <20260826111915.3387926-18-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826111915.3387926-1-den@openvz.org>
 References: <20260826111524.3383479-1-den@openvz.org>
@@ -79,8 +80,8 @@ References: <20260826111524.3383479-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=den@openvz.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=den@openvz.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,114 +106,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-/ide/identify/udma and /ide/identify/udma_atapi check that a device
-advertising UDMA mode 5 claims a standard that defines it and reports the
-hardware reset result, on the disk and on the CD-ROM. The ATAPI case also
-checks that the words obsolete in IDENTIFY PACKET DEVICE data stay
-clear, and that the reset result reports a passed diagnostic, which
-only the packet path does so far.
+IDENTIFY PACKET DEVICE claims UDMA mode 5 in word 88 while word 80
+reports support only up to ATA/ATAPI-4. UDMA5 first appears in
+ATA/ATAPI-6; ATA/ATAPI-5 stops at mode 4. Bits 3:1 of word 80 are
+obsolete in IDENTIFY PACKET DEVICE data as well, so the old 001eh
+claimed three standards that mean nothing for a packet device. Report
+0070h, ATA/ATAPI-4 through ATA/ATAPI-6.
 
+Word 93 was left unset, so nothing reported the 80-conductor cable that
+UDMA5 needs. Fill it in, but only for a parallel attachment: ACS-3
+7.13.6.41 gives word 93 of IDENTIFY PACKET DEVICE data the meaning of
+word 93 of IDENTIFY DEVICE data, where "For SATA devices, word 93 shall
+be set to the value 0000h". A cleared ncq_queues is how both identify
+paths already tell a parallel attachment from an AHCI one.
+
+The device 0 reset result is 0fh rather than the 01h ide_identify()
+reports: bit 3 says diagnostics passed, which they did, and bits 2:1
+say the device number came from some other method, the only one of the
+four encodings that is not a jumper, CSEL or reserved.
+
+Raising word 80 has a second effect. Linux decides a device is SATA in
+ata_id_is_sata(), which wants word 93 clear and word 80 at ATA/ATAPI-5
+or later. An AHCI CD-ROM satisfied neither condition before and was
+taken for a parallel device; now it satisfies both.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4038
 Cc: John Snow <jsnow@redhat.com>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qtest/ide-test.c | 69 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
+ hw/ide/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index a3109da908..92e3d9b343 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -104,6 +104,7 @@ enum {
-     CMD_FLUSH_CACHE = 0xe7,
-     CMD_IDENTIFY    = 0xec,
-     CMD_PACKET      = 0xa0,
-+    CMD_IDENTIFY_PACKET = 0xa1,
-     CMD_READ_NATIVE = 0xf8,  /* READ NATIVE MAX ADDRESS */
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 06c18dbf09..ef573798d9 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -292,7 +292,7 @@ static void ide_atapi_identify(IDEState *s)
+         put_le16(p + 76, (1 << 8));
+     }
  
-     CMDF_ABORT      = 0x100,
-@@ -1571,6 +1572,72 @@ static void test_migrate_chs_rejected(void)
-     unlink(path);
- }
+-    put_le16(p + 80, 0x1e); /* support up to ATA/ATAPI-4 */
++    put_le16(p + 80, 0x70); /* support up to ATA/ATAPI-6 */
+     if (s->wwn) {
+         put_le16(p + 84, (1 << 8)); /* supports WWN for words 108-111 */
+         put_le16(p + 87, (1 << 8)); /* WWN enabled */
+@@ -300,6 +300,10 @@ static void ide_atapi_identify(IDEState *s)
  
-+/*
-+ * A device advertising UDMA5 has to claim a standard that defines it, and a
-+ * parallel attachment has to report the cable word (ACS-3 7.12.7.47).
-+ */
-+static void test_identify_udma(bool packet)
-+{
-+    QTestState *qts;
-+    QPCIDevice *dev;
-+    QPCIBar bmdma_bar, ide_bar;
-+    uint16_t buf[256];
-+    int i;
-+
-+    if (packet) {
-+        qts = ide_test_start("-device ide-cd,bus=ide.0");
-+    } else {
-+        qts = ide_test_start(
-+            "-blockdev driver=file,node-name=hda,filename=%s "
-+            "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
-+            tmp_path[0]);
+ #ifdef USE_DMA_CDROM
+     put_le16(p + 88, 0x3f | (1 << 13)); /* udma5 set and supported */
++    if (!s->ncq_queues) {
++        /* word 93 is parallel ATA only, a SATA device reports zero */
++        put_le16(p + 93, 0x600f);
 +    }
-+    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-+
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command,
-+                   packet ? CMD_IDENTIFY_PACKET : CMD_IDENTIFY);
-+    for (i = 0; i < 256; i++) {
-+        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
-+    }
-+
-+    /* UDMA5 supported and selected */
-+    assert_bit_set(buf[88], 1 << 5);
-+    assert_bit_set(buf[88], 1 << 13);
-+
-+    /* UDMA5 arrived in ATA/ATAPI-6, so word 80 has to reach bit 6 */
-+    assert_bit_set(buf[80], 1 << 6);
-+    if (packet) {
-+        /* Bits 3:1 are obsolete in IDENTIFY PACKET DEVICE data */
-+        assert_bit_clear(buf[80], 0x0e);
-+    }
-+
-+    /* Word 93: reserved bit clear, fixed bit set, 80-conductor cable */
-+    assert_bit_clear(buf[93], 1 << 15);
-+    assert_bit_set(buf[93], 1 << 14);
-+    assert_bit_set(buf[93], 1 << 13);
-+    assert_bit_set(buf[93], 1 << 0);
-+    /* Device 0 clears the device 1 result */
-+    assert_bit_clear(buf[93], 0x1f00);
-+    if (packet) {
-+        /* the disk path has yet to gain this */
-+        assert_bit_set(buf[93], 1 << 3);
-+    }
-+
-+    free_pci_device(dev);
-+    ide_test_quit(qts);
-+}
-+
-+static void test_identify_udma_ata(void)
-+{
-+    test_identify_udma(false);
-+}
-+
-+static void test_identify_udma_atapi(void)
-+{
-+    test_identify_udma(true);
-+}
-+
- /* A PIO transfer window reaching past the io_buffer has to be refused */
- static void test_migrate_pio_state_rejected(void)
- {
-@@ -1843,6 +1910,8 @@ int main(int argc, char **argv)
-     qtest_add_func("/ide/migration/chs_rejected", test_migrate_chs_rejected);
-     qtest_add_func("/ide/migration/pio_state_rejected",
-                    test_migrate_pio_state_rejected);
-+    qtest_add_func("/ide/identify/udma", test_identify_udma_ata);
-+    qtest_add_func("/ide/identify/udma_atapi", test_identify_udma_atapi);
+ #endif
  
-     qtest_add_func("/ide/identify", test_identify);
- 
+     if (s->wwn) {
 -- 
 2.53.0
 
