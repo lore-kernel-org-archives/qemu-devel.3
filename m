@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E15C61DC7
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46032C61DC7
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzWsS-0007ml-W6; Thu, 27 Aug 2026 05:58:33 -0400
+	id 1wzWty-0000HJ-Sd; Thu, 27 Aug 2026 06:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wzWsQ-0007lS-SW
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:58:30 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wzWsO-0007on-W0
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:58:30 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-cc1cbb64a1fso1552197a12.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 02:58:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787824707; cv=none;
- d=google.com; s=arc-20260327;
- b=IAtiHnyVg/epWvDhokAmA9XPVVHlVCyoop1a90z737+wI7Di5V76804UcatG4uesMl
- Bf/G7IHO6lpOirwz0bVd/NyeZwuNID0iEZjOpX/ug7l0I4fvz1Jv8pRGVH26BGCMejyU
- iARGkhgslAudGWrhTSx25UwQtHcYc4h2zFbSJc5B4ctvSAsyqeVGNyBTIjd6VYr3Tyxp
- 6QlQumngvUyVP7glvtUfJzY8r2zapOGU/cjBWl+pf9+2LAI89oC9U1QX/HpEgV72pKzK
- Yo6jh2c4pHHQEnrX09ZAlKfDgDgj7Cjbp2810kDV/YFfvtXhwnUVS2TyXYNxqWK8x4MB
- EWnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fXcaUfxwvo8yrsHq9dyA3ZcvA6AkZ/ogCZBUJAz2ru4=;
- fh=BvaKJMiH2T+cklnzFVwMvu7nTyBSZzzflKJvBCzExpE=;
- b=lkagcI5vVGvwCSOtqI4EILvSDO0YXmxnxkbClyQyJ8Vh2ChA2e/G2DUMWCNam0ZpfY
- 1KKmMnIzNtnzc1cgEF4dviKm/8mdfs819L240we2paMWli2p+DJeiqM8ARN9ZCO3gKae
- ut+dfNaI/xMibnOy5chzywx83OMFRsV6/2IZNOmglQiG4kBAaepICkqQLoNn1X5WOrVr
- eOPtr9bFpbkJwCPpHlXYBmP+jTo9/y+DTYwhTwgLdC5oeWJxaB7JPPHZrExeUNvRJ/VP
- b76iZbrDaLh2vn/C1jvMonxcCTnt66+JOjLhVC7J+FGBzPX5dRe7qg7BbbN9OlBvTZrC
- Ozvg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787824707; x=1788429507; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fXcaUfxwvo8yrsHq9dyA3ZcvA6AkZ/ogCZBUJAz2ru4=;
- b=erYDe87wXBskO01GmBOrvSFbuFwWH9qMxcW0AQ2+itEDF7Ixe/mU5Lm5wkNAFKPkGN
- +jhwyeoG9LWgSgiy2LcYmlOviSnBI1KBxkdwnMu4hIQzL8kl619V3OnNtVXXWPsU4V+1
- RN16ylw6BsC6QydjpOCplu0K/UiDC5GfJvtT7kGIEeTjk9h844Zj8nh9zcZk8tJiKJIR
- I95bYdQSL99nRxIU8ex83ADpmXsboFOwusrhc3LXyBmPUg+WIb/AK9Yy7Dp+r/vCh6gL
- d/QFRXrScSG6/uAQn0xQsfzt70lzpvShcmxeZQCCvEj4D9SzvvBbSUS75UU63BfkwAOx
- F88g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787824707; x=1788429507;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fXcaUfxwvo8yrsHq9dyA3ZcvA6AkZ/ogCZBUJAz2ru4=;
- b=HFGs+UZGBBJmaYdtQXvwMo2a6+k6ZdW1wPQ2nvLotHpcNipfTZ6gmPt47VtZWRkkl+
- GbGTEcd1CRAmE+Zo3oKh3Vm2HsKu5hPN4qXMK/eA3psDMO3NmoVALSvgqzX2jI0XpxrX
- DSgDRp14HZXhBTregGStBYxGywf/fNSVSnDY7vog6+wrd9SUbIbgRFvZLP1AFcpO2WxH
- OcS+xvbSNRigAaG9BzrqBTDqnY9JCsZfboXTku+IDIaBMFETKWILWZEMvNXQXXFiTja1
- SuYGMansni01CwZ9g35NFRIviAvSTktNIAwdimehP4dp+Z0xjGchcd10LZl21QEjwqSZ
- AeLg==
-X-Gm-Message-State: AFuF++lyktHRdj+Ep6/a1IXa7l2UJC/sZXcCVE5Ki6oSR7+NoDI2CJlh
- /zcKK5G868iM91zlnC6XZ3mMViuOFUd7AodbY0q9dwyDJmAYQmuL1nc5WTlsp/X6/qZlcNrd0XM
- cXRANVbS7wPV2QGp2KozN7f5wTjeZka4=
-X-Gm-Gg: AR+sD13hhveQxVw12F9Lhm6bwdSwJXCUSVq8L7XlFMZWeCHXXKRmHrBGUyATgyTmStz
- N6GtR5ao+0l+VDIc1gACyeUlDi2Yc4oPGEpD3gmuurVZcohf+UTSwjjDNrQ3E0kNVyp5t+An4Bj
- za69PIrTKOquSo0r29clJqSSfDEUYlNrh1l4E4IAxpoOX6TWgw4GiarHaWc0jRPgSLxMbGJOqsw
- mMWWNe4SxAfRGC6EJtg9QRl9d1mzjZfVPUyPt1KJ6HU2AK+2rZace+DGBifh1g8StYGOdfkdI+q
- lgononGyVMRtduVM/Bk8kfGzH1n+1n//WyRu4YbEVGJxn1/TDtkM2gLaMmdoVcacZDpnXkkYybK
- j
-X-Received: by 2002:a17:90b:1a90:b0:396:6344:3b62 with SMTP id
- 98e67ed59e1d1-3966d71a0e4mr27102161a91.12.1787824706988; Thu, 27 Aug 2026
- 02:58:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzWtx-0000GZ-Kr
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:00:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzWtu-00084H-Vk
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:00:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787824802;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l+4pZWx3NugtOS6fR3PbIv1beFy0znaJNkgwfzU0W6g=;
+ b=P3pKiKgHMxmsX3364VPGUANrS5hGw8bPnWMocRciICiRUa04AjMdeA/k/pVt6QcChLPAMq
+ mehj9HHmruY3WwiRZ34V5W/KcdjNlF9hYZhFw1CRMGhHYamnbLGdwK0IS7+G4says8SXKk
+ MLYhJFPScjTtwk32LM/CyzDV4J+R3xs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-Heyc38tiOWuxNt3mcFuN8w-1; Thu,
+ 27 Aug 2026 05:58:48 -0400
+X-MC-Unique: Heyc38tiOWuxNt3mcFuN8w-1
+X-Mimecast-MFC-AGG-ID: Heyc38tiOWuxNt3mcFuN8w_1787824723
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BF06195398E; Thu, 27 Aug 2026 09:58:42 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CED29180059E; Thu, 27 Aug 2026 09:58:31 +0000 (UTC)
+Date: Thu, 27 Aug 2026 10:58:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
+Message-ID: <apAKRZtz9xsB1U9s@redhat.com>
+References: <20260823150731.896-1-luoyonggang@gmail.com>
+ <ao7c-FiawF9sMCGj@redhat.com>
+ <392d0652-2d06-4889-8b67-c199e59bd314@nutanix.com>
+ <7f865144-dc5e-4eaa-9704-8cb3cc6a1158@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260827070647.2872650-1-marcandre.lureau@redhat.com>
- <ao_5WNBxRiZycEeb@redhat.com>
-In-Reply-To: <ao_5WNBxRiZycEeb@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 27 Aug 2026 13:58:14 +0400
-X-Gm-Features: AcwNN1Wp7dum7I90fp0I3XF3VpUI5vvzKQvRe-9D34WkO7Vd33Qm4_E1g-G2Dps
-Message-ID: <CAJ+F1CL-4kx18mUC4Jk7-cARiVX0Cq3qSFt5Ct-qM2EBA9dyUw@mail.gmail.com>
-Subject: Re: [PATCH] ui/console: fix use-after-free in qemu_console_set_cursor
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, akihiko.odaki@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7f865144-dc5e-4eaa-9704-8cb3cc6a1158@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,75 +118,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Wed, Aug 26, 2026 at 05:41:30PM -0300, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 8/26/2026 10:40 AM, Mark Cave-Ayland wrote:
+> > On 26/08/2026 13:32, Daniel P. Berrangé wrote:
+> > 
+> > > On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
+> > > 
+> > > snip,
+> > > 
+> > > ..to comment just on the end result for now..
+> > > 
+> > > > The last patch builds qemu-system (and qemu-systemw on Windows) from
+> > > > aarch64 common/system objects plus RISC-V arch objects, and installs
+> > > > qemu-system-{arm,aarch64,riscv32,riscv64} as symlinks so argv[0] still
+> > > > selects TargetInfo.
+> > > > 
+> > > > Examples:
+> > > > 
+> > > >    qemu-system -target aarch64 -M virt ...
+> > > >    qemu-system-riscv64 -M virt ...
+> > > > 
+> > > > A basename that matches no registered token falls through to the unique
+> > > > default. A combined binary with no suffix requires -target when more
+> > > > than one default TargetInfo is registered.
+> > > 
+> > > In testing and comparing  the new qemu-system-riscv64 symlink
+> > > to qemu-system vs the current standalone qemu-system-riscv64
+> > > binary there are some significant user visible changes.
+> > > 
+> > > The simplest is 'qom-list-types' went from reporting approx
+> > > 770 classes, to reporting approx 1530 classes. IOW, the
+> > > qemu-system-riscv64 binary is now reporting supporting for
+> > > all the classes that were unique to arm.
+> > > 
+> > > The '-device help' output similarly shows a great many more
+> > > devices
+> > > 
+> > > TL;DR introspecting qemu-system-riscv64 is no longer accurate
+> > > wrt riscv64 capabilities.
+> > > 
+> > > This is not suprising, since we register all TypeInfo meaning
+> > > we get all QOM classes present. Some of Pierricks patches try
+> > > to filter places which iterate over classes, but this does not
+> > > have full coverage.
+> > > 
+> > > 
+> > > I think this is probably also what leads to the increased RAM
+> > > usage in qemu-system-riscv64. Starting
+> > > 
+> > >    qemu-system-riscv64 -nodefaults -display none -M none
+> > > 
+> > > shows an increase in RAM usage from  17.3 to 20.7 MB which
+> > > is about 15% increase. NB this is dirty, private RAM per
+> > > process. The shared RAM pages also increase but that's not
+> > > a concern since they're common to all QEMU processes.
+> > > 
+> > > qemu-system-aarch64 shows a much smaller RAM increase, since
+> > > it only grew from 1430 classes to 1530 classes.
+> > > 
+> > > We have many more target though, so if we assume the end
+> > > point where every single target is unified, the the union
+> > > of all classes for all targets comes to approx 3600.
+> > > 
+> > > My guesstimate is that would mean a memory increase for
+> > > qemu-system-riscv64 from 17.3 to 39.9 MB, which is a
+> > > 72% increase.
+> > > 
+> > > In absolute terms this is still modest, but for deployments
+> > > with large VM counts  and small RAM sizes, that gets to be
+> > > significant.
+> > > 
+> > > 
+> > > None of this means single binary is a bad idea.
+> > > 
+> > > 
+> > > My main takeaway is that we're creating uneccessary work
+> > > for ourselves by trying to make 'qemu-sytem' identical
+> > > in behaviour to qemu-system-$TARGET.
+> > > 
+> > > The complex filtering patches / QOM interfaces that I
+> > > found uncomfortable in Pierrick's base series are largely
+> > > around the filtering needed to simulate qemu-system-$TARGET,
+> > > and they're still incomplete. I don't have high confidence
+> > > in our ability to avoid regressions if we go route this
+> > > route.
+> > > 
+> > > 
+> > > IMHO we should make a clean break with the past. Leave
+> > > the existing qemu-system-$TARGET binaries being built
+> > > from the same pieces they are today, such that there
+> > > is better confidence that we are not making behavioural
+> > > changes to them.
+> > > 
+> > > 
+> > > qemu-system should be built alongside qemu-system-$TARGET
+> > > and offer new semantics where it is documented as exposing
+> > > everything from all targets whenever introspected and does
+> > > not apply target type or target Kconfig filtering to inputs/
+> > > outputs.
+> > > 
+> > > We still get the benefit of only building most  .o files
+> > > once, so keeping qemu-system-$TARGET is only a small
+> > > overhead in the final step of linking everything together.
+> > > 
+> > > 
+> > > qemu-system will still have the increased memory overhead
+> > > but that's fine as qemu-system-$TARGET will be unaffected.
+> > > We can tackle the memory overhead of qemu-system at our
+> > > leisure through use of loadable modules, and thus not have
+> > > that as a task to think about today.
+> > > 
+> > > 
+> > > With the clean break with the past, we also have the
+> > > ability to tackle various long standing design mistakes
+> > > present in qemu-system-$TARGET instead of carrying them
+> > > over into the new binary.
+> > > 
+> > > Specifically
+> > > 
+> > >   * -nodefaults should become the default
+> > >   * All CLI args should be processed in order from
+> > >     the command line, so we eliminate the nonsense
+> > >     where we process some -object, then -chardev,
+> > >     then more -object through hand crafted deps
+> > > 
+> > >   * No default machine type
+> > 
+> > I would even go as far as to suggest that we should make modules mandatory for qemu-system, so that devices can be loaded upon demand during machine construction to help keep the size down.
+> > 
+> > I'll leave whether that is through dependency tracking or via an explicit load directive for someone else to decide :)
+> > >   * Drop all legacy syntax so we only have a single
+> > >     QAPI based way of configuring.
+> > >     eg drop -hda, -hdb, -cdrom, -drive, etc
+> > >        only keeping -blockdev
+> > >     eg drop -mon, -monitor, -qmp, etc only
+> > >        keeping -object
+> > 
+> > The only problem with this is that I often get a lot of complaints that QEMU command lines are complicated from retro folks who just want to run their favourite old games. Why would they want to come up with a long-winded -drive command line when they can just use -hda instead?
+> > 
+> > > We don't have to do all that straightaway. If we declare
+> > > qemu-system "experimental" initially we can iterate on
+> > > that intentionally breaking compat in releases, without
+> > > any impact on qemu-system-$TARGET.
+> > > 
+> > > Avoiding the back compat task will give us more flexibility
+> > > with the follow on work when people come to create new
+> > > machine types with heterogenous CPU targets.
+> > I agree that this is a good opportunity to explore new things without being tied to past decisions.
+> 
+> To be fair I don't think Phil and Pierrick are basing their design solely
+> on "we must comply to what qemu-system-$target does and has".  From what I
+> understood they're trying to get the prototype out of the door to prove that
+> it works, i.e. "this is clearest and most viable path we're seeing to make it
+> happen". This would naturally adhere to what is already available because,
+> well, it's already a proven base to build on top of.
 
-On Thu, Aug 27, 2026 at 12:47=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Thu, Aug 27, 2026 at 11:06:47AM +0400, marcandre.lureau@redhat.com wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > When the new cursor is the same object as the one already held by
-> > the console and the refcount is 1, cursor_unref frees it before
-> > cursor_ref can increment the count.
-> >
-> > Ref the incoming cursor before unreffing the old one so the
-> > refcount goes 1-2-1 instead of 1-0 (freed) then use-after-free.
->
-> I don't see where/how this can happen.  The caller of
-> qemu_console_set_cursor should own its own reference
-> on 'cursor'. So on entry to this method, 'cursor'
-> should have a ref of 2 if it is the same as the
-> current con->cursor.
->
-> if anything the behaviour you describe sounds like a
-> bug in a caller not holding its own reference.
+In looking at these patches my impression is introducing "qemu-system"
+as its own thing is simpler than trying to make 'qemu-system' be able
+to replace & simulate qemu-system-$target, which this does.
 
-You are right, I thought virtio-gpu kept a weak pointer, but it should
-have a strong ref, so we should never reach 0. I can't explain the
-crash I observed then.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
->
-> >
-> > This is related to 385ac97f8fad ("ui: keep current cursor with
-> > QemuConsole"), but could have happened earlier with VNC too.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  ui/console.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/ui/console.c b/ui/console.c
-> > index a8a2a247d8f4..4db8f1cb431f 100644
-> > --- a/ui/console.c
-> > +++ b/ui/console.c
-> > @@ -904,8 +904,9 @@ void qemu_console_set_cursor(QemuConsole *c, QEMUCu=
-rsor *cursor)
-> >      DisplayState *s =3D c->ds;
-> >      DisplayChangeListener *dcl;
-> >
-> > +    cursor_ref(cursor);
-> >      cursor_unref(con->cursor);
-> > -    con->cursor =3D cursor_ref(cursor);
-> > +    con->cursor =3D cursor;
-> >      QLIST_FOREACH(dcl, &s->listeners, next) {
-> >          if (c !=3D dcl->con) {
-> >              continue;
-> > --
-> > 2.55.0.543.g5ebe2ebe4ea8
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
->
 
