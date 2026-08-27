@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB60C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C6CC61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wza1C-0004ie-NX; Thu, 27 Aug 2026 09:19:46 -0400
+	id 1wza5W-0005zm-DZ; Thu, 27 Aug 2026 09:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wza1B-0004ew-AR
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 09:19:45 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1wza5U-0005zH-RX
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 09:24:12 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wza19-0007Bv-Hy
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 09:19:45 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-85a50f6a7f7so22687797b3.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 06:19:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787836782; cv=none;
+ id 1wza5T-0008DD-96
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 09:24:12 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-836c4474028so24513517b3.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 06:24:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787837050; cv=none;
  d=google.com; s=arc-20260327;
- b=aHW07FUUDacurdeGU0+sKonsEMpWcLLX2gikzYQau26cVrglxrbrXSqufxGUiEVEvw
- 0AmPBsYtcuhQQOPPbDQmhyObbp2yIwQjSjRJlQZnLvBPTBBg2DU1dDaUfilUzoUWxE+L
- 9wvEt5roK+QHRBt4LCR7h6JRmrHpEY2Tj8PTXGu1USeOEzgPwa75mbg2XYQ/Q8nALLqb
- oOpEJG1i4cq8GHThbeQs9i1Hu9MSJLR4ssHgMe/N0HTkUodCydT4BxMx7kArcyaEWezM
- oyXpWLQlT62+nKgHqc73zJXwSiCkKTibRwGBIDDDBjsnPKod/Jhom41GBxYs3Qacl1CJ
- KjVw==
+ b=D3uiWxTY55c0oJ3+5OrkDncMUY1MSTdNLr4ORcROUodQp9DAhuzUnhh7kSQqfJmSLw
+ zqCbwEt/Q+ULPnwYWjKq2CprNqTQuzNEh44o6ErK8cDStsKGnVkgPFKOwf85OKFwi3QI
+ 2/1vCZl9VT0H7Z0Up0ACsMxT3tBjODknDnbOJOhjCsuuQH/WAppJQ0U54BLbHcQXeo4M
+ JTusHYf3cuNMQZkCdilh1BHbbuS7KrDWb5NqXDZe7njG0ogD7No82GFdNbXIWsZlgsIs
+ 8gBvE5TQUyPIBjEo5ZAn3PPWoDzvUT82y6Gk2ny5DfD4BtqCsGYDfnIKp02npxbnYjgG
+ ZptQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=XiPuOcNwiQpKQLIWzQaOStCzXolFZok2QJ6bsUDaR3o=;
- fh=AJJQC8UsL25NRH65SN4WtPGIwBnn2JuaVopGicM+qcg=;
- b=mLgVkxUiOf1UeUr2gzfCANcka7kzUHV0okSr93JMTx0laDCFpSDDdQll/e65Aaudi9
- p/e1vsfGBt2R6zNzAMDYhDwWAuHgaJ8le4BmFGQzVHgxp5cYJRHneuK7UHgjpOMMnhxg
- LyPENfmCSIsCBTS1gTorhir5OPO7syvsUYyLoRgQrIMk6RE2/WuPT0whorHiWPmEbHhn
- +nRAh9/PTPmUk+j9GH7pz4Wq3IQ3dnOlUjGm1DnBXJRcPTlWjYXsmg1j4Oi00bVIhn4m
- mg0qvRONE3aCyZZyp9blIvoRj3W7UB9wjt5OaWNmPw6dB96Sf10HD9mCaQwwVsOd+bq2
- wTZg==; darn=nongnu.org
+ bh=XAaYA7j7G13b2Fv6XG2065GHaY0UFn21jSBTzq0d7xI=;
+ fh=ha6/36mnVIse2IYGESlpLWU1S2sZOniWgoAfZb7nzCU=;
+ b=lVqGDqAfRfIuJkZ5L6+L2lq1/S6YMoFze1RcSzCfgZQaFam8PSdkBtRzhP+RSpSg8P
+ F0+b42qBEIbJO6V2rsFLcHZJIn8JIn7tMuSpe2er8lDd9bZxzxyvh5yrzKATm4g7UPDD
+ +Wv/ejSxtVtqtT+OL2AOxcKdXowk5PHE6Ml9FQsU68I21Avo2rU4CVMJE9+b10n3cwE6
+ zEjB+DWbm0lMBWYtcww13w5Ot5Om2JKtkDDANaAmCxwWE7oPWrg6646rWw1knBYJmUOy
+ C+NW921IQSYxTI8a/4yWcC6hy3qqoPKnu3AbChn+km4grRMsnXPuqMg9KDWZyWWkErQb
+ Md8A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787836782; x=1788441582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787837050; x=1788441850; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=XiPuOcNwiQpKQLIWzQaOStCzXolFZok2QJ6bsUDaR3o=;
- b=zx+yxKrPsfj3At5nWGwwK+OD+nM7geMpeqkaumJ6+Bq4z35mSnZShEXAsfMrH6WJVr
- m8q7lz4yUpgdmFDNrP2APByHoP0NguM/c3vCgPwdk1m1tPUCB8yc5B0LYTfXS8fv5tJY
- qJNujjM8vx3JjhJmL+WAFXXTj2cDGPsSpjdy5K/hnLnqONtWgsnaSQUVw457MZKe3Ny2
- CUHPN0dGcX7l5FYUgdliVkk3BwSJbI+peJtNtmZdOS1asb9x12hem9iIp4VVG+kXdXw+
- n5C6BYNIA+TmY9vX/6gf4iehqwGJQDzm0hBVnJ6qX12Fpls/+iTn5sGXaTMkokX2J4jF
- 2J3g==
+ :content-type; bh=XAaYA7j7G13b2Fv6XG2065GHaY0UFn21jSBTzq0d7xI=;
+ b=iCzVt+z92POn+PqXEUMPpK237dxmwwaV4spamS8SZBYkBAwMekeLI2Ak55rcnLIAfq
+ 4vgTYD45cLOTuL+lHnpQtapLpbL1NwSMwwWSE0aeA0kY6ou0ENmS6l/fLR47jXnUaiLI
+ qW2Dy9CIq88yD0llJv0XIPq8gyIQGxZ/Mhyrgoj+73nlNEoiyFxR03z+JLkW+XMaj70T
+ 8zLSmbHv4OVM7tokjfMeS+9xWJfNSmNSZsgcU4BSyzk0vryAJIlhR2tnc2uVW1k92pIv
+ gqSTqzSrFZ/9TfvzbzE9dB8W0FOmud7w5PUpSkIvW0Ca/8v6K8bYGveY/ThiREVAUncT
+ q5ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787836782; x=1788441582;
+ d=1e100.net; s=20251104; t=1787837050; x=1788441850;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=XiPuOcNwiQpKQLIWzQaOStCzXolFZok2QJ6bsUDaR3o=;
- b=Qcew5qbXsDQMeQNHFGOxXhPps/ZmoJGBA1SfLI2U6rOEwqNaT++dwc+ggArGc9vYzf
- jmR8rvldruJaV1h0Y2Zx+ax72gCqAMCpP6rEsVVwj8+WyjCSa4ZKq2mFgLpcP81Lt9zr
- y/xMyqNCyzrgfazvxqFwTSZNLWNGCfjj9gOLZmOdbSt9znStYQU1YL7ScjnVl9XvUbc1
- QBjZcO8eLwxanrv3NMqWnSBA2nMPMDWavANlEeepgxF1Sn3JZSZM/MbAF+qSOJW9VW8O
- 68mjXipLWrK3Gjm4lOKJyDo+MHcYKgFXnK1tYbH9oNa1cizbyUD4QAyEEfaicmSRAuUe
- kwJg==
-X-Gm-Message-State: AFuF++nsODNvpmhyGbgrnY/N2RjV0btUQAtBSkmS23XjWj11CYtd6hjr
- 3jjwZHeSLbdRQICUlqiNLxdE5Ivo+r3JFmKOxFiUCg9VjAIaw5xjjTMjquH4xdw6EtFE2tBRHSI
- +UHgqud4eSa6Vb2u8soXRWvZICBK9d2/532SkYydY+w==
-X-Gm-Gg: AR+sD11qMmnm3D3fXGlBo0Nk9eYYWz33IO2gXc6UXstZx7tTryJtveywnDuPt5MVRW6
- e60tkmEdMQBLhhq/tmgojfQUKKoBT6tVNyJGGjeP9u8wQnLkwGeUwv2pK7olYDAfau/KHBsbLcn
- Voiqi/R6u9osAbQxo+o1vax8po5OcMgC/0bgzqicsUNakkwXcUILKYP4bYT27WQT+rRhDld6sbA
- Kik42ij8SV5RE1TnFLW6DsMU56mcZ1g7RB1IfYDxRNrHQKvbilSd04t0jNTuxXIiDI0ol7wx509
- 0r/0r9khRwlUoqdrPnOcS5YC4O7fzPlpe+fc5nnEgsjhnYc8qN/hbzwRjJ8FQse2jTo+tGL1I6k
- bqd7eubD4udJILcj36tPMq5eUWXve
-X-Received: by 2002:a05:690c:e154:b0:7fd:4ef9:e5a4 with SMTP id
- 00721157ae682-8574088a19bmr57630267b3.29.1787836781914; Thu, 27 Aug 2026
- 06:19:41 -0700 (PDT)
+ bh=XAaYA7j7G13b2Fv6XG2065GHaY0UFn21jSBTzq0d7xI=;
+ b=YKIXvL8V7DT+jbNqoasBwGLP4pMvvQBT+HPK09r90EBuQ5hT7zdiE7/pogwfY2w4yA
+ Li6heox2Va/stawKYUuKHHZ+nShO80CNge02wLIoIdLheTMBAaEluIfjtuWdCAQqTJY9
+ SfcWxRapyS7750z4Rp1uEouQTbnSf+v2QKthUeak2CSAz/4cyy4OaWlP6CaVX0x/Vw3H
+ QSOMSOAVBxbzMYRHuTuKAlW/JuV8EovHoaxT4my79StamkhqQpUctXU9e+MHgyaJUhU5
+ I59tECICy8tIw5CV4NW2jNTykh7J66U3MLgoGAvVnUiBSG6yPMJ7mUN+BB4pTthuZ5Mj
+ M0RQ==
+X-Gm-Message-State: AFuF++nYkAAahNWshMJe9L8HHqJMhIuqWYlRdN7Nws2XpRjBz3i4GmCc
+ Owd/7yp/Lxnv/IcuINfRAtryFJpjjhF4KozdNl+0JArsNpg/IUmyRlcEkINIKliHrHlGBuITNOU
+ 3fmig8QqooBRrioKDrRL51fokdzLyC1hxlYBZMedG+w==
+X-Gm-Gg: AR+sD13VCcvTDpPsnb+MUx8fGhloP1/n1fw0akG5ZziraLVRM8z0vPhwrzwIY40ZcBY
+ gMyCOrANNIDziisdbiXloji62FzBgbIYJWjjrZFedL6tznzfGlMOGkgpxH32Eb6YQyEFwASGUS7
+ R2tJIULs7aO4RFjRfoIFEUXtOqPvbyC4ISCB0BYtNWyx9Pg30Mu/LnMuWPp55VOHrsCkdazFHe2
+ c/HLxYMGCN0VdJjrYuU4asDgI6RF8ryHsslE73fSC1yILpAHWgj5GE5ptOyVcvhZb7cV6o+VgbQ
+ oOPGQAcLGX+0QXqkJHPngLniPPXm08XNWafpG2P817gWy/9wNk6lSC+TTjBmePFJTtkUAzSBpB3
+ NQLSXWxOU7mpUlj5ctxt3FIxPMmf+
+X-Received: by 2002:a05:690c:c6c9:b0:854:d9d0:467b with SMTP id
+ 00721157ae682-85741730018mr51971107b3.22.1787837049805; Thu, 27 Aug 2026
+ 06:24:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <LVXPR21MB7009C0007D22503C38FE053EADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
-In-Reply-To: <LVXPR21MB7009C0007D22503C38FE053EADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
+References: <20260818002629.172827-1-simonxhy0404@gmail.com>
+ <20260818002629.172827-9-simonxhy0404@gmail.com>
+In-Reply-To: <20260818002629.172827-9-simonxhy0404@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 27 Aug 2026 14:19:30 +0100
-X-Gm-Features: AcwNN1VzKwjSYzN6qDs6MWLartAja_0p_2ov5eA7xvLgf-mJJGHJIVnslsHgeDk
-Message-ID: <CAFEAcA9h98dHUim+rsaebTtmbpD3LLPKenyD8U07+vxwqASxfw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] target/arm/whpx: Don't try to sync ARM_CP_CONST
- registers
-To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "Pedro d'Aquino Filocre F S Barbuda" <pbarbuda@microsoft.com>, 
- "mohamed@unpredictable.fr" <mohamed@unpredictable.fr>
+Date: Thu, 27 Aug 2026 14:23:57 +0100
+X-Gm-Features: AcwNN1WYLQyXlxZfBdbBKM20gekZ9gpu6iuWXcmbFulO_pfBB29ZADNazkrdePU
+Message-ID: <CAFEAcA-cT1dFhURcxB-qE80LL8apGfydrMM+pwWgbLgJWe4rWA@mail.gmail.com>
+Subject: Re: [PATCH v3 8/9] hw/misc/mps2-fpgaio.c: add GPIOALT2 register
+To: Simon Xu <simonxhy0404@gmail.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
+ Owen Giles <owen.giles@hpe.com>, Robert Elliott <elliott@hpe.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,60 +117,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Aug 2026 at 01:31, Doug Cook (WINDOWS) <dcook@microsoft.com> wrote:
+On Tue, 18 Aug 2026 at 01:26, Simon Xu <simonxhy0404@gmail.com> wrote:
 >
-> ARM_CP_CONST registers ignore writes, so readback assertion fails.
+> Add GPIOALT2 register for new an555 board.
+> Implement register access as RW with LOG_UNIMP for writes.
+> Add "has-gpioalt2" property to make each board configurable.
+> Add gpioalt2 vmstate subsection for device state migration.
 >
-> Not asserting now because all entries in the whpx_sreg_match table are
-> invalid. Needs to be fixed now so that we can fix the table entries.
->
-> Signed-off-by: Doug Cook <dcook@microsoft.com>
+> Reviewed-by: Owen Giles <owen.giles@hpe.com>
+> Reviewed-by: Robert Elliott <elliott@hpe.com>
+> Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+> Message-Id: <20260805153005.9989-10-simonxhy0404@gmail.com>
 > ---
->  target/arm/whpx/whpx-all.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 00a5de8cdc..9a5a575b5e 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -223,6 +223,8 @@ static struct whpx_sreg_match whpx_sreg_match[] = {
->      { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
->      { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
->  #endif
-> +#ifdef SYNC_CONST_ID_REGS
 
-What is this ifdef intended to do? We never seem to define
-SYNC_CONST_ID_REGS anywhere. If we never do anything with these
-array entries, why have them at all?
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-> +    /* ID registers are ARM_CP_CONST (writes ignored).  */
->      { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 1), true },
->      { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 0), true },
->      { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 1), true },
-> @@ -235,6 +237,7 @@ static struct whpx_sreg_match whpx_sreg_match[] = {
->      { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 1), true },
->      { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 2), true },
->      { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 3), true },
-> +#endif
->
->      { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
->      { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
-> @@ -790,7 +793,7 @@ int whpx_init_vcpu(CPUState *cpu)
->
->          ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
->          if (ri) {
-> -            assert(!(ri->type & ARM_CP_NO_RAW));
-> +            assert(!(ri->type & (ARM_CP_NO_RAW | ARM_CP_CONST)));
-
-Generally speaking the idea behind having ID registers in the
-cpregs array is that it catches cases like attempted migration
-between different CPU types -- writing the ID register on the
-destination fails because it's the wrong value for the host.
-
->              whpx_sreg_match[i].cp_idx = sregs_cnt;
->              arm_cpu->cpreg_indexes[sregs_cnt++] = cpreg_to_kvm_id(key);
->          } else {
-> --
-
+thanks
 -- PMM
 
