@@ -4,65 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52118C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2404C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzav6-0003Ek-E2; Thu, 27 Aug 2026 10:17:33 -0400
+	id 1wzasQ-0004Lr-3r; Thu, 27 Aug 2026 10:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wzav4-0003E4-GN
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:17:30 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wzasM-00049k-7Y
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wzav1-0006zW-BK
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:17:30 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67REHFh0012927
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 27 Aug 2026 23:17:15 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=jYWq5inWub3zBWjQDIkQ/R2TCqIUTHiUoqOsJo6FjUU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1787840235; v=1;
- b=Yg4wCra4S+g5orbykErUyRf18LGdu478NIOfxPp7fiN3QLejywJwzrjiL4lvHKbc
- SzQABxu9YOPxLwPKcspTplPGoXssaJQHZ+W1IueT0uJLGgbzO2UC+TxvQr+Zl3dy
- 1Pbw2YuqwuP0UT69zBWP2NK5JOKs21tVNrOqT1kdHu6uxSMXwzl7wOcN0pK8uw9w
- mHQTv2WDc12kbvPEN5rbPjP8nBwyjxe+3LlXVLDJJz7W+9YdUHm3V61T/heWfAK6
- n6EaDhUP561ATwkYBHG3X2N3/CJea2XEq7RajEYwDv5JrTVqaF9FuMmPGAGviAS9
- MKF0XnTh9KXRB8FaAB3hSg==
-Message-ID: <a8b24bc2-42f5-476d-8972-a34257945b3b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 27 Aug 2026 23:17:15 +0900
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wzasG-00068H-G0
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787840075;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8K1XNZx8pAwhOsPmaAvHPY7r0/0nTtUBbCf52x0tFMk=;
+ b=QXookmiV9m2kjEbM1thdscYdBv9gOml1CtHFY6NvgsLsyG1sDwwusLHcZgk6IChjLTfkrp
+ XgIbWRGo5Rjs1BGTkvYyl/Ly/xuF17Tu2aLz0k2PgeGGmru6vrLdyr3Nd45UBwDe9G6LCJ
+ 7RlTr63+Okq1H4vRVC9mjbs5yM8X38o=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-664-ecyWpmbTO_2t8BZ3w4qBsA-1; Thu, 27 Aug 2026 10:14:34 -0400
+X-MC-Unique: ecyWpmbTO_2t8BZ3w4qBsA-1
+X-Mimecast-MFC-AGG-ID: ecyWpmbTO_2t8BZ3w4qBsA_1787840073
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-482f2b8a116so507163f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:14:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787840073; x=1788444873; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8K1XNZx8pAwhOsPmaAvHPY7r0/0nTtUBbCf52x0tFMk=;
+ b=gui1b5CudZG69CSUhTeV7RWKyxNXMXwzRT2FqC8eIVacqm22zHqkuw9R83PYwjZSKW
+ zOEPPRmpYL5HwdbUK4jP4QHdBqdIEVel/uRXoEHtTEnMCZ+U3hp8CKWI5jdKtO2pIehj
+ 6WhJUIOsHAnEETjBz0x4g15sFAhG4QCN4LSijQvc8Pl5cyBvXm1VFoZtwNUhIefEk4tV
+ tOuI9E/YwA9dd51FHoN8H+eMBfHFN+pRe5+9KSISNAHYuERx5IKx7shwoowCRd2MZwd6
+ F5mkCV7Kt4V9dzG5U0e5i77vhkrkFPUpQf65Q+MuHsYMeeWlQCSKegdQdPiqTaJSj2+f
+ sn6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787840073; x=1788444873;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8K1XNZx8pAwhOsPmaAvHPY7r0/0nTtUBbCf52x0tFMk=;
+ b=JXPofe+cAs1J/mJaZsrAt3UNhZpaojYIBxWqti72o5b9DfkjbaDJm194gqB7W0XfBi
+ uQqvS4zejOTdjZlXEhc4B2h1sbk/0EqwvL4ieSg0Z6mVzFbUz0h5xe/Oz4mmvApYFeRq
+ uguX6N5j2w5F9Q2OZ8StDELzzvedHwZyssfw9cjfIcYQBQtPvx6CEk9dh5XWnnp1CM2t
+ 6lpwOORCD7t6TQRK2zgj9GmlY2PZe8r9wH6QpNIxa6Gpj2HCOpkxDTSbvRoF+zJbLBHJ
+ u0CingBXV1XTTQ/UbJ0v7QqRVKGZMfic0JmhEq3xCgJuT7C0SZiRWhf6nDCGq/FNa6LR
+ Y6Rg==
+X-Gm-Message-State: AFuF++k585Yr6Js+q+atu3cWqy2fwfQfU3jRZCrIE5z+h7qX9P1jTmY4
+ TygwgSZii9fj7Vkg6PB2/O1Cvg24qfLbXH1+jc0/Z2fea1f7LUQKGmZf+4WKKZGQSPHV+7+kjd4
+ bw0Z0AKj77/MGV3GukjJ+1Ta+EbDkYuesLpfzqpC3MZsEMwmYlo5ybjFnhSGtyoAkTdNp6cPG23
+ NIKzjEk8y6+CfxOWIRNL1u7nvywcPMei/V/CxLBidK
+X-Gm-Gg: AR+sD131vAbch2W9Kx9ZA2TFWYhE8O6Z8v4qyuH0fs1HUnhreYdkNblcwKFw521cU9a
+ bMoy6+1TTJNxsR82+rpkhaoTrXOsWMZq1iB/uuwuPOHSgBK9q3QAeMLs2JK49bgqfAvnMEPgbJr
+ ekVg0k/2355OLbV6X11xhnAac3UIo8dfjsimbneCK5Z8glREebuf7rx3QL85fxbCQToS/PUBjxo
+ WjBXMdDVcvgvAL1gH2UErtLNsoKfbPnlzUQxjRy1apXpyrarrXH4F/mNSrp9HPezS68otUSz8lo
+ 53bMULjltY3cJbTStoGqId/dlq+Ezpso0Z7EkR2CjnpfWQoyB1dAW80WKGeJKa4F4X/tBcONp3q
+ 577CYqTQpBMellxqnCKNUBPYvY9txpRjoMlZN5RgdBrnbo/tHjJR2uLTiAKSPcJbyccfrm1I7td
+ dZ/c0=
+X-Received: by 2002:a05:600c:3b03:b0:499:8704:242c with SMTP id
+ 5b1f17b1804b1-499dc6a37famr175883385e9.0.1787840072994; 
+ Thu, 27 Aug 2026 07:14:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b03:b0:499:8704:242c with SMTP id
+ 5b1f17b1804b1-499dc6a37famr175882195e9.0.1787840072437; 
+ Thu, 27 Aug 2026 07:14:32 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.151.49])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b4ddf5023sm50170215e9.13.2026.08.27.07.14.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Aug 2026 07:14:31 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PULL 23/23] i386/vapic: unref MemoryRegion if vapic_map_rom_writable
+ fails
+Date: Thu, 27 Aug 2026 16:13:11 +0200
+Message-ID: <20260827141314.1099352-24-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
+References: <20260827141314.1099352-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/18] virtio-gpu: consolidate disabling scanout
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
- <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
- <20260825-virtio-gpu-cleanup-v1-14-d3bb612b9975@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260825-virtio-gpu-cleanup-v1-14-d3bb612b9975@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,84 +121,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/25 19:20, Marc-André Lureau wrote:
-> Use the common virtio_gpu_disable_scanout() to reset the scanout state,
-> including GL state if any.
+memory_region_find returns the memory region with an elevated
+reference count.  Drop the reference count also if the memory
+region cannot be mapped writable.
 
-This actually:
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/i386/vapic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
-
-because it properly releases scanout->dmabuf.
-
-Regards,
-Akihiko Odaki
-
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/display/virtio-gpu-rutabaga.c | 4 +---
->   hw/display/virtio-gpu-virgl.c    | 6 ++----
->   hw/display/virtio-gpu.c          | 7 +++++--
->   3 files changed, 8 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-> index fcd9c94d580c..5344a5f9e26a 100644
-> --- a/hw/display/virtio-gpu-rutabaga.c
-> +++ b/hw/display/virtio-gpu-rutabaga.c
-> @@ -320,9 +320,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
->       scanout = &vb->scanout[ss.scanout_id];
->   
->       if (ss.resource_id == 0) {
-> -        scanout->resource_id = 0;
-> -        qemu_console_set_surface(scanout->con, NULL);
-> -        qemu_console_gl_scanout_disable(scanout->con);
-> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
->           return;
->       }
->   
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 532132e46031..6cb9365a714f 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -599,8 +599,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
->               ss.r.x, ss.r.y, ss.r.width, ss.r.height,
->               d3d_tex2d);
->       } else {
-> -        qemu_console_set_surface(g->parent_obj.scanout[ss.scanout_id].con, NULL);
-> -        qemu_console_gl_scanout_disable(g->parent_obj.scanout[ss.scanout_id].con);
-> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
->       }
->       g->parent_obj.scanout[ss.scanout_id].resource_id = ss.resource_id;
->   }
-> @@ -1406,8 +1405,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->       int i;
->   
->       for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-> -        qemu_console_set_surface(g->parent_obj.scanout[i].con, NULL);
-> -        qemu_console_gl_scanout_disable(g->parent_obj.scanout[i].con);
-> +        virtio_gpu_disable_scanout(g, i);
->       }
->   }
->   
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index c50eb58917e8..a7f549a6a8b9 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -404,8 +404,11 @@ void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
->   {
->       struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
->   
-> -    virtio_gpu_release_scanout_dmabuf(g, scanout_id);
-> -
-> +    if (scanout->dmabuf) {
-> +        virtio_gpu_release_scanout_dmabuf(g, scanout_id);
-> +    } else {
-> +        qemu_console_gl_scanout_disable(scanout->con);
-> +    }
->       qemu_console_set_surface(scanout->con, NULL);
->       scanout->resource_id = 0;
->       scanout->ds = NULL;
-> 
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index 9adce172621..5c3911cf9c8 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -614,11 +614,13 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+ 
+     /* read ROM size from RAM region */
+     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
++        memory_region_unref(section.mr);
+         return -1;
+     }
+     ram = memory_region_get_ram_ptr(section.mr);
+     rom_size = ram[rom_paddr + 2] * ROM_BLOCK_SIZE;
+     if (rom_size == 0 || rom_size > OPTION_ROM_END - rom_paddr) {
++        memory_region_unref(section.mr);
+         return -1;
+     }
+ 
+-- 
+2.55.0
 
 
