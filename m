@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C05A9C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE2DC61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcFW-0006Iv-PW; Thu, 27 Aug 2026 11:42:42 -0400
+	id 1wzcGs-0008FT-80; Thu, 27 Aug 2026 11:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFV-0006IU-6K
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:41 -0400
-Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wzcGr-0008F2-7U
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:44:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFT-000193-5p
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:40 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=wdN3LkJ
- qSXQZ+0NOPMPbvhWUOL76mgM3Iuonmr1gwXDN/0C/+vXlTewb8K0kb9G2WSE436hJAz+rb
- EBtaBnvulAQDi5vf9uKUkD2HH50zy0Jc6I8ChN9yW16gxJBRkp1AgDzPQ2s5QZyWZyxlGD
- a3aAyf8i3YbZNHPm7PXOIz04JtC8emjLl7YVFYNIMrXDqVEz/CRY7WgXSH3UTu4CRxuvQ7
- P6fLGOjEp4rCfzkEDlexd4Cw2RuRx/zgOtM6vdh7+FQUwwpD0wtNMp17r/eYJfSUZr7yzV
- FiPog3jEqP4uQNLBL8qiqEgW7QogXjFOOvOHJ+RUSUOEJccvg2DCEdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=q
- A437rlrS/eneymJ21yfTMArrIp3PE7bMGZ/YzrWPHc=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=ZuMhzSNQ2Md0j2g13yxG8y6KF67Nfz6fgxOqO7wm+kpePWTEJX2OnszHSSfhxkhX8wTZ
- gupaaaZe1CEWdSCVZ3EFLDOz9bPh/wJoipikUlCZWgRAm8y6vxB8ZdS43TAwv8ZmvSrgSk
- gA1gXa3GbflAGdBA3mjo89GgNMXdQYwQDwLYoFExJAVtL9Nc08Ck99HFiPSajXpfbm7TpI
- qYmu6Vs92dlfC9hJRR6czVYqfczKPi6sD5mx/UAr1N4hkg9TmGpoBrqeQoUPA2u6TcQaqF
- QQQ8ksIjhk0tIl23LOiao2+Nu+ufXtlL3Lx3YMGcG990VabnwLJM1rXsMR4NteNQ==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=FZAcAc8F; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=ufuD4CJC;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=qA437rlr
- S/eneymJ21yfTMArrIp3PE7bMGZ/YzrWPHc=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=FZAcAc8FIFVhRnAUGzubIA4wkV7WNirnS34
- Wz41l4Vkd2jFT52uGYQs2rvNBlz763eWV7FpNcLw3/StTe2frAvW7YD/fc2SrLjoD7I9iG
- ZvMqJ4BQpZ+2Mqt5CB2E8ClSeuvAVojmctxZjQRONy0r51Ny+56bhsZW266s9xiusxqg7z
- +/JMpEO8A1mtp30cBHbEQr6CzFOXdtIsgjAwQbGm0P9Wuay5mTb8Gc7+pQtkFcWDtBMn6D
- 3fFH6xcN2K5scO8Cz2tOg9yc8ibCqyDvsBikinwq89j1r3VOzuhcpzJ/PT+qpy6zSzdrdZ
- cYH2Lqd35B9oqVBtVp7kdvO6Wqw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=qA437rlrS/eneymJ21yfTMArrIp3PE7bMGZ/YzrWPHc=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=ufuD4CJCLvk4Kf9aX3
- jDSro7l8uXcmupKVoAFpgT9c3MY6nn0z4Po7RiaUiHorqMRqJQTiB7f+z96F2CEXb0BA==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 64615583
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 27 Aug 2026 17:42:34 +0200 (CEST)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 60dd7ed8;
- Thu, 27 Aug 2026 17:42:32 +0200 (CEST)
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wzcGp-0001k2-8O
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:44:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787845442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+mX6A4o/0nrBGPuneaxlEe/s9qiuccqTUnHZG1ZQz9Y=;
+ b=NmL6voSfFBX+6n4lNqHAaKmV3Z40Ob1mQTddRF7ZnnhKRXdGSmR633mPfNj+f5plDR6mL8
+ DbR+EdiOZwbVTwjrS4PXdD+wT2Nv+EYp+O0F2AeQ1GGNxEwrpUN67eOKFENSS7tR0pXxuC
+ feJPGGWWIW5hDsgwyJeSjJglH8RaZvA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-JEeeDipyP363AmfHUG2QZA-1; Thu,
+ 27 Aug 2026 11:44:00 -0400
+X-MC-Unique: JEeeDipyP363AmfHUG2QZA-1
+X-Mimecast-MFC-AGG-ID: JEeeDipyP363AmfHUG2QZA_1787845439
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 67475195DE4A; Thu, 27 Aug 2026 15:43:59 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 648A91955F70; Thu, 27 Aug 2026 15:43:57 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 5/5] tests/functional: Boot OpenBSD on mac99
-Date: Thu, 27 Aug 2026 17:41:17 +0200
-Message-ID: <20260827154220.84845-6-kirill@korins.ky>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260827154220.84845-1-kirill@korins.ky>
-References: <20260827154220.84845-1-kirill@korins.ky>
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] virtio-gpu/virgl: free BHs and timers on renderer reset
+Date: Thu, 27 Aug 2026 19:43:55 +0400
+Message-ID: <20260827154355.3346449-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
- envelope-from=kirill@korins.ky; helo=mx1.catap.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,90 +84,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OpenBSD device discovery exercises CTPR masking, zero decrementer
-writes, and CUDA reply timing and layout; regressions in any of these
-paths stall the guest before the installer starts.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+virtio_gpu_virgl_reset() does not free the bottom halves or timers
+allocated by the previous virtio_gpu_virgl_init() call. A subsequent
+virtio_gpu_virgl_init() overwrites the old pointers, leaking the
+previous allocations.
+
+Fixes: bd9258917fbf ("virtio-gpu: Destroy virgl resources on virtio-gpu reset")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/ppc/meson.build     |  2 ++
- tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
- create mode 100755 tests/functional/ppc/test_openbsd.py
+ hw/display/virtio-gpu-virgl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tests/functional/ppc/meson.build b/tests/functional/ppc/meson.build
-index ae061fe5a6..1055cdaa17 100644
---- a/tests/functional/ppc/meson.build
-+++ b/tests/functional/ppc/meson.build
-@@ -2,6 +2,7 @@
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 0b79aef8d1f5..8bf6417c6514 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1425,6 +1425,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
  
- test_ppc_timeouts = {
-   '40p' : 240,
-+  'openbsd' : 240,
+ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+ {
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+     struct virtio_gpu_simple_resource *res, *tmp;
+ 
+     /*
+@@ -1443,6 +1444,11 @@ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+ 
+     virtio_gpu_virgl_reset_async_fences(g);
+ 
++    g_clear_pointer(&gl->cmdq_resume_bh, qemu_bh_delete);
++    g_clear_pointer(&gl->async_fence_bh, qemu_bh_delete);
++    g_clear_pointer(&gl->print_stats, timer_free);
++    g_clear_pointer(&gl->fence_poll, timer_free);
++
+     return true;
  }
  
- tests_ppc_system_quick = [
-@@ -15,6 +16,7 @@ tests_ppc_system_thorough = [
-   'bamboo',
-   'mac',
-   'mpc8544ds',
-+  'openbsd',
-   'ppe42',
-   'replay',
-   'sam460ex',
-diff --git a/tests/functional/ppc/test_openbsd.py b/tests/functional/ppc/test_openbsd.py
-new file mode 100755
-index 0000000000..cf45930a7c
---- /dev/null
-+++ b/tests/functional/ppc/test_openbsd.py
-@@ -0,0 +1,46 @@
-+#!/usr/bin/env python3
-+#
-+# Test that OpenBSD boots on mac99 and reaches the installer.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+
-+
-+class OpenBSDMac99(QemuSystemTest):
-+
-+    ASSET_CD = Asset(
-+        'https://ftp.eu.openbsd.org/pub/OpenBSD/7.9/macppc/cd79.iso',
-+        '227fef3d5089d56ce8376d8bfa28181ce5b19f0eceef0a6d82d58d8e52832b24')
-+
-+    def test_openbsd_79_installer(self):
-+        self.set_machine('mac99')
-+        self.require_accelerator('tcg')
-+        cdrom_path = self.ASSET_CD.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-M', 'via=cuda,graphics=off,usb=off',
-+                         '-cpu', '7400',
-+                         '-accel', 'tcg,thread=single',
-+                         '-smp', '1',
-+                         '-m', '2g',
-+                         '-nic', 'none',
-+                         '-device', 'VGA',
-+                         '-global', 'cuda.sr-delay-ns=0',
-+                         '-prom-env', 'input-device=ttya',
-+                         '-prom-env', 'output-device=ttya',
-+                         '-cdrom', cdrom_path,
-+                         '-boot', 'd',
-+                         '-no-reboot')
-+        self.vm.launch()
-+
-+        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
-+        wait_for_console_pattern(
-+            self,
-+            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
-+            'panic:')
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
 -- 
-2.55.0
+2.55.0.543.g5ebe2ebe4ea8
 
 
