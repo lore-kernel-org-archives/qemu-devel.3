@@ -4,40 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF33C61DBE
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 01:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890FEC61DCB
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 01:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzPED-00025u-B5; Wed, 26 Aug 2026 21:48:29 -0400
+	id 1wzPEE-00026N-0h; Wed, 26 Aug 2026 21:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wzPEB-00025H-8f
+ id 1wzPEB-00025J-CO
  for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:27 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wzPE8-0007pO-5c
+ (envelope-from <gaosong@loongson.cn>) id 1wzPE7-0007pJ-RU
  for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:27 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxTtNil49qgIYFAA--.15336S3;
- Thu, 27 Aug 2026 09:48:18 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxTtNfl49qe4YFAA--.15334S3;
+ Thu, 27 Aug 2026 09:48:15 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx+c1dl49q1KwTAA--.16714S4;
- Thu, 27 Aug 2026 09:48:17 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx+c1dl49q1KwTAA--.16714S2;
+ Thu, 27 Aug 2026 09:48:13 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 2/3] hw/loongarch/virt: Add bootargs and initrd to device-tree
-Date: Thu, 27 Aug 2026 09:28:10 +0800
-Message-Id: <20260827012811.1008381-3-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org
+Subject: [PULL 0/3] loongarch queue
+Date: Thu, 27 Aug 2026 09:28:08 +0800
+Message-Id: <20260827012811.1008381-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260827012811.1008381-1-gaosong@loongson.cn>
-References: <20260827012811.1008381-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx+c1dl49q1KwTAA--.16714S4
+X-CM-TRANSID: qMiowJCx+c1dl49q1KwTAA--.16714S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,64 +61,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+The following changes since commit fe11f459f640cd08f35c21f9d403517951bfd671:
 
-Add bootarg and initrd information in fdt tree.
+  Merge tag 'fixes-pr-v1' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-08-25 06:48:55 -0700)
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260807070029.1171348-3-maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/loongarch/virt-fdt-build.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+are available in the Git repository at:
 
-diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-index 6c06b36fca..c6f5d022c5 100644
---- a/hw/loongarch/virt-fdt-build.c
-+++ b/hw/loongarch/virt-fdt-build.c
-@@ -25,6 +25,7 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
- {
-     MachineState *ms = MACHINE(lvms);
-     uint8_t rng_seed[32];
-+    int ret;
- 
-     ms->fdt = create_device_tree(&lvms->fdt_size);
-     if (!ms->fdt) {
-@@ -39,6 +40,32 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
-     qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
-     qemu_fdt_add_subnode(ms->fdt, "/chosen");
- 
-+    if (ms->kernel_cmdline && *ms->kernel_cmdline) {
-+        ret = qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs",
-+                                      ms->kernel_cmdline);
-+        if (ret < 0) {
-+            error_report("set /chosen/bootargs failed");
-+            exit(1);
-+        }
-+    }
-+
-+    if (lvms->bootinfo.initrd_addr) {
-+        ret = qemu_fdt_setprop_cell(ms->fdt, "/chosen", "linux,initrd-start",
-+                                    lvms->bootinfo.initrd_addr);
-+        if (ret < 0) {
-+            error_report("set /chosen/linux,initrd-start failed");
-+            exit(1);
-+        }
-+
-+        ret = qemu_fdt_setprop_cell(ms->fdt, "/chosen", "linux,initrd-end",
-+                                    lvms->bootinfo.initrd_addr +
-+                                    lvms->bootinfo.initrd_size);
-+        if (ret < 0) {
-+            error_report("set /chosen/linux,initrd-end failed");
-+            exit(1);
-+        }
-+    }
-+
-     /* Pass seed to RNG */
-     qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
-     qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
--- 
-2.55.0
+  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260826
+
+for you to fetch changes up to dd9641cb140d6e2c297f8d87c7875409e42319b2:
+
+  target/loongarch: Fix SWI interrupt delivery via CSR_ESTAT (2026-08-26 21:40:19 -0400)
+
+----------------------------------------------------------------
+pull-loongarch-20260826
+
+----------------------------------------------------------------
+Bibo Mao (3):
+      hw/loongarch/boot: Check memory boundary in init_boot_rom()
+      hw/loongarch/virt: Add bootargs and initrd to device-tree
+      target/loongarch: Fix SWI interrupt delivery via CSR_ESTAT
+
+ hw/loongarch/boot.c               | 68 +++++++++++++++++++++++++++++++--------
+ hw/loongarch/virt-fdt-build.c     | 27 ++++++++++++++++
+ target/loongarch/cpu.c            | 26 +++++++++++----
+ target/loongarch/internals.h      |  1 +
+ target/loongarch/tcg/csr_helper.c | 10 ++++++
+ 5 files changed, 113 insertions(+), 19 deletions(-)
 
 
