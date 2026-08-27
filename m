@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43095C61DCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 513B5C61DD4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wziSf-0000WE-3e; Thu, 27 Aug 2026 18:20:41 -0400
+	id 1wziSf-0000aj-AL; Thu, 27 Aug 2026 18:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziSU-00082w-TF
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:20:31 -0400
+ id 1wziSQ-0007Vk-RT
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:20:27 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziSP-0007hP-DC
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:20:30 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wziSM-0007bu-Vr
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:20:26 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RJLfoD124906
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:20:13 GMT
+ 67RJLhQ61358582
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:20:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- RDjAOGJCSsUutnNLpkoLP/mMS7c4Pe3F5i1NJ8GOlwI=; b=Hu6j1PNQaFuk/4w2
- vO8z0J6QckDzliWv96UpWRnVgs+ou6QcZgXNaMceW6aIQhrIxpAkuOqY79erRQTH
- npNzQs0KBG6cZKNj/UIbFfOTP6qCEKc8XyelezyXnutFQ0Z1ADGHlbU+wz2jNQTf
- C78PQsblUPGe4/E3ADd+MVBokc+R+qy7LYDyE49y2RFo9bEbcFfjICT4XLg8s/ia
- qfG0FXySix6t6V+ayccIhQoMpNjg33myaT1zqUFRFWdEbUdObbEycXJlhuB+KE49
- AYTICJxwyzFJfHX0nGu1NQ3LCRthG/yxjo20A5RiIkuiohOOeYuIr9lI+Yxcj7zr
- 2GBxzA==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4game7tw8g-1
+ v10mKXwu+nKBetXxCTpDguNMbWArrru1Gn4U3yP/OY8=; b=nbBGmBlqsP+WBUYQ
+ V3obM8cXQMYjswS0EcvZH09KAO27RJf1gvC0VknyLe1DM/M9gNu3OT4TRJYzsME1
+ kwhjy9jkICdg47srSk4VtggaBxpbpClr+sWRO47G6n5+HDIovXbM5ZGeKl5xTfis
+ NyRgqYaY/kjr5vLAR7vIcVCCBTkTHrQweQWnRtPmHcTr9BRtdEFuDhJY2LwDr4ml
+ caYm/dpWzfIC+BcYqsdhMcdnLZP21Ug0HV97Hf63CSBTxKREqhgD+P5hFcUc+90T
+ pY5FtmcSg51bhAMKZGPtEf09f7aT0spFyWRm3RH9iXhpbtfZ6zP9F8iITrbbSu1D
+ lqvgeg==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gapgvaaaw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:20:13 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3965ba1ba3eso555971a91.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:20:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:20:11 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cbb467e56aaso303187a12.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787869213; x=1788474013; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787869210; x=1788474010; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=RDjAOGJCSsUutnNLpkoLP/mMS7c4Pe3F5i1NJ8GOlwI=;
- b=P64gqCQxgo3/xWV4pDMAUYM6NIJS7tR9Jg6dw+16LAg2dcB8rhmPomtb55/pTH1qOI
- RTF1MYygN0L+wkM00n3XWwa3fiOoXKRqu4defH3NlsKjlZSOe508XVeUt5hkvJuKxaTb
- wp0FdXmEW9cB+jeo8ZA9JJrOtGZA2mUcCGanvVrNeJ29yx4AsL0D/abV3FshHnBVNw+p
- NdUJet5gBBQRPPYuxaV9w3QyrYu0hheoGck7YIJ5b7eqK56lLi64nvoH6elmgVel9kDJ
- JzzEEVWAM3brZDcze83I4Ibe/Mdr40pKzZo1PPmPk28kZTqGVlSjXzHTYEhulZuXDaar
- 22Bw==
+ bh=v10mKXwu+nKBetXxCTpDguNMbWArrru1Gn4U3yP/OY8=;
+ b=KLxUdV2f4XE3dEfzE6twbD4oTfGsyzupcFLBVtVSQCYWWOra5+Dk5DZTOVlTUx9hG+
+ +D3/5vNYqIPYlR8vb9J68briPji0Bq107WY9StqbjK5OTvGuWN0kFRD2m3FfIVax9jA3
+ RgJ1CDNTHtx3Mfl0xYSTSz/DAsfmar8UZmM+KO/9ArTWNzAZqgXRPQijVoqTir4EgYVB
+ 9L+S3VwamSvh4SVpKCOLzQIy+UbZmP9+w9b34enhl+to6Hsw0s/oSXn9dhaojU7pzB93
+ EA1pI9N43FvpBgGq6v1llaNptNCisOCT8gGecQtYOliXC3VqttSNCQSIXPZc19mcXgDC
+ UodA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787869213; x=1788474013;
+ d=1e100.net; s=20251104; t=1787869210; x=1788474010;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=RDjAOGJCSsUutnNLpkoLP/mMS7c4Pe3F5i1NJ8GOlwI=;
- b=mh502ZO7HMijWrXEElsmBT24wsGy5VR2qWxjjRUkJiJ8HaXo06erJS7YXwDqfCvwn0
- X6xK/s+x7xZJszFJPU6NYGhdmmVA5wTUHCeaSp1Il3DwoELc9OVdRLjv4U0AZkNiEEg7
- hXtwuW3cJoGESfJF1gphatp37TX7p3DjNemJ1LplnrGZscjs1tRVQhwJcvb+U/uUklWr
- CBnZl4cNO7Psmc+pR9tVxUbFcU6F9uAXefjyjtmy5Rd2Vs36tFz81bHQ6/on7O/nhaMq
- jYMFVidTAnXmmc3gyb/JLO7pCayf99ouKDIT1WtrlnEotdvddNoDdQWuuArUxDoY9g5/
- Xk/g==
-X-Gm-Message-State: AFuF++kFDothgF5f+1shQSVXbnbJTkiWceJztigDk/RN7GhhUJ9/EXG6
- KgCDk5tnTvwd0IZSTBSObwtEvwL0EyhK+Px1GwIR0z2mT/SECBuq10m5AooUGbS50w4HL+17Aux
- tat4ItbnGC6v3CrrYuo44BPzzv6DHasFFlSGH+CL89syATZ/xLTDQ7g1hDccIa7o6/w==
-X-Gm-Gg: AR+sD12W1vtcIs/D4o0x5hlHXQixOrbYN9W+MFm70IA5w7ZBHOQ44F0UER9aUh0Ufmn
- c9IgmVhFvzVqw4OzVwS9jAe8HqtNUQTFUKVk/XjKHmmrqvcR1+6DqYgIxh9T+wIfGMx+A14P524
- giGQ9jTa8ciWwUUR2tmRYGhN7Pi07KyHTNt01QfXajq5nGjblC8ZXJ2UYRWi076Y6nVBGuewEVr
- KDpLTrb2+A009xhcvNla+Ea1PBfZARS7CvkTNBNJ5fznxVLmzWNpXxadokwn8B0+IQ6KhiDvRtJ
- kmoWumdZnhIokSXdYl59GPRSJHltjUBs7wa6Sad6FpTYjex9wtqyyrPSIfcxveNqAgpMwYrqT7Y
- gAjUEHKp5thXCMHq07aWqz8JLtnzzyjN6qyPo9wuQGzLgd4xDwuctrm4ve3Q=
-X-Received: by 2002:a17:90b:50cf:b0:36d:9e0b:3801 with SMTP id
- 98e67ed59e1d1-396d0ed78e5mr4446730a91.8.1787869212198; 
- Thu, 27 Aug 2026 15:20:12 -0700 (PDT)
-X-Received: by 2002:a17:90b:50cf:b0:36d:9e0b:3801 with SMTP id
- 98e67ed59e1d1-396d0ed78e5mr4446541a91.8.1787869211187; 
- Thu, 27 Aug 2026 15:20:11 -0700 (PDT)
+ bh=v10mKXwu+nKBetXxCTpDguNMbWArrru1Gn4U3yP/OY8=;
+ b=AIegq2mXaVumhE4DBHiNXabeMvUt6ZLRkTUrIoNHgCzCawkZmbsqV/a3wpaUlle0z3
+ epY6XHe/tga7PNWMRcQAy773vhfehQ7EgfzbjwFlb9dXm6vw34ryZveBfNiKozMy654d
+ S2GmozmD3xAJmWCOBltj6cQ3yDPvmVv5lwVohDamCII4jvkCiJBSHF48BdbRuZCkCyL4
+ bE+/xHf+6+Pj2AKKM+Wyb6tscNpg74KIoQGMYBRTJq+AjVAgEKi/aSHMDn0D2Aa/SKVh
+ nPjsnaDDZWZ5lYAmozisoNbm1o0vnHKzPHTuSHS5d+vV5xJs+bz4NUzsljICX8xdWd/N
+ rS3A==
+X-Gm-Message-State: AFuF++kguCmSWXxMrGSSxIgIFyA84pA5swp2/DIAopJUEvNU4hxtBH2M
+ xhLi3WpzveWdI7xtwUFM/qyb1vpR/kWxA0xEaCXgcWnmdYD/i6L5K9fbVJLyZPh0yFG/OaYRe6Q
+ vcuEMYBkoaKvHEbwhN211KL0VdI0A7WRW3X0HNamqSDG8jjOisdoKSO34lJdvcXoWXg==
+X-Gm-Gg: AR+sD13RxCSmtLkyzN31cuNTyinKvcz6Ij39icEwChZJufVM1PntGrUATJVv7FJ4z+l
+ kOI+JodKidzpr3UJaZgKiJqgDOXt8w4aX8H7dNQef60dcJQVRDr2tHBYZ9AkxbJMIgYjRnqVcLO
+ vB3jt5YvKmBlPZR/f+O8wD4K1CegeCpNc/b7p0vKTA5XOEIa+cq/0Rm2+ArPB6f+TvbIev3rwqD
+ LZFCS2RNx3Nj0V9fFZxBdSYZnW7PvBsix+UVA8vI+AKs/pzQjJNjGN+clywxmgmvzHMKivfj/EO
+ Vh2E2peqOYbSKHNLpwNUJ601lX5fa5iPXY7+9d0XL9m6a+rXRqfyLZhXfW9WxB6x5BbJqV5YZZ8
+ ZonOxx0+EOJFCoWIrplUr3glc1zggp9Dd8PWd7ujXMqw1jnp1lfO18QpSZyo=
+X-Received: by 2002:a17:90b:2d82:b0:393:194d:5366 with SMTP id
+ 98e67ed59e1d1-396d0f6f8bfmr4510371a91.10.1787869210543; 
+ Thu, 27 Aug 2026 15:20:10 -0700 (PDT)
+X-Received: by 2002:a17:90b:2d82:b0:393:194d:5366 with SMTP id
+ 98e67ed59e1d1-396d0f6f8bfmr4510034a91.10.1787869208668; 
+ Thu, 27 Aug 2026 15:20:08 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-396b0fd55a4sm4466925a91.7.2026.08.27.15.20.09
+ 98e67ed59e1d1-396b0fd55a4sm4466925a91.7.2026.08.27.15.20.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 15:20:10 -0700 (PDT)
+ Thu, 27 Aug 2026 15:20:08 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -103,41 +103,42 @@ Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v8 077/105] tests/tcg/ppc64le: add missing float reference file
-Date: Thu, 27 Aug 2026 22:14:38 +0000
-Message-ID: <20260827221506.91574-78-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v8 075/105] tests/tcg/ppc64: remove dependency on
+ qemu/compiler.h
+Date: Thu, 27 Aug 2026 22:14:36 +0000
+Message-ID: <20260827221506.91574-76-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE4OSBTYWx0ZWRfX4c+ozu7mtfaA
- vpwQ97/aDf0i2HlC6K6o+8BCBGyaqHruov+1RSesJnXTi5GuydpY25RL2JIZ/bL0gS9Msyrjzdl
- AqijLls7GYRHeJSyDqnrUlDMim1wbHq2UttTEtwyuPLgWJ9n1W5mvx0H+mJvromj0COMS8tpCoU
- rGgklMvZN7450GmwS/UljNA/939loQvSVw7qeLuMoEiObV0LKOIvW7bl4KgUcleoB0HNifQd1NA
- KvwOGXejQcDqtAAKXSghbHtv0fnngraVFtQOG+WBxjlEyw1QlfUQy5iwgwZ3R2RmKwmMUmYpJWO
- qdXt3w93bpVaRGRxYmkJ2zAFNaS6sSbZ2oyrWy6Ki5xbd4uyHmfFrh4n4MvjmIm97cE9AwDz1VD
- sxJOdWC/pdwnA7s+V0i3dxW97SrLHCC7BbQUVUk278BuvN/zITLGA3wDVTCYBP/HeCIkbUdmJqr
- wkfoSqgsIQSt8Sm/diQ==
-X-Proofpoint-GUID: 21y2U2pgZC2D3-UNvEA0D013QYBLLoMi
-X-Authority-Analysis: v=2.4 cv=Yrc/gYYX c=1 sm=1 tr=0 ts=6a90b81d cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: 74nFYcNqkXiUmkQFVEaUUWPyYGODINuS
+X-Proofpoint-GUID: 74nFYcNqkXiUmkQFVEaUUWPyYGODINuS
+X-Authority-Analysis: v=2.4 cv=FpU1OWrq c=1 sm=1 tr=0 ts=6a90b81b cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=hpEQL-_og1YAjth118IA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=UsHlXZ0vMnIq6N_CsqQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
  a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 21y2U2pgZC2D3-UNvEA0D013QYBLLoMi
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE4OSBTYWx0ZWRfX+hmppKGSVSHa
- fuUK31lctUMmRyCpCG2jQzACPfPRvlrBf93Tvr8D3nF2yNM7fCzGAoHWjueF33JCy6ZOyrUuhk8
- hmQF8ZGRz2Ly1RL1e/WuLTSJ4nHq4yg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE4OSBTYWx0ZWRfXwwq+V38v4qaQ
+ J2zdJGwxliea4wjHGK+3ndnsCBLe2I+WbIH9NbzZyH5r1z+X9cHcuAR3+1uc9Y3NoacGM2eZgwb
+ JwEZieCtyUOXnYJP7g5OlPkyPbubyAGgLYu6tqGvYwmhg5jYtOQlctv2vF36hRzvpe4bYoS6eYb
+ S4q3XhQ51E5IxTOpLx+1n6X8EyTyh2+hboPLlIAucTrrvoTv6x6EkThAPJxN+UqKVrmcfZdAXHi
+ HL0gYjMZbqnEUDmWcmQQC84XHrNaR6sHFvKVJJc9Q+fMLARvhjhQsviN+OWYevN2uRO6qpV8e2e
+ c1EfUqmZNOecU0QqRgcpB0G7xm9fgukztcgeCl3nOg6XfAf7eN6wQ2MgTgj75R30wYO28I/w+8u
+ sOilejG6LMzJb8kRg/KeyUG80breCaSfX0Vy9wXggvaKmo17k2u+66Ta0THNMm9Jo3/+JFVhtTx
+ RkB1sMpM+uI4/LPndMQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE4OSBTYWx0ZWRfX4uPdUg4dYGA6
+ jDBp9bBAfPTrjHPAEeNSrb4OQ4R3QnB59iG9g3WgdtPhNyx3OrcSasW3Yn2m5bMNE7VhybQWAvS
+ QQ3j0siCQI8sGIxKv912IyTLRn9iPGw=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_08,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0
- impostorscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0 phishscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270189
 Received-SPF: pass client-ip=205.220.168.131;
@@ -165,1017 +166,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makefiles were skipping the output compare when such files
-were not available. This results in arch being very inconsistent with
-some providing all files, some providing no files, and some providing
-some files. There was even one case of a misnamed file that result in a
-skipped check.
+Replace definition of vector attribute, remove unlikely, and detect
+endianness from __BYTE_ORDER__.
 
-For consistency, the current series adds all missing reference files for
-all arch, and make their presence mandatory
+It's the only tests that use this, so for consistency, it's better to
+not make exceptions. Also, not having this include path by default
+prevents anyone from having the "good" idea to reuse any other header
+from qemu in the future.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/ppc64le/float_convd.ref | 988 ++++++++++++++++++++++++++++++
- 1 file changed, 988 insertions(+)
- create mode 100644 tests/tcg/ppc64le/float_convd.ref
+ tests/tcg/ppc64/vector.c      | 11 ++++++-----
+ tests/tcg/ppc64/vsx_f2i_nan.c |  7 ++++---
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/tests/tcg/ppc64le/float_convd.ref b/tests/tcg/ppc64le/float_convd.ref
-new file mode 100644
-index 00000000000..2995a767c04
---- /dev/null
-+++ b/tests/tcg/ppc64le/float_convd.ref
-@@ -0,0 +1,988 @@
-+### Rounding to nearest
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-nan:0x00fff8000000000000)
-+  to single: f32(-nan:0xffc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-inf:0x00fff0000000000000)
-+  to single: f32(-inf:0xff800000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
-+  to single: f32(-inf:0xff800000) (OVERFLOW INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
-+  to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
-+  to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
-+  to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
-+   to int32: -2 (OK)
-+   to int64: -2 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
-+  to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
-+   to int32: -1 (OK)
-+   to int64: -1 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
-+  to single: f32(-0x0.00000000000000000000p+0:0x80000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(-0x1.00000000000000000000p-126:0x00b810000000000000)
-+  to single: f32(-0x1.00000000000000000000p-126:0x80800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.00000000000000000000p+0:00000000000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
-+   to int32: 0 (OK)
-+   to int64: 0 (OK)
-+  to uint32: 0 (OK)
-+  to uint64: 0 (OK)
-+from double: f64(0x1.00000000000000000000p-126:0x003810000000000000)
-+  to single: f32(0x1.00000000000000000000p-126:0x00800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000001c5f680000000p-25:0x003e600000001c5f68)
-+  to single: f32(0x1.00000000000000000000p-25:0x33000000) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ffffe6cb2fa820000000p-25:0x003e6ffffe6cb2fa82)
-+  to single: f32(0x1.ffffe600000000000000p-25:0x337ffff3) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ff801a9af58a10000000p-15:0x003f0ff801a9af58a1)
-+  to single: f32(0x1.ff801a00000000000000p-15:0x387fc00d) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000c06a1ef50000000p-14:0x003f100000c06a1ef5)
-+  to single: f32(0x1.00000c00000000000000p-14:0x38800006) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00400000000000000000p+0:0x003ff0040000000000)
-+  to single: f32(0x1.00400000000000000000p+0:0x3f802000) (OK)
-+   to int32: 1 (INEXACT )
-+   to int64: 1 (INEXACT )
-+  to uint32: 1 (INEXACT )
-+  to uint64: 1 (INEXACT )
-+from double: f64(0x1.00000000000000000000p-1022:0x000010000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.9ea82a22876800000000p-1022:0x000009ea82a2287680)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.ab98fba8432100000000p-1022:0x00000ab98fba843210)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00000000000000000000p+1:0x004000000000000000)
-+  to single: f32(0x1.00000000000000000000p+1:0x40000000) (OK)
-+   to int32: 2 (OK)
-+   to int64: 2 (OK)
-+  to uint32: 2 (OK)
-+  to uint64: 2 (OK)
-+from double: f64(0x1.5bf0a8b1457690000000p+1:0x004005bf0a8b145769)
-+  to single: f32(0x1.5bf0a800000000000000p+1:0x402df854) (INEXACT )
-+   to int32: 2 (INEXACT )
-+   to int64: 2 (INEXACT )
-+  to uint32: 2 (INEXACT )
-+  to uint64: 2 (INEXACT )
-+from double: f64(0x1.921fb54442d180000000p+1:0x00400921fb54442d18)
-+  to single: f32(0x1.921fb600000000000000p+1:0x40490fdb) (INEXACT )
-+   to int32: 3 (INEXACT )
-+   to int64: 3 (INEXACT )
-+  to uint32: 3 (INEXACT )
-+  to uint64: 3 (INEXACT )
-+from double: f64(0x1.ffbe0000000000000000p+15:0x0040effbe000000000)
-+  to single: f32(0x1.ffbe0000000000000000p+15:0x477fdf00) (OK)
-+   to int32: 65503 (OK)
-+   to int64: 65503 (OK)
-+  to uint32: 65503 (OK)
-+  to uint64: 65503 (OK)
-+from double: f64(0x1.ffc00000000000000000p+15:0x0040effc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+15:0x477fe000) (OK)
-+   to int32: 65504 (OK)
-+   to int64: 65504 (OK)
-+  to uint32: 65504 (OK)
-+  to uint64: 65504 (OK)
-+from double: f64(0x1.ffc20000000000000000p+15:0x0040effc2000000000)
-+  to single: f32(0x1.ffc20000000000000000p+15:0x477fe100) (OK)
-+   to int32: 65505 (OK)
-+   to int64: 65505 (OK)
-+  to uint32: 65505 (OK)
-+  to uint64: 65505 (OK)
-+from double: f64(0x1.ffbf0000000000000000p+16:0x0040fffbf000000000)
-+  to single: f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) (OK)
-+   to int32: 131007 (OK)
-+   to int64: 131007 (OK)
-+  to uint32: 131007 (OK)
-+  to uint64: 131007 (OK)
-+from double: f64(0x1.ffc00000000000000000p+16:0x0040fffc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+16:0x47ffe000) (OK)
-+   to int32: 131008 (OK)
-+   to int64: 131008 (OK)
-+  to uint32: 131008 (OK)
-+  to uint64: 131008 (OK)
-+from double: f64(0x1.ffc10000000000000000p+16:0x0040fffc1000000000)
-+  to single: f32(0x1.ffc10000000000000000p+16:0x47ffe080) (OK)
-+   to int32: 131009 (OK)
-+   to int64: 131009 (OK)
-+  to uint32: 131009 (OK)
-+  to uint64: 131009 (OK)
-+from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
-+  to single: f32(0x1.00000000000000000000p+31:0x4f000000) (INEXACT )
-+   to int32: 2147483647 (OK)
-+   to int64: 2147483647 (OK)
-+  to uint32: 2147483647 (OK)
-+  to uint64: 2147483647 (OK)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
-+  to single: f32(inf:0x7f800000) (OVERFLOW INEXACT )
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(inf:0x007ff0000000000000)
-+  to single: f32(inf:0x7f800000) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(nan:0x007ff8000000000000)
-+  to single: f32(nan:0x7fc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff0000000000001)
-+  to single: f32(nan:0x7fc00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+### Rounding upwards
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-nan:0x00fff8000000000000)
-+  to single: f32(-nan:0xffc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-inf:0x00fff0000000000000)
-+  to single: f32(-inf:0xff800000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OVERFLOW INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
-+  to single: f32(-0x1.1874b000000000000000p+103:0xf30c3a58) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
-+  to single: f32(-0x1.c0bab400000000000000p+99:0xf1605d5a) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
-+  to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
-+   to int32: -2 (OK)
-+   to int64: -2 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
-+  to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
-+   to int32: -1 (OK)
-+   to int64: -1 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
-+  to single: f32(-0x0.00000000000000000000p+0:0x80000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(-0x1.00000000000000000000p-126:0x00b810000000000000)
-+  to single: f32(-0x1.00000000000000000000p-126:0x80800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.00000000000000000000p+0:00000000000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
-+   to int32: 0 (OK)
-+   to int64: 0 (OK)
-+  to uint32: 0 (OK)
-+  to uint64: 0 (OK)
-+from double: f64(0x1.00000000000000000000p-126:0x003810000000000000)
-+  to single: f32(0x1.00000000000000000000p-126:0x00800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000001c5f680000000p-25:0x003e600000001c5f68)
-+  to single: f32(0x1.00000200000000000000p-25:0x33000001) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ffffe6cb2fa820000000p-25:0x003e6ffffe6cb2fa82)
-+  to single: f32(0x1.ffffe800000000000000p-25:0x337ffff4) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ff801a9af58a10000000p-15:0x003f0ff801a9af58a1)
-+  to single: f32(0x1.ff801c00000000000000p-15:0x387fc00e) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000c06a1ef50000000p-14:0x003f100000c06a1ef5)
-+  to single: f32(0x1.00000e00000000000000p-14:0x38800007) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00400000000000000000p+0:0x003ff0040000000000)
-+  to single: f32(0x1.00400000000000000000p+0:0x3f802000) (OK)
-+   to int32: 1 (INEXACT )
-+   to int64: 1 (INEXACT )
-+  to uint32: 1 (INEXACT )
-+  to uint64: 1 (INEXACT )
-+from double: f64(0x1.00000000000000000000p-1022:0x000010000000000000)
-+  to single: f32(0x1.00000000000000000000p-149:0x00000001) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.9ea82a22876800000000p-1022:0x000009ea82a2287680)
-+  to single: f32(0x1.00000000000000000000p-149:0x00000001) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.ab98fba8432100000000p-1022:0x00000ab98fba843210)
-+  to single: f32(0x1.00000000000000000000p-149:0x00000001) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00000000000000000000p+1:0x004000000000000000)
-+  to single: f32(0x1.00000000000000000000p+1:0x40000000) (OK)
-+   to int32: 2 (OK)
-+   to int64: 2 (OK)
-+  to uint32: 2 (OK)
-+  to uint64: 2 (OK)
-+from double: f64(0x1.5bf0a8b1457690000000p+1:0x004005bf0a8b145769)
-+  to single: f32(0x1.5bf0aa00000000000000p+1:0x402df855) (INEXACT )
-+   to int32: 2 (INEXACT )
-+   to int64: 2 (INEXACT )
-+  to uint32: 2 (INEXACT )
-+  to uint64: 2 (INEXACT )
-+from double: f64(0x1.921fb54442d180000000p+1:0x00400921fb54442d18)
-+  to single: f32(0x1.921fb600000000000000p+1:0x40490fdb) (INEXACT )
-+   to int32: 3 (INEXACT )
-+   to int64: 3 (INEXACT )
-+  to uint32: 3 (INEXACT )
-+  to uint64: 3 (INEXACT )
-+from double: f64(0x1.ffbe0000000000000000p+15:0x0040effbe000000000)
-+  to single: f32(0x1.ffbe0000000000000000p+15:0x477fdf00) (OK)
-+   to int32: 65503 (OK)
-+   to int64: 65503 (OK)
-+  to uint32: 65503 (OK)
-+  to uint64: 65503 (OK)
-+from double: f64(0x1.ffc00000000000000000p+15:0x0040effc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+15:0x477fe000) (OK)
-+   to int32: 65504 (OK)
-+   to int64: 65504 (OK)
-+  to uint32: 65504 (OK)
-+  to uint64: 65504 (OK)
-+from double: f64(0x1.ffc20000000000000000p+15:0x0040effc2000000000)
-+  to single: f32(0x1.ffc20000000000000000p+15:0x477fe100) (OK)
-+   to int32: 65505 (OK)
-+   to int64: 65505 (OK)
-+  to uint32: 65505 (OK)
-+  to uint64: 65505 (OK)
-+from double: f64(0x1.ffbf0000000000000000p+16:0x0040fffbf000000000)
-+  to single: f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) (OK)
-+   to int32: 131007 (OK)
-+   to int64: 131007 (OK)
-+  to uint32: 131007 (OK)
-+  to uint64: 131007 (OK)
-+from double: f64(0x1.ffc00000000000000000p+16:0x0040fffc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+16:0x47ffe000) (OK)
-+   to int32: 131008 (OK)
-+   to int64: 131008 (OK)
-+  to uint32: 131008 (OK)
-+  to uint64: 131008 (OK)
-+from double: f64(0x1.ffc10000000000000000p+16:0x0040fffc1000000000)
-+  to single: f32(0x1.ffc10000000000000000p+16:0x47ffe080) (OK)
-+   to int32: 131009 (OK)
-+   to int64: 131009 (OK)
-+  to uint32: 131009 (OK)
-+  to uint64: 131009 (OK)
-+from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
-+  to single: f32(0x1.00000000000000000000p+31:0x4f000000) (INEXACT )
-+   to int32: 2147483647 (OK)
-+   to int64: 2147483647 (OK)
-+  to uint32: 2147483647 (OK)
-+  to uint64: 2147483647 (OK)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
-+  to single: f32(inf:0x7f800000) (OVERFLOW INEXACT )
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(inf:0x007ff0000000000000)
-+  to single: f32(inf:0x7f800000) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(nan:0x007ff8000000000000)
-+  to single: f32(nan:0x7fc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff0000000000001)
-+  to single: f32(nan:0x7fc00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+### Rounding downwards
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-nan:0x00fff8000000000000)
-+  to single: f32(-nan:0xffc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-inf:0x00fff0000000000000)
-+  to single: f32(-inf:0xff800000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
-+  to single: f32(-inf:0xff800000) (OVERFLOW INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
-+  to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
-+  to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
-+  to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
-+   to int32: -2 (OK)
-+   to int64: -2 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
-+  to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
-+   to int32: -1 (OK)
-+   to int64: -1 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
-+  to single: f32(-0x1.00000000000000000000p-149:0x80000001) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(-0x1.00000000000000000000p-126:0x00b810000000000000)
-+  to single: f32(-0x1.00000000000000000000p-126:0x80800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.00000000000000000000p+0:00000000000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
-+   to int32: 0 (OK)
-+   to int64: 0 (OK)
-+  to uint32: 0 (OK)
-+  to uint64: 0 (OK)
-+from double: f64(0x1.00000000000000000000p-126:0x003810000000000000)
-+  to single: f32(0x1.00000000000000000000p-126:0x00800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000001c5f680000000p-25:0x003e600000001c5f68)
-+  to single: f32(0x1.00000000000000000000p-25:0x33000000) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ffffe6cb2fa820000000p-25:0x003e6ffffe6cb2fa82)
-+  to single: f32(0x1.ffffe600000000000000p-25:0x337ffff3) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ff801a9af58a10000000p-15:0x003f0ff801a9af58a1)
-+  to single: f32(0x1.ff801a00000000000000p-15:0x387fc00d) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000c06a1ef50000000p-14:0x003f100000c06a1ef5)
-+  to single: f32(0x1.00000c00000000000000p-14:0x38800006) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00400000000000000000p+0:0x003ff0040000000000)
-+  to single: f32(0x1.00400000000000000000p+0:0x3f802000) (OK)
-+   to int32: 1 (INEXACT )
-+   to int64: 1 (INEXACT )
-+  to uint32: 1 (INEXACT )
-+  to uint64: 1 (INEXACT )
-+from double: f64(0x1.00000000000000000000p-1022:0x000010000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.9ea82a22876800000000p-1022:0x000009ea82a2287680)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.ab98fba8432100000000p-1022:0x00000ab98fba843210)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00000000000000000000p+1:0x004000000000000000)
-+  to single: f32(0x1.00000000000000000000p+1:0x40000000) (OK)
-+   to int32: 2 (OK)
-+   to int64: 2 (OK)
-+  to uint32: 2 (OK)
-+  to uint64: 2 (OK)
-+from double: f64(0x1.5bf0a8b1457690000000p+1:0x004005bf0a8b145769)
-+  to single: f32(0x1.5bf0a800000000000000p+1:0x402df854) (INEXACT )
-+   to int32: 2 (INEXACT )
-+   to int64: 2 (INEXACT )
-+  to uint32: 2 (INEXACT )
-+  to uint64: 2 (INEXACT )
-+from double: f64(0x1.921fb54442d180000000p+1:0x00400921fb54442d18)
-+  to single: f32(0x1.921fb400000000000000p+1:0x40490fda) (INEXACT )
-+   to int32: 3 (INEXACT )
-+   to int64: 3 (INEXACT )
-+  to uint32: 3 (INEXACT )
-+  to uint64: 3 (INEXACT )
-+from double: f64(0x1.ffbe0000000000000000p+15:0x0040effbe000000000)
-+  to single: f32(0x1.ffbe0000000000000000p+15:0x477fdf00) (OK)
-+   to int32: 65503 (OK)
-+   to int64: 65503 (OK)
-+  to uint32: 65503 (OK)
-+  to uint64: 65503 (OK)
-+from double: f64(0x1.ffc00000000000000000p+15:0x0040effc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+15:0x477fe000) (OK)
-+   to int32: 65504 (OK)
-+   to int64: 65504 (OK)
-+  to uint32: 65504 (OK)
-+  to uint64: 65504 (OK)
-+from double: f64(0x1.ffc20000000000000000p+15:0x0040effc2000000000)
-+  to single: f32(0x1.ffc20000000000000000p+15:0x477fe100) (OK)
-+   to int32: 65505 (OK)
-+   to int64: 65505 (OK)
-+  to uint32: 65505 (OK)
-+  to uint64: 65505 (OK)
-+from double: f64(0x1.ffbf0000000000000000p+16:0x0040fffbf000000000)
-+  to single: f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) (OK)
-+   to int32: 131007 (OK)
-+   to int64: 131007 (OK)
-+  to uint32: 131007 (OK)
-+  to uint64: 131007 (OK)
-+from double: f64(0x1.ffc00000000000000000p+16:0x0040fffc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+16:0x47ffe000) (OK)
-+   to int32: 131008 (OK)
-+   to int64: 131008 (OK)
-+  to uint32: 131008 (OK)
-+  to uint64: 131008 (OK)
-+from double: f64(0x1.ffc10000000000000000p+16:0x0040fffc1000000000)
-+  to single: f32(0x1.ffc10000000000000000p+16:0x47ffe080) (OK)
-+   to int32: 131009 (OK)
-+   to int64: 131009 (OK)
-+  to uint32: 131009 (OK)
-+  to uint64: 131009 (OK)
-+from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
-+  to single: f32(0x1.fffffe00000000000000p+30:0x4effffff) (INEXACT )
-+   to int32: 2147483647 (OK)
-+   to int64: 2147483647 (OK)
-+  to uint32: 2147483647 (OK)
-+  to uint64: 2147483647 (OK)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OVERFLOW INEXACT )
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(inf:0x007ff0000000000000)
-+  to single: f32(inf:0x7f800000) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(nan:0x007ff8000000000000)
-+  to single: f32(nan:0x7fc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff0000000000001)
-+  to single: f32(nan:0x7fc00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+### Rounding to zero
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-nan:0x00fff8000000000000)
-+  to single: f32(-nan:0xffc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-inf:0x00fff0000000000000)
-+  to single: f32(-inf:0xff800000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OVERFLOW INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
-+  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
-+  to single: f32(-0x1.1874b000000000000000p+103:0xf30c3a58) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
-+  to single: f32(-0x1.c0bab400000000000000p+99:0xf1605d5a) (INEXACT )
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
-+  to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
-+   to int32: -2 (OK)
-+   to int64: -2 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
-+  to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
-+   to int32: -1 (OK)
-+   to int64: -1 (OK)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
-+  to single: f32(-0x0.00000000000000000000p+0:0x80000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(-0x1.00000000000000000000p-126:0x00b810000000000000)
-+  to single: f32(-0x1.00000000000000000000p-126:0x80800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.00000000000000000000p+0:00000000000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
-+   to int32: 0 (OK)
-+   to int64: 0 (OK)
-+  to uint32: 0 (OK)
-+  to uint64: 0 (OK)
-+from double: f64(0x1.00000000000000000000p-126:0x003810000000000000)
-+  to single: f32(0x1.00000000000000000000p-126:0x00800000) (OK)
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000001c5f680000000p-25:0x003e600000001c5f68)
-+  to single: f32(0x1.00000000000000000000p-25:0x33000000) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ffffe6cb2fa820000000p-25:0x003e6ffffe6cb2fa82)
-+  to single: f32(0x1.ffffe600000000000000p-25:0x337ffff3) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.ff801a9af58a10000000p-15:0x003f0ff801a9af58a1)
-+  to single: f32(0x1.ff801a00000000000000p-15:0x387fc00d) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000c06a1ef50000000p-14:0x003f100000c06a1ef5)
-+  to single: f32(0x1.00000c00000000000000p-14:0x38800006) (INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00400000000000000000p+0:0x003ff0040000000000)
-+  to single: f32(0x1.00400000000000000000p+0:0x3f802000) (OK)
-+   to int32: 1 (INEXACT )
-+   to int64: 1 (INEXACT )
-+  to uint32: 1 (INEXACT )
-+  to uint64: 1 (INEXACT )
-+from double: f64(0x1.00000000000000000000p-1022:0x000010000000000000)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.9ea82a22876800000000p-1022:0x000009ea82a2287680)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x0.ab98fba8432100000000p-1022:0x00000ab98fba843210)
-+  to single: f32(0x0.00000000000000000000p+0:0000000000) (UNDERFLOW INEXACT )
-+   to int32: 0 (INEXACT )
-+   to int64: 0 (INEXACT )
-+  to uint32: 0 (INEXACT )
-+  to uint64: 0 (INEXACT )
-+from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
-+  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
-+   to int32: 1 (OK)
-+   to int64: 1 (OK)
-+  to uint32: 1 (OK)
-+  to uint64: 1 (OK)
-+from double: f64(0x1.00000000000000000000p+1:0x004000000000000000)
-+  to single: f32(0x1.00000000000000000000p+1:0x40000000) (OK)
-+   to int32: 2 (OK)
-+   to int64: 2 (OK)
-+  to uint32: 2 (OK)
-+  to uint64: 2 (OK)
-+from double: f64(0x1.5bf0a8b1457690000000p+1:0x004005bf0a8b145769)
-+  to single: f32(0x1.5bf0a800000000000000p+1:0x402df854) (INEXACT )
-+   to int32: 2 (INEXACT )
-+   to int64: 2 (INEXACT )
-+  to uint32: 2 (INEXACT )
-+  to uint64: 2 (INEXACT )
-+from double: f64(0x1.921fb54442d180000000p+1:0x00400921fb54442d18)
-+  to single: f32(0x1.921fb400000000000000p+1:0x40490fda) (INEXACT )
-+   to int32: 3 (INEXACT )
-+   to int64: 3 (INEXACT )
-+  to uint32: 3 (INEXACT )
-+  to uint64: 3 (INEXACT )
-+from double: f64(0x1.ffbe0000000000000000p+15:0x0040effbe000000000)
-+  to single: f32(0x1.ffbe0000000000000000p+15:0x477fdf00) (OK)
-+   to int32: 65503 (OK)
-+   to int64: 65503 (OK)
-+  to uint32: 65503 (OK)
-+  to uint64: 65503 (OK)
-+from double: f64(0x1.ffc00000000000000000p+15:0x0040effc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+15:0x477fe000) (OK)
-+   to int32: 65504 (OK)
-+   to int64: 65504 (OK)
-+  to uint32: 65504 (OK)
-+  to uint64: 65504 (OK)
-+from double: f64(0x1.ffc20000000000000000p+15:0x0040effc2000000000)
-+  to single: f32(0x1.ffc20000000000000000p+15:0x477fe100) (OK)
-+   to int32: 65505 (OK)
-+   to int64: 65505 (OK)
-+  to uint32: 65505 (OK)
-+  to uint64: 65505 (OK)
-+from double: f64(0x1.ffbf0000000000000000p+16:0x0040fffbf000000000)
-+  to single: f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) (OK)
-+   to int32: 131007 (OK)
-+   to int64: 131007 (OK)
-+  to uint32: 131007 (OK)
-+  to uint64: 131007 (OK)
-+from double: f64(0x1.ffc00000000000000000p+16:0x0040fffc0000000000)
-+  to single: f32(0x1.ffc00000000000000000p+16:0x47ffe000) (OK)
-+   to int32: 131008 (OK)
-+   to int64: 131008 (OK)
-+  to uint32: 131008 (OK)
-+  to uint64: 131008 (OK)
-+from double: f64(0x1.ffc10000000000000000p+16:0x0040fffc1000000000)
-+  to single: f32(0x1.ffc10000000000000000p+16:0x47ffe080) (OK)
-+   to int32: 131009 (OK)
-+   to int64: 131009 (OK)
-+  to uint32: 131009 (OK)
-+  to uint64: 131009 (OK)
-+from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
-+  to single: f32(0x1.fffffe00000000000000p+30:0x4effffff) (INEXACT )
-+   to int32: 2147483647 (OK)
-+   to int64: 2147483647 (OK)
-+  to uint32: 2147483647 (OK)
-+  to uint64: 2147483647 (OK)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
-+  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OVERFLOW INEXACT )
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(inf:0x007ff0000000000000)
-+  to single: f32(inf:0x7f800000) (OK)
-+   to int32: 2147483647 (INVALID)
-+   to int64: 9223372036854775807 (INVALID)
-+  to uint32: -1 (INVALID)
-+  to uint64: -1 (INVALID)
-+from double: f64(nan:0x007ff8000000000000)
-+  to single: f32(nan:0x7fc00000) (OK)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff0000000000001)
-+  to single: f32(nan:0x7fc00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
-+from double: f64(nan:0x007ff4000000000000)
-+  to single: f32(nan:0x7fe00000) (INVALID)
-+   to int32: -2147483648 (INVALID)
-+   to int64: -9223372036854775808 (INVALID)
-+  to uint32: 0 (INVALID)
-+  to uint64: 0 (INVALID)
+diff --git a/tests/tcg/ppc64/vector.c b/tests/tcg/ppc64/vector.c
+index cbf4ae93323..70491d59251 100644
+--- a/tests/tcg/ppc64/vector.c
++++ b/tests/tcg/ppc64/vector.c
+@@ -1,6 +1,7 @@
+ #include <assert.h>
+ #include <stdint.h>
+-#include "qemu/compiler.h"
++
++#define vector __attribute__((altivec(vector__)))
+ 
+ int main(void)
+ {
+@@ -15,28 +16,28 @@ int main(void)
+     vector __uint128_t vbc_qi_src;
+ 
+     asm("vextractbm %0, %1" : "=r" (result_wi) : "v" (vbc_bi_src));
+-#if HOST_BIG_ENDIAN
++#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+     assert(result_wi == 0b1101111111000011);
+ #else
+     assert(result_wi == 0b1100001111111011);
+ #endif
+ 
+     asm("vextracthm %0, %1" : "=r" (result_wi) : "v" (vbc_hi_src));
+-#if HOST_BIG_ENDIAN
++#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+     assert(result_wi == 0b10010011);
+ #else
+     assert(result_wi == 0b11001001);
+ #endif
+ 
+     asm("vextractwm %0, %1" : "=r" (result_wi) : "v" (vbc_wi_src));
+-#if HOST_BIG_ENDIAN
++#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+     assert(result_wi == 0b0011);
+ #else
+     assert(result_wi == 0b1100);
+ #endif
+ 
+     asm("vextractdm %0, %1" : "=r" (result_wi) : "v" (vbc_di_src));
+-#if HOST_BIG_ENDIAN
++#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+     assert(result_wi == 0b10);
+ #else
+     assert(result_wi == 0b01);
+diff --git a/tests/tcg/ppc64/vsx_f2i_nan.c b/tests/tcg/ppc64/vsx_f2i_nan.c
+index 94b1a4eb02d..6a9d54faf52 100644
+--- a/tests/tcg/ppc64/vsx_f2i_nan.c
++++ b/tests/tcg/ppc64/vsx_f2i_nan.c
+@@ -1,5 +1,6 @@
+ #include <stdio.h>
+-#include "qemu/compiler.h"
++
++#define vector __attribute__((altivec(vector__)))
+ 
+ typedef vector float vsx_float32_vec_t;
+ typedef vector double vsx_float64_vec_t;
+@@ -104,7 +105,7 @@ static inline vsx_uint64_vec_t vsx_mask_out_float32_vec_to_uint64_vec(
+ static inline vsx_int32_vec_t vsx_mask_out_float64_vec_to_int32_vec(
+     vsx_int32_vec_t v)
+ {
+-#if HOST_BIG_ENDIAN
++#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+     const vsx_int32_vec_t valid_lanes_mask = {-1, 0, -1, 0};
+ #else
+     const vsx_int32_vec_t valid_lanes_mask = {0, -1, 0, -1};
+@@ -209,7 +210,7 @@ static inline int test_vsx_conv_##SRC_T##_vec_to_##DEST_T##_vec(         \
+     const int test_result =                                              \
+         vsx_##DEST_T##_all_eq(expected_result, actual_result);           \
+                                                                          \
+-    if (unlikely(test_result == 0)) {                                    \
++    if (test_result == 0) {                                    \
+         fputs("FAIL: Conversion of " #SRC_T " vector to " #DEST_T        \
+               " vector failed\n", stdout);                               \
+         fputs("Source values: ", stdout);                                \
 -- 
 2.43.0
 
