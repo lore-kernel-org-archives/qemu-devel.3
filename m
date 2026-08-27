@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4C7C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336F7C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:43:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcFU-0006IF-Tw; Thu, 27 Aug 2026 11:42:40 -0400
+	id 1wzcFV-0006Id-PQ; Thu, 27 Aug 2026 11:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFS-0006HG-MS
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:38 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFT-0006HY-Mc
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:39 -0400
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFQ-000181-SA
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=LbBG++o
- fsdG9xAzRJrtUQ4WJ6uxCSrkkglYzNFtD3FG2CUwDWVGM2pqXxm4c11yhx+7zJDZjTrBvv
- XzTCOP+W/oRa3IoR73ZYdXvNe06LEkOgEI3wEQFO3K3/Nf50FTMELSxwdb/yo2kC7pYQIY
- CxQR9E4F2SRUn2kgdSwgiC6WuLQPXnCcErmYKb0Mgmm/67nPErzOWLz93im3jrs6xgZqnP
- +fMN7fQcjFEy6wiB9AahFc7HfUZTw2uAFozeX03RlqrUFlAug5pg3bmCXzdAoiGJvbrUjR
- 2Cehh32fU8b6d+f50t8jDhRBTKRj+O8eEA3P8uZoKclwNO359APlpgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=0
- OTWgZjx9Loia+02herFsXxqxRWHhR9TMYMBOb0kF5U=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFR-00019R-UL
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=FmkDJCO
+ jCreomgjEBvgcmCIdxqZjt3ix6yrwzUAGq8UIMODmyIvEbhZWb6ZYYsblClbnp4dC8Icwu
+ PNFFM6P0YmI+oZczh0n2Z4SPtoKseDoG4zqXGzJhGlRdAj4pYPxz7Kv33UqqW27XB6MfkU
+ KKl1nUNz1nNSr8NdWDschGovpzhdpYUz8HqIWf+qcXtrLbIYMYFHQ6ljnd3xpXkyZ3r6vU
+ ckNE2FOC0vyVIN/dazyO1mtS7Ln/fJPDXly+qDpB3jJKKKxfEXJ3YpS+Iw0FrDMszjWayI
+ EN/8Wbod7RdTNHGhDB3r6iPPneQNmPPmTos1u0IS94ijUjRuZgA9Rmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=k
+ oHFNGi4Fw3yPpaGm3FaF7mlvXRBicgrFjENxa3+hOw=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=fUji9AtA0PuKnAKnMfSgd6rdGDbn42XP7DUxdxbPhl8EvKSR3VovgihWFM5ih35FXPja
- d4S8WlCJedNCEJj4ieaNODwyGoJoNUczrhcZBSBqn/xgJDdvB9bIDxNhA9RKhYzC2bHAgF
- 8lp8eaYL4Ed+AqNEtZARG7VxjBe1cHCJJ4fTODdu18dqdz+fYVLkWHj5/eP2QZb2DYjgjn
- LD25icMHxF96ne8YT1xgSkBWjWUqp0s51jjiS+mOVqn5h7UeVs9T4Y5fr0wFo5gApKR5DH
- fXFdmerEXIx5gRRbQ8gpEG3N+V9Ye/3Dd+N4YUAsTtc2edOEefgHMpHAXrrxhzZQ==
+ b=IRqt/tgbBStPP42QtReprU0wvL34SqEtizTqVwCSbSAdBKcKd/lk6We3rKq6MeZe9i6o
+ 49kbJAvsIWFbPYTfzSW18+RkTKjLk9AffSK89pzqOotince31IMQDdem9eNtj3n7c4Zq6h
+ rzghkCIYxVjv5bOA7AjcflrJNiI4shYdJW/iJJFrSmWPi2OlZ/bDjaA5sTZfoD5VQEQzUE
+ OOLOTV63Hy1/ejy6mobfkCCr9PSU4s/km4eegOaKzD5XP9f57ldOcjqZ7AdhfUUCUJuezO
+ drLKuYAHrtRMBJQesQWUbW5z0xAu+fmtYRI9S5p5HEY5Juqy1FrBun52DCdShcNg==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=wTLIYhKr; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=ggvMntms;
+ header.b=moP4t6VS; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=fRxt189Q;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=0OTWgZjx
- 9Loia+02herFsXxqxRWHhR9TMYMBOb0kF5U=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=koHFNGi4
+ Fw3yPpaGm3FaF7mlvXRBicgrFjENxa3+hOw=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=wTLIYhKr15zcvJZBrtOH9KsW0s79CTBuUOn
- v9gEveBrIs8I5WuzOnvVot4uQFY/8CUtIcYeKpJdCpoXs+GIP2oFIjvY4QaV6X+5CILg9Q
- /EMpnuAm74WUq+9g4Sz3E1/WqUA/JNX2XQhxZNTrcS/o76mYWJ6HzWWj0u0xjury3pbqBx
- MVjd/N5c2B0G1JS8byz3tGRKnPgZQIjJaRymPy4bEvaPKaX1QjSo/gwwWi+LXdlNJNgysW
- 7U7X1UYpQIr0zHkVAN2UZ+mkuyxAQ7b/lj1uRgjSBEIt4ffZ7NJi8aYcmvFGVTQu5i41h7
- uKDqHX3djvtqiGBCX4k1GlBIQ1A==
+ subject:cc:to:from; d=korins.ky; b=moP4t6VS4cBMqrIKfxbm2XH49+BPjKTMSV/
+ JpXVwjc+4Z98Zo8WzpXKSgeh/4V6X0a+u4zmY4Blh29Whuj+KFxUynSzedIa46ZDrtS6gJ
+ otBiYGjzKDbX9s10sqeHTNbOlX3lVPsvN4kdl3Dx5AYXAOShFn3iTD9/FetgaMI7W0wQtS
+ vPDl6AZEMQbBV0H7N+a8tS7oxNWHRqWwg/ZL0Vuqr7OE5USqVxF/lVj6Zz8OJe8ZvuPpLT
+ QIQrS3ftx0QHDEkifJQF7ff8JYZi/Hl3aYpk8RN49T0HKc2TBj7wiLEda/D8QrlaabkIjK
+ h8y3AccatbItMg0UU6mARhWXxeg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=0OTWgZjx9Loia+02herFsXxqxRWHhR9TMYMBOb0kF5U=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=ggvMntmsXKxLajyWIt
- ua5VtlKBlYwiAzb18Ml6kJ6T4T552AH11N2yjczZWwwFea9Q4Zl7Yf7POVVNc+rnJFAQ==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id b481d9c1
+ bh=koHFNGi4Fw3yPpaGm3FaF7mlvXRBicgrFjENxa3+hOw=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=fRxt189QLy/OZMnToR
+ 9RdyWwSteHfqp5c/PY9dYoczqgYCiwm/IR1u1r2ioQDEak+Zn0wTkdDNsuxFvRyuYjBw==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id a418d2a4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 27 Aug 2026 17:42:32 +0200 (CEST)
+ Thu, 27 Aug 2026 17:42:33 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id a043a7e4;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id d6a2e407;
  Thu, 27 Aug 2026 17:42:32 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 1/5] openpic: Preserve IRQs masked by CTPR
-Date: Thu, 27 Aug 2026 17:41:13 +0200
-Message-ID: <20260827154220.84845-2-kirill@korins.ky>
+Subject: [PATCH 3/5] cuda: Include command in successful ADB replies
+Date: Thu, 27 Aug 2026 17:41:15 +0200
+Message-ID: <20260827154220.84845-4-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827154220.84845-1-kirill@korins.ky>
 References: <20260827154220.84845-1-kirill@korins.ky>
@@ -94,48 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OpenBSD exposes this by raising CTPR while handling interrupts. If an
-edge remains pending when EOI lowers the servicing priority, QEMU
-reasserts INT without checking CTPR; IACK then returns the spurious
-vector and consumes the masked edge before CTPR permits delivery.
+OpenBSD and Linux expect the ADB command between the CUDA status and
+reply data. QEMU omits it on success, so guests consume the first data
+byte as the command and lose it from the reply.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/intc/openpic.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ hw/misc/macio/cuda.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
-index 99d2a1e65e..6f9a562163 100644
---- a/hw/intc/openpic.c
-+++ b/hw/intc/openpic.c
-@@ -1033,8 +1033,9 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
-         n_IRQ = IRQ_get_next(opp, &dst->raised);
-         if (n_IRQ != -1) {
-             src = &opp->src[n_IRQ];
--            if (s_IRQ == -1 ||
--                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
-+            if (IVPR_PRIORITY(src->ivpr) > dst->ctpr &&
-+                (s_IRQ == -1 ||
-+                 IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
-                 DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
-                         idx, n_IRQ);
-                 qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-@@ -1070,12 +1071,13 @@ static uint32_t openpic_iack(OpenPICState *opp, IRQDest *dst, int cpu)
-     }
- 
-     src = &opp->src[irq];
--    if (!(src->ivpr & IVPR_ACTIVITY_MASK) ||
--            !(IVPR_PRIORITY(src->ivpr) > dst->ctpr)) {
-+    if (!(src->ivpr & IVPR_ACTIVITY_MASK)) {
-         error_report("%s: bad raised IRQ %d ctpr %d ivpr 0x%08x",
-                 __func__, irq, dst->ctpr, src->ivpr);
-         openpic_update_irq(opp, irq);
-         retval = opp->spve;
-+    } else if (IVPR_PRIORITY(src->ivpr) <= dst->ctpr) {
-+        return opp->spve;
-     } else {
-         /* IRQ enter servicing state */
-         IRQ_setbit(&dst->servicing, irq);
+diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
+index 312dde242b..ccb3e1d74b 100644
+--- a/hw/misc/macio/cuda.c
++++ b/hw/misc/macio/cuda.c
+@@ -431,11 +431,12 @@ static void cuda_receive_packet_from_host(CUDAState *s,
+         {
+             uint8_t obuf[ADB_MAX_OUT_LEN + 3];
+             int olen;
+-            olen = adb_request(&s->adb_bus, obuf + 2, data + 1, len - 1);
++            olen = adb_request(&s->adb_bus, obuf + 3, data + 1, len - 1);
+             if (olen > 0) {
+                 obuf[0] = ADB_PACKET;
+                 obuf[1] = 0x00;
+-                cuda_send_packet_to_host(s, obuf, olen + 2);
++                obuf[2] = data[1];
++                cuda_send_packet_to_host(s, obuf, olen + 3);
+             } else {
+                 /* error */
+                 obuf[0] = ADB_PACKET;
 -- 
 2.55.0
 
