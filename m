@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D24EC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17771C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzaE8-0006g2-Px; Thu, 27 Aug 2026 09:33:08 -0400
+	id 1wzaCs-0001Xw-1T; Thu, 27 Aug 2026 09:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaE0-0006Yh-AM; Thu, 27 Aug 2026 09:33:00 -0400
+ id 1wzaCp-0001Mh-RU; Thu, 27 Aug 2026 09:31:47 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaDx-0001tB-JT; Thu, 27 Aug 2026 09:32:59 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wzaCn-0001aG-G9; Thu, 27 Aug 2026 09:31:47 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RCVb4t3056396; Thu, 27 Aug 2026 13:32:53 GMT
+ 67RCVfKH2891921; Thu, 27 Aug 2026 13:31:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=yQPwj5JqJOKv76ZBs
- hjegYR6UFGGp5K+ybD+QBmMixg=; b=MuAEATBlzGKnYGQeA3upI6CClW9d1Jypp
- XPXalRcvpANXYQMkckKyQipY1kwgarsRfJU4WgMUP+0bs0Gg3ZHtJeYv/sFv0IzD
- dy1Xko2aMGEmxpPZiz/PNE+O9dmtzOE+BApCvh0NCN9qBpIuA3INfwbggsoPfVNw
- pFFpZyKl3ES6QyV53cutrC+6Evw4Vz9wGEeicDatglpVxD0QwRSDtKPE6MpmYyBB
- BxuCNYWzmNLQcFrO2uS5bAcHM6rl2E7Vj9TOoaYzhItiNmKKIQCfDsblbeG1BQhl
- lWTLuvUX/Rvp7w+ODUEi7xL8ZwQs13WVe/humUuSZ1Tvq1OsKp+6A==
+ :mime-version:references:subject:to; s=pp1; bh=Yg+b6JemkRWuCdyU5
+ 4zsa5z+hAKmYsPjzbZjbuEHw5w=; b=tG/bWZj1YVMndwalPnbPPj3c7xvdhEUlh
+ 4ZhFT1pdX6KzUQ5s1JkAOJAfr/uqFMaxJ8JC1Fesy7gRy5Dwp6A7bznj0vgGbxjv
+ J4ktQ3926eb6RRZRtZPQeEoNmVHgBU7WwGun6/KviWR/G1fy6Ml5lHyow0FvkYov
+ Nm9D3gBv+FVvxlYW1KFhJEXlimbzIX8PnhAG6f+Tb75NWRqw0iR7mM1MlBphmjPa
+ Jwuh63KT9mWB3rYRhvIlHn8QNRaBaoAYoqw3Jn+ZjrFYqR7VqsuStKSdQNFP3Mi+
+ /9SSyDMGZxgsKTSL4EH6y0jGvAgkTPIbQ/EKlKpRvKG8sbi8EvC0g==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxn9qx-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716j5pfg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:32:52 +0000 (GMT)
+ Thu, 27 Aug 2026 13:31:42 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQJHV027471;
- Thu, 27 Aug 2026 13:32:52 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k89kn-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQIrn027463;
+ Thu, 27 Aug 2026 13:31:42 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k89ce-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:32:52 +0000 (GMT)
+ Thu, 27 Aug 2026 13:31:42 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67RDWlAN45089158
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67RDVaUf39256458
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Aug 2026 13:32:48 GMT
+ Thu, 27 Aug 2026 13:31:36 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D77C82004F;
- Thu, 27 Aug 2026 13:32:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E26B82004B;
+ Thu, 27 Aug 2026 13:31:35 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 19A1E20040;
- Thu, 27 Aug 2026 13:32:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B55AD20040;
+ Thu, 27 Aug 2026 13:31:29 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.111.12.1]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Aug 2026 13:32:41 +0000 (GMT)
+ Thu, 27 Aug 2026 13:31:29 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -64,11 +64,11 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v3 21/37] target/ppc: Move Condition Register logical
- instructions to decodetree.
-Date: Thu, 27 Aug 2026 18:59:36 +0530
-Message-ID: <20260827133010.278889-22-rathc@linux.ibm.com>
+ Sathvika Vasireddy <sv@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v3 10/37] target/ppc: Move fixed-point Shift insns to
+ decodetree
+Date: Thu, 27 Aug 2026 18:59:25 +0530
+Message-ID: <20260827133010.278889-11-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827133010.278889-1-rathc@linux.ibm.com>
 References: <20260827133010.278889-1-rathc@linux.ibm.com>
@@ -76,32 +76,31 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX0abJe69qo9eU
- SDThdsZhtBdCBC8R789NVdobUeZbUnJyOhK9JpReXh9pFURZS8YQD58D5Ee7Aj+P24CxD01NqAi
- AKDAxvTcYtFraBGtGXrJ5fjd7toW1yU=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a903c85 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX10az4l2kxmRX
+ 0aNa/o5DMBvRQv13ePIBG+oh8r3EUqXBqBtRA+5Rxu1Y/fXRqAD+d8JBDvEH8UFDnpoX7lKErGg
+ S/tzi9nudtc60kyR7d8DRKlJhBzL6JQ=
+X-Proofpoint-GUID: B9-lcY5mgY8RdVU_5ReaUCVLoviMy_gt
+X-Proofpoint-ORIG-GUID: _TsFb6s5wes0BwGgfBrvDxVA6Ihn99VW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX9ECRM1EIRSr4
+ hihLPG3aFyTMOdIhzwYy64IhachKGWGWW6Gb0nJY9Onxw0zIgjQ8LFQ5a6E1GTjY65OdfH86ApQ
+ tSs8FqNzOCuB8bw5mChPe0+Sv2S+Qk7aTUV/UQ4XPunJ+GGa3RisdBA+i4tdxLq9QPAQSAnL5be
+ v43Cl8eAdKrWFT5FeVYOMn6BT/89KFwoq5ILzXRe/bfi+62a4oPa4CDfirhTg+uqi2tpXGayjmA
+ 9Qgb6JUiMXEtJL5ildFAvaHsBpeM/+d8nJ7crdnOBNnzBOYpwRP7uvD/mOpvE8/C/LvM6yYPLDa
+ qtWtl6DiKFcflOpmHbfoh5S0Rah5s4DX9SFj5lNbijGh5Tb4MZGgRubUBzLPKP5TisF6pd22D9l
+ 6t9Ev6ULd/Ttln8bqPtkH/u/Gkv6HKhDn/yCo49GYPPLzXbU2QWANkd0AMaB3r4tsmLI3XCnC/g
+ UdUIbgzVvZ6/pBzGwXw==
+X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a903c3f cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=hG2spAfxjb5FyaO2x7EA:9
-X-Proofpoint-ORIG-GUID: SOd2T-Mv62uPzu8WrjSDLv30e4pAQEiF
-X-Proofpoint-GUID: 1YDQfZpVYeGltQ30fqTj32tvCpzYmAIN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX0RibsWbtlLUM
- KU6ic3TWvpm/VtDDvQQvJ9YM/jrSMLTR8Fb9SlYGVQvS4mxgIHB7jroY7dglABqHGVniaoZleNQ
- ed7F1rxuWzeyjWvM9tR2OtbtEa5+ZMcnc897Cn3bzCQnsxNAnbCG0xKPcfKQ+y+E2TaJ8q6S0YP
- apk45rO+gs2BOKspMyf/pOIrHyD7sCPvRZ+n9Zheve5why6wq5Wu9K2ajks1oB7A1Rwl4OPbfV2
- HymN2J5BSDbid2kIz+Isz8H2pZ630ANUKertjYZBkJ3E3cY7k5jSBcsInsKGrgDIF3RXgN4i2O9
- ABHTpmgwXWu2QwYAJ/tRpI6XGQjk2RMht6MYymgDb9cCC34vlYVloa554oEsBd1VmVLf41r5gEk
- JJWMEf+oFskh9Xfi1+VfbLMw+628xDMGF6fde8hPwyqPhJwlbLJbeIxyw23BI3kLyk3DMZjD4lO
- q7SDOYz8390VOWgXLKQ==
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=70_TU0wQgaf75xgqATAA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_05,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608270113
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270113
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -126,180 +125,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-Move below instructions to decodetree specification :
+Move the below instructions to decodetree specification:
 
-        cr{and, or, xor, nand, nor, eqv, andc, orc}  : XL-form
+  s{r,l}d, and srad[i]					: X-form
 
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the '-d
-in_asm,op' flag.
+The changes were verified by validating that the TCG ops generated by
+these instructions remain the same after these changes. The TCG
+micro-ops were captured with the '-d op,in_asm' QEMU flag.
 
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Move all shift insntructions to one place in insn32.decode
+
+Signed-off-by: Sathvika Vasireddy <sv@linux.ibm.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/insn32.decode                   | 11 ++++
- target/ppc/translate.c                     | 59 ----------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 45 +++++++++++++++++
- 3 files changed, 56 insertions(+), 59 deletions(-)
+ target/ppc/helper.h                        |  2 +-
+ target/ppc/insn32.decode                   | 12 ++-
+ target/ppc/int_helper.c                    |  2 +-
+ target/ppc/translate.c                     | 96 ----------------------
+ target/ppc/translate/fixedpoint-impl.c.inc | 72 ++++++++++++++++
+ 5 files changed, 82 insertions(+), 102 deletions(-)
 
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index d4a9334ce8..e7bf43bf4b 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -74,7 +74,7 @@ DEF_HELPER_FLAGS_1(CBCDTD, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_2(CMPEQB, TCG_CALL_NO_RWG_SE, i32, tl, tl)
+ DEF_HELPER_FLAGS_1(POPCNTW, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_2(BPERMD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+-DEF_HELPER_3(srad, tl, env, tl, tl)
++DEF_HELPER_3(SRAD, tl, env, tl, tl)
+ DEF_HELPER_FLAGS_0(DARN32, TCG_CALL_NO_RWG, tl)
+ DEF_HELPER_FLAGS_0(DARN64, TCG_CALL_NO_RWG, tl)
+ #endif
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 137432ed96..5e5490b169 100644
+index f928cd6602..12fb4974e4 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -516,6 +516,17 @@ CFUGED          011111 ..... ..... ..... 0011011100 -   @X
- PDEPD           011111 ..... ..... ..... 0010011100 -   @X
- PEXTD           011111 ..... ..... ..... 0010111100 -   @X
+@@ -119,7 +119,7 @@
  
-+## Condition Register Instructions
-+
-+CRAND           010011 ..... ..... ..... 0100000001 -  @X
-+CROR            010011 ..... ..... ..... 0111000001 -  @X
-+CRNAND          010011 ..... ..... ..... 0011100001 -  @X
-+CRXOR           010011 ..... ..... ..... 0011000001 -  @X
-+CRNOR           010011 ..... ..... ..... 0000100001 -  @X
-+CREQV           010011 ..... ..... ..... 0100100001 -  @X
-+CRANDC          010011 ..... ..... ..... 0010000001 -  @X
-+CRORC           010011 ..... ..... ..... 0110100001 -  @X
-+
- # Fixed-Point Hash Instructions
+ # XS-form with fractured shift amount
+ %xs_sh           1:1 11:5
+-&XS              rs ra sh rc
++&XS              rs ra sh rc:bool
+ @XS              ...... rs:5 ra:5 ..... ......... . rc:1        &XS sh=%xs_sh
  
- HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 59e8ecb262..c5361d8db5 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2920,53 +2920,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
-     tcg_gen_movi_tl(cpu_lr, nip);
+ %x_frtp         22:4 !function=times_2
+@@ -512,6 +512,13 @@ SRW             011111 ..... ..... ..... 1000011000 .   @X_rc
+ SRAW            011111 ..... ..... ..... 1100011000 .   @X_rc
+ SRAWI           011111 ..... ..... ..... 1100111000 .   @X_rc
+ 
++SLD             011111 ..... ..... ..... 0000011011 .   @X_rc
++SRD             011111 ..... ..... ..... 1000011011 .   @X_rc
++SRAD            011111 ..... ..... ..... 1100011010 .   @X_rc
++SRADI           011111 ..... ..... ..... 110011101 . .  @XS
++
++EXTSWSLI        011111 ..... ..... ..... 110111101 . .  @XS
++
+ ## BCD Assist
+ 
+ ADDG6S          011111 ..... ..... ..... - 001001010 -  @X
+@@ -1379,9 +1386,6 @@ DST             011111 ----- ..... ..... 0101010110 -   @X_ea
+ DSTST           011111 ----- ..... ..... 0101110110 -   @X_ea
+ DSS             011111 ----- ..... ..... 1100110110 -   @X_ea
+ 
+-##Extend Sign Word and Shift Left Immediate XS-form
+-EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+-
+ ## Load and Reserve Instructions
+ LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
+ LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
+diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+index b161f930ec..8e8076a92c 100644
+--- a/target/ppc/int_helper.c
++++ b/target/ppc/int_helper.c
+@@ -261,7 +261,7 @@ target_ulong helper_SRAW(CPUPPCState *env, target_ulong value,
  }
  
--/***                      Condition register logical                       ***/
--#define GEN_CRLOGIC(name, tcg_op, opc)                                        \
--static void glue(gen_, name)(DisasContext *ctx)                               \
--{                                                                             \
--    uint8_t bitmask;                                                          \
--    int sh;                                                                   \
--    TCGv_i32 t0, t1;                                                          \
--    sh = (crbD(ctx->opcode) & 0x03) - (crbA(ctx->opcode) & 0x03);             \
--    t0 = tcg_temp_new_i32();                                                  \
--    if (sh > 0)                                                               \
--        tcg_gen_shri_i32(t0, cpu_crf[crbA(ctx->opcode) >> 2], sh);            \
--    else if (sh < 0)                                                          \
--        tcg_gen_shli_i32(t0, cpu_crf[crbA(ctx->opcode) >> 2], -sh);           \
--    else                                                                      \
--        tcg_gen_mov_i32(t0, cpu_crf[crbA(ctx->opcode) >> 2]);                 \
--    t1 = tcg_temp_new_i32();                                                  \
--    sh = (crbD(ctx->opcode) & 0x03) - (crbB(ctx->opcode) & 0x03);             \
--    if (sh > 0)                                                               \
--        tcg_gen_shri_i32(t1, cpu_crf[crbB(ctx->opcode) >> 2], sh);            \
--    else if (sh < 0)                                                          \
--        tcg_gen_shli_i32(t1, cpu_crf[crbB(ctx->opcode) >> 2], -sh);           \
--    else                                                                      \
--        tcg_gen_mov_i32(t1, cpu_crf[crbB(ctx->opcode) >> 2]);                 \
--    tcg_op(t0, t0, t1);                                                       \
--    bitmask = 0x08 >> (crbD(ctx->opcode) & 0x03);                             \
--    tcg_gen_andi_i32(t0, t0, bitmask);                                        \
--    tcg_gen_andi_i32(t1, cpu_crf[crbD(ctx->opcode) >> 2], ~bitmask);          \
--    tcg_gen_or_i32(cpu_crf[crbD(ctx->opcode) >> 2], t0, t1);                  \
--}
--
--/* crand */
--GEN_CRLOGIC(crand, tcg_gen_and_i32, 0x08);
--/* crandc */
--GEN_CRLOGIC(crandc, tcg_gen_andc_i32, 0x04);
--/* creqv */
--GEN_CRLOGIC(creqv, tcg_gen_eqv_i32, 0x09);
--/* crnand */
--GEN_CRLOGIC(crnand, tcg_gen_nand_i32, 0x07);
--/* crnor */
--GEN_CRLOGIC(crnor, tcg_gen_nor_i32, 0x01);
--/* cror */
--GEN_CRLOGIC(cror, tcg_gen_or_i32, 0x0E);
--/* crorc */
--GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D);
--/* crxor */
--GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06);
--
- /***                           System linkage                              ***/
- 
- /* rfi (supervisor only) */
-@@ -5109,18 +5062,6 @@ GEN_STEPX(stw, DEF_MEMOP(MO_UL), 0x1F, 0x04)
- GEN_STEPX(std, DEF_MEMOP(MO_UQ), 0x1D, 0x04)
+ #if defined(TARGET_PPC64)
+-target_ulong helper_srad(CPUPPCState *env, target_ulong value,
++target_ulong helper_SRAD(CPUPPCState *env, target_ulong value,
+                          target_ulong shift)
+ {
+     int64_t ret;
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 7e7ef4e32d..45418b4de5 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2313,95 +2313,6 @@ static void gen_rldimi(DisasContext *ctx, int mbn, int shn)
+ GEN_PPC64_R4(rldimi, 0x1E, 0x06);
  #endif
  
--#undef GEN_CRLOGIC
--#define GEN_CRLOGIC(name, tcg_op, opc)                                        \
--GEN_HANDLER(name, 0x13, 0x01, opc, 0x00000001, PPC_INTEGER)
--GEN_CRLOGIC(crand, tcg_gen_and_i32, 0x08),
--GEN_CRLOGIC(crandc, tcg_gen_andc_i32, 0x04),
--GEN_CRLOGIC(creqv, tcg_gen_eqv_i32, 0x09),
--GEN_CRLOGIC(crnand, tcg_gen_nand_i32, 0x07),
--GEN_CRLOGIC(crnor, tcg_gen_nor_i32, 0x01),
--GEN_CRLOGIC(cror, tcg_gen_or_i32, 0x0E),
--GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D),
--GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06),
+-/***                             Integer shift                             ***/
 -
- #undef GEN_MAC_HANDLER
- #define GEN_MAC_HANDLER(name, opc2, opc3)                                     \
- GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_405_MAC)
+-
+-#if defined(TARGET_PPC64)
+-/* sld & sld. */
+-static void gen_sld(DisasContext *ctx)
+-{
+-    TCGv t0, t1;
+-
+-    t0 = tcg_temp_new();
+-    /* AND rS with a mask that is 0 when rB >= 0x40 */
+-    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x39);
+-    tcg_gen_sari_tl(t0, t0, 0x3f);
+-    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
+-    t1 = tcg_temp_new();
+-    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x3f);
+-    tcg_gen_shl_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+-    }
+-}
+-
+-/* srad & srad. */
+-static void gen_srad(DisasContext *ctx)
+-{
+-    gen_helper_srad(cpu_gpr[rA(ctx->opcode)], tcg_env,
+-                    cpu_gpr[rS(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+-    }
+-}
+-/* sradi & sradi. */
+-static inline void gen_sradi(DisasContext *ctx, int n)
+-{
+-    int sh = SH(ctx->opcode) + (n << 5);
+-    TCGv dst = cpu_gpr[rA(ctx->opcode)];
+-    TCGv src = cpu_gpr[rS(ctx->opcode)];
+-    if (sh == 0) {
+-        tcg_gen_mov_tl(dst, src);
+-        tcg_gen_movi_tl(cpu_ca, 0);
+-        if (is_isa300(ctx)) {
+-            tcg_gen_movi_tl(cpu_ca32, 0);
+-        }
+-    } else {
+-        TCGv t0;
+-        tcg_gen_andi_tl(cpu_ca, src, (1ULL << sh) - 1);
+-        t0 = tcg_temp_new();
+-        tcg_gen_sari_tl(t0, src, TARGET_LONG_BITS - 1);
+-        tcg_gen_and_tl(cpu_ca, cpu_ca, t0);
+-        tcg_gen_setcondi_tl(TCG_COND_NE, cpu_ca, cpu_ca, 0);
+-        if (is_isa300(ctx)) {
+-            tcg_gen_mov_tl(cpu_ca32, cpu_ca);
+-        }
+-        tcg_gen_sari_tl(dst, src, sh);
+-    }
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, dst);
+-    }
+-}
+-
+-static void gen_sradi0(DisasContext *ctx)
+-{
+-    gen_sradi(ctx, 0);
+-}
+-
+-static void gen_sradi1(DisasContext *ctx)
+-{
+-    gen_sradi(ctx, 1);
+-}
+-
+-/* srd & srd. */
+-static void gen_srd(DisasContext *ctx)
+-{
+-    TCGv t0, t1;
+-
+-    t0 = tcg_temp_new();
+-    /* AND rS with a mask that is 0 when rB >= 0x40 */
+-    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x39);
+-    tcg_gen_sari_tl(t0, t0, 0x3f);
+-    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
+-    t1 = tcg_temp_new();
+-    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x3f);
+-    tcg_gen_shr_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+-    }
+-}
+-#endif
+-
+ /***                           Addressing modes                            ***/
+ /* Register indirect with immediate index : EA = (rA|0) + SIMM */
+ static inline void gen_addr_imm_index(DisasContext *ctx, TCGv EA,
+@@ -5671,13 +5582,6 @@ GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER(sld, 0x1F, 0x1B, 0x00, 0x00000000, PPC_64B),
+-GEN_HANDLER(srad, 0x1F, 0x1A, 0x18, 0x00000000, PPC_64B),
+-GEN_HANDLER2(sradi0, "sradi", 0x1F, 0x1A, 0x19, 0x00000000, PPC_64B),
+-GEN_HANDLER2(sradi1, "sradi", 0x1F, 0x1B, 0x19, 0x00000000, PPC_64B),
+-GEN_HANDLER(srd, 0x1F, 0x1B, 0x10, 0x00000000, PPC_64B),
+-#endif
+ /* handles lfdp, lxsd, lxssp */
+ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+ /* handles stfdp, stxsd, stxssp */
 diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 11d919a21a..d0b3bda97f 100644
+index 234404e459..9f669894a3 100644
 --- a/target/ppc/translate/fixedpoint-impl.c.inc
 +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -539,6 +539,51 @@ static bool trans_MFCR(DisasContext *ctx, arg_MFCR *a)
+@@ -486,6 +486,76 @@ static bool do_add_const_XO(DisasContext *ctx, arg_XO_ta *a, TCGv const_val,
      return true;
  }
  
-+static bool cr_logic_common(DisasContext *ctx, arg_X *a,
-+                            void (*tcg_op)(TCGv_i32, TCGv_i32, TCGv_i32))
++static bool do_shift_X_rc(DisasContext *ctx, arg_X_rc *a,
++                                void(*op)(TCGv, TCGv, TCGv))
 +{
-+    uint8_t bitmask;
-+    int sh;
-+    TCGv_i32 t0, t1;
-+    sh = (a->rt & 0x03) - (a->ra & 0x03);
-+    t0 = tcg_temp_new_i32();
-+    t1 = tcg_temp_new_i32();
++    REQUIRE_64BIT(ctx);
++#if defined(TARGET_PPC64)
++    TCGv t0 = tcg_temp_new();
++    TCGv t1 = tcg_temp_new();
 +
-+    if (sh > 0) {
-+        tcg_gen_shri_i32(t0, cpu_crf[a->ra >> 2], sh);
-+    } else if (sh < 0) {
-+        tcg_gen_shli_i32(t0, cpu_crf[a->ra >> 2], -sh);
-+    } else {
-+        tcg_gen_mov_i32(t0, cpu_crf[a->ra >> 2]);
++    /* AND rt with a mask that is 0 when rb >= 0x40 */
++    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x39);
++    tcg_gen_sari_tl(t0, t0, 0x3f);
++    tcg_gen_andc_tl(t0, cpu_gpr[a->rt], t0);
++    tcg_gen_andi_tl(t1, cpu_gpr[a->rb], 0x3f);
++    op(cpu_gpr[a->ra], t0, t1);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
 +    }
-+
-+    sh = (a->rt & 0x03) - (a->rb & 0x03);
-+    if (sh > 0) {
-+        tcg_gen_shri_i32(t1, cpu_crf[a->rb >> 2], sh);
-+    } else if (sh < 0) {
-+        tcg_gen_shli_i32(t1, cpu_crf[a->rb >> 2], -sh);
-+    } else {
-+        tcg_gen_mov_i32(t1, cpu_crf[a->rb >> 2]);
-+    }
-+    tcg_op(t0, t0, t1);
-+
-+    bitmask = 0x08 >> (a->rt & 0x03);
-+    tcg_gen_andi_i32(t0, t0, bitmask);
-+    tcg_gen_andi_i32(t1, cpu_crf[a->rt >> 2], ~bitmask);
-+    tcg_gen_or_i32(cpu_crf[a->rt >> 2], t0, t1);
-+
++#else
++    qemu_build_not_reached();
++#endif
 +    return true;
 +}
 +
-+TRANS(CRAND, cr_logic_common, tcg_gen_and_i32);
-+TRANS(CROR, cr_logic_common, tcg_gen_or_i32);
-+TRANS(CRXOR, cr_logic_common, tcg_gen_xor_i32);
-+TRANS(CRNAND, cr_logic_common, tcg_gen_nand_i32);
-+TRANS(CRNOR, cr_logic_common, tcg_gen_nor_i32);
-+TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
-+TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
-+TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
++static bool trans_SRAD(DisasContext *ctx, arg_SRAD *a)
++{
++    REQUIRE_64BIT(ctx);
++#if defined(TARGET_PPC64)
++    gen_helper_SRAD(cpu_gpr[a->ra], tcg_env, cpu_gpr[a->rt], cpu_gpr[a->rb]);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
++    }
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
 +
- static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
-                      bool compute_ov, bool compute_rc0)
++static bool trans_SRADI(DisasContext *ctx, arg_SRADI *a)
++{
++    REQUIRE_64BIT(ctx);
++#if defined(TARGET_PPC64)
++    int sh = a->sh;
++    TCGv dst = cpu_gpr[a->ra];
++    TCGv src = cpu_gpr[a->rs];
++    if (sh == 0) {
++        tcg_gen_mov_tl(dst, src);
++        tcg_gen_movi_tl(cpu_ca, 0);
++        if (is_isa300(ctx)) {
++            tcg_gen_movi_tl(cpu_ca32, 0);
++        }
++    } else {
++        TCGv t0 = tcg_temp_new();
++        tcg_gen_andi_tl(cpu_ca, src, (1ULL << sh) - 1);
++        tcg_gen_sari_tl(t0, src, TARGET_LONG_BITS - 1);
++        tcg_gen_and_tl(cpu_ca, cpu_ca, t0);
++        tcg_gen_setcondi_tl(TCG_COND_NE, cpu_ca, cpu_ca, 0);
++        if (is_isa300(ctx)) {
++            tcg_gen_mov_tl(cpu_ca32, cpu_ca);
++        }
++        tcg_gen_sari_tl(dst, src, sh);
++    }
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, dst);
++    }
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
+ TRANS(ADD, do_add_XO, false, false);
+ TRANS(ADDC, do_add_XO, false, true);
+ TRANS(ADDE, do_add_XO, true, true);
+@@ -493,6 +563,8 @@ TRANS(ADDME, do_add_const_XO, tcg_constant_tl(-1LL), true, true);
+ TRANS(ADDZE, do_add_const_XO, tcg_constant_tl(0), true, true);
+ TRANS(ADDIC, do_add_D, false, true, false, false);
+ TRANS(ADDIC_, do_add_D, false, true, false, true);
++TRANS(SLD, do_shift_X_rc, tcg_gen_shl_tl);
++TRANS(SRD, do_shift_X_rc, tcg_gen_shr_tl);
+ 
+ static bool trans_SUBFIC(DisasContext *ctx, arg_D *a)
  {
 -- 
 2.55.0
