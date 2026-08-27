@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F69C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA4FAC61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzarZ-0002eZ-9r; Thu, 27 Aug 2026 10:13:53 -0400
+	id 1wzarW-0002dp-7O; Thu, 27 Aug 2026 10:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarW-0002dq-9U
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:50 -0400
+ id 1wzarS-0002d2-Dw
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarN-0005hX-CD
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:50 -0400
+ id 1wzarM-0005h5-DJ
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840020;
+ s=mimecast20190719; t=1787840019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Fw4f0kzvVqy0S6njX9tdZ399Ssuq2ixYN/WFdO9R4bo=;
- b=cvuY0/wC0Fl79VWHoyBDdbHXA/f8phV/M+6bx5YbCgVNRSPzSeT3Fcju4/vBs7HY6oJh2c
- qEu3gn0kTnDLu8ez6kmh0IrqnCvaAYBdjCgyJpVJhW3VcJtcJbJaZdAnjhoDRIFvt4lH8R
- reW4S1JTSeuclIMiTwqZpZEa1XL2LVA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M2i19n0p9YgArVOv8vKeFeUdAlRf+ZdvKQUP5HpsMcQ=;
+ b=S0mxHqnbZ/7YaChqWmbDuxcNxukc096070EzfDMbetbsJhsCaa5OCoauvJ77J5XLg4CpUi
+ t3f+D9nsDhaGLNgzu6/jetEpjwPqAtneQg1IO4EthpLHbGeKhtuHP0T4XIJCmhopF38rQ8
+ wQulc60njVl6zcol8i1x5n8GP2qzIAU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-NMTz3KY1NK65hJiqu_G0JA-1; Thu, 27 Aug 2026 10:13:25 -0400
-X-MC-Unique: NMTz3KY1NK65hJiqu_G0JA-1
-X-Mimecast-MFC-AGG-ID: NMTz3KY1NK65hJiqu_G0JA_1787840004
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49b64e98e94so5255825e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:25 -0700 (PDT)
+ us-mta-486-1WgA5uQRNTuMI7iSWZZv-A-1; Thu, 27 Aug 2026 10:13:37 -0400
+X-MC-Unique: 1WgA5uQRNTuMI7iSWZZv-A-1
+X-Mimecast-MFC-AGG-ID: 1WgA5uQRNTuMI7iSWZZv-A_1787840017
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47eaa4006a1so510332f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787840004; x=1788444804; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Fw4f0kzvVqy0S6njX9tdZ399Ssuq2ixYN/WFdO9R4bo=;
- b=qvmmb7FzKpTR5YQxMiCdgNKeUmyWIKsfELCDnPtl9zwIBs4nvbw2CC+Xhdy4q251vH
- 1NVRHpp9TCwfUvmgt+ky98rEusuOBEC7M1ByxlPRZoN8vyd7+igkyLMi6DbuuGbfIxDD
- hL+M6N1NHlGgWmn/PE4CrrsAVStJxWnti/cYI2OW8VqrDENnf7asg3U6nZMq7VgyvhCX
- 1N564O7Du683n5kotkq/NC04ebJ/+xl4dKU2/KNUlfuUgN+A9gh6Mn6XXictZ8qVacIF
- U0NViFOvfAYe8UPRTol2AhWd2tjpRk4RrLoHVQo+0SeYTeVhDnsrkcnFiDnMzoPqdpTy
- Nhmw==
+ d=redhat.com; s=google; t=1787840016; x=1788444816; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=M2i19n0p9YgArVOv8vKeFeUdAlRf+ZdvKQUP5HpsMcQ=;
+ b=QnEN0fG8fhdvRrL2QGCtk1RH/nuxv3RQOO/a9Mc+qp34/IZgQro9hiDWBnnyhy/J3p
+ YZKOGPUe3uvmbkFhHsRXBTkT2lv7zdceo1cbAfe07qA0M68Yxw7elZehVs1gdD4z6WK9
+ +Ae9ZToz7Pfn7m36+bSks/zgcvRjfU8I+hEU/AbUaintFqHCqpnmlCiun1/QaWgbdrWN
+ JyoWfqCM+6MwPwQXPMu9HxDU/pqf86UVmD3W8voiGAPw4/BlTNtWmxYwuQkA2wtSSPQ/
+ ACozSsUrcM/JtmuiYey569iFba3agb9Kn9R1ncvNNEWmyRXbftr2Cv6qb5Ql+Jy9cxYg
+ slsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787840004; x=1788444804;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Fw4f0kzvVqy0S6njX9tdZ399Ssuq2ixYN/WFdO9R4bo=;
- b=PFdQjIR7aqZHplXBSwFU6qodlKDZ18QUHZZgFiQDYNsKyvypT939QI24yR1E+lltJt
- nWkvR8SMV+GOcAiWUVJaa4HrJOxL0EAwSWAoDeEBb20JzPLeoFWUo0Z6lH6SXupaJyrh
- AkXn5n2/4IiMaWtstithPLK9LnA6K1vHcKJbzcniJNAzvaMo4l/aX8mJHPTzFjjbZtoW
- vSwHykOILIWcqcSLDeTXpzoUyBspYqzTE5GiZNljNYPUVE1R4LuJY8VGRNtxIAdyC83y
- cgEue+qSv55tq6nLEvmVAudaAOt1A4/cTlGiptsORhmOusvpKunxRDZjNUzbVUEO8Nca
- PRbw==
-X-Gm-Message-State: AFuF++lHv5gbbJ60y2Q0CNOjzCTsFCCtPPEPH3xzuhYv5zNM3gDlHx0u
- wn4ZJHUYIk6OPcrzxV03X+ERJDR7DDkRjoIHAob8p6HizqrNq5FvGNKsuVI9cqkE6TsmrK8tJvb
- ePiuoqkYQUhmz2YRcFPa6mvqTyQOxuHClw5eiP/6D0IIxgsK3tDEGwx1Nodel23SGNR7OfOT68S
- UNm3iudZjkKjczDim5wJ9mJ7xQlMtG2E4yWQmPvXOO
-X-Gm-Gg: AR+sD11KF2xo4rV0l1YAYZUjOEDw8cLmckvmoCc/GhcFrb2phkimwakTSL27z+ho4z+
- oomF76+t3wTjGOpWwDgEmwmxSgz4plM5YFM8Kz8oFbDLb6VYOZAN+V9YtyVrkt0hp6zQLqKlRny
- 9hcYb45FTDzFYlxraUnF/IV3/+6GE+cFBABvtd1ePzCYQYZjvnQFmbnO9pgvbSmcVuSnni+5+fh
- /mFfkCClmXmUdtAmBjNLMDUnz4pqt3JgrK+Zqq4WNGS2u8qlPzsDkCsGTT0c1uhxoYC9uqfKgfo
- OvRyQWWCevvXD9vqAxOTn1xXFRYA6YUwIH8KqWAo7R1wFcRTrC5bZuc4Je7kuIKDGoGZTynu1qv
- k4RoyckcZKqhUA/RjM+wDIZmvY4ce91y3zb4QPDMx6O6ivH0FgSZuN1+bdP/HwQQEoSzusarzqg
- XGXPs=
-X-Received: by 2002:a05:600c:3e8e:b0:499:5f80:83ac with SMTP id
- 5b1f17b1804b1-49b0dfd7d2cmr95427445e9.7.1787840004140; 
- Thu, 27 Aug 2026 07:13:24 -0700 (PDT)
-X-Received: by 2002:a05:600c:3e8e:b0:499:5f80:83ac with SMTP id
- 5b1f17b1804b1-49b0dfd7d2cmr95426525e9.7.1787840003602; 
- Thu, 27 Aug 2026 07:13:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787840016; x=1788444816;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=M2i19n0p9YgArVOv8vKeFeUdAlRf+ZdvKQUP5HpsMcQ=;
+ b=oLxqxsve57/yGamlH3243xRE53JxGDj9qXthvtfrImcpXNc99lEBWT8Q7ypecBQ4mY
+ c4pQFGWzi6dN8aVLXzHpyNElAPn7oWpesWuCidpIC/KZ0C3ml7O6vKcOMjsfTAporYwz
+ I0jkLxCFeZf6/RtXESaY7r0cDiG0N6F2qnwWJeD0PgQbCIAH1hok7J5jHBHIgNmLAVr6
+ TUtMeb5VFdEOG51Z9v3/5zsq+svJqhc7ZlRkgWk1q1Qg5GGLWlsHTXPZw0H2zFhtfeF2
+ ukS2bNU4niBQa+iMx4Lgkz3ZKNsZMIzLLisUT6ESQOFChJkmert1jXTsHw/8qjV9zkqx
+ Gzzw==
+X-Gm-Message-State: AFuF++mF9MwRxpzQBXnXyk317/ZczBsBQ27zTQTKfROamsbduz54vah1
+ hqZJNHxsOScnq/d39QRKldYmWaP/1qzFcnkbz1dAmC3V3QjoGXXSb7o9IlXXO4dPssooXiNd0fj
+ RiPHIifEIf1cB8YPKwnpXY0ZpbSXRzrmaNI6AVCYQdsA9bZRPq1AHA6OTMWC7UdgLgplEFwqq1x
+ w9Nmlu9aU81TPXEVBN49o+HzQVpwOySo08RNOy3v8M
+X-Gm-Gg: AR+sD108dAjG7aFrTIjw2x6QXhNrFUgYOhIJmtkVCxX8D5WZNDZxYldiCCYNuHr3L2l
+ DY2lpSeuelE19lch04Zg29lxXiBZfHi/k5VE/ViQNjf4nuGkyHjSeMuR8+vU3douTxLRtpizEoP
+ qQRsXZnORQvcoQLz7njAdvYo0YTRHlrrFErooeaQJaPjOyC32p17Rb3MgCjdpfsoINsvHvLBCD+
+ f1u5Aql8JeDkn1P2kRhl4t2xctrWqxVAOyFoBqv+SAnyL9YGRZNVuowkpPL47QQEei5I9CvAmVC
+ eCU3aU23wbYTJV3kFTQEEZUD6cNSCi5y5uAHYHQ/ZshuOsXFunKreM1Uk9ZAkDsxLmwJAFM+XzA
+ SPujcndsBrPMC2WzUkEuIJWgzjXxRwDlxsYbmmkm7gl3Gq6aKv/YTjNicVjVBDFTaEiPg3B/WgZ
+ yewZs=
+X-Received: by 2002:a5d:5847:0:b0:482:dd86:348 with SMTP id
+ ffacd0b85a97d-482eab6a866mr9268106f8f.4.1787840016474; 
+ Thu, 27 Aug 2026 07:13:36 -0700 (PDT)
+X-Received: by 2002:a5d:5847:0:b0:482:dd86:348 with SMTP id
+ ffacd0b85a97d-482eab6a866mr9268007f8f.4.1787840015887; 
+ Thu, 27 Aug 2026 07:13:35 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b4961004bsm67496225e9.4.2026.08.27.07.13.22
+ ffacd0b85a97d-482e28fe2ecsm9325731f8f.37.2026.08.27.07.13.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:13:23 -0700 (PDT)
+ Thu, 27 Aug 2026 07:13:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/23] scripts: rename variable in
- scripts/get-wraps-from-cargo-registry.py
-Date: Thu, 27 Aug 2026 16:12:51 +0200
-Message-ID: <20260827141314.1099352-4-pbonzini@redhat.com>
+Subject: [PULL 07/23] scripts: add functionality to update wrap files from
+ Cargo.lock
+Date: Thu, 27 Aug 2026 16:12:55 +0200
+Message-ID: <20260827141314.1099352-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
 References: <20260827141314.1099352-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,105 +121,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do first the change that makes the diff larger than it should be.
+.wrap files and Cargo.lock contain pretty much the same information.
+QEMU uses the former to make it easier for distros to use a local
+registry, and also because Meson <1.13 does not use Cargo.lock for
+the "meson subprojects" command.  This however introduces an
+inconvenience when running "cargo update", in that the wrap
+files have to be updated by hand.
+
+Add the possibility to get new versions from Cargo.lock and not
+just from a local registry, thus automating the update.
+
+For now, only existing wrap files are modified.  This means
+that semver-breaking updates need to be done (at least partly)
+by hand; it is enough to rename the wrap file prior to running
+the script.
+
+While the need for this script is a lot smaller with Meson 1.13, it
+would still remain useful for packages that have a patch directory.
+Perhaps a bit overengineered, but since we have it...
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/get-wraps-from-cargo-registry.py | 32 ++++++++++++------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ scripts/get-wraps-from-cargo-registry.py | 77 +++++++++++++++++++++---
+ 1 file changed, 69 insertions(+), 8 deletions(-)
 
 diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps-from-cargo-registry.py
-index 84c652127f9..0095bd937ec 100755
+index 636e4ba3474..b3ae5a2c284 100755
 --- a/scripts/get-wraps-from-cargo-registry.py
 +++ b/scripts/get-wraps-from-cargo-registry.py
-@@ -47,20 +47,20 @@ def find_installed_crate(self, namever: str) -> str | None:
-         matches = sorted(glob.glob(f"{path}.*"))
-         return os.path.basename(matches[0]) if matches else None
+@@ -3,7 +3,8 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
--    def compare_build_rs(self, orig_dir: str, registry_namever: str) -> None:
-+    def compare_build_rs(self, orig_dir: str, source_namever: str) -> None:
-         """Warn if the build.rs in the original directory differs from the registry version."""
-         orig_build_rs = os.path.join(orig_dir, "build.rs")
--        new_build_rs = os.path.join(self.cargo_registry, registry_namever, "build.rs")
-+        new_build_rs = os.path.join(self.cargo_registry, source_namever, "build.rs")
+ """
+-get-wraps-from-cargo-registry.py - Update Meson subprojects from a global registry
++get-wraps-from-cargo-registry.py - Update Meson subprojects from a Cargo
++registry or from the versions pinned in Cargo.lock.
+ """
  
-         msg = None
-         if os.path.isfile(orig_build_rs) != os.path.isfile(new_build_rs):
-             if os.path.isfile(orig_build_rs):
--                msg = f"build.rs removed in {registry_namever}"
-+                msg = f"build.rs removed in {source_namever}"
-             if os.path.isfile(new_build_rs):
--                msg = f"build.rs added in {registry_namever}"
-+                msg = f"build.rs added in {source_namever}"
+ # Copyright (C) 2025 Red Hat, Inc.
+@@ -18,6 +19,7 @@
+ import shutil
+ import subprocess
+ import sys
++import tomllib
  
-         elif os.path.isfile(orig_build_rs) and not filecmp.cmp(orig_build_rs, new_build_rs, shallow=False):
--            msg = f"build.rs changed from {orig_dir} to {registry_namever}"
-+            msg = f"build.rs changed from {orig_dir} to {source_namever}"
-             # diff exits non-zero when the files differ, which is expected here
-             subprocess.run(["diff", "-u", orig_build_rs, new_build_rs])
  
-@@ -68,7 +68,7 @@ def compare_build_rs(self, orig_dir: str, registry_namever: str) -> None:
-             print(f"⚠️  Warning: {msg}")
+ def get_name_and_semver(namever: str) -> tuple[str, str]:
+@@ -75,6 +77,49 @@ def rewrite_source(self, section: configparser.SectionProxy, orig_namever: str,
+         return True
+ 
+ 
++class CargoLock(CrateSource):
++    """Locate crates by the versions pinned in a Cargo.lock file."""
++
++    origin = "crates.io"
++
++    def __init__(self, path: str):
++        with open(path, "rb") as f:
++            data = tomllib.load(f)
++
++        self.versions: dict[str, list[str]] = {}
++        self.checksums: dict[str, str] = {}
++        for pkg in data.get("package", []):
++            # workspace members have neither a checksum nor a crates.io tarball
++            if "checksum" not in pkg:
++                continue
++            name, version = pkg["name"], pkg["version"]
++            self.versions.setdefault(name, []).append(version)
++            self.checksums[f"{name}-{version}"] = pkg["checksum"]
++
++    def find(self, namever: str) -> str | None:
++        """Find pinned crate matching name and semver prefix"""
++        name, semver = get_name_and_semver(namever)
++        versions = sorted(self.versions.get(name, []))
++
++        # exact version match
++        if semver in versions:
++            return f"{name}-{semver}"
++
++        # semver match
++        matches = [v for v in versions if v.startswith(f"{semver}.")]
++        return f"{name}-{matches[0]}" if matches else None
++
++    def rewrite_source(self, section: configparser.SectionProxy, orig_namever: str, new_namever: str) -> bool:
++        # rewrite the download keys to fetch the pinned version from crates.io.
++        if orig_namever == new_namever:
++            return False
++        name, version = get_name_and_semver(new_namever)
++        section["source_url"] = f"https://crates.io/api/v1/crates/{name}/{version}/download"
++        section["source_filename"] = f"{new_namever}.tar.gz"
++        section["source_hash"] = self.checksums[new_namever]
++        return True
++
++
+ class UpdateSubprojects:
+     cargo_registry: str
+     source: CrateSource
+@@ -104,12 +149,13 @@ def compare_build_rs(self, orig_dir: str, source_namever: str) -> None:
              print("   This may affect the build process - please review the differences.")
  
--    def update_subproject(self, wrap_file: str, registry_namever: str) -> None:
-+    def update_subproject(self, wrap_file: str, source_namever: str) -> None:
-         """Modify [wrap-file] section to point to self.cargo_registry."""
+     def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+-        """Modify [wrap-file] section to point to self.cargo_registry."""
++        """Modify [wrap-file] section to use the crate resolved as `source_namever`."""
          assert wrap_file.endswith("-rs.wrap")
          wrap_name = wrap_file[:-5]
-@@ -83,18 +83,18 @@ def update_subproject(self, wrap_file: str, registry_namever: str) -> None:
  
-         # do not download the wrap, always use the local copy
-         orig_dir = config["wrap-file"]["directory"]
--        if os.path.exists(orig_dir) and orig_dir != registry_namever:
--            self.compare_build_rs(orig_dir, registry_namever)
-+        if os.path.exists(orig_dir) and orig_dir != source_namever:
-+            self.compare_build_rs(orig_dir, source_namever)
+         env = os.environ.copy()
+-        env["MESON_PACKAGE_CACHE_DIR"] = self.cargo_registry
++        if self.cargo_registry:
++            env["MESON_PACKAGE_CACHE_DIR"] = self.cargo_registry
  
-         if self.dry_run:
--            if orig_dir == registry_namever:
-+            if orig_dir == source_namever:
-                 print(f"Will install {orig_dir} from registry.")
-             else:
--                print(f"Will replace {orig_dir} with {registry_namever}.")
-+                print(f"Will replace {orig_dir} with {source_namever}.")
-             self.changes += 1
-             return
+         config = configparser.ConfigParser()
+         config.read(wrap_file)
+@@ -157,9 +203,15 @@ def parse_cmdline() -> argparse.Namespace:
+         parser = argparse.ArgumentParser(
+             description="Replace Meson subprojects with packages in a Cargo registry"
+         )
++        parser.add_argument(
++            "--cargo-lock",
++            action='store_true',
++            default=False,
++            help="Update wraps from Cargo.lock",
++        )
+         parser.add_argument(
+             "--cargo-registry",
+-            default=os.environ.get("CARGO_REGISTRY"),
++            default=None,
+             help="Path to Cargo registry (default: CARGO_REGISTRY env var)",
+         )
+         parser.add_argument(
+@@ -170,9 +222,15 @@ def parse_cmdline() -> argparse.Namespace:
+         )
  
--        config["wrap-file"]["directory"] = registry_namever
-+        config["wrap-file"]["directory"] = source_namever
-         for key in list(config["wrap-file"].keys()):
-             if key.startswith("source"):
-                 del config["wrap-file"][key]
-@@ -111,10 +111,10 @@ def update_subproject(self, wrap_file: str, registry_namever: str) -> None:
-         with open(wrap_file, "w") as f:
-             config.write(f)
+         args = parser.parse_args()
+-        if not args.cargo_registry:
+-            print("error: CARGO_REGISTRY environment variable not set and --cargo-registry not provided")
++        if args.cargo_registry and args.cargo_lock:
++            print("error: --cargo-registry and --cargo-lock are incompatible")
+             sys.exit(1)
++        if not args.cargo_registry and not args.cargo_lock:
++            args.cargo_registry = os.environ.get("CARGO_REGISTRY")
++            if not args.cargo_registry:
++                print("error: CARGO_REGISTRY environment variable not set and " +
++                      "--cargo-registry or --cargo-lock not provided")
++                sys.exit(1)
  
--        if orig_dir == registry_namever:
-+        if orig_dir == source_namever:
-             print(f"Installing {orig_dir} from registry.")
-         else:
--            print(f"Replacing {orig_dir} with {registry_namever}.")
-+            print(f"Replacing {orig_dir} with {source_namever}.")
+         return args
  
-         subprocess.run(
-             ["meson", "subprojects", "download", wrap_name],
-@@ -162,12 +162,12 @@ def main(self) -> None:
-         for wrap_file in sorted(glob.glob("*-rs.wrap")):
-             namever = wrap_file[:-8]  # Remove '-rs.wrap'
+@@ -180,7 +238,10 @@ def __init__(self, args: argparse.Namespace):
+         self.cargo_registry = args.cargo_registry
+         self.dry_run = args.dry_run
+         self.top_srcdir = os.getcwd()
+-        self.source = CargoRegistry(args.cargo_registry)
++        if args.cargo_lock:
++            self.source = CargoLock(os.path.join(self.top_srcdir, "Cargo.lock"))
++        else:
++            self.source = CargoRegistry(args.cargo_registry)
  
--            registry_namever = self.find_installed_crate(namever)
--            if not registry_namever:
-+            source_namever = self.find_installed_crate(namever)
-+            if not source_namever:
-                 print(f"No installed crate found for {wrap_file}")
+     def main(self) -> None:
+         if not os.path.exists("subprojects"):
+@@ -193,7 +254,7 @@ def main(self) -> None:
+ 
+             source_namever = self.source.find(namever)
+             if not source_namever:
+-                print(f"No installed crate found for {wrap_file}")
++                print(f"No crate found for {wrap_file}")
                  continue
  
--            self.update_subproject(wrap_file, registry_namever)
-+            self.update_subproject(wrap_file, source_namever)
- 
-         if self.changes:
-             if self.dry_run:
+             self.update_subproject(wrap_file, source_namever)
 -- 
 2.55.0
 
