@@ -4,63 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F131BC61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 08:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11ABC5DF9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 08:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzVBz-0002AO-3l; Thu, 27 Aug 2026 04:10:38 -0400
+	id 1wzVM9-0003gc-0Q; Thu, 27 Aug 2026 04:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wzVBu-00029K-29
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:10:30 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wzVBr-0001Hs-IE
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:10:29 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8AxdvDt8I9q7J0FAA--.15758S3;
- Thu, 27 Aug 2026 16:10:21 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJDxE+Ts8I9qTQEUAA--.17362S2;
- Thu, 27 Aug 2026 16:10:20 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: WANG Xuerui <git@xen0n.name>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] tcg/loongarch64: Fix compile issue LoongArch host
-Date: Thu, 27 Aug 2026 16:11:38 +0800
-Message-ID: <20260827081138.1448296-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wzVM6-0003gB-PP
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:21:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wzVM5-0003Lg-6t
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:21:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787818860;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hdSvTeBfLysofWli5ed9Pk2UjOgKDdG69Cf4fAXhbcs=;
+ b=WEue74PwnT9wCqiU4IxWgXaWQpMEqkTmc1hK73ya/DsryfANDG60mnSwys1Egh6yGGr5PD
+ hvU3AHW9RPp8dxFHeKkpPPV2BY1dT+zuyl7GGxWaPaG/gnchY3IM2EBBlDkV+y/0p7yMlW
+ d7TXPLnjzoheeTMBbj1qnva/MGrojSg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-602-9j8kJEi-N4eT-Y3t0D52tA-1; Thu, 27 Aug 2026 04:20:56 -0400
+X-MC-Unique: 9j8kJEi-N4eT-Y3t0D52tA-1
+X-Mimecast-MFC-AGG-ID: 9j8kJEi-N4eT-Y3t0D52tA_1787818855
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49a1b4ea633so5600265e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 01:20:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787818855; x=1788423655;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hdSvTeBfLysofWli5ed9Pk2UjOgKDdG69Cf4fAXhbcs=;
+ b=IkSoH3ZBzvrhxFOYhZGr4+01ZyyllwCYoZvtWPf3w2O7AoBLICGw1vKNV8ekVIswKE
+ cK1Q9ZIKjNq6enYkpj41agQ/aQu0R/uoYJcJwpGUNCYHS7Eu8+qiMa4EBsPJPqggMc08
+ B/5bvJmfwxP6GrVv2+y6TRl3ZLLmmw1xc0jWZytVkgirUSCn/LQ4pANbv8LBBngdTbtb
+ DcW2E3nTjB+jSjms7hKhTU605FvL2a40NPd1ZPgp2Or1K5grCTmEIZEZ7AcnghODQxWR
+ YpYcb0qqzLj2wOf5Pwow9PlfjOpr1u+Yy9V7vsdhIEc9ISocSV0fYQCycngUQ8XviWhG
+ WtWw==
+X-Gm-Message-State: AFuF++kfaI8J8IUxQvjNUaGsui5nB3ka0/qNuYDef3AdWcJ3a4MaI46I
+ 2AdMchHDLBCfSCPjflinlrg8/verK4uSZrglQIbevjFusRh/oVAHEvgE/EPCgHKyrUIbAyZQshe
+ w7krdFlH7klRDocP7ssWpHZXNWzHEyJIWSywWrQSzjaLfGOVCvGyEjsRi
+X-Gm-Gg: AR+sD10wr9wyLBRcBzBzhznJjFa3Y7jX4oYQ55qpQA6dmRowQMjyS83dCBsR8lxipc/
+ QhXpc2gtmxGP7rwKI536L4bC958IIgzzzX6F47Da/VgG0bXGWxbrvDlr8f44CAGIwVpb9e6vvbp
+ 4XPzP7olbp8pIGA/HVHx7gXDN1LqBCFUtfC1rghxeIJuU+AX0K6NPmvbcLGqLjybLBoQmoCp1Yi
+ +RQyAaTbQKKlks+n7P7A+X3jL9iQmbVsBA50am6UfszMce8eoct8UinXvYAnmHuAitjLd9OtY35
+ I+OeIjOUZhr3Z2m9hVc++UbK5LJP8WcCjRW+X3rye1LiNwSWlEXdbX9GpGQt7seV0a1dS6QFIbf
+ BLuTx2rTXGi+KKgsb+GG8PypvrGzirvtBTzYTw38DbIEqgAW2
+X-Received: by 2002:a05:600c:3baa:b0:499:ae94:be05 with SMTP id
+ 5b1f17b1804b1-499dc6a3e86mr169025525e9.0.1787818855213; 
+ Thu, 27 Aug 2026 01:20:55 -0700 (PDT)
+X-Received: by 2002:a05:600c:3baa:b0:499:ae94:be05 with SMTP id
+ 5b1f17b1804b1-499dc6a3e86mr169024705e9.0.1787818854838; 
+ Thu, 27 Aug 2026 01:20:54 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499dd55dd4bsm52286485e9.3.2026.08.27.01.20.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 01:20:53 -0700 (PDT)
+Message-ID: <612d54f3-929a-45bc-9c7c-1e3cbfcd71eb@redhat.com>
+Date: Thu, 27 Aug 2026 10:20:51 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v5 05/28] hw/arm/smmu-common: Add security-aware address
+ space selector
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162410.2805113-5-tangtao1634@phytium.com.cn>
+ <94e049b6-f144-4494-a089-2bef2251ca07@oss.qualcomm.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <94e049b6-f144-4494-a089-2bef2251ca07@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxE+Ts8I9qTQEUAA--.17362S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Gr1DXw1rur1fCry8Cr1Dtwc_yoW8Jr13p3
- 43Zr1rGF4rJayrKwnIyFyjqr1UJwsxuay2qa1fGr1xursI9w1kZa1fGay2qa4Yy348Xayj
- qFs29r1YqFWUAagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
- Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
- 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
- vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
- 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
- kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcyxRUUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,41 +117,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch host machine, qemu fails to compile. The error is something like
-this:
-In file included from ../tcg/tcg.c:1098:
-tcg/loongarch64/tcg-target.c.inc:1896:27: error: expected ‘}’ before ‘;’ token
- 1896 |     .out_rr = tgen_revbit8;
-      |                           ^
-tcg/loongarch64/tcg-target.c.inc:1894:44: note: to match this ‘{’
- 1894 | static const TCGOutOpUnary outop_revbit8 = {
+Hi Tao, Pierrick,
 
-Here fix one small typo issue and pass to compile on LoongArch host.
+On 8/21/26 12:17 AM, Pierrick Bouvier wrote:
+> On 8/13/2026 9:24 AM, Tao Tang wrote:
+>> Introduce SMMU_SEC_SID_S to represent SEC_SID == 1, meaning Secure. And
+>> then provide smmu_get_address_space, a SMMU instance-based address space
+>> selector. The helper returns the per-device memory or secure-memory
+>> AddressSpace selected by SEC_SID.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>  hw/arm/smmu-common.c         | 15 +++++++++++++++
+>>  include/hw/arm/smmu-common.h |  3 +++
+>>  2 files changed, 18 insertions(+)
+>>
+>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+>> index 8e40ba603d3..54a6a9f4d62 100644
+>> --- a/hw/arm/smmu-common.c
+>> +++ b/hw/arm/smmu-common.c
+>> @@ -30,6 +30,21 @@
+>>  #include "hw/arm/smmu-common.h"
+>>  #include "smmu-internal.h"
+>>  
+>> +AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
+>> +{
+>> +    switch (sec_sid) {
+>> +    case SMMU_SEC_SID_NS:
+>> +        return &s->memory_as;
+>> +    case SMMU_SEC_SID_S:
+>> +        g_assert(s->secure_memory);
+>> +        g_assert(s->secure_memory_as.root);
+> This second assert is not needed as we know it was initialized in realize.
+agreed, with that removed
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- tcg/loongarch64/tcg-target.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index f65496a040..69e76807d6 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1893,7 +1893,7 @@ static void tgen_revbit8(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
- 
- static const TCGOutOpUnary outop_revbit8 = {
-     .base.static_constraint = C_O1_I1(r, r),
--    .out_rr = tgen_revbit8;
-+    .out_rr = tgen_revbit8,
- };
- 
- static void tgen_revbit32(TCGContext *s, TCGType type,
-
-base-commit: 324bb5ef83ad5e9026ea3242f99ba53191a7bf3f
--- 
-2.54.0
+Eric
+>
+>> +        return &s->secure_memory_as;
+>> +    case SMMU_SEC_SID_NUM:
+>> +        g_assert_not_reached();
+>> +    }
+>> +    g_assert_not_reached();
+>> +}
+>> +
+>>  /* IOTLB Management */
+>>  
+>>  static guint smmu_iotlb_key_hash(gconstpointer v)
+>> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+>> index 6ea40f6b074..9d6e2d3038f 100644
+>> --- a/include/hw/arm/smmu-common.h
+>> +++ b/include/hw/arm/smmu-common.h
+>> @@ -43,6 +43,7 @@
+>>  /* StreamID Security state */
+>>  typedef enum SMMUSecSID {
+>>      SMMU_SEC_SID_NS = 0,
+>> +    SMMU_SEC_SID_S,
+>>      SMMU_SEC_SID_NUM,
+>>  } SMMUSecSID;
+>>  
+>> @@ -188,6 +189,8 @@ struct SMMUBaseClass {
+>>  #define TYPE_ARM_SMMU "arm-smmu"
+>>  OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
+>>  
+>> +AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid);
+>> +
+>>  /* Return the SMMUPciBus handle associated to a PCI bus number */
+>>  SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
+>>  
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>
 
 
