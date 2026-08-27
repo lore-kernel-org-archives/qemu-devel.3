@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4845C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D70CC61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wziVV-0003AN-V9; Thu, 27 Aug 2026 18:23:37 -0400
+	id 1wziVz-0004nA-Q9; Thu, 27 Aug 2026 18:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziVM-0002z0-T4
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:29 -0400
+ id 1wziVs-0004JY-1q
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:24:00 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziVK-00009d-Rv
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:28 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wziVp-0000FS-FT
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:59 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RJM6Gu1803764
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:25 GMT
+ 67RJLpOF779228
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=vKQsF91/SmX
- gLZpHhfYNxavZhJipHZDXWtiJpZrxATQ=; b=jQfbkvJFNFS0Oj83Eis5ily14pP
- 26L7KtIi3ra+lE2p7D+ooq3Gx6i+qs8Jyu58PSe/k1tosXd22GVgbdcCJpkp4Arg
- V6Cm3A/Ys2rh9+FqH07uJ+cwELpVMWvLVRl6xTPz5V9AK0ZOhWMs1711bQQKDpyR
- 1VXxFG5iRmyoJDaxHzExHdeFQ2eZSS95wvGHWXK2Y5JtitrTn+d7aqQHu4c6EcMo
- ITUSbBcf63nGfI1HEJpT7vxFLkNARQ3bIuI0wOUiCV1LAW9SlM6kirWWF8hQ/tjD
- iDK4tfyEIvh8YC/VNi4oyUWNj/sqWVpxZyWA8kk6ao0fsu89B0R5O7plKMg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gatfxgvwy-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=ckshVDk5gaa
+ jI8YhxWcMEeFXmbjZB7uEPi6KziDY8QI=; b=lglI0G0ih7lqxheFuTaSPbyBEtb
+ 74kP2kp6fE1n2ElR1B0DK9u5wBHhxAZ1zUM9u9a2aWr3B5cnQZCkCVhLleSmoubd
+ yccDYNIWzJMpEaqz6dKhWiNVQnBmXvOzkL8mm6kj2AC7qUSvH56lZia8wlFb48Ek
+ Mrkvc1Onh5SzcYp8PARK0qzKtyD435OovrOxAFNjmyDj7fuuGZhyLiMBCHJY9YwD
+ /g3bygC5euIK/wXd36EbjsA5uNfycFJOFZWcdLTucqqmiAu+neXbktalse/AV74D
+ SaBPgNcGAuhz6YlaqukNUZ6Bk2qb4HZGT9al9fcFX+QKOpnJhVGb5p5Jrpg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4garee1r6y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:25 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2ce8a76df2dso5051545ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:23:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:46 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cc640dfde3so3649425ad.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787869405; x=1788474205; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787869425; x=1788474225; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vKQsF91/SmXgLZpHhfYNxavZhJipHZDXWtiJpZrxATQ=;
- b=b6SI+C0b4j/8ehLEVibI8Ka9w+9BpHDFYvrrXSmzFqgImrzfhZNcIjO2g5yjhxfWiB
- a544CA/8uAmqylfFPj7YM9rmRVNwJFFjUEs3V1qyehY30rL6kcOSo5Bf1lIjB0sYYtgB
- u0ae9GPZEeoKFdorcmhNihBK7yZe/OcHp8qYzgcxI77GgDbXGl6q7HezUDNSuiLCmrp0
- Vm29h9cBa7xh/bKpW34iKPWNWt10rJA3OO7dI32nat3ErcZCmtykABnXLp0cTgP0Y9gU
- N7ZgMDE+27QVmnjZ38FD5O1gbb0simc8qNayp/qfPBovFgaha3Ne6IFCCYRKYycIFX+P
- wGuQ==
+ bh=ckshVDk5gaajI8YhxWcMEeFXmbjZB7uEPi6KziDY8QI=;
+ b=AoiKGQcAXhUME4phYrT1rQNZ5jDUC28otOwixbWmNKMDJR/EpHQ0mBHGjVY7C27iaV
+ bY3m1Uv+lAOvft1K9cJE7LKJ+bZbpg5cWFm52p+54yhC2WelTYoF9JEE8Yc7TGiBaFdb
+ rmVm0TYdTrtcAVEZ2aP+vKCBQ1SZcsJ38TEoWCPR6nt9f1bQ+vjfyXiGMDU+2H0AU1BE
+ J4VwJO6AcIZGBBVJlH+/qLQAYlvgk0w683rJyt5QIWdZuPjGxSZqObRbQDNU3MDT10uK
+ TjTtarz4q3SpNpM3AlWGevG269pq/glaFvgeF6j3UrVgdy6aKerge9LV/BUAsJmPt9sw
+ +7Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787869405; x=1788474205;
+ d=1e100.net; s=20251104; t=1787869425; x=1788474225;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vKQsF91/SmXgLZpHhfYNxavZhJipHZDXWtiJpZrxATQ=;
- b=WV3Ym+b4sgUhKn3xKaz+PdHcAkIETP7JKWHuWV6qbaAKFqbgBc0BtNv4J7KtXm9fxx
- /Lbuo9uamhv1ry3wQE9Kw/Ywb+kWhss0CBOLwlnvskWtMhhi2q7g3LFagHrt+hlsd1Nl
- KMsg0E9+LCGoy3Kk5kNh+sshV2fSy0hsUoos63/taFYtgy7F1IpjWFE4LWXMkphfG4QJ
- j32hmOalGK+YfB6b186bDni+eKe5XLxr/QUWJ+uDFi342xx5pB6rt4wl2QixHQj4znwb
- C7Z54XgHweVYBBZq9w69ndeo1oO92y1U3vbMiTrDil8KC54Hv6UKNuLJGMPrN1LlD9Tf
- OCag==
-X-Gm-Message-State: AFuF++khefGg8XqxSFhjeC4WbkQXS90A4I5xKkcMWkusYE+pj9mOr8sj
- XLFg2RpjNUX6+e6nUrKZc3TeLe1vyvFvW44L1NbmvN3yFPqfOhA9EByoyL2vjrS7VilhcPitxUh
- 5O1hWSmAsag48Q6acMbPlQvhDlrvlDpOeTRVgazVuLV9i9TeRNV9BsBdRmuB2XME6yQ==
-X-Gm-Gg: AR+sD11KiiavBFp1+TgPxEZTPsqePgX6/ggVp2Ycgr+S/jjGbOKfH6mub/rsl7dCob3
- +BiX2liWXKYpFHmJoEfwCnc8AcYqQsn+Pb884vo3Io6cW+F2/xa1LEBkWTd+/53uZZGW2ciuv2o
- g+2yylzGaFQI0TcBYM1yYHAuvfsZkMCu0ixdl3yr01tdMUmJrY4pcY7/Zq/Dl9yk+oE7jG6ioV8
- YsDW83faL1tIKm4NU4dd3s9Fbcpl9E/wuBKvn+wJV0IOMasUZ8NtwwLVRloYYokHoWoR+nol2Gf
- COc22Epse6XHxD2HXrbaNO9nY5578DrhHGjQOQsSPkE255y+9nwzHxHRIsQcbRVhfdFqxkRZ0vm
- dQHAJqgRxGxOSgXVXHzsmPyM3uR+Xpacebe/i66YwZMXmfDZR+/nGff0QOG8=
-X-Received: by 2002:a17:902:fc4d:b0:2c6:9f66:d573 with SMTP id
- d9443c01a7336-2d74dc6e805mr44211455ad.2.1787869404847; 
- Thu, 27 Aug 2026 15:23:24 -0700 (PDT)
-X-Received: by 2002:a17:902:fc4d:b0:2c6:9f66:d573 with SMTP id
- d9443c01a7336-2d74dc6e805mr44210265ad.2.1787869404252; 
- Thu, 27 Aug 2026 15:23:24 -0700 (PDT)
+ bh=ckshVDk5gaajI8YhxWcMEeFXmbjZB7uEPi6KziDY8QI=;
+ b=OZWIDu+SsBzBCYgQeo5IGe85qCpTuZ1T6Sd66MNA/y/z9L2SdUQUHA5yfkj7BNttGz
+ 4U4TJVkVnuRD5AJt95h8C2tJdAHBDT2k2t+L/sWn4nUMYIsk/JrQNilfgkbRfEQXnEH/
+ tX+a6VI+a7EN9Z+M90w97/d3sg32FLV7MLLir/ODC4MeBGeTM8V+O5IiROVZOxzIUaJx
+ PbBamd+idMCvNnXuun484fdTg5BAxBTrtZdGWXcnYNqMJg7shCxc+JaDyabjfibJkOE1
+ wpjphWRu7t5rhN34WohjGvjAJFpQp2sMqQ5hT67PYzjFyIktkAeXK2nBlbjEwVY0HzQ1
+ AXrw==
+X-Gm-Message-State: AFuF++ko/8nuhB5YyEcWoI7HcI2451gvlzwFDxFJ1ZwKptqlrtNjPqW5
+ Dz7TQdZudV0TO183bnxYI3Ca3HlxbYSNqD0M03+mBEfsmbV9xKWPR1YxDae9nCuw+buXPKu88nQ
+ RP/b0gt6ja7d2/EZmJZBx/GsarK+jTUMCz92irOHOhS9VnklKEnmVjahr12lHAEnPEQ==
+X-Gm-Gg: AR+sD12B3N7r4JJewhZ0CekkDRTxBrmmA66KbitD/iK8yv4Vc6TUgpRraw95mwGrhM2
+ qSaA82pYZH0HNGB6lc0eqqI1r4MA4Yfn3saGn+TBM1q16bTubYpCg+zcSj4RSPbLUI09t5qQsU3
+ t3UIM2AjzPgybAlzGyQylmxPORSC1S3n4MkwlXGAu++8JrrCYIBIOJkxj0w5cZOITJUzr7Bcd8/
+ qyEEP07hv9upcYF5wNZaLudmH9oHHCY3JSyE4UhcvosFFEd7czxWatdYSrLG6pGOSnIJk4fF77q
+ PNb4J9wlwM5qzp/OrGW7KeBfOh4v7lKKBi/m51Z0WDfcTlqXnCThYLg61TIBd3r2NKRH5sfyBYp
+ 554JPJe4YoQtSkpB0YmdXdaZgAnzTtelRQDQz4AAMAKRFZLfUl+B9rfx4CKg=
+X-Received: by 2002:a17:903:2f8b:b0:2d3:160b:c01f with SMTP id
+ d9443c01a7336-2d74ddd684cmr36431055ad.6.1787869425334; 
+ Thu, 27 Aug 2026 15:23:45 -0700 (PDT)
+X-Received: by 2002:a17:903:2f8b:b0:2d3:160b:c01f with SMTP id
+ d9443c01a7336-2d74ddd684cmr36430285ad.6.1787869424860; 
+ Thu, 27 Aug 2026 15:23:44 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d70493f729sm20776155ad.2.2026.08.27.15.23.23
+ d9443c01a7336-2d70493f729sm20776155ad.2.2026.08.27.15.23.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 15:23:23 -0700 (PDT)
+ Thu, 27 Aug 2026 15:23:44 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -101,38 +101,38 @@ Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v8 084/105] tests/tcg/s390x: user tests
-Date: Thu, 27 Aug 2026 22:14:45 +0000
-Message-ID: <20260827221506.91574-85-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v8 095/105] tests/tcg/xtensa: system tests
+Date: Thu, 27 Aug 2026 22:14:56 +0000
+Message-ID: <20260827221506.91574-96-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=UKLt2ify c=1 sm=1 tr=0 ts=6a90b8dd cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX6POrV4nhFg1c
+ Qns2CMesfy5Rxt00HlxfjI3bCN56bDSvV+sOJTysnS94IghxzO7CKzVCd52WZJ2nbaZrxFLD0qB
+ hekWL+/gW7QrchB9vMwapMRyZisxFLF6qOpoDwjfg9ATp9A71NQEZSQ5cr/qr7kaGRM8DtZf7ux
+ dlCF1/KdJ3xRh9E3F4BQnbBFyyddtReTQsRej+1ahUdsxF0q7lEW7xnxgADRGel7Zj7z0MytgsJ
+ 4Ai2b2MsqAH2jLVqa30yHbJXdP6/tEdd7s9SuNgU2O7Ie4s+0Dorvaq4XHNo5LFORFzBzKC8jlQ
+ eMtng2seCU4rkOK3maa8+B2QO/05T0cmRLFmCXk7UAgsd6tKajb8sh+eRQzKshhWdgJHa7KLI4T
+ ewR9onYnLsNVNlFHIb6jBjycIwdllrriaEm43vxc3Ukvqd2zQqLWa1gM7d17+ZRk4w2aTNzeCQC
+ rKUpNbEAyudCtCTL46g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX3q1GjArdQMkc
+ qX80xePt61nvVgqsMmag0Sja4BdqfDsc+of/MDk3F10HgOpdV6KZ2nG7HkBihx9hMbqQRKHlUVh
+ kFr6OfBKaqF4p8+5sz5liJAMwY1C0gw=
+X-Proofpoint-ORIG-GUID: 9TQYFp85fWlQpsQbB2XArCexb8b_kj9U
+X-Proofpoint-GUID: 9TQYFp85fWlQpsQbB2XArCexb8b_kj9U
+X-Authority-Analysis: v=2.4 cv=e8E2j6p/ c=1 sm=1 tr=0 ts=6a90b8f2 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=U997BogEOwLcalXFwzwA:9 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: mOPnkliRPQNzxttnq9aui8bOpA0N9O3Z
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX8JrXuSSFVwIp
- h+OMQHjWt0UMaAaVrmtdToN2M1WfHWhEJCJAMmuhKMhEYo62j5jsYz+cKOL4XltA99ZTuHAP0PA
- Jn6+WhAiwJWbQohkF9PtD2kpje/E1EOy0383p7bCM6Osb3Zxuayt4vXJVSbPbxTfC1ibvYCAQ46
- U3fq51I/9pSedYDNLTSKtosTZfjePa4mft/8QEi64fanzfNFsxL8ld8H/XXDaB72WQxmO6I/kTN
- wkyzH8OnaZmTEayy/pTBJpcnUMxcdJBbsmMqmOoZ/O/xrFOU1EAmYBEAjSeIENEf8YmZaATXFV1
- psFL6S5qpBePhozhIUpl2YHY6u+0jgAZv0rHVkn8kM67cBR7N/Le8DiT2igSj+yzRZt9wr2wfVF
- aYxF0Y8r3ygE47XBFbCtWG7RImB2wxDLamRbvgZURuaqWE0D5SSp8sOVosNMBPtCHiVGZONAUN4
- qxed30HTP01PRG2hwBA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX+MTkZTlDmCFJ
- Z13nWdz8CNEec4h5XGI/3jdiwq5QUe8uDvpPXHeuW2TOdd8SvZoG39MjxfocDhJ4Q41lsP0G7PT
- 3llmfNyLyt0sSgayYRdwF/XDAII/fXQ=
-X-Proofpoint-ORIG-GUID: mOPnkliRPQNzxttnq9aui8bOpA0N9O3Z
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=R9K0oc9ZdQARYiJKlRgA:9 a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_08,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+ bulkscore=0 malwarescore=0 suspectscore=0 spamscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270190
 Received-SPF: pass client-ip=205.220.168.131;
@@ -160,310 +160,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+We prepare structure to be able to test multiple cores.
+
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/meson.build           |   1 +
- tests/tcg/s390x/Makefile.target | 129 -----------------------------
- tests/tcg/s390x/meson.build     | 140 ++++++++++++++++++++++++++++++++
- 3 files changed, 141 insertions(+), 129 deletions(-)
- delete mode 100644 tests/tcg/s390x/Makefile.target
- create mode 100644 tests/tcg/s390x/meson.build
+ tests/tcg/meson.build                      |  1 +
+ tests/tcg/xtensa/Makefile.softmmu-target   | 46 -----------
+ tests/tcg/xtensa/meson.build               | 96 ++++++++++++++++++++++
+ tests/tcg/xtensaeb/Makefile.softmmu-target |  2 +-
+ 4 files changed, 98 insertions(+), 47 deletions(-)
+ delete mode 100644 tests/tcg/xtensa/Makefile.softmmu-target
+ create mode 100644 tests/tcg/xtensa/meson.build
 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 1a48b37f75c..6bc2829ba92 100644
+index 163e0a96753..76f8f3e6e02 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -152,6 +152,7 @@ subdir('or1k')
- subdir('ppc64')
- subdir('ppc64le')
- subdir('riscv64')
-+subdir('s390x')
+@@ -156,6 +156,7 @@ subdir('s390x')
+ subdir('sh4')
+ subdir('tricore')
+ subdir('x86_64')
++subdir('xtensa')
  
  image_targets = {}
  exe_targets = []
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+diff --git a/tests/tcg/xtensa/Makefile.softmmu-target b/tests/tcg/xtensa/Makefile.softmmu-target
 deleted file mode 100644
-index 97c0f021902..00000000000
---- a/tests/tcg/s390x/Makefile.target
+index a29571b367c..00000000000
+--- a/tests/tcg/xtensa/Makefile.softmmu-target
 +++ /dev/null
-@@ -1,129 +0,0 @@
--S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
--VPATH+=$(S390X_SRC)
--CFLAGS+=-march=zEC12 -m64
+@@ -1,46 +0,0 @@
+-#
+-# Xtensa system tests
+-#
 -
--%.o: %.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
+-CORE=dc232b
+-ifneq ($(shell $(QEMU) -cpu help | grep -w $(CORE)),)
 -
--config-cc.mak: Makefile
--	$(quiet-@)( \
--	    $(call cc-option,-march=z14, CROSS_CC_HAS_Z14); \
--	    $(call cc-option,-march=z15, CROSS_CC_HAS_Z15)) 3> config-cc.mak
---include config-cc.mak
+-XTENSA_SRC = $(SRC_PATH)/tests/tcg/xtensa
+-XTENSA_ALL = $(filter-out $(XTENSA_SRC)/linker.ld.S,$(wildcard $(XTENSA_SRC)/*.S))
+-XTENSA_TESTS = $(patsubst $(XTENSA_SRC)/%.S, %, $(XTENSA_ALL))
+-# Filter out common blobs and broken tests
+-XTENSA_BROKEN_TESTS  = crt vectors
+-XTENSA_USABLE_TESTS = $(filter-out $(XTENSA_BROKEN_TESTS), $(XTENSA_TESTS))
 -
--TESTS+=hello-s390x
--TESTS+=csst
--TESTS+=ipm
--TESTS+=exrl-trt
--TESTS+=exrl-trtr
--TESTS+=pack
--TESTS+=mie3-compl
--TESTS+=mie3-mvcrl
--TESTS+=mie3-sel
--TESTS+=mvo
--TESTS+=mvc
--TESTS+=shift
--TESTS+=trap
--TESTS+=signals-s390x
--TESTS+=branch-relative-long
--TESTS+=noexec
--TESTS+=div
--TESTS+=clst
--TESTS+=long-double
--TESTS+=cdsg
--TESTS+=chrl
--TESTS+=rxsbg
--TESTS+=ex-relative-long
--TESTS+=ex-branch
--TESTS+=mxdb
--TESTS+=epsw
--TESTS+=larl
--TESTS+=mdeb
--TESTS+=cgebra
--TESTS+=clgebr
--TESTS+=clc
--TESTS+=laalg
--TESTS+=add-logical-with-carry
--TESTS+=lae
--TESTS+=cvd
--TESTS+=cvb
--TESTS+=ts
--TESTS+=ex-smc
--TESTS+=divide-to-integer
--TESTS+=stckf
+-# add to the list of tests
+-TESTS += $(XTENSA_USABLE_TESTS)
+-VPATH += $(XTENSA_SRC)
 -
--cdsg: CFLAGS+=-pthread
--cdsg: LDFLAGS+=-pthread
+-QEMU_OPTS+=-M sim -cpu $(CORE) -nographic -semihosting -icount 6 $(EXTFLAGS) -kernel
 -
--# The following tests contain inline assembly that requires inlining,
--# and thus cannot be built with -O0.
--rxsbg: CFLAGS+=-O2
--divide-to-integer: CFLAGS+=-O2
+-INCLUDE_DIRS = $(SRC_PATH)/target/xtensa/core-$(CORE)
+-XTENSA_INC = $(addprefix -I,$(INCLUDE_DIRS))
 -
--cgebra: LDFLAGS+=-lm
--clgebr: LDFLAGS+=-lm
--divide-to-integer: LDFLAGS+=-lm
+-vectors_ASFLAGS = -mtext-section-literals
+-ASFLAGS = -Wa,--no-absolute-literals
+-LDFLAGS = -Tlinker.ld -nostartfiles -nostdlib
 -
--include $(S390X_SRC)/pgm-specification.mak
--$(PGM_SPECIFICATION_TESTS): pgm-specification-user.o
--$(PGM_SPECIFICATION_TESTS): LDFLAGS+=pgm-specification-user.o
--TESTS += $(PGM_SPECIFICATION_TESTS)
+-CRT        = crt.o vectors.o
+-CLEANFILES += linker.ld
 -
--Z13_TESTS=vistr
--Z13_TESTS+=lcbb
--Z13_TESTS+=locfhr
--Z13_TESTS+=vcksm
--Z13_TESTS+=vstl
--Z13_TESTS+=vrep
--Z13_TESTS+=precise-smc-user
--Z13_TESTS+=prno-trng
--$(Z13_TESTS): CFLAGS+=-march=z13 -O2
--TESTS+=$(Z13_TESTS)
+-linker.ld: linker.ld.S
+-	$(CC) $(XTENSA_INC) -E -P $< -o $@
 -
--ifneq ($(CROSS_CC_HAS_Z14),)
--Z14_TESTS=fma vfminmax
--fma: float.h
--fma: LDFLAGS+=-lm
--vfminmax: LDFLAGS+=-lm
--vfminmax: float.h
--$(Z14_TESTS): CFLAGS+=-march=z14 -O2
--TESTS+=$(Z14_TESTS)
+-$(XTENSA_USABLE_TESTS): linker.ld macros.inc $(CRT) Makefile.softmmu-target
+-
+-# special rule for common blobs
+-%.o: %.S
+-	$(CC) $(XTENSA_INC) $($*_ASFLAGS) $(ASFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
+-
+-%: %.S
+-	$(CC) $(XTENSA_INC) $(ASFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS) $(NOSTDFLAGS) $(CRT)
+-
 -endif
 -
--ifneq ($(CROSS_CC_HAS_Z15),)
--Z15_TESTS=vxeh2_vs
--Z15_TESTS+=vxeh2_vcvt
--Z15_TESTS+=vxeh2_vlstr
--Z15_TESTS+=vxeh2_vstrs
--$(Z15_TESTS): CFLAGS+=-march=z15 -O2
--TESTS+=$(Z15_TESTS)
--endif
--
--ifneq ($(GDB),)
--GDB_SCRIPT=$(SRC_PATH)/tests/guest-debug/run-test.py
--
--run-gdbstub-signals-s390x: signals-s390x
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(S390X_SRC)/gdbstub/test-signals-s390x.py, \
--	mixing signals and debugging)
--
--hello-s390x-asm: CFLAGS+=-nostdlib
--
--run-gdbstub-svc: hello-s390x-asm
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(S390X_SRC)/gdbstub/test-svc.py, \
--	single-stepping svc)
--
--EXTRA_RUNS += run-gdbstub-signals-s390x run-gdbstub-svc
--endif
--
--# MVX versions of sha512
--sha512-mvx: CFLAGS=-march=z13 -mvx -O3
--sha512-mvx: sha512.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
--
--TESTS+=sha512-mvx
-diff --git a/tests/tcg/s390x/meson.build b/tests/tcg/s390x/meson.build
+-# We don't currently support the multiarch system tests
+-undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/xtensa/meson.build b/tests/tcg/xtensa/meson.build
 new file mode 100644
-index 00000000000..dcbbb463c43
+index 00000000000..339a9a1294e
 --- /dev/null
-+++ b/tests/tcg/s390x/meson.build
-@@ -0,0 +1,140 @@
-+cc = 's390x-linux-gnu-gcc'
-+cc_dockerfile = 'debian-all-test-cross'
-+cc_docker_host_arch = ['aarch64', 'x86_64']
++++ b/tests/tcg/xtensa/meson.build
+@@ -0,0 +1,96 @@
++tests_per_core = {}
++cores = ['dc232b']
 +
-+cc_feat_cflags = {
-+  'z14': '-march=z14',
-+  'z15': '-march=z15',
-+}
++foreach core: cores
++  tests = []
++  core_dir = meson.project_source_root() / 'target' / 'xtensa' / 'core-' + core
++  link_script_src = files('linker.ld.S')[0]
++  link_script = custom_target('xtensa_linker.ld.' + core,
++    command: [meson.get_compiler('c').cmd_array(),
++              '-E', '-P', '-I', core_dir,
++              '@INPUT@',
++              '-o', '@OUTPUT@'],
++    input: link_script_src,
++    output: 'xtensa_linker.ld' + core,
++  )
++  crt = files('crt.S')[0]
++  vectors = files('vectors.S')[0]
++  cflags = ['-nostdlib',
++            '-nostartfiles',
++            '-mtext-section-literals',
++            crt, vectors,
++            '-I', core_dir,
++            '-Wa,--no-absolute-literals',
++            '-Wl,-T', link_script,
++            '-lgcc']
++  qemu_args = ['-M', 'sim', '-cpu', core,
++               '-nographic',
++               '-semihosting',
++               '-kernel']
++  setup = {'cflags': cflags, 'qemu_args': qemu_args}
 +
-+tests_s390x_pgm = [
-+  'br-odd.S',
-+  'cgrl-unaligned.S',
-+  'clrl-unaligned.S',
-+  'crl-unaligned.S',
-+  'ex-odd.S',
-+  'lgrl-unaligned.S',
-+  'llgfrl-unaligned.S',
-+  'lpswe-unaligned.S',
-+  'lrl-unaligned.S',
-+  'stgrl-unaligned.S',
-+  'strl-unaligned.S',
-+]
++  # Multi arch tests are not supported
++  # tests += tcg_tests['multiarch-softmmu']['tests']
 +
-+tests = []
-+
-+# Multi arch tests
-+tests += tcg_tests['multiarch-linux-user']['tests']
-+
-+tests += {
-+  # The following tests contain inline assembly that requires inlining,
-+  # and thus cannot be built with -O0.
-+  'rxsbg.c': {'cflags': ['-O2']},
-+  'divide-to-integer.c': {'cflags': ['-O2', '-lm']},
-+
-+  'hello-s390x.c': {},
-+  'hello-s390x-asm.S': {'cflags': ['-nostdlib']},
-+  'csst.c': {},
-+  'ipm.c': {},
-+  'exrl-trt.c': {},
-+  'exrl-trtr.c': {},
-+  'pack.c': {},
-+  'mie3-compl.c': {},
-+  'mie3-mvcrl.c': {},
-+  'mie3-sel.c': {},
-+  'mvo.c': {},
-+  'mvc.c': {},
-+  'shift.c': {},
-+  'trap.c': {},
-+  'signals-s390x.c': {},
-+  'branch-relative-long.c': {},
-+  'noexec.c': {},
-+  'div.c': {},
-+  'clst.c': {},
-+  'long-double.c': {},
-+  'cdsg.c': {},
-+  'chrl.c': {},
-+  'ex-relative-long.c': {},
-+  'ex-branch.c': {},
-+  'mxdb.c': {},
-+  'epsw.c': {},
-+  'larl.c': {},
-+  'mdeb.c': {},
-+  'cgebra.c': {'cflags': ['-lm']},
-+  'clgebr.c': {'cflags': ['-lm']},
-+  'clc.c': {},
-+  'laalg.c': {},
-+  'add-logical-with-carry.c': {},
-+  'lae.c': {},
-+  'cvd.c': {},
-+  'cvb.c': {},
-+  'stckf.c': {},
-+  'ts.c': {},
-+  'ex-smc.c': {'cflags': ['-Wl,--no-warn-rwx-segments']},
-+}
-+
-+foreach src: tests_s390x_pgm
 +  tests += {
-+    src: {'cflags': [files('pgm-specification-user.c'), '-Wa,--noexecstack']}
++    'test_b.S': setup,
++    'test_bi.S': setup,
++    'test_boolean.S': setup,
++    'test_break.S': setup,
++    'test_bz.S': setup,
++    'test_cache.S': setup,
++    'test_clamps.S': setup,
++    'test_dfp0_arith.S': setup,
++    'test_exclusive.S': setup,
++    'test_extui.S': setup,
++    'test_flix.S': setup,
++    'test_fp0_arith.S': setup,
++    'test_fp0_conv.S': setup,
++    'test_fp0_div.S': setup,
++    'test_fp0_sqrt.S': setup,
++    'test_fp1.S': setup,
++    'test_fp_cpenable.S': setup,
++    'test_interrupt.S': setup,
++    'test_load_store.S': setup,
++    'test_loop.S': setup,
++    'test_lsc.S': setup,
++    'test_mac16.S': setup,
++    'test_max.S': setup,
++    'test_min.S': setup,
++    'test_mmu.S': setup,
++    'test_mul16.S': setup,
++    'test_mul32.S': setup,
++    'test_nsa.S': setup,
++    'test_phys_mem.S': setup,
++    'test_quo.S': setup,
++    'test_rem.S': setup,
++    'test_rst0.S': setup,
++    'test_s32c1i.S': setup,
++    'test_sar.S': setup,
++    'test_sext.S': setup,
++    'test_shift.S': setup,
++    'test_sr.S': setup,
++    # test_timer is time sensitive, use icount to control time
++    'test_timer.S': setup + {'qemu_args': ['-icount', '8'] + qemu_args},
++    'test_windowed.S': setup,
 +  }
++
++  tests_per_core += {core: tests}
 +endforeach
 +
-+setup_z13 = {'cflags': ['-O2', '-march=z13']}
-+tests += {
-+  'vistr.c': setup_z13,
-+  'lcbb.c': setup_z13,
-+  'locfhr.c': setup_z13,
-+  'vcksm.c': setup_z13,
-+  'vstl.c': setup_z13,
-+  'vrep.c': setup_z13,
-+  'precise-smc-user.c': setup_z13,
-+  'prno-trng.c': setup_z13,
-+  '../multiarch/sha512.c': {
-+    'exe_name': 'sha512-mvx',
-+    'cflags': setup_z13['cflags'] + ['-mvx', '-O3'],
-+  }
-+}
++cc_dockerfile = 'debian-xtensa-cross'
++cc_docker_host_arch = ['x86_64']
 +
-+setup_z14 = {
-+  'cc_feat': 'z14',
-+  'cflags': ['-O2', '-lm', '-Wl,--no-warn-rwx-segments']
-+}
-+tests += {
-+  'fma.c': setup_z14,
-+  'vfminmax.c': setup_z14,
-+}
-+
-+setup_z15 = {'cc_feat': 'z15', 'cflags': ['-O2']}
-+tests += {
-+  'vxeh2_vs.c': setup_z15,
-+  'vxeh2_vcvt.c': setup_z15,
-+  'vxeh2_vlstr.c': setup_z15,
-+  'vxeh2_vstrs.c': setup_z15,
-+}
-+
-+tests += {
-+  'signals-s390x.c': {
-+    'test_name': 'signals',
-+    'gdb_test': ['--test', files('gdbstub/test-signals-s390x.py')],
-+  },
-+  'hello-s390x-asm.S': {
-+    'test_name': 'svc',
-+    'gdb_test': ['--test', files('gdbstub/test-svc.py')],
-+  },
-+}
-+
-+if 'qemu-s390x' in emulators
++if 'qemu-system-xtensa' in emulators
 +  tcg_tests += {
-+    's390x-linux-user': {
-+      'cc': cc,
++    'xtensa-softmmu': {
++      'cc': 'xtensa-dc232b-elf-gcc',
 +      'cc_dockerfile': cc_dockerfile,
 +      'cc_docker_host_arch': cc_docker_host_arch,
-+      'cc_feat_cflags': cc_feat_cflags,
-+      'folder': 's390x',
-+      'gdb_arch': 's390x',
-+      'gdb_feat_version': gdb_feat_version,
-+      'qemu': emulators['qemu-s390x'],
-+      'tests': tests,
++      'folder': 'xtensa',
++      'gdb_arch': 'xtensa',
++      'qemu': emulators['qemu-system-xtensa'],
++      'tests': tests_per_core['dc232b'],
 +    }
 +  }
 +endif
+diff --git a/tests/tcg/xtensaeb/Makefile.softmmu-target b/tests/tcg/xtensaeb/Makefile.softmmu-target
+index 95d0528c372..3df131acea7 100644
+--- a/tests/tcg/xtensaeb/Makefile.softmmu-target
++++ b/tests/tcg/xtensaeb/Makefile.softmmu-target
+@@ -2,4 +2,4 @@
+ # Xtensa system tests
+ #
+ 
+-include $(SRC_PATH)/tests/tcg/xtensa/Makefile.softmmu-target
++#include $(SRC_PATH)/tests/tcg/xtensa/Makefile.softmmu-target
 -- 
 2.43.0
 
