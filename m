@@ -4,101 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FEAC61DC7
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8064EC61DC7
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzWfD-0003cT-DY; Thu, 27 Aug 2026 05:44:51 -0400
+	id 1wzWik-0004jQ-A1; Thu, 27 Aug 2026 05:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzWfB-0003bP-1W
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:44:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzWf9-0004Y3-9v
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:44:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787823881;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=mWDGcNhRBVrJJrFNAPEKX4vJ5h93IVJZBYMGNwDwTRU=;
- b=apgoH9wAMrXsQaL7BNqy56L5pY24x3i2SzinjzdF+zme2ow8kcV6OJlE/tsCdXxdYj5N3A
- 1W5MYlCs5HYquXZ7mu7RXqkNiblZ6QGGawwEjJxcz0kJvY/Ju9Obbar589D0524hBPpYkj
- WAQlOBn24jub0U9TFrwpHO3x+F9NHdI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-VYPPC-wHOsG-9LJIzH9ozQ-1; Thu,
- 27 Aug 2026 05:44:37 -0400
-X-MC-Unique: VYPPC-wHOsG-9LJIzH9ozQ-1
-X-Mimecast-MFC-AGG-ID: VYPPC-wHOsG-9LJIzH9ozQ_1787823871
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 756F31835ADB; Thu, 27 Aug 2026 09:44:30 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F089C1800346; Thu, 27 Aug 2026 09:44:18 +0000 (UTC)
-Date: Thu, 27 Aug 2026 10:44:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
- Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-Message-ID: <apAG8JQTnQxRkfip@redhat.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <ao7c-FiawF9sMCGj@redhat.com>
- <b2b1d77e-c3e3-4aad-87d2-f5d4834abd1a@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzWij-0004jD-7S
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:48:29 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzWih-00055V-A5
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:48:28 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-81ea0b7d137so20876567b3.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 02:48:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787824106; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Lj2u9+u6R4Y8LV0yyuPCjR6wSYnuaH/OiN7TsDaffS/0RaWdgmYLTdhJBRfwfhXuMS
+ YMlwVi+POPDc5OBn2wHytPfAjqi0tWA3b0PP3cfBR+rs+qX8CYeQ5ULz9lu1NXGWYQI0
+ CFpX4FwFWsr+RqSEO6gxQoJUnC/x7hYBDN/yRTiz1kzumzCrC9sl5NL6YKpQGeOe1kY9
+ N0YwJdzEWSWxCXEkwZwvueUjt4Uld7LSugzTMr8lS6r8O00BRre/66aq5rclfvlsmj+u
+ 4LwKWo4ZpzMVFHSTlFWNhvtx/BvL1d8sdJczc5h7aJbuDr5SiXzbhRNkfFaPRbxXYx6F
+ F4aw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=sHCnzV+x2eg2b5OxtZhbCRPxOklRYRvw7EVzT+L4Sxk=;
+ fh=QFzjk5Y/nR/g10pdLemc5PgFvnp7BZS5BGhAmf5sjDc=;
+ b=lRaxjJ0NVLVjr+3jP1xw+a1MugbmsQ2uiH83xXUL/2EoRflrDtXsQacj6FRmVaB/z6
+ AwBXeiGJu5ii8xDWKUEgUk6AzE1JuTjEx2L3ODo2bKaJ0TIbDKhrL2czIiWZJQNImoAV
+ JRhLHs9X3qCPXxBSfLOpAwjZLCDJL7/qJZhbyl4DRVAK7TzzuJIMLOyu2iu1Jtc3qVat
+ lN5jdjZId6Ljeeq8t2avrbZav/hXA3FMfwsmPydAikWqL/Xkc2m6Rx1YavbEH6W39TEV
+ A9AD8WHyCNz/vS45XRC/f37yOCVnV17CD1CvRGYX0nuCKB2suK2SSrTHXDvCvG/K+U0x
+ fKdg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787824106; x=1788428906; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=sHCnzV+x2eg2b5OxtZhbCRPxOklRYRvw7EVzT+L4Sxk=;
+ b=KQPdsZPc2BzVp2gvKBhFpncVIvME+KrHq+M38CFeYgvyuCMp1E4rw+ErEzwD1lBdqf
+ tu7WmJh/7s+SLAD1MRNzEG5fPvTMgXo3KSQkVHqirJTy6mumyOv8b/N26ixgVjJlheA/
+ i5kcULsGPcTPOFgvjJEeldFO1rissh8AnB3dNposMIwaYhgLLuiW9cG7H/nKJlroA2f6
+ VxVI2WGfGBMwR5ebzr2TjZqUMnnCSK9XAJ5zE78mSF+Tnesy2/4Pw3m18fvBxRkLWOXy
+ +aTfaIYxkzWta8YXgBwtNWy5xftPGhN6HMAMIUVqjxHfUVLrnGiUtGGkdbXXq3z/IvUS
+ +V4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787824106; x=1788428906;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=sHCnzV+x2eg2b5OxtZhbCRPxOklRYRvw7EVzT+L4Sxk=;
+ b=Jb6K8wW4/VONR4AaICAQYYz0QEbJu7li5me1LsebeBFCsWs9yWfUi6PrO+vkt4vTNt
+ Y+n/3MaBV6qKfXS0kVxP49Cj2jFmrtzsZuRs51kXw95qAq3lxf2+IrbxNWdvIkqgxDuS
+ opLlLHcrz4jUdqx5KZsLvTkHGQ8tMkhR9O8AeF2jsAJJvNpGsaW2iq/R8jkwGPPHSwBU
+ eKMk1PCxw14pfdSn9zxz0wWGXPm8dQKSt8nR3D23GNpcWM0kJZT9/+LYtz7Xt28xDDIR
+ 5RDVEBbxXT8mMevaDCTu+3Yw3DJN7zsH15A1o0VgHGiZMt+JaBq8XV/lAv0lI8VTk4ec
+ K5QA==
+X-Gm-Message-State: AFuF++nnDIk2XEljnwjqgRmVcAJHqVurUsP2YKyLya0BJJ23PWxcXIuB
+ h+Q04wN5OrqUEP38dO8vorWYCyGUAx68++0yXFpjt1DCyM4l3RIn27NzNALVIpJ9TEchh5O0xej
+ hUlY5TDqfTfGnieVGOU81HuDq9/0t/sx5+YnrY3klEA==
+X-Gm-Gg: AR+sD10Jd792lkcpb7j746nlhzgbdLl2IFnBSEYLwW0CRH9EEjIEpLCxRDkVfAyfn4i
+ btvecxudpTWx3BZ0fs6bL5lyIYfGgrC6DBKZDGTzh/r0+1uJ/PhKSgvfi4xKXSs2OI5hAI6gJ3e
+ N7ZLh+umnS1dJfjD5zjtEyfJwmjRQdtnmNgmgB8G4YOohXoegU4O/dvmVE5R/bZ5IQmh0xKthk5
+ U1Mut0Unu48g0g13Y08RhS/sgQPQvXZouOZXPEcd9haL2ac15l5Hu9Bpk095QDZHhPoXMduU9AQ
+ vWHdA9zh3dF+W31ifOqULx0MME88pHcfAmX2qBXpeOCc58ZceOx+d2aFbLa6Mj/sMLGdn3FxwUh
+ 4rq7VzeWBK1mbCqxgkh6acKsN6x9w
+X-Received: by 2002:a05:690c:e288:10b0:858:def3:3422 with SMTP id
+ 00721157ae682-858def3356cmr31008297b3.27.1787824105803; Thu, 27 Aug 2026
+ 02:48:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b2b1d77e-c3e3-4aad-87d2-f5d4834abd1a@oss.qualcomm.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260821104832.151452-1-alexander@mihalicyn.com>
+In-Reply-To: <20260821104832.151452-1-alexander@mihalicyn.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Aug 2026 10:48:14 +0100
+X-Gm-Features: AcwNN1UsAxnvGlWmLXSlGl_khbKI7V4veIfdmnaTjejmADeiWMbsto8FhB1TUIw
+Message-ID: <CAFEAcA_ODdYjXzgq796Fk3xK-dUwV8L8ajFAR7M3GTLGyBvfVA@mail.gmail.com>
+Subject: Re: [PATCH v4] hw/char/pl011: support backend hotswap
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+ qemu-arm@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,24 +121,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 11:35:11AM -0700, Pierrick Bouvier wrote:
-> Seems like the Genius.Artist. in the bottle just need to escape, and you
-> can send us a nice series doing all this. Meanwhile, I'll try to find a
-> carpet, a monkey, a princess and a suit to be the next Aladdin.
+On Fri, 21 Aug 2026 at 11:48, Alexander Mikhalitsyn
+<alexander@mihalicyn.com> wrote:
+>
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Currently, when Incus issues "chardev-change" QMP command to change
+> chardev backend from ringbuf to socket it receives an error (with aarch64=
+ VM):
+> "Chardev user does not support chardev hotswap" [1], [2]
+>
+> Let's fix this by properly implementing BackendChangeHandler for pl011.
+>
+> Please, note that we have to "replay" CHR_IOCTL_SERIAL_SET_BREAK, because
+> if BRK bit was set before backend change (i.e. (s->lcr & LCR_BRK) is true=
+),
+> then after change we need to send break to a new backend too.
+>
+> Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-conso=
+le-on-arm-architecture/23096/3 [1]
+> Link: https://github.com/lxc/distrobuilder/issues/892 [2]
+> Reported-by: St=C3=A9phane Graber <stgraber@stgraber.org>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.i=
+o>
+> ---
 
-This kind of comment is not productive and disrepectful to the time
-reviewers in invest in looking at the proposed patches. Please stop
-this.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
