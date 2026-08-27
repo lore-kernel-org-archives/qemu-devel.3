@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217E5C61DD4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21736C61DCD
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wziVs-0004JU-2i; Thu, 27 Aug 2026 18:24:00 -0400
+	id 1wziVX-0003DU-Cw; Thu, 27 Aug 2026 18:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziVq-0004HP-SG
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:58 -0400
+ id 1wziVV-0003A0-Gj
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:37 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziVo-0000FB-6z
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:58 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wziVT-0000By-Em
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:37 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RJLp9s3848243
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:45 GMT
+ 67RJLclF1358479
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=wnPivJKcFz8
- beT3Njzq647EjYz0bhArjjueNm9Gx/Po=; b=XELyP4sAVF6ZpNpRyo4d+qSftuz
- d2RU7SiXrUQlMGntrCq6FknWdkV0h54xQrBiyO3q4gODXjwI0MG2HBixpjs9T3PU
- n7vXT7Usw+GtgzXajqi293h8zLU2mHeSBBsRv6O10ZvFYHE57hkqYuZl2G6NrlpH
- TmDZDUOCLQYasjEfCaFY3Z8BQAtoToNx6ggbDtifsaVbt0fOkEX5FHFNfgprTHYi
- IRNN+kX/+K611u2ByOH4kEpzYXTVEHE2tFfm/CFrJAmtvFwjiIWsioBdtU0JhoNO
- vnqkwkMsT7vXid6SYPYfcFbzNvw175ZT1M5/+5BhpICQCG58ZeJNcUlu8Ow==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gatnc0uqp-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=+bvhWdkebx3
+ eMmgv9UTgjx8WC3xGIg7vDT+DzHJURLM=; b=HBlZh2HcSrQlWZdrmDDj2jTdNZn
+ MssB08hNn+Tc5avZOMjba8x+fEp5UcI0kJ2Q85OZLukRAqe1q1oB8RxrN5/Wb5tq
+ Ucu6ZhIuxzkIc4EyzuPUC2BiYomZgGKsCfqZEOswJpX8RJKRwla9Hdg9Kx4X+CqD
+ IH6rp3BzIPegBQsJGG3BBVAWVGLNgFxYWlasaIxstYjaVU6Nx0vt6P9CdYzmEpR2
+ qjrtK63Os+2kNsQ9w5ZFbgL4J83M78Jl7/d1kOBwNp6TjhxUlKRKlM5ZOLv6IChw
+ tIsMXNP9aATCnA8LoYjOKwwkFUCaRZb7kwD269lFNcFBSgYvDhtjECq99wg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gapgvaane-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:44 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cf7dd9fd91so3493975ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:23:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:33 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cc6dd43737so6357265ad.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787869424; x=1788474224; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787869413; x=1788474213; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wnPivJKcFz8beT3Njzq647EjYz0bhArjjueNm9Gx/Po=;
- b=j2LsQpfs6erE5enP2t4P6jjEgIRmvdwoshfLYRzyK0fHQbbvOMCdhbwFt4Ld5jJAAG
- yt/oioit5CMcKr0rG+6CeWwYVzi63JUkiaUri5UZ5hX+satQ0HcqdBd50h3ViHePcz1h
- bq78Cr/tXFTBJ0OwjaJclJ9WVOB9fNQr2lEzXUmZOKGVRMtTCicuAc/DaBEUjRjxZ4ct
- 30CMSsJDlmUwcQLf3lOUKmTavYdngq1pl20oyJsNOS59c1zvOIYueBu6JqLm53+bVSdU
- PEd2SAAKkcaRvk3yIkc1lz4DLUbXhsu6AB1bGVJjTozoO8pDh+ai2o7tDYYKyOS6Av30
- wbhg==
+ bh=+bvhWdkebx3eMmgv9UTgjx8WC3xGIg7vDT+DzHJURLM=;
+ b=DqvHgrutkEwnChlflWORKgY79rE/E6iL88v23fBx1042ahLPbB6u8/6k9/KL8Q7EmN
+ b81/dtvy2Hz91pEmIKD4ETo3s+tpS03O1LhdGGggVWzpMmTp389rkPVLtiaqQ7yOVDca
+ VQQLmKqYiJJN2ZLwlzhz5BAMzU/+jw/+Whj44DKC4bjeeBxVVRwCTv/GoOIiIJrk+5VE
+ 5OlgRb0k6Y9cbt2k890G04cj05CfGWbEMpfQkEx1nEfu3oxsoApDIWA9xPmYHNDIrM+N
+ 0WORUhtItPswSk7s9gpWXuRrYpU3EobDvhSTov51sD3Pp5JGp5uM6cQbwciFlohSRRiL
+ xsuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787869424; x=1788474224;
+ d=1e100.net; s=20251104; t=1787869413; x=1788474213;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wnPivJKcFz8beT3Njzq647EjYz0bhArjjueNm9Gx/Po=;
- b=EY9QlN/AvuG5+gIRAfujPBz6sNCte5nFpabkiB3OzBHV/Phw8nVnE8cNHb9iOzB5VA
- teecT6O13pbLskQDaoRDtPGOli2n6VRzFAmb/q97utVAGGw/aRtqgDm4tatu80YEDTws
- cIu4pDbd2maEtVBdCRKuPWtwTWD69xob0q55NG4V7LvKL4djTJwDq7yd8/kwbtegFt8x
- GQDuRETLpL+EC76PveIUbGiIUmJyT09SIqR690YQU1tztyUbfxsywI/t6F0NTAa8Hz/p
- vb23RUjd1bVR85MSG2FxRUwdq5HHrMfrMY9AiiTx6wOMjiHymfTXSdZ00nctP4CvyU7w
- 0nkw==
-X-Gm-Message-State: AFuF++ndxX9DwGiER5V0wBHa7Y52+iHfY7Jr2MeznKcFD+0UT9WUBsvO
- Jnrt97U0UgV1mxLZnKTQ2PvMZIDGupDZrwQ1VUffIybxcxEaaQr9ROiSJxUO0NZ1wRqYORqzJi6
- Jc+maHodIybcXNFLWEsCk86NAr2PYCT/K8TSh4eWjZrpVNQcjbTNcAo2dhnfy9ZOAyw==
-X-Gm-Gg: AR+sD10uyi9jO/YmFrH2JP88DmdIYbQdSAlp1lmDw2DWsY6jFWZZ1uNWbn7D1Ox7cN+
- 0yzZkM3hmmpKSiAU14r6Hf20a1ZCNOB+U8S6YytCE53GTFrz9egeFcI9iC+F5hMtii+04hWqZXQ
- 5D0ou0MqB74KRzi6kYMnMS0mDRvASisqYxqJc9hBgKa3q2ZmJy3J5ET6IiXZNzKvYBBu98xAnUd
- Pf23zZYEjnR8Ve+sRWXN19o3oWhUJxh+ZfnLaY121wHrqh2VdHfyKkKRTu2gjrA+d1STu8TGGqE
- QO9Aa3zNGZGonw/Z3KaGQqlmJ5LbummQxG+iH/DJYujRCRJtnYgAl/BTi9J0SvpfKNNCc/eH0Lv
- kTKg8nJfwyxpMWjJDeDh+kF5b7TkASIsMKrN7LMT0QXLRu45A/WsbbwQ9xsc=
-X-Received: by 2002:a17:903:1b0e:b0:2d3:78c2:1f19 with SMTP id
- d9443c01a7336-2d74ddc6da3mr36203525ad.9.1787869424164; 
- Thu, 27 Aug 2026 15:23:44 -0700 (PDT)
-X-Received: by 2002:a17:903:1b0e:b0:2d3:78c2:1f19 with SMTP id
- d9443c01a7336-2d74ddc6da3mr36202795ad.9.1787869423765; 
- Thu, 27 Aug 2026 15:23:43 -0700 (PDT)
+ bh=+bvhWdkebx3eMmgv9UTgjx8WC3xGIg7vDT+DzHJURLM=;
+ b=Xgo3PfJNgar5XZtgqHDpjcyvXda8Y6ozLJ6xsZL0gQc69p6gOGR/BzbkHVIQMZeR1o
+ ct6GkQ+9AwSYk7f04LZGx11+Nf3NSRwKy70X3bTD1W6ow4AR/nbOuyDnOnr1U9op/uPZ
+ KhaYk4Q4oUQJ8l4w+4L761WG3pVK0ZqkwQu4aoMNxqrMzxWrkL2Aq2yKzJDAbS3zfTMe
+ Jy/JmiUUy2UzjFdyXipusksDwZaBVQf7wApWUNbOmV1JkLYlOXyk2YAPnOxeQ7F9HCm5
+ YS6qwzBvBoxxYreasfQBq86i46y9t6t22MO7imtenMzU6aIRrcB/5ewJOPUL6DmaRHRE
+ +5bA==
+X-Gm-Message-State: AFuF++mNKdZoOKQQ0lsHMX7FLi5euW8pukWkFdhUK6y2OHkHb+LU4hwy
+ bPXMGa+27NSJuhxrgPn3gOJo0Si8i2zy/vUWBbaOF875DkAQB6QnP19EpR9GhZC1e7EyPOhlgl+
+ nDb15frO8iz6ZwgI1x2Ot1P2T0FVNPvIKcXltAfXBTJ5iMJGONg8GblB/ydwhlhKegg==
+X-Gm-Gg: AR+sD13e3B4TDgE69p30BVern1oRQX5VW5OSFyjIKGJM7VcaorPvFdffyiAd0NZld6w
+ gTbPoUuctBLYaRH//czn7TWVj3PcbvKGToM9tDNYpAHHCB15VWkJKV2yplxDFJ6jXixbU7jW+uw
+ gnsERRpXdhoqf5YrIvDLs+IogHrTJV71KlAp00G6JoBbYIM+wAkLkQpMa6ESSsU0T2zXx32wsLk
+ tVMveW94/eeEx2wTKs/KBEjSBAC6CQIcmTpiE0kHQQ94ipQGUteaAShpL61kuXh09k7D7qj3Xy9
+ 1T7pxlH/mJLrJMt6qMVSCeEEfdgrTZ3dBUKxjUbxBd8K6hYe6jSlTLEQ48xBfRtkDQZKOU+gmVg
+ pmu/P90OK/ZHG8cu3wd8PZCxCVVntIt/oWyyEAJjx8qPoJ3To+G6/rVPf4CI=
+X-Received: by 2002:a17:903:22ca:b0:2d6:fd55:3a9d with SMTP id
+ d9443c01a7336-2d74dc111bcmr35128925ad.3.1787869413310; 
+ Thu, 27 Aug 2026 15:23:33 -0700 (PDT)
+X-Received: by 2002:a17:903:22ca:b0:2d6:fd55:3a9d with SMTP id
+ d9443c01a7336-2d74dc111bcmr35128345ad.3.1787869412870; 
+ Thu, 27 Aug 2026 15:23:32 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d70493f729sm20776155ad.2.2026.08.27.15.23.42
+ d9443c01a7336-2d70493f729sm20776155ad.2.2026.08.27.15.23.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 15:23:42 -0700 (PDT)
+ Thu, 27 Aug 2026 15:23:32 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -101,40 +101,38 @@ Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v8 094/105]
- tests/docker/dockerfiles/debian-xtensa-cross.docker: add test_kc705_be
- toolchain for xtensaeb
-Date: Thu, 27 Aug 2026 22:14:55 +0000
-Message-ID: <20260827221506.91574-95-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v8 089/105] tests/tcg/tricore: system tests
+Date: Thu, 27 Aug 2026 22:14:50 +0000
+Message-ID: <20260827221506.91574-90-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX3pXKoaS/T6kr
- px7Z3h6Ugf6pWaG5zwxRHG4qdFsdTY5fASnXImPvxPPepdtv5mbr6ZpbYyuCEiVq4owPcaBLOzP
- 01m4aCoUzPIBXzXhv91esOxHKwHWkH2v5tvtUCY0dRbrwKKSHLSRzWz0+Q37lpOBJ8MJ4eTYG/X
- qlTnzP3wnR18kmxOh52vnHGXwJWAHvDrQLFaebJ49N6XzzAp8z4WgfohAmIQ0MvuC/93aCuhk3h
- RqtY+hAI4r2bNGVAqX5+E8yoZ5QmnwYk1r6A/zyOuDRY+RmKssX45D5WQfqZV9UFOz0ZVo1cFLP
- SWwZzTaMIlvBJHPMIt3KWMlG7yCgF6J9svDfUbRF1lMNFasTgWSQRXh5SNpxMT402ZHC/i1Mj7+
- 7UmicdMeEsslrhyvkvVVuMEaqHxDJrbSffwHOb4hVkVwrIDmU+JZb1W0LJhLRA9pCt/ysP4U5Z7
- NaTkj6Z382D8+Z29Ndw==
-X-Proofpoint-ORIG-GUID: qUIFaJMT79rnB_-wtL04JTPXL0X0_7e4
-X-Authority-Analysis: v=2.4 cv=HfUkiCE8 c=1 sm=1 tr=0 ts=6a90b8f0 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: cObhA-g5QbtG0HXEbV6Bc94FaqZcdJ9C
+X-Proofpoint-GUID: cObhA-g5QbtG0HXEbV6Bc94FaqZcdJ9C
+X-Authority-Analysis: v=2.4 cv=FpU1OWrq c=1 sm=1 tr=0 ts=6a90b8e5 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=wlx_lthn7XJiM5nFl28A:9 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfXyxIrSVNkttSL
- x+wFXfRlGw9v0BxBkIaVSlbikVOszxB/mrCzcu5jZvlVVT+aGD6qKpSNAIaK+86E18Kd0idpnUE
- pl2pTSgi/9wVjw6zhLZ1adwHo80w0OQ=
-X-Proofpoint-GUID: qUIFaJMT79rnB_-wtL04JTPXL0X0_7e4
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=4feyZHKGdxcD__gy_rYA:9 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX7PT37yFX5rcy
+ azl9X7XpfXwvBOInq4JhuEV5XtEmy0o7OyjoHmu7LAOm5UrmRePeltyJxQ/oJ2peDfD7AbcbU3M
+ 8NgX574YYZsNN/8WIRhJG4rAaZHpfoMUto06MGxJyViouDF9oMW4AWi3UI5qzabXRKXBnACUMzR
+ qksZliubCcWOckMMKU97FlenFba8y82eyIFHciv1gYn4l/Lrq9yhcYI0lr6kIb3atY9fq5TtEh6
+ E9R17z5/hUIzAkEitGdjxXAILUSlr6X9bmqhHULp3+QCqztmUi0Slk3V015NK7V3mDeT9+WLbKL
+ bH0VOlbMvg77wRIKo6Nu/sG5aWASWwNqypzUZff5eftLgeYunTAwC3+8YAqWMhZlg4e+7VQHPFM
+ /DtgiauRcFi13CqjcdTGxXFDmU8N7N7Ti7VlsqVYvgdfAyEan0rx+dmAfZXck8smi3Xd3oGPSqv
+ C87ejA5ddtbacnR2LJA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX4YPsK/R5XkHa
+ hi0c4OJ6QA8DB8XQ0pd/mDMRmEAobRCWSe8v0znndepltoCGQ0eBnGNNe+Pb1PjW5Hcx0HJsFqh
+ FNUGwWx0JLQ+9Sny+GFaO3HSpAddjGE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_08,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0 phishscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270190
 Received-SPF: pass client-ip=205.220.168.131;
@@ -165,31 +163,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/docker/dockerfiles/debian-xtensa-cross.docker | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/tcg/meson.build                     |  1 +
+ tests/tcg/tricore/Makefile.softmmu-target | 53 ---------------------
+ tests/tcg/tricore/meson.build             | 57 +++++++++++++++++++++++
+ 3 files changed, 58 insertions(+), 53 deletions(-)
+ delete mode 100644 tests/tcg/tricore/Makefile.softmmu-target
+ create mode 100644 tests/tcg/tricore/meson.build
 
-diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-index d9130fc3378..0eb6d98cc75 100644
---- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
-+++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-@@ -19,7 +19,7 @@ RUN apt-get update && \
-         python3-minimal && \
-     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 1c34b8e63c6..4903947a636 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -154,6 +154,7 @@ subdir('ppc64le')
+ subdir('riscv64')
+ subdir('s390x')
+ subdir('sh4')
++subdir('tricore')
  
--ENV CPU_LIST="dc232b dc233c de233_fpu dsp3400"
-+ENV CPU_LIST="dc232b dc233c de233_fpu dsp3400 test_kc705_be"
- ENV TOOLCHAIN_RELEASE=2020.07
- 
- RUN for cpu in $CPU_LIST; do \
-@@ -27,7 +27,7 @@ RUN for cpu in $CPU_LIST; do \
-         | tar -xzC /opt; \
-     done
- 
--ENV PATH=$PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin
-+ENV PATH=$PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-test_kc705_be-elf/bin
- ENV MAKE=/usr/bin/make
- # As a final step configure the user (if env is defined)
- ARG USER
+ image_targets = {}
+ exe_targets = []
+diff --git a/tests/tcg/tricore/Makefile.softmmu-target b/tests/tcg/tricore/Makefile.softmmu-target
+deleted file mode 100644
+index 258aeb40ae8..00000000000
+--- a/tests/tcg/tricore/Makefile.softmmu-target
++++ /dev/null
+@@ -1,53 +0,0 @@
+-TESTS_PATH = $(SRC_PATH)/tests/tcg/tricore
+-ASM_TESTS_PATH = $(TESTS_PATH)/asm
+-C_TESTS_PATH = $(TESTS_PATH)/c
+-
+-LDFLAGS = -T$(TESTS_PATH)/link.ld --mcpu=tc162
+-ASFLAGS = -mtc162
+-CFLAGS = -mtc162 -c -I$(TESTS_PATH)
+-
+-TESTS += test_abs.asm.tst
+-TESTS += test_bmerge.asm.tst
+-TESTS += test_clz.asm.tst
+-TESTS += test_crcn.asm.tst
+-TESTS += test_dextr.asm.tst
+-TESTS += test_dvstep.asm.tst
+-TESTS += test_fadd.asm.tst
+-TESTS += test_fmul.asm.tst
+-TESTS += test_ftohp.asm.tst
+-TESTS += test_ftoi.asm.tst
+-TESTS += test_ftou.asm.tst
+-TESTS += test_hptof.asm.tst
+-TESTS += test_imask.asm.tst
+-TESTS += test_insert.asm.tst
+-TESTS += test_ld_bu.asm.tst
+-TESTS += test_ld_h.asm.tst
+-TESTS += test_madd.asm.tst
+-TESTS += test_msub.asm.tst
+-TESTS += test_muls.asm.tst
+-
+-TESTS += test_boot_to_main.c.tst
+-TESTS += test_context_save_areas.c.tst
+-
+-QEMU_OPTS += -M tricore_testboard -cpu tc37x -nographic -kernel
+-
+-%.pS: $(ASM_TESTS_PATH)/%.S
+-	$(CC) -E -o $@ $<
+-
+-%.o: %.pS
+-	$(AS) $(ASFLAGS) -o $@ $<
+-
+-%.asm.tst: %.o
+-	$(LD) $(LDFLAGS) $< -o $@
+-
+-crt0-tc2x.o: $(C_TESTS_PATH)/crt0-tc2x.S
+-	$(AS) $(ASFLAGS) -o $@ $<
+-
+-%.o: $(C_TESTS_PATH)/%.c
+-	$(CC) $(CFLAGS) -o $@ $<
+-
+-%.c.tst: %.o crt0-tc2x.o
+-	$(LD) $(LDFLAGS) -o $@ $^
+-
+-# We don't currently support the multiarch system tests
+-undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/tricore/meson.build b/tests/tcg/tricore/meson.build
+new file mode 100644
+index 00000000000..d0bf55dedce
+--- /dev/null
++++ b/tests/tcg/tricore/meson.build
+@@ -0,0 +1,57 @@
++tests = []
++
++link_script = files('link.ld')[0]
++crt0 = files('c'/'crt0-tc2x.S')
++asmflags = ['-Wl,--mcpu=tc162',
++            '-Wl,-T', link_script,
++            '-mtc162',
++            '-nostartfiles']
++cflags = [asmflags, crt0]
++qemu_args = ['-display', 'none',
++             '-M', 'tricore_testboard',
++             '-cpu', 'tc37x',
++             '-kernel']
++
++# Multi arch tests are not supported
++# tests += tcg_tests['multiarch-softmmu']['tests']
++
++setup_asm = {'cflags': asmflags, 'qemu_args': qemu_args}
++setup_c = {'cflags': cflags, 'qemu_args': qemu_args}
++
++tests += {
++  'asm/test_abs.S': setup_asm,
++  'asm/test_bmerge.S': setup_asm,
++  'asm/test_clz.S': setup_asm,
++  'asm/test_crcn.S': setup_asm,
++  'asm/test_dextr.S': setup_asm,
++  'asm/test_dvstep.S': setup_asm,
++  'asm/test_fadd.S': setup_asm,
++  'asm/test_fmul.S': setup_asm,
++  'asm/test_ftohp.S': setup_asm,
++  'asm/test_ftoi.S': setup_asm,
++  'asm/test_ftou.S': setup_asm,
++  'asm/test_hptof.S': setup_asm,
++  'asm/test_imask.S': setup_asm,
++  'asm/test_insert.S': setup_asm,
++  'asm/test_ld_bu.S': setup_asm,
++  'asm/test_ld_h.S': setup_asm,
++  'asm/test_madd.S': setup_asm,
++  'asm/test_msub.S': setup_asm,
++  'asm/test_muls.S': setup_asm,
++  'c/test_boot_to_main.c': setup_c,
++  'c/test_context_save_areas.c': setup_c,
++}
++
++if 'qemu-system-tricore' in emulators
++  tcg_tests += {
++    'tricore-softmmu': {
++      'cc': 'tricore-gcc',
++      'cc_dockerfile': 'debian-tricore-cross',
++      'cc_docker_host_arch': ['x86_64'],
++      'folder': 'tricore',
++      'gdb_arch': 'tricore',
++      'qemu': emulators['qemu-system-tricore'],
++      'tests': tests,
++    }
++  }
++endif
 -- 
 2.43.0
 
