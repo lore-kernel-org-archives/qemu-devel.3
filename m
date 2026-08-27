@@ -4,138 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4ACFC61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854A3C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzXQk-00033k-3j; Thu, 27 Aug 2026 06:33:58 -0400
+	id 1wzXSo-0003zr-SB; Thu, 27 Aug 2026 06:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wzXQi-00033U-K5; Thu, 27 Aug 2026 06:33:56 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzXSd-0003yy-Iw
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:35:57 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wzXQg-000601-Rw; Thu, 27 Aug 2026 06:33:56 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Y0gYx7iZJuezmZoHXJupJMamSdHe/hQN4RFGcKYPRcYdVdSldx+OvZIv8CIRGFWyIOh2/iiGXtevfuIxV3ZBzKSaqGZKApepETMdJ0LoVmCqLoB/f5rfIdu1LPDfW+gpIkdCFBRQazlGUmzV39CVH6101E2VqNWq5A9lhP0TTmF9fopZ0y+NqO6TqD4dB2rrUpB+25dt/99OqYIMsXaoJSIYlDO7GHIQx3U/uPVRwLgqTP4ttQwbPbVMCn5patDkjZP2uID+KoJLu6p1AnOa6bPnfo79Cu9eq3mwwUWpR/VbmBPxJo2SBN0NUAt/6rAu05XV6mk4Y/Mmr9z1jXqjEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1r0RZFNGZdZOzXAKuBBkwW3DVC0jHRMcgjWiIC3UfKw=;
- b=rk2HPorzKFuAWVtPbA0g7eHckYSnWT6i1A0BLLC2tX++uLqenLvZ6EXx4bqTcgWAxNU6D0m5ONq3YmEuD2pMNfg7xLXMOJpeK28dWY5Mb12481hyyLhteVN1eWWcT5hvbsyrtIyeFN6WH9qN8aGwG02ne7SyjxkAAtYEgqxzn17Q27SM+o2gMNbxOUmffDsYaxU2vA5axgTZ0WObFYuEzYrzdu51OaOGG/K7VE3IQOaVm4YqBY7cHFmV8V8AyT6O+NxL0IBc/PrbSrhhW+Uz7vwTWdcgkxm7IPzvZW5kgkuloACs/orgTdCZ/KbBj4T02wAGNBU5juYsurrthUaRwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1r0RZFNGZdZOzXAKuBBkwW3DVC0jHRMcgjWiIC3UfKw=;
- b=U6BjTGisXOdhCT7hZ3zdfNfp33N0ANc5VOseXCIOTmcoiVc7bH/tviZ9AXfz9O/FFPksw9LBiwAD2SVdluMUGpkg3JcAvhSRSmfcDz+g6jIj7eeG/B4vyeg6N/4Qargv2lsB+pr87nTJryGYKLTPE7aZYluqfhvLqx38Zp5inn7YN2bh2GGn/Ifkp8yT0W+AGdH5hZiMErQh/wiVcgY7jO3baR/695gQbLt+qOWCwVABZWAOTW4jO6x8wXR9Gnv8wxpjmQjtZdioG6rdtnaAn0VSq40OwH5Ejl/u23IAttvTF0p+TZoXWtmxobYPlFFza1Od/sh2ViosdR43YMihuA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by DM6PR18MB3570.namprd18.prod.outlook.com (2603:10b6:5:2ab::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.9; Thu, 27 Aug
- 2026 10:33:49 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0360.008; Thu, 27 Aug 2026
- 10:33:49 +0000
-Message-ID: <9ba5f4fb-2a78-4864-a0a9-7c5a803df8fc@axiado.com>
-Date: Thu, 27 Aug 2026 18:33:44 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] Add Axiado SoC AX3005 and EVB
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- 163wangjack@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260826074635.2850931-1-kchiu@axiado.com>
- <a665849f-3b20-4ad3-a35b-02259e882628@oss.qualcomm.com>
- <c15422ab-6a58-45b8-8df6-b2f54e0620cf@axiado.com>
- <CAFEAcA_2GiDUY36TAEk3OhJfJLLDkQja-A=x9UTFGeHAP86t7g@mail.gmail.com>
-Content-Language: en-US
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <CAFEAcA_2GiDUY36TAEk3OhJfJLLDkQja-A=x9UTFGeHAP86t7g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TPYP295CA0010.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:7d0:9::19) To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzXSb-0006J2-AT
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:35:54 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67R9HvT93978048
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 10:35:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ g1yHx4Ee814g0XA3qlGc9mEeDnlyfhtuhU0XBGeoJsU=; b=ei6nR69EQ1fcCksI
+ 3xe2uaqFUjWJfooD+vNW+YXmWGqC3N/zVFG66JFsMTv8IP1KooIOBQrb9yMxAYju
+ g1G/1bSxmqWsOnHdRbzFXjSaWDqyr77hbeehptdM5ckkXyyyOTn/VDm6BjF5UQLx
+ G3HuhkiwDRp0aW3z4Y4KXha2Iv72FPK5tTsRl3aS+nEyAO3PmdyrKUW/ujJd5Ko6
+ B/4/nEbyFtTFcxLyC3cPFaTCxLKyiSebZOmgf5sfF/H17g/kJ8plbQ3n0A57SzDf
+ PuSiiZSRl1739HDk3n0MoiCoq8+YwRAtFTUHZz+FjZxbSrguqAOCin4EXh7b3AYm
+ q6qYhA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga4egkb0c-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 10:35:48 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-52cd0374265so34498911cf.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:35:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787826948; x=1788431748; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=g1yHx4Ee814g0XA3qlGc9mEeDnlyfhtuhU0XBGeoJsU=;
+ b=WZNHChNnwq7UYKrvoA1uyiY2Wkl1Yfd87JW+/O0PlPUJFDFUUtTEcuRkEGpbrk3JZ6
+ NW0+aBfsx0lUKnPdGiFR8LvfDxpTr45WtN4cqF+bWfFM3gdgB6G/lpEr/V6Bqsptl1FO
+ e9i3L5i2gnuFMwmwWd6+sWyLIZW+TS8JohZY6vAgj+Zh4HqNO244kUtRqvmSYVG7cf08
+ eP84egsKxOJdtt4NHevLjbSgUima+R67tiAI15lZ1qyK9HMJrCmyBzGVCgrrbCcAJ7Zy
+ D0W4YBKCU8ZDb20iLv9zZpMoRfiWUuMgmo/qzuJ6GjDL/YyNTWxt81sNd9S9Y26FZix4
+ JFEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787826948; x=1788431748;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=g1yHx4Ee814g0XA3qlGc9mEeDnlyfhtuhU0XBGeoJsU=;
+ b=STWKPgVlvb8R3tn1hRNE2s2Y4DLpavQ2TWsB3j9XQUVrQ89EulHdRrpTdM8BOr/j5W
+ XE7KMz/ZPR3NNPX93MKrxHCleUYAYTPBUDK938U3WNsybarMFKqMpySdrLKUDDsSzP17
+ 6jqZDRx/uMw3l6qqksdMgJRmGq5K9hzuLrVHxjQvXLWv1GOjRIQjONS18yplyqKzN2W7
+ reIM63Uder69yJsjs2IYoXPbhYPU4ThdTNFxPbv7SoAdpQRdpNl7huH4Fu1GJgnNnXTk
+ BA79oQ/aVc7QQDjSJ7rnaUHZZOf2uRMgG8svAPyFyh8VeCL94xtuR+kRZeYvUekfzs3V
+ hwdQ==
+X-Gm-Message-State: AFuF++nUl2taQaaFNnK13MYh7MLHNfiZdqrt6AbRI4KlJVbIaLdQCfV3
+ HUXH9TyTgKH5JFxJo4SMFcmsDUaiiKm1/dKdZofBDYUx5Qpkv27wuJd/6DTFYB3OHjtuc0Bn0OJ
+ DYhE9A6bS74Vm0lnmoUY8dF2f+sknc/y4yFPf/Ez6YP2MsIzjZ26PdgcDMQ==
+X-Gm-Gg: AR+sD10qlpHe/uz+v0lfuHQCe9ED6KY4mKf2mkEURkAzLQTBBNbBcq3b9tUkClNsSF4
+ Uxsj7W8dBHg8AyxYV9Nd90ExEO8vik8+cikld3HQ4dDcim7e/zL9SqmfZxP9B9XMQmPnEUkY46g
+ k2L41wmEkdPdh6njT4rXS5/zjpAEKPvVoCPvtSd4/WCqD1hiBvEVwKrVYi++zeiXIxgMJF3EeJu
+ bn/VZWyZF2E32HtGQ6ejew+6wQh45AVRSuaN2ipRwFAP2trFSUWr+u1vcg/QUiIY0w+GrStYu9u
+ 8O+DzwQmesa86k7wDr44AD3W0/ZSh587MbzzuVZ3U4v08ycMYxrEdP0WtDQyY0YbEC/TzpCLIZx
+ XWMSU54Bn+T01o6I6nc5JLXQEWSVkqbppiw==
+X-Received: by 2002:a05:622a:3ce:b0:527:7a5b:ca67 with SMTP id
+ d75a77b69052e-52e423deda8mr129226171cf.20.1787826947699; 
+ Thu, 27 Aug 2026 03:35:47 -0700 (PDT)
+X-Received: by 2002:a05:622a:3ce:b0:527:7a5b:ca67 with SMTP id
+ d75a77b69052e-52e423deda8mr129225391cf.20.1787826947123; 
+ Thu, 27 Aug 2026 03:35:47 -0700 (PDT)
+Received: from [192.168.69.226] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b4d08d86dsm40967145e9.12.2026.08.27.03.35.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 03:35:46 -0700 (PDT)
+Message-ID: <4522b97d-5399-4bd6-867c-eade341afb9c@oss.qualcomm.com>
+Date: Thu, 27 Aug 2026 12:35:44 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|DM6PR18MB3570:EE_
-X-MS-Office365-Filtering-Correlation-Id: 05f48550-9f1e-4c32-f90b-08df0426ae31
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|23010399003|4143699003|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: WapNMGRv7J5KqMkjjWzMEUjDxATtg/vtgYddRuUwZ4oxdzwe9kjebK0ss/MGyKZW1HJurmYVgXIOS5DsOtXLJyhs3QClaBfbqlwuALjP5I8nLdnqPZqTBvM/JF1TxhLHr5gbRJ/pD+xaRVyLpqFGZbsia0EA+YtclIQTkIUokk22HeJ+sHB7q7fvQSY0RYA2Fm/UoIHyXbFelxSB8E6Kjcr9gtKPddTMBa99qqGcJjhMkkI+bxczEJ5571pBfMWARoTKQP0CkK4JqLADiHFXXtjk+QX7/Qsrk1Ot1oh0EQC6KnJYZWGiTt9SdQ933qPZDla/oBWfbAMfnrWRUWeubGHamQac5V+YkvZPUhqd/HOZjUOb8sz+7fs2/qg527j4Ae84TkU1rR3q0z+a4Fsx3cMFICNRbW5s2XmGjlSRaUEMa5SnJYyOgLS+rDgWu3QVgGvF5nONh6ObEBQPBTnf4UXsWDXuuCTBT4fvKyotQp2GB/1CxZ6BOBADFxJ2Kk4B4Mp/SIPL1xmVnJ47BVQhIXVc+EwxCz8dHjgJ5cCcKcPl2JTbtd2U3ckzqUEZJuBzASmo4lZcEbhYHx6Xd3T9uCcJWVwhMeuFngdumRRIJ79Z6b2PUZILyrBWqYp6Vyai0Mh0igMxdFWuWwtVn2qaZdjTQpdKAd6HFY+q3HnyPGU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(4143699003)(10067099003)(56012099006)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?enV5S2dIY3NlMExTb2o2VmdQK3pyZ0JzR3ltKzltRVhNTGhMZ3dMdG5sTVRm?=
- =?utf-8?B?Q0pGVlN6VTZlRUJBTndESzZHb3QvV2hCS21EOVhJVXJkWnl4aVVtc0hVVE90?=
- =?utf-8?B?bUVDRnpJQ0lpOGExTjIwRWJBUkw0NzF4V1FVZDJ4TEJmYkZmQS9PSFJ0WGhI?=
- =?utf-8?B?MXRkNTBSZUI5YWNkVkN5QXhuVWxhQTFkMEliWnJpSGlzS1BxdFB6TzV6Z0Nx?=
- =?utf-8?B?R2kvTWs3K3Y4L0tEN2pHaDZGUXYyenVFL0k2MzJ4bVhUcXk3TC9lbUxGZ0hL?=
- =?utf-8?B?ZzJuWXZ4UnhiT09hcXRQaVlTTGpKV1R6TEFJeU5tSWFzMUJVVE5aSUJGNHNI?=
- =?utf-8?B?QXVTU3NZd1JpaU51aXJ0TmR5c3o1Tk9ZWDlHWDAxUTM2YlNVS0oxUzQwZmxa?=
- =?utf-8?B?K3pMc3VtVHBoU1hBVXptLzZELzE3OUJYd2hsMTVsODdyd0dBS0FSZHZGUWph?=
- =?utf-8?B?K1cyb01LQ0U0T256M2ROVG5maHQvVmFuQmZJMXZYQlB0RnBVVFNZMWFkZW5h?=
- =?utf-8?B?ZVhDZFg4RldzUDh1VHB4NEZNL1UxOTg3bU1NTzdHVmNnd3I0UEJTN0FNbWJ2?=
- =?utf-8?B?Um4zMjc5dmFJV1craHl2UXg1dUtPeXNYZUNYVEZDU2sxOFFlUERyaVN3Ry9Y?=
- =?utf-8?B?V2hoRS9vWmMvNWxqN1hMYU5VbkswWG1XeG1tc0h6MERzYjBEYVozekZWRkxK?=
- =?utf-8?B?YmdjOTF2eTJUdU1uai9hRWcvYjVnZmhGVkxqcTQ4ZXlIUWtsQ0NZbnRHOGZV?=
- =?utf-8?B?dVNleHl3TWl2R1pBQUNMRy9NV2Q2TXJQMDRqUlIrV1VCbEkrWHNkRU5HeGRG?=
- =?utf-8?B?NVhMdUZEVWxRNXhOSnR0N0tWdUllYkZraDBDcWh3RGo0aTZlU3RqcTA5ZzVQ?=
- =?utf-8?B?dkE0cWsxUnV6Kzh0MHFwbzlhdEpqa0M5VGdDQjFnaDl0VGM0Sm14Vk52R0JJ?=
- =?utf-8?B?eVRtUEdNVlZQU1dsbWNnNEVsQzk5Y05DZlF2UEJoQ3NtT1VrRm1kRmVYM0hk?=
- =?utf-8?B?U1RDQXF1U1BNOTBReVVDRDZTOHZzcXVZZ1BEV3YxOUlCVThsVUZjSUdpWUJl?=
- =?utf-8?B?S1hkeFlOa2w3VWdGSDlXZDkxUTQ1RXhIV0xsQ2hpS0Z2TnQxQW1kM085QWJK?=
- =?utf-8?B?aGF4bFQ5cndCT2hQWWJsYW4xbzZOZVRhSVV3Q3NVTmVuY2d6cUF0TGc3RFhz?=
- =?utf-8?B?MGI3QkUxbkRYMVg3b1NKNTRRWXVNbndOWVZ6bC9sN3FhdmlnUitRem9iR1BT?=
- =?utf-8?B?ekdFcHVkSm1TSkdsM2ZlYS8yRzZIT2JlOG9XN2hVV0dzUDZBRmplWmxmcHlT?=
- =?utf-8?B?SDZkVTBScGNHZHgyZk1xdHNFUTNnRkowZitZMzNnNUVpS0JQRDNBTmF4TE52?=
- =?utf-8?B?Y2gxbUgwN01ZZUQrRFNZWi9JT1dqUVpIZ0dtMWhIbVJyN1NoL09oNURhT0ZN?=
- =?utf-8?B?QXYzQ0cySlVabHIzT2g4SEtIT0I5amlkODdsNnlGTEpxNUZsMTNDMW5Kdk5s?=
- =?utf-8?B?cjVYaUFvYTJTSERla0FRcmMwaVUxL1l3TFJGM1BTWmt1NTluSnFFenhGaEYy?=
- =?utf-8?B?alptdXhOb1R4bUc1VHR3eWNlSWJ3RHUyejd0Z2pVYm92QVBHcVVzSG1TVlV6?=
- =?utf-8?B?b0tVWWdnd3kxbFNoZXR5MStDazVMSlJvVTJDZ1RSKzRYdUJjUmFKUGVaMlRx?=
- =?utf-8?B?WkRXY0pGKzJkMkI3R3BlV3RVMTk2bk9XNW1KZXFzMVc3bWErMkJvaGUraDdZ?=
- =?utf-8?B?eFh6R1l6b1dKWGtPOVk2Zm84QmdPeUhsNXphU2tHdzh4L0JqZTNzNDZTQWk3?=
- =?utf-8?B?am5ieGQyRjRGNi91OFk4QXFJRTQ3aFVSWWgxMTdBSklYeEpZMGdweGZpd1Jp?=
- =?utf-8?B?VUxDT1NUZG5MK2lBZU1uR2lUam9MMTc4QUQzWTN3eXVoVHhtdnZTaTNHTVB6?=
- =?utf-8?B?NDE3RXBVVHBIMUFQUVdLMGRUUHlOVzJiNVdiOEYwa2g0WDU4TWV4Sm95QnYw?=
- =?utf-8?B?VmVDT0Z6am92ZjN1a1gyRmovckhjN2cvVkE2TVZlTTM3a3lwOS8zeENJRjNF?=
- =?utf-8?B?bjFTTWJVK0lSYlVSVTlVUmZKb1Fhc0kzSzVjQy9LZEpaYWpxYit1R1c4QmRs?=
- =?utf-8?B?UlAxTkRvRUM5YWovVVllQUpCeUVkcFpjSUtNcUthT3FXNjdKWnpEQklpWk4w?=
- =?utf-8?B?OXcwdDZwaU55NE1mb2NnWi8rK1JaeHVPYXVKRW5rOFhoWFJvNERBeEZZNEV0?=
- =?utf-8?B?REs5QnMwTFRvTFFxWFRha2pJdVBjTENJTllUZlIwUnNtMndRS1F5Wm5pTWZR?=
- =?utf-8?B?WDMxNTB5cmsvTlh3eDRVVlR5djJTM3QvN29sYVJiOW9XNlhQeXZrQT09?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05f48550-9f1e-4c32-f90b-08df0426ae31
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2026 10:33:49.0780 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3OdMibO4jShU40SRy4ufbgLb4ijlBgcf/kQLrsdqxbr1kZcryiZNmwLm1Zg56QDSQ9Nl/pPbwTumR7TOnJ8TsQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR18MB3570
-Received-SPF: pass client-ip=2a01:111:f403:c111::5;
- envelope-from=kchiu@axiado.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] Rename ssi_transfer to ssi_transfer8
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, stephensportia@gmail.com
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, Troy Lee <leetroy@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Joel Stanley <joel@jms.id.au>, Hao Wu <wuhaotsh@google.com>,
+ Glenn Miles <milesg@linux.ibm.com>, qemu-riscv@nongnu.org,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+References: <20260825040452.1322251-1-stephensportia@gmail.com>
+ <CAFEAcA9etHvjL1igO4mFy5iQNy1pCbNFGaSg5HFva+YCeMkGEA@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA9etHvjL1igO4mFy5iQNy1pCbNFGaSg5HFva+YCeMkGEA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: jJAqvnftYPrye6Z1HWjwniIV8y4sWBAI
+X-Proofpoint-ORIG-GUID: jJAqvnftYPrye6Z1HWjwniIV8y4sWBAI
+X-Authority-Analysis: v=2.4 cv=DsRmPm/+ c=1 sm=1 tr=0 ts=6a901304 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=pGLkceISAAAA:8 a=t9496tuAAAAA:8 a=jNFeHvk_SeYrjZSZ0a8A:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=4wQ91nGE5lQcD7eh5OX0:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDA4NyBTYWx0ZWRfX/kHtqT32Xaf7
+ uKh9TOBiOVT+ak3EUBydGjXaa/8ebpsP0UUpZN7N9xuotBoHFZGkVarJaGBt4pYPHsNKfRFgHXn
+ MeQpPNtw4ijwaC90Rx6mnNc3vZjjItdg0fVyS4IkOyVLg+dliUGKykBqJyQmm9LYw1wrhnVXDnE
+ 7AqjbDRz5z1lTP69hiBfT8/apvweceGLHdvNXWRTpo3OMekAnm/v4F02LridB0/7tQWuf3woe5j
+ 47KTlb2MRwpPHm0qoB1fOsTQ8jASdy80cBC7OQp96PWRujIv5p8mXe7u6g+A5VqeNpnNg35igGI
+ FiBC7lv8hSS5iTlDHjMOzFezvK7gB97tC3zwXRq3TdpbbNw3w2X9tavlHg2K45qOKFdtKZKY70x
+ UyyOHO7HbZw8BOwnXY8lSR+mqBQylzwBanj1QPJsSgIDTy8kHYvPIyFqYnZPf2lmFQzgSYpwSCK
+ wGO4qve0N6oz6wPueHw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDA4NyBTYWx0ZWRfXz14JREuxoFFq
+ pS6Z0RgiL3wPJ3LE2gRLfwMHTQj0bK39+OvogJfD5gwQEm3jHDQ9b3lr5oNEptsfCM4WzF23KT6
+ tsLtkP10hb8hT1wx+W+FGWA2VtIis4g=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-27_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 malwarescore=0
+ clxscore=1015 priorityscore=1501 phishscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270087
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,42 +170,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Peter Maydell 於 2026/8/27 下午 04:43 寫道:
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
->
->
-> On Thu, 27 Aug 2026 at 07:39, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->> Hi
+On 27/8/26 11:19, Peter Maydell wrote:
+> On Tue, 25 Aug 2026 at 05:05, <stephensportia@gmail.com> wrote:
 >>
->> Philippe Mathieu-Daudé 於 2026/8/26 下午 04:18 寫道:
->>> Could you add a functional test? See:
->>>
->>> $ git grep -l obmc tests
->>> tests/functional/arm/test_aspeed_anacapa.py
->>> tests/functional/arm/test_aspeed_ast2500_sdk.py
->>> tests/functional/arm/test_aspeed_ast2500_sdk_515.py
->>> tests/functional/arm/test_aspeed_bletchley.py
->>> tests/functional/arm/test_aspeed_catalina.py
->>> tests/functional/arm/test_aspeed_gb200nvl_bmc.py
->>> tests/functional/arm/test_aspeed_palmetto.py
->>> tests/functional/arm/test_aspeed_romulus.py
->>> tests/functional/arm/test_aspeed_witherspoon.py
->>> tests/functional/arm/test_quanta_gsj.py
->>>
->> Please allow me to add functional test cases in another patch set
->> because we did not release firmware package on our Github for
->> downloading yet.
-> Can we get a functional test for the machine model you've
-> already landed before we add more machines in this family, please?
->
-> -- PMM
+>> From: Portia Stephens <portias@oss.tenstorrent.com>
+>>
+>> The ssi_transfer function comments say that it takes a word varying
+>> between 8-bits and 32-bits. ssi_transfer takes a 32-bit arg to transfer
+>> but there is no means to indicate the number of bits that should
+>> actually be transferred. All child classes of SSI_PERIPHERAL class have
+>> transfer functions that, despite accepting a 32-bit tx, only transfer a
+>> single byte; m25p80_transfer8(), ssi_sd_transfer(), ssd0323_transfer().
+>>
+>> The current implementation depends on the SSI model to know
+>> what peripheral model will be attached and what transfer size it
+>> expects which is error prone. If a SSI_PERIPHERAL model was written that
+>> accepted 32-bit transfers, it could not attach to any existing SSI
+>> models.
+> 
+> What is the motivation for this change?
+> 
+> As far as I know for the hardware SSI protocol, it is indeed
+> the case that the SSI controller (and/or the guest software) needs
+> to know what transfer size the attached device expects: the
+> controller just transmits (or expects to receive) however many
+> bits it is programmed for.
+> 
+>> This change updates the the naming of ssi_transfer to ssi_transfer8, as
+>> well as changes the return value and transmit argument to be 8-bit.
+> 
+> This means that the API will no longer work for a controller
+> and device that aren't 8-bit.
 
-Let me try to release a firmware package for QEMU first then I can 
-create a functional test for Ax3000/Ax3005 machines with it
+Yes exactly. Clearer than the mail I just wrote, thanks hehe.
+> We happen not to have any of those
+> devices today, but why specifically stop them working?
 
-B.R.
-
-Howard
-
+I guess remembering having see forks with 16-bit devices, but
+that was few years ago (I know forks don't have they voice here,
+but just to mention the current API is working for them).
 
