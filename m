@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F34AC61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59231C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzWCe-0000m9-3W; Thu, 27 Aug 2026 05:15:20 -0400
+	id 1wzWGt-0006Qc-Qv; Thu, 27 Aug 2026 05:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzWCc-0000jL-Un
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:15:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wzWGs-0006QK-8N
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:19:42 -0400
+Received: from ci-2004k-snip6-2.eps.apple.com ([2a01:b747:3005:204::69]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzWCY-0004lg-SC
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:15:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787822114;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9cCYPO+UsodRZtmHqqnwUme6qjbL/MPJKST/HAeCVCU=;
- b=JVm9HYQKrJsDQ+5MIgJyJfwOoExNHrItwuTJNBf/7HB9in8G4Dl8EMMc8s/0acHL0cKUoC
- TzogxeNy2A6apVPJpN9qaeUlbk4OAOx1XQjuTsJPHGuMB/IG9WxQk1sK2jXcyE+FAZnfTY
- mKHUdlbwa+pFVftg8mTyacmZMAw5ytA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-ruwhZZdzNF-Dpg4JQssTeQ-1; Thu,
- 27 Aug 2026 05:15:09 -0400
-X-MC-Unique: ruwhZZdzNF-Dpg4JQssTeQ-1
-X-Mimecast-MFC-AGG-ID: ruwhZZdzNF-Dpg4JQssTeQ_1787822108
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 112E71953994; Thu, 27 Aug 2026 09:15:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 114A11800765; Thu, 27 Aug 2026 09:15:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7EE0B21E6920; Thu, 27 Aug 2026 11:15:04 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: "Denis V. Lunev" <den@openvz.org>,  qemu-devel@nongnu.org,
- qemu-block@nongnu.org,  Andrey Drobyshev
- <andrey.drobyshev@virtuozzo.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Eric Blake <eblake@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
- writable
-In-Reply-To: <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com> (Denis
- V. Lunev's message of "Wed, 26 Aug 2026 18:37:55 +0200")
-References: <20260824133729.1141990-1-den@openvz.org>
- <20260824133729.1141990-6-den@openvz.org>
- <87ld9umth3.fsf@pond.sub.org>
- <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
- <8733w0j45n.fsf@pond.sub.org>
- <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com>
-Date: Thu, 27 Aug 2026 11:15:04 +0200
-Message-ID: <87fqzzgc13.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wzWGq-0006mQ-Cc
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:19:42 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-10 (Postfix) with ESMTPS id
+ 35B9518001B5; Thu, 27 Aug 2026 09:19:34 +0000 (UTC)
+X-ICL-RepId: 01a04284-8097-78c6-a7ac-3d2f8a758246
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjIOOwEsdigCXQhIBS8aX3M1C1VyWw9TH0B6TABedVMARng+ci1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1787822377; x=1790414377;
+ bh=s674QyVjykg0dTS93sHYgtmBGVy1ShykZfbXJzlc5tQ=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Bu+6fLXv2UYEgZ9848rSvFGSUtv3zKGH6lpA56PqCverCYTR0nVxb81DQ/YpkuLnYxZozUPZa631BDZ0hluMtF02qrWnRGymuXZIFINWW4NddvGhGUDBEjkiLLpweG0gB/9LqMqbyKYCkYGa5qxtLytjRX/o6J8vkf53g3h1ib3xr0LuiuwDjS/7OBjJv2W0YHWrJzHlbzf2KUUiaBFuE1EGnrlMwgp84x4H3836JMbMZqgccGm68z20P9NezrNOBB0uSPrWjkTkHp96u0P6/8KNhkLz+JwHDGnCu4/Pu+oFmj6+GLGufqOeRRME9VDbeB9vM/3bvmZXOwM2ew0DXQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-10 (Postfix) with ESMTPSA id
+ 9688A1800127; Thu, 27 Aug 2026 09:19:33 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH] Update to a cleaner build path on macOS 27.
+ ParavirtualizationGraphics.framework API has changed significantly.
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260826203700.39057-1-dude@angrygoose.dev>
+Date: Thu, 27 Aug 2026 11:19:21 +0200
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ berrange@redhat.com, philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B7C2AAC0-106B-4AE2-A688-0C433B826AFA@unpredictable.fr>
+References: <20260826203700.39057-1-dude@angrygoose.dev>
+To: DB Holder <dude@angrygoose.dev>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Authority-Info-Out: v=2.4 cv=Ft8IPmrq c=1 sm=1 tr=0 ts=6a900127
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Eu1XywiOcv-WUTJC:21 a=IkcTkHD0fZMA:10
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Y4BSF4L1CW0vQ5KvyfYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: r-HmzCq2raBRov7T_nsP6rp3F4ddw_VP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDA3NyBTYWx0ZWRfX5UG1WkNYjm/1
+ lW8YF9sIwU7M/sxi5YvlmIUX40SHY3DswrnCeDPtFiEeUtGBnTlGUWP8AEYLC8tyV+18Hu6imb3
+ 6Kk1jQFxUS/cDXh4zmYD0DEuguj2mE7Ry3ihTNBvII/1sxLraSTn7hbfv3IXM0ka8izGrMzD4zD
+ CsS/Wo92ig20q4XT3h61mvypkbmlfBxGwhnC++7zcAGrugkBeoOG73OnO7aUBhnzVc+rHpkmqXj
+ 4FItoL3VKfO735Ps1ai/tF3jAoqhjjosSeI8Pu+7OwGAnQisw0NtRE7iNoE5a39XWCSR+t9vpvW
+ QRNL9iF0WHjDOsXGsCrylo6XeSFOy54ZV600n78XPN5/gySuw0A2/IYn2KtlgU=
+X-Proofpoint-GUID: r-HmzCq2raBRov7T_nsP6rp3F4ddw_VP
+X-JNJ: AAAAAAABBqJELNeldeQACbBgqgQABpTxiglKCT5NTJfBOi0VVYnW5jvLLeoHrvFZ9/Okk87Kd5XUcoRsBpDJDVR9DH12kfoPAcTcaVe7TU8LejWbtybyUzXWUERqaMnrFQPAbkDDSnKfYMDgOltZ3T5g8ApzT7vI7WEyEEiepxdQLTXsmmwVDAcMG1YTdlazmtHnBqzAr8qn/+CvCmJZLLCv1CvEa6st/aX2j515bgktHUul3+/eyLiNyam3k5EdJa1v79DJpvnVwYrV9z+e1VmYdnBYy+DaZrRVPlL+gwkkSh3S7j6SBXcEPnGlWNIgkBMxs7O2BRD8IIG6xzpAdeMSCS4t4uJ93kfX+jWZCwZEI67WCcI8W+WCV6tlX0QUXwiWaG+j+WmxjHJx6wbOTCguWHJUv9Cnl94Ydw9AuCGxxY/tQHfd9AD5pqlDwEdKVVHZBKRpX5njjMMW9D/DwrkK4U2TUqoG3ijWFwktYvLKB8+QulnO+M7X1rSP4cS/69LnhyevGDK1iRsEkUn1DO9SUacKuVGxfyafIrm3TcEvTiZOZGzG0gK3lINoQ9eYA8y5QJJxloX3CaTY7pVKS3Jb9+KMlZrH1lneg/8ZSRr20aKdmmiPAmKdDzRgPS3D/wi7ayqH75ZRnrsGQApFTw7W+ssdVubZQg1slpDlUvgFLDPySfto7GQzEz3HdTxtisvYUhnrP45byfueXKayjvYPqvEMTjC+uKCc4AwfA/YyvBRbA9lqC7vdXa371zJHjxBg/d1cTaJAn6L5YD86BuwLiGnJtdELtILLHVEn4foAgExyx38Zh3ZuCh3hEywXekJp3h7G9Hwp6TF5Io8AKctZp75PvVcdYhXX2699Cr/iyd+YYrsPQxxjQF4sXHAqbzkKbj/ffaB7VF9mMYN+pLU24NCqAbv4PS7wtbiPjHqpHJaXURQJjYgNmbrD4PuOMECchUTBg8APKLqju5l4KSXypoquXCF
+ LZ9UcchO3mgvyzbX4pWi2+1sssWuVDliJsV3WzGPzPLvdJKFCqer+vzdkQeKSOgtXkPl54bh27sjpSy+aRaxE4Ns9Q2RxmduOaEXJvfVFEZ/cIPd8b2/nTbVGlacGZxXFJvSDeOhASieOLVC+JMSHTX7k1W9N3vV+ku69AbnhLWO1UxZiWC/nYx3EnTGRm992LyWZM/92JSiuMfdfMJRvnkowrT1qArx4ezpApd/xlzj3OJqIltWtgZ+TA2fjgm4H8RtEJHAuiuqh9/XbFCGmzNQPQVOmuSmZ9ybRcXyj76xw6D/RZV+Rmouq+TAxtgZLM2qC6qO/Y2Om9vsszko/zSceMYlYWSsCKh1wiM3TNCvGRlm3X696hUrp0J4OLCDFaA39FtBexoMXjCnrWoCf/tCtvrbk5QwXGWGDqvugCSRX46NUIZWG+KmgqZPh6gic+6Z0EM0lCBGPbCHxFCv9KtE5G/Q7Q10LT8RyVag9U83kWVBhmXnGFMvNbjw4iGVFM6YUM4NBCu/KW3Q5Ds5//Cv6mLbvgHNFMub38QBtWvs=
+Received-SPF: pass client-ip=2a01:b747:3005:204::69;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,266 +88,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Denis V. Lunev" <den@virtuozzo.com> writes:
 
-> On 8/26/26 17:24, Markus Armbruster wrote:
->> "Denis V. Lunev" <den@virtuozzo.com> writes:
->>
->>> On 8/25/26 11:37, Markus Armbruster wrote:
->>>> "Denis V. Lunev" <den@openvz.org> writes:
->>>>
->>>>> From: Denis V. Lunev <den@openvz.org>
->>>>>
->>>>> A dirty image must be repaired before anything allocates a cluster in
->>>>> it. qcow2_do_open() does that, but only for a node that is writable
->>>>> from the start. A node opened read-only skips it, and nothing revisits
->>>>> the question once that node becomes writable, which block-commit does
->>>>> routinely: commit_active_start() and commit_start() reopen the base
->>>>> read-write for the duration of the job.
->>>>>
->>>>> With lazy refcounts the on-disk refcount block then still accounts for
->>>>> the metadata clusters only, so the allocator restarts at the front of
->>>>> the image and hands out clusters that L2 entries point at. Two guest
->>>>> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
->>>>> stays clear, and a clean close clears the dirty bit, so no later open
->>>>> repairs the image either. The bit also stays set for the whole writable
->>>>> session, so a node which is merely writable says nothing.
->>>>>
->>>>> Refusing the reopen instead is simpler and keeps it atomic, but it
->>>>> leaves nowhere to go: the base belongs to a chain the VM has open, so
->>>>> the qemu-img check -r such an error would ask for cannot take the write
->>>>> lock it needs. The repair does the trick in most cases anyway.
->>>>>
->>>>> Do the repair in qcow2_reopen_commit_post(), the earliest point where
->>>>> the node is writable. An inactive node is skipped: bdrv_activate() calls
->>>>> qcow2_do_open() again through qcow2_co_invalidate_cache().
->>>>>
->>>>> commit_post cannot reject the reopen, so a failed repair takes the
->>>>> driver away from the node instead, which is what stops writes from
->>>>> aliasing live clusters. qcow2_signal_corruption() does that as well,
->>>>> but it also sends BLOCK_IMAGE_CORRUPTED and sets the corrupt bit,
->>>>> which qcow2_do_open() honours by refusing every later read-write open.
->>>>> The image is dirty and unrepaired, not corrupt, and qemu-img check -r
->>>>> still fixes it, so neither belongs here. Return the error and skip
->>>>> the bitmaps.
->>>>>
->>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
->>>>> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>>>> CC: Kevin Wolf <kwolf@redhat.com>
->>>>> CC: Hanna Reitz <hreitz@redhat.com>
->>>>> CC: Eric Blake <eblake@redhat.com>
->>>>> CC: Markus Armbruster <armbru@redhat.com>
->>>>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>>>> Cc: qemu-stable@nongnu.org
->>>> [...]
->>>>
->>>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
->>>>> index 199efc1e00..940249a5e5 100644
->>>>> --- a/qapi/block-core.json
->>>>> +++ b/qapi/block-core.json
->>>>> @@ -1852,6 +1852,9 @@
->>>>   ##
->>>>   # @change-backing-file:
->>>>   #
->>>>   # Change the backing file in the image file metadata.  This does not
->>>>   # cause QEMU to reopen the image file to reparse the backing filename
->>>>   # (it may, however, perform a reopen to change permissions from r/o ->
->>>>>  # r/w -> r/o, if needed).  The new backing file string is written into
->>>>>  # the image file metadata, and the QEMU internal strings are updated.
->>>>>  #
->>>>> +# A dirty qcow2 image is repaired during that reopen, which blocks
->>>>> +# other requests and can fail the command.
->>>>
->>>> Pardon my ignorance: what makes a qcow2 image dirty?
->>> usual obvious reasons are SIGKILL to qemu process (f.e. from OOM)
->>> or node crash.
->>
->> So, you have to do some cleaning work before you can use it again, just
->> like a dirty filesystem.  Correct?
-> Correct. QEMU allows right now to open dirty images in read-only
-> mode and it is OK to be used until we switch to RW. In this
-> case real write to metadata corrupts image.
 
-Feels... adventurous?
+> On 26. Aug 2026, at 22:37, DB Holder <dude@angrygoose.dev> wrote:
+>=20
+>=20
+> API marked obsolete in xcrun --show-sdk-path + =
+/System/Library/Frameworks/ParavirtualizedGraphics.framework/Headers/PGDev=
+ice.h
+>=20
+> Signed-off-by: DB Holder <dude@angrygoose.dev>
+> ---
+> meson.build | 8 ++++++++
+> 1 file changed, 8 insertions(+)
+>=20
+> diff --git a/meson.build b/meson.build
+> index 6dcfdceb50..a6b11cb009 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -852,6 +852,14 @@ elif host_os =3D=3D 'darwin'
+>   host_dsosuf =3D '.dylib'
+>   pvg =3D dependency('appleframeworks', modules: =
+['ParavirtualizedGraphics', 'Metal'],
+>                    required: get_option('pvg'))
+> +  if pvg.found() and not objc.has_type('PGTask_t',
+> +                          prefix: '#import =
+<ParavirtualizedGraphics/ParavirtualizedGraphics.h>',
+> +                          dependencies: pvg)
+> +    if get_option('pvg').enabled()
+> +      error('ParavirtualizedGraphics framework found, but the API =
+lacks PGTask_t')
+> +    endif
+> +    pvg =3D not_found
+> +  endif
 
->> Back to change-backing-file.  It operates on an open image.  Cleaning
->> happens when that image is read-only and dirty.  Possible because you
->> can open dirty images read-only, and that doesn't clean them.  Correct?
->
-> Correct.
->
->>>> Can you give me an idea of what other requests could be blocked?
->>> Before the patch reopen was smooth - we have just opened the
->>> file again. After this patch in a very unlikely corner case
->>> potentially lengthy procedure has been added - full image
->>> consistency check. Guest IO is stuck until the check will be
->>> completed.
->>>
->>> The case is unfortunately real for production.
->>>
->>>> Double-checking: "that reopen" is the one to change permissions,
->>>> i.e. the parenthesis above.  Correct?
->>> yes
->>>
->>>>> +#
->>>>>  # @image-node-name: The name of the block driver state node of the
->>>>>  #     image to modify.  The "device" argument is used to verify
->>>>>  #     "image-node-name" is in the chain described by "device".
->>>>> @@ -1891,6 +1894,9 @@
->>>>   ##
->>>>   # @block-commit:
->>>>   #
->>>>   # Live commit of data from overlay image nodes into backing nodes -
->>>>   # i.e., writes data between 'top' and 'base' into 'base'.
->>>>   #
->>>>   # If top == base, that is an error.  If top has no overlays on top of
->>>>   # it, or if it is in use by a writer, the job will not be completed by
->>>>   # itself.  The user needs to complete the job with the `job-complete`
->>>>   # command after getting the ready event.  (Since 2.0)
->>>>   #
->>>>   # If the base image is smaller than top, then the base image will be
->>>>   # resized to be the same size as top.  If top is smaller than the base
->>>>   # image, the base will not be truncated.  If you want the base image
->>>>>  # size to match the size of the smaller top, you can safely truncate
->>>>>  # it yourself once the commit operation successfully completes.
->>>>>  #
->>>>> +# The base is opened read-write.  A dirty qcow2 base is repaired
->>
->> Reopend, I presume?
-> The meaning here is repaired. The meaning here is the following:
-> "The base is reopened read-write and if it is dirty it should be
-> repaired before any single write is made. Guest stalls until
-> repair is complete."
+Hi,
 
-If it is dirty, it *will* (not should) be repaired before commit can
-start to write.  Correct?
+There's a newer path (RFC already sent since a while) that works on =
+macOS 27.
+The older path already had the IOSurface mapper side gone since macOS =
+15.4 so this
+is not exactly new. It=E2=80=99s just marked as deprecated now since =
+x86_64 macOS support is
+formally gone.
 
-Is the base reopened read-only after the commit completed?
 
->>>>> +# first, which blocks other requests and can fail the command.
->>>>> +#
->>>>>  # @job-id: identifier for the newly-created block job.  If omitted,
->>>>>  #     the device name will be used.  (Since 2.7)
->>>>>  #
->>
->> Like change-backing-file, block-commit operates on open images.  It
->> copies down into a base image.  If the base image is read-only, it is
->> reopened, and cleaning happens when it's dirty.  Correct?
-> Correct.
->
->> Can it happen in any other way?
-> No at the best knowledge from me and Andrey.
-
-Got it.
-
->>>>> @@ -2902,6 +2908,9 @@
->>>>   ##
->>>>   # @block-stream:
->>>>   #
->>>>   # Copy data from a backing file into a block device.
->>>>
->>>> [...]
->>
->> Whereas block-commit copies down into a base image, block-stream copies
->> up from a base image.  If the image copied to is read-only, it is
->> reopened, and cleaning happens when it's dirty.  Correct?
-> Correct.
-
-Is the reopened back to read-only afterwards?
-
->> Can it happen in any other way?
-> No at the best knowledge from me and Andrey.
-
-Got it.
-
->>>>>  # On successful completion the image file is updated to drop the
->>>>>  # backing file and the `BLOCK_JOB_COMPLETED` event is emitted.
->>>>>  #
->>>>> +# The top image is opened read-write.  A dirty qcow2 image is repaired
->>>>> +# first, which blocks other requests and can fail the command.
->>>>> +#
->>>>>  # In case @device is a filter node, `block-stream` modifies the first
->>>>>  # non-filter overlay node below it to point to the new backing node
->>>>>  # instead of modifying @device itself.
->>>>> @@ -4989,6 +4998,16 @@
->>>>   ##
->>>>   # @blockdev-reopen:
->>>>   #
->>>>   # Reopens one or more block devices using the given set of options.
->>>>   # Any option not specified will be reset to its default value
->>>>   # regardless of its previous status.  If an option cannot be changed
->>>>   # or a particular driver does not support reopening then the command
->>>>   # will return an error.  All devices in the list are reopened in one
->>>>>  # transaction, so if one of them fails then the whole transaction is
->>>>>  # cancelled.
->>
->> blockdev-reopen also operates on open images.  Cleaning happens when
->> reopening a dirty read-only image read/write.  Correct?
-> Correct.
->
->> Can it happen in any other way?
-> No.
-
-Got it.
-
->>>>>  #
->>>>> +# An error is also returned when a device cannot be used once it has
->>>>> +# been reopened.  Such a reopen is not undone, so an error does not
->>>>> +# always mean that nothing has changed.
->>>>
->>>> Could that be a problem?
->>> Error reply as itself is not a problem. The situation as a whole
->>> is a real pain in the ass.
-
-Ideally, a command does not change user-visible state when it fails.
-
-blockdev-reopen is designed to be a single transaction: success means
-all the images were reopened as directed, failure means none of the
-images were reopened.  "So an error does not always mean that nothing
-has changed" indicates we're not actually implementing this design.
-Could that be a problem?
-
->>> The problem is that such images exists in production and there
->>> is not way to handle this without downtime.
-
-Yes.
-
->>> Under this patch we are trying to fix things hard and this is
->>> correct thing to do - on RW image we are doing exactly the
->>> same thing. If automation is unable to fix - the guest denies
->>> starting.
-
-We must not (re)open a dirty image read/write without cleaning it,
-because writing to risks corruption, i.e. data loss.
-
-When we open a dirty image read/write, we can clean it without
-inconveniencing the guest, because the guest cannot access it until
-after open completes and we connect the newly open image.  Correct?
-
-When we reopen a read/only dirty image read/write, cleaning it *can*
-affect the guest, as discussed above.
-
-As far as I can tell, all the trouble discussed above ultimately comes
-from letting the guest work with read-only dirty images.  Why is that
-useful?
-
-What are the use cases for opening dirty images read-only?
-
->>> Here we report an error and render guest as unusable. This
->>> case is expected to be extremely rare but technically possible.
->>>
->>> This is a problem.
->>
->> I'll come back to this as soon as I understand when exactly cleaning may
->> happen.
-> Right. Thanks.
->
-> You are asking very good questions which are quite important
-> and interesting :-) Simple "deny" policy is very bad from
-> operations point of view.
-
-I try!
-
-[...]
+> elif host_os =3D=3D 'sunos'
+>   socket =3D [cc.find_library('socket'),
+>             cc.find_library('nsl'),
+> --=20
+> 2.54.0 (Apple Git-157)
+>=20
+>=20
+>=20
+>=20
 
 
