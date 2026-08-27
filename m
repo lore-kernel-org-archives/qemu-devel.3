@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94D9C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D389FC61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSGX-0005pn-Ne; Thu, 27 Aug 2026 01:03:05 -0400
+	id 1wzSGX-0005pj-NR; Thu, 27 Aug 2026 01:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSGV-0005pG-G7
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:03 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1wzSGS-0005od-Us
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:00 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSGT-0002Ij-RG
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:03 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8585c16ab5aso4602327b3.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:03:01 -0700 (PDT)
+ id 1wzSGR-0002I8-6D
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:00 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-66b32bb75beso2652676d50.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787806981; x=1788411781; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qoJCBK/eJXzgVER7xSpcF+/HlWQEqa8pDFs252ZZUaI=;
- b=qV9zbJMhgOHzlGynQt2Lh+gHUtOPxB63IvJAqGgKPlYVCX3wvV6WvnVAQH4yLx638+
- qqrBUMchMZDJWT/8DIltdDGx5STx0wauGe1JxYB5rVRAfed+hXo4PFp3lmWXhihpWDku
- qarREQ2FypHFgsVlcIT3VQKeNyGo632LXUR1oAzPqlxqcu3XnpHoPuywe7GVNkxYWAB1
- QNrMSbWv8RUKblgwKaFJnBie7Hv92/C3bNRPUBB0XNGda1TyEfScgMgHsE4OEGQQlgeQ
- YdMJ/0t/KmHBw60/ZM8SsC8DWPPzlv4aCzx31WS9vFiVBlKTeu4hU5ML2e3I8t49Rbk4
- QGxg==
+ d=gmail.com; s=20251104; t=1787806978; x=1788411778; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=dddZb2vZrpIrHqwA49O0MST0IY6y/BPuLvI5U4ufjcg=;
+ b=FoH7vIoRz3/R4+Nu0rNV1SaR/A2/BXmU0tsDUCHXFoOnofXlumrXNx4DjvTUssn2lt
+ tmKs/nSOgFbOscSc6LabJlhu1xop7FvUhOLO4XzzZRQSsJ1hFggihvfKYgAmKONJlIOs
+ T8FpympBl0DVyAjdJKlwZdnF5yKeEPMt9uPYXjhbymzmASwJobPORyHnfoWvl6Vu0Y1g
+ 3Pz8favWZOOCjg3TFN0tLMGnviRHoqGk/VcNTFNIzAxPhGOeRpKhLz5Fu88jO+CYYw9Q
+ xR4/f4B59E/pvpSm7Vi2W9SuJyxxX02VQtbDxgD81ANnVEq5KEeQezXku2TUDseVd6Gs
+ nQeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787806981; x=1788411781;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qoJCBK/eJXzgVER7xSpcF+/HlWQEqa8pDFs252ZZUaI=;
- b=SO53SjwCKwFSjYa+TzZm+qAn1Xj0R7zmPlqYq4ZiE/7aRi3cQqAQXXcTaAds8cKuGV
- 6QZ+P2iblgWLEBBEc+eE2KdIKui3IeGJEwrvkt74w43hsU9W4IURvHDaZ50RWIiImXKI
- cL0eHpRf7vCoOz7r2L0BccnwYz1+8c5pxgFgS1MxXjVxRrx5CCulwF3rgoBnOsZxVMsD
- BzWwsc56daqt9ctZz6zc84TtSJLQwzpcwCX4nUSEOksYJV7hBwd+6upMZLr75L9FHuV+
- avVSbxoG36ksB5zg19MMnAoIiJljDKkF2M7sWpFmZcx69DndsCRx688YABR4GCt0jrFB
- XX+Q==
-X-Gm-Message-State: AFuF++nfHfdRcsF4pUQmyneIW6IYJ3Q2v4m4Y4W0kzwlsnGhyVPWPfA9
- DUM3QeDlFcR1mYBuGlfbe2Ck9RlCEht7Hz2/6acA8+Z/olS51GwRX6j9hrk6AGlc
-X-Gm-Gg: AR+sD10SrQNevDf9OPgJ0bV9wOoO/ar7kFxMuv21ho2ZPFJc9QdvTyALzNBBILLkvtU
- ynMhhM3g3H/+6xXv0RXU+IC7NFvWV2ojdvcmCkrkzJouszdw3CwBofc/8g9b5faoNFuJnUSiNDV
- bdL8Y97HSwsRPmQOCAnRLOMehZ+edAm62nbMGDIrv+HRwjyvejwroHvuAu7ttcR8YxZr7Y4MgY4
- obfEloEgcvMW9iZaYGC1oDd+OrTcmbXlVCk95/NRqMSYj+Wy29rOAy40XnQsNcV9eaKs0Bkb6KK
- GKug0gQTD9CKSRAa8B5v1wV6MNa4QzNfcVqcMzhEyjuIPV5Q8/9PToMeFDB/TSrY/JM0iyNJFb0
- BgTQOJlrcvH6Tmg3JfbRRC3ONV3EyrTatrm5rScNY+U3VsCoj3pqrPldyfD3pF6qJqVbgAPoNwJ
- QakdGfIH5TBGDWgIuViJtJzG2h11ADYtpkno6eIv6kycMhuORzNxhgl6d1xf/3yw1SCuSeGjPNl
- sVsdomtdtZ7pqRuFMy9lHO1PdRVxE2t24aH6wGu
-X-Received: by 2002:a05:690c:399:b0:841:e9e4:8ab9 with SMTP id
- 00721157ae682-857402a4134mr53042687b3.25.1787806980573; 
- Wed, 26 Aug 2026 22:03:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787806978; x=1788411778;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dddZb2vZrpIrHqwA49O0MST0IY6y/BPuLvI5U4ufjcg=;
+ b=FMsgdHjcAKLAQijnunxqj//+RjHxvXxFpsJD23eYSRk0PjTAQraZpZA1ksdPhzAeFh
+ DklsMP++Q98bQ6jSb/lsbJ5CenJD2GwfuKOwa9QB4mDvl0fG9ojvMmbNmYYevGreFwVL
+ WqLBxIEwOhNLi/WEY4MIBqsGKL2dpsMVzVnYN+nf+3Y/X75z9rHcwE07ur1F+hszokqn
+ MgdvRwMly+H0fqsCEHj8i+On03B6xgHQDrggdhFKRSpOL9zdOGHBpzJHimHjH6tytq8m
+ CiSvJo67q63pxR0W51NcoD1mA4ilIPBdej5JhGtLdTr5ppG+BNovQVx1v2i6N8jgBJl0
+ vILg==
+X-Gm-Message-State: AFuF++mjOuM76yaOZdD3JzMc6NdZKouSIjgonzB98Nc+EehQzaVFuBm1
+ NRwkTURTwKVO6ijKba1+4+nFnpdTgeCs74W5VT/6DT3AmmMiWQ434tO6iX0PlaUC
+X-Gm-Gg: AR+sD13ULDM/qSnjUV6t5abdBbuBzt6fJMr7FDPPX/sijRajOF7LKtP2SRgo01Kk7N9
+ iUiF7E67RkmeDP1woUNE4P1iHZOe5cP2t2g8QBpZhoqMMgt1PH+PRjo81pGidTkoW+FmpmxmjZg
+ 6iGxSiO5XGs+uqRmh2OgdQoLFvhEdSN9sNYbcYlhXMB0vy96fFg9GsRaAx0XHywaPMVkM8dHikg
+ eTvNtgsVtypn/SslVhUN2+zWmLIiKPhQbIV/oKR0zuOOuF8O5j8RUkC+9eoOwZwvmHatmWp3e0S
+ RQSyUtZwKvjEb6EixGfQdpAIPSmbbOGRUdZgdczNmorY1KKk5/TWvfpDRqo/2PsxhuEVjlYnwzN
+ byJVQ6W3NXk7oFZ/fUOZ0NFm+KkOZ1gb6Aw6TSEl261uGQq3jT0fIMmFGqLoBTFih5IZDeyeG2W
+ 0C8Mjtfm1Oq2PydokLEKLv2Jr8fsD1oxU3wK/db45AoGkFcIWRK11ILieanRtPsB2Xzyufo6Fkw
+ 6wwv1oEcnXG6ZXoXzZtD+b60ArJ9JyHSPNXv1OD
+X-Received: by 2002:a53:d5ca:0:b0:667:f400:e822 with SMTP id
+ 956f58d0204a3-66d256acceemr4053961d50.3.1787806977905; 
+ Wed, 26 Aug 2026 22:02:57 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-85b5bc34efasm4267567b3.7.2026.08.26.22.02.58
+ 00721157ae682-85b5bc34f86sm4317827b3.8.2026.08.26.22.02.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 22:02:58 -0700 (PDT)
+ Wed, 26 Aug 2026 22:02:56 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@oss.qualcomm.com,
  alex.bennee@linaro.org, zhao1.liu@intel.com,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v4 3/9] accel/tcg: skip the can_do_io stores in user-only
- builds
-Date: Thu, 27 Aug 2026 01:02:35 -0400
-Message-ID: <20260827050241.3713332-4-mattst88@gmail.com>
+Subject: [PATCH v4 2/9] accel/tcg: enlarge the TB jump cache to 64K entries
+Date: Thu, 27 Aug 2026 01:02:34 -0400
+Message-ID: <20260827050241.3713332-3-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260822190818.1829249-1-mattst88@gmail.com>
 References: <20260822190818.1829249-1-mattst88@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,86 +103,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Every translation block stores to cpu->neg.can_do_io twice: false before
-the first instruction, true before the last one. Nothing reads it in a
-user-only build. There is no memory-mapped I/O in linux-user, and every
-reader is in system_ss: cputlb.c, watchpoint.c, icount-common.c and
-tcg-accel-ops-icount.c.
+The per-CPU TB jump cache has held 4096 entries since it was introduced.
+That is too small for guests running large programs: an emulated compiler
+misses often enough that the fallback qht lookup shows up prominently in
+a profile.
 
-Two stores per TB is not much on its own, but TBs are short. An emulated
-alpha gcc 16.2.0 compiling the SQLite 3.45.1 amalgamation (255k lines,
--O2) executes 34.2 billion TBs at 6.04 guest instructions each, so this is
-68 billion stores for nothing.
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host. The
+compile performs 34.2 billion TB executions, of which 8.4 billion take
+the indirect dispatch path.
 
-Measured on an x86-64 host, LTO build, on top of the preceding two
-patches:
+Sizing curve, on top of the preceding patch, instructions retired and
+wall clock:
 
-    before: 1,469,772,951,575 instructions
-    after:  1,402,667,803,616 instructions   -4.57%
+    12 bits (  64 KiB): 1,562,204,796,597          132.58s
+    14 bits ( 256 KiB): 1,493,318,515,396  -4.41%  124.67s  -5.97%
+    16 bits (   1 MiB): 1,469,772,951,575  -5.92%  121.04s  -8.71%
+    18 bits (   4 MiB): 1,462,309,832,762  -6.39%  119.82s  -9.62%
 
-    before: 121.04s wall clock
-    after:  115.56s wall clock              -4.53%
+16 bits is the knee. 18 buys another 0.47% of instructions for four times
+the memory. It does show a further 1.01% of wall clock, which is outside
+the 0.70% run-to-run spread at 16 bits, so the effect is probably real --
+but paying four times the memory for it is a poor trade, and instructions
+retired does not account for the data cache pressure of a 4 MiB table.
 
-The emulated compiler produces byte-identical output.
+In a perf profile the mechanism is visible directly: tb_htable_lookup(),
+which is where qht_lookup_custom() lands once it is inlined in an LTO
+build, falls from 6.10% of samples to 1.66%.
 
-v3: Use #ifndef CONFIG_USER_ONLY again rather than
-    if (IS_ENABLED(CONFIG_USER_ONLY)). QEMU's IS_ENABLED() is IS_EMPTY(),
-    which is only true for a symbol Meson defines empty; CONFIG_USER_ONLY
-    is defined as 1, so the test was always false and v2 emitted the two
-    stores after all. The measurements above are from the working form.
+The cost is memory: the cache grows from 64 KiB to 1 MiB, once per
+CPUState. In linux-user that is per guest thread rather than per process,
+so a threaded guest pays it as many times as it has threads, exactly as
+system emulation pays it per vCPU. The allocation is g_new0(), so the
+pages are faulted in as the cache is touched and a thread that runs a
+small amount of code touches a small part of it, but the address space is
+committed either way.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+So this may still want to be tunable, or scaled from the number of CPUs,
+rather than raised unconditionally. I do not have a threaded workload where
+the smaller cache is the better trade, and would welcome one.
+
+v4: Fix the claim that a linux-user process is a single vCPU. The cache is
+    per CPUState, and linux-user creates one per guest thread. Pointed out
+    by Richard Henderson.
+
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- accel/tcg/translator.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ accel/tcg/tb-jmp-cache.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
-index 57daded60f..6c8fcd7a20 100644
---- ./accel/tcg/translator.c
-+++ ./accel/tcg/translator.c
-@@ -21,12 +21,14 @@
- #include "disas/disas.h"
- #include "tb-internal.h"
+diff --git ./accel/tcg/tb-jmp-cache.h ./accel/tcg/tb-jmp-cache.h
+index c3a505e394..268dacd7ba 100644
+--- ./accel/tcg/tb-jmp-cache.h
++++ ./accel/tcg/tb-jmp-cache.h
+@@ -12,7 +12,7 @@
+ #include "qemu/rcu.h"
+ #include "exec/cpu-common.h"
  
-+#ifndef CONFIG_USER_ONLY
- static void set_can_do_io(DisasContextBase *db, bool val)
- {
-     QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
-     tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
-                     offsetof(CPUState, neg.can_do_io) - sizeof(CPUState));
- }
-+#endif
+-#define TB_JMP_CACHE_BITS 12
++#define TB_JMP_CACHE_BITS 16
+ #define TB_JMP_CACHE_SIZE (1 << TB_JMP_CACHE_BITS)
  
- bool translator_io_start(DisasContextBase *db)
- {
-@@ -210,17 +212,25 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-     /*
-      * Manage can_do_io for the translation block: set to false before
-      * the first insn and set to true before the last insn.
-+     *
-+     * Nothing reads can_do_io in user-only builds.  There is no MMIO
-+     * there, and every reader (cputlb.c, watchpoint.c, icount) is in
-+     * system_ss, so skip the two stores per TB entirely.
-      */
-     if (db->num_insns == 1) {
-         tcg_debug_assert(first_insn_start == db->insn_start);
-     } else {
-         tcg_debug_assert(first_insn_start != db->insn_start);
-+#ifndef CONFIG_USER_ONLY
-         tcg_ctx->emit_before_op = first_insn_start;
-         set_can_do_io(db, false);
-+#endif
-     }
-+#ifndef CONFIG_USER_ONLY
-     tcg_ctx->emit_before_op = db->insn_start;
-     set_can_do_io(db, true);
-     tcg_ctx->emit_before_op = NULL;
-+#endif
- 
-     /* May be used by disas_log or plugin callbacks. */
-     tb->size = db->pc_next - db->pc_first;
+ /*
 -- 
 2.54.0
 
