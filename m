@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B75F1C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A92EC61DC6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzarN-0002cG-NQ; Thu, 27 Aug 2026 10:13:41 -0400
+	id 1wzas7-0003B0-SW; Thu, 27 Aug 2026 10:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarM-0002c1-Cb
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:40 -0400
+ id 1wzas5-00031o-Nl
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarC-0005eP-Ch
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:34 -0400
+ id 1wzary-0005y0-ET
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840009;
+ s=mimecast20190719; t=1787840057;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=YShCvgs5y/flDeRVs7TKOSqOFTuCBjlBJVFCEqRO1es=;
- b=bLK6IQXTwqcDrU6WZjwc7RmT4xUfzgxPdqwG+txzQ80SOhvgJVJys5c5vRlIYvMelYTScJ
- jDc9FgPWIg6QRwACvwcdYL0uX6oBocsqFJkbiG0Iqr9BFIby86FgqZiCnWCuUSeyIhzkyb
- B0DqbuKajD6/9ZxE8tdIpcah3SC3Iz4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FVHt4kfMC19ZV7Xknh2WCbGWe9zSwmURX9G6ZKP5uCc=;
+ b=Ggb4NHDkRiSel2XPNvSGg2TdLkX0wuuZoievI72KQu+2l/WKPnPuFAfFLweUHSW0tWU+xK
+ ev1AzKCtyOIiWgwUt+riZAi0Pm6YX36AIHSHe2iH5HEolHK7ZUVhm8e/LnmGPibNW8uo9n
+ 1vtzxIxAqzkfJueOSEqcvHcihYV79ME=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-9s9sRBLoNQ6O7PAUKb_tDw-1; Thu, 27 Aug 2026 10:13:18 -0400
-X-MC-Unique: 9s9sRBLoNQ6O7PAUKb_tDw-1
-X-Mimecast-MFC-AGG-ID: 9s9sRBLoNQ6O7PAUKb_tDw_1787839997
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49a1b4ea633so9215685e9.0
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:18 -0700 (PDT)
+ us-mta-562-wMDrwhyEMzKa4uknp63mPw-1; Thu, 27 Aug 2026 10:14:15 -0400
+X-MC-Unique: wMDrwhyEMzKa4uknp63mPw-1
+X-Mimecast-MFC-AGG-ID: wMDrwhyEMzKa4uknp63mPw_1787840055
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c24ae1a510cso63980866b.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787839997; x=1788444797; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=YShCvgs5y/flDeRVs7TKOSqOFTuCBjlBJVFCEqRO1es=;
- b=CSVR7nFkeMaR0o4KOrLergKgEHrTzpeFz/KrXaBWTXvkTwyrMfD5lw/bYEOltRe9zZ
- FbGXJcwb5chT/7mV2JCnXrpa9nj4QgI67H+xo4iEtbd5oGfdBPLkW3VqjpEeSg0NERUS
- UXgRvhLB4S0MU3XSGhdbBCdpMIjnKXs1wqhzPjqTYw3upj70ZdvzS9T9BJ+PIbCDY33u
- fEQD1lI0XiZ/1S6/z3BEa5ZMJcNDaGmOiS6xxrYe/G+XDdsPPjw0nrH4AP08rKl8+Ju0
- 3OaXzE33K68+tUbvtlu48tmxPdokjhLY3Pkqja3cHTa+IsrCCyjhpQWR+Ba8w8ddVyU0
- 4FDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787839997; x=1788444797;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1787840054; x=1788444854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YShCvgs5y/flDeRVs7TKOSqOFTuCBjlBJVFCEqRO1es=;
- b=Ep39exzyVNV0DVhQGLokBznYzfYImgxEwsHxzVWuAg1zCzCIuPJ3TQuqoyh7mVjp0A
- nfu2OT5urKwJ3VGadKl4QgRUpqpbYxLnoZPEt9A+9qMiHEsz356tc2zLsD29NRqzn0an
- fj2fg0+EiIH/1TiOZ/wjCqTre9FAcWmwl+jxu7epgZNOxvJyQ1eGi3yq1clYuLMkrtl1
- KQiAYRybBjWgdP4WVY0sUZR0MG1DBRAbtZYx/08JilULV/SUmHEmOnCM92Ij4iNucbI5
- ZaDDFnROxEmDNHub3IeP8Rz7J876sVYfZ/Q7SgITobwEjJIMSO+IOxIPy585owhqAIt+
- LyNg==
-X-Gm-Message-State: AFuF++lrEUk1ECVFYMMXzIPoeIbTm6nfu81ZhdLSxap+5TWHdmkVUpDv
- u6lSZPxaKCVleomGvtAP1kmq4A9Q9uP8o4hpfINjbfr+lqLyz5GnUb0EKcQ7Czvf6PXjUA0OG70
- BMjzvCEz6vO/rM/oacG9aUNHetE1hE4S7+TfN01SroGNjtl/SkxkfZJMU1cpK9Voqfb0k0Krdij
- bW8VTNJVlgGpXTTWIRdw4t2n2RXTVa9PwBZ3/E+6xs
-X-Gm-Gg: AR+sD133nVUnCfXbuc8OrnZbAsRDGugpdoXWoAG31i+ewnxcandQi6imAwiOatG8cMX
- AZ37k0QeM1DMKn6+KVIe21zE6z7sIzC+tyGZZO1YH9kz8lXNo1gWQguFKEKUqn9B5Gnhj/2jpBe
- wOoS79EKYzWXz9ONkXyr/q2FCkNnrK/E6KvVOCLsg3L/Vdcpuo4mb3cgKd+5f7rsg3cY026nVXg
- H2eF6xl5IcnmE/nGGdZyNZGqIM0Rl0kDVs3jk4Ad7pYeMni+040QSobPhzSex05Q6VugVXiOKfT
- 428iDLUPDeoL2N+UHmzzxbRacDlNhnOTi/ysZxfEDcXg8t7OInBUnNSAzqtooVDjIY9Zq1mrap7
- +CkJWtVvdb5QdNDPr+B6PmUA85smllIWKGUWXLUQqEBVcCffugrZpwflw7YgJo7Z6y1ofPcUTNB
- +5baE=
-X-Received: by 2002:a05:600c:c0da:b0:499:83f1:398 with SMTP id
- 5b1f17b1804b1-499dc820705mr171530065e9.9.1787839996962; 
- Thu, 27 Aug 2026 07:13:16 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0da:b0:499:83f1:398 with SMTP id
- 5b1f17b1804b1-499dc820705mr171529005e9.9.1787839996309; 
- Thu, 27 Aug 2026 07:13:16 -0700 (PDT)
+ bh=FVHt4kfMC19ZV7Xknh2WCbGWe9zSwmURX9G6ZKP5uCc=;
+ b=cIbNVaVCwUm1hSpJ9p8VIaW0jWDaUlMCoF4CDYFXdZRRMFQJD2PBnZD1WeKWZI4KZh
+ 9Y50h6sBpeLoOnSdMcowdbgaRihf9dwDurqlPKFt118S8zic486mabrWTFlP6Ca5KfIn
+ +v1m5ZX921PCbWQVtzxPniUCBj1m9LJNFzsIIw0goMqIeF9Mc4z07nokFiTqoi34J7DB
+ 8sLhSbSa2VZiDVMCR2sVVUBN/ZVLlm2M2RhSaoH8SNx3IwuxU19jayrDo2jbio80NXEM
+ cy6SoAvrHumhkgPy/5QfUqMfiv9oBmK3jZENvGWjDX2C0HZ2nnyA+leCm6X+k0S4aipr
+ 4oxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787840054; x=1788444854;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=FVHt4kfMC19ZV7Xknh2WCbGWe9zSwmURX9G6ZKP5uCc=;
+ b=YW2/N7t4+4d85VYKmrPOb5tquGRQJtiG1loqtGUFwt6jQmhD4jMRTyVV20dHszpWkV
+ Xi2vNzyd4WTZFrUbUmoiwKwQRFTAd87YGTFYyAG7rNOZn8wi3YMeHfB9jjf2vnmBEwF8
+ fBPqR+sHQmdoxPbosmTCdP4j+AKUi9WuDRI2lo5mRGvg7wFWkd+2nKsFTheu2Kb67XWH
+ mm0VsNibPXTTE1uYUiznj2WZ6zjBdigVIZMcSz7wdrY03s71n+18RxC4FYu7FSL8z1Gd
+ bJTXGriPm55ZiSIDwJAiYRkIm4ZP/YzZaOD16lA1OyHuMQu3NRBWWEO4JHwRl/f3C+eo
+ mkjA==
+X-Gm-Message-State: AFuF++l/fMEXEUd88gTp+VSPvFvYej7+XzS4kycgDRimpBAx22DiDbT1
+ vZooUdSdJa4lkqvXKoOpEyvkU5ElVdk2PITPIL0PEZV/EsNjOdTRg9VPpI11VOqd49rH09GgvYe
+ v93NRlYPMSKnp8GqcetLWhEAKjNRY9GlDntu2vV5bp9hn9+13EVCvl405lFhDexD1+aHH8BYk7Z
+ qp96V+w/HHTgYw+gED9jrWSkxkA0ODKHF5BgXnZo2H
+X-Gm-Gg: AR+sD11Y8QTzKGDwdrsJzveAHl+xJZEhQDEXXzc+1Vf0+4xkwMbNCFHkTbCDhXJcWe1
+ RvAVygqiEOsRNmeAErdtSeyTgtNly47kIUglh0IHCm3TUYwxYl9fMntyvXS55FmmWHFyixCY1Hl
+ 8mtBamav5GW1zW21dIK0L+eZ+ULsASdNLuvMB77arGCFb18BOoEnZ7kgtF9v7ML7MebWk3xEHx/
+ TaAPoZF6vjRJIzvUdsYioXnQUE7yBRXlzG/kgPI2bwd1h+Ly2TXOGzZCc8ZmbCAr7J5KKZj+hWv
+ H2+Wr3WnZqf7GVIrWkbCSqP2zznhAz5uyO0LBoGzNI0ZrvDSEp+6iUW1hC2IkwLSWLD9QwMRuJh
+ qhDykImqyPnk+kuAMJfkQ/jpb3x1hjlyRLJbo7lIc3Ft4i86V2AkZlWpTvTgTtEXqJw93ZQM234
+ mhL9w=
+X-Received: by 2002:a17:907:1c8d:b0:c20:af9d:4533 with SMTP id
+ a640c23a62f3a-c250c36a8e8mr1447243266b.19.1787840054371; 
+ Thu, 27 Aug 2026 07:14:14 -0700 (PDT)
+X-Received: by 2002:a17:907:1c8d:b0:c20:af9d:4533 with SMTP id
+ a640c23a62f3a-c250c36a8e8mr1447238866b.19.1787840053831; 
+ Thu, 27 Aug 2026 07:14:13 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b4c321184sm69911785e9.11.2026.08.27.07.13.15
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-c250f99f6bdsm616919966b.0.2026.08.27.07.14.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:13:15 -0700 (PDT)
+ Thu, 27 Aug 2026 07:14:13 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/23] Rust, i386, SCSI changes for 2026-08-27
-Date: Thu, 27 Aug 2026 16:12:48 +0200
-Message-ID: <20260827141314.1099352-1-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org,
+	Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 20/23] scsi-disk: fix out-of-bound read in WRITE SAME
+Date: Thu, 27 Aug 2026 16:13:08 +0200
+Message-ID: <20260827141314.1099352-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
+References: <20260827141314.1099352-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -117,82 +121,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f57fc2f7ce667b6527582862e69d526edd3ee0e2:
+A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
+to read roughly 60 KiB past the end of a heap buffer, copying that out
+of bounds host memory into the guest's own disk image.
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-08-20 16:01:59 -0700)
+WRITE SAME computes the request transfer length at dev->blocksize
+when the request is prepared and sets cmd->xfer from dev->blocksize.
+scsi_disk_emulate_command() then uses cmd->xfer as the size of the
+request buffer.
 
-are available in the Git repository at:
+However, MODE SELECT can race with the WRITE SAME command and guest raise
+the logical block size to any value whose low bits fit 0xfe00, up to 65024.
+In the presence of this race, scsi_disk_emulate_write_same() will read
+from memory as many bytes as indicated by the *new* dev->blocksize,
+and write it to disk.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+The read length in WRITE SAME must be bounded by the buffer that was
+actually allocated, not by the mutable s->qdev.blocksize, so clamp the
+length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
+against the current block size would not work because the race is
+intrinsic in the SCSI protocol.
 
-for you to fetch changes up to cfa6e2c52ca8f756461fe41f4ce40e61a82fd914:
+I am not sure if this is exploitable with virtio-scsi and other SG-capable
+HBAs, because it should process the WRITE SAME input immediately,
+without letting the MODE SELECT command race with it.
 
-  i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails (2026-08-27 14:02:31 +0200)
+Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/scsi/scsi-disk.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-* rust: introduce script to update crates
-* rust: update dependent crates
-* target/i386: tcg: small cleanups
-* target/i386: tcg: decoder cleanups around VEX prefix
-* scsi-disk: disable MODE SELECT block size change by default
-* scsi-disk: fix out-of-bounds read in WRITE SAME
-* hw/i386: harden vapic against mapping the writable region over SMRAM
-
-----------------------------------------------------------------
-Paolo Bonzini (23):
-      scripts: remove dead variable assignments
-      scripts: print build.rs diff
-      scripts: rename variable in scripts/get-wraps-from-cargo-registry.py
-      scripts: do not assume the new version of the crate is present
-      scripts: prepare for introduction of CrateSource class
-      scripts: introduce CrateSource abstract class
-      scripts: add functionality to update wrap files from Cargo.lock
-      scripts: add the possibility of a quick update of the pacakge
-      scripts: rename get-wraps-from-cargo-registry.py
-      rust: update crates
-      rust: hpet: fix clippy needless_range_loop
-      scripts/feature_to_c: avoid SyntaxWarning
-      target/i386/tcg: do not reuse cc_srcT
-      target/i386/tcg: inline gen_ext_tl
-      target/i386/tcg: simplify return value of gen_prepare_cc
-      target/i386/tcg: move check bits out of validate_vex
-      target/i386/tcg: treat VEX as disabling high-byte registers
-      target/i386/tcg: fetch modrm early
-      target/i386/tcg: move VEX validation early
-      scsi-disk: fix out-of-bound read in WRITE SAME
-      scsi: hide MODE SELECT block size change behind a quirk
-      vapic: confine the VAPIC region to 0xc0000..0xe0000
-      i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails
-
- MAINTAINERS                                        |   2 +-
- docs/about/build-platforms.rst                     |   2 +-
- include/hw/scsi/scsi.h                             |   1 +
- hw/i386/vapic.c                                    |  18 +-
- hw/m68k/q800.c                                     |   2 +
- hw/scsi/scsi-disk.c                                |  17 +-
- target/i386/tcg/translate.c                        |  93 +++----
- target/i386/tcg/decode-new.c.inc                   | 146 ++++++-----
- target/i386/tcg/emit.c.inc                         |  15 +-
- Cargo.lock                                         |  60 +++--
- Cargo.toml                                         |   2 +-
- rust/hw/timer/hpet/src/device.rs                   |   4 +-
- scripts/feature_to_c.py                            |   2 +-
- scripts/get-wraps-from-cargo-registry.py           | 184 -------------
- scripts/update-cargo-wraps.py                      | 285 +++++++++++++++++++++
- subprojects/attrs-0.2-rs.wrap                      |   9 +-
- subprojects/foreign-0.3-rs.wrap                    |   6 -
- subprojects/foreign-0.4-rs.wrap                    |   7 +
- subprojects/libc-0.2-rs.wrap                       |  10 +-
- .../packagefiles/foreign-0.4-rs/meson/meson.build  |   3 +
- .../packagefiles/libc-0.2-rs/meson/meson.build     |  20 +-
- subprojects/quote-1-rs.wrap                        |  10 +-
- subprojects/unicode-ident-1-rs.wrap                |  10 +-
- 23 files changed, 528 insertions(+), 380 deletions(-)
- delete mode 100755 scripts/get-wraps-from-cargo-registry.py
- create mode 100755 scripts/update-cargo-wraps.py
- delete mode 100644 subprojects/foreign-0.3-rs.wrap
- create mode 100644 subprojects/foreign-0.4-rs.wrap
- create mode 100644 subprojects/packagefiles/foreign-0.4-rs/meson/meson.build
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 1b0cce128c5..5bb7a974d69 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1911,6 +1911,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     SCSIRequest *req = &r->req;
+     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
+     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
++    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
+     WriteSameCBData *data;
+     uint8_t *buf;
+     int i, l;
+@@ -1930,7 +1931,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+         return;
+     }
+ 
+-    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
++    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
+         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
+ 
+         /* The request is used as the AIO opaque value, so add a ref.  */
+@@ -1956,7 +1957,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
+ 
+     for (i = 0; i < data->iov.iov_len; i += l) {
+-        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
++        l = MIN(buflen, data->iov.iov_len - i);
+         memcpy(&buf[i], inbuf, l);
+     }
+ 
 -- 
 2.55.0
 
