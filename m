@@ -4,159 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD27C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB86C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzXP2-0001tC-Ja; Thu, 27 Aug 2026 06:32:12 -0400
+	id 1wzXPu-0002Qp-GR; Thu, 27 Aug 2026 06:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzXOw-0001s9-Fa
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:32:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzXOt-0005qP-Lf
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:32:06 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67R9HJII2526945
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 10:32:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2DBINuFMm58bjywl49w88Q8ntiTVwCXL5/JJ9jLbOUk=; b=CT588Ai/L4MtbD/N
- pq8Hzn/5S/K/UAW7noUxqq8PUSoO+edGRyxiZWTlIamtFKtg2JFcp64403PYiAU0
- vSU0dz/LOi4Yv20tnK8c/81Qb0FZ0OpbIzyBfUoihuxJMeJl47wh/UJEEthVN9wo
- 7KPSZZbUWfpdsJxEXyKHeKJ2n5YDBZmjJEcvMswyKPD6+IyeTz/DCv2XBng1WK4o
- atDyIiidoXG68p4cJWDifk1cNgw0c09CBjlxnpfrEMlgq+C0m/x2NtN7Ugb55Dp3
- BZF45Nb19hzxdHZVplGte1NIUqxjtdjROpEubp4P0AjxP228WPr0kLoUktEdHpLl
- 4z3A4w==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gab7t1x2x-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 10:32:01 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-52827090cc5so9713851cf.0
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:32:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzXPt-0002QB-22
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:33:05 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzXPq-0005tp-Iz
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:33:04 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-836cbcd0a48so11840997b3.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:33:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787826781; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XBwoVYbZ2j52Ozh1M4O8VfJ9yTfFRFPY5/f2SFjHXZ8lkCkioE2l88RjaJxMPi3R21
+ KuX6xg/2swb2b3HRAtLozNBSj9nxZjG1gMiI2QliHGdCl/DL0+jfiglrj9unOLmpKor+
+ oaK2y73ll7pyc2OkkoUEIK9gMnTa0njN0lvewh0kmmH8tvslEcNj8c/uQ7WKw+xX2Wam
+ HgiTG78p75uR9cCGJWAfWSampV8JJlMvCIUwp+B9OmVN0Fs99Csgtop8/0gPIhe+Cc1r
+ Bev9w5qMI7Uwfu2YLpqD0h/N/8NpmrFfvlrpHZR3fKCZtOzNGg72Ututp6uSyL6Dfl6E
+ i9Jw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tTrAo6VqK52hX+0Fm7vKdbUYFoLyoSHCxnIpGUABsYQ=;
+ fh=ub/zH6y+WPJijJytJEhlCd5PKbYleOIQ1GJXfRlIPlM=;
+ b=C2nTjDscDljabzZuvf1bzpe6wvWZH/kBpDHirYFMw9233rUd1+GVM7SpTOG5MFPeb6
+ drc8q3cyLjZubyoL5yqPwNk/YknCRIs8OqqS4CtBftVnEVXlL7IUSSXqAFJz1jv0tMTg
+ jcs+cUBpobpEL4FLkHBjAfWHc0yoah1Uvvi2qgEUlK19nbCW6yGpIUo9ECHuN/8awIrP
+ WR9ARcxnlCQxGlNTiIDDi0EOm8XI3kUNhfYGX6CW1Lfa6d4HZfl7c+rLo1m+yh+P4rTT
+ QiT2uOxiZxRMKguRnGwYrmSh6IsgjzMLYnDttUwvqpHx9C8Bgw9Kw3q86DNRvJYBVyPe
+ 7gSg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787826720; x=1788431520; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2DBINuFMm58bjywl49w88Q8ntiTVwCXL5/JJ9jLbOUk=;
- b=i0SZEjX1wyX3SUOUJKze9oVZelu9Cq3RlrIEysjlERZ2sPrgvKBUuHlIdfyYBF3e1e
- G+uAaaLQ+qwOMuIRXhYjiOZrTlvm7GUepm64VfORt+OoHtPKWvs3jqIRk84xUaezkx84
- UKoOkX3BZDXojV/axPbnl+V5ln6iQpfwxVM4aLbOg5OTqDriQsBesmzIIgYarMmE76oM
- QgsRhUJ1ImTpyxnHUU2RJ0HPxv0+3VYO5K393k/Aq9gAT3hARq3kgQvCzbMpzzJ+kFeA
- db+d2cWHJ3UOfcYFybBWODdwPHVKUn0yL3m0y3iuPIuKa73DmTLkADWRkEJjVC/Ig8pW
- t6UA==
+ d=linaro.org; s=google; t=1787826781; x=1788431581; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=tTrAo6VqK52hX+0Fm7vKdbUYFoLyoSHCxnIpGUABsYQ=;
+ b=bc6FV0pj5n0BoLSs05uc082wo3zvBaDenN1hD2punK4CPaLlbY9Zaa7WRtwpZ1t2kV
+ ybDJP2vK2IwtrZULKitRwhF+cBAMgQYNQ0yrKi7mSkK5+ubhEGRvUUQ40TAxir3Gbjz4
+ SIyqdpTlUad58z/0DrJSa0tERer9wWNClTJC7RJ0jRa4feH/ExotUoV85GThYZdlkFGJ
+ 4rCxll/NNO0+h+oTjrZzMpWiOIDmeMZOgkYf68m6Fa4Lrp/z0amgTY/9qpNZKC1cw9Ez
+ KpUIEfuGyZ4SlBblUrFB9X2nHuHg3rphtVjxbbBe2HExjKsszJD4wOgwwQ3NCfbXEUsU
+ sZkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787826720; x=1788431520;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2DBINuFMm58bjywl49w88Q8ntiTVwCXL5/JJ9jLbOUk=;
- b=p79M+AWiboOpdSXX41GxCmYes3L21WGzSru5CHjes3psLPZ9Laa2vXPak9L+348Wfj
- yzZkvWokroxj9NChR5IVGxfeLAhJyWB688dMIbPsLlE4Woq1lFmHqAk4LcRuYFXEZtk9
- IKZ4Io/5vP8mASMsnHeqVanRrXBIucl+ZTQ9Tf58c/F9WAmlICcX+lbOVVHbcqa85ZG4
- oBki44YmNxiw6DvdAJUnf+oVoMthscfsmbOhLgM2L+eZkfybZgyBYRmol3rDnwcUltZw
- sxVKhKqd/UOcAj/jL66qrbmnbdclUIEvwKotG9bjuEOUqZqFnE51RuDBWIZ+7oegP4UL
- Pupw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpYIYY2qgyjk7Pc1GK7TeMWYCW59QuAEClkgj1oi6zCep/0Tk4quKUacPhwZ+aEpkqQJJeYIS2LPQKC@nongnu.org
-X-Gm-Message-State: AFuF++m1dG4abbjGPl/6U/lXnjqoi5cPj84pSg+U+MCKaYeIZ5F1cI8h
- WPYJHuGe1uDdiXCH3xiXkHG2vx9+r/nbGaHlCTboUcFbCDc47mqB3L90ZZiXnTwkPcchY9mDZsj
- kcbT1fMxBHWF0zzMyZVufvrK7o1olrlvFdU1rIg0UDrfH5xu2Odt7woYmWQ==
-X-Gm-Gg: AR+sD1115sDYbwe0Y6P5cVGeh33I3CVbrq2xMeG3rjUDwbUaf1Nks8xKsm1Lu3jOub2
- 23swvgUku5Zc+gXpudqoGe7zWT6VwYSQQUUSQ/YYtH3t4BlcgW0Lyd/BlczXc04WNhkSNQKiQca
- b13UTQCJaqvwLYSpijrKWXJ01VxUFA4BRcxp9XPjcziWBJ3SOUDrkZWVJuMJjY/c8QYGQU6jPqr
- JYjSHs4H/NNPU8xR1e75Yox/QMXrj7Q0R1vhWz0rjTsbktwI4ljZ6uJUptqSd/5/p+fBaWSfmBi
- SIGSAB3RnQPHT3MqEdQg/fB8hJtxPC3f8W9Cz1jmANhXRkvl+L893Q7lnAPlj7ooL8h9NUK7ZFU
- L+XF/fJTkQxD13oF2k3aY1fHPScqYFAl2ww==
-X-Received: by 2002:a05:622a:4291:b0:52d:9cfa:663c with SMTP id
- d75a77b69052e-52fa185dc9amr59596291cf.0.1787826720460; 
- Thu, 27 Aug 2026 03:32:00 -0700 (PDT)
-X-Received: by 2002:a05:622a:4291:b0:52d:9cfa:663c with SMTP id
- d75a77b69052e-52fa185dc9amr59595761cf.0.1787826719892; 
- Thu, 27 Aug 2026 03:31:59 -0700 (PDT)
-Received: from [192.168.69.226] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482e28f854dsm8106335f8f.36.2026.08.27.03.31.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Aug 2026 03:31:59 -0700 (PDT)
-Message-ID: <53ce22e0-a26e-4641-ba20-0ae65b290bc7@oss.qualcomm.com>
-Date: Thu, 27 Aug 2026 12:31:57 +0200
+ d=1e100.net; s=20251104; t=1787826781; x=1788431581;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tTrAo6VqK52hX+0Fm7vKdbUYFoLyoSHCxnIpGUABsYQ=;
+ b=C9iCTfhDIkyhN8imtZ0/JWF09x0ihzglhsL1hmcMA+/fCmsAZmYXdKSckk6RicW/BO
+ 7vmqTO/LIe8xqN2Qa0ns6W7RUpv+Ksl2NNloPo9SNwLYsu/n7hT7zYlW+GeBD7GiHlx9
+ 7nCVuOFIOVc+LpQbfXJJdc00Po/JnI8VtxHQJ2kYyuBUb25KGz/fmMd6yIzpV3eSRFd+
+ SsSkAxxYHUZHzmGShuXFu4PJPnYfrq5ZLxVXWgF+nlQ+7PFu33ehe8G/leI3wmTDJppR
+ GUI/NiCoN9Ba+arhpgfmYFjQK0dybaHdFJy2DDEBr81InadewvB0ztqAk6lntXwbb2JV
+ Mfcw==
+X-Gm-Message-State: AFuF++lVuTppqJ9Dv1nyn8D5jj4dkRXakjduJann7KRIMYRuMTPt8rHZ
+ ffbzgW1OfZJPGALTLQBY25LEcriTWaZRPQht3pjhMIjIBLZpQqHSKbGv8tpZ/lsQT+fFbF/CsKm
+ POWzNFEu1hLZVbgRXLvw/Lao1DHsNBEB+AXGzon1HSg==
+X-Gm-Gg: AR+sD11iLIVMNKlLUdMpoAiZZR+yWTyoTq1s6KWVRQNq0P+wFPyxTVo9sj6qIbKE+xz
+ iurFEUIIAMT2PeRKx59wvqa3n0lyqKghfBM70twTJiC6v7gpnQLsCeEOm0zny1iDQ8C0CZ7njz7
+ 5KckOCXql8lmavcmkd6rtWxnV+sAqdL+OFwijH+/uuLsHFLuik1dLXhGLe0luYTd/ahx4sxJGmf
+ SsVZTjjhxIJZmxMgxp0VjCNHZAaz9GreCwBgqLqfx06xgbLjNFa9xcnLTpJPpTiz7n4l5xyewov
+ qnyP9XkDYLnGiDPHQRH0c2pz2eOF52jrNxPmRRlEyHe/LtEMOkWBIYSyHP97xpNg1KriO/pNctO
+ HFTCigk2K31Nvk9dP76Kn7pdNweyH
+X-Received: by 2002:a05:690c:5807:b0:820:b01:9d6 with SMTP id
+ 00721157ae682-8573d39f08dmr56575807b3.11.1787826780564; Thu, 27 Aug 2026
+ 03:33:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Rename ssi_transfer to ssi_transfer8
-Content-Language: en-US
-To: Alistair <alistair@alistair23.me>, stephensportia@gmail.com,
- qemu-devel@nongnu.org, Bin Meng <bin.meng@processmission.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, Troy Lee <leetroy@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Joel Stanley <joel@jms.id.au>, Hao Wu <wuhaotsh@google.com>,
- Glenn Miles <milesg@linux.ibm.com>, qemu-riscv@nongnu.org,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Portia Stephens <portias@oss.tenstorrent.com>
-References: <20260825040452.1322251-1-stephensportia@gmail.com>
- <d88347aa69db68c498b593eabcd2377413ff4af5.camel@alistair23.me>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <d88347aa69db68c498b593eabcd2377413ff4af5.camel@alistair23.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=X6Bi7mTe c=1 sm=1 tr=0 ts=6a901221 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=pGLkceISAAAA:8 a=t9496tuAAAAA:8 a=6o3zYDZGyaI6ylSOKDgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=4wQ91nGE5lQcD7eh5OX0:22
-X-Proofpoint-ORIG-GUID: epoR1XuMtBPfzM9pnlLWPvFaxSBJSLp8
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDA4NyBTYWx0ZWRfX8j+BvR8xRiKy
- 3GOmlV44UTxJPqm3oAy53weyk5MxvjkVaVR6rU87cq4YLMa//8pMmg5CMixywknDfsJ443Ql4qw
- Nz8FzErER4tUu0aCvMGeyxPkFqIywRA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDA4NyBTYWx0ZWRfX7luDEzQ4zO8z
- 4IblD92YpBj8ho2PPHHjdGXyJXzu6WdfGWOJeBn54E7f1V7CJP9qUTMDwayGv0PE3IMSNr6HtDn
- Y1kunP0DQd8d+EiSbEweDrw7opRwPyWNlgTmGOPBsuw2e303E8BF/iTUfwQ41M+9VFlymSii4dx
- UJwFtnkiKrRZ1v+a/514AbN0309IU+pDLmYEd8UDnlQDVqhRMgB9k4f2xD1DsSVNXkfVAGdG7iK
- saNjWVFco3B7SXtbHMo3G+mWvD/Nt48FCt2PsKkOe9cch1GG0uG3tqD/gzCr7wa+NFbtJsdp4Mm
- Y2tPum9Yi4tgU8HJBxjki01cItyiMFPCcIEtopt9nuSV0U+GJbXJoF/5wGzC68LC8ilJKJGY6gh
- Bs2lGV9hPs5IQSZtmL8f0LR1b/LMrnmlJfoamLVRxNDoV+wb9lB/4rxQdWW0cAdrpxrFu2lo6xs
- Tlvxu6XMOtO4VhlDkdQ==
-X-Proofpoint-GUID: epoR1XuMtBPfzM9pnlLWPvFaxSBJSLp8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-27_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270087
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260825145350.3726466-1-alex.bennee@linaro.org>
+In-Reply-To: <20260825145350.3726466-1-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Aug 2026 11:32:49 +0100
+X-Gm-Features: AcwNN1Vv9ig7sfqpze66zeBrYrXp7PaqpjF54_T6hNMXZ7H-_qoGjHaQYrb2tsg
+Message-ID: <CAFEAcA-fCT+A8aC7tqpwnXgK22vo_z77P4Yr0GLuNzv1ZWZh6g@mail.gmail.com>
+Subject: Re: [RFC PATCH] target/arm: re-order ARMFault_Domain check for v5/v6
+ ptw
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -173,67 +118,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+On Tue, 25 Aug 2026 at 15:53, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> In the Armv7 ARM (DDI0406C) any walk of the short descriptor
+> table (TranslationTableWalkSD()) which has a second stage has the
+> opportunity to fault with a translation fault in
+> SecondStageTranslate() before a potential domain checking fault.
+>
+> Moving the check down and lightly re-factoring setting level =3D 2 we
+> can more closely match the architectural behaviour.
+>
+> Reported-by: Karl Mehltretter (@kmehltretter)
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4233
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> ---
+> I've only checked the get_phys_addr_v6 change against the Arm ARM but
+> I've fairly confident the v5 one is the same. I've bundled everything
+> together for review but this patch can't be merged as is because it
+> does too much in one commit. Some open questions:
+>
+>   - should we properly factor out a boot_v6.S and share with other tests
 
-On 27/8/26 07:37, Alistair wrote:
-> On Tue, 2026-08-25 at 14:04 +1000, stephensportia@gmail.com wrote:
->> From: Portia Stephens <portias@oss.tenstorrent.com>
->>
->> The ssi_transfer function comments say that it takes a word varying
->> between 8-bits and 32-bits. ssi_transfer takes a 32-bit arg to
->> transfer
->> but there is no means to indicate the number of bits that should
->> actually be transferred. All child classes of SSI_PERIPHERAL class
->> have
->> transfer functions that, despite accepting a 32-bit tx, only transfer
->> a
->> single byte; m25p80_transfer8(), ssi_sd_transfer(),
->> ssd0323_transfer().
->>
->> The current implementation depends on the SSI model to know
->> what peripheral model will be attached and what transfer size it
->> expects which is error prone. If a SSI_PERIPHERAL model was written
->> that
->> accepted 32-bit transfers, it could not attach to any existing SSI
->> models.
->>
->> This change updates the the naming of ssi_transfer to ssi_transfer8,
->> as
->> well as changes the return value and transmit argument to be 8-bit.
->>
->> Most ssi models handle this correctly already, sending a single byte
->> at
->> a time. There are a few models that are written to support non 8-bit
->> transfers but there are no in-tree use cases that connect a
->> peripheral
->> to the SSI device. These have been updated to use 8-bit transfers.
->>
->> Portia Stephens (4):
->>    hw/ssi: Rename ssi_transfer to ssi_transfer8
->>    hw/ssi/pl022: Fix dropped upper bytes of ssi transfer
->>    hw/arm/strongarm: Fix dropped upper byte of ssi transfer
->>    hw/ssi/pnv_spi: Fix dropped upper bytes of ssi transfer
-> 
-> Thanks!
-> 
-> Applied to riscv-to-apply.next
+I don't care, but would prefer the test case in its own commit
+rather than in the same commit as the bugfix.
 
-Can you hold on before merging this please (or drop it from
-your riscv queue)? I tagged this series to review but didn't
-got a sufficient large enough slot to look at it.
+>   - could the ptw code better match the psuedocode (e.g. case l1desc<1:0>=
+)
+>   - which Arm ARM should be checked for get_phys_addr_v5
 
-In short, the reason I think this isn't the correct way to go
-is SPI "words" can be any number of bits. While QEMU only
-models 8-bit word devices, I have be working with 16-bit and
-even 24-bit words ones, so I believe the current implementation
-is right. I have be thinking of a better way to model this
-granularity in our class hooks, but haven't find a good one yet.
-Restricting some devices to 8-bit to simplify them move part
-of the complexity to the host controller so I'm not sure it
-is useful. I'll return with clearer comments when I get more
-time.
+DDI0100E, which corresponds to the 2nd edition printed book version
+(which covers v5TE). I happen to own a copy of that, which is what
+I've used for the review of the v5 parts below.
 
-Thanks,
+> ---
+>  target/arm/ptw.c                              |  31 ++--
+>  tests/tcg/arm/system/test-domainfault.c       | 148 ++++++++++++++++++
+>  tests/tcg/arm/Makefile.softmmu-target         |  23 ++-
+>  tests/tcg/arm/system/test-domainfault-start.S |  62 ++++++++
+>  tests/tcg/arm/system/test-domainfault.ld      |  17 ++
+>  5 files changed, 264 insertions(+), 17 deletions(-)
+>  create mode 100644 tests/tcg/arm/system/test-domainfault.c
+>  create mode 100644 tests/tcg/arm/system/test-domainfault-start.S
+>  create mode 100644 tests/tcg/arm/system/test-domainfault.ld
+>
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index a29de0385f4..ddfbb79beb6 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -1172,19 +1172,13 @@ static bool get_phys_addr_v5(CPUARMState *env, S1=
+Translate *ptw,
+>          fi->type =3D ARMFault_Translation;
+>          goto do_fault;
+>      }
+> -    if (type !=3D 2) {
+> -        level =3D 2;
+> -    }
+> -    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
+> -        fi->type =3D ARMFault_Domain;
+> -        goto do_fault;
+> -    }
+>      if (type =3D=3D 2) {
+>          /* 1Mb section.  */
+>          phys_addr =3D (desc & 0xfff00000) | (address & 0x000fffff);
+>          ap =3D (desc >> 10) & 3;
+>          result->f.lg_page_size =3D 20; /* 1MB */
+>      } else {
+> +        level =3D 2;
+>          /* Lookup l2 entry.  */
+>          if (type =3D=3D 1) {
+>              /* Coarse pagetable.  */
+> @@ -1239,6 +1233,10 @@ static bool get_phys_addr_v5(CPUARMState *env, S1T=
+ranslate *ptw,
+>              g_assert_not_reached();
+>          }
+>      }
+> +    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
+> +        fi->type =3D ARMFault_Domain;
+> +        goto do_fault;
+> +    }
+>      result->f.prot =3D ap_to_rw_prot(env, ptw->in_mmu_idx, ap, domain_pr=
+ot);
+>      result->f.prot |=3D result->f.prot ? PAGE_EXEC : 0;
+>      if (ptw->in_prot_check & ~result->f.prot) {
 
-Phil.
+This matches Table 3-5 in the v5 Arm ARM (ARM DDI 0100E), which
+lists the priority encoding of different MMU faults. Domain faults
+are lower priority than Translation faults but higher priority
+than Permission faults. It also matches the flowchart in Figure
+3-9, which does the domain check only after loading the second
+level descriptor.
+
+> @@ -1254,6 +1252,7 @@ do_fault:
+>      return false;
+>  }
+>
+> +/* See TranslationTableWalkSD() in Armv7 ARM (DDI0406C) */
+
+...but note that the domain and permission checks we do in this function
+are handled in the pseudocode in its caller TranslateAddressV().
+
+>  static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+>                               uint32_t address, MMUAccessType access_type=
+,
+>                               GetPhysAddrResult *result, ARMMMUFaultInfo =
+*fi)
+> @@ -1288,6 +1287,7 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Tr=
+anslate *ptw,
+>      if (fi->type !=3D ARMFault_None) {
+>          goto do_fault;
+>      }
+> +    /* l1desc<1:0> */
+
+I think personally I wouldn't bother with this comment.
+
+>      type =3D (desc & 3);
+>      if (type =3D=3D 0 || (type =3D=3D 3 && !cpu_isar_feature(aa32_pxn, c=
+pu))) {
+>          /* Section translation fault, or attempt to use the encoding
+> @@ -1305,15 +1305,6 @@ static bool get_phys_addr_v6(CPUARMState *env, S1T=
+ranslate *ptw,
+>      } else {
+>          dacr =3D env->cp15.dacr_s;
+>      }
+> -    if (type =3D=3D 1) {
+> -        level =3D 2;
+> -    }
+> -    domain_prot =3D (dacr >> (domain * 2)) & 3;
+> -    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
+> -        /* Section or Page domain fault */
+> -        fi->type =3D ARMFault_Domain;
+> -        goto do_fault;
+> -    }
+>      if (type !=3D 1) {
+>          if (desc & (1 << 18)) {
+>              /* Supersection.  */
+> @@ -1331,6 +1322,7 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Tr=
+anslate *ptw,
+>          pxn =3D desc & 1;
+>          ns =3D extract32(desc, 19, 1);
+>      } else {
+> +        level =3D 2;
+>          if (cpu_isar_feature(aa32_pxn, cpu)) {
+>              pxn =3D (desc >> 2) & 1;
+>          }
+> @@ -1373,6 +1365,13 @@ static bool get_phys_addr_v6(CPUARMState *env, S1T=
+ranslate *ptw,
+>           */
+>          out_space =3D ARMSS_NonSecure;
+>      }
+> +    /* Extract from DACR indexed by domain */
+> +    domain_prot =3D (dacr >> (domain * 2)) & 3;
+> +    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
+> +        /* Section or Page domain fault */
+> +        fi->type =3D ARMFault_Domain;
+> +        goto do_fault;
+> +    }
+>      if (domain_prot =3D=3D 3) {
+>          result->f.prot =3D PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+>      } else {
+
+This one is trickier because v6 introduced the AccessFlag bit and
+associated fault. If we're taking an AccessFlag fault that has to
+be taken before the domain fault (the pseudocode does it inside
+TranslationTableWalkSD()). So for us the place where we check
+domain_prot needs to go somewhere after the AccessFlag fault check
+but before the Permission fault check. At the moment you have it
+before the AccessFlag check.
+
+thanks
+-- PMM
 
