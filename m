@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C103BC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9431C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzch7-0006rx-Nj; Thu, 27 Aug 2026 12:11:13 -0400
+	id 1wzci0-0007Ld-HT; Thu, 27 Aug 2026 12:12:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wzch6-0006rm-Vo
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:11:13 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <ombarkare123@gmail.com>)
+ id 1wzchy-0007Kr-Gn
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:12:06 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wzch4-00081k-ME
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:11:12 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4953e04ef16so22822035e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:11:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ombarkare123@gmail.com>)
+ id 1wzchw-00085v-49
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:12:06 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2d7200b2e15so16549305ad.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787847068; x=1788451868; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=PFbdPuqdB86SykNwHkfFz8BwmjNv5g6nf3B39eU1iZk=;
- b=SKo6uRopuGt2kfcXctljumhCakLV2NoP7Gbp2eOoNYa3oeMWuuff8WbcoRXs+RUqa+
- 6vxZIx1LabAMrHO2STRC8aDbsvbjErLs5StnR9bL24LajNj5ZYBwpzRMv8HG4SMJZ9+m
- tteqIrkM3cdMCPHg/7JgBfB26x8B72r1MozqUW/PICwaUmws0RwJ0J5yBDK+zdtjqtpx
- cFY0SSNQtwx80gqyD+/EA0trQlzgw0d9cLdeiPPpB9h8w1JbQTan9vHvQMwDroOiG47/
- poBg6c9NMjb9JfQfeIE10u8Bv+8YbhF6fB/vR/AnNlbUOZhBuqCbCV4vSVN4o1JXvHBY
- BXxg==
+ d=gmail.com; s=20251104; t=1787847122; x=1788451922; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=0RR9P+O3Z7D5ncDdKnSVmbnZXmb7xth/LnHjtNyI6Uw=;
+ b=ZuxJ+/609AEAd+ikB1cb6lRTEAZCCDKQX1t+qrzvX2S5lK5PRDtDt8cu72jKYU47Op
+ u0p92Mmyh7Be+97nBBZkIFcJD1ekATKnqgzs0rCcPY8/LE/S6g0ctr/35G2LLQbbqq/b
+ 5ThfSUNHmG4gKpWrxDYhZo31LD/nthWggnt+Msvj4UA9QrfV+JYzEqzvCZybEh5vFFi4
+ 8mE/YQGSXgepx6oYn6cIBStOiPoONE3fsYyvuc7tSVFfXHFSWIgV8dGQNqi4V2Z5kTJ5
+ CzgvJoszDY8AWpPidU43XppSuKxyrZquPdsg/E4MCLcjmJn8sx/EVZFl4zY7vnaYxGNu
+ 2JRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787847068; x=1788451868;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PFbdPuqdB86SykNwHkfFz8BwmjNv5g6nf3B39eU1iZk=;
- b=WdB5vtA7tWzAv8R9nuUUnDl42ea+SqWLWXXQ7KVSOCZVMNDD4n2OJ4YA6M58iD0n2j
- aH7wChXE+x+8jKIRuKau1DIlaqHbRVxDr/VIZRUGEZIIgxbINn1+oXebfcEyjxnnqbIk
- 8iNfgZjOvaiKTeeuGJ1z6M5qnzRMvQguS0Aydw1jAD0IKnrSUyk9xNggyPcTVtm31hXS
- lalJqpaplJfb/lvYRsJ0JdtHfJvjegUVMfrbG9zfJ4HVOCukNGq80QuZrFLxASGZI2US
- R+I+4bF3l8KxS/QJZ0jR63uccXMiaYG68df5+D3uS/pNmjoXaQGvBxJP0B73kwFaQ3q4
- E9ng==
-X-Gm-Message-State: AFuF++k2uaKwpsmw9SCDlh4l8tUguFzN7EWsWSb4QLT1C2MwY0qOnleJ
- 5cJkoQhjStjvba5xI13KZMu1f9cUd3SiY2yjccgP0l2BunBuIBEYq7eMWGJWsxKzens=
-X-Gm-Gg: AR+sD13eGwdACVM9+c/Ft6segrKbGmuzYOde8+nyhD+wUC8+kCZvoTe4vIiSRbPFdiK
- 3FuMODStR5AUMTVjryWJkW9UaluOZ52KeVDVWgzNd4qtH0VFdny7uOceV/7B1a3kXbPXieSNaeL
- ONyrKg/BPy433Dp9lGfXvdgQxrC3C8JLe85oe9HsdcRWZfm3Ibo/3nimv4TH3D1ZwwY8Y5vUrBd
- V0UfVIKygUScIQPnpZsn83jz15lSZDc/Bt5IIy3rGF9gi0gH3+meZbMQvBkGlRvn1t/yMpxKsXN
- 0RE5Ii5bdWSBjuBb3FHsBEZ+EJgH3AZQZRV3PT1u2ILEyv/6pBS+cClpd+xTFBU1LOG/XjBF6JU
- D4t6POp8bONskRAqbOYc6yvk5Jd/ChPfzmd0r5Bl/vTcm3xntITO5p7BZCAwGkYxwGW4jK+ODQy
- Y4ytnMqj548hNfokPosOJycLCS3MDWrQ8iA1P6q7haAijsEAtU2uNquFLDjhH9
-X-Received: by 2002:a05:600c:1393:b0:495:48d7:f178 with SMTP id
- 5b1f17b1804b1-499dc7253d8mr207294475e9.11.1787847068404; 
- Thu, 27 Aug 2026 09:11:08 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499e7170b72sm122699705e9.0.2026.08.27.09.11.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 09:11:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7672F5F882;
- Thu, 27 Aug 2026 17:11:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  akihiko.odaki@gmail.com
-Subject: Re: [PATCH] virtio-gpu/virgl: free BHs and timers on renderer reset
-In-Reply-To: <20260827154355.3346449-1-marcandre.lureau@redhat.com> (marcandre
- lureau's message of "Thu, 27 Aug 2026 19:43:55 +0400")
-References: <20260827154355.3346449-1-marcandre.lureau@redhat.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Thu, 27 Aug 2026 17:11:06 +0100
-Message-ID: <877blb5ysl.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1787847122; x=1788451922;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0RR9P+O3Z7D5ncDdKnSVmbnZXmb7xth/LnHjtNyI6Uw=;
+ b=mJgUJ4WpaHR2cEkj8q4FwHg916aZkqlDBMmcHXfDpIeJ70ACY3ZwjNkTK0NXXM94CT
+ bOU22SqZvfefDUZt4rUU6nRM3tWmOlxkhF0lPGfTsYobxngu0rLfaOYmysdIdi+B92LV
+ zTqLf50pDHjlfAxVQMqJPgzm+h369CY/ySWXWWToHvn27rydN4zDKwyTX1lqtjp1QTGj
+ gUqXNjAiCLiD+MPCHuj8kWyhEqAyfWKt5sRpD9xJyYoW6ruFSAX+KwPmGovoqy/4u9DS
+ VsoBFV2ZHZm+TK3bhOXktIRECjsd25wE0JyPzm8xAgfZ+HPkNM9KXl2T+IN6VVTjs3HY
+ 5AxA==
+X-Gm-Message-State: AFuF++kwDSTv94QuPAJlOBsQY+t48EoAGHE7eZnGhJ9XTT8qguDzNroD
+ 9r7bqXZDJsZU1jNbib/YK+eExnuC860uNU+Jb+7QuixBMMaVQpmFyZRt
+X-Gm-Gg: AR+sD12OLLwAH425/PxMqOpTvt9HbO/r3mjcV99RnK0HPiCG5h3sn0OfJ6sizi+vvMr
+ h44dQOWZrmelUZCxNfrzvG2wlD7WYvkxqCrMtA2GoanBUOLKyfAAZa4PK68Jj8dSxJ1VL2ezPx0
+ k0R/j7zsCPIjlRIdZUQDlB+l6mRl8AC+iMQVettedMveIoa7LET+vpbT0mEysdAT5q8vFC5wmjB
+ 8L9iomiISkqpKD9bepR+q0La2YPqqcD7Ebg6b2N2VzMkORQGR0GAc28K5eUipX69n1NTo8azt+s
+ I+cON1gEUWgsN46itDRfptflWaA2Yc0dBh1Mdhcf/goUBkkkWj4JQfSIeLkyZsJDZvb3l1ch9wG
+ lNZ1q/lRxmwNWHN1yi+1eLQMPUFzYFuF9HTpKy/fVLtVU8/DOJpWJpZmRtLAHRtTD9+usL557v7
+ CtJNXJ3u+A5Fjymr8QCem7BIYe6EUwckmS26iueJKz55GcJ7xytGCVe96YGBjROcO2oFo6BQ==
+X-Received: by 2002:a17:90b:39ab:b0:38d:fda6:4873 with SMTP id
+ 98e67ed59e1d1-396d0f74e3cmr471752a91.10.1787847121659; 
+ Thu, 27 Aug 2026 09:12:01 -0700 (PDT)
+Received: from [10.42.0.135] ([103.199.188.243])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-396b10ff06dsm3520116a91.14.2026.08.27.09.11.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 09:12:00 -0700 (PDT)
+Message-ID: <e4341a01-1a6a-46e2-8666-ee25b977a154@gmail.com>
+Date: Thu, 27 Aug 2026 21:41:53 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/block: Add migration support for pflash_cfi02.c
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@mailo.com, kwolf@redhat.com,
+ hreitz@redhat.com
+References: <20260822183900.110111-1-ombarkare123@gmail.com>
+ <CAFEAcA-f-=gP2GZEtTE7x=0mNvk0xL=TvHYDOvK=8GfVybuMQA@mail.gmail.com>
+Content-Language: en-US
+From: Om <ombarkare123@gmail.com>
+In-Reply-To: <CAFEAcA-f-=gP2GZEtTE7x=0mNvk0xL=TvHYDOvK=8GfVybuMQA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=ombarkare123@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,53 +105,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 27/08/26 15:38, Peter Maydell wrote:
+> On Sat, 22 Aug 2026 at 19:39, Om Barkare <ombarkare123@gmail.com> wrote:
+>> From: OmBarkare <ombarkare123@gmail.com>
+>>
+>> Device did not have migration support, which would result in its
+>> internal state being lost during migration or saves.
+>>
+>> Add VMStateDescription to serialize state and set memory regions
+>> romd_mode to rom_mode field in post load hook
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4157
+>>
+>> Signed-off-by: Om Barkare <ombarkare123@gmail.com>
+>> ---
+>>   hw/block/pflash_cfi02.c | 73 ++++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 72 insertions(+), 1 deletion(-)
+> Thanks for this patch; I have a few comments below, but mostly
+> this looks good.
 >
-> virtio_gpu_virgl_reset() does not free the bottom halves or timers
-> allocated by the previous virtio_gpu_virgl_init() call. A subsequent
-> virtio_gpu_virgl_init() overwrites the old pointers, leaking the
-> previous allocations.
+> We could mention in the commit message that the only boards
+> using pflash_cfi02 are the sh4 r2d and the arm canon-a1100,
+> musicpal and xilinx-zynq-a9.
+Will mention that
 >
-> Fixes: bd9258917fbf ("virtio-gpu: Destroy virgl resources on virtio-gpu r=
-eset")
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/display/virtio-gpu-virgl.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 0b79aef8d1f5..8bf6417c6514 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -1425,6 +1425,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->=20=20
->  static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
->  {
-> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
->      struct virtio_gpu_simple_resource *res, *tmp;
->=20=20
->      /*
-> @@ -1443,6 +1444,11 @@ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
->=20=20
->      virtio_gpu_virgl_reset_async_fences(g);
->=20=20
-> +    g_clear_pointer(&gl->cmdq_resume_bh, qemu_bh_delete);
-> +    g_clear_pointer(&gl->async_fence_bh, qemu_bh_delete);
-> +    g_clear_pointer(&gl->print_stats, timer_free);
-> +    g_clear_pointer(&gl->fence_poll, timer_free);
-> +
+>> diff --git a/hw/block/pflash_cfi02.c b/hw/block/pflash_cfi02.c
+>> index 6f952fe7de..82965e6cdc 100644
+>> --- a/hw/block/pflash_cfi02.c
+>> +++ b/hw/block/pflash_cfi02.c
+>> @@ -46,6 +46,7 @@
+>>   #include "qemu/module.h"
+>>   #include "hw/core/sysbus.h"
+>>   #include "migration/vmstate.h"
+>> +#include "system/runstate.h"
+>>   #include "trace.h"
+>>
+>>   #define PFLASH_LAZY_ROMD_THRESHOLD 42
+>> @@ -71,7 +72,7 @@ struct PFlashCFI02 {
+>>       BlockBackend *blk;
+>>       uint32_t uniform_nb_blocs;
+>>       uint32_t uniform_sector_len;
+>> -    uint32_t total_sectors;
+>> +    int32_t total_sectors;
+> I think it's worth mentioning in the commit message that we
+> have to change total_sectors from uint32_t to int32_t to
+> satisfy the VMSTATE_BITMAP macro, but that this is OK because
+> it's a value we calculate based on the size of the flash,
+> and it's never going to be large enough to overflow an int32_t.
+Will mention as this was something that was changed :)
+>>       uint32_t nb_blocs[PFLASH_MAX_ERASE_REGIONS];
+>>       uint32_t sector_len[PFLASH_MAX_ERASE_REGIONS];
+>>       uint32_t chip_len;
+>> @@ -107,6 +108,50 @@ struct PFlashCFI02 {
+>>       unsigned long *sector_erase_map;
+>>       char *name;
+>>       void *storage;
+>> +    VMChangeStateEntry *vmstate;
+>> +};
+>> +
+>> +static int pflash_post_load(void *opaque, int version_id);
+>> +
+>> +static bool pflash_sector_erase_needed(void *opaque)
+>> +{
+>> +    PFlashCFI02 *pfl = opaque;
+>> +
+>> +    return (pfl->sectors_to_erase > 0);
+>> +}
+>> +
+>> +static const VMStateDescription vmstate_pflash_sector_erase = {
+>> +    .name = "pflash_cfi02_erase_sector",
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .needed = pflash_sector_erase_needed,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_INT32(sectors_to_erase, PFlashCFI02),
+>> +        VMSTATE_UINT64(erase_time_remaining, PFlashCFI02),
+>> +        VMSTATE_BITMAP(sector_erase_map, PFlashCFI02, 1, total_sectors),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +
+>> +};
+> Why did you choose to put this in a subsection ?
+These states are accessed only if an erase is ongoing or if it is pending
+which can happen if migration is performed mid-erase or when an erase
+is suspended. As they are only accessed during an erase, so I thought I 
+would
+put them in a subsection
+>> +
+>> +static const VMStateDescription vmstate_pflash = {
+>> +    .name = "pflash_cfi02",
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .post_load = pflash_post_load,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_INT32(wcycle, PFlashCFI02),
+>> +        VMSTATE_UINT8(cmd, PFlashCFI02),
+>> +        VMSTATE_UINT8(status, PFlashCFI02),
+>> +        VMSTATE_INT32(read_counter, PFlashCFI02),
+>> +        VMSTATE_BOOL(rom_mode, PFlashCFI02),
+>> +        VMSTATE_TIMER(timer, PFlashCFI02),
+> You've missed out "bypass", which is also state that the guest
+> can cause the device to change at runtime.
+oops, will add that
 
-Don't we need some ptr checks in virtio_gpu_gl_device_unrealize so a
-reset followed by an unplug doesn't causes segs chasing now NULL
-pointers?
 
+Thanks for the review
 
->      return true;
->  }
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
