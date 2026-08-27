@@ -4,99 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87174C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70649C5DF9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSNm-0002aE-Lo; Thu, 27 Aug 2026 01:10:34 -0400
+	id 1wzSVz-0001Gs-Qa; Thu, 27 Aug 2026 01:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wzSNj-0002Ym-GG
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:10:31 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1wzSVy-0001Gc-1h
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:19:02 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wzSNg-00042T-Sz
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:10:31 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ceab75934dso21397565ad.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:10:28 -0700 (PDT)
+ id 1wzSVw-0005q9-5O
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:19:01 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-cc1cc1b42b5so1282259a12.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:18:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787807938; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TOsZWmWVEg5NJIHU7au4bOr/p2HvME9jK5YTqmNaj98eIPdcP3PwKFNVpb0xRZr6YP
+ y9IJLqGLvyTmLKZKqPqwjX9vYwsC+x4SlkPdfyj9flF6QXCdJZG805vneydbuiig3dhF
+ 4fzuwt4awHbOWtv8o4grwhKkM3zpG1zK1c8+FEtx8l8lsOzBIiuVnmcKq+ZLjUJga6u2
+ KFihh614ETDnRPPMS3Wz0BqNXXvfrdXR6TYoXI2EPYZb8/k3N3AtEIVN9oT+X8ZQMp6s
+ jYHakuRtStQZnqwS5sfqH3fb0OTvQ/o91Q/qH1Esa7DS3NLzNvgEK7ToR8VJj3rBIHbZ
+ ACuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=BVjPHVNFtbbt4NMLfE0oYpeZ2wgFlY7nGKpNUYSowlk=;
+ fh=A291yEVSkXF7nIxhNTXlrgMxx+6cdsgywmmTt9h4sug=;
+ b=n/qULMWo1Lqy3w8TKnRTAQD5cBu29dP6eq/ivEMsznUPycxhv1lrRFx703q8rqiG/W
+ VIfUu7/XdKF9u2eAn/up1qlnttCHSc0au7B6SWcNC2anf37+8xx2JTDNxGitoPCdew64
+ 0F7c9QIw/CG3yP074ZILv+NE8cU4jodsC7JoP6pUaVko2jouZQjQJo9yez2g1BRhWFsh
+ GHQMhI65j4GvSrd435CXPOO1vQVDIWwP9xBDA1IgruQfcPBJloe1Mwlt9DuFIYVcAHzN
+ reTPkZAkRS8sw78I5Ws6kizNLbMflVWLWnXYOQthz2+SebkY9DYbBaS5y6jrY8dVa1mt
+ buWw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787807427; x=1788412227; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=5bkCYeMhO7/zC3uMA+VZFpZtFUWR2ZdudiB4U3VtuDk=;
- b=C+VFqoSJx6ySmnz0hGIs9tEavgHwK5algRgh3gVPwdmg90stCx/m5uyZtIlggQLrlU
- RZC+6EvcbCJ/wtCckrynkLhVf5laCuJcrZ70M9Am9qnDZXBciK+HVFegnuybonXsylvv
- dyAWuyoPn1jQarw/jQYGF294MER+lEeve1Cav19nuQQJ2QQhGByQEz9eyfRyyR7XFh+e
- 2GKH2Nf0wakedQ1bmxm7mn82jRFLflOnJiIA1x4rQNNiiZP5KQYZqnGsp1JHHgnlJJMW
- lii5PDNulC+u8kOGw6XAZbuME860QOAztej+2D6MIP477lMuHCCJ1ziWdw1Aup//hCy9
- cUVQ==
+ d=jms.id.au; s=google; t=1787807938; x=1788412738; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=BVjPHVNFtbbt4NMLfE0oYpeZ2wgFlY7nGKpNUYSowlk=;
+ b=VwT/6DNAI5993GowgSPNz2Oc/+L2MNEk/hLFZqNMqZ0I1azigfEJLZ3+xMv5jGD7SX
+ 6DYupqIvG32sFZflSfwVQppi9olTjHhxdTacxVP5QDJPBpVoOS89qpjSriYVh/f0LOwo
+ OpT62mQh7qU7gvQmZIwSSE+1CJrQbtbfL8iqA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787807427; x=1788412227;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5bkCYeMhO7/zC3uMA+VZFpZtFUWR2ZdudiB4U3VtuDk=;
- b=ABPUkWbIRoguiV5ql22eghffhKXblQoFgcuWOUBCBO5C038y2YuY07BZkFiqkgD1Y2
- DZ5iz9SZLx2ANegn0l1RGMwxQocXnSA9iry8fTme1pZb0l6qmWJNe5nndexrWN0q7/S5
- 9PRwSZdtZ2tnZ9gKdwbmsVh35GArv92inu9daIQ8tcjSyRBhN+PByTNDh6DqfdNxxkMg
- XFQByhUOwMi94dI/o8skxsvzGiHVyC/aaqeNIBUnAIU0u2Fj2O22aC823sbJJCSIAJD6
- TewXlnkW2I+HdFlS4jyEUh/myMmLRELF/yZLjj2J9NWaE/+sELADMPZPqczklfLTinOQ
- 398A==
+ d=1e100.net; s=20251104; t=1787807938; x=1788412738;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=BVjPHVNFtbbt4NMLfE0oYpeZ2wgFlY7nGKpNUYSowlk=;
+ b=EvIcLbhxFWWLpDKeTfYsAdYa36BWp8eRqFxlW4uv5GLASkEUKwAHXFaOx2sa1zrVHn
+ /w2O5LgstdFWwN4RjSOBfzz8Fcv5tQO4zFfUo+IEOGHr362X6tHOv1jP5iaJf9sOgNsy
+ ziYb2nYW5F6UDZuwg9p2xLCDcsdVfm5hHyov40AQiy65dzhHQbLfXoO/hjtms8pkfO4+
+ /QHTjUMvsLqLDhyiEXq8TCFvB5L/4tj/igxf/GkdhrQRP4Y3goh713G5ub8VXSgpgck+
+ sST6JBd/hTUdDbIFGe6q7QCmpv+pIbskXsNa2OPImIGobqrd38w/juRsnZq/Ax6BC7C6
+ +UVQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqshEK4lSE1rpWAMaoy1O3zQoipyOQGwRTXuIQNsj/pVFIE9xiE9lOLTPxcKeGrHQ3tXgfaTtW8EmLY@nongnu.org
-X-Gm-Message-State: AFuF++lzo7K7uvsnijuFRWZePq17DJutapFTZaldVtKOO36jLm3sJerg
- eXpPmDOQ1pr6tK7V6gOIf13pi8xpHz0RtLH/gH1bBDoSL9p6LsCZfpnn
-X-Gm-Gg: AR+sD12NwYlFmKXDWRs6KTYJ8TU5Ko0Wx3+fgt4dltZJky2uJ/jouwyik/z1nqNJldj
- AJgf/NOozmzhWMEdPIvmvfMU/KINWANGcXWl5ctz7cxXMu4kZx+vw9GJ66Qy5I2h+Wwvl6/6lfm
- AIRmoOnQ+EYhqdCJC7A173yFp9RsaspNofK75F1dDuMM0pk01cfFibmXXedbZS2gaqvC0yYBfLA
- FROGDRP6pCaUgNSSGvWOQSwKE4zbLFwn0OuZiREd2IFdsGsioksQKoqfoSPNSBdsidnktiqspUe
- mTbq18G0Xs5/mT8FX7nwxheVZs8W+QTe1HB7Bchb+Z8oDUmbULiEqXAC6ty4eF8XoLm+VE1BIml
- ouJYSkoOTFZgxQGiV0to4iRcf+GErEIPnIAcSkOIar+9Jy0AFXYp9Vx0kBYk4fHxvgiEbnuRAYN
- uYi8Xy1vjUzCJpCg08NyKVx+ig7VDiAgOGRu8q9sHy53y6hFnkzZsZH28dPgRAxrUT45DzNJ39x
- o+4rFwyAIu5sbMHhLrOQOF9uL7XzUqbftJO+j2XjjaVuNwyb79XN7UIIHCBse6c1oQcGaXkMpBW
- 3FZNLO2fOvWgfLXkBxzvCIFeVcnOcag=
-X-Received: by 2002:a17:90b:4acc:b0:396:5c22:b1f1 with SMTP id
- 98e67ed59e1d1-3966d413283mr24086293a91.8.1787807427473; 
- Wed, 26 Aug 2026 22:10:27 -0700 (PDT)
-Received: from donnager-debian.. ([180.150.112.50])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39670599275sm2210473a91.0.2026.08.26.22.10.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 22:10:25 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH 02/12] tests/tcg/riscv64: Clean up semicall.h inline asm
-Date: Thu, 27 Aug 2026 14:39:41 +0930
-Message-ID: <20260827050953.67184-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260827050953.67184-1-joel@jms.id.au>
-References: <20260827050953.67184-1-joel@jms.id.au>
+ AHgh+RqtgMLiWrQIVwh4Q5ye3cUMBxI8nNXXMyGZZ/TPi1ehj8tei4C5sJDyNbkuxnUTImKSGwwPZHoENxwA@nongnu.org
+X-Gm-Message-State: AFuF++kQzLg3lu8HrVRKjSqMoJQ+IbDchL1EHcN6EfzZJn7JAc2GuqHh
+ z/hr2IaGGxgujnfr09sGlzRXXrCvM+HKJrjG+S4EfGXKst/ilTxBz8bPicakX04Ot7mA0qB98yE
+ aXAFILCPghhJHZPPatJPhVwXufkPbeN4=
+X-Gm-Gg: AR+sD12FcPaF0oCdQZJc4PG/dUg1Im2ntYGdkByj4o9plInQkYBHbGyz7GOo8i8HaOz
+ gPjW2yD/o3GYmpN5ZMdDQkB/qe66aLf2mv0VZ7tE1vox/y4XaDIYNdghTs9r3/eypb61ht+VFOY
+ rJqXnULfO5PpCJb9ZC0IPkFZIJ9HcxIGfsr8JwdlGYinv0zFG5ANjM+C2OWSrX6HUb7GjKSj0ur
+ AiQmowCG/kSGLNnZwCDIwMsl3yNIAoBcE6cPsbjtgq1BNSIYhJiTNRFMaSYQS2Tr+r+DQOwrJyQ
+ 9ROHCe6Jt6c8Sj6PPoSmf7mzWPj6RqWPgePlS7b+Est1ydm4/m8Q0MDHcAtefYAO17uzwOMZ3tf
+ XYfcusuh+1R7tWKbSRE5gPlXfqwIsY3Scx/rX5zMOW5Rps4ISDGyIOhVvKe98u5ShA9iVrEZKis
+ wjx6xejEdKKcxsKcS2
+X-Received: by 2002:a05:6a21:e081:b0:3c4:3112:33 with SMTP id
+ adf61e73a8af0-3cf75f83f45mr20380876637.6.1787807938324; Wed, 26 Aug 2026
+ 22:18:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x635.google.com
+References: <20260802113130.7818-1-nendensu@ispras.ru>
+ <e350bfda-cd57-4b25-9c72-40585e30a488@tls.msk.ru>
+ <a985157941bd10429a3048618e3fb977@ispras.ru>
+In-Reply-To: <a985157941bd10429a3048618e3fb977@ispras.ru>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 27 Aug 2026 14:48:46 +0930
+X-Gm-Features: AcwNN1X23rdJ7vu-qDzyCNQTuwju6ArsSUxpre5apaty1dMCpUOCxPKP1b9Es0M
+Message-ID: <CACPK8XfEQnEqQ923ag8kWXcvBNsxmUKZK_dCdUm-AddD2Mf0dg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/riscv: Fix seed CSR sign extension
+To: nendensu@ispras.ru
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ alistair.francis@wdc.com, palmer@dabbelt.com, farosas@suse.de, 
+ lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=joel.stan@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
  FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -115,48 +120,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make __semi_call static inline so semicall.h can be included more
-than once in a program.
+On Thu, 27 Aug 2026 at 07:57, <nendensu@ispras.ru> wrote:
+> > I'm picking this patch set for the currently active qemu stable
+> > series (10.0 LTS, 11.0, 11.1).  However, it does not work on
+> > 11.0.x already (it works ok on 11.1.x), the test fails:
 
-Use .option push/pop rather than leaving norvc set for the rest of
-the file.
+> > Should I pick something else for 11.0 and 10.0 (on 10.0 it fails the
+> > same way),
+> > so the test succeeds, or should I drop this patch set from 11.1.x?
+> >
+> > Thanks,
+> >
+> > /mjt
+> Thank you for testing. From my runs it seems that 10.0, 11.0 lack commit
+> 569aa628 (target/riscv: tt-ascalon: Enable Zkr extension), which enables
+> Zkr for tt-ascalon, so reading the seed triggers an assertion in
+> csr_call. Apologies if I`m missing something here. I`m not sure which is
+> better for stable: backporting 569aa628, or skipping the test patch.
 
-Set the constraints for the asm block.
+Backporting 569aa628 seems reasonable to me.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- tests/tcg/riscv64/semicall.h | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+Cheers,
 
-diff --git a/tests/tcg/riscv64/semicall.h b/tests/tcg/riscv64/semicall.h
-index 2fdd322af91f..34e87332de44 100644
---- a/tests/tcg/riscv64/semicall.h
-+++ b/tests/tcg/riscv64/semicall.h
-@@ -8,16 +8,19 @@
-  */
- #include <stdint.h>
- 
--uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-+static inline uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
- {
-     register uintptr_t t asm("a0") = type;
-     register uintptr_t a0 asm("a1") = arg0;
--    asm(".option norvc\n\t"
-+    asm(".option push\n\t"
-+        ".option norvc\n\t"
-         ".balign 16\n\t"
-         "slli zero, zero, 0x1f\n\t"
-         "ebreak\n\t"
-         "srai zero, zero, 0x7\n\t"
--        : "=r" (t)
--        : "r" (t), "r" (a0));
-+        ".option pop\n\t"
-+        : "+r" (t)          /* Output: read as input, written as return value */
-+        : "r" (a0)          /* Input: arg0 */
-+        : "memory");        /* Clobber: may modify memory, depending on type */
-     return t;
- }
--- 
-2.47.3
-
+Joel
 
