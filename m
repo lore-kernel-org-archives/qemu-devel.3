@@ -4,142 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8921FC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2302C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 23:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wziw7-0003ql-KU; Thu, 27 Aug 2026 18:51:07 -0400
+	id 1wzjHR-0001ob-SR; Thu, 27 Aug 2026 19:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziw3-0003qC-NQ
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:51:03 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziw2-0008MH-4d
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:51:03 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RMdjgD1215585
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:51:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- zSqXmmGO52LKPy+zDIzGfsXMDBn7E1gw+1GsgRIOGig=; b=M4ZAUBBjeDC0T2IJ
- 8bA7YzTV0IZbZsX8gOOoIc6vdP5n3EdMChGRoJwGluJSYDIoSqNLZFsflZrcyHhb
- +X1iNfMmksXx2PTSgbgBTCf/SYUvQ/qrDOpcBvBY9PDShmxDkgL6bK5Zp8YePHPG
- oGM7swOc93/tdIb+c33AA77eAFXgdxrYHbC+OZ/zlN+odFeA79zBU1NqOyrFVIi+
- la2E9uX04qlsexi7odPCxTLGlEpOQEkjAo7M3ENwz8SnHO0oAyUiSxprrRhK/U21
- 47v/xJC+wNKwyrSS+R9JfECYW2fI50t05+inSdW7EK2e3wCknFt4Xq+DoAaidcJs
- Cy9hiQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gam6fjqxh-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:50:56 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-39640eebc57so964769a91.0
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:50:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzjHQ-0001oP-PH
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 19:13:08 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzjHN-0004oE-Dn
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 19:13:08 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2d049069377so5145125ad.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 16:13:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787871056; x=1788475856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787872383; x=1788477183; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zSqXmmGO52LKPy+zDIzGfsXMDBn7E1gw+1GsgRIOGig=;
- b=cJaL52yAq+tlIXirHGatpMnZg2KE2umRKteV4ug4OySem4dieRYV5BGC+EPROhCXui
- LV7SOuIVpOq63z1WM/j6QKFAuKHA1POAyVqNyh/86RGbfQnjP7Xxae3ErIR02tzvho6y
- +eQLlnS3YB/oMNDzaYkpbYcEpgqEBGAci/xL2/rdBdSWwcpNv2r8MZ7WBPGTBksrsZxA
- ZDOWl//qXMlzhTvhWTJnCxw1Cucpy1AXdszYqDpLUYVc9WKMqbqVfTyr0vYnkIuacUD0
- l+u52jXJ+ROHMfdhEhAw+wRHJdFKW9aA+BqG/vtobeDFi6VIcoq9+u4Qj4GTHIwFGkCt
- 6cWQ==
+ bh=JtM5kJ51Yc/0Y9wWnzG1BvXOOhvjG9Zp04Rv6YxYpsM=;
+ b=TYVK4sWlqSRYHEabwd93+upyzFT6MoK2yZswEVFY4Ze+nbs5gRGQ63ZJS///YBI+hs
+ qkOgYG7QSngEdJIkgGRdY7itTp6RVD5EGRb3R19yVirC2Et0O9E0nUxrBhEMPZ70xsUc
+ OtwdCi08lRugABQtMAM9kv328dytomTeCQZauAHAjX3Gdtyc7bQ/W7a34wquq6rqEsfb
+ mJmtoqXoscDO7M1eoUP4uFfUXScUwqLzFD4QjlNpPLtJPPjaqhv5HtXg7ndwSOciW6ZO
+ 9OEfglgX4QEJBRFgpzczi90uDDw8wSGvgk3YvjL0GETsfW6zkYtCjSbctOiswJwzmbSt
+ 3ibA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787871056; x=1788475856;
+ d=1e100.net; s=20251104; t=1787872383; x=1788477183;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zSqXmmGO52LKPy+zDIzGfsXMDBn7E1gw+1GsgRIOGig=;
- b=eSZcvHpC4qabPexkyxWYSrSh4jYVedPDcdz8wQynXKSJyRGZXj1VHQ7KiHt+hrt/pH
- MrFCxBPZj2+s7kFMz1XEfSipfZkF52K3mjdOmMU6GoL1S5Pfvp4/RsI2/BtHEOy0Se12
- I9R6H+3qQ8BpejISoPoSDqA5Y0BTIX7/SnnNwTc3hfGIMDcEi2Pgc8tuH+fUCHALE4H6
- bJ3a+YtZRHoOymiGyFu5+kpY9RTxZSqk2c1mmGHQ+jfoTgo7yE9xrxyyoTajeSF5YEqV
- E8wBwBWQSRqaonz8zr6DD1Tm/vGRSGfbeUIkCq9XWmnbIeG3dcBOoatVDhy33gCzfoil
- p4Dg==
+ bh=JtM5kJ51Yc/0Y9wWnzG1BvXOOhvjG9Zp04Rv6YxYpsM=;
+ b=mR7xS3KMih4Rh6UM5hZs32BBJapx/I4Zg185WHxSwmy69eFeyHaxNn2eaoa73FfoSb
+ k/HrvikRa2FxDssZVXZFdJHjAXEW4c/YGeT1L8/9JjI3KqI/ojBnee1jWffFQnLPXXkX
+ bQk2PRs42r9qJkjsiDpo+scjwX6bdIm7iMu31oFKMfEm8oz/hih7GhwNenLlsEnfMCAu
+ r9hhBmu4q6XXdsI1H7mo1awIbmWlsoYhRndHJ7KJizZHFMAykaGQsWwb8+zgpHi554Ux
+ g9lqVNeoW3qFFVFeIS3qSiJRCtY6vp2k8ESyI+4gVWBtyYlWjNrb00+QYtkC8CU/jKDV
+ /LsQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr6241YdNaO4JyF6fWQNvQJNX63v7V30k+AvXR9qLoFvo6nRZ2UuJU4VrxXkex++ByJD0/B3MSuqsKM@nongnu.org
-X-Gm-Message-State: AFuF++mBXAJU83g/Bg3fLYRIE/2zoY9dLFmyKLiQ6CzGr8ivU0W87fkW
- XOfkVIHnB/N8AULP0nwtDLQjH0g8P/NeXkpSxPI4/4nsIMs8yYnOxDrhTj8Rmsceccqzh3apGN/
- 3Q4iC10Iq/PeiQeM48da5FPsr9O0ZBPsVl7j95OBi0SJrYUPLrlDyOhKLDg==
-X-Gm-Gg: AR+sD13eKPpYGqjnbi/pQ3uzkSswcXXo3bboEAFRzRMd/XFRCTzvzZdUnXhla7Il8JF
- 4UPNrMKE4+zQZEI8q136OiLjla/mdcx8gx46jGbiJMrSh+tH3mSf8Bx6/+TyQyEeag9LkyZ14tI
- D+rNzFQfkQxmKshgp0s2QxdM7m+ENpqSmP3tFKAuBREaW8Mx1r4NBht9YhnlGbRE1POrI8zlkOd
- i+nA3Q1+gGUHbJ3zH4pVzLxgPV2E9vzUt6P91Q0zScsMbwa/N0Ny2iJ1dTcMTQHDkAPgJ2gnz7G
- pkV4HE39gLHfDphUilIXKAk7M1ddWQaKhKrneQyRdNIg2AJvoAibr0QT53qJmCThPxesCG2oS8R
- i5G9b8DxAjkAfOhVKFhyMeaneCqhEic3LpHU/HSz8K4WKFpSv6bTMPGSZ6brtz5MHIL7j
-X-Received: by 2002:a17:90b:51d2:b0:38f:26c7:165e with SMTP id
- 98e67ed59e1d1-396d0f8ffdamr4945972a91.9.1787871055772; 
- Thu, 27 Aug 2026 15:50:55 -0700 (PDT)
-X-Received: by 2002:a17:90b:51d2:b0:38f:26c7:165e with SMTP id
- 98e67ed59e1d1-396d0f8ffdamr4945900a91.9.1787871055297; 
- Thu, 27 Aug 2026 15:50:55 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3283d60b539sm20907481eec.1.2026.08.27.15.50.54
+ AHgh+RpU8AlE05MkReVaeu/Nav4mRsdXH3e9MFOuc8tg6ezrWuTBeUU5uciJv/WFI19JBuNHpX938Cmt/j8x@nongnu.org
+X-Gm-Message-State: AFuF++ki6JbxXNBqqQxEIXZgUW65mDIILNQ9Jk+qD8Yv7TUD0/PHxeMo
+ 8t7qcSWpH6v97FmOuBDeyfRbTzqGSAId8eIsfm5Tv+NOJ42RMfDfBRT4HUHugxFR4Kc=
+X-Gm-Gg: AR+sD105lD7tpGG23bHuJr/hwmG7vzXqf8JdJuBWxLaihg0zJ57fTWfWrS74MCr+TxT
+ IyYGZmrXLqm5VzwSKwYJzKN9YsA0sj9UKEbkfdhiM2mDo0cqchaNz+RviefYIbn0tL2JcXsSwJZ
+ W+TpVmO6haaYXlMD57beo7XAWSj18DuciNoVpeWXnzynFUL0EQmomNPsUwkCM7D1spIjVflaYVV
+ z7rm9itEsU/2E87bTFQtd1EeSBt8XQNhvVbpqoq50lULijZ6qlwZ+7LzkkD2QyEmKk6Z1NchDpV
+ dt37Y91tuzKhyG6dzZqy3XIH5TA3lmvEDJNmzDGCTYxsFVFS8RXHmpOyZKhk2QG3Pnnk+FbKKmE
+ r8P1QPKDw3ROnIm53qK/45NtUkRT4oFK6T6RRIvYIvGBXZrBiOEspGCl8oagHq/O2CBLB+nTZMg
+ P1E2+pm1Wy3i5ZRAQLo/jIh5mycEtEZ7LzxWURXq/JGsfdkocXkGFGrOloErBYPHMnplNFh5+wA
+ f8VA1oXCcX6D3vY3FPchxPGd4P3
+X-Received: by 2002:a17:902:f788:b0:2d7:40d1:e14a with SMTP id
+ d9443c01a7336-2d74ce1cab4mr48554595ad.0.1787872383013; 
+ Thu, 27 Aug 2026 16:13:03 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d70498c8c6sm21140685ad.28.2026.08.27.16.13.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Aug 2026 15:50:54 -0700 (PDT)
-Message-ID: <b3609e37-cd97-4f7e-8d84-9b6e2feeced5@oss.qualcomm.com>
-Date: Thu, 27 Aug 2026 15:50:53 -0700
+ Thu, 27 Aug 2026 16:13:02 -0700 (PDT)
+Message-ID: <dcd678bb-83ca-4a41-8230-66fd72278bde@linaro.org>
+Date: Thu, 27 Aug 2026 16:12:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] target/arm: Move -cpu max stuff out of cpu32.c
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, philmd@oss.qualcomm.com
-References: <20260827041557.775080-1-richard.henderson@linaro.org>
- <20260827041557.775080-2-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v4 4/9] tcg: pass the destination to
+ tcg_gen_lookup_and_goto_ptr()
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, philmd@oss.qualcomm.com, alex.bennee@linaro.org,
+ zhao1.liu@intel.com
+References: <20260822190818.1829249-1-mattst88@gmail.com>
+ <20260827050241.3713332-5-mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260827041557.775080-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260827050241.3713332-5-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MiBTYWx0ZWRfX3sjpWTimzkaj
- KF6ID5jOXfziFh2SYjp6ZAGmzN8IS06tkUFKn3eQ6zk+31KF/zF/bQ+ukEsBy/F3tMM1rG+gWCJ
- ALzvfJayMTqr/ox5SNucnrpv0Oq1mkA=
-X-Proofpoint-GUID: EZEv7eGkrUpn1cw-HRBJbRR6AWtta1Qu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MiBTYWx0ZWRfXwC3rgWN1dlgu
- aLFFnUOWR0p8mOyMA94+BkwnfJfONV8K4DvswHSLcV5KODlbpWn7L9BgCMYleXMUMHUa1rw1B+s
- 1B793slSzy994HVE+YZ7r4krzvavMsGQ3gad24nkGKiod58XimzUxoM3bdvM2Q4y9R4mmcxRwEh
- ctsqmrDciv2EV9RFMoa0AsdAMUObNvNM3gzLIC2S2fr/1dfzoAYqrAvxw7ClDRuoH4kxQqwLS/y
- CI3ssk9+vM/PHucOZJBUTJ56LDsU4TmYSlcCCpLCVu1y3bzX2FruOOubpmYl5wlwS6hy0YD5dM2
- nyRCPb1IotxTFxCrHQ9RyehX3uD2eLfQKO/3130rPSe4G0Xu18brbwEyFvJYpKu6WbYvmJI9PLr
- Hh00yb4vnZSNC6+42iXOrmQbvT0CDlbf48EvAaLFvkINxY4DYbwbG/dNZnOiRwR+FG/CbeWG/v9
- Tk4Kqt4B8vyRGtW2jJQ==
-X-Authority-Analysis: v=2.4 cv=eIgjSnp1 c=1 sm=1 tr=0 ts=6a90bf50 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=CQGHVcWclJPO4PMvv7cA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: EZEv7eGkrUpn1cw-HRBJbRR6AWtta1Qu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-27_09,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- bulkscore=0 phishscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270192
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,15 +108,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/2026 9:15 PM, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/cpu-max-v8.c | 117 ++++++++++++++++++++++++++++++++++++
->  target/arm/tcg/cpu32.c      | 111 ----------------------------------
->  target/arm/tcg/meson.build  |   1 +
->  3 files changed, 118 insertions(+), 111 deletions(-)
->  create mode 100644 target/arm/tcg/cpu-max-v8.c
+On 8/26/26 22:02, Matt Turner wrote:
+> tcg_gen_lookup_and_goto_ptr() takes no arguments and emits a call to
+> helper_lookup_tb_ptr(), which recovers the destination PC from env by
+> calling back into the target through TCGCPUOps::get_tb_cpu_state(). At
+> translation time the caller already has the destination PC in a temp, and
+> knows the flags, cflags and cs_base any destination it may reach has to
+> match, because they are the ones the block being generated was translated
+> with.
 > 
+> Pass both, so that a later patch can use them to look the destination up
+> inline. Nothing reads them yet and the generated code does not change.
+> 
+> The contract on @pc is the whole of the interface: it must hold exactly
+> what get_tb_cpu_state() reports as the pc for the destination block. Five
+> targets keep their PC in a temp whose value is that pc by construction and
+> so can pass it: alpha, loongarch, mips, ppc and s390x. Everything else
+> passes NULL and keeps today's behavior.
+> 
+> For six of those the TB pc is derived and passing the PC temp would be
+> wrong: avr's TB pc is the word address doubled, i386's is eip before
+> segmentation, riscv masks it to 32 bits when xl is MXL_RV32, hppa derives
+> it from the IAQ, hexagon adjusts it inside a hardware loop, and sparc puts
+> npc in cs_base. The remaining seven -- arm, m68k, microblaze, or1k, rx, sh4
+> and tricore -- look like they could pass it, but I have not convinced
+> myself of the contract for them and have nothing to test them with. Each is
+> a one-line change for whoever wants it.
+> 
+> The common entry point takes a TCGTemp rather than a TCGv and reads the
+> width from it, because the translators that are built for both values of
+> TARGET_LONG_BITS -- arm, s390x, microblaze -- cannot include tcg-op.h.
+> tcg-op.h wraps it for everyone else. This is the same split as
+> tcg_gen_qemu_ld_*_chk().
+> 
+> v4: Split out of "tcg: probe the TB jump cache inline instead of calling a
+>      helper", which did the API change and the inline probe in one patch.
+>      Requested by Richard Henderson.
+> 
+> Signed-off-by: Matt Turner<mattst88@gmail.com>
+> ---
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Ok, I was a bit surprised at your claim that only 5 targets qualify, as 
+there are plenty that have a simple PC.
+
+However! The subtlety of the interface, that we are asserting that the 
+current TranslationBlock flags are still valid, now leads me to think 
+that it's a mistake to adjust the current interface.
+
+We need to introduce a new interface to which targets may be migrated. 
+This won't be difficult, but it's not entirely trivial.
+
+For instance, target/arm/ has
+
+         case DISAS_UPDATE_NOCHAIN:
+             gen_update_pc(dc, curr_insn_len(dc));
+             /* fall through */
+         case DISAS_JUMP:
+             gen_goto_ptr();
+             break;
+
+where DISAS_UPDATE_NOCHAIN requires the helper because of state change 
+and DISAS_JUMP does not.
+
+This is subtle enough that we probably want to verify that the flags are 
+unchanged with --enable-debug-tcg.
+
+Perhaps tcg_gen_goto_jc_{i32,i64,tl)?
+
+BTW:
+
+> --- ./include/tcg/tcg-op.h
+> +++ ./include/tcg/tcg-op.h
+> @@ -49,6 +49,18 @@ typedef TCGv_i64 TCGv;
+>  #error Unhandled TARGET_LONG_BITS value
+>  #endif
+>  
+> +/*
+> + * See tcg_gen_lookup_and_goto_ptr_tmp().  @pc may be NULL, for a target
+> + * whose guest PC is not directly the key a destination block is found by.
+> + * A translator that is built for more than one value of TARGET_LONG_BITS,
+> + * and so cannot include this header, calls the _tmp() form directly.
+> + */
+> +static inline void
+> +tcg_gen_lookup_and_goto_ptr(TCGv pc, const TranslationBlock *tb)
+> +{
+> +    tcg_gen_lookup_and_goto_ptr_tmp(pc ? tcgv_tl_temp(pc) : NULL, tb);
+> +}
+> +
+
+This needs adjustment.  As we migrate binaries to single-binary, we 
+start building bits of code once and stop relying on TARGET_LONG_BITS.
+Notice where we include "tcg-op-common.h" instead of "tcg-op.h".
+
+The simplest solution, IMO is to define functions for _i32 and _i64,
+as for most everything else, and to have a _tl alias in tcg-op.h.
+
+
+r~
 
