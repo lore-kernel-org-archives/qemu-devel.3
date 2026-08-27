@@ -4,141 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C48C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F34AC61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzWCH-0000N1-RO; Thu, 27 Aug 2026 05:14:57 -0400
+	id 1wzWCe-0000m9-3W; Thu, 27 Aug 2026 05:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wzWCF-0000H6-K5; Thu, 27 Aug 2026 05:14:55 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzWCc-0000jL-Un
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:15:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wzWCB-0004XN-VY; Thu, 27 Aug 2026 05:14:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lzkC0udvJT/2SX3i5CwxFHc/7LJNiqNWDq45GP7LLKzW/REfxtRHaGnbY3rFgZBqGRlQrkkHrSARxUEg0dLpv1JraokFvURGfwqlxP3hzszUYIHw9dxdkojkd/Q4Qmka8ChInXKETkON5ev6VQ6jexqVnyt0eBa8KQ3j1KJssnBlo7S2psq8E1wSZV6lie/bUYasqq7FV+B5/o4ZWtqBAZaloLqyU5CV4BPc0ouFk3q5zMkw4csyFaKeuKamN7b/842bae1cT9QJLeE+ddEeclA0HjlZ8J4DcItDiH9gq+3ZqPJUxS059Bv+kIQaOHXJxrmiaS0bOizSabwEP0HDtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sj87Rl0GrCEIpTTFZXoIMrJTlpPi09gonGvtB75TcRY=;
- b=JKoGI3owTkgQeiehORyUhEarWK7NUYuC5RARsBXf2vwKCPORBoa3q87vUZftbdoMMztro42gN6y3Wp7kQCJ41TxusAmYL/vFdSL4jKfnE/1ykYfo29YHCO4PTk+nTxdLQHFXcs9en02+Q8aXg1EjCc1zXR5D48TTU87SVn6+rXJyCixqj5EUWVow5s8LJgk0W0WNLI5tiqDC925fB+YpjEpjw3OTW2Hdigx5Puw29qZ5FeLyWxNfiM2XPzA0loW2R4+0Y676dB7e9FqupJNaI4nu9EOhf5iP84mEXemP0rmVeQMV03qg2HyFcOkhDfDKYOGCMK7ed573TaqTXLQKWg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sj87Rl0GrCEIpTTFZXoIMrJTlpPi09gonGvtB75TcRY=;
- b=vFN314Az3ddnF54+g9FD/hCVKtmQnMMRUT29+Q9c9EXcbvvFg8bcv2JDOTdJsu+//hg6LVdCEwo5d0bfiem+2Fzugu+aae9+arg8jD6vxY8fsk25nim+xB+XYKK0OgmuJA8V+4CQInCMdqHp6yW7ATrKDbol5oHJ1Zr7gyes5E6/q8sxqvNO35asU2YSD6xm7STnV66bNTQm81WZGYxQ1AyT5Ta8ohF3niGKppWOYZlC1xDp7mGhvb5rfQtE4KHEOkg9D4gzaH3tLDOaE5U2XRdzWWclrAmqgnYkl3cTfUwSNDuIK2Dl0xCgNdWUpV63m630bL516o5RBK70ukJk8g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by PH3PPF33C709630.namprd18.prod.outlook.com (2603:10b6:518:1::c91)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.10; Thu, 27 Aug
- 2026 09:14:45 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0360.008; Thu, 27 Aug 2026
- 09:14:45 +0000
-Message-ID: <42e7024e-43d9-47a2-9816-229aa8ee4d2a@axiado.com>
-Date: Thu, 27 Aug 2026 17:14:40 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/8] hw/char/cadence_uart: Reserve MMIO with dynamic
- size
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- 163wangjack@gmail.com, qemu-devel@nongnu.org, peter.maydell@linaro.org,
- qemu-arm@nongnu.org
-References: <20260826074635.2850931-1-kchiu@axiado.com>
- <20260826074635.2850931-5-kchiu@axiado.com>
- <5e22ac73-0650-493d-a099-c88cbb74b397@oss.qualcomm.com>
- <a3210074-7795-4a9b-b72e-aea0efb53664@axiado.com>
- <33c9db8d-2004-482a-8d86-5400252fe2d2@oss.qualcomm.com>
-Content-Language: en-US
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <33c9db8d-2004-482a-8d86-5400252fe2d2@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TPYP295CA0032.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:7d0:7::13) To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzWCY-0004lg-SC
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:15:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787822114;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9cCYPO+UsodRZtmHqqnwUme6qjbL/MPJKST/HAeCVCU=;
+ b=JVm9HYQKrJsDQ+5MIgJyJfwOoExNHrItwuTJNBf/7HB9in8G4Dl8EMMc8s/0acHL0cKUoC
+ TzogxeNy2A6apVPJpN9qaeUlbk4OAOx1XQjuTsJPHGuMB/IG9WxQk1sK2jXcyE+FAZnfTY
+ mKHUdlbwa+pFVftg8mTyacmZMAw5ytA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-ruwhZZdzNF-Dpg4JQssTeQ-1; Thu,
+ 27 Aug 2026 05:15:09 -0400
+X-MC-Unique: ruwhZZdzNF-Dpg4JQssTeQ-1
+X-Mimecast-MFC-AGG-ID: ruwhZZdzNF-Dpg4JQssTeQ_1787822108
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 112E71953994; Thu, 27 Aug 2026 09:15:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 114A11800765; Thu, 27 Aug 2026 09:15:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7EE0B21E6920; Thu, 27 Aug 2026 11:15:04 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: "Denis V. Lunev" <den@openvz.org>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  Andrey Drobyshev
+ <andrey.drobyshev@virtuozzo.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
+ writable
+In-Reply-To: <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com> (Denis
+ V. Lunev's message of "Wed, 26 Aug 2026 18:37:55 +0200")
+References: <20260824133729.1141990-1-den@openvz.org>
+ <20260824133729.1141990-6-den@openvz.org>
+ <87ld9umth3.fsf@pond.sub.org>
+ <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
+ <8733w0j45n.fsf@pond.sub.org>
+ <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com>
+Date: Thu, 27 Aug 2026 11:15:04 +0200
+Message-ID: <87fqzzgc13.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|PH3PPF33C709630:EE_
-X-MS-Office365-Filtering-Correlation-Id: bfa075e1-f71f-499b-e65d-08df041ba29a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|6133799003|10067099003|4143699003|56012099006|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info: MiCy/xfZZOIMnQfZcVzUsElU2qB6zJZqTRODaWLIS/6AZW+vZPOJJWxmfjiSYflb1YODd3XH6t0M7oNtx5yUuu8qtKBCho8vVJpwfT3E6dIZ5lWlPKoXC4lbjuICZSmzGa9M/SRGsYR6Fwsl/x1WuzgEukKCZMrK+mysc0n4Z9jlM5P5dnWWUbWo61gtAM76qe3GxFjEfE7BYrMpJLp3SnnbJX+UzI1DW8hvGvI0tedmBDYIQwdFdnhKrhVQ2e9tl0OOtTYK2WxvvRW0esrHM7oK/FMcCFjbRgrvPXb/TOXEn0qHUWsGhIxlqdq+p6EzL7Xrc+GntGCliib1ZIXA7ogsmxwMf5Udaw9cRd1J7YJq0EYpqFILTOkwYImNjsWKAwYLXKtt3O7WAjCDqIj8NiP7JelcrAAxpjNFWFsV1upV73z0pEnbGqq2xQ93RMR/Fdhkgu8Kv09M1oXvv3U9tbo5FWpUhX7bHWVKwG8Dda2cVYtI37faSNOCjOPDUZwCDXHVO2ly6ovtB7tEpD6Qy/EMMlik2hzN55Ehjq1+iji+inZi896+CaMZtb1SPHxg5jjWujQdj1rAuubY7PwpQSKMMH6P0H48JmJzK+QIp94bPOJ1Zvm2dz9SglxUD6NxGqyuhxshDfzbzeWbaTGupcYILTdK761n0UrUeRoGphA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003)(3023799007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a2wwMXdlRFd2YStzTExiWEFCYVE3SU82aHNFRHZqODJGQzZzWUV6bHVPOXVj?=
- =?utf-8?B?ZGQyTU95OWJiUFpmbFFUaWtaYWMvSXpTMWJ0eUMyREE4Mi9mNExiM3JkRml1?=
- =?utf-8?B?SytqU3g5TWdiK1NCUkFoYnMrcVRKSXFwR2g0R2xoM01SYTQ5YWNldXd2aWto?=
- =?utf-8?B?UEpTMkQraHVQSjdoN091V2o3NjFIZkxSMFRvTUpzRkUwSWFyd2FIMHhqeStu?=
- =?utf-8?B?R2FQc3NGeGU2UXRsSFN0TnVtV1FlUGNoZWx6ZXlkenozdDVXTHVoVFRaVC95?=
- =?utf-8?B?MTJ3amZxZHQ0ejBwV2N5Y2RQRmcyS1RGM3dEYXlTNkV2UTY2ekMxM3FIaDRB?=
- =?utf-8?B?bGVxNVRkQ09GM2JjL3V6QzBNMmVlN3Z5WERUNC9kUUw3MkEveDV6MTE5bWFJ?=
- =?utf-8?B?QW5UYmdKdlk0aWlrVTFUVThyNU9scTlHNFFSNTRYN29KanFjd21xV2hkSFVq?=
- =?utf-8?B?dVEwN0U3Mmxlb2tnWERUY2htSUh0R3Q1QXpJTmdhWVpqYWtFMk50RnNZYkJT?=
- =?utf-8?B?cmVqdTVSdjZ4YnBaMWt1RzgvanVad0Q5OXJqeEE5eHE5Y2dPc2ZMNTVKdFRR?=
- =?utf-8?B?QUk2TVhha25MemJJZkNwOW80SVlJaXhzdXdRRzdWTjZJd2Q0Wk0zVUErSWkz?=
- =?utf-8?B?czlwSmdTTk1nMTB2RVpLMUlGYWtuVVQwZ2JJK0xDdnN3dUR3NC8xRDc1cmo1?=
- =?utf-8?B?bm9rUEpGN2lXSVQ5UFd3MzlSMDdJa3NHdHNHNHVJa0pHVllsUDdTOXZwZ2dh?=
- =?utf-8?B?eFpNS2ZnT0xkOUVOWXBNdU43bXhpdjFGVUVsL2NKci9CYW9JdEVSYzFUN0xy?=
- =?utf-8?B?NUlLY0szSHlLSlBPcTV4djhWa29XVTVsK1Joc1lEQnpkbHNmSWxKc0xSNWZz?=
- =?utf-8?B?NVIyd2NJWTBoUFZVeGZrV240c0FQd3N2VFdvbUFxNlpQNnFwdkJoY3ppU1JO?=
- =?utf-8?B?V0V6c0tRU1dwcWt6M0V6Rk9QUm5DeWU5SlUrRHQvY1ljUWFIWkR4VFVMQWFG?=
- =?utf-8?B?TG5tUTJmZDJLd0xQTjF1Ukl0b3dFbUVGMjB2M2ZVeUpxcWdQc2syUk8wQ0J2?=
- =?utf-8?B?VlY1VEc1ODJkb0o5cnFXYi94c2d6L1FiWGxpR1dscEdKMTN3bXZFbUt4Q3g3?=
- =?utf-8?B?ZHUvSWU5MU9HQjVzTWRzNGtHZzIyUEdrNkFnREtZbzZ6eEdiWktOS2dzd2Q2?=
- =?utf-8?B?ZEFmOEpFR0QvUVcwazdhd0xOZllDQTQ2VGsvYXEvM3J4R0tLOGlyRlFMNmNl?=
- =?utf-8?B?SWE0Wm11TkJRK1dYcU5jZVV0T29ZRzJQbUNUeUpZZUx6WCs1UjgzODBROWlC?=
- =?utf-8?B?dDI5a0c1QVBPNFh6Sk9wSVdhRkczSTVpeWRvVy9jUXh0VXJRTS9MSG1YWU94?=
- =?utf-8?B?UEFTWnZVYXBXMDQ4T0RjMkhyRXJ4cHFHSHRrbGNqVkhxall4T2tKekthSnJB?=
- =?utf-8?B?U2FQWXBHT00xZllhVEVZaUpldVpIYlVTOFo3bUlkQ01iWTQreVdTYmhYRUN4?=
- =?utf-8?B?MjVNQ3FHMmZnTXVFcFlEcU1SM0loaXlLVUZiSUgzc3QxUWMxQ2JDTkd6ajM1?=
- =?utf-8?B?NHRpYTE2Qzc0RHg1czQrWDJqU2lyTkIyTXp6MlZKUTM1M0NTNFNxNmVKSUlX?=
- =?utf-8?B?OEh2WnhPbGc1OGhacVBPUFpVMi8vK0FUS2V0My9lOGZlQnIwWW5WTXNnNjJo?=
- =?utf-8?B?dFA4OUJDYlRrWlU3bDhONzlYTGtyZGVlMytDZjVIOUZWdmxXMkdVVjVOd1VT?=
- =?utf-8?B?K2pNV2dKcmFFa253a0tjUWVUYmNIc0hHSit4RDZ4T3hsa21yekFuSXBsV2tl?=
- =?utf-8?B?THV4Vml4MmxwTkxPR0dDUHhXV0Q4SUtac2tyNWRYczhvaTRva1J4Rko2K0Jo?=
- =?utf-8?B?eG5oc3ZKdCs4Umd3RkZNK0F6NUdrMDlwbEFsanVHdlpNd29nSWRUOE1PeXRy?=
- =?utf-8?B?azVOSjg0TGt0L0VXdGxrNzJsaW9hZTArenVXYW94enRqUWREWkphcFhFWkVS?=
- =?utf-8?B?WGdVYlg2Q09KM25yeVk1RnpraEhBTkovSGppV092cFNyWHk0dnc4aG5Ja1Ar?=
- =?utf-8?B?Q0VESEhqcmpIbG9XTHNndWVIcFVLRE5rekVFY2NjMFh4S1BNbDg5S2xldW42?=
- =?utf-8?B?Tm95bjRoR1IxWWF6Z2wvMVN6bTBtNE9Wc1ByVllrakg0V0JnWU02TVJkQklO?=
- =?utf-8?B?QlJRU2lkelorZXI4SkhlRFppU2s1Wml1aE1Ib2Vzd2t5eTNyUk1JR2NHM3RG?=
- =?utf-8?B?WWhZNEtsNnk2T3pySEdxUlJrbzF4R1pPelNYeU90TE9Xa3pncHNNb215OG1B?=
- =?utf-8?B?dzJEN3NGOFNiSk1BdUZlcy96K1ZFSHlncFd5cXl5NEN5bUxqT2h4dz09?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bfa075e1-f71f-499b-e65d-08df041ba29a
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2026 09:14:45.0131 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kX1Cgwq/2hhKfTMYbmo2IhUiJGg10UtiryDU1/UQlSckoSEeIlv5Mubns8r/DxnEJ09kPOWkLnyBnDcekJZwUg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPF33C709630
-Received-SPF: pass client-ip=2a01:111:f403:c105::7;
- envelope-from=kchiu@axiado.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,97 +94,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+"Denis V. Lunev" <den@virtuozzo.com> writes:
 
+> On 8/26/26 17:24, Markus Armbruster wrote:
+>> "Denis V. Lunev" <den@virtuozzo.com> writes:
+>>
+>>> On 8/25/26 11:37, Markus Armbruster wrote:
+>>>> "Denis V. Lunev" <den@openvz.org> writes:
+>>>>
+>>>>> From: Denis V. Lunev <den@openvz.org>
+>>>>>
+>>>>> A dirty image must be repaired before anything allocates a cluster in
+>>>>> it. qcow2_do_open() does that, but only for a node that is writable
+>>>>> from the start. A node opened read-only skips it, and nothing revisits
+>>>>> the question once that node becomes writable, which block-commit does
+>>>>> routinely: commit_active_start() and commit_start() reopen the base
+>>>>> read-write for the duration of the job.
+>>>>>
+>>>>> With lazy refcounts the on-disk refcount block then still accounts for
+>>>>> the metadata clusters only, so the allocator restarts at the front of
+>>>>> the image and hands out clusters that L2 entries point at. Two guest
+>>>>> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
+>>>>> stays clear, and a clean close clears the dirty bit, so no later open
+>>>>> repairs the image either. The bit also stays set for the whole writable
+>>>>> session, so a node which is merely writable says nothing.
+>>>>>
+>>>>> Refusing the reopen instead is simpler and keeps it atomic, but it
+>>>>> leaves nowhere to go: the base belongs to a chain the VM has open, so
+>>>>> the qemu-img check -r such an error would ask for cannot take the write
+>>>>> lock it needs. The repair does the trick in most cases anyway.
+>>>>>
+>>>>> Do the repair in qcow2_reopen_commit_post(), the earliest point where
+>>>>> the node is writable. An inactive node is skipped: bdrv_activate() calls
+>>>>> qcow2_do_open() again through qcow2_co_invalidate_cache().
+>>>>>
+>>>>> commit_post cannot reject the reopen, so a failed repair takes the
+>>>>> driver away from the node instead, which is what stops writes from
+>>>>> aliasing live clusters. qcow2_signal_corruption() does that as well,
+>>>>> but it also sends BLOCK_IMAGE_CORRUPTED and sets the corrupt bit,
+>>>>> which qcow2_do_open() honours by refusing every later read-write open.
+>>>>> The image is dirty and unrepaired, not corrupt, and qemu-img check -r
+>>>>> still fixes it, so neither belongs here. Return the error and skip
+>>>>> the bitmaps.
+>>>>>
+>>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>>>> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>>>> CC: Kevin Wolf <kwolf@redhat.com>
+>>>>> CC: Hanna Reitz <hreitz@redhat.com>
+>>>>> CC: Eric Blake <eblake@redhat.com>
+>>>>> CC: Markus Armbruster <armbru@redhat.com>
+>>>>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>>>> Cc: qemu-stable@nongnu.org
+>>>> [...]
+>>>>
+>>>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>>>>> index 199efc1e00..940249a5e5 100644
+>>>>> --- a/qapi/block-core.json
+>>>>> +++ b/qapi/block-core.json
+>>>>> @@ -1852,6 +1852,9 @@
+>>>>   ##
+>>>>   # @change-backing-file:
+>>>>   #
+>>>>   # Change the backing file in the image file metadata.  This does not
+>>>>   # cause QEMU to reopen the image file to reparse the backing filename
+>>>>   # (it may, however, perform a reopen to change permissions from r/o ->
+>>>>>  # r/w -> r/o, if needed).  The new backing file string is written into
+>>>>>  # the image file metadata, and the QEMU internal strings are updated.
+>>>>>  #
+>>>>> +# A dirty qcow2 image is repaired during that reopen, which blocks
+>>>>> +# other requests and can fail the command.
+>>>>
+>>>> Pardon my ignorance: what makes a qcow2 image dirty?
+>>> usual obvious reasons are SIGKILL to qemu process (f.e. from OOM)
+>>> or node crash.
+>>
+>> So, you have to do some cleaning work before you can use it again, just
+>> like a dirty filesystem.  Correct?
+> Correct. QEMU allows right now to open dirty images in read-only
+> mode and it is OK to be used until we switch to RW. In this
+> case real write to metadata corrupts image.
 
-Philippe Mathieu-Daudé 於 2026/8/27 下午 04:50 寫道:
-> CAUTION: This email originated from outside of the organization. Do 
-> not click links or open attachments unless you recognize the sender 
-> and know the content is safe.
->
->
-> On 27/8/26 06:26, Kuan-Jui Chiu wrote:
->> Hi
->>
->> Philippe Mathieu-Daudé 於 2026/8/26 下午 04:11 寫道:
->>> CAUTION: This email originated from outside of the organization. Do
->>> not click links or open attachments unless you recognize the sender
->>> and know the content is safe.
->>>
->>>
->>> Hi,
->>>
->>> On 26/8/26 09:46, Kuan-Jui Chiu wrote:
->>>> Candence UART model is reserving 4 KiB for registers statically
->>>> For other SoC models, the MMIO size may be not 4 KiB which would have
->>>> overlapping sysbus regions in QEMU
->>>>
->>>> This patch adds a property which allows other models to revise the 
->>>> MMIO
->>>> size and it is 4 KiB by default
->>>>
->>>> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
->>>> ---
->>>>   hw/char/cadence_uart.c         | 8 ++++++--
->>>>   include/hw/char/cadence_uart.h | 3 +++
->>>>   2 files changed, 9 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
->>>> index f57cad57a8..d83c71b877 100644
->>>> --- a/hw/char/cadence_uart.c
->>>> +++ b/hw/char/cadence_uart.c
->>>> @@ -541,6 +541,10 @@ static void cadence_uart_realize(DeviceState
->>>> *dev, Error **errp)
->>>>   {
->>>>       CadenceUARTState *s = CADENCE_UART(dev);
->>>>
->>>> +    memory_region_init_io(&s->iomem, OBJECT(dev), &uart_ops, s, 
->>>> "uart",
->>>> +                          s->mmio_size);
->>>> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
->>>> +
->>>>       s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
->>>> fifo_trigger_update, s);
->>>>
->>>> @@ -561,8 +565,6 @@ static void cadence_uart_init(Object *obj)
->>>>       SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
->>>>       CadenceUARTState *s = CADENCE_UART(obj);
->>>>
->>>> -    memory_region_init_io(&s->iomem, obj, &uart_ops, s, "uart",
->>>> 0x1000);
->>>
->>> Are we sure this size is even correct and not a copy/paste error?
->>> We can clearly reduce it up to 0x80 (so far the last register
->>> implemented is R_TTRIG at address 0x44).
->>>
->> No
->>
->> It is 0x1000 since the first release of this model
->
-> QEMU model use 0x1000, but what the datasheet says? I'm
-> suspicious using 0x1000 for the current model is correct.
-> Can you point me to the datasheet please?
->
-This is the datasheet provided by Edgar previously
+Feels... adventurous?
 
-https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/UART-Module
-
->>
->> Sure, I will change it to 0x80. It would be a simpler fix
->>
->>>> -    sysbus_init_mmio(sbd, &s->iomem);
->>>>       sysbus_init_irq(sbd, &s->irq);
->>>>
->>>>       s->refclk = qdev_init_clock_in(DEVICE(obj), "refclk",
->>>> @@ -621,6 +623,8 @@ static const VMStateDescription
->>>> vmstate_cadence_uart = {
->>>>
->>>>   static const Property cadence_uart_properties[] = {
->>>>       DEFINE_PROP_CHR("chardev", CadenceUARTState, chr),
->>>> +    DEFINE_PROP_SIZE("mmio-size", CadenceUARTState, mmio_size,
->>>> +                     CADENCE_UART_MMIO_SIZE),
->>>>   };
->>>
->>
+>> Back to change-backing-file.  It operates on an open image.  Cleaning
+>> happens when that image is read-only and dirty.  Possible because you
+>> can open dirty images read-only, and that doesn't clean them.  Correct?
 >
+> Correct.
+>
+>>>> Can you give me an idea of what other requests could be blocked?
+>>> Before the patch reopen was smooth - we have just opened the
+>>> file again. After this patch in a very unlikely corner case
+>>> potentially lengthy procedure has been added - full image
+>>> consistency check. Guest IO is stuck until the check will be
+>>> completed.
+>>>
+>>> The case is unfortunately real for production.
+>>>
+>>>> Double-checking: "that reopen" is the one to change permissions,
+>>>> i.e. the parenthesis above.  Correct?
+>>> yes
+>>>
+>>>>> +#
+>>>>>  # @image-node-name: The name of the block driver state node of the
+>>>>>  #     image to modify.  The "device" argument is used to verify
+>>>>>  #     "image-node-name" is in the chain described by "device".
+>>>>> @@ -1891,6 +1894,9 @@
+>>>>   ##
+>>>>   # @block-commit:
+>>>>   #
+>>>>   # Live commit of data from overlay image nodes into backing nodes -
+>>>>   # i.e., writes data between 'top' and 'base' into 'base'.
+>>>>   #
+>>>>   # If top == base, that is an error.  If top has no overlays on top of
+>>>>   # it, or if it is in use by a writer, the job will not be completed by
+>>>>   # itself.  The user needs to complete the job with the `job-complete`
+>>>>   # command after getting the ready event.  (Since 2.0)
+>>>>   #
+>>>>   # If the base image is smaller than top, then the base image will be
+>>>>   # resized to be the same size as top.  If top is smaller than the base
+>>>>   # image, the base will not be truncated.  If you want the base image
+>>>>>  # size to match the size of the smaller top, you can safely truncate
+>>>>>  # it yourself once the commit operation successfully completes.
+>>>>>  #
+>>>>> +# The base is opened read-write.  A dirty qcow2 base is repaired
+>>
+>> Reopend, I presume?
+> The meaning here is repaired. The meaning here is the following:
+> "The base is reopened read-write and if it is dirty it should be
+> repaired before any single write is made. Guest stalls until
+> repair is complete."
+
+If it is dirty, it *will* (not should) be repaired before commit can
+start to write.  Correct?
+
+Is the base reopened read-only after the commit completed?
+
+>>>>> +# first, which blocks other requests and can fail the command.
+>>>>> +#
+>>>>>  # @job-id: identifier for the newly-created block job.  If omitted,
+>>>>>  #     the device name will be used.  (Since 2.7)
+>>>>>  #
+>>
+>> Like change-backing-file, block-commit operates on open images.  It
+>> copies down into a base image.  If the base image is read-only, it is
+>> reopened, and cleaning happens when it's dirty.  Correct?
+> Correct.
+>
+>> Can it happen in any other way?
+> No at the best knowledge from me and Andrey.
+
+Got it.
+
+>>>>> @@ -2902,6 +2908,9 @@
+>>>>   ##
+>>>>   # @block-stream:
+>>>>   #
+>>>>   # Copy data from a backing file into a block device.
+>>>>
+>>>> [...]
+>>
+>> Whereas block-commit copies down into a base image, block-stream copies
+>> up from a base image.  If the image copied to is read-only, it is
+>> reopened, and cleaning happens when it's dirty.  Correct?
+> Correct.
+
+Is the reopened back to read-only afterwards?
+
+>> Can it happen in any other way?
+> No at the best knowledge from me and Andrey.
+
+Got it.
+
+>>>>>  # On successful completion the image file is updated to drop the
+>>>>>  # backing file and the `BLOCK_JOB_COMPLETED` event is emitted.
+>>>>>  #
+>>>>> +# The top image is opened read-write.  A dirty qcow2 image is repaired
+>>>>> +# first, which blocks other requests and can fail the command.
+>>>>> +#
+>>>>>  # In case @device is a filter node, `block-stream` modifies the first
+>>>>>  # non-filter overlay node below it to point to the new backing node
+>>>>>  # instead of modifying @device itself.
+>>>>> @@ -4989,6 +4998,16 @@
+>>>>   ##
+>>>>   # @blockdev-reopen:
+>>>>   #
+>>>>   # Reopens one or more block devices using the given set of options.
+>>>>   # Any option not specified will be reset to its default value
+>>>>   # regardless of its previous status.  If an option cannot be changed
+>>>>   # or a particular driver does not support reopening then the command
+>>>>   # will return an error.  All devices in the list are reopened in one
+>>>>>  # transaction, so if one of them fails then the whole transaction is
+>>>>>  # cancelled.
+>>
+>> blockdev-reopen also operates on open images.  Cleaning happens when
+>> reopening a dirty read-only image read/write.  Correct?
+> Correct.
+>
+>> Can it happen in any other way?
+> No.
+
+Got it.
+
+>>>>>  #
+>>>>> +# An error is also returned when a device cannot be used once it has
+>>>>> +# been reopened.  Such a reopen is not undone, so an error does not
+>>>>> +# always mean that nothing has changed.
+>>>>
+>>>> Could that be a problem?
+>>> Error reply as itself is not a problem. The situation as a whole
+>>> is a real pain in the ass.
+
+Ideally, a command does not change user-visible state when it fails.
+
+blockdev-reopen is designed to be a single transaction: success means
+all the images were reopened as directed, failure means none of the
+images were reopened.  "So an error does not always mean that nothing
+has changed" indicates we're not actually implementing this design.
+Could that be a problem?
+
+>>> The problem is that such images exists in production and there
+>>> is not way to handle this without downtime.
+
+Yes.
+
+>>> Under this patch we are trying to fix things hard and this is
+>>> correct thing to do - on RW image we are doing exactly the
+>>> same thing. If automation is unable to fix - the guest denies
+>>> starting.
+
+We must not (re)open a dirty image read/write without cleaning it,
+because writing to risks corruption, i.e. data loss.
+
+When we open a dirty image read/write, we can clean it without
+inconveniencing the guest, because the guest cannot access it until
+after open completes and we connect the newly open image.  Correct?
+
+When we reopen a read/only dirty image read/write, cleaning it *can*
+affect the guest, as discussed above.
+
+As far as I can tell, all the trouble discussed above ultimately comes
+from letting the guest work with read-only dirty images.  Why is that
+useful?
+
+What are the use cases for opening dirty images read-only?
+
+>>> Here we report an error and render guest as unusable. This
+>>> case is expected to be extremely rare but technically possible.
+>>>
+>>> This is a problem.
+>>
+>> I'll come back to this as soon as I understand when exactly cleaning may
+>> happen.
+> Right. Thanks.
+>
+> You are asking very good questions which are quite important
+> and interesting :-) Simple "deny" policy is very bad from
+> operations point of view.
+
+I try!
+
+[...]
+
 
