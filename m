@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E343C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 20:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB3EC61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 20:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzgL4-0002hr-6G; Thu, 27 Aug 2026 16:04:42 -0400
+	id 1wzgO7-0004a3-Cb; Thu, 27 Aug 2026 16:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wzgL2-0002fs-De
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 16:04:40 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1wzgO5-0004Y8-7r
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 16:07:49 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wzgL0-0008Ih-UJ
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 16:04:40 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-85339ed040aso354081b3a.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 13:04:38 -0700 (PDT)
+ id 1wzgO3-0001Al-JG
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 16:07:49 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-38dfe7eb825so373334a91.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 13:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787861077; x=1788465877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787861266; x=1788466066; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CKQpWMw2aLuZz6hryE0T1XlvHPYk+aoHajkr6v6H19Q=;
- b=iflJTCjGan3cSdDnwSqLTQqThBcd+a0kKhlSFLady5r6+H2iajuSZ+7bEngSb341WG
- OD5RMk440nzPCwnfF6nCLXkJR1EVZ+1jJZvH6GG80qaEpn2FI2LBpvJwD5LsPV2X15dO
- bmkMgCrMG9r93GTjIYsK7YXSmvrMt07M60CZvKvo53OTtW86giSmoSocp6YmyBCKufSk
- sNhKaLSg18hPzzgM+AkBQI2h6ix7m0YAwJPi/r57fccHUzGIOhdEaEaSGUy+pWqYcEN4
- LBrCGD7tlURnabgWaHxuMpJ8RCcAO9/mXjAKtU2iT9HxQ41xQV+HrqVlif5gcFr/VnOb
- 7Z+Q==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=RkQXossPM8x2ln4eURTtPHqSSzNgexTYevvkBcw2D2A=;
+ b=n4OkJXZuJvgQXnxsyXj81tzMVJK2NG3yFd+novxJZwrPLl7o9PtRLZcqutcQRrqD8Q
+ pzUpG/zpOhphTwv8zXsXTcXwpcpWcn/idhRjH3meelsBREfBxpfaEozWRX3Uw3w+ykje
+ citbB+JfvBlbAXJcZGmiK247/NJ2ied+5Cir77Q8DGOhXWR3l5ZMBPjjAQiiuyP52dQl
+ wb7bCZTD5jXaJnXC1zSCFjxpRxRrR16d6c8MmTKFHKdSI8nTE4HXL2cv47b+rap89dUG
+ zVco0aqGN5cMDzSKZq5DHqN9fLQ/6+Z1HDBJ+6DqS293unP8/V/CtAOY+2VpgewijNSz
+ mVFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787861077; x=1788465877;
+ d=1e100.net; s=20251104; t=1787861266; x=1788466066;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=CKQpWMw2aLuZz6hryE0T1XlvHPYk+aoHajkr6v6H19Q=;
- b=rlLRzFTxnLVicUHQKU17U0Odi7VWRDd3pryuzJgHSgh4U/mtUnq9r1js9KSGhO3+/b
- kwmVERjTo46KHP8mwOip8FT7RJgG/KTu54P8SBqqL2SzRvN5ATuwTHZUySYZYw81VWFW
- Rp2m7T5xSaOaBTNmH6to+i/4DDFc962ds6Km4+HTcix/Cm6lggF52SRUkREe90HkLVBn
- jyPGKK6kQp/uhvYsZms42+tIzGaS9wgwOaayZLGrPh2hDluu8OIYIK5rAd0JBmOTMa86
- 8yqRbxrv0EgPzjNOO8b1AI9uK3WzKLWMu8J53I3dlVyw93xMQwdcVspCCHrILLuUPlce
- iP/g==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro7l8ifBWKro67TbduZCSi/m6v+53kP4GTboJZZzx/NeDU8Rx/QDf/Y1oxlkZo171G/ZvZvarrS98m0@nongnu.org
-X-Gm-Message-State: AFuF++kyaBNATuOH1HpuD5r22K5c5iXul+pfTDuOWoyWaN3b81OFJZIB
- G8lAbyTFCmafG7JBiTlapalM80eenNNRlORL4fvBgmbkT/PYxMRzfvjktvidYSaUTY8=
-X-Gm-Gg: AR+sD11OkwsN3be2yTFl/kdvQ7UsHU2E8kp8vItMKZkMsLYkg8hf1LgwYSk9Td7d9Bk
- xybUvZ83yrPCc6Z5AhZH5wja1qp0v4uvUjPj+KnDySHD3AD3HKtvXK4EXgZZrlqP9HX5uPnHWTs
- Ue9Vi+OJvTYZjzVEx+C32WT4u6SdLxJ8w1jtc5+WlzB9ad/dqjJ3eyvOCxrxOSQZABnUhS+dNzP
- kz75nh/Ya8GskyDqDfBeogBC7c4n2XrPUZkfppDM4+zPiGQ3hXuvyJkjhU4qBlTAqxkuRxXGUcY
- LtNY8xcJwoNqzw5lEZuzRQvM0fcumyT4eaeN4VhJNBsMs1U53Ij4udH5K3Y55nWKBWDnAFntM5g
- mnNoSKRPLMWz39HTgCi+dV0Nk9SYM2NGNIsHjPKFmNKFuVE8VZOPospcTvxhYwZn+wG1gkrOA/t
- Nww3cg16qmMtCXCp7c+neqYY6SeHIiUIM+0yOagZ39f2SNC8y0ad1POYDhLZKjOD3HUeZuBO5sZ
- Yjeb77huEvGXkFdCqdgmZorAsOLxeG4phqMHN0=
-X-Received: by 2002:a05:6a00:4109:b0:847:7f3c:b5f5 with SMTP id
- d2e1a72fcca58-8562a6e1024mr3088047b3a.11.1787861077238; 
- Thu, 27 Aug 2026 13:04:37 -0700 (PDT)
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RkQXossPM8x2ln4eURTtPHqSSzNgexTYevvkBcw2D2A=;
+ b=lvwEcC/DxL/zSMmKRBYyorr8Odcxe169kclUj2PxvxFh9O2A4+WL8XCUvJm+qj9a46
+ 51dc/GpBUTyVDWspkRuG6miJdO8euHkZOCEJ1kVnrQzveEow1mcpOcFAVtZi795vTBaR
+ HaNDK7TtekA0fmIUAiRsyPMS3l9ai0c/POpr0S92yjq9Cv/mkwg9PkYj1C2khYqEADop
+ xy5ch4Numtuv6VHTZzV+fgH0X/PewgQiicApoNxeGTW4egiKnAvcf7nYVoozukBVCALM
+ pQnsJylB90N3OzBGUvRNoJBVvBWZ53Tnf3Z9+B7sGkQLSCKu2d29DALlqbpmSRe4uRAS
+ avCA==
+X-Gm-Message-State: AFuF++mr3PX57MBlR3GZKy9zZB8/xou3ZyfiJN9LmO6jVLJUjBC4Pxsn
+ n3nbAj/Nm+YV8hUiTvIrEb746xRtLLHfLagtTwcgpRnrPH+OW08XFJbPUQz7j+FHbB0=
+X-Gm-Gg: AR+sD10lJnVXodWiFPzW2qD0Ydu4iEijzWHIIdQAl8RzRM9oANsc/xS94lkytvulRM/
+ SxCij2LJUFbSsmglFZteZmlcVOU6QtdAAbhx3i084Hxmdyu23wCPzA2GDShu5Cj1zxpGXCN/iFu
+ BPryoEwEhOyFxUfiHLTXkDi9vbYbQxPnoOl9yjfouARIONJxqZZDB7Pcg8QdYT5ryjLZFvvCpcR
+ ZuL9i9Spxr+w03G5+u6zUw6ag3qicz9O38mGeaous5Xwlw882VDfbBia04PkgBsxbXbdAE6YNWA
+ 5gXw9WUAZObJD7LBqC8BN0d4wZwnQ4vvoW1JmD9E1i71hFMa3gbs+HcAl7pfOEEPDRnixinpqaz
+ Ldmw0bKpgNYx2BSGoI67kak5cA7nwOF2jjtgse+DrPxUSpp1BobXt5igvGn+AgmGjIx/RyAXn4i
+ 8+eQgcoHDGSUqy8PbeVTW7cUk2tk/AkFphM9CMAwx9uD7cEVvVYSMG36ZtKY4XV/H3/GRi7XaSz
+ J+H5NwAqun/Z5oXQ3t5xRa5UaYnsvWJQujIfm0=
+X-Received: by 2002:a17:90a:e710:b0:381:528a:808c with SMTP id
+ 98e67ed59e1d1-396d10085b8mr3275181a91.12.1787861265667; 
+ Thu, 27 Aug 2026 13:07:45 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8535afb2caesm2387274b3a.26.2026.08.27.13.04.36
+ 98e67ed59e1d1-396b0d3c9e4sm4086521a91.2.2026.08.27.13.07.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Aug 2026 13:04:36 -0700 (PDT)
-Message-ID: <d13ef96a-fc1f-4df4-bada-de2f04d55ea7@linaro.org>
-Date: Thu, 27 Aug 2026 13:04:35 -0700
+ Thu, 27 Aug 2026 13:07:45 -0700 (PDT)
+Message-ID: <1ae174fe-34d2-4425-be69-f8ec54d59e4d@linaro.org>
+Date: Thu, 27 Aug 2026 13:07:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] qom-qdev queue 20260827
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org
-References: <20260827143404.1393166-1-mark.caveayland@nutanix.com>
+Subject: Re: [PATCH] tcg/loongarch64: Fix compile issue LoongArch host
+To: Bibo Mao <maobibo@loongson.cn>, WANG Xuerui <git@xen0n.name>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260827081138.1448296-1-maobibo@loongson.cn>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260827143404.1393166-1-mark.caveayland@nutanix.com>
+In-Reply-To: <20260827081138.1448296-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,24 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/26 07:33, Mark Cave-Ayland wrote:
-> The following changes since commit bbc8fb89fa3478a6f47c0475d2e4952e69a64f45:
+On 8/27/26 01:11, Bibo Mao wrote:
+> On LoongArch host machine, qemu fails to compile. The error is something like
+> this:
+> In file included from ../tcg/tcg.c:1098:
+> tcg/loongarch64/tcg-target.c.inc:1896:27: error: expected ‘}’ before ‘;’ token
+>   1896 |     .out_rr = tgen_revbit8;
+>        |                           ^
+> tcg/loongarch64/tcg-target.c.inc:1894:44: note: to match this ‘{’
+>   1894 | static const TCGOutOpUnary outop_revbit8 = {
 > 
->    Merge tag 'pull-tcg-20260826' ofhttps://gitlab.com/rth7680/qemu into staging (2026-08-26 21:33:14 -0700)
+> Here fix one small typo issue and pass to compile on LoongArch host.
 > 
-> are available in the Git repository at:
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   tcg/loongarch64/tcg-target.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->    https://gitlab.com/mcayland-ntx/qemu.git tags/classprop-hw-acpi-upstream-20260827
+> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+> index f65496a040..69e76807d6 100644
+> --- a/tcg/loongarch64/tcg-target.c.inc
+> +++ b/tcg/loongarch64/tcg-target.c.inc
+> @@ -1893,7 +1893,7 @@ static void tgen_revbit8(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
+>   
+>   static const TCGOutOpUnary outop_revbit8 = {
+>       .base.static_constraint = C_O1_I1(r, r),
+> -    .out_rr = tgen_revbit8;
+> +    .out_rr = tgen_revbit8,
+>   };
+>   
+>   static void tgen_revbit32(TCGContext *s, TCGType type,
 > 
-> for you to fetch changes up to 3435f9eed289b362097429d031c75bdaa847446b:
-> 
->    hw/acpi/piix4.c: convert ACPI_PM_PROP_PM_IO_BASE to a class prop (2026-08-27 15:22:11 +0100)
-> 
-> ----------------------------------------------------------------
-> qom-qdev queue
-> - Conversion of object properties to class properties (hw/acpi)
+> base-commit: 324bb5ef83ad5e9026ea3242f99ba53191a7bf3f
 
-Applied, thanks.
+Sorry about that.  I clearly did not correctly transfer my work between 
+machines after testing.  I've applied this directly to master as a build 
+fix.
+
+We should add a cross-loongarch64 test to CI.
+
 
 r~
 
