@@ -4,48 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB27C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 20:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E202C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 20:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzgT5-000663-Mv; Thu, 27 Aug 2026 16:12:59 -0400
+	id 1wzgiB-0001nD-AT; Thu, 27 Aug 2026 16:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wzgT3-00060p-U7; Thu, 27 Aug 2026 16:12:57 -0400
+ id 1wzgi9-0001mU-T8
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 16:28:33 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wzgT1-0002RM-W9; Thu, 27 Aug 2026 16:12:57 -0400
+ id 1wzgi8-00075a-3l
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 16:28:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=AP6z/l/4Wm2GkR77oII8qrO61x6kGAYDU7J+IRhF+q4=; b=U9d/OlE/yPimLUNmKulGVAtGjU
- lgB9daHRHUvDJsIizT5TOkBKooBjfzCRSxFUUyXUJX+JGkSknzi0I2/O914s47gYgr3MiWUQ3k3oc
- jF+Tm8cOYqOSbC6ielXBGxfftbtBo2EU9xnmmt9YpzbVySG9Jsz+sRx/0OcmPWtQmXR2sbBm8vF6k
- YUVmBiHBcYS6RUJq0yrOk5xXWCzPcJphLwA+ISr0gKLpyfojFpcX7rTVSmbsheAT8gqOekXVtpoXI
- wNB9tnDTO+n6Md8EZREzgzaRVGOVpN4hAs9w6Z7lWA+vj5mbfiL2kWJbhqPSEusDtZ+hPbNtTZxdx
- gUPX7iuFc/fxcguIgmYtNuVQWgf7oKyE1D8r+NzFJi3wPl4JTpQO9GNcwljdLYM+mcKE7Zn8oxAJQ
- TrActf3SXuIWIezvxBg9SsOsdLFESYr6aTO8olvJMTnLSWKLXqJ+wktNf66ivycjTTiNuYKd1DlBy
- +5Ak2xKQs6MA7wGktUJhS6mx+1YT+wwJFt7RRol/e5kn+7C5qrkgRibEgVtKcGCC7xY860TkoXq1h
- ANoqlJAN0mEF9hWmaSnesEWaEIslYYm5IJcE/fYpRcAvs7zGc/eaUXSSwBp8KpEH4k+RkFKvxsA0t
- Z106o0UNr3/S9uNYGABrIiPPntBRmIcWrp0QCEM/o=;
+ bh=yfJ6yvtwQYldEjty/NbHsb5SlOHZYqq5fc3nAy6yICU=; b=cIyjGEwcGDQTqHi2Oygo+97zHL
+ zjIA+Prg5/unOGcX+4oOJ+jQTcWd7DqB4onFIZhboMadXbauaxcbBZrwl3CiwI6bl+WtywG1Pm7i2
+ c0/vyVcIQLRUaTSQD/LllS9eNZ6tQMkc31ElPEgwVXXZ2SFoCtB0DBYbqsPNTmV6gLiNQgU0jiqxB
+ /YWYFvVEF6QDQ2xfKzWMscxgq+xypSBZUbVueAEQTFfi/BverXz1fldRXBjw1Od/vlLahk8K3ugXi
+ KnWbE1h2Rz19l9i35GtLwXqPNZ7weOWCYfPgmM0j7+d7gaZzN7vs2pmpIYSCSr0i+/1eYXY502JAV
+ Dk30RFv6N8VN8WrzJhLYmR6hBwbWtfcwLjef5/20Kwxts1OUZ4TqKe7XyC1TVSLmxmGgIJ7yug2tJ
+ fAaxoy6EcrfSX4XWtMz0ybUnGxXiQ5qpoxvsxZ9y9cz48E1YmYw/xvjz45D9kMcNJEaSoH2kfRPhS
+ 1pQ8pylDc5X3ElVbL0uQvkaJXNtSxbjOj1H3r8RnvJCZAq9BSPI/hJhUKdyK8amFPseNCQfWqr0V/
+ kKrqPXacmYui9B9BFLmpCZ3NR6wKxcfUquyzvtQALxzTZa7ERUbNn2UnsO6S9e02d7XWp7+YsZZkj
+ XxmHDUQ/lVD3JYXw0WY9YaQbnagNocXiR5TL9fYDw=;
 Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wzgSa-00AQ22-Ir; Thu, 27 Aug 2026 21:12:29 +0100
-Message-ID: <efe7ad78-d94a-4885-a443-6d1d0fe6c506@ilande.co.uk>
-Date: Thu, 27 Aug 2026 21:12:49 +0100
+ id 1wzghd-00AQAN-Sw; Thu, 27 Aug 2026 21:28:02 +0100
+Message-ID: <e36d50ca-b484-4ccf-8317-347d4817b804@ilande.co.uk>
+Date: Thu, 27 Aug 2026 21:28:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>
-References: <20260826181725.849718-1-pbonzini@redhat.com>
- <20260826181725.849718-3-pbonzini@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Thomas Huth <thuth@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
+ qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Natalia Portillo <claunia@claunia.com>
+References: <20231007072313.22108-1-huth@tuxfamily.org>
+ <1826b106-2b9a-41e2-81a4-8a3439f9c511@ilande.co.uk>
+ <bf3036ba-0259-4757-a249-68e2a15af1ea@redhat.com>
+ <74883723-8f58-404c-9bab-ddb9a4aef4a8@oss.qualcomm.com>
+ <CAFEAcA_ALPTQLQwA_XzqOr=Zuc4_K9=LPNXN9jN_i0fyouqwxQ@mail.gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -72,13 +80,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260826181725.849718-3-pbonzini@redhat.com>
+In-Reply-To: <CAFEAcA_ALPTQLQwA_XzqOr=Zuc4_K9=LPNXN9jN_i0fyouqwxQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/2] scsi: hide MODE SELECT block size change behind a
- quirk
+Subject: Re: [PATCH] docs/about: Deprecate the 'next-cube' m68k machine
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -104,95 +111,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/08/2026 19:17, Paolo Bonzini wrote:
+On 27/08/2026 18:32, Peter Maydell wrote:
 
-> This is a dangerous operation in that the block size is not
-> protected by a lock, but it can be written concurrently if
-> you have a multi-queue virtio-scsi HBA.  Put it behind a quirk
-> that is only enabled by the Q800 machine, since the MODE
-> SELECT feature was added for A/UX.
+> On Thu, 27 Aug 2026 at 17:09, Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
+>>
+>> Hi Thomas,
+>>
+>> On 27/8/26 14:54, Thomas Huth wrote:
+>>> On 09/10/2023 21.39, Mark Cave-Ayland wrote:
+>>>> On 07/10/2023 08:23, Thomas Huth wrote:
+>>>>
+>>>> (added Natalia who was the GSoC mentor for the NeXT cube work)
+>>>>
+>>>>> The machine is incomplete, and unfortunately the hoped-for improvements
+>>>>> never happened. So it's maybe best if we mark this machine as deprecated
+>>>>> and finally remove it again in case it gets into the way of a code
+>>>>> refactoring or other reasons.
 > 
-> Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   include/hw/scsi/scsi.h |  1 +
->   hw/m68k/q800.c         |  2 ++
->   hw/scsi/scsi-disk.c    | 12 ++++++++++--
->   3 files changed, 13 insertions(+), 2 deletions(-)
+>>>> I'm torn a bit by this one - on the one hand the NeXT code could do
+>>>> with some love, but then given that the code already uses qdev/QOM
+>>>> then there isn't really much in the way of maintenance burden. The
+>>>> main concern for me at the moment is the use of the old-style memory
+>>>> accessors that pre-date the memory API.
+>>>>
+>>>> With my latest ESP patches I think it shouldn't be too hard to update
+>>>> the NeXT DMA controller to get SCSI working, so perhaps we can leave
+>>>> it for now if it doesn't cause too many problems?
 > 
-> diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-> index c60c6e8810e..3eab339b0d2 100644
-> --- a/include/hw/scsi/scsi.h
-> +++ b/include/hw/scsi/scsi.h
-> @@ -262,5 +262,6 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
->   #define SCSI_DISK_QUIRK_MODE_SENSE_ROM_USE_DBD             1
->   #define SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE    2
->   #define SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED                3
-> +#define SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE           4
->   
->   #endif
-> diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-> index ab64250c47c..1ad3f93b294 100644
-> --- a/hw/m68k/q800.c
-> +++ b/hw/m68k/q800.c
-> @@ -710,12 +710,14 @@ static void q800_init(Object *obj)
->   
->   static GlobalProperty hw_compat_q800[] = {
->       { "scsi-hd", "quirk_mode_page_vendor_specific_apple", "on" },
-> +    { "scsi-hd", "quirk_mode_page_set_block_size", "on" },
->       { "scsi-hd", "vendor", " SEAGATE" },
->       { "scsi-hd", "product", "          ST225N" },
->       { "scsi-hd", "ver", "1.0 " },
->       { "scsi-cd", "quirk_mode_page_apple_vendor", "on" },
->       { "scsi-cd", "quirk_mode_sense_rom_use_dbd", "on" },
->       { "scsi-cd", "quirk_mode_page_vendor_specific_apple", "on" },
-> +    { "scsi-cd", "quirk_mode_page_set_block_size", "on" },
->       { "scsi-cd", "quirk_mode_page_truncated", "on" },
->       { "scsi-cd", "vendor", "MATSHITA" },
->       { "scsi-cd", "product", "CD-ROM CR-8005" },
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> index 5bb7a974d69..a42f7d8e77d 100644
-> --- a/hw/scsi/scsi-disk.c
-> +++ b/hw/scsi/scsi-disk.c
-> @@ -1673,8 +1673,12 @@ static void scsi_disk_emulate_mode_select(SCSIDiskReq *r, uint8_t *inbuf)
->           goto invalid_param;
->       }
->   
-> -    /* Allow changing the block size */
-> -    if (bd_len) {
-> +    /*
-> +     * Allow changing the block size only if the quirk is enabled for it.
-> +     * Writing s->qdev.blocksize is not thread safe!
-> +     */
-> +    if (bd_len && (s->quirks &
-> +                   (1 << SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE))) {
->           bs = p[5] << 16 | p[6] << 8 | p[7];
->   
->           /*
-> @@ -3247,6 +3251,8 @@ static const Property scsi_hd_properties[] = {
->       DEFINE_PROP_BIT("quirk_mode_page_vendor_specific_apple", SCSIDiskState,
->                       quirks, SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE,
->                       0),
-> +    DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-> +                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
->       DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
->   };
->   
-> @@ -3352,6 +3358,8 @@ static const Property scsi_cd_properties[] = {
->                       0),
->       DEFINE_PROP_BIT("quirk_mode_page_truncated", SCSIDiskState, quirks,
->                       SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED, 0),
-> +    DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-> +                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
->   };
->   
->   static void scsi_cd_class_initfn(ObjectClass *klass, const void *data)
+>>> Almost three years later, the world changed quite a bit. We're getting
+>>> flooded with AI-generated bug reports now, and of course people are
+>>> discovering problems in this old and neglected code, e.g.:
+>>>
+>>>    https://gitlab.com/qemu-project/qemu/-/work_items/4303
+>>>    https://gitlab.com/qemu-project/qemu/-/work_items/4304
+>>>    https://gitlab.com/qemu-project/qemu/-/work_items/4305
+>>
+>> Hobbyist motivated machine emulations never committed to be
+>> secure. While I appreciate these bug reports for the overall
+>> quality of the project, I'm taking these one as lowest priority.
+>> I wouldn't even mind of closing them as WONTFIX "Thanks ...".
+> 
+> I agree, but also they can prompt us to look and say "actually
+> this machine is no longer used / never got sufficiently
+> implemented to be useful / has no maintainer" (cf musicpal).
+> So the questions here are:
+>   * is the machine's functionality better than it was in 2023:
+>     can we boot something beyond just the firmware now?
+>   * is anybody planning to actively work on it?
+>   * is anybody using it?
 
-Apologies for this, I really didn't expect this to cause a problem with multi-queue 
-virtio-scsi. The fix looks good to me.
+The ESP rewrite solved a number of problems and it is possible to load a kernel from 
+a disk image and start executing it. I do have a series that further tidies up the 
+machine (with fixes for the DMA controller) but it needs a bit more work to finish: I 
+believe that should be able to get a pre-installed disk image to userspace.
 
-FWIW early SPARC Solaris also requires this if using a ROM from a real machine and 
-booting from CDROM: OpenBIOS has a few hacks in place that allow this to work (for now).
+The assert()s are really there to catch unhandled accesses during boot and they 
+aren't considered a security boundary so I think it's fine to close these as WONTFIX 
+with a comment that the device is currently unimplemented and not within our security 
+boundary.
+
+Certainly booting NeXTstep was useful in figuring out parts of the ESP rewrite and 
+also for helping test the 68040 emulation so it's not completely useless...
 
 
 ATB,
