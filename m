@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BDEC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71AC0C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzaCU-0000TV-NH; Thu, 27 Aug 2026 09:31:26 -0400
+	id 1wzaCy-0002EP-RV; Thu, 27 Aug 2026 09:31:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaCS-0000NX-Sj; Thu, 27 Aug 2026 09:31:24 -0400
+ id 1wzaCw-00024W-Kf; Thu, 27 Aug 2026 09:31:54 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaCQ-0001Vl-Vj; Thu, 27 Aug 2026 09:31:24 -0400
+ id 1wzaCu-0001c3-7y; Thu, 27 Aug 2026 09:31:54 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RCVcLS3056423; Thu, 27 Aug 2026 13:31:21 GMT
+ 67RCVd7Z3056441; Thu, 27 Aug 2026 13:31:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=+5ZhhOqGb9NvPDgHx
- xJYElEytBq65TwPR/bPwJbQzbs=; b=H0jq4tp6j/S4WJrdWNfxVrdeea472ggAD
- e09WytJapsiKl7m8QQ+Vd7OJ2A1Ml1o3pixe80mB05puJIiY40mO+sB6ZVqY+/9C
- SyyaNO5NiqDaXH9NhYrBB0+rbz82pcGVALrRBL4MYtgTQbuj41zW9d2g61cOMEp3
- 5yhQ5dSedcLX9IrtLFGAnyk2PzSsrhW5PDL6nZRM4t0B2rX4HrN7mqzE5IuolLdy
- T4XzZSkbb8KumN3POiJYd4Z1bZe0b+W7fZuVgeww9Jg1sazM+M+qsSd87DAVVeeN
- mkKL/7I+OPNQJD7OxFphIj5DqZy2YOH1w1UZob/ZZXtWmxHHogCOw==
+ :mime-version:references:subject:to; s=pp1; bh=E37s6fg91Vf7sl9Tb
+ KFPAnbUAeQR0tYfSHoaJLRFUsM=; b=hrVhWS9DPLaHrIIo7UfawvlmeihiOYkFV
+ qwZWJSMqRxjICXwzVMOfk3LyqKnt0evFhMMb59lNQc2Xhsu5kxEdbOu5NnZ3I8Bm
+ DHy7aYE/4Y2jjrexzOO2EWLht8WgfKfmCpY+PLBMOQ5OH3Eq980GcR3v4oVVZcbB
+ fYcu1nfiZkzK5F1LIgHfHogg1/ypJUGkuvJNvkBTysngcJO87khgoTLNGaobDUq/
+ i0JvNs4dKM2iRQaCJ49pvd0oKDGSwdMK3jPB+7daxB1nfR++Yef3qMuyNpO8RaGr
+ OT7cdYe3iwV20MteFd7srVVypIHBoDSsUOOD2Llsl+n/wCglscKxg==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxn9fg-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxn9j7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:31:20 +0000 (GMT)
+ Thu, 27 Aug 2026 13:31:50 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQHrU003837;
- Thu, 27 Aug 2026 13:31:20 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwgcp8-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQHbY003840;
+ Thu, 27 Aug 2026 13:31:49 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwgcrg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:31:20 +0000 (GMT)
+ Thu, 27 Aug 2026 13:31:49 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67RDVGv845351226
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67RDVgSQ44958026
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Aug 2026 13:31:16 GMT
+ Thu, 27 Aug 2026 13:31:42 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F287220043;
- Thu, 27 Aug 2026 13:31:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4E7DD2004D;
+ Thu, 27 Aug 2026 13:31:42 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3D9592004D;
- Thu, 27 Aug 2026 13:31:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8B1232004B;
+ Thu, 27 Aug 2026 13:31:36 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.111.12.1]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Aug 2026 13:31:09 +0000 (GMT)
+ Thu, 27 Aug 2026 13:31:36 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -65,10 +65,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v3 07/37] target/ppc: convert slw,
- srw instruction via decode spec
-Date: Thu, 27 Aug 2026 18:59:22 +0530
-Message-ID: <20260827133010.278889-8-rathc@linux.ibm.com>
+Subject: [PATCH v3 11/37] target/ppc: Move fixed-point byte-reversal store
+ insns to decodetree
+Date: Thu, 27 Aug 2026 18:59:26 +0530
+Message-ID: <20260827133010.278889-12-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827133010.278889-1-rathc@linux.ibm.com>
 References: <20260827133010.278889-1-rathc@linux.ibm.com>
@@ -76,24 +76,23 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX9ek2wy0N8zAN
- Iud2awSkEH+3FlkqA7XNpBHteP0IB0sOuwtZZcZd+Qv25fGkAKn7BzfgZocq6WbrsEGo864bMi8
- rrbjoltRC+H/T572rN3wR2ICtN2Dtic=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a903c29 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfXwdbwV8CyptK0
+ SB8z6RAEB185tTL+e0nlw/7VVjD/KHK07oyTz4kY9IWFztzC9dWt2IemprTX7tEyHGFEsynXoE+
+ k/Z/lXwLLN4ELWvd2tQr1T3YuR5dZ6s=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a903c46 cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
- a=Fp1rp7siH0uluUpQqjEA:9
-X-Proofpoint-ORIG-GUID: _sTma-nBu1lb4RgKVAinRnZz_UqAcR33
-X-Proofpoint-GUID: wrAvtQHKYCPnSQn0Dz-sOtEUNObiyzia
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX0DroanAPr0Bh
- x8A4AASVpuPk6EH/Vo3xjqqB4rPCiOxtALr4xFvx+Kmoo4XSWu7X0GqnZmIHPX1olU3J8dFF1pG
- gq0cNec5i6pkrm0tAg9g0k6mFTFajCmpN7B+bjb8h8RqKInrr+10JG0cKfCRTI3P5aCuNqbVSf/
- OsCLXuyLMAojfA6HqivWK4AUOEiuJKFzZnRbbJV9njI3lCtEqCe2MQA6B8SLopH4Ne+isMmmILL
- QGYM7UeXRPgflW8j6TkY5YVpw7TTFGINfXFJ96MUn4w7NS5gqLZ+RRKjDHffXgTiu/WWMoleOSl
- Ql4prrwVxDfNvSBN/U3/H4oLT9+z8gZGq3M2xDytRJeVunIQcaFpGhUQMu9+WD/8JAVWvv1q2In
- D7bEMVGlzO7rjSYznBMSKqVlU4lFfgPKiNeQAIIgWN6v9761/f8sITNWiyrJSsN7jyb7tenDTGd
- R6YQVnKOfXrGCthgxSg==
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=XjGAUUzDke6TOz208osA:9
+X-Proofpoint-ORIG-GUID: DnJVDwGv-dQFvdrUhgLb-ynES4SA433T
+X-Proofpoint-GUID: EaFJgUwWML_HZ_t95JynfkygcinEAjiM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX74n/qWhybZIt
+ G92slDUO+nVz7zp9iBqEdrDWSq10OIxONX/tzR+z3jnRBhvLODDMQ2E/Ygz3wxZD9ZyW6U5McJy
+ FpRqcKyuYupzFboo3vExYQaISlqDL3K4Qwb6/Qa8ie2G/r0KlJdYX5JwanU2rcijLEXU1KNWZdU
+ aog1afTx1la26K6e+sHJDVoCWbq2byVDnVMUwlhKF9VBWnzo2kIUZY7dRQi14sisHayUp53rxx/
+ 11f4QALjg3Km3E3PAD9s46Ntqz8N09IdoqXZ2Qfk1jT+3e639h+ytJHhWFiUcHcbNY9OVULUgRh
+ I9dgyhAEn++uw2Y+lJ6JDCYWRXdFH1fovdQaZgwO9/5R+pHW31G6TezFTnRegbEvbK3l+uiqSL6
+ CPS5ch23TXZnn3sxdH/6tyFVKvhZS8QbzH3F4OdJwprZVYry/DJW3+Q1rbTWWqdHzvvJ91wxtMS
+ 4Dh3ntoBKdmMGKqG14g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_05,2026-08-26_02,2025-10-01_01
@@ -127,170 +126,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-Move slw and srw to decodetree specification using the @X_rc
-format. The existing shift-masking logic from gen_slw/gen_srw is
-preserved verbatim in the new trans_SLW/trans_SRW handlers.
+Move the below PPC instructions to decodetree specification:
 
-Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+  st{d,h,w}brx, st{d,w,h,b}cix				: X-form
+
+The changes were verified by validating that the TCG micro-ops generated
+by those insns remain the same. These TCG micro-ops were captured with
+the `-d op,in_asm` QEMU flag.
+
+Additionally, remove GEN_STX and GEN_STX_E macros as they are no longer
+used anywhere else.
+
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/insn32.decode                   |  5 +++
- target/ppc/translate.c                     | 49 ----------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 48 +++++++++++++++++++++
- 3 files changed, 53 insertions(+), 49 deletions(-)
+ target/ppc/insn32.decode                   |  8 +++
+ target/ppc/translate.c                     | 52 +++-----------
+ target/ppc/translate/fixedpoint-impl.c.inc | 79 ++++++++++++++++++++++
+ 3 files changed, 95 insertions(+), 44 deletions(-)
 
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 824181eb4e..189f9c6fe7 100644
+index 12fb4974e4..37f508a5c2 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -505,6 +505,11 @@ HASHCHK         011111 ..... ..... ..... 1011110010 .   @X_DW
- HASHSTP         011111 ..... ..... ..... 1010010010 .   @X_DW
- HASHCHKP        011111 ..... ..... ..... 1010110010 .   @X_DW
+@@ -372,6 +372,14 @@ STVDX           011111 ..... ..... ..... 0010010001 -   @X
+ STSKU           111110 ..... ..... ............. 0 11   @DD
+ STCXU           111110 ..... ..... ............. 1 11   @DD
  
-+# Fixed-Point Shift Instructions
++STDBRX          011111 ..... ..... ..... 1010010100 -   @X
++STDCIX          011111 ..... ..... ..... 1111110101 -   @X
++STWCIX          011111 ..... ..... ..... 1110010101 -   @X
++STHCIX          011111 ..... ..... ..... 1110110101 -   @X
++STBCIX          011111 ..... ..... ..... 1111010101 -   @X
++STHBRX          011111 ..... ..... ..... 1110010110 -   @X
++STWBRX          011111 ..... ..... ..... 1010010110 -   @X
 +
-+SLW             011111 ..... ..... ..... 0000011000 .   @X_rc
-+SRW             011111 ..... ..... ..... 1000011000 .   @X_rc
-+
- ## BCD Assist
+ ### Fixed-Point Compare Instructions
  
- ADDG6S          011111 ..... ..... ..... - 001001010 -  @X
+ CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 821363e7fb..3d26e1144e 100644
+index 45418b4de5..749ae56cdf 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -2315,29 +2315,6 @@ GEN_PPC64_R4(rldimi, 0x1E, 0x06);
+@@ -2529,23 +2529,6 @@ GEN_LDX_HVRM(lhzcix, ld16u, 0x15, 0x19, PPC_CILDST)
+ GEN_LDX_HVRM(lbzcix, ld8u, 0x15, 0x1a, PPC_CILDST)
+ #endif
  
- /***                             Integer shift                             ***/
- 
--/* slw & slw. */
--static void gen_slw(DisasContext *ctx)
--{
--    TCGv t0, t1;
--
--    t0 = tcg_temp_new();
--    /* AND rS with a mask that is 0 when rB >= 0x20 */
--#if defined(TARGET_PPC64)
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x3a);
--    tcg_gen_sari_tl(t0, t0, 0x3f);
--#else
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x1a);
--    tcg_gen_sari_tl(t0, t0, 0x1f);
--#endif
--    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
--    t1 = tcg_temp_new();
--    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x1f);
--    tcg_gen_shl_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
--    tcg_gen_ext32u_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rA(ctx->opcode)]);
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
+-/***                              Integer store                            ***/
+-#define GEN_STX_E(name, stop, opc2, opc3, type, type2, chk)                   \
+-static void glue(gen_, name##x)(DisasContext *ctx)                            \
+-{                                                                             \
+-    TCGv EA;                                                                  \
+-    chk(ctx);                                                                 \
+-    gen_set_access_type(ctx, ACCESS_INT);                                     \
+-    EA = tcg_temp_new();                                                      \
+-    gen_addr_reg_index(ctx, EA);                                              \
+-    gen_qemu_##stop(ctx, cpu_gpr[rS(ctx->opcode)], EA);                       \
 -}
- 
- /* sraw & sraw. */
- static void gen_sraw(DisasContext *ctx)
-@@ -2379,30 +2356,6 @@ static void gen_srawi(DisasContext *ctx)
-     }
- }
- 
--/* srw & srw. */
--static void gen_srw(DisasContext *ctx)
--{
--    TCGv t0, t1;
+-#define GEN_STX(name, stop, opc2, opc3, type)                                 \
+-    GEN_STX_E(name, stop, opc2, opc3, type, PPC_NONE, CHK_NONE)
 -
--    t0 = tcg_temp_new();
--    /* AND rS with a mask that is 0 when rB >= 0x20 */
+-#define GEN_STX_HVRM(name, stop, opc2, opc3, type)                            \
+-    GEN_STX_E(name, stop, opc2, opc3, type, PPC_NONE, CHK_HVRM)
+-
+ #define GEN_STEPX(name, stop, opc2, opc3)                                     \
+ static void glue(gen_, name##epx)(DisasContext *ctx)                          \
+ {                                                                             \
+@@ -2565,12 +2548,6 @@ GEN_STEPX(stw, DEF_MEMOP(MO_UL), 0x1F, 0x04)
+ GEN_STEPX(std, DEF_MEMOP(MO_UQ), 0x1d, 0x04)
+ #endif
+ 
 -#if defined(TARGET_PPC64)
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x3a);
--    tcg_gen_sari_tl(t0, t0, 0x3f);
--#else
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x1a);
--    tcg_gen_sari_tl(t0, t0, 0x1f);
+-GEN_STX_HVRM(stdcix, st64_i64, 0x15, 0x1f, PPC_CILDST)
+-GEN_STX_HVRM(stwcix, st32, 0x15, 0x1c, PPC_CILDST)
+-GEN_STX_HVRM(sthcix, st16, 0x15, 0x1d, PPC_CILDST)
+-GEN_STX_HVRM(stbcix, st8, 0x15, 0x1e, PPC_CILDST)
 -#endif
--    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
--    tcg_gen_ext32u_tl(t0, t0);
--    t1 = tcg_temp_new();
--    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x1f);
--    tcg_gen_shr_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
+ /***                Integer load and store with byte reverse               ***/
+ 
+ /* lhbrx */
+@@ -2582,15 +2559,8 @@ GEN_LDX(lwbr, ld32ur, 0x16, 0x10, PPC_INTEGER);
+ #if defined(TARGET_PPC64)
+ /* ldbrx */
+ GEN_LDX_E(ldbr, ld64ur_i64, 0x14, 0x10, PPC_NONE, PPC2_DBRX, CHK_NONE);
+-/* stdbrx */
+-GEN_STX_E(stdbr, st64r_i64, 0x14, 0x14, PPC_NONE, PPC2_DBRX, CHK_NONE);
+ #endif  /* TARGET_PPC64 */
+ 
+-/* sthbrx */
+-GEN_STX(sthbr, st16r, 0x16, 0x1C, PPC_INTEGER);
+-/* stwbrx */
+-GEN_STX(stwbr, st32r, 0x16, 0x14, PPC_INTEGER);
 -
- #if defined(TARGET_PPC64)
- /* sld & sld. */
- static void gen_sld(DisasContext *ctx)
-@@ -5764,10 +5717,8 @@ GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(slw, 0x1F, 0x18, 0x00, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(sraw, 0x1F, 0x18, 0x18, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(srawi, 0x1F, 0x18, 0x19, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(srw, 0x1F, 0x18, 0x10, 0x00000000, PPC_INTEGER),
- #if defined(TARGET_PPC64)
- GEN_HANDLER(sld, 0x1F, 0x1B, 0x00, 0x00000000, PPC_64B),
- GEN_HANDLER(srad, 0x1F, 0x1A, 0x18, 0x00000000, PPC_64B),
+ /***                    Integer load and store multiple                    ***/
+ 
+ /* lmw */
+@@ -5147,9 +5117,17 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
+             return true;                            \
+         }                                           \
+     } while (0)
++#define REQUIRE_HVRM(CTX)                               \
++    do {                                                \
++        if (unlikely(ctx->pr || !ctx->hv || ctx->dr)) { \
++            gen_priv_opc(CTX);                          \
++            return true;                                \
++        }                                               \
++    } while (0)
+ #else
+ #define REQUIRE_SV(CTX) do { gen_priv_opc(CTX); return true; } while (0)
+ #define REQUIRE_HV(CTX) do { gen_priv_opc(CTX); return true; } while (0)
++#define REQUIRE_HVRM(CTX) do { gen_priv_opc(CTX); return true; } while (0)
+ #endif
+ 
+ /*
+@@ -5756,20 +5734,6 @@ GEN_LDEPX(lw, DEF_MEMOP(MO_UL), 0x1F, 0x00)
+ GEN_LDEPX(ld, DEF_MEMOP(MO_UQ), 0x1D, 0x00)
+ #endif
+ 
+-#undef GEN_STX_E
+-#define GEN_STX_E(name, stop, opc2, opc3, type, type2, chk)                   \
+-GEN_HANDLER_E(name##x, 0x1F, opc2, opc3, 0x00000000, type, type2),
+-
+-#if defined(TARGET_PPC64)
+-GEN_STX_E(stdbr, st64r_i64, 0x14, 0x14, PPC_NONE, PPC2_DBRX, CHK_NONE)
+-GEN_STX_HVRM(stdcix, st64_i64, 0x15, 0x1f, PPC_CILDST)
+-GEN_STX_HVRM(stwcix, st32, 0x15, 0x1c, PPC_CILDST)
+-GEN_STX_HVRM(sthcix, st16, 0x15, 0x1d, PPC_CILDST)
+-GEN_STX_HVRM(stbcix, st8, 0x15, 0x1e, PPC_CILDST)
+-#endif
+-GEN_STX(sthbr, st16r, 0x16, 0x1C, PPC_INTEGER)
+-GEN_STX(stwbr, st32r, 0x16, 0x14, PPC_INTEGER)
+-
+ #undef GEN_STEPX
+ #define GEN_STEPX(name, ldop, opc2, opc3)                                     \
+ GEN_HANDLER_E(name##epx, 0x1F, opc2, opc3,                                    \
 diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 91f9c6c391..9d04b96316 100644
+index 9f669894a3..25a60d3d3a 100644
 --- a/target/ppc/translate/fixedpoint-impl.c.inc
 +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -1406,3 +1406,51 @@ TRANS(HASHST, do_hash, false, gen_helper_HASHST)
- TRANS(HASHCHK, do_hash, false, gen_helper_HASHCHK)
- TRANS(HASHSTP, do_hash, true, gen_helper_HASHSTP)
- TRANS(HASHCHKP, do_hash, true, gen_helper_HASHCHKP)
-+
-+static bool trans_SLW(DisasContext *ctx, arg_SLW *a)
+@@ -566,6 +566,85 @@ TRANS(ADDIC_, do_add_D, false, true, false, true);
+ TRANS(SLD, do_shift_X_rc, tcg_gen_shl_tl);
+ TRANS(SRD, do_shift_X_rc, tcg_gen_shr_tl);
+ 
++static bool do_stxx(DisasContext *ctx, arg_X *a,
++                       void(*op)(DisasContext *, TCGv, TCGv), bool is_hvrm)
 +{
-+    TCGv t0, t1;
++    TCGv ea;
 +
-+    t0 = tcg_temp_new();
-+    /* AND rt with a mask that is 0 when rB >= 0x20 */
-+#if defined(TARGET_PPC64)
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x3a);
-+    tcg_gen_sari_tl(t0, t0, 0x3f);
-+#else
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x1a);
-+    tcg_gen_sari_tl(t0, t0, 0x1f);
-+#endif
-+    tcg_gen_andc_tl(t0, cpu_gpr[a->rt], t0);
-+    t1 = tcg_temp_new();
-+    tcg_gen_andi_tl(t1, cpu_gpr[a->rb], 0x1f);
-+    tcg_gen_shl_tl(cpu_gpr[a->ra], t0, t1);
-+    tcg_gen_ext32u_tl(cpu_gpr[a->ra], cpu_gpr[a->ra]);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
++    if (is_hvrm) {
++            REQUIRE_HVRM(ctx);
 +    }
++
++    gen_set_access_type(ctx, ACCESS_INT);
++    ea = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    op(ctx, cpu_gpr[a->rt], ea);
++
 +    return true;
 +}
 +
-+static bool trans_SRW(DisasContext *ctx, arg_SRW *a)
-+{
-+    TCGv t0, t1;
++TRANS(STHBRX, do_stxx, gen_qemu_st16r, 0);
++TRANS(STWBRX, do_stxx, gen_qemu_st32r, 0);
 +
-+    t0 = tcg_temp_new();
-+    /* AND rt with a mask that is 0 when rB >= 0x20 */
++static bool trans_STDBRX(DisasContext *ctx, arg_STDBRX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, DBRX);
 +#if defined(TARGET_PPC64)
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x3a);
-+    tcg_gen_sari_tl(t0, t0, 0x3f);
++    return do_stxx(ctx, a, gen_qemu_st64r_i64, false);
 +#else
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x1a);
-+    tcg_gen_sari_tl(t0, t0, 0x1f);
++    qemu_build_not_reached();
 +#endif
-+    tcg_gen_andc_tl(t0, cpu_gpr[a->rt], t0);
-+    tcg_gen_ext32u_tl(t0, t0);
-+    t1 = tcg_temp_new();
-+    tcg_gen_andi_tl(t1, cpu_gpr[a->rb], 0x1f);
-+    tcg_gen_shr_tl(cpu_gpr[a->ra], t0, t1);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
 +    return true;
 +}
++
++static bool trans_STDCIX(DisasContext *ctx, arg_STDCIX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS(ctx, CILDST);
++#if defined(TARGET_PPC64)
++    return do_stxx(ctx, a, gen_qemu_st64_i64, true);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_STWCIX(DisasContext *ctx, arg_STWCIX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS(ctx, CILDST);
++#if defined(TARGET_PPC64)
++    return do_stxx(ctx, a, gen_qemu_st32, true);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_STHCIX(DisasContext *ctx, arg_STHCIX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS(ctx, CILDST);
++#if defined(TARGET_PPC64)
++    return do_stxx(ctx, a, gen_qemu_st16, true);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_STBCIX(DisasContext *ctx, arg_STBCIX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS(ctx, CILDST);
++#if defined(TARGET_PPC64)
++    return do_stxx(ctx, a, gen_qemu_st8, true);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
+ static bool trans_SUBFIC(DisasContext *ctx, arg_D *a)
+ {
+     gen_op_arith_subf(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra],
 -- 
 2.55.0
 
