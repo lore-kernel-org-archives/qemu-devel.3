@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC8BC61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3019C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcgH-0004ab-ED; Thu, 27 Aug 2026 12:10:21 -0400
+	id 1wzcg9-0004XU-GZ; Thu, 27 Aug 2026 12:10:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcgC-0004Yq-4m
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:16 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcg8-0004Wv-6r
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:12 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcgA-0007uz-CE
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:15 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-499ac87c92bso21224225e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:10:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcg6-0007u4-92
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:11 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-496bb7cdf51so12348435e9.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787847012; x=1788451812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=y8pOTuQTygf728JvHILh6d5V4mR5TMERZeFgcXgTwJQ=;
- b=ZQylZqanSZIoofCcHAksuE21pnNbeCtx3C4g5echx28s5qa/bNKdVDSfl80qdWUope
- aYRluoWq7cRSj/Yqu7qdURldJ7CkCOAq3iG/MyrTrjfSbf/gm5yffycIW/5zGapEEOTH
- Icyw+uaKRA0ebEoCxJitJ5D1bTEQsaPrZ4pEQllLnoR/YA/OC7wMRFrgRI1BuVuuSB2R
- v70HfazpTGKf5uQhAXElPgXaHWG+cfAHC5oJ3xUbgwFxbURJ7s3PHo2lXn+ES/IhRVBi
- tA4NZD0QvUAQm8QIg6GliFK6Mn7+ZPh6xvhFXtq5zD3YydkR08n33CCWreRGWG0p2mPD
- otAw==
+ d=openvz.org; s=google; t=1787847008; x=1788451808; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iF5ga2tpXylLpY2GYV1QrkHGIJHHIciIhCJzpfwHipk=;
+ b=rRP08nuwYtNEiXrnFJGZ7AeBJtaJ0jIJSMWghS4EEp7ZrIIsBGpkPQoGbVa+wh5fYK
+ syJwNhYrH//UTIfW+aokp5psyM5FcdYHfIUriZM3E9VqlHTZakd+0I7KVhZMhnqUUpq3
+ zGOLscTkfNxWBViYh7H/Q6N7xt9axDfhYmfEPkOlahPm3R7n9uXDUnmfR1TJPMaiIrS3
+ BoD7PYdjTVAmBOcJJnccjz7PDjP4ZFn6V/XKhS1EcjLs3ehYRqRuwKShBCEp1qPy7vWf
+ OeuyPJSbOzPFJ9GmGG9lswwcTVqnFz+gUdb54DrGEqjjd1lWqxWETztgQfUqOg/YY6X3
+ xO1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787847012; x=1788451812;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=y8pOTuQTygf728JvHILh6d5V4mR5TMERZeFgcXgTwJQ=;
- b=gmkfMT3uvn0hSZm0tk8p0pHTRyMdZOC18XwaxNHbOUk3rlH/8Nieng9vK/F/grr7h2
- ARPnYLn/TZtL55D98c+rhDzlnCHJj/XEU0JBTu05ajz1ys90LjLJl14/LMPkFq5wFBuN
- GK8DtHF+2r/7CVMTDmPiWWObezZkQ1SYmM+Hyew1xRehq9GxpYbazfTi4GazfUD/sYC0
- GKgeaphTsR3DusH2Gx/byuqXk39Kr+/L3ovtnuax9/jMJz/E9WVGrVBFr83ayAURlLjx
- bMt1klPKbRnupMf07odAuK0ySP5bRQpu4GoSla5HobzWjf1oSK3ep42Z7WZXwt2xrYoi
- ym0w==
-X-Gm-Message-State: AFuF++m4GcEKPRZSdwrvZd/pPD/plrdSs9WGTKAjCCrfmvRGR7XuQtdu
- X/uXOYf4bL8QJ8DRBLzOAQHZ5b4Xpps+uKiYlGpxZFCOpD0C0H+iGD9atil5MCHyODkbHBeA1iC
- 94Eju
-X-Gm-Gg: AR+sD13m4JD4p9asqQdaJyoNhP78CLVrtp+UGDdi/c/2N37tkN5PnSbyF/hIBgXh1Kx
- eHzt60jqMgovwpvFsDaG5819PVLPYRYP0jdWjQ4ppzrdZNa2PxxsgL2dIUytjGtNlEOi7C5fsYF
- w/nHMw9YBY1yQqcHBqVJRuWWMcfkOjStKJD56p2nKm4PsM1V8St2YGO0rp2O/CJ82H00OL5FZR5
- nukKpCqibmcBYIux+/2znZncnEH40HM9PUuwlyrG4UJU7xiGJKj1HoH83btEr5LeC/GSGEomjZA
- ragV7blmByJbs/aCwpNWdma/xrLHuFogVjlYB/FlKLsBgvK5fY7wi9AqT9qt+/7FMc8nMgygSOW
- Riz971uF7FIl6QZG9jbYyYdOd2gB7e8REHhyvbVzVnQz5mRHcdRU1WpcGncTR8Pwzcqa3pcE6ym
- 5ToG1PxpCeq3z4EpCCaWIXkahTd1aQY8a+QNx9HrFr4xAHlw8T
-X-Received: by 2002:a05:600c:8b6b:b0:49b:c8e:8e6 with SMTP id
- 5b1f17b1804b1-49b91bd99b7mr1848545e9.0.1787847012489; 
- Thu, 27 Aug 2026 09:10:12 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787847008; x=1788451808;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iF5ga2tpXylLpY2GYV1QrkHGIJHHIciIhCJzpfwHipk=;
+ b=gPIENRi0eV9thPh7cIMyEvYke3k81U4ZvQJDMqGRWGIPdEpFsA+xEn2DXAAJ43HPZF
+ 66gG8kotZS17qC5ziblXo+l6wlCAgSuRLxOaSncJr2TVsnKVNAaSOjbUjOL47ef+Q/PA
+ 0fhWWZ0qqRgFUrVz73H4QNCHZr3tLmjP4P1Aa+n9nagZmB54qicjzCa5SlO5a3wvtKWv
+ /oUr8wE/lbF7TCWT9iOMLuCaYYOsjphpTryicvP3GWG9ivMRuZsFtcjlyLXPVr2ymaKP
+ mX1jbl8nyZWTmgYbnaU3RSppz8RGDTLkYBqJ9FHbCcmxagFftlo82VsCH64Vvq1m2FKO
+ j5ww==
+X-Gm-Message-State: AFuF++lDzEpvaSyP260nhkLcKmKlICxvZNMWCrq/6KG2/f2MYOa9KEpa
+ nbM6hf3h5PsIU4a9V5jJ1yzG4nOYunz/mdCOXMpO1sPxp3laTmV5CkIr0JSkpNkuzd/6XryFzJf
+ 3JiQk
+X-Gm-Gg: AR+sD100xE56oMBk9ZsRAdJO4GXkcix62j+0pbnjIxZvtcGcs7JTox/8rW4dXRInMMH
+ 3AgEo+XjN86n4gVgeczLQTQ2WyJDJRz9shRZ8BqLAjXT96L/I/CR0nG8Pb4XudlTGTvbjpl5uAh
+ zEVLETyhpXuRYJ2prX/9maBjridZEx38QqVt7n4GP77M0qJ/s4Mmo4bqPH/MggYVHeM+itV27zR
+ 6zUtD/RnZf3J0QHd+t+K8x15ArCT4gpJM/t6eCu47zbYmAuQjAkXLtKXcg9SQkflwQkhsM0cF+U
+ aDSfi1dOYn1fUkq8g3B1NkwgPU1xlPe19GPRvoDVJa6k6irejAP8jdg7eKIxpT6ozAT2PJYHbn2
+ kma2ISOtoM1Pue93SqeUGVa5p05+cyozjzSpoA8CQwihhgYnR2JSb8ufRH9IbT4GIa1ucTjC2Sb
+ 8ApavrRoOdBFKGdsj149AP6vgNeI5b4f3StCElSfJSnyL/wsO5
+X-Received: by 2002:a05:600c:8b75:b0:499:d22a:8973 with SMTP id
+ 5b1f17b1804b1-49b91c1da1emr265815e9.1.1787847007862; 
+ Thu, 27 Aug 2026 09:10:07 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:e57e:de8:330d:26d0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dd5771a3sm71359465e9.4.2026.08.27.09.10.11
+ 5b1f17b1804b1-499dd5771a3sm71359465e9.4.2026.08.27.09.10.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 09:10:11 -0700 (PDT)
+ Thu, 27 Aug 2026 09:10:06 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v2 3/5] iotests/nbd-commands: exercise the simple and
- structured reply modes
-Date: Thu, 27 Aug 2026 18:10:00 +0200
-Message-ID: <20260827161002.310688-4-den@openvz.org>
+Subject: [PATCH v2 0/5] nbd: accept a large NBD_CMD_CACHE,
+ cover the transmission commands
+Date: Thu, 27 Aug 2026 18:09:57 +0200
+Message-ID: <20260827161002.310688-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260827161002.310688-1-den@openvz.org>
-References: <20260827161002.310688-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=den@openvz.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,79 +98,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+NBD_CMD_CACHE carries no payload in either direction, yet the server
+rejects any effect length above the advertised maximum payload size.
+The specification explicitly allows the oversize request, and we
+already accept it for NBD_CMD_TRIM and NBD_CMD_WRITE_ZEROES. Patch 2
+drops the check.
 
-Every NBD request the iotests send arrives in NBD_MODE_EXTENDED, so
-the server paths kept for older clients are never taken. Instrumenting
-nbd_co_receive_request() over the whole auto group and every test that
-touches NBD gives mode 4 for all of them, which leaves
-nbd_co_send_simple_reply() and the compact header handling dead under
-test. A regression there would only show against a third party client.
+The rest of the series adds tests/qemu-iotests/tests/nbd-commands, a
+small client which speaks the NBD transmission phase itself. Nothing
+in the tree does that today, so the protocol surface of the server -
+reply modes, command flags, error codes, sparse and extended replies -
+is covered only as far as our own client happens to exercise it. It is
+useful both as coverage and as a regression tool.
 
-libnbd can negotiate down, so run the same command set three times,
-once per mode, and assert the mode that was actually reached. Block
-status is limited to the two modes that can negotiate a meta context.
+Changes since v1:
+- the libnbd handle now lives in setUp() and tearDown() instead of a
+  context manager entered by every test case, which drops a level of
+  indent everywhere (Vladimir)
+- one block_status() helper returning a context to extents map, in
+  place of the three near identical extent collecting callbacks
+  (Vladimir)
+- the unused callback arguments are named with a leading underscore,
+  so that iotest 297 stays pylint clean; v1 added eight
+  unused-argument warnings, which would have failed 297 wherever
+  pylint is installed
+- Vladimir's Reviewed-by is kept on patch 2, which is unchanged, and
+  dropped from the four test patches, since the two points above
+  rewrote most of the test
+
+v1: https://lore.kernel.org/qemu-devel/20260826165747.3768674-1-den@openvz.org/
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Eric Blake <eblake@redhat.com>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- tests/qemu-iotests/tests/nbd-commands     | 29 +++++++++++++++++++++++
- tests/qemu-iotests/tests/nbd-commands.out |  4 ++--
- 2 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/nbd-commands b/tests/qemu-iotests/tests/nbd-commands
-index cbfc47782f..3dfe913190 100755
---- a/tests/qemu-iotests/tests/nbd-commands
-+++ b/tests/qemu-iotests/tests/nbd-commands
-@@ -119,6 +119,35 @@ class TestNbdCommands(iotests.QMPTestCase):
-         self.assertEqual(self.top_extents(), [(0, size, 0)])
-         qemu_io('-c', f'read -P {pattern} 0 {size}', top)
- 
-+    def check_commands(self, structured, extended):
-+        self.connect(structured, extended)
-+
-+        self.assertEqual(self.h.pread(4096, 4096), bytes([pattern]) * 4096)
-+
-+        self.h.cache(size, 0)
-+
-+        self.h.pwrite(b'x' * 4096, 4096)
-+        self.h.flush()
-+        self.assertEqual(self.h.pread(4096, 4096), b'x' * 4096)
-+
-+        self.h.zero(4096, 8192)
-+        self.assertEqual(self.h.pread(4096, 8192), bytes(4096))
-+
-+        self.h.trim(4096, 16384)
-+
-+        if structured:
-+            self.assertEqual(self.block_status()['qemu:allocation-depth'],
-+                             [(size, DEPTH_LOCAL)])
-+
-+    def test_commands_simple_replies(self):
-+        self.check_commands(structured=False, extended=False)
-+
-+    def test_commands_structured_replies(self):
-+        self.check_commands(structured=True, extended=False)
-+
-+    def test_commands_extended_headers(self):
-+        self.check_commands(structured=True, extended=True)
-+
-     def test_cache_past_end_of_export(self):
-         self.assertRaises(nbd.Error, self.h.cache, size + 1, 0)
- 
-diff --git a/tests/qemu-iotests/tests/nbd-commands.out b/tests/qemu-iotests/tests/nbd-commands.out
-index 8d7e996700..3f8a935a08 100644
---- a/tests/qemu-iotests/tests/nbd-commands.out
-+++ b/tests/qemu-iotests/tests/nbd-commands.out
-@@ -1,5 +1,5 @@
--...
-+......
- ----------------------------------------------------------------------
--Ran 3 tests
-+Ran 6 tests
- 
- OK
+Denis V. Lunev (5):
+  iotests: add coverage for NBD transmission commands
+  nbd/server: accept NBD_CMD_CACHE above the maximum payload size
+  iotests/nbd-commands: exercise the simple and structured reply modes
+  iotests/nbd-commands: cover NBD_CMD_BLOCK_STATUS with a payload
+  iotests/nbd-commands: cover the command flags and sparse replies
+
+ nbd/server.c                              |   4 +-
+ tests/qemu-iotests/tests/nbd-commands     | 244 ++++++++++++++++++++++
+ tests/qemu-iotests/tests/nbd-commands.out |   5 +
+ 3 files changed, 250 insertions(+), 3 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/nbd-commands
+ create mode 100644 tests/qemu-iotests/tests/nbd-commands.out
+
+
+base-commit: bde2492aace2b5acb755a5b057013e915163a77f
 -- 
 2.53.0
 
