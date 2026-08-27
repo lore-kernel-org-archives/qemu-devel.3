@@ -4,106 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B35DC61DC6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 12:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B33C61DC6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 12:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzYvS-0001aT-Ip; Thu, 27 Aug 2026 08:09:46 -0400
+	id 1wzZ3k-0003B6-2a; Thu, 27 Aug 2026 08:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzYvR-0001a2-2T
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 08:09:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wzZ3g-0003Aa-ET; Thu, 27 Aug 2026 08:18:17 -0400
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzYvP-0007x0-Cz
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 08:09:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787832582;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PgeeWjtfQltgIjCPzXNpTJTj8fAdJm1l7RIL8AatcnM=;
- b=aak5bOTeclfz6YP3OuXyN0ODjYrGtPV8fO2NoJrlsUU1vKWQtKiA5EPlV1k+Tghni4hrXT
- 5tTB0lQR/9g+1d22Yjzhfh0MGhOZRtxPYjB+j1zE0S3N5EPrhx8TgEVR4gROuUfein1cOX
- jL2pBf/RQWtwgY/wU/Kdv8wk9UCybhg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-ZmLD1O-FNQSb__i4gEUvjA-1; Thu, 27 Aug 2026 08:09:38 -0400
-X-MC-Unique: ZmLD1O-FNQSb__i4gEUvjA-1
-X-Mimecast-MFC-AGG-ID: ZmLD1O-FNQSb__i4gEUvjA_1787832577
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49b8c651ac0so4918295e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 05:09:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787832577; x=1788437377;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PgeeWjtfQltgIjCPzXNpTJTj8fAdJm1l7RIL8AatcnM=;
- b=F4OldyFiSho0ry1NDszdH8Au0OyoYBl/o5EbcEApnM4KbIsCLcyAo0UqDAmzwGrm/3
- BRq8ioQac0sp/jSTIm1tM22bpmak+5lexVth2o/Bi6ssI3lEC3rF/10X25W6VIStFs1y
- usk/lsUKu9eo5NkV8EYgDO3bc8Pt2p0TZqG/aUmAaYgBEg00gtRxTNDgbiIHMtoFkYD2
- QDxLn/gQYtBHqS3tKH47kquNDAraRjYgiyIkE6FWRXXMKr1AyUviSvqO5mloxpaqqFXe
- riJIqzAgwflPSiYX5/bxH0foUGZAblanWZa0BNFh42TqFOjdYH+/Te/Ko7gf5AodAJ1j
- DxqA==
-X-Gm-Message-State: AFuF++myCO44LnwhNH+N3CteGMh+0dSIgNAIFK//2/69kJYPJY48CC5x
- tYW8B03lHjzHHBkmN7aTO+d42wAn6N9l4DSsb/GJNWJHILu1UbKPeNJIL5l+TWH/8YR7714eA9d
- RWInPFE1qDUhmiPRW/XYZ4rgBqwoi62UF2/c9WzSruTvPftQZFNQEGoYp
-X-Gm-Gg: AR+sD132ttNBMUJLOFRwBFEEsog5rHr2qtCnlzgpTBgjcs8WtSLnW0yBnvhKoBBIJz4
- dBM3mSYvChh1b2bdzZrRdwGlkHwwUI8eRAgNFUoBIuJR5IpHUzReJPBOTmZVo1eKTEfUguD51Xh
- pLiCdW1xscIOt2txlUVWRAfIjivXIJlefEEPfQ3On9Tazl9T1ct1bES/iw3VOhDn5CUXQYD0x9H
- 8tebuJPXxItOWPWGNVxZb27W29Sdy1MRGLBJrYOVNL0p1xj7VRx2pGsL8j3P3dGCfc2ZuRI5ljn
- D5WsaGCNZdpvR/gHxxwGdTsBGDb3ZTQv1LOW/E3gx3Yobdaps2c+LEuxxP1MwhmkWI9XUTpH4ps
- 2wAzBHFZXkK18VxVFZthJOY/bJFPRYshYyNcTMPob45AsMu2H
-X-Received: by 2002:a05:600c:6912:b0:499:cd34:100d with SMTP id
- 5b1f17b1804b1-499dc703bd3mr187757475e9.7.1787832576818; 
- Thu, 27 Aug 2026 05:09:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:6912:b0:499:cd34:100d with SMTP id
- 5b1f17b1804b1-499dc703bd3mr187756495e9.7.1787832576403; 
- Thu, 27 Aug 2026 05:09:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b49610170sm110944935e9.6.2026.08.27.05.09.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Aug 2026 05:09:35 -0700 (PDT)
-Message-ID: <7eb87bf3-39c4-47b8-804d-15cbbafb78a7@redhat.com>
-Date: Thu, 27 Aug 2026 14:09:34 +0200
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wzZ3b-0001pm-Br; Thu, 27 Aug 2026 08:18:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1787833058; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+ bh=8DE8YWrYIhz1nyWrytlZP/KXEdy+Shl5A+B+FYzj0KQ=;
+ b=x2TxSLlkPRc3w6xOQpSTRj3NmBalI/+sJZWzHzFZeikHRAMKN80P5KNMH9IVtQ17SGyVtvc0QHMJIWvgzwPYIDly4XSVDZ9CmjHIIv0auFmceTKYYpy7iy89efgfVIVs7G8Wns7vsKWuJ/edM+PMHupmbnkDLeqDZEjbhnYwxb4=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R861e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=20; SR=0;
+ TI=SMTPD_---0X9jaGtO_1787833047; 
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
+ fp:SMTPD_---0X9jaGtO_1787833047 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 27 Aug 2026 20:17:36 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
+ imammedo@redhat.com, sunilvl@ventanamicro.com, sunilvl@oss.qualcomm.com,
+ jic23@kernel.org, pbonzini@redhat.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, anisinha@redhat.com, dave.jiang@intel.com,
+ alison.schofield@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 3/4] hw/riscv/virt: Provide a 32-bit MMIO window for CXL
+ host bridges
+Date: Thu, 27 Aug 2026 20:17:24 +0800
+Message-ID: <20260827193716.200002-1-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260826133754.355453-1-junjie.cao@intel.com>
+References: <20260821081954.1171-4-cp0613@linux.alibaba.com>
+ <20260826133754.355453-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 07/28] hw/arm/smmuv3: Reject secure STEs with stage-2
- enabled
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162446.2806393-2-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260813162446.2806393-2-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=cp0613@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,76 +74,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
+Hi Junjie,
 
-On 8/13/26 6:24 PM, Tao Tang wrote:
-> Pass sec_sid into decode_ste() and treat a secure STE that enables stage-2
-> translation as an illegal STE.
-some coming back to [RFC v5 06/28] hw/arm/smmuv3: Plumb transaction
-attributes into config helpers
+Thanks a lot for the careful review, and especially for taking the time
+to actually run this and trace the root cause rather than just pointing
+at the symptom.
 
-why did we need to modify smmu_ptw_64_s2()
+You are right, and I should correct my earlier judgement: I had convinced
+myself the firmware had no way to learn about the expander bus, so I went
+down the simulate-in-QEMU route. The real root cause sits one level up --
+riscv virt simply never advertises the expander root bus to the firmware.
 
->
-> The current model does not implement Secure stage-2 translation, so reject
-> Secure STE configurations that enable stage 2 and report BAD_STE. This
-> restriction can be relaxed when SEL2 and Secure stage-2 support are
-SMMU_S_IDR1.SEL2  (secure EL2 and secure stage 2 support)
+Thanks for the new direction and for the groundwork you have already done
+along this line. That is clearly the better approach, and it matches the
+"fix UEFI to perform required initialization" option Igor raised on v2.
 
-Besides I don't get why you set SEL2 in last patch
-[NOT-MERGE] hw/arm/smmuv3: temporarily enable SEL2 bit and some other
-features
-> implemented.
+I will rework 3/4 following your guidance. Before respinning, I will also
+do the end-to-end verification you flagged as missing -- on a booting CXL
+guest -- and I will sync back with you once I have the result.
 
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  hw/arm/smmuv3.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index b5dc67dcb01..3ff2f498a3b 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -597,7 +597,7 @@ static void decode_ste_config(SMMUTransCfg *cfg, uint32_t config)
->  
->  /* Returns < 0 in case of invalid STE, 0 otherwise */
->  static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
-> -                      STE *ste, SMMUEventInfo *event)
-> +                      STE *ste, SMMUEventInfo *event, SMMUSecSID sec_sid)
->  {
->      uint32_t config;
->      /* OAS field only presents on NS-IDR5 so we use hardcoded SMMU_SEC_SID_NS */
-> @@ -651,6 +651,14 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
->          if (ret) {
->              goto bad_ste;
->          }
-> +
-> +        /*
-> +         * It is ILLEGAL to set STE.Config == 0b11x according to (IHI 0070G.b)
-> +         * 5.2 STE, Stream Table Entry, Page 218.
-> +         */
-> +        if (sec_sid == SMMU_SEC_SID_S) {
-> +            goto bad_ste;
-> +        }
->      }
->  
->      /* Multiple context descriptors require SubstreamID support */
-> @@ -916,7 +924,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
->          return ret;
->      }
->  
-> -    ret = decode_ste(s, cfg, &ste, event);
-> +    ret = decode_ste(s, cfg, &ste, event, sec_sid);
->      if (ret) {
->          return ret;
->      }
-Thanks
-
-Eric
-
+Thanks again,
+Pei
 
