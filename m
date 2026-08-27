@@ -4,106 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D48C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B65C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzX7S-0003Mk-SJ; Thu, 27 Aug 2026 06:14:02 -0400
+	id 1wzXAe-0005Ft-9H; Thu, 27 Aug 2026 06:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzX7R-0003Lp-ER
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:14:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wzXAb-0005FZ-QV
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:17:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzX7N-0002o4-Aw
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:14:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wzXAa-0003mz-9J
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:17:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787825636;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1787825828;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hNqTnSzXjq1FFnhGJCIoqeClbAUQRviA1YvNpWOKzP4=;
- b=OoTP2cCz/rXDgB6KdHiVOhNqNu+iiLeAxjDdsLN08xuIS4PbaIWFku9hBqDOg79BQP8QZJ
- /pNlrehW+0beg5CwI9FK0KAq/Wa4lsxeqVNm41L9qnXfmWinGJKNHZJejA2QMjB2GySVIq
- rhXaPnuyTAnkDD9hozFVguVPAg0jX0U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-WJq6vs-7MUW811MQM2g7sg-1; Thu,
- 27 Aug 2026 06:13:51 -0400
-X-MC-Unique: WJq6vs-7MUW811MQM2g7sg-1
-X-Mimecast-MFC-AGG-ID: WJq6vs-7MUW811MQM2g7sg_1787825625
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25F3A1802147; Thu, 27 Aug 2026 10:13:44 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6AA8B1956044; Thu, 27 Aug 2026 10:13:33 +0000 (UTC)
-Date: Thu, 27 Aug 2026 11:13:30 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
- Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 10/12] target-info: add -target and program-name selection
-Message-ID: <apANygsXLoXL96f6@redhat.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <20260823150731.896-11-luoyonggang@gmail.com>
- <ao7gGVuiDcVZSN6v@redhat.com>
- <0f3d8fe9-b3ad-40c5-9078-c13738997998@oss.qualcomm.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=D+aK8WAnJSSk6JBgSqQocyHNfItUsYfYzgJcZZ5743U=;
+ b=J+AOAmXvhFRfr0zalv7L/GVbHtiR1N5jm4skdeD9VF13ycwC7ZPPKFl4qeH72g2P/CO9v5
+ KluhYD3VvS69Lk1SCkxC80l+w97hUg0kMUoSZnEshBCIp/Kl39O2nntyaP0Ntu9FBPbFbO
+ lQojNXwbguyHYIn0k/804fQW9LkBaRY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-167-cKxbqMkWM-2J9I4bG30pSA-1; Thu, 27 Aug 2026 06:17:05 -0400
+X-MC-Unique: cKxbqMkWM-2J9I4bG30pSA-1
+X-Mimecast-MFC-AGG-ID: cKxbqMkWM-2J9I4bG30pSA_1787825819
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49545071724so17656425e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:17:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787825819; x=1788430619; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=D+aK8WAnJSSk6JBgSqQocyHNfItUsYfYzgJcZZ5743U=;
+ b=f8lmxVzHyM7fmsweY6OSPX2W57RJWITmsakd4swizq1arBkWixvKOYu89cEP1o/laD
+ FnmGun5e3EZfu1fm4sBPHh9Os9CsuY5slm4S6GJwxB7H0M3WUdBGgcZYIrQLgxdwrZPq
+ +WGOYmVeGP1gMgRUtIAd7uJKmMyHX6d2rFzKeGfJd8/c5zyjpwvax991DDPnkMgyHNHq
+ 6JxAJSC8rOYZHNs2dJGSqoBNJlQV/sF7LvYa/qAC3ihddlnXuKWIXx0u2OnWunOtDISe
+ 1x9A/G1uhDbfJeXMqwss+lGfdOz5eeQHdigdF3hHxyGefD2OQtkt07c8b0ycWIQkXSnb
+ O6AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787825819; x=1788430619;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=D+aK8WAnJSSk6JBgSqQocyHNfItUsYfYzgJcZZ5743U=;
+ b=I77U0qob+jkggwHI7PlU1/tL6WnDILWz5rcG/d7tndFyfa9gUQFr8FvctUpl24IkRH
+ 4VEnr1a5WNZXL1cUxPfGTxQ//+ZcE6Z6ENzjWfEvwxQwU8OrGXYX7gevCbZ3n2K4CfMO
+ HPAIPBu6wlz/HtwY+BqNq0lp+gDcbe0aJxdfSSXD93YYxH0LPs9Bku81uIl0Dd4jlcC9
+ dwE3ixvLiqTy0giOk4Ooh+yznxL+I8xTUuKt3QUUlS6lRSA70af/dUczuR+lqRBqWnpo
+ +63Mhi4/WEFA29v/RAxPCiUQfh8o8BM7VwtV8TMvJhls4QCOKHHYBjzWavw+uGg3S7WS
+ 5FYQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoPDNTBVuY8WdDR+Ry2wDAhWU/pCH7FlmX/iSawsREknoPibW12h6SnicsGD8RXOfAPEVUIeMG7PScN@nongnu.org
+X-Gm-Message-State: AFuF++n49wnWBY1JUcehyR2PGajWUMd/q9Anux+89mygQgRPjKNrWIrL
+ fkQ2MCmopmouLezyLP2XHWrCU39nu+55IvhWQZjMJpDj5IURgsqVdgtZdRtH87XY9JOqCNYXVNh
+ 0a4XuEOQpd8VYendeJiiNvd6STIB2Xzv/qEZIVb8iwhcZflxGD1sO15rJ
+X-Gm-Gg: AR+sD13VBCnv7D8SEEWIU41Vnu2O/vE/DOe/MykVitLd6M1YaVcTBB6BDjn65BGPl/a
+ qUmYw5RRypapV8UFYS1Z8wUnJOzWc0urAMaH98+00Znvpk3xv4wtoPquKqA0lbmRURTqRNJklEx
+ FQyknQGrYp/fQGBoReLgKIa+C9fbBmHte0LX2gLjsGLRfLAA2TkL2+DWY5F9hVnEe6ypoIk8Hzi
+ 17u+SqKSbUoyDbn2SKn6gjEOuKCw9ApOYRSbCM7WLmwGhRtJY6+4DoepKWb7XjuvVjr3d4VaXTJ
+ WdqrjgUJmfeOPJ8pdV8lyRkwwdsue85EbOCeB63y/MfGNxDZRRePoBowEP2Evp56LBvXfoMqZQ=
+ =
+X-Received: by 2002:a05:600c:1d15:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49b0d4570b4mr88749135e9.8.1787825819261; 
+ Thu, 27 Aug 2026 03:16:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d15:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49b0d4570b4mr88748465e9.8.1787825818912; 
+ Thu, 27 Aug 2026 03:16:58 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482e27ab569sm7819124f8f.16.2026.08.27.03.16.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 03:16:57 -0700 (PDT)
+Message-ID: <a1a7cdc7-5458-4d1b-bf1e-9aa89502317b@redhat.com>
+Date: Thu, 27 Aug 2026 12:16:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0f3d8fe9-b3ad-40c5-9078-c13738997998@oss.qualcomm.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] tests/qtest: fix the disk tests on a host with a
+ small /tmp
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Fabiano Rosas <farosas@suse.de>
+References: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
+ <20260824200627.2180635-1-den@openvz.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260824200627.2180635-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,104 +163,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 11:13:05AM -0700, Pierrick Bouvier wrote:
-> On 8/26/2026 5:46 AM, Daniel P. Berrangé wrote:
-> By implementing *strict* identical behavior with existing binaries, we
-> indeed didn't add any new feature, but:
-> - we reduced total number of compilation units by 30%
-> - we cleaned up a lot of headers and did a lot of refactoring
-> - we have a systematic approach to add new targets in single-binary
-> while being able to reuse all existing tests without any change.
->
-> From my point of view, what you see as a detour was precisely what made
-> us progress so far in a year.
 
-No, on the contrary, that's all good stuff.
+  Hi Denis!
 
-What I'm considering here is the behaviour of the new proposed
-qemu-system and what it needs to be able todo.
+Please make sure to CC: the qtest maintainer (Fabiano Rosas) on series like 
+this.
 
-Some of this work only appears relevant to a scenario where
-qemu-system-$target is dropped in favour of a symlink to the
-new qemu-system. That forces qemu-system to be 100% compatible
-with the existing binaries, which IMHO is an undesirable
-constraint and creates extra work.
-
-We can have the benefits of the compliation unit reduction,
-cleaner headers, etc, while still having qemu-system be a
-distinct break with the past in a number of areas.
-
-> > If we ignore historical compat and treat qemu-system as a
-> > clean break, then I'd suggest that 'target' is not a concept
-> > to be exposed to the user at all.
-> >
+On 24/08/2026 22.06, Denis V. Lunev wrote:
+> John reported ide-test dying at startup in the NetBSD VM:
 > 
-> If your only problem is with having a new -target option, I would be
-> happy to just keep the behavior to derive the target from current binary
-> name. That's a very small compromise on my side, and -target is just
-> here for convenience. It's not the end of the path.
-
-It isn't about the syntax - whether it is implicit from the binary
-name or explicit from -target, that's still producing a design
-where the target is the top level concept, and machine is a second
-level concept. I don't see how that makes sense given the longer
-term intent to have machines with heterogeneous CPU targets.
-
-The machine looks like it should be the top level concept, with
-target(s) derived from that.
-
-> > The user cares about the machine (and CPUs) they want to run,
-> > and their choice in this respect is what should determine the
-> > target(s) QEMU needs to enable. We should take
-> > 
-> >   qemu-system --machine vexpress-a15
-> > 
-> > that tells us we need the arm target. If we need to distinguish
-> > arm7 vs aarch64, then the choice of -cpu should determine 32
-> > bs 64 bit.
-> > 
-> > This extends better into the future world where we have
-> > machine type that could involve CPUs from multiple targets.
-> > 
-> > IOW machine config option / QOM class is what we should pivot
-> > off rather than a global target config option.
-> > 
-> > This likely implies that the MachineClass should gain a class
-> > method to query the QEMU_ARCH_XXXX bitmask required. Initially
-> > restricted to only a single target, so you can wire that through
-> > to the current global target info at startup. Later expanded to
-> > support multiple concurrent targets.
-> >
+>    ERROR:../src/tests/qtest/ide-test.c:1260:main: assertion failed:
+>    (ret == 0)
 > 
-> While it sounds nice on paper, you will be doomed to ambiguity with this:
-> 
-> qemu-system -machine virt -cpu max
-> 
-> What is your next plan? add an environment variable to solve it?
+> The hypothesys is that the ftruncate() of a 64 MiB scratch image. NetBSD
+> mounts /tmp as a tmpfs sized at 25% of RAM and charges a file its full
+> length themoment it is extended, so a sparse image is not free there and
+> the call returns ENOSPC. The assert dates to 2013, nothing regressed.
 
-The machine names need to be globally unique across all targets.
-So the 'virt' naming clash needs a rename, such as is done in
-an earlier patch in this series.
+Does NetBSD have another file like /var/tmp that might be friendlier to 
+sparse files? If so, maybe that should be used instead?
 
-> Deriving target from argv(0) or -target is explicit, predictable, boring
-> and reliable, and it's exactly what we need now.
+OTOH, our NetBSD VM in tests/vm/ uses 4G of RAM, so a temporary file with 
+just 64 MiB should really not be a problem...?
 
-With the requirement that machine names are globally unique, we can
-determine the target(s) directly.
+...> Hope this should help. John, can you give a try to this in the test?
+> I do not have NetBSD handy and will start with this tomorrow if you
+> will share guest config.
+Simply type "make vm-build-netbsd" from your build folder, this should take 
+care of everything automatically. No need to install NetBSD on your own.
 
-Relying on argv(0) does not appear to work in a heterogeneous future
-as target is no longer unique per process, but the machine type would
-be unique.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+  Thomas
 
 
