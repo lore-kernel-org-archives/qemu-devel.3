@@ -4,84 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA824C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B72C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzc0O-000278-AN; Thu, 27 Aug 2026 11:27:04 -0400
+	id 1wzc9y-0003XM-46; Thu, 27 Aug 2026 11:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1wzc0M-00026j-64
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:27:02 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzc9w-0003X4-P6
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:36:56 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1wzc0K-0005YU-F2
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:27:01 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49b8e527d63so6434975e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 08:26:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzc9v-0007fb-6X
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:36:56 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-66b32bb75beso155652d50.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 08:36:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787845013; cv=none;
+ d=google.com; s=arc-20260327;
+ b=o3/ALhhS79k47Snx0TJdVLTpDG3dBEKNOm5Wd0uaefxGRBf0qG4STBpxBB/9s5vm/0
+ 5O9geRsB3nyg3mRrT1dSx6ryeEFecbUqmJw+FEXrP9T9dipL5bTUx6EiriNWMn9x/Xwg
+ kENDq7Is9fWb4BnVGaJO+MWrNI6n9xo44OTwAPLcRFJ2eIW+81A27hxZ0wDsurMX3QHc
+ heVA2qensvNqczYroDOxBzgNjr8SVgVuTnOYaZMDl25Fmyb5C5B+H9EWfmFclOYQGlCb
+ rGgpemRZBcTDx6vb8Kir6NNU/MrjgLbSExIv5rN1KZNNBL+wm22IqSYxlac+PW4oa0g0
+ g/uw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=l/TIyVx59OMApJQbBVsOFK1nHzU6lLIk98gtKNMSbdc=;
+ fh=bIE/bXSCkVaBwWnI5E22W+KoiLTAK5S4CW9f53swsiE=;
+ b=OsDQJWWt3TZStyP5b+aRF+7S4m1hgsRkljzlqrtCGi7H8Mauu+pVM+JQKrd1NPBQ98
+ wH6L+Vbn+Xc+UaefEAEAUcmAS0JnP8ZMMutUWg8f0Mq2tXZQ6B9pZ8kOGocVOR8ZL7OF
+ 5J6SzHuCuB5ANSiFkjOLtq6LOcCtoNGRLxTxG5I/aqiifF9F8Be2JmUvRyjw6CElO1PB
+ wUoPA4RWkY6m63j4zN5q5w+CG+WQb3vMcKHbJksXmQZVoTyFNJy4Ma5g2o8IVseTZgIa
+ L/NYTWz51ff4Lhwi4lLr+hAPluLRQX1TWD6QcLqBRH/c2v2+fdTQYVFcfptTjhECQyc+
+ kRDw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787844417; x=1788449217; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1U21OR/IIXg06yAP0kDJrvdKDU3O+mHUuP5qP6imk/w=;
- b=orh91PFiPAt+Azeo3zaXztzwL8nlvBEeuq1BucLvLAjb5rOOyU6vbE3D51WBt7rXH4
- i8DkPZEPWqBfn+s3FYt1PKhoPrZmvu6Tb4SBJHVyaqMZ1EvD7qQz3WbjvfSvyiVBxeBr
- Fsj3zdriuebl4OFuJK+2D0p7Rsr1/Ggz8a9SBc3heuMKKKKUdMTXOpH5t1pcpjLW+kiE
- CR8Z/I2SSz4FtU1oTUHSxjBvSHMJCxN0oGDedN4V2dM2tz88DTwHJKTvfgC1dHGcAMpW
- uhIsMAp92R52JHroQv0qROyagwm7aAhTibJIOX/WNRpMQbki4SGDEjPGyVgYszmUxXmR
- GyWQ==
+ d=linaro.org; s=google; t=1787845013; x=1788449813; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=l/TIyVx59OMApJQbBVsOFK1nHzU6lLIk98gtKNMSbdc=;
+ b=QtA0KBtnuxpV0FnJiYEqRzceMyBzwJEBIEAmwZNG15iOHNnZQuez1zhLruh9bMIqKX
+ 40iyn8bOd+J2ZsjOZdXIoEN8ihWBktNZ3GA98tL2Y7dxRbIYx0MpAWgzN7svBQmOde70
+ gPI6jRnFMg0gc/nzA3hugzOwDDEBd4pHVwRDBew7rNTczo73qRLiQHGIMEqqDiU2TfvE
+ tMfQBXcrkxPxgLhaskFvFGtp34/jRAjL4XHRV7M3ORLRhOzR75UolSlv0+3VcU/J5L3b
+ dMD87gbuckW2hYGlpKuqQmJuAW9sBovZcq2/Q/4shFre3G0p5nLfzEMQ+wQC2FWn/ZWw
+ rATw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787844417; x=1788449217;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1U21OR/IIXg06yAP0kDJrvdKDU3O+mHUuP5qP6imk/w=;
- b=Y7bFudFQg/CrPEs/xGwQ81JR307gmZEs9VE6gPe7SFLrRzDB8nJuzLTV79+pV9v9O1
- xPWc7aJKzu0yzQ+xLuRTAN8N7xcl2ENDz8ThZTqPRazYsCzeuEraE0kgjdpChjFRh8tu
- cKeEO/gDmx/IDK5r1xxOD96rUsMM42tJnDD9DWX4JOuriplNHCjSAbIASO5ysoUBUOj2
- IuxenutE/TRtjf1h7y5336q2B/HN5osAuuDvpMzKIc0r3o553wypFYVhFxeul9hxmzbT
- f3p7yxvcpTPhg1hdj+apFf9G03zZ5oy8mj6hWdL89P/dIBKgtLtAju0n5/+zP/8+cjqe
- hSrg==
-X-Gm-Message-State: AFuF++nbeRDo2+7Nmh8cQBK3wSdvTP3aWC7dO3gTQHo7JIn5tkvoiJ+F
- j1pnGVUVkG3Cvg2mOTbzUSSK25pynwNmpfquSkTvskuRtCav5pIbGz0IR9y9IKob
-X-Gm-Gg: AR+sD12mhP0DdC9QsnDLJi17AylEbe+O/g16DMOYZjOSWjEK+jYeMD3kKHngg8ge2US
- a/DJLbt1xIKh3crJyD3N31xbpBI1LHnenUDK+/Z8xUWQbPL5un/z+f9Nj58iL73XM0/+Pk637U5
- 6RaC7MBQsRorpJWCIPOkVXh5mGzrvhXMY4J267/d6wKxBOlNk2Q6g315Jzdra8E172d3x94UfDS
- vb+4O2reAaBX5cgEbQLFUM5J2070lpC8IOglTWYtLQPFs0Yz/fF9Y0fKVaLoPje62JSKg8IZ8ii
- 14r9eF80oMiNPQu3xeXaskQp+Bg/fifVq+U998jiW1JwtrZspbBIdhpArfnQw/kuvJlyVXOJmYc
- ZnSB/bDjZ5JAlKfekqu8eQcOxS+8AyOJe2FG1j36Sq7x0RPvmcGpbZUHZRs2bCMbGW1rCkfq/xu
- 8IHd53wl5n+jXDxdr4ok/nM7H8ktFAn1SZ2CDsza2yhBOjPXspRiPRXWusDTpkLPUn42uFm4Npi
- qyZSJKTCuFG9/js9Ed0fbrSrFWdu8WwpQa6tgt38/mLj0+Se06B90ERm2c6Y8MCR4g=
-X-Received: by 2002:a05:600c:698c:b0:493:cefc:d113 with SMTP id
- 5b1f17b1804b1-499dc6f5dcdmr225500345e9.5.1787844416901; 
- Thu, 27 Aug 2026 08:26:56 -0700 (PDT)
-Received: from simon-macbookpro ([2001:4bc9:c076:abab:88db:4e13:7c97:ca38])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dd5771a3sm69625145e9.4.2026.08.27.08.26.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 08:26:55 -0700 (PDT)
-From: Simon Scherer <scherer.simon89@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
- Simon Scherer <scherer.simon89@gmail.com>
-Subject: [PATCH] target/i386: clear C1 for all x87 compare instructions
-Date: Thu, 27 Aug 2026 17:26:38 +0200
-Message-ID: <20260827152638.307913-1-scherer.simon89@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1787845013; x=1788449813;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=l/TIyVx59OMApJQbBVsOFK1nHzU6lLIk98gtKNMSbdc=;
+ b=M9kCqAvRMUm3qYMdIR5rLsQxzfDLyNp8vr+Z0ngcrhbc71ttJkFQ6qTUq8qsGpLdCr
+ RPfLud+b/Vc0eZX1RTaVjCg6abTnRtNHm7BFya5F0SuXHBGOtN0tlD/for1/jAg7kRJX
+ jv7rrtrreXhYirVkihCQlGmNU3RdKWftqDSvGl/qutzSAClZgJ2nm7sjT2c8+uZzIw1g
+ y3X7IVoBwHqSYTErO51H4VNMs3VojheN3krnrVul7PmMJdhuZYewkoAmHfO+h6ziOFgr
+ ilaGeh1JE0/JPkoDKul3qyrVrgP81fuCyQwTfSrXXestcOEydWiPnFNdHWelJXYtm+QB
+ B6aA==
+X-Gm-Message-State: AFuF++m+E8REf949/rXaXXxqFuPGp8edtUC3MNpjKf4Rigf3yLaazfmO
+ UFe2/5SGdk7n1cTB0N7gffIPbncW93fzgbDn+cjHviUnYlNMIwSd2n1oWNJNVmId/VJmiv0yemH
+ 3Sq6qk6LTcn4LStUEwg8FN3g1XiSfV8AN32Vw4PjRHg==
+X-Gm-Gg: AR+sD10yu3mcvmMUUnWhc14nriYyzcYsUMBnnN6zycw+JXGtQbhVgPR6Gltlt5YM3V7
+ fdQ59qkIeIIx/KKtQ+2bEc9MUPHJlTGs8PjR4zCPGs20RI8quvBXUsY+3MomhkTvEgyqXl708CG
+ AMEtPgIgUy3Gh+pjTphJRBAqCsj1O2Ona+IqBjheZIefAhM4g9qyweEwsqbv9fFkIM2e4XIpHfL
+ ejNDbmd3kO/P+v/7ym3UPYpNbzEls9xxqvB+dbNJFG9/Z1yDG5dCT/rF1BmV5QjLhPSbr37/8Rw
+ Dn4vKtHgfx49Zl9kVCLFZ1NnzkPdZrFOlDSbFx7g6aLyUT0lRuv2E1xItXp7QTsfP/49D5x+rEp
+ cxjgBVITXUB9915he3q1VV8f2+czD
+X-Received: by 2002:a53:d4cd:0:b0:66b:245f:bc5c with SMTP id
+ 956f58d0204a3-66d265b185emr4118134d50.24.1787845013526; Thu, 27 Aug 2026
+ 08:36:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260827041557.775080-1-richard.henderson@linaro.org>
+ <20260827041557.775080-7-richard.henderson@linaro.org>
+In-Reply-To: <20260827041557.775080-7-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Aug 2026 16:36:42 +0100
+X-Gm-Features: AcwNN1VE4A6DEQBsF9B2SBkhWaLHpuI2MlkXT4GBej8LorOtY5HOOEoOTmHpQtA
+Message-ID: <CAFEAcA9HkALxGJ-iExtMCyw-KKnJD2UGwfjh85iKo0zi0cf4Ug@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] target/arm: Separate cpu types max-v8 and max-v9
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ pierrick.bouvier@oss.qualcomm.com, philmd@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,68 +116,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SDM specifies that FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOMP/
-FCOMI/FCOMIP/FUCOMI/FUCOMIP unconditionally clear C1 in the FPU status word,
-regardless of the comparison result.
+On Thu, 27 Aug 2026 at 05:17, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Do not include v9-only features in "max-v8".
+> Do not include the prohibited v8 features in "max-v9".
+> In aarch64 tcg mode, define "max" as "max-v9".
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 only cleared C3, C2, C0 (mask
-0x4500) before OR-ing in the comparison result, leaving C1 (bit 9) at
-whatever value it already had. FICOM/FICOMP dispatch through the same
-helpers after converting their integer operand, so they inherited the
-same bug.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0 never touched the FPU status
-word at all, so C1 was left untouched by those too.
-
-This patch clears C1 explicitly in all four helpers.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4378
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
----
- target/i386/tcg/fpu_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index b812125efa..49459b5bc1 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -532,6 +532,8 @@ void helper_fcom_ST0_FT0(CPUX86State *env)
- 
-     ret = floatx80_compare(ST0, FT0, &env->fp_status);
-     env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
- 
-@@ -542,6 +544,8 @@ void helper_fucom_ST0_FT0(CPUX86State *env)
- 
-     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
-     env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
- 
-@@ -556,6 +560,8 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
- 
-@@ -568,6 +574,8 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
- 
--- 
-2.53.0
-
+thanks
+-- PMM
 
