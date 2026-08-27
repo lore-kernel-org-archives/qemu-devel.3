@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78127C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 08:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5859AC61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 08:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzVOw-0004O6-Tf; Thu, 27 Aug 2026 04:23:58 -0400
+	id 1wzVUN-0005Hp-Ln; Thu, 27 Aug 2026 04:29:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzVOu-0004Nl-WB
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:23:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzVUD-0005HU-QW
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:29:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzVOt-0003Vu-7n
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:23:56 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzVUC-0004Mq-2Q
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:29:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787819034;
+ s=mimecast20190719; t=1787819363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fTPnv6PNq+8w3nGIOY8S9Bac1+7qp08v3A/P0zS17g0=;
- b=AafUdhK1f9HXS3MlJMjvm1CLl1NltGabFb8ygWVl3U15yTc2GZUotmPcO1rmXorFE7GWGG
- ZIXduiQfkYBMc/Z+3V0HdxTiV/sszyBJ7qxCjcYYOneVNMrZgSWMclrl5MCiQgXs9aLxsU
- 7FtKBbdpX28fnXMo+3Zm+B/p1fNRKwI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=moe4i2TB3rWxKEUGFbSTbZj84HcKiuBYaXSxRH8MhBw=;
+ b=TNAqpu+a0rAHPs0Ely/hiGnpg92vBsG0ui/jGWbYPcM1o6IQ16ZD5PvLNb0bmdMc64ry6K
+ b6RcRmxjb3vLcmcO5fHy91AHQ+69y1Cclgqxoh0zA36QJ2BLJWuvycnl+GzxgmfaBTgPDI
+ gx0fG19HaWqEwZQEDpxI4+nk7uDsSuA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-Ls1VOmuGO-ev2lhLW-vgPg-1; Thu,
- 27 Aug 2026 04:23:51 -0400
-X-MC-Unique: Ls1VOmuGO-ev2lhLW-vgPg-1
-X-Mimecast-MFC-AGG-ID: Ls1VOmuGO-ev2lhLW-vgPg_1787819028
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-0ptwhhbUMQmgWU82wcwUSw-1; Thu,
+ 27 Aug 2026 04:29:19 -0400
+X-MC-Unique: 0ptwhhbUMQmgWU82wcwUSw-1
+X-Mimecast-MFC-AGG-ID: 0ptwhhbUMQmgWU82wcwUSw_1787819358
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35CDD180216B; Thu, 27 Aug 2026 08:23:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C0E219774F8; Thu, 27 Aug 2026 08:29:18 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47ED930002E9; Thu, 27 Aug 2026 08:23:47 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B595C18005AD; Thu, 27 Aug 2026 08:29:17 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BD0A521E6920; Thu, 27 Aug 2026 10:23:44 +0200 (CEST)
+ id 2F4B321E6920; Thu, 27 Aug 2026 10:29:15 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de,
- eblake@redhat.com,  maciej.szmigiero@oracle.com,  mark.kanda@oracle.com,
- bchaney@akamai.com,  pierrick.bouvier@oss.qualcomm.com, joe.jin@oracle.com
-Subject: Re: [PATCH 1/5] migration/qapi: Add memfd migration transport
-In-Reply-To: <7d7496c2-79f0-444d-a843-5f5bba467560@oracle.com> (Dongli Zhang's
- message of "Wed, 26 Aug 2026 10:45:09 -0700")
-References: <20260812232842.470225-1-dongli.zhang@oracle.com>
- <20260812232842.470225-2-dongli.zhang@oracle.com>
- <87a4qh46ao.fsf@pond.sub.org>
- <614160f2-2f3e-4489-ac4b-758f162be553@oracle.com>
- <87a4qg0wv9.fsf@pond.sub.org>
- <a23d9e5b-d0ed-4e9d-95ae-e0fda4bb0453@oracle.com>
- <87h5kkvxni.fsf@pond.sub.org>
- <7d7496c2-79f0-444d-a843-5f5bba467560@oracle.com>
-Date: Thu, 27 Aug 2026 10:23:44 +0200
-Message-ID: <87zey8ezu7.fsf@pond.sub.org>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: "Denis V. Lunev" <den@openvz.org>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Eric
+ Blake <eblake@redhat.com>
+Subject: Re: [PATCH v6 19/25] parallels: report the stored dirty bitmaps in
+ qemu-img info
+In-Reply-To: <84b7646d-0567-4af5-be98-a62f49beb963@virtuozzo.com> (Denis
+ V. Lunev's message of "Wed, 26 Aug 2026 18:45:54 +0200")
+References: <20260817185942.1065143-1-den@openvz.org>
+ <20260817185942.1065143-20-den@openvz.org>
+ <878q5uo9a6.fsf@pond.sub.org>
+ <84b7646d-0567-4af5-be98-a62f49beb963@virtuozzo.com>
+Date: Thu, 27 Aug 2026 10:29:15 +0200
+Message-ID: <87v78wezl0.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,148 +90,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dongli Zhang <dongli.zhang@oracle.com> writes:
+"Denis V. Lunev" <den@virtuozzo.com> writes:
 
-> On Sun, Aug 23, 2026 11:29:53PM -0700, Markus Armbruster wrote:
-> Dongli Zhang <dongli.zhang@oracle.com> writes:
->> 
->>> On Fri, Aug 21, 2026 12:13:30AM -0700, Markus Armbruster wrote:
->>>> Dongli Zhang <dongli.zhang@oracle.com> writes:
->>>> 
->>>>> On Thu, Aug 20, 2026 12:09:19AM -0700, Markus Armbruster wrote:
->>>>>> Dongli Zhang <dongli.zhang@oracle.com> writes:
->
-> [snip]
->
->>>> message.
+> On 8/25/26 11:10, Markus Armbruster wrote:
+>> "Denis V. Lunev" <den@openvz.org> writes:
+>>
+>>> From: Denis V. Lunev <den@openvz.org>
 >>>
->>> Sure.
+>>> Nothing tells which persistent bitmaps an image carries. qemu-img info
+>>> says nothing about them, and the only other way to see one is to export
+>>> the image over NBD and ask for a bitmap by name, which needs the name
+>>> beforehand.
 >>>
->>>> 
->>>> We should also help users decide whether to use the feature.  I gather
->>>> it's useful with migration mode cpr-exec.  Any other use cases?  Does it
->>>> even work with other migration modes?  If yes, which ones, and what
->>>> happens when you try with another one?
+>>> Add ImageInfoSpecificParallels with the bitmaps and their granularity,
+>>> as qcow2 reports the contents of its bitmap directory:
 >>>
->>> So far I only added support for cpr-exec. I have not tried othe modes.
->> 
->> What happens when you try to use it with other migration modes?
->
-> If I use memfd transport without cpr-exec mode, it will be denied.
->
-> The code checks that only cpr-exec mode is supported.
->
-> (qemu) migrate -d memfd:
-> Error: memfd transport is only supported with cpr-exec
-
-Good.
-
->>> In my opinion, cpr-transfer could also use a memfd-backed channel, but I am not
->>> sure it is necessary.
+>>>     Format specific information:
+>>>         bitmaps:
+>>>             [0]:
+>>>                 name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
+>>>                 granularity: 65536
 >>>
->>> For cpr-transfer, the source and destination are separate QEMU processes. If we
->>> want to pass a memfd between them, we still need an IPC mechanism that can
->>> transfer file descriptors, such as a Unix domain socket with SCM_RIGHTS. That
->>> reduces the value of using memfd as the migration channel, because we need at
->>> least one Unix domain socket anyway to pass the memfd fd and coordinate the handoff.
->>>
->>> If a Unix domain socket is already required, the main benefit of memfd would
->>> likely be performance, especially when the device state is large.
->> 
->> We'd want to measure the performance impact to see whether it's worth
->> complicating configuration and code.
->
-> I may create a VM with many virtio devices to maximize the storage overhead of
-> the VM device state. However, I don't think the goal is to improve performance.
+>>> The list is built from the bitmaps loaded at open time rather than from
+>>> a second pass over the Format Extension, as every bitmap the extension
+>>> carries is loaded and marked persistent there. On a node which is open
+>>> that also covers a bitmap which was created but not stored yet, which is
+>>> what the field says: qemu-img info opens the image on its own, so there
+>>> the two are the same thing.
+>>
+>> The last sentence confuses me.
+>>
+>>> An image with no bitmaps leaves the structure empty, and
+>>> bdrv_image_info_specific_dump() prints nothing for an empty one, so the
+>>> output for such an image does not change.
+>>
+>> Output of what?  I guess it's "info block" and "qemu-img info", because
+>> these call bdrv_image_info_specific_dump().
+> For the image (BDS) without dirty bitmaps the output
+> of 'qemu-img info' would be the same as with and
+> without a patch.
 
-As long as that's the case, enabling memfd for cpr-transfer makes no
-sense.
+Suggest to clarify 'the output' to something like 'the output of
+"qemu-img info" and "info block"'.
 
->>> cpr-exec is different. The new QEMU is started via exec(), so the memfd fd can
->>> be preserved across exec by clearing CLOEXEC and passing the fd number through
->>> an environment variable. This allows us to add a memfd-backed migration channel
->>> without needing an external file or socket for the device state.
->> 
->> What are the actual user-visible benefits?
->
-> The goal is to avoid the VM state file used during live update with cpr-exec.
-> So, the user-visible benefit is that the file is no longer required. Live update
-> with cpr-exec no longer relies on a file on disk.
+>>> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+>>> Cc: Eric Blake <eblake@redhat.com>
+>>> Cc: Markus Armbruster <armbru@redhat.com>
+>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>> [...]
+>>
+>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>>> index 1f87b07850..4bc8b45efe 100644
+>>> --- a/qapi/block-core.json
+>>> +++ b/qapi/block-core.json
+>>> @@ -200,7 +200,7 @@
+>>>  # Since: 1.7
+>>>  ##
+>>>  { 'enum': 'ImageInfoSpecificKind',
+>>> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
+>>> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'parallels' ] }
+>>>  
+>>>  ##
+>>>  # @ImageInfoSpecificQCow2Wrapper:
+>>> @@ -255,6 +255,41 @@
+>>>  { 'struct': 'ImageInfoSpecificFileWrapper',
+>>>    'data': { 'data': 'ImageInfoSpecificFile' } }
+>>>  
+>>> +##
+>>> +# @ParallelsBitmapInfo:
+>>> +#
+>>> +# Parallels dirty bitmap information.
+>>> +#
+>>> +# @name: the name of the bitmap
+>>> +#
+>>> +# @granularity: granularity of the bitmap in bytes
+>>> +#
+>>> +# Since: 11.2
+>>> +##
+>>> +{ 'struct': 'ParallelsBitmapInfo',
+>>> +  'data': { 'name': 'str', 'granularity': 'uint32' } }
+>>> +
+>>> +##
+>>> +# @ImageInfoSpecificParallels:
+>>> +#
+>>> +# @bitmaps: A list of the persistent dirty bitmaps of the image,
+>>> +#     including the ones which are not written out yet
+>>
+>> Pardon my ignorance...  Is "not written out yet" relevant to a user /
+>> management application?
+> This means that the image on disk could contains
+> bitmaps A and B while backup software has added
+> bitmap C to BDS. The query will return A, B, C.
+> This is same as for QCOW2.
 
-Got it.
+Will bitmap C be written to the image, and when?
 
->> Performance?  Provide measurements, please.
->
-> Not performance.
+>> ImageInfoSpecificQCow2 also has a @bitmaps member.  Its documentation is
+>>
+>>    # @bitmaps: A list of qcow2 bitmap details (since 4.0)
+>>
+>> Are these "persistent dirty bitmaps" as well, or something else?
+> same, as above
 
-If we accept memfd for its other benefits, performance measurements
-might be interesting.  Not now.
+If they're basically the same, then their documentation should be
+basically the same.
 
->> Simpler configuration?  Not sure that would be worth the special case.
->
-> Yes. No file required.
->
-> "migrate -d memfd:" vs. "migrate -d file:vm.state".
->
-> "migrate_incoming memfd:" vs. "migrate_incoming file:vm.state".
+>>> +#
+>>> +# Since: 11.2
+>>> +##
+>>> +{ 'struct': 'ImageInfoSpecificParallels',
+>>> +  'data': { '*bitmaps': ['ParallelsBitmapInfo'] } }
 
-Got it.
-
->> Anything else?
->
-> No. Writable storage is no longer required to cache the VM device state file.
-> That's the only explicit benefit so far.
-
-Benefits of the new MigrationAddressType @memfd: we gain a zero-config
-migration channel for MigMode cpr-exec.
-
-Costs: we gain yet another kind of migration channel, useful only with
-cpr-exec.  Feels niche.
-
-Are the benefits worth the costs?  Migration maintainers decide, not me.
-
-In my (relatively ignorant) opinion, migration already suffers from too
-many features.  Hard to understand, painful test matrix, expensive to
-maintain.
-
->>> One potential future use case is LUO/KHO support for QEMU. In that case, device
->>> state could be preserved in memory as a memfd and potentially survive across a
->>> KHO kexec. We won't need to preserve anything on storage. Indeed, I did some
->>> internal tests using memfd to preserve device state across kexec although using
->>> different implementation, and it worked.
->>>
->>> For other live migration modes, or even local migration, I do not think this is
->>> useful. For example, saving to and loading from a file won't use memfd, as the
->>> QEMU processes are terminated during the this process.
->> 
->> User documentation should spell out when memfd can be used.
-
-It does: "This transport is currently only valid with cpr-exec migration
-mode."
-
->>                                                              I recommend
->> to make it usable only when it's known to improve things in at least
->> some scenario that matters.  Code should cleanly reject attempts to use
->> memfd when it's not usable.
-
-You showed above that it does.
-
->> User documentation should help users decide whether to use it.
-
-It does not so far.
-
->> The commit message(s) may need to provide additional detail on how
->> things improve.
->> 
-> Thank you very much for feedback!
->
-> Dongli Zhang
-
-You're welcome!
-
-
-Tangent, pardon my ignorance...  We have MigMode @cpr-exec and we have
-MigrationAddressType @exec.  Both involve starting a new instance of
-QEMU.  How do their use cases differ?
+[...]
 
 
