@@ -4,124 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E65C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A905C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzXeM-0007pU-7g; Thu, 27 Aug 2026 06:48:02 -0400
+	id 1wzXfb-0008Dz-3Q; Thu, 27 Aug 2026 06:49:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wzXeK-0007pH-De
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:48:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wzXeG-0000q5-9S
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:47:58 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67R9VaZT2582047; Thu, 27 Aug 2026 10:47:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6WPr2S
- Jj1CmDg5gcKNUe06+2l5dsbKGhhT/7kX9WBsQ=; b=ccDMiHlFrXx196j+EJ1cHE
- FRDxkrzf6bqKpAXT0P14JzDUZDwBGDw5HcfNYkDBLbTa5gegplMtj7HJCIMFQSE+
- afZHB21i3fR4S6/GvOLLpVgu9XJS2HLQ7ypm8Nqzt7BgMd+VRdz8wXCR2t951wau
- BKcoSNy3edTYpSE8HrIUumS5lHErGdCa8PZJeXqzb/uFefnSAkZ8bXfdBF5NCFGu
- glpK0Ri6Rl43gc9nx/p3CjxLfH7c82prsBE5Ja2vnaJOHE0sXe8lEqn/chERTA6R
- Zb5IwTJD7MrC/Ppt6RRoaLqsuPKHUcrIhHH04H1Vk4P9j1sDr+HPP9YzxS/pu+lg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7394ctkh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 10:47:51 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RAfO0h008800;
- Thu, 27 Aug 2026 10:47:50 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k7j4f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 10:47:50 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67RAllvO51904792
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Aug 2026 10:47:47 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57B922004D;
- Thu, 27 Aug 2026 10:47:47 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E219C20043;
- Thu, 27 Aug 2026 10:47:46 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.64.177])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Aug 2026 10:47:46 +0000 (GMT)
-Message-ID: <b3451ce0-2d1f-4be4-9c22-1be491f21a94@linux.ibm.com>
-Date: Thu, 27 Aug 2026 12:47:46 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzXfZ-0008Dn-Cf
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:49:17 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzXfX-0000x1-AQ
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:49:17 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-857c51be779so2520447b3.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:49:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787827754; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Tvd5mzQPmCyODjQLi5dV5NeCeD9h8Q/BHJ0XqJ+EyUHi7BbEPfIDQvqBwenaGtIWt7
+ 5HI3nCVeerMLwzn/NPSvi8yQXbnAVFdwm1+wKYIkkcMmhFboFg7b3KqCB82O3R+7ua1P
+ 4JYK9B+2sqGPYRLmYjzftxCwbffP3XuZuGdR3/IFyDe1sHpONrXzam8R/zET/yzHWdCW
+ WUmPhVVbgKsK+1ABYPuUVvVZi5IWaoyXixBLPav3I5e2BrnUmYjXIRdLUFJo5KIGIItQ
+ t37vtq5S1Ll9Wke3yHBB98gzFY7fL/IEjmiZQ5TCjB7pZp7XI/2UfYxWXHTwcFwruekR
+ Ie0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=huQqSMe3N9uh++IkE+LiJ1JbhPmizm/crfaW4QRHI90=;
+ fh=vwLn0QjPfybQ7TrkM/wEJNBHvvswDHP+AhH71hCDNA0=;
+ b=V+M1kffQp/VnDOWVFlHYn+muyxGqPvNaeuBRN9dLazeKae+D3V1OirRIAppLkD/VWH
+ aD/QWnR1vHPB1wWSiMrP56j9Up6XHFUOpypuYjhr6bVLtUmxFup2c8MWd7klMSr9jfpu
+ pgwTgB20CGBpJVQE1Ymbpv4W90hSup6DqHXTeZ8ryT6GdXO4Q4mNpGgapwnpLZFLZZwv
+ N+jf0gKDB+NUROEAX3wGLUKI2oWuR/079isTiSrftd4klUF1e26Vzx+UyL+jKkKhLaHl
+ tEMQ+jivFo35dKx8klOJxNEG3VTod6GHm9Sm4N+pstYYW0J0j28JvGS+BHgbluc/xWHn
+ gQYg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787827754; x=1788432554; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=huQqSMe3N9uh++IkE+LiJ1JbhPmizm/crfaW4QRHI90=;
+ b=RnjycLxITsPDbhqDgQT5uBpq9W+K/132UyY0RL1TjKVwuz9N7NJzBr4zRTChpx8GVA
+ JiR8XAt5Hqeds+ypurky/Y8RRhm2DJiGfSI736s76BMqZlY3wvR1H2BHOIAZnl2cRY7x
+ hDiFc3QhTzy1K3AhhuXzvMID04qQ7m+fQmVb8lMeARAM2RBTuo2dWExXwyBxx8NhTppx
+ Yj9pCbF/9Kisy4yjT1vYFpu+a4gjH3sWOsD4qCemEMCYLUN0bTIiD+fBO0AKcJfftmug
+ zBgz4R/05qQrmmBfW3h8TKve+PEOotQdj0cLMvPeiGiCzpm600lHH83XtkJXT8VzGbVl
+ bL1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787827754; x=1788432554;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=huQqSMe3N9uh++IkE+LiJ1JbhPmizm/crfaW4QRHI90=;
+ b=LuMj+Z67WgMxjVnbTsc4U73xZkGuVCMNwjNQZYzU+ZDIR8EMt/8/f9tN5QD6wfMlvt
+ MpzXDpMUBBlbHGT+C8+y+3ia2PTADak8VnwvMObsXa+SFhOGxB/qFubiTeGd9z5Za+u2
+ yTqkmAdrlw/2pyyNsnH3bUVSOK7YfoHF9VdAsuRFlVhy6Xu/bYZ6wfvQEvQsj9emywpv
+ Fe6TRMhsDa+UXKty9CvWmoqbMmRMgXd8LGr2z/RNVhumYR4c2PbDzk1vPehYC6gd6p4r
+ fcB7xvKrdarLirO7xYs68XKFOxv2+fijP4hU+Ba3obQIwsKnte3xUZk6SOTlb0OsC15W
+ Xp6w==
+X-Gm-Message-State: AFuF++n/5NtI1BD7vrMoTgPr5CnNBf5mrw7kOQ+fVIcGMGuytiqlBgXX
+ Yp2qtsVwpwMfJZExZlAWt192HKENXnIcFN/ZSI29tO/4VkgXdzCcNC/aP22+ZRd6MlxB9Fq501Y
+ gFfKjCKnSuMR033E8O7RA+BuOzDy5TnoYi+eeWiCONQ==
+X-Gm-Gg: AR+sD10iVGMGpUUbQaVmT+SqgJuE4Ius7A/B1ijbMuVCwD7mG7IOZgOMCzAzQB/CkQL
+ jMKL4ZeNBZv16giHMNCchCK8AnYo895lYS4ENw1pHyba+TtDl7J55cQF35gtAPXUAnZmn+/yjZL
+ fot/yBCaHsDhfFmRlZMvn0Dmre9btGCZ9461gyiSsiyBYh2uGsymRXLgRwqh0DE2F4UaXBL4Tm+
+ W3NPLk1uM664tWyxUFQvXgkvq6r6UsvzF9TOM11KEK/T8s0V0VsfJozU0iPvGYTIIhQUXn5plal
+ 4LOR0F5ehdC2fhlvOyXgdka8mTLZ7Q2s2l8psm65/kbiZIb/YfvZ7juVp7VnV+24iyJepoAlhyN
+ jRH1sMXBmNgRT64k6xg94jRx6RRcv
+X-Received: by 2002:a05:690c:dc8:b0:814:6ca5:ef99 with SMTP id
+ 00721157ae682-8573de63a48mr61331057b3.16.1787827754004; Thu, 27 Aug 2026
+ 03:49:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 035/104] tests/tcg/multiarch/gdbstub/prot-none.py:
- detect if /proc/self/mem can be used to access PROT_NONE pages
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
- <20260818192309.22169-36-pierrick.bouvier@oss.qualcomm.com>
- <87mru9oxyx.fsf@draig.linaro.org>
- <e98811cc-489b-433b-89be-a246492460e7@oss.qualcomm.com>
- <853eec97-f9a1-4e67-a125-51a6083d4f1b@oss.qualcomm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <853eec97-f9a1-4e67-a125-51a6083d4f1b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 6RSEtUFjnxWJNH-rrQSYbKy7lTo_57cK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDA4NyBTYWx0ZWRfX+EQN4yTl/Efz
- 9DDD5Ub/9ERvXAIqu99jH+cXkbuYAIHpYdKSp5wy0U8rzC1gkuQ/wmRu5YiAa1UycN7nnA5Keec
- V1MVzhEv5PAyNf6uAZgnq2JIZxlqxv5wZ5O8AReBiq51gWgywnO8i9cJgcv5MlqPVuxHdk52Pe5
- RRwPiChlwIlXsnT8lLnoIKZVYB5JNpXlfBDmOyjWfkK16rzJclxxpyvFKlNcTHFibX2/L++VEvP
- r8mNq1hw9nKbz/+BEeaqogCmLudRhz1us5cXzX9ILVCJcVLwDlV6QmbM8vyh7FjEvdfbdkej1LM
- 4vJT8CNsYaa38/8Ldlggd3ECwNj52jxsl0SHDGPThKD5n4s6QoC8bDlLbHsvWnfS0/Rtrbh0zZ5
- xcxhVjhLit+PDzn+z7vU8HO2c9MT6WxTg4Lnyh0cuF0wRHvF+bryqjpTSudxyhv5b79t1JUeFzo
- MOD1ngrEdQUK2SNqlrw==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a9015d7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
- a=GcyzOjIWAAAA:8 a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=Ea45Ija9ffq4WqWH2pAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=hQL3dl6oAZ8NdCsdz28n:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDA4NyBTYWx0ZWRfX9TL2N/IPgZME
- Heg88e0od0Aex3p7nrQ5jgdMK56uTej4qftdZnzbplDA0LOphwTl50v/+/YkCjbmCVw5r0p/gCr
- EK09F2HvV5rYP97E3KIvNfhOFA2GCpw=
-X-Proofpoint-ORIG-GUID: A25ene7UZi62WCg0NVujmfq1TOG1Wlz1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-27_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270087
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <ZR6PR04MB44238851A057F385D7EECEAD3599AE2@ZR6PR04MB442388.eurprd04.prod.outlook.com>
+In-Reply-To: <ZR6PR04MB44238851A057F385D7EECEAD3599AE2@ZR6PR04MB442388.eurprd04.prod.outlook.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Aug 2026 11:49:01 +0100
+X-Gm-Features: AcwNN1Wom0X-Gi8wRD6Z3y_L0FXEJZs1tHF3MnsdQ-maDAKPVqj_JDg1yDsptCk
+Message-ID: <CAFEAcA9HP168y3nxkfBgKYjvWV8kTvypa5h2V4+bOVu33xWMhQ@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix TTA instruction S bit for IDAU-exempt
+ addresses
+To: Alexandre Frey <alexandre.frey@nxp.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,109 +115,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 26 Aug 2026 at 17:55, Alexandre Frey <alexandre.frey@nxp.com> wrote:
+>
+> The TTA (Test Target Alternate Domain) instruction is specific to
+> ARMv8-M processors with the Security Extension (TrustZone). It allows
+> Secure code to query the security attributes and access permissions of
+> a memory address as seen from the Non-secure domain, and is typically
+> used by Secure code to validate pointers received from Non-secure
+> callers before dereferencing them.
+>
+> The TTA instruction incorrectly reports the S bit (bit 22) of the
+> result register for IDAU-exempt addresses when executed from Secure
+> state.
+>
+> According to the ARMv8-M Architecture Reference Manual (DDI0553B.z),
+> the TTResp() pseudocode (E2.1.408) always calls SecurityCheck() with
+> the current security state, regardless of the alt flag:
+>
+>   sAttributes = SecurityCheck(address, FALSE, IsSecure());
+>
+> The alt flag only affects which MPU bank is queried for the R/RW/MREGION
+> fields. It does not affect the SAU/IDAU security attribute lookup that
+> determines the S bit.
+>
+> For an IDAU-exempt address, SecurityCheck() (E2.1.366) sets:
+>
+>   result.ns = !isSecure;  // isSecure = current CPU security state
+>
+> So TTA executed from Secure state on an IDAU-exempt address should
+> return S=1. This is confirmed by testing on real Cortex-M33 hardware.
+>
+> QEMU currently passes targetsec (which is flipped to !env->v7m.secure
+> when alt=true) to v8m_security_lookup(), causing the IDAU-exempt path
+> to set sattrs->ns = TRUE and return S=0 instead.
+>
+> Fix this by always passing the current security state to
+> v8m_security_lookup(), as the spec requires.
+>
+> Signed-off-by: Alexandre Frey <alexandre.frey@nxp.com>
+> ---
+>  target/arm/tcg/m_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+> index f4ba93b..12ec191 100644
+> --- a/target/arm/tcg/m_helper.c
+> +++ b/target/arm/tcg/m_helper.c
+> @@ -2870,7 +2870,7 @@ uint32_t HELPER(v7m_tt)(CPUARMState *env, uint32_t addr, uint32_t op)
+>
+>      if (env->v7m.secure) {
+>          v8m_security_lookup(env, addr, MMU_DATA_LOAD, mmu_idx,
+> -                            targetsec, &sattrs);
+> +                            env->v7m.secure, &sattrs);
+>          nsr = sattrs.ns && r;
+>          nsrw = sattrs.ns && rw;
+>      } else {
 
+Applied to target-arm.next, thanks (and cc'd for stable backports).
+I added a brief comment
+        /* Note that security check is done as Secure even if alt is true */
+for the benefit of future readers of the function.
 
-On 8/27/26 00:39, Pierrick Bouvier wrote:
-> On 8/26/2026 3:26 PM, Pierrick Bouvier wrote:
->> On 8/26/2026 5:41 AM, Alex Bennée wrote:
->>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>
->>>> Recently (July 2026), this issue became reproducible on debian stable
->>>> with kernel (7.1.3) from backports. I suspect it's a default hardening
->>>> of kernel related to recent CVEs.
->>>>
->>>> By tracking error reported, we can see that /proc/self/mem pread from
->>>> cpu_memory_rw_debug in accel/tcg/user-exec.c returns an error
->>>> (Input/Output error).
->>>>
->>>> Detect this situation directly from our gdb python script, by trying the
->>>> same thing from current process. If this operation fails, we can
->>>> gracefully skip the test.
->>>>
->>>> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/3329
->>>> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>> ---
->>>>   tests/tcg/multiarch/gdbstub/prot-none.py | 35 ++++++++++++++++++++++--
->>>>   1 file changed, 32 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
->>>> index e653bc697f6..393626a9798 100644
->>>> --- a/tests/tcg/multiarch/gdbstub/prot-none.py
->>>> +++ b/tests/tcg/multiarch/gdbstub/prot-none.py
->>>> @@ -5,6 +5,8 @@
->>>>   SPDX-License-Identifier: GPL-2.0-or-later
->>>>   """
->>>>   import ctypes
->>>> +import ctypes.util
->>>> +import mmap
->>>>   import os
->>>>   from test_gdbstub import gdb_exit, main, report
->>>>   
->>>> @@ -18,6 +20,34 @@ def probe_proc_self_mem():
->>>>       except OSError:
->>>>           return False
->>>>   
->>>> +def probe_proc_self_mem_access_prot_none():
->>>> +    libc = ctypes.CDLL(ctypes.util.find_library("c"), use_errno=True)
->>>> +    libc.mmap.restype = ctypes.c_void_p
->>>> +    libc.mmap.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int,
->>>> +                          ctypes.c_int, ctypes.c_int, ctypes.c_long]
->>>> +    size = os.sysconf("SC_PAGESIZE")
->>>> +    # mmap a PROT_NONE page
->>>> +    PROT_NONE = 0
->>>> +    addr = libc.mmap(None, size, PROT_NONE,
->>>> +                     mmap.MAP_PRIVATE | mmap.MAP_ANONYMOUS, -1, 0)
->>>> +    assert addr != ctypes.c_void_p(-1).value
->>>> +    fd = os.open("/proc/self/mem", os.O_RDWR)
->>>> +    try:
->>>> +        # read it through /proc/self/mem
->>>
->>> It might be worth pointing to it here:
->>>
->>> modified    tests/tcg/multiarch/gdbstub/prot-none.py
->>> @@ -34,6 +34,7 @@ def probe_proc_self_mem_access_prot_none():
->>>       fd = os.open("/proc/self/mem", os.O_RDWR)
->>>       try:
->>>           # read it through /proc/self/mem
->>> +        # this is the fallback in cpu_memory_rw_debug
->>>           data = os.pread(fd, size, addr)
->>>       except Exception as e:
->>>           print("/proc/self/mem pread error: " + str(e))
->>>
->>> I think the comment in cpu_memory_rw_debug is wrong through, pread isn't
->>> using the ptrace interface.
->>>
->>
->> I'm not sure which comment you talk about (link to source?), but pread
->> is absolutely not related to ptrace. It's just a read with a specific
->> offset. seek + read can be used to achieve the same result.
->>
-> 
-> Comment is coming from this commit:
-> https://gitlab.com/qemu-project/qemu/-/commit/87ab270429618c13a6bf6dfc90d5edf6a3fa99b9
-> 
-> It's indeed incorrect, and seems like the alternative idea mentioned in
-> commit description.
-> 
-> @Ilya: was it a leftover from when you tried to implement this with ptrace?
-
-I think what I had in mind when I wrote it was [1]:
-
-        /proc/pid/mem
-               This file can be used to access the pages of a process's
-               memory through open(2), read(2), and lseek(2).
-
-               Permission to access this file is governed by a ptrace
-               access mode PTRACE_MODE_ATTACH_FSCREDS check; see
-               ptrace(2).
-
-But I don't think this is relevant for /proc/self/mem, that should
-always work.
-
-[1] https://man7.org/linux/man-pages/man5/proc_pid_mem.5.html
-
-> Regards,
-> Pierrick
-
+thanks
+-- PMM
 
