@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F40C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 07:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543F5C61DC7
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 07:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzUu9-0003ul-PF; Thu, 27 Aug 2026 03:52:09 -0400
+	id 1wzUu9-0003tL-3T; Thu, 27 Aug 2026 03:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wzUu6-0003rH-LL
+ id 1wzUu6-0003r8-Cg
  for qemu-devel@nongnu.org; Thu, 27 Aug 2026 03:52:06 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wzUu3-00050j-Eu
+ (envelope-from <maobibo@loongson.cn>) id 1wzUu4-00050i-1m
  for qemu-devel@nongnu.org; Thu, 27 Aug 2026 03:52:06 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Ax39Ka7I9quZwFAA--.15510S3;
+ by gateway (Coremail) with SMTP id _____8DxC9Ka7I9qvJwFAA--.15858S3;
  Thu, 27 Aug 2026 15:51:54 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJAxnM6Z7I9qFvwTAA--.16948S4;
+ by front1 (Coremail) with SMTP id qMiowJAxnM6Z7I9qFvwTAA--.16948S5;
  Thu, 27 Aug 2026 15:51:54 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Subject: [PATCH 2/3] hw/intc/loongarch_pch_pic: Add pic interrupt status
+Subject: [PATCH 3/3] hw/intc/loongarch_extioi: Add extioi interrupt status
  display
-Date: Thu, 27 Aug 2026 15:53:09 +0800
-Message-ID: <20260827075310.1389232-3-maobibo@loongson.cn>
+Date: Thu, 27 Aug 2026 15:53:10 +0800
+Message-ID: <20260827075310.1389232-4-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260827075310.1389232-1-maobibo@loongson.cn>
 References: <20260827075310.1389232-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxnM6Z7I9qFvwTAA--.16948S4
+X-CM-TRANSID: qMiowJAxnM6Z7I9qFvwTAA--.16948S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJFW5Jr45GFWfury8Jw43urX_yoW5CF43pF
- W7uFnxJr4DGFsrXr93Z345ZF1FqFyxur13KanxA3y0krZ8Gr1DXa48trW29F1UK393Cr12
- gws5t3WYg3WUCrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxZryUtw1DuFyDur45Ww15Awc_yoW5KrWfpF
+ 43uFW3Wr4UGanxJr9xWayDuF1rtws3ur12qFZFv348uayUGryDuas2qry7XF4UCws7K3Wv
+ kwn5tryYgF1DArcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
  xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
  Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
  6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0x
  vE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
  42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
- kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU2nYFDUUUU
+ kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcCD7UUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -78,83 +78,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When irqchip in kernel is enabled, the register status of pch_pic irqchip
+When irqchip in kernel is enabled, the register status of extioi irqchip
 is in KVM kernel. Here add interrupt status display in user side in order
-to debug pch_pic irqchip driver.
+to debug extioi irqchip driver.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c | 38 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ hw/intc/loongarch_extioi.c | 58 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index e87c7497c1..34090514ec 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -9,6 +9,7 @@
- #include "qemu/bitops.h"
+diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+index 2999740269..06f2aa7b14 100644
+--- a/hw/intc/loongarch_extioi.c
++++ b/hw/intc/loongarch_extioi.c
+@@ -10,6 +10,7 @@
  #include "qemu/log.h"
+ #include "qapi/error.h"
  #include "hw/core/irq.h"
 +#include "hw/intc/intc.h"
- #include "hw/intc/loongarch_pch_pic.h"
+ #include "hw/loongarch/virt.h"
+ #include "system/address-spaces.h"
  #include "system/kvm.h"
- #include "trace.h"
-@@ -331,11 +332,43 @@ static int loongarch_pic_post_load(LoongArchPICCommonState *opaque,
+@@ -420,11 +421,63 @@ static int vmstate_extioi_post_load(void *opaque, int version_id)
      return 0;
  }
  
-+static void loongarch_pic_print_info(InterruptStatsProvider *obj, GString *buf)
++static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
++                                        GString *buf)
 +{
-+    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(obj);
-+    uint64_t *vector;
++    LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(obj);
++    uint64_t *val;
++    unsigned long irq;
++    ExtIOICore *core;
++    int i;
 +
-+    loongarch_pic_pre_save(s);
++    vmstate_extioi_pre_save(s);
 +    g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
 +
-+    g_string_append_printf(buf, "  mask     0x%016"PRIx64" msi_en 0x%016"PRIx64
-+                                " edge 0x%016"PRIx64" clr    0x%016"PRIx64"\n",
-+                                s->int_mask, s->htmsi_en, s->intedge,
-+                                s->intclr);
-+
-+    g_string_append_printf(buf, "  last_irr 0x%016"PRIx64" irr    0x%016"PRIx64
-+                                " isr  0x%016"PRIx64" polary 0x%016"PRIx64"\n",
-+                                s->last_intirr, s->intirr, s->intisr,
-+                                s->int_polarity);
-+
-+    vector = (uint64_t *)s->htmsi_vector;
-+    g_string_append_printf(buf, "  MSI map  0x%016"PRIx64" 0x%016"PRIx64
++    val = (uint64_t *)s->isr;
++    g_string_append_printf(buf, "  ISR     0x%016"PRIx64" 0x%016"PRIx64
 +                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+                                *vector, *(vector + 1), *(vector + 2),
-+                                *(vector + 3));
-+
-+    vector += 4;
-+    g_string_append_printf(buf, "           0x%016"PRIx64" 0x%016"PRIx64
++                                *val, *(val + 1), *(val + 2), *(val + 3));
++    val = (uint64_t *)s->enable;
++    g_string_append_printf(buf, "  ENABLE  0x%016"PRIx64" 0x%016"PRIx64
 +                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+                                *vector, *(vector + 1), *(vector + 2),
-+                                *(vector + 3));
++                                *val, *(val + 1), *(val + 2), *(val + 3));
++    val = (uint64_t *)s->ipmap;
++    g_string_append_printf(buf, "  IPMAP   0x%016"PRIx64"\n", *val);
++
++    val = (uint64_t *)s->coremap;
++    for (i = 0; i < EXTIOI_IRQS; i += 32) {
++        g_string_append_printf(buf, "  COREMAP 0x%016"PRIx64" 0x%016"PRIx64
++                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
++                                    *val, *(val + 1), *(val + 2), *(val + 3));
++        val += 4;
++    }
++
++    core = s->cpu;
++    for (i = 0; i < s->num_cpu; i++, core++) {
++        if (!core->cpu) {
++            continue;
++        }
++
++        irq = find_first_bit((unsigned long *)core->coreisr, EXTIOI_IRQS);
++        /* No pending IRQ */
++        if (irq == EXTIOI_IRQS) {
++            continue;
++        }
++
++        val = (uint64_t *)core->coreisr;
++        g_string_append_printf(buf, "  CPU[%d] ISR 0x%016"PRIx64" 0x%016"PRIx64
++                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
++                                    i, *val, *(val + 1), *(val + 2),
++                                    *(val + 3));
++    }
 +}
 +
- static void loongarch_pic_class_init(ObjectClass *klass, const void *data)
+ static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
  {
      DeviceClass *dc = DEVICE_CLASS(klass);
-     LoongarchPICClass *lpc = LOONGARCH_PIC_CLASS(klass);
-     LoongArchPICCommonClass *lpcc = LOONGARCH_PIC_COMMON_CLASS(klass);
+     LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_CLASS(klass);
+     LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
 +    InterruptStatsProviderClass *ic = INTERRUPT_STATS_PROVIDER_CLASS(klass);
      ResettableClass *rc = RESETTABLE_CLASS(klass);
  
-     resettable_class_set_parent_phases(rc, NULL, loongarch_pic_reset_hold,
-@@ -344,6 +377,7 @@ static void loongarch_pic_class_init(ObjectClass *klass, const void *data)
-                                     &lpc->parent_realize);
-     lpcc->pre_save = loongarch_pic_pre_save;
-     lpcc->post_load = loongarch_pic_post_load;
-+    ic->print_info = loongarch_pic_print_info;
+     device_class_set_parent_realize(dc, loongarch_extioi_realize,
+@@ -433,6 +486,7 @@ static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &lec->parent_phases);
+     lecc->pre_save  = vmstate_extioi_pre_save;
+     lecc->post_load = vmstate_extioi_post_load;
++    ic->print_info = loongarch_extioi_print_info;
  }
  
- static const TypeInfo loongarch_pic_types[] = {
-@@ -353,6 +387,10 @@ static const TypeInfo loongarch_pic_types[] = {
-         .instance_size      = sizeof(LoongarchPICState),
-         .class_size         = sizeof(LoongarchPICClass),
-         .class_init         = loongarch_pic_class_init,
+ static const TypeInfo loongarch_extioi_types[] = {
+@@ -442,6 +496,10 @@ static const TypeInfo loongarch_extioi_types[] = {
+         .instance_size = sizeof(LoongArchExtIOIState),
+         .class_size    = sizeof(LoongArchExtIOIClass),
+         .class_init    = loongarch_extioi_class_init,
 +        .interfaces         = (const InterfaceInfo[]) {
 +            { TYPE_INTERRUPT_STATS_PROVIDER },
 +            { }
