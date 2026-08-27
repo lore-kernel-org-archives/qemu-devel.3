@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A79C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D24EC61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzaDh-0004WF-1Y; Thu, 27 Aug 2026 09:32:41 -0400
+	id 1wzaE8-0006g2-Px; Thu, 27 Aug 2026 09:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaDY-0004IL-R8; Thu, 27 Aug 2026 09:32:32 -0400
+ id 1wzaE0-0006Yh-AM; Thu, 27 Aug 2026 09:33:00 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaDV-0001nf-Iq; Thu, 27 Aug 2026 09:32:31 -0400
+ id 1wzaDx-0001tB-JT; Thu, 27 Aug 2026 09:32:59 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RCVlHb3056734; Thu, 27 Aug 2026 13:32:28 GMT
+ 67RCVb4t3056396; Thu, 27 Aug 2026 13:32:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=JalPK9pK2J2b4ofpE
- nG+jd28VyNFmej5Av36hE4/d6M=; b=JDLMuRUBol1fAkBYVnY0T9lmqu7IL17rU
- lTlr4rOvzP/s8V1NHsJHfVcscJru5afHaGOYSi69eMTQRzW0V1OmVM3nytE8vLPf
- RK4JpI+3QglQbxC0P5T8XHzE0y9mIySJ/ygW9HUw/Jae1wIyOSfrKTYlqkumvYg7
- 5xqylLsAPQl9DtvxYniDzyiCW7gGRy90S+B2BLdMbbsOM+blUc+IFk79cOs3MdZC
- 0gsGmo6WbqmIqERmmPTKBkpTtQGgdNU+51bwFTP9+uFTjSX13hiK+6yTaySzq5YO
- p1Vik2DIpK25c2olI/RLQZCTveCBrlqxlIbjSxrHooTZTcra6oMMg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxn9nf-1
+ :mime-version:references:subject:to; s=pp1; bh=yQPwj5JqJOKv76ZBs
+ hjegYR6UFGGp5K+ybD+QBmMixg=; b=MuAEATBlzGKnYGQeA3upI6CClW9d1Jypp
+ XPXalRcvpANXYQMkckKyQipY1kwgarsRfJU4WgMUP+0bs0Gg3ZHtJeYv/sFv0IzD
+ dy1Xko2aMGEmxpPZiz/PNE+O9dmtzOE+BApCvh0NCN9qBpIuA3INfwbggsoPfVNw
+ pFFpZyKl3ES6QyV53cutrC+6Evw4Vz9wGEeicDatglpVxD0QwRSDtKPE6MpmYyBB
+ BxuCNYWzmNLQcFrO2uS5bAcHM6rl2E7Vj9TOoaYzhItiNmKKIQCfDsblbeG1BQhl
+ lWTLuvUX/Rvp7w+ODUEi7xL8ZwQs13WVe/humUuSZ1Tvq1OsKp+6A==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxn9qx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:32:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQNss027530;
- Thu, 27 Aug 2026 13:32:26 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsyg1fs-1
+ Thu, 27 Aug 2026 13:32:52 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQJHV027471;
+ Thu, 27 Aug 2026 13:32:52 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k89kn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:32:26 +0000 (GMT)
+ Thu, 27 Aug 2026 13:32:52 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67RDWLaQ17367414
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67RDWlAN45089158
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Aug 2026 13:32:22 GMT
+ Thu, 27 Aug 2026 13:32:48 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 358C320040;
- Thu, 27 Aug 2026 13:32:21 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D77C82004F;
+ Thu, 27 Aug 2026 13:32:47 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 758F120043;
- Thu, 27 Aug 2026 13:32:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 19A1E20040;
+ Thu, 27 Aug 2026 13:32:42 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.111.12.1]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Aug 2026 13:32:15 +0000 (GMT)
+ Thu, 27 Aug 2026 13:32:41 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -65,9 +65,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v3 17/37] target/ppc: Move wait instruction to decodetree
-Date: Thu, 27 Aug 2026 18:59:32 +0530
-Message-ID: <20260827133010.278889-18-rathc@linux.ibm.com>
+Subject: [PATCH v3 21/37] target/ppc: Move Condition Register logical
+ instructions to decodetree.
+Date: Thu, 27 Aug 2026 18:59:36 +0530
+Message-ID: <20260827133010.278889-22-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827133010.278889-1-rathc@linux.ibm.com>
 References: <20260827133010.278889-1-rathc@linux.ibm.com>
@@ -75,23 +76,23 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX63aGHVYmvCwo
- FQSrYt4S5/5M9afQPav7k+upAIXac2OawAMSxyosWqciQDJSwTHKjRagdXVxiYrCHi8PRabMJVG
- n/+/mj+XjDB5NwpY5sCIC2iN5He8DOo=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a903c6b cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX0abJe69qo9eU
+ SDThdsZhtBdCBC8R789NVdobUeZbUnJyOhK9JpReXh9pFURZS8YQD58D5Ee7Aj+P24CxD01NqAi
+ AKDAxvTcYtFraBGtGXrJ5fjd7toW1yU=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a903c85 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=uB9JOsh-sYL72gAx4UQA:9
-X-Proofpoint-ORIG-GUID: xhzzpLndZqwo61Z2kgRLLpLwLqV87K3r
-X-Proofpoint-GUID: euPVGynN90_ScL-qOyQRziZE3xJEB8bq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX12iRWZp608H/
- IjGj4qAf5Nzdlj87KcAII/IjyEZUFOlTBhyexcSrNL8+0oM5XDHVWzEyP+TqfNzCX2doQLXJaDw
- 2ak/7owI6xCLhs4gkxeYO5B8LNDbnnM/OY2ZYZE06yHKIsc2cJEDAbsYUj8D+UQqhGJQ0osZF+P
- 1rVbqWNWn5AXL6mabbgS5otUnSo+V/CIUj0Ys6JaO5disL+LL5uaFVSV+GQXv7DTQLdmg9KxHZs
- 8C+rmCA4YBiaJF0wItZPqZBHDN/iKKctsdNImRxYSyrqyGW7x8hVOc18J8GIc0pwf2FGjV97ZkN
- okxedcsoXV9lFUF50dSajtJe5xR2fzXLfnCk+0G0z4fuaHmuedak4y/L/NOHffHeUxLqgQhJI7E
- /7TMMWXQ7tMHYoVT7aSjaCgS2ixWsuaPxfVFZxlanD8TbVm+Xvb+v1oJyGKjVNWXVxd5C6Sv1T5
- bhDfzmq3nVaozCpZ4xQ==
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=hG2spAfxjb5FyaO2x7EA:9
+X-Proofpoint-ORIG-GUID: SOd2T-Mv62uPzu8WrjSDLv30e4pAQEiF
+X-Proofpoint-GUID: 1YDQfZpVYeGltQ30fqTj32tvCpzYmAIN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX0RibsWbtlLUM
+ KU6ic3TWvpm/VtDDvQQvJ9YM/jrSMLTR8Fb9SlYGVQvS4mxgIHB7jroY7dglABqHGVniaoZleNQ
+ ed7F1rxuWzeyjWvM9tR2OtbtEa5+ZMcnc897Cn3bzCQnsxNAnbCG0xKPcfKQ+y+E2TaJ8q6S0YP
+ apk45rO+gs2BOKspMyf/pOIrHyD7sCPvRZ+n9Zheve5why6wq5Wu9K2ajks1oB7A1Rwl4OPbfV2
+ HymN2J5BSDbid2kIz+Isz8H2pZ630ANUKertjYZBkJ3E3cY7k5jSBcsInsKGrgDIF3RXgN4i2O9
+ ABHTpmgwXWu2QwYAJ/tRpI6XGQjk2RMht6MYymgDb9cCC34vlYVloa554oEsBd1VmVLf41r5gEk
+ JJWMEf+oFskh9Xfi1+VfbLMw+628xDMGF6fde8hPwyqPhJwlbLJbeIxyw23BI3kLyk3DMZjD4lO
+ q7SDOYz8390VOWgXLKQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_05,2026-08-26_02,2025-10-01_01
@@ -125,277 +126,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-Implement wait instruction using decodetree with
-proper handling of WC and PL fields across different ISA
-versions. Since the opcode changed between ISA 2.x and 3.x
-we have defined 2 different decodetree instructions that
-are handled by the same helper.
+Move below instructions to decodetree specification :
 
-The changes have been tested by comparing the tcg generated
-before and after the change for wait instruction. The test
-was repeated for 2 types of machines:
+        cr{and, or, xor, nand, nor, eqv, andc, orc}  : XL-form
 
-Power10 - which should use the newer wait implementation
-e500mc - which should use older PPC_WAIT implementation
+The changes were verified by validating that the tcg ops generated by
+those instructions remain the same, which were captured with the '-d
+in_asm,op' flag.
 
-Both generated the same tcg ops with and without the change.
-Further, with the changes we were able to boot into Fedora
-distro as well.
-
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/insn32.decode                     | 15 +++
- target/ppc/translate.c                       | 91 ------------------
- target/ppc/translate/storage-ctrl-impl.c.inc | 99 ++++++++++++++++++++
- 3 files changed, 114 insertions(+), 91 deletions(-)
+ target/ppc/insn32.decode                   | 11 ++++
+ target/ppc/translate.c                     | 59 ----------------------
+ target/ppc/translate/fixedpoint-impl.c.inc | 45 +++++++++++++++++
+ 3 files changed, 56 insertions(+), 59 deletions(-)
 
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index e7cc36bd6c..da32ac1d28 100644
+index 137432ed96..5e5490b169 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -1478,6 +1478,21 @@ ISYNC           010011 ----- ----- ----- 0010010110 -
- @XL_bfa         ...... bf:3 .. bfa:3 .. ..... ..... ..... .
- MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
+@@ -516,6 +516,17 @@ CFUGED          011111 ..... ..... ..... 0011011100 -   @X
+ PDEPD           011111 ..... ..... ..... 0010011100 -   @X
+ PEXTD           011111 ..... ..... ..... 0010111100 -   @X
  
-+# Wait Instructions
++## Condition Register Instructions
 +
-+# We can use the same X_wait argument set for both WAIT and older ISA2.x
-+# compliant WAIT_2_x. Depending on the version, we may or may not use the
-+# arguments. For more information, check do_wait() helper.
++CRAND           010011 ..... ..... ..... 0100000001 -  @X
++CROR            010011 ..... ..... ..... 0111000001 -  @X
++CRNAND          010011 ..... ..... ..... 0011100001 -  @X
++CRXOR           010011 ..... ..... ..... 0011000001 -  @X
++CRNOR           010011 ..... ..... ..... 0000100001 -  @X
++CREQV           010011 ..... ..... ..... 0100100001 -  @X
++CRANDC          010011 ..... ..... ..... 0010000001 -  @X
++CRORC           010011 ..... ..... ..... 0110100001 -  @X
 +
-+&X_wait         wc pl
-+@X_wait         ...... ..- wc:2 --- pl:2 ----- .......... -  &X_wait
-+
-+# According to ISA v3.1, bit 6 and 7 are implementation dependent and "unless
-+# the intention is to use the implementation-dependent field, these bits must be
-+# coded zero". Hence, we code them to 0.
-+WAIT            011111 00-.. ---.. ----- 0000011110 -  @X_wait
-+WAIT_ISA_2_X    011111 ---.. ---.. ----- 0000111110 -  @X_wait
-+
- # Branch History Rolling Buffer (BHRB) Instructions
+ # Fixed-Point Hash Instructions
  
- &XFX_bhrbe      rt bhrbe
+ HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 322870dc0d..e5ed4d2cc4 100644
+index 59e8ecb262..c5361d8db5 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -2727,95 +2727,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
- static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
- #endif
+@@ -2920,53 +2920,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+     tcg_gen_movi_tl(cpu_lr, nip);
+ }
  
--/* wait */
--static void gen_wait(DisasContext *ctx)
--{
--    uint32_t wc;
--
--    if (ctx->insns_flags & PPC_WAIT) {
--        /* v2.03-v2.07 define an older incompatible 'wait' encoding. */
--
--        if (ctx->insns_flags2 & PPC2_PM_ISA206) {
--            /* v2.06 introduced the WC field. WC > 0 may be treated as no-op. */
--            wc = WC(ctx->opcode);
--        } else {
--            wc = 0;
--        }
--
--    } else if (ctx->insns_flags2 & PPC2_ISA300) {
--        /* v3.0 defines a new 'wait' encoding. */
--        wc = WC(ctx->opcode);
--        if (ctx->insns_flags2 & PPC2_ISA310) {
--            uint32_t pl = PL(ctx->opcode);
--
--            /* WC 1,2 may be treated as no-op. WC 3 is reserved. */
--            if (wc == 3) {
--                gen_invalid(ctx);
--                return;
--            }
--
--            /* PL 1-3 are reserved. If WC=2 then the insn is treated as noop. */
--            if (pl > 0 && wc != 2) {
--                gen_invalid(ctx);
--                return;
--            }
--
--        } else { /* ISA300 */
--            /* WC 1-3 are reserved */
--            if (wc > 0) {
--                gen_invalid(ctx);
--                return;
--            }
--        }
--
--    } else {
--        warn_report("wait instruction decoded with wrong ISA flags.");
--        gen_invalid(ctx);
--        return;
--    }
--
--    /*
--     * wait without WC field or with WC=0 waits for an exception / interrupt
--     * to occur.
--     */
--    if (wc == 0) {
--        TCGv_i32 t0 = tcg_constant_i32(1);
--        tcg_gen_st_i32(t0, tcg_env,
--                       -offsetof(PowerPCCPU, env) + offsetof(CPUState, halted));
--        /* Stop translation, as the CPU is supposed to sleep from now */
--        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
--    }
--
--    /*
--     * Other wait types must not just wait until an exception occurs because
--     * ignoring their other wake-up conditions could cause a hang.
--     *
--     * For v2.06 and 2.07, wc=1,2,3 are architected but may be implemented as
--     * no-ops.
--     *
--     * wc=1 and wc=3 explicitly allow the instruction to be treated as a no-op.
--     *
--     * wc=2 waits for an implementation-specific condition, such could be
--     * always true, so it can be implemented as a no-op.
--     *
--     * For v3.1, wc=1,2 are architected but may be implemented as no-ops.
--     *
--     * wc=1 (waitrsv) waits for an exception or a reservation to be lost.
--     * Reservation-loss may have implementation-specific conditions, so it
--     * can be implemented as a no-op.
--     *
--     * wc=2 waits for an exception or an amount of time to pass. This
--     * amount is implementation-specific so it can be implemented as a
--     * no-op.
--     *
--     * ISA v3.1 allows for execution to resume "in the rare case of
--     * an implementation-dependent event", so in any case software must
--     * not depend on the architected resumption condition to become
--     * true, so no-op implementations should be architecturally correct
--     * (if suboptimal).
--     */
+-/***                      Condition register logical                       ***/
+-#define GEN_CRLOGIC(name, tcg_op, opc)                                        \
+-static void glue(gen_, name)(DisasContext *ctx)                               \
+-{                                                                             \
+-    uint8_t bitmask;                                                          \
+-    int sh;                                                                   \
+-    TCGv_i32 t0, t1;                                                          \
+-    sh = (crbD(ctx->opcode) & 0x03) - (crbA(ctx->opcode) & 0x03);             \
+-    t0 = tcg_temp_new_i32();                                                  \
+-    if (sh > 0)                                                               \
+-        tcg_gen_shri_i32(t0, cpu_crf[crbA(ctx->opcode) >> 2], sh);            \
+-    else if (sh < 0)                                                          \
+-        tcg_gen_shli_i32(t0, cpu_crf[crbA(ctx->opcode) >> 2], -sh);           \
+-    else                                                                      \
+-        tcg_gen_mov_i32(t0, cpu_crf[crbA(ctx->opcode) >> 2]);                 \
+-    t1 = tcg_temp_new_i32();                                                  \
+-    sh = (crbD(ctx->opcode) & 0x03) - (crbB(ctx->opcode) & 0x03);             \
+-    if (sh > 0)                                                               \
+-        tcg_gen_shri_i32(t1, cpu_crf[crbB(ctx->opcode) >> 2], sh);            \
+-    else if (sh < 0)                                                          \
+-        tcg_gen_shli_i32(t1, cpu_crf[crbB(ctx->opcode) >> 2], -sh);           \
+-    else                                                                      \
+-        tcg_gen_mov_i32(t1, cpu_crf[crbB(ctx->opcode) >> 2]);                 \
+-    tcg_op(t0, t0, t1);                                                       \
+-    bitmask = 0x08 >> (crbD(ctx->opcode) & 0x03);                             \
+-    tcg_gen_andi_i32(t0, t0, bitmask);                                        \
+-    tcg_gen_andi_i32(t1, cpu_crf[crbD(ctx->opcode) >> 2], ~bitmask);          \
+-    tcg_gen_or_i32(cpu_crf[crbD(ctx->opcode) >> 2], t0, t1);                  \
 -}
 -
- #if defined(TARGET_PPC64)
- static void gen_doze(DisasContext *ctx)
- {
-@@ -5184,8 +5095,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
- GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
- GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
- /* ISA v3.0 changed the extended opcode from 62 to 30 */
--GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
--GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
- #if defined(TARGET_PPC64)
- GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
-diff --git a/target/ppc/translate/storage-ctrl-impl.c.inc b/target/ppc/translate/storage-ctrl-impl.c.inc
-index 943229c438..d4d6ab765a 100644
---- a/target/ppc/translate/storage-ctrl-impl.c.inc
-+++ b/target/ppc/translate/storage-ctrl-impl.c.inc
-@@ -270,3 +270,102 @@ static bool do_tlbie(DisasContext *ctx, arg_X_tlbie *a, bool local)
+-/* crand */
+-GEN_CRLOGIC(crand, tcg_gen_and_i32, 0x08);
+-/* crandc */
+-GEN_CRLOGIC(crandc, tcg_gen_andc_i32, 0x04);
+-/* creqv */
+-GEN_CRLOGIC(creqv, tcg_gen_eqv_i32, 0x09);
+-/* crnand */
+-GEN_CRLOGIC(crnand, tcg_gen_nand_i32, 0x07);
+-/* crnor */
+-GEN_CRLOGIC(crnor, tcg_gen_nor_i32, 0x01);
+-/* cror */
+-GEN_CRLOGIC(cror, tcg_gen_or_i32, 0x0E);
+-/* crorc */
+-GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D);
+-/* crxor */
+-GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06);
+-
+ /***                           System linkage                              ***/
  
- TRANS_FLAGS(MEM_TLBIE, TLBIE, do_tlbie, false)
- TRANS_FLAGS(MEM_TLBIE, TLBIEL, do_tlbie, true)
-+
-+/*
-+ * Decodetree populates a->wc and a->pl based on ISA v3.1, however they may
-+ * or may not be used based on the ISA:
-+ *   For ISA < 2.06 - both wc and pl are ignored
-+ *   For ISA == 2.06, 2.07, 3.0 - wc is used and pl is ignored
-+ *   For ISA 3.1 - both wc and pl are used
-+ */
-+static bool do_wait(DisasContext *ctx, arg_X_wait *a)
+ /* rfi (supervisor only) */
+@@ -5109,18 +5062,6 @@ GEN_STEPX(stw, DEF_MEMOP(MO_UL), 0x1F, 0x04)
+ GEN_STEPX(std, DEF_MEMOP(MO_UQ), 0x1D, 0x04)
+ #endif
+ 
+-#undef GEN_CRLOGIC
+-#define GEN_CRLOGIC(name, tcg_op, opc)                                        \
+-GEN_HANDLER(name, 0x13, 0x01, opc, 0x00000001, PPC_INTEGER)
+-GEN_CRLOGIC(crand, tcg_gen_and_i32, 0x08),
+-GEN_CRLOGIC(crandc, tcg_gen_andc_i32, 0x04),
+-GEN_CRLOGIC(creqv, tcg_gen_eqv_i32, 0x09),
+-GEN_CRLOGIC(crnand, tcg_gen_nand_i32, 0x07),
+-GEN_CRLOGIC(crnor, tcg_gen_nor_i32, 0x01),
+-GEN_CRLOGIC(cror, tcg_gen_or_i32, 0x0E),
+-GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D),
+-GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06),
+-
+ #undef GEN_MAC_HANDLER
+ #define GEN_MAC_HANDLER(name, opc2, opc3)                                     \
+ GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_405_MAC)
+diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+index 11d919a21a..d0b3bda97f 100644
+--- a/target/ppc/translate/fixedpoint-impl.c.inc
++++ b/target/ppc/translate/fixedpoint-impl.c.inc
+@@ -539,6 +539,51 @@ static bool trans_MFCR(DisasContext *ctx, arg_MFCR *a)
+     return true;
+ }
+ 
++static bool cr_logic_common(DisasContext *ctx, arg_X *a,
++                            void (*tcg_op)(TCGv_i32, TCGv_i32, TCGv_i32))
 +{
-+    uint32_t wc;
++    uint8_t bitmask;
++    int sh;
++    TCGv_i32 t0, t1;
++    sh = (a->rt & 0x03) - (a->ra & 0x03);
++    t0 = tcg_temp_new_i32();
++    t1 = tcg_temp_new_i32();
 +
-+    if (ctx->insns_flags & PPC_WAIT) {
-+        /* v2.03-v2.07 define an older incompatible 'wait' encoding. */
-+
-+        if (ctx->insns_flags2 & PPC2_PM_ISA206) {
-+            /* v2.06 introduced the WC field. WC > 0 may be treated as no-op. */
-+            wc = a->wc;
-+        } else {
-+            wc = 0;
-+        }
-+
-+    } else if (ctx->insns_flags2 & PPC2_ISA300) {
-+        /* v3.0 defines a new 'wait' encoding. */
-+        wc = a->wc;
-+        if (ctx->insns_flags2 & PPC2_ISA310) {
-+            uint32_t pl = a->pl;
-+
-+            /* WC 1,2 may be treated as no-op. WC 3 is reserved. */
-+            if (wc == 3) {
-+                gen_invalid(ctx);
-+                return true;
-+            }
-+
-+            /* PL 1-3 are reserved. If WC=2 then the insn is treated as noop. */
-+            if (pl > 0 && wc != 2) {
-+                gen_invalid(ctx);
-+                return true;
-+            }
-+
-+        } else { /* ISA300 */
-+            /* WC 1-3 are reserved */
-+            if (wc > 0) {
-+                gen_invalid(ctx);
-+                return true;
-+            }
-+        }
-+
++    if (sh > 0) {
++        tcg_gen_shri_i32(t0, cpu_crf[a->ra >> 2], sh);
++    } else if (sh < 0) {
++        tcg_gen_shli_i32(t0, cpu_crf[a->ra >> 2], -sh);
 +    } else {
-+        warn_report("wait instruction decoded with wrong ISA flags.");
-+        gen_invalid(ctx);
-+        return true;
++        tcg_gen_mov_i32(t0, cpu_crf[a->ra >> 2]);
 +    }
 +
-+    /*
-+     * wait without WC field or with WC=0 waits for an exception / interrupt
-+     * to occur.
-+     */
-+    if (wc == 0) {
-+        TCGv_i32 t0 = tcg_constant_i32(1);
-+        tcg_gen_st_i32(t0, tcg_env,
-+                       -offsetof(PowerPCCPU, env) + offsetof(CPUState, halted));
-+        /* Stop translation, as the CPU is supposed to sleep from now */
-+        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
++    sh = (a->rt & 0x03) - (a->rb & 0x03);
++    if (sh > 0) {
++        tcg_gen_shri_i32(t1, cpu_crf[a->rb >> 2], sh);
++    } else if (sh < 0) {
++        tcg_gen_shli_i32(t1, cpu_crf[a->rb >> 2], -sh);
++    } else {
++        tcg_gen_mov_i32(t1, cpu_crf[a->rb >> 2]);
 +    }
++    tcg_op(t0, t0, t1);
 +
-+    /*
-+     * Other wait types must not just wait until an exception occurs because
-+     * ignoring their other wake-up conditions could cause a hang.
-+     *
-+     * For v2.06 and 2.07, wc=1,2,3 are architected but may be implemented as
-+     * no-ops.
-+     *
-+     * wc=1 and wc=3 explicitly allow the instruction to be treated as a no-op.
-+     *
-+     * wc=2 waits for an implementation-specific condition, such could be
-+     * always true, so it can be implemented as a no-op.
-+     *
-+     * For v3.1, wc=1,2 are architected but may be implemented as no-ops.
-+     *
-+     * wc=1 (waitrsv) waits for an exception or a reservation to be lost.
-+     * Reservation-loss may have implementation-specific conditions, so it
-+     * can be implemented as a no-op.
-+     *
-+     * wc=2 waits for an exception or an amount of time to pass. This
-+     * amount is implementation-specific so it can be implemented as a
-+     * no-op.
-+     *
-+     * ISA v3.1 allows for execution to resume "in the rare case of
-+     * an implementation-dependent event", so in any case software must
-+     * not depend on the architected resumption condition to become
-+     * true, so no-op implementations should be architecturally correct
-+     * (if suboptimal).
-+     */
++    bitmask = 0x08 >> (a->rt & 0x03);
++    tcg_gen_andi_i32(t0, t0, bitmask);
++    tcg_gen_andi_i32(t1, cpu_crf[a->rt >> 2], ~bitmask);
++    tcg_gen_or_i32(cpu_crf[a->rt >> 2], t0, t1);
++
 +    return true;
 +}
 +
-+TRANS_FLAGS(WAIT, WAIT_ISA_2_X, do_wait)
-+TRANS_FLAGS2(ISA300, WAIT, do_wait)
++TRANS(CRAND, cr_logic_common, tcg_gen_and_i32);
++TRANS(CROR, cr_logic_common, tcg_gen_or_i32);
++TRANS(CRXOR, cr_logic_common, tcg_gen_xor_i32);
++TRANS(CRNAND, cr_logic_common, tcg_gen_nand_i32);
++TRANS(CRNOR, cr_logic_common, tcg_gen_nor_i32);
++TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
++TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
++TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
++
+ static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
+                      bool compute_ov, bool compute_rc0)
+ {
 -- 
 2.55.0
 
