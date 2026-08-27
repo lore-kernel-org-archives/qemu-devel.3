@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D21C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD738C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzarh-0002gw-8w; Thu, 27 Aug 2026 10:14:01 -0400
+	id 1wzarh-0002hD-NS; Thu, 27 Aug 2026 10:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarg-0002gS-2Z
+ id 1wzarg-0002gb-Lz
  for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarV-0005k2-NO
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:56 -0400
+ id 1wzarY-0005l8-V4
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840029;
+ s=mimecast20190719; t=1787840032;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M/O6x+kgw6s99eEjinNaj/p2rgga36nR4TA3pRTnHMs=;
- b=O21+amT9xqmgS0V1cwZwbGXL4VntO0oMsyBC7s02PxhjxNF7RPDpwoK1iRcjnG6EPDabsm
- j25UHXozreDoEe44C+7s1ADhSTrXikOm7gXVSpa+hEaYiawrRESk8R0olfaMEmg4Qk5yFc
- FtQMhIXnvRGUl/DnIw6NDQbtDNpOFwU=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b5m3PCBo4qZ8ZChzlOr1MQQV5+IdqKQ4NKkucVjzKRs=;
+ b=alHCZYyDLREdoeTKtRYUMBe1+mJ0hE3S2nd9uyjyw0wiGGjfnuS2fEqhiCCyrglgE1PpZJ
+ UYeToYRwATsx8hv3TiXc2FBxsYg+mEfRes1vZ3As9UmNYjfg60j7I8JQL/IoDdCUoBcWDK
+ IqZMiFC24eNcWazNHKvCG36U49uPYQg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-365-AWMbcodzPZiOuii7elywjA-1; Thu, 27 Aug 2026 10:13:45 -0400
-X-MC-Unique: AWMbcodzPZiOuii7elywjA-1
-X-Mimecast-MFC-AGG-ID: AWMbcodzPZiOuii7elywjA_1787840024
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-6a5d7e3ac13so653363a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:45 -0700 (PDT)
+ us-mta-617-ZYwWhEsvPZSnpwJ5WvV8yg-1; Thu, 27 Aug 2026 10:13:50 -0400
+X-MC-Unique: ZYwWhEsvPZSnpwJ5WvV8yg-1
+X-Mimecast-MFC-AGG-ID: ZYwWhEsvPZSnpwJ5WvV8yg_1787840029
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49b0e6638e3so5624455e9.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787840024; x=1788444824; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787840029; x=1788444829; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=M/O6x+kgw6s99eEjinNaj/p2rgga36nR4TA3pRTnHMs=;
- b=RGhLLyIo8+DSC1cftE2TMQCV3t0Cy+qqlJuzBb0KaA5mZIJhfB91Yr159KKjbk/8Mc
- 5wQbQBKmQMTGRYyTBfXYEFM3LGHwQiffEfK+3/0xij2uBDNJ8a2qY0JJjUEfNcrGNvQZ
- z3hZvDz3sbnWKsVC7AhhRD6aJ4kAaSbKSg3tz5ASOqagJAD6rFNtwECatrkerH9B/6rx
- c8lpEsUl+4CiF66UNbc2onjjd6MnGBcRCYYkUOQGTK7sr+VyppRV7mTikdbU+GmhPvWt
- vltrOyEAemi17k6CKRyvK9JB/vnqWK15GlG9moTFP/tayeA0Q+otrYyGEU3bvhUI+1yW
- G3+w==
+ bh=b5m3PCBo4qZ8ZChzlOr1MQQV5+IdqKQ4NKkucVjzKRs=;
+ b=Dr/uUL8sWgQ5IQoGwvhHGTsf9NrLbeOdQafkDVxRHA/a1qGZPUTJTgHQlPkgAj+QIJ
+ NsY/2bomNBa1/uCSE/lkbs3MUw5xSKKSKBHm1d5kHMytXoYmXSGkcAVACQbETkG6FAIP
+ c2v4VTo8gJ4o6p8Tq/zut8GyDpn2+L6l9iFdMbJ7N+qcOQsSwXEApHjfakz3O4jnwmEw
+ Iq1ROzkI6rQ2EIywMfaNqPCPf0PXDMihEytEVuDa0CxtzZFj+Ax+OGv+K1XPrxI9LMl0
+ zsi3Rs4hbpzLSPL0bc0z9mZoulHc/l8LMpn3uwrbc79vevQon1XuhKHDZ38X4N1EiQSC
+ 3Xmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787840024; x=1788444824;
+ d=1e100.net; s=20251104; t=1787840029; x=1788444829;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=M/O6x+kgw6s99eEjinNaj/p2rgga36nR4TA3pRTnHMs=;
- b=az1Z0ysqwXvI6cUMN6N+0BVA62CaGBXbnljNeUW0U75RI5d3zC3GcjLIwZNobq8sjL
- Qqq70kMPl0Go8XbY+pW2+QvwYY0vwrV6CKVgZCHgLTuaKWAsQR3NuA7PFPCwvHLk5AIg
- 2k0jZTThfhUPeyuK2TWWos4fK0U/Z3+AtGQbhCjC2o+cIzlyuarUXAD6pMMDZvBTDcOT
- DCXnf63GA+1wF3iYiVfSoLY0sWOcW9dCCNZGQ5wyacyqZv+2yLolQ8/OSFCLmcKfGFP0
- G4zE9JjxpMwp1dptmeB9RxIMNVJFp7b/clvPM5U72G+a48tLCTy8iJ1S6Sh9AGZY6cb2
- uITg==
-X-Gm-Message-State: AFuF++kxWKX0ZwqasJpBsDuOlutfiZ9h9pwfQwa1+2aKEGz0F2oPnuAr
- PV/kHQrARn4+twYO1k2aYwNLg7fiz6O+rwq8oMJAgYW62NcFP8sGnLgS77P9yB7GZ6SL0mPdemS
- QkPKFTBvCrnHNAYrhmGgc/WvO4GplNoPQ1/lZpJY2YdQuvpMdqpyk91Ls164u+k0ENzTVvl9eem
- PImg8Y8/XqBF9SqAAfU3dBqWVzEKCrup2sMyeREjC3
-X-Gm-Gg: AR+sD12YR0acBwGQdi2yTIYUE2iacJ+W5S7b1+bgHV1GUX4ySEAbQlI1O9Mty3RwBPC
- 2yV+Leb6/DOQPPXhpCXqKnLMnMAcIJyJsMGiwWkCtNEyqHnmQTa08aY9IfHDKxLhwztcyRWVjUr
- pcNdFXM6jBU3fnrl74ka5w5VLYfyNLHJGyjhQwuuBlwONhxHyKh7nUAqiIDCBIDFGemz3d/eqLY
- APq0KRLWIGEUC+CgilqLe+CeViEcD+izLTGw7N+sxnrJzmjun5hImmZDu6u5ZC0tHfqA9T2S87+
- xYJIRd2U4Dm9zc/UvnWEM12P6PjduTYy/Gx3IiC24w42PJwTWFlRnlUtwVWxuH3gcZBd7U0lQMj
- Z/u04NtbwmD2PzeC5Wml5RY8WacTd28se7L4nW04mkZ/sDs4EBxxXLjlRE/OJPBVxjoBHYY1OuN
- /zxqw=
-X-Received: by 2002:a05:6402:1912:b0:6a3:ee5c:8800 with SMTP id
- 4fb4d7f45d1cf-6a5df61fe9cmr18595180a12.8.1787840024053; 
- Thu, 27 Aug 2026 07:13:44 -0700 (PDT)
-X-Received: by 2002:a05:6402:1912:b0:6a3:ee5c:8800 with SMTP id
- 4fb4d7f45d1cf-6a5df61fe9cmr18595113a12.8.1787840023542; 
- Thu, 27 Aug 2026 07:13:43 -0700 (PDT)
+ bh=b5m3PCBo4qZ8ZChzlOr1MQQV5+IdqKQ4NKkucVjzKRs=;
+ b=TUqsSr52esxp4So9+89oyB4Cxx0PVfNTbTnSiy/IjTFIGcYl4L6IcUBGoxf4Ot4vRD
+ E2qGI1RfUoK/vR6cifp7JejoTwuIMC9G/voPSDAWXMa7IisVlMRgHQ1JXT+LsrEzorcT
+ jkGl1moxIwiVTaW79ncs15MD7lLNJPoXAJo55YnsoKSJhaq3L3EG+fvOkLds4CVPBVhq
+ 9wvx0cONJdZSrTU/j3xN5mH+b5L/SJl2vYbKT+DB7DQqNyNUI4W3Pkidk/NqNdCMIGBH
+ 3oPIVGAYgKaFiIxCm9M9/AQHGz35j2Ya4iFB9R7J+B7jRk2dVNyqzzPZaHdYP4HIbRa2
+ BqWg==
+X-Gm-Message-State: AFuF++mz2ELZwd8j1RqV5jhbcmFts2FGGELgDtSIP85Btn2lrcIxJsX+
+ q6ezgk4LakURJ+zY6sGlTzkrXWOJw9ncYl8Mpa4BC9Cj80uxxwMEsCvl4Xh+gQ/V8pigimX26cy
+ wtFmN8zHfiPaR5KyKV9rWSnUAN5lNV6ST61Qid3ZpoKkzqW2xbBRU1vsQXSqq8ixVtuEXDbXe9w
+ HuGARrHzCBZ/5m8mmOGwKMNhowdc8Onm0nBVUGQrS5
+X-Gm-Gg: AR+sD11XBqQ3w1qexDXHb/RU4w6E1mS3LlTxmo3JWimJW5TjF/ggwN3XDWgyCJcT2Ib
+ N4VeHHB3tTGGXiNHVUDMMiDILnbhaP3B9zMhXmLmAf4BseSljOshgdOlxSmDc4Wd5PWIIob02Sc
+ U6LTyu5CQoGPYdXAOyE+fYIbEEv4oCpNYUU2SChqql89MOgmP6fzPINoj+XDAZFvAZCb6l/0JQW
+ fPxfSIluNSZeINGR9Q10qqoaK+C5hipE3uALcGH0mDhjJ9pCFO7IjX+k/8xUmROOqrmm287UEUK
+ qPgI08moeM55aE7SLmjfK90ckxHBk9f2Z1RlxD/WbtjZ+Fv081qo7NkcFoK89oqky6UWUhNlfvH
+ IN8MnKV+XV2eeH5tF6S2Urrkfdc7l4TsSH4BavyrHBQhCG4sNCHvNMpGvsu9gezUX8wWGZSfYGR
+ +t51M=
+X-Received: by 2002:a05:600c:4e15:b0:49b:8e8f:a409 with SMTP id
+ 5b1f17b1804b1-49b8e8fa4a6mr66882385e9.13.1787840029412; 
+ Thu, 27 Aug 2026 07:13:49 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e15:b0:49b:8e8f:a409 with SMTP id
+ 5b1f17b1804b1-49b8e8fa4a6mr66881185e9.13.1787840028890; 
+ Thu, 27 Aug 2026 07:13:48 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a5deaa786csm6533587a12.20.2026.08.27.07.13.42
+ 5b1f17b1804b1-499dd55283esm54934805e9.2.2026.08.27.07.13.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:13:42 -0700 (PDT)
+ Thu, 27 Aug 2026 07:13:47 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/23] scripts: rename get-wraps-from-cargo-registry.py
-Date: Thu, 27 Aug 2026 16:12:57 +0200
-Message-ID: <20260827141314.1099352-10-pbonzini@redhat.com>
+Subject: [PULL 11/23] rust: hpet: fix clippy needless_range_loop
+Date: Thu, 27 Aug 2026 16:12:59 +0200
+Message-ID: <20260827141314.1099352-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
 References: <20260827141314.1099352-1-pbonzini@redhat.com>
@@ -120,58 +120,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It does more than that now.
+Nightly clippy is a bit smarter and recognizes one more loop
+that it wants to be written with iterators.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                                                     | 2 +-
- docs/about/build-platforms.rst                                  | 2 +-
- .../{get-wraps-from-cargo-registry.py => update-cargo-wraps.py} | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
- rename scripts/{get-wraps-from-cargo-registry.py => update-cargo-wraps.py} (99%)
+ rust/hw/timer/hpet/src/device.rs | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ac8e73bb24f..a8d7566e06a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3764,7 +3764,7 @@ F: rust/rustfmt.toml
- F: rust/system/
- F: rust/tests/
- F: rust/util/
--F: scripts/get-wraps-from-cargo-registry.py
-+F: scripts/update-cargo-wraps.py
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index ec0bca4496d..89ba7a5c4d2 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -938,9 +938,7 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
+         let mut regs = self.regs.borrow_mut();
+         let cnt = regs.counter;
  
- Rust-related patches CC here
- L: qemu-rust@nongnu.org
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 3d23dfbd779..676f6901acc 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -128,7 +128,7 @@ Rust build dependencies
- 
-   Some distros prefer to avoid vendored crate sources, and instead use
-   local sources from e.g. ``/usr/share/cargo/registry``.  QEMU includes a
--  script, ``scripts/get-wraps-from-cargo-registry.py``, that automatically
-+  script, ``scripts/update-cargo-wraps.py``, that automatically
-   performs this task.  The script is meant to be invoked after unpacking
-   the QEMU tarball.  QEMU also includes ``rust/Cargo.toml`` and
-   ``rust/Cargo.lock`` files that can be used to compute QEMU's build
-diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/update-cargo-wraps.py
-similarity index 99%
-rename from scripts/get-wraps-from-cargo-registry.py
-rename to scripts/update-cargo-wraps.py
-index a26fe135eb9..b66a60ebad8 100755
---- a/scripts/get-wraps-from-cargo-registry.py
-+++ b/scripts/update-cargo-wraps.py
-@@ -3,7 +3,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- """
--get-wraps-from-cargo-registry.py - Update Meson subprojects from a Cargo
-+update-cargo-wraps.py - Update Meson subprojects from a Cargo
- registry or from the versions pinned in Cargo.lock.
- """
- 
+-        for index in 0..self.num_timers {
+-            let tn_regs = &mut regs.tn_regs[index];
+-
++        for tn_regs in regs.tn_regs.iter_mut().take(self.num_timers) {
+             tn_regs.update_cmp64(cnt);
+             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
+         }
 -- 
 2.55.0
 
