@@ -4,102 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B72C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03BCC61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:38:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzc9y-0003XM-46; Thu, 27 Aug 2026 11:36:58 -0400
+	id 1wzcAq-0003nI-27; Thu, 27 Aug 2026 11:37:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wzc9w-0003X4-P6
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:36:56 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wzc9v-0007fb-6X
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:36:56 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-66b32bb75beso155652d50.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 08:36:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787845013; cv=none;
- d=google.com; s=arc-20260327;
- b=o3/ALhhS79k47Snx0TJdVLTpDG3dBEKNOm5Wd0uaefxGRBf0qG4STBpxBB/9s5vm/0
- 5O9geRsB3nyg3mRrT1dSx6ryeEFecbUqmJw+FEXrP9T9dipL5bTUx6EiriNWMn9x/Xwg
- kENDq7Is9fWb4BnVGaJO+MWrNI6n9xo44OTwAPLcRFJ2eIW+81A27hxZ0wDsurMX3QHc
- heVA2qensvNqczYroDOxBzgNjr8SVgVuTnOYaZMDl25Fmyb5C5B+H9EWfmFclOYQGlCb
- rGgpemRZBcTDx6vb8Kir6NNU/MrjgLbSExIv5rN1KZNNBL+wm22IqSYxlac+PW4oa0g0
- g/uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=l/TIyVx59OMApJQbBVsOFK1nHzU6lLIk98gtKNMSbdc=;
- fh=bIE/bXSCkVaBwWnI5E22W+KoiLTAK5S4CW9f53swsiE=;
- b=OsDQJWWt3TZStyP5b+aRF+7S4m1hgsRkljzlqrtCGi7H8Mauu+pVM+JQKrd1NPBQ98
- wH6L+Vbn+Xc+UaefEAEAUcmAS0JnP8ZMMutUWg8f0Mq2tXZQ6B9pZ8kOGocVOR8ZL7OF
- 5J6SzHuCuB5ANSiFkjOLtq6LOcCtoNGRLxTxG5I/aqiifF9F8Be2JmUvRyjw6CElO1PB
- wUoPA4RWkY6m63j4zN5q5w+CG+WQb3vMcKHbJksXmQZVoTyFNJy4Ma5g2o8IVseTZgIa
- L/NYTWz51ff4Lhwi4lLr+hAPluLRQX1TWD6QcLqBRH/c2v2+fdTQYVFcfptTjhECQyc+
- kRDw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787845013; x=1788449813; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=l/TIyVx59OMApJQbBVsOFK1nHzU6lLIk98gtKNMSbdc=;
- b=QtA0KBtnuxpV0FnJiYEqRzceMyBzwJEBIEAmwZNG15iOHNnZQuez1zhLruh9bMIqKX
- 40iyn8bOd+J2ZsjOZdXIoEN8ihWBktNZ3GA98tL2Y7dxRbIYx0MpAWgzN7svBQmOde70
- gPI6jRnFMg0gc/nzA3hugzOwDDEBd4pHVwRDBew7rNTczo73qRLiQHGIMEqqDiU2TfvE
- tMfQBXcrkxPxgLhaskFvFGtp34/jRAjL4XHRV7M3ORLRhOzR75UolSlv0+3VcU/J5L3b
- dMD87gbuckW2hYGlpKuqQmJuAW9sBovZcq2/Q/4shFre3G0p5nLfzEMQ+wQC2FWn/ZWw
- rATw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787845013; x=1788449813;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=l/TIyVx59OMApJQbBVsOFK1nHzU6lLIk98gtKNMSbdc=;
- b=M9kCqAvRMUm3qYMdIR5rLsQxzfDLyNp8vr+Z0ngcrhbc71ttJkFQ6qTUq8qsGpLdCr
- RPfLud+b/Vc0eZX1RTaVjCg6abTnRtNHm7BFya5F0SuXHBGOtN0tlD/for1/jAg7kRJX
- jv7rrtrreXhYirVkihCQlGmNU3RdKWftqDSvGl/qutzSAClZgJ2nm7sjT2c8+uZzIw1g
- y3X7IVoBwHqSYTErO51H4VNMs3VojheN3krnrVul7PmMJdhuZYewkoAmHfO+h6ziOFgr
- ilaGeh1JE0/JPkoDKul3qyrVrgP81fuCyQwTfSrXXestcOEydWiPnFNdHWelJXYtm+QB
- B6aA==
-X-Gm-Message-State: AFuF++m+E8REf949/rXaXXxqFuPGp8edtUC3MNpjKf4Rigf3yLaazfmO
- UFe2/5SGdk7n1cTB0N7gffIPbncW93fzgbDn+cjHviUnYlNMIwSd2n1oWNJNVmId/VJmiv0yemH
- 3Sq6qk6LTcn4LStUEwg8FN3g1XiSfV8AN32Vw4PjRHg==
-X-Gm-Gg: AR+sD10yu3mcvmMUUnWhc14nriYyzcYsUMBnnN6zycw+JXGtQbhVgPR6Gltlt5YM3V7
- fdQ59qkIeIIx/KKtQ+2bEc9MUPHJlTGs8PjR4zCPGs20RI8quvBXUsY+3MomhkTvEgyqXl708CG
- AMEtPgIgUy3Gh+pjTphJRBAqCsj1O2Ona+IqBjheZIefAhM4g9qyweEwsqbv9fFkIM2e4XIpHfL
- ejNDbmd3kO/P+v/7ym3UPYpNbzEls9xxqvB+dbNJFG9/Z1yDG5dCT/rF1BmV5QjLhPSbr37/8Rw
- Dn4vKtHgfx49Zl9kVCLFZ1NnzkPdZrFOlDSbFx7g6aLyUT0lRuv2E1xItXp7QTsfP/49D5x+rEp
- cxjgBVITXUB9915he3q1VV8f2+czD
-X-Received: by 2002:a53:d4cd:0:b0:66b:245f:bc5c with SMTP id
- 956f58d0204a3-66d265b185emr4118134d50.24.1787845013526; Thu, 27 Aug 2026
- 08:36:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzcAo-0003m3-Gq; Thu, 27 Aug 2026 11:37:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzcAm-0007xV-8W; Thu, 27 Aug 2026 11:37:50 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67RF58dI1478434; Thu, 27 Aug 2026 15:37:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=99RXl+vKXwExf1G7kuPumVM4jQLfiF
+ Az79AUwWSXl/s=; b=fvkZOTMV8NDMGeeLksbBfC0rGQ/y3hYznpgdq5NHhsb6gg
+ OoHrbzJEBRkybr2js56+Ib/baB2WZitPEVodWzuqcqKQ70S81DAe81Wq7McP6/t1
+ FcDm+uNkysbQtnSAWv1F+XYYYG9iccp1q/SEYYWCgMX2JIcleHiBA/eUMT9t6Ekf
+ 3r0QarbNzVSymo6Kg6IIKRc0HV9E/WDVZtaAKpFJfNuud801O5ebAoTp9Buxzx0t
+ FBNuQ8ob+r3OpHoyngrfWz5Tk9CrsPEysTjEX+PkHBfst+7fna3178weeJXSpGNT
+ ZZWiJk5Ars5l4n68HaaDM+vTBVzzBUMk8Cy7sA9Q==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73er6900-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2026 15:37:45 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RFQHeL020467;
+ Thu, 27 Aug 2026 15:37:44 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsygjgx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2026 15:37:44 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67RFbejR41615800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Aug 2026 15:37:40 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 271832004B;
+ Thu, 27 Aug 2026 15:37:40 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E25B920040;
+ Thu, 27 Aug 2026 15:37:35 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 27 Aug 2026 15:37:35 +0000 (GMT)
+Date: Thu, 27 Aug 2026 21:07:04 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v3 25/37] target/ppc: Move rlwimi, rlwinm instructions to
+ decodetree
+Message-ID: <20260827210643.3e03f30f-54-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260827133010.278889-1-rathc@linux.ibm.com>
+ <20260827133010.278889-26-rathc@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260827041557.775080-1-richard.henderson@linaro.org>
- <20260827041557.775080-7-richard.henderson@linaro.org>
-In-Reply-To: <20260827041557.775080-7-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 27 Aug 2026 16:36:42 +0100
-X-Gm-Features: AcwNN1VE4A6DEQBsF9B2SBkhWaLHpuI2MlkXT4GBej8LorOtY5HOOEoOTmHpQtA
-Message-ID: <CAFEAcA9HkALxGJ-iExtMCyw-KKnJD2UGwfjh85iKo0zi0cf4Ug@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] target/arm: Separate cpu types max-v8 and max-v9
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- pierrick.bouvier@oss.qualcomm.com, philmd@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260827133010.278889-26-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: FgXZH6QaOClPW3zQVwjSg-SccymxJYq5
+X-Proofpoint-ORIG-GUID: PcZDSK881iXV7H3Q_M5rBn7HGrb5fd-I
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDEzMSBTYWx0ZWRfX0pETuFYuOVKS
+ L/qQ7RAY+UBKsKAKJhvKO5mthyD6Z++c2c9oyHAVTjXzlq3nKVuNgAVDKwhGlqf8ybjK/cbLmkq
+ ghZ4qm5H7ob2wS7LvCuk7mKMWIHI4m1Kn6QNgFwO0CxXORs1sE24BgmHPfzAFZy7wN3UV2CbdeD
+ BUV+F8VvwJM0m+WG/OBnrURvRhX3fXpm0UAFONTdbbmu2NpuEzPtJd/ix/XplQtoyOePlOR5nGI
+ xaRkbZZ2tvwKYhcgINaSic0jalQq0d4lA/VbsVfo/Az/GqyvRDv/PYOZ0FLRl1TIxGf5BCKvRWM
+ ZLHp5VWX6HeyxmVCCXcdmFEzxlFstoDsk3m3538eA4A4+0wFXcdF8NaJUGF9qCe1LnEltgozHCN
+ CaLSdcCsgygi7HccTPMkvzJ5O5NZvdbBNprMDEBTk7Rv5fQ46wVX7GdXVq9oz5YZf5CWhBu5imn
+ Z42NE6sYeV2NXV4Mt3g==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a9059c9 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=q2vIqlbgvv1_T1apIFsA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDEzMSBTYWx0ZWRfX37Uj8mS3W0Q0
+ vP2Bb1HrYcfd2iRO3YfMWhFJe92/C6ny0TFkBlGzcHtoa3kSUVBMC7q3/KBrF3R/CY8cDCb5w3O
+ QfuOKhB5nw9HbHDRjsBKelztMD/pnQA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-27_06,2026-08-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270131
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,18 +134,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Aug 2026 at 05:17, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Do not include v9-only features in "max-v8".
-> Do not include the prohibited v8 features in "max-v9".
-> In aarch64 tcg mode, define "max" as "max-v9".
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 2026/08/27 06:59 PM, Chinmay Rath wrote:
+> From: Tanushree Shah <tshah@linux.ibm.com>
+> 
+> -Moving the following instructions to decodetree specification:
+>             rlwimi                           : M-form
+>             rlwimi.                          : M-form
+>             rlwinm                           : M-form
+>             rlwinm.                          : M-form
+>  The changes were verified by validating that the tcg ops generated by
+>  those instructions remain the same, which were captured with the
+>  "-d in_asm,op" flag.
+> 
+>  Additionally, validated using small assembly tests confirming the
+>  destination register is correctly updated based on rotated and masked
+>  source values and confirmed that the value was same before and after
+>  the change
+> 
+> Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
+>  target/ppc/insn32.decode                   |   6 ++
+>  target/ppc/translate.c                     | 106 ---------------------
+>  target/ppc/translate/fixedpoint-impl.c.inc | 102 ++++++++++++++++++++
+>  3 files changed, 108 insertions(+), 106 deletions(-)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-thanks
--- PMM
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 69d60605bd..92ee278f63 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -312,6 +312,9 @@
+>  
+>  @Z23_te_tbp     ...... ....0 te:5 ....0 rmc:2 ........ rc:1     &Z23_te_tb frt=%z23_frtp frb=%z23_frbp
+>  
+> +&M              ra rs sh mb me rc:bool
+> +@M              ...... rs:5 ra:5 sh:5 mb:5 me:5 rc:1 &M
+> +
+>  ### Fixed-Point Load Instructions
+>  
+>  LBZ             100010 ..... ..... ................     @D
+> @@ -561,6 +564,9 @@ SRADI           011111 ..... ..... ..... 110011101 . .  @XS
+>  
+>  EXTSWSLI        011111 ..... ..... ..... 110111101 . .  @XS
+>  
+> +RLWIMI          010100 ..... ..... ..... ..... ......   @M
+> +RLWINM          010101 ..... ..... ..... ..... ......   @M
+> +
+>  ## BCD Assist
+>  
+>  ADDG6S          011111 ..... ..... ..... - 001001010 -  @X
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index d17d77a9d9..ce94f9e4e6 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2012,110 +2012,6 @@ static void gen_pause(DisasContext *ctx)
+>  
+>  /***                             Integer rotate                            ***/
+>  
+> -/* rlwimi & rlwimi. */
+> -static void gen_rlwimi(DisasContext *ctx)
+> -{
+> -    TCGv t_ra = cpu_gpr[rA(ctx->opcode)];
+> -    TCGv t_rs = cpu_gpr[rS(ctx->opcode)];
+> -    uint32_t sh = SH(ctx->opcode);
+> -    uint32_t mb = MB(ctx->opcode);
+> -    uint32_t me = ME(ctx->opcode);
+> -
+> -    if (sh == (31 - me) && mb <= me) {
+> -        tcg_gen_deposit_tl(t_ra, t_ra, t_rs, sh, me - mb + 1);
+> -    } else {
+> -        target_ulong mask;
+> -        bool mask_in_32b = true;
+> -        TCGv t1;
+> -
+> -#if defined(TARGET_PPC64)
+> -        mb += 32;
+> -        me += 32;
+> -#endif
+> -        mask = MASK(mb, me);
+> -
+> -#if defined(TARGET_PPC64)
+> -        if (mask > 0xffffffffu) {
+> -            mask_in_32b = false;
+> -        }
+> -#endif
+> -        t1 = tcg_temp_new();
+> -        if (mask_in_32b) {
+> -            TCGv_i32 t0 = tcg_temp_new_i32();
+> -            tcg_gen_trunc_tl_i32(t0, t_rs);
+> -            tcg_gen_rotli_i32(t0, t0, sh);
+> -            tcg_gen_extu_i32_tl(t1, t0);
+> -        } else {
+> -#if defined(TARGET_PPC64)
+> -            tcg_gen_deposit_i64(t1, t_rs, t_rs, 32, 32);
+> -            tcg_gen_rotli_i64(t1, t1, sh);
+> -#else
+> -            g_assert_not_reached();
+> -#endif
+> -        }
+> -
+> -        tcg_gen_andi_tl(t1, t1, mask);
+> -        tcg_gen_andi_tl(t_ra, t_ra, ~mask);
+> -        tcg_gen_or_tl(t_ra, t_ra, t1);
+> -    }
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, t_ra);
+> -    }
+> -}
+> -
+> -/* rlwinm & rlwinm. */
+> -static void gen_rlwinm(DisasContext *ctx)
+> -{
+> -    TCGv t_ra = cpu_gpr[rA(ctx->opcode)];
+> -    TCGv t_rs = cpu_gpr[rS(ctx->opcode)];
+> -    int sh = SH(ctx->opcode);
+> -    int mb = MB(ctx->opcode);
+> -    int me = ME(ctx->opcode);
+> -    int len = me - mb + 1;
+> -    int rsh = (32 - sh) & 31;
+> -
+> -    if (sh != 0 && len > 0 && me == (31 - sh)) {
+> -        tcg_gen_deposit_z_tl(t_ra, t_rs, sh, len);
+> -    } else if (me == 31 && rsh + len <= 32) {
+> -        tcg_gen_extract_tl(t_ra, t_rs, rsh, len);
+> -    } else {
+> -        target_ulong mask;
+> -        bool mask_in_32b = true;
+> -#if defined(TARGET_PPC64)
+> -        mb += 32;
+> -        me += 32;
+> -#endif
+> -        mask = MASK(mb, me);
+> -#if defined(TARGET_PPC64)
+> -        if (mask > 0xffffffffu) {
+> -            mask_in_32b = false;
+> -        }
+> -#endif
+> -        if (mask_in_32b) {
+> -            if (sh == 0) {
+> -                tcg_gen_andi_tl(t_ra, t_rs, mask);
+> -            } else {
+> -                TCGv_i32 t0 = tcg_temp_new_i32();
+> -                tcg_gen_trunc_tl_i32(t0, t_rs);
+> -                tcg_gen_rotli_i32(t0, t0, sh);
+> -                tcg_gen_andi_i32(t0, t0, mask);
+> -                tcg_gen_extu_i32_tl(t_ra, t0);
+> -            }
+> -        } else {
+> -#if defined(TARGET_PPC64)
+> -            tcg_gen_deposit_i64(t_ra, t_rs, t_rs, 32, 32);
+> -            tcg_gen_rotli_i64(t_ra, t_ra, sh);
+> -            tcg_gen_andi_i64(t_ra, t_ra, mask);
+> -#else
+> -            g_assert_not_reached();
+> -#endif
+> -        }
+> -    }
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, t_ra);
+> -    }
+> -}
+> -
+>  /* rlwnm & rlwnm. */
+>  static void gen_rlwnm(DisasContext *ctx)
+>  {
+> @@ -4794,8 +4690,6 @@ GEN_HANDLER(invalid, 0x00, 0x00, 0x00, 0xFFFFFFFF, PPC_NONE),
+>  GEN_HANDLER_E(copy, 0x1F, 0x06, 0x18, 0x03C00001, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(cp_abort, 0x1F, 0x06, 0x1A, 0x03FFF801, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+> -GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  /* handles lfdp, lxsd, lxssp */
+>  GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+> index 4b79e24f6f..efef56a119 100644
+> --- a/target/ppc/translate/fixedpoint-impl.c.inc
+> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
+> @@ -1872,6 +1872,108 @@ static bool trans_SRAWI(DisasContext *ctx, arg_SRAWI *a)
+>      return true;
+>  }
+>  
+> +static bool trans_RLWIMI(DisasContext *ctx, arg_RLWIMI *a)
+> +{
+> +    TCGv t_ra = cpu_gpr[a->ra];
+> +    TCGv t_rs = cpu_gpr[a->rs];
+> +    int mb = a->mb;
+> +    int me = a->me;
+> +
+> +    if (a->sh == (31 - me) && mb <= me) {
+> +        tcg_gen_deposit_tl(t_ra, t_ra, t_rs, a->sh, me - mb + 1);
+> +    } else {
+> +        target_ulong mask;
+> +        bool mask_in_32b = true;
+> +        TCGv t1;
+> +
+> +#if defined(TARGET_PPC64)
+> +        mb += 32;
+> +        me += 32;
+> +#endif
+> +        mask = MASK(mb, me);
+> +
+> +#if defined(TARGET_PPC64)
+> +        if (mask > 0xffffffffu) {
+> +            mask_in_32b = false;
+> +        }
+> +#endif
+> +        t1 = tcg_temp_new();
+> +        if (mask_in_32b) {
+> +            TCGv_i32 t0 = tcg_temp_new_i32();
+> +            tcg_gen_trunc_tl_i32(t0, t_rs);
+> +            tcg_gen_rotli_i32(t0, t0, a->sh);
+> +            tcg_gen_extu_i32_tl(t1, t0);
+> +        } else {
+> +#if defined(TARGET_PPC64)
+> +            tcg_gen_deposit_i64(t1, t_rs, t_rs, 32, 32);
+> +            tcg_gen_rotli_i64(t1, t1, a->sh);
+> +#else
+> +            g_assert_not_reached();
+> +#endif
+> +        }
+> +
+> +        tcg_gen_andi_tl(t1, t1, mask);
+> +        tcg_gen_andi_tl(t_ra, t_ra, ~mask);
+> +        tcg_gen_or_tl(t_ra, t_ra, t1);
+> +    }
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, t_ra);
+> +    }
+> +    return true;
+> +}
+> +
+> +static bool trans_RLWINM(DisasContext *ctx, arg_RLWINM *a)
+> +{
+> +    TCGv t_ra = cpu_gpr[a->ra];
+> +    TCGv t_rs = cpu_gpr[a->rs];
+> +    int me = a->me;
+> +    int mb = a->mb;
+> +    int len = me - mb + 1;
+> +    int rsh = (32 - a->sh) & 31;
+> +
+> +    if (a->sh != 0 && len > 0 && me == (31 - a->sh)) {
+> +        tcg_gen_deposit_z_tl(t_ra, t_rs, a->sh, len);
+> +    } else if (me == 31 && rsh + len <= 32) {
+> +        tcg_gen_extract_tl(t_ra, t_rs, rsh, len);
+> +    } else {
+> +        target_ulong mask;
+> +        bool mask_in_32b = true;
+> +#if defined(TARGET_PPC64)
+> +        mb += 32;
+> +        me += 32;
+> +#endif
+> +        mask = MASK(mb, me);
+> +#if defined(TARGET_PPC64)
+> +        if (mask > 0xffffffffu) {
+> +            mask_in_32b = false;
+> +        }
+> +#endif
+> +        if (mask_in_32b) {
+> +            if (a->sh == 0) {
+> +                tcg_gen_andi_tl(t_ra, t_rs, mask);
+> +            } else {
+> +                TCGv_i32 t0 = tcg_temp_new_i32();
+> +                tcg_gen_trunc_tl_i32(t0, t_rs);
+> +                tcg_gen_rotli_i32(t0, t0, a->sh);
+> +                tcg_gen_andi_i32(t0, t0, mask);
+> +                tcg_gen_extu_i32_tl(t_ra, t0);
+> +            }
+> +        } else {
+> +#if defined(TARGET_PPC64)
+> +            tcg_gen_deposit_i64(t_ra, t_rs, t_rs, 32, 32);
+> +            tcg_gen_rotli_i64(t_ra, t_ra, a->sh);
+> +            tcg_gen_andi_i64(t_ra, t_ra, mask);
+> +#else
+> +            g_assert_not_reached();
+> +#endif
+> +        }
+> +    }
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, t_ra);
+> +    }
+> +    return true;
+> +}
+> +
+>  static void do_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+>                                       TCGv EA, int rt,
+>                                       TCGCond cond, int addend)
+> -- 
+> 2.55.0
+> 
 
