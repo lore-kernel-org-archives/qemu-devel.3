@@ -4,75 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26602C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 08:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C34FC61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 08:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzVli-0006A9-K1; Thu, 27 Aug 2026 04:47:30 -0400
+	id 1wzVnF-0006n2-8q; Thu, 27 Aug 2026 04:49:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzVlh-00069x-LY
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:47:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzVlf-0007hp-N4
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:47:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787820446;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TU7Q6ITlTnHGBzj6+4uPM5lYbNojytOfaYjLxq4LLHw=;
- b=AplRofZaFJtlh6jLFM5LvjCIzbR8SKvmcgS3GVleIvHOiGFUSYWWsRIBSizaSH09w1Bp2N
- n2KKU7IecbNXIz8rAB6Kiz8j2kzUXa5LFD4dBhZJzMiXbwKKxU2DbTUV8gFqgR3u/qWi9b
- JC4laJVf5HyVin05XlmBWbH3JlkrBPE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-Ea4MAeMcPuOEC_4kIcmSPA-1; Thu,
- 27 Aug 2026 04:47:24 -0400
-X-MC-Unique: Ea4MAeMcPuOEC_4kIcmSPA-1
-X-Mimecast-MFC-AGG-ID: Ea4MAeMcPuOEC_4kIcmSPA_1787820443
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 278721955DA6; Thu, 27 Aug 2026 08:47:23 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E980318005BC; Thu, 27 Aug 2026 08:47:21 +0000 (UTC)
-Date: Thu, 27 Aug 2026 09:47:18 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, akihiko.odaki@gmail.com
-Subject: Re: [PATCH] ui/console: fix use-after-free in qemu_console_set_cursor
-Message-ID: <ao_5WNBxRiZycEeb@redhat.com>
-References: <20260827070647.2872650-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzVnE-0006mq-8t
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:49:04 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzVnC-0008AO-Me
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 04:49:04 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-836ce6cbe1eso24389187b3.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 01:49:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787820541; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lHvHAQ/x/aRBAPUC/2urOcutahKWO9vUYOs//YQEX5mbylZZ8ATuh2EaoFf/Q8H7q9
+ 2HZtBIRTgDBqZRmkNAN0BFRcYYIHLG5eRD9y7u0jGw1exSKA+5shtrKpyeSnbGXqam/9
+ tgaNaBpHc3hkWn2Hchr8EfObARKwf3tpRHby7ITdJwe1IPJep1LR//o5CQwW0J7wcW4a
+ kdvAGIb2/1qG0pyqGcCs/wTPH694W7kruxPlImU/k6DJX5nINUnsVua0UnMG8VkpA8Ql
+ qXturPLJ1wtUUA90s2mL9xdeLaljKFvXl1hQnX8lPurriF0AuxebB81aZIbDs6XkZd53
+ ca7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rR4F7voyXnR3OapohUC/RnVoVjpb/JEA6/VILqsxqlo=;
+ fh=6BO/J4gjMuMAc+trLHU90Lj/JIm5nm/1p4XD/1+2pog=;
+ b=pZ9xurotKxrb2VLpD2RUq9jFYBBraVdtIw3quRJwMiA2qPt2pGLLEF4hBI3gQ+o79l
+ MM/xXuP8qXr47Z3WKmAAs727SLBYAI1rfeesKC/98xDBgoquTUGw71YGM8BvV8p9VpSZ
+ 0T5ubfEnSMw19PxPOUaZmQzfmZ1z1OggOABrhaFALiD8kTaUhCIe15REY+IUru3M8i1Y
+ TkBtQjQ8PjrAVdzCpLMe6QbipdHb60dU7gqySCVD1SuIJwCUbzhLdMvSSAZ+nfkVcMqD
+ N7+WkLZsCgLBCgiufS7jlqigqhDAQDe9V+Y8RvcanHZ9CQUQmqSfz5byA2stEdTdsoxX
+ VlMg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787820541; x=1788425341; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rR4F7voyXnR3OapohUC/RnVoVjpb/JEA6/VILqsxqlo=;
+ b=v95PPL4obSX1XHgscs6xIPhl1oeqgJ4SpCAsjemzOWpX3AvH49apmYPvz3VWHCCY3c
+ rhFljr1M6awvwLYVktNqdQPgoU6ovWDYAKvOPhGJX69yweMSFtDiBDVg08qpj0oTAsmQ
+ BKovP++aVUIEd9kBM8Og83JZp92xz283FKVVuhSBaoG07RbcflJYUc/H6xds1qn5Q5Fl
+ kBEKyro3D9POStgYOG7iFWUZyGT+HsPangGYgC/S3MZH1mPrC6MEufPgVoFvf2lxYNm1
+ OtgQxy4VbeNTvCkH3wmZbw3GLyqCLEj2hMix4X6sBnWBMVIsvyAmVyEealKE0G+BjA7a
+ BsQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787820541; x=1788425341;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rR4F7voyXnR3OapohUC/RnVoVjpb/JEA6/VILqsxqlo=;
+ b=QKC48y/RJj1aa0L9/pYU8aTM7FBqvPx4oAIFVURqfpX7W/+ohKGkaV0YEfM32QM1QB
+ hm+JyD4SxfnDcRhTrRasNZrYqanPWr10d4q5VvNWtulfNYZ5kfhJqa+D3siz/nrf8kYB
+ cxI2t/EuaUpg9668ILd6Y+mleJHKhzn3HnAcmsu0Vh3YLaynVei1YmMy4FJMnB3T8udY
+ gPSJj3lRKgO6JOXHfJWmwllL6wHdFWCay6LrMwDZuWGfbySannNoKTyWHSEu9M2pItMo
+ +MEVVg+jS3rO+YIrIlDdWpCHtx+eSUdplQ9MR3NhdU4WyNhFTiWHLpkxL1qFwYAL7c0b
+ wcXA==
+X-Gm-Message-State: AFuF++lodlUFmBgo9LClodPYLSoE/vRlkFOj2FvFjiztd52XjQYykmUR
+ mcwGyCyG4lpBJy5Mcage+BvR8zLmoTUmfJ2LSzUKO8Dtrl57JS6IRwCELEKxX5jbkcVlXNdON4X
+ RMeH506t5RW4tIwL4XMav3M2ZNkb2yDKXpgcXZ5S7Xw==
+X-Gm-Gg: AR+sD12s5DD4BCQ+f5IcZvfzjiKzRTDK92XcnGCLBPcdoLVGgJbVmkGoyWB/Yki3DZI
+ UXXhtoXToJ19Djt9w/3FySWmBpw4z3oaZyd7d5yvKPhLsPcoD/9yuaU4ka6nsl+ueR6WrX1Fb9N
+ R7jy/20Nx/Cc+sz420bLC1i8JBJSkXHVGrv/F9g4CSe3/GaX4BlKw69ZlQ3ZfG2v8NURbH+KNpI
+ mY8taLbLpb1v/zjU7O+TO9gD2MqRbsam8nxKeuC6JEeXC3xYIXC7RmUWi5Ki5DkQuZlwKKD2RQ7
+ L75fh4ra7kScheqPHrw9dwXB8t2455kGvtw5nB3jqe3lM+VlesrGNm9wvTeTlavYBaXnMeV9Oqj
+ XxFU4yQndsmJ6nBuh8FFKz1BuiEld
+X-Received: by 2002:a05:690c:4b8f:b0:816:b469:ccec with SMTP id
+ 00721157ae682-8573cfbda13mr62400057b3.15.1787820541434; Thu, 27 Aug 2026
+ 01:49:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260827070647.2872650-1-marcandre.lureau@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260824122942.85863-1-berrange@redhat.com>
+In-Reply-To: <20260824122942.85863-1-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Aug 2026 09:48:50 +0100
+X-Gm-Features: AcwNN1UlR_z5TlMyx9ikvGktsjwJYqOUmo4wrvnsvzftJY0CmjWs8ST02xkej0M
+Message-ID: <CAFEAcA-P889KqaTK5NUDQ8Y4ZoeHqUTLFSdoGcO0T_9n05BduQ@mail.gmail.com>
+Subject: Re: [PATCH] system: improve -mon deprecation warning
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,63 +115,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 27, 2026 at 11:06:47AM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> When the new cursor is the same object as the one already held by
-> the console and the refcount is 1, cursor_unref frees it before
-> cursor_ref can increment the count.
-> 
-> Ref the incoming cursor before unreffing the old one so the
-> refcount goes 1-2-1 instead of 1-0 (freed) then use-after-free.
-
-I don't see where/how this can happen.  The caller of
-qemu_console_set_cursor should own its own reference
-on 'cursor'. So on entry to this method, 'cursor'
-should have a ref of 2 if it is the same as the
-current con->cursor.
-
-if anything the behaviour you describe sounds like a
-bug in a caller not holding its own reference.
-
-> 
-> This is related to 385ac97f8fad ("ui: keep current cursor with
-> QemuConsole"), but could have happened earlier with VNC too.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Mon, 24 Aug 2026 at 13:29, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> Expand the text a bit to make the new syntax more explicit and point
+> users to the man page for further info.
+>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  ui/console.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/ui/console.c b/ui/console.c
-> index a8a2a247d8f4..4db8f1cb431f 100644
-> --- a/ui/console.c
-> +++ b/ui/console.c
-> @@ -904,8 +904,9 @@ void qemu_console_set_cursor(QemuConsole *c, QEMUCursor *cursor)
->      DisplayState *s = c->ds;
->      DisplayChangeListener *dcl;
->  
-> +    cursor_ref(cursor);
->      cursor_unref(con->cursor);
-> -    con->cursor = cursor_ref(cursor);
-> +    con->cursor = cursor;
->      QLIST_FOREACH(dcl, &s->listeners, next) {
->          if (c != dcl->con) {
->              continue;
-> -- 
-> 2.55.0.543.g5ebe2ebe4ea8
-> 
-> 
+>  system/vl.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/system/vl.c b/system/vl.c
+> index 061cbdf860..d5b5392569 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -3239,8 +3239,11 @@ void qemu_init(int argc, char **argv)
+>                  default_monitor =3D 0;
+>                  break;
+>              case QEMU_OPTION_mon:
+> -                warn_report_once("'-mon' is deprecated, use '-object' wi=
+th "
+> -                                 "'monitor-hmp' or 'monitor-qmp' types i=
+nstead");
+> +                warn_report_once("'-mon' is deprecated. Switch to either=
+ "
+> +                                 "'-object monitor-hmp,id=3DID,chardev=
+=3DCHR-ID' "
+> +                                 "or '-object monitor-qmp,id=3DqmpNN,cha=
+rdev=3DCHR-ID' "
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+why the difference in id=3DID vs id=3DqmpNN ?
 
+> +                                 "instead. See '-object' docs in 'qemu(1=
+)' for further "
+> +                                 "configuration guidance.");
+
+Personally I think of the HTML docs as our primary documentation
+and the manpages as a kind of "not very well maintained extracted
+subset", so I wouldn't want to point people at qemu(1).
+
+thanks
+-- PMM
 
