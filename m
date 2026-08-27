@@ -4,110 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA02CC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E63C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzaIL-0006c7-Uj; Thu, 27 Aug 2026 09:37:29 -0400
+	id 1wzaJw-0007PV-8F; Thu, 27 Aug 2026 09:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaIK-0006Zp-Bz; Thu, 27 Aug 2026 09:37:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wzaII-0003Jj-Bw; Thu, 27 Aug 2026 09:37:28 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RCVdhQ1871545; Thu, 27 Aug 2026 13:37:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=cqxqjg
- sJK6Qvtm3QYpSzMNsRdnVs0RprR0MXJ39k4+I=; b=azVSvfrfsUDsnV7ye4/o/6
- oLa442pUf9NL8LXiuNrT1teLCdSA3VhQenIwp+S32ggRX5lHDp21v54sTyyQJiRr
- qv/qVKpMoLkEqZu6pJ6oWDuxJygrwvrmZngyoCsOaX9AmaT5B1EvBi7FH3JMrRtp
- VUEI5MLd5KWDsHPcyuJ50j44rH0zvGm2oh3DVfPzllFrFpvHrcEGvmQ2yNRjv5Nr
- IBoOu6Xz9OgwMBxQ9x3R3OtcLFSbL17ng43+Vks1tf46avzS6yLhiFAmMhQf9RNl
- Q/AGACntNB1aMej3v/nGgL/E+b3PYpZGQZRSXuGRdtMc9+WeitcV1+xsBi2q/qTg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726ewhun-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:37:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQIOh027485;
- Thu, 27 Aug 2026 13:37:23 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsyg28p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 13:37:23 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67RDbLkX14942732
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Aug 2026 13:37:22 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 97D9A5805A;
- Thu, 27 Aug 2026 13:37:21 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A0BBC58056;
- Thu, 27 Aug 2026 13:37:19 +0000 (GMT)
-Received: from [9.111.12.1] (unknown [9.111.12.1])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Aug 2026 13:37:19 +0000 (GMT)
-Message-ID: <590b897c-2b1c-4eb9-a1f5-3d4eb7235350@linux.ibm.com>
-Date: Thu, 27 Aug 2026 19:07:17 +0530
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1wzaJn-0007OE-N4
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 09:38:59 -0400
+Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1wzaJl-0003d1-Qi
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 09:38:59 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id CC72218041B
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:38:48 +0200 (CEST)
+Received: (qmail 16823 invoked by uid 990); 27 Aug 2026 13:38:48 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unknown) (::1)
+ by skiff.uberspace.de (Haraka/3.1.1) with ESMTPSA;
+ Thu, 27 Aug 2026 15:38:48 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/37] target/ppc: PPC TCG Improvements (decodetree
- migrations + ISA 2.07 flag updates)
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- asahu1x@linux.ibm.com
-References: <20260827133010.278889-1-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260827133010.278889-1-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a903d94 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=qNCrWNZkRuKrpyOj1ycA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX4KHkvc0KdOwJ
- Tx8ojunk5s1ybvl9jCNewhHChyaf1FjKOfkBWxPJUPlYZwTQOlQxtfhaAD2TYOrLF34DkA7Y8wG
- 4oO0sbUEhML3rxGgzMsfO5DVPDigFWc=
-X-Proofpoint-GUID: iB1NrrfA_G6j31L6Xl7qc6AjN64HSJ2P
-X-Proofpoint-ORIG-GUID: iB1NrrfA_G6j31L6Xl7qc6AjN64HSJ2P
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDExMyBTYWx0ZWRfX6t30tTM/nX0h
- aRNKlEXRBGwNqUut9fPKiFMkAQPToHLyCeTJr3mB3+rndFqyOr+b6iILUS/wjN0ONJQu2iZXG0y
- FKWLG6wi+JzyuuNHmyR4M6TOThIOetVBEJkzyMbmF1cl//BxXK8DjQMYbZMJkyM6xFWERUEfSBK
- 7Y63ql4IIw0Z/nQrYOMzv7A2MpJ8IXqWFhgdt4iP5c76OUsUrE5Rfx2HQUp8tSZgKYqfyneibHA
- 7PvDapm3QrIDfh6ddjDwR6x9BMq2x7zDu0tsypjXqGU2o/L9MhILUNewSZmxY0xEDz02j3Ekf5a
- tALRSdgCV1uuAcGJrD319RdR0M4bMm9tIc+1Rh8PxLyyTE35Z9bq9xh45hMhs+ZsQ9XZvt16IVo
- m2n5oeDz7w+VVFI4jNUO8opfHLfjmGnjhgvYYbTyGVfw9TbgWN31yAPdJoP38KBfHbVuy8WFTju
- L4Do4eQE9sbNI1AnelQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-27_05,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270113
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Date: Thu, 27 Aug 2026 13:38:47 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <39c0afbc330cd144bc1ae3757e7638b2a8c8fc57@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH 13/35] target/avr: call plugin trap callbacks
+To: "=?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@oss.qualcomm.com>, 
+ "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, "Alexandre Iooss"
+ <erdnaxe@crans.org>, "Chinmay Rath" <rathc@linux.ibm.com>,
+ qemu-arm@nongnu.org, "Peter Maydell" <peter.maydell@linaro.org>,
+ "Nicholas Piggin" <npiggin@gmail.com>, "Ilya Leoshkevich"
+ <iii@linux.ibm.com>, "David Hildenbrand" <david@redhat.com>,
+ qemu-ppc@nongnu.org, "Paolo Bonzini" <pbonzini@redhat.com>,
+ qemu-s390x@nongnu.org, "Bastian Koppelmann"
+ <kbastian@mail.uni-paderborn.de>, "Helge Deller" <deller@gmx.de>,
+ "Stafford Horne" <shorne@gmail.com>, "Mahmoud Mandour"
+ <ma.mandourr@gmail.com>, "Artyom Tarasenko" <atar4qemu@gmail.com>,
+ "Eduardo Habkost" <eduardo@habkost.net>, "Palmer Dabbelt"
+ <palmer@dabbelt.com>, "Alistair Francis" <alistair.francis@wdc.com>,
+ "Laurent Vivier" <laurent@vivier.eu>, "Weiwei Li" <liwei1518@gmail.com>,
+ "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, "Mark Cave-Ayland"
+ <mark.cave-ayland@ilande.co.uk>, "Yoshinori Sato"
+ <yoshinori.sato@nifty.com>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, "Aurelien Jarno" <aurelien@aurel32.net>,
+ "Richard Henderson" <richard.henderson@linaro.org>, "Thomas Huth"
+ <thuth@redhat.com>, "Max Filippov" <jcmvbkbc@gmail.com>, "Jiaxun Yang"
+ <jiaxun.yang@flygoat.com>, "Michael Rolnik" <mrolnik@gmail.com>, "Song 
+ Gao" <gaosong@loongson.cn>, qemu-riscv@nongnu.org, "Aleksandar Rikalo"
+ <arikalo@gmail.com>, "Pierrick Bouvier" <pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <aa4bdaf5-6669-4ed7-90fb-4e766f160118@oss.qualcomm.com>
+References: <20251027110344.2289945-1-alex.bennee@linaro.org>
+ <20251027110344.2289945-14-alex.bennee@linaro.org>
+ <aa4bdaf5-6669-4ed7-90fb-4e766f160118@oss.qualcomm.com>
+X-Rspamd-Bar: +
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.035663) MIME_GOOD(-0.1)
+X-Rspamd-Score: 1.364336
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=3YLSykSOgjx+A88sO5o8Doo1klTySZuA845vpIUw5f0=;
+ b=H1PcMs5+zwTIkGKISmDQF6XsH1GKukHw6JTHx/8TPfnydTyCr4ykemYtPDftAjnQoJ020j7vm9
+ AmseTI8Zro2L70wLz2Njk3pqaBdB5WCQpO/JjbRlY8wTJdIN77cNftOLtQZDIf6ATqP9o5JOLEyx
+ yDiIVMEzndB344dUfhnXSaOE+QWJIwu4w/WprywWJifQTvtHODRT1nlXSiSsnKbLaQQ/5BkoZp7h
+ tJcDSnJKXVR8IoZGw2DMIS1VxP8P2C3gpa5HerBPZTQN8CJHu2lVKLdJz69ZPtxxsLFDMrVhcRXh
+ cEuQHpxZ4xL2yOFxM63RydIALfQOc2QdG+49xvXXJXn3lzqybSnl8MNFtOFsEOsflsk/AH5/Xu3k
+ OpafC1ImSENz15gil/HpHDH5BK71wO8dDAeU/kyYkOIlXyCf1YawOb9UssC6R5lDVyWNfkvq5oCa
+ Gx5o+9xml+2eXRIsblZA0bw5oCndn5ZQjx8YGM1LpfVvxvBclbY08bc3/DQMHX5GsZ3BDK+Sh4Dz
+ 588aAsBB+dBe51yR82sNO7Ru9RydbThLbcN4Vguujf9h/UUwqGgIbHl7ZWrmaFIB9+eevERTOZBw
+ r9nRZiTyL4S8p2VTNiibysLDlYONScXBN8cM36KltX2scgObYGT3rbUwTGKcO06H4wa4j4A2UL0T
+ A=
+Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
+ envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,113 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Philippe,
 
-On 8/27/26 18:59, Chinmay Rath wrote:
-> This series primarily contains 3 changes :
->
-> 1. PPC instructions movement to decodetree specification
-> Changes from v2 :
-> - Addressed review comments from Amit, as discussed in the v2 series.
-> - Retained Rbs received.
->
-> 2. PPC ISA 2.07 flag cleanup and updates
-> This series is based on top the above decodetree series.
-> - No changes. Only Rbs added.
->
-> 3. Stepping up as an active maintainer for PowerPC TCG CPUs module.
->
-> Link to v2: https://lore.kernel.org/qemu-devel/20260826050923.74756-1-rathc@linux.ibm.com/
-Harsh,
-Aniket's Tested-by is missing in this v3. v2 got the Tested-by after I 
-had prepared the v3 patches, hence missed.
+sorry for the late reply. Did not realize I hadn't checked mails this
+long.
 
->
-> Aboorva Devarajan (3):
->    target/ppc: Move vector merge instructions to decodetree
->    target/ppc: Move vector pack instructions to decodetree
->    target/ppc: Move GPR atomic load/store instructions to decodetree
->
-> Amit Machhiwal (2):
->    target/ppc: Move fixed-point Shift insns to decodetree
->    target/ppc: Move fixed-point byte-reversal store insns to decodetree
->
-> Chinmay Rath (9):
->    target/ppc: make do_ea_calc_ra available for 32 bit builds
->    target/ppc: Replace PPC2_VSX207 flag with PPC2_ISA207
->    target/ppc: Use PPC2_ISA207 instead of PPC2_BCTAR_ISA207
->    target/ppc: Use PPC2_ISA207 instead of PPC2_LSQ_ISA207
->    target/ppc: Use PPC2_ISA207 instead of PPC2_ALTIVEC_207
->    target/ppc: Use PPC2_ISA207 instead of PPC2_ISA207S
->    target/ppc: Reorder PPC2 flags
->    target/ppc: Add ICBT support for ISA version 2.07
->    target/ppc: Add self as maintainer for PowerPC TCG CPUs
->
-> Mukesh Kumar Chaurasiya (IBM) (2):
->    target/ppc: convert slw, srw instruction via decode spec
->    target/ppc: convert sraw[i] instruction via decode spec
->
-> Nikhil Kumar Singh (3):
->    target/ppc: Migrate extswsli to decodetree
->    target/ppc: Migrate atomic loads to decodetree
->    target/ppc: Convert cache instructions to decodetree
->
-> Ojaswin Mujoo (7):
->    target/ppc: Move isync instruction to decodetree
->    target/ppc: Convert b{a, l, la} to decode tree
->    target/ppc: move various conditional branch insns to decodetree
->    target/ppc: Fix TRANS* macro variadic arguments handling
->    target/ppc: Move wait instruction to decodetree
->    target/ppc: Move sleep & friends to decodetree
->    target/ppc: Refactor sleep and its variants to use a common helper
->
-> Shivang Upadhyay (4):
->    target/ppc: Move Condition Register access instructions to decodetree.
->    target/ppc: Move Condition Register logical instructions to
->      decodetree.
->    target/ppc: Move Fixed-Point Load/Store String instructions to
->      decodetree.
->    target/ppc: Move VMX integer arithmetic and BCD instructions to
->      decodetree.
->
-> Shivani Nittor (1):
->    target/ppc: Convert mcrf to decode tree
->
-> Tanushree Shah (2):
->    target/ppc: Move rlwimi, rlwinm instructions to decodetree
->    target/ppc: Move lmw, stmw instructions to decodetree
->
-> Utkarsh Verma (1):
->    target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
->
-> Vishal Chourasia (3):
->    target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
->    target/ppc: Move byte-reverse instructions to decodetree
->    target/ppc: Move system call and rfi instructions to decodetree
->
->   MAINTAINERS                                   |    2 +-
->   hw/ppc/spapr_caps.c                           |    2 +-
->   linux-user/ppc/elfload.c                      |    6 +-
->   target/ppc/cpu.h                              |   38 +-
->   target/ppc/cpu_init.c                         |    6 +-
->   target/ppc/cpu_init.h                         |    7 +-
->   target/ppc/helper.h                           |   96 +-
->   target/ppc/insn32.decode                      |  252 ++
->   target/ppc/int_helper.c                       |   76 +-
->   target/ppc/internal.h                         |    7 -
->   target/ppc/mem_helper.c                       |   14 +-
->   target/ppc/tcg-excp_helper.c                  |   18 +-
->   target/ppc/translate.c                        | 2258 +++--------------
->   target/ppc/translate/bhrb-impl.c.inc          |    4 +-
->   target/ppc/translate/branch-impl.c.inc        |  182 +-
->   target/ppc/translate/fixedpoint-impl.c.inc    |  947 ++++++-
->   target/ppc/translate/fp-impl.c.inc            |    4 +-
->   target/ppc/translate/misc-impl.c.inc          |  172 ++
->   .../ppc/translate/processor-ctrl-impl.c.inc   |   39 +-
->   target/ppc/translate/storage-ctrl-impl.c.inc  |  116 +
->   target/ppc/translate/vmx-impl.c.inc           |  457 ++--
->   target/ppc/translate/vmx-ops.c.inc            |   59 +-
->   target/ppc/translate/vsx-impl.c.inc           |   56 +-
->   target/ppc/translate/vsx-ops.c.inc            |   24 +-
->   24 files changed, 2473 insertions(+), 2369 deletions(-)
->
+August 17, 2026 at 1:14 PM, "Philippe Mathieu-Daud=C3=A9" wrote:
+> Expanding a bit ...
+>=20
+>=20 77 void avr_cpu_do_interrupt(CPUState *cs)
+>  78 {
+>  79 CPUAVRState *env =3D cpu_env(cs);
+>  80
+>  81 uint32_t ret =3D env->pc_w;
+>  82 int vector =3D 0;
+>  83 int size =3D avr_feature(env, AVR_FEATURE_JMP_CALL) ? 2 : 1;
+>  84 int base =3D 0;
+>  85
+>  86 if (cs->exception_index =3D=3D EXCP_RESET) {
+>  87 vector =3D 0;
+>  88 } else if (env->intsrc !=3D 0) {
+>  89 vector =3D ctz64(env->intsrc) + 1;
+>  90 }
+>=20
+>=20Unconditionally recording exception vector as interrupt seems wrong,
+> shouldn't we call qemu_plugin_vcpu_exception_cb() in that case?
+>=20
+>=20 91
+>  92 if (avr_feature(env, AVR_FEATURE_3_BYTE_PC)) {
+>  93 do_stb(env, env->sp--, ret, 0);
+>  94 do_stb(env, env->sp--, ret >> 8, 0);
+>  95 do_stb(env, env->sp--, ret >> 16, 0);
+>  96 } else if (avr_feature(env, AVR_FEATURE_2_BYTE_PC)) {
+>  97 do_stb(env, env->sp--, ret, 0);
+>  98 do_stb(env, env->sp--, ret >> 8, 0);
+>  99 } else {
+> 100 do_stb(env, env->sp--, ret, 0);
+> 101 }
+> 102
+> 103 env->pc_w =3D base + vector * size;
+> 104 env->sregI =3D 0; /* clear Global Interrupt Flag */
+> 105
+> 106 cs->exception_index =3D -1;
+> 107
+> 108 qemu_plugin_vcpu_interrupt_cb(cs, ret);
+> 109 }
+
+Yes. As should be apparent from _some_ commit message, I wrote this
+under the impression that AVR did not have exceptions. Or rather, what
+we call exceptions in the discon API, which are synchronous events or
+traps resulting from specific instructions being executed (including
+things such as invalid instructios and instruction load failures).
+
+We _do_ want to make sure to call qemu_plugin_vcpu_interrupt_cb only for
+interrupts. At the same time, we don't necessarily want to call
+qemu_plugin_vcpu_exceptions_cb either, at least if AVR just resets on an
+illegal instructions.
+
+Regards,
+Julian
 
