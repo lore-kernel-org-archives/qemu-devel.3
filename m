@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E63FC5DF9D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4598C61DB9
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 04:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSBz-0003Ww-VS; Thu, 27 Aug 2026 00:58:23 -0400
+	id 1wzSBj-0003RQ-VJ; Thu, 27 Aug 2026 00:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSBy-0003V7-JV
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:22 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1wzSBh-0003RE-Sm
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:05 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSBw-0000xW-Pf
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:22 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-39f20d19895so13871891fa.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:58:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787806699; cv=none;
+ id 1wzSBg-0000uw-BI
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:05 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-5b0231a3e86so1585215e87.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:58:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787806683; cv=none;
  d=google.com; s=arc-20260327;
- b=ISTsrIEaIwlDRzGVJcSjgm7LVCO3333mPp70sORxwUbQmziH2qdZvUjzRKU6E4IJxK
- YZwL+LjP7cwZpSdevp/leVAq0c0B4hilpI4JLgWXsTMKJNWiEdzQHOJcSctQu3sobh5u
- AcLPVrQfY/1X45h77MH2VgNy+ZfS7ycSqKP5Lmn98yoqJ09b4cxIdhoADi/m/DNkI5cI
- ISjaFbzarORJqjJOM5aW0ujFZQAnlXP5rVuPH0XUy2JeoQmPNiEpLb3uYEVvaBpQ9a2k
- G1w133p/nk2kArCNEP02S6UCp7/6lihRA2UfSn7x697NG3pO4ihRPQCXtPkURxeCwv7W
- LFUw==
+ b=hNlICqpP1MiwAPi+komqicIuVngxncVuRXctHw9c+cNQr0EMl4chTVXUTEwvk31YFz
+ gsZL6+7/qcVOAbJTEbkC8h6x+3AW6pUDf73Li27k4zmG6uulrSn/TM+I/YYSkmTC57bw
+ DqSx3N2uQQqn9u4vI/6XkLRJH7j1814zDwYLJcCWKk5ObsFgubiPrUedFlSjRN2Mjy+S
+ ZV96DzNTATcN+F4ZwZEmit6qcYGtvwRvqF+uEjvOjymueexHNluKFnRd7aL9DQ+7hvYK
+ QhrTFvaXl87ZLhLy1XuJ3gZk1SLJU6sz6xYHJrNSBd1/HBouM5zEEnckAu+liFgu6kQu
+ EzHQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=LrZxT18D2451JlJlmox0DJE83batWQGKJmS6PBE8pd4=;
+ bh=Ra3VUeTQ+90Xz80S0tbH/wzwxEa0svSPzY6j4HcnEXw=;
  fh=QVe/7zv5OrYmrprO28ljpRmhYeOlvvTBoRQtHWn+3sI=;
- b=aaVGoqD12BL1rjODUMUeTwWB2iq1SJJ2/UT9KbmmYkv18HwkgV3J+UdFGFd5iupQVH
- a+V0UsAq6qAWgcrCajJ2k0unuV7eKp0RjjDcsWImWsXTLb67rpo0IlPrgYDqVeMSzWjr
- TiDbWI1omUES/Dp9AFO4DwppCz7wigem1ryiyVuMRNnN8cdHaK9ARhhnKdui4QfBoPTu
- 0NrGuGcqu6/2WzZTFNlmY0TA76t/jcIWm9ephntoLXkA8LyoKe5CMyxm1jkaOdyzTQkj
- ZzI9GaM5oA2oJRNV2KZ6MMIQru/FIZYqzeMDqRYjG0QzBdq/89tGT/m8879Nn0kKaKo0
- F+MA==; darn=nongnu.org
+ b=loQqRTsYBdLTrJs0oBPQ4v1vlD+SnhLdLDDik4dPpq3TKJul0AP//iMLVR2Zqaqd4G
+ H/ajJ44uVI/oSuApkhczEVXx7somrUIl87OGra5j5Oe3ilkmDEu9e8zIecHcmw6NNTBw
+ SPwpYKxW8MpnNeV7FBMHPfoSdKwE6QngLOG7jTXM1KH4zEONbXfxrXfoAD6XNGGkUWOd
+ ghPeBBx0XQYnYuutLLLBena4v1ruO+TOtcubECKmyFDrRtIL2tD6v2m1QniGMV224tk/
+ MidZqrm21StmK4n3JV3VeAcmsROeX7ndqVsZxpTFHvb9IoEoIUEqnf53jkEg4kFsAwYF
+ 4HpA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787806699; x=1788411499; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787806682; x=1788411482; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LrZxT18D2451JlJlmox0DJE83batWQGKJmS6PBE8pd4=;
- b=TUrKyziyInP9bzVTk7cKEpRqZaDL24VI2xsaEj2hpOAbBELvmwUInTtNzNb86Aj+7c
- CT4PCPXiw4UGcN9Gbas5nmDmIzgboICbegWBcssK+StAKlF+vX+TzdUghYxJ5ZS2rMiL
- g/QGDzOW49PkoQpo2g7207VfqD1+3qG6xdGI9EkfD7XLoCYHgyCqNoy794U//nUxlksv
- mrOLk4NyEUkIGDS+VAnX2kNVLTOI0p3hkZgm2pWvDNYrwvc4hV9GztGeG9egmIwQT+v/
- ViGeS15hnWdGZyLpK9Zhm1nuW1Aw8P0qxZKAzmzZ8nG8mGumbQwx2FSa626KZsDtH3UV
- +8OA==
+ bh=Ra3VUeTQ+90Xz80S0tbH/wzwxEa0svSPzY6j4HcnEXw=;
+ b=J9yi83OkvHNY1zX63g7pkhP8uMoHCbjPQpBh0Uv28k6p72BFC5W6XXpTJyZb0BiR71
+ HHrWbGQYEL7OokFj6cS2l+6/1ooaBd2pzaAlA8y3IXEh+FZUR8s5p720qGsMY3qEWgWW
+ x9KjsyBJdRsbM2VymFx0dHiPfoKq5TSAzqTw36jiosLEXKTKqEtwrscCvc2NWwKbs+Xr
+ z3XrghkqKIQ5DJCfKROP1j/RahsIbnONIASMnJoPmXJKoU1i0CJ84ePU2E6Irhvl0niO
+ JJP2gBaLpiRBz0TCrNBjQmHdC+iaTv0OnB9C7LPoy4llOg4MgRoPqX/dVktqCX/1CvzB
+ fERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787806699; x=1788411499;
+ d=1e100.net; s=20251104; t=1787806683; x=1788411483;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=LrZxT18D2451JlJlmox0DJE83batWQGKJmS6PBE8pd4=;
- b=AIX4Q3s5Kt2RlKSQu9ol3gc1Dpqm66g2vBz1LYAc+NFqAye8sVkIglf0MqgbkzdmHJ
- NTxWhAxLclotpXYcT4HJxWNWeM+MBPMe5Q6prDHqvKWuleMlrE8oseyTUkvpMAkfuMby
- iroveBlTflMySEpCgwel4xnfEFx2vpHgNA0grO7Kqk53K18LKRx02nccin3QeXleEYPM
- XZa8RMnNkaXaZmJDH8Rc3PCVDYge+2yrHsbeMDWOfbTOAAGi4Rn0EOotTpUzaUGd0lSJ
- GY4Uu3/wTAqL+IPJjcPW+1NNvGEsryooh8aFdEeNugmaptj1LJ/IaZ8H7FSCLxjD9zBM
- HcEw==
-X-Gm-Message-State: AFuF++mE4ZDi8knT1T8SEl4lsy8sPf+RerPNLRPhbCYt18mHhbAHLFIE
- ppOZAawpDt+BEmVqyhv6YMJ7rsMfS+OLGJVckldn70euonqSfqA6Ky89ZkrKfl3BDlQkM+WCOoT
- 9fAnnb5CzSV1Q76BFx5n6w9rJ1cCUTrw=
-X-Gm-Gg: AR+sD11qwy9j8gWhTHdsUKLjCEusJOvxotEqOL9FFya8c+xptSPhoGRtf5/yq31BChU
- LKzfmcnh9KkIJtrPGHTkINHKJuWojY4VVUGs2wLcAxrQd5FkCw/21mRTWbyBa8gGtLwFN/kKsIy
- 2DU2cem3NPBgsM5cl3T7LMnCyxjE/kiHCX86wQ4IiKVEaEUBObA1zBazH2PUCDCUC4PKUb861VO
- csrUsN524vy4q0DJ6x3QwtOomjiDpgLktymnIQ+NMlyizt43E9xGLohCNgKz4CYQBZdp3+yC6Ay
- ikR8/1ZA5bfUlQ8pgUEnj0I9wD0pQ003nJ+idOqYRdR1C+W8zo8eR1hf3g==
-X-Received: by 2002:a05:651c:f16:b0:39c:920f:c486 with SMTP id
- 38308e7fff4ca-3a1fd490e8fmr29377521fa.6.1787806698869; Wed, 26 Aug 2026
- 21:58:18 -0700 (PDT)
+ bh=Ra3VUeTQ+90Xz80S0tbH/wzwxEa0svSPzY6j4HcnEXw=;
+ b=jhfWmb0XyMUK4dEZcce0t42KLbgyaFsgP6XlHJVpqxpaBm441PlnVSYWzE1BtGRlF1
+ PlRZYkZL7SADcyOVEMGdEVTcL0ZYtDk/e8ISV7Gk3h6NZ38JB8bk7D3K7KYztsbadae+
+ XIDTXK8HqsaIDRmnitXlYblfTH9ywMnR+oEFwErH/Rzxa5ksN5p3oJczRIRbG5Lxco/M
+ v43WqK3D+ko7VxZ+l0jrWdDtxZd2hwHUSwTgYAcEa49+smV2JAHFI/FBFZl5gqeR4vjT
+ qk8mtLTCeVLuls5nwwVMTu89PbpK3tBl4SEyro3AQgayD4nxpZCj2jqTFzCxS7U8LEAa
+ 6FbA==
+X-Gm-Message-State: AFuF++lK3O5ch16YOj0kLG+Rh9ZPHe987SOUg27qYTr/id/BiuB3wQqG
+ JADnmRbqYxd9g5v9ROY4iFVtWYxUc1dapPJk2oxcW4KadArRBrTAX9kYT90gbDbGZK8zf0T3X2M
+ Dbl2e2JphEcc8/6JRAr5s3asV1/N5H8U=
+X-Gm-Gg: AR+sD13BWn5myuC4dDftEil3SsEaQT2q7uWqf6Qic6G3XT6X9nQ0HAwHfbNaabldeTB
+ UKOXH8StGGvvpCT0uy0d3dduQRSNt16322kq5yzIFrJcnDN2nIcupEXxAaR2ys+2LO2gCsOp13V
+ uU+/qXLZ9GyH3JZz8PBNdF5RiIwSFh8stAjFu9WGFHzyal+gfh8k/E3ha2DjMuwUxca1QBNiCNQ
+ kD9v7A7Z9XMHGOSu2F1KfTGdMr327IRKDewmKs+edw7F42r+n6exVtZMQvTUQYHACusBr3YDQ5V
+ 9hW96rVms/4dfvmdnV4iu1PnydZAy9djO43Ou2VHLw1QuKY=
+X-Received: by 2002:a05:6512:32c6:b0:5ae:b887:bb33 with SMTP id
+ 2adb3069b0e04-5b4a9030e05mr3584195e87.1.1787806682437; Wed, 26 Aug 2026
+ 21:58:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260822190818.1829249-8-mattst88@gmail.com>
- <4645e775-b0c9-45a2-a064-17fabc3db431@linaro.org>
-In-Reply-To: <4645e775-b0c9-45a2-a064-17fabc3db431@linaro.org>
+ <20260822190818.1829249-2-mattst88@gmail.com>
+ <b847a616-5d7b-484c-8065-655d33c63c13@linaro.org>
+In-Reply-To: <b847a616-5d7b-484c-8065-655d33c63c13@linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Thu, 27 Aug 2026 00:57:58 -0400
-X-Gm-Features: AcwNN1UpVEM3MjBU7oLqnF71TwhmHT1dKMtDUJkiqcNF8TfgCCit3r0_BgAKXwM
-Message-ID: <CAEdQ38FPhP9Fmnj2cqzPqRt8MMEjKju0xihLYfwhW72x-jT19Q@mail.gmail.com>
-Subject: Re: [PATCH v3 7/7] RFC: tcg: fold a guest displacement into the host
- addressing mode
+Date: Thu, 27 Aug 2026 00:57:47 -0400
+X-Gm-Features: AcwNN1VCTgixNUcsB5a-uuiu-vpfOwiSuG2dKI7ep5sxFxyxd3RAvPUQJSyhJQo
+Message-ID: <CAEdQ38HVe=uML9CMSYDkWWvXhLgYo+kJxF90MOTBM3oR7gw2ew@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] accel/tcg: fold the dynamic cflags into
+ CPUState::tcg_cflags
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@oss.qualcomm.com, 
  alex.bennee@linaro.org, zhao1.liu@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=mattst88@gmail.com; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -121,110 +121,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 6:52=E2=80=AFPM Richard Henderson
+On Tue, Aug 25, 2026 at 5:47=E2=80=AFPM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
+>
 > On 8/22/26 12:08, Matt Turner wrote:
-> > RFC because:
+> > diff --git ./accel/tcg/tcg-all.c ./accel/tcg/tcg-all.c
+> > index 7186c10cf0..c9874a286a 100644
+> > --- ./accel/tcg/tcg-all.c
+> > +++ ./accel/tcg/tcg-all.c
+> > @@ -254,6 +254,7 @@ static void tcg_set_one_insn_per_tb(Object *obj, bo=
+ol value, Error **errp)
+> >       s->one_insn_per_tb =3D value;
+> >       /* Set the global also: this changes the behaviour */
+> >       qatomic_set(&one_insn_per_tb, value);
+> > +    tcg_update_all_cflags();
+> >   }
+> ...
+> > diff --git ./util/log.c ./util/log.c
+> > index 7cffbc1bf8..3fa46a67fa 100644
+> > --- ./util/log.c
+> > +++ ./util/log.c
+> > @@ -27,6 +27,7 @@
+> >   #include "qemu/thread.h"
+> >   #include "qemu/lockable.h"
+> >   #include "qemu/rcu.h"
+> > +#include "system/tcg.h"
+> >   #ifdef CONFIG_LINUX
+> >   #include <sys/syscall.h>
+> >   #endif
+> > @@ -301,6 +302,9 @@ static bool qemu_set_log_internal(const char *filen=
+ame, bool changed_name,
+> >   #endif
+> >       qemu_loglevel =3D log_flags;
 > >
-> > - Only wired up for x86_64, and only for qemu_ld and qemu_st; the i128
-> >    qemu_ld2 and qemu_st2 pairs are left alone.
-> > - Requiring that no slow path exists is stricter than necessary. Record=
-ing
-> >    the displacement in TCGLabelQemuLdst and emitting one lea on the slo=
-w
-> >    path would cover alignment-checked accesses too, at no fast path cos=
-t.
-> > - Softmmu wants the displacement folded into the TLB comparison as well=
-,
-> >    which is a bigger change than this one.
-> > - A one op window catches everything the frontends emit today but is
-> >    trivially defeated by anything scheduled in between.
+> > +    /* CPU_LOG_TB_NOCHAIN feeds into the per-CPU cflags. */
+> > +    tcg_update_all_cflags();
 >
-> Plausible.  Several times I've considered exposing complex addressing
-> modes to the translators so that things that do LEA are kept intact for
-> awhile.  There are plenty of host-specific code sequences for x << s + y
-> + c, even before we fold that into the memory access.  Then expose the
-> host memory path to tcg ops, somehow, and finally implement a simple CSE
-> pass.  But yeah, hand waving is as far as I've ever gone.
-
-That's the shape I kept wanting. A one-op peephole is a poor
-substitute, and it loses the moment anything is scheduled between the
-add and the access. I went this way because it needed no frontend
-changes; happy to look at the op instead if you'd rather.
-
-> On the second point, I guess you also assuming the offset is also
-> aligned?  I.e. for X + 8*N, you can test X for 8-byte alignment without
-> constructing the complete address.
-
-Right, and that's what makes the second bullet worth doing. If disp is
-a multiple of the required alignment, X + disp is aligned exactly when
-X is, so the fast path test can stay on the base and never needs the
-full address. That covers every displacement a frontend emits for a
-struct or stack access.
-
-What's left is the slow path, which hands addr_reg to the helper --
-and addr_reg is now the base. Recording the displacement in
-TCGLabelQemuLdst and emitting one lea there fixes it at no fast path
-cost. v4 spells that out in the bullet but still refuses any access
-needing a test.
-
-> > +static bool tcg_target_ldst_disp_ok(TCGContext *s, MemOpIdx oi, int64_=
-t disp)
+> I'm not keen on these placements.  I know they're needed for HMP, but
+> I'd rather have these calls in HMP, after updating state.
+>
+> > +void tcg_update_cflags(CPUState *cpu)
 > > +{
-> > +#ifdef CONFIG_USER_ONLY
-> > +    MemOp opc =3D get_memop(oi);
-> > +    TCGAtomAlign aa;
-> > +    int64_t ofs;
-> > +
-> > +    if (tcg_use_softmmu || s->addr_type !=3D TCG_TYPE_I64) {
-> > +        return false;
-> > +    }
-> > +    aa =3D atom_and_align_for_opc(s, opc, MO_ATOM_WITHIN16,
-> > +                                (opc & MO_SIZE) =3D=3D MO_128);
-> > +    if (aa.align) {
-> > +        return false;
-> > +    }
-> > +    ofs =3D (int64_t)x86_guest_base.ofs + disp;
-> > +    return ofs =3D=3D (int32_t)ofs;
-> > +#else
-> > +    return false;
-> > +#endif
 > > +}
-> These compilation mode tests belong...
->
-> > +static void __attribute__((noinline))
-> > +fold_ldst_disp(TCGContext *s)
-> > +{
-> > +    TCGOp *op;
 > > +
-> > +    if (!TCG_TARGET_HAS_ldst_disp) {
-> > +        return;
-> > +    }
-> ... here, before we step over the loop.  You might as well pass MemOp to
-> the target function and not MemOpIdx -- nothing about the mmu_idx is
-> relevant.
->
-> Ideally, the atom_and_align test would also be done generically, not
-> requiring each target to replicate that boilerplate.
+> Where does this get used outside of tcg itself?  I think only
+> tcg_update_all_cflags() should be stubbed, and indeed the only one
+> visible outside of accel/tcg/.
 
-All three done. x86_64 is now just:
+cpu_single_step(), in cpu-target.c, which is in both user_ss and
+system_ss and always linked. So both entry points need stubbing.
 
-    ofs =3D (int64_t)x86_guest_base.ofs + disp;
-    return ofs =3D=3D (int32_t)ofs;
+> Phil, is the stub itself better placed in accel/stubs/ or accel/tcg/?
+> I'm unsure what organization you're working toward.
 
-The alignment one needed a compromise. atom_and_align_for_opc() takes
-host_atom and allow_two_ops and both feed aa.align, so a generic
-caller either gets them from the target -- the same boilerplate, moved
-to tcg-target.h -- or answers without them. I answered without them: a
-small ldst_disp_needs_align() that gives the answer for the most
-restrictive
-host.
-
-Exact for MO_ATOM_NONE and the IFALIGN cases, i.e. everything
-frontends emit by default, so the alpha numbers don't move.
-Conservative for MO_ATOM_WITHIN16 and MO_ATOM_SUBALIGN: x86 could take
-those folds and no longer does. One #define of the host atomicity next
-to TCG_TARGET_HAS_ldst_disp gets that back if you'd rather have it
-exact.
+v4 moves it to accel/stubs/tcg-stub.c, alongside the other accelerator
+stubs. Verified --disable-tcg links. Easy to move again if Phil
+prefers elsewhere.
 
