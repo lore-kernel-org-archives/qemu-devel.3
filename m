@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46032C61DC7
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93B5C61DC7
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzWty-0000HJ-Sd; Thu, 27 Aug 2026 06:00:06 -0400
+	id 1wzWxj-0001Ya-Bc; Thu, 27 Aug 2026 06:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzWtx-0000GZ-Kr
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:00:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzWtu-00084H-Vk
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:00:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787824802;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l+4pZWx3NugtOS6fR3PbIv1beFy0znaJNkgwfzU0W6g=;
- b=P3pKiKgHMxmsX3364VPGUANrS5hGw8bPnWMocRciICiRUa04AjMdeA/k/pVt6QcChLPAMq
- mehj9HHmruY3WwiRZ34V5W/KcdjNlF9hYZhFw1CRMGhHYamnbLGdwK0IS7+G4says8SXKk
- MLYhJFPScjTtwk32LM/CyzDV4J+R3xs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-Heyc38tiOWuxNt3mcFuN8w-1; Thu,
- 27 Aug 2026 05:58:48 -0400
-X-MC-Unique: Heyc38tiOWuxNt3mcFuN8w-1
-X-Mimecast-MFC-AGG-ID: Heyc38tiOWuxNt3mcFuN8w_1787824723
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7BF06195398E; Thu, 27 Aug 2026 09:58:42 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CED29180059E; Thu, 27 Aug 2026 09:58:31 +0000 (UTC)
-Date: Thu, 27 Aug 2026 10:58:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
- Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-Message-ID: <apAKRZtz9xsB1U9s@redhat.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <ao7c-FiawF9sMCGj@redhat.com>
- <392d0652-2d06-4889-8b67-c199e59bd314@nutanix.com>
- <7f865144-dc5e-4eaa-9704-8cb3cc6a1158@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wzWxi-0001YM-Eg
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:03:58 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wzWxf-0000Iz-53
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:03:58 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4995b0343c1so16289735e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787825033; x=1788429833; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=csgrpDKtf2UyMheOyiDVEI2NzIE/1VuTDsipBKYqE94=;
+ b=N9lK7pQvAIkdNLVIFkLqz224SpR95sMTFfDWThytodGsH48/ixzg6ORIvXLgF5j/mA
+ hhu/mkLk+z/OeiGjk4UEYIfpmYmtRViJREbJq1uBrdPIB+1ogoIYFB1/ITOLzxdhtJ/r
+ p3KQlzLKkgtllSdM32bLOhgu7aPxBAzC+FFKxk9+drc/3tfTOS4NKZgrw/ONa6Yplzl1
+ 2NWNuFGFYpSmr27augO6IO534fNfBir/0aQKHpL2JOFqLa81+eXi5RF2BxSPSWqd+VC8
+ Ylom6M+fETkQmSoDraBSbm9MKwoB3zpgV852RNU+KjnldeHHTFFVSBDoTKZYUYb9pgsD
+ pD/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787825033; x=1788429833;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=csgrpDKtf2UyMheOyiDVEI2NzIE/1VuTDsipBKYqE94=;
+ b=Np+ozMqv8wuJ3+90VozuTcDBTKVcz0AzyGorB534mJ3G6T3jcQeuqMacQ3kYrkBjux
+ wqUGLhJnMQvMEyGkXTbQih1LqNFRoavzxYZmhaRIFoO4TEUZky6Z2pYJRIQMn1hTnSwf
+ ZXVyqYItNJTS+VV4/4wULTNKfM9ZojGWwMDsWOe+lotYFcf3hIzAJUzUz6eBcN0Wj9Jp
+ Xb1as36Ef4PpoGbcbcqArpaGDDaAmoY3xF1C4RrgpuMHz91lK+9hmPnLPM8UIkB6SI1v
+ NNtfjq1KMXkiYJNq7YIabHZLIzv5idpja4z0aF2mSXIf1VdgeH0bwsoOdtPryRaylLHZ
+ iJ4A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqsmA5/9jW6WvZcp+SqDjrB73opdirc88FdxM8NOpC16tFybGzvjKnLaGFIxbsUqH60KfiERvQfWxkc@nongnu.org
+X-Gm-Message-State: AFuF++nvphUYDDoCJdNwg1i5wRytmPgNo6t5j+9DCl87yjGcMVhFWxO7
+ 65AYkZ/tN138dw7sdNIIy9flcGFVnSD/Xxat7svdAg4avTD+TlzeFD0L
+X-Gm-Gg: AR+sD13Jvfhf8npkVrpjDhRR9C/hYesybmKTID7j0i6fQmDNc9X4ajc+AaXxBDsTlpI
+ a6QqnOvUr82L2E85kg3Ymq7L4ehK6PIRXjvIHtnp4Wm0CRvr5EaJH3VtgUQIlHeU8rFVTEd9hVk
+ j3IGHoYNkXoz7HudqDPsJPKvK3v7+jcgbs4gkiKmUBR+jSd7KvWUvmcukZjxtV7sqYZgBx9h2+l
+ 0yRL2c+xhGR/0b1XbsQ8llmSjGaK5KLdmv9yFMtdDWkti1nEq5j12T8FFuoai+llkeHjtzlQ7fq
+ e6wRMHAfPsfMKIOwqbuDAwh+OKtKZBa6eiuDTkw9elihC5BwXWrpdO+HLPIO4HlXK97DnYYZAfH
+ P8Zu9JQO4lwqxK5Ivlh3tQ0E8c5AWME97C6qs05MYO3oyGVpR4SKIGEcnhit+vY4ulVthrT9Sz8
+ SYo3XAVUQyeg0L5iMkTpkIaK+uZv8umOm7GYZmZ65mzMGR6oL6PjVprliudUpxpxLo8w==
+X-Received: by 2002:a05:600c:a418:b0:49a:2c4b:403f with SMTP id
+ 5b1f17b1804b1-49a2c4b41dfmr111526485e9.13.1787825031458; 
+ Thu, 27 Aug 2026 03:03:51 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([62.214.191.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b4aff5ffbsm34378305e9.13.2026.08.27.03.03.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 03:03:51 -0700 (PDT)
+Date: Thu, 27 Aug 2026 10:03:41 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?RE=3A_=5BEXT=5D_RE=3A_=5BPATCHv2_0/7?=
+ =?US-ASCII?Q?=5D_hw/arm=3A_Adding_Cortex-M7?=
+ =?US-ASCII?Q?_Asymmetric_Multiprocessing_boot_support_for_i=2EMX8MP?=
+In-Reply-To: <DB8PR04MB71771CD2C2030CDC5C554A6887A02@DB8PR04MB7177.eurprd04.prod.outlook.com>
+References: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
+ <DB8PR04MB717781FAC6A65C0BE2AF1D0587CF2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+ <DB8PR04MB717730147C8E5B87FF57D07D87DD2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+ <C7FBB1C7-732B-4BFB-9073-CA8A44C41C3B@gmail.com>
+ <5496592E-1B57-420F-B87B-8070A3F7D2AA@gmail.com>
+ <DB8PR04MB71774BF67E652DD2B6DD3A6187A02@DB8PR04MB7177.eurprd04.prod.outlook.com>
+ <64BC2648-354C-4F3B-A22E-1E45725B82AB@gmail.com>
+ <DB8PR04MB71771CD2C2030CDC5C554A6887A02@DB8PR04MB7177.eurprd04.prod.outlook.com>
+Message-ID: <213A4391-3DB7-4AC4-9AF3-6C06DAD27C0D@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7f865144-dc5e-4eaa-9704-8cb3cc6a1158@oss.qualcomm.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,176 +109,365 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 05:41:30PM -0300, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 8/26/2026 10:40 AM, Mark Cave-Ayland wrote:
-> > On 26/08/2026 13:32, Daniel P. Berrangé wrote:
-> > 
-> > > On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
-> > > 
-> > > snip,
-> > > 
-> > > ..to comment just on the end result for now..
-> > > 
-> > > > The last patch builds qemu-system (and qemu-systemw on Windows) from
-> > > > aarch64 common/system objects plus RISC-V arch objects, and installs
-> > > > qemu-system-{arm,aarch64,riscv32,riscv64} as symlinks so argv[0] still
-> > > > selects TargetInfo.
-> > > > 
-> > > > Examples:
-> > > > 
-> > > >    qemu-system -target aarch64 -M virt ...
-> > > >    qemu-system-riscv64 -M virt ...
-> > > > 
-> > > > A basename that matches no registered token falls through to the unique
-> > > > default. A combined binary with no suffix requires -target when more
-> > > > than one default TargetInfo is registered.
-> > > 
-> > > In testing and comparing  the new qemu-system-riscv64 symlink
-> > > to qemu-system vs the current standalone qemu-system-riscv64
-> > > binary there are some significant user visible changes.
-> > > 
-> > > The simplest is 'qom-list-types' went from reporting approx
-> > > 770 classes, to reporting approx 1530 classes. IOW, the
-> > > qemu-system-riscv64 binary is now reporting supporting for
-> > > all the classes that were unique to arm.
-> > > 
-> > > The '-device help' output similarly shows a great many more
-> > > devices
-> > > 
-> > > TL;DR introspecting qemu-system-riscv64 is no longer accurate
-> > > wrt riscv64 capabilities.
-> > > 
-> > > This is not suprising, since we register all TypeInfo meaning
-> > > we get all QOM classes present. Some of Pierricks patches try
-> > > to filter places which iterate over classes, but this does not
-> > > have full coverage.
-> > > 
-> > > 
-> > > I think this is probably also what leads to the increased RAM
-> > > usage in qemu-system-riscv64. Starting
-> > > 
-> > >    qemu-system-riscv64 -nodefaults -display none -M none
-> > > 
-> > > shows an increase in RAM usage from  17.3 to 20.7 MB which
-> > > is about 15% increase. NB this is dirty, private RAM per
-> > > process. The shared RAM pages also increase but that's not
-> > > a concern since they're common to all QEMU processes.
-> > > 
-> > > qemu-system-aarch64 shows a much smaller RAM increase, since
-> > > it only grew from 1430 classes to 1530 classes.
-> > > 
-> > > We have many more target though, so if we assume the end
-> > > point where every single target is unified, the the union
-> > > of all classes for all targets comes to approx 3600.
-> > > 
-> > > My guesstimate is that would mean a memory increase for
-> > > qemu-system-riscv64 from 17.3 to 39.9 MB, which is a
-> > > 72% increase.
-> > > 
-> > > In absolute terms this is still modest, but for deployments
-> > > with large VM counts  and small RAM sizes, that gets to be
-> > > significant.
-> > > 
-> > > 
-> > > None of this means single binary is a bad idea.
-> > > 
-> > > 
-> > > My main takeaway is that we're creating uneccessary work
-> > > for ourselves by trying to make 'qemu-sytem' identical
-> > > in behaviour to qemu-system-$TARGET.
-> > > 
-> > > The complex filtering patches / QOM interfaces that I
-> > > found uncomfortable in Pierrick's base series are largely
-> > > around the filtering needed to simulate qemu-system-$TARGET,
-> > > and they're still incomplete. I don't have high confidence
-> > > in our ability to avoid regressions if we go route this
-> > > route.
-> > > 
-> > > 
-> > > IMHO we should make a clean break with the past. Leave
-> > > the existing qemu-system-$TARGET binaries being built
-> > > from the same pieces they are today, such that there
-> > > is better confidence that we are not making behavioural
-> > > changes to them.
-> > > 
-> > > 
-> > > qemu-system should be built alongside qemu-system-$TARGET
-> > > and offer new semantics where it is documented as exposing
-> > > everything from all targets whenever introspected and does
-> > > not apply target type or target Kconfig filtering to inputs/
-> > > outputs.
-> > > 
-> > > We still get the benefit of only building most  .o files
-> > > once, so keeping qemu-system-$TARGET is only a small
-> > > overhead in the final step of linking everything together.
-> > > 
-> > > 
-> > > qemu-system will still have the increased memory overhead
-> > > but that's fine as qemu-system-$TARGET will be unaffected.
-> > > We can tackle the memory overhead of qemu-system at our
-> > > leisure through use of loadable modules, and thus not have
-> > > that as a task to think about today.
-> > > 
-> > > 
-> > > With the clean break with the past, we also have the
-> > > ability to tackle various long standing design mistakes
-> > > present in qemu-system-$TARGET instead of carrying them
-> > > over into the new binary.
-> > > 
-> > > Specifically
-> > > 
-> > >   * -nodefaults should become the default
-> > >   * All CLI args should be processed in order from
-> > >     the command line, so we eliminate the nonsense
-> > >     where we process some -object, then -chardev,
-> > >     then more -object through hand crafted deps
-> > > 
-> > >   * No default machine type
-> > 
-> > I would even go as far as to suggest that we should make modules mandatory for qemu-system, so that devices can be loaded upon demand during machine construction to help keep the size down.
-> > 
-> > I'll leave whether that is through dependency tracking or via an explicit load directive for someone else to decide :)
-> > >   * Drop all legacy syntax so we only have a single
-> > >     QAPI based way of configuring.
-> > >     eg drop -hda, -hdb, -cdrom, -drive, etc
-> > >        only keeping -blockdev
-> > >     eg drop -mon, -monitor, -qmp, etc only
-> > >        keeping -object
-> > 
-> > The only problem with this is that I often get a lot of complaints that QEMU command lines are complicated from retro folks who just want to run their favourite old games. Why would they want to come up with a long-winded -drive command line when they can just use -hda instead?
-> > 
-> > > We don't have to do all that straightaway. If we declare
-> > > qemu-system "experimental" initially we can iterate on
-> > > that intentionally breaking compat in releases, without
-> > > any impact on qemu-system-$TARGET.
-> > > 
-> > > Avoiding the back compat task will give us more flexibility
-> > > with the follow on work when people come to create new
-> > > machine types with heterogenous CPU targets.
-> > I agree that this is a good opportunity to explore new things without being tied to past decisions.
-> 
-> To be fair I don't think Phil and Pierrick are basing their design solely
-> on "we must comply to what qemu-system-$target does and has".  From what I
-> understood they're trying to get the prototype out of the door to prove that
-> it works, i.e. "this is clearest and most viable path we're seeing to make it
-> happen". This would naturally adhere to what is already available because,
-> well, it's already a proven base to build on top of.
 
-In looking at these patches my impression is introducing "qemu-system"
-as its own thing is simpler than trying to make 'qemu-system' be able
-to replace & simulate qemu-system-$target, which this does.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Am 24=2E August 2026 11:16:11 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7=
+@nxp=2Ecom>:
+>
+>
+>
+>NXP Confidential
+>> -----Original Message-----
+>> From: Bernhard Beschow <shentey@gmail=2Ecom>
+>> Sent: 24 August 2026 16:13
+>> To: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>; qemu-devel@nongnu=2Eor=
+g
+>> Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
+>> Subject: RE: [EXT] RE: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetri=
+c
+>> Multiprocessing boot support for i=2EMX8MP
+>>
+>> Caution: This is an external email=2E Please take care when clicking li=
+nks or
+>> opening attachments=2E When in doubt, report the message using the 'Rep=
+ort
+>> this email' button
+>>
+>>
+>> Am 24=2E August 2026 04:55:28 UTC schrieb Gaurav Sharma
+>> <gaurav=2Esharma_7@nxp=2Ecom>:
+>> >
+>> >
+>> >
+>> >NXP Confidential
+>> >> -----Original Message-----
+>> >> From: Bernhard Beschow <shentey@gmail=2Ecom>
+>> >> Sent: 23 August 2026 22:26
+>> >> To: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>; qemu-
+>> devel@nongnu=2Eorg
+>> >> Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
+>> >> Subject: [EXT] RE: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+>> >> Multiprocessing boot support for i=2EMX8MP
+>> >>
+>> >> Caution: This is an external email=2E Please take care when clicking
+>> >> links or opening attachments=2E When in doubt, report the message us=
+ing
+>> >> the 'Report this email' button
+>> >>
+>> >>
+>> >> Am 23=2E August 2026 12:02:22 UTC schrieb Bernhard Beschow
+>> >> <shentey@gmail=2Ecom>:
+>> >> >
+>> >> >
+>> >> >Am 11=2E August 2026 04:47:40 UTC schrieb Gaurav Sharma
+>> >> <gaurav=2Esharma_7@nxp=2Ecom>:
+>> >> >>ping
+>> >> >>
+>> >> >>> -----Original Message-----
+>> >> >>> From: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> >> >>> Sent: 24 July 2026 09:32
+>> >> >>> To: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>; qemu-
+>> >> devel@nongnu=2Eorg
+>> >> >>> Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg; Bernhar=
+d
+>> >> >>> Beschow <shentey@gmail=2Ecom>
+>> >> >>> Subject: RE: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+>> >> >>> Multiprocessing boot support for i=2EMX8MP
+>> >> >>>
+>> >> >>> Ping
+>> >> >
+>> >> >Hi Gurav,
+>> >> >
+>> >> >I finally could test your series=2E I built Buildroot's
+>> >> freescale_imx8mpevk_defonfig (v2026=2E05) which has the required ker=
+nel
+>> >> options already enabled and passed imx8mp-evk-rpmsg=2Edtb to QEMU=2E
+>> QEMU
+>> >> starts successfully=2E However, when attempting to load an =2Eelf im=
+age
+>> >> to remoteproc0/firmware, I get:
+>> >> >
+>> >> >    # echo zephyr=2Eelf >
+>> >> >/sys/devices/platform/imx8mp-cm7/remoteproc/remoteproc0/firm
+>> >> >ware
+>> >> >    [  887=2E325597] imx-rproc imx8mp-cm7: can't change firmware wh=
+ile
+>> >> running
+>> >> >    sh: write error: Device or resource busy
+>> >> >
+>> >> >Checking the state results in:
+>> >> >
+>> >> >    # cat /sys/devices/platform/imx8mp-
+>> cm7/remoteproc/remoteproc0/state
+>> >> >    attached
+>> >> >
+>> >> >I didn't dig into the Linux kernel sources to investigate this
+>> >> >further=2E Do you
+>> >> have an idea of what is missing?
+>> >>
+>> >> Okay, I missed the -mmio change as well as the reserved regions:
+>> >> https://eur01=2Esafelinks=2Eprotection=2Eoutlook=2Ecom/?url=3Dhttps%=
+3A%2F%2Fdoc
+>> >>
+>> s=2En%2F&data=3D05%7C02%7Cgaurav=2Esharma_7%40nxp=2Ecom%7C078980c8a6cf4
+>> 41d336
+>> >>
+>> 708df01cc83b7%7C686ea1d3bc2b4c6fa92cd99c5c301635%7C0%7C0%7C6392
+>> 316500
+>> >>
+>> 62951398%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYi
+>> OiIwLjAu
+>> >>
+>> MDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%
+>> 7C%7C
+>> >>
+>> &sdata=3DEZYjWZBic3VeUAYyFd2MmxmMdnt5OHtR1pujyFlD01Y%3D&reserved
+>> =3D0
+>> >>
+>> xp=2Ecom%2Fbundle%2FAN5317%2Fpage%2Ftopics%2Fimx_linux_rproc_suppo
+>> >>
+>> rt=2Ehtml&data=3D05%7C02%7Cgaurav=2Esharma_7%40nxp=2Ecom%7Cba42497956e9=
+4
+>> >>
+>> 77b17c608df01376f9a%7C686ea1d3bc2b4c6fa92cd99c5c301635%7C0%7C0%
+>> >>
+>> 7C639231009747150362%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGki
+>> >>
+>> OnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoy
+>> >>
+>> fQ%3D%3D%7C0%7C%7C%7C&sdata=3DVnPdMGYtloMgOrGjEMM8V0fAeyJ4PX
+>> >> 1mE0mDUQJiasA%3D&reserved=3D0 =2E Fixed=2E
+>> >>
+>> >> Then I set up MCUXpresso following this guide:
+>> >> https://mcuxpr/
+>> >>
+>> esso=2Enxp=2Ecom%2Fmcuxsdk%2Flatest%2Fhtml%2Fgsd%2Frepo_setup=2Ehtml&da=
+t
+>> >>
+>> a=3D05%7C02%7Cgaurav=2Esharma_7%40nxp=2Ecom%7Cba42497956e9477b17c608
+>> >>
+>> df01376f9a%7C686ea1d3bc2b4c6fa92cd99c5c301635%7C0%7C0%7C6392310
+>> >>
+>> 09747181724%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUs
+>> >>
+>> IlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D
+>> >> %7C0%7C%7C%7C&sdata=3D9h%2BskLy4Ymmj5Hdm4bbxNWwBMVmTA%2Fj
+>> %2
+>> >> Bt2eAQvbKnrg%3D&reserved=3D0
+>> >>
+>> >> With an ARM eabi toolchain provided by my distrubution I created the
+>> >> =2Eelf
+>> >> file:
+>> >>
+>> >>     west build -b evkmimx8mp examples/driver_examples/uart/polling/
+>> >> -- config ddr_release
+>> >>
+>> >> With the apporpriate =2Edtb I get in Buildroot guest:
+>> >>
+>> >>     # modprobe rpmsg_char
+>> >>     # echo uart_polling_cm7=2Eelf > /sys/devices/platform/imx8mp-
+>> >> cm7/remoteproc/remoteproc0/firmware
+>> >>     # echo start > /sys/devices/platform/imx8mp-
+>> >> cm7/remoteproc/remoteproc0/state
+>> >>     [   52=2E182388] remoteproc remoteproc0: powering up imx-rproc
+>> >>     [   52=2E195672] remoteproc remoteproc0: Direct firmware load fo=
+r
+>> >> uart_polling_cm7=2Eelf failed with error -2
+>> >>     [   52=2E195895] remoteproc remoteproc0: Falling back to sysfs f=
+allback for:
+>> >> uart_polling_cm7=2Eelf
+>> >>     [  113=2E748324] remoteproc remoteproc0: request_firmware failed=
+: -110
+>> >>     [  113=2E755836] remoteproc remoteproc0: Boot failed: -110
+>> >>     sh: write error: Connection timed out
+>> >>
+>> >> Any ideas?
+>> >>
+>> >
+>> >Hey Bernhard,
+>>
+>> Hi Gurav,
+>>
+>> >Please copy the elf firmware to /lib/firmware directory before trying
+>> >the above remoteproc loading=2E Linux kernel has a built-in firmware
+>> >loader subsystem that automatically searches for firmware files in
+>> >specific directories such as :- /lib/firmware/
+>> >
+>> >It is a one-time setup=2E The firmware loading should then work=2E I m=
+ight have
+>> missed this copy step in the rst=2E I will add it=2E
+>>
+>> The step is there, I missed it=2E Now I moved the =2Eelf file to /lib/f=
+irmware and
+>> performed the loading with the new, absolute path=2E Still the same out=
+come=2E=2E=2E
+>>
+>
+>I have uploaded the test binaries here - https://github=2Ecom/gauravsharm=
+a0305/qemu_test_bins=2E So, you will get:-
+>1=2E Kernel Image
+>2=2E RPMSG DTB
+>3=2E M7 binary elf
+>
+>can you please test the emulation with the above binaries ? that way you'=
+ll know which side of changes are being missed=2E I have been testing it co=
+nsistently with these binaries=2E
+>
+>=2E/qemu-system-aarch64 -M imx8mp-evk -m 3G -display none -serial null -s=
+erial stdio -serial null -serial pty:/tmp/imx8mp-uart4 -kernel Image -dtb i=
+mx8mp-evk-rpmsg=2Edtb -append "root=3D/dev/mmcblk2p1" -drive file=3D2024052=
+2-br2024=2E02-nitrogen8mp_qt5_gst1=2Eimg,if=3Dsd,bus=3D2,format=3Draw,id=3D=
+mmcblk2
 
+Thanks! I finally succeeded=2E The missing detail was to echo just the nam=
+e of the =2Eelf file rather than its absolute path, and your log file helpe=
+d me spot that=2E
+
+Now that I've a working setup I will be able to provide feedback=2E
+
+Until then and best regards,
+Bernhard
+
+>
+>> >
+>> >> Best regards,
+>> >> Bernhard
+>> >>
+>> >> >
+>> >> >Note that I built Zephyr's imx8mp_evk for the M7 [1] which produces
+>> >> zephyr=2Eelf=2E Does the series provide everything to use Zephyr or =
+do we
+>> >> need to add ITCM memory? Adding a dedicated memory map including
+>> ITCM
+>> >> for the
+>> >> M7 core doesn't seem too complicated=2E Using Zephyr may allow for
+>> >> having a functional test in our CI, though of course binary images h=
+ad to
+>> be provided=2E
+>> >> >
+>> >> >Best regards,
+>> >> >Bernhard
+>> >> >
+>> >> >[1]
+>> >> >https://docs/=2E
+>> >> >zephyrproject=2Eorg%2Flatest%2Fboards%2Fnxp%2Fimx8mp_evk%2Fdoc%2
+>> Fin
+>> >> dex=2Eht
+>> >> >ml%23programming-and-debugging-
+>> >> m7&data=3D05%7C02%7Cgaurav=2Esharma_7%40nxp=2E
+>> >> >com%7Cba42497956e9477b17c608df01376f9a%7C686ea1d3bc2b4c6fa92
+>> cd
+>> >> 99c5c3016
+>> >> >35%7C0%7C0%7C639231009747200340%7CUnknown%7CTWFpbGZsb3d
+>> 8ey
+>> >> JFbXB0eU1hcGk
+>> >> >iOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIld
+>> UIj
+>> >> oyfQ
+>> >> >%3D%3D%7C0%7C%7C%7C&sdata=3DcyY1qeaapUnyZB45dfZ5V4Os0S2gkQr
+>> rq
+>> >> MXR5XZ83fw%3
+>> >> >D&reserved=3D0
+>> >> >
+>> >> >
+>> >> >>>
+>> >> >>> > -----Original Message-----
+>> >> >>> > From: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> >> >>> > Sent: 06 July 2026 21:59
+>> >> >>> > To: qemu-devel@nongnu=2Eorg
+>> >> >>> > Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg; Gaura=
+v
+>> >> >>> > Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> >> >>> > Subject: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+>> >> >>> > Multiprocessing boot support for i=2EMX8MP
+>> >> >>> >
+>> >> >>> > Changes in v1:
+>> >> >>> >
+>> >> >>> > This series adds Asymmetric Multiprocessing (AMP) boot support
+>> >> >>> > for the
+>> >> >>> > Cortex-M7 core on the i=2EMX8MP SoC=2E The M7 firmware can be
+>> >> >>> > loaded and started from Linux running on the Cortex-A53 cores
+>> >> >>> > via the remoteproc framework=2E
+>> >> >>> >
+>> >> >>> > The series introduces the following peripheral models needed f=
+or
+>> AMP:
+>> >> >>> >   - GPC (General Power Controller)
+>> >> >>> >   - GPR (General Purpose Registers)
+>> >> >>> >   - SRC (System Reset Controller) authored by Bernhard Beschow
+>> >> >>> > <shentey@gmail=2Ecom>
+>> >> >>> >   - MU (Messaging Unit)
+>> >> >>> >   - Extends the CCM with M7 clock outputs and wires into the
+>> >> >>> > i=2EMX8MP
+>> >> SoC
+>> >> >>> >   - Enable Cortex-M7 boot in i=2EMX8MP EVK functional test
+>> >> >>> >
+>> >> >>> > Changes in v2:
+>> >> >>> >
+>> >> >>> > - Removed the usage of device_class_set_legacy_reset in imx8mp
+>> >> >>> > gpc,gpr,mu and
+>> >> >>> >   src=2E
+>> >> >>> > - Removed the usage of 'smp' , 'maxcpus' and 'enable-cm7' to m=
+ake
+>> the
+>> >> >>> >   invocation simpler=2E
+>> >> >>> > - Cleaned up imx8mp_src by removing redundant/unused code=2E
+>> >> >>> > - Updated Maintainers and improved the imx8mp documentation
+>> >> >>> >
+>> >> >>> > Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> >> >>> >
+>> >> >>> > Bernhard Beschow (1):
+>> >> >>> >   hw/misc: Add SRC (System Reset Controller) to i=2EMX8MP
+>> >> >>> >
+>> >> >>> > Gaurav Sharma (6):
+>> >> >>> >   hw/misc: Add i=2EMX8MP GPC (General Power Controller) IP
+>> >> >>> >   hw/misc: Add GPR (General Purpose Register) IP to iMX8MP
+>> >> >>> >   hw/misc: Add MU (Messaging Unit) IP to i=2EMX8MP device mode=
+l
+>> >> >>> >   hw/misc: Extend i=2EMX8MP CCM with Cortex-M7 clock outputs
+>> >> >>> >   hw/arm: Enable Cortex-M7 AMP boot on i=2EMX8MP
+>> >> >>> >   tests/functional: Enable Cortex-M7 boot in i=2EMX8MP EVK
+>> >> >>> > functional test
+>> >> >>> >
+>> >> >>> >  MAINTAINERS                                 |  13 +-
+>> >> >>> >  docs/system/arm/imx8m=2Erst                   | 188 +++++++++=
++-
+>> >> >>> >  hw/arm/Kconfig                              |   4 +
+>> >> >>> >  hw/arm/fsl-imx8mp=2Ec                         | 220 +++++++++=
++++-
+>> >> >>> >  hw/arm/imx8mp-evk=2Ec                         |   3 +-
+>> >> >>> >  hw/misc/Kconfig                             |  12 +
+>> >> >>> >  hw/misc/imx8mp_ccm=2Ec                        |   9 +
+>> >> >>> >  hw/misc/imx8mp_gpc=2Ec                        | 146 +++++++++
+>> >> >>> >  hw/misc/imx8mp_gpr=2Ec                        | 153 +++++++++
+>> >> >>> >  hw/misc/imx8mp_mu=2Ec                         | 328 +++++++++=
++++++++++++
+>> >> >>> >  hw/misc/imx8mp_src=2Ec                        | 275 +++++++++=
++++++++
+>> >> >>> >  hw/misc/meson=2Ebuild                         |   4 +
+>> >> >>> >  hw/misc/trace-events                        |   5 +
+>> >> >>> >  include/hw/arm/fsl-imx8mp=2Eh                 |  29 +-
+>> >> >>> >  include/hw/misc/imx8mp_ccm=2Eh                |   3 +
+>> >> >>> >  include/hw/misc/imx8mp_gpc=2Eh                |  34 ++
+>> >> >>> >  include/hw/misc/imx8mp_gpr=2Eh                |  56 ++++
+>> >> >>> >  include/hw/misc/imx8mp_mu=2Eh                 |  53 ++++
+>> >> >>> >  include/hw/misc/imx8mp_src=2Eh                |  31 ++
+>> >> >>> >  tests/functional/aarch64/test_imx8mp_evk=2Epy |   1 -
+>> >> >>> >  20 files changed, 1539 insertions(+), 28 deletions(-)  create
+>> >> >>> > mode
+>> >> >>> > 100644 hw/misc/imx8mp_gpc=2Ec  create mode 100644
+>> >> >>> hw/misc/imx8mp_gpr=2Ec
+>> >> >>> > create mode 100644 hw/misc/imx8mp_mu=2Ec  create mode 100644
+>> >> >>> > hw/misc/imx8mp_src=2Ec  create mode 100644
+>> >> >>> include/hw/misc/imx8mp_gpc=2Eh
+>> >> >>> > create mode 100644 include/hw/misc/imx8mp_gpr=2Eh  create mode
+>> >> >>> > 100644 include/hw/misc/imx8mp_mu=2Eh  create mode 100644
+>> >> >>> > include/hw/misc/imx8mp_src=2Eh
+>> >> >>> >
+>> >> >>> > --
+>> >> >>> > 2=2E34=2E1
+>> >> >>
 
