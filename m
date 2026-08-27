@@ -4,109 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 038D0C61DCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB91C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzarF-0002bN-VH; Thu, 27 Aug 2026 10:13:33 -0400
+	id 1wzara-0002ew-3y; Thu, 27 Aug 2026 10:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarF-0002bE-1n
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wzarQ-0002cc-EX
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzar8-0005dR-TI
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:32 -0400
+ id 1wzarM-0005g4-6m
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840006;
+ s=mimecast20190719; t=1787840015;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7hjxLnAVY/DURtZa77LbXggflUPsLfOq7SYe7f/Hv64=;
- b=BnOqAFlsk2m6MIip8Wa5xc2iQbZXVUxzkL4RglfBvhMBzBOlmrOCrIuht4mrEZy+SHNXHl
- ND4w9HB3/w0eGHAsqyOELVgHs6B5tPK7TOKra9SsdOZPFU1U8NamvI3bRUDlzL+3SNp4AN
- gbZ6uICv0Zlb9NjPmHwmNBlt9M35v5Y=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pmhrxutqvfwk8kCCA5LdrLPDB71Ss207mNaYjLClR4E=;
+ b=iCrHVKVhY+VKfDL50sBA1SkYT5PU7ns96g+Wv+PJdPr7yoXGQjX2/+IzMMYkEXanBX10uH
+ XetWz7UxxXpQF3WYoH89YhBHDEprGFUEw6PLaViUwvz9Ja1wIAJG68XDHGZfB3MmNiuoO3
+ tL48sHHNDKeY+8hq+Rd6OqJQwlyRcyk=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-Ww9a8nJvOCqf29u4hjbhnA-1; Thu, 27 Aug 2026 10:13:24 -0400
-X-MC-Unique: Ww9a8nJvOCqf29u4hjbhnA-1
-X-Mimecast-MFC-AGG-ID: Ww9a8nJvOCqf29u4hjbhnA_1787840002
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f81362fb1so476843f8f.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:23 -0700 (PDT)
+ us-mta-270-aoipw8JUPa6BN2bAW2iuzA-1; Thu, 27 Aug 2026 10:13:30 -0400
+X-MC-Unique: aoipw8JUPa6BN2bAW2iuzA-1
+X-Mimecast-MFC-AGG-ID: aoipw8JUPa6BN2bAW2iuzA_1787840010
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c24ae1a510cso63916766b.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787840002; x=1788444802; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7hjxLnAVY/DURtZa77LbXggflUPsLfOq7SYe7f/Hv64=;
- b=iNPOXT2L0O2NicDUE44wUmEkoTDyzkUkeRA79qCEMiXfl2iegNYCv0MKUGh57ZlnqC
- pMBD6p2F1Q4Tipzzsa2c2I/1hXNLAxE3DE/JmN/OumSIFNoaHpluBKXDVnqNrNc1heo1
- 27StdGsDUH6exB/GTep3GtvpIklVsjIpDx+PFDsNZ1cNPwPMEbvbN/sQb/jmNHhI4wOC
- AlY4abVM05hd6/g+m90NJbdMKcDFaN3f+LzbGUwB1J4k7JxJ9B9SHRohmtVpAr8Yu78j
- pLTe9fYb7M4VE9sHn0ul7O3Z+CyLCOPeHtfM6HmlecpjoDcAxROxRyh5AbsXb4pYUAvn
- xXEA==
+ d=redhat.com; s=google; t=1787840009; x=1788444809; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=pmhrxutqvfwk8kCCA5LdrLPDB71Ss207mNaYjLClR4E=;
+ b=VsnhDFEggCpAZhnSIAXNrfSUQZgpmjUx9QtviTP6wjxrXImY8dhcwGvXWdbf5r1X96
+ w/5BNINyN5bybiZ1rQNCSgTw9bS8ir/kjQHVEtJfQz5yjwj1MnZYeAubcqIn/eQ4nPJU
+ QWg4/jcs1tETYwuGU5xX/NFy/amC80bS14HU9h4WXHVDDJvhZ6TR8h3J1GyMM7jdteIi
+ kre+8PcMC9xUdeS4tXsicXl4MPU+ROU4dWkOjVNMbuwzafAfRSq7OncF/V4T74PS3WYq
+ 0mrRnX+JpZ5OOnaPVpnYno0DuGi8cwYNUsT8MGrpq454um3PPeGcTWTU8tWfo06aVdRa
+ 7GAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787840002; x=1788444802;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7hjxLnAVY/DURtZa77LbXggflUPsLfOq7SYe7f/Hv64=;
- b=h7pvjtTbM94o4MMIHs3hYsVv8d1+KGBbUeTps7Nii7rXp2ZnSitfnBmz6co6bFuZx9
- yF0AemP+M55LeMWdu+huMV0jlbw0NCZW8VT+kYjGUGsFp26KSSTQvl/gNtOAgCcg4zU6
- 6s0BjbZfKchTV9lANPjvdW2rPj6syU2foQB+POO6sr5u6HwSarYJCueQZrP+O5turY9z
- ZPM7P5PXTQauu8FS1VcLYzlxa2+vN6tPcL5uO7tX86LVQZTh6OeJ58Dw1j8PscVVt/w8
- vGHPyKf3bWD6uhogAyIcytWTYpFMwft+NZcZa/iLgGr129q95/pzDzOGm4gGylVgXDnm
- Lkxg==
-X-Gm-Message-State: AFuF++mWKnQBB0jQcqgHILzvhCAWEBpskSpefeVGGCjnltB3wdr4VAk4
- LfsdoOlsUo7oWRD4F3d870gqTfEgMIBRk6ePuhA3OAq8Qo9499mV582mg0b+vgKWyqbSgQlsQm5
- +KFd/nI99WTwc3qeXROmdYK0nnok7ceSsOXX+fwt96YBDBwE8Lt9jr0f4BSjK9wn5A+Mkvu93Y2
- juRYG4niwAW+Uyt+maN99E2ts8gXp0iV9Fm88KQlNH
-X-Gm-Gg: AR+sD10wtl6aTFCSaQN+TbGBkHQ9jE58w+m+D9LYZAL7Q8TsAt6Tfj+Uc7JsX969xVY
- uz3JbgR1c7i+aHrM+VFdUBATxmhcamFRUYivLCMhT/2N49Fi6AR8vtTpijzhIAy7IyRUirgRUyx
- xUFpUgLKjn+l4vceT/GS78ni2UWyswOhMCmA1PwUVYs+utYnxwhnvGIZlGMM0m/n6ltaL3UTp/x
- x1qKeU+QGW87Fgt7/+y6f37j4QS+SuCtQ2KHt4QOeRE9rwUW3cztopYyshVWiKFwhIUJoKvVIyL
- e4uFpCdSoohI9Glwrzio7nJ4fFcBoYumAybCyki0AFlY0Pil1KZMGs3FO+RQMwXTqapY1IT9Y2H
- ZQkhpv7MWsxDPe2twJUjmnGWpvbry72lSJS9D8bsuDEBiIMslCS0RPNXcu8w9e60fALB+aFAh6x
- UcLgs=
-X-Received: by 2002:a5d:5f50:0:b0:482:f0dc:e647 with SMTP id
- ffacd0b85a97d-482f0dce707mr8539332f8f.21.1787840002216; 
- Thu, 27 Aug 2026 07:13:22 -0700 (PDT)
-X-Received: by 2002:a5d:5f50:0:b0:482:f0dc:e647 with SMTP id
- ffacd0b85a97d-482f0dce707mr8539206f8f.21.1787840001581; 
- Thu, 27 Aug 2026 07:13:21 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787840009; x=1788444809;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=pmhrxutqvfwk8kCCA5LdrLPDB71Ss207mNaYjLClR4E=;
+ b=sYW/6P5X4BXfPitOUQJA3kptME9lA4fBnK25uepaYjLVwBxfJjpvYCI/F9DM1b7Lyb
+ ujA0BlMrSxVkag++z2h1UakIWjDw777OruGebN2qEDBooceMKucxtsQBuaKufEGTL6pA
+ DKbcIJtLZ1RyzcDKHatitwNuJDAkJ7Mre4meK7jvXYAYZb//KXVqsshOeauVR3FkKgJY
+ fZ2hvaMo2UzIeYqRuw4FEe4OwXajQvxVr60FnKFdpzYefsjWrh1FNgGwR6jG/ExPU9hU
+ SnEv60jkrjwA00NhylrzUaU/dqNJRG/SLEzVDHRe9dbzO/MR44FxtqL3pVKYVNVG0o43
+ HZSQ==
+X-Gm-Message-State: AFuF++lRztPswY9rrpNZjPfyDeaR0nFDmlwdF9h7lzDa4sC/y9wFqeIw
+ TdrmjMAo6ACxRYjtJnSVDmgCJJ4Lsxll8iaATzrm0MGeTOa8ImiAtxWAbVl6R9PmrigUWru0cAE
+ xHz/GfJTc/ef33v/F2jJdb8OX/DNkNCZUEqgDIZJh0CYIfLxbuO22mJdMwxVNPCvoozSpMT6/Af
+ Fo07oHvwS1HvXg67x3b3EDB+5iaSBcUmM6/KGT4xbF
+X-Gm-Gg: AR+sD13B8vdpI8u33smRnASFEQtsxf9SxHSWmDReL6d0hK7Mbr0L57fJVm6rwG6j2nV
+ bf7zBnKL5gOus4uFNiJe+WgtDfo43HBa+mAIljdf5nqbjNbv12+pAboFdIF1FQGYupRSsr877XM
+ y7B7ZuQDuy1p8VanxzU7QKY+x2/SJEvgXCKfqE0/FVM1aBOAWlkXotMkCMpA74xGIzV8NnKYTCd
+ hW/OoUOsrb8Hb+IRydhCIj/cJZBK6znIfmylBlKtOKxvhS0ayB4Nj8aznZ0xnIRz99jbS2YY0eQ
+ xYznmcyx4CqOLL8CBGENYryUOrhDuCtnEVtJ+AXVj07RQP84w5SyYIUaJ0gIaF6bL55oOUuv2Kg
+ jVXzOAyO0YjP4YruIq/oCHp+YT70a8h+s//PxWXNBQ6qqhobWgo90+zeaYx5CNMkZ4DwB9/QH82
+ pv1tM=
+X-Received: by 2002:a17:907:e84a:b0:c1c:4a80:30c4 with SMTP id
+ a640c23a62f3a-c250c33108fmr1751443666b.11.1787840009612; 
+ Thu, 27 Aug 2026 07:13:29 -0700 (PDT)
+X-Received: by 2002:a17:907:e84a:b0:c1c:4a80:30c4 with SMTP id
+ a640c23a62f3a-c250c33108fmr1751438666b.11.1787840009108; 
+ Thu, 27 Aug 2026 07:13:29 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482e28f6917sm8975014f8f.35.2026.08.27.07.13.20
+ a640c23a62f3a-c250a88a928sm801105466b.33.2026.08.27.07.13.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:13:21 -0700 (PDT)
+ Thu, 27 Aug 2026 07:13:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/23] scripts: print build.rs diff
-Date: Thu, 27 Aug 2026 16:12:50 +0200
-Message-ID: <20260827141314.1099352-3-pbonzini@redhat.com>
+Subject: [PULL 05/23] scripts: prepare for introduction of CrateSource class
+Date: Thu, 27 Aug 2026 16:12:53 +0200
+Message-ID: <20260827141314.1099352-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
 References: <20260827141314.1099352-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,25 +122,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/get-wraps-from-cargo-registry.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/get-wraps-from-cargo-registry.py | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps-from-cargo-registry.py
-index 3820d121183..84c652127f9 100755
+index 8b45c1551f5..8114f0731be 100755
 --- a/scripts/get-wraps-from-cargo-registry.py
 +++ b/scripts/get-wraps-from-cargo-registry.py
-@@ -59,8 +59,10 @@ def compare_build_rs(self, orig_dir: str, registry_namever: str) -> None:
-             if os.path.isfile(new_build_rs):
-                 msg = f"build.rs added in {registry_namever}"
+@@ -48,6 +48,14 @@ def find_installed_crate(self, namever: str) -> str | None:
+         matches = sorted(glob.glob(f"{path}.*"))
+         return os.path.basename(matches[0]) if matches else None
  
--        elif os.path.isfile(orig_build_rs) and not filecmp.cmp(orig_build_rs, new_build_rs):
-+        elif os.path.isfile(orig_build_rs) and not filecmp.cmp(orig_build_rs, new_build_rs, shallow=False):
-             msg = f"build.rs changed from {orig_dir} to {registry_namever}"
-+            # diff exits non-zero when the files differ, which is expected here
-+            subprocess.run(["diff", "-u", orig_build_rs, new_build_rs])
++    def rewrite_source(self, section: configparser.SectionProxy, orig_namever: str, registry_namever: str) -> bool:
++        # the registry already holds the extracted sources, so Meson does not
++        # download anything: drop the source_* keys.
++        for key in list(section.keys()):
++            if key.startswith("source"):
++                del section[key]
++        return True
++
+     def compare_build_rs(self, orig_dir: str, source_namever: str) -> None:
+         """Warn if the build.rs in the original directory differs from the registry version."""
+         orig_build_rs = os.path.join(orig_dir, "build.rs")
+@@ -82,7 +90,8 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+         if "wrap-file" not in config:
+             return
  
-         if msg:
-             print(f"⚠️  Warning: {msg}")
+-        orig_dir = config["wrap-file"]["directory"]
++        section = config["wrap-file"]
++        orig_dir = section["directory"]
+ 
+         if self.dry_run:
+             if orig_dir == source_namever:
+@@ -92,10 +101,10 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+             self.changes += 1
+             return
+ 
+-        config["wrap-file"]["directory"] = source_namever
+-        for key in list(config["wrap-file"].keys()):
+-            if key.startswith("source"):
+-                del config["wrap-file"][key]
++        section["directory"] = source_namever
++        if self.rewrite_source(section, orig_dir, source_namever):
++            with open(wrap_file, "w") as f:
++                config.write(f)
+ 
+         with open(wrap_file, "w") as f:
+             config.write(f)
 -- 
 2.55.0
 
