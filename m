@@ -4,152 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1DF8C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 18:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297F8C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 18:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzeO5-0007CB-1f; Thu, 27 Aug 2026 13:59:41 -0400
+	id 1wzfCm-0001qV-Ah; Thu, 27 Aug 2026 14:52:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzeO2-0007As-Ut
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 13:59:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzeNz-0006Sk-Fo
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 13:59:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787853574;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=y5tvMOgDlNPcG4RJ6rTsz18cC0h5UV1jgNVK5VwBpRU=;
- b=hFCFuR2O/ApM7GDoPBCkIZOXCitkTiTOQxqS7nz2LAycq9zGYF/LBww5Xgho5+pIeefkuV
- WuO+KIJVTD+Vp4uRA8J4OcqW3MRUgvuKT3Culf6aVenT7zgW6L8Tg4AZUMWBYcORAbprYS
- VcqWXJaJJHXULgXty54lrXpaHgk4OOk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-SvXiB76eODCHWc6r-Ajymg-1; Thu, 27 Aug 2026 13:59:32 -0400
-X-MC-Unique: SvXiB76eODCHWc6r-Ajymg-1
-X-Mimecast-MFC-AGG-ID: SvXiB76eODCHWc6r-Ajymg_1787853572
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-495529a93f9so220085e9.3
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 10:59:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787853572; cv=none;
- d=google.com; s=arc-20260327;
- b=lv5WbBhGQ5U3LdmMElwIerXs70EsXRBbbrkyEjrCtF6dwC5MsEtvwjzuN96YyTE2f1
- clskAI9shwAW10MKhYuit5rrm4TMYd53do8G4d/xQmLUB4GifPj7Lyswv6LF/bKuimmj
- YiiwnnuX+7jrCpQQ0/RbP/C45Q4hJ/PZabPEzdMg6ZNGPiWumMC/GBrXXlls3te19vAl
- xNIub23sKDwUhps6lf0vo7B/468Z7cUdxdFKvi26h11fBORdOOupowehM7iH57yfXMGc
- pGlZyGV478n5tn7Av38Ey7fTxFeavVAd5BZ/A650vvYF9OeucZSmvMeTzCLvPSBTu/G6
- lrQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=y5tvMOgDlNPcG4RJ6rTsz18cC0h5UV1jgNVK5VwBpRU=;
- fh=/VAcVfS+dKqTQuo70067OY/myg+iUnDAze/+gRoqrCY=;
- b=Fm0NUjc7Bj4VqRbh2r8WRlEOow4yA3URVg6hR2vr4CJOVBcIuKhO9Mk5khTSvbedM7
- o+nngOZfsrhp7RyD7o7Yxs3X15PhP0Gx4EZyOFOd1mJjIZ0ujTcj537PAi8FPKXq1Snw
- XSJZDchJpmV35MQ6HMA5mqhJokgjgyi5wffyTlAxiqGbquKAGyoQEHpgC+WyXoElhpF6
- b9Fdg7Qx/Y7HSHKABunM3DbJm1kf6B1o7t7yGefbEfJQ50CWkO9syW0n/Pn7ABxdBVqK
- mYT3NZGEyNUebsB/DqHaxcAr8H3jm5i9MHtuvGYyriMp8vThjhwAUk/N74QVMGLY93ei
- fXrQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzfCk-0001ph-8s
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 14:52:02 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzfCi-0002ba-6J
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 14:52:02 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-cb5b8572b70so286179a12.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 11:51:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787853572; x=1788458372; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=y5tvMOgDlNPcG4RJ6rTsz18cC0h5UV1jgNVK5VwBpRU=;
- b=m40o4Br3GueGsCK0uS30enBVrB9Bp60hlCs0z5aTef3HhIpXnyj+rUwgoln0MI2SpL
- ltA8beMmXZQDaYP2x70FN21bwmanzJvUHKey29xaU8ryMv6iNtfNbt818vjKeCKx0+I4
- b9dVbZeWQCJ8+3dwbNVwExeMmOjW7saONdra12zzbpO8DYuplCf09JSMWEJ2kBOLB1UZ
- jIISHgTzSWwRjwEhCvxLKSZoue2JAwZOKfVYvF5A0hjRXeg0Hwniko+u8Ofv/eup4QGG
- o300vh+c9/mIr15gVr84USeCn3Zwar4ys53e7Yr6p8/yTyd8TYVDHQGRC+jHMfk0Fr5G
- +hiA==
+ d=linaro.org; s=google; t=1787856718; x=1788461518; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=bRZOKHNVvwcEW41isx9vX5kjXu/M+MyrVU1U+dykEXM=;
+ b=h9CPgQodYVRFpkj3fX9KuHK6RAKmD8cxQWKHESFVwx75ciZVYARr+94KH88O7zBmBB
+ 8mcVAKMflRqtzUhe02bRJzQZFQc5Kj1AxoSMk5eqEkfhOb71decdj8M71am+tbFz0j4k
+ 91cEf/n3n091dpwoNNMWZgEI/BiDTj32gDG16uIuhZZhvGsKwi+8RoSshAZLI0ZekpIa
+ Yx6HUGpcvONBSXavNtya++n9+yay+e5s+eUjoVo1i135iYb/rGQPuVDeRcPBHBxbI3tS
+ yxMoQwj0Naaa55w3olaIdfI8JmGQ1s7GZjjEZ8uPA7SEfyAc1iANUqe6WNjVj4ziBuzC
+ 60qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787853572; x=1788458372;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=y5tvMOgDlNPcG4RJ6rTsz18cC0h5UV1jgNVK5VwBpRU=;
- b=fr+QiKt471/53Qql0kfAeUpQy4YyyiUN7Obq9/zBLU4NRzfi3xZ3OzQIRDAiWpwOID
- zpoSbc4gcSnAxVLalaF6ltV8G0FSRF8TtNZJyX5fTf/CT2X+CEriWLbG+242tRKaHtnx
- IIHLGpKPE8mdpmN/+7D3/26JfK6Z1zY4HHS5L4aK5osqIBmhpReZ5dFKbkZTA9ZV0wOY
- BEcIdDGxnZnBTro+Zry9M8HkAUH6KymZjEm3EU91JQWnvP5WZS8b+OdrHgEDUkaHar3e
- 4AqLQEcO+MBb0FyNPI3mYiSp/QEkpJap2TpHU0KR6V5lixktSnV78dasAxk02ZPxjJsG
- 6Bag==
+ d=1e100.net; s=20251104; t=1787856718; x=1788461518;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=bRZOKHNVvwcEW41isx9vX5kjXu/M+MyrVU1U+dykEXM=;
+ b=rjpc0VA3sVnobm00goZwqjVuFrtQQ/NmaGTujNwxqV87l3yc6DZCteplfM0DvjRXFP
+ vq9qbwYEzK7aeWJVI6Hv6oUmRKJQBhN1tWlGEBeSx9kQkofesFhVkb2mgo/9i8IYrrxK
+ QVm/7YVjAj1gZREq/5T0Z7skEVW/Neoor2ZmKxgq/hooHvbVRgdPOmAalZTfS5r68THg
+ YUORwArQXxJ9E/+etFUTMLgtbtdVMsXlUSfUY2VOSqJHWD6BpEuTlZ17/WNJ4AXlfxLY
+ ino+6MYO1Qiq1jumbYQr9dp4PqrXOz/1dsHTozSLgbBEDIEdE7p+46PzrWJ0trxKRt3Q
+ Z3WQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoUMYQgfTaG97SJfFhr2tB/ybAzmrEdc6/Kb9upfT6WUbbG5uy0ya0bJTCum9J7D1mVwXZ5Cf37O56T@nongnu.org
-X-Gm-Message-State: AFuF++mlIOpS8SpVyOrVodaVFqQABN207y72CzxU01DU2EjLIcaSIMoU
- plx1iEDsZxwmtaUpPHcF5C1cX9s2FLfF9OxpN9D5B73Z+UHvVzxB6XSXj4VVe8QROXdw7/oxen/
- 98CzQvyjY5eDXYM1mi4QO42szDjxXo1foKR1xDnbp1BOAVWRXbW4JDvOhQtV39CJ/rg0DaE6PUT
- 3ETME0dSPlmZ1XOgAEYtggT7lll3w8Qjs=
-X-Gm-Gg: AR+sD13LLoWTEHhII4FKoUy3CYkwN0SzzDlyqEs5jyAKlWFUlvNRVi7RO2KZgf2ihmW
- ZkKUiPlc5MFxSmHJzqVylkvPGGZ6bIuEEU9IHjTC+XxnVSqE/k8bJT3LFyvTLCo6ygRBBrDoNim
- 2FHLhjFTtsQoJDedAcsWGG1yr7oWF7IfFHJ5i2ti9iMT8y+OG51GJx+Da2rQRl5WtDFeqt01jQ+
- 3XQwHPaMM0QApAirXyIcBCKGLpFtUe/53sZkZ8Xo7l1kEZTpDcaSlYUdL46
-X-Received: by 2002:a5d:5e01:0:b0:480:c5:d635 with SMTP id
- ffacd0b85a97d-482f782a4a2mr988169f8f.0.1787853571686; 
- Thu, 27 Aug 2026 10:59:31 -0700 (PDT)
-X-Received: by 2002:a5d:5e01:0:b0:480:c5:d635 with SMTP id
- ffacd0b85a97d-482f782a4a2mr988102f8f.0.1787853571294; 
- Thu, 27 Aug 2026 10:59:31 -0700 (PDT)
+ AHgh+Rq6YL5sOtIbaqp+wwOUW8hNWU+zJ+zfHN2ar2RUQL2UQ+wts1h1MUMxc86D7+eoyMZE/eodQRYiWm3t@nongnu.org
+X-Gm-Message-State: AFuF++mEJ1pUgqyV8QqfG6RkXN+LCcxw9VNYrtKisiLwYjijmFQEQaOy
+ TDRve/GqT/uK9h/gSIzH6ATblGy1vrq5Gmi+uErN/z1LEmty5lJXBKEIweijvSxXxLU=
+X-Gm-Gg: AR+sD120vvt8uzQM68PEiVkoifgJfP8z4+jOEaQy3kllZm74h6JvqPeMBI2cFMIpiFS
+ AvPZvybM2H63qhOYwGyitgH+SCq8ASE89PUQ7FWrwvILg9gAEPvVFJkEf87AEelb4DBYT2cVkbS
+ lq4jNEkgtd7oEk0BFz4lf1hb1ZGD/MU/+M2ryaDit4lIEXdESJqqPbW8ugPjGh687zdS9zh4EUY
+ x7JD3V/nf6m0+Fa+P36pMCAdNmcr4BVhdRyhFdt+vxmE6GpvuwME/ArcBtjq2DdGCt2l9dQpELr
+ dg1WNwiXqTeXwTdTX3YN8kGsjnv1o16XJNbiQR0TK/bClwYWSjyiFxCy95lVZX8eGOQfHxYVjQa
+ nGsD6opGYkV+LQ8Z+xGvXt8ypv4X/KraGW8Uy/1L9/LwKdi47krGYlf566/kvOyR1ERDkrPDCa6
+ hauAXsC28/hkGPOngyyybaouL9P67t1VuaXYdiiPdNFfadH5t4lluSj1HjEJ/mvbGiahGiDBLjA
+ H0pm/aPEKCiKDjtEWcB3TWJE/Im
+X-Received: by 2002:a05:6a00:414c:b0:848:4754:28e4 with SMTP id
+ d2e1a72fcca58-8562abbefa2mr2423498b3a.15.1787856717623; 
+ Thu, 27 Aug 2026 11:51:57 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-85359cd5f7dsm2355378b3a.6.2026.08.27.11.51.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 11:51:57 -0700 (PDT)
+Message-ID: <54c6435b-e959-4894-a1ff-69d312eb55b0@linaro.org>
+Date: Thu, 27 Aug 2026 11:51:55 -0700
 MIME-Version: 1.0
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <ao7c-FiawF9sMCGj@redhat.com>
-In-Reply-To: <ao7c-FiawF9sMCGj@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 27 Aug 2026 19:59:17 +0200
-X-Gm-Features: AcwNN1VpaapR05HRvOFF4orkVX2TS72Y3gXl8WNsZU1FMiT86DpM1kMM4s_3nag
-Message-ID: <CABgObfa4QiBKuj7o06RL+egm_QOX03hpP9PAHoeKYOr9wwGvFA@mail.gmail.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org, 
- Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Chinmay Rath <rathc@linux.ibm.com>, Sunil V L <sunilvl@ventanamicro.com>,
- qemu-riscv@nongnu.org, 
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, 
- Laurent Vivier <lvivier@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-s390x@nongnu.org, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, 
- Fabiano Rosas <farosas@suse.de>, Aurelien Jarno <aurelien@aurel32.net>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/9] accel/tcg: fold the dynamic cflags into
+ CPUState::tcg_cflags
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, philmd@oss.qualcomm.com, alex.bennee@linaro.org,
+ zhao1.liu@intel.com
+References: <20260822190818.1829249-1-mattst88@gmail.com>
+ <20260827050241.3713332-2-mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260827050241.3713332-2-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,31 +108,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 2:33=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
-> With the clean break with the past, we also have the
-> ability to tackle various long standing design mistakes
-> present in qemu-system-$TARGET instead of carrying them
-> over into the new binary.
+On 8/26/26 22:02, Matt Turner wrote:
+> curr_cflags() is called once per TB dispatch, from helper_lookup_tb_ptr()
+> and from the cpu_exec() loop. It recomputes the same value every time:
+> 
+>      uint32_t cflags = cpu->tcg_cflags;
+>      if (unlikely(cpu_single_stepping(cpu))) { ... }
+>      else if (qatomic_read(&one_insn_per_tb)) { ... }
+>      else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) { ... }
+> 
+> That is three loads and three branches on the hottest path in the
+> interpreter, for state that changes only when gdb enables single-step,
+> when one-insn-per-tb is toggled, or when the log mask changes.
+> 
+> None of the three has to be sampled at dispatch time. Fold each into
+> CPUState::tcg_cflags where it changes and curr_cflags() becomes a single
+> load of a field that TB lookup has to read anyway.
+> 
+> The derived bits -- CF_COUNT_MASK, CF_NO_GOTO_TB, CF_NO_GOTO_PTR and
+> CF_SINGLE_STEP -- are never set by tcg_cflags_set(), so tcg_update_cflags()
+> can recompute them in place without disturbing the rest, and conversely
+> tcg_cflags_set() ORs in its bits without disturbing them.
+> 
+> There are three places to call it:
+> 
+>    - tcg_exec_realizefn(), so that a CPU created after the command line has
+>      been parsed starts out with the right value. This covers user-only,
+>      where tcg_cpu_init_cflags() is not reached. linux-user's cpu_copy()
+>      copies tcg_cflags wholesale, so a cloned thread inherits it.
+> 
+>    - cpu_single_step(), which changes one CPU.  gdb is the only caller that
+>      matters; in system mode it runs with the vCPUs stopped, and in user mode
+>      gdb_continue_partial() can reach a thread that is still running, because
+>      gdb_handlesig() stops only the thread that trapped. That is exactly the
+>      plain cross-thread store to another CPU's CPUState that
+>      cpu->singlestep_flags already was, read back by that CPU through
+>      cpu_single_stepping() in curr_cflags(). This patch changes which field
+>      carries it, not who writes it or how.
+> 
+>    - hmp_one_insn_per_tb() and hmp_log(), which change every CPU while the
+>      vCPUs are running, so the update is queued with async_run_on_cpu() and
+>      each CPU writes its own cflags from its own thread. The command line
+>      spellings of those two settings need nothing: they are parsed before
+>      any CPU is realized, so tcg_exec_realizefn() picks them up.
+> 
+> Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+> the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, in a
+> build configured with --enable-lto:
+> 
+>      before: 1,646,994,254,249 instructions
+>      after:  1,562,204,796,597 instructions   -5.15%
+> 
+> That workload issues 8.4 billion dispatches, so the per-call saving is
+> small but the aggregate is not. The emulated compiler produces
+> byte-identical output before and after.
+> 
+> Wall clock does not move: 133.19s to 132.58s, a 0.46% difference against a
+> run-to-run spread larger than that. The removed work is a few predictable
+> loads and branches that the host executes largely in parallel with the
+> surrounding dispatch, so this patch is worth taking for the instruction
+> count and for what it enables, not for a time saving that can be measured
+> on its own.
+> 
+> v4: Update the cflags from the HMP handlers for 'log' and 'one-insn-per-tb'
+>      rather than from qemu_set_log_internal() and the accelerator property
+>      setter. Those are the paths that reach a running vCPU, and the monitor
+>      is the only thing that does. Suggested by Richard Henderson.
+> 
+> v4: Queue the per-CPU update with async_run_on_cpu() rather than
+>      async_safe_run_on_cpu(). Halting the other vCPUs buys nothing: the
+>      queued work already runs on the owning CPU's own thread. Suggested by
+>      Alex Bennee, who also asked whether there are cross-vCPU updates of
+>      tcg_cflags at all. With this change the monitor path has none: the
+>      only remaining writer from another thread is cpu_single_step(), above,
+>      which is neither new nor made worse here.
+> 
+> v4: Move the stub to accel/stubs/, which is where the other accelerator
+>      stubs live.
+> 
+> Signed-off-by: Matt Turner<mattst88@gmail.com>
+> ---
+>   accel/stubs/meson.build     |  1 +
+>   accel/stubs/tcg-stub.c      | 16 ++++++++++++++++
+>   accel/tcg/cpu-exec-common.c | 33 ++++++++++++++++++++++++++++++---
+>   accel/tcg/cpu-exec.c        |  3 +++
+>   accel/tcg/internal-common.h | 11 +++++++++--
+>   cpu-target.c                |  3 +++
+>   include/system/tcg.h        | 12 ++++++++++++
+>   monitor/hmp-cmds.c          |  5 +++++
+>   system/runstate-hmp-cmds.c  |  4 ++++
+>   9 files changed, 83 insertions(+), 5 deletions(-)
+>   create mode 100644 accel/stubs/tcg-stub.c
 
-I am not sure about this. Overall most (not all) of the complexity of
-command-line processing and legacy arguments is kept at bay, and
-contained within board code - and boards do not have to support it.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The complexity that is left is tied to -drive, mostly due to
-differences between hot-unplug in -drive and -blockdev. And honestly
-I'd be very much opposed to dropping -drive because using -blockdev
-correctly is *extremely* hard and barely documented.
-
-If we want a clean break, we need to drop the command line completely
-and just have a QMP monitor on stdin/stdout
-(https://wiki.qemu.org/User:Paolo_Bonzini/Machine_init_sequence).
-Start small adding just accel-new and machine-new, and add QMP
-equivalents of command line objects as needed.
-
-That said, I understand that this is just an idea and not the crux of
-the disagreement.
-
-Paolo
-
+r~
 
