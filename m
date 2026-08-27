@@ -4,108 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E95C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B75F1C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzas3-0002tp-6j; Thu, 27 Aug 2026 10:14:23 -0400
+	id 1wzarN-0002cG-NQ; Thu, 27 Aug 2026 10:13:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzas1-0002tI-Kr
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wzarM-0002c1-Cb
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzars-0005uj-CF
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:21 -0400
+ id 1wzarC-0005eP-Ch
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840051;
+ s=mimecast20190719; t=1787840009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BzPmt7KVQkTpe1/d3/LXdqLWTe5gTJkqbQqLF5f/EEg=;
- b=DTpwgr+mu/7anPiwZ8yWSXTU8rvbNGer/Dne0TipnsPb0YoaLEAO5tViCuTlxUjsAFhplD
- TrPiv6x+13Xzf7WkjTwFCjDj002QUSxRr0HVlav2KhtqqB1NNN0hHRxbWke0z+bfiAu0x4
- qKxupgU+GtNX7jMmaSfM8rEHR2YbVdo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=YShCvgs5y/flDeRVs7TKOSqOFTuCBjlBJVFCEqRO1es=;
+ b=bLK6IQXTwqcDrU6WZjwc7RmT4xUfzgxPdqwG+txzQ80SOhvgJVJys5c5vRlIYvMelYTScJ
+ jDc9FgPWIg6QRwACvwcdYL0uX6oBocsqFJkbiG0Iqr9BFIby86FgqZiCnWCuUSeyIhzkyb
+ B0DqbuKajD6/9ZxE8tdIpcah3SC3Iz4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-HrBZcTE3OiS1TgDX_UGlFA-1; Thu, 27 Aug 2026 10:14:08 -0400
-X-MC-Unique: HrBZcTE3OiS1TgDX_UGlFA-1
-X-Mimecast-MFC-AGG-ID: HrBZcTE3OiS1TgDX_UGlFA_1787840048
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47d81cf0c4cso1074158f8f.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:14:08 -0700 (PDT)
+ us-mta-126-9s9sRBLoNQ6O7PAUKb_tDw-1; Thu, 27 Aug 2026 10:13:18 -0400
+X-MC-Unique: 9s9sRBLoNQ6O7PAUKb_tDw-1
+X-Mimecast-MFC-AGG-ID: 9s9sRBLoNQ6O7PAUKb_tDw_1787839997
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49a1b4ea633so9215685e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787840048; x=1788444848; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=BzPmt7KVQkTpe1/d3/LXdqLWTe5gTJkqbQqLF5f/EEg=;
- b=EnUdsI+v+MXwhNxW6Q0trv1NcGVsuK2He1GTuAAvxk0GPMJbcrcXCUoItmirP0KG9Z
- 8QHp2NThvJFoCif10NnY7KKUJDFi1gK31jiyxf6zsuGKP6lRf7IiVQ9xuKHRy5sOWJnu
- hefWCS8TdEJP3UsOfTDJNcmGhvXDL/EWF9dLOxcWyGMOTVjVt13pPdVQ4Qqtr+DUjcub
- 5wpaePkKwaMQC8DI0dKg3RO68Q1NGie7OtCWpW4tFioMNAqgbbD6TxgQzuJeZvjn9YLs
- 1pAG5+bqQB4Rchpxk+Fl5nzk5yVna8GFhAMKLcBTku4IT8kwZw6EPNMM2VVFDI2p9iX3
- gzFA==
+ d=redhat.com; s=google; t=1787839997; x=1788444797; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YShCvgs5y/flDeRVs7TKOSqOFTuCBjlBJVFCEqRO1es=;
+ b=CSVR7nFkeMaR0o4KOrLergKgEHrTzpeFz/KrXaBWTXvkTwyrMfD5lw/bYEOltRe9zZ
+ FbGXJcwb5chT/7mV2JCnXrpa9nj4QgI67H+xo4iEtbd5oGfdBPLkW3VqjpEeSg0NERUS
+ UXgRvhLB4S0MU3XSGhdbBCdpMIjnKXs1wqhzPjqTYw3upj70ZdvzS9T9BJ+PIbCDY33u
+ fEQD1lI0XiZ/1S6/z3BEa5ZMJcNDaGmOiS6xxrYe/G+XDdsPPjw0nrH4AP08rKl8+Ju0
+ 3OaXzE33K68+tUbvtlu48tmxPdokjhLY3Pkqja3cHTa+IsrCCyjhpQWR+Ba8w8ddVyU0
+ 4FDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787840048; x=1788444848;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=BzPmt7KVQkTpe1/d3/LXdqLWTe5gTJkqbQqLF5f/EEg=;
- b=oj+/urEK3U6+Ue5JLLrpbn0PRbgKoeEEqN/Q1v8zzatLCUyuU3hUX5HwWN6oYQIJM1
- Ah8L0+fjCeiu11d8UGY5RkmfFSmXlXcd5gSTHZtNZTW/lKSW4LhE0i1p0FWF4IAZqd6c
- zCECyhF88/QH8N3mxPedkrhvx/7aDQ63m4+wOaT8VRcVMiXGED9cX2Zwx8qzN0A0lRFG
- qJaOAnpwlwjNxdLQxJcce0h0hKiEjSkT2bEDc1MFLiEniE7H04lfKyL42OoMZyIWwWpp
- Y0/AvNGGR26Fys2Tne3rwBXXJT5Y5kazyC2CCNTOePAMFUKLAFRn4CSla2QEWsLetEON
- vUMQ==
-X-Gm-Message-State: AFuF++l26B80EciJNNcT+Hzeyd/SfAP+Lke/TVz1pY2oAb1YLBRt1hef
- hTz6tazSLmnmRyn2iIIADQCCS4Aaz3RzpEEjnTMnOF521ahtcl/csi41AXaCL7A1hWInAuKVu1S
- PwHROIFRufTS9LZSHkfc8VQlUt1I6L2TxWCQeF8mfmweOgyquJMmIh2bLd2beH0N04W9lJklPpZ
- rCru0EAPNhOgf9IqoYV7+PhvbxEek9z7eWI/gst0Ah
-X-Gm-Gg: AR+sD12hctTBKBak6v+ITM5uUfHw0V5r/h371RaUnOnynAESpwu3WtMk22wSNl69H2U
- E55obVoYe7u+j7+1aZ/ZlTFfp/RoxaD9WLsgLz+URKqoeXsCyZRhl9arwsBXBh9jVHQu5L/rftx
- AUZFVq74SG4Ox5fChmWe6flttWVdgJmKz5Xi0kPlwCmj5ALqRowUoX+9LcGnHzdBisc70mt9DVz
- wSLaXtfPFRBWKWTO0FZiCs5Wag0xXlV3KuBIu11L7vj3jt8woeC21LAJTqhl7q24xIbTuxgdiwO
- 6j2b8F8zCigGzucVSN0dBj0jwOolZVDMuB/w6drKV71uRJapC4MkHU4pMgb0ZiYuFK/kT+mLhRV
- Ah1BOemgaYfV3XBhhQ2yWdTSDeELbFBn5Tlnz4p6VYYadkjTzkXUDvMPqPjgXZeOpLpuzS5+D2k
- 1UW2o=
-X-Received: by 2002:a05:6000:41d1:b0:482:f344:5325 with SMTP id
- ffacd0b85a97d-482f3445421mr7675589f8f.3.1787840047726; 
- Thu, 27 Aug 2026 07:14:07 -0700 (PDT)
-X-Received: by 2002:a05:6000:41d1:b0:482:f344:5325 with SMTP id
- ffacd0b85a97d-482f3445421mr7675388f8f.3.1787840046768; 
- Thu, 27 Aug 2026 07:14:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787839997; x=1788444797;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YShCvgs5y/flDeRVs7TKOSqOFTuCBjlBJVFCEqRO1es=;
+ b=Ep39exzyVNV0DVhQGLokBznYzfYImgxEwsHxzVWuAg1zCzCIuPJ3TQuqoyh7mVjp0A
+ nfu2OT5urKwJ3VGadKl4QgRUpqpbYxLnoZPEt9A+9qMiHEsz356tc2zLsD29NRqzn0an
+ fj2fg0+EiIH/1TiOZ/wjCqTre9FAcWmwl+jxu7epgZNOxvJyQ1eGi3yq1clYuLMkrtl1
+ KQiAYRybBjWgdP4WVY0sUZR0MG1DBRAbtZYx/08JilULV/SUmHEmOnCM92Ij4iNucbI5
+ ZaDDFnROxEmDNHub3IeP8Rz7J876sVYfZ/Q7SgITobwEjJIMSO+IOxIPy585owhqAIt+
+ LyNg==
+X-Gm-Message-State: AFuF++lrEUk1ECVFYMMXzIPoeIbTm6nfu81ZhdLSxap+5TWHdmkVUpDv
+ u6lSZPxaKCVleomGvtAP1kmq4A9Q9uP8o4hpfINjbfr+lqLyz5GnUb0EKcQ7Czvf6PXjUA0OG70
+ BMjzvCEz6vO/rM/oacG9aUNHetE1hE4S7+TfN01SroGNjtl/SkxkfZJMU1cpK9Voqfb0k0Krdij
+ bW8VTNJVlgGpXTTWIRdw4t2n2RXTVa9PwBZ3/E+6xs
+X-Gm-Gg: AR+sD133nVUnCfXbuc8OrnZbAsRDGugpdoXWoAG31i+ewnxcandQi6imAwiOatG8cMX
+ AZ37k0QeM1DMKn6+KVIe21zE6z7sIzC+tyGZZO1YH9kz8lXNo1gWQguFKEKUqn9B5Gnhj/2jpBe
+ wOoS79EKYzWXz9ONkXyr/q2FCkNnrK/E6KvVOCLsg3L/Vdcpuo4mb3cgKd+5f7rsg3cY026nVXg
+ H2eF6xl5IcnmE/nGGdZyNZGqIM0Rl0kDVs3jk4Ad7pYeMni+040QSobPhzSex05Q6VugVXiOKfT
+ 428iDLUPDeoL2N+UHmzzxbRacDlNhnOTi/ysZxfEDcXg8t7OInBUnNSAzqtooVDjIY9Zq1mrap7
+ +CkJWtVvdb5QdNDPr+B6PmUA85smllIWKGUWXLUQqEBVcCffugrZpwflw7YgJo7Z6y1ofPcUTNB
+ +5baE=
+X-Received: by 2002:a05:600c:c0da:b0:499:83f1:398 with SMTP id
+ 5b1f17b1804b1-499dc820705mr171530065e9.9.1787839996962; 
+ Thu, 27 Aug 2026 07:13:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:c0da:b0:499:83f1:398 with SMTP id
+ 5b1f17b1804b1-499dc820705mr171529005e9.9.1787839996309; 
+ Thu, 27 Aug 2026 07:13:16 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482e27aa050sm9109506f8f.12.2026.08.27.07.14.05
+ 5b1f17b1804b1-49b4c321184sm69911785e9.11.2026.08.27.07.13.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:14:05 -0700 (PDT)
+ Thu, 27 Aug 2026 07:13:15 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/23] target/i386/tcg: treat VEX as disabling high-byte
- registers
-Date: Thu, 27 Aug 2026 16:13:05 +0200
-Message-ID: <20260827141314.1099352-18-pbonzini@redhat.com>
+Subject: [PULL 00/23] Rust, i386, SCSI changes for 2026-08-27
+Date: Thu, 27 Aug 2026 16:12:48 +0200
+Message-ID: <20260827141314.1099352-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
-References: <20260827141314.1099352-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,30 +117,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This does not have any functional effect because the only instruction
-where it would make a difference is VPINSRB/VPINSRW, and they disable
-high-byte registers even for the non-AVX encoding.  However, with
-APX it becomes a general property of the EVEX prefix and it makes sense
-to treat VEX the same way since it *does* include REX bits.
+The following changes since commit f57fc2f7ce667b6527582862e69d526edd3ee0e2:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-08-20 16:01:59 -0700)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index bbd1c3b7893..d8de290acb6 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -208,7 +208,7 @@ typedef struct DisasContext {
- #endif
- 
- #ifdef TARGET_X86_64
--#define REX_PREFIX(S)  (((S)->prefix & PREFIX_REX) != 0)
-+#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_VEX)) != 0)
- #define REX_W(S)       ((S)->vex_w)
- #define REX_R(S)       ((S)->rex_r + 0)
- #define REX_X(S)       ((S)->rex_x + 0)
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to cfa6e2c52ca8f756461fe41f4ce40e61a82fd914:
+
+  i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails (2026-08-27 14:02:31 +0200)
+
+----------------------------------------------------------------
+* rust: introduce script to update crates
+* rust: update dependent crates
+* target/i386: tcg: small cleanups
+* target/i386: tcg: decoder cleanups around VEX prefix
+* scsi-disk: disable MODE SELECT block size change by default
+* scsi-disk: fix out-of-bounds read in WRITE SAME
+* hw/i386: harden vapic against mapping the writable region over SMRAM
+
+----------------------------------------------------------------
+Paolo Bonzini (23):
+      scripts: remove dead variable assignments
+      scripts: print build.rs diff
+      scripts: rename variable in scripts/get-wraps-from-cargo-registry.py
+      scripts: do not assume the new version of the crate is present
+      scripts: prepare for introduction of CrateSource class
+      scripts: introduce CrateSource abstract class
+      scripts: add functionality to update wrap files from Cargo.lock
+      scripts: add the possibility of a quick update of the pacakge
+      scripts: rename get-wraps-from-cargo-registry.py
+      rust: update crates
+      rust: hpet: fix clippy needless_range_loop
+      scripts/feature_to_c: avoid SyntaxWarning
+      target/i386/tcg: do not reuse cc_srcT
+      target/i386/tcg: inline gen_ext_tl
+      target/i386/tcg: simplify return value of gen_prepare_cc
+      target/i386/tcg: move check bits out of validate_vex
+      target/i386/tcg: treat VEX as disabling high-byte registers
+      target/i386/tcg: fetch modrm early
+      target/i386/tcg: move VEX validation early
+      scsi-disk: fix out-of-bound read in WRITE SAME
+      scsi: hide MODE SELECT block size change behind a quirk
+      vapic: confine the VAPIC region to 0xc0000..0xe0000
+      i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails
+
+ MAINTAINERS                                        |   2 +-
+ docs/about/build-platforms.rst                     |   2 +-
+ include/hw/scsi/scsi.h                             |   1 +
+ hw/i386/vapic.c                                    |  18 +-
+ hw/m68k/q800.c                                     |   2 +
+ hw/scsi/scsi-disk.c                                |  17 +-
+ target/i386/tcg/translate.c                        |  93 +++----
+ target/i386/tcg/decode-new.c.inc                   | 146 ++++++-----
+ target/i386/tcg/emit.c.inc                         |  15 +-
+ Cargo.lock                                         |  60 +++--
+ Cargo.toml                                         |   2 +-
+ rust/hw/timer/hpet/src/device.rs                   |   4 +-
+ scripts/feature_to_c.py                            |   2 +-
+ scripts/get-wraps-from-cargo-registry.py           | 184 -------------
+ scripts/update-cargo-wraps.py                      | 285 +++++++++++++++++++++
+ subprojects/attrs-0.2-rs.wrap                      |   9 +-
+ subprojects/foreign-0.3-rs.wrap                    |   6 -
+ subprojects/foreign-0.4-rs.wrap                    |   7 +
+ subprojects/libc-0.2-rs.wrap                       |  10 +-
+ .../packagefiles/foreign-0.4-rs/meson/meson.build  |   3 +
+ .../packagefiles/libc-0.2-rs/meson/meson.build     |  20 +-
+ subprojects/quote-1-rs.wrap                        |  10 +-
+ subprojects/unicode-ident-1-rs.wrap                |  10 +-
+ 23 files changed, 528 insertions(+), 380 deletions(-)
+ delete mode 100755 scripts/get-wraps-from-cargo-registry.py
+ create mode 100755 scripts/update-cargo-wraps.py
+ delete mode 100644 subprojects/foreign-0.3-rs.wrap
+ create mode 100644 subprojects/foreign-0.4-rs.wrap
+ create mode 100644 subprojects/packagefiles/foreign-0.4-rs/meson/meson.build
 -- 
 2.55.0
 
