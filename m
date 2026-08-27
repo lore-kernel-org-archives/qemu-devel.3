@@ -4,102 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C71DC61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D48C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzX23-0002R7-Ta; Thu, 27 Aug 2026 06:08:28 -0400
+	id 1wzX7S-0003Mk-SJ; Thu, 27 Aug 2026 06:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wzX1y-0002Qe-RI
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:08:23 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wzX1w-00027Q-Rv
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:08:22 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-85aeb506b78so11709207b3.3
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:08:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787825299; cv=none;
- d=google.com; s=arc-20260327;
- b=OohaefhePKztCGy6anshrSUVj/E9aI7sqpkP5ej0eYRdYDJfVP6/y714n/fvZCrWg4
- AXe6Z4PQGtQh+7AuAnL7AoO3QMlNH1r3pufX4qHH/oSv4rjQfOufKzTpoV0EAzSRfeWZ
- yUvnlb+oV9n1+VStwvM3c7AwI5iFMjDohxQwzDz+dSXMV0+sadO81PkoDULq/47M4P4X
- wjIxoewkT0UWySnewNSVvgMmgm/nRSeWwxOrNs/Ss1OndDADchMQMQvCjWcU62umRmpF
- BXGy+g0UXvMJfvGcaCkwcWBGyR09dvpzcR1AFUu+wV3T4i9kWWkZRuSk023UrAo9WGLi
- nYqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AIMrBgAvUo8qSUtrlbudNApMyVpTiBhuYqpxAOpEYE8=;
- fh=/HmZTtYTGRzUoXNodUpbgfFx3rTopm+VA3eCfRm/1og=;
- b=RGlBZ0odtEGKNIU+sl0jDTobNg/NS5WIlNqINMUM4S/ByrmUHndk7y/F9uTK+PIoZF
- 6W4TIdWbqB9cd8W7r94Wyyf9HDjevLSMCqIZvzHSqXfiaA4Tp7L1pr5zxIFxHeDrc//y
- 8cOpIqhc01Xyz1dZ8bKlFWGHjBXRGvCiIOZVVdK28fuVGhv3KgDF8oFWfxFL2mGf59tM
- f0jFlA0XGhXzZwMr1rbJraI6qfMROb9Pax0EjeS/19IAvCbJrcw50I6EApctjq9h6itb
- JdMabrUTDK3WnazcbU4us9oZwjqmYh9BZtMS4oL7LUf1JUAtbqi3y2fVd8AmUgQlzvL0
- 8JvQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787825299; x=1788430099; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=AIMrBgAvUo8qSUtrlbudNApMyVpTiBhuYqpxAOpEYE8=;
- b=WLUSQbXiUKSImlJ6ayZOgz5U7JUojUyQzx8Su1mSvTVIBqvfYANhXjrGZnC7AQTITE
- CLaqajNrirqdrU/K9imj4tjRXH53/iIFs7oqDxOomkSDu2aGQ5jL5Xfwz16kAH89SDHg
- 75Yk7BzkSoSVyM0x6UDw1PCa8z0a/gPmCa3AVtc2MUzSUt7/J2btbt+BgpAY3uiW9/xn
- j6OV+kEHCrasuC65TifmLcVhjabxKbHYuXQfvMUuh4dNRfKU9bVPZdtX8BMBcnAT1toO
- 4ZO+B7nrqri5YGtXLnPbetvtXO4ossAPpdgrEvCa8Jd4gM14Dt4xUCD5hh/hdcfsx1ED
- 1bVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787825299; x=1788430099;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=AIMrBgAvUo8qSUtrlbudNApMyVpTiBhuYqpxAOpEYE8=;
- b=X3avGRx/rEZxJdxTBoqTynI3xaNaH4/oYnBlUweMckpNiXi/V/djaE26qJVpdx0rtr
- VhXUNOzWokmDUiXErwBVFyXRWezZ31/hOkHOSYpQtskArCfoWXd9Wl0w3el5vVNFrcx+
- l2p8F1/A2/nd3V4voHY9rCVrXo6heWIV2WHRjr5B3W8ahEi+XQe+Pr6aolvQdvwOkjin
- s74yENquUy6u4q0DFzQNEwVIkgJ+CYX0xYX52cvLqorQW+GJvbCEzSa34KvSQklVGDF9
- E+ttFr1c9Ks55WHN6pDBuaYk0Rv+SV3ljHH1nP49pf8WerOnyDCLnJ6KC9bR8pp12SR2
- iq/A==
-X-Gm-Message-State: AFuF++nR6aEB7Rb3cyW+vROTrgJ1WnOC+hS2mgJf9+2Yd7SDWXwVg0mW
- MvtS0R2daZbvtWi7NKTy3njOkWJRQK6TpaSkpcJMnaCt+n3lnX24yaoqePLuEb4CsJwmLGUkZXW
- SjOMojWWHVgqMxnadP7nb6Gov3yf0Pk+2lcz+yPvcKw==
-X-Gm-Gg: AR+sD100u2qt4+BL+gTPODz7ZQ4ryRDmEngQMirzaOq/zMAtcMejvtlemPN+GyxhOGA
- gSIGs+lyyYNtUV4ktymO8wsKgnFuf4NUnGa7cPCkrGluPUbV9RAgDbMW+gEJbKTfO0/mOlrmZ5u
- 7s2iM7Kl7p056zM5rfLRJvoQxI8A9Mw+vCOLp2m1XdFcrP5/LP6y9XLomfxFGh/EE6MFbprw90s
- dBc1o25GJD13gBr/UKicJ65yWoBfs7uWR/RqIBNuuY8+52s1ZoodPOoD47tLXrGIWrltoLpI19O
- yYn77Cfvs1U7CIFvW+QR6e/iAbsLrOw2jLFpO8ex2DYquixyNTOja5bePsz75qLdwYRvUdSVmPA
- y5KbZwXbTsKpO9SNxRDICLFpJkPX3
-X-Received: by 2002:a05:690c:e209:10b0:7bd:cf35:e33b with SMTP id
- 00721157ae682-8573fdc758cmr48264837b3.17.1787825299428; Thu, 27 Aug 2026
- 03:08:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzX7R-0003Lp-ER
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:14:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzX7N-0002o4-Aw
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:14:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787825636;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hNqTnSzXjq1FFnhGJCIoqeClbAUQRviA1YvNpWOKzP4=;
+ b=OoTP2cCz/rXDgB6KdHiVOhNqNu+iiLeAxjDdsLN08xuIS4PbaIWFku9hBqDOg79BQP8QZJ
+ /pNlrehW+0beg5CwI9FK0KAq/Wa4lsxeqVNm41L9qnXfmWinGJKNHZJejA2QMjB2GySVIq
+ rhXaPnuyTAnkDD9hozFVguVPAg0jX0U=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-WJq6vs-7MUW811MQM2g7sg-1; Thu,
+ 27 Aug 2026 06:13:51 -0400
+X-MC-Unique: WJq6vs-7MUW811MQM2g7sg-1
+X-Mimecast-MFC-AGG-ID: WJq6vs-7MUW811MQM2g7sg_1787825625
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25F3A1802147; Thu, 27 Aug 2026 10:13:44 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AA8B1956044; Thu, 27 Aug 2026 10:13:33 +0000 (UTC)
+Date: Thu, 27 Aug 2026 11:13:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 10/12] target-info: add -target and program-name selection
+Message-ID: <apANygsXLoXL96f6@redhat.com>
+References: <20260823150731.896-1-luoyonggang@gmail.com>
+ <20260823150731.896-11-luoyonggang@gmail.com>
+ <ao7gGVuiDcVZSN6v@redhat.com>
+ <0f3d8fe9-b3ad-40c5-9078-c13738997998@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260822183900.110111-1-ombarkare123@gmail.com>
-In-Reply-To: <20260822183900.110111-1-ombarkare123@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 27 Aug 2026 11:08:07 +0100
-X-Gm-Features: AcwNN1UyMbxLjzlWtpVtyG3Zp7fuzY8iafap0LupsXXIVqkjqBlUh1Js1jCdfSc
-Message-ID: <CAFEAcA-f-=gP2GZEtTE7x=0mNvk0xL=TvHYDOvK=8GfVybuMQA@mail.gmail.com>
-Subject: Re: [PATCH] hw/block: Add migration support for pflash_cfi02.c
-To: Om Barkare <ombarkare123@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@mailo.com, kwolf@redhat.com, 
- hreitz@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0f3d8fe9-b3ad-40c5-9078-c13738997998@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,118 +116,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 22 Aug 2026 at 19:39, Om Barkare <ombarkare123@gmail.com> wrote:
+On Wed, Aug 26, 2026 at 11:13:05AM -0700, Pierrick Bouvier wrote:
+> On 8/26/2026 5:46 AM, Daniel P. Berrangé wrote:
+> By implementing *strict* identical behavior with existing binaries, we
+> indeed didn't add any new feature, but:
+> - we reduced total number of compilation units by 30%
+> - we cleaned up a lot of headers and did a lot of refactoring
+> - we have a systematic approach to add new targets in single-binary
+> while being able to reuse all existing tests without any change.
 >
-> From: OmBarkare <ombarkare123@gmail.com>
->
-> Device did not have migration support, which would result in its
-> internal state being lost during migration or saves.
->
-> Add VMStateDescription to serialize state and set memory regions
-> romd_mode to rom_mode field in post load hook
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4157
->
-> Signed-off-by: Om Barkare <ombarkare123@gmail.com>
-> ---
->  hw/block/pflash_cfi02.c | 73 ++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 72 insertions(+), 1 deletion(-)
+> From my point of view, what you see as a detour was precisely what made
+> us progress so far in a year.
 
-Thanks for this patch; I have a few comments below, but mostly
-this looks good.
+No, on the contrary, that's all good stuff.
 
-We could mention in the commit message that the only boards
-using pflash_cfi02 are the sh4 r2d and the arm canon-a1100,
-musicpal and xilinx-zynq-a9.
+What I'm considering here is the behaviour of the new proposed
+qemu-system and what it needs to be able todo.
 
-> diff --git a/hw/block/pflash_cfi02.c b/hw/block/pflash_cfi02.c
-> index 6f952fe7de..82965e6cdc 100644
-> --- a/hw/block/pflash_cfi02.c
-> +++ b/hw/block/pflash_cfi02.c
-> @@ -46,6 +46,7 @@
->  #include "qemu/module.h"
->  #include "hw/core/sysbus.h"
->  #include "migration/vmstate.h"
-> +#include "system/runstate.h"
->  #include "trace.h"
->
->  #define PFLASH_LAZY_ROMD_THRESHOLD 42
-> @@ -71,7 +72,7 @@ struct PFlashCFI02 {
->      BlockBackend *blk;
->      uint32_t uniform_nb_blocs;
->      uint32_t uniform_sector_len;
-> -    uint32_t total_sectors;
-> +    int32_t total_sectors;
+Some of this work only appears relevant to a scenario where
+qemu-system-$target is dropped in favour of a symlink to the
+new qemu-system. That forces qemu-system to be 100% compatible
+with the existing binaries, which IMHO is an undesirable
+constraint and creates extra work.
 
-I think it's worth mentioning in the commit message that we
-have to change total_sectors from uint32_t to int32_t to
-satisfy the VMSTATE_BITMAP macro, but that this is OK because
-it's a value we calculate based on the size of the flash,
-and it's never going to be large enough to overflow an int32_t.
+We can have the benefits of the compliation unit reduction,
+cleaner headers, etc, while still having qemu-system be a
+distinct break with the past in a number of areas.
 
->      uint32_t nb_blocs[PFLASH_MAX_ERASE_REGIONS];
->      uint32_t sector_len[PFLASH_MAX_ERASE_REGIONS];
->      uint32_t chip_len;
-> @@ -107,6 +108,50 @@ struct PFlashCFI02 {
->      unsigned long *sector_erase_map;
->      char *name;
->      void *storage;
-> +    VMChangeStateEntry *vmstate;
-> +};
-> +
-> +static int pflash_post_load(void *opaque, int version_id);
-> +
-> +static bool pflash_sector_erase_needed(void *opaque)
-> +{
-> +    PFlashCFI02 *pfl = opaque;
-> +
-> +    return (pfl->sectors_to_erase > 0);
-> +}
-> +
-> +static const VMStateDescription vmstate_pflash_sector_erase = {
-> +    .name = "pflash_cfi02_erase_sector",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = pflash_sector_erase_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_INT32(sectors_to_erase, PFlashCFI02),
-> +        VMSTATE_UINT64(erase_time_remaining, PFlashCFI02),
-> +        VMSTATE_BITMAP(sector_erase_map, PFlashCFI02, 1, total_sectors),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +
-> +};
+> > If we ignore historical compat and treat qemu-system as a
+> > clean break, then I'd suggest that 'target' is not a concept
+> > to be exposed to the user at all.
+> >
+> 
+> If your only problem is with having a new -target option, I would be
+> happy to just keep the behavior to derive the target from current binary
+> name. That's a very small compromise on my side, and -target is just
+> here for convenience. It's not the end of the path.
 
-Why did you choose to put this in a subsection ?
+It isn't about the syntax - whether it is implicit from the binary
+name or explicit from -target, that's still producing a design
+where the target is the top level concept, and machine is a second
+level concept. I don't see how that makes sense given the longer
+term intent to have machines with heterogeneous CPU targets.
 
-> +
-> +static const VMStateDescription vmstate_pflash = {
-> +    .name = "pflash_cfi02",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .post_load = pflash_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_INT32(wcycle, PFlashCFI02),
-> +        VMSTATE_UINT8(cmd, PFlashCFI02),
-> +        VMSTATE_UINT8(status, PFlashCFI02),
-> +        VMSTATE_INT32(read_counter, PFlashCFI02),
-> +        VMSTATE_BOOL(rom_mode, PFlashCFI02),
-> +        VMSTATE_TIMER(timer, PFlashCFI02),
+The machine looks like it should be the top level concept, with
+target(s) derived from that.
 
-You've missed out "bypass", which is also state that the guest
-can cause the device to change at runtime.
+> > The user cares about the machine (and CPUs) they want to run,
+> > and their choice in this respect is what should determine the
+> > target(s) QEMU needs to enable. We should take
+> > 
+> >   qemu-system --machine vexpress-a15
+> > 
+> > that tells us we need the arm target. If we need to distinguish
+> > arm7 vs aarch64, then the choice of -cpu should determine 32
+> > bs 64 bit.
+> > 
+> > This extends better into the future world where we have
+> > machine type that could involve CPUs from multiple targets.
+> > 
+> > IOW machine config option / QOM class is what we should pivot
+> > off rather than a global target config option.
+> > 
+> > This likely implies that the MachineClass should gain a class
+> > method to query the QEMU_ARCH_XXXX bitmask required. Initially
+> > restricted to only a single target, so you can wire that through
+> > to the current global target info at startup. Later expanded to
+> > support multiple concurrent targets.
+> >
+> 
+> While it sounds nice on paper, you will be doomed to ambiguity with this:
+> 
+> qemu-system -machine virt -cpu max
+> 
+> What is your next plan? add an environment variable to solve it?
 
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_pflash_sector_erase,
-> +        NULL
-> +    }
->  };
+The machine names need to be globally unique across all targets.
+So the 'virt' naming clash needs a rename, such as is done in
+an earlier patch in this series.
 
-thanks
--- PMM
+> Deriving target from argv(0) or -target is explicit, predictable, boring
+> and reliable, and it's exactly what we need now.
+
+With the requirement that machine names are globally unique, we can
+determine the target(s) directly.
+
+Relying on argv(0) does not appear to work in a heterogeneous future
+as target is no longer unique per process, but the machine type would
+be unique.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
