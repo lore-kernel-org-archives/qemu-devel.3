@@ -4,55 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F94C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B72C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:02:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcTL-0007NE-D9; Thu, 27 Aug 2026 11:56:59 -0400
+	id 1wzcXy-0001AY-2H; Thu, 27 Aug 2026 12:01:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wzcTE-0007Kq-H6; Thu, 27 Aug 2026 11:56:52 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzcXq-00011V-Kt; Thu, 27 Aug 2026 12:01:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wzcTC-00052W-8A; Thu, 27 Aug 2026 11:56:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787846201; bh=JWcEKlCrOGD1sTwhyHBj3EVq4lLeCeQa83TRHshuXTk=;
- h=From:To:Cc:Subject:Date;
- b=r+Rukw1grQDLpfHMA700B2gB/EiPyTCj3tPOAZGVMkxFQTK60Yg3qycvhEhK/JLAm
- bjpHCccbik31N8jvySjUEGDODAp62fX+Y5NXBHbmQYVtVJQutBbIcxIjV5rTgpK0sE
- IasZ4mTIgXJ4Xz3c9QpJfFUEi9H5nUvZfw750vHJqIlWWIkyJ4VLYnyDMoxdiF4KYl
- ntG1w3OmLcUNSMMGjwm7diRVt7wwxKIzjfY+mH+l6+VMd6VRUBuwQwOtnwJu8xPhou
- mCDoofhnVR04xdEWgsbtRwLe4AKZhrlvcT+lE66vCamP7GtVbyQPMlIYCjOe9FPzvC
- iChUm2Wp3rs6Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 495D81CF28F;
- Thu, 27 Aug 2026 18:56:41 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8432641948A;
- Thu, 27 Aug 2026 18:56:44 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BB5C936397; Thu, 27 Aug 2026 18:56:08 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 11.1.1 Stable released
-Date: Thu, 27 Aug 2026 18:56:06 +0300
-Message-ID: <20260827155607.639070-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzcXm-0006Xq-Ru; Thu, 27 Aug 2026 12:01:38 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67RG1UUD1608711; Thu, 27 Aug 2026 16:01:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jhuLe/
+ bJN3r6NbqWNKNHdpqvZcwJ4PUDMQ+m7KM9e68=; b=OOe7nMzJAzwQf4SryWX2jH
+ /rZFntH9jWJ/xp2S4KeNpHgCT3PiPu+3e/dI1eEE25XyGNdtUkU/Rp/pUNXubtu+
+ XBP8pU3GWA8Jgapy+8pSvDHvQnsPznE3BSdCyE+FgaiKrlzyqe3EGYuWSK5PXkpo
+ joZY0ymhanfv6vHl67AnRd2ZPLKO/D2zYQN2LIr0XQb9V+mhltOhyfYi126NOTeL
+ aw48KI2Gcfff5aEfA9UKaQPMvkOba8112vVguCp9Xe6zJV/4DfBIiYo2rAOCGB73
+ jc+NFRy7LFYi8c0aBCWQShCglsErRbnyf3CzRfrEAs+DOWHiZdhA4DC5y9C1dFFw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73er6cpg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2026 16:01:30 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RFuGSc027630;
+ Thu, 27 Aug 2026 16:01:28 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsygnyk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2026 16:01:28 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67RG1Lsv48038206
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Aug 2026 16:01:21 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3B0702004E;
+ Thu, 27 Aug 2026 16:01:21 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF3D42004D;
+ Thu, 27 Aug 2026 16:01:17 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 27 Aug 2026 16:01:17 +0000 (GMT)
+Date: Thu, 27 Aug 2026 21:30:45 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com, Vishal Chourasia <Vishal.Chourasia2@ibm.com>
+Subject: Re: [PATCH v3 29/37] target/ppc: Move system call and rfi
+ instructions to decodetree
+Message-ID: <20260827212208.5b09b9d6-73-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, 
+ nikhilks@linux.ibm.com, Vishal Chourasia <Vishal.Chourasia2@ibm.com>
+References: <20260827133010.278889-1-rathc@linux.ibm.com>
+ <20260827133010.278889-30-rathc@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <20260827133010.278889-30-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: T6XtfqKecRuWbFuigGSHB7d8taatg2z3
+X-Proofpoint-ORIG-GUID: b_9GdcNWApGx2z5ZJSEBuBi16pC8KjF0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDEzNSBTYWx0ZWRfX94PRfmBrrYw8
+ 2YRi27ZPbzXAxCKQxxfwx1M5qS5tp3UaY8zK4N2LTaj/K3JJduD3fh6/J/EPJVW1UYxUaD9Xo4+
+ nG4G4UIm61GWNs2u6C0IdKbi9dNhFqqHt4gK3DWUFu89Q6cBU7JWFo/hWgqDBQsYB2KAbfe3HRh
+ j1dXjbc0tMA3KjSMfIDq5U0zEfuf1l1JcGWrOVkuZCBkpiqjopjN0eUPdaWjVO+xrxTs+e8FwTC
+ U2jBvz43YZwoIDTOU3dh+vV9Udld5Q2VW6i/DAGYIdHR91rLgan2H7f2HB8/AwQUAfXEb5mKWLa
+ DAa1RaWrJ3np9LXJJL6Msphoo7qyAHSJujyP5n3Hc0fDMVzgXlz4DGH6WWyRr/LtSqsuhKPZ+1W
+ bH/eBATXXaMDrogjLJy7BHZXDYsYWsKO7RSJjaA/vzfnMrrqyW6XkSPSDDVl77sAlcS67hw6Gp3
+ v2cYXlbtjijyDol/ABg==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a905f5a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=JTILiv1MWM5Zm06z2YIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDEzNSBTYWx0ZWRfX1iFCZvbKnmpy
+ wE2VlBeO0c91LitMX8efoHCrZ3TOilX73A7gEAhPTFIRtQoDcnQKZ+AgvlOnBiqw0Bo2WbrvkzU
+ g5c/AJ0CnOlpq6Il5Tu8t6HY529BFO0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-27_07,2026-08-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270135
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,213 +137,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi everyone,
+On 2026/08/27 06:59 PM, Chinmay Rath wrote:
+> From: Vishal Chourasia <Vishal.Chourasia2@ibm.com>
+> 
+> Moving the following instructions to decodetree specification:
+>     sc, scv                         : SC-form
+>     rfi, rfid, rfscv, hrfid         : XL-form
+> 
+> This builds upon the previous work that moved mfmsr and mtmsr[d]
+> instructions to decodetree.
+> 
+> The changes were verified by validating that the tcg ops generated by
+> those instructions remain the same, which were captured with the
+> `-d in_asm,op` flag, and also by booting a pseries qemu guest.
+> 
+> This also includes improvements from review feedback:
+> - Rename helpers to uppercase (RFI/RFID/RFSCV/HRFID) to match ISA mnemonics
+> - Add TRANS64_FLAGS() macro variants
+> - Add REQUIRE_INSNS_FLAGS_NOT() check for flag exclusion
+> - Specify lev field as uint8_t in SC instruction format
+> - Remove redundant masking in SCV since lev is already 7-bit
+> - Replace TARGET_PPC64 ifdefs with REQUIRE_64BIT() macro
+> - Gate SC, SCV, RFI, RFID, RFSCV, and HRFID with appropriate flags
+> - Consolidate CONFIG_USER_ONLY guards into single block
+> 
+> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/helper.h                  |   8 +-
+>  target/ppc/insn32.decode             |  11 +++
+>  target/ppc/tcg-excp_helper.c         |   8 +-
+>  target/ppc/translate.c               | 126 ++-------------------------
+>  target/ppc/translate/misc-impl.c.inc | 102 ++++++++++++++++++++++
+>  5 files changed, 128 insertions(+), 127 deletions(-)
+> 
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index ec3350fee8..80d6616bab 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -11,7 +11,7 @@ DEF_HELPER_4(HASHCHKP, void, env, tl, tl, tl)
+>  #if !defined(CONFIG_USER_ONLY)
+>  DEF_HELPER_2(store_msr, void, env, tl)
+>  DEF_HELPER_1(ppc_maybe_interrupt, void, env)
+> -DEF_HELPER_1(rfi, void, env)
+> +DEF_HELPER_1(RFI, void, env)
+>  DEF_HELPER_1(40x_rfci, void, env)
+>  DEF_HELPER_1(rfci, void, env)
+>  DEF_HELPER_1(rfdi, void, env)
+> @@ -19,9 +19,9 @@ DEF_HELPER_1(rfmci, void, env)
+>  #if defined(TARGET_PPC64)
+>  DEF_HELPER_2(scv, noreturn, env, i32)
+>  DEF_HELPER_2(PMINSN, void, env, i32)
+> -DEF_HELPER_1(rfid, void, env)
+> -DEF_HELPER_1(rfscv, void, env)
+> -DEF_HELPER_1(hrfid, void, env)
+> +DEF_HELPER_1(RFID, void, env)
+> +DEF_HELPER_1(RFSCV, void, env)
+> +DEF_HELPER_1(HRFID, void, env)
+>  DEF_HELPER_2(rfebb, void, env, tl)
+>  DEF_HELPER_2(store_lpcr, void, env, tl)
+>  DEF_HELPER_2(store_pcr, void, env, tl)
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 7bbe1f8838..6563dc4f64 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -199,6 +199,9 @@
+>  &X_rs_l         rs l:bool
+>  @X_rs_l         ...... rs:5 .... l:1 ..... .......... .         &X_rs_l
+>  
+> +&SC             lev:uint8_t
+> +@SC             ...... ..... ..... .... lev:7 ... . .           &SC
+> +
+>  &X_uim5         xt uim:uint8_t
+>  @X_uim5         ...... ..... ..... uim:5 .......... .           &X_uim5 xt=%x_xt
+>  
+> @@ -320,6 +323,14 @@ MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
+>  MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
+>  MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
+>  
+> +### System Call and Return from Interrupt
+> +SC              010001 ----- ----- ---- ....... --- 1 -         @SC
+> +SCV             010001 ----- ----- ---- ....... --- 0 1         @SC
+> +RFI             010011 ----- ----- ----- 0000110010 -
+> +RFID            010011 ----- ----- ----- 0000010010 -
+> +RFSCV           010011 ----- ----- ----- 0001010010 -
+> +HRFID           010011 ----- ----- ----- 0100010010 -
+> +
+>  ### Fixed-Point Byte-Reverse Instructions
+>  BRW             011111 ..... ..... ----- 0010011011 -   @X_sa
+>  BRD             011111 ..... ..... ----- 0010111011 -   @X_sa
+> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+> index c4ffa2dfbb..d06d3f8642 100644
+> --- a/target/ppc/tcg-excp_helper.c
+> +++ b/target/ppc/tcg-excp_helper.c
+> @@ -528,13 +528,13 @@ static void do_rfi(CPUPPCState *env, target_ulong nip, target_ulong msr)
+>      check_tlb_flush(env, false);
+>  }
+>  
+> -void helper_rfi(CPUPPCState *env)
+> +void helper_RFI(CPUPPCState *env)
+>  {
+>      do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1] & 0xfffffffful);
+>  }
+>  
+>  #ifdef TARGET_PPC64
+> -void helper_rfid(CPUPPCState *env)
+> +void helper_RFID(CPUPPCState *env)
+>  {
+>      /*
+>       * The architecture defines a number of rules for which bits can
+> @@ -545,12 +545,12 @@ void helper_rfid(CPUPPCState *env)
+>      do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
+>  }
+>  
+> -void helper_rfscv(CPUPPCState *env)
+> +void helper_RFSCV(CPUPPCState *env)
+>  {
+>      do_rfi(env, env->lr, env->ctr);
+>  }
+>  
+> -void helper_hrfid(CPUPPCState *env)
+> +void helper_HRFID(CPUPPCState *env)
+>  {
+>      do_rfi(env, env->spr[SPR_HSRR0], env->spr[SPR_HSRR1]);
+>  }
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 20d3e7c1ab..f46e2167ea 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2679,110 +2679,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+>      tcg_gen_movi_tl(cpu_lr, nip);
+>  }
+>  
+> -/***                           System linkage                              ***/
+> -
+> -/* rfi (supervisor only) */
+> -static void gen_rfi(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    /*
+> -     * This instruction doesn't exist anymore on 64-bit server
+> -     * processors compliant with arch 2.x
+> -     */
+> -    if (is_book3s_arch2x(ctx)) {
+> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> -        return;
+> -    }
+> -    /* Restore CPU state */
+> -    CHK_SV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+> -    gen_helper_rfi(tcg_env);
+> -    ctx->base.is_jmp = DISAS_EXIT;
+> -#endif
+> -}
+> -
+> -#if defined(TARGET_PPC64)
+> -static void gen_rfid(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    /* Restore CPU state */
+> -    CHK_SV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+> -    gen_helper_rfid(tcg_env);
+> -    ctx->base.is_jmp = DISAS_EXIT;
+> -#endif
+> -}
+> -
+> -#if !defined(CONFIG_USER_ONLY)
+> -static void gen_rfscv(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    /* Restore CPU state */
+> -    CHK_SV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+> -    gen_helper_rfscv(tcg_env);
+> -    ctx->base.is_jmp = DISAS_EXIT;
+> -#endif
+> -}
+> -#endif
+> -
+> -static void gen_hrfid(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    /* Restore CPU state */
+> -    CHK_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    gen_helper_hrfid(tcg_env);
+> -    ctx->base.is_jmp = DISAS_EXIT;
+> -#endif
+> -}
+> -#endif
+> -
+> -/* sc */
+> -#if defined(CONFIG_USER_ONLY)
+> -#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL_USER
+> -#else
+> -#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL
+> -#endif
+> -static void gen_sc(DisasContext *ctx)
+> -{
+> -    uint32_t lev;
+> -
+> -    /*
+> -     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
+> -     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
+> -     * for Ultravisor which TCG does not support, so just ignore the top 6.
+> -     */
+> -    lev = (ctx->opcode >> 5) & 0x1;
+> -    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
+> -}
+> -
+> -#if defined(TARGET_PPC64)
+> -#if !defined(CONFIG_USER_ONLY)
+> -static void gen_scv(DisasContext *ctx)
+> -{
+> -    uint32_t lev = (ctx->opcode >> 5) & 0x7F;
+> -
+> -    /* Set the PC back to the faulting instruction. */
+> -    gen_update_nip(ctx, ctx->cia);
+> -    gen_helper_scv(tcg_env, tcg_constant_i32(lev));
+> -
+> -    ctx->base.is_jmp = DISAS_NORETURN;
+> -}
+> -#endif
+> -#endif
+> -
+>  /***                                Trap                                   ***/
+>  
+>  /* Check for unconditional traps (always or never) */
+> @@ -4155,6 +4051,13 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
+>  #define TRANS64(NAME, FUNC, ...) \
+>      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
+>      { REQUIRE_64BIT(ctx); return FUNC(ctx, a, ##__VA_ARGS__); }
+> +#define TRANS64_FLAGS(FLAGS, NAME, FUNC, ...) \
+> +    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
 
-The QEMU v11.1.1 stable release is now available.
+Nit: Similar to what I mentioned below.
 
-You can grab the tarball from our download page here:
+> +    {                                                           \
+> +        REQUIRE_64BIT(ctx);                                     \
+> +        REQUIRE_INSNS_FLAGS(ctx, FLAGS);                        \
+> +        return FUNC(ctx, a, ##__VA_ARGS__);                     \
+> +    }
+>  #define TRANS64_FLAGS2(FLAGS2, NAME, FUNC, ...) \
+>      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
+>      {                                                          \
+> @@ -4529,21 +4432,6 @@ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+>  /* handles stfdp, stxsd, stxssp */
+>  GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+> -/* ISA v3.0 changed the extended opcode from 62 to 30 */
+> -GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+> -#if defined(TARGET_PPC64)
+> -GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+> -#if !defined(CONFIG_USER_ONLY)
+> -/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
+> -GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
+> -#endif
+> -GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+> -#endif
+> -/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
+> -GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
+> -GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
+>  GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
+>  GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
+>  GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
+> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
+> index 54712f9b73..26c82a5a7f 100644
+> --- a/target/ppc/translate/misc-impl.c.inc
+> +++ b/target/ppc/translate/misc-impl.c.inc
+> @@ -225,3 +225,105 @@ static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
+>  
+>  TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
+>  TRANS64(MTMSRD, do_mtmsr, true)
+> +
+> +/*
+> + * System Call and Return from Interrupt Instructions
+> + */
+> +
+> +static bool do_SC(DisasContext *ctx, arg_SC * a, uint32_t excp)
 
-  https://www.qemu.org/download/#source
+Nit: space before a — should be arg_SC *a per QEMU coding style (pointer
+attached to the type, not the variable name). This was present in v2 and
+wasn't caught earlier.
 
-  https://download.qemu.org/qemu-11.1.1.tar.xz
-  https://download.qemu.org/qemu-11.1.1.tar.xz.sig (signature)
+> +{
+> +    uint32_t lev;
+> +
+> +    /*
+> +     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
+> +     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
+> +     * for Ultravisor which TCG does not support, so just ignore the top 6.
+> +     */
+> +    lev = a->lev & 0x1;
+> +    gen_exception_err(ctx, excp, lev);
+> +    return true;
+> +}
+> +
+> +static bool do_SCV(DisasContext *ctx, arg_SC *a)
+> +{
+> +#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
+> +    /* Set the PC back to the faulting instruction. */
+> +    gen_update_nip(ctx, ctx->cia);
+> +    gen_helper_scv(tcg_env, tcg_constant_i32(a->lev));
+> +
+> +    ctx->base.is_jmp = DISAS_NORETURN;
+> +    return true;
+> +#else
+> +    gen_invalid(ctx);
+> +    return true;
+> +#endif
+> +}
+> +
+> +/*
+> + * Common helper for return-from-interrupt instructions
+> + */
+> +enum {
+> +   RFI_KIND_RFI = 0,
+> +   RFI_KIND_RFID = 1,
+> +   RFI_KIND_HRFID = 2,
+> +   RFI_KIND_RFSCV = 3,
+> +};
+> +
+> +static bool do_rfi(DisasContext *ctx, arg_RFID *a, int kind)
+> +{
+> +#if defined(CONFIG_USER_ONLY)
+> +    gen_priv_opc(ctx);
+> +    return true;
+> +#else
+> +    void (*helper)(TCGv_ptr);
+> +
+> +    switch (kind) {
 
-v11.1.1 is now tagged in the official qemu.git repository, and the
-stable-11.1 branch has been updated accordingly:
+On the broader design point I raised in v2 — preferring four separate
+translators over the consolidated do_rfi(kind) approach: I still think
+separate translators would be structurally cleaner. The RFI family has
+genuinely distinct privilege semantics (REQUIRE_SV vs REQUIRE_HV), a
+is_book3s_arch2x check for one variant only, and the BHRB omission for
+HRFID — all of which require guards that must be remembered to apply
+correctly when the function is modified in future.
 
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-11.1
+That said, the RFI_KIND_HRFID guard is correctly in place in v3, and I
+am okay with this approach if you prefer to keep it. The key correctness
+issue is resolved.
 
-There are 91 changes since the previous v11.1.0 release.
+With the two pointer-spacing nits fixed (@Harsh, if there's no respin,
+could you please take care of this while applying the patch?):
 
-Thank you everyone who has been involved and helped with the stable series!
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-/mjt
-
-Changelog (stable-11.1-hash master-hash Author Name: Commmit-Subject):
-
-c3d48b7d1e8 Michael Tokarev:
- Update version for 11.1.1 release
-3e2849a33c9 85d38315fd Christian S. Lima:
- target/riscv/tcg: sret in virtual user mode raises virtual instruction exception
-486ce35b39b a9779d24be Frédéric Pétrot:
- target/riscv: Allow UXL to be 3 in mstatus on rv128
-2c0db8a985e 409c7d8682 Joel Stanley:
- target/riscv: Restore register dump zero padding
-f9530009f69 e4ae434836 Chao Liu:
- tests/qtest: remove trace output from k230 watchdog test
-e0611379203 e68cc2e5cd wangyang:
- target/riscv: enforce even register constraints for Zdinx fcvt pairs
-d1f63a04cf8 af1e669cef wangyang:
- target/riscv: reject FMV.X.W/FMV.W.X under Zfinx
-bb72fd70109 12289f2f9a wangyang:
- target/riscv: honor zicbo* envcfg gating in linux-user mode
-adf74c01ed7 ecbd3a031f Richard Henderson:
- disas/riscv: Fix typo in th.lbib format
-2c2d25853e1 d610e55c83 Richard Henderson:
- disas/riscv: Fix isa decoding of rev8
-326411de08f d4151cf267 Richard Henderson:
- disas/riscv: Fix rv32 encoding of zext.h
-d767c0d95ea bd1ee9ab3c A-Shehab:
- target/riscv: allow menvcfg/henvcfg LPE and SSE bits on RV32
-292af62ed09 aa51eec004 Andrew Jones:
- hw/riscv/riscv-iommu: preserve requested perm in spa_fetch()
-c75952b065b f16fd27b3f Andrew Jones:
- hw/riscv/riscv-iommu: fix U-bit check to apply only to leaf S/VS-stage PTEs
-ab8547c74c1 00cec77a7f TANG Tiancheng:
- disas/riscv: Decode unsigned vector immediates as unsigned
-a15c135c2c7 7899d3c6bd TANG Tiancheng:
- disas/riscv: Use signed type for vector immediates
-508eb3dd61e 7a8454ef29 TANG Tiancheng:
- disas/riscv: Fix 6-bit immediate extraction
-36024d5d98f 6985cfc875 TANG Tiancheng:
- disas/riscv: Fix th.srri decoding
-88b441bc373 e80cf29479 Ivan Efremov:
- tests/qtest: Add seed CSR zero extension test
-b0b3d341ca8 51362da8f7 Ivan Efremov:
- target/riscv: Fix seed CSR sign extension
-1edfaf11576 5a9fa8b582 Zephyr Li:
- target/riscv: do not count ECALL in minstret
-f449779db24 d5ab0bdefe Zeng Chi:
- target/riscv: Fix memory leak in riscv_trigger_unrealize()
-44e88d1a1ef ebef6685a1 Abhigyan Kumar:
- target/riscv: use SXL instead of MXL for read_sstatus
-ef002da4944 4a884ba94b Max Chou:
- target/riscv: Fix PC sync in trans_sspopchk for CFI exception handling
-039201db1f9 93f38b6e88 Mohamed Mediouni:
- whpx: i386: inject back db
-b9a42d07b4a 37ce6d8da7 Mohamed Mediouni:
- whpx: i386: work around Hyper-V FP state oddities
-a4049cf8690 7b0516912e Mohamed Mediouni:
- whpx: i386: synchronise PAT too
-5c16e7ad5dc 3bfcd8ef6b Mohamed Mediouni:
- whpx: i386: enable fast hypercall output
-fd87e7a8c54 32452bac6d Mohamed Mediouni:
- hw/i386: fw_cfg: do not set VMX feature control on WHPX
-793bc2f82f9 7c84752396 Mohamed Mediouni:
- whpx: i386: fix xsaves enablement in legacy probing path
-3c3bdea4c4a eea4de1bd8 Chinmay Rath:
- hw/watchdog: Add lower bound check for watchdogNumber
-362f1623616 3295370010 Richard Henderson:
- tests/tcg/aarch64: Add regression test for whilewr/whilerw
-371cff91208 bab972a2b0 Richard Henderson:
- target/arm: Fix SVE2 WHILEWR/WHILERW zero diff boundary case
-17532efeaa6 b4f6f672a3 Richard Henderson:
- tcg: Export tcg_gen_ussub_i{32,64,tl}
-802ab469a5d a0c093900d Philippe Mathieu-Daudé:
- hw/intc/arm_gicv3: Have GIC kconfig select GICv3 for HVF and WHPX
-a1d64c7ecd9 d05febdd32 Richard Henderson:
- hw/intc: Fix arm kvm gicv3 selection
-58a5803f22c f5d2d8532f Richard Henderson:
- tcg: Defer tb_flush when initial thread region alloc fails
-14976fc01b7 fcdbc78ad4 Richard Henderson:
- tcg: Return success from tcg_region_alloc
-d5367567581 e131c28b6e Richard Henderson:
- tcg: Return success from tcg_region_alloc__locked
-b947b77e271 215a4fc08f Jan Mercl:
- target/loongarch: check FPE before reading fcc in bceqz/bcnez
-6e7f8933d73 501187d0bc Paolo Bonzini:
- meson: make linker warnings non-fatal on Linux
-780da10b0a7 eb3f7fe382 Paolo Bonzini:
- serial: clear transmit retry callback on unrealize
-abfd1af48bd 380b959618 Andrey Polivoda:
- target/i386: decode opcode extensions group 3 /1 as TEST
-4b6ba25a739 36f634fe4a Andrey Polivoda:
- target/i386: allow transition to virtual-8086 mode only if CPL == 0 and CPU is not in long mode
-6cc5f14292f 3589cd995b Craaijo, Jos:
- target/i386: fix long mode segment override prefix decoding
-b66ebf444bf ce0ee66044 Simon Scherer:
- target/i386: fix incorrect decoding of EXTRQ_i
-1621cc4971b 0924d9d3db Simon Scherer:
- target/i386: Clear OF, SF, and AF for fcomi/fucomi
-1215e2a16c8 784b7f28e2 Ilya Chichkov:
- accel/tcg: Allow overlapping reads in record_save
-075194c6589 5fe5160614 Richard Henderson:
- tcg/optimize: Fix s_mask computation for shifts
-f50d3d4a0ba 3181e53c13 Richard Henderson:
- tcg/optimize: INDEX_op_mul is commutative
-1cdd486e5e8 260d49d8e2 Alex Bennée:
- hw/elf_ops: defend against weird elf headers
-5b8167a83d2 6dab35f549 Stefan Hajnoczi:
- hw/nvme: add SPDM_SOCKET Kconfig dependency
-5ea267f2408 60d010f66f Bin Guo:
- hw/block/pflash_cfi01: Restore ROMD mode after migration
-e244b68eee8 f3a10c1c45 Peter Maydell:
- hw/net/rtl8139: Send whole of vlan-tagged packet when doing loopback
-c9f0ac98b2a 59fc7b747d Peter Maydell:
- hw/net/rtl8139: Fix handling of VLAN tags on incoming short packets
-f04f55578ae 6ccf1e73fc Dario Faggioli:
- hw/i386/pc: xen: reinstate the "xenfv" machine alias
-76e3cd5a96d be1ee6a8f6 Denis V. Lunev:
- tests/qtest/ahci: regression test for ATAPI read vs. drain
-1e4ab5af46a 12289dc700 Denis V. Lunev:
- hw/ide/atapi: read the whole elementary transfer asynchronously
-de0ba7ecd9e 31f13e71af Denis V. Lunev:
- tests/qtest/ahci: cover raw (2352-byte) ATAPI CD reads
-033fdd2653a de86ef3dfd Denis V. Lunev:
- tests/qtest/libqos/ahci: support raw (2352-byte) READ CD
-7f7ad47bd99 502dbdfd96 Denis V. Lunev:
- tests/qtest/ide-test: cover raw (2352-byte) ATAPI CD reads
-a34b3fd1e86 fe543c2d78 Denis V. Lunev:
- tests/qtest/ide-test: add a multi-sector ATAPI DMA read test
-043b76442bd ebec7c7322 Denis V. Lunev:
- tests/qtest/ide-test: parametrize the ATAPI CD-ROM read test
-b203a315941 46099d9900 Thomas Huth:
- hw/net/vmxnet3: Do not abort if guest provides bad interrupt numbers
-14addd62843 15700a66ec Thomas Huth:
- hw/usb/dev-uas: Don't abort if guest provided an undersized buffer for status
-15344d76f2f 80776c4df9 Bin Guo:
- hw/intc/loongarch_pch_pic: Validate htmsi_vector before indexing parent_irq
-d9ef500245b cf45083edc Peter Xu:
- migration/multifd: Replace assert() with error_setg() in recv paths
-a647c8c0d75 ac7fa2e9d4 Peter Xu:
- migration/multifd: Validate next_packet_size in zlib/zstd recv
-12d97018d62 e79ea44726 Ilya Leoshkevich:
- tests/tcg/s390x: Test STCKF condition code on a faulting store
-7b8decf5dde 2c32c273da Ilya Leoshkevich:
- target/s390x/tcg: Set STCK/STCKF condition code after the store
-41159464971 9b3d68edb2 Eric Farman:
- pc-bios/s390-ccw.img: update s390x bios
-ad0e925eb41 c4d9412cdd Jared Rossi:
- pc-bios/s390-ccw: Fix off-by-one errors with loadparm and boot entries
-623610af04c a3856a7ba4 Joshua Daley:
- pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in zipl_print_entry
-82ce8ab787c 33909d4ebd Joshua Daley:
- pc-bios/s390-ccw: bounds-check zipl menu entry index before array write
-15170634bc2 a9f1e84c6b Joshua Daley:
- pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
-656906057e9 df607fd056 Joshua Daley:
- s390x/ipl: validate num_comp against iplb length before iterating
-987183f34d2 4e994ebb01 Christian Borntraeger:
- hw/char/sclpconsole-lm: avoid guest triggerable assert
-6bbe986ce70 aa5d03bc93 Ilya Leoshkevich:
- tests/tcg/s390x: Test DR overflow (INT64_MIN / -1)
-811040e242c 0103cb1cd1 Ilya Leoshkevich:
- target/s390x: Fix DR/D INT64_MIN / -1 host crash
-412e2834cbc abe1d893f4 Ilya Leoshkevich:
- tests/tcg/s390x: Test PRNO TRNG interruptibility
-84844c9e8de aae77f5ddd Ilya Leoshkevich:
- target/s390x: Make PRNO TRNG interruptible
-277d4e94c1d 9e96b5953e Brian Cain:
- host-utils: fix ssub32/64_saturate return type and clamp direction
-dd91028cd58 6440880ed3 Philippe Mathieu-Daudé:
- hw/arm/aspeed: Add missing Kconfig dependencies on required components
-e2f860671ea 2fad751ed6 Philippe Mathieu-Daudé:
- hw/arm/aspeed: Add missing PCI_EXPRESS -> PCIE_PORT Kconfig dependency
-8a1d98d7ddc 4713988da1 Matt Turner:
- linux-user: implement mount_setattr(2)
-c1522f68f58 8f5bf4fa0a Brian Cain:
- target/hexagon: don't let an idef-parser dest clobber its own source
-dc761320844 d2504d4cea Brian Cain:
- tests/tcg/hexagon: add slot-assignment tests
-d1c5b1006fd 0177efb9b7 Brian Cain:
- target/hexagon: accept valid packets rejected by check
-a1a6e8ab136 01b4e06b52 Saul Freedman:
- target/i386/kvm: Fix CET SSP MSR read feature check
-4a9db4d91bb f7ad7b1f8c Mikulas Patocka:
- linux-user/sh4: Fix crashes on signal delivery in conditional delay slot
-73ac7cff737 668d571bf0 Mikulas Patocka:
- linux-user/sh4: Initialize the FPSCR register on signal
-32f305bca18 bc4681990b Mikulas Patocka:
- linux-user/sh4: Deliver SIGILL on invalid instruction
-
+> +    case RFI_KIND_RFI:
+> +        if (is_book3s_arch2x(ctx)) {
+> +            gen_invalid(ctx);
+> +            return true;
+> +        }
+> +        REQUIRE_SV(ctx);
+> +        helper = gen_helper_RFI;
+> +        break;
+> +#if defined(TARGET_PPC64)
+> +    case RFI_KIND_HRFID:
+> +        REQUIRE_HV(ctx);
+> +        helper = gen_helper_HRFID;
+> +        break;
+> +    case RFI_KIND_RFID:
+> +        REQUIRE_SV(ctx);
+> +        helper = gen_helper_RFID;
+> +        break;
+> +    case RFI_KIND_RFSCV:
+> +        REQUIRE_SV(ctx);
+> +        helper = gen_helper_RFSCV;
+> +        break;
+> +#endif
+> +    default:
+> +        gen_invalid(ctx);
+> +        return true;
+> +    }
+> +
+> +    translator_io_start(&ctx->base);
+> +    if (kind != RFI_KIND_HRFID) {
+> +        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+> +    }
+> +    helper(tcg_env);
+> +    ctx->base.is_jmp = DISAS_EXIT;
+> +    return true;
+> +#endif
+> +}
+> +
+> +#if defined(CONFIG_USER_ONLY)
+> +TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL_USER)
+> +#else
+> +TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL)
+> +#endif
+> +
+> +TRANS64_FLAGS2(ISA300, SCV, do_SCV)
+> +
+> +TRANS_FLAGS(FLOW, RFI, do_rfi, RFI_KIND_RFI)
+> +TRANS64(RFID, do_rfi, RFI_KIND_RFID)
+> +TRANS64_FLAGS(64H, HRFID, do_rfi, RFI_KIND_HRFID)
+> +TRANS64_FLAGS2(ISA300, RFSCV, do_rfi, RFI_KIND_RFSCV)
+> -- 
+> 2.55.0
+> 
 
