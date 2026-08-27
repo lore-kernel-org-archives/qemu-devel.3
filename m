@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336F7C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A42FC61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 15:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcFV-0006Id-PQ; Thu, 27 Aug 2026 11:42:41 -0400
+	id 1wzcFW-0006It-By; Thu, 27 Aug 2026 11:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFT-0006HY-Mc
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:39 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFU-0006I3-Pa
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:40 -0400
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFR-00019R-UL
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=FmkDJCO
- jCreomgjEBvgcmCIdxqZjt3ix6yrwzUAGq8UIMODmyIvEbhZWb6ZYYsblClbnp4dC8Icwu
- PNFFM6P0YmI+oZczh0n2Z4SPtoKseDoG4zqXGzJhGlRdAj4pYPxz7Kv33UqqW27XB6MfkU
- KKl1nUNz1nNSr8NdWDschGovpzhdpYUz8HqIWf+qcXtrLbIYMYFHQ6ljnd3xpXkyZ3r6vU
- ckNE2FOC0vyVIN/dazyO1mtS7Ln/fJPDXly+qDpB3jJKKKxfEXJ3YpS+Iw0FrDMszjWayI
- EN/8Wbod7RdTNHGhDB3r6iPPneQNmPPmTos1u0IS94ijUjRuZgA9Rmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=k
- oHFNGi4Fw3yPpaGm3FaF7mlvXRBicgrFjENxa3+hOw=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wzcFT-000181-17
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 11:42:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=TGAIoAG
+ gJBuEUS2WrIOZ0+EXWRqbBSrPGBvK6aWU6Zh6T4xEsLrmE06BOtWO3cZ/NmAkrBj+76Edl
+ m/yCkFA48KrFY/h9iIk0eUDMOQpNPDrPIVbny1iz91qva3RbztiPEACzN6DPKtTYx00NcQ
+ Etc9eVoDL+Yp7/phtUKd5ddwdzGUZIoxawOdjKUkFJRstpVJJLR4lqblTkYO68U1KknH4G
+ l7rKRDSvhd/fca4ywu8jCwO7FeO5DwTubG++k6TCp9uwrcfbF1OVflhXhvG5/FkM6Ar2Fo
+ w4iXPdRap931/BKokfNkPFw9k8K4nrgQI198Kngprz0MbMTOludTY9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=O
+ qTl22l5p6/CPHHVITgZQsvYvoHPLOjk9ekmkSr5Lw8=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=IRqt/tgbBStPP42QtReprU0wvL34SqEtizTqVwCSbSAdBKcKd/lk6We3rKq6MeZe9i6o
- 49kbJAvsIWFbPYTfzSW18+RkTKjLk9AffSK89pzqOotince31IMQDdem9eNtj3n7c4Zq6h
- rzghkCIYxVjv5bOA7AjcflrJNiI4shYdJW/iJJFrSmWPi2OlZ/bDjaA5sTZfoD5VQEQzUE
- OOLOTV63Hy1/ejy6mobfkCCr9PSU4s/km4eegOaKzD5XP9f57ldOcjqZ7AdhfUUCUJuezO
- drLKuYAHrtRMBJQesQWUbW5z0xAu+fmtYRI9S5p5HEY5Juqy1FrBun52DCdShcNg==
+ b=MO/Fpn0gaFRA4nvl3mJzW6Tj1vIhLPkKW7CoCMzbZEzdULFu6l+JiP9KoEqUqPR/LZdy
+ VVP6T469/mtUgSQSiScJfF6bbcN8fiAhlhkR1W5n2xJDc4I8oJeOfDabJ6Dhxpp0zYGUbJ
+ 6r9V0pPWB1pxzhyvmN6fW20K7CtOas7s/d8BMhmr2f7rcNZmEz2IvDAQWPlpzoNR95oJxE
+ VTo1k85QbZiEySa1ij7jqyBBeMHjlbgZp8gTwwm3FWl/Q81/o9L1aQ5nM/dEubGln90Up+
+ v6WejEsvByHVaJY3UHNviC6bLHDhFYtG3eiuRNq8JzTs6nMZDgm4GZqZHXRr04Kg==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=moP4t6VS; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=fRxt189Q;
+ header.b=nOMoO3AF; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=aKqL3bFQ;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=koHFNGi4
- Fw3yPpaGm3FaF7mlvXRBicgrFjENxa3+hOw=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=OqTl22l5
+ p6/CPHHVITgZQsvYvoHPLOjk9ekmkSr5Lw8=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=moP4t6VS4cBMqrIKfxbm2XH49+BPjKTMSV/
- JpXVwjc+4Z98Zo8WzpXKSgeh/4V6X0a+u4zmY4Blh29Whuj+KFxUynSzedIa46ZDrtS6gJ
- otBiYGjzKDbX9s10sqeHTNbOlX3lVPsvN4kdl3Dx5AYXAOShFn3iTD9/FetgaMI7W0wQtS
- vPDl6AZEMQbBV0H7N+a8tS7oxNWHRqWwg/ZL0Vuqr7OE5USqVxF/lVj6Zz8OJe8ZvuPpLT
- QIQrS3ftx0QHDEkifJQF7ff8JYZi/Hl3aYpk8RN49T0HKc2TBj7wiLEda/D8QrlaabkIjK
- h8y3AccatbItMg0UU6mARhWXxeg==
+ subject:cc:to:from; d=korins.ky; b=nOMoO3AFzjrxe+6UiPQysSIfckuPNTW8FxY
+ Y6220vPUj9ZMDmnm5tgNxb4pj0lDwEWrHxCvSZhAo90HOpGFBTeiTgrM1vRdLqUMAGj9J5
+ QxhKJoK3JVR3gTXEn50An2n/rBeB6VC0M44/KfYGvJfQF7hYkN+lTGrLmB7OezkhVvyROp
+ Y4BrLSxS/zrSYY38zkcdxY2etwhbW61h+oOQgOocukL1oR+cL7+mzt50NOBnc0BGeI2hhl
+ GkvDc3x5eaoWTqV3a3qUJjRimSS/dzTFy69tKr74LZWmR/lVL9pqzrJL7pmwzWWhUw/Wi4
+ gb+6CYlRZ6rUSEA0hoe5JPbjsVA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=koHFNGi4Fw3yPpaGm3FaF7mlvXRBicgrFjENxa3+hOw=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=fRxt189QLy/OZMnToR
- 9RdyWwSteHfqp5c/PY9dYoczqgYCiwm/IR1u1r2ioQDEak+Zn0wTkdDNsuxFvRyuYjBw==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id a418d2a4
+ bh=OqTl22l5p6/CPHHVITgZQsvYvoHPLOjk9ekmkSr5Lw8=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=aKqL3bFQXu59vvbVIS
+ DuBeVxMdYOyie+IHDQ6BewIKKVizTmz0DMrr4A99yb7hWyXzdwKFqcmK/IK216DFDWCg==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 764c51b0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 27 Aug 2026 17:42:33 +0200 (CEST)
+ Thu, 27 Aug 2026 17:42:34 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id d6a2e407;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id c12e42ef;
  Thu, 27 Aug 2026 17:42:32 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 3/5] cuda: Include command in successful ADB replies
-Date: Thu, 27 Aug 2026 17:41:15 +0200
-Message-ID: <20260827154220.84845-4-kirill@korins.ky>
+Subject: [PATCH 4/5] cuda: Make shift register delay configurable
+Date: Thu, 27 Aug 2026 17:41:16 +0200
+Message-ID: <20260827154220.84845-5-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827154220.84845-1-kirill@korins.ky>
 References: <20260827154220.84845-1-kirill@korins.ky>
@@ -94,34 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OpenBSD and Linux expect the ADB command between the CUDA status and
-reply data. QEMU omits it on success, so guests consume the first data
-byte as the command and lose it from the reply.
+The CUDA model assumes a 20 microsecond delay before each shift
+register interrupt. OpenBSD times out during device discovery with that
+timing, so retain the existing default but allow an override.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/misc/macio/cuda.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/misc/macio/cuda.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
-index 312dde242b..ccb3e1d74b 100644
+index ccb3e1d74b..a62fdf23b9 100644
 --- a/hw/misc/macio/cuda.c
 +++ b/hw/misc/macio/cuda.c
-@@ -431,11 +431,12 @@ static void cuda_receive_packet_from_host(CUDAState *s,
-         {
-             uint8_t obuf[ADB_MAX_OUT_LEN + 3];
-             int olen;
--            olen = adb_request(&s->adb_bus, obuf + 2, data + 1, len - 1);
-+            olen = adb_request(&s->adb_bus, obuf + 3, data + 1, len - 1);
-             if (olen > 0) {
-                 obuf[0] = ADB_PACKET;
-                 obuf[1] = 0x00;
--                cuda_send_packet_to_host(s, obuf, olen + 2);
-+                obuf[2] = data[1];
-+                cuda_send_packet_to_host(s, obuf, olen + 3);
-             } else {
-                 /* error */
-                 obuf[0] = ADB_PACKET;
+@@ -535,7 +535,6 @@ static void cuda_realize(DeviceState *dev, Error **errp)
+     s->tick_offset = (uint32_t)mktimegm(&tm) + RTC_OFFSET;
+ 
+     s->sr_delay_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, cuda_set_sr_int, s);
+-    s->sr_delay_ns = 20 * SCALE_US;
+ 
+     adb_register_autopoll_callback(adb_bus, cuda_adb_poll, s);
+ }
+@@ -557,6 +556,8 @@ static void cuda_init(Object *obj)
+ 
+ static const Property cuda_properties[] = {
+     DEFINE_PROP_UINT64("timebase-frequency", CUDAState, tb_frequency, 0),
++    DEFINE_PROP_UINT64("sr-delay-ns", CUDAState, sr_delay_ns,
++                       20 * SCALE_US),
+ };
+ 
+ static void cuda_class_init(ObjectClass *oc, const void *data)
 -- 
 2.55.0
 
