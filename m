@@ -4,106 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97138C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296F3C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzd1M-0002jf-9V; Thu, 27 Aug 2026 12:32:08 -0400
+	id 1wzd1c-0002s4-0D; Thu, 27 Aug 2026 12:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wzd1K-0002fn-2F
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:32:06 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wzd1I-0003qf-9Q
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:32:05 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2cfbbdfa60bso475955ad.3
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:32:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787848322; cv=none;
- d=google.com; s=arc-20260327;
- b=E9Hkt+rSTG5AL1mlOcvGubFEdJcDNawnbNBE/MoiT64M9XgblcVVbgFRl8/H2UD0a9
- 8NQaaHY0o6m2OomZSkTumt3RR01xfjqzCsA6vreXd9HD1ZugESCEC/7unq4l5P+QXPQv
- nE1JFvz4jDku+GMvODnRt5FxH12Hfgg2CyzPz+DuCzMx464EL6geuMjEFUI76VkUCRPU
- Wkjsn/7Oz3LDACWdQ+LZGYyw82AL8pFAYRpkvkGb6qoEXLBiPeklvrx8f2Y+qKLsjvc7
- 97wNebCkfuzWsEXuF1p/UqNyUVIac4U0lf33oso7W/wsHrOpJV9MSWi7t2y2TsDimttp
- UdnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=c2oxALRqjk+G+OZunhaXWZu2z4aYlpbgEsVBKKhFO8o=;
- fh=iBp5jtZZnbUXCTHESVhjBz0oKrPau2LepWbEcsuEIIU=;
- b=jOMM2Rr9w5qUHiMPXgXKqPfE7sPqWqFDbKsnYSbe11c8RzhZCPDnygi5KMFcqMeCpW
- 3Ftv6ginCWSAB9Hfxrd0G/qO2DwUcfVETz7HvTjOMhQb9zDoybqqUO3vs7gqBM3gSW+F
- faC0QYR1xCUCPy7bNKwpAJR+9nia0Q1+MfUpEekjZ0XaZLKHsivlHWbYPf7TsGloq/sY
- U/RKRoWWaXKoRA1hpQSxfifBWXm8vhibeEIShbq2CEEiCT6UZAoRV5xZzGnl3r1B6QVq
- uP2y1rMu81Gu3bFhTM8md7yFzHonmO9IxobPN9RD15nN/s+IAIqZft51DEPDHWGtPFl/
- yyFw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wzd1Z-0002qL-1e
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:32:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wzd1X-0003sP-4o
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:32:20 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67RGIftl708588
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 16:32:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ PpzExICWWXrFjUHddg2HT7F1Pum8dEAU0sEI0oHCL/0=; b=QW/J1MND39Z7jPuZ
+ 7L5JmwrWsOLRlfIG7pctAjsp3NypqJMgVDvThXdYvSKrO/GnQa1pxlE07axUJ/mQ
+ d9vIOR1w0WxQoFfDMpyBEtjCIsJoCaebw4MdYJ+jPt3Nfghx1/odBFs/axTAMudG
+ sKgXZen1YqnmL485pQAqEfp0TOrGGaVagw3zilcYgIEEceZba5NwL4h2vexcQ3hD
+ ra+1GyiXatYyEckc44rFB9jgyEEieLTB23FW8XYXWA2PY16kPviCO1NAl7NiFjD4
+ vZygO457zWJvTNs5jtxeIzuSJKx5ahhKJFyRmwya1ognxVkcOZLmx2W5pDuM+8rk
+ JJtmig==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4garn0g1wk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 16:32:17 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cc1c057f480so95293a12.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787848322; x=1788453122; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=c2oxALRqjk+G+OZunhaXWZu2z4aYlpbgEsVBKKhFO8o=;
- b=mCpKBcXqrtWrPkvnxIzWZSe7dnmjN95tm1Xv6CcNbomDJo86WTw629kgrxpfGqVMut
- VlB0IODgsSK52QUsdqC/MfQrJY3s78A3VdDWMf8hNVRI+1owDtCsh3aLFtNwhmrXNgu6
- 4LbCtDvmawhqrZzWT9awYouxEnAcX6QVQBuNpxrx+0Qk332jMQS+32tMozPeSbsBOKKJ
- vsJ9Ffid6tMiJzva3drEPBjIXSGY5tkB/kU44k1fNQ6K91wkDahTuBDgkI+krlOUhOYg
- bpnuHKZiZAf2kXcp7S44yzDxl/+CjV2TBYg1wg7rU9ejQpauO+Qk539i3e+nFj9/TfQK
- wyZw==
+ d=oss.qualcomm.com; s=google; t=1787848336; x=1788453136; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PpzExICWWXrFjUHddg2HT7F1Pum8dEAU0sEI0oHCL/0=;
+ b=TNWQasZ4zFLznRpOUv2jozSbGByHDIhoyXG49cochl7TqyBDrkwFu+IUy+Mdte21Cq
+ UEdpH3BxqORr8QTjZWKBH+C72a5d4RxtbWgR8+MVS0gwpRsweKHGqN+tzxrLLquH8GBi
+ fhsPc7Frx5w/QdacIEYMhiMXy0MUijUb4xl6CErShlbzRM+egMXo2hbb58XOu2RCjRqb
+ +9JkGqLDKdkYj+Wwe9qp6EMmHIRfwC1X/jfth8lSdlIXMNyNkytWy0waJTFej5XNabWt
+ yJ/ndkwefKXwTbA4Wq21EsQbR2fAPWO0H6EcfAg0TgloNr3gkY9I1umaIqHvCjBvZurg
+ O95g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787848322; x=1788453122;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=c2oxALRqjk+G+OZunhaXWZu2z4aYlpbgEsVBKKhFO8o=;
- b=KmEXJFF2zvDzxeEOIzT5H1olajidSmtpPRZO5eRCFwTSM+7gcyHgDAwyimUApg08qC
- UKW8bGhU2fRUbzAr3d57Z4PhGf915yC/2CBmeXSgFLaNEeCREqzkfMgCWAy0/nZBMIRL
- jM77MQTHAgUXuwe7qeTpglZe9Mp6ukagnJ7DIvlI767aEguPUMF2P2y/hPFsBLysIBVN
- T0YqMy+Z+jVkpuNO7/LdDRZsiJ3fmiv8t+S++OT/RNChfcdDlGypomlylWJYgHSsxcGt
- OB6vOlB1nttc50/o3paNEwkARW6Y0dzrmOfMSRAMT27Vmr8nYnvxncmE/bYZX0eObVuu
- PbiQ==
-X-Gm-Message-State: AFuF++luubZl4tzxhVzwIFA3tyHgBS5rtsXfaNcSx7ryxvMseZbvVead
- HiIVQzZB2mQKYVQOj3bEHk/IXG0mFM8AzfR2n+eNpe8XUBh7v/QwUus3LuUQgPN1XClUP+aWBdF
- xEJbRBySxJ4RAzWwYOy6wku3Hw+e/9mg=
-X-Gm-Gg: AR+sD13VnJEy29wEE+ZuolnBm10xIxf4jmKxMtucomwBY4lDqMieqb/JAUKCtmRnj/x
- tiW/Hb8nfDMZFOON+o7m1reF0rbJ9CsEaurQTZsLYp3LDBMPFHgNKzoHd+MZ8XW0ESMwXEUasxK
- Koa+zwcRqZ6LDAw8TJPvgaI9eApgereh70E72+OmI6tAAYmpNTeRTpnStuvWZ3gNykaRJDKEHwl
- FsG4sj1qqs4t97nkyUADR5EKoQJb6MQvnnN02pnYG397WiR6anA6WMduye0AMxja2ss7W6IJ0OQ
- PoH0KEoUo4aTGrCVlhN0cfXe+mzOcR6JKhx3C5RwUp/RMd+NlvaCOLONkkOB/nCiMnylIdNpU+x
- f
-X-Received: by 2002:a17:902:ce88:b0:2c9:c952:6e9 with SMTP id
- d9443c01a7336-2d74dca2281mr3015885ad.2.1787848322167; Thu, 27 Aug 2026
- 09:32:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787848336; x=1788453136;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PpzExICWWXrFjUHddg2HT7F1Pum8dEAU0sEI0oHCL/0=;
+ b=EZMDrD2+PAPm/WBNtIQyimQDoNNUXrC8XroKY59HrzACEJwll/VDMgH6xh2gd1vhAB
+ c07o9FWORv+mF9EpG7yKFnf7LQl2pQbfVm29LxyhCNhdbYgz0u7+SdoMxX9jE9f5Fxoo
+ 5Ihman1NIhRXTH++MraGWYgJZ9mvLt4kRQa3Soum+TTTystgWrOy0x9AM07rcXdlyhNe
+ U+sAM6cdLVVhgZ32xwniUDLAdt4RlURkZi6r+CjBPk2a5UUMpEVUuCVdtojFxRlid6ZU
+ lBMtftccJ2wmIxQwzQAHCAYC6mTG8PlJWEfxbmVDQ47T33kySUpsNejOi8FC3uX98TLK
+ cpHg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrcA3jHgnLusXC0bIGtMbP6d1SjbOfZgDCtLLj7AenEkfuRr8aZEZpbxg2M2E3a+nyxIaBR+moDOmjG@nongnu.org
+X-Gm-Message-State: AFuF++lczJO34INGlT0HjhwmQ79OalG6gc9CcliclpVlOQMhk2uCkRc+
+ vDoiNCkVg+N2i5A3D+09U0q5hLZI4uDsvW89RUEZ/Ah9xwuZhj2IyNitmKdVTGzCGXY6yJZij5C
+ r6TZciCoxL3R+xYnGqcU4GTN+UIgGh+CjRPfWrkuOWXT2wX9SVXmdLHF1Cg==
+X-Gm-Gg: AR+sD13dmIk3X2H8bScXmQTmhVhIbuOP9TpTx2kkRjbAvbUUKpmXbYw1TiSDHEH+AY7
+ paIDIrN8oYCzyhBsNQDMmjKfFO6gSbxlB1qLvq4aS5rTIx89EBDSk2Rck3I9n+XqikdHmSVc4AZ
+ sszPRrAAa1i+9WFjtBw9FQAFBzDLXU4zJ5lTtR1T+EicpLZ9tLi4um1Ibwt3i5huoe/fPEeUxk5
+ jBpGnTcOok/d46aApAvB4/k1J6zZV6JSOZ2tL5+b26eQUGJ8sT7spASSXBXyw0o5S7omvr2bqsd
+ mVKO13ZVxxZg4bFTs+rSCFtm3NmVJMEFjNk3bpqHok8Edo06Mvt3JKVslo9JGy0MiPhzh7l40z8
+ L1+0gu3qLlEdVhcxqRmB62xcEpXmJaqRuYoxL1ZSq9o8GwtYaRhgquoNzTSUBgFfOIBmA
+X-Received: by 2002:a17:90b:3c08:b0:38e:485c:ebd3 with SMTP id
+ 98e67ed59e1d1-396d0f9ad1fmr754132a91.15.1787848336229; 
+ Thu, 27 Aug 2026 09:32:16 -0700 (PDT)
+X-Received: by 2002:a17:90b:3c08:b0:38e:485c:ebd3 with SMTP id
+ 98e67ed59e1d1-396d0f9ad1fmr753963a91.15.1787848335612; 
+ Thu, 27 Aug 2026 09:32:15 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-141a9035ff1sm16751413c88.11.2026.08.27.09.32.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Aug 2026 09:32:14 -0700 (PDT)
+Message-ID: <9e36f8a0-5363-4ce2-accf-62ccf3602344@oss.qualcomm.com>
+Date: Thu, 27 Aug 2026 09:32:11 -0700
 MIME-Version: 1.0
-References: <20260827154355.3346449-1-marcandre.lureau@redhat.com>
- <877blb5ysl.fsf@draig.linaro.org>
-In-Reply-To: <877blb5ysl.fsf@draig.linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 27 Aug 2026 20:31:49 +0400
-X-Gm-Features: AcwNN1VkK5_4_MHOmV_nipMvIqwqgTOiWI9W3j55KS3XLNxUhSbulWdI40qYLDg
-Message-ID: <CAJ+F1CJ-tFV4Yc8Gvp7huyQjLZJW5FE5fKb4QEqf+wSB8DNA-Q@mail.gmail.com>
-Subject: Re: [PATCH] virtio-gpu/virgl: free BHs and timers on renderer reset
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, akihiko.odaki@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+References: <20260823150731.896-1-luoyonggang@gmail.com>
+ <ao7c-FiawF9sMCGj@redhat.com>
+ <b2b1d77e-c3e3-4aad-87d2-f5d4834abd1a@oss.qualcomm.com>
+ <apAG8JQTnQxRkfip@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <apAG8JQTnQxRkfip@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDEzOSBTYWx0ZWRfX24Kpq914aby3
+ LB1vt0sFihL/k/3lijsRG1JAxOCYcYooAxqyV048Ad+2lXvgbf1GVzUfbqnKFRBU0Z+UPWVoWKw
+ jxq7fhXvPPSeGQIrCqWMe0tC6YZPc+46cwc6pXYjbSDkusnRf7YYzyBGsPd3Gc8QnT0/9P5/k5+
+ q1s5SHWt2Il1pLo6B0iqI0OrmBbHiwLKfkzvGrfjJce81mleN5COca1CoiMKzQnx0QdUwDPxD3P
+ k4fKKV0axHIbMTdw8o+9ubKnyOARkrall9h8xjTw5LUEdWjlM296zxPP87PmtwtxLyagXNTfunw
+ ytiVfSmmnXyhnWkk47fPObQ/nat2vfilMQ6wPkiAUZ3Tzq1kR4cwA1DcOlua2J546UAlYHtf5Ic
+ 7H4wSaGqMahu/lZZQEEBW32eFYGUMCTYxBL3FWRWXw60mQr7/oir7LXeXp3YB7rSZpWCBhEQ8GO
+ OY7T9+ebYpMqej0T/SA==
+X-Proofpoint-GUID: G76vgR_qM-a5UbDzDx1vqQnphQXgetjy
+X-Authority-Analysis: v=2.4 cv=C+3ZDwP+ c=1 sm=1 tr=0 ts=6a906691 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=PWUnpSKA2arHrWdFqVoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-ORIG-GUID: G76vgR_qM-a5UbDzDx1vqQnphQXgetjy
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDEzOSBTYWx0ZWRfXz/BgPZ75S38/
+ hDTtvt/u4Am/gU+JfD7LCodX5tpqdBGCqUKt+ssPiJdCb36VWiXIUuuZaIGdBHvEsy6qilFJ3+c
+ jpLDZOmyTl3hsTaPKhYBaFatoSsY9b4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-27_07,2026-08-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 suspectscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270139
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,66 +187,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 8/27/2026 2:44 AM, Daniel P. Berrangé wrote:
+> On Wed, Aug 26, 2026 at 11:35:11AM -0700, Pierrick Bouvier wrote:
+>> Seems like the Genius.Artist. in the bottle just need to escape, and you
+>> can send us a nice series doing all this. Meanwhile, I'll try to find a
+>> carpet, a monkey, a princess and a suit to be the next Aladdin.
+> 
+> This kind of comment is not productive and disrepectful to the time
+> reviewers in invest in looking at the proposed patches. Please stop
+> this.
+>
 
-On Thu, Aug 27, 2026 at 8:11=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> marcandre.lureau@redhat.com writes:
->
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > virtio_gpu_virgl_reset() does not free the bottom halves or timers
-> > allocated by the previous virtio_gpu_virgl_init() call. A subsequent
-> > virtio_gpu_virgl_init() overwrites the old pointers, leaking the
-> > previous allocations.
-> >
-> > Fixes: bd9258917fbf ("virtio-gpu: Destroy virgl resources on virtio-gpu=
- reset")
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  hw/display/virtio-gpu-virgl.c | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
-l.c
-> > index 0b79aef8d1f5..8bf6417c6514 100644
-> > --- a/hw/display/virtio-gpu-virgl.c
-> > +++ b/hw/display/virtio-gpu-virgl.c
-> > @@ -1425,6 +1425,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
-> >
-> >  static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
-> >  {
-> > +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> >      struct virtio_gpu_simple_resource *res, *tmp;
-> >
-> >      /*
-> > @@ -1443,6 +1444,11 @@ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
-> >
-> >      virtio_gpu_virgl_reset_async_fences(g);
-> >
-> > +    g_clear_pointer(&gl->cmdq_resume_bh, qemu_bh_delete);
-> > +    g_clear_pointer(&gl->async_fence_bh, qemu_bh_delete);
-> > +    g_clear_pointer(&gl->print_stats, timer_free);
-> > +    g_clear_pointer(&gl->fence_poll, timer_free);
-> > +
->
-> Don't we need some ptr checks in virtio_gpu_gl_device_unrealize so a
-> reset followed by an unplug doesn't causes segs chasing now NULL
-> pointers?
+The only person wasting everyone's time here is YOU.
+There is not a single person who came on any thread to say "I agree with
+you Daniel", while several posted or commented they were ok with the
+approach here.
 
-Good point, actually we should be safe, since render_state < RS_INITED.
+Project is QEMU, not Daniel's EMU.
 
-But those qemu_bh_delete().. can we make it safe to call with NULL?
-timer_free() was fixed already.
+Whether or not you like my joke above does not matter, just focus on the
+first sentence of it. Send a series implementing your view instead of
+long emails "I said so" on other people series. And go back to the lamp
+until it's ready.
 
->
->
-> >      return true;
-> >  }
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
+> With regards,
+> Daniel
+
+Regards,
+Pierrick
 
