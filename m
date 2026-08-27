@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5355C61DBD
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 01:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF33C61DBE
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 01:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzPEC-00025W-JY; Wed, 26 Aug 2026 21:48:28 -0400
+	id 1wzPED-00025u-B5; Wed, 26 Aug 2026 21:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wzPEA-00024z-2y
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:26 -0400
+ id 1wzPEB-00025H-8f
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:27 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wzPE7-0007pR-KU
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:25 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wzPE8-0007pO-5c
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:27 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx+9Fil49qg4YFAA--.15590S3;
+ by gateway (Coremail) with SMTP id _____8DxTtNil49qgIYFAA--.15336S3;
  Thu, 27 Aug 2026 09:48:18 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx+c1dl49q1KwTAA--.16714S5;
- Thu, 27 Aug 2026 09:48:18 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx+c1dl49q1KwTAA--.16714S4;
+ Thu, 27 Aug 2026 09:48:17 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Bibo Mao <maobibo@loongson.cn>,
- "Andrew S . Rightenburg" <andrew@rail5.org>, Song Gao <17746591750@163.com>
-Subject: [PULL 3/3] target/loongarch: Fix SWI interrupt delivery via CSR_ESTAT
-Date: Thu, 27 Aug 2026 09:28:11 +0800
-Message-Id: <20260827012811.1008381-4-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 2/3] hw/loongarch/virt: Add bootargs and initrd to device-tree
+Date: Thu, 27 Aug 2026 09:28:10 +0800
+Message-Id: <20260827012811.1008381-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260827012811.1008381-1-gaosong@loongson.cn>
 References: <20260827012811.1008381-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx+c1dl49q1KwTAA--.16714S5
+X-CM-TRANSID: qMiowJCx+c1dl49q1KwTAA--.16714S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,111 +66,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-In TCG mode, helper_csrwr_estat() updates CSR.ESTAT.IS[1:0] (SWI0/SWI1)
-when the guest writes CSR_ESTAT, but it did not update the CPU interrupt
-request state. As a result, software interrupts could be observed as pending
-in CSR.ESTAT while no interrupt exception was taken.
+Add bootarg and initrd information in fdt tree.
 
-Update CPU_INTERRUPT_HARD after modifying CSR_ESTAT, matching the behavior of
-loongarch_cpu_set_irq(). The helper runs without the Big QEMU Lock (BQL), so
-take the BQL while calling cpu_interrupt().
-
-Fixes: 5b1dedfe848b ("target/loongarch: Add LoongArch CSR instruction")
-Reported-by: Andrew S. Rightenburg <andrew@rail5.org>
-Signed-off-by: Andrew S. Rightenburg <andrew@rail5.org>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by:  Song Gao <17746591750@163.com>
-Message-ID: <20260806120315.1059413-1-maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20260807070029.1171348-3-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/cpu.c            | 26 ++++++++++++++++++++------
- target/loongarch/internals.h      |  1 +
- target/loongarch/tcg/csr_helper.c | 10 ++++++++++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ hw/loongarch/virt-fdt-build.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index bd819247c7..84a130956d 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -58,12 +58,29 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
- #ifndef CONFIG_USER_ONLY
- #include "hw/loongarch/virt.h"
- 
-+void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old)
-+{
-+    CPULoongArchState *env = &cpu->env;
-+    CPUState *cs = CPU(cpu);
-+    CPUSysState *sys = env_sys(env);
-+
-+    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
-+        if (!FIELD_EX64(old, CSR_ESTAT, IS)) {
-+            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-+        }
-+    } else {
-+        if (FIELD_EX64(old, CSR_ESTAT, IS)) {
-+            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-+        }
-+    }
-+}
-+
- void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+index 6c06b36fca..c6f5d022c5 100644
+--- a/hw/loongarch/virt-fdt-build.c
++++ b/hw/loongarch/virt-fdt-build.c
+@@ -25,6 +25,7 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
  {
-     LoongArchCPU *cpu = opaque;
-     CPULoongArchState *env = &cpu->env;
--    CPUState *cs = CPU(cpu);
-     CPUSysState *sys = env_sys(env);
-+    uint64_t old;
+     MachineState *ms = MACHINE(lvms);
+     uint8_t rng_seed[32];
++    int ret;
  
-     if (irq < 0 || irq >= N_IRQS) {
-         return;
-@@ -72,12 +89,9 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-     if (kvm_enabled()) {
-         kvm_loongarch_set_interrupt(cpu, irq, level);
-     } else if (tcg_enabled()) {
-+        old = sys->CSR_ESTAT;
-         sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
--        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
--            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
--        } else {
--            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
--        }
-+        loongarch_cpu_update_irq(cpu, old);
-     }
- }
+     ms->fdt = create_device_tree(&lvms->fdt_size);
+     if (!ms->fdt) {
+@@ -39,6 +40,32 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+     qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
  
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index e01dbed40f..0b670f9466 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -31,6 +31,7 @@ void restore_fp_status(CPULoongArchState *env);
- #ifndef CONFIG_USER_ONLY
- extern const VMStateDescription vmstate_loongarch_cpu;
- 
-+void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
- 
- void loongarch_constant_timer_cb(void *opaque);
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 7dc33bc180..155482efc6 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -106,6 +106,16 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
- 
-     /* Only IS[1:0] can be written */
-     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
-+    /*
-+     * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
-+     * Make sure the CPU interrupt request state tracks the pending bits,
-+     * matching the behavior of loongarch_cpu_set_irq().
-+     */
-+    if (sys->CSR_ESTAT != old_v) {
-+        bql_lock();
-+        loongarch_cpu_update_irq(env_archcpu(env), old_v);
-+        bql_unlock();
++    if (ms->kernel_cmdline && *ms->kernel_cmdline) {
++        ret = qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs",
++                                      ms->kernel_cmdline);
++        if (ret < 0) {
++            error_report("set /chosen/bootargs failed");
++            exit(1);
++        }
 +    }
- 
-     return old_v;
- }
++
++    if (lvms->bootinfo.initrd_addr) {
++        ret = qemu_fdt_setprop_cell(ms->fdt, "/chosen", "linux,initrd-start",
++                                    lvms->bootinfo.initrd_addr);
++        if (ret < 0) {
++            error_report("set /chosen/linux,initrd-start failed");
++            exit(1);
++        }
++
++        ret = qemu_fdt_setprop_cell(ms->fdt, "/chosen", "linux,initrd-end",
++                                    lvms->bootinfo.initrd_addr +
++                                    lvms->bootinfo.initrd_size);
++        if (ret < 0) {
++            error_report("set /chosen/linux,initrd-end failed");
++            exit(1);
++        }
++    }
++
+     /* Pass seed to RNG */
+     qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
+     qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
 -- 
 2.55.0
 
