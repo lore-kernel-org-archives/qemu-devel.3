@@ -4,105 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB86C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4ACFC61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 10:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzXPu-0002Qp-GR; Thu, 27 Aug 2026 06:33:06 -0400
+	id 1wzXQk-00033k-3j; Thu, 27 Aug 2026 06:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wzXPt-0002QB-22
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:33:05 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wzXPq-0005tp-Iz
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 06:33:04 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-836cbcd0a48so11840997b3.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 03:33:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787826781; cv=none;
- d=google.com; s=arc-20260327;
- b=XBwoVYbZ2j52Ozh1M4O8VfJ9yTfFRFPY5/f2SFjHXZ8lkCkioE2l88RjaJxMPi3R21
- KuX6xg/2swb2b3HRAtLozNBSj9nxZjG1gMiI2QliHGdCl/DL0+jfiglrj9unOLmpKor+
- oaK2y73ll7pyc2OkkoUEIK9gMnTa0njN0lvewh0kmmH8tvslEcNj8c/uQ7WKw+xX2Wam
- HgiTG78p75uR9cCGJWAfWSampV8JJlMvCIUwp+B9OmVN0Fs99Csgtop8/0gPIhe+Cc1r
- Bev9w5qMI7Uwfu2YLpqD0h/N/8NpmrFfvlrpHZR3fKCZtOzNGg72Ututp6uSyL6Dfl6E
- i9Jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=tTrAo6VqK52hX+0Fm7vKdbUYFoLyoSHCxnIpGUABsYQ=;
- fh=ub/zH6y+WPJijJytJEhlCd5PKbYleOIQ1GJXfRlIPlM=;
- b=C2nTjDscDljabzZuvf1bzpe6wvWZH/kBpDHirYFMw9233rUd1+GVM7SpTOG5MFPeb6
- drc8q3cyLjZubyoL5yqPwNk/YknCRIs8OqqS4CtBftVnEVXlL7IUSSXqAFJz1jv0tMTg
- jcs+cUBpobpEL4FLkHBjAfWHc0yoah1Uvvi2qgEUlK19nbCW6yGpIUo9ECHuN/8awIrP
- WR9ARcxnlCQxGlNTiIDDi0EOm8XI3kUNhfYGX6CW1Lfa6d4HZfl7c+rLo1m+yh+P4rTT
- QiT2uOxiZxRMKguRnGwYrmSh6IsgjzMLYnDttUwvqpHx9C8Bgw9Kw3q86DNRvJYBVyPe
- 7gSg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787826781; x=1788431581; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tTrAo6VqK52hX+0Fm7vKdbUYFoLyoSHCxnIpGUABsYQ=;
- b=bc6FV0pj5n0BoLSs05uc082wo3zvBaDenN1hD2punK4CPaLlbY9Zaa7WRtwpZ1t2kV
- ybDJP2vK2IwtrZULKitRwhF+cBAMgQYNQ0yrKi7mSkK5+ubhEGRvUUQ40TAxir3Gbjz4
- SIyqdpTlUad58z/0DrJSa0tERer9wWNClTJC7RJ0jRa4feH/ExotUoV85GThYZdlkFGJ
- 4rCxll/NNO0+h+oTjrZzMpWiOIDmeMZOgkYf68m6Fa4Lrp/z0amgTY/9qpNZKC1cw9Ez
- KpUIEfuGyZ4SlBblUrFB9X2nHuHg3rphtVjxbbBe2HExjKsszJD4wOgwwQ3NCfbXEUsU
- sZkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787826781; x=1788431581;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tTrAo6VqK52hX+0Fm7vKdbUYFoLyoSHCxnIpGUABsYQ=;
- b=C9iCTfhDIkyhN8imtZ0/JWF09x0ihzglhsL1hmcMA+/fCmsAZmYXdKSckk6RicW/BO
- 7vmqTO/LIe8xqN2Qa0ns6W7RUpv+Ksl2NNloPo9SNwLYsu/n7hT7zYlW+GeBD7GiHlx9
- 7nCVuOFIOVc+LpQbfXJJdc00Po/JnI8VtxHQJ2kYyuBUb25KGz/fmMd6yIzpV3eSRFd+
- SsSkAxxYHUZHzmGShuXFu4PJPnYfrq5ZLxVXWgF+nlQ+7PFu33ehe8G/leI3wmTDJppR
- GUI/NiCoN9Ba+arhpgfmYFjQK0dybaHdFJy2DDEBr81InadewvB0ztqAk6lntXwbb2JV
- Mfcw==
-X-Gm-Message-State: AFuF++lVuTppqJ9Dv1nyn8D5jj4dkRXakjduJann7KRIMYRuMTPt8rHZ
- ffbzgW1OfZJPGALTLQBY25LEcriTWaZRPQht3pjhMIjIBLZpQqHSKbGv8tpZ/lsQT+fFbF/CsKm
- POWzNFEu1hLZVbgRXLvw/Lao1DHsNBEB+AXGzon1HSg==
-X-Gm-Gg: AR+sD11iLIVMNKlLUdMpoAiZZR+yWTyoTq1s6KWVRQNq0P+wFPyxTVo9sj6qIbKE+xz
- iurFEUIIAMT2PeRKx59wvqa3n0lyqKghfBM70twTJiC6v7gpnQLsCeEOm0zny1iDQ8C0CZ7njz7
- 5KckOCXql8lmavcmkd6rtWxnV+sAqdL+OFwijH+/uuLsHFLuik1dLXhGLe0luYTd/ahx4sxJGmf
- SsVZTjjhxIJZmxMgxp0VjCNHZAaz9GreCwBgqLqfx06xgbLjNFa9xcnLTpJPpTiz7n4l5xyewov
- qnyP9XkDYLnGiDPHQRH0c2pz2eOF52jrNxPmRRlEyHe/LtEMOkWBIYSyHP97xpNg1KriO/pNctO
- HFTCigk2K31Nvk9dP76Kn7pdNweyH
-X-Received: by 2002:a05:690c:5807:b0:820:b01:9d6 with SMTP id
- 00721157ae682-8573d39f08dmr56575807b3.11.1787826780564; Thu, 27 Aug 2026
- 03:33:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1wzXQi-00033U-K5; Thu, 27 Aug 2026 06:33:56 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1wzXQg-000601-Rw; Thu, 27 Aug 2026 06:33:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Y0gYx7iZJuezmZoHXJupJMamSdHe/hQN4RFGcKYPRcYdVdSldx+OvZIv8CIRGFWyIOh2/iiGXtevfuIxV3ZBzKSaqGZKApepETMdJ0LoVmCqLoB/f5rfIdu1LPDfW+gpIkdCFBRQazlGUmzV39CVH6101E2VqNWq5A9lhP0TTmF9fopZ0y+NqO6TqD4dB2rrUpB+25dt/99OqYIMsXaoJSIYlDO7GHIQx3U/uPVRwLgqTP4ttQwbPbVMCn5patDkjZP2uID+KoJLu6p1AnOa6bPnfo79Cu9eq3mwwUWpR/VbmBPxJo2SBN0NUAt/6rAu05XV6mk4Y/Mmr9z1jXqjEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1r0RZFNGZdZOzXAKuBBkwW3DVC0jHRMcgjWiIC3UfKw=;
+ b=rk2HPorzKFuAWVtPbA0g7eHckYSnWT6i1A0BLLC2tX++uLqenLvZ6EXx4bqTcgWAxNU6D0m5ONq3YmEuD2pMNfg7xLXMOJpeK28dWY5Mb12481hyyLhteVN1eWWcT5hvbsyrtIyeFN6WH9qN8aGwG02ne7SyjxkAAtYEgqxzn17Q27SM+o2gMNbxOUmffDsYaxU2vA5axgTZ0WObFYuEzYrzdu51OaOGG/K7VE3IQOaVm4YqBY7cHFmV8V8AyT6O+NxL0IBc/PrbSrhhW+Uz7vwTWdcgkxm7IPzvZW5kgkuloACs/orgTdCZ/KbBj4T02wAGNBU5juYsurrthUaRwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1r0RZFNGZdZOzXAKuBBkwW3DVC0jHRMcgjWiIC3UfKw=;
+ b=U6BjTGisXOdhCT7hZ3zdfNfp33N0ANc5VOseXCIOTmcoiVc7bH/tviZ9AXfz9O/FFPksw9LBiwAD2SVdluMUGpkg3JcAvhSRSmfcDz+g6jIj7eeG/B4vyeg6N/4Qargv2lsB+pr87nTJryGYKLTPE7aZYluqfhvLqx38Zp5inn7YN2bh2GGn/Ifkp8yT0W+AGdH5hZiMErQh/wiVcgY7jO3baR/695gQbLt+qOWCwVABZWAOTW4jO6x8wXR9Gnv8wxpjmQjtZdioG6rdtnaAn0VSq40OwH5Ejl/u23IAttvTF0p+TZoXWtmxobYPlFFza1Od/sh2ViosdR43YMihuA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
+ by DM6PR18MB3570.namprd18.prod.outlook.com (2603:10b6:5:2ab::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.9; Thu, 27 Aug
+ 2026 10:33:49 +0000
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0360.008; Thu, 27 Aug 2026
+ 10:33:49 +0000
+Message-ID: <9ba5f4fb-2a78-4864-a0a9-7c5a803df8fc@axiado.com>
+Date: Thu, 27 Aug 2026 18:33:44 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/8] Add Axiado SoC AX3005 and EVB
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ 163wangjack@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260826074635.2850931-1-kchiu@axiado.com>
+ <a665849f-3b20-4ad3-a35b-02259e882628@oss.qualcomm.com>
+ <c15422ab-6a58-45b8-8df6-b2f54e0620cf@axiado.com>
+ <CAFEAcA_2GiDUY36TAEk3OhJfJLLDkQja-A=x9UTFGeHAP86t7g@mail.gmail.com>
+Content-Language: en-US
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+In-Reply-To: <CAFEAcA_2GiDUY36TAEk3OhJfJLLDkQja-A=x9UTFGeHAP86t7g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TPYP295CA0010.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:9::19) To SJ0PR18MB4479.namprd18.prod.outlook.com
+ (2603:10b6:a03:37f::19)
 MIME-Version: 1.0
-References: <20260825145350.3726466-1-alex.bennee@linaro.org>
-In-Reply-To: <20260825145350.3726466-1-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 27 Aug 2026 11:32:49 +0100
-X-Gm-Features: AcwNN1Vv9ig7sfqpze66zeBrYrXp7PaqpjF54_T6hNMXZ7H-_qoGjHaQYrb2tsg
-Message-ID: <CAFEAcA-fCT+A8aC7tqpwnXgK22vo_z77P4Yr0GLuNzv1ZWZh6g@mail.gmail.com>
-Subject: Re: [RFC PATCH] target/arm: re-order ARMFault_Domain check for v5/v6
- ptw
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|DM6PR18MB3570:EE_
+X-MS-Office365-Filtering-Correlation-Id: 05f48550-9f1e-4c32-f90b-08df0426ae31
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|4143699003|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: WapNMGRv7J5KqMkjjWzMEUjDxATtg/vtgYddRuUwZ4oxdzwe9kjebK0ss/MGyKZW1HJurmYVgXIOS5DsOtXLJyhs3QClaBfbqlwuALjP5I8nLdnqPZqTBvM/JF1TxhLHr5gbRJ/pD+xaRVyLpqFGZbsia0EA+YtclIQTkIUokk22HeJ+sHB7q7fvQSY0RYA2Fm/UoIHyXbFelxSB8E6Kjcr9gtKPddTMBa99qqGcJjhMkkI+bxczEJ5571pBfMWARoTKQP0CkK4JqLADiHFXXtjk+QX7/Qsrk1Ot1oh0EQC6KnJYZWGiTt9SdQ933qPZDla/oBWfbAMfnrWRUWeubGHamQac5V+YkvZPUhqd/HOZjUOb8sz+7fs2/qg527j4Ae84TkU1rR3q0z+a4Fsx3cMFICNRbW5s2XmGjlSRaUEMa5SnJYyOgLS+rDgWu3QVgGvF5nONh6ObEBQPBTnf4UXsWDXuuCTBT4fvKyotQp2GB/1CxZ6BOBADFxJ2Kk4B4Mp/SIPL1xmVnJ47BVQhIXVc+EwxCz8dHjgJ5cCcKcPl2JTbtd2U3ckzqUEZJuBzASmo4lZcEbhYHx6Xd3T9uCcJWVwhMeuFngdumRRIJ79Z6b2PUZILyrBWqYp6Vyai0Mh0igMxdFWuWwtVn2qaZdjTQpdKAd6HFY+q3HnyPGU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(4143699003)(10067099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?enV5S2dIY3NlMExTb2o2VmdQK3pyZ0JzR3ltKzltRVhNTGhMZ3dMdG5sTVRm?=
+ =?utf-8?B?Q0pGVlN6VTZlRUJBTndESzZHb3QvV2hCS21EOVhJVXJkWnl4aVVtc0hVVE90?=
+ =?utf-8?B?bUVDRnpJQ0lpOGExTjIwRWJBUkw0NzF4V1FVZDJ4TEJmYkZmQS9PSFJ0WGhI?=
+ =?utf-8?B?MXRkNTBSZUI5YWNkVkN5QXhuVWxhQTFkMEliWnJpSGlzS1BxdFB6TzV6Z0Nx?=
+ =?utf-8?B?R2kvTWs3K3Y4L0tEN2pHaDZGUXYyenVFL0k2MzJ4bVhUcXk3TC9lbUxGZ0hL?=
+ =?utf-8?B?ZzJuWXZ4UnhiT09hcXRQaVlTTGpKV1R6TEFJeU5tSWFzMUJVVE5aSUJGNHNI?=
+ =?utf-8?B?QXVTU3NZd1JpaU51aXJ0TmR5c3o1Tk9ZWDlHWDAxUTM2YlNVS0oxUzQwZmxa?=
+ =?utf-8?B?K3pMc3VtVHBoU1hBVXptLzZELzE3OUJYd2hsMTVsODdyd0dBS0FSZHZGUWph?=
+ =?utf-8?B?K1cyb01LQ0U0T256M2ROVG5maHQvVmFuQmZJMXZYQlB0RnBVVFNZMWFkZW5h?=
+ =?utf-8?B?ZVhDZFg4RldzUDh1VHB4NEZNL1UxOTg3bU1NTzdHVmNnd3I0UEJTN0FNbWJ2?=
+ =?utf-8?B?Um4zMjc5dmFJV1craHl2UXg1dUtPeXNYZUNYVEZDU2sxOFFlUERyaVN3Ry9Y?=
+ =?utf-8?B?V2hoRS9vWmMvNWxqN1hMYU5VbkswWG1XeG1tc0h6MERzYjBEYVozekZWRkxK?=
+ =?utf-8?B?YmdjOTF2eTJUdU1uai9hRWcvYjVnZmhGVkxqcTQ4ZXlIUWtsQ0NZbnRHOGZV?=
+ =?utf-8?B?dVNleHl3TWl2R1pBQUNMRy9NV2Q2TXJQMDRqUlIrV1VCbEkrWHNkRU5HeGRG?=
+ =?utf-8?B?NVhMdUZEVWxRNXhOSnR0N0tWdUllYkZraDBDcWh3RGo0aTZlU3RqcTA5ZzVQ?=
+ =?utf-8?B?dkE0cWsxUnV6Kzh0MHFwbzlhdEpqa0M5VGdDQjFnaDl0VGM0Sm14Vk52R0JJ?=
+ =?utf-8?B?eVRtUEdNVlZQU1dsbWNnNEVsQzk5Y05DZlF2UEJoQ3NtT1VrRm1kRmVYM0hk?=
+ =?utf-8?B?U1RDQXF1U1BNOTBReVVDRDZTOHZzcXVZZ1BEV3YxOUlCVThsVUZjSUdpWUJl?=
+ =?utf-8?B?S1hkeFlOa2w3VWdGSDlXZDkxUTQ1RXhIV0xsQ2hpS0Z2TnQxQW1kM085QWJK?=
+ =?utf-8?B?aGF4bFQ5cndCT2hQWWJsYW4xbzZOZVRhSVV3Q3NVTmVuY2d6cUF0TGc3RFhz?=
+ =?utf-8?B?MGI3QkUxbkRYMVg3b1NKNTRRWXVNbndOWVZ6bC9sN3FhdmlnUitRem9iR1BT?=
+ =?utf-8?B?ekdFcHVkSm1TSkdsM2ZlYS8yRzZIT2JlOG9XN2hVV0dzUDZBRmplWmxmcHlT?=
+ =?utf-8?B?SDZkVTBScGNHZHgyZk1xdHNFUTNnRkowZitZMzNnNUVpS0JQRDNBTmF4TE52?=
+ =?utf-8?B?Y2gxbUgwN01ZZUQrRFNZWi9JT1dqUVpIZ0dtMWhIbVJyN1NoL09oNURhT0ZN?=
+ =?utf-8?B?QXYzQ0cySlVabHIzT2g4SEtIT0I5amlkODdsNnlGTEpxNUZsMTNDMW5Kdk5s?=
+ =?utf-8?B?cjVYaUFvYTJTSERla0FRcmMwaVUxL1l3TFJGM1BTWmt1NTluSnFFenhGaEYy?=
+ =?utf-8?B?alptdXhOb1R4bUc1VHR3eWNlSWJ3RHUyejd0Z2pVYm92QVBHcVVzSG1TVlV6?=
+ =?utf-8?B?b0tVWWdnd3kxbFNoZXR5MStDazVMSlJvVTJDZ1RSKzRYdUJjUmFKUGVaMlRx?=
+ =?utf-8?B?WkRXY0pGKzJkMkI3R3BlV3RVMTk2bk9XNW1KZXFzMVc3bWErMkJvaGUraDdZ?=
+ =?utf-8?B?eFh6R1l6b1dKWGtPOVk2Zm84QmdPeUhsNXphU2tHdzh4L0JqZTNzNDZTQWk3?=
+ =?utf-8?B?am5ieGQyRjRGNi91OFk4QXFJRTQ3aFVSWWgxMTdBSklYeEpZMGdweGZpd1Jp?=
+ =?utf-8?B?VUxDT1NUZG5MK2lBZU1uR2lUam9MMTc4QUQzWTN3eXVoVHhtdnZTaTNHTVB6?=
+ =?utf-8?B?NDE3RXBVVHBIMUFQUVdLMGRUUHlOVzJiNVdiOEYwa2g0WDU4TWV4Sm95QnYw?=
+ =?utf-8?B?VmVDT0Z6am92ZjN1a1gyRmovckhjN2cvVkE2TVZlTTM3a3lwOS8zeENJRjNF?=
+ =?utf-8?B?bjFTTWJVK0lSYlVSVTlVUmZKb1Fhc0kzSzVjQy9LZEpaYWpxYit1R1c4QmRs?=
+ =?utf-8?B?UlAxTkRvRUM5YWovVVllQUpCeUVkcFpjSUtNcUthT3FXNjdKWnpEQklpWk4w?=
+ =?utf-8?B?OXcwdDZwaU55NE1mb2NnWi8rK1JaeHVPYXVKRW5rOFhoWFJvNERBeEZZNEV0?=
+ =?utf-8?B?REs5QnMwTFRvTFFxWFRha2pJdVBjTENJTllUZlIwUnNtMndRS1F5Wm5pTWZR?=
+ =?utf-8?B?WDMxNTB5cmsvTlh3eDRVVlR5djJTM3QvN29sYVJiOW9XNlhQeXZrQT09?=
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 05f48550-9f1e-4c32-f90b-08df0426ae31
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2026 10:33:49.0780 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3OdMibO4jShU40SRy4ufbgLb4ijlBgcf/kQLrsdqxbr1kZcryiZNmwLm1Zg56QDSQ9Nl/pPbwTumR7TOnJ8TsQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR18MB3570
+Received-SPF: pass client-ip=2a01:111:f403:c111::5;
+ envelope-from=kchiu@axiado.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,175 +152,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Aug 2026 at 15:53, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+
+Peter Maydell 於 2026/8/27 下午 04:43 寫道:
+> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
 >
-> In the Armv7 ARM (DDI0406C) any walk of the short descriptor
-> table (TranslationTableWalkSD()) which has a second stage has the
-> opportunity to fault with a translation fault in
-> SecondStageTranslate() before a potential domain checking fault.
 >
-> Moving the check down and lightly re-factoring setting level =3D 2 we
-> can more closely match the architectural behaviour.
+> On Thu, 27 Aug 2026 at 07:39, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+>> Hi
+>>
+>> Philippe Mathieu-Daudé 於 2026/8/26 下午 04:18 寫道:
+>>> Could you add a functional test? See:
+>>>
+>>> $ git grep -l obmc tests
+>>> tests/functional/arm/test_aspeed_anacapa.py
+>>> tests/functional/arm/test_aspeed_ast2500_sdk.py
+>>> tests/functional/arm/test_aspeed_ast2500_sdk_515.py
+>>> tests/functional/arm/test_aspeed_bletchley.py
+>>> tests/functional/arm/test_aspeed_catalina.py
+>>> tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+>>> tests/functional/arm/test_aspeed_palmetto.py
+>>> tests/functional/arm/test_aspeed_romulus.py
+>>> tests/functional/arm/test_aspeed_witherspoon.py
+>>> tests/functional/arm/test_quanta_gsj.py
+>>>
+>> Please allow me to add functional test cases in another patch set
+>> because we did not release firmware package on our Github for
+>> downloading yet.
+> Can we get a functional test for the machine model you've
+> already landed before we add more machines in this family, please?
 >
-> Reported-by: Karl Mehltretter (@kmehltretter)
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4233
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> ---
-> I've only checked the get_phys_addr_v6 change against the Arm ARM but
-> I've fairly confident the v5 one is the same. I've bundled everything
-> together for review but this patch can't be merged as is because it
-> does too much in one commit. Some open questions:
->
->   - should we properly factor out a boot_v6.S and share with other tests
+> -- PMM
 
-I don't care, but would prefer the test case in its own commit
-rather than in the same commit as the bugfix.
+Let me try to release a firmware package for QEMU first then I can 
+create a functional test for Ax3000/Ax3005 machines with it
 
->   - could the ptw code better match the psuedocode (e.g. case l1desc<1:0>=
-)
->   - which Arm ARM should be checked for get_phys_addr_v5
+B.R.
 
-DDI0100E, which corresponds to the 2nd edition printed book version
-(which covers v5TE). I happen to own a copy of that, which is what
-I've used for the review of the v5 parts below.
+Howard
 
-> ---
->  target/arm/ptw.c                              |  31 ++--
->  tests/tcg/arm/system/test-domainfault.c       | 148 ++++++++++++++++++
->  tests/tcg/arm/Makefile.softmmu-target         |  23 ++-
->  tests/tcg/arm/system/test-domainfault-start.S |  62 ++++++++
->  tests/tcg/arm/system/test-domainfault.ld      |  17 ++
->  5 files changed, 264 insertions(+), 17 deletions(-)
->  create mode 100644 tests/tcg/arm/system/test-domainfault.c
->  create mode 100644 tests/tcg/arm/system/test-domainfault-start.S
->  create mode 100644 tests/tcg/arm/system/test-domainfault.ld
->
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index a29de0385f4..ddfbb79beb6 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -1172,19 +1172,13 @@ static bool get_phys_addr_v5(CPUARMState *env, S1=
-Translate *ptw,
->          fi->type =3D ARMFault_Translation;
->          goto do_fault;
->      }
-> -    if (type !=3D 2) {
-> -        level =3D 2;
-> -    }
-> -    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
-> -        fi->type =3D ARMFault_Domain;
-> -        goto do_fault;
-> -    }
->      if (type =3D=3D 2) {
->          /* 1Mb section.  */
->          phys_addr =3D (desc & 0xfff00000) | (address & 0x000fffff);
->          ap =3D (desc >> 10) & 3;
->          result->f.lg_page_size =3D 20; /* 1MB */
->      } else {
-> +        level =3D 2;
->          /* Lookup l2 entry.  */
->          if (type =3D=3D 1) {
->              /* Coarse pagetable.  */
-> @@ -1239,6 +1233,10 @@ static bool get_phys_addr_v5(CPUARMState *env, S1T=
-ranslate *ptw,
->              g_assert_not_reached();
->          }
->      }
-> +    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
-> +        fi->type =3D ARMFault_Domain;
-> +        goto do_fault;
-> +    }
->      result->f.prot =3D ap_to_rw_prot(env, ptw->in_mmu_idx, ap, domain_pr=
-ot);
->      result->f.prot |=3D result->f.prot ? PAGE_EXEC : 0;
->      if (ptw->in_prot_check & ~result->f.prot) {
-
-This matches Table 3-5 in the v5 Arm ARM (ARM DDI 0100E), which
-lists the priority encoding of different MMU faults. Domain faults
-are lower priority than Translation faults but higher priority
-than Permission faults. It also matches the flowchart in Figure
-3-9, which does the domain check only after loading the second
-level descriptor.
-
-> @@ -1254,6 +1252,7 @@ do_fault:
->      return false;
->  }
->
-> +/* See TranslationTableWalkSD() in Armv7 ARM (DDI0406C) */
-
-...but note that the domain and permission checks we do in this function
-are handled in the pseudocode in its caller TranslateAddressV().
-
->  static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
->                               uint32_t address, MMUAccessType access_type=
-,
->                               GetPhysAddrResult *result, ARMMMUFaultInfo =
-*fi)
-> @@ -1288,6 +1287,7 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Tr=
-anslate *ptw,
->      if (fi->type !=3D ARMFault_None) {
->          goto do_fault;
->      }
-> +    /* l1desc<1:0> */
-
-I think personally I wouldn't bother with this comment.
-
->      type =3D (desc & 3);
->      if (type =3D=3D 0 || (type =3D=3D 3 && !cpu_isar_feature(aa32_pxn, c=
-pu))) {
->          /* Section translation fault, or attempt to use the encoding
-> @@ -1305,15 +1305,6 @@ static bool get_phys_addr_v6(CPUARMState *env, S1T=
-ranslate *ptw,
->      } else {
->          dacr =3D env->cp15.dacr_s;
->      }
-> -    if (type =3D=3D 1) {
-> -        level =3D 2;
-> -    }
-> -    domain_prot =3D (dacr >> (domain * 2)) & 3;
-> -    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
-> -        /* Section or Page domain fault */
-> -        fi->type =3D ARMFault_Domain;
-> -        goto do_fault;
-> -    }
->      if (type !=3D 1) {
->          if (desc & (1 << 18)) {
->              /* Supersection.  */
-> @@ -1331,6 +1322,7 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Tr=
-anslate *ptw,
->          pxn =3D desc & 1;
->          ns =3D extract32(desc, 19, 1);
->      } else {
-> +        level =3D 2;
->          if (cpu_isar_feature(aa32_pxn, cpu)) {
->              pxn =3D (desc >> 2) & 1;
->          }
-> @@ -1373,6 +1365,13 @@ static bool get_phys_addr_v6(CPUARMState *env, S1T=
-ranslate *ptw,
->           */
->          out_space =3D ARMSS_NonSecure;
->      }
-> +    /* Extract from DACR indexed by domain */
-> +    domain_prot =3D (dacr >> (domain * 2)) & 3;
-> +    if (domain_prot =3D=3D 0 || domain_prot =3D=3D 2) {
-> +        /* Section or Page domain fault */
-> +        fi->type =3D ARMFault_Domain;
-> +        goto do_fault;
-> +    }
->      if (domain_prot =3D=3D 3) {
->          result->f.prot =3D PAGE_READ | PAGE_WRITE | PAGE_EXEC;
->      } else {
-
-This one is trickier because v6 introduced the AccessFlag bit and
-associated fault. If we're taking an AccessFlag fault that has to
-be taken before the domain fault (the pseudocode does it inside
-TranslationTableWalkSD()). So for us the place where we check
-domain_prot needs to go somewhere after the AccessFlag fault check
-but before the Permission fault check. At the moment you have it
-before the AccessFlag check.
-
-thanks
--- PMM
 
