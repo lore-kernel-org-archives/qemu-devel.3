@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D56FC61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 03:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5052AC61DC6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 04:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzQvl-0002cv-SF; Wed, 26 Aug 2026 23:37:33 -0400
+	id 1wzRXF-00077K-NK; Thu, 27 Aug 2026 00:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wzQvj-0002cb-3k
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 23:37:32 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wzQvg-0001Ug-Vp
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 23:37:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787801849; x=1819337849;
- h=message-id:date:mime-version:subject:to:references:from:
- in-reply-to:content-transfer-encoding;
- bh=gyqUU24Mn6kBuYubFJLQagdydRCgXNqdCn22v1ZF1Nc=;
- b=HZIs6JIN1uAJ1pqW4mPMBdkv3JOxICPuRV0PMYCZ+7En7vLW0JPn/nCC
- uLVTAOOFW55Mb8fAAoxzKQ1ngq3nh2RS+bI9sr5cQuadTQ1zn3mf/Y8he
- lsPOMYzCQxaPw2ROoYmiBmF3YWQzanoYRrSz56vwgJzR3sbCvLZEqlBZ2
- sky50ldkOUc0jGunspdThp4f4XnRKJe3ASlgexlGQkbmtvYE8NLSdXPLT
- Fd9050McGyqunl8/mgnMWVlRCh6a0ZQBjeLzaJlMFqmY3lKGcsyMJaeTu
- wz7PaFVLBk/Y4WcJHKfgRkM92Ey+5qoNYE7bT1bdtE346iXbhiUS0S/Yb w==;
-X-CSE-ConnectionGUID: /Nigsm1UQ1qrnIQ0TXtoZw==
-X-CSE-MsgGUID: 9WIXUVW2QP+1Kq8RzCRFEA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11887"; a="98893949"
-X-IronPort-AV: E=Sophos;i="6.25,245,1779174000"; d="scan'208";a="98893949"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2026 20:37:24 -0700
-X-CSE-ConnectionGUID: Kl6ndKtfRqOTN+hJOoqnlw==
-X-CSE-MsgGUID: gU4nVxTqSRGcTA9lzHHhnQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,245,1779174000"; d="scan'208";a="261613360"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.119])
- ([10.124.240.119])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2026 20:37:23 -0700
-Message-ID: <31bbab79-4ebd-44d4-879f-7bc8baca6d34@intel.com>
-Date: Thu, 27 Aug 2026 11:37:20 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzRXD-00075b-Fm
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:16:15 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzRXB-0006RY-Cl
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:16:15 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-38e041ea211so259025a91.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:16:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787804172; x=1788408972; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Mqdk3c9HbzgZWSmcwYY8mMSQqF5s5IhpPUD59+J81rc=;
+ b=euGqAjUFXHVeb+oA6rjj27zS3bNC4GP0OYkRQ6DZnB/aVQMog6VVNEFwWKFfx9a1zU
+ 68O3lsC3q/PLsRvwc119dN6kBjUVFfIQulGpuf6uiUSoOnxokhGottlL407GXpGnS+Er
+ tVzjyP3RTyy5d5vaXb7vMp+kYHvO13E3GMHqJKCWQTX/OwOerO8OS5SO8UIoeaLU66X1
+ pmnYWRZkIjlUOGQJFE8+UWNMgmBfdNef9M6yER04NyJpsYFoDx/+Sio47kh1m4wqaYu8
+ d/MeSzqSZKGTD95qJExhLloSxeiBLR7mZJ/LytvDSBrMK6HHUZoF+RghbD3uugr5uS4r
+ oLPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787804172; x=1788408972;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Mqdk3c9HbzgZWSmcwYY8mMSQqF5s5IhpPUD59+J81rc=;
+ b=PHm2VoI7XyacA6cpIjQCX/DuSe8LIqbtvsy4aEz2n4liDic0r3m6Ea4fAVEvQzIhFZ
+ dMcVMHbO7gpY3TEIs+LRHaTIxpuigr2EBHt1RMttoqvIVEzWCOKPtjIQmpP0tD6can43
+ 0gRl3IcI4ZEZmNYQXCIcoNyYBkCz9VuvkQSjCaCGI3GyIZ7G+nOS3CXM4oSIQ2bYMVWz
+ 8r1aFhXZW9F+Hwi1gvXYNEyu2xcW9x6XIfQetIcAJnNpcweDP8PFkhFU0ySyMpxXOhYk
+ wGKNgbbWM+73+hnYX9MluuG8pkCrT9upxJ3syxeb9IggbHq7AzxzBpOFiHs7U3jfVIdB
+ dNUw==
+X-Gm-Message-State: AFuF++lP5OhY0QDMX6ThzgBT7CYojW2/fwsqZeD17+LeomH0h0uCOELh
+ lua2VAr+XrUxRScRwvvYUMBoqyiCp583niTh0fKg2g6ccyayfw8MqQGYAGGMfqW6B3Jl+FGiEAv
+ 5AzUB8rE=
+X-Gm-Gg: AR+sD13E7vqMucv6LarGmau6k4xEqUm+CInWBwk2dfAP7q4kN6VgoU9re6cqvE3LvBP
+ QMV/aafPUOBJgaeO7zHUkzzgKPLfSO3K6evUA+9Kx53JpTLQq+U4TAyqW59JKEp0nIHNpycm6wY
+ 76UxGvkUAhTGqRraPW4GCnbRnj9OScGhH5IesLlOhXxEnvEgaqlGcCDG0heHvzxokFNTTc0VwuA
+ XPnQKX+RMFzuZgaCWjIxBcH/EtzVsLcYpiMlRKWru11yo4zB8ZrwrrUkbQXMYHhOiAqThobfOrG
+ U9Y0M9l25rocDD22aexJlrp/NVIfNqE9zRQ187HZ21AH8VUhsjvsUXacYY/pB4AbYx1COZdPYzm
+ g0Vv5j0CRLI68qVp+i3E8gda68xcjHhX7Te5JKVSeqi+3yrXP/Y6KdkmTtHsH4jKmWAUF0+y9b6
+ CmWLBx3YxV98sZsL87nNlC5cGiGXXqtfjvY63iI+hcad5nkJbBVbDr7JAMvarISMEsgknUSZnMq
+ XGeZvwSIc8no17lvA==
+X-Received: by 2002:a17:90b:5107:b0:37f:fb1d:63fa with SMTP id
+ 98e67ed59e1d1-3966d9e5ecfmr25513431a91.15.1787804171995; 
+ Wed, 26 Aug 2026 21:16:11 -0700 (PDT)
+Received: from stoup (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-396b0d81682sm969597a91.7.2026.08.26.21.16.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Aug 2026 21:16:11 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, pierrick.bouvier@oss.qualcomm.com,
+ philmd@oss.qualcomm.com
+Subject: [PATCH v4 2/6] target/arm: Build cpu32.c once in system mode
+Date: Wed, 26 Aug 2026 21:15:53 -0700
+Message-ID: <20260827041557.775080-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260827041557.775080-1-richard.henderson@linaro.org>
+References: <20260827041557.775080-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/system/i386: document TDG.VP.VMCALL<GetQuote> and TD
- attestation
-To: Mikko Ylinen <mikko.ylinen@linux.intel.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250814123144.136966-1-mikko.ylinen@linux.intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250814123144.136966-1-mikko.ylinen@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.016, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,96 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Paolo
+"Move" the ifdef to meson.build rules.
 
-We missed this patch for a year now. Paolo, can you help get it merged? 
-it can be applied to the latest master cleanly.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/cpu32.c     |  5 -----
+ target/arm/tcg/meson.build | 10 +++++-----
+ 2 files changed, 5 insertions(+), 10 deletions(-)
 
-On 8/14/2025 8:31 PM, Mikko Ylinen wrote:
-> TD attestation has been supported since the handling of
-> TDG.VP.VMCALL<GetQuote> was added. However, the documentation still
-> states that TD attestation is future work.
-> 
-> Update TDX documention to match with the code and move the TD attestation
-> section up to the feature configuration section. In addition, add a link
-> to TDX Enabling Guide that gives further details on how to setup the
-> platform for attestation to work.
-> 
-> Fixes: 40da501d8989 ("i386/tdx: handle TDG.VP.VMCALL<GetQuote>")
-> Reported-by: Benny Fuhry <benny.fuhry@intel.com>
-> Signed-off-by: Mikko Ylinen <mikko.ylinen@linux.intel.com>
-> ---
->   docs/system/i386/tdx.rst | 40 ++++++++++++++++++++++++++--------------
->   1 file changed, 26 insertions(+), 14 deletions(-)
-> 
-> diff --git a/docs/system/i386/tdx.rst b/docs/system/i386/tdx.rst
-> index 8131750b64..47d8fd023f 100644
-> --- a/docs/system/i386/tdx.rst
-> +++ b/docs/system/i386/tdx.rst
-> @@ -97,6 +97,28 @@ if the fixed-1 feature is requested to be disabled explicitly. This is newly
->   added to QEMU for TDX because TDX has fixed-1 features that are forcibly enabled
->   by TDX module and VMM cannot disable them.
->   
-> +TD attestation
-> +~~~~~~~~~~~~~~
-> +
-> +In TD guest, the attestation process is used to verify the TDX guest
-> +trustworthiness to other entities before provisioning secrets to the guest.
-> +
-> +TD attestation is initiated first by calling TDG.MR.REPORT inside TD to get the
-> +REPORT. Then the REPORT data needs to be converted into a remotely verifiable
-> +TD-Quote signed by a service hosting TD-Quoting Enclave operating on the host.
-> +
-> +The guest issues TDG.VP.VMCALL<GetQuote> which is forwarded to user space by KVM.
-> +QEMU handles the request and sends the REPORT further to a Quote Generation Service
-> +(QGS) for signing. On success, a TD-Quote is returned back to the guest.
-> +
-> +To enable TD attestation, QGS destination must be configured using a
-> +"quote-generation-socket" property. Intel reference TDX QGS supports the
-> +following socket addresses: `{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}`
-> +or `{"type": "vsock", "cid":"2","port":"<portnum>"}`.
-> +
-> +See TDX Enabling Guide for details on how to provision the platform for
-> +TD attestation to work.
-> +
->   Launching a TD (TDX VM)
->   -----------------------
->   
-> @@ -112,6 +134,9 @@ split kernel-irqchip, as below:
->           -machine ...,confidential-guest-support=tdx0 \\
->           -bios OVMF.fd \\
->   
-> +Additional properties and their descriptions are documented in the QAPI
-> +schema for the 'tdx-guest' object.
-> +
->   Restrictions
->   ------------
->   
-> @@ -135,19 +160,6 @@ SEAMCALLs and corresonponding QEMU change.
->   
->   It's targeted as future work.
->   
-> -TD attestation
-> ---------------
-> -
-> -In TD guest, the attestation process is used to verify the TDX guest
-> -trustworthiness to other entities before provisioning secrets to the guest.
-> -
-> -TD attestation is initiated first by calling TDG.MR.REPORT inside TD to get the
-> -REPORT. Then the REPORT data needs to be converted into a remotely verifiable
-> -Quote by SGX Quoting Enclave (QE).
-> -
-> -It's a future work in QEMU to add support of TD attestation since it lacks
-> -support in current KVM.
-> -
->   Live Migration
->   --------------
->   
-> @@ -158,4 +170,4 @@ References
->   
->   - `TDX Homepage <https://www.intel.com/content/www/us/en/developer/articles/technical/intel-trust-domain-extensions.html>`__
->   
-> -- `SGX QE <https://github.com/intel/SGXDataCenterAttestationPrimitives/tree/master/QuoteGeneration>`__
-> +- `TDX Enabling Guide <https://cc-enabling.trustedservices.intel.com/intel-tdx-enabling-guide/01/introduction/>`__
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 34436ad6ec4..2d642ef8787 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -19,9 +19,6 @@
+ #include "cpregs.h"
+ 
+ 
+-/* CPU models. These are not needed for the AArch64 linux-user build. */
+-#if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
+-
+ static void arm926_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -756,5 +753,3 @@ static void arm_tcg_cpu_register_types(void)
+ }
+ 
+ type_init(arm_tcg_cpu_register_types)
+-
+-#endif /* !CONFIG_USER_ONLY || !TARGET_AARCH64 */
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 35e70b004d9..a3e9d55e853 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -30,10 +30,6 @@ translate32_d = [
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
+ arm_stubs_ss.add(files('stubs32.c'))
+ 
+-arm_ss.add(files(
+-  'cpu32.c',
+-))
+-
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'gengvec64.c',
+   'translate-a64.c',
+@@ -49,7 +45,10 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+ ))
+ 
+ arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
+-arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
++arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
++  'cpu-v7m.c',
++  'cpu32.c',
++))
+ 
+ arm_common_ss.add(zlib)
+ arm_common_ss.add(files(
+@@ -86,6 +85,7 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
+ ))
+ 
+ arm_common_system_ss.add(files(
++  'cpu32.c',
+   'cpregs-at.c',
+   'gicv5-cpuif.c',
+   'psci.c',
+-- 
+2.53.0
 
 
