@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D70CC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B86BC61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 22:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wziVz-0004nA-Q9; Thu, 27 Aug 2026 18:24:07 -0400
+	id 1wziVY-0003LE-Gj; Thu, 27 Aug 2026 18:23:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziVs-0004JY-1q
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:24:00 -0400
+ id 1wziVU-00039w-3V
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:37 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wziVp-0000FS-FT
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:59 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wziVS-0000Ba-74
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 18:23:35 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RJLpOF779228
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:46 GMT
+ 67RJLp6B125185
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=ckshVDk5gaa
- jI8YhxWcMEeFXmbjZB7uEPi6KziDY8QI=; b=lglI0G0ih7lqxheFuTaSPbyBEtb
- 74kP2kp6fE1n2ElR1B0DK9u5wBHhxAZ1zUM9u9a2aWr3B5cnQZCkCVhLleSmoubd
- yccDYNIWzJMpEaqz6dKhWiNVQnBmXvOzkL8mm6kj2AC7qUSvH56lZia8wlFb48Ek
- Mrkvc1Onh5SzcYp8PARK0qzKtyD435OovrOxAFNjmyDj7fuuGZhyLiMBCHJY9YwD
- /g3bygC5euIK/wXd36EbjsA5uNfycFJOFZWcdLTucqqmiAu+neXbktalse/AV74D
- SaBPgNcGAuhz6YlaqukNUZ6Bk2qb4HZGT9al9fcFX+QKOpnJhVGb5p5Jrpg==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4garee1r6y-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 8ZJ6beGopJuhtp2BrCuwv4CRH34ByzTLU4wtxP3A11c=; b=b9KnMA0de7Y0K1tc
+ qINh9o+mzx4RPGrbVRHgv/YbxsrvKuXFqGioXwgzdLYmAmzVkViF4JXCFoIYoJw5
+ cZzGG8FV9fkB6fJskg66AFSvuVoneFyB/NGkUkBIg5NGt3ZN5x414EwJtE3cjUpn
+ tWsJZsdDoA22EHZrtumoahiCdCuncahEaalv8ZhDGR3ptPmghTlIUjwcMc/LbE1i
+ 6InL0mUsuGdzbFEvNBd/pVbgTfMHPgOHx3GeSNyM203mjbG23JA8rP8gBj1xI0c5
+ SHTP0WW2094LefNSDV7BV8qJtBTGt/oYlIbAs1GFgPU4cQC1ei9+7IY0gvKUfYfM
+ gT0tPA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4game7twk3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:46 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cc640dfde3so3649425ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:23:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 22:23:32 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2cc7e86e7c5so2717915ad.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 15:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787869425; x=1788474225; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ckshVDk5gaajI8YhxWcMEeFXmbjZB7uEPi6KziDY8QI=;
- b=AoiKGQcAXhUME4phYrT1rQNZ5jDUC28otOwixbWmNKMDJR/EpHQ0mBHGjVY7C27iaV
- bY3m1Uv+lAOvft1K9cJE7LKJ+bZbpg5cWFm52p+54yhC2WelTYoF9JEE8Yc7TGiBaFdb
- rmVm0TYdTrtcAVEZ2aP+vKCBQ1SZcsJ38TEoWCPR6nt9f1bQ+vjfyXiGMDU+2H0AU1BE
- J4VwJO6AcIZGBBVJlH+/qLQAYlvgk0w683rJyt5QIWdZuPjGxSZqObRbQDNU3MDT10uK
- TjTtarz4q3SpNpM3AlWGevG269pq/glaFvgeF6j3UrVgdy6aKerge9LV/BUAsJmPt9sw
- +7Ww==
+ d=oss.qualcomm.com; s=google; t=1787869412; x=1788474212; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8ZJ6beGopJuhtp2BrCuwv4CRH34ByzTLU4wtxP3A11c=;
+ b=TwTCA30UkUWIiJVC3MLgOYrZseIm0qD8x/PqUoPfUShdhGhGh1v7Fa1aVj3aCqE3vI
+ lgp/muuFZdRBX7D33ZtvPSnY7Eb855HvCaE3uxAfR/t5l0pwV2z+mQp6oQRzGKGUgE9W
+ HsZBEu8tP4hVcQi/D8CElxyq0+E2J1rm9lrbypeseZ0vRYPH3EvEuqdY/zfHE4UhTET7
+ rO6tPBK//+bADP+sjRH2u37nw50mmrhKBiC4VBsQ5s/AbsfRUC0CvthsD3jB7SRnxK5k
+ yFg2w8ULTGMKKR4ENI8kZLe/eImqCE9r+VIeEesJ2LcBqrSWVobJOGMVnYUPiDRs4/aV
+ kG5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787869425; x=1788474225;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ckshVDk5gaajI8YhxWcMEeFXmbjZB7uEPi6KziDY8QI=;
- b=OZWIDu+SsBzBCYgQeo5IGe85qCpTuZ1T6Sd66MNA/y/z9L2SdUQUHA5yfkj7BNttGz
- 4U4TJVkVnuRD5AJt95h8C2tJdAHBDT2k2t+L/sWn4nUMYIsk/JrQNilfgkbRfEQXnEH/
- tX+a6VI+a7EN9Z+M90w97/d3sg32FLV7MLLir/ODC4MeBGeTM8V+O5IiROVZOxzIUaJx
- PbBamd+idMCvNnXuun484fdTg5BAxBTrtZdGWXcnYNqMJg7shCxc+JaDyabjfibJkOE1
- wpjphWRu7t5rhN34WohjGvjAJFpQp2sMqQ5hT67PYzjFyIktkAeXK2nBlbjEwVY0HzQ1
- AXrw==
-X-Gm-Message-State: AFuF++ko/8nuhB5YyEcWoI7HcI2451gvlzwFDxFJ1ZwKptqlrtNjPqW5
- Dz7TQdZudV0TO183bnxYI3Ca3HlxbYSNqD0M03+mBEfsmbV9xKWPR1YxDae9nCuw+buXPKu88nQ
- RP/b0gt6ja7d2/EZmJZBx/GsarK+jTUMCz92irOHOhS9VnklKEnmVjahr12lHAEnPEQ==
-X-Gm-Gg: AR+sD12B3N7r4JJewhZ0CekkDRTxBrmmA66KbitD/iK8yv4Vc6TUgpRraw95mwGrhM2
- qSaA82pYZH0HNGB6lc0eqqI1r4MA4Yfn3saGn+TBM1q16bTubYpCg+zcSj4RSPbLUI09t5qQsU3
- t3UIM2AjzPgybAlzGyQylmxPORSC1S3n4MkwlXGAu++8JrrCYIBIOJkxj0w5cZOITJUzr7Bcd8/
- qyEEP07hv9upcYF5wNZaLudmH9oHHCY3JSyE4UhcvosFFEd7czxWatdYSrLG6pGOSnIJk4fF77q
- PNb4J9wlwM5qzp/OrGW7KeBfOh4v7lKKBi/m51Z0WDfcTlqXnCThYLg61TIBd3r2NKRH5sfyBYp
- 554JPJe4YoQtSkpB0YmdXdaZgAnzTtelRQDQz4AAMAKRFZLfUl+B9rfx4CKg=
-X-Received: by 2002:a17:903:2f8b:b0:2d3:160b:c01f with SMTP id
- d9443c01a7336-2d74ddd684cmr36431055ad.6.1787869425334; 
- Thu, 27 Aug 2026 15:23:45 -0700 (PDT)
-X-Received: by 2002:a17:903:2f8b:b0:2d3:160b:c01f with SMTP id
- d9443c01a7336-2d74ddd684cmr36430285ad.6.1787869424860; 
- Thu, 27 Aug 2026 15:23:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787869412; x=1788474212;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8ZJ6beGopJuhtp2BrCuwv4CRH34ByzTLU4wtxP3A11c=;
+ b=sPHTtLBEOmZZmCA2PdmhuEBM0xb90dY0IKTaSXSmgr/RdHgLQ2ngv3noY44AQvwpDC
+ g4mzxzYgW54V0Grdb1kn/d8im04YKqM3rGwfiJHyn6gz8ag1zhmuOlnfRiwIQXNM5ekO
+ EsIKAsPJvRY8X7ng5NzR5twwOFKO8D2i+U6WC9Sgb//wTxw263QdCOOybx4ScWRUdvqc
+ Ds3do5xeC3BlloKgG4wtSymi1nl4r4/ci8uRpiz/LQtp2+rwO44HGtFl8pDpMQfV7Sui
+ kHZCj7zgfwxKED7ikp41HDic3CEA8Wl471K+FBPHCnTJkzpUrs3UR7raxDC2NePpsksx
+ T09w==
+X-Gm-Message-State: AFuF++kAWxU8fv4/X6w6WXwZpd/g6JBjEweNlyfZjJ/sN4ZS9TeBQn4u
+ eYEh7Y/GO97S+gPZ9z+NL1NKhojbKr9a4fH7DdGBv+zS9z8rAKR3KOK7Y06HwRqUpgICmsrgNJS
+ p34OrhpRCvU2vEv/quVZuApIIRYXgtHbXy5nJ5mmZ4k1MlAj9CP/mLAiN40x5+4hQfQ==
+X-Gm-Gg: AR+sD11pMz11p9UMANP6yBcMBgVYYyPgStKxXrGwNOoBL/ZtScWi4c+OSEYer/IarkN
+ MXMKfn366bwa7ppZMAEOC5P9rHnD+mbtP2fWiOZWTUbLoy+76jstj8x7ZWOC6wKsY6Lz6d3XxDd
+ /eS+GGPfMDo9kALqEORnnjgnRmpV/IYWLjvQk5pkU+1xsaJnNgomqfgg8fyLij+kD0yTNxiiDS4
+ 7pTjIUtaxxRhlIoYjecmC2/GjRutrvRO0f0uwZVS09DcEZ0E8pIb7LaOpOeyMISmMmK4XPnKdHh
+ 5p05+RxFO3KRIjRAJmP79uAzUl+u9Tj96BcBKasZHv0ulckYAuHOvJFPqJF+QS9DyMx2YwpAOiZ
+ ra+4003F0OP1dDBq5zNiNR5EQuk7eIbjZfFpF3JpBe6bdQMOHFD9LADePRow=
+X-Received: by 2002:a17:902:efd1:b0:2d6:f988:398f with SMTP id
+ d9443c01a7336-2d74df00b5amr28784395ad.12.1787869412222; 
+ Thu, 27 Aug 2026 15:23:32 -0700 (PDT)
+X-Received: by 2002:a17:902:efd1:b0:2d6:f988:398f with SMTP id
+ d9443c01a7336-2d74df00b5amr28783815ad.12.1787869411814; 
+ Thu, 27 Aug 2026 15:23:31 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d70493f729sm20776155ad.2.2026.08.27.15.23.44
+ d9443c01a7336-2d70493f729sm20776155ad.2.2026.08.27.15.23.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 15:23:44 -0700 (PDT)
+ Thu, 27 Aug 2026 15:23:31 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -101,38 +103,40 @@ Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v8 095/105] tests/tcg/xtensa: system tests
-Date: Thu, 27 Aug 2026 22:14:56 +0000
-Message-ID: <20260827221506.91574-96-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v8 088/105] tests/tcg/sh4: user tests
+Date: Thu, 27 Aug 2026 22:14:49 +0000
+Message-ID: <20260827221506.91574-89-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX6POrV4nhFg1c
- Qns2CMesfy5Rxt00HlxfjI3bCN56bDSvV+sOJTysnS94IghxzO7CKzVCd52WZJ2nbaZrxFLD0qB
- hekWL+/gW7QrchB9vMwapMRyZisxFLF6qOpoDwjfg9ATp9A71NQEZSQ5cr/qr7kaGRM8DtZf7ux
- dlCF1/KdJ3xRh9E3F4BQnbBFyyddtReTQsRej+1ahUdsxF0q7lEW7xnxgADRGel7Zj7z0MytgsJ
- 4Ai2b2MsqAH2jLVqa30yHbJXdP6/tEdd7s9SuNgU2O7Ie4s+0Dorvaq4XHNo5LFORFzBzKC8jlQ
- eMtng2seCU4rkOK3maa8+B2QO/05T0cmRLFmCXk7UAgsd6tKajb8sh+eRQzKshhWdgJHa7KLI4T
- ewR9onYnLsNVNlFHIb6jBjycIwdllrriaEm43vxc3Ukvqd2zQqLWa1gM7d17+ZRk4w2aTNzeCQC
- rKUpNbEAyudCtCTL46g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX3q1GjArdQMkc
- qX80xePt61nvVgqsMmag0Sja4BdqfDsc+of/MDk3F10HgOpdV6KZ2nG7HkBihx9hMbqQRKHlUVh
- kFr6OfBKaqF4p8+5sz5liJAMwY1C0gw=
-X-Proofpoint-ORIG-GUID: 9TQYFp85fWlQpsQbB2XArCexb8b_kj9U
-X-Proofpoint-GUID: 9TQYFp85fWlQpsQbB2XArCexb8b_kj9U
-X-Authority-Analysis: v=2.4 cv=e8E2j6p/ c=1 sm=1 tr=0 ts=6a90b8f2 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=R9K0oc9ZdQARYiJKlRgA:9 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX7QFVLYv4aOBe
+ 2jGPpt2JzRCYzSziLeeQenMahu8M6SYyxMaPvrU/cFDhkpPt8izvpOGHuWrm3xZys+oaDOi16xJ
+ cdIoEwn1Uuq4B5CwsymSDQAb7oXFcJNyc+hLRdbeAn420x2dhKcNjKsrJ5nHAyFkrvDZNTOfC4W
+ f3vFcKZGswy3YoJPT3NBHSQFUNphohy575h/BkvTWrrn8voQdTjCZR5/baoQ4rgYHRSWxILjRB8
+ lFcRq3Y+YRqwuAxYSc1OaskTbfEzkqTKLsDxWXlHEp2ZWLdfjhg7z3S4jIHgJJXaZUsHyh6WDwF
+ guMaraEO5xxS2IWVTHGUNynacwu9MTG0KNJafTi0eoI2rrUrdOaDGjJU5V4o5lDoLyS85jRmK92
+ Lpp3Ety2TRqsEBpMtqKyu9MyUkE7o/mVmYk2znQ3tbqHKyta7cYGkT9Pel3mfVXoSlWIKi58i9t
+ Sn6F/yLufiygiVhuVjw==
+X-Proofpoint-GUID: d34lj-ROQMQHotPsWCafZi9IJihUkwEW
+X-Authority-Analysis: v=2.4 cv=Yrc/gYYX c=1 sm=1 tr=0 ts=6a90b8e4 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=2nRveiBTxYvp2EUq1skA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-ORIG-GUID: d34lj-ROQMQHotPsWCafZi9IJihUkwEW
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDE5MCBTYWx0ZWRfX4fQWavT2ikMS
+ toyMuq2x2Ape7f3ovf56J9mMJq0e/KzplUkxfveGEyU9sYhXQHIFBmG1cNVIBkG1dhg4AYdq4xE
+ O7FN8OZJaqLGLk4O/Ndw4ZktKyuMcQs=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-27_08,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 malwarescore=0 suspectscore=0 spamscore=0 impostorscore=0
+ phishscore=0 clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0
+ impostorscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270190
 Received-SPF: pass client-ip=205.220.168.131;
@@ -160,195 +164,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We prepare structure to be able to test multiple cores.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/meson.build                      |  1 +
- tests/tcg/xtensa/Makefile.softmmu-target   | 46 -----------
- tests/tcg/xtensa/meson.build               | 96 ++++++++++++++++++++++
- tests/tcg/xtensaeb/Makefile.softmmu-target |  2 +-
- 4 files changed, 98 insertions(+), 47 deletions(-)
- delete mode 100644 tests/tcg/xtensa/Makefile.softmmu-target
- create mode 100644 tests/tcg/xtensa/meson.build
+ tests/tcg/meson.build         |  1 +
+ tests/tcg/sh4/Makefile.target | 18 ------------------
+ tests/tcg/sh4/meson.build     | 25 +++++++++++++++++++++++++
+ 3 files changed, 26 insertions(+), 18 deletions(-)
+ delete mode 100644 tests/tcg/sh4/Makefile.target
+ create mode 100644 tests/tcg/sh4/meson.build
 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 163e0a96753..76f8f3e6e02 100644
+index 6bc2829ba92..1c34b8e63c6 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -156,6 +156,7 @@ subdir('s390x')
- subdir('sh4')
- subdir('tricore')
- subdir('x86_64')
-+subdir('xtensa')
+@@ -153,6 +153,7 @@ subdir('ppc64')
+ subdir('ppc64le')
+ subdir('riscv64')
+ subdir('s390x')
++subdir('sh4')
  
  image_targets = {}
  exe_targets = []
-diff --git a/tests/tcg/xtensa/Makefile.softmmu-target b/tests/tcg/xtensa/Makefile.softmmu-target
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
 deleted file mode 100644
-index a29571b367c..00000000000
---- a/tests/tcg/xtensa/Makefile.softmmu-target
+index b7a8737be0f..00000000000
+--- a/tests/tcg/sh4/Makefile.target
 +++ /dev/null
-@@ -1,46 +0,0 @@
+@@ -1,18 +0,0 @@
+-# -*- Mode: makefile -*-
 -#
--# Xtensa system tests
+-# SuperH specific tweaks
 -#
 -
--CORE=dc232b
--ifneq ($(shell $(QEMU) -cpu help | grep -w $(CORE)),)
+-VPATH += $(SRC_PATH)/tests/tcg/sh4
 -
--XTENSA_SRC = $(SRC_PATH)/tests/tcg/xtensa
--XTENSA_ALL = $(filter-out $(XTENSA_SRC)/linker.ld.S,$(wildcard $(XTENSA_SRC)/*.S))
--XTENSA_TESTS = $(patsubst $(XTENSA_SRC)/%.S, %, $(XTENSA_ALL))
--# Filter out common blobs and broken tests
--XTENSA_BROKEN_TESTS  = crt vectors
--XTENSA_USABLE_TESTS = $(filter-out $(XTENSA_BROKEN_TESTS), $(XTENSA_TESTS))
+-test-macl: CFLAGS += -O -g
+-TESTS += test-macl
 -
--# add to the list of tests
--TESTS += $(XTENSA_USABLE_TESTS)
--VPATH += $(XTENSA_SRC)
+-test-macw: CFLAGS += -O -g
+-TESTS += test-macw
 -
--QEMU_OPTS+=-M sim -cpu $(CORE) -nographic -semihosting -icount 6 $(EXTFLAGS) -kernel
+-test-addv: CFLAGS += -O -g
+-TESTS += test-addv
 -
--INCLUDE_DIRS = $(SRC_PATH)/target/xtensa/core-$(CORE)
--XTENSA_INC = $(addprefix -I,$(INCLUDE_DIRS))
--
--vectors_ASFLAGS = -mtext-section-literals
--ASFLAGS = -Wa,--no-absolute-literals
--LDFLAGS = -Tlinker.ld -nostartfiles -nostdlib
--
--CRT        = crt.o vectors.o
--CLEANFILES += linker.ld
--
--linker.ld: linker.ld.S
--	$(CC) $(XTENSA_INC) -E -P $< -o $@
--
--$(XTENSA_USABLE_TESTS): linker.ld macros.inc $(CRT) Makefile.softmmu-target
--
--# special rule for common blobs
--%.o: %.S
--	$(CC) $(XTENSA_INC) $($*_ASFLAGS) $(ASFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
--
--%: %.S
--	$(CC) $(XTENSA_INC) $(ASFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS) $(NOSTDFLAGS) $(CRT)
--
--endif
--
--# We don't currently support the multiarch system tests
--undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/xtensa/meson.build b/tests/tcg/xtensa/meson.build
+-test-subv: CFLAGS += -O -g
+-TESTS += test-subv
+diff --git a/tests/tcg/sh4/meson.build b/tests/tcg/sh4/meson.build
 new file mode 100644
-index 00000000000..339a9a1294e
+index 00000000000..d73df074497
 --- /dev/null
-+++ b/tests/tcg/xtensa/meson.build
-@@ -0,0 +1,96 @@
-+tests_per_core = {}
-+cores = ['dc232b']
++++ b/tests/tcg/sh4/meson.build
+@@ -0,0 +1,25 @@
++tests = []
 +
-+foreach core: cores
-+  tests = []
-+  core_dir = meson.project_source_root() / 'target' / 'xtensa' / 'core-' + core
-+  link_script_src = files('linker.ld.S')[0]
-+  link_script = custom_target('xtensa_linker.ld.' + core,
-+    command: [meson.get_compiler('c').cmd_array(),
-+              '-E', '-P', '-I', core_dir,
-+              '@INPUT@',
-+              '-o', '@OUTPUT@'],
-+    input: link_script_src,
-+    output: 'xtensa_linker.ld' + core,
-+  )
-+  crt = files('crt.S')[0]
-+  vectors = files('vectors.S')[0]
-+  cflags = ['-nostdlib',
-+            '-nostartfiles',
-+            '-mtext-section-literals',
-+            crt, vectors,
-+            '-I', core_dir,
-+            '-Wa,--no-absolute-literals',
-+            '-Wl,-T', link_script,
-+            '-lgcc']
-+  qemu_args = ['-M', 'sim', '-cpu', core,
-+               '-nographic',
-+               '-semihosting',
-+               '-kernel']
-+  setup = {'cflags': cflags, 'qemu_args': qemu_args}
++tests += tcg_tests['multiarch-linux-user']['tests']
 +
-+  # Multi arch tests are not supported
-+  # tests += tcg_tests['multiarch-softmmu']['tests']
++tests += {
++  'test-addv.c': {},
++  'test-macl.c': {},
++  'test-macw.c': {},
++  'test-subv.c': {},
++}
 +
-+  tests += {
-+    'test_b.S': setup,
-+    'test_bi.S': setup,
-+    'test_boolean.S': setup,
-+    'test_break.S': setup,
-+    'test_bz.S': setup,
-+    'test_cache.S': setup,
-+    'test_clamps.S': setup,
-+    'test_dfp0_arith.S': setup,
-+    'test_exclusive.S': setup,
-+    'test_extui.S': setup,
-+    'test_flix.S': setup,
-+    'test_fp0_arith.S': setup,
-+    'test_fp0_conv.S': setup,
-+    'test_fp0_div.S': setup,
-+    'test_fp0_sqrt.S': setup,
-+    'test_fp1.S': setup,
-+    'test_fp_cpenable.S': setup,
-+    'test_interrupt.S': setup,
-+    'test_load_store.S': setup,
-+    'test_loop.S': setup,
-+    'test_lsc.S': setup,
-+    'test_mac16.S': setup,
-+    'test_max.S': setup,
-+    'test_min.S': setup,
-+    'test_mmu.S': setup,
-+    'test_mul16.S': setup,
-+    'test_mul32.S': setup,
-+    'test_nsa.S': setup,
-+    'test_phys_mem.S': setup,
-+    'test_quo.S': setup,
-+    'test_rem.S': setup,
-+    'test_rst0.S': setup,
-+    'test_s32c1i.S': setup,
-+    'test_sar.S': setup,
-+    'test_sext.S': setup,
-+    'test_shift.S': setup,
-+    'test_sr.S': setup,
-+    # test_timer is time sensitive, use icount to control time
-+    'test_timer.S': setup + {'qemu_args': ['-icount', '8'] + qemu_args},
-+    'test_windowed.S': setup,
-+  }
-+
-+  tests_per_core += {core: tests}
-+endforeach
-+
-+cc_dockerfile = 'debian-xtensa-cross'
-+cc_docker_host_arch = ['x86_64']
-+
-+if 'qemu-system-xtensa' in emulators
++if 'qemu-sh4' in emulators
 +  tcg_tests += {
-+    'xtensa-softmmu': {
-+      'cc': 'xtensa-dc232b-elf-gcc',
-+      'cc_dockerfile': cc_dockerfile,
-+      'cc_docker_host_arch': cc_docker_host_arch,
-+      'folder': 'xtensa',
-+      'gdb_arch': 'xtensa',
-+      'qemu': emulators['qemu-system-xtensa'],
-+      'tests': tests_per_core['dc232b'],
++    'sh4-linux-user': {
++      'cc': 'sh4-linux-gnu-gcc',
++      'cc_dockerfile': 'debian-all-test-cross',
++      'cc_docker_host_arch': ['aarch64', 'x86_64'],
++      'cc_feat_cflags': cc_feat_cflags,
++      'folder': 'sh4',
++      'gdb_arch': 'sh4',
++      'qemu': emulators['qemu-sh4'],
++      'tests': tests,
 +    }
 +  }
 +endif
-diff --git a/tests/tcg/xtensaeb/Makefile.softmmu-target b/tests/tcg/xtensaeb/Makefile.softmmu-target
-index 95d0528c372..3df131acea7 100644
---- a/tests/tcg/xtensaeb/Makefile.softmmu-target
-+++ b/tests/tcg/xtensaeb/Makefile.softmmu-target
-@@ -2,4 +2,4 @@
- # Xtensa system tests
- #
- 
--include $(SRC_PATH)/tests/tcg/xtensa/Makefile.softmmu-target
-+#include $(SRC_PATH)/tests/tcg/xtensa/Makefile.softmmu-target
 -- 
 2.43.0
 
