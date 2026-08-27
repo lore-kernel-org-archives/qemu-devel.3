@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2997DC5DF9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 04:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E63FC5DF9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 04:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSBc-0003Qg-VG; Thu, 27 Aug 2026 00:58:00 -0400
+	id 1wzSBz-0003Ww-VS; Thu, 27 Aug 2026 00:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSBb-0003QU-Ro
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:57:59 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1wzSBy-0003V7-JV
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:22 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSBZ-0000sY-Tz
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:57:59 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5b5607bd3b5so255964e87.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:57:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787806676; cv=none;
+ id 1wzSBw-0000xW-Pf
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:22 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-39f20d19895so13871891fa.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:58:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787806699; cv=none;
  d=google.com; s=arc-20260327;
- b=ghJjXw3Sp/xtFGvXjICOuvsSeH17DO7Cjd3qug5AkLfcTGQO6U1jZubyniJcKyRBr6
- mWyRc0YhxaIRsE91Yc/9gFK7231I3dnGVD63xSV1WzwAvIVGlEeHvAOPlyqVFH4wny6j
- 4SY8LPDQF78EW9Jvqm3BcVhVZ0h4aHwKYkluBFS8/iZLa0PBnpYAVVL/hFDZRlWzTDic
- Cd6GJRl0jQxAZc7yJOQM9tkflzhtd42C2H2ruhsq9W/xLKbzsQ7LWDEMkYTpH8Yo1lTY
- ZpJjhzx5K/dWRd0yQ+89CbYNEfqYgEjPMLh2UlYHp6mgEQxHf/rfZ9VOAesfBJgTavHg
- PM3Q==
+ b=ISTsrIEaIwlDRzGVJcSjgm7LVCO3333mPp70sORxwUbQmziH2qdZvUjzRKU6E4IJxK
+ YZwL+LjP7cwZpSdevp/leVAq0c0B4hilpI4JLgWXsTMKJNWiEdzQHOJcSctQu3sobh5u
+ AcLPVrQfY/1X45h77MH2VgNy+ZfS7ycSqKP5Lmn98yoqJ09b4cxIdhoADi/m/DNkI5cI
+ ISjaFbzarORJqjJOM5aW0ujFZQAnlXP5rVuPH0XUy2JeoQmPNiEpLb3uYEVvaBpQ9a2k
+ G1w133p/nk2kArCNEP02S6UCp7/6lihRA2UfSn7x697NG3pO4ihRPQCXtPkURxeCwv7W
+ LFUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=a9ZArFkXlEH5mM1UKLIa6QRPl0lpAzd7IELtVjOWABI=;
- fh=JPyNvPMIwCrkCRfC7AfOHa3V7KQSEuSbWu8g6CBWLw8=;
- b=MOyIY/BEWOFNm320NclDXHQ33Su52KU2+g2ANTdOYKVab0Zn6wnp4BULcmO3s1V2Y+
- o8vpgu9o8ZT+ubhPjeSR/J26HW53PMbKem1HaI8kTw1gMjZ6Ehl9Lys4d66A4Y/4OvDc
- dN59nHtfW7SPNGBtQ7pP4fb3WkPXX+Yy3OBdjs3IJDyKX3T2RgFJ9TLzqZHZe5pcpZTa
- vWVXldV/gMli5cX+UpgdJx1cweBMvPXyVLxp2fTcIPyqPfLyuAdHo2cDuzc/c1mZ8Lzy
- XHgls8Qx6Qv96ZdrEKEcUARTcoqj7GKV66bx5PW2ncwUkvClohtUeNdxsUAJhYxdPtPD
- oyXA==; darn=nongnu.org
+ bh=LrZxT18D2451JlJlmox0DJE83batWQGKJmS6PBE8pd4=;
+ fh=QVe/7zv5OrYmrprO28ljpRmhYeOlvvTBoRQtHWn+3sI=;
+ b=aaVGoqD12BL1rjODUMUeTwWB2iq1SJJ2/UT9KbmmYkv18HwkgV3J+UdFGFd5iupQVH
+ a+V0UsAq6qAWgcrCajJ2k0unuV7eKp0RjjDcsWImWsXTLb67rpo0IlPrgYDqVeMSzWjr
+ TiDbWI1omUES/Dp9AFO4DwppCz7wigem1ryiyVuMRNnN8cdHaK9ARhhnKdui4QfBoPTu
+ 0NrGuGcqu6/2WzZTFNlmY0TA76t/jcIWm9ephntoLXkA8LyoKe5CMyxm1jkaOdyzTQkj
+ ZzI9GaM5oA2oJRNV2KZ6MMIQru/FIZYqzeMDqRYjG0QzBdq/89tGT/m8879Nn0kKaKo0
+ F+MA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787806676; x=1788411476; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787806699; x=1788411499; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=a9ZArFkXlEH5mM1UKLIa6QRPl0lpAzd7IELtVjOWABI=;
- b=aJ+QbKYDUYPmrS4v1664+wvcy0qDFxXcW7bWes8Ljs6FvqLj84tAhWdzjbZP5Vl2E1
- cVRu4mZ+jWjwx6xSVg/Az3u43tgo6qHk8NdxP7+iBMRaMg3SiRKoVric/89csuKofXJh
- dt5wwjUbKnOD6Uc5EZDHqBYLHj2kh4NgZMzz3bC1gy99irL8c2xT0CrgQklu7AQkdWFm
- +tUWW8FpIVsGn1iC53mT0wi/6O4JuLAFIM11/Hq9urWxpa3PzeLwRRvwWB0EDjm8ktJZ
- DEBiMd8ril+I21iF2gBwfnvSVB4TvenyhsyYKLlN7miVm8iv5w68BCTIW8EVMwHnHaq0
- v7jA==
+ bh=LrZxT18D2451JlJlmox0DJE83batWQGKJmS6PBE8pd4=;
+ b=TUrKyziyInP9bzVTk7cKEpRqZaDL24VI2xsaEj2hpOAbBELvmwUInTtNzNb86Aj+7c
+ CT4PCPXiw4UGcN9Gbas5nmDmIzgboICbegWBcssK+StAKlF+vX+TzdUghYxJ5ZS2rMiL
+ g/QGDzOW49PkoQpo2g7207VfqD1+3qG6xdGI9EkfD7XLoCYHgyCqNoy794U//nUxlksv
+ mrOLk4NyEUkIGDS+VAnX2kNVLTOI0p3hkZgm2pWvDNYrwvc4hV9GztGeG9egmIwQT+v/
+ ViGeS15hnWdGZyLpK9Zhm1nuW1Aw8P0qxZKAzmzZ8nG8mGumbQwx2FSa626KZsDtH3UV
+ +8OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787806676; x=1788411476;
+ d=1e100.net; s=20251104; t=1787806699; x=1788411499;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=a9ZArFkXlEH5mM1UKLIa6QRPl0lpAzd7IELtVjOWABI=;
- b=nkDbwA1e+WN0NSdZFOZnORA3qCqnxb/msmx1Ht03KY3+RL04cvMIA2bOLptS6kqLK0
- 7JB6rtahVX77dVUZqrX3My5mFGnOVcjZemSgLC1Hh39rmwzeEpUUV0wcb656IbkdmhoW
- NwJkLPGXcM42i2pgRtbVtCsvmtAtKmdYHk6OLa6N55+mX7Aa8sykN7oQr7DL/AxgJIqt
- j+wR97mR95k1eJ8atsKxr2sh3y+jh/A0fRlY4+/Rh9LZL6hAZ70m6zrlgiEjYL9N752J
- iKTtCSkxl2+06XZ37V4HkfN7AkQ9eyIPtVP0XtKi4XP0Gz4XJFAftqN5mQsvI55EmbnP
- /fpw==
-X-Gm-Message-State: AFuF++mZsy/3ABenyV8fc3+2qb9j6287Uqm9bCUryiRkVYDLZyIpWrzw
- TzYVZ3s7qTRG6xqZxqR+FWGpZzr2PrR9tEmf98aXVenlKkD27Fpmw0H3CkfL/MoxdrgdUB88RfW
- +NBSog9bahuV92mAyY+KX22fhLKA7SVw=
-X-Gm-Gg: AR+sD13Ln7p8IGlDeeThJbN1Q3LoRMuatBBjjDWJKVD1ETWcQPkui4zlPNc9ruSXbJ9
- TSUGD3siDv2BPQJn2kQWAoMzAKsXbitibYZnfpdx8H3XvnoEwJZK7u3Vd/r0A3xdBt8o3LBDioP
- ng/zibUM4XSPt6RtRoSY3pvXU1TSJsjw2c3j2LZMAQ/Ts2kWPmcyL1PGcKHdFp+17B/SJmjyIX8
- YCAmc1YIVugWPpj+cPFiu3Ypmq2jgQ4MBOZwi4SDa4zQ24SVCfLy/2y7VonhIyn7/0ETuUSGxD4
- bSBpP+HYSoKMAEcyyANUg+9epq5HLd9G9Yd7hojvonYoXG8=
-X-Received: by 2002:a05:6512:31cf:b0:5b5:e0dd:1c6c with SMTP id
- 2adb3069b0e04-5b5e0dd1cafmr220979e87.4.1787806675353; Wed, 26 Aug 2026
- 21:57:55 -0700 (PDT)
+ bh=LrZxT18D2451JlJlmox0DJE83batWQGKJmS6PBE8pd4=;
+ b=AIX4Q3s5Kt2RlKSQu9ol3gc1Dpqm66g2vBz1LYAc+NFqAye8sVkIglf0MqgbkzdmHJ
+ NTxWhAxLclotpXYcT4HJxWNWeM+MBPMe5Q6prDHqvKWuleMlrE8oseyTUkvpMAkfuMby
+ iroveBlTflMySEpCgwel4xnfEFx2vpHgNA0grO7Kqk53K18LKRx02nccin3QeXleEYPM
+ XZa8RMnNkaXaZmJDH8Rc3PCVDYge+2yrHsbeMDWOfbTOAAGi4Rn0EOotTpUzaUGd0lSJ
+ GY4Uu3/wTAqL+IPJjcPW+1NNvGEsryooh8aFdEeNugmaptj1LJ/IaZ8H7FSCLxjD9zBM
+ HcEw==
+X-Gm-Message-State: AFuF++mE4ZDi8knT1T8SEl4lsy8sPf+RerPNLRPhbCYt18mHhbAHLFIE
+ ppOZAawpDt+BEmVqyhv6YMJ7rsMfS+OLGJVckldn70euonqSfqA6Ky89ZkrKfl3BDlQkM+WCOoT
+ 9fAnnb5CzSV1Q76BFx5n6w9rJ1cCUTrw=
+X-Gm-Gg: AR+sD11qwy9j8gWhTHdsUKLjCEusJOvxotEqOL9FFya8c+xptSPhoGRtf5/yq31BChU
+ LKzfmcnh9KkIJtrPGHTkINHKJuWojY4VVUGs2wLcAxrQd5FkCw/21mRTWbyBa8gGtLwFN/kKsIy
+ 2DU2cem3NPBgsM5cl3T7LMnCyxjE/kiHCX86wQ4IiKVEaEUBObA1zBazH2PUCDCUC4PKUb861VO
+ csrUsN524vy4q0DJ6x3QwtOomjiDpgLktymnIQ+NMlyizt43E9xGLohCNgKz4CYQBZdp3+yC6Ay
+ ikR8/1ZA5bfUlQ8pgUEnj0I9wD0pQ003nJ+idOqYRdR1C+W8zo8eR1hf3g==
+X-Received: by 2002:a05:651c:f16:b0:39c:920f:c486 with SMTP id
+ 38308e7fff4ca-3a1fd490e8fmr29377521fa.6.1787806698869; Wed, 26 Aug 2026
+ 21:58:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260822190818.1829249-2-mattst88@gmail.com>
- <8733w1qq7o.fsf@draig.linaro.org>
-In-Reply-To: <8733w1qq7o.fsf@draig.linaro.org>
+ <20260822190818.1829249-8-mattst88@gmail.com>
+ <4645e775-b0c9-45a2-a064-17fabc3db431@linaro.org>
+In-Reply-To: <4645e775-b0c9-45a2-a064-17fabc3db431@linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Thu, 27 Aug 2026 00:57:41 -0400
-X-Gm-Features: AcwNN1U-40l3YlNf_aSw7ai8DZ7IIU-rWWHJgjTOYfGQI0mbJaiOtlldDC90N8E
-Message-ID: <CAEdQ38ExK8a5QKJR0shezbdwEJ88bQFtU_+sKxt2_61x9f9yMw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] accel/tcg: fold the dynamic cflags into
- CPUState::tcg_cflags
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- philmd@oss.qualcomm.com, zhao1.liu@intel.com
+Date: Thu, 27 Aug 2026 00:57:58 -0400
+X-Gm-Features: AcwNN1UpVEM3MjBU7oLqnF71TwhmHT1dKMtDUJkiqcNF8TfgCCit3r0_BgAKXwM
+Message-ID: <CAEdQ38FPhP9Fmnj2cqzPqRt8MMEjKju0xihLYfwhW72x-jT19Q@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] RFC: tcg: fold a guest displacement into the host
+ addressing mode
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@oss.qualcomm.com, 
+ alex.bennee@linaro.org, zhao1.liu@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -121,184 +121,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 3:46=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
+On Tue, Aug 25, 2026 at 6:52=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Matt Turner <mattst88@gmail.com> writes:
+> On 8/22/26 12:08, Matt Turner wrote:
+> > RFC because:
+> >
+> > - Only wired up for x86_64, and only for qemu_ld and qemu_st; the i128
+> >    qemu_ld2 and qemu_st2 pairs are left alone.
+> > - Requiring that no slow path exists is stricter than necessary. Record=
+ing
+> >    the displacement in TCGLabelQemuLdst and emitting one lea on the slo=
+w
+> >    path would cover alignment-checked accesses too, at no fast path cos=
+t.
+> > - Softmmu wants the displacement folded into the TLB comparison as well=
+,
+> >    which is a bigger change than this one.
+> > - A one op window catches everything the frontends emit today but is
+> >    trivially defeated by anything scheduled in between.
 >
-> > curr_cflags() is called once per TB dispatch, from helper_lookup_tb_ptr=
-()
-> > and from the cpu_exec() loop. It recomputes the same value every time:
-> >
-> >     uint32_t cflags =3D cpu->tcg_cflags;
-> >     if (unlikely(cpu_single_stepping(cpu))) { ... }
-> >     else if (qatomic_read(&one_insn_per_tb)) { ... }
-> >     else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) { ... }
-> >
-> > That is three loads and three branches on the hottest path in the
-> > interpreter, for state that changes only when gdb enables single-step,
-> > when one-insn-per-tb is toggled, or when the log mask changes.
-> >
-> > None of the three has to be sampled at dispatch time. Fold each into
-> > CPUState::tcg_cflags where it changes and curr_cflags() becomes a singl=
-e
-> > load of a field that TB lookup has to read anyway.
-> >
-> > The derived bits -- CF_COUNT_MASK, CF_NO_GOTO_TB, CF_NO_GOTO_PTR and
-> > CF_SINGLE_STEP -- are never set by tcg_cflags_set(), so tcg_update_cfla=
-gs()
-> > can recompute them in place without disturbing the rest, and conversely
-> > tcg_cflags_set() ORs in its bits without disturbing them.
-> >
-> > There are three places to call it:
-> >
-> >   - tcg_exec_realizefn(), so that a CPU created after the command line =
-has
-> >     been parsed starts out with the right value. This covers user-only,
-> >     where tcg_cpu_init_cflags() is not reached. linux-user's cpu_copy()
-> >     copies tcg_cflags wholesale, so a cloned thread inherits it.
-> >
-> >   - cpu_single_step(), which changes one CPU and runs either on that CP=
-U's
-> >     thread or with it stopped.
-> >
-> >   - tcg_set_one_insn_per_tb() and qemu_set_log_internal(), which change
-> >     every CPU. Both can be reached from the monitor while the vCPUs are
-> >     running -- 'one-insn-per-tb on' and 'log nochain' -- so the update =
-is
-> >     queued with async_safe_run_on_cpu() and each CPU writes its own cfl=
-ags
-> >     with the others halted.
-> >
-> > Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-> > the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, in =
-a
-> > build configured with --enable-lto:
-> >
-> >     before: 1,646,994,254,249 instructions
-> >     after:  1,562,204,796,597 instructions   -5.15%
-> >
-> > That workload issues 8.4 billion dispatches, so the per-call saving is
-> > small but the aggregate is not. The emulated compiler produces
-> > byte-identical output before and after.
-> >
-> > Wall clock does not move: 133.19s to 132.58s, a 0.46% difference agains=
-t a
-> > run-to-run spread larger than that. The removed work is a few predictab=
-le
-> > loads and branches that the host executes largely in parallel with the
-> > surrounding dispatch, so this patch is worth taking for the instruction
-> > count and for what it enables, not for a time saving that can be measur=
-ed
-> > on its own.
-> >
-> > Signed-off-by: Matt Turner <mattst88@gmail.com>
-> > ---
-> >  accel/tcg/cpu-exec-common.c | 33 ++++++++++++++++++++++++++++++---
-> >  accel/tcg/cpu-exec.c        |  3 +++
-> >  accel/tcg/internal-common.h | 11 +++++++++--
-> >  accel/tcg/tcg-all.c         |  1 +
-> >  cpu-target.c                |  3 +++
-> >  include/system/tcg.h        | 12 ++++++++++++
-> >  stubs/meson.build           |  1 +
-> >  stubs/tcg-cflags.c          | 16 ++++++++++++++++
-> >  util/log.c                  |  4 ++++
-> >  9 files changed, 79 insertions(+), 5 deletions(-)
-> >  create mode 100644 stubs/tcg-cflags.c
-> >
-> > diff --git ./accel/tcg/cpu-exec-common.c ./accel/tcg/cpu-exec-common.c
-> > index 44e84344f3..dd2be475e2 100644
-> > --- ./accel/tcg/cpu-exec-common.c
-> > +++ ./accel/tcg/cpu-exec-common.c
-> > @@ -36,9 +36,16 @@ void tcg_cflags_set(CPUState *cpu, uint32_t flags)
-> >      cpu->tcg_cflags |=3D flags;
-> >  }
-> >
-> > -uint32_t curr_cflags(CPUState *cpu)
-> > +/*
-> > + * The bits of CPUState::tcg_cflags that tcg_cflags_set() never sets, =
-because
-> > + * they are derived from gdb single-step, one-insn-per-tb and -d nocha=
-in.
-> > + */
-> > +#define CF_DERIVED  (CF_COUNT_MASK | CF_NO_GOTO_TB | CF_NO_GOTO_PTR | =
-\
-> > +                     CF_SINGLE_STEP)
-> > +
-> > +void tcg_update_cflags(CPUState *cpu)
-> >  {
-> > -    uint32_t cflags =3D cpu->tcg_cflags;
-> > +    uint32_t cflags =3D cpu->tcg_cflags & ~CF_DERIVED;
-> >
-> >      /*
-> >       * Record gdb single-step.  We should be exiting the TB by raising
-> > @@ -55,7 +62,27 @@ uint32_t curr_cflags(CPUState *cpu)
-> >          cflags |=3D CF_NO_GOTO_TB;
-> >      }
-> >
-> > -    return cflags;
-> > +    cpu->tcg_cflags =3D cflags;
-> > +}
-> > +
-> > +static void tcg_update_cflags_work(CPUState *cpu, run_on_cpu_data data=
-)
+> Plausible.  Several times I've considered exposing complex addressing
+> modes to the translators so that things that do LEA are kept intact for
+> awhile.  There are plenty of host-specific code sequences for x << s + y
+> + c, even before we fold that into the memory access.  Then expose the
+> host memory path to tcg ops, somehow, and finally implement a simple CSE
+> pass.  But yeah, hand waving is as far as I've ever gone.
+
+That's the shape I kept wanting. A one-op peephole is a poor
+substitute, and it loses the moment anything is scheduled between the
+add and the access. I went this way because it needed no frontend
+changes; happy to look at the op instead if you'd rather.
+
+> On the second point, I guess you also assuming the offset is also
+> aligned?  I.e. for X + 8*N, you can test X for 8-byte alignment without
+> constructing the complete address.
+
+Right, and that's what makes the second bullet worth doing. If disp is
+a multiple of the required alignment, X + disp is aligned exactly when
+X is, so the fast path test can stay on the base and never needs the
+full address. That covers every displacement a frontend emits for a
+struct or stack access.
+
+What's left is the slow path, which hands addr_reg to the helper --
+and addr_reg is now the base. Recording the displacement in
+TCGLabelQemuLdst and emitting one lea there fixes it at no fast path
+cost. v4 spells that out in the bullet but still refuses any access
+needing a test.
+
+> > +static bool tcg_target_ldst_disp_ok(TCGContext *s, MemOpIdx oi, int64_=
+t disp)
 > > +{
-> > +    tcg_update_cflags(cpu);
+> > +#ifdef CONFIG_USER_ONLY
+> > +    MemOp opc =3D get_memop(oi);
+> > +    TCGAtomAlign aa;
+> > +    int64_t ofs;
+> > +
+> > +    if (tcg_use_softmmu || s->addr_type !=3D TCG_TYPE_I64) {
+> > +        return false;
+> > +    }
+> > +    aa =3D atom_and_align_for_opc(s, opc, MO_ATOM_WITHIN16,
+> > +                                (opc & MO_SIZE) =3D=3D MO_128);
+> > +    if (aa.align) {
+> > +        return false;
+> > +    }
+> > +    ofs =3D (int64_t)x86_guest_base.ofs + disp;
+> > +    return ofs =3D=3D (int32_t)ofs;
+> > +#else
+> > +    return false;
+> > +#endif
 > > +}
-> > +
-> > +void tcg_update_all_cflags(void)
-> > +{
-> > +    CPUState *cpu;
-> > +
-> > +    /*
-> > +     * one-insn-per-tb and -d nochain can both be changed from the mon=
-itor
-> > +     * while the vCPUs are running.  Have each CPU update its own cfla=
-gs
-> > +     * with the others halted, so that no dispatch can read a value th=
-at
-> > +     * another thread is in the middle of writing.
-> > +     */
-> > +    CPU_FOREACH(cpu) {
-> > +        async_safe_run_on_cpu(cpu, tcg_update_cflags_work,
-> > RUN_ON_CPU_NULL);
+> These compilation mode tests belong...
 >
-> I don't think this is wrong but are we really seeing cross-vCPU updates
-> of cpu->cflags?
+> > +static void __attribute__((noinline))
+> > +fold_ldst_disp(TCGContext *s)
+> > +{
+> > +    TCGOp *op;
+> > +
+> > +    if (!TCG_TARGET_HAS_ldst_disp) {
+> > +        return;
+> > +    }
+> ... here, before we step over the loop.  You might as well pass MemOp to
+> the target function and not MemOpIdx -- nothing about the mmu_idx is
+> relevant.
+>
+> Ideally, the atom_and_align test would also be done generically, not
+> requiring each target to replicate that boilerplate.
 
-Fixed in v4. The monitor path was the cross-vCPU one -- v3 had the
-monitor thread storing into every cpu->tcg_cflags -- and v4 queues the
-update instead, so each vCPU writes its own field from its own thread.
+All three done. x86_64 is now just:
 
-The one foreign writer left is cpu_single_step(), and it's the same
-one that was already there. gdb_continue_partial() in gdbstub/user.c
-walks CPU_FOREACH and can hit a thread that's still running, since
-gdb_handlesig() only parks the thread that trapped. But before this
-patch, curr_cflags() on CPU X read X->singlestep_flags and
-cpu_single_step() stored to it from whichever thread gdb was on. Now
-the store lands in X->tcg_cflags. Same width, same plain accesses,
-same writer, same reader -- the patch changes which field carries the
-state, not how it's synchronized. Nothing here wants atomics that
-didn't want them before.
+    ofs =3D (int64_t)x86_guest_base.ofs + disp;
+    return ofs =3D=3D (int32_t)ofs;
 
-I did fix the commit message, which claimed cpu_single_step() always
-runs on the owning thread or with the CPU stopped. True in system
-mode, not in the user-mode gdb_continue_partial() case.
+The alignment one needed a compromise. atom_and_align_for_opc() takes
+host_atom and allow_two_ops and both feed aa.align, so a generic
+caller either gets them from the target -- the same boilerplate, moved
+to tcg-target.h -- or answers without them. I answered without them: a
+small ldst_disp_needs_align() that gives the answer for the most
+restrictive
+host.
 
-> I suspect async_run_on_cpu would be enough to trigger an
-> update from a non-vCPU thread to the vCPU.
-
-Agreed, fixed in v4. async_safe_run_on_cpu() was overkill.
-
-> You could even pass the sub-set of flags down in the user data and maybe
-> avoid having to use global atomics for those flags.
-
-I left this, but tell me if you'd rather have it. The only atomic is
-qatomic_read(&one_insn_per_tb), and the patch already takes it off the
-hot path -- it ran on every dispatch, now it runs at realize, at a gdb
-step change, or on an HMP command. Passing a snapshot would remove
-that last read, but one_insn_per_tb and qemu_loglevel are read by
-other code too, so the queued CPU would be working from a snapshot
-while everyone else sees the live global. For a path this cold that
-seemed like the worse trade.
+Exact for MO_ATOM_NONE and the IFALIGN cases, i.e. everything
+frontends emit by default, so the alpha numbers don't move.
+Conservative for MO_ATOM_WITHIN16 and MO_ATOM_SUBALIGN: x86 could take
+those folds and no longer does. One #define of the host atomicity next
+to TCG_TARGET_HAS_ldst_disp gets that back if you'd rather have it
+exact.
 
