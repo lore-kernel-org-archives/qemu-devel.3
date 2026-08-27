@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEBEC61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 12:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB12C61DC2
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 12:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzZAb-0006Fb-IH; Thu, 27 Aug 2026 08:25:25 -0400
+	id 1wzZBU-00077h-Fa; Thu, 27 Aug 2026 08:26:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzZAZ-0006F0-Nr
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 08:25:23 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzZBS-00076P-Fu
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 08:26:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzZAY-0003mO-7o
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 08:25:23 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzZBO-0003t6-UO
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 08:26:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787833521;
+ s=mimecast20190719; t=1787833574;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GAd7JjxuKF4O5Z9JpLPWkK2/P2bhhQECbF3uyXhTb2c=;
- b=WWZtutFEbHVPYGxkr/yNXjZJ7CgP7NRihxTkJou88rsLfxlCz65A5fZv3a3aOycJdknkhJ
- 2O3U/pOB/9nWz1N2IRjx0csE5duk1t3kTXxlZHa+5vMeaerVXAJmiwJ4H2PhP5apIB91Wu
- zKPNCEr6zWjgRvzmWDwkUTI5VifJC+g=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-w-H0ipc_MCKQKmxsoUdPag-1; Thu, 27 Aug 2026 08:25:18 -0400
-X-MC-Unique: w-H0ipc_MCKQKmxsoUdPag-1
-X-Mimecast-MFC-AGG-ID: w-H0ipc_MCKQKmxsoUdPag_1787833517
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f8f8fde2dso1224985f8f.0
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 05:25:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787833517; x=1788438317;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GAd7JjxuKF4O5Z9JpLPWkK2/P2bhhQECbF3uyXhTb2c=;
- b=S1cmtcW5S0060XSi2fcINiEmL+CV6smBwu4NVgYllK8Kfj3b3STRUGg2inq5NoOIkH
- 78V22V7+XDf/AW71GVvAwJgmBeQcLLfwk+gD+3ctZvQGx9dR+iHO1IZdqJVLWIqsry1z
- rAkkcYfSDYOGKnw6EDoV7vuu/NRxcWa/KSVvIxKEerPv8mwgonLXrYkNVUOi5a21iT1x
- UBsWGc+M4seAS/2wZSI6KMbU8TVedT+sbAYgUB0i/VPDvjSs3DRB6TUwdDSI2HAvKghw
- YzTTYBs3JjEkYm0DXu3PLDtOoT1IiX9BFYLnn1sxUsQLKIMZwD3N7TZPx46OvgyKvTmM
- 7+Sg==
-X-Gm-Message-State: AFuF++nq7VxZhCmQV4NNcnSh+wn3/kKozkvEi7HqKw81vvsDWCLaBIwt
- +glY1mBoVKkBuolZR0XgTlJHAXeWNjJeatbJkKewnYZ71xWW/QXI0qbeLm6E/2drnTxQegX0sVj
- kfgZCT9QTlDZ87nF7y00lbrhIMvnLPxnRAgxu+NY79O8q+sUcA/CLxqnk
-X-Gm-Gg: AR+sD13mReDWQnP+mm49JOQ1jwT4ETB0/PadRZC/fDzfDCJOzMhWS2h0fSIkrZVdJDU
- DEWJlQesUDcHQkynv2QGvItzdEkwc7egNfZbWGAnYE0+/LILpzy+NUf0Ui924t+w6R5ipVHC5M9
- 6aEQ0DFS+OOQMrSvcU4QkdlxGU5ARtH4I4eI+avFesQouRCKajmO9H9sVQ9kIgEfoklgHEKkiQa
- dwOI91Qw4Gs0Wp6QuIEeBe/m8dKM8QBN6O2BCCWEjRH3VUKK+N1Re3c6/ESY/QfVn/I1fVYz4ui
- A35nVm/B5SuJEU7NwKTDuAmiZQ85JuIzxhgziDT/tmwGnUc4f43cGfEq6JJY3VH6Gu4Xs5p/w5p
- Lb13NZKs5n3q5V+c9gTU3hcPYbBMu24p740EiWnkEvWL4b0tm
-X-Received: by 2002:a05:6000:4605:b0:482:e2f2:19c9 with SMTP id
- ffacd0b85a97d-482e2f21dc2mr19449654f8f.2.1787833517159; 
- Thu, 27 Aug 2026 05:25:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:4605:b0:482:e2f2:19c9 with SMTP id
- ffacd0b85a97d-482e2f21dc2mr19449551f8f.2.1787833516808; 
- Thu, 27 Aug 2026 05:25:16 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482e27ab569sm8617295f8f.16.2026.08.27.05.25.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Aug 2026 05:25:16 -0700 (PDT)
-Message-ID: <74a383fb-e124-44ea-95d7-63c6add2a53c@redhat.com>
-Date: Thu, 27 Aug 2026 14:25:14 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 09/28] hw/arm/smmu: Add PTE NS/NSTable helpers
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
+ bh=Zkv3VOsmEi3W4EvqWCfKcDrMC80ZeCPkmQbK7/rUWSg=;
+ b=TVJjgI/WtlWwHM6beQrCAJ5pvcxu4Y5rWFeewtN3W5jerAmvLqKTaLPWu3lLdphMAseKY0
+ wwGrkvVXsALiSJAdn7eb5gR+RXY98yD+frNlHJWXcCuWZgoG9x4GrwLNM2IWjPOpNsfBYX
+ 0zcI1OEJa29B3wz07rwq3MkfndTeSQw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-L3oEfgQlO5qAnQpqgc_cUQ-1; Thu,
+ 27 Aug 2026 08:26:10 -0400
+X-MC-Unique: L3oEfgQlO5qAnQpqgc_cUQ-1
+X-Mimecast-MFC-AGG-ID: L3oEfgQlO5qAnQpqgc_cUQ_1787833565
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11E6D1953987; Thu, 27 Aug 2026 12:26:03 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 213A71955F70; Thu, 27 Aug 2026 12:25:51 +0000 (UTC)
+Date: Thu, 27 Aug 2026 13:25:49 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162446.2806393-4-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260813162446.2806393-4-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 10/12] target-info: add -target and program-name selection
+Message-ID: <apAszS1ewxM0Y1XU@redhat.com>
+References: <20260823150731.896-1-luoyonggang@gmail.com>
+ <20260823150731.896-11-luoyonggang@gmail.com>
+ <ao7gGVuiDcVZSN6v@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ao7gGVuiDcVZSN6v@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,58 +115,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Aug 26, 2026 at 01:46:17PM +0100, Daniel P. Berrangé wrote:
+> On Sun, Aug 23, 2026 at 11:07:28PM +0800, Yonggang Luo wrote:
+> > - Parse -target before TargetInfo is fixed; CLI overrides the program
+> >   basename.
+> > - Tokens are target_name or target_name-be / -le; -target help lists
+> >   registered names in sorted order.
+> > - When -target is omitted, infer the token from g_get_prgname(): strip
+> >   .exe, take the longest dash-separated registered suffix, and retry
+> >   without a trailing w for Windows GUI binaries.
+> > - A basename that matches no registered token falls through to the
+> >   unique default. Combined binaries with no suffix require -target
+> >   when more than one default TargetInfo is registered.
+> 
+> IMHO this -target argument and the target interference from
+> program name is a mistaken direction.  We're being led off
+> course by the attempt to make the new qemu-system be identical
+> to qemu-system-$TARGET.
+> 
+> If we ignore historical compat and treat qemu-system as a
+> clean break, then I'd suggest that 'target' is not a concept
+> to be exposed to the user at all.
+> 
+> The user cares about the machine (and CPUs) they want to run,
+> and their choice in this respect is what should determine the
+> target(s) QEMU needs to enable. We should take
+> 
+>   qemu-system --machine vexpress-a15
+> 
+> that tells us we need the arm target. If we need to distinguish
+> arm7 vs aarch64, then the choice of -cpu should determine 32
+> bs 64 bit.
+> 
+> This extends better into the future world where we have
+> machine type that could involve CPUs from multiple targets.
+> 
+> IOW machine config option / QOM class is what we should pivot
+> off rather than a global target config option.
+
+I forgot to mention that this is also pretty important for making
+introspection work, as we need to be able to say
+
+  'qemu-system --machine none -qmp ...'
+
+and connect to QMP to introspect the binary. Having to add a
+'--target <name>' into that mix is undesirable, as it creates
+a chicken & egg problem. You don't know what targets are built
+into qemu-system without introspecting it and you can't
+introspect it without selecting a target to introspect.
 
 
-On 8/13/26 6:24 PM, Tao Tang wrote:
-> Add helper macros for NS and NSTable bits and group PTE attribute
-> accessors for clarity. No functional change beyond the new helpers.
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-
-
-> ---
->  hw/arm/smmu-internal.h | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
-> index d143d296f34..004abd58bca 100644
-> --- a/hw/arm/smmu-internal.h
-> +++ b/hw/arm/smmu-internal.h
-> @@ -58,16 +58,27 @@
->      ((level == 3) &&                                                    \
->       ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
->  
-> +/* Stage 1 attribute fields in VMSAv8-64 Block and Page descriptors */
-> +/* Non-secure bit */
-> +#define PTE_NS(pte) \
-> +    (extract64(pte, 5, 1))
-> +
->  /* access permissions */
->  
->  #define PTE_AP(pte) \
->      (extract64(pte, 6, 2))
->  
-> +/* Stage 1 VMSAv8-64 Table descriptor fields */
->  #define PTE_APTABLE(pte) \
->      (extract64(pte, 61, 2))
->  
-> +#define PTE_NSTABLE(pte) \
-> +    (extract64(pte, 63, 1))
-> +
-> +/* Access flag: defined for both Block/Page and Table descriptors. */
->  #define PTE_AF(pte) \
->      (extract64(pte, 10, 1))
-> +
->  /*
->   * TODO: At the moment all transactions are considered as privileged (EL1)
->   * as IOMMU translation callback does not pass user/priv attributes.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
