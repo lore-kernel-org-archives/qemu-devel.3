@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26288C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 636FBC61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSGn-0005wh-Kl; Thu, 27 Aug 2026 01:03:21 -0400
+	id 1wzSGj-0005s3-5A; Thu, 27 Aug 2026 01:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSGj-0005tb-T7
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:17 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ id 1wzSGd-0005rI-H6
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:12 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSGg-0002Kp-Os
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:17 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-81ee6b2da98so26786967b3.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:03:14 -0700 (PDT)
+ id 1wzSGb-0002Ju-6A
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:11 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-85a50f6a7f7so15272317b3.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787806993; x=1788411793; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787806988; x=1788411788; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IieFYtDc0DxvX0y8JT1W+rF6uG/bZgRcpKzBTVDticE=;
- b=OuKOufnnA9nfCwp3o3CQG3hB+BxnRhqEx8fY3iiLPWZfTerf9lmW4ljMGCsL2+p/Gj
- 9wgKeU06yDk24cG3p+4itJlZw5yicseCczaHxETK+PYo0LUdKqJ+DNGcCYo9hwe6QgL0
- 6c/xtcOrpfo2icPbAqQqCR0LX2oEZSJZF0bmNqmiHj6+S2LvOsqAkE8W9fEdnerq0FZ2
- VftDRQk80ZTyKQe2k+XrN+qsEunfG9YN86egHQm0pOLAJOp0RrMrA3N0LvAhgj6dualJ
- Zb0n8RWNJd7MbzqzCYAAtuQUe3b1JgJ3C9+sbD6SgXmbgQzAzDvldOfWCXPG/O1tBJef
- f5pg==
+ bh=QYGTe5Dtc8jpyUVbafTGVnqH+rZmDr8bZimPftm6jiM=;
+ b=Wgi3CDrLKN+MYNEmWQCQj9Zkiaz9WVweKdfwUu7qWZviuUu4WwZdCifGHt7/wABedW
+ Gji42kborOuKDjjzFORmCWqnhs5Qen8/0IoHb1KYl2qmOk0UcBABm76dVrSIeV1w59Lj
+ Z5AeD7Cc+VdfjNFkzFB7hJroaoJhmHp+prWFPZsJPXwd3PTi3qWc40VXm/33vsfoesfC
+ awnHVtLNbQ1eA1MwdQNBwYEeoviaD18yORuiZjzqo5xGidibih41OwRIt3JKERn37Ub1
+ KvDFLIZKABOtgHrLkzL3JT5HIBOBrhkR8GWwAwYbPOFLifzCP8w4eN61cTOyJcwp4ZJd
+ 7pCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787806993; x=1788411793;
+ d=1e100.net; s=20251104; t=1787806988; x=1788411788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IieFYtDc0DxvX0y8JT1W+rF6uG/bZgRcpKzBTVDticE=;
- b=Kd1kFWFaltLqpTVDwJhNXlXpSin2ELaT93N3mCYoCk/1VZP0leu5gvZgyYuNNeu0ed
- rkjkadeXmv0MoY/3+PbqyQhk8ebrY8UkKUUMDUlk84Y2dehVFKm/wq9rfo6n1c0yNSi7
- wg45hFrGLiIv+v+P9VagUO7p44e6hycHQuk3yVKZD5HEaiYJsUUcFc0OGgQbU1JtFvzt
- IMKOMJUJn5gUYUCS0GW9hz4Qxz6B2gHPEAFaFG6MQYfolGqXf89th6qk8hEZsx2JxRsS
- lG8gZ2eFKS0jqFlgm5dHc9HYgwxeuKQdD6wg9qB5KupEzeeUkshAzi0ztgl0WqjG35tk
- OEfg==
-X-Gm-Message-State: AFuF++kTNzVAVomDIKWnJUlwp+X7NDyQ1onqSjeS2OWZO1hh070xCOM9
- /WQ1G3l7EZP8hxMzPZ0TSd2+xDzJMDW4OE5+/pn/LLmSLtQM1P70r9bXRpXJzsmU
-X-Gm-Gg: AR+sD11uJ8VX1IGKf+HgBFdwRMJyW1zQEeIWZJc4SDo6IXR084asn/JAo06jl5SG93e
- E0FCLZ/mksAUsIBXYFNx9Yyt/6972TJKFf/Y0qF5brsU0WyhK3P4YzXAv34CnXgM+Q6PksChCsl
- DwG1V3nrJSLA+3mNJD9BZOJi9sRPpqFbn6ARI0C4A1wOzHRNsBMyjgS9syg5GEbBWfScEe7Unz7
- 5/ZiPdLq10zTD9rByzHx423tPtB/dpgzbzc7M7/Am5Mt6phEaDbbLrw5XHWEsod6nwkbt7YMCrM
- HQxWd7v3Ko/5k6HP4NEuRiuxSbe5b8EMF3uOtetAnpSd4RTFbGDclRpr2vYSVatOmeBvmwcJV9Q
- mN2Q1wGSOTVe8fnjEFrcuKiCjswx63fbtogeHbP3oMttjVzurTj279g+q31UKNW7VE7KFCrYKtw
- g0Ed1EpG9p+cMpfqr5I8/Ij+E7tWV6cb0oxNE24kuLorgVTIYqeb//aGDM2mwkmUg6E98fFjW7R
- j1j7hy0qSFScv6m5/jnlHOTUiDQ3iGVprYhtoo1
-X-Received: by 2002:a05:690c:3388:b0:81e:89b2:91ae with SMTP id
- 00721157ae682-8573f8d462amr59125217b3.21.1787806993191; 
- Wed, 26 Aug 2026 22:03:13 -0700 (PDT)
+ bh=QYGTe5Dtc8jpyUVbafTGVnqH+rZmDr8bZimPftm6jiM=;
+ b=hUbdSQbapAbYwdNih6q5TgTuBQ2eNY84FWM1tMHk2BWR1vUqMmuSA34Sp3shEJ/Cq3
+ YIYdqTHX2E8+hgfr30Z3R/uY6TTuhS2p/we2dmv9EPW51jU0D92ZeV4qHp8ANS1YpP+T
+ zZ1ve0JOOLv8Qpo5qOQ9OUzSqkSzyXa0c+OX0NzoMysGzH4Jou5VU6H81IgAKOaoxnuF
+ QYrWnO1hcb/piBQ0xCxHSJWnHHDc96f4pOg4RE1dmZahlyd4eBORsRSc9K5+XWUWyYst
+ Ce7Ftw7oKRjlmIsSAJQxyWLFEBecZF181lhwspvOO4cW4KS+B860QbFnCUzAMkyo/G0y
+ UG2A==
+X-Gm-Message-State: AFuF++nlf3TFdyIOZovgSGP2hwsGPEEEcOF6Q8PNFJZ7hTGG5uAYdV1Z
+ yBAMFxN7DCkcJ77lr4QdAmG+b/2CwbgrbGvEryycYkM870vvYKOfEquVhrN5Oxbc
+X-Gm-Gg: AR+sD10134yIECcza7FHzo+SKpFBaXII3Lqw6d5W/vUqoWGbPruhMjsdJmsc4GDPiZ+
+ 4a1hU8ybTHk0Y2v2S/FBahlJUugo/2Z6UDZ8+4f8YVYWuajE/RQ0REWHzfb0s4nCCyLBi3aDU3J
+ cncRLFoqsKCW/f+vzXIvE2aw/3/hLquLv84gj5CDTXrPGUgQ2sD6jpZ0zfptwQxe9gt9udj5FEz
+ jjFavYBV6TpN9K5xq/eEer1qjq46bE1DQZ6Dm0kQfXTXkefUTGeCQ7nvrFaPjx4UxfLt8tC5ACZ
+ krT5FOnL14CWj7Us5vuMKsgccGRNtw0rkKpn/ieCDG1zd4x31M5IvwdqiX49sn8l12zqmPWuiGG
+ Gnlbme18Y+ukk89WQmPkWeaXMaa+ZWWNTovDvXZ9vksp5xGxwUoZalKG9KcT0/rvnKh6+1/pFpS
+ hgwYJ6ZUUsnTNWbDif9/v95rqD5Hmdn2Atrr2MXMyNvmfk37e3AAmpkvLSD0apF/5ENh7u94hxy
+ DAOEnqP3vsYQ5yW6yYVf8fjvozsbgOg7bKizzG8
+X-Received: by 2002:a05:690c:4b11:b0:81e:cc9f:3dfe with SMTP id
+ 00721157ae682-8573c008d0bmr54581107b3.1.1787806987967; 
+ Wed, 26 Aug 2026 22:03:07 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-85b5bc331c5sm4272317b3.3.2026.08.26.22.03.12
+ 00721157ae682-85b6143ff05sm4120317b3.32.2026.08.26.22.03.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 22:03:12 -0700 (PDT)
+ Wed, 26 Aug 2026 22:03:06 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@oss.qualcomm.com,
  alex.bennee@linaro.org, zhao1.liu@intel.com,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v4 8/9] RFC: accel/tcg: poison the jump cache instead of
- polling for indirect exits
-Date: Thu, 27 Aug 2026 01:02:40 -0400
-Message-ID: <20260827050241.3713332-9-mattst88@gmail.com>
+Subject: [PATCH v4 6/9] RFC: tcg: probe the TB jump cache inline instead of
+ calling a helper
+Date: Thu, 27 Aug 2026 01:02:38 -0400
+Message-ID: <20260827050241.3713332-7-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260822190818.1829249-1-mattst88@gmail.com>
 References: <20260822190818.1829249-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,409 +104,294 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Every translation block begins by loading cpu->neg.icount_decr.u32, testing
-it and branching to the exit path. That is three host instructions at the top
-of every TB, and blocks are short: an emulated alpha gcc 16.2.0 compiling a
-255k line translation unit executes 34.2 billion of them at 6.04 guest
-instructions each.
+Every indirect branch that cannot use goto_tb ends in
+tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For an
+emulated compiler that is 8.4 billion helper calls in a single translation
+unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
+register destination and because goto_tb is restricted to same-page
+targets.
 
-A block does not need to poll if every way out of it already reaches a check.
-A goto_tb does not: it chains straight into its destination, with nothing in
-between that looks at icount_decr, so the destination has to poll on entry.
-An indirect exit does. The out-of-line path calls helper_lookup_tb_ptr()
-every time, so it only needs the helper to return the epilogue while an exit
-is pending. The inline probe is already covered by the machinery the
-breakpoint patch added: it reads its base pointer from
-cpu->tb_jmp_cache_probe and takes the slow path when the entry it finds has a
-NULL tb, so pointing that base at a page of zeroes turns every indirect
-dispatch into a miss, and a miss lands in the same helper.
+The helper itself is already tight, but each call pays for a call frame,
+the can_do_io store, the get_tb_cpu_state() indirect call through
+TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
+jump cache probe that almost always hits (95.8% for this workload).
 
-So a pending exit becomes one more reason for tcg_cpu_may_dispatch() to say
-no. The two places that set icount_decr.u16.high poison the probe; the main
-loop puts it back once the flag is clear, on the same pass that already
-re-evaluates the breakpoint state. The real tb_jmp_cache is untouched
-throughout, so no cache contents are lost, and the fast path pays nothing:
-the base was a load from CPUState either way.
+Emit the probe inline instead. The two preceding patches supply what it
+needs: the destination PC is in a TCG temp, the flags, cflags and cs_base
+the destination must match are constants at translation time, and
+tb_jmp_cache_probe is a base pointer the main loop can poison. The fast
+path is therefore a hash, four guarded loads and a goto_ptr. Only a miss
+calls the helper, which still owns filling the cache.
 
-The poll is therefore emitted only in blocks that emit a goto_tb. Whether a
-block does is not known until its last exit has been generated, so the
-decision is deferred and the load and branch are emitted retroactively at the
-head of the block in gen_tb_end(), using the same emit_before_op mechanism
-the can_do_io stores use. icount opts out and keeps the counter
-unconditionally.
+Two details matter for the generated code. The flags and cflags guards are
+folded into a single aligned 64-bit load and compare, since the fields are
+adjacent. And each path emits its own goto_ptr rather than branching to a
+shared one: a temp live across the label is spilled and reloaded on every
+dispatch, which cost 6.3% on its own.
 
-Interrupt latency is bounded at one block, as before. It does not depend on
-the shape of the guest's control flow graph: a block either polls on entry or
-is checked on the way out, and no run of blocks can avoid both. What changes
-is where the check sits, not how often one happens.
+The flags and cflags constants are safe against the other things that can
+change them. CF_PARALLEL is only ever set by begin_parallel_context(),
+which flushes first, so no block predating it survives to dispatch. gdb
+single-step is only turned on with the CPU stopped, and a block translated
+without CF_SINGLE_STEP can only be re-entered through tb_lookup(), which
+from then on demands the new cflags -- so a stale-cflags block is never the
+one running. What is left is one_insn_per_tb and -d nochain, which the
+monitor can toggle under a running vCPU without a flush; see below.
 
-tests/tcg/multiarch/test-indirect-irq.c is added for this: a loop whose only
-back edge is an indirect branch, under alarm(1). That loop's block emits no
-goto_tb, so it no longer polls, and the test passes only because the dispatch
-notices instead -- it hangs if the poison is removed, which is what makes it a
-test of the new mechanism rather than of the old poll. Nothing in it is
-architecture specific: the loop is a computed goto, which every target's
-compiler supports, so it covers whichever targets go on to use the inline
-probe. The other alpha tests still pass and the emulated compiler still
-produces byte-identical output.
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
+build, on top of the preceding patches:
 
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling the
-SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO build, on
-top of the preceding patches:
+    before: 1,402,667,803,616 instructions
+    after:    916,415,123,244 instructions   -34.67%
 
-    before: 891,254,240,071 instructions
-    after:  868,811,832,620 instructions   -2.52%
+    before: 115.56s wall clock
+    after:   85.59s wall clock               -25.94%
 
-    before: 81.45s wall clock
-    after:  79.85s wall clock              -1.96%
+The gap between the two is the point at which this stops being a
+straight-line win: the helper call was highly predictable work that the
+host pipelined well, so removing it retires far fewer instructions than it
+saves time. IPC falls from 2.48 to 2.17 across this patch for that reason.
 
-The emulated compiler produces byte-identical output.
+Despite emitting more code, this also reduces instruction cache pressure,
+because a dispatch no longer jumps into qemu's .text and evicts translated
+code:
 
-RFC because:
+    before: 11,735,141,703 L1-icache-load-misses
+    after:   7,154,863,292 L1-icache-load-misses   -39.0%
 
-- The un-poison in the main loop races a concurrent poison from another
-  thread. The existing barrier around icount_decr.u16.high covers it -- a
-  poison that lands after the sync also re-set the flag, and exit_request was
-  stored before it -- but this deserves more eyes than the single-threaded
-  user-mode testing I have given it.
-- Only the inline probe needs the poison, and only alpha uses the inline
-  probe today. Targets on the out-of-line path are covered by the helper
-  check alone, but that has not been measured.
-- The shared zero-filled CPUJumpCache is a 1MB allocation that is never
-  written. A read-only mapping would express that better.
+The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
+falls from 31.01% of samples to 0.35%, and qemu's own .text falls from
+38.8% to 5.3%, with the balance moving into generated code.
 
-v3: Rebased onto the removal of "only poll for interrupts in blocks that can
-    close a cycle", which v2 sat on top of and which is dropped: it let a
-    straight-line run of arbitrary length go unchecked, since a block with no
-    backward edge polled nowhere (Richard).
+Combined with the preceding patches, against an unmodified LTO build,
+1,646,994,254,249 instructions fall to 916,415,123,244, or -44.36%. The
+emulated compiler produces byte-identical output throughout.
 
-    The rule is now that a block polls iff it emits a goto_tb, rather than
-    iff it can close a control flow cycle. That keeps the bound at one block
-    without any analysis of the guest's control flow graph, so the objection
-    to the dropped patch does not carry over. The deferred-emission machinery
-    it needs moves here from that patch; DisasContextBase::needs_exit_check
-    and the hook in translator_use_goto_tb() are gone with it, and the flag
-    is now set by tcg_gen_goto_tb() rather than by goto_ptr emission.
+Open issues, hence RFC:
 
-    All of v2's measurements were dropped: they were taken with the
-    cycle-analysis patch underneath, which changes both the baseline and
-    what is left to remove, so none of them described this patch. The
-    numbers above are a fresh measurement of the series as it now stands.
+- one_insn_per_tb and CPU_LOG_TB_NOCHAIN can be toggled from the monitor
+  while a vCPU is inside a block that was translated without them. The
+  block keeps dispatching inline with the old cflags until it exits for
+  some other reason. Poisoning the probe from tcg_update_all_cflags()
+  would close it.
+- The jump cache entry is read without qatomic_read(); entries are
+  invalidated concurrently by setting tb to NULL.
+- Only alpha has been measured. The other four targets that pass a PC are
+  built and boot-tested only.
 
-v4: Moved the test from tests/tcg/alpha/ to tests/tcg/multiarch/: the
-    mechanism is generic and nothing in the test is alpha specific (Alex).
+v4: Split out of the patch that also changed the
+    tcg_gen_lookup_and_goto_ptr() API and introduced tb_jmp_cache_probe,
+    which are now the two preceding patches. Requested by Richard
+    Henderson.
 
-    The performance numbers above are the v3 measurements, not re-run: the
-    machine they were taken on is busy.
+v4: Emit the softmmu form of tb_jmp_cache_hash_func() under
+    CONFIG_SOFTMMU rather than the user-only form everywhere. v3 emitted
+    the user-only hash unconditionally, which was wrong for system mode
+    and was only not a correctness bug because a wrong index simply
+    misses. Caught by Richard Henderson. tcg-op.c is compiled once per
+    build rather than once per target, but CONFIG_SOFTMMU is set for it,
+    and TARGET_PAGE_BITS -- a load from target_page here -- is fixed long
+    before any translation happens.
+
+v4: Compare the pc before testing tb for NULL. On a hash miss the pc is
+    the field most likely to differ, and an unused entry has a zero pc
+    that only pc 0 can match, so the tb test buys nothing ahead of it.
+    Suggested by Richard Henderson.
+
+v4: Assert that offsetof(TranslationBlock, flags) is 8-byte aligned, since
+    folding the flags and cflags guards into one 64-bit load relies on it
+    and nothing else does. Requested by Richard Henderson.
+
+v4: Zero-extend a 32-bit guest PC instead of falling back to the helper.
+    Suggested by Richard Henderson. The high half then folds to a compare
+    against zero.
+
+v4: Describe cs_base in the probe as a second word of target-specific
+    flags rather than by name. Suggested by Richard Henderson.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- accel/tcg/cpu-exec.c                    | 23 +++++++--
- accel/tcg/tcg-accel-ops.c               |  1 +
- accel/tcg/translator.c                  | 51 ++++++++++++++++++--
- include/hw/core/cpu.h                   |  8 ++--
- include/tcg/tcg.h                       |  2 +
- tcg/tcg-op.c                            | 13 ++++++
- tests/tcg/multiarch/test-indirect-irq.c | 62 +++++++++++++++++++++++++
- 7 files changed, 151 insertions(+), 9 deletions(-)
- create mode 100644 tests/tcg/multiarch/test-indirect-irq.c
+ include/tcg/tcg-op-common.h |  14 ++--
+ tcg/tcg-op.c                | 126 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 133 insertions(+), 7 deletions(-)
 
-diff --git ./accel/tcg/cpu-exec.c ./accel/tcg/cpu-exec.c
-index c2a9679cd7..9ca5894108 100644
---- ./accel/tcg/cpu-exec.c
-+++ ./accel/tcg/cpu-exec.c
-@@ -388,6 +388,16 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
-      */
-     cpu->neg.can_do_io = true;
- 
-+    /*
-+     * A block that dispatches indirectly does not emit the icount_decr poll,
-+     * so this is where a pending exit is noticed for that path: either the
-+     * probe was poisoned and every dispatch arrives here, or the target uses
-+     * the out-of-line lookup and always did.
-+     */
-+    if (unlikely(cpu_loop_exit_requested(cpu))) {
-+        return tcg_code_gen_epilogue;
-+    }
-+
-     TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
-     s.cflags = curr_cflags(cpu);
- 
-@@ -757,8 +767,9 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-  * slow path when the entry it finds has a NULL tb.  Pointing the probe at a
-  * region that is all zeroes therefore forces every indirect dispatch into
-  * helper_lookup_tb_ptr(), which does the full lookup the inline probe only
-- * approximates.  The real jump cache is untouched, so no contents are lost
-- * and recovery is a single store.
-+ * approximates and returns to the main loop while an exit is pending.  The
-+ * real jump cache is untouched, so no contents are lost and recovery is a
-+ * single store.
+diff --git ./include/tcg/tcg-op-common.h ./include/tcg/tcg-op-common.h
+index 34102b3b7a..b8399229c9 100644
+--- ./include/tcg/tcg-op-common.h
++++ ./include/tcg/tcg-op-common.h
+@@ -81,13 +81,13 @@ void tcg_gen_goto_tb(unsigned idx);
   *
-  * Only ever read from, and only one entry per dispatch, so one shared
-  * zero-filled cache is enough for every CPU.  Not const: that would put a
-@@ -779,10 +790,13 @@ static CPUJumpCache tb_jmp_cache_poison;
-  * the rest of the page.  A block translated before the breakpoint was set is
-  * therefore still in the jump cache, and dispatching to it inline would step
-  * straight over the breakpoint.
-+ *
-+ * A block that dispatches indirectly also does not emit the icount_decr
-+ * poll, so the dispatch is where a pending exit has to be noticed.
-  */
- static bool tcg_cpu_may_dispatch(CPUState *cpu)
- {
--    return QTAILQ_EMPTY(&cpu->breakpoints);
-+    return QTAILQ_EMPTY(&cpu->breakpoints) && !cpu_loop_exit_requested(cpu);
- }
- 
- /*
-@@ -851,6 +865,9 @@ void tcg_kick_vcpu_thread(CPUState *cpu)
- 
-     /* Ensure cpu_exec will see the exit request after TCG has exited.  */
-     qatomic_store_release(&cpu->neg.icount_decr.u16.high, -1);
-+
-+    /* Blocks that only dispatch indirectly do not poll; stop them chaining. */
-+    tcg_cpu_poison_jmp_cache(cpu);
- }
- 
- static inline bool icount_exit_request(CPUState *cpu)
-diff --git ./accel/tcg/tcg-accel-ops.c ./accel/tcg/tcg-accel-ops.c
-index 560fe2554b..9eb9e861ac 100644
---- ./accel/tcg/tcg-accel-ops.c
-+++ ./accel/tcg/tcg-accel-ops.c
-@@ -106,6 +106,7 @@ void tcg_handle_interrupt(CPUState *cpu, int mask)
-         qemu_cpu_kick(cpu);
-     } else {
-         qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
-+        tcg_cpu_poison_jmp_cache(cpu);
-     }
- }
- 
-diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
-index 8879cd626f..89d255bd04 100644
---- ./accel/tcg/translator.c
-+++ ./accel/tcg/translator.c
-@@ -45,12 +45,35 @@ bool translator_io_start(DisasContextBase *db)
-     return true;
- }
- 
-+/*
-+ * A block that ends in a goto_tb chains straight to its destination: nothing
-+ * between the two looks at icount_decr, so the destination has to poll on
-+ * entry.  A block whose exits are all indirect does not, because the dispatch
-+ * itself notices -- a pending exit poisons tb_jmp_cache_probe, so the probe
-+ * misses into helper_lookup_tb_ptr(), which returns the epilogue.  Every block
-+ * therefore either polls on entry or is checked as it leaves, which bounds
-+ * interrupt latency at one block without looking at the shape of the guest's
-+ * control flow graph.
-+ *
-+ * Which kind a block is is not known until its last exit has been emitted, so
-+ * defer the decision to gen_tb_end() and emit the poll retroactively.
-+ *
-+ * icount needs the counter unconditionally, so it opts out.
-+ */
-+static bool defer_exit_check(uint32_t cflags)
-+{
-+    return !(cflags & CF_USE_ICOUNT);
-+}
-+
- static TCGOp *gen_tb_start(DisasContextBase *db, uint32_t cflags)
- {
-     TCGv_i32 count = NULL;
-     TCGOp *icount_start_insn = NULL;
- 
--    if ((cflags & CF_USE_ICOUNT) || !(cflags & CF_NOIRQ)) {
-+    tcg_ctx->exit_check_needed = false;
-+
-+    if ((cflags & CF_USE_ICOUNT) ||
-+        (!(cflags & CF_NOIRQ) && !defer_exit_check(cflags))) {
-         count = tcg_temp_new_i32();
-         tcg_gen_ld_i32(count, tcg_env,
-                        offsetof(CPUState, neg.icount_decr.u32) -
-@@ -76,6 +99,9 @@ static TCGOp *gen_tb_start(DisasContextBase *db, uint32_t cflags)
-      */
-     if (cflags & CF_NOIRQ) {
-         tcg_ctx->exitreq_label = NULL;
-+    } else if (defer_exit_check(cflags)) {
-+        /* Emitted retroactively by gen_tb_end(), if this TB emits a goto_tb. */
-+        tcg_ctx->exitreq_label = gen_new_label();
-     } else {
-         tcg_ctx->exitreq_label = gen_new_label();
-         tcg_gen_brcondi_i32(TCG_COND_LT, count, 0, tcg_ctx->exitreq_label);
-@@ -91,7 +117,8 @@ static TCGOp *gen_tb_start(DisasContextBase *db, uint32_t cflags)
- }
- 
- static void gen_tb_end(const TranslationBlock *tb, uint32_t cflags,
--                       TCGOp *icount_start_insn, int num_insns)
-+                       TCGOp *icount_start_insn, int num_insns,
-+                       TCGOp *first_insn_start)
- {
-     if (cflags & CF_USE_ICOUNT) {
-         /*
-@@ -102,6 +129,23 @@ static void gen_tb_end(const TranslationBlock *tb, uint32_t cflags,
-                            tcgv_i32_arg(tcg_constant_i32(num_insns)));
-     }
- 
-+    if (tcg_ctx->exitreq_label && defer_exit_check(cflags) &&
-+        !(cflags & CF_NOIRQ)) {
-+        if (tcg_ctx->exit_check_needed) {
-+            TCGv_i32 count = tcg_temp_new_i32();
-+            TCGOp *save = tcg_ctx->emit_before_op;
-+
-+            tcg_ctx->emit_before_op = first_insn_start;
-+            tcg_gen_ld_i32(count, tcg_env,
-+                           offsetof(CPUState, neg.icount_decr.u32) -
-+                           sizeof(CPUState));
-+            tcg_gen_brcondi_i32(TCG_COND_LT, count, 0, tcg_ctx->exitreq_label);
-+            tcg_ctx->emit_before_op = save;
-+        } else {
-+            tcg_ctx->exitreq_label = NULL;
-+        }
-+    }
-+
-     if (tcg_ctx->exitreq_label) {
-         gen_set_label(tcg_ctx->exitreq_label);
-         tcg_gen_exit_tb(tb, TB_EXIT_REQUESTED);
-@@ -238,7 +282,8 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
- 
-     /* Emit code to exit the TB, as indicated by db->is_jmp.  */
-     ops->tb_stop(db, cpu);
--    gen_tb_end(tb, cflags, icount_start_insn, db->num_insns);
-+    gen_tb_end(tb, cflags, icount_start_insn, db->num_insns,
-+               first_insn_start);
- 
-     /*
-      * Manage can_do_io for the translation block: set to false before
-diff --git ./include/hw/core/cpu.h ./include/hw/core/cpu.h
-index bd2cdd2a0b..4272740303 100644
---- ./include/hw/core/cpu.h
-+++ ./include/hw/core/cpu.h
-@@ -523,9 +523,11 @@ struct CPUState {
-      * @tb_jmp_cache_probe: base the inline jump cache probe reads.
-      *
-      * Normally @tb_jmp_cache.  Pointed at a shared page of zeroes to force
--     * every inline dispatch to miss and fall back to helper_lookup_tb_ptr();
--     * see tcg_cpu_sync_jmp_cache().  NULL before tcg_exec_realizefn() and
--     * after tcg_exec_unrealizefn().
-+     * every inline dispatch to miss and fall back to helper_lookup_tb_ptr(),
-+     * either because a breakpoint is set or because an exit is pending; see
-+     * tcg_cpu_sync_jmp_cache().  Only generated code and the accessors in
-+     * cpu-exec.c may touch it.  NULL before tcg_exec_realizefn() and after
-+     * tcg_exec_unrealizefn().
-      */
-     struct CPUJumpCache *tb_jmp_cache_probe;
- 
-diff --git ./include/tcg/tcg.h ./include/tcg/tcg.h
-index 7669dc1c2d..df08c10544 100644
---- ./include/tcg/tcg.h
-+++ ./include/tcg/tcg.h
-@@ -389,6 +389,8 @@ struct TCGContext {
-     struct TCGLabelPoolData *pool_labels;
- 
-     TCGLabel *exitreq_label;
-+    /* Set by goto_tb emission: this TB chains without reaching a check. */
-+    bool exit_check_needed;
- 
- #ifdef CONFIG_PLUGIN
-     /*
+  * If the TB is not valid, jump to the epilogue.
+  *
+- * The lookup is a call to helper_lookup_tb_ptr().  @pc and @tb describe the
+- * destination for a faster lookup that a later patch adds, and neither is
+- * used yet.  When @pc is non-NULL it must hold exactly the value
+- * get_tb_cpu_state() reports as the pc for the destination, and the
+- * destination must match @tb's flags, cflags and cs_base.  A target whose
+- * pc is derived rather than being that key -- avr's word address, i386's
+- * eip before segmentation -- must pass NULL.
++ * The lookup is normally a call to helper_lookup_tb_ptr().  If @pc is
++ * non-NULL the jump cache is probed inline instead, and only a miss reaches
++ * the helper.  @pc must then hold exactly the value get_tb_cpu_state()
++ * reports as the pc for the destination; a target whose pc is derived
++ * (avr's word address, i386's eip before segmentation) must pass NULL.  The
++ * destination is required to match @tb's flags, cflags and cs_base, which
++ * is what makes them constants in the probe.
+  *
+  * This operation is optional. If the TCG backend does not implement goto_ptr,
+  * this op is equivalent to calling tcg_gen_exit_tb() with 0 as the argument.
 diff --git ./tcg/tcg-op.c ./tcg/tcg-op.c
-index cf7b6882d8..d384325a2e 100644
+index 2fda6e5c07..cf7b6882d8 100644
 --- ./tcg/tcg-op.c
 +++ ./tcg/tcg-op.c
-@@ -2713,6 +2713,13 @@ void tcg_gen_goto_tb(unsigned idx)
-     tcg_debug_assert((tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0);
-     tcg_ctx->goto_tb_issue_mask |= 1 << idx;
- #endif
-+    /*
-+     * A goto_tb chains straight into the destination, with nothing in between
-+     * that looks at icount_decr, so this TB has to poll on entry.  See
-+     * defer_exit_check().
-+     */
-+    tcg_ctx->exit_check_needed = true;
-+
-     plugin_gen_disable_mem_helpers();
+@@ -28,6 +28,8 @@
+ #include "tcg/tcg-op-common.h"
+ #include "exec/translation-block.h"
+ #include "exec/plugin-gen.h"
++#include "hw/core/cpu.h"
++#include "../accel/tcg/tb-hash.h"
+ #include "tcg-internal.h"
+ #include "tcg-has.h"
+ 
+@@ -2715,6 +2717,112 @@ void tcg_gen_goto_tb(unsigned idx)
      tcg_gen_op1i(INDEX_op_goto_tb, 0, idx);
  }
-@@ -2834,6 +2841,12 @@ void tcg_gen_lookup_and_goto_ptr_tmp(TCGTemp *pc, const TranslationBlock *tb)
+ 
++static void gen_jmp_cache_hash(TCGv_i64 h, TCGv_i64 pc)
++{
++#ifdef CONFIG_SOFTMMU
++    /*
++     * tb_jmp_cache_hash_func(), softmmu form.  TARGET_PAGE_BITS is a load
++     * from target_page in this translation unit, but it is decided long
++     * before any translation happens, so it is a constant here.
++     */
++    int shift = TARGET_PAGE_BITS - TB_JMP_PAGE_BITS;
++    TCGv_i64 tmp = tcg_temp_ebb_new_i64();
++
++    tcg_gen_shri_i64(tmp, pc, shift);
++    tcg_gen_xor_i64(tmp, tmp, pc);
++    tcg_gen_shri_i64(h, tmp, shift);
++    tcg_gen_andi_i64(h, h, TB_JMP_PAGE_MASK);
++    tcg_gen_andi_i64(tmp, tmp, TB_JMP_ADDR_MASK);
++    tcg_gen_or_i64(h, h, tmp);
++    tcg_temp_free_i64(tmp);
++#else
++    /* tb_jmp_cache_hash_func(), user-only form. */
++    tcg_gen_shri_i64(h, pc, TB_JMP_CACHE_BITS);
++    tcg_gen_xor_i64(h, h, pc);
++    tcg_gen_andi_i64(h, h, TB_JMP_CACHE_SIZE - 1);
++#endif
++}
++
++static void gen_jmp_cache_probe(TCGv_i64 pc, const TranslationBlock *tb)
++{
++    TCGv_ptr jc, ent, tbp, ptr;
++    TCGv_i64 h, tmp;
++    TCGLabel *slow;
++    uint64_t fpair;
++
++    QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) != 16);
++    QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) % 8 != 0);
++    /* One 64-bit load has to cover both, so they must be adjacent... */
++    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=
++                      offsetof(TranslationBlock, flags) + 4);
++    /* ...and aligned, which nothing else currently relies on. */
++    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, flags) % 8 != 0);
++
++    jc = tcg_temp_ebb_new_ptr();
++    ent = tcg_temp_ebb_new_ptr();
++    tbp = tcg_temp_ebb_new_ptr();
++    ptr = tcg_temp_ebb_new_ptr();
++    h = tcg_temp_ebb_new_i64();
++    tmp = tcg_temp_ebb_new_i64();
++    slow = gen_new_label();
++
++    /* ent = &jc->array[tb_jmp_cache_hash_func(pc)] */
++    gen_jmp_cache_hash(h, pc);
++    tcg_gen_shli_i64(h, h, 4);
++
++    /*
++     * Not cpu->tb_jmp_cache: the probe reads its own base so that the main
++     * loop can poison it, which is how conditions the probe cannot test for
++     * itself force every dispatch back into the helper.  See
++     * tcg_cpu_sync_jmp_cache().
++     */
++    tcg_gen_ld_ptr(jc, tcg_env,
++                   offsetof(CPUState, tb_jmp_cache_probe) - sizeof(CPUState));
++    tcg_gen_trunc_i64_ptr(ent, h);
++    tcg_gen_add_ptr(ent, jc, ent);
++
++    /*
++     * The pc first: on a hash miss it is the field most likely to differ,
++     * and an entry whose tb is NULL has a zero pc that only pc 0 matches.
++     */
++    tcg_gen_ld_i64(tmp, ent, offsetof(CPUJumpCache, array[0].pc));
++    tcg_gen_brcond_i64(TCG_COND_NE, tmp, pc, slow);
++
++    tcg_gen_ld_ptr(tbp, ent, offsetof(CPUJumpCache, array[0].tb));
++    tcg_gen_brcondi_ptr(TCG_COND_EQ, tbp, 0, slow);
++
++    /*
++     * flags and cflags are adjacent uint32_t, so one aligned 64-bit load
++     * and compare covers both.
++     */
++#if HOST_BIG_ENDIAN
++    fpair = ((uint64_t)tb->flags << 32) | tb->cflags;
++#else
++    fpair = ((uint64_t)tb->cflags << 32) | tb->flags;
++#endif
++    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, flags));
++    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, fpair, slow);
++
++    /*
++     * cs_base is a second word of target-specific flags despite the name,
++     * and the pc alone does not imply it on a target that uses it.
++     */
++    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, cs_base));
++    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, tb->cs_base, slow);
++
++    tcg_gen_ld_ptr(ptr, tbp, offsetof(TranslationBlock, tc.ptr));
++    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
++
++    /*
++     * Emit a second goto_ptr rather than branching to a shared one: a temp
++     * live across the label would be spilled and reloaded on every dispatch.
++     */
++    gen_set_label(slow);
++    ptr = tcg_temp_ebb_new_ptr();
++    gen_helper_lookup_tb_ptr(ptr, tcg_env);
++    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
++}
++
+ void tcg_gen_lookup_and_goto_ptr_tmp(TCGTemp *pc, const TranslationBlock *tb)
+ {
+     TCGv_ptr ptr;
+@@ -2726,6 +2834,24 @@ void tcg_gen_lookup_and_goto_ptr_tmp(TCGTemp *pc, const TranslationBlock *tb)
  
      plugin_gen_disable_mem_helpers();
  
-+    /*
-+     * Neither path below needs an icount_decr poll.  The helper returns to
-+     * the main loop while an exit is pending, and a pending exit poisons
-+     * tb_jmp_cache_probe, so the inline probe finds a NULL tb and falls into
-+     * that same helper.
-+     */
-     if (pc) {
-         TCGv_i64 pc64;
- 
-diff --git ./tests/tcg/multiarch/test-indirect-irq.c ./tests/tcg/multiarch/test-indirect-irq.c
-new file mode 100644
-index 0000000000..a672faf641
---- /dev/null
-+++ ./tests/tcg/multiarch/test-indirect-irq.c
-@@ -0,0 +1,62 @@
-+/*
-+ * A loop whose only back edge is an indirect branch must still be
-+ * interruptible.
-+ *
-+ * Blocks that dispatch indirectly do not emit the icount_decr poll; a pending
-+ * exit instead poisons the inline jump cache probe so that the dispatch falls
-+ * into helper_lookup_tb_ptr(), which returns to the main loop. If that
-+ * mechanism breaks, this program never leaves the loop and the test times
-+ * out rather than failing an assertion.
-+ *
-+ * A computed goto is used deliberately: a plain while(1) would end the block
-+ * with a direct backward branch, that is a goto_tb, and a block that emits a
-+ * goto_tb still polls -- so it would not exercise the path under test.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
++    if (pc) {
++        TCGv_i64 pc64;
 +
-+/* Written by the handler, read by the loop, so it must not be cached. */
-+static volatile sig_atomic_t fired;
-+/* Read after the loop, so the loop must not optimize the increment away. */
-+static volatile unsigned long iterations;
-+
-+static void handler(int sig)
-+{
-+    fired = 1;
-+}
-+
-+int main(void)
-+{
-+    /*
-+     * Indexing a table with a volatile index, rather than jumping through a
-+     * volatile pointer: gcc happily proves a single-valued pointer constant
-+     * and emits a direct branch, which is the case this test is not about.
-+     */
-+    volatile int idx = 0;
-+    void *target[2];
-+    struct sigaction sa;
-+
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_handler = handler;
-+    sigemptyset(&sa.sa_mask);
-+    assert(sigaction(SIGALRM, &sa, NULL) == 0);
-+    alarm(1);
-+
-+    target[0] = &&spin;
-+    target[1] = &&out;
-+spin:
-+    iterations++;
-+    if (!fired) {
-+        goto *target[idx];
++        /*
++         * The jump cache is keyed on a vaddr, so a 32-bit guest PC is
++         * compared as its zero-extension.  The high half then folds to a
++         * constant compare against zero.
++         */
++        if (pc->type == TCG_TYPE_I32) {
++            pc64 = tcg_temp_ebb_new_i64();
++            tcg_gen_extu_i32_i64(pc64, temp_tcgv_i32(pc));
++        } else {
++            pc64 = temp_tcgv_i64(pc);
++        }
++        gen_jmp_cache_probe(pc64, tb);
++        return;
 +    }
-+out:
 +
-+    printf("interrupted after %lu iterations\n", iterations);
-+    return 0;
-+}
+     ptr = tcg_temp_ebb_new_ptr();
+     gen_helper_lookup_tb_ptr(ptr, tcg_env);
+     tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
 -- 
 2.54.0
 
