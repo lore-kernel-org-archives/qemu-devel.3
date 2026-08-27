@@ -4,61 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C90C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97797C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 13:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wza9R-0007sy-Nf; Thu, 27 Aug 2026 09:28:17 -0400
+	id 1wzaBh-00004y-2a; Thu, 27 Aug 2026 09:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1wza9P-0007sk-CO; Thu, 27 Aug 2026 09:28:15 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wzaBf-0008WM-8e; Thu, 27 Aug 2026 09:30:35 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1wza9N-0000Mj-Gj; Thu, 27 Aug 2026 09:28:14 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 19A25600D3;
- Thu, 27 Aug 2026 13:28:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018051F000E9;
- Thu, 27 Aug 2026 13:28:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787837289;
- bh=YoiuiV7BuiVkrt8iov95SFQ61pmnoDw60YzzsiWw5ms=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=TWTXxhtPSBhbUDlaXPW8owhBrzMuM51QNTsBlaYj8E3rogpmptJX9wqI6a5830ZTr
- N5hWNYG/3SL7Clty+bZ11ZgQ3pBlLqE+xWxHydkWV9j38ZEh+0ohY1tahqC2kS+Yy+
- irlGOnGnIq7yPxzH9joYvSDEGPhnDY0RvDt2tCpvPa0ssydYzuZF29MznUQC4fHfB8
- T3lzkt+663pSsv+7GLEpmFj/bGsit3k3OGNr3HaTVTtytTpNBDITf/14oBxrAJFXj8
- /8Oq0LlwLzDu9KPkzTmSLYyC+LNZpm3LGOtOlAjSvWWk4jm2zu+sIlnpHGyjRWqXex
- 743b9W3tF90LQ==
-Date: Thu, 27 Aug 2026 15:28:03 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, armbru@redhat.com, lorenzo.pieralisi@linaro.org,
- gshan@redhat.com, enju.kohei@fujitsu.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v3 00/24] Add Realm support to QEMU-VMM
-Message-ID: <apA7Y37myawAspZk@red-moon>
-References: <20260825220101.3443954-1-mathieu.poirier@linaro.org>
- <apA2aSd4Gcic9vAP@redhat.com>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wzaBc-0001K4-Uj; Thu, 27 Aug 2026 09:30:35 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67RCVchK3056424; Thu, 27 Aug 2026 13:30:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=S/M3EfSXYtFddxXPfZM7RFX43eYe
+ w4NnJqkxSEOhqqQ=; b=Im5WahV0TJrTbZ29QsU/RhPHlyACac/hRfLaAEbvoXlb
+ tfy2G8MI9ckJlCpNXb1pyGCB5d2hgr0cIV6dhiZ8+TLkmeZGEucOTDlfpuN1LvWI
+ jhdh18V+mtkQGW97ixkzCStRPz5qAabqFIKtgwWZ8XFwYgxTTCaBY+AIoMQ7R4b1
+ 5S2H8prJjaCVSabrxu+tz8ZGU0NIKnbyctGx9Cb9zPAt320njE8fdjfe3MAfE3It
+ mNPz0GoQNHlxol+ANBeSQjqWTgi1pvmfNGcrBVSZKh0/rLXuatFm69Bh0ieo4Z23
+ cdplgG6b5oYyrifCKE5o25yK20A6Gvq+uqTp4FyaEw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxn9a5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2026 13:30:29 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RDQHb6003840;
+ Thu, 27 Aug 2026 13:30:28 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwgcj0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2026 13:30:28 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67RDUMBB31916634
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Aug 2026 13:30:23 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4CDE820043;
+ Thu, 27 Aug 2026 13:30:22 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 91A4B2004B;
+ Thu, 27 Aug 2026 13:30:16 +0000 (GMT)
+Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
+ [9.111.12.1]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Aug 2026 13:30:16 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com
+Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
+ aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
+ mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v3 00/37] target/ppc: PPC TCG Improvements (decodetree
+ migrations + ISA 2.07 flag updates)
+Date: Thu, 27 Aug 2026 18:59:15 +0530
+Message-ID: <20260827133010.278889-1-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <apA2aSd4Gcic9vAP@redhat.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=lpieralisi@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDEwOSBTYWx0ZWRfXx7IxY4x4upg1
+ OgU48ObMdvKqKntTg0U+YIoDAd+oMI5K9Isu9g5hkOQqmyn6tis5bfPsRSts1pEhC8hZwfRhx2U
+ xHlzn92zEr33VWux2y1UqZogelbzTfo=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a903bf5 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=SrywxPvrAqHmf2QoqzIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: kgBhUnHX4xAY6mFuN_L0p4sxDf2rkaC7
+X-Proofpoint-GUID: bdknaCrI4f49wEA_HiOiPf9eGo7r1C1w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDEwOSBTYWx0ZWRfX4eq4w2y2jzjs
+ qQbZQgYKQR7ZrXFtBUrnzXeLa2uuaQnnu9p9JOoyTyzPO1GEGr8YKCEiIZgix1vq7azCDvk9w3G
+ F46txilgDWQp+GUzWrxJEDdXSGIU1V6qg7C0ZHyg/TIzxA7qWdWoGx01bcLUrUy3/QAgFcrTp1y
+ pf6pVhtBXwLN7JVNxeryNA34fyKt00SpUGk7eCpAydbzaHJeHc2UL8A1YlIjqrpJPb2E/Dri/Gc
+ pX9yFt1C3Ez90zgM0jqpeT2qL+cWStefdkGvKrRS0LiRXB2M+TOwD05yGWasrbslMjI05fjE+QS
+ CY+cs/hoCMC+itkxWQ78BawsSGPImBmXnqYgnNpzgHzMZIOBNpArMazhvhrHKmCRJdRV1B/x8iW
+ /TXRdJOGenZUXqCVtNgOT+C24gG3ELkUafn7pDZZEDiwYeiVW9vZkQStq3Wg8M366EbbSmMUOxa
+ YxxOeFKtE4VJqqayTeg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-27_05,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608270109
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,31 +126,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 27, 2026 at 02:06:49PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Aug 25, 2026 at 04:00:37PM -0600, Mathieu Poirier wrote:
-> > This patchset provides minimal functionality to start a Realm VM
-> > from an Arm RME capable host using the following command line:
-> > 
-> > qemu-system-aarch64 \
-> >  -M confidential-guest-support=rme0,memory-backend=ram0 \
-> >  -object rme-guest,id=rme0,convert-in-place=on \
-> >  -object memory-backend-guest-memfd,id=ram0,size=1G,share=on \
-> >  -cpu host -M virt -enable-kvm -M gic-version=3,its=on -nodefaults ..
-> 
-> This example mentions 'convert-in-place=on', but I don't see that property
-> implemented in this series. Is the example a mistake or is this from a
-> further follow-on series yet to come ?
+This series primarily contains 3 changes :
 
-This series depends on Michael's patchset [0] as Mathieu mentioned in
-this cover letter (+ a fixlet that was added in the QEmu repo reported
-in this cover letter too that Michael should hopefully squash in in
-his series to make it work for CCA and possible other arches).
+1. PPC instructions movement to decodetree specification
+Changes from v2 :
+- Addressed review comments from Amit, as discussed in the v2 series.
+- Retained Rbs received.
 
-[1] contains all of the above.
+2. PPC ISA 2.07 flag cleanup and updates
+This series is based on top the above decodetree series.
+- No changes. Only Rbs added.
 
-[0] https://lore.kernel.org/kvm/20260528000416.8161-1-michael.roth@amd.com/
-[1] https://gitlab.com/Linaro/cca-public/qemu/-/tree/upstream-v3
+3. Stepping up as an active maintainer for PowerPC TCG CPUs module.
 
-Thanks,
-Lorenzo
+Link to v2: https://lore.kernel.org/qemu-devel/20260826050923.74756-1-rathc@linux.ibm.com/
+
+Aboorva Devarajan (3):
+  target/ppc: Move vector merge instructions to decodetree
+  target/ppc: Move vector pack instructions to decodetree
+  target/ppc: Move GPR atomic load/store instructions to decodetree
+
+Amit Machhiwal (2):
+  target/ppc: Move fixed-point Shift insns to decodetree
+  target/ppc: Move fixed-point byte-reversal store insns to decodetree
+
+Chinmay Rath (9):
+  target/ppc: make do_ea_calc_ra available for 32 bit builds
+  target/ppc: Replace PPC2_VSX207 flag with PPC2_ISA207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_BCTAR_ISA207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_LSQ_ISA207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_ALTIVEC_207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_ISA207S
+  target/ppc: Reorder PPC2 flags
+  target/ppc: Add ICBT support for ISA version 2.07
+  target/ppc: Add self as maintainer for PowerPC TCG CPUs
+
+Mukesh Kumar Chaurasiya (IBM) (2):
+  target/ppc: convert slw, srw instruction via decode spec
+  target/ppc: convert sraw[i] instruction via decode spec
+
+Nikhil Kumar Singh (3):
+  target/ppc: Migrate extswsli to decodetree
+  target/ppc: Migrate atomic loads to decodetree
+  target/ppc: Convert cache instructions to decodetree
+
+Ojaswin Mujoo (7):
+  target/ppc: Move isync instruction to decodetree
+  target/ppc: Convert b{a, l, la} to decode tree
+  target/ppc: move various conditional branch insns to decodetree
+  target/ppc: Fix TRANS* macro variadic arguments handling
+  target/ppc: Move wait instruction to decodetree
+  target/ppc: Move sleep & friends to decodetree
+  target/ppc: Refactor sleep and its variants to use a common helper
+
+Shivang Upadhyay (4):
+  target/ppc: Move Condition Register access instructions to decodetree.
+  target/ppc: Move Condition Register logical instructions to
+    decodetree.
+  target/ppc: Move Fixed-Point Load/Store String instructions to
+    decodetree.
+  target/ppc: Move VMX integer arithmetic and BCD instructions to
+    decodetree.
+
+Shivani Nittor (1):
+  target/ppc: Convert mcrf to decode tree
+
+Tanushree Shah (2):
+  target/ppc: Move rlwimi, rlwinm instructions to decodetree
+  target/ppc: Move lmw, stmw instructions to decodetree
+
+Utkarsh Verma (1):
+  target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
+
+Vishal Chourasia (3):
+  target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
+  target/ppc: Move byte-reverse instructions to decodetree
+  target/ppc: Move system call and rfi instructions to decodetree
+
+ MAINTAINERS                                   |    2 +-
+ hw/ppc/spapr_caps.c                           |    2 +-
+ linux-user/ppc/elfload.c                      |    6 +-
+ target/ppc/cpu.h                              |   38 +-
+ target/ppc/cpu_init.c                         |    6 +-
+ target/ppc/cpu_init.h                         |    7 +-
+ target/ppc/helper.h                           |   96 +-
+ target/ppc/insn32.decode                      |  252 ++
+ target/ppc/int_helper.c                       |   76 +-
+ target/ppc/internal.h                         |    7 -
+ target/ppc/mem_helper.c                       |   14 +-
+ target/ppc/tcg-excp_helper.c                  |   18 +-
+ target/ppc/translate.c                        | 2258 +++--------------
+ target/ppc/translate/bhrb-impl.c.inc          |    4 +-
+ target/ppc/translate/branch-impl.c.inc        |  182 +-
+ target/ppc/translate/fixedpoint-impl.c.inc    |  947 ++++++-
+ target/ppc/translate/fp-impl.c.inc            |    4 +-
+ target/ppc/translate/misc-impl.c.inc          |  172 ++
+ .../ppc/translate/processor-ctrl-impl.c.inc   |   39 +-
+ target/ppc/translate/storage-ctrl-impl.c.inc  |  116 +
+ target/ppc/translate/vmx-impl.c.inc           |  457 ++--
+ target/ppc/translate/vmx-ops.c.inc            |   59 +-
+ target/ppc/translate/vsx-impl.c.inc           |   56 +-
+ target/ppc/translate/vsx-ops.c.inc            |   24 +-
+ 24 files changed, 2473 insertions(+), 2369 deletions(-)
+
+-- 
+2.55.0
+
 
