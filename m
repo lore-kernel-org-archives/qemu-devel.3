@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0715C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FC8C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSGp-0005y2-Og; Thu, 27 Aug 2026 01:03:23 -0400
+	id 1wzSGg-0005rV-LL; Thu, 27 Aug 2026 01:03:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSGm-0005uR-32
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:20 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1wzSGb-0005ql-69
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:09 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSGj-0002LA-Lj
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:19 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-81ee6b2da98so26787437b3.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:03:16 -0700 (PDT)
+ id 1wzSGZ-0002JX-11
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 01:03:08 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-857d1184d29so19194417b3.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 22:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787806996; x=1788411796; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787806986; x=1788411786; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=abTvdvVoaUPAt7wEkDm5qW6FwkZ8iBbbJSMuWBq+oyc=;
- b=jpGMC0EUURyGoCiFMsT59gJZt47tbTVj6eAN/+P/tI4REmmn2Sps+8pLEam0i83p6n
- bdnYrtdXjWmbY7A+LZUrz4omMqRBQkEnySzS/tfNRopEt/NowUuY7Za+ADNk/KvS3bne
- LnahPT8BTbY7g+MUflPLlT1NZSOSS9+e3TkMesA/ahYPccCsxgqIjRFA9VsXjoPHBVrR
- JPAoSpNoV69nnS7mzGO+lLq1ewM3gJAcB0U5wDUMkyCPaf61j0wMq2WB3b8bdW9PiTyH
- 0+oHUwFT2jJJK9Z87QIJqSLsMScbfg1yy/Z/k49WO5IrtIgtegRnAElnQopKvIIE66Gu
- VwPw==
+ bh=ZnObpIoTaCD5yxi6xstyDb0vWidqbX29THsSMuAvPIs=;
+ b=AOz6dFf8tzj8bh+BDVOuG/Dde6fh0y+RGXF31KsX3VvxhykDbjuAJQyMhF7kQCQUoO
+ RgwkinHNER0u79Pn3MUf+D5woLvwKbQfwSXlMK0qOi11SIsY0P3GawCClddpUcsqgMSB
+ JGIB2gyIdUBaTtzfFEWdGOyWOQzQvENEiKBOdVPAMjMmaa3mjFkLNZXqQcUWji5ybsjV
+ kBhssrPQ9yYTIC/R+zUC84irPt3QlCvUSWdxhtVyoCbKRVFYuVkZeqT2ame2xk2f7U2f
+ QrU5L2ee64b8xhwqb11IcugxEQ83NxQkp0i+425FSNmS11jJvUB2XyYuagy8lle4spWc
+ dBNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787806996; x=1788411796;
+ d=1e100.net; s=20251104; t=1787806986; x=1788411786;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=abTvdvVoaUPAt7wEkDm5qW6FwkZ8iBbbJSMuWBq+oyc=;
- b=dMtEHQYXLnsxqhMGg/2vSbb0NuESXDPunNyoGfi0LOp3esc9G2k6BfCOQ/vUpCyqDS
- fTisJr1xdkCGszjLoVL+C+Nq2uPt2FBec3BK47kxyoD/2rhuicbTWASAh1ardQX2/uoM
- wIue4c8K4TujYNMTruzyWvTPN+oWDHFU1DRo4qXpXptcKMxBLwjstWxJF8mVnhkPthm1
- 7IjTyN/dJe/fiLPLK0KsqoamRvY/LVgT55qYhsmgmu3gA3AW2zPHEmpeJB3EvhK8/uyI
- OPD3zI1g38TEBunitSxqjJBFyfngez1dA69lX22n1/28JiubcExuVegrGCG19osFNyH9
- 8ZNg==
-X-Gm-Message-State: AFuF++mFgwQaNsSePCkDIUx0cA7lEQpuRc+AAsL5+lhb+a1zMaXaeZyw
- mtzcWpM0l3GNGgLT4Y+IGk3tVvBHCT6o1EyIDHHQek1WQUL3qjyB/YtB110JfZjT
-X-Gm-Gg: AR+sD108scyb6Xp7VmehSa/J83KPJX7aQ+qTqO+ImeDDCfseCEcpAQ5Zv5irJhgi8GX
- oKRIoYEKClS7AQu+0lyHyJXr3HZrSAQVxFInWe282HEiBYOWbpVP3sGW5ixhRaY8ZpgnH3nF1or
- Vn7MmpRz6+k5tcz2Cg/POD/ynk3Soc+/MpZMAUvydTNaxrd3UrlWSGNtmhWgmm/HJafcQN2uMLk
- iCnU6AdY227qzOKY0H3PHiuysdM5Bl/llp0r24h9G7Jll2/3bSCWeb/bjCgziNtXsquOLq8klYR
- +9ezBdmJb7mk3DfKk3I1gHAOVNqglI1wWTIuUo9cbxAxlbosshKl6imACZS8I9picT9D7ULpoJL
- QKB/xwObcpi4sGpOKk6Y047DhaLBXyO9QfEY95OcccpVp91k5inRsRh8M4xTAjyWDmNcMep0Mqw
- l0SxlLJGpE/HDg0LYzQv7aerI9ewfWhUyJJEjg4uS9fCLiIzFnPqfCIhYup8Jil1wT8/PATF93e
- tZg/qu5dMzKFSMdQpWdmdWjm3JSQUarUw0vwo9KDw==
-X-Received: by 2002:a05:690c:60c5:b0:854:5db3:4ed0 with SMTP id
- 00721157ae682-8574153a296mr54240007b3.31.1787806995751; 
- Wed, 26 Aug 2026 22:03:15 -0700 (PDT)
+ bh=ZnObpIoTaCD5yxi6xstyDb0vWidqbX29THsSMuAvPIs=;
+ b=puDUsHMJ3GPaS8WXooTMPnSOlWryI8w/UYZ6rTU1FV8fs/Ia7xdma2zxJKmnOBWreC
+ e5WfSHSCVlsYcifb8b+8EtYiaY8odludBvFZrNiZgPSQpn7kemSsJcHzBrETTvalGk60
+ Py9t+F3Y01xW4Jv1myu50rdGck2LXeG0w/i68gH29P7snQ45Jf9cqF5iPdWBzI3sr1UG
+ mNQYpBSYiUNlRnpJifqQgmzmThtV0+ji3MuiFJVW7Bp6ly+6TQ4RopcC18JAgxcgL7yz
+ KQK8Omyh9lWtZLkuFiSce368pA7NTeo1yUfPDMVI7g3340fXbddJZE7qMiRuYqpJ3GHL
+ 6Vbw==
+X-Gm-Message-State: AFuF++lF6guNoMg5o8FocqHEizdxabD/HDS1t49JlwUB+2/FSvZYoQxY
+ GlGtkXCe9atzjqU7zygJtr4pVBb9EYwYJfUukf9m+o2DRdq7IJPzzXzasnFOCieg
+X-Gm-Gg: AR+sD10ooAdnp5b+XTJX6kZyQM9xbsN94ERe+BmdVDCDnRb57s6OIf4YU/ZVFO6ftur
+ 7+rsgjmYwjSWU/ls3NKQdxJri4Sz4FH+vegKjNkhAp1ISXVlXPzgNr59KYvEV+vI5KLGl0u1Wtk
+ Ur7UulieNRM5Mhw+RFaeLCoejX8cly/qBgpdbgIsThw8+ODCShzSSuyJS6/6fMTW71MIlQE8ZdO
+ FDLHjCy6DmqgLXXs8+0KBKc/1J5UQUOmoyrY6JjtfGn7mYXjxfbFm8bzK4VTSF12EE4RhU9hrAL
+ Vxh6FBdqwyJae11MX6LpEyjRinJOIpQ4n8I1JbQLmbXBAFt1QdVY8e8vMnmbz58W11bAcLgbhLU
+ RRSDeYKQqO0q0wWAfh3DhOXm3miHxeQm+eem2slLD7ZMQoZFvqm4N2mLWVtKY2l+BGoLvwtOZ3W
+ nkarwg2ssUEF+pXpD8Cf9Rc0iEH2j/DjSA9hbBGNVmAaYOAegNIXMGJqjlic90SZpW6FDRqLi7/
+ ruU+LTagzAAi5P+MI8VkgYXOziSZioa1zrnldpT
+X-Received: by 2002:a05:690c:c507:b0:825:c3fc:e63f with SMTP id
+ 00721157ae682-8573c9cf6c7mr48415177b3.8.1787806985778; 
+ Wed, 26 Aug 2026 22:03:05 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-85b5c7f3d67sm4296127b3.15.2026.08.26.22.03.13
+ 00721157ae682-85b6143e97bsm4133407b3.26.2026.08.26.22.03.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 22:03:15 -0700 (PDT)
+ Wed, 26 Aug 2026 22:03:03 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@oss.qualcomm.com,
  alex.bennee@linaro.org, zhao1.liu@intel.com,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v4 9/9] RFC: tcg: fold a guest displacement into the host
- addressing mode
-Date: Thu, 27 Aug 2026 01:02:41 -0400
-Message-ID: <20260827050241.3713332-10-mattst88@gmail.com>
+Subject: [PATCH v4 5/9] accel/tcg: give the TB jump cache a second base
+ pointer for generated code
+Date: Thu, 27 Aug 2026 01:02:37 -0400
+Message-ID: <20260827050241.3713332-6-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260822190818.1829249-1-mattst88@gmail.com>
 References: <20260822190818.1829249-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,404 +104,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing in the TCG frontend interface can express a based memory access.
-tcg_gen_qemu_ld/st take an address and nothing else, so a target with a
-displacement in its load and store encodings -- which is most of them --
-has to materialize the address first:
+Add CPUState::tb_jmp_cache_probe, a base pointer that only generated code
+will read. Normally it is cpu->tb_jmp_cache. Pointing it instead at a
+shared, permanently zero-filled CPUJumpCache makes every entry generated
+code finds have a NULL tb, so every lookup done through it misses. The
+real jump cache is not touched, so nothing is lost and recovery is a single
+store.
 
-    ldq a1,8(a0)  ->  mov 0x80(%rbp),%rbx      reload a0
-                      lea 0x8(%rbx),%r12       address
-                      mov (%r12),%r12          the load
-                      mov %r12,0x88(%rbp)      spill a1
-
-The lea is pure loss on a host whose addressing mode has a displacement
-field sitting empty. It also needs a register, at the point in a block
-where pressure is highest.
-
-Fold it. After optimization, look for an add of a constant immediately
-before a guest access, defining that access's address operand, and move the
-constant into a new second constant argument on the op. The add is left for
-liveness to remove, so nothing breaks if its result has another use. Only
-the immediately preceding op is examined: that is what the frontends emit,
-and a window of one op means the pass does not have to reason about what
-could have happened in between. The one thing it does check is that the add
-did not clobber the base it read, since the access now reads that base
+Nothing reads it yet. The next patch probes the jump cache from generated
+code, and that probe cannot check everything helper_lookup_tb_ptr() checks;
+poisoning this pointer is how the conditions it cannot check force it back
+into the helper. The one that matters here is breakpoints.
+check_for_breakpoints() raises EXCP_DEBUG on an exact pc match and selects
+CF_BP_PAGE cflags for the rest of the page, and inserting a breakpoint
+deliberately invalidates no TB, so a block translated before the breakpoint
+was set is still sitting in the jump cache and would be dispatched to
 directly.
 
-Targets opt in with TCG_TARGET_HAS_ldst_disp and an out_disp member on
-TCGOutOpQemuLdSt. Without it the pass does not run, the displacement stays
-zero and the existing out member is called exactly as before, so no other
-backend changes behavior or needs touching.
+cpu_breakpoint_insert() poisons the target CPU, rather than leaving it to
+that CPU's own main loop, because gdb inserts a breakpoint into every CPU
+(tcg_insert_gdbstub_breakpoint()) and a thread already inside generated
+code dispatching to itself need never return to its main loop. The main
+loop puts the pointer back once the last breakpoint is gone, re-checking
+after the store so that it loses a race with a concurrent insert in the
+safe direction.
 
-The fold is refused unless the access has no slow path at all, since the
-slow path hands addr_reg to the helper and that register no longer holds
-the full guest address. That is decided generically: user-only, because
-softmmu compares the unadjusted address against the TLB; a 64-bit address
-type, because a 32-bit one wraps where a host displacement would not; and
-no alignment test on the access. For x86_64 the displacement goes in the
-disp32 that prepare_host_addr() already fills in for guest_base, so all the
-backend has left to check is that guest_base plus the displacement still
-fits there.
+The poison cache is a plain static rather than a const one so that it lands
+in .bss: a megabyte of const zeroes would be a megabyte of .rodata in every
+emulator binary, whereas .bss costs nothing on disk and faults in only the
+handful of pages a poisoned run happens to probe.
 
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling the
-SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO build,
-on top of the preceding patches, against a control measured in the same
-session:
+v4: Split out of "tcg: probe the TB jump cache inline instead of calling a
+    helper". Requested by Richard Henderson.
 
-    before: 868,811,832,620 instructions, 79.85s
-    after:  819,262,147,022 instructions, 77.30s
-                                          -5.70% instructions, -3.20% wall
-
-Emitted code shrinks from 50.55MB to 48.80MB over the run, 167.4 to 161.6
-bytes per block. Per Alpha opcode, the host bytes emitted for an access
-fall as expected and nothing else moves:
-
-    ldq   18.3 -> 15.4    ldah  20.9 -> 20.9
-    ldl   16.6 -> 14.1    lda   12.9 -> 12.9
-    stq   12.8 ->  9.7    mov    9.8 ->  9.8
-
-The emulated compiler produces byte-identical output and the alpha tests
-still pass, including with a non-zero guest_base forced via -B.
-
-RFC because:
-
-- Only wired up for x86_64, and only for qemu_ld and qemu_st; the i128
-  qemu_ld2 and qemu_st2 pairs are left alone.
-- Requiring that no slow path exists is stricter than necessary. The fast
-  path test can stay on the base register as long as the displacement is
-  itself a multiple of the required alignment, which it is for anything a
-  frontend emits for a struct or stack access. Recording the displacement
-  in TCGLabelQemuLdst and emitting one lea on the slow path would then
-  cover alignment-checked accesses too, at no fast path cost.
-- Softmmu wants the displacement folded into the TLB comparison as well,
-  which is a bigger change than this one.
-- A one op window catches everything the frontends emit today but is
-  trivially defeated by anything scheduled in between.
-
-v4:
-- Hoisted the compilation mode tests -- tcg_use_softmmu and the 64-bit
-  address type -- out of the backend hook and into fold_ldst_disp(), next
-  to the TCG_TARGET_HAS_ldst_disp test, so the loop is not entered at all
-  when the mode rules the fold out.
-- Pass MemOp rather than MemOpIdx to the backend hook; nothing about the
-  mmu_idx is relevant to it.
-- Moved the alignment test into generic code as ldst_disp_needs_align(),
-  so a backend does not have to repeat the atom_and_align_for_opc() call.
-  The exact answer depends on the host's atomicity capabilities, which the
-  generic pass does not know, so it answers for the most restrictive host.
-  That is the same answer for everything the frontends actually emit --
-  MO_ATOM_IFALIGN is the default -- and conservative for the handful of
-  MO_ATOM_WITHIN16 and MO_ATOM_SUBALIGN accesses, which lose the fold on a
-  host that could have taken it.
-- What is left of the x86_64 hook is the guest_base test, so it now lives
-  beside x86_guest_base under the CONFIG_USER_ONLY that declares it.
-- Refuse a displacement that does not fit in an int32_t, which is what
-  out_disp() takes. Not reachable with any real guest_base, but the pass
-  should not offer the backend something the interface cannot carry.
-- The numbers above are unchanged from v3: they have not been re-measured
-  on the restructured patch, which is not expected to move them since the
-  accesses in this workload are all MO_ATOM_IFALIGN.
+v4: Make the poison a static object rather than allocating one on first
+    use. Suggested by Richard Henderson, who asked for const; see above for
+    why it is not.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- include/tcg/tcg-opc.h       |   9 ++-
- tcg/tcg-op-ldst.c           |   3 +-
- tcg/tcg.c                   | 132 +++++++++++++++++++++++++++++++++++-
- tcg/x86_64/tcg-target.c.inc |  41 +++++++++++
- tcg/x86_64/tcg-target.h     |   3 +
- 5 files changed, 184 insertions(+), 4 deletions(-)
+ accel/stubs/tcg-stub.c      |  6 ++-
+ accel/tcg/cpu-exec.c        | 96 +++++++++++++++++++++++++++++++++++++
+ accel/tcg/internal-common.h |  2 +
+ cpu-common.c                | 11 +++++
+ include/hw/core/cpu.h       |  9 ++++
+ include/system/tcg.h        |  9 ++++
+ 6 files changed, 132 insertions(+), 1 deletion(-)
 
-diff --git ./include/tcg/tcg-opc.h ./include/tcg/tcg-opc.h
-index f3a81d5d7f..92fd34d3e3 100644
---- ./include/tcg/tcg-opc.h
-+++ ./include/tcg/tcg-opc.h
-@@ -125,8 +125,13 @@ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
- DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
- DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
- 
--DEF(qemu_ld, 1, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
--DEF(qemu_st, 0, 2, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
-+/*
-+ * The second constant argument is a displacement to add to the address,
-+ * zero unless a target advertises TCG_TARGET_HAS_ldst_disp and the fold in
-+ * fold_ldst_disp() applied.
-+ */
-+DEF(qemu_ld, 1, 1, 2, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
-+DEF(qemu_st, 0, 2, 2, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
- DEF(qemu_ld2, 2, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
- DEF(qemu_st2, 0, 3, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
- 
-diff --git ./tcg/tcg-op-ldst.c ./tcg/tcg-op-ldst.c
-index 22211ccb45..ffc5e651a6 100644
---- ./tcg/tcg-op-ldst.c
-+++ ./tcg/tcg-op-ldst.c
-@@ -92,7 +92,8 @@ static MemOp tcg_canonicalize_memop(MemOp op, bool is64, bool st)
- static void gen_ldst1(TCGOpcode opc, TCGType type, TCGTemp *v,
-                       TCGTemp *addr, MemOpIdx oi)
+diff --git ./accel/stubs/tcg-stub.c ./accel/stubs/tcg-stub.c
+index f9e1bd22d6..8298e4a1f5 100644
+--- ./accel/stubs/tcg-stub.c
++++ ./accel/stubs/tcg-stub.c
+@@ -1,6 +1,6 @@
+ /*
+  * Stubs for the TCG entry points in system/tcg.h, for binaries that link
+- * cpu-target.c or the HMP command handlers but not TCG.
++ * cpu-target.c, cpu-common.c or the HMP command handlers but not TCG.
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+@@ -14,3 +14,7 @@ void tcg_update_cflags(CPUState *cpu)
+ void tcg_update_all_cflags(void)
  {
--    TCGOp *op = tcg_gen_op3(opc, type, temp_arg(v), temp_arg(addr), oi);
-+    /* The trailing zero is the address displacement; see fold_ldst_disp(). */
-+    TCGOp *op = tcg_gen_op4(opc, type, temp_arg(v), temp_arg(addr), oi, 0);
-     TCGOP_FLAGS(op) = get_memop(oi) & MO_SIZE;
+ }
++
++void tcg_cpu_poison_jmp_cache(CPUState *cpu)
++{
++}
+diff --git ./accel/tcg/cpu-exec.c ./accel/tcg/cpu-exec.c
+index 148e0f583e..c2a9679cd7 100644
+--- ./accel/tcg/cpu-exec.c
++++ ./accel/tcg/cpu-exec.c
+@@ -752,6 +752,93 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+     return false;
  }
  
-diff --git ./tcg/tcg.c ./tcg/tcg.c
-index 489df0e738..466604eb97 100644
---- ./tcg/tcg.c
-+++ ./tcg/tcg.c
-@@ -1058,6 +1058,13 @@ typedef struct TCGOutOpQemuLdSt {
-     TCGOutOp base;
-     void (*out)(TCGContext *s, TCGType type, TCGReg dest,
-                 TCGReg addr, MemOpIdx oi);
-+    /*
-+     * As out(), for an access at addr + disp. Only required of targets that
-+     * define TCG_TARGET_HAS_ldst_disp; for everyone else fold_ldst_disp()
-+     * never runs and the displacement is always zero.
-+     */
-+    void (*out_disp)(TCGContext *s, TCGType type, TCGReg dest,
-+                     TCGReg addr, MemOpIdx oi, int32_t disp);
- } TCGOutOpQemuLdSt;
- 
- typedef struct TCGOutOpQemuLdSt2 {
-@@ -3574,6 +3581,123 @@ static void move_label_uses(TCGLabel *to, TCGLabel *from)
-     QSIMPLEQ_CONCAT(&to->branches, &from->branches);
- }
- 
-+#ifndef TCG_TARGET_HAS_ldst_disp
-+#define TCG_TARGET_HAS_ldst_disp  0
-+#define tcg_target_ldst_disp_ok(s, opc, disp)  false
-+#endif
++/*
++ * The inline jump cache probe reads cpu->tb_jmp_cache_probe and takes the
++ * slow path when the entry it finds has a NULL tb.  Pointing the probe at a
++ * region that is all zeroes therefore forces every indirect dispatch into
++ * helper_lookup_tb_ptr(), which does the full lookup the inline probe only
++ * approximates.  The real jump cache is untouched, so no contents are lost
++ * and recovery is a single store.
++ *
++ * Only ever read from, and only one entry per dispatch, so one shared
++ * zero-filled cache is enough for every CPU.  Not const: that would put a
++ * megabyte of zeroes in .rodata and so in the binary, where .bss costs
++ * nothing on disk and only faults in the handful of pages a poisoned run
++ * happens to probe.
++ */
++static CPUJumpCache tb_jmp_cache_poison;
 +
 +/*
-+ * Return true if @opc needs an alignment test in the fast path.
++ * Whether the generated code may dispatch to the next block by itself.
 + *
-+ * atom_and_align_for_opc() gives the exact answer, but only once the host's
-+ * atomicity capabilities are known, and those belong to the backend. Answer
-+ * instead for the most restrictive host, which is valid for all of them.
++ * The inline probe matches on the destination pc and on the flags and
++ * cflags the dispatching block was translated with.  It does not consult
++ * cpu->breakpoints, so it must not run while one is set: setting a
++ * breakpoint deliberately invalidates nothing, and check_for_breakpoints()
++ * both raises EXCP_DEBUG on an exact match and picks CF_BP_PAGE cflags for
++ * the rest of the page.  A block translated before the breakpoint was set is
++ * therefore still in the jump cache, and dispatching to it inline would step
++ * straight over the breakpoint.
 + */
-+static bool ldst_disp_needs_align(MemOp opc)
++static bool tcg_cpu_may_dispatch(CPUState *cpu)
 +{
-+    MemOp size = opc & MO_SIZE;
++    return QTAILQ_EMPTY(&cpu->breakpoints);
++}
 +
-+    if (memop_alignment_bits(opc)) {
-+        return true;
-+    }
-+    switch (opc & MO_ATOM_MASK) {
-+    case MO_ATOM_NONE:
-+    case MO_ATOM_IFALIGN:
-+    case MO_ATOM_IFALIGN_PAIR:
-+        return false;
-+    case MO_ATOM_WITHIN16:
-+        /* Misalignment implies !within16, and therefore no atomicity. */
-+        return size != MO_128;
-+    case MO_ATOM_WITHIN16_PAIR:
-+    case MO_ATOM_SUBALIGN:
-+        return size != MO_8;
-+    default:
-+        g_assert_not_reached();
++/*
++ * Poison @cpu's probe, from any thread.  Called when a breakpoint is
++ * inserted, which is what makes the poison take effect at the dispatch
++ * after the insert rather than whenever @cpu next reaches its main loop:
++ * a vCPU chaining indirectly need never reach it, and would run past a
++ * breakpoint another thread had just set.
++ *
++ * A plain store is enough.  The value only ever costs a slow path that is
++ * correct on its own, and the generated code re-reads the base on every
++ * dispatch.  Un-poisoning is tcg_cpu_sync_jmp_cache()'s job.
++ */
++void tcg_cpu_poison_jmp_cache(CPUState *cpu)
++{
++    if (qatomic_read(&cpu->tb_jmp_cache_probe) != NULL) {
++        qatomic_set(&cpu->tb_jmp_cache_probe, &tb_jmp_cache_poison);
 +    }
 +}
 +
 +/*
-+ * Fold "add addr, base, $disp" into the guest access that follows it, so
-+ * that the displacement becomes part of the host addressing mode instead of
-+ * a separate instruction. Frontends have no way to express this: there is
-+ * no displacement operand on tcg_gen_qemu_ld/st, so a based access always
-+ * costs an extra add, and an extra register to hold its result.
-+ *
-+ * Only an add in the op immediately before the access is recognized. That
-+ * is what the frontends emit, and a window of one op means no analysis is
-+ * needed of what might have happened in between. The add is left in place;
-+ * liveness removes it if its result has no other use.
++ * Called from the main loop, which is the only context that can establish
++ * that no reason to be poisoned is left.  Cheap enough to call every time
++ * round: the common case is a load, a compare and no store at all.
 + */
-+static void __attribute__((noinline))
-+fold_ldst_disp(TCGContext *s)
++void tcg_cpu_sync_jmp_cache(CPUState *cpu)
 +{
-+    TCGOp *op;
++    CPUJumpCache *want;
 +
-+    /*
-+     * The fold requires that the access have no slow path, because the slow
-+     * path hands the address operand to the helper and that register no
-+     * longer holds the complete guest address. That means user-only, since
-+     * softmmu compares the unadjusted address against the TLB. It also
-+     * requires a 64-bit address type: for a 32-bit one the add wraps and a
-+     * host displacement would not.
-+     */
-+    if (!TCG_TARGET_HAS_ldst_disp || tcg_use_softmmu ||
-+        s->addr_type != TCG_TYPE_I64) {
-+        return;
++    if (qatomic_read(&cpu->tb_jmp_cache_probe) == NULL) {
++        return;  /* not realized, or already unrealized */
 +    }
 +
-+    QTAILQ_FOREACH(op, &s->ops, link) {
-+        TCGOp *prev;
-+        TCGTemp *cts;
-+        int64_t disp;
-+        MemOp opc;
++    want = tcg_cpu_may_dispatch(cpu)
++           ? cpu->tb_jmp_cache
++           : &tb_jmp_cache_poison;
 +
-+        switch (op->opc) {
-+        case INDEX_op_qemu_ld:
-+        case INDEX_op_qemu_st:
-+            break;
-+        default:
-+            continue;
-+        }
++    if (qatomic_read(&cpu->tb_jmp_cache_probe) != want) {
++        qatomic_set(&cpu->tb_jmp_cache_probe, want);
 +
-+        opc = get_memop(op->args[2]);
-+        if (ldst_disp_needs_align(opc)) {
-+            continue;
-+        }
-+
-+        prev = QTAILQ_PREV(op, link);
-+        if (prev == NULL || prev->opc != INDEX_op_add ||
-+            TCGOP_TYPE(prev) != s->addr_type) {
-+            continue;
-+        }
-+
-+        /*
-+         * The add must define the address operand, and must not have
-+         * clobbered the base it read: after the fold the access reads the
-+         * base directly, so the base has to still hold its original value.
-+         */
-+        if (prev->args[0] != op->args[1] || prev->args[0] == prev->args[1]) {
-+            continue;
-+        }
-+
-+        cts = arg_temp(prev->args[2]);
-+        if (cts->kind != TEMP_CONST) {
-+            continue;
-+        }
-+        /* out_disp() takes an int32_t, so anything wider cannot be passed. */
-+        disp = cts->val;
-+        if (disp != (int32_t)disp) {
-+            continue;
-+        }
-+        if (disp == 0 || !tcg_target_ldst_disp_ok(s, opc, disp)) {
-+            continue;
-+        }
-+
-+        op->args[1] = prev->args[1];
-+        op->args[3] = disp;
-+    }
-+}
-+
- /* Reachable analysis : remove unreachable code.  */
- static void __attribute__((noinline))
- reachable_code_pass(TCGContext *s)
-@@ -5728,7 +5852,12 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-             const TCGOutOpQemuLdSt *out =
-                 container_of(all_outop[op->opc], TCGOutOpQemuLdSt, base);
- 
--            out->out(s, type, new_args[0], new_args[1], new_args[2]);
-+            if (new_args[3]) {
-+                out->out_disp(s, type, new_args[0], new_args[1],
-+                              new_args[2], new_args[3]);
-+            } else {
-+                out->out(s, type, new_args[0], new_args[1], new_args[2]);
++        if (want == cpu->tb_jmp_cache) {
++            /*
++             * Un-poisoning races a concurrent tcg_cpu_poison_jmp_cache():
++             * the reason may have appeared after tcg_cpu_may_dispatch() read
++             * it, and the poison may have landed before the store above.
++             * Order that store against the re-read below, so that the race
++             * is lost in the safe direction.
++             */
++            smp_mb();
++            if (!tcg_cpu_may_dispatch(cpu)) {
++                tcg_cpu_poison_jmp_cache(cpu);
 +            }
-         }
-         break;
++        }
++    }
++}
++
+ void tcg_kick_vcpu_thread(CPUState *cpu)
+ {
+     /*
+@@ -964,6 +1051,13 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+                 break;
+             }
  
-@@ -6611,6 +6740,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
-     tcg_temp_ebb_reset_freed(s);
++            /*
++             * Reaching here means the main loop has just re-evaluated
++             * everything the inline probe assumes, so this is where the
++             * probe is allowed to come back after a poison.
++             */
++            tcg_cpu_sync_jmp_cache(cpu);
++
+             tb = tb_lookup(cpu, s);
+             if (tb == NULL) {
+                 CPUJumpCache *jc;
+@@ -1072,6 +1166,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+     tcg_update_cflags(cpu);
  
-     tcg_optimize(s);
-+    fold_ldst_disp(s);
+     cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
++    qatomic_set(&cpu->tb_jmp_cache_probe, cpu->tb_jmp_cache);
+     tlb_init(cpu);
+ #ifndef CONFIG_USER_ONLY
+     tcg_iommu_init_notifier_list(cpu);
+@@ -1089,5 +1184,6 @@ void tcg_exec_unrealizefn(CPUState *cpu)
+ #endif /* !CONFIG_USER_ONLY */
  
-     reachable_code_pass(s);
-     liveness_pass_0(s);
-diff --git ./tcg/x86_64/tcg-target.c.inc ./tcg/x86_64/tcg-target.c.inc
-index 2c8f1f3e58..9b177d3475 100644
---- ./tcg/x86_64/tcg-target.c.inc
-+++ ./tcg/x86_64/tcg-target.c.inc
-@@ -1892,6 +1892,18 @@ static HostAddress x86_guest_base = {
-     .index = -1
- };
+     tlb_destroy(cpu);
++    qatomic_set(&cpu->tb_jmp_cache_probe, NULL);
+     g_free_rcu(cpu->tb_jmp_cache, rcu);
+ }
+diff --git ./accel/tcg/internal-common.h ./accel/tcg/internal-common.h
+index 853d1b51ee..9d1f6712d6 100644
+--- ./accel/tcg/internal-common.h
++++ ./accel/tcg/internal-common.h
+@@ -144,6 +144,8 @@ void page_table_config_init(void);
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+ #endif /* CONFIG_USER_ONLY */
+ 
++void tcg_cpu_sync_jmp_cache(CPUState *cpu);
++
+ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
+ void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
+ 
+diff --git ./cpu-common.c ./cpu-common.c
+index adb76b3a78..3aed0156e6 100644
+--- ./cpu-common.c
++++ ./cpu-common.c
+@@ -22,6 +22,7 @@
+ #include "exec/cpu-common.h"
+ #include "hw/core/cpu.h"
+ #include "qemu/lockable.h"
++#include "system/tcg.h"
+ #include "trace/trace-root.h"
+ 
+ QemuMutex qemu_cpu_list_lock;
+@@ -429,6 +430,16 @@ int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, int flags,
+         *breakpoint = bp;
+     }
+ 
++    /*
++     * Nothing is invalidated here, so blocks translated before this point
++     * are still live and still dispatch to each other without consulting
++     * cpu->breakpoints.  Stop the ones that can: a TCG vCPU dispatching
++     * inline reads a base pointer that this poisons, so the next dispatch
++     * takes the slow path and sees the new breakpoint.  @cpu may be another
++     * thread, and may be running.
++     */
++    tcg_cpu_poison_jmp_cache(cpu);
++
+     trace_breakpoint_insert(cpu->cpu_index, pc, flags);
+     return 0;
+ }
+diff --git ./include/hw/core/cpu.h ./include/hw/core/cpu.h
+index 81af7b9ee1..bd2cdd2a0b 100644
+--- ./include/hw/core/cpu.h
++++ ./include/hw/core/cpu.h
+@@ -519,6 +519,15 @@ struct CPUState {
+     MemoryRegion *memory;
+ 
+     struct CPUJumpCache *tb_jmp_cache;
++    /*
++     * @tb_jmp_cache_probe: base the inline jump cache probe reads.
++     *
++     * Normally @tb_jmp_cache.  Pointed at a shared page of zeroes to force
++     * every inline dispatch to miss and fall back to helper_lookup_tb_ptr();
++     * see tcg_cpu_sync_jmp_cache().  NULL before tcg_exec_realizefn() and
++     * after tcg_exec_unrealizefn().
++     */
++    struct CPUJumpCache *tb_jmp_cache_probe;
+ 
+     GArray *gdb_regs;
+     int gdb_num_regs;
+diff --git ./include/system/tcg.h ./include/system/tcg.h
+index 2c2dbc753b..bf05db1329 100644
+--- ./include/system/tcg.h
++++ ./include/system/tcg.h
+@@ -29,6 +29,15 @@ extern bool tcg_allowed;
+ void tcg_update_cflags(CPUState *cpu);
+ void tcg_update_all_cflags(void);
  
 +/*
-+ * Whether the displacement of a guest access can be folded into the host
-+ * addressing mode rather than materialized by a separate lea.  The generic
-+ * pass has already established that the access has no slow path, so all
-+ * that is left is guest_base, which shares the disp32 field.
++ * Force @cpu's generated code back into the slow dispatch path, which
++ * re-checks everything the inline jump cache probe assumes.  Safe to call
++ * from any thread, and a no-op for a CPU that is not running TCG.  Call
++ * whenever something the probe cannot see changes under a running vCPU;
++ * the main loop undoes it once the reason is gone.
 + */
-+static bool tcg_target_ldst_disp_ok(TCGContext *s, MemOp opc, int32_t disp)
-+{
-+    int64_t ofs = (int64_t)x86_guest_base.ofs + disp;
-+    return ofs == (int32_t)ofs;
-+}
++void tcg_cpu_poison_jmp_cache(CPUState *cpu);
 +
- #if defined(__linux__)
- # include <asm/prctl.h>
- # include <sys/prctl.h>
-@@ -1917,6 +1929,7 @@ static inline int setup_guest_base_seg(void)
- #endif
- #else
- # define x86_guest_base (*(HostAddress *)({ qemu_build_not_reached(); NULL; }))
-+# define tcg_target_ldst_disp_ok(s, opc, disp)  false
- #endif /* CONFIG_USER_ONLY */
- #ifndef setup_guest_base_seg
- # define setup_guest_base_seg()  0
-@@ -2183,9 +2196,23 @@ static void tgen_qemu_ld(TCGContext *s, TCGType type, TCGReg data,
-     }
- }
- 
-+static void tgen_qemu_ld_disp(TCGContext *s, TCGType type, TCGReg data,
-+                              TCGReg addr, MemOpIdx oi, int32_t disp)
-+{
-+    TCGLabelQemuLdst *ldst;
-+    HostAddress h;
-+
-+    ldst = prepare_host_addr(s, &h, addr, oi, true);
-+    /* tcg_target_ldst_disp_ok() has ruled out every slow path. */
-+    tcg_debug_assert(ldst == NULL);
-+    h.ofs += disp;
-+    tcg_out_qemu_ld_direct(s, data, -1, h, type, get_memop(oi));
-+}
-+
- static const TCGOutOpQemuLdSt outop_qemu_ld = {
-     .base.static_constraint = C_O1_I1(r, L),
-     .out = tgen_qemu_ld,
-+    .out_disp = tgen_qemu_ld_disp,
- };
- 
- static void tgen_qemu_ld2(TCGContext *s, TCGType type, TCGReg datalo,
-@@ -2321,9 +2348,23 @@ static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
-     }
- }
- 
-+static void tgen_qemu_st_disp(TCGContext *s, TCGType type, TCGReg data,
-+                              TCGReg addr, MemOpIdx oi, int32_t disp)
-+{
-+    TCGLabelQemuLdst *ldst;
-+    HostAddress h;
-+
-+    ldst = prepare_host_addr(s, &h, addr, oi, false);
-+    /* tcg_target_ldst_disp_ok() has ruled out every slow path. */
-+    tcg_debug_assert(ldst == NULL);
-+    h.ofs += disp;
-+    tcg_out_qemu_st_direct(s, data, -1, h, get_memop(oi));
-+}
-+
- static const TCGOutOpQemuLdSt outop_qemu_st = {
-     .base.static_constraint = C_O0_I2(L, L),
-     .out = tgen_qemu_st,
-+    .out_disp = tgen_qemu_st_disp,
- };
- 
- static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
-diff --git ./tcg/x86_64/tcg-target.h ./tcg/x86_64/tcg-target.h
-index 7ebae56a7d..8f2315c15e 100644
---- ./tcg/x86_64/tcg-target.h
-+++ ./tcg/x86_64/tcg-target.h
-@@ -30,6 +30,9 @@
- #define TCG_TARGET_NB_REGS   32
- #define MAX_CODE_GEN_BUFFER_SIZE  (2 * GiB)
- 
-+/* A guest displacement can go in the disp32 of the addressing mode. */
-+#define TCG_TARGET_HAS_ldst_disp  1
-+
- typedef enum {
-     TCG_REG_EAX = 0,
-     TCG_REG_ECX,
+ /**
+  * qemu_tcg_mttcg_enabled:
+  * Check whether we are running MultiThread TCG or not.
 -- 
 2.54.0
 
