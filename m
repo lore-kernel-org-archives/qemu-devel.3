@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A64C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01ADBC5DF9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 05:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzShq-000698-FX; Thu, 27 Aug 2026 01:31:18 -0400
+	id 1wzSoS-0007TB-Sm; Thu, 27 Aug 2026 01:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wzSho-00068B-57; Thu, 27 Aug 2026 01:31:16 -0400
+ id 1wzSoM-0007SR-Re; Thu, 27 Aug 2026 01:38:02 -0400
 Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wzShm-0000jp-Ff; Thu, 27 Aug 2026 01:31:15 -0400
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfout.phl.internal (Postfix) with ESMTP id 015E4EC01AD;
- Thu, 27 Aug 2026 01:31:13 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-11.internal (MEProxy); Thu, 27 Aug 2026 01:31:13 -0400
+ id 1wzSoK-0002Sg-5d; Thu, 27 Aug 2026 01:38:02 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfout.phl.internal (Postfix) with ESMTP id B24E2EC012A;
+ Thu, 27 Aug 2026 01:37:56 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Thu, 27 Aug 2026 01:37:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1787808672; x=1787895072; bh=OCMJ/MYUimGd/Fob8NO80S5wGAaBu0It
- BzUd8eGnMOs=; b=kiDAQtEDa7DoBXNwMBYZj0FThzEQpBndYKYOXOjPUzw6gaIA
- e4inFH+kugVU72zzeD3RR+Kzvvpr3tNQNY/LUGm3BQ8y7oZN1d8j8wV+8pCWzXhQ
- P1gyI60VGr9+fzrI2egEtzMyGitpAvCnIwwMOKzxCvIqlaqH54dKMuHsTqJJEThF
- YGwytfy1S7XucE7yKwV7fuMqmOdlTsgAUNk1y455Cfntz2g/RIRyCWDCI1F/aNGi
- 8dCzemyYqFI+DdL6ws8ChgCuVHI71NyF8P91/nk3UmBjozg52IkjynJGrvBP3SfA
- OuvYRr5/zap97LfGhTtl2Rw4lA0KcULdZ910CQ==
+ t=1787809076; x=1787895476; bh=+mCjXoth4Le30Hs19TlIAwUeDAUiQx5w
+ lwyyXe5tZZ8=; b=dmxWSh8ws7A3s+ZNeDqNoi4Yl+y98JIiq++1cxEv3PteIAzB
+ XpnybYzt5gknerrI/drDw3IaK6BKrHDKu1qhX8FCsx4/JOdFhyHkcrleQskLrZF5
+ tzCuX2zaXAb7k/07T9dJA2IDw609dt5X8ZXAqRxrm0/WDr0fIIiB1QfjqcqEAL3N
+ mpF3OeNy8EFDwxkL3T+x+NqbtUqC6nhl1e6i+sg1J6Vm4aKZITHWvs02Vak/Yb6n
+ ogmgneaqj8Kyf12xOnuksO9aTyH0bSssdo/1M+jFL9XadxWcwltfZZ1aAP3F8cXS
+ EOpOzOXEHfSCIVh1/MIbbD4yUlMCtE/SNSquYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787808672; x=
- 1787895072; bh=OCMJ/MYUimGd/Fob8NO80S5wGAaBu0ItBzUd8eGnMOs=; b=c
- iCXLlzDn7QaITassrasJpPnuRTh/VpyOVBXJHkAYNcjVjvbbpspGNNaYn1QYQYq9
- IDWy6rI/asEYr1y5gHKz4uGZt5x6V0ysUDaFjopgw1mo0NasdZK/HsJvQjT6D8I0
- cnRxH/fQsP36bRFj2oApcP/P53RSKef9muHW6BRrOyTRfKSf8toDsdR+9L0cPMU9
- 7l1g0Z9ick72wXGDTDlULoKj6M8q8H3LHu07n4NlJKqK7ERlWtN7t4G6fjD5w6Ht
- m+m7xq5XDlQMnnq/5FVkDJhiUGng+ISN5rY7p1y2hvUFRbMUflROLDEglicqodir
- O1HV2Ir3YT5pA5J4d2+qA==
-X-ME-Sender: <xms:n8uPagefVorlJ2y3bb4sBu2Z1tFPr8PrPPUuDpRMmeewoH2u0YV8IA>
- <xme:n8uPaj1fRarSsWt7zrYf0rjTJGEIqMyuw62ULI-BfUQaG8fjFYVKSAH59_KV9LZ3f
- P9aG1B_pgHiCy9p8O58yfeRa_t5CIp-SXhJsmH324XtjZIlQ5rY-no>
-X-ME-Received: <xmr:n8uPagMFSCk96bxTN8GQC0ARABTUgnFYNBLayeHET2JNK2hCwhok64MS2d91w_c9IUjhYZWNhmZEoKTypAxu8yS8jHw>
-X-ME-Proxy-Cause: dmFkZTGxTzDF9ljJovxys1DnOAP0oUJYty27B0GzBM4AXiCJZn3bFLRWTYPddY6wPdtbi3
- LsMf639TMhCgcY8YGmw5a71jBM5Tm+Ly0lIZSBP+kXpBaufxKbT91VVd/AfhlpIm/a8fqJ
- qnXrccbBd3jRyM7clZbeLcthu8KWr5eOsFEp+msZKwr8FERLfyTok7Und+7iE/hppI+z6E
- NpNVSJtIRKP5rXJThMVue7BQz0b1mhbiB88Ng9vRwwl8Z6UCEM7c+GxnwYPhddH8RtIvHO
- EXISFgbTV4wZQg2MaF9vXKNHNo+CzxHLOVQzhKn9DxKSRZa6AkV0vHNiZjdmzGIdgTueRJ
- OWVjbYsKGpEcsKi2tRH85y0VeCVBpuFTWD39+eEX/hrVIS7YhPnMkoY4rrU5DIaw11cUBR
- Oe4SJWJUh6wWijEE2fufgi+O7rySWQaT11m1VNZQ9fUXEpeXOmcDm+ADYo8riRjNbFP6Zm
- HX5TvBcpCTO5nXEiY2+pr0RIoWx0xsFp7O1euIgw5D9BB4r6RAKiHfvzwjVS9oH7bXbWzL
- oNp+VhgyTf7AhExJ0dFZSq9LPubywmCGLtnbMX2gOR4rEyXOALU08ElCzgs6TeCY+5TqhG
- OC8c2TrYMszIGNlHYRA0HZynQde3+TiqYISyCSJCVO5VtMLHw/jPOqKr8PRw
-X-ME-Proxy: <xmx:n8uPaucr5jgz3Q2t1fZtpm30cWlRARKjVZ94_WCanilXUew0MMnrBw>
- <xmx:n8uPatVRClry52rxdUuCAdpDpAlUsrCmrPXpBhPJ0MiPD3pe3gn7NA>
- <xmx:n8uPamw_9xHecQgNkAyA8Gojz40yzB45c0zzT2K-licL-mxlYka7Ag>
- <xmx:n8uPajjqfubhWrDJLeb5-TW9b1iDZQP0r6VtUmzyt-FCVytMcsO3YQ>
- <xmx:oMuPasrEXBKV5fLPef6aSX4FHaBtPYAOuN6vWu2cbMbk3ISENYyGheSs>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787809076; x=
+ 1787895476; bh=+mCjXoth4Le30Hs19TlIAwUeDAUiQx5wlwyyXe5tZZ8=; b=a
+ RJECmbJUD85EkP5mwx/Mq2Tv/aU369EOD50ahwd9ZAjii6rrOIVa491+eI/N2k6W
+ hea13FMl0deS4aBNmWTedOF6DddJ5OgvaVX0lZshPd0zXsr2WHY3xZrdX3HGDM6a
+ tS8fNnjVxUgSBzY08zMlzW7Ax60RPyy3wfkczq+vumnPkObdyLRJHNpCScnjV7Df
+ wST0YOXIuxL3fxtiETAXThXzomzH1qwBdHVyVzr0v/3ieDg1hleL6e/T+btEjAjn
+ eGlaATlZ5nS7CzVSF2a3BZWqDxiNg3sqzvZZ7RHxzENs1MUidKcybkgmUXTqitGi
+ WiZ3G9fGxK3jX6Mh/vjtw==
+X-ME-Sender: <xms:M82Pah0cernEvpSnei6_AF7gw-sifw8GHp9jiubJ9cplUVrwa8VYjQ>
+ <xme:M82PaptlCwOeY3Ci5GsNfaR0Ott8cwcmed0G9si7Gvy1anpfTCmwmAEqj8vzB7PDX
+ lDZFbgY2cizgzetyHupKu-aK7JVmUitFFnVGjG9Y3cAoQ_CbeZZObA>
+X-ME-Received: <xmr:M82Pagkv-UEdEWhMogVM8QtkGsYj1LSjpEe9gyl_xZLz3YSjCwJ4VaX9o8MYhtXWwH2UZobbAN9n7IQVb5LkPPgue4c>
+X-ME-Proxy-Cause: dmFkZTFr5Khk0hnoPo3hr1tAQnrUpRBiYv3THCUXV4xHo4PuqEsl9OTRcSz1YGo5CXYzUz
+ uVf5P442UGDVBZ82XS+XzRLYoxSmemZoVXNe32WyusYf4mBFrgFQ9JBrc46HOG1xmHM3Ev
+ ExDX06tHF9Qu37R09vwAlvZYp/wmTKGnyZkKjO9EFzVuC61c+8w6RbrSZZfj71hZZmXfRu
+ w4IPcIvUgZBltzHQRjtl1WbjgBCw5RxdUsIycCwLMvP6cWHyh9dCjHK3yOaSCE89X4vfVt
+ C1Bw6z9bBEyshuMLGWvY4NBIMqdhqgpS398haismQMNHJXp3X0EOL0AG+TRmeFhM3KJhar
+ EQFk0XV4vRiBVAPjiAWsJ5ZHXy1h2pQrpajDmvbZWoaPwAClK+bo9RO1iSrHt6gukbhJC2
+ fqVnsqMJNP+ebnu+6rfChxlt0zb1Mf3+PjXAAhsxIOkA5pjYOXjeJpE2G0kgRjwBr0DTWq
+ I7/RrmbSYIf4gO3K8nZOtfcyqn12mkiJfskF4OrJTne+asCfoibJTba5unhNQ3YyulnE8N
+ qPpvVNDabEl0PiWQ8CiyAPFS1PMhf1nF3E7VUJeFtpUXn4PeOFaEwZoPmU0JR6/EEdFK9n
+ yZDAmFoxgEpnREdj4D94owAs0lhn+eabctStXl6iWIOekv5+yzSVJr1hJQTQ
+X-ME-Proxy: <xmx:M82PanV0ntmiXEKbotE1YUsNMmDLr2zOmODWM-YF4Dl6sE_kQ4-RWQ>
+ <xmx:M82PakvKmGD-TFpYoOZG_p3Ykk0Zf-v4Bc_bjf0MVZQzV7BV95SzGg>
+ <xmx:M82PaqqNoj1MVY9cjs4oAFU6-BrORbVXfDP3R571c4BrHJdR5fFpNg>
+ <xmx:M82Pap7u4kvboAEK7a5XACnSxHOgEj9gSwnJXqC7FNEXIEK2HwCFWQ>
+ <xmx:NM2PamflruzU5pGYiedx8pUCMx40Usc2nPI8orKFQ3LbuXBJ0ZagmUbK>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Aug 2026 01:31:04 -0400 (EDT)
-Message-ID: <c8f06fc012811d207af31afe0b43ca78f1637c36.camel@alistair23.me>
-Subject: Re: [PATCH 4/4] hw/ssi/pnv_spi: Fix dropped upper bytes of ssi
- transfer
+ 27 Aug 2026 01:37:48 -0400 (EDT)
+Message-ID: <d88347aa69db68c498b593eabcd2377413ff4af5.camel@alistair23.me>
+Subject: Re: [PATCH 0/4] Rename ssi_transfer to ssi_transfer8
 From: Alistair <alistair@alistair23.me>
 To: stephensportia@gmail.com, qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -93,12 +92,11 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Glenn Miles <milesg@linux.ibm.com>, 	qemu-riscv@nongnu.org,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Portia Stephens <portias@oss.tenstorrent.com>
-Date: Thu, 27 Aug 2026 15:31:02 +1000
-In-Reply-To: <20260825040452.1322251-5-stephensportia@gmail.com>
+Date: Thu, 27 Aug 2026 15:37:46 +1000
+In-Reply-To: <20260825040452.1322251-1-stephensportia@gmail.com>
 References: <20260825040452.1322251-1-stephensportia@gmail.com>
- <20260825040452.1322251-5-stephensportia@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
 Received-SPF: pass client-ip=103.168.172.150;
@@ -125,57 +123,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVHVlLCAyMDI2LTA4LTI1IGF0IDE0OjA0ICsxMDAwLCBzdGVwaGVuc3BvcnRpYUBnbWFpbC5j
-b20gd3JvdGU6Cj4gRnJvbTogUG9ydGlhIFN0ZXBoZW5zIDxwb3J0aWFzQG9zcy50ZW5zdG9ycmVu
-dC5jb20+Cj4gCj4gVGhlIHBudl9zcGkgbW9kZWwgc3VwcG9ydHMgdHJhbnNhY3Rpb24gc2l6ZXMg
-b2YgNCBieXRlcyBob3dldmVyIHRoZXJlCj4gYXJlIG5vIGluLXRyZWUgU1NJIHBlcmlwaGVyYWxz
-IHRoYXQgc3VwcG9ydCB0aGlzLiBVcGRhdGUgdGhlIG1vZGVsIHRvCj4gdXNlIGEgOC1iaXQgdHJh
-bnNmZXIgZnVuY3Rpb24uCj4gCj4gU2lnbmVkLW9mZi1ieTogUG9ydGlhIFN0ZXBoZW5zIDxwb3J0
-aWFzQG9zcy50ZW5zdG9ycmVudC5jb20+CgpSZXZpZXdlZC1ieTogQWxpc3RhaXIgRnJhbmNpcyA8
-YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tPgoKQWxpc3RhaXIKCj4gLS0tCj4gwqBody9zc2kvcG52
-X3NwaS5jIHwgMjggKysrKysrKysrKystLS0tLS0tLS0tLS0tLS0tLQo+IMKgMSBmaWxlIGNoYW5n
-ZWQsIDExIGluc2VydGlvbnMoKyksIDE3IGRlbGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS9o
-dy9zc2kvcG52X3NwaS5jIGIvaHcvc3NpL3Budl9zcGkuYwo+IGluZGV4IGUyYThhNzEwZGEuLjQ4
-MTc5OGIxZmEgMTAwNjQ0Cj4gLS0tIGEvaHcvc3NpL3Budl9zcGkuYwo+ICsrKyBiL2h3L3NzaS9w
-bnZfc3BpLmMKPiBAQCAtMTk0LDMyICsxOTQsMjYgQEAgc3RhdGljIHZvaWQgc3BpX3Jlc3BvbnNl
-KFBudlNwaSAqcykKPiDCoAo+IMKgc3RhdGljIHZvaWQgdHJhbnNmZXIoUG52U3BpICpzKQo+IMKg
-ewo+IC3CoMKgwqAgdWludDMyX3QgdHgsIHJ4LCBwYXlsb2FkX2xlbjsKPiArwqDCoMKgIHVpbnQz
-Ml90IHBheWxvYWRfbGVuOwo+IMKgwqDCoMKgIHVpbnQ4X3QgcnhfYnl0ZTsKPiDCoAo+IMKgwqDC
-oMKgIHBheWxvYWRfbGVuID0gZmlmbzhfbnVtX3VzZWQoJnMtPnR4X2ZpZm8pOwo+IMKgwqDCoMKg
-IGZvciAoaW50IG9mZnNldCA9IDA7IG9mZnNldCA8IHBheWxvYWRfbGVuOyBvZmZzZXQgKz0gcy0K
-PiA+dHJhbnNmZXJfbGVuKSB7Cj4gLcKgwqDCoMKgwqDCoMKgIHR4ID0gMDsKPiAtwqDCoMKgwqDC
-oMKgwqAgZm9yIChpbnQgaSA9IDA7IGkgPCBzLT50cmFuc2Zlcl9sZW47IGkrKykgewo+IC3CoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIGlmICgob2Zmc2V0ICsgaSkgPj0gcGF5bG9hZF9sZW4pIHsKPiAt
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHR4IDw8PSA4Owo+IC3CoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIH0gZWxzZSBpZiAoIWZpZm84X2lzX2VtcHR5KCZzLT50eF9maWZvKSkgewo+IC3C
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdHggPSAodHggPDwgOCkgfCBmaWZvOF9wb3Ao
-JnMtPnR4X2ZpZm8pOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSB7Cj4gLcKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBxZW11X2xvZ19tYXNrKExPR19HVUVTVF9FUlJPUiwg
-InBudl9zcGk6IFRYX0ZJRk8KPiB1bmRlcmZsb3dcbiIpOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIH0KPiAtwqDCoMKgwqDCoMKgwqAgfQo+IC3CoMKgwqDCoMKgwqDCoCByeCA9IHNzaV90cmFu
-c2Zlcjgocy0+c3NpX2J1cywgdHgpOwo+IMKgwqDCoMKgwqDCoMKgwqAgZm9yIChpbnQgaSA9IDA7
-IGkgPCBzLT50cmFuc2Zlcl9sZW47IGkrKykgewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBp
-ZiAoKG9mZnNldCArIGkpID49IHBheWxvYWRfbGVuKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgYnJlYWs7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KPiAtwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCByeF9ieXRlID0gKHJ4ID4+ICg4ICogKHMtPnRyYW5zZmVyX2xlbiAt
-IDEpIC0gaSAqIDgpKSAmCj4gMHhGRjsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpZiAoIWZp
-Zm84X2lzX2Z1bGwoJnMtPnJ4X2ZpZm8pKSB7Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBmaWZvOF9wdXNoKCZzLT5yeF9maWZvLCByeF9ieXRlKTsKPiArCj4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgaWYgKCFmaWZvOF9pc19lbXB0eSgmcy0+dHhfZmlmbykpIHsKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJ4X2J5dGUgPSBzc2lfdHJhbnNmZXI4KHMtPnNzaV9i
-dXMsIGZpZm84X3BvcCgmcy0KPiA+dHhfZmlmbykpOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgaWYgKCFmaWZvOF9pc19mdWxsKCZzLT5yeF9maWZvKSkgewo+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmaWZvOF9wdXNoKCZzLT5yeF9maWZvLCByeF9i
-eXRlKTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSB7Cj4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHFlbXVfbG9nX21hc2soTE9HX0dVRVNU
-X0VSUk9SLCAicG52X3NwaTogUlhfRklGTwo+IGlzIGZ1bGxcbiIpOwo+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIH0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfSBlbHNlIHsKPiAtwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHFlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLCAi
-cG52X3NwaTogUlhfRklGTyBpcwo+IGZ1bGxcbiIpOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgYnJlYWs7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBxZW11X2xv
-Z19tYXNrKExPR19HVUVTVF9FUlJPUiwgInBudl9zcGk6IFRYX0ZJRk8KPiB1bmRlcmZsb3dcbiIp
-Owo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqDC
-oMKgwqAgfQo=
+On Tue, 2026-08-25 at 14:04 +1000, stephensportia@gmail.com wrote:
+> From: Portia Stephens <portias@oss.tenstorrent.com>
+>=20
+> The ssi_transfer function comments say that it takes a word varying
+> between 8-bits and 32-bits. ssi_transfer takes a 32-bit arg to
+> transfer
+> but there is no means to indicate the number of bits that should
+> actually be transferred. All child classes of SSI_PERIPHERAL class
+> have
+> transfer functions that, despite accepting a 32-bit tx, only transfer
+> a
+> single byte; m25p80_transfer8(), ssi_sd_transfer(),
+> ssd0323_transfer().
+>=20
+> The current implementation depends on the SSI model to know
+> what peripheral model will be attached and what transfer size it
+> expects which is error prone. If a SSI_PERIPHERAL model was written
+> that
+> accepted 32-bit transfers, it could not attach to any existing SSI
+> models.
+>=20
+> This change updates the the naming of ssi_transfer to ssi_transfer8,
+> as
+> well as changes the return value and transmit argument to be 8-bit.
+>=20
+> Most ssi models handle this correctly already, sending a single byte
+> at
+> a time. There are a few models that are written to support non 8-bit
+> transfers but there are no in-tree use cases that connect a
+> peripheral
+> to the SSI device. These have been updated to use 8-bit transfers.
+>=20
+> Portia Stephens (4):
+> =C2=A0 hw/ssi: Rename ssi_transfer to ssi_transfer8
+> =C2=A0 hw/ssi/pl022: Fix dropped upper bytes of ssi transfer
+> =C2=A0 hw/arm/strongarm: Fix dropped upper byte of ssi transfer
+> =C2=A0 hw/ssi/pnv_spi: Fix dropped upper bytes of ssi transfer
 
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
+>=20
+> =C2=A0hw/arm/strongarm.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+|=C2=A0 7 +++++--
+> =C2=A0hw/ssi/allwinner-a10-spi.c |=C2=A0 2 +-
+> =C2=A0hw/ssi/aspeed_smc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 14 =
+++++++-------
+> =C2=A0hw/ssi/bcm2835_spi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 =
++-
+> =C2=A0hw/ssi/ibex_spi_host.c=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 5 +++--
+> =C2=A0hw/ssi/imx_spi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 |=C2=A0 2 +-
+> =C2=A0hw/ssi/mss-spi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 |=C2=A0 2 +-
+> =C2=A0hw/ssi/npcm7xx_fiu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 42 +++++=
+++++++++++++++-----------------
+> --
+> =C2=A0hw/ssi/npcm_pspi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+|=C2=A0 4 ++--
+> =C2=A0hw/ssi/pl022.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 | 12 +++++++----
+> =C2=A0hw/ssi/pnv_spi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 | 28 ++++++++++---------------
+> =C2=A0hw/ssi/sifive_spi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=
+=A0 2 +-
+> =C2=A0hw/ssi/ssi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++--
+> =C2=A0hw/ssi/stm32f2xx_spi.c=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
+> =C2=A0hw/ssi/xilinx_spi.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 =
+++++-----
+> =C2=A0hw/ssi/xilinx_spips.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++--
+> =C2=A0hw/ssi/xlnx-versal-ospi.c=C2=A0 |=C2=A0 4 ++--
+> =C2=A0include/hw/ssi/ssi.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 17 +++++=
++++-------
+> =C2=A018 files changed, 82 insertions(+), 81 deletions(-)
 
