@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4598C61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 04:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6901AC5DF9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 04:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzSBj-0003RQ-VJ; Thu, 27 Aug 2026 00:58:07 -0400
+	id 1wzSBp-0003Rt-Ba; Thu, 27 Aug 2026 00:58:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSBh-0003RE-Sm
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:05 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ id 1wzSBo-0003Rl-F1
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:12 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wzSBg-0000uw-BI
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:05 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5b0231a3e86so1585215e87.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:58:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787806683; cv=none;
+ id 1wzSBm-0000vv-4n
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 00:58:12 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-3a12ffc112cso5580951fa.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 21:58:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787806688; cv=none;
  d=google.com; s=arc-20260327;
- b=hNlICqpP1MiwAPi+komqicIuVngxncVuRXctHw9c+cNQr0EMl4chTVXUTEwvk31YFz
- gsZL6+7/qcVOAbJTEbkC8h6x+3AW6pUDf73Li27k4zmG6uulrSn/TM+I/YYSkmTC57bw
- DqSx3N2uQQqn9u4vI/6XkLRJH7j1814zDwYLJcCWKk5ObsFgubiPrUedFlSjRN2Mjy+S
- ZV96DzNTATcN+F4ZwZEmit6qcYGtvwRvqF+uEjvOjymueexHNluKFnRd7aL9DQ+7hvYK
- QhrTFvaXl87ZLhLy1XuJ3gZk1SLJU6sz6xYHJrNSBd1/HBouM5zEEnckAu+liFgu6kQu
- EzHQ==
+ b=FDqOpT8qhKXYLLOxXdFK2UCgazxEahsddcP0kLODksZY80Y1bYvUk2nK9FpYO9Qjhe
+ WHZrvdv4I3Uw4Huzs0SjpuMhTM4W+nuCcAKAMoWz3vKr3tC1aVzsYBeHRsIIzQ9Tm3bL
+ rerDQMGinflCF2W7YrpefR87yWuTu7qS1Ook1yU4b3Yq3MfQpKrPXE+TcvbmRv8l+Iu9
+ 88mDUCDNVZmheh5nzV6H5m67vzKm31gvehe/BD25Fg0BWxg5hsZfzw65AT+Xy3FXfO3j
+ Uzs1IJXoKVJrmQx9IFcFcPCNpS+0an/W5R9Na0oBtMu6U0lrGsdc8aqeGPLcDftudzsd
+ DUXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Ra3VUeTQ+90Xz80S0tbH/wzwxEa0svSPzY6j4HcnEXw=;
- fh=QVe/7zv5OrYmrprO28ljpRmhYeOlvvTBoRQtHWn+3sI=;
- b=loQqRTsYBdLTrJs0oBPQ4v1vlD+SnhLdLDDik4dPpq3TKJul0AP//iMLVR2Zqaqd4G
- H/ajJ44uVI/oSuApkhczEVXx7somrUIl87OGra5j5Oe3ilkmDEu9e8zIecHcmw6NNTBw
- SPwpYKxW8MpnNeV7FBMHPfoSdKwE6QngLOG7jTXM1KH4zEONbXfxrXfoAD6XNGGkUWOd
- ghPeBBx0XQYnYuutLLLBena4v1ruO+TOtcubECKmyFDrRtIL2tD6v2m1QniGMV224tk/
- MidZqrm21StmK4n3JV3VeAcmsROeX7ndqVsZxpTFHvb9IoEoIUEqnf53jkEg4kFsAwYF
- 4HpA==; darn=nongnu.org
+ bh=CnupKhdJcINkIfV0lifxag4jkVxr0ComsL81cMCk+f8=;
+ fh=JPyNvPMIwCrkCRfC7AfOHa3V7KQSEuSbWu8g6CBWLw8=;
+ b=BKV55iwb1fyjnkqNSjEt5JPEroJuvawNDa+S3mnVwhFgpfTwzReuck3NK6T3ubPRFx
+ JOx2WAkkAy43Lz/IKgUtdFQQZATkce85/5JrkTJ02k22oHHBM5cY1qouiK4Bs1UvrwKE
+ ajIos3R42RR7OJQILIj6HrTnqFc/PFe3tGfIBPoXp+x/wem79rANtzuQZmnq758A8ZN4
+ Ua9EShEg8EDUfJ+gdQvvhsFH1nRQNNhjJcPzL4yiKIa5D483J58C9ivSTAB8ro0iF1WU
+ oc+Oij4i8V2+wQulBw23h81fhYMpcVMhihTNcqxAG+huYVLOjrw1NU22HJNgbGUK+QhV
+ IyRw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787806682; x=1788411482; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787806688; x=1788411488; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ra3VUeTQ+90Xz80S0tbH/wzwxEa0svSPzY6j4HcnEXw=;
- b=J9yi83OkvHNY1zX63g7pkhP8uMoHCbjPQpBh0Uv28k6p72BFC5W6XXpTJyZb0BiR71
- HHrWbGQYEL7OokFj6cS2l+6/1ooaBd2pzaAlA8y3IXEh+FZUR8s5p720qGsMY3qEWgWW
- x9KjsyBJdRsbM2VymFx0dHiPfoKq5TSAzqTw36jiosLEXKTKqEtwrscCvc2NWwKbs+Xr
- z3XrghkqKIQ5DJCfKROP1j/RahsIbnONIASMnJoPmXJKoU1i0CJ84ePU2E6Irhvl0niO
- JJP2gBaLpiRBz0TCrNBjQmHdC+iaTv0OnB9C7LPoy4llOg4MgRoPqX/dVktqCX/1CvzB
- fERA==
+ bh=CnupKhdJcINkIfV0lifxag4jkVxr0ComsL81cMCk+f8=;
+ b=g0isRkKEMlnkZlZqnY2K0C3ngYpQOMgvBtXpri+NgbBYBTbs7ziIJP4LyxG4eA2Obl
+ IccL195yEIa4SkM881w4OHrWmFIJt4bH2rOYCl2OpIApOj7MPF8FDCYD5xbj6rS7M6/K
+ gATz+TaMFIVSzLW+QsPL3oZo/yfTfg0GAFNEY0dPjphnlmVasFaaJEnRtnf8AQZkS+5P
+ clx6Lg7aRh0VIt2+L9wn5o8+nxhDm4HwU4rYTfvOejK+fbv2vrTOJ0zO4fnrmaQOT5m6
+ PiXk1kWZPWEhyN89c4jj2L9SqjQ0ptfuJ+pcOYLmusW3+Z1BCTAygAV110QfPCCNZcwO
+ cMmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787806683; x=1788411483;
+ d=1e100.net; s=20251104; t=1787806688; x=1788411488;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ra3VUeTQ+90Xz80S0tbH/wzwxEa0svSPzY6j4HcnEXw=;
- b=jhfWmb0XyMUK4dEZcce0t42KLbgyaFsgP6XlHJVpqxpaBm441PlnVSYWzE1BtGRlF1
- PlRZYkZL7SADcyOVEMGdEVTcL0ZYtDk/e8ISV7Gk3h6NZ38JB8bk7D3K7KYztsbadae+
- XIDTXK8HqsaIDRmnitXlYblfTH9ywMnR+oEFwErH/Rzxa5ksN5p3oJczRIRbG5Lxco/M
- v43WqK3D+ko7VxZ+l0jrWdDtxZd2hwHUSwTgYAcEa49+smV2JAHFI/FBFZl5gqeR4vjT
- qk8mtLTCeVLuls5nwwVMTu89PbpK3tBl4SEyro3AQgayD4nxpZCj2jqTFzCxS7U8LEAa
- 6FbA==
-X-Gm-Message-State: AFuF++lK3O5ch16YOj0kLG+Rh9ZPHe987SOUg27qYTr/id/BiuB3wQqG
- JADnmRbqYxd9g5v9ROY4iFVtWYxUc1dapPJk2oxcW4KadArRBrTAX9kYT90gbDbGZK8zf0T3X2M
- Dbl2e2JphEcc8/6JRAr5s3asV1/N5H8U=
-X-Gm-Gg: AR+sD13BWn5myuC4dDftEil3SsEaQT2q7uWqf6Qic6G3XT6X9nQ0HAwHfbNaabldeTB
- UKOXH8StGGvvpCT0uy0d3dduQRSNt16322kq5yzIFrJcnDN2nIcupEXxAaR2ys+2LO2gCsOp13V
- uU+/qXLZ9GyH3JZz8PBNdF5RiIwSFh8stAjFu9WGFHzyal+gfh8k/E3ha2DjMuwUxca1QBNiCNQ
- kD9v7A7Z9XMHGOSu2F1KfTGdMr327IRKDewmKs+edw7F42r+n6exVtZMQvTUQYHACusBr3YDQ5V
- 9hW96rVms/4dfvmdnV4iu1PnydZAy9djO43Ou2VHLw1QuKY=
-X-Received: by 2002:a05:6512:32c6:b0:5ae:b887:bb33 with SMTP id
- 2adb3069b0e04-5b4a9030e05mr3584195e87.1.1787806682437; Wed, 26 Aug 2026
- 21:58:02 -0700 (PDT)
+ bh=CnupKhdJcINkIfV0lifxag4jkVxr0ComsL81cMCk+f8=;
+ b=hVqzTUxKpkZEnQUUyiHH7hF18bmoXPbHGNXcD3OL2LqmsAZRgj+2gY+Rh4yNXjpsyC
+ jDXQ9Z7SFGewxi/AehIArRQtIunVxXqOBhl+X9sBM9eo8BoUW8jzS5AwqUMgiMkWJyl0
+ TySygNnQpoLgrxK74y3Htj72j08xuw5yMER3xT7qDQUCkVEG6akk3oYBIprRwVR0q8jc
+ Grax18uJlcLl12JrkMe1bUdSgl44p4OHUV8/4m47T7311RmINDr/Nt0YsPN5d3EAWfqj
+ XdzFJfVLosVeQgx/goubjQQ+NHAPDH5+XvVyn3UJ5+hM/L0FUHqBOVcuTvpjsLedqB2k
+ IGCw==
+X-Gm-Message-State: AFuF++ngdM277OM7LnlBPvQAkvePwMA8dVhcXAJZjcUYeJ5YD6+6lH6c
+ UTxjdaBGX3iogs+hgicsdJwPT64w5+lMjvPuD8yS2Z/NBfKxqgHulypvKZ3Uv0Q0JAOBUgmcMMW
+ 9TxNnDqo9+2vhwHqii71t1x+HVoFQd08=
+X-Gm-Gg: AR+sD126lkZxOuffyGN9HrJ5zEk6bDKdnKj6YcdVArsPRvuZIOf84x4/HvhmXIwIpW0
+ 5RZuIBtNnVZafi0rekYWDRr57TQL8UxD6x2rdVjeKyViqrSyrjzNKXH+aMpvZVzE5aMQxP4qTJa
+ 3Knu+NSUiwQqhPskAttBnj87Io+Ze1THxDfHjLEB8oDk1vlaNX3up8xn+EwpyG+GNsp7LyOqBvp
+ 45ML+0rZAjtE2zEL08avshsjZ/nPImBZvYevgCnz6yhOMZhKtPXQZRucr2Lu6cOfk5uuEp1awog
+ XkiP5oHkAGYEd4OBAdMuIsmwCACCflecbNUHIesX7S66X/w=
+X-Received: by 2002:a05:651c:b0e:b0:3a1:fa0f:5d21 with SMTP id
+ 38308e7fff4ca-3a20d819aeemr6228851fa.3.1787806688167; Wed, 26 Aug 2026
+ 21:58:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260822190818.1829249-2-mattst88@gmail.com>
- <b847a616-5d7b-484c-8065-655d33c63c13@linaro.org>
-In-Reply-To: <b847a616-5d7b-484c-8065-655d33c63c13@linaro.org>
+ <20260822190818.1829249-6-mattst88@gmail.com>
+ <87wltdpbdy.fsf@draig.linaro.org>
+In-Reply-To: <87wltdpbdy.fsf@draig.linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Thu, 27 Aug 2026 00:57:47 -0400
-X-Gm-Features: AcwNN1VCTgixNUcsB5a-uuiu-vpfOwiSuG2dKI7ep5sxFxyxd3RAvPUQJSyhJQo
-Message-ID: <CAEdQ38HVe=uML9CMSYDkWWvXhLgYo+kJxF90MOTBM3oR7gw2ew@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] accel/tcg: fold the dynamic cflags into
- CPUState::tcg_cflags
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@oss.qualcomm.com, 
- alex.bennee@linaro.org, zhao1.liu@intel.com
+Date: Thu, 27 Aug 2026 00:57:52 -0400
+X-Gm-Features: AcwNN1U0Wq4bNgKk0Zr8kfQBiDI2wkLj6tjZKouGU8WFWy-fzf4oqB_UEFDNA4M
+Message-ID: <CAEdQ38FHj7qPpkJZx13kuKLyndagvFFv89Zn67mbXy=PQ76_iA@mail.gmail.com>
+Subject: Re: [PATCH v3 5/7] RFC: accel/tcg: allow cross-page goto_tb chaining
+ in user-only builds
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ philmd@oss.qualcomm.com, zhao1.liu@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -121,61 +121,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 5:47=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Wed, Aug 26, 2026 at 3:51=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
 >
+> Matt Turner <mattst88@gmail.com> writes:
 >
-> On 8/22/26 12:08, Matt Turner wrote:
-> > diff --git ./accel/tcg/tcg-all.c ./accel/tcg/tcg-all.c
-> > index 7186c10cf0..c9874a286a 100644
-> > --- ./accel/tcg/tcg-all.c
-> > +++ ./accel/tcg/tcg-all.c
-> > @@ -254,6 +254,7 @@ static void tcg_set_one_insn_per_tb(Object *obj, bo=
-ol value, Error **errp)
-> >       s->one_insn_per_tb =3D value;
-> >       /* Set the global also: this changes the behaviour */
-> >       qatomic_set(&one_insn_per_tb, value);
-> > +    tcg_update_all_cflags();
-> >   }
-> ...
-> > diff --git ./util/log.c ./util/log.c
-> > index 7cffbc1bf8..3fa46a67fa 100644
-> > --- ./util/log.c
-> > +++ ./util/log.c
-> > @@ -27,6 +27,7 @@
-> >   #include "qemu/thread.h"
-> >   #include "qemu/lockable.h"
-> >   #include "qemu/rcu.h"
-> > +#include "system/tcg.h"
-> >   #ifdef CONFIG_LINUX
-> >   #include <sys/syscall.h>
-> >   #endif
-> > @@ -301,6 +302,9 @@ static bool qemu_set_log_internal(const char *filen=
-ame, bool changed_name,
-> >   #endif
-> >       qemu_loglevel =3D log_flags;
+> > translator_use_goto_tb() refuses to chain unless the destination is on =
+the
+> > same page as the start of the TB. For guests whose text is much larger =
+than
+> > a page this is expensive: an emulated alpha gcc compiling a 255k line
+> > translation unit takes the indirect dispatch path for 8.4 billion of it=
+s
+> > 34.2 billion TB exits, and a large share of those are ordinary direct
+> > branches that simply crossed an 8 KiB page boundary.
 > >
-> > +    /* CPU_LOG_TB_NOCHAIN feeds into the per-CPU cflags. */
-> > +    tcg_update_all_cflags();
+> > The restriction was made unconditional by d3a2a1d803 ("accel/tcg:
+> > Introduce translator_use_goto_tb"), whose rationale was:
+> >
+> >     Various targets avoid the page crossing test for CONFIG_USER_ONLY,
+> >     but that is wrong: mmap and mprotect can change page permissions.
+> >
+> > That is true, but in user-only builds the invalidation path already cov=
+ers
+> > it. There are no page tables: every mmap, mprotect and munmap reaches
+> > page_set_flags(), which calls tb_invalidate_phys_range() whenever the f=
+lags
+> > actually change, and tb_phys_invalidate() calls tb_jmp_unlink() to rese=
+t
+> > incoming jumps. A chained cross-page jump is therefore broken whenever =
+the
+> > destination page's permissions change. This is not true in system mode,
+> > where TBs are keyed by physical address and a page table change invalid=
+ates
+> > nothing, so the restriction is kept there.
+> >  tests/tcg/alpha/Makefile.target     |  17 +++-
+> >  tests/tcg/alpha/gdbstub/xpage-bp.py |  34 +++++++
+> >  tests/tcg/alpha/test-xpage-chain.c  | 144 ++++++++++++++++++++++++++++
+> <snip>
 >
-> I'm not keen on these placements.  I know they're needed for HMP, but
-> I'd rather have these calls in HMP, after updating state.
->
-> > +void tcg_update_cflags(CPUState *cpu)
-> > +{
-> > +}
-> > +
-> Where does this get used outside of tcg itself?  I think only
-> tcg_update_all_cflags() should be stubbed, and indeed the only one
-> visible outside of accel/tcg/.
+> Given alpha linux-user isn't widely built or used it would be better if
+> we could make the xpage chaining tests multiarch so they are exercised
+> on all *-user targets.
 
-cpu_single_step(), in cpu-target.c, which is in both user_ss and
-system_ss and always linked. So both entry points need stubbing.
+Done. The explicit branch is gone with the move: a fall-through off
+the end of a page is a cross-page goto_tb just the same, so the test
+writes the last instruction of page A and the first of page B, and
+needs no per-arch branch encoding or displacement arithmetic -- just
+"set the return value" and "return".
 
-> Phil, is the stub itself better placed in accel/stubs/ or accel/tcg/?
-> I'm unsure what organization you're working toward.
-
-v4 moves it to accel/stubs/tcg-stub.c, alongside the other accelerator
-stubs. Verified --disable-tcg links. Easy to move again if Phil
-prefers elsewhere.
+13 architectures supply those two, and the rest skip. I checked each
+encoding against the cross assembler and ran the test under qemu-user
+on aarch64, alpha, arm, hppa, loongarch64, m68k, mips, ppc, ppc64le,
+riscv64, s390x, sh4, sparc64 and x86_64 (ppc64 ELFv1 skips). The
+gdbstub half moved with it.
 
