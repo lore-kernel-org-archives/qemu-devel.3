@@ -4,51 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 352DAC61DC6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 01:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC45FC61DBD
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 03:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzPEF-00026V-Mb; Wed, 26 Aug 2026 21:48:31 -0400
+	id 1wzQT3-0004bd-51; Wed, 26 Aug 2026 23:07:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wzPEA-000259-Fx
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:26 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wzPE7-0007pN-LE
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 21:48:26 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx_9Jhl49qfoYFAA--.15525S3;
- Thu, 27 Aug 2026 09:48:17 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx+c1dl49q1KwTAA--.16714S3;
- Thu, 27 Aug 2026 09:48:17 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 1/3] hw/loongarch/boot: Check memory boundary in init_boot_rom()
-Date: Thu, 27 Aug 2026 09:28:09 +0800
-Message-Id: <20260827012811.1008381-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260827012811.1008381-1-gaosong@loongson.cn>
-References: <20260827012811.1008381-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <farrah.chen@intel.com>)
+ id 1wzQT1-0004bU-Ng
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 23:07:51 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farrah.chen@intel.com>)
+ id 1wzQSz-0001ji-JY
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 23:07:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1787800070; x=1819336070;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=cVKXDb2z2A38yNILAhmAJpiHzYHdyOmxFxo/VeatxNI=;
+ b=Mgs+GRghV0j3jpievEyBtLd4hStPLWRX9VSQIvR8yvML6+qZl0JUMJGa
+ KChjXyqFFeNfwAsJnR/kQmqpJkvAYwXIby3JmHdPpp49hy4fvnTFukeSD
+ CjGhBG0VMdUBjUtrHzzpe17W4ZXFdpqpty9N0sJIaYVzAxzfOckvyzmI/
+ rrxvm7TbYKWe6bhzG3uLMTTMreFnHHOpYazTqevX/254/tSuvZVue7NMi
+ iOgVb1OqUenEJRuU5c/WtmV+jQuMTXD7y0UYZbnAs6MS5OiMuEmW1n1ON
+ Mcv5I76hNaZ8QOHq6diGN5N9wVCU0k/IwsSq1duaEYU3GKwSHswOtTBMD A==;
+X-CSE-ConnectionGUID: HU1PXIGXSwqP4nQmLlkLbg==
+X-CSE-MsgGUID: SBC39W6zQk2GVu5TwjkQ5w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11887"; a="98964104"
+X-IronPort-AV: E=Sophos;i="6.25,245,1779174000"; d="scan'208";a="98964104"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2026 20:07:45 -0700
+X-CSE-ConnectionGUID: H5F5ci5IRRiJxjH5EOuLTQ==
+X-CSE-MsgGUID: wR/QkgONRuGUwn05/odP+A==
+X-ExtLoop1: 1
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2026 20:07:44 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 26 Aug 2026 20:07:43 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Wed, 26 Aug 2026 20:07:43 -0700
+Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.29) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 26 Aug 2026 20:07:38 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gen7jY1rOtY3jVtpqTepFqmVE/RfTX42s6kaBV4P9gCa7/j8WMZ18fT+rjk29iIU8K26ltn+1bT4Sq57jH0fIJzz/oYF22m55GAMrnzrthtHV6ehGlMcadhYHSreXqqZmI2054ynDKcP1EXE3kdMkPgduGFnCewMU8PknVHeU7LiTduFCfu+EKp3uWkaTpLROOD5NjDyH4YxPFaIdzU6+atqitd+nbs62ed7glVkGz6FfO/5hB+fqPsGfz2WjwebqhlzEpkX3Omu2UOVNY77PM2lNjg0pC9jwZ6UK9NenhzqJvQM/Gg4LeQPUAoxdN5YfN0LQb9dEuy46lyNEMCMHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jSl7ZHFUsvm3q4xrESYOJv807MeblMXIVBvi0nqvixI=;
+ b=tf5ejDxd3mBz2gjaMXN4X8O/cmKkhUG0NN9TTKBHdTkngNz7j46lasq7IBdk/E7/aFFE7koJw7wCQhy/Kr1hUQAwQ+QP3GhOc1U9ug7PEg8Nb1rufP3eZRUexofze0Z2OGx8Cs3UVdA7Vw9j0JfiEeS4sMLPvU6aJ+QcnLqQX83uNl8Ha4gnD5Hd0qGDQpxI79IKl2PaXdQ+3aH85T1JoPTz542jx4/DUr0Av+EPLSatPoHkNh0q9GVMK5tp4DJYxsRnHhR4WzoLmwbhOhPrmW12YrE5GnWDJ6Ncqnnk2IDcnK/+vD8Sk+ooC+2u7z9mP4akN67eIIhXPuIgOeYJLg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH0PR11MB7494.namprd11.prod.outlook.com (2603:10b6:510:283::18)
+ by SA3PR11MB192006.namprd11.prod.outlook.com (2603:10b6:806:52d::23)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.7; Thu, 27 Aug
+ 2026 03:07:36 +0000
+Received: from PH0PR11MB7494.namprd11.prod.outlook.com
+ ([fe80::e642:c73c:6d80:5083]) by PH0PR11MB7494.namprd11.prod.outlook.com
+ ([fe80::e642:c73c:6d80:5083%4]) with mapi id 15.21.0360.008; Thu, 27 Aug 2026
+ 03:07:35 +0000
+Message-ID: <0a66aeb1-30fd-4223-adae-a01bd77de8e7@intel.com>
+Date: Thu, 27 Aug 2026 11:07:28 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] target/i386: Add support for LASS
+To: Kishen Maloor <kishen.maloor@intel.com>, <qemu-devel@nongnu.org>
+CC: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <kvm@vger.kernel.org>,
+ <sohil.mehta@intel.com>, <xiaoyao.li@intel.com>, <binbin.wu@linux.intel.com>
+References: <20260826035734.114685-1-kishen.maloor@intel.com>
+Content-Language: en-US
+From: "Chen, Farrah" <farrah.chen@intel.com>
+In-Reply-To: <20260826035734.114685-1-kishen.maloor@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TPYP295CA0006.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:9::16) To SJ2PR11MB7504.namprd11.prod.outlook.com
+ (2603:10b6:a03:4c5::7)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx+c1dl49q1KwTAA--.16714S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR11MB7494:EE_|SA3PR11MB192006:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9d33aab9-c5f9-48cb-fd0e-08df03e8572b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|23010399003|1800799024|10067099003|56012099006|6133799003|11063799006|3023799007|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Yw03bbzBvk/c2wijJr54K3CGKlClM/QIo1h5XEmCHKzqEtGtRjZpybx5MIWozSuNfMtYXTZ2QhnkK+bloLAkbngPaglvtVu7IACIBNMkNV4ExXDIFeLOBzegr0jigx1ThEXaNNPMJIgDSVgA/wzi5vfxxvzZACzlf35nENVD/3ShdYlz2HQi04e7K22TudbXlEms2CB8AWs6trXph6NWhv90QxajnkxV6aNpLcqf1jAKy0gXAkMPEqXbTcNObBqB74QW5tW/3kPlNnw1ZDxdW3zM17A5O8xhN7UGqhWIjkf1tg7erUWawdNSzu+WS7gVrLAfp6LPalzy8exv5/Z1tI/SZdXOV+fpU6XSmBaNpHUgY6WvJDkkNzQ25t/97yn1VFU3Hr5Gwwh9hFGyOngNoutq6Gf5505jAqEnGC4trto/gpilfi8YSAxw2d8CtRekHNkUWS2sNWmQGeuPUdWKPYvmxM7/kki6ToYgq+7sG2ljTjpnt/fN47Pm1WLu+gIH2b5OX4WOLuw9gLAPHScYVKZAL9EgIafJkfesFXULxKEfrVE7E99IYKl1zwWl0hAxlU3gQvjdlIHdztfR+5dAJONPjXhNFHT5IFGEGBXEu8t+9y7J06GgbCcYMlI1e1tvdbnZFD7hM6jJGzogRl10zsbc8rR7Ll0g5YCN76rd1Pk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR11MB7494.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(6133799003)(11063799006)(3023799007)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R0QwMHRrT1dMMGI3bEt3VytsMGh5bmMySUZOaW5RenA2QW5CZ3BqbVZIQm42?=
+ =?utf-8?B?TE5YMUJVWDNEdVAxOUJGQzVOM210TkMrYUlGeUZUdWwyRE1VdDZIUVozeWFh?=
+ =?utf-8?B?WG54V016dVZidWs4M0V0SHlvbnJhTnhqZHJEYWUrSDJkbDZhbTdES2dlMTJ0?=
+ =?utf-8?B?eVVyVUlpdkJtZ3ZZQm5MWi9IcHpuVlVRVmtFbDBlTFNzM3FYajJERGJVOVgy?=
+ =?utf-8?B?OHVJdmNyeVg0cVFnL2RFZTNDS0J6Z253dXZPVVl0ck43MEowS1B1UEQwVWdw?=
+ =?utf-8?B?ZjM1eU8rQXFURjNzY1dDbFhHTXpjQmFDdUUxcTN5NFAvd3hjT0pMUVBYNnk2?=
+ =?utf-8?B?WXRlOFU5RkgzNDROR0lOSUVDd1ZuUitrb3owRVQvc3hjaDNyOWFpN3hxTGxT?=
+ =?utf-8?B?NGpaRFVxUXdPOW9nL0dFWit6VjZtSHI1ZHpuZU10SUlnbE5lNTJ5VHBOMEt6?=
+ =?utf-8?B?SGI5R1ZVUENLSE9KZWhxb2s3R3FNNFRSZmJHcEtRNnVCV0k3dGZXWmtwY01B?=
+ =?utf-8?B?NGtySVB3L0hHVTNyQ0lrYldsRFRTNms4VUVYNWw1M0NGK3pBZ056bDJMTjBB?=
+ =?utf-8?B?d3FKbEpFZ3gwSWZyZlNzSHp0a2F1bnk4RC9ZdUkwSVhCMXlXQlhpYnI4K1pk?=
+ =?utf-8?B?THNxM1ZKTUlGeUVxcFU3YVBCNUEwdEF4bG0rSlk3NG9jQ2NpbWZqS0hJRFZP?=
+ =?utf-8?B?akpUWkJObWVialhwOVhsZm0xVTh1TUR2Vlo2YUpDTTFFZ1ZSSzZsaEJQS2ZY?=
+ =?utf-8?B?V2tGMGFVcktuNUpXbCtaNXdRY2tmUjVKSjJqL1JwRmpPbUJXbmI1Vm1GaHhX?=
+ =?utf-8?B?bmJMY3FkdlVUdnVaRGdXSWJJMHV2WVZ3RmpMSlpEaTN4ZEM0M2ZuTjh1TVR3?=
+ =?utf-8?B?MXREK1Vqc2NncXRpcDVzaFF5eTFuQzBHSEphK2N4anFFaWRCTThra3lKVzNM?=
+ =?utf-8?B?NXE5cVZzdUs2MVpIL04ybllwNXF3YVRUZU5sQkNtT1JqbUh4ZU1pOHNxU3Ry?=
+ =?utf-8?B?SnlxM3I1b3Rqb29iaHpVY0c2U25kOUhlU08wdnA1aEhxVEVNZjdBSnM3Y1FC?=
+ =?utf-8?B?cG5FMnQ4cU5Eb3pyMjd0RWNVc3BXWnRpS3VYQ0g3ZjRBZ1FnQ2JZdjQ3dDcw?=
+ =?utf-8?B?WVlTTHB1QjlrK1BXTDlLWDJCbmRXa2JxSGFwbUhtZTRvYXBWMk1kNEdrSEdP?=
+ =?utf-8?B?VzZZWjVITUFrRFlRcFdFQlY5TE9IaU53TVlSZktBbDJlVHkvMzVNQUVsKzE0?=
+ =?utf-8?B?Z0dOb3Q3VEc0Z1N4VkVqdlFMeHRvNWgvL2Z3WjYyY0tKR0p1Yndtc0Z6Wjl4?=
+ =?utf-8?B?Y3haSFJJZGU2U0srblVjZEFJQzVEVk1iaTEwWXBjWVNiUUFUQXFuemVIK2lS?=
+ =?utf-8?B?MTVIVkp3R3RUSmpoc2pYMnYycUthVzQvWS8xV0xBWUdITVBrOVlSVzhPM05R?=
+ =?utf-8?B?cm9oT3JZMTJ6Q0owdUpUS3pLU3JZTFVKaHNqR0hJcWE3OGVjaU5kZ202N2N5?=
+ =?utf-8?B?SUdUSnUveE9keHliUHRZY3VIWU9kK1pqRmMxamV4SnFhRFpWWVV2d0U5TFlm?=
+ =?utf-8?B?UTA3NXdLTlNLNytiZ2FvL1prM1ZpVHJrUEZ1MVFWeERsaklzZ1Z3VjdUdDJo?=
+ =?utf-8?B?bWRKa0RGQi9QSUsxdUpkb1NnMXY1WVpEanNzMHo5bENoUzBQblRsM1poSnkr?=
+ =?utf-8?B?Rk9ZVE9uZ0FETUIvUDB1dzByV1YvZW4wa1pXa2hJY0NObjFyVTlRS0NPQUJW?=
+ =?utf-8?B?aHFaQU1XQlJ1dkozbkIvbDN5aFczaTVrYU80TnhpU2lUK2ZQb0dtUDRBS09V?=
+ =?utf-8?B?emZoQ0JFcXlsYnFnSC9hQVZWUmZ3dEdaVGJyN3lVaWlOQ3h2MU9pakp6TU9R?=
+ =?utf-8?B?SEJxWWhLZjBUdzVqOWIvbFYyTmZBYkFhUlh4dkVSTHI1cnJTNVYrdnJnQVps?=
+ =?utf-8?B?azc4aDlEdlpOMWUxaVE4T0s4QVlKSVFUOW11N2MralZSQ0JSNGdUQ2cyb21B?=
+ =?utf-8?B?OUdjNlgzOU11Nkh1OStnZUNFeC9RNkJBM3JWSmp2M0VjZjMvWWw2UU82UFVz?=
+ =?utf-8?B?NDVsRVMxbnF5N1JvbkRPQk51VVRHRVdFRkIvY3IzdkV3ODVBdU5nNktTbkJM?=
+ =?utf-8?B?ZlJPNGIwR2ZSVE5Mbi9vajBBUUJkWmczeDZaQUNoaWhTMEJXUlZtUTFzSlZx?=
+ =?utf-8?B?cGxKVG5CMVI1azBkS2R0SVN4a3UwTS9DQWNrOVBMVTVGTnZRaTlSUGhBajY3?=
+ =?utf-8?B?c3pNU3NTZnNNNDk1Zi9scGsxV0xCbnBmNGwvOFgxNDlmd3o1aHRLY1RNdTlF?=
+ =?utf-8?B?Q0FaYy8vcXJTQkh3WjBTOFhQQVZ0TmhQS1RFWXZqK2ZxUVdSNTJMdz09?=
+X-Exchange-RoutingPolicyChecked: RDE7F6xixh+RlwYhhfcEKudzjRSQmmZz5rJhn+I99b71sGhv+DI5RK8ELSArFgXiZ/aeroRFVICFd//V9okQOTSspaiI5ugA7k4ii9KJJzyi+2SAM88BB5ubWJXHO5Ts6fki6zMuhg6ZLRhjkmjN7PXJAUWsVi8RHFB3Fq9ZNZW7LVsEHc+HE/Ff8OFnwugrL8edTBmR0XHcZAMXdPncaH88+lT9T424wn6LHDIuP5Ybx4WS7Po5Qn+xy6tUVKV5BWBsX3+FJuKFOUJIc3B/OOcKEFQZJw4c11yG6001AFOaVMlygtwTgRwsOcqJW5dDH6xLdz/m766PAZhfwYMbow==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d33aab9-c5f9-48cb-fd0e-08df03e8572b
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7504.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2026 03:07:34.9720 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9bWI8WeVf2CrHvrc6rgV0PV70daVSBDlhESuT0aEPWzJj6hlIxtIF5xaUcdUemY9pg63iQY4fqyyHmjzvU5GKw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB192006
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=farrah.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,158 +182,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+On 8/26/2026 11:57 AM, Kishen Maloor wrote:
+> This series adds QEMU support for Linear Address Space Separation (LASS) [1],
+> an Intel security feature that prevents a class of side-channel attacks
+> relying on speculative accesses across the user/kernel boundary. Paging,
+> along with SMEP and SMAP, already provides mode-based access protection,
+> but enforcing it requires a page walk whose timing can leak the layout of
+> kernel memory. LASS applies the equivalent protections during
+> linear-address pre-processing: given the usual partitioning of the linear
+> address space into a user half (bit 63 clear) and a supervisor half
+> (bit 63 set), an access targeting the opposite half is rejected on the
+> basis of bit 63 alone, before any page walk.
+> 
+> This series enumerates the LASS CPUID bit, recognizes CR4.LASS,
+> and exposes LASS on the relevant Intel CPU models via new versioned models.
+> LASS is not emulated by TCG.
+> 
+> Exposing LASS to a guest also requires KVM support: KVM must validate
+> the CPUID bit and CR4.LASS, and enforce LASS violations in its
+> instruction emulator. That enabling is currently under review [2].
+> 
+I tested this series on Clearwater Forest (CWF), running a KVM guest 
+with -cpu host. On the host I applied the KVM LASS enabling series 
+referenced as [2] in the cover letter:
 
-When booting the Linux kernel without UEFI BIOS, QEMU needs to set the boot
-param for kernel. For the LoongArch Linux kernel, it is put in structure
-loongarch_boot_info, and the total size is 1MB.
+https://lore.kernel.org/kvm/20260806011536.4172258-1-sohil.mehta@intel.com/
 
-Here add memory boundary checking with preparing kernel boot param in
-loongarch_boot_info.
+With both series applied, LASS is correctly enumerated in the guest, and 
+the LASS functional tests pass with vsyscall=none/xonly/emulate.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260807070029.1171348-2-maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/loongarch/boot.c | 68 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 55 insertions(+), 13 deletions(-)
-
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index ef8eae237c..fe91ab16bd 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -173,12 +173,19 @@ static void init_efi_fdt_table(struct efi_system_table *systab)
-     systab->nr_tables = 3;
- }
- 
--static void init_systab(MachineState *ms,
-+static void init_systab(MachineState *ms, size_t size,
-                         struct loongarch_boot_info *info, void *p, void *start)
- {
-     void *bp_tables_start;
-     struct efi_system_table *systab = p;
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-+    size_t len;
-+
-+    len = ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init efi_system_table");
-+        exit(1);
-+    }
- 
-     info->a2 = p - start;
- 
-@@ -190,29 +197,56 @@ static void init_systab(MachineState *ms,
-     systab->boottime = 0;
-     systab->nr_tables = 0;
- 
--    p += ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
-+    p += len;
-+    size -= len;
- 
-     systab->tables = p;
-     bp_tables_start = p;
- 
-+    len = ROUND_UP(sizeof(struct efi_boot_memmap) +
-+                   sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init efi_boot_memmap");
-+        exit(1);
-+    }
-+
-     init_efi_boot_memmap(ms, systab, p, start);
--    p += ROUND_UP(sizeof(struct efi_boot_memmap) +
--                  sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
-+    p += len;
-+    size -= len;
-+
-+    len = ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init efi_initrd");
-+        exit(1);
-+    }
-+
-     init_efi_initrd_table(info, systab, p, start);
--    p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-+    p += len;
-+    size -= len;
-     init_efi_fdt_table(systab);
- 
-     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
- }
- 
--static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
-+static size_t init_cmdline(struct loongarch_boot_info *info, void *p,
-+                           void *start, size_t size)
- {
-     hwaddr cmdline_addr = p - start;
-+    size_t len;
- 
-     info->a0 = 1;
-     info->a1 = cmdline_addr;
- 
--    g_strlcpy(p, info->kernel_cmdline, COMMAND_LINE_SIZE);
-+    len = g_strlcpy(p, info->kernel_cmdline, size);
-+
-+    /* include terminating null byte */
-+    if (len < size) {
-+        len += 1;
-+    } else {
-+        len = size;
-+    }
-+
-+    return len;
- }
- 
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
-@@ -385,15 +419,21 @@ static void loongarch_firmware_boot(LoongArchVirtMachineState *lvms,
-     fw_cfg_add_kernel_info(info, lvms->fw_cfg);
- }
- 
--static void init_boot_rom(MachineState *ms,
-+static void init_boot_rom(MachineState *ms, size_t size,
-                           struct loongarch_boot_info *info, void *p)
- {
-     void *start = p;
-+    size_t len;
- 
--    init_cmdline(info, p, start);
--    p += COMMAND_LINE_SIZE;
-+    len = init_cmdline(info, p, start, size);
-+    len = ROUND_UP(len, 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init systab");
-+        exit(1);
-+    }
- 
--    init_systab(ms, info, p, start);
-+    p += len;
-+    init_systab(ms, size - len, info, p, start);
- }
- 
- static void loongarch_direct_kernel_boot(MachineState *ms,
-@@ -403,6 +443,7 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     void *p, *bp;
-     int64_t kernel_addr = VIRT_FLASH0_BASE;
-     uint64_t *data;
-+    size_t size;
- 
-     if (info->kernel_filename) {
-         kernel_addr = load_kernel_info(info, phys_addr_mask);
-@@ -415,8 +456,9 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     /* Load cmdline and system tables at [0 - 1 MiB] */
-     p = g_malloc0(1 * MiB);
-     bp = p;
--    init_boot_rom(ms, info, p);
--    rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
-+    size = 1 * MiB;
-+    init_boot_rom(ms, size, info, p);
-+    rom_add_blob_fixed_as("boot_info", bp, size, 0, &address_space_memory);
- 
-     /* Load slave boot code at pflash0 . */
-     void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
--- 
-2.55.0
+Tested-by: Farrah Chen <farrah.chen@intel.com>
 
 
