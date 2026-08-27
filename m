@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD738C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E95C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzarh-0002hD-NS; Thu, 27 Aug 2026 10:14:01 -0400
+	id 1wzas3-0002tp-6j; Thu, 27 Aug 2026 10:14:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarg-0002gb-Lz
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:00 -0400
+ id 1wzas1-0002tI-Kr
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzarY-0005l8-V4
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:00 -0400
+ id 1wzars-0005uj-CF
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840032;
+ s=mimecast20190719; t=1787840051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b5m3PCBo4qZ8ZChzlOr1MQQV5+IdqKQ4NKkucVjzKRs=;
- b=alHCZYyDLREdoeTKtRYUMBe1+mJ0hE3S2nd9uyjyw0wiGGjfnuS2fEqhiCCyrglgE1PpZJ
- UYeToYRwATsx8hv3TiXc2FBxsYg+mEfRes1vZ3As9UmNYjfg60j7I8JQL/IoDdCUoBcWDK
- IqZMiFC24eNcWazNHKvCG36U49uPYQg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BzPmt7KVQkTpe1/d3/LXdqLWTe5gTJkqbQqLF5f/EEg=;
+ b=DTpwgr+mu/7anPiwZ8yWSXTU8rvbNGer/Dne0TipnsPb0YoaLEAO5tViCuTlxUjsAFhplD
+ TrPiv6x+13Xzf7WkjTwFCjDj002QUSxRr0HVlav2KhtqqB1NNN0hHRxbWke0z+bfiAu0x4
+ qKxupgU+GtNX7jMmaSfM8rEHR2YbVdo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-ZYwWhEsvPZSnpwJ5WvV8yg-1; Thu, 27 Aug 2026 10:13:50 -0400
-X-MC-Unique: ZYwWhEsvPZSnpwJ5WvV8yg-1
-X-Mimecast-MFC-AGG-ID: ZYwWhEsvPZSnpwJ5WvV8yg_1787840029
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49b0e6638e3so5624455e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:50 -0700 (PDT)
+ us-mta-463-HrBZcTE3OiS1TgDX_UGlFA-1; Thu, 27 Aug 2026 10:14:08 -0400
+X-MC-Unique: HrBZcTE3OiS1TgDX_UGlFA-1
+X-Mimecast-MFC-AGG-ID: HrBZcTE3OiS1TgDX_UGlFA_1787840048
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso1074158f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787840029; x=1788444829; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787840048; x=1788444848; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=b5m3PCBo4qZ8ZChzlOr1MQQV5+IdqKQ4NKkucVjzKRs=;
- b=Dr/uUL8sWgQ5IQoGwvhHGTsf9NrLbeOdQafkDVxRHA/a1qGZPUTJTgHQlPkgAj+QIJ
- NsY/2bomNBa1/uCSE/lkbs3MUw5xSKKSKBHm1d5kHMytXoYmXSGkcAVACQbETkG6FAIP
- c2v4VTo8gJ4o6p8Tq/zut8GyDpn2+L6l9iFdMbJ7N+qcOQsSwXEApHjfakz3O4jnwmEw
- Iq1ROzkI6rQ2EIywMfaNqPCPf0PXDMihEytEVuDa0CxtzZFj+Ax+OGv+K1XPrxI9LMl0
- zsi3Rs4hbpzLSPL0bc0z9mZoulHc/l8LMpn3uwrbc79vevQon1XuhKHDZ38X4N1EiQSC
- 3Xmg==
+ bh=BzPmt7KVQkTpe1/d3/LXdqLWTe5gTJkqbQqLF5f/EEg=;
+ b=EnUdsI+v+MXwhNxW6Q0trv1NcGVsuK2He1GTuAAvxk0GPMJbcrcXCUoItmirP0KG9Z
+ 8QHp2NThvJFoCif10NnY7KKUJDFi1gK31jiyxf6zsuGKP6lRf7IiVQ9xuKHRy5sOWJnu
+ hefWCS8TdEJP3UsOfTDJNcmGhvXDL/EWF9dLOxcWyGMOTVjVt13pPdVQ4Qqtr+DUjcub
+ 5wpaePkKwaMQC8DI0dKg3RO68Q1NGie7OtCWpW4tFioMNAqgbbD6TxgQzuJeZvjn9YLs
+ 1pAG5+bqQB4Rchpxk+Fl5nzk5yVna8GFhAMKLcBTku4IT8kwZw6EPNMM2VVFDI2p9iX3
+ gzFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787840029; x=1788444829;
+ d=1e100.net; s=20251104; t=1787840048; x=1788444848;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=b5m3PCBo4qZ8ZChzlOr1MQQV5+IdqKQ4NKkucVjzKRs=;
- b=TUqsSr52esxp4So9+89oyB4Cxx0PVfNTbTnSiy/IjTFIGcYl4L6IcUBGoxf4Ot4vRD
- E2qGI1RfUoK/vR6cifp7JejoTwuIMC9G/voPSDAWXMa7IisVlMRgHQ1JXT+LsrEzorcT
- jkGl1moxIwiVTaW79ncs15MD7lLNJPoXAJo55YnsoKSJhaq3L3EG+fvOkLds4CVPBVhq
- 9wvx0cONJdZSrTU/j3xN5mH+b5L/SJl2vYbKT+DB7DQqNyNUI4W3Pkidk/NqNdCMIGBH
- 3oPIVGAYgKaFiIxCm9M9/AQHGz35j2Ya4iFB9R7J+B7jRk2dVNyqzzPZaHdYP4HIbRa2
- BqWg==
-X-Gm-Message-State: AFuF++mz2ELZwd8j1RqV5jhbcmFts2FGGELgDtSIP85Btn2lrcIxJsX+
- q6ezgk4LakURJ+zY6sGlTzkrXWOJw9ncYl8Mpa4BC9Cj80uxxwMEsCvl4Xh+gQ/V8pigimX26cy
- wtFmN8zHfiPaR5KyKV9rWSnUAN5lNV6ST61Qid3ZpoKkzqW2xbBRU1vsQXSqq8ixVtuEXDbXe9w
- HuGARrHzCBZ/5m8mmOGwKMNhowdc8Onm0nBVUGQrS5
-X-Gm-Gg: AR+sD11XBqQ3w1qexDXHb/RU4w6E1mS3LlTxmo3JWimJW5TjF/ggwN3XDWgyCJcT2Ib
- N4VeHHB3tTGGXiNHVUDMMiDILnbhaP3B9zMhXmLmAf4BseSljOshgdOlxSmDc4Wd5PWIIob02Sc
- U6LTyu5CQoGPYdXAOyE+fYIbEEv4oCpNYUU2SChqql89MOgmP6fzPINoj+XDAZFvAZCb6l/0JQW
- fPxfSIluNSZeINGR9Q10qqoaK+C5hipE3uALcGH0mDhjJ9pCFO7IjX+k/8xUmROOqrmm287UEUK
- qPgI08moeM55aE7SLmjfK90ckxHBk9f2Z1RlxD/WbtjZ+Fv081qo7NkcFoK89oqky6UWUhNlfvH
- IN8MnKV+XV2eeH5tF6S2Urrkfdc7l4TsSH4BavyrHBQhCG4sNCHvNMpGvsu9gezUX8wWGZSfYGR
- +t51M=
-X-Received: by 2002:a05:600c:4e15:b0:49b:8e8f:a409 with SMTP id
- 5b1f17b1804b1-49b8e8fa4a6mr66882385e9.13.1787840029412; 
- Thu, 27 Aug 2026 07:13:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e15:b0:49b:8e8f:a409 with SMTP id
- 5b1f17b1804b1-49b8e8fa4a6mr66881185e9.13.1787840028890; 
- Thu, 27 Aug 2026 07:13:48 -0700 (PDT)
+ bh=BzPmt7KVQkTpe1/d3/LXdqLWTe5gTJkqbQqLF5f/EEg=;
+ b=oj+/urEK3U6+Ue5JLLrpbn0PRbgKoeEEqN/Q1v8zzatLCUyuU3hUX5HwWN6oYQIJM1
+ Ah8L0+fjCeiu11d8UGY5RkmfFSmXlXcd5gSTHZtNZTW/lKSW4LhE0i1p0FWF4IAZqd6c
+ zCECyhF88/QH8N3mxPedkrhvx/7aDQ63m4+wOaT8VRcVMiXGED9cX2Zwx8qzN0A0lRFG
+ qJaOAnpwlwjNxdLQxJcce0h0hKiEjSkT2bEDc1MFLiEniE7H04lfKyL42OoMZyIWwWpp
+ Y0/AvNGGR26Fys2Tne3rwBXXJT5Y5kazyC2CCNTOePAMFUKLAFRn4CSla2QEWsLetEON
+ vUMQ==
+X-Gm-Message-State: AFuF++l26B80EciJNNcT+Hzeyd/SfAP+Lke/TVz1pY2oAb1YLBRt1hef
+ hTz6tazSLmnmRyn2iIIADQCCS4Aaz3RzpEEjnTMnOF521ahtcl/csi41AXaCL7A1hWInAuKVu1S
+ PwHROIFRufTS9LZSHkfc8VQlUt1I6L2TxWCQeF8mfmweOgyquJMmIh2bLd2beH0N04W9lJklPpZ
+ rCru0EAPNhOgf9IqoYV7+PhvbxEek9z7eWI/gst0Ah
+X-Gm-Gg: AR+sD12hctTBKBak6v+ITM5uUfHw0V5r/h371RaUnOnynAESpwu3WtMk22wSNl69H2U
+ E55obVoYe7u+j7+1aZ/ZlTFfp/RoxaD9WLsgLz+URKqoeXsCyZRhl9arwsBXBh9jVHQu5L/rftx
+ AUZFVq74SG4Ox5fChmWe6flttWVdgJmKz5Xi0kPlwCmj5ALqRowUoX+9LcGnHzdBisc70mt9DVz
+ wSLaXtfPFRBWKWTO0FZiCs5Wag0xXlV3KuBIu11L7vj3jt8woeC21LAJTqhl7q24xIbTuxgdiwO
+ 6j2b8F8zCigGzucVSN0dBj0jwOolZVDMuB/w6drKV71uRJapC4MkHU4pMgb0ZiYuFK/kT+mLhRV
+ Ah1BOemgaYfV3XBhhQ2yWdTSDeELbFBn5Tlnz4p6VYYadkjTzkXUDvMPqPjgXZeOpLpuzS5+D2k
+ 1UW2o=
+X-Received: by 2002:a05:6000:41d1:b0:482:f344:5325 with SMTP id
+ ffacd0b85a97d-482f3445421mr7675589f8f.3.1787840047726; 
+ Thu, 27 Aug 2026 07:14:07 -0700 (PDT)
+X-Received: by 2002:a05:6000:41d1:b0:482:f344:5325 with SMTP id
+ ffacd0b85a97d-482f3445421mr7675388f8f.3.1787840046768; 
+ Thu, 27 Aug 2026 07:14:06 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dd55283esm54934805e9.2.2026.08.27.07.13.47
+ ffacd0b85a97d-482e27aa050sm9109506f8f.12.2026.08.27.07.14.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:13:47 -0700 (PDT)
+ Thu, 27 Aug 2026 07:14:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/23] rust: hpet: fix clippy needless_range_loop
-Date: Thu, 27 Aug 2026 16:12:59 +0200
-Message-ID: <20260827141314.1099352-12-pbonzini@redhat.com>
+Subject: [PULL 17/23] target/i386/tcg: treat VEX as disabling high-byte
+ registers
+Date: Thu, 27 Aug 2026 16:13:05 +0200
+Message-ID: <20260827141314.1099352-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
 References: <20260827141314.1099352-1-pbonzini@redhat.com>
@@ -120,29 +121,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nightly clippy is a bit smarter and recognizes one more loop
-that it wants to be written with iterators.
+This does not have any functional effect because the only instruction
+where it would make a difference is VPINSRB/VPINSRW, and they disable
+high-byte registers even for the non-AVX encoding.  However, with
+APX it becomes a general property of the EVEX prefix and it makes sense
+to treat VEX the same way since it *does* include REX bits.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/i386/tcg/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index ec0bca4496d..89ba7a5c4d2 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -938,9 +938,7 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-         let mut regs = self.regs.borrow_mut();
-         let cnt = regs.counter;
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index bbd1c3b7893..d8de290acb6 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -208,7 +208,7 @@ typedef struct DisasContext {
+ #endif
  
--        for index in 0..self.num_timers {
--            let tn_regs = &mut regs.tn_regs[index];
--
-+        for tn_regs in regs.tn_regs.iter_mut().take(self.num_timers) {
-             tn_regs.update_cmp64(cnt);
-             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-         }
+ #ifdef TARGET_X86_64
+-#define REX_PREFIX(S)  (((S)->prefix & PREFIX_REX) != 0)
++#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_VEX)) != 0)
+ #define REX_W(S)       ((S)->vex_w)
+ #define REX_R(S)       ((S)->rex_r + 0)
+ #define REX_X(S)       ((S)->rex_x + 0)
 -- 
 2.55.0
 
