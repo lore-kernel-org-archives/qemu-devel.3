@@ -4,123 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B72C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 536F5C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcXy-0001AY-2H; Thu, 27 Aug 2026 12:01:46 -0400
+	id 1wzccj-0002tE-7N; Thu, 27 Aug 2026 12:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzcXq-00011V-Kt; Thu, 27 Aug 2026 12:01:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wzccf-0002sD-AR; Thu, 27 Aug 2026 12:06:37 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzcXm-0006Xq-Ru; Thu, 27 Aug 2026 12:01:38 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67RG1UUD1608711; Thu, 27 Aug 2026 16:01:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jhuLe/
- bJN3r6NbqWNKNHdpqvZcwJ4PUDMQ+m7KM9e68=; b=OOe7nMzJAzwQf4SryWX2jH
- /rZFntH9jWJ/xp2S4KeNpHgCT3PiPu+3e/dI1eEE25XyGNdtUkU/Rp/pUNXubtu+
- XBP8pU3GWA8Jgapy+8pSvDHvQnsPznE3BSdCyE+FgaiKrlzyqe3EGYuWSK5PXkpo
- joZY0ymhanfv6vHl67AnRd2ZPLKO/D2zYQN2LIr0XQb9V+mhltOhyfYi126NOTeL
- aw48KI2Gcfff5aEfA9UKaQPMvkOba8112vVguCp9Xe6zJV/4DfBIiYo2rAOCGB73
- jc+NFRy7LFYi8c0aBCWQShCglsErRbnyf3CzRfrEAs+DOWHiZdhA4DC5y9C1dFFw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73er6cpg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 16:01:30 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67RFuGSc027630;
- Thu, 27 Aug 2026 16:01:28 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsygnyk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Aug 2026 16:01:28 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67RG1Lsv48038206
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Aug 2026 16:01:21 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3B0702004E;
- Thu, 27 Aug 2026 16:01:21 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF3D42004D;
- Thu, 27 Aug 2026 16:01:17 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 27 Aug 2026 16:01:17 +0000 (GMT)
-Date: Thu, 27 Aug 2026 21:30:45 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com, Vishal Chourasia <Vishal.Chourasia2@ibm.com>
-Subject: Re: [PATCH v3 29/37] target/ppc: Move system call and rfi
- instructions to decodetree
-Message-ID: <20260827212208.5b09b9d6-73-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, 
- nikhilks@linux.ibm.com, Vishal Chourasia <Vishal.Chourasia2@ibm.com>
-References: <20260827133010.278889-1-rathc@linux.ibm.com>
- <20260827133010.278889-30-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wzcca-0007PH-S0; Thu, 27 Aug 2026 12:06:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BwV/ApaL14xmBNdZozA+2IuikmW7xaP/06aW7KZnRTFERzXxS2j8Y6tmbVZnK8y2Q7krQuqtkOWiPPkOcQRrGtN92N/QuI71aAGi0XUHTeXfLznmw1JaZ9JNAfyM+j4ieaD6JkCiagbkZ7bFPDA/b+PvkMapc1ZPN9xy54BO5QUjN22oUsrL/I+XD/cu4bxkoUAf8pMZOgFgLFB29Jj/qMcxOECseHiuA/gohXoJqaioIUOm8eieEZ4DorB70CwXc8rNwjIiVwv7uw+tRvDJIYKXIuyOCw5hYApsvgqb/oymgluuHOV3qpefOIygTx7YETU/WxSncfxWEV/X+s7l9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=I42n5TNCXZMGH+x9N99IVYsZ5qZk6O7uRJIAbt3UA2w=;
+ b=eHEIXgDIYqdp+2CJWaDUBiGKSjPeM6soFPMi3OhmfykXDMnNO7DwKeRG77bqVmeDXjTMHUOys7eU9taXoZmju+gPIRl0eyl7p+ORGoQTmkelzvQEo0K99nwhHD3KYciB3bOl1GEzADCn582gT4RZFVh8XmuvnNlq0KJBFDduMcT++rrxNyRmp3tGoRR1zoO+EB43nWx55DVSC8Al7pKRNzssEtwiGnBqxNpBB29JvQULMBW+5dmGFznUXl4pyCvPePbm21HmIJrpqjJCP50Fi7dS1FNOw1CBGldnBzzlXEEHgDnDuBxokcgqrxqOX8AwQpHufQbXj7PGdRcZEJWicw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=I42n5TNCXZMGH+x9N99IVYsZ5qZk6O7uRJIAbt3UA2w=;
+ b=RDwjY77ENLLeosHVsDnGpWERwPBXF+ewYWdJk64YZfDaXNog4mi+XHyCuAZGxHxHRgvR1WXk3h2TDkLr+M/BpIuyQwyces/SvX7BrdCX16GG/aQ+oS7Es+jcC73czePs07i6/0T91fKuUx43J3usgSSzmYbsP6+K7+LzZZW0e/ln2iTBOvTg7LIGA1xYea2vV9QhQ9PGDn1ozisRjo4ezO2x5tA/g9uejeD5a/KiIhdDzV4tZi1Y+G7q5UfrPNfz0+ZjdoqMUwrInN5L2w7x7KfcHLlBu65ntl+1USrje5UJyUYlhqhKn60HzMJom5E/CyFUZbomUwb7zqw95hPMlQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DU0PR08MB8564.eurprd08.prod.outlook.com (2603:10a6:10:403::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.6; Thu, 27 Aug
+ 2026 16:06:27 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.007; Thu, 27 Aug 2026
+ 16:06:25 +0000
+Message-ID: <aacf393c-2688-47b4-a507-18119dc6d199@virtuozzo.com>
+Date: Thu, 27 Aug 2026 18:06:23 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
+ writable
+To: Markus Armbruster <armbru@redhat.com>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-stable@nongnu.org
+References: <20260824133729.1141990-1-den@openvz.org>
+ <20260824133729.1141990-6-den@openvz.org> <87ld9umth3.fsf@pond.sub.org>
+ <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
+ <8733w0j45n.fsf@pond.sub.org>
+ <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com>
+ <87fqzzgc13.fsf@pond.sub.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <87fqzzgc13.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR03CA0044.eurprd03.prod.outlook.com
+ (2603:10a6:803:50::15) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260827133010.278889-30-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: T6XtfqKecRuWbFuigGSHB7d8taatg2z3
-X-Proofpoint-ORIG-GUID: b_9GdcNWApGx2z5ZJSEBuBi16pC8KjF0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDEzNSBTYWx0ZWRfX94PRfmBrrYw8
- 2YRi27ZPbzXAxCKQxxfwx1M5qS5tp3UaY8zK4N2LTaj/K3JJduD3fh6/J/EPJVW1UYxUaD9Xo4+
- nG4G4UIm61GWNs2u6C0IdKbi9dNhFqqHt4gK3DWUFu89Q6cBU7JWFo/hWgqDBQsYB2KAbfe3HRh
- j1dXjbc0tMA3KjSMfIDq5U0zEfuf1l1JcGWrOVkuZCBkpiqjopjN0eUPdaWjVO+xrxTs+e8FwTC
- U2jBvz43YZwoIDTOU3dh+vV9Udld5Q2VW6i/DAGYIdHR91rLgan2H7f2HB8/AwQUAfXEb5mKWLa
- DAa1RaWrJ3np9LXJJL6Msphoo7qyAHSJujyP5n3Hc0fDMVzgXlz4DGH6WWyRr/LtSqsuhKPZ+1W
- bH/eBATXXaMDrogjLJy7BHZXDYsYWsKO7RSJjaA/vzfnMrrqyW6XkSPSDDVl77sAlcS67hw6Gp3
- v2cYXlbtjijyDol/ABg==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a905f5a cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=JTILiv1MWM5Zm06z2YIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI3MDEzNSBTYWx0ZWRfX1iFCZvbKnmpy
- wE2VlBeO0c91LitMX8efoHCrZ3TOilX73A7gEAhPTFIRtQoDcnQKZ+AgvlOnBiqw0Bo2WbrvkzU
- g5c/AJ0CnOlpq6Il5Tu8t6HY529BFO0=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-27_07,2026-08-27_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608270135
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DU0PR08MB8564:EE_
+X-MS-Office365-Filtering-Correlation-Id: 40b637f2-978e-4c44-b40d-08df04552523
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|10070799003|376014|1800799024|56012099006|10067099003|6133799003|18002099003|22082099003|4143699003|5023799004;
+X-Microsoft-Antispam-Message-Info: F/ZmLtC8H4OWtX/UhuWnnEM0+0lRBBwITzgge9tkV8aiOCmam7NaNZNl2TvMJqZGDS0ZPAv1pBbdowWuvp4Ry+z+gTQngsiu4AndKR7+Y5A+21sm/SuclEhkVss9WkIQT6Efa00oCyaIfVmnDUKxR5T943UvrIbR7/cgJn71D6IdSS9qKh0HSCdI7mKQZ6k4Ua5TLa+NPo0kV7ZpnTR5inKH8mJLYiYxVgC7xA8z20+aVRITetPx3W/w5ofn0FL3S8P+EctDHMO8+VenKKqB2N51WPTLUbuw+1FxiA5yAvYlCPyernC7snkrAd8bYc6ggMUuBMYx+NwxTfVQV9hJonD1tcMiXAddjUsew42/xD37ATrYY5OE1RcSrMi08+ZZhn66XOzsgT3jWB3MvD4kmkVlLSKkIItQW6HB3KldkAfRSCah5ZeAFezVrgaYpzPaYefpCGLixrQuv//+9kYgWf7L8JvvkChawwossp6vXqz0geGSBVNmOdg9c/Y9l/a7j1KrAatqq4ZFY/84VcrhvgGIuGBXgri9sxXmeSzNLI8UV3FrZ7Wfvn9hPN5dg5vEo1mtKK3+qBc3vaROmepsI/OgvdfBFT3MDBRHqXFa+AoPSWkzf2ecHEuobcBRy1gPc7zSakFa49LoQxMGh9TZILs4JgJKwRpVb/A3yeiPvZQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(10070799003)(376014)(1800799024)(56012099006)(10067099003)(6133799003)(18002099003)(22082099003)(4143699003)(5023799004);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Syt2YkZ0V0RGYVdFYW5iZFZadG83QVRzODdTWkRuUEo0V29ILzBlbjA4OXhS?=
+ =?utf-8?B?bWw5OHZPSzJHbVN0eGIxUmlDazZRWEVOWDV3TE5ZZDFCelp2U1BTVENhT0NQ?=
+ =?utf-8?B?bEtDR0gyU0pnaGpUNHEvSG1ZOTcyTDZURUoyRGRRT25xOTZJc1BUbTNpMmRm?=
+ =?utf-8?B?a3EzdVdCSnhHb2YzMDczNFZlRWExbXEyWDlyZTF6dFBva2h3V0RLdjRndUhK?=
+ =?utf-8?B?bHVVR2d1M0hlYXZIdlNaQnJEKzNVa0ZrN24vOUg1bFNvcGcrU1dFcGp0bzFP?=
+ =?utf-8?B?UzJjcWliNTh4V1VMWmx5QjdldWVWZ1kxM3JqV2FCTWdZVFJJR0dLc1pEYnNr?=
+ =?utf-8?B?dmJ0VFl2SnJ2MnFtZjV1cjhuSkxiemlNTXFJc1hDNjhvb09wNFJpY2tobm5Y?=
+ =?utf-8?B?NXlHY2llZ1JJS0pzLzcxcExSRXFKMFM0bSt2ckxDUmw5VUVtVXlSY09Tc1Mv?=
+ =?utf-8?B?QTE5UnMxeWlHb0hHeVd4S2NZM3ZoZDlVd3lZS2hKbE94KzE4WmdXSDJhcmhk?=
+ =?utf-8?B?cWRRYjVGNjNJdVFCK2RjZnZtS0p3a2FMS3B4V1N4UGtZSGhuWkVmQ1dSY3ZZ?=
+ =?utf-8?B?MzdaaGw5NlV2Q1V0bkhjOGtZd1dQS1J6bUp0UzB3dm92QnZHdnZ0cnk2VzFQ?=
+ =?utf-8?B?am9nQmlOVjdYMmlzZXB4N01nK3Ntai85dFA0RXZGQ3J5ZXpBQnhWck15REps?=
+ =?utf-8?B?My9lM2NVL2E0ZDc0U25TQi9OSHF1WHBDMmFYMGVaV0pFVGFPdXByMkpydnJr?=
+ =?utf-8?B?N1QwNStIeDZPekwwQmljY1pPUVZOZGFUaXIrRTluc3kzZUcrZkZ4akpCSUNG?=
+ =?utf-8?B?ODNJTWJzYmZOUWZveW5nbjlmdEIzbVlmRUszMkJsa0xjdFRwcWEraXliL2Y5?=
+ =?utf-8?B?MFBhRUtFM2Jza0ZmdmlYRW53aWlzdFZrcGJKZzBvcnVDQUpQYW1jdTNPazAr?=
+ =?utf-8?B?alFXYzJvVHZSQXpyK2pWZzJ6dEoxY2lzTDJwNEZ5ZDVjclR4U1llSFdpdFpD?=
+ =?utf-8?B?TjNTdnJQMUxPNjhnV3JqQnU5aUZiZlFLWmRFR0R0VDZpd0t6c09YeVRvYURK?=
+ =?utf-8?B?NEhzcDhhSFE3N0tORmdhaWwzdDd6R2RYVGkrVlJUUmVLUmJCb1MrMFZqbWZX?=
+ =?utf-8?B?S3d0TGJId1FlN1hycmQrQU5mUmNhcGx1MEJHK2p5UDNnZ0dEZWxNaU1sSjJ6?=
+ =?utf-8?B?aFdJMmxBN0Y2RUlBS0pxcnZpVEs5QlRONmlvdE4wbndmcFIzd1BqeXBhYjhM?=
+ =?utf-8?B?cUFibW9oY3F3Mitocm9ncXM1YVRmdWRONWpkcWZaOXJ2c3NHUHpwdTR6czNu?=
+ =?utf-8?B?UVN4emFYMjlVUmJnbFZOZ0I0MkNOV0hDMEFaTUc0em1tODVtNTQ1WVc3d0U3?=
+ =?utf-8?B?M0R0MUpqZkVHdEY0QWZieWwrbjBXSFBJTXBqem1xUDlvdUJCWTg2UVJ0dXVa?=
+ =?utf-8?B?NVZNU1h4Z1JpV2FmTzVLbEpmb2ZaMndtb3l5YytGQ3JYQmQza0hMQ29yc3RR?=
+ =?utf-8?B?MyttNE9iYWpYeWgwR200TE9INTJ6MmpZL09SSVJsUG4zUjNDSVQ4dzhGOUM2?=
+ =?utf-8?B?OXJSUENzWE0zQmFMa3U4OXpzbFB4NWRYNjNnWE1qZGJSN2hMRWI1bnE1L09v?=
+ =?utf-8?B?Qnd6Q0xuUkoyUnlOVE1OQklZMUo0UUg5T2FEWWMvOTY3NUxBeVdwNVByZEVY?=
+ =?utf-8?B?dUs0MDlZU2VqeDBnMUJQaTdtK0M1S2IzZFBCZjhUYXpFWnp4c1diSE1hbFRO?=
+ =?utf-8?B?V2xxRytkakk2RXhMc2ZvNHRkb0Fqc0dtSmpwZHhac0JSOUk1OXJ1aVVCVHdl?=
+ =?utf-8?B?c1VvWllBTWhiUC9INGd6b01Fd3VrTlFtcWhoZ2hKOEc4RUtxd2xvRDBuSTZm?=
+ =?utf-8?B?ZkJKb1N3SEhURVJlKzltMzkyeW11aUxDZnFUT0RzbW93TlB5M3FnTVdpNkdz?=
+ =?utf-8?B?aXJzVkNFQlZpYnlXajMxT1p5L3lKTlpEbDNRTThQNmpabExiam5ucGtTanJU?=
+ =?utf-8?B?Rm4xQm9TWWZSK0E3RGZGUGpmQ295VUc3VlBQUXJMZ2dTbWJMS1ExR29zOFA2?=
+ =?utf-8?B?bWF0QmZUR0h0ZEtxUHY3ZVRrZmNrRW9VNG5TZzc5WVBHeXRlLzBvZGJJV0h2?=
+ =?utf-8?B?S0ZBKzd0ZG5IbVIxQ0ZMS1JkQWhNRVROYTBickZaL2RDK2RXdDZjc0tLaVlX?=
+ =?utf-8?B?TzNzVTAzVGVud0ZlWGdJQ2hiVnVJN3VmVWUxeWJnL25ZbjhPMFRMU0xjaHd2?=
+ =?utf-8?B?UlZJakxrcmZTU0FCMFh3cUllMmE2cXFjVDRndGZ3aUVMaDRTYmRhaDdTN0dt?=
+ =?utf-8?B?Z21Ea3o1akxEcHB4QkV6S0cwWUI0ZkhuZXNISVo1Vm94OVNOTGJVQ0JaUncy?=
+ =?utf-8?Q?LPWEICpEuoJEY7Y1OiAOjfg7N4mBlZOcgDREZ0wRMCryv?=
+X-MS-Exchange-AntiSpam-MessageData-1: gMl6dwYSw7YmPQ==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 40b637f2-978e-4c44-b40d-08df04552523
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2026 16:06:25.3746 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FSazzm54N/0lG90AqqT1BXIv75bCyEexP9cENms2FGT0S6cP0FLjfNg2MFNYMJSyOecZByzx7PNVL/kjUWidTg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR08MB8564
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+ envelope-from=den@virtuozzo.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,419 +159,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/27 06:59 PM, Chinmay Rath wrote:
-> From: Vishal Chourasia <Vishal.Chourasia2@ibm.com>
-> 
-> Moving the following instructions to decodetree specification:
->     sc, scv                         : SC-form
->     rfi, rfid, rfscv, hrfid         : XL-form
-> 
-> This builds upon the previous work that moved mfmsr and mtmsr[d]
-> instructions to decodetree.
-> 
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the
-> `-d in_asm,op` flag, and also by booting a pseries qemu guest.
-> 
-> This also includes improvements from review feedback:
-> - Rename helpers to uppercase (RFI/RFID/RFSCV/HRFID) to match ISA mnemonics
-> - Add TRANS64_FLAGS() macro variants
-> - Add REQUIRE_INSNS_FLAGS_NOT() check for flag exclusion
-> - Specify lev field as uint8_t in SC instruction format
-> - Remove redundant masking in SCV since lev is already 7-bit
-> - Replace TARGET_PPC64 ifdefs with REQUIRE_64BIT() macro
-> - Gate SC, SCV, RFI, RFID, RFSCV, and HRFID with appropriate flags
-> - Consolidate CONFIG_USER_ONLY guards into single block
-> 
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h                  |   8 +-
->  target/ppc/insn32.decode             |  11 +++
->  target/ppc/tcg-excp_helper.c         |   8 +-
->  target/ppc/translate.c               | 126 ++-------------------------
->  target/ppc/translate/misc-impl.c.inc | 102 ++++++++++++++++++++++
->  5 files changed, 128 insertions(+), 127 deletions(-)
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index ec3350fee8..80d6616bab 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -11,7 +11,7 @@ DEF_HELPER_4(HASHCHKP, void, env, tl, tl, tl)
->  #if !defined(CONFIG_USER_ONLY)
->  DEF_HELPER_2(store_msr, void, env, tl)
->  DEF_HELPER_1(ppc_maybe_interrupt, void, env)
-> -DEF_HELPER_1(rfi, void, env)
-> +DEF_HELPER_1(RFI, void, env)
->  DEF_HELPER_1(40x_rfci, void, env)
->  DEF_HELPER_1(rfci, void, env)
->  DEF_HELPER_1(rfdi, void, env)
-> @@ -19,9 +19,9 @@ DEF_HELPER_1(rfmci, void, env)
->  #if defined(TARGET_PPC64)
->  DEF_HELPER_2(scv, noreturn, env, i32)
->  DEF_HELPER_2(PMINSN, void, env, i32)
-> -DEF_HELPER_1(rfid, void, env)
-> -DEF_HELPER_1(rfscv, void, env)
-> -DEF_HELPER_1(hrfid, void, env)
-> +DEF_HELPER_1(RFID, void, env)
-> +DEF_HELPER_1(RFSCV, void, env)
-> +DEF_HELPER_1(HRFID, void, env)
->  DEF_HELPER_2(rfebb, void, env, tl)
->  DEF_HELPER_2(store_lpcr, void, env, tl)
->  DEF_HELPER_2(store_pcr, void, env, tl)
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 7bbe1f8838..6563dc4f64 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -199,6 +199,9 @@
->  &X_rs_l         rs l:bool
->  @X_rs_l         ...... rs:5 .... l:1 ..... .......... .         &X_rs_l
->  
-> +&SC             lev:uint8_t
-> +@SC             ...... ..... ..... .... lev:7 ... . .           &SC
-> +
->  &X_uim5         xt uim:uint8_t
->  @X_uim5         ...... ..... ..... uim:5 .......... .           &X_uim5 xt=%x_xt
->  
-> @@ -320,6 +323,14 @@ MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
->  MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
->  MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
->  
-> +### System Call and Return from Interrupt
-> +SC              010001 ----- ----- ---- ....... --- 1 -         @SC
-> +SCV             010001 ----- ----- ---- ....... --- 0 1         @SC
-> +RFI             010011 ----- ----- ----- 0000110010 -
-> +RFID            010011 ----- ----- ----- 0000010010 -
-> +RFSCV           010011 ----- ----- ----- 0001010010 -
-> +HRFID           010011 ----- ----- ----- 0100010010 -
-> +
->  ### Fixed-Point Byte-Reverse Instructions
->  BRW             011111 ..... ..... ----- 0010011011 -   @X_sa
->  BRD             011111 ..... ..... ----- 0010111011 -   @X_sa
-> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> index c4ffa2dfbb..d06d3f8642 100644
-> --- a/target/ppc/tcg-excp_helper.c
-> +++ b/target/ppc/tcg-excp_helper.c
-> @@ -528,13 +528,13 @@ static void do_rfi(CPUPPCState *env, target_ulong nip, target_ulong msr)
->      check_tlb_flush(env, false);
->  }
->  
-> -void helper_rfi(CPUPPCState *env)
-> +void helper_RFI(CPUPPCState *env)
->  {
->      do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1] & 0xfffffffful);
->  }
->  
->  #ifdef TARGET_PPC64
-> -void helper_rfid(CPUPPCState *env)
-> +void helper_RFID(CPUPPCState *env)
->  {
->      /*
->       * The architecture defines a number of rules for which bits can
-> @@ -545,12 +545,12 @@ void helper_rfid(CPUPPCState *env)
->      do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
->  }
->  
-> -void helper_rfscv(CPUPPCState *env)
-> +void helper_RFSCV(CPUPPCState *env)
->  {
->      do_rfi(env, env->lr, env->ctr);
->  }
->  
-> -void helper_hrfid(CPUPPCState *env)
-> +void helper_HRFID(CPUPPCState *env)
->  {
->      do_rfi(env, env->spr[SPR_HSRR0], env->spr[SPR_HSRR1]);
->  }
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 20d3e7c1ab..f46e2167ea 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2679,110 +2679,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
->      tcg_gen_movi_tl(cpu_lr, nip);
->  }
->  
-> -/***                           System linkage                              ***/
-> -
-> -/* rfi (supervisor only) */
-> -static void gen_rfi(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    /*
-> -     * This instruction doesn't exist anymore on 64-bit server
-> -     * processors compliant with arch 2.x
-> -     */
-> -    if (is_book3s_arch2x(ctx)) {
-> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> -        return;
-> -    }
-> -    /* Restore CPU state */
-> -    CHK_SV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
-> -    gen_helper_rfi(tcg_env);
-> -    ctx->base.is_jmp = DISAS_EXIT;
-> -#endif
-> -}
-> -
-> -#if defined(TARGET_PPC64)
-> -static void gen_rfid(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    /* Restore CPU state */
-> -    CHK_SV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
-> -    gen_helper_rfid(tcg_env);
-> -    ctx->base.is_jmp = DISAS_EXIT;
-> -#endif
-> -}
-> -
-> -#if !defined(CONFIG_USER_ONLY)
-> -static void gen_rfscv(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    /* Restore CPU state */
-> -    CHK_SV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
-> -    gen_helper_rfscv(tcg_env);
-> -    ctx->base.is_jmp = DISAS_EXIT;
-> -#endif
-> -}
-> -#endif
-> -
-> -static void gen_hrfid(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    /* Restore CPU state */
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    gen_helper_hrfid(tcg_env);
-> -    ctx->base.is_jmp = DISAS_EXIT;
-> -#endif
-> -}
-> -#endif
-> -
-> -/* sc */
-> -#if defined(CONFIG_USER_ONLY)
-> -#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL_USER
-> -#else
-> -#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL
-> -#endif
-> -static void gen_sc(DisasContext *ctx)
-> -{
-> -    uint32_t lev;
-> -
-> -    /*
-> -     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
-> -     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
-> -     * for Ultravisor which TCG does not support, so just ignore the top 6.
-> -     */
-> -    lev = (ctx->opcode >> 5) & 0x1;
-> -    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
-> -}
-> -
-> -#if defined(TARGET_PPC64)
-> -#if !defined(CONFIG_USER_ONLY)
-> -static void gen_scv(DisasContext *ctx)
-> -{
-> -    uint32_t lev = (ctx->opcode >> 5) & 0x7F;
-> -
-> -    /* Set the PC back to the faulting instruction. */
-> -    gen_update_nip(ctx, ctx->cia);
-> -    gen_helper_scv(tcg_env, tcg_constant_i32(lev));
-> -
-> -    ctx->base.is_jmp = DISAS_NORETURN;
-> -}
-> -#endif
-> -#endif
-> -
->  /***                                Trap                                   ***/
->  
->  /* Check for unconditional traps (always or never) */
-> @@ -4155,6 +4051,13 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
->  #define TRANS64(NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
->      { REQUIRE_64BIT(ctx); return FUNC(ctx, a, ##__VA_ARGS__); }
-> +#define TRANS64_FLAGS(FLAGS, NAME, FUNC, ...) \
-> +    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+On 8/27/26 11:15, Markus Armbruster wrote:
+> "Denis V. Lunev" <den@virtuozzo.com> writes:
+>
+>> On 8/26/26 17:24, Markus Armbruster wrote:
+>>> "Denis V. Lunev" <den@virtuozzo.com> writes:
+>>>
+>>>> On 8/25/26 11:37, Markus Armbruster wrote:
+>>>>> "Denis V. Lunev" <den@openvz.org> writes:
+>>>>>
+>>>>>> From: Denis V. Lunev <den@openvz.org>
+>>>>>>
+>>>>>> A dirty image must be repaired before anything allocates a cluster in
+>>>>>> it. qcow2_do_open() does that, but only for a node that is writable
+>>>>>> from the start. A node opened read-only skips it, and nothing revisits
+>>>>>> the question once that node becomes writable, which block-commit does
+>>>>>> routinely: commit_active_start() and commit_start() reopen the base
+>>>>>> read-write for the duration of the job.
+>>>>>>
+>>>>>> With lazy refcounts the on-disk refcount block then still accounts for
+>>>>>> the metadata clusters only, so the allocator restarts at the front of
+>>>>>> the image and hands out clusters that L2 entries point at. Two guest
+>>>>>> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
+>>>>>> stays clear, and a clean close clears the dirty bit, so no later open
+>>>>>> repairs the image either. The bit also stays set for the whole writable
+>>>>>> session, so a node which is merely writable says nothing.
+>>>>>>
+>>>>>> Refusing the reopen instead is simpler and keeps it atomic, but it
+>>>>>> leaves nowhere to go: the base belongs to a chain the VM has open, so
+>>>>>> the qemu-img check -r such an error would ask for cannot take the write
+>>>>>> lock it needs. The repair does the trick in most cases anyway.
+>>>>>>
+>>>>>> Do the repair in qcow2_reopen_commit_post(), the earliest point where
+>>>>>> the node is writable. An inactive node is skipped: bdrv_activate() calls
+>>>>>> qcow2_do_open() again through qcow2_co_invalidate_cache().
+>>>>>>
+>>>>>> commit_post cannot reject the reopen, so a failed repair takes the
+>>>>>> driver away from the node instead, which is what stops writes from
+>>>>>> aliasing live clusters. qcow2_signal_corruption() does that as well,
+>>>>>> but it also sends BLOCK_IMAGE_CORRUPTED and sets the corrupt bit,
+>>>>>> which qcow2_do_open() honours by refusing every later read-write open.
+>>>>>> The image is dirty and unrepaired, not corrupt, and qemu-img check -r
+>>>>>> still fixes it, so neither belongs here. Return the error and skip
+>>>>>> the bitmaps.
+>>>>>>
+>>>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>>>>> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>>>>> CC: Kevin Wolf <kwolf@redhat.com>
+>>>>>> CC: Hanna Reitz <hreitz@redhat.com>
+>>>>>> CC: Eric Blake <eblake@redhat.com>
+>>>>>> CC: Markus Armbruster <armbru@redhat.com>
+>>>>>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>>>>> Cc: qemu-stable@nongnu.org
+>>>>> [...]
+>>>>>
+>>>>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>>>>>> index 199efc1e00..940249a5e5 100644
+>>>>>> --- a/qapi/block-core.json
+>>>>>> +++ b/qapi/block-core.json
+>>>>>> @@ -1852,6 +1852,9 @@
+>>>>>   ##
+>>>>>   # @change-backing-file:
+>>>>>   #
+>>>>>   # Change the backing file in the image file metadata.  This does not
+>>>>>   # cause QEMU to reopen the image file to reparse the backing filename
+>>>>>   # (it may, however, perform a reopen to change permissions from r/o ->
+>>>>>>  # r/w -> r/o, if needed).  The new backing file string is written into
+>>>>>>  # the image file metadata, and the QEMU internal strings are updated.
+>>>>>>  #
+>>>>>> +# A dirty qcow2 image is repaired during that reopen, which blocks
+>>>>>> +# other requests and can fail the command.
+>>>>> Pardon my ignorance: what makes a qcow2 image dirty?
+>>>> usual obvious reasons are SIGKILL to qemu process (f.e. from OOM)
+>>>> or node crash.
+>>> So, you have to do some cleaning work before you can use it again, just
+>>> like a dirty filesystem.  Correct?
+>> Correct. QEMU allows right now to open dirty images in read-only
+>> mode and it is OK to be used until we switch to RW. In this
+>> case real write to metadata corrupts image.
+> Feels... adventurous?
+>
+>>> Back to change-backing-file.  It operates on an open image.  Cleaning
+>>> happens when that image is read-only and dirty.  Possible because you
+>>> can open dirty images read-only, and that doesn't clean them.  Correct?
+>> Correct.
+>>
+>>>>> Can you give me an idea of what other requests could be blocked?
+>>>> Before the patch reopen was smooth - we have just opened the
+>>>> file again. After this patch in a very unlikely corner case
+>>>> potentially lengthy procedure has been added - full image
+>>>> consistency check. Guest IO is stuck until the check will be
+>>>> completed.
+>>>>
+>>>> The case is unfortunately real for production.
+>>>>
+>>>>> Double-checking: "that reopen" is the one to change permissions,
+>>>>> i.e. the parenthesis above.  Correct?
+>>>> yes
+>>>>
+>>>>>> +#
+>>>>>>  # @image-node-name: The name of the block driver state node of the
+>>>>>>  #     image to modify.  The "device" argument is used to verify
+>>>>>>  #     "image-node-name" is in the chain described by "device".
+>>>>>> @@ -1891,6 +1894,9 @@
+>>>>>   ##
+>>>>>   # @block-commit:
+>>>>>   #
+>>>>>   # Live commit of data from overlay image nodes into backing nodes -
+>>>>>   # i.e., writes data between 'top' and 'base' into 'base'.
+>>>>>   #
+>>>>>   # If top == base, that is an error.  If top has no overlays on top of
+>>>>>   # it, or if it is in use by a writer, the job will not be completed by
+>>>>>   # itself.  The user needs to complete the job with the `job-complete`
+>>>>>   # command after getting the ready event.  (Since 2.0)
+>>>>>   #
+>>>>>   # If the base image is smaller than top, then the base image will be
+>>>>>   # resized to be the same size as top.  If top is smaller than the base
+>>>>>   # image, the base will not be truncated.  If you want the base image
+>>>>>>  # size to match the size of the smaller top, you can safely truncate
+>>>>>>  # it yourself once the commit operation successfully completes.
+>>>>>>  #
+>>>>>> +# The base is opened read-write.  A dirty qcow2 base is repaired
+>>> Reopend, I presume?
+>> The meaning here is repaired. The meaning here is the following:
+>> "The base is reopened read-write and if it is dirty it should be
+>> repaired before any single write is made. Guest stalls until
+>> repair is complete."
+> If it is dirty, it *will* (not should) be repaired before commit can
+> start to write.  Correct?
 
-Nit: Similar to what I mentioned below.
+Absolutely.
 
-> +    {                                                           \
-> +        REQUIRE_64BIT(ctx);                                     \
-> +        REQUIRE_INSNS_FLAGS(ctx, FLAGS);                        \
-> +        return FUNC(ctx, a, ##__VA_ARGS__);                     \
-> +    }
->  #define TRANS64_FLAGS2(FLAGS2, NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
->      {                                                          \
-> @@ -4529,21 +4432,6 @@ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->  GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->  /* handles stfdp, stxsd, stxssp */
->  GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
-> -/* ISA v3.0 changed the extended opcode from 62 to 30 */
-> -GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
-> -#if defined(TARGET_PPC64)
-> -GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
-> -#if !defined(CONFIG_USER_ONLY)
-> -/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
-> -GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
-> -GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
-> -GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
-> -#endif
-> -GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
-> -#endif
-> -/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
-> -GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
-> -GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
->  GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
->  GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
->  GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
-> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
-> index 54712f9b73..26c82a5a7f 100644
-> --- a/target/ppc/translate/misc-impl.c.inc
-> +++ b/target/ppc/translate/misc-impl.c.inc
-> @@ -225,3 +225,105 @@ static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
->  
->  TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
->  TRANS64(MTMSRD, do_mtmsr, true)
-> +
-> +/*
-> + * System Call and Return from Interrupt Instructions
-> + */
-> +
-> +static bool do_SC(DisasContext *ctx, arg_SC * a, uint32_t excp)
+> Is the base reopened read-only after the commit completed?
+Not mandatory. For pivot cases we are committing top to
+base and through out top. Base stays RW.
 
-Nit: space before a — should be arg_SC *a per QEMU coding style (pointer
-attached to the type, not the variable name). This was present in v2 and
-wasn't caught earlier.
 
-> +{
-> +    uint32_t lev;
-> +
-> +    /*
-> +     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
-> +     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
-> +     * for Ultravisor which TCG does not support, so just ignore the top 6.
-> +     */
-> +    lev = a->lev & 0x1;
-> +    gen_exception_err(ctx, excp, lev);
-> +    return true;
-> +}
-> +
-> +static bool do_SCV(DisasContext *ctx, arg_SC *a)
-> +{
-> +#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
-> +    /* Set the PC back to the faulting instruction. */
-> +    gen_update_nip(ctx, ctx->cia);
-> +    gen_helper_scv(tcg_env, tcg_constant_i32(a->lev));
-> +
-> +    ctx->base.is_jmp = DISAS_NORETURN;
-> +    return true;
-> +#else
-> +    gen_invalid(ctx);
-> +    return true;
-> +#endif
-> +}
-> +
-> +/*
-> + * Common helper for return-from-interrupt instructions
-> + */
-> +enum {
-> +   RFI_KIND_RFI = 0,
-> +   RFI_KIND_RFID = 1,
-> +   RFI_KIND_HRFID = 2,
-> +   RFI_KIND_RFSCV = 3,
-> +};
-> +
-> +static bool do_rfi(DisasContext *ctx, arg_RFID *a, int kind)
-> +{
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +    return true;
-> +#else
-> +    void (*helper)(TCGv_ptr);
-> +
-> +    switch (kind) {
+>>>>>> +# first, which blocks other requests and can fail the command.
+>>>>>> +#
+>>>>>>  # @job-id: identifier for the newly-created block job.  If omitted,
+>>>>>>  #     the device name will be used.  (Since 2.7)
+>>>>>>  #
+>>> Like change-backing-file, block-commit operates on open images.  It
+>>> copies down into a base image.  If the base image is read-only, it is
+>>> reopened, and cleaning happens when it's dirty.  Correct?
+>> Correct.
+>>
+>>> Can it happen in any other way?
+>> No at the best knowledge from me and Andrey.
+> Got it.
+>
+>>>>>> @@ -2902,6 +2908,9 @@
+>>>>>   ##
+>>>>>   # @block-stream:
+>>>>>   #
+>>>>>   # Copy data from a backing file into a block device.
+>>>>>
+>>>>> [...]
+>>> Whereas block-commit copies down into a base image, block-stream copies
+>>> up from a base image.  If the image copied to is read-only, it is
+>>> reopened, and cleaning happens when it's dirty.  Correct?
+>> Correct.
+> Is the reopened back to read-only afterwards?
 
-On the broader design point I raised in v2 — preferring four separate
-translators over the consolidated do_rfi(kind) approach: I still think
-separate translators would be structurally cleaner. The RFI family has
-genuinely distinct privilege semantics (REQUIRE_SV vs REQUIRE_HV), a
-is_book3s_arch2x check for one variant only, and the BHRB omission for
-HRFID — all of which require guards that must be remembered to apply
-correctly when the function is modified in future.
+That is I was not tracked, but for commit image could stay RW
+after op and from design point of view I believe that answer
+is enough.
 
-That said, the RFI_KIND_HRFID guard is correctly in place in v3, and I
-am okay with this approach if you prefer to keep it. The key correctness
-issue is resolved.
+>>> Can it happen in any other way?
+>> No at the best knowledge from me and Andrey.
+> Got it.
+>
+>>>>>>  # On successful completion the image file is updated to drop the
+>>>>>>  # backing file and the `BLOCK_JOB_COMPLETED` event is emitted.
+>>>>>>  #
+>>>>>> +# The top image is opened read-write.  A dirty qcow2 image is repaired
+>>>>>> +# first, which blocks other requests and can fail the command.
+>>>>>> +#
+>>>>>>  # In case @device is a filter node, `block-stream` modifies the first
+>>>>>>  # non-filter overlay node below it to point to the new backing node
+>>>>>>  # instead of modifying @device itself.
+>>>>>> @@ -4989,6 +4998,16 @@
+>>>>>   ##
+>>>>>   # @blockdev-reopen:
+>>>>>   #
+>>>>>   # Reopens one or more block devices using the given set of options.
+>>>>>   # Any option not specified will be reset to its default value
+>>>>>   # regardless of its previous status.  If an option cannot be changed
+>>>>>   # or a particular driver does not support reopening then the command
+>>>>>   # will return an error.  All devices in the list are reopened in one
+>>>>>>  # transaction, so if one of them fails then the whole transaction is
+>>>>>>  # cancelled.
+>>> blockdev-reopen also operates on open images.  Cleaning happens when
+>>> reopening a dirty read-only image read/write.  Correct?
+>> Correct.
+>>
+>>> Can it happen in any other way?
+>> No.
+> Got it.
+>
+>>>>>>  #
+>>>>>> +# An error is also returned when a device cannot be used once it has
+>>>>>> +# been reopened.  Such a reopen is not undone, so an error does not
+>>>>>> +# always mean that nothing has changed.
+>>>>> Could that be a problem?
+>>>> Error reply as itself is not a problem. The situation as a whole
+>>>> is a real pain in the ass.
+> Ideally, a command does not change user-visible state when it fails.
+>
+> blockdev-reopen is designed to be a single transaction: success means
+> all the images were reopened as directed, failure means none of the
+> images were reopened.  "So an error does not always mean that nothing
+> has changed" indicates we're not actually implementing this design.
+> Could that be a problem?
+This is real pain and this could be a problem for me.
+As fair as can be. I thought about other option - return
+success from the reopen itself - we are succeeded on
+switch and rely to signal corruption workflow, which
+sends out of stream QAPI event when this condition is
+detected.
 
-With the two pointer-spacing nits fixed (@Harsh, if there's no respin,
-could you please take care of this while applying the patch?):
+This could be an option and may be I am over-designing
+with this QAPI change. Anyway, this is the place than
+other different thinking person is very welcome.
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+>>>> The problem is that such images exists in production and there
+>>>> is not way to handle this without downtime.
+> Yes.
+>
+>>>> Under this patch we are trying to fix things hard and this is
+>>>> correct thing to do - on RW image we are doing exactly the
+>>>> same thing. If automation is unable to fix - the guest denies
+>>>> starting.
+> We must not (re)open a dirty image read/write without cleaning it,
+> because writing to risks corruption, i.e. data loss.
+>
+> When we open a dirty image read/write, we can clean it without
+> inconveniencing the guest, because the guest cannot access it until
+> after open completes and we connect the newly open image.  Correct?
+correct.
 
-> +    case RFI_KIND_RFI:
-> +        if (is_book3s_arch2x(ctx)) {
-> +            gen_invalid(ctx);
-> +            return true;
-> +        }
-> +        REQUIRE_SV(ctx);
-> +        helper = gen_helper_RFI;
-> +        break;
-> +#if defined(TARGET_PPC64)
-> +    case RFI_KIND_HRFID:
-> +        REQUIRE_HV(ctx);
-> +        helper = gen_helper_HRFID;
-> +        break;
-> +    case RFI_KIND_RFID:
-> +        REQUIRE_SV(ctx);
-> +        helper = gen_helper_RFID;
-> +        break;
-> +    case RFI_KIND_RFSCV:
-> +        REQUIRE_SV(ctx);
-> +        helper = gen_helper_RFSCV;
-> +        break;
-> +#endif
-> +    default:
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    translator_io_start(&ctx->base);
-> +    if (kind != RFI_KIND_HRFID) {
-> +        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
-> +    }
-> +    helper(tcg_env);
-> +    ctx->base.is_jmp = DISAS_EXIT;
-> +    return true;
-> +#endif
-> +}
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL_USER)
-> +#else
-> +TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL)
-> +#endif
-> +
-> +TRANS64_FLAGS2(ISA300, SCV, do_SCV)
-> +
-> +TRANS_FLAGS(FLOW, RFI, do_rfi, RFI_KIND_RFI)
-> +TRANS64(RFID, do_rfi, RFI_KIND_RFID)
-> +TRANS64_FLAGS(64H, HRFID, do_rfi, RFI_KIND_HRFID)
-> +TRANS64_FLAGS2(ISA300, RFSCV, do_rfi, RFI_KIND_RFSCV)
-> -- 
-> 2.55.0
-> 
+> When we reopen a read/only dirty image read/write, cleaning it *can*
+> affect the guest, as discussed above.
+>
+> As far as I can tell, all the trouble discussed above ultimately comes
+> from letting the guest work with read-only dirty images.  Why is that
+> useful?
+>
+> What are the use cases for opening dirty images read-only?
+Read only images usually comes in image chains (snapshots, backing
+stores). How RO image becomes dirty is very good question. May
+be this was due to QEMU stop/node crash during running commit.
+
+Why this is needed? VM should continue to start with dirty
+RO image. Doing maintenance at start? That is also problematic.
+At this moment we can face shared lock on base image (so called
+golden image scenario).
+
+
+>>>> Here we report an error and render guest as unusable. This
+>>>> case is expected to be extremely rare but technically possible.
+>>>>
+>>>> This is a problem.
+>>> I'll come back to this as soon as I understand when exactly cleaning may
+>>> happen.
+>> Right. Thanks.
+>>
+>> You are asking very good questions which are quite important
+>> and interesting :-) Simple "deny" policy is very bad from
+>> operations point of view.
+> I try!
+>
+> [...]
+>
+
 
