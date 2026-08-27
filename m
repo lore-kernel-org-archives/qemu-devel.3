@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5079AC61DB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5B9C61DB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 16:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzcgD-0004ZZ-VR; Thu, 27 Aug 2026 12:10:17 -0400
+	id 1wzcgP-0004nf-81; Thu, 27 Aug 2026 12:10:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcgA-0004YG-Ms
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:14 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcgH-0004bF-VW
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:25 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcg8-0007uc-OY
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:14 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4957eefd361so16124715e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:10:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzcgG-0007wG-5R
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 12:10:21 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-49b0dbfbf7bso9973495e9.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 09:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787847011; x=1788451811; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787847018; x=1788451818; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=f5QFhAFnxCdd4h1trIbLuH4MIh6b8yqEQgKz02p+ZQ4=;
- b=JPbgWoogH8QRf8d7KApWKb4aSbZFRRHBFof58OhHBlYNyXosNjWI7GkluiglEU4unx
- gNnSu5x398+DF5mH4AVCCkN+cTq09xMrIsFAt0qjb595jeBragCc5FXDK5ojcu/v6jgO
- GvAjwQ5r1tYcmCsfwQmGr7Wgf8cMh4nvd/7wAMxhQxiIjE61eCqeMhvsuTGCr6itwD/6
- bzmOGCvQRjdi+2xyqSXDjh9u43SASik8SM6IrDadfA1MA5N26YSyACgXWA8dKfh276Pb
- e/4eM2fuS04gaPBHgUt1HMRUqvM9w4VYc0byZczKNCsyq/W7yallVLayQbVQC/O3/G0G
- vYiA==
+ bh=BwRgMbNoY8A7dFSglbkxKQAAAXinbP9BQT6ju2m4fTE=;
+ b=gia/bR4HPnqJkyzeIaQxABP6BXwq8arVUE6vQBI5Envp5+0K4f6bUirdbzAsB8JB7U
+ AhsSijUA+/fMVemuo4gO32pDVNN5W/zFjUEo7aDwI+RZ4Vej21az5YCsBW/5FEOf5gqc
+ LJZ3XAXzsPu4mOtFp48xhhEp08nA02jdJvZKgfFq8mUd85qx/RvcNnCVQv9vdv7+H1db
+ uqWIboCDC3XY4Oui/ls5aQZClcji/AoU8qNf2nfFByis1XM+MvrKYAInLo6AA1HmRHoI
+ VCqJ7T+Y5C6tgj6VC9HValFpzQGnppzu4TAOWjPvQ57+DGP43yehbmlYb6dYNhVuV/wo
+ zDjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787847011; x=1788451811;
+ d=1e100.net; s=20251104; t=1787847018; x=1788451818;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=f5QFhAFnxCdd4h1trIbLuH4MIh6b8yqEQgKz02p+ZQ4=;
- b=BMHp9ww0BTgyAP2/v5ob6hAr8VNlUKLS1kHdTnq6soiPUOH4RwMrhJi2xi5FU6QNRn
- QRD0fyRlxPoIRGHx5ohjpE/3T5yNuB9gidQkNgXzjM4YxuEGs5+WOaD1pm29V45Nx9hQ
- s49nmIZoq9y1+Gs4s+tjXwPab5XxCfwWM/OdEJjh+k8jkSPLgUuj5rnKOBQ7dYje9exN
- NIBNZj1FmEkqMRyo6RF5m+twIF1SekQwaUtqinFyww61ANIXAaOI1EBSbbYWttZIP7AA
- /QSlYshREA7IgTneLkuDLkSKQgIkiHc7XQc0KCnIaSwmBlU7k+wlHJzALcUYEyioRiYr
- pILw==
-X-Gm-Message-State: AFuF++nAXyKrB6wOLsUPCSsClmeQqQnWzU6KlKiMYV7Qmxpm6grzV+Uh
- /nIo0Q/wQdOFb5TETwsCZC1jOlFj8pJq1l8WDT8JVshhgf7QeAn24HejNqjEOr8v/qy7tTdy49t
- HwoJW
-X-Gm-Gg: AR+sD13J6dUJEWiIDT7lF20EHUBpwu5FISRxvymg4+h5nPSymCGDR/Ssm0tsvcl2q2c
- 6NHmvluBQ1lZv1II7g4qqJbzoS1gKzFwJvLwFHgewxNzCUO88mCZfRe5vVLh15X0dCvKsYpzjyi
- P2rKmFqRByqk9fNrnzLYqS8HUaehNLtNgsBtqyfdO6qxhhtYBBqMWdAzyP7vgqVSFhDt1cCzeRR
- P0dW+RcNzs/Md+5NjszRGTAzl1ft2kaLYdWQFSEAhn2k5f4pbMjBJKbzp9f5rVfeiiZtWPLwFX/
- GAJm/AUdVa5YhBZrC2woPRxccW/da+nWmf9WGwnzyN16ncpOmSfP3haApoBIH6en5oBzhRO8G/R
- AEPcEtTa9lQVB1GYHaqM2oCHsWKTGpddkQlJ8MIj1qyOP29aQu2JfdKu9mxfxTnqeUeK9/JPQk+
- vwkietBJxd+fZoBHELmzZNRjsi0D+w4rv8s79MQ4rU2uJaOY0HRQ==
-X-Received: by 2002:a05:600c:37c9:b0:49b:2796:be30 with SMTP id
- 5b1f17b1804b1-49b2796c07cmr118083215e9.11.1787847011061; 
- Thu, 27 Aug 2026 09:10:11 -0700 (PDT)
+ bh=BwRgMbNoY8A7dFSglbkxKQAAAXinbP9BQT6ju2m4fTE=;
+ b=p7rFzgAV8+hfqdNwqVPBIKb4FgrmFDexx3iG2QRS3aLT9UTR9v1ROW84QGdJqgBuUj
+ CsvOeKDFit2BOThfnZ0r9GZhe/4EiZ7B+e4DZ8lF2Xoaudi0WXAxW+p3bwm64h9Lz6tX
+ 1OGv/1564SYNbuvRl93KsuJHn+lhlUq9Z0M9tHjZ8Qk0KPojLHWkL7QRplj0NUdzHnoa
+ Fd6SmWsQQe/MzVQRMzSUD7cJRSD3M37X7cyVC1hII2faiglyN0LNpGXhv+9e7St6z+/2
+ cRAAR11TCSR4YTWUONA4YFdyyfRdZXWh1uCxh1x200lZa7Oe7BDOTNNm/ofdJeHxNkxj
+ 1Mrg==
+X-Gm-Message-State: AFuF++ksdjDStNybHebdKrV1erXCx4Irc/6ISLXQFCb1+MH7+w9aHgpF
+ NYjOrDiism/iiM7qHU6l8G5gIZGSGJMtr0AmpN+9GR23bwSMxy9SAgxLh3SJR/ujM4+TBisg9RL
+ 8/w0i
+X-Gm-Gg: AR+sD10lKuDeTbyO4SQWjl9jJeZxTN+/aWj6GfuW2JgqT8RQk63uJvKyadG0DVP4eVZ
+ 1c0V0SwSx4BOVjDRAQ+L9wCbqyWPzUihixhVWOOaV+yh8RTmjniVTYu6FA4oV6urB9p0/B1rBdj
+ D0Fy1B+eZsKWbu2D60KEOIq2/wakBOZLuo1kHeG1io2RShuhFxrliUJBrTYQm3oYFjwHe6GcgB4
+ a9g7dw14m3JfN0RvzKK8VZ2TWi7Kr9FpftNOIPs4s0YrzBBlDR6Dz0eiZ2ftRqNh0gHuCTguAEi
+ E4IUSz+Pv9bd26WUfDxaq/s56cCADMkmsN/97BliuJflElwBXMLaHSg5hmufU2RSmNnykjPamS3
+ 8uW/1vFqHyK4qQ4PNsoiTx0XHdQgLK79qFGOyqNXTtQZKllS56lHucCczGwrhZCdZDOb3OOgzwn
+ 9pyCUSKQMj+YQde26e4IG2LJ0PGQ4GOPhqR92kulgbNMHFKJqJ
+X-Received: by 2002:a05:600c:46cc:b0:49b:909e:922e with SMTP id
+ 5b1f17b1804b1-49b909e92aamr39758705e9.10.1787847018030; 
+ Thu, 27 Aug 2026 09:10:18 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:e57e:de8:330d:26d0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dd5771a3sm71359465e9.4.2026.08.27.09.10.09
+ 5b1f17b1804b1-499dd5771a3sm71359465e9.4.2026.08.27.09.10.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 09:10:10 -0700 (PDT)
+ Thu, 27 Aug 2026 09:10:16 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH v2 2/5] nbd/server: accept NBD_CMD_CACHE above the maximum
- payload size
-Date: Thu, 27 Aug 2026 18:09:59 +0200
-Message-ID: <20260827161002.310688-3-den@openvz.org>
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v2 5/5] iotests/nbd-commands: cover the command flags and
+ sparse replies
+Date: Thu, 27 Aug 2026 18:10:02 +0200
+Message-ID: <20260827161002.310688-6-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260827161002.310688-1-den@openvz.org>
 References: <20260827161002.310688-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=den@openvz.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,86 +103,156 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-NBD_CMD_CACHE carries no payload in either direction. The request is
-a header only, nbd_do_cmd_cache() passes a NULL qiov to
-blk_co_preadv(), and the reply is a bare status. Still the server
-rejects any effect length above NBD_MAX_BUFFER_SIZE with EINVAL,
-which forces a client to split a large prefetch into 32 MiB pieces.
+No test sends the NBD command flags, so the server paths behind them
+go unexercised. Send them from the new client.
 
-The specification does not ask for this. The constraint was renamed
-from "maximum block size" to "maximum payload size" precisely to
-separate payload length from effect length, and it says:
+A structured read answers a hole with an offset and a length rather
+than a cluster of zeroes. Lay out data, a hole and data again, and
+read the three arrangements a hole can appear in, since a leading hole
+and a hole between two extents take different turns through
+nbd_co_send_sparse_read(). NBD_CMD_FLAG_DF asks for one chunk instead,
+which is the same layout sent as real zeroes. Check the chunk
+boundaries in both forms, and that the data still reads back.
 
-  For commands that do not require a payload in either direction
-  (such as NBD_CMD_TRIM or NBD_CMD_WRITE_ZEROES), the client MAY
-  request an effect length larger than the maximum payload size;
-  the server SHOULD NOT disconnect, but MAY reply with an
-  NBD_EOVERFLOW or NBD_EINVAL error if the oversize request would
-  require too many server resources when compared to the same
-  command with an effect length limited to the maximum payload
-  size (such as an implementation of NBD_CMD_WRITE_ZEROES that
-  utilizes a scratch buffer).
+NBD_CMD_FLAG_REQ_ONE caps the extent array at one entry, so the block
+status reply covers only the first cluster of the three asked about.
+That a reply may describe less than was requested is also how the
+server keeps NBD_MAX_BLOCK_STATUS_EXTENTS from being exceeded on a
+long fragmented range, and a client assuming full coverage believes
+stale status.
 
-We already follow that for NBD_CMD_TRIM and NBD_CMD_WRITE_ZEROES,
-which carry no length check at all, and our client assumes a server
-supporting extended headers takes unlimited zero and trim lengths.
-Handle NBD_CMD_CACHE in the same way.
+NBD_CMD_FLAG_FAST_ZERO becomes BDRV_REQ_NO_FALLBACK. A cluster aligned
+zero can be done by marking the cluster, while zeroing part of a
+cluster over a backing file needs the read modify write the flag
+forbids, so check both the success and the ENOTSUP.
+
+NBD_CMD_FLAG_FUA is added to a write and a trim.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: Eric Blake <eblake@redhat.com>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- nbd/server.c                          | 4 +---
- tests/qemu-iotests/tests/nbd-commands | 5 ++---
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ tests/qemu-iotests/tests/nbd-commands     | 72 ++++++++++++++++++++++-
+ tests/qemu-iotests/tests/nbd-commands.out |  4 +-
+ 2 files changed, 71 insertions(+), 5 deletions(-)
 
-diff --git a/nbd/server.c b/nbd/server.c
-index 78ec984409..e6c47f8c2e 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -2718,7 +2718,6 @@ static int coroutine_fn nbd_co_receive_request(NBDRequestData *req,
-         break;
- 
-     case NBD_CMD_CACHE:
--        check_length = true;
-         break;
- 
-     case NBD_CMD_WRITE_ZEROES:
-@@ -2752,7 +2751,7 @@ static int coroutine_fn nbd_co_receive_request(NBDRequestData *req,
-         req->complete = true;
-     }
-     if (check_length && request->len > NBD_MAX_BUFFER_SIZE) {
--        /* READ, WRITE, CACHE */
-+        /* READ, WRITE */
-         error_setg(errp, "len (%" PRIu64 ") is larger than max len (%u)",
-                    request->len, NBD_MAX_BUFFER_SIZE);
-         return -EINVAL;
-@@ -2908,7 +2907,6 @@ static coroutine_fn int nbd_do_cmd_cache(NBDClient *client, NBDRequest *request,
-     NBDExport *exp = client->exp;
- 
-     assert(request->type == NBD_CMD_CACHE);
--    assert(request->len <= NBD_MAX_BUFFER_SIZE);
- 
-     ret = blk_co_preadv(exp->common.blk, request->from, request->len,
-                         NULL, BDRV_REQ_COPY_ON_READ | BDRV_REQ_PREFETCH);
 diff --git a/tests/qemu-iotests/tests/nbd-commands b/tests/qemu-iotests/tests/nbd-commands
-index 4c1cd33db7..cbfc47782f 100755
+index 09e811724b..adfd4a495c 100755
 --- a/tests/qemu-iotests/tests/nbd-commands
 +++ b/tests/qemu-iotests/tests/nbd-commands
-@@ -114,10 +114,9 @@ class TestNbdCommands(iotests.QMPTestCase):
-         self.assertEqual(self.block_status()['qemu:allocation-depth'],
-                          [(size, DEPTH_BACKING)])
+@@ -25,6 +25,7 @@ nbd: ModuleType
  
--        self.h.cache(maximum, 0)
-+        self.h.cache(size, 0)
+ DEPTH_LOCAL = 1
+ DEPTH_BACKING = 2
++CLUSTER = 65536
  
--        self.assertEqual(self.top_extents(),
--                         [(0, maximum, 0), (maximum, size - maximum, 1)])
-+        self.assertEqual(self.top_extents(), [(0, size, 0)])
-         qemu_io('-c', f'read -P {pattern} 0 {size}', top)
  
+ class TestNbdCommands(iotests.QMPTestCase):
+@@ -90,7 +91,7 @@ class TestNbdCommands(iotests.QMPTestCase):
+             self.h.shutdown()
+             self.h = None
+ 
+-    def block_status(self, count=size, wanted=None):
++    def block_status(self, count=size, wanted=None, flags=0):
+         """Map each meta context in the reply to its list of extents."""
+         reply = {}
+ 
+@@ -99,9 +100,9 @@ class TestNbdCommands(iotests.QMPTestCase):
+                                                   entries[1::2]))
+ 
+         if wanted is None:
+-            self.h.block_status(count, 0, cb)
++            self.h.block_status(count, 0, cb, flags)
+         else:
+-            self.h.block_status_filter(count, 0, wanted, cb)
++            self.h.block_status_filter(count, 0, wanted, cb, flags)
+         return reply
+ 
+     def top_extents(self):
+@@ -158,6 +159,71 @@ class TestNbdCommands(iotests.QMPTestCase):
+         for wanted in (['base:allocation'], ['qemu:allocation-depth']):
+             self.assertEqual(sorted(self.block_status(wanted=wanted)), wanted)
+ 
++    def read_chunks(self, count, offset, flags=0):
++        chunks = []
++
++        def cb(subbuf, off, status, _err):
++            chunks.append((off, len(subbuf), status))
++
++        self.h.pread_structured(count, offset, cb, flags)
++        return chunks
++
++    def make_sparse(self):
++        """Lay out data, a hole and data again, one cluster each."""
++        self.h.pwrite(b'z' * CLUSTER, 0)
++        self.h.zero(CLUSTER, CLUSTER)
++        self.h.pwrite(b'z' * CLUSTER, 2 * CLUSTER)
++
++    def test_read_sparse_chunks(self):
++        self.make_sparse()
++
++        first = (0, CLUSTER, nbd.READ_DATA)
++        hole = (CLUSTER, CLUSTER, nbd.READ_HOLE)
++        second = (2 * CLUSTER, CLUSTER, nbd.READ_DATA)
++
++        # A hole is an offset and a length, not a cluster of zeroes,
++        # wherever it falls in the reply
++        self.assertEqual(self.read_chunks(2 * CLUSTER, 0), [first, hole])
++        self.assertEqual(self.read_chunks(2 * CLUSTER, CLUSTER),
++                         [hole, second])
++        self.assertEqual(self.read_chunks(3 * CLUSTER, 0),
++                         [first, hole, second])
++
++        self.assertEqual(self.h.pread(CLUSTER, CLUSTER), bytes(CLUSTER))
++        self.assertEqual(self.h.pread(CLUSTER, 0), b'z' * CLUSTER)
++
++    def test_read_dont_fragment(self):
++        self.make_sparse()
++
++        self.assertEqual(self.read_chunks(3 * CLUSTER, 0, nbd.CMD_FLAG_DF),
++                         [(0, 3 * CLUSTER, nbd.READ_DATA)])
++
++    def test_block_status_req_one(self):
++        hole = nbd.STATE_HOLE | nbd.STATE_ZERO
++        self.make_sparse()
++
++        alloc = self.block_status(3 * CLUSTER)['base:allocation']
++        self.assertEqual(alloc, [(CLUSTER, 0), (CLUSTER, hole), (CLUSTER, 0)])
++
++        # One extent, so the reply covers less than was asked for and the
++        # client has to come back for the rest
++        alloc = self.block_status(3 * CLUSTER, flags=nbd.CMD_FLAG_REQ_ONE)
++        self.assertEqual(alloc['base:allocation'], [(CLUSTER, 0)])
++
++    def test_write_and_trim_fua(self):
++        self.h.pwrite(b'y' * 4096, 4096, nbd.CMD_FLAG_FUA)
++        self.assertEqual(self.h.pread(4096, 4096), b'y' * 4096)
++        self.h.trim(4096, 4096, nbd.CMD_FLAG_FUA)
++
++    def test_fast_zero(self):
++        self.h.zero(CLUSTER, CLUSTER, nbd.CMD_FLAG_FAST_ZERO)
++        self.assertEqual(self.h.pread(CLUSTER, CLUSTER), bytes(CLUSTER))
++
++        # Zeroing part of a cluster needs the fallback the flag forbids
++        with self.assertRaises(nbd.Error) as caught:
++            self.h.zero(4096, 4096, nbd.CMD_FLAG_FAST_ZERO)
++        self.assertEqual(caught.exception.errno, 'ENOTSUP')
++
      def test_cache_past_end_of_export(self):
+         self.assertRaises(nbd.Error, self.h.cache, size + 1, 0)
+ 
+diff --git a/tests/qemu-iotests/tests/nbd-commands.out b/tests/qemu-iotests/tests/nbd-commands.out
+index 2f7d3902f2..281b69efea 100644
+--- a/tests/qemu-iotests/tests/nbd-commands.out
++++ b/tests/qemu-iotests/tests/nbd-commands.out
+@@ -1,5 +1,5 @@
+-.......
++............
+ ----------------------------------------------------------------------
+-Ran 7 tests
++Ran 12 tests
+ 
+ OK
 -- 
 2.53.0
 
