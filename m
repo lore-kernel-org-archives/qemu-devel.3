@@ -4,74 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59231C61DC2
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0A1C61DC7
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 09:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzWGt-0006Qc-Qv; Thu, 27 Aug 2026 05:19:43 -0400
+	id 1wzWGu-0006RI-Ne; Thu, 27 Aug 2026 05:19:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wzWGs-0006QK-8N
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzWGt-0006QT-4O
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:19:43 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wzWGr-0006na-9a
  for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:19:42 -0400
-Received: from ci-2004k-snip6-2.eps.apple.com ([2a01:b747:3005:204::69]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wzWGq-0006mQ-Cc
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 05:19:42 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-10 (Postfix) with ESMTPS id
- 35B9518001B5; Thu, 27 Aug 2026 09:19:34 +0000 (UTC)
-X-ICL-RepId: 01a04284-8097-78c6-a7ac-3d2f8a758246
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjIOOwEsdigCXQhIBS8aX3M1C1VyWw9TH0B6TABedVMARng+ci1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1787822377; x=1790414377;
- bh=s674QyVjykg0dTS93sHYgtmBGVy1ShykZfbXJzlc5tQ=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Bu+6fLXv2UYEgZ9848rSvFGSUtv3zKGH6lpA56PqCverCYTR0nVxb81DQ/YpkuLnYxZozUPZa631BDZ0hluMtF02qrWnRGymuXZIFINWW4NddvGhGUDBEjkiLLpweG0gB/9LqMqbyKYCkYGa5qxtLytjRX/o6J8vkf53g3h1ib3xr0LuiuwDjS/7OBjJv2W0YHWrJzHlbzf2KUUiaBFuE1EGnrlMwgp84x4H3836JMbMZqgccGm68z20P9NezrNOBB0uSPrWjkTkHp96u0P6/8KNhkLz+JwHDGnCu4/Pu+oFmj6+GLGufqOeRRME9VDbeB9vM/3bvmZXOwM2ew0DXQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-10 (Postfix) with ESMTPSA id
- 9688A1800127; Thu, 27 Aug 2026 09:19:33 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [PATCH] Update to a cleaner build path on macOS 27.
- ParavirtualizationGraphics.framework API has changed significantly.
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260826203700.39057-1-dude@angrygoose.dev>
-Date: Thu, 27 Aug 2026 11:19:21 +0200
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
- berrange@redhat.com, philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B7C2AAC0-106B-4AE2-A688-0C433B826AFA@unpredictable.fr>
-References: <20260826203700.39057-1-dude@angrygoose.dev>
-To: DB Holder <dude@angrygoose.dev>
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
-X-Authority-Info-Out: v=2.4 cv=Ft8IPmrq c=1 sm=1 tr=0 ts=6a900127
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Eu1XywiOcv-WUTJC:21 a=IkcTkHD0fZMA:10
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Y4BSF4L1CW0vQ5KvyfYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: r-HmzCq2raBRov7T_nsP6rp3F4ddw_VP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI3MDA3NyBTYWx0ZWRfX5UG1WkNYjm/1
- lW8YF9sIwU7M/sxi5YvlmIUX40SHY3DswrnCeDPtFiEeUtGBnTlGUWP8AEYLC8tyV+18Hu6imb3
- 6Kk1jQFxUS/cDXh4zmYD0DEuguj2mE7Ry3ihTNBvII/1sxLraSTn7hbfv3IXM0ka8izGrMzD4zD
- CsS/Wo92ig20q4XT3h61mvypkbmlfBxGwhnC++7zcAGrugkBeoOG73OnO7aUBhnzVc+rHpkmqXj
- 4FItoL3VKfO735Ps1ai/tF3jAoqhjjosSeI8Pu+7OwGAnQisw0NtRE7iNoE5a39XWCSR+t9vpvW
- QRNL9iF0WHjDOsXGsCrylo6XeSFOy54ZV600n78XPN5/gySuw0A2/IYn2KtlgU=
-X-Proofpoint-GUID: r-HmzCq2raBRov7T_nsP6rp3F4ddw_VP
-X-JNJ: AAAAAAABBqJELNeldeQACbBgqgQABpTxiglKCT5NTJfBOi0VVYnW5jvLLeoHrvFZ9/Okk87Kd5XUcoRsBpDJDVR9DH12kfoPAcTcaVe7TU8LejWbtybyUzXWUERqaMnrFQPAbkDDSnKfYMDgOltZ3T5g8ApzT7vI7WEyEEiepxdQLTXsmmwVDAcMG1YTdlazmtHnBqzAr8qn/+CvCmJZLLCv1CvEa6st/aX2j515bgktHUul3+/eyLiNyam3k5EdJa1v79DJpvnVwYrV9z+e1VmYdnBYy+DaZrRVPlL+gwkkSh3S7j6SBXcEPnGlWNIgkBMxs7O2BRD8IIG6xzpAdeMSCS4t4uJ93kfX+jWZCwZEI67WCcI8W+WCV6tlX0QUXwiWaG+j+WmxjHJx6wbOTCguWHJUv9Cnl94Ydw9AuCGxxY/tQHfd9AD5pqlDwEdKVVHZBKRpX5njjMMW9D/DwrkK4U2TUqoG3ijWFwktYvLKB8+QulnO+M7X1rSP4cS/69LnhyevGDK1iRsEkUn1DO9SUacKuVGxfyafIrm3TcEvTiZOZGzG0gK3lINoQ9eYA8y5QJJxloX3CaTY7pVKS3Jb9+KMlZrH1lneg/8ZSRr20aKdmmiPAmKdDzRgPS3D/wi7ayqH75ZRnrsGQApFTw7W+ssdVubZQg1slpDlUvgFLDPySfto7GQzEz3HdTxtisvYUhnrP45byfueXKayjvYPqvEMTjC+uKCc4AwfA/YyvBRbA9lqC7vdXa371zJHjxBg/d1cTaJAn6L5YD86BuwLiGnJtdELtILLHVEn4foAgExyx38Zh3ZuCh3hEywXekJp3h7G9Hwp6TF5Io8AKctZp75PvVcdYhXX2699Cr/iyd+YYrsPQxxjQF4sXHAqbzkKbj/ffaB7VF9mMYN+pLU24NCqAbv4PS7wtbiPjHqpHJaXURQJjYgNmbrD4PuOMECchUTBg8APKLqju5l4KSXypoquXCF
- LZ9UcchO3mgvyzbX4pWi2+1sssWuVDliJsV3WzGPzPLvdJKFCqer+vzdkQeKSOgtXkPl54bh27sjpSy+aRaxE4Ns9Q2RxmduOaEXJvfVFEZ/cIPd8b2/nTbVGlacGZxXFJvSDeOhASieOLVC+JMSHTX7k1W9N3vV+ku69AbnhLWO1UxZiWC/nYx3EnTGRm992LyWZM/92JSiuMfdfMJRvnkowrT1qArx4ezpApd/xlzj3OJqIltWtgZ+TA2fjgm4H8RtEJHAuiuqh9/XbFCGmzNQPQVOmuSmZ9ybRcXyj76xw6D/RZV+Rmouq+TAxtgZLM2qC6qO/Y2Om9vsszko/zSceMYlYWSsCKh1wiM3TNCvGRlm3X696hUrp0J4OLCDFaA39FtBexoMXjCnrWoCf/tCtvrbk5QwXGWGDqvugCSRX46NUIZWG+KmgqZPh6gic+6Z0EM0lCBGPbCHxFCv9KtE5G/Q7Q10LT8RyVag9U83kWVBhmXnGFMvNbjw4iGVFM6YUM4NBCu/KW3Q5Ds5//Cv6mLbvgHNFMub38QBtWvs=
-Received-SPF: pass client-ip=2a01:b747:3005:204::69;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-81ed2a06b9eso19529507b3.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 02:19:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787822380; cv=none;
+ d=google.com; s=arc-20260327;
+ b=qlxuSeyJ5VWqUu12j/HZfd/CqHntbtEUjV4nlEfqiMfJ/UB+lvCeMR+qKVenWOo2Q4
+ x0Xb5BESjGQvv5NncNdrwKppvzdViLsds2+P2TBRc3c+oYPq7ojx41ZEBlp6Kc9cVD6B
+ b3AaaheC73o7vezvPk+Pyk5ZBG2ahTjNYwggKWV//ScMf9SskjksVG9JXIbbZq/wpt5F
+ xom5LYhCGSPtaAYq2DSkSKXYE1rPR4dUdr1wNfuecb2rH8+4poax8kbGLMWXXquNe7pH
+ VXBhhQNqSTGTTTNcpzvc3eFiwUobKe6HBxo5FC3wEL6tT4VNQUW9rr6sUkbJLVXTrz6l
+ d8Ow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=HtBlM6Z6bTfGegu7sb9BhAkdE/aBn0pvhLP8tvsv0vY=;
+ fh=ZRYhF6Rp+Cnb3RB0wrwVZZJ9P0OjTlPcRm8z4vqZvQc=;
+ b=hQBc5Fz2MliwfIn5ixZeVFtc/LjJHQIqocaeJ923mJIATYVpHur7M0oXenmEkmFTAW
+ 5+ueVcjlek1zzyiUH4zQwbNIOdisWpYpLbw4bvezPVJCvE2LNHW/wDHfsJWPlNS39v+m
+ 52s5BYQ8SjAa7TyLehBnHyeOrdTATvvCFrV7BgDYBT/r1CN45b/xUfH9JAVGEB6ebTo9
+ F0tZvUXsi3Sn0gOZFCgv1534zeijV0qalpOMGG5ivu+0XBCZw6Y6/KoC2F8N8R0otPxo
+ k2K+cFBQdFnPgc2FpCZT2Aaa2z+zyLYJX+CSGZewTPyrtJgI4fr715tYKPzyQK+Cbgik
+ 75JA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787822380; x=1788427180; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=HtBlM6Z6bTfGegu7sb9BhAkdE/aBn0pvhLP8tvsv0vY=;
+ b=XUdCcVbI/QwKV6f9tFG+o0UIW6drN2qgD9xyBFNZgOKsYjAjZdE7L0TBGlmQ4KmjNn
+ 0EGvgzJBpSS8aB15x+h9XRUyUujyg9oiiTdcRmX7FGxlBZLX/zj2E5BqObas+alyNd7p
+ isAn9/Wg9RNxztKU8KpwxPCCo3nmXWCOkUS6sChkVs/Cysc3vFWEazluPihTRvTjGhP6
+ Q31VtomgHrJyg5R38CapOIos8LxOPoSR9K6/38q0mkevrLwvLX3WjOjAQIyza4ujcS1R
+ zB+Z6XjyeKPU9AQ1l11+b2BFS9Dc8bwDwTo/dXsTE28EKoDJyNbEhnPO3E2OcxjK7jlM
+ E80Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787822380; x=1788427180;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=HtBlM6Z6bTfGegu7sb9BhAkdE/aBn0pvhLP8tvsv0vY=;
+ b=poF//lowmcpWmFbaZON1qB1827QOClyt8jQNA5/NDWU9g6pUs3phD0GEQ7yl7OkGgR
+ Hge/mRX5EaZ3i4U8TLVdTIHukescQpEqQlJFLLU8wK4Cy6EQbhfwj0Gi1DDBumAMFCbk
+ LpfIAPH9D8HejP6EeavjJtsw8vyX284q7EkPJ9uowQ03HbO/6Yh6s/JbNqkEIhB0SbEt
+ cSS6hLbfpuEeIZLWdgV0yexvBBbx+R8dyVim+HMkVcxygNG8PdtnFeVA/HJRP6Q1aZw5
+ Z5oBLHm8rnb6y7UCV4k/NNnZFBIvuF0hExkEl2GCDmToCE2aSoPjAq2yayO9O4BA0AzN
+ ejzw==
+X-Gm-Message-State: AFuF++mIxdBejMPNauOZH5OAeRFegC6mv/ItbFralAyxDohA/ySsCUvw
+ IJAl/4Wi+i+qzvqTReOP9O9YHsE7fATzjxkY7BxQRMoZM4VRF39iCTu9FlCLGd1YMc5rUe3p/gv
+ NyupJQPad+E18UXOJYNQUcAiWV5eTZfeIZZjtUL9ubQ==
+X-Gm-Gg: AR+sD114hbesjT3ApjUZzQcqEtGgZZzfxdtG48fexZNzF6SXw+1CRiPENWSj91Y6O6a
+ EhGXtzov5QPickGbMaJgiFZzuQQQQ7qghQS3uoB1HpwRbfGnp/FD2+SVNmf4niYUWxbUD8rRnER
+ N/hvOlRyltAF/9IhyQcuUv4nLxWsEgRddOlcgH72v2hFdGxxtALe5FDS6DfeD5bVhTF0uG1/8H9
+ x4D4NTp1SDM5wb3Y7DM9JqVs2m11rjwOGVnm4U3gRaM2sc9WrnQHO3NflyciQN3lwwk51A0YTaw
+ Js+uJFzlgjvFbc2Q8RBDiCjS6iPcLhVdYZb7LljA1S7iHPihgEhZcPomS7MVP4SROALPcV0S6Gp
+ xNf/2RiWXsNC9SD4TVjQ9w1RiUzYs
+X-Received: by 2002:a05:690c:9c0c:b0:80c:ebd4:762 with SMTP id
+ 00721157ae682-8573be1e4c0mr61989607b3.7.1787822379833; Thu, 27 Aug 2026
+ 02:19:39 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260825040452.1322251-1-stephensportia@gmail.com>
+In-Reply-To: <20260825040452.1322251-1-stephensportia@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Aug 2026 10:19:28 +0100
+X-Gm-Features: AcwNN1XRZThkv23MUPhrrgokKre1Ig6vtj8xgI-faEZYcmow70zlT5AbwWYVdik
+Message-ID: <CAFEAcA9etHvjL1igO4mFy5iQNy1pCbNFGaSg5HFva+YCeMkGEA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Rename ssi_transfer to ssi_transfer8
+To: stephensportia@gmail.com
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-ppc@nongnu.org, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ Troy Lee <leetroy@gmail.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org, 
+ Tyrone Ting <kfting@nuvoton.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Aditya Gupta <adityag@linux.ibm.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>, Joel Stanley <joel@jms.id.au>,
+ Hao Wu <wuhaotsh@google.com>, Glenn Miles <milesg@linux.ibm.com>,
+ qemu-riscv@nongnu.org, Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,59 +130,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 25 Aug 2026 at 05:05, <stephensportia@gmail.com> wrote:
+>
+> From: Portia Stephens <portias@oss.tenstorrent.com>
+>
+> The ssi_transfer function comments say that it takes a word varying
+> between 8-bits and 32-bits. ssi_transfer takes a 32-bit arg to transfer
+> but there is no means to indicate the number of bits that should
+> actually be transferred. All child classes of SSI_PERIPHERAL class have
+> transfer functions that, despite accepting a 32-bit tx, only transfer a
+> single byte; m25p80_transfer8(), ssi_sd_transfer(), ssd0323_transfer().
+>
+> The current implementation depends on the SSI model to know
+> what peripheral model will be attached and what transfer size it
+> expects which is error prone. If a SSI_PERIPHERAL model was written that
+> accepted 32-bit transfers, it could not attach to any existing SSI
+> models.
 
+What is the motivation for this change?
 
-> On 26. Aug 2026, at 22:37, DB Holder <dude@angrygoose.dev> wrote:
->=20
->=20
-> API marked obsolete in xcrun --show-sdk-path + =
-/System/Library/Frameworks/ParavirtualizedGraphics.framework/Headers/PGDev=
-ice.h
->=20
-> Signed-off-by: DB Holder <dude@angrygoose.dev>
-> ---
-> meson.build | 8 ++++++++
-> 1 file changed, 8 insertions(+)
->=20
-> diff --git a/meson.build b/meson.build
-> index 6dcfdceb50..a6b11cb009 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -852,6 +852,14 @@ elif host_os =3D=3D 'darwin'
->   host_dsosuf =3D '.dylib'
->   pvg =3D dependency('appleframeworks', modules: =
-['ParavirtualizedGraphics', 'Metal'],
->                    required: get_option('pvg'))
-> +  if pvg.found() and not objc.has_type('PGTask_t',
-> +                          prefix: '#import =
-<ParavirtualizedGraphics/ParavirtualizedGraphics.h>',
-> +                          dependencies: pvg)
-> +    if get_option('pvg').enabled()
-> +      error('ParavirtualizedGraphics framework found, but the API =
-lacks PGTask_t')
-> +    endif
-> +    pvg =3D not_found
-> +  endif
+As far as I know for the hardware SSI protocol, it is indeed
+the case that the SSI controller (and/or the guest software) needs
+to know what transfer size the attached device expects: the
+controller just transmits (or expects to receive) however many
+bits it is programmed for.
 
-Hi,
+> This change updates the the naming of ssi_transfer to ssi_transfer8, as
+> well as changes the return value and transmit argument to be 8-bit.
 
-There's a newer path (RFC already sent since a while) that works on =
-macOS 27.
-The older path already had the IOSurface mapper side gone since macOS =
-15.4 so this
-is not exactly new. It=E2=80=99s just marked as deprecated now since =
-x86_64 macOS support is
-formally gone.
+This means that the API will no longer work for a controller
+and device that aren't 8-bit. We happen not to have any of those
+devices today, but why specifically stop them working?
 
-
-> elif host_os =3D=3D 'sunos'
->   socket =3D [cc.find_library('socket'),
->             cc.find_library('nsl'),
-> --=20
-> 2.54.0 (Apple Git-157)
->=20
->=20
->=20
->=20
-
+thanks
+-- PMM
 
