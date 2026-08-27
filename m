@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2BC1C61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D858C61DC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 14:15:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzas4-0002uA-8j; Thu, 27 Aug 2026 10:14:24 -0400
+	id 1wzarb-0002fE-Pk; Thu, 27 Aug 2026 10:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzas2-0002tb-N9
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wzarS-0002d3-F3
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzart-0005vP-8w
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:14:22 -0400
+ id 1wzarM-0005gc-8e
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 10:13:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787840052;
+ s=mimecast20190719; t=1787840017;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1pLSMCLpxSN80qw8SiP74TkTNU4AhuCBzxyGia3kBIw=;
- b=GUbUNoUWUCb1qOHrbpNMJ1W/zdYpoEgbjBTvJ4rdE16KWw6mc2xM5HAxoMXu9RpkgcILqM
- Oyff2OCgPOS121lmyu8DPg4Rkiq2lH1ZTWjX1Op4Li3pwQM9EnfFlJ/UkQig/Hu2E17lIC
- EAejOMGoM20dphw7e46gtI3K5grYd3I=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=54WY2o82iGBH8d5H4JTOlD44ATSwqc2GBS3osVVeSxI=;
+ b=JBqlsY24ejKiZAL/J3SIMIKDBwAb2N5OQS8llhI2mhELLKNEXEcmqGXtLo5SOmDGhux1Cx
+ KaeKEim2nqB1MhRgymvfQ97dMkTpvBqAAk78Uu/Ysiecq5tgQpeFCFf/ibdb9nTj0R+9zG
+ RK8Alk0gMEClWwhXX6QIrIQkU3yjJjg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-4-lIyT5hN7C8UEqR7Rbc2g-1; Thu, 27 Aug 2026 10:14:11 -0400
-X-MC-Unique: 4-lIyT5hN7C8UEqR7Rbc2g-1
-X-Mimecast-MFC-AGG-ID: 4-lIyT5hN7C8UEqR7Rbc2g_1787840050
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c2192261d79so249401766b.3
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:14:10 -0700 (PDT)
+ us-mta-364-Wx2kppEJMfinuWmfOfahsA-1; Thu, 27 Aug 2026 10:13:34 -0400
+X-MC-Unique: Wx2kppEJMfinuWmfOfahsA-1
+X-Mimecast-MFC-AGG-ID: Wx2kppEJMfinuWmfOfahsA_1787840014
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49554715277so7534575e9.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 07:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787840050; x=1788444850; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=1pLSMCLpxSN80qw8SiP74TkTNU4AhuCBzxyGia3kBIw=;
- b=IjdCTQG7pMw1rdcWXoOce/mVTyg8VgQs78ZHaG3JOXmfRNzvQ2cZTAlCsMW5ntShcr
- 88HsV0XOPxSD3grnTMZaQmFAyJyZ0s/w8kvk8fqS3MLGQF+l1z30k7x2KKuEeooplj+J
- U2v7uM8VEoMq3Yjxa3dGevOZbyCVCduOOHHPGf670ndYlGrNtHXE4n72JFc+4gBK2Vi+
- twa4bFHt1P/7J9Ju7suS5POdj294qO6WaDHPVgDbPAzoJ3RzAI1hyBj3f/EpYV3fyQEG
- 8gXh3fhr6xUqWqwvyNIvWEF8JSAlqthxsQj92Y1IN2nUUIrUV5D/J8mfZygx5tbPz3fZ
- WIvg==
+ d=redhat.com; s=google; t=1787840013; x=1788444813; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=54WY2o82iGBH8d5H4JTOlD44ATSwqc2GBS3osVVeSxI=;
+ b=N9UA8WrabjrBCsQITOuNTzc8oeN2rvHOV4BqK/EEdd0wwJSZfCtg4VV6rEbvjrN6OE
+ UUTCBc9utIHtGDpQDWkEVmnmN13NZPEn8Dx1gDiYChbltP3tvbw+mongXq6vbOfBsUWV
+ 7ckaz5vpD/dIRTOvTDTFH/FDxMVa3n7FYs/kRZ40qK8VfjahEKo0E7K7gDT0ujBAZ9Zr
+ ELfzGrVahjPToh+/jsB4ukSfQQG91zsc+M69VfeOoSqvjuPcKt+xv3qjKSld2Lj3e9PW
+ qvKC0CQzwwoW7O5Oe/g2NcRFCiJ1eezJkgXevIbiBKKb0huyGIYi5QYfNxs5ECUdzw5F
+ vIiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787840050; x=1788444850;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=1pLSMCLpxSN80qw8SiP74TkTNU4AhuCBzxyGia3kBIw=;
- b=EeeWi9XdxjbNsn/Z9KXZZJg49b5n7gc+70T9FhII5XZrlzJuT9sR81+2yr+kdFi3lS
- 3KBd2Rlu8ZlqidVsf+rti3ZzV5ZYlV7AAlWTUImWyPPvpvLvhl2F9x6Ajl/i4Ay7pjEk
- WYl5ppk3npUpv2pjB3CsDTOXudczcoQsvCWssWo74IygJwtthQ5yon421OVJY8XoZLHo
- o9gecj1KyQGm5Q4IAl8YzeKtkeW77nG9fmZ01VqC+TJtTp6aHaHw6dI2NfNtdWPJi5cs
- /rrwDWANLJpJ/74NXpXE6SoGdAFK/+VBD/gYFTmf5fY/hmQcU1k98z4tOi/7j06E1NMf
- d0CA==
-X-Gm-Message-State: AFuF++nk8Rnaqia59z1xieTa08vpVSkjA7W2Z/8vO7suaIHBtoQVvt2Y
- 0wQs9SKFhikBzi0ewyrSAX41dn8JxI7S5o9dUCz5CIY1TOuNQsPBCxpH/TY3x/pB+DkSF7QMxFp
- 1jdMxi+3lWoDsjXeMRc2q1d+MjlkwSRZf99nO4Vbaws5x2Qk6/H9mklOCjPTJQT7Ug62Ufjffq/
- g2fiefBvaqH2de9us7SaIjIYU7xx2Oj+uZoGo9u8dX
-X-Gm-Gg: AR+sD12cJV8U6l1MEMHQkmzi88Cm1oOm/pTRrYjQP+/+K4k/+5v6q9XxFK+7FrNg4Dg
- 2QV/o9wVUK32+tv9ennFJvTSpT53ram6kbAp/cWxDrDm5zk4SLhOB8/RdGwXaC5ocpFWKVpNVq8
- +JL9QxnfvOIj760h17WQPVHvQRFVN3rl4sh+tDVvKCnlPnk3BdDE2LKGJLSnvRgJ/PBWCY4MdQT
- ScL4iRpm04kPitmIS3nE5vZE+ZemthbMoiyLfGHsSeQjdYbMINuIe2Kb5s/3DL0qZPOBrW8EkR/
- XOW+eFkpVcb9ezEZAzaQSJTpyYzVl5e8f38FTjjKDbxKGRaK47cLDEGxhmHpg+9lcWiLfUDQHDM
- j2Aamr3/ImMu8crPzEffk8NxaNdBZ05r6+ybVqEr5BV78DOxtaHTtrL7bWONrB9q+1KpYEOv48X
- ht5Jc=
-X-Received: by 2002:a17:907:3d0c:b0:c25:37e2:2d3b with SMTP id
- a640c23a62f3a-c2537e230c6mr534568666b.10.1787840049686; 
- Thu, 27 Aug 2026 07:14:09 -0700 (PDT)
-X-Received: by 2002:a17:907:3d0c:b0:c25:37e2:2d3b with SMTP id
- a640c23a62f3a-c2537e230c6mr534561766b.10.1787840048909; 
- Thu, 27 Aug 2026 07:14:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787840013; x=1788444813;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=54WY2o82iGBH8d5H4JTOlD44ATSwqc2GBS3osVVeSxI=;
+ b=cs2IFlbBZiDgrJCuPM7NbCRI8m9BoEQlSMYKSEt3eMbqk5XPn+YecYh+5kVLOngW36
+ TjMn0fpy9o6jlevfYfue/ty9aVG0XqBK2Sf5hW8wKYSpzV5APCVYZitG/5WQR+8Rvvlb
+ 07+vQbo2BPMgH6Vbv+q2Cz6Zpx5xCve9vZJIiu83xeJkP8XfzOSlfcIJOu+w3uvtml9T
+ cB9cAyMWBgiUXv+4KCIn05n8mipp0op8em/bItNwQkHgpD6YR+LAozUg35qqINSvcwQC
+ 8nxox7E9IXuAqZYLQMuNdENlyeuIWfOHxKTu/R3rmJx8HwKqbI8TO2qwikMxiUagHiaY
+ uruQ==
+X-Gm-Message-State: AFuF++nfe5OFjl4E0/xb3iXbnrepipTHJ4KEjEXRGl9oDGKh6Jw+D9xf
+ nYTwSOcRJ9ctgpNnPD9iDfJNW9mvDhhQwS/JiaXB03JcLQX5/ZLLj8IU+PUgWs3/SruGWIwA5tO
+ nGklnLrhcStngdfyQUiNYdEUvx/Z1GHGdWSJBo7e7oKJpXck/D18+uKsQ+dIv0xVC6NnWXjZa10
+ 1jiKlh0R+1b4JH5YdGVc9ypEclgzsWw77AUxVdmJif
+X-Gm-Gg: AR+sD11oa2PlB/SDJKH+CBhfN6TbTNQo6U2SO1MslkSuy4Ikx43qfoaDm36lbZOwkBW
+ FbKJKRS/05GEIIK0tFl0dev2xgQqsUL3r/cNjsAjX469aQdd+0OC8vgU+b0GrQXFmh8KKd4CDIg
+ xf12KGcbvaT+RqIUXa0ycrxsqebmgpEhqpgXDtsNmSWXx9IS0DlvsWHgoDGR4qSm5TlkFxJZjbf
+ TkH4jDsFunuDLTbpniBvP/WDzT2dlvOqgoYloyg1k1l1Ea6v0a03wjzi3sIKljQsRMrUHn8kCkN
+ DcVeRxQKZBgYrhFuVInKyEM1m+U2yXVqqPPGRdascVl/gleXUZB+1H0b96Dv3ePKz2O3SZMW6Lt
+ sLiUXw1G/D2E7YcfYWn/jNTPir8FWrVGMXDLab1PrqxQIHMQUNmGkgZ4zxHHR+U7exPrbadUGWH
+ 0x2Gs=
+X-Received: by 2002:a05:600c:4445:b0:499:a685:c10 with SMTP id
+ 5b1f17b1804b1-499dc6fd832mr187424705e9.4.1787840013425; 
+ Thu, 27 Aug 2026 07:13:33 -0700 (PDT)
+X-Received: by 2002:a05:600c:4445:b0:499:a685:c10 with SMTP id
+ 5b1f17b1804b1-499dc6fd832mr187423445e9.4.1787840012900; 
+ Thu, 27 Aug 2026 07:13:32 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a9e96bdsm584567466b.55.2026.08.27.07.14.08
+ 5b1f17b1804b1-49b4b2d6b30sm53384835e9.14.2026.08.27.07.13.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Aug 2026 07:14:08 -0700 (PDT)
+ Thu, 27 Aug 2026 07:13:30 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/23] target/i386/tcg: fetch modrm early
-Date: Thu, 27 Aug 2026 16:13:06 +0200
-Message-ID: <20260827141314.1099352-19-pbonzini@redhat.com>
+Subject: [PULL 06/23] scripts: introduce CrateSource abstract class
+Date: Thu, 27 Aug 2026 16:12:54 +0200
+Message-ID: <20260827141314.1099352-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260827141314.1099352-1-pbonzini@redhat.com>
 References: <20260827141314.1099352-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,171 +122,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As a first step towards handling EVEX prefixes, fetch the modrm
-byte before decode_ops().  This way, EVEX validation can use the
-mod bits: for example, APX instructions require X4=0 if the r/m
-operand is a register.
+Prepare for making the script able to update .wrap files with
+versions from Cargo.lock.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 65 ++++++++++++++++++++++++--------
- 1 file changed, 50 insertions(+), 15 deletions(-)
+ scripts/get-wraps-from-cargo-registry.py | 49 ++++++++++++++++++------
+ 1 file changed, 38 insertions(+), 11 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 47bc30a22fc..f5f36ef1731 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2012,9 +2012,8 @@ static void decode_root(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
- static void decode_modrm(DisasContext *s, CPUX86State *env,
-                          X86DecodedInsn *decode, X86DecodedOp *op)
- {
--    int modrm = get_modrm(s, env);
--    int mod = (modrm >> 6) & 3;
--    int rm = modrm & 7;
-+    int mod = (s->modrm >> 6) & 3;
-+    int rm = s->modrm & 7;
-     bool is_vsib = decode->e.vex_class == 12;
-     int sib = -1;
+diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps-from-cargo-registry.py
+index 8114f0731be..636e4ba3474 100755
+--- a/scripts/get-wraps-from-cargo-registry.py
++++ b/scripts/get-wraps-from-cargo-registry.py
+@@ -29,18 +29,36 @@ def get_name_and_semver(namever: str) -> tuple[str, str]:
+     return parts[0], parts[1]
  
-@@ -2226,11 +2225,33 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
-     }
- }
  
-+static bool op_has_modrm(X86OpType type)
-+{
-+    switch (type) {
-+    case X86_TYPE_C:  /* REG in the modrm byte selects a control register */
-+    case X86_TYPE_D:  /* REG in the modrm byte selects a debug register */
-+    case X86_TYPE_E:  /* ALU modrm operand */
-+    case X86_TYPE_EM:  /* modrm byte selects an ALU memory operand */
-+    case X86_TYPE_G:  /* REG in the modrm byte selects a GPR */
-+    case X86_TYPE_M:  /* modrm byte selects a memory operand */
-+    case X86_TYPE_nop:  /* modrm operand decoded but not fetched */
-+    case X86_TYPE_N:  /* R/M in the modrm byte selects an MMX register */
-+    case X86_TYPE_P:  /* REG in the modrm byte selects an MMX register */
-+    case X86_TYPE_Q:  /* MMX modrm operand */
-+    case X86_TYPE_R:  /* R/M in the modrm byte selects a register */
-+    case X86_TYPE_U:  /* R/M in the modrm byte selects an XMM/YMM register */
-+    case X86_TYPE_V:  /* reg in the modrm byte selects an XMM/YMM register */
-+    case X86_TYPE_WM:  /* modrm byte selects an XMM/YMM memory operand */
-+    case X86_TYPE_W:  /* XMM/YMM modrm operand */
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
+-class UpdateSubprojects:
+-    cargo_registry: str
+-    top_srcdir: str
+-    dry_run: bool
+-    changes: int = 0
++class CrateSource:
++    """Class for locating crate versions and pointing wrap files at them.
++       Subclasses know where the source of a crate comes from and how to
++       rewrite the ``[wrap-file]`` to consume it."""
+ 
+-    def find_installed_crate(self, namever: str) -> str | None:
++    origin: str
 +
- static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-                       X86DecodedOp *op, X86OpType type, int b)
- {
--    int modrm;
--
-     switch (type) {
-     case X86_TYPE_None:  /* Implicit or absent */
-     case X86_TYPE_A:  /* Implicit */
-@@ -2246,7 +2267,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
- 
-     case X86_TYPE_C:  /* REG in the modrm byte selects a control register */
-         op->unit = X86_OP_CR;
--        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
-+        op->n = ((s->modrm >> 3) & 7) | REX_R(s);
-         if (op->n == 0 && (s->prefix & PREFIX_LOCK) &&
-             (s->cpuid_ext3_features & CPUID_EXT3_CR8LEG)) {
-             op->n = 8;
-@@ -2262,7 +2283,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
- 
-     case X86_TYPE_D:  /* REG in the modrm byte selects a debug register */
-         op->unit = X86_OP_DR;
--        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
-+        op->n = ((s->modrm >> 3) & 7) | REX_R(s);
-         if (op->n >= 8) {
-             /*
-              * illegal opcode.  The DR4 and DR5 case is checked in the generated
-@@ -2281,14 +2302,14 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
- 
-     case X86_TYPE_S:  /* reg selects a segment register */
-         op->unit = X86_OP_SEG;
--        op->n = (get_modrm(s, env) >> 3) & 7;
-+        op->n = (s->modrm >> 3) & 7;
-         /* Values outside [CDEFGS]S, as well as storing to CS, are invalid.  */
-         if (op->n >= 6 || (op->n == R_CS && op == &decode->op[0])) {
-             return false;
-         }
-         break;
- 
--    case X86_TYPE_P:
-+    case X86_TYPE_P:  /* REG in the modrm byte selects an MMX register */
-         op->unit = X86_OP_MMX;
-         goto get_reg;
- 
-@@ -2300,7 +2321,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-             op->unit = X86_OP_SSE;
-         }
-     get_reg:
--        op->n = ((get_modrm(s, env) >> 3) & 7);
-+        op->n = ((s->modrm >> 3) & 7);
-         if (op->unit != X86_OP_MMX) {
-             op->n |= REX_R(s);
-         }
-@@ -2339,8 +2360,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-     case X86_TYPE_R:  /* R/M in the modrm byte selects a register */
-         op->unit = X86_OP_INT;
-     get_modrm_reg:
--        modrm = get_modrm(s, env);
--        if ((modrm >> 6) != 3) {
-+        if ((s->modrm >> 6) != 3) {
-             return false;
-         }
-         goto get_modrm;
-@@ -2354,8 +2374,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-         /* fall through */
-     case X86_TYPE_M:  /* modrm byte selects a memory operand */
-     get_modrm_mem:
--        modrm = get_modrm(s, env);
--        if ((modrm >> 6) == 3) {
-+        if ((s->modrm >> 6) == 3) {
-             return false;
-         }
-         /* fall through */
-@@ -2463,7 +2482,7 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-         return false;
-     }
- 
--    /* First compute size of operands in order to initialize s->rip_offset.  */
-+    /* Compute size of operands here in order to initialize s->rip_offset.  */
-     if (e->op0 != X86_TYPE_None) {
-         if (!decode_op_size(s, e, e->s0, &decode->op[0].ot)) {
-             return false;
-@@ -2496,6 +2515,13 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-         assert(e->op3 == X86_TYPE_I && e->s3 == X86_SIZE_b);
-         s->rip_offset += 1;
-     }
-+    return true;
-+}
++    def find(self, namever: str) -> str | None:
++        """Resolve a 'name-semver' prefix to a concrete 'name-version'."""
++        raise NotImplementedError
 +
-+static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
-+                       X86DecodedInsn *decode)
-+{
-+    X86OpEntry *e = &decode->e;
- 
-     if (e->op0 != X86_TYPE_None &&
-         !decode_op(s, env, decode, &decode->op[0], e->op0, decode->b)) {
-@@ -2993,6 +3019,15 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         }
-     }
- 
-+    if (op_has_modrm(decode.e.op0) || op_has_modrm(decode.e.op1) ||
-+        op_has_modrm(decode.e.op2)) {
-+        get_modrm(s, env);
-+    }
++    def rewrite_source(self, section: configparser.SectionProxy, orig_namever: str, source_namever: str) -> bool:
++        """Update the download-related keys of a [wrap-file] section."""
++        raise NotImplementedError
 +
-+    if (!decode_ops(s, env, decode_func, &decode)) {
-+        goto illegal_op;
-+    }
 +
-     switch (decode.e.special) {
-     case X86_SPECIAL_None:
-         break;
++class CargoRegistry(CrateSource):
++    """Locate crates already extracted in a local Cargo registry directory."""
++
++    origin = "the Cargo registry"
++
++    def __init__(self, path: str):
++        self.path = path
++
++    def find(self, namever: str) -> str | None:
+         """Find installed crate matching name and semver prefix"""
+         name, semver = get_name_and_semver(namever)
+ 
+         # exact version match
+-        path = os.path.join(self.cargo_registry, f"{name}-{semver}")
++        path = os.path.join(self.path, f"{name}-{semver}")
+         if os.path.exists(path):
+             return f"{name}-{semver}"
+ 
+@@ -56,6 +74,14 @@ def rewrite_source(self, section: configparser.SectionProxy, orig_namever: str,
+                 del section[key]
+         return True
+ 
++
++class UpdateSubprojects:
++    cargo_registry: str
++    source: CrateSource
++    top_srcdir: str
++    dry_run: bool
++    changes: int = 0
++
+     def compare_build_rs(self, orig_dir: str, source_namever: str) -> None:
+         """Warn if the build.rs in the original directory differs from the registry version."""
+         orig_build_rs = os.path.join(orig_dir, "build.rs")
+@@ -102,7 +128,7 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+             return
+ 
+         section["directory"] = source_namever
+-        if self.rewrite_source(section, orig_dir, source_namever):
++        if self.source.rewrite_source(section, orig_dir, source_namever):
+             with open(wrap_file, "w") as f:
+                 config.write(f)
+ 
+@@ -110,9 +136,9 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+             config.write(f)
+ 
+         if orig_dir == source_namever:
+-            print(f"Installing {orig_dir} from registry.")
++            print(f"👉 Installing {orig_dir} from {self.source.origin}.")
+         else:
+-            print(f"Replacing {orig_dir} with {source_namever}.")
++            print(f"👉 Replacing {orig_dir} with {source_namever}.")
+ 
+         subprocess.run(
+             ["meson", "subprojects", "download", wrap_name],
+@@ -154,6 +180,7 @@ def __init__(self, args: argparse.Namespace):
+         self.cargo_registry = args.cargo_registry
+         self.dry_run = args.dry_run
+         self.top_srcdir = os.getcwd()
++        self.source = CargoRegistry(args.cargo_registry)
+ 
+     def main(self) -> None:
+         if not os.path.exists("subprojects"):
+@@ -164,7 +191,7 @@ def main(self) -> None:
+         for wrap_file in sorted(glob.glob("*-rs.wrap")):
+             namever = wrap_file[:-8]  # Remove '-rs.wrap'
+ 
+-            source_namever = self.find_installed_crate(namever)
++            source_namever = self.source.find(namever)
+             if not source_namever:
+                 print(f"No installed crate found for {wrap_file}")
+                 continue
 -- 
 2.55.0
 
