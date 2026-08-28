@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34989C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A50C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzpq4-0003PU-Nc; Fri, 28 Aug 2026 02:13:21 -0400
+	id 1wzprJ-0006gQ-V5; Fri, 28 Aug 2026 02:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzppt-00030X-FK; Fri, 28 Aug 2026 02:13:11 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1wzprI-0006fk-Et; Fri, 28 Aug 2026 02:14:36 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzppr-0001k7-SM; Fri, 28 Aug 2026 02:13:09 -0400
+ id 1wzprH-0001u0-0o; Fri, 28 Aug 2026 02:14:36 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 20476436AC;
- Fri, 28 Aug 2026 06:13:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F278B1F000E9;
- Fri, 28 Aug 2026 06:13:03 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id E2AE4602D4;
+ Fri, 28 Aug 2026 06:14:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40311F000E9;
+ Fri, 28 Aug 2026 06:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787897585;
- bh=yjSTGJr8Jz1TKN2cvhCq5H3QQXb3Hyh0H4SY9T12jwg=;
+ s=k20260515; t=1787897669;
+ bh=LQ0KqQUobaxbdlTLVbnyuLDrv2eVjNQ6GGf55CH3bhk=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=lb5QTZnpF7M8DZJP8JKNGPUA0//M6ARfQNIZPR3y2jtmIPAqD98tauz8rx7wzaHcC
- eJ1iOJ065If5EL5Hr+JHjmEaPKbXDG9sewKz5HwZzEIISBKCqwkNrXlI3tFtMwBZEJ
- eKPxdBGY/aRkcN1ozOomDl6RUdZ/Nb58srC7h6pbyWOG7ZiiNZPVSmxgLziqbgFmy9
- ymSALTnk/WVqJkxKBJw/Pz1gDjOqfWmO1EsKSSzgLtqek8KwsMQDBCY2IOHlhF8QLj
- 6wSIwmoyNvy0WgqEc9WILGag9x+r6RmR7RwTpYqHCuNWiR39mMw9ruCUZldd2Qod6s
- kAOR7HgdM+dng==
-Message-ID: <acf8c773-5c3a-45ae-8675-5402340761a8@kernel.org>
-Date: Fri, 28 Aug 2026 15:13:02 +0900
+ b=FqK0g5XCGhbg881/A007kIH9m/Yc3IBZHcaWhZnS6Y9rBIeeVZg0gFHEp5jSRKV+c
+ hqKdHxzqxLLHN8YDItoBD1sMw2kLhv9tYIIh3TnUBmVw8IJZ7rk0sHmoSk+JW3z4id
+ Slefjdr89sXDauD6s5ehsYPoQ/DRJ50eIymH5UP9WuA2ihIeuFq5zSvMd9eoPwd3KO
+ GC1Y/4Li1BqzonyqfaPRAG6tVipClGYPkoJijcmyxXwL8uA6uauPvCm4f7C2EZSX9n
+ HQXhrwVhPtMNPdisvc4dXGcKue9NfTqNHDd0YoTCs+7W8R5a1HohXVEBZWWN9Vvzdc
+ GEaYB8+ozKSGw==
+Message-ID: <6700fd4b-16e0-43bc-8780-0a4704f90f4b@kernel.org>
+Date: Fri, 28 Aug 2026 15:14:27 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] block: reject zone appends that are not a multiple
- of the sector size
+Subject: Re: [PATCH 08/12] file-posix: remove the zone append write
+ granularity check
 To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260825205748.679968-1-cassel@kernel.org>
- <20260825205748.679968-8-cassel@kernel.org>
+ <20260825205748.679968-9-cassel@kernel.org>
 Content-Language: en-US
 From: Damien Le Moal <dlemoal@kernel.org>
 Organization: Western Digital Research
-In-Reply-To: <20260825205748.679968-8-cassel@kernel.org>
+In-Reply-To: <20260825205748.679968-9-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=dlemoal@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=dlemoal@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,31 +75,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/26/26 05:57, Niklas Cassel wrote:
-> Zone write pointers are tracked and reported in units of
-> BDRV_SECTOR_SIZE, so an append whose data size is not a multiple of it
-> would leave a write pointer that cannot be represented, neither in a
-> BlockZoneDescriptor nor in the virtio and NVMe zone reports derived from
-> one.
+> The check rejects a zone append whose individual iovec lengths are not
+> multiples of the zone write granularity. That is stricter than the
+> constraint it is meant to enforce, which applies to the size of the
+> request as a whole. A request whose total is properly aligned but which
+> is split across, say, a 512 byte and a 3584 byte iovec is refused here,
+> even though the iovec boundaries do not survive into the scatter gather
+> list that reaches the device.
 > 
-> Nothing states that invariant. file-posix, the only driver that carries
-> out an append itself, does enforce it, but only as a side effect of
-> checking each iovec against BlockLimits.write_granularity, which is never
-> smaller than the sector size. That conflates two constraints: the sector
-> granularity holds for every driver, whereas write_granularity describes a
-> coarser requirement of the medium below a driver, and only a driver that
-> has such a medium should express it.
+> Nor is the driver the right place to enforce it. The kernel and the
+> device validate writes to a sequential zone themselves, which is why the
+> same function already passes the request length down without comparing it
+> against BlockLimits.max_append_sectors. The sector granularity that holds
+> for every backend is now checked once in bdrv_co_zone_append(), and a
+> frontend enforces the granularity it advertises to its guest.
 > 
-> Check the invariant once in bdrv_co_zone_append(), so that it no longer
-> rests on a driver that happens to have a granularity of its own to
-> report.
-> 
-> This is a lower bound, not the alignment that a guest has to observe. The
-> block layer cannot know that one, because it also depends on the logical
-> block size the device is configured with, which is a property of the
-> frontend. The alignment that applies to a guest is the larger of the two,
-> and it is the frontend that reports it, that validates requests against
-> it, and that has to refuse a device whose write pointers do not satisfy
-> it.
+> Drop the check. BlockLimits.write_granularity is now set in one place, by
+> this driver from the zone_write_granularity queue attribute, and read in
+> one place, by the frontend that reports it.
 > 
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
