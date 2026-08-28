@@ -4,144 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B65C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE42C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzviX-0007h9-2f; Fri, 28 Aug 2026 08:29:57 -0400
+	id 1wzvps-0001sr-LI; Fri, 28 Aug 2026 08:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1wzviW-0007f8-6y
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:29:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1wzviU-0002ME-8p
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:29:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787920193;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rS19fT4hEDASyIxwXNgxHR0wu0cgKifpCgEwRP35ln0=;
- b=RWyR2Er3GRjMu4Hbk6Wu8hPo+olB9OSu1TbAz9Xz1gmZim1crDTi+H7l5Chnk6n+0pXoT5
- bDHX7ydnvrWBxGq7zAfKNAQ5tCi0dv2DsO72UxkLLYMltshc3kxkUofImcLNDnpRxNjs7Z
- CHkyfevJY1zHD8JNPWqrJZz8u/Dt3kA=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-C4j28TQ8OqqhH830Ar3PqA-1; Fri, 28 Aug 2026 08:29:51 -0400
-X-MC-Unique: C4j28TQ8OqqhH830Ar3PqA-1
-X-Mimecast-MFC-AGG-ID: C4j28TQ8OqqhH830Ar3PqA_1787920191
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-8563c2a53dbso12493657b3.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:29:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787920191; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wzvpi-0001sH-UQ
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:37:23 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wzvph-0005qd-1q
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:37:22 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-cc1ceadbd16so822471a12.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:37:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787920639; cv=none;
  d=google.com; s=arc-20260327;
- b=ng/3k3xWrMrnLvvg9+UHXRvohEMJvDQSPVACQvTrimTyTbeRD+AGcIxGSf5UIltwaT
- +jGoZsf4H1611i6/8MZMQx1hZ2abGMcvUtjPVdwea8DDgOtwrbUww7k7A55pXEA/l5I5
- Z2nGoFFB5kuVdYcCBev+J1TRLcpmqqwiTFP974SPklBQkq+VkKJrgWpT6TqPLMON9nSp
- ZheaNv653XJ/1K/10pYYgsuWGF49kEMH4AlVuExqg6g94WoXnxMDpcLAJ7n0dqISruHl
- SdLDOMxkWLwEKO/lOpizvhVaeH+OcHguBg4aB3LhL1cboxEwN2BwUi7gXU275rs9w6Aj
- LYcw==
+ b=mKarLQnzbODfSllSRaGkXlC7ynYoDhQw+VOPPWNSujG0XUUX3/Lah/JUex18Dcgkbb
+ i3TAABocJ87FwErsBmUQ+LM+AsHNsfbTh20aBW3FqbouNw+ABWIFKEu3No/mx3vpvMkq
+ 1cVPw9dlFn4Y4MwsFp4BJl+qEiJqepxK54/smVXozP2xpJPJnFDwDWTA6dvbtCwWm1G6
+ BQnLTZKvHueX+Kjjc5YNBT9c8aHo/uo9VlWS1XfouL85tlYxpErnvPx1oAEO9pwfH8z/
+ 209Z8X4fZMw8vipFKcMviPU9A8VGTN8s7ag/iQAaE/pKuCYwryHh3MSN5S4suYzqIEnP
+ y93Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=rS19fT4hEDASyIxwXNgxHR0wu0cgKifpCgEwRP35ln0=;
- fh=yg5daGthdVMj9fDITVijmPSN3ReNNkmmnmBt2RkEpmU=;
- b=iOshQ4CGE0FisKOlgeHgYp6SSC8Mt6wLUsmn4/zQBHfiWBBDPeeNib+ugkVxw4PXL9
- DHkm0ehnVx4aNz2yJjdz0odzzBH3pOVcHm+z6j3bFTm+/bYBtzJf3FKbZ1pIrnWKBf76
- /sdlvLRVXQP1Gy1zPqJisELWFUXLVUT8aUBp6fqARQiqEsOPDrUNZ7Ii02XvzPYgAVCU
- izJJB9t1UDkABS0FkrLoSV9PQR15jd7JLXLV4ns2ieDPHZgrgBNI+gv7PgMVS9+ilXL5
- jDGqaux9IyWLWl8ZoGaqhPSo75ZuTI4WE0DzXe3yCkcgxM1O9cx8vG30WE1zCdcGkS4G
- fAsQ==; darn=nongnu.org
+ bh=w+TvNFrB527qI0b3iMvuP8USPZnyG0G3rDlXBYUI65E=;
+ fh=72UdCioTAzbcxYbLN7TVE3AZJYZp81beZoM76t1yHyQ=;
+ b=FHOismAqDo/EvDuSuZIZqyOAGmnKkdCXKbdC9Mzd1VgAEJAeZI8DFKS3y9YTDL+Brp
+ T7jR/rejClxXopL2Co+sRD4wuedlvAx+9h5zTYOKOSqZcUtbiYAMUUm68sI8edGaPzfa
+ Z1y/OOiSpGyXco3kujd+21dxfcgS3bI90kaOYrsa0BSroaYlA5kQZhHbyLaTK7+w+No7
+ zxKz+CUIzY8JGyq2Sr2/Jz/pJUBs3UryJ2/sQ3G1Mh0tYPDYNNLbkFXth2SgXvABxL17
+ AT8yn3F7O/tnX1NyrU8Pth5EGgnB1inn3u+khdQ0Qf5ra9O4OL7GSbZkd9G3UCqpmGnN
+ 3gWQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787920191; x=1788524991; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787920639; x=1788525439; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=rS19fT4hEDASyIxwXNgxHR0wu0cgKifpCgEwRP35ln0=;
- b=J0iJN/VhQHC/ON3y6SnH7VN+Ko1HDmi4aalqJOqeQ69iu/ILwTs+B/E5zvzXTkZ/dY
- xsAkIyqDnkYG5jKnCnZkpkG1bUb1Jz6n9CY2O1YR8rIJ02VfHgYqJQE3SRn98AExQnVe
- bO+wjOAFdqUmFJU47zvtQR+cygsuhPTOuLnuEqjSVVGSpN0W+stK6WTr7fOhE1LgTxYd
- HcRnlWZRB8T8/EQnDGj7OvpO1udUgUCvFcvPorNJo8U6nbMkq5b8w52uQkBbH80pWcxL
- dN6Hmc46wUDEll36GBYUFIqzxpCRPuSpVYv2qidC17ZpvDBcXr9Gz9BzOVnsQJdKzsfB
- wW8Q==
+ bh=w+TvNFrB527qI0b3iMvuP8USPZnyG0G3rDlXBYUI65E=;
+ b=oHOfobwexrVm2/4yw9dFjuVw2CxA+XTNT9GFfRzHtd9wde9zX8DRFDb6q8Dx5W0qa9
+ bofLWpwFi/kkXhXdH4iZ7IO5zfBlKPoP804I3oNLs5QosT7ctxgwH4aFqotVgJecdnGS
+ kfmxfaK+b3Kbd2Piq10932jArdlUkaRal3z7AZNI0+fwiFMnBJNessa25Fd3pez2X9Di
+ Tc0HRo25ej4pZesFwGIzwqczpR7DPwhSO+Z1mWUTjKhhW75AyJ2acsZydn+jFhV9eXd0
+ w40Io4ecuiSCWk6PGPmnE4+anbt+q+0NQNwAk8eyWC2m43WqAUHueJB9KLCht4aJIDoG
+ /Meg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787920191; x=1788524991;
+ d=1e100.net; s=20251104; t=1787920639; x=1788525439;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=rS19fT4hEDASyIxwXNgxHR0wu0cgKifpCgEwRP35ln0=;
- b=HXRrHKTcCITWhgiO4vhsUq/A8c9zYdAVAZXGZ1c0G92n/Gt2V20HP5QOXhCePnQ5k/
- L3XflGrnExwL+PkE9GiyHmC5jsR3lc7Jy83BQQ0oHwkWLbZds+GjUukBjpxCBIkf5ili
- XaISTLgqVRBgp4EUzWz4SntmFgAkocZkDDwfMQ0wu9A78lviBiRF6FymPyEbB24zgSf4
- KTpbCh31nbNBiGeh9wAm7Qy/GgC2r/pR5028t8Lb1KakizTpmwydRqa7ZmmSs/LGICIq
- 0ev69sLzpaVMdsv3FCWiU86y/HsyTZShmbn+H5IilufbKAvcwIr1SabJiQDyeGw8PCaM
- zhEQ==
-X-Gm-Message-State: AFuF++lLwBmQHIQnwCU6XpDb48alPREHhbIiHpRBmYAZgE3CwU9bAPu2
- bZVxYd2W4ZwjEP/w3wRIv0HEwuiLF7H8mqe16wc+Be/GXWVwR3Y/MDKCJSp3CKR3yn9z07q61o0
- gzvo7HvgNyjs/I6CXBICQIRPhNfBQ73nAAt5woouBVwYAkYK/NT/FlxS/wOqMWyuExwQpVIDtMe
- bTTeBN0JxsYVkGjAW0gFqXnc0es92xN9g=
-X-Gm-Gg: AYBFou059ADd+3mzeQnhqQzQ5NR6j5hO3n2N0I/Q4GPolgPYsT0u9jdY1l+IC5S4ND5
- 3B/wyPhQFmqm9J34VzsdlVtBbr2xIiYa3RMRvqt9rq7+AJ88HinEdp2Ezx10Z+cV3MQChXKP8gP
- Jr3unS/3upuYC1ypXOG9G4HLLypfhKnoJgfczkNc8vEej9j0VoL63E9gC/iEbwo1g2pdquuZT3e
- ZEq8eeM6i9U1x1d74mWJqJVS4yVRxfSztMw5xYCk7iiogqYZbQh/lHU1Fc=
-X-Received: by 2002:a05:690c:e1d3:20b0:85a:dd2d:906d with SMTP id
- 00721157ae682-85d69640f4emr23095627b3.2.1787920190759; 
- Fri, 28 Aug 2026 05:29:50 -0700 (PDT)
-X-Received: by 2002:a05:690c:e1d3:20b0:85a:dd2d:906d with SMTP id
- 00721157ae682-85d69640f4emr23095397b3.2.1787920190308; Fri, 28 Aug 2026
- 05:29:50 -0700 (PDT)
+ bh=w+TvNFrB527qI0b3iMvuP8USPZnyG0G3rDlXBYUI65E=;
+ b=pWspq+JkvKQpk+fpx+sn0rYe/xidCecO2cot/h3HbMiKahpohG6AaPk4a9atEAu/ZJ
+ aWWwVnvlYcxxIJpm49pSC6CjkUyC2dvUosA+TV6GLhuyuwQ0EyFkrRDdIXM3s25/sh3e
+ OoYI/9KyjX+4dw/6jMHtxph5yBS047uguxFwD/U52zT0US9xhSKjpQMKLgNejPeRoBlm
+ +bqJOMB2FeH/2PU3E3bY/7t+3UD1/AJMlMT0iuGFZ+FblTfAtkUiM6CnqarcRiOh8twU
+ dqKCdBRDDnPpMDwniUH4nXzM4YBh5GQ3C9N5Uzvv3Ahm5Gbnu/pJx7z4SCMNjTXSTnSU
+ OkkA==
+X-Gm-Message-State: AFuF++mlxg9Bd4CFPqg/anQJ6051ZBXFg3C8Du9Bd+CahG9EX2W4Icdp
+ jbvjF+wMj+FCqOvPl0uV/gaEOCuoInnuBNc0LErHMeuE0P9PhmB4XoBXYxAbEuGsNI11WM32Q3+
+ Qs/U1JgA9nLE3ThkSVit5Id9KyE/lJ8g=
+X-Gm-Gg: AR+sD13HepJXUD6gDtanIwqEJuj24EC5O02qckCRTtSQ0gx8WwpxqDP9C+LpnljxFgO
+ lFmUV+fWtHFb3v3NrguXCf/1YmVOF27ETmiuYlWpwOaNx2cF1FY8mTtEf4re2rEcEkx7SB0SRnl
+ AaW0S7BFvxgUL8IBCR/NH1E5SI2R+Y8u43kPXGxe8raN0VnaEhCGgyB0PRYvQrDysF4e1OCf/8M
+ pF6Om52rPh0EhLFts/7PEcglsabt/entPORwqcnCRBp8Va9W19BpzQsD8XCIS77dBF2CKzFIM3P
+ 9j/ghdyVLbIF/phZ0vk6Om+HGKECNNGwdW9PBQ09TkP9DI4gyCdJ8vmll7ahZI5siYBgJoFhudv
+ M
+X-Received: by 2002:a17:90b:180e:b0:396:5c22:b1f1 with SMTP id
+ 98e67ed59e1d1-396d0e26ca8mr11352503a91.8.1787920638740; Fri, 28 Aug 2026
+ 05:37:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
-In-Reply-To: <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 28 Aug 2026 14:29:13 +0200
-X-Gm-Features: AcwNN1VHrhFHmM7AUF9p_TslU01gI8yN1qi-kPfIWunAI2DiqE197XuGPz9KRpI
-Message-ID: <CAJaqyWfCPYY4rFNZGG2EM6Pdtz66KpO0Rx9U2JmZ8UggzKJEfw@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 08/13] hw/virtio/vhost-user: send isolation regions
- to device
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
+References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
+ <a0bd3ef2-91df-4a6d-a04f-67a568188b24@rsg.ci.i.u-tokyo.ac.jp>
+ <d71116d3-2108-4f14-baa0-d2f1f878b5f4@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <d71116d3-2108-4f14-baa0-d2f1f878b5f4@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 28 Aug 2026 16:37:06 +0400
+X-Gm-Features: AcwNN1WoGitMOVY0JnrM_Aq9EWz9J28o01c2Vj6SJJwhEJsMN5DeaHRhP9eVZow
+Message-ID: <CAJ+F1C+BPPLcko6nqK5vCTn81D=CHv3m_bvqDiQzbc-shY1S2A@mail.gmail.com>
+Subject: Re: [PATCH 00/18] RFC: various virtio-gpu/dmabuf related fixes
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, 
- Peter Xu <peterx@redhat.com>, Alyssa Ross <hi@alyssa.is>, 
- Demi Marie Obenour <demiobenour@gmail.com>,
- 20260817233147.2867623-1-connorkite@gmail.com
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson <alex@shazbot.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, swing <swing@mail.exp.sh>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,212 +125,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 7:12=E2=80=AFAM Connor Kite <connorkite@gmail.com> =
-wrote:
+Hi
+
+On Fri, Aug 28, 2026 at 4:29=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> Adds features to fill a vhost_user_set_mem_table message with the
-> addresses of isolation memory regions corresponding to bounce buffers
-> and vrings.
+> On 2026/08/28 21:26, Akihiko Odaki wrote:
+> > On 2026/08/25 19:20, Marc-Andr=C3=A9 Lureau wrote:
+> >> Hi,
+> >>
+> >> While working on CVE-2026-66020 (which had a few revision on list), I
+> >> kept finding several places where virtio-gpu scanout and dmabuf
+> >> ownership was unclear.
+> >>
+> >> The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
+> >> unmapped its memory. Following that path also found stale dmabuf
+> >> references, duplicated scanout bookkeeping, and inconsistent cleanup
+> >> between display backends.
+> >>
+> >> This series makes each virtio_gpu_scanout own its current dmabuf and
+> >> uses resource_id to track which resource it displays. It also makes
+> >> QemuDmaBuf own its file descriptors and moves GTK fence state out of t=
+he
+> >> dmabuf.
+> >>
+> >> Those changes touch a lot of area and I have done basic testing with t=
+he
+> >> various backends. I would not recommend backporting them to stable:
+> >> there is a high risk of introducing regressions. Yet, I don't know how
+> >> to address all the problems uncovered by CVE-2026-66020 in a simple
+> >> patch series. Help welcome!
+> >
+> > If you mean "all the problems", my coding agent tells there are some
+> > problems remaining:
 >
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->  hw/virtio/vhost-user.c | 118 +++++++++++++++++++++++++++++++++++++++++++=
-+++++-
->  1 file changed, 117 insertions(+), 1 deletion(-)
+> I forgot to note that I manually reviewed the claims.
 >
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 7e9233e174..e1e5cba53d 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1140,7 +1140,77 @@ static void cleanup_isolation_regions(struct vhost=
-_dev *dev)
->      }
->  }
+> I also think you can drop RFC. Though the series is large, each patch is
+> small and I think reasonable.
 >
-> -__attribute__((unused))
-> +typedef struct {
-> +    VhostUserMsg *msg;
-> +    struct vhost_user *u;
-> +    int *fds;
-> +    size_t fds_size;
-> +    uint64_t vring_iova;
-> +    size_t vring_size;
-> +    bool vring_node_visited;
-> +    size_t *idx;
-> +} IOVATreeTraversalArgs;
-> +
-> +static gboolean vhost_user_fill_msg_reg_from_tree(gpointer key,
-> +                                                  gpointer value,
-> +                                                  gpointer data)
-> +{
-> +    IOVATreeTraversalArgs *args =3D data;
-> +    struct vhost_user *u;
-> +    VhostUserMsg *msg =3D args->msg;
-> +    DMAMap *map =3D key;
-> +    uint64_t offset;
-> +
-> +    assert(args && key && value);
-> +    if (!args->vring_node_visited) {
-> +        args->vring_node_visited =3D true;
-> +        return false;
-> +    }
-> +
-> +    u =3D args->u;
-> +    assert(*args->idx < args->fds_size);
-> +
-> +    args->fds[*args->idx] =3D args->u->iso_mem_ctx.fd;
-> +
-> +    /*
-> +     * If the number of regions is fixed, it would be wasteful to use on=
-e for
-> +     * only the vrings. The first vhost_iova_tree element is always
-> +     * reserved for the vrings, so we can simply combine the first and s=
-econd
-> +     * elements, which are contiguous in IOVA space, when sending region=
-s to
-> +     * the backend.
-> +     */
-> +    if (*args->idx =3D=3D 0) {
-> +        offset =3D u->iso_mem_ctx.vring_hva_addr - u->iso_mem_ctx.shared=
-_mem_addr;
-> +        msg->payload.memory.regions[*args->idx].userspace_addr =3D
-> +            args->vring_iova;
-> +        /*
-> +         * The size from the iova tree is inclusive, so 1 is added to it=
+> >
+> > 1. Vhost-user still has duplicate, incomplete DMA-BUF ownership.
+> >
+> > VhostUserGPU retains its separate g->dmabuf[]. The contrib backend
+> > disables a scanout using ordinary VHOST_USER_GPU_SCANOUT with zero
+> > dimensions, but the QEMU frontend handles that by only calling
+> > qemu_console_set_surface().
+> >
+> > Although that changes con->scanout.kind, it neither releases g-
+> >  >dmabuf[id] nor invokes the frontend GL-disable callback. GTK/SDL can
+> > therefore retain their private scanout mode and redraw the old buffer;
+> > the wrapper and owned fd remain until another DMA-BUF message. Reset an=
+d
+> > finalize also never free this array.
+> >
+> > Separately, contrib=E2=80=99s virgl RESOURCE_UNREF destroys the rendere=
+r
+> > resource without disabling scanouts using it. The in-process virgl
+> > backend fixes precisely this case, but contrib does not.
+> >
+> > 2. GTK DMA-BUF texture release lacks the required GL context.
+> >
+> > GTK=E2=80=99s release callback directly calls egl_dmabuf_release_textur=
+e(),
+> > which calls glDeleteTextures() and then unconditionally forgets the
+> > texture ID. Neither it nor the core release dispatcher establishes the
+> > owning context.
+> >
+> > This is reachable after another GTK console=E2=80=99s surface update le=
+aves
+> > EGL_NO_CONTEXT current. Deletion is then not guaranteed, yet the ID is
+> > lost, leaking the GL import and backing. With another unshared context
+> > current, a coincident texture name could be deleted from the wrong
+> > context. SDL has the same missing-context pattern.
+> >
+> > 3. Rutabaga resource destruction remains incomplete.
+> >
+> > virtio_gpu_rutabaga_resource_unref() calls Rutabaga unref and frees the
+> > QEMU resource, but does not clean res->iov/res->addrs or remove a mappe=
+d
+> > blob=E2=80=99s host-visible MemoryRegion. Only explicit RESOURCE_UNMAP_=
+BLOB
+> > removes that region.
+> >
+> > Consequently, MAP_BLOB =E2=86=92 RESOURCE_UNREF or reset can leave a
+> > MemoryRegion pointing at storage destroyed by Rutabaga, as well as
+> > pinned DMA mappings. This is adjacent to, rather than the original
+> > scanout-detach CVE, but it is another unresolved blob-ownership problem=
 .
-> +         * args->vring_size is exclusive, so no addition is required.
-> +         */
-> +        msg->payload.memory.regions[*args->idx].memory_size =3D
-> +            args->vring_size + map->size + 1;
-> +        msg->payload.memory.regions[*args->idx].guest_phys_addr =3D
-> +            args->vring_iova;
-> +        msg->payload.memory.regions[*args->idx].mmap_offset =3D offset;
-> +    } else {
-> +        /* Use 128 bit operation in unlikely case of negative iso_iova_o=
-ffset */
-> +        offset =3D int128_get64(int128_add(int128_make64(map->iova),
-> +                                        u->iso_mem_ctx.iso_iova_offset))=
- -
-> +                (uint64_t)u->iso_mem_ctx.shared_mem_addr;
-> +
-> +        msg->payload.memory.regions[*args->idx].userspace_addr =3D map->=
-iova;
-> +        msg->payload.memory.regions[*args->idx].memory_size =3D map->siz=
-e + 1;
-> +        msg->payload.memory.regions[*args->idx].guest_phys_addr =3D map-=
->iova;
-> +        msg->payload.memory.regions[*args->idx].mmap_offset =3D offset;
-> +    }
-> +
-> +    assert(offset + msg->payload.memory.regions[*args->idx].memory_size =
-<=3D
-> +        u->iso_mem_ctx.size);
-> +    (*args->idx)++;
-> +
-> +    return false;
-> +}
+> >
+> > ...so there is still some work to be done.
 
-The iterator is already inconvenient in the gtree, and the plan is to
-remove its usage when glib minimum version is updated and support for
-better functions are mandatory. Why not add a function to SVQ to write
-the nodes into an array and avoid moving the interface up?
+Thanks for the analysis. Do you think we can review & apply this
+series first before addressing the remaining issues? (and helping me
+:)
 
-> +
->  static int init_isolation_regions(struct vhost_dev *dev,
->                                    VhostUserMsg *msg,
->                                    int *fds, size_t *fd_num)
-> @@ -1159,6 +1229,7 @@ static int init_isolation_regions(struct vhost_dev =
-*dev,
->      DMAMap *map;
->      DMAMap vring_map;
->      int r;
-> +    IOVATreeTraversalArgs trav_args;
->
->      msg->hdr.request =3D VHOST_USER_SET_MEM_TABLE;
->
-> @@ -1244,6 +1315,27 @@ static int init_isolation_regions(struct vhost_dev=
- *dev,
->          }
->      }
->
-> +    *fd_num =3D 0;
-> +    trav_args.idx =3D fd_num;
-> +    trav_args.fds =3D fds;
-> +    trav_args.msg =3D msg;
-> +    trav_args.u =3D u;
-> +    trav_args.vring_iova =3D vring_map.iova;
-> +    trav_args.vring_size =3D total_vring_size;
-> +    trav_args.fds_size =3D nregions;
-> +    trav_args.vring_node_visited =3D false;
-> +
-> +    vhost_iova_tree_foreach(u->iso_mem_ctx.tree,
-> +                            vhost_user_fill_msg_reg_from_tree, &trav_arg=
-s);
-> +
-> +    msg->payload.memory.nregions =3D *fd_num;
-> +
-> +    assert(*fd_num =3D=3D nregions);
-> +
-> +    msg->hdr.size =3D sizeof(msg->payload.memory.nregions);
-> +    msg->hdr.size +=3D sizeof(msg->payload.memory.padding);
-> +    msg->hdr.size +=3D *fd_num * sizeof(VhostUserMemoryRegion);
-> +
->      return 0;
->  }
->
-> @@ -1251,6 +1343,7 @@ static int vhost_user_set_mem_table(struct vhost_de=
-v *dev,
->                                      struct vhost_memory *mem)
->  {
->      struct vhost_user *u =3D dev->opaque;
-> +    bool memory_isolation =3D u->user->memory_isolation;
->      int fds[VHOST_MEMORY_BASELINE_NREGIONS];
->      size_t fd_num =3D 0;
->      bool do_postcopy =3D u->postcopy_listen && u->postcopy_fd.handler;
-> @@ -1262,6 +1355,11 @@ static int vhost_user_set_mem_table(struct vhost_d=
-ev *dev,
->      int ret;
->
->      if (do_postcopy) {
-> +        /* Postcopy is not supported with memory isolation yet */
-> +        if (memory_isolation) {
-> +            return -1;
-> +        }
-> +
->          /*
->           * Postcopy has enough differences that it's best done in it's o=
-wn
->           * version
-> @@ -1278,6 +1376,24 @@ static int vhost_user_set_mem_table(struct vhost_d=
-ev *dev,
->          msg.hdr.flags |=3D VHOST_USER_NEED_REPLY_MASK;
->      }
->
-> +    if (memory_isolation) {
-> +        ret =3D init_isolation_regions(dev, &msg, fds, &fd_num);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +
-> +        ret =3D vhost_user_write(dev, &msg, fds, fd_num);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +
-> +        if (reply_supported) {
-> +            return process_message_reply(dev, &msg);
-> +        }
-> +
-> +        return 0;
-> +    }
-> +
->      if (config_mem_slots) {
->          ret =3D vhost_user_add_remove_regions(dev, &msg, reply_supported=
-, false);
->          if (ret < 0) {
->
-> --
-> 2.43.0
->
+> >
+> > But when it comes to backporting, I think we can instead do focused
+> > backporting to avoid extra trouble. Concretely, the patches you tagged
+> > with "Fixes: CVE-2026-66020" can be backported, namely:
+> >
+> > - "[PATCH 10/18] virtio-gpu: disable blob scanouts on mapping cleanup" =
+and
+> > - "[PATCH 18/18] virtio-gpu: fix use-after-free on blob cursor after
+> > detach"
 
+Cc: qemu-stable for those two only? even if there are still corner
+cases addressed by the other patches)?
+
+thanks again
 
