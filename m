@@ -4,144 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B9BC61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 15:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E3DC61DD3
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 15:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzy4M-0001Qx-6v; Fri, 28 Aug 2026 11:00:38 -0400
+	id 1wzy7J-0002Rw-Ag; Fri, 28 Aug 2026 11:03:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wzy4I-0001QO-C0
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:00:35 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wzy7G-0002Rg-SX
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:03:38 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wzy4E-0007Ec-PT
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:00:32 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SDkdJW2538480
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:00:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4azgbFq2nQKth/Gl1h93wp/iIU5ib0OFdKkEBJq6g5A=; b=j5/CccxsGWNeqqRT
- 0C4b2NVAOqSzsU7FkL7htY+H6VMQ4mR2jbYMbKfGhgp5puW7Ic7y4GnJRQuV9yVl
- /XWUvRQt+n33ABbTj1UIS7KnFVKD7PZ4YPydZpq4GWIY1N0cLBDiiNRv+JKkaZ1i
- jrefmz4AiNO845Kn1HeyExBsGmcx8/hOekA0aHhfY8EwWNfaeT2XmbpA2BwMTELT
- hQRZy5iZrnmJN2EPVjPrnul7DrdhCz3/psburSfa1lFDnNMZa99i3TGcU8HWrRAZ
- BLD2ZFD2HqLAjgtX4Y9/pGooBTV/YM+dtJyqcPdf8+R4IBVTW+VFVq9byyyFnRDi
- Lc1U2w==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3mua8dc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:00:27 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2d001671a54so19640565ad.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 08:00:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787929227; x=1788534027; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4azgbFq2nQKth/Gl1h93wp/iIU5ib0OFdKkEBJq6g5A=;
- b=GXNZ1tLmjbMEPjrAqUDony7n8H7RLDNw/nETRqCSqJwdOHAcynXNX7h8naT71XH+5q
- RNKbp6JfghCTPGyodOQd8eu2mUsGs0saYOXVuPBh58ta7SgwUC8PwHzO5XBfC0QgsuhF
- I77PvikPDtsXV5g6jaEqT9Ya9Fe/YmH5Ja9R5LKARyvD2r/jdj1fgj7YOw2gOQQiRkkQ
- VTXzE6ahiH75KGfybqyZ0S5DENKQKquUHm1BZWVJeiDX6ZY1ttEokmuK68g6SMRlPjbm
- rnWBeQDjWxmmFQEoJvLDoD9lJyjB8aan+96bdBxM02VSlV0Cycvg1OZyNgfsjXe36uun
- 8D4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787929227; x=1788534027;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4azgbFq2nQKth/Gl1h93wp/iIU5ib0OFdKkEBJq6g5A=;
- b=sDg5WTH5WnwVB2XTsVdAPl5wvUcL1wDcSaOR8/n2TMibfh9cSmy6S7a19ZUDwBvO8o
- 7izBTS2QE7oDBEfVEvBt9y+bPDv6UbfUWg0H5u8yJ8DPpRuJeqJl0Pp/98KcM25n2CUJ
- 8UJNLAOTUb+xF8UXJcKUMamDrU6KLnmum+goTrxfPe5MY96BZHE+WuNBt23TlTBd+Eyp
- DMONdV/ScZu2aI9V3ruGQyK2RkAXvKAmMEDLN5XMp1aUvjWgZpUl3ENkYRoirOCot6NJ
- orRsqYjMgU9+UC+QKsg8qQ3uZjmKFMWNoOwXcu80/IMO9Fl5l1nl998ppYJt4dUj+sC7
- KUXQ==
-X-Gm-Message-State: AFuF++naSZ7YuDUDuo1PtvG+ViudSVUsf0EYn9VJrDXLL11DXGExK/7v
- 8nqooYaZt2O0pfRIPoAnpuvWaF1tuihNPZSkWm/Fh0TVagH7T9QgxHUA09Ym/NgltQQYvOScQzf
- 2HzyHw/VQLRLGk8yF0yQqtyn2yuZflI58fmnxlYCUw+2HkRHa0wq+HnK4GA==
-X-Gm-Gg: AR+sD10gshDSQUt1CZxhk55J7BfX+FV6iXtXupdrxRdvfuZqDeW203H9sk+8vku8iVG
- vrKBJlB92diibNG3vxn/u6khoVdV/+s3LfUZA2RkoqXD+yR2bJ9fBf8A8LyGxnMP4WsSzIqqSt+
- XFBsIa7s//ZbvxFEJ7CrWexGBeTkE8qIBA0UPLqGV78lXxKOd1If12B4yO/KofvgKulPYbTs/7Y
- aT0zKi2P9xu5L75c3vtkxa6SPPJv+T/dCzhTecjmW0m2q6Wq3bHzVqw6yI+jjirT7eImmLl2ert
- gjgWRChtEPpAj16KNtwc9Tg/+Oc7cw+MN4hjLCVY4BsoEfqLYCJ/RWRJe+BdKY7u2cZrJzZM8Az
- 9z2xHPkpmkKFBlvBYoISOjdUx8eQ6VXRc1eyh1PHwa4/ciZQd3aIKbCo=
-X-Received: by 2002:a17:902:f546:b0:2ca:6c8:abd8 with SMTP id
- d9443c01a7336-2d74df45042mr134414135ad.12.1787929226531; 
- Fri, 28 Aug 2026 08:00:26 -0700 (PDT)
-X-Received: by 2002:a17:902:f546:b0:2ca:6c8:abd8 with SMTP id
- d9443c01a7336-2d74df45042mr134410775ad.12.1787929225548; 
- Fri, 28 Aug 2026 08:00:25 -0700 (PDT)
-Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d759869b28sm6269555ad.39.2026.08.28.08.00.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 08:00:24 -0700 (PDT)
-Message-ID: <0e1c8986-6b72-487b-abe3-7c559457be73@oss.qualcomm.com>
-Date: Fri, 28 Aug 2026 08:00:24 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/1] tests/docker: ensure container command is probed at
- most once
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-References: <20260716195807.3219466-1-pierrick.bouvier@oss.qualcomm.com>
- <20260716195807.3219466-2-pierrick.bouvier@oss.qualcomm.com>
- <87v78u3007.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <87v78u3007.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wzy7E-0008Jr-7w
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:03:38 -0400
+Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67SDUDLf3069407; Fri, 28 Aug 2026 08:03:33 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=ODTKXVfIrQUSG4PIsogjNC0n6hK0dnK5gwZ6Usfxp
+ 2E=; b=QRz+719HXxYuyBV3eEoSlgJiJGvfpHFWsTq6ha5O3SzqC9UzPaXGNmbrX
+ TBEgx4kXq/5w0U54iXHH8ZYTCNUtzAjVHgUYigFQdjMoFM88hdOTQxuAPOTrlcuL
+ dDBQHAchm0Yg5FPS5gtpQ98GmGMBvrWt/ouoztpO4pjr9MODokJMqUDSweJRKL8g
+ kKBXlPrMYWljQKuzpSyNpanRzpVWSEyZtsOw1KNS+WZjyhJg5qBvUW6CLIcaJC6x
+ BzOjgjM499djiTgWpcpIlFkBWG12yNf76E0SmrRv4trFljqwNnRboIhIOaEeeNl2
+ gnf/lwNyQhXokZF0XRvPX9xrIL1fA==
+Received: from cy7pr03cu001.outbound.protection.outlook.com
+ (mail-westcentralusazon11020088.outbound.protection.outlook.com
+ [40.93.198.88])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4gad5ccmwf-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 28 Aug 2026 08:03:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=h7pvN4w6cy6mt9L2xSBGcCVTZ5z0KXIbdOedLEI9r7Sw+k+c57WZk8MVGhISh4URtIcYLNQ79lsOx4qNcv82T17hqeO2wIcrubHB+8ZFAFcuuSk6hLK1Fs2eYSVFjWBJiZvpXXhbaDw7IQSKf/TaT+Nle6xd8G710Fdb6jbbBQqMC1YFNzJE4DN1OqirIysJyjlbfH8kT/eChRYdfMguntchCkbQ3X6grd7hdWpYd8p2m+CfpZlyIcmQ+w0aNFwc/PPOApvkaPz01G4W7IfC2vO5IN10sw0gBkB66smqjmiIxCMUWv6c49ayAtpptg/6Jli2TgliQCK4D2Ja7BZn1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ODTKXVfIrQUSG4PIsogjNC0n6hK0dnK5gwZ6Usfxp2E=;
+ b=WP2HscZbNqaexX3qhN+E/sY1/RZQ4HgrT5YmHs3cKTuYu5m0RIF1ehmgJCY+90Fwtn+rbUushpDaDDQWXsPsY0l4lSMudFgBQucG/2zbxyG5Xxn3GvAXzfbydNtw5V9pDVnjesz7AaMi/Chz/XOY9M80kGQJ7kTXJWjD4SSeWbVJqq1w6G7f/DdOZtjTHLFtxkvHq8ZU229XuItZ16K1Z6utW7GjmTAq8zzsJHwiXEJrTwadQvsjwHPE7F2APKQnESOVlx1MRS42aKE2IXFgg5kds1WzUw8otMtZLpGEzexaMY6IsS4tENBq352JsChGxbDWWrryCa0IrAUfx8g/Mw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ODTKXVfIrQUSG4PIsogjNC0n6hK0dnK5gwZ6Usfxp2E=;
+ b=mAmSseQRnEIiFTDfA8H34bBDVll94bgcZIVRR8xy0ORj7YPiuw1wSoTc3mW8WqJ7WgQOZfCsk4HdsGthB4EcwgSkCW8DaAGi/oi1MWeiLjVzQhwvdI0UOla/vSBrV1js4NHSWSfiLsOs3RCQjjRx6tAqYYdJn/+xub6vHChbTtBrvkWetwiiqCFDxeUFCRn+kkz37JtXovUgFISMe1AFEQoA4Hmzib3SQ0kFM/MRKY/OR+0u1nPKwXso5LpAEWYaPvlik8/TrINO5pDOnNrLwIinWHcacvl/pbNd1IgLDH3tLtSQhyBj7+jYgBJ6QjmLEgNjDoVXhshNZQbv2wNarQ==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by DM4PR02MB8909.namprd02.prod.outlook.com (2603:10b6:8:b5::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.9; Fri, 28 Aug
+ 2026 15:03:30 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0360.008; Fri, 28 Aug 2026
+ 15:03:30 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
+ mtosatti@redhat.com, marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v2 4/8] hw/i386/pc.c: convert pcspk-audiodev object prop to a
+ class prop
+Date: Fri, 28 Aug 2026 16:02:00 +0100
+Message-ID: <20260828150313.1883999-5-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260828150313.1883999-1-mark.caveayland@nutanix.com>
+References: <20260828150313.1883999-1-mark.caveayland@nutanix.com>
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ZbMt8MVA c=1 sm=1 tr=0 ts=6a91a28b cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=Y4KUgLan4rUVnHkZcAsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-ORIG-GUID: uH9bTaF2-0-I4LKXy7aAImN5ihpgu6lL
-X-Proofpoint-GUID: uH9bTaF2-0-I4LKXy7aAImN5ihpgu6lL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDEzMCBTYWx0ZWRfX1byoMa5SUYXN
- NNI5KqidvrE4Yci3UJNqIyKXXgCYhO8WdtIM+us13Tku2SNdR8pZapsIvPKjj3VjpF6NAm6twFK
- 0/Cd7nANmj2uZslUqDfLycRNONVGeuU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDEzMCBTYWx0ZWRfX4PhOT/rhJToY
- UAU2VxQmrdzrK5nCz97/v8eyc14/fFq7FpeS6/GBNp/fM9pTpvxNsRlJKh7+chotbwJHL7rQqiC
- RAKCiZVUWPSrB11BiMR0d5+w+3cORgh1AHNIYxaOVBbPHSkW7FdpKzaxGEIlpfAx1qdKOkqS3gA
- fd71KFBjMLzXQeLnXtQRjT3IawWJq+/oRBFwA32tYp0NXEaciI7Ue23MbID3542AE2BV7Eh4tEX
- znGErRCpNJ0EUmY8LsxvRr9i3slJUg3EHWxx3BB3NFTe3RjgdCFNt3djmxJBa4EZowop/BGfP/U
- 3sw2dcQJ5+chgcMx910VggJZYcfInT/Iu7sLMkB+kh7Cwcwj05XYhntM+OAWhVw3BrRmCzmwKfg
- Iew1KjETrr9EFoNYZpDnx2uDIfakb4tiS0Mkq7fg8jVTxp79rscPJNnMqnYdYlKUoeZZjc3Vrnn
- ee2RvMrUAejnaLV7Q7g==
+Content-Type: text/plain
+X-ClientProxiedBy: SA9PR10CA0016.namprd10.prod.outlook.com
+ (2603:10b6:806:a7::21) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DM4PR02MB8909:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5148ff2a-86d5-45c8-6892-08df05158578
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|23010399003|376014|1800799024|56012099006|10067099003|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 5ufrpV6Bki4zaXIDrfCjDafL46zVntdExRDVKuWde7fuI4yJrbSgywNunWvXPKYq1khPDEEzJ4OC4zejeYJlHFGbglaxMgE3knuU2DbTrKt01F9frrG1m2ajvrhH1aU2syTUezxkwV3DQZzON+xP+knIE5PUSbK3GLhBuWRkFyu5j7aeLpuFUe44q6nxv1XdR8DXwzP8nJ3RKkYmCvAE2U5Ziq0qxS3kPaO9KZib6jGx69A54pMHPL8EjzWqiB8S4d5AYsC6mxp7u5foqvvv+JnJnt0VnzHivz0kr2FKVE7Hh9OPOqOncwwzo6s3k2BNWMf6rQlqqnnG+y8d5GwQkM1jBZ7engWY5eGbAn3Y6JHrHPc2v1ll+gFol8CaN4mA/cLG4opvPP1gjAKtZhsDf9uDgN9fM5b2QUFcSl8D6zHYb2w2Js8AH/OBwJIeDojxdKeYv+vnJoH31CqWjU6CNxaJ0MXc6OTYiekWZRilQMfcKSJSP+7upqXnjY44a0NW8WozurT3vWmFmeUYOxAodu4J3jZAz0x4V7+WT1sZbWJl7y6EQFYhJ/2WYeRVt27Ru39x5GfOQ7tTxFz80NZHL0c8qXFPPtS6ELOMbBe4JKNcea19LS9m1j2fQZOCyBCVcug+FBdf26rMROw0dyeTqgSphOSRZuUPCystqrQFiK4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(56012099006)(10067099003)(6133799003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TuH0WY+wAFiyb/pBvuMleoBcNOAQah/qpMdPDFWBX+abxE58CQHZoUMovgFz?=
+ =?us-ascii?Q?85/dl0dbwz0jv6yFnuxhk4EF5pj1yg8B3Zuqy38zZevRZ+cCXwcIYnHFYv1r?=
+ =?us-ascii?Q?Tc2KrVKg5lIgJEwBJjFJYXy5UfEQAJJARbFlRxMTqO6HVmXd7wdVhukBcOec?=
+ =?us-ascii?Q?Vr+Pyih97bcQDmq/CCpvsU5i4b8abj5oEka8d5nIqi8mlgMgBYTQFB/akjn4?=
+ =?us-ascii?Q?TUguTJGdHHxiWx6zK5KDpY24uJUmkiWwur6dz5PdiP6mwtViJh6J0OvW2pze?=
+ =?us-ascii?Q?OsLkOab3mKGrS7jaAt9jaiegbg3RkWBtt6/thHTBaAXZTiDcZL6PbgRtlxiH?=
+ =?us-ascii?Q?BLu1upax4RXgk1gO3Zr57NqLcU7m+WcTRVbbfLV4QurLE5yD3crsLXyw8OIr?=
+ =?us-ascii?Q?mEfDEtY3CzkjYm0YSaPQY5CA0O1XPd+ATbHG40SxdAcL+17hmZRo5K1HkYDf?=
+ =?us-ascii?Q?FsTVV4Cg4dYp7ZrjIIrC5w6tYB0tdI/K4eVlnrCIiOP4Ui9GY5bdBSTeI86n?=
+ =?us-ascii?Q?SIV9/vXbvDAVyifwWCK6DGAE6WLoPFmkODucXBDoG0LwANzAuue3fukuDN15?=
+ =?us-ascii?Q?UsEBzyyWit7az+7THz4UFITu957dbMtebGyZyPTHaA3irQDy8R1aVRcxdb3y?=
+ =?us-ascii?Q?wcaq7BgKkYgXsak1iyjaPwC94ol3Wxf3NPpXdFWpK+aaToeBgrxKz9sPS8oT?=
+ =?us-ascii?Q?bDpYa3b0cRRm1R2g0Nel9JGhmtEGg1oA9ehJAHYgeu/uhkLj7poIg7YXgvTe?=
+ =?us-ascii?Q?3Z557B+nlk8tja6ko0coVgqPRM6tyfuaiP1NBd9gmd6GpFAWzR8g5G4Wrfoj?=
+ =?us-ascii?Q?QlPt1adyB91C/e5ZSW0vkEu1gQFs/GaIqJUR+mAn8aTNnQYo44dVwbCet5da?=
+ =?us-ascii?Q?d50M9LKmiGJrpcd2LCGsO0/vVfLKUOJcHR4gZGjOymthdzKf6pQ4bNizSexe?=
+ =?us-ascii?Q?b471yXoL8qLFnxMdAfUm+oFiCTAqC2SufILfWIu6pD8O/5wpx7UzDJWPGpXT?=
+ =?us-ascii?Q?sVW5kbwW3Szrw1oQvmFcquh3h6YcQfwe/CBxqYhKJG4ZoxPhXvxiqJPZ0UOX?=
+ =?us-ascii?Q?/YB6000g5A0qK+UUT+OHuFtQwx9HvjTELJxMA6z8C+zkI0CRc+V5zILmTbGk?=
+ =?us-ascii?Q?tdKHbQPMnxncYm/VS5uJ6hU45ZeTj36jEFUk3bXnrLMqr9H87APwP0mEQlqO?=
+ =?us-ascii?Q?Up4K8nVPmIHucw8ndy6YzeU+J66881zWkISIapjDUftVirOyKz/9Byy3La8A?=
+ =?us-ascii?Q?omVHuw4KwEhsgHCigLe3ym+cpncMWf7jNPZf9jzAr53TXfU/Lf2mQ6A7NYyH?=
+ =?us-ascii?Q?+P1B0qXS4qICOU6vSwuA9Qak5Cs9eJPRQaJXdh06auis08JG72PaBkUO/ZBC?=
+ =?us-ascii?Q?TmHBt7wBT8ZtlPJjps1KFPtl6rmKql0TvGzVZCo+JNS8TGVdmvJHloHWeCCE?=
+ =?us-ascii?Q?sKuphKRq8wOgYr8gxtDoiKyxfSxm6a6DCYHkkx2RK5QcBWJP0oeiHedgcMSj?=
+ =?us-ascii?Q?++W4D05+13pnAUMaTd/La6BNMy2bP+iGHuWptoixoxpS9dnvT9luGMWlW4di?=
+ =?us-ascii?Q?AtB7oTEA740/1BpyZKXwWl61mZtBV96zMCb4ZxhXTCsdsE5X5FSIuSPSkMM4?=
+ =?us-ascii?Q?yJnJueRhyX9znEdhTB1VNlCwvimXfz/zxE8SQygfd+p092CWlxCNzO5mxwPL?=
+ =?us-ascii?Q?ZDvrPgV3IHE19eWCTF2WQIfykSli0px4X/mzL9ekwoP18iDHBl8HEGN5UBkx?=
+ =?us-ascii?Q?onYoP8YXYIIeYAqFzRRHAzrpcgfQm54=3D?=
+X-Exchange-RoutingPolicyChecked: GAuPnxhv5RyuSuQJv1x8+uoZmX8nE5pvkVutqDS5EjuC0x4c10p11DNklj6ocEnNICVI/W2WZmdL+N38hqwHChZ9vgtZvkWAo8cN229xoFrywfWA5hLZ0nV3V4pU2PJulNgzyJ93ErI+wAUduhDYyt/2WM4li5SdDhO43Z+N2ldt4/zD+fMSP8JphkiS/IIwGkuUVEYvPA6QwHEoOUGACUjUw7i+Jr2arz2jn4zN9Ma0hZ840KQo/IFvtmAV4djE0ADdwKNBxUk6De15hiQC2dyYJSuSLHIXvSQHG3f3yHxdMv7cFHrjeKlEQ1Ew2MJo/nUCF+Yq3bRY2pCOOFOQeQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5148ff2a-86d5-45c8-6892-08df05158578
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2026 15:03:30.2832 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZUFkF/PFq3XzwC+sZK8GbDK4xlntv9W1bKgnTjee3IeB867wiArFXc0wXvltc1JmoM7KbZ6Ur+RrzTzyYCi2wdSzgI6s8d3BVHCaJ4/JfgA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR02MB8909
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDEzMSBTYWx0ZWRfX1j2LDeWGQBkk
+ hpC1dJ3nZbXg1or0aTWc/mgtJ6NhSvw8JU93RDS4CTUUznkqCR5YiEjEr/DAnVpjRd3C43DpIOU
+ 6FgwhPoKBzmaqEjEjLmDZRyj2jhwjW8=
+X-Proofpoint-ORIG-GUID: -jgudaHf3Lm1fvUhoeugbPnhdmd6bDxr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDEzMSBTYWx0ZWRfX0EEmrltDxXlf
+ 7kllJnLaM2yaBWeeQENhzMtkqOL5RX2XtWNJNQ/gRerOiJV27rVbxb5jAEdkzt+UBcV15Khu1gf
+ lwuYFGU3WPX2yfzJVqk3AzwyTkNRP6kJzvoL2LKUDt5eDWpDs9avla0INV/9STKp58SHEa4oK//
+ DYxYT9UR6x7CT3qwWvK8zG++LGR8hWbnnRsvv+kv4yvuVbdwlmfGM3sv5DwTRQYHUtaV8VWFUVf
+ xtxaIRpgCcu8z2JmOrXqWnTw5XZy6/j0QFKve9gwf3r0/h3K3hkc/IRCSJXE18nSBoVs50qapBi
+ +W8s0AZhtdM8eUoniTCH1A1vOjmyBpr4az5N18e8mRzwuyGmsIAMSYNwT8B28ycsfJGNbla3ZYM
+ d02gan49Qhf+lIx/OfMUE+PdrdC0qBNWYA4hUlUIYzC6WBVZradFPgd+0Ro+k+Hb08pMye6YO65
+ ZY88qo1pFVFbqdd9RxQ==
+X-Proofpoint-GUID: -jgudaHf3Lm1fvUhoeugbPnhdmd6bDxr
+X-Authority-Analysis: v=2.4 cv=Me1cfZ/f c=1 sm=1 tr=0 ts=6a91a345 cx=c_pps
+ a=B4HvfKsIdAoZ9ZdT5gFWvw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=Ap8k9tRZuQ82DLYWQqG7:22
+ a=64Cc0HZtAAAA:8 a=L8dKEXyYK7uH4lZ-jiMA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_04,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608280130
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,110 +181,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/28/26 5:25 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> From: Daniel P. Berrangé <berrange@redhat.com>
->>
->> The '--engine' arg accepts either 'podman' or 'docker', which is
->> not sufficiently granular to map directly to a command. This
->> means that  docker.py still has to then probe the exact command
->> to use.
->>
->> Meanwhile the 'probe' command prints out the full command to use
->> but this cannot be passed back to docker.py to avoid probing
->> again, so the caching is only useful in the few case where we
->> run a container directly bypassing docker.py.
->>
->> Address this by replacing --engine with --command for docker.py.
->>
->> This in turn requires the --container-engine configure arg to be
->> replaced with --container-command.
->>
->> With these changes the container command is probed at most once
->> during configure and never again, while running in an unconfigured
->> tree will still probe on demand.
->>
->> Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->> Link: https://lore.kernel.org/qemu-devel/20260716102515.1503404-1-berrange@redhat.com
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> 
-> I've bisected to this as breaking --disable-containers:
-> 
->    ../../configure --target-list=aarch64-linux-user,loongarch64-linux-user --disable-containers
->    ...
->      Cross compilers
->        aarch64                         : aarch64-linux-gnu-gcc
->        loongarch64                     : cc --cc loongarch64-unknown-linux-gnu-gcc -i qemu/debian-loongarch-cross -s /home/alex.bennee/lsrc/qemu.git --
-> 
-> So some mangling with the container command line has happened.
-> 
->> ---
->>   configure                     | 25 +++++++------
->>   tests/docker/Makefile.include | 13 ++++---
->>   tests/docker/docker.py        | 67 ++++++++++++-----------------------
->>   3 files changed, 40 insertions(+), 65 deletions(-)
->>
->> diff --git a/configure b/configure
->> index d8bc10060e1..6ddfe4b5342 100755
->> --- a/configure
->> +++ b/configure
->> @@ -172,7 +172,7 @@ fi
->>   # some defaults, based on the host environment
->>   
->>   # default parameters
->> -container_engine="auto"
->> +container_command=""
->>   cpu=""
->>   cross_compile="no"
->>   cross_prefix=""
->> @@ -734,7 +734,7 @@ for opt do
->>     ;;
->>     --disable-containers) use_containers="no"
->>     ;;
->> -  --container-engine=*) container_engine="$optarg"
->> +  --container-command=*) container_command="$optarg"
->>     ;;
->>     --rust-target-triple=*) rust_target_triple="$optarg"
->>     ;;
->> @@ -869,7 +869,7 @@ Advanced options (experts only):
->>     --enable-debug           enable common debug build options
->>     --cpu=CPU                Build for host CPU [$cpu]
->>     --disable-containers     don't use containers for cross-building
->> -  --container-engine=TYPE  which container engine to use [$container_engine]
->> +  --container-command=CMD  which container command to use [autodetect]
->>     --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
->>     --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
->>                                  is to use the whole 64-bit range).
->> @@ -1291,12 +1291,12 @@ fi
->>   ##########################################
->>   # functions to probe cross compilers
->>   
->> -runc="no"
->> -if test $use_containers = "yes" && (has "docker" || has "podman"); then
->> -    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
->> -    if test "$runc" != "no"; then
->> -        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
->> -    fi
->> +if test "$container_command" = ""; then
->> +    container_command=$($python "$source_path"/tests/docker/docker.py probe)
->> +    test "$container_command" = "no" && container_command=""
->> +fi
->> +if test $use_containers = "yes" && test "$container_command" != ""; then
->> +    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
-> 
-> else
->    container_command=""
-> fi
-> 
-> ?
-> 
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+---
+ include/hw/i386/pc.h | 2 ++
+ hw/i386/pc.c         | 9 ++++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-@Daniel, could you please take a look and fix this change?
-
-Regards,
-Pierrick
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index ac03da97b6..bd800e7ff0 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -38,6 +38,8 @@ typedef struct PCMachineState {
+     DeviceState *iommu;
+     BusState *idebus[MAX_IDE_BUS];
+ 
++    Object *alias_pcspk;
++
+     /* Configuration options: */
+     uint64_t max_ram_below_4g;
+     OnOffAuto vmport;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index e9e4fc262b..5293c59d66 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1643,8 +1643,8 @@ static void pc_machine_initfn(Object *obj)
+ 
+     pc_system_flash_create(pcms);
+     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
+-    object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+-                              OBJECT(pcms->pcspk), "audiodev");
++    object_property_set_alias(OBJECT(pcms), "pcspk-audiodev",
++                              OBJECT(pcms->pcspk));
+     if (pcmc->pci_enabled) {
+         cxl_machine_init(obj, &pcms->cxl_devices_state);
+     }
+@@ -1788,7 +1788,10 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Set IGVM configuration");
+ #endif
+ 
+-
++    object_class_property_add_alias(oc, "pcspk-audiodev",
++                                    offsetof(PCMachineState, alias_pcspk),
++                                    TYPE_PC_SPEAKER,
++                                    "audiodev");
+ }
+ 
+ static const TypeInfo pc_machine_info = {
+-- 
+2.43.0
 
 
