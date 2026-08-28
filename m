@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C75C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FCA6C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x04qy-0007tq-B8; Fri, 28 Aug 2026 18:15:16 -0400
+	id 1x04vn-00006H-AP; Fri, 28 Aug 2026 18:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x04qw-0007tL-Lx
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:15:14 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x04vl-00004w-9g
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:20:13 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x04qv-0000IW-0F
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:15:14 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c9e7391839cso1625403a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:15:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x04vj-0001Mg-DR
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:20:13 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-499840a2575so9532585e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787955312; x=1788560112; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=36ii43Ol0ZFQwf247LxQrRpEfIVtYkFcZrFxznWA5a8=;
- b=M4AF9AmN+lh2/bbOhbPXtzePkMGq6JyuITxupBvhORKmJjGq773+qI5qfAPsJZ/5+R
- i+rnZDw49ojwyaE5sqpYcEiUAXgRtc/VWLC1HCxgOUjFJZe2IhP9U3H3EP0aqd4UclNc
- r9rJ5r4P5f7LwpLp5/r+pjXII5pt4PQE+/7rfmW6wGdLg2WtBOy2AAuYt4F1ypRF5TJk
- aWXIWXMifwutw2W9PjolT8F6ydSM3Bs6i6U2gGOrjRHYXaHN8Wg7VDlycqTS14iEeVEl
- M7IR3kaBbHsNUdwq9Ksb4lJJ++YsCv/XLvP62qemXhETUt29VUoukjdi4DeqZnFRSTa8
- M/xQ==
+ d=openvz.org; s=google; t=1787955609; x=1788560409; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=W9dl4FBJSzjursIZDzQhAMVE6DykvRtXZpBPUUvqz6E=;
+ b=qEry/Ben4/AiIrwsSUY/LLgQgfPhtdFQAbNdsFFbeNEHMw4QYARy8YsMwNDLjgwAy2
+ MdDFUJ+y0EyWhcxUZS4vJF3KejdHhnXTgdmzwznNeg+7oQBMBgRLEAsqi5gSXxbMcKh7
+ lDqfR1+HFHxjxHKCCiHdWxGrJIu4XgcFpDFv8P+/GzISi0hXnH7pJuqzFk/pWwZHr01n
+ 6oGxEP1G/08+kBUj+Qkp4TwSUeR0x0KiMvQxSu+3SZPgzPjXA59MoVoJfsb5e8g3B6OB
+ jbleFSLgJomZQv8oTn75pueKMl9uKgLsUlqPEARqDDh9ewWf40dQIZHJBossjBIvU9iW
+ qKiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787955312; x=1788560112;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1787955609; x=1788560409;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=36ii43Ol0ZFQwf247LxQrRpEfIVtYkFcZrFxznWA5a8=;
- b=r67QTofSKnsi/px3nIvheH5t71vJ8cu+YZ51v78tJ2W82Ppzt2B3RiIlRz8Q4gy6i0
- J2JQPwfF/VoN1UqrR8qB1Rxptgb27F+BEuisqaJ28TEaQTg+bUHz6sieYrVSk3meSa54
- f8MNtW0ygTQyhBWZlo2LdibFzmwvLdKZKvTVS+mOF2SbRIqW2/bYvpgpYk7E+eECYmKI
- VXb8BB10HOciaQmHbi8p9GXHCZpfvsEQjc/eNoxDVGyMnTeznN9jXEgrAeDUagghe/BA
- gZhCjrj0ypnrom28A8+qpjZ41TjkjAGyIjkm2uyXDHXQJbOMihofzkRvjZRxXaygU/jQ
- zi1w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBympyCiHZQ3AMTQKU/mf+SAyX8i6LCqhu0pWDVt5VvbH1dwK5/YuUo6aIz6UARkbcGPyluUz09419wg@nongnu.org
-X-Gm-Message-State: AFuF++m319/yIgpFhyr47GGa930Oc+5ABrATbqFQh5BCZGBUYOo8TRCr
- tvXVXraFcu71wtFGC9aahPzzi1ReZfKVbkeDSceyAedDGJBZYJnb/i7IoclyTs5QfvQ=
-X-Gm-Gg: AYBFou0219vRf2Fss1XFNOwWAxRIPRfZw/IkcBXVSI2bVXfOOzTJQIYhKRFxN/DY17H
- p8tdd//Ak1WzTOtClr2B72kl7surIATHCuasDm12JzVreRFuaynhsqXSYeTTaY0sB8euinb3soF
- 8UM9d4EB8xR3OkChrjOg3ZPEiP8JniUU3JAIIaRAXLOmKl7DRNsL8J4sfebiXfRWQeRiwhFAZdR
- 460w5BMnZIp/xKZAYY3ypbKk/Iv465GfTFpDswaIKKQl3jJVjDbq67Lq5PwR/oRI1njSX32cZzQ
- bIuSE4zvtu4bZBgAMWRd7n5oFbbXJe3WRXfqBpn026zwu2JmWtAFwHHkJmy89GRzujPC6kZgb8G
- 8I+AdBSjeed2A743RsIzdBpMTyQ2kqzvMRZoD6/P7fEJZBI3CEdmef3zpvuE1nMLjUYsX6XDnIV
- ZOgZMGMImOMDwjBMjMbXBNbHfOWjPUi1tA48kb4ZJhMG3G9k/OW7CGrPMRxCX33Klia7Abhrv3+
- qJLnyP906zsSiCqXMIzKbTGX9782jI=
-X-Received: by 2002:a17:90b:1dcd:b0:398:9be5:b416 with SMTP id
- 98e67ed59e1d1-3989be5b4f8mr4104468a91.17.1787955311558; 
- Fri, 28 Aug 2026 15:15:11 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-39-143.tukw.qwest.net. [71.212.39.143])
+ bh=W9dl4FBJSzjursIZDzQhAMVE6DykvRtXZpBPUUvqz6E=;
+ b=ANY7P77keRcqBZJauMYjWOrG4TJ8vbadx6reLQJF3RJc+FYPmRqY7z0FYT5HIMHlTI
+ 1ZvME8To5Jh82ZOZMunYwqHkNxFSwYIRcSCiOs/9apjxDxy9Fn7nzW6ZABNSt3CbcEeu
+ E8mDJRVhiENT4saHY1nvsxwerL+aBkyyFiL7dkNRGDISiMR7EZRDQ9hFgdomxxcbcAti
+ sw55s2J34IqFHa/9wC2qt4+x2TO2MTrojRwkQgupTm0CIT1HwE7yIXnkNzTcQzcfhzdX
+ YJqvC5ZbHieNuunYa/kG1VtLqvtlWJLbseXNv+8pDcRmVhpSY8nvVTzI4JY6Em8N2UGM
+ zYXA==
+X-Gm-Message-State: AFuF++np7ZT8DtBcYWESNMGPLFqVpiImUpXKjrvFwhzFsXOv8021tFEA
+ cf75j+2FOf4IaQ1zQwrB2EkAcbT4103203IL+M66xAckn702glCUEGoH+neEpv90rY2I+XA4ZRf
+ UMMzc
+X-Gm-Gg: AR+sD12CchxYMZSYVNhRN6TNUBxG751pBvPx9Op+GaEuOrdZLk47kaBGPr7Md1VzF97
+ ExTQU+u8qBZ3oXUjWMcA7KXYB6SMUzyVIH7vPYTzzjo1PTQP15uE0N5xO5D6lQ3tnx7yNlelOAW
+ nMUGTt7cZ6tRRl8BEX+4MHp99Ear+Fc3CNdHdj6OWnjZnc9jHJ073R3Oe1wD36jZw6CqcT/qjKF
+ UbxcLSMqnE/9C4NWjChuTcH0ijWew1XiWJT52/m5icbBE8Bqas5kRvokUnoIOphNWxfUWbiEK2H
+ 9uEeUh725/Xyts07r2t3rYh/4u7c30iZJzAI/4z1L93tRlaNiUTJXdYn/6F2v2Uuy9l0I82FmPe
+ zzOM7Z7A55FR8wzpZjAyhsGN9oRxRO4D8OTtnI1xwPJ3ABWxYXrCrcB5W4HLCJngTGPVQ1wdmLH
+ jTbhQc5qxU0TiEGaGdNJRxm9sUUt7TWOWWgU1C+uSIovozlC0J37MiXW7U0XA=
+X-Received: by 2002:a05:600c:6088:b0:49b:2796:be30 with SMTP id
+ 5b1f17b1804b1-49b91c433a4mr158972405e9.11.1787955609089; 
+ Fri, 28 Aug 2026 15:20:09 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:9458:da19:ab04:373a])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-396b0fd0079sm9092120a91.5.2026.08.28.15.15.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 15:15:11 -0700 (PDT)
-Message-ID: <838b1d64-fe70-4aa0-8a71-d276240db3b4@linaro.org>
-Date: Fri, 28 Aug 2026 15:15:08 -0700
+ 5b1f17b1804b1-49b95018ee8sm83329455e9.15.2026.08.28.15.20.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Aug 2026 15:20:08 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH] block: fix bdrv_next() skipping monitor-owned nodes
+Date: Sat, 29 Aug 2026 00:20:05 +0200
+Message-ID: <20260828222005.2888213-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/30] Migration patches for 2026-08-28
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-References: <20260828155845.2874508-1-farosas@suse.de>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260828155845.2874508-1-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,29 +96,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/28/26 08:58, Fabiano Rosas wrote:
-> The following changes since commit 0a1ebd448b38afaa118597cbb633dbec24ef74d3:
-> 
->    tcg/loongarch64: Fix compile issue LoongArch host (2026-08-27 11:04:01 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/farosas/qemu.git tags/migration-20260828-pull-request
-> 
-> for you to fetch changes up to 96e7412cd5581edf6bd3b966afa3abeb53b5a6a9:
-> 
->    migration/postcopy: fix page_requested leak for vhost-user shared pages (2026-08-28 09:09:32 -0300)
-> 
-> ----------------------------------------------------------------
-> Migration pull request
-> 
-> - New feature: Fast Snapshot Load
-> - Cleanups and hardening of RDMA code
-> - Cleanups and hardening of vmstate code
-> - Fix for vhost-user postcopy hang
-> - Fix for CVE-2026-6426
+From: Denis V. Lunev <den@openvz.org>
 
-Applied, thanks.
+it->bs is the cursor into monitor_bdrv_states for the second phase of
+bdrv_next(), so it has to be NULL when that phase starts. Commit
+f6d38c9f6d made the first phase store the node it returns there, to
+unreference the right one when the graph changes underneath. The cursor
+is now left pointing at the last BlockBackend root, so the second phase
+resumes from there instead of from the head of the list and never
+returns a node added before it.
 
-r~
+A skipped node drops out of the vm_stop and migration handover paths:
+not flushed, not inactivated, not snapshotted. bdrv_inactivate_all()
+still reports success, so the node keeps its image lock and the
+migration target cannot open the image. Only detached nodes are hit in
+practice, as these callers also recurse into children.
+
+Reset the cursor when the second phase starts. old_bs is taken at the
+top of the function, so f6d38c9f6d keeps working.
+
+Fixes: f6d38c9f6d ("block-backend: fix edge case in bdrv_next() where BDS associated to BB changes")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+---
+
+Notes:
+    The iterator was correct from its introduction in 2016 until 2024:
+    it->bs was written only by the second phase, and the node to unreference
+    came from the BlockBackend instead.
+
+    f6d38c9f6d's own reproducer does not fire for me, 240 runs across 8
+    timings, even with its fix reverted. Tried hard.
+
+ block/block-backend.c                          |  1 +
+ tests/qemu-iotests/tests/inactive-node-nbd     | 16 ++++++++++++++++
+ tests/qemu-iotests/tests/inactive-node-nbd.out |  8 ++++++++
+ 3 files changed, 25 insertions(+)
+
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 37ba7e9fc4..55497c4551 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -625,6 +625,7 @@ BlockDriverState *bdrv_next(BdrvNextIterator *it)
+             return bs;
+         }
+         it->phase = BDRV_NEXT_MONITOR_OWNED;
++        it->bs = NULL;
+     }
+ 
+     /* Then return the monitor-owned BDSes without a BB attached. Ignore all
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
+index 664157bfd0..ef876ae6be 100755
+--- a/tests/qemu-iotests/tests/inactive-node-nbd
++++ b/tests/qemu-iotests/tests/inactive-node-nbd
+@@ -47,6 +47,7 @@ def node_is_active(_vm, node_name):
+     return node['active']
+ 
+ with iotests.FilePath('disk.img') as path, \
++     iotests.FilePath('detached.img') as detached_path, \
+      iotests.FilePath('snap.qcow2') as snap_path, \
+      iotests.FilePath('snap2.qcow2') as snap2_path, \
+      iotests.FilePath('target.img') as target_path, \
+@@ -58,6 +59,7 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log('Preparing disk...')
+     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
+     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
++    iotests.qemu_img_create('-f', iotests.imgfmt, detached_path, img_size)
+ 
+     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
+                             snap_path)
+@@ -68,6 +70,9 @@ with iotests.FilePath('disk.img') as path, \
+     vm.add_blockdev(f'file,node-name=disk-file,filename={path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
+                      'active=off')
++    vm.add_blockdev(f'file,node-name=detached-file,filename={detached_path}')
++    vm.add_blockdev(f'{iotests.imgfmt},file=detached-file,'
++                     'node-name=detached-fmt')
+     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
+     vm.add_blockdev(f'file,node-name=snap-file,filename={snap_path}')
+@@ -297,6 +302,17 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
+     iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
+ 
++    iotests.log('\n=== Inactivating all nodes at once ===')
++
++    # detached-fmt has no parent and no BlockBackend, so nothing can reach it
++    # by recursion. It is only inactivated if bdrv_next() actually returns it.
++    vm.qmp_log('stop')
++    vm.qmp_log('blockdev-set-active', active=False)
++
++    iotests.log('detached-fmt active: %s' % node_is_active(vm, 'detached-fmt'))
++    iotests.log('detached-file active: %s'
++                % node_is_active(vm, 'detached-file'))
++
+     iotests.log('\nShutting down...')
+     vm.shutdown()
+     log = vm.get_log()
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+index a458b4fc05..48451dc0c5 100644
+--- a/tests/qemu-iotests/tests/inactive-node-nbd.out
++++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+@@ -235,5 +235,13 @@ snap-fmt active: True
+ snap2-fmt active: True
+ target-fmt active: True
+ 
++=== Inactivating all nodes at once ===
++{"execute": "stop", "arguments": {}}
++{"return": {}}
++{"execute": "blockdev-set-active", "arguments": {"active": false}}
++{"return": {}}
++detached-fmt active: False
++detached-file active: False
++
+ Shutting down...
+ 
+-- 
+2.53.0
+
 
