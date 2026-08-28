@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86373C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F38C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03Mv-0007cp-3X; Fri, 28 Aug 2026 16:40:09 -0400
+	id 1x03MT-0007JK-Tz; Fri, 28 Aug 2026 16:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x03Ms-0007Tf-Ar
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:40:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1x03MS-0007Ic-QK
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:39:40 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x03Mq-0006df-73
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:40:05 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1x03MQ-0006UU-NM
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:39:40 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SKa0et492786
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:40:03 GMT
+ 67SJ7oWS3989422
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:39:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0QGz/8B7wCPNje9O4Qm1vB9zHh4pgJMhEaZHiw2hcZM=; b=FgZSJbE598BdhZ+z
- I94OwF7U3/E4ZlmYJOX0pbfU+upd+FTI19QGpz9FHF3Nwk1n0NIb+Qee6+nZbVm/
- WoBGdlUSN5OSpp7f1FPx0iZ/pp5o/ZD3nT5sm0UElczPIL7U2YaKJ3VmRbxY+ssn
- BhLPPz76CeGx6rCn51gf1JvS7OPWhpz1J297Oc4xl9Z5E0kWWwuqk2RyoLkENUjR
- o6WtC67No0hve0ge29oAoYVeGpG7edn/RMoC8XIbAmQHAtT80QRFT3y/MYkzAnAK
- LqhBwJRpi+QaT8gDB8IgoiojosnmIaBcJywWx2FE4EDaSHWz2swIQu6C6c2bnbfx
- V32Dkw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gbhgtr0bj-1
+ EF/HHtp2rvbcbWykXnApHPCp3cZe1I4jNoHX+KY8Hpg=; b=lgHJeIlcQp5DxCxJ
+ PBxYtSm5GKT5ATeXF1IP1BTdZgfIOzbPrvqWvMKwpoYsGDr/p4PW+Sn0q84qhDvD
+ Whi6Bkd2r1qCN0BHiBNyOPMOMZGj/xBppzViDs0Na0gcMZqyU8Dj2i+bi7yLqYJx
+ P/ocCbmPIVU2kg3fEvqFZG3BkNfa4CShl7z1Fax8NsTMoW3w8ZK4uzfc9Qgzw/st
+ 8NWrr9Z5zA9a6JwOELxF+vQg6UWdFzCbHzY9M6a6yEsFmuRF9UNWUjeBzv1ew75c
+ uOGReEclGzldqeeVne6d9mPk1Ds1su+Lf7k4XP6fkZW4AXcebA8aFikN10F1Datz
+ WLfDMg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb62h2xce-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:40:02 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-938153538caso250602285a.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 13:40:02 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:39:37 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e82060977so216470385a.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 13:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787949602; x=1788554402; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787949577; x=1788554377; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=0QGz/8B7wCPNje9O4Qm1vB9zHh4pgJMhEaZHiw2hcZM=;
- b=VCB7G7e9A+jDO7fxyuNOfuajUSXURiIoS/98ELvRvAzDkUcgL/VagqH65hm2kyshu9
- oM0+0XCku63RaN9VzjQC76xafq2jCXjNizqu7r3ZbGFNXFHBQrWqSd+aUJJ7yaKEw0fA
- Gbk02JGwK+0f0KJK2Ty/x8mCUu08wt33Ntuoi9pfbq3NF+c5cePQl30dnzM6h4GW8o/K
- W//uNhCttZpFkNcdF2QHqZOXCiUSEK4y/5xI6cLpQxXhCBroDkongxusFwXSb37yNOBW
- PoMXx7I+qzREn9QtAQou/VnzgnhjPsX+0LnmsD/np4qk/CEp5iDhtS4rvA5tyWx/NtOd
- ArPw==
+ bh=EF/HHtp2rvbcbWykXnApHPCp3cZe1I4jNoHX+KY8Hpg=;
+ b=PAPb2JckqneJ2NmrUWOo2bsJhlAHCz6ba3sn6G4vJleWiWyrsKDtu+aEyOMnTbnhtq
+ 2QWNPYpre/SMFqZHwcNeG0vP0zCNZ3/zYYhVt/Co0kYhmFvZs+FQAByjNeO+05CWPvou
+ WNbaASlSrswembMZA1USfMC0aWJLl7t3WuXB/8M2Ocjsor6U48zyjmKTTNHbtB30yQDt
+ 8qsIbAl1VV/RiU+o0bS9KF+QQmpJkQC6VsCNkCOCuud+o5V2EnnMFUu/ZkPWUC5OQ5yi
+ lYL1sdwv85/QtKmXRmsU0ZaD98/DZ3ChSHzIuNiNqqA+qIGl9CGu8Hwlg0GHlmjEI59C
+ tKiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787949602; x=1788554402;
+ d=1e100.net; s=20251104; t=1787949577; x=1788554377;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=0QGz/8B7wCPNje9O4Qm1vB9zHh4pgJMhEaZHiw2hcZM=;
- b=iTUgvr2HfJIyzA8m4OARPN0NfK5gQkGVu4vAjtk1p0vtB1qAUL3duKZ+fDCQdpdUX8
- AVZMqWBRuqSJtXjWnrF+fYwGK0+cIbFchYD1nD44k47d3jJymsWW8BMttZ1L7wqwkUi3
- d2sYUKOiN1pMAvY43IjN06WwcClvTaqU0p2BjhkSzdm4ZcfgZGnntSckafJLTfg61W3J
- 1P7P2ed53xc2CJEXNUlimMevvBLOTPtyAZ0nP4ZVKC0wCyWmEMmZphsRJx6L+WRANqWP
- bO8/sqeaZtI/KNDaF9A5GudIugiaHJk/2Q5LFtNJQcCSDrddV6GNNyIckCWpV0927IVC
- j8dg==
-X-Gm-Message-State: AFuF++mCcyh1Ksk5qpH+I1psmS/pEs3CuHxPJrmJYORnEq4SFldWfBU5
- qgVA0lGjVVaKGtki9X26UKlTMMP0weHQDcjo/H6/vsSdQuHvPGBcRmW4lHlqCnUC3JkPSOdX5Ij
- 2CXRBKG6bLItZwSP5R3rjXJPlR3Ab3+hccJ9ikwsJmxNuPjfOEWSCgrvHPcMrHB6JiQ==
-X-Gm-Gg: AR+sD13NueEKAF7QPIkwfou3BRwRwR0yXhK5Vwj9oEGl52ZscBkkFsI2VSBvPTWpKie
- SzZyfRAmGPuCuNyjoID2kb5PkWMSj844Mnr3WUniNx7OnSqobJ8wkRDQ6iCVUzRcikVrjvsuM1g
- YcEQZFbrA02u1hqWBBDiSUYxj72six8ISQvYJReiYgRlFqSR7CFsps+PPk+RtjDVxrkc9wf0gFz
- U6jrwdon8C0h2XePNIRs3cJ2CPRZx/dZn9VE9t9ZjwjulyqsXfW/fpt/Czbe+1WDp4OnL0Jzu4w
- bLsXpjKYl4612J66ePrFnCmOkVHemxuGflY/PHdEpTpjyxP3CMthBugo08lqE1ouNkH4aAi/Gor
- pePKgce3G8mb/92HSqRiGjO2sf0m2n9nb/a4dmg==
-X-Received: by 2002:a05:620a:ac1c:b0:925:e485:fca7 with SMTP id
- af79cd13be357-93913804c88mr1054418785a.15.1787949601799; 
- Fri, 28 Aug 2026 13:40:01 -0700 (PDT)
-X-Received: by 2002:a05:620a:ac1c:b0:925:e485:fca7 with SMTP id
- af79cd13be357-93913804c88mr1054414185a.15.1787949601357; 
- Fri, 28 Aug 2026 13:40:01 -0700 (PDT)
+ bh=EF/HHtp2rvbcbWykXnApHPCp3cZe1I4jNoHX+KY8Hpg=;
+ b=gXfba2RcEY/sfMcPFFN3wJ0C9dNztb6cK0MSl+fh5alKiVqnGpCCqsIvCgCpt2noxD
+ 3aUBxjRXSqU1KbZMq3LknQxfjpeFpSTIuYE75mxbS12CrMnTV9MFbnHda4yeWtMk9+u6
+ lXl8exjxLKEVGSuMiWSBHBjCP6G2r7ZANPqItqK5IX9DXZYLNAFJPZjTyH/xYb9ebQxE
+ BYJ0SOIDnAnIRaOuv58qzWWRRx7Y2kS7FIVNjBHD0stCsBw6cCHNP7LRcYD5ETUCMg48
+ qFkqtY9zA8B3vpDK6Vue8oTfTdbM6weBL7YDjIw+sUv12e76JgT2JttygmAP0+SdwTpR
+ uZ1Q==
+X-Gm-Message-State: AFuF++l+sn1GfqcenjInG/wnnrR7kwKf3zR6BFcZ+m+aDnDQ0FWyjOV2
+ oKW4iwq6N3gQrH4fgDU/ud42+TxUZA2QnX5mmDQ2jw0DA+W37i+asx+VueUhUyrjeThAbA57SVO
+ GjN0ObEbajV0MQSkhINTNPOEooViLeyDxkfWgH0WVuhTx1nIel+3hlwgx60Mbj0zb4g==
+X-Gm-Gg: AR+sD11ci0RRGFUvkpdCPbzb8bGxCOAR4IFblQ0j5PGUnvHEVdNChruGC2YZzGTx7fw
+ Mwv1zZNVwoDMtrbgT8deKFWVvxmvrP25ULIYb07ECiraf+gDdbLf79qRy3DrZPe9Cu1zK6nzvh4
+ Kw2BDXB8w1RmQ8dzFb36j2Lf+IozqN90vW/21f4lZX5LUb55S8QnI9+Q2zTgjHhvVy0ed2QLnzp
+ JvwB8YQGZ1g3++7FMZrHjYX9KdLoLUrqpsT/KTbgDxZfCzxfc1a1+ZA81g/UMjnWwp6t0JAhlB6
+ Nc52AXo5ujQi8yZHcRh46NcROUrn8MqUqM9JykIn24w0zFr2oxGI+LWVO8VdbnDcJB+xnykxpV/
+ 7zr5v31AGM7I129Dvo7F/kcq5SbUUq8PANqizng==
+X-Received: by 2002:a05:620a:1b8a:b0:939:116c:284a with SMTP id
+ af79cd13be357-939116c2f8amr1354425585a.14.1787949576620; 
+ Fri, 28 Aug 2026 13:39:36 -0700 (PDT)
+X-Received: by 2002:a05:620a:1b8a:b0:939:116c:284a with SMTP id
+ af79cd13be357-939116c2f8amr1354420585a.14.1787949576094; 
+ Fri, 28 Aug 2026 13:39:36 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.38.141.232])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-939173f2758sm218063985a.37.2026.08.28.13.39.59
+ af79cd13be357-939173f2758sm218063985a.37.2026.08.28.13.39.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 13:40:00 -0700 (PDT)
+ Fri, 28 Aug 2026 13:39:35 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -94,52 +94,53 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v5 13/15] hw/riscv/device-common, virt.c: add flash helpers
-Date: Fri, 28 Aug 2026 17:39:15 -0300
-Message-ID: <20260828203918.350131-14-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v5 03/15] hw/riscv/fdt-common,
+ virt.c: add riscv_create_fdt_syscon()
+Date: Fri, 28 Aug 2026 17:39:05 -0300
+Message-ID: <20260828203918.350131-4-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260828203918.350131-1-daniel.barboza@oss.qualcomm.com>
 References: <20260828203918.350131-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfX9Ey/6258e4i9
- Ki93dt1sgmwTvNSxrfAKgfQUmT35tFrROjkThjWerTl31BbHybIH1+PzrlzPjeOtTEywndOQY1C
- aTCYxXKLIUlCoEcnWWmBL1YT5Lee5cg=
-X-Proofpoint-GUID: K8YBg8UPORZyrv_ywlhMeCDz__8ca4wj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfX4l599uFB1g/r
- jjFxJoGr0uOcf3B5HPTRpjBE07SCCsjok2eTHCed7nBHbIkRHjCBrxNaddaG4D+Ksxr6cLZ1yek
- 6llRq4Wccpm4h9+X6EYoVR3K39mJDeU5wuxMAKGQrGopJEtGtrkWtS1Y0AiPZRgCrEaNTaIVX/h
- jvS51/GlkFgunxxlqU2TUv9enTgBVq/56Mk3iGrr2/hwkOXaBQT/k0kvF0tgP9de3Atp/CkoJD6
- 7VdjkcBlc7GoahUymE8RF28WgNchvWXDuFUKnvS3zApK6siYjR0O2Ma8x8/7YuOe/irC+QXDnIP
- 0UKg/Azpbx/gdh1opuwZo37OjgeHzfUud/kIBo+9Hf9MXkMUrlcC4LuGceNH3Umq6ov0BXnGc3q
- ddp0A5511/49ncun48OojVSmsIv0o+dDBh8qGg9PCUaGca96tEQqKpX7NTkEqi3qgmFU8l4Y+LT
- kHV86l/v3nzZ2NLErUw==
-X-Proofpoint-ORIG-GUID: K8YBg8UPORZyrv_ywlhMeCDz__8ca4wj
-X-Authority-Analysis: v=2.4 cv=e/A2j6p/ c=1 sm=1 tr=0 ts=6a91f222 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfX+qDpNY8S+KQF
+ BM9v0Q11Kb5aXqpy6qipmiBNrjspKxuPq/YmCPBZtQ9JyFv4hX13b0YoKvx0y+SYIOM7hezQ2bP
+ AXaoPWmBXyAuvN/QoME3RzjmOxaqWVU=
+X-Proofpoint-GUID: wB3GFhEkEc1f5X3zHWLCJJfvIvmyuxN2
+X-Proofpoint-ORIG-GUID: wB3GFhEkEc1f5X3zHWLCJJfvIvmyuxN2
+X-Authority-Analysis: v=2.4 cv=I5dVgtgg c=1 sm=1 tr=0 ts=6a91f209 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=Faol744VrePhJRHcD5sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=FRSEYCzRAAAA:8 a=4Tf7kDObtFz1SKwdFkIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfX+cUySTSbRJZQ
+ kxoWiXQWfOkojIqQAlQJHRVCq+izl7twwat0i2Td2fyizv0Rj59Zx/0nQrnF/SZo0185QcAhzWy
+ oYiRRPxqh3PnbSMVwwW30mr74RqeakjgEMr9fHj9t5N7vZIe3bLQt/S4AO0fnEwwy8D71QchqzU
+ /IJIEZMFif7XItQtIcC60b7IFfWmLtCF1zVk9XJR9+HQkKdXJ2ohaRfgJ6owu3ZvUVCefxL6Sc1
+ tAqJGF3zALkmPV2cy3ehvCyJsP/hEqUN198sbq2Eu1yb1r1CkkmUtlV07h4k7HcU4JBxOpOGJmN
+ Px74roHwk2d5zjSKF0cP3Ck5eWCR5kdCEddpsagl3TJpEQXczokeZ2yrX3Ft39b6D9l4VNGIdKo
+ yeViCe8tQn9UnQYIEn3RJ8YrgVEJqmM1aJ0eVhg6VFyXyqQQTuPcYNDXXQn0ruEBmxk1wqeSMJ/
+ pcIwmnhNwqQzwAJMnAg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_06,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608280179
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,178 +156,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the flash device creating and flash map initialization to
-device-common.c.
+The soon to be added riscv-server-ref board will declare a syscon FDT
+similar to what the 'virt' board already does.
+
+It won't have a 'sifive,test0' and 'sifive,test1' compat string though,
+hence we'll add a flag to enable/disable these additional properties.
+
+The FDT is slightly changed: the subnode is now named 'soc/syscon' instead
+of 'soc/test' to be compatible with the latest device-tree docs.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 ---
- hw/riscv/device-common.c         | 44 ++++++++++++++++++++++++
- hw/riscv/virt.c                  | 57 +++++---------------------------
- include/hw/riscv/device-common.h |  6 ++++
- 3 files changed, 58 insertions(+), 49 deletions(-)
+ hw/riscv/fdt-common.c         | 54 +++++++++++++++++++++++++++++++++++
+ hw/riscv/virt.c               | 46 +++--------------------------
+ include/hw/riscv/fdt-common.h |  4 +++
+ 3 files changed, 62 insertions(+), 42 deletions(-)
 
-diff --git a/hw/riscv/device-common.c b/hw/riscv/device-common.c
-index d3c68a9e71..a054cd7114 100644
---- a/hw/riscv/device-common.c
-+++ b/hw/riscv/device-common.c
-@@ -10,11 +10,13 @@
- 
- #include "hw/riscv/device-common.h"
- 
-+#include "hw/block/flash.h"
- #include "hw/core/platform-bus.h"
- #include "hw/core/qdev.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
- #include "qapi/error.h"
-+#include "qom/object.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
- 
-@@ -46,3 +48,45 @@ DeviceState *riscv_create_platform_bus(DeviceState *irqchip,
- 
-     return dev;
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index 6fcc1ce21f..eac5ca9322 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -295,3 +295,57 @@ void riscv_create_fdt_flash(void *fdt, hwaddr flashbase, hwaddr flashsize)
+                                  2, flashbase + flashsize, 2, flashsize);
+     qemu_fdt_setprop_cell(fdt, name, "bank-width", 4);
  }
 +
-+PFlashCFI01 *riscv_flash_create(Object *parent, const char *name,
-+                                const char *alias_prop_name,
-+                                int flash_sector_size)
++/*
++ * @sifive_test_compat is used to create a FDT that declares
++ * compat with "sifive,test1" and "sifive,test0".  This happens
++ * to be the case for the 'virt' machine that also creates a
++ * 'sifive_test' syscon device.
++ */
++void riscv_create_fdt_syscon(void *fdt, uint32_t *next_phandle,
++                             hwaddr addr, hwaddr size,
++                             uint32_t reboot, uint32_t poweroff,
++                             bool sifive_test_compat)
 +{
-+    /*
-+     * Create a single flash device.  We use the same parameters as
-+     * the flash devices on the ARM virt board.
-+     */
-+    DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
++    uint32_t syscon_phandle;
++    char *name;
 +
-+    qdev_prop_set_uint64(dev, "sector-length", flash_sector_size);
-+    qdev_prop_set_uint8(dev, "width", 4);
-+    qdev_prop_set_uint8(dev, "device-width", 2);
-+    qdev_prop_set_bit(dev, "big-endian", false);
-+    qdev_prop_set_uint16(dev, "id0", 0x89);
-+    qdev_prop_set_uint16(dev, "id1", 0x18);
-+    qdev_prop_set_uint16(dev, "id2", 0x00);
-+    qdev_prop_set_uint16(dev, "id3", 0x00);
-+    qdev_prop_set_string(dev, "name", name);
++    name = g_strdup_printf("/soc/syscon@%"HWADDR_PRIx, addr);
++    qemu_fdt_add_subnode(fdt, name);
 +
-+    object_property_add_child(parent, name, OBJECT(dev));
-+    object_property_add_alias(parent, alias_prop_name,
-+                              OBJECT(dev), "drive");
++    if (sifive_test_compat) {
++        static const char * const compat[3] = {
++            "sifive,test1", "sifive,test0", "syscon"
++        };
 +
-+    return PFLASH_CFI01(dev);
-+}
++        qemu_fdt_setprop_string_array(fdt, name, "compatible",
++                                      (char **)&compat, ARRAY_SIZE(compat));
++    } else {
++        qemu_fdt_setprop_string(fdt, name, "compatible", "syscon");
++    }
 +
-+void riscv_init_flash_map(PFlashCFI01 *flash, hwaddr base, hwaddr size,
-+                          MemoryRegion *sysmem, int flash_sector_size)
-+{
-+    DeviceState *dev = DEVICE(flash);
++    qemu_fdt_setprop_sized_cells(fdt, name, "reg",
++                                 2, addr,
++                                 2, size);
 +
-+    assert(QEMU_IS_ALIGNED(size, flash_sector_size));
-+    assert(size / flash_sector_size <= UINT32_MAX);
++    syscon_phandle = next_phandle ? (*next_phandle)++ : qemu_fdt_alloc_phandle(fdt);
++    qemu_fdt_setprop_cell(fdt, name, "phandle", syscon_phandle);
 +
-+    qdev_prop_set_uint32(dev, "num-blocks", size / flash_sector_size);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    g_free(name);
 +
-+    memory_region_add_subregion(sysmem, base,
-+                            sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
++    name = g_strdup_printf("/reboot");
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", "syscon-reboot");
++    qemu_fdt_setprop_cell(fdt, name, "regmap", syscon_phandle);
++    qemu_fdt_setprop_cell(fdt, name, "offset", 0x0);
++    qemu_fdt_setprop_cell(fdt, name, "value", reboot);
++    g_free(name);
++
++    name = g_strdup_printf("/poweroff");
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", "syscon-poweroff");
++    qemu_fdt_setprop_cell(fdt, name, "regmap", syscon_phandle);
++    qemu_fdt_setprop_cell(fdt, name, "offset", 0x0);
++    qemu_fdt_setprop_cell(fdt, name, "value", poweroff);
++    g_free(name);
 +}
 diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a2671ae341..9ff5beae77 100644
+index e48337dfd9..ab6c53c78a 100644
 --- a/hw/riscv/virt.c
 +++ b/hw/riscv/virt.c
-@@ -120,53 +120,12 @@ static MemMapEntry virt_high_pcie_memmap;
+@@ -768,47 +768,6 @@ static void create_fdt_pcie(RISCVVirtState *s,
+     create_pcie_irq_map(s, ms->fdt, name, irq_pcie_phandle);
+ }
  
- #define VIRT_FLASH_SECTOR_SIZE (256 * KiB)
- 
--static PFlashCFI01 *virt_flash_create1(RISCVVirtState *s,
--                                       const char *name,
--                                       const char *alias_prop_name)
+-static void create_fdt_reset(RISCVVirtState *s, uint32_t *phandle)
 -{
--    /*
--     * Create a single flash device.  We use the same parameters as
--     * the flash devices on the ARM virt board.
--     */
--    DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
+-    char *name;
+-    uint32_t test_phandle;
+-    MachineState *ms = MACHINE(s);
 -
--    qdev_prop_set_uint64(dev, "sector-length", VIRT_FLASH_SECTOR_SIZE);
--    qdev_prop_set_uint8(dev, "width", 4);
--    qdev_prop_set_uint8(dev, "device-width", 2);
--    qdev_prop_set_bit(dev, "big-endian", false);
--    qdev_prop_set_uint16(dev, "id0", 0x89);
--    qdev_prop_set_uint16(dev, "id1", 0x18);
--    qdev_prop_set_uint16(dev, "id2", 0x00);
--    qdev_prop_set_uint16(dev, "id3", 0x00);
--    qdev_prop_set_string(dev, "name", name);
+-    test_phandle = (*phandle)++;
+-    name = g_strdup_printf("/soc/test@%"HWADDR_PRIx,
+-                           s->memmap[VIRT_TEST].base);
+-    qemu_fdt_add_subnode(ms->fdt, name);
+-    {
+-        static const char * const compat[3] = {
+-            "sifive,test1", "sifive,test0", "syscon"
+-        };
+-        qemu_fdt_setprop_string_array(ms->fdt, name, "compatible",
+-                                      (char **)&compat, ARRAY_SIZE(compat));
+-    }
+-    qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
+-                                 2, s->memmap[VIRT_TEST].base,
+-                                 2, s->memmap[VIRT_TEST].size);
+-    qemu_fdt_setprop_cell(ms->fdt, name, "phandle", test_phandle);
+-    test_phandle = qemu_fdt_get_phandle(ms->fdt, name);
+-    g_free(name);
 -
--    object_property_add_child(OBJECT(s), name, OBJECT(dev));
--    object_property_add_alias(OBJECT(s), alias_prop_name,
--                              OBJECT(dev), "drive");
+-    name = g_strdup_printf("/reboot");
+-    qemu_fdt_add_subnode(ms->fdt, name);
+-    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "syscon-reboot");
+-    qemu_fdt_setprop_cell(ms->fdt, name, "regmap", test_phandle);
+-    qemu_fdt_setprop_cell(ms->fdt, name, "offset", 0x0);
+-    qemu_fdt_setprop_cell(ms->fdt, name, "value", FINISHER_RESET);
+-    g_free(name);
 -
--    return PFLASH_CFI01(dev);
+-    name = g_strdup_printf("/poweroff");
+-    qemu_fdt_add_subnode(ms->fdt, name);
+-    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "syscon-poweroff");
+-    qemu_fdt_setprop_cell(ms->fdt, name, "regmap", test_phandle);
+-    qemu_fdt_setprop_cell(ms->fdt, name, "offset", 0x0);
+-    qemu_fdt_setprop_cell(ms->fdt, name, "value", FINISHER_PASS);
+-    g_free(name);
 -}
 -
- static void virt_flash_create(RISCVVirtState *s)
+ static void create_fdt_uart(RISCVVirtState *s,
+                             uint32_t irq_mmio_phandle, int memId, int irqNo)
  {
--    s->flash[0] = virt_flash_create1(s, "virt.flash0", "pflash0");
--    s->flash[1] = virt_flash_create1(s, "virt.flash1", "pflash1");
--}
--
--static void virt_flash_map1(PFlashCFI01 *flash,
--                            hwaddr base, hwaddr size,
--                            MemoryRegion *sysmem)
--{
--    DeviceState *dev = DEVICE(flash);
--
--    assert(QEMU_IS_ALIGNED(size, VIRT_FLASH_SECTOR_SIZE));
--    assert(size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
--    qdev_prop_set_uint32(dev, "num-blocks", size / VIRT_FLASH_SECTOR_SIZE);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
--
--    memory_region_add_subregion(sysmem, base,
--                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
--                                                       0));
-+    s->flash[0] = riscv_flash_create(OBJECT(s), "virt.flash0", "pflash0",
-+                                     VIRT_FLASH_SECTOR_SIZE);
-+    s->flash[1] = riscv_flash_create(OBJECT(s), "virt.flash1", "pflash1",
-+                                     VIRT_FLASH_SECTOR_SIZE);
- }
+@@ -994,7 +953,10 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_pcie(s, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
  
- static void virt_flash_map(RISCVVirtState *s,
-@@ -175,10 +134,10 @@ static void virt_flash_map(RISCVVirtState *s,
-     hwaddr flashsize = s->memmap[VIRT_FLASH].size / 2;
-     hwaddr flashbase = s->memmap[VIRT_FLASH].base;
+-    create_fdt_reset(s, &phandle);
++    riscv_create_fdt_syscon(MACHINE(s)->fdt, &phandle,
++                            s->memmap[VIRT_TEST].base,
++                            s->memmap[VIRT_TEST].size,
++                            FINISHER_RESET, FINISHER_PASS, true);
  
--    virt_flash_map1(s->flash[0], flashbase, flashsize,
--                    sysmem);
--    virt_flash_map1(s->flash[1], flashbase + flashsize, flashsize,
--                    sysmem);
-+    riscv_init_flash_map(s->flash[0], flashbase, flashsize,
-+                         sysmem, VIRT_FLASH_SECTOR_SIZE);
-+    riscv_init_flash_map(s->flash[1], flashbase + flashsize, flashsize,
-+                         sysmem, VIRT_FLASH_SECTOR_SIZE);
- }
+     create_fdt_uarts(s, irq_mmio_phandle);
  
- static void create_fdt_socket_plic(RISCVVirtState *s,
-diff --git a/include/hw/riscv/device-common.h b/include/hw/riscv/device-common.h
-index 12af031bbf..9f8bc67a1d 100644
---- a/include/hw/riscv/device-common.h
-+++ b/include/hw/riscv/device-common.h
-@@ -10,10 +10,16 @@
- #define RISCV_DEVICE_COMMON_H
- 
- #include "exec/hwaddr.h"
-+#include "hw/block/flash.h"
- #include "hw/core/qdev.h"
- 
- DeviceState *riscv_create_platform_bus(DeviceState *irqchip,
-                                        const MemMapEntry *platform_bus_mem,
-                                        int platform_bus_base_irq,
-                                        int platform_bus_num_irqs);
-+PFlashCFI01 *riscv_flash_create(Object *parent, const char *name,
-+                                const char *alias_prop_name,
-+                                int flash_sector_size);
-+void riscv_init_flash_map(PFlashCFI01 *flash, hwaddr base, hwaddr size,
-+                          MemoryRegion *sysmem, int flash_sector_size);
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index b422da6aef..e377682b32 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -39,4 +39,8 @@ void riscv_create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+                            bool numa_enabled, int socket);
+ void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ void riscv_create_fdt_flash(void *fdt, hwaddr flashbase, hwaddr flashsize);
++void riscv_create_fdt_syscon(void *fdt, uint32_t *next_phandle,
++                             hwaddr addr, hwaddr size,
++                             uint32_t reboot, uint32_t poweroff,
++                             bool sifive_test_compat);
  #endif
 -- 
 2.43.0
