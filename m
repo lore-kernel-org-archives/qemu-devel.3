@@ -4,107 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6FDC61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF16EC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzyzg-0001ft-4D; Fri, 28 Aug 2026 11:59:52 -0400
+	id 1wzyz0-0001Kk-Rh; Fri, 28 Aug 2026 11:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyze-0001f4-3t
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:50 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyyw-0001JY-3w
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:07 -0400
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzS-000092-3E
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyyt-0008BB-BK
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:05 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7C6BD1FED0;
- Fri, 28 Aug 2026 15:59:28 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DC2B51FD66;
+ Fri, 28 Aug 2026 15:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932772; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yogt7hp0asx6p9ZHQBFyYyBwc22IVXY4dpf+tsNP4gU=;
- b=P5wY8pVAFCYeDzNNeoNq2szHu8yYJyIIyOAKCOmkWfAMZSPImBQyPEpAXfrh+yBOFKLWLb
- d8hhp3FzDpkQRjV0xghpzaevhtfyn8cb56luXCPBs3ShagptQR7mzxOyhMHr90TFJFhz96
- NL36d9Ph1gOYD5tta4VOtfVvrn4yHvc=
+ bh=Rb8Z5SCDyJWp7TdpiITGRQvtQ0lXojHnbL+MAwG9tnw=;
+ b=fPzYQ+fafM6yfMYiPJR+WziDDACJnLy0KU2dp3KnztpEWRCfYX4yNeV8HNvMozKQ27+enE
+ cVHQZZ4ROKmFPyfjRb9Z+X+nb/qB9/xDH4Y+Wd2YuDIXS4sklJXk31Wf8PbenRN+lR/zMC
+ UVslGR5Iii/WJYCAmbk8RtHXv9A/dw4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932772;
+ s=susede2_ed25519; t=1787932738;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yogt7hp0asx6p9ZHQBFyYyBwc22IVXY4dpf+tsNP4gU=;
- b=8gtg3LD4tK2Uqhait7n6fT02QeALXd6GGAv4mWECB5IJeFM1PsSPpsGpqOUbhTDKbg7fKC
- 6W70pcpUWKQe+TAw==
+ bh=Rb8Z5SCDyJWp7TdpiITGRQvtQ0lXojHnbL+MAwG9tnw=;
+ b=Z/pcjmZ/dA3MDOTTEQ8Wkj5wVGkVAfsS+9xDI5WIvZyF2wIkW7IEPE1Cr6yiajm7UvbOAv
+ BYtf1/e6j2OrZ8BQ==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=eq4djWYb;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=hlD+MlIz
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932768; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932733; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yogt7hp0asx6p9ZHQBFyYyBwc22IVXY4dpf+tsNP4gU=;
- b=eq4djWYb7CCWe31ecLJlhT5nAXnXQ6OwcobdBAIzWdOke+Xg4HR68LrSTfBniN+0dk9jOu
- oorsLY343rFhB7d0UGZA3fqgJ+06sA26piLQnSNVEfu4xGm3oENRVOXjT/beZ5UId4Ti1A
- 6xUgCZf2BKVV0CtJPmwDcraLniUwhkU=
+ bh=Rb8Z5SCDyJWp7TdpiITGRQvtQ0lXojHnbL+MAwG9tnw=;
+ b=Rb4BiYoZvWBWsky638zse+ukJU/2b/sFkzNfPgtE+GhIbOovMKUp+xRYTOWbSRUHpEdsrd
+ kATQsdPvy8q0cZCO2DaffcGy4pK/IFqmswon+UHnG1cGiGcn6prcWxiTzlSENwkW51b090
+ dDOEjj1A5OzztL7wq8fb37dVTcf2c24=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932768;
+ s=susede2_ed25519; t=1787932733;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yogt7hp0asx6p9ZHQBFyYyBwc22IVXY4dpf+tsNP4gU=;
- b=hlD+MlIzXhWV7Wx7OUfueWkaHJJUHg/XGlaubdjRgskTSAPM/irG/MbJzaa96d+EFQpVq4
- zTszEFyR8XCIQ+DA==
+ bh=Rb8Z5SCDyJWp7TdpiITGRQvtQ0lXojHnbL+MAwG9tnw=;
+ b=kk7sJuEDnflcevRrIGZvpeutaA8rn1V+I+0j8G27YNiznACoGjsHGePunlAztgzUrEs2IV
+ 0kbWsQLAqmpI7iBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 728961369E;
- Fri, 28 Aug 2026 15:59:27 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A05FC13686;
+ Fri, 28 Aug 2026 15:58:52 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cLn8EF+wkWpoBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:59:27 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QBUqHDywkWpoBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:58:52 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	hongmianquan <hongmianquan@bytedance.com>
-Subject: [PULL v2 30/30] migration/postcopy: fix page_requested leak for
- vhost-user shared pages
-Date: Fri, 28 Aug 2026 12:58:45 -0300
-Message-ID: <20260828155845.2874508-31-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL v2 03/30] migration: Rename postcopy_listen_thread_bh
+Date: Fri, 28 Aug 2026 12:58:18 -0300
+Message-ID: <20260828155845.2874508-4-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828155845.2874508-1-farosas@suse.de>
 References: <20260828155845.2874508-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 7C6BD1FED0
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,bytedance.com:email];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_COUNT_TWO(0.00)[2]; FREEMAIL_ENVRCPT(0.00)[gmail.com]
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -129,77 +119,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hongmianquan <hongmianquan@bytedance.com>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-With postcopy-preempt enabled, a postcopy migration of a guest with a
-vhost-user device can hang at the very end on the destination, after all
-pages are transferred (query-migrate: status=postcopy-active, remaining=0).
+Rename postcopy_listen_thread_bh to postcopy_incoming_complete_bh for a
+more robust naming scheme. This will allow fast snapshot load to use
+this bh funciton directly to cleanup the incoming state.
 
-Root cause is an add/del key mismatch on mis->page_requested:
-
-- add: a backend fault goes through postcopy_request_shared_page() ->
-  postcopy_request_page() -> migrate_send_rp_req_pages(), which inserts
-  the request and bumps page_requested_count keyed by client_addr.
-- del: qemu_ufd_copy_ioctl() removes the entry and drops the counter
-  keyed by this QEMU process's host address for the page.
-
-client_addr is a VA in the external vhost-user backend's address space and
-never equals QEMU's host address, so the removal misses and the counter
-leaks. postcopy_ram_incoming_cleanup() then waits for it to reach zero
-forever, which also stalls the source (it waits for the return path).
-
-Racing threads:
-  dst: postcopy_ram_listen_thread -> postcopy_ram_incoming_cleanup ->
-       qemu_cond_wait_impl              (waits for page_requested_count==0)
-       (postcopy_preempt_thread already placed/woke the pages)
-  src: migration_thread -> migration_completion ->
-       await_return_path_close_on_source -> qemu_thread_join
-       (source_return_path_thread blocked in recvmsg)
-
-The leak is only triggered when the vhost-user backend faults on a page
-that has not been received yet: only then does the request take the
-shared-fault slow path and register an entry in page_requested. If that
-page is subsequently delivered while the request is still outstanding,
-its entry is never removed. (Pages already present when the backend
-faults just take the wake path and never register.) So a run may leak
-only a few entries (9 of ~244k requests in our repro) yet still hang.
-
-Fix: key the request with the same host address the removal uses
-(rb->host + aligned_rbo) instead of client_addr. The backend wake still
-happens at placement time via postcopy_wake_shared().
-
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/postcopy-ram.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ migration/postcopy-ram.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 885ab58fca5..5509cbdcb8d 100644
+index 7dead1c68fc..2286d25f8c6 100644
 --- a/migration/postcopy-ram.c
 +++ b/migration/postcopy-ram.c
-@@ -1123,7 +1123,20 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
-         return postcopy_wake_shared(pcfd, client_addr, rb);
-     }
-     /* TODO: support blocktime tracking */
--    postcopy_request_page(mis, rb, aligned_rbo, client_addr, 0);
-+
-+    /*
-+     * The page will be placed by qemu_ufd_copy_ioctl(), which removes the
-+     * matching entry from mis->page_requested (and drops
-+     * page_requested_count) using this QEMU process's host address for the
-+     * page. Register the request with the same key, rb->host + aligned_rbo,
-+     * not client_addr: client_addr is a VA in the external vhost-user
-+     * backend's address space and can never equal that host address, so the
-+     * removal would miss forever, leaking page_requested_count and hanging
-+     * postcopy teardown.
-+     */
-+    postcopy_request_page(mis, rb, aligned_rbo,
-+                          (uint64_t)(uintptr_t)qemu_ram_get_host_addr(rb) +
-+                          aligned_rbo, 0);
-     return 0;
+@@ -2109,7 +2109,7 @@ bool postcopy_is_paused(MigrationStatus status)
+         status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
  }
+ 
+-static void postcopy_listen_thread_bh(void *opaque)
++static void postcopy_incoming_complete_bh(void *opaque)
+ {
+     MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+@@ -2217,7 +2217,7 @@ out:
+     rcu_unregister_thread();
+     postcopy_state_set(POSTCOPY_INCOMING_END);
+ 
+-    migration_bh_schedule(postcopy_listen_thread_bh, NULL);
++    migration_bh_schedule(postcopy_incoming_complete_bh, NULL);
+ 
+     object_unref(OBJECT(migr));
  
 -- 
 2.53.0
