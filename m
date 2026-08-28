@@ -4,102 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF2DC61DCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A93FC61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzpkp-0005Nh-B9; Fri, 28 Aug 2026 02:07:55 -0400
+	id 1wzpl3-0005kZ-Sg; Fri, 28 Aug 2026 02:08:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wzpkn-0005NC-S8
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:07:53 -0400
+ id 1wzpl2-0005jv-39
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:08 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wzpkl-0000qI-0p
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:07:53 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wzpl0-0000sV-4M
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:07 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67S2249v596385
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:07:49 GMT
+ 67S2255v2940748
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=84//HM+JVIbuqjTRf
- Br6XMZNAENpBnSjxO6+Vah7uG8=; b=cRjCm8Mtjf8Qjt5zeQxfbeut53zNZi3pc
- qmXwuVROagk6qme/9jdtU4PTt8LugM1qWsIzEphjoMjltdJ7F8+ZN8PN5upFC2C1
- V4ysn5Z3ZE/0IIQcz2ANk+VtIIESdboU2X605Otx5ym3OrEBjLzeU55eySXKacTu
- hZuj79KQSl14UDn6XXRI9rVUG2lZMcpiasQEkWAMUCowfQCf3vSeabuSRp91beYC
- MtRrtGqiQHimiuAdhfPCgesDOw0vf14LGEv/4Pv0k9bgjD909PMfArYV62sdWBsq
- dx1fA9eSTNnDNd+wzxSwGzO2F2/DAkhXaPhOLK0d6JYjqy78htziQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7394je2t-1
+ :mime-version:references:subject:to; s=pp1; bh=AlLa+CBRhmd2U2jAL
+ la36qI1QKgZbklY4C07ji1UORs=; b=mj+BMx0kS+MCl8tjRktwh4yjhxm7yJlFY
+ JnpdIcq+K38zTefrlS1WR8yZYR7mcipxUYjeRMf3pjw9QrsXZL9cUobWK9Oc89nv
+ b64Gpx9BNMIfzBALdbdBwyPxoOS2OTHQGmmlMNwRqjV+CvM3t3QPf5Ui3u13o1MK
+ tOmjfuSypP3IuP0X0P+iE7Oek9TBZ3sUoPft5RrWIJtfx6oh3UFmtk2hAgDzQUm1
+ 9dSERQW85cNINTMFrP2NjUwJlJ7xlbnoKTBgWTJp/6J/Z0VpGZqje1g2Q/ky2Bxb
+ CoNAQ99ciWvgp2VwE8GU02wWQI7LOhr3oSM/6UsANkCwMcT4cFgUA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eraauw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:07:49 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67S5uFK4019134
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:07:48 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3kcm5s-1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:04 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67S5uEsD025163
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:03 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragvgbb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:07:48 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:03 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67S67h0o10748328
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67S67xKU51577102
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 28 Aug 2026 06:07:43 GMT
+ Fri, 28 Aug 2026 06:07:59 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC1B52004B;
- Fri, 28 Aug 2026 06:07:43 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A4D5720043;
+ Fri, 28 Aug 2026 06:07:59 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A06D20040;
- Fri, 28 Aug 2026 06:07:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AB06320040;
+ Fri, 28 Aug 2026 06:07:57 +0000 (GMT)
 Received: from Mac.com (unknown [9.124.217.17])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 28 Aug 2026 06:07:40 +0000 (GMT)
+ Fri, 28 Aug 2026 06:07:57 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Nikhil Kumar Singh <nikhilks@linux.ibm.com>,
- Tasmiya Nalatwad <tasmiya@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+Cc: Shivani Nittor <shivani@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Amit Machhiwal <amachhiw@linux.ibm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 07/41] target/ppc: Convert cache instructions to decodetree
-Date: Fri, 28 Aug 2026 11:36:42 +0530
-Message-ID: <20260828060716.91672-8-harshpb@linux.ibm.com>
+ Chinmay Rath <rathc@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
+Subject: [PULL 13/41] target/ppc: Convert mcrf to decode tree
+Date: Fri, 28 Aug 2026 11:36:48 +0530
+Message-ID: <20260828060716.91672-14-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260828060716.91672-1-harshpb@linux.ibm.com>
 References: <20260828060716.91672-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ex6bf2Nzn_i4-T0_7f_3cdy5HN-W7X3U
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfXxGLoofmsCEs5
- qG0rHNAqoHZ/Z3sPM0Wgin5Qmmj9Gz+Stjtxl0kl9D42Be733SBb947hd3fc/zPFB1lmUhtpc5t
- 3elHHtnmgNZ8Bbly2GPuJAdAJKgCfoliUjkaQr6pmcTzr197PqRlAGfOo6FX4H8SXYb1j9CRgCe
- T9Zpwa7JSfH1zhJ3bKQZqWPe5lBqZqWyQF+DFD+yzHvV6cju7cBhWv5Kxj5d/HNbDql6vSWC+sv
- snnYrBR+aBmOJUELn8C9bZdB/uWn/ethi2V0W61a9hNx/AFlKG/NAxcXWhZU5F06QKzKZ6MxUHB
- ++1K5oAhRpa56oqIzyZ45JWTuzyNXwQrJkKsSIKp320vxWx+0zf3b0PTSM3oC/RTZCIfP/Z1pdS
- bMHE+LqCkP9wIsAvJKV/vmycjGnS3b1ISfbYBmpYisdhvw5XhIgSUoT39BZmTYNHjBDV0cYYkPW
- yXBC8Af4QaBjqAJJjKA==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a9125b5 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-GUID: eht4Drjp4xu7Q9NV1_nqXeMNJJSATlWZ
+X-Proofpoint-ORIG-GUID: eht4Drjp4xu7Q9NV1_nqXeMNJJSATlWZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX9zYmoItq3d1n
+ ox56Urm9B9TUpuMfbxlWn3cD0lP7/v/gh0kzqqRLLB02pM1At2CFB8tu3H//TVp4NaikS0HVcko
+ 5v03pRPv4mf5yyqNYueZnZy64O/mFPBiy1Vor3ot1ZtUV1O4wtkDALo14CWrPmVvWYl81R9eXfM
+ xFlD429SRcA48BBAUYLE+XxWUJW5TXA+Hjr+kNHPqRKWpFiTo3JJ4WgzLjQfquGNvuu33eSFiSn
+ iUfQp0KO3pTXUAhWtU9fQ1lufjrjGtL5BkoERN8gVDhP2lAhw6XtmS3bbm9dJ3y1Wb3Sz5sFurA
+ JrPheIvRQTBQr0Qh2/UkeqLNeG3Wk+qWkkisg80vETFhOJiK1/etRq5DNjdJ62mY67gu3jKv0Xq
+ 92DlD9Hi1htrGkEMpQM/DSWFGTVWUVx3/+EF45390Y8lhRaFBhr939bRlofN+GLFP3SrdnSQS9G
+ Jdxv567xYssgU/UNikg==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a9125c4 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=Sv0fKeRqtYgA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=Lmgfs3a3K7fV6kfGSZAA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX7Bm4pZ/v7sv3
- kYazoHuOSRHdjhoSc+3MEp44NxP9qf9CHgbdbCtPzjh4EZE3EfcScaZls8VA59AAS4556rYJ+XQ
- WZ5RNMk5JZuq/sIlhjOJV0naexGngpk=
-X-Proofpoint-ORIG-GUID: ex6bf2Nzn_i4-T0_7f_3cdy5HN-W7X3U
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=vy6McjWATDkKsZsaVXEA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfXxdbiKM2q0flP
+ +xZYX4bj3qdtrDf58SWrdJ+23keePDJI7YsfKiXANtybjj1g2Yp4NiCt6CV5SvFLIc2+yvpkwVU
+ wMUR+dpKYgAlbBqtHseppRVTCPq3YLg=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_01,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280050
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
@@ -126,574 +124,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+From: Shivani Nittor <shivani@linux.ibm.com>
 
-Convert cache management instructions to decodetree using custom
-X-form layouts (@X_ea, @X_l, @X_th) and dedicated translation functions.
-This ensures reserved bits are accurately represented and ignored by
-the decoder (using '-' in the patterns), rather than being erroneously
-parsed into instruction fields.
+Convert mcrf to decode tree specification. The functionality
+was tested by comparing the qemu -D log -d op,in_asm output
+as well as single stepping gdb.
 
-Legacy GEN_HANDLER-based implementations are removed.
-
-The implementation preserves legacy semantics, including:
-  - MMU-visible accesses for instructions treated as loads
-    (e.g. dcbt, dcbtst, dcbtep, dcbtstep)
-  - Supervisor and BookE-specific constraints
-  - Effective address computation via do_ea_calc()
-
-Instructions that were defined as no-ops in the legacy implementation
-remain no-ops here.
-
-Note on intentional behavior changes:
-  - dcbf now validates the L field against the Power ISA v3.1 set of
-    legal values (0, 1, 3, 4, 6).
-  - Reserved bits that were previously encoded as part of the opcode
-    mask (and trapped if set) are now properly decoded as "don't care"
-    ('-' in the pattern).
-
-Testing:
-  - Verified TCG equivalence for all cache operations
-
-Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-Tested-by: Tasmiya Nalatwad <tasmiya@linux.ibm.com>
+Signed-off-by: Shivani Nittor <shivani@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260827133010.278889-4-rathc@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260827133010.278889-10-rathc@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/helper.h      |   4 +-
- target/ppc/insn32.decode |  33 ++++
- target/ppc/mem_helper.c  |   4 +-
- target/ppc/translate.c   | 409 ++++++++++++++++++++-------------------
- 4 files changed, 249 insertions(+), 201 deletions(-)
+ target/ppc/insn32.decode             | 6 ++++++
+ target/ppc/translate.c               | 7 -------
+ target/ppc/translate/misc-impl.c.inc | 6 ++++++
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 6b2d19a3ad..82ec3a471b 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -52,8 +52,8 @@ DEF_HELPER_FLAGS_3(dcbz, TCG_CALL_NO_WG, void, env, tl, int)
- #ifdef TARGET_PPC64
- DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
- #endif
--DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
--DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
-+DEF_HELPER_FLAGS_2(ICBI, TCG_CALL_NO_WG, void, env, tl)
-+DEF_HELPER_FLAGS_2(ICBIEP, TCG_CALL_NO_WG, void, env, tl)
- 
- #if defined(TARGET_PPC64)
- DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 26948e08a7..92706e2097 100644
+index ef0fe12959..f928cd6602 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -1306,6 +1306,39 @@ XVF64GERPN      111011 ... -- .... 0 ..... 10111010 ..-  @XX3_at xa=%xx_xa_pair
- XVF64GERNP      111011 ... -- .... 0 ..... 01111010 ..-  @XX3_at xa=%xx_xa_pair
- XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+@@ -1452,6 +1452,12 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
+ SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
+ EIEIO           011111 ----- ----- ----- 1101010110 -
  
-+## Cache Management Instructions
++# Condition Register Field Instruction
 +
-+&X_ea           ra rb
-+@X_ea           ...... ..... ra:5 rb:5 .......... .     &X_ea
++&XL_bfa         bf bfa
++@XL_bfa         ...... bf:3 .. bfa:3 .. ..... ..... ..... .
++MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
 +
-+&X_l            l ra rb
-+@X_l            ...... .. l:3 ra:5 rb:5 .......... .    &X_l
-+
-+&X_th           th ra rb
-+@X_th           ...... th:5 ra:5 rb:5 .......... .      &X_th
-+
-+DCBF            011111 -- ... ..... ..... 0001010110 -   @X_l
-+DCBFEP          011111 ----- ..... ..... 0001111111 -   @X_ea
-+DCBI            011111 ----- ..... ..... 0111010110 -   @X_ea
-+DCBST           011111 ----- ..... ..... 0000110110 -   @X_ea
-+DCBSTEP         011111 ----- ..... ..... 0000111111 -   @X_ea
-+DCBA            011111 ----- ..... ..... 1011110110 -   @X_ea
-+
-+DCBT            011111 ..... ..... ..... 0100010110 -   @X_th
-+DCBTEP          011111 ----- ..... ..... 0100111111 -   @X_ea
-+DCBTST          011111 ..... ..... ..... 0011110110 -   @X_th
-+DCBTSTEP        011111 ----- ..... ..... 0011111111 -   @X_ea
-+
-+DCBTLS          011111 ..... ..... ..... 0010100110 -   @X_th
-+DCBLC           011111 ..... ..... ..... 0110000110 -   @X_th
-+
-+ICBI            011111 ----- ..... ..... 1111010110 -   @X_ea
-+ICBIEP          011111 ----- ..... ..... 1111011111 -   @X_ea
-+
-+DST             011111 ----- ..... ..... 0101010110 -   @X_ea
-+DSTST           011111 ----- ..... ..... 0101110110 -   @X_ea
-+DSS             011111 ----- ..... ..... 1100110110 -   @X_ea
-+
- ##Extend Sign Word and Shift Left Immediate XS-form
- EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+ # Branch History Rolling Buffer (BHRB) Instructions
  
-diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index 787ba2cdec..8ad6945590 100644
---- a/target/ppc/mem_helper.c
-+++ b/target/ppc/mem_helper.c
-@@ -341,7 +341,7 @@ void helper_dcbzl(CPUPPCState *env, target_ulong addr)
- }
- #endif
- 
--void helper_icbi(CPUPPCState *env, target_ulong addr)
-+void helper_ICBI(CPUPPCState *env, target_ulong addr)
- {
-     unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
-     MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, mmu_idx);
-@@ -357,7 +357,7 @@ void helper_icbi(CPUPPCState *env, target_ulong addr)
-     cpu_ldl_mmu(env, addr, oi, GETPC());
- }
- 
--void helper_icbiep(CPUPPCState *env, target_ulong addr)
-+void helper_ICBIEP(CPUPPCState *env, target_ulong addr)
- {
- #if !defined(CONFIG_USER_ONLY)
-     MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, PPC_TLB_EPID_LOAD);
+ &XFX_bhrbe      rt bhrbe
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 69c4443dda..4bd7f44b3c 100644
+index 53acd54ad4..7e7ef4e32d 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -4298,128 +4298,6 @@ static void gen_setb(DisasContext *ctx)
+@@ -3642,12 +3642,6 @@ GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D);
+ /* crxor */
+ GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06);
  
- /***                         Cache management                              ***/
+-/* mcrf */
+-static void gen_mcrf(DisasContext *ctx)
+-{
+-    tcg_gen_mov_i32(cpu_crf[crfD(ctx->opcode)], cpu_crf[crfS(ctx->opcode)]);
+-}
+-
+ /***                           System linkage                              ***/
  
--/* dcbf */
--static void gen_dcbf(DisasContext *ctx)
--{
--    /* XXX: specification says this is treated as a load by the MMU */
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_qemu_ld8u(ctx, t0, t0);
--}
--
--/* dcbfep (external PID dcbf) */
--static void gen_dcbfep(DisasContext *ctx)
--{
--    /* XXX: specification says this is treated as a load by the MMU */
--    TCGv t0;
--    CHK_SV(ctx);
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    tcg_gen_qemu_ld_tl(t0, t0, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
--}
--
--/* dcbi (Supervisor only) */
--static void gen_dcbi(DisasContext *ctx)
--{
--#if defined(CONFIG_USER_ONLY)
--    GEN_PRIV(ctx);
--#else
--    TCGv EA, val;
--
--    CHK_SV(ctx);
--    EA = tcg_temp_new();
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    gen_addr_reg_index(ctx, EA);
--    val = tcg_temp_new();
--    /* XXX: specification says this should be treated as a store by the MMU */
--    gen_qemu_ld8u(ctx, val, EA);
--    gen_qemu_st8(ctx, val, EA);
--#endif /* defined(CONFIG_USER_ONLY) */
--}
--
--/* dcdst */
--static void gen_dcbst(DisasContext *ctx)
--{
--    /* XXX: specification say this is treated as a load by the MMU */
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_qemu_ld8u(ctx, t0, t0);
--}
--
--/* dcbstep (dcbstep External PID version) */
--static void gen_dcbstep(DisasContext *ctx)
--{
--    /* XXX: specification say this is treated as a load by the MMU */
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    tcg_gen_qemu_ld_tl(t0, t0, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
--}
--
--/* dcbt */
--static void gen_dcbt(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtep */
--static void gen_dcbtep(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtst */
--static void gen_dcbtst(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtstep */
--static void gen_dcbtstep(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a load by the MMU but
--     *      does not generate any exception
--     */
--}
--
--/* dcbtls */
--static void gen_dcbtls(DisasContext *ctx)
--{
--    /* Always fails locking the cache */
--    TCGv t0 = tcg_temp_new();
--    gen_load_spr(t0, SPR_Exxx_L1CSR0);
--    tcg_gen_ori_tl(t0, t0, L1CSR0_CUL);
--    gen_store_spr(SPR_Exxx_L1CSR0, t0);
--}
--
--/* dcblc */
--static void gen_dcblc(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     */
--}
--
- /* dcbz */
- static void gen_dcbz(DisasContext *ctx)
- {
-@@ -4448,64 +4326,6 @@ static void gen_dcbzep(DisasContext *ctx)
-     gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(PPC_TLB_EPID_STORE));
- }
- 
--/* dst / dstt */
--static void gen_dst(DisasContext *ctx)
--{
--    if (rA(ctx->opcode) == 0) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
--    } else {
--        /* interpreted as no-op */
--    }
--}
--
--/* dstst /dststt */
--static void gen_dstst(DisasContext *ctx)
--{
--    if (rA(ctx->opcode) == 0) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
--    } else {
--        /* interpreted as no-op */
--    }
--
--}
--
--/* dss / dssall */
--static void gen_dss(DisasContext *ctx)
--{
--    /* interpreted as no-op */
--}
--
--/* icbi */
--static void gen_icbi(DisasContext *ctx)
--{
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_helper_icbi(tcg_env, t0);
--}
--
--/* icbiep */
--static void gen_icbiep(DisasContext *ctx)
--{
--    TCGv t0;
--    gen_set_access_type(ctx, ACCESS_CACHE);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    gen_helper_icbiep(tcg_env, t0);
--}
--
--/* Optional: */
--/* dcba */
--static void gen_dcba(DisasContext *ctx)
--{
--    /*
--     * interpreted as no-op
--     * XXX: specification say this is treated as a store by the MMU
--     *      but does not generate any exception
--     */
--}
--
- /***                    Segment register manipulation                      ***/
- /* Supervisor only: */
- 
-@@ -5740,6 +5560,218 @@ static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
-     return true;
- }
- 
-+/*
-+ * Cache Management Instructions (decodetree)
-+ */
-+
-+static bool trans_DCBA(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE_DCBA);
-+    return true;
-+}
-+
-+static bool trans_DCBT(DisasContext *ctx, arg_X_th *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+    return true;
-+}
-+
-+static bool trans_DCBTEP(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+    return true;
-+}
-+
-+static bool trans_DCBTST(DisasContext *ctx, arg_X_th *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+    return true;
-+}
-+
-+static bool trans_DCBTSTEP(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+    return true;
-+}
-+
-+static bool trans_DCBLC(DisasContext *ctx, arg_X_th *a)
-+{
-+    /* Requires either PPC_BOOKE or PPC2_BOOKE206 */
-+    if (!(ctx->insns_flags & PPC_BOOKE) &&
-+        !(ctx->insns_flags2 & PPC2_BOOKE206)) {
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static bool trans_DSS(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+    return true;
-+}
-+
-+static bool trans_DCBTLS(DisasContext *ctx, arg_X_th *a)
-+{
-+    TCGv t0 = tcg_temp_new();
-+
-+    /* Requires either PPC_BOOKE or PPC2_BOOKE206 */
-+    if (!(ctx->insns_flags & PPC_BOOKE) &&
-+        !(ctx->insns_flags2 & PPC2_BOOKE206)) {
-+        return false;
-+    }
-+
-+    gen_load_spr(t0, SPR_Exxx_L1CSR0);
-+    tcg_gen_ori_tl(t0, t0, L1CSR0_CUL);
-+    gen_store_spr(SPR_Exxx_L1CSR0, t0);
-+
-+    return true;
-+}
-+
-+static bool trans_DST(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+
-+    if (a->ra == 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_DSTST(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-+
-+    if (a->ra == 0) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_DCBF(DisasContext *ctx, arg_X_l *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+
-+    /*
-+     * As per PowerISA v3.1, the L field can have values 0, 1, 3, 4, or 6.
-+     * Other values are Undefined Behavior (UB).
-+     */
-+    switch (a->l) {
-+    case 0: /* dcbf */
-+    case 1: /* dcbfl */
-+    case 3: /* dcbflp */
-+    case 4: /* dcbfps */
-+    case 6: /* dcbstps */
-+        break;
-+    default:
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-+        return true;
-+    }
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    gen_qemu_ld8u(ctx, EA, EA);
-+
-+    return true;
-+}
-+
-+static bool trans_DCBST(DisasContext *ctx, arg_X_ea *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    gen_qemu_ld8u(ctx, EA, EA);
-+
-+    return true;
-+}
-+
-+static bool trans_DCBFEP(DisasContext *ctx, arg_X_ea *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+
-+    REQUIRE_SV(ctx);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+    tcg_gen_qemu_ld_tl(EA, EA, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-+
-+    return true;
-+}
-+
-+static bool trans_DCBSTEP(DisasContext *ctx, arg_X_ea *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+    tcg_gen_qemu_ld_tl(EA, EA, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-+
-+    return true;
-+}
-+
-+static bool trans_DCBI(DisasContext *ctx, arg_X_ea *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-+
-+#if defined(CONFIG_USER_ONLY)
-+    gen_priv_opc(ctx);
-+    return true;
-+#else
-+    TCGv EA, val;
-+
-+    REQUIRE_SV(ctx);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    val = tcg_temp_new();
-+
-+    gen_qemu_ld8u(ctx, val, EA);
-+    gen_qemu_st8(ctx, val, EA);
-+
-+    return true;
-+#endif
-+}
-+
-+static bool trans_ICBI(DisasContext *ctx, arg_X_ea *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, CACHE_ICBI);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    gen_helper_ICBI(tcg_env, EA);
-+
-+    return true;
-+}
-+
-+static bool trans_ICBIEP(DisasContext *ctx, arg_X_ea *a)
-+{
-+    TCGv EA;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-+    REQUIRE_SV(ctx);
-+
-+    gen_set_access_type(ctx, ACCESS_CACHE);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+
-+    gen_helper_ICBIEP(tcg_env, EA);
-+    return true;
-+}
-+
- #include "translate/fixedpoint-impl.c.inc"
- 
- #include "translate/fp-impl.c.inc"
-@@ -5904,25 +5936,8 @@ GEN_HANDLER_E(mcrxrx, 0x1F, 0x00, 0x12, 0x007FF801, PPC_NONE, PPC2_ISA300),
+ /* rfi (supervisor only) */
+@@ -5709,7 +5703,6 @@ GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
+ GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
+ GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
+ GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
+-GEN_HANDLER(mcrf, 0x13, 0x00, 0xFF, 0x00000001, PPC_INTEGER),
+ GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
+index cbf82b1ea0..890fbb209e 100644
+--- a/target/ppc/translate/misc-impl.c.inc
++++ b/target/ppc/translate/misc-impl.c.inc
+@@ -155,3 +155,9 @@ static bool trans_ATTN(DisasContext *ctx, arg_ATTN *a)
+     return false;
  #endif
- GEN_HANDLER(mtmsr, 0x1F, 0x12, 0x04, 0x001EF801, PPC_MISC),
- GEN_HANDLER(mtspr, 0x1F, 0x13, 0x0E, 0x00000000, PPC_MISC),
--GEN_HANDLER(dcbf, 0x1F, 0x16, 0x02, 0x03C00001, PPC_CACHE),
--GEN_HANDLER_E(dcbfep, 0x1F, 0x1F, 0x03, 0x03C00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcbi, 0x1F, 0x16, 0x0E, 0x03E00001, PPC_CACHE),
--GEN_HANDLER(dcbst, 0x1F, 0x16, 0x01, 0x03E00001, PPC_CACHE),
--GEN_HANDLER_E(dcbstep, 0x1F, 0x1F, 0x01, 0x03E00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcbt, 0x1F, 0x16, 0x08, 0x00000001, PPC_CACHE),
--GEN_HANDLER_E(dcbtep, 0x1F, 0x1F, 0x09, 0x00000001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcbtst, 0x1F, 0x16, 0x07, 0x00000001, PPC_CACHE),
--GEN_HANDLER_E(dcbtstep, 0x1F, 0x1F, 0x07, 0x00000001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER_E(dcbtls, 0x1F, 0x06, 0x05, 0x02000001, PPC_BOOKE, PPC2_BOOKE206),
--GEN_HANDLER_E(dcblc, 0x1F, 0x06, 0x0c, 0x02000001, PPC_BOOKE, PPC2_BOOKE206),
- GEN_HANDLER(dcbz, 0x1F, 0x16, 0x1F, 0x03C00001, PPC_CACHE_DCBZ),
- GEN_HANDLER_E(dcbzep, 0x1F, 0x1F, 0x1F, 0x03C00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dst, 0x1F, 0x16, 0x0A, 0x01800001, PPC_ALTIVEC),
--GEN_HANDLER(dstst, 0x1F, 0x16, 0x0B, 0x01800001, PPC_ALTIVEC),
--GEN_HANDLER(dss, 0x1F, 0x16, 0x19, 0x019FF801, PPC_ALTIVEC),
--GEN_HANDLER(icbi, 0x1F, 0x16, 0x1E, 0x03E00001, PPC_CACHE_ICBI),
--GEN_HANDLER_E(icbiep, 0x1F, 0x1F, 0x1E, 0x03E00001, PPC_NONE, PPC2_BOOKE206),
--GEN_HANDLER(dcba, 0x1F, 0x16, 0x17, 0x03E00001, PPC_CACHE_DCBA),
- GEN_HANDLER(mfsr, 0x1F, 0x13, 0x12, 0x0010F801, PPC_SEGMENT),
- GEN_HANDLER(mfsrin, 0x1F, 0x13, 0x14, 0x001F0001, PPC_SEGMENT),
- GEN_HANDLER(mtsr, 0x1F, 0x12, 0x06, 0x0010F801, PPC_SEGMENT),
+ }
++
++static bool trans_MCRF(DisasContext *ctx, arg_MCRF *a)
++{
++    tcg_gen_mov_i32(cpu_crf[a->bf], cpu_crf[a->bfa]);
++    return true;
++}
 -- 
 2.52.0
 
