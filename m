@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDEFC61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C36CC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x04lb-0006kD-7h; Fri, 28 Aug 2026 18:09:43 -0400
+	id 1x04pf-0007Nc-Qn; Fri, 28 Aug 2026 18:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x04la-0006k5-B8
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:09:42 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1x04pd-0007NG-VR
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:13:53 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x04lY-0007Ay-Sn
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:09:42 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-38ea87caafeso1549581a91.3
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:09:40 -0700 (PDT)
+ id 1x04pc-0008GV-Fx
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:13:53 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-cc1c8d4a959so1207698a12.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787954979; x=1788559779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787955231; x=1788560031; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=KIjzvjpljpM5XiVLGQnGjUr8VZog5bVIyEQmEzlN0cI=;
- b=ErQzpHutXt9iNSzJWwFbz4XIICnfdoEaYX1GPsUBvrQDpa8vxHmdhx+itKPLQe7IoX
- sCWatmyapkKqs7qW1oeistIb7GZ+4dIrTb5TA1rjEnTN/pkl+57+fejd6cu9k/SC409u
- X6NR7mtU3ESauhae9IyxnA0VBXqBGE6md5b0vUyniHAJpxyGY6SzQUnlE3TtQmsgBq24
- uPZS0EyUbw8ijiiG65E79lFkWp1bIsMglqjQdrSZqG8GXYkjBGc/gGl7lCeWn6VupY95
- rd+14WBMIwFbRNKaqaBkP6O5mMuq7urrHKO9Z7TsDDWkQh5U2aO/ZBJ6SrwrIZr3nl+t
- t4mA==
+ bh=6H997e5W3ZLzT+b54C4PoYFCR8oxh9+jGcti+f3yyaM=;
+ b=QelgwTevZ8Ch8a3HNkXKp6C/fSCD9xg0X+hY/I7y7unuB02FiG4kMyBtaNk5KPv2hb
+ lb9tOfNy+9SDbky9MVyDwcM1/MzWWYi0Sy4ZxAqlDSZw+MvCJCJ0ZMXlezLm7PcMebXg
+ 5MjwJxHXRaD5DsOumNVvq3ppMOfzH1BaI/ShqymzZvdP78/uNB30927TeBRdPzc4tLWd
+ HUrR9iRoE4ISkJ4quUS31eWt3osaKuTQJ0OMmPpt5Xq63FAuZu7FgLcjKCFge7UIudSM
+ ledFphce0XHMj+p7PM2xB4mdqJWNw6TBxP4QKWs9cJXcTmCQAR6DkJ3ErpTtrJ8GWOqZ
+ 4gCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787954979; x=1788559779;
+ d=1e100.net; s=20251104; t=1787955231; x=1788560031;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KIjzvjpljpM5XiVLGQnGjUr8VZog5bVIyEQmEzlN0cI=;
- b=Fg+ypvMSgY7y7eqoBL+uIoPXdXUehLV6FplUN8rSWtpeFqeTMHkpTrsdHMF/TYTsrr
- uPzfTXESzOGrAXqptRVEKNwdjC1XkzUcLZdZAiiXnMp5oN9xDnR7SdixGY3jWbuxEeew
- l2ZyEU2j5E6EXvTae6BkyE0wtebd50JcjLBvz6cH9PBEz7z6hEcajn2c+FmEz/+KSBB5
- LH1t/pC+WhOQeiCL84EhiGPX3P4tI/uZxky+zThW1dsSnzh8SACO6HcfwV1SadzpjQuB
- dw3+1MwGX3i6gwslXzv+vjY8MgjoCzUJ6zJ2ANkXICID+abe+C845cOISeCqKh2CLag+
- tjRg==
+ bh=6H997e5W3ZLzT+b54C4PoYFCR8oxh9+jGcti+f3yyaM=;
+ b=RzpiFlXTf5+HwjjXBZv5VvBIZKcE8Lyz2mThMUF8pYq5lnUq6gxCArLRMS84xWCXCA
+ Nb2v21pTajoXrYRBQSHjQEXUdvdhOUhCsKkKImJmcaHnb+sRZ7Z4N33PWYc+E87JWi+l
+ q++2pQxx5YbfhnV+msP/A0fJMhIiF5GgXp95Dz6diGuZZxsA0nqsRSvXhmLKF393Sic4
+ CTDgpUN32ydX5nt0wIxXMQTlhbd68hhYlmXToy1KhAG4abZ4hG8vop+nxEjU2RVqqUqO
+ ua8y264My74CJgvDs0jIaYhxkoumlPOYGLTRrGHG1EyNEeVwMJCCH+eQgsg78FhdSEM/
+ 5n+g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwmDN3ssGcupLUijJoN5ZLLEIYOZuZMEszzEsBS5Og9FjkI6lVIY50RzmMNAw6yBi4sww7yYMaypIvT@nongnu.org
-X-Gm-Message-State: AFuF++nYROuEWK7i92GSNAdRJYzq3WaVMm7hy5NHfkeYyR6mYOgIvTy6
- 2KjP9wdJkBCODp+oshm1nsoiJqLTEMJoB4GL1CAREl55iPxzwq7u3Ujf1qmoXDxjMeI=
-X-Gm-Gg: AYBFou1u9ZQrDZ7YBUsRNdvLIGU3/5jaWKMy+659//hUPuWq0zI8JZPaaDahcLAy60q
- 4lUU6bhJCWPWc5wEg1GGCHSXPWzZpIuZM7E8VZEtfXzWwQ1G4sHZm7LMy2QK0nI+qTYe1xYvt6S
- 1T8o6dz46pKYc7H8BP472GhUJBCG0cJS8qSu6XA5t67nKXbIToEJwuDSO/tbt3Xd505OS0ozTcw
- M/3eSwBwb2Zu3lwHCnIL0OEmNmlQAGm3Dxg2qsj51rxTDuHxATnYck93oCCPRUbiLSMfDjmi9kI
- Ouyc26X1MUBljwVU/MMrtH2gAhUbgw/LWPGoZgMLvi/907N2JZI9O9WBYlwuAq4UHgItlmV8OAP
- rqo3xT3y6xXUYdNSB59plDxIXMkrfo0692hP5mwqzimPUNxypjchb9be40Jlo6AFhTCUk/JWZK/
- F5C5uMEQrxfgkupDhngSo/vQsraRcBQBzmfWv3imxVF226zTVLQ9UEhrxzsuei82MCSNiTWMcy5
- WgILXuQCgDNNUkZCfu4xZ2KCAU1jkM=
-X-Received: by 2002:a17:90b:4ad2:b0:383:f52b:d616 with SMTP id
- 98e67ed59e1d1-396d0fd53afmr15091715a91.10.1787954979336; 
- Fri, 28 Aug 2026 15:09:39 -0700 (PDT)
+ AKwUvBwXzEwo+5dJwsy2Id0Ep6/1czGJcYo0EQr4q33GZo5E1qAytclcINtmGlYN4KaGbkAkNPWuyllnknZI@nongnu.org
+X-Gm-Message-State: AFuF++kc53QzpZ8M8vpWP0DuFYXv/043AZSrnstzPz1QgV/yCjUngqht
+ z/Wp9qi5ZCU34Wtf/1ttF4Pq6l5uY0QUQlRlsom5gYJh+0DuG9ECx2M4yo2YdOQ7BPc=
+X-Gm-Gg: AYBFou3RizQzzPbo/nXXbSsIiW2kZ9RI5rstg4X+JCLWYr7ywVphT+6iNTrX7/mXcp8
+ fY3dFnQ1m/GQc+snmSJZ41v0LMYgekTt+oVMKLvMbdB4bElfE0x4dhZer78+R2+5KN3z7qklZhk
+ vVMvY98i/c9h8tfrUKN1B/Kk9inE5usKWhSh25lV/XNw1wb0ElaVzQOSByrdoJnF+uPuqbcoE4n
+ P6oVSB5G5k4CmdPsuEfoqyW9kOUVcmW/F0oOVxaUjDZ3/w900ty7tyfOdjWfzFvE5jXJm/8+MiX
+ H+NlAavcJn2BBwKOTL8Uugn6RCzOoyW/Bi0iqOp6ZWOCjG5KDhNeozWltqtSVafzRYv8Zup0xDi
+ IwGoMAhhG/3XdvE08t8+cqtU7134StpkMN8aGs6gMs3ig1T3YiBXmwerOyoe2pVB62IDd9bG6TE
+ L8kpUbjgwgCK0vLcRsgR7YO6Vor6yq8MuWvxZtIOWJJjc8kz0/mkSasdDFMprhcyDWEelKgvquQ
+ e85ZdR/9e1Gh2PQ1/sdqbc4OkArhm8=
+X-Received: by 2002:a17:90b:5626:b0:398:9bd1:3216 with SMTP id
+ 98e67ed59e1d1-3989bd135fcmr4419738a91.23.1787955230821; 
+ Fri, 28 Aug 2026 15:13:50 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-396ddc58f3dsm4233064a91.16.2026.08.28.15.09.38
+ 98e67ed59e1d1-396b1ab4e12sm8720272a91.16.2026.08.28.15.13.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 15:09:38 -0700 (PDT)
-Message-ID: <f457a110-2f5d-4749-8985-7cf0f84a0eb3@linaro.org>
-Date: Fri, 28 Aug 2026 15:09:37 -0700
+ Fri, 28 Aug 2026 15:13:50 -0700 (PDT)
+Message-ID: <8de947bd-3dcf-4893-aab4-149ebad288a3@linaro.org>
+Date: Fri, 28 Aug 2026 15:13:48 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 046/105] tests/tcg/alpha: system tests
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Stafford Horne <shorne@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
+Subject: Re: [PATCH v4 00/40] bsd-user: Upstream most of the remaining system
+ calls
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bibo Mao <maobibo@loongson.cn>,
- Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <17746591750@163.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Laurent Vivier
- <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
- <20260827221506.91574-47-pierrick.bouvier@oss.qualcomm.com>
+ Stacey Son <sson@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>,
+ =?UTF-8?Q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>,
+ Michal Meloun <mmel@freebsd.org>, Sean Bruno <sbruno@freebsd.org>
+References: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
+ <CANCZdfo9q2uO-WiJwT-=GSr1AwY_q0hMOLgtrO3ht5SriHc29A@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260827221506.91574-47-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <CANCZdfo9q2uO-WiJwT-=GSr1AwY_q0hMOLgtrO3ht5SriHc29A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,20 +112,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/26 15:14, Pierrick Bouvier wrote:
-> Tested-by: Aniket Sahu<asahu1x@linux.ibm.com>
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> ---
->   tests/tcg/alpha/Makefile.softmmu-target | 34 ------------------
->   tests/tcg/alpha/meson.build             |  2 ++
->   tests/tcg/alpha/system/meson.build      | 47 +++++++++++++++++++++++++
->   3 files changed, 49 insertions(+), 34 deletions(-)
->   delete mode 100644 tests/tcg/alpha/Makefile.softmmu-target
->   create mode 100644 tests/tcg/alpha/system/meson.build
+On 8/26/26 15:18, Warner Losh wrote:
+> First off, I'd like to express my appreciations for the reviews so far 
+> on this this series. Thank you!
+> 
+> I have a process question. All the hunks in this series have a 'Acked- 
+> by' or 'Reviewed-by' but many lack the former. The 'Acked-by' was made 
+> by a linux-user maintainer, for which I'm thankful. I've not seen that 
+> situation in the past, however. Can I submit a pull request for these 
+> now?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yes, please do.
+
 
 r~
-
-
 
