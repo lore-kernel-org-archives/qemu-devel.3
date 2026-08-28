@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB49DC61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 14:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786EBC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 14:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzxqJ-0002gP-57; Fri, 28 Aug 2026 10:46:07 -0400
+	id 1wzxqG-0002eE-IW; Fri, 28 Aug 2026 10:46:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqH-0002ec-1d
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:05 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqF-0002dp-5I
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:03 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqF-0000eW-7h
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:04 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4995b0343c1so9526075e9.3
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 07:46:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqD-0000dJ-FJ
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:02 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49b8be0409fso5702725e9.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 07:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787928362; x=1788533162; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=JAXlrjXZ6Fm9mPDZhDxHdudSyY1vaCDPY6fIxYTWzCs=;
- b=ZOaLYiITwSh0X94h/00WWPm+F3MhEcLxsj1DpOlP+w/5typzvFJOnmbJbUo2SfXebr
- ZCN3fYy7EUzHIIhXcJzvcgAV5qPzhA1mv65U4AYA5HDZ0uW5t8+M5FHFwWGNDx5ei/iu
- gwzXJtV+NdLS3CUui9hIH5X9b6F5iY7Nyyc012X8hepsJYtp5lH5rCjlnGkX6YxF4pSw
- h/KDQ0ugc0dOmwLfT2AUyjF+UlwZfozwfgl+4BPg3QwqzZuhwAEAdLmJgOzy/WOmPaDA
- vbaW8WZgTsAQWCP4wPJVTgsijr9z+F74bi5rjIpu393Un7Dyh0XUFxxxnZtgWq+HU2Jf
- aODg==
+ d=openvz.org; s=google; t=1787928358; x=1788533158; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=hhZt7ihNiJiEiFAnLnB5rZOpdZLwyBaqicPsPLbR04s=;
+ b=eH5wx5y95hVlgeoBgOnojLkqLdz5i5b56kVsb5aReVwQmZa90vMnb7T8yAxSB2zexI
+ QTdtxgZn3q2+ErgO/leU9Nb84KOxPTEZZR0PEBdP73Qm4MqHyM9zraYydiLPdYeMvTe4
+ AzqXe/CWKeUmDZSv885l49Z+zQeOPMou3hzV+BJ/ZUFpy5ucW3SgWPldHU/ollqcWmBL
+ dOqEg+s3DoZpLRiW8fZjZoSityNG0GrFgw3QTcWqvCzyWuN218CwpvICzVbARazqr8jd
+ zJ4MXIZGsqQqNZ6/8Th0FtDS3yHuQyhPygJMNr1BQVFahyoLjdZpcbQ2jWbiDcS/F8W1
+ 3BNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787928362; x=1788533162;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=JAXlrjXZ6Fm9mPDZhDxHdudSyY1vaCDPY6fIxYTWzCs=;
- b=SNlkv4QI08VHvoI879jHlj9gK87jYXIq7D5L2AvdM5Oeq3Q7Gt0GYbdiaZAZtnYvT+
- uRSQ91sLvzXrvzjPbTYr0GXnUYMgF2ykQXTe0aRqHK8cEi5sa4CWxDB6jp+ub5Fxq56J
- kBc4eRWp30AnWeXHSIx7YrlTd0rhyW5jtal3G+VVZq/VbgeiIenZVeNpYbxF87AJBTkU
- OojMCUzV/j0uYllBcXIRe9AgqCj5lEaaiz85ni+qEnB0B+Di4fw0t23cPNe7NjKNxjJH
- 0frvD47qfFT1tA3ZK3+vECXtLQrkJ9BLoIYRddZpny5WIHZf5Ntzw6dAhu7d1z7zEzHE
- DV1g==
-X-Gm-Message-State: AFuF++nPicO+sEqCYOxAQ93jhFmaCXWzmvQ9Eic2SnHT+3tViit7rggv
- sVzKIlL4Oy0DOvxUtAmwdyiCWOPKkGDsJ6I+I+wR991G/o8BHDRUNCTYk103Nb36g5s3zRLky85
- 6JBkW
-X-Gm-Gg: AR+sD12qzny3yXKu7bD7vEPRjzEd6pCc63mnqyOk8/Z501THa6uaujUojsSSeay0jgD
- idnvUw8snt2h14TZHq68wVsFrTxB1ANHefSKBw/Ayp5fxG58M5J4XzQNXHPoMWxCMWdYNkyiSU2
- bQ2fnCM+RobJ9BEvlngE0ukCFkqfYONdEeSt9BCGfsj/DXge8JphcCGbsjUXE9w7sVTFhquWx1j
- etVJhSBnIQwTzOqdMbwrzXR5Nhb3PhRWDaKmA5nFZajlY5ghK/iEKRp/B3Y9aEYAunjAXiZrMSQ
- odNblgNUxkrF8dUPJ0g8MbT77KygmEFmmVJb/myeyja4whQrzIg1cpnsVcFqm0WCL7Li8Uk59+x
- ivO6psl6v9kLBBhNx/A1TGRITQ3T9ezS1d2rqdqbeQs66MldyZWICjfXpUEctujpZUmI3byzp4Y
- xCtKtVaQd4l1JtscHIt09+cIjdhhcCIw9AbWBV7kseYCU4mfR4OxFpWwM2+A==
-X-Received: by 2002:a05:600c:a48:b0:499:9eb8:a1d7 with SMTP id
- 5b1f17b1804b1-49b91c3b7b6mr93831295e9.9.1787928361703; 
- Fri, 28 Aug 2026 07:46:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787928358; x=1788533158;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hhZt7ihNiJiEiFAnLnB5rZOpdZLwyBaqicPsPLbR04s=;
+ b=pNwZrW2CnA9ifuOXh+mfA1aP3m7AS/mtf+YEJvnKj5G+TggY8/j1c7BkQ+3NsU4giz
+ 80+KJeu6f4Nu2ec0wcg0rlB5DfUC2vxvUWWcn7jyJ8wYRG4hsYxXzB2cIxOG+YQ0Wm/S
+ 0StqBzG2mLJTFKfp5hYbEyzpUQuZAZLSVyOoo5Peayf+/VuS9UnvwrNPgjBBjmAf5P8n
+ szb8Vym5JJyI+QzpWmjKs5mI1qp2ZtjJ2SZzXYdYenurEY3E8Y8Y4/PfgOWh8mAwZ1iN
+ GFxnM2FCg7kc1h/q4Z5X1iCTRCyS8xoXvQyp9WdFSzKNDImduomj8Bn3QGfO9Sh1jwGW
+ AlYA==
+X-Gm-Message-State: AFuF++m08DogsDidX6EVNpgF1S7gjcBR1k15ReCj8IPEoy2BNp3ATlbO
+ gqQ9bPR4QZlrifZ9zgL+KXyQG0kUhHLTgKq8gtvc6moZh0P/PhVHd1ODfDLzA3oiV2B3gYWTNkJ
+ Gcs1N
+X-Gm-Gg: AR+sD12txunLyPXyWy2mslDUMxh56u3RpvWXVQj7COfxtEtt9ytYxe4U+HEwkB1joVi
+ NmZrL6wK8Gwz8QJNBPrzu7rXVBHzhFqkuOvhfSAICr9VHIdrS/s1YNW/OpARNkMzcBgUjqzjuvM
+ uEdXkQXacokJCSmZnBgF5ekXGmPPqsh5OrmsIbLrP9XcEQKxHGFBwuHT5yoTzeQG8AI0QmOHcQc
+ aIxvHVWlXMYW0mwsmZXXDt4uqYAUz3y/sZtEV8SGT4jADzCD5cfQ/jjk7l3kqA2Hk4kYVME/1Gh
+ odX+dOAPK1p5E9V6xFx9lfD/EINXh3pm6zX34VFgMiX1s9Eiz7SNJRknQvFSPeMJCzTvGQdBjgS
+ cr7SfNJ63QaArGA3qsnxCHcLfYxMyIQrCvtIozW0K8EMtzhc14GVsjULoHtFYCh/hKL/kFJD6tQ
+ JFcn92NZfqCs+mI9quwdVV0JR6hiNEKSd6UEms3dW0yTViA3frURzts0Yukw==
+X-Received: by 2002:a05:600c:870c:b0:499:dc34:bdc with SMTP id
+ 5b1f17b1804b1-49b91c1c401mr136228045e9.1.1787928358201; 
+ Fri, 28 Aug 2026 07:45:58 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9458:da19:ab04:373a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b94dcaf61sm53730925e9.4.2026.08.28.07.46.00
+ 5b1f17b1804b1-49b94dcaf61sm53730925e9.4.2026.08.28.07.45.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 07:46:01 -0700 (PDT)
+ Fri, 28 Aug 2026 07:45:57 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH 3/9] block/commit: batch block-status queries
-Date: Fri, 28 Aug 2026 16:45:48 +0200
-Message-ID: <20260828144554.1741910-4-den@openvz.org>
+Subject: [PATCH 0/9] block: cheaper zero handling in backup and commit
+Date: Fri, 28 Aug 2026 16:45:45 +0200
+Message-ID: <20260828144554.1741910-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260828144554.1741910-1-den@openvz.org>
-References: <20260828144554.1741910-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,131 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+Backup and commit re-query the source block status for every task and
+size a task by the copy buffer, so a long run of zeroes turns into a
+crowd of small write-zeroes requests. This series reuses what the
+up-front scan already learned and lets one write-zeroes task cover a
+whole run.
 
-commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
-time, so a long run above base pays one query per 512K for an answer
-the whole run shares.
+Backup of a 16G qcow2 image holding 1G of data, the rest never
+allocated, sync=full to a raw target on ext4:
 
-Query the remainder of the image instead and keep the answer in a
-CommitStatus owned by commit_run(). Nothing can write top above
-base_overlay while the job runs: BLK_PERM_CONSISTENT_READ is shared
-only from filtered_base downwards, and the job writes below
-base_overlay.
+               tasks    time
+    before     16384    1.6s
+    after       1088    1.0s
 
-Copying is still bounded by the read buffer. Zeroes need no buffer, so
-COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
-write-zeroes, and an unallocated span is crossed in one step.
+Such an image is the normal case rather than a corner one: a guest with
+discard enabled on a disk which is mostly free leaves exactly this
+shape behind.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- block/commit.c | 50 +++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 39 insertions(+), 11 deletions(-)
 
-diff --git a/block/commit.c b/block/commit.c
-index 4e0b0f9029..5aa3df31e1 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -31,8 +31,17 @@ enum {
-      * contiguous regions of the image is efficient.
-      */
-     COMMIT_BUFFER_SIZE = 512 * 1024, /* in bytes */
-+    COMMIT_ZERO_CHUNK = 256 * 1024 * 1024, /* in bytes */
- };
- 
-+/* Last block-status answer, covering [offset, end). Empty when equal. */
-+typedef struct CommitStatus {
-+    int64_t len;
-+    int64_t offset;
-+    int64_t end;
-+    int ret;
-+} CommitStatus;
-+
- typedef struct CommitBlockJob {
-     BlockJob common;
-     BlockDriverState *commit_top_bs;
-@@ -130,26 +139,43 @@ static void commit_clean(Job *job)
- 
- static int coroutine_fn
- commit_iteration(CommitBlockJob *s, int64_t offset,
--                 int64_t *requested_bytes, void *buf)
-+                 int64_t *requested_bytes, void *buf, CommitStatus *st)
- {
-     BlockErrorAction action;
--    int64_t bytes = *requested_bytes;
-+    int64_t bytes;
-     int ret = 0;
-     bool error_in_source = true;
- 
--    /* Copy if allocated above the base */
--    WITH_GRAPH_RDLOCK_GUARD() {
--        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
--            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
--            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
-+    if (offset < st->offset || offset >= st->end) {
-+        /* Copy if allocated above the base */
-+        WITH_GRAPH_RDLOCK_GUARD() {
-+            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
-+                s->base_overlay, true, BDRV_WANT_PRECISE, offset,
-+                st->len - offset, &bytes, NULL, NULL, NULL);
-+        }
-+
-+        if (ret < 0) {
-+            trace_commit_one_iteration(s, offset, 0, ret);
-+            goto fail;
-+        }
-+
-+        st->offset = offset;
-+        st->end = offset + bytes;
-+        st->ret = ret;
-     }
- 
--    trace_commit_one_iteration(s, offset, bytes, ret);
-+    ret = st->ret;
-+    bytes = st->end - offset;
- 
--    if (ret < 0) {
--        goto fail;
-+    /* An unallocated span costs no I/O, so it is crossed in one step. */
-+    if (ret & BDRV_BLOCK_ZERO) {
-+        bytes = MIN(bytes, COMMIT_ZERO_CHUNK);
-+    } else if (ret & BDRV_BLOCK_ALLOCATED) {
-+        bytes = MIN(bytes, COMMIT_BUFFER_SIZE);
-     }
- 
-+    trace_commit_one_iteration(s, offset, bytes, ret);
-+
-     if (ret & BDRV_BLOCK_ALLOCATED) {
-         if (ret & BDRV_BLOCK_ZERO) {
-             /*
-@@ -215,6 +241,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     int64_t n = 0; /* bytes */
-     QEMU_AUTO_VFREE void *buf = NULL;
-     int64_t len, base_len;
-+    CommitStatus st = { 0 };
- 
-     len = blk_co_getlength(s->top);
-     if (len < 0) {
-@@ -235,6 +262,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     }
- 
-     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
-+    st.len = len;
- 
-     for (offset = 0; offset < len; offset += n) {
-         /* Note that even when no rate limit is applied we need to yield
-@@ -245,7 +273,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-             break;
-         }
- 
--        ret = commit_iteration(s, offset, &n, buf);
-+        ret = commit_iteration(s, offset, &n, buf, &st);
- 
-         if (ret < 0) {
-             return ret;
+Denis V. Lunev (9):
+  block/commit: pass BDRV_WANT_PRECISE to block-status
+  iotests/040: cover large and fragmented commit runs
+  block/commit: batch block-status queries
+  iotests/124: cover backup of zero clusters and holes
+  block/block-copy: don't reserve memory for zero tasks
+  block/block-copy: extract block_copy_set_task_method()
+  block/block-copy: track known-zero source clusters
+  block/backup: pre-fill zero_bitmap for full/bitmap
+  block/block-copy: coalesce write-zeroes tasks
+
+ block/backup.c             |  93 ++++++---
+ block/block-copy.c         | 239 +++++++++++++++++++---
+ block/commit.c             |  50 ++++-
+ include/block/block-copy.h |   5 +
+ tests/qemu-iotests/040     |  95 ++++++++-
+ tests/qemu-iotests/040.out |   4 +-
+ tests/qemu-iotests/124     | 402 ++++++++++++++++++++++++++++++++++++-
+ tests/qemu-iotests/124.out |   4 +-
+ 8 files changed, 811 insertions(+), 81 deletions(-)
+
+
+base-commit: 0a1ebd448b38afaa118597cbb633dbec24ef74d3
 -- 
 2.53.0
 
