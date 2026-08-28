@@ -4,56 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F7F0C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F572C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzvHB-00043O-Ao; Fri, 28 Aug 2026 08:01:41 -0400
+	id 1wzvK4-0005MT-HF; Fri, 28 Aug 2026 08:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1wzvH4-0003xx-EG
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:01:35 -0400
-Received: from va-1-114.ptr.blmpb.com ([209.127.230.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1wzvGy-0000rq-9r
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:01:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1787918478; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=cmkpcGoKPgxevNKBFdQTRdSCicl6GwGpvzSSWTybcLs=;
- b=Ze9YcznDvp7P3rBx0rMFYGpJgrO94j6B1AGi0brOtan4kkeg8Gyx4s5aaP5cL5Eas2IJqd
- znktMfEgXiBkJ+xrGCsmZwSrOFTP170wx6aOcak5OYmvW0z6HsVg//PDZYj6KJOZcKS6fV
- LdZoXvZBOQcik/rfWZCWIV5j975xBAUpM4k+4CdrNFc8g6X9sZsg74KlAAVxCl8WCi2e3A
- iirYZZdgLWQuBAh5GhVYtvfE8UuhOCfZvdJYKAARC1bJAacFK0gnWkf4zi843B54Aoh4k0
- 6h0VbtxokyUkrd5yc1/bgcXhXK7ybz7HDgW3JXaoXs+fHsNmV5t0vBr1dQ26dQ==
-Date: Fri, 28 Aug 2026 20:01:14 +0800
-Message-Id: <ee7ee3a1f02a7e7cbb15b78aec59fd82060d2306.450f9d23.be8a.4745.93e4.f94f8b9058aa@bytedance.com>
-To: "Daniel Henrique Barboza" <daniel.barboza@oss.qualcomm.com>
-Mime-Version: 1.0
-References: <20260828092053.3787517-1-liumingliang.dev@bytedance.com>
- <11e5ab2c-b87e-4033-a424-028e42dc9954@oss.qualcomm.com>
-In-Reply-To: <11e5ab2c-b87e-4033-a424-028e42dc9954@oss.qualcomm.com>
-X-Lms-Return-Path: <lba+16a91788c+40b488+nongnu.org+liumingliang.dev@bytedance.com>
-Content-Type: multipart/alternative;
- boundary=ad8fb322d1c23b556c768fb458fc4fb8702cd956827b899f757d42dc30af
-Cc: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, 
- <Alistair.Francis@wdc.com>, <zhiwei_liu@linux.alibaba.com>, 
- <liwei1518@gmail.com>, <chao.liu@processmission.com>, 
- "Zhibo Hong" <hongzhibo@bytedance.com>
-Subject: Re: [PATCH] target/riscv: Add experimental Zvabd extension support
-From: =?utf-8?q?=E5=88=98=E9=B8=A3=E4=BA=AE?= <liumingliang.dev@bytedance.com>
-Received-SPF: pass client-ip=209.127.230.114;
- envelope-from=liumingliang.dev@bytedance.com; helo=va-1-114.ptr.blmpb.com
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wzvJz-0005Lg-TH
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:04:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wzvJw-0001ew-5z
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:04:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787918670;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ucS2QBmZcST6faPS/JFZFfGA/IwvZdQ7OI7S+emcI1Q=;
+ b=FSiw71JlkoF75wlYHu9B7/gdy/rwnWdA1gzMATtlRua3zOV+2MoUAQJZVO67D8fSpeFKZd
+ kSE6V9xtN6Ip7ZkR2stiJwtHBVSojvXmVbDOWfrLuYavOMQLLOp6FLsCka4vEjagLNE6hz
+ YR4Lxa5Iw+HiG08WyaTh+TrCb9ZVL+I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-qBL3EPSGPKOj3VpzFG10Fw-1; Fri,
+ 28 Aug 2026 08:04:26 -0400
+X-MC-Unique: qBL3EPSGPKOj3VpzFG10Fw-1
+X-Mimecast-MFC-AGG-ID: qBL3EPSGPKOj3VpzFG10Fw_1787918665
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED27B180256E; Fri, 28 Aug 2026 12:04:24 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F3687195604A; Fri, 28 Aug 2026 12:04:14 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v5 00/50] Make HMP optional (and later standalone)
+Date: Fri, 28 Aug 2026 16:03:57 +0400
+Message-Id: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23Nyw6CMBAF0F8hXVvT1/Bw5X8YF6VMpSY8bJFoD
+ P9u0YUiLm/mnjsPEtA7DGSXPIjH0QXXtTHAJiGm1u0JqatiJoKJlIHg9ILNlbYdrZueoq6kZaX
+ NCsNIFL1H626vtcPxncO1PKMZ5om5UbswdP7+ejfyufd/eeSU0YozZXNWIFew91jVetiariHz9
+ Cg+OBXpEouIc20lLw0ok/IVlh+c8x8sI0aQ1kiIHNgKqy8sYIlVxNrGA2RG2BIXeJqmJ8gL/xh
+ wAQAA
+X-Change-ID: 20260521-qemu-no-hmp-ead3f0bf79c0
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ dave@treblig.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, "Denis V. Lunev" <den@openvz.org>, 
+ "Jason J. Herne" <jjherne@linux.ibm.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=23790;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=hqtaVKJO3Ev6d0Z+adLpH26klLBn1W1ulVYyXfFnPOc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkXk3WoVqgFMk1uzkTGIz5Lu8DhA6EFKWDTkTT
+ O7RSPjiiI+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapF5NwAKCRDa6OEJdZac
+ 5cIOD/9ZslVFU9UNdEexQ3eu1BdAO2NKa94BfLn5FVj9GO4VFiYdcsADIbzWG45qIzMm0DvBr7A
+ Jt2zUerV+25yK/4Vxo74eqZXlgGarBydHBLbHTHT9WEeonamIta45RVzsmkAKnTp4ZuGAmvsKJK
+ lK+S8nCfIx4iV2NM8jWHQuUdv6cnNSoepRKabNy6xZNzOHrSfM7AWabkUI0CSxoM3iIDO+Z6pGw
+ k8DIV4clnYWDLLNf6fjp9viKCsRn/VAVJdn7SFKpJialnqZz1ksZS6MX6SB/WADaxq1wEQqgSa9
+ ptbre88vb3cmCmtPUzqN/HHCmJbrLHXrKQcvr0ZRfCMyM3V3Zt1g8X6cbBYd2opQN4sNTp9PGhK
+ nGNfTZJ9dP62Bqy8/ryQHaYyzHPeLGcGQYjsuPM+ZRdAqn8tRin97w1bR9QMTDFsCe+5AQAwtxM
+ +Sm5n1z5/P1oGLUhisAUmR8K5ba3otrji27W761vbl3QPqfjsZ8TJBuujC/2AVsPFfMEB21MSHB
+ a9OebB3y0m6WDeSsVE/5MtQ3JbQ2KAucA+8NtJ2IuaFClHyWAbv7UlJSZlcpkWaz0ZHtcNNrkTL
+ v66o/g1NuFKR2CdLOq/fcNCXq3EFkkyDZKGwhxeAFvTUI0Hpm1r2Ze6WHGRWr/hXn6qH/LITVOI
+ GxAAdJ/2VpvlYzA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,911 +114,427 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---ad8fb322d1c23b556c768fb458fc4fb8702cd956827b899f757d42dc30af
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Hi Daniel,
-Thanks for your advice. I=E2=80=99ll add more tests for this patch.
+This series makes HMP compile-time optional via --disable-hmp. The
+resulting binary speaks only QMP - reducing the attack surface, binary
+size and enforcing a separation between machine-readable interface and
+interactive debugging console.
 
-In the latest specification, vabs.v is defined as a pseudo-instruction that=
- aliases vabd.vx rd, vs2, x0, similar to how vneg.v aliases vrsub.vx rd, vs=
-2, x0. I think we don't need add vabs.v as a separate instruction, since th=
-ey share the same encoding.
+QMP offers almost all the functionality HMP could provide, so a separate
+standalone "HMP-like" console could be implemented on top of it. The
+rough list of missing commands (+complexity estimation) after this
+series:
 
-See the vabs.v at: https://github.com/riscv/riscv-isa-manual/pull/3279/chan=
-ges#diff-c4a6db324416cc1f52c849a8cd5a20b5d8b5e422ffca6dcb6f341b5f1df48a15R1=
-10
+Debugging / introspection:
+- info registers (medium) - plus $reg expression handling
+- x/xp read memory (medium)
+- gpa2hpa/gpa2hva/gva2gpa address translation (medium)
+- info lapic (high) - deep x86 APIC state, lots of registers
+- info mem (high) - virtual memory mappings, different per arch
+- info tlb (high) - virt-to-phys mappings, also per arch
+- info mtree (high) - memory region tree, multiple view modes
+- info skeys (medium) - s390x storage keys
+- info cmma (medium) - s390x CMMA values
+- info qdm (easy) - could probably be folded into QOM introspection
+- info qtree (medium) - same, maybe QOM introspection is enough
+- info snapshots (medium)
+- info usbhost (medium)
+- info via (medium) -- VIA south bridge state
 
-> From: "Daniel Henrique Barboza"<daniel.barboza@oss.qualcomm.com>
-> Date:  Fri, Aug 28, 2026, 19:34
-> Subject:  Re: [PATCH] target/riscv: Add experimental Zvabd extension supp=
-ort
-> To: "liumingliang"<liumingliang.dev@bytedance.com>, <qemu-devel@nongnu.or=
-g>
-> Cc: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <Alistair.Francis@wdc.=
-com>, <zhiwei_liu@linux.alibaba.com>, <liwei1518@gmail.com>, <chao.liu@proc=
-essmission.com>, "Zhibo Hong"<hongzhibo@bytedance.com>
-> Hi,
->=20
-> This patch is missing vabs.v, which is also part of the specification.
->=20
-> I added vabs.v, and a .S test file for this new insns, using Zhibo's orig=
-inal
-> patch, in this branch:
->=20
-> https://gitlab.com/danielhb/qemu/-/tree/zvabd
->=20
-> vabs.v implementation:
->=20
-> https://gitlab.com/danielhb/qemu/-/commit/1ce5701e737f885f2e32248c1587614=
-ea3435d76
->=20
-> test file:
->=20
-> https://gitlab.com/danielhb/qemu/-/commit/9f4626bc8e55c0768ff474037e29143=
-1d4deb0fb
->=20
->=20
-> Feel free to add these 2 commits in this work. =C2=A0It's already rebased=
- on a recent code
-> base so shouldn't be much of a problem.
->=20
->=20
-> Also, I believe we'll want tests for the other zvabd insns too, so we'll =
-need extra
-> code in test-zvabd.S.
->=20
->=20
-> Thanks,
-> Daniel
->=20
-> On 8/28/2026 6:20 AM, liumingliang wrote:
-> > From: Zhibo Hong <hongzhibo@bytedance.com>
-> >=C2=A0
-> > The draft Zvabd extension provides vector integer absolute-difference
-> > operations for image, video, and other data-processing workloads. It
-> > introduces eight new intructions:
-> >=C2=A0
-> > =C2=A0 =C2=A0- vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW val=
-ues from
-> > =C2=A0 =C2=A0 =C2=A08 through ELEN, with SEW 64 requiring Zve64x.
-> > =C2=A0 =C2=A0- vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support=
- SEW 8
-> > =C2=A0 =C2=A0 =C2=A0and 16 and accumulate into a double-width destinati=
-on.
-> >=C2=A0
-> > This patch implement this instruction extension, including instruction
-> > decoder, TCG translation, and helpers, etc. The specification is under
-> > review at:
-> > https://github.com/riscv/riscv-isa-manual/pull/3279
-> >=C2=A0
-> > Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
-> > ---
-> > =C2=A0 disas/riscv-op.c.inc =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A08 +++
-> > =C2=A0 disas/riscv.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A08 +++
-> > =C2=A0 target/riscv/cpu.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A01 +
-> > =C2=A0 target/riscv/cpu_cfg_fields.h.inc =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | =C2=A01 +
-> > =C2=A0 target/riscv/helper.h =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 26 ++++++++++
-> > =C2=A0 target/riscv/insn32.decode =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| 10 ++++
-> > =C2=A0 target/riscv/tcg/insn_trans/trans_rvv.c.inc | 45 +++++++++++++++=
-++
-> > =C2=A0 target/riscv/tcg/tcg-cpu.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A06 +++
-> > =C2=A0 target/riscv/tcg/vector_helper.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0| 56 +++++++++++++++++++++
-> > =C2=A0 9 files changed, 161 insertions(+)
-> >=C2=A0
-> > diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-> > index 1d334e4857..07b56f5d52 100644
-> > --- a/disas/riscv-op.c.inc
-> > +++ b/disas/riscv-op.c.inc
-> > @@ -490,6 +490,10 @@ OP(vaadd_vv, "vaadd.vv", rv_codec_v_r, rv_fmt_vd_v=
-s2_vs1_vm)
-> > =C2=A0 OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > =C2=A0 OP(vaaddu_vv, "vaaddu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > =C2=A0 OP(vaaddu_vx, "vaaddu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > +OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > +OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > +OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > +OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > =C2=A0 OP(vadc_vim, "vadc.vim", rv_codec_v_i, rv_fmt_vd_vs2_imm_vl)
-> > =C2=A0 OP(vadc_vvm, "vadc.vvm", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vl)
-> > =C2=A0 OP(vadc_vxm, "vadc.vxm", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vl)
-> > @@ -861,6 +865,10 @@ OP(vsuxei16_v, "vsuxei16.v", rv_codec_v_r, rv_fmt_=
-ldst_vd_rs1_vs2_vm)
-> > =C2=A0 OP(vsuxei32_v, "vsuxei32.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs=
-2_vm)
-> > =C2=A0 OP(vsuxei64_v, "vsuxei64.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs=
-2_vm)
-> > =C2=A0 OP(vsuxei8_v, "vsuxei8.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_=
-vm)
-> > +OP(vwabda_vv, "vwabda.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > +OP(vwabda_vx, "vwabda.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > +OP(vwabdau_vv, "vwabdau.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > +OP(vwabdau_vx, "vwabdau.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > =C2=A0 OP(vwadd_vv, "vwadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > =C2=A0 OP(vwadd_vx, "vwadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> > =C2=A0 OP(vwadd_wv, "vwadd.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> > diff --git a/disas/riscv.c b/disas/riscv.c
-> > index b8099cbdf8..e0a8b3a756 100644
-> > --- a/disas/riscv.c
-> > +++ b/disas/riscv.c
-> > @@ -2022,6 +2022,8 @@ static const rv_opcode_data *decode_inst_opcode(r=
-v_decode *dec, rv_isa isa)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 48:=
- return &op_vwredsumu_vs;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 49:=
- return &op_vwredsum_vs;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 53:=
- return &op_vwsll_vv;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 61: retur=
-n &op_vwabda_vv;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 62: retur=
-n &op_vwabdau_vv;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 1:
-> > @@ -2164,6 +2166,8 @@ static const rv_opcode_data *decode_inst_opcode(r=
-v_decode *dec, rv_isa isa)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 break;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 }
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 break;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 21: retur=
-n &op_vabd_vv;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 22: retur=
-n &op_vabdu_vv;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 23:
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 if ((inst >> 25) & 1) {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 return &op_vcompress_vm;
-> > @@ -2349,6 +2353,8 @@ static const rv_opcode_data *decode_inst_opcode(r=
-v_decode *dec, rv_isa isa)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 46:=
- return &op_vnclipu_wx;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 47:=
- return &op_vnclip_wx;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 53:=
- return &op_vwsll_vx;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 61: retur=
-n &op_vwabda_vx;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 62: retur=
-n &op_vwabdau_vx;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 5:
-> > @@ -2417,6 +2423,8 @@ static const rv_opcode_data *decode_inst_opcode(r=
-v_decode *dec, rv_isa isa)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 13:=
- return &op_vclmulh_vx;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 14:=
- return &op_vslide1up_vx;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 15:=
- return &op_vslide1down_vx;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 21: retur=
-n &op_vabd_vx;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 22: retur=
-n &op_vabdu_vx;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 16:
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 switch ((inst >> 20) & 0b11111) {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 case 0:
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index a13177b7b7..4b8944b051 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -220,6 +220,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
-> > =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(zksh, PRIV_VERSION_1_12_0, ext_=
-zksh),
-> > =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(zkt, PRIV_VERSION_1_12_0, ext_z=
-kt),
-> > =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(ztso, PRIV_VERSION_1_12_0, ext_=
-ztso),
-> > + =C2=A0 =C2=A0ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvabd, PRIV_VERSION_1_13=
-_0, ext_zvabd),
-> > =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(zvbb, PRIV_VERSION_1_12_0, ext_=
-zvbb),
-> > =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(zvbc, PRIV_VERSION_1_12_0, ext_=
-zvbc),
-> > =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(zve32f, PRIV_VERSION_1_10_0, ex=
-t_zve32f),
-> > diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_f=
-ields.h.inc
-> > index f8c27a574f..6018e58195 100644
-> > --- a/target/riscv/cpu_cfg_fields.h.inc
-> > +++ b/target/riscv/cpu_cfg_fields.h.inc
-> > @@ -83,6 +83,7 @@ BOOL_FIELD(ext_zve32x)
-> > =C2=A0 BOOL_FIELD(ext_zve64f)
-> > =C2=A0 BOOL_FIELD(ext_zve64d)
-> > =C2=A0 BOOL_FIELD(ext_zve64x)
-> > +BOOL_FIELD(ext_zvabd)
-> > =C2=A0 BOOL_FIELD(ext_zvbb)
-> > =C2=A0 BOOL_FIELD(ext_zvbc)
-> > =C2=A0 BOOL_FIELD(ext_zvkb)
-> > diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> > index 4fc2d3a155..3aef6e0e3e 100644
-> > --- a/target/riscv/helper.h
-> > +++ b/target/riscv/helper.h
-> > @@ -1350,6 +1350,32 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env,=
- i32)
-> > =C2=A0 DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
-> > =C2=A0 DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
-> > =C2=A0=C2=A0
-> > +/* Zvabd Extension */
-> > +DEF_HELPER_6(vabd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vabdu_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vwabda_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vwabda_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vwabda_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vwabda_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vwabdau_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vwabdau_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> > +DEF_HELPER_6(vwabdau_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> > +DEF_HELPER_6(vwabdau_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> > +
-> > =C2=A0 /* CFI (zicfiss) helpers */
-> > =C2=A0 #ifndef CONFIG_USER_ONLY
-> > =C2=A0 DEF_HELPER_1(ssamoswap_disabled, void, env)
-> > diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> > index 21272fdb50..1c991a6f42 100644
-> > --- a/target/riscv/insn32.decode
-> > +++ b/target/riscv/insn32.decode
-> > @@ -1084,3 +1084,13 @@ sb_aqrl =C2=A000111 . . ..... ..... 000 ..... 01=
-01111 @atom_st
-> > =C2=A0 sh_aqrl =C2=A000111 . . ..... ..... 001 ..... 0101111 @atom_st
-> > =C2=A0 sw_aqrl =C2=A000111 . . ..... ..... 010 ..... 0101111 @atom_st
-> > =C2=A0 sd_aqrl =C2=A000111 . . ..... ..... 011 ..... 0101111 @atom_st
-> > +
-> > +# *** Zvabd Extension ***
-> > +vabd_vv =C2=A0 =C2=A0 =C2=A0 010101 . ..... ..... 010 ..... 1010111 @r=
-_vm
-> > +vabd_vx =C2=A0 =C2=A0 =C2=A0 010101 . ..... ..... 110 ..... 1010111 @r=
-_vm
-> > +vabdu_vv =C2=A0 =C2=A0 =C2=A0010110 . ..... ..... 010 ..... 1010111 @r=
-_vm
-> > +vabdu_vx =C2=A0 =C2=A0 =C2=A0010110 . ..... ..... 110 ..... 1010111 @r=
-_vm
-> > +vwabda_vv =C2=A0 =C2=A0 111101 . ..... ..... 000 ..... 1010111 @r_vm
-> > +vwabda_vx =C2=A0 =C2=A0 111101 . ..... ..... 100 ..... 1010111 @r_vm
-> > +vwabdau_vv =C2=A0 =C2=A0111110 . ..... ..... 000 ..... 1010111 @r_vm
-> > +vwabdau_vx =C2=A0 =C2=A0111110 . ..... ..... 100 ..... 1010111 @r_vm
-> > diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv=
-/tcg/insn_trans/trans_rvv.c.inc
-> > index a22e2cae6c..14ef961607 100644
-> > --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> > +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> > @@ -4091,3 +4091,48 @@ GEN_INT_EXT_TRANS(vzext_vf8, 3, 2)
-> > =C2=A0 GEN_INT_EXT_TRANS(vsext_vf2, 1, 3)
-> > =C2=A0 GEN_INT_EXT_TRANS(vsext_vf4, 2, 4)
-> > =C2=A0 GEN_INT_EXT_TRANS(vsext_vf8, 3, 5)
-> > +
-> > +/* Zvabd Extension */
-> > +#define GEN_ABD_CHECK(NAME, CHECK_FN, MAX_SEW) =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > +static bool NAME(DisasContext *s, arg_rmrr *a) =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > +{ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0return CHECK_FN(s, a) && s->cfg_ptr->ext_zvabd && =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s->sew <=3D MAX_SEW && =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (s->sew !=3D MO_64 || s->cfg_ptr->=
-ext_zve64x); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > +}
-> > +GEN_ABD_CHECK(vabd_vv_check, opivv_check, MO_64)
-> > +GEN_ABD_CHECK(vabd_vx_check, opivx_check, MO_64)
-> > +GEN_ABD_CHECK(vwabd_vv_check, opivv_overwrite_widen_check, MO_16)
-> > +GEN_ABD_CHECK(vwabd_vx_check, opivx_overwrite_widen_check, MO_16)
-> > +
-> > +GEN_OPIVV_TRANS(vabd_vv, vabd_vv_check)
-> > +GEN_OPIVX_TRANS(vabd_vx, vabd_vx_check)
-> > +GEN_OPIVV_TRANS(vabdu_vv, vabd_vv_check)
-> > +GEN_OPIVX_TRANS(vabdu_vx, vabd_vx_check)
-> > +
-> > +#define GEN_ABD_OPIVV_WIDEN_TRANS(NAME, CHECK) =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > +static bool trans_##NAME(DisasContext *s, arg_rmrr *a) =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > +{ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0static gen_helper_gvec_4_ptr * const fns[2] =3D { =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_helper_##NAME##_b, gen_helper_##NAME##=
-_h, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0}; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0return s->sew <=3D MO_16 && do_opivv_widen(s, a, fns[s->=
-sew], CHECK); \
-> > +}
-> > +
-> > +#define GEN_ABD_OPIVX_WIDEN_TRANS(NAME, CHECK) =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > +static bool trans_##NAME(DisasContext *s, arg_rmrr *a) =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > +{ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0if (CHECK(s, a)) { =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0static gen_helper_opivx * const fns[2] =3D=
- { =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0\
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_helper_##NAME##_b, gen_h=
-elper_##NAME##_h, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0}; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0return opivx_trans(a->rd, a->rs1, a->rs2, =
-a->vm, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 fns[s->sew], s); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0} =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > + =C2=A0 =C2=A0return false; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-> > +}
-> > +
-> > +GEN_ABD_OPIVV_WIDEN_TRANS(vwabda_vv, vwabd_vv_check)
-> > +GEN_ABD_OPIVX_WIDEN_TRANS(vwabda_vx, vwabd_vx_check)
-> > +GEN_ABD_OPIVV_WIDEN_TRANS(vwabdau_vv, vwabd_vv_check)
-> > +GEN_ABD_OPIVX_WIDEN_TRANS(vwabdau_vx, vwabd_vx_check)
-> > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> > index 9e3cc87f8a..4c2fb6f063 100644
-> > --- a/target/riscv/tcg/tcg-cpu.c
-> > +++ b/target/riscv/tcg/tcg-cpu.c
-> > @@ -732,6 +732,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *c=
-pu, Error **errp)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;
-> > =C2=A0 =C2=A0 =C2=A0 }
-> > =C2=A0=C2=A0
-> > + =C2=A0 =C2=A0if ((cpu->cfg.ext_zvabd) && !cpu->cfg.ext_zve32x) {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg(errp,
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "Zvabd=
- extensions require V or Zve* extensions");
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
-> > + =C2=A0 =C2=A0}
-> > +
-> > =C2=A0 =C2=A0 =C2=A0 if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu_cfg_ext_is_user_set(CPU_CFG_=
-OFFSET(ext_zicntr))) {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, "zicn=
-tr requires zicsr");
-> > diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector=
-_helper.c
-> > index e28d8a3d9f..bdb1efcebc 100644
-> > --- a/target/riscv/tcg/vector_helper.c
-> > +++ b/target/riscv/tcg/vector_helper.c
-> > @@ -5906,3 +5906,59 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, =
-H8, H4)
-> > =C2=A0 GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t, =C2=A0H4, H1)
-> > =C2=A0 GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
-> > =C2=A0 GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t, =C2=A0H8, H1)
-> > +
-> > +/* Zvabd Extension */
-> > +#define DO_ABD(N, M) =C2=A0(N > M ? N - M : M - N)
-> > +#define DO_ABDACC(N, M, D) (DO_ABD(N, M) + D)
-> > +
-> > +RVVCALL(OPIVV2, vabd_vv_b, OP_SSS_B, H1, H1, H1, DO_ABD)
-> > +RVVCALL(OPIVV2, vabd_vv_h, OP_SSS_H, H2, H2, H2, DO_ABD)
-> > +RVVCALL(OPIVV2, vabd_vv_w, OP_SSS_W, H4, H4, H4, DO_ABD)
-> > +RVVCALL(OPIVV2, vabd_vv_d, OP_SSS_D, H8, H8, H8, DO_ABD)
-> > +RVVCALL(OPIVX2, vabd_vx_b, OP_SSS_B, H1, H1, DO_ABD)
-> > +RVVCALL(OPIVX2, vabd_vx_h, OP_SSS_H, H2, H2, DO_ABD)
-> > +RVVCALL(OPIVX2, vabd_vx_w, OP_SSS_W, H4, H4, DO_ABD)
-> > +RVVCALL(OPIVX2, vabd_vx_d, OP_SSS_D, H8, H8, DO_ABD)
-> > +RVVCALL(OPIVV2, vabdu_vv_b, OP_UUU_B, H1, H1, H1, DO_ABD)
-> > +RVVCALL(OPIVV2, vabdu_vv_h, OP_UUU_H, H2, H2, H2, DO_ABD)
-> > +RVVCALL(OPIVV2, vabdu_vv_w, OP_UUU_W, H4, H4, H4, DO_ABD)
-> > +RVVCALL(OPIVV2, vabdu_vv_d, OP_UUU_D, H8, H8, H8, DO_ABD)
-> > +RVVCALL(OPIVX2, vabdu_vx_b, OP_UUU_B, H1, H1, DO_ABD)
-> > +RVVCALL(OPIVX2, vabdu_vx_h, OP_UUU_H, H2, H2, DO_ABD)
-> > +RVVCALL(OPIVX2, vabdu_vx_w, OP_UUU_W, H4, H4, DO_ABD)
-> > +RVVCALL(OPIVX2, vabdu_vx_d, OP_UUU_D, H8, H8, DO_ABD)
-> > +
-> > +RVVCALL(OPIVV3, vwabda_vv_b, WOP_SSS_B, H2, H1, H1, DO_ABDACC)
-> > +RVVCALL(OPIVV3, vwabda_vv_h, WOP_SSS_H, H4, H2, H2, DO_ABDACC)
-> > +RVVCALL(OPIVX3, vwabda_vx_b, WOP_SSS_B, H2, H1, DO_ABDACC)
-> > +RVVCALL(OPIVX3, vwabda_vx_h, WOP_SSS_H, H4, H2, DO_ABDACC)
-> > +RVVCALL(OPIVV3, vwabdau_vv_b, WOP_UUU_B, H2, H1, H1, DO_ABDACC)
-> > +RVVCALL(OPIVV3, vwabdau_vv_h, WOP_UUU_H, H4, H2, H2, DO_ABDACC)
-> > +RVVCALL(OPIVX3, vwabdau_vx_b, WOP_UUU_B, H2, H1, DO_ABDACC)
-> > +RVVCALL(OPIVX3, vwabdau_vx_h, WOP_UUU_H, H4, H2, DO_ABDACC)
-> > +
-> > +GEN_VEXT_VV(vabd_vv_b, 1)
-> > +GEN_VEXT_VV(vabd_vv_h, 2)
-> > +GEN_VEXT_VV(vabd_vv_w, 4)
-> > +GEN_VEXT_VV(vabd_vv_d, 8)
-> > +GEN_VEXT_VX(vabd_vx_b, 1)
-> > +GEN_VEXT_VX(vabd_vx_h, 2)
-> > +GEN_VEXT_VX(vabd_vx_w, 4)
-> > +GEN_VEXT_VX(vabd_vx_d, 8)
-> > +GEN_VEXT_VV(vabdu_vv_b, 1)
-> > +GEN_VEXT_VV(vabdu_vv_h, 2)
-> > +GEN_VEXT_VV(vabdu_vv_w, 4)
-> > +GEN_VEXT_VV(vabdu_vv_d, 8)
-> > +GEN_VEXT_VX(vabdu_vx_b, 1)
-> > +GEN_VEXT_VX(vabdu_vx_h, 2)
-> > +GEN_VEXT_VX(vabdu_vx_w, 4)
-> > +GEN_VEXT_VX(vabdu_vx_d, 8)
-> > +
-> > +GEN_VEXT_VV(vwabda_vv_b, 2)
-> > +GEN_VEXT_VV(vwabda_vv_h, 4)
-> > +GEN_VEXT_VX(vwabda_vx_b, 2)
-> > +GEN_VEXT_VX(vwabda_vx_h, 4)
-> > +GEN_VEXT_VV(vwabdau_vv_b, 2)
-> > +GEN_VEXT_VV(vwabdau_vv_h, 4)
-> > +GEN_VEXT_VX(vwabdau_vx_b, 2)
-> > +GEN_VEXT_VX(vwabdau_vx_h, 4)
->=20
---ad8fb322d1c23b556c768fb458fc4fb8702cd956827b899f757d42dc30af
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
+Simple actions / settings:
+- gdbserver (trivial)
+- boot_set (easy)
+- mce (easy) - x86 MCE injection
+- sum (easy) - memory checksum
+- sync-profile (easy) - enable/disable/reset
+- info sync-profile (medium)
+- one-insn-per-tb (easy) - could be a QOM property on the accelerator
+- pcie_aer_inject_error (easy)
+- migration_mode (medium?)
+- i/o ioport read/write (easy)
+- hostfwd-add/hostfwd-remove (medium) - slirp port forwarding
+- log/logfile (medium)
+- trace-file (medium)
 
-<html><head></head><body><div id=3D"editor_version_7.72.1_FGiQTTmz" style=
-=3D"word-break:break-word;"><div data-zone-id=3D"0" data-line-index=3D"0" d=
-ata-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height=
-: 1.6;"><div dir=3D"auto" style=3D"font-size: 14px;">Hi Daniel,</div></div>=
-<div data-zone-id=3D"0" data-line-index=3D"1" data-line=3D"true" style=3D"m=
-argin-top: 4px; margin-bottom: 4px; line-height: 1.6;"><div style=3D"text-i=
-ndent: 2em; font-size: 14px;" class=3D"text-indent" dir=3D"auto">Thanks for=
- your advice. I=E2=80=99ll add more tests for this patch.</div></div><div d=
-ata-zone-id=3D"0" data-line-index=3D"2" data-line=3D"true" style=3D"margin-=
-top: 4px; margin-bottom: 4px; line-height: 1.6;"><div dir=3D"auto" style=3D=
-"font-size: 14px;"><br/></div></div><div data-zone-id=3D"0" data-line-index=
-=3D"3" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; lin=
-e-height: 1.6;"><div style=3D"text-indent: 2em; font-size: 14px;" class=3D"=
-text-indent" dir=3D"auto">In the latest specification, vabs.v is defined as=
- a pseudo-instruction that aliases vabd.vx rd, vs2, x0, similar to how vneg=
-.v aliases vrsub.vx rd, vs2, x0. I think we don&#39;t need add vabs.v as a =
-separate instruction, since they share the same encoding.</div></div><div d=
-ata-zone-id=3D"0" data-line-index=3D"4" data-line=3D"true" style=3D"margin-=
-top: 4px; margin-bottom: 4px; line-height: 1.6;"><div style=3D"text-indent:=
- 2em; font-size: 14px;" class=3D"text-indent" dir=3D"auto"><br/></div></div=
-><div data-zone-id=3D"0" data-line-index=3D"5" data-line=3D"true" style=3D"=
-margin-top: 4px; margin-bottom: 4px; line-height: 1.6;"><div style=3D"text-=
-indent: 2em; font-size: 14px;" class=3D"text-indent" dir=3D"auto">See the <=
-span style=3D"font-size: 14px;">vabs.v </span>at: <a class=3D"not-doclink" =
-href=3D"https://github.com/riscv/riscv-isa-manual/pull/3279/changes#diff-c4=
-a6db324416cc1f52c849a8cd5a20b5d8b5e422ffca6dcb6f341b5f1df48a15R110" linkid=
-=3D"IXSAIvBgAG" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"tran=
-sition: color 0.3s; cursor: pointer; text-decoration: none; color: rgb(20, =
-86, 240);">https://github.com/riscv/riscv-isa-manual/pull/3279/changes#diff=
--c4a6db324416cc1f52c849a8cd5a20b5d8b5e422ffca6dcb6f341b5f1df48a15R110</a></=
-div></div><div data-zone-id=3D"0" data-line-index=3D"6" data-line=3D"true" =
-style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;"><div style=
-=3D"text-indent: 2em; font-size: 14px;" class=3D"text-indent" dir=3D"auto">=
-<br/></div></div></div><div class=3D"history-quote-wrapper" id=3D"lark-mail=
--quote-178791846"><div data-html-block=3D"quote" data-mail-html-ignore=3D""=
-><div id=3D"lark-mail-quote-178791832" class=3D"history-quote-wrapper"><div=
- class=3D"adit-html-block adit-html-block--collapsed" style=3D"border-left:=
- none; padding-left: 0px;"><div><div id=3D"lark-mail-quote-63212af051f686bc=
-b2dd0e4e1b18b957"><div style=3D"padding: 12px; background: rgb(245, 246, 24=
-7); color: rgb(31, 35, 41); border-radius: 4px; margin-top: 24px; margin-bo=
-ttom: 12px;" id=3D"lark-mail-meta-9aiv9HH5L" class=3D"adit-html-block__attr=
- history-quote-meta-wrapper history-quote-gap-tag"><div style=3D"word-break=
-: break-word;"><div class=3D"lme-line-signal" style=3D""><span>From: </span=
-> <span>&#34;Daniel Henrique Barboza&#34;&lt;<a href=3D"mailto:daniel.barbo=
-za@oss.qualcomm.com" style=3D"overflow-wrap: break-word; white-space: pre-w=
-rap; hyphens: none; word-break: break-word; cursor: pointer; text-decoratio=
-n: none; color: inherit;" class=3D"quote-head-meta-mailto" data-mailto=3D"m=
-ailto:daniel.barboza@oss.qualcomm.com">daniel.barboza@oss.qualcomm.com</a>&=
-gt;</span></div><div class=3D"lme-line-signal" style=3D""><span>Date: </spa=
-n> Fri, Aug 28, 2026, 19:34</div><div class=3D"lme-line-signal" style=3D"">=
-<span>Subject: </span> Re: [PATCH] target/riscv: Add experimental Zvabd ext=
-ension support</div><div class=3D"lme-line-signal" style=3D""><span>To: </s=
-pan> <span>&#34;liumingliang&#34;&lt;<a href=3D"mailto:liumingliang.dev@byt=
-edance.com" style=3D"overflow-wrap: break-word; white-space: pre-wrap; hyph=
-ens: none; word-break: break-word; cursor: pointer; text-decoration: none; =
-color: inherit;" class=3D"quote-head-meta-mailto" data-mailto=3D"mailto:liu=
-mingliang.dev@bytedance.com">liumingliang.dev@bytedance.com</a>&gt;</span>,=
- <span>&lt;<a href=3D"mailto:qemu-devel@nongnu.org" style=3D"overflow-wrap:=
- break-word; white-space: pre-wrap; hyphens: none; word-break: break-word; =
-cursor: pointer; text-decoration: none; color: inherit;" class=3D"quote-hea=
-d-meta-mailto" data-mailto=3D"mailto:qemu-devel@nongnu.org">qemu-devel@nong=
-nu.org</a>&gt;</span></div><div class=3D"lme-line-signal" style=3D""><span>=
-Cc: </span> <span>&lt;<a href=3D"mailto:qemu-riscv@nongnu.org" style=3D"ove=
-rflow-wrap: break-word; white-space: pre-wrap; hyphens: none; word-break: b=
-reak-word; cursor: pointer; text-decoration: none; color: inherit;" class=
-=3D"quote-head-meta-mailto" data-mailto=3D"mailto:qemu-riscv@nongnu.org">qe=
-mu-riscv@nongnu.org</a>&gt;</span>, <span>&lt;<a href=3D"mailto:palmer@dabb=
-elt.com" style=3D"overflow-wrap: break-word; white-space: pre-wrap; hyphens=
-: none; word-break: break-word; cursor: pointer; text-decoration: none; col=
-or: inherit;" class=3D"quote-head-meta-mailto" data-mailto=3D"mailto:palmer=
-@dabbelt.com">palmer@dabbelt.com</a>&gt;</span>, <span>&lt;<a href=3D"mailt=
-o:Alistair.Francis@wdc.com" style=3D"overflow-wrap: break-word; white-space=
-: pre-wrap; hyphens: none; word-break: break-word; cursor: pointer; text-de=
-coration: none; color: inherit;" class=3D"quote-head-meta-mailto" data-mail=
-to=3D"mailto:Alistair.Francis@wdc.com">Alistair.Francis@wdc.com</a>&gt;</sp=
-an>, <span>&lt;<a href=3D"mailto:zhiwei_liu@linux.alibaba.com" style=3D"ove=
-rflow-wrap: break-word; white-space: pre-wrap; hyphens: none; word-break: b=
-reak-word; cursor: pointer; text-decoration: none; color: inherit;" class=
-=3D"quote-head-meta-mailto" data-mailto=3D"mailto:zhiwei_liu@linux.alibaba.=
-com">zhiwei_liu@linux.alibaba.com</a>&gt;</span>, <span>&lt;<a href=3D"mail=
-to:liwei1518@gmail.com" style=3D"overflow-wrap: break-word; white-space: pr=
-e-wrap; hyphens: none; word-break: break-word; cursor: pointer; text-decora=
-tion: none; color: inherit;" class=3D"quote-head-meta-mailto" data-mailto=
-=3D"mailto:liwei1518@gmail.com">liwei1518@gmail.com</a>&gt;</span>, <span>&=
-lt;<a href=3D"mailto:chao.liu@processmission.com" style=3D"overflow-wrap: b=
-reak-word; white-space: pre-wrap; hyphens: none; word-break: break-word; cu=
-rsor: pointer; text-decoration: none; color: inherit;" class=3D"quote-head-=
-meta-mailto" data-mailto=3D"mailto:chao.liu@processmission.com">chao.liu@pr=
-ocessmission.com</a>&gt;</span>, <span>&#34;Zhibo Hong&#34;&lt;<a href=3D"m=
-ailto:hongzhibo@bytedance.com" style=3D"overflow-wrap: break-word; white-sp=
-ace: pre-wrap; hyphens: none; word-break: break-word; cursor: pointer; text=
--decoration: none; color: inherit;" class=3D"quote-head-meta-mailto" data-m=
-ailto=3D"mailto:hongzhibo@bytedance.com">hongzhibo@bytedance.com</a>&gt;</s=
-pan></div></div></div><div><div class=3D"lme-line-signal" data-type=3D"plai=
-nText">Hi,<br/><br/>This patch is missing vabs.v, which is also part of the=
- specification.<br/><br/>I added vabs.v, and a .S test file for this new in=
-sns, using Zhibo&#39;s original<br/>patch, in this branch:<br/><br/><span><=
-a href=3D"https://gitlab.com/danielhb/qemu/-/tree/zvabd" target=3D"_blank" =
-ref=3D"noopener noreferrer">https://gitlab.com/danielhb/qemu/-/tree/zvabd</=
-a></span><br/><br/>vabs.v implementation:<br/><br/><span><a href=3D"https:/=
-/gitlab.com/danielhb/qemu/-/commit/1ce5701e737f885f2e32248c1587614ea3435d76=
-" target=3D"_blank" ref=3D"noopener noreferrer">https://gitlab.com/danielhb=
-/qemu/-/commit/1ce5701e737f885f2e32248c1587614ea3435d76</a></span><br/><br/=
->test file:<br/><br/><span><a href=3D"https://gitlab.com/danielhb/qemu/-/co=
-mmit/9f4626bc8e55c0768ff474037e291431d4deb0fb" target=3D"_blank" ref=3D"noo=
-pener noreferrer">https://gitlab.com/danielhb/qemu/-/commit/9f4626bc8e55c07=
-68ff474037e291431d4deb0fb</a></span><br/><br/><br/>Feel free to add these 2=
- commits in this work. =C2=A0It&#39;s already rebased on a recent code<br/>=
-base so shouldn&#39;t be much of a problem.<br/><br/><br/>Also, I believe w=
-e&#39;ll want tests for the other zvabd insns too, so we&#39;ll need extra<=
-br/>code in test-zvabd.S.<br/><br/><br/>Thanks,<br/>Daniel<br/><br/>On 8/28=
-/2026 6:20 AM, liumingliang wrote:<br/><span>&gt; From: Zhibo Hong &lt;<a h=
-ref=3D"mailto:hongzhibo@bytedance.com" target=3D"_blank" ref=3D"noopener no=
-referrer">hongzhibo@bytedance.com</a>&gt;</span><br/>&gt;=C2=A0<br/>&gt; Th=
-e draft Zvabd extension provides vector integer absolute-difference<br/>&gt=
-; operations for image, video, and other data-processing workloads. It<br/>=
-&gt; introduces eight new intructions:<br/>&gt;=C2=A0<br/>&gt; =C2=A0 =C2=
-=A0- vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW values from<br/>&=
-gt; =C2=A0 =C2=A0 =C2=A08 through ELEN, with SEW 64 requiring Zve64x.<br/>&=
-gt; =C2=A0 =C2=A0- vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support=
- SEW 8<br/>&gt; =C2=A0 =C2=A0 =C2=A0and 16 and accumulate into a double-wid=
-th destination.<br/>&gt;=C2=A0<br/>&gt; This patch implement this instructi=
-on extension, including instruction<br/>&gt; decoder, TCG translation, and =
-helpers, etc. The specification is under<br/>&gt; review at:<br/><span>&gt;=
- <a href=3D"https://github.com/riscv/riscv-isa-manual/pull/3279" target=3D"=
-_blank" ref=3D"noopener noreferrer">https://github.com/riscv/riscv-isa-manu=
-al/pull/3279</a></span><br/>&gt;=C2=A0<br/><span>&gt; Signed-off-by: Mingli=
-ang Liu &lt;<a href=3D"mailto:liumingliang.dev@bytedance.com" target=3D"_bl=
-ank" ref=3D"noopener noreferrer">liumingliang.dev@bytedance.com</a>&gt;</sp=
-an><br/>&gt; ---<br/>&gt; =C2=A0 disas/riscv-op.c.inc =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A08 +++=
-<br/>&gt; =C2=A0 disas/riscv.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A08 ++=
-+<br/>&gt; =C2=A0 target/riscv/cpu.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A01 +<br/>&gt; =
-=C2=A0 target/riscv/cpu_cfg_fields.h.inc =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- | =C2=A01 +<br/>&gt; =C2=A0 target/riscv/helper.h =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 26 ++++++++++<br/>&g=
-t; =C2=A0 target/riscv/insn32.decode =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0| 10 ++++<br/>&gt; =C2=A0 target/riscv/tcg/insn_tra=
-ns/trans_rvv.c.inc | 45 +++++++++++++++++<br/>&gt; =C2=A0 target/riscv/tcg/=
-tcg-cpu.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =
-=C2=A06 +++<br/>&gt; =C2=A0 target/riscv/tcg/vector_helper.c =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| 56 +++++++++++++++++++++<br/>&gt; =C2=A0 9 fil=
-es changed, 161 insertions(+)<br/>&gt;=C2=A0<br/>&gt; diff --git a/disas/ri=
-scv-op.c.inc b/disas/riscv-op.c.inc<br/>&gt; index 1d334e4857..07b56f5d52 1=
-00644<br/>&gt; --- a/disas/riscv-op.c.inc<br/>&gt; +++ b/disas/riscv-op.c.i=
-nc<br/>&gt; @@ -490,6 +490,10 @@ OP(vaadd_vv, &#34;vaadd.vv&#34;, rv_codec_=
-v_r, rv_fmt_vd_vs2_vs1_vm)<br/>&gt; =C2=A0 OP(vaadd_vx, &#34;vaadd.vx&#34;,=
- rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)<br/>&gt; =C2=A0 OP(vaaddu_vv, &#34;vaa=
-ddu.vv&#34;, rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)<br/>&gt; =C2=A0 OP(vaaddu_=
-vx, &#34;vaaddu.vx&#34;, rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)<br/>&gt; +OP(v=
-abd_vv, &#34;vabd.vv&#34;, rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)<br/>&gt; +OP=
-(vabd_vx, &#34;vabd.vx&#34;, rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)<br/>&gt; +=
-OP(vabdu_vv, &#34;vabdu.vv&#34;, rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)<br/>&g=
-t; +OP(vabdu_vx, &#34;vabdu.vx&#34;, rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)<br=
-/>&gt; =C2=A0 OP(vadc_vim, &#34;vadc.vim&#34;, rv_codec_v_i, rv_fmt_vd_vs2_=
-imm_vl)<br/>&gt; =C2=A0 OP(vadc_vvm, &#34;vadc.vvm&#34;, rv_codec_v_r, rv_f=
-mt_vd_vs2_vs1_vl)<br/>&gt; =C2=A0 OP(vadc_vxm, &#34;vadc.vxm&#34;, rv_codec=
-_v_r, rv_fmt_vd_vs2_rs1_vl)<br/>&gt; @@ -861,6 +865,10 @@ OP(vsuxei16_v, &#=
-34;vsuxei16.v&#34;, rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)<br/>&gt; =C2=
-=A0 OP(vsuxei32_v, &#34;vsuxei32.v&#34;, rv_codec_v_r, rv_fmt_ldst_vd_rs1_v=
-s2_vm)<br/>&gt; =C2=A0 OP(vsuxei64_v, &#34;vsuxei64.v&#34;, rv_codec_v_r, r=
-v_fmt_ldst_vd_rs1_vs2_vm)<br/>&gt; =C2=A0 OP(vsuxei8_v, &#34;vsuxei8.v&#34;=
-, rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)<br/>&gt; +OP(vwabda_vv, &#34;vwa=
-bda.vv&#34;, rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)<br/>&gt; +OP(vwabda_vx, &#=
-34;vwabda.vx&#34;, rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)<br/>&gt; +OP(vwabdau=
-_vv, &#34;vwabdau.vv&#34;, rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)<br/>&gt; +OP=
-(vwabdau_vx, &#34;vwabdau.vx&#34;, rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)<br/>=
-&gt; =C2=A0 OP(vwadd_vv, &#34;vwadd.vv&#34;, rv_codec_v_r, rv_fmt_vd_vs2_vs=
-1_vm)<br/>&gt; =C2=A0 OP(vwadd_vx, &#34;vwadd.vx&#34;, rv_codec_v_r, rv_fmt=
-_vd_vs2_rs1_vm)<br/>&gt; =C2=A0 OP(vwadd_wv, &#34;vwadd.wv&#34;, rv_codec_v=
-_r, rv_fmt_vd_vs2_vs1_vm)<br/>&gt; diff --git a/disas/riscv.c b/disas/riscv=
-.c<br/>&gt; index b8099cbdf8..e0a8b3a756 100644<br/>&gt; --- a/disas/riscv.=
-c<br/>&gt; +++ b/disas/riscv.c<br/>&gt; @@ -2022,6 +2022,8 @@ static const =
-rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)<br/>&gt; =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 48: return=
- &amp;op_vwredsumu_vs;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 case 49: return &amp;op_vwredsum_vs;<br/>&gt; =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 53: return &am=
-p;op_vwsll_vv;<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0case 61: return &amp;op_vwabda_vv;<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 62: return &amp;op_vwabdau_vv;<br/>&=
-gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br/>&g=
-t; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br=
-/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 1:<br/>&gt; @@=
- -2164,6 +2166,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_deco=
-de *dec, rv_isa isa)<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br/>&gt; =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br/>&gt; =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 break;<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0case 21: return &amp;op_vabd_vv;<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0case 22: return &amp;op_vabdu_vv;<br/>&gt; =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 23:<br/>&g=
-t; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 if ((inst &gt;&gt; 25) &amp; 1) {<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return &=
-amp;op_vcompress_vm;<br/>&gt; @@ -2349,6 +2353,8 @@ static const rv_opcode_=
-data *decode_inst_opcode(rv_decode *dec, rv_isa isa)<br/>&gt; =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 46: return &amp;op_v=
-nclipu_wx;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 case 47: return &amp;op_vnclip_wx;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 53: return &amp;op_vwsll_vx;=
-<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 61:=
- return &amp;op_vwabda_vx;<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0case 62: return &amp;op_vwabdau_vx;<br/>&gt; =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br/>&gt; =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br/>&gt; =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 5:<br/>&gt; @@ -2417,6 +242=
-3,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_i=
-sa isa)<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 case 13: return &amp;op_vclmulh_vx;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 14: return &amp;op_vslide1up=
-_vx;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 case 15: return &amp;op_vslide1down_vx;<br/>&gt; + =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 21: return &amp;op_vabd_vx;<br/>&gt=
-; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 22: return =
-&amp;op_vabdu_vx;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 case 16:<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 switch ((inst &gt;&gt; 20) &amp; 0b11111=
-) {<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 case 0:<br/>&gt; diff --git a/target/riscv/cpu.c b/target/ri=
-scv/cpu.c<br/>&gt; index a13177b7b7..4b8944b051 100644<br/>&gt; --- a/targe=
-t/riscv/cpu.c<br/>&gt; +++ b/target/riscv/cpu.c<br/>&gt; @@ -220,6 +220,7 @=
-@ const RISCVIsaExtData isa_edata_arr[] =3D {<br/>&gt; =C2=A0 =C2=A0 =C2=A0=
- ISA_EXT_DATA_ENTRY(zksh, PRIV_VERSION_1_12_0, ext_zksh),<br/>&gt; =C2=A0 =
-=C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(zkt, PRIV_VERSION_1_12_0, ext_zkt),<br/>&g=
-t; =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(ztso, PRIV_VERSION_1_12_0, ext_z=
-tso),<br/>&gt; + =C2=A0 =C2=A0ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvabd, PRIV_V=
-ERSION_1_13_0, ext_zvabd),<br/>&gt; =C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY=
-(zvbb, PRIV_VERSION_1_12_0, ext_zvbb),<br/>&gt; =C2=A0 =C2=A0 =C2=A0 ISA_EX=
-T_DATA_ENTRY(zvbc, PRIV_VERSION_1_12_0, ext_zvbc),<br/>&gt; =C2=A0 =C2=A0 =
-=C2=A0 ISA_EXT_DATA_ENTRY(zve32f, PRIV_VERSION_1_10_0, ext_zve32f),<br/>&gt=
-; diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc<br/>&gt; index f8c27a574f..6018e58195 100644<br/>&gt; --- a/targe=
-t/riscv/cpu_cfg_fields.h.inc<br/>&gt; +++ b/target/riscv/cpu_cfg_fields.h.i=
-nc<br/>&gt; @@ -83,6 +83,7 @@ BOOL_FIELD(ext_zve32x)<br/>&gt; =C2=A0 BOOL_F=
-IELD(ext_zve64f)<br/>&gt; =C2=A0 BOOL_FIELD(ext_zve64d)<br/>&gt; =C2=A0 BOO=
-L_FIELD(ext_zve64x)<br/>&gt; +BOOL_FIELD(ext_zvabd)<br/>&gt; =C2=A0 BOOL_FI=
-ELD(ext_zvbb)<br/>&gt; =C2=A0 BOOL_FIELD(ext_zvbc)<br/>&gt; =C2=A0 BOOL_FIE=
-LD(ext_zvkb)<br/>&gt; diff --git a/target/riscv/helper.h b/target/riscv/hel=
-per.h<br/>&gt; index 4fc2d3a155..3aef6e0e3e 100644<br/>&gt; --- a/target/ri=
-scv/helper.h<br/>&gt; +++ b/target/riscv/helper.h<br/>&gt; @@ -1350,6 +1350=
-,32 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)<br/>&gt; =C2=
-=A0 DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)<br/>&gt; =C2=A0 DEF_HE=
-LPER_4(vsm4r_vs, void, ptr, ptr, env, i32)<br/>&gt; =C2=A0=C2=A0<br/>&gt; +=
-/* Zvabd Extension */<br/>&gt; +DEF_HELPER_6(vabd_vv_b, void, ptr, ptr, ptr=
-, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabd_vv_h, void, ptr, ptr, ptr, ptr=
-, env, i32)<br/>&gt; +DEF_HELPER_6(vabd_vv_w, void, ptr, ptr, ptr, ptr, env=
-, i32)<br/>&gt; +DEF_HELPER_6(vabd_vv_d, void, ptr, ptr, ptr, ptr, env, i32=
-)<br/>&gt; +DEF_HELPER_6(vabd_vx_b, void, ptr, ptr, tl, ptr, env, i32)<br/>=
-&gt; +DEF_HELPER_6(vabd_vx_h, void, ptr, ptr, tl, ptr, env, i32)<br/>&gt; +=
-DEF_HELPER_6(vabd_vx_w, void, ptr, ptr, tl, ptr, env, i32)<br/>&gt; +DEF_HE=
-LPER_6(vabd_vx_d, void, ptr, ptr, tl, ptr, env, i32)<br/>&gt; +DEF_HELPER_6=
-(vabdu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vab=
-du_vv_h, void, ptr, ptr, ptr, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabdu_v=
-v_w, void, ptr, ptr, ptr, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabdu_vv_d,=
- void, ptr, ptr, ptr, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabdu_vx_b, voi=
-d, ptr, ptr, tl, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabdu_vx_h, void, pt=
-r, ptr, tl, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabdu_vx_w, void, ptr, pt=
-r, tl, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vabdu_vx_d, void, ptr, ptr, tl=
-, ptr, env, i32)<br/>&gt; +DEF_HELPER_6(vwabda_vv_b, void, ptr, ptr, ptr, p=
-tr, env, i32)<br/>&gt; +DEF_HELPER_6(vwabda_vv_h, void, ptr, ptr, ptr, ptr,=
- env, i32)<br/>&gt; +DEF_HELPER_6(vwabda_vx_b, void, ptr, ptr, tl, ptr, env=
-, i32)<br/>&gt; +DEF_HELPER_6(vwabda_vx_h, void, ptr, ptr, tl, ptr, env, i3=
-2)<br/>&gt; +DEF_HELPER_6(vwabdau_vv_b, void, ptr, ptr, ptr, ptr, env, i32)=
-<br/>&gt; +DEF_HELPER_6(vwabdau_vv_h, void, ptr, ptr, ptr, ptr, env, i32)<b=
-r/>&gt; +DEF_HELPER_6(vwabdau_vx_b, void, ptr, ptr, tl, ptr, env, i32)<br/>=
-&gt; +DEF_HELPER_6(vwabdau_vx_h, void, ptr, ptr, tl, ptr, env, i32)<br/>&gt=
-; +<br/>&gt; =C2=A0 /* CFI (zicfiss) helpers */<br/>&gt; =C2=A0 #ifndef CON=
-FIG_USER_ONLY<br/>&gt; =C2=A0 DEF_HELPER_1(ssamoswap_disabled, void, env)<b=
-r/>&gt; diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decod=
-e<br/>&gt; index 21272fdb50..1c991a6f42 100644<br/>&gt; --- a/target/riscv/=
-insn32.decode<br/>&gt; +++ b/target/riscv/insn32.decode<br/>&gt; @@ -1084,3=
- +1084,13 @@ sb_aqrl =C2=A000111 . . ..... ..... 000 ..... 0101111 @atom_st=
-<br/>&gt; =C2=A0 sh_aqrl =C2=A000111 . . ..... ..... 001 ..... 0101111 @ato=
-m_st<br/>&gt; =C2=A0 sw_aqrl =C2=A000111 . . ..... ..... 010 ..... 0101111 =
-@atom_st<br/>&gt; =C2=A0 sd_aqrl =C2=A000111 . . ..... ..... 011 ..... 0101=
-111 @atom_st<br/>&gt; +<br/>&gt; +# *** Zvabd Extension ***<br/>&gt; +vabd_=
-vv =C2=A0 =C2=A0 =C2=A0 010101 . ..... ..... 010 ..... 1010111 @r_vm<br/>&g=
-t; +vabd_vx =C2=A0 =C2=A0 =C2=A0 010101 . ..... ..... 110 ..... 1010111 @r_=
-vm<br/>&gt; +vabdu_vv =C2=A0 =C2=A0 =C2=A0010110 . ..... ..... 010 ..... 10=
-10111 @r_vm<br/>&gt; +vabdu_vx =C2=A0 =C2=A0 =C2=A0010110 . ..... ..... 110=
- ..... 1010111 @r_vm<br/>&gt; +vwabda_vv =C2=A0 =C2=A0 111101 . ..... .....=
- 000 ..... 1010111 @r_vm<br/>&gt; +vwabda_vx =C2=A0 =C2=A0 111101 . ..... .=
-.... 100 ..... 1010111 @r_vm<br/>&gt; +vwabdau_vv =C2=A0 =C2=A0111110 . ...=
-.. ..... 000 ..... 1010111 @r_vm<br/>&gt; +vwabdau_vx =C2=A0 =C2=A0111110 .=
- ..... ..... 100 ..... 1010111 @r_vm<br/>&gt; diff --git a/target/riscv/tcg=
-/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc<b=
-r/>&gt; index a22e2cae6c..14ef961607 100644<br/>&gt; --- a/target/riscv/tcg=
-/insn_trans/trans_rvv.c.inc<br/>&gt; +++ b/target/riscv/tcg/insn_trans/tran=
-s_rvv.c.inc<br/>&gt; @@ -4091,3 +4091,48 @@ GEN_INT_EXT_TRANS(vzext_vf8, 3,=
- 2)<br/>&gt; =C2=A0 GEN_INT_EXT_TRANS(vsext_vf2, 1, 3)<br/>&gt; =C2=A0 GEN_=
-INT_EXT_TRANS(vsext_vf4, 2, 4)<br/>&gt; =C2=A0 GEN_INT_EXT_TRANS(vsext_vf8,=
- 3, 5)<br/>&gt; +<br/>&gt; +/* Zvabd Extension */<br/>&gt; +#define GEN_ABD=
-_CHECK(NAME, CHECK_FN, MAX_SEW) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; +static bool NAME(DisasContex=
-t *s, arg_rmrr *a) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 \<br/>&gt; +{ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; + =C2=A0 =C2=
-=A0return CHECK_FN(s, a) &amp;&amp; s-&gt;cfg_ptr-&gt;ext_zvabd &amp;&amp; =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; + =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;sew &lt;=3D MAX_SEW &amp;&amp; =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; + =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 (s-&gt;sew !=3D MO_64 || s-&gt;cfg_ptr-&gt;ext_zve64x)=
-; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; +}<br/>&gt; +G=
-EN_ABD_CHECK(vabd_vv_check, opivv_check, MO_64)<br/>&gt; +GEN_ABD_CHECK(vab=
-d_vx_check, opivx_check, MO_64)<br/>&gt; +GEN_ABD_CHECK(vwabd_vv_check, opi=
-vv_overwrite_widen_check, MO_16)<br/>&gt; +GEN_ABD_CHECK(vwabd_vx_check, op=
-ivx_overwrite_widen_check, MO_16)<br/>&gt; +<br/>&gt; +GEN_OPIVV_TRANS(vabd=
-_vv, vabd_vv_check)<br/>&gt; +GEN_OPIVX_TRANS(vabd_vx, vabd_vx_check)<br/>&=
-gt; +GEN_OPIVV_TRANS(vabdu_vv, vabd_vv_check)<br/>&gt; +GEN_OPIVX_TRANS(vab=
-du_vx, vabd_vx_check)<br/>&gt; +<br/>&gt; +#define GEN_ABD_OPIVV_WIDEN_TRAN=
-S(NAME, CHECK) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; +static bool trans_##NAME(DisasCo=
-ntext *s, arg_rmrr *a) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0\<br/>&gt; +{ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; + =C2=A0 =C2=A0=
-static gen_helper_gvec_4_ptr * const fns[2] =3D { =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; + =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0gen_helper_##NAME##_b, gen_helper_##NAME##_h, =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; + =C2=A0 =C2=A0=
-}; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0\<br/>&gt; + =C2=A0 =C2=A0return s-&gt;sew &lt;=3D MO_16 &amp;=
-&amp; do_opivv_widen(s, a, fns[s-&gt;sew], CHECK); \<br/>&gt; +}<br/>&gt; +=
-<br/>&gt; +#define GEN_ABD_OPIVX_WIDEN_TRANS(NAME, CHECK) =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<=
-br/>&gt; +static bool trans_##NAME(DisasContext *s, arg_rmrr *a) =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; +{ =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 \<br/>&gt; + =C2=A0 =C2=A0if (CHECK(s, a)) { =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0\<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0static gen_helper_=
-opivx * const fns[2] =3D { =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0gen_helper_##NAME##_b, gen_helper_##NAME##_h, =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0}; =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br/>&gt=
-; + =C2=A0 =C2=A0 =C2=A0 =C2=A0return opivx_trans(a-&gt;rd, a-&gt;rs1, a-&g=
-t;rs2, a-&gt;vm, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<b=
-r/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 fns[s-&gt;sew], s); =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br=
-/>&gt; + =C2=A0 =C2=A0} =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; + =C2=A0 =C2=A0return false; =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br/>&gt; +}<br/>&gt; +<br/>&gt;=
- +GEN_ABD_OPIVV_WIDEN_TRANS(vwabda_vv, vwabd_vv_check)<br/>&gt; +GEN_ABD_OP=
-IVX_WIDEN_TRANS(vwabda_vx, vwabd_vx_check)<br/>&gt; +GEN_ABD_OPIVV_WIDEN_TR=
-ANS(vwabdau_vv, vwabd_vv_check)<br/>&gt; +GEN_ABD_OPIVX_WIDEN_TRANS(vwabdau=
-_vx, vwabd_vx_check)<br/>&gt; diff --git a/target/riscv/tcg/tcg-cpu.c b/tar=
-get/riscv/tcg/tcg-cpu.c<br/>&gt; index 9e3cc87f8a..4c2fb6f063 100644<br/>&g=
-t; --- a/target/riscv/tcg/tcg-cpu.c<br/>&gt; +++ b/target/riscv/tcg/tcg-cpu=
-.c<br/>&gt; @@ -732,6 +732,12 @@ void riscv_cpu_validate_set_extensions(RIS=
-CVCPU *cpu, Error **errp)<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 retur=
-n;<br/>&gt; =C2=A0 =C2=A0 =C2=A0 }<br/>&gt; =C2=A0=C2=A0<br/>&gt; + =C2=A0 =
-=C2=A0if ((cpu-&gt;cfg.ext_zvabd) &amp;&amp; !cpu-&gt;cfg.ext_zve32x) {<br/=
->&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg(errp,<br/>&gt; + =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#34;Zvabd extensions =
-require V or Zve* extensions&#34;);<br/>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0r=
-eturn;<br/>&gt; + =C2=A0 =C2=A0}<br/>&gt; +<br/>&gt; =C2=A0 =C2=A0 =C2=A0 i=
-f (cpu-&gt;cfg.ext_zicntr &amp;&amp; !cpu-&gt;cfg.ext_zicsr) {<br/>&gt; =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(=
-ext_zicntr))) {<br/>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 e=
-rror_setg(errp, &#34;zicntr requires zicsr&#34;);<br/>&gt; diff --git a/tar=
-get/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c<br/>&gt; i=
-ndex e28d8a3d9f..bdb1efcebc 100644<br/>&gt; --- a/target/riscv/tcg/vector_h=
-elper.c<br/>&gt; +++ b/target/riscv/tcg/vector_helper.c<br/>&gt; @@ -5906,3=
- +5906,59 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)<br/>&g=
-t; =C2=A0 GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t, =C2=A0H4, H1)<br/>=
-&gt; =C2=A0 GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)<br/>&gt=
-; =C2=A0 GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t, =C2=A0H8, H1)<br/>&=
-gt; +<br/>&gt; +/* Zvabd Extension */<br/>&gt; +#define DO_ABD(N, M) =C2=A0=
-(N &gt; M ? N - M : M - N)<br/>&gt; +#define DO_ABDACC(N, M, D) (DO_ABD(N, =
-M) + D)<br/>&gt; +<br/>&gt; +RVVCALL(OPIVV2, vabd_vv_b, OP_SSS_B, H1, H1, H=
-1, DO_ABD)<br/>&gt; +RVVCALL(OPIVV2, vabd_vv_h, OP_SSS_H, H2, H2, H2, DO_AB=
-D)<br/>&gt; +RVVCALL(OPIVV2, vabd_vv_w, OP_SSS_W, H4, H4, H4, DO_ABD)<br/>&=
-gt; +RVVCALL(OPIVV2, vabd_vv_d, OP_SSS_D, H8, H8, H8, DO_ABD)<br/>&gt; +RVV=
-CALL(OPIVX2, vabd_vx_b, OP_SSS_B, H1, H1, DO_ABD)<br/>&gt; +RVVCALL(OPIVX2,=
- vabd_vx_h, OP_SSS_H, H2, H2, DO_ABD)<br/>&gt; +RVVCALL(OPIVX2, vabd_vx_w, =
-OP_SSS_W, H4, H4, DO_ABD)<br/>&gt; +RVVCALL(OPIVX2, vabd_vx_d, OP_SSS_D, H8=
-, H8, DO_ABD)<br/>&gt; +RVVCALL(OPIVV2, vabdu_vv_b, OP_UUU_B, H1, H1, H1, D=
-O_ABD)<br/>&gt; +RVVCALL(OPIVV2, vabdu_vv_h, OP_UUU_H, H2, H2, H2, DO_ABD)<=
-br/>&gt; +RVVCALL(OPIVV2, vabdu_vv_w, OP_UUU_W, H4, H4, H4, DO_ABD)<br/>&gt=
-; +RVVCALL(OPIVV2, vabdu_vv_d, OP_UUU_D, H8, H8, H8, DO_ABD)<br/>&gt; +RVVC=
-ALL(OPIVX2, vabdu_vx_b, OP_UUU_B, H1, H1, DO_ABD)<br/>&gt; +RVVCALL(OPIVX2,=
- vabdu_vx_h, OP_UUU_H, H2, H2, DO_ABD)<br/>&gt; +RVVCALL(OPIVX2, vabdu_vx_w=
-, OP_UUU_W, H4, H4, DO_ABD)<br/>&gt; +RVVCALL(OPIVX2, vabdu_vx_d, OP_UUU_D,=
- H8, H8, DO_ABD)<br/>&gt; +<br/>&gt; +RVVCALL(OPIVV3, vwabda_vv_b, WOP_SSS_=
-B, H2, H1, H1, DO_ABDACC)<br/>&gt; +RVVCALL(OPIVV3, vwabda_vv_h, WOP_SSS_H,=
- H4, H2, H2, DO_ABDACC)<br/>&gt; +RVVCALL(OPIVX3, vwabda_vx_b, WOP_SSS_B, H=
-2, H1, DO_ABDACC)<br/>&gt; +RVVCALL(OPIVX3, vwabda_vx_h, WOP_SSS_H, H4, H2,=
- DO_ABDACC)<br/>&gt; +RVVCALL(OPIVV3, vwabdau_vv_b, WOP_UUU_B, H2, H1, H1, =
-DO_ABDACC)<br/>&gt; +RVVCALL(OPIVV3, vwabdau_vv_h, WOP_UUU_H, H4, H2, H2, D=
-O_ABDACC)<br/>&gt; +RVVCALL(OPIVX3, vwabdau_vx_b, WOP_UUU_B, H2, H1, DO_ABD=
-ACC)<br/>&gt; +RVVCALL(OPIVX3, vwabdau_vx_h, WOP_UUU_H, H4, H2, DO_ABDACC)<=
-br/>&gt; +<br/>&gt; +GEN_VEXT_VV(vabd_vv_b, 1)<br/>&gt; +GEN_VEXT_VV(vabd_v=
-v_h, 2)<br/>&gt; +GEN_VEXT_VV(vabd_vv_w, 4)<br/>&gt; +GEN_VEXT_VV(vabd_vv_d=
-, 8)<br/>&gt; +GEN_VEXT_VX(vabd_vx_b, 1)<br/>&gt; +GEN_VEXT_VX(vabd_vx_h, 2=
-)<br/>&gt; +GEN_VEXT_VX(vabd_vx_w, 4)<br/>&gt; +GEN_VEXT_VX(vabd_vx_d, 8)<b=
-r/>&gt; +GEN_VEXT_VV(vabdu_vv_b, 1)<br/>&gt; +GEN_VEXT_VV(vabdu_vv_h, 2)<br=
-/>&gt; +GEN_VEXT_VV(vabdu_vv_w, 4)<br/>&gt; +GEN_VEXT_VV(vabdu_vv_d, 8)<br/=
->&gt; +GEN_VEXT_VX(vabdu_vx_b, 1)<br/>&gt; +GEN_VEXT_VX(vabdu_vx_h, 2)<br/>=
-&gt; +GEN_VEXT_VX(vabdu_vx_w, 4)<br/>&gt; +GEN_VEXT_VX(vabdu_vx_d, 8)<br/>&=
-gt; +<br/>&gt; +GEN_VEXT_VV(vwabda_vv_b, 2)<br/>&gt; +GEN_VEXT_VV(vwabda_vv=
-_h, 4)<br/>&gt; +GEN_VEXT_VX(vwabda_vx_b, 2)<br/>&gt; +GEN_VEXT_VX(vwabda_v=
-x_h, 4)<br/>&gt; +GEN_VEXT_VV(vwabdau_vv_b, 2)<br/>&gt; +GEN_VEXT_VV(vwabda=
-u_vv_h, 4)<br/>&gt; +GEN_VEXT_VX(vwabdau_vx_b, 2)<br/>&gt; +GEN_VEXT_VX(vwa=
-bdau_vx_h, 4)<br/></div></div></div></div></div></div></div></div></body></=
-html>
---ad8fb322d1c23b556c768fb458fc4fb8702cd956827b899f757d42dc30af--
+Also, to let clients do disassembly on their side, it'd be useful to
+have something like "query-disassemble-info" that gives the client what
+architecture and endianness is used etc.
+
+In the meantime, being able to build without HMP is valuable and helps
+identifying the missing pieces. The series does so by steps:
+
+- preparatory cleanups and bug fixes
+- add commands without QMP equivalent and needed for tests
+- convert most iotests and qtests from HMP to QMP
+- guard HMP-only code paths
+- make HMP source files conditional in the build system
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+Changes in v5:
+- renamed local variable hmp_mon -> hmp in patch for consistency
+- renamed error_vprintf_mon/error_printf_mon -> error_vprintf_hmp/error_printf_hmp
+- simplified default_monitor init with IS_ENABLED(CONFIG_HMP)
+- added early NULL return in qemu_vprintf/qemu_vfprintf
+- reworked !opts->has_mode path to use explicit error_setg() when HMP is disabled
+- split device-introspect-test patch
+- rebased, collected tags, all reviewed, ready-to-merge
+- Link to v4: https://lore.kernel.org/qemu-devel/20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com
+
+Changes in v4:
+- patches missing review: 1, 16, 18, 19, 22, 33, 34, 36, 42, 45, 49
+- reordering, introduce CONFIG_HMP early, better bisectability
+- dropped "qemu-print: swith to monitor_cur_hmp()" instead "document
+  HMP/QMP behaviour" patch
+- fixed "error-report: switch to use monitor_cur_hmp()" to avoid calling
+  monitor_cur() multiple times
+- dropped "system: decouple qmp_inject_nmi()", now useless
+- rebased, minor fixups, collect tags
+- I didn't split "monitor: tighten monitor_printf*()", as suggested by
+  David, since it's mostly mechanical changes. Let me know if necessary.
+- Link to v3: https://lore.kernel.org/qemu-devel/20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com
+
+Changes in v3:
+- adapted to QOM refactoring of the Monitor subsystem, use type-system
+  enforced MonitorHMP
+- adjusted hmp_snapshot_blkdev() code for non-optional filename
+- dropped patch 39/40 "monitor: guard HMP internal helpers with CONFIG_HMP"
+- guard new tests for HMP dependency
+- rebase, minor fixups
+- Link to v2: https://lore.kernel.org/qemu-devel/20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com
+
+Changes in v2:
+- add "target/i386: return an error for invalid CPU in hmp_mce()",
+  suggested by Philippe
+- drop all the patches converting iotests to QMP - instead skip
+  when HMP is disabled. The series was getting significantly bigger with
+  those, we can address the remaining conversion later.
+- clean up the series to be fully bisectable
+- rebased, add r-b trailers
+- Link to v1: https://lore.kernel.org/qemu-devel/20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com
+
+To: qemu-devel@nongnu.org
+Cc: dave@treblig.org
+Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+
+---
+Marc-André Lureau (50):
+      build-sys: introduce CONFIG_HMP
+      vl: fix -monitor none prefix matching
+      hmp: remove 'vcpu' argument from trace-event help
+      hmp: fix snapshot_blkdev argument type
+      target/i386: decouple cpu_x86_inject_mce() from Monitor
+      target/i386: return an error for invalid CPU in hmp_mce()
+      system: move gpa2hva() to system memory unit
+      monitor: move HMP-only fields from Monitor to MonitorHMP
+      tests/functional: use query-version QMP command instead of HMP
+      net/qapi: add x-query-usernet command
+      python, tests: switch usernet queries from HMP to QMP
+      tests/qtest/pnv: drop unnecessary -serial mon:stdio
+      tests/qtest/qmp-test: don't depend on human-monitor-command
+      tests/qtest/numa-test: replace HMP "info numa" with QMP query-cpus-fast
+      tests/qtest/cdrom-test: replace HMP "info block" with QMP query-block
+      tests/qtest/device-introspect-test: replace 'info qom-tree'
+      tests/qtest/device-introspect-test: restrict test when !CONFIG_HMP
+      tests/qemu-iotests/205: fix race in assertExportNotFound
+      net: add x-query-network QMP command
+      tests/qtest/netdev-socket: replace HMP with x-query-network QMP
+      qemu-io: propagate errors through Error API instead of printf
+      block: add x-qemu-io QMP command
+      qtest: add qemu-io command to the qtest protocol
+      qtest/ide-test: convert to use qtest qemu-io command
+      tests/qemu-iotests: add qmp_qemu_io()
+      tests/qemu-iotests: convert pause/resume_drive() to QMP
+      monitor: reject readline monitor when HMP is disabled
+      system: guard HMP initialization paths with CONFIG_HMP
+      tests: skip HMP-dependent tests when HMP is disabled
+      monitor: isolate HMP declarations in hmp.h
+      monitor: change HMPCommand cmd to take MonitorHMP
+      monitor: make hmp_handle_error() take MonitorHMP
+      monitor: add monitor_cur_hmp() helper
+      qemu-print: document HMP/QMP behaviour better
+      error-report: switch to use monitor_cur_hmp()
+      monitor: tighten monitor_set_cpu()/get_cpu()
+      monitor: tighten monitor_printf*()
+      hexagon: make dump_mmu() take MonitorHMP
+      qdev-monitor: make print_dev() callback take MonitorHMP
+      qapi: make HMP-specific schema entries conditional on CONFIG_HMP
+      Guard HMP command implementations with CONFIG_HMP
+      target: guard MonitorDef tables with CONFIG_HMP
+      hw: guard BusClass::print_dev with CONFIG_HMP
+      hexagon: condition HMP-specific code
+      build-sys: make HMP source files conditional on have_hmp
+      stubs: split monitor-core stubs into separate compilation units
+      monitor: move monitor_hmp_print*() functions to hmp.c
+      monitor: move HMP-specific to monitor-hmp-internal.h
+      build-sys: add 'hmp' option
+      gitlab: --disable-hmp in build-without-defaults
+
+ .gitlab-ci.d/buildtest.yml                         |   1 +
+ accel/accel-system.c                               |   3 +
+ accel/tcg/monitor.c                                |   3 +
+ audio/audio-hmp-cmds.c                             |  10 +-
+ audio/meson.build                                  |   4 +-
+ backends/cryptodev-hmp-cmds.c                      |  10 +-
+ backends/meson.build                               |   5 +-
+ block/monitor/block-hmp-cmds.c                     | 341 +++++++----------
+ block/monitor/meson.build                          |   5 +-
+ block/monitor/qmp-cmds.c                           |  79 ++++
+ chardev/char-hmp-cmds.c                            |  36 +-
+ chardev/char.c                                     |  11 +-
+ chardev/meson.build                                |   5 +-
+ disas/disas-mon.c                                  |  11 +-
+ disas/meson.build                                  |   4 +-
+ docs/devel/style.rst                               |   2 +-
+ docs/devel/writing-monitor-commands.rst            |   8 +-
+ dump/dump-hmp-cmds.c                               |  12 +-
+ dump/meson.build                                   |   5 +-
+ gdbstub/system.c                                   |  10 +-
+ hmp-commands-info.hx                               |   6 +-
+ hmp-commands.hx                                    |   9 +-
+ hw/char/virtio-serial-bus.c                        |  21 +-
+ hw/core/machine-hmp-cmds.c                         | 263 +++++++------
+ hw/core/meson.build                                |   5 +-
+ hw/core/sysbus.c                                   |  15 +-
+ hw/hexagon/hexagon_tlb.c                           |  87 ++---
+ hw/i386/kvm/xen-stubs.c                            |  10 +-
+ hw/i386/kvm/xen_evtchn.c                           |  28 +-
+ hw/i386/meson.build                                |   4 +-
+ hw/i386/sgx-hmp-stub.c                             |   4 +-
+ hw/i386/sgx.c                                      |  32 +-
+ hw/misc/auxbus.c                                   |  29 +-
+ hw/misc/mos6522-stub.c                             |   6 +-
+ hw/misc/mos6522.c                                  |   7 +-
+ hw/net/meson.build                                 |   4 +-
+ hw/net/rocker/rocker-hmp-cmds.c                    | 158 ++++----
+ hw/pci/meson.build                                 |   4 +-
+ hw/pci/pci-hmp-cmds.c                              | 121 +++---
+ hw/pci/pci-internal.h                              |   2 +-
+ hw/pci/pci-stub.c                                  |   8 +-
+ hw/pci/pci.c                                       |   2 +
+ hw/s390x/s390-skeys.c                              |  14 +-
+ hw/s390x/s390-stattrib.c                           |  26 +-
+ hw/uefi/ovmf-log.c                                 |  10 +-
+ hw/usb/bus.c                                       |  21 +-
+ hw/usb/host-libusb.c                               |  29 +-
+ hw/virtio/meson.build                              |   4 +-
+ hw/virtio/virtio-hmp-cmds.c                        | 312 ++++++++--------
+ hw/xen/xen-bus.c                                   |  11 +-
+ include/block/block-hmp-cmds.h                     |  55 +--
+ include/disas/disas.h                              |   4 +-
+ include/hw/core/qdev.h                             |   5 +-
+ include/hw/core/sysemu-cpu-ops.h                   |   2 +
+ include/hw/hexagon/hexagon_tlb.h                   |   5 +-
+ include/hw/usb/usb.h                               |   3 +-
+ include/monitor/hmp.h                              | 334 +++++++++--------
+ include/monitor/monitor.h                          |  21 --
+ include/monitor/qdev.h                             |   5 +-
+ include/net/net.h                                  |   8 +-
+ include/net/slirp.h                                |   8 +-
+ include/qemu-io.h                                  |   4 +-
+ include/system/memory.h                            |   2 +
+ meson.build                                        |   6 +-
+ meson_options.txt                                  |   2 +
+ migration/dirtyrate.c                              |  52 +--
+ migration/meson.build                              |   4 +-
+ migration/migration-hmp-cmds.c                     | 363 +++++++++---------
+ monitor/hmp-cmds.c                                 | 290 +++++++--------
+ monitor/hmp.c                                      | 257 +++++++------
+ monitor/meson.build                                |   9 +-
+ monitor/monitor-hmp-internal.h                     | 106 ++++++
+ monitor/monitor-internal.h                         | 104 ------
+ monitor/monitor.c                                  |  76 ++--
+ monitor/qmp-cmds.c                                 |   5 +-
+ net/hub.c                                          |  29 +-
+ net/hub.h                                          |   4 +-
+ net/meson.build                                    |   4 +-
+ net/net-hmp-cmds.c                                 |  85 +++--
+ net/net.c                                          |  70 +++-
+ net/slirp.c                                        |  70 ++--
+ python/qemu/utils/__init__.py                      |   5 +-
+ qapi/block.json                                    |  34 ++
+ qapi/control.json                                  |   4 +-
+ qapi/misc.json                                     |   3 +-
+ qapi/net.json                                      | 166 +++++++++
+ qemu-io-cmds.c                                     | 414 +++++++++++----------
+ qemu-io.c                                          |  17 +-
+ qemu-options.hx                                    |   6 +-
+ qom/meson.build                                    |   4 +-
+ qom/qom-hmp-cmds.c                                 |  46 +--
+ replay/replay-debugging.c                          |  20 +-
+ replay/stubs-system.c                              |  14 +-
+ scripts/meson-buildoptions.sh                      |   3 +
+ stats/meson.build                                  |   5 +-
+ stats/stats-hmp-cmds.c                             |  60 +--
+ stubs/hmp-cmd-info_sev.c                           |   4 +-
+ stubs/meson.build                                  |  15 +-
+ stubs/monitor-core.c                               |  21 +-
+ stubs/monitor-cur.c                                |  14 +
+ stubs/monitor-hmp.c                                |   9 +
+ stubs/monitor-internal.c                           |   4 +-
+ stubs/qapi-event-emit.c                            |   8 +
+ system/dirtylimit-hmp-cmds.c                       |  20 +-
+ system/meson.build                                 |  11 +-
+ system/physmem.c                                   |  31 ++
+ system/qdev-monitor.c                              |  39 +-
+ system/qtest.c                                     |  14 +
+ system/runstate-hmp-cmds.c                         |  22 +-
+ system/tpm-hmp-cmds.c                              |  30 +-
+ system/vl.c                                        |   4 +-
+ target/hexagon/hex_mmu.c                           |   6 +-
+ target/hexagon/hex_mmu.h                           |   3 +-
+ target/i386/cpu-apic.c                             |   8 +-
+ target/i386/cpu.c                                  |   8 +-
+ target/i386/cpu.h                                  |   4 +-
+ target/i386/helper.c                               |  49 +--
+ target/i386/kvm/kvm.c                              |   4 +-
+ target/i386/monitor.c                              | 173 ++++-----
+ target/i386/sev.c                                  |  38 +-
+ target/m68k/cpu.c                                  |   4 +
+ target/m68k/monitor.c                              |   8 +-
+ target/ppc/monitor.c                               |   8 +-
+ target/riscv/monitor.c                             |  61 +--
+ target/rx/disas.c                                  |   1 +
+ target/sh4/monitor.c                               |  34 +-
+ target/sparc/cpu.c                                 |   5 +-
+ target/sparc/monitor.c                             |   8 +-
+ target/xtensa/monitor.c                            |   8 +-
+ tests/functional/generic/test_version.py           |  10 +-
+ tests/functional/qemu_test/utils.py                |   8 +-
+ tests/qemu-iotests/004.out                         |  20 +-
+ tests/qemu-iotests/021.out                         |  60 +--
+ tests/qemu-iotests/026.out                         | 228 ++++++------
+ tests/qemu-iotests/028                             |   1 +
+ tests/qemu-iotests/045                             |   3 +-
+ tests/qemu-iotests/051                             |   1 +
+ tests/qemu-iotests/056                             |   3 +-
+ tests/qemu-iotests/060                             |   1 +
+ tests/qemu-iotests/060.out                         |  44 ++-
+ tests/qemu-iotests/068                             |   1 +
+ tests/qemu-iotests/071                             |   1 +
+ tests/qemu-iotests/071.out                         |  10 +-
+ tests/qemu-iotests/072.out                         |   2 +-
+ tests/qemu-iotests/080.out                         |   4 +-
+ tests/qemu-iotests/081                             |   1 +
+ tests/qemu-iotests/081.out                         |   2 +-
+ tests/qemu-iotests/083.out                         |  36 +-
+ tests/qemu-iotests/089.out                         |   4 +-
+ tests/qemu-iotests/091                             |   1 +
+ tests/qemu-iotests/093                             |   3 +-
+ tests/qemu-iotests/102                             |   1 +
+ tests/qemu-iotests/114.out                         |   2 +-
+ tests/qemu-iotests/117                             |   1 +
+ tests/qemu-iotests/119                             |   1 +
+ tests/qemu-iotests/120                             |   1 +
+ tests/qemu-iotests/124                             |   3 +-
+ tests/qemu-iotests/130                             |   1 +
+ tests/qemu-iotests/132                             |   3 +-
+ tests/qemu-iotests/134.out                         |   2 +-
+ tests/qemu-iotests/136                             |   3 +-
+ tests/qemu-iotests/137.out                         |   2 +-
+ tests/qemu-iotests/142                             |   1 +
+ tests/qemu-iotests/145                             |   1 +
+ tests/qemu-iotests/146                             |   1 +
+ tests/qemu-iotests/148                             |   3 +-
+ tests/qemu-iotests/151                             |   3 +-
+ tests/qemu-iotests/152                             |   3 +-
+ tests/qemu-iotests/153                             |   1 +
+ tests/qemu-iotests/153.out                         |  12 +-
+ tests/qemu-iotests/156                             |   1 +
+ tests/qemu-iotests/157                             |   1 +
+ tests/qemu-iotests/161                             |   1 +
+ tests/qemu-iotests/165                             |   3 +-
+ tests/qemu-iotests/171                             |   2 +-
+ tests/qemu-iotests/171.out                         |  68 ++--
+ tests/qemu-iotests/172                             |   1 +
+ tests/qemu-iotests/181                             |   1 +
+ tests/qemu-iotests/185                             |   1 +
+ tests/qemu-iotests/186                             |   1 +
+ tests/qemu-iotests/192                             |   1 +
+ tests/qemu-iotests/201                             |   1 +
+ tests/qemu-iotests/205                             |   6 +-
+ tests/qemu-iotests/214.out                         |   2 +-
+ tests/qemu-iotests/216                             |   3 +-
+ tests/qemu-iotests/220.out                         |   2 +-
+ tests/qemu-iotests/225                             |   1 +
+ tests/qemu-iotests/225.out                         |   4 +-
+ tests/qemu-iotests/232                             |   1 +
+ tests/qemu-iotests/236                             |   3 +-
+ tests/qemu-iotests/244.out                         |  12 +-
+ tests/qemu-iotests/245                             |   3 +-
+ tests/qemu-iotests/246                             |   3 +-
+ tests/qemu-iotests/249                             |   1 +
+ tests/qemu-iotests/249.out                         |   6 +-
+ tests/qemu-iotests/254                             |   3 +-
+ tests/qemu-iotests/255                             |   3 +-
+ tests/qemu-iotests/257                             |   3 +-
+ tests/qemu-iotests/260                             |   3 +-
+ tests/qemu-iotests/264                             |   3 +-
+ tests/qemu-iotests/267                             |   1 +
+ tests/qemu-iotests/271.out                         |  14 +-
+ tests/qemu-iotests/274                             |   3 +-
+ tests/qemu-iotests/280                             |   1 +
+ tests/qemu-iotests/281                             |   3 +-
+ tests/qemu-iotests/283                             |   1 +
+ tests/qemu-iotests/286                             |   1 +
+ tests/qemu-iotests/289.out                         |   2 +-
+ tests/qemu-iotests/298                             |   3 +-
+ tests/qemu-iotests/300                             |   3 +-
+ tests/qemu-iotests/304                             |   3 +-
+ tests/qemu-iotests/305.out                         |   2 +-
+ tests/qemu-iotests/307.out                         |   2 +-
+ tests/qemu-iotests/310                             |   3 +-
+ tests/qemu-iotests/common.rc                       |   8 +
+ tests/qemu-iotests/iotests.py                      |  32 +-
+ tests/qemu-iotests/tests/backup-discard-source     |   7 +-
+ tests/qemu-iotests/tests/copy-before-write         |  69 ++--
+ tests/qemu-iotests/tests/file-io-error.out         |   2 +-
+ tests/qemu-iotests/tests/image-fleecing            |   3 +-
+ tests/qemu-iotests/tests/image-fleecing.out        |  12 +-
+ tests/qemu-iotests/tests/inactive-node-nbd.out     |   8 +-
+ tests/qemu-iotests/tests/iothreads-create          |   3 +-
+ tests/qemu-iotests/tests/luks-detached-header      |   3 +-
+ .../tests/migrate-bitmaps-postcopy-test            |   3 +-
+ tests/qemu-iotests/tests/migrate-bitmaps-test      |   3 +-
+ tests/qemu-iotests/tests/mirror-change-copy-mode   |   3 +-
+ tests/qemu-iotests/tests/mirror-ready-cancel-error |   3 +-
+ tests/qemu-iotests/tests/qcow2-internal-snapshots  |   1 +
+ tests/qemu-iotests/tests/qsd-migrate               |   3 +-
+ tests/qemu-iotests/tests/reopen-file               |   3 +-
+ tests/qemu-iotests/tests/write-zeroes-unmap        |   1 +
+ tests/qtest/ahci-test.c                            |   5 +-
+ tests/qtest/cdrom-test.c                           |  29 +-
+ tests/qtest/device-introspect-test.c               | 111 ++++--
+ tests/qtest/drive_del-test.c                       |  25 ++
+ tests/qtest/ide-test.c                             |   4 +-
+ tests/qtest/libqtest.c                             |  14 +
+ tests/qtest/libqtest.h                             |  11 +
+ tests/qtest/meson.build                            |   8 +-
+ tests/qtest/netdev-socket.c                        | 143 ++++---
+ tests/qtest/numa-test.c                            |  63 +++-
+ tests/qtest/pnv-host-i2c-test.c                    |   2 +-
+ tests/qtest/pnv-xive2-test.c                       |   2 +-
+ tests/qtest/qmp-test.c                             |  13 +-
+ tests/unit/test-util-sockets.c                     |   1 -
+ tests/vm/basevm.py                                 |  13 +-
+ tools/qemu-vnc/clipboard.c                         |   4 +-
+ tools/qemu-vnc/stubs.c                             |   5 -
+ trace/meson.build                                  |   5 +-
+ trace/trace-hmp-cmds.c                             |  17 +-
+ ui/meson.build                                     |   4 +-
+ ui/ui-hmp-cmds.c                                   | 151 ++++----
+ util/error-report.c                                |  72 ++--
+ util/qemu-print.c                                  |  30 +-
+ 255 files changed, 3922 insertions(+), 2938 deletions(-)
+---
+base-commit: 0a1ebd448b38afaa118597cbb633dbec24ef74d3
+change-id: 20260521-qemu-no-hmp-ead3f0bf79c0
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
