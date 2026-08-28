@@ -4,106 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5A97C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 09:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CBA1C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 09:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wztBE-0000G9-0G; Fri, 28 Aug 2026 05:47:24 -0400
+	id 1wztFx-0002h1-Va; Fri, 28 Aug 2026 05:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wztBC-0000Fs-HP
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 05:47:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wztB9-0002VB-M2
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 05:47:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787910438;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qm7YizpKPZpv7PCuyBgXL6ZHDWQBYClCWWtnxZlCtkE=;
- b=WpJCc4ZNjjmJjPJhqSi5gmw1whF0i5A5RAntedhnXBAvG93Ysp7zm6cpKK3g3kNN6ZdkM2
- VibabX3qnM8aYOfEavToineFilq+4lgWFNUmbhYO4fVfm74ZCs7Lrbt/TWyuKZG5hk+5CM
- j2hNOsI8gXkf+Q/+QODXC1o3qZfS4pc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-E1etsLRfMdqZXm2vkv8hQQ-1; Fri, 28 Aug 2026 05:47:17 -0400
-X-MC-Unique: E1etsLRfMdqZXm2vkv8hQQ-1
-X-Mimecast-MFC-AGG-ID: E1etsLRfMdqZXm2vkv8hQQ_1787910436
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49b7c1dc61eso5014005e9.3
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 02:47:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787910436; x=1788515236;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1wztFw-0002gY-SL
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 05:52:16 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1wztFu-0003qi-UN
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 05:52:16 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c160420289bso112868166b.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 02:52:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787910733; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hf3QZoeUp3HVWtxNVDKfdMx+dg6DP2ELzM/0rNlfem812yAgH0Z5FrRJcTQSprIEaO
+ dja/cIi25p8oHJUajly0UyYq5Yvr9Tu0g1Nf8PtOaQ3ORxEhnzVhKTnJ61PFkTPHeXyN
+ reYFddSrrmHkr1V6NTbRfW/y8EpyZ7XHi6YsAKSt0WhnxiLqd+gC90yyxeTHBr09jSBS
+ qlVGmhTgXEns4HflbvtIG9pN1t8iCuNFUpoPssUbysLfhG2CgGwPWOzs0b79/qfDuAjP
+ 2GD4TEwTxJnwwH4v4O6p52y1dWoiINmgt3Mu+VfO+k9YzUmaEB+vuv+GREvJTXkk13jN
+ TRDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=IcIjNrUAkd4ujMAOwdVdWFS8R76eSaZH4WFCI7a3bNY=;
+ fh=9mwyWOpK54iJC8aLtzCKDeGN9smrR+H4CobDsaMoCBU=;
+ b=YgtBrcvcFRu9EdD0K+7qpg9u7YfYJ9bL3dKAux4zHqwkLH/jjD/UCVz8Av5GfXoI5i
+ yL0JgguDGeRvLl9DFmEsJyiULs5n1ZVT8D3GSWaQK64X3UbZ4DJy2V8zfUwg00n/2WQ0
+ ah7O/sTrVNpXtxLMAvw/ohSxTVhW0LCP00kRkej6d6QRTImPMHH7fOg1yAuZW3H/mQEZ
+ yf5Ms5K6SPDrlY7gR4eessMZ/A3ej9rGHE7GFAICjTrBXibubGsuxXKPqeDqVZqEVPyF
+ 6gFuN8bbYxD5As4RDrALD+CEouV12udzNEr2PyHDJim1Vs3aeGC7UiS9qagvmNbAFGxv
+ qxCA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787910733; x=1788515533; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Qm7YizpKPZpv7PCuyBgXL6ZHDWQBYClCWWtnxZlCtkE=;
- b=FCkSFQ2hgeR4uf8jOYIFA2UMyhODXOF2mI2ffOmjVKiBk3OFdC5g4DWD4UZ/++VRyd
- uMeZHFkaF+TW5BYAofjuSIbIEKyXK6aSI7BFsmYsveeaGMoZBBBt/yrHU43cGSUUmOuX
- hRAwWXCnYRUvQZXJvu3Py9EGbKOFFtuKhuA1wRcwuhzq8SO+pSJ998F01Vqtcr8ZnAaZ
- hCBVl+MD3eQPKh4kdI4RpZOxRvU53cOLaezdfV77eW5qYeZlp9l4GJxT/a8bkVs3qkNw
- v0Jbu5JmvL21TMCfthasH2XlUD6JjYwxyxnyH4qLG4usVH5kxi//n1/1XCotlK2+MtQo
- OCgA==
-X-Gm-Message-State: AFuF++klEtjd3JzZMi5FkNOvWm0yajcQNABYQwqkwjEGI6u8ktqkRWtU
- ggYZqo+/mGYm71Tadk1LGsOnyEhBYvraGnd5iwTfotXT9hIa3YdFX9AEd0NNjSUGUVodBk4mggC
- 8eGJD7OobP4l0aMrGk4JQxIGKLCxhFavkxR1ENGyS48l1VLK7uYDCfBMk
-X-Gm-Gg: AR+sD11VuZAsTvHrFRREhJcJEhHS8qCXf8s4JrB95Djl5Nl7We1CFgbIfeQ2w69KR5Z
- KVx2RjltXRF2MhVqpADLIWI8/o6Ezhfj5IZ4zhSsgN8dXkRPGyAYhu1gsDxWUIvOhdmmEsUhA7Q
- NQcw4/1DhS83BtkV5FZNCGf5RN7gDfJWtYTCjptZqam3xTnpXIXPSGaiFxhSJEWl/EcRoeNy4Ex
- qMeiYJMmmHGNTW8dOV3HJrcEARkmcwspDVudP2vDZaA8++LSuLN5BaWhNwAy+7GcjhhaZn8YhvR
- brr6QwBKsQrWkeAy4/A92a7GCgMU+8udWNawLqRRERuquLxOJWj6ZuOhFrz0eGjmrNf+FBtAZvq
- hTA/3I3PI36OLOgyhrWYcnRGEwlyVXMQkYyEsy5fTR+FbMQqm
-X-Received: by 2002:a05:600c:1d08:b0:499:bf0e:95c8 with SMTP id
- 5b1f17b1804b1-49b91c2e145mr81879395e9.1.1787910435804; 
- Fri, 28 Aug 2026 02:47:15 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d08:b0:499:bf0e:95c8 with SMTP id
- 5b1f17b1804b1-49b91c2e145mr81878285e9.1.1787910435193; 
- Fri, 28 Aug 2026 02:47:15 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b9266d45esm28298695e9.2.2026.08.28.02.47.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 02:47:14 -0700 (PDT)
-Message-ID: <7b5f99bb-891f-4184-9278-207664b02fb0@redhat.com>
-Date: Fri, 28 Aug 2026 11:47:12 +0200
+ bh=IcIjNrUAkd4ujMAOwdVdWFS8R76eSaZH4WFCI7a3bNY=;
+ b=chcItkNQ4IAWPvsCTFq5OwiAyC28VrfUII7Apc1Sg69WUCFI9fhB61iPdeQTFFjYuX
+ Y8qEbmblC/dHDiak6vfIsJyj42IjTAyQs4Huh1EDMBn5tzjL8ye9RPqgRG2GOLQeaDLe
+ HtCmSs7ukBkvSTlh6Ja/nxNUXryxwbQmg1r7QNLNqQTxwon2OAYPjuix0RsLwIu7TBH3
+ tomdT69NqfwBoQnzLjBetgyg7E/IAy4YYnLBKg1Pg54NqWExIDw+TdC7fmoJAZiRo7wY
+ Ahm/sEiTNkmGbOSm/swG1E+1f97tiKuOIPv6pYCJ9rEXzhO4LPwwtZfmwZCFGAVkQQuJ
+ HHNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787910733; x=1788515533;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=IcIjNrUAkd4ujMAOwdVdWFS8R76eSaZH4WFCI7a3bNY=;
+ b=QpeySeSHMhGPeJbvxuLTrPtEZERST1Gua6ktFAs9H91b0YuKfxlnvNTmTYR6BCf/v8
+ T9Huw7vvFTTzJkIKEKlOPGNp8dro1s5eEl3UND9iTQBBzcsvqSwP+zU5r3NqILB62/BV
+ o3neNZeNXzgy87ApQmZtAZdZVZTLP6FdKmiLfdJuY4BTn8ZpHSybRn75bor0cxm2qFC6
+ hENe73NUuOd53XuzkDqUwCOWk8xjtPUaSfzjuuG2QFztcxTbUeT5iy2QkFjZS4VSYvgh
+ +iuX1jZMwduVlVdDIGkzl+Dy8m7JSVsI9GY7X8YH7tGpshYKoml8l95d2NaV8jJklVIF
+ rsew==
+X-Gm-Message-State: AFuF++nSIAmy+QQCamgYf6eA5JaegR38GHsSbb1c7hqA6Opkf5tuusHq
+ 98avTKy0vV8glQVeJ8Y3MZ3umh0GTMgwv1RfBapkLBBJDHEydxufsX7HQwR7JT6dX0MqTbFn9BB
+ 53ukTKGkP7BGvUS82thSNTRJo4WnOs9w=
+X-Gm-Gg: AR+sD13L+kS3OyK5sCwFRWqkpUIlsWpLVCyyVyjtI8coEWq9KfqX9qTmM+60HgYkIo9
+ x8YPMQDusQz6wgAttqUEfklbNzXlO23xkEfqiIFTHDPg8iBMYQrwWc6hJ/dUu7nndX41lvmgD6R
+ WDCmL5FGE4+IbSjQjo0dCE9BbplJectntqqscpredeL/AT3eOSuk/uPtWkr3le+XDX+yiBcEIiK
+ wfcSM306sDfZRUfty86S2Eb4jEx2oqzE4KVgPIhyCuoRetTwgI43gWXXmcNmg1SQZQlQppbUf/Z
+ UTgnX3lGl5eyRlUbmD4vILlENu4WOoIckpd7fN6Lcmt7Ig==
+X-Received: by 2002:a17:906:4fd2:b0:c15:e8c8:340 with SMTP id
+ a640c23a62f3a-c255741a367mr337707566b.23.1787910733116; Fri, 28 Aug 2026
+ 02:52:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 16/28] hw/arm/smmuv3: Add access checks for
- GERROR_IRQ_CFG registers
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162558.2808607-1-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260813162558.2808607-1-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 28 Aug 2026 17:51:59 +0800
+X-Gm-Features: AcwNN1WjvWZmRn1AF7aRX8NJBF-OGf3o-v15QMyyRa8WVRy6vtf0YVDu2JLGZ6s
+Message-ID: <CAE2XoE8g0nAJPoJvjZGR_KpEAo+C+S7+QTdZGhagBQE_diDXcw@mail.gmail.com>
+Subject: Re: [PATCH 00/27] single-binary: implement dynamic filtering for
+ machine types
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: multipart/alternative; boundary="000000000000233bba065a1868d3"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,250 +119,179 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
+--000000000000233bba065a1868d3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/13/26 6:25 PM, Tao Tang wrote:
-Please directly explain what is the problem we want to fix before what
-is actually done in the patch.
-
-Spec says: "SMMU_GERROR_IRQ_CFG0 is Guarded by
-SMMU_IRQ_CTRL.GERROR_IRQEN and must only be modified
-when SMMU_IRQ_CTRL.GERROR_IRQEN == 0." This check is currently not
-performed 
-
-In SMMUv3.2 and later, a write while SMMU_IRQ_CTRL.GERROR_IRQEN == 1 is
-IGNORED.
-Accesses to this register use the following encodings:
-Accessible at offset 0x0068 from SMMUv3_PAGE_0
-• When SMMU_IRQ_CTRL.GERROR_IRQEN == 0 and SMMU_IRQ_CTRLACK.GERROR_IRQEN
-== 0,
-accesses to this register are RW.
-• Otherwise, accesses to this register are RO.
-"
-
-By the way you are not checking  SMMU_IRQ_CTRLACK.GERROR_IRQEN
-
-Nevertheless our emulation does not support MSI, right? So why don't we
-hardcode this behavior on SMMU_GERROR_IRQ_CFG0 access, ie.
-
-"This register is present only when SMMU_IDR0.MSI == 1.
-SMMU_GERROR_IRQ_CFG0 are RES 0."
-
-That would be simpler.
-> Add helpers that separate IRQ_CFG register presence from the runtime
-> IRQ enable guard. The Non-secure and Secure GERROR_IRQ_CFG register sets
-> both use SMMU_IDR0.MSI for presence, while writability additionally
-> requires GERROR_IRQEN to be clear. IRQ_CTRL and IRQ_CTRLACK share one
-> synchronous backing field in the current model.
+On Fri, Jul 24, 2026 at 8:11=E2=80=AFAM Pierrick Bouvier <
+pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> Reads return RES0 when the register set is absent. Writes are ignored
-> when it is absent or GERROR_IRQEN is set. Apply the same checks to all
-> three GERROR_IRQ_CFG registers and mask reserved bits in CFG0 and CFG2.
+> Now that we can link a single-binary with at least two targets (arm,
+aarch64),
+> we want to make sure that we expose the same set of machines (later
+devices and
+> cpus) than target binaries. For that, we implemented a static filtering
+based on
+> target interfaces that each machine will implement to declare which
+targets have
+> this machine.
 >
-> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
-above is enought I think
-> Fixes: 10a83cb9887e ("hw/arm/smmuv3: Skeleton")
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  hw/arm/smmuv3.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 116 insertions(+), 2 deletions(-)
+> However, we discovered that this static filtering is not enough. Indeed,
+some
+> machines and devices do not depend only on target, and their presence can
+depend
+> on Kconfig or host/target combination. Thus, our static approach can't
+work, and
+> we need something more flexible.
 >
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 47f0d575817..628911d3f21 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1428,6 +1428,62 @@ smmu_cmdq_stage2_supported(SMMUv3State *s, SMMUSecSID sec_sid)
->      return true;
->  }
->  
-> +/* Check whether the selected IRQ_CFG register set is present. */
-Remove the final "."
-Besides worth to add, check if MSI are supported. Even I would rather
-rename the helper to reflect what is pratcically does, even if your
-eventual interest is to know if SMMU_PRIQ_IRQ_CFGn and
-SMMU_GERROR_IRQ_CFGn are not RES 0. By the way IRQ_CFG is always present
-;-)
-> +static bool smmu_irq_cfg_present(SMMUv3State *s, SMMUSecSID sec_sid,
-> +                                 SMMUIrq irq)
-> +{
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-> +
-> +    switch (irq) {
-> +    case SMMU_IRQ_GERROR:
-> +        switch (sec_sid) {
-> +        case SMMU_SEC_SID_NS:
-> +        case SMMU_SEC_SID_S:
-> +            return FIELD_EX32(bank->idr[0], IDR0, MSI);
-> +        case SMMU_SEC_SID_NUM:
-> +            g_assert_not_reached();
-> +        }
-> +        break;
-> +    case SMMU_IRQ_EVTQ:
-why do you pass irq if everything besides 
+> This series adds a new TYPE_TARGET_SPECIFIC, that declare a single
+function
+> bool is_available(void). From there, any machine type (and later devices
+and
+> cpus) can implement it to override their presence for each target.
+> We first replace the existing static mechanism with this, and once done,
+we
+> cleanup all the old interface. One nice benefit is that we can get rid of
+> config/targets/*.c files, which saves duplication.
 
-SMMU_IRQ_GERROR is unexpected?
 
-> +    case SMMU_IRQ_PRIQ:
-> +    case SMMU_IRQ_CMD_SYNC:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    g_assert_not_reached();
-> +}
-> +
-> +/* Check whether the selected IRQ_CFG register set is writable. */
-> +static bool smmu_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid,
-> +                                  SMMUIrq irq)
-> +{
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    uint32_t irqen;
-> +
-> +    if (!smmu_irq_cfg_present(s, sec_sid, irq)) {
-> +        return false;
-> +    }
-> +
-> +    switch (irq) {
-> +    case SMMU_IRQ_GERROR:
-> +        irqen = FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
-again the name of the helper does not reflect what it does. 
-GERROR_IRQENMeaning
-0b0 interrupts are disabled.
-0b1 Interrupts are enabled.
-> +        break;
-> +    case SMMU_IRQ_EVTQ:
-> +    case SMMU_IRQ_PRIQ:
-> +    case SMMU_IRQ_CMD_SYNC:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    /* IRQ_CTRL and IRQ_CTRLACK share one synchronous backing field. */
-> +    return irqen == 0;
-> +}
-> +
-> +static bool
-> +smmu_gerror_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
-> +{
-> +    return smmu_irq_cfg_writable(s, sec_sid, SMMU_IRQ_GERROR);
-> +}
-> +
->  static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->  {
->      SMMUState *bs = ARM_SMMU(s);
-> @@ -1735,7 +1791,14 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->  
->      switch (offset) {
->      case A_GERROR_IRQ_CFG0:
-> -        bank->gerror_irq_cfg0 = data;
-> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
-> +            /* SMMU_(*_)_IRQ_CTRL.GERROR_IRQEN == 1: IGNORED this write */
-> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 write ignored: "
-> +                         "register is RO when IRQ enabled\n");
-> +            return MEMTX_OK;
-> +        }
-> +
-> +        bank->gerror_irq_cfg0 = data & SMMU_GERROR_IRQ_CFG0_RESERVED;
->          return MEMTX_OK;
->      case A_STRTAB_BASE:
->          bank->strtab_base = data;
-> @@ -1803,16 +1866,42 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->          smmuv3_cmdq_consume(s, &local_err, reg_sec_sid);
->          break;
->      case A_GERROR_IRQ_CFG0: /* 64b */
-> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 write ignored: "
-> +                          "register is RO when IRQ enabled\n");
-> +            return MEMTX_OK;
-> +        }
-> +
-> +        data &= SMMU_GERROR_IRQ_CFG0_RESERVED;
->          bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 0, 32, data);
->          break;
->      case A_GERROR_IRQ_CFG0 + 4:
-> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG0 + 4 write ignored: "
-> +                          "register is RO when IRQ enabled\n");
-> +            return MEMTX_OK;
-> +        }
-> +
-> +        data &= SMMU_GERROR_IRQ_CFG0_RESERVED >> 32;
->          bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 32, 32, data);
->          break;
->      case A_GERROR_IRQ_CFG1:
-> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG1 write ignored: "
-> +                          "register is RO when IRQ enabled\n");
-> +            return MEMTX_OK;
-> +        }
-> +
->          bank->gerror_irq_cfg1 = data;
->          break;
->      case A_GERROR_IRQ_CFG2:
-> -        bank->gerror_irq_cfg2 = data;
-> +        if (!smmu_gerror_irq_cfg_writable(s, reg_sec_sid)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "GERROR_IRQ_CFG2 write ignored: "
-> +                          "register is RO when IRQ enabled\n");
-> +            return MEMTX_OK;
-> +        }
-> +
-> +        bank->gerror_irq_cfg2 = data & SMMU_GERROR_IRQ_CFG2_RESERVED;
->          break;
->      case A_GBPA:
->          /*
-> @@ -1938,6 +2027,11 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
->  
->      switch (offset) {
->      case A_GERROR_IRQ_CFG0:
-> +        if (!smmu_irq_cfg_present(s, reg_sec_sid, SMMU_IRQ_GERROR)) {
-> +            *data = 0; /* RES0 */
-> +            return MEMTX_OK;
-> +        }
-> +
->          *data = bank->gerror_irq_cfg0;
->          return MEMTX_OK;
->      case A_STRTAB_BASE:
-> @@ -2006,15 +2100,35 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
->          *data = bank->gerrorn;
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG0: /* 64b */
-> +        if (!smmu_irq_cfg_present(s, reg_sec_sid, SMMU_IRQ_GERROR)) {
-> +            *data = 0; /* RES0 */
-> +            return MEMTX_OK;
-> +        }
-> +
->          *data = extract64(bank->gerror_irq_cfg0, 0, 32);
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG0 + 4:
-> +        if (!smmu_irq_cfg_present(s, reg_sec_sid, SMMU_IRQ_GERROR)) {
-> +            *data = 0; /* RES0 */
-> +            return MEMTX_OK;
-> +        }
-> +
->          *data = extract64(bank->gerror_irq_cfg0, 32, 32);
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG1:
-> +        if (!smmu_irq_cfg_present(s, reg_sec_sid, SMMU_IRQ_GERROR)) {
-> +            *data = 0; /* RES0 */
-> +            return MEMTX_OK;
-> +        }
-> +
->          *data = bank->gerror_irq_cfg1;
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG2:
-> +        if (!smmu_irq_cfg_present(s, reg_sec_sid, SMMU_IRQ_GERROR)) {
-> +            *data = 0; /* RES0 */
-> +            return MEMTX_OK;
-> +        }
-> +
->          *data = bank->gerror_irq_cfg2;
->          return MEMTX_OK;
->      case A_STRTAB_BASE: /* 64b */
-Thanks
+  About target-filtering, we already have
 
-Eric
+enum {
+    QEMU_ARCH_ALPHA =3D       (1UL << SYS_EMU_TARGET_ALPHA),
+    QEMU_ARCH_ARM =3D         (1UL << SYS_EMU_TARGET_ARM) |
+                            (1UL << SYS_EMU_TARGET_AARCH64),
+    QEMU_ARCH_I386 =3D        (1UL << SYS_EMU_TARGET_I386) |
+                            (1UL << SYS_EMU_TARGET_X86_64),
+    QEMU_ARCH_M68K =3D        (1UL << SYS_EMU_TARGET_M68K),
+    QEMU_ARCH_MICROBLAZE =3D  (1UL << SYS_EMU_TARGET_MICROBLAZE),
+    QEMU_ARCH_MIPS =3D        (1UL << SYS_EMU_TARGET_MIPS) |
+                            (1UL << SYS_EMU_TARGET_MIPSEL) |
+                            (1UL << SYS_EMU_TARGET_MIPS64) |
+                            (1UL << SYS_EMU_TARGET_MIPS64EL),
+    QEMU_ARCH_PPC =3D         (1UL << SYS_EMU_TARGET_PPC) |
+                            (1UL << SYS_EMU_TARGET_PPC64),
+    QEMU_ARCH_S390X =3D       (1UL << SYS_EMU_TARGET_S390X),
+    QEMU_ARCH_SH4 =3D         (1UL << SYS_EMU_TARGET_SH4) |
+                            (1UL << SYS_EMU_TARGET_SH4EB),
+    QEMU_ARCH_SPARC =3D       (1UL << SYS_EMU_TARGET_SPARC) |
+                            (1UL << SYS_EMU_TARGET_SPARC64),
+    QEMU_ARCH_XTENSA =3D      (1UL << SYS_EMU_TARGET_XTENSA) |
+                            (1UL << SYS_EMU_TARGET_XTENSAEB),
+    QEMU_ARCH_OR1K =3D        (1UL << SYS_EMU_TARGET_OR1K),
+    QEMU_ARCH_TRICORE =3D     (1UL << SYS_EMU_TARGET_TRICORE),
+    QEMU_ARCH_HPPA =3D        (1UL << SYS_EMU_TARGET_HPPA),
+    QEMU_ARCH_RISCV =3D       (1UL << SYS_EMU_TARGET_RISCV32) |
+                            (1UL << SYS_EMU_TARGET_RISCV64),
+    QEMU_ARCH_RX =3D          (1UL << SYS_EMU_TARGET_RX),
+    QEMU_ARCH_AVR =3D         (1UL << SYS_EMU_TARGET_AVR),
+    QEMU_ARCH_HEXAGON =3D     (1UL << SYS_EMU_TARGET_HEXAGON),
+    QEMU_ARCH_LOONGARCH =3D   (1UL << SYS_EMU_TARGET_LOONGARCH64),
+    QEMU_ARCH_ALL =3D         UINT32_MAX,
+};
 
+Can we use this to do target filtering instead? And we can extend this to
+maximal uint128_t to support maximal 128 targets in future, so it's not a
+burden to use it as a enum
+
+and for arm or mips we can use QEMU_ARCH_ARM QEMU_ARCH_MIPS  to support
+multiple targets in a single integer.
+
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
+
+--000000000000233bba065a1868d3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><br></div><div><br>On Fri, Jul 24, 2=
+026 at 8:11=E2=80=AFAM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouv=
+ier@oss.qualcomm.com" target=3D"_blank">pierrick.bouvier@oss.qualcomm.com</=
+a>&gt; wrote:<br>&gt;<br>&gt; Now that we can link a single-binary with at =
+least two targets (arm, aarch64),<br>&gt; we want to make sure that we expo=
+se the same set of machines (later devices and<br>&gt; cpus) than target bi=
+naries. For that, we implemented a static filtering based on<br>&gt; target=
+ interfaces that each machine will implement to declare which targets have<=
+br>&gt; this machine.<br>&gt;<br>&gt; However, we discovered that this stat=
+ic filtering is not enough. Indeed, some<br>&gt; machines and devices do no=
+t depend only on target, and their presence can depend<br>&gt; on Kconfig o=
+r host/target combination. Thus, our static approach can&#39;t work, and<br=
+>&gt; we need something more flexible.<br>&gt;<br>&gt; This series adds a n=
+ew TYPE_TARGET_SPECIFIC, that declare a single function<br>&gt; bool is_ava=
+ilable(void). From there, any machine type (and later devices and<br>&gt; c=
+pus) can implement it to override their presence for each target.<br>&gt; W=
+e first replace the existing static mechanism with this, and once done, we<=
+br>&gt; cleanup all the old interface. One nice benefit is that we can get =
+rid of<br>&gt; config/targets/*.c files, which saves duplication.</div><div=
+><br></div><div><br></div><div>=C2=A0 About target-filtering, we already ha=
+ve=C2=A0<div><br>enum {<br>=C2=A0 =C2=A0 QEMU_ARCH_ALPHA =3D =C2=A0 =C2=A0 =
+=C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_ALPHA),<br>=C2=A0 =C2=A0 QEMU_ARCH_ARM =
+=3D =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_ARM) |<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_AARCH64),<br>=C2=A0 =C2=
+=A0 QEMU_ARCH_I386 =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0(1UL &lt;&lt; SYS_EMU_TAR=
+GET_I386) |<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_X86_64)=
+,<br>=C2=A0 =C2=A0 QEMU_ARCH_M68K =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0(1UL &lt;&=
+lt; SYS_EMU_TARGET_M68K),<br>=C2=A0 =C2=A0 QEMU_ARCH_MICROBLAZE =3D =C2=A0(=
+1UL &lt;&lt; SYS_EMU_TARGET_MICROBLAZE),<br>=C2=A0 =C2=A0 QEMU_ARCH_MIPS =
+=3D =C2=A0 =C2=A0 =C2=A0 =C2=A0(1UL &lt;&lt; SYS_EMU_TARGET_MIPS) |<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_MIPSEL) |<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_MIPS64) |<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_MIPS64EL),<br>=C2=A0 =C2=A0 QEMU_ARCH_P=
+PC =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_PPC) |<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_PPC64),<br>=C2=A0 =C2=
+=A0 QEMU_ARCH_S390X =3D =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_S=
+390X),<br>=C2=A0 =C2=A0 QEMU_ARCH_SH4 =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1UL =
+&lt;&lt; SYS_EMU_TARGET_SH4) |<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_=
+EMU_TARGET_SH4EB),<br>=C2=A0 =C2=A0 QEMU_ARCH_SPARC =3D =C2=A0 =C2=A0 =C2=
+=A0 (1UL &lt;&lt; SYS_EMU_TARGET_SPARC) |<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1UL =
+&lt;&lt; SYS_EMU_TARGET_SPARC64),<br>=C2=A0 =C2=A0 QEMU_ARCH_XTENSA =3D =C2=
+=A0 =C2=A0 =C2=A0(1UL &lt;&lt; SYS_EMU_TARGET_XTENSA) |<br>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_XTENSAEB),<br>=C2=A0 =C2=A0 QEMU_AR=
+CH_OR1K =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0(1UL &lt;&lt; SYS_EMU_TARGET_OR1K),<=
+br>=C2=A0 =C2=A0 QEMU_ARCH_TRICORE =3D =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_=
+TARGET_TRICORE),<br>=C2=A0 =C2=A0 QEMU_ARCH_HPPA =3D =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0(1UL &lt;&lt; SYS_EMU_TARGET_HPPA),<br>=C2=A0 =C2=A0 QEMU_ARCH_RISCV =
+=3D =C2=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_RISCV32) |<br>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_RISCV64),<br>=C2=A0 =C2=A0 Q=
+EMU_ARCH_RX =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1UL &lt;&lt; SYS_EMU_TAR=
+GET_RX),<br>=C2=A0 =C2=A0 QEMU_ARCH_AVR =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0 (1U=
+L &lt;&lt; SYS_EMU_TARGET_AVR),<br>=C2=A0 =C2=A0 QEMU_ARCH_HEXAGON =3D =C2=
+=A0 =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_HEXAGON),<br>=C2=A0 =C2=A0 QEMU_ARC=
+H_LOONGARCH =3D =C2=A0 (1UL &lt;&lt; SYS_EMU_TARGET_LOONGARCH64),<br>=C2=A0=
+ =C2=A0 QEMU_ARCH_ALL =3D =C2=A0 =C2=A0 =C2=A0 =C2=A0 UINT32_MAX,<br>};<br>=
+<br>Can we use this to do target filtering instead? And we can extend this =
+to maximal uint128_t to support maximal 128 targets in future, so it&#39;s =
+not a burden to use it as a enum</div><div><br></div><div>and for arm or mi=
+ps we can use=C2=A0<span style=3D"background-color:transparent">QEMU_ARCH_A=
+RM</span><span style=3D"background-color:transparent">=C2=A0</span><span st=
+yle=3D"background-color:transparent">QEMU_ARCH_MIPS</span><span style=3D"ba=
+ckground-color:transparent">=C2=A0 to support multiple targets in a single =
+integer.</span></div><div><br></div></div><div><br></div><div><br>--<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=
+=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</di=
+v></div>
+</div>
+
+--000000000000233bba065a1868d3--
 
