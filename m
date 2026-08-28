@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95201C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662F6C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03QN-0000I9-TY; Fri, 28 Aug 2026 16:43:43 -0400
+	id 1x03Pk-0006me-1u; Fri, 28 Aug 2026 16:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03QN-0000H2-2J
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:43 -0400
+ id 1x03Pi-0006eS-V8
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03QJ-00007x-Ot
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:42 -0400
+ id 1x03Pg-0008JZ-PW
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787949816;
+ s=mimecast20190719; t=1787949780;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PLeeZ0AHiOKQ2oOvOf6V4+XfqMQ/FMyIOOORqxDbaMs=;
- b=G+YsAMs2G9Sr3/o2wR9utr9ROqzB+FgTeixS0JWMIQiQanGnNz7gtfEFBoTkrlGIAecGXg
- 9PLvNtnVxlhaPEEdALi10PFbZr8VJZA/cLRmq7XEATb7Sx+IqYScf8z+1jhmXYppW7ghMo
- RA1JqvhRZTutAfDoqiqGLZvLetw7wVA=
+ bh=Q7aJVi5LXJ+NtA2gG+7uKXZdAeNwER+/p995kZn6wtA=;
+ b=fNHbDa31wvr6VFaxipW/vEJ2/8L93WJn3uUghXB2fLDuthXNa78sq54/9cZxi6IyzKyYFC
+ jO/Mylhdlo8DVySMOEDcLoR5ha4gHIQXO9KsjYRX2TWbRMrE9vSfJTEDht3EbqdKeXAhvk
+ C2wA3Mq82wEakBF2dGhOfaJ/4IbVh6o=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-uc1HaLSJMRqSFDICYj3Zrw-1; Fri,
- 28 Aug 2026 16:43:33 -0400
-X-MC-Unique: uc1HaLSJMRqSFDICYj3Zrw-1
-X-Mimecast-MFC-AGG-ID: uc1HaLSJMRqSFDICYj3Zrw_1787949812
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-4KCPBTQrMbuy_B8gyzTU0Q-1; Fri,
+ 28 Aug 2026 16:42:58 -0400
+X-MC-Unique: 4KCPBTQrMbuy_B8gyzTU0Q-1
+X-Mimecast-MFC-AGG-ID: 4KCPBTQrMbuy_B8gyzTU0Q_1787949777
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F68B180AEBE; Fri, 28 Aug 2026 20:43:32 +0000 (UTC)
+ id 469A018A3C0A; Fri, 28 Aug 2026 20:42:57 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 64B4F1955F0A; Fri, 28 Aug 2026 20:43:31 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 563971803A40; Fri, 28 Aug 2026 20:42:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 00:42:05 +0400
-Subject: [GIT PULL 26/50] tests/qemu-iotests: convert pause/resume_drive()
- to QMP
+Date: Sat, 29 Aug 2026 00:41:55 +0400
+Subject: [GIT PULL 16/50] tests/qtest/device-introspect-test: replace 'info
+ qom-tree'
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260829-nohmp-v1-26-4dcc2b4b0055@redhat.com>
+Message-Id: <20260829-nohmp-v1-16-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1317;
+Cc: richard.henderson@linaro.org, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5554;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=9yUWqz9+Kpd5K4Ga7zpfZ8+so7PJQ0UEYfgEPskRBu4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUV1ySLwAY99VN9LCdOEalNXUDtePdDeRdt
- Xy5hciFi8KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
- 5eDiEACSP/G8wSC47oOi8csklvyMt//BuMaRnFWYhG9sCGDZ4WNt0+8iy4XAjrQOoDjMq5uguvy
- hHwYGBnMz3ZSORX8wquZB/KQYataTybNk+PTBP023uB7E22KcGZmefxB2S2yJbyJq8AhLx3dSFz
- dy68WDkI1RnEVAz5Frl3fa4vauhIx27wp1wIMAj2m7zNb7pCqCsyO22qNRG5FDFWPtREs7Zv9lI
- SK0YlKE4s+Ut4Ry6dnJZXTZrBbsKj6+OCWgBgj60BUtTZuhlqSAsZWAbVwLn+8SZ8txG/dXzWZh
- vBJN+KhHaikgv4bG9GLr2e79eaIMWi0odvntec/PLr8G8IGFo5kADwdO0XKrBHtr9R/dJBVpNtR
- Kv+seYjjL5eHl2HlPq5etZLu6fTdyhvc4N2Fh0kjXgSMpVugFRy2klyfXXRk2lDHkZOcitDLrUc
- n63kr72pJ0bj70x28Qpif7s/HdxTjv09ANwfUMnB179k2jslii+VpeiHYJJ/Qz8MPURxGV6wewj
- dgK793O7YeuJ0V+LVcF3F40bWCapOg8L0Xg8BOAv6alIxkGCHRhatgi6ANnNCE5/LJz0yVtVhDW
- H0RbYkBnqpUvAhRRo5o3fFIzNO0DfJwbQ7z0maXb/E68jagCsiUcdTVswxpX/EAHiqbapkgFwlF
- pXDg+z7+J9fAw2w==
+ bh=FVCkBeD7AGwbOPHtW4E0zgvzeheUmYontGT5jAr9fls=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUlNhE+aty2QZi2t05GX3f6tpXx+1lDbtG9
+ 5SlXwssheuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
+ 5azeD/0YVIAORAywdwiPLjxAbxJwrY/D/0c0vAhys71mkyjGqEsbNvyEU5qb5EGS6qI6u4SPWYH
+ t0TFGBQPFvdNGoqmso3dIWnYbtt9k0gl+S+cOZ88mrRnwF1Bic6SrjRBBQaOubcWDOBXPrWzDdm
+ Yq0cX9h+xvMO/6WRwiAecWcUAPIwJtWDcEPl0a7UzElO6KuKnhgndMiK0IjqSc+sPlwlEnAnmxn
+ /ogJ1atQNWb0idslfCbDUs/DOPfV0mOPNy3BHJgQNnETAxq3ajBuZyVsPfUiE6qEGYUJLYHW/5g
+ byrLLvgw2UR8TLuu9Qmh0s2VBu5ECQFAf+48T5h0yOv0F7HNoLEoIihdJGjPgfDkECUMdVzSIrw
+ 6bh6DBDZTAoQ5osbHFjFDJ0SHBipBlggfkLnMiWRk9mpJ1vUfrS7O9kh8Co7LHcM/nMFkTkoPTp
+ 67lS48hez7eAyco3ZitiJlW9lC1AoJ/lPp9DyQiB9GCgqZAEqd2nUxNmX8BkXYRVQTEpNW9ljlS
+ QAnTycJ+A/q1pzRiHpOr0MPFOW1xwxmCbMVSFoHh72yRF0ZjLjH92XLtfLwHFcA4KA9ZNaQVnXv
+ mEVwt/9DyiagjfnZE5Bfg2ubMhvqa355Fn5qwTJAKdKyNjzDkyiWLtxWytJrPd+7L5A3TGcXSzd
+ eVNnuCxMhq1gVBA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,34 +104,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert pause_drive() and resume_drive() to use x-qemu-io directly
-instead of routing through hmp().
+Replace "info qom-tree" with recursive qom-list walk. This substitutes a
+HMP-only command by a QOM command, allowing the test to run when
+!CONFIG_HMP later in this series.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260828-qemu-no-hmp-v5-26-9227de146347@redhat.com>
+Message-ID: <20260828-qemu-no-hmp-v5-16-9227de146347@redhat.com>
 ---
- tests/qemu-iotests/iotests.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/device-introspect-test.c | 65 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 58 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index c24f1e3767c4..f36bcf316429 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -941,11 +941,11 @@ def pause_drive(self, drive: str, event: Optional[str] = None) -> None:
-             self.pause_drive(drive, "read_aio")
-             self.pause_drive(drive, "write_aio")
-             return
--        self.hmp(f'qemu-io {drive} "break {event} bp_{drive}"')
-+        self.qmp_qemu_io(drive, f'break {event} bp_{drive}')
+diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
+index f84cec51dc2e..1ee441e19a0a 100644
+--- a/tests/qtest/device-introspect-test.c
++++ b/tests/qtest/device-introspect-test.c
+@@ -100,6 +100,57 @@ static QList *device_type_list(QTestState *qts, bool abstract)
+     return qom_list_types(qts, "device", abstract);
+ }
  
-     def resume_drive(self, drive: str) -> None:
-         """Resume drive r/w operations"""
--        self.hmp(f'qemu-io {drive} "remove_break bp_{drive}"')
-+        self.qmp_qemu_io(drive, f'remove_break bp_{drive}')
++/*
++ * Recursively walk the QOM composition tree via qom-list and build a
++ * string representation.  This serves two purposes: detecting dangling
++ * pointers (qom-list would crash QEMU) and detecting leaked objects
++ * (by comparing the output before and after device introspection).
++ */
++static void qom_tree_walk(QTestState *qts, const char *path, GString *result)
++{
++    QDict *resp;
++    QList *list;
++    QListEntry *e;
++    GList *children = NULL;
++
++    resp = qtest_qmp(qts, "{'execute': 'qom-list',"
++                     " 'arguments': {'path': %s}}", path);
++    g_assert(qdict_haskey(resp, "return"));
++    list = qdict_get_qlist(resp, "return");
++
++    QLIST_FOREACH_ENTRY(list, e) {
++        QDict *prop = qobject_to(QDict, qlist_entry_obj(e));
++        const char *type = qdict_get_str(prop, "type");
++        if (g_str_has_prefix(type, "child<")) {
++            const char *name = qdict_get_str(prop, "name");
++            children = g_list_prepend(children, g_strdup(name));
++        }
++    }
++
++    children = g_list_sort_with_data(children, (GCompareDataFunc)g_strcmp0,
++                                     NULL);
++
++    for (GList *l = children; l; l = l->next) {
++        const char *name = l->data;
++        g_autofree char *child_path = (!strcmp(path, "/"))
++            ? g_strdup_printf("/%s", name)
++            : g_strdup_printf("%s/%s", path, name);
++
++        g_string_append_printf(result, "%s\n", child_path);
++        qom_tree_walk(qts, child_path, result);
++    }
++
++    g_list_free_full(children, g_free);
++    qobject_unref(resp);
++}
++
++static char *qom_tree_str(QTestState *qts)
++{
++    GString *result = g_string_new("");
++    qom_tree_walk(qts, "/", result);
++    return g_string_free(result, FALSE);
++}
++
+ static void test_one_device(QTestState *qts, const char *type)
+ {
+     QDict *resp;
+@@ -198,7 +249,7 @@ static void test_qom_list_fields(void)
+ static void test_device_intro_none(void)
+ {
+     QTestState *qts = qtest_init(common_args);
+-    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
++    g_autofree char *qom_tree_start = qom_tree_str(qts);
+     g_autofree char *qom_tree_end = NULL;
+     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
+     g_autofree char *qtree_end = NULL;
+@@ -206,7 +257,7 @@ static void test_device_intro_none(void)
+     test_one_device(qts, "nonexistent");
  
-     def hmp_qemu_io(self, drive: str, cmd: str,
-                     use_log: bool = False, qdev: bool = False) -> QMPMessage:
+     /* Make sure that really nothing changed in the trees */
+-    qom_tree_end = qtest_hmp(qts, "info qom-tree");
++    qom_tree_end = qom_tree_str(qts);
+     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
+     qtree_end = qtest_hmp(qts, "info qtree");
+     g_assert_cmpstr(qtree_start, ==, qtree_end);
+@@ -217,7 +268,7 @@ static void test_device_intro_none(void)
+ static void test_device_intro_abstract(void)
+ {
+     QTestState *qts = qtest_init(common_args);
+-    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
++    g_autofree char *qom_tree_start = qom_tree_str(qts);
+     g_autofree char *qom_tree_end = NULL;
+     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
+     g_autofree char *qtree_end = NULL;
+@@ -225,7 +276,7 @@ static void test_device_intro_abstract(void)
+     test_one_device(qts, "device");
+ 
+     /* Make sure that really nothing changed in the trees */
+-    qom_tree_end = qtest_hmp(qts, "info qom-tree");
++    qom_tree_end = qom_tree_str(qts);
+     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
+     qtree_end = qtest_hmp(qts, "info qtree");
+     g_assert_cmpstr(qtree_start, ==, qtree_end);
+@@ -239,7 +290,7 @@ static void test_device_intro_concrete(const void *args)
+     QListEntry *entry;
+     const char *type;
+     QTestState *qts = qtest_init(args);
+-    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
++    g_autofree char *qom_tree_start = qom_tree_str(qts);
+     g_autofree char *qom_tree_end = NULL;
+     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
+     g_autofree char *qtree_end = NULL;
+@@ -255,10 +306,10 @@ static void test_device_intro_concrete(const void *args)
+ 
+     /*
+      * Some devices leave dangling pointers in QOM behind.
+-     * "info qom-tree" or "info qtree" have a good chance at crashing then.
++     * Walking the QOM tree via qom-list has a good chance at crashing then.
+      * Also make sure that the tree did not change.
+      */
+-    qom_tree_end = qtest_hmp(qts, "info qom-tree");
++    qom_tree_end = qom_tree_str(qts);
+     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
+ 
+     qtree_end = qtest_hmp(qts, "info qtree");
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
