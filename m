@@ -4,102 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194C4C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A88CAC61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzyzW-0001bp-Df; Fri, 28 Aug 2026 11:59:42 -0400
+	id 1wzzop-0005Zd-Hp; Fri, 28 Aug 2026 12:52:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzT-0001Zs-SE
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:39 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzI-0008Um-R1
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:39 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 107B62228E;
- Fri, 28 Aug 2026 15:59:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932763; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JK5hagYU1EUz0RO8LHP2IW2Zhm75w1JTYi6QloT7uOI=;
- b=FQLdvMweH6z/EOOj5171sfT6ukpVNow8XIlqKgWCWhwmxGroZoqrfCNcygvj0cmoaaowB/
- ovGqJ70D+yTZW8pYk3hJY73RqgMz5Qa5HA2FSEpr6NTyb+RIi3LbfdvIhFB5xCQ0gKI6Ko
- 7+IeKuVBpWRror5HXJX4jut5A7bJv1s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932763;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JK5hagYU1EUz0RO8LHP2IW2Zhm75w1JTYi6QloT7uOI=;
- b=b6/wFsWUaFIAr7YBzrUrSMZNoXSgYJ+qEJsaMyZ/nJUd+RhWFTX8yPk/LsI1x1tn9k8cLG
- JK35uUmqmLfXsRBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932759; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JK5hagYU1EUz0RO8LHP2IW2Zhm75w1JTYi6QloT7uOI=;
- b=i2wLUWPU+UnE94Fk4x6p4lLcoxfSdPJMWtUyJpYvmWOunn00H9V6NSa6zikLxh76jcQ2sA
- lar/HotoFI03txxItzL/4n53jU1IwcOwzf6oksD/WkoU76N+VI+GzM1Lg4g+vzGEVpjVrr
- fBYCiix5qrRIIHepaR4WnkTZ4+zkD1A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932759;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JK5hagYU1EUz0RO8LHP2IW2Zhm75w1JTYi6QloT7uOI=;
- b=AnJuWYQZB7mgktM5Y8WwrufqOcArji66RsuCN5/OrVKnOPBRd2bSdpwCOhwXnKeWHbYqcw
- TArTVVfSKCK5cYAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2ED761352D;
- Fri, 28 Aug 2026 15:59:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4Fh2AFawkWpoBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:59:18 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL v2 22/30] migration: Remove unused vmstate macros
-Date: Fri, 28 Aug 2026 12:58:37 -0300
-Message-ID: <20260828155845.2874508-23-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260828155845.2874508-1-farosas@suse.de>
-References: <20260828155845.2874508-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzzoo-0005ZT-Ir
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 12:52:42 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzzom-0000Ku-TX
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 12:52:42 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67SGJxNj3568393
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:52:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Kg6UESLRwj3FWNI38cBsKhvt+KWlHcUQ6s2OTxv/v4E=; b=EB0k9cy3/t6dS2vH
+ AwTUBqbCN13esDleIEHauK0qAPOo3PSxor504K3yqLhF9BkzAd6MXWOKNY3Ww1Qn
+ nFQpnWsGGHOu+4sAoQgb1nQvwE1wSZSuyNo163VEN1GTp6TEt4FBsxoI+2+Owuat
+ o9lh9CcP5Pj9H9cSWAxJi8F+z816R1/NcSaxSRLfLYqy51HuS3kmi+IhFKG0/d4v
+ Y2xLpYIHa5FvVUGmcTgDXefJdtjtAmOWFrBDF0d7TPjoF259FGF9Q4fxXtXWUdFg
+ VTJAzbyq8AK7dw3uHnm4aMdbfyPfnaX25cjXkAviPhrSZuVe/PAcn/lb3vMv6m4m
+ UAFmrQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3mxtrrb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:52:38 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-52fc0097865so21853281cf.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 09:52:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787935958; x=1788540758; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Kg6UESLRwj3FWNI38cBsKhvt+KWlHcUQ6s2OTxv/v4E=;
+ b=HrERH+ROUNoNjbJkJZ9P81BdQrKASkJUxr2OW833RfZKC8Th1n8ZRHi8tja4MQkDa5
+ h70LgVQPunype1vD+WI5oEZEuM5SaOmDSXGhsTeOUr2vn5WfCftcHQHZVNUvxHQbT+vz
+ 4/CKbQJfx2UelxP1jvzZtw7cz0X/BUvC6wmZX0FbQJtY2h5T5cnlv21nKmlaV9LjI3KW
+ +UNQoaoBbkdrGevNWcOTjOko6wVhTYBTV8Ir0hwcDzG+rH8mQHNJdW9F7pJF5pN/941d
+ ssV/LUtfKfZ2vRmLbvSl83a2vvitIJqSJ1+ou03P3IYK/vbnSJX3gSmV9vn/84LaegRn
+ 9J9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787935958; x=1788540758;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Kg6UESLRwj3FWNI38cBsKhvt+KWlHcUQ6s2OTxv/v4E=;
+ b=leSLrd3F9vqo+nb4X6Kd3NU4JNH+iux6DSayH4Gd8jYvnjCc0yfC/nah0tM0v8PG7t
+ C7P6jytPV1D8/ka0nlPjrRYpVZqlQfHTGTeOApKmOMgQR/2UqBXDk5RdZH3nQ80kEObw
+ ZEgq2xgiokoZPVTce2Xome6ndlldcjD3VdmtZonpUJMS9SLU3A1O5ZNWjnE5cTrHckEM
+ DPcX2SqGkns4wdrPNUCTDxNjxHSA/xVFGFQy+SyOo38VKiR8MJEsTI1FqdGbDzJzccJH
+ WSKvRzfvtgnylrCpElWrv8JEJE4FFeARnBxjsqOvHcnF9e2siS9lNkQfMSJF5+1B07Zx
+ 5jOg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrmAfDjpcoWTR8Iemfa2KhFza9wqheRlD+XdvNwfqT6hLhTKn8mGBmHB8Bdj+fWkUpM1IB6pdlZeUx6@nongnu.org
+X-Gm-Message-State: AFuF++maETRqJpz7igbKe1HqAfq+ux2rh1SUxvESJd0ktBOzODsceP1t
+ 9bzfm/Ga3DoOc14b8x7FzqVw/KPYajiqJpGGWxbNmah8MRgrWpHxVQoj4Xoke3taoskMWymY1hl
+ k1GblNpKYIulafFtZnhPd+xbfwwP5k+sytloEOrZj8pqt7F8IWJWwEgvZ2w==
+X-Gm-Gg: AR+sD13LPKkaXJRlJiZj3NoeBl0cSXMK870Ud/cYOKW7l2pbopc0TS4zPmmm0z8XBWt
+ xx9xwNjsODBPmh/YrRm+4hgSyK0JWZdWHh9AyMGxQWlLLMNnwaM9hSm+AZHAKcXWJkuK/H/UOLJ
+ lJSHEbQ9mxp7sxF9aYpWRd8X2Ibt6JNKPoFoi4KBXjc4pzRqOhWmlmq1Yw00SRRCk1VC2GJbohH
+ AMN+cMfVWDZW8PRERo2Ppk+hErE/tnkz7i22Ry/aFgm5+2Fjwj5m5iEFfBU80wKKT8U2+wAKXki
+ SpL+QqmNCpO60herfhSnWLKvqyJ7FYTQl+G/nZrjCb7v5Qvblr61CxoseOtgArsv7fRYQojCfTu
+ HaRJ/vjHa99yYFmkT6wrCfe141vz6czVP6w==
+X-Received: by 2002:a05:622a:1109:b0:51c:1590:8e13 with SMTP id
+ d75a77b69052e-52fb93d2796mr103586541cf.4.1787935957829; 
+ Fri, 28 Aug 2026 09:52:37 -0700 (PDT)
+X-Received: by 2002:a05:622a:1109:b0:51c:1590:8e13 with SMTP id
+ d75a77b69052e-52fb93d2796mr103585721cf.4.1787935957260; 
+ Fri, 28 Aug 2026 09:52:37 -0700 (PDT)
+Received: from [192.168.69.226] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482fbb20793sm4727178f8f.17.2026.08.28.09.52.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Aug 2026 09:52:36 -0700 (PDT)
+Message-ID: <e55988ca-43d0-41ec-8a3b-d839e8138461@oss.qualcomm.com>
+Date: Fri, 28 Aug 2026 18:52:35 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/50] Make HMP optional (and later standalone)
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, "Denis V. Lunev" <den@openvz.org>,
+ "Jason J. Herne" <jjherne@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDE0NiBTYWx0ZWRfX2WtyVmXmxgTC
+ mrp1RJKEvdhiv4wriTog/uDCvEpURZcxNtI6TOjnetkhipPIPsgPrD1CBrsd9J29K3bxIT697xV
+ dPnp33MIBwVSNhYhnEDHFaY9rFfX8Qq5JayufTq0OS10byyZUyBOb6g3SqUNuRl44LEh876ke6P
+ nzASqjCefBRkLdDTONGCfWcA7nDJurjR+HW0/FPWrAXtoBEf5vAe+NQZQThk5p3xwjd/nrBEgUk
+ VyK/X0ipTBULT1qoI0gvnxI9blDqhWDlFKD74jFLbR7JKtl+ezHcdgP75kQ8G9l4RuRL1LnuB4t
+ RmZU91a88vE1rylgk3IFTxgVf0LN1nraRitfqM45ayFRrnjQcDpl6aV91pS0qJ3t+5ztXLlvyNA
+ OL4vNKnGn7U26bWoh9XNM1SO2p9TSoVuSL1EYmqvnATLHASCAnbvU2cbM43Ig5Z/RR1QWgGGHQv
+ O8aI7cW5P0e0Ceu57GQ==
+X-Authority-Analysis: v=2.4 cv=MONQXsZl c=1 sm=1 tr=0 ts=6a91bcd6 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=20KFwNOVAAAA:8 a=G91jXg4iDfnOBt3sguQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDE0NiBTYWx0ZWRfX+/lL21TrvMoy
+ 9FXfZQ5q7d6CovL46A5SNyTgO4pa1kkW6YnJCpJ9yJOq4JMoII6R4LET8fQmWCxhV7O0X7B9TOB
+ klpZR4lqPAkn50Bq0Yq5Tc6Tlgsi3bE=
+X-Proofpoint-ORIG-GUID: S1Iyu3Za4Q_56SFgMa9_EwY4qXwMWJD5
+X-Proofpoint-GUID: S1Iyu3Za4Q_56SFgMa9_EwY4qXwMWJD5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-28_05,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280146
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,113 +159,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the several vmstate macros that don't have any users.
+On 28/8/26 14:03, Marc-AndrÃ© Lureau wrote:
+> Hi,
+> 
+> This series makes HMP compile-time optional via --disable-hmp. The
+> resulting binary speaks only QMP - reducing the attack surface, binary
+> size and enforcing a separation between machine-readable interface and
+> interactive debugging console.
+> 
+> QMP offers almost all the functionality HMP could provide, so a separate
+> standalone "HMP-like" console could be implemented on top of it. The
+> rough list of missing commands (+complexity estimation) after this
+> series:
 
-Acked-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- include/migration/vmstate.h | 45 -------------------------------------
- 1 file changed, 45 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 1b7f295417e..214a2131350 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -451,15 +451,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .offset     = vmstate_offset_sub_array(_state, _field, _type, _start), \
- }
- 
--#define VMSTATE_ARRAY_INT32_UNSAFE(_field, _state, _field_num, _info, _type) {\
--    .name       = (stringify(_field)),                               \
--    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
--    .info       = &(_info),                                          \
--    .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_INT32,                                  \
--    .offset     = vmstate_offset_varray(_state, _field, _type),      \
--}
--
- #define VMSTATE_VARRAY_INT32(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
-@@ -710,16 +701,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
--#define VMSTATE_STRUCT_VARRAY_INT32(_field, _state, _field_num, _version, _vmsd, _type) { \
--    .name       = (stringify(_field)),                               \
--    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
--    .version_id = (_version),                                        \
--    .vmsd       = &(_vmsd),                                          \
--    .size       = sizeof(_type),                                     \
--    .flags      = VMS_STRUCT|VMS_VARRAY_INT32,                       \
--    .offset     = vmstate_offset_varray(_state, _field, _type),      \
--}
--
- #define VMSTATE_STRUCT_VARRAY_UINT32(_field, _state, _field_num, _version, _vmsd, _type) { \
-     .name       = (stringify(_field)),                               \
-     .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-@@ -1069,8 +1050,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- 
- #ifdef CONFIG_LINUX
- 
--#define VMSTATE_U8(_f, _s)                                         \
--    VMSTATE_U8_V(_f, _s, 0)
- #define VMSTATE_U16(_f, _s)                                        \
-     VMSTATE_U16_V(_f, _s, 0)
- #define VMSTATE_U32(_f, _s)                                        \
-@@ -1116,15 +1095,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_BOOL_TEST(_f, _s, _t)                               \
-     VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_bool, bool)
- 
--#define VMSTATE_INT8_TEST(_f, _s, _t)                               \
--    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_int8, int8_t)
--
--#define VMSTATE_INT16_TEST(_f, _s, _t)                               \
--    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_int16, int16_t)
--
--#define VMSTATE_INT32_TEST(_f, _s, _t)                                  \
--    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_int32, int32_t)
--
- #define VMSTATE_INT64_TEST(_f, _s, _t)                                  \
-     VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_int64, int64_t)
- 
-@@ -1140,12 +1110,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_UINT64_TEST(_f, _s, _t)                                  \
-     VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_uint64, uint64_t)
- 
--#define VMSTATE_FD_TEST(_f, _s, _t)                                            \
--    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_fd, int32_t)
--
--#define VMSTATE_TIMER_PTR_TEST(_f, _s, _test)                             \
--    VMSTATE_POINTER_TEST(_f, _s, _test, vmstate_info_timer, QEMUTimer *)
--
- #define VMSTATE_TIMER_PTR_V(_f, _s, _v)                                   \
-     VMSTATE_POINTER(_f, _s, _v, vmstate_info_timer, QEMUTimer *)
- 
-@@ -1155,9 +1119,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_TIMER_PTR_ARRAY(_f, _s, _n)                              \
-     VMSTATE_ARRAY_OF_POINTER(_f, _s, _n, 0, vmstate_info_timer, QEMUTimer)
- 
--#define VMSTATE_TIMER_TEST(_f, _s, _test)                             \
--    VMSTATE_SINGLE_TEST(_f, _s, _test, 0, vmstate_info_timer, QEMUTimer)
--
- #define VMSTATE_TIMER_V(_f, _s, _v)                                   \
-     VMSTATE_SINGLE(_f, _s, _v, vmstate_info_timer, QEMUTimer)
- 
-@@ -1275,12 +1236,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_BUFFER_START_MIDDLE(_f, _s, _start) \
-     VMSTATE_BUFFER_START_MIDDLE_V(_f, _s, _start, 0)
- 
--#define VMSTATE_PARTIAL_VBUFFER(_f, _s, _size)                        \
--    VMSTATE_VBUFFER(_f, _s, 0, NULL, _size)
--
--#define VMSTATE_PARTIAL_VBUFFER_UINT32(_f, _s, _size)                        \
--    VMSTATE_VBUFFER_UINT32(_f, _s, 0, NULL, _size)
--
- #define VMSTATE_BUFFER_TEST(_f, _s, _test)                            \
-     VMSTATE_STATIC_BUFFER(_f, _s, 0, _test, 0, sizeof(typeof_field(_s, _f)))
- 
--- 
-2.53.0
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+> Changes in v5:
+> - renamed local variable hmp_mon -> hmp in patch for consistency
+> - renamed error_vprintf_mon/error_printf_mon -> error_vprintf_hmp/error_printf_hmp
+> - simplified default_monitor init with IS_ENABLED(CONFIG_HMP)
+> - added early NULL return in qemu_vprintf/qemu_vfprintf
+> - reworked !opts->has_mode path to use explicit error_setg() when HMP is disabled
+> - split device-introspect-test patch
+> - rebased, collected tags, all reviewed, ready-to-merge
 
+Thanks for the final polishing. Everything LGTM!
 
