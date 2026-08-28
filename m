@@ -4,147 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6A9C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61471C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wztaF-00006H-Lp; Fri, 28 Aug 2026 06:13:15 -0400
+	id 1wztfM-0000lI-Mc; Fri, 28 Aug 2026 06:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wztaE-000068-En
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:13:14 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wztaC-0000tx-Ap
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:13:14 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SA7Rga2061310
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 10:13:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0KgZkJ3R2WTe4gmka2newT6tRgg1F3MaZRYWRM/4MJw=; b=QRFoxDN4mtgo8toA
- 6zS1oGN5ZcjeQyyxTuYvp0BsIPNDllF39SlvwvG8yMtSGNmWAFotQ9rbeCaur8cC
- KNCBooorADTsk0DJ4zK0p0R1kBsfzeyC7I2X5TTa3OIMJJS80au74NXPHlKdG5Y3
- 6qi6mIPK8OzueoSjULV5FLVzawpnT4eRHpFRZYoQb5BS1YsUMBKCZbajeZ/DYIAC
- FVmTeVufM1+WYlhMQGfKQv/AtP/4S9ty1pHQQWFf/PpT9U6D0KV9jAblz5ks9CQY
- WC7hnP4D4NTLeY9Szzj5/NaEV7NDjx9dG7548HuGlNKL3BteIn2fBJaKxZTLTeAc
- YVFdkQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3mu975d-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 10:13:10 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52ff14b1c02so1899621cf.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:13:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wztfJ-0000kx-Ee
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:18:29 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wztfH-0002Rm-K1
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:18:29 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4953de5be0aso5864535e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787911990; x=1788516790; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0KgZkJ3R2WTe4gmka2newT6tRgg1F3MaZRYWRM/4MJw=;
- b=ExiCtSgWzPgd1cGToeDQhNiWovZYbd5uFD3rRMBtXm4PKlOb057jJlIfjKwG1xhqSC
- udVIz6X/F13G4QsBuG3WNesUy7hkke+dgWtDUn6/poJpO25uPvANRfph3Jch3Odnxb85
- hokcrKiaiGVAO8/rmT5xf5TrC1ZzMwdXQiVLQ+1ORQnvDU17oYgAidEv7eIOIV3IjoPH
- S5BMO0z1RvPUlofxu0Hwv3pApZwc2Bh1BO71dzafKpimOaRQeetJ2thnjCkGJP0GRfC3
- jX+v/p98Gh6kqVx14NETNnt4pwhbuYSth5JJ34aLyDJOJUBXtYxopOjHjODwTVoHAOvB
- EqTg==
+ d=linaro.org; s=google; t=1787912306; x=1788517106; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=hK1gCAEqj075H2vT8s7bZJBXYS7QjP3AZi4u9ZclhdM=;
+ b=uNV4Zx9Zswx8+SMgEZfbDgnh7VfFb8c340HgqiBme7LjeMZhO+dYrdrWM4Uo9fGhO7
+ LnRT6vbJQZ0Fvp+BKmBBIptkvVxZqTUm5LKy+aPSOIRvnpYVMc6mzkm/CAS9fObGUU7m
+ +mGzDqsFhCtU5iv6Ze2kGlmkSljUOBrDKrpJIDLxno8muXFULpiHeVN/uacmk3TOIrnR
+ GKeABV98Yar7ho7DJs0EpDaGHPdBSQYtHE4fqMfTyJiZhbmyA4LfehSDNCE2+8DhIZSh
+ JdBB+12ffIAALYrd06lc+tMFaS8r3Ivchjmknfnse2YFHCVAebTnWDVyUBnqQc60dIP0
+ 0WeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787911990; x=1788516790;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0KgZkJ3R2WTe4gmka2newT6tRgg1F3MaZRYWRM/4MJw=;
- b=F+yrcViJhbM9wllzV1EOJF/Ir/SfkqxsPIrIOSGlK6mzXp4akG7UJj84y/+FCZCVM4
- 3mc/bOyIJRGBwQp6kWjylNVvlE+GhwL0LMqGvjhg+2k5VKfKBDrODfYnvt0UPxjJJULn
- Pzx6lEanzb6JILS8pWmybeyoKYXk2ots1M3/4yfeyd5EPBFLrWCT1owX8w/ND4Tni3yF
- 9zy5REcYP4kPdSDUlzXd7EYGBTVBspTvkzPx2Evp3i1o8YSTZQmLQGNFyx8pU7oZZWpF
- eZQSdHP3JbFcAS0LOmt3Scx7HxDoKQqWTBvkgfOCeKqoPoCVc3FbKXx6QnxGTfdqLjY8
- a4fw==
+ d=1e100.net; s=20251104; t=1787912306; x=1788517106;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hK1gCAEqj075H2vT8s7bZJBXYS7QjP3AZi4u9ZclhdM=;
+ b=JuFR9NR3PCeDtpSY/tAynKkKLY/J6x5SUjlCCNj63ptA65ML2Mj+z9uQR8ERQVbt/M
+ FRWiOH0Kfb7v9d4UhgfZ+1c9fmHybG8IcfxHutoNjB0rkMk37ntzyLjomsuZVvPMFNNu
+ LaOQF28wNpNM1WTWAC7/AapTdPXXks02qO8T1K1XmEwUTKNv7OyYpBqprA9rTS1mh7Sq
+ 3Y8SX5NrOazKh2/bboXZO7ItZkhcSuuGy7xGQ2+TsJoHcvqCcz2pKIHjva0281T3wkQR
+ IJBOJa6V+xIC7eCiUNWLdTuMzgSG3ZSTX1teBtkn66WmPS+zW5QLAUthXWo/NOk5BRIV
+ JDVg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqYtasvYDjXYeV7nv2e/BbQD3wl6nh8UdZiS6sSgvZvus/kY9CkgHKFHxwaI5C8ak+bbD73YY5/jAGr@nongnu.org
-X-Gm-Message-State: AFuF++n6DY1UiRf2iBtyIDAs4oj5jYh56V5RnwCuOw5357KfklONz4zQ
- rqd8AAFrgv2/1up3hP2+xAi17FSYN0Vhw5mDtRahTT//izt3HVwVxGjyiErcqSnVpfPptUvH/oU
- MMhdkw54PJnVQ+s+LgOwl1unsTwnoRNbAfQdD37Rief3xXSSDoPrt8kCiow==
-X-Gm-Gg: AR+sD10qYfbn6qUaEWK1y7RBKQdk76CuWj7jcdEpZOqODWCF8TOiUfpIJIJkb6ccuKi
- GGuhUO6xX5zMppYWBrbUjHMujl4EalczWyRLT5Yj53tu0ycyqEGglhLD4Kv3voIgzFDNJBlYXQ0
- hrj1bsKtb81mG4XwtL2emRaxBqFygES9MuGCLABdROgQSsAz+DHeoSE7Ti/mdwFB6iBB0+Z1QeZ
- Pcbg9RCEF3QaoHlopddPf5HGU5L3HTmixsAXAAAs9aEu/zG5MTEKYwJQWP8rR0IjFlWwy2PPc9o
- 4yZ+S9RduAlqZOKGjNi0Gn8NJeq/uJ7I9fiqOHgpPqUKvE6EuazXohnUeGF+9t4Blqi1fyWyWoi
- 8OHRnfrsZusssahNsOCqliH1rPgQScICLkQ==
-X-Received: by 2002:a05:622a:44e:b0:52e:2d4f:2219 with SMTP id
- d75a77b69052e-52fb93cf62dmr60577391cf.9.1787911989528; 
- Fri, 28 Aug 2026 03:13:09 -0700 (PDT)
-X-Received: by 2002:a05:622a:44e:b0:52e:2d4f:2219 with SMTP id
- d75a77b69052e-52fb93cf62dmr60576921cf.9.1787911989131; 
- Fri, 28 Aug 2026 03:13:09 -0700 (PDT)
-Received: from [192.168.69.226] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b8d2ba486sm88762025e9.5.2026.08.28.03.13.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 03:13:08 -0700 (PDT)
-Message-ID: <2f6c9bab-dcc1-4c33-85bf-04b508f7cd67@oss.qualcomm.com>
-Date: Fri, 28 Aug 2026 12:13:07 +0200
+ AHgh+RpZgKyWNn769KYAfoQNzq0z5aHny1783/yIc51mZdwreB4q/TJJPCo4EN2t6Ul7rMxBoYW3Vb/T3Xz+@nongnu.org
+X-Gm-Message-State: AFuF++lUhjgPyEMupX+u6t9aHggyEoouvAs2eVQ2dOub/BAf26fLd4Yn
+ VH2sBAxuCMAo0ulNaOv5xfm2I7WeRse1+w2HfQLr4jg5vDhGceNZtPSQMW72Pi++85A=
+X-Gm-Gg: AR+sD11L2i8gEMu4Asz4o4KYdzYYVD2aKULw8LaqGu7XjXlySVt2ceDSJf5m8tjewIW
+ DKUvuGLiz3i2E8MU7hRbKIilwQX4eK1/1RLsnY63kHDCbHl9HqNKzOrINF5Q+qDnCA+XCxEdN/G
+ 0COWP+kV2EWHJ2KTc35hbkX9tgHB31+YRQH9cwiW+61I3vjhnmZc04Rm69IlZgCaqfxI0EUYxCM
+ OdhIui5nWVYw8FOKUhTAUY/ZvlLhSLtqklo/0A7YVDGCbHGPQeu9yVVcoUP1HLgWXDx3I8zlc8D
+ KTMrm8KL2yi9Ujsy/lDGq53pfEa/DnbEzs0Y7sz0yD6+7QdHNqyEPh01pL4eYTIFFk5ZIxTp07C
+ npkLmuc8BE8C/RinkUqivgpW50MShH57bjtJDb6wDD4tN/OZdLWzriI6h4dwmV4h8qweL+EQ5w/
+ 8QZx+5/JqpK6bHVTzMxQ0uXAIjetP+q+9X4mIodSf2t2WDLkLOceaSrqgORO6X
+X-Received: by 2002:a05:600c:4fd2:b0:496:c9cd:e7ab with SMTP id
+ 5b1f17b1804b1-49b91c22421mr86976965e9.5.1787912305557; 
+ Fri, 28 Aug 2026 03:18:25 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b95013d06sm53879335e9.12.2026.08.28.03.18.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Aug 2026 03:18:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A54095F7E6;
+ Fri, 28 Aug 2026 11:18:23 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Andreas Grapentin <gra@linux.ibm.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  eric.auger@redhat.com,  Paolo Bonzini
+ <pbonzini@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ philmd@linaro.org,  qemu-ppc@nongnu.org,  Christian Borntraeger
+ <borntraeger@linux.ibm.com>,  Steffen Eiden <seiden@linux.ibm.com>
+Subject: Re: [PATCH v5 8/8] hw/vfio: all vfio files can now be common files
+In-Reply-To: <7ce963fc-cca4-43df-8e03-36fe09dc80f1@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Thu, 20 Aug 2026 09:24:05 -0700")
+References: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
+ <20260318174733.1717643-9-pierrick.bouvier@linaro.org>
+ <aoPw6-MGBcTOfxwp@li-d8547bcc-2d90-11b2-a85c-a70f2a37009a.ibm.com>
+ <29fca8f4-9730-4090-8c89-813ba5c248fb@oss.qualcomm.com>
+ <aoWvPGCSA54hg_Dc@li-d8547bcc-2d90-11b2-a85c-a70f2a37009a.ibm.com>
+ <7ce963fc-cca4-43df-8e03-36fe09dc80f1@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Fri, 28 Aug 2026 11:18:23 +0100
+Message-ID: <871pbi4kgg.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/49] tests/qtest/netdev-socket: replace HMP with
- x-query-network QMP
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-19-af60857c2fbe@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260825-qemu-no-hmp-v4-19-af60857c2fbe@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ZbMt8MVA c=1 sm=1 tr=0 ts=6a915f36 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: gyLlrjKCqCm2cOy5Gp3IUpy3uDzGoc_M
-X-Proofpoint-GUID: gyLlrjKCqCm2cOy5Gp3IUpy3uDzGoc_M
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA4NiBTYWx0ZWRfX6nejumCd/N1L
- 8UC/pCpqhREGbj/Zv5gKz4I/wbzk7KW9urGS4TFWG9N5Erds2rsBh3ExfqUB4zzkdcJD6/3QoRW
- /VQ54af6vuLFf/lBRZY8Esqs+BZMx6c=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA4NiBTYWx0ZWRfXxgfcrnosjPTr
- Rd2pl84tc9TP/RA15lVSLtr8T0brHuOzjgnlD49vbCYHSpZi9Ea8lnoX8Lsp4R748cm2Q4NcQpH
- MmKrrJsyd7VgeeVtg95JxywWyxtj+N1C7EGXtEZThtLB+Cb43CDpuCZLDlz6hV/km2xsAr561ZS
- SGzF5kRKfALIHdG6yIl/ZsMjJgWY2B4qez43MDCBNOpBPoayxrw6arGKZv8BqXkF11f0IVgYeu+
- PWxp+g8J+PXEfmFnYJv1AwZql6UsonYw5c+jWhc1NCH5YyFCAdErddiUlEg5QHLz295hGbxzvbj
- uloSmQyoAKZRdiuMDF8942yOgsScCCGqY+E9aLCu5mghUaRjJh8W5hcsqxBkSKxgAHJhf59AtJL
- zkdZUqKBQJNMs6b47+SVEqaDP/1/7TZgNnIDbNrCj0yzD6Kp5VeTSYVGRdWSlRH2fJlfcElQR6A
- c7PLjXS6facBlBoBppA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-28_03,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608280086
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -161,25 +116,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/8/26 21:09, Marc-AndrÃ© Lureau wrote:
-> Replace the HMP "info network" text parsing with the structured
-> x-query-network QMP command. This makes the test assertions more robust
-> by matching individual fields (info-str) instead of parsing the full HMP
-> line format.
-> 
-> The EXPECT_STATE macro now takes an explicit netdev id argument to look
-> up the client by name in the QMP response. The strrchr truncation is
-> made NULL-safe: if the truncation character is not found, the full
-> string is compared (and the final g_assert_cmpstr will catch
-> mismatches).
-> 
-> While at it, fix the pre-existing duplicate "qemu/sockets.h" include,
-> and reorder includes.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   tests/qtest/netdev-socket.c | 143 +++++++++++++++++++++++++-------------------
->   1 file changed, 82 insertions(+), 61 deletions(-)
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> On 8/19/2026 1:06 PM, Andreas Grapentin wrote:
+>> On Aug 18 26, Pierrick Bouvier wrote:
+>>> It would be better to keep it as system_ss, since bringing back
+>>> specific_ss will break the single-binary compilation.
+>>> It should not be needed to rely on target config within the C file
+>>> directly. At least, we didn't meet any situation where it was.
+>>> That said, there is nothing in CI (yet) that prevent such regression,
+>>> but I would appreciate if you could keep it as it is for now.
+>>>
+>>> If you need to filter a specific function per config
+>>> (host/target/whatever), the right way is to isolate this in a new file,
+>>> and condition inclusion from build system instead.
+>>>
+>>> system_ss.add_all(when: 'CONFIG_X', if_true: [newfile.c])
+>>> Also, you can add associated stubs for other configs in stub_ss.
+>>> stub_ss.add(files('newfile-stubs.c'))
+>>>
+>>> I don't know the details of the series you sent (and too big for me to
+>>> take a look now), but if you have a precise question on a specific
+>>> patch, feel free to reach out to me by email.
+>>>
+>>> Regards,
+>>> Pierrick
+>>=20
+>> Thanks Patrick,
+>>=20
+>> To give some context, the linked series enables s390 host linux KVM to
+>> virtualize guests with different (non-native) guest architectures. So we
+>> would need to build (on host architecture s390x):
+>>=20
+>> a) qemu-system-s390x with vfio using asm-s390/kvm.h, and
+>> b) qemu-system-aarch64 with vfio using asm-arm64/kvm.h
+>>=20
+>> which (based on my current understanding of the code) would make it
+>> necessary to build the kvm-helpers in the vfio code twice, once per
+>> guest architecture s390x and aarch64.
+
+These are common KVM API headers aren't they? Which bits do you need
+apart from the ioctl #defines?
+
+>>
+>
+> Depending which functions/constants you need from asm-$arch/kvm.h, the
+> simpler is probably to expose it in a proper API, and then prefix
+> symbols per architecture. Finally, you can have a dispatcher function to
+> return the right value:
+>
+> void kvm_get_X() {
+>   if (target_aarch64()) {
+>     return kvm_aarch64_get_X();
+>   }
+>   else if (target_s390x()) {
+>     return kvm_s390x_get_X();
+>   }
+>   g_assert_not_reached().
+> }
+
+This is basically KVMCPUOps (like TCGCPUOps) with extra steps. I suggest
+that is the way to handle the abstraction of kvm_arch_* functions.
+
+>
+> However, it does not scale very well if you need to expose a lot of X.
+> You could also generate a struct with all values populated per arch, and
+> use that.
+>
+> What kind of information do you need to extract from this header?
+>
+>> I understand that this is a problem for the single-binary efforts of
+>> qemu, and needs further thought. We are currently trying to come up with
+>> an approach that more closely aligns with the single-binary goal, and
+>> any advice you could give to that end would be appreciated :)
+>>=20
+>> Of course this problem extends to all components in qemu that require
+>> architecture-specific components of the KVM UAPI.
+>>
+>
+> We didn't really meet any issue so far with this, but maybe it's because
+> we didn't yet to mix two different arch supporting kvm. In all cases, we
+> take the problems one after another, and we don't anticipate things - it
+> proved to an inefficient approach.
+>
+>> Thanks,
+>> Andreas
+>
+> Regards,
+> Pierrick
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
