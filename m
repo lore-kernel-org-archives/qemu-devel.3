@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD032C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0DEC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x05Jl-00010X-UQ; Fri, 28 Aug 2026 18:45:01 -0400
+	id 1x05Jn-000119-Cu; Fri, 28 Aug 2026 18:45:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x05Jk-0000zZ-Gw
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:00 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1x05Jl-00010D-P4
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:01 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x05Ji-0004MK-KK
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:00 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-ca766c1c9ccso1028556a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:44:58 -0700 (PDT)
+ id 1x05Jk-0004MW-9p
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:01 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-38759bcd877so1541476a91.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787957097; x=1788561897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787957099; x=1788561899; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IOeZvVD9ayER5VsvPnM2GYqjFIb7dCUMmqokgi1BWGE=;
- b=Ga4FnOcMbcPXjWeMh2aqQssdEE918+ssJMll19ULRegI+2fnM5eruWu3zAaftoeR+3
- ysFwdlR0x/cwXMYh7dST2bSwSF14f9h8DI7s6zkCgllXK6GkSK8HS8Jr/j/p0wsuFCHF
- Z+JyEcg3sZMa5x0pi++vdBvCpPi3FX8YKKIYD/RcOSvrLV2iNi6w42ozmzkNSV/dm6PJ
- QT9Bi2PyJBKUlwUTzgGXwnkvc2ShWrjsGT6P82+zKnfeUQ2wMoa3Plxf/OuLA4lGDn+O
- cenAhO+COUA98+x9mBpVtmPZkRBcgfv9tkez35NmaLn7ZsEc2r4jhfEBPwslraOueFaI
- Yo+A==
+ bh=YkaJNMx3LlnyAT8c1M0BxaIxuYtmXIvIWAde/pzZ480=;
+ b=q2oG7LFLb9EsKgybXjtCzGB2nJZZ4aG6+q7E6XDviBpxP1qhZKLkBLTCqKXCmZhr/k
+ o+CP0lsuGw6FXhNX6YQEBBDAEacJEjFRmJwQ+j7iDW+PFyVye86YvTdc+tcUCL/JXecR
+ CcuclDG1pNlQkFoKcziqFCbP5FBRJEDlu2f02STGYWPPcOBVeq4W/3z9TNEi1Q/8p+d3
+ tdKvo66HAoScY3ijtZa7Fy/QfkmrmPB1BDXt/i0pqwvB1e99FWP/I4pNLy4rcadbwyXP
+ ad7CfC8TkBhTLOA496PCtIjWJcQclv9F+1rHA/23tGt1ydfQoSd8O913KWUByF9b7ga8
+ Mcew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787957097; x=1788561897;
+ d=1e100.net; s=20251104; t=1787957099; x=1788561899;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IOeZvVD9ayER5VsvPnM2GYqjFIb7dCUMmqokgi1BWGE=;
- b=T91vBl8mf/SodA864809zxLRtiZdjF8Z+GIJBFiFZtfMAj20ukPPyFLJaQsm+ZFBEM
- r+Nk+LOWNgU0Rl6B2bnBRnwGOXndCHJWQW65HtzdAIMHN1VafF53J3V4v2UQ9gJrJClU
- 2IR6l3rjIBF7X/Iv7W8A4W1tDreheKgfcw3D57kYz4gnsoHHWi3H3Eat7N/OBcMssfIQ
- AFvT6M37kHpL0unJ+IMxKbBc1IFRUFYfrXQrN/oCPYPG9beMyDDBJmk63PLYrfJcsfBB
- 0t//xGkLjBOKrl+eC5hY9MlIyITWoq/p63go2yL2+4VstojSnG3S9Y5gy/rTGzqg14OA
- EPhw==
-X-Gm-Message-State: AFuF++kcIVYOlZnKfwycnrfzi/z+oSz+8IMFTTo7YZkzHvRQhlKLSigX
- 2VTn9PImyIUxFvJgvybjiddYcN+t8QD4dBXJKQ+xiYQAKqSRFGnmL9wxNmeUfDsV6y6/nclblJ/
- 5+Z+/acw=
-X-Gm-Gg: AYBFou1M86vOIGf6LuasA2PhRctb6qG9Gllw9x5XZ5+vO4DA7c4dl5AaEOhO4sECrao
- AIoduyzmhf9OugFpHO3pDAnkjRYN1calqzyHRDFpiDRkBs08yn0R+Qw5EiboqkGxttARuWfSAE4
- vBWhpX8kW1bk552mV6RxRNshieJe645LKtjKoZisP3perG4+OEZ3mqkt1/2IsL1maHtuS+Iwrkv
- nNay69risPoGhmMDKXrG1w5iNhJ1th6ePN9sTXHjCbnA0JG4+F5g3IeQBwxUT6c5wGpUr4GD43s
- 1oHAos9n0D6OVm9uz8ZZ1A4k/2hJY9nyKKoTbdu0hvbBIGemoC3E4omnENWTtKQt1qHK91KTeLc
- KTQ+HbDfj6x7+rPGWXei+xaX+KeAPujNVO7NzRXWuBtGDUPF37AvZZOOPhCGN6kXE/QJ8rWz4ko
- sORRauiQSqT3ur+R6pFSJkPBVMU+fKopA6Kqvp6edT/HKflM9XK4F4XkmYbKsjbAIa3v9lxXk99
- GZ5pQ50b4SclVeswHsYrg==
-X-Received: by 2002:a17:90b:54c5:b0:395:4de4:92c7 with SMTP id
- 98e67ed59e1d1-396d0e5ccc7mr20314641a91.3.1787957097261; 
- Fri, 28 Aug 2026 15:44:57 -0700 (PDT)
+ bh=YkaJNMx3LlnyAT8c1M0BxaIxuYtmXIvIWAde/pzZ480=;
+ b=UbmTBPrtnklVe46z+bXPMtTJcLvZDbYchirTzbnIfBqAUSvaDPHo9DJ8bEcZU53VbI
+ 5p81oCiBIzg9ofpqMb7AjiCMJbNpQZhtSMiD7B6c4KMQ6RDSV5Z9caqvUfNBrzXRsyHQ
+ adhH5oY+HClidbo8yHHga23PoW48FqY/wPtAPqvaJ4GJVKujIqQdNb2BRHlyLZNd6XoA
+ Unx+AYSo3oYPnnxhb5YEqHuQfvr1ZZB7l//2TrZX3Ludgi8JO0QYevoN56kdibY9N8Bh
+ 0Mim6uuv7zWc2XEMObJpiwoZ74c6HKEmYNLjtT/Uc17AfbRETF/ufGY38S/VOKKowi9/
+ 4TGw==
+X-Gm-Message-State: AFuF++m1sFzilBCxfzIGkTbC3uWwnBMthpH1/B+i7MYBSueG08MqL0MC
+ sSwztAYuhGrN1i0h32MtXaRkpHHnuDCNhywPa5yL+tt6AOWkjPTm0du1TVAt+WFVbdhv1rKBuVv
+ kWRclL+8=
+X-Gm-Gg: AYBFou2ayJ/Xr9nSgyJ44g1ebuTfH39lhCTu0yGEkzYuN0CkNCKoXrHV4KHvoLXncMu
+ uItvHjnT6mv0f+iol4VO59QRKVlsmgg88Thc14IvAt0trlRCURZfDOIrZ0FH0toK75OcSAHtBKt
+ KESUWSwEiOHq0onibg2ajOe1X8EEXbtLgXhxeraT8FYB2QMNcgdtZjqaR/8kHklP4ffn0dhvGrL
+ gkcjAEhk91pXhCMIY9dNOmmsoWtbolLe2WbrHwsDgJg+YvB/gDu1usVXpJaIZ5FSYU4kktKWNKw
+ 5f7KuikTvi6iD2uNGcCgOVgo8uP9vpu2h7thCG1a6NJDregWOYjMVZtmCmv/DWcgEHZtJXAzbuW
+ xcr9xtNcuPoJC+TitZuJwEawtfab2TZrjw0aaixfAOToCKh2Do47YqBZpSc/rNfYaS2f+i7S2dL
+ gZ87mfL/0LDE/rh+ZcTKWR5QS9+qLIAu02dVMN8VyDcKyJX16n2nvucbUeE8U2FLTvIntehVK0Y
+ nerAdsFXjzAXk0V/JU3
+X-Received: by 2002:a17:90b:2783:b0:398:9beb:5c19 with SMTP id
+ 98e67ed59e1d1-3989beb6352mr4209840a91.20.1787957098619; 
+ Fri, 28 Aug 2026 15:44:58 -0700 (PDT)
 Received: from stoup (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-398a2f5187fsm427594a91.1.2026.08.28.15.44.56
+ 98e67ed59e1d1-398a2f5187fsm427594a91.1.2026.08.28.15.44.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:44:56 -0700 (PDT)
+ Fri, 28 Aug 2026 15:44:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mattst88@gmail.com
-Subject: [PATCH 05/16] target/alpha: Use tcg_gen_lea_i64 for S{4,8}ADD{L,Q}
-Date: Fri, 28 Aug 2026 15:44:40 -0700
-Message-ID: <20260828224451.1564072-6-richard.henderson@linaro.org>
+Subject: [PATCH 07/16] target/riscv: Use tcg_gen_lea_tl for SH*ADD
+Date: Fri, 28 Aug 2026 15:44:42 -0700
+Message-ID: <20260828224451.1564072-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828224451.1564072-1-richard.henderson@linaro.org>
 References: <20260828224451.1564072-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,61 +103,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/alpha/translate.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ target/riscv/tcg/insn_trans/trans_rvb.c.inc | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index c66e3f9c146..6f18b8d1af6 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -1474,10 +1474,8 @@ static DisasJumpType translate_one(DisasContext *ctx, uint32_t insn)
-             break;
-         case 0x02:
-             /* S4ADDL */
--            tmp = tcg_temp_new_i64();
--            tcg_gen_shli_i64(tmp, va, 2);
--            tcg_gen_add_i64(tmp, tmp, vb);
--            tcg_gen_ext32s_i64(vc, tmp);
-+            tcg_gen_lea_i64(vc, vb, va, 2, 0);
-+            tcg_gen_ext32s_i64(vc, vc);
-             break;
-         case 0x09:
-             /* SUBL */
-@@ -1502,10 +1500,8 @@ static DisasJumpType translate_one(DisasContext *ctx, uint32_t insn)
-             break;
-         case 0x12:
-             /* S8ADDL */
--            tmp = tcg_temp_new_i64();
--            tcg_gen_shli_i64(tmp, va, 3);
--            tcg_gen_add_i64(tmp, tmp, vb);
--            tcg_gen_ext32s_i64(vc, tmp);
-+            tcg_gen_lea_i64(vc, vb, va, 3, 0);
-+            tcg_gen_ext32s_i64(vc, vc);
-             break;
-         case 0x1B:
-             /* S8SUBL */
-@@ -1524,9 +1520,7 @@ static DisasJumpType translate_one(DisasContext *ctx, uint32_t insn)
-             break;
-         case 0x22:
-             /* S4ADDQ */
--            tmp = tcg_temp_new_i64();
--            tcg_gen_shli_i64(tmp, va, 2);
--            tcg_gen_add_i64(vc, tmp, vb);
-+            tcg_gen_lea_i64(vc, vb, va, 2, 0);
-             break;
-         case 0x29:
-             /* SUBQ */
-@@ -1544,9 +1538,7 @@ static DisasJumpType translate_one(DisasContext *ctx, uint32_t insn)
-             break;
-         case 0x32:
-             /* S8ADDQ */
--            tmp = tcg_temp_new_i64();
--            tcg_gen_shli_i64(tmp, va, 3);
--            tcg_gen_add_i64(vc, tmp, vb);
-+            tcg_gen_lea_i64(vc, vb, va, 3, 0);
-             break;
-         case 0x3B:
-             /* S8SUBQ */
+diff --git a/target/riscv/tcg/insn_trans/trans_rvb.c.inc b/target/riscv/tcg/insn_trans/trans_rvb.c.inc
+index 3e74be223b0..82e715c7b73 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvb.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvb.c.inc
+@@ -336,10 +336,7 @@ static bool trans_orc_b(DisasContext *ctx, arg_orc_b *a)
+ #define GEN_SHADD(SHAMT)                                       \
+ static void gen_sh##SHAMT##add(TCGv ret, TCGv arg1, TCGv arg2) \
+ {                                                              \
+-    TCGv t = tcg_temp_new();                                   \
+-                                                               \
+-    tcg_gen_shli_tl(t, arg1, SHAMT);                           \
+-    tcg_gen_add_tl(ret, t, arg2);                              \
++    tcg_gen_lea_tl(ret, arg2, arg1, SHAMT, 0);                 \
+ }
+ 
+ GEN_SHADD(1)
 -- 
 2.53.0
 
