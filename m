@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60976C61DCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A4DC61DDB
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x05Jq-00014F-6y; Fri, 28 Aug 2026 18:45:06 -0400
+	id 1x05Jm-00010e-5c; Fri, 28 Aug 2026 18:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x05Jo-00012w-OR
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:04 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1x05Jl-0000zo-19
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:01 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x05Jn-0004Nh-7f
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:04 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-382ef647e20so1517077a91.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:45:02 -0700 (PDT)
+ id 1x05Jj-0004MO-Fi
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:45:00 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-398a4dcf289so319160a91.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787957102; x=1788561902; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787957098; x=1788561898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=k7apDi5G/qgt0uMemM+43oBLUrsOqwhkU7pSrCFTWHc=;
- b=GhxucXPOkjW2jbfqUrprWJ31C00sNarSq+X6Pef7MeUlzkRcjV3D4RVpl59b5M8ghq
- 1kZkXOy+16hAkFoks5ioS8sDR/ahEanDyKxlH2rNq+qfjlLmWAW2R7dd0169LphpqAbQ
- d2zC1IC4O7eju0yXxXNDZurrMPOW/ER1BX+ST0hGDikNM/ieRz7FVaqBmii35NGt2XHm
- 5kIbPQZQ9ecg8HYhTlxGB5RJhVfIhM4/gpGbsT8liQqjsYhjKf3sH3OyfGW/JBujxHVZ
- iVAPhkrw3qyuMA7tWU0G95SoTJUkIgrCSLCAlWmrejHj1dB7KIDJTYBAiN16fpXyCxPW
- o58Q==
+ bh=TDtoQykOTtlGAaVG6Zeyqh1hYI6bis39S05SlVKKuoY=;
+ b=Fe7wS8Mehn+sS7xacLQnCGy03bpt+2PJ0kKpmjXAHvGgWi0a7choU+RpG+fAkPkDkO
+ NpteCYAx7JTQ50Kg7pLvZPiH9M7GNhqg2irZI0OdYKSrRd5Bf+h6wDMJA8xMORd00VhA
+ VSdfzldPBOT//Bt+cm9foGtHNElJnw77LPoUqBld3b3DlZ+srzNQHuegV2yz/qLvP/tz
+ UW6RsJHnvlOlSxtJZ3q87nUBfGA0srLbE2iTYQtdF6NHlL94Plwjd7zkx3gINCHFPOn/
+ aXwhT1a0/PCZwdDKEZPrdHXCzX/n0z5UAp1NJoG6+nEsOHhGpiLIIDL0amIj9S/G86+P
+ K2DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787957102; x=1788561902;
+ d=1e100.net; s=20251104; t=1787957098; x=1788561898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=k7apDi5G/qgt0uMemM+43oBLUrsOqwhkU7pSrCFTWHc=;
- b=IpMTRAuNclYG5FXHsOREqXnKXlY8g/7ff6HVLR2W5qX35NxhfGdA+vHOd5kR2awwf7
- Lzjjo7Xa1LNcs1MlO9BS7Kf8WacHULRiobK8/JgGFUWtzT2LkA3gTePQQqmrbNMpmY3f
- fE65P0fnkO8w/Bdi5CKu+3RQBdohS6x6Idq649UpkLG5VjtV0PvQtMwFZDVpIXWxcLwG
- 5FEJHDXxRVAo6X6wsquQ94hx/zSZw/Ti7IGm3TnqyPNDto1dGF4SKEdUWflLGRG2oXv2
- kDrd1iBwAk5ydN2QCZaHrFZgCqZwycdRIYemV9gtToVUmA/t/qCMVqTzYRA2gaMZP7qG
- 61tQ==
-X-Gm-Message-State: AFuF++lMln/XQMAy3DwDNa5ghskO+Omu9JXZsArg7tuOHvKoxW1EWT2x
- tmfiWtcPzdeeTGw+7j7q/mcgOMNoiTUvXhHFMA87QE/FbFnA/zdzY47OhM+JstZJGovp8T3Ax47
- /EqqZSlA=
-X-Gm-Gg: AYBFou1pUzxbCAAaNFBpWEHgda5VYfVYrUoHO+CDclPt/8gDQkGuWamZZIq6t1/DbCt
- +T7P7yR27fFUy/oPL0TA7bF/92QMU9NS61rABJeUp/PvlMkSOyhMrxQVymZQGB3N6tOn2oGjrKf
- 3LzqKR2HCHOoCxZtjeTow5NVRDXfYT3e0m4M9eWmNCV7ntuxatM9dYk0YwncIBo9VVO4sgNXdW5
- kfdz9Wg58NvHfu5Bjnbrf7+35Z/5+UcoYbMy+7HWFmKc3sRFZ54NDh2Z60wgtwZFpcKyhAjAIho
- xZ0E2o+nJdDEdvz2UpTdenxriEcWizA6lBDuUz6Xn6HzXST1JFWnteoX27zUCVt/C5P5/Ixd4bW
- DcwArUEFpl1imwy1P1CYPGkiafQC/UnrjCz7jP7cKX5qEGhjDPLm2wd1uemNR0Je6F/gKmRonmT
- K3fofNyWQ/boImhP3gTvoVTHdS4a2hcCkTU6eJF6Rz3nPTB1dg7F99kn3kbrClKKEFM6GcPOIkf
- 9M+UW5sLegUVYzRctlX
-X-Received: by 2002:a17:90b:5405:b0:38e:67e1:15b with SMTP id
- 98e67ed59e1d1-396d0de4c19mr18190924a91.6.1787957101344; 
- Fri, 28 Aug 2026 15:45:01 -0700 (PDT)
+ bh=TDtoQykOTtlGAaVG6Zeyqh1hYI6bis39S05SlVKKuoY=;
+ b=Lv9hWSYkxWX/7YXslowNQ7oJden8rV30r0W3NDZPhKDwPSTaIYDXkP3MvfM1zE8f0w
+ DD0jkkHzgzB4S4lZCq7L6wA3omF/W1eTsVhIWCUPtcCW61oFya+zQASX3TErl2Rwqg3i
+ 9wcXi520BStWoJBrDwAA+oOx/qFF5zZBAjPrGuzVGA0XegZMYEO6P8cOTrFPEx2LGi7e
+ U0D0h4vqKSgbK927O14FB+ZN4+oqgywq6Cz5K4t681/vhhP3zx6QITAabi1U/7acHbVE
+ ewjb//oZtnrCGR79+bo6OxvO382ws+TgrWYijBfS7x//8tRdp1VBX2s8vJ8zcbQDX/Vq
+ y89A==
+X-Gm-Message-State: AFuF++kFLQdCwkE32EHka4qK9QfIi18zpKw8S0CGL9mxG8DKAXAaGceJ
+ 15O8oOV/zIu5C9fA5UsTeGQBpStKv1HHh3gMZ8Ub8ktzHakrCFY8+GcxyT+MOrGdGZyX1oiJXPv
+ lqQdF
+X-Gm-Gg: AYBFou2op94dsSDlwRl9CR5fn0p7qJB08CiI56xC22aUnonvjK46QnWyx7NuMBAu9b0
+ FlxWkMCffWpsbBefSVxJRrEw2QEgSDR2kMy719Wxx8pzpDq19N8Em5djwED0p/V00/qyLjY47se
+ f/UljgpVlWVLEyrY1+9GT3rabiR4nvr2rYhHblbI3LbNp/aHsU0FWBGhMVlvQwqYqTuumnwHuae
+ RxMcijjGKmJFrYvmHNcmb9aGV8XWNOsJPE8onI+B44NFTVFGrU/nAjm3IQR6O58+xkTjPg9WSUX
+ skue9xsJUa0lCeLtytaSPjNP9+/TWmr0XXsHdWiZHyvaHhwydsaxGMGu3qHfYbCZaB3s67StE4x
+ llkjgZNgTDCokEeo+wONO9Cz3GPO4VrrmUXBWUSbB8zhz57v58TAnhUTDGT9svU+ROAw+rU3G5u
+ 6Hgh7OQk/2/YFk7JmPlWt+X4++HKRd3vEC65sZRNH67b2a5qeByGlPQGNLfYZWc0WHF8qfSFVWw
+ L7TYcC+Fvt9TW1WKipF
+X-Received: by 2002:a17:90b:4a92:b0:38f:2168:b9cb with SMTP id
+ 98e67ed59e1d1-396d0f75f22mr18127561a91.9.1787957097988; 
+ Fri, 28 Aug 2026 15:44:57 -0700 (PDT)
 Received: from stoup (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-398a2f5187fsm427594a91.1.2026.08.28.15.45.00
+ 98e67ed59e1d1-398a2f5187fsm427594a91.1.2026.08.28.15.44.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:45:00 -0700 (PDT)
+ Fri, 28 Aug 2026 15:44:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mattst88@gmail.com
-Subject: [PATCH 11/16] tcg/x86_64: Implement INDEX_op_lea
-Date: Fri, 28 Aug 2026 15:44:46 -0700
-Message-ID: <20260828224451.1564072-12-richard.henderson@linaro.org>
+Subject: [PATCH 06/16] target/loongarch: Use tcg_gen_lea_tl for ALSL
+Date: Fri, 28 Aug 2026 15:44:41 -0700
+Message-ID: <20260828224451.1564072-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828224451.1564072-1-richard.henderson@linaro.org>
 References: <20260828224451.1564072-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,72 +103,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/x86_64/tcg-target-con-set.h |  1 +
- tcg/x86_64/tcg-target-has.h     |  4 ++--
- tcg/x86_64/tcg-target.h         |  2 ++
- tcg/x86_64/tcg-target.c.inc     | 11 ++++++++++-
- 4 files changed, 15 insertions(+), 3 deletions(-)
+ target/loongarch/tcg/insn_trans/trans_arith.c.inc | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tcg/x86_64/tcg-target-con-set.h b/tcg/x86_64/tcg-target-con-set.h
-index 458d69c3c07..5af8c1cb2cd 100644
---- a/tcg/x86_64/tcg-target-con-set.h
-+++ b/tcg/x86_64/tcg-target-con-set.h
-@@ -46,6 +46,7 @@ C_O1_I2(r, r, r)
- C_O1_I2(r, r, re)
- C_O1_I2(r, r, ri)
- C_O1_I2(r, rO, re)
-+C_O1_I2(r, rz, r)
- C_O1_I2(x, x, x)
- C_N1_I2(r, r, r)
- C_N1_I2(r, r, rW)
-diff --git a/tcg/x86_64/tcg-target-has.h b/tcg/x86_64/tcg-target-has.h
-index 6ffae51f923..4f06b395de4 100644
---- a/tcg/x86_64/tcg-target-has.h
-+++ b/tcg/x86_64/tcg-target-has.h
-@@ -105,7 +105,7 @@ tcg_target_extract_valid(TCGType type, unsigned ofs, unsigned len)
+diff --git a/target/loongarch/tcg/insn_trans/trans_arith.c.inc b/target/loongarch/tcg/insn_trans/trans_arith.c.inc
+index 2be057e9320..c358e642649 100644
+--- a/target/loongarch/tcg/insn_trans/trans_arith.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_arith.c.inc
+@@ -188,9 +188,7 @@ static void gen_rem_w(TCGv dest, TCGv src1, TCGv src2)
+ 
+ static void gen_alsl(TCGv dest, TCGv src1, TCGv src2, target_long sa)
+ {
+-    TCGv t0 = tcg_temp_new();
+-    tcg_gen_shli_tl(t0, src1, sa);
+-    tcg_gen_add_tl(dest, t0, src2);
++    tcg_gen_lea_tl(dest, src2, src1, sa, 0);
  }
- #define TCG_TARGET_extract_valid  tcg_target_extract_valid
  
--#define TCG_TARGET_lea_sh_valid(type, sh)          0
--#define TCG_TARGET_lea_imm_valid(type, imm)        0
-+#define TCG_TARGET_lea_sh_valid(type, sh)          ((sh) >= 0 && (sh) <= 3)
-+#define TCG_TARGET_lea_imm_valid(type, imm)        ((imm) == (int32_t)(imm))
- 
- #endif
-diff --git a/tcg/x86_64/tcg-target.h b/tcg/x86_64/tcg-target.h
-index 7109722f240..3444bcdca0a 100644
---- a/tcg/x86_64/tcg-target.h
-+++ b/tcg/x86_64/tcg-target.h
-@@ -80,4 +80,6 @@ typedef enum {
-     TCG_REG_CALL_STACK = TCG_REG_ESP
- } TCGReg;
- 
-+#define TCG_REG_ZERO  TCG_REG_NONE
-+
- #endif
-diff --git a/tcg/x86_64/tcg-target.c.inc b/tcg/x86_64/tcg-target.c.inc
-index ec397e287c0..a41252782e1 100644
---- a/tcg/x86_64/tcg-target.c.inc
-+++ b/tcg/x86_64/tcg-target.c.inc
-@@ -3331,8 +3331,17 @@ static const TCGOutOpStore outop_st = {
-     .out_i = tgen_st_i,
- };
- 
-+static void tgen_lea(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
-+                     TCGReg a2, unsigned sh, tcg_target_long imm)
-+{
-+    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
-+    tcg_out_modrm_sib_offset(s, OPC_LEA + rexw, a0, a1, a2, sh, imm);
-+}
-+
- static const TCGOutOpLea outop_lea = {
--    .base.static_constraint = C_NotImplemented,
-+    /* Allow "lea imm(, a2, sh), a0" via TCG_REG_ZERO constraint */
-+    .base.static_constraint = C_O1_I2(r, rz, r),
-+    .out = tgen_lea,
- };
- 
- static int const umin_insn[4] = {
+ static bool trans_lu32i_d(DisasContext *ctx, arg_lu32i_d *a)
 -- 
 2.53.0
 
