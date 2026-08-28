@@ -4,176 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45BAC61DC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 02:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83AAAC61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 02:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzluk-0008C0-F2; Thu, 27 Aug 2026 22:01:54 -0400
+	id 1wzmMO-0005K2-FC; Thu, 27 Aug 2026 22:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6935b7a9c=Alistair.Francis@wdc.com>)
- id 1wzlui-0008BZ-VV; Thu, 27 Aug 2026 22:01:53 -0400
-Received: from esa2.hgst.iphmx.com ([68.232.143.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6935b7a9c=Alistair.Francis@wdc.com>)
- id 1wzlug-00077s-6u; Thu, 27 Aug 2026 22:01:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1787882509; x=1819418509;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=A4fQj3RpP2sGpZnt58eQJh6oUlepYZv2U5FFcqoyDVo=;
- b=oXmbw0CNC034SVj5MrQIYQ8OxKRvAGsoHfgd0pf42evn/dMrT+DcRKdG
- YcCfAhmicpTsLNBbwRbI1M0mP+FQPoYMUPpKFHcHKnUHGF1HIUiLPQGbO
- AW6AteqMmlS0qUgw4izyciT0ziTzBNkpZs0wFmIsvPM8EBg3rBR5/xYXI
- ZBqsD+obAn4lcIPW4XHi8kBUWNdr26Wfyt+YAI7Z5tVqrNQmery0iHSXx
- KSuh14EvzYU8Rls2dRuEewQ2LMJb/TjlwCLGvt9p9TTdnEXpOQQ3/wHcR
- 7goBvM1eU7DUFq22av9nmUkJoKtHz4aXIWTXzTsPjWZY2iauffrPRN08L w==;
-X-CSE-ConnectionGUID: dFklqfUWRZGbt+hdopm1cw==
-X-CSE-MsgGUID: CNMdIXwAT66cFbVAMsXFzQ==
-X-IronPort-AV: E=Sophos;i="6.25,247,1779120000"; d="scan'208";a="155346750"
-Received: from mail-southcentralusazon11012017.outbound.protection.outlook.com
- (HELO SN4PR2101CU001.outbound.protection.outlook.com) ([40.93.195.17])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 28 Aug 2026 10:01:46 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JS+MyjWec/mNaBuWOAx582PZxHkfPGoe7K5JXVYDIH8rUlk5OhWX6z4r1kA8Vx312520X3oxpbr1M3s0fgU6+7lekesGR7oLzehyRMFKOWO2wcnV00eXmTq1YBum2Tphw0g4aRJ81HqzEoKsuzlillmTUTSG6bAWgFNHqVecuCVYc9yBLAMXNYYiLahr/DcQKD1iJqlrd5OwfnyZvOAKskK8JiY8gwnvXN2yWTepGZcRlj6IsvLbEiE+5I0wqGtn2WND288ATLPuDWeaTVhB50Cflosepq8tly15eT23S880VVJzxgnlY2ZFn0TsZi5qc1bMldRmuIAadFBNhI0Vlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A4fQj3RpP2sGpZnt58eQJh6oUlepYZv2U5FFcqoyDVo=;
- b=nqAs9kgoT9w2XK5atQDKfPZSqBzSSsxP9PcWeZuzOgZSnd0X5funqvE69ftvWZkEq8YocFmNaeog2RMv6OKEDNujUivhj83KNkn8sjOq40UBSbYtXxPr+lIJedtOUHBucrvtWqaCi/PjdpDNaL1lVkzXgYZ7hw0j1AaEyuLabs7OYyr2vk4rjBCGqJFPXG4+zEpK5scV+EKutfILnpSYiAwP7d+e6lWFDbyq2H7JCUOL+7lbmDvA3+d23yJ0L8bJWfc6XyrTUq/FS8/6YqWel3W+2W0HU13rVc6dg/fKvLRuPQMKvvzqv28465EeMdzvI65ckY+2Z+j8YXjGsjD5iw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wzmME-0005IV-VU
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 22:30:21 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wzmMB-0004d9-SC
+ for qemu-devel@nongnu.org; Thu, 27 Aug 2026 22:30:18 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-7dbcb505578so6373947b3.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 19:30:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787884214; cv=none;
+ d=google.com; s=arc-20260327;
+ b=V3XKEoXdsXeqUaroIDFVo6RZaHP3xxBxWD/cShqEhz6lDYfvJRwGHoFIgUSY2tU+n/
+ IzS6+oTw5C2+3D+rHxZCpSg2JHirywBH7A63+9t71715iBgnSKSYZ3DgONMyKhjGG4OR
+ w1aNOkz89W1VzQwsh4l4pE9l9BVimRSDXJM9vzgi44DhBgWs+UnQaSc0/lsCxST9RTsY
+ 57AS6RlD248CJwSo3ySFdHx8GsJoQ9aO1U+wgu07CwbaHaVjxXLcdObZyfPc2f4JSvtA
+ kEK/COCeBOhGaLTo1JnsZvki3Zkfreur0QE5O+wAHDm7pxrMs49W7F66frRGNsbw+IMg
+ b2gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=hJNSnNZklrJGp3c78mYTdDJHPCCOOrq1tloQ9PqPqO0=;
+ fh=fi6EkmAcHre70J/1/Kpblsy6Abs9eQdzmlytBWwZ2V8=;
+ b=C4iqsYeKdY+DXKeSNESnHwqTvd8/nQRZ1PiNFiZGOn7NCaU/ZixS0Z+seFw2LZSXND
+ yiHCZhQgkvCXFA3mxnur0KLS++KM1OlOVTZo99pUGFD6YSSuBaxFV9LDiEj4wTdLsLIe
+ +U+bS9kUEfpJkCjfvqPpjWDvfNMLrKt5eTkf9U2XGtUnqbiDILo88utD0D5zGOSkcxY5
+ GAw8EhIXQ4hydJgRPSaBl36v+ukN6ZqwYJusoYev0dKCDUv2O0GtXKALUxGBDNbzDEJ9
+ fxMyK8GZvtOw47/k1unFr0eyAUwkWCWHeumIqlvcEjONc/Lz0VDg0tn/UauWP6cFaTqI
+ +0xA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=A4fQj3RpP2sGpZnt58eQJh6oUlepYZv2U5FFcqoyDVo=;
- b=AL0j48Ct+2fmJ6mMmF24Em56wjDFXiIDBdqm6ErDurxL/kzeAwhNX+YPvoJSh4+1i4HpGEHIZhqwpWIAiG8X1zI5kujUAf65/sdXCnp7zkOU34hgijOk8t3vFdTwkoQ4KNFTyWUC1kSuNeHMW0YElW3hlq3qhUZbirRgEieVuBQ=
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
- by CH5PR04MB9599.namprd04.prod.outlook.com (2603:10b6:610:213::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.10; Fri, 28 Aug
- 2026 02:01:45 +0000
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0360.008; Fri, 28 Aug 2026
- 02:01:44 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "asrinivasan@oss.tenstorrent.com" <asrinivasan@oss.tenstorrent.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "joel@jms.id.au" <joel@jms.id.au>, "npiggin@gmail.com"
- <npiggin@gmail.com>, "portias@oss.tenstorrent.com"
- <portias@oss.tenstorrent.com>, "daniel.barboza@oss.qualcomm.com"
- <daniel.barboza@oss.qualcomm.com>, "mpe@kernel.org" <mpe@kernel.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "palmer@dabbelt.com"
- <palmer@dabbelt.com>, "zhiwei_liu@linux.alibaba.com"
- <zhiwei_liu@linux.alibaba.com>, "chao.liu@processmission.com"
- <chao.liu@processmission.com>, "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH v2 2/2] hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis
- model
-Thread-Topic: [PATCH v2 2/2] hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis
- model
-Thread-Index: AQHdLla3FHin3DgYnkKQXmuCoj3XpLayxawA
-Date: Fri, 28 Aug 2026 02:01:44 +0000
-Message-ID: <82aaa80829eab22a9bd5ee308aa366a93928934c.camel@wdc.com>
-References: <20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com>
- <20260817-atlantis_prcm-v2-2-ffba0b944419@oss.tenstorrent.com>
-In-Reply-To: <20260817-atlantis_prcm-v2-2-ffba0b944419@oss.tenstorrent.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.60.2 (by Flathub.org) 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|CH5PR04MB9599:EE_
-x-ms-office365-filtering-correlation-id: 39696d48-31f4-4e10-80ee-08df04a84fae
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|10070799003|23010399003|366016|376014|7416014|19092799006|38070700021|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
-x-microsoft-antispam-message-info: ErZkomrn+SUfBO0kaii2X22fjJeYj71eM6TVQnjr9ouxeRiLQb8gbHplE++jnx7OKIYv9dCynvIi8MpnuY9eJ/XRfoDacsHk53hCqKhmKDntrzpZIPBLL8rfSaSC2FC2X3qrU0d2EsP64ExCIbY/TG2v/RcCKDgO+3p5HZYbs+Er2aplPx1hDVT2viewgIxCl1aYf/Cl5SzJhrf8uaWO8iekNGeH1GHGuE8oddmF4Ddq0MAMgSySeIsBxT6Mq4TJmqxYTwrpklY3q0reRvOvwYdORZIYEtQo5Pv+OmTXT7xHJIoruzzEgjI5bogFr96+tTOhl+etk6mNZmYwWDEz7lrryoSPA5cp76C/TSQRqPNE7MOAVtqkWo509RDuegL0wYe/GQpddJyG8L6EnD1ycfnPpOZXiw7FgtbavrmnFCFUNW2bLOglbHwyE+8Cx0wfdpljuGy+jzdk2Tz7W7PFyLkohje0VrYpuTwj53qcOJBGjhKt21FHn1j+yR7ssTYDhGCyIOWOf5gPGWMzytNafMA8bYmimV6K4LjivDWQxL1mUzZEbgefRtivLVdvGn+4oSq2IwGRK2Ei7qY0HmY5AdakGtGaRg9G7lTDB2lfebyysfC/4JGESVQPwLAol458+ntDKsU4Cw09JyANuwjJmO1hvfauDGOf9Qc7uvpd1ZcEQh/7EMsE+BQwppbRLMHQhVfvPMkagtxfCLMgKaWpvpWahYTi8B/X5Jn3QtAhheA=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(10070799003)(23010399003)(366016)(376014)(7416014)(19092799006)(38070700021)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?N2hhTHc3d0I2VEpjaklsMVlOV3FESTFiYjQ0TnI2OUNpeHE3bmhtUUZSVW5H?=
- =?utf-8?B?NXhaNUY4c2dlUGloVU1mSngvWW9RN3JzL2NBdmhmb21PY2hyenlpU0R5ckpn?=
- =?utf-8?B?MzYvby9RSFkzNWtPaXc2NUpaZitJc2s4NHM0WHFIYnZzaCtoZElRbU14elZr?=
- =?utf-8?B?cDI3YlVjVTJDM09PVktRU1FmejZETS9GNkdRU254M0RmSXZQZWxTTmVZQlla?=
- =?utf-8?B?dGlQY0V4UFJKNnUxencwK2V4TjVObkw3K3pXZjNzN2g0Y3Fic2VUeW5tVHZY?=
- =?utf-8?B?S2Nua0JzL0l0Q3NDZGpETGhOWXVpOGthQ0ZGNEozUS9acnE3WjJyZFUrbEc5?=
- =?utf-8?B?M2hCdGhpTjZXc1U5Nnp4R3hwczBkdDcvMUtBellXb1ArUkpST00zZ0FVZE1Z?=
- =?utf-8?B?QVlkaElRNDl1VUZTdGZLNFlodjNxR1VGRUFBZ3hsV2U3UXpmZEJBeEI0WHZx?=
- =?utf-8?B?Y1JSS3B1SHNRNkhqcDIvQnNIaHlpdFFUNlV0aFQyODZwYnd0WnU1d3NmWkxJ?=
- =?utf-8?B?eEo1OTdobUVadE85Zi9kWVdTVWNMbmVZUWZVWENWWENxM2lsdkhnN2ZSTHhM?=
- =?utf-8?B?NzJuTmdwamM5M1d2dk1TbWhZcEhMQkdnMjlVSmNRNFNOWGl2M2xHMVFBQTRW?=
- =?utf-8?B?REJKU2FqV2JiRXlLMHREbXV6aWk4OTNLK25DeEsyRm94NDYydWVtREkxNHZk?=
- =?utf-8?B?RHRwWjlxVG1ONWs4SU9hSW4vd05WQmF1WHV3VkNMYVRpK2dVbE5iUmdIY3FP?=
- =?utf-8?B?SlYzbnpZdlluZzYrMXVmZzJ1V0ZnVDZsbjdyWGlaRVg2RDhjN3VUQUtsd1pB?=
- =?utf-8?B?VGFHdlpBNVhsWkloc1NlRnFvUmhqL2tWcE11TEF4U3N5VTJiTFFaVW5DVC9l?=
- =?utf-8?B?cmt5eFdDdFIybmFCVmNuRFY2dmFDMUlxbEp1RXJVOEVWMnRnYndNY0JaNjFY?=
- =?utf-8?B?cm9WM0VIZVBTSU80MDZqQU5GVUxmMHZ2b0FxaEcwdDVFQjNnUTBjbW9aSm1x?=
- =?utf-8?B?eXJuS21lNWdUb1pmdWR1WXQwam5aVzQramtZdENTaE9LeG5HVHUxYVNmVnNS?=
- =?utf-8?B?aWhxaTJKMzZMUS95bGJ0Z0p1c3BKRmJ6M3ZkNUM3NnNJVEtucHZzNnFKdTZt?=
- =?utf-8?B?NUFMelNCalZqajE2K1pFNDJCYUxRL3VxWGMvTU12SUxPMnBSdVUwUCt3eTE5?=
- =?utf-8?B?MXFuei9hWGphUUNURFp4QStWbUdHc043OEp4dXFOWXdRSW5WMjA5dGJKVzcv?=
- =?utf-8?B?WHYwb0dWMThzUXA5U2NMbXVoejVHS0ZsYnpVbGdhcjk0d2VXVEVCdDNkaUF6?=
- =?utf-8?B?Sy9oVFdjcFljVTlZSUNPYlozUmgvdXY4QkhwODhVY0xKQi9kYmpkNE1LbUhr?=
- =?utf-8?B?UytEMkdQQ25BWVhCN3VOREpVOGZnUGxCcUVCRlZoM3ZFSG9oZjVVQXRvNUw4?=
- =?utf-8?B?MzJSNEVXNldvYnI5SHV5MWhVbG9ZaStTWlBuZkZwZGpENE9BaTdLYk55c2cr?=
- =?utf-8?B?Q0p4b2ZQMXc3TzlIYjRuS3VKOWhVYkxuRE1hT0FyaHY3U3I4NnZtclk3ZWlv?=
- =?utf-8?B?R0dERTd2UERSa0pjbUhQVFoxQ1NKVi8ybFc4OUNvNnJWeG9MSURudlNrdHRF?=
- =?utf-8?B?OEtiVWlBWmVXbHVGaVF5M1p3MnRBNEw4TDFpa3QxWTE3K0lpcFhoWlBTeUdK?=
- =?utf-8?B?T2JydFpiTmNxVUp2QjN1YS85VWRNQVBYejFnOTNDZTVkU2lOYmV1V0E3Z0VZ?=
- =?utf-8?B?Rm5Eb3pIZVdwNEo4UllGcFI4dGJkb3RqZ3IvSXNEYTl2WTNnY1Z6MWhUc2w4?=
- =?utf-8?B?T2dYeGJucU1wNjZwMUpkdm13REdIMzVlM1ZtMGJTbWRFcFJCTzhjeTFyNTZZ?=
- =?utf-8?B?R3JqL21yOEFkTXpvSzRld1YrUnRXV0Z2NmZHVEdRMFN1Y3FicHFXUnRxemo5?=
- =?utf-8?B?S0FPbjNtcHZBUUxOQlZiWTBzQVFQbjY3clR1T0FJSU00ck5neE12YXRJS3Aw?=
- =?utf-8?B?OFIwZjZnb3luQVBDM1dLd3RZcmZtUkFTZ0lEelNTYWpISnJhQ1djN2lML1pt?=
- =?utf-8?B?SFFoUU5rREZ0a24rZVNac1JVcElGRWpOTTFqVUtyMm9HZFFmY0ltNjRDck5i?=
- =?utf-8?B?d0xLSHdaalhnekt6WkN0NXhSMFlQZXpqc3VsUTFtazFKRWMxWWcyOHErL1Jv?=
- =?utf-8?B?WHE0MnVONVVaWFVwS3FLZjA4bWZWTEdiWlNHbm5nSUFHSE5CdEpaQkx0VU9I?=
- =?utf-8?B?RThuOStKY01KaHdCK1dTQjVRaEhXa1ZUTjhLNG9kSzk3ejhLK3hsTjdyY05h?=
- =?utf-8?B?TzJNS1RYREcvcXdEM2R1MDhYbkdYeExFbEFxc0xHcHZSdVFjS0d6akZtaUE5?=
- =?utf-8?Q?Ds2dc4UmiYdhBd72OOdpxtXN+jPsiWQ5zSjdazdRbO0yZ?=
-x-ms-exchange-antispam-messagedata-1: nW/K/B8SYWwZZjJoR42FP7iyrhILDTzMTvU=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <ABB11DBDE1AD004BB88B443B525F8156@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ d=tenstorrent.com; s=google; t=1787884214; x=1788489014; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hJNSnNZklrJGp3c78mYTdDJHPCCOOrq1tloQ9PqPqO0=;
+ b=MGE9yfsjhqS0d6ZzvWQ6WAp1Xsnz6G35zJspEk+mFUQF/CTquJG29SBpwrE0Um0W+6
+ ahbFSXknBhPjvPYDOHvWyLXGiSTA2rdtQ6cDqB/iqx6y9476Kvm3NK473THg1OrJ4Xkg
+ GNWi3kO8CK2VXGSqcDcTnD7rdE1KcXQ05JfvtWsrEgrGQPQkijg1uKdw8UHfJ2ewbkAT
+ 066JPK2lwkcMklS9BM02m/iVAuJ/SZ1IIDXGYYBrwJNVnyoTrEiBMbQcOXkeIeUV7pw8
+ aapHyudg/liI51tU60wfg35ZaeJU0WcV02mU5PEKkUhXEqneCLyaueBCWQAh66hKnjxZ
+ sjHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787884214; x=1788489014;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hJNSnNZklrJGp3c78mYTdDJHPCCOOrq1tloQ9PqPqO0=;
+ b=JpqoMcIaj4PFvy4pYt0gCbjnqQSuaiTNcVyzo4bD05f+776+p1rFcHhkGeqJgJlkZy
+ bvuf2q1Rm3RV1J0b5jytZwroPUmQtXZrgPDAU9klmuYSTlmAyUJXkVcultkhkRRkhDr4
+ Uy57JJKOBifr7ZjYaHwllSMTrgtmAFfx/aEl1UgbNbKHtflD2vfkNc6Xn1Us+28NVFK2
+ 3oSkdzhzZdsEf/oRv8AVeofPRXngr1FzBv5tpdqszQ9wY95wmWxUQjNdx2a3Kw8NYFBM
+ ODW5RRucdcoU5WtV8uYVJy6lghGbXTPX9Np1PaT5UI3eh+K5gsToZFTpqwNas1Q7e42G
+ I/9A==
+X-Gm-Message-State: AFuF++kQkHsKx9NlAiQse7dpCN6MtUEKXLYvX+YTADiSI6Xsf0bSBkfr
+ 4zxVtXnqeQHhaDt8jF7tFi6Mn68oUHGlIosU5GJmu2xbRvZay4wLCXTQPErEb5HMf0CVBmHYca0
+ kEqEGg5J8OjDq7yP/APVLWOwXZMH+7wGy5VXjrstVXg==
+X-Gm-Gg: AR+sD13tt58VxM8Ywi41/dN/lwjKusAmyFWHIkjS+FRPzK8evf2nTwwaEfC6oWjRHh8
+ JdfvcBnSvlQqTYl1vFUN8PYEHpqgJZf9VhUoepFO93GUuZLn5UG6Dj6bZsMxjEujWiXQVNVy2eq
+ 3H/HfulC0+jqb3RCmiO5W14TsLEhbpAKyeBueTDRaLLCgqGdb3e8oXPdR1QlUDzfM+ZhpqHvfl8
+ BTe0AdB0R/FDW2Zo+ow7gtLtp8dnjIaPnoeP/aMOckxjtzDwxZ6PjMbEFPMpCbzyAjeiws0ESjR
+ 41da6DI1gP31fMGKUP7ttR1jb1CXIxGm/+shpFkGdC0f+ipFFUFH852KJyqLOgQbERNHXVhkRMB
+ J
+X-Received: by 2002:a05:690e:4554:10b0:66c:7f92:1767 with SMTP id
+ 956f58d0204a3-66e4c643178mr845360d50.14.1787884213461; Thu, 27 Aug 2026
+ 19:30:13 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: IgxFRbC10o4YhRLQ0n+Yi8tfbqAao3RCsHfkwn6bEBy3lMbC+uxc7wwB3qrn7ZWy8V7Xz52LTy3v6may5VeanfX5EW5bdwWbJkMjGTgE4AjXnOUzZ4B7M8FunVG/ccrmnAXwaBAvaOnI/VHIPWmcOzfV4qXbvDjQu4BrCUKGHqkNUc3GeSlVyiKL5FdxAAPM5yMFaudkzh2xraeU+X4J+wz4inn8ZRU7gTDMO8YD2SlB2XEfrwNUeNbcCrIsgvVl1u5h1042lCJzKXqnQ71THcypoNIVflPdfBc/4d4PR+VY45SBKJUNo2WSEgT0Y0BGwV1A1PLXO/uzXyvojrbqWg==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Zb7KUk73bCejlzJ6l9BSlf7Rhg2KdY6/GJnKS76Y+tRGDnHYva0UhuYvbLM2lZhs7oXQCXlBwTeuzwLo+6oMPq5hzZYRxdp50scej78Rcwwyn6FWF3z5vEUJaIn6zT0tGbIeVNrQtD1xj2qubH0yrOZPGd67Rmua3KXLsuZtfppJqqkkXl005X6SH4CRXY/skG+rYSSRsvEGmQsJ0/JuhEGbPLr5YxcFT0w9px052q4W6SVRPvHkncJ4yFV1c/xyBRajtYfmEmkq4fYr7S/8oYO+KRYjS5VIBxS77UV5uFUGiW60cJOK4+W0PTwnKch568fVuvtnavx8NJHBe1Wnm08Z9ii6Yk6n9ZGqkf3d8KtoMcuOA5eIWXKPpFrdXi9QlW/FU/gcM3+iB8bi6EFQbrFlFSyO8jTN6XlXWQOJN5NewOJbIxuV9L8yABNl3/r9ntbDdwfnFgwGP3TJNa2l30V+W7NQRG/d3JCgEDK4oN3HB3yt4lKi7AE2fPWGbt0FzK+IaCG8FK47g/4vfE9OpnHcR2jCA5eXW90kr3ZdPhuM5CHZg+yNQxiM8f2xSB/bDqx0NDNDXJVhlZHzgkcFtpLq+N9URzJhFqSLmjtP0UBH67Zrm7l4MNn2cPdosIln
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 39696d48-31f4-4e10-80ee-08df04a84fae
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Aug 2026 02:01:44.7678 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CN1WnWFuSFvdcxGAUY7GnkdU3fWZsDn16p86PX7LT0d+ewWnYuqr70LRDJ5qqw9G1IQ4WAGGlVSxovrC5GSPXaAbQ9Pzhihq0KoFN81tJUM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH5PR04MB9599
-Received-SPF: pass client-ip=68.232.143.124;
- envelope-from=prvs=6935b7a9c=Alistair.Francis@wdc.com;
- helo=esa2.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com>
+ <20260817-atlantis_prcm-v2-1-ffba0b944419@oss.tenstorrent.com>
+ <1287b0f1687e31234fc3c92dd6da115af53f4e69.camel@wdc.com>
+In-Reply-To: <1287b0f1687e31234fc3c92dd6da115af53f4e69.camel@wdc.com>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Thu, 27 Aug 2026 21:30:02 -0500
+X-Gm-Features: AcwNN1Vqpw_rg6KLLsHtQXGmusF9SC_OovrOnNfZT6w2-h3VPHen_qEASZ0Z6ts
+Message-ID: <CAEev2e-1fUo8hm_tn3oGARH0viXTF_rOq1KQOgR49NBxXixV-w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] hw/misc: Add Tenstorrent Atlantis PRCM model
+To: Alistair Francis <Alistair.Francis@wdc.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "joel@jms.id.au" <joel@jms.id.au>, 
+ "npiggin@gmail.com" <npiggin@gmail.com>, 
+ "portias@oss.tenstorrent.com" <portias@oss.tenstorrent.com>, 
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "mpe@kernel.org" <mpe@kernel.org>, 
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>, 
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>, 
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>, 
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -189,193 +129,465 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gTW9uLCAyMDI2LTA4LTE3IGF0IDA5OjQyIC0wNTAwLCBBbmlydWRoIFNyaW5pdmFzYW4gd3Jv
-dGU6Cj4gQXRsYW50aXMgaGFzIDQgUFJDTXMgdGhhdCBhcmUgdmlzaWJsZSBmcm9tIFMgbW9kZSBi
-eSB0aGUgQXNjYWxvbiBDb3JlCj4gKFJDUFUsIEhTSU8sIFBDSWUgYW5kIE1NKS4gVGhpcyBjb21t
-aXQgYWRkcyB0aGVzZSA0IFBSQ00gYmxvY2tzIHRvCj4gdGhlCj4gdHQtYXRsYW50aXMgbW9kZWws
-IGFsb25nIHdpdGggbmVjZXNzYXJ5IGRldmljZSB0cmVlIG5vZGVzIGZvciB0aGVtLgo+IAo+IFJl
-dmlld2VkLWJ5OiBDaGFvIExpdSA8Y2hhby5saXVAcHJvY2Vzc21pc3Npb24uY29tPgo+IFNpZ25l
-ZC1vZmYtYnk6IEFuaXJ1ZGggU3Jpbml2YXNhbiA8YXNyaW5pdmFzYW5Ab3NzLnRlbnN0b3JyZW50
-LmNvbT4KPiAtLS0KPiDCoGRvY3Mvc3lzdGVtL3Jpc2N2L3R0X2F0bGFudGlzLnJzdCB8wqAgMSAr
-Cj4gwqBody9yaXNjdi90dF9hdGxhbnRpcy5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDk0Cj4g
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4gwqBpbmNsdWRlL2h3L3Jp
-c2N2L3R0X2F0bGFudGlzLmjCoMKgwqAgfCAxOSArKysrKysrKwo+IMKgMyBmaWxlcyBjaGFuZ2Vk
-LCAxMTQgaW5zZXJ0aW9ucygrKQo+IAo+IGRpZmYgLS1naXQgYS9kb2NzL3N5c3RlbS9yaXNjdi90
-dF9hdGxhbnRpcy5yc3QKPiBiL2RvY3Mvc3lzdGVtL3Jpc2N2L3R0X2F0bGFudGlzLnJzdAo+IGlu
-ZGV4IDFmMjg4MGQ2MTcuLjUzOWMyMjM1NGYgMTAwNjQ0Cj4gLS0tIGEvZG9jcy9zeXN0ZW0vcmlz
-Y3YvdHRfYXRsYW50aXMucnN0Cj4gKysrIGIvZG9jcy9zeXN0ZW0vcmlzY3YvdHRfYXRsYW50aXMu
-cnN0Cj4gQEAgLTE0LDYgKzE0LDcgQEAgdHQtYXRsYW50aXMgUUVNVSBtb2RlbCBmZWF0dXJlcwo+
-IMKgKiA4LWNvcmUgQXNjYWxvbi1YIENQVSBDbHVzdGVyCj4gwqAqIFJJU0MtViBjb21wbGlhbnQg
-QWR2YW5jZWQgSW50ZXJydXB0IEFyY2hpdGVjdHVyZQo+IMKgKiAxNjU1MEEgY29tcGF0aWJsZSBV
-QVJUCj4gKyogNCBQUkNNcyAoQ2xvY2sgYW5kIFJlc2V0IENvbnRyb2xsZXJzKQo+IMKgCj4gwqBL
-bm93biBsaW1pdGF0aW9ucwo+IMKgLS0tLS0tLS0tLS0tLS0tLS0KPiBkaWZmIC0tZ2l0IGEvaHcv
-cmlzY3YvdHRfYXRsYW50aXMuYyBiL2h3L3Jpc2N2L3R0X2F0bGFudGlzLmMKPiBpbmRleCBkODA4
-YmNjMTFjLi45ZWJiYTA3NzAzIDEwMDY0NAo+IC0tLSBhL2h3L3Jpc2N2L3R0X2F0bGFudGlzLmMK
-PiArKysgYi9ody9yaXNjdi90dF9hdGxhbnRpcy5jCj4gQEAgLTI2LDYgKzI2LDcgQEAKPiDCoCNp
-bmNsdWRlICJody9jaGFyL3NlcmlhbC1tbS5oIgo+IMKgI2luY2x1ZGUgImh3L2ludGMvcmlzY3Zf
-YWNsaW50LmgiCj4gwqAjaW5jbHVkZSAiaHcvbWlzYy91bmltcC5oIgo+ICsjaW5jbHVkZSAiaHcv
-bWlzYy90dF9hdGxhbnRpc19wcmNtLmgiCj4gwqAKPiDCoCNpbmNsdWRlICJzeXN0ZW0vc3lzdGVt
-LmgiCj4gwqAjaW5jbHVkZSAic3lzdGVtL2RldmljZV90cmVlLmgiCj4gQEAgLTU5LDYgKzYwLDEw
-IEBAIHN0YXRpYyBjb25zdCBNZW1NYXBFbnRyeSB0dF9hdGxhbnRpc19tZW1tYXBbXSA9IHsKPiDC
-oMKgwqDCoCBbVFRfQVRMX0kyQzNdID3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgeyAweGQ0MDcw
-MDAwLMKgwqDCoMKgwqDCoCAweDEwMDAwIH0sCj4gwqDCoMKgwqAgW1RUX0FUTF9JMkM0XSA9wqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHsgMHhkNDA4MDAwMCzCoMKgwqDCoMKgwqAgMHgxMDAwMCB9
-LAo+IMKgwqDCoMKgIFtUVF9BVExfVUFSVDFdID3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHsgMHhk
-NDExMDAwMCzCoMKgwqDCoMKgwqAgMHgxMDAwMCB9LAo+ICvCoMKgwqAgW1RUX0FUTF9QUkNNX1JD
-UFVdID3CoMKgwqDCoMKgwqDCoCB7IDB4ZDAwMDAwMDAswqDCoMKgwqDCoMKgIDB4MTAwMDAgfSwK
-PiArwqDCoMKgIFtUVF9BVExfUFJDTV9QQ0lFXSA9wqDCoMKgwqDCoMKgwqAgeyAweGQ4MDAwMDAw
-LMKgwqDCoMKgwqDCoMKgwqAgMHgxMDAgfSwKPiArwqDCoMKgIFtUVF9BVExfUFJDTV9NTV0gPcKg
-wqDCoMKgwqDCoMKgwqDCoCB7IDB4ZGMwMDAwMDAswqDCoMKgwqDCoMKgwqAgMHgxMDAwIH0sCj4g
-K8KgwqDCoCBbVFRfQVRMX1BSQ01fSFNJT10gPcKgwqDCoMKgwqDCoMKgIHsgMHhlMDBjMDAwMCzC
-oMKgwqDCoMKgwqDCoMKgIDB4NTEwIH0sCj4gwqDCoMKgwqAgW1RUX0FUTF9TQVBMSUNdID3CoMKg
-wqDCoMKgwqDCoMKgwqDCoCB7IDB4ZTgwMDAwMDAswqDCoMKgwqAgMHg0MDAwMDAwIH0sCj4gwqDC
-oMKgwqAgW1RUX0FUTF9ERFJfSEldID3CoMKgwqDCoMKgwqDCoMKgwqAgeyAweDEwMDAwMDAwMCzC
-oCAweDEwMDAwMDAwMDAgfSwKPiDCoH07Cj4gQEAgLTMyOCwxMSArMzMzLDM1IEBAIHN0YXRpYyB2
-b2lkCj4gY3JlYXRlX2ZkdF9pMmNfZGV2aWNlKFRUQXRsYW50aXNTdGF0ZSAqcywgaW50IGJ1cywK
-PiDCoMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX2NlbGwoZmR0LCBuYW1lLCAicmVnIiwgYWRkcik7
-Cj4gwqB9Cj4gwqAKPiArc3RhdGljIGNoYXIgKmNyZWF0ZV9mZHRfcHJjbSh2b2lkICpmZHQsIGNv
-bnN0IE1lbU1hcEVudHJ5ICptZW0sCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNvbnN0IGNoYXIgKnByY21fbmFtZSkKPiArewo+ICvC
-oMKgwqAgaHdhZGRyIGJhc2UgPSBtZW0tPmJhc2U7Cj4gK8KgwqDCoCBod2FkZHIgc2l6ZSA9IG1l
-bS0+c2l6ZTsKPiArwqDCoMKgIGNoYXIgKm5hbWUgPSBnX3N0cmR1cF9wcmludGYoIi9zb2MvcHJj
-bV8lc0AlIiBQUkl4NjQsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcHJjbV9uYW1lLCBtZW0tPmJhc2UpOwo+ICvCoMKg
-wqAgZ19hdXRvZnJlZSBjaGFyICpjb21wYXRpYmxlID0KPiArwqDCoMKgwqDCoMKgwqAgZ19zdHJk
-dXBfcHJpbnRmKCJ0ZW5zdG9ycmVudCxhdGxhbnRpcy1wcmNtLSVzIiwgcHJjbV9uYW1lKTsKPiAr
-Cj4gK8KgwqDCoCBxZW11X2ZkdF9hZGRfc3Vibm9kZShmZHQsIG5hbWUpOwo+ICvCoMKgwqAgcWVt
-dV9mZHRfc2V0cHJvcF9zdHJpbmcoZmR0LCBuYW1lLCAiY29tcGF0aWJsZSIsIGNvbXBhdGlibGUp
-Owo+ICvCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9zaXplZF9jZWxscyhmZHQsIG5hbWUsICJyZWci
-LCAyLCBiYXNlLCAyLAo+IHNpemUpOwo+ICvCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxsKGZk
-dCwgbmFtZSwgIiNhZGRyZXNzLWNlbGxzIiwgMSk7Cj4gK8KgwqDCoCBxZW11X2ZkdF9zZXRwcm9w
-X2NlbGwoZmR0LCBuYW1lLCAiI3NpemUtY2VsbHMiLCAwKTsKPiArwqDCoMKgIHFlbXVfZmR0X3Nl
-dHByb3BfY2VsbChmZHQsIG5hbWUsICIjY2xvY2stY2VsbHMiLCAxKTsKPiArwqDCoMKgIHFlbXVf
-ZmR0X3NldHByb3BfY2VsbChmZHQsIG5hbWUsICIjcmVzZXQtY2VsbHMiLCAxKTsKPiArwqDCoMKg
-IHFlbXVfZmR0X3NldHByb3BfY2VsbChmZHQsIG5hbWUsICJwaGFuZGxlIiwgbmV4dF9waGFuZGxl
-KCkpOwo+ICsKPiArwqDCoMKgIHJldHVybiBuYW1lOwo+ICt9Cj4gKwo+IMKgc3RhdGljIHZvaWQg
-ZmluYWxpemVfZmR0KFRUQXRsYW50aXNTdGF0ZSAqcykKPiDCoHsKPiDCoMKgwqDCoCB1aW50MzJf
-dCBhcGxpY19zX3BoYW5kbGUgPSBuZXh0X3BoYW5kbGUoKTsKPiDCoMKgwqDCoCB1aW50MzJfdCBp
-bXNpY19zX3BoYW5kbGUgPSBuZXh0X3BoYW5kbGUoKTsKPiDCoMKgwqDCoCB1aW50MzJfdCBwZXJp
-cGhfY2xrX3BoYW5kbGUgPSBuZXh0X3BoYW5kbGUoKTsKPiArwqDCoMKgIHVpbnQzMl90IG9zY18y
-NG1fcGhhbmRsZSA9IG5leHRfcGhhbmRsZSgpOwo+ICvCoMKgwqAgdWludDMyX3QgcHJjbV9yY3B1
-X3BoYW5kbGU7Cj4gwqDCoMKgwqAgdm9pZCAqZmR0ID0gTUFDSElORShzKS0+ZmR0Owo+IMKgCj4g
-wqDCoMKgwqAgY3JlYXRlX2ZkdF9jcHUocywgcy0+bWVtbWFwLCBhcGxpY19zX3BoYW5kbGUsIGlt
-c2ljX3NfcGhhbmRsZSk7Cj4gQEAgLTM0OCw2ICszNzcsMzQgQEAgc3RhdGljIHZvaWQgZmluYWxp
-emVfZmR0KFRUQXRsYW50aXNTdGF0ZSAqcykKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIGFwbGljX3NfcGhhbmRsZSk7Cj4gwqAKPiDCoMKgwqDCoCBjcmVhdGVfZmR0
-X2NsayhmZHQsICJwZXJpcGgtY2xrIiwgMTAwMDAwMDAwLAo+IHBlcmlwaF9jbGtfcGhhbmRsZSk7
-Cj4gK8KgwqDCoCBjcmVhdGVfZmR0X2NsayhmZHQsICJvc2NfMjRtIiwgMjQwMDAwMDAsIG9zY18y
-NG1fcGhhbmRsZSk7Cj4gKwo+ICvCoMKgwqAgZ19hdXRvZnJlZSBjaGFyICpyY3B1X25hbWUgPSBj
-cmVhdGVfZmR0X3ByY20oZmR0LAo+ICvCoMKgwqDCoMKgwqDCoCAmcy0+bWVtbWFwW1RUX0FUTF9Q
-UkNNX1JDUFVdLCAicmNwdSIpOwoKUGxlYXNlIGRvbid0IG1peCBjb2RlIGFuZCBkZWNsYXJhdGlv
-bnMKCj4gK8KgwqDCoCBwcmNtX3JjcHVfcGhhbmRsZSA9IHFlbXVfZmR0X2dldF9waGFuZGxlKGZk
-dCwgcmNwdV9uYW1lKTsKPiArwqDCoMKgIHFlbXVfZmR0X3NldHByb3BfY2VsbHMoZmR0LCByY3B1
-X25hbWUsICJjbG9ja3MiLAo+IG9zY18yNG1fcGhhbmRsZSk7Cj4gK8KgwqDCoCBxZW11X2ZkdF9z
-ZXRwcm9wX2NlbGxzKGZkdCwgcmNwdV9uYW1lLCAiYXNzaWduZWQtY2xvY2tzIiwKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBwcmNtX3JjcHVf
-cGhhbmRsZSwgVFRfQVRMX0NMS19SQ1BVX1JPT1QsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcHJjbV9yY3B1X3BoYW5kbGUsIFRUX0FUTF9D
-TEtfTk9DQ19DTEspOwo+ICvCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxscyhmZHQsIHJjcHVf
-bmFtZSwgImFzc2lnbmVkLWNsb2NrLXBhcmVudHMiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHByY21fcmNwdV9waGFuZGxlLCBUVF9BVExf
-Q0xLX1JDUFVfUExMLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIHByY21fcmNwdV9waGFuZGxlLCBUVF9BVExfQ0xLX05PQ19QTEwpOwo+ICsK
-PiArwqDCoMKgIGdfYXV0b2ZyZWUgY2hhciAqaHNpb19uYW1lID0gY3JlYXRlX2ZkdF9wcmNtKGZk
-dCwKPiArwqDCoMKgwqDCoMKgwqAgJnMtPm1lbW1hcFtUVF9BVExfUFJDTV9IU0lPXSwgImhzaW8i
-KTsKPiArwqDCoMKgIHFlbXVfZmR0X3NldHByb3BfY2VsbHMoZmR0LCBoc2lvX25hbWUsICJjbG9j
-a3MiLAo+IG9zY18yNG1fcGhhbmRsZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBwcmNtX3JjcHVfcGhhbmRsZSwgVFRfQVRMX0NMS19IU0lP
-X1BMTCk7Cj4gKwo+ICvCoMKgwqAgZ19hdXRvZnJlZSBjaGFyICpwY2llX25hbWUgPSBjcmVhdGVf
-ZmR0X3ByY20oZmR0LAo+ICvCoMKgwqDCoMKgwqDCoCAmcy0+bWVtbWFwW1RUX0FUTF9QUkNNX1BD
-SUVdLCAicGNpZSIpOwo+ICvCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxscyhmZHQsIHBjaWVf
-bmFtZSwgImNsb2NrcyIsCj4gb3NjXzI0bV9waGFuZGxlLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHByY21fcmNwdV9waGFuZGxlLCBUVF9B
-VExfQ0xLX1BDSUVfUExMKTsKPiArCj4gK8KgwqDCoCBnX2F1dG9mcmVlIGNoYXIgKm1tX25hbWUg
-PSBjcmVhdGVfZmR0X3ByY20oZmR0LAo+ICvCoMKgwqDCoMKgwqDCoCAmcy0+bWVtbWFwW1RUX0FU
-TF9QUkNNX01NXSwgIm1tIik7Cj4gK8KgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX2NlbGxzKGZkdCwg
-bW1fbmFtZSwgImNsb2NrcyIsIG9zY18yNG1fcGhhbmRsZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBwcmNtX3JjcHVfcGhhbmRsZSwgVFRf
-QVRMX0NMS19NTV9QTEwwLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHByY21fcmNwdV9waGFuZGxlLCBUVF9BVExfQ0xLX01NX1BMTDEpOwo+
-IMKgCj4gwqDCoMKgwqAgZm9yIChpbnQgaSA9IDA7IGkgPCBUVF9BVExfTlVNX0kyQzsgaSsrKSB7
-Cj4gwqDCoMKgwqDCoMKgwqDCoCBjcmVhdGVfZmR0X2kyYyhmZHQsCj4gQEAgLTU0NSw2ICs2MDIs
-NDMgQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2luaXQoTWFjaGluZVN0YXRl
-ICptYWNoaW5lKQo+IMKgwqDCoMKgIHNlcmlhbF9tbV9pbml0KHN5c3RlbV9tZW1vcnksIHMtPm1l
-bW1hcFtUVF9BVExfVUFSVDFdLmJhc2UsIDIsCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgcWRldl9nZXRfZ3Bpb19pbihzLT5pcnFjaGlwLCBUVF9BVExfVUFSVDFfSVJR
-KSwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAxMTUyMDAsIHNlcmlh
-bF9oZCgwKSwgREVWSUNFX0xJVFRMRV9FTkRJQU4pOwo+ICsKPiArwqDCoMKgIC8qIEFkZCByY3B1
-IHByY20gYmxvY2sgKi8KPiArwqDCoMKgIG9iamVjdF9pbml0aWFsaXplX2NoaWxkKE9CSkVDVChz
-KSwgInByY20tcmNwdSIsICZzLT5wcmNtWzBdLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgVFlQRV9UVF9BVExBTlRJU19QUkNNX1JDUFUp
-Owo+ICvCoMKgwqAgc3lzYnVzX3JlYWxpemUoU1lTX0JVU19ERVZJQ0UoJnMtPnByY21bMF0pLCAm
-ZXJyb3JfZmF0YWwpOwo+ICvCoMKgwqAgbWVtb3J5X3JlZ2lvbl9hZGRfc3VicmVnaW9uKHN5c3Rl
-bV9tZW1vcnksCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHMtPm1lbW1hcFtUVF9BVExfUFJDTV9SQ1BVXS5iYXNlLAo+ICvC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBzeXNidXNfbW1pb19nZXRfcmVnaW9uKAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFNZU19CVVNfREVW
-SUNFKCZzLT5wcmNtWzBdKSwKPiAwKSk7Cj4gKwo+ICvCoMKgwqAgLyogQWRkIGhzaW8gcHJjbSBi
-bG9jayAqLwo+ICvCoMKgwqAgb2JqZWN0X2luaXRpYWxpemVfY2hpbGQoT0JKRUNUKHMpLCAicHJj
-bS1oc2lvIiwgJnMtPnByY21bMV0sCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBUWVBFX1RUX0FUTEFOVElTX1BSQ01fSFNJTyk7Cj4gK8Kg
-wqDCoCBzeXNidXNfcmVhbGl6ZShTWVNfQlVTX0RFVklDRSgmcy0+cHJjbVsxXSksICZlcnJvcl9m
-YXRhbCk7Cj4gK8KgwqDCoCBtZW1vcnlfcmVnaW9uX2FkZF9zdWJyZWdpb24oc3lzdGVtX21lbW9y
-eSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgcy0+bWVtbWFwW1RUX0FUTF9QUkNNX0hTSU9dLmJhc2UsCj4gK8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHN5
-c2J1c19tbWlvX2dldF9yZWdpb24oCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgU1lTX0JVU19ERVZJQ0UoJnMt
-PnByY21bMV0pLAo+IDApKTsKPiArCj4gK8KgwqDCoCAvKiBBZGQgcGNpZSBwcmNtIGJsb2NrICov
-Cj4gK8KgwqDCoCBvYmplY3RfaW5pdGlhbGl6ZV9jaGlsZChPQkpFQ1QocyksICJwcmNtLXBjaWUi
-LCAmcy0+cHJjbVsyXSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIFRZUEVfVFRfQVRMQU5USVNfUFJDTV9QQ0lFKTsKPiArwqDCoMKgIHN5
-c2J1c19yZWFsaXplKFNZU19CVVNfREVWSUNFKCZzLT5wcmNtWzJdKSwgJmVycm9yX2ZhdGFsKTsK
-PiArwqDCoMKgIG1lbW9yeV9yZWdpb25fYWRkX3N1YnJlZ2lvbihzeXN0ZW1fbWVtb3J5LAo+ICvC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBzLT5tZW1tYXBbVFRfQVRMX1BSQ01fUENJRV0uYmFzZSwKPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc3lzYnVzX21t
-aW9fZ2V0X3JlZ2lvbigKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBTWVNfQlVTX0RFVklDRSgmcy0+cHJjbVsy
-XSksCj4gMCkpOwo+ICsKPiArwqDCoMKgIC8qIEFkZCBtbSBwcmNtIGJsb2NrICovCj4gK8KgwqDC
-oCBvYmplY3RfaW5pdGlhbGl6ZV9jaGlsZChPQkpFQ1QocyksICJwcmNtLW1tIiwgJnMtPnByY21b
-M10sCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBUWVBFX1RUX0FUTEFOVElTX1BSQ01fTU0pOwo+ICvCoMKgwqAgc3lzYnVzX3JlYWxpemUo
-U1lTX0JVU19ERVZJQ0UoJnMtPnByY21bM10pLCAmZXJyb3JfZmF0YWwpOwo+ICvCoMKgwqAgbWVt
-b3J5X3JlZ2lvbl9hZGRfc3VicmVnaW9uKHN5c3RlbV9tZW1vcnksCj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHMtPm1lbW1h
-cFtUVF9BVExfUFJDTV9NTV0uYmFzZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc3lzYnVzX21taW9fZ2V0X3JlZ2lvbigK
-PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCBTWVNfQlVTX0RFVklDRSgmcy0+cHJjbVszXSksCgpZb3Ugc2hvdWxk
-IGJlIGFibGUgdG8gdXNlIHlvdXIgYFBSQ01fRE9NQUlOXypgIGVudW1zIGhlcmUKCj4gMCkpOwo+
-ICsKPiDCoMKgwqDCoCAvKgo+IMKgwqDCoMKgwqAgKiBBdGxhbnRpcyBjb250YWlucyBhIERlc2ln
-bldhcmUgdWFydCB3aGlsZSB0aGUgUUVNVSBtYWNoaW5lCj4gwqDCoMKgwqDCoCAqIHVzZXMgdGhl
-IHNlcmlhbF9tbSBtb2RlbCB3aXRoIHRoZSBiYXNlIG5zMTY1NTAgcmVnaXN0ZXIgc2V0Lgo+IGRp
-ZmYgLS1naXQgYS9pbmNsdWRlL2h3L3Jpc2N2L3R0X2F0bGFudGlzLmgKPiBiL2luY2x1ZGUvaHcv
-cmlzY3YvdHRfYXRsYW50aXMuaAo+IGluZGV4IDdmN2Q0YTVhNTkuLjIwYmNkZmViNTIgMTAwNjQ0
-Cj4gLS0tIGEvaW5jbHVkZS9ody9yaXNjdi90dF9hdGxhbnRpcy5oCj4gKysrIGIvaW5jbHVkZS9o
-dy9yaXNjdi90dF9hdGxhbnRpcy5oCj4gQEAgLTEzLDEyICsxMywxNCBAQAo+IMKgI2luY2x1ZGUg
-Imh3L2NvcmUvc3lzYnVzLmgiCj4gwqAjaW5jbHVkZSAiaHcvaTJjL2Rlc2lnbndhcmVfaTJjLmgi
-Cj4gwqAjaW5jbHVkZSAiaHcvaW50Yy9yaXNjdl9pbXNpYy5oIgo+ICsjaW5jbHVkZSAiaHcvbWlz
-Yy90dF9hdGxhbnRpc19wcmNtLmgiCj4gwqAjaW5jbHVkZSAiaHcvcmlzY3YvcmlzY3ZfaGFydC5o
-Igo+IMKgCj4gwqAjZGVmaW5lIFRZUEVfVFRfQVRMQU5USVNfTUFDSElORSBNQUNISU5FX1RZUEVf
-TkFNRSgidHQtYXRsYW50aXMiKQo+IMKgT0JKRUNUX0RFQ0xBUkVfU0lNUExFX1RZUEUoVFRBdGxh
-bnRpc1N0YXRlLCBUVF9BVExBTlRJU19NQUNISU5FKQo+IMKgCj4gwqAjZGVmaW5lIFRUX0FUTF9O
-VU1fSTJDIDUKPiArI2RlZmluZSBUVF9BVExfTlVNX1BSQ00gNAoKV2hhdCBhYm91dCB0aGUgb3Ro
-ZXIgMj8KCkFsaXN0YWlyCgo+IMKgCj4gwqBzdHJ1Y3QgVFRBdGxhbnRpc1N0YXRlIHsKPiDCoMKg
-wqDCoCAvKjwgcHJpdmF0ZSA+Ki8KPiBAQCAtMzEsNiArMzMsNyBAQCBzdHJ1Y3QgVFRBdGxhbnRp
-c1N0YXRlIHsKPiDCoMKgwqDCoCBSSVNDVkhhcnRBcnJheVN0YXRlIHNvYzsKPiDCoMKgwqDCoCBE
-ZXZpY2VTdGF0ZSAqaXJxY2hpcDsKPiDCoMKgwqDCoCBEZXNpZ25XYXJlSTJDU3RhdGUgaTJjW1RU
-X0FUTF9OVU1fSTJDXTsKPiArwqDCoMKgIFRUQXRsYW50aXNQUkNNU3RhdGUgcHJjbVtUVF9BVExf
-TlVNX1BSQ01dOwo+IMKgCj4gwqDCoMKgwqAgaW50IGZkdF9zaXplOwo+IMKgfTsKPiBAQCAtNTks
-NiArNjIsMjIgQEAgZW51bSB7Cj4gwqDCoMKgwqAgVFRfQVRMX1NBUExJQywKPiDCoMKgwqDCoCBU
-VF9BVExfU0lNU0lDLAo+IMKgwqDCoMKgIFRUX0FUTF9VQVJUMSwKPiArwqDCoMKgIFRUX0FUTF9Q
-UkNNX1JDUFUsCj4gK8KgwqDCoCBUVF9BVExfUFJDTV9IU0lPLAo+ICvCoMKgwqAgVFRfQVRMX1BS
-Q01fUENJRSwKPiArwqDCoMKgIFRUX0FUTF9QUkNNX01NLAo+ICt9Owo+ICsKPiArLyogUkNQVSBQ
-UkNNIENsb2NrIElEcyAqLwo+ICtlbnVtIHsKPiArwqDCoMKgIFRUX0FUTF9DTEtfUkNQVV9QTEwg
-PSAwLAo+ICvCoMKgwqAgVFRfQVRMX0NMS19SQ1BVX1JPT1QgPSAxLAo+ICvCoMKgwqAgVFRfQVRM
-X0NMS19OT0NfUExMID0gMjUsCj4gK8KgwqDCoCBUVF9BVExfQ0xLX05PQ0NfQ0xLID0gMjYsCj4g
-K8KgwqDCoCBUVF9BVExfQ0xLX0hTSU9fUExMID0gNTQsCj4gK8KgwqDCoCBUVF9BVExfQ0xLX1BD
-SUVfUExMID0gNTUsCj4gK8KgwqDCoCBUVF9BVExfQ0xLX01NX1BMTDAgPSA1NiwKPiArwqDCoMKg
-IFRUX0FUTF9DTEtfTU1fUExMMSA9IDU3LAo+IMKgfTsKPiDCoAo+IMKgI2VuZGlmCg==
+Hi Alistair,
+
+On Thu, Aug 27, 2026 at 8:58=E2=80=AFPM Alistair Francis
+<Alistair.Francis@wdc.com> wrote:
+>
+> On Mon, 2026-08-17 at 09:42 -0500, Anirudh Srinivasan wrote:
+> > This device present in Tenstorrent Atlantis has registers that
+> > control
+> > clocks, reset and other misc functionality in the SoC. This commit
+> > adds
+> > models for the RCPU, HSIO, PCIE, MM and 2 DDR PRCMs.
+> >
+> > Co-developed-by: Portia Stephens <portias@oss.tenstorrent.com>
+> > Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+> > Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> > ---
+> >  MAINTAINERS                        |   2 +
+> >  hw/misc/meson.build                |   1 +
+> >  hw/misc/trace-events               |   4 +
+> >  hw/misc/tt_atlantis_prcm.c         | 442
+> > +++++++++++++++++++++++++++++++++++++
+> >  include/hw/misc/tt_atlantis_prcm.h |  51 +++++
+> >  5 files changed, 500 insertions(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index e25df9493c..49c1a5ad76 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1802,7 +1802,9 @@ R: Portia Stephens
+> > <portias@oss.tenstorrent.com>
+> >  L: qemu-riscv@nongnu.org
+> >  S: Supported
+> >  F: docs/system/riscv/tt_*.rst
+> > +F: hw/misc/tt_*.c
+> >  F: hw/riscv/tt_*.c
+> > +F: include/hw/misc/tt_*.h
+> >  F: include/hw/riscv/tt_*.h
+> >  F: tests/functional/riscv64/test_tt_*.py
+> >
+> > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> > index 23265f6035..26627013f3 100644
+> > --- a/hw/misc/meson.build
+> > +++ b/hw/misc/meson.build
+> > @@ -36,6 +36,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI',
+> > if_true: files('sifive_e_prci.c'))
+> >  system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true:
+> > files('sifive_e_aon.c'))
+> >  system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true:
+> > files('sifive_u_otp.c'))
+> >  system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true:
+> > files('sifive_u_prci.c'))
+> > +system_ss.add(when: 'CONFIG_TENSTORRENT', if_true:
+> > files('tt_atlantis_prcm.c'))
+> >
+> >  subdir('macio')
+> >
+> > diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> > index c9a868b3ef..9359a4e66d 100644
+> > --- a/hw/misc/trace-events
+> > +++ b/hw/misc/trace-events
+> > @@ -442,3 +442,7 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t
+> > len) "gva=3D0x%" PRIx64 " len=3D%u"
+> >  iommu_testdev_dma_verify(uint32_t expected, uint32_t actual)
+> > "expected=3D0x%x actual=3D0x%x"
+> >  iommu_testdev_dma_result(uint32_t result) "DMA completed
+> > result=3D0x%x"
+> >  iommu_testdev_dma_armed(bool armed) "armed=3D%d"
+> > +
+> > +# tt_atlantis_prcm.c
+> > +tt_atlantis_prcm_read(uint32_t domain, uint64_t offset, uint64_t
+> > data) "domain 0x%02x offset 0x%" PRIx64 " data 0x%" PRIx64
+> > +tt_atlantis_prcm_write(uint32_t domain, uint64_t offset, uint64_t
+> > data) "domain 0x%02x offset 0x%" PRIx64 " data 0x%" PRIx64
+> > diff --git a/hw/misc/tt_atlantis_prcm.c b/hw/misc/tt_atlantis_prcm.c
+> > new file mode 100644
+> > index 0000000000..571f2a08fe
+> > --- /dev/null
+> > +++ b/hw/misc/tt_atlantis_prcm.c
+> > @@ -0,0 +1,442 @@
+> > +/*
+> > + * PRCM (Clock and Reset Controller) in Tenstorrent Atlantis SoC
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + *
+> > + * Copyright 2026 Tenstorrent
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qemu/bitops.h"
+> > +#include "qapi/error.h"
+> > +#include "qemu/log.h"
+> > +#include "hw/misc/tt_atlantis_prcm.h"
+> > +#include "hw/core/qdev-properties.h"
+> > +#include "hw/core/registerfields.h"
+> > +#include "hw/core/irq.h"
+> > +#include "trace.h"
+> > +
+> > +#define TO_REG(offset) ((offset) >> 2)
+> > +
+> > +#define PLL_LOCK_BIT        31
+> > +#define PLL_FBDIV_LSB       14
+> > +#define PLL_POSTDIV2_LSB    11
+> > +#define PLL_POSTDIV1_LSB    8
+> > +#define PLL_REFDIV_LSB      2
+> > +#define PLL_BYPASS_BIT      1
+> > +
+> > +#define PLL_RESET_VAL(BYPASS, REFDIV, POSTDIV1, POSTDIV2, FBDIV,
+> > LOCK)         \
+> > +  ((LOCK << PLL_LOCK_BIT) | (FBDIV << PLL_FBDIV_LSB)
+> > |                         \
+> > +   (POSTDIV2 << PLL_POSTDIV2_LSB) | (POSTDIV1 << PLL_POSTDIV1_LSB)
+> > |           \
+> > +   (REFDIV << PLL_REFDIV_LSB) | (BYPASS << PLL_BYPASS_BIT))
+> > +
+> > +#define RCPU_PLL_RCPU_CFG   TO_REG(0)
+> > +#define RCPU_PLL_NOCC_CFG   TO_REG(0x4)
+> > +#define RCPU_NOCC_CLK_CFG   TO_REG(0x8)
+> > +#define RCPU_RCPU_DIV_CFG   TO_REG(0xc)
+> > +#define RCPU_RCPU_BLK_CG    TO_REG(0x14)
+> > +#define RCPU_LSIO_BLK_CG    TO_REG(0x18)
+> > +#define RCPU_RCPU_BLK_RST   TO_REG(0x1c)
+> > +#define RCPU_LSIO_BLK_RST   TO_REG(0x20)
+> > +#define RCPU_PLL_RCPU_EN    TO_REG(0x11c)
+> > +#define RCPU_PLL_NOCC_EN    TO_REG(0x120)
+> > +#define RCPU_PLL_MM_EN      TO_REG(0x0124)
+> > +#define RCPU_PLL1_MM_EN     TO_REG(0x0128)
+> > +#define RCPU_PLL_HSIO_EN    TO_REG(0x12c)
+> > +#define RCPU_PLL_PCIE_EN    TO_REG(0x138)
+> > +#define RCPU_PLL_I2S_EN     TO_REG(0x13C)
+> > +#define RCPU_PLL_MM_CFG     TO_REG(0x19c)
+> > +#define RCPU_PLL_HSIO_CFG   TO_REG(0x1a0)
+> > +#define RCPU_PLL_PCIE_CFG   TO_REG(0x1ac)
+> > +#define RCPU_BOOT_MODE_CFG  TO_REG(0x1b0)
+> > +#define RCPU_PLL_I2S_CFG    TO_REG(0x1f4)
+> > +#define RCPU_I2S_DIV_CFG    TO_REG(0x1f8)
+> > +#define RCPU_BUS_CFG        TO_REG(0x1fc)
+> > +#define RCPU_PLL1_MM_CFG    TO_REG(0x2a4)
+> > +
+> > +#define HSIO_HSIO_DIV_CFG       TO_REG(0x0)
+> > +#define HSIO_HSIO_DIV_CFG1      TO_REG(0x4)
+> > +#define HSIO_HSIO_BLK_CG        TO_REG(0x8)
+> > +#define HSIO_HSIO_BLK_RST       TO_REG(0xc)
+> > +#define HSIO_HSIO_GMAC_DIV_CFG  TO_REG(0x10)
+> > +
+> > +#define PCIE_SUBS_RST_CTL   TO_REG(0x0)
+> > +#define PCIE_SUBS_CG_CTL    TO_REG(0x4)
+> > +#define PCIE_SUBS_CK_CTL    TO_REG(0x8)
+> > +
+> > +#define MM_MM_CLK_GATE_CFG  TO_REG(0x8)
+> > +#define MM_MM_CLK_DIV_CFG   TO_REG(0xC)
+> > +#define MM_MM_CLK_SEL_CFG   TO_REG(0x10)
+> > +#define MM_MM_RSTN          TO_REG(0x14)
+> > +#define MM_MM_CLK_DIV_CFG1  TO_REG(0x130)
+> > +
+> > +#define DDRC_STAT           TO_REG(0x10014)
+> > +#define DDRC_DFISTAT        TO_REG(0x10514)
+> > +#define DDRC_SWSTAT         TO_REG(0x10c84)
+> > +
+> > +#define PLL_EN              BIT(0)
+> > +#define RCPU_PLL_BUS_CG_EN  BIT(7)
+> > +#define HSIO_PLL_BUS_CG_EN  BIT(3)
+> > +#define PCIE_PLL_BUS_CG_EN  BIT(1)
+> > +#define NOCC_PLL_BUS_CG_EN  BIT(0)
+>
+> You don't have to change this, but in future please try to use the
+> REG32/FIELD API. It's a lot nicer :)
+
+Ha, I came across that way of doing things after writing this model.
+Will keep it in mind for the future.
+
+>
+> > +
+> > +#define RCPU_BOOT_MODE_UART      (0x0 << 4)
+> > +#define RCPU_BOOT_MODE_NOR       (0x1 << 4)
+> > +#define RCPU_BOOT_MODE_SD        (0x2 << 4)
+> > +
+> > +#define RCPU_DOMAIN_SIZE   0x10000
+> > +#define HSIO_DOMAIN_SIZE   0x510
+> > +#define PCIE_DOMAIN_SIZE   0x100
+> > +#define MM_DOMAIN_SIZE     0x1000
+> > +#define DDRC0_DOMAIN_SIZE  0x101000
+> > +#define DDRC1_DOMAIN_SIZE  0x101000
+> > +
+> > +static uint64_t tt_atlantis_prcm_read(void *opaque, hwaddr offset,
+> > +                                      unsigned size)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +    uint32_t data;
+> > +
+> > +    if (offset >=3D c->regs_size) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "%s: Out-of-bounds read at offset 0x%"
+> > HWADDR_PRIx "\n",
+> > +                      __func__, offset);
+> > +        return 0;
+> > +    }
+> > +    data =3D s->regs[TO_REG(offset)];
+> > +
+> > +    trace_tt_atlantis_prcm_read(c->domain, offset, data);
+> > +    return data;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_write(void *opaque, hwaddr offset,
+> > +                                   uint64_t data, unsigned size)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +
+> > +    if (offset >=3D c->regs_size) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "%s: Out-of-bounds write at offset 0x%"
+> > HWADDR_PRIx "\n",
+> > +                      __func__, offset);
+> > +        return;
+> > +    }
+> > +
+> > +    trace_tt_atlantis_prcm_write(c->domain, offset, data);
+> > +
+> > +    s->regs[TO_REG(offset)] =3D data;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_rcpu_write(void *opaque, hwaddr offset,
+> > +                                        uint64_t data, unsigned
+> > size)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
+> > +
+> > +    tt_atlantis_prcm_write(opaque, offset, data, size);
+>
+> You probably don't need to log the size
+>
+> > +
+> > +    uint32_t pll_reg_offset;
+>
+> Don't mix declarations and code please. This should be at the top of
+> the function (checkpatch should catch this).
+
+Yes, will fix.
+
+>
+> > +    switch (TO_REG(offset)) {
+> > +    case RCPU_PLL_RCPU_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_RCPU_CFG;
+> > +        break;
+> > +    case RCPU_PLL_NOCC_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_NOCC_CFG;
+> > +        break;
+> > +    case RCPU_PLL_HSIO_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_HSIO_CFG;
+> > +        break;
+> > +    case RCPU_PLL_PCIE_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_PCIE_CFG;
+> > +        break;
+> > +    case RCPU_PLL_MM_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_MM_CFG;
+> > +        break;
+> > +    case RCPU_PLL1_MM_EN:
+> > +        pll_reg_offset =3D RCPU_PLL1_MM_CFG;
+> > +        break;
+> > +    case RCPU_PLL_I2S_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_I2S_CFG;
+> > +        break;
+> > +    default:
+> > +        return;
+> > +    }
+> > +
+> > +    if (data & PLL_EN) {
+> > +        s->regs[pll_reg_offset] |=3D BIT(PLL_LOCK_BIT);
+> > +    } else {
+> > +        s->regs[pll_reg_offset] &=3D ~BIT(PLL_LOCK_BIT);
+> > +    }
+> > +}
+> > +
+> > +static const MemoryRegionOps tt_atlantis_prcm_ops =3D {
+> > +    .read =3D tt_atlantis_prcm_read,
+> > +    .write =3D tt_atlantis_prcm_write,
+> > +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > +    .valid.min_access_size =3D 4,
+> > +    .valid.max_access_size =3D 4,
+> > +};
+> > +
+> > +static const MemoryRegionOps tt_atlantis_prcm_rcpu_ops =3D {
+> > +    .read =3D tt_atlantis_prcm_read,
+> > +    .write =3D tt_atlantis_prcm_rcpu_write,
+> > +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > +    .valid.min_access_size =3D 4,
+> > +    .valid.max_access_size =3D 4,
+> > +};
+> > +
+> > +static void tt_atlantis_prcm_realize(DeviceState *dev, Error **errp)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +
+> > +    if (c->domain >=3D PRCM_DOMAIN_COUNT) {
+> > +        error_setg(errp,
+> > +                   "domain %d is larger than max number of possible
+> > domains %d",
+> > +                   c->domain, PRCM_DOMAIN_COUNT);
+> > +        return;
+> > +    }
+> > +    s->regs =3D g_new0(uint32_t, TO_REG(c->regs_size));
+> > +
+> > +    memory_region_init_io(&s->mmio, OBJECT(s), c->ops, s,
+> > +                          TYPE_TT_ATLANTIS_PRCM, c->regs_size);
+> > +    sysbus_init_mmio(sbd, &s->mmio);
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_reset_hold(Object *obj, ResetType type)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(obj);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +
+> > +    memset(s->regs, 0, c->regs_size);
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_rcpu_reset_hold(Object *obj, ResetType
+> > type)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(obj);
+> > +    tt_atlantis_prcm_reset_hold(obj, type);
+> > +
+> > +    s->regs[RCPU_PLL_RCPU_CFG] =3D PLL_RESET_VAL(1, 0, 4, 0, 100, 1);
+> > +    s->regs[RCPU_PLL_NOCC_CFG] =3D PLL_RESET_VAL(0, 2, 2, 2, 267, 1);
+> > +    s->regs[RCPU_NOCC_CLK_CFG] =3D
+> > +        (0x25f31 << 1) | BIT(0); /* Value from Datasheet */
+>
+> I hope the value comes from the datasheet. Where else would it come
+> from!
+
+Another reviewer (Daniel) asked to mention where these come from, I'll
+add a single comment at the top instead.
+
+>
+> > +    s->regs[RCPU_RCPU_DIV_CFG] =3D (0xb8c2 << 1); /* Value from
+> > Datasheet */
+> > +    s->regs[RCPU_RCPU_BLK_CG] =3D 0;
+> > +    s->regs[RCPU_LSIO_BLK_CG] =3D 0;
+> > +    s->regs[RCPU_RCPU_BLK_RST] =3D 0xffffffff;
+> > +    s->regs[RCPU_LSIO_BLK_RST] =3D 0xffffffff;
+> > +    s->regs[RCPU_PLL_RCPU_EN] =3D PLL_EN;
+> > +    s->regs[RCPU_PLL_NOCC_EN] =3D PLL_EN;
+> > +    s->regs[RCPU_PLL_HSIO_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_MM_EN] =3D 0;
+> > +    s->regs[RCPU_PLL1_MM_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_I2S_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_PCIE_EN] =3D 0;
+>
+> You don't need to set the 0's, you have already memset(0)
+
+I was experimenting with different reset values here to test if the
+linux driver handles weird/unrealistic edge cases. So I've left them
+in.
+
+>
+> > +    s->regs[RCPU_PLL_HSIO_CFG] =3D PLL_RESET_VAL(0, 1, 2, 1, 50, 0);
+> > +    s->regs[RCPU_PLL_PCIE_CFG] =3D PLL_RESET_VAL(0, 2, 3, 1, 250, 0);
+> > +    s->regs[RCPU_BOOT_MODE_CFG] =3D RCPU_BOOT_MODE_SD;
+> > +    s->regs[RCPU_PLL_MM_CFG] =3D PLL_RESET_VAL(0, 1, 2, 1, 50, 1);
+> > +    s->regs[RCPU_PLL1_MM_CFG] =3D PLL_RESET_VAL(0, 1, 2, 1, 50, 1);
+> > +    s->regs[RCPU_PLL_I2S_CFG] =3D PLL_RESET_VAL(0, 1, 6, 6, 33, 0);
+> > +    s->regs[RCPU_I2S_DIV_CFG] =3D 0xde69ad31; /* Value from Datasheet
+> > */
+> > +    s->regs[RCPU_BUS_CFG] =3D NOCC_PLL_BUS_CG_EN | HSIO_PLL_BUS_CG_EN;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_ddrc_reset_hold(Object *obj, ResetType
+> > type)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(obj);
+> > +    tt_atlantis_prcm_reset_hold(obj, type);
+> > +
+> > +    s->regs[DDRC_STAT] =3D 0x1;
+> > +    s->regs[DDRC_DFISTAT] =3D 0x1;
+> > +    s->regs[DDRC_SWSTAT] =3D 0x1;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_hsio_reset_hold(Object *obj, ResetType
+> > type)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(obj);
+> > +    tt_atlantis_prcm_reset_hold(obj, type);
+> > +
+> > +    s->regs[HSIO_HSIO_DIV_CFG] =3D 0x20821731; /* Value from Datasheet
+> > */
+> > +    s->regs[HSIO_HSIO_DIV_CFG1] =3D 0x8; /* Value from Datasheet */
+> > +    s->regs[HSIO_HSIO_BLK_CG] =3D 0;
+> > +    s->regs[HSIO_HSIO_BLK_RST] =3D 0;
+> > +    s->regs[HSIO_HSIO_GMAC_DIV_CFG] =3D 0;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_pcie_reset_hold(Object *obj, ResetType
+> > type)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(obj);
+> > +    tt_atlantis_prcm_reset_hold(obj, type);
+> > +
+> > +    s->regs[PCIE_SUBS_RST_CTL] =3D 0;
+> > +    s->regs[PCIE_SUBS_CG_CTL] =3D 0;
+> > +    s->regs[PCIE_SUBS_CK_CTL] =3D 0x44908; /* Value from Datasheet */
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_mm_reset_hold(Object *obj, ResetType
+> > type)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(obj);
+> > +    tt_atlantis_prcm_reset_hold(obj, type);
+> > +
+> > +    s->regs[MM_MM_CLK_GATE_CFG] =3D 0;
+> > +    s->regs[MM_MM_CLK_DIV_CFG] =3D 0xddc8312; /* Value from Datasheet
+> > */
+> > +    s->regs[MM_MM_CLK_SEL_CFG] =3D 0;
+> > +    s->regs[MM_MM_RSTN] =3D 0;
+> > +    s->regs[MM_MM_CLK_DIV_CFG1] =3D 0x333; /* Value from Datasheet */
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_unrealize(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +
+> > +    g_free(s->regs);
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_class_init(ObjectClass *klass,
+> > +                                        const void *data)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    dc->unrealize =3D tt_atlantis_prcm_unrealize;
+> > +    dc->desc =3D "Tenstorrent Atlantis PRCM Controller";
+> +    rc->phases.hold =3D tt_atlantis_prcm_reset_hold;
+> > +    c->ops =3D &tt_atlantis_prcm_ops;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_rcpu_class_init(ObjectClass *klass,
+> > +                                             const void *data)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    dc->desc =3D "Tenstorrent Atlantis RCPU PRCM Controller";
+> > +    rc->phases.hold =3D tt_atlantis_prcm_rcpu_reset_hold;
+>
+> You could use a rc->phases.enter to call tt_atlantis_prcm_reset_hold()
+> here instead. Not sure if that's better though
+
+I was using legacy_reset previously. Another reviewer (Daniel)
+suggested using reset_hold instead.
+
+>
+> Alistair
+
+Regards
+Anirudh Srinivasan
 
