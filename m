@@ -4,94 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5299AC61DC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Aug 2026 23:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A924BC61DC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 00:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzjbo-0001Sp-96; Thu, 27 Aug 2026 19:34:12 -0400
+	id 1wzk8m-0006E1-Lo; Thu, 27 Aug 2026 20:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wzjbm-0001O7-OI
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 19:34:10 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wzjbk-0000F6-Tj
- for qemu-devel@nongnu.org; Thu, 27 Aug 2026 19:34:10 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-cc1c3d79b9bso436168a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 16:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787873647; x=1788478447; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=x8U1HGO4ntsRB94xWkG6RdwbkZEn6L+guYsMW38dCig=;
- b=EMA7Coj9E2Q4hbdOziy5EQNJho4eh0NygxMtIEhRNSFiRZx/zj4Vm/qNWsxzzv5dPf
- ip6hCfaSRd3g0g2j9vrlADIGEXm4RkYi+8maBGgAclgch/47V8jp3s81qvqkSf/v88GI
- 32G5cIpYSZd9uDHSMonlkbUDpBm3WKHcx19oH5XndIAtwEFtJvSzV4m2+DGW5vxJ3Zx2
- CpKBiF6c7iIQcRSUfVmE0b+HySjX6GXdEdWGfslCOZjuuqKSlOp+ubHQxRp061L11jWn
- 70gj3um6UV5n/8el0GXM5Q7UoLrnHmUg8G8YPO4TRSqeTm9c2ULVXZRGQun8Xb9VGqJK
- pY+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787873647; x=1788478447;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=x8U1HGO4ntsRB94xWkG6RdwbkZEn6L+guYsMW38dCig=;
- b=qQCNF1p0YnxfIGhjmVQJdN4YftN8I/LFnGBcrBrBTRw5I7moROS+KgLmbbV7OMkPaU
- ZpwqoBAz2s6tQoFo6Fx/r1uh05Pi7Ys3po4144D1dN9+UHOe97EsLythDnnVgPDkRc3G
- IXeJvDyifT5AOeQABngxaMRiU1Zvfmvy1gpR383OwqS10nqNUgWDLoUqsrmJv2NhXthg
- jcydHyV7K61cK2imfarPbunymQzrrlwSnFVv/I0XbIIY7AC9BatZswnPlAkCnuwaw0E5
- n/XB92s1gHpgV6ZDrcLiBULTgPeA2qhPqM5lJM7cWwr9Eas2VJeUYqma4JcxmXzSAvLZ
- 48gg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqBJFxpjdYgFsduAJnH7Wp2ffpu1JRQ91yNOPcJYM4hlOMy6j3sUIf0ZlqO6T8yVqI5fzogKgg0e6s3@nongnu.org
-X-Gm-Message-State: AFuF++lF6Z13vXOJJjKaTA5JW+WY73WeVw0tnZPOdOE+x+bEcET8FBMw
- gVsFRsrzZYjr1g8j04ycACgKeYseRzwxTv8H5KXmHe6zNJHHKjdpeNRI0/PRWrPFDD4=
-X-Gm-Gg: AR+sD119mqdbfrrYj3gMJEA04kqfximTGQMs3/wvEpewF8rLxhyf6A2ly6mtRxRT0+8
- mbVY71kfzKg1xYwx9lbWI/0sGKNWAAfMofSNPeQb9BVU3LAyzpBVj4tr57+1GFvvYc4ncagaTKl
- wqoTF66MrrYhKmcJRT7e0/Q61WttUcbv/qwzEq2qW3GlWmn/5324dmyEwV638A4F3orduurJy0+
- ReZ6A09YtUOQAUCjoeSfYhTtjHDV0JjYOXQUZCa3k8eQecYQFwSgGFYMwhECmSkA1UVbTqDQDg+
- hvt3ZNO2VrCWRrtHPS9s4fgC2yEFrz3AQQNLD8geGkg79yRrgstJ12w+kOfOkzrNiA5FInvTVkm
- 1wQqjpN8y5KWia/SvEaSx/Qw+1WcekvV7PGcISnD75qkl77uaRbhlyH9sZru9S5CdlyBik9AzF1
- JBum9TjcnsFvv57+nfrVBONYE5IGAcDHZxReTXQVNVmczuJ2KxcNBIL8FjQeRrwpoz/6OrWQoai
- 7LZoigFpPG9DwzHdNpCWkLdGVpw
-X-Received: by 2002:a17:90b:3c47:b0:38d:f5bb:e0f4 with SMTP id
- 98e67ed59e1d1-396d0e27e11mr5472987a91.1.1787873646734; 
- Thu, 27 Aug 2026 16:34:06 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-396b186807bsm4831948a91.12.2026.08.27.16.34.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Aug 2026 16:34:06 -0700 (PDT)
-Message-ID: <b6265b43-8f26-4703-9ca1-88214c06905a@linaro.org>
-Date: Thu, 27 Aug 2026 16:34:04 -0700
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wzk8k-0006DO-Kb; Thu, 27 Aug 2026 20:08:14 -0400
+Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wzk8h-0006WG-Ix; Thu, 27 Aug 2026 20:08:14 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 690807A00D9;
+ Thu, 27 Aug 2026 20:08:08 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-02.internal (MEProxy); Thu, 27 Aug 2026 20:08:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1787875688; x=1787962088; bh=BOZJR3VVH47eUCp5RvSlZ5FawNdXQA0y
+ 3EkgMljkMEE=; b=wlJ4MkH9wFSWsO3Sji2Sq4BGe1fZEROW8EQTS09diOtPla+E
+ FtAD0tYQv+0UCWHyqYoeAxdoMcjJ28JEyP1W6ZsLmaftpC/rzL/CBB0xF7LAgaGr
+ uDBbxvR6M9BYL8YatwFzBNqqTJ5AETIY1BluGZLCCXS16TDhY4+VECIepeNqUuKe
+ qXGxZKIgisNh+UoVRcM6sW+/hYbbNeUrUZykCEPqBKXWpUYSsS9apJVGhk5IiibB
+ Jo5/Z77ZS/MOksIHgXwfSbcp+uAIiUsAQWQirrPJQ+n1iGOs6V2sZdOTV122QsIa
+ NexX/hI6f6VNj4zbpmHapXb6pO1p9AJ6KB8PVQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787875688; x=
+ 1787962088; bh=BOZJR3VVH47eUCp5RvSlZ5FawNdXQA0y3EkgMljkMEE=; b=j
+ RnTxIfa3eoQqesteWXOgr8PtLGrnHL4k4sqBx9FXRw/dSgkhADwIs7wYg9z58z/E
+ kKGWUxD6FUbu53RjUi4YVPJVmm5wS/UUN9mLP+H5VwS3a8DRTF8FqluASO9k21jE
+ ITbojPyc0jU3RegJAw41IV8LzzdbQSjRQEQ0muWcirNQMnbU927weCbBGerANhs6
+ vz2PpeE+DQYgWQKiC13j3Jm1TcUMBJmu8E3PjPRtEvD4RkAZiJmjtyoRRy3KOY2D
+ YQt7oB/o1E8mjkGZI/V9zO5q3yuGaOt2jgYti0PbNblsfaOEmgSfaKL8qnIq0W2m
+ ShS1TB7xo6/ZvQ6sz4lxg==
+X-ME-Sender: <xms:ZtGQari9ElGEo5z4Ywi-IoaHF_OaJtodeg-XMXufi66iGKTVc2qbQA>
+ <xme:ZtGQapp2HRWHezFxL_JOqFdko50RjukKXl8reimjyNREwwuvmdd6pdhZ-WBxBRPWX
+ En3-cXZuafEMjLJlrTF72otDSqk664LjQSsrWj-HaEb9A0he5HxPN4>
+X-ME-Received: <xmr:ZtGQapyFA_zD3oJqCSNkHtwbDLnn_vnWHsNRVW2jRrqXiap55XmvmO-Z0PCU2f5fRQqiY-q9q3Fbo_IJ8srlMmRy9jQ>
+X-ME-Proxy-Cause: dmFkZTGoUImZX0MgnIa0NA3cVRDDZ6yZQ5ecoNAMTTjH5DBE+LuNLzuOjXKtL75mZvws5Y
+ Vdg4ooMMVtA6b5uOkOqkw7ZxcjoszrZMJF0GX76e9m2fuALSZ3VPf8dZz+Rio2fCdjRcfd
+ Y/2+9fSkN2dWy37jzlCSQHbSTBQuGi8OpbkZsIa+Ads0CsMHCqMopQmfk7El0TdV8php9N
+ SdXFmVZwod+58HRfVGaOfE12IN6Kr2gthhOMqSO0ntB0Hp6vpZUZYaHwrkfH2JLlK/QShM
+ w04AHAfErEIWbd2457e4GqNEqjL1cQl2dwBWCBRrTlRTT6Rdvx0W/DY4/Z1scdBn0Kr1ET
+ VKmhZv9ea7oihM9VdeM0jQqh9qzbzJmjPB7AD3HEizb5IpIb4SoNZbKTbLXNKp1R9+ilQQ
+ TLifrnBr9zhjRk2AwdlJhCiJI5yHx5GWuJy+O1sqSBUaWoJo0ZpZiCTvXoRITv1EXhhawg
+ TZ1V/3BkycSk0xDGRPnNaBvuByv83g+Q9eKeC68rLFa3oKwQog9e6xkxA3l6T085SHdsnA
+ Ftpy0pPtW+pcomoNfByUK8WYM4g/NByXF4k8wZy3KyybcsRTsQT8zPkDgfPFLidil1cBt1
+ nam2p0l7YktKqFUNZpbPNgE0RXKHEtjMKKF6pBG6toLPvG41VNWBtaaZAxpg
+X-ME-Proxy: <xmx:ZtGQagxjUaPhUtrEd6rDMEgXcELYugXOKr2LuWVXRVUkpW1hEdmpuQ>
+ <xmx:ZtGQapYKWOlxQKqwiJZIMUfQAigGf5wA4vFy9lXX7Ei3C8CFOs4XPw>
+ <xmx:ZtGQaplP-JlbZ9cRZ35KiBxlFgZUvkIspJxljmNwCtPXEn9r6oi5wA>
+ <xmx:ZtGQamE797IGoIqSMu4ZURzdWaEfuvp0gGMQU3hsuBfO6lA-5k8-Ow>
+ <xmx:aNGQanYQZCrO1hjVsEvuInoY3yRZM7KRbF2Vuzq-62oQXM9ujdpGXj9M>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Aug 2026 20:07:58 -0400 (EDT)
+Message-ID: <3796c9917796a0fe26f2462645d95cc7039539af.camel@alistair23.me>
+Subject: Re: [PATCH 0/4] Rename ssi_transfer to ssi_transfer8
+From: Alistair <alistair@alistair23.me>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Portia Stephens <stephensportia@gmail.com>, qemu-devel@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-ppc@nongnu.org,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater	 <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery	 <andrew@codeconstruct.com.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, Troy Lee <leetroy@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@mailo.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
+ Nicholas Piggin	 <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Kane Chen	 <kane_chen@aspeedtech.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Joel Stanley <joel@jms.id.au>, Hao Wu <wuhaotsh@google.com>,
+ Glenn Miles <milesg@linux.ibm.com>, 	qemu-riscv@nongnu.org,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+Date: Fri, 28 Aug 2026 10:07:56 +1000
+In-Reply-To: <CAFEAcA9zz60hTDMEMePnc1osis7dPjn5KmSksrWKATpSMc8SHw@mail.gmail.com>
+References: <20260825040452.1322251-1-stephensportia@gmail.com>
+ <CAFEAcA9etHvjL1igO4mFy5iQNy1pCbNFGaSg5HFva+YCeMkGEA@mail.gmail.com>
+ <CACYNXwKU_UuhrBWHNFtYYmSfzRsUd5jRFjSc1++xvQHxPk6rew@mail.gmail.com>
+ <CAFEAcA-Ncv9_jMMg1i+Ox_xa9oM4D_MMLGnPpqbyGJV_5B9iMg@mail.gmail.com>
+ <ac30bd54b6f1f4e4753638c9e95dbb85d8b81eca.camel@alistair23.me>
+ <CAFEAcA9zz60hTDMEMePnc1osis7dPjn5KmSksrWKATpSMc8SHw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/9] RFC: tcg: probe the TB jump cache inline instead
- of calling a helper
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@oss.qualcomm.com, alex.bennee@linaro.org,
- zhao1.liu@intel.com
-References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260827050241.3713332-7-mattst88@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260827050241.3713332-7-mattst88@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=202.12.124.152;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,107 +128,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/26 22:02, Matt Turner wrote:
-> +static void gen_jmp_cache_probe(TCGv_i64 pc, const TranslationBlock *tb)
-> +{
-> +    TCGv_ptr jc, ent, tbp, ptr;
-> +    TCGv_i64 h, tmp;
-> +    TCGLabel *slow;
-> +    uint64_t fpair;
-> +
-> +    QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) != 16);
-> +    QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) % 8 != 0);
-> +    /* One 64-bit load has to cover both, so they must be adjacent... */
-> +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=
-> +                      offsetof(TranslationBlock, flags) + 4);
-> +    /* ...and aligned, which nothing else currently relies on. */
-> +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, flags) % 8 != 0);
-> +
-> +    jc = tcg_temp_ebb_new_ptr();
-> +    ent = tcg_temp_ebb_new_ptr();
-> +    tbp = tcg_temp_ebb_new_ptr();
-> +    ptr = tcg_temp_ebb_new_ptr();
-> +    h = tcg_temp_ebb_new_i64();
-> +    tmp = tcg_temp_ebb_new_i64();
-> +    slow = gen_new_label();
-> +
-> +    /* ent = &jc->array[tb_jmp_cache_hash_func(pc)] */
-> +    gen_jmp_cache_hash(h, pc);
-> +    tcg_gen_shli_i64(h, h, 4);
-> +
-> +    /*
-> +     * Not cpu->tb_jmp_cache: the probe reads its own base so that the main
-> +     * loop can poison it, which is how conditions the probe cannot test for
-> +     * itself force every dispatch back into the helper.  See
-> +     * tcg_cpu_sync_jmp_cache().
-> +     */
-> +    tcg_gen_ld_ptr(jc, tcg_env,
-> +                   offsetof(CPUState, tb_jmp_cache_probe) - sizeof(CPUState));
-> +    tcg_gen_trunc_i64_ptr(ent, h);
-> +    tcg_gen_add_ptr(ent, jc, ent);
-> +
-> +    /*
-> +     * The pc first: on a hash miss it is the field most likely to differ,
-> +     * and an entry whose tb is NULL has a zero pc that only pc 0 matches.
-> +     */
-> +    tcg_gen_ld_i64(tmp, ent, offsetof(CPUJumpCache, array[0].pc));
-> +    tcg_gen_brcond_i64(TCG_COND_NE, tmp, pc, slow);
-> +
-> +    tcg_gen_ld_ptr(tbp, ent, offsetof(CPUJumpCache, array[0].tb));
-> +    tcg_gen_brcondi_ptr(TCG_COND_EQ, tbp, 0, slow);
-> +
-> +    /*
-> +     * flags and cflags are adjacent uint32_t, so one aligned 64-bit load
-> +     * and compare covers both.
-> +     */
-> +#if HOST_BIG_ENDIAN
-> +    fpair = ((uint64_t)tb->flags << 32) | tb->cflags;
-> +#else
-> +    fpair = ((uint64_t)tb->cflags << 32) | tb->flags;
-> +#endif
+On Thu, 2026-08-27 at 12:17 +0100, Peter Maydell wrote:
+> On Thu, 27 Aug 2026 at 12:03, Alistair <alistair@alistair23.me>
+> wrote:
+> >=20
+> > On Thu, 2026-08-27 at 11:53 +0100, Peter Maydell wrote:
+> > > But isn't this just the way the SSI specification is? If we're
+> > > modelling a "you just have to get this right in software" bit
+> > > of hardware then we don't need to somehow try to add extra
+> > > checks in QEMU for whether the software hasn't actually done
+> > > things right.
+> >=20
+> > From my reading of things this is a bug in QEMU, not a guest issue.
+> >=20
+> > The fact that aspeed_smc_flash_setup() for example iterates over a
+> > larger value to send a single byte at a time shows that currently
+> > everyone *thinks* think function should send a single byte.
+>=20
+> Doesn't that just show that the aspeed flash controller knows
+> it is always talking to an 8-bit SSI device ? It wouldn't
 
-I'd use
+But I don't think that's guaranteed to be true.
 
-     fpair = (HOST_BIG_ENDIAN
-              ? deposit64(tb->cflags, 32, 32, tb->flags)
-              : deposit64(tb->flags, 32, 32, tb->cflags));
+On real hardware the software could know that it's only ever connected
+to an 8-bit SSI device, and set the driver accordingly. That seems
+entirely possible.
 
-Whenever possible, avoid ifdefs to make sure all paths compile on every 
-host.
+But the hardware seems to support larger sizes reading [1].
 
-> +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, flags));
-> +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, fpair, slow);
-> +
-> +    /*
-> +     * cs_base is a second word of target-specific flags despite the name,
-> +     * and the pc alone does not imply it on a target that uses it.
-> +     */
-> +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, cs_base));
-> +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, tb->cs_base, slow);
-> +
-> +    tcg_gen_ld_ptr(ptr, tbp, offsetof(TranslationBlock, tc.ptr));
-> +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
-> +
-> +    /*
-> +     * Emit a second goto_ptr rather than branching to a shared one: a temp
-> +     * live across the label would be spilled and reloaded on every dispatch.
-> +     */
-> +    gen_set_label(slow);
-> +    ptr = tcg_temp_ebb_new_ptr();
-> +    gen_helper_lookup_tb_ptr(ptr, tcg_env);
-> +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
-> +}
-This is pretty good.  As a follow-up I suspect we'll want a tcg backend 
-expansion of this.  For instance:
+In this case the QEMU code is the hardware, and I don't see how we know
+we are only ever accessing an 8-bit device.
 
-   - x86_64 and s390x can use memory-operand comparisons.
+1:
+https://patchew.org/linux/20220304083643.1079142-1-clg@kaod.org/20220304083=
+643.1079142-5-clg@kaod.org/
 
-   - aarch64
-     - use shift-add insn for env_plus_off + h * 16.
-     - use ldp to load (tb, pc) and (cs_base, flags) in one insn.
-     - use ccmp to halve the number of branches.
+> surprise me if the SPI-NOR standard in particular insisted on
+> 8-bit transfers, though I can't find anything claiming to be
+> that standard.
+>=20
+> > So it does seem broken today. Making the current function clear
+> > seems
+> > like a good step. Supporting different or larger transfers in the
+> > future is then possible.
+>=20
+> I think the current interface already supports different or
+> larger transfers. We just happen to not be using that.
 
-etc.
+Kind of. It does support larger transfers, but there is no size
+argument. So how can the SSI device know how much was sent? Everything
+seems to just assume a single byte, but it has no way to actually know
+that.
 
-r~
+Alistair
+
+>=20
+> -- PMM
 
