@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0AFC61DD3
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 23:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5BBC61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 23:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x05bb-0001oG-Gj; Fri, 28 Aug 2026 19:03:27 -0400
+	id 1x05bi-0002Es-CS; Fri, 28 Aug 2026 19:03:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x05bL-0001Bf-H6
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:03:11 -0400
+ id 1x05bP-0001Kh-79
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:03:15 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x05bJ-0006CK-2L
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:03:10 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1x05bM-0006Cu-CM
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:03:14 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SMTJjK014615
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:03:08 GMT
+ 67SMTD9i501579
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:03:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=DqtIG53AlRe
- zvlq7vSu/yJbQEUyPOvahOZe+3M3x+9A=; b=l11tLpnc3zRz+RepKLqOxv/eu35
- 2eoyvQvwhulpgSDJyKkNXMgxrFZ5XP2BPDV5i5MWFXEb0FhtSmJIgKEwGImbGza4
- aoGCLAscC2IuNgyLMiKdS6bTNdWS+jBWU/xUZ8eeCHmHrDRiPYEC6OXfIJYhE/SQ
- tTQw/OYwU9Mo0Q7nsIpRcnyor+2bsqmLTbeQ/4F9JUGdmfQpiR6xuUKAcRRKEkYv
- TpSAEWv2VSrjcMixojhX6PEQqsba3uHRFpl4+xd1rM1HlvL35gFdD1wa1jLBwTcT
- JdHnT2qpC/PLPShyVzeugTyAq4Ob7VPLIGUhSdpN/qx1lxMlVR3kce/qQQQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gbgvfgfcb-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=ulZ0BDaGxuX
+ B9oX4K5vkbOWFmnyC0ry6YcHUyCAlRWI=; b=hb+d6AiJe6PKyoFnN/LH8s9KgZx
+ oq0VKeT++YfOMvS5OPkyXVBWKW3Qilv5KhgbVatvtm9yBUSkgSs3n9yt8bAY2QeG
+ w0a30vKcGP+D3q+7J6x+Md+e8mctig7RaC5MJvJT4ym0zH+osljc+XIL4SsE+mMV
+ 46fnBJ48t7vhJyt6AC8PTH4rz5xiv1TjYB/7yb64QBrXqjLLr3JcVDE63+BKp4Vh
+ 41kgvM0OeIBXSLUhlhLAEGZIBbxE1A59UW+wMf28d4RzAm6FpB6xAZE/ukBEMqyU
+ zcs1Zcah+VT9Z1Yx0rNaQl3rAfgfnBOzKXx4IGqOwOS3iw8e8FOUyXLytGQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gbgpc0h00-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:03:07 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cbedb8673ceso1782792a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:03:07 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:03:06 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2d55d8cd938so24128185ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787958187; x=1788562987; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787958186; x=1788562986; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=DqtIG53AlRezvlq7vSu/yJbQEUyPOvahOZe+3M3x+9A=;
- b=bl47CurX0udflnna5bco1T4JE+/znBw2nLqvpSR/kfJDS31w8MPalSD6LRhv+LDS7j
- 8Z4JOiEkJDtpEb5G6WcrWvWn8ZFsycmxr7G6rds+gy8j0aT0N9suYAkmzwdqs+sZfz4N
- fH/bQtN4Nyc2W/rja7Kwu/6kfjGgUcv23PRCunOJgLZurZloakLxGD85Oi2ZK5v+vIbL
- iRLSWhrSvnnEn2Lg92/rT84MbXEGoLw7RWRdpz0/z/pC2D1q5t+9PM8wdYOJmuzlgHTd
- zwD4l5JnNdypGYnlMahoyDm2yGR2qwmAx/8H4x32vkMtega6S1E4SJbHmFOL+qkwgLyr
- OqJw==
+ bh=ulZ0BDaGxuXB9oX4K5vkbOWFmnyC0ry6YcHUyCAlRWI=;
+ b=D/0HkB8pLg2JgCpczaKAYS9vMtPXKSaHORwcBU4BkrP6j3gtlPn4yiBnSM6Ucl7Ltu
+ sez13gJExFvGvrzjgj4SwSeifMD8np8vjOOeNmPRLgZxwQSU2FfCTnoxap6Q6msTdJn8
+ h6T4XWyFC8e0OChNHXW+gxV4frQEn9YOc+ocQ4SHd3oafZeBdcUPyKtu0Yvy//Tfr7lO
+ PfX3Y8vX9rEoPkHnfJDGz6jtpH0dxIA5f2R+Zc73nK7DQB2LLI/s7DPV8XzulcgNRxqU
+ Hjsy9EQNlLgrSvMVNDUWYuouEuFqZqAnqYPlcPOSDmRLm+jEszYP5/AwoESe+nyPh4Qz
+ xN9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787958187; x=1788562987;
+ d=1e100.net; s=20251104; t=1787958186; x=1788562986;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=DqtIG53AlRezvlq7vSu/yJbQEUyPOvahOZe+3M3x+9A=;
- b=cfB83+7qYG7Xi3+WvWWoK+38/FdWQPurgLoDIX7nvumVaUlRMUn4NlVhSkQVU0w/W8
- KVCadMHo6KaINIS3I8DQG5rsTHIbLKYak027WC1kaZdNPGQ+IEA2ZRR+ynKfUGITcWiW
- 6v15FKWdLDxg6jVVREcNaz+UTMw1ThSCEL0fekEsCW/INbwEJuc2icotXk1nbsAanTp1
- vfW94SWnFn+fB8QUUWPOAAz7VYvkGbGef2syudcq963zKzJn+usmJjRMx8NDj1Sh107V
- DSEbT0w7H5ss59AjAgQB6TJisidKsiVJRLXU4soO9DW6F7Xvq6Sl/4ZvVvKQXeK/6ab1
- ddGw==
-X-Gm-Message-State: AFuF++nleBSlm+0Pssg0qpCh3ODCefG2wj8z+lw7rtaoPyB96MyZRdXJ
- oDFA1Hxn3Xa/fi4TOCvSlrGkH6NWkOer7fy510vbDHKy8SGqe0Fd3UDhC81j5kTBq2IGO7620Hy
- cd0HdBJ7TDa4w7IgsZoBjoggYsGkCDXnCqdqJ4cQo7tPrT98Lmzi8CUMqVgPet6/cbg==
-X-Gm-Gg: AR+sD13p97Mr2C7f6cz9dOgLcAVw+199C7UFQc6aXqEEl+SBO7fuMJnomKZFqzBHrs9
- 30i1I7evfXNAOuyDqVSrBr+YlqHe+qvlQ/jwyWxQ8y71OJ5jjQU1xe0u1Tx0nf45rnztO/u8KX/
- Mq+nF3N1cCDxWDTiaockgd17eqZz8nDWy5fcFTTLMF1qopKO87xe+inAlI55L7obCMJVniHsGI6
- CP71ajn3p3zRhDp30vBEjbAyS9g+hBtGS2tUN0U8jwPe8lADszG3bPlgUmKwa4lxYF4v9a/suNr
- aqZ3fnSbPl6eLzbIKiWZuKsQJkSRNeFizQd7I+s6vcHGjqwVhI/6cwL7sO0db/sSHdWtd7XOQO/
- 8N4TLpTLzbN5rZfHiwUV+UvBnVVrRWy27Zi/k13yG4XIiQ+nAo/zk+k1zPPg=
-X-Received: by 2002:a05:6a20:6a27:b0:3d3:ae1f:d7f5 with SMTP id
- adf61e73a8af0-3d3ae2013d9mr3626016637.21.1787958187009; 
- Fri, 28 Aug 2026 16:03:07 -0700 (PDT)
-X-Received: by 2002:a05:6a20:6a27:b0:3d3:ae1f:d7f5 with SMTP id
- adf61e73a8af0-3d3ae2013d9mr3625962637.21.1787958186565; 
- Fri, 28 Aug 2026 16:03:06 -0700 (PDT)
+ bh=ulZ0BDaGxuXB9oX4K5vkbOWFmnyC0ry6YcHUyCAlRWI=;
+ b=Y3GCp4fi3raQUZmlr7phTQBF1UQfcD0J5YFtQaVMJlf22ZeNYGOptTh1+1Z93DUkMM
+ ynDFEstJVZGB5ceXlw8aTOYxhJwQ7f7sktBEYZl6NUp4A+YLfJ6Es/TWT7BAZJu+6zvK
+ sDXJvoFMzeyk4oM5KLrfsTanlPYlqgYY4fbd1SnKe3WwLmNMFHANCCf/8NRCYAIjjpfT
+ fINuPEggD9sbvytl/2lDeismyueX5S0lcOteJobm+8GjRjW+VCNcc2RZIIJ4N+28saGL
+ kRbzojDX3BdqY5EsyK0lpX9jutsDiY8oPBsu5utzEvgvPSQ0LoSaiwmAcNlAFH57Mih1
+ 3onQ==
+X-Gm-Message-State: AFuF++nqeN91AROaxw9AxW7728EivZQDRF6gz6viPjsvo9YNnZ3aQdQp
+ aRtgFZjuxLyW5dV/b3eLPdayULsWMBy9+0ouL+pGYuM9iNFPSISuBum5RNmMHINB3ADq0V+vpZg
+ GgPl6KnEkBsyvD2a3C3RxIlyQqT+xjdWpxPBDrEH96vEn8r/aS79Ks6Q3umcpOM1i5Q==
+X-Gm-Gg: AYBFou3LH54GIz9wkekNGmc9nBiBtIpxl1eTcD0Gg6sEEMcXfIxM5m9a43jFE/t6ZyV
+ FOr3HKkLmJxD9ZQd1me4CA12jIrqmGhi1brWlInp9KKIxaluNNza76C1P1+zNOkFupCG1LDHoVq
+ SiKsniw+wYkgZhoMYL8S0sNUjAlr9Cxpzo/v4y3IwjmTg/ROZiy+1v2AIb+NL4cSRqS8vlFzwXG
+ OmQ51ZNjIBSTxBS7gMbRkZ7XLNfnyLErAKQBB28c0+fWRvvMVKWcpdo2SrX8PD+fcV2/i80Jx09
+ NfCdI6p0Buq3ddaWtu8xqStnaz4oqLXAdi6L1n/W5TIICJiu32VmHe/fHHvgyFpAHXmYtAajZYl
+ AGpD37VabEDnx6UQ4P9lU3g4dA7z5GqkjH5Z6yVlXHWATIsiUADRZbVv976w=
+X-Received: by 2002:a17:903:124e:b0:2d8:d4ce:7e3b with SMTP id
+ d9443c01a7336-2d8d4ce8378mr38887155ad.16.1787958185803; 
+ Fri, 28 Aug 2026 16:03:05 -0700 (PDT)
+X-Received: by 2002:a17:903:124e:b0:2d8:d4ce:7e3b with SMTP id
+ d9443c01a7336-2d8d4ce8378mr38886525ad.16.1787958185352; 
+ Fri, 28 Aug 2026 16:03:05 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3286f99585csm8448569eec.21.2026.08.28.16.03.05
+ 5a478bee46e88-3286f99585csm8448569eec.21.2026.08.28.16.03.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 16:03:06 -0700 (PDT)
+ Fri, 28 Aug 2026 16:03:04 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
@@ -93,38 +93,38 @@ Cc: anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 46/47] hw/pci-bridge: filter from CONFIG_CXL
-Date: Fri, 28 Aug 2026 22:59:00 +0000
-Message-ID: <20260828225901.367438-47-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 45/47] target-info: add target_config_cxl
+Date: Fri, 28 Aug 2026 22:58:59 +0000
+Message-ID: <20260828225901.367438-46-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfXzD5PKKDVRUhk
- RVgsf5ScUvxfCD6GZBzDt57OHHhzrNA5xokxwMyOeUxWoFwf716+clyz/ii70xJQTB0XmxrlajG
- D5JMxuW9ugtZJjBdPjbLlvQmwpRvJK/H+SK2dga6tW3JpKBNDJ1hLX/tnR1A/In64RIQKRzStIE
- TpV7JEc3HZz0mPAHoTlZ3sFpkWoDCtw4Qph7ricvijaaVC02k0Er8ipvad/3T5fEAIN+3VL/va0
- u9bx3tLlbGQV9P8FzA9DG7KVVwqAvYw4JW55rhnA7X5Aq4/KByuVUHPTwX4UpOMrZRr10tDb5Tj
- qEx/WEiXttzXcC1xOgEGS1AjdiKzmx59oIPtHQ5MiHVEoe9suztSsu7D1X8+Ji65nHu3xJg3o6O
- qav4NCl5vs58R36qD6+3QbdKGuie/F1uN21E+kFGd1uGa3c9XxTVAlDV0qqbDzTmzSHgD3FCdmc
- C65tpqCLnddJ8fe1G9w==
-X-Proofpoint-ORIG-GUID: iyCGFIIwf68sOMLsXVBDq8Nq4_UkwSIY
-X-Authority-Analysis: v=2.4 cv=UcthjqSN c=1 sm=1 tr=0 ts=6a9213ab cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: wwaKyYqsGlD8QynFWdxnQEoQ1R23fDHp
+X-Proofpoint-GUID: wwaKyYqsGlD8QynFWdxnQEoQ1R23fDHp
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX9ymO7PaWsBiW
+ i05SaOoA0IJn18M43NX6ZY9IY1sCp8BRRc+keuCTlLknMvjzVIK77zmhm0XCOFQw1J1YvinqOLi
+ mrxwYbYftTTW4xgR++0VtzDTOQ8aDKY=
+X-Authority-Analysis: v=2.4 cv=dtfrzVg4 c=1 sm=1 tr=0 ts=6a9213aa cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
- a=vbsKY5us0WoHdvgjJyMA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX72TosqYUNdHe
- 3eW4ps2Bv/p7ntUO59QcbbQHIH05ZtS0oNXIa8K+P+I6JaBA5hgU3uYZELsCRrjXgmitherU794
- kaDyIaR9cZndiFHVKIb/rvqwRVV5pHk=
-X-Proofpoint-GUID: iyCGFIIwf68sOMLsXVBDq8Nq4_UkwSIY
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
+ a=Ar1EeLoZb0Qve_BY5QEA:9 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX29LkgqyeVmdg
+ jIIyKxUdkZ6NkrRd5iaCjbN5xM7jdsrJE34WENjMqiy+anG2qiJkGmnh5VcIP/D4liTyQmclhPh
+ 8xKXNl5MdJRc3kxsD22+2MIewcmIq5jp3rS69iBgHDhFzHoy9caZoXME3XlYZchA+Znr0qcnzAD
+ ty/iiN6QGYbEf1lPwNKxb6xJcwFnk0YedV23mtJgsmVgoSXkIZj0pJ7GXYmB+/tv/P7hfk8stoy
+ jbDGx6Pv8krpkfmTn5KfqRtELaal0dtVK1fQm6BbhSeZugiKGO1hmBLp8YAYb4Gljuq/j370QkD
+ yl/xVuivSqOqFa5hlNxPyvClMsRll9k7njm4RHAK3Wo2kW5S+KOerefjh5GOE1Bh/wQVywtoLAw
+ NhuOXsqMHRCq63qPhby8HF2mMg/IyDMKvGIdL7b30VLk+gwRHVU2/SZN+D0dXsmwwfM5pf+t0ho
+ r4GyLOdSCMKHj0/whGA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_07,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 spamscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280200
 Received-SPF: pass client-ip=205.220.180.131;
@@ -154,47 +154,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- hw/pci-bridge/cxl_downstream.c | 1 +
- hw/pci-bridge/cxl_root_port.c  | 1 +
- hw/pci-bridge/cxl_upstream.c   | 1 +
- 3 files changed, 3 insertions(+)
+ include/qemu/target-info-impl.h | 2 ++
+ include/qemu/target-info.h      | 7 +++++++
+ target-info-def.c               | 3 +++
+ target-info.c                   | 5 +++++
+ 4 files changed, 17 insertions(+)
 
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index ec450d1aa09..a8aad11d4e5 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -252,6 +252,7 @@ static const TypeInfo cxl_dsp_info = {
-     .instance_size = sizeof(CXLDownstreamPort),
-     .parent = TYPE_PCIE_SLOT,
-     .class_init = cxl_dsp_class_init,
-+    .is_available = target_config_cxl,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-         { INTERFACE_CXL_DEVICE },
-diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-index e2093ac39ee..dfa2af7d86b 100644
---- a/hw/pci-bridge/cxl_root_port.c
-+++ b/hw/pci-bridge/cxl_root_port.c
-@@ -297,6 +297,7 @@ static const TypeInfo cxl_root_port_info = {
-     .parent = TYPE_PCIE_ROOT_PORT,
-     .instance_size = sizeof(CXLRootPort),
-     .class_init = cxl_root_port_class_init,
-+    .is_available = target_config_cxl,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CXL_DEVICE },
-         { }
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index 69773ff1638..d0398588e1b 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -400,6 +400,7 @@ static const TypeInfo cxl_usp_info = {
-     .parent = TYPE_PCIE_PORT,
-     .instance_size = sizeof(CXLUpstreamPort),
-     .class_init = cxl_upstream_class_init,
-+    .is_available = target_config_cxl,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_PCIE_DEVICE },
-         { INTERFACE_CXL_DEVICE },
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index 045799a771a..cf3c967e845 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -31,6 +31,8 @@ typedef struct TargetInfo {
+     /* runtime equivalent of TARGET_PAGE_BITS_VARY definition */
+     bool page_bits_vary;
+ 
++    /* CONFIG_CXL */
++    bool config_cxl;
+     /* CONFIG_DPCD */
+     bool config_dpcd;
+     /* CONFIG_MULTIPROCESS */
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index e6524a8001e..38a419490b0 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -42,6 +42,13 @@ const char *target_cpu_type(void);
+  */
+ bool target_big_endian(void);
+ 
++/**
++ * target_config_cxl:
++ *
++ * Returns true if target defines CONFIG_CXL.
++ */
++bool target_config_cxl(void);
++
+ /**
+  * target_config_dpcd:
+  *
+diff --git a/target-info-def.c b/target-info-def.c
+index 543278eb949..96ed0c7b998 100644
+--- a/target-info-def.c
++++ b/target-info-def.c
+@@ -43,6 +43,9 @@ static const TargetInfo target_info_stub = {
+     .page_bits_vary = false,
+     .page_bits_init = TARGET_PAGE_BITS,
+ #endif
++#ifdef CONFIG_CXL
++    .config_cxl = true,
++#endif
+ #ifdef CONFIG_DPCD
+     .config_dpcd = true,
+ #endif
+diff --git a/target-info.c b/target-info.c
+index 1124aa5f780..ba25112dd38 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -42,6 +42,11 @@ bool target_big_endian(void)
+     return target_endian_mode() == ENDIAN_MODE_BIG;
+ }
+ 
++bool target_config_cxl(void)
++{
++    return target_info()->config_cxl;
++}
++
+ bool target_config_dpcd(void)
+ {
+     return target_info()->config_dpcd;
 -- 
 2.43.0
 
