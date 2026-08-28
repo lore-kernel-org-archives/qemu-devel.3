@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42B6C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16DBC61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x052G-0002pN-My; Fri, 28 Aug 2026 18:26:56 -0400
+	id 1x052K-0002sc-5e; Fri, 28 Aug 2026 18:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x052F-0002oF-BX
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:55 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1x052I-0002pv-08
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:58 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x0528-0002JY-LO
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:50 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2cfbbdfa60bso16885415ad.3
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
+ id 1x052F-0002K3-2g
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:57 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2d71e253c90so14395585ad.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787956007; x=1788560807; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787956008; x=1788560808; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=2MZbjMDE841td0JwucZyy0AxkAYMDGPNezkz1NHmtAY=;
- b=unaHY14J30ejDmKJINX6w5PZlnDCbo/04uFtFZqPjJzINfMiyyWKGUvP6yktuEiZ9W
- ox+j1nSz3/vQwDWcjLyN5zFQO5GXkH9yWz4iYkD48jtRvEnrlf5+RwlJYBrDemHJJyrs
- rtktJNVgmFjVjx1sJ2A8zBX7qI1x+meOnZ26ukQRQMJzDzIbwzYX7ORLkOePUlhRlgxR
- 5Pq1iGqRNI1rTCto5xh7x41tIOj40pT1l0lhAqDs/KxX/CiFGJf3XTi4vBq47g8RRnV6
- UqpKfVeUrLvj9HXd+dtubNYilaDxwNlV7LhFK9jLdDe3EjyEwg+VQoY/LglsPX/PaBe1
- q/uw==
+ bh=B4qeYxozmzv5nUB9BT/DGHD7IZGaEHc1xEeHPC5DMdU=;
+ b=hKvt7We/GA0BKaZdtANUDE3Qi4AsesQDoz8LXX8EkbmuOWYar7A3RwnfINgxKzLjqh
+ ihwfo4WDlb9x0TQ2BTvNUCOQijwKgfatKS519ixr4KsseGuVZ7v72E3kpHmIsWE1jCWN
+ KPGVgNrbl0SEFhz2S67uNF51uOa4AK7cBGqgkzBrv5gVTedR/rY2e7aYO8rjho8eMLe0
+ k/y+gtcH6NsXQC6HW5JBYGHW0QqhOu/DPGe8dc174A8vr5vbnxfUJHZB7sq317nd6Ixt
+ rS8WZUy6KGiIafuom3hBl8ET4eNiZOrDmlCjaZcFoAcq220l9yD2twTMUPEvjLIYy9v/
+ RgHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787956007; x=1788560807;
+ d=1e100.net; s=20251104; t=1787956008; x=1788560808;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2MZbjMDE841td0JwucZyy0AxkAYMDGPNezkz1NHmtAY=;
- b=VJ3Cw6uZ7rFA+oYMIA2B0shPu0bc3CJ3b2Dfz27cl4wKCKY01nidz5CceX/2x47ORy
- WcXUVTNS3IzasO0hG8cx5wLZPQK4Vz3njNIhBuJKQTDQ8vZ5eK+93UD/F4/iYO3k3lgB
- Q/P0ocrFkdUQlsZaJhjg7SMjtDR24K7VDb+WmWPLpK73oT6hXUEAOrmEaMRB5d4eaUSd
- neQJGXv6vmshsdN+nfZNh0fq5b6cwj/+NQZ+MIPucZeJb1Vsi2kTgktjaeRNcQ/xLFGK
- u9TTsLlhIALrdzKyJsU0AZ/acx8vOgw7Trrc+WRTFq42cz/SnCfR050/YX+xbaDJIKlv
- SSuQ==
-X-Gm-Message-State: AFuF++ml7uXXshIIBKB23oMhiLFERvMJEB/79EH0QV/4+rX36sVzyWYZ
- nnKnvZVSQa8O4PFJECp3FlbvSZGf4uwqg6bqmyfAmmSZMOK/jyl2seKLvZUrmFgJ82cgIZtQgQN
- oED1O2Kk=
-X-Gm-Gg: AYBFou2CVcQ6jKSnHkfn7LPyIF/1r0NQdmDKMB8EbO8Nfo49S9tXORXONfXd98YsU6Q
- 3EM/apqhzrNHvy31hhS9obDT5cgRGJL7EoCVF96aBnq+4Sps0AwyyO2m5u8H8tfVrAXl1zDcmSX
- aIYzEIF1PaE8Y0UvJlHvrjHuiK4WFjyFH0cyBhs2SVXFWorCaiSM5TdtQ0ltnBZEQGQ5dSqL0aF
- 15N79Vw8VadNs07C2/wxjgf++wQLW6RMzYwx9aWiLM/pAODSjKRXnzTq/90eHjAk7V2LGOGyx4t
- flIVyVPeUF0b1SPSCB5eUBJYOMDudREXb7HpS+BczQa98Mr47q9go4M/NOMw+bw4UD7M39CmwSD
- kR0qDx7Z+7JyNnOLbeLe5Jbpm06L1xnkbMSxMRcaCS9Lbtyfy5F54FGvf1R5mfIYOOnzhOJC8x7
- Y7iM+KSYKJYL5ypLSdXfjOPPoroVxUhBC8l3O8gcEXD+aMjgR8aIjmH/cb/h2K3YT9yku6Z1JXH
- 2vHVZ5bpsSTdaiOWRZn
-X-Received: by 2002:a17:903:144f:b0:2d8:d4cd:dc8e with SMTP id
- d9443c01a7336-2d8d4cddf75mr43132365ad.17.1787956007247; 
- Fri, 28 Aug 2026 15:26:47 -0700 (PDT)
+ bh=B4qeYxozmzv5nUB9BT/DGHD7IZGaEHc1xEeHPC5DMdU=;
+ b=GRkQrQPhA4KM9B9js83B3pDr9pRo0361DpjqGN121o9hh3pvGUVf9eF4zhxJLI/vjA
+ Fa2eUPuePKxHPlwQjXJqsA5LwjJrXqMSUa7g8RQxKOw+0DPyn4vGP58pNcP34bCl3VK3
+ n3Fc6e6RjLuku5rIC15rLST1iyhV+IP0URQ1mlTYT1+4eA8NvqZGihzZZb8TnRr7PIeM
+ SQ56D0DFtcFHDLbUAERS0Q9LZ2PaeFHWKiUUt2p/G9wOFXO+ABLmKQLYyyJvJsfND4qc
+ renWuwjlNQRdZt8VX6k0lE0mdN2OqoS9z7Y9O6a7t2ZMSRO3iZrDFw8Tli6sTc83XrDR
+ 57dQ==
+X-Gm-Message-State: AFuF++nbDcYKzEVMxIlJIm7KQKBTnBS/l31zP0yth1bTP3iGl8Fl6OPS
+ NqcwdDljopU/RZbOwqaQQPO7OocD2+fDkYWZpIZgOkcMS3XLPBedYV+PjDRtagTHcsMnIMgkTd7
+ gzWc75hI=
+X-Gm-Gg: AYBFou2TJ15AplVI2Vi+axgL1RnbW9BcqJBUyq0SgtpIV2UGmBpNJEWIl73kEyOuYfe
+ FiXVGYXBXmUgtWMpVmCGuQsGKsovyFj/KK50/0f6GN6T3Zhbg+236tfKVqfvhlfFoAeSl3aM8Yj
+ powp2fRHmsT/v1T/higc53zXkC69EsmDATBTT+U6LoCXUnuUnd1qJRywxQENx4Pxo6FyZ5CQoya
+ b8pRsogsadNT+fseJPhB8OGOjHBfbZ2C2zsdZ9QyZnmi5sg83mIce5SYcXvvLDNccwtwK+gAnDp
+ r30DmPB7/4J0rBxkHU/CEZSwuW914BGVRuX4i36c15uOUWZzOCKvwT7E/vTlBvOUGl895NGwzB1
+ +h0t4GfAghxxskHIt/o8cwvEbMKq7A/D4uJE+ERW9lXEq91UGPmLiQGHJqrqDInQvtngb8tx2PE
+ wcrK61cwT3+m5FrBI5GykGiLFFXGiCTGjKctBSG/0IQ4De9BDVDjbxT+3UxY2TDL/6UpLzEoMrJ
+ m3IGehQUsMxR53i03Yg
+X-Received: by 2002:a17:902:ce88:b0:2c9:c952:6e9 with SMTP id
+ d9443c01a7336-2d74dca2281mr180565415ad.2.1787956008060; 
+ Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
 Received: from stoup (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.46
+ d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:26:46 -0700 (PDT)
+ Fri, 28 Aug 2026 15:26:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 08/13] target/arm: Clear PSTATE.UINJ when taking exceptions
-Date: Fri, 28 Aug 2026 15:26:34 -0700
-Message-ID: <20260828222639.1432046-9-richard.henderson@linaro.org>
+Subject: [PATCH 09/13] target/arm: Widen cpsr_{read,
+ write}_for_spsr_elx to uint64_t
+Date: Fri, 28 Aug 2026 15:26:35 -0700
+Message-ID: <20260828222639.1432046-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828222639.1432046-1-richard.henderson@linaro.org>
 References: <20260828222639.1432046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,68 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clear UINJ when taking an exception.
-Clear UINJ when exception return is invalid.
-
-In both cases, perform the clear without feature check,
-since the bit is otherwise RES0.
+We will shortly need to handle bit 36: PSTATE.UINJ.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h            | 1 +
- target/arm/helper.c         | 9 +++++++++
- target/arm/tcg/helper-a64.c | 2 ++
- 3 files changed, 12 insertions(+)
+ target/arm/internals.h | 4 ++--
+ target/arm/helper.c    | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9e258fa005e..b7ee215257f 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1579,6 +1579,7 @@ void pmu_init(ARMCPU *cpu);
- #define PSTATE_Z (1 << 30)
- #define PSTATE_N (1ULL << 31)
- #define PSTATE_EXLOCK (1ULL << 34)
-+#define PSTATE_UINJ (1ULL << 36)
- #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
- #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
- #define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index be32a8c531f..69c9256984a 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -2015,8 +2015,8 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env);
+  */
+ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask);
+ bool arm_pan_enabled(CPUARMState *env);
+-uint32_t cpsr_read_for_spsr_elx(CPUARMState *env);
+-void cpsr_write_from_spsr_elx(CPUARMState *env, uint32_t val);
++uint64_t cpsr_read_for_spsr_elx(CPUARMState *env);
++void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val);
+ 
+ /* Compare uint64_t for qsort and bsearch. */
+ int compare_u64(const void *a, const void *b);
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 4f30a94ecd3..ed6b4d985e1 100644
+index ed6b4d985e1..e6b16eade76 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -9583,6 +9583,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
- 
-         env->condexec_bits = 0;
+@@ -9353,9 +9353,9 @@ static int aarch64_regnum(CPUARMState *env, int aarch32_reg)
      }
-+
-+    /*
-+     * R_XKSNJ: If FEAT_UINJ, PSTATE.UINJ is set to 0 *and* the resulting
-+     * value stored in SPSR_ELx is 0.  The new PSTATE is automatically
-+     * handled by construction of a new value from 0; clear it from the
-+     * old state and as UINJ is RES0 otherwise, skip the feature check.
-+     */
-+    old_mode &= ~PSTATE_UINJ;
-+
-     env->banked_spsr[aarch64_banked_spsr_index(new_el)] = old_mode;
+ }
  
-     qemu_log_mask(CPU_LOG_INT, "...with SPSR 0x%" PRIx64 "\n", old_mode);
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 9d805231a08..f76d89990c3 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -764,10 +764,12 @@ illegal_return:
-      * mandated behaviour:
-      * restore NZCV and DAIF from SPSR_ELx
-      * set PSTATE.IL
-+     * reset PSTATE.UINJ
-      * restore PC from ELR_ELx
-      * no change to exception level, execution state or stack pointer
-      */
-     env->pstate |= PSTATE_IL;
-+    env->pstate &= ~PSTATE_UINJ;
-     env->pc = new_pc;
-     spsr &= PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT;
-     spsr |= pstate_read(env) & ~(PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT);
+-uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
++uint64_t cpsr_read_for_spsr_elx(CPUARMState *env)
+ {
+-    uint32_t ret = cpsr_read(env);
++    uint64_t ret = cpsr_read(env);
+ 
+     /* Move DIT to the correct location for SPSR_ELx */
+     if (ret & CPSR_DIT) {
+@@ -9368,7 +9368,7 @@ uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
+     return ret;
+ }
+ 
+-void cpsr_write_from_spsr_elx(CPUARMState *env, uint32_t val)
++void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val)
+ {
+     uint32_t mask;
+ 
 -- 
 2.53.0
 
