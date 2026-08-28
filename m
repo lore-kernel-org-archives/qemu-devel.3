@@ -4,99 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C48C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A5AC61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzyz2-0001Lx-P0; Fri, 28 Aug 2026 11:59:12 -0400
+	id 1wzyzQ-0001U2-Vd; Fri, 28 Aug 2026 11:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyz0-0001Kj-OD
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:10 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzJ-0001Os-Tf
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:29 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyyx-0008Dq-Fw
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:10 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyz7-0008MM-NQ
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:29 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F18AB21B5E;
- Fri, 28 Aug 2026 15:58:57 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8B1701F842;
+ Fri, 28 Aug 2026 15:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932742; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932751; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
- b=T4088HU+4G0miahE3GuLt3IL8ctNeH0DcblbdzhFKHJzGTSArQGo8yqYiQpoLaXLqGtRVX
- uaIfevz89K/Tj+jWc0B5roRPiWsu01b4SDuDwNRbK/7aODhHVsg8Ag54dgPx+hSh+AoWXw
- v4NskzBKN1NBM2a/iGAWZyZaVkPC4Ag=
+ bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
+ b=hwSpZWw229E1jYHrk9NqboRM6vhtLyMyf/flczWMf19Dws1kXoBOkFNCqjekVlkzjJFA0p
+ 2sU/klQ8CSI1iNwh8ASh/fUJ3nCkJxz9B1ANAoUsuSFqe4fTBhdeZmw1S3vbUtUQCL6cYO
+ apseQSUySLQd1FfZpp2i0Y086/KVEuk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932742;
+ s=susede2_ed25519; t=1787932751;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
- b=RV8bolo4RyToC4v69MbHzZE/01l794BQV/e+0Hy+bQcn5TmBkyg/BknCvYvAkO6xNICK7F
- yFtZAVAZWnLHXjAA==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
+ b=n99UOZ0PVbMUv9zW13N/klXnFausrb5DkvOju7FCpoqpBLc07ISQIiQWgP2KoRHoswTc7C
+ UkJuUnh8rgMIxbCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=c57zhPN4;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=x0GsthUZ
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932737; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
- b=tRDVqWSl26rOl/YWrH57X2HShMZW+mibcwyRisdco1a4zuUmoBb7Xao72Ea8I4CE6Hktid
- 7LhtnqHScFWBBYMtoElEtTXPwRFXHpm7DGih52kktsjQmpf0/+e9OAIHnYu+qgWmVTwM35
- /pjFekbFGqQvN+nJszg/zmfWAuy4PF0=
+ bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
+ b=c57zhPN43p/DZYUVinKISshlItmcXosD8W7Ygz8oq0TSAFca93oe7rG6/UGzvBEdQz/pKL
+ c5e73EbhiERhnDKFZsEkV/qKIs71NjUj24kfOoXqPKul6Jx0tUkLR5GmIcuWztUbOqJvcx
+ yJhPbBF3PqJjC9ifI/zYgSgImoVZdlk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932737;
+ s=susede2_ed25519; t=1787932747;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
- b=zZIBMB42I9MrUJCAgz9h6tEd+9eGfYxDwJVF0Zkf3YdRZK5od9R+vn7RudCqlc4Yr92cP+
- mxjtO5h0HxjlhHBg==
+ bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
+ b=x0GsthUZWLN1gD+xdbltRxhBe8BQ+meng+FSotNu4Z2dfHhRGt0h3LXRJF/l94uKyBq3/u
+ 2BZTOXZDHZRFpjDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 96E2C13688;
- Fri, 28 Aug 2026 15:58:55 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 830D313688;
+ Fri, 28 Aug 2026 15:59:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qErQGT+wkWpoBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:58:55 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2EEDFUqwkWpoBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:59:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL v2 05/30] migration: Make qemu_get_buffer_at() thread-safe
-Date: Fri, 28 Aug 2026 12:58:20 -0300
-Message-ID: <20260828155845.2874508-6-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Subject: [PULL v2 13/30] migration/rdma: Remove unregister code
+Date: Fri, 28 Aug 2026 12:58:28 -0300
+Message-ID: <20260828155845.2874508-14-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828155845.2874508-1-farosas@suse.de>
 References: <20260828155845.2874508-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+X-Rspamd-Queue-Id: 8B1701F842
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid,ionos.com:email];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; FREEMAIL_ENVRCPT(0.00)[gmail.com]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,101 +125,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
+From: Peter Xu <peterx@redhat.com>
 
-Remove the internal QEMUFile error state modification from
-qemu_get_buffer_at(). This function is called by two functions, both of
-which already check for unexpected return values and handle their own
-error reporting.
+The unregister code was there since the first commit RDMA migration was
+merged, but it was never functioning.  Remove the dead code.
 
-Removing this shared state modification makes qemu_get_buffer_at()
-strictly thread-safe for concurrent disk reads, serving as a
-preparatory change for the upcoming fast snapshot load feature.
+Since the two control messages are the last ones, we don't even need to
+worry about compatibility of legacy RDMA control commands, we can directly
+remove the messages too.
 
-Removed local error by passing errp to improve on error handling,
-consequently also change caller to use error_prevent and not error_setg.
+As a side effect, this patch closes a report by removing the code
+completely.
 
-Set errp in case of f->last_error as function should set errp in case it
-fails, and caller can simply use error_prepend without checking errp in
-case of error.
-
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Reported-by: Tristan (@TristanInSec)
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4003
+Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/qemu-file.c | 11 +++++------
- migration/qemu-file.h |  4 ++--
- migration/ram.c       |  6 +++---
- 3 files changed, 10 insertions(+), 11 deletions(-)
+ migration/rdma.c       | 133 -----------------------------------------
+ migration/trace-events |   9 ---
+ 2 files changed, 142 deletions(-)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index f30e13c66d7..7735e618549 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -550,17 +550,16 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 62a509b2362..eae4afd6df0 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -142,8 +142,6 @@ enum {
+     RDMA_CONTROL_REGISTER_REQUEST,    /* dynamic page registration */
+     RDMA_CONTROL_REGISTER_RESULT,     /* key to use after registration */
+     RDMA_CONTROL_REGISTER_FINISHED,   /* current iteration finished */
+-    RDMA_CONTROL_UNREGISTER_REQUEST,  /* dynamic UN-registration */
+-    RDMA_CONTROL_UNREGISTER_FINISHED, /* unpinning finished */
+     RDMA_CONTROL_NUM,
+ };
+ 
+@@ -232,8 +230,6 @@ static const char *control_desc(unsigned int rdma_control)
+         [RDMA_CONTROL_REGISTER_REQUEST] = "REGISTER REQUEST",
+         [RDMA_CONTROL_REGISTER_RESULT] = "REGISTER RESULT",
+         [RDMA_CONTROL_REGISTER_FINISHED] = "REGISTER FINISHED",
+-        [RDMA_CONTROL_UNREGISTER_REQUEST] = "UNREGISTER REQUEST",
+-        [RDMA_CONTROL_UNREGISTER_FINISHED] = "UNREGISTER FINISHED",
+     };
+ 
+     if (rdma_control >= RDMA_CONTROL_NUM) {
+@@ -370,9 +366,6 @@ typedef struct RDMAContext {
+     int total_registrations;
+     int total_writes;
+ 
+-    int unregister_current, unregister_next;
+-    uint64_t unregistrations[RDMA_SIGNALED_SEND_MAX];
+-
+     GHashTable *blockmap;
+ 
+     /* the RDMAContext for return path */
+@@ -1186,91 +1179,6 @@ static int qemu_rdma_reg_control(RDMAContext *rdma, int idx)
+     return -1;
  }
  
- 
--size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
--                          off_t pos)
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
-+                          Error **errp)
- {
+-/*
+- * Perform a non-optimized memory unregistration after every transfer
+- * for demonstration purposes, only if pin-all is not requested.
+- *
+- * Potential optimizations:
+- * 1. Start a new thread to run this function continuously
+-        - for bit clearing
+-        - and for receipt of unregister messages
+- * 2. Use an LRU.
+- * 3. Use workload hints.
+- */
+-static int qemu_rdma_unregister_waiting(RDMAContext *rdma)
+-{
 -    Error *err = NULL;
 -
-     if (f->last_error) {
-+        error_setg(errp, "Cannot read from file: stream is in error state %d",
-+                   f->last_error);
-         return 0;
+-    while (rdma->unregistrations[rdma->unregister_current]) {
+-        int ret;
+-        uint64_t wr_id = rdma->unregistrations[rdma->unregister_current];
+-        uint64_t chunk =
+-            (wr_id & RDMA_WRID_CHUNK_MASK) >> RDMA_WRID_CHUNK_SHIFT;
+-        uint64_t index =
+-            (wr_id & RDMA_WRID_BLOCK_MASK) >> RDMA_WRID_BLOCK_SHIFT;
+-        RDMALocalBlock *block =
+-            &(rdma->local_ram_blocks.block[index]);
+-        RDMARegister reg = { .current_index = index };
+-        RDMAControlHeader resp = { .type = RDMA_CONTROL_UNREGISTER_FINISHED,
+-                                 };
+-        RDMAControlHeader head = { .len = sizeof(RDMARegister),
+-                                   .type = RDMA_CONTROL_UNREGISTER_REQUEST,
+-                                   .repeat = 1,
+-                                 };
+-
+-        trace_qemu_rdma_unregister_waiting_proc(chunk,
+-                                                rdma->unregister_current);
+-
+-        rdma->unregistrations[rdma->unregister_current] = 0;
+-        rdma->unregister_current++;
+-
+-        if (rdma->unregister_current == RDMA_SIGNALED_SEND_MAX) {
+-            rdma->unregister_current = 0;
+-        }
+-
+-
+-        /*
+-         * Unregistration is speculative (because migration is single-threaded
+-         * and we cannot break the protocol's inifinband message ordering).
+-         * Thus, if the memory is currently being used for transmission,
+-         * then abort the attempt to unregister and try again
+-         * later the next time a completion is received for this memory.
+-         */
+-        clear_bit(chunk, block->unregister_bitmap);
+-
+-        if (test_bit(chunk, block->transit_bitmap)) {
+-            trace_qemu_rdma_unregister_waiting_inflight(chunk);
+-            continue;
+-        }
+-
+-        trace_qemu_rdma_unregister_waiting_send(chunk);
+-
+-        ret = ibv_dereg_mr(block->pmr[chunk]);
+-        block->pmr[chunk] = NULL;
+-        block->remote_keys[chunk] = 0;
+-
+-        if (ret != 0) {
+-            error_report("unregistration chunk failed: %s",
+-                         strerror(ret));
+-            return -1;
+-        }
+-        rdma->total_registrations--;
+-
+-        reg.key.chunk = chunk;
+-        register_to_network(rdma, &reg);
+-        ret = qemu_rdma_exchange_send(rdma, &head, (uint8_t *) &reg,
+-                                      &resp, NULL, NULL, &err);
+-        if (ret < 0) {
+-            error_report_err(err);
+-            return -1;
+-        }
+-
+-        trace_qemu_rdma_unregister_waiting_complete(chunk);
+-    }
+-
+-    return 0;
+-}
+-
+ static uint64_t qemu_rdma_make_wrid(uint64_t wr_id, uint64_t index,
+                                          uint64_t chunk)
+ {
+@@ -2757,8 +2665,6 @@ static int qemu_rdma_drain_cq(RDMAContext *rdma)
+         }
      }
  
--    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
--        qemu_file_set_error_obj(f, -EIO, err);
-+    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, errp) < 0) {
-         return 0;
-     }
+-    qemu_rdma_unregister_waiting(rdma);
+-
+     return 0;
+ }
  
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 8f824c124d8..966766788dd 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -76,8 +76,8 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
- off_t qemu_get_offset(QEMUFile *f);
- void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-                         off_t pos);
--size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
--                          off_t pos);
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
-+                          Error **errp);
+@@ -3336,10 +3242,6 @@ int rdma_registration_handle(QEMUFile *f)
+                                .type = RDMA_CONTROL_REGISTER_RESULT,
+                                .repeat = 0,
+                              };
+-    RDMAControlHeader unreg_resp = { .len = 0,
+-                               .type = RDMA_CONTROL_UNREGISTER_FINISHED,
+-                               .repeat = 0,
+-                             };
+     RDMAControlHeader blocks = { .type = RDMA_CONTROL_RAM_BLOCKS_RESULT,
+                                  .repeat = 1 };
+     QIOChannelRDMA *rioc;
+@@ -3552,41 +3454,6 @@ int rdma_registration_handle(QEMUFile *f)
+             ret = qemu_rdma_post_send_control(rdma,
+                             (uint8_t *) results, &reg_resp, &err);
  
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
- int qemu_file_put_fd(QEMUFile *f, int fd);
-diff --git a/migration/ram.c b/migration/ram.c
-index 7fa4774246a..60ad4352150 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4133,7 +4133,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-                                               block->pages_offset + offset);
-             } else {
-                 read = qemu_get_buffer_at(f, host, size,
--                                          block->pages_offset + offset);
-+                                          block->pages_offset + offset, errp);
-             }
- 
-             if (!read) {
-@@ -4202,8 +4202,8 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
- 
-     if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
--                           header.bitmap_offset) != bitmap_size) {
--        error_setg(errp, "Error reading dirty bitmap");
-+                           header.bitmap_offset, errp) != bitmap_size) {
-+        error_prepend(errp, "Error reading dirty bitmap");
-         return;
-     }
- 
+-            if (ret < 0) {
+-                error_report_err(err);
+-                goto err;
+-            }
+-            break;
+-        case RDMA_CONTROL_UNREGISTER_REQUEST:
+-            trace_rdma_registration_handle_unregister(head.repeat);
+-            unreg_resp.repeat = head.repeat;
+-            registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
+-
+-            for (int count = 0; count < head.repeat; count++) {
+-                reg = &registers[count];
+-                network_to_register(reg);
+-
+-                trace_rdma_registration_handle_unregister_loop(count,
+-                           reg->current_index, reg->key.chunk);
+-
+-                block = &(rdma->local_ram_blocks.block[reg->current_index]);
+-
+-                ret = ibv_dereg_mr(block->pmr[reg->key.chunk]);
+-                block->pmr[reg->key.chunk] = NULL;
+-
+-                if (ret != 0) {
+-                    error_report("rdma unregistration chunk failed: %s",
+-                                 strerror(errno));
+-                    goto err;
+-                }
+-
+-                rdma->total_registrations--;
+-
+-                trace_rdma_registration_handle_unregister_success(reg->key.chunk);
+-            }
+-
+-            ret = qemu_rdma_post_send_control(rdma, NULL, &unreg_resp, &err);
+-
+             if (ret < 0) {
+                 error_report_err(err);
+                 goto err;
+diff --git a/migration/trace-events b/migration/trace-events
+index 4ae1c226f90..6d70f8e8cad 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -242,12 +242,6 @@ qemu_rdma_register_and_get_keys(uint64_t len, void *start) "Registering %" PRIu6
+ qemu_rdma_register_odp_mr(const char *name) "Try to register On-Demand Paging memory region: %s"
+ qemu_rdma_advise_mr(const char *name, uint32_t len, uint64_t addr, const char *res) "Try to advise block %s prefetch at %" PRIu32 "@0x%" PRIx64 ": %s"
+ qemu_rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
+-qemu_rdma_signal_unregister_append(uint64_t chunk, int pos) "Appending unregister chunk %" PRIu64 " at position %d"
+-qemu_rdma_signal_unregister_already(uint64_t chunk) "Unregister chunk %" PRIu64 " already in queue"
+-qemu_rdma_unregister_waiting_inflight(uint64_t chunk) "Cannot unregister inflight chunk: %" PRIu64
+-qemu_rdma_unregister_waiting_proc(uint64_t chunk, int pos) "Processing unregister for chunk: %" PRIu64 " at position %d"
+-qemu_rdma_unregister_waiting_send(uint64_t chunk) "Sending unregister for chunk: %" PRIu64
+-qemu_rdma_unregister_waiting_complete(uint64_t chunk) "Unregister for chunk: %" PRIu64 " complete."
+ qemu_rdma_write_flush(int sent) "sent total: %d"
+ qemu_rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
+ qemu_rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
+@@ -266,9 +260,6 @@ rdma_registration_handle_ram_blocks_loop(const char *name, uint64_t offset, uint
+ rdma_registration_handle_register(int requests) "%d requests"
+ rdma_registration_handle_register_loop(int req, int index, uint64_t addr, uint64_t chunks) "Registration request (%d): index %d, current_addr %" PRIu64 " chunks: %" PRIu64
+ rdma_registration_handle_register_rkey(int rkey) "0x%x"
+-rdma_registration_handle_unregister(int requests) "%d requests"
+-rdma_registration_handle_unregister_loop(int count, int index, uint64_t chunk) "Unregistration request (%d): index %d, chunk %" PRIu64
+-rdma_registration_handle_unregister_success(uint64_t chunk) "%" PRIu64
+ rdma_registration_handle_wait(void) ""
+ rdma_registration_start(uint64_t flags) "%" PRIu64
+ rdma_registration_stop(uint64_t flags) "%" PRIu64
 -- 
 2.53.0
 
