@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A465C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 15:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F9E9C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 15:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzyHG-0006DV-OJ; Fri, 28 Aug 2026 11:13:58 -0400
+	id 1wzyHI-0006FH-Dn; Fri, 28 Aug 2026 11:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1wzyHE-0006CG-8r; Fri, 28 Aug 2026 11:13:56 -0400
-Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
+ id 1wzyHG-0006DW-AP; Fri, 28 Aug 2026 11:13:58 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1wzyHB-0002eN-Em; Fri, 28 Aug 2026 11:13:56 -0400
+ id 1wzyHB-0002fD-0D; Fri, 28 Aug 2026 11:13:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1787930010; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=7kYP1SmE4po1NHX60o1wn5jt4JN1ovNWLbqMRiHorT8=;
- b=DrO81/OmIeOjWZ3WZR4s/dYAbw8QZtElWxEUnZlf/gQ0cOpV+ymBDkWrak/LoMUqBfBNVl2ObCyyP0/jCaGyHyGmyapdWTi9AFaYoDOf63L6ql36YHdHfAe9J7dcJ0fs49xAGD38h1aeHdH/qrgJ+Z1GlSlMb+bCMwo9SjFFCm8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ t=1787930015; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=h9pooA5aBA96lNnW7CUv7B9YADSvf/FDW4PI23kWFUI=;
+ b=NEGBnXVP517fiakY5XKv3Lbeb8UCBsyCOKIwONfpXmwYeXKhzVOWMTrEeplSjYTGPaDGGFqyWeXx6dtkFg8mDk0+pmrAiy04cihA14AW9BuCt1epWtwun6aLYng7cC4vbBGB8bFRysdbroR7hx7pnpvUtRg/AeUDF216hZ1V6MA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R551e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
  MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=19; SR=0;
- TI=SMTPD_---0X9md4xv_1787930008; 
+ TI=SMTPD_---0X9md4yo_1787930013; 
 Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0X9md4xv_1787930008 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 28 Aug 2026 23:13:29 +0800
+ fp:SMTPD_---0X9md4yo_1787930013 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 28 Aug 2026 23:13:34 +0800
 From: Chen Pei <cp0613@linux.alibaba.com>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
  imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
@@ -38,19 +38,17 @@ Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
  junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: [PATCH v4 1/6] hw/riscv/virt: Add CXL support to the RISC-V virt
- machine
-Date: Fri, 28 Aug 2026 23:13:00 +0800
-Message-ID: <20260828151317.815-2-cp0613@linux.alibaba.com>
+Subject: [PATCH v4 5/6] tests/qtest: Add RISC-V ACPI bios tables test for CXL
+Date: Fri, 28 Aug 2026 23:13:04 +0800
+Message-ID: <20260828151317.815-6-cp0613@linux.alibaba.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260828151317.815-1-cp0613@linux.alibaba.com>
 References: <20260828151317.815-1-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=cp0613@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=cp0613@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -74,191 +72,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable CXL support on the RISC-V virt machine following the same
-approach used by the ARM virt machine:
-- Add PXB and ACPI_CXL Kconfig selections
-- Add CXLState and PCIBus pointer to RISCVVirtState
-- Register CXL machine properties via cxl_machine_init()
-- Create CXL host register region above the PCIe high MMIO region
-- Call cxl_hook_up_pxb_registers() and cxl_fmws_link_targets() at
-  machine_done time
-- Map Fixed Memory Windows above the CXL host register region
-- Add ACPI0017 device in DSDT and build CEDT table in virt-acpi-build.c
+Add test_acpi_riscv64_virt_tcg_cxl() to verify that enabling CXL on
+the RISC-V virt machine produces correct ACPI tables, including the
+ACPI0017 CXLM device with _DEP in the DSDT and the CEDT table.
 
+The test boots with cxl=on, one pxb-cxl bus (bus_nr=12), a CXL root
+port, a cxl-type3 device and a fixed memory window, mirroring the
+existing x86 q35 CXL test pattern.
+
+Since pxb-cxl is a root bus, using -cdrom causes QEMU to auto-plug the
+cdrom drive into pxb-cxl, triggering "Only PCI/PCIe bridges can be
+plugged into pxb-cxl".  The ISO is instead attached explicitly via a
+virtio-scsi-pci controller on pcie.0, following the same approach as
+test_acpi_aarch64_virt_tcg_pxb().
+
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
 ---
- hw/riscv/Kconfig           |  2 ++
- hw/riscv/virt-acpi-build.c | 20 ++++++++++++++++++++
- hw/riscv/virt.c            | 37 +++++++++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h    |  3 +++
- 4 files changed, 62 insertions(+)
+ tests/qtest/bios-tables-test.c | 54 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index de37c08cae..0ba3cd9e15 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -66,8 +66,10 @@ config RISCV_VIRT
-     select VIRTIO_MMIO
-     select FW_CFG_DMA
-     select PLATFORM_BUS
-+    select PXB
-     select ACPI
-     select ACPI_PCI
-+    select ACPI_CXL
- 
- config SHAKTI_C
-     bool
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 59c454f4f9..3188cdc5bf 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -29,12 +29,16 @@
- #include "hw/acpi/aml-build.h"
- #include "hw/acpi/pci.h"
- #include "hw/acpi/utils.h"
-+#include "hw/acpi/cxl.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/nvram/fw_cfg_acpi.h"
- #include "hw/pci-host/gpex.h"
-+#include "hw/pci/pci_bus.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/numa.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-@@ -514,6 +518,17 @@ static void build_dsdt(GArray *table_data,
-         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + s->num_sources * 2);
-     }
- 
-+    if (s->cxl_devices_state.is_enabled) {
-+        Aml *cxl_dev = aml_device("CXLM");
-+        aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
-+        Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
-+        aml_append(method, aml_return(aml_int(0x0B)));
-+        aml_append(cxl_dev, method);
-+        build_cxl_dsm_method(cxl_dev);
-+
-+        aml_append(scope, cxl_dev);
-+    }
-+
-     aml_append(dsdt, scope);
- 
-     /* copy AML table into ACPI tables blob and patch header there */
-@@ -921,6 +936,11 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
-                    s->oem_table_id);
-     }
- 
-+    if (s->cxl_devices_state.is_enabled) {
-+        cxl_build_cedt(table_offsets, tables_blob, tables->linker,
-+                       s->oem_id, s->oem_table_id, &s->cxl_devices_state);
-+    }
-+
-     if (ms->numa_state->num_nodes > 0) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_srat(tables_blob, tables->linker, s);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 51bac47a91..e08c76af4d 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -55,6 +55,8 @@
- #include "hw/pci/pci.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "hw/acpi/aml-build.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
-@@ -1101,9 +1103,33 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
-     }
- 
-     GPEX_HOST(dev)->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-+    s->pci_bus = PCI_HOST_BRIDGE(dev)->bus;
-     return dev;
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 5cc526510a..d2b18d8ecb 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2214,6 +2214,56 @@ static void test_acpi_riscv64_virt_tcg(void)
+     free_test_data(&data);
  }
  
-+static void cxl_host_state_init(RISCVVirtState *s)
++#ifdef CONFIG_POSIX
++static void test_acpi_riscv64_virt_tcg_cxl(void)
 +{
-+    MemoryRegion *sysmem = get_system_memory();
-+    MemoryRegion *mr = &s->cxl_devices_state.host_mr;
-+    hwaddr base;
++    gchar *tmp_path = g_dir_make_tmp("qemu-test-cxl.XXXXXX", NULL);
++    gchar *params;
 +
-+    if (!s->cxl_devices_state.is_enabled) {
-+        return;
-+    }
++    test_data data = {
++        .machine = "virt",
++        .arch = "riscv64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
++        .ram_start = 0x80000000ULL,
++        .scan_len = 128ULL * MiB,
++        .variant = ".cxl",
++    };
 +
-+    base = virt_high_pcie_memmap.base + virt_high_pcie_memmap.size;
-+    base = ROUND_UP(base, 64 * KiB);
++    /*
++     * While using -cdrom, the cdrom would auto-plug into pxb-cxl because
++     * its bus is also a root bus, triggering "Only PCI/PCIe bridges can be
++     * plugged into pxb-cxl".  Attach the ISO explicitly to a scsi controller
++     * on pcie.0 instead, following the same pattern as
++     * test_acpi_aarch64_virt_tcg_pxb().
++     */
++    params = g_strdup_printf("-cpu rva22s64"
++                             " -machine cxl=on"
++                             " -device pcie-root-port,chassis=1,id=pci.1,bus=pcie.0"
++                             " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
++                             " -drive file=tests/data/uefi-boot-images/"
++                             "bios-tables-test.riscv64.iso.qcow2,"
++                             "if=none,media=cdrom,id=drive-scsi0-0-0-1,readonly=on"
++                             " -device scsi-cd,bus=scsi0.0,scsi-id=0,"
++                             "drive=drive-scsi0-0-0-1,id=scsi0-0-0-1,bootindex=1"
++                             " -object memory-backend-file,id=cxl-mem1,mem-path=%s,size=256M"
++                             " -object memory-backend-file,id=lsa1,mem-path=%s,size=256M"
++                             " -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1"
++                             " -device cxl-rp,port=0,bus=cxl.1,id=rp1,chassis=0,slot=2"
++                             " -device cxl-type3,bus=rp1,persistent-memdev=cxl-mem1,lsa=lsa1"
++                             " -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,"
++                             "cxl-fmw.0.interleave-granularity=8k",
++                             tmp_path, tmp_path);
++    test_acpi_one(params, &data);
 +
-+    memory_region_init(mr, OBJECT(s), "cxl_host_reg", 64 * KiB * 16);
-+    memory_region_add_subregion(sysmem, base, mr);
-+
-+    /* Map the Fixed Memory Windows above the CXL host register region. */
-+    base += memory_region_size(mr);
-+    base = ROUND_UP(base, 256 * MiB);
-+    cxl_fmws_set_memmap(base, UINT64_MAX);
-+    cxl_fmws_update_mmio();
++    g_free(params);
++    g_assert(g_rmdir(tmp_path) == 0);
++    g_free(tmp_path);
++    free_test_data(&data);
 +}
++#endif /* CONFIG_POSIX */
 +
- static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ static void test_acpi_aarch64_virt_tcg(void)
  {
-     FWCfgState *fw_cfg;
-@@ -1205,6 +1231,13 @@ static void virt_machine_done(Notifier *notifier, void *data)
-                                      machine_done);
-     MachineState *machine = MACHINE(s);
-     hwaddr start_addr = s->memmap[VIRT_DRAM].base;
-+
-+    cxl_hook_up_pxb_registers(s->pci_bus, &s->cxl_devices_state,
-+                              &error_fatal);
-+
-+    if (s->cxl_devices_state.is_enabled) {
-+        cxl_fmws_link_targets(&error_fatal);
-+    }
-     hwaddr firmware_end_addr;
-     vaddr kernel_start_addr;
-     const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
-@@ -1451,6 +1484,8 @@ static void virt_machine_init(MachineState *machine)
-             ROUND_UP(virt_high_pcie_memmap.base, virt_high_pcie_memmap.size);
-     }
- 
-+    cxl_host_state_init(s);
-+
-     /* register system main memory (actual RAM) */
-     memory_region_add_subregion(system_memory, s->memmap[VIRT_DRAM].base,
-                                 machine->ram);
-@@ -1558,6 +1593,8 @@ static void virt_machine_instance_init(Object *obj)
-     s->acpi = ON_OFF_AUTO_AUTO;
-     s->iommu_sys = ON_OFF_AUTO_AUTO;
-     s->num_sources = VIRT_IRQCHIP_NUM_SOURCES;
-+
-+    cxl_machine_init(obj, &s->cxl_devices_state);
- }
- 
- static char *virt_get_aia_guests(Object *obj, Error **errp)
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 36a2def410..4cf930ab9f 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -24,6 +24,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/block/flash.h"
- #include "hw/intc/riscv_imsic.h"
-+#include "hw/cxl/cxl.h"
- 
- #define VIRT_CPUS_MAX_BITS             9
- #define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
-@@ -65,6 +66,8 @@ struct RISCVVirtState {
-     OnOffAuto iommu_sys;
-     uint16_t pci_iommu_bdf;
-     uint16_t num_sources;
-+    CXLState cxl_devices_state;
-+    PCIBus *pci_bus;
- };
- 
- enum {
+     test_data data = {
+@@ -2963,6 +3013,10 @@ int main(int argc, char *argv[])
+                            test_acpi_riscv64_virt_tcg_numamem);
+             qtest_add_func("acpi/virt/acpispcr",
+                            test_acpi_riscv64_virt_tcg_acpi_spcr);
++#ifdef CONFIG_POSIX
++            qtest_add_func("acpi/virt/cxl",
++                           test_acpi_riscv64_virt_tcg_cxl);
++#endif
+         }
+     } else if (strcmp(arch, "loongarch64") == 0) {
+         if (has_tcg && qtest_has_machine("virt")) {
 -- 
 2.50.1
 
