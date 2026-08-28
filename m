@@ -4,90 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9D6C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBBAEC61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 13:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzvze-0003Ni-4Q; Fri, 28 Aug 2026 08:47:38 -0400
+	id 1wzwkJ-0003vW-HG; Fri, 28 Aug 2026 09:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wzvzd-0003NZ-43
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:47:37 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wzvzb-0000xd-Lg
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:47:36 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-3969e82ff8fso996832a91.0
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787921254; x=1788526054; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=RzPaqL4/mHAVqsKq27PDGFNe/OdVSsoGnuRREvrAOGo=;
- b=NwlbcIQoNjnUKIY8uQFjVW6M1naJ6X5VpveqIvUdvVEmEkGOMEtC2W+YdTZ/+keFgJ
- rVwdVwy4JFq2baKSyQilnUv6q3A2tDcriClATOSCULW8MAY7iht7L8tnv5Hde+xn6L8K
- W66AWm9oGH4d1b8b6or8n/pEihSz/AxJz8ZeEewIT9hV+nY6hqnxKI1O20ELBI7TBw5B
- PiyNR9+PmTYSchY+gOs42nRwd/js1z+Kg59UzaUzSt3yIU6lNPy3r3eAZVVyjKg275xg
- WAUJ3f1bmZzJTF9jK1BoJvGvNWd1MGuEysWdXR2LS+UaJNtO4TXcDeGQvXhdnwF7t99v
- VasA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787921254; x=1788526054;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RzPaqL4/mHAVqsKq27PDGFNe/OdVSsoGnuRREvrAOGo=;
- b=mSPCVIt7Uij5c64X98VdwjF5dN3atRcG4k5pTtPyvXKdEibeWUlssCQMJ5DZWvqhGk
- Z0VqJkobLunGBdcjAvM2wRmOk1DTad8u/iP9ijNXmz2tzXSiHD3jUXbegn3wqCsxWMV7
- jV3l9Wix67miFl/rfuqGSsTIfzLaL64mZsCTIiwAMrc497IXCuY/7qTY6u1RzZN6tyME
- 5d3gq2RNvE9+/UFqE3VBc61/8IY8vO+Mp/qLx42xMDAXzArZq3v/jv4DeGduKXYzZyB9
- //P4vgXCzDOwE3BOU7pDybUFbweDguQO1kHciDGZOsM+d1vCRJETX36nWzcuCEvCGJt0
- z/Ng==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp/DB/6evbhkVaaypB1PWWOmM3ZxTvxLoA4K17Mqn2M+ANL7+P6CVHngy2ux4SpLgfNSl2stkq697Ck@nongnu.org
-X-Gm-Message-State: AFuF++mpus4BocQguiY04l1zECP0jq2hCJ4ldjQTN13oLg2pe+wGMnmB
- C1i0QjHU6e2EGRBYghm9ftQ8QRo82C7cqNDRjripI30PD4Xe7/4VLKdi
-X-Gm-Gg: AR+sD13g63czOpzYJMi8ylPHWfIuBSWv5D+XLc+WGFMct+zQN0z8EAjkliF3i5DXelp
- LJXdtfSPB5vQa6SM4ZSLKso6ieIHqKtZH60SJINeSZDiCNkJgfqfWF+NfK612yBKa3J2wPTfnHH
- U/t0xXks9NFBwTlRKXC/C2+U/bYFplWiApOs4Bts5YYssOMQHyS4M2RC6kbYBUWWB4DxiWTeVRG
- VEenlZ527z62mQJiMeVOXCPnorUUz2R2OtukMaGSHJivaSsyUY7Qe/2XjUWppI+qaInh7VoEZ/y
- Nzz3nanSBc9g7bJLXEKnF5Wqw4zAZ2Qerv9/wuWrpKAdeKxGfVfxPU9HWQogPvSx3r/q1pjK7x+
- fephX08aLxj03icCK6Sgk5nlH9AGX2pOLfFXc6MnPCgx8a13bnVIVlmbu+fDWZ0rdymSbM2H3vM
- J0Qi7Hp93y7+VbBF2o9DNA4vq86JrDHL2Mj3rM4BQih0GghtWURSoaPmTpEhaTt2YgQYicZsXQg
- +6NidJmL83Z0ZeS251YkvryKg==
-X-Received: by 2002:a17:90b:180e:b0:396:5c22:b1f1 with SMTP id
- 98e67ed59e1d1-396d0e26ca8mr11478714a91.8.1787921253643; 
- Fri, 28 Aug 2026 05:47:33 -0700 (PDT)
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-396b0fd0079sm7277481a91.5.2026.08.28.05.47.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 05:47:33 -0700 (PDT)
-Message-ID: <2c5ddb68-b7c7-4f7b-9793-be0fc51f29c7@gmail.com>
-Date: Fri, 28 Aug 2026 21:47:30 +0900
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wzwkH-0003vK-Ll
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 09:35:49 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wzwkE-0001KK-Ek
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 09:35:49 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67SDZMmx075768
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 28 Aug 2026 22:35:22 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=p9I7J0hiuXLrZCLsMO+Rt5F7X9GhI/D8uWXaTr/36l0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1787924123; v=1;
+ b=Df++MGC9Oy8jX5F/DFk0GhzVbpT7qR8vk5LDkC64Bnb7CxLbpV2q7dVYw4G1k8ZK
+ WHL8NM6+c33o5nTEtCn0azxfqA5T/0Q5F7Og6MBKKgEc5+Jr/uKC8btFIa42EM36
+ rUA9faiXvkWyAtSXV+SctaAYFXyB2mjfckOfsvAz0pxMympIGFHh80M7b1IE10/V
+ 81Ir9AvaYWGO/BkUKiU6NrivkiOn1n1ikqg484C1kpaaT9gVNi/V8dqs0SwSPJEW
+ dVbWXAa5qynd361oBw6GSWVMuE/9y8gHi7zePooAA12c9SXOXgx8msdhtn+thJJd
+ maDb/QsMXx+R/hcLo/K1IA==
+Message-ID: <a523e460-b861-464f-9579-b160a14c7126@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 28 Aug 2026 22:35:22 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-gpu/virgl: free BHs and timers on renderer reset
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260827154355.3346449-1-marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 00/18] RFC: various virtio-gpu/dmabuf related fixes
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
+ <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ swing <swing@mail.exp.sh>
+References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
+ <a0bd3ef2-91df-4a6d-a04f-67a568188b24@rsg.ci.i.u-tokyo.ac.jp>
+ <d71116d3-2108-4f14-baa0-d2f1f878b5f4@rsg.ci.i.u-tokyo.ac.jp>
+ <CAJ+F1C+BPPLcko6nqK5vCTn81D=CHv3m_bvqDiQzbc-shY1S2A@mail.gmail.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@gmail.com>
-In-Reply-To: <20260827154355.3346449-1-marcandre.lureau@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CAJ+F1C+BPPLcko6nqK5vCTn81D=CHv3m_bvqDiQzbc-shY1S2A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,58 +80,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/28 0:43, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 2026/08/28 21:37, Marc-André Lureau wrote:
+> Hi
 > 
-> virtio_gpu_virgl_reset() does not free the bottom halves or timers
-> allocated by the previous virtio_gpu_virgl_init() call. A subsequent
-> virtio_gpu_virgl_init() overwrites the old pointers, leaking the
-> previous allocations.
+> On Fri, Aug 28, 2026 at 4:29 PM Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2026/08/28 21:26, Akihiko Odaki wrote:
+>>> On 2026/08/25 19:20, Marc-André Lureau wrote:
+>>>> Hi,
+>>>>
+>>>> While working on CVE-2026-66020 (which had a few revision on list), I
+>>>> kept finding several places where virtio-gpu scanout and dmabuf
+>>>> ownership was unclear.
+>>>>
+>>>> The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
+>>>> unmapped its memory. Following that path also found stale dmabuf
+>>>> references, duplicated scanout bookkeeping, and inconsistent cleanup
+>>>> between display backends.
+>>>>
+>>>> This series makes each virtio_gpu_scanout own its current dmabuf and
+>>>> uses resource_id to track which resource it displays. It also makes
+>>>> QemuDmaBuf own its file descriptors and moves GTK fence state out of the
+>>>> dmabuf.
+>>>>
+>>>> Those changes touch a lot of area and I have done basic testing with the
+>>>> various backends. I would not recommend backporting them to stable:
+>>>> there is a high risk of introducing regressions. Yet, I don't know how
+>>>> to address all the problems uncovered by CVE-2026-66020 in a simple
+>>>> patch series. Help welcome!
+>>>
+>>> If you mean "all the problems", my coding agent tells there are some
+>>> problems remaining:
+>>
+>> I forgot to note that I manually reviewed the claims.
+>>
+>> I also think you can drop RFC. Though the series is large, each patch is
+>> small and I think reasonable.
+>>
+>>>
+>>> 1. Vhost-user still has duplicate, incomplete DMA-BUF ownership.
+>>>
+>>> VhostUserGPU retains its separate g->dmabuf[]. The contrib backend
+>>> disables a scanout using ordinary VHOST_USER_GPU_SCANOUT with zero
+>>> dimensions, but the QEMU frontend handles that by only calling
+>>> qemu_console_set_surface().
+>>>
+>>> Although that changes con->scanout.kind, it neither releases g-
+>>>   >dmabuf[id] nor invokes the frontend GL-disable callback. GTK/SDL can
+>>> therefore retain their private scanout mode and redraw the old buffer;
+>>> the wrapper and owned fd remain until another DMA-BUF message. Reset and
+>>> finalize also never free this array.
+>>>
+>>> Separately, contrib’s virgl RESOURCE_UNREF destroys the renderer
+>>> resource without disabling scanouts using it. The in-process virgl
+>>> backend fixes precisely this case, but contrib does not.
+>>>
+>>> 2. GTK DMA-BUF texture release lacks the required GL context.
+>>>
+>>> GTK’s release callback directly calls egl_dmabuf_release_texture(),
+>>> which calls glDeleteTextures() and then unconditionally forgets the
+>>> texture ID. Neither it nor the core release dispatcher establishes the
+>>> owning context.
+>>>
+>>> This is reachable after another GTK console’s surface update leaves
+>>> EGL_NO_CONTEXT current. Deletion is then not guaranteed, yet the ID is
+>>> lost, leaking the GL import and backing. With another unshared context
+>>> current, a coincident texture name could be deleted from the wrong
+>>> context. SDL has the same missing-context pattern.
+>>>
+>>> 3. Rutabaga resource destruction remains incomplete.
+>>>
+>>> virtio_gpu_rutabaga_resource_unref() calls Rutabaga unref and frees the
+>>> QEMU resource, but does not clean res->iov/res->addrs or remove a mapped
+>>> blob’s host-visible MemoryRegion. Only explicit RESOURCE_UNMAP_BLOB
+>>> removes that region.
+>>>
+>>> Consequently, MAP_BLOB → RESOURCE_UNREF or reset can leave a
+>>> MemoryRegion pointing at storage destroyed by Rutabaga, as well as
+>>> pinned DMA mappings. This is adjacent to, rather than the original
+>>> scanout-detach CVE, but it is another unresolved blob-ownership problem.
+>>>
+>>> ...so there is still some work to be done.
 > 
-> Fixes: bd9258917fbf ("virtio-gpu: Destroy virgl resources on virtio-gpu reset")
+> Thanks for the analysis. Do you think we can review & apply this
+> series first before addressing the remaining issues? (and helping me
+> :)
 
-This Fixes: tag needs to be corrected. bd9258917fbf^ already reset the
-renderer and re-entered virtio_gpu_virgl_init(), overwriting the 
-allocations. That behavior began in 7e688d1bf515, so the current tag 
-misses older affected releases. Please use:
+For vhost-user and Rutabaga, yes: I think we can review this series 
+without making it solve every ownership problem first. Those paths are 
+separate and can be follow-ups.
 
-Fixes: 7e688d1bf515 ("virtio-gpu: Handle virtio_gpu_virgl_init() failure")
+It may be better to handle the GTK/SDL context issue before applying the 
+series, though. The callback already existed, but patches 7 and 10 add 
+release-on-disable and release-on-detach callers. They can invoke 
+glDeleteTextures() with no context, or with another console's context 
+current. A small additional patch should suffice; this does not require 
+keeping the series as RFC.
 
-With the Fixes tag corrected:
+> 
+>>>
+>>> But when it comes to backporting, I think we can instead do focused
+>>> backporting to avoid extra trouble. Concretely, the patches you tagged
+>>> with "Fixes: CVE-2026-66020" can be backported, namely:
+>>>
+>>> - "[PATCH 10/18] virtio-gpu: disable blob scanouts on mapping cleanup" and
+>>> - "[PATCH 18/18] virtio-gpu: fix use-after-free on blob cursor after
+>>> detach"
+> 
+> Cc: qemu-stable for those two only? even if there are still corner
+> cases addressed by the other patches)?
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Yes. I don't think the other corner cases are worthwhile to fix risking 
+a regression.
+
+But rechecking these patches, I found "[PATCH 18/18] virtio-gpu: fix 
+use-after-free on blob cursor after detach" has two dependencies on the 
+earlier patches:
+
+- Patch 6 changes the signature of virtio_gpu_fini_udmabuf().
+- Patch 17 allows removing the res->blob guard in
+   virtio_gpu_cleanup_mapping().
+
+So I suggest:
+
+- reordering the series to put patch 10 and patch 18 at the first,
+- keeping the res->blob guard in patch 18, and
+- dropping the res->blob guard in patch 17 instead.
 
 Regards,
 Akihiko Odaki
-
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/display/virtio-gpu-virgl.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 0b79aef8d1f5..8bf6417c6514 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -1425,6 +1425,7 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->   
->   static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
->   {
-> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
->       struct virtio_gpu_simple_resource *res, *tmp;
->   
->       /*
-> @@ -1443,6 +1444,11 @@ static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
->   
->       virtio_gpu_virgl_reset_async_fences(g);
->   
-> +    g_clear_pointer(&gl->cmdq_resume_bh, qemu_bh_delete);
-> +    g_clear_pointer(&gl->async_fence_bh, qemu_bh_delete);
-> +    g_clear_pointer(&gl->print_stats, timer_free);
-> +    g_clear_pointer(&gl->fence_poll, timer_free);
-> +
->       return true;
->   }
->   
-
 
