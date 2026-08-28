@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CACC61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95201C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03Pk-0006mr-2a; Fri, 28 Aug 2026 16:43:04 -0400
+	id 1x03QN-0000I9-TY; Fri, 28 Aug 2026 16:43:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03Ph-0006WR-Ql
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:01 -0400
+ id 1x03QN-0000H2-2J
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03Pf-0008Ig-Q0
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:01 -0400
+ id 1x03QJ-00007x-Ot
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787949779;
+ s=mimecast20190719; t=1787949816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7rzlkd2+BKZxOYKk7ruwu+JOJATUqJP0A89XiG/7GSc=;
- b=Ay8lWjuwrIJWu96xXDuWk/sH4URY133WM0qIJOQVAiBhVgNp9r7VtBKHV7L2gmHQNYVA2/
- b5XJLdUCQmwnZQm54fveDgVmtB0SjTs/e4JdMZhviD4vdM1yKZP4XHEZG3E5flGomQy5XN
- 7QSAVd1QGUuy3Jt6RTYtqDo1fVUA/9o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=PLeeZ0AHiOKQ2oOvOf6V4+XfqMQ/FMyIOOORqxDbaMs=;
+ b=G+YsAMs2G9Sr3/o2wR9utr9ROqzB+FgTeixS0JWMIQiQanGnNz7gtfEFBoTkrlGIAecGXg
+ 9PLvNtnVxlhaPEEdALi10PFbZr8VJZA/cLRmq7XEATb7Sx+IqYScf8z+1jhmXYppW7ghMo
+ RA1JqvhRZTutAfDoqiqGLZvLetw7wVA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-gGHY_hSONeOwYlcoT5Ihjg-1; Fri,
- 28 Aug 2026 16:42:54 -0400
-X-MC-Unique: gGHY_hSONeOwYlcoT5Ihjg-1
-X-Mimecast-MFC-AGG-ID: gGHY_hSONeOwYlcoT5Ihjg_1787949773
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-uc1HaLSJMRqSFDICYj3Zrw-1; Fri,
+ 28 Aug 2026 16:43:33 -0400
+X-MC-Unique: uc1HaLSJMRqSFDICYj3Zrw-1
+X-Mimecast-MFC-AGG-ID: uc1HaLSJMRqSFDICYj3Zrw_1787949812
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F6131944F2C; Fri, 28 Aug 2026 20:42:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F68B180AEBE; Fri, 28 Aug 2026 20:43:32 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D9F83001D3D; Fri, 28 Aug 2026 20:42:52 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 64B4F1955F0A; Fri, 28 Aug 2026 20:43:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 00:41:54 +0400
-Subject: [GIT PULL 15/50] tests/qtest/cdrom-test: replace HMP "info block"
- with QMP query-block
+Date: Sat, 29 Aug 2026 00:42:05 +0400
+Subject: [GIT PULL 26/50] tests/qemu-iotests: convert pause/resume_drive()
+ to QMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260829-nohmp-v1-15-4dcc2b4b0055@redhat.com>
+Message-Id: <20260829-nohmp-v1-26-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, John Snow <jsnow@redhat.com>, 
- "Denis V. Lunev" <den@openvz.org>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2367;
+Cc: richard.henderson@linaro.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1317;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=xhJEizoqGjh3FfP4/9t/2DEdWVsfugPSy+jyJAz+SHg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUX20qCaJNixKq4aZcXNdiW3YMd1bAb1miS
- ua/3fZkIzuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
- 5VikD/4vlGNdaaXKn7kVDCP0oWYnu1xdilJXDxoZbo3wvqBpxaze5nl+f5LDySNxqsqGoAffVvR
- UwrAKfBMbe5BgLK/lTU36COkP7RLDPWZzhlcLd4UiD8BB3tLp9gylFBS/l5jpRYjC/LYamE2eLC
- eHS2gNsMsYQPWloIxFcVz3hYBqLMo2hYHGs3JeIDoSZ6y5Wol1Ep2Sux6blOqOder4ceLri0nNf
- HrAcQD7UzTmY1y32fb2sny5IJUy/M1WUmvULmWU7NAU/cfB2bTvPrYiJI/xZs6zT2nSx3v7whCh
- gKj/g3Ayv4R/WKKRztssrc+kKCK8F8GlQP3uaHzHvqmyxD8Hr2u1lSugJv+JGns+CFvyx81IgNu
- gKnTnjDPTQRVIAmOm/KZu7oSrv4Ebq0k8sdoWh/uJvS5rG/Bcjgs+TKDr/aK2lUS+du1zoH6Px0
- ABv0K92Yi+iaXns7G69pLSxI5pzGolFVksaGYYuNc1XZUVZh/y1qOK0QVfeWrM1cQ1z0v/1l2YJ
- sFZL0VUnuzS9LNmcxksfjLRPcarxIxNCWGYP88nKMiJwwn1McFV2wgLsAKD4g3rdh1qo/lTLHTc
- kt/KMyp2Sbe/jhSI406MUj4EEGlwJvi2tV0qCSavLjRrVVJP8AHCSb1Ew5woYM9dMPgNDHsXd3U
- SR2cCEBdUpRkM/A==
+ bh=9yUWqz9+Kpd5K4Ga7zpfZ8+so7PJQ0UEYfgEPskRBu4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUV1ySLwAY99VN9LCdOEalNXUDtePdDeRdt
+ Xy5hciFi8KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
+ 5eDiEACSP/G8wSC47oOi8csklvyMt//BuMaRnFWYhG9sCGDZ4WNt0+8iy4XAjrQOoDjMq5uguvy
+ hHwYGBnMz3ZSORX8wquZB/KQYataTybNk+PTBP023uB7E22KcGZmefxB2S2yJbyJq8AhLx3dSFz
+ dy68WDkI1RnEVAz5Frl3fa4vauhIx27wp1wIMAj2m7zNb7pCqCsyO22qNRG5FDFWPtREs7Zv9lI
+ SK0YlKE4s+Ut4Ry6dnJZXTZrBbsKj6+OCWgBgj60BUtTZuhlqSAsZWAbVwLn+8SZ8txG/dXzWZh
+ vBJN+KhHaikgv4bG9GLr2e79eaIMWi0odvntec/PLr8G8IGFo5kADwdO0XKrBHtr9R/dJBVpNtR
+ Kv+seYjjL5eHl2HlPq5etZLu6fTdyhvc4N2Fh0kjXgSMpVugFRy2klyfXXRk2lDHkZOcitDLrUc
+ n63kr72pJ0bj70x28Qpif7s/HdxTjv09ANwfUMnB179k2jslii+VpeiHYJJ/Qz8MPURxGV6wewj
+ dgK793O7YeuJ0V+LVcF3F40bWCapOg8L0Xg8BOAv6alIxkGCHRhatgi6ANnNCE5/LJz0yVtVhDW
+ H0RbYkBnqpUvAhRRo5o3fFIzNO0DfJwbQ7z0maXb/E68jagCsiUcdTVswxpX/EAHiqbapkgFwlF
+ pXDg+z7+J9fAw2w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,73 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test_cdrom_param() function uses qtest_hmp() to run "info block",
-which depends on the human-monitor-command QMP endpoint. Replace it
-with the QMP query-block command so the test works when HMP is
-disabled (-Dhmp=disabled).
+Convert pause_drive() and resume_drive() to use x-qemu-io directly
+instead of routing through hmp().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260828-qemu-no-hmp-v5-15-9227de146347@redhat.com>
+Message-ID: <20260828-qemu-no-hmp-v5-26-9227de146347@redhat.com>
 ---
- tests/qtest/cdrom-test.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ tests/qemu-iotests/iotests.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-index a65854d2bc53..bf997be6d690 100644
---- a/tests/qtest/cdrom-test.c
-+++ b/tests/qtest/cdrom-test.c
-@@ -14,6 +14,7 @@
- #include "libqtest.h"
- #include "boot-sector.h"
- #include "qobject/qdict.h"
-+#include "qobject/qlist.h"
+diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
+index c24f1e3767c4..f36bcf316429 100644
+--- a/tests/qemu-iotests/iotests.py
++++ b/tests/qemu-iotests/iotests.py
+@@ -941,11 +941,11 @@ def pause_drive(self, drive: str, event: Optional[str] = None) -> None:
+             self.pause_drive(drive, "read_aio")
+             self.pause_drive(drive, "write_aio")
+             return
+-        self.hmp(f'qemu-io {drive} "break {event} bp_{drive}"')
++        self.qmp_qemu_io(drive, f'break {event} bp_{drive}')
  
- static char isoimage[] = "cdrom-boot-iso-XXXXXX";
+     def resume_drive(self, drive: str) -> None:
+         """Resume drive r/w operations"""
+-        self.hmp(f'qemu-io {drive} "remove_break bp_{drive}"')
++        self.qmp_qemu_io(drive, f'remove_break bp_{drive}')
  
-@@ -92,17 +93,35 @@ cleanup:
- 
- /**
-  * Check that at least the -cdrom parameter is basically working, i.e. we can
-- * see the filename of the ISO image in the output of "info block" afterwards
-+ * see the filename of the ISO image in the output of "query-block" afterwards
-  */
- static void test_cdrom_param(gconstpointer data)
- {
-     QTestState *qts;
--    char *resp;
-+    QDict *response;
-+    QList *ret;
-+    QListEntry *entry;
-+    bool found = false;
- 
-     qts = qtest_initf("-M %s -cdrom %s", (const char *)data, isoimage);
--    resp = qtest_hmp(qts, "info block");
--    g_assert(strstr(resp, isoimage) != 0);
--    g_free(resp);
-+    response = qtest_qmp(qts, "{'execute': 'query-block'}");
-+    g_assert(response && qdict_haskey(response, "return"));
-+    ret = qdict_get_qlist(response, "return");
-+
-+    QLIST_FOREACH_ENTRY(ret, entry) {
-+        QDict *entry_dict = qobject_to(QDict, entry->value);
-+        QDict *inserted = qdict_get_qdict(entry_dict, "inserted");
-+        if (inserted) {
-+            const char *file = qdict_get_str(inserted, "file");
-+            if (file && strstr(file, isoimage)) {
-+                found = true;
-+                break;
-+            }
-+        }
-+    }
-+
-+    g_assert(found);
-+    qobject_unref(response);
-     qtest_quit(qts);
- }
- 
+     def hmp_qemu_io(self, drive: str, cmd: str,
+                     use_log: bool = False, qdev: bool = False) -> QMPMessage:
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
