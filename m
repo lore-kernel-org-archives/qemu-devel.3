@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE87C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDB9C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x052J-0002rH-Ad; Fri, 28 Aug 2026 18:26:59 -0400
+	id 1x052J-0002rC-47; Fri, 28 Aug 2026 18:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x052I-0002qC-8X
+ id 1x052I-0002q4-4y
  for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:58 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x052F-0002Kb-2d
+ id 1x052F-0002KP-2d
  for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:57 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2d715f4a587so21368525ad.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:50 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ce98cb8165so15870715ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787956010; x=1788560810; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787956009; x=1788560809; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=BlDhmUu6FRHdcxkTrfu/H3G5UIOzp8QqwoOoZ5rTi2Y=;
- b=eqNqd2GXpo1e5IZXjnU3Oiz4IX3esEg6HxdFlBSTLRpoLhe+l8nyI1RcYm/Rq7jrcQ
- 2c3Eac9+6w5cxyaSQ/QQIxlVr6w1HozRuKTdZAmMJ1LJkdrJ5oKwTDlVibXO1MnF8k6X
- 1dfCDYntvU349GCmT0Oxi/x+bh+RT8F55oxA6l6a1awaHr5f8nah1ocHnMfjrtL9MHSW
- zLhKoHRYvuO9ME5ZmJWtMSkqnxsDFdW9jO38LRTzCalebxo4nurc1huuMFrQFlcIMYuD
- mLRpbZXKkZWWJGycLxv5sv7dlFkfaUX5z7J972gft/OePZkytn1nFIFKddyrTPWnULMd
- ZlIQ==
+ bh=c3prOMqPHLIQmXgwFNllZn8rehgch0RbINfq/i5tMyY=;
+ b=KvQLtlO5usCcGXAas8GbRqL776w9litSjoSPeCXf9scYI03MOSPgbkIuSgcuMizx3r
+ Df99Qq0/75nt6XKmR/xirGYfptnlBNYIWa8zt838ZccK8IvS+/V4K0WbkYuJVozbSMEl
+ ucvsIsOARcdpmBp9vZ7oLrUDzDRMnnvEE1NJwaQjNlyLcBq7ozqXchWyaJ/Q/1bIiTrU
+ CsxAz6+05mZyDg1WpBkEJ1x8KU5MuypdnO+hbv3kBDQJzzp0JJvPzxjaQxPDXOry6za6
+ +tOghy7ltluZ7DUibDIKNgjKPSJ70ZCKakHqB3tCyoUvMn2ohCAulTRc6m9+BZn2CXJI
+ MenQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787956010; x=1788560810;
+ d=1e100.net; s=20251104; t=1787956009; x=1788560809;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BlDhmUu6FRHdcxkTrfu/H3G5UIOzp8QqwoOoZ5rTi2Y=;
- b=MNyiLwUsVGdwUB6R1bi4k3pCaH+H8H3PCXOiC5ratfJUAYXPQb6/auDAHciGRTX0Fq
- ZJQT+UAHy3vcvH7cp4erOuLrgPJy3dTczW/hAvIfHI0dnqwzycI5WhRj94V3ZlTHDqhk
- vfTgLsd1yqUmaB8UtK9QXyjHOu6IKOhDPDoHgAs0yGViwRRMxGvydy1QDtPZvOv9khNN
- Ic2WVkHKWCCX/sEdojuM7ph/E7PklochaOFIGXWw82kDD7nqf+KDEqOmNtdtTHAmNhMm
- Ri210oTNj7eBBj8unqfd9eF5SNRRQsHCT3Fi9LGFZwvcHcZvyAvrdNHlmiFdkxfDZ5SB
- 0XGw==
-X-Gm-Message-State: AFuF++kMqKMwbOUy02rkPT+1UKZNodZOy06OM4nQgyDsBDJiTPbbC3X7
- md5YGoWt920BiyrTqBkg7b5OTwiwmTo0JBMNF7PnOV1X6R3xLNibLKya6p26MhYZsUzNPMLcQ9V
- wz3QqIVA=
-X-Gm-Gg: AYBFou1cf2yP3ZuEIPoSEWitU179KEMfDIz14Bo/NJ5cSsq2jmhu3O/5SGCB0wgtUMZ
- Zmcchn5/2eqwwhJ+K/tUr7nGEOv4M8Bk8PpP/s2bdgv+x88gwMTHRXhd2IQFYz883tqwApzPzPh
- YsYHB4gb5d4KqyyHwfduQEifiZQRU5qjaicdOVZE5gTKAbuWpCP1zNamMbhGbA0nE0qXB7WtaoQ
- 1wr7aLomb/XfkyXIEgfEJFIHC9EWCbwCpM2X7A2/Vd8SlotiAfiLyDkA4HPPoo4YGx6kPIsbNYh
- PzRkN8SADqJKB035HSdsHkVAAEJ1rQ2+bcQZjX40LQXwX82AsSmd3nIl1CWp4wiSgnIrhYnA26D
- Db6YuhaAAkzC5RUSQ7aMk4mrsoEzxE65LIB4mjc2aTvUyqp+/ooJeji5f1tNLpFkFVYpcHigExc
- xE7cbyFEUsK8ftC+qQPlFo8SsjjVvc4HoszfUiqEYMtGKLyxG2QDyJsgPMYWUAxS+FoRRtqpVi9
- 4Tb0WlyJ+ksA3pJ3Mum
-X-Received: by 2002:a17:903:1b25:b0:2d8:d4cc:5bb3 with SMTP id
- d9443c01a7336-2d8d4cc5d8bmr40860725ad.19.1787956009699; 
- Fri, 28 Aug 2026 15:26:49 -0700 (PDT)
+ bh=c3prOMqPHLIQmXgwFNllZn8rehgch0RbINfq/i5tMyY=;
+ b=DGnaYchliA2YaQRyDvlviNuH+MLhjM239rk457L7DhK7qEfKlx/vzUoGjNkfLC0LYN
+ k3FmjT7fNhUa/tONMkaOpT4sWeDA0cESXQhE8H7e8zMOdb3VlDLUBu60nTc+56oK3gXv
+ qMz8Hc10gTrqS/LZIaS0bTWtB6gGtOEkvWb6xeOjRcPtfUc+uQ65rMaQzrZonyWCv41Z
+ hnG9lXXgOTuxOfzarOuX7AuI6VhkJAaOs93A5hwnXfv+cL0Efw0VAoPL1AlOliKYYATS
+ AKl1YW+YpyaaHMQwc0sC7ew5hPx5r/dep5RdiZfgrwQb/K5ey73hG6pBAuRc5jPBD2mP
+ GicA==
+X-Gm-Message-State: AFuF++lFQPg55vTR49iXHmRUIs6Lat1ZU069tbkVr9SBpQSpalW8UiWo
+ uAEmfcVczXFAda7Ox5F+x/jZ32NeoQoN0yBinfSs0Z5QyP2QqVxhxJSbTqRAy+2OChKJF5+fa0W
+ c6uPpVDc=
+X-Gm-Gg: AYBFou0Ec2Bw1apefM2K9YBYgEDM8xf8dux2hyPoyzpot7KDYa3xPpHkLt2TsA0yHwW
+ svqd8hfGzlnXOmVAQWFkoYsdEGNXHvE+wopojqHfEN1JfjvXf+kr7yCcia8cPAr3JNOhfZYvFwC
+ giqD0Yf950HrTCeks+YGDKrYfHRjleX2ZY2AWvh0gex6nUCWOnSFJdxrlULN9vsNEoorzOwjHGj
+ 2NptbPj1SxLlIJQV4rG69CQ7tu58ELkF4ubXhCe2J1LQ5AhNKtFMmBLCDM0hQnlFETdHUTfpgVT
+ SzL1Xsd9jRkbobhYHg4nXo8B4+4mKy5yRljgc5XFaaYL7Dv+yh0abnVikJqUx23jok7iOdyfjwN
+ 4cZuQdqPcEa/y+z0mqWilM6/0T6oVnfsdoyaAuYDj1JdN6BDGqJqUXoW/r/WZqMg24cAjVm1lzC
+ rEv6WS8Z0S6rvW5tRRp9ZW4YRO+DJJP/dfz8XcqX0e5UO7OXpWweV6Og+lF5NN2liBLZQX8Q+fd
+ TJncg0XPrEmtS4LlRPK
+X-Received: by 2002:a17:903:3504:b0:2cf:8aa7:7810 with SMTP id
+ d9443c01a7336-2d8d4a0176fmr27776185ad.2.1787956008963; 
+ Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
 Received: from stoup (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.49
+ d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:26:49 -0700 (PDT)
+ Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 11/13] target/arm: Add PSTATE.UINJ to tbflags
-Date: Fri, 28 Aug 2026 15:26:37 -0700
-Message-ID: <20260828222639.1432046-12-richard.henderson@linaro.org>
+Subject: [PATCH 10/13] target/arm: Read and write PSTATE.UINJ
+Date: Fri, 28 Aug 2026 15:26:36 -0700
+Message-ID: <20260828222639.1432046-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828222639.1432046-1-richard.henderson@linaro.org>
 References: <20260828222639.1432046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,88 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+With FEAT_UINJ, allow PSTATE.UINJ to be set from aa64 and aa32 modes.
+Read the value back for SPSR_ELx from aa32 mode.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h               | 1 +
- target/arm/tcg/translate.h     | 2 ++
- target/arm/tcg/hflags.c        | 6 ++++++
- target/arm/tcg/translate-a64.c | 1 +
- target/arm/tcg/translate.c     | 1 +
- 5 files changed, 11 insertions(+)
+ target/arm/internals.h |  3 +++
+ target/arm/helper.c    | 13 +++++++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index b7ee215257f..4fe8bff998d 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2483,6 +2483,7 @@ FIELD(TBFLAG_ANY, ALIGN_MEM, 10, 1)
- FIELD(TBFLAG_ANY, PSTATE__IL, 11, 1)
- FIELD(TBFLAG_ANY, FGT_ACTIVE, 12, 1)
- FIELD(TBFLAG_ANY, FGT_SVC, 13, 1)
-+FIELD(TBFLAG_ANY, PSTATE__UINJ, 14, 1)
- 
- /*
-  * Bit usage when in AArch32 state, both A- and M-profile.
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 31f52a34a68..f633aa265f0 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -155,6 +155,8 @@ typedef struct DisasContext {
-     bool align_mem;
-     /* True if PSTATE.IL is set */
-     bool pstate_il;
-+    /* True if PSTATE.UINJ is set */
-+    bool pstate_uinj;
-     /* True if PSTATE.SM is set. */
-     bool pstate_sm;
-     /* True if PSTATE.ZA is set. */
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index 296ec8101ab..174f4aa746f 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -292,6 +292,9 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-     if (env->uncached_cpsr & CPSR_IL) {
-         DP_TBFLAG_ANY(flags, PSTATE__IL, 1);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 69c9256984a..eac1f7f379d 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1392,6 +1392,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
+     if (isar_feature_aa64_nmi(id)) {
+         valid |= PSTATE_ALLINT;
      }
-+    if (env->pstate & PSTATE_UINJ) {
-+        DP_TBFLAG_ANY(flags, PSTATE__UINJ, 1);
++    if (isar_feature_aa64_uinj(id)) {
++        valid |= PSTATE_UINJ;
 +    }
  
-     /*
-      * The SME exception we are testing for is raised via
-@@ -513,6 +516,9 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-     if (env->pstate & PSTATE_IL) {
-         DP_TBFLAG_ANY(flags, PSTATE__IL, 1);
+     return valid;
+ }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index e6b16eade76..a4a7fa69ff1 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9362,8 +9362,9 @@ uint64_t cpsr_read_for_spsr_elx(CPUARMState *env)
+         ret &= ~CPSR_DIT;
+         ret |= PSTATE_DIT;
      }
-+    if (env->pstate & PSTATE_UINJ) {
-+        DP_TBFLAG_ANY(flags, PSTATE__UINJ, 1);
+-    /* Merge PSTATE.SS into SPSR_ELx */
+-    ret |= env->pstate & PSTATE_SS;
++
++    /* Merge PSTATE.{SS,UINJ} into SPSR_ELx */
++    ret |= env->pstate & (PSTATE_SS | PSTATE_UINJ);
+ 
+     return ret;
+ }
+@@ -9372,6 +9373,14 @@ void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val)
+ {
+     uint32_t mask;
+ 
++    /* Save SPSR_ELx.UINJ into PSTATE. */
++    if (unlikely(val & PSTATE_UINJ)
++        && arm_feature(env, ARM_FEATURE_AARCH64)
++        && cpu_isar_feature(aa64_uinj, env_archcpu(env))) {
++        env->pstate |= PSTATE_UINJ;
++        val &= ~PSTATE_UINJ;
 +    }
- 
-     if (arm_fgt_active(env, el)) {
-         DP_TBFLAG_ANY(flags, FGT_ACTIVE, 1);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 4f9a93950b1..026a2a72d05 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -11014,6 +11014,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
-     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
-     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
-+    dc->pstate_uinj = EX_TBFLAG_ANY(tb_flags, PSTATE__UINJ);
-     dc->fgt_active = EX_TBFLAG_ANY(tb_flags, FGT_ACTIVE);
-     dc->fgt_svc = EX_TBFLAG_ANY(tb_flags, FGT_SVC);
-     dc->trap_eret = EX_TBFLAG_A64(tb_flags, TRAP_ERET);
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c866148383f..40929a6ef78 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6382,6 +6382,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
-     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
-     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
-+    dc->pstate_uinj = EX_TBFLAG_ANY(tb_flags, PSTATE__UINJ);
-     dc->fgt_active = EX_TBFLAG_ANY(tb_flags, FGT_ACTIVE);
-     dc->fgt_svc = EX_TBFLAG_ANY(tb_flags, FGT_SVC);
- 
++
+     /* Save SPSR_ELx.SS into PSTATE. */
+     env->pstate = (env->pstate & ~PSTATE_SS) | (val & PSTATE_SS);
+     val &= ~PSTATE_SS;
 -- 
 2.53.0
 
