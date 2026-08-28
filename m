@@ -4,61 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C15C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48D28C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzpwJ-0003By-TP; Fri, 28 Aug 2026 02:19:47 -0400
+	id 1wzq4c-0007BQ-Ab; Fri, 28 Aug 2026 02:28:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzpwI-0003BP-Ph; Fri, 28 Aug 2026 02:19:46 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzpwH-0002Yg-6d; Fri, 28 Aug 2026 02:19:46 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 9F64B6053A;
- Fri, 28 Aug 2026 06:19:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B711F000E9;
- Fri, 28 Aug 2026 06:19:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787897983;
- bh=yyjsk/7GjdpgwVo2+CpajifmTEEsKjFVZ93weYKxESY=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Tp1VJZ0FohS0HzREs+0AMHErM57vulpXAwGb9oJxnMV/axyWDXwYyr2/ea3aXknzH
- SQXXLiBnrfrExMLscnswNAOnG7TCZx4D0FMW+Vdh7Zcts59pv7sTr3eSh60Gy2rQzy
- BqH1V4oz5N6h+uONdGFtAHxYKPTrVzMNbjEBD81cnfqTVOG2pfAkSKlFJTUpkVHUmt
- aCdpXMqJkYUel32uYa3UHmkHkta3zHgHQ43eLxbro3FBm58lH6Qav3FU8lN/nMdjAz
- nkf/4xVEncKK7hpGc/OUebM5kGZJCykLiv3hMTVhad12vZUhPRQNnKcByQD+fcN5PQ
- BsLXAM+fghemg==
-Message-ID: <ab64dc5d-52d6-49bb-ac94-571218f92bdb@kernel.org>
-Date: Fri, 28 Aug 2026 15:19:41 +0900
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wzq4a-0007BF-0o
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:28:20 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wzq4Y-0003sd-JE
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:28:19 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-c15cf78d1a2so73067366b.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Aug 2026 23:28:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787898495; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QXKx+06E4dHsKlTlRant+hTzxraEXLgs8PQ8bj95BhKGZTBNLTpQLJbhq77uEK0a07
+ gClrnjOZY7DiS4enwHFjvhfbgU7cpEHtIN9rN+BOSEmNSJQCLDcOpXAKzxz2wAVR99G/
+ yY8S8ZdbNMnQCB22uHy/PxhGvN7KHtHcLih0qKhekP1CWqqYdZDob0eZogzn/ddVlWMU
+ 9XObusxtLVfUECfKTeUUIRLXcFUH0g2xaPpOXyXux13OXM06tOGOA4+OdDqekRpiaACf
+ Xsb1eS0lPWl0GbXj2TjgvfsYFCeJQy7HpQtkQWymwgHbQKa2SUdZgkdGHAzY9TP9BCB0
+ ixpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=uRQok1yz5stDDqyfic1hgU3qeB2gVzS3I1bNJHV2TAg=;
+ fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
+ b=fYLOLugfUW/xU9bZwIU2q0j9jwiCDV8gtwyqg+Z7Ujzb+plYlUV+enIkdKxd7BSFUs
+ lJIPIdr76RxK+bPDF5iH6Bmpz+8CuwEX8gKDtrtSP1BPIzKZeZ/KXJN87Fi3KDCb8gA3
+ hQ5HEUaCA/rcVDEbfPQp9UNfZ/khXicEiuDhtzlK5O2B9kOxNmZ94aODQ2GggTHxq8SG
+ JEBfKmzHG546IvYEoMl3usCoIWGyDJPvC22Zf5FDR0DgbfBPLhADgJ4rK8sisD31JxYb
+ Ye5WZ/R//cUlgC0aUiOVZTC4mIYE6+4cnXAbw834gFQN2LZumnQvfsPeb2fGVbyCKyAK
+ a+kA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787898495; x=1788503295; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uRQok1yz5stDDqyfic1hgU3qeB2gVzS3I1bNJHV2TAg=;
+ b=c9HpsWNLZDUbi8MZPR0vJpq9c566Eo02S+ce7XdUgwctuMXyPAvF4H7jd69kqHJUHK
+ TBWqlE04cTkUEc9CmMdg0OOpSSJNDxzHo0GQxMm3VKgVJNMmfiXnh5p6bfoW/ogSpYYF
+ T48ZPL00ASIQNrSalfde7c72PsJte7ZS43AUfudvcvSjsWzfTf8PzFc0oNibCy56dJwS
+ BJF1bb2TeuVY+6JCARHE7L7Z0cwSxvd4JTBMuVCO5pBMrRF7F78yRIvc35n39Sz3IK/r
+ DqJ13s296YFG9wcqGFg+0Mnehtqfj8y2w4CXW13WamLs+yKy7fU03Y21IO8leLmCZysW
+ BXNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787898495; x=1788503295;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uRQok1yz5stDDqyfic1hgU3qeB2gVzS3I1bNJHV2TAg=;
+ b=WIc/OFeTlVm8auaBfg8cUNhDmqlLJ2WMKD6NtCsoEQSfDNUJ4FKc6VChufNgTL/vOr
+ wQdz+/J/54rVM/GCMSXT6kXNyVLbA5qwfOAjOzLjdnUeOb5vOXfkaffNWCYh7iCdW6EU
+ ysZ6PiFbl6VhwcMCSDqlX9AdE/bc3zIdvIpurwrhdoswo93ywp0iY4XvDz9+/4mA9KpS
+ 7xKbek9qTb8kP7DdopUQ0UwqpL9hBzuoKgNDksJCUNGwU4VhYSe+/YX2fgYimMTXM0H8
+ 7knFwiA4VNdbrCbNLj/RJYGPBOs/Vt1TSenJDF6PP1q7PGVJOKtJAsy3uMVvmwDRsafY
+ 2rCg==
+X-Gm-Message-State: AFuF++lmW9G6YIZDvbzidSbJOHqpMkAE1orVlt5YrqNo6jxI4SXIS2+/
+ IhK0fG/u59uM17pW/V/HIBz8yzllNlqE0sBR0PEILMcUUHlOv66jQqmYFBgBGGNJj3GNIkIg8sr
+ 2g0FMzcjfI04LlXABGubfr/u9t+GX3jw=
+X-Gm-Gg: AR+sD13x4Sfj3H3qRxNp3Bl4fhEUy2lDVDewKOjzcnu62uNIGBJSHb2Xiw8mx8euHka
+ TyoG5Wyhvvi0gJ01jCYZ6x3AqM1x1kwMKpNkxf7oaIBMHAJzmEoNqRKn8nStfyoqRjbj86et0y5
+ eTQuassEcq+D/3Zi25rIgkrymXDZ0CA/ANkUrcPcmJQDsl5V4nu9S6evVwrtBDupnM6J2bfeGUA
+ 3q43NctJPNQK0UKM4WfCxF7BSns0I77pj3mUofZx7GfdZYNZjUeRBq6moYS0mjHEnW3332yP/J6
+ h0HYXEGjSCJ9yZVS2FhgiSPVnGfgQsMyNvKqPSEO5aG0vg==
+X-Received: by 2002:a17:907:ea91:b0:c16:6a42:c7d6 with SMTP id
+ a640c23a62f3a-c2556fe5799mr280410966b.9.1787898495089; Thu, 27 Aug 2026
+ 23:28:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] file-posix: reject a zone append to a full or
- conventional zone
-To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260825205748.679968-1-cassel@kernel.org>
- <20260825205748.679968-13-cassel@kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260825205748.679968-13-cassel@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=dlemoal@kernel.org;
- helo=tor.source.kernel.org
+References: <20260822213343.661939-1-zhangckid@gmail.com>
+ <20260822213343.661939-7-zhangckid@gmail.com>
+ <87zeyaobjj.fsf@pond.sub.org>
+In-Reply-To: <87zeyaobjj.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Fri, 28 Aug 2026 14:27:34 +0800
+X-Gm-Features: AcwNN1U1IXOtES4l-Z83AR6ifZzC1Y4NIt5m1-tI0AXXjB36wElYMQK4sbK2xyo
+Message-ID: <CAK3tnv+G81CntgqX+6By2JYfGcM5+m18mdAaDO+hoHXu=JwO7A@mail.gmail.com>
+Subject: Re: [PATCH V13 06/15] monitor: track IOThread users with QOM paths
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,45 +122,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/26 05:57, Niklas Cassel wrote:
-> raw_co_prw() replaces the offset of a zone append with the write pointer
-> of the addressed zone, which assumes that the stored value names a
-> position inside that zone. It does not in two cases.
-> 
-> A full zone has its write pointer recorded at the end of the zone, since
-> get_zones_wp() stores start + len for BLK_ZONE_COND_FULL. That is the
-> first sector of the following zone, so the append is submitted there. The
-> kernel accepts it whenever that zone is empty, because it is a legal
-> write at its write pointer, and the completion path advances the wrong
-> zone because it recomputes the zone index from the replaced offset. The
-> data is written to a zone that was never addressed and success is
-> returned:
-> 
->   zone 2 finished, then a 4 KiB append to zone 2:
->   After zap done, the append sector is 0x180000     <- zone 3
->   zone 2: wptr 0x180000, zcond:14 (full)
->   zone 3: wptr 0x180008                             <- advanced
-> 
-> A conventional zone has no write pointer at all, and its array entry
-> carries only the type marker in the top bit, so the offset becomes
-> negative and the write fails with EINVAL. That is harmless but it reports
-> nothing about the actual mistake.
-> 
-> Reject both while the write pointer lock is held, since the state has to
-> be read and acted on atomically. check_zoned_request() in virtio-blk
-> refuses an append to a conventional zone, so that case needs a caller
-> that goes to the driver directly, but nothing there examines whether a
-> zone is full, so a guest can reach the misdirected write.
-> 
-> Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+On Tue, Aug 25, 2026 at 4:21=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > Monitors that require an IOThread share the internal mon_iothread.
+> > Account for each monitor explicitly in IOThread holder tracking, using
+> > the monitor's canonical QOM path to distinguish holders.
+> >
+> > Acquire the shared monitor IOThread AioContext once, using the monitor
+> > QOM path as the holder, and reuse the stored context for later
+> > operations.
+> >
+> > Release the holder from the Monitor ObjectClass::unparent callback,
+> > while the canonical QOM path is still available. This covers every
+> > object_unparent() path and avoids duplicating the cleanup in
+> > monitor_cleanup() and monitor_qmp_prepare_delete().
+> >
+> > The internal mon_iothread remains hidden from query-iothreads, as befor=
+e.
+>
+> Let's add
+>
+>   Management applications therefore cannot use it to determine which
+>   monitors are using the IOThread.
+>
+> You add tracking anyway for consistency, I guess.  Correct?
 
-It would be nice to have a helper to test if a zone is full...
-Nevertheless,
+Correct. The monitor holders are not visible to management applications
+because mon_iothread is under the internal object root.
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+I'll add the suggested limitation in the next version.
 
--- 
-Damien Le Moal
-Western Digital Research
+Thanks
+Chen
+
+>
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>
 
