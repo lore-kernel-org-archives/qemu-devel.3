@@ -4,91 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F025EC61DD7
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2AD8C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03Py-0007N9-Rd; Fri, 28 Aug 2026 16:43:18 -0400
+	id 1x03RM-0003x3-QZ; Fri, 28 Aug 2026 16:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03Px-0007MV-MQ
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:17 -0400
+ id 1x03RJ-0003gM-Il
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:44:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03Pu-0008QE-IN
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:16 -0400
+ id 1x03R9-0000eF-65
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:44:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787949793;
+ s=mimecast20190719; t=1787949870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g3532pJx8XtC8b5BqHRkc/LDFBIfrOpABziYCCae0mI=;
- b=TuKbA/peW2qe6yWnL43rfBv2/0gcF6gFw6rjbR2L3cN49L6IY5gQXtBqgjfkRenOrk5+oL
- QRvHw/GsPKpleayZt4Y29lpdbargXOJ4uf4VXixEBym7KxBChceWkM3YY+qIs8HotrjZJL
- 5ku9hNIV5obYzceH1sVt6RSq53Zsy8M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3tt1Li1Xgl8ddzlGr2B8S7+Mrjv2YOxklMy5kdNutVQ=;
+ b=UX6hmHZZknY2GIjDI9G7HYl7Ip9Hka2I1ivTaII4xyv1o5H35sqcUXCqwlgJjDr+edYLaa
+ oPozOLfbVJGfTtN/zdVBsSgrdOxnJMmz4CAdC/V69xc2YMUjtmbBLKXkGbqrzkOLTMRo5d
+ dJDLfBuy48jF4u/v+tPItSmWZTOerP8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-j64ThpVLMniqy_pVpUOu7A-1; Fri,
- 28 Aug 2026 16:43:12 -0400
-X-MC-Unique: j64ThpVLMniqy_pVpUOu7A-1
-X-Mimecast-MFC-AGG-ID: j64ThpVLMniqy_pVpUOu7A_1787949791
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-G-B1MgVaN6aAdqTWAoTJ1g-1; Fri,
+ 28 Aug 2026 16:44:26 -0400
+X-MC-Unique: G-B1MgVaN6aAdqTWAoTJ1g-1
+X-Mimecast-MFC-AGG-ID: G-B1MgVaN6aAdqTWAoTJ1g_1787949865
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 383E41944DF1; Fri, 28 Aug 2026 20:43:11 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F4FA180AEBE; Fri, 28 Aug 2026 20:44:25 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6DEBD18005AC; Fri, 28 Aug 2026 20:43:10 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7BDAE7D9; Fri, 28 Aug 2026 20:44:23 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 00:41:59 +0400
-Subject: [GIT PULL 20/50] tests/qtest/netdev-socket: replace HMP with
- x-query-network QMP
+Date: Sat, 29 Aug 2026 00:42:18 +0400
+Subject: [GIT PULL 39/50] qdev-monitor: make print_dev() callback take
+ MonitorHMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260829-nohmp-v1-20-4dcc2b4b0055@redhat.com>
+Message-Id: <20260829-nohmp-v1-39-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12898;
+Cc: richard.henderson@linaro.org, Laurent Vivier <lvivier@redhat.com>, 
+ Amit Shah <amit@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ xen-devel@lists.xenproject.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8864;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wpmE1TS6HfynuLy8xc2o2mqysRdbeyZssssQvNGj95M=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKU9mC+zQ3tci8sN4uZP9lJUVAEBAUB34xNE
- NPOdX+JudOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
- 5QeTEACMUJecLqhlNCHoeMYjJk31MP1fhhxPYAM/lbvhEz3zFZu+K+rMTtrSw7s7JUzsQ/JY0D4
- ABrQlINrUpQHp53KuRwasUtHu2lhP6xP7FqsJVhH55qkQbCKt9YrJikWfmzmdrY/eSKVd0RrRVF
- R/UcX9DA54DcnGIzrBk5s4yA3Q6q9furEcoKhUMbumi6oerbhYP2j5R48FJpIICwlFy6GJCbwtf
- Dcfk0ETrxZRwbKkwXb/7h972o92pos2Ql4y9jVf3VECb6uP1WaGnESEU5sz9CoibodYSjw5sGkT
- llksByAONEH8ad39JZzeHzng7GkByFe3Gt3CjhH9XR9zoiKN7hDKg6vSzBsX1AnCdItNqgnnBkN
- s0s4Tc0DQAqdx0blKNpIh9JYS+rCPi4w/1cn+8+uN0ykL07nOBFpRGgjpBLYJg6uSpCURtEfqW4
- e/DJ914NSIXzQq4OCwYCO7HHlBHEos8bTyH2lEsxF2+dD1XiXbgFQc1woEuzWaQ/HfcHFznfDt8
- zJxF8TBvRkRR7OTa1PgcUNyXvujnMWZaaRg2PKqK07UFPeRqJ+uFU6cKTjNEevOTt0JaH1FmHnk
- XYft9O8Xxuy4gJBSYhH5VjPmMLVSiu+9smcYxFWn+vHL+iVAKlb5Ei9qhlOtGOq/GqCGBVu40St
- m1sIH5TjIdsg+cg==
+ bh=yhdT14CCjQBH3XB2MAJuktkFy3BQqu+3tvJiv7NtYD0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKVBF+dcyUO8acre9UTIyRuoRk5B+6NoKVbf
+ 7ZzLN0hGDWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylQAKCRDa6OEJdZac
+ 5UaaD/9PPDFeyFi0aR/4kzKPGwlgkCol/O9YralbhXK29ecxzlJ+wH091XOW6kXWjWElEC8yTFA
+ buzgJKN5PjmbRZujJ9d3fal8WRUFzKZXVTCSog09Qx6oEh152mndo+Cy4OCwzzYuz9X72x2w/ZB
+ mWZyqBQm5eTqZSkHlLMoMaJkBswcZfbtbxhl/R0DQKZCMfrPrKxy9kdScAWKI8ieSLlGExbHlJS
+ TXbyWOtNmNj866rjZbFUq7182tz3TxNIRbVjf+ySp1eTqt1/Ea44Raigg8H76MXyr32qL+evKEd
+ 3NJNhd8mmQ4akyy/rERBnfbXd/kv0GqPYDMa/3K5f95zmoZzGSiLz+3meD5hTVLN/SS6LUKnRtZ
+ Kod+sawsBvlO4EkUtOSFeU7Sl2XE7/ac7joV8YJTtcqOn2jDkjl1pccM0aCHX2YVWkN71rdlVlN
+ qSMIfP/m6zHBAgkqQl5hk0VjkfAgHwpK5V3fLt+8bY/9Bl6goLi+ZynO29rL2IxUhCinwN6ooxe
+ y6sIwxCMellb7FgfyR2hYjV6a7GVdXCl3PitikvNK9UcoCZVBCVcz9v3ZcZxZgdLh1ShnusKb1J
+ RE3uzD7M/nN4A5lVnoGxzI4iTlqezeuapZ6B7BExz1xFvjjA3Wlt9VAMQueIBVm+/NEp64A0TSk
+ jYfAc+kD9ts/r6w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,315 +111,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the HMP "info network" text parsing with the structured
-x-query-network QMP command. This makes the test assertions more robust
-by matching individual fields (info-str) instead of parsing the full HMP
-line format.
-
-The EXPECT_STATE macro now takes an explicit netdev id argument to look
-up the client by name in the QMP response. The strrchr truncation is
-made NULL-safe: if the truncation character is not found, the full
-string is compared (and the final g_assert_cmpstr will catch
-mismatches).
-
-While at it, fix the pre-existing duplicate "qemu/sockets.h" include,
-and reorder includes.
+The callback is specific to HMP context, avoid unsafe MONITOR_HMP()
+cast.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260828-qemu-no-hmp-v5-20-9227de146347@redhat.com>
+Message-ID: <20260828-qemu-no-hmp-v5-39-9227de146347@redhat.com>
 ---
- tests/qtest/netdev-socket.c | 143 +++++++++++++++++++++++++-------------------
- 1 file changed, 82 insertions(+), 61 deletions(-)
+ hw/char/virtio-serial-bus.c | 6 +++---
+ hw/core/sysbus.c            | 5 ++---
+ hw/misc/auxbus.c            | 7 +++----
+ hw/pci/pci-hmp-cmds.c       | 3 +--
+ hw/pci/pci-internal.h       | 2 +-
+ hw/usb/bus.c                | 5 ++---
+ hw/xen/xen-bus.c            | 3 +--
+ include/hw/core/qdev.h      | 3 ++-
+ system/qdev-monitor.c       | 7 +++----
+ 9 files changed, 18 insertions(+), 23 deletions(-)
 
-diff --git a/tests/qtest/netdev-socket.c b/tests/qtest/netdev-socket.c
-index b731af0ad959..30005c2e0015 100644
---- a/tests/qtest/netdev-socket.c
-+++ b/tests/qtest/netdev-socket.c
-@@ -7,33 +7,62 @@
-  */
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index 33fdc0846ac3..4dcc4516e45e 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -814,7 +814,7 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
+     return 0;
+ }
  
- #include "qemu/osdep.h"
--#include "qemu/sockets.h"
- #include <glib/gstdio.h>
- #include "../unit/socket-helpers.h"
- #include "libqtest.h"
--#include "qobject/qstring.h"
--#include "qemu/sockets.h"
--#include "qapi/qobject-input-visitor.h"
- #include "qapi/qapi-visit-sockets.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qemu/sockets.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qlist.h"
-+#include "qobject/qstring.h"
+-static void virtser_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent);
++static void virtser_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent);
  
- #define CONNECTION_TIMEOUT    60
+ static const Property virtser_props[] = {
+     DEFINE_PROP_UINT32("nr", VirtIOSerialPort, id, VIRTIO_CONSOLE_BAD_ID),
+@@ -834,11 +834,11 @@ static const TypeInfo virtser_bus_info = {
+     .class_init = virtser_bus_class_init,
+ };
  
--#define EXPECT_STATE(q, e, t)                             \
--do {                                                      \
--    char *resp = NULL;                                    \
--    g_test_timer_start();                                 \
--    do {                                                  \
--        g_free(resp);                                     \
--        resp = qtest_hmp(q, "info network");              \
--        if (t) {                                          \
--            strrchr(resp, t)[0] = 0;                      \
--        }                                                 \
--        if (g_str_equal(resp, e)) {                       \
--            break;                                        \
--        }                                                 \
--    } while (g_test_timer_elapsed() < CONNECTION_TIMEOUT); \
--    g_assert_cmpstr(resp, ==, e);                         \
--    g_free(resp);                                         \
-+/*
-+ * Only checks info-str; type is implicit from the netdev created by each test
-+ */
-+static char *query_net_info_str(QTestState *q, const char *name)
-+{
-+    QDict *ret;
-+    QList *clients;
-+    QListEntry *entry;
-+
-+    ret = qtest_qmp_assert_success_ref(q, "{'execute': 'x-query-network'}");
-+    clients = qdict_get_qlist(ret, "clients");
-+    g_assert_nonnull(clients);
-+
-+    QLIST_FOREACH_ENTRY(clients, entry) {
-+        QDict *client = qobject_to(QDict, qlist_entry_obj(entry));
-+        if (g_str_equal(qdict_get_str(client, "name"), name)) {
-+            char *info = g_strdup(qdict_get_str(client, "info-str"));
-+            qobject_unref(ret);
-+            return info;
-+        }
-+    }
-+
-+    g_assert_not_reached();
-+}
-+
-+#define EXPECT_STATE(q, id, e, t)                           \
-+do {                                                        \
-+    char *info = NULL;                                      \
-+    g_test_timer_start();                                   \
-+    do {                                                    \
-+        g_free(info);                                       \
-+        info = query_net_info_str(q, id);                   \
-+        if (t) {                                            \
-+            char *p = strrchr(info, t);                     \
-+            if (p) {                                        \
-+                p[0] = 0;                                   \
-+            }                                               \
-+        }                                                   \
-+        if (g_str_equal(info, e)) {                         \
-+            break;                                          \
-+        }                                                   \
-+    } while (g_test_timer_elapsed() < CONNECTION_TIMEOUT);  \
-+    g_assert_cmpstr(info, ==, e);                           \
-+    g_free(info);                                           \
+-static void virtser_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent)
++static void virtser_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent)
+ {
+     VirtIOSerialPort *port = VIRTIO_SERIAL_PORT(qdev);
+ 
+-    monitor_hmp_printf(MONITOR_HMP(mon), "%*sport %d, guest %s, host %s, throttle %s\n",
++    monitor_hmp_printf(hmp, "%*sport %d, guest %s, host %s, throttle %s\n",
+                        indent, "", port->id,
+                        port->guest_connected ? "on" : "off",
+                        port->host_connected ? "on" : "off",
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index 82130ba04698..31c4fdf79d48 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -24,7 +24,7 @@
+ #include "monitor/hmp.h"
+ #include "system/address-spaces.h"
+ 
+-static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent);
++static void sysbus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent);
+ static char *sysbus_get_fw_dev_path(DeviceState *dev);
+ 
+ typedef struct SysBusFind {
+@@ -249,10 +249,9 @@ bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp)
+     return qdev_realize_and_unref(DEVICE(dev), sysbus_get_default(), errp);
+ }
+ 
+-static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent)
++static void sysbus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+ {
+     SysBusDevice *s = SYS_BUS_DEVICE(dev);
+-    MonitorHMP *hmp = MONITOR_HMP(mon);
+     hwaddr size;
+     int i;
+ 
+diff --git a/hw/misc/auxbus.c b/hw/misc/auxbus.c
+index ffa76f83016b..0bb89c5a60ab 100644
+--- a/hw/misc/auxbus.c
++++ b/hw/misc/auxbus.c
+@@ -47,7 +47,7 @@
  } while (0)
  
- static gchar *tmpdir;
-@@ -127,20 +156,19 @@ static void test_stream_inet_ipv4(void)
-                        "addr.ipv4=on,addr.ipv6=off,"
-                        "addr.host=127.0.0.1,addr.port=%d", port);
  
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
+-static void aux_slave_dev_print(Monitor *mon, DeviceState *dev, int indent);
++static void aux_slave_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent);
+ static inline I2CBus *aux_bridge_get_i2c_bus(AUXTOI2CState *bridge);
  
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,server=false,id=st0,addr.type=inet,"
-                        "addr.ipv4=on,addr.ipv6=off,"
-                        "addr.host=127.0.0.1,addr.port=%d", port);
+ /* aux-bus implementation (internal not public) */
+@@ -288,7 +288,7 @@ static const TypeInfo aux_to_i2c_type_info = {
+ };
  
--    expect = g_strdup_printf("st0: index=0,type=stream,tcp:127.0.0.1:%d\r\n",
--                             port);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("tcp:127.0.0.1:%d", port);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
+ /* aux-slave implementation */
+-static void aux_slave_dev_print(Monitor *mon, DeviceState *dev, int indent)
++static void aux_slave_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+ {
+     AUXBus *bus = AUX_BUS(qdev_get_parent_bus(dev));
+     AUXSlave *s;
+@@ -300,8 +300,7 @@ static void aux_slave_dev_print(Monitor *mon, DeviceState *dev, int indent)
  
-     /* the port is unknown, check only the address */
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:127.0.0.1", ':');
-+    EXPECT_STATE(qts0, "st0", "tcp:127.0.0.1", ':');
+     s = AUX_SLAVE(dev);
  
-     qtest_quit(qts1);
-     qtest_quit(qts0);
-@@ -200,7 +228,7 @@ static void test_stream_unix_reconnect(void)
-                        "-netdev stream,id=st0,server=true,addr.type=unix,"
-                        "addr.path=%s", path);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,server=false,id=st0,addr.type=unix,"
-@@ -250,20 +278,19 @@ static void test_stream_inet_ipv6(void)
-                        "addr.ipv4=off,addr.ipv6=on,"
-                        "addr.host=::1,addr.port=%d", port);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,server=false,id=st0,addr.type=inet,"
-                        "addr.ipv4=off,addr.ipv6=on,"
-                        "addr.host=::1,addr.port=%d", port);
- 
--    expect = g_strdup_printf("st0: index=0,type=stream,tcp:::1:%d\r\n",
--                             port);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("tcp:::1:%d", port);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
- 
-     /* the port is unknown, check only the address */
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:::1", ':');
-+    EXPECT_STATE(qts0, "st0", "tcp:::1", ':');
- 
-     qtest_quit(qts1);
-     qtest_quit(qts0);
-@@ -282,16 +309,16 @@ static void test_stream_unix(void)
-                        "addr.type=unix,addr.path=%s,",
-                        path);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,id=st0,server=false,"
-                        "addr.type=unix,addr.path=%s",
-                        path);
- 
--    expect = g_strdup_printf("st0: index=0,type=stream,unix:%s\r\n", path);
--    EXPECT_STATE(qts1, expect, 0);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("unix:%s", path);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
-     g_free(path);
- 
-@@ -314,16 +341,16 @@ static void test_stream_unix_abstract(void)
-                        "addr.abstract=on",
-                        path);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,id=st0,server=false,"
-                        "addr.type=unix,addr.path=%s,addr.abstract=on",
-                        path);
- 
--    expect = g_strdup_printf("st0: index=0,type=stream,unix:%s\r\n", path);
--    EXPECT_STATE(qts1, expect, 0);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("unix:%s", path);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
-     g_free(path);
- 
-@@ -346,14 +373,14 @@ static void test_stream_fd(void)
-                        "-netdev stream,id=st0,addr.type=fd,addr.str=%d",
-                        sock[0]);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,unix:\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "unix:", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,id=st0,addr.type=fd,addr.str=%d",
-                        sock[1]);
- 
--    EXPECT_STATE(qts1, "st0: index=0,type=stream,unix:\r\n", 0);
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,unix:\r\n", 0);
-+    EXPECT_STATE(qts1, "st0", "unix:", 0);
-+    EXPECT_STATE(qts0, "st0", "unix:", 0);
- 
-     qtest_quit(qts1);
-     qtest_quit(qts0);
-@@ -379,10 +406,9 @@ static void test_dgram_inet(void)
-                        "remote.type=inet,remote.host=127.0.0.1,remote.port=%d",
-                         port[0], port[1]);
- 
--    expect = g_strdup_printf("st0: index=0,type=dgram,"
--                             "udp=127.0.0.1:%d/127.0.0.1:%d\r\n",
-+    expect = g_strdup_printf("udp=127.0.0.1:%d/127.0.0.1:%d",
-                              port[0], port[1]);
--    EXPECT_STATE(qts0, expect, 0);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-@@ -391,10 +417,9 @@ static void test_dgram_inet(void)
-                        "remote.type=inet,remote.host=127.0.0.1,remote.port=%d",
-                         port[1], port[0]);
- 
--    expect = g_strdup_printf("st0: index=0,type=dgram,"
--                             "udp=127.0.0.1:%d/127.0.0.1:%d\r\n",
-+    expect = g_strdup_printf("udp=127.0.0.1:%d/127.0.0.1:%d",
-                              port[1], port[0]);
--    EXPECT_STATE(qts1, expect, 0);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
- 
-     qtest_quit(qts1);
-@@ -410,7 +435,7 @@ static void test_dgram_mcast(void)
-                       "-netdev dgram,id=st0,"
-                       "remote.type=inet,remote.host=230.0.0.1,remote.port=1234");
- 
--    EXPECT_STATE(qts, "st0: index=0,type=dgram,mcast=230.0.0.1:1234\r\n", 0);
-+    EXPECT_STATE(qts, "st0", "mcast=230.0.0.1:1234", 0);
- 
-     qtest_quit(qts);
+-    monitor_hmp_printf(MONITOR_HMP(mon),
+-                       "%*smemory " HWADDR_FMT_plx "/" HWADDR_FMT_plx "\n",
++    monitor_hmp_printf(hmp, "%*smemory " HWADDR_FMT_plx "/" HWADDR_FMT_plx "\n",
+                        indent, "",
+                        object_property_get_uint(OBJECT(s->mmio), "addr", NULL),
+                        memory_region_size(s->mmio));
+diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
+index 500f821246a9..bcccfaf07f4d 100644
+--- a/hw/pci/pci-hmp-cmds.c
++++ b/hw/pci/pci-hmp-cmds.c
+@@ -135,9 +135,8 @@ void hmp_info_pci(MonitorHMP *hmp, const QDict *qdict)
+     qapi_free_PciInfoList(info_list);
  }
-@@ -431,9 +456,8 @@ static void test_dgram_unix(void)
-                        "remote.type=unix,remote.path=%s",
-                        path0, path1);
  
--    expect = g_strdup_printf("st0: index=0,type=dgram,udp=%s:%s\r\n",
--                             path0, path1);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("udp=%s:%s", path0, path1);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
+-void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent)
++void pcibus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+ {
+-    MonitorHMP *hmp = MONITOR_HMP(mon);
+     PCIDevice *d = (PCIDevice *)dev;
+     int class = pci_get_word(d->config + PCI_CLASS_DEVICE);
+     const pci_class_desc *desc = get_class_desc(class);
+diff --git a/hw/pci/pci-internal.h b/hw/pci/pci-internal.h
+index a7d6d8a7324e..b7231fab5dc9 100644
+--- a/hw/pci/pci-internal.h
++++ b/hw/pci/pci-internal.h
+@@ -16,7 +16,7 @@ extern PCIHostStateList pci_host_bridges;
  
-     qts1 = qtest_initf("-nodefaults -M none "
-@@ -441,10 +465,8 @@ static void test_dgram_unix(void)
-                        "remote.type=unix,remote.path=%s",
-                        path1, path0);
+ const pci_class_desc *get_class_desc(int class);
+ PCIBus *pci_find_bus_nr(PCIBus *bus, int bus_num);
+-void pcibus_dev_print(Monitor *mon, DeviceState *dev, int indent);
++void pcibus_dev_print(MonitorHMP *mon, DeviceState *dev, int indent);
  
--
--    expect = g_strdup_printf("st0: index=0,type=dgram,udp=%s:%s\r\n",
--                             path1, path0);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("udp=%s:%s", path1, path0);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
+ int pcie_aer_parse_error_string(const char *error_name,
+                                 uint32_t *status, bool *correctable);
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+index fe3dbfa2227c..8bd25a9d872a 100644
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -13,7 +13,7 @@
+ #include "trace.h"
+ #include "qemu/cutils.h"
  
-     unlink(path0);
-@@ -470,17 +492,16 @@ static void test_dgram_fd(void)
-                        "-netdev dgram,id=st0,local.type=fd,local.str=%d",
-                        sv[0]);
+-static void usb_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent);
++static void usb_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent);
  
--    expect = g_strdup_printf("st0: index=0,type=dgram,fd=%d unix\r\n", sv[0]);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("fd=%d unix", sv[0]);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
+ static char *usb_get_dev_path(DeviceState *dev);
+ static char *usb_get_fw_dev_path(DeviceState *qdev);
+@@ -544,9 +544,8 @@ static const char *usb_speed(unsigned int speed)
+     return txt[speed];
+ }
  
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev dgram,id=st0,local.type=fd,local.str=%d",
-                        sv[1]);
+-static void usb_bus_dev_print(Monitor *mon, DeviceState *qdev, int indent)
++static void usb_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent)
+ {
+-    MonitorHMP *hmp = MONITOR_HMP(mon);
+     USBDevice *dev = USB_DEVICE(qdev);
+     USBBus *bus = usb_bus_from_device(dev);
  
--
--    expect = g_strdup_printf("st0: index=0,type=dgram,fd=%d unix\r\n", sv[1]);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("fd=%d unix", sv[1]);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index 4075b5b001ae..b81a067e7753 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -101,9 +101,8 @@ abort:
+     qemu_xen_xs_transaction_end(xenbus->xsh, tid, true);
+ }
  
-     qtest_quit(qts1);
+-static void xen_bus_print_dev(Monitor *mon, DeviceState *dev, int indent)
++static void xen_bus_print_dev(MonitorHMP *hmp, DeviceState *dev, int indent)
+ {
+-    MonitorHMP *hmp = MONITOR_HMP(mon);
+     XenDevice *xendev = XEN_DEVICE(dev);
+ 
+     monitor_hmp_printf(hmp, "%*sname = '%s' frontend_id = %u\n",
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index 37f7d3355193..1391dc060caf 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -10,6 +10,7 @@
+ #include "qom/object.h"
+ #include "hw/core/hotplug.h"
+ #include "hw/core/resettable.h"
++#include "monitor/hmp.h"
+ 
+ /**
+  * DOC: The QEMU Device API
+@@ -323,7 +324,7 @@ struct BusClass {
+     ObjectClass parent_class;
+ 
+     /* FIXME first arg should be BusState */
+-    void (*print_dev)(Monitor *mon, DeviceState *dev, int indent);
++    void (*print_dev)(MonitorHMP *mon, DeviceState *dev, int indent);
+     /*
+      * Return a newly allocated string containing the path of the
+      * device on this bus.
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 3860ada2a237..13ac9f8f3be1 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -790,18 +790,17 @@ static void qdev_print_props(MonitorHMP *hmp, DeviceState *dev, DeviceClass *dc,
+     }
+ }
+ 
+-static void bus_print_dev(BusState *bus, Monitor *mon, DeviceState *dev, int indent)
++static void bus_print_dev(BusState *bus, MonitorHMP *hmp, DeviceState *dev, int indent)
+ {
+     BusClass *bc = BUS_GET_CLASS(bus);
+ 
+     if (bc->print_dev) {
+-        bc->print_dev(mon, dev, indent);
++        bc->print_dev(hmp, dev, indent);
+     }
+ }
+ 
+ static void qdev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+ {
+-    Monitor *mon = MONITOR(hmp);
+     ObjectClass *class;
+     NamedGPIOList *ngl;
+     NamedClockList *ncl;
+@@ -828,7 +827,7 @@ static void qdev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+         qdev_print_props(hmp, dev, DEVICE_CLASS(class), indent);
+         class = object_class_get_parent(class);
+     } while (class != object_class_by_name(TYPE_DEVICE));
+-    bus_print_dev(dev->parent_bus, mon, dev, indent);
++    bus_print_dev(dev->parent_bus, hmp, dev, indent);
+ }
+ 
+ static void qbus_print(MonitorHMP *hmp, BusState *bus, int indent, bool details)
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
