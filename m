@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD6DC61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C48C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzyze-0001fP-EY; Fri, 28 Aug 2026 11:59:50 -0400
+	id 1wzyz2-0001Lx-P0; Fri, 28 Aug 2026 11:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzd-0001ev-Ka
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:49 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyz0-0001Kj-OD
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:10 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzR-00007u-0x
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyyx-0008Dq-Fw
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:10 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 331721FDDF;
- Fri, 28 Aug 2026 15:59:27 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F18AB21B5E;
+ Fri, 28 Aug 2026 15:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932771; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932742; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
- b=tZnZf1wk0tugEGKB4mgPysx8oypqrGVe/Xpq6egJLYzCvXD0zBbCIQjry4P9jooxmC2ron
- 2IYyCFSeYMyUcMjO9b1V2cNGPk7sEl6UEXSTj3hFU0UZYhzvuqZM+G8AXKjiRaIua66yPl
- dik4ZShCM588w4OXgNeuQxAzEzlrRe8=
+ bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
+ b=T4088HU+4G0miahE3GuLt3IL8ctNeH0DcblbdzhFKHJzGTSArQGo8yqYiQpoLaXLqGtRVX
+ uaIfevz89K/Tj+jWc0B5roRPiWsu01b4SDuDwNRbK/7aODhHVsg8Ag54dgPx+hSh+AoWXw
+ v4NskzBKN1NBM2a/iGAWZyZaVkPC4Ag=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932771;
+ s=susede2_ed25519; t=1787932742;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
- b=ypQE+6p0GOqyk6chKu9Lz+EfFZbjIGNa6aVu751cUwh36kn9EQNp+oZm5mqS7j4gTGWQnb
- GEhzeKXJ3rlYdZBA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hRr+aA+h;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wz2u54u9
+ bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
+ b=RV8bolo4RyToC4v69MbHzZE/01l794BQV/e+0Hy+bQcn5TmBkyg/BknCvYvAkO6xNICK7F
+ yFtZAVAZWnLHXjAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932737; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
- b=hRr+aA+hUlVciUpz8SvMF0QG78j6I5+RBk67979JodfHth41EaTBYPf9lGZg0y2EUCouEA
- DKtUrUyONm8EZfoSlksHmbxuSaBDxorUmjoQvk/aWl/fY/wJJL+tWYLtt/lIVkhRaHn3k3
- OacfbeS670C1HNrjiczBeIn/fPGEapM=
+ bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
+ b=tRDVqWSl26rOl/YWrH57X2HShMZW+mibcwyRisdco1a4zuUmoBb7Xao72Ea8I4CE6Hktid
+ 7LhtnqHScFWBBYMtoElEtTXPwRFXHpm7DGih52kktsjQmpf0/+e9OAIHnYu+qgWmVTwM35
+ /pjFekbFGqQvN+nJszg/zmfWAuy4PF0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932767;
+ s=susede2_ed25519; t=1787932737;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
- b=wz2u54u9BoG4vVMg8X+tb0hiPutEXjwndauzuIeUQd9bF89xs8W9C5kwzo0Ib0fYEuLUBk
- B1HB22UqWU5NvKDg==
+ bh=rrepw8xFVIYK0eTpXHlcG4uSiRXY3zAh8X76xJ5QxIo=;
+ b=zZIBMB42I9MrUJCAgz9h6tEd+9eGfYxDwJVF0Zkf3YdRZK5od9R+vn7RudCqlc4Yr92cP+
+ mxjtO5h0HxjlhHBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5745D13688;
- Fri, 28 Aug 2026 15:59:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 96E2C13688;
+ Fri, 28 Aug 2026 15:58:55 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EERRCl6wkWpoBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:59:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qErQGT+wkWpoBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:58:55 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL v2 29/30] migration: Harden vmstate_size
-Date: Fri, 28 Aug 2026 12:58:44 -0300
-Message-ID: <20260828155845.2874508-30-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL v2 05/30] migration: Make qemu_get_buffer_at() thread-safe
+Date: Fri, 28 Aug 2026 12:58:20 -0300
+Message-ID: <20260828155845.2874508-6-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828155845.2874508-1-farosas@suse.de>
 References: <20260828155845.2874508-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 331721FDDF
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2]; FREEMAIL_ENVRCPT(0.00)[gmail.com]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,90 +118,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Protect vmstate_size against overflow of the on-stack 64bit integer
-during multiplication. The data at size_indirect.offset comes from the
-migration stream.
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-Acked-by: Peter Xu <peterx@redhat.com>
+Remove the internal QEMUFile error state modification from
+qemu_get_buffer_at(). This function is called by two functions, both of
+which already check for unexpected return values and handle their own
+error reporting.
+
+Removing this shared state modification makes qemu_get_buffer_at()
+strictly thread-safe for concurrent disk reads, serving as a
+preparatory change for the upcoming fast snapshot load feature.
+
+Removed local error by passing errp to improve on error handling,
+consequently also change caller to use error_prevent and not error_setg.
+
+Set errp in case of f->last_error as function should set errp in case it
+fails, and caller can simply use error_prepend without checking errp in
+case of error.
+
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/vmstate.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ migration/qemu-file.c | 11 +++++------
+ migration/qemu-file.h |  4 ++--
+ migration/ram.c       |  6 +++---
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index cbcd86e5b60..24004565bfd 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -126,14 +126,20 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
-     return n_elems;
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index f30e13c66d7..7735e618549 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -550,17 +550,16 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
  }
  
--static uint64_t vmstate_size(void *opaque, const VMStateField *field)
-+static bool vmstate_size(void *opaque, const VMStateField *field,
-+                         uint64_t *sz, Error **errp)
- {
-     uint64_t size;
  
-+    *sz = 0;
-+
-     if (field->flags & VMS_VBUFFER) {
-         size = vmstate_read_from_offset(&field->size_indirect, opaque);
--        if (field->flags & VMS_MULTIPLY) {
--            size *= field->size;
-+        if ((field->flags & VMS_MULTIPLY) &&
-+            umul64_overflow(size, field->size, &size)) {
-+            error_setg(errp, "%s: VMState field '%s' multiply overflow",
-+                       __func__, field->name);
-+            return false;
-         }
-     } else if (field->flags & VMS_ARRAY_OF_POINTER) {
-         /*
-@@ -145,7 +151,8 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
-         size = field->size;
+-size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+-                          off_t pos)
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
++                          Error **errp)
+ {
+-    Error *err = NULL;
+-
+     if (f->last_error) {
++        error_setg(errp, "Cannot read from file: stream is in error state %d",
++                   f->last_error);
+         return 0;
      }
  
--    return size;
-+    *sz = size;
-+    return true;
- }
+-    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
+-        qemu_file_set_error_obj(f, -EIO, err);
++    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, errp) < 0) {
+         return 0;
+     }
  
- static bool vmstate_handle_alloc(void *ptr, const VMStateField *field,
-@@ -377,7 +384,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
-             void *first_elem = opaque + field->offset;
-             int i;
-             uint64_t n_elems = vmstate_n_elems(opaque, field);
--            uint64_t size = vmstate_size(opaque, field);
-+            uint64_t size;
-+
-+            if (!vmstate_size(opaque, field, &size, errp)) {
-+                return false;
-+            }
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 8f824c124d8..966766788dd 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -76,8 +76,8 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
+ off_t qemu_get_offset(QEMUFile *f);
+ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                         off_t pos);
+-size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+-                          off_t pos);
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
++                          Error **errp);
  
-             if (!vmstate_handle_alloc(first_elem, field, n_elems, size, errp)) {
-                 return false;
-@@ -695,9 +706,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-             void *first_elem = opaque + field->offset;
-             int i;
-             uint64_t n_elems = vmstate_n_elems(opaque, field);
--            uint64_t size = vmstate_size(opaque, field);
-+            uint64_t size;
-             JSONWriter *vmdesc_loop = vmdesc;
-             bool is_prev_null = false;
-+
-             /*
-              * When this is enabled, it means we will always push a ptr
-              * marker first for each element saying if it's populated.
-@@ -705,6 +717,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-             bool use_dynamic_array =
-                 field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
+ int qemu_file_put_fd(QEMUFile *f, int fd);
+diff --git a/migration/ram.c b/migration/ram.c
+index 7fa4774246a..60ad4352150 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4133,7 +4133,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+                                               block->pages_offset + offset);
+             } else {
+                 read = qemu_get_buffer_at(f, host, size,
+-                                          block->pages_offset + offset);
++                                          block->pages_offset + offset, errp);
+             }
  
-+            if (!vmstate_size(opaque, field, &size, errp)) {
-+                return false;
-+            }
-+
-             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
-             if (field->flags & VMS_POINTER) {
-                 first_elem = *(void **)first_elem;
+             if (!read) {
+@@ -4202,8 +4202,8 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+ 
+     if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
+-                           header.bitmap_offset) != bitmap_size) {
+-        error_setg(errp, "Error reading dirty bitmap");
++                           header.bitmap_offset, errp) != bitmap_size) {
++        error_prepend(errp, "Error reading dirty bitmap");
+         return;
+     }
+ 
 -- 
 2.53.0
 
