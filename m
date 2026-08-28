@@ -4,113 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29015C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67A2C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:09:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzplE-00065N-34; Fri, 28 Aug 2026 02:08:20 -0400
+	id 1wzplJ-0006Ny-NI; Fri, 28 Aug 2026 02:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wzplB-0005yc-Ut
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wzplI-0006Js-18
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wzpl9-0000u0-4Z
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:17 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wzplF-0000uv-IS
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:23 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67S22DkV596831
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:13 GMT
+ 67S23CxF516079
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=f51RKlzuos+0NDV4R
- sWt2HXbSJ9vmkEkwSDRBJgEGmc=; b=Y4tykOUFKfHtONnITLkBBrPMpzCiSOADi
- CQHDiFl5ChHIMXmhCFUfKZi+xz/N3lFMHLI0+Y6Q7AfiUsK5reviTZuEESvYaQ2N
- I5CL6qQy6hvrxYolMgtOTl3Dni6qw7+5CmBVmsRWAyi4LVlf7ZZcSvbQSxBKMdtV
- 4ihkUpt88RWNdyeEyf1J8uMNOE3FZGBv4Itjwd9TPCtdNhW7+Uwl5rwJYrXNadTV
- e4fww2Xjs8cgEioZk1EOoPD3QAicnORjB/k197WA0JpX4t/E3bHVySK67+92vLOn
- OFgCTFfTo3B0RIZHM56iupgx1kXGluo7Pd48JdcV3j3rMyDmwwsgg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7394je60-1
+ :mime-version:references:subject:to; s=pp1; bh=VYr9YHIiy2spLOcFy
+ Pdk84VfDo1lfbww0FFqlGoUMco=; b=rCL4Bp6rJJYMuQyXOsPvBzmqXECus76s6
+ fQoE6fxs4xqNiJFxmKBeR07fXsn3s4b0hgKwzSY55gpQ7FU+Qsx5utCB0ap8tk1n
+ IudIgGBXE8j1lXpEf6JdrpTplnfmRwAZ0JbywLQyjoS/210XHIxBXirJkfELhhyt
+ 3LaswO+RjSiBgdCfkS8XkDBXW4ro0UoEGpbu6hI3fVYM/ldl1Z0EbdeRs/qh8MUO
+ GvdRIZkQPUPo0Bn+eeGPP8ygQeGB2Vr8+CWt+fWVGhkM+R0nti2YB5CDhuKl3xVf
+ P5oyFzUpFF0Y4tY5ZeXhhzpzd6S5h0BzYQd5WuBoYsCb34v6NM+Fg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716jadrc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:13 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67S5uNul003691
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:12 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkhmjyy-1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:20 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67S5uNCc025224
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:19 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragvgcf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:12 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:19 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67S687Bj47120714
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67S68GBL51380628
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 28 Aug 2026 06:08:08 GMT
+ Fri, 28 Aug 2026 06:08:16 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C3CD620043;
- Fri, 28 Aug 2026 06:08:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DE6E820040;
+ Fri, 28 Aug 2026 06:08:15 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0180820040;
- Fri, 28 Aug 2026 06:08:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D48F720043;
+ Fri, 28 Aug 2026 06:08:13 +0000 (GMT)
 Received: from Mac.com (unknown [9.124.217.17])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 28 Aug 2026 06:08:04 +0000 (GMT)
+ Fri, 28 Aug 2026 06:08:13 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>,
- Nikhil Kumar Singh <nikhilks@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
+Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
  Amit Machhiwal <amachhiw@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 16/41] target/ppc: Move GPR atomic load/store instructions to
+Subject: [PULL 19/41] target/ppc: move various conditional branch insns to
  decodetree
-Date: Fri, 28 Aug 2026 11:36:51 +0530
-Message-ID: <20260828060716.91672-17-harshpb@linux.ibm.com>
+Date: Fri, 28 Aug 2026 11:36:54 +0530
+Message-ID: <20260828060716.91672-20-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260828060716.91672-1-harshpb@linux.ibm.com>
 References: <20260828060716.91672-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JLLKPfV-_J7I16RKK-3w-CipZpy-QEO8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX4KE/Rjsx4zt5
- HgimrMbe70RQ2tT8eCbP2rVrKnouSg97zI4c17sqgvR5cT61YcxFfQg6pAXTPwA/L4/CpaoUmHp
- kQrpOa2Ffyp9nvmPHoBYzk69OXP6yYGOSlWfOAjYv1OIYAKfQLbQeXp2AUgywgdQl6VTgfiuxM0
- WmM88U1cHxYJRY3vpzLyexKlODiaOjs6EFMePDDeyVGQ+emTmc5yuNuXl/8Y6sy+QW7GpwCBufz
- K7eN45e6HSMonHefQVs+/xCfwuGTtWiqm2VAj0DaPm3z49wOJIHcs1PPJ19/Bw63M5Buizm+Lk0
- Nn4gGA4fqUCiP4vDuI89Oe44BXEZkRiWBDMFHI540g7o0DPgMBP26Ru8Xdl5cKzl6+IkqdEE45y
- 9jwVF5ZSllKNmoWmYH8Y1elUZttB0V2o/0plQOy0/QbeTWk2eg6R8XYjzhx8lANcTxaaaRLX1Ec
- ZzLASHiHjTqw4rSb8yQ==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a9125cd cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX0Hx+IDXUJuNq
+ 1KasXeggEZFpFFWYcgGwCIip5u2MWTfjtxCIEwfUIMWIsKOdJ6PuRh+RFV6RGkr4rIaX9Sa5JT2
+ YE/5Mnn/G2az9paSwgEpdpoGtS5tSpI=
+X-Proofpoint-GUID: lmVmnu4wd_-m1RGaOaqNSlCAdKxF3GC_
+X-Proofpoint-ORIG-GUID: lmVmnu4wd_-m1RGaOaqNSlCAdKxF3GC_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX9ZFvq+01SPcn
+ 1qw4hhe59OYehgCjbY6nxCpOWRpWx4HOuurWZrKGpYFo+9TivMTCu2P6DMCPcwpgtqkguSq2M4+
+ jrqafkZJH28sz40/2sL4mXZWDxyhVN2wxuvQKv7A+COJOHZrJWqf94k8S/OiaGby5ul+Nh7/lfe
+ tdManf0qkW2DQTgkMgxuowtJ3jDNWOpn8GA6rTgKEAc79FcW7OG4uYZ+05VtPaR3laXy5hAuy2D
+ xXW6x94P9lU3/Y4+Hdbhn4O1gBn3JcU4pzpQ5NSrDU2Kldp96ufkuIm6qeRCej7qHHVFhLzxUSG
+ 02ORyC1Wbe1OrxCiXYO5eJzSyameFV3GuZcCbqwYicTUH6nTyxe22hnedaSCyLAf9E0039z/V2L
+ hbhFiXI4DLZVL/S4tSObNvbLPTeytKz0umJfVQkz4ORdVtZciTSC1oE8vwI66U8Kfq4CwpOtkvl
+ CQwTct7ufqNvglYCxLA==
+X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a9125d4 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=Sv0fKeRqtYgA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=MTnc9FqoDo0FvQgUzQ0A:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX2jBFJvOQaxfJ
- sjDxcmC+/6zaSZ4OJIthOUTFVjUX42eAhyZqwPaKeoCFrinf+XozgntBpFJ++65HalgWB2+YRMs
- ibZDQJu5iorkiLHvRnB5x73KUTdde8Y=
-X-Proofpoint-ORIG-GUID: JLLKPfV-_J7I16RKK-3w-CipZpy-QEO8
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=CKxRzG1O2kzciCs865QA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_01,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,513 +125,399 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-Move below instructions to decodetree specification:
+Convert the following instructions to decodetree specification:
 
-        lwat, stwat     : X-form (word atomic, ISA 3.0)
-        ldat, stdat     : X-form (doubleword atomic, ISA 3.0)
+bc
+bca
+bcl
+bcla
 
-The legacy gen_ld_atomic()/gen_st_atomic() functions that read register
-fields and the function code from ctx->opcode are replaced by new
-do_ld_atomic()/do_st_atomic() helpers in fixedpoint-impl.c.inc that
-use the pre-extracted decodetree argument fields (a->rt, a->ra, a->rb)
-directly.  The RB field carries the Function Code (FC) selecting the
-atomic operation.
+bclr
+bclrl
 
-gen_fetch_inc_conditional() is similarly moved and refactored to accept
-the destination register number as an explicit parameter instead of
-extracting it from ctx->opcode.
+bcctr
+bcctrl
 
-Checked with '-d in_asm,op'.  The printed TCG ops may differ from the
-pre-refactor log because EA now uses do_ea_calc(ctx, ra, 0), which lowers
-as GPR[ra] + 0 (then narrow in 32-bit mode) instead of mov/ext32u from ra
-alone.
+bctar
+bctarl
 
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+The branch was tested by comparing the qemu -D log -d op,in_asm output for
+each instruction and also for the various combinations of branch option
+(BO) bits for the conditional branch instructions. Additionally, gdb
+was used to confirm the LR and other register's behavior is consistent
+to legacy behavior.
+
+Further, the changes also pass a boot test into Fedora distro.
+
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260827133010.278889-13-rathc@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260827133010.278889-16-rathc@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/insn32.decode                   |   7 +
- target/ppc/translate.c                     | 212 --------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 214 +++++++++++++++++++++
- 3 files changed, 221 insertions(+), 212 deletions(-)
+ target/ppc/insn32.decode               |  13 +++
+ target/ppc/translate.c                 | 148 -----------------------
+ target/ppc/translate/branch-impl.c.inc | 156 +++++++++++++++++++++++++
+ 3 files changed, 169 insertions(+), 148 deletions(-)
 
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 37f508a5c2..e8326a9d0b 100644
+index 0c58899429..e7cc36bd6c 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -343,6 +343,13 @@ LSKU            111010 ..... ..... ............. 0 11   @DD
- LCXU            111010 ..... ..... ............. 1 11   @DD
+@@ -1493,6 +1493,19 @@ CLRBHRB         011111 ----- ----- ----- 0110101110 -
  
+ B               010010 ........................ . .  @I_b
  
-+### Fixed-Point Atomic Load/Store Instructions
++%bd             2:14 !function=times_4
++&bcond          bo:uint32_t bi bd aa:bool lk:bool
++@B_bcond        ...... bo:5 bi:5 .............. aa:1 lk:1 &bcond bd=%bd
 +
-+LWAT            011111 ..... ..... ..... 1001000110 -   @X
-+STWAT           011111 ..... ..... ..... 1011000110 -   @X
-+LDAT            011111 ..... ..... ..... 1001100110 -   @X
-+STDAT           011111 ..... ..... ..... 1011100110 -   @X
++BC              010000 ..... ..... .............. . .  @B_bcond
 +
- ### Fixed-Point Store Instructions
++&bclr          bo bi bh lk:bool
++@XL_bclr       ...... bo:5 bi:5 --- bh:2 .......... lk:1 &bclr
++
++BCLR            010011 ..... ..... ---.. 0000010000 . @XL_bclr
++BCCTR           010011 ..... ..... ---.. 1000010000 . @XL_bclr
++BCTAR           010011 ..... ..... ---.. 1000110000 . @XL_bclr
++
+ ## Misc POWER instructions
  
- STB             100110 ..... ..... ................     @D
+ ATTN            000000 00000 00000 00000 0100000000 0
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 749ae56cdf..c44cffb5e8 100644
+index 3c6e2da8ce..f5b1446d7a 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -2741,212 +2741,6 @@ static void gen_isync(DisasContext *ctx)
-     ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+@@ -3089,150 +3089,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+     tcg_gen_movi_tl(cpu_lr, nip);
  }
  
--static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
--                                      TCGv EA, TCGCond cond, int addend)
+-#define BCOND_IM  0
+-#define BCOND_LR  1
+-#define BCOND_CTR 2
+-#define BCOND_TAR 3
+-
+-static void gen_bcond(DisasContext *ctx, int type)
 -{
--    TCGv t = tcg_temp_new();
--    TCGv t2 = tcg_temp_new();
--    TCGv u = tcg_temp_new();
+-    uint32_t bo = BO(ctx->opcode);
+-    TCGLabel *l1;
+-    TCGv target;
+-    target_long bhrb_type = BHRB_TYPE_OTHER;
 -
--    tcg_gen_qemu_ld_tl(t, EA, ctx->mem_idx, memop);
--    tcg_gen_addi_tl(t2, EA, memop_size(memop));
--    tcg_gen_qemu_ld_tl(t2, t2, ctx->mem_idx, memop);
--    tcg_gen_addi_tl(u, t, addend);
--
--    /* E.g. for fetch and increment bounded... */
--    /* mem(EA,s) = (t != t2 ? u = t + 1 : t) */
--    tcg_gen_movcond_tl(cond, u, t, t2, u, t);
--    tcg_gen_qemu_st_tl(u, EA, ctx->mem_idx, memop);
--
--    /* RT = (t != t2 ? t : u = 1<<(s*8-1)) */
--    tcg_gen_movcond_tl(cond, cpu_gpr[rD(ctx->opcode)], t, t2, t,
--                       tcg_constant_tl(1 << (memop_size(memop) * 8 - 1)));
--}
--
--static void gen_ld_atomic(DisasContext *ctx, MemOp memop)
--{
--    uint32_t gpr_FC = FC(ctx->opcode);
--    TCGv EA = tcg_temp_new();
--    int rt = rD(ctx->opcode);
--    bool need_serial;
--    TCGv src, dst;
--
--    gen_addr_register(ctx, EA);
--    dst = cpu_gpr[rt];
--    src = cpu_gpr[(rt + 1) & 31];
--
--    need_serial = false;
--    memop |= MO_ALIGN;
--    switch (gpr_FC) {
--    case 0: /* Fetch and add */
--        tcg_gen_atomic_fetch_add_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 1: /* Fetch and xor */
--        tcg_gen_atomic_fetch_xor_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 2: /* Fetch and or */
--        tcg_gen_atomic_fetch_or_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 3: /* Fetch and 'and' */
--        tcg_gen_atomic_fetch_and_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 4:  /* Fetch and max unsigned */
--        tcg_gen_atomic_fetch_umax_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 5:  /* Fetch and max signed */
--        tcg_gen_atomic_fetch_smax_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 6:  /* Fetch and min unsigned */
--        tcg_gen_atomic_fetch_umin_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 7:  /* Fetch and min signed */
--        tcg_gen_atomic_fetch_smin_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--    case 8: /* Swap */
--        tcg_gen_atomic_xchg_tl(dst, EA, src, ctx->mem_idx, memop);
--        break;
--
--    case 16: /* Compare and swap not equal */
--        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
--            need_serial = true;
+-    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+-        target = tcg_temp_new();
+-        if (type == BCOND_CTR) {
+-            tcg_gen_mov_tl(target, cpu_ctr);
+-        } else if (type == BCOND_TAR) {
+-            gen_load_spr(target, SPR_TAR);
 -        } else {
--            TCGv t0 = tcg_temp_new();
--            TCGv t1 = tcg_temp_new();
+-            tcg_gen_mov_tl(target, cpu_lr);
+-        }
+-        if (!LK(ctx->opcode)) {
+-            bhrb_type |= BHRB_TYPE_INDIRECT;
+-        }
+-        bhrb_type |= BHRB_TYPE_XL_FORM;
+-    } else {
+-        target = NULL;
+-    }
+-    if (LK(ctx->opcode)) {
+-        gen_setlr(ctx, ctx->base.pc_next);
+-        bhrb_type |= BHRB_TYPE_CALL;
+-    }
+-    l1 = gen_new_label();
+-    if ((bo & 0x4) == 0) {
+-        /* Decrement and test CTR */
+-        TCGv temp = tcg_temp_new();
 -
--            tcg_gen_qemu_ld_tl(t0, EA, ctx->mem_idx, memop);
--            if ((memop & MO_SIZE) == MO_64 || TARGET_LONG_BITS == 32) {
--                tcg_gen_mov_tl(t1, src);
--            } else {
--                tcg_gen_ext32u_tl(t1, src);
+-        if (type == BCOND_CTR) {
+-            /*
+-             * All ISAs up to v3 describe this form of bcctr as invalid but
+-             * some processors, ie. 64-bit server processors compliant with
+-             * arch 2.x, do implement a "test and decrement" logic instead,
+-             * as described in their respective UMs. This logic involves CTR
+-             * to act as both the branch target and a counter, which makes
+-             * it basically useless and thus never used in real code.
+-             *
+-             * This form was hence chosen to trigger extra micro-architectural
+-             * side-effect on real HW needed for the Spectre v2 workaround.
+-             * It is up to guests that implement such workaround, ie. linux, to
+-             * use this form in a way it just triggers the side-effect without
+-             * doing anything else harmful.
+-             */
+-            if (unlikely(!is_book3s_arch2x(ctx))) {
+-                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+-                return;
 -            }
--            tcg_gen_movcond_tl(TCG_COND_NE, t1, t0, t1,
--                               cpu_gpr[(rt + 2) & 31], t0);
--            tcg_gen_qemu_st_tl(t1, EA, ctx->mem_idx, memop);
--            tcg_gen_mov_tl(dst, t0);
--        }
--        break;
 -
--    case 24: /* Fetch and increment bounded */
--        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
--            need_serial = true;
+-            if (NARROW_MODE(ctx)) {
+-                tcg_gen_ext32u_tl(temp, cpu_ctr);
+-            } else {
+-                tcg_gen_mov_tl(temp, cpu_ctr);
+-            }
+-            if (bo & 0x2) {
+-                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+-            } else {
+-                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+-            }
+-            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
 -        } else {
--            gen_fetch_inc_conditional(ctx, memop, EA, TCG_COND_NE, 1);
+-            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+-            if (NARROW_MODE(ctx)) {
+-                tcg_gen_ext32u_tl(temp, cpu_ctr);
+-            } else {
+-                tcg_gen_mov_tl(temp, cpu_ctr);
+-            }
+-            if (bo & 0x2) {
+-                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+-            } else {
+-                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+-            }
 -        }
--        break;
--    case 25: /* Fetch and increment equal */
--        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
--            need_serial = true;
--        } else {
--            gen_fetch_inc_conditional(ctx, memop, EA, TCG_COND_EQ, 1);
--        }
--        break;
--    case 28: /* Fetch and decrement bounded */
--        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
--            need_serial = true;
--        } else {
--            gen_fetch_inc_conditional(ctx, memop, EA, TCG_COND_NE, -1);
--        }
--        break;
+-        bhrb_type |= BHRB_TYPE_COND;
+-    }
+-    if ((bo & 0x10) == 0) {
+-        /* Test CR */
+-        uint32_t bi = BI(ctx->opcode);
+-        uint32_t mask = 0x08 >> (bi & 0x03);
+-        TCGv_i32 temp = tcg_temp_new_i32();
 -
--    default:
--        /* invoke data storage error handler */
--        gen_exception_err(ctx, POWERPC_EXCP_DSI, POWERPC_EXCP_INVAL);
+-        if (bo & 0x8) {
+-            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+-            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
+-        } else {
+-            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+-            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+-        }
+-        bhrb_type |= BHRB_TYPE_COND;
 -    }
 -
--    if (need_serial) {
--        /* Restart with exclusive lock.  */
--        gen_helper_exit_atomic(tcg_env);
--        ctx->base.is_jmp = DISAS_NORETURN;
--    }
--}
+-    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
 -
--static void gen_lwat(DisasContext *ctx)
--{
--    gen_ld_atomic(ctx, DEF_MEMOP(MO_UL));
--}
--
--#ifdef TARGET_PPC64
--static void gen_ldat(DisasContext *ctx)
--{
--    gen_ld_atomic(ctx, DEF_MEMOP(MO_UQ));
--}
--#endif
--
--static void gen_st_atomic(DisasContext *ctx, MemOp memop)
--{
--    uint32_t gpr_FC = FC(ctx->opcode);
--    TCGv EA = tcg_temp_new();
--    TCGv src, discard;
--
--    gen_addr_register(ctx, EA);
--    src = cpu_gpr[rD(ctx->opcode)];
--    discard = tcg_temp_new();
--
--    memop |= MO_ALIGN;
--    switch (gpr_FC) {
--    case 0: /* add and Store */
--        tcg_gen_atomic_add_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 1: /* xor and Store */
--        tcg_gen_atomic_xor_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 2: /* Or and Store */
--        tcg_gen_atomic_or_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 3: /* 'and' and Store */
--        tcg_gen_atomic_and_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 4:  /* Store max unsigned */
--        tcg_gen_atomic_umax_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 5:  /* Store max signed */
--        tcg_gen_atomic_smax_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 6:  /* Store min unsigned */
--        tcg_gen_atomic_umin_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 7:  /* Store min signed */
--        tcg_gen_atomic_smin_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
--        break;
--    case 24: /* Store twin  */
--        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
--            /* Restart with exclusive lock.  */
--            gen_helper_exit_atomic(tcg_env);
--            ctx->base.is_jmp = DISAS_NORETURN;
+-    if (type == BCOND_IM) {
+-        target_ulong li = (target_long)((int16_t)(BD(ctx->opcode)));
+-        if (likely(AA(ctx->opcode) == 0)) {
+-            gen_goto_tb(ctx, 0, ctx->cia + li);
 -        } else {
--            TCGv t = tcg_temp_new();
--            TCGv t2 = tcg_temp_new();
--            TCGv s = tcg_temp_new();
--            TCGv s2 = tcg_temp_new();
--            TCGv ea_plus_s = tcg_temp_new();
--
--            tcg_gen_qemu_ld_tl(t, EA, ctx->mem_idx, memop);
--            tcg_gen_addi_tl(ea_plus_s, EA, memop_size(memop));
--            tcg_gen_qemu_ld_tl(t2, ea_plus_s, ctx->mem_idx, memop);
--            tcg_gen_movcond_tl(TCG_COND_EQ, s, t, t2, src, t);
--            tcg_gen_movcond_tl(TCG_COND_EQ, s2, t, t2, src, t2);
--            tcg_gen_qemu_st_tl(s, EA, ctx->mem_idx, memop);
--            tcg_gen_qemu_st_tl(s2, ea_plus_s, ctx->mem_idx, memop);
+-            gen_goto_tb(ctx, 0, li);
 -        }
--        break;
--    default:
--        /* invoke data storage error handler */
--        gen_exception_err(ctx, POWERPC_EXCP_DSI, POWERPC_EXCP_INVAL);
+-    } else {
+-        if (NARROW_MODE(ctx)) {
+-            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
+-        } else {
+-            tcg_gen_andi_tl(cpu_nip, target, ~3);
+-        }
+-        gen_lookup_and_goto_ptr(ctx);
 -    }
+-    if ((bo & 0x14) != 0x14) {
+-        /* fallthrough case */
+-        gen_set_label(l1);
+-        gen_goto_tb(ctx, 1, ctx->base.pc_next);
+-    }
+-    ctx->base.is_jmp = DISAS_NORETURN;
 -}
 -
--static void gen_stwat(DisasContext *ctx)
+-static void gen_bc(DisasContext *ctx)
 -{
--    gen_st_atomic(ctx, DEF_MEMOP(MO_UL));
+-    gen_bcond(ctx, BCOND_IM);
 -}
 -
--#ifdef TARGET_PPC64
--static void gen_stdat(DisasContext *ctx)
+-static void gen_bcctr(DisasContext *ctx)
 -{
--    gen_st_atomic(ctx, DEF_MEMOP(MO_UQ));
+-    gen_bcond(ctx, BCOND_CTR);
 -}
--#endif
 -
- /* wait */
- static void gen_wait(DisasContext *ctx)
- {
-@@ -5571,12 +5365,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
- GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
- GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
- GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
--GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
--#if defined(TARGET_PPC64)
--GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
--#endif
+-static void gen_bclr(DisasContext *ctx)
+-{
+-    gen_bcond(ctx, BCOND_LR);
+-}
+-
+-static void gen_bctar(DisasContext *ctx)
+-{
+-    gen_bcond(ctx, BCOND_TAR);
+-}
+-
+ /***                      Condition register logical                       ***/
+ #define GEN_CRLOGIC(name, tcg_op, opc)                                        \
+ static void glue(gen_, name)(DisasContext *ctx)                               \
+@@ -5330,10 +5186,6 @@ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
  /* ISA v3.0 changed the extended opcode from 62 to 30 */
  GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
  GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 25a60d3d3a..f9435f4a00 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -1646,3 +1646,217 @@ static bool trans_SRAWI(DisasContext *ctx, arg_SRAWI *a)
-     }
+-GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
+-GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
+-GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
+-GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
+ GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
+index 745f71afd1..c51fd9b13e 100644
+--- a/target/ppc/translate/branch-impl.c.inc
++++ b/target/ppc/translate/branch-impl.c.inc
+@@ -55,3 +55,159 @@ static bool trans_B(DisasContext *ctx, arg_I_b *a)
+ 
      return true;
  }
 +
-+static void do_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
-+                                     TCGv EA, int rt,
-+                                     TCGCond cond, int addend)
++#define BCOND_IM  0
++#define BCOND_LR  1
++#define BCOND_CTR 2
++#define BCOND_TAR 3
++
++static bool bcond_helper(DisasContext *ctx, int type, uint32_t bo, int bi,
++                         int bd, int bh, bool aa, bool lk)
 +{
-+    TCGv t = tcg_temp_new();
-+    TCGv t2 = tcg_temp_new();
-+    TCGv u = tcg_temp_new();
++    TCGLabel *l1;
++    TCGv target;
++    target_long bhrb_type = BHRB_TYPE_OTHER;
 +
-+    tcg_gen_qemu_ld_tl(t, EA, ctx->mem_idx, memop);
-+    tcg_gen_addi_tl(t2, EA, memop_size(memop));
-+    tcg_gen_qemu_ld_tl(t2, t2, ctx->mem_idx, memop);
-+    tcg_gen_addi_tl(u, t, addend);
++    if (type == BCOND_IM && bh != -1) {
++        /* BCOND_IM should never use bh */
++        return false;
++    } else if (type != BCOND_IM && (bd != -1 || aa != 0)) {
++        /* Other BCOND types should never use bd or aa */
++        return false;
++    }
 +
-+    /* mem(EA,s) = (t cond t2 ? u = t + addend : t) */
-+    tcg_gen_movcond_tl(cond, u, t, t2, u, t);
-+    tcg_gen_qemu_st_tl(u, EA, ctx->mem_idx, memop);
++    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
++        target = tcg_temp_new();
++        if (type == BCOND_CTR) {
++            tcg_gen_mov_tl(target, cpu_ctr);
++        } else if (type == BCOND_TAR) {
++            gen_load_spr(target, SPR_TAR);
++        } else {
++            tcg_gen_mov_tl(target, cpu_lr);
++        }
++        if (!lk) {
++            bhrb_type |= BHRB_TYPE_INDIRECT;
++        }
++        bhrb_type |= BHRB_TYPE_XL_FORM;
++    } else {
++        target = NULL;
++    }
++    if (lk) {
++        gen_setlr(ctx, ctx->base.pc_next);
++        bhrb_type |= BHRB_TYPE_CALL;
++    }
++    l1 = gen_new_label();
++    if ((bo & 0x4) == 0) {
++        /* Decrement and test CTR */
++        TCGv temp = tcg_temp_new();
 +
-+    /* RT = (t cond t2 ? t : 1<<(s*8-1)) */
-+    tcg_gen_movcond_tl(cond, cpu_gpr[rt], t, t2, t,
-+                       tcg_constant_tl(1 << (memop_size(memop) * 8 - 1)));
++        if (type == BCOND_CTR) {
++            /*
++             * All ISAs up to v3 describe this form of bcctr as invalid but
++             * some processors, ie. 64-bit server processors compliant with
++             * arch 2.x, do implement a "test and decrement" logic instead,
++             * as described in their respective UMs. This logic involves CTR
++             * to act as both the branch target and a counter, which makes
++             * it basically useless and thus never used in real code.
++             *
++             * This form was hence chosen to trigger extra micro-architectural
++             * side-effect on real HW needed for the Spectre v2 workaround.
++             * It is up to guests that implement such workaround, ie. linux, to
++             * use this form in a way it just triggers the side-effect without
++             * doing anything else harmful.
++             */
++            if (unlikely(!is_book3s_arch2x(ctx))) {
++                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
++                return true;
++            }
++
++            if (NARROW_MODE(ctx)) {
++                tcg_gen_ext32u_tl(temp, cpu_ctr);
++            } else {
++                tcg_gen_mov_tl(temp, cpu_ctr);
++            }
++            if (bo & 0x2) {
++                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
++            } else {
++                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
++            }
++            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
++        } else {
++            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
++            if (NARROW_MODE(ctx)) {
++                tcg_gen_ext32u_tl(temp, cpu_ctr);
++            } else {
++                tcg_gen_mov_tl(temp, cpu_ctr);
++            }
++            if (bo & 0x2) {
++                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
++            } else {
++                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
++            }
++        }
++        bhrb_type |= BHRB_TYPE_COND;
++    }
++    if ((bo & 0x10) == 0) {
++        /* Test CR */
++        uint32_t mask = 0x08 >> (bi & 0x03);
++        TCGv_i32 temp = tcg_temp_new_i32();
++
++        if (bo & 0x8) {
++            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
++            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
++        } else {
++            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
++            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
++        }
++        bhrb_type |= BHRB_TYPE_COND;
++    }
++
++    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
++
++    if (type == BCOND_IM) {
++        target_ulong li = (target_long)((int16_t)(bd));
++        if (likely(aa == 0)) {
++            gen_goto_tb(ctx, 0, ctx->cia + li);
++        } else {
++            gen_goto_tb(ctx, 0, li);
++        }
++    } else {
++        if (NARROW_MODE(ctx)) {
++            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
++        } else {
++            tcg_gen_andi_tl(cpu_nip, target, ~3);
++        }
++        gen_lookup_and_goto_ptr(ctx);
++    }
++    if ((bo & 0x14) != 0x14) {
++        /* fallthrough case */
++        gen_set_label(l1);
++        gen_goto_tb(ctx, 1, ctx->base.pc_next);
++    }
++    ctx->base.is_jmp = DISAS_NORETURN;
++
++    return true;
++}
++
++static bool trans_BC(DisasContext *ctx, arg_bcond *a)
++{
++    /*
++     * bh is not used for bc variants hence we pass -1
++     */
++    return bcond_helper(ctx, BCOND_IM, a->bo, a->bi, a->bd, -1, a->aa, a->lk);
 +}
 +
 +/*
-+ * Fixed-Point Atomic Load/Store Instructions
-+ *
-+ * In the X-form encoding the RB field carries the Function Code (FC)
-+ * that selects the atomic operation.  EA is computed from RA alone.
++ * This helper is shared by bclr, bcctr and bctar.
 + */
-+static bool do_ld_atomic(DisasContext *ctx, arg_X *a, MemOp memop)
++static bool bclr_helper(DisasContext *ctx, arg_bclr *a, int type)
 +{
-+    TCGv EA, dst, src;
-+    bool need_serial;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+
-+    EA = do_ea_calc(ctx, a->ra, tcg_constant_tl(0));
-+    dst = cpu_gpr[a->rt];
-+    src = cpu_gpr[(a->rt + 1) & 31];
-+
-+    need_serial = false;
-+    memop |= MO_ALIGN;
-+    switch (a->rb) {
-+    case 0: /* Fetch and add */
-+        tcg_gen_atomic_fetch_add_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 1: /* Fetch and xor */
-+        tcg_gen_atomic_fetch_xor_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 2: /* Fetch and or */
-+        tcg_gen_atomic_fetch_or_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 3: /* Fetch and 'and' */
-+        tcg_gen_atomic_fetch_and_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 4: /* Fetch and max unsigned */
-+        tcg_gen_atomic_fetch_umax_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 5: /* Fetch and max signed */
-+        tcg_gen_atomic_fetch_smax_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 6: /* Fetch and min unsigned */
-+        tcg_gen_atomic_fetch_umin_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 7: /* Fetch and min signed */
-+        tcg_gen_atomic_fetch_smin_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 8: /* Swap */
-+        tcg_gen_atomic_xchg_tl(dst, EA, src, ctx->mem_idx, memop);
-+        break;
-+
-+    case 16: /* Compare and swap not equal */
-+        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
-+            need_serial = true;
-+        } else {
-+            TCGv t0 = tcg_temp_new();
-+            TCGv t1 = tcg_temp_new();
-+
-+            tcg_gen_qemu_ld_tl(t0, EA, ctx->mem_idx, memop);
-+            if ((memop & MO_SIZE) == MO_64 || TARGET_LONG_BITS == 32) {
-+                tcg_gen_mov_tl(t1, src);
-+            } else {
-+                tcg_gen_ext32u_tl(t1, src);
-+            }
-+            tcg_gen_movcond_tl(TCG_COND_NE, t1, t0, t1,
-+                               cpu_gpr[(a->rt + 2) & 31], t0);
-+            tcg_gen_qemu_st_tl(t1, EA, ctx->mem_idx, memop);
-+            tcg_gen_mov_tl(dst, t0);
-+        }
-+        break;
-+
-+    case 24: /* Fetch and increment bounded */
-+        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
-+            need_serial = true;
-+        } else {
-+            do_fetch_inc_conditional(ctx, memop, EA, a->rt, TCG_COND_NE, 1);
-+        }
-+        break;
-+    case 25: /* Fetch and increment equal */
-+        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
-+            need_serial = true;
-+        } else {
-+            do_fetch_inc_conditional(ctx, memop, EA, a->rt, TCG_COND_EQ, 1);
-+        }
-+        break;
-+    case 28: /* Fetch and decrement bounded */
-+        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
-+            need_serial = true;
-+        } else {
-+            do_fetch_inc_conditional(ctx, memop, EA, a->rt, TCG_COND_NE, -1);
-+        }
-+        break;
-+
-+    default:
-+        /* invoke data storage error handler */
-+        gen_exception_err(ctx, POWERPC_EXCP_DSI, POWERPC_EXCP_INVAL);
-+    }
-+
-+    if (need_serial) {
-+        /* Restart with exclusive lock.  */
-+        gen_helper_exit_atomic(tcg_env);
-+        ctx->base.is_jmp = DISAS_NORETURN;
-+    }
-+    return true;
++    /*
++     * bd and aa is not used for bc variants hence we pass -1 and 0 respectively
++     */
++    return bcond_helper(ctx, type, a->bo, a->bi, -1, a->bh, 0, a->lk);
 +}
 +
-+static bool do_st_atomic(DisasContext *ctx, arg_X *a, MemOp memop)
-+{
-+    TCGv EA, src, discard;
-+
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+
-+    EA = do_ea_calc(ctx, a->ra, tcg_constant_tl(0));
-+    src = cpu_gpr[a->rt];
-+    discard = tcg_temp_new();
-+
-+    memop |= MO_ALIGN;
-+    switch (a->rb) {
-+    case 0: /* add and Store */
-+        tcg_gen_atomic_add_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 1: /* xor and Store */
-+        tcg_gen_atomic_xor_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 2: /* Or and Store */
-+        tcg_gen_atomic_or_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 3: /* 'and' and Store */
-+        tcg_gen_atomic_and_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 4: /* Store max unsigned */
-+        tcg_gen_atomic_umax_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 5: /* Store max signed */
-+        tcg_gen_atomic_smax_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 6: /* Store min unsigned */
-+        tcg_gen_atomic_umin_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 7: /* Store min signed */
-+        tcg_gen_atomic_smin_fetch_tl(discard, EA, src, ctx->mem_idx, memop);
-+        break;
-+    case 24: /* Store twin */
-+        if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
-+            /* Restart with exclusive lock.  */
-+            gen_helper_exit_atomic(tcg_env);
-+            ctx->base.is_jmp = DISAS_NORETURN;
-+        } else {
-+            TCGv t = tcg_temp_new();
-+            TCGv t2 = tcg_temp_new();
-+            TCGv s = tcg_temp_new();
-+            TCGv s2 = tcg_temp_new();
-+            TCGv ea_plus_s = tcg_temp_new();
-+
-+            tcg_gen_qemu_ld_tl(t, EA, ctx->mem_idx, memop);
-+            tcg_gen_addi_tl(ea_plus_s, EA, memop_size(memop));
-+            tcg_gen_qemu_ld_tl(t2, ea_plus_s, ctx->mem_idx, memop);
-+            tcg_gen_movcond_tl(TCG_COND_EQ, s, t, t2, src, t);
-+            tcg_gen_movcond_tl(TCG_COND_EQ, s2, t, t2, src, t2);
-+            tcg_gen_qemu_st_tl(s, EA, ctx->mem_idx, memop);
-+            tcg_gen_qemu_st_tl(s2, ea_plus_s, ctx->mem_idx, memop);
-+        }
-+        break;
-+    default:
-+        /* invoke data storage error handler */
-+        gen_exception_err(ctx, POWERPC_EXCP_DSI, POWERPC_EXCP_INVAL);
-+    }
-+    return true;
-+}
-+
-+TRANS(LWAT, do_ld_atomic, DEF_MEMOP(MO_UL))
-+TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
-+
-+static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+#if defined(TARGET_PPC64)
-+    return do_ld_atomic(ctx, a, DEF_MEMOP(MO_UQ));
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
-+
-+static bool trans_STDAT(DisasContext *ctx, arg_STDAT *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+#if defined(TARGET_PPC64)
-+    return do_st_atomic(ctx, a, DEF_MEMOP(MO_UQ));
-+#else
-+    qemu_build_not_reached();
-+#endif
-+    return true;
-+}
++TRANS(BCLR, bclr_helper, BCOND_LR)
++TRANS(BCCTR, bclr_helper, BCOND_CTR)
++TRANS_FLAGS2(BCTAR_ISA207, BCTAR, bclr_helper, BCOND_TAR)
 -- 
 2.52.0
 
