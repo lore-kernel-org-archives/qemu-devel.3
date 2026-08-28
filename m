@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7763C61DCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8D1C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzpup-0001fz-N6; Fri, 28 Aug 2026 02:18:17 -0400
+	id 1wzpvG-00026H-Qi; Fri, 28 Aug 2026 02:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzpuk-0001eG-SZ; Fri, 28 Aug 2026 02:18:11 -0400
+ id 1wzpvE-00020s-OG; Fri, 28 Aug 2026 02:18:40 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzpuj-0002Nb-6A; Fri, 28 Aug 2026 02:18:10 -0400
+ id 1wzpvD-0002Qo-2f; Fri, 28 Aug 2026 02:18:40 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 1E34541AE1;
- Fri, 28 Aug 2026 06:18:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F183B1F000E9;
- Fri, 28 Aug 2026 06:18:05 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9268F43A22;
+ Fri, 28 Aug 2026 06:18:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950FF1F000E9;
+ Fri, 28 Aug 2026 06:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787897887;
- bh=4K8W4a+RJBMTgCN/TwMLp1StPh/EMBKedJmlzjmIW1A=;
+ s=k20260515; t=1787897917;
+ bh=5j9neVhs+JPKC+M98wf88AjkfeRl6bE6n7tzeYq0bcw=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=oLAbenML3HnCdGxlGY/tGbvW1aZq0m7rPGcyVin//C25sqN6zNNppU0mRZ88ytWcc
- LfLrpZNwFXK9M7yQLraYwcdH3r4px9rin87NJLHPsNbqM+ru9AQt4h0mV3xjCpD0dT
- CHIAOqaR3cndh/6zRkJ+P4iX6CM9nSlIUewSDy79UD0S4GUq4Ps/X9HMAhUXux+nSF
- ZzUVmd47irIitd0Pycv8viCSwnB1Jcz5lQUfsYT1d2z0Sm96wZspuyIgN4GEqt4CQy
- n7z+EubWxsXlmi6F43JCuL32XnGJxnPXimKcjLDFRmfFGH6oyVR4HwfM/PlA/1zOpr
- tQc3Dx1c8zdAw==
-Message-ID: <7c8f1d20-43bc-423e-a7fb-2ea36e526e0b@kernel.org>
-Date: Fri, 28 Aug 2026 15:18:04 +0900
+ b=Ne4+ro4/zZclhczrJjAHQCtwBuGqfZe7+jQmfYGdy0qw0iex8kR4icLVqByBanV5M
+ T8EViEfEQ1muAJuFYLr/N7/FitVwezcnsPf7boz1RblR2WaTW+NEUijfxdGhzN8+Pt
+ u/mDFymdrHf+OrUoLg82mAif4dbZ9PXqqaPTwwSPkCeqNpCB4XwQYEJArda/9lLV8p
+ rO2bZmjXXIweqyFC/5ve++O4KFinn/y+ejleqSIBeQ/Pb3gzL6Rrrp4Xx173qI1fV3
+ 7jM6W9iTLvIzXS5srkIHWz1cQ+LRVGgJVnogvo5ygZ1vF3qt2N940VLshKNZ/LEY2O
+ JQ/uejJRQPLug==
+Message-ID: <6408b297-24bc-484c-a8cf-5ab4dce6a1ce@kernel.org>
+Date: Fri, 28 Aug 2026 15:18:35 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/12] virtio-blk: derive the maximum zone append size
+Subject: Re: [PATCH 11/12] file-posix: reject a zone append past the device
+ capacity
 To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260825205748.679968-1-cassel@kernel.org>
- <20260825205748.679968-11-cassel@kernel.org>
+ <20260825205748.679968-12-cassel@kernel.org>
 Content-Language: en-US
 From: Damien Le Moal <dlemoal@kernel.org>
 Organization: Western Digital Research
-In-Reply-To: <20260825205748.679968-11-cassel@kernel.org>
+In-Reply-To: <20260825205748.679968-12-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
@@ -75,27 +75,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/26/26 05:57, Niklas Cassel wrote:
-> The max_append_sectors field of virtio_blk_zoned_characteristics must be
-> set by the device to the largest zone append request that can be issued
-> to it, and a value of zero tells the guest driver that zone append is not
-> supported at all (virtio 1.4, 5.2.5.2). Linux refuses to attach a zoned
-> device that reports zero.
+> raw_co_zone_append() checks that the offset it is given is aligned to the
+> zone size, but not that it names a zone of the device. raw_co_prw() then
+> derives a zone index from it and reads that entry of the write pointer
+> array, so an offset past the end of the device reads past the end of the
+> array.
 > 
-> We pass BlockLimits.max_append_sectors straight through, which makes that
-> field mean "zone append unsupported" when it is unset, rather than "this
-> backend imposes no limit of its own". Only a backend that has a limit of
-> its own has anything to put there.
+> bdrv_co_zone_append() does not catch it either: bdrv_check_qiov_request()
+> bounds the request against BDRV_MAX_LENGTH, which has nothing to do with
+> the size of this device. A guest cannot reach it, because
+> check_zoned_request() in virtio-blk rejects an out of range offset first,
+> but qemu-io and any other caller of blk_co_zone_append() can:
 > 
-> Derive the value instead. A backend limit is honoured when there is one,
-> and otherwise the request is bounded by the zone size, since an append
-> cannot cross a zone boundary, and by the largest request the block layer
-> can carry. The result cannot be zero.
+>   $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
+>         -c "zap -p 0x100000000000 0x1000"
+>   Segmentation fault
 > 
-> A backend that carries out an append itself, rather than passing it to a
-> device that has a limit of its own, is the one that knows how large a
-> request its implementation can take, so it reports that in
-> BlockLimits.max_append_sectors and this does not have to guess at it.
+> On a null_blk device with 1000 zones of 256 MiB, that offset yields zone
+> index 65536 and reads 512 KiB beyond an 8000 byte allocation.
 > 
+> Reject an offset that lies outside the device. That also bounds the
+> zone index that raw_co_prw() derives from it, so its write pointer
+> lookup stays inside the array.
+> 
+> Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
