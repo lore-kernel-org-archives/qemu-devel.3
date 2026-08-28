@@ -4,138 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE20BC61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6A9C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wztZF-0008C2-1S; Fri, 28 Aug 2026 06:12:13 -0400
+	id 1wztaF-00006H-Lp; Fri, 28 Aug 2026 06:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wztZD-0008Bk-Rt
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:12:11 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wztaE-000068-En
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:13:14 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wztZC-0000mI-9u
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:12:11 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wztaC-0000tx-Ap
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:13:14 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SA88pj2596142
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 10:12:09 GMT
+ 67SA7Rga2061310
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 10:13:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KFHEpAzofODBCAtYpK8flaMKjwewVs/ExDx8uNaQKig=; b=BCPLUGMFy+1YUcQJ
- iaRg/P4pvI9qXDGpMnZgy8qGqQK/d8nxRbvnstJOJVWVsp2l+XUAONKBz4gL8Oxx
- FNagIFtefUHsrLjcWpvi+RwKsPGhEZ7S9hQnXr/HQ1tzuJHzyS/1O33gEhLYlpPt
- /vZn/3QS5h9EpK0xISdplbNcWpfmEZKDueuxhGpzdQpESPcYAAslCJmwW1HfY/AK
- RPBCWPKHyscT2GIPswleok5HkHlhVXRvtlYmU99Je+xMnqOuFWi9LANhUH6Xmy34
- HccR0j2YHjVv51S+yNYm0SWkkWDFKGwoCUir+EHrmkonSbXGTRU+xNNakQ8AsybE
- AfCDwg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb1v39npu-1
+ 0KgZkJ3R2WTe4gmka2newT6tRgg1F3MaZRYWRM/4MJw=; b=QRFoxDN4mtgo8toA
+ 6zS1oGN5ZcjeQyyxTuYvp0BsIPNDllF39SlvwvG8yMtSGNmWAFotQ9rbeCaur8cC
+ KNCBooorADTsk0DJ4zK0p0R1kBsfzeyC7I2X5TTa3OIMJJS80au74NXPHlKdG5Y3
+ 6qi6mIPK8OzueoSjULV5FLVzawpnT4eRHpFRZYoQb5BS1YsUMBKCZbajeZ/DYIAC
+ FVmTeVufM1+WYlhMQGfKQv/AtP/4S9ty1pHQQWFf/PpT9U6D0KV9jAblz5ks9CQY
+ WC7hnP4D4NTLeY9Szzj5/NaEV7NDjx9dG7548HuGlNKL3BteIn2fBJaKxZTLTeAc
+ YVFdkQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3mu975d-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 10:12:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-52d33c89a29so17745191cf.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:12:08 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 10:13:10 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-52ff14b1c02so1899621cf.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787911928; x=1788516728; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787911990; x=1788516790; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=KFHEpAzofODBCAtYpK8flaMKjwewVs/ExDx8uNaQKig=;
- b=kr0Ei1n16jEhUe2d3aAM3ELjeqqgawZkV4yjozC6y3ku5RE+rhu5hZ41iwmcXjlig1
- mwD6VfRrypc+J2x+joJwNNMLPANfGdNvGiQlCrlTu/iixDoEBlX4C5Qw2eDZAC0NuwV6
- zLl+pC0FuU8s0xpd/3lBWkehTw9Tca6gsMVuhR8e2Lg3DPNwxxRDtD6dXQX6udfDGD+j
- 6H82fs/GWJHaZhXRQ2y4o7YDsGU25nxbnuYc22aLL7UBUTIfSYAjWP5Im4C1qflgZM6x
- QEnFXzJ4zTamsySAnIYj2dtosdEczWqlWLkkhawZP32mjHGF5bZqKqnpAVfb9cDrVCfa
- poRg==
+ bh=0KgZkJ3R2WTe4gmka2newT6tRgg1F3MaZRYWRM/4MJw=;
+ b=ExiCtSgWzPgd1cGToeDQhNiWovZYbd5uFD3rRMBtXm4PKlOb057jJlIfjKwG1xhqSC
+ udVIz6X/F13G4QsBuG3WNesUy7hkke+dgWtDUn6/poJpO25uPvANRfph3Jch3Odnxb85
+ hokcrKiaiGVAO8/rmT5xf5TrC1ZzMwdXQiVLQ+1ORQnvDU17oYgAidEv7eIOIV3IjoPH
+ S5BMO0z1RvPUlofxu0Hwv3pApZwc2Bh1BO71dzafKpimOaRQeetJ2thnjCkGJP0GRfC3
+ jX+v/p98Gh6kqVx14NETNnt4pwhbuYSth5JJ34aLyDJOJUBXtYxopOjHjODwTVoHAOvB
+ EqTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787911928; x=1788516728;
+ d=1e100.net; s=20251104; t=1787911990; x=1788516790;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KFHEpAzofODBCAtYpK8flaMKjwewVs/ExDx8uNaQKig=;
- b=AisVTcliKBf9QV9kQO/8kKr1onzDcJjbGRGGo5hmGN2zUAx30RoV2Yxsbl5NRvOy+R
- nJez5qRpHwbmPc3EhhYzFFEinUTySshE3MZfFGQNONWbQhOZJIwMkGfbG29F0XLs7Swz
- EFPq7Am1m3rPMUfrNpIGKqsiFe/g6KtGH/SkO41Ipuyc7oRyyAUPNKxWadm7zRC2086H
- /M4wpZh4P9ig1sDyw5mGcnN70w4ck+CLBXzB+A0fR8uhPY+iTsj+yaWNDZPUZg1zoQyx
- ArBIGNcm3kyT74ZEdKiy94IgOciWCTd8PlEANhujzzbOQVL6lbBoqo0OUKLNyqZFJ5BI
- y2lg==
+ bh=0KgZkJ3R2WTe4gmka2newT6tRgg1F3MaZRYWRM/4MJw=;
+ b=F+yrcViJhbM9wllzV1EOJF/Ir/SfkqxsPIrIOSGlK6mzXp4akG7UJj84y/+FCZCVM4
+ 3mc/bOyIJRGBwQp6kWjylNVvlE+GhwL0LMqGvjhg+2k5VKfKBDrODfYnvt0UPxjJJULn
+ Pzx6lEanzb6JILS8pWmybeyoKYXk2ots1M3/4yfeyd5EPBFLrWCT1owX8w/ND4Tni3yF
+ 9zy5REcYP4kPdSDUlzXd7EYGBTVBspTvkzPx2Evp3i1o8YSTZQmLQGNFyx8pU7oZZWpF
+ eZQSdHP3JbFcAS0LOmt3Scx7HxDoKQqWTBvkgfOCeKqoPoCVc3FbKXx6QnxGTfdqLjY8
+ a4fw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rox9ylECHTYW9wekLDDB5rvAt0klFA5s0XzMdM1iPk1yctKkKg5QGDbK926XjX1pTleL/dzSdn368vR@nongnu.org
-X-Gm-Message-State: AFuF++mLDOfCVKkJQBwEqMy4N3mJ12sw/NGxpHhD/nBKoSbjRBeQu+UW
- pBSC3haZFzqPNnmGQsENV2cnOjPSmNbQ9OAwwph64BM3Qj5YnzmcKpHbmIDmi+qvMCNtArY2K7s
- BUcMEZfdwOkIdwAYYKOWYG4uGLWeJxTO2oHtFKTM/L4hQnXd7RF6y/oWgMg==
-X-Gm-Gg: AR+sD1271eyRKn2Y7vqUy3oIlPT5H/eJdwWc5iJVn82ex8vK15S7GRUtm85UOEAm7FU
- fIfE8nB4Rpkp+rDhgOgCjWC9e+aPqkBO7TUZUza/jdtlNHiMTsNPy2uC8TI0qSeTDz220dhTAOg
- rhYmnA6SGvbypFQPOXTzR6q/bh2bYYaapSF1UBipWdYc1nUfLeukNDc2yqwxw5qcrY0JtTPliHa
- tuasQlI9EbJHMFmii9T8cKxf/WW8hbmslme6Xq3PltD7oLT9jMqk4t7y0OkPjI0nDaVzhOr7RWJ
- ZjzeMfKITt+gxbhgfI/RIIt0R83xk12GE5qZwf0JvC43c9glRM6GHJEKX0NUBfzeSMwgxk2aKTk
- s219IhpqG2Lb6Y76Wpn/8+9Vy/fPU+DSTeg==
-X-Received: by 2002:a05:622a:15d3:b0:516:d699:a99b with SMTP id
- d75a77b69052e-52fb9675b7emr51125921cf.40.1787911923270; 
- Fri, 28 Aug 2026 03:12:03 -0700 (PDT)
-X-Received: by 2002:a05:622a:15d3:b0:516:d699:a99b with SMTP id
- d75a77b69052e-52fb9675b7emr51125501cf.40.1787911922732; 
- Fri, 28 Aug 2026 03:12:02 -0700 (PDT)
+ AHgh+RqYtasvYDjXYeV7nv2e/BbQD3wl6nh8UdZiS6sSgvZvus/kY9CkgHKFHxwaI5C8ak+bbD73YY5/jAGr@nongnu.org
+X-Gm-Message-State: AFuF++n6DY1UiRf2iBtyIDAs4oj5jYh56V5RnwCuOw5357KfklONz4zQ
+ rqd8AAFrgv2/1up3hP2+xAi17FSYN0Vhw5mDtRahTT//izt3HVwVxGjyiErcqSnVpfPptUvH/oU
+ MMhdkw54PJnVQ+s+LgOwl1unsTwnoRNbAfQdD37Rief3xXSSDoPrt8kCiow==
+X-Gm-Gg: AR+sD10qYfbn6qUaEWK1y7RBKQdk76CuWj7jcdEpZOqODWCF8TOiUfpIJIJkb6ccuKi
+ GGuhUO6xX5zMppYWBrbUjHMujl4EalczWyRLT5Yj53tu0ycyqEGglhLD4Kv3voIgzFDNJBlYXQ0
+ hrj1bsKtb81mG4XwtL2emRaxBqFygES9MuGCLABdROgQSsAz+DHeoSE7Ti/mdwFB6iBB0+Z1QeZ
+ Pcbg9RCEF3QaoHlopddPf5HGU5L3HTmixsAXAAAs9aEu/zG5MTEKYwJQWP8rR0IjFlWwy2PPc9o
+ 4yZ+S9RduAlqZOKGjNi0Gn8NJeq/uJ7I9fiqOHgpPqUKvE6EuazXohnUeGF+9t4Blqi1fyWyWoi
+ 8OHRnfrsZusssahNsOCqliH1rPgQScICLkQ==
+X-Received: by 2002:a05:622a:44e:b0:52e:2d4f:2219 with SMTP id
+ d75a77b69052e-52fb93cf62dmr60577391cf.9.1787911989528; 
+ Fri, 28 Aug 2026 03:13:09 -0700 (PDT)
+X-Received: by 2002:a05:622a:44e:b0:52e:2d4f:2219 with SMTP id
+ d75a77b69052e-52fb93cf62dmr60576921cf.9.1787911989131; 
+ Fri, 28 Aug 2026 03:13:09 -0700 (PDT)
 Received: from [192.168.69.226] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbab3fcesm2855350f8f.5.2026.08.28.03.12.01
+ 5b1f17b1804b1-49b8d2ba486sm88762025e9.5.2026.08.28.03.13.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 03:12:01 -0700 (PDT)
-Message-ID: <d3648fd5-78b3-4206-9777-4a98d7e522dd@oss.qualcomm.com>
-Date: Fri, 28 Aug 2026 12:12:01 +0200
+ Fri, 28 Aug 2026 03:13:08 -0700 (PDT)
+Message-ID: <2f6c9bab-dcc1-4c33-85bf-04b508f7cd67@oss.qualcomm.com>
+Date: Fri, 28 Aug 2026 12:13:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 18/49] net: add x-query-network QMP command
+Subject: Re: [PATCH v4 19/49] tests/qtest/netdev-socket: replace HMP with
+ x-query-network QMP
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
+ <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-18-af60857c2fbe@redhat.com>
+ <20260825-qemu-no-hmp-v4-19-af60857c2fbe@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260825-qemu-no-hmp-v4-18-af60857c2fbe@redhat.com>
+In-Reply-To: <20260825-qemu-no-hmp-v4-19-af60857c2fbe@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA4NiBTYWx0ZWRfX1YNyz1u09w/C
- xc/NBUHlTFxYAmGNV/6ghSe8B4CkKwCxcLCm8n9BDE86/e1X2lpFiA+bdjd+/saUWP18xoEu7u4
- SsvrCSWOylxVUkTrtXZ55EzEIe61KV0mRIjeeuoocb0R5A2bbcGyeg40BCbAEIQkYYkiVbfzy6b
- evLTvdvaTLBjDGzOZfwgZvdDv+VpfYN2H7cgrES7QcbmECFVvTDBDKcX+Ec8uclySXygWSkD34t
- LfILCRky9IOEF4kbncd7bxOD0Ii1v5ciNeXODsZbR6cF8KNFoEkEUSEMZUkqAjjq0b7frkk90bl
- Ct/b4btBSX+lpvoqGmU2Au7B05tnwKU7hP0LYTJKHGWcCPbUzyDlAXqrXmtFHBr8vxG5occUz5d
- ioCvPccwYcoaaQXqn7sRL46hJf9K18aKeHvjhZx9ERvb3vqz/HbRhssazwwEupZuuG2hg3MOqTO
- HXcK2F/ha98AMQ0W0Vw==
-X-Proofpoint-ORIG-GUID: tzElZYlipBaN2-_ivC8H9_4npVBg1_kW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA4NiBTYWx0ZWRfX6F1s3Gp5Bj6U
- zccs3FtOZWwfAAFqj3y+1tU5e+f7qOG/xVAP0wL+YTRLMR46y3S37O6i4jR1iJsU30GO1q9ubvc
- MwajghHCulHoDnjAu4RJ++qL6TuP5XA=
-X-Authority-Analysis: v=2.4 cv=faedDUQF c=1 sm=1 tr=0 ts=6a915ef8 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=ZbMt8MVA c=1 sm=1 tr=0 ts=6a915f36 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: tzElZYlipBaN2-_ivC8H9_4npVBg1_kW
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: gyLlrjKCqCm2cOy5Gp3IUpy3uDzGoc_M
+X-Proofpoint-GUID: gyLlrjKCqCm2cOy5Gp3IUpy3uDzGoc_M
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA4NiBTYWx0ZWRfX6nejumCd/N1L
+ 8UC/pCpqhREGbj/Zv5gKz4I/wbzk7KW9urGS4TFWG9N5Erds2rsBh3ExfqUB4zzkdcJD6/3QoRW
+ /VQ54af6vuLFf/lBRZY8Esqs+BZMx6c=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA4NiBTYWx0ZWRfXxgfcrnosjPTr
+ Rd2pl84tc9TP/RA15lVSLtr8T0brHuOzjgnlD49vbCYHSpZi9Ea8lnoX8Lsp4R748cm2Q4NcQpH
+ MmKrrJsyd7VgeeVtg95JxywWyxtj+N1C7EGXtEZThtLB+Cb43CDpuCZLDlz6hV/km2xsAr561ZS
+ SGzF5kRKfALIHdG6yIl/ZsMjJgWY2B4qez43MDCBNOpBPoayxrw6arGKZv8BqXkF11f0IVgYeu+
+ PWxp+g8J+PXEfmFnYJv1AwZql6UsonYw5c+jWhc1NCH5YyFCAdErddiUlEg5QHLz295hGbxzvbj
+ uloSmQyoAKZRdiuMDF8942yOgsScCCGqY+E9aLCu5mghUaRjJh8W5hcsqxBkSKxgAHJhf59AtJL
+ zkdZUqKBQJNMs6b47+SVEqaDP/1/7TZgNnIDbNrCj0yzD6Kp5VeTSYVGRdWSlRH2fJlfcElQR6A
+ c7PLjXS6facBlBoBppA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_03,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 phishscore=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280086
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ spamscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608280086
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,26 +162,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/8/26 21:09, Marc-AndrÃ© Lureau wrote:
-> Add a structured x-query-network QMP command that returns network
-> configuration as a NetworkInfo struct with pre-grouped hub information
-> and a flat list of non-hub clients. Each hub includes its ports with
-> inlined peer client info, and each client includes attached netfilter
-> details.
+> Replace the HMP "info network" text parsing with the structured
+> x-query-network QMP command. This makes the test assertions more robust
+> by matching individual fields (info-str) instead of parsing the full HMP
+> line format.
 > 
-> Refactor hmp_info_network() to consume only the QMP result instead of
-> directly accessing internal net_clients state. This decouples HMP from
-> internal data structures, making it possible to remove HMP support
-> without losing programmatic network introspection.
+> The EXPECT_STATE macro now takes an explicit netdev id argument to look
+> up the client by name in the QMP response. The strrchr truncation is
+> made NULL-safe: if the truncation character is not found, the full
+> string is compared (and the final g_assert_cmpstr will catch
+> mismatches).
+> 
+> While at it, fix the pre-existing duplicate "qemu/sockets.h" include,
+> and reorder includes.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/net/net.h  |   3 +-
->   net/hub.c          |  29 +++++++------
->   net/hub.h          |   4 +-
->   net/net-hmp-cmds.c |  57 +++++++++++++++++++------
->   net/net.c          |  70 +++++++++++++++++++++++-------
->   qapi/net.json      | 122 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->   6 files changed, 242 insertions(+), 43 deletions(-)
+>   tests/qtest/netdev-socket.c | 143 +++++++++++++++++++++++++-------------------
+>   1 file changed, 82 insertions(+), 61 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
