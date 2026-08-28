@@ -4,145 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F08C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E22C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzvWr-0002jz-0S; Fri, 28 Aug 2026 08:17:53 -0400
+	id 1wzveK-0005m7-8o; Fri, 28 Aug 2026 08:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzvWp-0002j6-Ch
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:17:51 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzvWl-0006ve-K5
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:17:51 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SA7cIa2744796
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 12:17:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- YrvnOOqMvc6gCMX050RJEmkUu2li6R0MG2FkAVvyHSQ=; b=JlSwsGufEKFNHs15
- JRD4rbCGUFGMrE8NMjM2DXEfFjGzVBsVzqsGNJ3l4/1FfukjmQggo8K1o/etSzE+
- hmsMrIhN/X9exjrZir4bUqL05/dSIIFW/vPVlX7L0JJCdKmU/rDRY7VwyIYcWXoR
- btywIn90A3f6JTX1wx5g2ZOkAvFmbhu+Bm//JhWytVK05yzyympT1znhTajMlT+H
- 4y0m1Lm4iMPC5SueU9DgcoTqEK+E6A1KsQDvD5W9Hb1Cwq3YZny8iu99oSw3y24p
- jDWR4p7R4bQnV9QALkiexF6cKawbbP2bkOYGB2i189USoNBSuPyi/T/EHHnTbqe6
- WZu8oA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3mxsqxc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 12:17:45 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92ec3146553so170270585a.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:17:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wzveJ-0005ln-2f
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:25:35 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wzveG-000111-Fe
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:25:34 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4921eed3fa2so6986975e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787919465; x=1788524265; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YrvnOOqMvc6gCMX050RJEmkUu2li6R0MG2FkAVvyHSQ=;
- b=LW3y2NZFr7YSlYaSlXlDh7Yv9eOcb+nxvsaEeMeOgnM3zCuylGZSFe5+hKrR43rjXu
- LOYyGXYWA0VyejnfrrAEefePCiWFrs52vzQIhSc0wRlBpHGoJtLcz8SyZQhj7p5EyBdY
- 2zxXFDE2jMbIS1NEGSKpHZ7Bb2CnVPqeaAcMIaXE59BrQkb3VY9q5NyjN5Ueoq9hBg1E
- hw8b21WtMRTTF1dhUwoouxI+/vNCH2l9Wr9yG+nozG3Vq706rQigzw6Lz5kk00ZGNkxk
- RT67FaqdrASfW0U8FZRhCbKqnNwb8AMETwiHtWuDIKiB9jAcV2elvFWDO8TiwtZ2Y7F9
- ybTw==
+ d=linaro.org; s=google; t=1787919931; x=1788524731; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=x7IIqzfYo/k3tIZHIH7OgEy31u3T94zwC6jkiM6qVzY=;
+ b=norPcUkwjk4vZgDmVsFAU2rEC+vqGXuu0i5Z84GL4XpvK/31unC2dNfyN/gPddtkS+
+ SWEdfLg4rMQDUskfFRaxCxmhnmGIFTK+VxJDGeHS0gydxaw/SROzCCk+Lw3O/WeJ41TF
+ CjdA4maqUSW7LIr8/jK6A6Yt01OEs1fzLtIqY4R8rqO73hAGjYdQAwy8SSJ77taKPv98
+ q1ejXFMGCgx/oanpePGhmhujDYmha2Obqt7zm5nTI4L6MMaAd2nJ+wYJ9LZ/cAqutQqg
+ r2N7aIoREwgfAXIDX67VW4txEBaoVL9FNBt9ZxZGIg+NJxjFks0erJY8sA/SVoYMftIf
+ dmkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787919465; x=1788524265;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=YrvnOOqMvc6gCMX050RJEmkUu2li6R0MG2FkAVvyHSQ=;
- b=qD9PJJgN2Zmeaxu6YMqcE2dQr8S9+wM6rp3JjUk8yYxVoA5jhokRFaNhk9iBxdgUa3
- /p0vhHRRVRUrDs0aOFLC1Mv2cPNlE1vVhx6y0pp5ccwwrcP9uNUR7JB2WtsS6REokAUj
- 2BkaZNOCIrdKeX6NqiLo0mNXwtZqaIJGa1BIKGKMLSVBGFbKokkhHesbqH1I0RkbLjXq
- vUd1hykMBIvkDPFHhCMsxygZskHO8qXwBivU1Yu9nfUc4EuAq35nhT1v5fCwFBpk+NFp
- /r++jAptSpfxrE+dWFBMtMr17qkJLpvs02Vexlxn5A528EDW8JWB1cbfhkXIZ3R67/Xf
- tJsA==
-X-Gm-Message-State: AFuF++kWt3e+bzxhKiD2X4DH7ZfKt4d1YBj72OndTG3iuq7lcOsKZfks
- 9dKytmH9cuoWWD8s15EHNM9G/NDflC6y0vvV89KrCDFnD7M+EddW6uXLSEOvDhBhdpMXO9Zr4yS
- JWTuWTaD6qd5LBQKxzDbvoYPZ+9vhjW5WBT2HLleTiQYpXAChH+qv/h9WAQ==
-X-Gm-Gg: AR+sD10tfmIlWB4x78HHWHY29CUihb0+5sahRx9qeRsef9T30qkLSy4B3ui03K1xuv8
- RaDn9mvBt9cvHYnMQ4V8kKOK2o7PFR3mJoMb+UFljVZNQxCjR1eug2u8Tyh6j/44ANIu0WAXB8E
- YuMO7v4OSpV2e7TzMPAm49aaxX3d4V3uMU1CLAKP5/M32Ejnq8DoCyXxK33sLy2e0JfK6oIH2ze
- W04VXttv3xyxatffqe8oXmdEt0uCynpQoXYgG8f/fHgS7r8oKmwJ74JOCWHNVZh/ycTm/Ofm30t
- dD6D/pOPze/OC99YEN7c8U5o0qg3WHyUJUivBfqXWSv/hmpPyqpMFqTG6sPvIgeBUCipyRcl1S5
- HZwm0sYQcRjiy9mvnxpm2aQGmeCE9xK8Mbuik
-X-Received: by 2002:a05:620a:11ae:b0:930:f723:35f5 with SMTP id
- af79cd13be357-939138ffc48mr539383785a.20.1787919465285; 
- Fri, 28 Aug 2026 05:17:45 -0700 (PDT)
-X-Received: by 2002:a05:620a:11ae:b0:930:f723:35f5 with SMTP id
- af79cd13be357-939138ffc48mr539377185a.20.1787919464756; 
- Fri, 28 Aug 2026 05:17:44 -0700 (PDT)
-Received: from [192.168.68.100] ([189.38.141.232])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-939173a560fsm129214285a.24.2026.08.28.05.17.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 05:17:44 -0700 (PDT)
-Message-ID: <b29d9c2b-6d5e-4587-9e77-ac16c991f7b9@oss.qualcomm.com>
-Date: Fri, 28 Aug 2026 09:17:39 -0300
+ d=1e100.net; s=20251104; t=1787919931; x=1788524731;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=x7IIqzfYo/k3tIZHIH7OgEy31u3T94zwC6jkiM6qVzY=;
+ b=eKh/KmWeTMQ6Kxo/7O+juiJSF/i5ICNeL9zeGm8F1bdFdTvFenVrlhd22fc829h2v6
+ +9/fPJXqgs44mBP3y8tYK9SLiBQmBJ886DGhk+3OjFDIJnpqJfT84hzmer4U6UZiU1nl
+ jUK/72anVuEWbOl1e7kn1NFSrzPc2jp111fl4lUbcY9y8T2QkpdfOAItg+2/mLhiPCVz
+ ZpNM0PdgilpqVPNoWFj9ZEiO2N8CkAudZ+bVT7GYjD4wOAXvJD/fik6y1BJpRDvPUmub
+ 7JvSRs2IBQtwefjgo4K2ltKtHkAwbyrfmEiG77HaS5QtIZxSzl/usdmv5ocQHTfbz6jG
+ zCWg==
+X-Gm-Message-State: AFuF++mhQ/3e2y0p2yJqRwDMZNmepj+fl28DbPP4Uc9y+d2pvqNTx9P+
+ ExUNJ3WwmlK+fE8xoOLYzUdR/IWRU+bzjWpABCGYuO2/bEOTViVchT+z2vw/Wa0ro/0=
+X-Gm-Gg: AR+sD12zqpJGjc6T4bUdridhFKfHbii5kfu3af6vhxh35qcAbv+QettwHOZ67D9mx37
+ y8wo7SHZp+xe42tAh+TT4VlTKT7dpbLDGjhVGmXd0mmkyIflxUSpVOuM7KXvz2drQ5LGwD9I1Nv
+ HdCjj0SJ3jhXj0ZrkujALMe0OWggKDY5vaoALGk+jO5Z9AZZ7gIAc5QACUBfEMAynr7oOgl6992
+ Pw1f2C4hDw1jUdaW5ixQtvbLCTGWaqlWYxog2la6W8JKJmVLxDhUuv7Dh1C3oGaRPz1fXE+tRfl
+ 6i74RoHCWIVWBmq0NrNaIwHs9UOsHDgN3bcrAFfwsUTJQXrpIJejbQ/my33hJlit5xrZuiRvwX8
+ AkbtkTSsr6BYGU2tYX5g3gnZEzM2xQ92ahBNXVuYauR7+/WiTkqf22wcx8w43rajOhu/IxlGGI3
+ brAAznt+Sq2pM8f99+QgzwausM3U6ft/6ri9aTjQOQtUmSKDNQS4PJGaFawqBHdvOyXI9CfOk=
+X-Received: by 2002:a05:600c:4e41:b0:495:6e68:5df2 with SMTP id
+ 5b1f17b1804b1-49b91c63a47mr98153735e9.12.1787919930532; 
+ Fri, 28 Aug 2026 05:25:30 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b90f78244sm83609445e9.10.2026.08.28.05.25.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Aug 2026 05:25:29 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 95F775F7E6;
+ Fri, 28 Aug 2026 13:25:28 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,
+ richard.henderson@linaro.org,  pbonzini@redhat.com,  stefanha@redhat.com
+Subject: Re: [PULL 1/1] tests/docker: ensure container command is probed at
+ most once
+In-Reply-To: <20260716195807.3219466-2-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Thu, 16 Jul 2026 12:58:07 -0700")
+References: <20260716195807.3219466-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260716195807.3219466-2-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Fri, 28 Aug 2026 13:25:28 +0100
+Message-ID: <87v78u3007.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Add experimental Zvabd extension support
-To: =?UTF-8?B?5YiY6bij5Lqu?= <liumingliang.dev@bytedance.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
- Alistair.Francis@wdc.com, zhiwei_liu@linux.alibaba.com,
- liwei1518@gmail.com, chao.liu@processmission.com,
- Zhibo Hong <hongzhibo@bytedance.com>
-References: <20260828092053.3787517-1-liumingliang.dev@bytedance.com>
- <11e5ab2c-b87e-4033-a424-028e42dc9954@oss.qualcomm.com>
- <ee7ee3a1f02a7e7cbb15b78aec59fd82060d2306.450f9d23.be8a.4745.93e4.f94f8b9058aa@bytedance.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ee7ee3a1f02a7e7cbb15b78aec59fd82060d2306.450f9d23.be8a.4745.93e4.f94f8b9058aa@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDEwNiBTYWx0ZWRfXywoSgA1YKTu/
- reKmlU5XGCWdMGQFLqocyLkBZYDkaz+vT4nc3i/Qtqlnsxz42SSZQRySjaN4MIYZg6fuLxgSDz3
- y1ViNsT3SNaHNsfr/lHHuRh0aOUGxGNR6ugmV2COXqBDRG5O6Di21w2jFqiodu5Shl/31R3oD9X
- AQPvS9Coxbdr1SYRPyMt0QdADteBoW1u4zbmQQIKAxV2ko6aZsrA/POR4lIvchawcUOhy/H9JiL
- JkwAQY/2Ry1gUzmtpxMg/z8aI0ZXJGZVO/QA9Huf1kih0oBOZY4Nxf/IKD0I3iDRgsmW7vG1cHN
- WA6dATN3UeQLoSTvpYfKqALKdqt1w3dT4J0TProlzqujKo5Oy95DPxCmGMqUfdbbA4yd09q4C4V
- Bl4uPrhZbcBv7W1JaYnSDmc8KZlo+7ZDS21DtCuzh/pkV2M594d0qgQMemMqz5zNtvVa4sXY4Ab
- XanIfk0ePkJunFogP+g==
-X-Authority-Analysis: v=2.4 cv=MONQXsZl c=1 sm=1 tr=0 ts=6a917c6a cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=968KyxNXAAAA:8
- a=69wJf7TsAAAA:8 a=_O3DOGVWAAAA:8 a=JF9118EUAAAA:8 a=SRrdq9N9AAAA:8
- a=pGLkceISAAAA:8 a=FRSEYCzRAAAA:8 a=t5Jr3y9hEBnHB1OR1jQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=2TKV-7w1aU1AVAwN0oqT:22 a=xVlTc564ipvMDusKsbsT:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDEwNiBTYWx0ZWRfX9HTsb3+FYe4V
- dtObNQ1/MDbGThie8IjgZ+GvFE71UJ6nsLQAOJzTHjNGfb2Al1Njv4F+pIIpZkxfhUwC67g3d3Q
- aZrZ5WKPJAVHlM4uHviI5PJcjlvPyw8=
-X-Proofpoint-ORIG-GUID: myIixImAiuTHrx60ZOu-LNgHK4yiDw7K
-X-Proofpoint-GUID: myIixImAiuTHrx60ZOu-LNgHK4yiDw7K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-28_03,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 bulkscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280106
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,373 +107,359 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
+> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+> The '--engine' arg accepts either 'podman' or 'docker', which is
+> not sufficiently granular to map directly to a command. This
+> means that  docker.py still has to then probe the exact command
+> to use.
+>
+> Meanwhile the 'probe' command prints out the full command to use
+> but this cannot be passed back to docker.py to avoid probing
+> again, so the caching is only useful in the few case where we
+> run a container directly bypassing docker.py.
+>
+> Address this by replacing --engine with --command for docker.py.
+>
+> This in turn requires the --container-engine configure arg to be
+> replaced with --container-command.
+>
+> With these changes the container command is probed at most once
+> during configure and never again, while running in an unconfigured
+> tree will still probe on demand.
+>
+> Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Link: https://lore.kernel.org/qemu-devel/20260716102515.1503404-1-berrang=
+e@redhat.com
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-On 8/28/2026 9:01 AM, 刘鸣亮 wrote:
-> Hi Daniel,
-> Thanks for your advice. I’ll add more tests for this patch.
-> 
-> In the latest specification, vabs.v is defined as a pseudo-instruction that aliases vabd.vx rd, vs2, x0, similar to how vneg.v aliases vrsub.vx rd, vs2, x0. I think we don't need add vabs.v as a separate instruction, since they share the same encoding.
-> 
-> See the vabs.v at: https://github.com/riscv/riscv-isa-manual/pull/3279/changes#diff-c4a6db324416cc1f52c849a8cd5a20b5d8b5e422ffca6dcb6f341b5f1df48a15R110
+I've bisected to this as breaking --disable-containers:
 
-Oh, ok. I wasn't aware of that.
+  ../../configure --target-list=3Daarch64-linux-user,loongarch64-linux-user=
+ --disable-containers
+  ...
+    Cross compilers=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20
+      aarch64                         : aarch64-linux-gnu-gcc
+      loongarch64                     : cc --cc loongarch64-unknown-linux-g=
+nu-gcc -i qemu/debian-loongarch-cross -s /home/alex.bennee/lsrc/qemu.git --
 
-Thing is that GCC generates vabs.v with x264.  So, following the diff you just sent:
+So some mangling with the container command line has happened.
 
-"assembly pseudoinstruction insn:vabs.v[vd,vs2] = insn:vabd.vx[vd,vs2,x0] is provided."
+> ---
+>  configure                     | 25 +++++++------
+>  tests/docker/Makefile.include | 13 ++++---
+>  tests/docker/docker.py        | 67 ++++++++++++-----------------------
+>  3 files changed, 40 insertions(+), 65 deletions(-)
+>
+> diff --git a/configure b/configure
+> index d8bc10060e1..6ddfe4b5342 100755
+> --- a/configure
+> +++ b/configure
+> @@ -172,7 +172,7 @@ fi
+>  # some defaults, based on the host environment
+>=20=20
+>  # default parameters
+> -container_engine=3D"auto"
+> +container_command=3D""
+>  cpu=3D""
+>  cross_compile=3D"no"
+>  cross_prefix=3D""
+> @@ -734,7 +734,7 @@ for opt do
+>    ;;
+>    --disable-containers) use_containers=3D"no"
+>    ;;
+> -  --container-engine=3D*) container_engine=3D"$optarg"
+> +  --container-command=3D*) container_command=3D"$optarg"
+>    ;;
+>    --rust-target-triple=3D*) rust_target_triple=3D"$optarg"
+>    ;;
+> @@ -869,7 +869,7 @@ Advanced options (experts only):
+>    --enable-debug           enable common debug build options
+>    --cpu=3DCPU                Build for host CPU [$cpu]
+>    --disable-containers     don't use containers for cross-building
+> -  --container-engine=3DTYPE  which container engine to use [$container_e=
+ngine]
+> +  --container-command=3DCMD  which container command to use [autodetect]
+>    --gdb=3DGDB-path           gdb to use for gdbstub tests [$gdb_bin]
+>    --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (=
+default
+>                                 is to use the whole 64-bit range).
+> @@ -1291,12 +1291,12 @@ fi
+>  ##########################################
+>  # functions to probe cross compilers
+>=20=20
+> -runc=3D"no"
+> -if test $use_containers =3D "yes" && (has "docker" || has "podman"); then
+> -    runc=3D$($python "$source_path"/tests/docker/docker.py --engine "$co=
+ntainer_engine" probe)
+> -    if test "$runc" !=3D "no"; then
+> -        docker_py=3D"$python $source_path/tests/docker/docker.py --engin=
+e $container_engine"
+> -    fi
+> +if test "$container_command" =3D ""; then
+> +    container_command=3D$($python "$source_path"/tests/docker/docker.py =
+probe)
+> +    test "$container_command" =3D "no" && container_command=3D""
+> +fi
+> +if test $use_containers =3D "yes" && test "$container_command" !=3D ""; =
+then
+> +    docker_py=3D"$python $source_path/tests/docker/docker.py --command $=
+container_command"
 
-QEMU needs to be able to handle the vabs.v pseudo (translating it to vabd.vx.... as the
-spec suggests).  Please keep that in mind.
+else
+  container_command=3D""
+fi
 
+?
 
-Thanks,
-Daniel
+>=20=20
+>  # cross compilers defaults, can be overridden with --cross-cc-ARCH
+> @@ -1415,7 +1415,7 @@ probe_target_compiler() {
+>    esac
+>=20=20
+>    for host in $container_hosts; do
+> -    test "$runc" !=3D no || continue
+> +    test "$container_command" !=3D "" || continue
+>      test "$host" =3D "$cpu" || continue
+>      case $target_arch in
+>        # debian-all-test-cross architectures
+> @@ -1736,9 +1736,8 @@ echo all: >> $config_host_mak
+>  echo "SRC_PATH=3D$source_path" >> $config_host_mak
+>  echo "TARGET_DIRS=3D$target_list" >> $config_host_mak
+>  echo "GDB=3D$gdb_bin" >> $config_host_mak
+> -if test "$runc" !=3D no; then
+> -    echo "RUNC=3D$runc" >> $config_host_mak
+> -    echo "CONTAINER_ENGINE=3D$container_engine" >> $config_host_mak
+> +if test "$container_command" !=3D ""; then
+> +    echo "CONTAINER_COMMAND=3D$container_command" >> $config_host_mak
+>  fi
+>  echo "SUBDIRS=3D$subdirs" >> $config_host_mak
+>  if test "$rust" !=3D disabled; then
+> diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+> index 4725c39807b..0adddb6a5c6 100644
+> --- a/tests/docker/Makefile.include
+> +++ b/tests/docker/Makefile.include
+> @@ -16,9 +16,8 @@ DOCKER_DEFAULT_REGISTRY :=3D registry.gitlab.com/qemu-p=
+roject/qemu
+>  endif
+>  DOCKER_REGISTRY :=3D $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGIS=
+TRY))
+>=20=20
+> -CONTAINER_ENGINE =3D auto
+> -DOCKER_SCRIPT=3D$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_=
+ENGINE)
+> -RUNC ?=3D $(shell $(DOCKER_SCRIPT) probe)
+> +CONTAINER_COMMAND ?=3D $(shell $(SRC_PATH)/tests/docker/docker.py probe)
+> +DOCKER_SCRIPT=3D$(SRC_PATH)/tests/docker/docker.py --command "$(CONTAINE=
+R_COMMAND)"
+>=20=20
+>  CUR_TIME :=3D $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
+>  DOCKER_SRC_COPY :=3D $(BUILD_DIR)/docker-src.$(CUR_TIME)
+> @@ -41,7 +40,7 @@ docker-qemu-src: $(DOCKER_SRC_COPY)
+>  # General rule for building docker images.
+>  docker-image-%: $(DOCKER_FILES_DIR)/%.docker
+>  	  $(call quiet-command,			\
+> -		DOCKER_BUILDKIT=3D1 $(RUNC) build		\
+> +		DOCKER_BUILDKIT=3D1 $(CONTAINER_COMMAND) build \
+>  		$(if $(DOCKER_V),,--quiet)		\
+>  		$(if $(NOCACHE),--no-cache,		\
+>  			$(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
+> @@ -152,7 +151,7 @@ $(foreach i,$(filter-out $(DOCKER_PARTIAL_IMAGES),$(D=
+OCKER_IMAGES)), \
+>  )
+>=20=20
+>  docker:
+> -	@echo 'Build QEMU and run tests inside $(RUNC) containers'
+> +	@echo 'Build QEMU and run tests inside $(CONTAINER_COMMAND) containers'
+>  	@echo
+>  	@echo 'Available targets:'
+>  	@echo
+> @@ -219,10 +218,10 @@ docker-run: docker-qemu-src
+>  			$(IMAGE) --executable $(EXECUTABLE),		\
+>  			"  COPYING $(EXECUTABLE) to $(IMAGE)"))
+>  	$(call quiet-command,						\
+> -		$(RUNC) run 						\
+> +		$(CONTAINER_COMMAND) run 				\
+>  			--rm						\
+>  			$(if $(NOUSER),,				\
+> -				$(if $(filter docker,$(RUNC)),		\
+> +				$(if $(filter docker,$(CONTAINER_COMMAND)), \
+>  					-u $(UID),			\
+>  					--userns keep-id		\
+>  				)					\
+> diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+> index 9e18b984f45..d2f39b5645b 100755
+> --- a/tests/docker/docker.py
+> +++ b/tests/docker/docker.py
+> @@ -35,27 +35,6 @@
+>=20=20
+>  DEVNULL =3D open(os.devnull, 'wb')
+>=20=20
+> -class EngineEnum(enum.IntEnum):
+> -    AUTO =3D 1
+> -    DOCKER =3D 2
+> -    PODMAN =3D 3
+> -
+> -    def __str__(self):
+> -        return self.name.lower()
+> -
+> -    def __repr__(self):
+> -        return str(self)
+> -
+> -    @staticmethod
+> -    def argparse(s):
+> -        try:
+> -            return EngineEnum[s.upper()]
+> -        except KeyError:
+> -            return s
+> -
+> -
+> -USE_ENGINE =3D EngineEnum.AUTO
+> -
+>  def _bytes_checksum(bytes):
+>      """Calculate a digest string unique to the text content"""
+>      return hashlib.sha1(bytes).hexdigest()
+> @@ -73,12 +52,11 @@ def _file_checksum(filename):
+>=20=20
+>  def _guess_engine_command():
+>      """ Guess a working engine command or raise exception if not found"""
+> -    commands =3D []
+> -
+> -    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+> -        commands +=3D [["podman"], ["podman-remote"], ["podman", "--remo=
+te"]]
+> -    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+> -        commands +=3D [["docker"], ["sudo", "-n", "docker"]]
+> +    commands =3D [["podman"],
+> +                ["podman-remote"],
+> +                ["podman", "--remote"],
+> +                ["docker"],
+> +                ["sudo", "-n", "docker"]]
+>      for cmd in commands:
+>          try:
+>              # 'version' is not sufficient to prove a working binary
+> @@ -222,8 +200,11 @@ def _dockerfile_verify_flat(df):
+>=20=20
+>  class Docker(object):
+>      """ Running Docker commands """
+> -    def __init__(self):
+> -        self._command =3D _guess_engine_command()
+> +    def __init__(self, commandstr=3DNone):
+> +        if commandstr is None:
+> +            self._command =3D _guess_engine_command()
+> +        else:
+> +            self._command =3D commandstr.split(" ")
+>=20=20
+>          if ("docker" in self._command and
+>              "TRAVIS" not in os.environ and
+> @@ -411,8 +392,8 @@ def args(self, parser):
+>                              help=3D"Run container using the current user=
+'s uid")
+>=20=20
+>      def run(self, args, argv):
+> -        return Docker().run(argv, args.keep, quiet=3Dargs.quiet,
+> -                            as_user=3Dargs.run_as_current_user)
+> +        return Docker(args.command).run(argv, args.keep, quiet=3Dargs.qu=
+iet,
+> +                                        as_user=3Dargs.run_as_current_us=
+er)
+>=20=20
+>=20=20
+>  class BuildCommand(SubCommand):
+> @@ -445,7 +426,7 @@ def run(self, args, argv):
+>          dockerfile =3D _read_dockerfile(args.dockerfile)
+>          tag =3D args.tag
+>=20=20
+> -        dkr =3D Docker()
+> +        dkr =3D Docker(args.command)
+>          if "--no-cache" not in argv and \
+>             dkr.image_matches_dockerfile(tag, dockerfile):
+>              if not args.quiet:
+> @@ -512,7 +493,7 @@ def args(self, parser):
+>                              help=3D"Docker registry")
+>=20=20
+>      def run(self, args, argv):
+> -        dkr =3D Docker()
+> +        dkr =3D Docker(args.command)
+>          dkr.command(cmd=3D"pull", quiet=3Dargs.quiet,
+>                      argv=3D["%s/%s" % (args.registry, args.tag)])
+>          dkr.command(cmd=3D"tag", quiet=3Dargs.quiet,
+> @@ -590,7 +571,7 @@ def run(self, args, argv):
+>          tmp.seek(0)
+>=20=20
+>          # Run the build with our tarball context
+> -        dkr =3D Docker()
+> +        dkr =3D Docker(args.command)
+>          dkr.update_image(args.tag, tmp, quiet=3Dargs.quiet)
+>=20=20
+>          return 0
+> @@ -601,7 +582,7 @@ class CleanCommand(SubCommand):
+>      name =3D "clean"
+>=20=20
+>      def run(self, args, argv):
+> -        Docker().clean()
+> +        Docker(args.command).clean()
+>          return 0
+>=20=20
+>=20=20
+> @@ -610,7 +591,7 @@ class ImagesCommand(SubCommand):
+>      name =3D "images"
+>=20=20
+>      def run(self, args, argv):
+> -        return Docker().command("images", argv, args.quiet)
+> +        return Docker(args.command).command("images", argv, args.quiet)
+>=20=20
+>=20=20
+>  class ProbeCommand(SubCommand):
+> @@ -619,7 +600,7 @@ class ProbeCommand(SubCommand):
+>=20=20
+>      def run(self, args, argv):
+>          try:
+> -            docker =3D Docker()
+> +            docker =3D Docker(args.command)
+>              print(" ".join(docker._command))
+>          except Exception:
+>              print("no")
+> @@ -651,18 +632,16 @@ def run(self, args, argv):
+>                  cmd +=3D ["-v", "%s:%s:ro,z" % (p, p)]
+>          cmd +=3D [args.image, args.cc]
+>          cmd +=3D argv
+> -        return Docker().run(cmd, False, quiet=3Dargs.quiet,
+> -                            as_user=3DTrue)
+> +        return Docker(args.command).run(cmd, False, quiet=3Dargs.quiet,
+> +                                        as_user=3DTrue)
+>=20=20
+>=20=20
+>  def main():
+> -    global USE_ENGINE
+> -
+>      parser =3D argparse.ArgumentParser(description=3D"A Docker helper",
+>                                       usage=3D"%s <subcommand> ..." %
+>                                       os.path.basename(sys.argv[0]))
+> -    parser.add_argument("--engine", type=3DEngineEnum.argparse, choices=
+=3Dlist(EngineEnum),
+> -                        help=3D"specify which container engine to use")
+> +    parser.add_argument("--command",
+> +                        help=3D"specify which container engine command t=
+o use")
+>      subparsers =3D parser.add_subparsers(title=3D"subcommands", help=3DN=
+one)
+>      for cls in SubCommand.__subclasses__():
+>          cmd =3D cls()
+> @@ -671,8 +650,6 @@ def main():
+>          cmd.args(subp)
+>          subp.set_defaults(cmdobj=3Dcmd)
+>      args, argv =3D parser.parse_known_args()
+> -    if args.engine:
+> -        USE_ENGINE =3D args.engine
+>      return args.cmdobj.run(args, argv)
 
-> 
->> From: "Daniel Henrique Barboza"<daniel.barboza@oss.qualcomm.com>
->> Date:  Fri, Aug 28, 2026, 19:34
->> Subject:  Re: [PATCH] target/riscv: Add experimental Zvabd extension support
->> To: "liumingliang"<liumingliang.dev@bytedance.com>, <qemu-devel@nongnu.org>
->> Cc: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <Alistair.Francis@wdc.com>, <zhiwei_liu@linux.alibaba.com>, <liwei1518@gmail.com>, <chao.liu@processmission.com>, "Zhibo Hong"<hongzhibo@bytedance.com>
->> Hi,
->>
->> This patch is missing vabs.v, which is also part of the specification.
->>
->> I added vabs.v, and a .S test file for this new insns, using Zhibo's original
->> patch, in this branch:
->>
->> https://gitlab.com/danielhb/qemu/-/tree/zvabd
->>
->> vabs.v implementation:
->>
->> https://gitlab.com/danielhb/qemu/-/commit/1ce5701e737f885f2e32248c1587614ea3435d76
->>
->> test file:
->>
->> https://gitlab.com/danielhb/qemu/-/commit/9f4626bc8e55c0768ff474037e291431d4deb0fb
->>
->>
->> Feel free to add these 2 commits in this work.  It's already rebased on a recent code
->> base so shouldn't be much of a problem.
->>
->>
->> Also, I believe we'll want tests for the other zvabd insns too, so we'll need extra
->> code in test-zvabd.S.
->>
->>
->> Thanks,
->> Daniel
->>
->> On 8/28/2026 6:20 AM, liumingliang wrote:
->>> From: Zhibo Hong <hongzhibo@bytedance.com>
->>>   
->>> The draft Zvabd extension provides vector integer absolute-difference
->>> operations for image, video, and other data-processing workloads. It
->>> introduces eight new intructions:
->>>   
->>>     - vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW values from
->>>       8 through ELEN, with SEW 64 requiring Zve64x.
->>>     - vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support SEW 8
->>>       and 16 and accumulate into a double-width destination.
->>>   
->>> This patch implement this instruction extension, including instruction
->>> decoder, TCG translation, and helpers, etc. The specification is under
->>> review at:
->>> https://github.com/riscv/riscv-isa-manual/pull/3279
->>>   
->>> Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
->>> ---
->>>    disas/riscv-op.c.inc                        |  8 +++
->>>    disas/riscv.c                               |  8 +++
->>>    target/riscv/cpu.c                          |  1 +
->>>    target/riscv/cpu_cfg_fields.h.inc           |  1 +
->>>    target/riscv/helper.h                       | 26 ++++++++++
->>>    target/riscv/insn32.decode                  | 10 ++++
->>>    target/riscv/tcg/insn_trans/trans_rvv.c.inc | 45 +++++++++++++++++
->>>    target/riscv/tcg/tcg-cpu.c                  |  6 +++
->>>    target/riscv/tcg/vector_helper.c            | 56 +++++++++++++++++++++
->>>    9 files changed, 161 insertions(+)
->>>   
->>> diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
->>> index 1d334e4857..07b56f5d52 100644
->>> --- a/disas/riscv-op.c.inc
->>> +++ b/disas/riscv-op.c.inc
->>> @@ -490,6 +490,10 @@ OP(vaadd_vv, "vaadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>>    OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>>    OP(vaaddu_vv, "vaaddu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>>    OP(vaaddu_vx, "vaaddu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>> +OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>> +OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>> +OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>> +OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>>    OP(vadc_vim, "vadc.vim", rv_codec_v_i, rv_fmt_vd_vs2_imm_vl)
->>>    OP(vadc_vvm, "vadc.vvm", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vl)
->>>    OP(vadc_vxm, "vadc.vxm", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vl)
->>> @@ -861,6 +865,10 @@ OP(vsuxei16_v, "vsuxei16.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->>>    OP(vsuxei32_v, "vsuxei32.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->>>    OP(vsuxei64_v, "vsuxei64.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->>>    OP(vsuxei8_v, "vsuxei8.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->>> +OP(vwabda_vv, "vwabda.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>> +OP(vwabda_vx, "vwabda.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>> +OP(vwabdau_vv, "vwabdau.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>> +OP(vwabdau_vx, "vwabdau.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>>    OP(vwadd_vv, "vwadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>>    OP(vwadd_vx, "vwadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->>>    OP(vwadd_wv, "vwadd.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->>> diff --git a/disas/riscv.c b/disas/riscv.c
->>> index b8099cbdf8..e0a8b3a756 100644
->>> --- a/disas/riscv.c
->>> +++ b/disas/riscv.c
->>> @@ -2022,6 +2022,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->>>                    case 48: return &op_vwredsumu_vs;
->>>                    case 49: return &op_vwredsum_vs;
->>>                    case 53: return &op_vwsll_vv;
->>> +                case 61: return &op_vwabda_vv;
->>> +                case 62: return &op_vwabdau_vv;
->>>                    }
->>>                    break;
->>>                case 1:
->>> @@ -2164,6 +2166,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->>>                            break;
->>>                        }
->>>                        break;
->>> +                case 21: return &op_vabd_vv;
->>> +                case 22: return &op_vabdu_vv;
->>>                    case 23:
->>>                        if ((inst >> 25) & 1) {
->>>                            return &op_vcompress_vm;
->>> @@ -2349,6 +2353,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->>>                    case 46: return &op_vnclipu_wx;
->>>                    case 47: return &op_vnclip_wx;
->>>                    case 53: return &op_vwsll_vx;
->>> +                case 61: return &op_vwabda_vx;
->>> +                case 62: return &op_vwabdau_vx;
->>>                    }
->>>                    break;
->>>                case 5:
->>> @@ -2417,6 +2423,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->>>                    case 13: return &op_vclmulh_vx;
->>>                    case 14: return &op_vslide1up_vx;
->>>                    case 15: return &op_vslide1down_vx;
->>> +                case 21: return &op_vabd_vx;
->>> +                case 22: return &op_vabdu_vx;
->>>                    case 16:
->>>                        switch ((inst >> 20) & 0b11111) {
->>>                        case 0:
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index a13177b7b7..4b8944b051 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -220,6 +220,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>>        ISA_EXT_DATA_ENTRY(zksh, PRIV_VERSION_1_12_0, ext_zksh),
->>>        ISA_EXT_DATA_ENTRY(zkt, PRIV_VERSION_1_12_0, ext_zkt),
->>>        ISA_EXT_DATA_ENTRY(ztso, PRIV_VERSION_1_12_0, ext_ztso),
->>> +    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvabd, PRIV_VERSION_1_13_0, ext_zvabd),
->>>        ISA_EXT_DATA_ENTRY(zvbb, PRIV_VERSION_1_12_0, ext_zvbb),
->>>        ISA_EXT_DATA_ENTRY(zvbc, PRIV_VERSION_1_12_0, ext_zvbc),
->>>        ISA_EXT_DATA_ENTRY(zve32f, PRIV_VERSION_1_10_0, ext_zve32f),
->>> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
->>> index f8c27a574f..6018e58195 100644
->>> --- a/target/riscv/cpu_cfg_fields.h.inc
->>> +++ b/target/riscv/cpu_cfg_fields.h.inc
->>> @@ -83,6 +83,7 @@ BOOL_FIELD(ext_zve32x)
->>>    BOOL_FIELD(ext_zve64f)
->>>    BOOL_FIELD(ext_zve64d)
->>>    BOOL_FIELD(ext_zve64x)
->>> +BOOL_FIELD(ext_zvabd)
->>>    BOOL_FIELD(ext_zvbb)
->>>    BOOL_FIELD(ext_zvbc)
->>>    BOOL_FIELD(ext_zvkb)
->>> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
->>> index 4fc2d3a155..3aef6e0e3e 100644
->>> --- a/target/riscv/helper.h
->>> +++ b/target/riscv/helper.h
->>> @@ -1350,6 +1350,32 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
->>>    DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
->>>    DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
->>>    
->>> +/* Zvabd Extension */
->>> +DEF_HELPER_6(vabd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vabdu_vx_d, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vwabda_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vwabda_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vwabda_vx_b, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vwabda_vx_h, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vwabdau_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vwabdau_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
->>> +DEF_HELPER_6(vwabdau_vx_b, void, ptr, ptr, tl, ptr, env, i32)
->>> +DEF_HELPER_6(vwabdau_vx_h, void, ptr, ptr, tl, ptr, env, i32)
->>> +
->>>    /* CFI (zicfiss) helpers */
->>>    #ifndef CONFIG_USER_ONLY
->>>    DEF_HELPER_1(ssamoswap_disabled, void, env)
->>> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
->>> index 21272fdb50..1c991a6f42 100644
->>> --- a/target/riscv/insn32.decode
->>> +++ b/target/riscv/insn32.decode
->>> @@ -1084,3 +1084,13 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
->>>    sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
->>>    sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
->>>    sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
->>> +
->>> +# *** Zvabd Extension ***
->>> +vabd_vv       010101 . ..... ..... 010 ..... 1010111 @r_vm
->>> +vabd_vx       010101 . ..... ..... 110 ..... 1010111 @r_vm
->>> +vabdu_vv      010110 . ..... ..... 010 ..... 1010111 @r_vm
->>> +vabdu_vx      010110 . ..... ..... 110 ..... 1010111 @r_vm
->>> +vwabda_vv     111101 . ..... ..... 000 ..... 1010111 @r_vm
->>> +vwabda_vx     111101 . ..... ..... 100 ..... 1010111 @r_vm
->>> +vwabdau_vv    111110 . ..... ..... 000 ..... 1010111 @r_vm
->>> +vwabdau_vx    111110 . ..... ..... 100 ..... 1010111 @r_vm
->>> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
->>> index a22e2cae6c..14ef961607 100644
->>> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
->>> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
->>> @@ -4091,3 +4091,48 @@ GEN_INT_EXT_TRANS(vzext_vf8, 3, 2)
->>>    GEN_INT_EXT_TRANS(vsext_vf2, 1, 3)
->>>    GEN_INT_EXT_TRANS(vsext_vf4, 2, 4)
->>>    GEN_INT_EXT_TRANS(vsext_vf8, 3, 5)
->>> +
->>> +/* Zvabd Extension */
->>> +#define GEN_ABD_CHECK(NAME, CHECK_FN, MAX_SEW)                       \
->>> +static bool NAME(DisasContext *s, arg_rmrr *a)                       \
->>> +{                                                                    \
->>> +    return CHECK_FN(s, a) && s->cfg_ptr->ext_zvabd &&                \
->>> +           s->sew <= MAX_SEW &&                                      \
->>> +           (s->sew != MO_64 || s->cfg_ptr->ext_zve64x);              \
->>> +}
->>> +GEN_ABD_CHECK(vabd_vv_check, opivv_check, MO_64)
->>> +GEN_ABD_CHECK(vabd_vx_check, opivx_check, MO_64)
->>> +GEN_ABD_CHECK(vwabd_vv_check, opivv_overwrite_widen_check, MO_16)
->>> +GEN_ABD_CHECK(vwabd_vx_check, opivx_overwrite_widen_check, MO_16)
->>> +
->>> +GEN_OPIVV_TRANS(vabd_vv, vabd_vv_check)
->>> +GEN_OPIVX_TRANS(vabd_vx, vabd_vx_check)
->>> +GEN_OPIVV_TRANS(vabdu_vv, vabd_vv_check)
->>> +GEN_OPIVX_TRANS(vabdu_vx, vabd_vx_check)
->>> +
->>> +#define GEN_ABD_OPIVV_WIDEN_TRANS(NAME, CHECK)                          \
->>> +static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
->>> +{                                                                       \
->>> +    static gen_helper_gvec_4_ptr * const fns[2] = {                     \
->>> +        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                   \
->>> +    };                                                                  \
->>> +    return s->sew <= MO_16 && do_opivv_widen(s, a, fns[s->sew], CHECK); \
->>> +}
->>> +
->>> +#define GEN_ABD_OPIVX_WIDEN_TRANS(NAME, CHECK)                          \
->>> +static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
->>> +{                                                                       \
->>> +    if (CHECK(s, a)) {                                                  \
->>> +        static gen_helper_opivx * const fns[2] = {                      \
->>> +            gen_helper_##NAME##_b, gen_helper_##NAME##_h,               \
->>> +        };                                                              \
->>> +        return opivx_trans(a->rd, a->rs1, a->rs2, a->vm,                \
->>> +                           fns[s->sew], s);                             \
->>> +    }                                                                   \
->>> +    return false;                                                       \
->>> +}
->>> +
->>> +GEN_ABD_OPIVV_WIDEN_TRANS(vwabda_vv, vwabd_vv_check)
->>> +GEN_ABD_OPIVX_WIDEN_TRANS(vwabda_vx, vwabd_vx_check)
->>> +GEN_ABD_OPIVV_WIDEN_TRANS(vwabdau_vv, vwabd_vv_check)
->>> +GEN_ABD_OPIVX_WIDEN_TRANS(vwabdau_vx, vwabd_vx_check)
->>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
->>> index 9e3cc87f8a..4c2fb6f063 100644
->>> --- a/target/riscv/tcg/tcg-cpu.c
->>> +++ b/target/riscv/tcg/tcg-cpu.c
->>> @@ -732,6 +732,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
->>>            return;
->>>        }
->>>    
->>> +    if ((cpu->cfg.ext_zvabd) && !cpu->cfg.ext_zve32x) {
->>> +        error_setg(errp,
->>> +                   "Zvabd extensions require V or Zve* extensions");
->>> +        return;
->>> +    }
->>> +
->>>        if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
->>>            if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicntr))) {
->>>                error_setg(errp, "zicntr requires zicsr");
->>> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
->>> index e28d8a3d9f..bdb1efcebc 100644
->>> --- a/target/riscv/tcg/vector_helper.c
->>> +++ b/target/riscv/tcg/vector_helper.c
->>> @@ -5906,3 +5906,59 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
->>>    GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
->>>    GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
->>>    GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
->>> +
->>> +/* Zvabd Extension */
->>> +#define DO_ABD(N, M)  (N > M ? N - M : M - N)
->>> +#define DO_ABDACC(N, M, D) (DO_ABD(N, M) + D)
->>> +
->>> +RVVCALL(OPIVV2, vabd_vv_b, OP_SSS_B, H1, H1, H1, DO_ABD)
->>> +RVVCALL(OPIVV2, vabd_vv_h, OP_SSS_H, H2, H2, H2, DO_ABD)
->>> +RVVCALL(OPIVV2, vabd_vv_w, OP_SSS_W, H4, H4, H4, DO_ABD)
->>> +RVVCALL(OPIVV2, vabd_vv_d, OP_SSS_D, H8, H8, H8, DO_ABD)
->>> +RVVCALL(OPIVX2, vabd_vx_b, OP_SSS_B, H1, H1, DO_ABD)
->>> +RVVCALL(OPIVX2, vabd_vx_h, OP_SSS_H, H2, H2, DO_ABD)
->>> +RVVCALL(OPIVX2, vabd_vx_w, OP_SSS_W, H4, H4, DO_ABD)
->>> +RVVCALL(OPIVX2, vabd_vx_d, OP_SSS_D, H8, H8, DO_ABD)
->>> +RVVCALL(OPIVV2, vabdu_vv_b, OP_UUU_B, H1, H1, H1, DO_ABD)
->>> +RVVCALL(OPIVV2, vabdu_vv_h, OP_UUU_H, H2, H2, H2, DO_ABD)
->>> +RVVCALL(OPIVV2, vabdu_vv_w, OP_UUU_W, H4, H4, H4, DO_ABD)
->>> +RVVCALL(OPIVV2, vabdu_vv_d, OP_UUU_D, H8, H8, H8, DO_ABD)
->>> +RVVCALL(OPIVX2, vabdu_vx_b, OP_UUU_B, H1, H1, DO_ABD)
->>> +RVVCALL(OPIVX2, vabdu_vx_h, OP_UUU_H, H2, H2, DO_ABD)
->>> +RVVCALL(OPIVX2, vabdu_vx_w, OP_UUU_W, H4, H4, DO_ABD)
->>> +RVVCALL(OPIVX2, vabdu_vx_d, OP_UUU_D, H8, H8, DO_ABD)
->>> +
->>> +RVVCALL(OPIVV3, vwabda_vv_b, WOP_SSS_B, H2, H1, H1, DO_ABDACC)
->>> +RVVCALL(OPIVV3, vwabda_vv_h, WOP_SSS_H, H4, H2, H2, DO_ABDACC)
->>> +RVVCALL(OPIVX3, vwabda_vx_b, WOP_SSS_B, H2, H1, DO_ABDACC)
->>> +RVVCALL(OPIVX3, vwabda_vx_h, WOP_SSS_H, H4, H2, DO_ABDACC)
->>> +RVVCALL(OPIVV3, vwabdau_vv_b, WOP_UUU_B, H2, H1, H1, DO_ABDACC)
->>> +RVVCALL(OPIVV3, vwabdau_vv_h, WOP_UUU_H, H4, H2, H2, DO_ABDACC)
->>> +RVVCALL(OPIVX3, vwabdau_vx_b, WOP_UUU_B, H2, H1, DO_ABDACC)
->>> +RVVCALL(OPIVX3, vwabdau_vx_h, WOP_UUU_H, H4, H2, DO_ABDACC)
->>> +
->>> +GEN_VEXT_VV(vabd_vv_b, 1)
->>> +GEN_VEXT_VV(vabd_vv_h, 2)
->>> +GEN_VEXT_VV(vabd_vv_w, 4)
->>> +GEN_VEXT_VV(vabd_vv_d, 8)
->>> +GEN_VEXT_VX(vabd_vx_b, 1)
->>> +GEN_VEXT_VX(vabd_vx_h, 2)
->>> +GEN_VEXT_VX(vabd_vx_w, 4)
->>> +GEN_VEXT_VX(vabd_vx_d, 8)
->>> +GEN_VEXT_VV(vabdu_vv_b, 1)
->>> +GEN_VEXT_VV(vabdu_vv_h, 2)
->>> +GEN_VEXT_VV(vabdu_vv_w, 4)
->>> +GEN_VEXT_VV(vabdu_vv_d, 8)
->>> +GEN_VEXT_VX(vabdu_vx_b, 1)
->>> +GEN_VEXT_VX(vabdu_vx_h, 2)
->>> +GEN_VEXT_VX(vabdu_vx_w, 4)
->>> +GEN_VEXT_VX(vabdu_vx_d, 8)
->>> +
->>> +GEN_VEXT_VV(vwabda_vv_b, 2)
->>> +GEN_VEXT_VV(vwabda_vv_h, 4)
->>> +GEN_VEXT_VX(vwabda_vx_b, 2)
->>> +GEN_VEXT_VX(vwabda_vx_h, 4)
->>> +GEN_VEXT_VV(vwabdau_vv_b, 2)
->>> +GEN_VEXT_VV(vwabdau_vv_h, 4)
->>> +GEN_VEXT_VX(vwabdau_vx_b, 2)
->>> +GEN_VEXT_VX(vwabdau_vx_h, 4)
->>
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
