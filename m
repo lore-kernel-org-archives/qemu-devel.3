@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49342C61DD7
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381D8C61DBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03RS-0004Rz-My; Fri, 28 Aug 2026 16:44:50 -0400
+	id 1x03Pi-0006Yf-C7; Fri, 28 Aug 2026 16:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03RQ-0004B2-6h
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:44:48 -0400
+ id 1x03Pe-00065C-6G
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:42:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03RL-0000kV-Gn
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:44:47 -0400
+ id 1x03Pc-0008FJ-1d
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:42:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787949882;
+ s=mimecast20190719; t=1787949774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O0gilCMcTw5GY6oy+YVwRqReRSTX/SrtxwLMRYrDZVs=;
- b=LiQcjaXzmuA9sS8hN3s8o79jRF8PrEgfpR+2yYSNHhV7r520MeVzFfpc1hzj9zN8wD/7dj
- 1Kwz+1J2x3H1WUmSG0Ak34P+8NwOJqjCDrFGQdsvpg30jBHbS6xrUTGmv6xGYv0g/dwUhK
- joyc4sbcY45GnDbQNx+1lu5e3+QQ2rk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3sBb5wKXIMM15ZG8HrtOTQGP++QueaQ7m+mrQd1vMSA=;
+ b=HBCQ2FGL+uXegcdZP/7sRInmpfpuW0UjdQPtUolZdz/3zNNQi52AGxN9Y3dbiT5+HgvBMA
+ UXcyUxwW0/CLWZUwJrI6fHkxl1teXUiSSciO8BTJhu95HUlPJPwc48FTYrP1TOGN3ZFRps
+ gaqxHSCHv/VrxZrpJMUNwlPmR4JPfX4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-670-TeuMH2ZtO3ew8EvnX0HPYw-1; Fri,
- 28 Aug 2026 16:44:41 -0400
-X-MC-Unique: TeuMH2ZtO3ew8EvnX0HPYw-1
-X-Mimecast-MFC-AGG-ID: TeuMH2ZtO3ew8EvnX0HPYw_1787949879
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-iirwSKgJO52CDvhblqWv7g-1; Fri,
+ 28 Aug 2026 16:42:51 -0400
+X-MC-Unique: iirwSKgJO52CDvhblqWv7g-1
+X-Mimecast-MFC-AGG-ID: iirwSKgJO52CDvhblqWv7g_1787949770
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B60611944F2C; Fri, 28 Aug 2026 20:44:39 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A04918C0FA5; Fri, 28 Aug 2026 20:42:50 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E99AA1803A40; Fri, 28 Aug 2026 20:44:38 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6AA0A18005AC; Fri, 28 Aug 2026 20:42:48 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 00:42:22 +0400
-Subject: [GIT PULL 43/50] hw: guard BusClass::print_dev with CONFIG_HMP
+Date: Sat, 29 Aug 2026 00:41:53 +0400
+Subject: [GIT PULL 14/50] tests/qtest/numa-test: replace HMP "info numa"
+ with QMP query-cpus-fast
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260829-nohmp-v1-43-4dcc2b4b0055@redhat.com>
+Message-Id: <20260829-nohmp-v1-14-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Laurent Vivier <lvivier@redhat.com>, 
- Amit Shah <amit@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- xen-devel@lists.xenproject.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9570;
+Cc: richard.henderson@linaro.org, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4107;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=L3Loi/onUFTsM2fjxBfrKJdXskJwqRvtiYRcMlKMo2w=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKVd+m32mJrZbVhGLpXFwMRIXrxLaCIEMZQD
- Zj5VnNgz7CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylQAKCRDa6OEJdZac
- 5Z2UD/4lT/YcsQpKiBSeaW34Rt6KLiZToHdewe53DXktQz/zLhMbXg0ro/ciVu3giu55hxebadE
- ZUadjNPI6eyfqmjNFIrvT4yC4B31liBIV0uXJvfV9g61SROBkq0uuCs/zdzbQEBJL0RtpQWJCCk
- IJUAf3ISbhmEYdm5sQAODfhQo4504YCsYMGR3ztVgSwmxTziDojBp6asRhq+ti9xRnQ3GHrHLkk
- iMycfc1cbtRG32JK8Lz0BhEiRiDTBnMhuBptseXC8vEItQG3/Mc6YioQqlRCqhvNfLN0TTSRvoj
- XJUB9BL41FrXym+uAAc7Lv5MWW8WIoJ1vUBYaaMHRmxzAIvG4grZ0mcnX3pUN24rdPMn8oSAwWC
- yl/FsCK+ktURtE1ZbeXVn0pj/9srsv+2tds8IAKUoyqRyK+bqhM0XuVPV2ic/kZ1GOF1GCdZJbF
- bElR3nAqEMOR5tEx1UBhdnDjVhglfp6OgO6z8y1T07Xq+sWWmqg3x8OGCmjsYrQhqyl8HW0l+Yr
- oQ6G0zugSfElA60YbY2EFkEtG+IbkRlE11WUcHri8GJOXJyBRY32m01a1cvRqxTI2yF1nZVPJMe
- Ey2nt/p1rD6i9pgAcwmJUIOpKJOyK9Sq1So6n8BZ/CIOsyp+B5/Qnfgv8D90PoeEWQvi1qMbcxM
- smThkRrXYJZPxOQ==
+ bh=T05QOCjWGcUCJjKa4FdLIFwcZrDf2hmNVYzR42TH3wM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUiQ1JumHY1QT3F8UPJCIb8TO3NfNIGGOm7
+ ABMu3+g3zaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
+ 5Q3lEACPQGmuQbC0mepdL11/CFU6rtJzo6BsJlxGLQi5TrSZoKbbmzrXsC/LOENnbAtTx5fLNFx
+ yN2VNq7kmF1XVMElsDYY+xrUa/jKkMPDXpvj4dHYip3CEjCgIvzN+uO4Nnwf6OZzg4W5c7ZGTk+
+ g88PALcL5b6RxNqjuTis95MSBy8M6F80EyxAm7Pwqb7QQiVo6IhX0Ha+eP1gnFcMvY/qIjz9EN0
+ olnnfb+XExK0cAvpentahPD1HVH4IL+g5cSy4iPYAJitWgZhL3wDI32p4FRc6UxsSoG5b6P708/
+ cQEdLuEEdHgkkSM2sBpXIQO42pNguzVQ4DUVFp73wXID9JVYsfdOei0V58HVOSohnwUAujzLByH
+ tz9m03/FqG8+YGDoOAatiUUwAVHAnWInCmQhA8HJqKtb71DD6BGy5hccQS4XT/EN2+9bkj7mHfo
+ t3HcUQ6nZqweq7mdzJG5q0OBdS41WjE4h6LbHuHPTHXqlIGXZYR7f6ek1KisyyMHapF5IYl2MpM
+ S3o7oi1IbgAhkkOv/y5pyA0y496JQuOL++jXS7GENjQlR5GIXA+jHFuq6sITj+t+MAlifB/gH1J
+ UpqwPLWrUB2Tm7OaSJ+S45GaUhN92NmDvTA1goHuxG803zDTKrJEoQaCmukzB5Lu5AwOYSRxEPm
+ c0Gk1DRSMs0aVgg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,283 +104,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The print_dev callback is only used by HMP 'info qtree'. Guard the field
-in BusClass, all implementations, and the caller with CONFIG_HMP.
+Convert the three test functions that relied on HMP "info numa" to use
+QMP "query-cpus-fast" instead, verifying each CPU's node-id through the
+structured response. Add a check_cpu_node() helper for the per-CPU
+assertions.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260828-qemu-no-hmp-v5-43-9227de146347@redhat.com>
+Message-ID: <20260828-qemu-no-hmp-v5-14-9227de146347@redhat.com>
 ---
- hw/char/virtio-serial-bus.c |  6 ++++++
- hw/core/sysbus.c            |  6 ++++++
- hw/misc/auxbus.c            | 16 +++++++++++-----
- hw/pci/pci-hmp-cmds.c       |  2 ++
- hw/pci/pci.c                |  2 ++
- hw/usb/bus.c                |  6 ++++++
- hw/xen/xen-bus.c            |  4 ++++
- include/hw/core/qdev.h      |  2 ++
- 8 files changed, 39 insertions(+), 5 deletions(-)
+ tests/qtest/numa-test.c | 63 +++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 51 insertions(+), 12 deletions(-)
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index 4dcc4516e45e..83a033ce8555 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -814,7 +814,9 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
-     return 0;
+diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
+index d657f3894743..8f563c079f62 100644
+--- a/tests/qtest/numa-test.c
++++ b/tests/qtest/numa-test.c
+@@ -19,19 +19,50 @@ static char *make_cli(const GString *generic_cli, const char *test_cli)
+     return g_strdup_printf("%s %s", generic_cli->str, test_cli);
  }
  
-+#ifdef CONFIG_HMP
- static void virtser_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent);
-+#endif
- 
- static const Property virtser_props[] = {
-     DEFINE_PROP_UINT32("nr", VirtIOSerialPort, id, VIRTIO_CONSOLE_BAD_ID),
-@@ -823,8 +825,10 @@ static const Property virtser_props[] = {
- 
- static void virtser_bus_class_init(ObjectClass *klass, const void *data)
- {
-+#ifdef CONFIG_HMP
-     BusClass *k = BUS_CLASS(klass);
-     k->print_dev = virtser_bus_dev_print;
-+#endif
- }
- 
- static const TypeInfo virtser_bus_info = {
-@@ -834,6 +838,7 @@ static const TypeInfo virtser_bus_info = {
-     .class_init = virtser_bus_class_init,
- };
- 
-+#ifdef CONFIG_HMP
- static void virtser_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent)
- {
-     VirtIOSerialPort *port = VIRTIO_SERIAL_PORT(qdev);
-@@ -844,6 +849,7 @@ static void virtser_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent
-                        port->host_connected ? "on" : "off",
-                        port->throttled ? "on" : "off");
- }
-+#endif
- 
- /* This function is only used if a port id is not provided by the user */
- static uint32_t find_free_port_id(VirtIOSerial *vser)
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 31c4fdf79d48..fe8f867a8d9c 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -24,7 +24,9 @@
- #include "monitor/hmp.h"
- #include "system/address-spaces.h"
- 
-+#ifdef CONFIG_HMP
- static void sysbus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent);
-+#endif
- static char *sysbus_get_fw_dev_path(DeviceState *dev);
- 
- typedef struct SysBusFind {
-@@ -76,7 +78,9 @@ static void system_bus_class_init(ObjectClass *klass, const void *data)
- {
-     BusClass *k = BUS_CLASS(klass);
- 
-+#ifdef CONFIG_HMP
-     k->print_dev = sysbus_dev_print;
-+#endif
-     k->get_fw_dev_path = sysbus_get_fw_dev_path;
- }
- 
-@@ -249,6 +253,7 @@ bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp)
-     return qdev_realize_and_unref(DEVICE(dev), sysbus_get_default(), errp);
- }
- 
-+#ifdef CONFIG_HMP
- static void sysbus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
- {
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
-@@ -261,6 +266,7 @@ static void sysbus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
-                            indent, "", s->mmio[i].addr, size);
-     }
- }
-+#endif
- 
- static char *sysbus_get_fw_dev_path(DeviceState *dev)
- {
-diff --git a/hw/misc/auxbus.c b/hw/misc/auxbus.c
-index 0bb89c5a60ab..3f17784d9b8a 100644
---- a/hw/misc/auxbus.c
-+++ b/hw/misc/auxbus.c
-@@ -47,18 +47,22 @@
- } while (0)
- 
- 
-+#ifdef CONFIG_HMP
- static void aux_slave_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent);
-+#endif
- static inline I2CBus *aux_bridge_get_i2c_bus(AUXTOI2CState *bridge);
- 
- /* aux-bus implementation (internal not public) */
- static void aux_bus_class_init(ObjectClass *klass, const void *data)
- {
-+#ifdef CONFIG_HMP
-     BusClass *k = BUS_CLASS(klass);
- 
-     /* AUXSlave has an MMIO so we need to change the way we print information
-      * in monitor.
-      */
-     k->print_dev = aux_slave_dev_print;
-+#endif
- }
- 
- AUXBus *aux_bus_init(DeviceState *parent, const char *name)
-@@ -91,11 +95,6 @@ void aux_map_slave(AUXSlave *aux_dev, hwaddr addr)
-     memory_region_add_subregion(bus->aux_io, addr, aux_dev->mmio);
- }
- 
--static bool aux_bus_is_bridge(AUXBus *bus, DeviceState *dev)
--{
--    return (dev == DEVICE(bus->bridge));
--}
--
- I2CBus *aux_get_i2c_bus(AUXBus *bus)
- {
-     return aux_bridge_get_i2c_bus(bus->bridge);
-@@ -288,6 +287,12 @@ static const TypeInfo aux_to_i2c_type_info = {
- };
- 
- /* aux-slave implementation */
-+#ifdef CONFIG_HMP
-+static bool aux_bus_is_bridge(AUXBus *bus, DeviceState *dev)
++static void check_cpu_node(QTestState *qts, int cpu_idx, int expected_node)
 +{
-+    return (dev == DEVICE(bus->bridge));
++    QDict *resp;
++    QList *cpus;
++    QListEntry *e;
++    bool found = false;
++
++    resp = qtest_qmp(qts, "{ 'execute': 'query-cpus-fast' }");
++    g_assert(resp);
++    g_assert(qdict_haskey(resp, "return"));
++    cpus = qdict_get_qlist(resp, "return");
++    g_assert(cpus);
++
++    QLIST_FOREACH_ENTRY(cpus, e) {
++        QDict *cpu = qobject_to(QDict, qlist_entry_obj(e));
++        int64_t idx = qdict_get_int(cpu, "cpu-index");
++        if (idx == cpu_idx) {
++            QDict *props = qdict_get_qdict(cpu, "props");
++            g_assert(qdict_haskey(props, "node-id"));
++            g_assert_cmpint(qdict_get_int(props, "node-id"), ==, expected_node);
++            found = true;
++            break;
++        }
++    }
++    g_assert(found);
++    qobject_unref(resp);
 +}
 +
- static void aux_slave_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+ static void test_mon_explicit(const void *data)
  {
-     AUXBus *bus = AUX_BUS(qdev_get_parent_bus(dev));
-@@ -305,6 +310,7 @@ static void aux_slave_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
-                        object_property_get_uint(OBJECT(s->mmio), "addr", NULL),
-                        memory_region_size(s->mmio));
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8 -numa node,nodeid=0,memdev=ram,cpus=0-3 "
+                          "-numa node,nodeid=1,cpus=4-7");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 1 2 3"));
+-    g_assert(strstr(s, "node 1 cpus: 4 5 6 7"));
++    for (i = 0; i < 4; i++) {
++        check_cpu_node(qts, i, 0);
++    }
++    for (i = 4; i < 8; i++) {
++        check_cpu_node(qts, i, 1);
++    }
+ 
+     qtest_quit(qts);
  }
-+#endif
- 
- void aux_init_mmio(AUXSlave *aux_slave, MemoryRegion *mmio)
+@@ -39,16 +70,19 @@ static void test_mon_explicit(const void *data)
+ static void test_def_cpu_split(const void *data)
  {
-diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
-index bcccfaf07f4d..879011da1384 100644
---- a/hw/pci/pci-hmp-cmds.c
-+++ b/hw/pci/pci-hmp-cmds.c
-@@ -135,6 +135,7 @@ void hmp_info_pci(MonitorHMP *hmp, const QDict *qdict)
-     qapi_free_PciInfoList(info_list);
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int even_cpus[] = {0, 2, 4, 6};
++    int odd_cpus[] = {1, 3, 5, 7};
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8,smp.sockets=8 "
+                          "-numa node,memdev=ram -numa node");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 2 4 6"));
+-    g_assert(strstr(s, "node 1 cpus: 1 3 5 7"));
++    for (i = 0; i < 4; i++) {
++        check_cpu_node(qts, even_cpus[i], 0);
++        check_cpu_node(qts, odd_cpus[i], 1);
++    }
+ 
+     qtest_quit(qts);
  }
- 
-+#ifdef CONFIG_HMP
- void pcibus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
+@@ -56,17 +90,22 @@ static void test_def_cpu_split(const void *data)
+ static void test_mon_partial(const void *data)
  {
-     PCIDevice *d = (PCIDevice *)dev;
-@@ -170,6 +171,7 @@ void pcibus_dev_print(MonitorHMP *hmp, DeviceState *dev, int indent)
-                            r->addr, r->addr + r->size - 1);
-     }
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int node0_cpus[] = {0, 1, 2, 3, 6, 7};
++    int node1_cpus[] = {4, 5};
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8 "
+                    "-numa node,nodeid=0,memdev=ram,cpus=0-1 "
+                    "-numa node,nodeid=1,cpus=4-5 ");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 1 2 3 6 7"));
+-    g_assert(strstr(s, "node 1 cpus: 4 5"));
++    for (i = 0; i < 6; i++) {
++        check_cpu_node(qts, node0_cpus[i], 0);
++    }
++    for (i = 0; i < 2; i++) {
++        check_cpu_node(qts, node1_cpus[i], 1);
++    }
+ 
+     qtest_quit(qts);
  }
-+#endif
- 
- void hmp_pcie_aer_inject_error(MonitorHMP *hmp, const QDict *qdict)
- {
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index e8e8a3b76714..c15f2b9f084a 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -293,7 +293,9 @@ static void pci_bus_class_init(ObjectClass *klass, const void *data)
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-     FWCfgDataGeneratorClass *fwgc = FW_CFG_DATA_GENERATOR_CLASS(klass);
- 
-+#ifdef CONFIG_HMP
-     k->print_dev = pcibus_dev_print;
-+#endif
-     k->get_dev_path = pcibus_get_dev_path;
-     k->get_fw_dev_path = pcibus_get_fw_dev_path;
-     k->realize = pci_bus_realize;
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 8bd25a9d872a..5cc5ffec33a1 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -13,7 +13,9 @@
- #include "trace.h"
- #include "qemu/cutils.h"
- 
-+#ifdef CONFIG_HMP
- static void usb_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent);
-+#endif
- 
- static char *usb_get_dev_path(DeviceState *dev);
- static char *usb_get_fw_dev_path(DeviceState *qdev);
-@@ -32,7 +34,9 @@ static void usb_bus_class_init(ObjectClass *klass, const void *data)
-     BusClass *k = BUS_CLASS(klass);
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
- 
-+#ifdef CONFIG_HMP
-     k->print_dev = usb_bus_dev_print;
-+#endif
-     k->get_dev_path = usb_get_dev_path;
-     k->get_fw_dev_path = usb_get_fw_dev_path;
-     hc->unplug = qdev_simple_device_unplug_cb;
-@@ -544,6 +548,7 @@ static const char *usb_speed(unsigned int speed)
-     return txt[speed];
- }
- 
-+#ifdef CONFIG_HMP
- static void usb_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent)
- {
-     USBDevice *dev = USB_DEVICE(qdev);
-@@ -555,6 +560,7 @@ static void usb_bus_dev_print(MonitorHMP *hmp, DeviceState *qdev, int indent)
-                        usb_speed(dev->speed), dev->product_desc,
-                        dev->attached ? ", attached" : "");
- }
-+#endif
- 
- static char *usb_get_dev_path(DeviceState *qdev)
- {
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index b81a067e7753..1762816bf469 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -101,6 +101,7 @@ abort:
-     qemu_xen_xs_transaction_end(xenbus->xsh, tid, true);
- }
- 
-+#ifdef CONFIG_HMP
- static void xen_bus_print_dev(MonitorHMP *hmp, DeviceState *dev, int indent)
- {
-     XenDevice *xendev = XEN_DEVICE(dev);
-@@ -108,6 +109,7 @@ static void xen_bus_print_dev(MonitorHMP *hmp, DeviceState *dev, int indent)
-     monitor_hmp_printf(hmp, "%*sname = '%s' frontend_id = %u\n",
-                        indent, "", xendev->name, xendev->frontend_id);
- }
-+#endif
- 
- static char *xen_bus_get_dev_path(DeviceState *dev)
- {
-@@ -386,7 +388,9 @@ static void xen_bus_class_init(ObjectClass *class, const void *data)
-     BusClass *bus_class = BUS_CLASS(class);
-     HotplugHandlerClass *hotplug_class = HOTPLUG_HANDLER_CLASS(class);
- 
-+#ifdef CONFIG_HMP
-     bus_class->print_dev = xen_bus_print_dev;
-+#endif
-     bus_class->get_dev_path = xen_bus_get_dev_path;
-     bus_class->realize = xen_bus_realize;
-     bus_class->unrealize = xen_bus_unrealize;
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index 1391dc060caf..f054a214fc6a 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -323,8 +323,10 @@ DECLARE_OBJ_CHECKERS(BusState, BusClass,
- struct BusClass {
-     ObjectClass parent_class;
- 
-+#ifdef CONFIG_HMP
-     /* FIXME first arg should be BusState */
-     void (*print_dev)(MonitorHMP *mon, DeviceState *dev, int indent);
-+#endif
-     /*
-      * Return a newly allocated string containing the path of the
-      * device on this bus.
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
