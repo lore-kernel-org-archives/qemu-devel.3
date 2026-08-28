@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D530EC61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD7DC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzvLB-0007UR-Hg; Fri, 28 Aug 2026 08:05:49 -0400
+	id 1wzvLA-0007Qa-Rv; Fri, 28 Aug 2026 08:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wzvL9-0007Gz-4n
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:05:47 -0400
+ id 1wzvL3-000737-HU
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:05:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wzvL7-0002l7-6g
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:05:46 -0400
+ id 1wzvL1-0002ji-Jj
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:05:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787918743;
+ s=mimecast20190719; t=1787918738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HfMcQcx6b8V1GGc85U1OGllXkTDW5Em7kmZJjqakvXg=;
- b=bYhfrFcdCc+BEk+XnvY//UFLAHScR2+yPeqoRviJAuVUrzVi3Df6OY8YkjGV6d/hG4ewAS
- DfJF0KIDKZpfQ87RmpQdmk1WuRggo0iNuhDbq1fq+QaNEXljp6SCz4C7FTYwaozEglxr22
- syWo9FFnPirRjYx4yFSHAz7YLS8TQFM=
+ bh=WuTj5x+fSNUVNN2LMJ3vFG3XqkgK85waEsJYQTSVFbk=;
+ b=ZS6WDEjR+GdqdssROiHxO2GAT0JlInj189uiQO3kr3izzG+xaP+XeBmDyxLer4ao5Bi7Mh
+ m8rr2u79VrbYF4HeseUGhHDTCxJQ6E+lDUvZePQFDgDXyIDEgFBE6TLegDzjqyDIP8eAa5
+ ZdrxopqaQUopeiDCTwhtZCMCxlGNw9Q=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-6F12snoTObqbzJV0BUkraA-1; Fri,
- 28 Aug 2026 08:05:40 -0400
-X-MC-Unique: 6F12snoTObqbzJV0BUkraA-1
-X-Mimecast-MFC-AGG-ID: 6F12snoTObqbzJV0BUkraA_1787918739
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-AvMnvy4CMYq6Rx5KTY3b7g-1; Fri,
+ 28 Aug 2026 08:05:35 -0400
+X-MC-Unique: AvMnvy4CMYq6Rx5KTY3b7g-1
+X-Mimecast-MFC-AGG-ID: AvMnvy4CMYq6Rx5KTY3b7g_1787918734
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8655195E908; Fri, 28 Aug 2026 12:05:38 +0000 (UTC)
+ id 68E93195C271; Fri, 28 Aug 2026 12:05:34 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0F0BD1955F05; Fri, 28 Aug 2026 12:05:37 +0000 (UTC)
+ id 810841955F05; Fri, 28 Aug 2026 12:05:33 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 28 Aug 2026 16:04:12 +0400
-Subject: [PATCH v5 15/50] tests/qtest/cdrom-test: replace HMP "info block"
- with QMP query-block
+Date: Fri, 28 Aug 2026 16:04:11 +0400
+Subject: [PATCH v5 14/50] tests/qtest/numa-test: replace HMP "info numa"
+ with QMP query-cpus-fast
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260828-qemu-no-hmp-v5-15-9227de146347@redhat.com>
+Message-Id: <20260828-qemu-no-hmp-v5-14-9227de146347@redhat.com>
 References: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
 In-Reply-To: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,26 +63,23 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, "Denis V. Lunev" <den@openvz.org>, 
- John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2301;
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4041;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=5wY91W0L9laNoGmdtIKhtW9LqkeXAMcQEZWY3DWeEYU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkXk4xkMBI3Gl1Wf1Btbk0cqkzjGduqUEtzct2
- OuJtAaBB8yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapF5OAAKCRDa6OEJdZac
- 5eGQEACu6xedg64arOYOHe3ZHbnNx5Gor5QqDuHu4qbQPbTH8Z4A9HQ10d6uVhOi6H21CwM/vsY
- zX0LpOswhlFJ0gbfh2B2OliYBsx0+GVHO/N27uCxLkgtS+imiga05ZukyeYdWfNsjpexeWQ0+L5
- nmSUzLu5i5QMkEs8aJRZijV7u8jn7+QEKd2EEAcIeUxeChQUoDhQj/I/Irh2py/Lq8QnYPKmK28
- ejA3vuwJ8ym+p684mmRxM9yQQpLEVXvpQMao7QtwH/nD+0+loK7Io2z4kga3aMQZJrzk6Uu9ohP
- eklEtC+/pUS0N0tgjHSTsK/vUflY0GJ0YiBGMFNEWrD+AAIwE9wxJ5my+9Dlhb2ecdtFBk8mLd6
- LfWC5jbB3N9gR86aXZcp2dVklxhkpAUce6r4dMgwVgGUyXKAFF2CSUc/vxIh3GSvKTCnb8bmTvl
- GH/4MnE2IFRjZEVirxSFWeUfIrTUO2s53DR5Hr9f2d7LRAqnGWOGQk46+wwvo3tV0+ITHJrg5xy
- 6TPQwIgJQyzgHyck1m0krDrXh9zw0qDWaLNwigcq4prEKEXeVxHP941SLxIqqAfrOwQlC2M8okn
- Xbun2KBOmjThWEPE2X+ZbmgEsACTmk4pmZ4j5XrnKY6/RoACeGMkkRLVspTbR3+A2T7VT0YCNzi
- dkXIs3IWLjzig3A==
+ bh=+FBAR2ZPq7hb97oLmYP2VfmJ5ZxlMcXNs2ksRVhW/zk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkXk4mOMXc/za3gwGBj9Gw7Qmx2y4m6TWlQuiT
+ VH9yupgL0iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapF5OAAKCRDa6OEJdZac
+ 5WfLD/9G7ZPkKKPf97a1ybOZWUI60ZUquIPh/qBWK7n5IPYPvoZvZNxs6tJGf/XmcDcMCdhrPt7
+ ArVTJw/OjVcNoaafZxdKZluy9mPN4pSKdzJnOYBMlCwtiXMpjVPbzjuYusY8gZ97WYcAlwBAK24
+ bSNuXHEyDqLOZRccE0sps+7BHzHQwhX2iu36HzZ2bIzdephBAswoM0peiq9w2oy7N+O5M2FiW5J
+ ZigBrHdGycyih2H3JU3s4BDpivF+3I43AWt3vXl5mxkdyvFQc0w6TGI/omPpDzI1axqcVseb5AD
+ 8XqeD0l6rjXovqrGNfs3q/4wM6laexJC/nSMOG6uqpdxXwFK6479AOg+ZkH7SZZKmxLM/271IsH
+ Bvdo1TWvu/UxMVZLXD2uFR6HfIxxinDUDiCX8MVwmKa/abKqyPS7E/P8KALxQYM7ABlyPWWOl6p
+ qTIHZTKiWskjpieT/e0xq8uREs/exaJ8MXJU7Jv5QixsC6rFvPbBYGaQfgVDLnnesgfyNHm5WAV
+ 0upPl2eR5EqIjdo0Az+IsFJLWIPdu8njYhPGByH/Yf/IGvxziVqr9VODA7Yb1KQbTRKlEvpY8X1
+ wiKgGnoJiTf2E1Td5AAN0xfnYJULP+ZXVrkMYXXsyUObUwuNDADP8upg0j4NOjqCeuPd3oIm3uu
+ ds6e3jaBjJ3dhPg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -111,72 +108,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test_cdrom_param() function uses qtest_hmp() to run "info block",
-which depends on the human-monitor-command QMP endpoint. Replace it
-with the QMP query-block command so the test works when HMP is
-disabled (-Dhmp=disabled).
+Convert the three test functions that relied on HMP "info numa" to use
+QMP "query-cpus-fast" instead, verifying each CPU's node-id through the
+structured response. Add a check_cpu_node() helper for the per-CPU
+assertions.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/cdrom-test.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ tests/qtest/numa-test.c | 63 +++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 51 insertions(+), 12 deletions(-)
 
-diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-index a65854d2bc53..bf997be6d690 100644
---- a/tests/qtest/cdrom-test.c
-+++ b/tests/qtest/cdrom-test.c
-@@ -14,6 +14,7 @@
- #include "libqtest.h"
- #include "boot-sector.h"
- #include "qobject/qdict.h"
-+#include "qobject/qlist.h"
- 
- static char isoimage[] = "cdrom-boot-iso-XXXXXX";
- 
-@@ -92,17 +93,35 @@ cleanup:
- 
- /**
-  * Check that at least the -cdrom parameter is basically working, i.e. we can
-- * see the filename of the ISO image in the output of "info block" afterwards
-+ * see the filename of the ISO image in the output of "query-block" afterwards
-  */
- static void test_cdrom_param(gconstpointer data)
- {
-     QTestState *qts;
--    char *resp;
-+    QDict *response;
-+    QList *ret;
-+    QListEntry *entry;
-+    bool found = false;
- 
-     qts = qtest_initf("-M %s -cdrom %s", (const char *)data, isoimage);
--    resp = qtest_hmp(qts, "info block");
--    g_assert(strstr(resp, isoimage) != 0);
--    g_free(resp);
-+    response = qtest_qmp(qts, "{'execute': 'query-block'}");
-+    g_assert(response && qdict_haskey(response, "return"));
-+    ret = qdict_get_qlist(response, "return");
-+
-+    QLIST_FOREACH_ENTRY(ret, entry) {
-+        QDict *entry_dict = qobject_to(QDict, entry->value);
-+        QDict *inserted = qdict_get_qdict(entry_dict, "inserted");
-+        if (inserted) {
-+            const char *file = qdict_get_str(inserted, "file");
-+            if (file && strstr(file, isoimage)) {
-+                found = true;
-+                break;
-+            }
-+        }
-+    }
-+
-+    g_assert(found);
-+    qobject_unref(response);
-     qtest_quit(qts);
+diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
+index d657f3894743..8f563c079f62 100644
+--- a/tests/qtest/numa-test.c
++++ b/tests/qtest/numa-test.c
+@@ -19,19 +19,50 @@ static char *make_cli(const GString *generic_cli, const char *test_cli)
+     return g_strdup_printf("%s %s", generic_cli->str, test_cli);
  }
  
++static void check_cpu_node(QTestState *qts, int cpu_idx, int expected_node)
++{
++    QDict *resp;
++    QList *cpus;
++    QListEntry *e;
++    bool found = false;
++
++    resp = qtest_qmp(qts, "{ 'execute': 'query-cpus-fast' }");
++    g_assert(resp);
++    g_assert(qdict_haskey(resp, "return"));
++    cpus = qdict_get_qlist(resp, "return");
++    g_assert(cpus);
++
++    QLIST_FOREACH_ENTRY(cpus, e) {
++        QDict *cpu = qobject_to(QDict, qlist_entry_obj(e));
++        int64_t idx = qdict_get_int(cpu, "cpu-index");
++        if (idx == cpu_idx) {
++            QDict *props = qdict_get_qdict(cpu, "props");
++            g_assert(qdict_haskey(props, "node-id"));
++            g_assert_cmpint(qdict_get_int(props, "node-id"), ==, expected_node);
++            found = true;
++            break;
++        }
++    }
++    g_assert(found);
++    qobject_unref(resp);
++}
++
+ static void test_mon_explicit(const void *data)
+ {
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8 -numa node,nodeid=0,memdev=ram,cpus=0-3 "
+                          "-numa node,nodeid=1,cpus=4-7");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 1 2 3"));
+-    g_assert(strstr(s, "node 1 cpus: 4 5 6 7"));
++    for (i = 0; i < 4; i++) {
++        check_cpu_node(qts, i, 0);
++    }
++    for (i = 4; i < 8; i++) {
++        check_cpu_node(qts, i, 1);
++    }
+ 
+     qtest_quit(qts);
+ }
+@@ -39,16 +70,19 @@ static void test_mon_explicit(const void *data)
+ static void test_def_cpu_split(const void *data)
+ {
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int even_cpus[] = {0, 2, 4, 6};
++    int odd_cpus[] = {1, 3, 5, 7};
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8,smp.sockets=8 "
+                          "-numa node,memdev=ram -numa node");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 2 4 6"));
+-    g_assert(strstr(s, "node 1 cpus: 1 3 5 7"));
++    for (i = 0; i < 4; i++) {
++        check_cpu_node(qts, even_cpus[i], 0);
++        check_cpu_node(qts, odd_cpus[i], 1);
++    }
+ 
+     qtest_quit(qts);
+ }
+@@ -56,17 +90,22 @@ static void test_def_cpu_split(const void *data)
+ static void test_mon_partial(const void *data)
+ {
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int node0_cpus[] = {0, 1, 2, 3, 6, 7};
++    int node1_cpus[] = {4, 5};
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8 "
+                    "-numa node,nodeid=0,memdev=ram,cpus=0-1 "
+                    "-numa node,nodeid=1,cpus=4-5 ");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 1 2 3 6 7"));
+-    g_assert(strstr(s, "node 1 cpus: 4 5"));
++    for (i = 0; i < 6; i++) {
++        check_cpu_node(qts, node0_cpus[i], 0);
++    }
++    for (i = 0; i < 2; i++) {
++        check_cpu_node(qts, node1_cpus[i], 1);
++    }
+ 
+     qtest_quit(qts);
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
