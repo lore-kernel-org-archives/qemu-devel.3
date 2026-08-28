@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42873C61DCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC944C61DDA
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03QC-00085k-Hn; Fri, 28 Aug 2026 16:43:32 -0400
+	id 1x03Pg-0006RP-M5; Fri, 28 Aug 2026 16:43:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03QB-0007yh-5O
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:31 -0400
+ id 1x03Pa-0005rn-7p
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:42:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03Q9-0008WF-E9
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:30 -0400
+ id 1x03PW-0008BT-D1
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:42:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787949808;
+ s=mimecast20190719; t=1787949767;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rU1JuobZe1INS7my5A1LrdEWPdwzd/Y214ba/NisCV8=;
- b=ieGkDiWB2IE4qnZPrhFqrHo/+bHsax+mnJw2Xtll9qHxM323M5SmI31dO15Db44HmTAxnl
- k+rbiEY3z8b/8a7lxSWQV9nSy2dRrduLHXShwL0IbgIBGam7TBorYwrNXs4ZswfMBxYKBQ
- TR8rRfj9KviabUD2wa336ym09/t94Lg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5hDibQ/76bLAuXZOX4GEYOaUl81zkc5tt+tMjQi0FuE=;
+ b=HlY7P70bDROwGe6CQE0Hqvr079A0u60IL0ziSQbniw6q3+9dYLyrIa06EIeL/fAJppPIkf
+ yUkMtDUYnBi2Zj+2F5d1Az1rjuUlDO2qEZ259SJQy5DLIOz6Xog6Qu8L87tc8Hb+L5bY13
+ 5/BtI3G/WCoQqYyv6P4j2FMQKnjw4Tc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-dXqQg4BWM5-ASX4FffGbbA-1; Fri,
- 28 Aug 2026 16:43:23 -0400
-X-MC-Unique: dXqQg4BWM5-ASX4FffGbbA-1
-X-Mimecast-MFC-AGG-ID: dXqQg4BWM5-ASX4FffGbbA_1787949802
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-5tuNl5uHMqiFyWuRDPWnlA-1; Fri,
+ 28 Aug 2026 16:42:41 -0400
+X-MC-Unique: 5tuNl5uHMqiFyWuRDPWnlA-1
+X-Mimecast-MFC-AGG-ID: 5tuNl5uHMqiFyWuRDPWnlA_1787949760
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58B3B180AE2E; Fri, 28 Aug 2026 20:43:22 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC24618CC49E; Fri, 28 Aug 2026 20:42:39 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 62F101955F43; Fri, 28 Aug 2026 20:43:21 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 980E51955F0A; Fri, 28 Aug 2026 20:42:38 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 00:42:02 +0400
-Subject: [GIT PULL 23/50] qtest: add qemu-io command to the qtest protocol
+Date: Sat, 29 Aug 2026 00:41:50 +0400
+Subject: [GIT PULL 11/50] python, tests: switch usernet queries from HMP to QMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260829-nohmp-v1-23-4dcc2b4b0055@redhat.com>
+Message-Id: <20260829-nohmp-v1-11-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3305;
+Cc: richard.henderson@linaro.org, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3604;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=RgvVsUcW+QcFTDrMP/ZKBkf1CzCW2rqeaLm06HOOQYo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUiGKIosU0zUJ0Th2/REFFXterv74AnftsN
- GWo1P9go0mJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
- 5VXKD/wOx5pBaKTGqvq2ytm95Ws3mDeuttkjXqgWcHftWfHioEBaMAz8CFScWban+xiw+loyZ+j
- fqzbxh1gkymBdXMXIklCeAjHGNImBoJyhD1I8EzCvm6hNYJciz+z7oCYRoe1fRF+XX4HjWg90Vb
- VmOSp1qj+ss/dNsvknGmRxVUl7hg4oll5GFzLcaEevpX0jX9UaBcBTtxRbBFuF/zlgiktchJIqc
- 2pKKXQEGKKVWb8vFoNRmDw7R5XhiaR5EokOW1YUToomU4oV475Pwr+p3n2wH6c51BsXn2RoH9QY
- tcFRzYWWfhZ1UpmcX/nsqnVEPmIoN+5mxwJ6kA/LZWxwEQRY37ETPQix7CAdRxigL59Cp+SaGzS
- q2xZG7SqXoe8MNjL2oYsdfvP/EcFtT0DOZsDqU6VC/uHR7QIZ19xMRoxSPGj8Z8Aj63XxAG5kJ4
- izi9KKCS7lDtFAQArHrPpoTGowaUw8nodOgCB/Pu8KiIXtkovMC96mOkDW9rATf4OinxgMauaRW
- fFjip19rC5acTkM4zSA/VWZQl0b8bLmrqnnS5/F/WQFz3BkRhVbmiIZVaQzM7S+q5Vlcc+mRgu1
- 8lVFi9j7g0ps2ue2vBWzz4kExWoVsD4ZyjmseNpW+8wLCnRukz4VzDIpvvZSA0ZgqEOjW1l7zlB
- ZzJ+TAwwffiG9fg==
+ bh=Ts1ydKczmkeF1pPgicN1uWQ5eabDW6urDzxS2MLEnJ0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUMzsfshXQR4lYG72cCJXRUMBrKeoZj96nX
+ pOEXn937MCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
+ 5VjpEACpwliy1GUwAMqsAP6UgCD6b/mCPxFy1ahgXZWqdVtZjOw/o4yuYo23h2p8ds3SIxtJddF
+ mUGN/qIkZnSxLuGQP8FNacv+CXD695Shl/xNoaYq+KsScGVKAk2ROIKhWMVZnP4+RebhXx+pQGg
+ Svgmx5hpByOFNaUD/IGY+dI6nuX6oO1+c8i9zlKvzwDF50QxPGvwRBMzXczEy9d3VeyXC8EWwdy
+ Ag19L9EI+eW/uVsYNziPlUXCEPsaH8kgZuzOB9z9FSIJTvAzX0yMLwu3PfyWOdvOAE+u+Ce9FL/
+ ROspkE6P696+BRLuy3AiUCvEp7CH+tGnKVfpc5nFBRckawT84HHxCIO9wbne0bw1++23qX8YqJk
+ M98zCdyP5d/pulUePFziTTOUMSKGMSeqoZy3D3fLrrMPSBI5lgusV8nxuABdUV1TnpblD+GqEW2
+ Kq8nTqfJ1Ws80JO3gMZl3u9jMdoTtPgbShFD0TVDkrVwhv425MB+VcLe9y4jL9wGxwog34HZZdc
+ cC5yUkisEcA61OLuYgAh+50EtJ4XkkrqwNJ6kU07vHKl10sdt1hCKTqd8OUEZr0t8uzNIs+HxQu
+ GVSDfIsBIwkCmvOhL1Qvwl0hr/xFx1EpLS+xoKUHXWDbl7qbL7fgwV2fgXyVNyxhL2aYIhhecbx
+ AMfttI+CUSYCzdg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,101 +107,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a "qemu-io" command to the qtest protocol so that tests can issue
-block layer I/O commands without going through the HMP monitor's
-"human-monitor-command" QMP, or use QMP at all.
+Replace human-monitor-command "info usernet" calls with the structured
+x-query-usernet QMP command in get_usernet_hostfwd_port() and the VM
+test runner boot path.
 
-Unfortunately, many tests will prefer to use QMP as they also monitor
-and log other events. It's easier if it is pipelined in the same stream.
+Since x-query-usernet returns a list of UsernetInfo entries, callers
+now iterate over the result and extract the port from each entry's
+"info" field. Also switch get_info_usernet_hostfwd_port() from
+split('\r\n') to splitlines(), since QMP strings use \n rather than
+the HMP monitor's \r\n line endings.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260828-qemu-no-hmp-v5-23-9227de146347@redhat.com>
+Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260828-qemu-no-hmp-v5-11-9227de146347@redhat.com>
 ---
- system/qtest.c         | 14 ++++++++++++++
- tests/qtest/libqtest.c | 14 ++++++++++++++
- tests/qtest/libqtest.h | 11 +++++++++++
- 3 files changed, 39 insertions(+)
+ python/qemu/utils/__init__.py       |  5 +++--
+ tests/functional/qemu_test/utils.py |  8 ++++++--
+ tests/vm/basevm.py                  | 13 ++++++++-----
+ 3 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/system/qtest.c b/system/qtest.c
-index cf3012391774..47c954838dd0 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -33,6 +33,7 @@
- #include "qom/object_interfaces.h"
- #include "qom/qom-qobject.h"
- #include "qobject/qobject.h"
-+#include "qapi-commands-block.h"
+diff --git a/python/qemu/utils/__init__.py b/python/qemu/utils/__init__.py
+index be5daa836340..e32911d4c6df 100644
+--- a/python/qemu/utils/__init__.py
++++ b/python/qemu/utils/__init__.py
+@@ -46,10 +46,11 @@ def get_info_usernet_hostfwd_port(info_usernet_output: str) -> Optional[int]:
+     """
+     Returns the port given to the hostfwd parameter via info usernet
  
- #define MAX_IRQ 256
+-    :param info_usernet_output: output generated by hmp command "info usernet"
++    :param info_usernet_output: output generated by "info usernet" or
++        the "info" field from x-query-usernet
+     :return: the port number allocated by the hostfwd option
+     """
+-    for line in info_usernet_output.split('\r\n'):
++    for line in info_usernet_output.splitlines():
+         regex = r'TCP.HOST_FORWARD.*127\.0\.0\.1\s+(\d+)\s+10\.'
+         match = re.search(regex, line)
+         if match is not None:
+diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
+index 826c267785bd..0992db49ab28 100644
+--- a/tests/functional/qemu_test/utils.py
++++ b/tests/functional/qemu_test/utils.py
+@@ -14,8 +14,12 @@
  
-@@ -797,6 +798,19 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
-         }
-         g_slist_free(list);
-         qtest_send(chr, "OK\n");
-+    } else if (strcmp(words[0], "qemu-io") == 0) {
-+        const char *io_dev;
-+        g_autofree char *io_cmd = NULL;
-+        Error *err = NULL;
-+
-+        g_assert(words[1] && words[2]);
-+        io_dev = words[1];
-+        io_cmd = g_strjoinv(" ", &words[2]);
-+
-+        qmp_x_qemu_io(io_dev, NULL, io_cmd, &err);
-+        qtest_sendf(chr, err ? "FAIL %s\n" : "OK\n",
-+                    err ? error_get_pretty(err) : NULL);
-+        error_free(err);
-     } else if (process_command_cb && process_command_cb(chr, words)) {
-         /* Command got consumed by the callback handler */
-     } else {
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index bec37c71b8c1..28bb72bfaecf 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -1012,6 +1012,20 @@ char *qtest_hmp(QTestState *s, const char *fmt, ...)
-     return ret;
- }
  
-+void qtest_qemu_io(QTestState *s, const char *device,
-+                   const char *fmt, ...)
-+{
-+    va_list ap;
-+    g_autofree char *cmd = NULL;
-+
-+    va_start(ap, fmt);
-+    cmd = g_strdup_vprintf(fmt, ap);
-+    va_end(ap);
-+
-+    qtest_sendf(s, "qemu-io %s %s\n", device, cmd);
-+    qtest_rsp(s);
-+}
-+
- const char *qtest_get_arch(void)
- {
-     /*
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index 45217fb8dc09..58491ca53ab7 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -424,6 +424,17 @@ char *qtest_hmp(QTestState *s, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
- char *qtest_vhmp(QTestState *s, const char *fmt, va_list ap)
-     G_GNUC_PRINTF(2, 0);
+ def get_usernet_hostfwd_port(vm):
+-    res = vm.cmd('human-monitor-command', command_line='info usernet')
+-    return get_info_usernet_hostfwd_port(res)
++    res = vm.cmd('x-query-usernet')
++    for entry in res:
++        port = get_info_usernet_hostfwd_port(entry['info'])
++        if port is not None:
++            return port
++    return None
  
-+/**
-+ * qtest_qemu_io:
-+ * @s: #QTestState instance to operate on.
-+ * @device: block device node-name or BlockBackend name.
-+ * @fmt: qemu-io command to send, formats arguments like sprintf().
-+ *
-+ * Send a qemu-io command via the qtest protocol.
-+ */
-+void qtest_qemu_io(QTestState *s, const char *device,
-+                   const char *fmt, ...) G_GNUC_PRINTF(3, 4);
-+
- void qtest_module_load(QTestState *s, const char *prefix, const char *libname);
+ def pow2ceil(x):
+     """
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index 9e879e966a36..198b04e8c375 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -312,12 +312,15 @@ def boot(self, img, extra_args=[]):
+         self._guest = guest
+         # Init console so we can start consuming the chars.
+         self.console_init()
+-        usernet_info = guest.cmd("human-monitor-command",
+-                                 command_line="info usernet")
+-        self.ssh_port = get_info_usernet_hostfwd_port(usernet_info)
++        res = guest.cmd("x-query-usernet")
++        for entry in res:
++            port = get_info_usernet_hostfwd_port(entry['info'])
++            if port is not None:
++                self.ssh_port = port
++                break
+         if not self.ssh_port:
+-            raise Exception("Cannot find ssh port from 'info usernet':\n%s" % \
+-                            usernet_info)
++            raise Exception("Cannot find ssh port from"
++                            " 'x-query-usernet': %s" % res)
  
- /**
+     def console_init(self, timeout = None):
+         if timeout == None:
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
