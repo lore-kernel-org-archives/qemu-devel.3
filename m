@@ -4,103 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CD6C61DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD6DC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 16:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzyzV-0001aW-0f; Fri, 28 Aug 2026 11:59:41 -0400
+	id 1wzyze-0001fP-EY; Fri, 28 Aug 2026 11:59:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzQ-0001Pq-1Q
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:36 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzd-0001ev-Ka
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:49 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzD-0008R2-6t
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:33 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzyzR-00007u-0x
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 11:59:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B77431FE8A;
- Fri, 28 Aug 2026 15:59:12 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 331721FDDF;
+ Fri, 28 Aug 2026 15:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932756; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932771; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SU6M+9tQ87hTQgwr6I/3+gapxDIcAIUfg8QtxVIi6v4=;
- b=Tycc1315enBgwzbkGxALQUQVD4iSgSph2IMTrGclFIJraxtwwIBu8P+Ih/a9Z6Rar27v/z
- JzzNS+DAdL7/WwbTOjT1zFl1NIQowYqACi8OMDo7VqAHL2xk6ui7T4IflzEIsULJAzZv76
- +yoyb5dSBUtpvPTo1U9GiU+7cc5PC2s=
+ bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
+ b=tZnZf1wk0tugEGKB4mgPysx8oypqrGVe/Xpq6egJLYzCvXD0zBbCIQjry4P9jooxmC2ron
+ 2IYyCFSeYMyUcMjO9b1V2cNGPk7sEl6UEXSTj3hFU0UZYhzvuqZM+G8AXKjiRaIua66yPl
+ dik4ZShCM588w4OXgNeuQxAzEzlrRe8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932756;
+ s=susede2_ed25519; t=1787932771;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SU6M+9tQ87hTQgwr6I/3+gapxDIcAIUfg8QtxVIi6v4=;
- b=fr/ZHclW2XrlRFaiBcwoqkqdY1Lpe7wgg3TcG+4+OO2zaRxNDVrwLeEqxLsrUwjjL6m7VD
- Bbi8C4x4koY9uABQ==
+ bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
+ b=ypQE+6p0GOqyk6chKu9Lz+EfFZbjIGNa6aVu751cUwh36kn9EQNp+oZm5mqS7j4gTGWQnb
+ GEhzeKXJ3rlYdZBA==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hRr+aA+h;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wz2u54u9
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787932752; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787932767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SU6M+9tQ87hTQgwr6I/3+gapxDIcAIUfg8QtxVIi6v4=;
- b=lUPgROhIoOeAho4w8nJxEELlpyTN2I7KK6JTLMZCjBPtyVwstnzZgtigQDJlTEUxSEsHF0
- /jZMcJB91k/fM1RiOkvBIokvdSRGdzXR4XziU4LowCc5S+5/UERRwIkOofHMtW2JT8HfjB
- VukZU5Zg+ZvvpzYuVpmSf1Db5FI6CP8=
+ bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
+ b=hRr+aA+hUlVciUpz8SvMF0QG78j6I5+RBk67979JodfHth41EaTBYPf9lGZg0y2EUCouEA
+ DKtUrUyONm8EZfoSlksHmbxuSaBDxorUmjoQvk/aWl/fY/wJJL+tWYLtt/lIVkhRaHn3k3
+ OacfbeS670C1HNrjiczBeIn/fPGEapM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787932752;
+ s=susede2_ed25519; t=1787932767;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SU6M+9tQ87hTQgwr6I/3+gapxDIcAIUfg8QtxVIi6v4=;
- b=XfVV5ctgdfPpgBcqr6pbWCz0B4ur+8OOQ901MYZqRhwkRLVMjg9ZGXobUdFwt8ORbcQ2Hz
- IrFhFmT5Cvf4tlBQ==
+ bh=FIK1YdOSs5HZro7/pz7DahbSMBMAf6939e28pmFTaCw=;
+ b=wz2u54u9BoG4vVMg8X+tb0hiPutEXjwndauzuIeUQd9bF89xs8W9C5kwzo0Ib0fYEuLUBk
+ B1HB22UqWU5NvKDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AFFCB13675;
- Fri, 28 Aug 2026 15:59:11 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5745D13688;
+ Fri, 28 Aug 2026 15:59:26 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6F8BIE+wkWpoBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:59:11 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EERRCl6wkWpoBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 28 Aug 2026 15:59:26 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PULL v2 17/30] migration/rdma: Drop RDMARegister.key.chunk
-Date: Fri, 28 Aug 2026 12:58:32 -0300
-Message-ID: <20260828155845.2874508-18-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL v2 29/30] migration: Harden vmstate_size
+Date: Fri, 28 Aug 2026 12:58:44 -0300
+Message-ID: <20260828155845.2874508-30-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828155845.2874508-1-farosas@suse.de>
 References: <20260828155845.2874508-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: 331721FDDF
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.996];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
+ RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[ionos.com:email,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_TWO(0.00)[2];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,92 +125,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+Protect vmstate_size against overflow of the on-stack 64bit integer
+during multiplication. The data at size_indirect.offset comes from the
+migration stream.
 
-Not used anymore.
-
-Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Acked-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/rdma.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ migration/vmstate.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index f9f39402568..683c24ba4dd 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -414,10 +414,7 @@ static void network_to_control(RDMAControlHeader *control)
-  * the actual RDMA operation.
-  */
- typedef struct QEMU_PACKED {
--    union QEMU_PACKED {
--        uint64_t current_addr;  /* offset into the ram_addr_t space */
--        uint64_t chunk;         /* chunk to lookup if unregistering */
--    } key;
-+    uint64_t current_addr;  /* offset into the ram_addr_t space */
-     uint32_t current_index; /* which ramblock the chunk belongs to */
-     uint32_t padding;
-     uint64_t chunks;            /* how many sequential chunks to register */
-@@ -442,16 +439,16 @@ static void register_to_network(RDMAContext *rdma, RDMARegister *reg)
-      * current_addr as passed in is an address in the local ram_addr_t
-      * space, we need to translate this for the destination
-      */
--    reg->key.current_addr -= local_block->offset;
--    reg->key.current_addr += rdma->dest_blocks[reg->current_index].offset;
--    reg->key.current_addr = htonll(reg->key.current_addr);
-+    reg->current_addr -= local_block->offset;
-+    reg->current_addr += rdma->dest_blocks[reg->current_index].offset;
-+    reg->current_addr = htonll(reg->current_addr);
-     reg->current_index = htonl(reg->current_index);
-     reg->chunks = htonll(reg->chunks);
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index cbcd86e5b60..24004565bfd 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -126,14 +126,20 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
+     return n_elems;
  }
  
- static void network_to_register(RDMARegister *reg)
+-static uint64_t vmstate_size(void *opaque, const VMStateField *field)
++static bool vmstate_size(void *opaque, const VMStateField *field,
++                         uint64_t *sz, Error **errp)
  {
--    reg->key.current_addr = ntohll(reg->key.current_addr);
-+    reg->current_addr = ntohll(reg->current_addr);
-     reg->current_index = ntohl(reg->current_index);
-     reg->chunks = ntohll(reg->chunks);
+     uint64_t size;
+ 
++    *sz = 0;
++
+     if (field->flags & VMS_VBUFFER) {
+         size = vmstate_read_from_offset(&field->size_indirect, opaque);
+-        if (field->flags & VMS_MULTIPLY) {
+-            size *= field->size;
++        if ((field->flags & VMS_MULTIPLY) &&
++            umul64_overflow(size, field->size, &size)) {
++            error_setg(errp, "%s: VMState field '%s' multiply overflow",
++                       __func__, field->name);
++            return false;
+         }
+     } else if (field->flags & VMS_ARRAY_OF_POINTER) {
+         /*
+@@ -145,7 +151,8 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
+         size = field->size;
+     }
+ 
+-    return size;
++    *sz = size;
++    return true;
  }
-@@ -1831,7 +1828,7 @@ retry:
-              * Otherwise, tell other side to register.
-              */
-             reg.current_index = current_index;
--            reg.key.current_addr = current_addr;
-+            reg.current_addr = current_addr;
-             reg.chunks = chunks;
  
-             trace_rdma_write_one_sendreg(chunk, sge.length, current_index,
-@@ -3373,7 +3370,7 @@ int rdma_registration_handle(QEMUFile *f)
-                 reg_result = &results[count];
+ static bool vmstate_handle_alloc(void *ptr, const VMStateField *field,
+@@ -377,7 +384,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i;
+             uint64_t n_elems = vmstate_n_elems(opaque, field);
+-            uint64_t size = vmstate_size(opaque, field);
++            uint64_t size;
++
++            if (!vmstate_size(opaque, field, &size, errp)) {
++                return false;
++            }
  
-                 trace_rdma_registration_handle_register_loop(count,
--                         reg->current_index, reg->key.current_addr, reg->chunks);
-+                         reg->current_index, reg->current_addr, reg->chunks);
+             if (!vmstate_handle_alloc(first_elem, field, n_elems, size, errp)) {
+                 return false;
+@@ -695,9 +706,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i;
+             uint64_t n_elems = vmstate_n_elems(opaque, field);
+-            uint64_t size = vmstate_size(opaque, field);
++            uint64_t size;
+             JSONWriter *vmdesc_loop = vmdesc;
+             bool is_prev_null = false;
++
+             /*
+              * When this is enabled, it means we will always push a ptr
+              * marker first for each element saying if it's populated.
+@@ -705,6 +717,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             bool use_dynamic_array =
+                 field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
  
-                 if (reg->current_index >= rdma->local_ram_blocks.nb_blocks) {
-                     error_report("rdma: 'register' bad block index %u (vs %d)",
-@@ -3382,15 +3379,15 @@ int rdma_registration_handle(QEMUFile *f)
-                     goto err;
-                 }
-                 block = &(rdma->local_ram_blocks.block[reg->current_index]);
--                if (block->offset > reg->key.current_addr) {
-+                if (block->offset > reg->current_addr) {
-                     error_report("rdma: bad register address for block %s"
-                         " offset: %" PRIx64 " current_addr: %" PRIx64,
-                         block->block_name, block->offset,
--                        reg->key.current_addr);
-+                        reg->current_addr);
-                     goto err;
-                 }
-                 host_addr = (block->local_host_addr +
--                            (reg->key.current_addr - block->offset));
-+                            (reg->current_addr - block->offset));
-                 chunk = ram_chunk_index(block->local_host_addr,
-                                         (uint8_t *) host_addr);
-                 chunk_start = ram_chunk_start(block, chunk);
++            if (!vmstate_size(opaque, field, &size, errp)) {
++                return false;
++            }
++
+             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
 -- 
 2.53.0
 
