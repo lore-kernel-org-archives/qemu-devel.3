@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCA7C61DD3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA4A1C61DBD
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 14:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzxqM-0002iZ-Ip; Fri, 28 Aug 2026 10:46:10 -0400
+	id 1wzxqN-0002jB-3h; Fri, 28 Aug 2026 10:46:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqK-0002hc-Ln
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqK-0002hv-UN
  for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:08 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqH-0000fy-Uj
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqJ-0000ga-27
  for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:08 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-49b8687630fso7112925e9.3
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 07:46:05 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49b8ce9b733so7781015e9.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 07:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787928364; x=1788533164; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787928365; x=1788533165; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SJFEI1lQ8SXWXqcCjUVxKX69y0HMHBq5YIZK1wiDeeQ=;
- b=lNmrEW1U3fxUQ2CfZ3PLHqzniWwI6yQiE/6C+o3KjM26PCdrdmgeEhobZgOPhXh2vY
- NVZi0jbcPJnOvE8Se8QabcGNmykvLJX+NjyCFaQIxbmuBPHtn19L/FqTTMgfIZxOo6hR
- 0r/JoEI9xKbTQRe2UcWPlxde+7yFZKYfuWN0P8xJ/Yh6BlYX3bGqJIaVxc6wgIGsKsYq
- HPYeXPkd1SX/FY0Bz+4S6E/X+oXCnwAjSj0Aj/9ZOLGUTKABvuo++JeykyCfC15jGhpX
- vmNM8762pi37Thq8+lwoMKgjsalprnB5T4pkASS8XOyx2GwarA9p0ZukuUEvCuyKaV4f
- 2npQ==
+ bh=K0kBd+JRwRmYuSzj9Gu1odey8tK1kya/yjE5FN2wYZ8=;
+ b=JQiWw7NbiUearP3EXq27THpEbI7ce9HFIBKLl4oQS7BWLbCxx48vAfIVx7QmD05xL7
+ I45NaaCEwVJrdqLKe6U50maSBdp3c4eV6VlUGU+hP963TYtiAopBjZr7s7/2nn+a2QAL
+ Se0PLX1XliVRd1mPdP8EabwFXVmtm5s69mUp2ezr6gfOI0e9bptQymao7F20+oMKZC1o
+ 1I8cos8ogMJTCvBulluqfZn0aDcxQd/wKhReRUnsik0ZmbU/vfzmlVP6dwPHdyOF6rLB
+ JEWHlGAqrEta6en+YEARmwzT7vGVIQ9oTgJ89rWV9wqo79cQY+Wn3SyWeM4w9EVlcmZV
+ yH+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787928364; x=1788533164;
+ d=1e100.net; s=20251104; t=1787928365; x=1788533165;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SJFEI1lQ8SXWXqcCjUVxKX69y0HMHBq5YIZK1wiDeeQ=;
- b=LG8xNNU/uWPRpfYWrrp2Qh9sOalDZd7s7vQRpqEC2xeqBe5Moifb44kLmkfgqLouCa
- tA2RcygTk67cofEFAhM/ZHPF/8gFswtb3i1jobh1jFP8JmSFJZ0N6j6YUzJN+gxShtHB
- 57ksyQyDJv7tlzCoRqCcE7wq2D4agTUnlB4Xhdamxy/wzGoBt2/gfT+W7vA9GGXXf604
- f6Dttc94kSTrIIB55MQKrOF5tYvQ7XwefdaZly34bBwAGtSV3JgpXmLRuvHY0JGXyDrt
- HWN4cWBzfJGIJ3tjrv3oRMQEsQDQq+fQ1nc0+6GUo9IRF3xTw/51p39+LwluQwYivrd1
- PQMQ==
-X-Gm-Message-State: AFuF++kxXf+kMdT4LlX6cHwjPpyvq7YmAPrDq2AJk6ulSW/o1ICMFEv6
- RFlQzh/KZdKIEcZr8mjWtBN2Pmvhg53ow0iI4iQWl3WrQSn03gQHzLpgbWXlK1TqADt3sUp+kAD
- XtU6c
-X-Gm-Gg: AR+sD12KP52SFUPOLh2NbCib3sqnUYyA3YBWK/6WA3oh812gFUrET66z/1tGQFZy3oj
- N9ypRDTcqyCS+amblx62TzpenZijW9wNsH4txDCdTzJhtsub/brCee2LweekSJ2/JfoOKf6XbRl
- Z3V28Mtwl7rJOI8fLj1zzPKz5zZfl675qrBAHW3C2knd8SdDlcgGcx5FKbIrAdkBnd8GE3rV6e5
- zTP54lIwNnXlc/nb9RtUBJMIkcYE3uJCyanYS6GG9poCMzKOlC6fift+qSJN5RGG8mfBGz51gME
- AUphtwJcmIhu28AxaFDXXpUDxhd1zSKvLzCuD1d0/kQODFSUhOMmfebZmBQ6QW2mWTlD6H/UlMS
- aABchp+X/5YQD2zOwpQMcnWB6D+GfFMhG47Hv5MG7eB5XrCekaxquOMbAmlYj6PuJmaSZt76yE+
- MMxvDYvTPsE4XaQk1ANwGRUz7nbSZ/7ngIjVWnrbBx3dMwON/TzjYANMkVYg==
-X-Received: by 2002:a05:600c:6748:b0:499:b65d:124f with SMTP id
- 5b1f17b1804b1-49b91c57449mr123180105e9.11.1787928364171; 
- Fri, 28 Aug 2026 07:46:04 -0700 (PDT)
+ bh=K0kBd+JRwRmYuSzj9Gu1odey8tK1kya/yjE5FN2wYZ8=;
+ b=gIfiHyxIByzp8AifPrxJHbld0KkGEV3YQgNwzIow23vLuyZG0jAacDHltvaeAFWW4J
+ RtPhRzJJswSs1ofnlaEc/pmCaG5T7F6n+/kNhUnENRMuy1FanL8DHXfIQuF+1OWzjkYP
+ tOWzHRBx6OEYKncnTQVQfPiJkQrQ9wFMOMSXEeGbqFiBD5bxvR+cQ9XdzmtE9G3cjrw7
+ n6XOdvoBnqyMA10DWwUKWA+VUNIWQSEKEvSjHLTpgUkkZPJ49OrQDWjv/WwZqJznH+cj
+ gqqvYzjwucC5q0mo4evz3Zht9UzzgWgL/R3yZQjJMzILQrWNt7dMK+e4UKWiJCog/T12
+ HFOA==
+X-Gm-Message-State: AFuF++mgffIbIUqAHK/z04+NLxVEdDGkTnF3MJWJYSkrfc3AuPZwJ2mY
+ bWccB5AYFPkCo6vAhfO2gXQ1UpNs33jclIM2kb1BXi5xPwvrFWeLXCFABYPe+Oqn6Z0GXLzYFNb
+ Xo/fh
+X-Gm-Gg: AR+sD13pG377rYBIwKM9gGdoPz4FQp8HJ1oyENif5b90pRnAHRbkVT5QxkdA6Du5bw1
+ ntbbYoBykOe/RgnD3ZLPlcO6PGlWk3E1fFGvQZS8hX8XMqdhhbTicCXv7vUqSmMqrbafiespbd8
+ lyvIRAgcd5C5FQs1t06IJhbBh6v6M16s4GYyli0JGE2NhOVNgNXPt3xiYoy0qEiff0WlvfQKLgD
+ HN6DlCWkGbpEUJuzjdkf67pKb/A5PClR1lm27e2dSwbZwPW2vQNL7w5aUNua31H30cwyOV4yA1D
+ /KNMJ+zBobD/YMNXBSaqnNp48tr0nHiMdAxZBm7MBR3vhox16dN+SzEGaO4LRhIu0mWXoT8as0m
+ y9BwBc2JeY627HPa5RS4tNoYm+R8uQfUguX34MMDeHWA/1uk76uA0Y45MYtl2tiYSVmusQMRZBi
+ ceVD79niHX4zW3HJQf8kKOfBZ1vvbEeOT/DXIOoKaYDz22NysFWkt0i25VHQ==
+X-Received: by 2002:a05:600c:19c8:b0:49b:c8e:a211 with SMTP id
+ 5b1f17b1804b1-49b91c20bfamr118453945e9.5.1787928365565; 
+ Fri, 28 Aug 2026 07:46:05 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9458:da19:ab04:373a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b94dcaf61sm53730925e9.4.2026.08.28.07.46.03
+ 5b1f17b1804b1-49b94dcaf61sm53730925e9.4.2026.08.28.07.46.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 07:46:03 -0700 (PDT)
+ Fri, 28 Aug 2026 07:46:04 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 5/9] block/block-copy: don't reserve memory for zero tasks
-Date: Fri, 28 Aug 2026 16:45:50 +0200
-Message-ID: <20260828144554.1741910-6-den@openvz.org>
+Subject: [PATCH 6/9] block/block-copy: extract block_copy_set_task_method()
+Date: Fri, 28 Aug 2026 16:45:51 +0200
+Message-ID: <20260828144554.1741910-7-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828144554.1741910-1-den@openvz.org>
 References: <20260828144554.1741910-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,13 +103,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-block_copy_dirty_clusters() charges task->req.bytes to the shared memory
-pool for every task, but a COPY_WRITE_ZEROES task allocates no bounce
-buffer, so there is nothing to account for. Add
-block_copy_task_shres_bytes() and use it at all three call sites.
+Move the per-task block-status query and its skip_unallocated and
+BDRV_BLOCK_ZERO handling out of block_copy_dirty_clusters() into
+block_copy_set_task_method(). No behavior change. The next patch
+changes that decision, and having it in one place keeps that change to
+just the new logic.
 
-Zero tasks lose the throttling the pool gave them incidentally and are
-bounded only by BLOCK_COPY_MAX_WORKERS (64).
+The block-status result no longer lands in the caller's @ret, so drop
+the note saying @ret may be positive at the out: label.
 
 Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
@@ -117,52 +118,92 @@ CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- block/block-copy.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ block/block-copy.c | 46 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
 diff --git a/block/block-copy.c b/block/block-copy.c
-index 1826c2e1c7..21ebe8aec2 100644
+index 21ebe8aec2..d71d070dbd 100644
 --- a/block/block-copy.c
 +++ b/block/block-copy.c
-@@ -453,6 +453,11 @@ void block_copy_set_progress_meter(BlockCopyState *s, ProgressMeter *pm)
-     s->progress = pm;
+@@ -741,6 +741,35 @@ int64_t coroutine_fn block_copy_reset_unallocated(BlockCopyState *s,
+     return ret;
  }
  
-+static uint64_t block_copy_task_shres_bytes(BlockCopyTask *task)
++/*
++ * Decide how @task is copied: COPY_WRITE_ZEROES if it reads as zero. May
++ * shrink @task. Returns false if @task is to be skipped (already ended,
++ * not freed).
++ */
++static bool coroutine_fn GRAPH_RDLOCK
++block_copy_set_task_method(BlockCopyState *s, BlockCopyTask *task)
 +{
-+    return task->method == COPY_WRITE_ZEROES ? 0 : task->req.bytes;
++    int ret;
++    int64_t status_bytes;
++
++    ret = block_copy_block_status(s, task->req.offset, task->req.bytes,
++                                  &status_bytes);
++    assert(ret >= 0); /* never fail */
++    if (status_bytes < task->req.bytes) {
++        block_copy_task_shrink(task, status_bytes);
++    }
++    if (qatomic_read(&s->skip_unallocated) && !(ret & BDRV_BLOCK_ALLOCATED)) {
++        block_copy_task_end(task, 0);
++        trace_block_copy_skip_range(s, task->req.offset, task->req.bytes);
++        return false;
++    }
++    if (ret & BDRV_BLOCK_ZERO) {
++        task->method = COPY_WRITE_ZEROES;
++    }
++
++    return true;
 +}
 +
  /*
-  * Takes ownership of @task
+  * block_copy_dirty_clusters
   *
-@@ -474,7 +479,7 @@ static coroutine_fn int block_copy_task_run(AioTaskPool *pool,
+@@ -773,7 +802,6 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
+     while (bytes && aio_task_pool_status(aio) == 0 &&
+            !qatomic_read(&call_state->cancelled)) {
+         BlockCopyTask *task;
+-        int64_t status_bytes;
  
-     aio_task_pool_wait_slot(pool);
-     if (aio_task_pool_status(pool) < 0) {
--        co_put_to_shres(task->s->mem, task->req.bytes);
-+        co_put_to_shres(task->s->mem, block_copy_task_shres_bytes(task));
-         block_copy_task_end(task, -ECANCELED);
-         g_free(task);
-         return -ECANCELED;
-@@ -605,7 +610,7 @@ static coroutine_fn int block_copy_task_entry(AioTask *task)
-             progress_work_done(s->progress, t->req.bytes);
+         task = block_copy_task_create(s, call_state, offset, bytes);
+         if (!task) {
+@@ -787,24 +815,12 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
+ 
+         found_dirty = true;
+ 
+-        ret = block_copy_block_status(s, task->req.offset, task->req.bytes,
+-                                      &status_bytes);
+-        assert(ret >= 0); /* never fail */
+-        if (status_bytes < task->req.bytes) {
+-            block_copy_task_shrink(task, status_bytes);
+-        }
+-        if (qatomic_read(&s->skip_unallocated) &&
+-            !(ret & BDRV_BLOCK_ALLOCATED)) {
+-            block_copy_task_end(task, 0);
+-            trace_block_copy_skip_range(s, task->req.offset, task->req.bytes);
++        if (!block_copy_set_task_method(s, task)) {
+             offset = task_end(task);
+             bytes = end - offset;
+             g_free(task);
+             continue;
          }
-     }
--    co_put_to_shres(s->mem, t->req.bytes);
-+    co_put_to_shres(s->mem, block_copy_task_shres_bytes(t));
-     block_copy_task_end(t, ret);
+-        if (ret & BDRV_BLOCK_ZERO) {
+-            task->method = COPY_WRITE_ZEROES;
+-        }
  
-     if (s->discard_source && ret == 0) {
-@@ -816,7 +821,7 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
- 
-         trace_block_copy_process(s, task->req.offset);
- 
--        co_get_from_shres(s->mem, task->req.bytes);
-+        co_get_from_shres(s->mem, block_copy_task_shres_bytes(task));
- 
-         offset = task_end(task);
-         bytes = end - offset;
+         if (!call_state->ignore_ratelimit) {
+             uint64_t ns = ratelimit_calculate_delay(&s->rate_limit, 0);
+@@ -845,8 +861,6 @@ out:
+          * block_copy_task_run. If it fails, it means some task already failed
+          * for real reason, let's return first failure.
+          * Still, assert that we don't rewrite failure by success.
+-         *
+-         * Note: ret may be positive here because of block-status result.
+          */
+         assert(ret >= 0 || aio_task_pool_status(aio) < 0);
+         ret = aio_task_pool_status(aio);
 -- 
 2.53.0
 
