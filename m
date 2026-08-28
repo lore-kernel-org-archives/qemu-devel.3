@@ -4,67 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBBAEC61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 13:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCA7C61DD3
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 14:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzwkJ-0003vW-HG; Fri, 28 Aug 2026 09:35:52 -0400
+	id 1wzxqM-0002iZ-Ip; Fri, 28 Aug 2026 10:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wzwkH-0003vK-Ll
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 09:35:49 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wzwkE-0001KK-Ek
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 09:35:49 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67SDZMmx075768
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 28 Aug 2026 22:35:22 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=p9I7J0hiuXLrZCLsMO+Rt5F7X9GhI/D8uWXaTr/36l0=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1787924123; v=1;
- b=Df++MGC9Oy8jX5F/DFk0GhzVbpT7qR8vk5LDkC64Bnb7CxLbpV2q7dVYw4G1k8ZK
- WHL8NM6+c33o5nTEtCn0azxfqA5T/0Q5F7Og6MBKKgEc5+Jr/uKC8btFIa42EM36
- rUA9faiXvkWyAtSXV+SctaAYFXyB2mjfckOfsvAz0pxMympIGFHh80M7b1IE10/V
- 81Ir9AvaYWGO/BkUKiU6NrivkiOn1n1ikqg484C1kpaaT9gVNi/V8dqs0SwSPJEW
- dVbWXAa5qynd361oBw6GSWVMuE/9y8gHi7zePooAA12c9SXOXgx8msdhtn+thJJd
- maDb/QsMXx+R/hcLo/K1IA==
-Message-ID: <a523e460-b861-464f-9579-b160a14c7126@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 28 Aug 2026 22:35:22 +0900
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqK-0002hc-Ln
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:08 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wzxqH-0000fy-Uj
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 10:46:08 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-49b8687630fso7112925e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 07:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1787928364; x=1788533164; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SJFEI1lQ8SXWXqcCjUVxKX69y0HMHBq5YIZK1wiDeeQ=;
+ b=lNmrEW1U3fxUQ2CfZ3PLHqzniWwI6yQiE/6C+o3KjM26PCdrdmgeEhobZgOPhXh2vY
+ NVZi0jbcPJnOvE8Se8QabcGNmykvLJX+NjyCFaQIxbmuBPHtn19L/FqTTMgfIZxOo6hR
+ 0r/JoEI9xKbTQRe2UcWPlxde+7yFZKYfuWN0P8xJ/Yh6BlYX3bGqJIaVxc6wgIGsKsYq
+ HPYeXPkd1SX/FY0Bz+4S6E/X+oXCnwAjSj0Aj/9ZOLGUTKABvuo++JeykyCfC15jGhpX
+ vmNM8762pi37Thq8+lwoMKgjsalprnB5T4pkASS8XOyx2GwarA9p0ZukuUEvCuyKaV4f
+ 2npQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787928364; x=1788533164;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SJFEI1lQ8SXWXqcCjUVxKX69y0HMHBq5YIZK1wiDeeQ=;
+ b=LG8xNNU/uWPRpfYWrrp2Qh9sOalDZd7s7vQRpqEC2xeqBe5Moifb44kLmkfgqLouCa
+ tA2RcygTk67cofEFAhM/ZHPF/8gFswtb3i1jobh1jFP8JmSFJZ0N6j6YUzJN+gxShtHB
+ 57ksyQyDJv7tlzCoRqCcE7wq2D4agTUnlB4Xhdamxy/wzGoBt2/gfT+W7vA9GGXXf604
+ f6Dttc94kSTrIIB55MQKrOF5tYvQ7XwefdaZly34bBwAGtSV3JgpXmLRuvHY0JGXyDrt
+ HWN4cWBzfJGIJ3tjrv3oRMQEsQDQq+fQ1nc0+6GUo9IRF3xTw/51p39+LwluQwYivrd1
+ PQMQ==
+X-Gm-Message-State: AFuF++kxXf+kMdT4LlX6cHwjPpyvq7YmAPrDq2AJk6ulSW/o1ICMFEv6
+ RFlQzh/KZdKIEcZr8mjWtBN2Pmvhg53ow0iI4iQWl3WrQSn03gQHzLpgbWXlK1TqADt3sUp+kAD
+ XtU6c
+X-Gm-Gg: AR+sD12KP52SFUPOLh2NbCib3sqnUYyA3YBWK/6WA3oh812gFUrET66z/1tGQFZy3oj
+ N9ypRDTcqyCS+amblx62TzpenZijW9wNsH4txDCdTzJhtsub/brCee2LweekSJ2/JfoOKf6XbRl
+ Z3V28Mtwl7rJOI8fLj1zzPKz5zZfl675qrBAHW3C2knd8SdDlcgGcx5FKbIrAdkBnd8GE3rV6e5
+ zTP54lIwNnXlc/nb9RtUBJMIkcYE3uJCyanYS6GG9poCMzKOlC6fift+qSJN5RGG8mfBGz51gME
+ AUphtwJcmIhu28AxaFDXXpUDxhd1zSKvLzCuD1d0/kQODFSUhOMmfebZmBQ6QW2mWTlD6H/UlMS
+ aABchp+X/5YQD2zOwpQMcnWB6D+GfFMhG47Hv5MG7eB5XrCekaxquOMbAmlYj6PuJmaSZt76yE+
+ MMxvDYvTPsE4XaQk1ANwGRUz7nbSZ/7ngIjVWnrbBx3dMwON/TzjYANMkVYg==
+X-Received: by 2002:a05:600c:6748:b0:499:b65d:124f with SMTP id
+ 5b1f17b1804b1-49b91c57449mr123180105e9.11.1787928364171; 
+ Fri, 28 Aug 2026 07:46:04 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:9458:da19:ab04:373a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b94dcaf61sm53730925e9.4.2026.08.28.07.46.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Aug 2026 07:46:03 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH 5/9] block/block-copy: don't reserve memory for zero tasks
+Date: Fri, 28 Aug 2026 16:45:50 +0200
+Message-ID: <20260828144554.1741910-6-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260828144554.1741910-1-den@openvz.org>
+References: <20260828144554.1741910-1-den@openvz.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/18] RFC: various virtio-gpu/dmabuf related fixes
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
- <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- swing <swing@mail.exp.sh>
-References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
- <a0bd3ef2-91df-4a6d-a04f-67a568188b24@rsg.ci.i.u-tokyo.ac.jp>
- <d71116d3-2108-4f14-baa0-d2f1f878b5f4@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1C+BPPLcko6nqK5vCTn81D=CHv3m_bvqDiQzbc-shY1S2A@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1C+BPPLcko6nqK5vCTn81D=CHv3m_bvqDiQzbc-shY1S2A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,134 +101,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/28 21:37, Marc-André Lureau wrote:
-> Hi
-> 
-> On Fri, Aug 28, 2026 at 4:29 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/08/28 21:26, Akihiko Odaki wrote:
->>> On 2026/08/25 19:20, Marc-André Lureau wrote:
->>>> Hi,
->>>>
->>>> While working on CVE-2026-66020 (which had a few revision on list), I
->>>> kept finding several places where virtio-gpu scanout and dmabuf
->>>> ownership was unclear.
->>>>
->>>> The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
->>>> unmapped its memory. Following that path also found stale dmabuf
->>>> references, duplicated scanout bookkeeping, and inconsistent cleanup
->>>> between display backends.
->>>>
->>>> This series makes each virtio_gpu_scanout own its current dmabuf and
->>>> uses resource_id to track which resource it displays. It also makes
->>>> QemuDmaBuf own its file descriptors and moves GTK fence state out of the
->>>> dmabuf.
->>>>
->>>> Those changes touch a lot of area and I have done basic testing with the
->>>> various backends. I would not recommend backporting them to stable:
->>>> there is a high risk of introducing regressions. Yet, I don't know how
->>>> to address all the problems uncovered by CVE-2026-66020 in a simple
->>>> patch series. Help welcome!
->>>
->>> If you mean "all the problems", my coding agent tells there are some
->>> problems remaining:
->>
->> I forgot to note that I manually reviewed the claims.
->>
->> I also think you can drop RFC. Though the series is large, each patch is
->> small and I think reasonable.
->>
->>>
->>> 1. Vhost-user still has duplicate, incomplete DMA-BUF ownership.
->>>
->>> VhostUserGPU retains its separate g->dmabuf[]. The contrib backend
->>> disables a scanout using ordinary VHOST_USER_GPU_SCANOUT with zero
->>> dimensions, but the QEMU frontend handles that by only calling
->>> qemu_console_set_surface().
->>>
->>> Although that changes con->scanout.kind, it neither releases g-
->>>   >dmabuf[id] nor invokes the frontend GL-disable callback. GTK/SDL can
->>> therefore retain their private scanout mode and redraw the old buffer;
->>> the wrapper and owned fd remain until another DMA-BUF message. Reset and
->>> finalize also never free this array.
->>>
->>> Separately, contrib’s virgl RESOURCE_UNREF destroys the renderer
->>> resource without disabling scanouts using it. The in-process virgl
->>> backend fixes precisely this case, but contrib does not.
->>>
->>> 2. GTK DMA-BUF texture release lacks the required GL context.
->>>
->>> GTK’s release callback directly calls egl_dmabuf_release_texture(),
->>> which calls glDeleteTextures() and then unconditionally forgets the
->>> texture ID. Neither it nor the core release dispatcher establishes the
->>> owning context.
->>>
->>> This is reachable after another GTK console’s surface update leaves
->>> EGL_NO_CONTEXT current. Deletion is then not guaranteed, yet the ID is
->>> lost, leaking the GL import and backing. With another unshared context
->>> current, a coincident texture name could be deleted from the wrong
->>> context. SDL has the same missing-context pattern.
->>>
->>> 3. Rutabaga resource destruction remains incomplete.
->>>
->>> virtio_gpu_rutabaga_resource_unref() calls Rutabaga unref and frees the
->>> QEMU resource, but does not clean res->iov/res->addrs or remove a mapped
->>> blob’s host-visible MemoryRegion. Only explicit RESOURCE_UNMAP_BLOB
->>> removes that region.
->>>
->>> Consequently, MAP_BLOB → RESOURCE_UNREF or reset can leave a
->>> MemoryRegion pointing at storage destroyed by Rutabaga, as well as
->>> pinned DMA mappings. This is adjacent to, rather than the original
->>> scanout-detach CVE, but it is another unresolved blob-ownership problem.
->>>
->>> ...so there is still some work to be done.
-> 
-> Thanks for the analysis. Do you think we can review & apply this
-> series first before addressing the remaining issues? (and helping me
-> :)
+From: Denis V. Lunev <den@openvz.org>
 
-For vhost-user and Rutabaga, yes: I think we can review this series 
-without making it solve every ownership problem first. Those paths are 
-separate and can be follow-ups.
+block_copy_dirty_clusters() charges task->req.bytes to the shared memory
+pool for every task, but a COPY_WRITE_ZEROES task allocates no bounce
+buffer, so there is nothing to account for. Add
+block_copy_task_shres_bytes() and use it at all three call sites.
 
-It may be better to handle the GTK/SDL context issue before applying the 
-series, though. The callback already existed, but patches 7 and 10 add 
-release-on-disable and release-on-detach callers. They can invoke 
-glDeleteTextures() with no context, or with another console's context 
-current. A small additional patch should suffice; this does not require 
-keeping the series as RFC.
+Zero tasks lose the throttling the pool gave them incidentally and are
+bounded only by BLOCK_COPY_MAX_WORKERS (64).
 
-> 
->>>
->>> But when it comes to backporting, I think we can instead do focused
->>> backporting to avoid extra trouble. Concretely, the patches you tagged
->>> with "Fixes: CVE-2026-66020" can be backported, namely:
->>>
->>> - "[PATCH 10/18] virtio-gpu: disable blob scanouts on mapping cleanup" and
->>> - "[PATCH 18/18] virtio-gpu: fix use-after-free on blob cursor after
->>> detach"
-> 
-> Cc: qemu-stable for those two only? even if there are still corner
-> cases addressed by the other patches)?
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ block/block-copy.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-Yes. I don't think the other corner cases are worthwhile to fix risking 
-a regression.
+diff --git a/block/block-copy.c b/block/block-copy.c
+index 1826c2e1c7..21ebe8aec2 100644
+--- a/block/block-copy.c
++++ b/block/block-copy.c
+@@ -453,6 +453,11 @@ void block_copy_set_progress_meter(BlockCopyState *s, ProgressMeter *pm)
+     s->progress = pm;
+ }
+ 
++static uint64_t block_copy_task_shres_bytes(BlockCopyTask *task)
++{
++    return task->method == COPY_WRITE_ZEROES ? 0 : task->req.bytes;
++}
++
+ /*
+  * Takes ownership of @task
+  *
+@@ -474,7 +479,7 @@ static coroutine_fn int block_copy_task_run(AioTaskPool *pool,
+ 
+     aio_task_pool_wait_slot(pool);
+     if (aio_task_pool_status(pool) < 0) {
+-        co_put_to_shres(task->s->mem, task->req.bytes);
++        co_put_to_shres(task->s->mem, block_copy_task_shres_bytes(task));
+         block_copy_task_end(task, -ECANCELED);
+         g_free(task);
+         return -ECANCELED;
+@@ -605,7 +610,7 @@ static coroutine_fn int block_copy_task_entry(AioTask *task)
+             progress_work_done(s->progress, t->req.bytes);
+         }
+     }
+-    co_put_to_shres(s->mem, t->req.bytes);
++    co_put_to_shres(s->mem, block_copy_task_shres_bytes(t));
+     block_copy_task_end(t, ret);
+ 
+     if (s->discard_source && ret == 0) {
+@@ -816,7 +821,7 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
+ 
+         trace_block_copy_process(s, task->req.offset);
+ 
+-        co_get_from_shres(s->mem, task->req.bytes);
++        co_get_from_shres(s->mem, block_copy_task_shres_bytes(task));
+ 
+         offset = task_end(task);
+         bytes = end - offset;
+-- 
+2.53.0
 
-But rechecking these patches, I found "[PATCH 18/18] virtio-gpu: fix 
-use-after-free on blob cursor after detach" has two dependencies on the 
-earlier patches:
-
-- Patch 6 changes the signature of virtio_gpu_fini_udmabuf().
-- Patch 17 allows removing the res->blob guard in
-   virtio_gpu_cleanup_mapping().
-
-So I suggest:
-
-- reordering the series to put patch 10 and patch 18 at the first,
-- keeping the res->blob guard in patch 18, and
-- dropping the res->blob guard in patch 17 instead.
-
-Regards,
-Akihiko Odaki
 
