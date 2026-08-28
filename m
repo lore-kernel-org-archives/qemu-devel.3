@@ -4,70 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED35C61DC6
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 07:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8CDC61DC6
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 08:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzrOt-0000kg-UG; Fri, 28 Aug 2026 03:53:23 -0400
+	id 1wzrrO-0006nl-T7; Fri, 28 Aug 2026 04:22:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wzrOs-0000kY-Kj
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 03:53:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wzrOq-0000ba-BB
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 03:53:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787903598;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=xkDd4wCNMtKFs+b4ZdS3TviUinobjNMqCI6a7EfVAjs=;
- b=Hz/ny30ROlqyDMHt7BttlArfscBSDsKAIMQLonQWxjFNbGlgqlp/x5w5b5yp8m4L4ckxKU
- zC1KDnPTYy0YmZsDSSJarwWCyNAibr6ntS+QSpzARCQaz+f11J+mxvA4x396hNJkFx4eTr
- pg70cY70RwJZkBczAzSuRMlPWAw4XcI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-f6kBxBXLOjSIcnobj5uZaQ-1; Fri,
- 28 Aug 2026 03:53:13 -0400
-X-MC-Unique: f6kBxBXLOjSIcnobj5uZaQ-1
-X-Mimecast-MFC-AGG-ID: f6kBxBXLOjSIcnobj5uZaQ_1787903592
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 893BD1955DB0; Fri, 28 Aug 2026 07:53:12 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7741A18005B0; Fri, 28 Aug 2026 07:53:10 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wzrrN-0006nc-Se
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 04:22:49 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wzrrM-00055i-4L
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 04:22:49 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4980fe6b3beso11791985e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 01:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787905366; x=1788510166; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fVfqtC47QEwi+QDe5wq0aCCg/+/S37/iVi1jhrKVS0I=;
+ b=HJ7U1AbZgDeV5HL3oLHwNxLV/TZPpx6UQW/LHuMazt+C54uoAU10z7sCPgxCOd2kzi
+ RCwwB05hBasq3emGswOH7ixJGkcLYZJGL2dwYsSuMBPNJGaS2hno537sMgPC35Y9l4Sf
+ r5Y+PlhUkbjjhZTvVb54oaGO/aSVEJdtzHooAqpHe5lCz/fw/5N43u2H2seYlJwidGID
+ ns3/4ALjZ7KPy5C4Kjzf8cBDu/NgGD6toEiwNCWu9DqfjvOH4wKCWFo8JzcwPmn5laxz
+ i7dWFEoGcCMEFXnkkheAE0jVcjU0wfGSMqJ1LbDw1/HduluKnRzAExE1hKa2CsdCrixO
+ 9W5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787905366; x=1788510166;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fVfqtC47QEwi+QDe5wq0aCCg/+/S37/iVi1jhrKVS0I=;
+ b=CdNO0d5eK2wMm5FzPiOOrCHcwCs4V9Mplxp/Yc+BwavfxGGWUTzPRl3/ZH1RqxEd3z
+ dOp+R1csMNXHCdMWHAfixdl9KPk9diabT8aD05RoDbO1ytrtN1dOH5vNfpGBYBksUh0Y
+ +pfzHwEI9FmeBF8b1RUCPnbiVECLCEax2oXSPy2NjXM5GYUmS77u/ucmSfMC9izi4ARL
+ VV2cyL3MDGMBJK9rXw5d9KPMhAm1r+THcAckgZ7NwWwqcq26NeusduCtpIXnV4Zu27rE
+ yYPRDniYQJze1fwZAqe1hodux0YC7rnTPCDUGgJ7oRbr3MeMpzD/E7ZjMnXaZ10ePykG
+ pIHw==
+X-Gm-Message-State: AFuF++nrcrdmTCjKM3zqKiiq8GLgWNgF/k8D7wWhI8goVJ9OlRJ113wb
+ Cz0LDyeBEjjDCKhvoL82xMd+1mcFWOE6RE3fC2kyozRNQjN5Wk+5y5zt37SqzKgXTj0=
+X-Gm-Gg: AR+sD10LhYulPU4kpZ3f04m24UEaVqOz/SFOhnydUqUFRypaxUmNpzUJ700QTt8g6rr
+ hKogTJy5ZChW7I85lj+Uy0LuswBznPQQUDoKDrTqP0Px5k3CwCp+vhixsjH/8SvwC7gezhLH5tw
+ LTEB5sMAvdN7J6LxdS6GXcUi51x4tx/lon54NRRWNlzK442kAKRyG3bco/WEJlCoSLBJy5KJNjX
+ giasY1IGV7rWkgmeLYo8uYPh+9X2/NlCt7ZtBTvIG1uU/6HaIlkRbOzswZHPOYBW6SgJLXvDWXw
+ bLWx5uJu4jr4Upa60Nu3IijX/s2YLqHMOLoWa9Wm2r1yweDiUcgqXjAyk0oMkbCSxlfEmNrEhQ4
+ 0xFfOnQT7Jw1lmcNCxfbbCHxdalfeYI0MIhRX13YKTYLWshEm7OOgpp5okptM5ELq7JyzgfUyv+
+ 6t6vYaR84+fx9w+jytLDbMLodA0mKu4Q2Syzh23mu+sJbnP0rbj1PV+vIjg2VCGWsgUTxrjoyOR
+ TrVYTnp402rRPnzECZ7SDA6HXAe3lUcE+xB9TQndCeNJ/wNNap3ALLBkJo6zaovaU8lB18Gk3Dm
+ pWl7
+X-Received: by 2002:a05:600c:474f:b0:49b:e22:4ee4 with SMTP id
+ 5b1f17b1804b1-49b91a58979mr58952825e9.4.1787905365456; 
+ Fri, 28 Aug 2026 01:22:45 -0700 (PDT)
+Received: from simon-macbookpro.fritz.box
+ ([2a02:6180:203:ce01:3d32:6ada:3037:d148])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b49cc6446sm100012255e9.7.2026.08.28.01.22.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Aug 2026 01:22:45 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com, philmd@oss.qualcomm.com, berrange@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2] hw/display/virtio-gpu: introduce virtio_gpu_{simple,
- virgl}_resource_new()
-Date: Fri, 28 Aug 2026 11:53:08 +0400
-Message-ID: <20260828075308.3882813-1-marcandre.lureau@redhat.com>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH v2] target/i386: clear C1 for all x87 compare instructions
+Date: Fri, 28 Aug 2026 10:22:35 +0200
+Message-ID: <20260828082235.128360-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,233 +98,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  marcandre.lureau@redhat.com
-From: marcandre.lureau--- via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+The SDM specifies that FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOMP/
+FCOMI/FCOMIP/FUCOMI/FUCOMIP unconditionally clear C1 in the FPU status word,
+regardless of the comparison result.
 
-All allocation sites used g_new0() which zero-initializes fields.
-However share_handle must be SHAREABLE_NONE (-1 on Unix, NULL on
-Windows) and dmabuf_fd must be -1, not 0. Centralize allocation and
-field initialization in new constructors fix this and reduce code
-duplication.
+helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 only cleared C3, C2, C0 (mask
+0x4500) before OR-ing in the comparison result, leaving C1 (bit 9) at
+whatever value it already had. FICOM/FICOMP dispatch through the same
+helpers after converting their integer operand, so they inherited the
+same bug.
 
-This fixes -display dbus with virtio-gpu blob resources. The other
-end is currently receiving qemu fd 0.
+helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0 never touched the FPU status
+word at all, so C1 was left untouched by those too.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+This patch clears C1 explicitly in all four helpers, adding the clear
+into the existing fpus mask for fcom/fucom since fcom_ccval never sets
+bit 9. For fcomi/fucomi add a new separate clear.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4378
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
 ---
- v2: add virgl_gpu_virgl_resource_new()
----
- hw/display/virtio-gpu-rutabaga.c | 20 +++++-------------
- hw/display/virtio-gpu-virgl.c    | 34 ++++++++++++++++++-------------
- hw/display/virtio-gpu.c          | 35 +++++++++++++++++++++-----------
- include/hw/virtio/virtio-gpu.h   |  4 ++++
- 4 files changed, 52 insertions(+), 41 deletions(-)
+v2: merge the C1 clear into the existing fpus mask for
+    fcom_ST0_FT0/fucom_ST0_FT0 (Richard Henderson)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 041216a10d04..234fe94b178b 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -100,12 +100,8 @@ rutabaga_cmd_create_resource_2d(VirtIOGPU *g,
-     result = rutabaga_resource_create_3d(vr->rutabaga, c2d.resource_id, &rc_3d);
-     CHECK(!result, cmd);
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+---
+ target/i386/tcg/fpu_helper.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index b812125efa..aa6527b0f5 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -531,7 +531,8 @@ void helper_fcom_ST0_FT0(CPUX86State *env)
+     FloatRelation ret;
  
--    res = g_new0(struct virtio_gpu_simple_resource, 1);
--    res->width = c2d.width;
--    res->height = c2d.height;
--    res->format = c2d.format;
--    res->resource_id = c2d.resource_id;
--
-+    res = virtio_gpu_simple_resource_new(c2d.resource_id, c2d.width,
-+                                         c2d.height, c2d.format);
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+     ret = floatx80_compare(ST0, FT0, &env->fp_status);
+-    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
+     merge_exception_flags(env, old_flags);
  }
  
-@@ -139,12 +135,8 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
-     result = rutabaga_resource_create_3d(vr->rutabaga, c3d.resource_id, &rc_3d);
-     CHECK(!result, cmd);
+@@ -541,7 +542,8 @@ void helper_fucom_ST0_FT0(CPUX86State *env)
+     FloatRelation ret;
  
--    res = g_new0(struct virtio_gpu_simple_resource, 1);
--    res->width = c3d.width;
--    res->height = c3d.height;
--    res->format = c3d.format;
--    res->resource_id = c3d.resource_id;
--
-+    res = virtio_gpu_simple_resource_new(c3d.resource_id, c3d.width,
-+                                         c3d.height, c3d.format);
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
+-    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
+     merge_exception_flags(env, old_flags);
  }
  
-@@ -634,9 +626,7 @@ rutabaga_cmd_resource_create_blob(VirtIOGPU *g,
- 
-     CHECK(cblob.resource_id != 0, cmd);
- 
--    res = g_new0(struct virtio_gpu_simple_resource, 1);
--
--    res->resource_id = cblob.resource_id;
-+    res = virtio_gpu_simple_resource_new(cblob.resource_id, 0, 0, 0);
-     res->blob_size = cblob.size;
- 
-     if (cblob.blob_mem != VIRTIO_GPU_BLOB_MEM_HOST3D) {
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 9bda572426b2..d32801c3893a 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -309,6 +309,23 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+@@ -556,6 +558,8 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
+     /* OF, SF, and AF are unconditionally cleared to 0 */
+     CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus &= ~0x0200;
+     merge_exception_flags(env, old_flags);
  }
- #endif
  
-+static struct virtio_gpu_virgl_resource *
-+virtio_gpu_virgl_resource_new(uint32_t resource_id, uint32_t width,
-+                              uint32_t height, uint32_t format)
-+{
-+    struct virtio_gpu_virgl_resource *res = g_new0(struct virtio_gpu_virgl_resource, 1);
-+
-+    res->base.share_handle = SHAREABLE_NONE;
-+    res->base.dmabuf_fd = -1;
-+
-+    res->base.resource_id = resource_id;
-+    res->base.width = width;
-+    res->base.height = height;
-+    res->base.format = format;
-+
-+    return res;
-+}
-+
- static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
-                                          struct virtio_gpu_ctrl_command *cmd)
- {
-@@ -335,12 +352,7 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
-         return;
-     }
+@@ -568,6 +572,8 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
+     /* OF, SF, and AF are unconditionally cleared to 0 */
+     CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus &= ~0x0200;
+     merge_exception_flags(env, old_flags);
+ }
  
--    res = g_new0(struct virtio_gpu_virgl_resource, 1);
--    res->base.width = c2d.width;
--    res->base.height = c2d.height;
--    res->base.format = c2d.format;
--    res->base.resource_id = c2d.resource_id;
--    res->base.dmabuf_fd = -1;
-+    res = virtio_gpu_virgl_resource_new(c2d.resource_id, c2d.width, c2d.height, c2d.format);
-     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
- 
-     args.handle = c2d.resource_id;
-@@ -383,12 +395,7 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    res = g_new0(struct virtio_gpu_virgl_resource, 1);
--    res->base.width = c3d.width;
--    res->base.height = c3d.height;
--    res->base.format = c3d.format;
--    res->base.resource_id = c3d.resource_id;
--    res->base.dmabuf_fd = -1;
-+    res = virtio_gpu_virgl_resource_new(c3d.resource_id, c3d.width, c3d.height, c3d.format);
-     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
- 
-     args.handle = c3d.resource_id;
-@@ -853,8 +860,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
- 
--    res = g_new0(struct virtio_gpu_virgl_resource, 1);
--    res->base.resource_id = cblob.resource_id;
-+    res = virtio_gpu_virgl_resource_new(cblob.resource_id, 0, 0, 0);
-     res->base.blob_size = cblob.size;
-     res->base.dmabuf_fd = -1;
- 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 55a1c7f80fb8..d5405f0c715f 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -41,6 +41,24 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
- 
- static void virtio_gpu_reset_bh(void *opaque);
- 
-+struct virtio_gpu_simple_resource *
-+virtio_gpu_simple_resource_new(uint32_t resource_id, uint32_t width,
-+                               uint32_t height, uint32_t format)
-+{
-+    struct virtio_gpu_simple_resource *res =
-+        g_new0(struct virtio_gpu_simple_resource, 1);
-+
-+    res->share_handle = SHAREABLE_NONE;
-+    res->dmabuf_fd = -1;
-+
-+    res->resource_id = resource_id;
-+    res->width = width;
-+    res->height = height;
-+    res->format = format;
-+
-+    return res;
-+}
-+
- void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-                                    struct virtio_gpu_scanout *s,
-                                    uint32_t resource_id)
-@@ -259,12 +277,8 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
-         return;
-     }
- 
--    res = g_new0(struct virtio_gpu_simple_resource, 1);
--
--    res->width = c2d.width;
--    res->height = c2d.height;
--    res->format = c2d.format;
--    res->resource_id = c2d.resource_id;
-+    res = virtio_gpu_simple_resource_new(c2d.resource_id, c2d.width,
-+                                         c2d.height, c2d.format);
- 
-     pformat = virtio_gpu_get_pixman_format(c2d.format);
-     if (!pformat) {
-@@ -345,8 +359,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
- 
--    res = g_new0(struct virtio_gpu_simple_resource, 1);
--    res->resource_id = cblob.resource_id;
-+    res = virtio_gpu_simple_resource_new(cblob.resource_id, 0, 0, 0);
-     res->blob_size = cblob.size;
- 
-     if (cblob.nr_entries) {
-@@ -1442,8 +1455,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-             return -EINVAL;
-         }
- 
--        res = g_new0(struct virtio_gpu_simple_resource, 1);
--        res->resource_id = resource_id;
-+        res = virtio_gpu_simple_resource_new(resource_id, 0, 0, 0);
-         res->width = qemu_get_be32(f);
-         res->height = qemu_get_be32(f);
-         res->format = qemu_get_be32(f);
-@@ -1555,8 +1567,7 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-             return -EINVAL;
-         }
- 
--        res = g_new0(struct virtio_gpu_simple_resource, 1);
--        res->resource_id = resource_id;
-+        res = virtio_gpu_simple_resource_new(resource_id, 0, 0, 0);
-         res->blob_size = qemu_get_be32(f);
-         res->iov_cnt = qemu_get_be32(f);
- 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 69b5ee2e382f..090719aa0522 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -64,6 +64,10 @@ struct virtio_gpu_simple_resource {
-     QTAILQ_ENTRY(virtio_gpu_simple_resource) next;
- };
- 
-+struct virtio_gpu_simple_resource *
-+virtio_gpu_simple_resource_new(uint32_t resource_id, uint32_t width,
-+                               uint32_t height, uint32_t format);
-+
- struct virtio_gpu_framebuffer {
-     pixman_format_code_t format;
-     uint32_t width, height;
 -- 
-2.55.0.543.g5ebe2ebe4ea8
+2.53.0
 
 
