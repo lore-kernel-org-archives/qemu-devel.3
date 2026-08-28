@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA333C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 09:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4ACEC61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 09:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wztGm-0002ma-Re; Fri, 28 Aug 2026 05:53:08 -0400
+	id 1wztGn-0002mt-LM; Fri, 28 Aug 2026 05:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wztGl-0002mC-K9
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wztGl-0002mQ-VF
  for qemu-devel@nongnu.org; Fri, 28 Aug 2026 05:53:07 -0400
-Received: from mout01.posteo.de ([185.67.36.65])
+Received: from mout02.posteo.de ([185.67.36.66])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wztGj-00045n-Vu
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.eu>) id 1wztGj-00044R-6j
  for qemu-devel@nongnu.org; Fri, 28 Aug 2026 05:53:07 -0400
 Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id F2C60240027
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 11:53:02 +0200 (CEST)
+ by mout02.posteo.de (Postfix) with ESMTPS id D2D9E240101
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 11:53:01 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
- s=1984.8680eb; t=1787910782;
- bh=KTF9PZfQbeayuWZmdjvcuipqCwuoiZfFVHPb0TvnpJw=;
+ s=1984.8680eb; t=1787910781;
+ bh=gMGyejMKTGX0CW1SJrpuUtat5Ad1+A/Mt2eajOklJEc=;
  h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
  Content-Transfer-Encoding:From;
- b=mEbMASKd+0MILbvCuZ1xeRDrfUZadSSVHFZmQPEOguYJu0k9hTLwTgUQdIShcSpHC
- dd1bKnWo88WdQzZ/j7Lhyx+w0bNgdjvISJAseC73jm0SzArGSb4VMIyjLtOE1sK5It
- hmice2oBhbPey3alCRr+j8LO9eMEnYCWXfszRgB5GPeue7EYKU3u++BheC06nWss8z
- K4FztXL/xRwt7P3RdnE7bQlsXVDDu71yKnlg9+mVuooNHhmRTTDL5YyOqwhUfsTpTe
- TWVKS9hXTE3wIEfBWXaFo+egNz4h4qaFz6gSjMgzpgNhKSpNsRtGX/RxBkc1RX9MIx
- pqNZvf3mZ1nOw==
+ b=l3xRi2UntC0yX6zlX7XNztm7tRTs5+W5TfVDbGre2MTXyffwSqy9T6vPBwZkbUrQn
+ Yfwjm1VQvG1rGQzOWnkuKjniAHgpumArrxSXWrRfAyvFH4BbRs9KHG/GEC78V1LJBK
+ T46ksKsy9cRBtpCLlWVYWB49Fb57r5CS2yMgGfAini5yME/fmWP2oL9xxtH78cZivX
+ ku17csyMkYPw2Q5xTZBBrBnfURPZrW3uLIlLBGnug42ARyhHAXTrze99ycWBaVjXKp
+ HQkGW2AQaIr+yNdQuWquFg6EVemASNvLJzTsahkuGmm7W7akrHM29+Dqe+llHv9H5d
+ Y5yDEzZBq7ACA==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4hWYbf1mbmz6twj;
- Fri, 28 Aug 2026 11:53:02 +0200 (CEST)
+ by submission (posteo.de) with ESMTPSA id 4hWYbd1mD9z6twf;
+ Fri, 28 Aug 2026 11:53:01 +0200 (CEST)
 From: Thomas Huth <th.huth@posteo.eu>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH 3/3] MAINTAINERS: Mark the next-cube machine as "Orphan"
-Date: Fri, 28 Aug 2026 09:53:02 +0000
-Message-ID: <20260828095241.118458-4-th.huth@posteo.eu>
+Subject: [PATCH 1/3] hw/m68k/next-cube: Replace assert()s and abort()s with
+ logging functions
+Date: Fri, 28 Aug 2026 09:53:01 +0000
+Message-ID: <20260828095241.118458-2-th.huth@posteo.eu>
 In-Reply-To: <20260828095241.118458-1-th.huth@posteo.eu>
 References: <20260828095241.118458-1-th.huth@posteo.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.eu;
- helo=mout01.posteo.de
+Received-SPF: pass client-ip=185.67.36.66; envelope-from=th.huth@posteo.eu;
+ helo=mout02.posteo.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -70,30 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I never manage to get this machine to a fully usable state, and in the
-course of time I also lost interest in this machine. Mark it as
-"Orphan" to set expectations right and make place for somebody else
-to take over.
+The next-cube code contains some assert() and abort() statements that
+can be triggered from the guest side. Of course LLMs love to complain
+about those and people are filing bugs about this. Thus replace those
+spots with logging functions to not get bothered about this again in
+the future.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4303
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4304
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4305
 Signed-off-by: Thomas Huth <th.huth@posteo.eu>
 ---
- MAINTAINERS | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/m68k/next-cube.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6c18b8a419..a6db951b59 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1418,8 +1418,7 @@ F: include/hw/m68k/mcf*.h
- F: tests/functional/m68k/test_mcf5208evb.py
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index 9a0a57c0cc..c541e6d00c 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -30,6 +30,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "ui/console.h"
+ #include "target/m68k/cpu.h"
+ #include "migration/vmstate.h"
+@@ -620,8 +621,7 @@ static void nextdma_write(void *opaque, uint8_t *buf, int size, int type)
  
- NeXTcube
--M: Thomas Huth <th.huth+qemu@posteo.eu>
--S: Odd Fixes
-+S: Orphan
- F: hw/m68k/next-*.c
- F: hw/display/next-fb.c
- F: include/hw/m68k/next-cube.h
+ static void nextscsi_read(void *opaque, uint8_t *buf, int len)
+ {
+-    DPRINTF("SCSI READ: %x\n", len);
+-    abort();
++    qemu_log_mask(LOG_UNIMP, "nextscsi_read with len = %d\n", len);
+ }
+ 
+ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
+@@ -825,7 +825,8 @@ static void next_floppy_write(void *opaque, hwaddr addr, uint64_t val,
+         break;
+ 
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_UNIMP, "next_floppy_write at addr 0x%"HWADDR_PRIx"\n",
++                      addr);
+     }
+ }
+ 
+@@ -840,7 +841,8 @@ static uint64_t next_floppy_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_UNIMP, "next_floppy_read at addr 0x%"HWADDR_PRIx"\n",
++                      addr);
+     }
+ 
+     return val;
 -- 
 2.55.0
 
