@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94947C61DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC11C61DDC
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03QO-0000QA-SB; Fri, 28 Aug 2026 16:43:44 -0400
+	id 1x03PE-0004zB-74; Fri, 28 Aug 2026 16:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03QM-0000Gz-Tj
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x03P9-0004st-Fv
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:42:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x03QJ-00008I-P3
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:43:42 -0400
+ id 1x03P7-000817-VL
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:42:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787949817;
+ s=mimecast20190719; t=1787949745;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iVPrkPp6gs0IB0j0xiU0o5owVlvgiG2b14b9p5/j2Pk=;
- b=FibohBNcp8/7ZQLFkeqkeGRA5D5trWA+Aupe4Y9QkkR+l6cWnHYhCkokkndivv/Goz3KQM
- +gT+q5XNsRaXUp10Z62FMSf4/NeF9rYdEpb3w1wwBBoxyVpdWYOoh1Hi6zavdm2OTDCnYY
- lHLjzetAjl/U1i3Yzl9Ab9ZeQjF5G/8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=BH342i7ovU6fuSWv8VZMyWgs9nCmCum2lZ7GYnWp7ko=;
+ b=a4QYLEuhCGaSGwlyVqrhALkQm20Yi8toj+mExkojvE9czZUSNv3DuTTRTKSavmQh5mkxck
+ Ef3dPTFQpipREvz6vUts4TNpyZ6WjWqUK6ctBnOMEH23k8ConpMP+qz7NRRel3Q9mkz7Ad
+ 8aduTzjVwO0djHYtnHldOwPomZJB1SU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-601-GA1zKLuyPXKagwUnWNhTJQ-1; Fri,
- 28 Aug 2026 16:43:36 -0400
-X-MC-Unique: GA1zKLuyPXKagwUnWNhTJQ-1
-X-Mimecast-MFC-AGG-ID: GA1zKLuyPXKagwUnWNhTJQ_1787949815
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-b-gvuYlqP6uFmS9La_ZU6w-1; Fri,
+ 28 Aug 2026 16:42:23 -0400
+X-MC-Unique: b-gvuYlqP6uFmS9La_ZU6w-1
+X-Mimecast-MFC-AGG-ID: b-gvuYlqP6uFmS9La_ZU6w_1787949742
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 652E319091F8; Fri, 28 Aug 2026 20:43:35 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AFE31802579; Fri, 28 Aug 2026 20:42:22 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9AC003001D3D; Fri, 28 Aug 2026 20:43:34 +0000 (UTC)
+ id A65673001D3E; Fri, 28 Aug 2026 20:42:21 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 00:42:06 +0400
-Subject: [GIT PULL 27/50] monitor: reject readline monitor when HMP is disabled
+Date: Sat, 29 Aug 2026 00:41:45 +0400
+Subject: [GIT PULL 06/50] target/i386: return an error for invalid CPU in
+ hmp_mce()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260829-nohmp-v1-27-4dcc2b4b0055@redhat.com>
+Message-Id: <20260829-nohmp-v1-6-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Markus Armbruster <armbru@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1234;
+Cc: richard.henderson@linaro.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1127;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=QNxQQy78jELbT7+yM8nfG44cMuZbkNhjHaeOwKj5cOw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKUr5kNQVavc+INsF4m4M4Qua5daawbS+n1U
- m7Qr1MpqVqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHylAAKCRDa6OEJdZac
- 5fGPD/9hj7Y6CjCxxPenxdWKF3v67sGA/QC+IsNNy4ljMFfNPFvu0dK4WVqLrwksqqqTnnGmYmT
- hVI/SKF/jv+K9yji39rhYXBV1q1hY3cf0ftDz+fOF9zzdhbPNSteT4lD9m6I5cFCxfKNZgrk/u+
- A9+/o3o6T9RZIe3wHBtCUIKMmp3py5iwVtLvfIKzskur5ZlJXACHv73ZRLFxXRWbnZKmw/jqYin
- TtWTJHtHK2zqWyvpkMapwWR9P6kAmeMtaPij1aqgQDRMBfImuf0ns3MY4mt3awlo8+rgveZFiCg
- LGMeB4ACkBKazwPbV1f/XWq3/HbjkWdX+Gg6wA5LSh2488JcZqLDlSDxiCXwEOeeeMZTQmmy3Gx
- 5A+f+GTt8FK/NYBW23AvRL/8vGkJX/B5e+iyB2jrpBmuESrOkEFY95TmcPBgAkExIjuy0V8xve+
- /j7Lb1q9deQ7nvOm/NsvaXwb+m9DTxd3SbWYyPkbImb9D0uotCOJAIeIWtPzRLVrZ1B2xNTiSbB
- 5gjjnw44pfQZX4R6Uxtjl0Tp7Rhjp6ouKlVPYT4HThJZKG5FAlSQXrKSiXN0x3ad7Dfw298oWEr
- /oL6lAUqNH3aWizFqae+ArOpeNTzK8vrnIvgjAJCRk2jkhrOH60ZLQ+YCBLPrGwgx0ROwUklSRU
- s61NX/HftVNKV5w==
+ bh=ri5Qp3clebQ3Ozsg1j2jOh9Qizc+flc2SoDeyDGSLp0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkfKTf7wih3WGXkDwAGa3nzzjJcmIhfq423VZM
+ 9D3VvD1iIKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapHykwAKCRDa6OEJdZac
+ 5XS3EACgAbHGkHiI0KeQ/vbAwAG3n8bWGi09TwrngWngrO8l6YxSHmvDUEXN2LCwQLVMzEQhqie
+ aeQhT8chNv9TBRQFOTZDXk3LC71Viqf3NOrAhCYHLr52XA9wevB7Yt7alBO/QCPgw2SPYa4XW2Y
+ wssiAcbLlcWDV1DeI8/Erw5j/IG7op2BUUO0QbVZi3qJFOOZ42ASch9DVFFJ+fQYV0bUwZU/P9T
+ oQYdYOh5m64W5JEDM8yrofIgTz/mGeQ4TudUoqAjvs/OMjCWrJgDahcLqCu6sJ4DjpdMjyZTMrE
+ J8FEw/qH8QsbwIIvYht0mcxLpb5GAjJcYYCK9Ux4i6zwplPKU8t+SC8+Mk+WdxY1q9gsSixkntS
+ z+tS4onXtWNvCM3G2mLWQA4yvNPrdH8JMy+L3Yu2B3GwR6EUfEY4dEkanfiervxiM4QhnWw7KIe
+ ToRVqJdAkaJvAAvmzFeyTGZjYYNpUmnLiXQwhUhq/9lZADOD+TYA0F9lyDyfNM5KW7n+wOtDwQA
+ 6NZkU3idFk9DyyEmqbGte56WIMwulZHFpAE6oLqYGncIocgJ/FvaUbqoHW/OG+3zg1cs2eeTvhC
+ emUYTLKN6xnkuCYV4NvcqaAFBHZrr3ajt5jl1lPhNkR8+7jfQ1VEH/kZmivO5Qb28MY3j0SAYFH
+ gl0JzUerB5LTLjw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU is built without HMP support, reject '-monitor' (which
-requests readline/HMP mode) early in monitor_new_opts() with a
-clear error message directing users to '-qmp' instead.
+Rather than silently doing nothing.
 
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260828-qemu-no-hmp-v5-27-9227de146347@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260828-qemu-no-hmp-v5-6-9227de146347@redhat.com>
 ---
- monitor/monitor.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/i386/monitor.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 6d6ffbb0f78a..8528af6f79b8 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -776,6 +776,16 @@ int monitor_new_opts(QemuOpts *opts, Error **errp)
-     MonitorOptions *options;
-     int ret;
- 
-+#ifndef CONFIG_HMP
-+    const char *mode = qemu_opt_get(opts, "mode");
-+    /* readline is HMP..  */
-+    if (mode && g_str_equal(mode, "readline")) {
-+        error_setg(errp, "HMP monitor is not available,"
-+                   " use '-qmp' instead of '-monitor'");
-+        return -1;
-+    }
-+#endif
-+
-     v = opts_visitor_new(opts);
-     visit_type_MonitorOptions(v, NULL, &options, errp);
-     visit_free(v);
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 785a13dd7107..9ed772e6d7f2 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -586,10 +586,12 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+         flags |= MCE_INJECT_BROADCAST;
+     }
+     cs = qemu_get_cpu(cpu_index);
+-    if (cs != NULL) {
++    if (cs) {
+         cpu = X86_CPU(cs);
+         cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
+                            flags, &err);
+-        hmp_handle_error(mon, err);
++    } else {
++        error_setg(&err, "Invalid CPU %d", cpu_index);
+     }
++    hmp_handle_error(mon, err);
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
