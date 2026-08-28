@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64DCDC61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89441C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzplY-00079V-F3; Fri, 28 Aug 2026 02:08:40 -0400
+	id 1wzplU-0006hj-FY; Fri, 28 Aug 2026 02:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wzplV-0006sX-VE
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wzplS-0006Zm-LL
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wzplT-0000xD-G8
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:37 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wzplQ-0000wi-Ez
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 02:08:34 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67S22ACA596538
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:34 GMT
+ 67S22wFg3688599
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=5zOCKbrZTz2AJ4tek
- sfNPyty7ZQ2fVPJeChH+NPt4HU=; b=dKIET7M0WiUwDiintH8OHq6lbjNYUXQ1m
- uLm90qx6M10ELzOVbrT5NyGDnQlYxGbpgRmQELbPrlYkOM5Ahr0DSK5PxibM5k0b
- v+rNv5Lm1cINHmeaXCObbC6kR1xAGKxmtKeTaCp0QtnNTG5n9WBBS7qW8nt+xaDz
- uQbHmu898pd1VOUisa6GO1DkuXP1+zy0ahCvcGwvI719zpQwHri8SCjiV+719fMY
- 0OeOsjLTXoy6LV5vZ4c2oWvLfoQkYozz66qL15m2GF/QSXLa0JH453HOGTbiFo/U
- FBAtE7x5zXJGz6VULwk1KwjVZ1urOto62T4W1RuMuqQl+Gk8dDXUA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7394je7x-1
+ :mime-version:references:subject:to; s=pp1; bh=sw9q9ogDOP5PDgir7
+ 8SPadWAWqHkUoEC+BupL5vdE1E=; b=ctJoCVWaSP80UqGTQ8xR2KYd2lv59CX2d
+ MTYR0wNhZiBlSTsewlm/53YQ1aiQ7QOs0QULKN6+SEfxO4VE6TqLomFGuhJ/0h5H
+ BMV5B2jXr+egop8Of+fUAhkBlJFUaAAqroCVV29X6T2RB+oh/9p0Pu7160ihlU5E
+ XmnornrGbYdU+9mKodVKXYlP3E2qblU3LBEToo9++iqDwbdG1gxHzKSSHzzDzw5W
+ 7jVpWpO1Of+zFjH6ziDj8t+zrXbhY6NpPi6I2x35dDN6plAzqW/Ea8qtBKaTRoMA
+ rIpDRVx3aQjWoDATsi9yUbUiLntUuQoRuj1MzR5G5T+c6JsRfVRsA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726f2841-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:33 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67S5uNxX025232
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:33 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragvgdk-1
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:31 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67S5uFr2007424
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:30 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsymc0p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:32 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 06:08:30 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67S68TWt51052904
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67S68Qib41812236
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 28 Aug 2026 06:08:29 GMT
+ Fri, 28 Aug 2026 06:08:26 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3948120040;
- Fri, 28 Aug 2026 06:08:29 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D5F1020043;
+ by IMSVA (Postfix) with ESMTP id 5CBFE20043;
  Fri, 28 Aug 2026 06:08:26 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7937020040;
+ Fri, 28 Aug 2026 06:08:24 +0000 (GMT)
 Received: from Mac.com (unknown [9.124.217.17])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 28 Aug 2026 06:08:26 +0000 (GMT)
+ Fri, 28 Aug 2026 06:08:24 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
+Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
  Amit Machhiwal <amachhiw@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 24/41] target/ppc: Move Condition Register access instructions
- to decodetree.
-Date: Fri, 28 Aug 2026 11:36:59 +0530
-Message-ID: <20260828060716.91672-25-harshpb@linux.ibm.com>
+Subject: [PULL 23/41] target/ppc: Refactor sleep and its variants to use a
+ common helper
+Date: Fri, 28 Aug 2026 11:36:58 +0530
+Message-ID: <20260828060716.91672-24-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260828060716.91672-1-harshpb@linux.ibm.com>
 References: <20260828060716.91672-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: FVDcH6nbRje3RPH1maNKclCR7nqneme0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX8mAF7Gw+hCsI
- xVUuBYcZAdoEB5XCkO1YcCQdP6bJ8t6CyvtlplnW8Z2AEFDOClFAGeqabtHFMXzNO8NERMvNHuZ
- 1PNSedupiPOlUv3gvp99hVB2WFHzgrZBAD6MLlqkOTjDzKjMflD2f9Sytimok5cCGwicQCzoQvs
- YjkNZpriJu1gJy7KXBrD2G8XKdzCzjGsXTSlrB+hzL2z/fQxPcfAZMWS254iSDs+AuONc/6zJWa
- LqA68DRbArSa2jB4UbP3+KgKCJpNIFpByxbhJ0BRQ8crxCYzQ/c4mcF9zUzOKT4/b1+bH89MXDA
- UAeZdQHloxrAIQ3Mw2xN0ST7Icsxn9G7Wcl9fwGxCW/aDiqiP/B2u3uDMECD1A9okpLR0/Iw3wX
- 8gAiNiJGLputAUHC+rXCM9jYIOvxDJ09sKfhLFYNkG2GPdsOpL27xJy016kNjHn9WAPBdnhZGAl
- juVTec9CibCGeut29+g==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a9125e2 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a9125df cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=Sv0fKeRqtYgA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=pKujU25TKs9URF08bPwA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX6g1QExiV+8q3
- xfrMySS4UJiHg30En9Thk0yBYB6kURAg+EHO6w7p7Yst7mtpQbOy1K4Ya5vI17VXikGrGf5m1o7
- 9FPRzDcPoEdK/dVUXeep8QVpbj6PoWo=
-X-Proofpoint-ORIG-GUID: FVDcH6nbRje3RPH1maNKclCR7nqneme0
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=AYO248uK6yRxx-YkPnAA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX3kcJa2mv3cjn
+ qWogqGs+swiQxzbFLC7jzEhzXnk5x2/psJlDaCNpxzcNe/U9mn/t9W09u2Wn9TUTNoah+T5jjeY
+ tJh1ASHGJeNwYEul8CJZKmtWAhwBCoc=
+X-Proofpoint-GUID: iHJq6D06fsnQLoaTv1gAjLl1oDMyuiOV
+X-Proofpoint-ORIG-GUID: iHJq6D06fsnQLoaTv1gAjLl1oDMyuiOV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA1MCBTYWx0ZWRfX/ic8dbpYrI9t
+ FDz34YEAZM0iWannl2Fgzre/iI0z5HIQgs936PstaD0z+NbcSdUV9rsNx5dJ17Fhsxoz8JP4Zun
+ AHgsA4eBJ5VX94O/R0afcS4iATHfpeAtuSBYSnNXNL9YWUSl+DgBuSwbcZ8F/JgwrrjqNpge1QJ
+ Ay2HgQJaJYLtwkBUl+RkFZXZAcbZXX0CIbHP5H+nIYLGKj/HF6sMjfI7MOayvNYOpb20sJG4WKa
+ m9+E4/laHblSiDmn7AZ7cAynt4mZohA6Rrn4jVyAHU1CWUAu7Sm68AA32xL+qEP0nRewe7JOmJH
+ YDgXSOtIH2aSWOwcsTOrc8CNxP1yDPHdIVKAi2h+aO798vWisNFtAqVoy0sE2zwMuslgSqf86CK
+ dOEsfcLZNgkAUbwnEViFH14eD+nKTAEWsTcRFOmgmmGuYuQBr1cbjxU9nPS1ezDb2PC5xXmO39r
+ 4Dvhpm9wHLmp1LXV/Bw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_01,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,235 +125,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-Move below instructions to decodetree specification :
+With sleep, doze, nap, rvwinkle and stop instructions moved to
+decodetree, the helper these instructions used : gen_helper_pminsn,
+should now be renamed to gen_helper_PMINSN, abiding by the decodetree
+standards. Do the same.
+Also refactor their translation routine to use a common do_sleep routine
+since they share majority of the code.
 
-        mfcr, mfocr,
-        mtcrf, mtocrf                    : XFX-form
-
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the '-d
-in_asm,op' flag.
-
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260827133010.278889-21-rathc@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260827133010.278889-20-rathc@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/insn32.decode                   |  8 +++
- target/ppc/translate.c                     | 62 -----------------
- target/ppc/translate/fixedpoint-impl.c.inc | 78 ++++++++++++++++++++++
- 3 files changed, 86 insertions(+), 62 deletions(-)
+ target/ppc/helper.h                           |  2 +-
+ target/ppc/tcg-excp_helper.c                  |  2 +-
+ .../ppc/translate/processor-ctrl-impl.c.inc   | 99 +++----------------
+ 3 files changed, 17 insertions(+), 86 deletions(-)
 
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index b833244932..137432ed96 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -70,6 +70,9 @@
- %dx_d           6:s10 16:5 0:1
- @DX             ...... rt:5  ..... .......... ..... .           &DX d=%dx_d
- 
-+&XFX            rt fxm
-+@XFX            ...... rt:5  . fxm:8 ...... ..... .             &XFX
-+
- %md_sh          1:1 11:5
- %md_mb          5:1 6:5
- &MD             rs ra sh mb rc
-@@ -648,6 +651,11 @@ FSEL            111111 ..... ..... ..... ..... 10111 .  @A
- 
- ### Move To/From System Register Instructions
- 
-+MFCR            011111 ..... 0.... ....- 0000010011 -   @XFX
-+MFOCR           011111 ..... 1.... ....- 0000010011 -   @XFX
-+MTCRF           011111 ..... 0.... ....- 0010010000 -   @XFX
-+MTOCRF          011111 ..... 1.... ....- 0010010000 -   @XFX
-+
- SETBC           011111 ..... ..... ----- 0110000000 -   @X_bi
- SETBCR          011111 ..... ..... ----- 0110100000 -   @X_bi
- SETNBC          011111 ..... ..... ----- 0111000000 -   @X_bi
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 9d9823f92d..59e8ecb262 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -3131,40 +3131,6 @@ static void gen_mcrxrx(DisasContext *ctx)
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index e7bf43bf4b..6e14f02598 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -18,7 +18,7 @@ DEF_HELPER_1(rfdi, void, env)
+ DEF_HELPER_1(rfmci, void, env)
+ #if defined(TARGET_PPC64)
+ DEF_HELPER_2(scv, noreturn, env, i32)
+-DEF_HELPER_2(pminsn, void, env, i32)
++DEF_HELPER_2(PMINSN, void, env, i32)
+ DEF_HELPER_1(rfid, void, env)
+ DEF_HELPER_1(rfscv, void, env)
+ DEF_HELPER_1(hrfid, void, env)
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index b04f07a637..c4ffa2dfbb 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -459,7 +459,7 @@ void helper_scv(CPUPPCState *env, uint32_t lev)
+     }
  }
- #endif
  
--/* mfcr mfocrf */
--static void gen_mfcr(DisasContext *ctx)
--{
--    uint32_t crm, crn;
--
--    if (likely(ctx->opcode & 0x00100000)) {
--        crm = CRM(ctx->opcode);
--        if (likely(crm && ((crm & (crm - 1)) == 0))) {
--            crn = ctz32(crm);
--            tcg_gen_extu_i32_tl(cpu_gpr[rD(ctx->opcode)], cpu_crf[7 - crn]);
--            tcg_gen_shli_tl(cpu_gpr[rD(ctx->opcode)],
--                            cpu_gpr[rD(ctx->opcode)], crn * 4);
--        }
--    } else {
--        TCGv_i32 t0 = tcg_temp_new_i32();
--        tcg_gen_mov_i32(t0, cpu_crf[0]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[1]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[2]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[3]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[4]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[5]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[6]);
--        tcg_gen_shli_i32(t0, t0, 4);
--        tcg_gen_or_i32(t0, t0, cpu_crf[7]);
--        tcg_gen_extu_i32_tl(cpu_gpr[rD(ctx->opcode)], t0);
--    }
--}
--
- /* mfmsr */
- static void gen_mfmsr(DisasContext *ctx)
+-void helper_pminsn(CPUPPCState *env, uint32_t insn)
++void helper_PMINSN(CPUPPCState *env, uint32_t insn)
  {
-@@ -3245,32 +3211,6 @@ static void gen_mftb(DisasContext *ctx)
-     gen_op_mfspr(ctx);
- }
+     CPUState *cs = env_cpu(env);
  
--/* mtcrf mtocrf*/
--static void gen_mtcrf(DisasContext *ctx)
--{
--    uint32_t crm, crn;
--
--    crm = CRM(ctx->opcode);
--    if (likely((ctx->opcode & 0x00100000))) {
--        if (crm && ((crm & (crm - 1)) == 0)) {
--            TCGv_i32 temp = tcg_temp_new_i32();
--            crn = ctz32(crm);
--            tcg_gen_trunc_tl_i32(temp, cpu_gpr[rS(ctx->opcode)]);
--            tcg_gen_shri_i32(temp, temp, crn * 4);
--            tcg_gen_andi_i32(cpu_crf[7 - crn], temp, 0xf);
--        }
--    } else {
--        TCGv_i32 temp = tcg_temp_new_i32();
--        tcg_gen_trunc_tl_i32(temp, cpu_gpr[rS(ctx->opcode)]);
--        for (crn = 0 ; crn < 8 ; crn++) {
--            if (crm & (1 << crn)) {
--                    tcg_gen_shri_i32(cpu_crf[7 - crn], temp, crn * 4);
--                    tcg_gen_andi_i32(cpu_crf[7 - crn], cpu_crf[7 - crn], 0xf);
--            }
--        }
--    }
--}
--
- /* mtmsr */
- #if defined(TARGET_PPC64)
- static void gen_mtmsrd(DisasContext *ctx)
-@@ -5030,11 +4970,9 @@ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
- GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
- GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
- GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
--GEN_HANDLER(mfcr, 0x1F, 0x13, 0x00, 0x00000801, PPC_MISC),
- GEN_HANDLER(mfmsr, 0x1F, 0x13, 0x02, 0x001FF801, PPC_MISC),
- GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
- GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
--GEN_HANDLER(mtcrf, 0x1F, 0x10, 0x04, 0x00000801, PPC_MISC),
- #if defined(TARGET_PPC64)
- GEN_HANDLER(mtmsrd, 0x1F, 0x12, 0x05, 0x001EF801, PPC_64B),
- GEN_HANDLER_E(setb, 0x1F, 0x00, 0x04, 0x0003F801, PPC_NONE, PPC2_ISA300),
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index f9435f4a00..11d919a21a 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -461,6 +461,84 @@ static bool trans_ADDEX(DisasContext *ctx, arg_X *a)
+diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
+index a96c9c87ce..cfcca28267 100644
+--- a/target/ppc/translate/processor-ctrl-impl.c.inc
++++ b/target/ppc/translate/processor-ctrl-impl.c.inc
+@@ -104,102 +104,33 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
      return true;
  }
  
-+static bool trans_MTCRF(DisasContext *ctx, arg_MTCRF *a)
-+{
-+    TCGv_i32 temp;
-+    uint32_t crm, crn;
-+
-+    crm = a->fxm;
-+
-+    temp = tcg_temp_new_i32();
-+    tcg_gen_trunc_tl_i32(temp, cpu_gpr[a->rt]);
-+
-+    for (crn = 0 ; crn < 8 ; crn++) {
-+        if (crm & (1 << crn)) {
-+            tcg_gen_shri_i32(cpu_crf[7 - crn], temp, crn * 4);
-+            tcg_gen_andi_i32(cpu_crf[7 - crn], cpu_crf[7 - crn], 0xf);
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_MTOCRF(DisasContext *ctx, arg_MTOCRF *a)
-+{
-+    uint32_t crm, crn;
-+
-+    crm = a->fxm;
-+
-+    /* Checking crm > 0 and set_bits(crm) == 1 */
-+    if (crm && ((crm & (crm - 1)) == 0)) {
-+        TCGv_i32 temp = tcg_temp_new_i32();
-+        crn = ctz32(crm);
-+        tcg_gen_trunc_tl_i32(temp, cpu_gpr[a->rt]);
-+        tcg_gen_shri_i32(temp, temp, crn * 4);
-+        tcg_gen_andi_i32(cpu_crf[7 - crn], temp, 0xf);
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_MFOCR(DisasContext *ctx, arg_MFOCR *a)
-+{
-+    uint32_t crm, crn;
-+
-+    crm = a->fxm;
-+
-+    /* Checking crm > 0 and set_bits(crm) == 1 */
-+    if (likely(crm && ((crm & (crm - 1)) == 0))) {
-+        crn = ctz32(crm);
-+        tcg_gen_extu_i32_tl(cpu_gpr[a->rt], cpu_crf[7 - crn]);
-+        tcg_gen_shli_tl(cpu_gpr[a->rt],
-+                        cpu_gpr[a->rt], crn * 4);
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_MFCR(DisasContext *ctx, arg_MFCR *a)
-+{
-+    TCGv_i32 t0 = tcg_temp_new_i32();
-+    tcg_gen_mov_i32(t0, cpu_crf[0]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[1]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[2]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[3]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[4]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[5]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[6]);
-+    tcg_gen_shli_i32(t0, t0, 4);
-+    tcg_gen_or_i32(t0, t0, cpu_crf[7]);
-+    tcg_gen_extu_i32_tl(cpu_gpr[a->rt], t0);
-+
-+    return true;
-+}
-+
- static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
-                      bool compute_ov, bool compute_rc0)
+-static bool do_doze(DisasContext *ctx, arg_DOZE *a)
+-{
+-    REQUIRE_64BIT(ctx);
+-
+-#if defined(CONFIG_USER_ONLY)
+-    gen_priv_opc(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    REQUIRE_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_DOZE);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-    return true;
+-}
+-TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
+-
+-static bool do_nap(DisasContext *ctx, arg_NAP *a)
++/*
++ * Helper to handle DOZE, NAP, SLEEP, RVWINKLE & STOP. Since none of them use
++ * any arguments just use a placeholder arg_SLEEP.
++ */
++static bool do_sleep(DisasContext *ctx, arg_SLEEP *a, powerpc_pm_insn_t type)
  {
+     REQUIRE_64BIT(ctx);
+ 
+ #if defined(CONFIG_USER_ONLY)
+     gen_priv_opc(ctx);
+-#else
++#elif defined(TARGET_PPC64)
+     TCGv_i32 t;
+ 
+     REQUIRE_HV(ctx);
+     translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_NAP);
+-    gen_helper_pminsn(tcg_env, t);
++    t = tcg_constant_i32(type);
++    gen_helper_PMINSN(tcg_env, t);
+     /* Stop translation, as the CPU is supposed to sleep from now */
+     gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-    return true;
+-}
+-TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
+-
+-static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
+-{
+-    REQUIRE_64BIT(ctx);
+-
+-#if defined(CONFIG_USER_ONLY)
+-    gen_priv_opc(ctx);
+ #else
+-    TCGv_i32 t;
+-
+-    REQUIRE_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_SLEEP);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-    return true;
+-}
+-TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
+-
+-static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
+-{
+-    REQUIRE_64BIT(ctx);
+-
+-#if defined(CONFIG_USER_ONLY)
+-    gen_priv_opc(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    REQUIRE_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
++    qemu_build_not_reached();
++#endif
+     return true;
+ }
+-TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
+-
+-static bool do_stop(DisasContext *ctx, arg_STOP *a)
+-{
+-    REQUIRE_64BIT(ctx);
+ 
+-#if defined(CONFIG_USER_ONLY)
+-    gen_priv_opc(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    REQUIRE_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_STOP);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-    return true;
+-}
+-TRANS_FLAGS2(ISA300, STOP, do_stop);
++TRANS_FLAGS2(PM_ISA206, DOZE, do_sleep, PPC_PM_DOZE);
++TRANS_FLAGS2(PM_ISA206, NAP, do_sleep, PPC_PM_NAP);
++TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep, PPC_PM_SLEEP);
++TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_sleep, PPC_PM_RVWINKLE);
++TRANS_FLAGS2(ISA300, STOP, do_sleep, PPC_PM_STOP);
 -- 
 2.52.0
 
