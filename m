@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4995EC61DCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6996C61DB9
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 23:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x05YM-0000pP-R8; Fri, 28 Aug 2026 19:00:06 -0400
+	id 1x05Xm-0000BP-HT; Fri, 28 Aug 2026 18:59:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x05Y8-0000Yp-Rd
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:59:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1x05Xk-0000As-EQ
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:59:28 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x05Y7-0005lp-31
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:59:52 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1x05Xj-0005kX-0L
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:59:28 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SMTJNf3665796
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 22:59:39 GMT
+ 67SMTLig4104959
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 22:59:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=P8c9tVc/tsC
- 0VKHJsAmXlBKD5jQLNNKQzVAo3npQ/JM=; b=RulfTeIEmtSr9FDCts6f6FSkV2L
- Hrga5SiEkNRfJiQTKGUypfRYzwqeNqQ2JUnzSdxumlQIq2XIw/NVZsUwQVYaif87
- Ojlg0SKuy8aTrzMHKm5MbKKQejDqvErt5TWkmNeGGPOU3nLXXFONeGT2BC1Xrs4K
- OQFO5KEa+4y2lJvocPUVha1juL+H5CE96+LbEaU0OH1k4dHtW/qwmezrWKyI2j0Y
- 3twZ/lRd1oKRzrGDe7dVayZTHMJSpmO+AISYTj9/TOND3ot83M/eigwOmkbYgePr
- F7OM3s/ipOAH0D7PXmJyQe7iHa27okAiWOu9VdK6BhseGZss5enEun8kigw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3mubswq-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=+fFw5NSa5Jr
+ y1A3ONE01He2NOx9PK8QCb8F7sLo12sY=; b=ZovRW7S978CX/00w3dOhfTqQ7Wa
+ B3s3B1ZF1ywugRk/1Nef3nkDYSeTzfn6FOSRFaeD+1xKUDUeHxRyss2DarE2cO9B
+ B0Xw47+cwtP/da25MmvdL5IJhZh44wr1WTcDra80oceNik82ND4AjwsnAcKkR2U2
+ hM0viQ89OE6wBVST7nk8hJMvzP3CLrIIuT+fLpa8vcvmuOgCdssBr6A0kyoCTj9j
+ TTi44hL8pj2Pp/HLPua0+gjVMG9LJkB9kAo8269eBPj7lO4Cfryp0raVEcfrwWzD
+ Kub+PLerPq/3EgOrJNV+Xqs253HPiFzJBt76PP15x1uGRz+kRQ6GSuO9RwA==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb3hs3xbp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 22:59:39 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38dc085b0a7so2724934a91.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:59:39 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 22:59:23 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-cc1b8088203so1905472a12.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787957979; x=1788562779; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787957963; x=1788562763; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=P8c9tVc/tsC0VKHJsAmXlBKD5jQLNNKQzVAo3npQ/JM=;
- b=Y730ONVoKF7+wnQ74h4/n/aZTWhdxDX//R3FepliHs7ix1ip/nnPsNIN+fW7JlWQYf
- JMf2RbrM4+FWF+oAhOZrulze9Wh5sZB60Pi9mp33ppWKypJS+f9tD5kDNDXnxjlqJyCN
- ioXyMnc8bwnjQggLnH24oI5T87IiPaAdO57A73DCDV282W1q71oyqS04Gk2bUDEhX8su
- HxPdyRciUJiJCfc7z4nNdWO+rkteGdLQZczwBGR46Hs0dN5VdwGIrQTCGZxALtIpuMa2
- EgeMeINQ/gwKGvosISwjvl3cPxe0sNUzfZ162LOpyF3ufH7Xo8Qs4NKc/ZEZevxWF2K3
- jFQA==
+ bh=+fFw5NSa5Jry1A3ONE01He2NOx9PK8QCb8F7sLo12sY=;
+ b=WScN+0nI5KoG9ezZeJhbXgWQeHGel4FxCiF2CNexAKBGCslOyM/+rfkmqnZZaTBfFI
+ jIkhIFfgFz4po+k2bxtv5IsXlwzZNe3YdKavtaE7a69nw7dyDOb5GOJGFAu2bmaEgkzs
+ I4Gx/f5j2Nva1mh9IfCKAu4Tx1w2odyjPBqjgH34+u4+rWhQp+Fnzl0FAOVKNHHEY7WY
+ s6q6ya9nEJe04ra49+ycnQ3z6j4xEE1KcEKad5w8EmvPPXk/COnE9F5Ba6mG81tI3VyD
+ 8voSbMudgCXj7DNfkyWp+NP8WWvzE3+H4eov3FA6jAb4HJh7U4N1La5awqQFCiJLZveg
+ 6G5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787957979; x=1788562779;
+ d=1e100.net; s=20251104; t=1787957963; x=1788562763;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=P8c9tVc/tsC0VKHJsAmXlBKD5jQLNNKQzVAo3npQ/JM=;
- b=JYjbdLsZD/EEAtzRHvTXUbtk9ZQmb7qY2i5PaAHxal/FpN2gjzHS0LNCF7U4ypWxZU
- h+S3jgZy6jI31OlUgYkeZxcqUSvRWbSqWrMnZ+zAW3tN+zqE1oumytzktFrNHaOIdNCQ
- xEcMPnxjkfmPu99T01W16MRBvYE4b/7CZzT6kEFSI/5Qkn6i1prBzvrooD4NCPzpxXin
- /jERdR3SlApDX+pjxvO60y+dwSLyp1qkVWqv+6W6F1Wipj7JYpnqgNxq+oSMEaKJWEQk
- +EMykIVfTKP6ipW4oCN3KfDUMzqYcRt0peMaTqCXrVOyZYUIF/8Q4iTs+ODFHBS2tSei
- kQ+g==
-X-Gm-Message-State: AFuF++mvIaNrKw3gbd1oxSwbauJdiW17qpQVeC4AsirQNy2zDXmLTkd8
- qBylLA+7CKrxzCR7iZlTJQOMVQGXpdo0NVgxp848TIpQjhacKQKQWADf3ZW0gzCcL+WoJypT4Ia
- ZaAXXj9TWQ1/lC/7/qL8W9Xm49NR/fRdy1OmwXClA60nBlox6yjyIgh81JFtXbULP9Q==
-X-Gm-Gg: AYBFou0x/4KfOAP78TQBwik+DQZsld+7zzJHSVsXeokyHnqacXT4jwgVeyZYgkY6tua
- jaLk9d924ZMK/MmI+gxxeESCV+4KWLydq7zC89nzEgGn2AJnSaF/FWZXyKCVxmowmt0VfEN4d9z
- TJ+6uOvu8jDy7In33LWSlykJeqTvrDfeuix0jL3ExWVWX9ltm25kb5XFqSxBh4ccKMvEC8xdlRI
- 9/KlONuUWY/e7HyLVbIISemYIWdh2G7/cWAFZRJr9QZq25p0MXOI/0NxfcsGl7fT8ibGTNTqAKz
- vbgCpIJQqspUJvQk8fueQaHaI0gNNh1OkPxdD1ktySTDBZIwrGiRIbP2W+oYaQo/s+2i6c3xkIN
- Eq1CmplrfbQThuLJ5wIas0oSKfcapBwq5F+2F/eQM+sLhCbc2/uPHOLvKajU=
-X-Received: by 2002:a17:90b:1e05:b0:398:9bd5:490c with SMTP id
- 98e67ed59e1d1-3989bd54c4emr3718537a91.19.1787957978841; 
- Fri, 28 Aug 2026 15:59:38 -0700 (PDT)
-X-Received: by 2002:a17:90b:1e05:b0:398:9bd5:490c with SMTP id
- 98e67ed59e1d1-3989bd54c4emr3718499a91.19.1787957978468; 
- Fri, 28 Aug 2026 15:59:38 -0700 (PDT)
+ bh=+fFw5NSa5Jry1A3ONE01He2NOx9PK8QCb8F7sLo12sY=;
+ b=Gc72SvcA/8CMS9j4bJak9g8EPwvYOzXHmsZWAPmD0UZPdbVEBvXEmn/OWPJ2Gju+M6
+ 741QiBum+U4euztBhD2E7npR3gH5PgfuorWmY6X1oddjh2rE8I3j8V9kKzzRnE8FKCnO
+ vG5rIYn7XY8/5nT8KfIhu/IyDfRoSdluElkXhuFD6+lt5did5psAwrQsTe3EE9fttulK
+ EB034dwd0DyBlyv6cmYDyqt0lhNhpudiv24dSOuXeIr7Enxx64tRg51Z9y+aBtNdAzrG
+ lxFTdR1JNypI46whXNgCuQ3f3KD9GPlA8fB4xP4x0wIMF64SW5KtP+RryuyMj/ynE8Kv
+ jyAg==
+X-Gm-Message-State: AFuF++nLBP8z8Bz1o6Lr/9EnD21m5M0Io1k/aQ4GN9xukPj05Fm40Poa
+ qDuSFSttmGe9CO6V0jf/pVqHmngvntQfLygyWH9taKoumuvOpyHDokSwJsPMNcl9ntRom/Jk8Yy
+ CPMM/Bgvxa/EW4KdAdoQVPR7uiXr4UUjJA9i3ZytoT5YKq8c/XWmt9wKLTjLzxJm4Jg==
+X-Gm-Gg: AR+sD100KFu0ci0ZKI/rjUVCtSUtboeROgPUhlNvMLvhX2s1tuTRC0gTVD8vGOakjs2
+ z3iMzZJN5MP98HUGhtaQu4YYR+vojLGQmEMRVC7fLZLGiWRFa2EbfD8BvcuyaWnt4CItz5Gk7eT
+ 83BGYUcLUNGueOh6sCmxOd3cbko5BhLQ+5XV0KHtPabBqa/7/7oLaR6m4cZTPUSLAwPF8vzOuwb
+ 8/tOVdWB1FK0pjN3HfCZvvRaW5O5K2mh3Y4dLrYwdYP/cSP/8EXGhFr8TJrQle9jgOcZifIjwXy
+ Y2iJwkQqLD86Wf21J0j0mIc6XtvSj0ReS14pnC8ndx7ZSuFeJlZ83vOTW3YCQ643Lh2IdkmVq/Q
+ zPB24TAAYYTOa4HsVQqTEJbo7JEonAaWtLVVsZHcIihnqM4YibifYDbVrJnI=
+X-Received: by 2002:a05:6a21:a8a:b0:3d3:ad3c:49a5 with SMTP id
+ adf61e73a8af0-3d3ad3c6457mr5129109637.19.1787957963027; 
+ Fri, 28 Aug 2026 15:59:23 -0700 (PDT)
+X-Received: by 2002:a05:6a21:a8a:b0:3d3:ad3c:49a5 with SMTP id
+ adf61e73a8af0-3d3ad3c6457mr5129077637.19.1787957962628; 
+ Fri, 28 Aug 2026 15:59:22 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-142e0de4de3sm12862827c88.12.2026.08.28.15.59.37
+ a92af1059eb24-142e0de4de3sm12862827c88.12.2026.08.28.15.59.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:59:38 -0700 (PDT)
+ Fri, 28 Aug 2026 15:59:22 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
@@ -93,44 +93,45 @@ Cc: anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 24/47] hw/remote/machine: filter from CONFIG_MULTIPROCESS
-Date: Fri, 28 Aug 2026 22:58:38 +0000
-Message-ID: <20260828225901.367438-25-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 14/47] target-info: rename target-info-stub.c in
+ target-info-def.c
+Date: Fri, 28 Aug 2026 22:58:28 +0000
+Message-ID: <20260828225901.367438-15-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ZbMt8MVA c=1 sm=1 tr=0 ts=6a9212db cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Authority-Analysis: v=2.4 cv=XKYAjwhE c=1 sm=1 tr=0 ts=6a9212cb cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=oZKOxlyl4ScGPvpX6VEA:9 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: QdNvBPPc241rMuqSLsXKtdIp6_yY1uwo
-X-Proofpoint-GUID: QdNvBPPc241rMuqSLsXKtdIp6_yY1uwo
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfXzvRPUG967Sc3
- /huArT3p95vYJcr+0d9aYuKt5HNG4UO4UyOQQcPpmqQh/cz+DKXCJmoT4WOkhiQacDKIIvAQroN
- n9v/gOwtIQ4EHAwACDJVNYhSss+0cYk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX3ebQxMgc7gqn
- yMPu7LOQEcb9x5F25Nga2Og5ikgkj34FOBZq2rimv1h+mkev0o5lo+hBngwfkJzClbWusXyxJmN
- 39Muugj+Grd+Ur9n0JXyTnCmE/RhOOlXi7Z5VaO/SSVH7UAnGRwHnHsMOhzGb17Zg+PfQJDLt8D
- MSPt8eCJj71QBlVHSB/ssgKtmzbDeL34TVQMwk2VDbffr9DMHwhsNfqtiJ0eBmmu5OerBI5AuDw
- DtFu1XIVkiCDkTuKLZ240xg7wCjbl31C+4HP2jv107n30cjWwpTHGwZC15f4/CAaOFRFCjipxrK
- bXOE25JxIwYltvbCHfxl/k7MLU1Ir2fU6RUSQa9TPHoQtCwtcN9tCm232tHayok6sxkE5dWaPpa
- dNvX6UtQh7dHPTtz/no1wEDT30h8ng4843XvdhE4UXUoNQC/aFoxBjRRTzDO9Z72aqkiyxmFijD
- MHw+BPCYhmldLwWtYZw==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
+ a=-IadAdOB_zlydFfnqDsA:9 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX3JnAejrDap/M
+ tSR3s+b0+/e0qz2NlbxbXfRTBK5ygvJh0nNA35B/E4GQdJIcKWM7+/8pp64ESt6cR2qBRUraGLD
+ zMhVQGfsJkXguOXlVss+88SPceEAL5fq2nDtDJHlS32kh36jTMiUHOJJxiwX6wLOa46S71hsbdt
+ QCVhfWtXpcFyZiEfYmGO0zTY6L5IdANvlL5UTri/Hi54Fk0ViKcrY6GQTnN6e8eLcXOG8eiINBj
+ jZKWi1UWPYOIgze1vK1CTivNYA5vEnJJAisdUDk7r/E0BIejyBxM5/gRR/hhhhMS9ltMslzTBtn
+ V3cfHCwGZhxfHS4l4gxacAWCo29Kh1IugtHm1A73ALFMW97lCEBhUJ8tnPGHDC9GCE6R4z4nLkZ
+ 32HOBsjdC0OJ0dlhBH3XhmA6OL0FdGnZwP+IkxU2cFuT6wQeKp5H2Jaki1kXsdVHTzEKbwySjYw
+ iUyaEeQdTKc9Ye0wStw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX8F8cOtOoAinI
+ QTQirb63H4f7PiIW8U4xnRzqm+PG+xTqOogoC2WsBhN8KdDEYGvMOwtKs9DFMusnjnsSEIqobrU
+ vHIeYnxw0ts75SrsFo2nq8TIrXNUFIA=
+X-Proofpoint-GUID: gZtmzwKeZbgCzr94fobAPq9xkc51J70u
+X-Proofpoint-ORIG-GUID: gZtmzwKeZbgCzr94fobAPq9xkc51J70u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_07,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ bulkscore=0 adultscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608280200
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,23 +154,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Now it's the only file left to define target info, we call it def to
+make the intent more clear.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- hw/remote/machine.c | 1 +
- 1 file changed, 1 insertion(+)
+ meson.build                             | 2 +-
+ target-info-stub.c => target-info-def.c | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename target-info-stub.c => target-info-def.c (100%)
 
-diff --git a/hw/remote/machine.c b/hw/remote/machine.c
-index ced782f6a9c..2068da9d5be 100644
---- a/hw/remote/machine.c
-+++ b/hw/remote/machine.c
-@@ -146,6 +146,7 @@ static const TypeInfo remote_machine = {
-     .instance_size = sizeof(RemoteMachineState),
-     .instance_init = remote_machine_instance_init,
-     .class_init = remote_machine_class_init,
-+    .is_available = target_config_multiprocess,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
-         { }
+diff --git a/meson.build b/meson.build
+index 93d495f09a0..5da6c15551e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4322,7 +4322,7 @@ foreach target : target_dirs
+     endif
+   endif
+ 
+-  arch_srcs += files('target-info-stub.c')
++  arch_srcs += files('target-info-def.c')
+ 
+   if target_base_arch in target_arch
+     t = target_arch[target_base_arch].apply(config_target, strict: false)
+diff --git a/target-info-stub.c b/target-info-def.c
+similarity index 100%
+rename from target-info-stub.c
+rename to target-info-def.c
 -- 
 2.43.0
 
