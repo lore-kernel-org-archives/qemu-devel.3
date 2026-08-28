@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DD4C61DD7
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A082CC61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzvNF-0004sJ-VQ; Fri, 28 Aug 2026 08:07:58 -0400
+	id 1wzvOe-0008HK-I8; Fri, 28 Aug 2026 08:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wzvMs-0004Gz-HB
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:07:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wzvNz-0007KZ-Lj
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:08:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wzvMo-0003IS-MZ
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:07:34 -0400
+ id 1wzvNx-0003zg-3g
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:08:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787918850;
+ s=mimecast20190719; t=1787918920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VTTOSanhGHKbR3ZZ0ym2Im83p2rMYPHN3U4INkRVXUw=;
- b=P6V0tAeHWIOHhNwB9dCw4tLMdt1DBjBfJlqwkucnKOe1Wd4K18bk4eJkeOgAaaft+FdTXo
- uBORgx1fzdCYWcrDv0vEFnPEXT2s9OV57mBmU+FFOkc5xPEHacxLHE/KWxIW7grw0uHK1o
- KpdhqbkwwOZXgySa3ej42WeFV5/KBgA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ppszL6gTBrA2CVHXSdQ72mVxNlv6agP/ol+ztvlZfEo=;
+ b=RCUjk2ngAxCPztl9rW2AHkjXXF7TKgTpVTQxah/6UK6QCIG7ysi6HCUQ8O/3Ryv4/VuLR4
+ qfK7CitDQvG2RFFfbNgiH51H7W8PKPd9ofmYuqnvfO7mrcTiTjNT/LGsuNwkjhF1EBSovK
+ F3QwTXkd9La15x91t9lKPSVi+8Bs0L0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-gA_FvuLpM-2GHJaxFhff0g-1; Fri,
- 28 Aug 2026 08:07:26 -0400
-X-MC-Unique: gA_FvuLpM-2GHJaxFhff0g-1
-X-Mimecast-MFC-AGG-ID: gA_FvuLpM-2GHJaxFhff0g_1787918845
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-G1WwTBMWOKWJm_5GAfwqew-1; Fri,
+ 28 Aug 2026 08:08:37 -0400
+X-MC-Unique: G1WwTBMWOKWJm_5GAfwqew-1
+X-Mimecast-MFC-AGG-ID: G1WwTBMWOKWJm_5GAfwqew_1787918915
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79BA518C0FCC; Fri, 28 Aug 2026 12:07:25 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBA59195DE3D; Fri, 28 Aug 2026 12:08:35 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ACF2E1955F05; Fri, 28 Aug 2026 12:07:24 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3EBC33000223; Fri, 28 Aug 2026 12:08:33 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 28 Aug 2026 16:04:30 +0400
-Subject: [PATCH v5 33/50] monitor: add monitor_cur_hmp() helper
+Date: Fri, 28 Aug 2026 16:04:42 +0400
+Subject: [PATCH v5 45/50] build-sys: make HMP source files conditional on
+ have_hmp
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260828-qemu-no-hmp-v5-33-9227de146347@redhat.com>
+Message-Id: <20260828-qemu-no-hmp-v5-45-9227de146347@redhat.com>
 References: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
 In-Reply-To: <20260828-qemu-no-hmp-v5-0-9227de146347@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,35 +63,44 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2283;
+ Markus Armbruster <armbru@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ qemu-block@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12975;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=27cFGH87Wmo+JiZTbLanexVZ3ePxuAtdbhaB/Ls1+ow=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkXk5BzbfmiZ6J+rQvAldl8SXfH/EoeZkZ8DxY
- uqoH70cFFeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapF5OQAKCRDa6OEJdZac
- 5RaNEACMOaaPQyP6vAnh37+BLlg0d8dRNhXfvj2rqH+4NuVMxv5JKRehLtWRBZGkAoebQIpGz9L
- FaYXswcGXqDkxtBwaTXNO4n4oc7wCRXk85o14E5T222tDp3rrxCqpM3PS1BfN6a4USSAqBIvLKc
- hhzV02ftsQ68llPDP2Jofx92L8wOojkIYbMeLUqJAXWVox2mFRzdEwdPLJHUxrZnAyWsTBmU0Gx
- AwRWzXZPootl1DRHeE/yG/Eq+rndduiYQRnaPngGQ7lIKLOljZ7U4UtTvnHgWjm1P6s1JmPCbLP
- qs3UcnR8LDNuqds8EYlqbVa2uJmKuzn047EBUjffh/huq6M/TZDznEPif4qwX0GKX3HZE/NV27W
- /8j7X40joQmOtR/By/87y5+IIH9cO74C/iDSELkUPbkH6b5CJJJVWunFlTgyZqi0nLUy/UUWe7d
- O714nONpqJ3uXHHk799BujydFuFUFsOnZ7Z+BFLa7Df5wWSSDBf4eB2FFdqTR+5NfvFL0JvWKj+
- E/IPT7hGT3qr72bGW6C+bAbafyTSBHOyBLH9i0I0pDfglo/x0fAwUg65Kd/O2MF/VHEZbVvYD9W
- S7+obSmD3cFN7opZJvaiIzVywlgeyQDz9ZO1L6ggxoJXbSiZhQPOHEym5bM5sI+xy7gNH9v2NMj
- 37XiY/h4fO6mnHA==
+ bh=XjKyU2aKA3DYV2lINAL24fmf5BDImmZsSgJpZ6i8wM8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkXk5LJCmI8Hsj4mYtd+4wQnRRLprCytthW6SL
+ uoQv/BUP2CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapF5OQAKCRDa6OEJdZac
+ 5Ql3D/9i9p2tDxpZ4l0T/E37kFsx6hFilg/qQ8GZo92HPGA2Rw9vDWHzrUkQUkUzTaKuAJf/Vkc
+ xkZt3W8oE/nQiUoKkR1BOM1ujHjZnZyAtYZZ78Ra2tOIhDPrgZkySTYiGEWQBuQk/xkmbD0yZM5
+ QX9DybWywmQtVuhAyI5AsjdlPtoxsrdRZDs6upWg4gfUNqPRJllGsxR6qNWRPwQxYCDe/twNfiv
+ 0Wl8rsSW/O75DQScTaxzWi9UsSKCfEHWdfpXeKGEZNeQySmu7GEUVhuczSRDWJXdC8Q6Vo8JmTw
+ gIHOfN1VVV/J2BzhOm0iYEJeaY+quPIHXgYSEZy/P9R5+mnIEyoOkoxU8lQpPqhVL+YSUHJ3ilv
+ MQb1H7gw45YQHg6gqsTc1jDjPtW9Yp3rdMXe5RpUR12MCNsG0znIFkYbIhE5Tp0w7cu9VqAUVET
+ ianHjSSjJC4Kbs0y/yjV8tX4Ofi73eetfmohmD4oA6JwORhGemIcvWS2RLlrQ+aHoLFoq3HWRzU
+ l8/WBPaD73BAKjF8oOhXggf180xjtJsdIPntf2HUm8WarjKJ2gAL/8/1rhVpY73fAAH8ZZPe3mg
+ eqrCJMb/abJZfHb+UQhXsQlQk89hzFwLL33UwCeY6PHeM0rJPlZKzc68ijTcVTkGoevGmtGwgaJ
+ tjbum1tYfCO/i2w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,78 +116,436 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will help to simplify the code in the following changes.
+Exclude all *-hmp-cmds.c files and HMP-only source files from the
+build when HMP is disabled.
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Also conditionalise the hmp-commands.hx header generation and the
+test-hmp qtest.
+
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/monitor/hmp.h |  2 ++
- monitor/hmp.c         | 10 ++++++++++
- stubs/meson.build     |  1 +
- stubs/monitor-hmp.c   |  9 +++++++++
- 4 files changed, 22 insertions(+)
+ audio/meson.build         |  4 +++-
+ backends/meson.build      |  5 ++++-
+ block/monitor/meson.build |  4 +++-
+ chardev/meson.build       |  5 ++++-
+ disas/meson.build         |  4 +++-
+ dump/meson.build          |  5 ++++-
+ hw/core/meson.build       |  5 +++--
+ hw/i386/meson.build       |  4 +++-
+ hw/net/meson.build        |  4 +++-
+ hw/pci/meson.build        |  4 +++-
+ hw/virtio/meson.build     |  4 +++-
+ meson.build               |  2 +-
+ migration/meson.build     |  4 +++-
+ monitor/hmp.c             |  2 --
+ monitor/meson.build       |  9 +++++++--
+ net/meson.build           |  4 +++-
+ qom/meson.build           |  4 +++-
+ stats/meson.build         |  5 ++++-
+ stubs/meson.build         | 12 +++++++-----
+ system/meson.build        | 11 ++++++++---
+ tests/qtest/meson.build   |  8 +++++++-
+ trace/meson.build         |  5 ++++-
+ ui/meson.build            |  4 +++-
+ 23 files changed, 86 insertions(+), 32 deletions(-)
 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 827a56144824..6aa562ddbaa2 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -36,6 +36,8 @@ struct MonitorDef {
- void monitor_new_hmp(const char *id, const char *chardev_id,
-                      bool use_readline, Error **errp);
+diff --git a/audio/meson.build b/audio/meson.build
+index 0e33b6f9836e..6655f601b115 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -9,7 +9,9 @@ audio_ss.add(files(
+ ))
  
-+MonitorHMP *monitor_cur_hmp(void);
+ # deprecated since v10.2, to be removed
+-system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++if have_hmp
++  system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++endif
+ 
+ audio_modules = {}
+ foreach m : [
+diff --git a/backends/meson.build b/backends/meson.build
+index 8792c58c361f..224e96753527 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add([files(
+   'cryptodev-builtin.c',
+-  'cryptodev-hmp-cmds.c',
+   'cryptodev.c',
+   'hostmem-ram.c',
+   'hostmem.c',
+@@ -10,6 +9,10 @@ system_ss.add([files(
+   'confidential-guest-support.c',
+ ), numa])
+ 
++if have_hmp
++  system_ss.add(files('cryptodev-hmp-cmds.c'))
++endif
 +
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
-     G_GNUC_PRINTF(2, 0);
- int monitor_printf(Monitor *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+ if host_os != 'windows'
+   system_ss.add(files('rng-random.c'))
+   if host_os != 'emscripten'
+diff --git a/block/monitor/meson.build b/block/monitor/meson.build
+index 74faced9e17f..2d5c157a7391 100644
+--- a/block/monitor/meson.build
++++ b/block/monitor/meson.build
+@@ -1,3 +1,5 @@
+-system_ss.add(files('block-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('block-hmp-cmds.c'))
++endif
+ block_ss.add(files('bitmap-qmp-cmds.c'))
+ system_ss.add(files('qmp-cmds.c'))
+diff --git a/chardev/meson.build b/chardev/meson.build
+index 56ee39ac0b01..031b6d7238c1 100644
+--- a/chardev/meson.build
++++ b/chardev/meson.build
+@@ -30,11 +30,14 @@ endif
+ chardev_ss = chardev_ss.apply({})
+ 
+ system_ss.add(files(
+-    'char-hmp-cmds.c',
+     'msmouse.c',
+     'wctablet.c',
+     'testdev.c'))
+ 
++if have_hmp
++    system_ss.add(files('char-hmp-cmds.c'))
++endif
++
+ chardev_modules = {}
+ 
+ if brlapi.found()
+diff --git a/disas/meson.build b/disas/meson.build
+index 42977a1f74dd..b382550e41f8 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -20,5 +20,7 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
+     'objdump.c'
+ ))
+ common_ss.add(files('disas-common.c'))
+-system_ss.add(files('disas-mon.c'))
++if have_hmp
++  system_ss.add(files('disas-mon.c'))
++endif
+ specific_ss.add(capstone)
+diff --git a/dump/meson.build b/dump/meson.build
+index 26e1561ed486..bef8276aa5ad 100644
+--- a/dump/meson.build
++++ b/dump/meson.build
+@@ -1,3 +1,6 @@
+-system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
++system_ss.add([files('dump.c'), snappy, lzo])
++if have_hmp
++  system_ss.add(files('dump-hmp-cmds.c'))
++endif
+ specific_ss.add(when: 'CONFIG_WINDUMP', if_true: files('win_dump-x86.c'))
+ system_ss.add(when: 'CONFIG_WINDUMP', if_false: files('win_dump-stubs.c'))
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 8a96567de8f2..8fe776d2c86b 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -26,13 +26,11 @@ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+ system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
+-
+ system_ss.add(files(
+   'cpu-system.c',
+   'fw-path-provider.c',
+   'hotplug.c',
+   'loader.c',
+-  'machine-hmp-cmds.c',
+   'machine-qmp-cmds.c',
+   'machine.c',
+   'nmi.c',
+@@ -46,6 +44,9 @@ system_ss.add(files(
+   'vm-change-state-handler.c',
+   'clock-vmstate.c',
+ ))
++if have_hmp
++  system_ss.add(files('machine-hmp-cmds.c'))
++endif
+ user_ss.add(files(
+   'cpu-user.c',
+   'qdev-user.c',
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 39ac8c9edc09..e16930c43197 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -24,7 +24,9 @@ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+ i386_ss.add(when: 'CONFIG_VTD_ACCEL', if_true: files('intel_iommu_accel.c'))
+ i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+                                 if_false: files('sgx-stub.c'))
+-stub_ss.add(files('sgx-hmp-stub.c'))
++if have_hmp
++  stub_ss.add(files('sgx-hmp-stub.c'))
++endif
+ 
+ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+diff --git a/hw/net/meson.build b/hw/net/meson.build
+index 84f142df222a..df3373be03bf 100644
+--- a/hw/net/meson.build
++++ b/hw/net/meson.build
+@@ -67,6 +67,8 @@ system_ss.add(when: 'CONFIG_ROCKER', if_true: files(
+   'rocker/rocker_world.c',
+ ))
+ stub_ss.add(files('rocker/rocker-stubs.c'))
+-system_ss.add(files('rocker/rocker-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('rocker/rocker-hmp-cmds.c'))
++endif
+ 
+ subdir('can')
+diff --git a/hw/pci/meson.build b/hw/pci/meson.build
+index a6cbd89c0a38..984c7327e5d0 100644
+--- a/hw/pci/meson.build
++++ b/hw/pci/meson.build
+@@ -5,12 +5,14 @@ pci_ss.add(files(
+   'pci.c',
+   'pci_bridge.c',
+   'pci_host.c',
+-  'pci-hmp-cmds.c',
+   'pci-qmp-cmds.c',
+   'pcie_sriov.c',
+   'shpc.c',
+   'slotid_cap.c'
+ ))
++if have_hmp
++  pci_ss.add(files('pci-hmp-cmds.c'))
++endif
+ # The functions in these modules can be used by devices too.  Since we
+ # allow plugging PCIe devices into PCI buses, include them even if
+ # CONFIG_PCI_EXPRESS=n.
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 0e023235164b..b59f455a5114 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -100,6 +100,8 @@ stub_ss.add(files('vhost-user-stub.c'))
+ stub_ss.add(files('virtio-stub.c'))
+ stub_ss.add(files('virtio-md-stubs.c'))
+ 
+-system_ss.add(files('virtio-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('virtio-hmp-cmds.c'))
++endif
+ 
+ system_ss.add(when: 'CONFIG_ACPI', if_true: files('virtio-acpi.c'))
+diff --git a/meson.build b/meson.build
+index aca56813ab8c..b10af358f947 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3548,7 +3548,7 @@ hx_headers = [
+   ['qemu-options.hx', 'qemu-options.def'],
+   ['qemu-img-cmds.hx', 'qemu-img-cmds.h'],
+ ]
+-if have_system
++if have_system and have_hmp
+   hx_headers += [
+     ['hmp-commands.hx', 'hmp-commands.h'],
+     ['hmp-commands-info.hx', 'hmp-commands-info.h'],
+diff --git a/migration/meson.build b/migration/meson.build
+index 0a9a5d0d3746..4ab9d99cea62 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -36,7 +36,9 @@ system_ss.add(files(
+   'socket.c',
+   'tls.c',
+ ), gnutls, zlib)
+-system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
++if have_hmp
++  system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
++endif
+ 
+ if get_option('replication').allowed()
+   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 57c4127641ac..47fb7cef6de2 100644
+index 3c70adcd35bb..10bcbe2a33cb 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -47,6 +47,16 @@
+@@ -1731,9 +1731,7 @@ static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char *name)
+     if (cs == NULL) {
+         return -1;
+     }
+-#ifdef CONFIG_HMP
+     md = cs->cc->sysemu_ops->monitor_defs;
+-#endif
+     if (md == NULL) {
+         return -1;
+     }
+diff --git a/monitor/meson.build b/monitor/meson.build
+index 4c58dd148c04..f67e0291a42a 100644
+--- a/monitor/meson.build
++++ b/monitor/meson.build
+@@ -2,8 +2,13 @@ qmp_ss.add(files('monitor.c', 'qmp.c', 'qmp-cmds-control.c'))
  
- OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
- 
-+MonitorHMP *monitor_cur_hmp(void)
-+{
-+    Monitor *mon = monitor_cur();
-+    if (mon) {
-+        return (MonitorHMP *)object_dynamic_cast(OBJECT(mon),
-+                                                 TYPE_MONITOR_HMP);
-+    }
-+    return NULL;
-+}
+ system_ss.add(files(
+   'fds.c',
+-  'hmp-cmds.c',
+-  'hmp.c',
+   'qemu-config-qmp.c',
+   'qmp-cmds.c',
+ ))
 +
- static void monitor_hmp_finalize(Object *obj)
- {
-     MonitorHMP *hmp = MONITOR_HMP(obj);
++if have_hmp
++  system_ss.add(files(
++    'hmp-cmds.c',
++    'hmp.c',
++  ))
++endif
+diff --git a/net/meson.build b/net/meson.build
+index 9c8068b06d1f..5bb76d136491 100644
+--- a/net/meson.build
++++ b/net/meson.build
+@@ -8,7 +8,6 @@ system_ss.add(files(
+   'filter-mirror.c',
+   'filter.c',
+   'hub.c',
+-  'net-hmp-cmds.c',
+   'net.c',
+   'queue.c',
+   'socket.c',
+@@ -16,6 +15,9 @@ system_ss.add(files(
+   'stream_data.c',
+   'util.c',
+ ))
++if have_hmp
++  system_ss.add(files('net-hmp-cmds.c'))
++endif
+ 
+ if get_option('replication').allowed() or \
+     get_option('colo_proxy').allowed()
+diff --git a/qom/meson.build b/qom/meson.build
+index bd6f4aadd78a..022d3ad5c8f1 100644
+--- a/qom/meson.build
++++ b/qom/meson.build
+@@ -10,4 +10,6 @@ if have_system
+ endif
+ 
+ qmp_ss.add(files('qom-qmp-cmds.c'))
+-system_ss.add(files('qom-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('qom-hmp-cmds.c'))
++endif
+diff --git a/stats/meson.build b/stats/meson.build
+index 0728dafcd1c7..b5f68a94052e 100644
+--- a/stats/meson.build
++++ b/stats/meson.build
+@@ -1 +1,4 @@
+-system_ss.add(files('stats-hmp-cmds.c', 'stats-qmp-cmds.c'))
++system_ss.add(files('stats-qmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('stats-hmp-cmds.c'))
++endif
 diff --git a/stubs/meson.build b/stubs/meson.build
-index 3b2f2680b193..7e15687a62b7 100644
+index 7e15687a62b7..93df8ea94f57 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -7,6 +7,7 @@ stub_ss.add(files('fdset.c'))
- stub_ss.add(files('iothread-lock.c'))
- stub_ss.add(files('is-daemonized.c'))
- stub_ss.add(files('monitor-core.c'))
-+stub_ss.add(files('monitor-hmp.c'))
- stub_ss.add(files('replay-mode.c'))
- stub_ss.add(files('trace-control.c'))
+@@ -86,11 +86,13 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+-  stub_ss.add(files('hmp-cmd-info_mem.c'))
+-  stub_ss.add(files('hmp-cmd-info_sev.c'))
+-  stub_ss.add(files('hmp-cmd-info_tlb.c'))
+-  stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+-  stub_ss.add(files('hmp-cmds-target-i386.c'))
++  if have_hmp
++    stub_ss.add(files('hmp-cmd-info_mem.c'))
++    stub_ss.add(files('hmp-cmd-info_sev.c'))
++    stub_ss.add(files('hmp-cmd-info_tlb.c'))
++    stub_ss.add(files('hmp-cmds-hw-s390x.c'))
++    stub_ss.add(files('hmp-cmds-target-i386.c'))
++  endif
+ endif
  
-diff --git a/stubs/monitor-hmp.c b/stubs/monitor-hmp.c
-new file mode 100644
-index 000000000000..9452a3f0c2c8
---- /dev/null
-+++ b/stubs/monitor-hmp.c
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
+ if have_system or have_user
+diff --git a/system/meson.build b/system/meson.build
+index 64e06e7abcc3..41e2e4a292d1 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -9,7 +9,6 @@ system_ss.add(files(
+   'cpus.c',
+   'cpu-timers.c',
+   'dirtylimit.c',
+-  'dirtylimit-hmp-cmds.c',
+   'dma-helpers.c',
+   'exit-with-parent.c',
+   'globals.c',
+@@ -24,12 +23,18 @@ system_ss.add(files(
+   'qtest.c',
+   'rtc.c',
+   'runstate-action.c',
+-  'runstate-hmp-cmds.c',
+   'runstate.c',
+-  'tpm-hmp-cmds.c',
+   'watchpoint.c',
+ ))
+ 
++if have_hmp
++  system_ss.add(files(
++    'dirtylimit-hmp-cmds.c',
++    'runstate-hmp-cmds.c',
++    'tpm-hmp-cmds.c',
++  ))
++endif
 +
-+#include "qemu/osdep.h"
-+#include "monitor/hmp.h"
-+
-+MonitorHMP *monitor_cur_hmp(void)
-+{
-+    return NULL;
-+}
+ if have_tpm
+   system_ss.add(files('tpm.c'))
+ endif
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index cbdef5a54550..a13c4af989ce 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -26,7 +26,13 @@ qtests_generic = [
+   'qmp-test',
+   'qmp-cmd-test',
+   'qom-test',
+-  'test-hmp',
++]
++if have_hmp
++  qtests_generic += [
++    'test-hmp',
++  ]
++endif
++qtests_generic += [
+   'qos-test',
+   'readconfig-test',
+   'netdev-socket',
+diff --git a/trace/meson.build b/trace/meson.build
+index d89a0db82a14..4e5681c44cae 100644
+--- a/trace/meson.build
++++ b/trace/meson.build
+@@ -1,4 +1,7 @@
+-system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
++system_ss.add(files('control-target.c'))
++if have_hmp
++  system_ss.add(files('trace-hmp-cmds.c'))
++endif
+ trace_rs_targets = []
+ trace_events_files = []
+ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
+diff --git a/ui/meson.build b/ui/meson.build
+index d345f6c70d6a..39829a2c6e23 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -56,10 +56,12 @@ system_ss.add(png)
+ system_ss.add(files(
+   'input-barrier.c',
+   'input.c',
+-  'ui-hmp-cmds.c',
+   'ui-qmp-cmds.c',
+   'util.c',
+ ))
++if have_hmp
++  system_ss.add(files('ui-hmp-cmds.c'))
++endif
+ system_ss.add(ui)
+ system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: files('console-vc-stubs.c'))
+ if dbus_display
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
