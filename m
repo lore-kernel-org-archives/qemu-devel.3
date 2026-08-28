@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EA6C61DD7
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42B6C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0529-0002m7-AQ; Fri, 28 Aug 2026 18:26:49 -0400
+	id 1x052G-0002pN-My; Fri, 28 Aug 2026 18:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x0527-0002kH-VG
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:47 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1x052F-0002oF-BX
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:55 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x0526-0002IL-E5
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:47 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2d712281f8bso17449845ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:45 -0700 (PDT)
+ id 1x0528-0002JY-LO
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:50 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2cfbbdfa60bso16885415ad.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787956005; x=1788560805; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787956007; x=1788560807; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=L/7Y8RdhplbD4Abq8NZ3BtTsO0de2a0oqbAmGeIVel4=;
- b=mB1enHum4woW+m8qtNtKyoo4c9XU8mVVhZMJJUa4beIO1U+sxCdOa23xUA0eCb/8Q4
- cGi0Kl5h3ZzRw6ylGDNeB+NtaRJvP0m70hA1JA067cJHN618KYJC2MsoumTIL3/EASu7
- 3dcBmfos4WiY7/6HX/O0WeGOu9zlZRyff46D7LLrJcymOkk+MhNog8mmZYYK116IUfy8
- x2mSr0w3ojV8fJ5C9l9DTTYTbdOmaX1NGT0AaJrt5XXLNvRlImbk95hCZYMPWbzbnlRo
- b36Yj3LV10ZZWvaN0drGK+ciWZAdFl/znSa4sTqrA/QriWJEpL5vAn6gPfnM7rYAh8ib
- /fBQ==
+ bh=2MZbjMDE841td0JwucZyy0AxkAYMDGPNezkz1NHmtAY=;
+ b=unaHY14J30ejDmKJINX6w5PZlnDCbo/04uFtFZqPjJzINfMiyyWKGUvP6yktuEiZ9W
+ ox+j1nSz3/vQwDWcjLyN5zFQO5GXkH9yWz4iYkD48jtRvEnrlf5+RwlJYBrDemHJJyrs
+ rtktJNVgmFjVjx1sJ2A8zBX7qI1x+meOnZ26ukQRQMJzDzIbwzYX7ORLkOePUlhRlgxR
+ 5Pq1iGqRNI1rTCto5xh7x41tIOj40pT1l0lhAqDs/KxX/CiFGJf3XTi4vBq47g8RRnV6
+ UqpKfVeUrLvj9HXd+dtubNYilaDxwNlV7LhFK9jLdDe3EjyEwg+VQoY/LglsPX/PaBe1
+ q/uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787956005; x=1788560805;
+ d=1e100.net; s=20251104; t=1787956007; x=1788560807;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=L/7Y8RdhplbD4Abq8NZ3BtTsO0de2a0oqbAmGeIVel4=;
- b=lrNERNLy0hb1h5H6MJV24MS7Trt+pwk/XPrNiitcYCCpMyqztQuD5MbhwolnkcPDG5
- pwLjxJUY6oGl0IrR8BZ2Sg/m0LHQGE2ZRoJ+MHn3VEngtEOEsgxGhtlv7XD9fJbG6r7X
- hIaLUOkvqBiYzLVc1riPAYZvkEsW938Lvdl2qY0hTlIqXW9d7Ri8jqiqMN8ugSCul/s0
- vyZLT1JHMyNmRxqzOfI5Hfz9E9hRmxjLKUg9eVHt8s4fBM47CB3eFl4hIUJVv4oUcADb
- h/CBIGS50cI8lTW/j/pj4MsTrKFlsCuKxbpzYNsiA2hU5ITj2/nG/UQmxOyZN0Nfcj4b
- zA+A==
-X-Gm-Message-State: AFuF++lt3t+2u1xkW24yGQ3ySpr/B/IwjubygyW73cIatYx5dU1aK4Sp
- 5NhwKjVNDH7A+iD7UFgy7LP0t7mKhK67w+QgYIs8Pl9nWDmT+saOL01jixZK7RqDKzz/jxXHuc6
- ssVTigSg=
-X-Gm-Gg: AYBFou14z/xAqK34tPuIDQpJKy4gthmrPNlEPbCpJywCTMrYJegf6k/7p+hwMeOyrew
- CFo9RNlmevGZiNMhub1LP5+4auJE41LzS9nIeraFzdUw0Gg8H1Hg2fthXJAoSdvD2LxrNkPRpuI
- uMC0dMWdBltqmJx0xlLfHha+PZd5qlNZFdA5dozUIYvF8npKs6PB/R4zlwQO6W8Um7qff1IJ34g
- VTn+8Qr3KtGmhKwh+ryddvqCHGuAAespFIXuafhzFc7c6AUKPAOsTE9lzb5knLHyZPxz4sIy6T7
- QMeTH7RpkJe+z5Nd7EOVUY7RbRghg7/h4/NrL/upEnShshPkXvA+362BWimaVQ4Kb71ioLTbkhk
- Xnvw7cb2D9B2lfAEDt+MUHDh/GtxBGKcfdA+Fs1crc/m9EMjO2hiazzozWkCAx4Ki0FboC5UoGP
- iUKrM9H45h49OZCeEG4XTKoL4NNSwfErOfTOVBIAEMig9gI4mzle4osTmAaeNW9XJQtagxaAFDl
- bUgyrpDgoFJ2hcZWvFr
-X-Received: by 2002:a17:903:390c:b0:2cf:8131:75f4 with SMTP id
- d9443c01a7336-2d74dee9430mr201795605ad.11.1787956004988; 
- Fri, 28 Aug 2026 15:26:44 -0700 (PDT)
+ bh=2MZbjMDE841td0JwucZyy0AxkAYMDGPNezkz1NHmtAY=;
+ b=VJ3Cw6uZ7rFA+oYMIA2B0shPu0bc3CJ3b2Dfz27cl4wKCKY01nidz5CceX/2x47ORy
+ WcXUVTNS3IzasO0hG8cx5wLZPQK4Vz3njNIhBuJKQTDQ8vZ5eK+93UD/F4/iYO3k3lgB
+ Q/P0ocrFkdUQlsZaJhjg7SMjtDR24K7VDb+WmWPLpK73oT6hXUEAOrmEaMRB5d4eaUSd
+ neQJGXv6vmshsdN+nfZNh0fq5b6cwj/+NQZ+MIPucZeJb1Vsi2kTgktjaeRNcQ/xLFGK
+ u9TTsLlhIALrdzKyJsU0AZ/acx8vOgw7Trrc+WRTFq42cz/SnCfR050/YX+xbaDJIKlv
+ SSuQ==
+X-Gm-Message-State: AFuF++ml7uXXshIIBKB23oMhiLFERvMJEB/79EH0QV/4+rX36sVzyWYZ
+ nnKnvZVSQa8O4PFJECp3FlbvSZGf4uwqg6bqmyfAmmSZMOK/jyl2seKLvZUrmFgJ82cgIZtQgQN
+ oED1O2Kk=
+X-Gm-Gg: AYBFou2CVcQ6jKSnHkfn7LPyIF/1r0NQdmDKMB8EbO8Nfo49S9tXORXONfXd98YsU6Q
+ 3EM/apqhzrNHvy31hhS9obDT5cgRGJL7EoCVF96aBnq+4Sps0AwyyO2m5u8H8tfVrAXl1zDcmSX
+ aIYzEIF1PaE8Y0UvJlHvrjHuiK4WFjyFH0cyBhs2SVXFWorCaiSM5TdtQ0ltnBZEQGQ5dSqL0aF
+ 15N79Vw8VadNs07C2/wxjgf++wQLW6RMzYwx9aWiLM/pAODSjKRXnzTq/90eHjAk7V2LGOGyx4t
+ flIVyVPeUF0b1SPSCB5eUBJYOMDudREXb7HpS+BczQa98Mr47q9go4M/NOMw+bw4UD7M39CmwSD
+ kR0qDx7Z+7JyNnOLbeLe5Jbpm06L1xnkbMSxMRcaCS9Lbtyfy5F54FGvf1R5mfIYOOnzhOJC8x7
+ Y7iM+KSYKJYL5ypLSdXfjOPPoroVxUhBC8l3O8gcEXD+aMjgR8aIjmH/cb/h2K3YT9yku6Z1JXH
+ 2vHVZ5bpsSTdaiOWRZn
+X-Received: by 2002:a17:903:144f:b0:2d8:d4cd:dc8e with SMTP id
+ d9443c01a7336-2d8d4cddf75mr43132365ad.17.1787956007247; 
+ Fri, 28 Aug 2026 15:26:47 -0700 (PDT)
 Received: from stoup (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.44
+ d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:26:44 -0700 (PDT)
+ Fri, 28 Aug 2026 15:26:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 05/13] target/arm: Move ID_AA64PFR2 feature tests together
-Date: Fri, 28 Aug 2026 15:26:31 -0700
-Message-ID: <20260828222639.1432046-6-richard.henderson@linaro.org>
+Subject: [PATCH 08/13] target/arm: Clear PSTATE.UINJ when taking exceptions
+Date: Fri, 28 Aug 2026 15:26:34 -0700
+Message-ID: <20260828222639.1432046-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828222639.1432046-1-richard.henderson@linaro.org>
 References: <20260828222639.1432046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +101,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the MTE feature tests are clustered together,
-but those are spread across two ID registers.  Sort the
-functions by ID reg and bitfield order, like most others.
+Clear UINJ when taking an exception.
+Clear UINJ when exception return is invalid.
+
+In both cases, perform the clear without feature check,
+since the bit is otherwise RES0.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ target/arm/cpu.h            | 1 +
+ target/arm/helper.c         | 9 +++++++++
+ target/arm/tcg/helper-a64.c | 2 ++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 280ead6f9cb..8ec9832424e 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1207,16 +1207,6 @@ static inline bool isar_feature_aa64_mte3(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 3;
- }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 9e258fa005e..b7ee215257f 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1579,6 +1579,7 @@ void pmu_init(ARMCPU *cpu);
+ #define PSTATE_Z (1 << 30)
+ #define PSTATE_N (1ULL << 31)
+ #define PSTATE_EXLOCK (1ULL << 34)
++#define PSTATE_UINJ (1ULL << 36)
+ #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
+ #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
+ #define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 4f30a94ecd3..ed6b4d985e1 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9583,6 +9583,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
  
--static inline bool isar_feature_aa64_mteperm(const ARMISARegisters *id)
--{
--    return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTEPERM) >= 1;
--}
--
--static inline bool isar_feature_aa64_mte_store_only(const ARMISARegisters *id)
--{
--    return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTESTOREONLY) == 1;
--}
--
- static inline bool isar_feature_aa64_mte_mtx(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTEX) != 0;
-@@ -1237,6 +1227,16 @@ static inline bool isar_feature_aa64_gcs(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64PFR1, GCS) != 0;
- }
+         env->condexec_bits = 0;
+     }
++
++    /*
++     * R_XKSNJ: If FEAT_UINJ, PSTATE.UINJ is set to 0 *and* the resulting
++     * value stored in SPSR_ELx is 0.  The new PSTATE is automatically
++     * handled by construction of a new value from 0; clear it from the
++     * old state and as UINJ is RES0 otherwise, skip the feature check.
++     */
++    old_mode &= ~PSTATE_UINJ;
++
+     env->banked_spsr[aarch64_banked_spsr_index(new_el)] = old_mode;
  
-+static inline bool isar_feature_aa64_mteperm(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTEPERM) >= 1;
-+}
-+
-+static inline bool isar_feature_aa64_mte_store_only(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTESTOREONLY) == 1;
-+}
-+
- static inline bool isar_feature_aa64_gcie(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64PFR2, GCIE) != 0;
+     qemu_log_mask(CPU_LOG_INT, "...with SPSR 0x%" PRIx64 "\n", old_mode);
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 9d805231a08..f76d89990c3 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -764,10 +764,12 @@ illegal_return:
+      * mandated behaviour:
+      * restore NZCV and DAIF from SPSR_ELx
+      * set PSTATE.IL
++     * reset PSTATE.UINJ
+      * restore PC from ELR_ELx
+      * no change to exception level, execution state or stack pointer
+      */
+     env->pstate |= PSTATE_IL;
++    env->pstate &= ~PSTATE_UINJ;
+     env->pc = new_pc;
+     spsr &= PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT;
+     spsr |= pstate_read(env) & ~(PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT);
 -- 
 2.53.0
 
