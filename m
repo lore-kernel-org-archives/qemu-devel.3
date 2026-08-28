@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDB9C61DCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D631C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 22:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x052J-0002rC-47; Fri, 28 Aug 2026 18:26:59 -0400
+	id 1x0528-0002lB-RO; Fri, 28 Aug 2026 18:26:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x052I-0002q4-4y
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:58 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1x0526-0002if-AQ
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:46 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x052F-0002KP-2d
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:57 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2ce98cb8165so15870715ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:49 -0700 (PDT)
+ id 1x0524-0002Hc-E6
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 18:26:46 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2d6d28aa26cso11422335ad.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 15:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787956009; x=1788560809; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787956003; x=1788560803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=c3prOMqPHLIQmXgwFNllZn8rehgch0RbINfq/i5tMyY=;
- b=KvQLtlO5usCcGXAas8GbRqL776w9litSjoSPeCXf9scYI03MOSPgbkIuSgcuMizx3r
- Df99Qq0/75nt6XKmR/xirGYfptnlBNYIWa8zt838ZccK8IvS+/V4K0WbkYuJVozbSMEl
- ucvsIsOARcdpmBp9vZ7oLrUDzDRMnnvEE1NJwaQjNlyLcBq7ozqXchWyaJ/Q/1bIiTrU
- CsxAz6+05mZyDg1WpBkEJ1x8KU5MuypdnO+hbv3kBDQJzzp0JJvPzxjaQxPDXOry6za6
- +tOghy7ltluZ7DUibDIKNgjKPSJ70ZCKakHqB3tCyoUvMn2ohCAulTRc6m9+BZn2CXJI
- MenQ==
+ bh=5OlP4xmBxJaU39dQm0XttdRoWfw/hb/T/Y+p7JEg/bw=;
+ b=OcJRwkITvO+JIvBYo4VsaMYvyjUcQQpJkuDKzUyCdD+un737ufW6gVu6oEKbYvFa2d
+ flDEl6PLvvJj8pq8O2vPZtT2nH0uOCTst8n3JiySuwOvIRnNEpcExoWYI8OjRdk5/kKU
+ 0tTNH4+yToGDlLtcnaUe16nXBwGHijIFFbAL5s+qh3JTuvcFERXqLOvNL4V8TaZlzqeM
+ jClmjxqyUycvoOuf9aMH7PaTVn3+Szs/jUsPQGEMoTWanxRDUM22XfaJFjuaY0lIlA0v
+ fZCDAve//IFmxriEHsc12yc68rXSNubXRt1XgvUoU1vnunpCBpeSydDzuHtAC9qV1AyE
+ X59g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787956009; x=1788560809;
+ d=1e100.net; s=20251104; t=1787956003; x=1788560803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=c3prOMqPHLIQmXgwFNllZn8rehgch0RbINfq/i5tMyY=;
- b=DGnaYchliA2YaQRyDvlviNuH+MLhjM239rk457L7DhK7qEfKlx/vzUoGjNkfLC0LYN
- k3FmjT7fNhUa/tONMkaOpT4sWeDA0cESXQhE8H7e8zMOdb3VlDLUBu60nTc+56oK3gXv
- qMz8Hc10gTrqS/LZIaS0bTWtB6gGtOEkvWb6xeOjRcPtfUc+uQ65rMaQzrZonyWCv41Z
- hnG9lXXgOTuxOfzarOuX7AuI6VhkJAaOs93A5hwnXfv+cL0Efw0VAoPL1AlOliKYYATS
- AKl1YW+YpyaaHMQwc0sC7ew5hPx5r/dep5RdiZfgrwQb/K5ey73hG6pBAuRc5jPBD2mP
- GicA==
-X-Gm-Message-State: AFuF++lFQPg55vTR49iXHmRUIs6Lat1ZU069tbkVr9SBpQSpalW8UiWo
- uAEmfcVczXFAda7Ox5F+x/jZ32NeoQoN0yBinfSs0Z5QyP2QqVxhxJSbTqRAy+2OChKJF5+fa0W
- c6uPpVDc=
-X-Gm-Gg: AYBFou0Ec2Bw1apefM2K9YBYgEDM8xf8dux2hyPoyzpot7KDYa3xPpHkLt2TsA0yHwW
- svqd8hfGzlnXOmVAQWFkoYsdEGNXHvE+wopojqHfEN1JfjvXf+kr7yCcia8cPAr3JNOhfZYvFwC
- giqD0Yf950HrTCeks+YGDKrYfHRjleX2ZY2AWvh0gex6nUCWOnSFJdxrlULN9vsNEoorzOwjHGj
- 2NptbPj1SxLlIJQV4rG69CQ7tu58ELkF4ubXhCe2J1LQ5AhNKtFMmBLCDM0hQnlFETdHUTfpgVT
- SzL1Xsd9jRkbobhYHg4nXo8B4+4mKy5yRljgc5XFaaYL7Dv+yh0abnVikJqUx23jok7iOdyfjwN
- 4cZuQdqPcEa/y+z0mqWilM6/0T6oVnfsdoyaAuYDj1JdN6BDGqJqUXoW/r/WZqMg24cAjVm1lzC
- rEv6WS8Z0S6rvW5tRRp9ZW4YRO+DJJP/dfz8XcqX0e5UO7OXpWweV6Og+lF5NN2liBLZQX8Q+fd
- TJncg0XPrEmtS4LlRPK
-X-Received: by 2002:a17:903:3504:b0:2cf:8aa7:7810 with SMTP id
- d9443c01a7336-2d8d4a0176fmr27776185ad.2.1787956008963; 
- Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
+ bh=5OlP4xmBxJaU39dQm0XttdRoWfw/hb/T/Y+p7JEg/bw=;
+ b=a8kW6Mq0GcE9UKwUxuO1AxTINSq8YZonZaGVNbSn55FTj4d1vlHi5HvaOut+yf39DB
+ 5oOWtKYqHjKAU5DquYyQiYkYRKZpyonEz0tZhcvSQctKL/KBS3tdekyN1hiPoKDHZliZ
+ DA01NzIwv+1jqIbM6b1hiDcqoGliF5tNut4n7IimD2luQn3Ijz9KULiwRtrUAApydbdU
+ Wz0S09HZ9qzXNv6FPD7eCliqDoAQoJH3ufweItSafljf1PDJpElKQtLz7VZp+widtECe
+ Eaqtbne7ZvwRwunnF0+UzznhVWK3mQys2+d3syyR9edhKLa4LMhfE1V0THM7hwnh6WN2
+ JJig==
+X-Gm-Message-State: AFuF++kHuROBPB8TVJHt4YeDvSXPh0PeMT5cAk4j8MJS/7CsIZ0dnW0m
+ mwlLx2PuWY3X+5EiT9wR5A0UxT/Gyo5+u6a58rTBSCATDYxlDHu43f5mEBK8TyHBkt/evRjSnry
+ g7RKFv2A=
+X-Gm-Gg: AYBFou3Guq7Awpm+Em/oPWGoU+MBM6/onw+DCsjkSxA0Be218eBc6QHBLQ+cqx29oNT
+ kLwc+qBwUZQ/RI2HARQ0sLRdF2ExBR6sR1wLUNPYk7Gw5hdIDsZuwjJX6/IV0lIbHT9XQLhHkhd
+ 5SICMj+Z7z97hi5exLyqkdRQunKSUIvbGRi+5QfztjkieoOcsVIOsRs9yQuFwqgwV5c8So1qAIA
+ ueEFSjBHsJOqxW7cltUHfmQS8DuQ/GbaidboYTga9c6t1lo64Rt194E2LeabugQqekskmYmrUZr
+ lq055hrVBxOlum5AJv8q5UGgRnNdWXoKV9Lf8b2UDagMv0i/7C3Ho07PZ45fhX+XGTjuX2q3lm0
+ 9SZltv0WtwcYpcRDcU0vlCBeP1KH5DTMfKREED7R+obPWX1NBCinGhL5iKafykwNI0Z+7C3ctNi
+ oyv6K3dwXRbSh0WE2RjdfiNLazRkYUaCy/DStfSbamqnF5CqlqwPLbBU0b8eePAG4PgUX9Y2Zeq
+ m3gRMCTv/sFLvWGqRHi5Q==
+X-Received: by 2002:a17:903:f8d:b0:2ca:f21a:a6c5 with SMTP id
+ d9443c01a7336-2d74dbea25bmr205709005ad.1.1787956002792; 
+ Fri, 28 Aug 2026 15:26:42 -0700 (PDT)
 Received: from stoup (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.48
+ d9443c01a7336-2d759640270sm9178355ad.34.2026.08.28.15.26.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 15:26:48 -0700 (PDT)
+ Fri, 28 Aug 2026 15:26:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 10/13] target/arm: Read and write PSTATE.UINJ
-Date: Fri, 28 Aug 2026 15:26:36 -0700
-Message-ID: <20260828222639.1432046-11-richard.henderson@linaro.org>
+Subject: [PATCH 02/13] target/arm: Introduce cpu types max-v8 and max-v9
+Date: Fri, 28 Aug 2026 15:26:28 -0700
+Message-ID: <20260828222639.1432046-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260828222639.1432046-1-richard.henderson@linaro.org>
 References: <20260828222639.1432046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,60 +101,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With FEAT_UINJ, allow PSTATE.UINJ to be set from aa64 and aa32 modes.
-Read the value back for SPSR_ELx from aa32 mode.
+Introduce the names and allow them with the virt and sbsa-ref
+machine types.  So far, the cpu types both exactly match "max".
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h |  3 +++
- target/arm/helper.c    | 13 +++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ hw/arm/sbsa-ref.c      | 2 ++
+ hw/arm/virt.c          | 2 ++
+ target/arm/tcg/cpu32.c | 4 ++++
+ target/arm/tcg/cpu64.c | 2 ++
+ 4 files changed, 10 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 69c9256984a..eac1f7f379d 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1392,6 +1392,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
-     if (isar_feature_aa64_nmi(id)) {
-         valid |= PSTATE_ALLINT;
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index 484b90053e8..56d08f605c8 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -913,6 +913,8 @@ static void sbsa_ref_class_init(ObjectClass *oc, const void *data)
+         ARM_CPU_TYPE_NAME("neoverse-v1"),
+         ARM_CPU_TYPE_NAME("neoverse-n2"),
+         ARM_CPU_TYPE_NAME("max"),
++        ARM_CPU_TYPE_NAME("max-v8"),
++        ARM_CPU_TYPE_NAME("max-v9"),
+         NULL,
+     };
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index e7a56e37f73..d738b95c726 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -4132,6 +4132,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
+     if (tcg_enabled()) {
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a7")));
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a15")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("max-v8")));
      }
-+    if (isar_feature_aa64_uinj(id)) {
-+        valid |= PSTATE_UINJ;
-+    }
- 
-     return valid;
- }
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index e6b16eade76..a4a7fa69ff1 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9362,8 +9362,9 @@ uint64_t cpsr_read_for_spsr_elx(CPUARMState *env)
-         ret &= ~CPSR_DIT;
-         ret |= PSTATE_DIT;
+     if (tcg_enabled() && target_aarch64()) {
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a35")));
+@@ -4143,6 +4144,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n1")));
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1")));
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n2")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("max-v9")));
      }
--    /* Merge PSTATE.SS into SPSR_ELx */
--    ret |= env->pstate & PSTATE_SS;
-+
-+    /* Merge PSTATE.{SS,UINJ} into SPSR_ELx */
-+    ret |= env->pstate & (PSTATE_SS | PSTATE_UINJ);
+     if (target_aarch64()) {
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 8397f26a864..12e70ded9c1 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -744,6 +744,10 @@ static const ARMCPUInfo arm_tcg_cpus[] = {
+     { .name = "ti925t",      .initfn = ti925t_initfn },
+     { .name = "sa1100",      .initfn = sa1100_initfn },
+     { .name = "sa1110",      .initfn = sa1110_initfn },
++#ifndef TARGET_AARCH64
++    /* For aarch64, max-v8 is defined in cpu64.c */
++    { .name = "max-v8",      .initfn = aarch32_max_v8_tcg_initfn },
++#endif
+ };
  
-     return ret;
- }
-@@ -9372,6 +9373,14 @@ void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val)
- {
-     uint32_t mask;
+ static void arm_tcg_cpu_register_types(void)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index b38c61ba623..4f5375deb25 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1488,6 +1488,8 @@ static const ARMCPUInfo aarch64_cpus[] = {
+     { .name = "neoverse-n1",        .initfn = aarch64_neoverse_n1_initfn },
+     { .name = "neoverse-v1",        .initfn = aarch64_neoverse_v1_initfn },
+     { .name = "neoverse-n2",        .initfn = aarch64_neoverse_n2_initfn },
++    { .name = "max-v8",             .initfn = aarch64_max_tcg_initfn },
++    { .name = "max-v9",             .initfn = aarch64_max_tcg_initfn },
+ };
  
-+    /* Save SPSR_ELx.UINJ into PSTATE. */
-+    if (unlikely(val & PSTATE_UINJ)
-+        && arm_feature(env, ARM_FEATURE_AARCH64)
-+        && cpu_isar_feature(aa64_uinj, env_archcpu(env))) {
-+        env->pstate |= PSTATE_UINJ;
-+        val &= ~PSTATE_UINJ;
-+    }
-+
-     /* Save SPSR_ELx.SS into PSTATE. */
-     env->pstate = (env->pstate & ~PSTATE_SS) | (val & PSTATE_SS);
-     val &= ~PSTATE_SS;
+ static void aarch64_cpu_register_types(void)
 -- 
 2.53.0
 
