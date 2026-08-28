@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D374C61DBD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D66C61DD7
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 20:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x03Mm-0007Mu-Kf; Fri, 28 Aug 2026 16:40:00 -0400
+	id 1x03Mk-0007M1-Fn; Fri, 28 Aug 2026 16:39:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x03Mk-0007M0-DE
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:39:58 -0400
+ id 1x03Mi-0007LF-Jk
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:39:56 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x03Mi-0006Wf-5M
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:39:58 -0400
+ id 1x03Mg-0006WD-KL
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 16:39:56 -0400
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SKdOij4186541
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:39:45 GMT
+ 67SKdOii4186541
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:39:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZT0iUTBK1UrFvANmHeHLvRYs2Xq1Vmxpjn3bhaymUBg=; b=iGLOdbdlourEUDvD
- gxeOa4ZEebmUrG9j18H2vcQesW2vQU8KY0nPGcbbIzQygiYVV0crmqN1TILyJt6J
- QtQsKlJT6lnrKSrIIcqWUGHGTq0B5Is2EoiKMYBsNauVLjwf+Kyu6Cb8lzpnvcd6
- SyH34JpvZKjpzbMx/htM3u72IAmY2ji0P7uqw54/5OKQ2+UJBXNtA28+hPXpP1hi
- RiF046xXm86+WZQjdo/2b3RKoRjZANbqQFCU5+p81UcixtwXYJneStdzHnpYi4hw
- qy1cM3LwyjesjKe/YwiI3qdPNtpbmmHvhY+hrJ5+Vg5KKJzl1pQY+CzUfgioaa8V
- mjziMQ==
+ 5lxTjGnQRpUm8uZHl82+qqHwXTfZgivwQUa9kxfBh3Q=; b=YJED9Os0O8zR8jEs
+ DDy1IGZiysAtTJ+RrD702X4ScW7DPTB3ykGmuJ0Hyjc1J5bdTVtt32achbaf/riC
+ EV+7GhLYgN+t2AQbUBitz1eIX98gGvUscMOfpEvYRp1rrP6CEb9bePzh2k7PbJFZ
+ iMR84p+TXra9XAnYfg9MtgWBa3xh1MJWZYHpx8r8ydyX5MfJEvUpl2yL84LzDtFH
+ JBOz3MmTtFAT0oX4N3LwBAxGjksELzOzP5FPa/jePzwOCBKh2oJiHTsn+FyG64Za
+ JG9f9DedsWEXxetdVz9a1LSFp14FqobRYdjeAesTcRDSJUTF3+WWSH53C7TFEfGm
+ SMz5Ng==
 Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
  [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb62h2xcw-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb62h2xcv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:39:45 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 20:39:43 +0000 (GMT)
 Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e5e38fbc5so140154985a.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 13:39:45 -0700 (PDT)
+ af79cd13be357-9390a2c895bso266678985a.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 13:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787949584; x=1788554384; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787949583; x=1788554383; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ZT0iUTBK1UrFvANmHeHLvRYs2Xq1Vmxpjn3bhaymUBg=;
- b=BC1upsZFps6MRNRWHJeo2M2xr4kBmJLst6WpEb8imvlvLoyaNhB40XDWg0Bd/cKc72
- DO7+WHRQnHqW3oJ95/cHHbBWqpaRQv+bkiIPJpk+Y5nRPxOJYNV96s2l/eA3cx0bDoiP
- f4lbYeKzicX56UdH1h4/04wBnhI5SEPFk30Z4wyn33hcx5NFs1YvhJ/M0OKiGok/dxWk
- +6mYg4uFBuAdwukGke82o83XV63nbAtbdNiX8WctgwI79c/TTPvX3YGxgPuu7RhWAhV7
- CC8pcNp2jISf+ZD8yRBtQuhaGFMZ6LRTQBR/QyY+9zAvI6hFZoxWZtvFU7oVyAs9QYsq
- 9fPw==
+ bh=5lxTjGnQRpUm8uZHl82+qqHwXTfZgivwQUa9kxfBh3Q=;
+ b=SouGvH8N5EZ1zxE5JYqWqki8T4GNGIF3j0R2d8vYNyQuoxduX3HI7SbNCk0YHxLkFo
+ 0PJsLfl1jNu1hd/ZCfmGj284TxnEYtsHsPlzGu6HdEZKytjG/kmjefJ4Taor6nVfGRXH
+ jVKYzxkP9htLkYMOZ0VN9hbKWMHXBQTmIB/4RjVuM10hA815udmPjCSOQLYVaEUL4qua
+ aoRdp2KvAUlz7YtGQ41i8x8GewFdhWQDtWUCVLr5YRJ0IMSl51O6IJTC8hptgGej/u8L
+ fgohoG8CNGM1sT/SstKvFHiOIQQzzm9T2dbNuMNEYhxl7I1TwshVRE1Ea/jJKchnVqql
+ F7pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787949584; x=1788554384;
+ d=1e100.net; s=20251104; t=1787949583; x=1788554383;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZT0iUTBK1UrFvANmHeHLvRYs2Xq1Vmxpjn3bhaymUBg=;
- b=TBU91rfuWB0ZLmbiaMhzSU8furWwT7rgHt+6fn63ArhAbeD9vHQiOwOKbOnDVJPjpZ
- tWgWtu2gBHLUfuv5F6pb4nVtbAIEim9Tt9od+Vw5zrkmoAymg6kDKn9U5Kj3cGgzKlSb
- RMfRla+N4bynrkKuGXcHmax5WfFEg6av+adLcvF0e6cK6D0UhFxKuYu/O1KNXPTC9mhL
- o+p9SB9yRjajY0/G8Jaf4FIhXaOCOvSfMznks8RbZdv654FjHaovQ4yGn0PhI7TxEHZ6
- AIg0bevmnFemNy4u4xDBTUOTHzQTYArtiwOILROjzBznOtia16Zou42G88sAM+are0Lp
- 8YPA==
-X-Gm-Message-State: AFuF++lo7T2DJylMUsoT7yo5vXotXcuEyHkGcH86oaHIYy+wcLemI+Q9
- 6/lYIvH2o16dnf+YSGNeIsh10CQikVW0UgGtq5IlD9+wWvVKc9IrEC8OP16VgEUXTdLAWbEF+Xi
- B/NUvJ8keobJHdfJuixmu9woomW16ObwXYCg/cb8CPr4Vj7Fa5Qp9zc9tjLq5cVarkg==
-X-Gm-Gg: AR+sD13GSYewb3hAOowzzpg6tfepnRadMSYQIr7dVGwJDjkzx74TE/E6fIvoPmXZgxw
- B5Mj3U50jpQvH0cRaS9+r5ldaxEnsECe7CqstG631HvITQXt0qGqlcRAVPZVv8Egv+2HC/Bhu6d
- ZLamqXuWGE3t1hKB6FDEJNBTBnq4e+kl6LGkNX56Tg45p5KHwi/3lej5tuGpbN4Kdne8QKw7u4/
- e5w748HdnwyA0J+qAbyXCA+gGGMG8NShE6VzxvI5/XTnVnl/l7y6+7gT91xdo3tafKicP1o8yGv
- PUgMDECGVf41Ki3tgIJEeTBAxp3Kk9dWf33Je8JlkTg2ETttXdDLEnl/Bww3Xi/PnI5L8JbZY6v
- 2uUwk4cJDUFuTLSb5xTqyywuDTKDhp1EEpO+knQ==
-X-Received: by 2002:a05:620a:8218:b0:937:3b26:c9e9 with SMTP id
- af79cd13be357-939138d2d33mr1016139685a.25.1787949584383; 
- Fri, 28 Aug 2026 13:39:44 -0700 (PDT)
-X-Received: by 2002:a05:620a:8218:b0:937:3b26:c9e9 with SMTP id
- af79cd13be357-939138d2d33mr1016133185a.25.1787949583755; 
+ bh=5lxTjGnQRpUm8uZHl82+qqHwXTfZgivwQUa9kxfBh3Q=;
+ b=URZF712o7lHAF1CD+jfx4M0Jke5F3kvRn4heHYQHPYMxMVoj9jJ6PgWUqTaC3ICCbb
+ FplLXnKds9wmOYX7a14B3JrVeKyE/86jVhIoryv1qm37HPeLFnMrTMv9Oyyww0cEEzuU
+ Icz/a/R+F5hMj2w38PKxJmqyVJRKtbeetKoUejCVyKGPYz64R39KVhqcD4OJRpBpGyuG
+ 8vxzYzNQnukL6Sn+Uzz6Qm4jGslKTRfvhunJSiiDQUcy/CfJz94t1Cksd7fL2svUYplZ
+ QTX7GBQF9tD9xOJaWTiaiL2D6m+qt4pWCsThvpnYzkQprAFoOdNBpe9xdD8BmIWqJiUp
+ DS8w==
+X-Gm-Message-State: AFuF++liCu78jE0hHIlr8Pw14LMiRvCAMzDa/c9utlbP/+FtOQNVQVJh
+ spI8Mfx0TZ4lV+aD+UWVqAz/6U6XPujp7hHlPAROINp3MMeY+fDDBbUOePkxVemKypf0ouphbCO
+ bWZtRKq768Anlnrv0uJaxBe9i9qFUYPAybew09d2E+9xv6kOdP5QIbK7oveagvdMWmw==
+X-Gm-Gg: AR+sD13zPOZMkimLaW3QG8K1IdVvJNZ29faBtTcyQOzhgKrzHTAvQoLNFDQLKDJNIgf
+ vB0U/eJg68gsCpitOBjJpVtC5597ETTB6agp+nGU/A6Ct9K6ok872GuFasKCem0kqGXg+UyUXNt
+ vDEFE4MPOM6AI/Lzsswxlkul+IRMwECgPr2qgL+IPuPqgiZbx4LxgU3jwu9IUW8nsk1E9HPFiZu
+ zEwwqQ5uv98OpWPNDvZLlxRHmsBDJWwxRfSvGXl+UYP4+FCu+kd4CBh+6Bb54Md1RVqdx5MSQ9D
+ aP7x+ofMH4s0mXKLFGbFXRgojeF/O2gstVK/qAuV0J93id7g9hrCu+IYcQiiiS7j3eJLrjh5RvZ
+ KRRLDYsu26MhwGElW8sNXCkQbTs3wl58h6fFGvg==
+X-Received: by 2002:a05:620a:6193:b0:936:bc40:cae2 with SMTP id
+ af79cd13be357-9391398ee3bmr1019520685a.39.1787949583137; 
  Fri, 28 Aug 2026 13:39:43 -0700 (PDT)
+X-Received: by 2002:a05:620a:6193:b0:936:bc40:cae2 with SMTP id
+ af79cd13be357-9391398ee3bmr1019473185a.39.1787949578558; 
+ Fri, 28 Aug 2026 13:39:38 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.38.141.232])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-939173f2758sm218063985a.37.2026.08.28.13.39.41
+ af79cd13be357-939173f2758sm218063985a.37.2026.08.28.13.39.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 13:39:43 -0700 (PDT)
+ Fri, 28 Aug 2026 13:39:38 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -94,35 +94,35 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v5 06/15] hw/riscv/fdt_common,
- virt.c: add riscv_create_fdt_imsic()
-Date: Fri, 28 Aug 2026 17:39:08 -0300
-Message-ID: <20260828203918.350131-7-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v5 04/15] hw/riscv/fdt-common,
+ virt.c: add riscv_create_fdt_riscv_iommu_sys()
+Date: Fri, 28 Aug 2026 17:39:06 -0300
+Message-ID: <20260828203918.350131-5-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260828203918.350131-1-daniel.barboza@oss.qualcomm.com>
 References: <20260828203918.350131-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfX0NjKp7C1lkeN
- 1io9033EfPSV64IPgAKyBLtPPAKFAyN/wlkmn2B9mmlnwdMtey3R2EDgTq4tbzt8adbj3daXqFl
- VKkVgzAZ7cYvegO+oep4t5Vc0Ke0UpA=
-X-Proofpoint-GUID: nrXAGKU-OlmK_5HEmu-fFZD3zv9K8UO4
-X-Proofpoint-ORIG-GUID: nrXAGKU-OlmK_5HEmu-fFZD3zv9K8UO4
-X-Authority-Analysis: v=2.4 cv=I5dVgtgg c=1 sm=1 tr=0 ts=6a91f211 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfXyl1x2zWUdJ62
+ abRMc7CRMA/3yU8GdQfwiwmTM38pI6ozioDKhCqda8AprZob4HOSkC2Nh7rUcQhBBm26bm0SXJ4
+ Q4+4RHld2nB+SQCucwfO468KjNx0iow=
+X-Proofpoint-GUID: bNzwI581lM-cOMQJk8SbT9x5bDZOFpHB
+X-Proofpoint-ORIG-GUID: bNzwI581lM-cOMQJk8SbT9x5bDZOFpHB
+X-Authority-Analysis: v=2.4 cv=I5dVgtgg c=1 sm=1 tr=0 ts=6a91f20f cx=c_pps
  a=50t2pK5VMbmlHzFWWp8p/g==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=JygOcCPXwz5LZr-bGiwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfXydO3C7kg4y1E
- 0i27yGJ0qU7vteT05O7THCMyiLWp2G61BQt9iFjDSYP3WTCRA6OE83h2NazuXGYhm5DC6o1OWms
- Iw1z9nWMv15NIQetm7uAw/V76Zi598romEdAKxistUVPgAXpVt3MapLVjW+t+uGqFCLsOGzcBvo
- NxTOaxDkaOycf4YrfU3rCHmpBIGafPYpUpN0zyaNvxFR+W60+033juT9RL8Jr+ubbVd/P1bgTEr
- RePvUT+JBZe5oEaRJ3KBPuLyqrap05pVQUg/s4G7WGc5/KuuvluNoZ+e1EWYO6AyHyMS6Jz1ZVw
- a5lSotW8ku855vXbkYubR4GFETVhpBal6SZvjQWC94ViW7+uIwM/XdUCZyxpkTnZHfCjDK4bRBs
- 2ZZjL74XSEcYzRaznkMWlCPJ5YQc98ahSWLpDXY6vPksg4XOzNIOdUHKqo0bFX7WmQRJAzslZH3
- reBPNDhmF+7jpsNnrfA==
+ a=EUspDBNiAAAA:8 a=FRSEYCzRAAAA:8 a=4Tf7kDObtFz1SKwdFkIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDE3OSBTYWx0ZWRfX529/Crmy8Yoj
+ DzOZS/qIi4cPRkwAwKUtx9+JHc7cuKouw7k0dXM9kd8i8Igg1K/RhhOOF+AqKFBD4MDeq5ldcTX
+ /kll9rxOErQZoZop8Ai3HGoPAaRTMcT6QtKNuRqsVYVVyMUzW4tp490uk/IXXmGnNnx7qbcXVSq
+ iX+AaXlvFZXSndrAHXfIU+eVplUubACDuhK5gylQQjqsS4ua8Jdl/rM0j+HB2fdUI2kNmJ+zb97
+ 6iAOpfu8nRESDdcWADYka0RFHgatbWOlkQvLUJnpkf3EaRYKR7eKVBmMLZ74oAIZGG9MXOByaGb
+ bn0Mwcu1uMTgOs1LcIo5ujXXxv/vG3za7an5r1uHMJ/sQ2pI0dPPGp6WaDc/KJPXcJu2KSDqGDI
+ IDvqe681hnuZV1/REsAwfLBBndMQNRNVEpGkSR/Ieui7l6hDAaFQQjCpiRcaNyP8pTqmzJVphay
+ uzAY2aSyfgJ70lm5l8A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_06,2026-08-27_02,2025-10-01_01
@@ -140,7 +140,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,315 +156,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FDT related to interrupt controllers should definitely be put into
-helpers, even if only 'virt' benefits from it, due to the amount of code
-that is relieved from the board alone.  We'll start with 'imsic'.
+Both the 'virt' board and the future 'riscv-server-ref' boards uses an
+iommu-sys device that is declared in the DT.  Create a helper to
+encapsulate the logic and avoid copy/pasting stuff between boards.
 
-For this endeavor we're going to use a helper struct that will carry all
-the extra FDT arguments in a human format.  The alternative would be to
-add 8 more function arguments, on top of 4 phandle arguments that we're
-passing around in all these controllers, and that's not only a poor
-reading experience but it's quite error prone too.
-
-We do not want to crowd the fdt-helper with non-FDT logic, hence we're
-handling the !kvm_enabled() cond in virt.c using the imsic_m_base
-argument.  This is a pattern that we'll fall back on in the next
-patches too.
-
-No FDT changes made.
+The helper will return the iommu phandle value instead of returning void
+and writing the used phandle in an extra argument.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 ---
- hw/riscv/fdt-common.c         |  98 ++++++++++++++++++++++++++++++
- hw/riscv/virt.c               | 108 +++++-----------------------------
- include/hw/riscv/fdt-common.h |  21 +++++++
- 3 files changed, 133 insertions(+), 94 deletions(-)
+ hw/riscv/fdt-common.c         | 35 ++++++++++++++++++++++++
+ hw/riscv/virt.c               | 50 ++++++-----------------------------
+ include/hw/riscv/fdt-common.h |  5 ++++
+ 3 files changed, 48 insertions(+), 42 deletions(-)
 
 diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
-index 38813b6aa7..ae24ad0011 100644
+index eac5ca9322..88589330fb 100644
 --- a/hw/riscv/fdt-common.c
 +++ b/hw/riscv/fdt-common.c
-@@ -15,8 +15,10 @@
+@@ -13,6 +13,8 @@
+ #include "hw/core/boards.h"
+ #include "hw/riscv/fdt-common.h"
  #include "target/riscv/cpu_bits.h"
- #include "hw/riscv/riscv-iommu-bits.h"
- #include "hw/riscv/iommu.h"
-+#include "hw/intc/riscv_imsic.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pcie_host.h"
-+#include "hw/riscv/aia.h"
++#include "hw/riscv/riscv-iommu-bits.h"
++#include "hw/riscv/iommu.h"
  
  void *riscv_create_board_device_tree(const char *model, const char *compatible,
                                       int *fdt_size)
-@@ -495,3 +497,99 @@ void riscv_create_fdt_pcie(void *fdt, int aia_type, bool has_iommu_sys,
- 
-     create_pcie_irq_map(fdt, name, irq_pcie_phandle, aia_type, pcie_irq);
+@@ -349,3 +351,36 @@ void riscv_create_fdt_syscon(void *fdt, uint32_t *next_phandle,
+     qemu_fdt_setprop_cell(fdt, name, "value", poweroff);
+     g_free(name);
  }
 +
-+static void create_fdt_one_imsic(void *fdt, IMSICFdtProps *props,
-+                                 hwaddr base_addr,
-+                                 uint32_t *intc_phandles, uint32_t msi_phandle,
-+                                 bool m_mode, uint32_t imsic_guest_bits)
++uint32_t riscv_create_fdt_riscv_iommu_sys(void *fdt, hwaddr addr, hwaddr size,
++                                          uint32_t *next_phandle,
++                                          uint32_t irq_chip,
++                                          uint32_t msi_phandle,
++                                          uint32_t iommu_sys_irq)
 +{
-+    RISCVHartArrayState *soc = (RISCVHartArrayState *)props->soc;
-+    g_autofree char *imsic_name = NULL;
-+    g_autofree uint32_t *imsic_cells = NULL;
-+    g_autofree uint32_t *imsic_regs = NULL;
-+    uint32_t imsic_max_hart_per_socket = 0;
-+    static const char * const imsic_compat[2] = {
-+        "qemu,imsics", "riscv,imsics"
-+    };
++    const char comp[] = "riscv,iommu";
++    g_autofree char *iommu_node = NULL;
++    uint32_t iommu_phandle;
 +
-+    imsic_cells = g_new0(uint32_t, props->smp_cpus * 2);
-+    imsic_regs = g_new0(uint32_t, props->socket_count * 4);
++    iommu_node = g_strdup_printf("/soc/iommu@%"HWADDR_PRIx, addr);
++    qemu_fdt_add_subnode(fdt, iommu_node);
 +
-+    for (int cpu = 0; cpu < props->smp_cpus; cpu++) {
-+        imsic_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
-+        imsic_cells[cpu * 2 + 1] = cpu_to_be32(m_mode ? IRQ_M_EXT : IRQ_S_EXT);
-+    }
++    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
++    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
 +
-+    for (int socket = 0; socket < props->socket_count; socket++) {
-+        hwaddr imsic_addr = base_addr + socket * props->imsic_group_max_size;
-+        uint32_t imsic_size = IMSIC_HART_SIZE(imsic_guest_bits) *
-+                              soc[socket].num_harts;
++    iommu_phandle = next_phandle ? (*next_phandle)++ : qemu_fdt_alloc_phandle(fdt);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
 +
-+        imsic_regs[socket * 4 + 0] = cpu_to_be32(imsic_addr >> 32);
-+        imsic_regs[socket * 4 + 1] = cpu_to_be32(imsic_addr);
-+        imsic_regs[socket * 4 + 2] = 0;
-+        imsic_regs[socket * 4 + 3] = cpu_to_be32(imsic_size);
-+        if (imsic_max_hart_per_socket < soc[socket].num_harts) {
-+            imsic_max_hart_per_socket = soc[socket].num_harts;
-+        }
-+    }
++    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg", 2, addr, 2, size);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip);
 +
-+    imsic_name = g_strdup_printf("/soc/interrupt-controller@%"HWADDR_PRIx,
-+                                 base_addr);
-+    qemu_fdt_add_subnode(fdt, imsic_name);
++    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
++        iommu_sys_irq + RISCV_IOMMU_INTR_CQ, FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_sys_irq + RISCV_IOMMU_INTR_FQ, FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_sys_irq + RISCV_IOMMU_INTR_PM, FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_sys_irq + RISCV_IOMMU_INTR_PQ, FDT_IRQ_TYPE_EDGE_LOW);
 +
-+    qemu_fdt_setprop_string_array(fdt, imsic_name, "compatible",
-+                                  (char **)&imsic_compat,
-+                                  ARRAY_SIZE(imsic_compat));
++    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
 +
-+    qemu_fdt_setprop_cell(fdt, imsic_name, "#interrupt-cells",
-+                          FDT_IMSIC_INT_CELLS);
-+    qemu_fdt_setprop(fdt, imsic_name, "interrupt-controller", NULL, 0);
-+    qemu_fdt_setprop(fdt, imsic_name, "msi-controller", NULL, 0);
-+    qemu_fdt_setprop(fdt, imsic_name, "interrupts-extended",
-+                     imsic_cells, props->smp_cpus * sizeof(uint32_t) * 2);
-+    qemu_fdt_setprop(fdt, imsic_name, "reg", imsic_regs,
-+                     props->socket_count * sizeof(uint32_t) * 4);
-+    qemu_fdt_setprop_cell(fdt, imsic_name, "riscv,num-ids",
-+                          props->irqchip_num_msis);
-+
-+    if (imsic_guest_bits) {
-+        qemu_fdt_setprop_cell(fdt, imsic_name, "riscv,guest-index-bits",
-+                              imsic_guest_bits);
-+    }
-+
-+    if (props->socket_count > 1) {
-+        qemu_fdt_setprop_cell(fdt, imsic_name, "riscv,hart-index-bits",
-+                              imsic_num_bits(imsic_max_hart_per_socket));
-+        qemu_fdt_setprop_cell(fdt, imsic_name, "riscv,group-index-bits",
-+                              imsic_num_bits(props->socket_count));
-+        qemu_fdt_setprop_cell(fdt, imsic_name, "riscv,group-index-shift",
-+                              IMSIC_MMIO_GROUP_MIN_SHIFT);
-+    }
-+    qemu_fdt_setprop_cell(fdt, imsic_name, "phandle", msi_phandle);
-+}
-+
-+void riscv_create_fdt_imsic(void *fdt, IMSICFdtProps *props,
-+                            uint32_t *next_phandle, uint32_t *intc_phandles,
-+                            uint32_t *msi_m_phandle, uint32_t *msi_s_phandle)
-+{
-+    if (next_phandle) {
-+        *msi_m_phandle = (*next_phandle)++;
-+        *msi_s_phandle = (*next_phandle)++;
-+    } else {
-+        *msi_m_phandle = qemu_fdt_alloc_phandle(fdt);
-+        *msi_s_phandle = qemu_fdt_alloc_phandle(fdt);
-+    }
-+
-+    if (props->imsic_m_base) {
-+        /* M-level IMSIC node */
-+        create_fdt_one_imsic(fdt, props, props->imsic_m_base,
-+                             intc_phandles, *msi_m_phandle, true, 0);
-+    }
-+
-+    /* S-level IMSIC node */
-+    create_fdt_one_imsic(fdt, props, props->imsic_s_base,
-+                         intc_phandles, *msi_s_phandle, false,
-+                         imsic_num_bits(props->aia_guests + 1));
-+
++    return iommu_phandle;
 +}
 diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a28e6d200a..468ec90696 100644
+index ab6c53c78a..8a165f4d9e 100644
 --- a/hw/riscv/virt.c
 +++ b/hw/riscv/virt.c
-@@ -320,98 +320,6 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
-     }
+@@ -869,46 +869,6 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
  }
  
--static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
--                                 uint32_t *intc_phandles, uint32_t msi_phandle,
--                                 bool m_mode, uint32_t imsic_guest_bits)
+-static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
+-                                 uint32_t msi_phandle,
+-                                 uint32_t *iommu_sys_phandle)
 -{
--    int cpu, socket;
--    g_autofree char *imsic_name = NULL;
--    MachineState *ms = MACHINE(s);
--    int socket_count = riscv_socket_count(ms);
--    uint32_t imsic_max_hart_per_socket, imsic_size;
--    hwaddr imsic_addr;
--    g_autofree uint32_t *imsic_cells = NULL;
--    g_autofree uint32_t *imsic_regs = NULL;
--    static const char * const imsic_compat[2] = {
--        "qemu,imsics", "riscv,imsics"
+-    const char comp[] = "riscv,iommu";
+-    void *fdt = MACHINE(s)->fdt;
+-    uint32_t iommu_phandle;
+-    g_autofree char *iommu_node = NULL;
+-    hwaddr addr = s->memmap[VIRT_IOMMU_SYS].base;
+-    hwaddr size = s->memmap[VIRT_IOMMU_SYS].size;
+-    uint32_t iommu_irq_map[RISCV_IOMMU_INTR_COUNT] = {
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_CQ,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_FQ,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PM,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PQ,
 -    };
 -
--    imsic_cells = g_new0(uint32_t, ms->smp.cpus * 2);
--    imsic_regs = g_new0(uint32_t, socket_count * 4);
+-    iommu_node = g_strdup_printf("/soc/iommu@%x",
+-                               (unsigned int) s->memmap[VIRT_IOMMU_SYS].base);
+-    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
+-    qemu_fdt_add_subnode(fdt, iommu_node);
 -
--    for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
--        imsic_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
--        imsic_cells[cpu * 2 + 1] = cpu_to_be32(m_mode ? IRQ_M_EXT : IRQ_S_EXT);
--    }
+-    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
 -
--    imsic_max_hart_per_socket = 0;
--    for (socket = 0; socket < socket_count; socket++) {
--        imsic_addr = base_addr + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
--        imsic_size = IMSIC_HART_SIZE(imsic_guest_bits) *
--                     s->soc[socket].num_harts;
--        imsic_regs[socket * 4 + 0] = cpu_to_be32(imsic_addr >> 32);
--        imsic_regs[socket * 4 + 1] = cpu_to_be32(imsic_addr);
--        imsic_regs[socket * 4 + 2] = 0;
--        imsic_regs[socket * 4 + 3] = cpu_to_be32(imsic_size);
--        if (imsic_max_hart_per_socket < s->soc[socket].num_harts) {
--            imsic_max_hart_per_socket = s->soc[socket].num_harts;
--        }
--    }
+-    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg", 2, addr, 2, size);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip);
 -
--    imsic_name = g_strdup_printf("/soc/interrupt-controller@%lx",
--                                 (unsigned long)base_addr);
--    qemu_fdt_add_subnode(ms->fdt, imsic_name);
--    qemu_fdt_setprop_string_array(ms->fdt, imsic_name, "compatible",
--                                  (char **)&imsic_compat,
--                                  ARRAY_SIZE(imsic_compat));
+-    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
+-        iommu_irq_map[0], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[1], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
 -
--    qemu_fdt_setprop_cell(ms->fdt, imsic_name, "#interrupt-cells",
--                          FDT_IMSIC_INT_CELLS);
--    qemu_fdt_setprop(ms->fdt, imsic_name, "interrupt-controller", NULL, 0);
--    qemu_fdt_setprop(ms->fdt, imsic_name, "msi-controller", NULL, 0);
--    qemu_fdt_setprop(ms->fdt, imsic_name, "interrupts-extended",
--                     imsic_cells, ms->smp.cpus * sizeof(uint32_t) * 2);
--    qemu_fdt_setprop(ms->fdt, imsic_name, "reg", imsic_regs,
--                     socket_count * sizeof(uint32_t) * 4);
--    qemu_fdt_setprop_cell(ms->fdt, imsic_name, "riscv,num-ids",
--                     VIRT_IRQCHIP_NUM_MSIS);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
 -
--    if (imsic_guest_bits) {
--        qemu_fdt_setprop_cell(ms->fdt, imsic_name, "riscv,guest-index-bits",
--                              imsic_guest_bits);
--    }
--
--    if (socket_count > 1) {
--        qemu_fdt_setprop_cell(ms->fdt, imsic_name, "riscv,hart-index-bits",
--                              imsic_num_bits(imsic_max_hart_per_socket));
--        qemu_fdt_setprop_cell(ms->fdt, imsic_name, "riscv,group-index-bits",
--                              imsic_num_bits(socket_count));
--        qemu_fdt_setprop_cell(ms->fdt, imsic_name, "riscv,group-index-shift",
--                              IMSIC_MMIO_GROUP_MIN_SHIFT);
--    }
--    qemu_fdt_setprop_cell(ms->fdt, imsic_name, "phandle", msi_phandle);
+-    *iommu_sys_phandle = iommu_phandle;
 -}
 -
--static void create_fdt_imsic(RISCVVirtState *s,
--                             uint32_t *phandle, uint32_t *intc_phandles,
--                             uint32_t *msi_m_phandle, uint32_t *msi_s_phandle)
--{
--    *msi_m_phandle = (*phandle)++;
--    *msi_s_phandle = (*phandle)++;
--
--    if (!kvm_enabled()) {
--        /* M-level IMSIC node */
--        create_fdt_one_imsic(s, s->memmap[VIRT_IMSIC_M].base, intc_phandles,
--                             *msi_m_phandle, true, 0);
--    }
--
--    /* S-level IMSIC node */
--    create_fdt_one_imsic(s, s->memmap[VIRT_IMSIC_S].base, intc_phandles,
--                         *msi_s_phandle, false,
--                         imsic_num_bits(s->aia_guests + 1));
--
--}
--
- /* Caller must free string after use */
- static char *fdt_get_aplic_nodename(unsigned long aplic_addr)
+ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
  {
-@@ -585,8 +493,20 @@ static void create_fdt_sockets(RISCVVirtState *s,
-     }
+     const char comp[] = "riscv,pci-iommu";
+@@ -947,8 +907,14 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_virtio(s, irq_virtio_phandle);
  
-     if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
--        create_fdt_imsic(s, phandle, intc_phandles,
--                         &msi_m_phandle, &msi_s_phandle);
-+        IMSICFdtProps props = {
-+            .soc = &s->soc,
-+            .socket_count = riscv_socket_count(ms),
-+            .smp_cpus = ms->smp.cpus,
-+            .imsic_m_base = !kvm_enabled() ? s->memmap[VIRT_IMSIC_M].base : 0,
-+            .imsic_s_base = s->memmap[VIRT_IMSIC_S].base,
-+            .imsic_group_max_size = VIRT_IMSIC_GROUP_MAX_SIZE,
-+            .irqchip_num_msis = VIRT_IRQCHIP_NUM_MSIS,
-+            .aia_guests = s->aia_guests
-+        };
-+
-+        riscv_create_fdt_imsic(ms->fdt, &props, phandle, intc_phandles,
-+                               &msi_m_phandle, &msi_s_phandle);
-+
-         *msi_pcie_phandle = msi_s_phandle;
+     if (virt_is_iommu_sys_enabled(s)) {
+-        create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
+-                             &iommu_sys_phandle);
++        iommu_sys_phandle =
++            riscv_create_fdt_riscv_iommu_sys(MACHINE(s)->fdt,
++                                             s->memmap[VIRT_IOMMU_SYS].base,
++                                             s->memmap[VIRT_IOMMU_SYS].size,
++                                             &phandle,
++                                             irq_mmio_phandle,
++                                             msi_pcie_phandle,
++                                             IOMMU_SYS_IRQ);
      }
- 
+     create_fdt_pcie(s, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
 diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
-index 3750230865..182c03d8ce 100644
+index e377682b32..65711468b8 100644
 --- a/include/hw/riscv/fdt-common.h
 +++ b/include/hw/riscv/fdt-common.h
-@@ -10,6 +10,8 @@
- #define RISCV_VIRT_FDT_H
- 
- #include "target/riscv/cpu.h"
-+#include "hw/core/boards.h"
-+#include "hw/riscv/riscv_hart.h"
- 
- #define FDT_PCI_ADDR_CELLS    3
- #define FDT_PCI_INT_CELLS     1
-@@ -32,6 +34,22 @@ typedef enum RISCVAIAType {
-     AIA_TYPE_APLIC_IMSIC,
- } RISCVAIAType;
- 
-+typedef struct IMSICFdtProps {
-+    /*
-+     * Machines will statically allocate RISCVHartArrayState[] pointer,
-+     * e.g. "RISCVHartArrayState soc[VIRT_SOCKETS_MAX]".  We'll have
-+     * to use a void* pointer to handle a soc with variable sizes.
-+     */
-+    void *soc;
-+    hwaddr imsic_m_base;
-+    hwaddr imsic_s_base;
-+    int socket_count;
-+    int smp_cpus;
-+    int imsic_group_max_size;
-+    int irqchip_num_msis;
-+    int aia_guests;
-+} IMSICFdtProps;
-+
- void *riscv_create_board_device_tree(const char *model, const char *compatible,
-                                      int *fdt_size);
- void riscv_create_fdt_socket_memory(void *fdt, hwaddr addr, uint64_t size,
-@@ -77,4 +95,7 @@ void riscv_create_fdt_pcie(void *fdt, int aia_type, bool has_iommu_sys,
-                            uint32_t irq_pcie_phandle,
-                            uint32_t msi_pcie_phandle,
-                            uint32_t iommu_sys_phandle, uint32_t pcie_irq);
-+void riscv_create_fdt_imsic(void *fdt, IMSICFdtProps *fdt_props,
-+                            uint32_t *next_phandle, uint32_t *intc_phandles,
-+                            uint32_t *msi_m_phandle, uint32_t *msi_s_phandle);
+@@ -43,4 +43,9 @@ void riscv_create_fdt_syscon(void *fdt, uint32_t *next_phandle,
+                              hwaddr addr, hwaddr size,
+                              uint32_t reboot, uint32_t poweroff,
+                              bool sifive_test_compat);
++uint32_t riscv_create_fdt_riscv_iommu_sys(void *fdt, hwaddr addr, hwaddr size,
++                                          uint32_t *next_phandle,
++                                          uint32_t irq_chip,
++                                          uint32_t msi_phandle,
++                                          uint32_t iommu_sys_irq);
  #endif
 -- 
 2.43.0
