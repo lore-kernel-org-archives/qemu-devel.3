@@ -4,106 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B82E4C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2B5C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 11:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wztn6-0004SQ-Iv; Fri, 28 Aug 2026 06:26:32 -0400
+	id 1wzull-0001ok-II; Fri, 28 Aug 2026 07:29:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wztn4-0004Ri-Lj
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:26:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1wzuli-0001nM-Cj
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 07:29:11 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wztn2-0004xH-4F
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:26:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787912786;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U/0p3cQRH0ebwjJJleDIzJeEv8hjoBOgpQAgJj6qn70=;
- b=DL1TcrvKrqdTGuTzuC4KBjrxEkjr3K5X24B1BhHqnCnusLkDdDWDLnd3XpRW5A/R0y4Rbu
- yTGBPMVsI+yywKXJdKs/KEfauIfaQ8KZuNrnva81nbpZ7RJqEKitgVg8FnFahkzzwgap7b
- 6zukFW2GICDk1/K5sXxDfVC9daM5KlE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-I4n9_5zPNSaKhNj2zZ1iuw-1; Fri, 28 Aug 2026 06:26:25 -0400
-X-MC-Unique: I4n9_5zPNSaKhNj2zZ1iuw-1
-X-Mimecast-MFC-AGG-ID: I4n9_5zPNSaKhNj2zZ1iuw_1787912784
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4954a93c565so5706525e9.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:26:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787912784; x=1788517584;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1wzulg-0007d3-Da
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 07:29:10 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67SA7nVW3306724
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 11:29:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=c7RNdSqYVCA
+ bHsYLsuQm5WluyL2z7ViFRVJaq8J+r9k=; b=AaCHdtNAOMssxu22H7AOgwi55n3
+ l09dnammnZho8Tvu3CNPekfYzG8P9EkvJMiCIVqLl5ir7FPB3tzc19Tp2lry3EEl
+ CjRwE9UvRIX7PJJBOMzT/bgEIdeZhWOO9wrPbGgo902hSVUIFRbqalb3W+hDI8Ii
+ j2alAFoNoqXI26w7QY+OjcbtEC1xXsnFH768cVBhHb2laxVc9d6dEW7rin3cuE4P
+ dm0pPJk3ZYQkkNvOkLppp57RmTJyNuTEPqm/mnhrQRoZeGR0pkRoJcorZN43XHv+
+ CRiVJspxIBx8196MmxpnRoEwqhKUzIf9yh2e2fVyDAy/+Z5MMtF3+amFd8A==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb42p9ck4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 11:29:07 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-38105cc58e1so237707a91.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 04:29:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787916546; x=1788521346; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=U/0p3cQRH0ebwjJJleDIzJeEv8hjoBOgpQAgJj6qn70=;
- b=QCikSgwMArSPS0pTVjFheOLEdAmW3oFZ7BCSlF3pNVHQ/qEkvSkPjCsnY4LNmFUqsP
- uB7E28xgePVAKxYyw6Q6QCRuHRIHca4u5AELX63WVAiZkGYQgwYUvN4To2XTI0r4DdUw
- JqrPMl/9bD5BZu4z4nmdbVSwipPWcUeN0B58O+iS6bXAGwQantk4/yubIE5d20Vo8JLx
- QCrEC9a+kGVQU+yvlmWngm0hF1kMQeRs1aOU97lcOjyyWGOWbiqs4o4nX41QfzzcGT7T
- 57ei+dn0h7BtwLmbIoBIH8seo3wO76uqYh918Jn74WhPA/ukGT/Xl0ldfHtNrm8s8w+s
- OErQ==
-X-Gm-Message-State: AFuF++nu08aRJTxxsRdPND+si5xv+VDF2nZbfkjCPSqIY8Q32K8B3Ew2
- HJEz6FHSUnGaWwKqZU9vFsv27p++HPqxZT8Sa4+yNpQFHf0PeFE3NDhoKMBOpJPaj5BhrRU228F
- Rah1qp9wOlZap+3y34Cq0sxGPDUZVnTLyGTpopLNCDzv1cAe4ds+u469p
-X-Gm-Gg: AR+sD12FnN8qY3lPiBllxLeYHKkS2hNQX639lE5w01I1EV4GoB7GA/QcCw+/pQImGno
- NclsmoHdFZ9t4nazlKXR6FmxjEbreKmO/lR2IBxjBqfRxmoqhz23YwfIuJFYaI60v3v5F4YqBYS
- LYx3QTKB+MSu4iUn3iRPKAJuwBnxceRHAjvSqF4Hw5aPFN/dD7/zAQYatQ1K6SXrj1EEAbGg4Fe
- 5vOd0iLIocM2gkhoPGzjG1M8bhaXUBz6pO+MSMbULQk21P9V53SyLc8PAGIW3R6HLN0ii3bStEW
- ZDS1JRH+4usm+SNxq74He6LhmzL1zllqIdP1jRLgcU0T+gKn50pwW+03EoP3BFhngBfCEOTXrkW
- BKVxZNcMI5/tYv/bJnqYaA+5PwqqzT4lP2Sxq6lmcBBcZtyrX
-X-Received: by 2002:a05:600c:c494:b0:499:8aff:59b6 with SMTP id
- 5b1f17b1804b1-49b91c486c3mr68503485e9.14.1787912783288; 
- Fri, 28 Aug 2026 03:26:23 -0700 (PDT)
-X-Received: by 2002:a05:600c:c494:b0:499:8aff:59b6 with SMTP id
- 5b1f17b1804b1-49b91c486c3mr68502695e9.14.1787912782743; 
- Fri, 28 Aug 2026 03:26:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=c7RNdSqYVCAbHsYLsuQm5WluyL2z7ViFRVJaq8J+r9k=;
+ b=j8fZUYkpSHwOq/2cI5h3J/IuP1IzOJKW01p8IPG7/xJ8KCK9YX5ncnegMHm0FFXaoG
+ JQprhIGopqkLS+4I++Z6najsLVoARX+ZrDMYScvJf8KXAfewUU3P5ZirZGUjqrkzBsxh
+ oGWGFFvVzTstBTx+Fr2rz62l7WuGoPxDUu7RiaNh0Q/gQGE6a1nJqxiM4oZVzcsccbko
+ F+25eQLMhHctU66Wbka956rRsTCByu3NDB0qFF92rrQl7/P4zh/plQpnQjU7dp7/gqhQ
+ n5ZuPpW56/r/YWDqkDo5mgsC3gXTpkOyecoLkQHmABayJV26448H6OR75AZV95Nh68kL
+ PFyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787916546; x=1788521346;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=c7RNdSqYVCAbHsYLsuQm5WluyL2z7ViFRVJaq8J+r9k=;
+ b=iNkI3gd5Z+4RrAHZb/Ogfhcirjbi/YKYj3fgmDcXGnCh7U3xMdxC8VKkznuuleHVNS
+ BdicxG3TrSFbNNxM3Y/8runsRezigvPN/XKikyV4X8FyzpSvsc+x9tGqTunMPZIi7yNL
+ CkZJUPd1bW5CV2WewVJLyJFMZo7UVM+U7AAtZLOb4l1cuQN4qZZ/KOFcz9+PDLkUPGP4
+ lZaVTHcuGGgRAnOoo8CYw8C9h0+vWuI3IZd3lZn/Q3skAGmhkVrDkktY7wYuwZHNd/11
+ egvMApoXkSeriQjDZmoUCNOmMdynsy93XzBJp1VXZWQdf7Rc4p6SOkt/ZhHNLU2K0Lwa
+ ML9Q==
+X-Gm-Message-State: AFuF++k5Zm/LRisdIB69JwxppuPIlUXYKKSMqweK5O11YtftWqkY8jtj
+ vRoUm9PgDYnRjfTC5A0jyBPLnIxNRaJzVf1+rZKuGxYahJ0qNk1KFS4YMOAlD2rzG02xoMAMu+M
+ iUos/3hAJdUamPKDXtW4znGXkTCQmoXnYetlCxT1hQaQ0UAn5/5XCv2lN/1ebKaAfiw==
+X-Gm-Gg: AR+sD13wf7RSSIXBOCyLhEhcjkqXoKStUWXFgRYBjis45TdbbmaCioJzAc4IyCyLCEB
+ 8o5d8r5Nj+8y+rHC/fIfz2pPKiXIorOLK3yOfyT2lDOWq4UiFQDBesbAhPXmtaU3ZhAZMK4ODH9
+ tX9WG/+27EAhSk+TUogh5u4S2s/rjjpisJBldyM61wXL4lBvZquIPW4SpnZPLWxfpsoyyI9y4O/
+ UIRZ8z+y2UZ+sBevNOIu7TsqzxlEgDTPiCpB0giBTebYMHju7aJ5W915GUUnCtTrfMsHqNXIrXE
+ V7a6Ap6c10IiCRCIDaqHpJz+pkHcKryCYJmoFDGbKMg35K6DTXflKj/V2V1Qlyb+tF8DCk0aNwA
+ Ky5OXeyhXF4TRAezo/r9k5eYdB+zJpPe0qeqyH3bgI7nkOsrmnQR8y9/MoL+96/2wozYo4qfA7e
+ hLlPR70FV+uaQjaVmKLvdyefX9YMBh2pI=
+X-Received: by 2002:a17:90b:3c47:b0:38e:ab3f:2c99 with SMTP id
+ 98e67ed59e1d1-396d0ee934emr6311498a91.2.1787916546283; 
+ Fri, 28 Aug 2026 04:29:06 -0700 (PDT)
+X-Received: by 2002:a17:90b:3c47:b0:38e:ab3f:2c99 with SMTP id
+ 98e67ed59e1d1-396d0ee934emr6311424a91.2.1787916545840; 
+ Fri, 28 Aug 2026 04:29:05 -0700 (PDT)
+Received: from hu-slingapp-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbab3f45sm4665506f8f.7.2026.08.28.03.26.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 03:26:21 -0700 (PDT)
-Message-ID: <703c2ecc-6d74-4fe3-ba8f-f358c9f18436@redhat.com>
-Date: Fri, 28 Aug 2026 12:26:20 +0200
+ a92af1059eb24-142e0de4d92sm4997320c88.13.2026.08.28.04.29.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Aug 2026 04:29:05 -0700 (PDT)
+From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org,
+ Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+Subject: [PATCH v10 03/10] hw/riscv: add RPMI FDT helpers
+Date: Fri, 28 Aug 2026 16:57:55 +0530
+Message-ID: <20260828112803.86636-4-subrahmanya.lingappa@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260828112803.86636-1-subrahmanya.lingappa@oss.qualcomm.com>
+References: <20260828112803.86636-1-subrahmanya.lingappa@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 19/28] hw/arm/smmuv3: Determine register bank from MMIO
- offset
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162558.2808607-4-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260813162558.2808607-4-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: k2LtmPqzp27HkQ_BbW8cpRhgoipBwlx6
+X-Authority-Analysis: v=2.4 cv=ToDWQjXh c=1 sm=1 tr=0 ts=6a917103 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=WNJofZAcfibaGo0vQRIA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-GUID: k2LtmPqzp27HkQ_BbW8cpRhgoipBwlx6
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDA5OCBTYWx0ZWRfX7ZbDj9ER3N5f
+ JCdLqMOCeYArKFsKJWJ62MS4+NiPnCawgy654PF1xdturzfkbUkuHgwR3kvj7yl4TKJaQYc8OXK
+ Li4m+eVIQ8IjemyIPVAqDuauAa6HYdI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDA5OCBTYWx0ZWRfX5Oj5YF58k6if
+ uF7zIngfOiTHhPNE7tWdJUAe1+qmHvUJYhBeBUNEgMaby2AxHs0IRYpkKQcrzdLcIMVyELg2ii4
+ iaOSwKxINL2Ik/wc5q2Rgm2/tiX2JzngOAFvz7A0H1csH3xYeoq8XZKq4f2omyjvlYWVbim7B8O
+ QAlMLsIKou+IELbkUFbntk0IRXYMy67u3VrwLOtwR9S554zZ+jP97NvhVX4J2U2P9OSl4WLrDwV
+ dIJcs6pX3wdvs1QThc/Porp8Xqu1KoY84zZwn7yZRZKJT5bNYXQRQ8t10ZmCRphaMiQZzPde3il
+ /vIji0R7pPCe1KQc1gNaHLmz9Wfzydkdy+BfZ2Ty6lrDvRMvgv/UVUVbPkI9gqxPQKy8a1k3bzf
+ EVhVMSumKmP+PjXwpcRgquVAjzNN9/HJR7JHw+HttwLc13obYLo2wxT+sFNp7kfpcSguHKCgF3D
+ 4jvW60xjOMN7u0epvJg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-28_03,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280098
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,158 +152,210 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add helper routines for describing RPMI shared-memory mailbox transports
+and service child nodes in the RISC-V virt device tree.
 
+The helpers keep RPMI node construction in one place so the virt machine
+can add service groups without open-coding compatible strings, channel
+IDs, interrupts, and shared-memory references at each call site.
 
-On 8/13/26 6:25 PM, Tao Tang wrote:
-> Modify the main MMIO handlers to select the target register bank from the
-> memory-mapped offset.
->
-> Offsets in the Secure register window select SMMU_SEC_SID_S and are
-> normalized by subtracting SMMU_SECURE_REG_START. Other offsets select the
-> Non-secure bank. Pass the selected SEC_SID to the register access helpers,
-> where the normalized bank-local offset identifies the register.
->
-> Keep bank-specific differences explicit, such as S_IDR5 being unimplemented.
-> This patch implements Non-secure and Secure bank dispatch and prepares for
-> later access checks; Realm and Root programming interfaces are not modeled.
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ hw/riscv/meson.build        |   3 ++
+ hw/riscv/rpmi-fdt-stub.c    |  16 ++++++
+ hw/riscv/rpmi-fdt.c         | 103 ++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/rpmi-fdt.h |  30 +++++++++++
+ 4 files changed, 152 insertions(+)
+ create mode 100644 hw/riscv/rpmi-fdt-stub.c
+ create mode 100644 hw/riscv/rpmi-fdt.c
+ create mode 100644 include/hw/riscv/rpmi-fdt.h
 
-Eric
-> ---
->  hw/arm/smmuv3.c | 44 ++++++++++++++++++++++++++++++++------------
->  1 file changed, 32 insertions(+), 12 deletions(-)
->
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index efa78869251..b36bc4a54e0 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1889,9 +1889,9 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->  }
->  
->  static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
-> -                               uint64_t data, MemTxAttrs attrs)
-> +                                uint64_t data, MemTxAttrs attrs,
-> +                                SMMUSecSID reg_sec_sid)
->  {
-> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->  
->      switch (offset) {
-> @@ -1959,10 +1959,10 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->  }
->  
->  static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
-> -                               uint64_t data, MemTxAttrs attrs)
-> +                               uint64_t data, MemTxAttrs attrs,
-> +                               SMMUSecSID reg_sec_sid)
->  {
->      Error *local_err = NULL;
-> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->  
->      switch (offset) {
-> @@ -2223,16 +2223,26 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
->      SMMUState *sys = opaque;
->      SMMUv3State *s = ARM_SMMUV3(sys);
->      MemTxResult r;
-> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->  
->      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
->      offset &= ~0x10000;
->  
-> +    /*
-> +     * Dispatch the Non-secure window directly. After access validation,
-> +     * translate the Secure window to its bank-local register offsets.
-> +     */
-> +    if (offset >= SMMU_SECURE_REG_START) {
-> +        reg_sec_sid = SMMU_SEC_SID_S;
-> +        offset -= SMMU_SECURE_REG_START;
-> +    }
-> +
->      switch (size) {
->      case 8:
-> -        r = smmu_writell(s, offset, data, attrs);
-> +        r = smmu_writell(s, offset, data, attrs, reg_sec_sid);
->          break;
->      case 4:
-> -        r = smmu_writel(s, offset, data, attrs);
-> +        r = smmu_writel(s, offset, data, attrs, reg_sec_sid);
->          break;
->      default:
->          r = MEMTX_ERROR;
-> @@ -2244,9 +2254,9 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
->  }
->  
->  static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
-> -                               uint64_t *data, MemTxAttrs attrs)
-> +                               uint64_t *data, MemTxAttrs attrs,
-> +                               SMMUSecSID reg_sec_sid)
->  {
-> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->  
->      switch (offset) {
-> @@ -2285,9 +2295,9 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
->  }
->  
->  static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
-> -                              uint64_t *data, MemTxAttrs attrs)
-> +                              uint64_t *data, MemTxAttrs attrs,
-> +                              SMMUSecSID reg_sec_sid)
->  {
-> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->  
->      switch (offset) {
-> @@ -2295,6 +2305,10 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
->          *data = smmuv3_idreg(offset - A_IDREGS);
->          return MEMTX_OK;
->      case A_IDR0 ... A_IDR5:
-> +        /* IDR5 does not support Secure or Realm state. */
-> +        if ((reg_sec_sid != SMMU_SEC_SID_NS) && (offset == A_IDR5)) {
-> +            goto unhandled;
-> +        }
->          *data = bank->idr[(offset - A_IDR0) / 4];
->          return MEMTX_OK;
->      case A_IIDR:
-> @@ -2429,6 +2443,7 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
->          *data = bank->eventq_irq_cfg2;
->          return MEMTX_OK;
->      default:
-> +    unhandled:
->          *data = 0;
->          qemu_log_mask(LOG_UNIMP,
->                        "%s unhandled 32-bit access at 0x%"PRIx64" (RAZ)\n",
-> @@ -2443,16 +2458,21 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
->      SMMUState *sys = opaque;
->      SMMUv3State *s = ARM_SMMUV3(sys);
->      MemTxResult r;
-> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->  
->      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
->      offset &= ~0x10000;
-> +    if (offset >= SMMU_SECURE_REG_START) {
-> +        reg_sec_sid = SMMU_SEC_SID_S;
-> +        offset -= SMMU_SECURE_REG_START;
-> +    }
->  
->      switch (size) {
->      case 8:
-> -        r = smmu_readll(s, offset, data, attrs);
-> +        r = smmu_readll(s, offset, data, attrs, reg_sec_sid);
->          break;
->      case 4:
-> -        r = smmu_readl(s, offset, data, attrs);
-> +        r = smmu_readl(s, offset, data, attrs, reg_sec_sid);
->          break;
->      default:
->          r = MEMTX_ERROR;
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 0d82ceacc4..87601f8523 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -4,6 +4,9 @@ riscv_ss.add(files('boot.c'))
+ riscv_ss.add(files('fdt-common.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+ riscv_ss.add(files('riscv_hart.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_RPMI',
++             if_true: files('rpmi-fdt.c'),
++             if_false: files('rpmi-fdt-stub.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+ riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+diff --git a/hw/riscv/rpmi-fdt-stub.c b/hw/riscv/rpmi-fdt-stub.c
+new file mode 100644
+index 0000000000..9866236ab3
+--- /dev/null
++++ b/hw/riscv/rpmi-fdt-stub.c
+@@ -0,0 +1,16 @@
++/*
++ * RISC-V RPMI device-tree helper stubs.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/riscv/rpmi-fdt.h"
++
++void riscv_rpmi_fdt_add_mbox(void *fdt G_GNUC_UNUSED,
++                             const RiscvRpmiFdtMboxConfig *cfg G_GNUC_UNUSED,
++                             uint32_t *phandle G_GNUC_UNUSED,
++                             uint32_t *mbox_handle G_GNUC_UNUSED)
++{
++    g_assert_not_reached();
++}
+diff --git a/hw/riscv/rpmi-fdt.c b/hw/riscv/rpmi-fdt.c
+new file mode 100644
+index 0000000000..439c91c894
+--- /dev/null
++++ b/hw/riscv/rpmi-fdt.c
+@@ -0,0 +1,103 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * RISC-V RPMI device-tree helpers
++ *
++ * Copyright (c) 2026 Qualcomm Technologies, Inc.
++ * Author:
++ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bswap.h"
++#include "hw/riscv/rpmi-fdt.h"
++#include "hw/misc/riscv_rpmi.h"
++#include "system/device_tree.h"
++
++void riscv_rpmi_fdt_add_mbox(void *fdt,
++                             const RiscvRpmiFdtMboxConfig *cfg,
++                             uint32_t *phandle,
++                             uint32_t *mbox_handle)
++{
++    g_autofree char *name = NULL;
++    hwaddr a2p_req_base, p2a_ack_base, p2a_req_base, a2p_ack_base;
++    static const char * const regnames_all[RPMI_ALL_NUM_REGS] = {
++        "a2p-req", "p2a-ack", "p2a-req", "a2p-ack", "a2p-doorbell"
++    };
++    static const char * const regnames_a2p[RPMI_A2P_NUM_REGS] = {
++        "a2p-req", "p2a-ack", "a2p-doorbell"
++    };
++
++    a2p_req_base = cfg->shmem_base;
++    p2a_ack_base = a2p_req_base + cfg->a2p_req_size;
++    p2a_req_base = p2a_ack_base + cfg->a2p_req_size;
++    a2p_ack_base = p2a_req_base + cfg->p2a_req_size;
++
++    *mbox_handle = (*phandle)++;
++    name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx, cfg->shmem_base);
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", "riscv,rpmi-shmem-mbox");
++    qemu_fdt_setprop_cell(fdt, name, "riscv,slot-size", RPMI_QUEUE_SLOT_SIZE);
++    qemu_fdt_setprop_cell(fdt, name, "#mbox-cells", 1);
++
++    if (cfg->p2a_req_size) {
++        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
++                                      (char **)&regnames_all,
++                                      ARRAY_SIZE(regnames_all));
++        qemu_fdt_setprop_cells(fdt, name, "reg",
++            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(p2a_req_base >> 32), (uint32_t)p2a_req_base,
++            0x0, cfg->p2a_req_size,
++            (uint32_t)(a2p_ack_base >> 32), (uint32_t)a2p_ack_base,
++            0x0, cfg->p2a_req_size,
++            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
++            0x0, cfg->doorbell_size);
++    } else {
++        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
++                                      (char **)&regnames_a2p,
++                                      ARRAY_SIZE(regnames_a2p));
++        qemu_fdt_setprop_cells(fdt, name, "reg",
++            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
++            0x0, cfg->doorbell_size);
++    }
++
++    qemu_fdt_setprop_cells(fdt, name, "phandle", *mbox_handle);
++}
++
++void riscv_rpmi_fdt_add_service(void *fdt, hwaddr shmem_base,
++                                const char *node_name,
++                                const char *compatible,
++                                uint32_t mbox_handle,
++                                uint32_t service_group,
++                                bool has_mpxy_channel,
++                                uint32_t mpxy_channel)
++{
++    g_autofree char *name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx "/%s",
++                                            shmem_base, node_name);
++
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
++    qemu_fdt_setprop_cells(fdt, name, "mboxes", mbox_handle, service_group);
++    if (has_mpxy_channel) {
++        qemu_fdt_setprop_cell(fdt, name, "riscv,sbi-mpxy-channel-id",
++                              mpxy_channel);
++    }
++}
++
++void riscv_rpmi_fdt_add_service_node(void *fdt, hwaddr shmem_base,
++                                     const RiscvRpmiServiceConfig *service,
++                                     uint32_t mbox_handle)
++{
++    riscv_rpmi_fdt_add_service(fdt, shmem_base, service->node_name,
++                               service->compatible, mbox_handle,
++                               service->service_group,
++                               service->has_mpxy_channel,
++                               service->mpxy_channel);
++}
+diff --git a/include/hw/riscv/rpmi-fdt.h b/include/hw/riscv/rpmi-fdt.h
+new file mode 100644
+index 0000000000..b157bda1d1
+--- /dev/null
++++ b/include/hw/riscv/rpmi-fdt.h
+@@ -0,0 +1,30 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * RISC-V RPMI device-tree helpers
++ *
++ * Copyright (c) 2026 Qualcomm Technologies, Inc.
++ * Author:
++ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
++ */
++
++#ifndef HW_RISCV_RPMI_FDT_H
++#define HW_RISCV_RPMI_FDT_H
++
++#include "exec/hwaddr.h"
++#include "hw/misc/riscv_rpmi.h"
++
++typedef struct RiscvRpmiFdtMboxConfig {
++    hwaddr shmem_base;
++    hwaddr doorbell_base;
++    uint32_t a2p_req_size;
++    uint32_t p2a_req_size;
++    uint32_t doorbell_size;
++} RiscvRpmiFdtMboxConfig;
++
++void riscv_rpmi_fdt_add_mbox(void *fdt,
++                             const RiscvRpmiFdtMboxConfig *cfg,
++                             uint32_t *phandle,
++                             uint32_t *mbox_handle);
++
++#endif
+-- 
+2.43.0
 
 
