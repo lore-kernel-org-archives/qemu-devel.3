@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29653C61DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83BC7C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 12:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzvSr-0007mE-0H; Fri, 28 Aug 2026 08:13:45 -0400
+	id 1wzvT0-0007pk-As; Fri, 28 Aug 2026 08:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wzvSq-0007m3-3b
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:13:44 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1wzvSx-0007oi-Lb
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:13:51 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wzvSn-0005Wb-DC
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:13:43 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-482e1bfcc63so656302f8f.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:13:41 -0700 (PDT)
+ id 1wzvSt-0005YQ-M5
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 08:13:50 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-482dd6ee390so770432f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 05:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787919220; x=1788524020; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ey69dTinh/EJjSfLRyZUI8o0OPFE0HXzfjla/jXFPMc=;
- b=OUIDA5yVMR4ggnSH/wtM6WiIRYx8rc3Q5qlhPuB7eO3sownPI+OViiufDClYZ4XRU/
- RMZQsL3h14vO15h4SLUYiuRjZsrPXa2J3ij3Zoe/FtF9nB/aHorawQ1r1/rdl/TmDWFM
- ZaNQTuFAc+1ABnxD+oBjdk+YaisVbbAQjXXB7HY15wvy+ej8bjNUX2opo/Cfqe5+SQy5
- aeZmP0u8IEjBipLMmC2Sdd5spwt7CxiL3jLMiq2WTjewTJXl0HrruhzSqmU3E32DzHYQ
- LEiF3+5K3MS0/WCSXVX/EQZmKNgra6bHDXf81eE3Uo2kc/3u1/kRU2Yoz8djCC/G2mFC
- ZAHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787919220; x=1788524020;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=linaro.org; s=google; t=1787919225; x=1788524025; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ey69dTinh/EJjSfLRyZUI8o0OPFE0HXzfjla/jXFPMc=;
- b=AgDxgOF5YD3aMWiyxpHCMG8hQp7D4MnxiKaTaiMutUTpSAMDcjEuN0lNcOU+ChqJns
- Ex9PTUq8juN5hWor7qCyy3AEpDU+7DyaVZb2jMJP2YTCpnZIcmBCOHFMirMi7S6XzsK9
- LBTxhKaRbSkA/v0LhJtHJ3i/2nUcnhi5Wlu8/IzK97Hi5C84x2GEOHT/Z6UVD+drX0Br
- p59dihNPbr9xWNFonJMpCI1NFRabJSmnLgk2U3PZhga2+BUvjQK8t8wzJ0yvyFpEfk2x
- Ql7gPmTTyMy1w3vBCGApF5nHCgtJ8i59TBQGA0FKMrnV6bKODjIR70yU6sAZwb/FAuVj
- HBQQ==
-X-Gm-Message-State: AFuF++k+SKIC7tu9Xf5SI/Px309Qrvk5nDDSaBLPfpsofhJWFTJbJOMZ
- QmtPr2brKjOj63X/Lc/C/d6zZ6XdbFs1CTCChpVtD+NstLd+/y6JH2pZNMadcfetCgsSJT+40NE
- duaszmQM=
-X-Gm-Gg: AR+sD132Wcqcch08E1G13Dm+qJg7H5+q2yjG0tOaGrNz2st2nYhT/2/ogcvGBwh+NWo
- njcP91l4alPBDgCUNBYLT7nnOzRtQzVNPoccdPKZ08KKcjs3DGm5muXRDkJL0Sil68V4cix7aIZ
- 5DOMlhCBoOcuHtl9mylRmhXwMoE71TVV+rhkug9YrSRrLZ61drcU9EGCqcvdPNBpc7JwqIvkxiq
- pkf0N5lUkcJtHP6V4FMhV0HsUWmvH8ocjLoIcDUg6MS7wQ9328Rt+gb9Sb3ETb//c47EXS6XQ4u
- NzIVR6NVodM4gsKm64/le0joiHfLuf3++zgQPDtsvMWKTCmwxTD+UVA+DvrlZK5osuEtwKvOeiR
- GdaKhf15DntOhIhwo7KPIhBzYPtZ8/EUdf00a1J2l9ATzdUChDVC+vWlxO4UG9KZII/bd0RLo6s
- UZ2cxCkUsLuNYCau1DABGELZuY5r8opX7140eroh7uKh9Pc8eHzhHlCnPXN3MD
-X-Received: by 2002:a05:6000:268a:b0:475:da0e:744d with SMTP id
- ffacd0b85a97d-482f75bb6b8mr9730632f8f.8.1787919219711; 
- Fri, 28 Aug 2026 05:13:39 -0700 (PDT)
+ bh=ST1FOuAQ39FjdnP6nZ6r2ASbv9ni6IRiZc0RuWujmK4=;
+ b=oFnYoPnl+xgzKOef8DCvPgcmT6ADWDohQVBJ822II2yFpSx9oQQ7Nbhh7+nsb6vxsa
+ s5kbjZ/PmvGKFMpzoixn3P9aVaVhke4wun6F1kqreI8ooSeiG/B6AdaV+bHAXNmRaITI
+ tq7YbaizQssFuh/gyvOn9iDrjOVNeotPCGMJyIqCSrf8tcOG4KHxr+yWIgWiPBG8iqI1
+ ifiXzXgYk0aQAERv1OaZG/bqucYTNV0sTSpX3SQcT9Hl45KsRFMpu6GyYmVqPNdubOBf
+ oC8TvXa7T+tou33zqyUmZ1F/0qfGURyfwRkv8SOncj0TVglbhhsxvaodtRxLEgKDThh/
+ rO9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787919225; x=1788524025;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ST1FOuAQ39FjdnP6nZ6r2ASbv9ni6IRiZc0RuWujmK4=;
+ b=Id2yo8uXddU8HJ9jl2rUHGCMEGRYCA/LfoqL2MzMbQZzzjYGF6PzMDJLgKSuBkJPk+
+ UpIVFz0w5jbxjfNF/pbXROQfhr52dAVDWdOF54YDzhRJVcPyyPoTA9TyJzUTXfBp3tFL
+ fndEB1L8bgSRE+cmoiYSfIjk97ZmYAhRfEwi6lVfdUCq3QWRx3poU+ZhP89izJ4p9+aj
+ HaMXTU4LoXHzkzRdRZZUlNwS0OjoM+lOEK55+x0WiKXiAEdCBzAb4JuHuQ2wyDZBqJSw
+ 3oZ8r43IRKCsPF7Ii1SthXk2RZ2qfoG0Z8uztvbBK9F8W3Ln4CU73NiZpojUyI1u/qC3
+ E6zw==
+X-Gm-Message-State: AFuF++lJ/YRVkd5GEZdulH2ZObN11e7EhRC98WKoBJbWQofa4h3Fqyvs
+ lZlL3B4t1QltHu9792yWV7iCuwaLSGJMLUCydi6NyqM6jnZ6bs9JMrlt73pGLeMeBeM=
+X-Gm-Gg: AR+sD10FrIq0lFz9NRoxWJU+Aw2orRPYkUcr6BPYT3Kcr0ldWcjlZnMwBXEdz+d2xpC
+ ObZJXQK3tpLYKsblHzUGKW9tV5HAK/SqtsgieSJCamU/o5EXtewCmbADlE+jl91cR75d4xAr7p5
+ f5MIVUUqSKTVHHP4FPKHT4vze5Y8wPBTdZmc5pn2osIFSL04oYDd3+9BNB7A3Clo2BYP1fIRBLR
+ J26bJGYYzJTG8gPh8u9tFnZOt926+XNN6O7k/pqWZzaukiycColmmXLhFS01UhjC6xu9ONXnojh
+ dp124m90yKyokw7OoD1yppTDEJzrs9auC22grCfpMP6R3e1aUvSGPO8YLPu5W4jzh0z4ScY49Zx
+ LvKNk5XAdjT6CXdGkmGfq4chjPR982lyn3aD3OU8XdMxe/9WgXsrAhnGXKGS1K6kJT+9/r89+fh
+ YwbUaqQm9KufRtUYFvg51QLbxNyXfL6bYuXsO3KUtdAEoEKKVfCd6V58/gSTGa
+X-Received: by 2002:a05:6000:2f8a:b0:47f:9266:9bde with SMTP id
+ ffacd0b85a97d-482f7975d34mr8516438f8f.4.1787919224576; 
+ Fri, 28 Aug 2026 05:13:44 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbb2005esm3477105f8f.24.2026.08.28.05.13.38
+ ffacd0b85a97d-482fbab730fsm3650763f8f.8.2026.08.28.05.13.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 05:13:38 -0700 (PDT)
+ Fri, 28 Aug 2026 05:13:43 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D4EEE5F7E6;
- Fri, 28 Aug 2026 13:13:37 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 674155FD5D;
+ Fri, 28 Aug 2026 13:13:38 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 0/6] random fixes (gitlab, tests, char-fe, mailmap,
- deprecations)
-Date: Fri, 28 Aug 2026 13:13:31 +0100
-Message-ID: <20260828121337.2277303-1-alex.bennee@linaro.org>
+Cc: "Denis V. Lunev" <den@openvz.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 6/6] mailmap: map the last From-munged author back to a real
+ identity
+Date: Fri, 28 Aug 2026 13:13:37 +0100
+Message-ID: <20260828121337.2277303-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260828121337.2277303-1-alex.bennee@linaro.org>
+References: <20260828121337.2277303-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,50 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0a1ebd448b38afaa118597cbb633dbec24ef74d3:
+From: "Denis V. Lunev" <den@openvz.org>
 
-  tcg/loongarch64: Fix compile issue LoongArch host (2026-08-27 11:04:01 -0700)
+qemu-block@nongnu.org rewrote the From: header of commit b67e353863
+("block: drop force_dup parameter of raw_reconfigure_getfd()") for
+DMARC reasons, so it landed in git attributed to the list instead of
+to its author, whose real address is in the Signed-off-by trailer.
+Map it like the other munged identities collected in that section.
+This was the last one left unmapped, so 'git log --format="%aN"' no
+longer reports any author 'via' a list.
 
-are available in the Git repository at:
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260812112456.970371-1-den@openvz.org>
+Message-ID: <20260824-fixes-for-11-2-v2-8-352c6b890402@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-11.1-random-updates-280826-1
-
-for you to fetch changes up to 485509e033d8d4fc3f408e02de205fad960e1d02:
-
-  mailmap: map the last From-munged author back to a real identity (2026-08-28 11:40:08 +0100)
-
-----------------------------------------------------------------
-some random fixes (gitlab, tests, char-fe, mailmap, deprecations):
-
- - use .base_meson_job_template for macOS jobs
- - use explicit cflags for arm system tests
- - add arm-softmmu tests to MacOS
- - implement qemu_chr_fe_backend_name
- - deprecate virtio-crypto
- - mailmap updates
-
-----------------------------------------------------------------
-Alex Bennée (5):
-      gitlab: use .base_meson_job_template for macOS jobs
-      tests/arm: add explicit CFLAGS for system build
-      gitlab: add arm-softmmu tests to the macOS build
-      char-fe: implement qemu_chr_fe_backend_name
-      docs: deprecate virtio-crypto
-
-Denis V. Lunev (1):
-      mailmap: map the last From-munged author back to a real identity
-
- docs/about/deprecated.rst             | 18 ++++++++++++++++++
- include/chardev/char-fe.h             | 13 ++++++++++++-
- backends/cryptodev-vhost-user.c       |  8 +-------
- backends/rng-egd.c                    |  8 +-------
- backends/vhost-user.c                 |  8 +-------
- hw/char/imx_serial.c                  |  4 ++--
- .gitlab-ci.d/macos.yml                |  7 ++++---
- .mailmap                              |  1 +
- tests/tcg/arm/Makefile.softmmu-target |  2 +-
- 9 files changed, 41 insertions(+), 28 deletions(-)
-
+diff --git a/.mailmap b/.mailmap
+index e5dc644623f..08f0fa9e118 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -68,6 +68,7 @@ Stefan Weil <sw@weilnetz.de> Stefan Weil via <qemu-devel@nongnu.org>
+ Stefan Weil <sw@weilnetz.de> Stefan Weil via <qemu-trivial@nongnu.org>
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com> Andrey Drobyshev via <qemu-block@nongnu.org>
+ BALATON Zoltan <balaton@eik.bme.hu> BALATON Zoltan via <qemu-ppc@nongnu.org>
++Denis V. Lunev <den@openvz.org> Denis V. Lunev via <qemu-block@nongnu.org>
+ 
+ # Next, replace old addresses by a more recent one.
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> <akihiko.odaki@daynix.com>
 -- 
 2.47.3
 
