@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF35C61DCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 05:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 404BAC61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 06:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzpcA-0002PV-0D; Fri, 28 Aug 2026 01:58:58 -0400
+	id 1wzpfu-0003Us-3M; Fri, 28 Aug 2026 02:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzpc8-0002P6-NE; Fri, 28 Aug 2026 01:58:56 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1wzpfs-0003UB-FT; Fri, 28 Aug 2026 02:02:48 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wzpc7-0007az-62; Fri, 28 Aug 2026 01:58:56 -0400
+ id 1wzpfq-0008AW-S3; Fri, 28 Aug 2026 02:02:48 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 9131940DFE;
- Fri, 28 Aug 2026 05:58:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939A71F000E9;
- Fri, 28 Aug 2026 05:58:44 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 4500F418FB;
+ Fri, 28 Aug 2026 06:02:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FCE1F000E9;
+ Fri, 28 Aug 2026 06:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787896725;
- bh=dy9m52vIe2kxwW14CcJm6vKDOe4xTWLVJtQzJF2vDDw=;
+ s=k20260515; t=1787896965;
+ bh=40S5/LoXjIQJHxYjEKRwlU9vwqXpU+WxrE2Dkgv2feg=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=RM09vPAaOSOrPCmFQWT3lP/Jahbgv6vqMMCIf46ScIuQ3jp4UnR0tTatjMM44i0C9
- i5bKThTaWjbzRUfaOb4dcQv3EhJ20L77hp37euREsr9kkXJSz22ikyKy5fTn3JaEq5
- 67LL7Uawxy7BVS0Ix9qYhvqRqTH0kixf485pWxW1iy7ARQ3dB+vxwrHT3a8Dp5NVS0
- 2vgpxw1P3yCQV02zfndrkbhs+v91PN3SceSzQLeiWEqoaWv85GeKHO7H1GLTpOIS2o
- bj2YAywtl6/ubCI0CNLRSAxVz4t4Xnh8zrtfpqwFqYG8NbkLYtuhUYdM9Irp3rzGwB
- M4A1GIqZQJG4w==
-Message-ID: <4fe373f3-6910-4122-ae0a-13880ad3e6cf@kernel.org>
-Date: Fri, 28 Aug 2026 14:58:43 +0900
+ b=n838HW6SOXxfZYwr7J5nUVEIV1AD8S0S34wksME+ODChTVoL0wqPmKOqfjPrw3QN5
+ mBN42PduGC+FlEcl4whdzH5zkSm+acVT/+mU9ZulSSME43FvdWtVy0KbdHzlyXgVuq
+ z0wKZFK/cZ1jQh1O7jHYqKzmhROT6/xg9lwhPu8VxCs2avVAOukakhBp9f2WjFTl5X
+ wlju/Z0fDISoZA6qhGKv/wX5cKNR5P+T7vgZscvaBCwKYsJwHJrlg1tTcmWiySkvAs
+ MQfmRudMUqeEnWJ5xDMHg0j4zXC8FVBbOslPIFhHVy6euroTRuQrStAqkdmG45rjuR
+ yTdlPM1bKXQjQ==
+Message-ID: <2c5edc3b-87cd-49e0-81d4-06c0036831f5@kernel.org>
+Date: Fri, 28 Aug 2026 15:02:42 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/12] block: widen BlockLimits.zone_size to uint64_t
+Subject: Re: [PATCH 02/12] virtio-blk: do not merge writes across a zone
+ boundary
 To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260825205748.679968-1-cassel@kernel.org>
- <20260825205748.679968-2-cassel@kernel.org>
+ <20260825205748.679968-3-cassel@kernel.org>
 Content-Language: en-US
 From: Damien Le Moal <dlemoal@kernel.org>
 Organization: Western Digital Research
-In-Reply-To: <20260825205748.679968-2-cassel@kernel.org>
+In-Reply-To: <20260825205748.679968-3-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=dlemoal@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=dlemoal@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,17 +78,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 8/26/26 05:57, Niklas Cassel wrote:
 > From: Sam Li <faithilikerun@gmail.com>
 > 
-> The zone-size field in BlockLimits is currently uint32_t, capping
-> expressible zone sizes at 4 GiB. Real zoned-device protocols
-> like NVMe ZNS allow larger zones. Widen BlockLimits.zone_size to
-> uint64_t to match.
+> virtio_blk_submit_multireq() fuses adjacent in-zone requests into a
+> single request. On a zoned backend, a merged zone append request
+> that straddles a zone boundary is rejected by the device because
+> each write must stay within a single zone.
+> 
+> Add a bail condition to the merge coalescer: if combining the
+> candidate request into the current batch would cross a zone
+> boundary, flush the current batch and start a new one.
 > 
 > Signed-off-by: Sam Li <faithilikerun@gmail.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 > Reviewed-by: Niklas Cassel <cassel@kernel.org>
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
+Looks good.
+
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 
+A couple of minor nit below.
+
+> @@ -309,17 +312,34 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
+>      for (i = 0; i < mrb->num_reqs; i++) {
+>          VirtIOBlockReq *req = mrb->reqs[i];
+>          if (num_reqs > 0) {
+> +            zone_cross = false;
+
+Move this as a else of the if below.
+
+> +
+> +            /*
+> +             * On zoned backends, a single backend write/read must not span
+> +             * a zone boundary. Bail out of merging if combining req into
+> +             * the current batch would straddle a zone.
+> +             */
+> +            if (zone_size > 0) {
+> +                zone_sector = zone_size / BDRV_SECTOR_SIZE;
+
+Super confusing name. Can we have this be zone_nr_sectors ?
+
+> +                end_sector = req->sector_num
+> +                                + req->qiov.size / BDRV_SECTOR_SIZE - 1;
+> +                zone_cross = (sector_num / zone_sector) !=
+> +                             (end_sector / zone_sector);
+> +            }
 
 -- 
 Damien Le Moal
