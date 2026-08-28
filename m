@@ -4,108 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB21C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B82E4C61DB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 10:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wztih-00039Y-EK; Fri, 28 Aug 2026 06:21:59 -0400
+	id 1wztn6-0004SQ-Iv; Fri, 28 Aug 2026 06:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wztig-000372-F6
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:21:58 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wztie-0003XQ-Rg
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:21:58 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c2074710751so102857666b.1
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:21:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787912515; cv=none;
- d=google.com; s=arc-20260327;
- b=H1ZSBfiDgENtXYpoMAayvU6JlcRNWUyxmXII9EVLoUoqZbjYzXHF21uVRfY5T1PPAz
- I5bHjw/AG0zo4roBee0dxqZVlM8xixNzud+e8u943+bMyOSWhL52SmjddRkOTq7lmNa6
- f/FpaJOhLasdaIMo/HHcsMdPbhiKnWq6v2WyC35XPxWzg8BZ3+6ndwuXyBhOxKlgAlSe
- 5oUIKwENqLBSX5aWjcKoWAh31ay3D+ssiijMBDW5Z3BI5S8nSaGYLBkbv5KDrS3Ula9M
- T69BnTLQHSaFePomPZJV7WPQimJLdzsOe1pSmz7AcJ2vO+AKi9/APNMJvFHDrbbTL45/
- n/kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iOgFjmurBo+vQH4uZ/wrcBoAmGvzMwHTc/M4IC4/eVg=;
- fh=orjNIa438wHugFGPNg3Bbd+M7L4r13hWQausNpg9bVI=;
- b=EG0s+k3kldKq7HkvDpRYa20BGZFUkBfXXigAwMaXTemVHutIzqtGvOqXPrqYh8kLbe
- NeV7yXwKXOzaWw9JdBSbbSfdRZP6aDU/+zKBbMrnJ4NXV9M39v34/E+2War1ZZoosIl7
- grpkYi8kBGeBoE1fM0fZzSN1kBJo8CkqxJqqys7G133bsNqG+oIlDD0rcY37zxFOuJTs
- Nt326WQKfN+N02eGa2ODXT9zDPPpwyTH+dGXVmjo7viI3jF/ujIBKs+ctlHbFZy4fsqQ
- YDMGpc/xfZZgbmrw3Li8fxpwSkSZSEmXOxfOM2PmKxPzRvPT4wxM+RJYg6/+KR2lvPEh
- JS+A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787912515; x=1788517315; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iOgFjmurBo+vQH4uZ/wrcBoAmGvzMwHTc/M4IC4/eVg=;
- b=o8vgqcy/XoSqwbMWJXz0bTnX17vLEIOyNJM20rZ6e6En38YN1fyBJ1T89ZkW4QORgw
- RScv+HaA+ustBXd0YAO7NHCxCGGnCTpcHUC2zORjof07LrHF2Vhkqv0cKrjtqDWDpmwX
- RRvzp5m9GJ8wDcGx4q4FWG1yae5zTB9iShFz+D5k9sdJOYAgvvriaApFTT91T+9b1v17
- 6V+Vj2uuBsyecg1b0t1JI0BrXN45QmPvWz+/h1QMswGfqwi31QTLBCmdDnlrtup/ah21
- h6wZJy4SyyQn0FVTGW+0RYXV4vKOGG+OpmZ3zgLIllQXiW+e93HtViARN/gfvxMPv5Rx
- QytQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wztn4-0004Ri-Lj
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:26:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wztn2-0004xH-4F
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 06:26:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787912786;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U/0p3cQRH0ebwjJJleDIzJeEv8hjoBOgpQAgJj6qn70=;
+ b=DL1TcrvKrqdTGuTzuC4KBjrxEkjr3K5X24B1BhHqnCnusLkDdDWDLnd3XpRW5A/R0y4Rbu
+ yTGBPMVsI+yywKXJdKs/KEfauIfaQ8KZuNrnva81nbpZ7RJqEKitgVg8FnFahkzzwgap7b
+ 6zukFW2GICDk1/K5sXxDfVC9daM5KlE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-I4n9_5zPNSaKhNj2zZ1iuw-1; Fri, 28 Aug 2026 06:26:25 -0400
+X-MC-Unique: I4n9_5zPNSaKhNj2zZ1iuw-1
+X-Mimecast-MFC-AGG-ID: I4n9_5zPNSaKhNj2zZ1iuw_1787912784
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4954a93c565so5706525e9.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 03:26:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787912515; x=1788517315;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=iOgFjmurBo+vQH4uZ/wrcBoAmGvzMwHTc/M4IC4/eVg=;
- b=VBa9FNwI2PfrSjsrXb9+P6e9fyEQT2mLb/utJsdFNgLTJW7onebGZx+y0jT1wrVzFE
- dvbrH1PcCvI+JTXX+KyKbuEh/OjE4vDlNTPD09MHjeLJlbPVmJIbke3YuDYpD700rhKh
- fv6xGnQU3MJgk9F4Hy3wSc++G9jJrqWO59HU5O3cIvCQiomaPfwyk9muJkOSU1dVGZ1k
- t5xld2j8YLlG6O1EDE31BP+i7+fpXw5lA/+EDWSg39A5xXJ7aY2tf+rXQa4uwBy7JeRn
- pVEbFSF/wE3t1bC3dexg08vSgMmL4/rkcjnPdUvu0b80gr79EijgrKOPQelCTOSU+L35
- NlMg==
-X-Gm-Message-State: AFuF++kVMS8Eo5zYeH74geBYpUo9616D05GzASTlSTu3d3CeYaxeDEzb
- VOgCMq0i/OSmU9SYp+7N4ptGXwuCpr7uTuRuhch57NcyVPNSq2QsNbPI+kPMCtvx1Z4hyJIaAAf
- e96A4h0I5tt1hY9WQnOsvRT34ivG1i3ehlGm3ARC42w==
-X-Gm-Gg: AR+sD11bF30+uTmhvactABZeZhm056kQhVsjXO72oKHfF37yL/C2InEQw2cLXuXs8Mb
- vPJv0qQhd0trclDVpLC1VlytKDsCptuDjY+0QYaN/RX5LNNFYp8PYIA2GE3orezzF3NZe8XusgH
- udCnZEYXM6ikoB8TXqYGLXj5nrHoaev140ePVQXehRFPIoV+fJRdsYJyCN1jtGqDEoWb30cn1e/
- YtASHz3oKgVvS3OiSOpJ7BUYVc8E+ZJhLJYyAjfNxs7B8A0z0yCikcd2h2RH5rCOc+LjP3PxqhH
- S+cN8TGvLllcvRwVp7csjneTP9LRm4wNA1BO7LdAwHqK
-X-Received: by 2002:a17:907:9618:b0:c16:66dc:3ab7 with SMTP id
- a640c23a62f3a-c2556db59a9mr403520566b.10.1787912514969; Fri, 28 Aug 2026
- 03:21:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787912784; x=1788517584;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=U/0p3cQRH0ebwjJJleDIzJeEv8hjoBOgpQAgJj6qn70=;
+ b=QCikSgwMArSPS0pTVjFheOLEdAmW3oFZ7BCSlF3pNVHQ/qEkvSkPjCsnY4LNmFUqsP
+ uB7E28xgePVAKxYyw6Q6QCRuHRIHca4u5AELX63WVAiZkGYQgwYUvN4To2XTI0r4DdUw
+ JqrPMl/9bD5BZu4z4nmdbVSwipPWcUeN0B58O+iS6bXAGwQantk4/yubIE5d20Vo8JLx
+ QCrEC9a+kGVQU+yvlmWngm0hF1kMQeRs1aOU97lcOjyyWGOWbiqs4o4nX41QfzzcGT7T
+ 57ei+dn0h7BtwLmbIoBIH8seo3wO76uqYh918Jn74WhPA/ukGT/Xl0ldfHtNrm8s8w+s
+ OErQ==
+X-Gm-Message-State: AFuF++nu08aRJTxxsRdPND+si5xv+VDF2nZbfkjCPSqIY8Q32K8B3Ew2
+ HJEz6FHSUnGaWwKqZU9vFsv27p++HPqxZT8Sa4+yNpQFHf0PeFE3NDhoKMBOpJPaj5BhrRU228F
+ Rah1qp9wOlZap+3y34Cq0sxGPDUZVnTLyGTpopLNCDzv1cAe4ds+u469p
+X-Gm-Gg: AR+sD12FnN8qY3lPiBllxLeYHKkS2hNQX639lE5w01I1EV4GoB7GA/QcCw+/pQImGno
+ NclsmoHdFZ9t4nazlKXR6FmxjEbreKmO/lR2IBxjBqfRxmoqhz23YwfIuJFYaI60v3v5F4YqBYS
+ LYx3QTKB+MSu4iUn3iRPKAJuwBnxceRHAjvSqF4Hw5aPFN/dD7/zAQYatQ1K6SXrj1EEAbGg4Fe
+ 5vOd0iLIocM2gkhoPGzjG1M8bhaXUBz6pO+MSMbULQk21P9V53SyLc8PAGIW3R6HLN0ii3bStEW
+ ZDS1JRH+4usm+SNxq74He6LhmzL1zllqIdP1jRLgcU0T+gKn50pwW+03EoP3BFhngBfCEOTXrkW
+ BKVxZNcMI5/tYv/bJnqYaA+5PwqqzT4lP2Sxq6lmcBBcZtyrX
+X-Received: by 2002:a05:600c:c494:b0:499:8aff:59b6 with SMTP id
+ 5b1f17b1804b1-49b91c486c3mr68503485e9.14.1787912783288; 
+ Fri, 28 Aug 2026 03:26:23 -0700 (PDT)
+X-Received: by 2002:a05:600c:c494:b0:499:8aff:59b6 with SMTP id
+ 5b1f17b1804b1-49b91c486c3mr68502695e9.14.1787912782743; 
+ Fri, 28 Aug 2026 03:26:22 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482fbab3f45sm4665506f8f.7.2026.08.28.03.26.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Aug 2026 03:26:21 -0700 (PDT)
+Message-ID: <703c2ecc-6d74-4fe3-ba8f-f358c9f18436@redhat.com>
+Date: Fri, 28 Aug 2026 12:26:20 +0200
 MIME-Version: 1.0
-References: <CAE2XoE_-ewv3iC_MZ2sM1eKG=CUKM7MZa-ppJV0Vk1rE1h+19w@mail.gmail.com>
- <23f04b70-b78e-4234-ac97-2feba4d38b0d@oss.qualcomm.com>
-In-Reply-To: <23f04b70-b78e-4234-ac97-2feba4d38b0d@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 28 Aug 2026 18:21:42 +0800
-X-Gm-Features: AcwNN1WCvUIHL12K3uOYgO0eRVD1rc3L0b_V0EMiyaDcGyEsqzjDHOinkOx08-s
-Message-ID: <CAE2XoE86KSO8KYUkM9nz2ktPD4dnLxbiUXW3H7-dzjr0VDNZWw@mail.gmail.com>
-Subject: Re: [RFC] single-binary: merge experimental qemu-system before
- filtering
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-level <qemu-devel@nongnu.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Type: multipart/alternative; boundary="0000000000005826fd065a18d25e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x631.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v5 19/28] hw/arm/smmuv3: Determine register bank from MMIO
+ offset
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162558.2808607-4-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260813162558.2808607-4-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,59 +116,158 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005826fd065a18d25e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
+
+On 8/13/26 6:25 PM, Tao Tang wrote:
+> Modify the main MMIO handlers to select the target register bank from the
+> memory-mapped offset.
 >
-> The 'heterogeneous emulation' comes after (and only after) that.
-> It is a disruptive change, I don't want any of the current
+> Offsets in the Secure register window select SMMU_SEC_SID_S and are
+> normalized by subtracting SMMU_SECURE_REG_START. Other offsets select the
+> Non-secure bank. Pass the selected SEC_SID to the register access helpers,
+> where the normalized bank-local offset identifies the register.
+>
+> Keep bank-specific differences explicit, such as S_IDR5 being unimplemented.
+> This patch implements Non-secure and Secure bank dispatch and prepares for
+> later access checks; Realm and Root programming interfaces are not modeled.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
+Eric
+> ---
+>  hw/arm/smmuv3.c | 44 ++++++++++++++++++++++++++++++++------------
+>  1 file changed, 32 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index efa78869251..b36bc4a54e0 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1889,9 +1889,9 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+>  }
+>  
+>  static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+> -                               uint64_t data, MemTxAttrs attrs)
+> +                                uint64_t data, MemTxAttrs attrs,
+> +                                SMMUSecSID reg_sec_sid)
+>  {
+> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+>  
+>      switch (offset) {
+> @@ -1959,10 +1959,10 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>  }
+>  
+>  static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+> -                               uint64_t data, MemTxAttrs attrs)
+> +                               uint64_t data, MemTxAttrs attrs,
+> +                               SMMUSecSID reg_sec_sid)
+>  {
+>      Error *local_err = NULL;
+> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+>  
+>      switch (offset) {
+> @@ -2223,16 +2223,26 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
+>      SMMUState *sys = opaque;
+>      SMMUv3State *s = ARM_SMMUV3(sys);
+>      MemTxResult r;
+> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+>  
+>      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
+>      offset &= ~0x10000;
+>  
+> +    /*
+> +     * Dispatch the Non-secure window directly. After access validation,
+> +     * translate the Secure window to its bank-local register offsets.
+> +     */
+> +    if (offset >= SMMU_SECURE_REG_START) {
+> +        reg_sec_sid = SMMU_SEC_SID_S;
+> +        offset -= SMMU_SECURE_REG_START;
+> +    }
+> +
+>      switch (size) {
+>      case 8:
+> -        r = smmu_writell(s, offset, data, attrs);
+> +        r = smmu_writell(s, offset, data, attrs, reg_sec_sid);
+>          break;
+>      case 4:
+> -        r = smmu_writel(s, offset, data, attrs);
+> +        r = smmu_writel(s, offset, data, attrs, reg_sec_sid);
+>          break;
+>      default:
+>          r = MEMTX_ERROR;
+> @@ -2244,9 +2254,9 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
+>  }
+>  
+>  static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
+> -                               uint64_t *data, MemTxAttrs attrs)
+> +                               uint64_t *data, MemTxAttrs attrs,
+> +                               SMMUSecSID reg_sec_sid)
+>  {
+> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+>  
+>      switch (offset) {
+> @@ -2285,9 +2295,9 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
+>  }
+>  
+>  static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+> -                              uint64_t *data, MemTxAttrs attrs)
+> +                              uint64_t *data, MemTxAttrs attrs,
+> +                              SMMUSecSID reg_sec_sid)
+>  {
+> -    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+>  
+>      switch (offset) {
+> @@ -2295,6 +2305,10 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+>          *data = smmuv3_idreg(offset - A_IDREGS);
+>          return MEMTX_OK;
+>      case A_IDR0 ... A_IDR5:
+> +        /* IDR5 does not support Secure or Realm state. */
+> +        if ((reg_sec_sid != SMMU_SEC_SID_NS) && (offset == A_IDR5)) {
+> +            goto unhandled;
+> +        }
+>          *data = bank->idr[(offset - A_IDR0) / 4];
+>          return MEMTX_OK;
+>      case A_IIDR:
+> @@ -2429,6 +2443,7 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+>          *data = bank->eventq_irq_cfg2;
+>          return MEMTX_OK;
+>      default:
+> +    unhandled:
+>          *data = 0;
+>          qemu_log_mask(LOG_UNIMP,
+>                        "%s unhandled 32-bit access at 0x%"PRIx64" (RAZ)\n",
+> @@ -2443,16 +2458,21 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
+>      SMMUState *sys = opaque;
+>      SMMUv3State *s = ARM_SMMUV3(sys);
+>      MemTxResult r;
+> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+>  
+>      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
+>      offset &= ~0x10000;
+> +    if (offset >= SMMU_SECURE_REG_START) {
+> +        reg_sec_sid = SMMU_SEC_SID_S;
+> +        offset -= SMMU_SECURE_REG_START;
+> +    }
+>  
+>      switch (size) {
+>      case 8:
+> -        r = smmu_readll(s, offset, data, attrs);
+> +        r = smmu_readll(s, offset, data, attrs, reg_sec_sid);
+>          break;
+>      case 4:
+> -        r = smmu_readl(s, offset, data, attrs);
+> +        r = smmu_readl(s, offset, data, attrs, reg_sec_sid);
+>          break;
+>      default:
+>          r = MEMTX_ERROR;
 
-Hi Philippe,
-I mention  SYS_EMU_TARGET_HETEROGENEOUS because I need to handle command
-lines `qemu-system -machine ?` or  `qemu-system -device ?`   that is not
-specified -target. and then
-we still need to list machines and devices and not error on it. That's
-raised from the v1 review of my draft patches.
-Now I think SYS_EMU_TARGET_UNSPECIFIED is a better candidate. that's not
-related to  'heterogeneous emulation'  at all.
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---0000000000005826fd065a18d25e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><span class=3D"gmail-im"><br class=3D"gmail-Apple-intercha=
-nge-newline">&gt;<br>&gt; The &#39;heterogeneous emulation&#39; comes after=
- (and only after) that.<br>&gt; It is a disruptive change, I don&#39;t want=
- any of the current<br><br><br></span>Hi Philippe,<div>I mention=C2=A0=C2=
-=A0<span style=3D"background-color:transparent">SYS_EMU_TARGET_HETEROGENEOU=
-S because I need to handle command lines `qemu-system -machine ?` or=C2=A0<=
-/span>
-
-`qemu-system -device ?`=C2=A0=C2=A0<span style=3D"background-color:transpar=
-ent">=C2=A0that is not specified -target. and then</span></div><div><span s=
-tyle=3D"background-color:transparent">we still need to list machines and de=
-vices and not error on it. That&#39;s raised from the v1 review of my draft=
- patches.</span></div><div>Now I think=C2=A0SYS_EMU_TARGET_UNSPECIFIED is a=
- better candidate. that&#39;s not related to=C2=A0<span style=3D"background=
--color:transparent">=C2=A0</span><span style=3D"background-color:transparen=
-t">&#39;heterogeneous emulation&#39;</span><span style=3D"background-color:=
-transparent">=C2=A0 at all.</span></div><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br=
->Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div>
-
---0000000000005826fd065a18d25e--
 
