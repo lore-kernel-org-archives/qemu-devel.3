@@ -4,127 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C69C61DB9
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 23:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36144C61DCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 23:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x05bP-0001E0-Vt; Fri, 28 Aug 2026 19:03:16 -0400
+	id 1x05eK-0001aJ-PT; Fri, 28 Aug 2026 19:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x05bJ-0000wV-4Z
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:03:09 -0400
+ id 1x05eI-0001ZQ-Od
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:06:14 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x05bC-0006Ba-VT
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:03:07 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1x05eG-0006UW-Be
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:06:14 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67SMU2P0170016
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:03:02 GMT
+ 67SMTIvA3756078
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:06:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=BI9lzGV7CdE
- iHTI8GC3Mv+uu0jG3uaMxbadWrl4HUEc=; b=pNSO/P2fSz91H9yr65T1nQnKACo
- gabz1OSRvM05kkKLyVp5c2mKM59aDTHH4Dvv9lPmJ1ndBYAFxhf50z523WR4zLq1
- Ql5Mq4fENNpxsEks8HLRNgKwXX5EdWRIncO58YLGEIYC+oIb+eJTtxv5qbLxhcHI
- R4I354h7ZprLLDHhiutzDuNlQcPEfhQ/SknF1nYsTBpERFDc1oaegBBcYajGsYWH
- A6BLzxsmS1w7/VqL23Ac2B+lGfOVOwJg8zhj9yQbJPCiwnxasVuJ0fENHehU3rAj
- 1RuncSXc33uksefoGSfMkTH3Btkb/xry4Coejt4iWQYNYXVKblyWLV8NvYA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gbhgq8crm-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fE5+FoZiKr2Sa5RCsVANMuI+3ptLbhtUFLS1svoTdA4=; b=EXXGVaICo/QVg9qY
+ Y8cQYPhdHzYL5BLgpZq03XtypJQZDx+1byAixEIezaVjHPC0on9xSS0iRdfOwWcE
+ 2PzPgRZ7IS97KRGo+zo8qzQouPlDksKssXZN8O0qEziFYm8V4ru8nc7Lz2TdFel1
+ SASeKXPcq1kaoajV93tD1kOaPxIHMzMFzD/FH8FQN/Kt7GA7c57vK067vnJcjiuD
+ KYek0ADOPrDlSfDkNpe5tnBwLTErqkyy+QCGvQwGwkmXfgZaXtYkaT6vZwXa4mGg
+ LGHybc26lIPpCC9dOYYApPo3aRcq7mZZSOwEI867yhd7VxEuZmllo/LHucsrzmHH
+ dh+8Lg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gb42rbtj7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:03:01 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38ec0f510a9so3688356a91.2
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:03:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 23:06:11 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-38f283baf1fso2793542a91.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787958181; x=1788562981; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BI9lzGV7CdEiHTI8GC3Mv+uu0jG3uaMxbadWrl4HUEc=;
- b=AYSkAacW2XJo/j8RkCt5B2uNMP2ly03Tikr6WjSOhvii42AqK1gJDbVFyAe1DZNzRh
- pJ5Vy/JBpHqeSZ/ST0CeEXrycZdqVkBVLmmSfGEYapH7yhlggE/6hfvrdor61X8BCUKJ
- Kgap8ugvn07TO1ocLbfsb1az5qFtiB6M97kQH/lJAp7PVJbRNaWZ0eajFlreHIC8oUs7
- d2pE8E+0rU0eJ1+TN1hUG7mKejO0A/w7dhtOuHA60YLOM/WMlcFGqRfEzYK++Q8AoTkS
- ElLfIjx1Vin1BX8v7spK0t9pzFuCiGmsm93QhVF0LRK1o1EH7uF/zLt+iP2AYENbAe1M
- O1dw==
+ d=oss.qualcomm.com; s=google; t=1787958370; x=1788563170; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fE5+FoZiKr2Sa5RCsVANMuI+3ptLbhtUFLS1svoTdA4=;
+ b=hvIAHa4cC8duElMvfAe+ytXJz4FSz2mYOm2YNv/bXFezbW4K6PPtJZiFrCd6nbFhKL
+ mdqvQjSVb/Npf5HZuTwgyF3wm2KBoq4/pzXSQejbCaDS6FDVDoA9DoB19ETtr9/Swt5t
+ vQzIzr5BXFbBF1esMzAiLL2zW0Pp49MPRkSgarob/2eXA8YgjAAngwShTtrrTMGdZkI5
+ wXRSQH0B1Tq5iZTLpMU7ag8pY+XpgR2uCi3mKQLNq/BoR4eS2Ak5VCu1YOmMMCfGBQDv
+ OnIcqhHR/6syZjKO7IN95YLUInJ1tQf85/bk0uK4ICcHFYqXbQEEVnVxEghG8AxDBFJH
+ wshw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787958181; x=1788562981;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BI9lzGV7CdEiHTI8GC3Mv+uu0jG3uaMxbadWrl4HUEc=;
- b=nSeYUNfg67e1OQanIzxUT9AaRzFrOdWZLUDRxM0wbgAPBzfXi3PX/HLLaN8KCYZh7s
- Qg1K2SXjRlj89XJuu115kH0cD2sodXD22aubX7aBtxxWOHmwgcFmNPVLXadfO1exvz0M
- HqkKKO7CFmBQ7mE1c2ZbXGmJ/YFaM9CJUhoedyFYAcwvz5Z2bMMno4zjECALyeJN1s60
- 7X5qZOR9yO6e9PLUeuEZoQ46rkwjIAEb4OrAaNmnpsICpWp+YONVfUSWC69JITn4O7ue
- Iwpcv4YzhUGCcKJvCepAldpP3eWkDprRRAfCT6UhI9lloTUJ83ex+GqwOWZOb6xPOdPM
- 31bw==
-X-Gm-Message-State: AFuF++kn3QE8uiTn+fmozphO4q92TmY5nsZW2FqC+TzyfvdSjhOMXeJV
- dKjk51wQIJMAjAGSDb0XU2cmrwptmUTU8QsUEb6KYo8qU0VjsVDc5yCXGeeMAspaqRHj4Gs2InT
- +Yc9wiI4W0Ro8C4yfYnUjiPsWZ8MpvaKte2eOJoWq9rlMbmV0AsE6iken/ti1uFTMVw==
-X-Gm-Gg: AYBFou3/gNDnPBk7IJxsC2AEka7kRGheNDy58ZqSwDVm6TiwjQpYfPQKBxld7VTXKPh
- W7LYcBTHWtaSubs8jmZdkg/iFQN5srQXFB9Yg6JuebrMvVvHcCqcklJY/r30K7P6OOCgnCzMSP2
- wNaSPM0qqBY4XlJbKJzCx+k+ul/Th3vG2vwxw9ZZxgm5AaJXnkB5vF200ATor/VrP3frB3B0qUz
- x6lt6iIDQTVvH2aPc3W6ViYmT9fpGQNuv2cE9Sse0eZqvIyUEomyoADbkE/bBfuN+IDMzqt/hWN
- a9tSfiSghSOHEYWgAx09KmbPybMTT45UHPVm26ivLPqfZe2qaRYF+q7KdplKtckZJxS0Bi0VL4+
- /2eJ+hhgTV+MoGDv/2igfAEJzT+qBM1a6w9BDER91Dq0Oj2lx4BVLAIhCrtE=
-X-Received: by 2002:a17:90a:114f:b0:398:9be5:b41e with SMTP id
- 98e67ed59e1d1-3989be5b50emr2705379a91.25.1787958180996; 
- Fri, 28 Aug 2026 16:03:00 -0700 (PDT)
-X-Received: by 2002:a17:90a:114f:b0:398:9be5:b41e with SMTP id
- 98e67ed59e1d1-3989be5b50emr2705342a91.25.1787958180589; 
- Fri, 28 Aug 2026 16:03:00 -0700 (PDT)
-Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ d=1e100.net; s=20251104; t=1787958370; x=1788563170;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fE5+FoZiKr2Sa5RCsVANMuI+3ptLbhtUFLS1svoTdA4=;
+ b=gZRDuK7lhsMmOufTGTr0niYtRoshMiCjGOkzwbJmMRYxdlb2ait8dZqIJ9q88hBl4O
+ 4ZIB0jpq0c06+DKGkP8nofPFA4Imf096eB6hzA3fQ6QBMu9/Qt0RPPEElvQUU7JR5aiW
+ Uy1MeUEZKmDcYKI5ajkuwgMMYSuXWDPx7v5e+riaP55s3DQ8SRvVOoov0Xv1pvITu0zu
+ NJDCP5av0DrFF57NoawD2qnWf/E8Q57dqSDDoQhVMAXqak7tIIqflikkY0wc5wYN/71X
+ IYDQb3qzKf6/yVcAZpXa+Pd5CRAamqaUG2jKPXYptKvOvbblTA+l/u2EnPT5whbaKPeo
+ +Cvg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxev66TIfxQq/rf9ZDejlcVCNzSIEP5XRq8e0MjwlS5TE+SIRt64OGZ4jLbeTsK/ERwSvuvOo4FKgRM@nongnu.org
+X-Gm-Message-State: AFuF++kYtuorQmcNxNLbBKxXOBFSqFMG1TotV8bcIpELxEzi/g2kBGxU
+ vx/4B99V1XUHzW1ZFcCAMyi+f1dKl6MVzrCT6WjU1tffaYCV1iJXVQ4Sc/nN0PGwtq9dnMflhSQ
+ gRMZQRKO+rKUb/X0hHwVFRLMm78rLflzAu7d4FroHE9a6HqCZajP9rja7uA==
+X-Gm-Gg: AYBFou3xPoFQMxKcENM8zDQSRWZ3a8/KQFXCju95fdYf5kpKaTKxO+rJdLvXEMeqdIg
+ hsR56bSwVqL6faqUBL1tFQGkaACZ3BsMhUft4gco59rgMtj9T3nV3cR/tOmPUeC6JtI2P4s763Y
+ SHUevnfzlu19Eh8tGV7y9xG0+kzwgQpNXrfRutEIkJvHFTFdF9bxlWvRVIHb3i468D2MCtp0879
+ LpFurGsBZB6kkIIgZ+6vrC8pV+nbKd2tS4HcCKYVQmsjwcv5CJtFl6x+z2zTU01XPsuuN/527Fe
+ 1Z2spGRa6fcZaHJkorZ6FfGwJQGOw84WZOAvm6+xqGJN3kdm+aAZxLcRligdgoCdoNc+g27RTjL
+ 7mjQsvUx4VHmZ00LCpkFg3DRhj3QX74y+9eeBU1PPj5EzM06HBnhhTNVN7ql8RlExaJpV
+X-Received: by 2002:a17:90b:380b:b0:380:f85c:94b4 with SMTP id
+ 98e67ed59e1d1-396d0f2391cmr17399759a91.7.1787958369917; 
+ Fri, 28 Aug 2026 16:06:09 -0700 (PDT)
+X-Received: by 2002:a17:90b:380b:b0:380:f85c:94b4 with SMTP id
+ 98e67ed59e1d1-396d0f2391cmr17399719a91.7.1787958369403; 
+ Fri, 28 Aug 2026 16:06:09 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3286f99585csm8448569eec.21.2026.08.28.16.02.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Aug 2026 16:03:00 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- philmd@oss.qualcomm.com, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 41/47] target-info: add target_microblaze
-Date: Fri, 28 Aug 2026 22:58:55 +0000
-Message-ID: <20260828225901.367438-42-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
+ a92af1059eb24-142e0d1abbdsm8506420c88.2.2026.08.28.16.06.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Aug 2026 16:06:08 -0700 (PDT)
+Message-ID: <e62fd6e2-d5f2-4c2d-b4c6-d40ee17cbcf1@oss.qualcomm.com>
+Date: Fri, 28 Aug 2026 16:06:05 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: nwyjvrrNJzYZay6lL5dK7R0YRdJNuOGR
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX9dK+vlXefy3b
- aDJcskeXo2OMV34O+bZCssezj21YL7yZZ0oF1e+NUL3Yj5IF1tAW2bUM7kRoU6vbrLOlJ5/K2hy
- I6w/9le+wGbNn/ANaUAfjqBXHgaxxaM=
-X-Proofpoint-ORIG-GUID: nwyjvrrNJzYZay6lL5dK7R0YRdJNuOGR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX2o4AvrvJ2OPz
- 6TTL3YJ3Z8bDsFl9HWEtah/o773TxuRAYk6e9iYqcQKLwTTHzBfFl8bLwG/lvAOliFxIGYPD+d7
- w0iRHIf7PQh1QuQXfJtqfk3xg9J+NwgmJ9nmrTUwX1Tt+nW30NH2Mug4UDCrmt98PjaJIntuyu2
- 4JSrAzzxROt0BJvnvhNM9RBlJ/RsF6/HECGXs8fhtTlgv7GqEZwMh20ETqzAG1/fscrXVPug7Sf
- 6e6WFExF7+hV5BSWrrXnrZw6u3qV6cDYTmEr//+ugwNY8qeMtModTlnc97/Am2I6QISQImMCPTf
- jVVOH2DwrcK7OMnWjbcP4mUwfe+6MGtNsJL2MRax/OnM1tkdZfje3vzR4T+xadTkhFijvEidbOL
- ejGJrnIKNc90WeGLCeFm5POWn9fd0JzEOus58ZtXreEU1aHN28gvsRLp3+oIjVuim6lCF9xubvS
- KRkbhRGHDMilodWXFxQ==
-X-Authority-Analysis: v=2.4 cv=CsGPtH4D c=1 sm=1 tr=0 ts=6a9213a5 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=upjuZsUD9oIM7hwv7PIA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/13] single-binary: link ARM and RISC-V into
+ qemu-system
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-riscv@nongnu.org,
+ Song Gao <17746591750@163.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>, David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Bibo Mao <maobibo@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Chao Liu <chao.liu@processmission.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Glenn Miles <milesg@linux.ibm.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Laurent Vivier <lvivier@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-arm@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Sunil V L
+ <sunilvl@ventanamicro.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Ani Sinha <anisinha@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260826184229.1145-1-luoyonggang@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260826184229.1145-1-luoyonggang@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: hsNSvFTh6b8NBwDEvO2MuZ_SvAHvnpPh
+X-Proofpoint-ORIG-GUID: hsNSvFTh6b8NBwDEvO2MuZ_SvAHvnpPh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX1j9YI4p165E8
+ eU75U+ORUHqZAfzhPLEzbKhX8qxK3VMqctcjyUESC1KshsysrSC5EPlU/vd23l+jAg65/vspBE2
+ ts1gbUI6lzFWjJSuUdLpWOawWXsQakKS+VMnXXUp2t+JsNbIM0ou41iNE1BkBsyOTroPz9IgwHl
+ c/zaQyp4LqzDHLBszHSoe6cNUK8e9pjyrYURYhQr3AttwT4GezBGb+m/TQacpRfvSUDWJVNHz7Z
+ 2H+7T21wAkWloTICove5mVUr01vWr4aNIhDbDMzvnBEvJ41wiAXEa3bltNB4MXPdQcn9ErZav1V
+ eHHmvr1hJOggqLFUeZNM7/YWZOZX3Rvgc+bXHaPxdE6JJ5OTwxrapSE35XdvbGcZQzMzfdCDG5a
+ I2eA1leZFM7odOEdYgENOE6yh+e0K4k4yCUP96XnC6Xf4FBOKtepxojLYLvONDofk/1yfwqTrFt
+ NtmXanObdXaO+oufqZg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI4MDIwMCBTYWx0ZWRfX/Qd5jI1xLNhw
+ 5+Tzx4TXa/jXPEwFD5AN6tVIQJIAoP7wJm/Dk7nwFwRLFfbuhGQt1WnbutR3VewdN/sdg2Wb8GC
+ kamZnglUAbVSyQbghtjT/Yy8ES7++E8=
+X-Authority-Analysis: v=2.4 cv=Fpo1OWrq c=1 sm=1 tr=0 ts=6a921463 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=GaQpPoNlAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=wAUz5CRPtLaz9UZ5HuIA:9
+ a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=xF5q_uoM5gZT5J3czcBi:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-28_07,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0 spamscore=0
- malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 phishscore=0
+ clxscore=1015 spamscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608280200
 Received-SPF: pass client-ip=205.220.180.131;
@@ -152,48 +183,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- include/qemu/target-info.h | 7 +++++++
- target-info.c              | 6 ++++++
- 2 files changed, 13 insertions(+)
+On 8/26/2026 11:42 AM, Yonggang Luo wrote:
+> This series produces one qemu-system binary that can run ARM (32 and 64)
+> and RISC-V (32 and 64). It follows Pierrick Bouvier's merged series
+> "single-binary: implement dynamic filtering for machine types":
+> 
+>   https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com/
+> 
+> That work added TYPE_TARGET_SPECIFIC so machines can be filtered per
+> target in one process. This series uniquifies remaining per-target C
+> symbols and QOM names, selects TargetInfo at runtime, and links ARM
+> plus RISC-V into qemu-system.
+> 
+> A combined link cannot keep C symbols or QOM type names that were unique
+> only because each qemu-system-$arch was a separate binary. The first
+> patches remove those collisions:
+> 
+> - TYPE_ACCEL_CPU is a single abstract accel-cpu parent, registered once
+>   next to TYPE_ACCEL. Leaf names still encode the CPU type so
+>   accel_init_cpu_interfaces() can look up "<accel>-accel-"
+>   CPU_RESOLVING_TYPE.
+> - ARM and RISC-V virt QOM names become arm-virt and riscv-virt. The
+>   boards keep -machine virt via machine_class_set_name() after the
+>   selected target is applied. Latest ARM virt still sets mc->alias.
+> - virt ACPI helpers and RISC-V TCG crc32/crc32c/wfi helpers get an arch
+>   prefix so the combined link does not need meson -D name mangling.
+>   LoongArch virt_acpi_setup is renamed in the same pass.
+> 
+> Target selection then has to work with more than one TargetInfo in the
+> process:
+> 
+> - Parse -target before TargetInfo is fixed. The token is target_name
+>   (arm, aarch64, riscv32, riscv64). When -target is omitted, infer it
+>   from the program basename (qemu-system-aarch64, strip .exe).
+>   qemu-system with no arch suffix always requires -target; there is
+>   no unique-TargetInfo fallback. Use -target ? to list names.
+> - Combined binaries cannot keep one global C symbol per arch for
+>   query-cpu-definitions, dump notes, or Angel semihosting. Those
+>   handlers move onto a process-wide TargetCpuOps table.
+> 
+> The last patch still builds qemu-system-$TARGET. qemu-system is extra,
+> from the union of ARM and RISC-V Kconfig plus aarch64/riscv64 arch
+> objects. Do not replace the per-target binaries with symlinks to
+> qemu-system. Do not add qemu-systemw on Windows: a GUI twin of the
+> combined binary would keep QEMU exporting data from the .exe into
+> DLLs, and those data exports cannot be delay-loaded (qdev_prop_array
+> and other qdev_prop_*). That would block enabling modules globally
+> on Windows.
+> 
+> Examples:
+> 
+>   qemu-system -target aarch64 -M virt ...
+>   qemu-system-riscv64 -M virt ...
+> 
+> A combined binary named qemu-system with no arch suffix always
+> requires -target. A missing or unknown name fails and points at
+> -target ?.
+> 
+> Changes v1 -> v2:
+> - Drop little- and big-endian TargetInfo variants from this series.
+>   v1 registered target-info-<name>-le and -be, selected is_default from
+>   TARGET_BIG_ENDIAN, and accepted -target tokens such as aarch64-le.
+>   v2 keeps one TargetInfo per target_name. Endian variants are later
+>   work, not required to link ARM and RISC-V into qemu-system.
+> - -target help/? lists target_name only. Unknown names point at
+>   -target ? rather than printing the list and exit(1).
+> - qemu-system with no arch suffix always requires -target. v1 could
+>   still pick a unique TargetInfo when only one was registered.
+> - Keep qemu-system-$TARGET; qemu-system is an extra binary. v1
+>   described installing per-arch names as symlinks to qemu-system.
+> - Do not build qemu-systemw for the combined binary. A Windows GUI
+>   twin would keep using exe symbols from DLLs, and data exports
+>   cannot be delay-loaded (qdev_prop_array / qdev_prop_*), which
+>   would block enabling modules globally on Windows.
+> 
+> Based-on: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
+> 
+> Yonggang Luo (13):
+>   accel: use a shared TYPE_ACCEL_CPU parent
+>   hw/riscv/virt: register TYPE_TARGET_SPECIFIC
+>   hw/arm/virt: register TYPE_TARGET_SPECIFIC on the abstract parent
+>   machine: allow -M name to differ from QOM type
+>   hw/riscv/virt: use unique QOM name
+>   hw/arm/virt: use unique QOM name
+>   hw/arm/virt: prefix ACPI helpers with arm_virt_
+>   hw/riscv/virt: prefix ACPI helpers with riscv_virt_
+>   hw/loongarch/virt: prefix ACPI helper with loongarch_virt_
+>   target/riscv: uniquify TCG crc32, crc32c, and wfi helper names
+>   system/vl: add new option -target
+>   target-info: dispatch CPU QMP, dump, and arm/riscv semihosting
+>   meson: build single binary
+> 
+>  MAINTAINERS                                   |  1 -
+>  accel/accel-common.c                          | 21 ++---
+>  hw/arm/virt-acpi-build.c                      |  4 +-
+>  hw/arm/virt.c                                 | 17 ++--
+>  hw/core/cpu-system.c                          | 23 ++++++
+>  hw/core/machine-qmp-cmds.c                    | 26 +++++++
+>  hw/core/machine.c                             |  6 ++
+>  hw/loongarch/virt-acpi-build.c                |  6 +-
+>  hw/loongarch/virt.c                           |  2 +-
+>  hw/riscv/virt-acpi-build.c                    |  2 +-
+>  hw/riscv/virt.c                               | 12 ++-
+>  include/accel/accel-cpu-target.h              |  3 +-
+>  include/accel/accel-cpu.h                     |  2 +
+>  include/hw/arm/virt.h                         |  6 +-
+>  include/hw/core/boards.h                      | 12 ++-
+>  include/hw/loongarch/virt.h                   |  2 +-
+>  include/hw/riscv/virt.h                       |  6 +-
+>  include/qemu/target-info-qom.h                | 42 +++++++++-
+>  include/semihosting/common-semi.h             | 56 ++++++++++++--
+>  meson.build                                   | 69 ++++++++++++++++-
+>  meson_options.txt                             |  2 +
+>  qemu-options.hx                               |  8 ++
+>  scripts/meson-buildoptions.sh                 |  3 +
+>  stubs/dump.c                                  | 27 -------
+>  stubs/meson.build                             |  2 -
+>  stubs/qmp-cpu.c                               | 21 -----
+>  system/vl.c                                   | 44 ++++++++---
+>  target-info-qom.c                             | 77 +++++++++++++++++--
+>  target-info.c                                 | 32 ++++++++
+>  target/arm/arch_dump.c                        |  8 +-
+>  target/arm/arm-qmp-cmds.c                     | 15 +++-
+>  target/arm/common-semi-target.c               | 23 ++++--
+>  target/arm/meson.build                        |  7 +-
+>  target/i386/arch_dump.c                       |  8 +-
+>  target/i386/cpu-system.c                      | 12 ++-
+>  target/i386/cpu.c                             |  6 +-
+>  target/loongarch/arch_dump.c                  |  8 +-
+>  target/loongarch/loongarch-qmp-cmds.c         | 15 +++-
+>  target/mips/system/mips-qmp-cmds.c            | 15 ++--
+>  target/ppc/arch_dump.c                        |  8 +-
+>  target/ppc/ppc-qmp-cmds.c                     | 15 ++--
+>  target/riscv/arch_dump.c                      |  8 +-
+>  target/riscv/common-semi-target.c             | 25 ++++--
+>  target/riscv/helper.h                         |  6 +-
+>  target/riscv/meson.build                      |  4 +-
+>  target/riscv/riscv-qmp-cmds.c                 | 15 +++-
+>  target/riscv/tcg/bitmanip_helper.c            |  4 +-
+>  .../tcg/insn_trans/trans_privileged.c.inc     |  2 +-
+>  target/riscv/tcg/insn_trans/trans_xlrbr.c.inc |  4 +-
+>  target/riscv/tcg/op_helper.c                  |  2 +-
+>  target/s390x/arch_dump.c                      |  8 +-
+>  target/s390x/cpu_models_system.c              | 15 +++-
+>  tests/qtest/fuzz/fuzz.c                       |  2 +-
+>  53 files changed, 562 insertions(+), 207 deletions(-)
+>  delete mode 100644 stubs/dump.c
+>  delete mode 100644 stubs/qmp-cpu.c
+> 
 
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index a60751a4ef6..e6524a8001e 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -84,6 +84,13 @@ bool target_arm(void);
-  */
- bool target_aarch64(void);
- 
-+/**
-+ * target_microblaze:
-+ *
-+ * Returns whether the target architecture is Microblaze.
-+ */
-+bool target_microblaze(void);
-+
- /**
-  * target_base_ppc:
-  *
-diff --git a/target-info.c b/target-info.c
-index 8e9f1823dc0..1124aa5f780 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -78,6 +78,12 @@ bool target_aarch64(void)
-     return target_arch() == SYS_EMU_TARGET_AARCH64;
- }
- 
-+bool target_microblaze(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_MICROBLAZE;
-+}
-+
-+
- bool target_base_ppc(void)
- {
-     switch (target_arch()) {
--- 
-2.43.0
+This series iterates on v1, but still does not tackle filtering of
+devices/cpus between the targets. This is a prerequisite before being to
+mix multiple targets together.
 
+I sent the following series to show how a full filtering would work, and
+if it's a direction people here would be interested to follow:
+https://lore.kernel.org/qemu-devel/20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com/T/#t
+
+Regards,
+Pierrick
 
