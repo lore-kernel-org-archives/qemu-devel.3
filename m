@@ -4,103 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD8BC61DD6
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 20:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511DEC61DE1
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 23:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0PEh-0006ou-28; Sat, 29 Aug 2026 16:01:07 -0400
+	id 1x0SiG-00082B-DI; Sat, 29 Aug 2026 19:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x0PEf-0006oj-0P
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 16:01:05 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x0PEd-0005Ig-Gr
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 16:01:04 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-3a2b4743936so16329201fa.0
- for <qemu-devel@nongnu.org>; Sat, 29 Aug 2026 13:01:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788033659; cv=none;
- d=google.com; s=arc-20260327;
- b=bnWNEhIpVWI5Zy9CYUWb19yyCiCbXb7wZH/T0Yshi/cLQIx1T4eGOHjVw2X5EwxsiA
- fEtb8sNplumhD+tqEylZKlvuRV1yzNfCupf5gvj5lhTre3XOlHtruTKA2ZjWZ95uGUUV
- 1BKevX7NiottSsqEJHm6OyuO5Mx8AANqZluXo2NYxAnp+xHDRhafnIX0z+B8III7va74
- 4VUtjtk1D+hHC3ppKuCfektWKwfXC2CHKL+XuZI7U3qtRRusHdtDdKcmyqxPeKek450v
- abwzQA6hgWcyBc0919gRPfGxCFrzt7raSu6aZJBmMZPUpn1h1x5/QIjyqsJvL3ZN6IE3
- bgQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8i4iK0s4ro86T1XbI47eLSDdgjqHmD1Z2vTmNRslqT8=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=IMRPcaq9XHcwOUoqzjGLxlCKg49dMeq6TyKXCGy5hgnnWVOyH9z25hSKFFnwQKsG6W
- fiBBf/Xavgl4ikmm6GeoIDXxgVrBJpsWH/IPqEyn0Wi6so+65ejRPUUsbKhJFEu+DExa
- 36ICicD8zPxCdo8wi2J9vyD+3LSL7k4LpF/HuCaOUllL7wiAD3s6Kgt+oe+gMe1PIPDZ
- 5iO7wmNxlXSewg1x3URFo0OVMNom3tTwdvo0Et2w5r11QoZXkaDAihjKy+FogJak4AWR
- 00GuTDC5LaRmiDs5Qm4QP5OS02AYvwQxhgkeJlzMuXSNmNapc11nuL15rU3ycavKZEtH
- cvuA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788033659; x=1788638459; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8i4iK0s4ro86T1XbI47eLSDdgjqHmD1Z2vTmNRslqT8=;
- b=J2lr5o56ciLQni6TDM+GEMRAsJdfnKep8BtwJHTtwXyWGIL+GWETZQl7/Td5rvB+n8
- dPW8AD9cb+cSfVrSDLSF3ai2bzr1I2oWhamsek2qlnb+qaHJlQz0BCYtTa2v1Yah2aXx
- 9w0/q7y2D2E2oqQibvlfQh9PZQu4n9F1zcyZ6DhcKR3Qtn4iVaFgM9iRb4IHMQ6jxIJo
- GLfTB1IUViEUw/bdUiAwbTDAD+DJ4bmGIetonveVqBy0qS/6LN/DOdQTPrpC7etqW4et
- Fd4WhQPfkl7gB1Nmha1pD7xQ+VY5AzjXj1M1tdfnwQmfhNk6Qg2wnH55jYwLab/Gu5r7
- zlpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788033659; x=1788638459;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8i4iK0s4ro86T1XbI47eLSDdgjqHmD1Z2vTmNRslqT8=;
- b=Dwox/rAdT1kl+mVDT6mDOlLYeSR8LPwJcGr2P0If3T+Z/8ztWBcRlxT23cxxmwM7uK
- M7DHisMTa1E5FEv+MjGv6G07S+8F5hxcXR5GI/3JcpN1BMG7uCL0TL9eM3APEdl68M2M
- yE5DYk8lJY1n4vMIJp1q6JGhWjfPcVo0xYtOvPOkzW3VKlYDl57V6Ks9zyEN7hcYjn3+
- jcRGCyYBauGJRyHBp6+gU80T+wJ/ZT0h2F8znLyzllBB3EESH7JCUOpDeLd+J1A4hwV0
- dxJ/tAsCIjTuGn3glVEbF9HREXH75Hjj/Oz8iuV+aXyMTg51RA3tLtQAntZJFux+seQT
- frvw==
-X-Gm-Message-State: AFuF++k5d6b3bvbWz7G52nV8AsRUlVj+vTFMspheYQCkfhsp+S/Ugmzx
- WAjA0T9yeWKCwje+V0ZbMzMY1JfgDBfnaSg/yotp2HGZBFI02Z9KcH3WfbZmXm8t5q6mggFTOMW
- mJ1tBB9nMaysNtZmrum0YvjngdFfsv70=
-X-Gm-Gg: AYBFou0QAPSkz1cvyavpPb8WuX9wUkXztCI8JoI5qXa6gbJFx/HhsoH+Q+VhLCazwBC
- Q8vQsWO4FxsefQeE+IJrMHE5fLK/fdGbxCTkXYYqOk5UCJ0opl3YGuMo6nZsKwwb1GqPPY/MpDy
- iGYwVgQGNS5YiHzfWTfHf1ZALRDoujZkjTrCfeG6n97DfPmQ3ZTozmEAgNixdccmDZ7fQjeQbLt
- Y47qZDbjE/SO05ggtoXbDFie0T6fwctXK5yFugbnM3FpGHZgy90VpCz2TR6N4Y5tcODWtQRAkRd
- AfGQ7QbQr6Qjil/VYigR9hrm2aHzlsGmRuCsiyFIjwRxk0Q=
-X-Received: by 2002:a05:6512:3c8f:b0:5b0:ceb3:1150 with SMTP id
- 2adb3069b0e04-5b5e68c215emr4601720e87.8.1788033659147; Sat, 29 Aug 2026
- 13:00:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x0SiE-00081y-Uf; Sat, 29 Aug 2026 19:43:50 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x0SiC-0006CN-WB; Sat, 29 Aug 2026 19:43:50 -0400
+Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hXWzb0T8dzBqXY;
+ Sun, 30 Aug 2026 01:43:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
+ s=dkim; t=1788047019;
+ bh=mR3cZMhs8jJwtsg810+4NT9bWS2wNRA6jz/tsbJBO84=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ZMwjgUdfxt/J1bI5824g7tf7ZMiKSC3IuzSvU91r1CiWy/t9DwQMrXTVXFbqdCUWf
+ ql8z3W+iWLUlY3NsC//KCIWBBSVVS1v0sFVSRUsQ1e2r8A5ywbKGP7nGp179Zvp9g0
+ w8XZxHvfKoEaEou8F10mi9oxqKNE9qKs+nW71ZXKp3O1uGb8BAADrQfPP8Dv2aqQ96
+ hafJVP9jYiz6Zcx/ElIEx5snuw2GYgCzEniudvlsxItavEbyO3FV3yB94rbdOpD88B
+ eaIv1Tcgy0Nw3xH5IdrO/N2Gvb9z6Mz6rYhu2A6E/LscLlFsSmJDsnXCAc0VOzNB54
+ PzQQa05TJcGdA==
+Received: from localhost.localdomain (unknown [10.134.14.34])
+ (Authenticated sender: gilles.grimaud)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXWzZ52Mjz7v19;
+ Sun, 30 Aug 2026 01:43:38 +0200 (CEST)
+From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, qemu-arm@nongnu.org,
+ gilles grimaud <gilles.grimaud@univ-lille.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH RFC v2 02/30] hw/char/pl011: expose DMA request outputs
+Date: Sun, 30 Aug 2026 01:42:36 +0200
+Message-ID: <20260829234308.33725-3-gilles.grimaud@univ-lille.fr>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
+References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
-References: <20260828224451.1564072-1-richard.henderson@linaro.org>
-In-Reply-To: <20260828224451.1564072-1-richard.henderson@linaro.org>
-From: Matt Turner <mattst88@gmail.com>
-Date: Sat, 29 Aug 2026 16:00:46 -0400
-X-Gm-Features: AcwNN1XHt5bt9-Vz5C7xT4JdAn4frp7QPnfiZqoXj1cFoeHlTGgAdeM3FmPLAaI
-Message-ID: <CAEdQ38F-2N_fAj1d+Ja15MDoPehOJmd7vcRhrfHYBtdah2G-EQ@mail.gmail.com>
-Subject: Re: [PATCH 00/16] tcg: Introduce INDEX_op_lea
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x22f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,31 +75,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 28, 2026 at 6:44=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Add a complex addressing mode primitive, and some trivial use cases.
->
-> This came up in conversation with Matt Turner re his inline jump cache
-> expansion.  In particular,
->
-> -    tcg_gen_shli_i64(h, h, 4);
-> -    tcg_gen_add_i64(ent, jc, ent);
-> +    tcg_gen_lea_i64(ent, jc, h, 4, 0);
->
-> With the use case in target/i386/tcg, we get nearly full coverage of
-> all the possible use cases.  The only thing I didn't immediately see
-> is shifts > 3, which could be visible with loongarch64 guests.
->
-> There are plenty of other places in target/ that could use this, but
-> the shift/add/imm extraction/generation are inconveniently separated.
-> E.g. m68k address generation, arm add-shifted, etc.
->
-> It may not even be worth converting those, but instead adding some
-> trivial peepholing along the lines of Matt's user-only guest displacement=
-.
+From: gilles grimaud <gilles.grimaud@univ-lille.fr>
 
-This looks great to me, for what that's worth.
+Expose named TX and RX DMA request GPIO outputs from the PL011 model. Update them when UARTDMACR or FIFO state changes so SoC DMA controllers can consume PL011 pacing without device-specific callbacks.
 
-Reviewed-by: Matt Turner <mattst88@gmail.com>
+Add a qtest covering TX and RX request assertion and deassertion.
+
+Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
+---
+ MAINTAINERS              |  1 +
+ hw/char/pl011.c          | 29 ++++++++++--
+ include/hw/char/pl011.h  |  2 +
+ tests/qtest/meson.build  |  2 +
+ tests/qtest/pl011-test.c | 95 ++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 125 insertions(+), 4 deletions(-)
+ create mode 100644 tests/qtest/pl011-test.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4a49a40294..55f6f2e3c0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -763,6 +763,7 @@ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/char/pl011.c
+ F: include/hw/char/pl011.h
++F: tests/qtest/pl011-test.c
+ F: hw/display/pl110*
+ F: hw/dma/pl080.c
+ F: include/hw/dma/pl080.h
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index cb12c3e224..77fa29ae28 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -80,6 +80,11 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+ #define LCR_FEN     (1 << 4)
+ #define LCR_BRK     (1 << 0)
+ 
++/* DMA Control Register, UARTDMACR */
++#define DMACR_RXDMAE    (1 << 0)
++#define DMACR_TXDMAE    (1 << 1)
++#define DMACR_DMAONERR  (1 << 2)
++
+ /* Control Register, UARTCR */
+ #define CR_OUT2     (1 << 13)
+ #define CR_OUT1     (1 << 12)
+@@ -157,6 +162,15 @@ static inline unsigned pl011_get_fifo_depth(PL011State *s)
+     return pl011_is_fifo_enabled(s) ? PL011_FIFO_DEPTH : 1;
+ }
+ 
++static void pl011_update_dreq(PL011State *s)
++{
++    qemu_set_irq(s->dreq_tx,
++                 (s->dmacr & DMACR_TXDMAE) &&
++                 !(s->flags & PL011_FLAG_TXFF));
++    qemu_set_irq(s->dreq_rx,
++                 (s->dmacr & DMACR_RXDMAE) && s->read_count > 0);
++}
++
+ static inline void pl011_reset_rx_fifo(PL011State *s)
+ {
+     s->read_count = 0;
+@@ -190,6 +204,7 @@ static void pl011_fifo_rx_put(void *opaque, uint32_t value)
+         trace_pl011_fifo_rx_full();
+         s->flags |= PL011_FLAG_RXFF;
+     }
++    pl011_update_dreq(s);
+     if (s->read_count == s->read_trigger) {
+         s->int_level |= INT_RX;
+         pl011_update(s);
+@@ -258,6 +273,7 @@ static void pl011_write_txdata(PL011State *s, uint8_t data)
+     pl011_loopback_tx(s, data);
+     s->int_level |= INT_TX;
+     pl011_update(s);
++    pl011_update_dreq(s);
+ }
+ 
+ static uint32_t pl011_read_rxdata(PL011State *s)
+@@ -280,6 +296,7 @@ static uint32_t pl011_read_rxdata(PL011State *s)
+     trace_pl011_read_fifo(s->read_count, fifo_depth);
+     s->rsr = c >> 8;
+     pl011_update(s);
++    pl011_update_dreq(s);
+     qemu_chr_fe_accept_input(&s->chr);
+     return c;
+ }
+@@ -469,6 +486,7 @@ static void pl011_write(void *opaque, hwaddr offset,
+         }
+         s->lcr = value;
+         pl011_set_read_trigger(s);
++        pl011_update_dreq(s);
+         break;
+     case 12: /* UARTCR */
+         /* ??? Need to implement the enable bit.  */
+@@ -492,10 +510,8 @@ static void pl011_write(void *opaque, hwaddr offset,
+         pl011_update(s);
+         break;
+     case 18: /* UARTDMACR */
+-        s->dmacr = value;
+-        if (value & 3) {
+-            qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
+-        }
++        s->dmacr = value & (DMACR_RXDMAE | DMACR_TXDMAE | DMACR_DMAONERR);
++        pl011_update_dreq(s);
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -603,6 +619,8 @@ static int pl011_post_load(void *opaque, int version_id)
+ 
+     s->ibrd &= IBRD_MASK;
+     s->fbrd &= FBRD_MASK;
++    s->dmacr &= DMACR_RXDMAE | DMACR_TXDMAE | DMACR_DMAONERR;
++    pl011_update_dreq(s);
+ 
+     return 0;
+ }
+@@ -653,6 +671,8 @@ static void pl011_init(Object *obj)
+     for (i = 0; i < ARRAY_SIZE(s->irq); i++) {
+         sysbus_init_irq(sbd, &s->irq[i]);
+     }
++    qdev_init_gpio_out_named(DEVICE(obj), &s->dreq_tx, "dreq-tx", 1);
++    qdev_init_gpio_out_named(DEVICE(obj), &s->dreq_rx, "dreq-rx", 1);
+ 
+     s->clk = qdev_init_clock_in(DEVICE(obj), "clk", pl011_clock_update, s,
+                                 ClockUpdate);
+@@ -687,6 +707,7 @@ static void pl011_reset(DeviceState *dev)
+     s->logged_disabled_uart = false;
+     pl011_reset_rx_fifo(s);
+     pl011_reset_tx_fifo(s);
++    pl011_update_dreq(s);
+ }
+ 
+ static void pl011_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/char/pl011.h b/include/hw/char/pl011.h
+index 5695787650..c7b5a3a2b3 100644
+--- a/include/hw/char/pl011.h
++++ b/include/hw/char/pl011.h
+@@ -49,6 +49,8 @@ struct PL011State {
+     int read_trigger;
+     CharFrontend chr;
+     qemu_irq irq[6];
++    qemu_irq dreq_tx;
++    qemu_irq dreq_rx;
+     Clock *clk;
+     bool migrate_clk;
+     bool logged_disabled_uart;
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index cbdef5a545..5555ce4eae 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -240,6 +240,8 @@ qtests_stm32l4x5 = \
+    'stm32l4x5_usart-test']
+ 
+ qtests_arm = \
++  (config_all_devices.has_key('CONFIG_ARM_VIRT') and
++   config_all_devices.has_key('CONFIG_PL011_C') ? ['pl011-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
+diff --git a/tests/qtest/pl011-test.c b/tests/qtest/pl011-test.c
+new file mode 100644
+index 0000000000..30722cf9e2
+--- /dev/null
++++ b/tests/qtest/pl011-test.c
+@@ -0,0 +1,95 @@
++/*
++ * QTest testcase for the Arm PL011 UART DMA request outputs.
++ *
++ * Copyright (c) 2026 Gilles Grimaud
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qobject/qdict.h"
++#include "qobject/qlist.h"
++#include "libqtest.h"
++
++#define PL011_BASE          0x09000000
++#define PL011_DR            0x000
++#define PL011_CR            0x030
++#define PL011_DMACR         0x048
++
++#define CR_RXE              (1 << 9)
++#define CR_TXE              (1 << 8)
++#define CR_LBE              (1 << 7)
++#define CR_UARTEN           (1 << 0)
++
++#define DMACR_RXDMAE        (1 << 0)
++#define DMACR_TXDMAE        (1 << 1)
++
++static char *find_pl011_path(QTestState *qts)
++{
++    g_autoptr(QDict) response = NULL;
++    QListEntry *entry;
++    QList *children;
++
++    response = qtest_qmp(qts,
++                         "{ 'execute': 'qom-list',"
++                         "  'arguments': { 'path': '/machine/unattached' } }");
++    children = qdict_get_qlist(response, "return");
++
++    QLIST_FOREACH_ENTRY(children, entry) {
++        QDict *child = qobject_to(QDict, qlist_entry_obj(entry));
++
++        if (g_str_equal(qdict_get_str(child, "type"), "child<pl011>")) {
++            return g_strdup_printf("/machine/unattached/%s",
++                                   qdict_get_str(child, "name"));
++        }
++    }
++
++    g_assert_not_reached();
++}
++
++static void test_tx_dreq(void)
++{
++    QTestState *qts = qtest_init("-M virt");
++    g_autofree char *path = find_pl011_path(qts);
++
++    qtest_irq_intercept_out_named(qts, path, "dreq-tx");
++    g_assert_false(qtest_get_irq(qts, 0));
++
++    qtest_writel(qts, PL011_BASE + PL011_DMACR, DMACR_TXDMAE);
++    g_assert_true(qtest_get_irq(qts, 0));
++    g_assert_cmphex(qtest_readl(qts, PL011_BASE + PL011_DMACR), ==,
++                    DMACR_TXDMAE);
++
++    qtest_writel(qts, PL011_BASE + PL011_DMACR, 0);
++    g_assert_false(qtest_get_irq(qts, 0));
++
++    qtest_quit(qts);
++}
++
++static void test_rx_dreq(void)
++{
++    QTestState *qts = qtest_init("-M virt");
++    g_autofree char *path = find_pl011_path(qts);
++
++    qtest_irq_intercept_out_named(qts, path, "dreq-rx");
++    qtest_writel(qts, PL011_BASE + PL011_CR,
++                 CR_RXE | CR_TXE | CR_LBE | CR_UARTEN);
++    qtest_writel(qts, PL011_BASE + PL011_DMACR, DMACR_RXDMAE);
++    g_assert_false(qtest_get_irq(qts, 0));
++
++    qtest_writel(qts, PL011_BASE + PL011_DR, 'x');
++    g_assert_true(qtest_get_irq(qts, 0));
++    g_assert_cmphex(qtest_readl(qts, PL011_BASE + PL011_DR), ==, 'x');
++    g_assert_false(qtest_get_irq(qts, 0));
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/pl011/dreq/tx", test_tx_dreq);
++    qtest_add_func("/pl011/dreq/rx", test_rx_dreq);
++
++    return g_test_run();
++}
+-- 
+2.55.0
+
 
