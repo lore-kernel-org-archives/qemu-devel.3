@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEB8C61DE5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D50C61DD6
 	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 23:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0Sj1-0008LF-3G; Sat, 29 Aug 2026 19:44:39 -0400
+	id 1x0SiS-00086l-Mj; Sat, 29 Aug 2026 19:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0Siz-0008KS-C1; Sat, 29 Aug 2026 19:44:37 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ id 1x0SiR-000862-0M; Sat, 29 Aug 2026 19:44:03 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0Siw-0006Hy-Nz; Sat, 29 Aug 2026 19:44:37 -0400
+ id 1x0SiN-0006Dr-Fh; Sat, 29 Aug 2026 19:44:02 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hXWzg4CYgz838j;
- Sun, 30 Aug 2026 01:43:43 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hXWzc2xq2zBqXm;
+ Sun, 30 Aug 2026 01:43:40 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788047023;
- bh=+IncyZOzLuaGeKBlStDm8lonLD3YLbuaPl/r4eKXcEE=;
+ s=dkim; t=1788047020;
+ bh=hLD3i3oCRJDl49ntg36l1fO5NhcwYmoduEeC9J/CmiU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ck/6+XNnGunfQEx1+3rPfQH+csRPzoX2VOhSvs9ziz8e1VeLmPz76CvPbfsz4IMca
- Fb+WfAHIuPiqUyB1FAd5SUN/8irZltujAGiqOeHxjktrefgFd+fIWhFAkCa3cTf1bf
- q6p3YJZ6Bma8KOIc8VuVj3jZVTejMCy+bVuVMXn6GBYyzrE4hwvlBNnLGXd6ATxzqW
- yFT/xayMpGJ7jT9DsI/zjYaBBDIqPwcbHPC0uIsWXV9YAgo2kajMC9RxOa8jRTIq+y
- s+qqvwszYRcdf+YCpntp+SpqGvLQPz04UaMDTtei4Gv19BMCYwnoisRYNigBkD7t4h
- 7vyXV/XXd/lEw==
+ b=yFRLdgAaisbizj0BOi428ZfNMv173Hy9WINqzm9+Y0/ESbThTSDqc6atN+CIlsO5l
+ 5ph0TcwkwqnctZab+JKVj0CiMk4KIIJoT6i+JrWujWA4GseT8Slx5kelxd8EeYQmQ2
+ rSptC3SD+e4HnPpMVQEjOfz9OhdNRxHyAG5sZ2UwigEmLnX30q1ZSG2U/oqPaSOrVF
+ NUHvHlF3heJgkkkPuVd9Acd9AMF7UXF+X4m90WGSVqsxQMm9QLfW9KIvuxz6O+nqJH
+ ywWTKAmXKlu+nG2wW3BTgR79YrtK3fYb+RhupGR3Yxl+kw96TEJFR6lm+V+756FNJJ
+ eHGluTON1fahQ==
 Received: from localhost.localdomain (unknown [10.134.14.34])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXWzg21Kqz7tLT;
- Sun, 30 Aug 2026 01:43:43 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXWzc0gnnz7v19;
+ Sun, 30 Aug 2026 01:43:40 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, qemu-arm@nongnu.org,
@@ -42,16 +42,16 @@ Cc: alex.bennee@linaro.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH RFC v2 14/30] hw/misc: add RP2040 IO_QSPI
-Date: Sun, 30 Aug 2026 01:42:48 +0200
-Message-ID: <20260829234308.33725-15-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH RFC v2 06/30] hw/misc: add RP2040 SYSINFO and SYSCFG
+Date: Sun, 30 Aug 2026 01:42:40 +0200
+Message-ID: <20260829234308.33725-7-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -76,136 +76,330 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: gilles grimaud <gilles.grimaud@univ-lille.fr>
 
-Model the six QSPI GPIO control pairs and the PROC0, PROC1 and dormant-wake interrupt registers, including atomic aliases and documented masks. Wire the register block into the RP2040 SoC and add focused qtests for reset, atomic control updates and forced interrupt status. The QSPI chip-select connection is deferred to the XIP controller patch.
+Model the RP2040 identification and system configuration registers, including APB atomic aliases and documented reset and write masks. Wire SYSCFG into the SoC so NMI masks reroute interrupt inputs and MEMPOWERDOWN blocks access to powered-off ROM and SRAM banks.\n\nAdd focused qtests for register values, aliases, power-down behavior, and UART0 IRQ routing to NMI.
 
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/Kconfig                   |   1 +
- hw/arm/rp2040.c                  |   8 +-
- hw/misc/Kconfig                  |   3 +
- hw/misc/meson.build              |   1 +
- hw/misc/rp2040_ioqspi.c          | 263 +++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h          |   2 +
- include/hw/misc/rp2040_ioqspi.h  |  33 ++++
- tests/qtest/meson.build          |   1 +
- tests/qtest/rp2040-ioqspi-test.c |  81 ++++++++++
- 9 files changed, 392 insertions(+), 1 deletion(-)
- create mode 100644 hw/misc/rp2040_ioqspi.c
- create mode 100644 include/hw/misc/rp2040_ioqspi.h
- create mode 100644 tests/qtest/rp2040-ioqspi-test.c
+ MAINTAINERS                              |   1 +
+ hw/arm/Kconfig                           |   2 +
+ hw/arm/rp2040.c                          | 129 +++++++++++-
+ hw/misc/Kconfig                          |   6 +
+ hw/misc/meson.build                      |   2 +
+ hw/misc/rp2040_syscfg.c                  | 244 +++++++++++++++++++++++
+ hw/misc/rp2040_sysinfo.c                 | 103 ++++++++++
+ include/hw/arm/rp2040.h                  |  12 ++
+ include/hw/misc/rp2040_syscfg.h          |  42 ++++
+ include/hw/misc/rp2040_sysinfo.h         |  25 +++
+ tests/qtest/meson.build                  |   1 +
+ tests/qtest/rp2040-sysinfo-syscfg-test.c | 176 ++++++++++++++++
+ 12 files changed, 740 insertions(+), 3 deletions(-)
+ create mode 100644 hw/misc/rp2040_syscfg.c
+ create mode 100644 hw/misc/rp2040_sysinfo.c
+ create mode 100644 include/hw/misc/rp2040_syscfg.h
+ create mode 100644 include/hw/misc/rp2040_sysinfo.h
+ create mode 100644 tests/qtest/rp2040-sysinfo-syscfg-test.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b000b3287d..fd35521947 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1042,6 +1042,7 @@ S: Maintained
+ F: hw/*/rp2040*
+ F: include/hw/*/rp2040*
+ F: hw/arm/raspi_pico.c
++F: tests/qtest/rp2040*
+ F: tests/tcg/arm/system/rp2040*
+ 
+ Real View
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 7e3d23e81c..a1b94532b4 100644
+index d93303ab80..5d55ca06fd 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -380,6 +380,7 @@ config RP2040
+@@ -379,6 +379,8 @@ config RP2040
+     select ARM_V7M
      select PL011
-     select RP2040_CLOCKS
-     select RP2040_IOBANK0
-+    select RP2040_IOQSPI
      select RP2040_NYI
-     select RP2040_PADS
-     select RP2040_PLL
++    select RP2040_SYSCFG
++    select RP2040_SYSINFO
+     select UNIMP
+ 
+ config STM32F100_SOC
 diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 4cceec863e..28c17232a5 100644
+index 2196bad18d..a184d527e1 100644
 --- a/hw/arm/rp2040.c
 +++ b/hw/arm/rp2040.c
-@@ -49,7 +49,6 @@ static const struct {
+@@ -13,6 +13,7 @@
+ #include "hw/core/loader.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
++#include "hw/core/irq.h"
+ #include "hw/misc/unimp.h"
+ #include "qemu/datadir.h"
+ #include "target/arm/cpu-qom.h"
+@@ -49,8 +50,6 @@ static const struct {
      hwaddr base;
      hwaddr size;
  } rp2040_unimplemented[] = {
--    { "rp2040.ioqspi",   0x40018000, 0x4000 },
-     { "rp2040.busctrl",  0x40030000, 0x4000 },
-     { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
-     { "rp2040.uart1_aliases", 0x40039000, 0x3000 },
-@@ -166,6 +165,8 @@ static void rp2040_soc_init(Object *obj)
-     object_initialize_child(obj, "clocks", &s->clocks, TYPE_RP2040_CLOCKS);
-     object_initialize_child(obj, "iobank0", &s->iobank0,
-                             TYPE_RP2040_IOBANK0);
-+    object_initialize_child(obj, "ioqspi", &s->ioqspi,
-+                            TYPE_RP2040_IOQSPI);
-     object_initialize_child(obj, "pads-bank0", &s->pads_bank0,
-                             TYPE_RP2040_PADS_BANK0);
-     object_initialize_child(obj, "pads-qspi", &s->pads_qspi,
-@@ -376,6 +377,11 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 0,
-                        s->irq[RP2040_IO_IRQ_BANK0]);
+-    { "rp2040.sysinfo",  0x40000000, 0x4000 },
+-    { "rp2040.syscfg",   0x40004000, 0x4000 },
+     { "rp2040.clocks",   0x40008000, 0x4000 },
+     { "rp2040.resets",   0x4000c000, 0x4000 },
+     { "rp2040.psm",      0x40010000, 0x4000 },
+@@ -84,6 +83,80 @@ static const struct {
+     { "rp2040.sio",      0xd0000000, 0x1000 },
+ };
  
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioqspi), errp)) {
++static MemTxResult rp2040_powered_off_read(void *opaque, hwaddr addr,
++                                           uint64_t *data, unsigned size,
++                                           MemTxAttrs attrs)
++{
++    *data = 0;
++    return MEMTX_ERROR;
++}
++
++static MemTxResult rp2040_powered_off_write(void *opaque, hwaddr addr,
++                                            uint64_t data, unsigned size,
++                                            MemTxAttrs attrs)
++{
++    return MEMTX_ERROR;
++}
++
++static const MemoryRegionOps rp2040_powered_off_ops = {
++    .read_with_attrs = rp2040_powered_off_read,
++    .write_with_attrs = rp2040_powered_off_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void rp2040_update_mempowerdown(RP2040State *s)
++{
++    uint32_t mempowerdown;
++    int i;
++
++    if (!s->mempowerdown_ready) {
 +        return;
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioqspi), 0, RP2040_IOQSPI_BASE);
 +
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rosc), errp)) {
++    mempowerdown = rp2040_syscfg_get_mempowerdown(&s->syscfg);
++    for (i = 0; i < ARRAY_SIZE(s->sram_poweroff); i++) {
++        memory_region_set_enabled(&s->sram_poweroff[i],
++                                  mempowerdown & BIT(i));
++    }
++    memory_region_set_enabled(&s->rom_poweroff, mempowerdown & BIT(7));
++}
++
++static void rp2040_update_nmi(RP2040State *s)
++{
++    uint32_t nmi_mask = rp2040_syscfg_get_proc0_nmi_mask(&s->syscfg);
++    bool nmi_level = false;
++    int i;
++
++    for (i = 0; i < RP2040_NUM_IRQS; i++) {
++        bool route_to_nmi = nmi_mask & BIT(i);
++
++        qemu_set_irq(s->cpu_irq[i], s->irq_level[i] && !route_to_nmi);
++        nmi_level |= s->irq_level[i] && route_to_nmi;
++    }
++    qemu_set_irq(s->nmi_irq, nmi_level);
++}
++
++static void rp2040_syscfg_update(void *opaque)
++{
++    RP2040State *s = opaque;
++
++    rp2040_update_mempowerdown(s);
++    rp2040_update_nmi(s);
++}
++
++static void rp2040_set_irq(void *opaque, int irq, int level)
++{
++    RP2040State *s = opaque;
++
++    assert(irq >= 0 && irq < RP2040_NUM_IRQS);
++    s->irq_level[irq] = level;
++    rp2040_update_nmi(s);
++}
++
+ static void rp2040_soc_init(Object *obj)
+ {
+     RP2040State *s = RP2040(obj);
+@@ -104,6 +177,10 @@ static void rp2040_soc_init(Object *obj)
+                                   "chardev");
+     }
+ 
++    object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_RP2040_SYSCFG);
++    object_initialize_child(obj, "sysinfo", &s->sysinfo, TYPE_RP2040_SYSINFO);
++
++    s->irq = qemu_allocate_irqs(rp2040_set_irq, s, RP2040_NUM_IRQS);
+     s->sysclk = clock_new(obj, "sysclk");
+     clock_set_hz(s->sysclk, RP2040_SYSCLK_FRQ);
+ }
+@@ -117,9 +194,17 @@ static bool rp2040_init_memory(RP2040State *s, Error **errp)
+         return false;
+     }
+     memory_region_add_subregion(s->board_memory, RP2040_ROM_BASE, &s->rom);
++    memory_region_init_io(&s->rom_poweroff, OBJECT(s),
++                          &rp2040_powered_off_ops, s,
++                          "rp2040.rom.poweroff", RP2040_ROM_SIZE);
++    memory_region_add_subregion_overlap(s->board_memory, RP2040_ROM_BASE,
++                                        &s->rom_poweroff, 1);
++    memory_region_set_enabled(&s->rom_poweroff, false);
+ 
+     for (i = 0; i < 4; i++) {
+         g_autofree char *name = g_strdup_printf("rp2040.sram%d", i);
++        g_autofree char *poweroff_name =
++            g_strdup_printf("rp2040.sram%d.poweroff", i);
+ 
+         if (!memory_region_init_ram(&s->sram[i], OBJECT(s), name,
+                                     RP2040_SRAM_BANK_SIZE, errp)) {
+@@ -129,6 +214,14 @@ static bool rp2040_init_memory(RP2040State *s, Error **errp)
+                                     RP2040_SRAM_BASE +
+                                     i * RP2040_SRAM_BANK_SIZE,
+                                     &s->sram[i]);
++        memory_region_init_io(&s->sram_poweroff[i], OBJECT(s),
++                              &rp2040_powered_off_ops, s, poweroff_name,
++                              RP2040_SRAM_BANK_SIZE);
++        memory_region_add_subregion_overlap(s->board_memory,
++                                            RP2040_SRAM_BASE +
++                                            i * RP2040_SRAM_BANK_SIZE,
++                                            &s->sram_poweroff[i], 1);
++        memory_region_set_enabled(&s->sram_poweroff[i], false);
+     }
+ 
+     if (!memory_region_init_ram(&s->sram[4], OBJECT(s), "rp2040.sram4",
+@@ -137,6 +230,12 @@ static bool rp2040_init_memory(RP2040State *s, Error **errp)
+     }
+     memory_region_add_subregion(s->board_memory, RP2040_SRAM4_BASE,
+                                 &s->sram[4]);
++    memory_region_init_io(&s->sram_poweroff[4], OBJECT(s),
++                          &rp2040_powered_off_ops, s,
++                          "rp2040.sram4.poweroff", RP2040_SRAM_HI_SIZE);
++    memory_region_add_subregion_overlap(s->board_memory, RP2040_SRAM4_BASE,
++                                        &s->sram_poweroff[4], 1);
++    memory_region_set_enabled(&s->sram_poweroff[4], false);
+ 
+     if (!memory_region_init_ram(&s->sram[5], OBJECT(s), "rp2040.sram5",
+                                 RP2040_SRAM_HI_SIZE, errp)) {
+@@ -144,6 +243,14 @@ static bool rp2040_init_memory(RP2040State *s, Error **errp)
+     }
+     memory_region_add_subregion(s->board_memory, RP2040_SRAM5_BASE,
+                                 &s->sram[5]);
++    memory_region_init_io(&s->sram_poweroff[5], OBJECT(s),
++                          &rp2040_powered_off_ops, s,
++                          "rp2040.sram5.poweroff", RP2040_SRAM_HI_SIZE);
++    memory_region_add_subregion_overlap(s->board_memory, RP2040_SRAM5_BASE,
++                                        &s->sram_poweroff[5], 1);
++    memory_region_set_enabled(&s->sram_poweroff[5], false);
++
++    s->mempowerdown_ready = true;
+ 
+     return true;
+ }
+@@ -201,6 +308,22 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
          return;
      }
++    for (i = 0; i < RP2040_NUM_IRQS; i++) {
++        s->cpu_irq[i] = qdev_get_gpio_in(DEVICE(&s->armv7m), i);
++    }
++    s->nmi_irq = qdev_get_gpio_in_named(DEVICE(&s->armv7m), "NMI", 0);
++
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->syscfg), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->syscfg), 0, RP2040_SYSCFG_BASE);
++    rp2040_syscfg_set_update_callback(&s->syscfg, rp2040_syscfg_update, s);
++
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sysinfo), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysinfo), 0, RP2040_SYSINFO_BASE);
++    rp2040_syscfg_update(s);
+ 
+     for (i = 0; i < ARRAY_SIZE(s->uart); i++) {
+         qdev_connect_clock_in(DEVICE(&s->uart[i]), "clk", s->sysclk);
+@@ -209,7 +332,7 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+         }
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, uart_base[i]);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+-                           qdev_get_gpio_in(DEVICE(&s->armv7m), uart_irq[i]));
++                           s->irq[uart_irq[i]]);
+     }
+ }
+ 
 diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index daf513766c..553a92d4b6 100644
+index de7a0f56fa..f6f344ab51 100644
 --- a/hw/misc/Kconfig
 +++ b/hw/misc/Kconfig
-@@ -107,6 +107,9 @@ config RP2040_CLOCKS
- config RP2040_IOBANK0
-     bool
- 
-+config RP2040_IOQSPI
-+    bool
-+
+@@ -104,6 +104,12 @@ config FSL_IMX8MP_CCM
  config RP2040_NYI
      bool
  
++config RP2040_SYSCFG
++    bool
++
++config RP2040_SYSINFO
++    bool
++
+ config STM32_RCC
+     bool
+ 
 diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e84cbd735f..5e4910e83d 100644
+index 8611d59437..7be9f45c78 100644
 --- a/hw/misc/meson.build
 +++ b/hw/misc/meson.build
-@@ -100,6 +100,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+@@ -99,6 +99,8 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'bcm2835_powermgt.c',
  ))
- system_ss.add(when: 'CONFIG_RP2040_CLOCKS', if_true: files('rp2040_clocks.c'))
- system_ss.add(when: 'CONFIG_RP2040_IOBANK0', if_true: files('rp2040_iobank0.c'))
-+system_ss.add(when: 'CONFIG_RP2040_IOQSPI', if_true: files('rp2040_ioqspi.c'))
  system_ss.add(when: 'CONFIG_RP2040_NYI', if_true: files('rp2040_nyi.c'))
- system_ss.add(when: 'CONFIG_RP2040_PADS', if_true: files('rp2040_pads.c'))
- system_ss.add(when: 'CONFIG_RP2040_PLL', if_true: files('rp2040_pll.c'))
-diff --git a/hw/misc/rp2040_ioqspi.c b/hw/misc/rp2040_ioqspi.c
++system_ss.add(when: 'CONFIG_RP2040_SYSCFG', if_true: files('rp2040_syscfg.c'))
++system_ss.add(when: 'CONFIG_RP2040_SYSINFO', if_true: files('rp2040_sysinfo.c'))
+ system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
+ system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZYNQ_DDRC', if_true: files('xlnx-zynq-ddrc.c'))
+diff --git a/hw/misc/rp2040_syscfg.c b/hw/misc/rp2040_syscfg.c
 new file mode 100644
-index 0000000000..eafd5e9eef
+index 0000000000..69b4164ccd
 --- /dev/null
-+++ b/hw/misc/rp2040_ioqspi.c
-@@ -0,0 +1,263 @@
++++ b/hw/misc/rp2040_syscfg.c
+@@ -0,0 +1,244 @@
 +/*
-+ * RP2040 QSPI IO bank emulation
++ * RP2040 syscfg emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
 +#include "hw/misc/rp2040_nyi.h"
-+#include "hw/misc/rp2040_ioqspi.h"
++#include "hw/misc/rp2040_syscfg.h"
 +#include "migration/vmstate.h"
-+#include "qemu/log.h"
 +#include "qemu/module.h"
 +
-+#define IOQSPI_INTR             0x30
-+#define IOQSPI_PROC0_INTE       0x34
-+#define IOQSPI_PROC0_INTF       0x38
-+#define IOQSPI_PROC0_INTS       0x3c
-+#define IOQSPI_PROC1_INTE       0x40
-+#define IOQSPI_PROC1_INTF       0x44
-+#define IOQSPI_PROC1_INTS       0x48
-+#define IOQSPI_DORMANT_INTE     0x4c
-+#define IOQSPI_DORMANT_INTF     0x50
-+#define IOQSPI_DORMANT_INTS     0x54
++#define SYSCFG_PROC0_NMI_MASK          0x00
++#define SYSCFG_PROC1_NMI_MASK          0x04
++#define SYSCFG_PROC_CONFIG             0x08
++#define SYSCFG_PROC_IN_SYNC_BYPASS     0x0c
++#define SYSCFG_PROC_IN_SYNC_BYPASS_HI  0x10
++#define SYSCFG_DBGFORCE                0x14
++#define SYSCFG_MEMPOWERDOWN            0x18
 +
-+#define IOQSPI_CTRL_RESET       0x1f
-+#define IOQSPI_CTRL_RW_MASK     0x33333f
-+#define IOQSPI_INTR_EDGE_MASK   0x00cccccc
-+#define IOQSPI_IRQ_MASK         0x00ffffff
++#define PROC_CONFIG_RW_MASK            0xff000000
++#define PROC_CONFIG_RESET              0x10000000
++#define PROC_IN_SYNC_BYPASS_MASK       0x3fffffff
++#define PROC_IN_SYNC_BYPASS_HI_MASK    0x0000003f
++#define DBGFORCE_RW_MASK               0x000000ee
++#define DBGFORCE_RESET                 0x00000066
++#define MEMPOWERDOWN_MASK              0x000000ff
 +
-+#define ATOMIC_ALIAS_MASK       0x3000
-+#define ATOMIC_XOR              0x1000
-+#define ATOMIC_SET              0x2000
-+#define ATOMIC_CLR              0x3000
++#define ATOMIC_ALIAS_MASK              0x3000
++#define ATOMIC_XOR                     0x1000
++#define ATOMIC_SET                     0x2000
++#define ATOMIC_CLR                     0x3000
 +
-+static uint32_t rp2040_ioqspi_apply_alias(uint32_t old, uint32_t value,
++static uint32_t rp2040_syscfg_apply_alias(uint32_t old, uint32_t value,
 +                                          hwaddr alias)
 +{
 +    switch (alias) {
@@ -220,149 +414,126 @@ index 0000000000..eafd5e9eef
 +    }
 +}
 +
-+static bool rp2040_ioqspi_ctrl_offset(hwaddr offset, unsigned *index)
++static void rp2040_syscfg_update(RP2040SysCfgState *s)
 +{
-+    if (offset > 0x2c || (offset & 0x7) != 0x4) {
-+        return false;
++    if (s->update) {
++        s->update(s->update_opaque);
 +    }
-+
-+    *index = offset / 8;
-+    return *index < ARRAY_SIZE(((RP2040IoQspiState *)0)->ctrl);
 +}
 +
-+static bool rp2040_ioqspi_status_offset(hwaddr offset)
++void rp2040_syscfg_set_update_callback(RP2040SysCfgState *s,
++                                       RP2040SysCfgUpdateFn update,
++                                       void *opaque)
 +{
-+    return offset <= 0x28 && (offset & 0x7) == 0;
++    s->update = update;
++    s->update_opaque = opaque;
 +}
 +
-+static uint32_t rp2040_ioqspi_ints(uint32_t intr, uint32_t inte,
-+                                   uint32_t intf)
++uint32_t rp2040_syscfg_get_proc0_nmi_mask(RP2040SysCfgState *s)
 +{
-+    return (intr & inte) | intf;
++    return s->proc0_nmi_mask;
 +}
 +
-+static uint64_t rp2040_ioqspi_read(void *opaque, hwaddr addr, unsigned size)
++uint32_t rp2040_syscfg_get_mempowerdown(RP2040SysCfgState *s)
 +{
-+    RP2040IoQspiState *s = opaque;
++    return s->mempowerdown;
++}
++
++static uint64_t rp2040_syscfg_read(void *opaque, hwaddr addr, unsigned size)
++{
++    RP2040SysCfgState *s = opaque;
 +    hwaddr offset = addr & 0xfff;
-+    unsigned index;
 +    uint64_t value;
 +
-+    if (rp2040_ioqspi_status_offset(offset)) {
++    switch (offset) {
++    case SYSCFG_PROC0_NMI_MASK:
++        value = s->proc0_nmi_mask;
++        break;
++    case SYSCFG_PROC1_NMI_MASK:
++        value = s->proc1_nmi_mask;
++        break;
++    case SYSCFG_PROC_CONFIG:
++        value = s->proc_config;
++        break;
++    case SYSCFG_PROC_IN_SYNC_BYPASS:
++        value = s->proc_in_sync_bypass;
++        break;
++    case SYSCFG_PROC_IN_SYNC_BYPASS_HI:
++        value = s->proc_in_sync_bypass_hi;
++        break;
++    case SYSCFG_DBGFORCE:
++        value = s->dbgforce;
++        break;
++    case SYSCFG_MEMPOWERDOWN:
++        value = s->mempowerdown;
++        break;
++    default:
 +        value = 0;
-+    } else if (rp2040_ioqspi_ctrl_offset(offset, &index)) {
-+        value = s->ctrl[index];
-+    } else {
-+        switch (offset) {
-+        case IOQSPI_INTR:
-+            value = s->intr;
-+            break;
-+        case IOQSPI_PROC0_INTE:
-+            value = s->proc0_inte;
-+            break;
-+        case IOQSPI_PROC0_INTF:
-+            value = s->proc0_intf;
-+            break;
-+        case IOQSPI_PROC0_INTS:
-+            value = rp2040_ioqspi_ints(s->intr, s->proc0_inte,
-+                                       s->proc0_intf);
-+            break;
-+        case IOQSPI_PROC1_INTE:
-+            value = s->proc1_inte;
-+            break;
-+        case IOQSPI_PROC1_INTF:
-+            value = s->proc1_intf;
-+            break;
-+        case IOQSPI_PROC1_INTS:
-+            value = rp2040_ioqspi_ints(s->intr, s->proc1_inte,
-+                                       s->proc1_intf);
-+            break;
-+        case IOQSPI_DORMANT_INTE:
-+            value = s->dormant_wake_inte;
-+            break;
-+        case IOQSPI_DORMANT_INTF:
-+            value = s->dormant_wake_intf;
-+            break;
-+        case IOQSPI_DORMANT_INTS:
-+            value = rp2040_ioqspi_ints(s->intr, s->dormant_wake_inte,
-+                                       s->dormant_wake_intf);
-+            break;
-+        default:
-+            value = 0;
-+            rp2040_log_unimplemented_read("ioqspi", size,
-+                                          RP2040_IOQSPI_BASE + addr, offset,
-+                                          value);
-+            break;
-+        }
++        rp2040_log_unimplemented_read("syscfg", size,
++                                      RP2040_SYSCFG_BASE + addr, offset,
++                                      value);
++        break;
 +    }
 +
 +    return value;
 +}
 +
-+static void rp2040_ioqspi_write(void *opaque, hwaddr addr,
++static void rp2040_syscfg_write(void *opaque, hwaddr addr,
 +                                uint64_t value64, unsigned size)
 +{
-+    RP2040IoQspiState *s = opaque;
++    RP2040SysCfgState *s = opaque;
 +    hwaddr alias = addr & ATOMIC_ALIAS_MASK;
 +    hwaddr offset = addr & 0xfff;
-+    unsigned index;
 +    uint32_t value = value64;
 +
-+    if (rp2040_ioqspi_ctrl_offset(offset, &index)) {
-+        s->ctrl[index] =
-+            rp2040_ioqspi_apply_alias(s->ctrl[index], value, alias) &
-+            IOQSPI_CTRL_RW_MASK;
-+    } else {
-+        switch (offset) {
-+        case IOQSPI_INTR:
-+            s->intr &= ~(value & IOQSPI_INTR_EDGE_MASK);
-+            break;
-+        case IOQSPI_PROC0_INTE:
-+            s->proc0_inte =
-+                rp2040_ioqspi_apply_alias(s->proc0_inte, value, alias) &
-+                IOQSPI_IRQ_MASK;
-+            break;
-+        case IOQSPI_PROC0_INTF:
-+            s->proc0_intf =
-+                rp2040_ioqspi_apply_alias(s->proc0_intf, value, alias) &
-+                IOQSPI_IRQ_MASK;
-+            break;
-+        case IOQSPI_PROC1_INTE:
-+            s->proc1_inte =
-+                rp2040_ioqspi_apply_alias(s->proc1_inte, value, alias) &
-+                IOQSPI_IRQ_MASK;
-+            break;
-+        case IOQSPI_PROC1_INTF:
-+            s->proc1_intf =
-+                rp2040_ioqspi_apply_alias(s->proc1_intf, value, alias) &
-+                IOQSPI_IRQ_MASK;
-+            break;
-+        case IOQSPI_DORMANT_INTE:
-+            s->dormant_wake_inte =
-+                rp2040_ioqspi_apply_alias(s->dormant_wake_inte, value,
-+                                          alias) &
-+                IOQSPI_IRQ_MASK;
-+            break;
-+        case IOQSPI_DORMANT_INTF:
-+            s->dormant_wake_intf =
-+                rp2040_ioqspi_apply_alias(s->dormant_wake_intf, value,
-+                                          alias) &
-+                IOQSPI_IRQ_MASK;
-+            break;
-+        default:
-+            if (!rp2040_ioqspi_status_offset(offset)) {
-+                rp2040_log_unimplemented_write("ioqspi", size,
-+                                               RP2040_IOQSPI_BASE + addr,
-+                                               offset, value64);
-+            }
-+            break;
-+        }
++    switch (offset) {
++    case SYSCFG_PROC0_NMI_MASK:
++        s->proc0_nmi_mask =
++            rp2040_syscfg_apply_alias(s->proc0_nmi_mask, value, alias);
++        rp2040_syscfg_update(s);
++        break;
++    case SYSCFG_PROC1_NMI_MASK:
++        s->proc1_nmi_mask =
++            rp2040_syscfg_apply_alias(s->proc1_nmi_mask, value, alias);
++        break;
++    case SYSCFG_PROC_CONFIG:
++        s->proc_config =
++            rp2040_syscfg_apply_alias(s->proc_config, value, alias) &
++            PROC_CONFIG_RW_MASK;
++        break;
++    case SYSCFG_PROC_IN_SYNC_BYPASS:
++        s->proc_in_sync_bypass =
++            rp2040_syscfg_apply_alias(s->proc_in_sync_bypass, value, alias) &
++            PROC_IN_SYNC_BYPASS_MASK;
++        break;
++    case SYSCFG_PROC_IN_SYNC_BYPASS_HI:
++        s->proc_in_sync_bypass_hi =
++            rp2040_syscfg_apply_alias(s->proc_in_sync_bypass_hi, value,
++                                      alias) &
++            PROC_IN_SYNC_BYPASS_HI_MASK;
++        break;
++    case SYSCFG_DBGFORCE:
++        s->dbgforce =
++            rp2040_syscfg_apply_alias(s->dbgforce, value, alias) &
++            DBGFORCE_RW_MASK;
++        break;
++    case SYSCFG_MEMPOWERDOWN:
++        s->mempowerdown =
++            rp2040_syscfg_apply_alias(s->mempowerdown, value, alias) &
++            MEMPOWERDOWN_MASK;
++        rp2040_syscfg_update(s);
++        break;
++    default:
++        rp2040_log_unimplemented_write("syscfg", size,
++                                       RP2040_SYSCFG_BASE + addr, offset,
++                                       value64);
++        break;
 +    }
 +}
 +
-+static const MemoryRegionOps rp2040_ioqspi_ops = {
-+    .read = rp2040_ioqspi_read,
-+    .write = rp2040_ioqspi_write,
++static const MemoryRegionOps rp2040_syscfg_ops = {
++    .read = rp2040_syscfg_read,
++    .write = rp2040_syscfg_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .valid = {
 +        .min_access_size = 4,
@@ -370,149 +541,319 @@ index 0000000000..eafd5e9eef
 +    },
 +};
 +
-+static void rp2040_ioqspi_reset(DeviceState *dev)
++static void rp2040_syscfg_reset(DeviceState *dev)
 +{
-+    RP2040IoQspiState *s = RP2040_IOQSPI(dev);
-+    int i;
++    RP2040SysCfgState *s = RP2040_SYSCFG(dev);
 +
-+    for (i = 0; i < ARRAY_SIZE(s->ctrl); i++) {
-+        s->ctrl[i] = IOQSPI_CTRL_RESET;
-+    }
-+    s->intr = 0;
-+    s->proc0_inte = 0;
-+    s->proc0_intf = 0;
-+    s->proc1_inte = 0;
-+    s->proc1_intf = 0;
-+    s->dormant_wake_inte = 0;
-+    s->dormant_wake_intf = 0;
++    s->proc0_nmi_mask = 0;
++    s->proc1_nmi_mask = 0;
++    s->proc_config = PROC_CONFIG_RESET;
++    s->proc_in_sync_bypass = 0;
++    s->proc_in_sync_bypass_hi = 0;
++    s->dbgforce = DBGFORCE_RESET;
++    s->mempowerdown = 0;
++    rp2040_syscfg_update(s);
 +}
 +
-+static void rp2040_ioqspi_init(Object *obj)
++static int rp2040_syscfg_post_load(void *opaque, int version_id)
 +{
-+    RP2040IoQspiState *s = RP2040_IOQSPI(obj);
++    RP2040SysCfgState *s = opaque;
 +
-+    memory_region_init_io(&s->iomem, obj, &rp2040_ioqspi_ops, s,
-+                          "rp2040.ioqspi", RP2040_IOQSPI_SIZE);
++    rp2040_syscfg_update(s);
++    return 0;
++}
++
++static void rp2040_syscfg_init(Object *obj)
++{
++    RP2040SysCfgState *s = RP2040_SYSCFG(obj);
++
++    memory_region_init_io(&s->iomem, obj, &rp2040_syscfg_ops, s,
++                          "rp2040.syscfg", RP2040_SYSCFG_SIZE);
 +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
 +}
 +
-+static const VMStateDescription rp2040_ioqspi_vmstate = {
-+    .name = TYPE_RP2040_IOQSPI,
++static const VMStateDescription rp2040_syscfg_vmstate = {
++    .name = TYPE_RP2040_SYSCFG,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
++    .post_load = rp2040_syscfg_post_load,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(ctrl, RP2040IoQspiState, 6),
-+        VMSTATE_UINT32(intr, RP2040IoQspiState),
-+        VMSTATE_UINT32(proc0_inte, RP2040IoQspiState),
-+        VMSTATE_UINT32(proc0_intf, RP2040IoQspiState),
-+        VMSTATE_UINT32(proc1_inte, RP2040IoQspiState),
-+        VMSTATE_UINT32(proc1_intf, RP2040IoQspiState),
-+        VMSTATE_UINT32(dormant_wake_inte, RP2040IoQspiState),
-+        VMSTATE_UINT32(dormant_wake_intf, RP2040IoQspiState),
++        VMSTATE_UINT32(proc0_nmi_mask, RP2040SysCfgState),
++        VMSTATE_UINT32(proc1_nmi_mask, RP2040SysCfgState),
++        VMSTATE_UINT32(proc_config, RP2040SysCfgState),
++        VMSTATE_UINT32(proc_in_sync_bypass, RP2040SysCfgState),
++        VMSTATE_UINT32(proc_in_sync_bypass_hi, RP2040SysCfgState),
++        VMSTATE_UINT32(dbgforce, RP2040SysCfgState),
++        VMSTATE_UINT32(mempowerdown, RP2040SysCfgState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void rp2040_ioqspi_class_init(ObjectClass *klass, const void *data)
++static void rp2040_syscfg_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    device_class_set_legacy_reset(dc, rp2040_ioqspi_reset);
-+    dc->vmsd = &rp2040_ioqspi_vmstate;
++    device_class_set_legacy_reset(dc, rp2040_syscfg_reset);
++    dc->vmsd = &rp2040_syscfg_vmstate;
 +}
 +
-+static const TypeInfo rp2040_ioqspi_info = {
-+    .name          = TYPE_RP2040_IOQSPI,
++static const TypeInfo rp2040_syscfg_info = {
++    .name          = TYPE_RP2040_SYSCFG,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040IoQspiState),
-+    .instance_init = rp2040_ioqspi_init,
-+    .class_init    = rp2040_ioqspi_class_init,
++    .instance_size = sizeof(RP2040SysCfgState),
++    .instance_init = rp2040_syscfg_init,
++    .class_init    = rp2040_syscfg_class_init,
 +};
 +
-+static void rp2040_ioqspi_register_types(void)
++static void rp2040_syscfg_register_types(void)
 +{
-+    type_register_static(&rp2040_ioqspi_info);
++    type_register_static(&rp2040_syscfg_info);
 +}
-+type_init(rp2040_ioqspi_register_types)
-diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 1ed6fa1449..068aab584f 100644
---- a/include/hw/arm/rp2040.h
-+++ b/include/hw/arm/rp2040.h
-@@ -15,6 +15,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/misc/rp2040_clocks.h"
- #include "hw/misc/rp2040_iobank0.h"
-+#include "hw/misc/rp2040_ioqspi.h"
- #include "hw/misc/rp2040_pads.h"
- #include "hw/misc/rp2040_pll.h"
- #include "hw/misc/rp2040_psm.h"
-@@ -49,6 +50,7 @@ struct RP2040State {
-     PL011State uart[2];
-     RP2040ClocksState clocks;
-     RP2040IoBank0State iobank0;
-+    RP2040IoQspiState ioqspi;
-     RP2040PadsBank0State pads_bank0;
-     RP2040PadsQspiState pads_qspi;
-     RP2040PllState pll_sys;
-diff --git a/include/hw/misc/rp2040_ioqspi.h b/include/hw/misc/rp2040_ioqspi.h
++type_init(rp2040_syscfg_register_types)
+diff --git a/hw/misc/rp2040_sysinfo.c b/hw/misc/rp2040_sysinfo.c
 new file mode 100644
-index 0000000000..e671d2a1b5
+index 0000000000..15c50df6af
 --- /dev/null
-+++ b/include/hw/misc/rp2040_ioqspi.h
-@@ -0,0 +1,33 @@
++++ b/hw/misc/rp2040_sysinfo.c
+@@ -0,0 +1,103 @@
 +/*
-+ * RP2040 QSPI IO bank emulation
++ * RP2040 sysinfo emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_MISC_RP2040_IOQSPI_H
-+#define HW_MISC_RP2040_IOQSPI_H
++#include "qemu/osdep.h"
++#include "hw/misc/rp2040_nyi.h"
++#include "hw/misc/rp2040_sysinfo.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++
++#define SYSINFO_CHIP_ID        0x00
++#define SYSINFO_PLATFORM       0x04
++#define SYSINFO_GITREF_RP2040  0x40
++
++#define SYSINFO_PLATFORM_ASIC  BIT(1)
++
++static uint64_t rp2040_sysinfo_read(void *opaque, hwaddr addr, unsigned size)
++{
++    hwaddr offset = addr & 0xfff;
++    uint64_t value;
++
++    switch (offset) {
++    case SYSINFO_CHIP_ID:
++    case SYSINFO_GITREF_RP2040:
++        value = 0;
++        break;
++    case SYSINFO_PLATFORM:
++        value = SYSINFO_PLATFORM_ASIC;
++        break;
++    default:
++        value = 0;
++        rp2040_log_unimplemented_read("sysinfo", size,
++                                      RP2040_SYSINFO_BASE + addr, offset,
++                                      value);
++        break;
++    }
++
++    return value;
++}
++
++static void rp2040_sysinfo_write(void *opaque, hwaddr addr,
++                                 uint64_t value, unsigned size)
++{
++    hwaddr offset = addr & 0xfff;
++
++    qemu_log_mask(LOG_GUEST_ERROR, "rp2040.sysinfo: write to read-only "
++                  "register (size %d, addr 0x%08" HWADDR_PRIx
++                  ", offset 0x%04" HWADDR_PRIx
++                  ", value 0x%0*" PRIx64 ")\n",
++                  size, RP2040_SYSINFO_BASE + addr, offset, size << 1, value);
++}
++
++static const MemoryRegionOps rp2040_sysinfo_ops = {
++    .read = rp2040_sysinfo_read,
++    .write = rp2040_sysinfo_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void rp2040_sysinfo_init(Object *obj)
++{
++    RP2040SysInfoState *s = RP2040_SYSINFO(obj);
++
++    memory_region_init_io(&s->iomem, obj, &rp2040_sysinfo_ops, s,
++                          "rp2040.sysinfo", RP2040_SYSINFO_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static const VMStateDescription rp2040_sysinfo_vmstate = {
++    .name = TYPE_RP2040_SYSINFO,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void rp2040_sysinfo_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->vmsd = &rp2040_sysinfo_vmstate;
++}
++
++static const TypeInfo rp2040_sysinfo_info = {
++    .name          = TYPE_RP2040_SYSINFO,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RP2040SysInfoState),
++    .instance_init = rp2040_sysinfo_init,
++    .class_init    = rp2040_sysinfo_class_init,
++};
++
++static void rp2040_sysinfo_register_types(void)
++{
++    type_register_static(&rp2040_sysinfo_info);
++}
++type_init(rp2040_sysinfo_register_types)
+diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
+index 4e5cd06add..caa1f9127f 100644
+--- a/include/hw/arm/rp2040.h
++++ b/include/hw/arm/rp2040.h
+@@ -13,6 +13,8 @@
+ #include "hw/char/pl011.h"
+ #include "hw/core/clock.h"
+ #include "hw/core/sysbus.h"
++#include "hw/misc/rp2040_syscfg.h"
++#include "hw/misc/rp2040_sysinfo.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_RP2040 "rp2040"
+@@ -34,12 +36,22 @@ struct RP2040State {
+ 
+     ARMv7MState armv7m;
+     PL011State uart[2];
++    RP2040SysCfgState syscfg;
++    RP2040SysInfoState sysinfo;
+ 
+     MemoryRegion *board_memory;
+     MemoryRegion rom;
++    MemoryRegion rom_poweroff;
+     MemoryRegion sram[6];
++    MemoryRegion sram_poweroff[6];
+     char *bootrom_file;
+ 
++    qemu_irq *irq;
++    qemu_irq cpu_irq[RP2040_NUM_IRQS];
++    qemu_irq nmi_irq;
++    bool irq_level[RP2040_NUM_IRQS];
++    bool mempowerdown_ready;
++
+     Clock *sysclk;
+ };
+ 
+diff --git a/include/hw/misc/rp2040_syscfg.h b/include/hw/misc/rp2040_syscfg.h
+new file mode 100644
+index 0000000000..c31799ae7a
+--- /dev/null
++++ b/include/hw/misc/rp2040_syscfg.h
+@@ -0,0 +1,42 @@
++/*
++ * RP2040 syscfg emulation
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_MISC_RP2040_SYSCFG_H
++#define HW_MISC_RP2040_SYSCFG_H
 +
 +#include "hw/core/sysbus.h"
 +#include "qom/object.h"
 +
-+#define TYPE_RP2040_IOQSPI "rp2040-ioqspi"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040IoQspiState, RP2040_IOQSPI)
++#define TYPE_RP2040_SYSCFG "rp2040-syscfg"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040SysCfgState, RP2040_SYSCFG)
 +
-+#define RP2040_IOQSPI_BASE 0x40018000
-+#define RP2040_IOQSPI_SIZE 0x4000
++#define RP2040_SYSCFG_BASE 0x40004000
++#define RP2040_SYSCFG_SIZE 0x4000
 +
-+struct RP2040IoQspiState {
++typedef void (*RP2040SysCfgUpdateFn)(void *opaque);
++
++struct RP2040SysCfgState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion iomem;
-+    uint32_t ctrl[6];
-+    uint32_t intr;
-+    uint32_t proc0_inte;
-+    uint32_t proc0_intf;
-+    uint32_t proc1_inte;
-+    uint32_t proc1_intf;
-+    uint32_t dormant_wake_inte;
-+    uint32_t dormant_wake_intf;
++    RP2040SysCfgUpdateFn update;
++    void *update_opaque;
++    uint32_t proc0_nmi_mask;
++    uint32_t proc1_nmi_mask;
++    uint32_t proc_config;
++    uint32_t proc_in_sync_bypass;
++    uint32_t proc_in_sync_bypass_hi;
++    uint32_t dbgforce;
++    uint32_t mempowerdown;
++};
++
++void rp2040_syscfg_set_update_callback(RP2040SysCfgState *s,
++                                       RP2040SysCfgUpdateFn update,
++                                       void *opaque);
++uint32_t rp2040_syscfg_get_proc0_nmi_mask(RP2040SysCfgState *s);
++uint32_t rp2040_syscfg_get_mempowerdown(RP2040SysCfgState *s);
++
++#endif
+diff --git a/include/hw/misc/rp2040_sysinfo.h b/include/hw/misc/rp2040_sysinfo.h
+new file mode 100644
+index 0000000000..d521659488
+--- /dev/null
++++ b/include/hw/misc/rp2040_sysinfo.h
+@@ -0,0 +1,25 @@
++/*
++ * RP2040 sysinfo emulation
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_MISC_RP2040_SYSINFO_H
++#define HW_MISC_RP2040_SYSINFO_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_RP2040_SYSINFO "rp2040-sysinfo"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040SysInfoState, RP2040_SYSINFO)
++
++#define RP2040_SYSINFO_BASE 0x40000000
++#define RP2040_SYSINFO_SIZE 0x4000
++
++struct RP2040SysInfoState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion iomem;
 +};
 +
 +#endif
 diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 372d412b9b..a232813014 100644
+index 5555ce4eae..692d51a78a 100644
 --- a/tests/qtest/meson.build
 +++ b/tests/qtest/meson.build
-@@ -258,6 +258,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_RASPI_PICO') ? ['rp2040-sysinfo-syscfg-test',
-                                                        'rp2040-clocks-test',
-                                                        'rp2040-iobank0-test',
-+                                                       'rp2040-ioqspi-test',
-                                                        'rp2040-pads-test',
-                                                        'rp2040-resets-test',
-                                                        'rp2040-rosc-test',
-diff --git a/tests/qtest/rp2040-ioqspi-test.c b/tests/qtest/rp2040-ioqspi-test.c
+@@ -255,6 +255,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
+   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_RASPI_PICO') ? ['rp2040-sysinfo-syscfg-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
+   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CAN_FLEXCAN') ? ['flexcan-test'] : []) + \
+diff --git a/tests/qtest/rp2040-sysinfo-syscfg-test.c b/tests/qtest/rp2040-sysinfo-syscfg-test.c
 new file mode 100644
-index 0000000000..4f94b5f3a2
+index 0000000000..18da6561bd
 --- /dev/null
-+++ b/tests/qtest/rp2040-ioqspi-test.c
-@@ -0,0 +1,81 @@
++++ b/tests/qtest/rp2040-sysinfo-syscfg-test.c
+@@ -0,0 +1,176 @@
 +/*
-+ * QTest testcase for the RP2040 QSPI IO bank block.
++ * QTest testcase for the RP2040 sysinfo and syscfg blocks.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
@@ -521,61 +862,152 @@ index 0000000000..4f94b5f3a2
 +#include "libqtest.h"
 +#include "qemu/bitops.h"
 +
-+#define IOQSPI_BASE             0x40018000
-+#define IOQSPI_SCLK_STATUS      0x00
-+#define IOQSPI_SCLK_CTRL        0x04
-+#define IOQSPI_SD1_CTRL         0x1c
-+#define IOQSPI_PROC0_INTE       0x34
-+#define IOQSPI_PROC0_INTF       0x38
-+#define IOQSPI_PROC0_INTS       0x3c
++#define SYSINFO_BASE                  0x40000000
++#define SYSINFO_CHIP_ID               0x00
++#define SYSINFO_PLATFORM              0x04
++#define SYSINFO_GITREF_RP2040         0x40
++#define SYSINFO_PLATFORM_ASIC         BIT(1)
 +
-+#define IOQSPI_CTRL_RESET       0x1f
-+#define IOQSPI_SD1_CTRL_SET     0x201c
-+#define IOQSPI_SD1_CTRL_CLR     0x301c
++#define SYSCFG_BASE                   0x40004000
++#define SYSCFG_PROC0_NMI_MASK         0x00
++#define SYSCFG_PROC1_NMI_MASK         0x04
++#define SYSCFG_PROC_CONFIG            0x08
++#define SYSCFG_PROC_IN_SYNC_BYPASS    0x0c
++#define SYSCFG_PROC_IN_SYNC_BYPASS_HI 0x10
++#define SYSCFG_DBGFORCE               0x14
++#define SYSCFG_MEMPOWERDOWN           0x18
++
++#define SRAM0_BASE                    0x20000000
++#define UART0_BASE                    0x40034000
++#define UARTDR                        0x00
++#define UARTCR                        0x30
++#define UARTIMSC                      0x38
++#define UARTICR                       0x44
++#define UART_INT_TX                   BIT(5)
++#define UART0_IRQ                     20
++#define NVIC_ISPR                     0xe000e200
++#define NVIC_ICPR                     0xe000e280
++#define NVIC_ICSR                     0xe000ed04
++#define NVIC_ICSR_NMIPENDSET          BIT(31)
++
++#define PROC_CONFIG_RESET             0x10000000
++#define DBGFORCE_RESET                0x00000066
++
++#define ATOMIC_SET_ALIAS              0x2000
++#define ATOMIC_CLR_ALIAS              0x3000
 +
 +static QTestState *rp2040_start(void)
 +{
 +    return qtest_init("-machine raspi-pico");
 +}
 +
-+static void test_ioqspi_reset_values(void)
++static void test_sysinfo_read_values(void)
 +{
 +    QTestState *qts = rp2040_start();
 +
-+    g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_SCLK_STATUS), ==,
-+                    0);
-+    g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_SCLK_CTRL), ==,
-+                    IOQSPI_CTRL_RESET);
-+    g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_SD1_CTRL), ==,
-+                    IOQSPI_CTRL_RESET);
++    g_assert_cmphex(qtest_readl(qts, SYSINFO_BASE + SYSINFO_CHIP_ID), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, SYSINFO_BASE + SYSINFO_PLATFORM), ==,
++                    SYSINFO_PLATFORM_ASIC);
++    g_assert_cmphex(qtest_readl(qts, SYSINFO_BASE + SYSINFO_GITREF_RP2040),
++                    ==, 0);
 +
 +    qtest_quit(qts);
 +}
 +
-+static void test_ioqspi_atomic_ctrl_aliases(void)
++static void test_syscfg_reset_values(void)
 +{
 +    QTestState *qts = rp2040_start();
 +
-+    qtest_writel(qts, IOQSPI_BASE + IOQSPI_SD1_CTRL, 0);
-+    qtest_writel(qts, IOQSPI_BASE + IOQSPI_SD1_CTRL_SET, BIT(17));
-+    qtest_writel(qts, IOQSPI_BASE + IOQSPI_SD1_CTRL_CLR, BIT(17));
-+    qtest_writel(qts, IOQSPI_BASE + IOQSPI_SD1_CTRL_SET, BIT(9));
-+
-+    g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_SD1_CTRL), ==,
-+                    BIT(9));
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC1_NMI_MASK),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC_CONFIG), ==,
++                    PROC_CONFIG_RESET);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_DBGFORCE), ==,
++                    DBGFORCE_RESET);
 +
 +    qtest_quit(qts);
 +}
 +
-+static void test_ioqspi_interrupt_force_status(void)
++static void test_syscfg_rw_masks(void)
 +{
 +    QTestState *qts = rp2040_start();
 +
-+    qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC0_INTE, BIT(1));
-+    qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC0_INTF, BIT(2));
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK, 0xa5a5a5a5);
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC1_NMI_MASK, 0x5a5a5a5a);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK),
++                    ==, 0xa5a5a5a5);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC1_NMI_MASK),
++                    ==, 0x5a5a5a5a);
 +
-+    g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_PROC0_INTS), ==,
-+                    BIT(2));
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS, 0xffffffff);
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS_HI,
++                 0xffffffff);
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_MEMPOWERDOWN, 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts,
++                                SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS),
++                    ==, 0x3fffffff);
++    g_assert_cmphex(qtest_readl(qts,
++                                SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS_HI),
++                    ==, 0x0000003f);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_MEMPOWERDOWN), ==,
++                    0x000000ff);
++
++    qtest_quit(qts);
++}
++
++static void test_syscfg_atomic_aliases(void)
++{
++    QTestState *qts = rp2040_start();
++
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK, 0);
++    qtest_writel(qts, SYSCFG_BASE + ATOMIC_SET_ALIAS + SYSCFG_PROC0_NMI_MASK,
++                 0x0000000f);
++    qtest_writel(qts, SYSCFG_BASE + ATOMIC_CLR_ALIAS + SYSCFG_PROC0_NMI_MASK,
++                 0x00000003);
++    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK),
++                    ==, 0x0000000c);
++
++    qtest_quit(qts);
++}
++
++static void test_syscfg_mempowerdown_blocks_sram(void)
++{
++    QTestState *qts = rp2040_start();
++
++    qtest_writel(qts, SRAM0_BASE, 0x11223344);
++    g_assert_cmphex(qtest_readl(qts, SRAM0_BASE), ==, 0x11223344);
++
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_MEMPOWERDOWN, BIT(0));
++    qtest_writel(qts, SRAM0_BASE, 0xaabbccdd);
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_MEMPOWERDOWN, 0);
++
++    g_assert_cmphex(qtest_readl(qts, SRAM0_BASE), ==, 0x11223344);
++
++    qtest_quit(qts);
++}
++
++static void test_syscfg_nmi_mask_routes_uart0_irq(void)
++{
++    QTestState *qts = rp2040_start();
++
++    qtest_writel(qts, UART0_BASE + UARTCR, BIT(0) | BIT(8));
++    qtest_writel(qts, UART0_BASE + UARTIMSC, UART_INT_TX);
++
++    qtest_writel(qts, UART0_BASE + UARTICR, UART_INT_TX);
++    qtest_writel(qts, NVIC_ICPR, BIT(UART0_IRQ));
++    qtest_writel(qts, UART0_BASE + UARTDR, 'a');
++    g_assert_cmphex(qtest_readl(qts, NVIC_ISPR) & BIT(UART0_IRQ), ==,
++                    BIT(UART0_IRQ));
++
++    qtest_writel(qts, UART0_BASE + UARTICR, UART_INT_TX);
++    qtest_writel(qts, NVIC_ICPR, BIT(UART0_IRQ));
++    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK, BIT(UART0_IRQ));
++    qtest_writel(qts, UART0_BASE + UARTDR, 'b');
++    g_assert_cmphex(qtest_readl(qts, NVIC_ISPR) & BIT(UART0_IRQ), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, NVIC_ICSR) & NVIC_ICSR_NMIPENDSET, ==,
++                    NVIC_ICSR_NMIPENDSET);
 +
 +    qtest_quit(qts);
 +}
@@ -584,11 +1016,15 @@ index 0000000000..4f94b5f3a2
 +{
 +    g_test_init(&argc, &argv, NULL);
 +
-+    qtest_add_func("/rp2040-ioqspi/reset-values", test_ioqspi_reset_values);
-+    qtest_add_func("/rp2040-ioqspi/atomic-ctrl-aliases",
-+                   test_ioqspi_atomic_ctrl_aliases);
-+    qtest_add_func("/rp2040-ioqspi/interrupt-force-status",
-+                   test_ioqspi_interrupt_force_status);
++    qtest_add_func("/rp2040-sysinfo/read-values", test_sysinfo_read_values);
++    qtest_add_func("/rp2040-syscfg/reset-values", test_syscfg_reset_values);
++    qtest_add_func("/rp2040-syscfg/rw-masks", test_syscfg_rw_masks);
++    qtest_add_func("/rp2040-syscfg/atomic-aliases",
++                   test_syscfg_atomic_aliases);
++    qtest_add_func("/rp2040-syscfg/mempowerdown-blocks-sram",
++                   test_syscfg_mempowerdown_blocks_sram);
++    qtest_add_func("/rp2040-syscfg/nmi-mask-routes-uart0-irq",
++                   test_syscfg_nmi_mask_routes_uart0_irq);
 +
 +    return g_test_run();
 +}
