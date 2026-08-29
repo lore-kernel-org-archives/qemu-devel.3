@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18D6C61DCB
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 08:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A446C61DBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 09:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0EHP-0006lL-TP; Sat, 29 Aug 2026 04:19:13 -0400
+	id 1x0F99-0001Aw-1G; Sat, 29 Aug 2026 05:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x0EHI-0006km-3Z
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 04:19:05 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x0EHG-0001Ez-Ap
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 04:19:03 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3968e063f84so1364660a91.0
- for <qemu-devel@nongnu.org>; Sat, 29 Aug 2026 01:19:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787991540; cv=none;
- d=google.com; s=arc-20260327;
- b=djnHnSpRj97lIP8bd6XfQ8lCfISQQwigw3Ni9Q6L1/qEfcccA6CzAtrikqnZmjA3fI
- Cwsz65tTM1p7racwzrKSbXH+ob4DAj00S5IXMQGmVgxbn5lW8Klz3t/2Npfayc6DVqJV
- uI0nDMqBNpzlWmtaKRPNDIBTARSJdjRIsURirLKHnXX1fej49cgvXYrQHBxu963/LFjj
- B8FXLNwGoQ5mom4DvGjoICHta5wwcXCdD16sYKHv/Ql2IKOYiUnmfFK57VzNGrTm3PIO
- T+E7DoVLFxfr1chtjLga8V0fRbkm2AF0xtZIoUvvIrCdahmbDUZf5XiD4ZVk5gQl2ZOu
- hLtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hYbSiA2QzHZytZanDSKgoJaiW7XisTcNeVsl/eIs60Q=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=Tpy6eN7UM1l1tiv0i1uXg7nE4ZrCLGFlKZtWM5an62f6VYERivmzQSTvzYdlntmLDF
- CB1eQabxaPXJ2vFULBVHhDipFkvaoJm/D5y+zbV6so4IurLt/gO9xEnU5XsoOf518a/e
- Js4thf3dumfsIUWFpIfpGYtuaY68ImnoSyRkeOtu3YSMTH3qei4QsD+DFI59u5ZclGhb
- Rjo5J6U9oZxmLR+WG830K4Q4mC/v7I+T+2ig93nezcsTc6s0p9i9KKcPnuOuoxmrTx3y
- ODxUXnFSVjm8eLlxLfrqTtp23XcRsgcaxf/jjX6GXQWm3EV8wIquSDjYE7OxtojqwOCS
- h0Ug==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787991540; x=1788596340; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=hYbSiA2QzHZytZanDSKgoJaiW7XisTcNeVsl/eIs60Q=;
- b=kOlQzUSLF/BFjqAQEutPKqmGDb3rGY5T5uCorEqdTsEUsZWo/5UzRWXoShVIANzw3q
- pGA5ftnu8lKQfT7/llUiRqPZHmfY1HeERruafoiQol88re4R4hCYR6K54kUIWglMZTec
- oaiRTj5FlCsQNuEp+Pn2UBz3c77/1WoJIk/VduzxsBxR2XUI9E8blik5ADLuvFfkwHv/
- 46KjYY02JRISXfdXBPVLn5X30ZrutRr5bV/rO6n9l36i7BbZrEVtiT2XEj2BbPLW9l5/
- LnD2DNmPv2gMy6/+AtSpIaiJwmiIDFu3sNdubl12ia49JligtVM80KV4P32zpAyK9pbZ
- mZvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787991540; x=1788596340;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hYbSiA2QzHZytZanDSKgoJaiW7XisTcNeVsl/eIs60Q=;
- b=YKigB8fJ52aTg7newdKZfBtaJ/C8s8UVSftSc4p9yNOz7eDEHn2W1EtXI0BohEVc1g
- tO39RgzECnXzaVsGeu2JhpNxEepZ4/S05KeSUzP1zN3NltOYtTYKZ2AOHHltuljiZ3NA
- uZJ+zru1tb4nd/acBqsy0ZAtFAu9UGVGGWmSG/G6FfPgz/EBktW9qxHOFJqn0WeEhoZG
- M/Swwm9coGfzEyQqZs6hOCUlKEZKnpJlx9QOAq1yVJUJP0wZAUw59pR5qAg6fSoBC9DL
- 1KaKGpJEeMTwcBmg7MWm5hAw2uM8rmC2pMLqhojkmfrWQvpWUK+O6p8wMes+gChUKo4F
- LrfA==
-X-Gm-Message-State: AFuF++m02C4wEemQsJWlcsKvZ7NodlHczUr6j7QXamXhNANtTt7h9pmt
- qd+FSpWXeiaUaNG6T+EaT1rD5KkeBAdrZKv6IXjDE1WeB8K6ws4jDrxYniHPFZA+LS+D8Yhed8/
- tx/rd+SYIDE7UM1lu5bPS0QmsM1Qqs+s=
-X-Gm-Gg: AYBFou007w4Ib0CZc9iP9U3F30RXKvACJkFMJKJ6k8dsvyDuINERxuSUprxiTUoUEDx
- Bgz7TI9nLllNaqzHGouwrzRszy0Mqbqn89njkdPT0cdLFzPbXLqgdiSqj1ScOTvkDJoJwLnRjOq
- oYpvlyfESfsJeOKKCk3eKpLWFZLEfzwuaQkOoYmhgCe18jxXMMO4fjhjJC8a+996etCM+UKfa45
- yR+VS/3JFMLFuttAje1a6alxylJ967FInl95g9BwxWGvAydq/flw758hjvYBzHo4MrFzRDqSKyg
- ebNg8M/aJX9tEFpLrXpsuPIgme/AEYNEAQNQiWMM+d3IJ3dRIVGKqnz3wIW+hhOaxjmLBqgBIr8
- Z
-X-Received: by 2002:a17:90b:1d46:b0:380:21b7:e727 with SMTP id
- 98e67ed59e1d1-396d0f8d841mr22088263a91.14.1787991540436; Sat, 29 Aug 2026
- 01:19:00 -0700 (PDT)
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x0F98-0001Aj-3w
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 05:14:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x0F95-00060Y-Cn
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 05:14:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787994877;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=33JlipVMbKkC9saEW/YHT3hEo5le8tQEq052Dv5jS/k=;
+ b=ioW2ctHvEv17geldaYVllMF5wPWLJhA8ZjLbA74RDkUmm8/MOz9L3NbUzB0CDftigOU97o
+ L9eKqbMRow4MVJ0ceTNh7sbl5FO2JRsOeeAPVObW+QTZhAsQFSJndrvG0J8uCd7qYab7+1
+ ZxaeaX6JHeKUwE1vodlX2eP8kZEZqiw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-kdFMoOwfPR-JY7wsg0Xnmw-1; Sat,
+ 29 Aug 2026 05:14:34 -0400
+X-MC-Unique: kdFMoOwfPR-JY7wsg0Xnmw-1
+X-Mimecast-MFC-AGG-ID: kdFMoOwfPR-JY7wsg0Xnmw_1787994873
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 575D219560B0
+ for <qemu-devel@nongnu.org>; Sat, 29 Aug 2026 09:14:33 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 486351955D69; Sat, 29 Aug 2026 09:14:31 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: [GIT PULL v2 00/50] Make HMP optional
+Date: Sat, 29 Aug 2026 13:14:29 +0400
+Message-ID: <20260829-nohmp-v2-0-c5bf7b766fe7@redhat.com>
+In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
- <d07e2f13-2c3c-43b5-8ad2-cbd2299f90bf@linaro.org>
-In-Reply-To: <d07e2f13-2c3c-43b5-8ad2-cbd2299f90bf@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sat, 29 Aug 2026 12:18:48 +0400
-X-Gm-Features: AcwNN1Wl7sBrn6xJz0AEKf-wQynNvlH9sFbs-wj1gnpHOAiZXxcpDjlV8GfNZcs
-Message-ID: <CAJ+F1CJS=eHFEpjM-AnXgfRrcAKKQqNJiytQP-ArDqDieapAnQ@mail.gmail.com>
-Subject: Re: [GIT PULL 00/50] Make HMP optional
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=19828;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=pdNJDjqOWkJJ28YEsF+k4RsrXWN4VR3INJ2BcD6sjV8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqkpOArKjwx+v/vu2QIFH0coJ1nKEqdF5jI9Y8e
+ /qLaKQsUB6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapKTgAAKCRDa6OEJdZac
+ 5ZLMD/9WhW5SRY8yMI/xdpG1H1SxnzKYJqjkdUaMuUaVNZLoG3JTshm0Wklxkg9ch9FUfy16KF4
+ Nr2cwkcZEiU6fBp7ln0XG6TpUXk97Do48aCVU5ZcpxqdVbtLnwa3kCVqrcBVGsmRpYRHoxvmLJn
+ TisDCTbAnuVLDKJvBIqK943f5ThLbFc+NZ61KbDz5qDYp408p/gH2oJVXROUeLvmp+vLTwgAzsi
+ WDMVRK0grMOu5pF0HXKzu6Vj3xlyAqlLNOm9uG9TTfM5ZttyZVM9f3CrDaSNnL3TJAyG/2lsaEA
+ 3+0kgnDsXG5x94J3mOj8kMWlHzPCST9jrxLOU61nsIP6BXIBYwJZ9Xj1edumccJc0fhxvk4t4Ig
+ 8bH6XNIcHN2T3k2Z6iMePUa9jPdaQ9toXEXivVmM3CyFGPTtLY9Mn0+Qcs7w3iD8FUTJfPK2MtD
+ bo5rBY1OmlbDhP0On3RRLlVEIYvN3uW/DN3rJUlB3gt9bas8Uwc5gR9O7wU6ybKt3hGycezAfqO
+ 8xS9rhC0ScxhUUcfpyZ2m1JwI1aUhg5+dxbtbnGeoXElxMrhkIz8z6ff74kK0DbvxHJoz0iPsUv
+ ivusXE1kWDw4M/oiIujl1xspY0jxORYwXjmy/X0C4CJgwqKoI8sbCvFAHH8408DI9gYBxLwCFE8 
+ eToieosR2xdF6AQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,51 +104,351 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkNCg0KT24gU2F0LCBBdWcgMjksIDIwMjYgYXQgNDo1M+KAr0FNIFJpY2hhcmQgSGVuZGVyc29u
-DQo8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4gd3JvdGU6DQo+DQo+IE9uIDgvMjgvMjYg
-MTM6NDEsIE1hcmMtQW5kcsOpIEx1cmVhdSB3cm90ZToNCj4gPiBUaGUgZm9sbG93aW5nIGNoYW5n
-ZXMgc2luY2UgY29tbWl0IDBhMWViZDQ0OGIzOGFmYWExMTg1OTdjYmI2MzNkYmVjMjRlZjc0ZDM6
-DQo+ID4NCj4gPiAgICB0Y2cvbG9vbmdhcmNoNjQ6IEZpeCBjb21waWxlIGlzc3VlIExvb25nQXJj
-aCBob3N0ICgyMDI2LTA4LTI3IDExOjA0OjAxIC0wNzAwKQ0KPiA+DQo+ID4gYXJlIGF2YWlsYWJs
-ZSBpbiB0aGUgR2l0IHJlcG9zaXRvcnkgYXQ6DQo+ID4NCj4gPiAgICBodHRwczovL2dpdGxhYi5j
-b20vbWFyY2FuZHJlLmx1cmVhdS9xZW11LmdpdCB0YWdzL25vaG1wLXByLXYxDQo+ID4NCj4gPiBm
-b3IgeW91IHRvIGZldGNoIGNoYW5nZXMgdXAgdG8gN2EzNjQ3ZDY3YTU0NzI4ZThmODhhYTBmYTdm
-NWU5YTk4YmYwNmE1MToNCj4gPg0KPiA+ICAgIGdpdGxhYjogLS1kaXNhYmxlLWhtcCBpbiBidWls
-ZC13aXRob3V0LWRlZmF1bHRzICgyMDI2LTA4LTI5IDAwOjQxOjMyICswNDAwKQ0KPiA+DQo+ID4g
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLQ0KPiA+IE1ha2UgSE1QIG9wdGlvbmFsDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBN
-YXJjLUFuZHLDqSBMdXJlYXU8bWFyY2FuZHJlLmx1cmVhdUByZWRoYXQuY29tPg0KPg0KPiBZb3Ug
-bmVlZCB0byB1cGRhdGUgc29tZSB0ZXN0cy4gIFdpdGgganVzdCAiY29uZmlndXJlIC0tZGlzYWJs
-ZS1obXAiOg0KPg0KPiDilrYgIDE3OC8xMDU2IC94ODZfNjQvaWRlL21pZ3JhdGlvbi9jaHNfc25h
-cHNob3QgLQ0KPiBFUlJPUjouLi9wdWJsaXNoL3Rlc3RzL3F0ZXN0L2xpYnF0ZXN0LmM6OTk4OnF0
-ZXN0X3ZobXA6IGFzc2VydGlvbg0KPiBmYWlsZWQ6IChyZXQpIEZBSUwNCj4g4pa2ICAxNzgvMTA1
-Ng0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgRVJST1INCj4gICAxNzgvMTA1NiBxdGVzdCtx
-dGVzdC14ODZfNjQrc2xvdyAtIHFlbXU6cXRlc3QteDg2XzY0L2lkZS10ZXN0DQo+ICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgRVJST1IgICAgICAgICAgICAxLjYxcyAgIGtpbGxlZCBieSBzaWdu
-YWwgNg0KPiBTSUdBQlJUDQo+ID4+Pj4gUlVTVF9CQUNLVFJBQ0U9MSBRVEVTVF9RRU1VX0lNRz0u
-L3FlbXUtaW1nIFBZVEhPTj0vaG9tZS9ydGgvcWVtdS9ibGQtcHViL3B5dmVudi9iaW4vcHl0aG9u
-MyBNU0FOX09QVElPTlM9aGFsdF9vbl9lcnJvcj0xOmFib3J0X29uX2Vycm9yPTE6cHJpbnRfc3Vt
-bWFyeT0xOnByaW50X3N0YWNrdHJhY2U9MSBVQlNBTl9PUFRJT05TPWhhbHRfb25fZXJyb3I9MTph
-Ym9ydF9vbl9lcnJvcj0xOnByaW50X3N1bW1hcnk9MTpwcmludF9zdGFja3RyYWNlPTEgUVRFU1Rf
-UUVNVV9TVE9SQUdFX0RBRU1PTl9CSU5BUlk9Li9zdG9yYWdlLWRhZW1vbi9xZW11LXN0b3JhZ2Ut
-ZGFlbW9uIEdfVEVTVF9EQlVTX0RBRU1PTj0vaG9tZS9ydGgvcWVtdS9wdWJsaXNoL3Rlc3RzL2Ri
-dXMtZGFlbW9uLnNoIFFURVNUX1FFTVVfQklOQVJZPS4vcWVtdS1zeXN0ZW0teDg2XzY0IFFURVNU
-X1FFTVVfVk5DX0JJTkFSWT0uL3Rvb2xzL3FlbXUtdm5jL3FlbXUtdm5jIEFTQU5fT1BUSU9OUz1o
-YWx0X29uX2Vycm9yPTE6YWJvcnRfb25fZXJyb3I9MTpwcmludF9zdW1tYXJ5PTEgTUFMTE9DX1BF
-UlRVUkJfPTQwIE1FU09OX1RFU1RfSVRFUkFUSU9OPTEgL2hvbWUvcnRoL3FlbXUvYmxkLXB1Yi90
-ZXN0cy9xdGVzdC9pZGUtdGVzdCAtLXRhcCAtaw0KPiDigJXigJXigJXigJXigJXigJXigJXigJXi
-gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
-gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
-gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXi
-gJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJXigJUNCj4g
-4pyADQo+IOKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAleKAleKAleKAleKAlQ0KPiBzdGRlcnI6DQo+ICoqDQo+IEVSUk9S
-Oi4uL3B1Ymxpc2gvdGVzdHMvcXRlc3QvbGlicXRlc3QuYzo5OTg6cXRlc3RfdmhtcDogYXNzZXJ0
-aW9uDQo+IGZhaWxlZDogKHJldCkNCj4NCj4gKHRlc3QgcHJvZ3JhbSBleGl0ZWQgd2l0aCBzdGF0
-dXMgY29kZSAtNikNCg0KSXQncyBhIG5ldyB0ZXN0IHRvIHNraXAgZm9yIG5vdyAoYW5kIGNvbnZl
-cnQgbGF0ZXIpLCBJJ2xsIHNlbmQgdjIgb2YNCmp1c3QgdGhlIGNvdmVyIGFmdGVyIENJIGlzIGFs
-bCBncmVlbi4NCg==
+From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>=0D
+
+The following changes since commit d2e570cc0f97b936902a5b1b86b73c0f5998b475=
+:=0D
+=0D
+  Merge tag 'pull-ppc-for-11.2-20260828' of https://gitlab.com/harshpb/qemu=
+ into staging (2026-08-28 15:17:04 -0700)=0D
+=0D
+are available in the Git repository at:=0D
+=0D
+  https://gitlab.com/marcandre.lureau/qemu.git tags/nohmp-pr-v2=0D
+=0D
+for you to fetch changes up to 7ef933e532a5f86778a16f5b0074f1c2d7b87459:=0D
+=0D
+  gitlab: --disable-hmp in build-without-defaults (2026-08-29 12:08:21 +040=
+0)=0D
+=0D
+----------------------------------------------------------------=0D
+Make HMP optional=0D
+v2:=0D
+ - rebased, skip one new test=0D
+=0D
+Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>=0D
+=0D
+----------------------------------------------------------------=0D
+Marc-Andr=C3=A9 Lureau (50):=0D
+      build-sys: introduce CONFIG_HMP=0D
+      vl: fix -monitor none prefix matching=0D
+      hmp: remove 'vcpu' argument from trace-event help=0D
+      hmp: fix snapshot_blkdev argument type=0D
+      target/i386: decouple cpu_x86_inject_mce() from Monitor=0D
+      target/i386: return an error for invalid CPU in hmp_mce()=0D
+      system: move gpa2hva() to system memory unit=0D
+      monitor: move HMP-only fields from Monitor to MonitorHMP=0D
+      tests/functional: use query-version QMP command instead of HMP=0D
+      net/qapi: add x-query-usernet command=0D
+      python, tests: switch usernet queries from HMP to QMP=0D
+      tests/qtest/pnv: drop unnecessary -serial mon:stdio=0D
+      tests/qtest/qmp-test: don't depend on human-monitor-command=0D
+      tests/qtest/numa-test: replace HMP "info numa" with QMP query-cpus-fa=
+st=0D
+      tests/qtest/cdrom-test: replace HMP "info block" with QMP query-block=
+=0D
+      tests/qtest/device-introspect-test: replace 'info qom-tree'=0D
+      tests/qtest/device-introspect-test: restrict test when !CONFIG_HMP=0D
+      tests/qemu-iotests/205: fix race in assertExportNotFound=0D
+      net: add x-query-network QMP command=0D
+      tests/qtest/netdev-socket: replace HMP with x-query-network QMP=0D
+      qemu-io: propagate errors through Error API instead of printf=0D
+      block: add x-qemu-io QMP command=0D
+      qtest: add qemu-io command to the qtest protocol=0D
+      qtest/ide-test: convert to use qtest qemu-io command=0D
+      tests/qemu-iotests: add qmp_qemu_io()=0D
+      tests/qemu-iotests: convert pause/resume_drive() to QMP=0D
+      monitor: reject readline monitor when HMP is disabled=0D
+      system: guard HMP initialization paths with CONFIG_HMP=0D
+      tests: skip HMP-dependent tests when HMP is disabled=0D
+      monitor: isolate HMP declarations in hmp.h=0D
+      monitor: change HMPCommand cmd to take MonitorHMP=0D
+      monitor: make hmp_handle_error() take MonitorHMP=0D
+      monitor: add monitor_cur_hmp() helper=0D
+      qemu-print: document HMP/QMP behaviour better=0D
+      error-report: switch to use monitor_cur_hmp()=0D
+      monitor: tighten monitor_set_cpu()/get_cpu()=0D
+      monitor: tighten monitor_printf*()=0D
+      hexagon: make dump_mmu() take MonitorHMP=0D
+      qdev-monitor: make print_dev() callback take MonitorHMP=0D
+      qapi: make HMP-specific schema entries conditional on CONFIG_HMP=0D
+      Guard HMP command implementations with CONFIG_HMP=0D
+      target: guard MonitorDef tables with CONFIG_HMP=0D
+      hw: guard BusClass::print_dev with CONFIG_HMP=0D
+      hexagon: condition HMP-specific code=0D
+      build-sys: make HMP source files conditional on have_hmp=0D
+      stubs: split monitor-core stubs into separate compilation units=0D
+      monitor: move monitor_hmp_print*() functions to hmp.c=0D
+      monitor: move HMP-specific to monitor-hmp-internal.h=0D
+      build-sys: add 'hmp' option=0D
+      gitlab: --disable-hmp in build-without-defaults=0D
+=0D
+ .gitlab-ci.d/buildtest.yml                         |   1 +=0D
+ accel/accel-system.c                               |   3 +=0D
+ accel/tcg/monitor.c                                |   3 +=0D
+ audio/audio-hmp-cmds.c                             |  10 +-=0D
+ audio/meson.build                                  |   4 +-=0D
+ backends/cryptodev-hmp-cmds.c                      |  10 +-=0D
+ backends/meson.build                               |   5 +-=0D
+ block/monitor/block-hmp-cmds.c                     | 341 +++++++----------=
+=0D
+ block/monitor/meson.build                          |   5 +-=0D
+ block/monitor/qmp-cmds.c                           |  79 ++++=0D
+ chardev/char-hmp-cmds.c                            |  36 +-=0D
+ chardev/char.c                                     |  11 +-=0D
+ chardev/meson.build                                |   5 +-=0D
+ disas/disas-mon.c                                  |  11 +-=0D
+ disas/meson.build                                  |   4 +-=0D
+ docs/devel/style.rst                               |   2 +-=0D
+ docs/devel/writing-monitor-commands.rst            |   8 +-=0D
+ dump/dump-hmp-cmds.c                               |  12 +-=0D
+ dump/meson.build                                   |   5 +-=0D
+ gdbstub/system.c                                   |  10 +-=0D
+ hmp-commands-info.hx                               |   6 +-=0D
+ hmp-commands.hx                                    |   9 +-=0D
+ hw/char/virtio-serial-bus.c                        |  21 +-=0D
+ hw/core/machine-hmp-cmds.c                         | 263 +++++++------=0D
+ hw/core/meson.build                                |   5 +-=0D
+ hw/core/sysbus.c                                   |  15 +-=0D
+ hw/hexagon/hexagon_tlb.c                           |  87 ++---=0D
+ hw/i386/kvm/xen-stubs.c                            |  10 +-=0D
+ hw/i386/kvm/xen_evtchn.c                           |  28 +-=0D
+ hw/i386/meson.build                                |   4 +-=0D
+ hw/i386/sgx-hmp-stub.c                             |   4 +-=0D
+ hw/i386/sgx.c                                      |  32 +-=0D
+ hw/misc/auxbus.c                                   |  29 +-=0D
+ hw/misc/mos6522-stub.c                             |   6 +-=0D
+ hw/misc/mos6522.c                                  |   7 +-=0D
+ hw/net/meson.build                                 |   4 +-=0D
+ hw/net/rocker/rocker-hmp-cmds.c                    | 158 ++++----=0D
+ hw/pci/meson.build                                 |   4 +-=0D
+ hw/pci/pci-hmp-cmds.c                              | 121 +++---=0D
+ hw/pci/pci-internal.h                              |   2 +-=0D
+ hw/pci/pci-stub.c                                  |   8 +-=0D
+ hw/pci/pci.c                                       |   2 +=0D
+ hw/s390x/s390-skeys.c                              |  14 +-=0D
+ hw/s390x/s390-stattrib.c                           |  26 +-=0D
+ hw/uefi/ovmf-log.c                                 |  10 +-=0D
+ hw/usb/bus.c                                       |  21 +-=0D
+ hw/usb/host-libusb.c                               |  29 +-=0D
+ hw/virtio/meson.build                              |   4 +-=0D
+ hw/virtio/virtio-hmp-cmds.c                        | 312 ++++++++--------=
+=0D
+ hw/xen/xen-bus.c                                   |  11 +-=0D
+ include/block/block-hmp-cmds.h                     |  55 +--=0D
+ include/disas/disas.h                              |   4 +-=0D
+ include/hw/core/qdev.h                             |   5 +-=0D
+ include/hw/core/sysemu-cpu-ops.h                   |   2 +=0D
+ include/hw/hexagon/hexagon_tlb.h                   |   5 +-=0D
+ include/hw/usb/usb.h                               |   3 +-=0D
+ include/monitor/hmp.h                              | 334 +++++++++--------=
+=0D
+ include/monitor/monitor.h                          |  21 --=0D
+ include/monitor/qdev.h                             |   5 +-=0D
+ include/net/net.h                                  |   8 +-=0D
+ include/net/slirp.h                                |   8 +-=0D
+ include/qemu-io.h                                  |   4 +-=0D
+ include/system/memory.h                            |   2 +=0D
+ meson.build                                        |   6 +-=0D
+ meson_options.txt                                  |   2 +=0D
+ migration/dirtyrate.c                              |  52 +--=0D
+ migration/meson.build                              |   4 +-=0D
+ migration/migration-hmp-cmds.c                     | 363 +++++++++--------=
+-=0D
+ monitor/hmp-cmds.c                                 | 290 +++++++--------=0D
+ monitor/hmp.c                                      | 257 +++++++------=0D
+ monitor/meson.build                                |   9 +-=0D
+ monitor/monitor-hmp-internal.h                     | 106 ++++++=0D
+ monitor/monitor-internal.h                         | 104 ------=0D
+ monitor/monitor.c                                  |  76 ++--=0D
+ monitor/qmp-cmds.c                                 |   5 +-=0D
+ net/hub.c                                          |  29 +-=0D
+ net/hub.h                                          |   4 +-=0D
+ net/meson.build                                    |   4 +-=0D
+ net/net-hmp-cmds.c                                 |  85 +++--=0D
+ net/net.c                                          |  70 +++-=0D
+ net/slirp.c                                        |  70 ++--=0D
+ python/qemu/utils/__init__.py                      |   5 +-=0D
+ qapi/block.json                                    |  34 ++=0D
+ qapi/control.json                                  |   4 +-=0D
+ qapi/misc.json                                     |   3 +-=0D
+ qapi/net.json                                      | 166 +++++++++=0D
+ qemu-io-cmds.c                                     | 414 +++++++++++------=
+----=0D
+ qemu-io.c                                          |  17 +-=0D
+ qemu-options.hx                                    |   6 +-=0D
+ qom/meson.build                                    |   4 +-=0D
+ qom/qom-hmp-cmds.c                                 |  46 +--=0D
+ replay/replay-debugging.c                          |  20 +-=0D
+ replay/stubs-system.c                              |  14 +-=0D
+ scripts/meson-buildoptions.sh                      |   3 +=0D
+ stats/meson.build                                  |   5 +-=0D
+ stats/stats-hmp-cmds.c                             |  60 +--=0D
+ stubs/hmp-cmd-info_sev.c                           |   4 +-=0D
+ stubs/meson.build                                  |  15 +-=0D
+ stubs/monitor-core.c                               |  21 +-=0D
+ stubs/monitor-cur.c                                |  14 +=0D
+ stubs/monitor-hmp.c                                |   9 +=0D
+ stubs/monitor-internal.c                           |   4 +-=0D
+ stubs/qapi-event-emit.c                            |   8 +=0D
+ system/dirtylimit-hmp-cmds.c                       |  20 +-=0D
+ system/meson.build                                 |  11 +-=0D
+ system/physmem.c                                   |  31 ++=0D
+ system/qdev-monitor.c                              |  39 +-=0D
+ system/qtest.c                                     |  14 +=0D
+ system/runstate-hmp-cmds.c                         |  22 +-=0D
+ system/tpm-hmp-cmds.c                              |  30 +-=0D
+ system/vl.c                                        |   4 +-=0D
+ target/hexagon/hex_mmu.c                           |   6 +-=0D
+ target/hexagon/hex_mmu.h                           |   3 +-=0D
+ target/i386/cpu-apic.c                             |   8 +-=0D
+ target/i386/cpu.c                                  |   8 +-=0D
+ target/i386/cpu.h                                  |   4 +-=0D
+ target/i386/helper.c                               |  49 +--=0D
+ target/i386/kvm/kvm.c                              |   4 +-=0D
+ target/i386/monitor.c                              | 173 ++++-----=0D
+ target/i386/sev.c                                  |  38 +-=0D
+ target/m68k/cpu.c                                  |   4 +=0D
+ target/m68k/monitor.c                              |   8 +-=0D
+ target/ppc/monitor.c                               |   8 +-=0D
+ target/riscv/monitor.c                             |  61 +--=0D
+ target/rx/disas.c                                  |   1 +=0D
+ target/sh4/monitor.c                               |  34 +-=0D
+ target/sparc/cpu.c                                 |   5 +-=0D
+ target/sparc/monitor.c                             |   8 +-=0D
+ target/xtensa/monitor.c                            |   8 +-=0D
+ tests/functional/generic/test_version.py           |  10 +-=0D
+ tests/functional/qemu_test/utils.py                |   8 +-=0D
+ tests/qemu-iotests/004.out                         |  20 +-=0D
+ tests/qemu-iotests/021.out                         |  60 +--=0D
+ tests/qemu-iotests/026.out                         | 228 ++++++------=0D
+ tests/qemu-iotests/028                             |   1 +=0D
+ tests/qemu-iotests/045                             |   3 +-=0D
+ tests/qemu-iotests/051                             |   1 +=0D
+ tests/qemu-iotests/056                             |   3 +-=0D
+ tests/qemu-iotests/060                             |   1 +=0D
+ tests/qemu-iotests/060.out                         |  44 ++-=0D
+ tests/qemu-iotests/068                             |   1 +=0D
+ tests/qemu-iotests/071                             |   1 +=0D
+ tests/qemu-iotests/071.out                         |  10 +-=0D
+ tests/qemu-iotests/072.out                         |   2 +-=0D
+ tests/qemu-iotests/080.out                         |   4 +-=0D
+ tests/qemu-iotests/081                             |   1 +=0D
+ tests/qemu-iotests/081.out                         |   2 +-=0D
+ tests/qemu-iotests/083.out                         |  36 +-=0D
+ tests/qemu-iotests/089.out                         |   4 +-=0D
+ tests/qemu-iotests/091                             |   1 +=0D
+ tests/qemu-iotests/093                             |   3 +-=0D
+ tests/qemu-iotests/102                             |   1 +=0D
+ tests/qemu-iotests/114.out                         |   2 +-=0D
+ tests/qemu-iotests/117                             |   1 +=0D
+ tests/qemu-iotests/119                             |   1 +=0D
+ tests/qemu-iotests/120                             |   1 +=0D
+ tests/qemu-iotests/124                             |   3 +-=0D
+ tests/qemu-iotests/130                             |   1 +=0D
+ tests/qemu-iotests/132                             |   3 +-=0D
+ tests/qemu-iotests/134.out                         |   2 +-=0D
+ tests/qemu-iotests/136                             |   3 +-=0D
+ tests/qemu-iotests/137.out                         |   2 +-=0D
+ tests/qemu-iotests/142                             |   1 +=0D
+ tests/qemu-iotests/145                             |   1 +=0D
+ tests/qemu-iotests/146                             |   1 +=0D
+ tests/qemu-iotests/148                             |   3 +-=0D
+ tests/qemu-iotests/151                             |   3 +-=0D
+ tests/qemu-iotests/152                             |   3 +-=0D
+ tests/qemu-iotests/153                             |   1 +=0D
+ tests/qemu-iotests/153.out                         |  12 +-=0D
+ tests/qemu-iotests/156                             |   1 +=0D
+ tests/qemu-iotests/157                             |   1 +=0D
+ tests/qemu-iotests/161                             |   1 +=0D
+ tests/qemu-iotests/165                             |   3 +-=0D
+ tests/qemu-iotests/171                             |   2 +-=0D
+ tests/qemu-iotests/171.out                         |  68 ++--=0D
+ tests/qemu-iotests/172                             |   1 +=0D
+ tests/qemu-iotests/181                             |   1 +=0D
+ tests/qemu-iotests/185                             |   1 +=0D
+ tests/qemu-iotests/186                             |   1 +=0D
+ tests/qemu-iotests/192                             |   1 +=0D
+ tests/qemu-iotests/201                             |   1 +=0D
+ tests/qemu-iotests/205                             |   6 +-=0D
+ tests/qemu-iotests/214.out                         |   2 +-=0D
+ tests/qemu-iotests/216                             |   3 +-=0D
+ tests/qemu-iotests/220.out                         |   2 +-=0D
+ tests/qemu-iotests/225                             |   1 +=0D
+ tests/qemu-iotests/225.out                         |   4 +-=0D
+ tests/qemu-iotests/232                             |   1 +=0D
+ tests/qemu-iotests/236                             |   3 +-=0D
+ tests/qemu-iotests/244.out                         |  12 +-=0D
+ tests/qemu-iotests/245                             |   3 +-=0D
+ tests/qemu-iotests/246                             |   3 +-=0D
+ tests/qemu-iotests/249                             |   1 +=0D
+ tests/qemu-iotests/249.out                         |   6 +-=0D
+ tests/qemu-iotests/254                             |   3 +-=0D
+ tests/qemu-iotests/255                             |   3 +-=0D
+ tests/qemu-iotests/257                             |   3 +-=0D
+ tests/qemu-iotests/260                             |   3 +-=0D
+ tests/qemu-iotests/264                             |   3 +-=0D
+ tests/qemu-iotests/267                             |   1 +=0D
+ tests/qemu-iotests/271.out                         |  14 +-=0D
+ tests/qemu-iotests/274                             |   3 +-=0D
+ tests/qemu-iotests/280                             |   1 +=0D
+ tests/qemu-iotests/281                             |   3 +-=0D
+ tests/qemu-iotests/283                             |   1 +=0D
+ tests/qemu-iotests/286                             |   1 +=0D
+ tests/qemu-iotests/289.out                         |   2 +-=0D
+ tests/qemu-iotests/298                             |   3 +-=0D
+ tests/qemu-iotests/300                             |   3 +-=0D
+ tests/qemu-iotests/304                             |   3 +-=0D
+ tests/qemu-iotests/305.out                         |   2 +-=0D
+ tests/qemu-iotests/307.out                         |   2 +-=0D
+ tests/qemu-iotests/310                             |   3 +-=0D
+ tests/qemu-iotests/common.rc                       |   8 +=0D
+ tests/qemu-iotests/iotests.py                      |  32 +-=0D
+ tests/qemu-iotests/tests/backup-discard-source     |   7 +-=0D
+ tests/qemu-iotests/tests/copy-before-write         |  69 ++--=0D
+ tests/qemu-iotests/tests/file-io-error.out         |   2 +-=0D
+ tests/qemu-iotests/tests/image-fleecing            |   3 +-=0D
+ tests/qemu-iotests/tests/image-fleecing.out        |  12 +-=0D
+ tests/qemu-iotests/tests/inactive-node-nbd.out     |   8 +-=0D
+ tests/qemu-iotests/tests/iothreads-create          |   3 +-=0D
+ tests/qemu-iotests/tests/luks-detached-header      |   3 +-=0D
+ .../tests/migrate-bitmaps-postcopy-test            |   3 +-=0D
+ tests/qemu-iotests/tests/migrate-bitmaps-test      |   3 +-=0D
+ tests/qemu-iotests/tests/mirror-change-copy-mode   |   3 +-=0D
+ tests/qemu-iotests/tests/mirror-ready-cancel-error |   3 +-=0D
+ tests/qemu-iotests/tests/qcow2-internal-snapshots  |   1 +=0D
+ tests/qemu-iotests/tests/qsd-migrate               |   3 +-=0D
+ tests/qemu-iotests/tests/reopen-file               |   3 +-=0D
+ tests/qemu-iotests/tests/write-zeroes-unmap        |   1 +=0D
+ tests/qtest/ahci-test.c                            |   5 +-=0D
+ tests/qtest/cdrom-test.c                           |  29 +-=0D
+ tests/qtest/device-introspect-test.c               | 111 ++++--=0D
+ tests/qtest/drive_del-test.c                       |  25 ++=0D
+ tests/qtest/ide-test.c                             |   8 +-=0D
+ tests/qtest/libqtest.c                             |  14 +=0D
+ tests/qtest/libqtest.h                             |  11 +=0D
+ tests/qtest/meson.build                            |   8 +-=0D
+ tests/qtest/netdev-socket.c                        | 143 ++++---=0D
+ tests/qtest/numa-test.c                            |  63 +++-=0D
+ tests/qtest/pnv-host-i2c-test.c                    |   2 +-=0D
+ tests/qtest/pnv-xive2-test.c                       |   2 +-=0D
+ tests/qtest/qmp-test.c                             |  13 +-=0D
+ tests/unit/test-util-sockets.c                     |   1 -=0D
+ tests/vm/basevm.py                                 |  13 +-=0D
+ tools/qemu-vnc/clipboard.c                         |   4 +-=0D
+ tools/qemu-vnc/stubs.c                             |   5 -=0D
+ trace/meson.build                                  |   5 +-=0D
+ trace/trace-hmp-cmds.c                             |  17 +-=0D
+ ui/meson.build                                     |   4 +-=0D
+ ui/ui-hmp-cmds.c                                   | 151 ++++----=0D
+ util/error-report.c                                |  72 ++--=0D
+ util/qemu-print.c                                  |  30 +-=0D
+ 255 files changed, 3926 insertions(+), 2938 deletions(-)=0D
+ create mode 100644 block/monitor/qmp-cmds.c=0D
+ create mode 100644 monitor/monitor-hmp-internal.h=0D
+ create mode 100644 stubs/monitor-cur.c=0D
+ create mode 100644 stubs/monitor-hmp.c=0D
+ create mode 100644 stubs/qapi-event-emit.c=0D
+=0D
+
 
