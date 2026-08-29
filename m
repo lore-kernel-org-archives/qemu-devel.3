@@ -4,92 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B159C61DBE
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 10:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DD8C61DD7
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 12:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0G3T-0002WC-FP; Sat, 29 Aug 2026 06:12:55 -0400
+	id 1x0IDP-0005uy-K9; Sat, 29 Aug 2026 08:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1x0G3R-0002Vf-TE
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 06:12:53 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1x0G3Q-0005o3-8K
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 06:12:53 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-383b4a3755fso2164397a91.3
- for <qemu-devel@nongnu.org>; Sat, 29 Aug 2026 03:12:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787998370; x=1788603170; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=MBVJG7s6MwOddcd7tH6RtphYGgZZlHn+SpSTGBFIEVs=;
- b=maLBSEonqhOUXhH9b7GoWfMwg57LJZs/iKNsJryS1jHJ/MWfLEz0UFkmuC7VCV8z2I
- 21KPQVwyh+zXakKoLjWb209qE33sHtpS+PKzvN4bdXNNiVihjRllRfBpejZk1hgfZAwr
- rJuCTfipmbCCReYHrOaL9zIA9tZEPrQWN4RAw8T3DSWLN+QOQsXlWdgSH8Rq069Rmdmz
- 0kUDuKbRQHg2dTdSVBK0OVj8tpb3u4M8HN80SfM2MshvPpUoU45x3IE278JUd94uCdnk
- qIFQi+BCSkBJucRNOUvWevjk/MgLDlwh5gAzIpfWi1cmckE7VQ+/qFdRBEUxPvG0MKxH
- x+bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787998370; x=1788603170;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MBVJG7s6MwOddcd7tH6RtphYGgZZlHn+SpSTGBFIEVs=;
- b=MnTUG1XfsHg1iesYnb1gPN4axh8d8jz16gmtyMPYhxT/fhcA/Flvi3ime5biD3QGJ0
- wDR2JacuvtJm+QOJQv17tUt7sFKaTNUHt6vRTI+YiDHH0Vt+B7BXybqRZf+79a6K794/
- rMfDo7nqbetS1DlvtoHcHUqLWxGFl1ry8v0RZjt99/FwyGd4lZEjfIrDoAeaxYthH4jt
- FZcMXPqIt+/iu2+fvGAxLh9Y1ojFqqnlRhfo222N1If9gy8afGYEyVUGOt4DwzEjZ3Xp
- hcHTIkYk139vH6cxxGbxBigTUO5QrkOv57zVzTZ7LDL7a+Yc7ZmNtvdxyVK9Kvu/mBvQ
- swpg==
-X-Gm-Message-State: AFuF++nsUAm7YEuR5IAYYtfREnBVey9hWB/bW23vxPyKGtJDczaDazkz
- pevv4wGmzG1GnUw0ePxcoBCpsZzsJH6UjjPXjQ4Azk4NZv0rfjbNRAL4kneRgx2Oiqk=
-X-Gm-Gg: AYBFou2nvRrMxz/nV7aeuL0vn3whK72y/QYd29gwmyexfqOKDvI8Ov95sIhzgriR1H0
- Rxb9XqGQ6qDSfs0yuxwLoXCxXGApdZL/SFgZQz3VtN+08smmlSj/oGLcGMQsMD8yi7l50tDRA5A
- bIvnXXY+OHYTaBN8JXcUYKA1jG8aXdLJxuKXw+w5xcj2d7Udu51jCeDdW/1y8dfuxGDKIIQSjr/
- nRjC0oseMIqzb2hVw1QEB7Xq/O2mNFX9Q9PEFkTHYmf2X8NMbf8KkQ7vHnD2gf2iXdhbJ0EPlJP
- eTa/xIKTuwVIlhtEo7BJz3TVWaHUn4Rt0JJulDzymBLbETcu6lbi5j0bfK18Kl9IhjQdxoWd094
- Y3yhi9gfp7ebC7dPQnrj4k+dOxixBtu3dk6YJAC7O6D1VhrebyBUfZDnC43kwyCzanGXZGfLK4I
- MFSW10Kz/o0FB6fR0iZTgJKiUjTQyebo40N4ru4HlzS7AenIXGttfmxSRhvA4GwfdnO7pQ
-X-Received: by 2002:a17:90b:1f86:b0:396:4cbf:45a2 with SMTP id
- 98e67ed59e1d1-396d0ff5bb9mr24603922a91.14.1787998370042; 
- Sat, 29 Aug 2026 03:12:50 -0700 (PDT)
-Received: from smtpclient.apple ([117.55.237.216])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-142e0df264csm24354655c88.14.2026.08.29.03.12.47
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 29 Aug 2026 03:12:49 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [PATCH v2 0/2] hw/riscv/k230: add the K230 Reset Management Unit
-From: Jack wang <163wangjack@gmail.com>
-In-Reply-To: <20260719180247.8660-1-163wangjack@gmail.com>
-Date: Sat, 29 Aug 2026 18:12:34 +0800
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0685DFA5-2C5E-47AC-8635-A38C69A1A4E2@gmail.com>
-References: <20260719180247.8660-1-163wangjack@gmail.com>
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=163wangjack@gmail.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ali@iusegentoo.com>)
+ id 1x0ESO-0000eS-8u
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 04:30:32 -0400
+Received: from sender-of-o58.zoho.eu ([136.143.169.58])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ali@iusegentoo.com>)
+ id 1x0ESM-0002Cu-Jd
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 04:30:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1787992223; cv=none; d=zohomail.eu; s=zohoarc; 
+ b=EvCJNp0vt2IwzIPhJ1tRzeMRisUf4NYhO1AMTwu6MA5Wnpg5XJzsMHyga38NhlCjV/7RqHz6ePpW1N8NK1CFO/+tBTPKs8WKLu51IOPf83mp2L6i8kBZcP4E2cbnHR1mQjiZJ9eA7EpAm6R75QPK9ObtUlWjm8sTH/A39+PqUak=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu;
+ s=zohoarc; t=1787992223;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=IAA4G3XKZTpZrERxA/O5HIyaveszDLi254+2Znopn2s=; 
+ b=kfCHmoYSvwG7fblGGaUQjCWzEcJMIFDkMzN6VsxkCJJEvPXjMqwja9w/CGEl29miOMY0mIJmBiEgzg8/kN/weGpx9c6wBU7+FKzSqia4QHJthpAsfbYwLogSCqJdftqZ54hMOIJZ6NW1/Gdd7a+Af8hGhz/GGGlgWowHmya1kjI=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+ dkim=pass  header.i=iusegentoo.com;
+ spf=pass  smtp.mailfrom=ali@iusegentoo.com;
+ dmarc=pass header.from=<ali@iusegentoo.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787992223; 
+ s=zmail; d=iusegentoo.com; i=ali@iusegentoo.com;
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=IAA4G3XKZTpZrERxA/O5HIyaveszDLi254+2Znopn2s=;
+ b=NOnHfAteLSN7LiQutltl8ecHhcM4yB+PfIvtRwVIb9OCXXQxHf7uOPhFhO4rfJr8
+ JdV4bG54mrzSBKELfzJ6JWv/2T2NJnrxGfep90ePPSy0FUkNmR4rFdzxlC8ZgcQHk1G
+ n6SRzXNXdKJaye8kMTMTaAOfZ+r2p2Vp6Z4zsCgg=
+Received: by mx.zoho.eu with SMTPS id 1787992221703226.72690195269513;
+ Sat, 29 Aug 2026 10:30:21 +0200 (CEST)
+From: Ali Ahmet Memis <ali@iusegentoo.com>
+To: shorne@gmail.com
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <ali@iusegentoo.com>
+Subject: [PATCH] target/or1k: Implement l.extws and l.extwz
+Date: Sat, 29 Aug 2026 08:29:48 +0000
+Message-ID: <20260829083010.2424941-1-ali@iusegentoo.com>
+X-Mailer: git-send-email 2.55.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.169.58; envelope-from=ali@iusegentoo.com;
+ helo=sender-of-o58.zoho.eu
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 29 Aug 2026 08:31:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,87 +77,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for this patch
+From: Ali Ahmet Memiş <ali@iusegentoo.com>
 
-Thanks for your time
-JW..
+l.extws and l.extwz belong to the ORBIS32 instruction set, but the
+decoder has no entries for them, so they raise an illegal instruction
+exception on every CPU model.
 
-> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 02:02=EF=BC=8CJack Wang =
-<163wangjack@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> References: <20260709031237.21284-1-163wangjack@gmail.com>
->=20
-> This v2 patch reply on review of=20
-> This series models the Kendryte K230 Reset Management Unit (RMU), a =
-bank of
-> reset-control registers at 0x91101000, and wires it into the K230 SoC. =
-It
-> replaces the create_unimplemented_device("rmu") stub so guest reset =
-drivers
-> (drivers/reset/reset-k230.c) work against a real model.
->=20
-> Patch 1 adds the standalone device model; patch 2 wires it into the =
-SoC and
-> adds the qtest. The qtest is deliberately placed in patch 2 =
-accorinding to=20
-> suggestion from Daniel: it drives "-machine k230", which only
-> exists once the device is wired up.
->=20
-> Register semantics, reset values and reserved-bit masks are taken from =
-the
-> K230 TRM chapter 2.1 "Reset" (V0.3.1) and cross-checked against the =
-mainline
-> Linux driver.
->=20
-> Changes since v1:
-> - Switched to the Resettable API (phases.hold instead of the legacy
->   device_class_set_legacy_reset()), per Daniel's review.
-> - Model real reset propagation: the RMU now cold-resets the two linked
->   watchdogs via "wdt0"/"wdt1" QOM links when their PERI0 reset bits =
-are
->   written (Cao review).
-> - CPU1 reset request is now a two-step assert/deassert (not =
-self-clearing),
->   matching the hardware (Cao review ).
-> - Filled in the documented per-register reset values and reserved-bit
->   (writable) masks from the TRM; the *_rst_done status bits reset to =
-0, so
->   they follow the per-bit "Reset" column rather than the summarised =
-total.
-> - Added the reset-time-control (*_RST_TIM) registers as plain storage =
-with
->   their documented reset values.
-> - Fixed the storage mask so the upper half of non-write-enable =
-registers is
->   writable (surfaced by the new TIM registers).
-> - New qtests: reset values, TIM storage, reserved-bit read-only, CPU1
->   two-step, and real watchdog reset propagation.
-> - Moved the qtest from patch 1 to patch 2 for bisectability; added the
->   MAINTAINERS entries.
->=20
-> Jack Wang (2):
->  hw/misc/k230_rmu: add Kendryte K230 Reset Management Unit model
->  hw/riscv/k230: wire up the RMU device
->=20
-> MAINTAINERS                 |   3 +
-> docs/system/riscv/k230.rst  |   1 +
-> hw/misc/Kconfig             |   3 +
-> hw/misc/k230_rmu.c          | 425 ++++++++++++++++++++++++++++++++++++
-> hw/misc/meson.build         |   1 +
-> hw/misc/trace-events        |   7 +
-> hw/riscv/Kconfig            |   1 +
-> hw/riscv/k230.c             |  15 +-
-> include/hw/misc/k230_rmu.h  | 126 +++++++++++
-> include/hw/riscv/k230.h     |   2 +
-> tests/qtest/k230-rmu-test.c | 225 +++++++++++++++++++
-> tests/qtest/meson.build     |   3 +-
-> 12 files changed, 808 insertions(+), 4 deletions(-)
-> create mode 100644 hw/misc/k230_rmu.c
-> create mode 100644 include/hw/misc/k230_rmu.h
-> create mode 100644 tests/qtest/k230-rmu-test.c
->=20
-> --=20
-> 2.53.0
->=20
+On a 32-bit implementation both are register moves: there is nothing
+above bit 31 to extend into. Implement them as such.
+
+Found while writing an OpenRISC port of Valgrind.
+
+Signed-off-by: Ali Ahmet Memiş <ali@iusegentoo.com>
+---
+ target/or1k/disas.c      |  2 ++
+ target/or1k/insns.decode |  2 ++
+ target/or1k/translate.c  | 14 ++++++++++++++
+ 3 files changed, 18 insertions(+)
+
+diff --git a/target/or1k/disas.c b/target/or1k/disas.c
+index dc025bd64d..0a46d68d30 100644
+--- a/target/or1k/disas.c
++++ b/target/or1k/disas.c
+@@ -71,6 +71,8 @@ INSN(exths,  "r%d, r%d", a->d, a->a)
+ INSN(extbs,  "r%d, r%d", a->d, a->a)
+ INSN(exthz,  "r%d, r%d", a->d, a->a)
+ INSN(extbz,  "r%d, r%d", a->d, a->a)
++INSN(extws,  "r%d, r%d", a->d, a->a)
++INSN(extwz,  "r%d, r%d", a->d, a->a)
+ INSN(cmov,   "r%d, r%d, r%d", a->d, a->a, a->b)
+ INSN(ff1,    "r%d, r%d", a->d, a->a)
+ INSN(fl1,    "r%d, r%d", a->d, a->a)
+diff --git a/target/or1k/insns.decode b/target/or1k/insns.decode
+index 0d6f7c29f8..cbf8af7f8b 100644
+--- a/target/or1k/insns.decode
++++ b/target/or1k/insns.decode
+@@ -112,6 +112,8 @@ l_exths         111000 d:5 a:5 ----- - 0000 -- 1100
+ l_extbs         111000 d:5 a:5 ----- - 0001 -- 1100
+ l_exthz         111000 d:5 a:5 ----- - 0010 -- 1100
+ l_extbz         111000 d:5 a:5 ----- - 0011 -- 1100
++l_extws         111000 d:5 a:5 ----- - 0000 -- 1101
++l_extwz         111000 d:5 a:5 ----- - 0001 -- 1101
+ 
+ l_add           111000 d:5 a:5 b:5   - 00 ---- 0000
+ l_addc          111000 d:5 a:5 b:5   - 00 ---- 0001
+diff --git a/target/or1k/translate.c b/target/or1k/translate.c
+index eb4485312f..e00ef45b9b 100644
+--- a/target/or1k/translate.c
++++ b/target/or1k/translate.c
+@@ -502,6 +502,20 @@ static bool trans_l_extbz(DisasContext *dc, arg_da *a)
+     return true;
+ }
+ 
++static bool trans_l_extws(DisasContext *dc, arg_da *a)
++{
++    check_r0_write(dc, a->d);
++    tcg_gen_mov_i32(cpu_R(dc, a->d), cpu_R(dc, a->a));
++    return true;
++}
++
++static bool trans_l_extwz(DisasContext *dc, arg_da *a)
++{
++    check_r0_write(dc, a->d);
++    tcg_gen_mov_i32(cpu_R(dc, a->d), cpu_R(dc, a->a));
++    return true;
++}
++
+ static bool trans_l_cmov(DisasContext *dc, arg_dab *a)
+ {
+     check_r0_write(dc, a->d);
+-- 
+2.55.0
 
 
