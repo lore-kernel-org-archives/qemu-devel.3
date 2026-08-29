@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E917C61DBE
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 14:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909BCC61DBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 17:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0Jps-0000yQ-GS; Sat, 29 Aug 2026 10:15:08 -0400
+	id 1x0NCj-0001bX-Gh; Sat, 29 Aug 2026 13:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x0Jpq-0000xw-JZ
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 10:15:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from
+ <SRS0=SizC=GW=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1x0NCg-0001bH-Rk
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 13:50:54 -0400
+Received: from sonata.ens-lyon.org ([140.77.166.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x0Jpo-0003yR-BQ
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 10:15:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788012902;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5MeeeDTacSpu27Iq1eZBWJAfOaWwmn/9mODx1GaTsuA=;
- b=OL39VH3tYXQAbHc4txh132KwkuZcrcxfssmBa7F2WbEvHO1rdKTylCqeFbxo/DzYFZR9yI
- wGaYT+NMPXAuTlk6wHtbMPWYabzpvwbjNfUgFfbtA4zo4bLjcIG+gMrdfoIChkTbTT/QBW
- XRp+U+vffnOv8x1dosLhN5E3m9dr2SM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-sTC2PIYZMHifnEHMackO_g-1; Sat,
- 29 Aug 2026 10:15:00 -0400
-X-MC-Unique: sTC2PIYZMHifnEHMackO_g-1
-X-Mimecast-MFC-AGG-ID: sTC2PIYZMHifnEHMackO_g_1788012899
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (Exim 4.90_1) (envelope-from
+ <SRS0=SizC=GW=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1x0NCf-0005bd-1t
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 13:50:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by sonata.ens-lyon.org (Postfix) with ESMTP id 9CE0BA03C0;
+ Sat, 29 Aug 2026 19:50:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
+ t=1788025849; bh=0j0jQMNP9Rs0OcCqzo+iiZhXE7dCLI4j6dw38FzVbvA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=hqtLO43jExICrv5wX0SIv6vMIpfBr98I7kIga8Go17uQOjnRdnl6TpwRULHkgcguI
+ QGYE1t87cqrAowpvbkmEbns039m5K8JaOgqhtByinWGReHTQ6yx0GZbyxJmtAZRYcR
+ FnU4SgR7ITEs6JAUfOWM2+BojxAvTdAI7hqr5qA7OBFLJUteDOyh7qLiPfrM0zKkEK
+ HKfzW7aWBkva1t0nuo2j16fw7F3OKWyP2b/f2WKnWQvBzSyeONUo2cWj87srYhfueG
+ U0b/8S0jwayhtK9d4u3RPitDy7kHLQhBLq2+CtVoXaVmbYWXDWlwyjn9IuWhLp71fs
+ VgJCVNZlqtF+g==
+Received: from sonata.ens-lyon.org ([127.0.0.1])
+ by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 2NoK7VeSqtYi; Sat, 29 Aug 2026 19:50:49 +0200 (CEST)
+Received: from end (aamiens-653-1-40-48.w83-192.abo.wanadoo.fr [83.192.199.48])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D45A1956096; Sat, 29 Aug 2026 14:14:59 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 553021803A40; Sat, 29 Aug 2026 14:14:57 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] ui/dbus: fix cursor race, copy cursor data
-Date: Sat, 29 Aug 2026 18:14:47 +0400
-Message-ID: <20260829141447.1677081-1-marcandre.lureau@redhat.com>
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by sonata.ens-lyon.org (Postfix) with ESMTPSA id 62C26A03B7;
+ Sat, 29 Aug 2026 19:50:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
+ t=1788025849; bh=0j0jQMNP9Rs0OcCqzo+iiZhXE7dCLI4j6dw38FzVbvA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=hqtLO43jExICrv5wX0SIv6vMIpfBr98I7kIga8Go17uQOjnRdnl6TpwRULHkgcguI
+ QGYE1t87cqrAowpvbkmEbns039m5K8JaOgqhtByinWGReHTQ6yx0GZbyxJmtAZRYcR
+ FnU4SgR7ITEs6JAUfOWM2+BojxAvTdAI7hqr5qA7OBFLJUteDOyh7qLiPfrM0zKkEK
+ HKfzW7aWBkva1t0nuo2j16fw7F3OKWyP2b/f2WKnWQvBzSyeONUo2cWj87srYhfueG
+ U0b/8S0jwayhtK9d4u3RPitDy7kHLQhBLq2+CtVoXaVmbYWXDWlwyjn9IuWhLp71fs
+ VgJCVNZlqtF+g==
+Received: from samy by end with local (Exim 4.100-RC3)
+ (envelope-from <samuel.thibault@ens-lyon.org>)
+ id 1x0NCa-0000000BN8G-34nV; Sat, 29 Aug 2026 19:50:48 +0200
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+To: qemu-devel@nongnu.org, adam@os.inf.tu-dresden.de, pbonzini@redhat.com,
+ richard.henderson@linaro.org, mst@redhat.com
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH] Revert 9696846600ca ("multiboot: Prevent loading of x86_64
+ images")
+Date: Sat, 29 Aug 2026 19:50:47 +0200
+Message-ID: <20260829175047.2710519-1-samuel.thibault@ens-lyon.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=140.77.166.138;
+ envelope-from=SRS0=SizC=GW=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org;
+ helo=sonata.ens-lyon.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,47 +90,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Loading x86_64 images in multiboot was disabled on the ground that since
+multiboot actually boots 64bit kernels in 32bit mode, the binary would
+have to be 32bit.
 
-Eleminates the undefined behavior where virtio-gpu's memcpy() overwrites
-the buffer that an in-flight gvariant still references. Fixes the data
-race where the GDBus worker thread calls cursor_unref() concurrently
-with main thread.
+https://lists.gnu.org/archive/html/qemu-devel/2010-08/msg00913.html
 
-Fixes: 142ca628a733 ("ui: add a D-Bus display backend")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+But making the binary 32bit makes using debugging tools such as gdb
+unnecessarily complex since they don't understand what architecture the
+kernel actually is.  Letting qemu load x86_64 images and boot them in 32bit
+mode is completely fine, works, and is what the multiboot standard actually
+expects.
+
+This notably fixes loading gnumach in x86_64 mode.
+
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
 ---
- ui/dbus-listener.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ hw/i386/multiboot.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 2e2f6ba4183a..aca802cb11cb 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -896,16 +896,18 @@ static void dbus_cursor_define(DisplayChangeListener *dcl,
- {
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
-     GVariant *v_data = NULL;
-+    size_t size = c->width * c->height * 4;
-+    void *copy = g_memdup2(c->data, size);
+diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
+index d544b62afb..004d5185fb 100644
+--- a/hw/i386/multiboot.c
++++ b/hw/i386/multiboot.c
+@@ -196,11 +196,6 @@ int load_multiboot(X86MachineState *x86ms,
+         int kernel_size;
+         fclose(f);
  
-     ddl_discard_cursor_messages(ddl);
- 
-     v_data = g_variant_new_from_data(
-         G_VARIANT_TYPE("ay"),
--        c->data,
--        c->width * c->height * 4,
-+        copy,
-+        size,
-         TRUE,
--        (GDestroyNotify)cursor_unref,
--        cursor_ref(c));
-+        g_free,
-+        copy);
- 
-     qemu_dbus_display1_listener_call_cursor_define(
-         ddl->proxy,
+-        if (((struct elf64_hdr*)header)->e_machine == EM_X86_64) {
+-            error_report("Cannot load x86-64 image, give a 32bit one.");
+-            exit(1);
+-        }
+-
+         kernel_size = load_elf(kernel_filename, NULL, NULL, NULL, &elf_entry,
+                                &elf_low, &elf_high, NULL,
+                                ELFDATA2LSB, I386_ELF_MACHINE, 0, 0);
 -- 
-2.55.0.543.g5ebe2ebe4ea8
+2.53.0
 
 
