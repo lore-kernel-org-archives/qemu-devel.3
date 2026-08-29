@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2706DC61DD3
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Aug 2026 23:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE56FC61DBD
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 00:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0664-00078G-Ol; Fri, 28 Aug 2026 19:34:56 -0400
+	id 1x07Jb-0001b6-Kk; Fri, 28 Aug 2026 20:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x0662-00077k-Q9
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:34:54 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1x07JZ-0001ar-Ts
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 20:52:58 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x0661-0000Mp-9O
- for qemu-devel@nongnu.org; Fri, 28 Aug 2026 19:34:54 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-ca12086c06eso1163682a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 16:34:52 -0700 (PDT)
+ id 1x07JY-0000rR-5l
+ for qemu-devel@nongnu.org; Fri, 28 Aug 2026 20:52:57 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8520161fdb9so1927087b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Aug 2026 17:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787960092; x=1788564892; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787964774; x=1788569574; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=F8TWmo8sr3bieVhCBcueaP9oG3MX7rTqQzoogX1Oqac=;
- b=ZCBN8/8P8WRl6GGXy/D1jErzByNJ/cLcPjWhJIk7xxCPqzhxPvGr/qO6cUs6loOisc
- IjH8YrfZXlZ2lRcWzyfKD0woHgvUDmUrxiatvT09RWyD/pyisdAJwYZiy83eBagtGTYy
- g6nAHL2zNE5es60UFaF8n2Hf2JkNXlFOEEGu/LlfCdwb44Tcd76t2fQpx7dwiY4/wwK2
- Smog4d9z4HQj5TrAz5SEBhm5dHh1NkpxJhso8nfwli5MySmZM1p0taF6a+ZHXSkBleio
- PS8l6fG68xCXB0j8gYmyXpfXWxvc4YpVDEAxYTs6rvU1HuAqratz8JXZUnlxz0IKj/u8
- 4cPQ==
+ bh=8H/Hrt2KtUR1TiWS9lEe47A+6+i/GN9W421RPW2Nmk8=;
+ b=c84rOqqRNrGHmHMCwUDhScIRLQzHvpWVTa7EwvzVJEdItverUoxeKzSOpleNhEi7vr
+ mMC/9oYm20eh5eUI1Uk3BL2boM76OQ/FUFr4KNS32cWbD03O6uwIzB5hfKHsSx7R9679
+ oEqOG+QDLLM7uKfftoKbTERbRwZ26theQ4AeHG+kCZD49oqUO7havh3Jvo2fT26fnc6W
+ pkUbD9XYRCjJ3pdtvUjqwSOknNaA+61+RcBtVC1fnYYrOpOPEKal9V9yOfJEEwJ34d44
+ z6hNCo3FycwGm4E4jnv0JpJdyA5JzomRxjI5SH3hC5OvFd642hBkjOAcBL5P8n+o3N3c
+ iKjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787960092; x=1788564892;
+ d=1e100.net; s=20251104; t=1787964774; x=1788569574;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=F8TWmo8sr3bieVhCBcueaP9oG3MX7rTqQzoogX1Oqac=;
- b=M6lCDRkzGsnLnGiYwo/nJc+JwoK66GEIj9HcC349dlZ71bw30p+HjZiqpjGbqjQoXp
- LaZPPUKSLRGiOPKOoerNFDbf2/XlnfpDDsphpsQiIIcL/EgBtT0WQ4Gef3CiePDFAXx5
- 4RWqpUcDM/6rTMq+Hwn4SbBj2g4VYTc97S1NkvKZBPrHUKb4HL/KnPscLYIyNEBuw/N4
- y4gfl9ijMztpIBt9cslypLc9SHPaoMKNBMgrK8cIM6sboMHJEdToYWNGscQ5vjtBuPqF
- z7Hg7dl5/9MabcKBJc+RAhnaSPOK2wDHuZPUaDPw+Ep92QT5Fdy4O+KajioPzcCFGlmi
- cfgw==
+ bh=8H/Hrt2KtUR1TiWS9lEe47A+6+i/GN9W421RPW2Nmk8=;
+ b=rAGaX0o68GtZHBFy01/DqsgKjgo/YZ+fRX/5e2IrfDWG6bZXkXeuu5BvNB8ux9Ux9H
+ oxNoLbT/xC6aIq4nR2/AxXLqEe9oFYcJSnevnaUR5/8G87TSDOrEcziBl+Ud6iGMk9m3
+ 97etQfSQYLF53s94CMui/iuyTgP+Isuwo2+gLYINZfWvEd+PzSmF6kl29o6vXo1F2dW5
+ DZlvhU5Q35ywyDf5BnrUnt1RreRpuYm+wX3yoaEhQNJob0jL0l4jN4zp2JnczdGHetJ9
+ wjqMZou8mGkUN3FO4POKf2YJVjdRcSsOWeog5Uque2N8l5MdyBrHExFcTEdszUrMZ9RG
+ OgzA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx7ioJmD6eoKVJ1eEXDPat0qlW4kT3uvDf2+OnAiRUTMr1FSlXyTq8XG3MR38u24ZNtenbCLsbLgUww@nongnu.org
-X-Gm-Message-State: AFuF++mJfGkgIX2dukO49LumE2j5XhxwJRf+iR2b78Aw+UCwLh8v0+bP
- cEwHH5p69ezKTa+zbWH8SngadszsCkaYwoStXEsZYGXPiJIzYTDYL3S+70M2YMar6H4kWIYE0pW
- potxQ
-X-Gm-Gg: AYBFou0CkAv3pE3smunGmHHIyrj28jAmJlURTpBKj+d8CBRYeI3H1tFT8iZk7Z8FbQR
- 1BZJ1kRoL9ogIilI5SL5VQqHx0OuJo6BsflcpYeG8VcREUP0iDGB97/vgakMVltOFuo5UVU4sJm
- z6cM8JOBJPuBoKHmm5Oes7VYK1UAt6oEsRWTCd1SiKpubIzZb+BbrsMIyhGfbv8UNbfXG92iK/G
- JYFQnkSF9G2NL8XC+hQZJUnuYJSZkoVE9G/HsQlF2r08BPOI/14CDp0BKd3meGKy0m/UzUkFnf2
- HuVHJXJTw0iJOZJuRGnYi3se0BqWXI14+abh8FWtDSW/ORTYXM4jBeTKYSp7FSpQ2hzOBjABTXl
- W8Lmi2GknLATxi4dVNniL1wJOGusLT3jeYnDalK0Hx78NZPt21XWYt0lkk3J9KXIGm2iQMIbyJP
- SxYFdqo53yjPuCUyAyCuyMBEU/xYqmZyDwW3Ld5RyfCHUdixRPZAY0HxXssWJe03cZftLqt1bOL
- 8wuYa+vdjYa+MCxdCMfzO2juh9+WNM=
-X-Received: by 2002:a17:90b:1804:b0:398:9c00:29ef with SMTP id
- 98e67ed59e1d1-3989c003c55mr3253375a91.23.1787960091702; 
- Fri, 28 Aug 2026 16:34:51 -0700 (PDT)
+ AHgh+RpOsyof2gI21oEr0/z8E/aXHCWLtSbOnCUDTQR/WRydDB/Go3z9SO6d5jp+nGDIiTWNQPo9yUI1B4eD@nongnu.org
+X-Gm-Message-State: AFuF++kQMESXfYpuFKtAUwsdC2Bf9xdEUm6jy5kJDO7i10zcDlUBB0wc
+ +7/IK1tv0XDhyjjL3fxBHJYd6iQwwdQPe4EAKPR03e4WNeRl9fZ4niKohwIzwL1eUYU=
+X-Gm-Gg: AR+sD12Q3mXs0RAEL2A/WIsEURlz6mQylr0tuGZJzQ1BtFdRNsljwiMGCMXiqLdifbv
+ 0VnzoQT701mkkzHgMpHOcFvl3Zh+Ws9TeGefRfLazDBSEiX34RCs+1tFB9ESZBL2MfPWYuIdk/j
+ hYruTfv0XnuRkvfEZPe8F+2L2gxRdpm6iblQ8zdanMISfmkG/er5X3YGHZC5j7MrIY4x8UsWYJH
+ mpenZzi+8DvBuqNcdzsulfGXoFwuikb1zEvAnUtuzYjKY8/5/pY5MhdleK6RCqmFfxwI2Gbwtbe
+ 6l+GKzmalVp73loVq9s26CwvjM2mTlVfwGqdUGFyY0zB8WDvP6dc9m0xh4+0Wuci17/2/C/4FsS
+ SjQBvm4PlDDa+nsDR5np67gTGfRpGdk/jexOTIZVn264qKbkCQ7hj9xKrcYnTH7aPOcYLSv0ght
+ nLMvbunPsFH3NLf3QXrQRzRZdehamJTxYQB/vRo1Uq7I7X9P1exwDtThwVFvDLz0MB/dt+bEn9X
+ QDu001KvaTy4LpgqPiPVIIr61jEoMM=
+X-Received: by 2002:a05:6a00:4b49:b0:857:726d:2706 with SMTP id
+ d2e1a72fcca58-857726d2de3mr5089822b3a.18.1787964774262; 
+ Fri, 28 Aug 2026 17:52:54 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-39-143.tukw.qwest.net. [71.212.39.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-398a2f5187fsm480688a91.1.2026.08.28.16.34.51
+ d2e1a72fcca58-8569f49f516sm1022850b3a.4.2026.08.28.17.52.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Aug 2026 16:34:51 -0700 (PDT)
-Message-ID: <54ba3e0a-0b90-46f2-8f2b-b254c39742b5@linaro.org>
-Date: Fri, 28 Aug 2026 16:34:49 -0700
+ Fri, 28 Aug 2026 17:52:53 -0700 (PDT)
+Message-ID: <d07e2f13-2c3c-43b5-8ad2-cbd2299f90bf@linaro.org>
+Date: Fri, 28 Aug 2026 17:52:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/41] ppc-for-11.2 queue
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20260828060716.91672-1-harshpb@linux.ibm.com>
+Subject: Re: [GIT PULL 00/50] Make HMP optional
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260828060716.91672-1-harshpb@linux.ibm.com>
+In-Reply-To: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,31 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/26 23:06, Harsh Prateek Bora wrote:
+On 8/28/26 13:41, Marc-André Lureau wrote:
 > The following changes since commit 0a1ebd448b38afaa118597cbb633dbec24ef74d3:
 > 
 >    tcg/loongarch64: Fix compile issue LoongArch host (2026-08-27 11:04:01 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.2-20260828
+>    https://gitlab.com/marcandre.lureau/qemu.git tags/nohmp-pr-v1
 > 
-> for you to fetch changes up to fe511b25417e01f1fdb50dc8ce158db0b7522705:
+> for you to fetch changes up to 7a3647d67a54728e8f88aa0fa7f5e9a98bf06a51:
 > 
->    target/ppc: Add self as maintainer for PowerPC TCG CPUs (2026-08-28 11:09:28 +0530)
+>    gitlab: --disable-hmp in build-without-defaults (2026-08-29 00:41:32 +0400)
 > 
 > ----------------------------------------------------------------
-> PPC patches for 2026-08-28
-> * TCG Improvements (decodetree migrations and ISA 2.07 flag updates)
-> * Compat mode fixes for nested guests
-> * XIVE fix for pending interrupts post migration
-> * MAINTAINERS: Chinmay transitioning as PPC TCG maintainer
+> Make HMP optional
 > 
-> Checkpatch errors can be ignored as suggested here:
-> https://lore.kernel.org/qemu- 
-> devel/846d7958-6515-4e4e-8c15-513e282aaaa3@linaro.org/
+> Signed-off-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 
-Applied, thanks.
+You need to update some tests.  With just "configure --disable-hmp":
+
+▶  178/1056 /x86_64/ide/migration/chs_snapshot - 
+ERROR:../publish/tests/qtest/libqtest.c:998:qtest_vhmp: assertion 
+failed: (ret) FAIL
+▶  178/1056 
+                         ERROR
+  178/1056 qtest+qtest-x86_64+slow - qemu:qtest-x86_64/ide-test 
+                          ERROR            1.61s   killed by signal 6 
+SIGABRT
+>>>> RUST_BACKTRACE=1 QTEST_QEMU_IMG=./qemu-img PYTHON=/home/rth/qemu/bld-pub/pyvenv/bin/python3 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon G_TEST_DBUS_DAEMON=/home/rth/qemu/publish/tests/dbus-daemon.sh QTEST_QEMU_BINARY=./qemu-system-x86_64 QTEST_QEMU_VNC_BINARY=./tools/qemu-vnc/qemu-vnc ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MALLOC_PERTURB_=40 MESON_TEST_ITERATION=1 /home/rth/qemu/bld-pub/tests/qtest/ide-test --tap -k
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― 
+✀ 
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+stderr:
+**
+ERROR:../publish/tests/qtest/libqtest.c:998:qtest_vhmp: assertion 
+failed: (ret)
+
+(test program exited with status code -6)
+
 
 r~
 
