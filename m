@@ -4,65 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DD8C61DD7
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 12:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E10C61DE2
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Aug 2026 12:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0IDP-0005uy-K9; Sat, 29 Aug 2026 08:31:19 -0400
+	id 1x0IbR-0001Wp-Se; Sat, 29 Aug 2026 08:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ali@iusegentoo.com>)
- id 1x0ESO-0000eS-8u
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 04:30:32 -0400
-Received: from sender-of-o58.zoho.eu ([136.143.169.58])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ali@iusegentoo.com>)
- id 1x0ESM-0002Cu-Jd
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 04:30:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1787992223; cv=none; d=zohomail.eu; s=zohoarc; 
- b=EvCJNp0vt2IwzIPhJ1tRzeMRisUf4NYhO1AMTwu6MA5Wnpg5XJzsMHyga38NhlCjV/7RqHz6ePpW1N8NK1CFO/+tBTPKs8WKLu51IOPf83mp2L6i8kBZcP4E2cbnHR1mQjiZJ9eA7EpAm6R75QPK9ObtUlWjm8sTH/A39+PqUak=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu;
- s=zohoarc; t=1787992223;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=IAA4G3XKZTpZrERxA/O5HIyaveszDLi254+2Znopn2s=; 
- b=kfCHmoYSvwG7fblGGaUQjCWzEcJMIFDkMzN6VsxkCJJEvPXjMqwja9w/CGEl29miOMY0mIJmBiEgzg8/kN/weGpx9c6wBU7+FKzSqia4QHJthpAsfbYwLogSCqJdftqZ54hMOIJZ6NW1/Gdd7a+Af8hGhz/GGGlgWowHmya1kjI=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
- dkim=pass  header.i=iusegentoo.com;
- spf=pass  smtp.mailfrom=ali@iusegentoo.com;
- dmarc=pass header.from=<ali@iusegentoo.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787992223; 
- s=zmail; d=iusegentoo.com; i=ali@iusegentoo.com;
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=IAA4G3XKZTpZrERxA/O5HIyaveszDLi254+2Znopn2s=;
- b=NOnHfAteLSN7LiQutltl8ecHhcM4yB+PfIvtRwVIb9OCXXQxHf7uOPhFhO4rfJr8
- JdV4bG54mrzSBKELfzJ6JWv/2T2NJnrxGfep90ePPSy0FUkNmR4rFdzxlC8ZgcQHk1G
- n6SRzXNXdKJaye8kMTMTaAOfZ+r2p2Vp6Z4zsCgg=
-Received: by mx.zoho.eu with SMTPS id 1787992221703226.72690195269513;
- Sat, 29 Aug 2026 10:30:21 +0200 (CEST)
-From: Ali Ahmet Memis <ali@iusegentoo.com>
-To: shorne@gmail.com
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <ali@iusegentoo.com>
-Subject: [PATCH] target/or1k: Implement l.extws and l.extwz
-Date: Sat, 29 Aug 2026 08:29:48 +0000
-Message-ID: <20260829083010.2424941-1-ali@iusegentoo.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x0IbP-0001Vf-Hz
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 08:56:07 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1x0IbN-00021B-NN
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 08:56:07 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5b2b92065ffso1960330e87.1
+ for <qemu-devel@nongnu.org>; Sat, 29 Aug 2026 05:56:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788008163; x=1788612963; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tBI87hi+w7tju9vmpR81JRr0gonsniLIcX+bUh7+jTE=;
+ b=ESJpymtHywBIoIQOnUlhuVd7rtkpvpx/EQz+fReLBYjHjmG2q1ESOrxcRZsK0PVkmX
+ G1zaPiedwOzfejbc2U3NC+DE2MfKkuQAcZ/8Et71uL3aeyGPGz57QFx/CMhWmH2N35di
+ 8/mMNqtV4KLHm6+CYGkUmJJsdGn/BSdBhBc2H2lB95rvUeJH8ADyyEj+TFHc1eEjb7+2
+ 01INkXKnRv7pD2O3z1ILulaiqV9mThooN+tWzZzPZ6PFVdCatQrv8Tojg1IAEve15GFb
+ AgjDmt/Ofux6tkgXkgVKE8c/Ww6vsMRAD6wvGBq97gCRrid/IYqY+mRBH2tsnd4vwDKN
+ 7wjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788008163; x=1788612963;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tBI87hi+w7tju9vmpR81JRr0gonsniLIcX+bUh7+jTE=;
+ b=szGZJWWKEMjyGLPtmfjnaTjE4D9QIN4LVGCDL/YnXxWWIAyyLZjhM8bF13nJ2fDI0e
+ UN/nq1TBAtJ/ODbhTboPEaUOiiCWPZnC1f1rv7N3467Lr8yZrM/9gPJgedXhxQ8ceU9r
+ otTutpRlzcFRIXl+nmPqArqLRhuKKtqGUezSWitZ/idPAx5Gf0t3wuVsdrqbBW4I6YnE
+ aOXkrrJw8BOG4887DPqegCvV0pzknG/CKjDMKNj5S1s59Vhz5iI5Ew1uuEaKLyyI6Lyz
+ tS7n14D11U6KH/cttcWKIenm4GrB+1WXyt8DTOEm3YG8pVWf6Qetu9E36nNeX6k8nJyc
+ Ez4g==
+X-Gm-Message-State: AFuF++kfvoFviUHEDGSz+TFIuGP3eFbeCrwkyz90vZpWQAZSnA2SXJms
+ xtFOpBAznvp6nxaZTPdHQkkpFBelVQgCUebFF3oQcFuj3F2YySzn5Pw6
+X-Gm-Gg: AYBFou1eYWTRgPCpGM285fn+ic9MGrveTgfyu7fSWy4iMHEDzqMXfdIHTaun5PQnB6Z
+ LIgyZ+9huGVSGsYajb9UvEBhQt2fz9XEEbvTAs0yJrm3sokD6klzqZsXoVJ19JlD6C0yLmcEIq4
+ wOs4hfe4n56Twe2MiOqRwxYIP5q1TPiiYyekG9eRFkhu096CPOtvI8Vt2crvibd5A5KTy9er8Od
+ 3Z5fNJrpbZZJ2uw+IPXdOhv/GKdaCkVjXXkitgO/6aluLZbMm9fDT7R7Fqhd+Y+CH+n6pGYc+p7
+ 5cN9LI6UalZGIInJ4kXa53mXSQnfvy1kTHIHa6DQLOJMFM12obT+dk4GXZ/J20KLBxBmpzcqFT1
+ iYkTcBUPQX61g+Nysk82Spjpzz52K0GdpDDbUOdwqXafjW7SqB2e3Ze40+iyLrl6oRuo5YcnwWg
+ Nu41j5rZuWAkQMXXACJNJXFMYP5BRz/GxN5OONDXVSZXXNlctBwC0pSb+rhQcUn81VqRytyC2ve
+ NrT6m8NZNf/+iyZ+ekVwZBrZwO/V1NAK2tmNX4jIjIgYWCxslb/Y8V20dg=
+X-Received: by 2002:ac2:568d:0:b0:5b5:e8f1:ee86 with SMTP id
+ 2adb3069b0e04-5b5e8f1f2acmr3542124e87.2.1788008162896; 
+ Sat, 29 Aug 2026 05:56:02 -0700 (PDT)
+Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
+ [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5b5e8a0ce42sm968866e87.57.2026.08.29.05.56.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 29 Aug 2026 05:56:01 -0700 (PDT)
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Subject: [PATCH v2 0/3] Allwinner A10 GPIO support
+Date: Sat, 29 Aug 2026 14:55:42 +0200
+Message-Id: <20260829-allwinner-gpio-v2-0-f0ebcb07302e@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.169.58; envelope-from=ali@iusegentoo.com;
- helo=sender-of-o58.zoho.eu
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/13MQQrCMBCF4auUWRvphBBTV95DugjNpB1ok5JIV
+ Ervbiy4cfk/eN8GmRJThmuzQaLCmWOoIU8NDJMNIwl2tUG2UrcGjbDz/OQQKIlx5Sg0WaMQL85
+ 3CuppTeT5dYD3vvbE+RHT+/ALftcf1f1TBUUrpNXKaO28R7yNi+X5PMQF+n3fP42OquOsAAAA
+X-Change-ID: 20260818-allwinner-gpio-6ea84117df94
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Jack wang <163wangjack@gmail.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 29 Aug 2026 08:31:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,76 +108,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ali Ahmet Memiş <ali@iusegentoo.com>
+This patch series introduces GPIO support for Allwinner A10 and
+Cubieboard.
 
-l.extws and l.extwz belong to the ORBIS32 instruction set, but the
-decoder has no entries for them, so they raise an illegal instruction
-exception on every CPU model.
+The support is focused on input/output and interrupt functionality.
+The qtest suite is also updated with tests for implemented
+functionality.
 
-On a 32-bit implementation both are register moves: there is nothing
-above bit 31 to extend into. Implement them as such.
-
-Found while writing an OpenRISC port of Valgrind.
-
-Signed-off-by: Ali Ahmet Memiş <ali@iusegentoo.com>
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 ---
- target/or1k/disas.c      |  2 ++
- target/or1k/insns.decode |  2 ++
- target/or1k/translate.c  | 14 ++++++++++++++
- 3 files changed, 18 insertions(+)
+Changes in v2:
+- allwinner-gpio-test: Added test for interrupt triggered on both rising
+  and falling edge
+- Link to v1: https://lore.kernel.org/qemu-devel/20260819-allwinner-gpio-v1-0-2a64866dff11@gmail.com
 
-diff --git a/target/or1k/disas.c b/target/or1k/disas.c
-index dc025bd64d..0a46d68d30 100644
---- a/target/or1k/disas.c
-+++ b/target/or1k/disas.c
-@@ -71,6 +71,8 @@ INSN(exths,  "r%d, r%d", a->d, a->a)
- INSN(extbs,  "r%d, r%d", a->d, a->a)
- INSN(exthz,  "r%d, r%d", a->d, a->a)
- INSN(extbz,  "r%d, r%d", a->d, a->a)
-+INSN(extws,  "r%d, r%d", a->d, a->a)
-+INSN(extwz,  "r%d, r%d", a->d, a->a)
- INSN(cmov,   "r%d, r%d, r%d", a->d, a->a, a->b)
- INSN(ff1,    "r%d, r%d", a->d, a->a)
- INSN(fl1,    "r%d, r%d", a->d, a->a)
-diff --git a/target/or1k/insns.decode b/target/or1k/insns.decode
-index 0d6f7c29f8..cbf8af7f8b 100644
---- a/target/or1k/insns.decode
-+++ b/target/or1k/insns.decode
-@@ -112,6 +112,8 @@ l_exths         111000 d:5 a:5 ----- - 0000 -- 1100
- l_extbs         111000 d:5 a:5 ----- - 0001 -- 1100
- l_exthz         111000 d:5 a:5 ----- - 0010 -- 1100
- l_extbz         111000 d:5 a:5 ----- - 0011 -- 1100
-+l_extws         111000 d:5 a:5 ----- - 0000 -- 1101
-+l_extwz         111000 d:5 a:5 ----- - 0001 -- 1101
- 
- l_add           111000 d:5 a:5 b:5   - 00 ---- 0000
- l_addc          111000 d:5 a:5 b:5   - 00 ---- 0001
-diff --git a/target/or1k/translate.c b/target/or1k/translate.c
-index eb4485312f..e00ef45b9b 100644
---- a/target/or1k/translate.c
-+++ b/target/or1k/translate.c
-@@ -502,6 +502,20 @@ static bool trans_l_extbz(DisasContext *dc, arg_da *a)
-     return true;
- }
- 
-+static bool trans_l_extws(DisasContext *dc, arg_da *a)
-+{
-+    check_r0_write(dc, a->d);
-+    tcg_gen_mov_i32(cpu_R(dc, a->d), cpu_R(dc, a->a));
-+    return true;
-+}
-+
-+static bool trans_l_extwz(DisasContext *dc, arg_da *a)
-+{
-+    check_r0_write(dc, a->d);
-+    tcg_gen_mov_i32(cpu_R(dc, a->d), cpu_R(dc, a->a));
-+    return true;
-+}
-+
- static bool trans_l_cmov(DisasContext *dc, arg_dab *a)
- {
-     check_r0_write(dc, a->d);
+---
+Strahinja Jankovic (3):
+      hw/gpio: Allwinner A10 GPIO emulation
+      hw/arm: Add GPIO to Allwinner A10 model
+      tests/qtest: Allwinner GPIO tests
+
+ MAINTAINERS                           |   3 +
+ docs/system/arm/cubieboard.rst        |   1 +
+ hw/arm/Kconfig                        |   1 +
+ hw/arm/allwinner-a10.c                |   8 +
+ hw/gpio/Kconfig                       |   3 +
+ hw/gpio/allwinner-gpio.c              | 465 +++++++++++++++++++++++++++++
+ hw/gpio/meson.build                   |   1 +
+ hw/gpio/trace-events                  |   6 +
+ include/hw/arm/allwinner-a10.h        |   2 +
+ include/hw/gpio/allwinner-gpio-regs.h | 228 ++++++++++++++
+ include/hw/gpio/allwinner-gpio.h      |  41 +++
+ tests/qtest/allwinner-gpio-test.c     | 538 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build               |   3 +-
+ 13 files changed, 1299 insertions(+), 1 deletion(-)
+---
+base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+change-id: 20260818-allwinner-gpio-6ea84117df94
+
+Best regards,
 -- 
-2.55.0
+Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
 
