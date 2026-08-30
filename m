@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DA2C61DD6
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 01:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A8C1C61DDE
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 01:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0ULe-0000NX-FQ; Sat, 29 Aug 2026 21:28:40 -0400
+	id 1x0UM9-0000Q4-3O; Sat, 29 Aug 2026 21:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1x0ULV-0000Mj-OT
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 21:28:31 -0400
-Received: from va-1-114.ptr.blmpb.com ([209.127.230.114])
+ id 1x0UM7-0000Pu-Dk
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 21:29:07 -0400
+Received: from va-1-113.ptr.blmpb.com ([209.127.230.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1x0ULT-000218-4F
- for qemu-devel@nongnu.org; Sat, 29 Aug 2026 21:28:29 -0400
+ id 1x0UM5-00024r-6d
+ for qemu-devel@nongnu.org; Sat, 29 Aug 2026 21:29:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1788053297; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1788053340; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=3BDM1EDjJ2NI3cL1nydtay9te7i3RUl7IF9MqFWkQ5Y=;
- b=NVFBlkD2cU/Xlns8XnpM/g2x9MnKHpR8GYnHwD7berCVUJOyUtQJKWZZE3rZuZ8XjS7Xvw
- crhDboMC4HDUtFfiVgcEuk22TwFaXAlEZlYikuVp8jUTDR0Cnnyw6z7ijWAF556verI2L9
- kLwppMaxvlljT7k1XuPHxzC0JmHF/7VGwjSYwksnRwXmP7nXPZIfpLdeqlh6PTpQLLzFvT
- 5XSeNjpxJ4bF8A50zhybXCy8QBvAnmYKj/XfKis52efO9tFFeh7GsoazCenPxL8bom8Qcy
- wxmPBqX4EFe8aKOL7AjWqFgLgWA+j5pdDTegvCT7N9uhk5mkJMwFe3n8F8ROXA==
+ bh=h4Azu3n9uiI8AfzjzdLlCXBuga4PsFIAT4bxBEhl2oo=;
+ b=oFUM+Gihh18Zw6tRUkkyR7bOUZc495AUORv1leU6cSX2G3PGfAlnFfkJ/77FydvQkRdp6x
+ xYUvRJKLkeCGpWdwbBkmeWaolanRtrRDtOF6LqQ9WxfPexKswsTgDmaeZSn6LBMC0V6D59
+ niSmY4GL0kDXb8j0xArJVQHFOBT/rSjZRkt8maruRBNNQbpBuBXEHz4uRAsQWs8dVygXsw
+ YIqQy+ZaLJzNoP3jci4BtkQ3yfwdHqsz2om5e5om0dYMKRMVeWoK90t8VyBfEFDK4S0WIo
+ MwpOyN6vejIW5YeflyNfeAVGj4r3GGfLvpxDANldgCWggBGT9GRjlgZpg3b+gA==
+Date: Sun, 30 Aug 2026 09:27:50 +0800
+References: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
+Content-Transfer-Encoding: 7bit
+From: "Yanfei Xu" <yanfei.xu@bytedance.com>
+Subject: [PATCH v2 4/4] migration/rdma: Remove unused transit bitmap
+In-Reply-To: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
+To: <qemu-devel@nongnu.org>
 Cc: <peterx@redhat.com>, <farosas@suse.de>, <lizhijian@fujitsu.com>, 
  <jinpu.wang@cloud.ionos.com>, <isyanfei.xu@gmail.com>, 
  "Yanfei Xu" <yanfei.xu@bytedance.com>
-Date: Sun, 30 Aug 2026 09:27:47 +0800
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=UTF-8
-Subject: [PATCH v2 1/4] migration/ram: Add RAM round synchronization notifiers
-X-Lms-Return-Path: <lba+26a93872f+112591+nongnu.org+yanfei.xu@bytedance.com>
-In-Reply-To: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
-To: <qemu-devel@nongnu.org>
-From: "Yanfei Xu" <yanfei.xu@bytedance.com>
-Message-Id: <20260830012750.1567524-2-yanfei.xu@bytedance.com>
-References: <20260830012750.1567524-1-yanfei.xu@bytedance.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.20.1
 X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=209.127.230.114;
- envelope-from=yanfei.xu@bytedance.com; helo=va-1-114.ptr.blmpb.com
+Content-Type: text/plain; charset=UTF-8
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+26a93875a+6a7498+nongnu.org+yanfei.xu@bytedance.com>
+Message-Id: <20260830012750.1567524-5-yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+Received-SPF: pass client-ip=209.127.230.113;
+ envelope-from=yanfei.xu@bytedance.com; helo=va-1-113.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,171 +69,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-find_dirty_block() directly invokes multifd's per-round synchronization
-when the RAM scan wraps.  Other transports need the same boundary to
-order page versions.
+After the per-chunk write wait is removed, transit_bitmap is no longer
+read.  The remaining set and clear operations only maintain unused
+state.
 
-Add a return-valued notifier for RAM round completion and register
-multifd's existing synchronization through it.  This keeps the current
-behavior while allowing other transports to synchronize at the same
-boundary.
+Remove the bitmap and simplify the block lifecycle tracepoints.
 
 Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
 ---
- migration/multifd-nocomp.c | 24 ++++++++++++++++++++
- migration/ram.c            | 45 +++++++++++++++++++++++++++++++++-----
- migration/ram.h            | 12 ++++++++++
- 3 files changed, 75 insertions(+), 6 deletions(-)
+ migration/rdma.c       | 20 +++-----------------
+ migration/trace-events |  4 ++--
+ 2 files changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 9f7a792fa7..3067c19cc6 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -19,6 +19,7 @@
- #include "multifd-colo.h"
- #include "options.h"
- #include "migration.h"
-+#include "ram.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -27,6 +28,28 @@
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 6f9b474e29..7a884ecb6e 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -30,7 +30,6 @@
+ #include "qemu/module.h"
+ #include "qemu/rcu.h"
+ #include "qemu/sockets.h"
+-#include "qemu/bitmap.h"
+ #include "qemu/coroutine.h"
+ #include "system/memory.h"
+ #include <sys/socket.h>
+@@ -197,7 +196,6 @@ typedef struct RDMALocalBlock {
+     int            index;           /* which block are we */
+     unsigned int   src_index;       /* (Only used on dest) */
+     int            nb_chunks;
+-    unsigned long *transit_bitmap;
+ } RDMALocalBlock;
  
- static MultiFDSendData *multifd_ram_send;
+ /*
+@@ -571,8 +569,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
+     block->index = local->nb_blocks;
+     block->src_index = ~0U; /* Filled in by the receipt of the block list */
+     block->nb_chunks = ram_chunk_index(host_addr, host_addr + length) + 1UL;
+-    block->transit_bitmap = bitmap_new(block->nb_chunks);
+-    bitmap_clear(block->transit_bitmap, 0, block->nb_chunks);
+     block->remote_keys = g_new0(uint32_t, block->nb_chunks);
  
-+static int multifd_ram_round_notify(NotifierWithReturn *n G_GNUC_UNUSED,
-+                                    void *data, Error **errp)
-+{
-+    RAMRoundNotifyData *round_data = data;
-+    QEMUFile *f = round_data->file;
-+    int ret;
-+
-+    if (!multifd_ram_sync_per_round()) {
-+        return 0;
-+    }
-+
-+    ret = multifd_ram_flush_and_sync(f);
-+    if (ret < 0) {
-+        error_setg(errp, "multifd RAM round synchronization failed");
-+    }
-+    return ret;
-+}
-+
-+static NotifierWithReturn multifd_ram_round_notifier = {
-+    .notify = multifd_ram_round_notify,
-+};
-+
- void multifd_ram_payload_alloc(MultiFDPages_t *pages)
- {
-     pages->offset = g_new0(ram_addr_t, multifd_ram_page_count());
-@@ -471,6 +494,7 @@ static const MultiFDMethods multifd_nocomp_ops = {
- static void multifd_nocomp_register(void)
- {
-     multifd_register_ops(MULTIFD_COMPRESSION_NONE, &multifd_nocomp_ops);
-+    ram_round_add_notifier(&multifd_ram_round_notifier);
- }
+     if (rdma->blockmap) {
+@@ -583,8 +579,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
+                          (uintptr_t) block->local_host_addr,
+                          block->offset, block->length,
+                          (uintptr_t) (block->local_host_addr + block->length),
+-                         BITS_TO_LONGS(block->nb_chunks) *
+-                             sizeof(unsigned long) * 8,
+                          block->nb_chunks);
  
- migration_init(multifd_nocomp_register);
-diff --git a/migration/ram.c b/migration/ram.c
-index 8918b2f03b..2dd898b305 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -440,6 +440,8 @@ typedef struct RAMState RAMState;
- static RAMState *ram_state;
+     local->nb_blocks++;
+@@ -654,9 +648,6 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
+         block->mr = NULL;
+     }
  
- static NotifierWithReturnList precopy_notifier_list;
-+static NotifierWithReturnList ram_round_notifier_list =
-+    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(ram_round_notifier_list);
+-    g_free(block->transit_bitmap);
+-    block->transit_bitmap = NULL;
+-
+     g_free(block->remote_keys);
+     block->remote_keys = NULL;
  
- /* Whether postcopy has queued requests? */
- static bool postcopy_has_request(RAMState *rs)
-@@ -470,6 +472,38 @@ int precopy_notify(PrecopyNotifyReason reason, Error **errp)
-     return notifier_with_return_list_notify(&precopy_notifier_list, &pnd, errp);
- }
+@@ -693,9 +684,8 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
  
-+void ram_round_add_notifier(NotifierWithReturn *n)
-+{
-+    notifier_with_return_list_add(&ram_round_notifier_list, n);
-+}
-+
-+void ram_round_remove_notifier(NotifierWithReturn *n)
-+{
-+    notifier_with_return_remove(n);
-+}
-+
-+static int ram_round_notify(QEMUFile *f)
-+{
-+    RAMRoundNotifyData data = {
-+        .file = f,
-+    };
-+    Error *local_err = NULL;
-+    int ret;
-+
-+    ret = notifier_with_return_list_notify(&ram_round_notifier_list, &data,
-+                                           &local_err);
-+    if (ret) {
-+        if (local_err) {
-+            error_report_err(local_err);
-+        } else {
-+            error_report("RAM round notifier failed: %d", ret);
-+        }
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- uint64_t ram_bytes_remaining(void)
- {
-     return ram_state ? (ram_state->migration_dirty_pages * TARGET_PAGE_SIZE) :
-@@ -1380,12 +1414,11 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
-         pss->page = 0;
-         pss->block = QLIST_NEXT_RCU(pss->block, next);
-         if (!pss->block) {
--            if (multifd_ram_sync_per_round()) {
--                QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
--                int ret = multifd_ram_flush_and_sync(f);
--                if (ret < 0) {
--                    return ret;
--                }
-+            QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
-+            int ret = ram_round_notify(f);
-+
-+            if (ret < 0) {
-+                return ret;
-             }
+     trace_rdma_delete_block(block, (uintptr_t)block->local_host_addr,
+                            block->offset, block->length,
+-                            (uintptr_t)(block->local_host_addr + block->length),
+-                           BITS_TO_LONGS(block->nb_chunks) *
+-                               sizeof(unsigned long) * 8, block->nb_chunks);
++                           (uintptr_t)(block->local_host_addr + block->length),
++                           block->nb_chunks);
  
-             /* Hit the end of the list */
-diff --git a/migration/ram.h b/migration/ram.h
-index 41697a7599..372e2a97f6 100644
---- a/migration/ram.h
-+++ b/migration/ram.h
-@@ -31,6 +31,7 @@
+     g_free(old);
  
- #include "qapi/qapi-types-migration.h"
- #include "exec/cpu-common.h"
-+#include "qemu/notify.h"
- #include "system/ram_addr.h"
- #include "io/channel.h"
+@@ -1221,8 +1211,6 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
+                                    index, chunk, block->local_host_addr,
+                                    (void *)(uintptr_t)block->remote_host_addr);
  
-@@ -95,6 +96,17 @@ void ram_handle_zero(void *host, uint64_t size);
- void ram_transferred_add(uint64_t bytes);
- void ram_release_page(const char *rbname, uint64_t offset);
+-        clear_bit(chunk, block->transit_bitmap);
+-
+         if (rdma->nb_sent > 0) {
+             rdma->nb_sent--;
+         }
+@@ -1877,8 +1865,7 @@ retry:
+     /*
+      * Encode the ram block index and chunk within this wrid.
+      * We will use this information at the time of completion
+-     * to figure out which bitmap to check against and then which
+-     * chunk in the bitmap to look for.
++     * to identify the completed write in trace output.
+      */
+     send_wr.wr_id = qemu_rdma_make_wrid(RDMA_WRID_RDMA_WRITE,
+                                         current_index, chunk);
+@@ -1916,7 +1903,6 @@ retry:
+         return -1;
+     }
  
-+/*
-+ * Round notifiers must complete writes from the previous RAM scan before
-+ * returning, so a newer version of a page cannot overtake an older version.
-+ */
-+typedef struct RAMRoundNotifyData {
-+    QEMUFile *file;
-+} RAMRoundNotifyData;
-+
-+void ram_round_add_notifier(NotifierWithReturn *n);
-+void ram_round_remove_notifier(NotifierWithReturn *n);
-+
- int ramblock_recv_bitmap_test(RAMBlock *rb, void *host_addr);
- bool ramblock_recv_bitmap_test_byte_offset(RAMBlock *rb, uint64_t byte_offset);
- void ramblock_recv_bitmap_set(RAMBlock *rb, void *host_addr);
+-    set_bit(chunk, block->transit_bitmap);
+     qatomic_add(&mig_stats.normal_pages, sge.length / qemu_target_page_size());
+     /*
+      * We are adding to transferred the amount of data written, but no
+diff --git a/migration/trace-events b/migration/trace-events
+index 70d083f3fe..4b3239636c 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -249,9 +249,9 @@ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received reg
+ rdma_write_one_sendreg(uint64_t chunk, int len, int index, int64_t offset) "Sending registration request chunk %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+ rdma_write_one_top(uint64_t chunks, uint64_t size) "Writing %" PRIu64 " chunks, (%" PRIu64 " MB)"
+ rdma_write_one_zero(uint64_t chunk, int len, int index, int64_t offset) "Entire chunk is zero, sending compress: %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+-rdma_add_block(const char *block_name, int block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, uint64_t bits, int chunks) "Added Block: '%s':%d, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " bits %" PRIu64 " chunks %d"
++rdma_add_block(const char *block_name, int block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, int chunks) "Added Block: '%s':%d, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " chunks %d"
+ rdma_block_notification_handle(const char *name, int index) "%s at %d"
+-rdma_delete_block(void *block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, uint64_t bits, int chunks) "Deleted Block: %p, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " bits %" PRIu64 " chunks %d"
++rdma_delete_block(void *block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, int chunks) "Deleted Block: %p, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " chunks %d"
+ rdma_registration_handle_compress(int64_t length, int index, int64_t offset) "Zapping zero chunk: %" PRId64 " bytes, index %d, offset %" PRId64
+ rdma_registration_handle_finished(void) ""
+ rdma_registration_handle_ram_blocks(void) ""
 -- 
 2.20.1
 
