@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9112FC61DB9
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA30EC61DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0YrJ-0002Wq-Th; Sun, 30 Aug 2026 02:17:37 -0400
+	id 1x0Yro-0002vm-2p; Sun, 30 Aug 2026 02:18:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0YrH-0002Vq-U9; Sun, 30 Aug 2026 02:17:35 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1x0Yrm-0002sB-Lp; Sun, 30 Aug 2026 02:18:06 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0YrE-0005HD-SE; Sun, 30 Aug 2026 02:17:35 -0400
+ id 1x0Yrk-0005KE-1B; Sun, 30 Aug 2026 02:18:06 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hXhjn4TptzBqYb;
- Sun, 30 Aug 2026 08:17:17 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hXhjp6N3Nz8340;
+ Sun, 30 Aug 2026 08:17:18 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788070637;
- bh=51MSPAX34QLjScUHTSmMcl8ETlx++ork8pmFINwZGBw=;
+ s=dkim; t=1788070638;
+ bh=cFM2jfrPyndQJ8QXbCLiQuVny0z7mWKjr5OK4mBueLU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KAsHty5L6WD7SVXiUS5STQGp+0OptaocwDqe3KDZNwWt0TO8bI/tFsi4W0IN0fL0R
- ds9E8xKlXjwolf8hWR93Obhi7/2/UUYherDnnwsCmchz4P8ISIs80fBQKB9a78cfrD
- Bamqrp3QAio3EaFnI+6C7xOmvgAKF5mNPusv2iCMKxZ8y4eltYy1lsDk0f9n4MrmAF
- ZOmlowqQKIKT9KyoaPFhHCTZqccrXhNAk6bZ+Dj+AtaWl+T5a5Sp485cFcLSr74Lg8
- xrVqHClh6zLmJtaQFv7xZulHEvMi5bH7HL6wSNro3WA3jzX4Aq8RGsUP8U7a9sA+2q
- rkkFLSYVsa3ag==
+ b=dCIJKpd8itCacyAw/R+SbIBrjKo73Bj7W145RvhxTZSBoKzOanXqyHZ6iOy3C8PzS
+ bs5224WdcY48RGmbA2EKjpuDIELSolZpx4WMrKGo2MJJfaiDs7OqKTVVmGpvhyh/iA
+ mISVKgtOa+6SrxoKh+EcsN5dDzRsbKVqYUtT/yvuaOL3xnu9HAds1L1zWXzrIugVxn
+ Z2nLF+yfqi18FMvNMpg3ZrRB8M5w8kiKFjdXgsJ0ND2L+OMGkLdRHtkNkXT9/3rnQe
+ g0/ECvVrpfgx9ug+V0ivB2rRxWIjglzYbUP5k3Potz582FkJjlIVAWLUiye3zQNIYQ
+ LbxuRHLIa43RQ==
 Received: from localhost.localdomain (unknown [10.134.14.34])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjn33vGz7xSW;
- Sun, 30 Aug 2026 08:17:17 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjp4yKCz7swM;
+ Sun, 30 Aug 2026 08:17:18 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org,
 	qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH RFC v2 18/30] hw/timer: add RP2040 timer and alarms
-Date: Sun, 30 Aug 2026 08:15:49 +0200
-Message-ID: <20260830061601.52136-4-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH RFC v2 25/30] hw/misc: add RP2040 bus controller
+Date: Sun, 30 Aug 2026 08:15:56 +0200
+Message-ID: <20260830061601.52136-11-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -76,142 +76,130 @@ From: gilles grimaud <gilles.grimaud@univ-lille.fr>
 
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/Kconfig                  |   1 +
- hw/arm/rp2040.c                 |  10 +-
- hw/misc/Kconfig                 |   3 +
- hw/misc/meson.build             |   1 +
- hw/misc/rp2040_timer.c          | 372 ++++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h         |   2 +
- include/hw/misc/rp2040_timer.h  |  39 ++++
- tests/qtest/meson.build         |   1 +
- tests/qtest/rp2040-timer-test.c | 149 +++++++++++++
- 9 files changed, 577 insertions(+), 1 deletion(-)
- create mode 100644 hw/misc/rp2040_timer.c
- create mode 100644 include/hw/misc/rp2040_timer.h
- create mode 100644 tests/qtest/rp2040-timer-test.c
+ hw/arm/Kconfig                    |   1 +
+ hw/arm/rp2040.c                   |   8 +-
+ hw/misc/Kconfig                   |   3 +
+ hw/misc/meson.build               |   1 +
+ hw/misc/rp2040_busctrl.c          | 208 ++++++++++++++++++++++++++++++
+ include/hw/arm/rp2040.h           |   2 +
+ include/hw/misc/rp2040_busctrl.h  |  29 +++++
+ tests/qtest/meson.build           |   1 +
+ tests/qtest/rp2040-busctrl-test.c |  92 +++++++++++++
+ 9 files changed, 344 insertions(+), 1 deletion(-)
+ create mode 100644 hw/misc/rp2040_busctrl.c
+ create mode 100644 include/hw/misc/rp2040_busctrl.h
+ create mode 100644 tests/qtest/rp2040-busctrl-test.c
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index a5cbbaef28..81cd84b642 100644
+index 30965e9ede..517e39d81b 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -391,6 +391,7 @@ config RP2040
-     select RP2040_SYSCFG
-     select RP2040_SYSINFO
-     select RP2040_TBMAN
-+    select RP2040_TIMER
-     select RP2040_VREG
-     select RP2040_WATCHDOG
-     select RP2040_XOSC
+@@ -378,6 +378,7 @@ config RP2040
+     bool
+     select ARM_V7M
+     select PL011
++    select RP2040_BUSCTRL
+     select RP2040_CLOCKS
+     select RP2040_DMA
+     select RP2040_IOBANK0
 diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 6067d53246..79c7fda151 100644
+index e7ba55bd1f..ca27b3c8ef 100644
 --- a/hw/arm/rp2040.c
 +++ b/hw/arm/rp2040.c
-@@ -74,7 +74,6 @@ static const struct {
-     { "rp2040.i2c1",     0x40048000, 0x4000 },
-     { "rp2040.adc",      0x4004c000, 0x4000 },
-     { "rp2040.pwm",      0x40050000, 0x4000 },
--    { "rp2040.timer",    0x40054000, 0x4000 },
-     { "rp2040.rtc",      0x4005c000, 0x4000 },
-     { "rp2040.dma",      0x50000000, 0x1000 },
-     { "rp2040.usbctrl_dpram", 0x50100000, 0x10000 },
-@@ -323,6 +322,7 @@ static void rp2040_soc_init(Object *obj)
-     object_initialize_child(obj, "rosc", &s->rosc, TYPE_RP2040_ROSC);
-     object_initialize_child(obj, "sio", &s->sio, TYPE_RP2040_SIO);
-     object_initialize_child(obj, "tbman", &s->tbman, TYPE_RP2040_TBMAN);
-+    object_initialize_child(obj, "timer", &s->timer, TYPE_RP2040_TIMER);
-     object_initialize_child(obj, "vreg", &s->vreg, TYPE_RP2040_VREG);
-     object_initialize_child(obj, "watchdog", &s->watchdog,
-                             TYPE_RP2040_WATCHDOG);
-@@ -556,6 +556,14 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+@@ -142,7 +142,6 @@ static const struct {
+     hwaddr base;
+     hwaddr size;
+ } rp2040_unimplemented[] = {
+-    { "rp2040.busctrl",  0x40030000, 0x4000 },
+     { "rp2040.spi0",     0x4003c000, 0x4000 },
+     { "rp2040.spi1",     0x40040000, 0x4000 },
+     { "rp2040.i2c0",     0x40044000, 0x4000 },
+@@ -368,6 +367,8 @@ static void rp2040_soc_init(Object *obj)
      }
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->tbman), 0, RP2040_TBMAN_BASE);
  
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->timer), errp)) {
+     object_initialize_child(obj, "xip", &s->xip, TYPE_RP2040_XIP);
++    object_initialize_child(obj, "busctrl", &s->busctrl,
++                            TYPE_RP2040_BUSCTRL);
+ 
+     object_initialize_child(obj, "clocks", &s->clocks, TYPE_RP2040_CLOCKS);
+     object_initialize_child(obj, "dma", &s->dma, TYPE_RP2040_DMA);
+@@ -531,6 +532,11 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+                                 RP2040_XIP_NOCACHE_NOALLOC_BASE,
+                                 &s->xip.xip_nocache_noalloc);
+ 
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->busctrl), errp)) {
 +        return;
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->timer), 0, RP2040_TIMER_BASE);
-+    for (i = 0; i < RP2040_TIMER_NUM_ALARMS; i++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->timer), i, s->irq[i]);
-+    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->busctrl), 0, RP2040_BUSCTRL_BASE);
 +
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->vreg), errp)) {
-         return;
-     }
+     object_property_set_link(OBJECT(&s->dma), "memory",
+                              OBJECT(s->board_memory), &err);
+     if (err) {
 diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 0168f85810..d98b8a4674 100644
+index d98b8a4674..228b313da0 100644
 --- a/hw/misc/Kconfig
 +++ b/hw/misc/Kconfig
-@@ -140,6 +140,9 @@ config RP2040_SYSINFO
- config RP2040_TBMAN
+@@ -101,6 +101,9 @@ config FSL_IMX8MP_ANALOG
+ config FSL_IMX8MP_CCM
      bool
  
-+config RP2040_TIMER
++config RP2040_BUSCTRL
 +    bool
 +
- config RP2040_VREG
+ config RP2040_CLOCKS
      bool
  
 diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 5cdbde9b37..ba2e9489ee 100644
+index ba2e9489ee..96b5fb9c46 100644
 --- a/hw/misc/meson.build
 +++ b/hw/misc/meson.build
-@@ -111,6 +111,7 @@ system_ss.add(when: 'CONFIG_RP2040_SIO', if_true: files('rp2040_sio.c'))
- system_ss.add(when: 'CONFIG_RP2040_SYSCFG', if_true: files('rp2040_syscfg.c'))
- system_ss.add(when: 'CONFIG_RP2040_SYSINFO', if_true: files('rp2040_sysinfo.c'))
- system_ss.add(when: 'CONFIG_RP2040_TBMAN', if_true: files('rp2040_tbman.c'))
-+system_ss.add(when: 'CONFIG_RP2040_TIMER', if_true: files('rp2040_timer.c'))
- system_ss.add(when: 'CONFIG_RP2040_VREG', if_true: files('rp2040_vreg.c'))
- system_ss.add(when: 'CONFIG_RP2040_WATCHDOG', if_true: files('rp2040_watchdog.c'))
- system_ss.add(when: 'CONFIG_RP2040_XOSC', if_true: files('rp2040_xosc.c'))
-diff --git a/hw/misc/rp2040_timer.c b/hw/misc/rp2040_timer.c
+@@ -98,6 +98,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'bcm2835_cprman.c',
+   'bcm2835_powermgt.c',
+ ))
++system_ss.add(when: 'CONFIG_RP2040_BUSCTRL', if_true: files('rp2040_busctrl.c'))
+ system_ss.add(when: 'CONFIG_RP2040_CLOCKS', if_true: files('rp2040_clocks.c'))
+ system_ss.add(when: 'CONFIG_RP2040_IOBANK0', if_true: files('rp2040_iobank0.c'))
+ system_ss.add(when: 'CONFIG_RP2040_IOQSPI', if_true: files('rp2040_ioqspi.c'))
+diff --git a/hw/misc/rp2040_busctrl.c b/hw/misc/rp2040_busctrl.c
 new file mode 100644
-index 0000000000..01d2d70793
+index 0000000000..505047609c
 --- /dev/null
-+++ b/hw/misc/rp2040_timer.c
-@@ -0,0 +1,372 @@
++++ b/hw/misc/rp2040_busctrl.c
+@@ -0,0 +1,208 @@
 +/*
-+ * RP2040 timer emulation
++ * RP2040 bus fabric control emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/core/irq.h"
++#include "hw/misc/rp2040_busctrl.h"
 +#include "hw/misc/rp2040_nyi.h"
-+#include "hw/misc/rp2040_timer.h"
 +#include "migration/vmstate.h"
 +#include "qemu/bitops.h"
-+#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "qemu/timer.h"
 +
-+#define TIMER_TIMEHW       0x00
-+#define TIMER_TIMELW       0x04
-+#define TIMER_TIMEHR       0x08
-+#define TIMER_TIMELR       0x0c
-+#define TIMER_ALARM0       0x10
-+#define TIMER_ALARM3       0x1c
-+#define TIMER_ARMED        0x20
-+#define TIMER_TIMERAWH     0x24
-+#define TIMER_TIMERAWL     0x28
-+#define TIMER_DBGPAUSE     0x2c
-+#define TIMER_PAUSE        0x30
-+#define TIMER_INTR         0x34
-+#define TIMER_INTE         0x38
-+#define TIMER_INTF         0x3c
-+#define TIMER_INTS         0x40
++#define BUSCTRL_PRIORITY        0x00
++#define BUSCTRL_PRIORITY_ACK    0x04
++#define BUSCTRL_PERFCTR_BASE    0x08
++#define BUSCTRL_PERFSEL_BASE    0x0c
++#define BUSCTRL_PERF_STRIDE     0x08
++#define BUSCTRL_NUM_COUNTERS    4
 +
-+#define TIMER_ALARM_MASK   0x0f
-+#define TIMER_DBGPAUSE_MASK (BIT(2) | BIT(1))
-+#define TIMER_PAUSE_MASK   BIT(0)
++#define BUSCTRL_PRIORITY_MASK   0x00001111
++#define BUSCTRL_PRIORITY_ACKED  BIT(0)
++#define BUSCTRL_PERFCTR_MASK    0x00ffffff
++#define BUSCTRL_PERFSEL_RESET   0x1f
++#define BUSCTRL_PERFSEL_MASK    0x1f
 +
-+#define ATOMIC_ALIAS_MASK  0x3000
-+#define ATOMIC_XOR         0x1000
-+#define ATOMIC_SET         0x2000
-+#define ATOMIC_CLR         0x3000
++#define ATOMIC_ALIAS_MASK       0x3000
++#define ATOMIC_XOR              0x1000
++#define ATOMIC_SET              0x2000
++#define ATOMIC_CLR              0x3000
 +
-+static uint32_t rp2040_timer_apply_alias(uint32_t old, uint32_t value,
-+                                         hwaddr alias)
++static uint32_t rp2040_busctrl_apply_alias(uint32_t old, uint32_t value,
++                                           hwaddr alias)
 +{
 +    switch (alias) {
 +    case ATOMIC_XOR:
@@ -225,214 +213,107 @@ index 0000000000..01d2d70793
 +    }
 +}
 +
-+static uint64_t rp2040_timer_now_us(RP2040TimerState *s)
++static uint32_t rp2040_busctrl_read_counter(RP2040BusCtrlState *s,
++                                            unsigned index)
 +{
-+    if (s->pause & TIMER_PAUSE_MASK) {
-+        return s->paused_time_us;
++    if (s->perfsel[index] != BUSCTRL_PERFSEL_RESET &&
++        s->perfctr[index] != BUSCTRL_PERFCTR_MASK) {
++        s->perfctr[index]++;
 +    }
 +
-+    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / 1000 + s->time_offset_us;
++    return s->perfctr[index];
 +}
 +
-+static uint32_t rp2040_timer_ints(RP2040TimerState *s)
++static uint64_t rp2040_busctrl_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    uint32_t ints = (s->intr & s->inte) | s->intf;
-+
-+    return ints & TIMER_ALARM_MASK;
-+}
-+
-+static void rp2040_timer_update_irq(RP2040TimerState *s)
-+{
-+    uint32_t ints = rp2040_timer_ints(s);
-+    int i;
-+
-+    for (i = 0; i < RP2040_TIMER_NUM_ALARMS; i++) {
-+        qemu_set_irq(s->irq[i], !!(ints & BIT(i)));
-+    }
-+}
-+
-+static void rp2040_timer_update_alarm(RP2040TimerState *s, unsigned alarm)
-+{
-+    uint64_t now_us;
-+    uint32_t delta;
-+
-+    if (!(s->armed & BIT(alarm)) || (s->pause & TIMER_PAUSE_MASK)) {
-+        timer_del(s->alarm_timer[alarm]);
-+        return;
-+    }
-+
-+    now_us = rp2040_timer_now_us(s);
-+    delta = s->alarm[alarm] - (uint32_t)now_us;
-+    if (delta == 0 || delta > INT32_MAX) {
-+        timer_del(s->alarm_timer[alarm]);
-+        s->armed &= ~BIT(alarm);
-+        s->intr |= BIT(alarm);
-+        rp2040_timer_update_irq(s);
-+    } else {
-+        timer_mod(s->alarm_timer[alarm],
-+                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+                  (int64_t)delta * 1000);
-+    }
-+}
-+
-+static void rp2040_timer_update_alarms(RP2040TimerState *s)
-+{
-+    int i;
-+
-+    for (i = 0; i < RP2040_TIMER_NUM_ALARMS; i++) {
-+        rp2040_timer_update_alarm(s, i);
-+    }
-+}
-+
-+static bool rp2040_timer_alarm_offset(hwaddr offset, unsigned *alarm)
-+{
-+    if (offset < TIMER_ALARM0 || offset > TIMER_ALARM3 || (offset & 0x3)) {
-+        return false;
-+    }
-+
-+    *alarm = (offset - TIMER_ALARM0) / sizeof(uint32_t);
-+    return true;
-+}
-+
-+static uint64_t rp2040_timer_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    RP2040TimerState *s = opaque;
++    RP2040BusCtrlState *s = opaque;
 +    hwaddr offset = addr & 0xfff;
-+    uint64_t now_us = rp2040_timer_now_us(s);
-+    unsigned alarm;
++    unsigned index;
 +    uint64_t value;
 +
++    if (offset >= BUSCTRL_PERFCTR_BASE &&
++        offset < BUSCTRL_PERFCTR_BASE + BUSCTRL_NUM_COUNTERS *
++        BUSCTRL_PERF_STRIDE &&
++        (offset - BUSCTRL_PERFCTR_BASE) % BUSCTRL_PERF_STRIDE == 0) {
++        index = (offset - BUSCTRL_PERFCTR_BASE) / BUSCTRL_PERF_STRIDE;
++        return rp2040_busctrl_read_counter(s, index);
++    }
++
++    if (offset >= BUSCTRL_PERFSEL_BASE &&
++        offset < BUSCTRL_PERFSEL_BASE + BUSCTRL_NUM_COUNTERS *
++        BUSCTRL_PERF_STRIDE &&
++        (offset - BUSCTRL_PERFSEL_BASE) % BUSCTRL_PERF_STRIDE == 0) {
++        index = (offset - BUSCTRL_PERFSEL_BASE) / BUSCTRL_PERF_STRIDE;
++        return s->perfsel[index];
++    }
++
 +    switch (offset) {
-+    case TIMER_TIMEHR:
-+    case TIMER_TIMERAWH:
-+        value = now_us >> 32;
++    case BUSCTRL_PRIORITY:
++        value = s->priority;
 +        break;
-+    case TIMER_TIMELR:
-+    case TIMER_TIMERAWL:
-+        value = (uint32_t)now_us;
-+        break;
-+    case TIMER_ARMED:
-+        value = s->armed;
-+        break;
-+    case TIMER_DBGPAUSE:
-+        value = s->dbgpause;
-+        break;
-+    case TIMER_PAUSE:
-+        value = s->pause;
-+        break;
-+    case TIMER_INTR:
-+        value = s->intr;
-+        break;
-+    case TIMER_INTE:
-+        value = s->inte;
-+        break;
-+    case TIMER_INTF:
-+        value = s->intf;
-+        break;
-+    case TIMER_INTS:
-+        value = rp2040_timer_ints(s);
++    case BUSCTRL_PRIORITY_ACK:
++        value = BUSCTRL_PRIORITY_ACKED;
 +        break;
 +    default:
-+        if (rp2040_timer_alarm_offset(offset, &alarm)) {
-+            value = s->alarm[alarm];
-+        } else {
-+            value = 0;
-+            rp2040_log_unimplemented_read("timer", size,
-+                                          RP2040_TIMER_BASE + addr, offset,
-+                                          value);
-+        }
++        value = 0;
++        rp2040_log_unimplemented_read("busctrl", size,
++                                      RP2040_BUSCTRL_BASE + addr, offset,
++                                      value);
 +        break;
 +    }
 +
 +    return value;
 +}
 +
-+static void rp2040_timer_set_time(RP2040TimerState *s, uint64_t value)
++static void rp2040_busctrl_write(void *opaque, hwaddr addr,
++                                 uint64_t value64, unsigned size)
 +{
-+    if (s->pause & TIMER_PAUSE_MASK) {
-+        s->paused_time_us = value;
-+    } else {
-+        s->time_offset_us = value -
-+                            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / 1000;
-+    }
-+    rp2040_timer_update_alarms(s);
-+}
-+
-+static void rp2040_timer_write(void *opaque, hwaddr addr,
-+                               uint64_t value64, unsigned size)
-+{
-+    RP2040TimerState *s = opaque;
++    RP2040BusCtrlState *s = opaque;
 +    hwaddr alias = addr & ATOMIC_ALIAS_MASK;
 +    hwaddr offset = addr & 0xfff;
++    unsigned index;
 +    uint32_t value = value64;
-+    uint32_t old;
-+    uint64_t now_us;
-+    unsigned alarm;
++
++    if (offset >= BUSCTRL_PERFCTR_BASE &&
++        offset < BUSCTRL_PERFCTR_BASE + BUSCTRL_NUM_COUNTERS *
++        BUSCTRL_PERF_STRIDE &&
++        (offset - BUSCTRL_PERFCTR_BASE) % BUSCTRL_PERF_STRIDE == 0) {
++        index = (offset - BUSCTRL_PERFCTR_BASE) / BUSCTRL_PERF_STRIDE;
++        s->perfctr[index] =
++            rp2040_busctrl_apply_alias(s->perfctr[index], value, alias) &
++            BUSCTRL_PERFCTR_MASK;
++        return;
++    }
++
++    if (offset >= BUSCTRL_PERFSEL_BASE &&
++        offset < BUSCTRL_PERFSEL_BASE + BUSCTRL_NUM_COUNTERS *
++        BUSCTRL_PERF_STRIDE &&
++        (offset - BUSCTRL_PERFSEL_BASE) % BUSCTRL_PERF_STRIDE == 0) {
++        index = (offset - BUSCTRL_PERFSEL_BASE) / BUSCTRL_PERF_STRIDE;
++        s->perfsel[index] =
++            rp2040_busctrl_apply_alias(s->perfsel[index], value, alias) &
++            BUSCTRL_PERFSEL_MASK;
++        return;
++    }
 +
 +    switch (offset) {
-+    case TIMER_TIMEHW:
-+        now_us = rp2040_timer_now_us(s);
-+        rp2040_timer_set_time(s, ((uint64_t)value << 32) |
-+                              (uint32_t)now_us);
++    case BUSCTRL_PRIORITY:
++        s->priority = rp2040_busctrl_apply_alias(s->priority, value, alias) &
++                      BUSCTRL_PRIORITY_MASK;
 +        break;
-+    case TIMER_TIMELW:
-+        now_us = rp2040_timer_now_us(s);
-+        rp2040_timer_set_time(s, (now_us & UINT64_C(0xffffffff00000000)) |
-+                              value);
-+        break;
-+    case TIMER_ARMED:
-+        s->armed &= ~(value & TIMER_ALARM_MASK);
-+        rp2040_timer_update_alarms(s);
-+        break;
-+    case TIMER_DBGPAUSE:
-+        s->dbgpause = rp2040_timer_apply_alias(s->dbgpause, value, alias) &
-+                      TIMER_DBGPAUSE_MASK;
-+        break;
-+    case TIMER_PAUSE:
-+        old = s->pause;
-+        now_us = rp2040_timer_now_us(s);
-+        s->pause = rp2040_timer_apply_alias(s->pause, value, alias) &
-+                   TIMER_PAUSE_MASK;
-+        if (!(old & TIMER_PAUSE_MASK) && (s->pause & TIMER_PAUSE_MASK)) {
-+            s->paused_time_us = now_us;
-+        } else if ((old & TIMER_PAUSE_MASK) &&
-+                   !(s->pause & TIMER_PAUSE_MASK)) {
-+            s->time_offset_us = s->paused_time_us -
-+                                qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / 1000;
-+            rp2040_timer_update_alarms(s);
-+        }
-+        break;
-+    case TIMER_INTR:
-+        s->intr &= ~(value & TIMER_ALARM_MASK);
-+        rp2040_timer_update_irq(s);
-+        break;
-+    case TIMER_INTE:
-+        s->inte = rp2040_timer_apply_alias(s->inte, value, alias) &
-+                  TIMER_ALARM_MASK;
-+        rp2040_timer_update_irq(s);
-+        break;
-+    case TIMER_INTF:
-+        s->intf = rp2040_timer_apply_alias(s->intf, value, alias) &
-+                  TIMER_ALARM_MASK;
-+        rp2040_timer_update_irq(s);
++    case BUSCTRL_PRIORITY_ACK:
 +        break;
 +    default:
-+        if (rp2040_timer_alarm_offset(offset, &alarm)) {
-+            s->alarm[alarm] = value;
-+            s->armed |= BIT(alarm);
-+            rp2040_timer_update_alarm(s, alarm);
-+        } else {
-+            rp2040_log_unimplemented_write("timer", size,
-+                                           RP2040_TIMER_BASE + addr, offset,
-+                                           value64);
-+        }
++        rp2040_log_unimplemented_write("busctrl", size,
++                                       RP2040_BUSCTRL_BASE + addr, offset,
++                                       value64);
 +        break;
 +    }
 +}
 +
-+static const MemoryRegionOps rp2040_timer_ops = {
-+    .read = rp2040_timer_read,
-+    .write = rp2040_timer_write,
++static const MemoryRegionOps rp2040_busctrl_ops = {
++    .read = rp2040_busctrl_read,
++    .write = rp2040_busctrl_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .valid = {
 +        .min_access_size = 4,
@@ -440,322 +321,209 @@ index 0000000000..01d2d70793
 +    },
 +};
 +
-+static void rp2040_timer_alarm_tick(void *opaque)
++static void rp2040_busctrl_reset(DeviceState *dev)
 +{
-+    uintptr_t packed = (uintptr_t)opaque;
-+    RP2040TimerState *s = (RP2040TimerState *)(packed & ~(uintptr_t)0x3);
-+    unsigned alarm = packed & 0x3;
-+
-+    s->armed &= ~BIT(alarm);
-+    s->intr |= BIT(alarm);
-+    rp2040_timer_update_irq(s);
-+}
-+
-+static void rp2040_timer_reset(DeviceState *dev)
-+{
-+    RP2040TimerState *s = RP2040_TIMER(dev);
++    RP2040BusCtrlState *s = RP2040_BUSCTRL(dev);
 +    int i;
 +
-+    s->time_offset_us = -qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / 1000;
-+    s->paused_time_us = 0;
-+    memset(s->alarm, 0, sizeof(s->alarm));
-+    s->armed = 0;
-+    s->dbgpause = TIMER_DBGPAUSE_MASK;
-+    s->pause = 0;
-+    s->intr = 0;
-+    s->inte = 0;
-+    s->intf = 0;
-+
-+    for (i = 0; i < RP2040_TIMER_NUM_ALARMS; i++) {
-+        timer_del(s->alarm_timer[i]);
-+        qemu_set_irq(s->irq[i], 0);
++    s->priority = 0;
++    for (i = 0; i < BUSCTRL_NUM_COUNTERS; i++) {
++        s->perfctr[i] = 0;
++        s->perfsel[i] = BUSCTRL_PERFSEL_RESET;
 +    }
 +}
 +
-+static void rp2040_timer_init(Object *obj)
++static void rp2040_busctrl_init(Object *obj)
 +{
-+    RP2040TimerState *s = RP2040_TIMER(obj);
++    RP2040BusCtrlState *s = RP2040_BUSCTRL(obj);
 +
-+    memory_region_init_io(&s->iomem, obj, &rp2040_timer_ops, s,
-+                          "rp2040.timer", RP2040_TIMER_SIZE);
++    memory_region_init_io(&s->iomem, obj, &rp2040_busctrl_ops, s,
++                          "rp2040.busctrl", RP2040_BUSCTRL_SIZE);
 +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq[0]);
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq[1]);
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq[2]);
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq[3]);
 +}
 +
-+static void rp2040_timer_realize(DeviceState *dev, Error **errp)
-+{
-+    RP2040TimerState *s = RP2040_TIMER(dev);
-+    int i;
-+
-+    for (i = 0; i < RP2040_TIMER_NUM_ALARMS; i++) {
-+        s->alarm_timer[i] =
-+            timer_new_ns(QEMU_CLOCK_VIRTUAL, rp2040_timer_alarm_tick,
-+                         (void *)((uintptr_t)s | i));
-+    }
-+}
-+
-+static const VMStateDescription rp2040_timer_vmstate = {
-+    .name = TYPE_RP2040_TIMER,
++static const VMStateDescription rp2040_busctrl_vmstate = {
++    .name = TYPE_RP2040_BUSCTRL,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_TIMER_PTR_ARRAY(alarm_timer, RP2040TimerState,
-+                                RP2040_TIMER_NUM_ALARMS),
-+        VMSTATE_INT64(time_offset_us, RP2040TimerState),
-+        VMSTATE_UINT64(paused_time_us, RP2040TimerState),
-+        VMSTATE_UINT32_ARRAY(alarm, RP2040TimerState,
-+                             RP2040_TIMER_NUM_ALARMS),
-+        VMSTATE_UINT32(armed, RP2040TimerState),
-+        VMSTATE_UINT32(dbgpause, RP2040TimerState),
-+        VMSTATE_UINT32(pause, RP2040TimerState),
-+        VMSTATE_UINT32(intr, RP2040TimerState),
-+        VMSTATE_UINT32(inte, RP2040TimerState),
-+        VMSTATE_UINT32(intf, RP2040TimerState),
++        VMSTATE_UINT32(priority, RP2040BusCtrlState),
++        VMSTATE_UINT32_ARRAY(perfctr, RP2040BusCtrlState, 4),
++        VMSTATE_UINT32_ARRAY(perfsel, RP2040BusCtrlState, 4),
 +        VMSTATE_END_OF_LIST()
-+    },
++    }
 +};
 +
-+static void rp2040_timer_class_init(ObjectClass *klass, const void *data)
++static void rp2040_busctrl_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->realize = rp2040_timer_realize;
-+    device_class_set_legacy_reset(dc, rp2040_timer_reset);
-+    dc->vmsd = &rp2040_timer_vmstate;
++    device_class_set_legacy_reset(dc, rp2040_busctrl_reset);
++    dc->vmsd = &rp2040_busctrl_vmstate;
 +}
 +
-+static const TypeInfo rp2040_timer_info = {
-+    .name          = TYPE_RP2040_TIMER,
++static const TypeInfo rp2040_busctrl_info = {
++    .name          = TYPE_RP2040_BUSCTRL,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040TimerState),
-+    .instance_init = rp2040_timer_init,
-+    .class_init    = rp2040_timer_class_init,
++    .instance_size = sizeof(RP2040BusCtrlState),
++    .instance_init = rp2040_busctrl_init,
++    .class_init    = rp2040_busctrl_class_init,
 +};
 +
-+static void rp2040_timer_register_types(void)
++static void rp2040_busctrl_register_types(void)
 +{
-+    type_register_static(&rp2040_timer_info);
++    type_register_static(&rp2040_busctrl_info);
 +}
-+
-+type_init(rp2040_timer_register_types)
++type_init(rp2040_busctrl_register_types)
 diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 5c0047c0f7..16e5ca8846 100644
+index d52c8856b0..eeec45efbe 100644
 --- a/include/hw/arm/rp2040.h
 +++ b/include/hw/arm/rp2040.h
-@@ -25,6 +25,7 @@
- #include "hw/misc/rp2040_syscfg.h"
- #include "hw/misc/rp2040_sysinfo.h"
- #include "hw/misc/rp2040_tbman.h"
-+#include "hw/misc/rp2040_timer.h"
- #include "hw/misc/rp2040_vreg.h"
- #include "hw/misc/rp2040_watchdog.h"
- #include "hw/misc/rp2040_xosc.h"
-@@ -64,6 +65,7 @@ struct RP2040State {
-     RP2040RoscState rosc;
-     RP2040SioState sio;
-     RP2040TbmanState tbman;
-+    RP2040TimerState timer;
-     RP2040VregState vreg;
-     RP2040WatchdogState watchdog;
-     RP2040XoscState xosc;
-diff --git a/include/hw/misc/rp2040_timer.h b/include/hw/misc/rp2040_timer.h
+@@ -14,6 +14,7 @@
+ #include "hw/core/clock.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/dma/rp2040_dma.h"
++#include "hw/misc/rp2040_busctrl.h"
+ #include "hw/misc/rp2040_clocks.h"
+ #include "hw/misc/rp2040_iobank0.h"
+ #include "hw/misc/rp2040_ioqspi.h"
+@@ -56,6 +57,7 @@ struct RP2040State {
+ 
+     ARMv7MState armv7m[RP2040_NUM_CORES];
+     PL011State uart[2];
++    RP2040BusCtrlState busctrl;
+     RP2040ClocksState clocks;
+     RP2040DmaState dma;
+     RP2040IoBank0State iobank0;
+diff --git a/include/hw/misc/rp2040_busctrl.h b/include/hw/misc/rp2040_busctrl.h
 new file mode 100644
-index 0000000000..b14bf75d53
+index 0000000000..5c4a6d6d2b
 --- /dev/null
-+++ b/include/hw/misc/rp2040_timer.h
-@@ -0,0 +1,39 @@
++++ b/include/hw/misc/rp2040_busctrl.h
+@@ -0,0 +1,29 @@
 +/*
-+ * RP2040 timer emulation
++ * RP2040 bus fabric control emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_MISC_RP2040_TIMER_H
-+#define HW_MISC_RP2040_TIMER_H
++#ifndef HW_MISC_RP2040_BUSCTRL_H
++#define HW_MISC_RP2040_BUSCTRL_H
 +
 +#include "hw/core/sysbus.h"
-+#include "qemu/timer.h"
 +#include "qom/object.h"
 +
-+#define TYPE_RP2040_TIMER "rp2040-timer"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040TimerState, RP2040_TIMER)
++#define TYPE_RP2040_BUSCTRL "rp2040-busctrl"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040BusCtrlState, RP2040_BUSCTRL)
 +
-+#define RP2040_TIMER_BASE 0x40054000
-+#define RP2040_TIMER_SIZE 0x4000
-+#define RP2040_TIMER_NUM_ALARMS 4
++#define RP2040_BUSCTRL_BASE 0x40030000
++#define RP2040_BUSCTRL_SIZE 0x4000
 +
-+struct RP2040TimerState {
++struct RP2040BusCtrlState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion iomem;
-+    qemu_irq irq[RP2040_TIMER_NUM_ALARMS];
-+    QEMUTimer *alarm_timer[RP2040_TIMER_NUM_ALARMS];
 +
-+    int64_t time_offset_us;
-+    uint64_t paused_time_us;
-+    uint32_t alarm[RP2040_TIMER_NUM_ALARMS];
-+    uint32_t armed;
-+    uint32_t dbgpause;
-+    uint32_t pause;
-+    uint32_t intr;
-+    uint32_t inte;
-+    uint32_t intf;
++    uint32_t priority;
++    uint32_t perfctr[4];
++    uint32_t perfsel[4];
 +};
 +
 +#endif
 diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 3054809620..f0ffa84dd1 100644
+index 89e8f3ac32..c11f35e427 100644
 --- a/tests/qtest/meson.build
 +++ b/tests/qtest/meson.build
-@@ -265,6 +265,7 @@ qtests_arm = \
-                                                        'rp2040-rosc-test',
-                                                        'rp2040-sio-test',
-                                                        'rp2040-tbman-test',
-+                                                       'rp2040-timer-test',
-                                                        'rp2040-uart-test',
-                                                        'rp2040-vreg-test',
-                                                        'rp2040-watchdog-test'] : []) + \
-diff --git a/tests/qtest/rp2040-timer-test.c b/tests/qtest/rp2040-timer-test.c
+@@ -256,6 +256,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
+   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_RASPI_PICO') ? ['rp2040-sysinfo-syscfg-test',
++                                                       'rp2040-busctrl-test',
+                                                        'rp2040-clocks-test',
+                                                        'rp2040-dma-test',
+                                                        'rp2040-iobank0-test',
+diff --git a/tests/qtest/rp2040-busctrl-test.c b/tests/qtest/rp2040-busctrl-test.c
 new file mode 100644
-index 0000000000..35185415b5
+index 0000000000..a86fd8a20e
 --- /dev/null
-+++ b/tests/qtest/rp2040-timer-test.c
-@@ -0,0 +1,149 @@
++++ b/tests/qtest/rp2040-busctrl-test.c
+@@ -0,0 +1,92 @@
 +/*
-+ * QTest testcase for the RP2040 timer.
++ * QTest testcase for the RP2040 bus fabric control block.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
 +#include "libqtest.h"
-+#include "qemu/bitops.h"
 +
-+#define TIMER_BASE          0x40054000
-+#define TIMER_TIMEHW        0x00
-+#define TIMER_TIMELW        0x04
-+#define TIMER_TIMEHR        0x08
-+#define TIMER_TIMELR        0x0c
-+#define TIMER_ALARM0        0x10
-+#define TIMER_ARMED         0x20
-+#define TIMER_TIMERAWH      0x24
-+#define TIMER_TIMERAWL      0x28
-+#define TIMER_DBGPAUSE      0x2c
-+#define TIMER_PAUSE         0x30
-+#define TIMER_INTR          0x34
-+#define TIMER_INTE          0x38
-+#define TIMER_INTF          0x3c
-+#define TIMER_INTS          0x40
++#define BUSCTRL_BASE           0x40030000
++#define BUSCTRL_PRIORITY       0x00
++#define BUSCTRL_PRIORITY_ACK   0x04
++#define BUSCTRL_PERFCTR0       0x08
++#define BUSCTRL_PERFSEL0       0x0c
++#define BUSCTRL_PERFCTR1       0x10
++#define BUSCTRL_PERFSEL1       0x14
++#define BUSCTRL_PRIORITY_MASK  0x00001111
++#define BUSCTRL_PERFCTR_MASK   0x00ffffff
++#define BUSCTRL_PERFSEL_RESET  0x1f
++#define BUSCTRL_PERFSEL_SRAM5  0x05
 +
-+#define TIMER_SET_ALIAS     0x2000
-+#define TIMER_CLR_ALIAS     0x3000
-+#define TIMER_ALARM_MASK    0x0f
-+#define TIMER_DBGPAUSE_MASK (BIT(2) | BIT(1))
-+#define TIMER_PAUSE_MASK    BIT(0)
-+#define NS_PER_US           1000
-+
-+static QTestState *rp2040_timer_start(void)
++static QTestState *rp2040_start(void)
 +{
 +    return qtest_init("-machine raspi-pico");
 +}
 +
-+static void test_reset_values(void)
++static void test_busctrl_reset_values(void)
 +{
-+    QTestState *qts = rp2040_timer_start();
++    QTestState *qts = rp2040_start();
 +
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_ARMED), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_DBGPAUSE), ==,
-+                    TIMER_DBGPAUSE_MASK);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_PAUSE), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTR), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTE), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTF), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTS), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_TIMEHR), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWH), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY_ACK),
++                    ==, 1);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL0),
++                    ==, BUSCTRL_PERFSEL_RESET);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL1),
++                    ==, BUSCTRL_PERFSEL_RESET);
 +
 +    qtest_quit(qts);
 +}
 +
-+static void test_counter_and_pause(void)
++static void test_busctrl_priority(void)
 +{
-+    QTestState *qts = rp2040_timer_start();
-+    uint32_t before = qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWL);
-+    uint32_t paused;
++    QTestState *qts = rp2040_start();
 +
-+    qtest_clock_step(qts, 123 * NS_PER_US);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWL) - before,
-+                    ==, 123);
-+
-+    qtest_writel(qts, TIMER_BASE + TIMER_PAUSE, TIMER_PAUSE_MASK);
-+    paused = qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWL);
-+    qtest_clock_step(qts, 100 * NS_PER_US);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWL), ==,
-+                    paused);
-+
-+    qtest_writel(qts, TIMER_BASE + TIMER_TIMEHW, 0);
-+    qtest_writel(qts, TIMER_BASE + TIMER_TIMELW, 0x12345678);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWL), ==,
-+                    0x12345678);
-+
-+    qtest_writel(qts, TIMER_BASE + TIMER_CLR_ALIAS + TIMER_PAUSE,
-+                 TIMER_PAUSE_MASK);
-+    qtest_clock_step(qts, 10 * NS_PER_US);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_TIMELR), ==,
-+                    0x12345682);
++    qtest_writel(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY, 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY),
++                    ==, BUSCTRL_PRIORITY_MASK);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PRIORITY_ACK),
++                    ==, 1);
 +
 +    qtest_quit(qts);
 +}
 +
-+static void test_alarm(void)
++static void test_busctrl_perf_counter(void)
 +{
-+    QTestState *qts = rp2040_timer_start();
-+    uint32_t now = qtest_readl(qts, TIMER_BASE + TIMER_TIMERAWL);
++    QTestState *qts = rp2040_start();
++    uint32_t first;
++    uint32_t second;
 +
-+    qtest_writel(qts, TIMER_BASE + TIMER_INTE, BIT(0));
-+    qtest_writel(qts, TIMER_BASE + TIMER_ALARM0, now + 100);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_ARMED), ==, BIT(0));
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0),
++                    ==, 0);
++    qtest_writel(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL0,
++                 BUSCTRL_PERFSEL_SRAM5);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFSEL0),
++                    ==, BUSCTRL_PERFSEL_SRAM5);
 +
-+    qtest_clock_step(qts, 99 * NS_PER_US);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTR), ==, 0);
-+    qtest_clock_step(qts, NS_PER_US);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_ARMED), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTR), ==, BIT(0));
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTS), ==, BIT(0));
++    first = qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0);
++    second = qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0);
++    g_assert_cmphex(first, ==, 1);
++    g_assert_cmphex(second, ==, 2);
 +
-+    qtest_writel(qts, TIMER_BASE + TIMER_INTR, BIT(0));
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTR), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTS), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_interrupt_force_and_masks(void)
-+{
-+    QTestState *qts = rp2040_timer_start();
-+
-+    qtest_writel(qts, TIMER_BASE + TIMER_SET_ALIAS + TIMER_INTE,
-+                 BIT(2) | BIT(8));
-+    qtest_writel(qts, TIMER_BASE + TIMER_SET_ALIAS + TIMER_INTF,
-+                 BIT(2) | BIT(9));
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTE), ==, BIT(2));
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTF), ==, BIT(2));
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTS), ==, BIT(2));
-+
-+    qtest_writel(qts, TIMER_BASE + TIMER_CLR_ALIAS + TIMER_INTF, BIT(2));
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTF), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_INTS), ==, 0);
-+
-+    qtest_writel(qts, TIMER_BASE + TIMER_ARMED, TIMER_ALARM_MASK);
-+    qtest_writel(qts, TIMER_BASE + TIMER_DBGPAUSE, UINT32_MAX);
-+    qtest_writel(qts, TIMER_BASE + TIMER_PAUSE, UINT32_MAX);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_DBGPAUSE), ==,
-+                    TIMER_DBGPAUSE_MASK);
-+    g_assert_cmphex(qtest_readl(qts, TIMER_BASE + TIMER_PAUSE), ==,
-+                    TIMER_PAUSE_MASK);
++    qtest_writel(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0,
++                 BUSCTRL_PERFCTR_MASK);
++    g_assert_cmphex(qtest_readl(qts, BUSCTRL_BASE + BUSCTRL_PERFCTR0),
++                    ==, BUSCTRL_PERFCTR_MASK);
 +
 +    qtest_quit(qts);
 +}
@@ -764,12 +532,11 @@ index 0000000000..35185415b5
 +{
 +    g_test_init(&argc, &argv, NULL);
 +
-+    qtest_add_func("/rp2040-timer/reset-values", test_reset_values);
-+    qtest_add_func("/rp2040-timer/counter-and-pause",
-+                   test_counter_and_pause);
-+    qtest_add_func("/rp2040-timer/alarm", test_alarm);
-+    qtest_add_func("/rp2040-timer/interrupt-force-and-masks",
-+                   test_interrupt_force_and_masks);
++    qtest_add_func("/rp2040-busctrl/reset-values",
++                   test_busctrl_reset_values);
++    qtest_add_func("/rp2040-busctrl/priority", test_busctrl_priority);
++    qtest_add_func("/rp2040-busctrl/perf-counter",
++                   test_busctrl_perf_counter);
 +
 +    return g_test_run();
 +}
