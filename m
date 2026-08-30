@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BBDC61DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 11:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D032C61DE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 16:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0e1m-00058g-C1; Sun, 30 Aug 2026 07:48:46 -0400
+	id 1x0i0b-000615-E6; Sun, 30 Aug 2026 12:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x0e1l-00058X-CN
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 07:48:45 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1x0i0Y-00060E-LY
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 12:03:46 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x0e1j-0007Xx-BY
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 07:48:45 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2d7200b2e15so27099975ad.3
- for <qemu-devel@nongnu.org>; Sun, 30 Aug 2026 04:48:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788090521; cv=none;
- d=google.com; s=arc-20260327;
- b=c6Nwf3cjwcp9ZAbsJ1pc2I0PbdYpfJelgkqAm20FF61n4jPhfFmDtG0nNIK6U5Iiu1
- vwQVVE4zr1iIyFIHHMN44l7odxx3bdcNj+eKmsF8wObMU7/G+LhJXXNfMS/2NC4g2coo
- Dfim7CDHyoDBWcn02rX43JzEFXC+KGhnHbFxagW2S61Ei+MoleRuhA7HLooi55zK9tVl
- ILjUpFdxQXjeCsOOEpJ+0N+WoxIGXUSzatIXnrXklKb9bwGnf6YgzJxN8B5VLe1cVriR
- vIm54Wiivm3gLVybG/CxviNM1Fiouw2jR/vK8UgG7d1nSwaM7Kk5TnacJUhVMo4ZLrXP
- a8Dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4dnbNGdSGtZ91Zw3n9WlYxvAC+/7WcuMMCImA4XhsSY=;
- fh=wNIBB09whFX4aqH2z8BcDR9CesbTcDsK1XevePNeRLw=;
- b=EUDy0N/rRkF1T1LGBmMm/8XeQkLfUE2tk02DJUFiLgLgY84XSJhD8BlgDK4lQ7LOar
- 0Gr8Jwc8wp/WisyvxsyL0+fwOBSpb+cGjYE9l6oBVa39XXQP0eeM0cfmFt66EslVU1gX
- OU6vxY7gPLhTPznfSxx3etoYJp//xFWE3IQ293XCxkx0iFQuWTUKQvTGrGAD7F5yjPGP
- os8xgkY5vd0hALn/qk9JamZPOCm1G2pzX1YDfERBzPBkCJKtAD+Mmnsy7dccjATbPH2I
- COW52gDdHs2BtkpX/kwowF+CGmwpT+G2RsQDV3wH9dQNmjydzDWqbAfZRzznbZWB78sY
- eT3Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1x0i0W-0007hk-LY
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 12:03:46 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-851cbd64814so1056328b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 30 Aug 2026 09:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788090521; x=1788695321; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=4dnbNGdSGtZ91Zw3n9WlYxvAC+/7WcuMMCImA4XhsSY=;
- b=qLDAv78YmotYboaCUU9V3ihhaCEXeEIFxH9W+Sg2SXjWsWP5N1P/F1EbfRM76eFaRY
- fLlnOFlAYn6aUFMtbk0817YS/2jYkgtQoJuIjWRkGXGNliYgMAZN6qVSFt8FS7lcpsbv
- 0Lb5cKjN91wvp3sMGHkra5We7j9UpBM5/a6TTjOOwozaTN4njd/IVe3udNrfjWgMervC
- dBqvd17IPK1Vv6pTAGbLFn9CcCWSjPrrwODN4AhI30HGE4cXcleWE4OWJvVkzEJf0xWP
- B4rRElhZXO8qeyAmhuW94t7O1ltt/zay2GN/g/c1PodnY6LJFaIFvU6nJBHeEhX/JBUj
- W07w==
+ d=sifive.com; s=google; t=1788105823; x=1788710623; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4/Mt6EYU17EVtqbOmrXe+oIOnepyoTf2cyDH6lrZC1k=;
+ b=dG/0lA6uBuotZV+FH4zVPuQNoz8kVWixbzMp7CdaaCF+OMoudGw+FcICL3nmF37u73
+ b7SMNqw1GNzGbA364CVj9uQi0hYUOhyCanNlAPsFjEMkCpDkTafWve5mi0tIiobrF3Yd
+ c+D/eByurIhozwEa1E4iEM6ua8vnpjlKcT9zHXJ4/dyx+GQ8AKQGCjhIU8aSAPiPs++p
+ zyzkV0UGu21LP3l2oQPMPaAHSB6+H/bvMXV1/4QW0tonV/TedNei/jk2BC0QnX2eOpdT
+ MrE7gT4duOXQXu13MGg/0eoHgQn21N98NNzDpM1IxWrwIk5EmwGiLMjNmuOZ90Yqd+KQ
+ Ac+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788090521; x=1788695321;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=4dnbNGdSGtZ91Zw3n9WlYxvAC+/7WcuMMCImA4XhsSY=;
- b=iCdZ5NZ1nRcxsPH0ohbHX1uzsWlMVzLWQHIAP4NhQLlHJF1tTnJdnuCruC3HBbardr
- yBF3U+LHpKG5Lf2B1JHc4y0mBbt4IIPifRupowd/77B4hAipXDBa99lKK0ou2LzBYqyi
- X2qGEKDLR3kOLPqoaO3H7nXHLS8t6cYn4o1M/Ot3N3wWcZwZozWuINHWMlf7lPOuzdDv
- /X3NdUrLN0/DAsDB/1zaqSs6GxjZM+tL3EDKHekyY7EPrjEWm9m+0hq38S+HURuFXjVO
- 39XefqXvHPfZp4NvNNwH57mRSW/ltZxlaktk3qJo2oH/pftKso0fU+kTJ7oVQcggCWgQ
- Z3dw==
-X-Gm-Message-State: AFuF++mfdwKjAZzgteuSZeRe7omlFKIbjVq3KhGmzreWQmFZG8PU+vu6
- scX23fTIT8PBFhThf3qohf1La/Xcc6Epvlo8lVnzyX1TyP0uMSHv7rdQnM9nyT04FgIOzOeTbhs
- CWCrWzuc3KIfnqueyutUsa75P2yi35+s=
-X-Gm-Gg: AYBFou3BFW5UcA9L2g63hXtKzlnS6EMK0+hSetc7JqLSP2ykHHuWQsA0dtSTwYwPE+k
- yiz8w5a9yXaFSyOW72vJJpS00Am5Xwmfg+3RhCL0tU7nvGPeZ+e154NuWzJo/NgW3AAg5V2sMpR
- bQh5pIeI24Iqsr1WtTuL8GxNFIopWXJmM00NuIa8fSU3z/xjt643DK7xUfpTSPDBFafHOfRNZRt
- pHOvb/spkX3B7t9jeVqiMeFaIVMY/eT/WP1G6g/gcvZSuJXOGx3vF3JZteakoJrN4gMVqsV9h6k
- zRwYW5qC/SFK3KqgqmzPYusza09gZNHDMOf/C3Foh9oJ4wPO6HAlHFfVMCc2wia4kuhKhfZIiTQ
- w
-X-Received: by 2002:a17:902:f549:b0:2d5:e9d5:8ae with SMTP id
- d9443c01a7336-2d74dc5e8c3mr205548975ad.5.1788090521492; Sun, 30 Aug 2026
- 04:48:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788105823; x=1788710623;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=4/Mt6EYU17EVtqbOmrXe+oIOnepyoTf2cyDH6lrZC1k=;
+ b=h5yE8d14VOcMWTOvFGztPJkr2Al+fRnGQjbh9mnnoqB1Zm/JZGN0aR/jf6VX72IAEK
+ jXdZeWhF+JOZ9a887C5NO2c5TiNdpArl+/x6Vec+6ty5S3z4QjEmuM8K7hpORdEPWkj1
+ WGwlPqSUYjB/Ue5twSIQjUapFqCf8VTSQ36QJIYCZyl9USvipyjD4wyJ/XNvh+8l0ENo
+ c1YmvPo6iqUgMre4Cdsagsp+9w/p6QmrDJN52+uVzNhForHx92wwItboYudS3b3CiXkt
+ 7c2ga80SQi6yowntZUx9NEBqVWGYJ4gMBBVqJhZxS6Xbu5sbjzMLPCPWbEzu+x3tOshA
+ JLuQ==
+X-Gm-Message-State: AFuF++lK2Il9FqereelkqfBjGRRWU2xinx/u4hCkEpgxBl4suY1Ck0Lj
+ V0fLlTjudd4hQ2sVpmjbsCVvqrYtVJ4l1GewGBOKKdewTcXrr1OsUWQaPmKgo2K2kdyF6Lz341b
+ qJnJOxFu2fwxmcGjUVt9MYCb8xd3CQVtTBvmLm46jQYyo7kvykjLct4ofHLxKk9Qe1mAd2ZiNdc
+ j+Jxxwuu5F2h/wX3mIKl5iX3Rv9wwIod+5oPBhE5AhzA==
+X-Gm-Gg: AR+sD13ZHAFFJ3YD6zjxu1LYf/5f+S128LQ8j9FonzBcVTgVxd/u9tnVjjCb9zy2NtM
+ vhqL1ZYAylQDrBBSy/FsmVItqMSC3i8tf4ViaTCeUI+HIFAF6LiKgIJLH7F+v0gcxJj3ItOUy7h
+ WQEF+WK7xEFd5mSr6DnMZOiBBzMig2w28v2eYNnU9ltDGUbEFBzdfIJLvn6MSjv6LfP7U+OJRRJ
+ gHB39VRNCMehzkqMplsAPsJtEoZoqrp+Fh08eMjkWOBPRBqJkpxnkteO2lWrjlqU9xKIfjOpDSF
+ oTl+BU0v0V8T4JVBLiz+rN3vKQX1KvqAQy1FUq8nrr0UkUVqK7us0A80NXdTq5tQA4JQynSWCHt
+ VSiA0u3qqFcVPdvmotR/1R3A+4bdQfuRVMAoVtK35MWaSYeNq9VXngc4uqY2iBGtZL4eOZCKj+1
+ chNsyNqCm5Nr5Q4Bt/cnzaMhVKDg2QD0tQnFb5r4pXWU9U4BIzxBLq6FkjzE1B5M42H2R57YsBQ
+ FquUHsnBvaqeVODaPoG5f38lebZrk0vuCM0f4JMTBAONeXEyFTk4l17VIWxAKE=
+X-Received: by 2002:a05:6a00:130d:b0:857:73e2:9104 with SMTP id
+ d2e1a72fcca58-85773e292ffmr16842355b3a.20.1788105822524; 
+ Sun, 30 Aug 2026 09:03:42 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8569ff701d5sm2455900b3a.25.2026.08.30.09.03.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 30 Aug 2026 09:03:42 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Max Chou <max.chou@sifive.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+Subject: [PATCH v3 0/6] target/riscv: Add SiFive Xsfvqmaccdod/Xsfvqmaccqoq
+ int8 matmul extensions
+Date: Mon, 31 Aug 2026 00:03:29 +0800
+Message-ID: <20260830160335.3441069-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260830054641.45437-1-colazcyg@gmail.com>
- <20260830054641.45437-2-colazcyg@gmail.com>
-In-Reply-To: <20260830054641.45437-2-colazcyg@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sun, 30 Aug 2026 15:48:29 +0400
-X-Gm-Features: AcwNN1WqlavCtY_Vj1oG7BLsxYChdcT7F5zMI4sNDdFlezGC07H6Gmla1VbRNCo
-Message-ID: <CAJ+F1CJjQm4dHy5U7MbTFSLgAu5Fgu3LdHrJvkvDPQQcxPtztA@mail.gmail.com>
-Subject: Re: [PATCH RFC v4 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
-To: Chengyang Zhu <colazcyg@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,250 +106,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+This patchset adds SiFive's custom int8 matrix-multiply vector
+extensions Xsfvqmaccdod and Xsfvqmaccqoq. Each extension provides 4
+signedness variants (unsigned/unsigned, signed/signed,
+unsigned/signed, signed/unsigned) for a total of 8 instructions:
+sf.vqmacc{u,,us,su}.{4x8x4,2x8x2}.
 
-On Sun, Aug 30, 2026 at 9:47=E2=80=AFAM Chengyang Zhu <colazcyg@gmail.com> =
-wrote:
->
-> Currently, the SetUIInfo method cannot set a refresh rate.
-> Simply adding a refresh_rate argument would break the method signature.
->
-> This patch adds the UIInfo interface containing
->   * property `Supported` indicating whether console UI info is supported.
->   * the method `Apply` taking a dictionary as input.
->   * the method `Get` returning the current UI info as a dictionary.
->
-> Signed-off-by: Chengyang Zhu <colazcyg@gmail.com>
-> ---
->  ui/dbus-console.c    | 106 +++++++++++++++++++++++++++++++++++++++++++
->  ui/dbus-display1.xml |  50 ++++++++++++++++++++
->  2 files changed, 156 insertions(+)
->
-> diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-> index e1ac06814b..947c3b3a54 100644
-> --- a/ui/dbus-console.c
-> +++ b/ui/dbus-console.c
-> @@ -55,6 +55,8 @@ struct _DBusDisplayConsole {
->      guint last_x;
->      guint last_y;
->      Notifier mouse_mode_notifier;
-> +
-> +    QemuDBusDisplay1UIInfo *iface_ui_info;
->  };
->
->  G_DEFINE_TYPE(DBusDisplayConsole,
-> @@ -155,6 +157,7 @@ dbus_display_console_dispose(GObject *object)
->      qemu_input_led_notifier_remove(&ddc->led_notifier);
->      qemu_console_unregister_listener(&ddc->dcl);
->      qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
-> +    g_clear_object(&ddc->iface_ui_info);
->      g_clear_object(&ddc->iface_touch);
->      g_clear_object(&ddc->iface_mouse);
->      g_clear_object(&ddc->iface_kbd);
-> @@ -528,6 +531,98 @@ dbus_mouse_mode_change(Notifier *notify, void *data)
->      dbus_mouse_update_is_absolute(ddc);
->  }
->
-> +static gboolean
-> +dbus_ui_info_get(DBusDisplayConsole *ddc,
-> +                 GDBusMethodInvocation *invocation)
-> +{
-> +    QemuUIInfo ui_info;
-> +    GVariantDict dict;
-> +
-> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
-RTED,
-> +                                              "UIInfo is not supported")=
-;
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
-> +
-> +    ui_info =3D *qemu_console_get_ui_info(ddc->dcl.con);
-> +    g_variant_dict_init(&dict, NULL);
-> +
-> +    g_variant_dict_insert(&dict, "width_mm", "q", ui_info.width_mm);
-> +    g_variant_dict_insert(&dict, "height_mm", "q", ui_info.height_mm);
-> +    g_variant_dict_insert(&dict, "xoff", "i", ui_info.xoff);
-> +    g_variant_dict_insert(&dict, "yoff", "i", ui_info.yoff);
-> +    g_variant_dict_insert(&dict, "width", "u", ui_info.width);
-> +    g_variant_dict_insert(&dict, "height", "u", ui_info.height);
-> +    g_variant_dict_insert(&dict, "refresh_rate", "u", ui_info.refresh_ra=
-te);
-> +
-> +    qemu_dbus_display1_uiinfo_complete_get(ddc->iface_ui_info, invocatio=
-n,
-> +                                           g_variant_dict_end(&dict));
-> +
-> +    return DBUS_METHOD_INVOCATION_HANDLED;
-> +}
-> +
-> +static bool
-> +dbus_ui_info_apply_lookup(GDBusMethodInvocation *invocation,
-> +                          GVariantDict *dict,
-> +                          const gchar *key,
-> +                          const gchar *fmt_str,
-> +                          void *res)
-> +{
-> +    if (g_variant_dict_contains(dict, key) &&
-> +        !g_variant_dict_lookup(dict, key, fmt_str, res)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_INVALID=
-,
-> +                                              "%s must have D-Bus signat=
-ure %s",
-> +                                              key, fmt_str);
-> +        return false;
-> +    }
-> +    return true;
+The toolchains support Xsfvqmaccdod/Xsfvqmaccqoq extensions:
+ - LLVM 18.1.0
+   - llvm/llvm-project#68295, commit d1985e3d1fed, merged 2023-10-20.
+   https://github.com/llvm/llvm-project/pull/68295
+ - GCC 15
+   - commit 139bd3198a73 ("RISC-V: Add the mini support for SiFive extensions"), 2024-11-17.
 
-A bit surprising that the function returns true for unknown/invalid keys, b=
-ut ok
+References:
+ - SiFive Int8 Matrix Multiplication Extensions Specification
+   https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification
 
-> +}
-> +
-> +static gboolean
-> +dbus_ui_info_apply(DBusDisplayConsole *ddc,
-> +                   GDBusMethodInvocation *invocation,
-> +                   GVariant *arg_ui_info)
-> +{
-> +    QemuUIInfo ui_info;
-> +    g_auto(GVariantDict) dict =3D G_VARIANT_DICT_INIT(arg_ui_info);
-> +
-> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
-RTED,
-> +                                              "UIInfo is not supported")=
-;
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
-> +
-> +    ui_info =3D *qemu_console_get_ui_info(ddc->dcl.con);
-> +
-> +    if (!dbus_ui_info_apply_lookup(invocation, &dict, "width_mm", "q",
-> +                                   &ui_info.width_mm) ||
-> +        !dbus_ui_info_apply_lookup(invocation, &dict, "height_mm", "q",
-> +                                   &ui_info.height_mm) ||
-> +        !dbus_ui_info_apply_lookup(invocation, &dict, "xoff", "i",
-> +                                   &ui_info.xoff) ||
-> +        !dbus_ui_info_apply_lookup(invocation, &dict, "yoff", "i",
-> +                                   &ui_info.yoff) ||
-> +        !dbus_ui_info_apply_lookup(invocation, &dict, "width", "u",
-> +                                   &ui_info.width) ||
-> +        !dbus_ui_info_apply_lookup(invocation, &dict, "height", "u",
-> +                                   &ui_info.height) ||
-> +        !dbus_ui_info_apply_lookup(invocation, &dict, "refresh_rate", "u=
-",
-> +                                   &ui_info.refresh_rate)) {
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
-> +
-> +    qemu_console_set_ui_info(ddc->dcl.con, &ui_info, false);
-> +    qemu_dbus_display1_uiinfo_complete_apply(ddc->iface_ui_info, invocat=
-ion);
-> +
-> +    return DBUS_METHOD_INVOCATION_HANDLED;
-> +}
-> +
->  int dbus_display_console_get_index(DBusDisplayConsole *ddc)
->  {
->      return qemu_console_get_index(ddc->dcl.con);
-> @@ -550,6 +645,7 @@ dbus_display_console_new(DBusDisplay *display, QemuCo=
-nsole *con)
->          "org.qemu.Display1.Keyboard",
->          "org.qemu.Display1.Mouse",
->          "org.qemu.Display1.MultiTouch",
-> +        "org.qemu.Display1.UIInfo",
->          NULL
->      };
->
-> @@ -626,5 +722,15 @@ dbus_display_console_new(DBusDisplay *display, QemuC=
-onsole *con)
->      qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
->      dbus_mouse_update_is_absolute(ddc);
->
-> +    ddc->iface_ui_info =3D qemu_dbus_display1_uiinfo_skeleton_new();
-> +    qemu_dbus_display1_uiinfo_set_supported(ddc->iface_ui_info,
-> +        qemu_console_ui_info_supported(ddc->dcl.con));
-> +    g_object_connect(ddc->iface_ui_info,
-> +        "swapped-signal::handle-get", dbus_ui_info_get, ddc,
-> +        "swapped-signal::handle-apply", dbus_ui_info_apply, ddc,
-> +        NULL);
-> +    g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(ddc),
-> +        G_DBUS_INTERFACE_SKELETON(ddc->iface_ui_info));
-> +
->      return ddc;
->  }
-> diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
-> index d96bae2ed6..26483edc37 100644
-> --- a/ui/dbus-display1.xml
-> +++ b/ui/dbus-display1.xml
-> @@ -1159,4 +1159,54 @@
->      -->
->      <property name=3D"Encoding" type=3D"s" access=3D"read"/>
->    </interface>
-> +
-> +  <!--
-> +      org.qemu.Display1.UIInfo:
-> +
-> +      This interface is implemented on
-> +      ``/org/qemu/Display1/Console_$id`` (see
-> +      :dbus:iface:`~org.qemu.Display1.Console`).
-> +  -->
-> +  <interface name=3D"org.qemu.Display1.UIInfo">
-> +    <!--
-> +        Supported:
-> +
-> +        Whether console UI info is supported.
-> +    -->
-> +    <property name=3D"Supported" type=3D"b" access=3D"read"/>
-> +
-> +    <!--
-> +        Get:
-> +        @ui_info: a dictionary of current UI info properties.
-> +
-> +        Return the properties of the current console display.
-> +
-> +        - ``width_mm`` (q): the physical display width in millimeters.
-> +        - ``height_mm`` (q): the physical display height in millimeters.
-> +        - ``xoff`` (i): the horizontal offset in pixels.
-> +        - ``yoff`` (i): the vertical offset in pixels.
-> +        - ``width`` (u): the console width in pixels.
-> +        - ``height`` (u): the console height in pixels.
-> +        - ``refresh_rate`` (u): the display refresh rate in millihertz.
-> +    -->
-> +    <method name=3D"Get">
-> +      <arg name=3D"ui_info" type=3D"a{sv}" direction=3D"out"/>
-> +    </method>
-> +
-> +    <!--
-> +        Apply:
-> +        @ui_info: a dictionary of new UI info properties.
-> +
-> +        Apply the properties to the console display.
-> +        The dictionary schema of ``Apply`` is a subset of that of ``Get`=
-`.
-> +
-> +        The properties will be merged with existing values.
-> +        Extra keys will be ignored.
-> +        The invocation will fail if any key has the wrong type,
-> +        leaving the UI info unchanged.
-> +    -->
-> +    <method name=3D"Apply">
-> +      <arg name=3D"ui_info" type=3D"a{sv}" direction=3D"in"/>
-> +    </method>
-> +  </interface>
->  </node>
-> --
-> 2.55.0
->
->
+Changes since v2:<20260812174417.2468981-1-max.chou@sifive.com>
+ - Rebase to riscv-to-apply.next branch (commit aee18ec)
+ - Modified patch 5 to align the new disas flow
 
-lgtm, I can pick this patch unless you want to send a non-rfc version befor=
-e
+Changes since v1:<20260721122034.1567146-1-max.chou@sifive.com>
+ - Rebase to master branch (commit 84f0721)
+ - Reformat riscv_multi_ext_implied_rules to list one rule per
+   line before adding XSFVQMACCDOD_IMPLIED/XSFVQMACCQOQ_IMPLIED, so
+   future additions to the array are a pure append instead of
+   reflowing whatever line they land on. Split out into its own
+   patch. (Thanks for Daniel Henrique Barboza's suggestion)
+ - Move the SiFive int8 matmul helper out of the shared
+   vector_helper.c and into a new target/riscv/tcg/xsf_helper.c,
+   so vendor-specific code no longer lives in common vector-helper
+   code. (Thanks for Daniel Henrique Barboza's suggestion)
+
+rnax
+
+Frank Chang (2):
+  target/riscv/cpu: Add SiFive custom int8 matmul extension implied
+    rules
+  target/riscv: rvv: Add SiFive custom int8 matmul instructions
+
+Jason Chien (1):
+  disas/riscv: Add disassembler support for Xsfvqmaccdod/Xsfvqmaccqoq
+
+Max Chou (3):
+  target/riscv: Add cfg property for SiFive int8 matmul extensions
+  target/riscv/cpu: List one implied-ext rule per line
+  tests/tcg/riscv64: Add tests for SiFive int8 matmul extensions
+
+ MAINTAINERS                                 |  10 +
+ disas/meson.build                           |   3 +-
+ disas/riscv-xsf-op.c.inc                    |  11 +
+ disas/riscv-xsf.c                           |  49 ++++
+ disas/riscv-xsf.h                           |  16 ++
+ disas/riscv.c                               |   2 +
+ disas/riscv.h                               |   1 +
+ target/riscv/cpu.c                          |  80 ++++--
+ target/riscv/cpu_cfg.h                      |   5 +
+ target/riscv/cpu_cfg_fields.h.inc           |   2 +
+ target/riscv/helper.h                       |  10 +
+ target/riscv/meson.build                    |   1 +
+ target/riscv/tcg/insn_trans/trans_xsf.c.inc |  98 ++++++++
+ target/riscv/tcg/meson.build                |   1 +
+ target/riscv/tcg/tcg-cpu.c                  |  16 ++
+ target/riscv/tcg/translate.c                |   3 +
+ target/riscv/tcg/xsf_helper.c               |  87 +++++++
+ target/riscv/xsf.decode                     |  30 +++
+ tests/tcg/riscv64/Makefile.softmmu-target   |   7 +
+ tests/tcg/riscv64/test-xsfvqmacc.S          | 260 ++++++++++++++++++++
+ 20 files changed, 677 insertions(+), 15 deletions(-)
+ create mode 100644 disas/riscv-xsf-op.c.inc
+ create mode 100644 disas/riscv-xsf.c
+ create mode 100644 disas/riscv-xsf.h
+ create mode 100644 target/riscv/tcg/insn_trans/trans_xsf.c.inc
+ create mode 100644 target/riscv/tcg/xsf_helper.c
+ create mode 100644 target/riscv/xsf.decode
+ create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
+
+-- 
+2.43.0
+
 
