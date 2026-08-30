@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1528AC61DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3952DC61DE2
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0Yr7-0002Po-2P; Sun, 30 Aug 2026 02:17:25 -0400
+	id 1x0Yrc-0002gO-TL; Sun, 30 Aug 2026 02:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0Yr5-0002Ot-FN; Sun, 30 Aug 2026 02:17:23 -0400
+ id 1x0Yrb-0002er-2H; Sun, 30 Aug 2026 02:17:55 -0400
 Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0Yr2-0005Fg-7Z; Sun, 30 Aug 2026 02:17:23 -0400
+ id 1x0YrY-0005J0-D2; Sun, 30 Aug 2026 02:17:54 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hXhjn0ggjzBqYY;
- Sun, 30 Aug 2026 08:17:17 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hXhjp3s7qzBqYk;
+ Sun, 30 Aug 2026 08:17:18 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788070637;
- bh=XvbYHMNtChB846XBwJQAYneGYp412W5DCJOPWphN4tI=;
+ s=dkim; t=1788070638;
+ bh=SmE0oazU4gxkDkJwfNizh86WOIHEMkky/buRlU3j15A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jAxqOzUUh9n8ATgCkroxFfM5IakpPagc/1E/k74i4oFDddNiBrZhHFpyAn4ISYV/T
- I2kT4kYpBxkf+onc+zfyeYaM9OxRXxGre/p4+mguLrJ//MmYVKp+ouXNI5TWhTX/j/
- epkLHA8ZuLp6pBYeroxgqaP14Acf3ned/zkXkYcJNAPP3Zfwr4oU62QB4CiRuUHDdk
- eNH8oOjOpfMin4VA7bhqFXA0v+hjt6bhz3ZQu1/6Lza2mpPbFjMQODpunSLWdkkGf7
- 4+g8yiyVlcKemK0pCbUc6Db0M+mgVkLDT481dREkl7pFEe4IIi95BD/5kAHvujRTx9
- s9MQDn28N2IjA==
+ b=Hf1yfjEnz0g7DHv04/kHTNcyqbUu1xXW2sVT+BdNzTwvlHLykz8I6MDa6l+jkw1Yk
+ XsO88iV0d4MqXLeYlkhOYoEtid78u8NmavpbsrJY6dpA4cO8m7ktVu1X5okw7WsL5r
+ sy+wdPKoMSdUH+iKaoSBvUJWE5WuyK71+tmH+OBqAGnxlEqMCxtPZ6Yq6CamArAX8+
+ 0UKgAnG1ZGtRfCh8cpk8+hYucf10F3izvYpL1+RbxcM8Zh4MScpIH9Tsn6GveLzjtq
+ v8X8BCxRgMJ5iu81kksMXxQps6hmfqrqwjux+Q4JePBFMDkoZqfM4hqAqvGLyCs9Hc
+ 1//70F650xq4w==
 Received: from localhost.localdomain (unknown [10.134.14.34])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjm6Ccmz7swM;
- Sun, 30 Aug 2026 08:17:16 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjp2ThDz7swM;
+ Sun, 30 Aug 2026 08:17:18 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org,
 	qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH RFC v2 15/30] hw/char: integrate RP2040 UART pinmux
-Date: Sun, 30 Aug 2026 08:15:46 +0200
-Message-ID: <20260830061601.52136-1-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH RFC v2 23/30] tests/tcg/arm: test RP2040 DMA transfers
+Date: Sun, 30 Aug 2026 08:15:54 +0200
+Message-ID: <20260830061601.52136-9-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
@@ -74,599 +74,595 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: gilles grimaud <gilles.grimaud@univ-lille.fr>
 
+Add source-built bare-metal tests for memory copy and fill transfers, completion status and interrupt acknowledgement.\n\nExercise UART0 and UART1 transmit and receive pacing through their DMA request lines. Each UART test waits for DMA IRQ completion and validates looped-back input before reporting success.
+
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/raspi_pico.c                |  33 +++++++
- hw/arm/rp2040.c                    |  57 +++++++++++-
- hw/char/pl011.c                    |  86 ++++++++++++++++-
- include/hw/arm/rp2040.h            |   5 +
- include/hw/char/pl011.h            |   6 ++
- tests/qtest/meson.build            |   1 +
- tests/qtest/rp2040-uart-test.c     | 142 +++++++++++++++++++++++++++++
- tests/tcg/arm/system/rp2040-mpu.S  |   5 +
- tests/tcg/arm/system/rp2040-uart.S |   5 +
- 9 files changed, 336 insertions(+), 4 deletions(-)
- create mode 100644 tests/qtest/rp2040-uart-test.c
+ tests/tcg/arm/Makefile.softmmu-target      |  34 ++-
+ tests/tcg/arm/system/rp2040-dma-memory.S   | 198 +++++++++++++++
+ tests/tcg/arm/system/rp2040-dma-memory.ref |   4 +
+ tests/tcg/arm/system/rp2040-dma-uart.S     | 267 +++++++++++++++++++++
+ tests/tcg/arm/system/rp2040-dma-uart0.ref  |   3 +
+ tests/tcg/arm/system/rp2040-dma-uart1.ref  |   3 +
+ 6 files changed, 505 insertions(+), 4 deletions(-)
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-memory.S
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-memory.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-uart.S
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-uart0.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-dma-uart1.ref
 
-diff --git a/hw/arm/raspi_pico.c b/hw/arm/raspi_pico.c
-index 2a65176dc6..e75d61ca07 100644
---- a/hw/arm/raspi_pico.c
-+++ b/hw/arm/raspi_pico.c
-@@ -32,6 +32,7 @@ struct RaspiPicoMachineState {
-     char *rosc_random_seed;
-     uint64_t rosc_random_seed_value;
-     bool rosc_random_seed_set;
-+    bool strict_uart_pins;
- };
+diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
+index c282ff5ad0..acb90458be 100644
+--- a/tests/tcg/arm/Makefile.softmmu-target
++++ b/tests/tcg/arm/Makefile.softmmu-target
+@@ -28,8 +28,10 @@ RP2040_FLASH_TESTS=rp2040-flash-commands rp2040-flash-ioqspi \
+ 	rp2040-flash-busy-hardfault rp2040-flash-busy-lockout \
+ 	rp2040-core0-xip-fault rp2040-core1-xip-fault
  
- static char *raspi_pico_get_rosc_random_seed(Object *obj, Error **errp)
-@@ -74,6 +75,8 @@ static void raspi_pico_init(MachineState *machine)
-     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RP2040);
-     qdev_prop_set_chr(DEVICE(&s->soc), "serial0", serial_hd(0));
-     qdev_prop_set_chr(DEVICE(&s->soc), "serial1", serial_hd(1));
-+    qdev_prop_set_bit(DEVICE(&s->soc), "strict-uart-pins",
-+                      s->strict_uart_pins);
-     qdev_prop_set_uint64(DEVICE(&s->soc.rosc), "random-seed",
-                          s->rosc_random_seed_value);
-     qdev_prop_set_bit(DEVICE(&s->soc.rosc), "random-seed-set",
-@@ -102,6 +105,28 @@ static void raspi_pico_machine_finalize(Object *obj)
-     g_free(s->rosc_random_seed);
- }
++RP2040_DMA_TESTS=rp2040-dma-memory rp2040-dma-uart0 rp2040-dma-uart1
++
+ RP2040_GUESTS=$(RP2040_TESTS) $(RP2040_FLASH_TESTS) \
+-	rp2040-flash-persist-reader
++	rp2040-dma-memory rp2040-flash-persist-reader
  
-+static bool raspi_pico_get_strict_uart_pins(Object *obj, Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    return s->strict_uart_pins;
-+}
-+
-+static void raspi_pico_set_strict_uart_pins(Object *obj, bool value,
-+                                            Error **errp)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    s->strict_uart_pins = value;
-+}
-+
-+static void raspi_pico_machine_initfn(Object *obj)
-+{
-+    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(obj);
-+
-+    s->strict_uart_pins = true;
-+}
-+
- static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -123,12 +148,20 @@ static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
-                                           "Use a deterministic seed for the "
-                                           "ROSC RANDOMBIT stream; if unset, "
-                                           "QEMU guest entropy is used");
-+    object_class_property_add_bool(oc, "strict-uart-pins",
-+                                   raspi_pico_get_strict_uart_pins,
-+                                   raspi_pico_set_strict_uart_pins);
-+    object_class_property_set_description(oc, "strict-uart-pins",
-+                                          "Require the RP2040 IO_BANK0 "
-+                                          "UART pinmux before UART0 or UART1 "
-+                                          "reaches its host serial backend");
- }
+ $(RP2040_GUESTS): %: %.S rp2040-boot2-w25q080.S rp2040.ld
+ 	$(CC) -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft \
+@@ -46,7 +48,8 @@ run-rp2040-sio-fifo run-rp2040-sio-divider \
+ run-rp2040-psm-proc1 run-rp2040-core1-launch run-rp2040-timer \
+ run-rp2040-flash-commands run-rp2040-flash-ioqspi \
+ run-rp2040-flash-busy-hardfault run-rp2040-flash-busy-lockout \
+-run-rp2040-core0-xip-fault run-rp2040-core1-xip-fault: \
++run-rp2040-core0-xip-fault run-rp2040-core1-xip-fault \
++run-rp2040-dma-memory: \
+ 	QEMU_OPTS=-M raspi-pico,strict-uart-pins=off \
+ 	-serial chardev:output \
+ 	-semihosting-config enable=on,target=native -kernel
+@@ -57,7 +60,8 @@ run-rp2040-psm-proc1 run-rp2040-core1-launch \
+ run-rp2040-timer run-rp2040-flash-ioqspi \
+ run-rp2040-flash-busy-hardfault run-rp2040-flash-busy-lockout \
+ run-rp2040-core0-xip-fault \
+-run-rp2040-core1-xip-fault: run-rp2040-%: rp2040-%
++run-rp2040-core1-xip-fault \
++run-rp2040-dma-memory: run-rp2040-%: rp2040-%
+ 	$(call run-test, $<, \
+ 	  $(QEMU) -monitor none -display none \
+ 		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
+@@ -84,7 +88,29 @@ run-rp2040-flash-commands: rp2040-flash-commands \
+ 	$(call diff-out,$<.persist,$(ARM_SRC)/rp2040-flash-persist-reader.ref)
+ 	rm -f $<.flash $<.persist.out
  
- static const TypeInfo raspi_pico_machine_info = {
-     .name = TYPE_RASPI_PICO_MACHINE,
-     .parent = TYPE_MACHINE,
-     .instance_size = sizeof(RaspiPicoMachineState),
-+    .instance_init = raspi_pico_machine_initfn,
-     .class_init = raspi_pico_machine_class_init,
-     .instance_finalize = raspi_pico_machine_finalize,
-     .interfaces = arm_machine_interfaces,
-diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 28c17232a5..c8fe2c0934 100644
---- a/hw/arm/rp2040.c
-+++ b/hw/arm/rp2040.c
-@@ -50,8 +50,6 @@ static const struct {
-     hwaddr size;
- } rp2040_unimplemented[] = {
-     { "rp2040.busctrl",  0x40030000, 0x4000 },
--    { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
--    { "rp2040.uart1_aliases", 0x40039000, 0x3000 },
-     { "rp2040.spi0",     0x4003c000, 0x4000 },
-     { "rp2040.spi1",     0x40040000, 0x4000 },
-     { "rp2040.i2c0",     0x40044000, 0x4000 },
-@@ -142,11 +140,54 @@ static void rp2040_set_irq(void *opaque, int irq, int level)
-     rp2040_update_nmi(s);
- }
- 
-+static void rp2040_update_uart_pins(RP2040State *s)
-+{
-+    pl011_set_tx_connected(&s->uart[0],
-+                           !s->strict_uart_pins ||
-+                           s->uart0_tx_pin_enabled);
-+    pl011_set_rx_connected(&s->uart[0],
-+                           !s->strict_uart_pins ||
-+                           s->uart0_rx_pin_enabled);
-+    pl011_set_tx_connected(&s->uart[1],
-+                           !s->strict_uart_pins ||
-+                           s->uart1_tx_pin_enabled);
-+    pl011_set_rx_connected(&s->uart[1],
-+                           !s->strict_uart_pins ||
-+                           s->uart1_rx_pin_enabled);
-+}
+-ARM_TESTS+=$(RP2040_TESTS) $(RP2040_FLASH_TESTS)
++rp2040-dma-uart0 rp2040-dma-uart1: rp2040-dma-uart%: \
++		rp2040-dma-uart.S rp2040-boot2-w25q080.S rp2040.ld
++	$(CC) -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft \
++		-DUART_INDEX=$* -Wl,--build-id=none -x assembler-with-cpp \
++		$(ARM_SRC)/rp2040-boot2-w25q080.S $< \
++		-o $@ -nostdlib -static \
++		-T $(ARM_SRC)/rp2040.ld
 +
-+static void rp2040_set_uart_pin(void *opaque, int pin, int level)
-+{
-+    RP2040State *s = opaque;
++run-rp2040-dma-uart0: QEMU_OPTS=-M raspi-pico,strict-uart-pins=off \
++	-serial chardev:output \
++	-semihosting-config enable=on,target=native -kernel
++run-rp2040-dma-uart1: QEMU_OPTS=-M raspi-pico,strict-uart-pins=off \
++	-serial null -serial chardev:output \
++	-semihosting-config enable=on,target=native -kernel
 +
-+    switch (pin) {
-+    case 0:
-+        s->uart0_tx_pin_enabled = level;
-+        break;
-+    case 1:
-+        s->uart0_rx_pin_enabled = level;
-+        break;
-+    case 2:
-+        s->uart1_tx_pin_enabled = level;
-+        break;
-+    case 3:
-+        s->uart1_rx_pin_enabled = level;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
++run-rp2040-dma-uart0 run-rp2040-dma-uart1: run-%: %
++	$(call run-test, $<, \
++	  $(QEMU) -monitor none -display none \
++		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
++		  $(QEMU_OPTS) $<)
++	$(call diff-out,$<,$(ARM_SRC)/$<.ref)
 +
-+    rp2040_update_uart_pins(s);
-+}
-+
- static void rp2040_soc_init(Object *obj)
- {
-     RP2040State *s = RP2040(obj);
-     int i;
++ARM_TESTS+=$(RP2040_TESTS) $(RP2040_FLASH_TESTS) $(RP2040_DMA_TESTS)
  
-+    qdev_init_gpio_in_named(DEVICE(obj), rp2040_set_uart_pin,
-+                            "uart-pin", 4);
-+
-     object_initialize_child(obj, "proc0", &s->armv7m, TYPE_ARMV7M);
-     qdev_prop_set_string(DEVICE(&s->armv7m), "cpu-type",
-                          ARM_CPU_TYPE_NAME("cortex-m0"));
-@@ -376,6 +417,14 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->iobank0), 0, RP2040_IOBANK0_BASE);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 0,
-                        s->irq[RP2040_IO_IRQ_BANK0]);
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 0,
-+                                qdev_get_gpio_in_named(dev, "uart-pin", 0));
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 1,
-+                                qdev_get_gpio_in_named(dev, "uart-pin", 1));
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 0,
-+                                qdev_get_gpio_in_named(dev, "uart-pin", 2));
-+    qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 1,
-+                                qdev_get_gpio_in_named(dev, "uart-pin", 3));
- 
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioqspi), errp)) {
-         return;
-@@ -430,15 +479,19 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-             return;
-         }
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, uart_base[i]);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 1,
-+                        uart_base[i] + 0x1000);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
-                            s->irq[uart_irq[i]]);
-     }
-+    rp2040_update_uart_pins(s);
- }
- 
- static const Property rp2040_soc_properties[] = {
-     DEFINE_PROP_LINK("memory", RP2040State, board_memory, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-     DEFINE_PROP_STRING("bootrom-file", RP2040State, bootrom_file),
-+    DEFINE_PROP_BOOL("strict-uart-pins", RP2040State, strict_uart_pins, true),
- };
- 
- static void rp2040_soc_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index 77fa29ae28..dfd0886ac6 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -101,6 +101,12 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
- /* Fractional Baud Rate Divider, UARTFBRD */
- #define FBRD_MASK 0x3f
- 
-+/* RP2040 APB atomic register aliases. */
-+#define PL011_ATOMIC_ALIAS_MASK 0x3000
-+#define PL011_ATOMIC_XOR        0x1000
-+#define PL011_ATOMIC_SET        0x2000
-+#define PL011_ATOMIC_CLR        0x3000
-+
- static const unsigned char pl011_id_arm[8] =
-   { 0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1 };
- static const unsigned char pl011_id_luminary[8] =
-@@ -171,6 +177,21 @@ static void pl011_update_dreq(PL011State *s)
-                  (s->dmacr & DMACR_RXDMAE) && s->read_count > 0);
- }
- 
-+static uint32_t pl011_apply_atomic_alias(uint32_t old, uint32_t value,
-+                                         hwaddr alias)
-+{
-+    switch (alias) {
-+    case PL011_ATOMIC_XOR:
-+        return old ^ value;
-+    case PL011_ATOMIC_SET:
-+        return old | value;
-+    case PL011_ATOMIC_CLR:
-+        return old & ~value;
-+    default:
-+        return value;
-+    }
-+}
-+
- static inline void pl011_reset_rx_fifo(PL011State *s)
- {
-     s->read_count = 0;
-@@ -269,7 +290,13 @@ static void pl011_write_txdata(PL011State *s, uint8_t data)
-      * XXX this blocks entire thread. Rewrite to use
-      * qemu_chr_fe_write and background I/O callbacks
-      */
--    qemu_chr_fe_write_all(&s->chr, &data, 1);
-+    if (s->tx_connected) {
-+        qemu_chr_fe_write_all(&s->chr, &data, 1);
-+    } else if (!s->logged_disconnected_tx) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "PL011 data written while TX pin is disconnected\n");
-+        s->logged_disconnected_tx = true;
-+    }
-     pl011_loopback_tx(s, data);
-     s->int_level |= INT_TX;
-     pl011_update(s);
-@@ -535,6 +562,10 @@ static int pl011_can_receive(void *opaque)
-      * UART continuously enabled regardless of the enable bits.
-      */
- 
-+    if (!s->rx_connected) {
-+        return 0;
-+    }
-+
-     trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
-     return fifo_available;
- }
-@@ -542,6 +573,9 @@ static int pl011_can_receive(void *opaque)
- static void pl011_receive(void *opaque, const uint8_t *buf, int size)
- {
-     trace_pl011_receive(size);
-+    if (!PL011(opaque)->rx_connected) {
-+        return;
-+    }
-     /*
-      * In loopback mode, the RX input signal is internally disconnected
-      * from the entire receiving logics; thus, all inputs are ignored,
-@@ -558,11 +592,45 @@ static void pl011_receive(void *opaque, const uint8_t *buf, int size)
- 
- static void pl011_event(void *opaque, QEMUChrEvent event)
- {
--    if (event == CHR_EVENT_BREAK && !pl011_loopback_enabled(opaque)) {
-+    PL011State *s = opaque;
-+
-+    if (event == CHR_EVENT_BREAK && s->rx_connected &&
-+        !pl011_loopback_enabled(opaque)) {
-         pl011_fifo_rx_put(opaque, DR_BE);
-     }
- }
- 
-+void pl011_set_tx_connected(PL011State *s, bool connected)
-+{
-+    s->tx_connected = connected;
-+    if (connected) {
-+        s->logged_disconnected_tx = false;
-+    }
-+}
-+
-+void pl011_set_rx_connected(PL011State *s, bool connected)
-+{
-+    s->rx_connected = connected;
-+    qemu_chr_fe_accept_input(&s->chr);
-+}
-+
-+static uint64_t pl011_atomic_alias_read(void *opaque, hwaddr offset,
-+                                        unsigned size)
-+{
-+    return pl011_read(opaque, offset & 0xfff, size);
-+}
-+
-+static void pl011_atomic_alias_write(void *opaque, hwaddr offset,
-+                                     uint64_t value, unsigned size)
-+{
-+    hwaddr alias = (offset + PL011_ATOMIC_XOR) & PL011_ATOMIC_ALIAS_MASK;
-+    hwaddr reg = offset & 0xfff;
-+    uint32_t old = pl011_read(opaque, reg, size);
-+    uint32_t new = pl011_apply_atomic_alias(old, value, alias);
-+
-+    pl011_write(opaque, reg, new, size);
-+}
-+
- static void pl011_clock_update(void *opaque, ClockEvent event)
- {
-     PL011State *s = PL011(opaque);
-@@ -578,6 +646,14 @@ static const MemoryRegionOps pl011_ops = {
-     .impl.max_access_size = 4,
- };
- 
-+static const MemoryRegionOps pl011_atomic_alias_ops = {
-+    .read = pl011_atomic_alias_read,
-+    .write = pl011_atomic_alias_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-+    .impl.max_access_size = 4,
-+};
-+
- static bool pl011_clock_needed(void *opaque)
- {
-     PL011State *s = PL011(opaque);
-@@ -666,8 +742,14 @@ static void pl011_init(Object *obj)
-     PL011State *s = PL011(obj);
-     int i;
- 
-+    s->tx_connected = true;
-+    s->rx_connected = true;
-     memory_region_init_io(&s->iomem, OBJECT(s), &pl011_ops, s, "pl011", 0x1000);
-     sysbus_init_mmio(sbd, &s->iomem);
-+    memory_region_init_io(&s->atomic_alias_iomem, OBJECT(s),
-+                          &pl011_atomic_alias_ops, s,
-+                          "pl011-atomic-alias", 0x3000);
-+    sysbus_init_mmio(sbd, &s->atomic_alias_iomem);
-     for (i = 0; i < ARRAY_SIZE(s->irq); i++) {
-         sysbus_init_irq(sbd, &s->irq[i]);
-     }
-diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 068aab584f..aa4b6f4736 100644
---- a/include/hw/arm/rp2040.h
-+++ b/include/hw/arm/rp2040.h
-@@ -77,6 +77,11 @@ struct RP2040State {
-     qemu_irq nmi_irq;
-     bool irq_level[RP2040_NUM_IRQS];
-     bool mempowerdown_ready;
-+    bool strict_uart_pins;
-+    bool uart0_tx_pin_enabled;
-+    bool uart0_rx_pin_enabled;
-+    bool uart1_tx_pin_enabled;
-+    bool uart1_rx_pin_enabled;
- 
-     Clock *sysclk;
- };
-diff --git a/include/hw/char/pl011.h b/include/hw/char/pl011.h
-index c7b5a3a2b3..20c0b5694b 100644
---- a/include/hw/char/pl011.h
-+++ b/include/hw/char/pl011.h
-@@ -32,6 +32,7 @@ struct PL011State {
-     SysBusDevice parent_obj;
- 
-     MemoryRegion iomem;
-+    MemoryRegion atomic_alias_iomem;
-     uint32_t flags;
-     uint32_t lcr;
-     uint32_t rsr;
-@@ -53,7 +54,10 @@ struct PL011State {
-     qemu_irq dreq_rx;
-     Clock *clk;
-     bool migrate_clk;
-+    bool tx_connected;
-+    bool rx_connected;
-     bool logged_disabled_uart;
-+    bool logged_disconnected_tx;
-     const unsigned char *id;
-     /*
-      * Since some users embed this struct directly, we must
-@@ -63,5 +67,7 @@ struct PL011State {
- };
- 
- DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr);
-+void pl011_set_tx_connected(PL011State *s, bool connected);
-+void pl011_set_rx_connected(PL011State *s, bool connected);
- 
- #endif
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index a232813014..b093f5da8a 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -263,6 +263,7 @@ qtests_arm = \
-                                                        'rp2040-resets-test',
-                                                        'rp2040-rosc-test',
-                                                        'rp2040-tbman-test',
-+                                                       'rp2040-uart-test',
-                                                        'rp2040-vreg-test',
-                                                        'rp2040-watchdog-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
-diff --git a/tests/qtest/rp2040-uart-test.c b/tests/qtest/rp2040-uart-test.c
+ # These objects provide the basic boot code and helper functions for all tests
+ CRT_OBJS=boot.o
+diff --git a/tests/tcg/arm/system/rp2040-dma-memory.S b/tests/tcg/arm/system/rp2040-dma-memory.S
 new file mode 100644
-index 0000000000..2464c090ad
+index 0000000000..015c7241dc
 --- /dev/null
-+++ b/tests/qtest/rp2040-uart-test.c
-@@ -0,0 +1,142 @@
++++ b/tests/tcg/arm/system/rp2040-dma-memory.S
+@@ -0,0 +1,198 @@
 +/*
-+ * QTest testcase for the RP2040 UART pinmux integration.
++ * Raspberry Pi Pico DMA memory transfer test.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
++.syntax unified
++.cpu cortex-m0plus
++.thumb
 +
-+#define IOBANK0_BASE  0x40014000
-+#define GPIO_CTRL(n)  (0x004 + (n) * 8)
-+#define GPIO_FUNC_UART 2
++#define SRAM_END               0x20042000
++#define UART0_DR               0x40034000
++#define DMA_BASE               0x50000000
++#define DMA_READ_ADDR          0x000
++#define DMA_WRITE_ADDR         0x004
++#define DMA_TRANS_COUNT        0x008
++#define DMA_CTRL_TRIG          0x00c
++#define DMA_INTR               0x400
++#define DMA_CTRL_WORD_COPY     0x001f8039
++#define DMA_CTRL_WORD_FILL     0x001f8029
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
 +
-+#define UART0_BASE 0x40034000
-+#define UART1_BASE 0x40038000
-+#define UART_DR     0x000
-+#define UART_FR     0x018
-+#define UART_CR     0x030
-+#define UART_FR_RXFE 0x10
++.macro fail_if_ne reg, expected, target
++    ldr r2, =\expected
++    cmp \reg, r2
++    beq 0f
++    b \target
++0:
++.endm
 +
-+#define ATOMIC_XOR 0x1000
-+#define ATOMIC_SET 0x2000
-+#define ATOMIC_CLR 0x3000
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
 +
-+static char *new_output_path(void)
-+{
-+    int fd;
-+    char *path = NULL;
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
 +
-+    fd = g_file_open_tmp("rp2040-uart-XXXXXX", &path, NULL);
-+    g_assert_cmpint(fd, >=, 0);
-+    close(fd);
-+    return path;
-+}
++    ldr r5, =copy_source
++    ldr r0, =0x11223344
++    str r0, [r5, #0]
++    ldr r0, =0xaabbccdd
++    str r0, [r5, #4]
++    ldr r0, =0x01020304
++    str r0, [r5, #8]
++    ldr r0, =0xfeedc0de
++    str r0, [r5, #12]
++    ldr r5, =fill_source
++    ldr r0, =0x55aa55aa
++    str r0, [r5]
 +
-+static void assert_file_contents(const char *path, const char *expected)
-+{
-+    g_autofree char *contents = NULL;
-+    gsize length;
++    ldr r4, =DMA_BASE
 +
-+    g_assert_true(g_file_get_contents(path, &contents, &length, NULL));
-+    g_assert_cmpuint(length, ==, strlen(expected));
-+    g_assert_cmpmem(contents, length, expected, strlen(expected));
-+}
++    ldr r0, =copy_source
++    str r0, [r4, DMA_READ_ADDR]
++    ldr r0, =copy_destination
++    str r0, [r4, DMA_WRITE_ADDR]
++    movs r0, 4
++    str r0, [r4, DMA_TRANS_COUNT]
++    ldr r0, =DMA_CTRL_WORD_COPY
++    str r0, [r4, DMA_CTRL_TRIG]
 +
-+static void test_uart0_pinmux(void)
-+{
-+    g_autofree char *path = new_output_path();
-+    QTestState *qts = qtest_initf("-machine raspi-pico "
-+                                  "-chardev file,id=uart0,path=%s "
-+                                  "-serial chardev:uart0", path);
++    ldr r5, =copy_source
++    ldr r6, =copy_destination
++    movs r3, 4
 +
-+    qtest_writel(qts, UART0_BASE + UART_DR, 'X');
-+    qtest_writel(qts, IOBANK0_BASE + GPIO_CTRL(0), GPIO_FUNC_UART);
-+    qtest_writel(qts, UART0_BASE + UART_DR, '0');
-+    qtest_quit(qts);
++copy_check_loop:
++    ldr r0, [r5]
++    ldr r1, [r6]
++    cmp r0, r1
++    bne fail_copy
++    adds r5, 4
++    adds r6, 4
++    subs r3, 1
++    bne copy_check_loop
 +
-+    assert_file_contents(path, "0");
-+    unlink(path);
-+}
++    ldr r6, =DMA_BASE + DMA_INTR
++    ldr r0, [r6]
++    movs r1, 1
++    tst r0, r1
++    beq fail_irq
++    str r1, [r6]
++    ldr r0, [r6]
++    tst r0, r1
++    bne fail_irq
 +
-+static void test_uart1_pinmux(void)
-+{
-+    g_autofree char *path = new_output_path();
-+    QTestState *qts = qtest_initf("-machine raspi-pico -serial null "
-+                                  "-chardev file,id=uart1,path=%s "
-+                                  "-serial chardev:uart1", path);
++    ldr r0, =copy_ok_message
++    bl puts
 +
-+    qtest_writel(qts, UART1_BASE + UART_DR, 'X');
-+    qtest_writel(qts, IOBANK0_BASE + GPIO_CTRL(4), GPIO_FUNC_UART);
-+    qtest_writel(qts, UART1_BASE + UART_DR, '1');
-+    qtest_quit(qts);
++    ldr r0, =fill_source
++    str r0, [r4, DMA_READ_ADDR]
++    ldr r0, =fill_destination
++    str r0, [r4, DMA_WRITE_ADDR]
++    movs r0, 4
++    str r0, [r4, DMA_TRANS_COUNT]
++    ldr r0, =DMA_CTRL_WORD_FILL
++    str r0, [r4, DMA_CTRL_TRIG]
 +
-+    assert_file_contents(path, "1");
-+    unlink(path);
-+}
++    ldr r5, =fill_destination
++    ldr r1, =0x55aa55aa
++    movs r3, 4
 +
-+static void test_non_strict_uart_pins(void)
-+{
-+    g_autofree char *path = new_output_path();
-+    QTestState *qts = qtest_initf("-machine raspi-pico,strict-uart-pins=off "
-+                                  "-chardev file,id=uart0,path=%s "
-+                                  "-serial chardev:uart0", path);
++fill_check_loop:
++    ldr r0, [r5]
++    cmp r0, r1
++    bne fail_fill
++    adds r5, 4
++    subs r3, 1
++    bne fill_check_loop
 +
-+    qtest_writel(qts, UART0_BASE + UART_DR, 'L');
-+    qtest_quit(qts);
++    ldr r0, =fill_ok_message
++    bl puts
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
 +
-+    assert_file_contents(path, "L");
-+    unlink(path);
-+}
++1:
++    b 1b
 +
-+static void test_uart0_rx_pinmux(void)
-+{
-+    int sock_fd;
-+    int retries;
-+    QTestState *qts = qtest_init_with_serial("-machine raspi-pico",
-+                                             &sock_fd);
++fail_copy:
++    ldr r0, =fail_copy_message
++    b test_failed
 +
-+    qtest_writel(qts, IOBANK0_BASE + GPIO_CTRL(1), GPIO_FUNC_UART);
-+    g_assert_cmpint(send(sock_fd, "R", 1, 0), ==, 1);
-+    for (retries = 0; retries < 1000; retries++) {
-+        if (!(qtest_readl(qts, UART0_BASE + UART_FR) & UART_FR_RXFE)) {
-+            break;
-+        }
-+        g_usleep(1000);
-+    }
-+    g_assert_cmpint(retries, <, 1000);
-+    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_DR), ==, 'R');
++fail_fill:
++    ldr r0, =fail_fill_message
++    b test_failed
 +
-+    close(sock_fd);
-+    qtest_quit(qts);
-+}
++fail_irq:
++    ldr r0, =fail_irq_message
 +
-+static void test_atomic_aliases(void)
-+{
-+    QTestState *qts = qtest_init("-machine raspi-pico");
-+    uint32_t reset = qtest_readl(qts, UART0_BASE + UART_CR);
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
 +
-+    qtest_writel(qts, UART0_BASE + ATOMIC_CLR + UART_CR, 0x100);
-+    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_CR), ==,
-+                    reset & ~0x100);
-+    qtest_writel(qts, UART0_BASE + ATOMIC_SET + UART_CR, 0x100);
-+    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_CR), ==, reset);
-+    qtest_writel(qts, UART0_BASE + ATOMIC_XOR + UART_CR, 0x200);
-+    g_assert_cmphex(qtest_readl(qts, UART0_BASE + UART_CR), ==,
-+                    reset ^ 0x200);
++2:
++    b 2b
 +
-+    qtest_quit(qts);
-+}
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++    b test_failed
 +
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
 +
-+    qtest_add_func("/rp2040-uart/uart0-pinmux", test_uart0_pinmux);
-+    qtest_add_func("/rp2040-uart/uart1-pinmux", test_uart1_pinmux);
-+    qtest_add_func("/rp2040-uart/non-strict", test_non_strict_uart_pins);
-+    qtest_add_func("/rp2040-uart/uart0-rx-pinmux", test_uart0_rx_pinmux);
-+    qtest_add_func("/rp2040-uart/atomic-aliases", test_atomic_aliases);
++3:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 4f
++    str r1, [r2]
++    adds r0, 1
++    b 3b
 +
-+    return g_test_run();
-+}
-diff --git a/tests/tcg/arm/system/rp2040-mpu.S b/tests/tcg/arm/system/rp2040-mpu.S
-index a3aef55f5f..8984e94ca2 100644
---- a/tests/tcg/arm/system/rp2040-mpu.S
-+++ b/tests/tcg/arm/system/rp2040-mpu.S
-@@ -13,6 +13,8 @@
- #define TEST_ADDRESS 0x20001000
- #define TEST_VALUE 0x12345678
- #define UART0_DR 0x40034000
-+#define GPIO0_CTRL 0x40014004
-+#define GPIO_FUNC_UART 2
- #define MPU_TYPE 0xe000ed90
- #define MPU_CTRL 0xe000ed94
- #define MPU_RNR 0xe000ed98
-@@ -39,6 +41,9 @@ vector_table:
- .thumb_func
- .global reset_handler
- reset_handler:
-+    ldr r0, =GPIO0_CTRL
-+    movs r1, GPIO_FUNC_UART
++4:
++    bx lr
++
++.section .bss, "aw", %nobits
++.align 2
++copy_source:
++    .space 16
++copy_destination:
++    .space 16
++fill_source:
++    .space 4
++fill_destination:
++    .space 16
++
++.section .rodata, "a", %progbits
++start_message:
++    .asciz "PICO TCG DMA MEMORY START\n"
++copy_ok_message:
++    .asciz "PICO TCG DMA MEMORY COPY OK\n"
++fill_ok_message:
++    .asciz "PICO TCG DMA MEMORY FILL OK\n"
++ok_message:
++    .asciz "PICO TCG DMA MEMORY OK\n"
++fail_copy_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: COPY\n"
++fail_fill_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: FILL\n"
++fail_irq_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: IRQ\n"
++fail_exception_message:
++    .asciz "PICO TCG DMA MEMORY FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-dma-memory.ref b/tests/tcg/arm/system/rp2040-dma-memory.ref
+new file mode 100644
+index 0000000000..5960220ead
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-dma-memory.ref
+@@ -0,0 +1,4 @@
++PICO TCG DMA MEMORY START
++PICO TCG DMA MEMORY COPY OK
++PICO TCG DMA MEMORY FILL OK
++PICO TCG DMA MEMORY OK
+diff --git a/tests/tcg/arm/system/rp2040-dma-uart.S b/tests/tcg/arm/system/rp2040-dma-uart.S
+new file mode 100644
+index 0000000000..36972bbc98
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-dma-uart.S
+@@ -0,0 +1,267 @@
++/*
++ * Raspberry Pi Pico UART-paced DMA transfer test.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#ifndef UART_INDEX
++#error UART_INDEX must select UART0 or UART1
++#elif UART_INDEX == 0
++#define UART_BASE              0x40034000
++#define DREQ_UART_TX           20
++#define DREQ_UART_RX           21
++#define UART_NAME              "UART0"
++#elif UART_INDEX == 1
++#define UART_BASE              0x40038000
++#define DREQ_UART_TX           22
++#define DREQ_UART_RX           23
++#define UART_NAME              "UART1"
++#else
++#error Unsupported UART_INDEX
++#endif
++
++#define SRAM_END               0x20042000
++#define UART_LCR_H             0x2c
++#define UART_CR                0x30
++#define UART_DMACR             0x48
++#define UART_CR_ENABLED        0x301
++#define UART_CR_LOOPBACK       0x381
++#define DMA_BASE               0x50000000
++#define DMA_READ_ADDR          0x000
++#define DMA_WRITE_ADDR         0x004
++#define DMA_TRANS_COUNT        0x008
++#define DMA_CTRL_TRIG          0x00c
++#define DMA_INTR               0x400
++#define DMA_INTE0              0x404
++#define DMA_CTRL_EN            0x00000001
++#define DMA_CTRL_INCR_R        0x00000010
++#define DMA_CTRL_INCR_W        0x00000020
++#define DMA_CTRL_TX            (DMA_CTRL_EN | DMA_CTRL_INCR_R | \
++                                (DREQ_UART_TX << 15))
++#define DMA_CTRL_RX            (DMA_CTRL_EN | DMA_CTRL_INCR_W | \
++                                (DREQ_UART_RX << 15))
++#define DMA_IRQ_0              11
++#define NVIC_ISER              0xe000e100
++#define NVIC_ICER              0xe000e180
++#define NVIC_ICPR              0xe000e280
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++    .rept 12
++    .word default_handler + 1
++    .endr
++    .rept DMA_IRQ_0
++    .word default_handler + 1
++    .endr
++    .word dma_irq_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    cpsid i
++    ldr r0, =UART_BASE
++    movs r1, 0x10
++    str r1, [r0, UART_LCR_H]
++    ldr r1, =UART_CR_ENABLED
++    str r1, [r0, UART_CR]
++    movs r1, 3
++    str r1, [r0, UART_DMACR]
++
++    ldr r0, =NVIC_ICER
++    movs r2, 0
++    mvns r2, r2
++    str r2, [r0]
++    ldr r0, =NVIC_ICPR
++    str r2, [r0]
++    ldr r0, =NVIC_ISER
++    ldr r1, =(1 << DMA_IRQ_0)
 +    str r1, [r0]
-     ldr r0, =start_message
-     bl puts
- 
-diff --git a/tests/tcg/arm/system/rp2040-uart.S b/tests/tcg/arm/system/rp2040-uart.S
-index bdb58cc7f2..6058699200 100644
---- a/tests/tcg/arm/system/rp2040-uart.S
-+++ b/tests/tcg/arm/system/rp2040-uart.S
-@@ -11,6 +11,8 @@
- 
- #define SRAM_END 0x20042000
- #define UART0_DR 0x40034000
-+#define GPIO0_CTRL 0x40014004
-+#define GPIO_FUNC_UART 2
- #define SYS_EXIT 0x18
- #define ADP_STOPPED_APPLICATION_EXIT 0x20026
- 
-@@ -25,6 +27,9 @@ vector_table:
- .thumb_func
- .global reset_handler
- reset_handler:
-+    ldr r0, =GPIO0_CTRL
-+    movs r1, GPIO_FUNC_UART
++    cpsie i
++
++    ldr r0, =start_message
++    movs r1, START_MESSAGE_LEN
++    bl dma_tx
++
++    ldr r0, =UART_BASE
++    ldr r1, =UART_CR_LOOPBACK
++    str r1, [r0, UART_CR]
++    ldr r0, =hello_message
++    movs r1, 5
++    bl dma_tx
++    ldr r0, =UART_BASE
++    ldr r1, =UART_CR_ENABLED
++    str r1, [r0, UART_CR]
++    ldr r0, =newline_message
++    bl puts
++
++    ldr r0, =rx_buffer
++    movs r1, 5
++    bl dma_rx
++
++    ldr r0, =rx_buffer
++    ldr r1, =hello_message
++    movs r2, 5
++
++check_loop:
++    ldrb r3, [r0]
++    ldrb r4, [r1]
++    cmp r3, r4
++    bne fail_data
++    adds r0, 1
++    adds r1, 1
++    subs r2, 1
++    bne check_loop
++
++    ldr r0, =ok_message
++    movs r1, OK_MESSAGE_LEN
++    bl dma_tx
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
++
++fail_data:
++    ldr r0, =fail_data_message
++    b test_failed
++
++fail_irq:
++    ldr r0, =fail_irq_message
++    b test_failed
++
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
++
++2:
++    b 2b
++
++.thumb_func
++dma_tx:
++    push {r4, lr}
++    mov r4, r1
++    bl clear_dma_irq
++    ldr r2, =DMA_BASE
++    str r0, [r2, DMA_READ_ADDR]
++    ldr r3, =UART_BASE
++    str r3, [r2, DMA_WRITE_ADDR]
++    str r4, [r2, DMA_TRANS_COUNT]
++    ldr r3, =DMA_CTRL_TX
++    str r3, [r2, DMA_CTRL_TRIG]
++    bl wait_dma_irq
++    pop {r4, pc}
++
++.thumb_func
++dma_rx:
++    push {r4, lr}
++    mov r4, r1
++    bl clear_dma_irq
++    ldr r2, =DMA_BASE
++    ldr r3, =UART_BASE
++    str r3, [r2, DMA_READ_ADDR]
++    str r0, [r2, DMA_WRITE_ADDR]
++    str r4, [r2, DMA_TRANS_COUNT]
++    ldr r3, =DMA_CTRL_RX
++    str r3, [r2, DMA_CTRL_TRIG]
++    bl wait_dma_irq
++    pop {r4, pc}
++
++.thumb_func
++clear_dma_irq:
++    ldr r2, =irq_flag
++    movs r3, 0
++    str r3, [r2]
++    ldr r2, =DMA_BASE + DMA_INTR
++    movs r3, 1
++    str r3, [r2]
++    ldr r2, =DMA_BASE + DMA_INTE0
++    str r3, [r2]
++    bx lr
++
++.thumb_func
++wait_dma_irq:
++    ldr r2, =irq_flag
++
++3:
++    ldr r3, [r2]
++    movs r4, 1
++    tst r3, r4
++    bne 4f
++    b 3b
++
++4:
++    bx lr
++
++.thumb_func
++dma_irq_handler:
++    ldr r0, =DMA_BASE + DMA_INTR
++    ldr r1, [r0]
++    movs r2, 1
++    tst r1, r2
++    beq fail_irq
 +    str r1, [r0]
-     ldr r0, =UART0_DR
-     ldr r1, =message
- 
++    ldr r0, =irq_flag
++    str r1, [r0]
++    bx lr
++
++.thumb_func
++puts:
++    ldr r2, =UART_BASE
++
++5:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 6f
++    str r1, [r2]
++    adds r0, 1
++    b 5b
++
++6:
++    bx lr
++
++.section .bss, "aw", %nobits
++.align 2
++irq_flag:
++    .word 0
++rx_buffer:
++    .space 8
++
++.section .rodata, "a", %progbits
++start_message:
++    .ascii "PICO TCG DMA " UART_NAME " START\n"
++start_message_end:
++hello_message:
++    .ascii "HELLO"
++newline_message:
++    .asciz "\n"
++ok_message:
++    .ascii "PICO TCG DMA " UART_NAME " TX/RX OK\n"
++ok_message_end:
++.equ START_MESSAGE_LEN, start_message_end - start_message
++.equ OK_MESSAGE_LEN, ok_message_end - ok_message
++fail_data_message:
++    .asciz "PICO TCG DMA " UART_NAME " FAIL: DATA\n"
++fail_irq_message:
++    .asciz "PICO TCG DMA " UART_NAME " FAIL: IRQ\n"
++fail_exception_message:
++    .asciz "PICO TCG DMA " UART_NAME " FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-dma-uart0.ref b/tests/tcg/arm/system/rp2040-dma-uart0.ref
+new file mode 100644
+index 0000000000..5cb57c56cc
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-dma-uart0.ref
+@@ -0,0 +1,3 @@
++PICO TCG DMA UART0 START
++HELLO
++PICO TCG DMA UART0 TX/RX OK
+diff --git a/tests/tcg/arm/system/rp2040-dma-uart1.ref b/tests/tcg/arm/system/rp2040-dma-uart1.ref
+new file mode 100644
+index 0000000000..1509dc034a
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-dma-uart1.ref
+@@ -0,0 +1,3 @@
++PICO TCG DMA UART1 START
++HELLO
++PICO TCG DMA UART1 TX/RX OK
 -- 
 2.55.0
 
