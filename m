@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64ABC61DB9
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 07:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B45D1C61DB9
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 07:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0Zr3-0000fm-8t; Sun, 30 Aug 2026 03:21:25 -0400
+	id 1x0ZrO-00017A-Pd; Sun, 30 Aug 2026 03:21:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x0Zqy-0000Xy-92
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 03:21:20 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1x0ZrN-00016s-Ml
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 03:21:45 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x0Zqw-0004xB-HD
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 03:21:19 -0400
+ id 1x0ZrM-0004zI-7O
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 03:21:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788074479; x=1819610479;
+ t=1788074504; x=1819610504;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=nZzvt0iW2Q7KLQNgSo/G2fUMX1/yU6BP1yQMPTPTucE=;
- b=eI3sGcdOq5JOa3F5jC7HmseCTX4pflg8B+ZtNTcMIWmqh62KKIGON2F9
- Pal2pJS9ohyxxug4ZV48f+9Qg6cWyId5QdHoewha9NG/SPRFTB59bKX8K
- BeVjiVxevR7ev+vgjMLordas+YPYnLthxY6dQkn04xewjnCXA1bpUfR08
- fezg4pP6ZRHLEyXS4Orv82he/fEPF3rq5iMuAC59fF9PGwVmOQUW/9GZW
- VMygcinaFdu6qberOrM5lMHhR7csHp9t8PwHWU5xqyXYDQeNFGwWnAFkZ
- uUHQJGcJgR1ZePfyaiK2PfaI/dFVW/3K9SiAcnnxsK5g1mx0xTstK+fBA w==;
-X-CSE-ConnectionGUID: PnP5Whd6QtWxflI6W0ly5A==
-X-CSE-MsgGUID: JANdvAPjTYq+ajhsIFQ9UA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11890"; a="88565401"
-X-IronPort-AV: E=Sophos;i="6.25,251,1779174000"; d="scan'208";a="88565401"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2026 00:21:17 -0700
-X-CSE-ConnectionGUID: Scg0oMW4RY2iI0umtxW6dA==
-X-CSE-MsgGUID: 7BYKUOHqQEmEENak+UP5wQ==
+ bh=p1aIId6OF51IkNNctX/PRW+eNkg+BLyFrTHN13rl6Qc=;
+ b=LdypoAcUrXmdxaE70l+ug7AkzOxYRGNhPzS02hw1omNXwMekEZOUvTe2
+ +CCpHaHr5l9t/nQxcw0nDSQH8vXgdPc4FhPDLM2uyYufSAManCEWngzcE
+ lr5SThIsDxtsxuv0iiZuwX5h54xi1mOBrGCt//4022ABUE6QUBa2tIKDv
+ feXL4xVZMiSfPNqz7YX98YDF45W1ureP/iXFNZuoRe7glGU9g6k4QzpjH
+ /YDeNuXllLY0aYn2TV4hPsDkQLH6r6ASaVv7XzPbwi8l72m+CrGSQmiDb
+ 4oDJC9JRaGycFOme0x3I9RHd2Rk+8l9JC22QivoKB0yLwk4koOSRD4OLq g==;
+X-CSE-ConnectionGUID: Zp5boxcjQmqRH1G3Ag41Aw==
+X-CSE-MsgGUID: CsDQmSO4RdqnYvgsyJccCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11890"; a="87648925"
+X-IronPort-AV: E=Sophos;i="6.25,251,1779174000"; d="scan'208";a="87648925"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Aug 2026 00:21:42 -0700
+X-CSE-ConnectionGUID: q7DV/ze/QZKouI+R5fR6uw==
+X-CSE-MsgGUID: 82SegnomR8KdHAghDREvOQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,251,1779174000"; d="scan'208";a="265948510"
+X-IronPort-AV: E=Sophos;i="6.25,251,1779174000"; d="scan'208";a="266710316"
 Received: from junjie-desk-dev.bj.intel.com (HELO
  junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2026 00:21:13 -0700
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Aug 2026 00:21:39 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: Shrihari E S <shrihari.s@samsung.com>
 Cc: jic23@kernel.org, fan.ni@samsung.com, mst@redhat.com,
@@ -54,16 +54,16 @@ Cc: jic23@kernel.org, fan.ni@samsung.com, mst@redhat.com,
  dongjoo.seo1@samsung.com, s.neeraj@samsung.com, vikash.k5@samsung.com,
  cpgs@samsung.com, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
  linux-pci@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [RFC V2 03/10] hw/pci: Add SVC capability and UIO properties to
- PCIe ports
-Date: Sun, 30 Aug 2026 15:20:53 +0800
-Message-ID: <20260830072053.399466-1-junjie.cao@intel.com>
+Subject: Re: [RFC V2 05/10] hw/cxl: Wire UIO capability into HDM decoder and
+ DVSEC registers
+Date: Sun, 30 Aug 2026 15:21:18 +0800
+Message-ID: <20260830072118.399487-1-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <124323713.61787732103161.JavaMail.epsvc@epcpadp1new>
-References: <124323713.61787732103161.JavaMail.epsvc@epcpadp1new>
+In-Reply-To: <1646464088.101787732103895.JavaMail.epsvc@epcpadp1new>
+References: <1646464088.101787732103895.JavaMail.epsvc@epcpadp1new>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=junjie.cao@intel.com;
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=junjie.cao@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -89,24 +89,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Shrihari,
 
-On Wed, 26 Aug 2026 11:04:03 +0530, Shrihari E S wrote:
-> +static const Property xio3130_upstream_props[] = {
-> +    DEFINE_PROP_BOOL("x-svc", PCIEPort, svc, false),
-> +    DEFINE_PROP_BOOL("x-256b-flit", PCIEPort, flitmode, false),
-> +};
+On Wed, 26 Aug 2026 11:04:05 +0530, Shrihari E S wrote:
+>      ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+> +                     UIO_DECODER_COUNT,
+> +                     (type == CXL2_TYPE3_DEVICE || type == CXL2_UPSTREAM_PORT
+> +                     || type == CXL2_ROOT_PORT) && uio ? decoder_count : 0);
 
-x-256b-flit is a no-op on x3130-upstream: nothing in
-xio3130_upstream.c reads PCIEPort::flitmode.  pcie_cap_fill_slot_lnk()
-does run from pcie_cap_init(), but returns early -- an upstream port is
-a PCIEPort, not a PCIESlot -- and pcie_cap_fill_link_ep_usp(), the path
-cxl-upstream and cxl-type3 take, isn't called here.  So with
-x-256b-flit=on the Flags bit 15 and LNKSTA2 flit bits stay 0.  I'd
-either wire up pcie_cap_fill_link_ep_usp() the way cxl-upstream does,
-from its reset handler, or drop x-256b-flit from this hunk.
+The always-true expression from v1 is a real type test now, but UIO
+Capable Decoder Count uses the same encoding as Decoder Count -- CXL
+3.2 8.2.4.20.1: "See the Decoder Count field in this register for
+enumeration" -- so writing decoder_count raw advertises 4h = 8 UIO
+decoders while Decoder Count reads 2h = 4.  I read the register back on
+a cxl-rp: 0x00042312, bits[3:0] = 2h but bits[19:16] = 4h.
+cxl_decoder_count_enc() would line the two up.  The same field
+description also marks it reserved for CXL.mem devices ("not permitted
+to limit the number of UIO-capable HDM decoders"), so CXL2_TYPE3_DEVICE
+should drop out of the count expression.
 
-x-svc has no reader until 7/10 either, so x-svc=on has no effect for
-four commits.  Same thing Jonathan asked for on v1: bring the state in
-with the patch that uses it.  Here that would fold 3 and 4 into 7.
+On the type list itself: 8.2.4.20.1 enumerates UIO Capable for CXL.mem
+devices, USPs and CXL Host Bridges, the Host Bridge case being the one
+that means "all the root ports within this Host Bridge are capable of
+routing UIO requests".  This sets it per root port instead, and
+pci_expander_bridge.c passes uio=false for CXL2_RC unconditionally, so
+the host bridge never advertises it.  On v1 I said a root port may well
+be intended, going off crp->uio_capable in the SVC wiring, but the
+enumeration above doesn't list one.  Is the root port the intended
+carrier?
+
+> +        if (uio) {
+> +            write_msk[R_CXL_HDM_DECODER0_CTRL + i * hdm_inc] |=
+> +                R_CXL_HDM_DECODER0_CTRL_UIO_MASK |
+> +                R_CXL_HDM_DECODER0_CTRL_UIG_MASK |
+> +                R_CXL_HDM_DECODER0_CTRL_UIW_MASK;
+> +        }
+
+The if (uio) block adds UIG and UIW to the write mask for every type,
+type3 included.  8.2.4.20.7 makes both "RWL for a switch and a Host
+Bridge if the UIO Capable bit ... is set" and then "reserved for
+CXL.mem devices."  I wrote 0x00ff0000 to decoder 0's Control register
+on an x-uio=on type3 and read it straight back; the same write on a
+type3 without x-uio reads back 0.  Gating UIG/UIW on the port types,
+and leaving UIO alone, would match the table.
 
 Many thanks,
 Junjie
