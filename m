@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2EDC61DB9
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433A4C61DE2
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0YrW-0002cL-AH; Sun, 30 Aug 2026 02:17:50 -0400
+	id 1x0Yre-0002m7-Qw; Sun, 30 Aug 2026 02:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0YrS-0002aC-3F; Sun, 30 Aug 2026 02:17:46 -0400
+ id 1x0Yrc-0002ft-FL; Sun, 30 Aug 2026 02:17:56 -0400
 Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x0YrM-0005I6-Vw; Sun, 30 Aug 2026 02:17:45 -0400
+ id 1x0YrZ-0005J6-C1; Sun, 30 Aug 2026 02:17:56 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hXhjp1FlNz833X;
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hXhjp58S6z833f;
  Sun, 30 Aug 2026 08:17:18 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
  s=dkim; t=1788070638;
- bh=XXc8xY6jbSJdHuZ5c/p5UvxqIcENO+prlnwXQ9kmufs=;
+ bh=JqUNpB1XViYFvwRpXI59jqC3eqxIurwOlbp6EzM/cWg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oyQEiDXUoN+SHhrPccs9XAy/n+gxoVn3l6TG4nlFjuixl+OZASfL8H/HtwXU8f8QJ
- VgccXIx4rcIh8Dv0ERR/s0MLB/Q/NfC5yeQgsAq8MCR8QABH8GILgf/jmMxVrRboXn
- MusNJSk+z48fzbtA4tYy8Z06CN7rsty8I2vVkGvrZmEBEuUcZRoe6MLuADzDRECrgB
- eBG0vFf1Po7Gbq5ohuJRgYF1Nq9IyrXLgU7Nl4ge+4ZmYTNcZ4uzk7PJzCvWMb1bkB
- UJVZbOzFiPQpCBbMjrlR9RihBGQVbmnZiW1ZK7ccI9qSofevdCkJsVBs4SU1Qq5Tbb
- r2iB+6qBuWqsQ==
+ b=owkIxYK5rVXnLQ7eaVapKj7U1W/OBYd6Ps1/MeGvnTklD8tAj1bZaBvcshsHjs1a7
+ LJuBMHSgiIej5SlyIN0tGPB7SMZxdFnbsv4cfgHY61CUNNJ6eIIPaJncRSDM/L3SPC
+ U17E5j23+Lin+NhVd9J36GfoSFUgDuCQe87ah2oZIMdSs4e+d/s5W55ciDVbcyoxI4
+ +Lw4rl+FGuFJD2YxAY55E8K7CFa7kjyFii1PswF7uKG7kUTYDuvyalThcVVKoy5PFD
+ Eo9b0aCVufX354F/ugckafkWIz9h+3TlWnUo1Ri6Vd3/aJ3s5u4iEwFcnIwOHZT+bt
+ uJD6Aan4Z2Y7g==
 Received: from localhost.localdomain (unknown [10.134.14.34])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjn6tkMz7swM;
- Sun, 30 Aug 2026 08:17:17 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjp3ggtz7xSW;
+ Sun, 30 Aug 2026 08:17:18 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org,
 	qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH RFC v2 21/30] tests/tcg/arm: test RP2040 flash and XIP behavior
-Date: Sun, 30 Aug 2026 08:15:52 +0200
-Message-ID: <20260830061601.52136-7-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH RFC v2 24/30] hw/ssi: load RP2040 UF2 flash images
+Date: Sun, 30 Aug 2026 08:15:55 +0200
+Message-ID: <20260830061601.52136-10-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
@@ -74,2029 +74,717 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: gilles grimaud <gilles.grimaud@univ-lille.fr>
 
-Exercise write-enable, page programming, sector erase and NOR bit semantics through the RP2040 SSI command path. Verify raw flash persistence across QEMU invocations and IO_QSPI chip-select behavior.\n\nCover XIP accesses while the flash is busy, including direct HardFault delivery, multicore lockout, and faults observed independently by core 0 and core 1.
+Accept RP2040-family UF2 files through the Raspberry Pi Pico -kernel path. Validate block framing, family IDs, payload sizes and XIP flash bounds before overlaying payloads onto flash storage.\n\nAdd a focused qtest for multi-block UF2 loading and provide a host-side converter for producing raw flash images from Pico UF2 files.
 
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- tests/tcg/arm/Makefile.softmmu-target         |  43 +-
- tests/tcg/arm/system/rp2040-core0-xip-fault.S | 193 ++++++++
- .../tcg/arm/system/rp2040-core0-xip-fault.ref |   2 +
- tests/tcg/arm/system/rp2040-core1-xip-fault.S | 331 +++++++++++++
- .../tcg/arm/system/rp2040-core1-xip-fault.ref |   3 +
- .../arm/system/rp2040-flash-busy-hardfault.S  | 179 ++++++++
- .../system/rp2040-flash-busy-hardfault.ref    |   2 +
- .../arm/system/rp2040-flash-busy-lockout.S    | 434 ++++++++++++++++++
- .../arm/system/rp2040-flash-busy-lockout.ref  |   4 +
- tests/tcg/arm/system/rp2040-flash-commands.S  | 375 +++++++++++++++
- .../tcg/arm/system/rp2040-flash-commands.ref  |   6 +
- tests/tcg/arm/system/rp2040-flash-ioqspi.S    | 212 +++++++++
- tests/tcg/arm/system/rp2040-flash-ioqspi.ref  |   2 +
- .../arm/system/rp2040-flash-persist-reader.S  |  87 ++++
- .../system/rp2040-flash-persist-reader.ref    |   1 +
- 15 files changed, 1869 insertions(+), 5 deletions(-)
- create mode 100644 tests/tcg/arm/system/rp2040-core0-xip-fault.S
- create mode 100644 tests/tcg/arm/system/rp2040-core0-xip-fault.ref
- create mode 100644 tests/tcg/arm/system/rp2040-core1-xip-fault.S
- create mode 100644 tests/tcg/arm/system/rp2040-core1-xip-fault.ref
- create mode 100644 tests/tcg/arm/system/rp2040-flash-busy-hardfault.S
- create mode 100644 tests/tcg/arm/system/rp2040-flash-busy-hardfault.ref
- create mode 100644 tests/tcg/arm/system/rp2040-flash-busy-lockout.S
- create mode 100644 tests/tcg/arm/system/rp2040-flash-busy-lockout.ref
- create mode 100644 tests/tcg/arm/system/rp2040-flash-commands.S
- create mode 100644 tests/tcg/arm/system/rp2040-flash-commands.ref
- create mode 100644 tests/tcg/arm/system/rp2040-flash-ioqspi.S
- create mode 100644 tests/tcg/arm/system/rp2040-flash-ioqspi.ref
- create mode 100644 tests/tcg/arm/system/rp2040-flash-persist-reader.S
- create mode 100644 tests/tcg/arm/system/rp2040-flash-persist-reader.ref
+ MAINTAINERS                   |   1 +
+ hw/ssi/rp2040_xip.c           | 109 ++++++++
+ scripts/uf2-to-flash.py       | 462 ++++++++++++++++++++++++++++++++++
+ tests/qtest/rp2040-xip-test.c |  61 +++++
+ 4 files changed, 633 insertions(+)
+ create mode 100755 scripts/uf2-to-flash.py
 
-diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
-index a07264fd89..c282ff5ad0 100644
---- a/tests/tcg/arm/Makefile.softmmu-target
-+++ b/tests/tcg/arm/Makefile.softmmu-target
-@@ -24,7 +24,14 @@ RP2040_TESTS=rp2040-boot rp2040-uart rp2040-mpu \
- 	rp2040-sio-fifo rp2040-sio-divider rp2040-psm-proc1 \
- 	rp2040-core1-launch rp2040-timer
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fd35521947..41494eff2a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1042,6 +1042,7 @@ S: Maintained
+ F: hw/*/rp2040*
+ F: include/hw/*/rp2040*
+ F: hw/arm/raspi_pico.c
++F: scripts/uf2-to-flash.py
+ F: tests/qtest/rp2040*
+ F: tests/tcg/arm/system/rp2040*
  
--$(RP2040_TESTS): %: %.S rp2040-boot2-w25q080.S rp2040.ld
-+RP2040_FLASH_TESTS=rp2040-flash-commands rp2040-flash-ioqspi \
-+	rp2040-flash-busy-hardfault rp2040-flash-busy-lockout \
-+	rp2040-core0-xip-fault rp2040-core1-xip-fault
-+
-+RP2040_GUESTS=$(RP2040_TESTS) $(RP2040_FLASH_TESTS) \
-+	rp2040-flash-persist-reader
-+
-+$(RP2040_GUESTS): %: %.S rp2040-boot2-w25q080.S rp2040.ld
- 	$(CC) -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft \
- 		-Wl,--build-id=none -x assembler-with-cpp \
- 		$(ARM_SRC)/rp2040-boot2-w25q080.S $< \
-@@ -36,7 +43,10 @@ run-rp2040-boot: QEMU_OPTS=-M raspi-pico \
+diff --git a/hw/ssi/rp2040_xip.c b/hw/ssi/rp2040_xip.c
+index d517df41ff..57cdd3c3c7 100644
+--- a/hw/ssi/rp2040_xip.c
++++ b/hw/ssi/rp2040_xip.c
+@@ -90,6 +90,17 @@
+ #define FLASH_PAGE_SIZE  256
+ #define FLASH_SECTOR_SIZE 4096
  
- run-rp2040-uart run-rp2040-mpu \
- run-rp2040-sio-fifo run-rp2040-sio-divider \
--run-rp2040-psm-proc1 run-rp2040-core1-launch run-rp2040-timer: \
-+run-rp2040-psm-proc1 run-rp2040-core1-launch run-rp2040-timer \
-+run-rp2040-flash-commands run-rp2040-flash-ioqspi \
-+run-rp2040-flash-busy-hardfault run-rp2040-flash-busy-lockout \
-+run-rp2040-core0-xip-fault run-rp2040-core1-xip-fault: \
- 	QEMU_OPTS=-M raspi-pico,strict-uart-pins=off \
- 	-serial chardev:output \
- 	-semihosting-config enable=on,target=native -kernel
-@@ -44,14 +54,37 @@ run-rp2040-psm-proc1 run-rp2040-core1-launch run-rp2040-timer: \
- run-rp2040-uart run-rp2040-mpu \
- run-rp2040-sio-fifo run-rp2040-sio-divider \
- run-rp2040-psm-proc1 run-rp2040-core1-launch \
--run-rp2040-timer: run-rp2040-%: rp2040-%
-+run-rp2040-timer run-rp2040-flash-ioqspi \
-+run-rp2040-flash-busy-hardfault run-rp2040-flash-busy-lockout \
-+run-rp2040-core0-xip-fault \
-+run-rp2040-core1-xip-fault: run-rp2040-%: rp2040-%
- 	$(call run-test, $<, \
- 	  $(QEMU) -monitor none -display none \
- 		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
- 		  $(QEMU_OPTS) $<)
- 	$(call diff-out,$<,$(ARM_SRC)/$<.ref)
--
--ARM_TESTS+=$(RP2040_TESTS)
-+run-rp2040-flash-commands: rp2040-flash-commands \
-+		rp2040-flash-persist-reader
-+	$(call run-test, $<, \
-+	  $(QEMU) -monitor none -display none \
-+		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
-+		  $(QEMU_OPTS) $<)
-+	$(call diff-out,$<,$(ARM_SRC)/rp2040-flash-commands.ref)
-+	$(PYTHON) -c "open('$<.flash', 'wb').write(b'\xff' * 512)"
-+	$(QEMU) -monitor none -display none \
-+		-M raspi-pico$(COMMA)strict-uart-pins=off$(COMMA)flash-file=$<.flash \
-+		-serial null -semihosting-config enable=on$(COMMA)target=native \
-+		-kernel $<
-+	$(QEMU) -monitor none -display none \
-+		-chardev file$(COMMA)path=$<.persist.out$(COMMA)id=output \
-+		-M raspi-pico$(COMMA)strict-uart-pins=off$(COMMA)flash-file=$<.flash \
-+		-serial chardev:output \
-+		-semihosting-config enable=on$(COMMA)target=native \
-+		-kernel rp2040-flash-persist-reader
-+	$(call diff-out,$<.persist,$(ARM_SRC)/rp2040-flash-persist-reader.ref)
-+	rm -f $<.flash $<.persist.out
++#define UF2_MAGIC_START0 0x0a324655
++#define UF2_MAGIC_START1 0x9e5d5157
++#define UF2_MAGIC_END    0x0ab16f30
++#define UF2_BLOCK_SIZE   512
++#define UF2_HEADER_SIZE  32
++#define UF2_MAX_PAYLOAD  476
 +
-+ARM_TESTS+=$(RP2040_TESTS) $(RP2040_FLASH_TESTS)
++#define UF2_FLAG_NOT_MAIN_FLASH       BIT(0)
++#define UF2_FLAG_FAMILY_ID_PRESENT    BIT(13)
++#define UF2_RP2040_FAMILY_ID          0xe48bff56
++
+ #define ATOMIC_ALIAS_MASK 0x3000
+ #define ATOMIC_XOR        0x1000
+ #define ATOMIC_SET        0x2000
+@@ -1121,6 +1132,92 @@ static bool rp2040_xip_load_elf(RP2040XipState *s, const char *filename,
+     return true;
+ }
  
- # These objects provide the basic boot code and helper functions for all tests
- CRT_OBJS=boot.o
-diff --git a/tests/tcg/arm/system/rp2040-core0-xip-fault.S b/tests/tcg/arm/system/rp2040-core0-xip-fault.S
-new file mode 100644
-index 0000000000..675dd231d2
++static bool rp2040_xip_load_uf2(RP2040XipState *s, const char *filename,
++                                Error **errp)
++{
++    g_autofree gchar *contents = NULL;
++    gsize len;
++    unsigned blocks;
++    unsigned i;
++    bool copied = false;
++
++    if (!g_file_get_contents(filename, &contents, &len, NULL)) {
++        error_setg(errp, "could not load flash image '%s'", filename);
++        return true;
++    }
++
++    if (len < UF2_BLOCK_SIZE ||
++        ldl_le_p(contents) != UF2_MAGIC_START0 ||
++        ldl_le_p(contents + 4) != UF2_MAGIC_START1) {
++        return false;
++    }
++
++    if (len % UF2_BLOCK_SIZE != 0) {
++        error_setg(errp, "invalid UF2 image '%s': size is not a multiple "
++                   "of %u bytes", filename, UF2_BLOCK_SIZE);
++        return true;
++    }
++
++    blocks = len / UF2_BLOCK_SIZE;
++    for (i = 0; i < blocks; i++) {
++        const uint8_t *block = (uint8_t *)contents + i * UF2_BLOCK_SIZE;
++        uint32_t flags;
++        uint32_t target;
++        uint32_t payload_size;
++        uint32_t family_id;
++        uint32_t offset;
++
++        if (ldl_le_p(block) != UF2_MAGIC_START0 ||
++            ldl_le_p(block + 4) != UF2_MAGIC_START1 ||
++            ldl_le_p(block + UF2_BLOCK_SIZE - 4) != UF2_MAGIC_END) {
++            error_setg(errp, "invalid UF2 image '%s': bad magic in block %u",
++                       filename, i);
++            return true;
++        }
++
++        flags = ldl_le_p(block + 8);
++        if (flags & UF2_FLAG_NOT_MAIN_FLASH) {
++            continue;
++        }
++
++        if (!(flags & UF2_FLAG_FAMILY_ID_PRESENT)) {
++            error_setg(errp, "invalid RP2040 UF2 image '%s': block %u has "
++                       "no family ID", filename, i);
++            return true;
++        }
++
++        family_id = ldl_le_p(block + 28);
++        if (family_id != UF2_RP2040_FAMILY_ID) {
++            error_setg(errp, "unsupported UF2 family ID 0x%08" PRIx32
++                       " in '%s'", family_id, filename);
++            return true;
++        }
++
++        target = ldl_le_p(block + 12);
++        payload_size = ldl_le_p(block + 16);
++        if (payload_size > UF2_MAX_PAYLOAD ||
++            target < RP2040_XIP_FLASH_BASE ||
++            target - RP2040_XIP_FLASH_BASE > s->flash_size ||
++            payload_size > s->flash_size -
++                           (target - RP2040_XIP_FLASH_BASE)) {
++            error_setg(errp, "UF2 block %u in '%s' is outside XIP flash",
++                       i, filename);
++            return true;
++        }
++
++        offset = target - RP2040_XIP_FLASH_BASE;
++        memcpy(s->storage + offset, block + UF2_HEADER_SIZE, payload_size);
++        copied = true;
++    }
++
++    if (!copied) {
++        error_setg(errp, "UF2 image '%s' contains no RP2040 flash payload",
++                   filename);
++    }
++
++    return true;
++}
++
+ void rp2040_xip_load_image(RP2040XipState *s, const char *filename,
+                            Error **errp)
+ {
+@@ -1143,6 +1240,18 @@ void rp2040_xip_load_image(RP2040XipState *s, const char *filename,
+         return;
+     }
+ 
++    if (rp2040_xip_load_uf2(s, filename, &local_err)) {
++        if (local_err) {
++            error_propagate(errp, local_err);
++            return;
++        }
++        if (!rp2040_xip_fixup_boot2(s, filename, errp)) {
++            return;
++        }
++        rp2040_xip_writeback(s, errp);
++        return;
++    }
++
+     image_size = load_image_size(filename, s->storage, s->flash_size);
+     if (image_size < 0) {
+         error_setg(errp, "could not load flash image '%s'", filename);
+diff --git a/scripts/uf2-to-flash.py b/scripts/uf2-to-flash.py
+new file mode 100755
+index 0000000000..f1c0fcbbbb
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-core0-xip-fault.S
-@@ -0,0 +1,193 @@
-+/*
-+ * Raspberry Pi Pico core 0 XIP-busy instruction fault test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END               0x20042000
-+#define SRAM_BASE              0x20000000
-+#define UART0_DR               0x40034000
-+#define SCB_VTOR               0xe000ed08
-+#define SSI_BASE               0x18000000
-+#define SSI_CTRLR0             0x00
-+#define SSI_SSIENR             0x08
-+#define SSI_SER                0x10
-+#define SSI_RXFLR              0x24
-+#define SSI_DR0                0x60
-+#define SSI_CTRLR0_SPI_TXRX    0x00070000
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl xip_puts
-+    ldr r0, =SRAM_BASE
-+    ldr r1, =sram_start
-+    ldr r2, =sram_end
-+
-+1:
-+    cmp r1, r2
-+    bhs 2f
-+    ldr r3, [r1]
-+    str r3, [r0]
-+    adds r1, 4
-+    adds r0, 4
-+    b 1b
-+
-+2:
-+    ldr r0, =SRAM_BASE
-+    adds r0, 1
-+    bx r0
-+
-+.thumb_func
-+default_handler:
-+    b default_handler
-+
-+.thumb_func
-+xip_probe:
-+    ldr r0, =xip_no_fault_message
-+    bl xip_puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+3:
-+    b 3b
-+
-+.thumb_func
-+xip_puts:
-+    ldr r2, =UART0_DR
-+
-+4:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 5f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 4b
-+
-+5:
-+    bx lr
-+
-+.align 2
-+sram_start:
-+    ldr r0, =SRAM_BASE
-+    ldr r1, =SRAM_END
-+    str r1, [r0]
-+    adr r1, sram_entry
-+    adds r1, 1
-+    str r1, [r0, 4]
-+    movs r1, 0
-+    str r1, [r0, 8]
-+    adr r1, sram_hardfault
-+    adds r1, 1
-+    str r1, [r0, 12]
-+    ldr r2, =SCB_VTOR
-+    str r0, [r2]
-+
-+.align 2
-+.thumb_func
-+sram_entry:
-+    ldr r4, =SSI_BASE
-+    movs r0, 0
-+    str r0, [r4, SSI_SSIENR]
-+    ldr r0, =SSI_CTRLR0_SPI_TXRX
-+    str r0, [r4, SSI_CTRLR0]
-+    movs r0, 1
-+    str r0, [r4, SSI_SSIENR]
-+
-+    str r0, [r4, SSI_SER]
-+    movs r0, 0x06
-+    bl sram_ssi_txrx
-+    movs r0, 0
-+    str r0, [r4, SSI_SER]
-+
-+    movs r0, 1
-+    str r0, [r4, SSI_SER]
-+    movs r0, 0x02
-+    bl sram_ssi_txrx
-+    movs r0, 0x00
-+    bl sram_ssi_txrx
-+    movs r0, 0x20
-+    bl sram_ssi_txrx
-+    movs r0, 0x00
-+    bl sram_ssi_txrx
-+    movs r0, 0x5a
-+    bl sram_ssi_txrx
-+    movs r0, 0
-+    str r0, [r4, SSI_SER]
-+
-+    ldr r0, =xip_probe
-+    adds r0, 1
-+    bx r0
-+
-+.thumb_func
-+sram_ssi_txrx:
-+    ldr r2, =(SSI_BASE + SSI_DR0)
-+    str r0, [r2]
-+    ldr r3, =(SSI_BASE + SSI_RXFLR)
-+
-+6:
-+    ldr r0, [r3]
-+    cmp r0, 0
-+    beq 6b
-+    ldr r0, [r2]
-+    bx lr
-+
-+.align 2
-+.thumb_func
-+sram_hardfault:
-+    adr r0, sram_ok_message
-+    bl sram_puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+7:
-+    b 7b
-+
-+.thumb_func
-+sram_puts:
-+    ldr r2, =UART0_DR
-+
-+8:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 9f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 8b
-+
-+9:
-+    bx lr
-+
-+.align 2
-+sram_ok_message:
-+    .asciz "PICO TCG CORE0 XIP HARDFAULT OK\n"
-+
-+.ltorg
-+.align 2
-+sram_end:
-+
-+.section .rodata, "a", %progbits
-+start_message:
-+    .asciz "PICO TCG CORE0 XIP START\n"
-+xip_no_fault_message:
-+    .asciz "PICO TCG CORE0 XIP FAIL: NO FAULT\n"
-diff --git a/tests/tcg/arm/system/rp2040-core0-xip-fault.ref b/tests/tcg/arm/system/rp2040-core0-xip-fault.ref
-new file mode 100644
-index 0000000000..22232ee864
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-core0-xip-fault.ref
-@@ -0,0 +1,2 @@
-+PICO TCG CORE0 XIP START
-+PICO TCG CORE0 XIP HARDFAULT OK
-diff --git a/tests/tcg/arm/system/rp2040-core1-xip-fault.S b/tests/tcg/arm/system/rp2040-core1-xip-fault.S
-new file mode 100644
-index 0000000000..5f8a1217eb
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-core1-xip-fault.S
-@@ -0,0 +1,331 @@
-+/*
-+ * Raspberry Pi Pico core 1 XIP-busy instruction fault test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END               0x20042000
-+#define SRAM_BASE              0x20000000
-+#define CORE1_STACK            0x20041000
-+#define UART0_DR               0x40034000
-+#define SIO_BASE               0xd0000000
-+#define SIO_CPUID              0x00
-+#define SIO_FIFO_ST            0x50
-+#define SIO_FIFO_WR            0x54
-+#define SIO_FIFO_RD            0x58
-+#define SIO_FIFO_ST_VLD        0x01
-+#define SIO_FIFO_ST_RDY        0x02
-+#define SCB_VTOR               0xe000ed08
-+#define SSI_BASE               0x18000000
-+#define SSI_CTRLR0             0x00
-+#define SSI_SSIENR             0x08
-+#define SSI_SER                0x10
-+#define SSI_RXFLR              0x24
-+#define SSI_DR0                0x60
-+#define SSI_CTRLR0_SPI_TXRX    0x00070000
-+#define CORE1_READY            0xc01e1001
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl xip_puts
-+    ldr r0, =SRAM_BASE
-+    ldr r1, =sram_start
-+    ldr r2, =sram_end
-+
-+1:
-+    cmp r1, r2
-+    bhs 2f
-+    ldr r3, [r1]
-+    str r3, [r0]
-+    adds r1, 4
-+    adds r0, 4
-+    b 1b
-+
-+2:
-+    ldr r0, =SRAM_BASE
-+    adds r0, sram_core0_main - sram_start + 1
-+    bx r0
-+
-+.thumb_func
-+default_handler:
-+    b default_handler
-+
-+.thumb_func
-+xip_core1_loop:
-+    ldr r0, =CORE1_READY
-+    bl xip_fifo_push
-+
-+3:
-+    b 3b
-+
-+.thumb_func
-+xip_fifo_push:
-+    ldr r1, =(SIO_BASE + SIO_FIFO_ST)
-+
-+4:
-+    ldr r2, [r1]
-+    movs r3, SIO_FIFO_ST_RDY
-+    tst r2, r3
-+    beq 4b
-+    ldr r1, =(SIO_BASE + SIO_FIFO_WR)
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+xip_puts:
-+    ldr r2, =UART0_DR
-+
-+5:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 6f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 5b
-+
-+6:
-+    bx lr
-+
-+.align 2
-+sram_start:
-+    .word SRAM_END
-+    .word SRAM_BASE + (sram_core0_main - sram_start) + 1
-+    .word 0
-+    .word SRAM_BASE + (sram_hardfault - sram_start) + 1
-+
-+.align 2
-+.thumb_func
-+sram_core0_main:
-+    ldr r0, =SCB_VTOR
-+    ldr r1, =SRAM_BASE
-+    str r1, [r0]
-+    bl sram_launch_core1
-+    bl sram_fifo_pop
-+    ldr r1, =CORE1_READY
-+    cmp r0, r1
-+    bne sram_fail_ready
-+
-+    adr r0, sram_ready_message
-+    bl sram_puts
-+    bl sram_start_flash_program
-+
-+7:
-+    b 7b
-+
-+.thumb_func
-+sram_launch_core1:
-+    push {r4, r5, lr}
-+    adr r4, sram_launch_sequence
-+    movs r5, 6
-+
-+8:
-+    ldr r0, [r4]
-+    cmp r0, 0
-+    bne 9f
-+    bl sram_fifo_drain
-+    sev
-+    ldr r0, [r4]
-+
-+9:
-+    bl sram_fifo_push
-+    sev
-+    bl sram_fifo_pop
-+    ldr r1, [r4]
-+    cmp r0, r1
-+    bne sram_fail_launch
-+    adds r4, 4
-+    subs r5, 1
-+    bne 8b
-+    pop {r4, r5, pc}
-+
-+.thumb_func
-+sram_fifo_push:
-+    ldr r1, =(SIO_BASE + SIO_FIFO_ST)
-+
-+10:
-+    ldr r2, [r1]
-+    movs r3, SIO_FIFO_ST_RDY
-+    tst r2, r3
-+    beq 10b
-+    ldr r1, =(SIO_BASE + SIO_FIFO_WR)
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+sram_fifo_pop:
-+    ldr r1, =(SIO_BASE + SIO_FIFO_ST)
-+
-+11:
-+    ldr r2, [r1]
-+    movs r3, SIO_FIFO_ST_VLD
-+    tst r2, r3
-+    beq 11b
-+    ldr r1, =(SIO_BASE + SIO_FIFO_RD)
-+    ldr r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+sram_fifo_drain:
-+    push {r0, r1, r2, r3, lr}
-+    ldr r1, =(SIO_BASE + SIO_FIFO_ST)
-+
-+12:
-+    ldr r2, [r1]
-+    movs r3, SIO_FIFO_ST_VLD
-+    tst r2, r3
-+    beq 13f
-+    ldr r0, =(SIO_BASE + SIO_FIFO_RD)
-+    ldr r0, [r0]
-+    b 12b
-+
-+13:
-+    pop {r0, r1, r2, r3, pc}
-+
-+.thumb_func
-+sram_start_flash_program:
-+    push {lr}
-+    ldr r4, =SSI_BASE
-+    movs r0, 0
-+    str r0, [r4, SSI_SSIENR]
-+    ldr r0, =SSI_CTRLR0_SPI_TXRX
-+    str r0, [r4, SSI_CTRLR0]
-+    movs r0, 1
-+    str r0, [r4, SSI_SSIENR]
-+
-+    str r0, [r4, SSI_SER]
-+    movs r0, 0x06
-+    bl sram_ssi_txrx
-+    movs r0, 0
-+    str r0, [r4, SSI_SER]
-+
-+    movs r0, 1
-+    str r0, [r4, SSI_SER]
-+    movs r0, 0x02
-+    bl sram_ssi_txrx
-+    movs r0, 0x00
-+    bl sram_ssi_txrx
-+    movs r0, 0x30
-+    bl sram_ssi_txrx
-+    movs r0, 0x00
-+    bl sram_ssi_txrx
-+    movs r0, 0xa5
-+    bl sram_ssi_txrx
-+    movs r0, 0
-+    str r0, [r4, SSI_SER]
-+    pop {pc}
-+
-+.thumb_func
-+sram_ssi_txrx:
-+    ldr r2, =(SSI_BASE + SSI_DR0)
-+    str r0, [r2]
-+    ldr r3, =(SSI_BASE + SSI_RXFLR)
-+
-+14:
-+    ldr r0, [r3]
-+    cmp r0, 0
-+    beq 14b
-+    ldr r0, [r2]
-+    bx lr
-+
-+.align 2
-+.thumb_func
-+sram_hardfault:
-+    ldr r0, =SIO_BASE
-+    ldr r0, [r0, SIO_CPUID]
-+    cmp r0, 1
-+    bne sram_fail_core
-+    adr r0, sram_ok_message
-+    bl sram_puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+15:
-+    b 15b
-+
-+sram_fail_launch:
-+    adr r0, sram_fail_launch_message
-+    b sram_test_failed
-+
-+sram_fail_ready:
-+    adr r0, sram_fail_ready_message
-+    b sram_test_failed
-+
-+sram_fail_core:
-+    adr r0, sram_fail_core_message
-+
-+sram_test_failed:
-+    bl sram_puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+16:
-+    b 16b
-+
-+.thumb_func
-+sram_puts:
-+    ldr r2, =UART0_DR
-+
-+17:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 18f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 17b
-+
-+18:
-+    bx lr
-+
-+.align 2
-+sram_launch_sequence:
-+    .word 0
-+    .word 0
-+    .word 1
-+    .word SRAM_BASE
-+    .word CORE1_STACK
-+    .word xip_core1_loop + 1
-+
-+.align 2
-+sram_ready_message:
-+    .asciz "PICO TCG CORE1 XIP READY\n"
-+.align 2
-+sram_ok_message:
-+    .asciz "PICO TCG CORE1 XIP HARDFAULT OK\n"
-+.align 2
-+sram_fail_launch_message:
-+    .asciz "PICO TCG CORE1 XIP FAIL: LAUNCH\n"
-+.align 2
-+sram_fail_ready_message:
-+    .asciz "PICO TCG CORE1 XIP FAIL: READY\n"
-+.align 2
-+sram_fail_core_message:
-+    .asciz "PICO TCG CORE1 XIP FAIL: CPUID\n"
-+
-+.ltorg
-+.align 2
-+sram_end:
-+
-+.section .rodata, "a", %progbits
-+start_message:
-+    .asciz "PICO TCG CORE1 XIP START\n"
-diff --git a/tests/tcg/arm/system/rp2040-core1-xip-fault.ref b/tests/tcg/arm/system/rp2040-core1-xip-fault.ref
-new file mode 100644
-index 0000000000..4488763747
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-core1-xip-fault.ref
-@@ -0,0 +1,3 @@
-+PICO TCG CORE1 XIP START
-+PICO TCG CORE1 XIP READY
-+PICO TCG CORE1 XIP HARDFAULT OK
-diff --git a/tests/tcg/arm/system/rp2040-flash-busy-hardfault.S b/tests/tcg/arm/system/rp2040-flash-busy-hardfault.S
-new file mode 100644
-index 0000000000..81bcafe260
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-busy-hardfault.S
-@@ -0,0 +1,179 @@
-+/*
-+ * Raspberry Pi Pico XIP access while flash is busy test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_BASE               0x20000000
-+#define SRAM_VTOR               0x20001000
-+#define SRAM_END                0x20042000
-+#define VTOR                    0xe000ed08
-+#define UART0_DR                0x40034000
-+#define SSI_SER                 0x18000010
-+#define SSI_RXFLR               0x18000024
-+#define SSI_DR0                 0x18000060
-+#define XIP_TARGET              0x10001400
-+#define SYS_EXIT                0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =SRAM_BASE
-+    ldr r1, =ram_code_start
-+    ldr r2, =ram_code_end
-+
-+copy_loop:
-+    cmp r1, r2
-+    bhs copy_done
-+    ldr r3, [r1]
-+    str r3, [r0]
-+    adds r0, 4
-+    adds r1, 4
-+    b copy_loop
-+
-+copy_done:
-+    ldr r0, =SRAM_BASE + 1
-+    bx r0
-+
-+.thumb_func
-+default_handler:
-+    b default_handler
-+
-+.align 2
-+ram_code_start:
-+.thumb_func
-+ram_main:
-+    ldr r0, =SRAM_VTOR
-+    ldr r1, =SRAM_END
-+    str r1, [r0]
-+    ldr r1, =SRAM_BASE + 1
-+    str r1, [r0, 4]
-+    movs r1, 0
-+    str r1, [r0, 8]
-+    adr r1, hardfault_handler
-+    adds r1, 1
-+    str r1, [r0, 12]
-+    ldr r1, =VTOR
-+    str r0, [r1]
-+
-+    adr r0, start_message
-+    bl puts
-+    bl write_enable
-+    bl select_flash
-+    movs r0, 0x02
-+    bl ssi_byte
-+    movs r0, 0x00
-+    bl ssi_byte
-+    movs r0, 0x14
-+    bl ssi_byte
-+    movs r0, 0x00
-+    bl ssi_byte
-+    movs r0, 'X'
-+    bl ssi_byte
-+    bl deselect_flash
-+
-+    ldr r1, =XIP_TARGET
-+faulting_access:
-+    ldrb r0, [r1]
-+    adr r0, fail_message
-+    b test_failed
-+
-+.thumb_func
-+write_enable:
-+    push {lr}
-+    bl select_flash
-+    movs r0, 0x06
-+    bl ssi_byte
-+    bl deselect_flash
-+    pop {pc}
-+
-+.thumb_func
-+select_flash:
-+    ldr r1, =SSI_SER
-+    movs r0, 1
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+deselect_flash:
-+    ldr r1, =SSI_SER
-+    movs r0, 0
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+ssi_byte:
-+    ldr r2, =SSI_DR0
-+    str r0, [r2]
-+    ldr r3, =SSI_RXFLR
-+
-+1:
-+    ldr r0, [r3]
-+    cmp r0, 0
-+    beq 1b
-+    ldr r0, [r2]
-+    bx lr
-+
-+.align 2
-+.thumb_func
-+hardfault_handler:
-+    adr r0, ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+2:
-+    b 2b
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+3:
-+    b 3b
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+4:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 5f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 4b
-+
-+5:
-+    bx lr
-+
-+.align 2
-+start_message:
-+    .asciz "PICO TCG FLASH XIP BUSY START\n"
-+.align 2
-+ok_message:
-+    .asciz "PICO TCG FLASH XIP BUSY HARDFAULT OK\n"
-+.align 2
-+fail_message:
-+    .asciz "PICO TCG FLASH XIP BUSY FAIL: NO HARDFAULT\n"
-+.align 2
-+.ltorg
-+ram_code_end:
-diff --git a/tests/tcg/arm/system/rp2040-flash-busy-hardfault.ref b/tests/tcg/arm/system/rp2040-flash-busy-hardfault.ref
-new file mode 100644
-index 0000000000..ee43e3ae15
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-busy-hardfault.ref
-@@ -0,0 +1,2 @@
-+PICO TCG FLASH XIP BUSY START
-+PICO TCG FLASH XIP BUSY HARDFAULT OK
-diff --git a/tests/tcg/arm/system/rp2040-flash-busy-lockout.S b/tests/tcg/arm/system/rp2040-flash-busy-lockout.S
-new file mode 100644
-index 0000000000..a0397d7a1d
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-busy-lockout.S
-@@ -0,0 +1,434 @@
-+/*
-+ * Raspberry Pi Pico multicore flash-busy lockout test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END               0x20042000
-+#define CORE0_SRAM_VTOR        0x20000000
-+#define CORE0_SRAM_CODE        0x20000100
-+#define PAGE_BUFFER            0x20000400
-+#define CORE1_SRAM_VTOR        0x20001000
-+#define CORE1_STACK            0x20041000
-+#define UART0_DR               0x40034000
-+#define SIO_BASE               0xd0000000
-+#define SIO_FIFO_ST            0x50
-+#define SIO_FIFO_WR            0x54
-+#define SIO_FIFO_RD            0x58
-+#define SIO_SPINLOCK0          0x100
-+#define SIO_FIFO_ST_VLD        0x01
-+#define SIO_FIFO_ST_RDY        0x02
-+#define NVIC_ISER              0xe000e100
-+#define SCB_VTOR               0xe000ed08
-+#define SIO_IRQ_PROC1_MASK     0x00010000
-+#define SSI_BASE               0x18000000
-+#define SSI_SSIENR             0x08
-+#define SSI_SER                0x10
-+#define SSI_DR0                0x60
-+#define FLASH_ADDRESS          0x10101000
-+#define LOCK_REQUEST           0xfacefeed
-+#define LOCK_ACK               0xface0001
-+#define BAD_ACK                0xbad10003
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl puts
-+    bl copy_core1_sram
-+    bl launch_core1
-+
-+    ldr r0, =launch_message
-+    bl puts
-+    bl claim_spinlock
-+    ldr r0, =LOCK_REQUEST
-+    bl fifo_push
-+    sev
-+    ldr r0, =LOCK_ACK
-+    bl fifo_pop_expect
-+
-+    ldr r0, =locked_message
-+    bl puts
-+    bl copy_and_run_core0_sram
-+    ldr r0, =fail_return_message
-+    b test_failed
-+
-+.thumb_func
-+launch_core1:
-+    push {r4, r5, lr}
-+    ldr r4, =launch_sequence
-+    movs r5, 6
-+
-+1:
-+    ldr r0, [r4]
-+    cmp r0, 0
-+    bne 2f
-+    bl fifo_drain
-+    sev
-+    ldr r0, [r4]
-+
-+2:
-+    bl fifo_push
-+    sev
-+    bl fifo_pop
-+    ldr r1, [r4]
-+    cmp r0, r1
-+    bne fail_launch
-+    adds r4, 4
-+    subs r5, 1
-+    bne 1b
-+    pop {r4, r5, pc}
-+
-+.thumb_func
-+copy_core1_sram:
-+    ldr r0, =core1_sram_start
-+    ldr r1, =CORE1_SRAM_VTOR
-+    ldr r2, =core1_sram_end
-+
-+3:
-+    cmp r0, r2
-+    bhs 4f
-+    ldr r3, [r0]
-+    str r3, [r1]
-+    adds r0, 4
-+    adds r1, 4
-+    b 3b
-+
-+4:
-+    bx lr
-+
-+.thumb_func
-+claim_spinlock:
-+    ldr r0, =(SIO_BASE + SIO_SPINLOCK0)
-+    ldr r1, [r0]
-+    cmp r1, 0
-+    beq fail_spinlock
-+    bx lr
-+
-+.thumb_func
-+copy_and_run_core0_sram:
-+    ldr r0, =core0_sram_start
-+    ldr r1, =CORE0_SRAM_CODE
-+    ldr r2, =core0_sram_end
-+
-+5:
-+    cmp r0, r2
-+    bhs 6f
-+    ldr r3, [r0]
-+    str r3, [r1]
-+    adds r0, 4
-+    adds r1, 4
-+    b 5b
-+
-+6:
-+    ldr r0, =CORE0_SRAM_CODE
-+    adds r0, 1
-+    bx r0
-+
-+.thumb_func
-+fifo_push:
-+    push {r1, r2, r3, lr}
-+    ldr r1, =SIO_BASE
-+
-+7:
-+    ldr r2, [r1, SIO_FIFO_ST]
-+    movs r3, SIO_FIFO_ST_RDY
-+    tst r2, r3
-+    beq 7b
-+    str r0, [r1, SIO_FIFO_WR]
-+    pop {r1, r2, r3, pc}
-+
-+.thumb_func
-+fifo_pop:
-+    push {r1, r2, r3, lr}
-+    ldr r1, =SIO_BASE
-+
-+8:
-+    ldr r2, [r1, SIO_FIFO_ST]
-+    movs r3, SIO_FIFO_ST_VLD
-+    tst r2, r3
-+    beq 8b
-+    ldr r0, [r1, SIO_FIFO_RD]
-+    pop {r1, r2, r3, pc}
-+
-+.thumb_func
-+fifo_drain:
-+    push {r0, r1, r2, r3, lr}
-+    ldr r1, =SIO_BASE
-+
-+9:
-+    ldr r2, [r1, SIO_FIFO_ST]
-+    movs r3, SIO_FIFO_ST_VLD
-+    tst r2, r3
-+    beq 10f
-+    ldr r0, [r1, SIO_FIFO_RD]
-+    b 9b
-+
-+10:
-+    pop {r0, r1, r2, r3, pc}
-+
-+.thumb_func
-+fifo_pop_expect:
-+    push {r4, lr}
-+    mov r4, r0
-+    bl fifo_pop
-+    cmp r0, r4
-+    bne fail_fifo
-+    pop {r4, pc}
-+
-+fail_launch:
-+    ldr r0, =fail_launch_message
-+    b test_failed
-+
-+fail_spinlock:
-+    ldr r0, =fail_spinlock_message
-+    b test_failed
-+
-+fail_fifo:
-+    ldr r0, =fail_fifo_message
-+    b test_failed
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+11:
-+    b 11b
-+
-+.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+    b test_failed
-+
-+.thumb_func
-+puts:
-+    push {r1, r2, lr}
-+    ldr r1, =UART0_DR
-+
-+12:
-+    ldrb r2, [r0]
-+    cmp r2, 0
-+    beq 13f
-+    str r2, [r1]
-+    adds r0, 1
-+    b 12b
-+
-+13:
-+    pop {r1, r2, pc}
-+
-+.align 2
-+core0_sram_start:
-+    ldr r0, =CORE0_SRAM_VTOR
-+    ldr r1, =SRAM_END
-+    str r1, [r0]
-+    movs r1, 0
-+    str r1, [r0, 4]
-+    ldr r1, =core0_sram_hardfault
-+    ldr r2, =core0_sram_start
-+    subs r1, r2
-+    ldr r2, =CORE0_SRAM_CODE
-+    adds r1, r1, r2
-+    str r1, [r0, 12]
-+    ldr r0, =SCB_VTOR
-+    ldr r1, =CORE0_SRAM_VTOR
-+    str r1, [r0]
-+
-+    ldr r0, =PAGE_BUFFER
-+    movs r1, 0x5a
-+    str r1, [r0]
-+
-+    ldr r4, =SSI_BASE
-+    movs r0, 1
-+    str r0, [r4, SSI_SSIENR]
-+    str r0, [r4, SSI_SER]
-+    movs r0, 0x06
-+    str r0, [r4, SSI_DR0]
-+    movs r0, 0
-+    str r0, [r4, SSI_SER]
-+
-+    movs r0, 1
-+    str r0, [r4, SSI_SER]
-+    movs r0, 0x02
-+    str r0, [r4, SSI_DR0]
-+    movs r0, 0x10
-+    str r0, [r4, SSI_DR0]
-+    str r0, [r4, SSI_DR0]
-+    movs r0, 0
-+    str r0, [r4, SSI_DR0]
-+    movs r0, 0x5a
-+    str r0, [r4, SSI_DR0]
-+    movs r0, 0
-+    str r0, [r4, SSI_SER]
-+
-+    ldr r0, =FLASH_ADDRESS
-+    ldrb r0, [r0]
-+    ldr r0, =core0_sram_no_fault_message
-+    ldr r1, =core0_sram_start
-+    subs r0, r1
-+    ldr r1, =CORE0_SRAM_CODE
-+    adds r0, r1
-+    bl core0_sram_puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+14:
-+    b 14b
-+
-+.thumb_func
-+core0_sram_hardfault:
-+    ldr r0, =core0_sram_ok_message
-+    ldr r1, =core0_sram_start
-+    subs r0, r1
-+    ldr r1, =CORE0_SRAM_CODE
-+    adds r0, r1
-+    bl core0_sram_puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+15:
-+    b 15b
-+
-+.thumb_func
-+core0_sram_puts:
-+    ldr r1, =UART0_DR
-+
-+16:
-+    ldrb r2, [r0]
-+    cmp r2, 0
-+    beq 17f
-+    str r2, [r1]
-+    adds r0, 1
-+    b 16b
-+
-+17:
-+    bx lr
-+
-+.align 2
-+core0_sram_ok_message:
-+    .asciz "PICO TCG FLASH BUSY LOCKOUT OK\n"
-+core0_sram_no_fault_message:
-+    .asciz "PICO TCG FLASH BUSY LOCKOUT FAIL: NO FAULT\n"
-+
-+.ltorg
-+.align 2
-+core0_sram_end:
-+
-+core1_sram_start:
-+    .word CORE1_STACK
-+    .word CORE1_SRAM_VTOR + (core1_sram_entry - core1_sram_start) + 1
-+    .word 0
-+    .word 0
-+    .space 0x80 - 16
-+    .word CORE1_SRAM_VTOR + (core1_sram_fifo_irq - core1_sram_start) + 1
-+    .space 0x100 - 0x84
-+
-+.thumb_func
-+core1_sram_entry:
-+    ldr r0, =SCB_VTOR
-+    ldr r1, =CORE1_SRAM_VTOR
-+    str r1, [r0]
-+    ldr r0, =NVIC_ISER
-+    ldr r1, =SIO_IRQ_PROC1_MASK
-+    str r1, [r0]
-+    cpsie i
-+
-+18:
-+    wfe
-+    b 18b
-+
-+.thumb_func
-+core1_sram_fifo_irq:
-+    push {r0, r1, r2, r3, lr}
-+    bl core1_sram_fifo_pop
-+    ldr r1, =LOCK_REQUEST
-+    cmp r0, r1
-+    bne core1_sram_bad_request
-+    ldr r0, =LOCK_ACK
-+    bl core1_sram_fifo_push
-+
-+19:
-+    wfe
-+    b 19b
-+
-+core1_sram_bad_request:
-+    ldr r0, =BAD_ACK
-+    bl core1_sram_fifo_push
-+
-+20:
-+    b 20b
-+
-+.thumb_func
-+core1_sram_fifo_push:
-+    ldr r1, =SIO_BASE
-+
-+21:
-+    ldr r2, [r1, SIO_FIFO_ST]
-+    movs r3, SIO_FIFO_ST_RDY
-+    tst r2, r3
-+    beq 21b
-+    str r0, [r1, SIO_FIFO_WR]
-+    bx lr
-+
-+.thumb_func
-+core1_sram_fifo_pop:
-+    ldr r1, =SIO_BASE
-+
-+22:
-+    ldr r2, [r1, SIO_FIFO_ST]
-+    movs r3, SIO_FIFO_ST_VLD
-+    tst r2, r3
-+    beq 22b
-+    ldr r0, [r1, SIO_FIFO_RD]
-+    bx lr
-+
-+.ltorg
-+.align 2
-+core1_sram_end:
-+
-+.section .rodata, "a", %progbits
-+.align 2
-+launch_sequence:
-+    .word 0
-+    .word 0
-+    .word 1
-+    .word CORE1_SRAM_VTOR
-+    .word CORE1_STACK
-+    .word CORE1_SRAM_VTOR + (core1_sram_entry - core1_sram_start) + 1
-+
-+start_message:
-+    .asciz "PICO TCG FLASH BUSY START\n"
-+launch_message:
-+    .asciz "PICO TCG FLASH BUSY CORE1 SRAM OK\n"
-+locked_message:
-+    .asciz "PICO TCG FLASH BUSY LOCKED\n"
-+fail_launch_message:
-+    .asciz "PICO TCG FLASH BUSY FAIL: LAUNCH\n"
-+fail_spinlock_message:
-+    .asciz "PICO TCG FLASH BUSY FAIL: SPINLOCK\n"
-+fail_fifo_message:
-+    .asciz "PICO TCG FLASH BUSY FAIL: FIFO\n"
-+fail_return_message:
-+    .asciz "PICO TCG FLASH BUSY FAIL: RETURN\n"
-+fail_exception_message:
-+    .asciz "PICO TCG FLASH BUSY FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-flash-busy-lockout.ref b/tests/tcg/arm/system/rp2040-flash-busy-lockout.ref
-new file mode 100644
-index 0000000000..53b85daabd
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-busy-lockout.ref
-@@ -0,0 +1,4 @@
-+PICO TCG FLASH BUSY START
-+PICO TCG FLASH BUSY CORE1 SRAM OK
-+PICO TCG FLASH BUSY LOCKED
-+PICO TCG FLASH BUSY LOCKOUT OK
-diff --git a/tests/tcg/arm/system/rp2040-flash-commands.S b/tests/tcg/arm/system/rp2040-flash-commands.S
-new file mode 100644
-index 0000000000..1245c88c4e
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-commands.S
-@@ -0,0 +1,375 @@
-+/*
-+ * Raspberry Pi Pico flash command and NOR semantics test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_BASE               0x20000000
-+#define SRAM_END                0x20042000
-+#define UART0_DR                0x40034000
-+#define SSI_SER                 0x18000010
-+#define SSI_RXFLR               0x18000024
-+#define SSI_DR0                 0x18000060
-+#define XIP_TARGET              0x10001000
-+#define FLASH_TARGET_OFFSET     0x00001000
-+#define FLASH_STATUS_WIP        0x01
-+#define FLASH_STATUS_WEL        0x02
-+#define SYS_EXIT                0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =SRAM_BASE
-+    ldr r1, =ram_code_start
-+    ldr r2, =ram_code_end
-+
-+copy_loop:
-+    cmp r1, r2
-+    bhs copy_done
-+    ldr r3, [r1]
-+    str r3, [r0]
-+    adds r0, 4
-+    adds r1, 4
-+    b copy_loop
-+
-+copy_done:
-+    ldr r0, =SRAM_BASE + 1
-+    bx r0
-+
-+.thumb_func
-+default_handler:
-+    b default_handler
-+
-+.align 2
-+ram_code_start:
-+.thumb_func
-+ram_main:
-+    ldr r0, =start_message
-+    bl puts
-+
-+    bl write_enable
-+    bl expect_wel
-+    ldr r0, =FLASH_TARGET_OFFSET
-+    bl erase_sector
-+    bl expect_busy_wel_clear
-+    bl expect_target_erased
-+
-+    bl write_enable
-+    bl expect_wel
-+    ldr r0, =FLASH_TARGET_OFFSET
-+    ldr r1, =flash_message
-+    movs r2, 5
-+    bl program_data
-+    bl expect_busy_wel_clear
-+    bl expect_flash_message
-+    ldr r0, =program_ok_message
-+    bl puts
-+
-+    bl write_enable
-+    ldr r0, =FLASH_TARGET_OFFSET
-+    bl erase_sector
-+    bl expect_busy_wel_clear
-+    bl expect_target_erased
-+    ldr r0, =erase_ok_message
-+    bl puts
-+
-+    bl write_enable
-+    ldr r0, =FLASH_TARGET_OFFSET
-+    ldr r1, =flash_message
-+    movs r2, 5
-+    bl program_data
-+    bl expect_busy_wel_clear
-+    bl expect_flash_message
-+
-+    ldr r0, =FLASH_TARGET_OFFSET + 8
-+    ldr r1, =no_wel_value
-+    movs r2, 1
-+    bl program_data
-+    bl read_status
-+    movs r1, FLASH_STATUS_WIP | FLASH_STATUS_WEL
-+    tst r0, r1
-+    beq 8f
-+    b fail_no_wel
-+8:
-+    ldr r1, =XIP_TARGET + 8
-+    ldrb r0, [r1]
-+    cmp r0, 0xff
-+    beq 9f
-+    b fail_no_wel
-+9:
-+    ldr r0, =no_wel_ok_message
-+    bl puts
-+
-+    bl write_enable
-+    ldr r0, =FLASH_TARGET_OFFSET + 16
-+    ldr r1, =zero_value
-+    movs r2, 1
-+    bl program_data
-+    bl expect_busy_wel_clear
-+    bl write_enable
-+    ldr r0, =FLASH_TARGET_OFFSET + 16
-+    ldr r1, =erased_value
-+    movs r2, 1
-+    bl program_data
-+    bl expect_busy_wel_clear
-+    ldr r1, =XIP_TARGET + 16
-+    ldrb r0, [r1]
-+    cmp r0, 0
-+    beq 10f
-+    b fail_old_and_new
-+10:
-+    ldr r0, =old_and_new_ok_message
-+    bl puts
-+
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+.thumb_func
-+write_enable:
-+    push {lr}
-+    bl select_flash
-+    movs r0, 0x06
-+    bl ssi_byte
-+    bl deselect_flash
-+    pop {pc}
-+
-+.thumb_func
-+read_status:
-+    push {r4, lr}
-+    bl select_flash
-+    movs r0, 0x05
-+    bl ssi_byte
-+    mov r4, r0
-+    bl deselect_flash
-+    mov r0, r4
-+    pop {r4, pc}
-+
-+.thumb_func
-+expect_wel:
-+    push {lr}
-+    bl read_status
-+    movs r1, FLASH_STATUS_WEL
-+    tst r0, r1
-+    beq fail_wel
-+    pop {pc}
-+
-+.thumb_func
-+expect_busy_wel_clear:
-+    push {lr}
-+    bl read_status
-+    movs r1, FLASH_STATUS_WIP
-+    tst r0, r1
-+    beq fail_status
-+    movs r1, FLASH_STATUS_WEL
-+    tst r0, r1
-+    bne fail_status
-+    pop {pc}
-+
-+.thumb_func
-+erase_sector:
-+    push {r4, lr}
-+    mov r4, r0
-+    bl select_flash
-+    movs r0, 0x20
-+    bl ssi_byte
-+    lsrs r0, r4, 16
-+    bl ssi_byte
-+    lsrs r0, r4, 8
-+    bl ssi_byte
-+    mov r0, r4
-+    bl ssi_byte
-+    bl deselect_flash
-+    pop {r4, pc}
-+
-+.thumb_func
-+program_data:
-+    push {r4, r5, r6, lr}
-+    mov r4, r0
-+    mov r5, r1
-+    mov r6, r2
-+    bl select_flash
-+    movs r0, 0x02
-+    bl ssi_byte
-+    lsrs r0, r4, 16
-+    bl ssi_byte
-+    lsrs r0, r4, 8
-+    bl ssi_byte
-+    mov r0, r4
-+    bl ssi_byte
-+
-+program_loop:
-+    cmp r6, 0
-+    beq program_done
-+    ldrb r0, [r5]
-+    bl ssi_byte
-+    adds r5, 1
-+    subs r6, 1
-+    b program_loop
-+
-+program_done:
-+    bl deselect_flash
-+    pop {r4, r5, r6, pc}
-+
-+.thumb_func
-+select_flash:
-+    ldr r1, =SSI_SER
-+    movs r0, 1
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+deselect_flash:
-+    ldr r1, =SSI_SER
-+    movs r0, 0
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+ssi_byte:
-+    ldr r2, =SSI_DR0
-+    str r0, [r2]
-+    ldr r3, =SSI_RXFLR
-+
-+2:
-+    ldr r0, [r3]
-+    cmp r0, 0
-+    beq 2b
-+    ldr r0, [r2]
-+    bx lr
-+
-+.thumb_func
-+expect_target_erased:
-+    ldr r1, =XIP_TARGET
-+    movs r2, 20
-+
-+3:
-+    ldrb r0, [r1]
-+    cmp r0, 0xff
-+    bne fail_erase
-+    adds r1, 1
-+    subs r2, 1
-+    bne 3b
-+    bx lr
-+
-+.thumb_func
-+expect_flash_message:
-+    ldr r0, =XIP_TARGET
-+    ldr r1, =flash_message
-+    movs r2, 5
-+
-+4:
-+    ldrb r3, [r0]
-+    ldrb r4, [r1]
-+    cmp r3, r4
-+    bne fail_program
-+    adds r0, 1
-+    adds r1, 1
-+    subs r2, 1
-+    bne 4b
-+    bx lr
-+
-+fail_wel:
-+    ldr r0, =fail_wel_message
-+    b test_failed
-+
-+fail_status:
-+    ldr r0, =fail_status_message
-+    b test_failed
-+
-+fail_program:
-+    ldr r0, =fail_program_message
-+    b test_failed
-+
-+fail_erase:
-+    ldr r0, =fail_erase_message
-+    b test_failed
-+
-+fail_no_wel:
-+    ldr r0, =fail_no_wel_message
-+    b test_failed
-+
-+fail_old_and_new:
-+    ldr r0, =fail_old_and_new_message
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+5:
-+    b 5b
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+6:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 7f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 6b
-+
-+7:
-+    bx lr
-+
-+.align 2
-+flash_message:
-+    .ascii "FLASH"
-+no_wel_value:
-+    .byte 0xa5
-+zero_value:
-+    .byte 0x00
-+erased_value:
-+    .byte 0xff
-+start_message:
-+    .asciz "PICO TCG FLASH COMMANDS START\n"
-+program_ok_message:
-+    .asciz "PICO TCG FLASH PROGRAM OK\n"
-+erase_ok_message:
-+    .asciz "PICO TCG FLASH ERASE OK\n"
-+no_wel_ok_message:
-+    .asciz "PICO TCG FLASH NO WEL OK\n"
-+old_and_new_ok_message:
-+    .asciz "PICO TCG FLASH OLD AND NEW OK\n"
-+ok_message:
-+    .asciz "PICO TCG FLASH COMMANDS OK\n"
-+fail_wel_message:
-+    .asciz "PICO TCG FLASH COMMANDS FAIL: WEL\n"
-+fail_status_message:
-+    .asciz "PICO TCG FLASH COMMANDS FAIL: STATUS\n"
-+fail_program_message:
-+    .asciz "PICO TCG FLASH COMMANDS FAIL: PROGRAM\n"
-+fail_erase_message:
-+    .asciz "PICO TCG FLASH COMMANDS FAIL: ERASE\n"
-+fail_no_wel_message:
-+    .asciz "PICO TCG FLASH COMMANDS FAIL: NO WEL\n"
-+fail_old_and_new_message:
-+    .asciz "PICO TCG FLASH COMMANDS FAIL: OLD AND NEW\n"
-+.align 2
-+.ltorg
-+ram_code_end:
-diff --git a/tests/tcg/arm/system/rp2040-flash-commands.ref b/tests/tcg/arm/system/rp2040-flash-commands.ref
-new file mode 100644
-index 0000000000..ac90dcb404
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-commands.ref
-@@ -0,0 +1,6 @@
-+PICO TCG FLASH COMMANDS START
-+PICO TCG FLASH PROGRAM OK
-+PICO TCG FLASH ERASE OK
-+PICO TCG FLASH NO WEL OK
-+PICO TCG FLASH OLD AND NEW OK
-+PICO TCG FLASH COMMANDS OK
-diff --git a/tests/tcg/arm/system/rp2040-flash-ioqspi.S b/tests/tcg/arm/system/rp2040-flash-ioqspi.S
-new file mode 100644
-index 0000000000..081c643529
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-ioqspi.S
-@@ -0,0 +1,212 @@
-+/*
-+ * Raspberry Pi Pico IO_QSPI chip-select flash command test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_BASE               0x20000000
-+#define SRAM_END                0x20042000
-+#define UART0_DR                0x40034000
-+#define SSI_CTRLR0              0x18000000
-+#define SSI_SSIENR              0x18000008
-+#define SSI_RXFLR               0x18000024
-+#define SSI_DR0                 0x18000060
-+#define IO_QSPI_SS_CTRL         0x4001800c
-+#define XIP_TARGET              0x10001200
-+#define FLASH_TARGET_OFFSET     0x00001200
-+#define SYS_EXIT                0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =SRAM_BASE
-+    ldr r1, =ram_code_start
-+    ldr r2, =ram_code_end
-+
-+copy_loop:
-+    cmp r1, r2
-+    bhs copy_done
-+    ldr r3, [r1]
-+    str r3, [r0]
-+    adds r0, 4
-+    adds r1, 4
-+    b copy_loop
-+
-+copy_done:
-+    ldr r0, =SRAM_BASE + 1
-+    bx r0
-+
-+.thumb_func
-+default_handler:
-+    b default_handler
-+
-+.align 2
-+ram_code_start:
-+.thumb_func
-+ram_main:
-+    ldr r0, =start_message
-+    bl puts
-+    ldr r1, =SSI_SSIENR
-+    movs r0, 0
-+    str r0, [r1]
-+    ldr r1, =SSI_CTRLR0
-+    ldr r0, =0x00070000
-+    str r0, [r1]
-+    ldr r1, =SSI_SSIENR
-+    movs r0, 1
-+    str r0, [r1]
-+
-+    bl write_enable
-+    bl cs_low
-+    movs r0, 0x20
-+    bl ssi_byte
-+    movs r0, 0x00
-+    bl ssi_byte
-+    movs r0, 0x12
-+    bl ssi_byte
-+    movs r0, 0x00
-+    bl ssi_byte
-+    bl cs_high
-+    bl read_status
-+
-+    bl write_enable
-+    bl cs_low
-+    movs r0, 0x02
-+    bl ssi_byte
-+    movs r0, 0x00
-+    bl ssi_byte
-+    movs r0, 0x12
-+    bl ssi_byte
-+    movs r0, 0x00
-+    bl ssi_byte
-+    movs r0, 'Q'
-+    bl ssi_byte
-+    movs r0, 'S'
-+    bl ssi_byte
-+    movs r0, 'P'
-+    bl ssi_byte
-+    movs r0, 'I'
-+    bl ssi_byte
-+    bl cs_high
-+    bl read_status
-+
-+    ldr r1, =XIP_TARGET
-+    ldrb r0, [r1]
-+    cmp r0, 'Q'
-+    bne test_failed
-+    ldrb r0, [r1, 1]
-+    cmp r0, 'S'
-+    bne test_failed
-+    ldrb r0, [r1, 2]
-+    cmp r0, 'P'
-+    bne test_failed
-+    ldrb r0, [r1, 3]
-+    cmp r0, 'I'
-+    bne test_failed
-+
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+.thumb_func
-+write_enable:
-+    push {lr}
-+    bl cs_low
-+    movs r0, 0x06
-+    bl ssi_byte
-+    bl cs_high
-+    pop {pc}
-+
-+.thumb_func
-+read_status:
-+    push {lr}
-+    bl cs_low
-+    movs r0, 0x05
-+    bl ssi_byte
-+    bl cs_high
-+    pop {pc}
-+
-+.thumb_func
-+ssi_byte:
-+    ldr r2, =SSI_DR0
-+    str r0, [r2]
-+    ldr r3, =SSI_RXFLR
-+
-+2:
-+    ldr r0, [r3]
-+    cmp r0, 0
-+    beq 2b
-+    ldr r0, [r2]
-+    bx lr
-+
-+.thumb_func
-+cs_low:
-+    ldr r1, =IO_QSPI_SS_CTRL
-+    movs r0, 2
-+    lsls r0, r0, 8
-+    str r0, [r1]
-+    bx lr
-+
-+.thumb_func
-+cs_high:
-+    ldr r1, =IO_QSPI_SS_CTRL
-+    movs r0, 3
-+    lsls r0, r0, 8
-+    str r0, [r1]
-+    bx lr
-+
-+test_failed:
-+    ldr r0, =fail_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+3:
-+    b 3b
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+4:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 5f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 4b
-+
-+5:
-+    bx lr
-+
-+.align 2
-+start_message:
-+    .asciz "PICO TCG IO_QSPI FLASH START\n"
-+ok_message:
-+    .asciz "PICO TCG IO_QSPI FLASH OK\n"
-+fail_message:
-+    .asciz "PICO TCG IO_QSPI FLASH FAIL\n"
-+.align 2
-+.ltorg
-+ram_code_end:
-diff --git a/tests/tcg/arm/system/rp2040-flash-ioqspi.ref b/tests/tcg/arm/system/rp2040-flash-ioqspi.ref
-new file mode 100644
-index 0000000000..8261199083
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-ioqspi.ref
-@@ -0,0 +1,2 @@
-+PICO TCG IO_QSPI FLASH START
-+PICO TCG IO_QSPI FLASH OK
-diff --git a/tests/tcg/arm/system/rp2040-flash-persist-reader.S b/tests/tcg/arm/system/rp2040-flash-persist-reader.S
-new file mode 100644
-index 0000000000..1232664370
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-persist-reader.S
-@@ -0,0 +1,87 @@
-+/*
-+ * Raspberry Pi Pico persistent flash reader test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END                0x20042000
-+#define UART0_DR                0x40034000
-+#define XIP_TARGET              0x10001000
-+#define SYS_EXIT                0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =XIP_TARGET
-+    ldr r1, =expected_message
-+    movs r2, 5
-+
-+check_loop:
-+    ldrb r3, [r0]
-+    ldrb r4, [r1]
-+    cmp r3, r4
-+    bne test_failed
-+    adds r0, 1
-+    adds r1, 1
-+    subs r2, 1
-+    bne check_loop
-+
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+test_failed:
-+    ldr r0, =fail_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+2:
-+    b 2b
-+
-+.thumb_func
-+default_handler:
-+    b default_handler
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+3:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 4f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 3b
-+
-+4:
-+    bx lr
-+
-+expected_message:
-+    .ascii "FLASH"
-+ok_message:
-+    .asciz "PICO TCG FLASH PERSIST OK\n"
-+fail_message:
-+    .asciz "PICO TCG FLASH PERSIST FAIL\n"
-diff --git a/tests/tcg/arm/system/rp2040-flash-persist-reader.ref b/tests/tcg/arm/system/rp2040-flash-persist-reader.ref
-new file mode 100644
-index 0000000000..0ac066b0cf
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-flash-persist-reader.ref
-@@ -0,0 +1 @@
-+PICO TCG FLASH PERSIST OK
++++ b/scripts/uf2-to-flash.py
+@@ -0,0 +1,462 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++"""
++uf2-to-flash.py
++
++Convert a Raspberry Pi Pico UF2 file into a raw flash image.
++
++This tool implements the simple and practical conversion model used for
++QEMU-style emulation:
++
++    UF2 target address 0x10000000 + offset  ->  flash image offset
++
++The output file is not a FAT image. It is a raw representation of the
++external QSPI flash contents after UF2 programming.
++
++Supported input model:
++    - RP2040 / Pico 1 UF2 files, family ID 0xE48BFF56.
++    - RP2350 / Pico 2 UF2 files are detected and converted linearly,
++      but RP2350 partition remapping is not implemented.
++
++Usage:
++    scripts/uf2-to-flash.py firmware.uf2 flash.img
++    scripts/uf2-to-flash.py flash.img firmware.uf2
++
++If the two arguments are provided in reverse order, the .uf2 extension is
++used to detect the input file.
++"""
++
++import os
++import sys
++import struct
++
++
++UF2_MAGIC_START0 = 0x0A324655
++UF2_MAGIC_START1 = 0x9E5D5157
++UF2_MAGIC_END = 0x0AB16F30
++
++UF2_BLOCK_SIZE = 512
++UF2_HEADER_SIZE = 32
++
++FLAG_NOT_MAIN_FLASH = 0x00000001
++FLAG_FAMILY_ID_PRESENT = 0x00002000
++
++RP2040_FAMILY_ID = 0xE48BFF56
++
++# Usual RP2350 / Pico 2 family IDs.
++# They are detected for diagnostics. This script does not implement
++# RP2350 partition table remapping.
++RP2350_FAMILY_IDS = {
++    0xE48BFF58: "rp2350-arm-secure",
++    0xE48BFF59: "rp2350-arm-nonsecure",
++    0xE48BFF5A: "rp2350-riscv",
++    0xE48BFF5B: "data-or-absolute",
++}
++
++XIP_BASE = 0x10000000
++
++# RP2040 UF2 flash window: 0x10000000 .. 0x11000000
++PICO1_FLASH_WINDOW_SIZE = 16 * 1024 * 1024
++
++# RP2350 UF2 flash window: 0x10000000 .. 0x12000000
++PICO2_FLASH_WINDOW_SIZE = 32 * 1024 * 1024
++
++
++def print_help() -> None:
++    """Print a minimal usage message."""
++
++    program_name = os.path.basename(sys.argv[0])
++
++    print("Usage:")
++    print(f"  {program_name} firmware.uf2 flash.img")
++    print()
++    print("Convert a Raspberry Pi Pico UF2 file into a raw flash image.")
++    print("Exactly one argument must have the .uf2 extension, the other")
++    print("is used as the raw flash output file.")
++    print()
++    print("Examples:")
++    print(f"  {program_name} blink.uf2 flash.img")
++    print(f"  {program_name} flash.raw blink.uf2")
++
++
++def get_extension(path: str) -> str:
++    """Return the lowercase extension of a path."""
++
++    return os.path.splitext(path)[1].lower()
++
++
++def detect_input_output(arguments: list[str]) -> tuple[str, str]:
++    """
++    Detect the UF2 input file and the raw image output file.
++
++    The arguments may be passed in either order, provided exactly one of them
++    has the .uf2 extension.
++    """
++
++    if len(arguments) != 2:
++        print_help()
++        sys.exit(2)
++
++    first_path, second_path = arguments
++    first_ext = get_extension(first_path)
++    second_ext = get_extension(second_path)
++
++    if first_ext == ".uf2" and second_ext != ".uf2":
++        return first_path, second_path
++
++    if second_ext == ".uf2" and first_ext != ".uf2":
++        print("Reversed arguments detected: using the .uf2 file as input.")
++        return second_path, first_path
++
++    print("Error: unable to determine which file is the UF2 input.")
++    print("Exactly one argument must have the .uf2 extension.")
++    print()
++    print_help()
++    sys.exit(2)
++
++
++def read_uf2_blocks(path: str):
++    """
++    Yield all 512-byte blocks from a UF2 file.
++
++    Raises ValueError if the file size is not a multiple of 512 bytes.
++    """
++
++    file_size = os.path.getsize(path)
++
++    if file_size == 0:
++        raise ValueError("empty file")
++
++    if file_size % UF2_BLOCK_SIZE != 0:
++        raise ValueError(
++            f"invalid UF2 file size: {file_size} bytes; "
++            f"expected a multiple of {UF2_BLOCK_SIZE}"
++        )
++
++    with open(path, "rb") as input_file:
++        physical_block_index = 0
++
++        while True:
++            block = input_file.read(UF2_BLOCK_SIZE)
++
++            if not block:
++                break
++
++            physical_block_index += 1
++
++            if len(block) != UF2_BLOCK_SIZE:
++                raise ValueError(
++                    f"incomplete block at physical index {physical_block_index}"
++                )
++
++            yield physical_block_index, block
++
++
++def analyze_uf2(uf2_path: str) -> dict:
++    """
++    Analyze a UF2 file and extract main-flash pages.
++
++    Returns a dictionary containing:
++        - pages: mapping from flash offset to payload bytes
++        - family_ids: detected family IDs
++        - warnings: non-fatal problems
++        - errors: fatal format problems
++        - min_offset / max_end_offset: occupied flash range
++    """
++
++    pages: dict[int, bytes] = {}
++    warnings: list[str] = []
++    errors: list[str] = []
++
++    family_ids: set[int] = set()
++    valid_block_count = 0
++    non_uf2_block_count = 0
++    ignored_not_main_flash_count = 0
++
++    min_offset = None
++    max_end_offset = 0
++
++    announced_num_blocks = None
++    seen_block_numbers: set[int] = set()
++
++    for physical_index, block in read_uf2_blocks(uf2_path):
++        (
++            magic_start0,
++            magic_start1,
++            flags,
++            target_address,
++            payload_size,
++            block_number,
++            num_blocks,
++            family_or_file_size,
++        ) = struct.unpack_from("<IIIIIIII", block, 0)
++
++        (magic_end,) = struct.unpack_from("<I", block, UF2_BLOCK_SIZE - 4)
++
++        if (
++            magic_start0 != UF2_MAGIC_START0
++            or magic_start1 != UF2_MAGIC_START1
++            or magic_end != UF2_MAGIC_END
++        ):
++            non_uf2_block_count += 1
++            errors.append(
++                f"block {physical_index}: invalid UF2 magic values"
++            )
++            continue
++
++        valid_block_count += 1
++
++        if announced_num_blocks is None:
++            announced_num_blocks = num_blocks
++        elif num_blocks != announced_num_blocks:
++            warnings.append(
++                f"block {physical_index}: inconsistent numBlocks "
++                f"({num_blocks}, expected {announced_num_blocks})"
++            )
++
++        if block_number in seen_block_numbers:
++            warnings.append(
++                f"block {physical_index}: duplicated blockNo {block_number}"
++            )
++
++        seen_block_numbers.add(block_number)
++
++        if flags & FLAG_NOT_MAIN_FLASH:
++            ignored_not_main_flash_count += 1
++            continue
++
++        if not (flags & FLAG_FAMILY_ID_PRESENT):
++            errors.append(
++                f"block {physical_index}: missing family ID; Pico boot ROM "
++                f"expects a family ID"
++            )
++            continue
++
++        family_id = family_or_file_size
++        family_ids.add(family_id)
++
++        if payload_size != 256:
++            errors.append(
++                f"block {physical_index}: payloadSize={payload_size}; "
++                f"expected 256 for Pico UF2 files"
++            )
++            continue
++
++        if target_address % 256 != 0:
++            errors.append(
++                f"block {physical_index}: target address is not "
++                f"256-byte aligned: 0x{target_address:08x}"
++            )
++            continue
++
++        pico2_window_end = XIP_BASE + PICO2_FLASH_WINDOW_SIZE
++        if not (XIP_BASE <= target_address < pico2_window_end):
++            errors.append(
++                f"block {physical_index}: target address outside Pico "
++                f"flash window: 0x{target_address:08x}"
++            )
++            continue
++
++        flash_offset = target_address - XIP_BASE
++
++        if flash_offset + payload_size > PICO2_FLASH_WINDOW_SIZE:
++            errors.append(
++                f"block {physical_index}: page exceeds Pico 2 flash window: "
++                f"offset=0x{flash_offset:x}, size={payload_size}"
++            )
++            continue
++
++        if flash_offset in pages:
++            warnings.append(
++                f"block {physical_index}: duplicated flash page at offset "
++                f"0x{flash_offset:x}; last occurrence wins"
++            )
++
++        payload = block[UF2_HEADER_SIZE:UF2_HEADER_SIZE + payload_size]
++        pages[flash_offset] = payload
++
++        if min_offset is None or flash_offset < min_offset:
++            min_offset = flash_offset
++
++        if flash_offset + payload_size > max_end_offset:
++            max_end_offset = flash_offset + payload_size
++
++    if valid_block_count == 0:
++        errors.append("no valid UF2 block found")
++
++    if (announced_num_blocks is not None
++            and len(seen_block_numbers) != announced_num_blocks):
++        warnings.append(
++            f"observed {len(seen_block_numbers)} distinct blockNo values, "
++            f"but numBlocks announces {announced_num_blocks}"
++        )
++
++    return {
++        "pages": pages,
++        "family_ids": family_ids,
++        "warnings": warnings,
++        "errors": errors,
++        "valid_block_count": valid_block_count,
++        "non_uf2_block_count": non_uf2_block_count,
++        "ignored_not_main_flash_count": ignored_not_main_flash_count,
++        "min_offset": min_offset,
++        "max_end_offset": max_end_offset,
++    }
++
++
++def diagnose_family_ids(
++    family_ids: set[int],
++    warnings: list[str],
++    errors: list[str],
++) -> None:
++    """
++    Diagnose UF2 family IDs with respect to Pico 1 and Pico 2.
++
++    RP2040 is accepted as the strict Pico 1 case.
++    RP2350 IDs are accepted with a warning because partition remapping is not
++    implemented.
++    """
++
++    if not family_ids:
++        errors.append("no usable family ID found")
++        return
++
++    if len(family_ids) > 1:
++        family_list = ", ".join(
++            f"0x{value:08x}" for value in sorted(family_ids)
++        )
++        warnings.append(f"multiple family IDs found: {family_list}")
++
++    for family_id in sorted(family_ids):
++        if family_id == RP2040_FAMILY_ID:
++            continue
++
++        if family_id in RP2350_FAMILY_IDS:
++            warnings.append(
++                f"family ID 0x{family_id:08x} detected "
++                f"({RP2350_FAMILY_IDS[family_id]}): this is probably a "
++                f"Pico 2 / RP2350 UF2 file. Linear conversion is performed, "
++                f"but RP2350 partition remapping is not implemented."
++            )
++        else:
++            warnings.append(
++                f"unknown or non-Pico family ID: 0x{family_id:08x}"
++            )
++
++    if RP2040_FAMILY_ID not in family_ids:
++        warnings.append(
++            "no RP2040 / Pico 1 family ID found (0xe48bff56); "
++            "the output may not be a strict Pico 1 flash image."
++        )
++
++
++def build_flash_image(pages: dict[int, bytes], occupied_size: int) -> bytearray:
++    """
++    Build a raw flash image initialized with erased flash bytes, 0xff.
++
++    Only the occupied part is emitted:
++        output size = highest written offset + payload size
++    """
++
++    image = bytearray([0xFF] * occupied_size)
++
++    for flash_offset, payload in pages.items():
++        image[flash_offset:flash_offset + len(payload)] = payload
++
++    return image
++
++
++def human_size(byte_count: int) -> str:
++    """Return a human-readable size string."""
++
++    if byte_count < 1024:
++        return f"{byte_count} B"
++
++    if byte_count < 1024 * 1024:
++        return f"{byte_count / 1024:.1f} KiB"
++
++    return f"{byte_count / (1024 * 1024):.2f} MiB"
++
++
++def main() -> None:
++    """Program entry point."""
++
++    uf2_path, image_path = detect_input_output(sys.argv[1:])
++
++    try:
++        analysis = analyze_uf2(uf2_path)
++    except OSError as error:
++        print(f"UF2 file access error: {error}")
++        sys.exit(1)
++    except ValueError as error:
++        print(f"UF2 format error: {error}")
++        sys.exit(1)
++
++    pages = analysis["pages"]
++    family_ids = analysis["family_ids"]
++    warnings = analysis["warnings"]
++    errors = analysis["errors"]
++
++    diagnose_family_ids(family_ids, warnings, errors)
++
++    if not pages:
++        errors.append("no main-flash page to write")
++
++    if analysis["max_end_offset"] > PICO1_FLASH_WINDOW_SIZE:
++        warnings.append(
++            "image exceeds the Pico 1 flash window "
++            "0x10000000..0x11000000; it is not strict Pico 1 compatible"
++        )
++
++    if errors:
++        print("Conversion refused: UF2 format problems were found.")
++        for error in errors:
++            print(f"ERROR: {error}")
++        for warning in warnings:
++            print(f"WARNING: {warning}")
++        sys.exit(1)
++
++    occupied_size = analysis["max_end_offset"]
++    image = build_flash_image(pages, occupied_size)
++
++    try:
++        with open(image_path, "wb") as output_file:
++            output_file.write(image)
++    except OSError as error:
++        print(f"Output image write error: {error}")
++        sys.exit(1)
++
++    programmed_size = sum(len(payload) for payload in pages.values())
++
++    print(f"UF2 input: {uf2_path}")
++    print(f"Raw output: {image_path}")
++    print(f"Valid UF2 blocks: {analysis['valid_block_count']}")
++    print("Ignored NOT_MAIN_FLASH blocks: "
++          f"{analysis['ignored_not_main_flash_count']}")
++    print(f"Written flash pages: {len(pages)}")
++    print(
++        f"Actually programmed bytes: {programmed_size} "
++        f"({human_size(programmed_size)})"
++    )
++    print(
++        f"Occupied flash size: {occupied_size} "
++        f"({human_size(occupied_size)})"
++    )
++
++    if family_ids:
++        family_id_list = ", ".join(
++            f"0x{value:08x}" for value in sorted(family_ids)
++        )
++        print(f"Family ID(s): {family_id_list}")
++
++    if warnings:
++        print()
++        print("Warnings:")
++        for warning in warnings:
++            print(f"- {warning}")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tests/qtest/rp2040-xip-test.c b/tests/qtest/rp2040-xip-test.c
+index 8e5b719332..351c8ef706 100644
+--- a/tests/qtest/rp2040-xip-test.c
++++ b/tests/qtest/rp2040-xip-test.c
+@@ -31,6 +31,15 @@
+ #define XIP_STAT_FIFO_EMPTY BIT(1)
+ #define XIP_STAT_FLUSH_READY BIT(0)
+ 
++#define UF2_BLOCK_SIZE          512
++#define UF2_PAYLOAD_OFFSET      32
++#define UF2_PAYLOAD_SIZE        256
++#define UF2_MAGIC_START0        0x0a324655
++#define UF2_MAGIC_START1        0x9e5d5157
++#define UF2_MAGIC_END           0x0ab16f30
++#define UF2_FLAG_FAMILY_ID      0x00002000
++#define UF2_RP2040_FAMILY_ID    0xe48bff56
++
+ static QTestState *rp2040_start(const char *machine_args)
+ {
+     if (machine_args) {
+@@ -39,6 +48,57 @@ static QTestState *rp2040_start(const char *machine_args)
+     return qtest_init("-machine raspi-pico");
+ }
+ 
++static void build_uf2_block(uint8_t *block, uint32_t target, uint32_t index,
++                            const uint8_t *payload)
++{
++    memset(block, 0, UF2_BLOCK_SIZE);
++    stl_le_p(block, UF2_MAGIC_START0);
++    stl_le_p(block + 4, UF2_MAGIC_START1);
++    stl_le_p(block + 8, UF2_FLAG_FAMILY_ID);
++    stl_le_p(block + 12, target);
++    stl_le_p(block + 16, UF2_PAYLOAD_SIZE);
++    stl_le_p(block + 20, index);
++    stl_le_p(block + 24, 2);
++    stl_le_p(block + 28, UF2_RP2040_FAMILY_ID);
++    memcpy(block + UF2_PAYLOAD_OFFSET, payload, UF2_PAYLOAD_SIZE);
++    stl_le_p(block + UF2_BLOCK_SIZE - 4, UF2_MAGIC_END);
++}
++
++static void test_uf2_kernel_load(void)
++{
++    g_autoptr(GError) error = NULL;
++    g_autofree char *path = NULL;
++    uint8_t uf2[2 * UF2_BLOCK_SIZE];
++    uint8_t boot2[UF2_PAYLOAD_SIZE];
++    uint8_t payload[UF2_PAYLOAD_SIZE];
++    uint8_t actual[UF2_PAYLOAD_SIZE];
++    QTestState *qts;
++    int fd;
++    size_t i;
++
++    memset(boot2, 0x5a, sizeof(boot2));
++    for (i = 0; i < ARRAY_SIZE(payload); i++) {
++        payload[i] = i ^ 0xa5;
++    }
++    build_uf2_block(uf2, XIP_BASE, 0, boot2);
++    build_uf2_block(uf2 + UF2_BLOCK_SIZE, XIP_BASE + 0x2000, 1, payload);
++
++    fd = g_file_open_tmp("qemu-rp2040-uf2-XXXXXX", &path, &error);
++    g_assert_no_error(error);
++    g_assert_cmpint(fd, >=, 0);
++    close(fd);
++    g_assert_true(g_file_set_contents(path, (const char *)uf2, sizeof(uf2),
++                                      &error));
++    g_assert_no_error(error);
++
++    qts = qtest_initf("-machine raspi-pico -kernel %s", path);
++    qtest_memread(qts, XIP_BASE + 0x2000, actual, sizeof(actual));
++    g_assert_cmpmem(actual, sizeof(actual), payload, sizeof(payload));
++    qtest_quit(qts);
++
++    unlink(path);
++}
++
+ static void read_flash_uid(QTestState *qts, uint8_t *uid)
+ {
+     int i;
+@@ -280,6 +340,7 @@ int main(int argc, char **argv)
+                    test_flash_uid_default);
+     qtest_add_func("/rp2040-xip/flash-uid-machine-option",
+                    test_flash_uid_machine_option);
++    qtest_add_func("/rp2040-xip/uf2-kernel-load", test_uf2_kernel_load);
+     qtest_add_func("/rp2040-xip/flash-program-erase",
+                    test_flash_program_erase);
+     qtest_add_func("/rp2040-xip/flash-persistence",
 -- 
 2.55.0
 
