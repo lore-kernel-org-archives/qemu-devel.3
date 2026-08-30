@@ -4,86 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C2B1C61DE2
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 05:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0206C61DB9
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 06:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0YNi-0005Bd-Vx; Sun, 30 Aug 2026 01:47:03 -0400
+	id 1x0Yr7-0002QI-LU; Sun, 30 Aug 2026 02:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <colazcyg@gmail.com>)
- id 1x0YNb-0005BG-ON
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 01:46:56 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <colazcyg@gmail.com>)
- id 1x0YNZ-0001Ri-MA
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 01:46:55 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-cc1bcdb3c4cso1693918a12.2
- for <qemu-devel@nongnu.org>; Sat, 29 Aug 2026 22:46:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788068812; x=1788673612; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sCLqvCcl/TsgvcW8ZflsErBGVRq5eKuTAYlxhpxwCPc=;
- b=JaOtxbnk3ogIenZ4UhBGbiHDW6Y8uivxv/tT6kKDFZWXGqX7nTMqn043ELd3l9eovt
- NvzH9/KSU4zsjepLQHvAFNXWrDUo02elzG/fm1IYD5ktgbVTJgEpbtbBqfMPXnScHpmB
- hOiqWZeq08G7X95WWEPsv+CkfrYYiAXrtDbkcVTR/CkHcS+W8q4PmAd/0kkxMrbsP1M1
- spXU25oFcy9479qrL5beXeUWz844n1vQGNd6b+VSzP0mRp70TBxPHu4MFKMyWkrWGJ92
- jJiIZZBPepvxrVtFj21BS3R170NpMxxi1/ziBn4QUyzRhidh3ptWU2+h5ItlQechuz3W
- o9Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788068812; x=1788673612;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sCLqvCcl/TsgvcW8ZflsErBGVRq5eKuTAYlxhpxwCPc=;
- b=BUm0OV06jGnML9SIkQdNTJGI8sCd/CPbsPzpybfPPWzFNGzV1mU2GHW1bZ0M18/pcr
- yBvYEbMtHdwOfLJjzBfNcxLJgbqu1uwY2oXx6gJJmx1rfLHLuYgaUwhUjzaDkecmQYVs
- MVq6bxCtxwuQU5wptbJo1Y87QTJe46zDO2S4drNDXzELPLCObTjE2hsI5hxd8pgw05B5
- okLFwAULMCs2MLMpDXLhHaImANUEYaTvvH/VxvJNis2Z1M21gIRAwhzHcQvgnRjfnf/9
- IUDLlB2FBg2pb7i1mo7nb1IILQd61Bt5gMCkH/jhpM7hdGUuQbUxdSZu65+YsnbpB0iW
- kDKw==
-X-Gm-Message-State: AFuF++l0mXjM7KUnQsiNis7/yuvjD50OWhyYqhtw0+CZIIQxWPmWVE7E
- 5HiinTOV4L0qXR5bZZNGB3YNwV71c3bSYGJYIU1tubReq7n1l2Geiw1Q7ZIy8py5v7TunA==
-X-Gm-Gg: AR+sD100KZu2Ft2kwpIuTTkOMx//k2kqHQVACETacIIbEnzUx7OHiNWQtsjcIOcVv7G
- q1Wmwbcx/lojFPNLqVym/bJLzbOMQTCb2GBWKplbXrsRzTjuaJwXjfimqqokJWQb0Q+dJnVAPLV
- F2UEzlxEwPsgyRYjQS8GvFdSbn8SZEseKLhPqx658S4Zs/M4WaP8JMQRb0LtzRUJZHPhEuUzOdO
- 21zf9NHUFsCsZkbmN41Y/vXR0XeZy/cqW9HXGDajujAohY/IO2ej3CAcSOUJO1mlHZbTmv9loiJ
- wlchSC3PBbOJGHLR+Jua91frAq5gjUCV+RPT1kGHUklWDhdpE5LRza8dsdnFl1YDmdaRpR6Er31
- Hvfnz+JfLH/NWfk8SyPcgu+KD/rFZHSnQDxPxO9umyAlQvm0Wt45bCBc+2L5Wp92loRccR723LJ
- +e5WWDKkiap5YTqGSEaupuf/COVegdZN2xdTJngiXnfVSDR8geiteIXHFef9M9Qai5mAd3Dw==
-X-Received: by 2002:a05:6300:49:b0:3d3:adbf:7782 with SMTP id
- adf61e73a8af0-3d3adbf816dmr15668004637.23.1788068811842; 
- Sat, 29 Aug 2026 22:46:51 -0700 (PDT)
-Received: from colazcyASUSlaptop.localdomain ([2a09:bac5:636f:183c::26a:c4])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3286fa5517fsm22878963eec.31.2026.08.29.22.46.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 29 Aug 2026 22:46:50 -0700 (PDT)
-From: Chengyang Zhu <colazcyg@gmail.com>
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x0Yr5-0002Op-ER; Sun, 30 Aug 2026 02:17:23 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x0Yr2-0005Fh-50; Sun, 30 Aug 2026 02:17:23 -0400
+Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hXhjn3FXbz8338;
+ Sun, 30 Aug 2026 08:17:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
+ s=dkim; t=1788070637;
+ bh=eS13Ssqri4iRX6kVa315iV+PIAJEgv3FuAsoOCa5nzQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=U/o36QRHS8BGBD6XGgY2OqGI6Jyz8hRNF45w4tTW7jaIJjpa77U2eEcF/tCnZliul
+ lAoH7+KCRgd5V0cik1BS012vqVgLzyGKBfH8newld0aoj8iO+ebZ5f/xPtdDHjVcS1
+ rIFMnQy+PWG98UJbbRo9vIU71mAOvxBwNt1oJtIWVO9abaCIYlC2jLedES6qUoKNOJ
+ rXpT3TreKFwtv9Ch9UV3nJfE24jOpmX3rErOXRK+v/aDr++rDeCaG0OOJiLOZ4x47Q
+ 0/trlGj8nhXdccvEMllNq7tOdscnot0K+Xw1W+0S5o+zqLRRiYBTlPsCkZF8O8h4L4
+ qt2BpQguruh9g==
+Received: from localhost.localdomain (unknown [10.134.14.34])
+ (Authenticated sender: gilles.grimaud)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hXhjn1nSMz7swM;
+ Sun, 30 Aug 2026 08:17:17 +0200 (CEST)
+From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	Chengyang Zhu <colazcyg@gmail.com>
-Subject: [PATCH RFC v4 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
-Date: Sun, 30 Aug 2026 13:46:41 +0800
-Message-ID: <20260830054641.45437-2-colazcyg@gmail.com>
+Cc: alex.bennee@linaro.org,
+	qemu-arm@nongnu.org,
+	peter.maydell@linaro.org
+Subject: [PATCH RFC v2 17/30] tests/tcg/arm: test RP2040 SIO and multicore
+Date: Sun, 30 Aug 2026 08:15:48 +0200
+Message-ID: <20260830061601.52136-3-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260830054641.45437-1-colazcyg@gmail.com>
-References: <20260830054641.45437-1-colazcyg@gmail.com>
+In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
+References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=colazcyg@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,223 +72,806 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the SetUIInfo method cannot set a refresh rate.
-Simply adding a refresh_rate argument would break the method signature.
+From: gilles grimaud <gilles.grimaud@univ-lille.fr>
 
-This patch adds the UIInfo interface containing
-  * property `Supported` indicating whether console UI info is supported.
-  * the method `Apply` taking a dictionary as input.
-  * the method `Get` returning the current UI info as a dictionary.
-
-Signed-off-by: Chengyang Zhu <colazcyg@gmail.com>
+Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- ui/dbus-console.c    | 106 +++++++++++++++++++++++++++++++++++++++++++
- ui/dbus-display1.xml |  50 ++++++++++++++++++++
- 2 files changed, 156 insertions(+)
+ tests/tcg/arm/Makefile.softmmu-target        |  13 +-
+ tests/tcg/arm/system/rp2040-core1-launch.S   | 216 +++++++++++++++++++
+ tests/tcg/arm/system/rp2040-core1-launch.ref |   4 +
+ tests/tcg/arm/system/rp2040-psm-proc1.S      | 143 ++++++++++++
+ tests/tcg/arm/system/rp2040-psm-proc1.ref    |   5 +
+ tests/tcg/arm/system/rp2040-sio-divider.S    | 169 +++++++++++++++
+ tests/tcg/arm/system/rp2040-sio-divider.ref  |   2 +
+ tests/tcg/arm/system/rp2040-sio-fifo.S       | 154 +++++++++++++
+ tests/tcg/arm/system/rp2040-sio-fifo.ref     |   2 +
+ 9 files changed, 705 insertions(+), 3 deletions(-)
+ create mode 100644 tests/tcg/arm/system/rp2040-core1-launch.S
+ create mode 100644 tests/tcg/arm/system/rp2040-core1-launch.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-psm-proc1.S
+ create mode 100644 tests/tcg/arm/system/rp2040-psm-proc1.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-sio-divider.S
+ create mode 100644 tests/tcg/arm/system/rp2040-sio-divider.ref
+ create mode 100644 tests/tcg/arm/system/rp2040-sio-fifo.S
+ create mode 100644 tests/tcg/arm/system/rp2040-sio-fifo.ref
 
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index e1ac06814b..947c3b3a54 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -55,6 +55,8 @@ struct _DBusDisplayConsole {
-     guint last_x;
-     guint last_y;
-     Notifier mouse_mode_notifier;
-+
-+    QemuDBusDisplay1UIInfo *iface_ui_info;
- };
+diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
+index 429416ca58..28e4c5774a 100644
+--- a/tests/tcg/arm/Makefile.softmmu-target
++++ b/tests/tcg/arm/Makefile.softmmu-target
+@@ -20,7 +20,9 @@ run-test-armv6m-undef: QEMU_OPTS=-semihosting-config enable=on,target=native,cha
  
- G_DEFINE_TYPE(DBusDisplayConsole,
-@@ -155,6 +157,7 @@ dbus_display_console_dispose(GObject *object)
-     qemu_input_led_notifier_remove(&ddc->led_notifier);
-     qemu_console_unregister_listener(&ddc->dcl);
-     qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
-+    g_clear_object(&ddc->iface_ui_info);
-     g_clear_object(&ddc->iface_touch);
-     g_clear_object(&ddc->iface_mouse);
-     g_clear_object(&ddc->iface_kbd);
-@@ -528,6 +531,98 @@ dbus_mouse_mode_change(Notifier *notify, void *data)
-     dbus_mouse_update_is_absolute(ddc);
- }
+ ARM_TESTS+=test-armv6m-undef
  
-+static gboolean
-+dbus_ui_info_get(DBusDisplayConsole *ddc,
-+                 GDBusMethodInvocation *invocation)
-+{
-+    QemuUIInfo ui_info;
-+    GVariantDict dict;
-+
-+    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-+        g_dbus_method_invocation_return_error(invocation,
-+                                              DBUS_DISPLAY_ERROR,
-+                                              DBUS_DISPLAY_ERROR_UNSUPPORTED,
-+                                              "UIInfo is not supported");
-+        return DBUS_METHOD_INVOCATION_HANDLED;
-+    }
-+
-+    ui_info = *qemu_console_get_ui_info(ddc->dcl.con);
-+    g_variant_dict_init(&dict, NULL);
-+
-+    g_variant_dict_insert(&dict, "width_mm", "q", ui_info.width_mm);
-+    g_variant_dict_insert(&dict, "height_mm", "q", ui_info.height_mm);
-+    g_variant_dict_insert(&dict, "xoff", "i", ui_info.xoff);
-+    g_variant_dict_insert(&dict, "yoff", "i", ui_info.yoff);
-+    g_variant_dict_insert(&dict, "width", "u", ui_info.width);
-+    g_variant_dict_insert(&dict, "height", "u", ui_info.height);
-+    g_variant_dict_insert(&dict, "refresh_rate", "u", ui_info.refresh_rate);
-+
-+    qemu_dbus_display1_uiinfo_complete_get(ddc->iface_ui_info, invocation,
-+                                           g_variant_dict_end(&dict));
-+
-+    return DBUS_METHOD_INVOCATION_HANDLED;
-+}
-+
-+static bool
-+dbus_ui_info_apply_lookup(GDBusMethodInvocation *invocation,
-+                          GVariantDict *dict,
-+                          const gchar *key,
-+                          const gchar *fmt_str,
-+                          void *res)
-+{
-+    if (g_variant_dict_contains(dict, key) &&
-+        !g_variant_dict_lookup(dict, key, fmt_str, res)) {
-+        g_dbus_method_invocation_return_error(invocation,
-+                                              DBUS_DISPLAY_ERROR,
-+                                              DBUS_DISPLAY_ERROR_INVALID,
-+                                              "%s must have D-Bus signature %s",
-+                                              key, fmt_str);
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static gboolean
-+dbus_ui_info_apply(DBusDisplayConsole *ddc,
-+                   GDBusMethodInvocation *invocation,
-+                   GVariant *arg_ui_info)
-+{
-+    QemuUIInfo ui_info;
-+    g_auto(GVariantDict) dict = G_VARIANT_DICT_INIT(arg_ui_info);
-+
-+    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-+        g_dbus_method_invocation_return_error(invocation,
-+                                              DBUS_DISPLAY_ERROR,
-+                                              DBUS_DISPLAY_ERROR_UNSUPPORTED,
-+                                              "UIInfo is not supported");
-+        return DBUS_METHOD_INVOCATION_HANDLED;
-+    }
-+
-+    ui_info = *qemu_console_get_ui_info(ddc->dcl.con);
-+
-+    if (!dbus_ui_info_apply_lookup(invocation, &dict, "width_mm", "q",
-+                                   &ui_info.width_mm) ||
-+        !dbus_ui_info_apply_lookup(invocation, &dict, "height_mm", "q",
-+                                   &ui_info.height_mm) ||
-+        !dbus_ui_info_apply_lookup(invocation, &dict, "xoff", "i",
-+                                   &ui_info.xoff) ||
-+        !dbus_ui_info_apply_lookup(invocation, &dict, "yoff", "i",
-+                                   &ui_info.yoff) ||
-+        !dbus_ui_info_apply_lookup(invocation, &dict, "width", "u",
-+                                   &ui_info.width) ||
-+        !dbus_ui_info_apply_lookup(invocation, &dict, "height", "u",
-+                                   &ui_info.height) ||
-+        !dbus_ui_info_apply_lookup(invocation, &dict, "refresh_rate", "u",
-+                                   &ui_info.refresh_rate)) {
-+        return DBUS_METHOD_INVOCATION_HANDLED;
-+    }
-+
-+    qemu_console_set_ui_info(ddc->dcl.con, &ui_info, false);
-+    qemu_dbus_display1_uiinfo_complete_apply(ddc->iface_ui_info, invocation);
-+
-+    return DBUS_METHOD_INVOCATION_HANDLED;
-+}
-+
- int dbus_display_console_get_index(DBusDisplayConsole *ddc)
- {
-     return qemu_console_get_index(ddc->dcl.con);
-@@ -550,6 +645,7 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
-         "org.qemu.Display1.Keyboard",
-         "org.qemu.Display1.Mouse",
-         "org.qemu.Display1.MultiTouch",
-+        "org.qemu.Display1.UIInfo",
-         NULL
-     };
+-RP2040_TESTS=rp2040-boot rp2040-uart rp2040-mpu
++RP2040_TESTS=rp2040-boot rp2040-uart rp2040-mpu \
++	rp2040-sio-fifo rp2040-sio-divider rp2040-psm-proc1 \
++	rp2040-core1-launch
  
-@@ -626,5 +722,15 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
-     qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
-     dbus_mouse_update_is_absolute(ddc);
+ $(RP2040_TESTS): %: %.S rp2040-minimal.ld
+ 	$(CC) -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft \
+@@ -31,11 +33,16 @@ $(RP2040_TESTS): %: %.S rp2040-minimal.ld
+ run-rp2040-boot: QEMU_OPTS=-M raspi-pico \
+ 	-semihosting-config enable=on,target=native -kernel
  
-+    ddc->iface_ui_info = qemu_dbus_display1_uiinfo_skeleton_new();
-+    qemu_dbus_display1_uiinfo_set_supported(ddc->iface_ui_info,
-+        qemu_console_ui_info_supported(ddc->dcl.con));
-+    g_object_connect(ddc->iface_ui_info,
-+        "swapped-signal::handle-get", dbus_ui_info_get, ddc,
-+        "swapped-signal::handle-apply", dbus_ui_info_apply, ddc,
-+        NULL);
-+    g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(ddc),
-+        G_DBUS_INTERFACE_SKELETON(ddc->iface_ui_info));
+-run-rp2040-uart run-rp2040-mpu: QEMU_OPTS=-M raspi-pico \
++run-rp2040-uart run-rp2040-mpu \
++run-rp2040-sio-fifo run-rp2040-sio-divider \
++run-rp2040-psm-proc1 run-rp2040-core1-launch: \
++	QEMU_OPTS=-M raspi-pico,strict-uart-pins=off \
+ 	-serial chardev:output \
+ 	-semihosting-config enable=on,target=native -kernel
+ 
+-run-rp2040-uart run-rp2040-mpu: run-rp2040-%: rp2040-%
++run-rp2040-uart run-rp2040-mpu \
++run-rp2040-sio-fifo run-rp2040-sio-divider \
++run-rp2040-psm-proc1 run-rp2040-core1-launch: run-rp2040-%: rp2040-%
+ 	$(call run-test, $<, \
+ 	  $(QEMU) -monitor none -display none \
+ 		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
+diff --git a/tests/tcg/arm/system/rp2040-core1-launch.S b/tests/tcg/arm/system/rp2040-core1-launch.S
+new file mode 100644
+index 0000000000..a280014b3c
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-core1-launch.S
+@@ -0,0 +1,216 @@
++/*
++ * Raspberry Pi Pico core 1 mask-ROM launch protocol test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-     return ddc;
- }
-diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
-index d96bae2ed6..26483edc37 100644
---- a/ui/dbus-display1.xml
-+++ b/ui/dbus-display1.xml
-@@ -1159,4 +1159,54 @@
-     -->
-     <property name="Encoding" type="s" access="read"/>
-   </interface>
++.syntax unified
++.cpu cortex-m0plus
++.thumb
 +
-+  <!--
-+      org.qemu.Display1.UIInfo:
++#define SRAM_END               0x20042000
++#define CORE1_STACK            0x20041000
++#define UART0_DR               0x40034000
++#define SIO_BASE               0xd0000000
++#define SIO_CPUID              0x00
++#define SIO_FIFO_ST            0x50
++#define SIO_FIFO_WR            0x54
++#define SIO_FIFO_RD            0x58
++#define SIO_FIFO_ST_VLD        0x01
++#define SIO_FIFO_ST_RDY        0x02
++#define CORE1_ACK              0x0000d01e
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
 +
-+      This interface is implemented on
-+      ``/org/qemu/Display1/Console_$id`` (see
-+      :dbus:iface:`~org.qemu.Display1.Console`).
-+  -->
-+  <interface name="org.qemu.Display1.UIInfo">
-+    <!--
-+        Supported:
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
 +
-+        Whether console UI info is supported.
-+    -->
-+    <property name="Supported" type="b" access="read"/>
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
 +
-+    <!--
-+        Get:
-+        @ui_info: a dictionary of current UI info properties.
++    ldr r4, =SIO_BASE
++    ldr r0, [r4, SIO_CPUID]
++    cmp r0, 0
++    bne fail_core0_id
 +
-+        Return the properties of the current console display.
++    ldr r6, =launch_sequence
++    movs r7, 0
 +
-+        - ``width_mm`` (q): the physical display width in millimeters.
-+        - ``height_mm`` (q): the physical display height in millimeters.
-+        - ``xoff`` (i): the horizontal offset in pixels.
-+        - ``yoff`` (i): the vertical offset in pixels.
-+        - ``width`` (u): the console width in pixels.
-+        - ``height`` (u): the console height in pixels.
-+        - ``refresh_rate`` (u): the display refresh rate in millihertz.
-+    -->
-+    <method name="Get">
-+      <arg name="ui_info" type="a{sv}" direction="out"/>
-+    </method>
++launch_next:
++    ldr r0, [r6, r7]
++    cmp r0, 0
++    bne launch_send
++    bl fifo_drain
++    sev
 +
-+    <!--
-+        Apply:
-+        @ui_info: a dictionary of new UI info properties.
++launch_send:
++    bl fifo_push
++    bl fifo_pop
++    ldr r1, [r6, r7]
++    cmp r0, r1
++    bne fail_echo
++    adds r7, 4
++    cmp r7, 24
++    bne launch_next
 +
-+        Apply the properties to the console display.
-+        The dictionary schema of ``Apply`` is a subset of that of ``Get``.
++    ldr r0, =echo_message
++    bl puts
 +
-+        The properties will be merged with existing values.
-+        Extra keys will be ignored.
-+        The invocation will fail if any key has the wrong type,
-+        leaving the UI info unchanged.
-+    -->
-+    <method name="Apply">
-+      <arg name="ui_info" type="a{sv}" direction="in"/>
-+    </method>
-+  </interface>
- </node>
++    bl fifo_pop
++    ldr r1, =CORE1_ACK
++    cmp r0, r1
++    bne fail_ack
++
++    ldr r0, =ack_message
++    bl puts
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
++
++.thumb_func
++core1_entry:
++    ldr r4, =SIO_BASE
++    ldr r0, [r4, SIO_CPUID]
++    cmp r0, 1
++    bne core1_failed
++    bl core1_send_ack
++
++2:
++    b 2b
++
++.thumb_func
++core1_send_ack:
++    push {lr}
++    ldr r0, =CORE1_ACK
++    bl fifo_push
++    pop {pc}
++
++core1_failed:
++    ldr r0, =0xbad10001
++    bl fifo_push
++
++3:
++    b 3b
++
++.thumb_func
++fifo_drain:
++    push {r0, r1, lr}
++
++4:
++    ldr r0, [r4, SIO_FIFO_ST]
++    movs r1, SIO_FIFO_ST_VLD
++    tst r0, r1
++    beq 5f
++    ldr r0, [r4, SIO_FIFO_RD]
++    b 4b
++
++5:
++    pop {r0, r1, pc}
++
++.thumb_func
++fifo_push:
++    push {r1, r2, lr}
++
++6:
++    ldr r1, [r4, SIO_FIFO_ST]
++    movs r2, SIO_FIFO_ST_RDY
++    tst r1, r2
++    beq 6b
++    str r0, [r4, SIO_FIFO_WR]
++    sev
++    pop {r1, r2, pc}
++
++.thumb_func
++fifo_pop:
++    push {r1, lr}
++
++7:
++    ldr r1, [r4, SIO_FIFO_ST]
++    movs r0, SIO_FIFO_ST_VLD
++    tst r1, r0
++    beq 7b
++    ldr r0, [r4, SIO_FIFO_RD]
++    pop {r1, pc}
++
++fail_core0_id:
++    ldr r0, =fail_core0_id_message
++    b test_failed
++
++fail_echo:
++    ldr r0, =fail_echo_message
++    b test_failed
++
++fail_ack:
++    ldr r0, =fail_ack_message
++
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
++
++8:
++    b 8b
++
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++    b test_failed
++
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
++
++9:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 10f
++    str r1, [r2]
++    adds r0, 1
++    b 9b
++
++10:
++    bx lr
++
++.section .rodata, "a", %progbits
++.align 2
++launch_sequence:
++    .word 0
++    .word 0
++    .word 1
++    .word vector_table
++    .word CORE1_STACK
++    .word core1_entry + 1
++
++start_message:
++    .asciz "PICO TCG CORE1 START\n"
++echo_message:
++    .asciz "PICO TCG CORE1 ECHO OK\n"
++ack_message:
++    .asciz "PICO TCG CORE1 ACK OK\n"
++ok_message:
++    .asciz "PICO TCG CORE1 OK\n"
++fail_core0_id_message:
++    .asciz "PICO TCG CORE1 FAIL: CORE0 ID\n"
++fail_echo_message:
++    .asciz "PICO TCG CORE1 FAIL: ECHO\n"
++fail_ack_message:
++    .asciz "PICO TCG CORE1 FAIL: ACK\n"
++fail_exception_message:
++    .asciz "PICO TCG CORE1 FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-core1-launch.ref b/tests/tcg/arm/system/rp2040-core1-launch.ref
+new file mode 100644
+index 0000000000..b9f9d4252d
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-core1-launch.ref
+@@ -0,0 +1,4 @@
++PICO TCG CORE1 START
++PICO TCG CORE1 ECHO OK
++PICO TCG CORE1 ACK OK
++PICO TCG CORE1 OK
+diff --git a/tests/tcg/arm/system/rp2040-psm-proc1.S b/tests/tcg/arm/system/rp2040-psm-proc1.S
+new file mode 100644
+index 0000000000..f88166b906
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-psm-proc1.S
+@@ -0,0 +1,143 @@
++/*
++ * Raspberry Pi Pico PSM PROC1 power-state test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#define SRAM_END               0x20042000
++#define UART0_DR               0x40034000
++#define PSM_BASE               0x40010000
++#define PSM_FRCE_OFF           0x04
++#define PSM_DONE               0x0c
++#define PSM_SET_ALIAS          0x2000
++#define PSM_CLR_ALIAS          0x3000
++#define PSM_PROC1              0x00010000
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
++
++    ldr r4, =(PSM_BASE + PSM_FRCE_OFF)
++    ldr r5, =PSM_PROC1
++    ldr r6, =(PSM_BASE + PSM_DONE)
++
++    ldr r0, [r4]
++    tst r0, r5
++    bne fail_initial
++    ldr r0, [r6]
++    tst r0, r5
++    beq fail_initial
++
++    ldr r0, =initial_message
++    bl puts
++
++    ldr r0, =(PSM_BASE + PSM_SET_ALIAS + PSM_FRCE_OFF)
++    str r5, [r0]
++    ldr r0, [r4]
++    tst r0, r5
++    beq fail_force_off
++    ldr r0, [r6]
++    tst r0, r5
++    bne fail_force_off
++
++    ldr r0, =off_message
++    bl puts
++
++    ldr r0, =(PSM_BASE + PSM_CLR_ALIAS + PSM_FRCE_OFF)
++    str r5, [r0]
++    ldr r0, [r4]
++    tst r0, r5
++    bne fail_restart
++    ldr r0, [r6]
++    tst r0, r5
++    beq fail_restart
++
++    ldr r0, =on_message
++    bl puts
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
++
++fail_initial:
++    ldr r0, =fail_initial_message
++    b test_failed
++
++fail_force_off:
++    ldr r0, =fail_force_off_message
++    b test_failed
++
++fail_restart:
++    ldr r0, =fail_restart_message
++
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
++
++2:
++    b 2b
++
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++    b test_failed
++
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
++
++3:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 4f
++    str r1, [r2]
++    adds r0, 1
++    b 3b
++
++4:
++    bx lr
++
++.section .rodata, "a", %progbits
++start_message:
++    .asciz "PICO TCG PSM PROC1 START\n"
++initial_message:
++    .asciz "PICO TCG PSM PROC1 INITIAL ON\n"
++off_message:
++    .asciz "PICO TCG PSM PROC1 FORCED OFF\n"
++on_message:
++    .asciz "PICO TCG PSM PROC1 RESTARTED\n"
++ok_message:
++    .asciz "PICO TCG PSM PROC1 OK\n"
++fail_initial_message:
++    .asciz "PICO TCG PSM PROC1 FAIL: INITIAL\n"
++fail_force_off_message:
++    .asciz "PICO TCG PSM PROC1 FAIL: FORCE OFF\n"
++fail_restart_message:
++    .asciz "PICO TCG PSM PROC1 FAIL: RESTART\n"
++fail_exception_message:
++    .asciz "PICO TCG PSM PROC1 FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-psm-proc1.ref b/tests/tcg/arm/system/rp2040-psm-proc1.ref
+new file mode 100644
+index 0000000000..b14da263b9
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-psm-proc1.ref
+@@ -0,0 +1,5 @@
++PICO TCG PSM PROC1 START
++PICO TCG PSM PROC1 INITIAL ON
++PICO TCG PSM PROC1 FORCED OFF
++PICO TCG PSM PROC1 RESTARTED
++PICO TCG PSM PROC1 OK
+diff --git a/tests/tcg/arm/system/rp2040-sio-divider.S b/tests/tcg/arm/system/rp2040-sio-divider.S
+new file mode 100644
+index 0000000000..fc924a2f3d
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-sio-divider.S
+@@ -0,0 +1,169 @@
++/*
++ * Raspberry Pi Pico SIO hardware divider test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#define SRAM_END               0x20042000
++#define UART0_DR               0x40034000
++#define SIO_BASE               0xd0000000
++#define SIO_DIV_UDIVIDEND      0x60
++#define SIO_DIV_UDIVISOR       0x64
++#define SIO_DIV_SDIVIDEND      0x68
++#define SIO_DIV_SDIVISOR       0x6c
++#define SIO_DIV_QUOTIENT       0x70
++#define SIO_DIV_REMAINDER      0x74
++#define SIO_DIV_CSR            0x78
++#define SIO_DIV_CSR_READY_DIRTY 0x03
++#define SIO_DIV_CSR_READY      0x01
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++
++.macro fail_if_ne reg, expected, target
++    ldr r2, =\expected
++    cmp \reg, r2
++    beq 0f
++    b \target
++0:
++.endm
++
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
++    ldr r4, =SIO_BASE
++
++    /* Unsigned: 100 / 7 = 14 remainder 2. */
++    movs r0, 100
++    str r0, [r4, SIO_DIV_UDIVIDEND]
++    movs r0, 7
++    str r0, [r4, SIO_DIV_UDIVISOR]
++    ldr r0, [r4, SIO_DIV_CSR]
++    fail_if_ne r0, SIO_DIV_CSR_READY_DIRTY, fail_unsigned
++    ldr r0, [r4, SIO_DIV_REMAINDER]
++    fail_if_ne r0, 2, fail_unsigned
++    ldr r0, [r4, SIO_DIV_CSR]
++    fail_if_ne r0, SIO_DIV_CSR_READY_DIRTY, fail_unsigned
++    ldr r0, [r4, SIO_DIV_QUOTIENT]
++    fail_if_ne r0, 14, fail_unsigned
++    ldr r0, [r4, SIO_DIV_CSR]
++    fail_if_ne r0, SIO_DIV_CSR_READY, fail_unsigned
++
++    /* Signed: -100 / 7 = -14 remainder -2. */
++    ldr r0, =-100
++    str r0, [r4, SIO_DIV_SDIVIDEND]
++    movs r0, 7
++    str r0, [r4, SIO_DIV_SDIVISOR]
++    ldr r0, [r4, SIO_DIV_REMAINDER]
++    fail_if_ne r0, -2, fail_signed
++    ldr r0, [r4, SIO_DIV_QUOTIENT]
++    fail_if_ne r0, -14, fail_signed
++
++    /* Division by zero follows the RP2040 result contract. */
++    ldr r0, =0x1234
++    str r0, [r4, SIO_DIV_UDIVIDEND]
++    movs r0, 0
++    str r0, [r4, SIO_DIV_UDIVISOR]
++    ldr r0, [r4, SIO_DIV_REMAINDER]
++    fail_if_ne r0, 0x1234, fail_divzero
++    ldr r0, [r4, SIO_DIV_QUOTIENT]
++    fail_if_ne r0, 0xffffffff, fail_divzero
++
++    /* Result writes restore a saved divider context and set DIRTY. */
++    ldr r0, =0xaabbccdd
++    str r0, [r4, SIO_DIV_REMAINDER]
++    ldr r0, =0x11223344
++    str r0, [r4, SIO_DIV_QUOTIENT]
++    ldr r0, [r4, SIO_DIV_CSR]
++    fail_if_ne r0, SIO_DIV_CSR_READY_DIRTY, fail_restore
++    ldr r0, [r4, SIO_DIV_REMAINDER]
++    fail_if_ne r0, 0xaabbccdd, fail_restore
++    ldr r0, [r4, SIO_DIV_QUOTIENT]
++    fail_if_ne r0, 0x11223344, fail_restore
++    ldr r0, [r4, SIO_DIV_CSR]
++    fail_if_ne r0, SIO_DIV_CSR_READY, fail_restore
++
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
++
++fail_unsigned:
++    ldr r0, =fail_unsigned_message
++    b test_failed
++
++fail_signed:
++    ldr r0, =fail_signed_message
++    b test_failed
++
++fail_divzero:
++    ldr r0, =fail_divzero_message
++    b test_failed
++
++fail_restore:
++    ldr r0, =fail_restore_message
++
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
++
++2:
++    b 2b
++
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++    b test_failed
++
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
++
++3:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 4f
++    str r1, [r2]
++    adds r0, 1
++    b 3b
++
++4:
++    bx lr
++
++.section .rodata, "a", %progbits
++start_message:
++    .asciz "PICO TCG SIO DIVIDER START\n"
++ok_message:
++    .asciz "PICO TCG SIO DIVIDER OK\n"
++fail_unsigned_message:
++    .asciz "PICO TCG SIO DIVIDER FAIL: UNSIGNED\n"
++fail_signed_message:
++    .asciz "PICO TCG SIO DIVIDER FAIL: SIGNED\n"
++fail_divzero_message:
++    .asciz "PICO TCG SIO DIVIDER FAIL: DIVZERO\n"
++fail_restore_message:
++    .asciz "PICO TCG SIO DIVIDER FAIL: RESTORE\n"
++fail_exception_message:
++    .asciz "PICO TCG SIO DIVIDER FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-sio-divider.ref b/tests/tcg/arm/system/rp2040-sio-divider.ref
+new file mode 100644
+index 0000000000..c03c8338dd
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-sio-divider.ref
+@@ -0,0 +1,2 @@
++PICO TCG SIO DIVIDER START
++PICO TCG SIO DIVIDER OK
+diff --git a/tests/tcg/arm/system/rp2040-sio-fifo.S b/tests/tcg/arm/system/rp2040-sio-fifo.S
+new file mode 100644
+index 0000000000..4395167203
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-sio-fifo.S
+@@ -0,0 +1,154 @@
++/*
++ * Raspberry Pi Pico SIO FIFO status test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#define SRAM_END               0x20042000
++#define UART0_DR               0x40034000
++#define SIO_BASE               0xd0000000
++#define SIO_CPUID              0x00
++#define SIO_FIFO_ST            0x50
++#define SIO_FIFO_RD            0x58
++#define SIO_FIFO_ST_VLD        0x01
++#define SIO_FIFO_ST_RDY        0x02
++#define SIO_FIFO_ST_ROE        0x08
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
++
++    ldr r4, =SIO_BASE
++    ldr r0, [r4, SIO_CPUID]
++    cmp r0, 0
++    bne fail_cpuid
++
++    ldr r0, [r4, SIO_FIFO_ST]
++    movs r1, SIO_FIFO_ST_RDY
++    tst r0, r1
++    beq fail_rdy
++
++    /* The mask ROM on core 1 may have queued its initial ready word. */
++    movs r1, SIO_FIFO_ST_VLD
++    tst r0, r1
++    beq fifo_empty
++    ldr r0, [r4, SIO_FIFO_RD]
++    cmp r0, 0
++    bne fail_ready_word
++
++fifo_empty:
++    ldr r0, [r4, SIO_FIFO_ST]
++    movs r1, SIO_FIFO_ST_VLD
++    tst r0, r1
++    bne fail_vld
++
++    ldr r0, [r4, SIO_FIFO_RD]
++    ldr r0, [r4, SIO_FIFO_ST]
++    movs r1, SIO_FIFO_ST_ROE
++    tst r0, r1
++    beq fail_roe
++
++    str r1, [r4, SIO_FIFO_ST]
++    ldr r0, [r4, SIO_FIFO_ST]
++    tst r0, r1
++    bne fail_roe_clear
++
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
++
++fail_cpuid:
++    ldr r0, =fail_cpuid_message
++    b test_failed
++
++fail_rdy:
++    ldr r0, =fail_rdy_message
++    b test_failed
++
++fail_vld:
++    ldr r0, =fail_vld_message
++    b test_failed
++
++fail_ready_word:
++    ldr r0, =fail_ready_word_message
++    b test_failed
++
++fail_roe:
++    ldr r0, =fail_roe_message
++    b test_failed
++
++fail_roe_clear:
++    ldr r0, =fail_roe_clear_message
++
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
++
++2:
++    b 2b
++
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++    b test_failed
++
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
++
++3:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 4f
++    str r1, [r2]
++    adds r0, 1
++    b 3b
++
++4:
++    bx lr
++
++.section .rodata, "a", %progbits
++start_message:
++    .asciz "PICO TCG SIO FIFO START\n"
++ok_message:
++    .asciz "PICO TCG SIO FIFO OK\n"
++fail_cpuid_message:
++    .asciz "PICO TCG SIO FIFO FAIL: CPUID\n"
++fail_rdy_message:
++    .asciz "PICO TCG SIO FIFO FAIL: RDY\n"
++fail_vld_message:
++    .asciz "PICO TCG SIO FIFO FAIL: VLD\n"
++fail_ready_word_message:
++    .asciz "PICO TCG SIO FIFO FAIL: READY WORD\n"
++fail_roe_message:
++    .asciz "PICO TCG SIO FIFO FAIL: ROE\n"
++fail_roe_clear_message:
++    .asciz "PICO TCG SIO FIFO FAIL: ROE CLEAR\n"
++fail_exception_message:
++    .asciz "PICO TCG SIO FIFO FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-sio-fifo.ref b/tests/tcg/arm/system/rp2040-sio-fifo.ref
+new file mode 100644
+index 0000000000..c0de9abb9f
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-sio-fifo.ref
+@@ -0,0 +1,2 @@
++PICO TCG SIO FIFO START
++PICO TCG SIO FIFO OK
 -- 
 2.55.0
 
