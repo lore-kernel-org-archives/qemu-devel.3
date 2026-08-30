@@ -4,96 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF6EC61DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 16:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52856C61DE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Aug 2026 17:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0i0g-000623-8W; Sun, 30 Aug 2026 12:03:54 -0400
+	id 1x0jhb-0005nN-62; Sun, 30 Aug 2026 13:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x0i0f-00061n-6H
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 12:03:53 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x0i0Z-0007i1-MO
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 12:03:52 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-853c07a76adso2711503b3a.0
- for <qemu-devel@nongnu.org>; Sun, 30 Aug 2026 09:03:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1788105826; x=1788710626; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=e3+182cJvrOIa0h+b5iwFEYaEYm9QcYRRZMRS35cDQ4=;
- b=OskNtxzpT7d1MGmmXru3CtzFi1atNHLRsCh8mc7hcIvNW7KxnlhwHsJ0szGrqaWuHb
- 0hdMxcDVFn9uRF7412DJU74jbY1PQnWy02c1Z/iGAN9DnPibFJdfd5h5lLkY4Uoy8WBu
- qQQV0PFX1qwPDULZf0cbYQrhAuIVdKywCfK/JOO/18nJNzXwqn2PnrIDpv2+rRKZ6Jpb
- PPi+AcdhJ+fBsjAGfpUJD3xd9ncsG4GzPXyqfUPUjwBqRMJca3DFnQumg5OpVHlGaTP5
- ZUY5fVUVo3eB8To0iN3ym1B341Bt6Od7Xk7iLHgOnp2KTDqADRIjk9eTv7L4jN/+VSl/
- 3pcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788105826; x=1788710626;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=e3+182cJvrOIa0h+b5iwFEYaEYm9QcYRRZMRS35cDQ4=;
- b=TQKk6L59W69/iS9dbdeJz68FOwYFxVr8bJUoXUhk3r1ytiwQaAB3TOAEl6QjpiqgcG
- cinPWeg+J8iM82CXKfhsl5x/9b90UAOeMyRf/wFHItVwWgpnvXxe5SEz2DcMXPEuEj44
- ZqMpktNLi3UXafbA2BKXoTDM4H9s7vZFHm38oRCQFCGau17X41Tle737Feo+dLx6SrKL
- kF5uAk6/MBHIzFix9jX7WAwSYzmarwoQg4Xtzex7ZJ7TjZlEIbn7041IsiAo9q19ckzn
- MU84wDH9ndz48qC4k7FLAFgQA/nCzSYmDVJUFN3ARYz5ikJV2GyHtSyfeQJD9tCmhyNw
- MerQ==
-X-Gm-Message-State: AFuF++k3tb4e9y4jVLAIW87MgQsmKCXDT1p2yhcmwQYmFa2lrGd2JmwA
- hEyXmp+hGZI3L3kyiUB7nJBdjsRBYCy/VVt7+RuppsNQ0neObIz0FmNxbVBGN9mL1kEriB0wEZX
- rvjlySss7LSG3bEvmH7Yl8cRyPctInehTQu0C3SNLaCpjL1cnz5IIckutV+9HDprKYtv6Wpj4Gn
- 2xhJ1nfvT3h9HHIpCwLjd/ZmoczGE6T4jikZcx2+cnqw==
-X-Gm-Gg: AR+sD12482NpAP/HYdOHBt/OilVYO81F8xz7zLlEZ7gMUZT9G4MSxitH+xB+6jDfmLe
- sm0kO4wLUgU5qF7UIWXwaoBdhwbiuCAENvwyTn5fk2ozKDtPAvBTg5nRSqhP7s3g3XiWHIU8+rP
- FkUNcn4VbKHxzPAw7SeM8Br1lbYcoBRHzrhQPEbXdka/S2ApO9U2nAv+cWqigUdxq8RacqroCrn
- uRhCj6p9hu2PZFzXJPtSOqv4mhf//ETxd1U7QplamE5qKatK4YzRlC9qqlGFdtfDLgCK88WVb/w
- xCrVy3Ptvo9wQ6bTqQ9VRLPIZb1TEEasHaMETwbXZZfhlMZ7iMAUsH4nuT4+GdHSCPXnaWY3Hy7
- 9bk0V2QORq2pgb4KTCK9Z4j3rmjfJDUWyKTwCmnQiEr55PtZWToNJcnK6e5wg1puJ79aS483IYb
- FvbCPDaYAlZ0KalBLPsjfKn5KMVKeVj+M6tx1GgxoNd227USxG3gRxMQsKQHHxawG7gDQI6VSjw
- GxH0sS/ZpRRZuk+T/gRO0V803KXvNuLHX8SORusx2izzBqqblUHceEH84diQwM=
-X-Received: by 2002:a05:6a00:4501:b0:857:72f8:dc94 with SMTP id
- d2e1a72fcca58-85772f8de8emr19046427b3a.21.1788105825707; 
- Sun, 30 Aug 2026 09:03:45 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8569ff701d5sm2455900b3a.25.2026.08.30.09.03.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Aug 2026 09:03:45 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Max Chou <max.chou@sifive.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v3 1/6] target/riscv: Add cfg property for SiFive int8 matmul
- extensions
-Date: Mon, 31 Aug 2026 00:03:30 +0800
-Message-ID: <20260830160335.3441069-2-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260830160335.3441069-1-max.chou@sifive.com>
-References: <20260830160335.3441069-1-max.chou@sifive.com>
+ (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
+ id 1x0jhY-0005n2-5o; Sun, 30 Aug 2026 13:52:16 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
+ id 1x0jhV-0000KU-Sc; Sun, 30 Aug 2026 13:52:15 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67UGVhKP2874632; Sun, 30 Aug 2026 17:52:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=xPtMTA67u2wyxCK1Jvbc0WvXjv7z
+ wrf5a4LT3OvGogQ=; b=FB5twDeleVjiD5E9QKOuOAbGXxYR94hKoeCA4aSg7/9U
+ 1G+e4597D0SN2+G0J7ww23H/XEa274LgJiS6AHkpSOWfiYMuehoKh6Rr6W10Iu4D
+ LbMReGhccuJ7/uWHZl15xWBSBhC0sbmIiWj//6yA53jJf01jDGIxG6sOTNykOzsZ
+ jF3rQ4RlpbaLxTtu965MF9mHwGpo5VDb3oe/0mP6l/Q30Fy8XCix9V21z+gkswnP
+ dXynXTlSout1tIa+IXGVmzvVt+KtJaIY6oqpqfDmOTAYnKgXn83TDLCxcetM+KVj
+ mMFqvkfvu6Mir2im9GqUhzxvVHQH6XuHlTtTyyhTYw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudd7qx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 30 Aug 2026 17:52:10 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67UHfKuc020819;
+ Sun, 30 Aug 2026 17:52:09 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccexsrx2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 30 Aug 2026 17:52:09 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67UHq8Sf64487838
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 30 Aug 2026 17:52:08 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3929458055;
+ Sun, 30 Aug 2026 17:52:08 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B33FA58043;
+ Sun, 30 Aug 2026 17:52:04 +0000 (GMT)
+Received: from [9.124.216.242] (unknown [9.124.216.242])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sun, 30 Aug 2026 17:52:04 +0000 (GMT)
+Message-ID: <77e89fea-0284-4e19-8ee7-04b900b13749@linux.ibm.com>
+Date: Sun, 30 Aug 2026 23:22:03 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: npiggin@gmail.com, Chinmay Rath <rathc@linux.ibm.com>,
+ milesg@linux.ibm.com, harshpb@linux.ibm.com, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com,
+ adityag@linux.ibm.com, gautam@linux.ibm.com
+From: Aniket Sahu <asahu1x@linux.ibm.com>
+Subject: [PATCH] tests/functional/ppc64: add pseries migration and powernv
+ NVMe tests
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: Y7M4tAygjyhkbYgc6bLvbX1Zd9iEOYvN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMwMDE1MyBTYWx0ZWRfX69GgBMYHER0m
+ AR5S8ovpC59PgddbwSAfQ/eKWmvuI1xJdNZz8uLht3mnTwsz3PgKic9JRGewiEPHRz2ChWReAJ1
+ XdisukLtlxiq2mTs0ndInO8YK39shZBM9hFWvuX8QLTujumtjlJThafXCACv+G5M+AkRG744b43
+ h+YYpWelshgTig1iiDzG2QBzq2yogUHGp7BGCFaGluzeSvvayKLzutYUx3Wa22mFFLwr3pF6BkW
+ OcgSNpAfwZTLJwdHJ3woDm1UW0wc6i7Y5xceclryKA22ii1X8+L8MJwKIOhs8S0fz90y0SF0VUb
+ UvITd4q6z5U07q7tEUHGjNmBijTfyrQabNV/YMFsX6xCplnCeDuWJHhhPo5idO0yh/oS1NKIgwn
+ 0aQmCr+heiM5PZXs/xKD5KrsWZuz2zNTYBttITeYqgt6DUpOdRtjpRwJuZ4+Axc8/RphDgkqDvJ
+ jpwxc5F29gjnW7QAzbw==
+X-Proofpoint-ORIG-GUID: k34ZvrDbuhraArNsxmKAMFQSxDpGML--
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMwMDE1MyBTYWx0ZWRfX3rh+wUP47SWg
+ 6VP3wHYV1LaN508xJk4jIx1VnUzrbWdACS4OMKGbujT9/xZxDFwfXoqNVb9izDtf/EPJvuUuHfz
+ c7oSGsovxDiulE7k6K+PM+eLiLYaBy8=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a946dca cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=NEAV23lmAAAA:8
+ a=VnNF1IyMAAAA:8 a=I-Z7AQhl-F28tbCi2EkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-30_05,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608300153
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=asahu1x@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,87 +126,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the CPU config properties for SiFive's custom int8 matrix
-multiply vector extensions:
+Add two new groups of functional tests that cover scenarios currently
+missing from the ppc64 test suite:
 
-- Xsfvqmaccdod: 2x8x2 int8 matrix-multiply-accumulate operations
-- Xsfvqmaccqoq: 4x8x4 int8 matrix-multiply-accumulate operations
+1. pseries live migration (pseries machine type)
+    - Extends the quick migration suite (already covering mac99) with
+      tcp-localhost, UNIX socket, and exec (socat) migration tests for
+      the pseries machine type.  This complements the existing
+      test_ppc64_linux_migration test in test_pseries.py (which boots a
+      full kernel) by providing lightweight no-boot migration smoke tests
+      that run quickly.
 
-All instructions of these extensions require the Zve32x extension
-to be present whenever either extension is enabled. Validate this
-in riscv_cpu_validate_vendor_ext() alongside the existing vector
-extension validation in riscv_cpu_validate_set_extensions().
+2. PowerNV NVMe + network device boot (powernv machine type)
+    - The existing do_test_ppc64_powernv() helper in test_powernv.py
+      already boots a rootfs from NVMe for P8/P9/P10/P11.  This patch
+      adds a complementary test that also verifies the e1000e network
+      adapter and USB xHCI controller are probed successfully by Linux -
+      previously these were present in the device args but no console
+      check was made for them.
+    - Adds test_powernv10_rainier() for the powernv10-rainier variant
+      that models the IBM Rainier system board.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c                |  2 ++
- target/riscv/cpu_cfg_fields.h.inc |  2 ++
- target/riscv/tcg/tcg-cpu.c        | 16 ++++++++++++++++
- 3 files changed, 20 insertions(+)
+Signed-off-by: Aniket Sahu <asahu1x@linux.ibm.com>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 61109672d60..b4e34daf8ec 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -299,6 +299,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
-     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
-     ISA_EXT_DATA_ENTRY(xmipslsp, PRIV_VERSION_1_12_0, ext_xmipslsp),
-+    ISA_EXT_DATA_ENTRY(xsfvqmaccdod, PRIV_VERSION_1_13_0, ext_xsfvqmaccdod),
-+    ISA_EXT_DATA_ENTRY(xsfvqmaccqoq, PRIV_VERSION_1_13_0, ext_xsfvqmaccqoq),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index f91c780299c..0f3bda1331c 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -159,6 +159,8 @@ BOOL_FIELD(ext_xmipscbop)
- BOOL_FIELD(ext_xmipscmov)
- BOOL_FIELD(ext_xmipslsp)
- BOOL_FIELD(ext_xlrbr)
-+BOOL_FIELD(ext_xsfvqmaccdod)
-+BOOL_FIELD(ext_xsfvqmaccqoq)
- 
- BOOL_FIELD(big_endian)
- BOOL_FIELD(mmu)
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 54f1b66216c..bdb6dc6ab3f 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -418,6 +418,16 @@ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
-     }
- }
- 
-+static void riscv_cpu_validate_vendor_ext(RISCVCPU *cpu, Error **errp)
-+{
-+    if ((cpu->cfg.ext_xsfvqmaccdod || cpu->cfg.ext_xsfvqmaccqoq) &&
-+        !cpu->cfg.ext_zve32x) {
-+        error_setg(errp, "Xsfvqmaccdod/Xsfvqmaccqoq extensions require "
-+                         "Zve32x extension");
-+        return;
-+    }
-+}
+diff --git a/tests/functional/ppc64/meson.build 
+b/tests/functional/ppc64/meson.build
+index cb3c745624..19c32c8b67 100644
+--- a/tests/functional/ppc64/meson.build
++++ b/tests/functional/ppc64/meson.build
+@@ -1,6 +1,8 @@
+  # SPDX-License-Identifier: GPL-2.0-or-later
+
+  test_ppc64_timeouts = {
++  'pseries_migrate' : 60,
++  'powernv_devices' : 480,
+    'fadump' : 480,
+    'hv' : 1000,
+    'mac99' : 120,
+@@ -14,12 +16,14 @@ test_ppc64_timeouts = {
+  tests_ppc64_system_quick = [
+    'migration',
+    'vmstate',
++  'pseries_migrate',
+  ]
+
+  tests_ppc64_system_thorough = [
+    'e500',
+    'fadump',
+    'hv',
++  'powernv_devices',
+    'mac99',
+    'openbsd',
+    'powernv',
+diff --git a/tests/functional/ppc64/test_powernv_devices.py 
+b/tests/functional/ppc64/test_powernv_devices.py
+new file mode 100644
+index 0000000000..6135855612
+--- /dev/null
++++ b/tests/functional/ppc64/test_powernv_devices.py
+@@ -0,0 +1,151 @@
++#!/usr/bin/env python3
++#
++# Functional tests that boot Linux on powernv machines and explicitly
++# verify that PCIe-attached devices (NVMe, e1000e, xHCI USB) are
++# detected by the guest kernel.  Also covers the powernv10-rainier
++# board variant.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -795,6 +805,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+    riscv_cpu_validate_vendor_ext(cpu, &local_err);
-+    if (local_err != NULL) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
++from qemu_test import LinuxKernelTest, Asset
 +
-     if (mcc->def->misa_mxl_max == MXL_RV32 && cpu->cfg.ext_svukte) {
-         error_setg(errp, "svukte is not supported for RV32");
-         return;
--- 
-2.43.0
++
++class PowerNVDevicesTest(LinuxKernelTest):
++    """
++    Boot Linux on powernv variants and verify that PCIe devices are
++    detected by the guest.
++
++    The existing test_powernv.py::do_test_ppc64_powernv() attaches an
++    NVMe drive, an e1000e NIC, and an xHCI USB controller, but only
++    waits for the CPU-generation string and the init process. This
++    test adds explicit console pattern checks for each device so that
++    regressions in device enumeration or PCI/PCIe topology are caught.
++
++    An additional test covers powernv10-rainier (the IBM Rainier system
++    board variant) which has a slightly different PHB topology.
++    """
++
++    timeout = 480
++
++    ASSET_KERNEL = Asset(
++ ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
++         'buildroot/qemu_ppc64le_powernv8-2025.02/vmlinux'),
++ '6fd29aff9ad4362511ea5d0acbb510667c7031928e97d64ec15bbc5daf4b8151')
++
++    ASSET_INITRD = Asset(
++ ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
++         'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
++ 'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
++
++    def setUp(self):
++        super().setUp()
++        self.require_accelerator('tcg')
++
++    def _do_test_powernv_pcie_devices(self, machine):
++        """
++        Boot *machine* and verify NVMe, e1000e, and xHCI are detected.
++
++        Device topology (matches the existing do_test_ppc64_powernv 
+helper):
++          pcie.2  → NVMe drive (boot device, rootfs)
++          bridge1 → e1000e NIC (addr 0x3)
++          bridge1 → nec-usb-xhci (addr 0x2)
++
++        Expected kernel log patterns checked:
++          * "nvme nvme0" — NVMe controller probe
++          * "e1000e"     — Intel e1000e NIC probe
++          * "xhci_hcd"   — USB xHCI host controller probe
++          * "Run /sbin/init as init process" — reached userland
++        """
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
++
++        self.set_machine(machine)
++        self.vm.set_console()
++        self.vm.add_args(
++            '-kernel', kernel_path,
++            '-drive',
++ f'file={initrd_path},format=raw,if=none,id=drive0,readonly=on',
++            '-append', 'root=/dev/nvme0n1 console=tty0 console=hvc0',
++            '-device', 'pcie-pci-bridge,id=bridge1,bus=pcie.1,addr=0x0',
++            '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234',
++            '-device', 'e1000e,bus=bridge1,addr=0x3',
++            '-device', 'nec-usb-xhci,bus=bridge1,addr=0x2',
++        )
++        self.vm.launch()
++
++        # NVMe controller should be detected first (it is the boot disk).
++        self.wait_for_console_pattern('nvme nvme0')
++
++        # e1000e NIC detection.
++        self.wait_for_console_pattern('e1000e')
++
++        # USB xHCI host controller detection.
++        self.wait_for_console_pattern('xhci_hcd')
++
++        # System reached userland — final sanity check.
++        self.wait_for_console_pattern('Run /sbin/init as init process')
++
++    def test_powernv8_pcie_devices(self):
++        """powernv8 (P8): NVMe + e1000e + xHCI detected."""
++        self._do_test_powernv_pcie_devices('powernv8')
++
++    def test_powernv9_pcie_devices(self):
++        """powernv9 (P9): NVMe + e1000e + xHCI detected."""
++        self._do_test_powernv_pcie_devices('powernv9')
++
++    def test_powernv10_pcie_devices(self):
++        """powernv10 (P10): NVMe + e1000e + xHCI detected."""
++        self._do_test_powernv_pcie_devices('powernv10')
++
++    def test_powernv11_pcie_devices(self):
++        """powernv11 (P11): NVMe + e1000e + xHCI detected."""
++        self._do_test_powernv_pcie_devices('powernv11')
++
++    def test_powernv10_rainier_pcie_devices(self):
++        """
++        powernv10-rainier: NVMe + e1000e + xHCI detected.
++
++        The Rainier board variant maps PCIe root ports slightly
++        differently from the default powernv10 topology.  Verify that
++        the same device set is enumerated successfully.
++        """
++        self._do_test_powernv_pcie_devices('powernv10-rainier')
++
++    def test_powernv9_hpt_pcie_devices(self):
++        """
++        powernv9 booted with disable_radix (HPT mode): verify devices.
++
++        Radix MMU is the default on P9.  Force the HPT (Hash Page Table)
++        MMU path to exercise an alternative translation code path while
++        still ensuring PCI devices are enumerated correctly.
++        """
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
++
++        self.set_machine('powernv9')
++        self.vm.set_console()
++        self.vm.add_args(
++            '-kernel', kernel_path,
++            '-drive',
++ f'file={initrd_path},format=raw,if=none,id=drive0,readonly=on',
++            '-append',
++            'root=/dev/nvme0n1 console=tty0 console=hvc0 disable_radix',
++            '-device', 'pcie-pci-bridge,id=bridge1,bus=pcie.1,addr=0x0',
++            '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234',
++            '-device', 'e1000e,bus=bridge1,addr=0x3',
++            '-device', 'nec-usb-xhci,bus=bridge1,addr=0x2',
++        )
++        self.vm.launch()
++
++        # HPT-specific boot message.
++        self.wait_for_console_pattern('hash-mmu: Initializing hash mmu')
++
++        # Device checks same as the radix path.
++        self.wait_for_console_pattern('nvme nvme0')
++        self.wait_for_console_pattern('e1000e')
++        self.wait_for_console_pattern('xhci_hcd')
++        self.wait_for_console_pattern('Run /sbin/init as init process')
++
++
++if __name__ == '__main__':
++    PowerNVDevicesTest.main()
+diff --git a/tests/functional/ppc64/test_pseries_migrate.py 
+b/tests/functional/ppc64/test_pseries_migrate.py
+new file mode 100644
+index 0000000000..0cb929e35f
+--- /dev/null
++++ b/tests/functional/ppc64/test_pseries_migrate.py
+@@ -0,0 +1,57 @@
++#!/usr/bin/env python3
++#
++# Lightweight (no-boot) migration smoke tests for the pseries machine type.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from migration import MigrationTest
++
++
++class PseriesMigrationTest(MigrationTest):
++    """
++    Lightweight migration smoke tests for pseries.
++
++    No kernel is booted — QEMU is launched with -nodefaults and
++    immediately migrated so the tests run in a few seconds.  This
++    catches regressions in the pseries vmstate save/restore path
++    without the overhead of a full kernel boot.
++
++    These complement the existing test_ppc64_linux_migration test in
++    test_pseries.py which exercises migration mid-boot.
++    """
++
++    timeout = 60
++
++    def test_pseries_migration_with_tcp_localhost(self):
++        """Basic TCP-localhost migration for pseries."""
++        self.set_machine('pseries')
++        self.migration_with_tcp_localhost()
++
++    def test_pseries_migration_with_unix(self):
++        """UNIX socket migration for pseries."""
++        self.set_machine('pseries')
++        self.migration_with_unix()
++
++    def test_pseries_migration_with_exec(self):
++        """exec (socat) migration for pseries."""
++        self.set_machine('pseries')
++        self.migration_with_exec()
++
++    def test_powernv_migration_with_tcp_localhost(self):
++        """Basic TCP-localhost migration for powernv."""
++        self.set_machine('powernv')
++        self.migration_with_tcp_localhost()
++
++    def test_powernv_migration_with_unix(self):
++        """UNIX socket migration for powernv."""
++        self.set_machine('powernv')
++        self.migration_with_unix()
++
++    def test_powernv_migration_with_exec(self):
++        """exec (socat) migration for powernv."""
++        self.set_machine('powernv')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+--
+2.53.0
 
 
