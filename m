@@ -4,109 +4,176 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E00BDC624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4A6C624C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12fh-00023a-PI; Mon, 31 Aug 2026 10:07:37 -0400
+	id 1x12g1-00025J-Q0; Mon, 31 Aug 2026 10:07:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x12fh-00023S-61
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:07:37 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x12ff-0006DK-5k
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:07:36 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c250f28f1cdso551442166b.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 07:07:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788185253; cv=none;
- d=google.com; s=arc-20260327;
- b=Xe0P1AOWUQo8V2181wF+3KQBwNCbblDdSGXXraBlIDtNHrYnm3VW7h8z1Uu/KHv0Kp
- iWWjfd8CskSwNekJVHjNiMFOHsnLIfW6/anVx8NeGRgxwmYAQYnYOdux1j2+M/CXOBzP
- 0HXFEhryC29Ig4pwRm/UO222himK7aDjM8bVwyMou2wcjCqLxf1dSD97LZ7o2IgJsge4
- JS88tW24iIVCo/SnJA7CFztkWdfkMqpCRqx2ozRQ9pXaz4X0lo8XTw7gHoG9eqU8FGId
- i0QrHoyBgMax7k4b7LUSsEHbzwdSQaB67WEI09zjcgRoW62bIsVFAhZAPbdQUXH1f1ic
- PgvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=bTG1ah6ofY0wulld+MskS/4dQpfX9pvTix7fVy2y+gU=;
- fh=9mwyWOpK54iJC8aLtzCKDeGN9smrR+H4CobDsaMoCBU=;
- b=fWexl9R33wUAS3XDOsnoqiSGWAb4NNNubI30xQfxZkLjArSSruzAA4lQh26crAsK89
- BQIMvrt3oDTFHhESRaBL/IwJpXVpvK0eDpZduzbSSfbgGUQ7KH2NyVShVNlwjphOIkaA
- 8kjf1QeRM9F8h/lQm6KihJLRbSqhs9L6vu0hrfChf5oqrVh4amI7I+u9edszPXwpAtlQ
- tB2W02rItDcLNeJE/UVApzUXKFWbQSElMpZRFeSjS56bpTX/QEI3Fd0igDpU74TBay7/
- DiNNpt1ATsldwBD2SpbeuU3++6njqRFO6YQwDlFXgDPFp687NdEaZtCNuzY81HsDr3pg
- eRvw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x12g0-00024t-8O
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:07:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x12fx-0006F4-UT
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:07:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788185272;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=zw6an/2EhhJ5W4wnSO5Y4YLVwQ7GrB0FsgM2E6YvV0o=;
+ b=QCRXxBd7vPDyN0mzPCfb2ym0oOZaXDs7qjg17Ra3fjIEicyGcY84mAg0cTL7gEY3x3yWR8
+ 3hy+1b2IG8zMfDnEzgw5DGQCK0uAONkyGN0Vx4vgkeVL+4bnvLyeQU4m8dkFCRfAsn8El7
+ 1aVnH4beA85lgtgvbd2paCWFnQbS7QI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-119-w4PxSnA-NUqlaN8WEj5NPw-1; Mon, 31 Aug 2026 10:07:50 -0400
+X-MC-Unique: w4PxSnA-NUqlaN8WEj5NPw-1
+X-Mimecast-MFC-AGG-ID: w4PxSnA-NUqlaN8WEj5NPw_1788185269
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c15f4732dfaso315754566b.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 07:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788185253; x=1788790053; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=bTG1ah6ofY0wulld+MskS/4dQpfX9pvTix7fVy2y+gU=;
- b=QLescBXJYk5stw91Om5Qutuc3mMIoznaok57D3rANS/SLlawwwYPodGs5fhTSrts0H
- OzbQrZpM4RKlChpYnfCGducXZIY63RfEylzYH4rolUPKjRzL6cEDtkfHKrkQFQ0gYKU5
- 5oHn2FJPyPtou4EV14oX8ONsEXTZ16L2OOo+1zOFCG6BGOzJG2mZDIKCfeGhqsfcYpiK
- Doul8h2lytwg0PoO4/7JyHCeqQb81hLHpQYDc0RgEJ5cQ7t/uMTZAPs3RaYwV7qF3uXJ
- DL7iGTtEF1Zdw/eS1J2wtnQDWblXutqgo/KjkT0othiXTrPmQwmJbMfc7Q3HZT/riMc1
- mrxw==
+ d=redhat.com; s=google; t=1788185269; x=1788790069; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=zw6an/2EhhJ5W4wnSO5Y4YLVwQ7GrB0FsgM2E6YvV0o=;
+ b=TcguOWVUGhewBlz/LBh/MZ8qZeYqrnDrMFGZdPKESC5/sqc+7EXLzpILkZ/GiqBDFh
+ NZgHJBu420w24BpMkI2Vcd91DTBdmETFE00rC/7mPtsQikYX+pPB0WWf9l6nYmXRu3bR
+ Ls05BRATaaZuFcnsRl0dRxepQ6uzExTMcHkdaU/W/YvMaAXsK5aGvrpKZS5k7EN1GJ18
+ AT9idw0eDnpvZJuES2yW3uuxS2cCnmO9RuES11GxZeGxau8mjCq7QXSz1yvQbLgrghC7
+ pzsjALIlX+0/B8WNM4XTFCnBJBy3FJJcShymH7uD3OrJdc9dTPLF6HkWtDE09Xsm0HHh
+ 62iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788185253; x=1788790053;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=bTG1ah6ofY0wulld+MskS/4dQpfX9pvTix7fVy2y+gU=;
- b=knu3dN3HII/DSeHat6JG2O+Lc/mk213bXQNxmu35IJiOgXFmigbt9FMY3jWc3DfY4L
- 5BENV3pEZ4Il8FP8nzZMCFIWC/vhYWUqf4I6oUEgSN1dRQ0GxwFhxG+LYj5STTGyojB5
- ybFGX8L0enPPx0gjC5tRafZmYu+JW0ImaevgtkqroOA4Wycp7C8to+R2ItdvXUEsQqBi
- X73GOB5Le9OTWPHAF7FfCFjJt6IE9FqGp0E3Hq97/uaje21N6v/hKjeRmO4GCfisL/IE
- ibRwj0uFiLmMQgILKjT05K1lXynKeyg7OappNePqJ8cWxOmublrKHljlkYGw1QSfAkNV
- yIRg==
-X-Gm-Message-State: AFuF++kU8z43J2A9ET4bE6uT0rQ1mb7Cxsi4mKa/oBF7T3wD/HUwGRGJ
- 4UTKU0ALTYhnEyfwMYtduthymqHFh95CvIVTPMNAHiXysZXZa9pVBITl5ysibyH2DMZ3sUnw4Bk
- Ms9eMZHcwMTwkVTYzfCuBflyhYaIL+78=
-X-Gm-Gg: AR+sD10/h/xPG+qaOko84VlwE8LlOVrEAcr+xZaniraceIZu2kzDq3pCKQMk4PfHu0L
- ZbDjZWw9LKAhI7TEW68bLOR297l73VdWYUeI2IuUw6zBkmu3KpUB0StVxeIADvusKZ4eEp+EeRj
- wmCUyUpMsanF3KjgY9AZMWWtTZXVIjbmIP8vQXLvB9lZiMVqP4+RVq2wA004+ueNedTj1vq8TbY
- UVbC+2bOEmH35TojLheIUKSp+XrDuqUl3SbEvMH9CgmdErF4IJUEp6knveDpiwJKBkfmiGj9VC7
- Z1DiOPAuG4iGZyniaJ7lWaO5y5tsv+REMd7t5G+LUH8X
-X-Received: by 2002:a17:907:3e8d:b0:c24:6985:d7a1 with SMTP id
- a640c23a62f3a-c2556da9d6fmr1776563166b.7.1788185253153; Mon, 31 Aug 2026
- 07:07:33 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788185269; x=1788790069;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zw6an/2EhhJ5W4wnSO5Y4YLVwQ7GrB0FsgM2E6YvV0o=;
+ b=Ts/W39BKLBWrwiFknVCXmEWXiG19JOqBApsdWxBTPWrEgC4Lnhf1KHegh6T/BSIArl
+ XkpNQ0QudckLw/9OQS1nE0a8oV/tnP9JnBDJa3EibN9XD6MYHTn9CywbUWb1y39GKoqg
+ M6INSf4/nXquj4IK1rbhYPBha5c/NJ0GJqzJRdqS3/CSOHyU21GcFdUXJapbDae+AMUV
+ FMhBBbc9WS2l2xyy/ZO+/2IPLGu7xuOK+KvumV7M+4yTLkADHXWNzu2Q4OAXCrhnCJ2d
+ 1Ic8gUGBcHcAYb0Wxm7uXipoZTmrjka6mhsAJeVyxWdnXghbzGs0qvD50Q2a7Ll+cUuj
+ QVdg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr3AM100S2NrU4f8EnOINBXnjO+l2X82fjadZPtJj2j/oMfbNILUogxowGjzeQknjorrCZC3j+3O10e@nongnu.org
+X-Gm-Message-State: AFuF++mInW250HqsX6oBYWFN2/i4p4yKOZSfXcngeUa5AXNU07e4q3x6
+ jUKaB4kg9QZ4T+Dvl6bw/G70qDSfvRsHf4Wc5FQ5a6wOwB/K4YR+y+d7UNTYXsNQspQmK7jpGOl
+ aV/OeGBZEUYVUbIqgteF1lALuHx2ovyH+S2C/zhzMSp+CBjbzyrYskOOR
+X-Gm-Gg: AR+sD12Dbf+75fsLQWUdAf84GZy7dPU09TOc8VnuduCXnbeG54VFf3Yj5HbhgRzxMas
+ 6MaAriQudE474BFYMIQmTqf/0kaGKwo63LXvPGkhC/Le6tZFVncVmoHMVLoCVBRx3LhqpL6y/2q
+ XgNBj73Wx+VNy8mSSHaJhQyKSXDFLHi7aBAn8ygwZnRi6Y9EljH+f79o63m4q7UszjJQlA/+iSR
+ QMPlMeL4hURQXZ4w8n4gDWMbeM6RMz5D/MeUTxVl/7lZHJ+rXnSZ4pe+MEdeNSkuoId5vlaI8mM
+ lu0BGKQFZGWKD//yj2y/5BbQul915hwP719VWtczAfW6/4dFTYoY3morQf526XPG6fZqJfF9dPk
+ +6lkhygaHIPLKuSsatZS7Dn4XOHkz8iTLOAD16jI=
+X-Received: by 2002:a17:907:97c4:b0:c25:6e17:9b4 with SMTP id
+ a640c23a62f3a-c256e170a28mr1236351666b.24.1788185269275; 
+ Mon, 31 Aug 2026 07:07:49 -0700 (PDT)
+X-Received: by 2002:a17:907:97c4:b0:c25:6e17:9b4 with SMTP id
+ a640c23a62f3a-c256e170a28mr1236346666b.24.1788185268714; 
+ Mon, 31 Aug 2026 07:07:48 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4?
+ ([2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c255ee09f4dsm466979166b.6.2026.08.31.07.07.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Aug 2026 07:07:47 -0700 (PDT)
+Message-ID: <fadc5ecd-f939-4258-841a-e80f488c080e@redhat.com>
+Date: Mon, 31 Aug 2026 16:07:44 +0200
 MIME-Version: 1.0
-References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
- <20260724000948.234657-4-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260724000948.234657-4-pierrick.bouvier@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Mon, 31 Aug 2026 22:07:20 +0800
-X-Gm-Features: AcwNN1Xs_9LeUBvOAE0x4YSgMMdi5a_bB03hIC4HrxiWyerX8IOoUdYPBv2jmGQ
-Message-ID: <CAE2XoE8jht9TP8OrTGAZNfALOTBECz+_2dRtKzmjwwf5kur2Jw@mail.gmail.com>
-Subject: Re: [PATCH 03/27] target-info: add target_riscv32 and
- target_base_riscv
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, 
- Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: multipart/alternative; boundary="000000000000ce91ec065a585284"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x631.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/43] qapi: convert trivial intro sections for
+ vfio.json
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ linux-cxl@vger.kernel.org, Markus Armbruster <armbru@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, qemu-trivial@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Jiri Pirko <jiri@resnulli.us>,
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, linux-edac@vger.kernel.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Jonathan Cameron <jic23@kernel.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Lukas Straub <lukasstraub2@web.de>
+References: <20260826193840.2152000-1-jsnow@redhat.com>
+ <20260826193840.2152000-6-jsnow@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260826193840.2152000-6-jsnow@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,151 +187,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ce91ec065a585284
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Jul 24, 2026 at 8:11=E2=80=AFAM Pierrick Bouvier <
-pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On 8/26/26 21:38, John Snow wrote:
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  include/qemu/target-info.h | 16 +++++++++++++++-
->  target-info.c              | 16 ++++++++++++++++
->  2 files changed, 31 insertions(+), 1 deletion(-)
->
-> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-> index 6c5b714288e..88ccef2a988 100644
-> --- a/include/qemu/target-info.h
-> +++ b/include/qemu/target-info.h
-> @@ -99,10 +99,24 @@ bool target_ppc64(void);
->   */
->  bool target_s390x(void);
->
-> +/**
-> + * target_base_riscv:
-> + *
-> + * Returns whether the target architecture is RISC-V 32-bit or 64-bit.
-> + */
-> +bool target_base_riscv(void);
-> +
-> +/**
-> + * target_riscv32:
-> + *
-> + * Returns whether the target architecture is RISC-V 32-bit.
-> + */
-> +bool target_riscv32(void);
-> +
->  /**
->   * target_riscv64:
->   *
-> - * Returns whether the target architecture is riscv64
-> + * Returns whether the target architecture is RISC-V 64-bit.
->   */
->  bool target_riscv64(void);
->
-> diff --git a/target-info.c b/target-info.c
-> index 04c69c41f8a..7ac2260b182 100644
-> --- a/target-info.c
-> +++ b/target-info.c
-> @@ -94,6 +94,22 @@ bool target_s390x(void)
->      return target_arch() =3D=3D SYS_EMU_TARGET_S390X;
->  }
->
-> +bool target_base_riscv(void)
-> +{
-> +    switch (target_arch()) {
-> +    case SYS_EMU_TARGET_RISCV32:
-> +    case SYS_EMU_TARGET_RISCV64:
-> +        return true;
-> +    default:
-> +        return false;
-> +    }
+>   qapi/vfio.json | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/qapi/vfio.json b/qapi/vfio.json
+> index 17b60468712..3d61fc38ecd 100644
+> --- a/qapi/vfio.json
+> +++ b/qapi/vfio.json
+> @@ -49,8 +49,8 @@
+>   
+>   ##
+>   # @VFIO_MIGRATION:
+> -#
+> -# This event is emitted when a VFIO device migration state is changed.
+> +#     This event is emitted when a VFIO device migration state is
+> +#     changed.
+>   #
+>   # @device-id: The device's id, if it has one.
+>   #
 
-This can be improved by using  (TARGET_ARCH_BITMASK(target_arch()) &
-QEMU_ARCH_RISCV
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-TARGET_ARCH_BITMASK should be a new macro in base-arch-defs.h
-#define TARGET_ARCH_BITMASK(sys_emu) 1UL << (sys_emu)
+Thanks,
 
+C.
 
-And the enum in base-arch-defs.h can be update with this emu, so once the
-sys_emu maximal >32 still works in future.
-
-> +}
-> +
-> +bool target_riscv32(void)
-> +{
-> +    return target_arch() =3D=3D SYS_EMU_TARGET_RISCV32;
-> +}
-> +
->  bool target_riscv64(void)
->  {
->      return target_arch() =3D=3D SYS_EMU_TARGET_RISCV64;
-> --
-> 2.43.0
->
->
-
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---000000000000ce91ec065a585284
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Fri, Jul 24, 2026 at 8:11=E2=80=AFAM Pierrick B=
-ouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.bo=
-uvier@oss.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; Signed-off-by: Pierri=
-ck Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierric=
-k.bouvier@oss.qualcomm.com</a>&gt;<br>&gt; ---<br>&gt; =C2=A0include/qemu/t=
-arget-info.h | 16 +++++++++++++++-<br>&gt; =C2=A0target-info.c =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 16 ++++++++++++++++<br>&gt; =C2=A02=
- files changed, 31 insertions(+), 1 deletion(-)<br>&gt;<br>&gt; diff --git =
-a/include/qemu/target-info.h b/include/qemu/target-info.h<br>&gt; index 6c5=
-b714288e..88ccef2a988 100644<br>&gt; --- a/include/qemu/target-info.h<br>&g=
-t; +++ b/include/qemu/target-info.h<br>&gt; @@ -99,10 +99,24 @@ bool target=
-_ppc64(void);<br>&gt; =C2=A0 */<br>&gt; =C2=A0bool target_s390x(void);<br>&=
-gt;<br>&gt; +/**<br>&gt; + * target_base_riscv:<br>&gt; + *<br>&gt; + * Ret=
-urns whether the target architecture is RISC-V 32-bit or 64-bit.<br>&gt; + =
-*/<br>&gt; +bool target_base_riscv(void);<br>&gt; +<br>&gt; +/**<br>&gt; + =
-* target_riscv32:<br>&gt; + *<br>&gt; + * Returns whether the target archit=
-ecture is RISC-V 32-bit.<br>&gt; + */<br>&gt; +bool target_riscv32(void);<b=
-r>&gt; +<br>&gt; =C2=A0/**<br>&gt; =C2=A0 * target_riscv64:<br>&gt; =C2=A0 =
-*<br>&gt; - * Returns whether the target architecture is riscv64<br>&gt; + =
-* Returns whether the target architecture is RISC-V 64-bit.<br>&gt; =C2=A0 =
-*/<br>&gt; =C2=A0bool target_riscv64(void);<br>&gt;<br>&gt; diff --git a/ta=
-rget-info.c b/target-info.c<br>&gt; index 04c69c41f8a..7ac2260b182 100644<b=
-r>&gt; --- a/target-info.c<br>&gt; +++ b/target-info.c<br>&gt; @@ -94,6 +94=
-,22 @@ bool target_s390x(void)<br>&gt; =C2=A0 =C2=A0 =C2=A0return target_ar=
-ch() =3D=3D SYS_EMU_TARGET_S390X;<br>&gt; =C2=A0}<br>&gt;<br>&gt; +bool tar=
-get_base_riscv(void)<br>&gt; +{<br>&gt; + =C2=A0 =C2=A0switch (target_arch(=
-)) {<br>&gt; + =C2=A0 =C2=A0case SYS_EMU_TARGET_RISCV32:<br>&gt; + =C2=A0 =
-=C2=A0case SYS_EMU_TARGET_RISCV64:<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0ret=
-urn true;<br>&gt; + =C2=A0 =C2=A0default:<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0return false;<br>&gt; + =C2=A0 =C2=A0}<br><br>This can be improved by=
- using =C2=A0(TARGET_ARCH_BITMASK(target_arch()) &amp; QEMU_ARCH_RISCV<br><=
-br>TARGET_ARCH_BITMASK should be a new macro in base-arch-defs.h<br>#define=
- TARGET_ARCH_BITMASK(sys_emu) 1UL &lt;&lt; (sys_emu)<br><br><br>And the enu=
-m in base-arch-defs.h can be update with this emu, so once the sys_emu maxi=
-mal &gt;32 still works in future.<br><br>&gt; +}<br>&gt; +<br>&gt; +bool ta=
-rget_riscv32(void)<br>&gt; +{<br>&gt; + =C2=A0 =C2=A0return target_arch() =
-=3D=3D SYS_EMU_TARGET_RISCV32;<br>&gt; +}<br>&gt; +<br>&gt; =C2=A0bool targ=
-et_riscv64(void)<br>&gt; =C2=A0{<br>&gt; =C2=A0 =C2=A0 =C2=A0return target_=
-arch() =3D=3D SYS_EMU_TARGET_RISCV64;<br>&gt; --<br>&gt; 2.43.0<br>&gt;<br>=
-&gt;<br><br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<=
-br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 since=
-rely,<br>Yonggang Luo</div>
-
---000000000000ce91ec065a585284--
 
