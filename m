@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB07C61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B22C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18YK-0005v9-7Q; Mon, 31 Aug 2026 16:24:24 -0400
+	id 1x18YO-0006EX-Fp; Mon, 31 Aug 2026 16:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xd-0003Dh-U8
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:42 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YC-0005b3-Jz
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xc-000891-8H
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:41 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YA-0008Hl-Sn
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207819;
+ s=mimecast20190719; t=1788207854;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=K8AG+94F77edoTiPAI8IPsNpOPrIzUtI0R/Rih5SccE=;
- b=VAN/S0k8X9XaNV7F51DifZuZcryNNTz7MD1Zn2vKMKuMPJjN7vqPMAtviUO5VrfxPN6RKR
- P3O1f6t3L+6IYLRB0xR+ub6c6TnM2ZOPoJzAsJjPTT8NICoqM2EUvOzkMESl5n0VBPqLvN
- r1E+Un7zw7vtVcsBJoH3AIy6+D1H4FA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=y8wW2V1gmq4U2oGifMr03OEbp6q8ZFZvEQ5q6kHXpZc=;
+ b=OxNdgEoEZ2T7vCPQ+DZ6THvXFXPCaZooBIg2tQdEjMy3LBBvDhxFYGxXigpDeye34Jk8vM
+ WC1AVWxXQChc5UO7kdXphkmSJIofFhBhkD9MZNullJktzPm5uJIq7Mb9zSV6kqf0CBPb81
+ sbQ/a0xFSl4ODNN5Sa0hoRpC44BEb3U=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-3a7aqxNSMtKAQ5-ch_pvGQ-1; Mon,
- 31 Aug 2026 16:23:34 -0400
-X-MC-Unique: 3a7aqxNSMtKAQ5-ch_pvGQ-1
-X-Mimecast-MFC-AGG-ID: 3a7aqxNSMtKAQ5-ch_pvGQ_1788207811
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-g8KQFvfPNuKhBNzurCJSLA-1; Mon,
+ 31 Aug 2026 16:24:11 -0400
+X-MC-Unique: g8KQFvfPNuKhBNzurCJSLA-1
+X-Mimecast-MFC-AGG-ID: g8KQFvfPNuKhBNzurCJSLA_1788207848
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 817AB191FCE2; Mon, 31 Aug 2026 20:23:31 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 794B8195FE07; Mon, 31 Aug 2026 20:24:08 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3DD3B1800577; Mon, 31 Aug 2026 20:23:24 +0000 (UTC)
+ id 3CD0A1800347; Mon, 31 Aug 2026 20:24:00 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,10 +71,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 22/43] qapi: convert trivial intro sections for
- transaction.json
-Date: Mon, 31 Aug 2026 16:19:24 -0400
-Message-ID: <20260831201945.287730-23-jsnow@redhat.com>
+Subject: [PATCH v4 27/43] qapi: convert trivial intro sections for rocker.json
+Date: Mon, 31 Aug 2026 16:19:29 -0400
+Message-ID: <20260831201945.287730-28-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -107,55 +106,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/transaction.json | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ qapi/rocker.json | 39 +++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 26 deletions(-)
 
-diff --git a/qapi/transaction.json b/qapi/transaction.json
-index 4b4eb09bf38..c0dc811ba61 100644
---- a/qapi/transaction.json
-+++ b/qapi/transaction.json
-@@ -12,8 +12,7 @@
+diff --git a/qapi/rocker.json b/qapi/rocker.json
+index 5d2dbd26034..7eb0a88dafd 100644
+--- a/qapi/rocker.json
++++ b/qapi/rocker.json
+@@ -9,8 +9,7 @@
  
  ##
- # @Abort:
+ # @RockerSwitch:
 -#
--# This action can be used to test transaction failure.
-+#     This action can be used to test transaction failure.
+-# Rocker switch information.
++#     Rocker switch information.
  #
- # Since: 1.6
- ##
-@@ -22,8 +21,7 @@
+ # @name: switch name
+ #
+@@ -25,8 +24,7 @@
  
  ##
- # @ActionCompletionMode:
+ # @query-rocker:
 -#
--# An enumeration of transactional completion modes.
-+#     An enumeration of transactional completion modes.
+-# Return rocker switch information.
++#     Return rocker switch information.
  #
- # @individual: Do not attempt to cancel any other Actions if any
- #     Actions fail after the Transaction request succeeds.  All
-@@ -156,9 +154,8 @@
+ # @name: switch name
+ #
+@@ -43,8 +41,7 @@
  
  ##
- # @TransactionAction:
+ # @RockerPortDuplex:
 -#
--# A discriminated record of operations that can be performed with
--# `transaction`.
-+#     A discriminated record of operations that can be performed with
-+#     `transaction`.
+-# An enumeration of port duplex states.
++#     An enumeration of port duplex states.
  #
- # @type: the operation to be performed
+ # @half: half duplex
  #
-@@ -184,8 +181,7 @@
+@@ -56,8 +53,7 @@
  
  ##
- # @TransactionProperties:
+ # @RockerPortAutoneg:
 -#
--# Optional arguments to modify the behavior of a Transaction.
-+#     Optional arguments to modify the behavior of a Transaction.
+-# An enumeration of port autoneg states.
++#     An enumeration of port autoneg states.
  #
- # @completion-mode: Controls how jobs launched asynchronously by
- #     Actions will complete or fail as a group.  See
+ # @off: autoneg is off
+ #
+@@ -69,8 +65,7 @@
+ 
+ ##
+ # @RockerPort:
+-#
+-# Rocker switch port information.
++#     Rocker switch port information.
+ #
+ # @name: port name
+ #
+@@ -93,8 +88,7 @@
+ 
+ ##
+ # @query-rocker-ports:
+-#
+-# Return rocker switch port information.
++#     Return rocker switch port information.
+ #
+ # @name: port name
+ #
+@@ -115,8 +109,7 @@
+ 
+ ##
+ # @RockerOfDpaFlowKey:
+-#
+-# Rocker switch OF-DPA flow key
++#     Rocker switch OF-DPA flow key
+ #
+ # @priority: key priority, 0 being lowest priority
+ #
+@@ -153,8 +146,7 @@
+ 
+ ##
+ # @RockerOfDpaFlowMask:
+-#
+-# Rocker switch OF-DPA flow mask
++#     Rocker switch OF-DPA flow mask
+ #
+ # @in-pport: physical input port
+ #
+@@ -182,8 +174,7 @@
+ 
+ ##
+ # @RockerOfDpaFlowAction:
+-#
+-# Rocker switch OF-DPA flow action
++#     Rocker switch OF-DPA flow action
+ #
+ # @goto-tbl: next table ID
+ #
+@@ -209,8 +200,7 @@
+ 
+ ##
+ # @RockerOfDpaFlow:
+-#
+-# Rocker switch OF-DPA flow
++#     Rocker switch OF-DPA flow
+ #
+ # @cookie: flow unique cookie ID
+ #
+@@ -230,8 +220,7 @@
+ 
+ ##
+ # @query-rocker-of-dpa-flows:
+-#
+-# Return rocker OF-DPA flow information.
++#     Return rocker OF-DPA flow information.
+ #
+ # @name: switch name
+ #
+@@ -261,8 +250,7 @@
+ 
+ ##
+ # @RockerOfDpaGroup:
+-#
+-# Rocker switch OF-DPA group
++#     Rocker switch OF-DPA group
+ #
+ # @id: group unique ID
+ #
+@@ -305,8 +293,7 @@
+ 
+ ##
+ # @query-rocker-of-dpa-groups:
+-#
+-# Return rocker OF-DPA group information.
++#     Return rocker OF-DPA group information.
+ #
+ # @name: switch name
+ #
 -- 
 2.55.0
 
