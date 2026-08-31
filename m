@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D52C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F05C624C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12Qx-00049p-Ru; Mon, 31 Aug 2026 09:52:23 -0400
+	id 1x12R8-0004DZ-Nc; Mon, 31 Aug 2026 09:52:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12Qw-00049L-O6
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:22 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12R7-0004D6-N2
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12Qu-0003vX-TG
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:22 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12R5-0003yE-Sn
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788184339;
+ s=mimecast20190719; t=1788184351;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=NHlXEJdd81HJkcAo6wpL5JghZB+1aFl1Z2KSzwFCTSc=;
- b=TLRNAJBsM93xh5dj0jfCJloJDW7B7c3ymsSnKlp+oFN6Sgc5QDgDNQ6AQhKJbam0p5oUKs
- U2aMQq2Jx5jFAO4qURd4rvF+16hmu5YRdS7aGKf0uRJDvSEhe0ar+YuCaIkjwpi1rJUhEU
- 069/uuH67EvPyoxHZuB3iUCeeLrDEjY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mARaIROY7KV7DEbzkF9LPUd5zvGcOmMBrV5r51m4f3k=;
+ b=C6YWcAWugI9rckkpXL2MoWSP5Tb2FIik4sFo1z5bpTuwvW4rXqXWy9QQqMGe7z6ymhL6Gj
+ XrfHjPjiALXHZF8+hi7ul0qUzCCc0mWw6wd4J4OUbf3tSpueKWsRKngnB/bbPYJv0SMaF1
+ v51vJHq8hD9dNyEF56yTgELqgODcLtA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-UzqWv90VPl-pXK6rmBYVwg-1; Mon, 31 Aug 2026 09:52:18 -0400
-X-MC-Unique: UzqWv90VPl-pXK6rmBYVwg-1
-X-Mimecast-MFC-AGG-ID: UzqWv90VPl-pXK6rmBYVwg_1788184337
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4994aebe932so34930075e9.3
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:18 -0700 (PDT)
+ us-mta-94-lUGHsFX6OEyk_kw5ibttxA-1; Mon, 31 Aug 2026 09:52:29 -0400
+X-MC-Unique: lUGHsFX6OEyk_kw5ibttxA-1
+X-Mimecast-MFC-AGG-ID: lUGHsFX6OEyk_kw5ibttxA_1788184349
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49b0d7a07acso34422845e9.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788184337; x=1788789137; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=NHlXEJdd81HJkcAo6wpL5JghZB+1aFl1Z2KSzwFCTSc=;
- b=n0abQCGdSw9eknnbFytq2BZ1fCY+/eKVBEs2RPApZvO+f9lnVev4FH5VstLVYOk5pD
- vKvU6RAz8eWPW4FUhr5HwaRaLAp5IxJ41q2a6bIHf4X4glyIYpmbR+375HG+OUojj1Si
- /XoNLCetl00uxTerywWcIYOyZe7JcjBU42DySpMvPeD9nmIpscM3NeQ7MEcsIIPxqwEo
- J+jyY/rOfAtip0q54WX6o6zUqhNS2lquk4Ykzdc7p+rd7OohEGP5pIXithzUsI6/RqPo
- 6O2TZiNJJABBAfFWDWdZp2czRdpD19SgotRD/yzCVH44Gl+Pm8p2IPsNXlnlrcqTN4yT
- Wl0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788184337; x=1788789137;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=redhat.com; s=google; t=1788184348; x=1788789148; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=NHlXEJdd81HJkcAo6wpL5JghZB+1aFl1Z2KSzwFCTSc=;
- b=nGs1EC3JSS3wc4ML5iowfrYnZRnj/+IutvEFWaAPuqnERZp+M20L2j+ZcSCk5SO3Ac
- 8mR3vwZRHNDoZwrci9MAW39GF3ZX9I+xkJI+w0NIkMYxYYgnn2DoTZk+yA3eSeUOIXNv
- pr4bi5ZSBcILwxgDC5yFkO2lDDeGcEkR9b15ayb/FdSyBoHO2DanJH8Oy0RFk8zihV2X
- r3x6K+ADU2onR8pisEAPfPzyatN1mj/+ckjSkry3XkDNMUwaGyod+BdYH+YNeX9vaIHm
- lEUgnFXh8WHihjfa1xMv9t88FiBatPkAlKL5WMpXbRpEN7Va6bq5ZHQIVfx4XPqlhTQ8
- QvXA==
-X-Gm-Message-State: AFuF++lZrVzm9CniCRo4TMHNqcrC6+HDO9mcGLPzCNZ135+148bwlE1s
- TPH8lt+SiZHL8Z3Uw1061LUE6/UaKofY7s+ooKS0xuzkf2GxR/K4aCZdju6FUowlQJahTDQJqwL
- DeRnIzlZUZyVEfcN7TGrms5yh9n7jM7Nt6b/ve/z9i3TdM6owUejhBdpb
-X-Gm-Gg: AR+sD12MfIQ8GO3c6ZrJkhedupWEtJpRLtFs8TfKGgqTlNyKCqXtafWvnxoIi5UbtTS
- oXcUvN21oKgzKWEYIprOstQei0amSy3EsQD2pgXKSVy73JGmaqh6azZ2zc3KZo7t6E+g2RVdS/W
- jPUPDeLQ9Y51VmU+YIXwuPZK8MmhojK7ywCVNKTL6/nM/uCJAMbjq5YHhPNoAjITwoKRqQBFoc3
- 24s3ceed5CRggCtFlca4pC7W7IavX0jjysj4+y6AxdN4svnDb9S4I19I8N0FSmhElGKGVzDUZR6
- so3We+ORX1Mj9aoME1lOMh4KDzMxq8BOP4rXC6B5G9bdUf/Gp6VAAMpjxOShIv/Od4Ri3yFJACR
- 2YdNVrMrL9aKkLJtuyH8/ABZ4JAbsFNptAbUs1zXPijtOV9jKCREvNL1ROtY=
-X-Received: by 2002:a05:600c:8011:b0:496:bbce:fc with SMTP id
- 5b1f17b1804b1-49cdc5660bamr13786195e9.12.1788184337134; 
- Mon, 31 Aug 2026 06:52:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:8011:b0:496:bbce:fc with SMTP id
- 5b1f17b1804b1-49cdc5660bamr13785375e9.12.1788184336755; 
- Mon, 31 Aug 2026 06:52:16 -0700 (PDT)
+ bh=mARaIROY7KV7DEbzkF9LPUd5zvGcOmMBrV5r51m4f3k=;
+ b=oCCo8lFvO3PVf9zoN824Yzew470/IA1MFCii3MTXQmZH+Y7LEQ+mxGesf859+Sol2V
+ dXo+ONy+aXtoGtnYmwEGC/P+pPV6MgV61il0x3iEMBWWYwV+y+ri4eBTMdnFPYTdt4fC
+ UtvnXVgFCfHJAJhv43VB7pxrGtqxXnAOJAgASLtnW2s6HMBqzOfiiJR2jh7rXsIP0xW3
+ 5z5omHMFBqV0eWd60CWZHQJ4xW/ZIufUIlbFzn+v+G0H7MtLjwYKUF4J/LS+4JK/qnJv
+ Vu6FK7Gh0eOUnx7dayvWH5IK1h18hruhswBLvcs435PJymC7SJC89A4QTiUCn3cjmo2U
+ oVzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788184348; x=1788789148;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mARaIROY7KV7DEbzkF9LPUd5zvGcOmMBrV5r51m4f3k=;
+ b=CHvBPCaAu1XLfZLPJS/hJ4ludW67ZJcdnPPEtt2jwddHoS+yOW6PXkMS/90zRrPeqM
+ 6h7iGDTCC/rbC4anhH02hRhruK2aLxPVQRg6+NqhQXrmjvoClTD8DJvM9Xw6sxGiQ3ry
+ jFh8W1cX3eHdbbSrK5P0Hnl9z0B6fpJMZ32V5pPI5sU+gKRTYWuDg7J0l2PuBteSstXD
+ X0cFlgG6dfsl7xSTdAJo097t7SzB5hTo9gQXgxaqxzDEsl0Q8eUj0SYNJF6Dn13ZOXdK
+ hk/nccBHVkttseVtyqvAP9K3KRCIT3hzeWC2PLTIp+THDgKxH+6+IYL7DWQ8Cb5xvy0A
+ F0yg==
+X-Gm-Message-State: AFuF++lHqpEh1x/rh2aHc+6apQF1hMNWBGZqJExVkNOrYSlg8JCQaCtf
+ WQX2rZn7Pgb08GA8kyQYEM/6HrQV5Vh8vHPyoyDjZmd3dvYO4FSnSVnVxeSA0IiSG7uVRjO98j4
+ IytecL5Z8z6SH27fCVyiS3g5W6aTHb668oA5ReG52R4qhk2lCGOBr+CjL
+X-Gm-Gg: AR+sD11iqXSL3LOqcgRS0sW2eeXwo9hX4KcFtAkSE1GxwR7ehcl1w1sPhhpqehsalL4
+ qxDnXVWDDu/y1DRb/BZrnMNgz5Ma1z5fNm2GR6PrgTb6FgLrdR9hNbdU90COJDTINBjpzP3Nn7w
+ DMJE67BZfBNtIiFO9u31uWPEo/zmUrA3rbRIa9FEGxcYndpg1coI1JktUC8L5cB6Vpnd2umEQzE
+ dwHEiYoo9JH1o99EmjHv1xPHwVJPYyxCsh9ENC/cPuL02xzcYK7o3Hdc/lvAvg9UuLnJ5YjifsR
+ sJ/6OBxho94H5x/ycV6S5kS+F3TtOxDNO0emXBF+JNeZ+mOi1lX7FBo4QbE6cetxC76xwbpCHsE
+ dLJogK2nNPqY7mSB8nFJGRjjSR9PFPyaHwrpVYgELY8HgJLpmqwvFY4NcMFM=
+X-Received: by 2002:a05:600c:1d1d:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49b91c2dfecmr398052745e9.8.1788184348546; 
+ Mon, 31 Aug 2026 06:52:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d1d:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49b91c2dfecmr398051545e9.8.1788184347971; 
+ Mon, 31 Aug 2026 06:52:27 -0700 (PDT)
 Received: from localhost
  (p200300cfd72080187472d8ceb75e67b1.dip0.t-ipconnect.de.
  [2003:cf:d720:8018:7472:d8ce:b75e:67b1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cd2922ebdsm168317295e9.3.2026.08.31.06.52.15
+ 5b1f17b1804b1-49b49cc61cfsm410444125e9.6.2026.08.31.06.52.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 06:52:15 -0700 (PDT)
+ Mon, 31 Aug 2026 06:52:27 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -88,10 +91,12 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 0/9] block: BLOCK_IO_DELAY event
-Date: Mon, 31 Aug 2026 15:51:56 +0200
-Message-ID: <20260831135206.126184-1-hreitz@redhat.com>
+Subject: [PATCH 4/9] block-backend: Public blk_get_attached_dev_path()
+Date: Mon, 31 Aug 2026 15:52:00 +0200
+Message-ID: <20260831135206.126184-5-hreitz@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831135206.126184-1-hreitz@redhat.com>
+References: <20260831135206.126184-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -103,7 +108,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,95 +124,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: <20260724152315.234183-1-hreitz@redhat.com>
-          [PATCH 0/6] hw/[block]: Fix missing accounting
-          Fri, 24 Jul 2026 17:23:09 +0200
+Make blk_get_attached_dev_path() public so we can use it in the I/O
+operation delay QMP event to identify the affected guest block device.
 
-Hi,
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ include/system/block-backend-io.h | 9 +++++++++
+ block/block-backend.c             | 6 +-----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-I’m told there are installations where storage is very slow, and some
-would like the VM stack to report this proactively.  To do so, we should
-(via QAPI events) report on extremely slow I/O requests.
-
-We already have the latency histogram, but this is not deemed sufficient
-because it is not proactively reporting and would require repeated
-querying.  Therefore, this series introduces the event still.
-
-Now, from a user's perspective, it would be nice if this event could be
-raised exactly when an I/O request crosses the user-defined threshold,
-but this would require keeping all active requests in a list and
-checking it periodically.  Now, if we used latency cookies for this
-(which makes sense), then that would require that every cookie set up is
-also finalized when the request is done, because if we don't, results
-could well be catastrophic:
-- Either we use cookies as-is, which are often allocated on the stack or
-  in some other structure managed by the device; then this would result
-  in use-after-free,
-- Or we allocate something specifically for this checking, so lingering
-  requests would at most create spurious latency events and memory
-  leaks, but this would require an additional heap allocation per
-  request that we would probably want to avoid.
-
-So ideally we could use latency cookies and could statically verify that
-they are always finalized when the request is done, but doing this in C
-may well be impossible.
-
-
-So, because it is basically impossible (or at least it would be very
-hard, and presumably require a large refactoring) to guarantee, without
-additional heap allocations, that a list of active requests won’t run
-into catastrophic use-after-frees, this series does the much simpler
-version first, which is to just raise an event when a request *finishes*
-and took more than a user-defined latency threshold.
-
-
-(PS: The nice thing about throwing an alert while the request is still
-going on would be that it could allow us to also stop the VM in case of
-excessive latency, before the request completes, so the guest would be
-shielded from such excessive latency.  This might be useful for Windows
-guests that just have a maximum request lantency before throwing a
-BSOD.)
-
-
-Hanna Czenczek (9):
-  block/accounting: Add offset to BlockAcctCookie
-  qapi/block: Add IoAccountingOperation enum
-  qapi/block: Add BLOCK_IO_DELAY event
-  block-backend: Public blk_get_attached_dev_path()
-  block/accounting: Add BB field to latency checker
-  block/accounting: Emit BLOCK_IO_DELAY event
-  block: Add delay-alert-ms property
-  block/accounting: Move latency_ns override down
-  iotests: Add delay-alert test
-
- qapi/block.json                          |  52 +++++++++
- include/block/accounting.h               |  20 +++-
- include/hw/block/block.h                 |   5 +-
- include/system/block-backend-io.h        |   9 ++
- include/system/dma.h                     |   2 +-
- block/accounting.c                       |  60 ++++++++--
- block/block-backend.c                    |   8 +-
- blockdev.c                               |  16 ++-
- hw/block/block.c                         |   4 +-
- hw/block/dataplane/xen-block.c           |   4 +-
- hw/block/virtio-blk.c                    |  15 +--
- hw/ide/ahci.c                            |   6 +-
- hw/ide/atapi.c                           |   9 +-
- hw/ide/core.c                            |   9 +-
- hw/ide/macio.c                           |  15 ++-
- hw/nvme/ctrl.c                           |  43 ++++---
- hw/nvme/dif.c                            |   8 +-
- hw/scsi/scsi-disk.c                      |  28 +++--
- qemu-io-cmds.c                           |  14 +--
- system/dma-helpers.c                     |   4 +-
- tests/unit/test-block-accounting.c       |   2 +-
- tests/qemu-iotests/172.out               |  38 +++++++
- tests/qemu-iotests/tests/delay-alert     | 136 +++++++++++++++++++++++
- tests/qemu-iotests/tests/delay-alert.out |  46 ++++++++
- 24 files changed, 472 insertions(+), 81 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/delay-alert
- create mode 100644 tests/qemu-iotests/tests/delay-alert.out
-
+diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
+index fd84723d9d0..63b2dd2e24f 100644
+--- a/include/system/block-backend-io.h
++++ b/include/system/block-backend-io.h
+@@ -41,6 +41,15 @@ bool blk_iostatus_is_enabled(const BlockBackend *blk);
+  */
+ char *blk_get_attached_dev_id(BlockBackend *blk);
+ 
++/*
++ * Return the QOM path of the block device attached to the
++ * BlockBackend.
++ *
++ * The caller is responsible for releasing the value returned
++ * with g_free() after use.
++ */
++char *blk_get_attached_dev_path(BlockBackend *blk);
++
+ BlockAIOCB *blk_aio_pwrite_zeroes(BlockBackend *blk, int64_t offset,
+                                   int64_t bytes, BdrvRequestFlags flags,
+                                   BlockCompletionFunc *cb, void *opaque);
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 37ba7e9fc40..164bda846f4 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -1053,11 +1053,7 @@ char *blk_get_attached_dev_id(BlockBackend *blk)
+     return blk_get_attached_dev_id_or_path(blk, true);
+ }
+ 
+-/*
+- * The caller is responsible for releasing the value returned
+- * with g_free() after use.
+- */
+-static char *blk_get_attached_dev_path(BlockBackend *blk)
++char *blk_get_attached_dev_path(BlockBackend *blk)
+ {
+     return blk_get_attached_dev_id_or_path(blk, false);
+ }
 -- 
 2.55.0
 
