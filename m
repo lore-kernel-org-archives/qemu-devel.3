@@ -4,112 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45417C624A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 07:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B31C624A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 07:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0wdl-0003Vv-BB; Mon, 31 Aug 2026 03:41:13 -0400
+	id 1x0wdu-0003WN-BQ; Mon, 31 Aug 2026 03:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1x0wdj-0003VT-KD
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 03:41:11 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1x0wdh-0004tw-Hy
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 03:41:11 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-49cca4ffdcfso14797895e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 00:41:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788162067; cv=none;
- d=google.com; s=arc-20260327;
- b=NuQCtyYkz5MSwLFPVmnvOfvjUjFqqP3WsM7D9Xt0H2LA/FPsyqTxS+UVo0+4rg2tAH
- YkqAO31EzyZYbVcNfO6pchHw7RqRVab06zqHLUXOiTjmjJpZd1CcXzLhQwZdN9Fc7hAx
- bKtfAD6aVWsonlYi+SDuwkeSItT/mKFF2insWJoYMNdEyNodl7vNtty4QVu2NAYb9nLK
- xPmtSrrddH7wRLieo1jM6SYsj/QmC36rIe9bHZ3mujnDNyQ7V9k4jxkKrB9hnWN5y6Kg
- AinYKi+3KOZT4tF/AXtFTWZCBZjg6KstfDRh/PRyz3Bh/+rMkWCLWoLX/BAnBirZwzd1
- lovQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GpuGOCIIyNj1BGe4oWzvEgY32X+2v4J25gDa482vKvM=;
- fh=hZlilrbqsditQ0+hAfZywczFkhc1DWF7LFZ1QY5cZTM=;
- b=PRml2eJ2eiRI1Cq9bd3uLB/C4CFRCHGVrvhu2l25KhcrFWBfO2+Vr9G1+R9+3gKT1E
- rZ/50/rl/V5Ms4/t6geeaJuCCNigCmH2yIGTCWU2dNKF87wdCf40eOK53LxdXb6ETPdP
- DNwLec1zbak+HrSrXIzwE2y/7lhbwEP3VDgZbWa3+4ZZmaHumTCZH2PbFDfmmfTNagz0
- zM578+7rpUiSgS9oQwFgWoY5XTGsXNa26CPj6VT05FPR8S1JoKbaFc/IzJOoo9uIcNAZ
- 7jOBsvhsfYCMGVDtE9tufkptU+BTBIXp4FSo9rffg0eZyidQd12DZqFc5iwTLbKGKHv5
- BdKQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1x0wdq-0003WB-Tf; Mon, 31 Aug 2026 03:41:19 -0400
+Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1x0wdn-0004ml-Am; Mon, 31 Aug 2026 03:41:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788162067; x=1788766867; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GpuGOCIIyNj1BGe4oWzvEgY32X+2v4J25gDa482vKvM=;
- b=Qh0gE6U09c1duIgNVAERfCSqzimbUZTajOYfJ6CDPZYX2CdJRWU5DOtxxzYw++tCF2
- o71Sl7qHmeP7+rmqlQ5yczRV5cYhB4n7Ux1JBn+9CKN+bDkqUX7Th61khDzbH4eD6twb
- u7bpLG563/RrKdHFX+BfK9+7Pvfd3egWeOKadqmGYlZXNorgrXSMoOdY/Fa+5AOUsdgB
- X750wzXNX/r7u/HA/IP0b+6PoZ43hFCchTkonZevZvSS8FKuyQZ/ud55xCSfXexCTC2s
- qxl0WlJgnRoqy6ydeZlGy62HlRL1GNS3mhzHqbQkNtX2zja699F/cF73LeDSgpReT/s9
- ulsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788162067; x=1788766867;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GpuGOCIIyNj1BGe4oWzvEgY32X+2v4J25gDa482vKvM=;
- b=JNoV0MtdaYd6KNa9ncOt6Sb6ytbFnACEOVTDOhRyhi03KK0SB+0RobZk5IGnjQ4JiP
- 1hnGhrNMcyUas7PlD7Gso/jzvp87jn6FIJtdFspISBeM0hx45cTUkX21F4nfLtGrSjyi
- +eEbnndsAt06xKnqeaZE/VjirI9ZOB+EckpAEAhJgZyZ9OnzDU/L4r5Y36ZtC1DteGjz
- IdxBVlWnBNbp91Ecr1dowLH1aNjQ3ETkDB/FOWs0pdNzLlBi8MSMh0ZsV5Jri7XS3xsk
- +k8aoeSDIxHR3/w1DVmdLlfgRfX8dbJr99Qsk+8AQUfCoEV2kfn65373BrhPaD1JXTvA
- Qc/g==
-X-Gm-Message-State: AFuF++kmBOtATbWQB8LxeDKI2JS46b1QpbFIZwqRpJtYJUebHY8FGX1J
- bmaUGiyICIfe6+N3xYYQbD22YMI5M6o7l6vgpCvMiPO2V0TyjW+aJGiDjvKqYaZlStt0rvVgO0C
- QtGsisdhyH/xjGqsQtvz4XVYNQFTXvxMkJge7OpFxoA==
-X-Gm-Gg: AR+sD12P7SkQXRnLNlt90lLv8jNCSde5UWkg5KXyGwU3/rUZ8ftVrFjgyyBuU4PJgWF
- hEu7ZEMqUBo+0enO7ELEBRNAOxaFLhSsL2LkmIfBvDvfGEddnd5p/NhCF2kW1EQoevi4e5IQjZG
- gx+kXWXCv3+YSu7xDddbFF+RSqX9kSvhEl6/mT9eHRdwX/QQPfhJLOls63smuSi7a6csdyxbvPF
- 6kKp6HiavMZdU+xA4hZe+B6GmHnUWSw82TKmFmcPg8+3tKG4ofeJ/V/TbXc49GHLLJ5rPcfJvcH
- LHYUiZNdXR6eA1SyzfKxugHcL03FxmbMmi374i29rpMgXN91b07Y5MiJ8GFzDtdzzD2AoRlXTMT
- 8kcmxhBC1W++43zQZyh5inJpKoFO8TeJXm4m1ePnfo6cJJSi8nAsNwLU8T3ty4QkXz1CBtQfeHb
- my4J9aXrMdYUnMzjJhl4+17TA=
-X-Received: by 2002:a05:600c:1f91:b0:499:bf8c:cfd1 with SMTP id
- 5b1f17b1804b1-49b91c1c784mr341096665e9.2.1788162066652; Mon, 31 Aug 2026
- 00:41:06 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1788162050; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=EyMzEUFX18h3H7e54rfyjeZ+71H4oGlpgGNQWBVUORs=;
+ b=aThZzsc01WbTlaSZNZJvAkRoX3v4ZUF2SEV9LodGx/WL634W6L63jJPksmrjUMHjARb9bWvKw0UWeBb6/qMnTaA+wWtDOMFLX9ge4/+yTeiaZqmKIZReMixpDlR41avB5reRU/x7ag87/+pYgs4wCA1n0Gq3yRe0deCTxm1lr1A=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0X9v6Xbf_1788162044; 
+Received: from
+ riscv-project-v011122129236.ea134.tbsite.net(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0X9v6Xbf_1788162044 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 31 Aug 2026 15:40:49 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Mon, 31 Aug 2026 15:40:35 +0800
+Subject: [PATCH] target/riscv/tcg: fix user option hash table leaks
 MIME-Version: 1.0
-References: <20260803081159.91981-1-alexander@mihalicyn.com>
- <CAJqdLrri+kRORx_8cHFhi6cuoVZ1ENup+fprm3XHaVavteHRpQ@mail.gmail.com>
-In-Reply-To: <CAJqdLrri+kRORx_8cHFhi6cuoVZ1ENup+fprm3XHaVavteHRpQ@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 31 Aug 2026 10:40:39 +0300
-X-Gm-Features: AcwNN1Vp2H3JgEPDfwjYfKX2q9dmTye9P8GEfMSnplIsDcU_rc5s7TUJN_yAusI
-Message-ID: <CAAjaMXZ80o20S-o7=QbrP+wNKqo==w-9Cc3BfeZGG9DazMTnPA@mail.gmail.com>
-Subject: Re: [PATCH v5 00/10] hw/audio/virtio-sound: basic migration support
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260831-b4-riscv-cpu-user-option-leak-v1-1-6b020c8b6964@linux.alibaba.com>
+X-B4-Tracking: v=1; b=H4sIAPIvlWoC/x3MTQ5AMBBA4avIrE1CWz9xFbGoGkwITYtIxN1NL
+ N/iew9ECkwRmuSBQBdH3jeJPE3AzXabCHmQBpWpMqt1jr3BwNFd6PyJp2jc/SEIV7ILmtqaSld
+ DMVoF8vCBRr7/f9u97wcbj/jPbwAAAA==
+X-Change-ID: 20260831-b4-riscv-cpu-user-option-leak-48a4737d5fa2
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788162049; l=10681;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=ViRIE0gWRAoMlBPw1LyxfuB2Died6CDpQQf0hy76HOQ=;
+ b=M2zO+mf/GmRcOHVWRUeryyF0GznKkEecg+OtKMjAxsTjSFYPRH2uBDQf0GXNUM0hOsg2sW3Jr
+ kwu0HJdCvrEDjiGLW61hwqU10IFOEe1BDvbJqE6pdHpLOdjvDFVTP6G
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,120 +85,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alexander, so sorry for the massive delay but I'm on PTO for a big
-part of August and some of September. Your series is on my priorities
-as soon as I return.
+The misa_ext_user_opts and multi_ext_user_opts hash tables are global,
+but riscv_tcg_cpu_instance_init() recreates both for every CPU instance.
+Creating a second CPU overwrites the only references to the first CPU's
+tables. LeakSanitizer reports two direct and four indirect leaks, 320
+bytes in total, when a two-hart virt machine exits.
 
-On Mon, Aug 31, 2026 at 10:27=E2=80=AFAM Alexander Mikhalitsyn
-<alexander@mihalicyn.com> wrote:
->
-> Am Mo., 3. Aug. 2026 um 10:12 Uhr schrieb Alexander Mikhalitsyn
-> <alexander@mihalicyn.com>:
-> >
-> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >
-> > Dear friends,
-> >
-> > This patchset is aimed to support virtio-sound live migration and based=
- on
-> > pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1]. I=
- tried
-> > to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b=
-8a335fc53569.camel@mihalicyn.com/)
-> > if Volker is going to continue his work on this, but received no reply =
-so I
-> > just decided to go forward: take his patches, rebase and resend. Of cou=
-rse,
-> > I kept all authorship/tags so I hope that it is fine.
-> >
-> > Testing.
-> >
-> > I manually validated this with Ubuntu 24.04 Desktop VM and found no iss=
-ues.
-> > Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pip=
-elines/2626702088).
-> >
-> > Original patchset:
-> > https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e=
-@t-online.de [1]
-> >
-> > Git tree:
-> > https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
-> >
-> > Changelog for version 5:
-> > - rebased
-> > - added RWB tags
-> >
-> > Changelog for version 4:
-> > - addressed review feedback from Marc-Andr=C3=A9 Lureau
-> > - and from Manos Pitsidianakis
-> > *there is a detailed changelog under each commit message*
-> >
-> > Changelog for version 3:
-> > - addressed review feedback from Marc-Andr=C3=A9 Lureau:
-> >         - drop VirtIOSoundPCMStream's id field (unused)
-> >         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
-> >         - fixes in "hw/audio/virtio-sound: add stream state variable"
-> >           [ please, look in commit message for details ]
-> >         - added "hw/audio/virtio-sound: remove channel positions field
-> >           from VirtIOSoundPCMStream"
-> >         - fixes in "hw/audio/virtio-sound: add missing vmstate fields"
-> >           [ details in commit message ]
-> >
-> > Changelog for version 2:
-> > - no code changes (only commit messages)
-> >   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Daniel!)
-> >   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
-> >   and added some extra details about what I did with the original
-> >   patches during rebase (for some of them it was simpler and less error
-> >   prone to just drop changes and reimplement them by following the idea
-> >   of the patch, cause base code has changed significantly).
-> >
-> > Changelog relative to the original Volker R=C3=BCmelin's submission:
-> > - rebased:
-> >         - "hw/audio/virtio-sound: return correct command response size"
-> >                 was dropped as it was already merged
-> >         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer =
-handler"
-> >                 was dropped as it seems to be replaced with another fix
-> >                 https://github.com/qemu/qemu/commit/731655f87f319fd06f2=
-7282c6cafbc2467ac8045
-> >         - I had to drop all pre-existing Reviewed-by tags cause it was =
-2 years since
-> >           this patchset was sent and reviewed and I did a quite signifi=
-cant code changes
-> >           during rebase
-> >
-> > Kind regards,
-> > Alex
-> >
-> > Alexander Mikhalitsyn (2):
-> >   hw/audio/virtio-sound: remove channel positions field from
-> >     VirtIOSoundPCMStream
-> >   hw/audio/virtio-sound: drop unused struct
-> >     VirtIOSoundPCMStream.flushing field
-> >
-> > Volker R=C3=BCmelin (8):
-> >   hw/audio/virtio-sound: remove command and stream mutexes
-> >   hw/audio/virtio-sound: allocate an array of streams
-> >   hw/audio/virtio-sound: free all stream buffers on reset
-> >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-> >   hw/audio/virtio-sound: add stream state variable
-> >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-> >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
-> >   hw/audio/virtio-sound: add missing vmstate fields
-> >
-> >  hw/audio/virtio-snd.c         | 696 ++++++++++++++++++++--------------
-> >  include/hw/audio/virtio-snd.h |  26 +-
-> >  2 files changed, 414 insertions(+), 308 deletions(-)
-> >
-> > --
-> > 2.47.3
-> >
->
-> Gentle ping.
+The option state belongs to a CPU instance, like user_options. Move both
+tables into RISCVCPU, pass the CPU to their access helpers, and free them
+from the existing instance finalizer. Keep the implied-rule tables global
+because those are initialized once and shared.
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+Fixes: 549cbf789ef8 ("target/riscv/cpu.c: introduce RISCVCPUMultiExtConfig")
+Fixes: 21915d16c6fb ("target/riscv/tcg: add MISA user options hash")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+---
+The misa_ext_user_opts and multi_ext_user_opts hash tables are global, but
+riscv_tcg_cpu_instance_init() creates both for every CPU instance.  A second
+CPU therefore overwrites the only references to the first CPU's tables.
+
+Move the tables into RISCVCPU and release them from the existing CPU instance
+finalizer.  Keep the implied-rule tables global because they are initialized
+once and shared.
+
+Testing:
+- No ASan/LSan errors after QMP quit for virt TCG with
+  -cpu rv64 and both -smp 1 and -smp 2.
+- Expected dependency errors were reported for:
+  -cpu rv64,zce=true,zca=false
+  -cpu rv64,zfa=true,f=false
+---
+ target/riscv/cpu.c         |  2 ++
+ target/riscv/cpu.h         |  2 ++
+ target/riscv/tcg/tcg-cpu.c | 54 ++++++++++++++++++++++------------------------
+ 3 files changed, 30 insertions(+), 28 deletions(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 61109672d60b4fa554e10401d58e5a27d7f2f679..c0f979ae0586c7e377fdfe328689d5953a0c1216 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3279,6 +3279,8 @@ static void riscv_cpu_instance_finalize(Object *obj)
+     g_clear_pointer(&cpu->pmu_event_ctr_map, g_hash_table_destroy);
+ #endif
+     g_clear_pointer(&cpu->user_options, g_hash_table_destroy);
++    g_clear_pointer(&cpu->misa_ext_user_opts, g_hash_table_destroy);
++    g_clear_pointer(&cpu->multi_ext_user_opts, g_hash_table_destroy);
+ }
+ 
+ static const TypeInfo riscv_cpu_type_infos[] = {
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 718b66487a21b42f6df55c8f754c5fc2e54ce864..afce7c2eca708256a4310caa7d0f5a89093d1999 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -582,6 +582,8 @@ struct ArchCPU {
+     /* Mapping of events to counters */
+     GHashTable *pmu_event_ctr_map;
+     GHashTable *user_options;
++    GHashTable *misa_ext_user_opts;
++    GHashTable *multi_ext_user_opts;
+     const GPtrArray *decoders;
+ };
+ 
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 54f1b66216cabb731222bce7115f2f4c59de18e0..b68160af8307c1e46d3f200c5313823d240eb7b3 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -41,34 +41,32 @@
+ #include "target/riscv/tcg/csr.h"
+ #endif
+ 
+-/* Hash that stores user set extensions */
+-static GHashTable *multi_ext_user_opts;
+-static GHashTable *misa_ext_user_opts;
+-
+ static GHashTable *multi_ext_implied_rules;
+ static GHashTable *misa_ext_implied_rules;
+ 
+-static bool cpu_cfg_ext_is_user_set(uint32_t ext_offset)
++static bool cpu_cfg_ext_is_user_set(RISCVCPU *cpu, uint32_t ext_offset)
+ {
+-    return g_hash_table_contains(multi_ext_user_opts,
++    return g_hash_table_contains(cpu->multi_ext_user_opts,
+                                  GUINT_TO_POINTER(ext_offset));
+ }
+ 
+-static bool cpu_misa_ext_is_user_set(uint32_t misa_bit)
++static bool cpu_misa_ext_is_user_set(RISCVCPU *cpu, uint32_t misa_bit)
+ {
+-    return g_hash_table_contains(misa_ext_user_opts,
++    return g_hash_table_contains(cpu->misa_ext_user_opts,
+                                  GUINT_TO_POINTER(misa_bit));
+ }
+ 
+-static void cpu_cfg_ext_add_user_opt(uint32_t ext_offset, bool value)
++static void cpu_cfg_ext_add_user_opt(RISCVCPU *cpu, uint32_t ext_offset,
++                                     bool value)
+ {
+-    g_hash_table_insert(multi_ext_user_opts, GUINT_TO_POINTER(ext_offset),
++    g_hash_table_insert(cpu->multi_ext_user_opts,
++                        GUINT_TO_POINTER(ext_offset),
+                         (gpointer)value);
+ }
+ 
+-static void cpu_misa_ext_add_user_opt(uint32_t bit, bool value)
++static void cpu_misa_ext_add_user_opt(RISCVCPU *cpu, uint32_t bit, bool value)
+ {
+-    g_hash_table_insert(misa_ext_user_opts, GUINT_TO_POINTER(bit),
++    g_hash_table_insert(cpu->misa_ext_user_opts, GUINT_TO_POINTER(bit),
+                         (gpointer)value);
+ }
+ 
+@@ -358,7 +356,7 @@ static void cpu_cfg_ext_auto_update(RISCVCPU *cpu, uint32_t ext_offset,
+         return;
+     }
+ 
+-    if (cpu_cfg_ext_is_user_set(ext_offset)) {
++    if (cpu_cfg_ext_is_user_set(cpu, ext_offset)) {
+         return;
+     }
+ 
+@@ -491,7 +489,7 @@ static void riscv_cpu_validate_g(RISCVCPU *cpu)
+ {
+     const char *warn_msg = "RVG mandates disabled extension %s";
+     uint32_t g_misa_bits[] = {RVI, RVM, RVA, RVF, RVD};
+-    bool send_warn = cpu_misa_ext_is_user_set(RVG);
++    bool send_warn = cpu_misa_ext_is_user_set(cpu, RVG);
+ 
+     for (int i = 0; i < ARRAY_SIZE(g_misa_bits); i++) {
+         uint32_t bit = g_misa_bits[i];
+@@ -734,7 +732,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicntr))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_zicntr))) {
+             error_setg(errp, "zicntr requires zicsr");
+             return;
+         }
+@@ -742,7 +740,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zihpm && !cpu->cfg.ext_zicsr) {
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zihpm))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_zihpm))) {
+             error_setg(errp, "zihpm requires zicsr");
+             return;
+         }
+@@ -802,8 +800,8 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ 
+     if ((cpu->cfg.ext_smctr || cpu->cfg.ext_ssctr) &&
+         (!riscv_has_ext(env, RVS) || !cpu->cfg.ext_sscsrind)) {
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_smctr)) ||
+-            cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_ssctr))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_smctr)) ||
++            cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_ssctr))) {
+             error_setg(errp, "Smctr and Ssctr require S-mode and Sscsrind");
+             return;
+         }
+@@ -820,7 +818,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->cfg.ext_svpbmt && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
+         cpu->cfg.ext_svpbmt = false;
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svpbmt))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_svpbmt))) {
+             warn_report("svpbmt requires at least satp sv39, "
+                         "current satp mode: %s",
+                         satp_mode_str(cpu->cfg.max_satp_mode,
+@@ -830,7 +828,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ 
+     if (cpu->cfg.ext_svnapot && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
+         cpu->cfg.ext_svnapot = false;
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svnapot))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_svnapot))) {
+             warn_report("svnapot requires at least satp sv39, "
+                         "current satp mode: %s",
+                         satp_mode_str(cpu->cfg.max_satp_mode,
+@@ -1007,7 +1005,7 @@ static void cpu_enable_implied_rule(RISCVCPU *cpu,
+                      * If the user disabled the misa_bit do not re-enable it
+                      * and do not apply any implied rules related to it.
+                      */
+-                    if (cpu_misa_ext_is_user_set(misa_bits[i]) &&
++                    if (cpu_misa_ext_is_user_set(cpu, misa_bits[i]) &&
+                         !(env->misa_ext & misa_bits[i])) {
+                         continue;
+                     }
+@@ -1143,7 +1141,7 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
+     }
+ 
+     if (set_misa_c) {
+-        if (cpu_misa_ext_is_user_set(RVC)) {
++        if (cpu_misa_ext_is_user_set(cpu, RVC)) {
+             warn_report("RVC mandated by Zca/Zcf/Zcd extensions");
+             return;
+         }
+@@ -1285,7 +1283,7 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
+             continue;
+         }
+ 
+-        cpu_misa_ext_add_user_opt(bit, profile->enabled);
++        cpu_misa_ext_add_user_opt(cpu, bit, profile->enabled);
+         riscv_cpu_write_misa_bit(cpu, bit, profile->enabled);
+     }
+ 
+@@ -1296,7 +1294,7 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
+             cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
+         }
+ 
+-        cpu_cfg_ext_add_user_opt(ext_offset, profile->enabled);
++        cpu_cfg_ext_add_user_opt(cpu, ext_offset, profile->enabled);
+         isa_ext_update_enabled(cpu, ext_offset, profile->enabled);
+     }
+ }
+@@ -1356,7 +1354,7 @@ static void cpu_set_misa_ext_cfg(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_misa_ext_add_user_opt(misa_bit, value);
++    cpu_misa_ext_add_user_opt(cpu, misa_bit, value);
+ 
+     prev_val = env->misa_ext & misa_bit;
+ 
+@@ -1520,7 +1518,7 @@ static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_cfg_ext_add_user_opt(cfg_offset, value);
++    cpu_cfg_ext_add_user_opt(cpu, cfg_offset, value);
+ 
+     prev_val = isa_ext_is_enabled(cpu, cfg_offset);
+ 
+@@ -1684,8 +1682,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
+                             "riscv.cpu.rnmi", RNMI_MAX);
+ #endif
+ 
+-    misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+-    multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
++    cpu->misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
++    cpu->multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+ 
+     if (!misa_ext_implied_rules) {
+         misa_ext_implied_rules = g_hash_table_new(NULL, g_direct_equal);
+
+---
+base-commit: aee18ec8d3c54fa98d33acdf617ad5af96d8e9fe
+change-id: 20260831-b4-riscv-cpu-user-option-leak-48a4737d5fa2
+
+Best regards,
+-- 
+TANG Tiancheng <lyndra@linux.alibaba.com>
+
 
