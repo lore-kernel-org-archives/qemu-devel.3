@@ -4,140 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1310FC61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 18:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A8BC61DFD
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 18:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x16VW-00067z-7J; Mon, 31 Aug 2026 14:13:22 -0400
+	id 1x16aO-0007hR-8F; Mon, 31 Aug 2026 14:18:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x16VR-00067T-IZ
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:13:17 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1x16aK-0007gu-W6
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:18:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x16VP-0005Jz-C2
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:13:17 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1x16aJ-00070S-0A
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:18:20 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VFpMw9954469
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 18:13:13 GMT
+ 67VFpe9e037160
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 18:18:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 82SiMzichM2VA1JZjRhNV8xGA16RzEb3qdmdORVi3Hk=; b=NMH5k5/msQoyLQq/
- C4ia3P4bYBAe+w+QmmfghKyfYRhWGvtt9gvCMIdQdhJRtke8XLEIXMo3wPwQ5ha4
- A5Ymc870ZY2HTRl7NgXxt7QMUenq0UXQTE9amLGaSOvANb0JOIGPh3gkZfg0IYFD
- b5O+VKuFrUey21gogETPtcSumoNKiX+FNDH5NwyHxCcxBi9BEb5TB6PpPsy3QGdm
- 598W6ZmJTrPhj0wLHs9+5iXmbf+8gpIfRZp7kk3gb3oKva7T7ulOUZRxqF5PRyxf
- NvocAijxwzZ+F/d3Bk0MZ/GEFdF4ZA2E8Sdm8WBL0MTslCaUmQpNmVzVywYFFG6W
- lLvJzg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gd8cvt15x-1
+ ox8r1AKgndrscN9dH0zqNeIXsYwiQhHxVlUJLNcarMY=; b=WAGmsUo+QtsaL4jd
+ kv3u/ysVM8GmdN7VYH9TOnIxqAP+Esgzi+0/kAWY1AS084mw4a6aY1ZCyLFLwi1B
+ vULxeqrbJG8KdJTn7yqTU8xLYsdIlkTJBGPcyoUqxvyfvOitVUD++sv28XjzG1t3
+ Javx1YepycAaDX30lYH8r8RuW7kzsRWzT+sLj0YBoiEDpwjeoTGeh1D7H9dbOdgB
+ x2hA+OJZv2FDppCqi74fL/mW/pFoml+L8ZT8YakLBM5EKXu1tNUsI6nzFOWFZFVu
+ 63hUwqJelacfdTxIhQLDeQ5y0V9qrlkIOOIp5skRAdmFn92J0NMCgIt3Eb6Mttw6
+ UbOYCg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gd6jgjgud-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 18:13:13 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cc1cb806660so6070638a12.3
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 11:13:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 18:18:16 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cf7dd9fd91so41350195ad.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 11:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788199993; x=1788804793; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788200296; x=1788805096; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=82SiMzichM2VA1JZjRhNV8xGA16RzEb3qdmdORVi3Hk=;
- b=PPUGsmgsejTYL16uylqMQ1xiZ8TBra/Ee8YP8ZO5Me+gxMfVAh3vwhTws8l8qmpjnv
- wa9Nik/i6JWQo/EMATsA9BwR4ZBS2xyy0c4dx9zpqMx/BnFk7iAnXF8dcUGMR+JcRqRE
- rrIHuE0cv/MgUSwozCpY0KbglGFA3/C9dKcbuZXmaR4F3Km6KK0WKlXQOa5JAmpSxGKz
- 18d//nCCx/oaCRaguI6FMayA8vgFHSOUbWzjPFw6lqwd2KFNnCl8bo2ptBia54jkSDEw
- uhr1gqyGTuu2nM8IY8NzFDqhTCD9bOKfdgYDj+moxBA/fLEm/fONqKXCykjsqVkmBZVX
- FgNQ==
+ bh=ox8r1AKgndrscN9dH0zqNeIXsYwiQhHxVlUJLNcarMY=;
+ b=MiHtaMQNj8S0rVMDJtlr/0vjOhdulHyNDYgDCSSg2WNSZ9T2EnuzxXtIAflF6sIUPO
+ m/oTY3rov5zR7fjfQyi2DKuekjM29POq7SD+BsotzG1oeub8HTb3NYnK/jfsM9xrHHr4
+ NpbGAog5Z6wJj2nDiMTe4ZkftK9MaOsYA6d8n9G985G0NoAoB906i/amXZrjpoxwqiY2
+ C1Ad/HhNl5GCMIgS8cXQ38dOpCBjdDQm5vq3stPZj/xbDm9pTs0Bv0CrsAFei9ea31Ri
+ t7YXRRIT0Mw6hKPDOFO9zs7Rnpxbt/pXhjZnCUqSpr/wDJWMZeiXDmmyklSGjVUwKYci
+ DbBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788199993; x=1788804793;
+ d=1e100.net; s=20251104; t=1788200296; x=1788805096;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=82SiMzichM2VA1JZjRhNV8xGA16RzEb3qdmdORVi3Hk=;
- b=sLGhirbtRXJg3BeSylFpQEsRrGVwQepg0U5j9r3rC4Z1CtAWDufv0p7gwyA14e87Gh
- IxHS6oLPaw67FHdt9Z/3ZXIqql/ldmRVcb7irmM6AcD5vObaquxlZFdUpZhuHmTHSTdQ
- z9NPQp9OG4ZnUg9D7Jl9hKWLPprJtqFhq7InNQod/lLQvO9rZnOK+FFYeK0frR5oyjft
- xQzD3KB0uIG9z+AtFoa1l16533/joyXSw2SjqBrEXnif58o8T5j8+A78ejaubl3hU3ZT
- EtUk6URctMzH1wI3catG2jqvs5FRy+eSr5ep0hfop0+G1UyJG8mIF/mJKVXaoE5o1m7s
- 3OdQ==
-X-Gm-Message-State: AFuF++mCx9uAMXMagr9PCDdJJAXpoQUv6ltDTEud+7iD6xej6WCfz0iW
- MxO8M/RePgcKFfe4CA4vz58oOgDrqhaxWZiZ0AwCThZTQOG3eo6w4mr79NR6EsQcmvRKv6H95kU
- 5LTS91J759nu7ywVqGdjGlLkgKEd/RTQQtSuVLkKQZSnSSzCHrrV0miU1lQ==
-X-Gm-Gg: AR+sD10WjUHKb8E7KWKty9VEWlxAFXodIt8titHjAd71M88LfKv9SD8UV/TCe8ipcZD
- si28v+55DV/CHQ4W+XaWMBs0VBrT+2taZ4bn4zmJpdI3wjdF7/bffv/Gg/v6k9RvC5UantMAG6y
- aDxwpefBMl6xVv3pZyPoaZmkgJKHfvB8haxJcyfiVN/Zfgg4x4/6eb5BOkmXmGHd9J+POUmcz4q
- wqAruhT8OEbsskS+DVqrMfLetCdYgUUce/XPzepRME4z9LFR7qN2WAPnIfFVjoLgJACMnp9GcdO
- 8lVPXWZLqUMi90v/Rf/HikIvpott60BbhncF0TWEJw33lmkhIBRwM6cBIHm1XkANiCBarxY4tg9
- yqti/cnX1EAo8+5KTfcAuaKp9NhVGUcxHzujsCCsLJweG9BKiu2bCPVFxLNJjbR+572gJ
-X-Received: by 2002:a05:6a20:3c90:b0:3d2:2011:d184 with SMTP id
- adf61e73a8af0-3d2681aa109mr43228118637.14.1788199992867; 
- Mon, 31 Aug 2026 11:13:12 -0700 (PDT)
-X-Received: by 2002:a05:6a20:3c90:b0:3d2:2011:d184 with SMTP id
- adf61e73a8af0-3d2681aa109mr43228039637.14.1788199992353; 
- Mon, 31 Aug 2026 11:13:12 -0700 (PDT)
+ bh=ox8r1AKgndrscN9dH0zqNeIXsYwiQhHxVlUJLNcarMY=;
+ b=dUBXAfHBf9OCZ17Nfa3qhMaLeOjJQLMY3CEAFzGSKusnjiL1umwpii7GB+qOsWY+33
+ mm8AL7VchpDQLaDhcdXQnHwUKzeGHd9o8Ri74uStLMcdXFjuH/MqW+8ApkTc5jp07jMc
+ 5+5tSfPjjk16B9gSrGgdyvW4GiAesXuCL3rn0fqPqwA2X0kOMVaPZOD2GxXkNqOhItrR
+ 6bHOpuRljGAqyrqbrD/+pGj64Z3991UJpXKaaMJjq14uE1SiCc0cdGYAvHBNylQ8Wf62
+ AFDZbixmgUSOtFm+5/2jfiJk2DZ7sKTyI5addmeVuEL65dMd4zjsNicTPxStalKU1ju4
+ 3Ygw==
+X-Gm-Message-State: AFuF++ne5EP/vo2AQ5uhhufGT+mfeMT6mbTfc7QPGQ+Mkxn/eOFABewn
+ 3TzGbkbC9PwC/j/ASnMiyjeMkGNHKKLkK6KDls8Dd5M2y890vE1nqgjvoCoYoojCVWsr/LVi/Zt
+ b4FQq9BpgqQiiuVCUE2XhX1XsGjmNsc510wvneiCoUmbZRf8OWPZYtNGLtQ==
+X-Gm-Gg: AYBFou0+0gR++ROgwNan8ePYW9RPba9l0v7LlKUcznfdPti0hGfSs2qOzXotDYAZNoT
+ iaBUTKw564LGrImUTasjYcvv1IHL9zJHZtVugNF95ho7c23jRtpicMguv68p0C8QrUfAIVX4R8B
+ +ICqrZCW1RY5lBoJfEcDyfurf2Y1cnpNioOw5rd8R6bBkLGGsi7mdt7nY8hgIMhD0vzCe60luoQ
+ Ych9sI5BIKd5sSLFpNiD08fz5qtRQ3aG9bZxjL4azwd2uO6MCv92flqM9Q4WKLRW4ne8G/bc6c8
+ J75hyx6Ebhm9VndDJpLCZ8NRh3xz59hthOj8+qYe45k1TQ04VN/J5ymk0s/zH8d6EXnaRA6aXmX
+ l3UxFCpnCV7pLsJ+z4g1jNgaVV029cNxgFy6Hc4bmU2GPByJRVCe7c7Q6FaNM1l78QrE6
+X-Received: by 2002:a17:903:1b0e:b0:2d3:78c2:1f19 with SMTP id
+ d9443c01a7336-2d74ddc6da3mr452922485ad.9.1788200295665; 
+ Mon, 31 Aug 2026 11:18:15 -0700 (PDT)
+X-Received: by 2002:a17:903:1b0e:b0:2d3:78c2:1f19 with SMTP id
+ d9443c01a7336-2d74ddc6da3mr452921625ad.9.1788200295185; 
+ Mon, 31 Aug 2026 11:18:15 -0700 (PDT)
 Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3286f959575sm31930309eec.15.2026.08.31.11.13.11
+ 5a478bee46e88-32b26fd7edbsm20446190eec.5.2026.08.31.11.18.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Aug 2026 11:13:11 -0700 (PDT)
-Message-ID: <1f499dd9-9504-48e2-9a6d-a207f19eced5@oss.qualcomm.com>
-Date: Mon, 31 Aug 2026 11:13:10 -0700
+ Mon, 31 Aug 2026 11:18:14 -0700 (PDT)
+Message-ID: <8a893eb6-44d9-4687-871c-8d4ddd4c0544@oss.qualcomm.com>
+Date: Mon, 31 Aug 2026 11:18:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 37/47] hw/core/boards.h: add available callback to
- DEFINE_MACHINE_EXTENDED
+Subject: Re: [PATCH 03/27] target-info: add target_riscv32 and
+ target_base_riscv
 To: luoyonggang@gmail.com
-Cc: qemu-devel@nongnu.org, anjo@rev.ng,
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- philmd@oss.qualcomm.com, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
- <20260828225901.367438-38-pierrick.bouvier@oss.qualcomm.com>
- <CAE2XoE9NXdtkgAAL_B2842aOoOU=2cc1vEdprb5QDQSY9Rwy-Q@mail.gmail.com>
+ Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260724000948.234657-4-pierrick.bouvier@oss.qualcomm.com>
+ <CAE2XoE8jht9TP8OrTGAZNfALOTBECz+_2dRtKzmjwwf5kur2Jw@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAE2XoE9NXdtkgAAL_B2842aOoOU=2cc1vEdprb5QDQSY9Rwy-Q@mail.gmail.com>
+In-Reply-To: <CAE2XoE8jht9TP8OrTGAZNfALOTBECz+_2dRtKzmjwwf5kur2Jw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE1NyBTYWx0ZWRfX+tCgTqvpWswc
- zSHhqFLXGyLyahN0/hguFdY+Yo6dZc+TuCWx1fAWr7bvuBAbshcHnBXko2i/f0pfOufOXbatI5a
- z7QS/V1ScO00HMAPtJrDF2tN2zS+394=
-X-Authority-Analysis: v=2.4 cv=JtnBas4C c=1 sm=1 tr=0 ts=6a95c439 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-GUID: 2PNvi7qsZ5YWVrV4mYqj-Fr1WezxEe1J
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE1OCBTYWx0ZWRfX9B2ivttfVqxf
+ ZxKD9HRMPEueCCkArhDn2ckrcsBHt8vtmkZC5xhUAErNELT7V+FbCP5TJBjic9kgZdgWGlwjHwA
+ d37O8c67aNiO8+akqQCqDpkvMJ8G4m0=
+X-Proofpoint-ORIG-GUID: 2PNvi7qsZ5YWVrV4mYqj-Fr1WezxEe1J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE1OCBTYWx0ZWRfXwUwYIpsiAksl
+ p1Jf7htnn6s81GbZ1QiNvzmdM4mAI9GIt6fxf/yIA0IKcMZMCXVEsS5SSO9/WgobYEYf9VgE+1b
+ kVxIm8AcLMypIg6mXa5/QvqTnjuysJezp//9mR7z68VJ3F3pU/4k0hpXiNZbP8AIyqW2P34xQIk
+ a+CAaNBypZTYxdvzNN2VRhSnxqhESefwRFKeTU4WV1RMkyG5InvgM1y2yMgK8yTs9MF/68vrUUC
+ pzyeIyG/oqP2B34uZQ708ub0k4vSJbUgt1jKXpnBIYDLX9wxO9e7oBGCgvm3dEjCs6VpNzPy7xl
+ UAA5eOYy/ujzMVBVp8BBJlye8OB69nbVey8bfi7C7aqGt+TK5W+1m9vLiCfcZ8tvdNCkH7vALO/
+ uLC09lHXIgltDGXOaBgkwpK9uQlTrYBAfyS/xiPx4O2jycUBmXJmJCtBP8EeRI0Ek29dERa2rgH
+ Dv5eQ4PZh6N+gFfrhIg==
+X-Authority-Analysis: v=2.4 cv=YsY/gYYX c=1 sm=1 tr=0 ts=6a95c568 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=m6953_s6SuGIUegrp6sA:9 a=lqcHg5cX4UMA:10 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE1NyBTYWx0ZWRfX9RQDl6X8MQUc
- qZBtbVvA3ZzB6okh/cnfaLgykQaDl7OeD8GKuCVhf8Pnr7RKncdFup7ugV7FBrKYb+nhhycFSjT
- rZ/DJQUP0SC9KjsFOwaHcaZuDUXkpNUBRP7OhLeUBSDe2c1f8bq3i8CxEtI3wT/RbIhXEYmjLQ6
- eT6p/h2w2CmKwmHNOZl0ki5Z4T4qrmA6cwsaautyhSIBVZlyb6GtqPi9PyvMS/3vADkCixdltHR
- 36QnAZ6VprC74HqBR+OoPMhaKD4U0oDEFDE4gd5+DBjcgv4g6gTGMzn842MtqPvfo7yoqqfGzr2
- TfEcPzb3c6VIgYktjRQKnZ/OU8R76BS662X1oT2zBBpRB7dL9NC/9l9iL39tWXuJJct7cDZtzsh
- W+AyeO5Y47+cGHA2ZEPgf+q9sjqnP2En1bVPvbIby6LpthGGakCyqLsBej5DvO1vVvjegKthWkR
- KnBxDECuq6Ef00Yfqcw==
-X-Proofpoint-GUID: opN0xYhNddI-x8Ebw8KVaMk83GrwEwPW
-X-Proofpoint-ORIG-GUID: opN0xYhNddI-x8Ebw8KVaMk83GrwEwPW
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=g5O3t26umuFA7Ibat5IA:9 a=lqcHg5cX4UMA:10 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_05,2026-08-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 bulkscore=0 phishscore=0 priorityscore=1501
- adultscore=0 spamscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310157
-Received-SPF: pass client-ip=205.220.168.131;
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310158
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -160,163 +161,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/31/2026 5:43 AM, Yonggang Luo wrote:
-> This change is minimal, I think it's can use proper target_is_* in this
-> patch(maybe). so we have no need change it twice.
->
-
-That's the idea: keep it minimal.
-Usually, mixing cleanup and code change is discouraged in QEMU. People
-will ask "can you please split it up again?".
-
-> On Sat, Aug 29, 2026 at 7:03 AM Pierrick Bouvier
+On 8/31/2026 7:07 AM, Yonggang Luo wrote:
+> 
+> 
+> On Fri, Jul 24, 2026 at 8:11 AM Pierrick Bouvier
 > <pierrick.bouvier@oss.qualcomm.com
 > <mailto:pierrick.bouvier@oss.qualcomm.com>> wrote:
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com
 > <mailto:pierrick.bouvier@oss.qualcomm.com>>
 >> ---
->>  hw/arm/bananapi_m2u.c    |  2 +-
->>  hw/arm/cubieboard.c      |  2 +-
->>  hw/arm/integratorcp.c    |  2 +-
->>  hw/arm/mcimx7d-sabre.c   |  2 +-
->>  hw/arm/musicpal.c        |  2 +-
->>  hw/arm/orangepi.c        |  2 +-
->>  hw/ppc/pegasos.c         |  2 +-
->>  include/hw/core/boards.h | 10 ++++++----
->>  8 files changed, 13 insertions(+), 11 deletions(-)
+>>  include/qemu/target-info.h | 16 +++++++++++++++-
+>>  target-info.c              | 16 ++++++++++++++++
+>>  2 files changed, 31 insertions(+), 1 deletion(-)
 >>
->> diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
->> index 8f59111fd4e..7b86986efb1 100644
->> --- a/hw/arm/bananapi_m2u.c
->> +++ b/hw/arm/bananapi_m2u.c
->> @@ -153,4 +153,4 @@ static void bpim2u_machine_init(MachineClass *mc)
->>  }
->>
->>  DEFINE_MACHINE_EXTENDED("bpim2u", MACHINE, Bpim2uMachineState,
->> -                        bpim2u_machine_init, false, NULL)
->> +                        bpim2u_machine_init, false, NULL, NULL)
->> diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
->> index ae27056938f..da45bb2be52 100644
->> --- a/hw/arm/cubieboard.c
->> +++ b/hw/arm/cubieboard.c
->> @@ -134,4 +134,4 @@ static void cubieboard_machine_init(MachineClass *mc)
->>
->>  DEFINE_MACHINE_EXTENDED("cubieboard", MACHINE, CubieboardMachineState,
->>                          cubieboard_machine_init, false,
->> -                        NULL)
->> +                        NULL, NULL)
->> diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
->> index 382ea7850d8..6314bbb6c13 100644
->> --- a/hw/arm/integratorcp.c
->> +++ b/hw/arm/integratorcp.c
->> @@ -705,7 +705,7 @@ static void integratorcp_machine_init(MachineClass
-> *mc)
->>
->>  DEFINE_MACHINE_EXTENDED("integratorcp", MACHINE,
-> IntegratorcpMachineState,
->>                          integratorcp_machine_init, false,
->> -                        NULL)
->> +                        NULL, NULL)
->>
->>  static const Property core_properties[] = {
->>      DEFINE_PROP_UINT32("memsz", IntegratorCMState, memsz, 0),
->> diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
->> index db8a62e5f6c..2c884b5c78f 100644
->> --- a/hw/arm/mcimx7d-sabre.c
->> +++ b/hw/arm/mcimx7d-sabre.c
->> @@ -87,4 +87,4 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
->>
->>  DEFINE_MACHINE_EXTENDED("mcimx7d-sabre", MACHINE,
-> Mcimx7dSabreMachineState,
->>                          mcimx7d_sabre_machine_init, false,
->> -                        NULL)
->> +                        NULL, NULL)
->> diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
->> index e1a336e861a..52805e41892 100644
->> --- a/hw/arm/musicpal.c
->> +++ b/hw/arm/musicpal.c
->> @@ -1365,7 +1365,7 @@ static void musicpal_machine_init(MachineClass *mc)
->>
->>  DEFINE_MACHINE_EXTENDED("musicpal", MACHINE, MusicPalMachineState,
->>                          musicpal_machine_init, false,
->> -                        NULL)
->> +                        NULL, NULL)
->>
->>  static void mv88w8618_wlan_class_init(ObjectClass *klass, const void
-> *data)
->>  {
->> diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
->> index 7a19732f5df..87ed2ef4b69 100644
->> --- a/hw/arm/orangepi.c
->> +++ b/hw/arm/orangepi.c
->> @@ -134,4 +134,4 @@ static void orangepi_machine_init(MachineClass *mc)
->>
->>  DEFINE_MACHINE_EXTENDED("orangepi-pc", MACHINE, OrangePiMachineState,
->>                          orangepi_machine_init, false,
->> -                        NULL)
->> +                        NULL, NULL)
->> diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
->> index 9d7e279123b..ad8aca85ab3 100644
->> --- a/hw/ppc/pegasos.c
->> +++ b/hw/ppc/pegasos.c
->> @@ -788,7 +788,7 @@ static void
-> pegasos2_machine_class_init(ObjectClass *oc, const void *data)
->>  }
->>
->>  DEFINE_MACHINE_EXTENDED("pegasos", MACHINE, PegasosMachineState,
->> -                        pegasos_machine_init, true, (const
-> InterfaceInfo[]) {
->> +                        pegasos_machine_init, true, NULL, (const
-> InterfaceInfo[]) {
->>                          { TYPE_PPC_VIRTUAL_HYPERVISOR },
->>                          { TYPE_VOF_MACHINE_IF }, { } })
->>
->> diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
->> index a436d48c8e5..2e2acdb6867 100644
->> --- a/include/hw/core/boards.h
->> +++ b/include/hw/core/boards.h
->> @@ -514,7 +514,8 @@ struct MachineState {
+>> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+>> index 6c5b714288e..88ccef2a988 100644
+>> --- a/include/qemu/target-info.h
+>> +++ b/include/qemu/target-info.h
+>> @@ -99,10 +99,24 @@ bool target_ppc64(void);
 >>   */
+>>  bool target_s390x(void);
 >>
->>  #define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
->> -                                machine_initfn, ABSTRACT, ifaces...) \
->> +                                machine_initfn, ABSTRACT, available_cb, \
->> +                                ifaces...) \
->>      static void machine_initfn##_class_init(ObjectClass *oc, const
-> void *data) \
->>      { \
->>          MachineClass *mc = MACHINE_CLASS(oc); \
->> @@ -526,6 +527,7 @@ struct MachineState {
->>          .class_init = machine_initfn##_class_init, \
->>          .instance_size = sizeof(InstanceName), \
->>          .abstract = ABSTRACT, \
->> +        .is_available = available_cb, \
->>          .interfaces = ifaces, \
->>      }; \
->>      static void machine_initfn##_register_types(void) \
->> @@ -536,14 +538,14 @@ struct MachineState {
+>> +/**
+>> + * target_base_riscv:
+>> + *
+>> + * Returns whether the target architecture is RISC-V 32-bit or 64-bit.
+>> + */
+>> +bool target_base_riscv(void);
+>> +
+>> +/**
+>> + * target_riscv32:
+>> + *
+>> + * Returns whether the target architecture is RISC-V 32-bit.
+>> + */
+>> +bool target_riscv32(void);
+>> +
+>>  /**
+>>   * target_riscv64:
+>>   *
+>> - * Returns whether the target architecture is riscv64
+>> + * Returns whether the target architecture is RISC-V 64-bit.
+>>   */
+>>  bool target_riscv64(void);
 >>
->>  #define DEFINE_MACHINE(namestr, machine_initfn) \
->>      DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState,
-> machine_initfn, \
->> -                            false, NULL)
->> +                            false, NULL, NULL)
+>> diff --git a/target-info.c b/target-info.c
+>> index 04c69c41f8a..7ac2260b182 100644
+>> --- a/target-info.c
+>> +++ b/target-info.c
+>> @@ -94,6 +94,22 @@ bool target_s390x(void)
+>>      return target_arch() == SYS_EMU_TARGET_S390X;
+>>  }
 >>
->>  #define DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn,
-> ifaces...)\
->>      DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState,
-> machine_initfn, \
->> -                            false, ifaces)
->> +                            false, NULL, ifaces)
->>
->>  #define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
->> -    DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
->> +    DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, NULL, \
->>                                          (const InterfaceInfo[])
-> { __VA_ARGS__ })
->>
->>  /*
+>> +bool target_base_riscv(void)
+>> +{
+>> +    switch (target_arch()) {
+>> +    case SYS_EMU_TARGET_RISCV32:
+>> +    case SYS_EMU_TARGET_RISCV64:
+>> +        return true;
+>> +    default:
+>> +        return false;
+>> +    }
+> 
+> This can be improved by using  (TARGET_ARCH_BITMASK(target_arch()) &
+> QEMU_ARCH_RISCV
+> 
+> TARGET_ARCH_BITMASK should be a new macro in base-arch-defs.h
+> #define TARGET_ARCH_BITMASK(sys_emu) 1UL << (sys_emu)
+>
+
+What is the added benefit compared to using an enum, is it supposed to
+be a code optimization, or more readable?
+
+> 
+> And the enum in base-arch-defs.h can be update with this emu, so once
+> the sys_emu maximal >32 still works in future.
+> 
+>> +}
+>> +
+>> +bool target_riscv32(void)
+>> +{
+>> +    return target_arch() == SYS_EMU_TARGET_RISCV32;
+>> +}
+>> +
+>>  bool target_riscv64(void)
+>>  {
+>>      return target_arch() == SYS_EMU_TARGET_RISCV64;
 >> --
 >> 2.43.0
 >>
