@@ -4,111 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE31C624CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A546CC624CE
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12i4-0002xC-IO; Mon, 31 Aug 2026 10:10:04 -0400
+	id 1x12iU-0003Yz-2v; Mon, 31 Aug 2026 10:10:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x12i3-0002wu-NJ
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:10:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x12iS-0003P4-AA
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:10:28 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x12i2-0006Ow-9Z
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:10:03 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VBVjSk956634; Mon, 31 Aug 2026 14:10:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=1vqQj8
- 24YRff5Y6udmregmLZ1tmxI3Nz2knTVviSifw=; b=cIKEWuSKo3UxGP6/95HREG
- qMcb05ek5IIFHe47Y9hBSpQUNQXaXo9Ip45hDElfnyuY5Ww31/gWygf/o7jrQuAk
- LMChHjLDrKemTtyDfj1mX0V7JFZr4HrZ33FO2MLt9Ek9DyCvKHL2SkMcnAEFXavc
- oXM3LCaq/25OnNBeNnCPp6GDJ5ZMdHnasAapQkWh+yhTkn4KfaG7hdaBNbxjdVRw
- 0KfbOS50R6eaJoXiYg86l4EEhwwMuK0U5JzjVDGx6U14cTuFzZAoL0YudTnrXTnB
- zdpR4sMHhwnlk8u1bOUheJlr6+98JAcdIvVF/LMyJDy14vF3wDunSJ04XQ0at34A
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudhr5p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 14:10:01 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VDuHwR001683;
- Mon, 31 Aug 2026 14:10:00 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccexx1ey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 14:10:00 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VE9x6K32637552
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 14:10:00 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADCE058058;
- Mon, 31 Aug 2026 14:09:59 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4B19B5805B;
- Mon, 31 Aug 2026 14:09:59 +0000 (GMT)
-Received: from [9.61.31.247] (unknown [9.61.31.247])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 14:09:59 +0000 (GMT)
-Message-ID: <ee2d0262-03ef-4441-bffd-f1bba88a2396@linux.ibm.com>
-Date: Mon, 31 Aug 2026 10:09:58 -0400
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x12iN-0006dQ-UO
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:10:28 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67VBAG6F3358118
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 14:10:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=yfXdQqf3P3p
+ qApv+GltJ5vh6DxK8OZMRliAbZOpBLhY=; b=fKGG7XmaVlzoGHB5KWpaIaeBKuh
+ kq2JdqkkFrsvElFj9z1FSutWhb78uib3Vg3WkbwpZwMdxu0DUevp1GnHwpETyM3/
+ SMuq6JHoTKgVXUo2xrpKeU9TWo77XdrmG4V0XGDafAIxXveCYW1gDZdB/pv7xkja
+ 3Us32f/2tHThjlYdxWysWvkdmyemM3VgOCMqp9EkzBHQHXmqzqisSQfxVVVWNAYu
+ F4eDbpl+KXva1dVLgPhTrOQfnpT4cz8uk6rsnhkCSah1oZmNmajfNrKFgOylDn+4
+ NCbnryjyQn4UFlSA1Jrqg+RlZsFs6fb6RlxqNr/31m2fHjfHAT3t+62TiLA==
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gcv7wb473-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 14:10:19 +0000 (GMT)
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-45952ce9ee0so4998851fac.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 07:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788185419; x=1788790219; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=yfXdQqf3P3pqApv+GltJ5vh6DxK8OZMRliAbZOpBLhY=;
+ b=Eh+kSK7WNPM+E/7bDvSfqhorvY6sSUDn65VTSWFB0g/XgqPWebAHEI4g3KUhEbd9wO
+ 7x86eiH5ifaXFFud67byCX0aw9toHD/Xw7KKQ/glB+clG2aniFL9kE+D2L+lB8yT6sQG
+ GnZYGoUkQIH7W2iwkO9zdw7QvrCqH5BVWwYvvgw0gq2BttDhcP7lYe1jK+/j8XGMO4wt
+ Hs5aYoSYkeAYWqKyiA+Peb2rF6eyX+/BpT+syVURJOD94Cc4VaTLEZFaK6Wwkhi89dk3
+ RRlnZUh9Z9+rco9NgV6gg7hkTgm/erqs5UhFxuPDdpbEn45aGsZUDrBCWlhnwonX4rYi
+ Z3vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788185419; x=1788790219;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yfXdQqf3P3pqApv+GltJ5vh6DxK8OZMRliAbZOpBLhY=;
+ b=f25v0TBfMef0Ex+NeoDneNIrAiSlZ/xTRgybZ8LAHqn+Tp0KLGtJbCxVgdFvA23T6s
+ 1dXoNPVYC2jjhwhUGPQjMe824LK4XtgKP4KIg3kXh6+Qdt5qpJ1h0vL2WBR4fQ2LjDAZ
+ dFN5qBEDixwO2cUy8JmETlayOg35y5MmureCsvMjNymeNIlWC7osV4NVSy74iD4v2Qni
+ XpmcT5r6bDUfWaZnxn48hyX1Zw2ikaCTU/Ne34B1TlertvSgKHNCJy0pn6U4vNVAyvGk
+ YuvsYCVhLmO86VZ1/4CThJC6zTVM8AI1a3dSGzzkZr4niYxBuykd3Rt6vPjhiwp+L49O
+ H4cw==
+X-Gm-Message-State: AFuF++lBMDeArsL1TTqaYW/O+mJQCCHrw6R8oTxIn6ZMel1SML3A3rCN
+ zViZIhCQ+CGKRpYvnm5jgevqbI/2Y690QagYb3o88mQqH14TWxApr2GyJI/RvGjO0z3li8uHLBQ
+ ZfisllGad7RNsk8bXsg0vVM/WpE0tmcIjCcM1lCwZNIw5fTD6hLetDhI6jQSj3Kc7eA==
+X-Gm-Gg: AYBFou3ES01PHHco9uUBDXGM1lDtrvdqCnkorgUyQfBRiRDnm2ZQ3je7B9bBL+QVinv
+ 6nt8NXAHtr4QQM0IJyV0h2t5zldbzeL5FAQ4MLf/dwXVpeaw6CNE3GJLF0IhCFnvyC/1xWtAHGm
+ AaTFoyWDmVuIGW+dCZvBNjfHXPA2jBwXg3KqMe2lx4oiPCosycRr+aziueqXy5me3KFPqej8SfE
+ fzBlDfqYTFiTVCv9uNX9uirM7n7xWz6AviC6lPBmPqpRiOPCLT/We9mRPeUhkXpuX3OyhbHZaOe
+ 8x0ULoblnSb+j0KdPUz3oyZLzGGQBAEL91QoUKz/oKypNSeUv1edgoUdc66mVyONY2ktCHXYGNm
+ 5kjUR6mFnLzE968kmVBJAvd5WsbL0kfYrjn2kbg==
+X-Received: by 2002:a05:6870:788a:b0:45e:e061:162b with SMTP id
+ 586e51a60fabf-4683802fef4mr28399411fac.18.1788185418933; 
+ Mon, 31 Aug 2026 07:10:18 -0700 (PDT)
+X-Received: by 2002:a05:6870:788a:b0:45e:e061:162b with SMTP id
+ 586e51a60fabf-4683802fef4mr28399324fac.18.1788185418405; 
+ Mon, 31 Aug 2026 07:10:18 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([152.250.131.13])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-468a3535e25sm9886129fac.5.2026.08.31.07.10.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 31 Aug 2026 07:10:17 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH v7 2/7] target/riscv: add sdext Debug Mode helpers
+Date: Mon, 31 Aug 2026 11:10:01 -0300
+Message-ID: <20260831141007.353854-3-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260831141007.353854-1-daniel.barboza@oss.qualcomm.com>
+References: <20260831141007.353854-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] crypto/x509-utils: propagate the error
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: berrange@redhat.com
-References: <20260831121009.2810804-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <20260831121009.2810804-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 6yjyns-A8izPwQFOf9CHgAejkty4kF2K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEyMSBTYWx0ZWRfXwwTD6gY8dgdc
- J3MZfackX8IAwT/niiGojNn1fK6uHMgAJc6+xdeGTrHe0UcKlXR0BGL3N4VgPfDDnHiLqrXsgmf
- +CZ/WZmGc7j1TWYdMzZlW3jGIUsgmp1eRAoC77t8HKzb9O/8M436iWAcupx8jV6TnXiwk+Lqol7
- OGBP0+q/8USs0PuFTkbatm/O1Ihp/+uMNG9srvjarYG22juvdmfkAd6ngDFsAoCcWb5H6iLfbAe
- /9oNOpryh7EqncFoNBkVb/MVhgUp9nVx4xm19qjgd12sT5Ht6zrNRF7yZqoT2mt4j3+Jl7xEK+l
- MOy6YlcTh+gzOvuSlB+LubRb4Tqyn/jEo0lhjaBKjsnMMZOeVlLysvU1HpEgrH3PcTkyQeVc51k
- fmFUDxjB+7TtUEsQll2Ci9x8SQoGufwalt4xP4rrUU504Kz29Jqvvw4c0yLdj6M0h+yXt6bEfdl
- Umcpm5tJw1tOHfu6Luw==
-X-Proofpoint-ORIG-GUID: 6yjyns-A8izPwQFOf9CHgAejkty4kF2K
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEyMSBTYWx0ZWRfX/4ONZxB2ejhw
- PdbaXZ+07jGQWqnJLD9mHivK0XhwxCxy4dUwKheNl0HoWUxUCyOjQLRdMTUTYf1lAg5ugc/4Tui
- WQSy8uY6WDhqpIa14SRFDZDEV6+l+pc=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a958b39 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=zhgLkVULathdIK0Tm94A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Authority-Analysis: v=2.4 cv=E9f9Y6dl c=1 sm=1 tr=0 ts=6a958b4b cx=c_pps
+ a=Z3eh007fzM5o9awBa1HkYQ==:117 a=CXdxNCAnTuDr1kYd6DjE4g==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=xvfqbYfxAAAA:20
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=fgrLqfBXAAAA:8 a=Mp8isO8jnsZoTyD_AnUA:9
+ a=eBU8X_Hb5SQ8N-bgNfv4:22 a=_Ge82aPy-h_wFa7gWU4u:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEyMiBTYWx0ZWRfXz2uR81HLpLB0
+ r/rNAWLbyEDggnabW7Q9LalJfT8z8wHZPLjlKxl7QsgTgnsJJarwNHEl4DnKYnXceRhefbIMpGn
+ ttR86cq8fs7fFErGPP1Gm3AiHbWgJfI=
+X-Proofpoint-ORIG-GUID: u_qIxkdX2SpwdITJeyn_vGedvrU4-bOa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEyMiBTYWx0ZWRfX0W7czf5mkTl5
+ r1Xeiidhhcl2iS9gXA1NGqDbsl5YOe5o7/Ydm4Xr0jTtK78elOq0OHp5H57v5svKzZ3P5oqJI1B
+ Ue9vbK14UmbBwR6vfKJgPjWLkvdWsvl4q2pzb1lFYErwbUdKKzHEVaEz7CemvEw/kwfDDF+JFAM
+ FDg9Rx4PHgjD1Q6i8/FJjTSqp0o0LTDSFypJolF/VOaVZ+UKVDY46QTYxMfbnvAJU4sbNiATIxM
+ hMmut9BfOWDLQp4qh+HWbmI2qF9bLoKSH7LqVoQ3xLYauGdo/SFbbfd8SsmZGHjNowFKPrSo4TC
+ T+Iau2NdoN3kHlfEhiwV48pQffodkdn8q7rB1u+f/zOt25eyy8SWi3yY9Q6NUgdZ8mCWyHa4dUH
+ jghlfOQY/UsAZo2kx9J75zFtymBMkMBs/nBydRn0HPG4THw4Q2QNmCdqYvWL8LFAA+dfAe97gsD
+ XiCKsiRm5ps4EnxsSaA==
+X-Proofpoint-GUID: u_qIxkdX2SpwdITJeyn_vGedvrU4-bOa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1011 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608310121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ definitions=main-2608310122
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,33 +152,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-On 8/31/26 8:10 AM, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Propagate the error when qcrypto_x509_get_pk_algorithm fails, instead of
-> falling through to return 0 (success) with *errp set.
-> 
-> Fixes: e8317c4c9f68 ("crypto/x509-utils: Add helper functions for DIAG 320 subcode 2")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  crypto/x509-utils.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-> index 34cbfca26bff..edcc44de80d3 100644
-> --- a/crypto/x509-utils.c
-> +++ b/crypto/x509-utils.c
-> @@ -319,6 +319,9 @@ int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
->      int curve_id;
->  
->      algo = qcrypto_x509_get_pk_algorithm(cert, size, errp);
-> +    if (algo < 0) {
-> +        return -1;
-> +    }
->      if (algo != GNUTLS_PK_ECDSA) {
->          return 0;
->      }
+RISC-V Debug Specification:
+https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+
+Add helpers to enter/leave Debug Mode and to update dpc/dcsr.
+Model resume without a Debug Module by leaving Debug Mode at
+cpu_exec_enter and continuing from dpc.
+
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+---
+ target/riscv/cpu.h            |  3 ++
+ target/riscv/tcg/cpu_helper.c | 85 +++++++++++++++++++++++++++++++++++
+ target/riscv/tcg/debug.c      |  5 +++
+ target/riscv/tcg/tcg-cpu.c    | 14 ++++++
+ 4 files changed, 107 insertions(+)
+
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 74bddc8415..167e913a48 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -669,6 +669,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ char *riscv_isa_string(RISCVCPU *cpu);
+ int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
+ bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname);
++void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
++                                uint32_t cause);
++void riscv_cpu_leave_debug_mode(CPURISCVState *env);
+ 
+ #ifndef CONFIG_USER_ONLY
+ void riscv_cpu_do_interrupt(CPUState *cpu);
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..e6d948991c 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -132,6 +132,91 @@ bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
+ #endif
+ }
+ 
++#ifndef CONFIG_USER_ONLY
++static bool riscv_sdext_enabled(CPURISCVState *env)
++{
++    return riscv_cpu_cfg(env)->ext_sdext;
++}
++#endif
++
++void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
++                                uint32_t cause)
++{
++#ifndef CONFIG_USER_ONLY
++    if (!riscv_sdext_enabled(env)) {
++        return;
++    }
++
++    env->debug_mode = true;
++    env->dpc = pc & get_xepc_mask(env);
++    env->dcsr &= ~(DCSR_CAUSE_MASK | DCSR_PRV_MASK | DCSR_V);
++    env->dcsr |= ((target_ulong)(cause & 0x7)) << DCSR_CAUSE_SHIFT;
++    env->dcsr |= env->priv & DCSR_PRV_MASK;
++    if (env->virt_enabled && riscv_has_ext(env, RVH)) {
++        env->dcsr |= DCSR_V;
++    }
++
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        if (env->elp) {
++            env->dcsr |= DCSR_PELP;
++        } else {
++            env->dcsr &= ~DCSR_PELP;
++        }
++        env->elp = false;
++    }
++#endif
++}
++
++void riscv_cpu_leave_debug_mode(CPURISCVState *env)
++{
++#ifndef CONFIG_USER_ONLY
++    if (!riscv_sdext_enabled(env)) {
++        return;
++    }
++
++    target_ulong new_priv = env->dcsr & DCSR_PRV_MASK;
++    bool new_virt = riscv_has_ext(env, RVH) && (env->dcsr & DCSR_V);
++
++    if (new_priv > PRV_M) {
++        new_priv = PRV_M;
++    }
++    if (new_priv == PRV_M) {
++        new_virt = false;
++    }
++
++    if (new_priv == PRV_S && !riscv_has_ext(env, RVS)) {
++        new_priv = PRV_M;
++        new_virt = false;
++    } else if (new_priv == PRV_U && !riscv_has_ext(env, RVU)) {
++        new_priv = riscv_has_ext(env, RVS) ? PRV_S : PRV_M;
++        new_virt = false;
++    }
++
++    env->debug_mode = false;
++    riscv_cpu_set_mode(env, new_priv, new_virt);
++
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++        env->elp = cpu_get_fcfien(env) && (env->dcsr & DCSR_PELP);
++        env->dcsr &= ~DCSR_PELP;
++    }
++
++    if (new_priv != PRV_M) {
++        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, 0);
++    }
++
++    if (env_archcpu(env)->cfg.ext_smdbltrp && new_priv != PRV_M) {
++        env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
++    }
++    if (env_archcpu(env)->cfg.ext_ssdbltrp && (new_priv == PRV_U || new_virt)) {
++        env->mstatus = set_field(env->mstatus, MSTATUS_SDT, 0);
++        if (new_virt && new_priv == PRV_U) {
++            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++        }
++    }
++#endif
++}
++
++
+ /*
+  * Returns the effective PMM field.
+  *
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 148201f3cb..5ab69bdc8e 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -972,6 +972,11 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+ 
++    /* Triggers must not match or fire while in Debug Mode. */
++    if (env->debug_mode) {
++        return;
++    }
++
+     if (cs->watchpoint_hit) {
+         if (cs->watchpoint_hit->flags & BP_CPU) {
+             do_trigger_action(env, DBG_ACTION_BP);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 54f1b66216..79afda28b8 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -271,6 +271,19 @@ static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
+     }
+     return extract64(result, 0, 64 - pm_len);
+ }
++
++static void riscv_cpu_exec_enter(CPUState *cs)
++{
++    RISCVCPU *cpu = RISCV_CPU(cs);
++    CPURISCVState *env = &cpu->env;
++
++    if (!cpu->cfg.ext_sdext || !env->debug_mode) {
++        return;
++    }
++    target_ulong pc = env->dpc;
++    riscv_cpu_leave_debug_mode(env);
++    env->pc = pc;
++}
+ #endif
+ 
+ const TCGCPUOps riscv_tcg_ops = {
+@@ -287,6 +300,7 @@ const TCGCPUOps riscv_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = riscv_cpu_tlb_fill,
+     .pointer_wrap = riscv_pointer_wrap,
++    .cpu_exec_enter = riscv_cpu_exec_enter,
+     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
+     .cpu_exec_halt = riscv_cpu_has_work,
+     .cpu_exec_reset = cpu_reset,
+-- 
+2.43.0
 
 
