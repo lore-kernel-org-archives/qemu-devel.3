@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E10C61DD3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B401CC61DE2
 	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 10:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0yq1-0003WC-CX; Mon, 31 Aug 2026 06:02:01 -0400
+	id 1x0yqG-0003aw-0e; Mon, 31 Aug 2026 06:02:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0ypy-0003Vc-E5
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:01:59 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0yq1-0003XA-Rz
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:02:04 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0ypw-0001hc-Q9
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:01:58 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4843f205a5bso181305f8f.1
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 03:01:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0ypz-0001i8-Ux
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:02:01 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-47de0093c42so2923688f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 03:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788170515; x=1788775315; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788170518; x=1788775318; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=WuBxW5Qk+qrLfNk8wOq6IIiADXNVrNAOwMYrteRNbjE=;
- b=UYLcN39F7J2xie7+1WZ8+VoFFkeJhf6h3O8sf8sFXEEyRSNaYNEDXoVknc5PGkSL3n
- KLPiinZ9GddemuIeUMVChB8cFj/aOJwnzCRpx7/YgjZcJG1FoYFGqpV00ikDzad6bFRD
- bN0nKjbyca7qK7we6iHB1QV/Cc9WhFwf2bgObWevtI29DfLaAWqZMLopnr83gSOF7fTN
- 251RUsg73en7LoSva4ugbO/uX2mKVOGn3UPsHjfHK6Vdnvovk8G4RGpR0CQ/2+cbtn57
- 1xTxBevcrBwP9FKjdBPdQK9qK1DrZkfyJa0wvcdyomS4jodyMprE9lW6W/rVx33JP3OR
- waeA==
+ bh=oCneUgH+VCGYg++9em8cPDWbXKgq959i6BrsDRTpNpA=;
+ b=jK73X1CrMBQK0Kfgy3M7pzXh6ZAJEctpCtaWghFmQs2Z8kNfxvrSXL5W6nrF9skLhl
+ LKjvouie57I4xRXKD9SMzJX0vVua75rkKKVTXnqme5TC8Ur/sH9L34h+bMEclUUQpPsU
+ Tu09zUpC82rSO1s6FnpMqoeHYUzQg0O9AOfO9fTJeQ7rvIqPsB1xrTjj4qHw0TrHl5sQ
+ qVvGS50Ty1bTRZVLErUXZzOS0fmm7Ij0Qlu+UpaEjUuVP0A/vDZX+1ip0OBZDi17RGNH
+ P/qS660Rew80XiObuGOiRX45OYHP/azKwVmkbO24A8RPWOjZS0mDlmP1jUmK61ujMlYa
+ Ktbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788170515; x=1788775315;
+ d=1e100.net; s=20251104; t=1788170518; x=1788775318;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WuBxW5Qk+qrLfNk8wOq6IIiADXNVrNAOwMYrteRNbjE=;
- b=F6hdeac2KjXKSnIyQq5oZ7aFgWWIoANpOYz+DLPHq+IsonUzX1tT56R/5dPJH6Ve8m
- gIKq6MuPqx1xCjHkBgwa02LeEidXS0Set6T72lE8R8cIu6bV4+bIzUF6qMQSjBXp59iU
- arA6QonogyTd+OAAm64ipA2YsNQbLLm4tU8S1jz3iFzbdMDYdn/EhCSK2FBrjbRPnKMn
- TYrDsi5wMJWr2pGShExBfdlwSgkggQlNDrclQRLG/rLt9vqIp8nWQIhg9mIaJAY/R1iM
- UHaEqFAREuj8pbJuGvCBbJhukrfLMdNxBmXNNRHApR1gkPVCwIBhXVm84zyfDhfCpjYv
- lU1Q==
-X-Gm-Message-State: AFuF++krZNIBM5Cs0pxj1nns2jZomBfqOCirkFSSvQG043I5nDd89XwK
- JbjYrGWc4ghbPBqIyIm+CVxsOnKQBp3QZHjc9o6uIOSfs7Le3QJ6MUm6uEn4RBuuoS2FiqIMGZH
- 5yPMO
-X-Gm-Gg: AYBFou2Osg3bu4LVeY8e2MGHkt1VpbX6nNEQ9kXEJaAJqjavW29xtVm+JIBOKSW+1rz
- eqXx9z69zbciMAqgaOV3XtrhAkaCO0Qa/HHod+XQSR7W+PW9XipzxUjpjoTjewzyFbU0Ls+kt0x
- SA8B7DMLdWXJ2WRs/v+J5UN2Uah+zsdPc9eVAQmB8PtSSo8w7KoLa5B7awF3cOO0p91qXcqasKB
- f0aMMVXHJ4R+Ca6YRk7v8jaUrWTRwxWZ1MhunbwPTbhTPWQw10yzSBPo1vcYOQorcp6J9WC5nW7
- Vv86z6gGCRM7XBBTNBxQU+hEaOg3WQfl5Y/AqkjEKVKq8oNbJaGQ8ZwOYp6lzr33k1XaYYd9xId
- P9VKcNiuIhiU+ljMKwzec1scpNPUBylSUEoKuNuvfPSl0U94Of41z4gvFz1vr+wFLZNNQengemg
- T/DBrkbUlD3oHshcZkIXLnPJGrIoRlmChZWtrI6yF/JYdnBzzFUXh6NgAh
-X-Received: by 2002:a5d:5e01:0:b0:480:c5:d635 with SMTP id
- ffacd0b85a97d-482f782a4a2mr34636140f8f.0.1788170515229; 
- Mon, 31 Aug 2026 03:01:55 -0700 (PDT)
+ bh=oCneUgH+VCGYg++9em8cPDWbXKgq959i6BrsDRTpNpA=;
+ b=WJEM9c5v2ScJkbr0M9hP9vxT8MB87XseQ48yIXzr+573MHr8gLkVkl2oZdUciPjxwj
+ icxOhPqbJGG2x6rutrZIk284TamIfp3GVa3GfMSyIxrtIvE7USTIaaNk6QTd0I4d7bGU
+ 76lm5jUan0Q1dLAfCvmuD/a5gaVDBdvETeiUO9w6YtHOSZf28G7xjt2ibpk23xL0oMCF
+ KGZt7xSOs0+FOanWNKCp0icK01HE1Ff26FEz6DIg1UZHJiBD7QW2QkYQtC6NX5U4F4bY
+ 0SNzVqLJw72uwrq/RmpJ5yNRtqB+3s47rnWd1CRi/uoP50wt9USaTGu2CQCqLIv7uA5u
+ XF3g==
+X-Gm-Message-State: AFuF++nzadgiVsm8PV1a+jz4+5GnoNQD6ji9EPrDdRwoUgJuH1ZGPtwX
+ qzH7v3YBLMBV4jxUXETDIBiw0o7hRP8MrYwXY2GA7QZpxeiQZ2RrKJxqYoOukmSw2AebiRZPms/
+ fyKpw
+X-Gm-Gg: AYBFou1xNGWf6IiFA1q2tHF9Y303IHQbpSL8bV9X1ZRGtOQLNWulfxRxPLaIww0BEk4
+ AsX/dBFNR/yn9qy2cKMK0uReDEqXP1ySq0Ia2BAswnBC3aNfkcm2YoQYr9WUfDJWSKaZ3la4i+L
+ tDQot/QHrhQ9gL4duFTAQmJ2zI9FulIIhE8Dhm4KwQqmZxknHyWWApwqARY/9gPeZ/x/1YQVvJ+
+ H61sDXv390Kc3F6eFyGzCm5PXCi0SLswv3BfjWInYIn/2UUOUyfwKU/8hKJN5pqgSe3WFUQwnZ/
+ uqru+gh+lbeRCvtSthlf8A6AijB51zXuuFkaZSmvC8DiJbRI+vk6gQV5TDKRiOUBLi7gAjjczVA
+ VDa/DBnLlQx6O8Vx8lNl+3qejFpBeHdkE1E/U/0hY7O5M4RyFDeiK6Hw2eTCSvHZu2HOrgSgrf0
+ n9FomyHzC2vfIzWIXAPZgvHlcu0UioppEMR25Yi1hUyLiBw8NpMKELzP8g
+X-Received: by 2002:a05:6000:1449:b0:47f:fb2e:f63d with SMTP id
+ ffacd0b85a97d-482f79859b9mr34002720f8f.9.1788170518482; 
+ Mon, 31 Aug 2026 03:01:58 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:3bc1:c53b:30b:203e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbb33070sm22362383f8f.36.2026.08.31.03.01.54
+ ffacd0b85a97d-482fbb33070sm22362383f8f.36.2026.08.31.03.01.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 03:01:54 -0700 (PDT)
+ Mon, 31 Aug 2026 03:01:58 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org, qemu-stable@nongnu.org,
+Cc: den@openvz.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 1/6] io/channel-socket: do not treat a zero length write as an
- error
-Date: Mon, 31 Aug 2026 12:01:46 +0200
-Message-ID: <20260831100151.914178-2-den@openvz.org>
+Subject: [PATCH 4/6] tests/unit: add websock handshake test
+Date: Mon, 31 Aug 2026 12:01:49 +0200
+Message-ID: <20260831100151.914178-5-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831100151.914178-1-den@openvz.org>
 References: <20260831100151.914178-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=den@openvz.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=den@openvz.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,45 +104,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-qio_channel_socket_writev() checks "ret <= 0" after sendmsg(). A zero
-length iovec is written successfully and returns 0, so the success
-falls into the errno switch, which acts on whatever the last failing
-syscall left in errno. A stale EAGAIN turns it into
-QIO_CHANNEL_ERR_BLOCK with errp untouched, and a caller which treats
-every negative return as fatal then passes a NULL Error to
-error_get_pretty(). The websocket handshake does exactly that, so an
-unauthenticated client crashes QEMU during the greeting.
+Check that malformed HTTP greetings are answered with an HTTP 400
+rather than an empty response. The no-space case is the one which used
+to leave the response buffer empty.
 
-Returning 0 is safe for callers which loop until everything is
-written. qio_channel_writev_full_all() has no zero progress guard, but
-iov_copy() yields no entries for a zero length write, so that loop is
-never entered. A connected stream socket returns 0 only when there is
-nothing to send.
-
-The WIN32 implementation in the same file uses "ret < 0".
-
-Fixes: 559607ea173a ("io: add QIOChannelSocket class")
-Cc: qemu-stable@nongnu.org
 Cc: Daniel P. Berrangé <berrange@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- io/channel-socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/meson.build               |   1 +
+ tests/unit/test-io-channel-websock.c | 105 +++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
+ create mode 100644 tests/unit/test-io-channel-websock.c
 
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 12773b832c..7920cee639 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -667,7 +667,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
- 
-  retry:
-     ret = sendmsg(sioc->fd, &msg, sflags);
--    if (ret <= 0) {
-+    if (ret < 0) {
-         switch (errno) {
-         case EAGAIN:
-             return QIO_CHANNEL_ERR_BLOCK;
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 3a9866c1f2..6a11f07112 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -93,6 +93,7 @@ if have_block
+     'test-io-channel-command': ['io-channel-helpers.c', io],
+     'test-io-channel-buffer': ['io-channel-helpers.c', io],
+     'test-io-channel-null': [io],
++    'test-io-channel-websock': [io],
+     'test-crypto-ivgen': [io],
+     'test-crypto-afsplit': [io],
+     'test-crypto-block': [io],
+diff --git a/tests/unit/test-io-channel-websock.c b/tests/unit/test-io-channel-websock.c
+new file mode 100644
+index 0000000000..2a55a4bcdf
+--- /dev/null
++++ b/tests/unit/test-io-channel-websock.c
+@@ -0,0 +1,105 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * QEMU I/O channel websock test
++ *
++ * Copyright (c) 2026 Virtuozzo International GmbH
++ */
++
++#include "qemu/osdep.h"
++#include "io/channel-websock.h"
++#include "io/channel-socket.h"
++#include "qapi/error.h"
++#include "qemu/module.h"
++#include "qemu/sockets.h"
++
++typedef struct {
++    bool finished;
++    bool failed;
++} QIOChannelWebsockHandshake;
++
++static void test_websock_handshake_done(QIOTask *task, gpointer opaque)
++{
++    QIOChannelWebsockHandshake *res = opaque;
++
++    res->finished = true;
++    res->failed = qio_task_propagate_error(task, NULL);
++}
++
++/*
++ * Drives a server-side handshake against @request and returns whatever
++ * the server wrote back, NUL terminated. The handshake is expected to
++ * fail; the point of the test is the HTTP response that goes with it.
++ */
++static char *test_websock_handshake_reply(const char *request)
++{
++    QIOChannelWebsockHandshake res = { false, false };
++    QIOChannelSocket *cli, *srv;
++    QIOChannelWebsock *wioc;
++    GMainContext *mainloop;
++    int channel[2];
++    char *reply;
++    ssize_t got;
++
++    g_assert(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, channel) == 0);
++
++    cli = qio_channel_socket_new_fd(channel[0], &error_abort);
++    srv = qio_channel_socket_new_fd(channel[1], &error_abort);
++    qio_channel_set_blocking(QIO_CHANNEL(srv), false, &error_abort);
++    qio_channel_set_blocking(QIO_CHANNEL(cli), false, &error_abort);
++
++    wioc = qio_channel_websock_new_server(QIO_CHANNEL(srv));
++    qio_channel_websock_handshake(wioc, test_websock_handshake_done,
++                                  &res, NULL);
++
++    qio_channel_write_all(QIO_CHANNEL(cli), request, strlen(request),
++                          &error_abort);
++
++    mainloop = g_main_context_default();
++    while (!res.finished) {
++        g_main_context_iteration(mainloop, TRUE);
++    }
++    g_assert(res.failed);
++
++    reply = g_malloc0(1024);
++    got = qio_channel_read(QIO_CHANNEL(cli), reply, 1023, &error_abort);
++    if (got > 0) {
++        reply[got] = '\0';
++    }
++
++    object_unref(OBJECT(wioc));
++    object_unref(OBJECT(srv));
++    object_unref(OBJECT(cli));
++
++    return reply;
++}
++
++static void test_websock_bad_request(const void *opaque)
++{
++    const char *request = opaque;
++    g_autofree char *reply = test_websock_handshake_reply(request);
++
++    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
++}
++
++int main(int argc, char **argv)
++{
++    module_call_init(MODULE_INIT_QOM);
++    g_test_init(&argc, &argv, NULL);
++
++#define TEST_BAD_REQUEST(name, request)                         \
++    g_test_add_data_func("/io/channel/websock/bad-request/" name, \
++                         request, test_websock_bad_request)
++
++    /*
++     * A greeting with no space at all used to leave the response buffer
++     * empty, which drove the handshake into a zero length write.
++     */
++    TEST_BAD_REQUEST("no-space", "stats\r\nx\r\n\r\n");
++    TEST_BAD_REQUEST("method-only", "GET\r\nx\r\n\r\n");
++    TEST_BAD_REQUEST("no-version", "GET /\r\nx\r\n\r\n");
++    TEST_BAD_REQUEST("bad-method", "POST / HTTP/1.1\r\nx: y\r\n\r\n");
++    TEST_BAD_REQUEST("bad-version", "GET / HTTP/1.0\r\nx: y\r\n\r\n");
++
++    return g_test_run();
++}
 -- 
 2.53.0
 
