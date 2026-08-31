@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB04AC624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68979C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12RV-0004VR-Iv; Mon, 31 Aug 2026 09:52:57 -0400
+	id 1x12RL-0004Lr-4H; Mon, 31 Aug 2026 09:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12RS-0004Tn-QS
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12RH-0004LI-JL
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12RP-00042T-NV
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:54 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12RF-00040Q-Hr
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788184371;
+ s=mimecast20190719; t=1788184361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e5bBcsxgaPauphBAbkV3pf/dICs6jqAgw/5t5PALPAY=;
- b=CC5g1STol0qf2I2TJvcSkjRHbwLedEsORKKtZaFT3ByA7ok62y8CONoykBibMHMjZ4Y5yc
- 5GoRZl5fwY+CJJMk5xIG/0UPFrmdihb0w+0CTezeGUtZ56t8GOOiQVixk1CLN3eSRZisHG
- +SIzHE5y5rnLIjoCYjC5eruIUx7WaQM=
+ bh=XsKq84WWl0P0xyX3zc9NdARXmnRPfWGby8GQ+hm8M4k=;
+ b=OmXRVaR6t1g0bcYkyKPCumQJXwvnlKZCswBmC9ksMtnTcNK9BXgpQVp1/H/mtB0im3E+22
+ gABqWmKPNY3wLjDa0eXhf1LhirYKoAmfW9wui9TxUMmluD2ZvthVnccm+ORYurQ1Ldrzk4
+ dFXdo+oE0Ng+6p3g9h+Q1qIxRRujEXE=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81--Y0zBVsCNTCWAnvE0SjpxQ-1; Mon, 31 Aug 2026 09:52:49 -0400
-X-MC-Unique: -Y0zBVsCNTCWAnvE0SjpxQ-1
-X-Mimecast-MFC-AGG-ID: -Y0zBVsCNTCWAnvE0SjpxQ_1788184368
+ us-mta-678-dtl7g0woNjOfjc9QgRrsWg-1; Mon, 31 Aug 2026 09:52:38 -0400
+X-MC-Unique: dtl7g0woNjOfjc9QgRrsWg-1
+X-Mimecast-MFC-AGG-ID: dtl7g0woNjOfjc9QgRrsWg_1788184357
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49a1b4ea633so32188965e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:49 -0700 (PDT)
+ 5b1f17b1804b1-49554715277so33079225e9.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788184368; x=1788789168; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788184357; x=1788789157; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=e5bBcsxgaPauphBAbkV3pf/dICs6jqAgw/5t5PALPAY=;
- b=q6X0dvtlAUGqrkwBaR2BVWSKb7OA4VmrmVKT4lIVGjdmHhE/pEEeivlXBKitlXC/A0
- f3SlTqIQqhubPRGsKQ/h7gRDKNhgXKUqsdbYvv4MaOBin3BtwoAPaxTlkgcw5irHD/V1
- R+j4BN/S+JlOGHQSgla5g4wRAdvZIRY/xvF1pDvCL8Pn7Wyxmd5z6zpX3eHmSavngVfX
- Nnp/QjETElGFYWt7xlbPZBWEUA3RHq5lJfiophLaUAGtQFwvGY47KsmoRowAELLbGvGp
- GALg3P/mMrWlCVaj9wQZY6CuEyoBqf1h0EJO5xp2BUYH1W6PN/M9exqR6Kh+MPcL/UyE
- 8Yxg==
+ bh=XsKq84WWl0P0xyX3zc9NdARXmnRPfWGby8GQ+hm8M4k=;
+ b=RKYlJU07dQyivLl/sgrIO6wRipD9Txy+RvYxdk5srUyA0s95r3KuNaC17i11Ddttma
+ jRNwxSgjPZyhdgnk34feUg+8GmzObOjHnu5XqO9DmLczsJUAE6ue0pi20BlINYJJsKHy
+ 9HAAsp/tiAup8bJX9DQgYahI6N1HEjCjPuVMfRr7HwmGZurHvyL7g7QN4ffaBL2VwdGQ
+ BuMi425iMlZDRu0/Y/OYNOIiJ2chkj8jHB7NxB7ysc+4nlEVqaHJMdMbk00HqmlXZ2r5
+ 3CI1cQZN9y31+aYvVKymm1RZL6S7O3pF/OePYdvWFKnWWByooIlDrLhIR7D5/AfQ0cSn
+ m7aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788184368; x=1788789168;
+ d=1e100.net; s=20251104; t=1788184357; x=1788789157;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=e5bBcsxgaPauphBAbkV3pf/dICs6jqAgw/5t5PALPAY=;
- b=BnKtlFfCU/mLCFF8ls0YRMxSje5RAhGBzwRaFTD1aXTWBa7OJBJM2Yk4moe/tlW3pR
- oI06/fBemhLUewGVjMNGEivTm7d56c8uLOwfpSrToWsnICVyVGo4L3VrP3cNFY3nQJCK
- mkl1bPwjjvoVN5UQnOoTvMFkPxgrsehwPc3SgztEDWD0LSsOFemRfO0Ecqz5gf0pD9Ny
- 7BDXWSKUpPkxbmo2hj6xcu/b6IoBlyPIwG9Y1wg6aEr9jG9GJsBX4ml9RnTHkJ0PRGW4
- +gKWhAN2Pehq/F8V9gRlc53Z2Aa55xfcCkvGLV0EVmBUtWAuTpAyDAZUdJ2HD1TnuLyA
- 3vTw==
-X-Gm-Message-State: AFuF++nIJSnN6D+QaToWduLTdTQdF0XrTjCc/HPNOF41cynjOqR4Sa02
- vzeB+CUJYHiTLKSF8DTy3Bfu103cWCKHTNSRsNQGsIZl60hGCV2SDQ/MFmFpZnufSfO5it5KL8J
- /QcMkdwOVstMeNb/wg8xmb8f+4XLJkKunjFde+P6aI76szz8++ANS4NcJSF7yzIr+
-X-Gm-Gg: AR+sD12tmUUtwWWw9nVpOMO6+ANiQ8tsT2QzK6Sawo62pLKVv+9lDMqkpsdCnELtpVq
- +h51shWdvFXk+NfG1p6bSA6+MAnb9rBUWPo+j7SaA+GUp+lxXEXW8ocm6w1wPSGtlYDVsyr+ASb
- aKMt4ThIiTc5s8uofqmVNQsiYNJtTF+1GRN+aFwMeeV5lNeh8X+fbkBk5inTvW97MW/ZUXyN8+U
- u8WUNw38x0a/5pc5Aa6wjL1TBqtZSyOMMIhalmU7NciU9J77YA4JGkTZ6BKvWpY4iStMRPna9xa
- k9AFRKTZDQtu8PTwz0wCfN3CmIO56+rBmHsz9U090V/iDluaunyLm8Tk4yrWd4OFoSfV5e1Xhwh
- fSD/kyh2trcoaEufDMej0mhtyZgkflZUylWyeGM1k6DSPk5fl+H1M1XCzCZc=
-X-Received: by 2002:a05:600c:64c6:b0:495:52a5:8829 with SMTP id
- 5b1f17b1804b1-49cdc558470mr13855015e9.11.1788184367771; 
- Mon, 31 Aug 2026 06:52:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:64c6:b0:495:52a5:8829 with SMTP id
- 5b1f17b1804b1-49cdc558470mr13853645e9.11.1788184367155; 
- Mon, 31 Aug 2026 06:52:47 -0700 (PDT)
+ bh=XsKq84WWl0P0xyX3zc9NdARXmnRPfWGby8GQ+hm8M4k=;
+ b=XAk2tjWGw7dLC9rba3h04WDCyjRiw8u2COHS+CX0F1q2qZoFA6IgTlksqcqvsVaFUF
+ HOnNESDV65df53zuFzoddUVkGea4LIqZpWPLX8fUnHHV+JT/pXi/livdf6lQtimHNfbs
+ m1hZqIj9Uka00FNIKis041iggRbZJVRc0WR8T+CO33p8TjVoSDueTsPx500LHEwJWu+v
+ I3Xk6FW+545ymiVyGq9BblAIom2Pd9smR54SWiGiEfWuC09fOtJpBFm21S9E4G0wXOor
+ 9MOGqFJiKPvVtYerQQadjGqDCVu8jpssT9u+nDrOctPAbRcK7stCfB8nhNM3aC5NcFE8
+ U85w==
+X-Gm-Message-State: AFuF++k3syWGneb7GcVw0LHCF4mR6K/DoseTTBtEn27nRAOJtZx/I8pE
+ l4FVdabGpYegs64ywVIMus/yYLhTToOfQTSDFJFZ1yV5+HFCCp/oP6DP1XITekUr7Q8YlLqA+e1
+ nyhSo74g4SDt/gCyBEiEK/pb/GDuVtRvTSxuOlC7V2sU+VTe87XzF/Cme
+X-Gm-Gg: AR+sD11YhexN2IwEoN4QLbtp9hq5h88AAX7nlFBpMPwwsMPfiqr9EN4EzaA/2PhTgtk
+ XRn93C9HSKgjD5A3myg/cx7ujbhfHp9hv6qm28/1sajVtVI/TLIhza09VmcKyaiBL3ChUp6P6Zi
+ HFlX7+KXMO/HafWmvHb+zHso1itsLcJWPLoNcsSiB+eacF/5Gb4xzVP0FNLjyW9EJnOC0E1afbH
+ xrcxkliOwz4fT2MJ3mMqjtEDQVNwp6bX/fp7B44+3jvAxav3vXTsseiySlMG/TrKFBI0/vjHOLU
+ XYMrzbynBORlCe+NMN8lBVOl1fyLLLnpq9eLekhjJS5HYNzCRHAOjSNt9UlJFmqv7F5yx1ZX8IA
+ WN2e4xMBtgGJP8YEb6nljef83EZmTPq/QcvMiCDmbhnySPxztnctejH1B/5E=
+X-Received: by 2002:a05:600c:a4a:b0:499:7a15:fcec with SMTP id
+ 5b1f17b1804b1-49cdc567061mr15382985e9.13.1788184357391; 
+ Mon, 31 Aug 2026 06:52:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:a4a:b0:499:7a15:fcec with SMTP id
+ 5b1f17b1804b1-49cdc567061mr15382005e9.13.1788184356984; 
+ Mon, 31 Aug 2026 06:52:36 -0700 (PDT)
 Received: from localhost
  (p200300cfd72080187472d8ceb75e67b1.dip0.t-ipconnect.de.
  [2003:cf:d720:8018:7472:d8ce:b75e:67b1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ccae954f9sm220330825e9.13.2026.08.31.06.52.45
+ 5b1f17b1804b1-49ccea6b814sm177277405e9.0.2026.08.31.06.52.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 06:52:45 -0700 (PDT)
+ Mon, 31 Aug 2026 06:52:31 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -91,24 +91,24 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 9/9] iotests: Add delay-alert test
-Date: Mon, 31 Aug 2026 15:52:05 +0200
-Message-ID: <20260831135206.126184-10-hreitz@redhat.com>
+Subject: [PATCH 6/9] block/accounting: Emit BLOCK_IO_DELAY event
+Date: Mon, 31 Aug 2026 15:52:02 +0200
+Message-ID: <20260831135206.126184-7-hreitz@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831135206.126184-1-hreitz@redhat.com>
 References: <20260831135206.126184-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,211 +124,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test delay-alert-ms via HMP qemu-io (break, aio_read/write, resume) on a
-null node (with blkdebug).
+When a request finishes with a higher latency than a predefined
+threshold, emit the BLOCK_IO_DELAY event.
+
+Note there would be an alternative, more precise solution: We could keep
+all active cookies per BlockBackend in a list and repeatedly iterate
+over it in a background coroutine (woken on a timer so it would wake
+always exactly when the next request would time out, so it generally
+stays asleep until there is actually a timeout). This way, we could emit
+the event exactly when a request crosses the delay threshold, while it
+is still running; and we could hypothetically even take actions like
+pausing the VM until the request is done so the guest operating system
+is shielded from extreme latency spikes.
+
+In practice, this is very complicated because latency cookies are
+created and finalized all over the place, so it is very hard to
+guarantee that every `block_acct_start()` is matched by the right
+finalization to ensure that cookies are properly removed from the list
+when they are done. Even if we fix all non-matching places now, there is
+hardly a guarantee this will be kept in order in the future.
+
+So, for now, just implement the simpler solution of only notifying the
+management layer when the request does complete, so VMs with high
+latency spikes can at least be identified when they happen without
+having to regularly check the latency histogram.
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- tests/qemu-iotests/tests/delay-alert     | 136 +++++++++++++++++++++++
- tests/qemu-iotests/tests/delay-alert.out |  46 ++++++++
- 2 files changed, 182 insertions(+)
- create mode 100755 tests/qemu-iotests/tests/delay-alert
- create mode 100644 tests/qemu-iotests/tests/delay-alert.out
+ include/block/accounting.h | 10 ++++++++-
+ block/accounting.c         | 42 +++++++++++++++++++++++++++++++++++++-
+ blockdev.c                 |  2 +-
+ hw/block/block.c           |  2 +-
+ 4 files changed, 52 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/delay-alert b/tests/qemu-iotests/tests/delay-alert
-new file mode 100755
-index 00000000000..d98f537e802
---- /dev/null
-+++ b/tests/qemu-iotests/tests/delay-alert
-@@ -0,0 +1,136 @@
-+#!/usr/bin/env python3
-+# group: rw
-+#
-+# Test the I/O delay QMP event.
-+#
-+# Copyright (C) 2026 Red Hat, Inc.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Creator/Owner: Hanna Czenczek <hreitz@redhat.com>
+diff --git a/include/block/accounting.h b/include/block/accounting.h
+index 025536239e6..ba3a6859cf4 100644
+--- a/include/block/accounting.h
++++ b/include/block/accounting.h
+@@ -92,6 +92,7 @@ struct BlockAcctStats {
+     QSLIST_HEAD(, BlockAcctTimedStats) intervals;
+     bool account_invalid;
+     bool account_failed;
++    int64_t delay_threshold_ns;
+     BlockLatencyHistogram latency_histogram[BLOCK_MAX_IOTYPE];
+ };
+ 
+@@ -103,9 +104,16 @@ typedef struct BlockAcctCookie {
+ } BlockAcctCookie;
+ 
+ void block_acct_init(BlockBackend *blk, BlockAcctStats *stats);
++/**
++ * Set up accounting for a block device in @stats.
++ * @alert_ns specifies a latency so that if any request takes longer than that
++ * threshold, a BLOCK_IO_DELAY event will be generated (when that request
++ * completes). Pass 0 to disable.
++ */
+ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+                       enum OnOffAuto account_failed, uint32_t *stats_intervals,
+-                      uint32_t num_stats_intervals, Error **errp);
++                      uint32_t num_stats_intervals, int64_t alert_ns,
++                      Error **errp);
+ void block_acct_cleanup(BlockAcctStats *stats);
+ void block_acct_add_interval(BlockAcctStats *stats, unsigned interval_length);
+ BlockAcctTimedStats *block_acct_interval_next(BlockAcctStats *stats,
+diff --git a/block/accounting.c b/block/accounting.c
+index a74551d41f2..debf1924455 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -27,8 +27,10 @@
+ #include "block/accounting.h"
+ #include "block/block_int.h"
+ #include "qemu/timer.h"
++#include "system/block-backend.h"
+ #include "system/qtest.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-events-block.h"
+ 
+ static QEMUClockType clock_type = QEMU_CLOCK_REALTIME;
+ static const int qtest_latency_ns = NANOSECONDS_PER_SECOND / 1000;
+@@ -62,9 +64,35 @@ static bool bool_from_onoffauto(OnOffAuto val, bool def)
+     }
+ }
+ 
++/**
++ * Convert a BlockAcctType into its QAPI equivalent IoAccountingOperation.
++ *
++ * Must only be called for valid BlockAcctType values, i.e. specifically not for
++ * `BLOCK_ACCT_NONE`.
++ */
++static IoAccountingOperation block_acct_qapi_type(enum BlockAcctType type)
++{
++    switch (type) {
++    case BLOCK_ACCT_READ:
++        return IO_ACCOUNTING_OPERATION_READ;
++    case BLOCK_ACCT_WRITE:
++        return IO_ACCOUNTING_OPERATION_WRITE;
++    case BLOCK_ACCT_FLUSH:
++        return IO_ACCOUNTING_OPERATION_FLUSH;
++    case BLOCK_ACCT_ZONE_APPEND:
++        return IO_ACCOUNTING_OPERATION_ZONE_APPEND;
++    case BLOCK_ACCT_UNMAP:
++        return IO_ACCOUNTING_OPERATION_UNMAP;
++    case BLOCK_ACCT_NONE:
++    default:
++        g_assert_not_reached();
++    }
++}
 +
-+import asyncio
-+import iotests
-+from iotests import filter_qmp_event, log
+ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+                       enum OnOffAuto account_failed, uint32_t *stats_intervals,
+-                      uint32_t num_stats_intervals, Error **errp)
++                      uint32_t num_stats_intervals, int64_t alert_ns,
++                      Error **errp)
+ {
+     stats->account_invalid = bool_from_onoffauto(account_invalid,
+                                                  stats->account_invalid);
+@@ -79,6 +107,7 @@ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+             block_acct_add_interval(stats, stats_intervals[i]);
+         }
+     }
++    stats->delay_threshold_ns = alert_ns;
+     return true;
+ }
+ 
+@@ -252,6 +281,17 @@ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
+         return;
+     }
+ 
++    if (stats->delay_threshold_ns && latency_ns > stats->delay_threshold_ns) {
++        g_autofree char *dev_path = blk_get_attached_dev_path(stats->blk);
++        double latency = latency_ns / (double)NANOSECONDS_PER_SECOND;
 +
-+DELAY_ALERT_MS = 5000 # ms
-+EPSILON_MS = 50 # ms -- small delta that can safely be added/subtracted
-+NS_PER_MS = 1000 * 1000
++        qapi_event_send_block_io_delay(dev_path,
++                                       block_acct_qapi_type(cookie->type),
++                                       latency,
++                                       cookie->offset >= 0, cookie->offset,
++                                       cookie->bytes);
++    }
 +
-+qtest_clock = 0 # ms
-+
-+iotests.script_initialize()
-+
-+def vm_qemu_io(qvm, virtio_blk_id, cmd):
-+    log(f'[HMP] qemu-io to {virtio_blk_id}: {cmd}')
-+    cmd = f'qemu-io -d {virtio_blk_id}/virtio-backend "{cmd}"'
-+    log(qvm.qmp('human-monitor-command', command_line=cmd))
-+
-+def advance_clock_to(qvm, clock_ms):
-+    # Retain the current absolute clock time so we can step *to* a specific
-+    # time via `clock_step`. pylint does not like global much, but this is a
-+    # test script, and not using global would just make this more complicated.
-+    global qtest_clock # pylint: disable=global-statement
-+
-+    msecs = clock_ms - qtest_clock
-+    log(f'[qtest] clock_step {msecs}ms to {clock_ms}ms')
-+    qvm.qtest(f'clock_step {msecs * NS_PER_MS}')
-+    qtest_clock += msecs
-+
-+def assert_no_event(qvm, event_name):
-+    try:
-+        evt = qvm.event_wait(event_name, timeout=0.1)
-+        assert evt is None, f'Unexpected {event_name} event: {evt}'
-+    except asyncio.TimeoutError:
-+        pass
-+    log(f'(No {event_name} event)')
-+
-+with iotests.VM() as vm:
-+    # Cannot use null-co.latency-ns, as that uses realtime (not qtest time)
-+    # Need to use raw to get the read_aio event working
-+    vm.add_blockdev(vm.qmp_to_opts({
-+        'driver': 'raw',
-+        'node-name': 'test-node',
-+        'file': {
-+            'driver': 'blkdebug',
-+            'image': {
-+                'driver': 'null-co',
-+            },
-+        },
-+    }))
-+
-+    vm.launch()
-+
-+    log(f'[QMP] device_add id=vblk delay-alert-ms={DELAY_ALERT_MS}')
-+    log(vm.qmp('device_add', {
-+        'driver': 'virtio-blk',
-+        'id': 'vblk',
-+        'drive': 'test-node',
-+        'delay-alert-ms': DELAY_ALERT_MS,
-+    }))
-+
-+    try:
-+        # Test different operation types. Flushing and discarding would also be
-+        # nice but `aio_flush` does not actually execute a flush, and there is
-+        # no blkdebug event for discarding.
-+
-+        vm_qemu_io(vm, 'vblk', 'break read_aio read_0')
-+        vm_qemu_io(vm, 'vblk', 'aio_read 0k 4k')
-+        vm_qemu_io(vm, 'vblk', 'wait_break read_0')
-+
-+        vm_qemu_io(vm, 'vblk', 'break write_aio write_0')
-+        vm_qemu_io(vm, 'vblk', 'aio_write 4k 4k')
-+        vm_qemu_io(vm, 'vblk', 'wait_break write_0')
-+
-+        vm_qemu_io(vm, 'vblk', 'break read_aio read_1')
-+        vm_qemu_io(vm, 'vblk', 'aio_read 8k 4k')
-+        vm_qemu_io(vm, 'vblk', 'wait_break read_1')
-+
-+        vm_qemu_io(vm, 'vblk', 'break write_aio write_1')
-+        vm_qemu_io(vm, 'vblk', 'aio_write 12k 4k')
-+        vm_qemu_io(vm, 'vblk', 'wait_break write_1')
-+
-+        # Assert there is no event before the step
-+        advance_clock_to(vm, DELAY_ALERT_MS - EPSILON_MS)
-+        assert_no_event(vm, 'BLOCK_IO_DELAY')
-+
-+        # Even when a request finishes here
-+        vm_qemu_io(vm, 'vblk', 'resume read_0')
-+        assert_no_event(vm, 'BLOCK_IO_DELAY')
-+
-+        # Crossing the threshold alone does not cause an event to fire
-+        advance_clock_to(vm, DELAY_ALERT_MS + EPSILON_MS)
-+        assert_no_event(vm, 'BLOCK_IO_DELAY')
-+
-+        # Only when the request finishes past the threshold do we see one
-+        vm_qemu_io(vm, 'vblk', 'resume write_0')
-+        event = vm.event_wait('BLOCK_IO_DELAY')
-+        assert event is not None
-+        log(event, filters=[filter_qmp_event])
-+        assert_no_event(vm, 'BLOCK_IO_DELAY')
-+
-+        # Check that we get the event immediately on completion
-+        vm_qemu_io(vm, 'vblk', 'resume read_1')
-+        event = vm.event_wait('BLOCK_IO_DELAY')
-+        assert event is not None
-+        log(event, filters=[filter_qmp_event])
-+        assert_no_event(vm, 'BLOCK_IO_DELAY')
-+
-+        # And the same for the final request, but add another bit of delay
-+        advance_clock_to(vm, DELAY_ALERT_MS + 2 * EPSILON_MS)
-+        vm_qemu_io(vm, 'vblk', 'resume write_1')
-+        event = vm.event_wait('BLOCK_IO_DELAY')
-+        assert event is not None
-+        log(event, filters=[filter_qmp_event])
-+        assert_no_event(vm, 'BLOCK_IO_DELAY')
-+    except Exception as exc:
-+        # The VM will not be able to quit without these requests
-+        # finished, which (without this block) would make the test
-+        # hang instead of exit if something unexpected goes wrong
-+        vm_qemu_io(vm, 'vblk', 'resume read_0')
-+        vm_qemu_io(vm, 'vblk', 'resume write_0')
-+        vm_qemu_io(vm, 'vblk', 'resume read_1')
-+        vm_qemu_io(vm, 'vblk', 'resume write_1')
-+        raise exc
-+
-+    vm.shutdown()
-diff --git a/tests/qemu-iotests/tests/delay-alert.out b/tests/qemu-iotests/tests/delay-alert.out
-new file mode 100644
-index 00000000000..fe6cd71c6b1
---- /dev/null
-+++ b/tests/qemu-iotests/tests/delay-alert.out
-@@ -0,0 +1,46 @@
-+[QMP] device_add id=vblk delay-alert-ms=5000
-+{"return": {}}
-+[HMP] qemu-io to vblk: break read_aio read_0
-+{"return": ""}
-+[HMP] qemu-io to vblk: aio_read 0k 4k
-+{"return": ""}
-+[HMP] qemu-io to vblk: wait_break read_0
-+{"return": ""}
-+[HMP] qemu-io to vblk: break write_aio write_0
-+{"return": ""}
-+[HMP] qemu-io to vblk: aio_write 4k 4k
-+{"return": ""}
-+[HMP] qemu-io to vblk: wait_break write_0
-+{"return": ""}
-+[HMP] qemu-io to vblk: break read_aio read_1
-+{"return": ""}
-+[HMP] qemu-io to vblk: aio_read 8k 4k
-+{"return": ""}
-+[HMP] qemu-io to vblk: wait_break read_1
-+{"return": ""}
-+[HMP] qemu-io to vblk: break write_aio write_1
-+{"return": ""}
-+[HMP] qemu-io to vblk: aio_write 12k 4k
-+{"return": ""}
-+[HMP] qemu-io to vblk: wait_break write_1
-+{"return": ""}
-+[qtest] clock_step 4950ms to 4950ms
-+(No BLOCK_IO_DELAY event)
-+[HMP] qemu-io to vblk: resume read_0
-+{"return": ""}
-+(No BLOCK_IO_DELAY event)
-+[qtest] clock_step 100ms to 5050ms
-+(No BLOCK_IO_DELAY event)
-+[HMP] qemu-io to vblk: resume write_0
-+{"return": ""}
-+{"data": {"bytes": 4096, "duration": 5.05, "offset": 4096, "operation": "write", "qom-path": "/machine/peripheral/vblk/virtio-backend"}, "event": "BLOCK_IO_DELAY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
-+(No BLOCK_IO_DELAY event)
-+[HMP] qemu-io to vblk: resume read_1
-+{"return": ""}
-+{"data": {"bytes": 4096, "duration": 5.05, "offset": 8192, "operation": "read", "qom-path": "/machine/peripheral/vblk/virtio-backend"}, "event": "BLOCK_IO_DELAY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
-+(No BLOCK_IO_DELAY event)
-+[qtest] clock_step 50ms to 5100ms
-+[HMP] qemu-io to vblk: resume write_1
-+{"return": ""}
-+{"data": {"bytes": 4096, "duration": 5.1, "offset": 12288, "operation": "write", "qom-path": "/machine/peripheral/vblk/virtio-backend"}, "event": "BLOCK_IO_DELAY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
-+(No BLOCK_IO_DELAY event)
+     WITH_QEMU_LOCK_GUARD(&stats->lock) {
+         if (failed) {
+             stats->failed_ops[cookie->type]++;
+diff --git a/blockdev.c b/blockdev.c
+index 6e86c6262f9..195bac8af01 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -618,7 +618,7 @@ static BlockBackend *blockdev_init(const char *file, QDict *bs_opts,
+         bs->detect_zeroes = detect_zeroes;
+ 
+         block_acct_setup(blk_get_stats(blk), account_invalid, account_failed,
+-                         NULL, 0, NULL);
++                         NULL, 0, 0, NULL);
+ 
+         if (!parse_stats_intervals(blk_get_stats(blk), interval_list, errp)) {
+             blk_unref(blk);
+diff --git a/hw/block/block.c b/hw/block/block.c
+index f187fa025d0..19301c6f995 100644
+--- a/hw/block/block.c
++++ b/hw/block/block.c
+@@ -251,7 +251,7 @@ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+ 
+     if (!block_acct_setup(blk_get_stats(blk), conf->account_invalid,
+                           conf->account_failed, conf->stats_intervals,
+-                          conf->num_stats_intervals, errp)) {
++                          conf->num_stats_intervals, 0, errp)) {
+         return false;
+     }
+     return true;
 -- 
 2.55.0
 
