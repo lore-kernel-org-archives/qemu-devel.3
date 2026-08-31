@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD54EC61DE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 02:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80625C61DE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 02:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0rg7-0002go-WB; Sun, 30 Aug 2026 22:23:20 -0400
+	id 1x0rl3-0003yZ-9b; Sun, 30 Aug 2026 22:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x0rg4-0002gZ-G8
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:23:16 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x0rg2-0000Ez-Du
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:23:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788142994; x=1819678994;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=JfFtoKN/qdgOj3A9lANKsbktFZUUewgu65dOxEHAdww=;
- b=FNtIKc9PWsNz8lw80bWWGFTTnZOMFd3tMs7jZmp0OiqFTKi8kStE1FNb
- T/hYjDES7KcHZDijtsGJ7oVcY7IHokaVeHTvMlZccDRqshV+ZVuLGDlTq
- qgVYRwkeKDHO3je4I3C86IevKaSWnQSxOwQ7Enfc0U2nGG820dj/4fMvu
- zYEByu7KuMBkuZtbM0m7935vXX8IH21mpZ0sDjl3lpD7A7M2uhKQpFMKo
- jQQDvvSGxWhSESQ5E3BrYPpcO+YsaM292jaScoRtEswolr874pnTgAp5o
- c3q6cxPLhheqguuuZyIV0OWew6fYVVOtH4JpwIT/BqjQXqrTkSahaFPHy Q==;
-X-CSE-ConnectionGUID: O5/qfOYwRMaEcfrI4Nfwqg==
-X-CSE-MsgGUID: 2AMEJfo4Q3mKOB9AtjI0Pw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="99703147"
-X-IronPort-AV: E=Sophos;i="6.25,252,1779174000"; d="scan'208";a="99703147"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2026 19:23:11 -0700
-X-CSE-ConnectionGUID: 6zp4s1G1SPylKnjVDBXrng==
-X-CSE-MsgGUID: wHFmjOCJQ3m8BYGsjX6F6w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,252,1779174000"; d="scan'208";a="272859624"
-Received: from junjie-desk-dev.bj.intel.com (HELO
- junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
- by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2026 19:23:09 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: mst@redhat.com, Shrihari E S <shrihari.s@samsung.com>,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH] hw/cxl: fix the CDAT DOE overlapping the Flex Bus DVSEC when
- sn= is set
-Date: Mon, 31 Aug 2026 10:23:02 +0800
-Message-ID: <20260831022302.406740-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x0rl1-0003yQ-34
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:28:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x0rkx-0000jz-GK
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:28:22 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxntK45pRqGL4GAA--.18825S3;
+ Mon, 31 Aug 2026 10:28:08 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxxMy35pRq8fcXAA--.23094S2;
+ Mon, 31 Aug 2026 10:28:07 +0800 (CST)
+Subject: Re: [PATCH v4 01/14] target/loongarch: Define LVZ CSR fields
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1787739852.git.prcups@krgm.moe>
+ <4e393c8c6f5d7d42ede6fa65fc94753bd8b14c17.1787739852.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <1deae93a-e9f0-3d33-ac78-872cf56d7e87@loongson.cn>
+Date: Mon, 31 Aug 2026 10:27:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <4e393c8c6f5d7d42ede6fa65fc94753bd8b14c17.1787739852.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJDxxMy35pRq8fcXAA--.23094S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Ww43Wr1rGF1Utw1ktFy7urX_yoW8KFyxp3
+ 48KFZ3CrW8Ka4SkF93t3W5G3ZxXr48AwsrursrJrWxtr1jq3y0yrZrt348try5Ar95Xr15
+ AFnay3y5CFn8JwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JV
+ WxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU2ID7
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.789,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,60 +82,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ct3_realize() adds the CDAT DOE at a fixed 0x190.  Since 8700ee15de the
-four DVSECs take 0x90 bytes, which from 0x100 ends exactly at 0x190.
-With sn= the Device Serial Number capability pushes the block to
-0x10c..0x19c, and the DOE, added later, overwrites the last 12 bytes of
-the Flex Bus Port DVSEC: Capability2, Control2 and Status2.  Nothing
-catches this -- pcie_add_capability() checks bounds, not overlap, and
-the chain still walks because the DVSEC's next pointer becomes 0x190,
-inside its own body.  Most cxl-type3 examples in
-docs/system/devices/cxl.rst set sn=.
 
-Derive the offset from the DVSEC block instead, as cxl_upstream.c
-already does.  Without sn= the layout is unchanged byte for byte; with
-sn= the DOE moves to 0x19c, below the AER capability at 0x200.  The
-type 3 device has no VMStateDescription, so its config space never
-reaches the migration stream.
 
-Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
-Found while walking the extended capability chains for the UIO/SVC RFC
-V2 review; independent of that series.
+On 2026/8/26 下午6:30, SignKirigami wrote:
+> Add LVZ CSR number and bit-field definitions for guest status,
+> configuration, interrupt, timer and guest TLB registers, preparing
+> the architectural constants needed by later LVZ CPU state, CSR and TCG
+> implementation patches.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/cpu-csr.h | 38 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 38 insertions(+)
+> 
+> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+> index d860417af2..438da43a79 100644
+> --- a/target/loongarch/cpu-csr.h
+> +++ b/target/loongarch/cpu-csr.h
+> @@ -224,4 +224,42 @@ FIELD(CSR_DBG, ECODE, 16, 6)
+>   #define LOONGARCH_CSR_DERA           0x501 /* Debug era */
+>   #define LOONGARCH_CSR_DSAVE          0x502 /* Debug save */
+>   
+> +/* LVZ (LoongArch Virtualization) CSRs */
+> +#define LOONGARCH_CSR_GSTAT          0x50 /* Guest status */
+> +FIELD(CSR_GSTAT, VM, 0, 1)
+> +FIELD(CSR_GSTAT, PVM, 1, 1)
+> +FIELD(CSR_GSTAT, GIDBIT, 4, 6)
+> +FIELD(CSR_GSTAT, GID, 16, 8)
+> +
+> +#define LOONGARCH_CSR_GCFG           0x51 /* Guest config */
+> +FIELD(CSR_GCFG, MATP, 0, 4)
+> +FIELD(CSR_GCFG, MATC, 4, 2)
+> +FIELD(CSR_GCFG, TOPIP, 6, 1)
+> +FIELD(CSR_GCFG, TOPI, 7, 1)
+> +FIELD(CSR_GCFG, TOTIP, 8, 1)
+> +FIELD(CSR_GCFG, TOTI, 9, 1)
+> +FIELD(CSR_GCFG, TOEP, 10, 1)
+> +FIELD(CSR_GCFG, TOE, 11, 1)
+> +FIELD(CSR_GCFG, TOPP, 12, 1)
+> +FIELD(CSR_GCFG, TOP, 13, 1)
+> +FIELD(CSR_GCFG, TOHUP, 14, 1)
+> +FIELD(CSR_GCFG, TOHU, 15, 1)
+> +FIELD(CSR_GCFG, TOCIP, 16, 4)
+> +FIELD(CSR_GCFG, TOCI, 20, 2)
+> +FIELD(CSR_GCFG, GPMP, 23, 1)
+> +FIELD(CSR_GCFG, GPMNUM, 24, 3)
+> +
+> +#define LOONGARCH_CSR_GINTC          0x52 /* Guest interrupt config */
+> +FIELD(CSR_GINTC, HWIS, 0, 8)
+> +FIELD(CSR_GINTC, HWIP, 8, 8)
+> +FIELD(CSR_GINTC, HWIC, 16, 8)
+> +
+> +#define LOONGARCH_CSR_GCNTC          0x53 /* Guest counter compensation */
+> +
+> +#define LOONGARCH_CSR_GTLBC          0x15 /* Guest TLB control */
+> +FIELD(CSR_GTLBC, GMTLBSZ, 0, 6)
+> +FIELD(CSR_GTLBC, USETGID, 12, 1)
+> +FIELD(CSR_GTLBC, TOTI, 13, 1)
+> +FIELD(CSR_GTLBC, TGID, 16, 8)
+> +
+CSR register LOONGARCH_CSR_GTLBC had better to put ahead of 
+LOONGARCH_CSR_GSTAT by CSR index order. The others looks good to me.
 
-Tested at bde2492aac on q35 (pxb-cxl / cxl-rp / cxl-type3), dumping the
-capability chain and raw config bytes from the guest with and without
-sn=: the Flex Bus DVSEC keeps its full 0x20 bytes and the DOE sits at
-0x19c; without sn= the bytes are identical before and after.  cxl-test
-12/12.
-
-On cxl-2026-03-25-draft REG_LOC_DVSEC_LENGTH is 0x34, so the overlap is
-there without sn= too; with this change the DOE lands at 0x1a0/0x1ac.
-cxl-2026-01-09-draft also fixes doe_comp at 0x1b0, which would then
-collide -- the two want chaining.
-
- hw/mem/cxl_type3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 28f41fa623..e6eb2e0cba 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -936,8 +936,8 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     }
- 
-     /* DOE Initialization */
--    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
--                  CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
-+    pcie_doe_init(pci_dev, &ct3d->doe_cdat, cxl_cstate->dvsec_offset,
-+                  doe_cdat_prot, true, CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
- 
-     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
-     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
-
-base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
--- 
-2.43.0
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+>   #endif /* LOONGARCH_CPU_CSR_H */
+> 
 
 
