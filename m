@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A73C61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 06:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8002CC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 06:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0ved-0003eA-RZ; Mon, 31 Aug 2026 02:38:03 -0400
+	id 1x0vey-00049D-J0; Mon, 31 Aug 2026 02:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x0veb-0003ZP-Ld; Mon, 31 Aug 2026 02:38:01 -0400
+ id 1x0vex-00048J-Ag; Mon, 31 Aug 2026 02:38:23 -0400
 Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x0vea-0003m7-8g; Mon, 31 Aug 2026 02:38:01 -0400
+ id 1x0veu-0003qh-Cz; Mon, 31 Aug 2026 02:38:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788158280; x=1819694280;
+ t=1788158300; x=1819694300;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vo/XQf+M5yJhZppndfhOXW182R1VefSU2/G8yHNnK5M=;
- b=YdyrGvwwv2R/SXCahnVV4FtUAgY48Ool68VKh7YG33Tu3XCq2zXJ5lAL
- PlE7vG3RkS3L+NWZR24zFeFW8sPVFB/lSlfzwHjWBBq01GkNWtXja3AkH
- cVKIF8pBRoZ5ifYuVosNe/7FFCPsGo+/JiPGlAaw2oxLCZQmQb6gFnkCS
- qg8ph56djgg6aSbYrZ1oMoD7nNJX21HEXvZrUMy/SMdpL+4vbBfWHbH6u
- /4u8D65jCq/WowjYYqqbyoS42e2MSH1AVC0of/rBUSfaNc97mX7yOe1k5
- k6Z1VL5fa7qvo9CmFBbbfSiU5EL1TSnpgbzqYRV0LMTlDLhxJFX24gYOq Q==;
-X-CSE-ConnectionGUID: m+2QITwsRh6BP1ydLnlQDw==
-X-CSE-MsgGUID: AOXAFEgWRyehPdeSYiNwsw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="88578068"
-X-IronPort-AV: E=Sophos;i="6.25,252,1779174000"; d="scan'208";a="88578068"
+ bh=9wlVfmVmE1FZIlAm8hbt7PCWwaL9R9CYrkrpj+LUYAQ=;
+ b=jA+MhHsZpdO8WxHka+6hkNGZB1KqKdX+urRAluGkWUKn/cR2938q5LTi
+ SwgkVOfQqRJnGy2mIaGwNgfzql9QccPuGee2PPJS4pZsX6D9Cmi7L4FwY
+ Qos5nEn3qnikD3py+rwvecvNCtK9sh8NYdBtMw/WlgQB1TaahL/6JbiRy
+ CJ3J5wQdzSWpaTB9P5QjimHK7fqh3XdkslUCAsvJlpKPsV8QBYrbV7FJH
+ AwIfnTURnU8ofMl93lYOq2GLMJTzD0sJv0F4xFNzzPbANX/b3volKKV4M
+ k0YKGApbgC7PtsQoa57FlH9tEU4hDT8rjnbiP8EIj/BTK5UCdgpvhQI7u Q==;
+X-CSE-ConnectionGUID: Z24rHW33TsKpMCVR/whE9Q==
+X-CSE-MsgGUID: I5LeYrWiTsy48HRXXaYT8g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="88578122"
+X-IronPort-AV: E=Sophos;i="6.25,252,1779174000"; d="scan'208";a="88578122"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2026 23:37:58 -0700
-X-CSE-ConnectionGUID: uGF+0WdUSdyku6Wx3xz3Dw==
-X-CSE-MsgGUID: ahmy2BwDSkG7fQxW2HI2lg==
+ 30 Aug 2026 23:38:19 -0700
+X-CSE-ConnectionGUID: JUPwQEiNT/mU6WXlM/OV2w==
+X-CSE-MsgGUID: Jx1uA8N4ThaLKIpiq0tCKQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,252,1779174000"; d="scan'208";a="293521469"
+X-IronPort-AV: E=Sophos;i="6.25,252,1779174000"; d="scan'208";a="293521550"
 Received: from junjie-desk-dev.bj.intel.com (HELO
  junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Aug 2026 23:37:53 -0700
+ 30 Aug 2026 23:38:14 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: Chen Pei <cp0613@linux.alibaba.com>
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
@@ -54,13 +54,13 @@ Cc: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
  chao.liu@processmission.com, anisinha@redhat.com, dave.jiang@intel.com,
  alison.schofield@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v4 4/6] tests/qtest: Prepare golden files for the RISC-V
- CXL ACPI test
-Date: Mon, 31 Aug 2026 14:37:46 +0800
-Message-ID: <20260831063747.409053-1-junjie.cao@intel.com>
+Subject: Re: [PATCH v4 5/6] tests/qtest: Add RISC-V ACPI bios tables test for
+ CXL
+Date: Mon, 31 Aug 2026 14:38:07 +0800
+Message-ID: <20260831063808.409069-1-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260828151317.815-5-cp0613@linux.alibaba.com>
-References: <20260828151317.815-5-cp0613@linux.alibaba.com>
+In-Reply-To: <20260828151317.815-6-cp0613@linux.alibaba.com>
+References: <20260828151317.815-6-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.17; envelope-from=junjie.cao@intel.com;
@@ -89,14 +89,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Chen Pei,
 
-On Fri, 28 Aug 2026 23:13:03 +0800, Chen Pei wrote:
-> Add empty DSDT.cxl and CEDT.cxl golden files and list them in
-> bios-tables-test-allowed-diff.h, in preparation for the RISC-V CXL
-> bios-tables test added in the following patch.  The populated golden
-> master binaries are committed separately in a final patch, following
-> the bios-tables-test update process.
+On Fri, 28 Aug 2026 23:13:04 +0800, Chen Pei wrote:
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
 
 Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
 
 Many thanks,
 Junjie
