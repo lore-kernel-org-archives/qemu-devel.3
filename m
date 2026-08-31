@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F311C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30390C61DFD
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18ZG-0003AX-H3; Mon, 31 Aug 2026 16:25:22 -0400
+	id 1x18YL-0005yL-Kl; Mon, 31 Aug 2026 16:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZC-0002q8-Jc
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Y6-0005Hz-Lb
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZA-0000B6-NA
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:18 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Y4-0008GF-1b
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207916;
+ s=mimecast20190719; t=1788207847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gbbbHuvMBl3KhDhnR1d/E0FiTkXcZ8dsOcmbpvowW8U=;
- b=eZ1KVL/z0WHj0NM5C8DRdAfSA4Uc94evbmT3Q5FEsZGXGEzuYMTFPM+K9JKyPdJOf5Yz2z
- 5afJRupAJ02K2Q7Ip1MVJaRymesD6GlvRmp5PJiG9cDHF9jPYxfgshd3AAY2hU1x/DezWi
- 2r+kEAOntElGs11vQmyBDbhujoT4/1c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=RQLl9Fz/e90VKbZH8iPZEXrmE8EWsrDRt4hVfZ8Hrwo=;
+ b=RELPYFe13Je12KnPkIevC/B+YLCDIe/zJkJOGja54QJLDx8n3p8vGOmaHj2Q2TR/J++ype
+ OPG2MNh/8YvOpWE1LJoIxioQ5x+/+Win1RE6yhG5lhwQv2X2cNngryHCeQqsIuKij3ZPyO
+ AvUdsJDMF1vbJmnxGYnbxzA1uwIUEvM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-xQ22YuS6OLOSlcEGZCvDTg-1; Mon,
- 31 Aug 2026 16:25:14 -0400
-X-MC-Unique: xQ22YuS6OLOSlcEGZCvDTg-1
-X-Mimecast-MFC-AGG-ID: xQ22YuS6OLOSlcEGZCvDTg_1788207911
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-hiXyKAF_Np2tW4fGQR2WHA-1; Mon,
+ 31 Aug 2026 16:24:02 -0400
+X-MC-Unique: hiXyKAF_Np2tW4fGQR2WHA-1
+X-Mimecast-MFC-AGG-ID: hiXyKAF_Np2tW4fGQR2WHA_1788207840
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47781195FE38; Mon, 31 Aug 2026 20:25:11 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1CFC1184A08F; Mon, 31 Aug 2026 20:24:00 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C14B71800577; Mon, 31 Aug 2026 20:25:05 +0000 (UTC)
+ id A60101800577; Mon, 31 Aug 2026 20:23:52 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,24 +71,24 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 36/43] qapi: convert trivial intro sections for char.json
-Date: Mon, 31 Aug 2026 16:19:38 -0400
-Message-ID: <20260831201945.287730-37-jsnow@redhat.com>
+Subject: [PATCH v4 26/43] qapi: convert trivial intro sections for
+ introspect.json
+Date: Mon, 31 Aug 2026 16:19:28 -0400
+Message-ID: <20260831201945.287730-27-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,313 +106,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/char.json | 90 +++++++++++++++++---------------------------------
- 1 file changed, 30 insertions(+), 60 deletions(-)
+ qapi/introspect.json | 40 ++++++++++++++--------------------------
+ 1 file changed, 14 insertions(+), 26 deletions(-)
 
-diff --git a/qapi/char.json b/qapi/char.json
-index abaccefa97e..7ae67eedff8 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -12,8 +12,7 @@
+diff --git a/qapi/introspect.json b/qapi/introspect.json
+index c8432c8ed8e..172ed389997 100644
+--- a/qapi/introspect.json
++++ b/qapi/introspect.json
+@@ -112,8 +112,7 @@
  
  ##
- # @ChardevInfo:
+ # @SchemaInfoBuiltin:
 -#
--# Information about a character device.
-+#     Information about a character device.
+-# Additional `SchemaInfo` members for meta-type 'builtin'.
++#     Additional `SchemaInfo` members for meta-type 'builtin'.
  #
- # @label: the label of the character device
+ # @json-type: the JSON type used for this type on the wire.
  #
-@@ -35,8 +34,7 @@
+@@ -124,10 +123,9 @@
  
  ##
- # @query-chardev:
+ # @JSONType:
 -#
--# Return information about current character devices.
-+#     Return information about current character devices.
+-# The four primitive and two structured types according to RFC 8259
+-# section 1, plus 'int' (split off 'number'), plus the obvious top
+-# type 'value'.
++#     The four primitive and two structured types according to RFC
++#     8259 section 1, plus 'int' (split off 'number'), plus the
++#     obvious top type 'value'.
  #
- # Since: 0.14
+ # @string: JSON string
  #
-@@ -68,8 +66,7 @@
+@@ -153,8 +151,7 @@
  
  ##
- # @ChardevBackendInfo:
+ # @SchemaInfoEnum:
 -#
--# Information about a character device backend
-+#     Information about a character device backend
+-# Additional `SchemaInfo` members for meta-type 'enum'.
++#     Additional `SchemaInfo` members for meta-type 'enum'.
  #
- # @name: The backend name
- #
-@@ -79,8 +76,7 @@
+ # @members: the enum type's members, in no particular order.
+ #     (since 6.2)
+@@ -178,8 +175,7 @@
  
  ##
- # @query-chardev-backends:
+ # @SchemaInfoEnumMember:
 -#
--# Return information about character device backends.
-+#     Return information about character device backends.
+-# An object member.
++#     An object member.
  #
- # Since: 2.0
+ # @name: the member's name, as defined in the QAPI schema.
  #
-@@ -108,8 +104,7 @@
+@@ -193,8 +189,7 @@
  
  ##
- # @DataFormat:
+ # @SchemaInfoArray:
 -#
--# An enumeration of data format.
-+#     An enumeration of data format.
+-# Additional `SchemaInfo` members for meta-type 'array'.
++#     Additional `SchemaInfo` members for meta-type 'array'.
  #
- # @utf8: Data is a UTF-8 string (RFC 3629)
+ # @element-type: the array type's element type.
  #
-@@ -122,8 +117,7 @@
+@@ -207,8 +202,7 @@
  
  ##
- # @ringbuf-write:
+ # @SchemaInfoObject:
 -#
--# Write to a ring buffer character device.
-+#     Write to a ring buffer character device.
+-# Additional `SchemaInfo` members for meta-type 'object'.
++#     Additional `SchemaInfo` members for meta-type 'object'.
  #
- # @device: the ring buffer character device name
- #
-@@ -154,8 +148,7 @@
+ # @members: the object type's (non-variant) members, in no particular
+ #     order.
+@@ -232,8 +226,7 @@
  
  ##
- # @ringbuf-read:
+ # @SchemaInfoObjectMember:
 -#
--# Read from a ring buffer character device.
-+#     Read from a ring buffer character device.
+-# An object member.
++#     An object member.
  #
- # @device: the ring buffer character device name
+ # @name: the member's name, as defined in the QAPI schema.
  #
-@@ -189,8 +182,7 @@
+@@ -257,8 +250,7 @@
  
  ##
- # @ChardevCommon:
+ # @SchemaInfoObjectVariant:
 -#
--# Configuration shared across all chardev backends
-+#     Configuration shared across all chardev backends
+-# The variant members for a value of the type tag.
++#     The variant members for a value of the type tag.
  #
- # @logfile: The name of a logfile to save output
+ # @case: a value of the type tag.
  #
-@@ -209,8 +201,7 @@
+@@ -272,8 +264,7 @@
  
  ##
- # @ChardevFile:
+ # @SchemaInfoAlternate:
 -#
--# Configuration info for file chardevs.
-+#     Configuration info for file chardevs.
+-# Additional `SchemaInfo` members for meta-type 'alternate'.
++#     Additional `SchemaInfo` members for meta-type 'alternate'.
  #
- # @in: The name of the input file
- #
-@@ -229,8 +220,7 @@
+ # @members: the alternate type's members, in no particular order.  The
+ #     members' wire encoding is distinct, see
+@@ -288,8 +279,7 @@
  
  ##
- # @ChardevHostdev:
+ # @SchemaInfoAlternateMember:
 -#
--# Configuration info for device and pipe chardevs.
-+#     Configuration info for device and pipe chardevs.
+-# An alternate member.
++#     An alternate member.
  #
- # @device: The name of the special file for the device, i.e.
- #     /dev/ttyS0 on Unix or COM1: on Windows
-@@ -243,8 +233,7 @@
+ # @type: the name of the member's type.
+ #
+@@ -300,8 +290,7 @@
  
  ##
- # @ChardevSocket:
+ # @SchemaInfoCommand:
 -#
--# Configuration info for (stream) socket chardevs.
-+#     Configuration info for (stream) socket chardevs.
+-# Additional `SchemaInfo` members for meta-type 'command'.
++#     Additional `SchemaInfo` members for meta-type 'command'.
  #
- # @addr: socket address to listen on (server=true) or connect to
- #     (server=false)
-@@ -295,8 +284,7 @@
+ # @arg-type: the name of the object type that provides the command's
+ #     parameters.
+@@ -322,8 +311,7 @@
  
  ##
- # @ChardevUdp:
+ # @SchemaInfoEvent:
 -#
--# Configuration info for datagram socket chardevs.
-+#     Configuration info for datagram socket chardevs.
+-# Additional `SchemaInfo` members for meta-type 'event'.
++#     Additional `SchemaInfo` members for meta-type 'event'.
  #
- # @remote: remote address
- #
-@@ -311,8 +299,7 @@
- 
- ##
- # @ChardevMux:
--#
--# Configuration info for mux chardevs.
-+#     Configuration info for mux chardevs.
- #
- # @chardev: name of the base chardev.
- #
-@@ -324,8 +311,7 @@
- 
- ##
- # @ChardevHub:
--#
--# Configuration info for hub chardevs.
-+#     Configuration info for hub chardevs.
- #
- # @chardevs: IDs to be added to this hub (maximum 4 devices).
- #
-@@ -337,8 +323,7 @@
- 
- ##
- # @ChardevStdio:
--#
--# Configuration info for stdio chardevs.
-+#     Configuration info for stdio chardevs.
- #
- # @signal: Allow signals (such as SIGINT triggered by ^C) be delivered
- #     to QEMU.  Default: true.
-@@ -351,8 +336,7 @@
- 
- ##
- # @ChardevSpiceChannel:
--#
--# Configuration info for spice vm channel chardevs.
-+#     Configuration info for spice vm channel chardevs.
- #
- # @type: kind of channel (for example vdagent).
- #
-@@ -365,8 +349,7 @@
- 
- ##
- # @ChardevSpicePort:
--#
--# Configuration info for spice port chardevs.
-+#     Configuration info for spice port chardevs.
- #
- # @fqdn: name of the channel (see docs/spice-port-fqdn.txt)
- #
-@@ -379,8 +362,7 @@
- 
- ##
- # @ChardevVCEncoding:
--#
--# Character encoding expected from the guest on a virtual console.
-+#     Character encoding expected from the guest on a virtual console.
- #
- # @cp437: CP437 (8-bit Extended ASCII / VGA).  Every byte maps
- #     directly to a glyph; suitable for DOS or other guests that
-@@ -397,8 +379,7 @@
- 
- ##
- # @ChardevDBus:
--#
--# Configuration info for DBus chardevs.
-+#     Configuration info for DBus chardevs.
- #
- # @name: name of the channel (following docs/spice-port-fqdn.txt)
- #
-@@ -415,8 +396,7 @@
- 
- ##
- # @ChardevVC:
--#
--# Configuration info for virtual console chardevs.
-+#     Configuration info for virtual console chardevs.
- #
- # @width: console width, in pixels
- #
-@@ -445,8 +425,7 @@
- 
- ##
- # @ChardevRingbuf:
--#
--# Configuration info for ring buffer chardevs.
-+#     Configuration info for ring buffer chardevs.
- #
- # @size: ring buffer size, must be power of two, default is 65536
- #
-@@ -458,8 +437,7 @@
- 
- ##
- # @ChardevQemuVDAgent:
--#
--# Configuration info for QEMU vdagent implementation.
-+#     Configuration info for QEMU vdagent implementation.
- #
- # @mouse: enable/disable mouse, default is enabled.
- #
-@@ -475,8 +453,7 @@
- 
- ##
- # @ChardevPty:
--#
--# Configuration info for pty implementation.
-+#     Configuration info for pty implementation.
- #
- # @path: optional path to create a symbolic link that points to the
- #     allocated PTY
-@@ -723,8 +700,7 @@
- 
- ##
- # @ChardevBackend:
--#
--# Configuration info for the new chardev backend.
-+#     Configuration info for the new chardev backend.
- #
- # @type: backend type
- #
-@@ -767,8 +743,7 @@
- 
- ##
- # @ChardevReturn:
--#
--# Return info about the chardev backend just created.
-+#     Return info about the chardev backend just created.
- #
- # @pty: name of the slave pseudoterminal device, present if and only
- #     if a chardev of type 'pty' was created
-@@ -780,8 +755,7 @@
- 
- ##
- # @chardev-add:
--#
--# Add a character device backend
-+#     Add a character device backend
- #
- # @id: the chardev's ID, must be unique
- #
-@@ -818,8 +792,7 @@
- 
- ##
- # @chardev-change:
--#
--# Change a character device backend
-+#     Change a character device backend
- #
- # @id: the chardev's ID
- #
-@@ -859,8 +832,7 @@
- 
- ##
- # @chardev-remove:
--#
--# Remove a character device backend
-+#     Remove a character device backend
- #
- # @id: the chardev's ID, must not be in use
- #
-@@ -876,8 +848,7 @@
- 
- ##
- # @chardev-send-break:
--#
--# Send a break to a character device
-+#     Send a break to a character device
- #
- # @id: the chardev's ID
- #
-@@ -893,8 +864,7 @@
- 
- ##
- # @VSERPORT_CHANGE:
--#
--# Emitted when the guest opens or closes a virtio-serial port.
-+#     Emitted when the guest opens or closes a virtio-serial port.
- #
- # @id: device identifier of the virtio-serial port
- #
+ # @arg-type: the name of the object type that provides the event's
+ #     parameters.
 -- 
 2.55.0
 
