@@ -4,118 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A09C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4506DC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x15WZ-0003dB-3b; Mon, 31 Aug 2026 13:10:23 -0400
+	id 1x15dg-00059X-G7; Mon, 31 Aug 2026 13:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1x15WW-0003ci-SR; Mon, 31 Aug 2026 13:10:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1x15de-00058y-JO; Mon, 31 Aug 2026 13:17:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1x15WU-0003Fl-Q7; Mon, 31 Aug 2026 13:10:20 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1x15dc-0005Hz-NL; Mon, 31 Aug 2026 13:17:42 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VG1RnB2743348; Mon, 31 Aug 2026 17:10:08 GMT
+ 67VG1jKw1615924; Mon, 31 Aug 2026 17:17:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=TsuXR+pJBnP/Ao4QZWHI9wa+TOK9q2
- L8AUEPclHR+ng=; b=lLbh10PZQ3x/tHiM2MN0L6mv4IuSqxJ8JE9Dv2NLIFvCHN
- M+9VKOu6OeNR+XTXzShzucUJwU4z+OSpTlzbTCG3DpwQH8kqYZdcwEelqK1mOO/Z
- I+7H0GKglOWmO3v/QjkoYT6OlxfXsO2/RHl0D6ZUMF6aitqOL2XdInfR58oFlf+N
- t5auckD9d/VoPLGz5h/9ljfNHNdlQT7tABCBonPdYL6a4sjH1grBWkI2SDw5ktSS
- bMiJzOQdCpP5tcnaSgPlNvW7TSwsBGxFttogGUqCZfaGVhWz+kkOxuIawAAJq46T
- pqR+CMbNLPMBoY01rp6KukIxwJdMEgyoXgRQo/7A==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq54jrqm-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=lH/0W9
+ MW5wsu2vBd7udarBPifBukp1Gu/MTuQDUjoL4=; b=HGBn4vXjdtlECIY2v9wUhR
+ UB6kVN50jk83+MsCCpXyxm7opAVUaweJCFBhjvPy+bHMPnvj+oYZ/qyK47V1hLfY
+ vGduxmnbJGjpD2nlrKpNDfuIN/IZPJAMhyFx6AtQspFjhssGnNSsY2mo/XThqI/I
+ FaAYy1zCXf0S7r10Imre54vj6DeV3PH6ZRu87o6HojEBxGDidNVyCm3UnvTDLCsF
+ fJLEKxvvRi53cExvuvzNif0ZjQLUxbahGL/eZmYlN/vJwfgbQ2KzzptPnqy4P+qv
+ Bbjx46kJwLitQpiYBSp5in1kWFcrd/I8oeX+8/lahQbBT3GmXTY0xdiwPVAJjV1A
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudjseb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 17:10:07 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VGuGYr028676;
- Mon, 31 Aug 2026 17:10:06 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gc9rq79jy-1
+ Mon, 31 Aug 2026 17:17:38 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VHBO9l017282;
+ Mon, 31 Aug 2026 17:17:37 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4vy7fn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 17:10:06 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VHA4uE5964398
+ Mon, 31 Aug 2026 17:17:37 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67VHGt1u14287516
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 17:10:05 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A4E1A58065;
- Mon, 31 Aug 2026 17:10:04 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44CE358056;
- Mon, 31 Aug 2026 17:09:58 +0000 (GMT)
-Received: from [9.43.79.120] (unknown [9.43.79.120])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 17:09:57 +0000 (GMT)
-Content-Type: multipart/alternative;
- boundary="------------G3KcogNSrEs0XibCUnUwgHJD"
-Message-ID: <4fd7316d-9a70-4074-bf12-3d89d1575470@linux.vnet.ibm.com>
-Date: Mon, 31 Aug 2026 22:39:57 +0530
+ Mon, 31 Aug 2026 17:16:56 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 783875805D;
+ Mon, 31 Aug 2026 17:17:36 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3481558058;
+ Mon, 31 Aug 2026 17:17:35 +0000 (GMT)
+Received: from [9.61.73.66] (unknown [9.61.73.66])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 31 Aug 2026 17:17:35 +0000 (GMT)
+Message-ID: <06d1f170-7a26-49b4-9d01-594ba5f8efa4@linux.ibm.com>
+Date: Mon, 31 Aug 2026 13:17:34 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/9] pnv/phb5: Implement write-clear and return 1's on
- unimplemented reg read
-To: Aditya Gupta <adityag@linux.ibm.com>, Saif Abrar <saif.abrar@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
- clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
- milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
-References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
- <20260617095058.652789-6-saif.abrar@linux.ibm.com>
- <aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Subject: Re: [PATCH v1 1/7] pc-bios/s390-ccw: Split virtio-ccw and generic
+ virtio net
+To: Matthew Rosato <mjrosato@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
+ cohuck@redhat.com, farman@linux.ibm.com, pasic@linux.ibm.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+References: <20260818205324.580199-1-zycai@linux.ibm.com>
+ <20260818205324.580199-2-zycai@linux.ibm.com>
+ <b9dafa7d-d3d0-46c7-8ef1-c800811181dc@linux.ibm.com>
+ <3b52a781-ea4c-4fec-b059-bebecc27ad3f@linux.ibm.com>
+ <91c8fb44-fcc0-4c94-8494-084d6eaa6504@linux.ibm.com>
+ <59fcd3e6-e0aa-4078-b36d-e7d51a4f4558@linux.ibm.com>
+ <b7a5f123-3da8-4d3a-b011-1f431c4bf1d9@linux.ibm.com>
 Content-Language: en-US
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-In-Reply-To: <aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <b7a5f123-3da8-4d3a-b011-1f431c4bf1d9@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX6puy31CDyoTi
- vatW9VVvCKIwWCb/AwhaOGpMaPfOJwHLearB38WO34WC2e5aw58AIZFE3C+/Z6mPU9SbCLhYTbp
- 1NnLaatUgAATyy4WHb3upCXb7DSLC2Vt9Zz+TCVKB8DxOCm/ZXsTm4TXeNIy1wLGMQWBhCyq1vX
- Xs0x3FsmFJfTBe5WA64IAmRhPT6MIx1jYYb1zEmaB8RFGjaDgb7ropckIgkSzjdxSflOna3LHkN
- GhHSThycZKM6SaeHit2y3MH+p1dGOdWyGB7/tw/T5dmHbwLUYPB/qrkZ38SoSePkqNHV7hnoXmF
- OKnGLR4NwzVk6Aewlp5XlyNGbgGFXLvsx5rWzKCCUy4fm2YWdg/RfRyNj2mTzdcgTAx8Cbwmyns
- qL2AhoYbYyrAlwtVRcJv9Uxnl801SbUHjAgY1kzzNND8k8eLZ2IxcX9E5Hthaf4c1FjQKK1bZaF
- Dhg8U0WvOvi41EN3lHg==
-X-Proofpoint-ORIG-GUID: zUzqYFr4gG_KVYFHCoyQP1GOQYfNercm
-X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a95b570 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=r77TgQKjGQsHNAKrUKIA:9 a=xIFDG7mMh4kwqAeel0kA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=VnNF1IyMAAAA:8 a=ZFQ4W_TumASF_08ED1YA:9
- a=_gr1ixP96QugBaqV:21 a=_W_S_7VecoQA:10
-X-Proofpoint-GUID: UTYNyT2H32cXZRjuQbYpW5rjGToiG5BR
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX3F3elNY/CXIO
- 4q+mr08q2xFLvAc+2svTxWPOJhM1q8g4iG6uz1YQuD5/6C6DgLtWHrx3je94NFEQIQ0anHDOU4E
- 0soV9zHcxrNjM+bHjcB6PWZEcvCo0LI=
+X-Proofpoint-GUID: ijAhZHYuL-YWia5QimHF97TfIPAc6xh5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX5XdVf7jNH09S
+ /qVDgljin0lfhHVgNMj+1LZCpIAX15RTWrhfyM8kBGQanvosLknRgUxH0nJTD+nU+UrGA6PKJpZ
+ Pw44OZBv3A+fg51s1ikMZxOfz2ABIpc/j86Ml0HOhllaGKC8zdrjjZ/aE71m60FvcvVkynecvnS
+ sJyf2H/CyBnbg4vNP7bANcXmTrn5sdoPps7GFB2np7wDnNcUJuWHijwicDVT7WUrapixR0aOWXW
+ YYfKksDGeArFnk2zn79iZUtHkOOJXCsVdNL1awLsD8MCR7Hp3niZ2dRZNo4SqSFDLzY3JhGzi9j
+ wTZkVkz1FEi/sTDWCEnHMBK4CRdk518uirqfrB1K/w5xN8XE6MmXe4ohvbaTWnAnS6IdB9rtF2f
+ HeASeOk7uEdzMKhZrYNtMpoAOFKK+GJX/Shd1PJRFT8eE0/xRJ8LkvCuMmho+i/KJWDsRyIkPG5
+ BgC+aM4fbIVHBC8JTwQ==
+X-Proofpoint-ORIG-GUID: ijAhZHYuL-YWia5QimHF97TfIPAc6xh5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX8CfMdodJvj08
+ HJH4WMbP5LjmCIz1ScI5+Yhwr+B5KRcyz0Kui6a0VqV0Gd8ti7Ifd1UqP/0g656Vv9enZEC8rXx
+ AMwxgBSJuZqIv11SIb+K33c7M9PpCYA=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a95b732 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=zs3X2yJ19ZC09JavB2kA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_05,2026-08-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310147
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608310147
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,221 +134,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------G3KcogNSrEs0XibCUnUwgHJD
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-
-On 16-07-2026 18:19, Aditya Gupta wrote:
-> On 26/06/17 04:50AM, Saif Abrar wrote:
->> <...snip...>
+On 8/26/26 4:49 PM, Matthew Rosato wrote:
+> On 8/26/26 4:23 PM, Jared Rossi wrote:
 >>
->> @@ -724,6 +762,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
->>               pnv_phb4_update_all_msi_regions(phb);
->>           }
->>           break;
->> +
->>       case PHB_M32_START_ADDR:
->>       case PHB_M64_UPPER_BITS:
->>           if (changed) {
->> @@ -771,27 +810,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
->>           break;
->>   
->>       /* Silent simple writes */
->> -    case PHB_ASN_CMPM:
->> -    case PHB_CONFIG_ADDRESS:
->> -    case PHB_IODA_ADDR:
->> -    case PHB_TCE_KILL:
->> -    case PHB_TCE_SPEC_CTL:
->> -    case PHB_PEST_BAR:
->> -    case PHB_PELTV_BAR:
-> Few of these are not handled in new code, like ASN_CMPM.
->
-> As you said in v4 that these are removed in PHB5 spec. The ASN_CMPM in
-> particular was anyways a silent skip, and now it will turn up as
-> unimplemented.
->
-> With separation of phb5, i will let you remove them or keep them as
-> silent skip for phb4.
->
-> Can you also check if there are any other such regs which may have been
-> skipped ?
-
-
-Separate methods for PHB4 and PHB5 read/write are now handling such issues.
-
-e.g.
-
-Read/write to registers that are present in PHB4 and removed from PHB5 are
-
-read/written as usual in PHB4 but flag an error in PHB5. ASN_CMPM is 
-also added back to PHB4.
-
-Registers that are new in PHB5 are read/written within PHB5 accordingly.
-
->
->> --- a/tests/qtest/pnv-phb-test.c
->> +++ b/tests/qtest/pnv-phb-test.c
->> @@ -88,11 +88,10 @@ static void phb5_sticky_rst_test(QTestState *qts)
->>       g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
->>                        PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
->>                        PPC_BITMASK(52, 54)));
->> -
->>   }
->>   
->>   /* Check that write-only bits/regs return 0 when read */
->> -static void phb4_writeonly_read_test(QTestState *qts)
->> +static void phb5_writeonly_read_test(QTestState *qts)
->>   {
->>       uint64_t val;
->>   
->> @@ -143,6 +142,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
->>       g_assert_cmpuint(val, ==, 0x0);
->>   }
->>   
->> +/* Check that reading an unimplemented address 0x0 returns -1 */
->> +static void phb5_unimplemented_read_test(QTestState *qts)
->> +{
->> +    g_assert_cmpint(PHB5_XSCOM_READ(0x0), ==, -1);
->> +}
->> +
->>   static void phb5_tests(void)
->>   {
->>       QTestState *qts = NULL;
->> @@ -156,7 +161,10 @@ static void phb5_tests(void)
->>       phb5_sticky_rst_test(qts);
->>   
->>       /* Check write-only logic */
->> -    phb4_writeonly_read_test(qts);
->> +    phb5_writeonly_read_test(qts);
-> With PHB5 separated out from PHB4, let's keep phb4_writeonly_read_test
-> also.
->
+>>
+>> On 8/26/26 3:41 PM, Matthew Rosato wrote:
+>>> On 8/26/26 3:30 PM, Jared Rossi wrote:
+>>>>
+>>>> On 8/26/26 1:33 PM, Matthew Rosato wrote:
+>>>>>> +bool virtio_net_setup(void)
+>>>>>> +{
+>>>>>> +    switch (virtio_get_device()->ipl_type) {
+>>>>>> +    case S390_IPL_TYPE_CCW:
+>>>>>> +        return virtio_ccw_net_setup();
+>>>>>> +    default:
+>>>>>> +        return false;
+>>>>>> +    }
+>>>>>> +}
+>>>>> This patch is largely renaming, but this does seem to have a subtle
+>>>>> functional change right here.
+>>>>>
+>>>>> AFAICT before this patch attempting to netboot with anything other than
+>>>>> a ccw device would hit
+>>>>> IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+>>>>>
+>>>>> Now, we will never call virtio_ccw_net_setup(), return false and
+>>>>> instead
+>>>>> bail out with
+>>>>> "No virtio net device found."
+>>>>>
+>>>>> That is new behavior for !IPL_TYPE_CCW after this patch.  For
+>>>>> IPL_TYPE_PCI, patch 4 will change the behavior again.
+>>>>>
+>>>>> That's not a deal-breaker, but I do think it's worth a mention in the
+>>>>> commit message.  I then also wonder if the message
+>>>>> "No virtio net device found"
+>>>>> would be more accurate if it instead read something like:
+>>>>> "No supported virtio net device found"
+>>>>>
+>>>>> Thanks,
+>>>>> Matt
+>>>>>
+>>>> I’m not sure this is a valid concern.  A non-ccw net device would be
+>>>> rejected before getting to virtio_net_setup() earlier at the
+>>>> find_boot_device() step either way.  In the case of virtio-net-pci
+>>>> specifically, it would fail because VIRTIO_ID_NET is not a supported PCI
+>>>> type yet.  For some sort of non-ccw non-pci netboot device, I believe
+>>>> there
+>>>> wouldn't ever be an IPLB built for it, so it wouldn’t be recognized as
+>>>> boot eligible at all.  I don’t think this patch affects any of that.
+>>>>
+>>>
+>>> Based on that description it sounds like we don't even ever to expect to
+>>> reach the new default: case then, as prior checks should have already
+>>> weeded out all but the supported IPL_TYPE_* values.
+>>>
+>>> Should the default: case have an IPL_assert with its own message then?
+>>
+>> Right, we shouldn’t ever hit the default case, but I don’t follow your
+>> suggestion about an IPL_assert.  What condition might be asserted there?
+> 
+> Since it's a switch statement looking at the type value would be
+> redundant, but something like
+> IPL_assert(false, "unexpected IPL type");
+> should work
+> 
+>>
+>> In my opinion simply returning false is appropriate, which will just print
+>> the error and move on to the next boot device if there one.  A full panic
+>> could be justified since something weird would need to happen to get into
+>> the default case at all, but I don’t think it’s really necessary.
+> 
+> Yeah, my line of thinking was that if we shouldn't reach this code but
+> somehow do, then something unexpected happened but we would kind of mask
+> that by simply moving onto the next device.
+> 
+>>
+>> If virtio_net_setup() does fail though, regardless of why, I do agree the
+>> subsequent error message needs to be updated to clarify that no “valid” or
+>> “supported” virtio network device was found rather than stating none was
+>> found at all.
+>>
+> I leave it up to you and Joy to decide if you feel it makes sense to
+> assert or update the message to be more accurate, but please do at least
+> one of those.
+> 
+> Outside of that, this patch LGTM.
+> 
 > Thanks,
-> - Aditya G
---------------G3KcogNSrEs0XibCUnUwgHJD
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+> Matt
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 16-07-2026 18:19, Aditya Gupta
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
-      <pre wrap="" class="moz-quote-pre">On 26/06/17 04:50AM, Saif Abrar wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">&lt;...snip...&gt;
+Thanks for the suggestion!
 
-@@ -724,6 +762,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-             pnv_phb4_update_all_msi_regions(phb);
-         }
-         break;
-+
-     case PHB_M32_START_ADDR:
-     case PHB_M64_UPPER_BITS:
-         if (changed) {
-@@ -771,27 +810,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-         break;
- 
-     /* Silent simple writes */
--    case PHB_ASN_CMPM:
--    case PHB_CONFIG_ADDRESS:
--    case PHB_IODA_ADDR:
--    case PHB_TCE_KILL:
--    case PHB_TCE_SPEC_CTL:
--    case PHB_PEST_BAR:
--    case PHB_PELTV_BAR:
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Few of these are not handled in new code, like ASN_CMPM.
+Based on the discussion, I'd prefer having an IPL_assert/panic in the
+default case and updating the subsequent error message to: "No valid
+virtio-net device found." Since the default path should be unreachable,
+reaching it would indicate an unexpected condition and should be treated
+as fatal.
 
-As you said in v4 that these are removed in PHB5 spec. The ASN_CMPM in
-particular was anyways a silent skip, and now it will turn up as
-unimplemented.
+Please let me know if you'd prefer a different approach.
 
-With separation of phb5, i will let you remove them or keep them as
-silent skip for phb4.
-
-Can you also check if there are any other such regs which may have been
-skipped ?</pre>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>Separate methods for PHB4 and PHB5 read/write are now handling
-      such issues.</p>
-    <p>e.g.</p>
-    <p>Read/write to registers that are present in PHB4 and removed from
-      PHB5 are </p>
-    <p>read/written as usual in PHB4 but flag an error in PHB5. <span
-      style="white-space: pre-wrap">ASN_CMPM is also added back to PHB4.</span></p>
-    <p>Registers that are new in PHB5 are read/written within PHB5
-      accordingly.</p>
-    <pre wrap="" class="moz-quote-pre">
-</pre>
-    <blockquote type="cite"
-cite="mid:aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
-      <pre wrap="" class="moz-quote-pre">
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">--- a/tests/qtest/pnv-phb-test.c
-+++ b/tests/qtest/pnv-phb-test.c
-@@ -88,11 +88,10 @@ static void phb5_sticky_rst_test(QTestState *qts)
-     g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
-                      PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
-                      PPC_BITMASK(52, 54)));
--
- }
- 
- /* Check that write-only bits/regs return 0 when read */
--static void phb4_writeonly_read_test(QTestState *qts)
-+static void phb5_writeonly_read_test(QTestState *qts)
- {
-     uint64_t val;
- 
-@@ -143,6 +142,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
-     g_assert_cmpuint(val, ==, 0x0);
- }
- 
-+/* Check that reading an unimplemented address 0x0 returns -1 */
-+static void phb5_unimplemented_read_test(QTestState *qts)
-+{
-+    g_assert_cmpint(PHB5_XSCOM_READ(0x0), ==, -1);
-+}
-+
- static void phb5_tests(void)
- {
-     QTestState *qts = NULL;
-@@ -156,7 +161,10 @@ static void phb5_tests(void)
-     phb5_sticky_rst_test(qts);
- 
-     /* Check write-only logic */
--    phb4_writeonly_read_test(qts);
-+    phb5_writeonly_read_test(qts);
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-With PHB5 separated out from PHB4, let's keep phb4_writeonly_read_test
-also.
-
-Thanks,
-- Aditya G
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------G3KcogNSrEs0XibCUnUwgHJD--
 
 
