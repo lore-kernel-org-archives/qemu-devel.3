@@ -4,102 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C89BC624A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 07:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E623FC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 07:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0wgB-0006CC-MK; Mon, 31 Aug 2026 03:43:43 -0400
+	id 1x0wtU-0000H7-FM; Mon, 31 Aug 2026 03:57:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1x0wgA-0006Bn-4Y
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 03:43:42 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1x0wg7-0005X5-Ra
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 03:43:41 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-c160420289bso407203766b.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 00:43:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788162218; cv=none;
- d=google.com; s=arc-20260327;
- b=Ekgngp3Yec28+0hRUjPl4piLQWHcR+p8eyM1EOr7eI7qg99R4VWPKDEgFfXpfMPMP/
- ETpsnkmQ6BKt/fRttLz1zptRZsU9hkqaFfdZE4fNNIMqT7ah+TIQwloHtKoI5otKaXwx
- XsMaFZb1iWzngXBZ0rwijBxImvh/HCimdu+Ma8V4efHgMkNxhddjLN90hKb3hGjQvbw2
- 5OVsW1oRPOzpI7aeJSbTu+4jGFEwG1r8jr6uENi3H7GuNoLBF2E7o3bY7LwEP0dwTeNe
- 83JlnU4c0BQG85AA91Cd/jqk/Ktil5wi5iaqc3YD/W+djdKLawHRf82ZfCcyum/OdRbw
- hhtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=FNpBcFg7nRKFLW+/7mFVi5Ejl7T43u2Qf0KILlfVu0Q=;
- fh=QIdIwkjOEVAhudi9ghQLIyGxlRSaA+Em0viZsaX5lbU=;
- b=YhJHOFwS5En7u0rT7sTE7p+iNyKxw6NXjG0/Ubo/f407bLmr59KCf37g6IVUitgpXZ
- q5xnb+SR8J5X5j6QZdea43Es9RueyN9XVA9Gjh3F5+3Yibj9zmr2uxdeqZg+5u9PYCQ9
- rTuvjU0Vz07Ra+TdIPbJ+GOl5JXUL6YYsJjIUSbcBv4c96qxTVPhuW3TNtAlsQGTl38g
- PYo7ghWNh6Y2W8Ga3DxXxms4byqa/vSBWhkMciawJ9yZvj/L+deHRQd/pwmQUilTxwaH
- KUGZF1e31LjpbU9uvowx/FXrNu0seU0h2mBq6dtT5Hp783pZia4bfduNXDz3h6gIfofu
- tDfA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1788162218; x=1788767018; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=FNpBcFg7nRKFLW+/7mFVi5Ejl7T43u2Qf0KILlfVu0Q=;
- b=JOzfVETCqy37fzL1Fqopeui8HXD1KanJG9Te6Zj1nN+jCRy1CsQDCqpJOEPSIFR+ch
- xfzp4LKYyYh0805keOGj06+VPw6NbseGwtwKNTScFzkZcXl8Ky8BzwA2uHzH2fVyxaIA
- 8P2CP0/baXAwVRNMj4XVYu5g6eLLvfpfmRUHQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788162218; x=1788767018;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=FNpBcFg7nRKFLW+/7mFVi5Ejl7T43u2Qf0KILlfVu0Q=;
- b=rCoHjWixUj/HKsYXOln08mUz9mqb1ie7ToC+0Cw+W/E+/L9xjQHAKOAQ2f+Yut3nuD
- vEFbj+cNCimuCVugN8m0Y/kRbnSt4/fh1a5WjFYiFqJBwXBHmlEwaWmZJxCgvzU3B92X
- dGsST6YemSWdtZRbOxFda0ok9pH0RSE7wR2Ra5J8zbT5vrMptGEcAeDhKUqUMcRstEk7
- l9CZTtxmxZaAwyD7XKmn5NBrEEWIXO8xJJaWLfWyqNO5Iy0hyMrVbHLbgHsIOlA3kNx7
- +28LrAYvxa7OlJ5jdZHbGl2juaWXQLhq757lNAsz8NtPiVywyHANhgvmTgQ9B1a6lIiL
- dKAg==
-X-Gm-Message-State: AFuF++nCTiv6n6xbiyfD5ypW0wg//CkXrCGX/xtJNnKV9RxS+aI6/rj1
- tIYAWqBx4c8fyhWVGtvoU/vil8ajmCFmdSgfPQX1HehztYuNu2X/+CLWaeuJAl3SyqbBKW5wZhh
- iXFRKh+Q3Y55NmnqXCGQhznkCv3vM9G7HnoSNp9T97A==
-X-Gm-Gg: AR+sD11bJVC0EmAP3QMCDcQ7UuhfnhOLADjnmlFIFrYbfDYjFFpOE6rHve4tXtfMzKO
- rYCLABK4tj5c4FogsYnkrF0/HeR+2NeiboL15Q5KiyBz51WTJPanZOtyX/lTK5JXWx0VvZjC+QO
- 66yXWHrl/zfKa9soaEQl1a5XgNqp6euIpCgmyeNIUXzqtZMoaJY8CblmaBmsCCGs6iWzgtU/mm2
- NXIeUxPrEaOm0OmCFhNM3N2EE0ejI1x47qenPuO9X/HOCeCYzneN2p6lxf9bKoGu6rutXYCPDWy
- 4u6YH6CX34nHAA2mQd3zc/sDbB3ApU09C8QYefhneDjaaoXupAuCmXrmH+9jaEXpBXYsQAOVVoj
- m
-X-Received: by 2002:a17:907:6092:b0:c15:e8c8:340 with SMTP id
- a640c23a62f3a-c25ab5a0741mr93153966b.23.1788162217597; Mon, 31 Aug 2026
- 00:43:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x0wtT-0000GN-4k
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 03:57:27 -0400
+Received: from smtpout9.mo539.mail-out.ovh.net ([51.210.91.48])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x0wtQ-0000to-0n
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 03:57:26 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hYLtk24fJz4F7S;
+ Mon, 31 Aug 2026 07:57:17 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Mon, 31 Aug 2026 07:57:17 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.168])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hYLtj4TPTz1xnN; Mon, 31 Aug 2026 07:57:17 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A8F6A203FD3; 
+ Mon, 31 Aug 2026 07:57:15 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-107S00164f2186c-1d60-4a4f-b47e-0324a5c9cf67,
+ 20713A92955D5A277E4AF24F7FE8A47CC1774BFC) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <80360ed9-9e56-406b-b318-6b198445f4ec@kaod.org>
+Date: Mon, 31 Aug 2026 09:57:15 +0200
 MIME-Version: 1.0
-References: <20260803081159.91981-1-alexander@mihalicyn.com>
- <CAJqdLrri+kRORx_8cHFhi6cuoVZ1ENup+fprm3XHaVavteHRpQ@mail.gmail.com>
- <CAAjaMXZ80o20S-o7=QbrP+wNKqo==w-9Cc3BfeZGG9DazMTnPA@mail.gmail.com>
-In-Reply-To: <CAAjaMXZ80o20S-o7=QbrP+wNKqo==w-9Cc3BfeZGG9DazMTnPA@mail.gmail.com>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Mon, 31 Aug 2026 09:43:25 +0200
-X-Gm-Features: AcwNN1XhiL1Hi17SwYu5iNHT5CAftwUlCygevFgzKQpnl_bWn7MSpXZgI3lN0Mg
-Message-ID: <CAJqdLrqi12b4LdhdBywr9JZ0H=dmEJUy8_-JCV7YRU5UmsiRrQ@mail.gmail.com>
-Subject: Re: [PATCH v5 00/10] hw/audio/virtio-sound: basic migration support
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x630.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/9] crypto/akcipher: Support ECDSA sign/verify with
+ nettle
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260831034153.192916-1-jamin_lin@aspeedtech.com>
+ <20260831034153.192916-4-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260831034153.192916-4-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 3737143266393762861
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGrmlXgbFH/MLMZPHHkPGKJ+YsojUGlvIS2+NpTNHX4Eror7DUPTav7rr65oiWJLd+em5748IMufoIk6ZzPWnZrJQ4zwSsbxJlQ9V/0lBi0Rc5NZCzQr+AK0HMDBg7t/4JU15dkcLJQZwOVRqXuhQxP2fkYePk9Pu126Ic6oHIHHoB3EjscNjgfUIJtcNIFszQG6kxWQ2VEDJkn5uyshF5MoxIWAHpiUNTfz2TCz7cOVQ/Ews1ecXpS1GbQVFezOuiOMa7MOXfVM1AocYPgeTEJPJFSLom0slac5uulnYryqIHWNma0GQdkD45fGXsadpGsQDdrRWQqJzLvTigYyYVgidBeR9jUwcXSKnz/0S9wLh1tqFhYJU5ABV9HBl/sdT1ie1HdlV5JIvHv1tT2F2yN0RNJqk5fd8LluI1oqFFMH0EofapHQL4LVsXhW8lrKFsLwEYIeHza1TIW1LV7PsZcgrn1Sen2nwjDBbRtXlkj9dkkCXGVwf4/ptJvCE5ntdIbzmg7+dqZt/eoOG9tBvWC3MI6xFSp4BNRRCHT41XiMTQ1V9eJBV9ZfBxBO4RS0wTSCBbfnDvKSvWevtYNoo1ujbkuwInE0epBgyYxTVdQ3G8P+AliNZrLMb9cXT3+Fyx2cjzcU9ehmWvwDiKYyMARsu8D0bLE+WOyyjNxKQPg8A
+DKIM-Signature: a=rsa-sha256; bh=qfES9bTL+DCn1ictHqU4249eLxbYM1odNz1zynqpgjw=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1788163039; v=1;
+ b=TQ1pquto7bUxqpQPDlIfDGblSbieX2Y3ZrWUaa3XGlRYar1qvs7t1WnCId76hs5M51Fja3Io
+ oaYWZW4rNLvq2MhgzJSHmIAh2V2D6HgawTkH6EGdjOWfv9VuYewhNA57r52DyVxS/9EwZ3ovKow
+ O3CW0nDviBjMe1hCplAT8NmHAplkN2/cWO7umuAleoFZiPMPfl9QTAw5g+/NxGjIVi7G4HyilpP
+ ev39Mfu2A8g+DFtA2173j0P125Mj2FsAWy0xx0wqY+clj1rUQRlHYW7ME8lIUIBUmW040LwQUi+
+ kWGkPL5lKPSnm+KGEpmCHFAAdQjwAXtiMsJ9e6LHPbllQ==
+Received-SPF: pass client-ip=51.210.91.48; envelope-from=clg@kaod.org;
+ helo=smtpout9.mo539.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,140 +140,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mo., 31. Aug. 2026 um 09:41 Uhr schrieb Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org>:
->
+On 8/31/26 05:41, Jamin Lin wrote:
+> Implement ECDSA signing and verification for the nettle/hogweed backend,
+> for the prime256v1 (NIST P-256) and secp384r1 (NIST P-384) curves.
+> A public key (Qx || Qy) is loaded into an ecc_point for verify;
+> a private key (the scalar d) into an ecc_scalar for sign,
+> using nettle's ecdsa_sign() / ecdsa_verify().
+> 
+> The encrypt/decrypt driver ops return an error.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   crypto/akcipher-nettle.c.inc | 267 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 267 insertions(+)
+> 
+> diff --git a/crypto/akcipher-nettle.c.inc b/crypto/akcipher-nettle.c.inc
+> index 1d4bd6960e..34bdc3de27 100644
+> --- a/crypto/akcipher-nettle.c.inc
+> +++ b/crypto/akcipher-nettle.c.inc
+> @@ -20,6 +20,10 @@
+>    */
+>   
+>   #include <nettle/rsa.h>
+> +#include <nettle/ecdsa.h>
+> +#include <nettle/ecc-curve.h>
+> +#include <nettle/ecc.h>
+> +#include <nettle/bignum.h>
+>   
+>   #include "qemu/osdep.h"
+>   #include "qemu/host-utils.h"
+> @@ -55,6 +59,12 @@ static QCryptoAkCipher *qcrypto_nettle_rsa_new(
+>       const uint8_t *key,  size_t keylen,
+>       Error **errp);
+>   
+> +static QCryptoAkCipher *qcrypto_nettle_ecdsa_new(
+> +    const QCryptoAkCipherOptionsECDSA *opt,
+> +    QCryptoAkCipherKeyType type,
+> +    const uint8_t *key,  size_t keylen,
+> +    Error **errp);
+> +
+>   QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,
+>                                         QCryptoAkCipherKeyType type,
+>                                         const uint8_t *key, size_t keylen,
+> @@ -64,6 +74,10 @@ QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,
+>       case QCRYPTO_AK_CIPHER_ALGO_RSA:
+>           return qcrypto_nettle_rsa_new(&opts->u.rsa, type, key, keylen, errp);
+>   
+> +    case QCRYPTO_AK_CIPHER_ALGO_ECDSA:
+> +        return qcrypto_nettle_ecdsa_new(&opts->u.ecdsa, type, key, keylen,
+> +                                        errp);
+> +
+>       default:
+>           error_setg(errp, "Unsupported algorithm: %u", opts->alg);
+>           return NULL;
+> @@ -422,6 +436,249 @@ error:
+>   }
+>   
+>   
+> +/*
+> + * ECDSA support (sign and verify)
+> + *
+> + * Keys and signatures use raw big-endian formats:
+> + *   - public key: Qx || Qy, each 'coord_len' bytes
+> + *   - private key: the scalar d, 'coord_len' bytes
+> + *   - signature: r || s, each 'coord_len' bytes
+> + *   - the input to sign/verify is a raw message digest
+> + */
+> +typedef struct QCryptoNettleECDSA {
+> +    QCryptoAkCipher akcipher;
+> +    QCryptoAkCipherKeyType type;
+> +    struct ecc_point pub;
+> +    struct ecc_scalar priv;
+> +    QCryptoCurveID curve_id;
+> +} QCryptoNettleECDSA;
+> +
+> +static const struct ecc_curve *qcrypto_nettle_ecdsa_curve(
+> +    QCryptoCurveID curve_id)
+> +{
+> +    switch (curve_id) {
+> +    case QCRYPTO_CURVE_ID_PRIME256V1:
+> +        return nettle_get_secp_256r1();
+> +
+> +    case QCRYPTO_CURVE_ID_SECP384R1:
+> +        return nettle_get_secp_384r1();
+> +
+> +    default:
+> +        return NULL;
+> +    }
+> +}
+> +
+> +static size_t qcrypto_nettle_ecdsa_coord_len(QCryptoCurveID curve_id)
+> +{
+> +    switch (curve_id) {
+> +    case QCRYPTO_CURVE_ID_PRIME256V1:
+> +        return 32;
+> +
+> +    case QCRYPTO_CURVE_ID_SECP384R1:
+> +        return 48;
+> +
+> +    default:
+> +        return 0;
+> +    }
+> +}
+> +
+> +static void qcrypto_nettle_ecdsa_free(QCryptoAkCipher *akcipher)
+> +{
+> +    QCryptoNettleECDSA *ecdsa = (QCryptoNettleECDSA *)akcipher;
+> +    if (!ecdsa) {
+> +        return;
+> +    }
+> +
+> +    if (ecdsa->type == QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
+> +        ecc_scalar_clear(&ecdsa->priv);
+> +    } else {
+> +        ecc_point_clear(&ecdsa->pub);
+> +    }
+> +    g_free(ecdsa);
+> +}
+> +
+> +static int qcrypto_nettle_ecdsa_encrypt(QCryptoAkCipher *akcipher,
+> +                                        const void *in, size_t in_len,
+> +                                        void *out, size_t out_len,
+> +                                        Error **errp)
+> +{
+> +    error_setg(errp, "ECDSA does not support encryption");
+> +    return -1;
+> +}
+> +
+> +static int qcrypto_nettle_ecdsa_decrypt(QCryptoAkCipher *akcipher,
+> +                                        const void *in, size_t in_len,
+> +                                        void *out, size_t out_len,
+> +                                        Error **errp)
+> +{
+> +    error_setg(errp, "ECDSA does not support decryption");
+> +    return -1;
+> +}
+> +
+> +static int qcrypto_nettle_ecdsa_sign(QCryptoAkCipher *akcipher,
+> +                                     const void *in, size_t in_len,
+> +                                     void *out, size_t out_len,
+> +                                     Error **errp)
+> +{
+> +    QCryptoNettleECDSA *ecdsa = (QCryptoNettleECDSA *)akcipher;
+> +    size_t coord_len = qcrypto_nettle_ecdsa_coord_len(ecdsa->curve_id);
+> +    struct dsa_signature sig;
+> +
+> +    if (ecdsa->type != QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
+> +        error_setg(errp, "ECDSA sign requires a private key");
+> +        return -1;
+> +    }
+> +
+> +    if (in_len == 0 || in_len > akcipher->max_dgst_len) {
+> +        error_setg(errp, "Invalid digest length %zu", in_len);
+> +        return -1;
+> +    }
+> +
+> +    if (out_len < coord_len * 2) {
+> +        error_setg(errp, "Signature buffer length %zu is less than %zu",
+> +                   out_len, coord_len * 2);
+> +        return -1;
+> +    }
+> +
+> +    dsa_signature_init(&sig);
+> +    ecdsa_sign(&ecdsa->priv, NULL, wrap_nettle_random_func, in_len, in, &sig);
+> +
+> +    /* output is r || s, each zero-padded to the curve size */
+> +    nettle_mpz_get_str_256(coord_len, out, sig.r);
+> +    nettle_mpz_get_str_256(coord_len, (uint8_t *)out + coord_len, sig.s);
+> +
+> +    dsa_signature_clear(&sig);
+> +    return coord_len * 2;
+> +}
+> +
+> +static int qcrypto_nettle_ecdsa_verify(QCryptoAkCipher *akcipher,
+> +                                       const void *in, size_t in_len,
+> +                                       const void *in2, size_t in2_len,
+> +                                       Error **errp)
+> +{
+> +    QCryptoNettleECDSA *ecdsa = (QCryptoNettleECDSA *)akcipher;
+> +    size_t coord_len = qcrypto_nettle_ecdsa_coord_len(ecdsa->curve_id);
+> +    struct dsa_signature sig;
+> +    int ret = -1;
 
-Dear Manos,
+Should we have a guard here, like in qcrypto_nettle_ecdsa_sign() ?
 
-> Hi Alexander, so sorry for the massive delay but I'm on PTO for a big
-> part of August and some of September. Your series is on my priorities
-> as soon as I return.
+     if (ecdsa->type != QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC) {
+         error_setg(errp, "ECDSA verify requires a public key");
+         return -1;
+     }
 
-ah, then sorry for bothering you during PTO ;-)
-Have a good time!
+Just asking.
 
-Kind regards,
-Alex
+Thanks,
 
->
-> On Mon, Aug 31, 2026 at 10:27=E2=80=AFAM Alexander Mikhalitsyn
-> <alexander@mihalicyn.com> wrote:
-> >
-> > Am Mo., 3. Aug. 2026 um 10:12 Uhr schrieb Alexander Mikhalitsyn
-> > <alexander@mihalicyn.com>:
-> > >
-> > > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> > >
-> > > Dear friends,
-> > >
-> > > This patchset is aimed to support virtio-sound live migration and bas=
-ed on
-> > > pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1].=
- I tried
-> > > to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f5=
-3b8a335fc53569.camel@mihalicyn.com/)
-> > > if Volker is going to continue his work on this, but received no repl=
-y so I
-> > > just decided to go forward: take his patches, rebase and resend. Of c=
-ourse,
-> > > I kept all authorship/tags so I hope that it is fine.
-> > >
-> > > Testing.
-> > >
-> > > I manually validated this with Ubuntu 24.04 Desktop VM and found no i=
-ssues.
-> > > Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/p=
-ipelines/2626702088).
-> > >
-> > > Original patchset:
-> > > https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c=
-0e@t-online.de [1]
-> > >
-> > > Git tree:
-> > > https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
-> > >
-> > > Changelog for version 5:
-> > > - rebased
-> > > - added RWB tags
-> > >
-> > > Changelog for version 4:
-> > > - addressed review feedback from Marc-Andr=C3=A9 Lureau
-> > > - and from Manos Pitsidianakis
-> > > *there is a detailed changelog under each commit message*
-> > >
-> > > Changelog for version 3:
-> > > - addressed review feedback from Marc-Andr=C3=A9 Lureau:
-> > >         - drop VirtIOSoundPCMStream's id field (unused)
-> > >         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
-> > >         - fixes in "hw/audio/virtio-sound: add stream state variable"
-> > >           [ please, look in commit message for details ]
-> > >         - added "hw/audio/virtio-sound: remove channel positions fiel=
-d
-> > >           from VirtIOSoundPCMStream"
-> > >         - fixes in "hw/audio/virtio-sound: add missing vmstate fields=
-"
-> > >           [ details in commit message ]
-> > >
-> > > Changelog for version 2:
-> > > - no code changes (only commit messages)
-> > >   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Daniel!)
-> > >   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
-> > >   and added some extra details about what I did with the original
-> > >   patches during rebase (for some of them it was simpler and less err=
-or
-> > >   prone to just drop changes and reimplement them by following the id=
-ea
-> > >   of the patch, cause base code has changed significantly).
-> > >
-> > > Changelog relative to the original Volker R=C3=BCmelin's submission:
-> > > - rebased:
-> > >         - "hw/audio/virtio-sound: return correct command response siz=
-e"
-> > >                 was dropped as it was already merged
-> > >         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfe=
-r handler"
-> > >                 was dropped as it seems to be replaced with another f=
-ix
-> > >                 https://github.com/qemu/qemu/commit/731655f87f319fd06=
-f27282c6cafbc2467ac8045
-> > >         - I had to drop all pre-existing Reviewed-by tags cause it wa=
-s 2 years since
-> > >           this patchset was sent and reviewed and I did a quite signi=
-ficant code changes
-> > >           during rebase
-> > >
-> > > Kind regards,
-> > > Alex
-> > >
-> > > Alexander Mikhalitsyn (2):
-> > >   hw/audio/virtio-sound: remove channel positions field from
-> > >     VirtIOSoundPCMStream
-> > >   hw/audio/virtio-sound: drop unused struct
-> > >     VirtIOSoundPCMStream.flushing field
-> > >
-> > > Volker R=C3=BCmelin (8):
-> > >   hw/audio/virtio-sound: remove command and stream mutexes
-> > >   hw/audio/virtio-sound: allocate an array of streams
-> > >   hw/audio/virtio-sound: free all stream buffers on reset
-> > >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-> > >   hw/audio/virtio-sound: add stream state variable
-> > >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-> > >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
-> > >   hw/audio/virtio-sound: add missing vmstate fields
-> > >
-> > >  hw/audio/virtio-snd.c         | 696 ++++++++++++++++++++------------=
---
-> > >  include/hw/audio/virtio-snd.h |  26 +-
-> > >  2 files changed, 414 insertions(+), 308 deletions(-)
-> > >
-> > > --
-> > > 2.47.3
-> > >
-> >
-> > Gentle ping.
->
-> --
-> Manos Pitsidianakis
-> Emulation and Virtualization Engineer at Linaro Ltd
+C.
+
+> +    /* signature is r || s */
+> +    if (in_len != coord_len * 2) {
+> +        error_setg(errp, "Signature length %zu is not %zu",
+> +                   in_len, coord_len * 2);
+> +        return ret;
+> +    }
+> +
+> +    if (in2_len == 0 || in2_len > akcipher->max_dgst_len) {
+> +        error_setg(errp, "Invalid digest length %zu", in2_len);
+> +        return ret;
+> +    }
+> +
+> +    dsa_signature_init(&sig);
+> +    nettle_mpz_set_str_256_u(sig.r, coord_len, in);
+> +    nettle_mpz_set_str_256_u(sig.s, coord_len, (const uint8_t *)in + coord_len);
+> +
+> +    if (ecdsa_verify(&ecdsa->pub, in2_len, in2, &sig) == 1) {
+> +        ret = 0;
+> +    } else {
+> +        error_setg(errp, "Failed to verify signature");
+> +    }
+> +
+> +    dsa_signature_clear(&sig);
+> +    return ret;
+> +}
+> +
+> +QCryptoAkCipherDriver nettle_ecdsa = {
+> +    .encrypt = qcrypto_nettle_ecdsa_encrypt,
+> +    .decrypt = qcrypto_nettle_ecdsa_decrypt,
+> +    .sign = qcrypto_nettle_ecdsa_sign,
+> +    .verify = qcrypto_nettle_ecdsa_verify,
+> +    .free = qcrypto_nettle_ecdsa_free,
+> +};
+> +
+> +static QCryptoAkCipher *qcrypto_nettle_ecdsa_new(
+> +    const QCryptoAkCipherOptionsECDSA *opt,
+> +    QCryptoAkCipherKeyType type,
+> +    const uint8_t *key, size_t keylen,
+> +    Error **errp)
+> +{
+> +    QCryptoNettleECDSA *ecdsa;
+> +    const struct ecc_curve *curve = qcrypto_nettle_ecdsa_curve(opt->curve_id);
+> +    size_t coord_len = qcrypto_nettle_ecdsa_coord_len(opt->curve_id);
+> +    mpz_t x;
+> +    mpz_t y;
+> +
+> +    if (!curve || coord_len == 0) {
+> +        error_setg(errp, "Unsupported curve id: %u", opt->curve_id);
+> +        return NULL;
+> +    }
+> +
+> +    switch (type) {
+> +    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
+> +        if (keylen != coord_len * 2) {
+> +            error_setg(errp, "Public key length %zu is not %zu",
+> +                       keylen, coord_len * 2);
+> +            return NULL;
+> +        }
+> +        break;
+> +
+> +    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
+> +        if (keylen != coord_len) {
+> +            error_setg(errp, "Private key length %zu is not %zu",
+> +                       keylen, coord_len);
+> +            return NULL;
+> +        }
+> +        break;
+> +
+> +    default:
+> +        error_setg(errp, "Unknown akcipher key type %d", type);
+> +        return NULL;
+> +    }
+> +
+> +    ecdsa = g_new0(QCryptoNettleECDSA, 1);
+> +    ecdsa->akcipher.driver = &nettle_ecdsa;
+> +    ecdsa->type = type;
+> +    ecdsa->curve_id = opt->curve_id;
+> +    ecdsa->akcipher.max_dgst_len = coord_len;
+> +    ecdsa->akcipher.max_signature_len = coord_len * 2;
+> +
+> +    if (type == QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC) {
+> +        /* public key: Qx || Qy */
+> +        ecc_point_init(&ecdsa->pub, curve);
+> +        mpz_init(x);
+> +        mpz_init(y);
+> +        nettle_mpz_set_str_256_u(x, coord_len, key);
+> +        nettle_mpz_set_str_256_u(y, coord_len,
+> +                                 (const uint8_t *)key + coord_len);
+> +
+> +        if (!ecc_point_set(&ecdsa->pub, x, y)) {
+> +            error_setg(errp, "Invalid ECDSA public key (not on curve)");
+> +            mpz_clear(x);
+> +            mpz_clear(y);
+> +            qcrypto_nettle_ecdsa_free((QCryptoAkCipher *)ecdsa);
+> +            return NULL;
+> +        }
+> +
+> +        mpz_clear(x);
+> +        mpz_clear(y);
+> +    } else {
+> +        /* private key: the scalar d */
+> +        ecc_scalar_init(&ecdsa->priv, curve);
+> +        mpz_init(x);
+> +        nettle_mpz_set_str_256_u(x, coord_len, key);
+> +
+> +        if (!ecc_scalar_set(&ecdsa->priv, x)) {
+> +            error_setg(errp, "Invalid ECDSA private key");
+> +            mpz_clear(x);
+> +            qcrypto_nettle_ecdsa_free((QCryptoAkCipher *)ecdsa);
+> +            return NULL;
+> +        }
+> +
+> +        mpz_clear(x);
+> +    }
+> +
+> +    return (QCryptoAkCipher *)ecdsa;
+> +}
+> +
+>   bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)
+>   {
+>       switch (opts->alg) {
+> @@ -445,6 +702,16 @@ bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)
+>           }
+>           break;
+>   
+> +    case QCRYPTO_AK_CIPHER_ALGO_ECDSA:
+> +        switch (opts->u.ecdsa.curve_id) {
+> +        case QCRYPTO_CURVE_ID_PRIME256V1:
+> +        case QCRYPTO_CURVE_ID_SECP384R1:
+> +            return true;
+> +
+> +        default:
+> +            return false;
+> +        }
+> +
+>       default:
+>           return false;
+>       }
+
 
