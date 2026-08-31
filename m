@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05435C61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1541BC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18YI-0005qk-Oo; Mon, 31 Aug 2026 16:24:22 -0400
+	id 1x18Yi-0000wV-L9; Mon, 31 Aug 2026 16:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xz-0004xY-CK
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Yh-0000ih-FW
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xx-0008Et-QK
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:03 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Yf-0008Qv-Jx
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207841;
+ s=mimecast20190719; t=1788207884;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4l91jyPAAO7hilD1RJ8+HNLPzBoV65DoCBpgH8pqK0g=;
- b=Eygl2A8QcnvrQDi2T3TPmk0Iy1i7E9xuoSjmzIlvUMr/rqlvfn9v+x3f5GAoppVAakzaqA
- DIkK5ajzbbIHN0IZ2wvhMc8oTxvZCsv4ltZbW6GwemqPVkVuGkh6xK6NOqibXsb95M79ei
- Uvr5az02ULfxO+IzQ25seG2V07f4ung=
+ bh=ZBjfSrh5PfkhhEWxcRNzfkVdUgV/WtbECn/x1oGAF6I=;
+ b=S2sDUFMJhIVBt2+jYPCXIqSSXJWqPg98bI3fA248GQSuepO3QLTLl+4rZvZLOt+GMlJOeL
+ xVke20/iu20TmBjC2oB4ETj5Ss5pdpQsdXozZnA9AixUIY7zDVfWSnGYlVV9PT8YQ0ExdC
+ 2c61HnO+5+4zwkgqAWlTAVVee5JQals=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41--Cv9VqWIOBa22A9uM2LAFg-1; Mon,
- 31 Aug 2026 16:23:55 -0400
-X-MC-Unique: -Cv9VqWIOBa22A9uM2LAFg-1
-X-Mimecast-MFC-AGG-ID: -Cv9VqWIOBa22A9uM2LAFg_1788207832
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-f-JqxZ-2NoeIBG-X0cV6gg-1; Mon,
+ 31 Aug 2026 16:24:39 -0400
+X-MC-Unique: f-JqxZ-2NoeIBG-X0cV6gg-1
+X-Mimecast-MFC-AGG-ID: f-JqxZ-2NoeIBG-X0cV6gg_1788207876
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76CFC1921ECF; Mon, 31 Aug 2026 20:23:52 +0000 (UTC)
+ id EA845191FCE9; Mon, 31 Aug 2026 20:24:35 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 460EC18005AC; Mon, 31 Aug 2026 20:23:46 +0000 (UTC)
+ id 5D7681800347; Mon, 31 Aug 2026 20:24:29 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -70,26 +70,25 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v4 25/43] qapi: convert trivial intro sections for pci.json
-Date: Mon, 31 Aug 2026 16:19:27 -0400
-Message-ID: <20260831201945.287730-26-jsnow@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 31/43] qapi: convert trivial intro sections for block.json
+Date: Mon, 31 Aug 2026 16:19:33 -0400
+Message-ID: <20260831201945.287730-32-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,105 +105,111 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/pci.json | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ qapi/block.json | 41 +++++++++++++++++------------------------
+ 1 file changed, 17 insertions(+), 24 deletions(-)
 
-diff --git a/qapi/pci.json b/qapi/pci.json
-index 694c741e420..a6a79f91afc 100644
---- a/qapi/pci.json
-+++ b/qapi/pci.json
-@@ -13,8 +13,7 @@
+diff --git a/qapi/block.json b/qapi/block.json
+index 46955bbb3e3..189f2e28204 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -50,8 +50,8 @@
  
  ##
- # @PciMemoryRange:
+ # @FloppyDriveType:
 -#
--# A PCI device memory region
-+#     A PCI device memory region
+-# Type of floppy drive to be emulated by the Floppy Disk Controller.
++#     Type of floppy drive to be emulated by the
++#     Floppy Disk Controller.
  #
- # @base: the starting address (guest physical)
+ # @144: 1.44MB 3.5" drive
  #
-@@ -26,8 +25,7 @@
+@@ -70,8 +70,7 @@
  
  ##
- # @PciMemoryRegion:
+ # @PRManagerInfo:
 -#
--# Information about a PCI device I/O region.
-+#     Information about a PCI device I/O region.
+-# Information about a persistent reservation manager
++#     Information about a persistent reservation manager
  #
- # @bar: the index of the Base Address Register for this region
+ # @id: the identifier of the persistent reservation manager
  #
-@@ -51,8 +49,7 @@
+@@ -85,9 +84,8 @@
  
  ##
- # @PciBusInfo:
+ # @query-pr-managers:
 -#
--# Information about a bus of a PCI Bridge device
-+#     Information about a bus of a PCI Bridge device
+-# Return a list of information about each persistent reservation
+-# manager.
++#     Return a list of information about each persistent reservation
++#     manager.
  #
- # @number: primary bus interface number.  This should be the number of
- #     the bus the device resides on.
-@@ -80,8 +77,7 @@
+ # Returns: a list of manager info for each persistent reservation
+ #     manager
+@@ -99,8 +97,7 @@
  
  ##
- # @PciBridgeInfo:
+ # @eject:
 -#
--# Information about a PCI Bridge device
-+#     Information about a PCI Bridge device
+-# Ejects the medium from a removable drive.
++#     Ejects the medium from a removable drive.
  #
- # @bus: information about the bus the device resides on
+ # @device: Block device name
  #
-@@ -94,8 +90,7 @@
+@@ -297,9 +294,8 @@
  
  ##
- # @PciDeviceClass:
+ # @BlockdevChangeReadOnlyMode:
 -#
--# Information about the Class of a PCI device
-+#     Information about the Class of a PCI device
+-# Specifies the new read-only mode of a block device subject to the
+-# `blockdev-change-medium` command.
++#     Specifies the new read-only mode of a block device subject to
++#     the `blockdev-change-medium` command.
  #
- # @desc: a string description of the device's class (not stable, and
- #     should only be treated as informational)
-@@ -109,8 +104,7 @@
+ # @retain: Retains the current read-only mode
+ #
+@@ -314,12 +310,11 @@
  
  ##
- # @PciDeviceId:
+ # @blockdev-change-medium:
 -#
--# Information about the Id of a PCI device
-+#     Information about the Id of a PCI device
+-# Changes the medium inserted into a block device by ejecting the
+-# current medium and loading a new image file which is inserted as the
+-# new medium (this command combines `blockdev-open-tray`,
+-# `blockdev-remove-medium`, `blockdev-insert-medium` and
+-# `blockdev-close-tray`).
++#     Changes the medium inserted into a block device by ejecting the
++#     current medium and loading a new image file which is inserted as
++#     the new medium (this command combines `blockdev-open-tray`,
++#     `blockdev-remove-medium`, `blockdev-insert-medium` and
++#     `blockdev-close-tray`).
  #
- # @device: the PCI device id
+ # @device: Block device name
  #
-@@ -128,8 +122,7 @@
+@@ -385,9 +380,8 @@
  
  ##
- # @PciDeviceInfo:
+ # @DEVICE_TRAY_MOVED:
 -#
--# Information about a PCI device
-+#     Information about a PCI device
+-# Emitted whenever the tray of a removable device is moved by the
+-# guest or by HMP/QMP commands
++#     Emitted whenever the tray of a removable device is moved by the
++#     guest or by HMP/QMP commands
  #
- # @bus: the bus number of the device
- #
-@@ -161,8 +154,7 @@
+ # @device: Block device name.  This is always present for
+ #     compatibility reasons, but it can be empty ("") if the image
+@@ -414,9 +408,8 @@
  
  ##
- # @PciInfo:
+ # @PR_MANAGER_STATUS_CHANGED:
 -#
--# Information about a PCI bus
-+#     Information about a PCI bus
+-# Emitted whenever the connected status of a persistent reservation
+-# manager changes.
++#     Emitted whenever the connected status of a persistent
++#     reservation manager changes.
  #
- # @bus: the bus index
+ # @id: The id of the PR manager object
  #
-@@ -174,8 +166,7 @@
- 
- ##
- # @query-pci:
--#
--# Return information about the PCI bus topology of the guest.
-+#     Return information about the PCI bus topology of the guest.
- #
- # Returns: a list of info for each PCI bus.  Each bus is
- #     represented by a json-object, which has a key with a json-array
 -- 
 2.55.0
 
