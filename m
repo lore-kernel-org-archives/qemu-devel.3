@@ -4,118 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57AB6C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1282C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12tx-0000Ud-2F; Mon, 31 Aug 2026 10:22:21 -0400
+	id 1x12yl-0001RO-TL; Mon, 31 Aug 2026 10:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x12tw-0000UO-06; Mon, 31 Aug 2026 10:22:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x12yk-0001R6-JQ
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:27:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x12tu-0008Ii-DE; Mon, 31 Aug 2026 10:22:19 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VBVdfK2083851; Mon, 31 Aug 2026 14:22:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=yyXFCx
- 7M3VJTJojM9XxDHIqFhk9lbL29SkkRqxSX+Dw=; b=rh5bpLjKDTK7Soh4pOPU68
- A2k1rRZ/DI5coVL6SdOxfkL8TZZ/9TM6F8clo8bPI5CsglXPaGZEKGIm+fH9sevI
- rrCz50h+JppJ0scMCdthplMNiTWdFWNH311IJLRlCohUUKsVrVqzWVk7wBZIRvz6
- h1R3RbvmHtVyMwiO60rYm9LPToxjKmKHwMoMbHVBDwZrk07Gc93gGHtrKl5rPqzo
- ZeVDb8EGF8LlbiAJXtiD1m9AtKdT0NPmyKlPHc78dPgHqrZrq12GDM2g45CpHblS
- NgXb+EHnEBeLSLi22rZDbU+gJ2+Yf6rlf4gz1hf0uUV9RJmpntCFO2hESeYqAKcQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq54ht0k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 14:22:16 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VEBKVa027531;
- Mon, 31 Aug 2026 14:22:15 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarjxaxe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 14:22:14 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VEM8Oi52494798
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 14:22:08 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0548B20040;
- Mon, 31 Aug 2026 14:22:08 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8679220043;
- Mon, 31 Aug 2026 14:22:04 +0000 (GMT)
-Received: from [9.124.217.83] (unknown [9.124.217.83])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 14:22:04 +0000 (GMT)
-Message-ID: <37d82601-68c0-49e6-b707-0954d56ceccb@linux.ibm.com>
-Date: Mon, 31 Aug 2026 19:52:03 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x12yi-0000TD-R4
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:27:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788186435;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HCozuPAg1cr/zk+7RZYGGy+oIIzMfSunUSVRYIRDg+0=;
+ b=FE/Jgy1VtqluOeHkFs2nQMjOfmHLBQ56l6/dTM423jIYujQDN9+QzifbAU078A6u8LvMnq
+ y6b4BRs//3Rr08IdRBn9B7DFrcKT3DMra7yQT+T1CXtEfzJq8vIkW0fJQemgG3La1eLZoR
+ hon7JyQJ5Wk/Si87ycYYW7iH7Byjn1E=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-8rxvVzleOh2OI-99uu497g-1; Mon,
+ 31 Aug 2026 10:27:11 -0400
+X-MC-Unique: 8rxvVzleOh2OI-99uu497g-1
+X-Mimecast-MFC-AGG-ID: 8rxvVzleOh2OI-99uu497g_1788186428
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 777EF187078B; Mon, 31 Aug 2026 14:27:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C03A18005BD; Mon, 31 Aug 2026 14:27:05 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 272D221E6832; Mon, 31 Aug 2026 16:27:03 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Alex Williamson <alex@shazbot.org>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ linux-cxl@vger.kernel.org,  Michael
+ Tokarev <mjt@tls.msk.ru>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Peter Xu <peterx@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,  qemu-trivial@nongnu.org,  Fabiano
+ Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Laurent Vivier
+ <laurent@vivier.eu>,  Jiri Pirko <jiri@resnulli.us>,
+ qemu-block@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Stefan
+ Berger <stefanb@linux.vnet.ibm.com>,  linux-edac@vger.kernel.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Jonathan
+ Cameron <jic23@kernel.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Lukas Straub
+ <lukasstraub2@web.de>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH v3 00/43] qapi: convert (very) trivial intro sections
+In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com> (John Snow's message
+ of "Wed, 26 Aug 2026 15:37:57 -0400")
+References: <20260826193840.2152000-1-jsnow@redhat.com>
+Date: Mon, 31 Aug 2026 16:27:03 +0200
+Message-ID: <87pkyycqmg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] MAINTAINERS: Add self as sPAPR EEH reviewer under
- PPC RAS
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org, mahesh@linux.ibm.com, sbhat@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, sourabhjain@linux.ibm.com,
- adityag@linux.ibm.com, nikhilks@linux.ibm.com
-Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
- harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
- shivangu@linux.ibm.com
-References: <20260831071958.58824-1-nnmlinux@linux.ibm.com>
- <20260831071958.58824-7-nnmlinux@linux.ibm.com>
- <b8cc9490-6716-4eb9-b330-728ebe87ae99@redhat.com>
-Content-Language: en-US
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-In-Reply-To: <b8cc9490-6716-4eb9-b330-728ebe87ae99@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEyMSBTYWx0ZWRfX7fF9wBSLfpMp
- KwmarsQq9w4hyJ3ZbXHJrl1F6YbFJs3KFfxtKacjuSMjKU3DuqestYgP0PQsnGgN4GfPzBtulSd
- OMAF3CZ1CalIgXUTcEYVLxZ+LA8+F8xfZaZq4XjxbKUlp8rqemlZ7psdEKjCdFRBlFXKPLXpmBn
- 5gUSBZlOghvPzBmNcfCdwhiISHEX4yJDr+6HAhmhJ9cnYMxKhEUtKFrK88raOJ+HOyXrFCNEm44
- jSO7cGVfyF2a0GQVfZnDVHRTT0ypkaXBxZqyyRZs7vDfI7XsfgHOKmaI7haD9RSNH5jEVdjU+pJ
- GpqmciB7UqIPziJHUMNpRUMy5XLa95nxrywT5RtSSO9MW0prmKsvcbRjIJH+sZkHssmxUSAX8cg
- DcWE5h+gfLFOLXtLIvwOwGHDq9uZ1xdd7AeipddroE+zbh/V0fsBsnyGH1F0gIfUvQbg5aaB1JB
- +uHPipZ9X//l14OqOhQ==
-X-Proofpoint-ORIG-GUID: Bvcl5DkNFhQMpD0tvG9p-x9QtUSO6GTe
-X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a958e18 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=Z0eqF2fs3n5ewGZ0-vIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: RJ3P0RSSzsV5zpKV22NlVXMbjbagxeDL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEyMSBTYWx0ZWRfX+rG7cAZiNfIW
- 8FXKzJ+BpLsoINmmYNxoxHkVt1ury3GirqRIdbKeCb6+tcT84afFpWsA19AZ9DhEI9jaiHfbf3B
- N6Vm6KYwjkeKheJKe7Q5PVF7c23fUnc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310121
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,46 +105,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
+John Snow <jsnow@redhat.com> writes:
 
-On 31/08/26 5:26 PM, Cédric Le Goater wrote:
-> On 8/31/26 09:19, Narayana Murty N wrote:
->> Adding self as reviewer for the sPAPR EEH under PPC RAS.
->> Updating the EEH specific file name as got updated in previous patches.
->>
->> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
->> ---
->>   MAINTAINERS | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 4a49a40294..9271d849b0 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1770,11 +1770,12 @@ M: Aditya Gupta <adityag@linux.ibm.com>
->>   R: Sourabh Jain <sourabhjain@linux.ibm.com>
->>   R: Hari Bathini <hbathini@linux.ibm.com>
->>   R: Shivang Upadhyay <shivangu@linux.ibm.com>
->> +R: Narayana Murty N <nnmlinux@linux.ibm.com>
->>   L: qemu-ppc@nongnu.org
->>   S: Maintained
->>   F: hw/ppc/spapr_events.c
->>   F: hw/ppc/spapr_fadump.c
->> -F: hw/ppc/spapr_pci_vfio.c
-> 
-> Nothing is left in hw/ppc/spapr_pci_vfio.c ?
-> 
-The spapr_pci_vfio.c is now covered by the regex under sPAPR machine 
-entry. It is supposed to contain generic vfio code only now.
-I think I need to send a V5 as I see some changes got missed in this 
-series. I shall post V5 soon.
+> v3:
+>    As per Markus' request, the intro section conversion has been split
+>    even further into the *very* trivial; leaving the semi-trivial and
+>    not-trivial conversions for later consideration.
+>
+>    If you are a non-qapi/non-docs maintainer being CC'd on this patch,
+>    there is **very likely** nothing for you to do here; we are only
+>    changing spacing and syntax, but not modifying content in any way
+>    in this series in particular. Please feel free to mark-as-read and
+>    move on with your day.
+> -
+>
+> Hi, this patchset converts trivial "introductory" sections in the QAPI
+> documentation to use the new, explicit intro section syntax.
+>
+> This is being done primarily for the benefit of the forthcoming
+> "inliner", a feature for the rendered HTML QMP documentation that
+> seeks to "inline" QMP command argument documentation into the argument
+> list for each command.
+>
+> There are two main motives here:
+>
+> (1) We want the split between the "introduction" and "details"
+>     sections to be mechanically obvious, so that auto-generated or
+>     inlined documentation has a well-defined, obvious spot to go.
+>
+> (2) We do not want to inline irrelevant, introductory text describing
+>     structures to be copied into command documentation.
+>
+> This patchset tackles "very trivial" conversions: cases where the
+> existing leading plaintext is only a single sentence and is
+> immediately followed by a tagged section, the end of the documentation
+> block, or some other pre-existing syntactical delineation. (i.e.: not
+> more plaintext.)
 
-Thanks & regards,
-Narayana
->> +F: hw/ppc/spapr_eeh.c
->>   F: hw/ppc/spapr_rtas.c
->>   F: hw/ppc/pnv_mpipl.c
->>   F: include/hw/ppc/spapr_fadump.h
-> 
+I checked whether the converted intros are indeed all "very trivial".
+Only a few that aren't have crept in.  I replied to the patches.
+
+I eye-balled whether these intros actually contain only introductory
+text.  Looks like it (but I'm only human, and the checking is
+t-e-d-i-o-u-s).  Many of them could use polish.  Not today.
+
+With the few conversions that aren't "very trivial" dropped, series
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
+> NOTE: This series *may* miss some conversions; future QAPI changes will
+> enforce the new syntax and any cases that have appeared since v1 will
+> be identified and corrected at that time; we are concerned with the
+> bulk and ease-of-review here, not completeness. This is precisely why
+> the new intro syntax and parser were carefully designed to allow
+> gradual conversion.
+
+Partial conversion is undesirable.  We need to finish the job.  We'll
+need more than one series to have a chance at actually reviewing it.
+I'm debating whether to keep them on a branch until we finish.
+
+If I count correctly, roughly 70% of all intros are "very trivial".
+Good to get them out of the way.
+
+> NOTE2: Future patches that may require more scrutiny will handle the
+> remaining conversions - There are some very subtle concerns that are
+> not readily apparent in the very minor textual changes that will be
+> spelled out for reviewers in the cover letters for those series.
+>
+> This is enough for today, don't you think?
+
+Yes!
 
 
