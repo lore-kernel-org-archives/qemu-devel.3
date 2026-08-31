@@ -4,93 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F67C624A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 16:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24C5C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 16:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x14Rx-0002Lq-UY; Mon, 31 Aug 2026 12:01:33 -0400
+	id 1x14WF-0000z5-7A; Mon, 31 Aug 2026 12:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x14Rq-0002Bu-QO
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:01:31 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x14Rp-0001YB-0U
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:01:26 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c9e7391839cso3885980a12.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 09:01:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1x14WD-0000yl-KG
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:05:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1x14WA-0002o1-72
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:05:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788192351;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RgpwLCoiXdOpetcNvH7SUOY864y6IWzqIzQjNquzz5w=;
+ b=KA+3fJeokkktqJ8b+WwMEcJBotNkuROdVu0EpaRQdyF9IouCVbyfffWdHbiI5F3e0xj1WW
+ ybO7mVGxLbsxRqynAk3adX/MYthGJ7eLUJOHhf9AvOx/l2h/FxRgl/2XkDVJDAkNeEnuTW
+ 9dPna64fc3owFWpjkO6GazJ/A9VTHyo=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-LiBrzCeKMpayYsAHWLez0A-1; Mon, 31 Aug 2026 12:05:49 -0400
+X-MC-Unique: LiBrzCeKMpayYsAHWLez0A-1
+X-Mimecast-MFC-AGG-ID: LiBrzCeKMpayYsAHWLez0A_1788192348
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cc6dd43737so73284435ad.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 09:05:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788192348; cv=none;
+ d=google.com; s=arc-20260327;
+ b=DfX7WW8a52zZrLQCFuw9PlpuTb8GFR/PuDzPKBpTYayA8QuMePFlnPkMIK6qjbi9bI
+ boEy262Oq5Xetrq9hWmrpax8cYIGdllgzDzo0NaVWzeAoihzpCKllkkp+tFzThdI1dSE
+ /Ao6FvgOmKb1vgn662bdTw+pcGM42bbwNHiflywnS52qZ4SC+iS3hf8Ey0zAPhiFeXw9
+ vg+53eQtSgC6M1pk2obmYOorGVjhrC4anEJhrqKHh4HmwBe/WdUGZ2i6bmnZ2O4cLkYC
+ xsQ16uA4Q0kyVWUlqhZ2qfpm0Dy+CtWX4N9FskxhHQqaPfCpfmF5R+zPaFciCKHs8fj+
+ 8zCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=RgpwLCoiXdOpetcNvH7SUOY864y6IWzqIzQjNquzz5w=;
+ fh=oPtfXQM5EZVioUGQT0clvqK6TK6ir1gI82An+AX8V3g=;
+ b=MHioG7MHV6ZGaSN/vT2iUzjnd9aFqJNbfCMAyKQRmMGPT6ajRAoKALe5YUBeLQ4bd1
+ wKmvOaANektrq82IHIALxuQVzZEhH1g1BvPMmlevK8Nr74OY8NNc4CCRlLUnyRpUsq5h
+ KHJqQ6ygCKaOedrObyiKe2W850CP7ISb6nyqf19LigWxJqwg5RLx6e+oRuE7AvuZRy9o
+ wu2XrxtYEhJij3weEt4Rpd2FdPaZ6I4sxJrS0Boy+/OnPRjuenFLVYQQ3qY8fTr+H5ln
+ zf05wVviqMCwhYmV0vrnvS83njb1kvSD3KpcN/iw4Jp8YUNkjVrM9Vf4XojPG8acfWs7
+ S7Pw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788192083; x=1788796883; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=c0DnY1gZpaIvaTUJhEOKC2Z/nQXIBJqQ3bcd/TsVWjI=;
- b=bcJFbVIBsrGc95HF95TEN7xn48gIzzLJclnT1A0YfAjnwCrkTG0545+W3+u7saatBO
- T2TGZTFos5QwmBbGrbAVP5ewd7fWwfhli4sixwezQudZQhKzAj+SHyD8YiOe5tm2NTuQ
- 2lvxV/5YTmqzazIOkVmfcvcuAGGyOawd0VQdJxJLRIt8lDlMdja7BKw3v2A/8tEre6Pl
- vLSmhhzoQexax3eB0qQ8E6hbQ5o4O1pg4Tq+bWSyqEhg/PKS7smNFd9RWt7+EyiMU5Ue
- MCILtlEVky++dVZIxc5nBR4DzMcDTfmVr08WRH0fKBo+Wf95o4chMhzn9Vz8ZdbNJaB0
- bAWA==
+ d=redhat.com; s=google; t=1788192348; x=1788797148; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=RgpwLCoiXdOpetcNvH7SUOY864y6IWzqIzQjNquzz5w=;
+ b=sBItIpz0GBCT1fXq3g2UEEtWYfCwK7/e+bE3lWCqwp0UsFlTaverHbV6BgS7MMj3Vw
+ YxKaz6i6rzkFOyUlo2ALF0hxTxmLbi+8h/pcDY17fe9xZK2jq1aYoyWaEt+7a+kML/MH
+ zGLPNQWpcqnXbipCUAdVH41jTc8HPbtEyTrs36tdsQR9QSh/ECSSVAe7l0OciZxfxk6v
+ B1skIXAK21+ZsSAYUYRtsk5HFwpLHYqG12ZE6DeEJaoEAJ+34KMAUkAaYTjbNFks1QuI
+ xb4lgaqffWjw4Bf7dKBlT7hbQawlOTXbsuHSkMI7aUCRMtbT+sGiuT0ZcTIGGqFQJAb7
+ i0Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788192083; x=1788796883;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=c0DnY1gZpaIvaTUJhEOKC2Z/nQXIBJqQ3bcd/TsVWjI=;
- b=ss8Sg/fhRmm7iFy+VuQzCDCVfNZKHJu5X39PE9w3UC/JxzzwLNxCucVR5ggu6t8nzM
- Sr/8lyadO12tMJdEFWZUpMwUzKMMe90RgA8ZsTPosdVFpvYpUCeAfEgdwxrxqF/CLBIi
- A+SexJrzUotu78LFOybmjssB9byjwCWqKalJAXw7hsGWGRrKJ+Y3iCmqVodXF5JwatGG
- jOnE/WP+Cxit1ALiv/SnTUlubr92K80sJ3+V+Mx/H1kQoYkSMPzMlmIibuFh8hRMbZVa
- 5174uf7JwoO8jlhCqPGzPZmCorQ5iFGmzd380kutx4Ur1Bx64MwrX/RBITAZ4ewMer23
- +1uA==
-X-Gm-Message-State: AFuF++nm0Xd67c06eNC6FuYolSI6BloYGX6iss0ywsXqvd7dC+h/18GY
- Vc5I4ZlSDuKbGELVIW37508W0kxpnoao1EKNgvC2n9/S4N36Ao99NZ0lcOiNf01NU1wwKu9R
-X-Gm-Gg: AR+sD128DLs9U1gzMlPawTYTOlzc6CfnYiSHU68Zlbbl39G76bY/Eo9gigYi0Q37NOk
- +Kwx7hNhwsVHPd8N4KXxwx53YjtK1fG0npXnLnQCnz7ts2Amdich8vzvh5TPzVRgMkzDA4+ifab
- AwMI140RZyysYQWpGq9n7+jPnxraHWT1YOiJEPUv5ih3EGPlWZcwm+B6nF9HKAMg8ufjIekOaRZ
- tGDC+m18TMiCL134frkyFounpbAeLH6/bfg3hvhgz4VorCC2TvoDB0sUACOGQgiuFg8QCo1n5DW
- Vtku+n6QErst2ajeN/DK0nAhfWS+pl4UakutvlbZg+491FKfg87PHb4U59pLuoRlGLer429qbOr
- fSdZd34FphgdFcsItOVPWZHgrtNXFXkkUQR2eQZnbnaYBHzoGccgmpNW7TSgze3ICgOhXrNg+sN
- ZaOygYHW8segTIBb4t0Bec1cB2EPevElgbMgMzqexDg2WHAXKoJA87IcGTr1K00GjwsGsyuJyNw
- y+6+APa
-X-Received: by 2002:a05:6a21:6004:b0:3d1:9166:5c68 with SMTP id
- adf61e73a8af0-3d265f403d0mr49688934637.8.1788192083315; 
- Mon, 31 Aug 2026 09:01:23 -0700 (PDT)
-Received: from catgo-fnos.taila0cd24.ts.net ([104.28.201.73])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-32b28ab0571sm22689520eec.4.2026.08.31.09.01.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 09:01:22 -0700 (PDT)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "'Michael S . Tsirkin'" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
- Jason Wang <jasowangio@gmail.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V14 05/15] block/export: track IOThread references
-Date: Tue,  1 Sep 2026 00:00:26 +0800
-Message-ID: <20260831160038.221776-6-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831160038.221776-1-zhangckid@gmail.com>
-References: <20260831160038.221776-1-zhangckid@gmail.com>
+ d=1e100.net; s=20251104; t=1788192348; x=1788797148;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=RgpwLCoiXdOpetcNvH7SUOY864y6IWzqIzQjNquzz5w=;
+ b=B5Yo/NgVEr63PHLopVEM5Fi+b08B2ZwSBzyVsUwaBhGVs9HORB0GVZPOsPb12KeH8Z
+ MppDMxkaE8Tl2C0R676hAz14y19BUTjws+IGiuLIoRgNZlqwJwVJq4hyyWyMZj12uRw4
+ tLKSHgjEEdqMrCv05jKiV7hV0z/Kgmk8jlrNoyT7rBU00zMX6X4zLfgcSzUWA107LZzh
+ hwPjUPH6OmoWM2/WPwH+davVFmSxAeuZz3oQPVx1GR9q2dFLOIyT8SkhrQcDk3Zkey7B
+ cY6KFbObWkj6w1hIJhF/x+iibn8IfbaxYhhShulFl+IfhmGW/jZQbYF3EO6yKG5TJHcC
+ cFSg==
+X-Gm-Message-State: AFuF++nqrpreecbKmpY1vbQKypQAx8/Os3kDzNmo/Mkfzd29UKjw8Sib
+ eo14wy2H8wUl5SnWX3cYNp6OGt7EuXT8hcyLbYk8BHaYAvD1d9kSeLZKTHSO6w8ya/HWm4sD3pU
+ OUluxXLR741kemZdZ4eIpq6NtDKW2LpXQ0/hYq3E6+SS/hJzvtKPz6SJIXvbu7jZ9aNRaYtxgXa
+ qbHRvynLvtip2Vk5XwjXmSDoue5wUllOM=
+X-Gm-Gg: AYBFou0ZvUiSuqCGmVnF4ioK0MaP4a+w3lmm/8VoSTR4hlH+z7q7n2gpyNdAI+W5UCw
+ bTeJwTEWvSpdh/iV6y2vQqpiFwbXypz0x/eYhP1al01+XAdBJeFUImBRozj0gzbjd7lzAx/ehJ9
+ Wlp+anQO/FZ/naFIq0lIyrpCA36B/jNMVn04zQuyN2LBUDwFb6DEajA4i9yCo=
+X-Received: by 2002:a17:902:cf0f:b0:2d0:cc92:f7a3 with SMTP id
+ d9443c01a7336-2d94a703f61mr24697005ad.2.1788192347802; 
+ Mon, 31 Aug 2026 09:05:47 -0700 (PDT)
+X-Received: by 2002:a17:902:cf0f:b0:2d0:cc92:f7a3 with SMTP id
+ d9443c01a7336-2d94a703f61mr24695855ad.2.1788192347115; Mon, 31 Aug 2026
+ 09:05:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x533.google.com
-X-Spam_score_int: 26
-X-Spam_score: 2.6
-X-Spam_bar: ++
-X-Spam_report: (2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260719160329.73695-1-bogorodskiy@gmail.com>
+In-Reply-To: <20260719160329.73695-1-bogorodskiy@gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 31 Aug 2026 19:05:34 +0300
+X-Gm-Features: AcwNN1XgOtYi9uz3xu_Knv--6kB6CtZYv2vnp08LsTmM_qoSJ0yHkkU1Ipwh4uE
+Message-ID: <CAPMcbCrLmS2NXASKAWujm6=do9cAvMcB4p5Yxp73T_6HshRGQA@mail.gmail.com>
+Subject: Re: [PATCH] qga: implement 'guest-get-diskstats' for FreeBSD
+To: Roman Bogorodskiy <bogorodskiy@gmail.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000a40878065a59f9b1"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,178 +131,549 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Track the IOThreads used by a block export and identify the holder
-with the unique BlockExportOptions id.
+--000000000000a40878065a59f9b1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Acquire holder-aware references during export creation and release
-them on error or export deletion.  Support both single- and
-multi-iothread exports.
+Hi Roman,
 
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
----
- block/export/export.c  | 62 ++++++++++++++++++++++++++++++++++++------
- include/block/export.h |  5 ++++
- 2 files changed, 58 insertions(+), 9 deletions(-)
+Thanks for your patch, and sorry for the late reply
 
-diff --git a/block/export/export.c b/block/export/export.c
-index b733f269f3..0e019545ef 100644
---- a/block/export/export.c
-+++ b/block/export/export.c
-@@ -15,7 +15,6 @@
- 
- #include "block/block.h"
- #include "system/block-backend.h"
--#include "system/iothread.h"
- #include "block/export.h"
- #include "block/fuse.h"
- #include "block/nbd.h"
-@@ -72,6 +71,32 @@ static const BlockExportDriver *blk_exp_find_driver(BlockExportType type)
-     return NULL;
- }
- 
-+static void init_iothreads(const char *holder_id, IOThread **iothreads,
-+                           size_t num_iothreads, AioContext **aio_ctxs)
-+{
-+    const IOThreadHolder holder = {
-+        .type = IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-+        .u.block_export.export_id = (char *)holder_id,
-+    };
-+
-+    for (size_t i = 0; i < num_iothreads; i++) {
-+        aio_ctxs[i] = iothread_ref_and_get_aio_context(iothreads[i], &holder);
-+    }
-+}
-+
-+static void cleanup_iothreads(const char *holder_id, IOThread **iothreads,
-+                              size_t num_iothreads)
-+{
-+    const IOThreadHolder holder = {
-+        .type = IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-+        .u.block_export.export_id = (char *)holder_id,
-+    };
-+
-+    for (size_t i = 0; i < num_iothreads; i++) {
-+        iothread_unref_and_put_aio_context(iothreads[i], &holder);
-+    }
-+}
-+
- BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
- {
-     bool fixed_iothread = export->has_fixed_iothread && export->fixed_iothread;
-@@ -85,6 +110,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     AioContext *ctx;
-     AioContext **multithread_ctxs = NULL;
-     size_t multithread_count = 0;
-+    g_autofree IOThread **local_iothreads = NULL;
-+    size_t iothread_count = 0;
-     uint64_t perm;
-     int ret;
- 
-@@ -139,7 +166,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             goto fail;
-         }
- 
--        new_ctx = iothread_get_aio_context(iothread);
-+        local_iothreads = g_new0(IOThread *, 1);
-+        local_iothreads[0] = iothread;
-+        init_iothreads(export->id, local_iothreads, 1, &new_ctx);
-+        iothread_count = 1;
- 
-         /* Ignore errors with fixed-iothread=false */
-         set_context_errp = fixed_iothread ? errp : NULL;
-@@ -163,8 +193,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             return NULL;
-         }
- 
-+        local_iothreads = g_new0(IOThread *, multithread_count);
-         multithread_ctxs = g_new(AioContext *, multithread_count);
-         i = 0;
-+
-         for (strList *e = iothread_list; e; e = e->next) {
-             IOThread *iothread = iothread_by_id(e->value);
- 
-@@ -172,9 +204,12 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-                 error_setg(errp, "iothread \"%s\" not found", e->value);
-                 goto fail;
-             }
--            multithread_ctxs[i++] = iothread_get_aio_context(iothread);
-+            local_iothreads[i++] = iothread;
-         }
-         assert(i == multithread_count);
-+        init_iothreads(export->id, local_iothreads, multithread_count,
-+                       multithread_ctxs);
-+        iothread_count = multithread_count;
-     }
- 
-     bdrv_graph_rdlock_main_loop();
-@@ -225,12 +260,14 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     assert(drv->instance_size >= sizeof(BlockExport));
-     exp = g_malloc0(drv->instance_size);
-     *exp = (BlockExport) {
--        .drv        = drv,
--        .refcount   = 1,
--        .user_owned = true,
--        .id         = g_strdup(export->id),
--        .ctx        = ctx,
--        .blk        = blk,
-+        .drv                  = drv,
-+        .refcount             = 1,
-+        .user_owned           = true,
-+        .id                   = g_strdup(export->id),
-+        .ctx                  = ctx,
-+        .blk                  = blk,
-+        .iothreads            = g_steal_pointer(&local_iothreads),
-+        .iothread_count       = iothread_count,
-     };
- 
-     ret = drv->create(exp, export, multithread_ctxs, multithread_count, errp);
-@@ -250,8 +287,12 @@ fail:
-         blk_unref(blk);
-     }
-     if (exp) {
-+        cleanup_iothreads(exp->id, exp->iothreads, exp->iothread_count);
-+        g_free(exp->iothreads);
-         g_free(exp->id);
-         g_free(exp);
-+    } else {
-+        cleanup_iothreads(export->id, local_iothreads, iothread_count);
-     }
-     g_free(multithread_ctxs);
-     return NULL;
-@@ -273,6 +314,9 @@ static void blk_exp_delete_bh(void *opaque)
-     exp->drv->delete(exp);
-     blk_set_dev_ops(exp->blk, NULL, NULL);
-     blk_unref(exp->blk);
-+
-+    cleanup_iothreads(exp->id, exp->iothreads, exp->iothread_count);
-+    g_free(exp->iothreads);
-     qapi_event_send_block_export_deleted(exp->id);
-     g_free(exp->id);
-     g_free(exp);
-diff --git a/include/block/export.h b/include/block/export.h
-index ca45da928c..ce8e4eb604 100644
---- a/include/block/export.h
-+++ b/include/block/export.h
-@@ -16,6 +16,7 @@
- 
- #include "qapi/qapi-types-block-export.h"
- #include "qemu/queue.h"
-+#include "system/iothread.h"
- 
- typedef struct BlockExport BlockExport;
- 
-@@ -89,6 +90,10 @@ struct BlockExport {
- 
-     /* List entry for block_exports */
-     QLIST_ENTRY(BlockExport) next;
-+
-+    /* The IOThreads utilized by this specific block export */
-+    IOThread **iothreads;
-+    size_t iothread_count;
- };
- 
- BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
--- 
-2.55.0
+
+On Sun, Jul 19, 2026 at 7:04=E2=80=AFPM Roman Bogorodskiy <bogorodskiy@gmai=
+l.com>
+wrote:
+
+> Implement the 'guest-get-diskstats' for FreeBSD.
+> This implementation uses the devstat(3) library which is a part
+> of the FreeBSD base system.
+>
+> The build system is updated to link qga with `-ldevstat`.
+>
+> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> ---
+>  qga/commands-bsd.c   | 127 +++++++++++++++++++++++++++++++++++++++++++
+>  qga/meson.build      |   3 +
+>  qga/qapi-schema.json |   6 +-
+>  3 files changed, 133 insertions(+), 3 deletions(-)
+>
+> diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
+> index 94ff6fee6a..763db33c9f 100644
+> --- a/qga/commands-bsd.c
+> +++ b/qga/commands-bsd.c
+> @@ -27,6 +27,9 @@
+>  #include <net/ethernet.h>
+>  #endif
+>  #include <paths.h>
+> +#ifdef CONFIG_FREEBSD
+> +#include <devstat.h>
+> +#endif
+>
+>  #if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
+>  bool build_fs_mount_list(FsMountList *mounts, Error **errp)
+> @@ -178,3 +181,127 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigne=
+d
+> char *buf,
+>      return true;
+>  }
+>  #endif /* HAVE_GETIFADDRS */
+> +
+> +#ifdef CONFIG_FREEBSD
+> +static uint64_t bintime_to_msec(const struct bintime *bt)
+> +{
+> +    return (uint64_t)bt->sec * 1000ULL + (((bt->frac >> 32) * 1000ULL) >=
+>
+> 32);
+> +}
+> +
+> +static void guest_diskstats_append(GuestDiskStatsInfoList ***tailp,
+> +                                   const struct devstat *dev)
+>
+
+Can we simplify pointer logic?
+For example, return GuestDiskStatsInfo* for devstat* and then append the
+list in guest_get_diskstats.
+***tailp -> more pointers - easier to make a mistake or memory leak.
+
+
+> +{
+> +    GuestDiskStatsInfoList **tail =3D *tailp;
+> +    g_autofree GuestDiskStatsInfo *diskstatinfo =3D NULL;
+> +    g_autofree GuestDiskStats *diskstat =3D NULL;
+> +
+> +    diskstatinfo =3D g_new0(GuestDiskStatsInfo, 1);
+> +    diskstatinfo->name =3D g_strdup_printf("%s%d", dev->device_name,
+> +                                         dev->unit_number);
+> +    /*
+> +     * devstat does not expose Linux-style major/minor numbers.  Report
+> the
+> +     * devstat device number and unit number in these mandatory QAPI
+> fields.
+> +     */
+> +    diskstatinfo->major =3D dev->device_number;
+> +    diskstatinfo->minor =3D dev->unit_number;
+> +
+> +    diskstat =3D g_new0(GuestDiskStats, 1);
+> +    diskstat->has_read_ios =3D true;
+> +    diskstat->read_ios =3D dev->operations[DEVSTAT_READ];
+> +    diskstat->has_read_sectors =3D true;
+> +    diskstat->read_sectors =3D dev->bytes[DEVSTAT_READ] / BDRV_SECTOR_SI=
+ZE;
+> +    diskstat->has_read_ticks =3D true;
+> +    diskstat->read_ticks =3D bintime_to_msec(&dev->duration[DEVSTAT_READ=
+]);
+> +
+> +    diskstat->has_write_ios =3D true;
+> +    diskstat->write_ios =3D dev->operations[DEVSTAT_WRITE];
+> +    diskstat->has_write_sectors =3D true;
+> +    diskstat->write_sectors =3D dev->bytes[DEVSTAT_WRITE] /
+> BDRV_SECTOR_SIZE;
+> +    diskstat->has_write_ticks =3D true;
+> +    diskstat->write_ticks =3D
+> bintime_to_msec(&dev->duration[DEVSTAT_WRITE]);
+> +
+> +    diskstat->has_discard_ios =3D true;
+> +    diskstat->discard_ios =3D dev->operations[DEVSTAT_FREE];
+> +    diskstat->has_discard_sectors =3D true;
+> +    diskstat->discard_sectors =3D dev->bytes[DEVSTAT_FREE] /
+> BDRV_SECTOR_SIZE;
+> +    diskstat->has_discard_ticks =3D true;
+> +    diskstat->discard_ticks =3D
+> bintime_to_msec(&dev->duration[DEVSTAT_FREE]);
+> +
+> +    diskstat->has_ios_pgr =3D true;
+> +    if (dev->start_count >=3D dev->end_count) {
+> +        diskstat->ios_pgr =3D dev->start_count - dev->end_count;
+> +    }
+>
+
+In case start_count < end_count, you have has_ios_pgr =3D true, and ios_pgr=
+ =3D
+0 (g_new0 initialized to 0=E2=80=99s)
+Is this expected? And in general, is this possible?
+
+
+> +
+> +    diskstat->has_total_ticks =3D true;
+> +    diskstat->total_ticks =3D bintime_to_msec(&dev->busy_time);
+> +
+> +    diskstatinfo->stats =3D g_steal_pointer(&diskstat);
+> +    QAPI_LIST_APPEND(tail, diskstatinfo);
+> +    diskstatinfo =3D NULL;
+> +
+> +    *tailp =3D tail;
+> +}
+> +
+> +static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)
+> +{
+> +    GuestDiskStatsInfoList *head =3D NULL, **tail =3D &head;
+> +    struct devinfo dinfo =3D { 0 };
+> +    struct statinfo stats =3D { .dinfo =3D &dinfo };
+> +    struct device_selection *dev_select =3D NULL;
+> +    struct devstat_match matches[] =3D {
+> +        {
+> +            .match_fields =3D DEVSTAT_MATCH_TYPE,
+> +            .device_type =3D DEVSTAT_TYPE_DIRECT,
+> +            .num_match_categories =3D 1,
+> +        },
+> +    };
+> +    int num_selected =3D 0;
+> +    int num_selections =3D 0;
+> +    long select_generation =3D 0;
+> +    int i;
+> +
+> +    if (devstat_checkversion(NULL) =3D=3D -1) {
+> +        error_setg(errp, "%s", devstat_errbuf);
+> +        return NULL;
+> +    }
+> +
+> +    if (devstat_getdevs(NULL, &stats) =3D=3D -1) {
+> +        error_setg(errp, "%s", devstat_errbuf);
+> +        return NULL;
+> +    }
+> +
+> +    if (devstat_selectdevs(&dev_select, &num_selected, &num_selections,
+> +                           &select_generation, stats.dinfo->generation,
+> +                           stats.dinfo->devices, stats.dinfo->numdevs,
+> +                           matches, ARRAY_SIZE(matches), NULL, 0,
+> +                           DS_SELECT_ONLY,
+> +                           stats.dinfo->numdevs, 0) =3D=3D -1) {
+> +        error_setg(errp, "%s", devstat_errbuf);
+> +        goto error;
+> +    }
+> +
+> +    for (i =3D 0; i < num_selections; i++) {
+> +        if (dev_select[i].selected =3D=3D 0) {
+> +            continue;
+> +        }
+> +
+> +        guest_diskstats_append(&tail,
+> +
+>  &stats.dinfo->devices[dev_select[i].position]);
+> +    }
+> +
+> +    free(stats.dinfo->mem_ptr);
+> +    free(dev_select);
+> +    return head;
+> +
+> +error:
+> +    qapi_free_GuestDiskStatsInfoList(head);
+> +    free(stats.dinfo->mem_ptr);
+> +    free(dev_select);
+> +    return NULL;
+> +}
+> +
+> +GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
+> +{
+> +    return guest_get_diskstats(errp);
+>
+
+Any reason for this wrapper?
+I see it in the Linux implementation, but not for other commands.
+
+
+
+> +}
+> +#endif /* CONFIG_FREEBSD */
+> diff --git a/qga/meson.build b/qga/meson.build
+> index cfa2157efb..a046ebe305 100644
+> --- a/qga/meson.build
+> +++ b/qga/meson.build
+> @@ -93,6 +93,9 @@ qga_ss =3D qga_ss.apply({})
+>
+>  gen_tlb =3D []
+>  qga_libs =3D []
+> +if host_os =3D=3D 'freebsd'
+> +  qga_libs +=3D ['-ldevstat']
+> +endif
+>  if host_os =3D=3D 'windows'
+>    qga_libs +=3D ['-lws2_32', '-lwinmm', '-lpowrprof', '-lwtsapi32',
+> '-lwininet', '-liphlpapi', '-lnetapi32',
+>                 '-lsetupapi', '-lcfgmgr32', '-luserenv', '-lpdh' ]
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index c57bc9a02f..0d1476dcc4 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -1714,7 +1714,7 @@
+>             '*total-ticks': 'uint64',
+>             '*weight-ticks': 'uint64'
+>             },
+> -  'if': 'CONFIG_LINUX' }
+> +  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_FREEBSD'] } }
+>
+>  ##
+>  # @GuestDiskStatsInfo:
+> @@ -1732,7 +1732,7 @@
+>             'major': 'uint64',
+>             'minor': 'uint64',
+>             'stats': 'GuestDiskStats' },
+> -  'if': 'CONFIG_LINUX' }
+> +  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_FREEBSD'] } }
+>
+>  ##
+>  # @guest-get-diskstats:
+> @@ -1745,7 +1745,7 @@
+>  ##
+>  { 'command': 'guest-get-diskstats',
+>    'returns': ['GuestDiskStatsInfo'],
+> -  'if': 'CONFIG_LINUX'
+> +  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_FREEBSD'] }
+>  }
+>
+>  ##
+> --
+> 2.52.0
+>
+>
+
+Best Regards,
+Kostiantyn Kostiuk.
+
+--000000000000a40878065a59f9b1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><div>Hi=C2=A0Roman,</div><div><br></=
+div><div>Thanks for your patch, and sorry for the late reply</div><br></div=
+></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr=
+" class=3D"gmail_attr">On Sun, Jul 19, 2026 at 7:04=E2=80=AFPM Roman Bogoro=
+dskiy &lt;<a href=3D"mailto:bogorodskiy@gmail.com">bogorodskiy@gmail.com</a=
+>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Imp=
+lement the &#39;guest-get-diskstats&#39; for FreeBSD.<br>
+This implementation uses the devstat(3) library which is a part<br>
+of the FreeBSD base system.<br>
+<br>
+The build system is updated to link qga with `-ldevstat`.<br>
+<br>
+Signed-off-by: Roman Bogorodskiy &lt;<a href=3D"mailto:bogorodskiy@gmail.co=
+m" target=3D"_blank">bogorodskiy@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0qga/commands-bsd.c=C2=A0 =C2=A0| 127 ++++++++++++++++++++++++++++++++=
++++++++++++<br>
+=C2=A0qga/meson.build=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A03 +<br>
+=C2=A0qga/qapi-schema.json |=C2=A0 =C2=A06 +-<br>
+=C2=A03 files changed, 133 insertions(+), 3 deletions(-)<br>
+<br>
+diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c<br>
+index 94ff6fee6a..763db33c9f 100644<br>
+--- a/qga/commands-bsd.c<br>
++++ b/qga/commands-bsd.c<br>
+@@ -27,6 +27,9 @@<br>
+=C2=A0#include &lt;net/ethernet.h&gt;<br>
+=C2=A0#endif<br>
+=C2=A0#include &lt;paths.h&gt;<br>
++#ifdef CONFIG_FREEBSD<br>
++#include &lt;devstat.h&gt;<br>
++#endif<br>
+<br>
+=C2=A0#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)<br>
+=C2=A0bool build_fs_mount_list(FsMountList *mounts, Error **errp)<br>
+@@ -178,3 +181,127 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigned =
+char *buf,<br>
+=C2=A0 =C2=A0 =C2=A0return true;<br>
+=C2=A0}<br>
+=C2=A0#endif /* HAVE_GETIFADDRS */<br>
++<br>
++#ifdef CONFIG_FREEBSD<br>
++static uint64_t bintime_to_msec(const struct bintime *bt)<br>
++{<br>
++=C2=A0 =C2=A0 return (uint64_t)bt-&gt;sec * 1000ULL + (((bt-&gt;frac &gt;&=
+gt; 32) * 1000ULL) &gt;&gt; 32);<br>
++}<br>
++<br>
++static void guest_diskstats_append(GuestDiskStatsInfoList ***tailp,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const struct devstat *d=
+ev)<br></blockquote><div><br></div><div>Can we <span class=3D"Asgive ng" st=
+yle=3D"border-style:none;background:none">simplify</span> pointer logic?<br=
+></div><div>For example, return=C2=A0GuestDiskStatsInfo* for=C2=A0devstat* =
+and then append the list in=C2=A0guest_get_diskstats.</div><div>***tailp -&=
+gt; more pointers - easier to make a mistake or memory leak.=C2=A0</div><di=
+v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++{<br>
++=C2=A0 =C2=A0 GuestDiskStatsInfoList **tail =3D *tailp;<br>
++=C2=A0 =C2=A0 g_autofree GuestDiskStatsInfo *diskstatinfo =3D NULL;<br>
++=C2=A0 =C2=A0 g_autofree GuestDiskStats *diskstat =3D NULL;<br>
++<br>
++=C2=A0 =C2=A0 diskstatinfo =3D g_new0(GuestDiskStatsInfo, 1);<br>
++=C2=A0 =C2=A0 diskstatinfo-&gt;name =3D g_strdup_printf(&quot;%s%d&quot;, =
+dev-&gt;device_name,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0de=
+v-&gt;unit_number);<br>
++=C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0* devstat does not expose Linux-style major/minor numb=
+ers.=C2=A0 Report the<br>
++=C2=A0 =C2=A0 =C2=A0* devstat device number and unit number in these manda=
+tory QAPI fields.<br>
++=C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 diskstatinfo-&gt;major =3D dev-&gt;device_number;<br>
++=C2=A0 =C2=A0 diskstatinfo-&gt;minor =3D dev-&gt;unit_number;<br>
++<br>
++=C2=A0 =C2=A0 diskstat =3D g_new0(GuestDiskStats, 1);<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_read_ios =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;read_ios =3D dev-&gt;operations[DEVSTAT_READ];<=
+br>
++=C2=A0 =C2=A0 diskstat-&gt;has_read_sectors =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;read_sectors =3D dev-&gt;bytes[DEVSTAT_READ] / =
+BDRV_SECTOR_SIZE;<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_read_ticks =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;read_ticks =3D bintime_to_msec(&amp;dev-&gt;dur=
+ation[DEVSTAT_READ]);<br>
++<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_write_ios =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;write_ios =3D dev-&gt;operations[DEVSTAT_WRITE]=
+;<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_write_sectors =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;write_sectors =3D dev-&gt;bytes[DEVSTAT_WRITE] =
+/ BDRV_SECTOR_SIZE;<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_write_ticks =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;write_ticks =3D bintime_to_msec(&amp;dev-&gt;du=
+ration[DEVSTAT_WRITE]);<br>
++<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_discard_ios =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;discard_ios =3D dev-&gt;operations[DEVSTAT_FREE=
+];<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_discard_sectors =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;discard_sectors =3D dev-&gt;bytes[DEVSTAT_FREE]=
+ / BDRV_SECTOR_SIZE;<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_discard_ticks =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;discard_ticks =3D bintime_to_msec(&amp;dev-&gt;=
+duration[DEVSTAT_FREE]);<br>
++<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_ios_pgr =3D true;<br>
++=C2=A0 =C2=A0 if (dev-&gt;start_count &gt;=3D dev-&gt;end_count) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 diskstat-&gt;ios_pgr =3D dev-&gt;start_count -=
+ dev-&gt;end_count;<br>
++=C2=A0 =C2=A0 }<br></blockquote><div><br></div><div>In case=C2=A0start_cou=
+nt &lt;=C2=A0end_count, you have has_ios_pgr =3D true, and ios_pgr =3D 0 (g=
+_new0=C2=A0initialized to 0=E2=80=99s)<br></div><div>Is this expected? And =
+in general, is <span class=3D"Asgive ng" style=3D"border-style:none;backgro=
+und:none">this</span> possible?=C2=A0=C2=A0</div><div>=C2=A0</div><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">
++<br>
++=C2=A0 =C2=A0 diskstat-&gt;has_total_ticks =3D true;<br>
++=C2=A0 =C2=A0 diskstat-&gt;total_ticks =3D bintime_to_msec(&amp;dev-&gt;bu=
+sy_time);<br>
++<br>
++=C2=A0 =C2=A0 diskstatinfo-&gt;stats =3D g_steal_pointer(&amp;diskstat);<b=
+r>
++=C2=A0 =C2=A0 QAPI_LIST_APPEND(tail, diskstatinfo);<br>
++=C2=A0 =C2=A0 diskstatinfo =3D NULL;<br>
++<br>
++=C2=A0 =C2=A0 *tailp =3D tail;<br>
++}<br>
++<br>
++static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 GuestDiskStatsInfoList *head =3D NULL, **tail =3D &amp;head;=
+<br>
++=C2=A0 =C2=A0 struct devinfo dinfo =3D { 0 };<br>
++=C2=A0 =C2=A0 struct statinfo stats =3D { .dinfo =3D &amp;dinfo };<br>
++=C2=A0 =C2=A0 struct device_selection *dev_select =3D NULL;<br>
++=C2=A0 =C2=A0 struct devstat_match matches[] =3D {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .match_fields =3D DEVSTAT_MATCH_=
+TYPE,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .device_type =3D DEVSTAT_TYPE_DI=
+RECT,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .num_match_categories =3D 1,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
++=C2=A0 =C2=A0 };<br>
++=C2=A0 =C2=A0 int num_selected =3D 0;<br>
++=C2=A0 =C2=A0 int num_selections =3D 0;<br>
++=C2=A0 =C2=A0 long select_generation =3D 0;<br>
++=C2=A0 =C2=A0 int i;<br>
++<br>
++=C2=A0 =C2=A0 if (devstat_checkversion(NULL) =3D=3D -1) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s&quot;, devstat_errbu=
+f);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (devstat_getdevs(NULL, &amp;stats) =3D=3D -1) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s&quot;, devstat_errbu=
+f);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (devstat_selectdevs(&amp;dev_select, &amp;num_selected, &=
+amp;num_selections,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0&amp;select_generation, stats.dinfo-&gt;generation,=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0stats.dinfo-&gt;devices, stats.dinfo-&gt;numdevs,<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0matches, ARRAY_SIZE(matches), NULL, 0,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0DS_SELECT_ONLY,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0stats.dinfo-&gt;numdevs, 0) =3D=3D -1) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s&quot;, devstat_errbu=
+f);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto error;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; num_selections; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (dev_select[i].selected =3D=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 guest_diskstats_append(&amp;tail,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;stats.dinfo-&gt;devices[dev_sele=
+ct[i].position]);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 free(stats.dinfo-&gt;mem_ptr);<br>
++=C2=A0 =C2=A0 free(dev_select);<br>
++=C2=A0 =C2=A0 return head;<br>
++<br>
++error:<br>
++=C2=A0 =C2=A0 qapi_free_GuestDiskStatsInfoList(head);<br>
++=C2=A0 =C2=A0 free(stats.dinfo-&gt;mem_ptr);<br>
++=C2=A0 =C2=A0 free(dev_select);<br>
++=C2=A0 =C2=A0 return NULL;<br>
++}<br>
++<br>
++GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 return guest_get_diskstats(errp);<br></blockquote><div><br><=
+/div><div>Any reason for this wrapper?=C2=A0</div><div>I see <span class=3D=
+"Asgive ng" style=3D"border-style:none;background:none">it</span> in the Li=
+nux implementation, but not for other commands.</div><div><br></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++}<br>
++#endif /* CONFIG_FREEBSD */<br>
+diff --git a/qga/meson.build b/qga/meson.build<br>
+index cfa2157efb..a046ebe305 100644<br>
+--- a/qga/meson.build<br>
++++ b/qga/meson.build<br>
+@@ -93,6 +93,9 @@ qga_ss =3D qga_ss.apply({})<br>
+<br>
+=C2=A0gen_tlb =3D []<br>
+=C2=A0qga_libs =3D []<br>
++if host_os =3D=3D &#39;freebsd&#39;<br>
++=C2=A0 qga_libs +=3D [&#39;-ldevstat&#39;]<br>
++endif<br>
+=C2=A0if host_os =3D=3D &#39;windows&#39;<br>
+=C2=A0 =C2=A0qga_libs +=3D [&#39;-lws2_32&#39;, &#39;-lwinmm&#39;, &#39;-lp=
+owrprof&#39;, &#39;-lwtsapi32&#39;, &#39;-lwininet&#39;, &#39;-liphlpapi&#3=
+9;, &#39;-lnetapi32&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;-lsetupapi&#39=
+;, &#39;-lcfgmgr32&#39;, &#39;-luserenv&#39;, &#39;-lpdh&#39; ]<br>
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
+index c57bc9a02f..0d1476dcc4 100644<br>
+--- a/qga/qapi-schema.json<br>
++++ b/qga/qapi-schema.json<br>
+@@ -1714,7 +1714,7 @@<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*total-ticks&#39;: &#39;uint=
+64&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*weight-ticks&#39;: &#39;uin=
+t64&#39;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
+-=C2=A0 &#39;if&#39;: &#39;CONFIG_LINUX&#39; }<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [&#39;CONFIG_LINUX&#39;, &#39;CONFIG=
+_FREEBSD&#39;] } }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestDiskStatsInfo:<br>
+@@ -1732,7 +1732,7 @@<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;major&#39;: &#39;uint64&#39;=
+,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;minor&#39;: &#39;uint64&#39;=
+,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;stats&#39;: &#39;GuestDiskSt=
+ats&#39; },<br>
+-=C2=A0 &#39;if&#39;: &#39;CONFIG_LINUX&#39; }<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [&#39;CONFIG_LINUX&#39;, &#39;CONFIG=
+_FREEBSD&#39;] } }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-get-diskstats:<br>
+@@ -1745,7 +1745,7 @@<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-get-diskstats&#39;,<br>
+=C2=A0 =C2=A0&#39;returns&#39;: [&#39;GuestDiskStatsInfo&#39;],<br>
+-=C2=A0 &#39;if&#39;: &#39;CONFIG_LINUX&#39;<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [&#39;CONFIG_LINUX&#39;, &#39;CONFIG=
+_FREEBSD&#39;] }<br>
+=C2=A0}<br>
+<br>
+=C2=A0##<br>
+-- <br>
+2.52.0<br>
+<br></blockquote><div><br></div><div><div><br clear=3D"all"></div><div><div=
+ dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,<=
+/div><div>Kostiantyn Kostiuk.</div></div></div></div>=C2=A0</div></div></di=
+v>
+
+--000000000000a40878065a59f9b1--
 
 
