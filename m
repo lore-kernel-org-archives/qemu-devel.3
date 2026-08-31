@@ -4,56 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2776C61DE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A53C61DE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0xCz-000568-9X; Mon, 31 Aug 2026 04:17:37 -0400
+	id 1x0xG1-00068i-0p; Mon, 31 Aug 2026 04:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1x0xCp-000550-S7
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:17:28 -0400
-Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1x0xG0-00068P-8S
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:20:44 -0400
+Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1x0xCl-000643-IK
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:17:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1788164231; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=Vvzw+HWwQAV+FRzswR5pjOHE7KlJAQVRzyziFmgKm/k=;
- b=pelJGHHBI8/MBZRvyzuWoWihokKQihPmOCdUFIQXno6glY7WE2NgpddyKVgK1RMUQR6EbBuvTgNGwnc1P5LaeqU1A3ckdGY0kLOfN7GJpft+BhzEUDqyTBFZACAe/D97kjdnNSncboZc1Pxf5zeo36V6gH3oDWgWsoyqQhMeaxY=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0X9urG4y_1788164230; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X9urG4y_1788164230 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 31 Aug 2026 16:17:10 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@mailo.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com, qemu-arm@nongnu.org
-Subject: [PATCH] hw/intc/bcm2835_ic: reject out-of-range FIQ source values
-Date: Mon, 31 Aug 2026 16:17:09 +0800
-Message-ID: <20260831081709.77725-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1x0xFx-0007Ha-To
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:20:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c8qG4E65xb4DObb7dJcsFh9Vd0yH2Y+JrkDgQmvOORIxM29ITnpFTKvc6iealQmcG+4dv1PBvQMuvsL9sTEH8rcXOaI5v3ana1Ponetz6rzZZCkGURjvTW+z4MEM369DpbtaC8j3udXELVyuBHxHUx19XoadTFfLvrE4U4AoK7wds9FtKxNkEVh4YN+67+YVCz/IZKHjCs+65UMnyTYXHHZ61vQ6nZWSMsZ1vmYetkQpMSuPPVnunuMuC3XAPG/l6X5n2CxgM3BUnVfe2B++LiyNcEGyFILjw0fDO/YKGt9IHUxopDWd2ggkG7457SGY8ybN9GuTqBjqbs2X7Wyqnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PUspbzI8RTBIhtFinY06poyyBxD3pwxPtE7nLTtZRI8=;
+ b=PAWxDr1PExP3Exdgh4ac9uz4dZYCVS4mlMyX8Rf1mshAenrcCtYhipMATN2N0MZ1ZZclMwlWnEk75pynQCduppRCkTr6+FnTCv02W/8KORTb9v4EFfLFuP+qX5q1ZycqNIVwHyRlw28sySaMZ1b8VyqJgO+2LcSxzN9TZ7oy9vS2C6eOIi0eA/DpU//iiViAOYJ4QwFLY//16NQYaMJNLGyCSWEjjqc8V4j5yDknOZooywFeddFs1rt7o0HYSqCPt7FjQ0xx47a5GnG8XZM7/xRxuLyMselaj2X/Ve3MP2LeFmy5EmBKWtIhzFzeK4635iTQ2D9ZDCwYVzM4XPnM0w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PUspbzI8RTBIhtFinY06poyyBxD3pwxPtE7nLTtZRI8=;
+ b=KgteT4n0L7z0jSoWbid5YI36tyxtSv5OzWeat/76pwRdce+P+1oiqfYnFfPSuAGizT0KYAMJsSkvErzIYQ19gikm7yiO9fLx+SRC4QJmv32o38vleTUqLanLQGupocTcjcMWd61LSI2NWCHNYubsHcXL7bhQO3v6vgZ1+bsjl2A=
+Received: from BL1PR13CA0011.namprd13.prod.outlook.com (2603:10b6:208:256::16)
+ by PH7PR12MB7426.namprd12.prod.outlook.com (2603:10b6:510:201::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
+ 2026 08:20:34 +0000
+Received: from BN3PEPF0000B069.namprd21.prod.outlook.com
+ (2603:10b6:208:256:cafe::82) by BL1PR13CA0011.outlook.office365.com
+ (2603:10b6:208:256::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.10 via Frontend Transport; Mon,
+ 31 Aug 2026 08:20:34 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN3PEPF0000B069.mail.protection.outlook.com (10.167.243.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.382.0 via Frontend Transport; Mon, 31 Aug 2026 08:20:32 +0000
+Received: from [10.85.43.97] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 31 Aug
+ 2026 03:20:30 -0500
+Message-ID: <a4b0e620-727e-40b5-85a0-b028fd43f435@amd.com>
+Date: Mon, 31 Aug 2026 13:50:28 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
-Received-SPF: pass client-ip=115.124.30.124;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <alejandro.j.jimenez@oracle.com>,
+ <pbonzini@redhat.com>, <richard.henderson@linaro.org>, <mst@redhat.com>,
+ <joe.jin@oracle.com>
+Subject: Re: [PATCH v2 3/5] amd_iommu: Define MMIO register masks
+Content-Language: en-US
+To: Dongli Zhang <dongli.zhang@oracle.com>, <qemu-devel@nongnu.org>
+References: <20260724223216.108667-1-dongli.zhang@oracle.com>
+ <20260724223216.108667-4-dongli.zhang@oracle.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20260724223216.108667-4-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B069:EE_|PH7PR12MB7426:EE_
+X-MS-Office365-Filtering-Correlation-Id: fec0c8e4-286a-4338-12a8-08df0738b9f8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|36860700016|23010399003|82310400026|10067099003|4143699003|11063799006|56012099006|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: zuZd6zmEH7xUWNOjKibLDm3Sh+vmPWydiM+C6LuJ9/iwYM0HJwqMGg2dMMSWrQzqdswAW0VrcV510+DEET7DcxXMoEOAaHKw19z43r/TugqtuCNiRuuRQl0OTjcI4IOuURUSAgU/wILZ+vh4lT+zLhf1DtqhBWWG81EujoHAdc0AO4YbUDGT5xDZq3Ak09cBVkUhpvsuKXB3G1hKLRRI4m8t0Q6/KjitPEi5/S9WUZCF2QHqVgKO9xAbFg+rcgod9bB9wXBSpE40WYiOhZCi1bojXM7sa9g0dujzUaFqkUXZQkhq5uE9S1ynwHsAuyLPWd3P/JL9zXxASTw3zUhXaN01SXwAYhUqAY36fj3mDG9vyX88mkFi4w43EJ9o8u5tHS3+L0PIuoO3E9eIOo/Zyhd6ZLG/f9bMAeJnD2x3MJO3oqAF8qof1aEAelpNFF+aUcBEZ6D6dfu76m10+ppszsACv0HT6Me5O8c7kk+ZnEYnc76V4a2+DUhV4p0Di+rj5dgWqDUvSJrSIO+GEawDqR1/sYUA8dGTnkMAtg7zDK4QEPkIx7R/QD40MavVd1DhR6gd19La1Dc+w4kTfepW/cBH0sCGGMgx99fhi2GWQhQBV3/Hbz0ZiHu40OKve+jHRd+0AxR8EWP6YXWlEcd/etKaBvfI1V7oRqu40cHMic0jm8/MXxhjxjEmywruIPFIlJ5gIfPZsLPkKqMYhRf2dA==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(36860700016)(23010399003)(82310400026)(10067099003)(4143699003)(11063799006)(56012099006)(6133799003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 3m2TSLFLEyGIU6sBzJI/XQ9Hwp0pcFbN1j7Is26UwMWwey6HKYCrkb22tGRAjh6uO5pL4AOS30X2ouKowa3S9unMQljKwV21ynyEHJMctEFjv573IfR9HX3hsUg8BwHFW6jSFxbq0RsP/CpeqvMtkO6s2oM8ArtwRnXbEWUwO/9axdfLF9/SQySPqePMLhmCRf9OUaYpMs+yvAAV5tL8cyQD+33F7IHyz+GxT0MNoikMdb8rztsWpJvnrnJAymVNIUtyltosVIW+7G9pf6TrdQFIOHoQT7cRwUaNPn4jJaQWZPoNuh9NxbxdM07h2foY7zVq25xxcgFuGNRs1NT2PrA88nHSevhqnsj69nM7iY+6BmHcfihxYfYeP7+QHIQUnZjXLROk+h/1082E+bTWT8AAwP08Nn8oSK1wUx3RF/2X7ATfVOWWaIL70Hvmgr0s
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 08:20:32.9083 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fec0c8e4-286a-4338-12a8-08df0738b9f8
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B069.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7426
+Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
+ envelope-from=Sairaj.K@amd.com;
+ helo=BN8PR05CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,138 +126,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FIQ_CONTROL register accepts a 7-bit source selector, but only
-sources 0..71 (64 GPU + 8 ARM IRQs) exist.  Values 96..127 cause
-bcm2835_ic_update() to call extract32(arm_irq_level, start, 1) with
-start >= 32, which trips the assertion in bitops.h and aborts QEMU.
 
-Reject writes that select a non-existent source and log a guest error,
-so that a malicious or buggy guest cannot kill the emulator.
 
-Add a qtest that verifies both valid and out-of-range FIQ source
-selections on raspi3b.
+On 7/25/2026 4:01 AM, Dongli Zhang wrote:
+> The MMIO read-only and write-1-to-clear masks used by amdvi_init() are
+> currently hardcoded. The hardcoded values look ambiguous.
+> 
+> Define named masks for the AMD-Vi MMIO registers to make the code easier
+> to read and understand. Use status bit names that match the Linux AMD
+> IOMMU driver definitions.
+> 
+> This is a cleanup.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4368
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- hw/intc/bcm2835_ic.c          | 13 +++++--
- tests/qtest/bcm2835-ic-test.c | 66 +++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |  2 +-
- 3 files changed, 78 insertions(+), 3 deletions(-)
- create mode 100644 tests/qtest/bcm2835-ic-test.c
+Instead of "This is a cleanup", we usually use "No functional change is
+intended"
 
-diff --git a/hw/intc/bcm2835_ic.c b/hw/intc/bcm2835_ic.c
-index 71bf671761..262a620968 100644
---- a/hw/intc/bcm2835_ic.c
-+++ b/hw/intc/bcm2835_ic.c
-@@ -139,10 +139,19 @@ static void bcm2835_ic_write(void *opaque, hwaddr offset, uint64_t val,
-     BCM2835ICState *s = opaque;
- 
-     switch (offset) {
--    case FIQ_CONTROL:
--        s->fiq_select = extract32(val, 0, 7);
-+    case FIQ_CONTROL: {
-+        unsigned fiq_select = extract32(val, 0, 7);
-+
-+        if (fiq_select >= GPU_IRQS + ARM_IRQS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: FIQ select %u out of range\n",
-+                          __func__, fiq_select);
-+            return;
-+        }
-+        s->fiq_select = fiq_select;
-         s->fiq_enable = extract32(val, 7, 1);
-         break;
-+    }
-     case IRQ_ENABLE_1:
-         s->gpu_irq_enable |= val;
-         break;
-diff --git a/tests/qtest/bcm2835-ic-test.c b/tests/qtest/bcm2835-ic-test.c
-new file mode 100644
-index 0000000000..1e171ee092
---- /dev/null
-+++ b/tests/qtest/bcm2835-ic-test.c
-@@ -0,0 +1,66 @@
-+/*
-+ * QTest testcase for the BCM2835 Interrupt Controller
-+ *
-+ * Copyright (c) 2026 Bin Guo <guobin@linux.alibaba.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+
-+#define IC_BASE     0x3f00b200
-+#define FIQ_CONTROL (IC_BASE + 0x0c)
-+
-+static void test_fiq_select_out_of_range(void)
-+{
-+    uint32_t val;
-+
-+    /*
-+     * Only FIQ sources 0..71 exist.  Source 96 used to trigger an assertion
-+     * in bcm2835_ic_update() because extract32(arm_irq_level, 32, 1) was
-+     * called with start >= 32.  Make sure the write is rejected and QEMU
-+     * keeps running.
-+     */
-+    writel(FIQ_CONTROL, 0xe0); /* fiq_select = 96, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
-+
-+    /* The first source past the ARM IRQ range should also be rejected. */
-+    writel(FIQ_CONTROL, 0xc8); /* fiq_select = 72, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0);
-+}
-+
-+static void test_fiq_select_valid(void)
-+{
-+    uint32_t val;
-+
-+    /* Select the highest valid ARM IRQ source (64 + 7 = 71). */
-+    writel(FIQ_CONTROL, 0xc7); /* fiq_select = 71, fiq_enable = 1 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0xc7);
-+
-+    /* Select the highest valid GPU IRQ source. */
-+    writel(FIQ_CONTROL, 0x3f); /* fiq_select = 63, fiq_enable = 0 */
-+    val = readl(FIQ_CONTROL);
-+    g_assert_cmpint(val, ==, 0x3f);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-out-of-range",
-+                   test_fiq_select_out_of_range);
-+    qtest_add_func("/bcm2835/bcm2835-ic/fiq-select-valid",
-+                   test_fiq_select_valid);
-+
-+    qtest_start("-machine raspi3b");
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index a13c4af989..149b395e53 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -274,7 +274,7 @@ qtests_aarch64 = \
-     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
-   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-+  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test', 'bcm2835-ic-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
--- 
-2.50.1 (Apple Git-155)
+> 
+> Suggested-by: Sairaj Kodilkar <sarunkod@amd.com>
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> ---
+>  hw/i386/amd_iommu.c |  5 +++--
+>  hw/i386/amd_iommu.h | 24 ++++++++++++++++++++----
+>  2 files changed, 23 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 2fd680c4ff..7ca6d33abb 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -2563,8 +2563,9 @@ static void amdvi_init(AMDVIState *s)
+>      memset(s->mmior, 0, AMDVI_MMIO_SIZE);
+>      amdvi_set_quad(s, AMDVI_MMIO_EXT_FEATURES,
+>                     amdvi_extended_feature_register(s),
+> -                   0xffffffffffffffef, 0);
+> -    amdvi_set_quad(s, AMDVI_MMIO_STATUS, 0, 0x98, 0x67);
+> +                   AMDVI_MMIO_EXT_FEATURE_RO_MASK, 0);
+> +    amdvi_set_quad(s, AMDVI_MMIO_STATUS, 0, AMDVI_MMIO_STATUS_RO_MASK,
+> +                   AMDVI_MMIO_STATUS_W1C_MASK);
+>  }
+>  
+>  static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
+> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+> index 687691ec1c..f86e37fe93 100644
+> --- a/hw/i386/amd_iommu.h
+> +++ b/hw/i386/amd_iommu.h
+> @@ -107,11 +107,25 @@
+>  #define AMDVI_MMIO_CONTROL_INTCAPXTEN     (1ULL << 51)
+>  
+>  /* MMIO status register bits */
+> -#define AMDVI_MMIO_STATUS_CMDBUF_RUN  (1 << 4)
+> -#define AMDVI_MMIO_STATUS_EVT_RUN     (1 << 3)
+> -#define AMDVI_MMIO_STATUS_COMP_INT    (1 << 2)
+> -#define AMDVI_MMIO_STATUS_EVENT_INT   (1 << 1)
+>  #define AMDVI_MMIO_STATUS_EVT_OVF     (1 << 0)
+> +#define AMDVI_MMIO_STATUS_EVENT_INT   (1 << 1)
+> +#define AMDVI_MMIO_STATUS_COMP_INT    (1 << 2)
+> +#define AMDVI_MMIO_STATUS_EVT_RUN     (1 << 3)
+> +#define AMDVI_MMIO_STATUS_CMDBUF_RUN  (1 << 4)
+> +#define AMDVI_MMIO_STATUS_PPR_OVF     (1 << 5)
+> +#define AMDVI_MMIO_STATUS_PPR_INT     (1 << 6)
+> +#define AMDVI_MMIO_STATUS_PPR_RUN     (1 << 7)
+> +#define AMDVI_MMIO_STATUS_GALOG_RUN   (1 << 8)
+> +#define AMDVI_MMIO_STATUS_GALOG_OVF   (1 << 9)
+> +#define AMDVI_MMIO_STATUS_GALOG_INT   (1 << 10)
+> +
+
+Please make macro names consistent, here you are defining event and ppr
+log related macros without "LOG" suffix but using "GALOG" for ga log.
+Either one is fine but make sure that it is consistent.
+
+Other that this,
+
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
+
+> +#define AMDVI_MMIO_STATUS_RO_MASK \
+> +    (AMDVI_MMIO_STATUS_EVT_RUN | AMDVI_MMIO_STATUS_CMDBUF_RUN | \
+> +     AMDVI_MMIO_STATUS_PPR_RUN)
+
+> +#define AMDVI_MMIO_STATUS_W1C_MASK \
+> +    (AMDVI_MMIO_STATUS_EVT_OVF | AMDVI_MMIO_STATUS_EVENT_INT | \
+> +     AMDVI_MMIO_STATUS_COMP_INT | AMDVI_MMIO_STATUS_PPR_OVF | \
+> +     AMDVI_MMIO_STATUS_PPR_INT)
+>  
+
+>  #define AMDVI_CMDBUF_ID_BYTE              0x07
+>  #define AMDVI_CMDBUF_ID_RSHIFT            4
+> @@ -227,6 +241,8 @@
+>          AMDVI_FEATURE_IA | AMDVI_FEATURE_GT | AMDVI_FEATURE_HE | \
+>          AMDVI_GATS_MODE | AMDVI_HATS_MODE | AMDVI_FEATURE_GA)
+>  
+> +#define AMDVI_MMIO_EXT_FEATURE_RO_MASK 0xffffffffffffffefULL
+> +
+>  /* capabilities header */
+>  #define AMDVI_CAPAB_FEATURES (AMDVI_CAPAB_FLAT_EXT | \
+>          AMDVI_CAPAB_FLAG_NPCACHE | AMDVI_CAPAB_FLAG_IOTLBSUP \
 
 
