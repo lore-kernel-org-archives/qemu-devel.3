@@ -4,96 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13444C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D52C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12PD-0003dC-Qz; Mon, 31 Aug 2026 09:50:35 -0400
+	id 1x12Qx-00049p-Ru; Mon, 31 Aug 2026 09:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x12PB-0003c9-2h
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:50:33 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12Qw-00049L-O6
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x12P9-0003iX-0H
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:50:32 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12Qu-0003vX-TG
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788184228;
+ s=mimecast20190719; t=1788184339;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zoTZvmy4jPUbkp6P4GsXHnJjsEPvOhs/+ivdjF0DsTM=;
- b=HZkTuEYr6EhvGvLqafs7PSC8wVLb10iy3mWqw0z5XXxkN2En+8RKxF5tll8LJHy2rp1tgA
- 4FFHFBQCckmExnZid4M/h7VzEqFKhMDXJ0bmr18ari5Sbe8hBxSzWEbmgCOlkacvhF9sak
- EIsm+GMpKNd5dAxMijeqUWPgtQHDR8c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-vkSRe0j1MoqBXm7keiMN6Q-1; Mon,
- 31 Aug 2026 09:50:24 -0400
-X-MC-Unique: vkSRe0j1MoqBXm7keiMN6Q-1
-X-Mimecast-MFC-AGG-ID: vkSRe0j1MoqBXm7keiMN6Q_1788184220
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57535195DE5B; Mon, 31 Aug 2026 13:50:19 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 750891956042; Mon, 31 Aug 2026 13:50:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F002421E6837; Mon, 31 Aug 2026 15:50:13 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Alex Williamson <alex@shazbot.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- linux-cxl@vger.kernel.org,  Michael
- Tokarev <mjt@tls.msk.ru>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Peter Xu <peterx@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- zhenwei pi <zhenwei.pi@linux.dev>,  qemu-trivial@nongnu.org,  Fabiano
- Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Laurent Vivier
- <laurent@vivier.eu>,  Jiri Pirko <jiri@resnulli.us>,
- qemu-block@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Stefan
- Berger <stefanb@linux.vnet.ibm.com>,  linux-edac@vger.kernel.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Jonathan
- Cameron <jic23@kernel.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Zhao
- Liu <zhao1.liu@intel.com>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Lukas Straub
- <lukasstraub2@web.de>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 42/43] qapi: convert trivial intro sections for
- machine.json
-In-Reply-To: <87pkyye7j1.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 31 Aug 2026 15:36:34 +0200")
-References: <20260826193840.2152000-1-jsnow@redhat.com>
- <20260826193840.2152000-43-jsnow@redhat.com>
- <87pkyye7j1.fsf@pond.sub.org>
-Date: Mon, 31 Aug 2026 15:50:13 +0200
-Message-ID: <87ecfee6wa.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NHlXEJdd81HJkcAo6wpL5JghZB+1aFl1Z2KSzwFCTSc=;
+ b=TLRNAJBsM93xh5dj0jfCJloJDW7B7c3ymsSnKlp+oFN6Sgc5QDgDNQ6AQhKJbam0p5oUKs
+ U2aMQq2Jx5jFAO4qURd4rvF+16hmu5YRdS7aGKf0uRJDvSEhe0ar+YuCaIkjwpi1rJUhEU
+ 069/uuH67EvPyoxHZuB3iUCeeLrDEjY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-UzqWv90VPl-pXK6rmBYVwg-1; Mon, 31 Aug 2026 09:52:18 -0400
+X-MC-Unique: UzqWv90VPl-pXK6rmBYVwg-1
+X-Mimecast-MFC-AGG-ID: UzqWv90VPl-pXK6rmBYVwg_1788184337
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4994aebe932so34930075e9.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788184337; x=1788789137; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=NHlXEJdd81HJkcAo6wpL5JghZB+1aFl1Z2KSzwFCTSc=;
+ b=n0abQCGdSw9eknnbFytq2BZ1fCY+/eKVBEs2RPApZvO+f9lnVev4FH5VstLVYOk5pD
+ vKvU6RAz8eWPW4FUhr5HwaRaLAp5IxJ41q2a6bIHf4X4glyIYpmbR+375HG+OUojj1Si
+ /XoNLCetl00uxTerywWcIYOyZe7JcjBU42DySpMvPeD9nmIpscM3NeQ7MEcsIIPxqwEo
+ J+jyY/rOfAtip0q54WX6o6zUqhNS2lquk4Ykzdc7p+rd7OohEGP5pIXithzUsI6/RqPo
+ 6O2TZiNJJABBAfFWDWdZp2czRdpD19SgotRD/yzCVH44Gl+Pm8p2IPsNXlnlrcqTN4yT
+ Wl0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788184337; x=1788789137;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=NHlXEJdd81HJkcAo6wpL5JghZB+1aFl1Z2KSzwFCTSc=;
+ b=nGs1EC3JSS3wc4ML5iowfrYnZRnj/+IutvEFWaAPuqnERZp+M20L2j+ZcSCk5SO3Ac
+ 8mR3vwZRHNDoZwrci9MAW39GF3ZX9I+xkJI+w0NIkMYxYYgnn2DoTZk+yA3eSeUOIXNv
+ pr4bi5ZSBcILwxgDC5yFkO2lDDeGcEkR9b15ayb/FdSyBoHO2DanJH8Oy0RFk8zihV2X
+ r3x6K+ADU2onR8pisEAPfPzyatN1mj/+ckjSkry3XkDNMUwaGyod+BdYH+YNeX9vaIHm
+ lEUgnFXh8WHihjfa1xMv9t88FiBatPkAlKL5WMpXbRpEN7Va6bq5ZHQIVfx4XPqlhTQ8
+ QvXA==
+X-Gm-Message-State: AFuF++lZrVzm9CniCRo4TMHNqcrC6+HDO9mcGLPzCNZ135+148bwlE1s
+ TPH8lt+SiZHL8Z3Uw1061LUE6/UaKofY7s+ooKS0xuzkf2GxR/K4aCZdju6FUowlQJahTDQJqwL
+ DeRnIzlZUZyVEfcN7TGrms5yh9n7jM7Nt6b/ve/z9i3TdM6owUejhBdpb
+X-Gm-Gg: AR+sD12MfIQ8GO3c6ZrJkhedupWEtJpRLtFs8TfKGgqTlNyKCqXtafWvnxoIi5UbtTS
+ oXcUvN21oKgzKWEYIprOstQei0amSy3EsQD2pgXKSVy73JGmaqh6azZ2zc3KZo7t6E+g2RVdS/W
+ jPUPDeLQ9Y51VmU+YIXwuPZK8MmhojK7ywCVNKTL6/nM/uCJAMbjq5YHhPNoAjITwoKRqQBFoc3
+ 24s3ceed5CRggCtFlca4pC7W7IavX0jjysj4+y6AxdN4svnDb9S4I19I8N0FSmhElGKGVzDUZR6
+ so3We+ORX1Mj9aoME1lOMh4KDzMxq8BOP4rXC6B5G9bdUf/Gp6VAAMpjxOShIv/Od4Ri3yFJACR
+ 2YdNVrMrL9aKkLJtuyH8/ABZ4JAbsFNptAbUs1zXPijtOV9jKCREvNL1ROtY=
+X-Received: by 2002:a05:600c:8011:b0:496:bbce:fc with SMTP id
+ 5b1f17b1804b1-49cdc5660bamr13786195e9.12.1788184337134; 
+ Mon, 31 Aug 2026 06:52:17 -0700 (PDT)
+X-Received: by 2002:a05:600c:8011:b0:496:bbce:fc with SMTP id
+ 5b1f17b1804b1-49cdc5660bamr13785375e9.12.1788184336755; 
+ Mon, 31 Aug 2026 06:52:16 -0700 (PDT)
+Received: from localhost
+ (p200300cfd72080187472d8ceb75e67b1.dip0.t-ipconnect.de.
+ [2003:cf:d720:8018:7472:d8ce:b75e:67b1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cd2922ebdsm168317295e9.3.2026.08.31.06.52.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 31 Aug 2026 06:52:15 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH 0/9] block: BLOCK_IO_DELAY event
+Date: Mon, 31 Aug 2026 15:51:56 +0200
+Message-ID: <20260831135206.126184-1-hreitz@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,57 +119,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+Based-on: <20260724152315.234183-1-hreitz@redhat.com>
+          [PATCH 0/6] hw/[block]: Fix missing accounting
+          Fri, 24 Jul 2026 17:23:09 +0200
 
-> John Snow <jsnow@redhat.com> writes:
->
->> Signed-off-by: John Snow <jsnow@redhat.com>
->> ---
->>  qapi/machine.json | 208 ++++++++++++++++------------------------------
->>  1 file changed, 73 insertions(+), 135 deletions(-)
->>
->> diff --git a/qapi/machine.json b/qapi/machine.json
->> index 2d63c1bac3b..3a5c6df9cff 100644
->> --- a/qapi/machine.json
->> +++ b/qapi/machine.json
->
-> [...]
->
->> @@ -469,8 +453,7 @@
->>  
->>  ##
->>  # @NumaOptions:
->> -#
->> -# A discriminated record of NUMA options.  (for OptsVisitor)
->> +#     A discriminated record of NUMA options.  (for OptsVisitor)
->>  #
->>  # @type: NUMA option type
->>  #
->
-> The parenthesis is questionable.  As long as it's there, this isn't
-> "very trivial".
+Hi,
 
-Could move it into the sentence, like so
+I’m told there are installations where storage is very slow, and some
+would like the VM stack to report this proactively.  To do so, we should
+(via QAPI events) report on extremely slow I/O requests.
 
-    # A discriminated record of NUMA options (for OptsVisitor).
+We already have the latency histogram, but this is not deemed sufficient
+because it is not proactively reporting and would require repeated
+querying.  Therefore, this series introduces the event still.
 
-But I think we can just drop it.
+Now, from a user's perspective, it would be nice if this event could be
+raised exactly when an I/O request crosses the user-defined threshold,
+but this would require keeping all active requests in a list and
+checking it periodically.  Now, if we used latency cookies for this
+(which makes sense), then that would require that every cookie set up is
+also finalized when the request is done, because if we don't, results
+could well be catastrophic:
+- Either we use cookies as-is, which are often allocated on the stack or
+  in some other structure managed by the device; then this would result
+  in use-after-free,
+- Or we allocate something specifically for this checking, so lingering
+  requests would at most create spurious latency events and memory
+  leaks, but this would require an additional heap allocation per
+  request that we would probably want to avoid.
 
-Neither should be in the "very trivial" jumbo patch.
+So ideally we could use latency cookies and could statically verify that
+they are always finalized when the request is done, but doing this in C
+may well be impossible.
 
->> @@ -488,8 +471,7 @@
->>  
->>  ##
->>  # @NumaNodeOptions:
->> -#
->> -# Create a guest NUMA node.  (for OptsVisitor)
->> +#     Create a guest NUMA node.  (for OptsVisitor)
->>  #
->>  # @nodeid: NUMA node ID (increase by 1 from 0 if omitted)
->>  #
->
-> Likewise.
 
-[...]
+So, because it is basically impossible (or at least it would be very
+hard, and presumably require a large refactoring) to guarantee, without
+additional heap allocations, that a list of active requests won’t run
+into catastrophic use-after-frees, this series does the much simpler
+version first, which is to just raise an event when a request *finishes*
+and took more than a user-defined latency threshold.
+
+
+(PS: The nice thing about throwing an alert while the request is still
+going on would be that it could allow us to also stop the VM in case of
+excessive latency, before the request completes, so the guest would be
+shielded from such excessive latency.  This might be useful for Windows
+guests that just have a maximum request lantency before throwing a
+BSOD.)
+
+
+Hanna Czenczek (9):
+  block/accounting: Add offset to BlockAcctCookie
+  qapi/block: Add IoAccountingOperation enum
+  qapi/block: Add BLOCK_IO_DELAY event
+  block-backend: Public blk_get_attached_dev_path()
+  block/accounting: Add BB field to latency checker
+  block/accounting: Emit BLOCK_IO_DELAY event
+  block: Add delay-alert-ms property
+  block/accounting: Move latency_ns override down
+  iotests: Add delay-alert test
+
+ qapi/block.json                          |  52 +++++++++
+ include/block/accounting.h               |  20 +++-
+ include/hw/block/block.h                 |   5 +-
+ include/system/block-backend-io.h        |   9 ++
+ include/system/dma.h                     |   2 +-
+ block/accounting.c                       |  60 ++++++++--
+ block/block-backend.c                    |   8 +-
+ blockdev.c                               |  16 ++-
+ hw/block/block.c                         |   4 +-
+ hw/block/dataplane/xen-block.c           |   4 +-
+ hw/block/virtio-blk.c                    |  15 +--
+ hw/ide/ahci.c                            |   6 +-
+ hw/ide/atapi.c                           |   9 +-
+ hw/ide/core.c                            |   9 +-
+ hw/ide/macio.c                           |  15 ++-
+ hw/nvme/ctrl.c                           |  43 ++++---
+ hw/nvme/dif.c                            |   8 +-
+ hw/scsi/scsi-disk.c                      |  28 +++--
+ qemu-io-cmds.c                           |  14 +--
+ system/dma-helpers.c                     |   4 +-
+ tests/unit/test-block-accounting.c       |   2 +-
+ tests/qemu-iotests/172.out               |  38 +++++++
+ tests/qemu-iotests/tests/delay-alert     | 136 +++++++++++++++++++++++
+ tests/qemu-iotests/tests/delay-alert.out |  46 ++++++++
+ 24 files changed, 472 insertions(+), 81 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/delay-alert
+ create mode 100644 tests/qemu-iotests/tests/delay-alert.out
+
+-- 
+2.55.0
 
 
