@@ -4,110 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6DBC61DE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 01:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5FEC61DE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 02:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0rH5-0000Dx-7W; Sun, 30 Aug 2026 21:57:27 -0400
+	id 1x0rZ8-0003Vs-VL; Sun, 30 Aug 2026 22:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x0rH3-0000Cz-MQ
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 21:57:25 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ id 1x0rZ7-0003Rv-9U
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:16:05 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x0rH1-0004vy-2x
- for qemu-devel@nongnu.org; Sun, 30 Aug 2026 21:57:25 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-66e63c2c9e1so910809d50.0
- for <qemu-devel@nongnu.org>; Sun, 30 Aug 2026 18:57:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788141441; cv=none;
- d=google.com; s=arc-20260327;
- b=sR7P+dhhT2CPUbVrqFLKWFH9g9rfwLkeu1sig6nLVlgLw+ayAcfBdcVyVqNyWKT6Tt
- AXiBfj5NOdLiuwbPbXYpv562cptVKjaTp8wvAq+VVdQVXDmCvvhWiWeLeIujpxfM7DKm
- NYrnEddOTg/0/eoLALmba2iFH9Rh2y0BhJKWt13C7IZd6Qdb9cHYPEb7YvHBwKbQQIEJ
- CN2W4gC5hJYHPM5q1dGF82PrtYdChwGwAW2P1XijYEiLsQ3JV148Nz81o7ZgL6qmHEQS
- fZBT3TaRAcBSVgp1rQ+Uqlj5ap92ly5Uosrs+E2CHocPHLcDOtwFP+oaDIJMjz62qhpO
- 6Q9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=EHWkIpJjbvCM8i9EVzGkfSqsE5M0tKBuD6Cyeoh+D9k=;
- fh=kZ4oTAT93UVohyFkSRyiFjTUHt11KIet+HJfYvTK4ek=;
- b=EyIFRhevLsyIIC1s5dcBVenEXA4HC8iKq2ndrbN2COZAS1ENUlrkYcg/BD7rwbxZyS
- cOuJJhZ9zJh1nbeUJ7e2a9tlUHeYcMf2IJmVYBGYZBSoAm+HWttRCuylwXjDy5LYKj6P
- XrqHsiWRVMYNHkJh/ulCA5MZsF5nLJLXGIy5xkOLWRk/rYCgQ4uxJPe9dENQWyEuEs2p
- 8VGd9vW5r1berf7u+AWuHSGX4nx/hFMGSAnemuyUPEYOCKjFqbt3pt9DkX1wGuEQC8qS
- 5varmcxVIp4PtKi3kTtW4ijHoTxkTsbX1Fx46QFkrnkgJISy0NhKpyKx9GWrNX0V1h3i
- At7w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1x0rZ5-0007ZO-Rd
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:16:05 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-cc1bcdb3c4cso2078655a12.2
+ for <qemu-devel@nongnu.org>; Sun, 30 Aug 2026 19:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1788141441; x=1788746241; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=EHWkIpJjbvCM8i9EVzGkfSqsE5M0tKBuD6Cyeoh+D9k=;
- b=VA6vrHTo0E6Aq2xSYI9ZWN3i6pD0uDiud1GTQB8KTWYa0Ka3YDsFNBLwOo+Dex8MFk
- mMVeNTol3NKG30s/MnE6zwqvmuKaxiWqWdL+eLoQAmQmIPBlQXMkk8/m0OxxxmbeQKLU
- QLNqV/QVg6U79gMFR5yF+HiL4h36SgQNBSxT8=
+ d=gmail.com; s=20251104; t=1788142562; x=1788747362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5s/MHm9pZEMHdIBltCKmL5mdgHKUgYmEicbJN9o3MIY=;
+ b=r7Qlg8wr+aFMTtcUo8mlfFi2trs7E7HqEiMoi1pepaE8AIxqDSyVbudC8NJxcnr12m
+ EhylFrYFaoppjy9I0rrpzaBpQ1E4U1xLwyxw6Ds0K+r6uwmRNL7dOx5NLaZLebfxQ+y4
+ Zz8u0MZcH+f8kle06w+XOMe/BH+02GX0SWvhMaK2z7ImrnYFol0gznCfIDMvzgcqmuw6
+ o2yuoxCrEBHvahiMzpM4Qht/2l5UOsCi2hpqrFTziEQrvc2ebaeDxSEKSI9GbKvOSgPW
+ CK/fhhGw0a4rVYHzOutDcpi8GbpU/aMBlxW5VW5oLVI43uDBGCxd76XpL323g/nW7v/L
+ PzZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788141441; x=1788746241;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=EHWkIpJjbvCM8i9EVzGkfSqsE5M0tKBuD6Cyeoh+D9k=;
- b=hs3NhFgdACKAt9wSccc35N2SgQ5OiuyT/5YYSY56Q5BY38+ayVw2dCv2xJaH2m0C7x
- JP84ld8SJ62yiOkKlgD+zLW2kQjitfbu4vhpaqCeInLS3LE5Yaa0bJLvRHyNXfol2t/+
- 2FM7qE2UxIvFuUYT8wo83qT2nGsz1mKY2WSP3WXfcJf/jWEhjtIdnSzY+RW8GDc/zRHk
- sRd/C326hwSl9bEApO/uqll08Su/UWZS9cTkeau+50DORQuAweRCiHmW9IU6hd/Huo8O
- NQe1GsGlBIM8fF7SWofwHM9fV1top0x2eHAGYtuXcLifW3FW1Ts0BIt+qHCrkk3bdzGy
- ey6g==
+ d=1e100.net; s=20251104; t=1788142562; x=1788747362;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=5s/MHm9pZEMHdIBltCKmL5mdgHKUgYmEicbJN9o3MIY=;
+ b=pj1S8Zc+YZmonCPRQKeRkQaZ1P2EO3ocKpyKExnVvNcVoRC+S3sgfNtVQUpG+rvYLn
+ AT/PGnKMeV5BkumvKqanh4/qxoCUKNpRsHW2/RisBP/gtA8jRk1qQrSIwbRCHKLNWvQ/
+ ddTpAHOClbuHTMJky4UgGwAs4jAXGLn/Lu1H7QPhG4Mra6jOWWsI4ar5vwOOBm+57eCR
+ 2vGsIR60gHcAJb5GvZfBS/h+vw9HknUlOpo9sCOQLBgpz9I2JbTpxjuEJ8DhguFyb/dL
+ wFp+SHVoY2TOvcQhT1xL7mNteiWBYdSijyFHSMfzs0IhPg1Oen+UjnbPfyIlqw5My1Yc
+ vbdg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwgn1HIK6SGTLxbjmLtxw3eABL9tiyxLzjFS8tWZkMqP78iLuXa/FobdJ+m/lvvD49l5wMI1a78Q5Yq@nongnu.org
-X-Gm-Message-State: AFuF++l1mh9PjsGnbC0JZkDy5p4/VruszY1EdQASx0UXbynVMVnl10Lf
- SjqeHD1tjosWCarsHk2qgKlSTOQkSNkT+dGN68pLnsvgsYWtnB5JX2YtojtoD50Idv+6NcUwhzW
- y0BEiRjVHm2ryvBgiFIG74LHg1sT/TCA=
-X-Gm-Gg: AYBFou1hM0pJbg3PUeltBOzZKhehEOkh2VhbXA6Se5Tk8c+72oNe01sd+X6Jgyn6Ao1
- bytcVOi/gBZD3/xDeuZZ3i5kaA4iZFmpl1mb+FdENTaEFp9nnebK2cRWynY30hzBZk6EY+yzCY8
- sdpwK2SbOSBpom0xYWk1KghRGRRYltrgYN0iNU9lIYB31UqOuly+luJcfB0x0nZjioWbDKl/cJ0
- jB5/AqVfLDfyyeSf7Ss+fGe18yRPaHLLutpS+dt/cAAJsknmjzK+okajQYkvNUnyuuqiv377AS8
- kpifmKTqCH1vvgeRW7XWfXPHVX/iMi/+xoMGwm+pPkV9+5iiL9qNxaCdtlzqIDolQN/17CHYr0V
- 3JtCjdoUXBWZUzbJvi0LOWgJPXTCxlwTKaMg1VWKlhxd3wKAHSrvTnJvYnyubDPwnO9XgAlNgA1
- 8pg2zdzHOfg397WQWi
-X-Received: by 2002:a05:690e:dcc:b0:66f:7717:a6f0 with SMTP id
- 956f58d0204a3-66f7717ad33mr1396300d50.9.1788141441358; Sun, 30 Aug 2026
- 18:57:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260826220528.54516-1-joel@jms.id.au>
- <20260826221154.54577-1-joel@jms.id.au>
- <20260826221154.54577-6-joel@jms.id.au>
- <be675569-27ef-46cf-82bf-563852bbe66e@oss.qualcomm.com>
-In-Reply-To: <be675569-27ef-46cf-82bf-563852bbe66e@oss.qualcomm.com>
+ AKwUvBwFrL2wAheY5Nu4JQxWmd7Tsq2hzLafzSiyg+bHihguEoI86Ey2oJY2mbUIFDGPwuJnaQJOZsnV6Dx7@nongnu.org
+X-Gm-Message-State: AFuF++lPRjmcBeuUC1mZXwNTVgcQMI+94mRsQmkokA6jBseT+nfMO96i
+ ZAPRtNjecL/MNxKLVW191bX6clIWxAiHnPdkH8dRtun3adFh/rOTXvqV
+X-Gm-Gg: AYBFou0k2BOA5rxRG34oY2NfMjfTILh1IwHVM2NMdBm0HhkSuRZn0wxTv/lj0nwY0Zm
+ WPjWc2vUYtUASj0600Cpj6cycOL4IzFNbbc/RMsliTkYSUgtoIr3qEGikpiIC4XFzhVOsywukmr
+ Io8+7JLWUHs20GaVG5RV6EyNm8KNUhHJrMiaDiaHp2610DdQ+Z8x4cqaJmYW7ds3qBAslJIK1jE
+ eXr/YmWvhalTQV4j1JQyxIQgPhffuehY1Zl1PLpoDuHYPXOUagoZi7UL8spyaiLw/MKqN25tCTQ
+ lESyMghCxVXJn0S3euz0qIxbRPjhg49xt88xu9lXB4LtrjUpvc+3tPYHjDGhIfm1QgMSjLDg5oU
+ kzAw19XdlHRS+AUExypUQMvRPpCWvpJ6TUyJRWn0odaFiN69zBlg3eieLJ6ASVwTY/DATQuqq/E
+ ccQunjNUGHc8QzHScGAZ1f1u7a6aelaLK4PRZMpk8VkBSB09qLKEH/toXwBOhMWT739dAlKeJC1
+ d7AmzT5DRPFX058N/oDDsftqJabT6tppDyZryhFieRfkwdlCm00RGwNY+moH+cMVUIU1r5IfUC3
+ 3gML220IHOCR+xXZaDA5ync79cMd8ew=
+X-Received: by 2002:a17:90b:1a84:b0:37f:e326:6557 with SMTP id
+ 98e67ed59e1d1-398f826de4fmr327270a91.4.1788142562350; 
+ Sun, 30 Aug 2026 19:16:02 -0700 (PDT)
+Received: from donnager-debian.. ([180.150.112.50])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-396b186807bsm20071240a91.12.2026.08.30.19.15.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 30 Aug 2026 19:16:01 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 31 Aug 2026 11:27:10 +0930
-X-Gm-Features: AcwNN1X53eB0-VFKX1pK9bXW42LA3jchxcdYCgFmZq25_dYfGj50ql1BNvrUmys
-Message-ID: <CACPK8XczvftDPUVb=2pX9ofRNA31jhLopeFPse-o6s7h27BVuQ@mail.gmail.com>
-Subject: Re: [PATCH 14/16] hw/riscv: Add property to hart to allow private
- memory
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, Nicholas Piggin <npiggin@gmail.com>, 
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-riscv@nongnu.org, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb12b.google.com
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v2 06/16] hw/riscv/cps: Map interrupt controllers in SoC
+ container
+Date: Mon, 31 Aug 2026 11:44:47 +0930
+Message-ID: <20260831021500.82565-7-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260831021500.82565-1-joel@jms.id.au>
+References: <20260831021500.82565-1-joel@jms.id.au>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=joel.stan@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
  FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -126,48 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Aug 2026 at 21:48, Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> On 8/26/2026 7:11 PM, Joel Stanley wrote:
-> > From: Portia Stephens <portias@oss.tenstorrent.com>
-> >
-> > There are platforms where CPUs have different mapping of system memory.
-> > The global system memory does not allow for this. This adds an optional
-> > property to assign a specific memory region to a hart. This allows for a
-> > machine to alias the hart's memory to system memory while the hart only
-> > views memory from its own memory region.
->
-> LGTM but please clarify in the commit msg that the memory region is being
-> assigned to the hart array, not "to a hart".
+The CPS device maps some devices into a container region, but the
+ACLINT and APLIC were mapped directly to system_memory.
 
-From the machine side you're right, but I agree with the commit
-message that the memory region assigned to the hart. The property is
-being set on the individual hart, not on the array:
+Pass the container memory region to the interrupt controller helpers so
+all CPS devices live in the container. The location of devices in memory
+for the boston-aia machine is unchanged.
 
-    /* Use private memory instead of system_memory if provided */
-    if (s->memory) {
-        object_property_set_link(OBJECT(&s->harts[idx]), "memory",
-                                 OBJECT(s->memory), &error_abort);
-    }
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ hw/riscv/cps.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-How about:
+diff --git a/hw/riscv/cps.c b/hw/riscv/cps.c
+index d2fd9638a08d..21daaf4943d8 100644
+--- a/hw/riscv/cps.c
++++ b/hw/riscv/cps.c
+@@ -135,7 +135,7 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < num_of_clusters; i++) {
+         uint64_t cm_base = GLOBAL_CM_BASE + (CM_SIZE * i);
+         uint32_t hartid_base = i << MHARTID_CLUSTER_SHIFT;
+-        s->aplic = riscv_aplic_create(get_system_memory(),
++        s->aplic = riscv_aplic_create(&s->container,
+                                       cm_base + AIA_PLIC_M_OFFSET,
+                                       AIA_PLIC_M_SIZE,
+                                       hartid_base, /* hartid_base */
+@@ -143,7 +143,7 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+                                       APLIC_NUM_SOURCES,
+                                       APLIC_NUM_PRIO_BITS,
+                                       false, true, NULL);
+-        riscv_aplic_create(get_system_memory(),
++        riscv_aplic_create(&s->container,
+                            cm_base + AIA_PLIC_S_OFFSET,
+                            AIA_PLIC_S_SIZE,
+                            hartid_base, /* hartid_base */
+@@ -153,10 +153,10 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+                            false, false, s->aplic);
+         /* PLIC changes msi_nonbroken to ture. We revert the change. */
+         msi_nonbroken = false;
+-        riscv_aclint_swi_create(get_system_memory(),
++        riscv_aclint_swi_create(&s->container,
+                                 cm_base + AIA_CLINT_OFFSET,
+                                 hartid_base, MAX_HARTS, false);
+-        riscv_aclint_mtimer_create(get_system_memory(),
++        riscv_aclint_mtimer_create(&s->container,
+                                    cm_base + AIA_CLINT_OFFSET +
+                                    RISCV_ACLINT_SWI_SIZE,
+                                    RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+-- 
+2.47.3
 
-"This adds an optional property on the hart array to assign a specific
-memory region. The array passes the region to each hart it creates,
-so a machine can alias the harts' memory to system memory, while
-the harts view memory from their own memory region."
-
-
->
-> E.g.:
->
-> "(...) This adds an optional property to assign a specific memory region to the
->   hart array. This allows for a machine to alias the array's memory to
->   system memory while the array only views memory from its own memory region."
->
->
-> With the commit msg change:
->
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
