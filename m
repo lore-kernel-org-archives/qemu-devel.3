@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B6CC61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5C6C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18ZE-00031V-FM; Mon, 31 Aug 2026 16:25:20 -0400
+	id 1x18Zr-0006Ls-Kx; Mon, 31 Aug 2026 16:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZA-0002j3-8l
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Zp-0006Bh-BM
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Z7-0000A6-NU
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:15 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Zl-0000cI-H1
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207913;
+ s=mimecast20190719; t=1788207952;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xv5Hc3Epjp7PUpL8zcU32FN49lioPMZa3oxVmw1Jn+I=;
- b=B9TOkmMBW8rmgTb7YK9aZZNp5Nu6C5wvzTp3Eu/SDeSk7vZj7shI/RlhLTRE59hCXPpPLI
- jbHs9Peh9PVD88I4qSjDCpQ8Og8wX/wjCRU7t6AYgF9wjAQ44UdOVpyJr1EQDvIIckgHdn
- 412IT9NoLp3P/iRSV0v4MwsJIH3lPMw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=guCLIzVmZrZpBJXqrS2tsFbY+MWTzN+mPMblZhwoDNA=;
+ b=Z39rWj4Xz2Zdcm8SAWOqIAhZ1XsamsumnPeAwI2YWVsY43ZzZfdA7w1sW2jbshbF2py3QD
+ mSADJ7l36oG5XEghrsJYZUC7xVgDdG/pNMyIAXo1NgJNaKMEQmUfHLvDYGb0K0z2AE5X7R
+ 9qGda0/MklP+vQJxu6nPkdTKVM8DO4k=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-UL8-StDYOTihKjq8V3Pgeg-1; Mon,
- 31 Aug 2026 16:25:08 -0400
-X-MC-Unique: UL8-StDYOTihKjq8V3Pgeg-1
-X-Mimecast-MFC-AGG-ID: UL8-StDYOTihKjq8V3Pgeg_1788207905
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-pdRSia-wNCWdmBDW_X-1mw-1; Mon,
+ 31 Aug 2026 16:25:48 -0400
+X-MC-Unique: pdRSia-wNCWdmBDW_X-1mw-1
+X-Mimecast-MFC-AGG-ID: pdRSia-wNCWdmBDW_X-1mw_1788207946
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 653E5184A082; Mon, 31 Aug 2026 20:25:05 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E08C19792FE; Mon, 31 Aug 2026 20:25:46 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B180B1800577; Mon, 31 Aug 2026 20:24:58 +0000 (UTC)
+ id CAD251800577; Mon, 31 Aug 2026 20:25:38 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -70,27 +70,25 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v4 35/43] qapi: convert trivial intro sections for
- run-state.json
-Date: Mon, 31 Aug 2026 16:19:37 -0400
-Message-ID: <20260831201945.287730-36-jsnow@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 41/43] qapi: convert trivial intro sections for
+ migration.json
+Date: Mon, 31 Aug 2026 16:19:43 -0400
+Message-ID: <20260831201945.287730-42-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,352 +105,425 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/run-state.json | 113 ++++++++++++++++----------------------------
- 1 file changed, 42 insertions(+), 71 deletions(-)
+ qapi/migration.json | 131 ++++++++++++++++----------------------------
+ 1 file changed, 48 insertions(+), 83 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index e4fdead1e0b..2a968a6bc0b 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -10,8 +10,7 @@
+diff --git a/qapi/migration.json b/qapi/migration.json
+index b1eaf7b0545..8b6abcee2ca 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -13,8 +13,7 @@
  
  ##
- # @RunState:
+ # @MigrationRAMStats:
 -#
--# An enumeration of VM run states.
-+#     An enumeration of VM run states.
+-# Detailed migration status.
++#     Detailed migration status.
  #
- # @debug: QEMU is running on a debugger
+ # @transferred: amount of bytes already transferred to the target VM
  #
-@@ -63,8 +62,7 @@
+@@ -78,8 +77,7 @@
  
  ##
- # @ShutdownCause:
+ # @XBZRLECacheStats:
 -#
--# An enumeration of reasons for a shutdown.
-+#     An enumeration of reasons for a shutdown.
+-# Detailed XBZRLE migration cache statistics
++#     Detailed XBZRLE migration cache statistics
  #
- # @none: No shutdown request pending
+ # @cache-size: XBZRLE cache size
  #
-@@ -103,8 +101,7 @@
+@@ -104,8 +102,7 @@
  
  ##
- # @StatusInfo:
+ # @CompressionStats:
 -#
--# Information about VM run state
-+#     Information about VM run state
+-# Detailed migration compression statistics
++#     Detailed migration compression statistics
  #
- # @running: true if all VCPUs are runnable, false if not runnable
+ # @pages: amount of pages compressed and transferred to the target VM
  #
-@@ -118,8 +115,7 @@
+@@ -126,8 +123,7 @@
  
  ##
- # @query-status:
+ # @MigrationStatus:
 -#
--# Query the run status of the VM
-+#     Query the run status of the VM
+-# An enumeration of migration status.
++#     An enumeration of migration status.
  #
- # Since: 0.14
+ # @none: no migration has ever happened.
  #
-@@ -134,9 +130,8 @@
+@@ -189,8 +185,7 @@
  
  ##
- # @SHUTDOWN:
+ # @VfioStats:
 -#
--# Emitted when the virtual machine has shut down, indicating that QEMU
--# is about to exit.
-+#     Emitted when the virtual machine has shut down, indicating that
-+#     QEMU is about to exit.
+-# Detailed VFIO devices migration statistics
++#     Detailed VFIO devices migration statistics
  #
- # @guest: If true, the shutdown was triggered by a guest request (such
- #     as a guest-initiated ACPI shutdown request or other
-@@ -162,9 +157,8 @@
+ # @transferred: amount of bytes transferred to the target VM by VFIO
+ #     devices
+@@ -202,8 +197,7 @@
  
  ##
- # @POWERDOWN:
+ # @MigrationInfo:
 -#
--# Emitted when the virtual machine is powered down through the power
--# control system, such as via ACPI.
-+#     Emitted when the virtual machine is powered down through the
-+#     power control system, such as via ACPI.
+-# Information about current migration process.
++#     Information about current migration process.
  #
- # Since: 0.12
- #
-@@ -177,8 +171,7 @@
+ # @status: `MigrationStatus` describing the current migration status.
+ #     If this field is not returned, no migration process has been
+@@ -435,8 +429,7 @@
  
  ##
- # @RESET:
+ # @MigrationCapability:
 -#
--# Emitted when the virtual machine is reset
-+#     Emitted when the virtual machine is reset
+-# Migration capabilities enumeration
++#     Migration capabilities enumeration
  #
- # @guest: If true, the reset was triggered by a guest request (such as
- #     a guest-initiated ACPI reboot request or other hardware-specific
-@@ -199,8 +192,7 @@
+ # @xbzrle: Migration supports xbzrle (Xor Based Zero Run Length
+ #     Encoding).  This feature allows us to minimize migration traffic
+@@ -545,8 +538,7 @@
  
  ##
- # @STOP:
+ # @MigrationCapabilityStatus:
 -#
--# Emitted when the virtual machine is stopped
-+#     Emitted when the virtual machine is stopped
+-# Migration capability information
++#     Migration capability information
  #
- # Since: 0.12
+ # @capability: capability enum
  #
-@@ -213,8 +205,7 @@
+@@ -559,8 +551,8 @@
  
  ##
- # @RESUME:
+ # @migrate-set-capabilities:
 -#
--# Emitted when the virtual machine resumes execution
-+#     Emitted when the virtual machine resumes execution
+-# Enable/Disable the following migration capabilities (like xbzrle)
++#     Enable/Disable the following migration capabilities (like
++#     xbzrle)
  #
- # Since: 0.12
+ # @capabilities: json array of capability modifications to make
  #
-@@ -227,9 +218,8 @@
+@@ -577,8 +569,8 @@
  
  ##
- # @SUSPEND:
+ # @query-migrate-capabilities:
 -#
--# Emitted when guest enters a hardware suspension state, for example,
--# S3 state, which is sometimes called standby state
-+#     Emitted when guest enters a hardware suspension state, for
-+#     example, S3 state, which is sometimes called standby state
+-# Return information about the current migration capabilities status
++#     Return information about the current migration capabilities
++#     status
  #
- # Since: 1.1
+ # Since: 1.2
  #
-@@ -261,9 +251,8 @@
+@@ -598,8 +590,7 @@
  
  ##
- # @WAKEUP:
+ # @MultiFDCompression:
 -#
--# Emitted when the guest has woken up from suspend state and is
--# running
-+#     Emitted when the guest has woken up from suspend state and is
-+#     running
+-# An enumeration of multifd compression methods.
++#     An enumeration of multifd compression methods.
  #
- # Since: 1.1
+ # @none: no compression.
  #
-@@ -276,8 +265,7 @@
+@@ -776,9 +767,8 @@
  
  ##
- # @WATCHDOG:
+ # @BitmapMigrationNodeAlias:
 -#
--# Emitted when the watchdog device's timer is expired
-+#     Emitted when the watchdog device's timer is expired
+-# Maps a block node name and the bitmaps it has to aliases for dirty
+-# bitmap migration.
++#     Maps a block node name and the bitmaps it has to aliases for
++#     dirty bitmap migration.
  #
- # @action: action that has been taken
+ # @node-name: A block node name.
  #
-@@ -300,9 +288,8 @@
+@@ -1098,8 +1088,7 @@
  
  ##
- # @WatchdogAction:
+ # @MIGRATION:
 -#
--# An enumeration of the actions taken when the watchdog device's timer
--# is expired
-+#     An enumeration of the actions taken when the watchdog device's
-+#     timer is expired
+-# Emitted when a migration event happens
++#     Emitted when a migration event happens
  #
- # @reset: system resets
+ # @status: `MigrationStatus` describing the current migration status.
  #
-@@ -330,8 +317,7 @@
+@@ -1116,9 +1105,8 @@
  
  ##
- # @RebootAction:
+ # @MIGRATION_PASS:
 -#
--# Possible QEMU actions upon guest reboot
-+#     Possible QEMU actions upon guest reboot
+-# Emitted from the source side of a migration at the start of each
+-# pass (when it syncs the dirty bitmap)
++#     Emitted from the source side of a migration at the start of each
++#     pass (when it syncs the dirty bitmap)
  #
- # @reset: Reset the VM
+ # @pass: An incrementing count (starting at 1 on the first pass)
  #
-@@ -345,8 +331,7 @@
+@@ -1134,8 +1122,8 @@
  
  ##
- # @ShutdownAction:
+ # @COLOMessage:
 -#
--# Possible QEMU actions upon guest shutdown
-+#     Possible QEMU actions upon guest shutdown
+-# The message transmission between Primary side and Secondary side.
++#     The message transmission between Primary side and Secondary
++#     side.
  #
- # @poweroff: Shutdown the VM and exit
+ # @checkpoint-ready: Secondary VM (SVM) is ready for checkpointing
  #
-@@ -377,8 +362,7 @@
+@@ -1161,8 +1149,7 @@
  
  ##
- # @watchdog-set-action:
+ # @COLOMode:
 -#
--# Set watchdog action.
-+#     Set watchdog action.
+-# The COLO current mode.
++#     The COLO current mode.
  #
- # @action: `WatchdogAction` action taken when watchdog timer expires.
+ # @none: COLO is disabled.
  #
-@@ -394,9 +378,8 @@
+@@ -1177,8 +1164,7 @@
  
  ##
- # @set-action:
+ # @FailoverStatus:
 -#
--# Set the actions that will be taken by the emulator in response to
--# guest events.
-+#     Set the actions that will be taken by the emulator in response
-+#     to guest events.
+-# An enumeration of COLO failover status
++#     An enumeration of COLO failover status
  #
- # @reboot: `RebootAction` action taken on guest reboot.
+ # @none: no failover has ever happened
  #
-@@ -427,8 +410,7 @@
+@@ -1198,9 +1184,8 @@
  
  ##
- # @GUEST_PANICKED:
+ # @COLO_EXIT:
 -#
--# Emitted when guest OS panic is detected
-+#     Emitted when guest OS panic is detected
+-# Emitted when VM finishes COLO mode due to some errors happening or
+-# at the request of users.
++#     Emitted when VM finishes COLO mode due to some errors happening
++#     or at the request of users.
  #
- # @action: action that has been taken, currently always "pause"
+ # @mode: report COLO mode when COLO exited.
  #
-@@ -447,8 +429,7 @@
+@@ -1218,8 +1203,7 @@
  
  ##
- # @GUEST_CRASHLOADED:
+ # @COLOExitReason:
 -#
--# Emitted when guest OS crash loaded is detected
-+#     Emitted when guest OS crash loaded is detected
+-# The reason for a COLO exit.
++#     The reason for a COLO exit.
  #
- # @action: action that has been taken, currently always "run"
- #
-@@ -467,8 +448,8 @@
+ # @none: failover has never happened.  This state does not occur in
+ #     the `COLO_EXIT` event, and is only visible in the result of
+@@ -1281,8 +1265,7 @@
  
  ##
- # @GUEST_PVSHUTDOWN:
+ # @migrate-continue:
 -#
--# Emitted when guest submits a shutdown request via pvpanic interface
-+#     Emitted when guest submits a shutdown request via pvpanic
-+#     interface
+-# Continue migration when it's in a paused state.
++#     Continue migration when it's in a paused state.
  #
- # Since: 9.1
+ # @state: The state the migration is currently expected to be in
  #
-@@ -481,8 +462,8 @@
+@@ -1298,8 +1281,7 @@
  
  ##
- # @GuestPanicAction:
+ # @MigrationAddressType:
 -#
--# An enumeration of the actions taken when guest OS panic is detected
-+#     An enumeration of the actions taken when guest OS panic is
-+#     detected
+-# The migration stream transport mechanisms.
++#     The migration stream transport mechanisms.
  #
- # @pause: system pauses
+ # @socket: Migrate via socket.
  #
-@@ -497,8 +478,7 @@
+@@ -1339,8 +1321,7 @@
  
  ##
- # @GuestPanicInformationType:
+ # @MigrationAddress:
 -#
--# An enumeration of the guest panic information types
-+#     An enumeration of the guest panic information types
+-# Migration endpoint configuration.
++#     Migration endpoint configuration.
  #
- # @hyper-v: hyper-v guest panic information type
+ # @transport: The migration stream transport mechanism
  #
-@@ -515,8 +495,7 @@
+@@ -1357,8 +1338,7 @@
  
  ##
- # @GuestPanicInformation:
+ # @MigrationChannelType:
 -#
--# Information about a guest panic
-+#     Information about a guest panic
+-# The migration channel-type request options.
++#     The migration channel-type request options.
  #
- # @type: Crash type that defines the hypervisor specific information
+ # @main: Main outbound migration channel.
  #
-@@ -532,8 +511,7 @@
+@@ -1371,8 +1351,7 @@
  
  ##
- # @GuestPanicInformationHyperV:
+ # @MigrationChannel:
 -#
--# Hyper-V specific guest panic information (HV crash MSRs)
-+#     Hyper-V specific guest panic information (HV crash MSRs)
+-# Migration stream channel parameters.
++#     Migration stream channel parameters.
  #
- # @arg1: for Windows, `STOP` code for the guest crash.  For Linux,
- #     an error code.
-@@ -562,8 +540,7 @@
+ # @channel-type: Channel type for transferring packet information.
+ #
+@@ -1387,8 +1366,7 @@
  
  ##
- # @S390CrashReason:
+ # @migrate:
 -#
--# Reason why the CPU is in a crashed state.
-+#     Reason why the CPU is in a crashed state.
+-# Migrates the current running guest to another Virtual Machine.
++#     Migrates the current running guest to another Virtual Machine.
  #
- # @unknown: no crash reason was set
+ # @uri: the Uniform Resource Identifier of the destination VM
  #
-@@ -588,8 +565,7 @@
+@@ -1560,8 +1538,7 @@
  
  ##
- # @GuestPanicInformationS390:
+ # @xen-set-global-dirty-log:
 -#
--# S390 specific guest panic information (PSW)
-+#     S390 specific guest panic information (PSW)
+-# Enable or disable the global dirty log mode.
++#     Enable or disable the global dirty log mode.
  #
- # @core: core id of the CPU that crashed
+ # @enable: true to enable, false to disable.
  #
-@@ -632,9 +608,8 @@
+@@ -1597,8 +1574,7 @@
  
  ##
- # @GuestPanicInformationSev:
+ # @xen-set-replication:
 -#
--# Information for AMD SEV-specific termination request (GHCB MSR
--# contents)
-+#     Information for AMD SEV-specific termination request (GHCB MSR
-+#     contents)
+-# Enable or disable replication.
++#     Enable or disable replication.
  #
- # @set: The reason code set provided by the guest
+ # @enable: true to enable, false to disable.
  #
-@@ -648,8 +623,7 @@
+@@ -1621,8 +1597,7 @@
  
  ##
- # @MEMORY_FAILURE:
+ # @ReplicationStatus:
 -#
--# Emitted when a memory failure occurs on host side.
-+#     Emitted when a memory failure occurs on host side.
+-# The result format for `query-xen-replication-status`.
++#     The result format for `query-xen-replication-status`.
  #
- # @recipient: recipient is defined as `MemoryFailureRecipient`.
+ # @error: true if an error happened, false if replication is normal.
  #
-@@ -675,8 +649,7 @@
+@@ -1670,8 +1645,7 @@
  
  ##
- # @MemoryFailureRecipient:
+ # @COLOStatus:
 -#
--# Hardware memory failure occurs, handled by recipient.
-+#     Hardware memory failure occurs, handled by recipient.
+-# The result format for `query-colo-status`.
++#     The result format for `query-colo-status`.
  #
- # @hypervisor: memory failure at QEMU process address space.  (none
- #     guest memory, but used by QEMU itself).
-@@ -691,8 +664,7 @@
+ # @mode: COLO running mode.  If COLO is running, this field will
+ #     return 'primary' or 'secondary'.
+@@ -1709,8 +1683,7 @@
  
  ##
- # @MemoryFailureAction:
+ # @migrate-recover:
 -#
--# Actions taken by QEMU in response to a hardware memory failure.
-+#     Actions taken by QEMU in response to a hardware memory failure.
+-# Provide a recovery migration stream URI.
++#     Provide a recovery migration stream URI.
  #
- # @ignore: the memory failure could be ignored.  This will only be the
- #     case for action-optional failures.
-@@ -719,8 +691,7 @@
+ # @uri: the URI to be used for the recovery of migration stream.
+ #
+@@ -1763,8 +1736,7 @@
  
  ##
- # @MemoryFailureFlags:
+ # @DirtyRateVcpu:
 -#
--# Additional information on memory failures.
-+#     Additional information on memory failures.
+-# Dirty rate of vcpu.
++#     Dirty rate of vcpu.
  #
- # @action-required: whether a memory failure event is action-required
- #     or action-optional (e.g. a failure during memory scrub).
-@@ -736,8 +707,8 @@
+ # @id: vcpu index.
+ #
+@@ -1777,8 +1749,7 @@
  
  ##
- # @NotifyVmexitOption:
+ # @DirtyRateStatus:
 -#
--# An enumeration of the options specified when enabling notify VM exit
-+#     An enumeration of the options specified when enabling notify VM
-+#     exit
+-# Dirty page rate measurement status.
++#     Dirty page rate measurement status.
  #
- # @run: enable the feature, do nothing and continue if the notify VM
- #     exit happens.
+ # @unstarted: measuring thread has not been started yet
+ #
+@@ -1810,8 +1781,7 @@
+ 
+ ##
+ # @TimeUnit:
+-#
+-# Specifies unit in which time-related value is specified.
++#     Specifies unit in which time-related value is specified.
+ #
+ # @second: value is in seconds
+ #
+@@ -1824,8 +1794,7 @@
+ 
+ ##
+ # @DirtyRateInfo:
+-#
+-# Information about measured dirty page rate.
++#     Information about measured dirty page rate.
+ #
+ # @dirty-rate: an estimate of the dirty page rate of the VM in units
+ #     of MiB/s.  Value is present only when @status is 'measured'.
+@@ -1935,8 +1904,8 @@
+ 
+ ##
+ # @query-dirty-rate:
+-#
+-# Query results of the most recent invocation of `calc-dirty-rate`.
++#     Query results of the most recent invocation of
++#     `calc-dirty-rate`.
+ #
+ # @calc-time-unit: time unit in which to report calculation time.
+ #     By default it is reported in seconds.  (Since 8.2)
+@@ -1962,8 +1931,7 @@
+ 
+ ##
+ # @DirtyLimitInfo:
+-#
+-# Dirty page rate limit information of a virtual CPU.
++#     Dirty page rate limit information of a virtual CPU.
+ #
+ # @cpu-index: index of a virtual CPU.
+ #
+@@ -2029,8 +1997,8 @@
+ 
+ ##
+ # @query-vcpu-dirty-limit:
+-#
+-# Return information about virtual CPU dirty page rate limits, if any.
++#     Return information about virtual CPU dirty page rate limits, if
++#     any.
+ #
+ # Since: 7.1
+ #
+@@ -2046,8 +2014,7 @@
+ 
+ ##
+ # @snapshot-save:
+-#
+-# Save a VM snapshot
++#     Save a VM snapshot
+ #
+ # @job-id: identifier for the newly created job
+ #
+@@ -2118,8 +2085,7 @@
+ 
+ ##
+ # @snapshot-load:
+-#
+-# Load a VM snapshot
++#     Load a VM snapshot
+ #
+ # @job-id: identifier for the newly created job
+ #
+@@ -2188,8 +2154,7 @@
+ 
+ ##
+ # @snapshot-delete:
+-#
+-# Delete a VM snapshot
++#     Delete a VM snapshot
+ #
+ # @job-id: identifier for the newly created job
+ #
 -- 
 2.55.0
 
