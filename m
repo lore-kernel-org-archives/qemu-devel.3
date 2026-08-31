@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B22C61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB91C624C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18YO-0006EX-Fp; Mon, 31 Aug 2026 16:24:28 -0400
+	id 1x18Xp-0004O0-NW; Mon, 31 Aug 2026 16:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YC-0005b3-Jz
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:16 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18XW-00035N-TZ
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YA-0008Hl-Sn
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:16 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18XT-000866-90
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207854;
+ s=mimecast20190719; t=1788207810;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y8wW2V1gmq4U2oGifMr03OEbp6q8ZFZvEQ5q6kHXpZc=;
- b=OxNdgEoEZ2T7vCPQ+DZ6THvXFXPCaZooBIg2tQdEjMy3LBBvDhxFYGxXigpDeye34Jk8vM
- WC1AVWxXQChc5UO7kdXphkmSJIofFhBhkD9MZNullJktzPm5uJIq7Mb9zSV6kqf0CBPb81
- sbQ/a0xFSl4ODNN5Sa0hoRpC44BEb3U=
+ bh=paUL78gCdpaCrvbsmed4HTHvmj42cb8WXYX01ka0V0s=;
+ b=gUg7U4JYt5q0v4GU017ap33bRCRKb46tchXqFfgbqYHcI/OWX0T9A+7ZGlGtba+e+i5O74
+ Rv/vMPI6rS5OAsf2Ps65VyuQWSn4SsclxeiZK5WgUQSYdYfuiqLku0UvkPAfhHqzuI1Nju
+ xcQsmHlWy5g+id3FY1je4h3Vta6XGAs=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-g8KQFvfPNuKhBNzurCJSLA-1; Mon,
- 31 Aug 2026 16:24:11 -0400
-X-MC-Unique: g8KQFvfPNuKhBNzurCJSLA-1
-X-Mimecast-MFC-AGG-ID: g8KQFvfPNuKhBNzurCJSLA_1788207848
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-1POLMyqEOI2R_KshbGM8_A-1; Mon,
+ 31 Aug 2026 16:23:28 -0400
+X-MC-Unique: 1POLMyqEOI2R_KshbGM8_A-1
+X-Mimecast-MFC-AGG-ID: 1POLMyqEOI2R_KshbGM8_A_1788207804
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 794B8195FE07; Mon, 31 Aug 2026 20:24:08 +0000 (UTC)
+ id 24F14196F741; Mon, 31 Aug 2026 20:23:16 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CD0A1800347; Mon, 31 Aug 2026 20:24:00 +0000 (UTC)
+ id 2DA391800347; Mon, 31 Aug 2026 20:23:09 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,9 +71,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 27/43] qapi: convert trivial intro sections for rocker.json
-Date: Mon, 31 Aug 2026 16:19:29 -0400
-Message-ID: <20260831201945.287730-28-jsnow@redhat.com>
+Subject: [PATCH v4 20/43] qapi: convert trivial intro sections for common.json
+Date: Mon, 31 Aug 2026 16:19:22 -0400
+Message-ID: <20260831201945.287730-21-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -106,142 +106,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/rocker.json | 39 +++++++++++++--------------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ qapi/common.json | 29 ++++++++++-------------------
+ 1 file changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 5d2dbd26034..7eb0a88dafd 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
+diff --git a/qapi/common.json b/qapi/common.json
+index af7e3d618a7..c1bbed21e7f 100644
+--- a/qapi/common.json
++++ b/qapi/common.json
 @@ -9,8 +9,7 @@
  
  ##
- # @RockerSwitch:
+ # @IoOperationType:
 -#
--# Rocker switch information.
-+#     Rocker switch information.
+-# An enumeration of the I/O operation types
++#     An enumeration of the I/O operation types
  #
- # @name: switch name
+ # @read: read operation
  #
-@@ -25,8 +24,7 @@
+@@ -23,8 +22,7 @@
  
  ##
- # @query-rocker:
+ # @OnOffAuto:
 -#
--# Return rocker switch information.
-+#     Return rocker switch information.
+-# An enumeration of three options: on, off, and auto
++#     An enumeration of three options: on, off, and auto
  #
- # @name: switch name
+ # @auto: QEMU selects the value between on and off
  #
-@@ -43,8 +41,7 @@
+@@ -39,8 +37,7 @@
  
  ##
- # @RockerPortDuplex:
+ # @OnOffSplit:
 -#
--# An enumeration of port duplex states.
-+#     An enumeration of port duplex states.
+-# An enumeration of three values: on, off, and split
++#     An enumeration of three values: on, off, and split
  #
- # @half: half duplex
+ # @on: Enabled
  #
-@@ -56,8 +53,7 @@
+@@ -72,8 +69,7 @@
  
  ##
- # @RockerPortAutoneg:
+ # @OffAutoPCIBAR:
 -#
--# An enumeration of port autoneg states.
-+#     An enumeration of port autoneg states.
+-# An enumeration of options for specifying a PCI BAR
++#     An enumeration of options for specifying a PCI BAR
  #
- # @off: autoneg is off
+ # @off: The specified feature is disabled
  #
-@@ -69,8 +65,7 @@
+@@ -98,8 +94,7 @@
  
  ##
- # @RockerPort:
+ # @PCIELinkSpeed:
 -#
--# Rocker switch port information.
-+#     Rocker switch port information.
+-# An enumeration of PCIe link speeds in units of GT/s
++#     An enumeration of PCIe link speeds in units of GT/s
  #
- # @name: port name
+ # @2_5: 2.5GT/s
  #
-@@ -93,8 +88,7 @@
+@@ -120,8 +115,7 @@
  
  ##
- # @query-rocker-ports:
+ # @PCIELinkWidth:
 -#
--# Return rocker switch port information.
-+#     Return rocker switch port information.
+-# An enumeration of PCIe link width
++#     An enumeration of PCIe link width
  #
- # @name: port name
+ # @1: x1
  #
-@@ -115,8 +109,7 @@
+@@ -144,8 +138,7 @@
  
  ##
- # @RockerOfDpaFlowKey:
+ # @HostMemPolicy:
 -#
--# Rocker switch OF-DPA flow key
-+#     Rocker switch OF-DPA flow key
+-# Host memory policy types
++#     Host memory policy types
  #
- # @priority: key priority, 0 being lowest priority
+ # @default: restore default policy, remove any nondefault policy
  #
-@@ -153,8 +146,7 @@
+@@ -164,9 +157,8 @@
  
  ##
- # @RockerOfDpaFlowMask:
+ # @NetFilterDirection:
 -#
--# Rocker switch OF-DPA flow mask
-+#     Rocker switch OF-DPA flow mask
+-# Indicates whether a netfilter is attached to a netdev's transmit
+-# queue or receive queue or both.
++#     Indicates whether a netfilter is attached to a netdev's transmit
++#     queue or receive queue or both.
  #
- # @in-pport: physical input port
- #
-@@ -182,8 +174,7 @@
+ # @all: the filter is attached both to the receive and the transmit
+ #     queue of the netdev (default).
+@@ -184,8 +176,7 @@
  
  ##
- # @RockerOfDpaFlowAction:
+ # @GrabToggleKeys:
 -#
--# Rocker switch OF-DPA flow action
-+#     Rocker switch OF-DPA flow action
+-# Key combinations to toggle input-linux between host and guest.
++#     Key combinations to toggle input-linux between host and guest.
  #
- # @goto-tbl: next table ID
- #
-@@ -209,8 +200,7 @@
- 
- ##
- # @RockerOfDpaFlow:
--#
--# Rocker switch OF-DPA flow
-+#     Rocker switch OF-DPA flow
- #
- # @cookie: flow unique cookie ID
- #
-@@ -230,8 +220,7 @@
- 
- ##
- # @query-rocker-of-dpa-flows:
--#
--# Return rocker OF-DPA flow information.
-+#     Return rocker OF-DPA flow information.
- #
- # @name: switch name
- #
-@@ -261,8 +250,7 @@
- 
- ##
- # @RockerOfDpaGroup:
--#
--# Rocker switch OF-DPA group
-+#     Rocker switch OF-DPA group
- #
- # @id: group unique ID
- #
-@@ -305,8 +293,7 @@
- 
- ##
- # @query-rocker-of-dpa-groups:
--#
--# Return rocker OF-DPA group information.
-+#     Return rocker OF-DPA group information.
- #
- # @name: switch name
+ # @ctrl-ctrl: left and right control key
  #
 -- 
 2.55.0
