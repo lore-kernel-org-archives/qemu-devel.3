@@ -4,136 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E85C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 09:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E51C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 09:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0yD4-0001TN-2P; Mon, 31 Aug 2026 05:21:46 -0400
+	id 1x0ydb-0006WA-7m; Mon, 31 Aug 2026 05:49:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x0yD2-0001Rr-7s; Mon, 31 Aug 2026 05:21:44 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x0ydZ-0006Vy-Dg
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 05:49:09 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x0yD0-0004qT-F2; Mon, 31 Aug 2026 05:21:44 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZOy7Hsgk1+T/SEfyOu67n5WtDasBwB0H87uRgb3HPdXuTYkBSj/BzvgKb80mstPjEHY1OFUoJavVN0/1Q7YAI5iux3waP2kiKRN93PXhM8eZ7ZvJi2i0KrBw6aDFBzi3F9vS+i8Xd3pHWkdvcCrJttsPgsEurf0WO6djzjHeJppw/2rpOOiIQdDB4cjRcavPHa2MB1M+17hphR7RXlbJa+pNkeudCEBZ7j7q50nSGhWF2gnURvJSxEwmn7tLMpXWx1zCgr5H51OT16492I9SCaIb7MZ/O8dfUz10weAX+0P0QQ2e+RLfkvpdV7KK+qyP8pnmPov6B2mfW1yyGR1MCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=x+bzWwB7kQD5omyUZ3eGF8MktAp0NFMKoFFNYBTtuX0=;
- b=thM74HRquBqoJKrRaSde/Bte2sSaQEa4raLGLNb7G6hZLpP+BfgZ9ILujzp02jTA0M64iwjc8E2mAehcVIkSSJRmatEH/j8Xx7rhBXiNRsgPFnNah50Rlx8xBQra4sfEfct4baRIssZCUxQYnDYvPT/7BGUNee4a+Xga5b63CvCjdGKPzm/GDJ4yBvfcIldClZ8oCbTNsDWWvEnyA/jHpzBDlUq33Rs28rJcfrZDUT2YFn1iwvBdv7lJwLYl7hcrbeyNN2+I8m+u8/CEl8YLewceowEga8gy5Ohot2nR5/qJjeXwh2VTiucFwDkYOv9i3pTTrTaTBiEjHeyqGbb3Jw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x+bzWwB7kQD5omyUZ3eGF8MktAp0NFMKoFFNYBTtuX0=;
- b=HALNJxWS24FdtJXaHoQsSAd/UHsgNUXS0e/JKjqEcl9YdZFFkpylF6fZilzk0PQljgBbVdHWMfgEsnp2TfQewj8CYeLKKAfmhbw9yKlIbwuOwoKtkVVOpwsO34rB3gzRLuPb2fpuecLiYe5HwSZQ2FjKh/dXVpuBMLZ3Yw1Qri6uFTPwIql3C9SHh77CtnhUYoXusehEyTc/jIIk3OLrsjNhPeT0awIfwcm9SESpSQe0uvzO9hZ5w7n8BIa1ZshssDKS9MAVsv0RkzBThBycrkz+xtAcI764gtZcuoMLkWE0rRyKdhJByznn3TQeaqPqyzv5FVYnysq+H3pGICRE5Q==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by SI2PR06MB5018.apcprd06.prod.outlook.com (2603:1096:4:1a2::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.11; Mon, 31 Aug
- 2026 09:21:33 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
- 09:21:33 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open list:ARM
- TCG CPUs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
- =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 4/4] hw/arm/aspeed_ast2600: Wire up the UDC
-Thread-Topic: [PATCH v3 4/4] hw/arm/aspeed_ast2600: Wire up the UDC
-Thread-Index: AQHdOSobI5/PV82TVEe9Th6zes3tsw==
-Date: Mon, 31 Aug 2026 09:21:30 +0000
-Message-ID: <20260831092125.1022201-5-jamin_lin@aspeedtech.com>
-References: <20260831092125.1022201-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260831092125.1022201-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SI2PR06MB5018:EE_
-x-ms-office365-filtering-correlation-id: 1e7c1148-1887-4586-35fb-08df07413f9c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|23010399003|366016|921020|38070700021|3023799007|10067099003|56012099006|5023799004|22082099003|18002099003;
-x-microsoft-antispam-message-info: wkfnnZKxV6FOkdP4EqwUvuoQ+TSn9HOaoEUH2C2eq8xWgLG340xkOnxarUSXupurwZ3yyZJpNjyK0SFWOrL3L/lLWMAIWwqtHvJqp1NxLIidpQrKXDyCpfhx5WuTwUOKqdfU1JVUj+rq9lxqj5weMs7tkDyN9heExXjDi5WiJ2lScWvpFmEcQIkIlTape54P0ljMfiNvZFd3uU7kMrmIGxlK9o65W7oUxSkqy73fnKXrz50AJ0pH0ZwRqQtNtmz0bXQRUiBF+KukDLaZdgMcRF5IeOtJaQ2DCyjpBlMi48ptitOV/Ol/82+2HrlRKU5mcOrwJGzNoEy+OXlaGpcO2qWJQZP9qOn+uS/cyl1B4GbyrS0sNfb+E31aa+xa8O71p3kVIZ+8igTwenS8xaKXpiEBduj+r6ganl5v6QFYQI7CKlOgzaQYXqFULGKGRn0B83GT1GL4FmWHWkFzW+j2QcwNFi0SzvEyItm2ovZwLEuTWx62+N4h5BstfQf5twwsn+3gWnCDycsaXW8GKM4WjagFWfiDODK3+xincwgek1eiC6IuPhZfhmKzMlxZhee2LR5A0DbReFaASwnl/ZfGkSQjGi5Pw6Qj/H4qCm4DCHMoYE3NXvUivwYO1MspRLQDn22II/fgPIM4oN3iLJox0TEn6PJKf6bybmEjkCm+KsaHqLbCsCesHrNkLD8DQG/TIJ+j9aBnkhUyzhI1EumFxrPrTIVvdcXNyV/A3++h22s=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(921020)(38070700021)(3023799007)(10067099003)(56012099006)(5023799004)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?n/v9KYMDoL/QawrIAQ5jIVl/H1FBFvXOtFxSNN5N7F6WDBeoppK012I8ZU?=
- =?iso-8859-1?Q?M1sWkJfSQWoyZPaEVoyPeT7CEPgbgjVvfkPRkAPo1EPhRqZsUWf2TGuFly?=
- =?iso-8859-1?Q?iIsUaUMhIyai8o+4iDmVxqw3jJWZUv94dwUmCO0dxP/RoFf3opQz33MroI?=
- =?iso-8859-1?Q?j3HQ9eXHdADIFnCCHW/KHPDLjZAIBXzlKZ+MA9FLwl+oxUAzcUzzFTVyj2?=
- =?iso-8859-1?Q?6sH38KBhqgYekbuYHe0qSTzLNvmFlou34By3VPgB5y2ljjhLfHXZeRHgWD?=
- =?iso-8859-1?Q?BecwepPDgGryGwUp16Oll9tYVXZAWmy95Lx1+jFJzmUxvbLK+qEx/YvrQl?=
- =?iso-8859-1?Q?nWpCKTEnNPiqMktZm2SVjUVRBic+rklkrAZNE1cFn6ZQfk566jo72VIE/0?=
- =?iso-8859-1?Q?EI+kgOSYlo23TyIQH+hqSK9KkGuhpVyP+5YYJpjdq4ei+DJdFJYxiO9DiW?=
- =?iso-8859-1?Q?rEzY5ph6O8GFTv+SfMO3r3PMU4Qfc/RIZPLZagx2sFdhg7CsUJpNK9wE5M?=
- =?iso-8859-1?Q?ek8/5p7137ZxKqrOipfnS/gnNktAqKudmSQXJNAOWhNfl2goLoy0WlS8aG?=
- =?iso-8859-1?Q?Lmz9i1Cwf2qLSjgHFI20G76t06pgEvDWmIQnOyuyM75tqqyLoTMw2j8AIP?=
- =?iso-8859-1?Q?tWBHZYGBY5WQale3WAeUu4CYWD9bj349uPp9jaJa1JZTfXzOSaEzWLzE2o?=
- =?iso-8859-1?Q?BOUzy9L9jy3RlKxYwZCZmsyzLjocTS8b5QBDGBQ6Es6jV+kwfF2JfuGc3s?=
- =?iso-8859-1?Q?/yt/E73BTjaMk25GQtiss3fCT3n9vgWcmOYAImuE0W27YY/LWdJXVNlOvd?=
- =?iso-8859-1?Q?QlXJn3j+n0D3KX+H9dRkaki2sMFMarBm+e5D04kfLwXC8HL3nGX6a6ZhNz?=
- =?iso-8859-1?Q?gbBuB/xZ495740r07G9RkupUikfnTl/AXlyudvyUF5QjPSU3trFnBqgAuo?=
- =?iso-8859-1?Q?9Ii+VRvgOFAyUVSOAg8/DSEIMjrIh2eP4I6dVXZz5FIoKxcjaMEkF56h8L?=
- =?iso-8859-1?Q?9bGXlatXAzMxxsTEA8MdbmayLMSw2bkNkOvHjsBjHlKltzp4VFi8QIo2Uj?=
- =?iso-8859-1?Q?Kkcp5cSgiMBY682ediwj04ZWzO1uKFmm6I9QFECJ92HyXtPTJgx4yj/AZx?=
- =?iso-8859-1?Q?LRELBFpOUE7voCSLCP0xHgfzMn3S08FRDvJBv3uk7LZO8a5Gslw5zcxl7+?=
- =?iso-8859-1?Q?CYLPRB2dV7blk7D0UrfyoNFU05ddBp2xia508D1msUkz9WmsnXXP9f/uDc?=
- =?iso-8859-1?Q?4sCoGA8pPXkzdsM2WTbKAz097wZb2ukACeXB+ypAAJUZ3Px+WS/y5qMXMB?=
- =?iso-8859-1?Q?+GhzjLr22/tjqzumTwQvBs6htReallwjHHEOrLPqcbA7HylsL2bHt7Ue9N?=
- =?iso-8859-1?Q?MBnPl/AC0ogIl8MhAE6GedjCySC+5eZdJkoZFsc3iBMePkMm8eyMqhnyD5?=
- =?iso-8859-1?Q?NrKo+ZHgbRrjilFCZB6TkxbygV7FwmM3gYqCylbCgufzzsjWnRWEtX2ZxH?=
- =?iso-8859-1?Q?Ck7jyECi0yDz5lLU+29Qea5IW7Ee9/qmdGDCu4DteJchyBTG1QMkNBuzQX?=
- =?iso-8859-1?Q?pMvi+/C7tffLqiRgvg8wSARScbtlh3dTrrDvRWzI9cjjhnY/n/jjiZTHsL?=
- =?iso-8859-1?Q?m9OoLHdBJ8Pd3m67qrCt3IOBSo2nsbG5xOkpGc6AIUTlKBEVYYq/Ok2Yox?=
- =?iso-8859-1?Q?dkmDyM3BZjdeQSl9+OwhEEY+EvF7Q1O3txjUw+AnOXO5cYiyXGxgNh25GR?=
- =?iso-8859-1?Q?j8k0Nz+dfHrf+fqJhGJuJQOdrVB38ZHWsv5hLPvWgX4Jygu1bYLox9ziIT?=
- =?iso-8859-1?Q?rAdiSumY4g=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x0ydX-000883-Q5
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 05:49:09 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67V9J1PJ2517051
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 09:49:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ eN48iTdEO9eyFztg0WuIybzBtG38C6lTtw9tqNlqPvE=; b=RSTkkhqrOmZEUiP5
+ 9+G0uUSDl5Biwl05KrO0SMo8eaJPdmAECHk7x8W8H4/7fGpa49UKihzlqE0pM8uO
+ ad1ZnyCPtJDw6GaI4e77KmxYzeQM0WwE8FdiP+aVXu+UQ1+jRdSVmP+vUYavgxsb
+ ViMOy1vabBO/lKfeXIdz1pdfPlm2Vpe4Ct6QlUshU/pS7RHTYDongFXdFOn2BqCr
+ 7tPS5gzflCgx95T9yLAzF236Uz6Uhz8T6jvHVJLIHZHu1Z7mOiiX0FoOQEk0o8tV
+ +wvfcW8gWN3zVJjIES7zrka+/DW+aknKqewQrKdGxm65OC06uQnedq5FoZrpBWrM
+ OKUUiw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gd6vcr427-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 09:49:06 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-52fb8f67542so51385421cf.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 02:49:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788169745; x=1788774545; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=eN48iTdEO9eyFztg0WuIybzBtG38C6lTtw9tqNlqPvE=;
+ b=UcKVwZO0GxzQR4QSo1tg37K9GMCWxBUKN29Gw1HBoXjpmq79d7LObHa0u4dEE/hOD5
+ 9JnGja1v5ZXH4tYLw7z5lRb6BU2xXVHPVV/Bf+Vw/wQN0qwHQfk8xbZLLjaKtDAO8+3B
+ W0UDewmnm/S3KHBHsaNiuTMx7JSLNR6ljINJ9DJPvEjM0rFzfoYidoqQXWpkknBvZCcD
+ QWvwh0qbR5EWtMlD6I6mOD0izZ891+WPa/qEOXisjy4QryNJM3OZGjG2mRIhJwKnTmoH
+ y83aH9O2sx+fll9KydRBlX2mk4MxaHeXft64Zxz2KKOvFkvyaqsN/vmsmYW6kISt5zxx
+ tKSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788169745; x=1788774545;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=eN48iTdEO9eyFztg0WuIybzBtG38C6lTtw9tqNlqPvE=;
+ b=MkJfiu3AKTlRj7/wHDLnQth/VAMGCMzFwMG/pb9Y50sZz0utZKfI7vh044wGZ1ks7k
+ YVujDnNPbOBkqzvB4jf2azL6qy4z0r1LqknZSrAdK5U7VvQO+Xpn5pOtyaDBo2nvNTKP
+ ABdRetopce6xqBozQ3dQt6eB6thMs0xWwQjuOhtVnTGJElg9mApyRUvcZ6A0eZqP8C1v
+ ohag1OX85UrLbDUtE4aMektl8kjvoBw7HHJxtW/PAs3XaI04MEO9QpkjHZ0+jmzcEs9k
+ lTl2dMsk3LzCKYUX8D1r+UAHbp7rmSXnUU1NAbpXo0Z5ossrAB5T5PyqQI0NsGyHLNTw
+ dXgQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rqg3FC5TahZdQ42aDvrQI1mrWKYDj2f1jtzGXyxFJQqhHAXVkyrou9hDXXU/qdcMVJKkUcD+4zTVOV9@nongnu.org
+X-Gm-Message-State: AFuF++mWEL5+vcUpucMtXKgXYnFnktie43sb6rJwCCN54lZGp92VpShg
+ BDcXQj3+yblId+BysyRwlU4vg0gOa2yhD0HON2xaO2+ajTnHXylLs1Tj8e5JgHK0dkRE4KtLA+T
+ I5wu6vShUNVXm+p+EEpO0t8V0LzHQC/jN1vcPPvBFim6IEbsTCO8D1nWAag==
+X-Gm-Gg: AR+sD13Erbw55lkE29s6IvESF7J21RP7Rgok0f9k7U/VPXQJwTlBppEOjl5Z7N8ZqJk
+ fJdE2bVIANzMDoV9J5w1mU7OaqRwzAv2p4svvSEeWZmrmcq+8NLABO5kabJ4/63/g7FGT8g8JUJ
+ NJt+noSCDclRxRFCBfJu4+yrhTdF9GUg59QAovHSbLz51FrR478Wa71AytX6D8eM4nC5qaeWvX8
+ EFbbohbhEgbpIUC2dxfL1a7ZQV/4st0rQhBngPYlaYrCx4UWo9vTSQrV4o0g7uRSi3bHU0uQS2b
+ zF2NSv5NSwMHvYUJ4845ev1Ryvk+KNUi7xEhn4jyAaUvomr7XxaKXbCGRz7kyLrEQU8ilG4ops+
+ 3/IoE5u8SoEuXePCfZFxceGXXQwCEDtTwGkyL
+X-Received: by 2002:a05:622a:228a:b0:52f:b1b6:a4aa with SMTP id
+ d75a77b69052e-5301b1943d6mr16200461cf.4.1788169745474; 
+ Mon, 31 Aug 2026 02:49:05 -0700 (PDT)
+X-Received: by 2002:a05:622a:228a:b0:52f:b1b6:a4aa with SMTP id
+ d75a77b69052e-5301b1943d6mr16197331cf.4.1788169740261; 
+ Mon, 31 Aug 2026 02:49:00 -0700 (PDT)
+Received: from [192.168.68.100] ([152.250.131.13])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-52fbe878f4esm69173531cf.31.2026.08.31.02.48.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Aug 2026 02:48:59 -0700 (PDT)
+Message-ID: <6d3b5400-4f73-4049-97bd-55cff8bcc4ef@oss.qualcomm.com>
+Date: Mon, 31 Aug 2026 06:48:55 -0300
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: NRL5gdNnnJchDnyTlmmuN1m8pEcOguwqT0Q1ulp9ouQVKz1FxzFSjo/X2XDXxirHIdiOF343k1g18Tw7nOeeAN/f9FgaqlxjNUJNC0wXuinOOzp/VT0Cnvd2NIYNmvxpQMFE/7fnAnirFRLO7FrqHaEPT/5p7A2m+moTr8P21QzIe5fvrXNXC3yBhEfMbtfahJQXrqBbfQW+6uqznZ2pscwlC3AQSCz6pm/wJYLQubvddNxho0AD13mdOem5hU91nroOZAbAFm+toKLlTw+bdMGZohvsWmIbQOuT52gu/5oRqlNd9RuXePyX5928Lf2WgbSlNUL3+Fir7I/mdldohQ==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e7c1148-1887-4586-35fb-08df07413f9c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Aug 2026 09:21:33.0500 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mvNggJ4oMFajBNerKB3XwjnYiY3km3eKPb5jeX/ZNbi4AqyE+zvN5W+Tp3HR2V9wFxapicn5ekI5gWN9FJdRPKG7FkS1xQS1wABO7j0U5RE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5018
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/16] hw/riscv: Add property to hart to allow private
+ memory
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20260826220528.54516-1-joel@jms.id.au>
+ <20260826221154.54577-1-joel@jms.id.au>
+ <20260826221154.54577-6-joel@jms.id.au>
+ <be675569-27ef-46cf-82bf-563852bbe66e@oss.qualcomm.com>
+ <CACPK8XczvftDPUVb=2pX9ofRNA31jhLopeFPse-o6s7h27BVuQ@mail.gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CACPK8XczvftDPUVb=2pX9ofRNA31jhLopeFPse-o6s7h27BVuQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDA4NCBTYWx0ZWRfX7M7J1mwKUEw1
+ a5a7k9AcfY5SVp1U/lZ/AZyWbAE67eyLvu8X47n+PrnRmjA/w3BN3+ce9UE/I45N4K2U5Kzidc1
+ MCYgPXAWYhzQoBEzw5uIz7UWlK27l3pmaM0Kz5DPNJ0WX60C7HlWUNhJz9LIAfz1pRXK6J1hULC
+ zLj82nNKp39plqUCifnGjxatVM6HTWOck+65hyyPmI1dMhfc1qrpDZ/ETIQhrQKKi8foThv2nny
+ tUiaOs5eGidULvfLfJtQ6IPF12Rj6dayyljyCr0EoN/zfOm5+34baIF22ruYNFTQbIBrxjVl5sV
+ Ec6b/JP48j/AvHkOJw936pPRadjWPKlo3yVvvetbDG5Zpbg/UAk8Xv9z4PHOz6slj1tErX7IF5u
+ mZgRW3I+3ig1qk0muI6qScDfZtkcGBFN9gyA6ny3BDPQBy53zxsJSPO8OEXjO8GZW5Jql3icB3O
+ k/43MgVaJY1ZlmhzRWQ==
+X-Proofpoint-GUID: m6vrfMFdgGOFW4nn2G8dqx9QYzEx3rHb
+X-Proofpoint-ORIG-GUID: m6vrfMFdgGOFW4nn2G8dqx9QYzEx3rHb
+X-Authority-Analysis: v=2.4 cv=Eo7iaycA c=1 sm=1 tr=0 ts=6a954e12 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=CXdxNCAnTuDr1kYd6DjE4g==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=t9496tuAAAAA:8 a=AtdzOuRA7NdErCjRmd4A:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=4wQ91nGE5lQcD7eh5OX0:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDA4NCBTYWx0ZWRfXzzqGcr4A6ZqM
+ z3XwlkFTBZ0WMnJjBdPrsQtx/SaGY5T6y8UFtvrpawHaW87kqGegXosjjnRRHdrZbOyVIgkuKXV
+ aXsgUZROhyxfDXBxnbz8lSi2DCkn9Ac=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-31_03,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0
+ suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310084
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,133 +165,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create the USB Device Controller (UDC) at 0x1e6a2000 on the AST2600 SoC=0A=
-and map its registers.=0A=
-=0A=
-The UDC and the second EHCI host controller (EHCI2) share one SoC=0A=
-interrupt line. Route both through an OR gate whose output drives that=0A=
-GIC input, so either device can raise the interrupt without the other=0A=
-clobbering the line.=0A=
-=0A=
-The gadget USB device is not created by the SoC. It is a separate,=0A=
-user-creatable "aspeed.udc-gadget" USB device that the user plugs onto a=0A=
-USB host controller's bus; it finds its controller through the "udc"=0A=
-link property, e.g.=0A=
-=0A=
-  -device aspeed.udc-gadget,udc=3D/machine/soc/udc=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
-Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
----=0A=
- include/hw/arm/aspeed_soc.h |  4 ++++=0A=
- hw/arm/aspeed_ast2600.c     | 37 ++++++++++++++++++++++++++++++++++---=0A=
- 2 files changed, 38 insertions(+), 3 deletions(-)=0A=
-=0A=
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
-index cd68c7f1ca..fe7b31e42c 100644=0A=
---- a/include/hw/arm/aspeed_soc.h=0A=
-+++ b/include/hw/arm/aspeed_soc.h=0A=
-@@ -36,6 +36,8 @@=0A=
- #include "hw/gpio/aspeed_sgpio.h"=0A=
- #include "hw/sd/aspeed_sdhci.h"=0A=
- #include "hw/usb/hcd-ehci.h"=0A=
-+#include "hw/usb/aspeed-udc.h"=0A=
-+#include "hw/core/or-irq.h"=0A=
- #include "qom/object.h"=0A=
- #include "hw/misc/aspeed_lpc.h"=0A=
- #include "hw/misc/unimp.h"=0A=
-@@ -138,6 +140,8 @@ struct Aspeed2600SoCState {=0A=
- =0A=
-     A15MPPrivState a7mpcore;=0A=
-     ARMCPU cpu[ASPEED_CPUS_NUM]; /* XXX belong to a7mpcore */=0A=
-+    AspeedUDCState udc;=0A=
-+    OrIRQState ehci2_udc_orgate;=0A=
- };=0A=
- =0A=
- #define TYPE_ASPEED2600_SOC "aspeed2600-soc"=0A=
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c=0A=
-index d1f18e471a..21db95f5ae 100644=0A=
---- a/hw/arm/aspeed_ast2600.c=0A=
-+++ b/hw/arm/aspeed_ast2600.c=0A=
-@@ -32,6 +32,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] =3D {=0A=
-     [ASPEED_DEV_SPI1]      =3D 0x1E630000,=0A=
-     [ASPEED_DEV_SPI2]      =3D 0x1E631000,=0A=
-     [ASPEED_DEV_EHCI1]     =3D 0x1E6A1000,=0A=
-+    [ASPEED_DEV_UDC]       =3D 0x1E6A2000,=0A=
-     [ASPEED_DEV_EHCI2]     =3D 0x1E6A3000,=0A=
-     [ASPEED_DEV_MII1]      =3D 0x1E650000,=0A=
-     [ASPEED_DEV_MII2]      =3D 0x1E650008,=0A=
-@@ -214,6 +215,10 @@ static void aspeed_soc_ast2600_init(Object *obj)=0A=
-                                 TYPE_PLATFORM_EHCI);=0A=
-     }=0A=
- =0A=
-+    object_initialize_child(obj, "udc", &a->udc, TYPE_ASPEED_UDC);=0A=
-+    object_initialize_child(obj, "ehci2-udc-orgate", &a->ehci2_udc_orgate,=
-=0A=
-+                            TYPE_OR_IRQ);=0A=
-+=0A=
-     snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);=0A=
-     object_initialize_child(obj, "sdmc", &s->sdmc, typename);=0A=
-     object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),=0A=
-@@ -561,6 +566,16 @@ static void aspeed_soc_ast2600_realize(DeviceState *de=
-v, Error **errp)=0A=
-                            aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_SPI1 +=
- i));=0A=
-     }=0A=
- =0A=
-+    /*=0A=
-+     * EHCI2 and the UDC share one SoC interrupt line, so OR their outputs=
-=0A=
-+     * together and drive that GIC input from the OR gate.=0A=
-+     */=0A=
-+    object_property_set_int(OBJECT(&a->ehci2_udc_orgate), "num-lines", 2,=
-=0A=
-+                            &error_abort);=0A=
-+    qdev_realize(DEVICE(&a->ehci2_udc_orgate), NULL, &error_abort);=0A=
-+    qdev_connect_gpio_out(DEVICE(&a->ehci2_udc_orgate), 0,=0A=
-+                          aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_EHCI2))=
-;=0A=
-+=0A=
-     /* EHCI */=0A=
-     for (i =3D 0; i < sc->ehcis_num; i++) {=0A=
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {=0A=
-@@ -568,10 +583,26 @@ static void aspeed_soc_ast2600_realize(DeviceState *d=
-ev, Error **errp)=0A=
-         }=0A=
-         aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ehci[i]), 0,=0A=
-                         sc->memmap[ASPEED_DEV_EHCI1 + i]);=0A=
--        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,=0A=
--                           aspeed_soc_ast2600_get_irq(s,=0A=
--                                                      ASPEED_DEV_EHCI1 + i=
-));=0A=
-     }=0A=
-+    /*=0A=
-+     * EHCI1 has its own IRQ; EHCI2 shares the UDC's IRQ, so route it thro=
-ugh=0A=
-+     * the OR gate.=0A=
-+     */=0A=
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[0]), 0,=0A=
-+                       aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_EHCI1));=
-=0A=
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[1]), 0,=0A=
-+                       qdev_get_gpio_in(DEVICE(&a->ehci2_udc_orgate), 0));=
-=0A=
-+=0A=
-+    /* UDC - USB 2.0 Device Controller */=0A=
-+    object_property_set_link(OBJECT(&a->udc), "dram", OBJECT(s->dram_mr),=
-=0A=
-+                             &error_abort);=0A=
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&a->udc), errp)) {=0A=
-+        return;=0A=
-+    }=0A=
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->udc), 0,=0A=
-+                    sc->memmap[ASPEED_DEV_UDC]);=0A=
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&a->udc), 0,=0A=
-+                       qdev_get_gpio_in(DEVICE(&a->ehci2_udc_orgate), 1));=
-=0A=
- =0A=
-     /* SDMC - SDRAM Memory Controller */=0A=
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {=0A=
--- =0A=
-2.53.0=0A=
+
+
+On 8/30/2026 10:57 PM, Joel Stanley wrote:
+> On Thu, 27 Aug 2026 at 21:48, Daniel Henrique Barboza
+> <daniel.barboza@oss.qualcomm.com> wrote:
+>>
+>> On 8/26/2026 7:11 PM, Joel Stanley wrote:
+>>> From: Portia Stephens <portias@oss.tenstorrent.com>
+>>>
+>>> There are platforms where CPUs have different mapping of system memory.
+>>> The global system memory does not allow for this. This adds an optional
+>>> property to assign a specific memory region to a hart. This allows for a
+>>> machine to alias the hart's memory to system memory while the hart only
+>>> views memory from its own memory region.
+>>
+>> LGTM but please clarify in the commit msg that the memory region is being
+>> assigned to the hart array, not "to a hart".
+> 
+>  From the machine side you're right, but I agree with the commit
+> message that the memory region assigned to the hart. The property is
+> being set on the individual hart, not on the array:
+> 
+>      /* Use private memory instead of system_memory if provided */
+>      if (s->memory) {
+>          object_property_set_link(OBJECT(&s->harts[idx]), "memory",
+>                                   OBJECT(s->memory), &error_abort);
+>      }
+> 
+> How about:
+> 
+> "This adds an optional property on the hart array to assign a specific
+> memory region. The array passes the region to each hart it creates,
+> so a machine can alias the harts' memory to system memory, while
+> the harts view memory from their own memory region."
+
+
+That works for me. Thx!
+
+
+Daniel
+
+> 
+> 
+>>
+>> E.g.:
+>>
+>> "(...) This adds an optional property to assign a specific memory region to the
+>>    hart array. This allows for a machine to alias the array's memory to
+>>    system memory while the array only views memory from its own memory region."
+>>
+>>
+>> With the commit msg change:
+>>
+>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
 
