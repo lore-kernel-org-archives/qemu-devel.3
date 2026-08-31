@@ -4,118 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0112FC61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FFC9C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x15OY-000293-Pl; Mon, 31 Aug 2026 13:02:06 -0400
+	id 1x15Ry-0002t3-QG; Mon, 31 Aug 2026 13:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1x15OX-00028e-IQ; Mon, 31 Aug 2026 13:02:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x15Rw-0002oG-DU
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 13:05:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1x15OV-0000KC-Ll; Mon, 31 Aug 2026 13:02:04 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VG1qI61616006; Mon, 31 Aug 2026 17:01:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kJoAsG
- yyyKs2vRGBKN2VTgVriBWSx7iBaa6lLYNrVUU=; b=f5pFWsqUuA0LHxdvfs64zW
- fc3YpMifmi8wST2ypHZlFpxn6VswNELErU8MMa+jd4EyQVmS8dvquC9aqmjUqqM4
- HVg0ctIXQFqa1hUE9etMVPJwQoUgMfPm3P+P4GeygKIBmCbbVygbFJnYDlG0yNrb
- vbQ55qHKYYYtl+3mgZhfT0S/evjuB8CS/oDgaWFWrX9NBGFTP07nciRpGcPRM+Jk
- oX2D4xVSkWwNm3+X33fWfFCnWE3bTOMCXVbPHPvYf9qEVZm/2TtUufNlxXnuY0W8
- Lp0r1Qf1g53FJ+1+iM53/ugYSnxB7aJeu0i4/l91nfeMYfB3Vgkh3GnUsFobhQpQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudjq6r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 17:01:54 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VGfJW2023765;
- Mon, 31 Aug 2026 17:01:52 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccexxurh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 17:01:52 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VH1pPa23659262
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 17:01:52 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D8BF058067;
- Mon, 31 Aug 2026 17:01:51 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 726D458052;
- Mon, 31 Aug 2026 17:01:45 +0000 (GMT)
-Received: from [9.43.79.120] (unknown [9.43.79.120])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 17:01:45 +0000 (GMT)
-Message-ID: <f1c63dee-d07f-4975-a61a-173318b2dea1@linux.vnet.ibm.com>
-Date: Mon, 31 Aug 2026 22:31:44 +0530
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x15Rt-0001Ya-2e
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 13:05:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788195930;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=asgAc5dWjjb38a9V+qk1adPMSmyly73cIk2R1tCMdVg=;
+ b=FwT3U05moxF6lJ+OuIKFr/n01asvj5uVYbTmtAj0nd1b+13Txj4Y9U0uFIgYMWfYKlPdK+
+ xF6m07wB0wWB5Xx8pJP4AtGjXcUEFDxsNAxAlCVCYYe7oUi7EqM0jhpQ+hMFXQCd9zTpnG
+ xV3YKxn4PTRhutim34LeJcOXccOyyRU=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-80-Kxqi9QaPN_m3VhHyRR82FA-1; Mon, 31 Aug 2026 13:05:25 -0400
+X-MC-Unique: Kxqi9QaPN_m3VhHyRR82FA-1
+X-Mimecast-MFC-AGG-ID: Kxqi9QaPN_m3VhHyRR82FA_1788195925
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-90cc2b97f8fso65044706d6.0
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 10:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788195925; x=1788800725; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=asgAc5dWjjb38a9V+qk1adPMSmyly73cIk2R1tCMdVg=;
+ b=hlTRYFvHEkO7zey9Vd65eQuPX38v2RPFWJAgR2vSEuc8+LV/IsPl+5mYesWVN1r485
+ +ILvUkMR+HpP3DNlD7ZLfNVYOUW6puBDCTiDBqEeccFNouwJPYrPzPGJYhhgSVDtVOLk
+ 5QOsYH+wVXV0zCRJs1dRrGHhhyj0/IfASCyP/+HwdinnMVKCnVyGfVfMiQiTITgCuUz0
+ HEliDnioLvp9nayZhDYMQuIwNMKUbnQkgZg/mAvgLdR7TamvRgAst7d7rs7P7fYulRnu
+ Ct2ubpH9GYBieVRIkDsFGqZjfh0N5c6wL6tGQyIMVBz3n3Q3+x/hWAq2GwmzY5SBaqxV
+ rZAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788195925; x=1788800725;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=asgAc5dWjjb38a9V+qk1adPMSmyly73cIk2R1tCMdVg=;
+ b=KIMYIRFjC1WCHYz+tlmja31mac3ELF+LoauKCv/zfK3ER5suXKrDbekLWFPvSpWZFp
+ r6kPqqfqW+xrXxqZklsHUiRbML2sz6cxxem5bezipIIaSfZhEAEyeaUyG3pmfZj0WR2d
+ VEiyMZ1CeB31jOPaP4yLdsTpoiX4kpDLdRNgwwJqtGoMurPhjfHEhCxGTNgtK8/BbRCS
+ J9OcRfNrgYJvktV/FlOP5Uuvmz33DKxZVQdavOr4j/YQJfHSBPU66uY5mwZLeHuflzNm
+ k2y0SoKQ9km3begPDq8oiWPpW5zuUyqg29GWdz5ym4golgIK6iv8m/ECRvifcFPKgZ+p
+ N0wg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rqiln2EeLDJVDapIBiAlNRzbwtok6D0VfyJiQC5elyNAFyJAS6ypXsca3b7/smiaNl8viZfTVDRSS7q@nongnu.org
+X-Gm-Message-State: AFuF++n+cd4m0HQsCUFu2dLowtYHrSXs7Hn7AiIfgEKFC8qjoY6lN5cs
+ BVys7bFKDNCHaZNee+fiAsaiRADndYdxn+cHiJXOm+lZX94AUbuaIqLfQrmcdvIKdO+D+juLAEX
+ QaYunvjCpF2Rabf7KBCOm08nYutI+9GwDC5T+EtZrjUrmtH0ICXLXC4Cj
+X-Gm-Gg: AR+sD123t5DoC7LyuIqkf+WEfQpzRjAeUG+9us33QLBGYJZAVNn8dExS83UbDLr/AcV
+ P9MeSzelvuBIkiGu3gRqi3aaMGIrqsA9cHnqg3QP8SyT6Ar/9l8bcOdDdnq+8WaRoX9ysd7hVY1
+ EqgRMzAW9+xuTY+/qc9HQxt4WMl84HjiYwl0z+Tt0x0dhWxFimfjFpnqpCyWH9ZFl2x7QW/U4v3
+ 786PbyAvVsxh6HpGHjE9f+QUzXvTzjb5gCeROV58ha3EFKv9MPZgsV1+NVtW1MUREX3ADXqS00B
+ wsc1id6AXq8eAWgA7m0cgpxUn1MChaKWGyDLq3ZAYfBNhQYvyRNw7xupA54cxiAqPZsDA1swRKv
+ 2EB3hWSiIBN+u2q8wDSKzeeIRzuW2xot0nNjs8zf8yAzFyGO9WwYq0aa0og==
+X-Received: by 2002:a05:6214:21e6:b0:90c:4d1f:f88e with SMTP id
+ 6a1803df08f44-90ce0ed1626mr323776256d6.16.1788195924467; 
+ Mon, 31 Aug 2026 10:05:24 -0700 (PDT)
+X-Received: by 2002:a05:6214:21e6:b0:90c:4d1f:f88e with SMTP id
+ 6a1803df08f44-90ce0ed1626mr323774196d6.16.1788195923685; 
+ Mon, 31 Aug 2026 10:05:23 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-90ce444e2c5sm88932886d6.10.2026.08.31.10.05.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 31 Aug 2026 10:05:22 -0700 (PDT)
+Date: Mon, 31 Aug 2026 13:05:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: BillXiang <xiangwencheng@lanxincomputing.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Markus Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, cw@f00f.org,
+ dbarboza@qti.qualcomm.com,
+ Demi Marie Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com,
+ Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
+ helge.deller@googlemail.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
+ jacob.oursland@gmail.com, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
+ Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ matthieu@minio.io, Max Chou <max.chou@sifive.com>,
+ Mark Burton <mburton@qti.qualcomm.com>,
+ "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, utsingh@redhat.com,
+ Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: Re: KVM/QEMU community call tomorrow - agenda items?
+Message-ID: <apW0SkNxWPCyvVV6@x1.local>
+References: <877bl6eoqv.fsf@draig.linaro.org>
+ <413b9ba2-20cf-4af6-9998-be46da277c84@lanxincomputing.com>
+ <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/9] pnv/phb5: Implement sticky reset logic in PHB5
-To: Aditya Gupta <adityag@linux.ibm.com>, Saif Abrar <saif.abrar@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
- clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
- milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
-References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
- <20260617095058.652789-4-saif.abrar@linux.ibm.com>
- <aljDwbMnI_w8R1Nu@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Language: en-US
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-In-Reply-To: <aljDwbMnI_w8R1Nu@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: SNodsKEwA3LdLAyDA1jaIu3-zR-UmY_5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX5W2wl2k4elzX
- H29ZkcjowOsgeW29Oq0+JWW7VhpVXogXl9gK56EYfqClgzrT+hHXTUv5y+QqEM9hUaVsd2HMsEj
- nmsJzZs4UeOzJldT4G1Aw6gwnu/Er92lTrttIO8fv7yVEjAz/WmGOUPu3tsECNar1Z+gflu8zG/
- TLkUZP7UoeX2XDYqV9agVm3YGe8hvucVRpwmemjip7VfLlfb/hxao0Pn6ERfL5b9hDUXb6JbBv5
- XP29Wt2xqPqsgfPdbYt6VFGR5S+VrHEcOyNWuMz2hj7mxL0JFFrGmZpL8EEP5Ro17NPLYHH+Khf
- Lb3mJIwb6/wxrg1wEGcFk21Qo2+ugYPGYbv+ko3RCYBqR0jqiNCVuyhDt1VdTWHn6YpkHScWAwV
- 2vI3Gxa0cdJZZsiVCWU5ML/0mxGxUWe1YMFp1FYkt58jO9nzreJvtc4KGZHl5SOAtJPaBGKePPp
- Va973v1PzFSY0wrStpQ==
-X-Proofpoint-ORIG-GUID: ViqpiYAgppSoQUlWxQo9m4ve3WHR7IZQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX9z64R8hIAbl5
- bYzp6h49b7VyuCCeeZg7KoQmyx8WGL7OiJwz6f/O33Z4EzmUV3zizLslAuxOKeiq/OrdKrKCvVZ
- JXb8Lai72iu4WlFOv7P+EucpzPoWuwE=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a95b382 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=vK7bBsrLjRi3Tw1mNiMA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_05,2026-08-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608310147
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,42 +160,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Aug 31, 2026 at 05:46:12PM +0200, Philippe Mathieu-Daudé wrote:
+> On 31/8/26 13:49, BillXiang wrote:
+> 
+> > How about discussing the patch[1]:
+> > "virtio: Add aligned ld/st accessors for vring".
+> > 
+> > As pointed out in the patch, this has been a long-standing issue. It is
+> > now necessary to introduce atomic accessors for fields that require
+> > atomicity, such as the avail_idx field in virtio. This support is
+> > especially crucial for architectures like RISC-V, which do not natively
+> > support misaligned memory accesses.
+> > 
+> > I'm particularly eager to receive more suggestions for it.
 
-On 16-07-2026 17:21, Aditya Gupta wrote:
-> On 26/06/17 04:50AM, Saif Abrar wrote:
->> <...snip...>
->>
->>   void pnv_phb4_cfg_core_reset(PCIDevice *d)
->>   {
->>       uint8_t *conf = d->config;
->> @@ -557,14 +570,56 @@ void pnv_phb4_cfg_core_reset(PCIDevice *d)
->>       pci_set_long(conf + P16_ECAP, 0x22410026);
->>       pci_set_long(conf + P32_ECAP, 0x1002A);
->>       pci_set_long(conf + P32_CAP,  0x103);
->> +
->> +    /* Sticky reset */
->> +    RC_CONFIG_STICKY_RESET(exp_offset + PCI_EXP_LNKCTL2,
->> +                                          PCI_EXP_LNKCTL2_TLS_32_0GT, 0xFEFFBF);
-> This is different for PHB4, which is PCI_EXP_LNKCTL2_TLS_16_0GT (0x4)
-> and for PHB5, spec says PCI_EXP_LNKCTL2_TLS_32_0GT (0x5)
->
-> This doesn't affect skiboot anyways, but good to be correct now.
-> Rebasing/separating phb5 should fix such nits, let's discuss on it.
+I saw the last email was from me..
 
+https://lore.kernel.org/qemu-devel/aoxiBB2Wn8NiL5s6@x1.local/
 
-Separate methods of PHB4 and PHB5 now take care of different values.
+I believe that was what PeterM suggested. I think Richard also at least
+partly agrees. so I thought we had at least partial consensus on the rough
+idea, if not exactly how.
 
+I confess I haven't fully got the latter part of Richard's comment,
+regarding the possibility to reuse accel/tcg/ldst_atomicity.c.inc: that
+path seems to invole a guest CPU context, where in the case of reading
+virtio ring it is from host and it has no guest CPU context.  But I think
+we can continue the discussion on the list in that thread.
 
->
-> Rest looks good to me.
->
-> Thanks,
-> - Aditya G
+> 
+> This is a very technical topic, not sure if the community call will
+> be a better place than the mailing list, in particular if no virtio /
+> atomic expert developers appears. We'll see :)
 
+Yes, I had such similar feeling that the problem was not yet blocked by
+something that a video call would better help..
+
+For example, I still want to double check if that change would work for
+your current use case, it will at least verify the thought, no matter if we
+want to use it or not.
 
 Thanks,
 
-/Saif
-
+-- 
+Peter Xu
 
 
