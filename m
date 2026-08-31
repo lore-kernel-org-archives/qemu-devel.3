@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6347CC624D0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4892CC624A4
 	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x11zp-0001v3-T0; Mon, 31 Aug 2026 09:24:22 -0400
+	id 1x11zn-0001t1-GA; Mon, 31 Aug 2026 09:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x11zm-0001rv-0D; Mon, 31 Aug 2026 09:24:18 -0400
-Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
+ id 1x11zk-0001py-RR; Mon, 31 Aug 2026 09:24:16 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x11zd-0006pQ-6f; Mon, 31 Aug 2026 09:24:17 -0400
+ id 1x11zd-0006pr-Je; Mon, 31 Aug 2026 09:24:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1788182634; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=v6XMDCYt94mF76Zx8dVfb9niwUZxkL4xtAl2xsI0yz8=;
- b=jrlybt3I+JssfTV0FZ2nd2DfpGPSRwF0XejVy47+YjnDo/jFtnV5x4N7El3ELWixxc3KQXOe3sZX5SvROxqeEhtto7loWPy8azc3NtXXOLUy9lqT4lb4Vkz3ipvOC7w1FEt7APWgatzchZPA5L4NTWIkLO7Wll+ddbBe9TXb+J8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ t=1788182636; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=qUoiwS+nVtbX4Kx79t0Lc82rPB+U+QOyOnVoT6G/J5I=;
+ b=Mz2ND8JNRYklwMwY28YSR61OvEAPM3NqR4767ozka+xWAZMln7KN1Wz1FzD0XWD/U8s25kWBDTMmVkyFQx/Ugdk6Q1JXwGg45dOi8AkQUL70Vo05mRDrvYJ94EU7qF2Q8HV1kYjIh8FOyjbTJWAAI+EBO98w2zGmglX6vp0tAAM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R831e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
  MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=19; SR=0;
- TI=SMTPD_---0X9znfpq_1788182632; 
+ TI=SMTPD_---0X9znfql_1788182635; 
 Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0X9znfpq_1788182632 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 31 Aug 2026 21:23:53 +0800
+ fp:SMTPD_---0X9znfql_1788182635 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 31 Aug 2026 21:23:56 +0800
 From: Chen Pei <cp0613@linux.alibaba.com>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
  imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
@@ -38,19 +38,18 @@ Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
  junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: [PATCH v5 1/6] hw/riscv/virt: Add CXL support to the RISC-V virt
- machine
-Date: Mon, 31 Aug 2026 21:23:32 +0800
-Message-ID: <20260831132340.5345-2-cp0613@linux.alibaba.com>
+Subject: [PATCH v5 4/6] tests/qtest: Prepare golden files for the RISC-V CXL
+ ACPI test
+Date: Mon, 31 Aug 2026 21:23:35 +0800
+Message-ID: <20260831132340.5345-5-cp0613@linux.alibaba.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260831132340.5345-1-cp0613@linux.alibaba.com>
 References: <20260831132340.5345-1-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
-Received-SPF: pass client-ip=115.124.30.101;
- envelope-from=cp0613@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=cp0613@linux.alibaba.com; helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -74,191 +73,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable CXL support on the RISC-V virt machine following the same
-approach used by the ARM virt machine:
-- Add PXB and ACPI_CXL Kconfig selections
-- Add CXLState and PCIBus pointer to RISCVVirtState
-- Register CXL machine properties via cxl_machine_init()
-- Create CXL host register region above the PCIe high MMIO region
-- Call cxl_hook_up_pxb_registers() and cxl_fmws_link_targets() at
-  machine_done time
-- Map Fixed Memory Windows above the CXL host register region
-- Add ACPI0017 device in DSDT and build CEDT table in virt-acpi-build.c
+Add empty DSDT.cxl and CEDT.cxl golden files and list them in
+bios-tables-test-allowed-diff.h, in preparation for the RISC-V CXL
+bios-tables test added in the following patch.  The populated golden
+master binaries are committed separately in a final patch, following
+the bios-tables-test update process.
 
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
 Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
 ---
- hw/riscv/Kconfig           |  2 ++
- hw/riscv/virt-acpi-build.c | 20 ++++++++++++++++++++
- hw/riscv/virt.c            | 37 +++++++++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h    |  3 +++
- 4 files changed, 62 insertions(+)
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index de37c08cae..0ba3cd9e15 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -66,8 +66,10 @@ config RISCV_VIRT
-     select VIRTIO_MMIO
-     select FW_CFG_DMA
-     select PLATFORM_BUS
-+    select PXB
-     select ACPI
-     select ACPI_PCI
-+    select ACPI_CXL
- 
- config SHAKTI_C
-     bool
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 59c454f4f9..3188cdc5bf 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -29,12 +29,16 @@
- #include "hw/acpi/aml-build.h"
- #include "hw/acpi/pci.h"
- #include "hw/acpi/utils.h"
-+#include "hw/acpi/cxl.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/nvram/fw_cfg_acpi.h"
- #include "hw/pci-host/gpex.h"
-+#include "hw/pci/pci_bus.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/numa.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-@@ -514,6 +518,17 @@ static void build_dsdt(GArray *table_data,
-         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + s->num_sources * 2);
-     }
- 
-+    if (s->cxl_devices_state.is_enabled) {
-+        Aml *cxl_dev = aml_device("CXLM");
-+        aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
-+        Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
-+        aml_append(method, aml_return(aml_int(0x0B)));
-+        aml_append(cxl_dev, method);
-+        build_cxl_dsm_method(cxl_dev);
-+
-+        aml_append(scope, cxl_dev);
-+    }
-+
-     aml_append(dsdt, scope);
- 
-     /* copy AML table into ACPI tables blob and patch header there */
-@@ -921,6 +936,11 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
-                    s->oem_table_id);
-     }
- 
-+    if (s->cxl_devices_state.is_enabled) {
-+        cxl_build_cedt(table_offsets, tables_blob, tables->linker,
-+                       s->oem_id, s->oem_table_id, &s->cxl_devices_state);
-+    }
-+
-     if (ms->numa_state->num_nodes > 0) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_srat(tables_blob, tables->linker, s);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 51bac47a91..e903551263 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -55,6 +55,8 @@
- #include "hw/pci/pci.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "hw/acpi/aml-build.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
-@@ -1101,9 +1103,33 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
-     }
- 
-     GPEX_HOST(dev)->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-+    s->pci_bus = PCI_HOST_BRIDGE(dev)->bus;
-     return dev;
- }
- 
-+static void cxl_host_state_init(RISCVVirtState *s)
-+{
-+    MemoryRegion *sysmem = get_system_memory();
-+    MemoryRegion *mr = &s->cxl_devices_state.host_mr;
-+    hwaddr base;
-+
-+    if (!s->cxl_devices_state.is_enabled) {
-+        return;
-+    }
-+
-+    base = virt_high_pcie_memmap.base + virt_high_pcie_memmap.size;
-+    base = ROUND_UP(base, 64 * KiB);
-+
-+    memory_region_init(mr, OBJECT(s), "cxl_host_reg", 64 * KiB * 16);
-+    memory_region_add_subregion(sysmem, base, mr);
-+
-+    /* Map the Fixed Memory Windows above the CXL host register region. */
-+    base += memory_region_size(mr);
-+    base = ROUND_UP(base, 256 * MiB);
-+    cxl_fmws_set_memmap(base, UINT64_MAX);
-+    cxl_fmws_update_mmio();
-+}
-+
- static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
- {
-     FWCfgState *fw_cfg;
-@@ -1213,6 +1239,13 @@ static void virt_machine_done(Notifier *notifier, void *data)
-     BlockBackend *pflash_blk0;
-     RISCVBootInfo boot_info;
- 
-+    cxl_hook_up_pxb_registers(s->pci_bus, &s->cxl_devices_state,
-+                              &error_fatal);
-+
-+    if (s->cxl_devices_state.is_enabled) {
-+        cxl_fmws_link_targets(&error_fatal);
-+    }
-+
-     /*
-      * An user provided dtb must include everything, including
-      * dynamic sysbus devices. Our FDT needs to be finalized.
-@@ -1451,6 +1484,8 @@ static void virt_machine_init(MachineState *machine)
-             ROUND_UP(virt_high_pcie_memmap.base, virt_high_pcie_memmap.size);
-     }
- 
-+    cxl_host_state_init(s);
-+
-     /* register system main memory (actual RAM) */
-     memory_region_add_subregion(system_memory, s->memmap[VIRT_DRAM].base,
-                                 machine->ram);
-@@ -1558,6 +1593,8 @@ static void virt_machine_instance_init(Object *obj)
-     s->acpi = ON_OFF_AUTO_AUTO;
-     s->iommu_sys = ON_OFF_AUTO_AUTO;
-     s->num_sources = VIRT_IRQCHIP_NUM_SOURCES;
-+
-+    cxl_machine_init(obj, &s->cxl_devices_state);
- }
- 
- static char *virt_get_aia_guests(Object *obj, Error **errp)
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 36a2def410..4cf930ab9f 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -24,6 +24,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/block/flash.h"
- #include "hw/intc/riscv_imsic.h"
-+#include "hw/cxl/cxl.h"
- 
- #define VIRT_CPUS_MAX_BITS             9
- #define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
-@@ -65,6 +66,8 @@ struct RISCVVirtState {
-     OnOffAuto iommu_sys;
-     uint16_t pci_iommu_bdf;
-     uint16_t num_sources;
-+    CXLState cxl_devices_state;
-+    PCIBus *pci_bus;
- };
- 
- enum {
+v4:
+- Split the CXL bios-tables test into the staged flow documented in
+  bios-tables-test.c: empty golden files + allowed-diff.h, then the test
+  code, then the populated golden master binaries with an emptied
+  allowed-diff.h in a final patch (matching how the riscv64 goldens were
+  originally added upstream).
+
+ tests/data/acpi/riscv64/virt/CEDT.cxl       | 0
+ tests/data/acpi/riscv64/virt/DSDT.cxl       | 0
+ tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
+ 3 files changed, 2 insertions(+)
+ create mode 100644 tests/data/acpi/riscv64/virt/CEDT.cxl
+ create mode 100644 tests/data/acpi/riscv64/virt/DSDT.cxl
+
+diff --git a/tests/data/acpi/riscv64/virt/CEDT.cxl b/tests/data/acpi/riscv64/virt/CEDT.cxl
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/riscv64/virt/DSDT.cxl b/tests/data/acpi/riscv64/virt/DSDT.cxl
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..c05fb697a5 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,3 @@
+ /* List of comma-separated changed AML files to ignore */
++"riscv64/virt/DSDT.cxl",
++"riscv64/virt/CEDT.cxl",
 -- 
 2.50.1
 
