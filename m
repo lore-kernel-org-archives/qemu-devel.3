@@ -4,145 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CB0C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B5A0C624A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 14:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x135I-0002aK-9f; Mon, 31 Aug 2026 10:34:04 -0400
+	id 1x13Dc-0003tg-EY; Mon, 31 Aug 2026 10:42:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x135G-0002a6-Fb
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:34:02 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
+ id 1x13Db-0003tC-0K; Mon, 31 Aug 2026 10:42:39 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x135E-0001pT-7s
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 10:34:02 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VETP5R3703670
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 14:33:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- eUQmCHoHoNB6GpnA0Df6YUSJwV1PqXsoMhxerctm6LE=; b=I66rcH0igPEaBH6q
- dckLJXk687EorwhkIINPKbeRy2FDuKr4OMdSdEkk4OTFdMgl5BGhRvoUn2o2vl4b
- 8al00lFa9qZXkgnZ0t3GunYZrzkNvlA27kJooUChYngtZb60iN0wi04DpMMbZDxf
- PRUJXhwmNhxg68Hlj07rvYNhG0wzuQwBtKYUZILM/3XEOCTaZkrmTCXekXK2tO0y
- HrNlKsxpOnrQslZkiMJuoF9IGy/W42WHNt/wcEtRO1D5iDUbe70VwFWf9t1U87qC
- XbCTJs8hJX0FgTBYs51SRhhHVkQiOCw/zC7ylcgVI80BXo2DfIMOhVs1N1y4blVL
- Po741g==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gd6yas8dr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 14:33:58 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-90cea0b5522so33496766d6.1
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 07:33:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788186838; x=1788791638; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=eUQmCHoHoNB6GpnA0Df6YUSJwV1PqXsoMhxerctm6LE=;
- b=Cu+MZVpFhYNKZUYWt6Kijc7etlPXCbcx+jrPhDw/Yisg4I48mBKaLiq8+cY9vLNWzh
- HYJwM+Y4dHg5kRIk6vslRRnA6/lfh3P8HHE8ja4Uucf2zIp3UyXx0EQDMk0LAJYUZfRL
- EGN+kZ3Gn4yxEIgfV3+Ggxpb43HgCv7WC9X2dO+HXdye7v4LOnQVVVuXZ5qe6UMrt8XG
- xAOAU0RwaimeKEcXIXXfz1mEZbQekilUFzv8kKrP0WTByzW+M33QKCEWdczzQt37T3xp
- ivsUOOZiBjJKm9D/4Kt/svm59lnKE+iTIzJdl9+eVvaA/gqMZs7HG4b29zKy+Z86HrMM
- TiPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788186838; x=1788791638;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=eUQmCHoHoNB6GpnA0Df6YUSJwV1PqXsoMhxerctm6LE=;
- b=C0UEW5SdBAKoaFuJsMKo/49UADYEePqTEL4Iz+Jt2Ded9KybSQjaPvUEUEN10sA5t3
- fWYzloRoCxToNuNUeJKBfT9gQ0t4ngfWquiM2g6rUH7k/Wla/XGjFCzBPDib8MVKKxGA
- p4HnOVLLUOPxLOII2cZYKAphTYUneFHGoff6z1ooi8u0Q9xpUI+JZI0XHNTqHFJpcWLy
- USjIxkn/nQwQ6JQLvyTnSaQ63o/2ae030cDTZo4QQ+7ffZTWAXnp3dfxQwHCNxA1Lk5g
- kTGtA4SWqqV+hwllYHZllGSBQcFv4wrLnJT67LoRA3yGeg7hjM3lZy9FARIWVyiO3jzO
- KvVA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro6PNnl+DJQBFp1/l6Li/q/VG1KyUwNKrEQyY0vLBihVdQbnnd1p0AZFVqVUV/0uv5dlCoXWlat4XDs@nongnu.org
-X-Gm-Message-State: AFuF++kIM4GMTuTGlt2NUnjg6n2PZtVZaJrwsrVBrxrx187ekH8bkKtN
- 2xCWus0ZaDitTkywF3qCyAqKWSB9yjrWoC3PNr0/lgqbFB3cvZbKyiWkpiTmipwz4tATn6o5a1H
- Kz2zgeDcWdvvjuYPH/o0MwrKnNgBfTyWLbiniEAZV0eGnEOawMXX/O642eA==
-X-Gm-Gg: AR+sD11vFYkkcDM+0wvAR262jzM6dkDCI3PpBndl1Fw/rD9sZau3Z/txaua11Br4TXG
- YOHMrgN2tAbmMxDEkxbC2cFlZfE2A6bNJLesWHTFsL4AkMsDMAk/Uf9uccSJDZOmxYgZIoK8L+B
- mMVzrsWP5qh3ZCBsdR1fH2Mv6OLZAEkfFThKMa7dcp9AMjDahUTi2ObwXJ+Q6Va8KxOLhOJUOi/
- XPUG8w3aOH4/DktDtS9uSzL6c7rPXvTIlS65CRVEI0TUHxq6hBYsBB1gvN0qSWnYRHvbp5MTgDA
- sk1IVay9+kz8B1idPbQ6wvLyXgbs8pLtQ/6bO70FD6n+S/tdFZqcInsDJFaSuYUnKCijNki1t29
- Ib25uncxZUWWq5ybQtGCJ
-X-Received: by 2002:a05:620a:486e:b0:938:e95e:9377 with SMTP id
- af79cd13be357-9391394c9b6mr2360606185a.30.1788186837562; 
- Mon, 31 Aug 2026 07:33:57 -0700 (PDT)
-X-Received: by 2002:a05:620a:486e:b0:938:e95e:9377 with SMTP id
- af79cd13be357-9391394c9b6mr2360596885a.30.1788186836910; 
- Mon, 31 Aug 2026 07:33:56 -0700 (PDT)
-Received: from [192.168.0.4] ([79.127.134.41])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b94dd2517sm294020205e9.7.2026.08.31.07.33.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Aug 2026 07:33:56 -0700 (PDT)
-Message-ID: <0edef42e-06b2-4fca-af6f-8d17b0f15a3f@oss.qualcomm.com>
-Date: Mon, 31 Aug 2026 16:33:54 +0200
+ (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
+ id 1x13DX-0003LV-FT; Mon, 31 Aug 2026 10:42:38 -0400
+Received: from [10.1.75.105] (unknown [89.93.216.19])
+ (Authenticated sender: emmanuel.blot@free.fr)
+ by smtp1-g21.free.fr (Postfix) with ESMTPSA id AF23DB0054E;
+ Mon, 31 Aug 2026 16:42:10 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+ s=smtp-20201208; t=1788187350;
+ bh=RCm+Q2H5Q55Q/wRYf9ExJ3E4N6JxqQxRKKtJJq7fLvs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=MmDebnBZXDuef90ILGyAI0hu1cc5JJcU8F3nRVF+s2h2Z4cVIB/78+mxYsmzp6Tj+
+ akCX394u/fMk0JvCeZWc0wt5k/yL2HW1DAeg6dYL0Jipb/FcurNMczrCBZ/pTFCmrU
+ W0T1KtfBSY1ZifHD2EAEO9b9dWVBijIoKXcZKeH/dFYgHlLmb3cVMrvZO9ID3l2cQ1
+ 11H3N8WKtjrLdTaKYIKhNi7XN/MiOpbEPS8aB9Ilh8bNa0bs9LUNROiWp/sxc9uNZL
+ vo6OLtCegpCDVw2P55SxETQrZh2KtnC/DGWKhvnNJDlUrgfdnoAgs306LkW3xjxgdn
+ G0XuONbRFX1aw==
+From: Emmanuel Blot <emmanuel.blot@free.fr>
+To: qemu-devel@nongnu.org,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
+Subject: [PING] Re: [PATCH v2 00/25] hw/arm: Facebook SanMiguel BMC and
+ TMP75-family sensors
+Date: Mon, 31 Aug 2026 16:42:04 +0200
+X-Mailer: MailMate (3.0r7024)
+Message-ID: <8B002EB0-F9EB-45C8-B533-AB297B3AF66D@free.fr>
+In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
+References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/47] target-info: add target_config_nitro
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Alexander Graf <agraf@csgraf.de>
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
- <20260828225901.367438-26-pierrick.bouvier@oss.qualcomm.com>
- <4b9aa2f9-8546-4aee-92f0-d27e935be53c@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <4b9aa2f9-8546-4aee-92f0-d27e935be53c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEyNSBTYWx0ZWRfXwKMOIx3JlVzY
- opV++HVLFD1z2iM+qELTq1RhadbHzumW2b4lZlxE0iHfDQF+0yhYl/PFful4Hs2R1TYV2UI6aN2
- pa1fG6Q941PbGDtiELKzC2GM09SXfm0=
-X-Authority-Analysis: v=2.4 cv=CpaPtH4D c=1 sm=1 tr=0 ts=6a9590d6 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=gmLkG3rbZGpK/HF7jnAN4w==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=akKINyWezlVBtN8CxxgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEyNSBTYWx0ZWRfX846KwUoK3jh0
- sC18n7T9MO13mIEK6nVlwnx+0QeRE5oIXT53kOc0jLipGRZywdOvZZGQlYplBQtTrtuaBpXXFS5
- PrM65NlqizXrJNfjohP/afrfpHxEgnlZKOl6eABe4AdRSQMfVAtCXihF0fa6eV3uRGal7Ec6Mlw
- 8N5PkO+BzXNqbdCej77ccI+vh2ABzznVadlhi58EvPj+jEx/Lz0L6QmM/ebza+6fzzovP5Ry5nl
- qCEsYVVdoTu57bBvxX85ym8+36IRruhDbK8LfcOWgUZi6baGLOz+xi8WP6nHomrsFAhpfz9uJvt
- sLkYl7LUviLCCZAYz30mJFaxsTKQ5f35zxRDqJXvHwjuaug4PxMgeLVdHu4VTxQlk+SzXAVXjZg
- WkD/MK1GM4TcetrzSljr7MZDYKmfUHz46RKWC8OXEkuEBzWfPYsmTBMGupXzYAWhoQr+EqU9tAz
- C0t5XXncXHhyRBXX6ug==
-X-Proofpoint-ORIG-GUID: 1lEkrO5ZfThM0FQx5Uy_Z1JAXSx0gwEl
-X-Proofpoint-GUID: 1lEkrO5ZfThM0FQx5Uy_Z1JAXSx0gwEl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_05,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- malwarescore=0 phishscore=0 suspectscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310125
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/alternative;
+ boundary="=_MailMate_8398102A-4657-4908-812A-F2DBCF68768C_="
+X-MS-Reactions: disallow
+Received-SPF: pass client-ip=212.27.42.1; envelope-from=emmanuel.blot@free.fr;
+ helo=smtp1-g21.free.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,197 +81,453 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-08-31 9:15, Philippe Mathieu-DaudÃ© wrote:
-> On 29/8/26 00:58, Pierrick Bouvier wrote:
-> 
-> Also wondering why we need a special config for a target device.
-> 
-> So why are we listing we can not plug? Maybe the bus Kconfig is
-> missing the accelerator dependency?
-> 
-> -- >8 --
-> diff --git a/hw/nitro/Kconfig b/hw/nitro/Kconfig
-> index cfae85920a0..2e4125f8710 100644
-> --- a/hw/nitro/Kconfig
-> +++ b/hw/nitro/Kconfig
-> @@ -1,4 +1,5 @@
->   config NITRO_VSOCK_BUS
-> +    depends on NITRO
->       bool
-> 
->   config NITRO_SERIAL_VSOCK
+
+--=_MailMate_8398102A-4657-4908-812A-F2DBCF68768C_=
+Content-Type: text/plain; charset="UTF-8"; markup=markdown
+Content-Transfer-Encoding: quoted-printable
+
+Hi Philippe,
+
+Gentle ping on the sensor half of this series.
+
+The patches that need your eyes are the hw/sensor/tmp105 ones:
+
+  01-05  cleanups: state made private to the implementation,
+         parent_obj rename, Resettable conversion, fault-queue
+         enforcement, temperature property description
+  07     TMP75, TMP175 and LM75B variants
+  08-11  qtest coverage for the above
+
+01-05 are behaviour-preserving apart from 04, which enforces the
+fault queue that was already configurable but ignored.
+
+Happy to respin the sensor patches as their own series if that is
+easier to review separately from the Aspeed board work.
+
+Thanks,
+Emmanuel
+
+
+On 31 Jul 2026, at 12:44, Emmanuel Blot wrote:
+
+> This series adds the Facebook SanMiguel BMC, promotes the
+> TMP75/TMP175/LM75B sensors from generic TMP105 stand-ins to improved,
+> dedicated models, and introduces the test-side plumbing needed to
+> exercise real I2C devices from functional tests without hardcoding QOM
+> paths.
+>
+> The work falls into four parts.
+>
+> 1. TMP* sensor models
+>
+> The TMP105 model was the only stand-in for a whole family of pin- and
+> register-compatible parts, and several boards worked around the gap wit=
+h
+> private TYPE_TMP75 / TYPE_LM75 aliases that resolved back to a plain
+> TMP105.
+>
+> The model is first cleaned up for correctness and QEMU convention. One
+> of those changes touches migrated state, which gains an optional
+> subsection so existing streams stay compatible.
+>
+> On that base, TMP75/TMP175/LM75B become variants selected by a small
+> per-type class descriptor. The variant is class data, so the wire forma=
+t
+> is unchanged and all variants share the existing vmstate. qtest coverag=
+e
+> is added for the per-variant behaviour. The existing BMC boards then
+> drop their local aliases and instantiate the real models.
+>
+> 2. SanMiguel BMC
+>
+> A new AST2600-based machine for the Facebook SanMiguel BMC, derived fro=
+m
+> its device tree. It wires up three TMP75 sensors, IO expanders, FRU
+> EEPROMs, an I2C mux and an RTC across its I2C buses, and provides its
+> RAM, flash and networking; the FRU EEPROMs are populated with data read=
+
+> from physical hardware. A functional test boots the OpenBMC image and
+> drives each sensor over QOM, checking the guest hwmon interface reports=
+
+> the injected value back.
+>
+> 3. Python device locator
+>
+> A QOM path names a device by its position under the object that owns it=
+,
+> in enumeration order =E2=80=94 it says nothing about where the device s=
+its in
+> the bus topology. From a QOM path alone it is impossible to tell where =
+a
+> device is actually connected or what purpose it serves.
+>
+> DeviceLocator is a pure-Python helper that resolves a device from a
+> string descriptor of its position =E2=80=94 bus, address, type, on-bus =
+index =E2=80=94
+> by walking the bus/device hierarchy. It uses only standard QOM queries
+> over QMP: no new QEMU commands, no model changes. A self-check exercise=
+s
+> the grammar and its error paths against a paused SanMiguel BMC; it need=
+s
+> no disk image and runs in about a second.
+>
+> Note: the helper adopts the 3.10 type-hint syntax rather than the 3.9
+> equivalents; 3.9 reached end of life on 2025-10-31. The import is
+> guarded so the module still loads on 3.9 and dependent tests skip there=
+=2E
+>
+> Two small test-framework fixes ride along: the set_machine probe VM now=
+
+> gets the per-test workdir instead of the hardcoded /var/tmp default, an=
+d
+> the Aspeed OpenBMC helper can optionally assert the booted device-tree
+> model.
+>
+> 4. Catalina follow-ups
+>
+> The final three commits are the tail of the earlier "hw/arm: improve
+> Aspeed Catalina BMC emulation" series: functional tests for the PCA9555=
+
+> and PCA9554 IO expanders, plus the PCA9554 change that drives its input=
+
+> pins externally. They were held back because reaching such devices from=
+
+> a test needs a stable way to reference them by bus position =E2=80=94 t=
+he QOM
+> re-parenting patch tried then was rejected, and the device locator now
+> unblocks them.
+>
+> Based on:
+>
+>   repo:   https://github.com/legoater/qemu.git
+>   branch: aspeed-11.1
+>   commit: 04d27371e3 ("hw/arm: catalina: add NIC and FIO temperature se=
+nsors")
+>
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
-> 
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>   include/qemu/target-info-impl.h | 2 ++
->>   include/qemu/target-info.h      | 7 +++++++
->>   target-info-def.c               | 3 +++
->>   target-info.c                   | 5 +++++
->>   4 files changed, 17 insertions(+)
->>
->> diff --git a/include/qemu/target-info-impl.h b/include/qemu/target- 
->> info-impl.h
->> index dbd7a5a2071..4f6c898c707 100644
->> --- a/include/qemu/target-info-impl.h
->> +++ b/include/qemu/target-info-impl.h
->> @@ -33,6 +33,8 @@ typedef struct TargetInfo {
->>       /* CONFIG_MULTIPROCESS */
->>       bool config_multiprocess;
->> +    /* CONFIG_NITRO */
->> +    bool config_nitro;
->>   } TargetInfo;
->>   /**
->> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
->> index 579c43332fb..d775c94d1e3 100644
->> --- a/include/qemu/target-info.h
->> +++ b/include/qemu/target-info.h
->> @@ -49,6 +49,13 @@ bool target_big_endian(void);
->>    */
->>   bool target_config_multiprocess(void);
->> +/**
->> + * target_config_nitro:
->> + *
->> + * Returns true if target defines CONFIG_NITRO.
->> + */
->> +bool target_config_nitro(void);
->> +
->>   /**
->>    * target_base_arm:
->>    *
->> diff --git a/target-info-def.c b/target-info-def.c
->> index 9d51371f766..96fd1f8c73d 100644
->> --- a/target-info-def.c
->> +++ b/target-info-def.c
->> @@ -46,6 +46,9 @@ static const TargetInfo target_info_stub = {
->>   #ifdef CONFIG_MULTIPROCESS
->>       .config_multiprocess = true,
->>   #endif
->> +#ifdef CONFIG_NITRO
->> +    .config_nitro = true,
->> +#endif
->>   };
->>   target_info_init(target_info_stub)
->> diff --git a/target-info.c b/target-info.c
->> index 5db2a6049ac..67127da16fe 100644
->> --- a/target-info.c
->> +++ b/target-info.c
->> @@ -47,6 +47,11 @@ bool target_config_multiprocess(void)
->>       return target_info()->config_multiprocess;
->>   }
->> +bool target_config_nitro(void)
->> +{
->> +    return target_info()->config_nitro;
->> +}
->> +
->>   bool target_base_arm(void)
->>   {
->>       switch (target_arch()) {
-> 
+> Changes in v2:
+> - Simplify TMP105 multiple variant initialization
+> - Improve reliability against malformed device locator strings
+> - Remove an obsolete reference to INA23x devices from a commit log mess=
+age
+> - Rebase patch series on aspeed-next branch
+> - Fix invalid JSON syntax in SanMiguel FRU descriptions
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260729-sanmiguel-bmc=
+-locator-v1-0-c8f9a8d101f6@free.fr
+>
+> To: qemu-devel@nongnu.org
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
+> Cc: C=C3=A9dric Le Goater <clg@kaod.org>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Steven Lee <steven_lee@aspeedtech.com>
+> Cc: Jamin Lin <jamin_lin@aspeedtech.com>
+> Cc: Kane Chen <kane_chen@aspeedtech.com>
+> Cc: Andrew Jeffery <andrew@codeconstruct.com.au>
+> Cc: Joel Stanley <joel@jms.id.au>
+> Cc: qemu-arm@nongnu.org
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Laurent Vivier <lvivier@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Thomas Huth <th.huth+qemu@posteo.eu>
+> Cc: "Daniel P. Berrang=C3=A9" <berrange@redhat.com>
+>
+> ---
+> Emmanuel Blot (25):
+>       hw/sensor: tmp105: make device state private to the implementatio=
+n
+>       hw/sensor: tmp105: name the parent object field parent_obj
+>       hw/sensor: tmp105: implement Resettable reset
+>       hw/sensor: tmp105: enforce the configurable fault queue
+>       hw/sensor: tmp105: describe the temperature property
+>       hw/arm: aspeed: guard board-local temperature-sensor aliases
+>       hw/sensor: tmp105: add TMP75, TMP175 and LM75B variants
+>       tests/qtest: tmp105: cover the ALERT fault queue
+>       tests/qtest: tmp105: cover the TMP75, TMP175 and LM75B variants
+>       tests/qtest: tmp105: cover one-shot and fault-queue write immunit=
+y
+>       tests/qtest: tmp105: cover shutdown clearing the ALERT across var=
+iants
+>       hw/arm: sanmiguel: add Facebook SanMiguel BMC machine
+>       hw/arm: sanmiguel: populate EEPROM data
+>       hw/arm: catalina: use the real TMP75 model
+>       hw/arm: fuji: use the real TMP75 and LM75B temperature sensors
+>       tests/functional: aspeed: optionally check the device tree model =
+on boot
+>       tests/functional: give the set_machine probe VM the test workdir
+>       tests/functional: add a pure-Python device-locator resolver
+>       tests/functional: add a device-locator self-check
+>       tests/functional: aspeed: add hwmon sensor read helpers
+>       tests/functional/arm: sanmiguel: add BMC boot test
+>       tests/functional/arm: catalina: test TMP75
+>       tests/functional/arm: catalina: test PCA9555 IO expander via QOM
+>       hw/arm: catalina: drive pca9554 io expander input pins externally=
 
-Since the goal of this effort is solely to keep the CLI
-output unchanged, we can do simpler without having to add
-TargetInfo::config_nitro:
+>       tests/functional/arm: catalina: test PCA9554 IO expander via QOM
+>
+>  hw/arm/aspeed_ast2600_catalina.c              |  14 +-
+>  hw/arm/aspeed_ast2600_fuji.c                  |  16 +-
+>  hw/arm/aspeed_ast2600_sanmiguel.c             | 405 ++++++++++++++++++=
 
--- >8 --
-diff --git a/hw/nitro/Kconfig b/hw/nitro/Kconfig
-index cfae85920a..2e4125f871 100644
---- a/hw/nitro/Kconfig
-+++ b/hw/nitro/Kconfig
-@@ -1,2 +1,3 @@
-  config NITRO_VSOCK_BUS
-+    depends on NITRO
-      bool
-diff --git a/hw/nitro/meson.build b/hw/nitro/meson.build
-index b9bd0d4300..39a087f8d7 100644
---- a/hw/nitro/meson.build
-+++ b/hw/nitro/meson.build
-@@ -1 +1,2 @@
-+system_ss.add(when: 'CONFIG_NITRO', if_true: files('nitro-common.c'))
-  system_ss.add(when: 'CONFIG_NITRO_VSOCK_BUS', if_true: 
-files('nitro-vsock-bus.c'))
-diff --git a/hw/nitro/nitro-common.c b/hw/nitro/nitro-common.c
-new file mode 100644
-index 0000000000..cfb47a9a49
---- /dev/null
-+++ b/hw/nitro/nitro-common.c
-@@ -0,0 +1,15 @@
-+/*
-+ * Nitro common helpers
-+ *
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/target-info.h"
-+#include "system/nitro-accel.h"
-+
-+bool target_config_nitro(void)
-+{
-+    return (target_aarch64() || target_x86_64()) && nitro_enabled();
-+}
-diff --git a/include/system/nitro-accel.h b/include/system/nitro-accel.h
-index a93aa6fb00..a5126bcf02 100644
---- a/include/system/nitro-accel.h
-+++ b/include/system/nitro-accel.h
-@@ -18,2 +18,4 @@ static inline bool nitro_enabled(void)
+>  hw/arm/meson.build                            |   1 +
+>  hw/sensor/tmp105.c                            | 304 ++++++++++---
+>  include/hw/sensor/tmp105.h                    |  46 +-
+>  tests/functional/arm/meson.build              |   3 +
+>  tests/functional/arm/test_aspeed_catalina.py  | 107 ++++-
+>  tests/functional/arm/test_aspeed_sanmiguel.py |  72 ++++
+>  tests/functional/arm/test_device_locator.py   | 120 ++++++
+>  tests/functional/aspeed.py                    |  21 +-
+>  tests/functional/qemu_test/locator.py         | 586 ++++++++++++++++++=
+++++++++
+>  tests/functional/qemu_test/testcase.py        |   2 +-
+>  tests/qtest/tmp105-test.c                     | 359 ++++++++++++++++
+>  14 files changed, 1934 insertions(+), 122 deletions(-)
+> ---
+> base-commit: e5d3f5ac8633de310066f14862b17e4cac8ef8a5
+> change-id: 20260729-sanmiguel-bmc-locator-db13cceae66c
+>
+> Best regards,
+> --
+> Emmanuel Blot <emmanuel.blot@free.fr>
 
-+bool target_config_nitro(void);
-+
-  #define TYPE_NITRO_ACCEL ACCEL_CLASS_NAME("nitro")
----
+--=_MailMate_8398102A-4657-4908-812A-F2DBCF68768C_=
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Amending in patches #30 "hw/nitro: filter from CONFIG_NITRO":
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/xhtml; charset=3Dutf-8"=
+>
+</head>
+<body><div style=3D"font-family: sans-serif;"><div class=3D"markdown" sty=
+le=3D"white-space: normal;">
+<p dir=3D"auto">Hi Philippe,</p>
+<p dir=3D"auto">Gentle ping on the sensor half of this series.</p>
+<p dir=3D"auto">The patches that need your eyes are the hw/sensor/tmp105 =
+ones:</p>
+<p dir=3D"auto">01-05  cleanups: state made private to the implementation=
+,<br>
+parent_obj rename, Resettable conversion, fault-queue<br>
+enforcement, temperature property description<br>
+07     TMP75, TMP175 and LM75B variants<br>
+08-11  qtest coverage for the above</p>
+<p dir=3D"auto">01-05 are behaviour-preserving apart from 04, which enfor=
+ces the<br>
+fault queue that was already configurable but ignored.</p>
+<p dir=3D"auto">Happy to respin the sensor patches as their own series if=
+ that is<br>
+easier to review separately from the Aspeed board work.</p>
+<p dir=3D"auto">Thanks,<br>
+Emmanuel</p>
+<p dir=3D"auto">On 31 Jul 2026, at 12:44, Emmanuel Blot wrote:</p>
+<blockquote style=3D"margin: 0 0 5px; padding-left: 5px; border-left: 2px=
+ solid #777777; color: #777777;">
+<p dir=3D"auto">This series adds the Facebook SanMiguel BMC, promotes the=
+<br>
+TMP75/TMP175/LM75B sensors from generic TMP105 stand-ins to improved,<br>=
 
--- >8 --
-diff --git a/hw/nitro/heartbeat.c b/hw/nitro/heartbeat.c
-index dc41323266..c4d2a4637e 100644
---- a/hw/nitro/heartbeat.c
-+++ b/hw/nitro/heartbeat.c
-@@ -21,2 +21,3 @@
-  #include "hw/nitro/heartbeat.h"
-+#include "system/nitro-accel.h"
-  #include "trace.h"
-diff --git a/hw/nitro/serial-vsock.c b/hw/nitro/serial-vsock.c
-index 1d56c33804..ec5aea4617 100644
---- a/hw/nitro/serial-vsock.c
-+++ b/hw/nitro/serial-vsock.c
-@@ -25,2 +25,3 @@
-  #include "hw/nitro/serial-vsock.h"
-+#include "system/nitro-accel.h"
-  #include "trace.h"
----
+dedicated models, and introduces the test-side plumbing needed to<br>
+exercise real I2C devices from functional tests without hardcoding QOM<br=
+>
+paths.</p>
+<p dir=3D"auto">The work falls into four parts.</p>
+<ol>
+<li>TMP* sensor models</li>
+</ol>
+<p dir=3D"auto">The TMP105 model was the only stand-in for a whole family=
+ of pin- and<br>
+register-compatible parts, and several boards worked around the gap with<=
+br>
+private TYPE_TMP75 / TYPE_LM75 aliases that resolved back to a plain<br>
+TMP105.</p>
+<p dir=3D"auto">The model is first cleaned up for correctness and QEMU co=
+nvention. One<br>
+of those changes touches migrated state, which gains an optional<br>
+subsection so existing streams stay compatible.</p>
+<p dir=3D"auto">On that base, TMP75/TMP175/LM75B become variants selected=
+ by a small<br>
+per-type class descriptor. The variant is class data, so the wire format<=
+br>
+is unchanged and all variants share the existing vmstate. qtest coverage<=
+br>
+is added for the per-variant behaviour. The existing BMC boards then<br>
+drop their local aliases and instantiate the real models.</p>
+<ol start=3D"2">
+<li>SanMiguel BMC</li>
+</ol>
+<p dir=3D"auto">A new AST2600-based machine for the Facebook SanMiguel BM=
+C, derived from<br>
+its device tree. It wires up three TMP75 sensors, IO expanders, FRU<br>
+EEPROMs, an I2C mux and an RTC across its I2C buses, and provides its<br>=
 
-And with another preliminary patch introducing target_x86_64():
+RAM, flash and networking; the FRU EEPROMs are populated with data read<b=
+r>
+from physical hardware. A functional test boots the OpenBMC image and<br>=
 
--- >8 --
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 5cce27d4f6..f71a1b8bb6 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -128,2 +128,9 @@ bool target_riscv64(void);
+drives each sensor over QOM, checking the guest hwmon interface reports<b=
+r>
+the injected value back.</p>
+<ol start=3D"3">
+<li>Python device locator</li>
+</ol>
+<p dir=3D"auto">A QOM path names a device by its position under the objec=
+t that owns it,<br>
+in enumeration order =E2=80=94 it says nothing about where the device sit=
+s in<br>
+the bus topology. From a QOM path alone it is impossible to tell where a<=
+br>
+device is actually connected or what purpose it serves.</p>
+<p dir=3D"auto">DeviceLocator is a pure-Python helper that resolves a dev=
+ice from a<br>
+string descriptor of its position =E2=80=94 bus, address, type, on-bus in=
+dex =E2=80=94<br>
+by walking the bus/device hierarchy. It uses only standard QOM queries<br=
+>
+over QMP: no new QEMU commands, no model changes. A self-check exercises<=
+br>
+the grammar and its error paths against a paused SanMiguel BMC; it needs<=
+br>
+no disk image and runs in about a second.</p>
+<p dir=3D"auto">Note: the helper adopts the 3.10 type-hint syntax rather =
+than the 3.9<br>
+equivalents; 3.9 reached end of life on 2025-10-31. The import is<br>
+guarded so the module still loads on 3.9 and dependent tests skip there.<=
+/p>
+<p dir=3D"auto">Two small test-framework fixes ride along: the set_machin=
+e probe VM now<br>
+gets the per-test workdir instead of the hardcoded /var/tmp default, and<=
+br>
+the Aspeed OpenBMC helper can optionally assert the booted device-tree<br=
+>
+model.</p>
+<ol start=3D"4">
+<li>Catalina follow-ups</li>
+</ol>
+<p dir=3D"auto">The final three commits are the tail of the earlier &quot=
+;hw/arm: improve<br>
+Aspeed Catalina BMC emulation&quot; series: functional tests for the PCA9=
+555<br>
+and PCA9554 IO expanders, plus the PCA9554 change that drives its input<b=
+r>
+pins externally. They were held back because reaching such devices from<b=
+r>
+a test needs a stable way to reference them by bus position =E2=80=94 the=
+ QOM<br>
+re-parenting patch tried then was rejected, and the device locator now<br=
+>
+unblocks them.</p>
+<p dir=3D"auto">Based on:</p>
+<p dir=3D"auto">repo:   <a href=3D"https://github.com/legoater/qemu.git" =
+style=3D"color: #777777;">https://github.com/legoater/qemu.git</a><br>
+branch: aspeed-11.1<br>
+commit: 04d27371e3 (&quot;hw/arm: catalina: add NIC and FIO temperature s=
+ensors&quot;)</p>
+<h2>Signed-off-by: Emmanuel Blot <a href=3D"mailto:emmanuel.blot@free.fr"=
+ style=3D"color: #777777;">emmanuel.blot@free.fr</a></h2>
+<p dir=3D"auto">Changes in v2:</p>
+<ul>
+<li>Simplify TMP105 multiple variant initialization</li>
+<li>Improve reliability against malformed device locator strings</li>
+<li>Remove an obsolete reference to INA23x devices from a commit log mess=
+age</li>
+<li>Rebase patch series on aspeed-next branch</li>
+<li>Fix invalid JSON syntax in SanMiguel FRU descriptions</li>
+<li>Link to v1: <a href=3D"https://lore.kernel.org/qemu-devel/20260729-sa=
+nmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr" style=3D"color: #777777;">=
+https://lore.kernel.org/qemu-devel/20260729-sanmiguel-bmc-locator-v1-0-c8=
+f9a8d101f6@free.fr</a></li>
+</ul>
+<p dir=3D"auto">To: <a href=3D"mailto:qemu-devel@nongnu.org" style=3D"col=
+or: #777777;">qemu-devel@nongnu.org</a><br>
+Cc: Philippe Mathieu-Daud=C3=A9 <a href=3D"mailto:philmd@mailo.com" style=
+=3D"color: #777777;">philmd@mailo.com</a><br>
+Cc: C=C3=A9dric Le Goater <a href=3D"mailto:clg@kaod.org" style=3D"color:=
+ #777777;">clg@kaod.org</a><br>
+Cc: Peter Maydell <a href=3D"mailto:peter.maydell@linaro.org" style=3D"co=
+lor: #777777;">peter.maydell@linaro.org</a><br>
+Cc: Steven Lee <a href=3D"mailto:steven_lee@aspeedtech.com" style=3D"colo=
+r: #777777;">steven_lee@aspeedtech.com</a><br>
+Cc: Jamin Lin <a href=3D"mailto:jamin_lin@aspeedtech.com" style=3D"color:=
+ #777777;">jamin_lin@aspeedtech.com</a><br>
+Cc: Kane Chen <a href=3D"mailto:kane_chen@aspeedtech.com" style=3D"color:=
+ #777777;">kane_chen@aspeedtech.com</a><br>
+Cc: Andrew Jeffery <a href=3D"mailto:andrew@codeconstruct.com.au" style=3D=
+"color: #777777;">andrew@codeconstruct.com.au</a><br>
+Cc: Joel Stanley <a href=3D"mailto:joel@jms.id.au" style=3D"color: #77777=
+7;">joel@jms.id.au</a><br>
+Cc: <a href=3D"mailto:qemu-arm@nongnu.org" style=3D"color: #777777;">qemu=
+-arm@nongnu.org</a><br>
+Cc: Fabiano Rosas <a href=3D"mailto:farosas@suse.de" style=3D"color: #777=
+777;">farosas@suse.de</a><br>
+Cc: Laurent Vivier <a href=3D"mailto:lvivier@redhat.com" style=3D"color: =
+#777777;">lvivier@redhat.com</a><br>
+Cc: Paolo Bonzini <a href=3D"mailto:pbonzini@redhat.com" style=3D"color: =
+#777777;">pbonzini@redhat.com</a><br>
+Cc: Thomas Huth <a href=3D"mailto:th.huth+qemu@posteo.eu" style=3D"color:=
+ #777777;">th.huth+qemu@posteo.eu</a><br>
+Cc: &quot;Daniel P. Berrang=C3=A9&quot; <a href=3D"mailto:berrange@redhat=
+=2Ecom" style=3D"color: #777777;">berrange@redhat.com</a></p>
+<hr style=3D"border: 0; height: 1px; background: #333; background-image: =
+linear-gradient(to right, #ccc, #333, #ccc);">
+<p dir=3D"auto">Emmanuel Blot (25):<br>
+hw/sensor: tmp105: make device state private to the implementation<br>
+hw/sensor: tmp105: name the parent object field parent_obj<br>
+hw/sensor: tmp105: implement Resettable reset<br>
+hw/sensor: tmp105: enforce the configurable fault queue<br>
+hw/sensor: tmp105: describe the temperature property<br>
+hw/arm: aspeed: guard board-local temperature-sensor aliases<br>
+hw/sensor: tmp105: add TMP75, TMP175 and LM75B variants<br>
+tests/qtest: tmp105: cover the ALERT fault queue<br>
+tests/qtest: tmp105: cover the TMP75, TMP175 and LM75B variants<br>
+tests/qtest: tmp105: cover one-shot and fault-queue write immunity<br>
+tests/qtest: tmp105: cover shutdown clearing the ALERT across variants<br=
+>
+hw/arm: sanmiguel: add Facebook SanMiguel BMC machine<br>
+hw/arm: sanmiguel: populate EEPROM data<br>
+hw/arm: catalina: use the real TMP75 model<br>
+hw/arm: fuji: use the real TMP75 and LM75B temperature sensors<br>
+tests/functional: aspeed: optionally check the device tree model on boot<=
+br>
+tests/functional: give the set_machine probe VM the test workdir<br>
+tests/functional: add a pure-Python device-locator resolver<br>
+tests/functional: add a device-locator self-check<br>
+tests/functional: aspeed: add hwmon sensor read helpers<br>
+tests/functional/arm: sanmiguel: add BMC boot test<br>
+tests/functional/arm: catalina: test TMP75<br>
+tests/functional/arm: catalina: test PCA9555 IO expander via QOM<br>
+hw/arm: catalina: drive pca9554 io expander input pins externally<br>
+tests/functional/arm: catalina: test PCA9554 IO expander via QOM</p>
+<h2>hw/arm/aspeed_ast2600_catalina.c              |  14 +-<br>
+hw/arm/aspeed_ast2600_fuji.c                  |  16 +-<br>
+hw/arm/aspeed_ast2600_sanmiguel.c             | 405 ++++++++++++++++++<br=
+>
+hw/arm/meson.build                            |   1 +<br>
+hw/sensor/tmp105.c                            | 304 ++++++++++---<br>
+include/hw/sensor/tmp105.h                    |  46 +-<br>
+tests/functional/arm/meson.build              |   3 +<br>
+tests/functional/arm/test_aspeed_catalina.py  | 107 ++++-<br>
+tests/functional/arm/test_aspeed_sanmiguel.py |  72 ++++<br>
+tests/functional/arm/test_device_locator.py   | 120 ++++++<br>
+tests/functional/aspeed.py                    |  21 +-<br>
+tests/functional/qemu_test/locator.py         | 586 +++++++++++++++++++++=
++++++<br>
+tests/functional/qemu_test/testcase.py        |   2 +-<br>
+tests/qtest/tmp105-test.c                     | 359 ++++++++++++++++<br>
+14 files changed, 1934 insertions(+), 122 deletions(-)</h2>
+<p dir=3D"auto">base-commit: e5d3f5ac8633de310066f14862b17e4cac8ef8a5<br>=
 
-+/**
-+ * target_x86_64:
-+ *
-+ * Returns whether the target architecture is 64-bit x86.
-+ */
-+bool target_x86_64(void);
-+
-  #endif
-diff --git a/target-info.c b/target-info.c
-index c9e0be3279..6f03f412b7 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -116 +116,6 @@ bool target_riscv64(void)
-  }
-+
-+bool target_x86_64(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_X86_64;
-+}
----
+change-id: 20260729-sanmiguel-bmc-locator-db13cceae66c</p>
+<h2>Best regards,</h2>
+<p dir=3D"auto">Emmanuel Blot <a href=3D"mailto:emmanuel.blot@free.fr" st=
+yle=3D"color: #777777;">emmanuel.blot@free.fr</a></p>
+</blockquote>
 
-Only tested on Linux/Aarch64, not Linux/x86_64.
+</div>
+</div>
+</body>
+
+</html>
+
+--=_MailMate_8398102A-4657-4908-812A-F2DBCF68768C_=--
 
