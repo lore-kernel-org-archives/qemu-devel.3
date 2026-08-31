@@ -4,134 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A0DDC61DF0
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 02:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A05EC61DE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 02:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0s1H-0005YF-OB; Sun, 30 Aug 2026 22:45:11 -0400
+	id 1x0sCo-0000pv-5q; Sun, 30 Aug 2026 22:57:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x0s1F-0005WT-PC; Sun, 30 Aug 2026 22:45:09 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x0s1B-00028Q-Pi; Sun, 30 Aug 2026 22:45:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Nr+OCGlkLwChEdofZDx0NPRSg7HqXcYXKyo1U/8FcglFS2qiO51ZR/el1MXQPhH76aSvE9M/UPoQBNQ5wSQNOl23MB1sCXKuatqsvWp1IqTusfgjIwZY0YiFMbEkEvw46bC4pWA/fP2XjJMyjtLoTLp60NCOO9qAhsibyRgMI+izfOKdc7UgHeRS8C15qWfRtjATj7jphk6FROfP/0u47CrpPr1mlR04rXQ2bvMP7QQQcGVTFdrYWK2Mgo/P6M9BqxIIZTrySUwORtxMZPuW123IZCpoIgBrvOpbm7+4svl5rQEWNWv73P8ReblU/2e83S7+liP1q3VtE7xMYHT5Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oeOIxEr6Kl7zby1FIHCmDuBgWK5A3JoQHjdtra+vPKc=;
- b=kp1p+2woslMeiI7ECsBaceXqZfJrD8xyTAHkLQ0+65nJ3hhuIP6iSl7HeRG1mf3YQMw9920i7uIBWzAmQ00KRVirduWYA7QplALhB/D7RBsZVtWTGU6tcZpUDD4kaLaThETKoUbfDyA4OVpKHzs11ks9Ix4shSVmmdFyPjW08rVIo2KQ7eecRuCZ7Zz6JS6Qkkj5xlyatHWS87UI4TpABWFpKvdA8Zn2Q5nbz01eXP6ivzBx5/hA2u7ax9s8O034r8kXDcnqIvcIjHpz+eZxShAf1ZeQl4C7jXAACjBrv5f4aEG6S1Ii31vGwbZ3nnpmZQ+1Ynhf4Lrci6nGS+s8OQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oeOIxEr6Kl7zby1FIHCmDuBgWK5A3JoQHjdtra+vPKc=;
- b=MiwA5GMxbekNlvHuB1z4CW05RGUM+xpMko9o4Dvu4zHMoLuTZIgtRSsgOG3X4xuWXTrV0NUEzbRoEaJpGOi/RLRSQQhufqGJxLwfgWTzRn2k0p8nBKuX+tMVqIw2WgUqIaxk/tIQ3YUsiSF5bXC54xpboo7zJCQE3UXTvW5JpOurT6vv2GjcABeCbWZSaud2X1T7eEB4s2n08w11LFFMf1BjtI3ZlwJaHUec5fzPT6GqVBl4XVfuJU+6rDwNl9QUITxTkm8dDZPFG6dE0V+RRtmJZSinCxKb0aJYpqxzTxXrzchusBBBR6RNqRA5rM26PcLkh6WGLt8No5bSJC+jYw==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by KL1PR0601MB5822.apcprd06.prod.outlook.com (2603:1096:820:b5::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
- 2026 02:44:53 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
- 02:44:53 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Fabiano Rosas
- <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
- list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 1/4] hw/misc/aspeed_acry: Add ASPEED ACRY model
-Thread-Topic: [PATCH v3 1/4] hw/misc/aspeed_acry: Add ASPEED ACRY model
-Thread-Index: AQHdOPKzO4IzP1CxSk+hk4IYZRZ34Q==
-Date: Mon, 31 Aug 2026 02:44:53 +0000
-Message-ID: <20260831024450.27178-2-jamin_lin@aspeedtech.com>
-References: <20260831024450.27178-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260831024450.27178-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KL1PR0601MB5822:EE_
-x-ms-office365-filtering-correlation-id: 34f82756-fb6c-440a-df1f-08df0709d5d5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|23010399003|1800799024|366016|376014|18002099003|22082099003|56012099006|3023799007|38070700021|6133799003|10067099003|921020;
-x-microsoft-antispam-message-info: tFp+v/HSris20PA13by/6+NNRlh/uhv3i49KKqvkwaWBUsJTGStY939pD4gyUi+r4ZLGQBS+jlM79ER1s9itCVRQ/o/Ta92ohvNcdPTgbCIj9oTOLtwdRBAd/6H999eCQzqg4O9AROMfDcrkvLsQzKlYA/BzETE0mJaoh19qVI/aZBG60pFxuYCkpL7HyX9JHM76BSvgZZ0oSJIX8lMQw6DmOzOJbx5901YZMPnj8ENCDIzVeDk1QBJg03d/gySKgd1rSErnl2Klxmk426ohb4wMdmBRKN+aFRm0bH2FxfEccPKuauEfIkjGjp/GDisCAf3oiMnYGAvFXuwy5vVjLhxgktgnreMVbtt88f3glcaY2/lLZtA6CIe8jL3DUjK6CPYY8tktYnUOlNhWzHEs5JPMWe1rGlbjf/bYFhCyq6nhhqlcLRxYE5B6xm/yAM3DVBM47VQcEK+t1XlchZaHcPfWNNSuOWDqTAlHSEEgMSxyDFOh1lq3V9MjLM779+lluKyjDoaDnDCrQVAwvD90CK+RVnYY85gTUt79C1f8inwBwK5BYvf+Vx9XH5ISbPuRfsCSXpxMHLAI4KvHSZzW0/Cj6Z1mLXhn9VUL/jOUUynzmoKAnS8T3+pPYUssSO1sk9rlIQFc6AavMiP+HVgS5EG9/N6z9M3gPXnjroqshy+sJzSmHi+kzMhse+HGYl5xBsQ4Qt7Df3MwpXuikEFMGtkcLQV3nLZxhde4GUODOJg=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(56012099006)(3023799007)(38070700021)(6133799003)(10067099003)(921020);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?oc6nlxUxn8oCYk47WgMPXLpNxr5w/LwQK72iSML1QKWEH5uIsAlV73MFYe?=
- =?iso-8859-1?Q?zg2RKvnqur+YVUjoUq3DpB1+Tx7DNSbgC3k+fK/a4q7PuEczvXW8sej+X2?=
- =?iso-8859-1?Q?VEOr3zTP/Ik5b/E1u1UAXmACgGEbqGTl4KNCbdo+5Vgyg8+4eOGr27duai?=
- =?iso-8859-1?Q?i2KDNlvggkR19G6oMmXduX713+xuVsj1r0MBCv552hmUx+/fa4Qzzz6wkM?=
- =?iso-8859-1?Q?owVRtwVxUgTcd3C5TGBQSbgqzauIutZ4o2dW/FATVcGStem0UQcLK9Rsoo?=
- =?iso-8859-1?Q?9oJtitFjzLgMZrlsMxn+DHygp5DHB7uF64la9sn6a2SPwGwmZTQc+gqykY?=
- =?iso-8859-1?Q?ghqcObzHVhbY05vRSS4DXVdDbBimeoMaViOjQ/vQhbd7BYdhayZAgta+FA?=
- =?iso-8859-1?Q?cYxr7F1o44kiVNVAppaKXHES/NJazcRv9xW+fmbQw3X8VlU73UfjVUsvt5?=
- =?iso-8859-1?Q?gqViI0/s0EDSYmpAvkwPrwleOVR0dx/VX0xomBhc7ncwymEzJr7qUzM790?=
- =?iso-8859-1?Q?cMemcOvhGHqCXUDZFqJcYFTnr8oR8eCDSvqVhG5Y+pUu44zgT9Is3amynu?=
- =?iso-8859-1?Q?n9pNa6MaC8SYcxlvcAeXsd4+PJrLG5oai0aETi9gZfbSKkPykKgeV6lOHl?=
- =?iso-8859-1?Q?hgUqTUD4SauFClyAt+WsS+qDlcIfC3IU5yqfUDi11ZMeO5GgqZ84xFXYEV?=
- =?iso-8859-1?Q?ggy5QkNphnswvwcRkzcZghVjUaN4NrILkP+Uo+ouDf6XOVixWqCFY6GhsH?=
- =?iso-8859-1?Q?vcsQKSz5D92Yvev44dxirKLZl8fElN4zpn665LMt+48h29NpFjlyNgIZjZ?=
- =?iso-8859-1?Q?2pBqhqCkIDUhj8CesZAqJxDOzfLU15PCGAQGV/213jC1+FDV2DuoGtiEgG?=
- =?iso-8859-1?Q?PNaQE1WY5movzOoYhJzIIQ1u1bf1Iqj0hYFtw8ZbLPT1Mx+ANWyExoT9zc?=
- =?iso-8859-1?Q?33jw7fCHS+W1RTRvvg2/QQJTUhSiOda0BPfy0BmXRnm59oCdWibVr0GeZo?=
- =?iso-8859-1?Q?A0O2audETdUo5qDZrqP2uBeYW85O2xfyegCcL9x5gGoZEMqiH5cDfYGTzT?=
- =?iso-8859-1?Q?wYAvK29SKpi9YGzLuFLq2vrEmmKN90Ly7eOi1ej/qirSmydeQpqPzttDm8?=
- =?iso-8859-1?Q?w6pJFJvshiH5LJ8Mb5CjDKo18sojzXOYqjLcrEqEqrCtZVpq0AvVDUKvMZ?=
- =?iso-8859-1?Q?TuxDTYgISaJnxqtzxEWG89ngwCxKOubAZ1Aae+4XgEW3P+FZKGlTLjHC+S?=
- =?iso-8859-1?Q?2ve/pTKLZpusSw/8Uvg2BPHeoiF6fnYYsv5doeoTWawvN+wJyNEMHHLmyb?=
- =?iso-8859-1?Q?F5cC+buuksBBoNoD7/l5Q56Z9am62Soofh5TBPcXxbidsvChkvW5Zz7Dtv?=
- =?iso-8859-1?Q?cacxPwvznKUzjyx5nmkAvYJXfzKSZZnWJ5kCkv+P89VoaC/Oa1HNb3gZFL?=
- =?iso-8859-1?Q?2DKbfWZ1HTBVG0S9NVnck1WzALWR6Dje77He3pofKEGoK07TbqIQXOABCx?=
- =?iso-8859-1?Q?7tftyQE3LtvsLS+5CJcjXnTZiAHq7VBK9S5U/gjvHC0zun0BijphKPXRIq?=
- =?iso-8859-1?Q?nvoz4BV3sc0Ldz5sN9l10KOKBBFux1NcL77HkNaExtESEc6A3cXptwATu2?=
- =?iso-8859-1?Q?T4Ix1NpJJACS2Cqc/iJyHhN4U206g77w0mjsFq+NeCCE5VSUuSWP4Fd5Bk?=
- =?iso-8859-1?Q?kcVjlelegpV5tps5hS/XizRKTiAhwMWZZWK3G2HuKTQoAp1OWd7oAwnSVb?=
- =?iso-8859-1?Q?cryk7knD2cfRj55z1JH2fQLRILyWUbNBMhR7uJpevm28pr53oLGI7U1tz8?=
- =?iso-8859-1?Q?lCLZKODkEg=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x0sCl-0000pH-0c
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:57:03 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x0sCh-0003L5-TF
+ for qemu-devel@nongnu.org; Sun, 30 Aug 2026 22:57:02 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Ax29Fw7ZRq4L8GAA--.18950S3;
+ Mon, 31 Aug 2026 10:56:48 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCx9cxp7ZRqmfsXAA--.22967S2;
+ Mon, 31 Aug 2026 10:56:43 +0800 (CST)
+Subject: Re: [PATCH v4 02/14] target/loongarch: Add LVZ CPU state definitions
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1787739852.git.prcups@krgm.moe>
+ <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <2b3ee697-6b50-0029-3f7e-e81359bfee29@loongson.cn>
+Date: Mon, 31 Aug 2026 10:56:26 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: oToPSL8wijDEUCNutCFsnhV8kD/0rDLoXxzwkU+WdLDLwY3ooxEcU3TopQTGhs2+cSjQ1U0hpCrYOud8NT5Mxl6c9xQnqzgEwu1JjHAVivAZIWajGGAKSis7pjubrPTwuSz8lqz107NO1YQNNK+QVaT6IdQJE9B838Za5X6U2m82CByJToAeENvnZ8izamQPLDiFZ0vtgidU0KIj5C+Z1y1kmn4NnIKFhFL0Ne4kHlE/ckPcjmaJhf2Qx8EK+LvMhBgffOhVHfwrAkEKfUtrPHjJLf5CJiD8r6FhE6eTrSWsytR3OIB8q5AqA+tSJfd+Ji6XuEPb8Jk9zRgO/nSq4g==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 34f82756-fb6c-440a-df1f-08df0709d5d5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Aug 2026 02:44:53.2968 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: cG77URbiESxKW+SdMrov5sqEJzjGsMElF0lRsLTXVodPYVLxTzdI1QGYO9qvABOxjPWoWumeMoafKw/gmljtuzB28pKFYTnncLjSAshwEew=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0601MB5822
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCx9cxp7ZRqmfsXAA--.22967S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Xw4kJr4DJFy5tFy8Gw1fZrc_yoWfWrW3pr
+ W2kFy3KF48KFWxZanaqw4YkFnxXr1xG342g347KrySyF4kX348Wr1vg39xCF4UX348W34x
+ Za1kAa15Wa9rXagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8yr
+ W7UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.789,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,637 +82,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a ASPEED ACRY model, which performs RSA modular=0A=
-exponentiation. The datasheet documents the engine as=0A=
-supporting both RSA and ECDSA, but ECDSA is broken on this=0A=
-hardware, so only RSA is modelled.=0A=
-=0A=
-The engine DMAs its operands (data, exponent, modulus) from a guest=0A=
-DRAM buffer and writes the result back into a memory-mapped SRAM=0A=
-region. Both regions share the same interleaved byte/dword layout:=0A=
-repeating 12-dword blocks of [4 dwords exponent][4 dwords modulus][4=0A=
-dwords data], index 0 holding the least-significant word/byte of each=0A=
-value.=0A=
-=0A=
-The engine accesses DRAM by relative offset, so the CPU-visible=0A=
-address written to the DMA source register has its top (base) bit=0A=
-masked off.=0A=
-=0A=
-The modular exponentiation itself is delegated to QEMU's generic=0A=
-akcipher crypto API (crypto/akcipher.c) using raw (unpadded) RSA,=0A=
-matching what the real hardware performs - PKCS1 padding is handled=0A=
-by the guest's software crypto stack, not by this engine.=0A=
-=0A=
-The RSA public-key operand DER encoding needed by that API is built with=0A=
-crypto/der.h's generic encoder. Raw (unpadded) RSA is only implemented=0A=
-by that API's libgcrypt backend (its nettle backend rejects raw=0A=
-padding).=0A=
-=0A=
-When that support is missing, the engine still completes and raises its=0A=
-completion IRQ as real hardware would, but produces an all-zero result=0A=
-so that whatever signature check the guest performs on it fails cleanly=0A=
-instead of the guest hanging forever waiting for an interrupt that=0A=
-would otherwise never come.=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- include/hw/misc/aspeed_acry.h |  39 +++=0A=
- hw/misc/aspeed_acry.c         | 456 ++++++++++++++++++++++++++++++++++=0A=
- hw/misc/meson.build           |   1 +=0A=
- hw/misc/trace-events          |   6 +=0A=
- 4 files changed, 502 insertions(+)=0A=
- create mode 100644 include/hw/misc/aspeed_acry.h=0A=
- create mode 100644 hw/misc/aspeed_acry.c=0A=
-=0A=
-diff --git a/include/hw/misc/aspeed_acry.h b/include/hw/misc/aspeed_acry.h=
-=0A=
-new file mode 100644=0A=
-index 0000000000..5ca80deec4=0A=
---- /dev/null=0A=
-+++ b/include/hw/misc/aspeed_acry.h=0A=
-@@ -0,0 +1,39 @@=0A=
-+/*=0A=
-+ * ASPEED ACRY Engine=0A=
-+ *=0A=
-+ * Copyright (C) 2026 ASPEED Technology Inc.=0A=
-+ *=0A=
-+ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
-+ */=0A=
-+=0A=
-+#ifndef ASPEED_ACRY_H=0A=
-+#define ASPEED_ACRY_H=0A=
-+=0A=
-+#include "hw/core/sysbus.h"=0A=
-+#include "system/memory.h"=0A=
-+=0A=
-+#define TYPE_ASPEED_ACRY "aspeed.acry"=0A=
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedACRYState, ASPEED_ACRY)=0A=
-+=0A=
-+#define ASPEED_ACRY_NR_REGS     (0x400 >> 2)=0A=
-+/* Max size of the "data" (message) field within the SRAM buffer. */=0A=
-+#define ASPEED_ACRY_DATA_MAX_LEN 0x800=0A=
-+#define ASPEED_ACRY_MAX_BITS     4096=0A=
-+/* Max exponent/modulus size for a 4096-bit RSA key, in bytes. */=0A=
-+#define ASPEED_ACRY_MAX_BYTES    (ASPEED_ACRY_MAX_BITS / 8)=0A=
-+=0A=
-+struct AspeedACRYState {=0A=
-+    SysBusDevice parent_obj;=0A=
-+=0A=
-+    MemoryRegion iomem;=0A=
-+    qemu_irq irq;=0A=
-+=0A=
-+    uint32_t regs[ASPEED_ACRY_NR_REGS];=0A=
-+=0A=
-+    MemoryRegion *dram_mr;=0A=
-+    MemoryRegion *sram_mr;=0A=
-+    AddressSpace dram_as;=0A=
-+    AddressSpace sram_as;=0A=
-+};=0A=
-+=0A=
-+#endif /* ASPEED_ACRY_H */=0A=
-diff --git a/hw/misc/aspeed_acry.c b/hw/misc/aspeed_acry.c=0A=
-new file mode 100644=0A=
-index 0000000000..b9fd9f11fd=0A=
---- /dev/null=0A=
-+++ b/hw/misc/aspeed_acry.c=0A=
-@@ -0,0 +1,456 @@=0A=
-+/*=0A=
-+ * ASPEED ACRY Engine=0A=
-+ *=0A=
-+ * Copyright (C) 2026 ASPEED Technology Inc.=0A=
-+ *=0A=
-+ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
-+ *=0A=
-+ * The datasheet documents the ACRY engine as supporting both RSA and=0A=
-+ * ECDSA, but ECDSA is broken on this hardware, so only RSA is modelled=0A=
-+ * here.=0A=
-+ */=0A=
-+=0A=
-+#include "qemu/osdep.h"=0A=
-+#include "qemu/cutils.h"=0A=
-+#include "qemu/log.h"=0A=
-+#include "hw/misc/aspeed_acry.h"=0A=
-+#include "hw/core/qdev-properties.h"=0A=
-+#include "hw/core/irq.h"=0A=
-+#include "hw/core/registerfields.h"=0A=
-+#include "qapi/error.h"=0A=
-+#include "crypto/akcipher.h"=0A=
-+#include "crypto/der.h"=0A=
-+#include "trace.h"=0A=
-+=0A=
-+REG32(ACRY_TRIGGER, 0x000)=0A=
-+    FIELD(ACRY_TRIGGER, RSA_DMA_DATA, 1, 1)=0A=
-+    FIELD(ACRY_TRIGGER, RSA_START, 0, 1)=0A=
-+REG32(ACRY_DMA_CMD, 0x048)=0A=
-+REG32(ACRY_DMA_SRC, 0x04C)=0A=
-+REG32(ACRY_DMA_LEN, 0x050)=0A=
-+    FIELD(ACRY_DMA_LEN, DEST, 16, 16)=0A=
-+    FIELD(ACRY_DMA_LEN, DATALEN, 0, 16)=0A=
-+REG32(ACRY_RSA_KEY_LEN, 0x058)=0A=
-+REG32(ACRY_INT_MASK, 0x3F8)=0A=
-+    FIELD(ACRY_INT_MASK, RSA_DMA_MASK, 2, 1)=0A=
-+    FIELD(ACRY_INT_MASK, RSA_ENG_MASK, 1, 1)=0A=
-+REG32(ACRY_STATUS, 0x3FC)=0A=
-+    FIELD(ACRY_STATUS, RSA_DMA_DONE, 2, 1)=0A=
-+    FIELD(ACRY_STATUS, RSA_ENG_DONE, 1, 1)=0A=
-+=0A=
-+/*=0A=
-+ * Total size of the interleaved buffer. Data is 4 of every 12=0A=
-+ * dwords of a block, one third of the buffer, so the whole buffer is 3x=
-=0A=
-+ * the data region.=0A=
-+ */=0A=
-+#define ASPEED_ACRY_SRAM_SIZE   (3 * ASPEED_ACRY_DATA_MAX_LEN)=0A=
-+=0A=
-+/* Dwords into each 12-dword block where each operand's region starts. */=
-=0A=
-+#define ASPEED_ACRY_EXP_OFFSET   0=0A=
-+#define ASPEED_ACRY_MOD_OFFSET   4=0A=
-+#define ASPEED_ACRY_DATA_OFFSET  8=0A=
-+=0A=
-+static void aspeed_acry_hexdump(const char *desc, const uint8_t *buf,=0A=
-+                                size_t size)=0A=
-+{=0A=
-+    g_autoptr(GString) str =3D g_string_sized_new(64);=0A=
-+    size_t len;=0A=
-+    size_t i;=0A=
-+=0A=
-+    for (i =3D 0; i < size; i +=3D len) {=0A=
-+        len =3D MIN(16, size - i);=0A=
-+        g_string_truncate(str, 0);=0A=
-+        qemu_hexdump_line(str, buf + i, len, 1, 4);=0A=
-+        trace_aspeed_acry_hexdump(desc, i, str->str);=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+/*=0A=
-+ * The interleaved buffer is a series of 12-dword blocks, each split into=
-=0A=
-+ * three 4-dword regions - exp, mod, data:=0A=
-+ *=0A=
-+ *   dword in block:  0    1    2    3    4    5    6    7    8    9   10 =
-  11=0A=
-+ *   region:          \---- exp ----/    \---- mod ----/    \---- data ---=
--/=0A=
-+ *   lane:            0    1    2    3    0    1    2    3    0    1    2 =
-   3=0A=
-+ *=0A=
-+ * Successive blocks hold the next 4 dwords of each operand, so operand=0A=
-+ * dword d is in block (d / 4), lane (d % 4). Dwords are little-endian, so=
-=0A=
-+ * byte b of dword D is at byte D * 4 + b.=0A=
-+ *=0A=
-+ * Return the buffer offset of byte 'op_byte' (op_byte =3D 0 =3D least=0A=
-+ * significant) of the operand whose region starts 'region' dwords into=0A=
-+ * each block (0 =3D exp, 4 =3D mod, 8 =3D data).=0A=
-+ */=0A=
-+static int aspeed_acry_operand_offset(int region, int op_byte)=0A=
-+{=0A=
-+    int byte_in_dword;=0A=
-+    int op_dword;=0A=
-+    int block;=0A=
-+    int lane;=0A=
-+=0A=
-+    op_dword =3D op_byte / 4;=0A=
-+    byte_in_dword =3D op_byte % 4;=0A=
-+    block =3D op_dword / 4;=0A=
-+    lane =3D op_dword % 4;=0A=
-+=0A=
-+    return (block * 12 + region + lane) * 4 + byte_in_dword;=0A=
-+}=0A=
-+=0A=
-+/*=0A=
-+ * Read one operand out of the buffer as a big-endian magnitude.=0A=
-+ *=0A=
-+ * The operand's bytes are scattered through buf; byte k (significance lev=
-el=0A=
-+ * k, k =3D 0 =3D least significant) is at aspeed_acry_operand_offset(regi=
-on, k).=0A=
-+ * Walk from the top down, drop leading zero bytes, and write the result m=
-ost=0A=
-+ * significant byte first into out[]. Returns the number of bytes written=
-=0A=
-+ * (the value 0 yields a single 0x00 byte, so always >=3D 1).=0A=
-+ */=0A=
-+static int aspeed_acry_extract_be(const uint8_t *buf, int region,=0A=
-+                                  int max_bytes, uint8_t *out)=0A=
-+{=0A=
-+    int offset;=0A=
-+    int msb;=0A=
-+    int len;=0A=
-+    int k;=0A=
-+=0A=
-+    /* Highest significance level holding a non-zero byte (skip leading 0s=
-). */=0A=
-+    for (msb =3D max_bytes - 1; msb >=3D 0; msb--) {=0A=
-+        offset =3D aspeed_acry_operand_offset(region, msb);=0A=
-+        if (buf[offset] !=3D 0) {=0A=
-+            break;=0A=
-+        }=0A=
-+    }=0A=
-+=0A=
-+    /* All bytes zero: the value is 0. */=0A=
-+    if (msb < 0) {=0A=
-+        out[0] =3D 0;=0A=
-+        return 1;=0A=
-+    }=0A=
-+=0A=
-+    /* Copy most significant byte first: level msb down to level 0. */=0A=
-+    len =3D 0;=0A=
-+    for (k =3D msb; k >=3D 0; k--) {=0A=
-+        offset =3D aspeed_acry_operand_offset(region, k);=0A=
-+        out[len++] =3D buf[offset];=0A=
-+    }=0A=
-+=0A=
-+    return len;=0A=
-+}=0A=
-+=0A=
-+/*=0A=
-+ * Return a DER INTEGER body for the unsigned big-endian magnitude 'be'.=
-=0A=
-+ *=0A=
-+ * DER INTEGERs are signed, so if the top byte has bit 7 set the value=0A=
-+ * would decode as negative; prepend a 0x00 guard byte in that case.=0A=
-+ *=0A=
-+ * The padded copy is written into 'pad_buf' (caller-owned, sized len + 1)=
-=0A=
-+ * rather than a local, because qcrypto_der_encode_int() only stores the=
-=0A=
-+ * pointer we hand it - the bytes are not copied until=0A=
-+ * qcrypto_der_encode_ctx_flush_and_free() - so the body must stay valid=
-=0A=
-+ * until then. Returns a pointer into 'be' or 'pad_buf' as appropriate,=0A=
-+ * with the body length in *body_len.=0A=
-+ */=0A=
-+static const uint8_t *aspeed_acry_der_uint_body(const uint8_t *be, size_t =
-len,=0A=
-+                                                uint8_t *pad_buf,=0A=
-+                                                size_t *body_len)=0A=
-+{=0A=
-+    if (be[0] & 0x80) {=0A=
-+        pad_buf[0] =3D 0x00;=0A=
-+        memcpy(pad_buf + 1, be, len);=0A=
-+        *body_len =3D len + 1;=0A=
-+        return pad_buf;=0A=
-+    }=0A=
-+=0A=
-+    *body_len =3D len;=0A=
-+    return be;=0A=
-+}=0A=
-+=0A=
-+/*=0A=
-+ * DER-encode a "RsaPubKey ::=3D SEQUENCE { n INTEGER, e INTEGER }" (see=
-=0A=
-+ * crypto/rsakey.h), the format expected by qcrypto_akcipher_new(). n and =
-e=0A=
-+ * are minimal big-endian magnitudes (as produced by=0A=
-+ * aspeed_acry_extract_be()); the engine does a raw modexp, so the guest's=
-=0A=
-+ * exponent is always encoded here as the public 'e'.=0A=
-+ */=0A=
-+static uint8_t *aspeed_acry_der_encode_pubkey(const uint8_t *n, size_t n_l=
-en,=0A=
-+                                              const uint8_t *e, size_t e_l=
-en,=0A=
-+                                              size_t *out_len)=0A=
-+{=0A=
-+    QCryptoEncodeContext *ctx =3D qcrypto_der_encode_ctx_new();=0A=
-+    uint8_t n_pad[ASPEED_ACRY_MAX_BYTES + 1];=0A=
-+    uint8_t e_pad[ASPEED_ACRY_MAX_BYTES + 1];=0A=
-+    const uint8_t *n_body;=0A=
-+    const uint8_t *e_body;=0A=
-+    size_t n_body_len;=0A=
-+    size_t e_body_len;=0A=
-+    uint8_t *buf;=0A=
-+=0A=
-+    n_body =3D aspeed_acry_der_uint_body(n, n_len, n_pad, &n_body_len);=0A=
-+    e_body =3D aspeed_acry_der_uint_body(e, e_len, e_pad, &e_body_len);=0A=
-+=0A=
-+    qcrypto_der_encode_seq_begin(ctx);=0A=
-+    qcrypto_der_encode_int(ctx, n_body, n_body_len);=0A=
-+    qcrypto_der_encode_int(ctx, e_body, e_body_len);=0A=
-+    qcrypto_der_encode_seq_end(ctx);=0A=
-+=0A=
-+    *out_len =3D qcrypto_der_encode_ctx_buffer_len(ctx);=0A=
-+    buf =3D g_malloc(*out_len);=0A=
-+    qcrypto_der_encode_ctx_flush_and_free(ctx, buf);=0A=
-+=0A=
-+    return buf;=0A=
-+}=0A=
-+=0A=
-+/*=0A=
-+ * Store the RSA result into the output SRAM data region as 'n_len' bytes=
-=0A=
-+ * (the key size): the low 'result_len' bytes are result_be (big-endian),=
-=0A=
-+ * the rest is zero. sram_as is a 0-based AddressSpace over the SRAM, so t=
-he=0A=
-+ * offset from aspeed_acry_operand_offset() is used directly; each data dw=
-ord=0A=
-+ * is written as a little-endian word.=0A=
-+ */=0A=
-+static void aspeed_acry_store_result(AspeedACRYState *s,=0A=
-+                                     const uint8_t *result_be,=0A=
-+                                     int result_len, int n_len)=0A=
-+{=0A=
-+    uint32_t result_word;=0A=
-+    MemTxResult res;=0A=
-+    int offset;=0A=
-+    int src;=0A=
-+    int i;=0A=
-+    int j;=0A=
-+=0A=
-+    /* result_be is MSB-first; take bytes from its LSB end. */=0A=
-+    src =3D result_len - 1;=0A=
-+    for (i =3D 0; i < n_len / 4; i++) {=0A=
-+        /* Pack up to 4 result bytes (LSB first) into a little-endian dwor=
-d. */=0A=
-+        result_word =3D 0;=0A=
-+        for (j =3D 0; j < 4; j++) {=0A=
-+            if (src >=3D 0) {=0A=
-+                result_word |=3D (uint32_t)result_be[src--] << (8 * j);=0A=
-+            }=0A=
-+        }=0A=
-+=0A=
-+        offset =3D aspeed_acry_operand_offset(ASPEED_ACRY_DATA_OFFSET, 4 *=
- i);=0A=
-+        address_space_stl_le(&s->sram_as, offset, result_word,=0A=
-+                             MEMTXATTRS_UNSPECIFIED, &res);=0A=
-+        if (res !=3D MEMTX_OK) {=0A=
-+            qemu_log_mask(LOG_GUEST_ERROR,=0A=
-+                          "%s: failed to write result\n", __func__);=0A=
-+            return;=0A=
-+        }=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+static void aspeed_acry_do_rsa(AspeedACRYState *s)=0A=
-+{=0A=
-+    QCryptoAkCipherOptions opts =3D {=0A=
-+        .alg =3D QCRYPTO_AK_CIPHER_ALGO_RSA,=0A=
-+        .u.rsa =3D {=0A=
-+            .padding_alg =3D QCRYPTO_RSA_PADDING_ALGO_RAW,=0A=
-+        },=0A=
-+    };=0A=
-+    uint32_t len =3D FIELD_EX32(s->regs[R_ACRY_DMA_LEN], ACRY_DMA_LEN, DAT=
-ALEN);=0A=
-+    uint8_t src_buf[ASPEED_ACRY_SRAM_SIZE] =3D { 0 };=0A=
-+    uint8_t result[ASPEED_ACRY_MAX_BYTES] =3D { 0 };=0A=
-+    uint64_t src_addr =3D s->regs[R_ACRY_DMA_SRC];=0A=
-+    uint8_t data[ASPEED_ACRY_DATA_MAX_LEN];=0A=
-+    g_autofree uint8_t *der_key =3D NULL;=0A=
-+    uint8_t n[ASPEED_ACRY_MAX_BYTES];=0A=
-+    uint8_t e[ASPEED_ACRY_MAX_BYTES];=0A=
-+    QCryptoAkCipher *cipher =3D NULL;=0A=
-+    Error *local_err =3D NULL;=0A=
-+    int result_len =3D 0;=0A=
-+    size_t der_len;=0A=
-+    int data_len;=0A=
-+    int n_len;=0A=
-+    int e_len;=0A=
-+=0A=
-+    if (!qcrypto_akcipher_supports(&opts)) {=0A=
-+        qemu_log_mask(LOG_UNIMP,=0A=
-+                     "%s: RSA ModExp not supported by the crypto backend; =
-"=0A=
-+                     "completing with an invalid result\n", __func__);=0A=
-+        return;=0A=
-+    }=0A=
-+=0A=
-+    if (len =3D=3D 0 || len > ASPEED_ACRY_SRAM_SIZE) {=0A=
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid DMA length %u\n",=0A=
-+                     __func__, len);=0A=
-+        return;=0A=
-+    }=0A=
-+=0A=
-+    trace_aspeed_acry_rsa_trigger(src_addr, len);=0A=
-+=0A=
-+    if (address_space_read(&s->dram_as, src_addr, MEMTXATTRS_UNSPECIFIED,=
-=0A=
-+                           src_buf, len) !=3D MEMTX_OK) {=0A=
-+        qemu_log_mask(LOG_GUEST_ERROR,=0A=
-+                     "%s: failed to read DMA buffer at 0x%" PRIx64 "\n",=
-=0A=
-+                     __func__, src_addr);=0A=
-+        return;=0A=
-+    }=0A=
-+=0A=
-+    n_len =3D aspeed_acry_extract_be(src_buf, ASPEED_ACRY_MOD_OFFSET,=0A=
-+                                   ASPEED_ACRY_MAX_BYTES, n);=0A=
-+    e_len =3D aspeed_acry_extract_be(src_buf, ASPEED_ACRY_EXP_OFFSET,=0A=
-+                                   ASPEED_ACRY_MAX_BYTES, e);=0A=
-+    data_len =3D aspeed_acry_extract_be(src_buf, ASPEED_ACRY_DATA_OFFSET,=
-=0A=
-+                                      ASPEED_ACRY_DATA_MAX_LEN, data);=0A=
-+=0A=
-+    if (trace_event_get_state_backends(TRACE_ASPEED_ACRY_HEXDUMP)) {=0A=
-+        aspeed_acry_hexdump("buf", src_buf, len);=0A=
-+        aspeed_acry_hexdump("n", n, n_len);=0A=
-+        aspeed_acry_hexdump("e", e, e_len);=0A=
-+        aspeed_acry_hexdump("data", data, data_len);=0A=
-+    }=0A=
-+=0A=
-+    der_key =3D aspeed_acry_der_encode_pubkey(n, n_len, e, e_len, &der_len=
-);=0A=
-+    cipher =3D qcrypto_akcipher_new(&opts, QCRYPTO_AK_CIPHER_KEY_TYPE_PUBL=
-IC,=0A=
-+                                  der_key, der_len, &local_err);=0A=
-+    if (!cipher) {=0A=
-+        qemu_log_mask(LOG_GUEST_ERROR,=0A=
-+                     "%s: failed to create RSA cipher: %s\n",=0A=
-+                     __func__, error_get_pretty(local_err));=0A=
-+        error_free(local_err);=0A=
-+        return;=0A=
-+    }=0A=
-+=0A=
-+    result_len =3D qcrypto_akcipher_encrypt(cipher, data, data_len,=0A=
-+                                          result, sizeof(result),=0A=
-+                                          &local_err);=0A=
-+    if (result_len < 0) {=0A=
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: RSA modexp failed: %s\n",=0A=
-+                     __func__, error_get_pretty(local_err));=0A=
-+        error_free(local_err);=0A=
-+        result_len =3D 0;=0A=
-+    }=0A=
-+=0A=
-+    qcrypto_akcipher_free(cipher);=0A=
-+=0A=
-+    if (trace_event_get_state_backends(TRACE_ASPEED_ACRY_HEXDUMP)) {=0A=
-+        aspeed_acry_hexdump("result", result, result_len);=0A=
-+    }=0A=
-+=0A=
-+    aspeed_acry_store_result(s, result, result_len, n_len);=0A=
-+}=0A=
-+=0A=
-+static uint64_t aspeed_acry_read(void *opaque, hwaddr offset, unsigned int=
- size)=0A=
-+{=0A=
-+    AspeedACRYState *s =3D ASPEED_ACRY(opaque);=0A=
-+    uint32_t reg =3D offset >> 2;=0A=
-+=0A=
-+    trace_aspeed_acry_read(offset, s->regs[reg]);=0A=
-+=0A=
-+    return s->regs[reg];=0A=
-+}=0A=
-+=0A=
-+static void aspeed_acry_write(void *opaque, hwaddr offset, uint64_t data,=
-=0A=
-+                              unsigned int size)=0A=
-+{=0A=
-+    AspeedACRYState *s =3D ASPEED_ACRY(opaque);=0A=
-+    uint32_t reg =3D offset >> 2;=0A=
-+=0A=
-+    trace_aspeed_acry_write(offset, data);=0A=
-+=0A=
-+    switch (reg) {=0A=
-+    case R_ACRY_DMA_SRC:=0A=
-+        /*=0A=
-+         * The DMA source register holds a CPU-visible DRAM address (e.g.=
-=0A=
-+         * 0x8xxxxxxx on AST2600); the engine addresses DRAM from offset 0=
-,=0A=
-+         * so mask off the top bit to get the DRAM-relative offset.=0A=
-+         */=0A=
-+        data &=3D 0x7FFFFFFF;=0A=
-+        break;=0A=
-+    case R_ACRY_STATUS:=0A=
-+        data =3D s->regs[R_ACRY_STATUS] & ~data;=0A=
-+        if (!(data & (R_ACRY_STATUS_RSA_ENG_DONE_MASK |=0A=
-+                      R_ACRY_STATUS_RSA_DMA_DONE_MASK))) {=0A=
-+            qemu_irq_lower(s->irq);=0A=
-+        }=0A=
-+        break;=0A=
-+    case R_ACRY_TRIGGER:=0A=
-+        if (FIELD_EX32(data, ACRY_TRIGGER, RSA_START)) {=0A=
-+            aspeed_acry_do_rsa(s);=0A=
-+=0A=
-+            s->regs[R_ACRY_STATUS] |=3D R_ACRY_STATUS_RSA_ENG_DONE_MASK |=
-=0A=
-+                                      R_ACRY_STATUS_RSA_DMA_DONE_MASK;=0A=
-+            if (s->regs[R_ACRY_INT_MASK] &=0A=
-+                (R_ACRY_INT_MASK_RSA_ENG_MASK_MASK |=0A=
-+                 R_ACRY_INT_MASK_RSA_DMA_MASK_MASK)) {=0A=
-+                qemu_irq_raise(s->irq);=0A=
-+            }=0A=
-+        }=0A=
-+        break;=0A=
-+    default:=0A=
-+        break;=0A=
-+    }=0A=
-+=0A=
-+    s->regs[reg] =3D data;=0A=
-+}=0A=
-+=0A=
-+static const MemoryRegionOps aspeed_acry_ops =3D {=0A=
-+    .read =3D aspeed_acry_read,=0A=
-+    .write =3D aspeed_acry_write,=0A=
-+    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
-+    .valid =3D {=0A=
-+        .min_access_size =3D 1,=0A=
-+        .max_access_size =3D 4,=0A=
-+    },=0A=
-+};=0A=
-+=0A=
-+static void aspeed_acry_reset_hold(Object *obj, ResetType type)=0A=
-+{=0A=
-+    AspeedACRYState *s =3D ASPEED_ACRY(obj);=0A=
-+=0A=
-+    memset(s->regs, 0, sizeof(s->regs));=0A=
-+}=0A=
-+=0A=
-+static void aspeed_acry_realize(DeviceState *dev, Error **errp)=0A=
-+{=0A=
-+    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);=0A=
-+    AspeedACRYState *s =3D ASPEED_ACRY(dev);=0A=
-+=0A=
-+    if (!s->dram_mr) {=0A=
-+        error_setg(errp, TYPE_ASPEED_ACRY ": 'dram' link not set");=0A=
-+        return;=0A=
-+    }=0A=
-+    address_space_init(&s->dram_as, s->dram_mr, "dram");=0A=
-+=0A=
-+    if (!s->sram_mr) {=0A=
-+        error_setg(errp, TYPE_ASPEED_ACRY ": 'sram' link not set");=0A=
-+        return;=0A=
-+    }=0A=
-+    address_space_init(&s->sram_as, s->sram_mr, "sram");=0A=
-+=0A=
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_acry_ops, s,=0A=
-+                          TYPE_ASPEED_ACRY, ASPEED_ACRY_NR_REGS << 2);=0A=
-+    sysbus_init_mmio(sbd, &s->iomem);=0A=
-+=0A=
-+    sysbus_init_irq(sbd, &s->irq);=0A=
-+}=0A=
-+=0A=
-+static const Property aspeed_acry_properties[] =3D {=0A=
-+    DEFINE_PROP_LINK("dram", AspeedACRYState, dram_mr,=0A=
-+                     TYPE_MEMORY_REGION, MemoryRegion *),=0A=
-+    DEFINE_PROP_LINK("sram", AspeedACRYState, sram_mr,=0A=
-+                     TYPE_MEMORY_REGION, MemoryRegion *),=0A=
-+};=0A=
-+=0A=
-+static void aspeed_acry_class_init(ObjectClass *klass, const void *data)=
-=0A=
-+{=0A=
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
-+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);=0A=
-+=0A=
-+    dc->desc =3D "ASPEED ACRY Engine";=0A=
-+    dc->realize =3D aspeed_acry_realize;=0A=
-+    rc->phases.hold =3D aspeed_acry_reset_hold;=0A=
-+    device_class_set_props(dc, aspeed_acry_properties);=0A=
-+}=0A=
-+=0A=
-+static const TypeInfo aspeed_acry_types[] =3D {=0A=
-+    {=0A=
-+        .name =3D TYPE_ASPEED_ACRY,=0A=
-+        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
-+        .instance_size =3D sizeof(AspeedACRYState),=0A=
-+        .class_init =3D aspeed_acry_class_init,=0A=
-+    },=0A=
-+};=0A=
-+=0A=
-+DEFINE_TYPES(aspeed_acry_types)=0A=
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build=0A=
-index e86d9ad6b3..3912dc2bce 100644=0A=
---- a/hw/misc/meson.build=0A=
-+++ b/hw/misc/meson.build=0A=
-@@ -137,6 +137,7 @@ system_ss.add(when: 'CONFIG_PVPANIC_PCI', if_true: file=
-s('pvpanic-pci.c'))=0A=
- system_ss.add(when: 'CONFIG_PVPANIC_MMIO', if_true: files('pvpanic-mmio.c'=
-))=0A=
- system_ss.add(when: 'CONFIG_AUX', if_true: files('auxbus.c'))=0A=
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(=0A=
-+  'aspeed_acry.c',=0A=
-   'aspeed_hace.c',=0A=
-   'aspeed_lpc.c',=0A=
-   'aspeed_ltpi.c',=0A=
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events=0A=
-index c9a868b3ef..bbec0d2178 100644=0A=
---- a/hw/misc/trace-events=0A=
-+++ b/hw/misc/trace-events=0A=
-@@ -331,6 +331,12 @@ aspeed_peci_read(uint64_t offset, uint64_t data) "offs=
-et 0x%" PRIx64 " data 0x%"=0A=
- aspeed_peci_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " da=
-ta 0x%" PRIx64=0A=
- aspeed_peci_raise_interrupt(uint32_t ctrl, uint32_t status) "ctrl 0x%" PRI=
-x32 " status 0x%" PRIx32=0A=
- =0A=
-+# aspeed_acry.c=0A=
-+aspeed_acry_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " dat=
-a 0x%" PRIx64=0A=
-+aspeed_acry_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " da=
-ta 0x%" PRIx64=0A=
-+aspeed_acry_rsa_trigger(uint64_t src_addr, uint32_t len) "src_addr 0x%" PR=
-Ix64 " len 0x%" PRIx32=0A=
-+aspeed_acry_hexdump(const char *desc, uint32_t offset, const char *s) "%s:=
- 0x%08x: %s"=0A=
-+=0A=
- # aspeed_hace.c=0A=
- aspeed_hace_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " dat=
-a 0x%" PRIx64=0A=
- aspeed_hace_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " da=
-ta 0x%" PRIx64=0A=
--- =0A=
-2.53.0=0A=
+
+
+On 2026/8/26 下午6:30, SignKirigami wrote:
+> Add host and guest system-state banks, LVZ exception and MMU indices,
+> CPU and translation state, and helpers for selecting a VM-level CSR bank.
+> 
+> Read host ERA and BADV explicitly when generating ELF core notes so the
+> result does not depend on the currently selected guest state.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/arch_dump.c |  6 ++--
+>   target/loongarch/cpu.c       |  4 +--
+>   target/loongarch/cpu.h       | 64 ++++++++++++++++++++++++++++++++++--
+>   target/loongarch/translate.h |  2 ++
+>   4 files changed, 68 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
+> index 9d84faef96..711b23257b 100644
+> --- a/target/loongarch/arch_dump.c
+> +++ b/target/loongarch/arch_dump.c
+> @@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>   {
+>       struct loongarch_note note;
+>       CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>       int ret, i;
+yes, it need similar modification with loongarch_cpu_write_elf64_note().
+can we keep local variable sys unchanged so that the change is smaller?
+
+BTW I do not know which name is better between LOONGARCH_VM_LEVEL_HOST 
+and LOONGARCH_VM_LEVEL0. Such as in KVM mode, it is to dump CSR 
+resisters of guest VM; however in TCG mode, it is for host.
+>   
+>       loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
+> @@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>       for (i = 0; i < 32; ++i) {
+>           note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
+>       }
+> -    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
+> -    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
+> +    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, host->CSR_ERA);
+> +    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, host->CSR_BADV);
+>       ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
+>       if (ret < 0) {
+>           return -1;
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index fb03424ffa..2f7692dc93 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
+>       uint32_t data = 0, field;
+>       int i;
+>   
+> -    set_sys_state(env, &env->sys_states[0]);
+> +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>       for (i = 0; i < 21; i++) {
+>           env->cpucfg[i] = 0x0;
+>       }
+> @@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
+>       uint32_t data = 0;
+>       int i;
+>   
+> -    set_sys_state(env, &env->sys_states[0]);
+> +    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>       for (i = 0; i < 21; i++) {
+>           env->cpucfg[i] = 0x0;
+>       }
+I still think that it need split to smaller version, such as
+   1. get_sys()/set_sys() and its user.
+   2. mmu_idx change for new added LVZ
+   3. others
+
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index ad30c73167..be982b7695 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -20,6 +20,8 @@
+>   #include "cpu-csr.h"
+>   #include "cpu-qom.h"
+>   
+> +#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
+> +
+>   #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+>   #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+>   #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
+> @@ -93,6 +95,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
+>   #define  EXCCODE_WPEM                EXCODE(19, 1)
+>   #define  EXCCODE_BTD                 EXCODE(20, 0)
+>   #define  EXCCODE_BTE                 EXCODE(21, 0)
+> +#define  EXCCODE_GSPR                EXCODE(22, 0)
+> +#define  EXCCODE_HVC                 EXCODE(23, 0)
+> +#define  EXCCODE_GCSC                EXCODE(24, 0)
+> +#define  EXCCODE_GCHC                EXCODE(25, 0)
+The exception for LVZ is added however not used, it had better be added 
+in patch where it is actually used.
+>   #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
+>   
+>   /* cpucfg[0] bits */
+> @@ -255,6 +261,7 @@ FIELD(TLB_MISC, E, 0, 1)
+>   FIELD(TLB_MISC, ASID, 1, 10)
+>   FIELD(TLB_MISC, VPPN, 13, 35)
+>   FIELD(TLB_MISC, PS, 48, 6)
+> +FIELD(TLB_MISC, GID, 54, 8)
+>   
+>   /*Msg interrupt registers */
+>   #define N_MSGIS                4
+> @@ -314,6 +321,10 @@ typedef struct  LoongArchBT {
+>       uint32_t ftop;
+>   } lbt_t;
+>   
+> +#define LOONGARCH_VM_LEVEL_HOST      0
+> +#define LOONGARCH_VM_LEVEL_GUEST     1
+> +#define LOONGARCH_VM_LEVELS          2
+> +
+>   #define CPU_VENDOR_LOONGSON   "Loongson"
+>   #define CPU_MODEL_3A5000      "3A5000"
+>   #define CPU_MODEL_1C101       "1C101"
+> @@ -375,10 +386,18 @@ typedef struct CPUSysState {
+>       uint64_t CSR_DBG;
+>       uint64_t CSR_DERA;
+>       uint64_t CSR_DSAVE;
+> +    uint64_t CSR_GSTAT;
+> +    uint64_t CSR_GCFG;
+> +    uint64_t CSR_GINTC;
+> +    uint64_t CSR_GCNTC;
+> +    uint64_t CSR_GTLBC;
+I think this patch can move to patch 1.
+
+>       /* Msg interrupt registers */
+>       uint64_t CSR_MSGIS[N_MSGIS];
+>       uint64_t CSR_MSGIR;
+>       uint64_t CSR_MSGIE;
+> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> +    LoongArchTLB tlb[LOONGARCH_TLB_MAX];
+> +#endif
+It can be deleted in this patch.
+
+>   } CPUSysState;
+>   
+>   typedef struct CPUArchState {
+> @@ -394,7 +413,7 @@ typedef struct CPUArchState {
+>       uint32_t pv_features;
+>       uint64_t vendor_id;
+>       uint64_t cpu_id;
+> -    CPUSysState sys_states[1];
+> +    CPUSysState sys_states[LOONGARCH_VM_LEVELS];
+>   
+>       struct {
+>           uint64_t guest_addr;
+> @@ -419,6 +438,7 @@ typedef struct CPUArchState {
+>       uint32_t mp_state;
+>   #endif
+>       CPUSysState *sys_state;
+> +    bool vm_exit;
+>   } CPULoongArchState;
+>   
+>   typedef struct LoongArchCPUTopo {
+> @@ -438,8 +458,10 @@ struct ArchCPU {
+>   
+>       CPULoongArchState env;
+>       QEMUTimer timer;
+> +    QEMUTimer guest_timer;
+>       uint32_t  phy_id;
+>       OnOffAuto lbt;
+> +    OnOffAuto lvz;
+>       OnOffAuto pmu;
+>       OnOffAuto ptw;
+>       OnOffAuto lsx;
+> @@ -484,15 +506,44 @@ struct LoongArchCPUClass {
+>   #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
+>   #define MMU_USER_IDX     MMU_PLV_USER
+>   #define MMU_DA_IDX       4
+> +#define MMU_GUEST_IDX    5
+> +#define MMU_GUEST_DA_IDX 9
+> +
+> +static inline bool is_guest_mmu_idx(int mmu_idx)
+> +{
+> +    return mmu_idx >= MMU_GUEST_IDX;
+> +}
+> +
+> +static inline int mmu_idx_to_plv(int mmu_idx)
+> +{
+> +    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
+> +        return 0;
+> +    }
+> +    if (is_guest_mmu_idx(mmu_idx)) {
+> +        return mmu_idx - MMU_GUEST_IDX;
+> +    }
+> +    return mmu_idx;
+> +}
+>   
+>   static inline CPUSysState *env_sys(CPULoongArchState *env)
+>   {
+>       return env->sys_state;
+>   }
+>   
+> -static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
+> +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_level)
+> +{
+> +    return &env->sys_states[vm_level];
+> +}
+> +
+> +static inline void set_sys(CPULoongArchState *env, int vm_level)
+>   {
+> -    env->sys_state = sys;
+> +    env->sys_state = get_sys(env, vm_level);
+> +}
+> +
+> +static inline int env_vm_level(CPULoongArchState *env)
+> +{
+> +    return env_sys(env) == get_sys(env, LOONGARCH_VM_LEVEL_GUEST) ?
+> +           LOONGARCH_VM_LEVEL_GUEST : LOONGARCH_VM_LEVEL_HOST;
+>   }
+>   
+>   static inline bool is_la64(CPULoongArchState *env)
+> @@ -530,6 +581,13 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
+>   #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
+>   #define HW_FLAGS_VA32       0x20
+>   #define HW_FLAGS_EUEN_ASXE  0x40
+> +#define HW_FLAGS_GUEST_MODE 0x80
+> +
+> +bool has_lvz_capability(CPULoongArchState *env);
+> +bool will_return_to_guest(CPULoongArchState *env);
+> +uint8_t get_gid(CPULoongArchState *env);
+> +uint8_t get_tgid(CPULoongArchState *env);
+> +void trigger_vm_exit(CPULoongArchState *env);
+There is only function declaration, no function implementation and 
+called. I think it can be removed in this patch.
+
+In general it requires that every single patch can pass to compile and work.
+
+Regards
+Bibo Mao
+>   
+>   #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
+>   
+> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+> index 8aa8325dc6..257c3bbddd 100644
+> --- a/target/loongarch/translate.h
+> +++ b/target/loongarch/translate.h
+> @@ -24,6 +24,7 @@
+>   #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
+>   #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
+>   #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
+> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
+>   #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
+>   #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
+>   #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
+> @@ -66,6 +67,7 @@ typedef struct DisasContext {
+>       TCGv zero;
+>       bool la64; /* LoongArch64 mode */
+>       bool va32; /* 32-bit virtual address */
+> +    bool guest_mode;
+>       uint32_t cpucfg1;
+>       uint32_t cpucfg2;
+>       uint32_t cpucfg3;
+> 
+
 
