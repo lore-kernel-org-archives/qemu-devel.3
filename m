@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098D8C61DE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 12:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B74C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 12:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x119p-0003QH-AP; Mon, 31 Aug 2026 08:30:37 -0400
+	id 1x119r-0003Qg-EF; Mon, 31 Aug 2026 08:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1x119j-0003Pn-VG; Mon, 31 Aug 2026 08:30:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1x119k-0003Po-3U; Mon, 31 Aug 2026 08:30:32 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1x119h-00065t-GJ; Mon, 31 Aug 2026 08:30:31 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1x119h-000660-IW; Mon, 31 Aug 2026 08:30:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VBVe892088357; Mon, 31 Aug 2026 12:30:20 GMT
+ 67VBVeBr956372; Mon, 31 Aug 2026 12:30:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Kruxv2
- tH+l7WZVWJ8X+fM9/96igKl/YKf04Nd5SdOP4=; b=gLrF9PusUCNYUpOh3LHcJH
- ftvb93d4HFCgd2bdRznE3/PC9LIQ3UU1Yh0yCMBGqxR1OaD+LR4rAiDg7E2G0hYc
- h/I/nKdQ/Ld0w0pkglsjapXlX7w29XB4HsIWP94A++1aLLkh/nnfL7HFPKGuI5FU
- Psc3KG7lZhOsnIJnWGa9Ogm2nphsifAu+u08En5OY5UOYrt/DS7YECg4/knLqD0Z
- BZaizigU9aehc/Xqa0F+O8Do3KOq33s3DGoJvtOn3bHuSdDJvxp1h3c/Ysp0g1Zm
- Xgn5v0qS9LwCLbxH687zHoWeJhTXnLPb1jfnv3WKoRFhDszdEx55kARFVjBTyiXA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx597d8-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=mWtpvQpa01m4s6thx
+ YN8D9hKOHLeTbs3qdEwy6BF9XE=; b=nSI6dYnBrg+Mg6UFsinvDz+WUNFqdE3RD
+ 41dvgXWggVmM90j1BvIIk3/UcQvXuxc0IGp+eZtTURea0uT1NO9XdHH8Efpo2HD5
+ iYr9vh6vescz1OrVrRJC5Qtu8/9+Np4lKvp0NYe8aDiUknHQGEUcj7eUtUitvsNQ
+ ezQ/99gOb1MYYQiCzg6oi1csHsPNZX/HOnBl7Wqp1hHmFwu2HgkI/cT40LtLm9OK
+ 0q+G63BztrlNwvJ45dUkxh4BNOReR1wbj8k1JnkrDlSEvlx069/3nf1UCfzbEIl+
+ JFHZA0jZwxiIN2fWuMjB7t9LKTaEfwBiF3H3OaabrJR1p4WlD6sSw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudh6n2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 31 Aug 2026 12:30:20 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VCQKJB015603;
+ Mon, 31 Aug 2026 12:30:19 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccexwjxj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 31 Aug 2026 12:30:19 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VCQHTn003087;
- Mon, 31 Aug 2026 12:30:18 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4vwvt4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 12:30:18 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VCUGKX3081024
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67VCUJ2M8782448
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 12:30:17 GMT
+ Mon, 31 Aug 2026 12:30:19 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CEC5E58061;
- Mon, 31 Aug 2026 12:30:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0C51558057;
+ Mon, 31 Aug 2026 12:30:19 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C286B58058;
- Mon, 31 Aug 2026 12:30:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 070835805D;
+ Mon, 31 Aug 2026 12:30:18 +0000 (GMT)
 Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 12:30:15 +0000 (GMT)
+ Mon, 31 Aug 2026 12:30:17 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
@@ -66,53 +65,50 @@ Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
  lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
  chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
  jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: [PATCH v6 1/9] qtest/phb5: Add testbench for PHB
-Date: Mon, 31 Aug 2026 07:29:57 -0500
-Message-ID: <20260831123005.1485518-2-saif.abrar@linux.ibm.com>
+Subject: [PATCH v6 3/9] pnv/phb5: Implement sticky reset logic in PHB5
+Date: Mon, 31 Aug 2026 07:29:59 -0500
+Message-ID: <20260831123005.1485518-4-saif.abrar@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
 References: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a9573db cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=-0P0_LzdpgOpHJt5G-4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: Ojmz_tGF8XqZSYcNWTmH_STqAr0bSsMt
-X-Proofpoint-ORIG-GUID: khDARJuSvb1zg9BU-kAqr9QI5PPwzAK6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEwNCBTYWx0ZWRfXyU7Jf9Z6miG8
- ExGiWiVHyotJbnyGvpApEzVAfb6fczASKVNn4CpNrNtVaEvGc8MeCdImkfZySudq0bcB3X81BPQ
- R1oMvw34freOK7us1dIYm1BGniox9lw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEwNCBTYWx0ZWRfX6TZnfKSe92q1
- 41tNgUwleSkcb+IofrQwStnkANkJ9wQ6FL7+qlddm8m21lUiLxPbuJp5ArH7JVVzgSmU9EW3K4J
- 4Jqsi6EqcL8P28CAbhzTu3v1/8KMFB2ebAzeOkvcJTCns+tIzm/GpRCA+rarvf6zoYP588j352S
- VTwWI5hrY3VIOXd6HqL5+kNycQUw7oQy2nA55VJJX5TuHA2yGOfmDyPPb9mvQgPAg0KvTzy45nz
- 2hlj/LYYyKRWtPr3mm5eRkVZfur/NSMTtBh7f1auJUUbXqzJEEjrYQ6X099tYcmSFcyUcX+9JYb
- qGZ6MHj0vwClbNKigGl4Qc1gFIrtMrOxJGHplIwqBO32NNvdh/OrZT9PbK+czzOziR2zavHGwON
- 6b+HUr2g/xygnhJ7OP1Z6Y9GXvv/59Guxh7XmniSX0vssO1SA0kDtk0247wfjqW3TDZawYNIqX5
- 3unLDcWCZGcsHY1i6NA==
+X-Proofpoint-GUID: J9ruVDSEtWmyM8belsJk-slQxg3dwVi0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEwNCBTYWx0ZWRfX9+YUPfAfm+UZ
+ t8tLJcuioXn5NHDwdRuqr9kGeMsBq0tGbz/M7to1sR+nfRWTXeWYpXUjQmgQAkVJgWbzOlopwY/
+ 6ZOrW0Pwr3zXuZVecjnlEVtmrxcEIuKn0ePGdNh8Q8US+DLurJE/qLDdR5c60kFtpYus563/fUG
+ F0NXchEdSnaEjgq8cfhVUng0rjIC3DNBz5fyYI+QgteGKADsVjlRlgInVbQyMhgAMxvTZsUQQAJ
+ 8GdVXNbNBPSHIu2dU0QTSEZ1Gz6qb8Y0E1z1VlTaPkh1MNzK0c6aa122xuAF5Hzmqd8yxRNZ6dn
+ NhsQiOzUpLL2u/EcbaYjmtpqo3xbHuuJiYEt/H0XqllS3PNz3F2mYPwa5BlVqMm4JlvNyc8OQeo
+ lD8mhEpZqW+jxVHphMcszrOdaroA/tJ8l1NvfkyBkwCkAeuk/gYQeQjffAsqRICOBvY+tX2OfZb
+ Vgrb78IYw9QI2nFRawg==
+X-Proofpoint-ORIG-GUID: lB2vLOf8EuTHsYCPfqzXkYoo1Mk1WZ6N
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEwNCBTYWx0ZWRfX2OwfYJeaIo9o
+ bL19so5LWqfOW/03Ln7MTpSR8vGqqNGYkm7n17//t8mbDf+P4vHdcEzGTZ0YiADLZQVzmFx8psc
+ 64A+8WY1zPv4TTasYg3nT7Tvs0Zm6AE=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a9573dd cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=_OqsxZwj8_jexw0pSn4A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ adultscore=0 spamscore=0 clxscore=1011 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608310104
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,213 +127,383 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-New qtest testbench added for PHB[345].
-Testbench reads PHB Version register and asserts that
-bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
+Sticky bits retain their values on reset and are not overwritten with
+the reset value.
+Added sticky reset logic for all required registers,
+i.e. CFG core, PBL core, PHB error registers, PCIE stack registers and
+REGB error registers.
+
+Tested by writing all 1's to the reg PHB_PBL_ERR_INJECT.
+This will set the bits in the reg PHB_PBL_ERR_STATUS.
+Reset the PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+Verify that the sticky bits in the PHB_PBL_ERR_STATUS reg are still set.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 ---
- tests/qtest/meson.build         |   1 +
- tests/qtest/pnv-host-i2c-test.c |  13 +----
- tests/qtest/pnv-phb-test.c      | 100 ++++++++++++++++++++++++++++++++
- tests/qtest/pnv-qtest-common.h  |  24 ++++++++
- tests/qtest/pnv-xive2-common.h  |   7 +--
- 5 files changed, 127 insertions(+), 18 deletions(-)
- create mode 100644 tests/qtest/pnv-phb-test.c
- create mode 100644 tests/qtest/pnv-qtest-common.h
+ hw/pci-host/pnv_phb4.c              | 114 +++++++++++++++++++++++++++-
+ hw/pci-host/pnv_phb5.c              |  19 +++--
+ include/hw/pci-host/pnv_phb4.h      |  17 +++++
+ include/hw/pci-host/pnv_phb4_regs.h |  13 +++-
+ include/hw/pci-host/pnv_phb5.h      |   7 +-
+ tests/qtest/pnv-phb-test.c          |  41 ++++++++++
+ 6 files changed, 196 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index cbdef5a545..bfea40bdf3 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -191,6 +191,7 @@ qtests_ppc64 = \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
-+  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-phb-test'] : []) +                  \
-   (config_all_devices.has_key('CONFIG_PSERIES') ? ['numa-test'] : []) +                      \
-   (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
-   (slirp.found() ? ['pxe-test'] : []) +              \
-diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
-index 5fd54f9de7..7d3c0035f9 100644
---- a/tests/qtest/pnv-host-i2c-test.c
-+++ b/tests/qtest/pnv-host-i2c-test.c
-@@ -11,18 +11,7 @@
- #include "hw/gpio/pca9554_regs.h"
- #include "hw/gpio/pca9552_regs.h"
- #include "pnv-xscom.h"
--
--#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
--#define PPC_BIT32(bit)          (0x80000000 >> (bit))
--#define PPC_BIT8(bit)           (0x80 >> (bit))
--#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
--#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
--                                 PPC_BIT32(bs))
--
--#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
--#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
--#define SETFIELD(m, v, val) \
--        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
-+#include "pnv-qtest-common.h"
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index ce8ed6847e..a91b8277d6 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -501,9 +501,17 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+     }
+ }
  
- #define PNV10_XSCOM_I2CM_BASE   0xa0000
- #define PNV10_XSCOM_I2CM_SIZE   0x1000
++uint32_t get_exp_offset(PCIDevice *pdev)
++{
++    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(pdev);
++
++    return rpc->exp_offset;
++}
++
+ void pnv_phb4_cfg_core_reset(PCIDevice *d)
+ {
+     uint8_t *conf = d->config;
++    uint32_t exp_offset = get_exp_offset(d);
+ 
+     pci_byte_test_and_set_mask(conf + PCI_IO_BASE,
+                                PCI_IO_RANGE_MASK & 0xff);
+@@ -516,14 +524,51 @@ void pnv_phb4_cfg_core_reset(PCIDevice *d)
+     pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
+     pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
+     pci_config_set_interrupt_pin(conf, 0);
++
++    /* Sticky reset */
++    RC_CONFIG_STICKY_RESET(exp_offset + PCI_EXP_LNKCTL2,
++                                          PCI_EXP_LNKCTL2_TLS_16_0GT, 0xFEFFBF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_UERR,      0,    0x1FF030);
++    RC_CONFIG_STICKY_RESET(PHB_AER_UERR_MASK, 0,    0x1FF030);
++    RC_CONFIG_STICKY_RESET(PHB_AER_CERR,      0,    0x11C1);
++    RC_CONFIG_STICKY_RESET(PHB_AER_ECAP + PCI_ERR_CAP, (PCI_ERR_CAP_ECRC_CHKC
++                                               | PCI_ERR_CAP_ECRC_GENC), 0x15F);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_1,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_2,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_3,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_4,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_RERR,      0,    0x7F);
++    RC_CONFIG_STICKY_RESET(PHB_AER_ESID,      0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_DLF_STAT,      0,    0x807FFFFF);
+ }
+ 
++/* Apply sticky-mask to the reset-value and write to the reg-address */
++#define STICKY_RST(addr, rst_val, sticky_mask) (phb->regs[addr >> 3] = \
++            ((phb->regs[addr >> 3] & sticky_mask) | (rst_val & ~sticky_mask)))
++
+ static void pnv_phb4_pbl_core_reset(PnvPHB4 *phb)
+ {
+-    /* Zero all PBL registers initially */
++    /*
++     * Zero all PBL registers initially,
++     * with sticky reset of certain registers.
++     */
+     for (int i = PHB_PBL_CONTROL ; i <= PHB_PBL_ERR1_STATUS_MASK ; i += 8) {
+-        phb->regs[i >> 3] = 0x0;
++        switch (i) {
++        case PHB_PBL_ERR_STATUS:
++            break;
++        case PHB_PBL_ERR1_STATUS:
++        case PHB_PBL_ERR_LOG_0:
++        case PHB_PBL_ERR_LOG_1:
++        case PHB_PBL_ERR_STATUS_MASK:
++        case PHB_PBL_ERR1_STATUS_MASK:
++            STICKY_RST(i, 0, PPC_BITMASK(0, 63));
++            break;
++        default:
++            phb->regs[i >> 3] = 0x0;
++        }
+     }
++    STICKY_RST(PHB_PBL_ERR_STATUS, 0, \
++            (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
+ 
+     /* Set PHB4 specific register values */
+     phb->regs[PHB_PBL_CONTROL       >> 3] = 0xC00000000000000;
+@@ -657,6 +702,17 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         }
+         break;
+ 
++    /*
++     * Writing bits to a 1 in this register will inject the error corresponding
++     * to the bit that is written. The bits will automatically clear to 0 after
++     * the error is injected. The corresponding bit in the Error Status Reg
++     * should also be set automatically when the error occurs.
++     */
++    case PHB_PBL_ERR_INJECT:
++        phb->regs[PHB_PBL_ERR_STATUS >> 3] = phb->regs[off >> 3];
++        phb->regs[off >> 3] = 0;
++        break;
++
+     /* Silent simple writes */
+     case PHB_ASN_CMPM:
+     case PHB_CONFIG_ADDRESS:
+@@ -1577,11 +1633,65 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+     .get_address_space = pnv_phb4_dma_iommu,
+ };
+ 
++static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
++{
++    STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
++    STICKY_RST(PHB_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_TXE_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_TXE_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_TXE_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_TXE_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_RXE_ARB_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR_LOG_0,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR_LOG_1,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_RXE_MRG_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_MRG_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_MRG_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_MRG_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_RXE_TCE_ERR_STATUS,       0, PPC_BITMASK(0, 35));
++    STICKY_RST(PHB_RXE_TCE_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR_LOG_0,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR_LOG_1,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++}
++
++static void pnv_phb4_pcie_stack_reg_reset(PnvPHB4 *phb)
++{
++    STICKY_RST(PHB_PCIE_CRESET, 0xE000000000000000, \
++                        (PHB_PCIE_CRESET_PERST_N | PHB_PCIE_CRESET_REFCLK_N));
++    STICKY_RST(PHB_PCIE_DLP_ERRLOG1,             0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_PCIE_DLP_ERRLOG2,             0, PPC_BITMASK(0, 31));
++    STICKY_RST(PHB_PCIE_DLP_ERR_STATUS,          0, PPC_BITMASK(0, 15));
++}
++
++static void pnv_phb4_regb_err_reg_reset(PnvPHB4 *phb)
++{
++    STICKY_RST(PHB_REGB_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR_LOG_0,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR_LOG_1,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++}
++
+ static void pnv_phb4_reset(Object *obj, ResetType type)
+ {
+     PnvPHB4 *phb = PNV_PHB4(obj);
+ 
+     pnv_phb4_pbl_core_reset(phb);
++    pnv_phb4_err_reg_reset(phb);
++    pnv_phb4_pcie_stack_reg_reset(phb);
++    pnv_phb4_regb_err_reg_reset(phb);
+ }
+ 
+ static void pnv_phb4_instance_init(Object *obj)
+diff --git a/hw/pci-host/pnv_phb5.c b/hw/pci-host/pnv_phb5.c
+index decfd2ba68..4906a82c6f 100644
+--- a/hw/pci-host/pnv_phb5.c
++++ b/hw/pci-host/pnv_phb5.c
+@@ -25,16 +25,6 @@
+ #include "trace.h"
+ #include "system/reset.h"
+ 
+-/*
+- * Get the PCI-E capability offset from the root-port
+- */
+-static uint32_t get_exp_offset(PCIDevice *pdev)
+-{
+-    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(pdev);
+-
+-    return rpc->exp_offset;
+-}
+-
+ void pnv_phb5_cfg_core_reset(PCIDevice *d)
+ {
+     uint8_t *conf = d->config;
+@@ -81,6 +71,15 @@ void pnv_phb5_cfg_core_reset(PCIDevice *d)
+     pci_set_long(conf + P16_ECAP, 0x22410026);
+     pci_set_long(conf + P32_ECAP, 0x1002A);
+     pci_set_long(conf + P32_CAP,  0x103);
++
++    /* Sticky reset */
++    RC_CONFIG_STICKY_RESET(exp_offset + PCI_EXP_LNKCTL2,
++                                          PCI_EXP_LNKCTL2_TLS_32_0GT, 0xFEFFBF);
++    RC_CONFIG_STICKY_RESET(P16_STAT,          0,    0x1F);
++    RC_CONFIG_STICKY_RESET(P16_LDPM,          0,    0xFFFF);
++    RC_CONFIG_STICKY_RESET(P16_FRDPM,         0,    0xFFFF);
++    RC_CONFIG_STICKY_RESET(P16_SRDPM,         0,    0xFFFF);
++    RC_CONFIG_STICKY_RESET(P32_CTL,           0,    0x3);
+ }
+ 
+ static void pnv_phb5_pbl_core_reset(PnvPHB4 *phb)
+diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+index 0d558f0c55..95ba26db53 100644
+--- a/include/hw/pci-host/pnv_phb4.h
++++ b/include/hw/pci-host/pnv_phb4.h
+@@ -215,5 +215,22 @@ struct PnvPhb4PecClass {
+     const uint32_t *num_phbs;
+ };
+ 
++/*
++ * Get the PCI-E capability offset from the root-port
++ */
++uint32_t get_exp_offset(PCIDevice *pdev);
++
++/*
++ * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
++ * RC-config space values and masks are LE.
++ * Method pnv_phb4_rc_config_read() returns BE, hence convert to LE.
++ * Compute new value in LE domain.
++ * New value computation using sticky-mask is in LE.
++ * Convert the computed value from LE to BE before writing back.
++ */
++#define RC_CONFIG_STICKY_RESET(a, v, s) \
++    (pci_set_word(conf + (a), be16_to_cpu( \
++                     (be16_to_cpu(pci_get_word(conf + (a))) & (s)) | \
++                     ((v) & ~(s)))))
+ 
+ #endif /* PCI_HOST_PNV_PHB4_H */
+diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+index d756b6bb4f..59329068d3 100644
+--- a/include/hw/pci-host/pnv_phb4_regs.h
++++ b/include/hw/pci-host/pnv_phb4_regs.h
+@@ -344,13 +344,23 @@
+ #define   PHB_RC_CONFIG_SIZE                    0x800
+ 
+ #define PHB_AER_ECAP                            0x100
++#define PHB_AER_UERR                            0x104
++#define PHB_AER_UERR_MASK                       0x108
++#define PHB_AER_CERR                            0x110
+ #define PHB_AER_CAPCTRL                         0x118
++#define PHB_AER_HLOG_1                          0x11C
++#define PHB_AER_HLOG_2                          0x120
++#define PHB_AER_HLOG_3                          0x124
++#define PHB_AER_HLOG_4                          0x128
++#define PHB_AER_RERR                            0x130
++#define PHB_AER_ESID                            0x134
+ #define PHB_SEC_ECAP                            0x148
+ #define PHB_LMR_ECAP                            0x1A0
+ #define PHB_LMR_CTLSTA_2                        0x1AC
+ #define PHB_LMR_CTLSTA_16                       0x1E4
+ #define PHB_DLF_ECAP                            0x1E8
+ #define PHB_DLF_CAP                             0x1EC
++#define PHB_DLF_STAT                            0x1F0
+ 
+ /* PHB4 REGB registers */
+ 
+@@ -385,8 +395,7 @@
+ #define   PHB_PCIE_CRESET_PBL           PPC_BIT(2)
+ #define   PHB_PCIE_CRESET_PERST_N       PPC_BIT(3)
+ #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+-
+-
++#define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+ #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
+ #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
+ 
+diff --git a/include/hw/pci-host/pnv_phb5.h b/include/hw/pci-host/pnv_phb5.h
+index a1d0b4d2b0..d76846068a 100644
+--- a/include/hw/pci-host/pnv_phb5.h
++++ b/include/hw/pci-host/pnv_phb5.h
+@@ -34,9 +34,14 @@ void pnv_phb5_cfg_core_reset(PCIDevice *d);
+ 
+ /* New registers in PHB5 from PHB4 */
+ #define P16_ECAP                                0x1F4
++#define P16_STAT                                0x200
++#define P16_LDPM                                0x204
++#define P16_FRDPM                               0x208
++#define P16_SRDPM                               0x20C
+ #define P32_ECAP                                0x224
+ #define P32_CAP                                 0x228
+-
++#define P32_CTL                                 0x22C
++#define P32_STAT                                0x230
+ #define PHB_PCIE_PHY_RXEQ_STAT_G3_00_03         0x1B40
+ #define PHB_PCIE_PHY_RXEQ_STAT_G5_12_15         0x1B98
+ 
 diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
-new file mode 100644
-index 0000000000..a6f890ba79
---- /dev/null
+index fd388493c9..2294cf5525 100644
+--- a/tests/qtest/pnv-phb-test.c
 +++ b/tests/qtest/pnv-phb-test.c
-@@ -0,0 +1,100 @@
-+/*
-+ * QTest testcase for PowerNV PHB
-+ *
-+ * Copyright (c) 2026, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/pci-host/pnv_phb4_regs.h"
-+#include "pnv-xscom.h"
-+#include "pnv-qtest-common.h"
-+
-+#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
-+#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
-+
-+/* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
-+#define PHB4_XSCOM              0x40084800ull
-+
-+/* SCOM to PCBA address conversion */
-+#define SCOM_TO_PCBA(scom, addr) (((scom) >> 3) + (addr))
-+
-+/*
-+ * Indirect XSCOM read::
-+ * - Write 'Indirect Address Register' with register-offset to read.
-+ * - Read 'Indirect Data Register' to get the value.
-+ */
-+static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
-+        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
-+        uint64_t reg)
-+{
-+    qtest_writeq(qts, pnv_xscom_addr(chip, SCOM_TO_PCBA(scom, indirect_addr)),
-+                 reg);
-+    return qtest_readq(qts, pnv_xscom_addr(chip, SCOM_TO_PCBA(scom,
-+                                                              indirect_data)));
-+}
-+
-+/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
-+static void phb_version_test(const void *data)
-+{
-+    const PnvChip *chip = (PnvChip *)data;
-+    QTestState *qts;
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-+
-+    /* Defaults to PNV_CHIP_POWER8 */
-+    uint64_t phb_xscom = 0x4809e000;
-+    uint64_t reg_phb_version = PHB_VERSION;
-+    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
-+    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
-+    uint32_t expected_ver = 0xA3;
-+    uint64_t ver;
-+
-+    if (chip->chip_type == PNV_CHIP_POWER9) {
-+        phb_xscom = 0x68084800;
-+        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-+        indirect_data = PHB_SCOM_HV_IND_DATA;
-+        reg_phb_version |= PPC_BIT(0);
-+        expected_ver = 0xA4;
-+    } else if ((chip->chip_type == PNV_CHIP_POWER10) ||
-+               (chip->chip_type == PNV_CHIP_POWER11)) {
-+        phb_xscom = PHB4_XSCOM;
-+        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-+        indirect_data = PHB_SCOM_HV_IND_DATA;
-+        reg_phb_version |= PPC_BIT(0);
-+        expected_ver = 0xA5;
-+    }
-+
-+    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip->cpu_model);
-+
-+    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
-+                                indirect_addr, indirect_data, reg_phb_version);
-+
-+    /* PHB Version register bits [24:31] */
-+    ver = GETFIELD(PPC_BITMASK(24, 31), ver);
-+    g_assert_cmpuint(ver, ==, expected_ver);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* Verify versions of all supported PHB's */
-+static void add_phbX_version_test(void)
-+{
-+    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
-+        g_autofree char *tname = g_strdup_printf("pnv-phb/%s",
-+                                      pnv_chips[i].cpu_model);
-+        qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
-+    }
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    /* PHB[345] tests */
-+    add_phbX_version_test();
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/pnv-qtest-common.h b/tests/qtest/pnv-qtest-common.h
-new file mode 100644
-index 0000000000..c2d1bae7bb
---- /dev/null
-+++ b/tests/qtest/pnv-qtest-common.h
-@@ -0,0 +1,24 @@
-+/*
-+ * PNV QTest common definitions
-+ *
-+ * Copyright (c) 2026, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef TEST_PNV_QTEST_COMMON_H
-+#define TEST_PNV_QTEST_COMMON_H
-+
-+#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-+#define PPC_BIT32(bit)          (0x80000000 >> (bit))
-+#define PPC_BIT8(bit)           (0x80 >> (bit))
-+#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
-+#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
-+                                 PPC_BIT32(bs))
-+
-+#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
-+#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
-+#define SETFIELD(m, v, val) \
-+        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
-+
-+#endif
-diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
-index 3b84227424..4b823a57e2 100644
---- a/tests/qtest/pnv-xive2-common.h
-+++ b/tests/qtest/pnv-xive2-common.h
-@@ -9,12 +9,7 @@
- #ifndef TEST_PNV_XIVE2_COMMON_H
- #define TEST_PNV_XIVE2_COMMON_H
+@@ -23,6 +23,19 @@
+ /* SCOM to PCBA address conversion */
+ #define SCOM_TO_PCBA(scom, addr) (((scom) >> 3) + (addr))
  
--#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
--#define PPC_BIT32(bit)          (0x80000000 >> (bit))
--#define PPC_BIT8(bit)           (0x80 >> (bit))
--#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
--#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
--                                 PPC_BIT32(bs))
-+#include "pnv-qtest-common.h"
- #include "hw/intc/pnv_xive2_regs.h"
- #include "hw/ppc/xive_regs.h"
- #include "hw/ppc/xive2_regs.h"
++/*
++ * Indirect XSCOM write:
++ * - Write 'Indirect Address Register' with register-offset to write.
++ * - Write 'Indirect Data Register' with the value.
++ */
++static void pnv_phb_xscom_write(QTestState *qts, const PnvChip *chip,
++        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
++        uint64_t reg, uint64_t val)
++{
++    qtest_writeq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_addr), reg);
++    qtest_writeq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_data), val);
++}
++
+ /*
+  * Indirect XSCOM read::
+  * - Write 'Indirect Address Register' with register-offset to read.
+@@ -38,6 +51,11 @@ static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
+                                                               indirect_data)));
+ }
+ 
++#define PHB5_XSCOM_WRITE(a, v) pnv_phb_xscom_write(qts, \
++                                   &pnv_chips[PNV_P10_CHIP_INDEX], PHB5_XSCOM, \
++                                   PHB_SCOM_HV_IND_ADDR, PHB_SCOM_HV_IND_DATA, \
++                                   PPC_BIT(0) | (a), (v))
++
+ #define PHB5_XSCOM_READ(a) pnv_phb_xscom_read(qts, \
+                                    &pnv_chips[PNV_P10_CHIP_INDEX], PHB5_XSCOM, \
+                                    PHB_SCOM_HV_IND_ADDR, PHB_SCOM_HV_IND_DATA, \
+@@ -49,6 +67,26 @@ static void phb5_reset_test(QTestState *qts)
+     g_assert_cmpuint(PHB5_XSCOM_READ(PHB_PBL_CONTROL), ==, 0xC009000000000000);
+ }
+ 
++/* Check sticky-reset */
++static void phb5_sticky_rst_test(QTestState *qts)
++{
++    uint64_t val;
++
++    /*
++     * Sticky reset test of PHB_PBL_ERR_STATUS.
++     *
++     * Write all 1's to reg PHB_PBL_ERR_INJECT.
++     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
++     *
++     * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
++     * Verify the sticky bits are still set.
++     */
++    PHB5_XSCOM_WRITE(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
++    PHB5_XSCOM_WRITE(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
++    val = PHB5_XSCOM_READ(PHB_PBL_ERR_STATUS);
++    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
++}
++
+ static void phb5_tests(void)
+ {
+     QTestState *qts = NULL;
+@@ -58,6 +96,9 @@ static void phb5_tests(void)
+     /* Check reset value of a register */
+     phb5_reset_test(qts);
+ 
++    /* Check sticky reset of a register */
++    phb5_sticky_rst_test(qts);
++
+     qtest_quit(qts);
+ }
+ 
 -- 
 2.52.0
 
