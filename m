@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D8FC61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED120C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18Wb-0001bG-Kg; Mon, 31 Aug 2026 16:22:39 -0400
+	id 1x18X0-0002II-QM; Mon, 31 Aug 2026 16:23:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18W9-0001Eu-5c
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:22:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18WR-0001b9-Hw
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:22:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18W7-0007nk-MZ
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:22:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18WO-0007rk-C8
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:22:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207727;
+ s=mimecast20190719; t=1788207743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yKAT3AByQqAPEWNoFggUat7b+8Hak/kL/bR6Gv1FXr8=;
- b=duU6ga0RB69Ov0Q5zSKw6tOCozJ4Dhofa15o3rkQhfO+Yj9ln6z4kbGJNGhVIfD4sWUnnd
- GaDUQiLSgQBkIJqlhew0Qf1aJq8+IE2ySlz+B82rXwl7O3xUwQ8C+XVtTfnaO0roqr3X+M
- TXuj4+R7CrgWGZuOevSCpTJB1TdR1ns=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=CJj1tpPE8OM93bqYjizhdyFRUwlcEtSIS5cPqNRF9cY=;
+ b=IyVRTlBi8lE07dFYy2MPEHCjWeY0As323SYBNX+bmT2OSao0RENGo+0tEOhgfrUw5H0T8Y
+ MQOp8AbRI2zMrAZ1BBigllG3bLlEFvpxjXueWBwGmuRHmabEJnXdzR0RbJ56v4Wh24ivo7
+ udcFh5DwMsbo9xgF198mBEMKDFCL+0c=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-GluYs3xHMN-gr1CQ6mS6dA-1; Mon,
- 31 Aug 2026 16:22:03 -0400
-X-MC-Unique: GluYs3xHMN-gr1CQ6mS6dA-1
-X-Mimecast-MFC-AGG-ID: GluYs3xHMN-gr1CQ6mS6dA_1788207720
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-131--hYo-e0KPKGM2YvaRZ_4EQ-1; Mon,
+ 31 Aug 2026 16:22:18 -0400
+X-MC-Unique: -hYo-e0KPKGM2YvaRZ_4EQ-1
+X-Mimecast-MFC-AGG-ID: -hYo-e0KPKGM2YvaRZ_4EQ_1788207735
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E77E5182C496; Mon, 31 Aug 2026 20:21:35 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88313192013B; Mon, 31 Aug 2026 20:21:44 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1B0ED1800DB9; Mon, 31 Aug 2026 20:21:20 +0000 (UTC)
+ id 88D89180176D; Mon, 31 Aug 2026 20:21:29 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -70,26 +70,27 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 09/43] qapi: convert trivial intro sections for
- machine-common.json
-Date: Mon, 31 Aug 2026 16:19:11 -0400
-Message-ID: <20260831201945.287730-10-jsnow@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v4 10/43] qapi: convert trivial intro sections for
+ accelerator.json
+Date: Mon, 31 Aug 2026 16:19:12 -0400
+Message-ID: <20260831201945.287730-11-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,55 +107,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/machine-common.json | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ qapi/accelerator.json | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index aca98e994af..fdb0e68d9e6 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -12,9 +12,8 @@
+diff --git a/qapi/accelerator.json b/qapi/accelerator.json
+index b59df378664..efc0fa81418 100644
+--- a/qapi/accelerator.json
++++ b/qapi/accelerator.json
+@@ -13,8 +13,7 @@
  
  ##
- # @S390CpuEntitlement:
+ # @KvmInfo:
 -#
--# An enumeration of CPU entitlements that can be assumed by a virtual
--# S390 CPU
-+#     An enumeration of CPU entitlements that can be assumed by a
-+#     virtual S390 CPU
+-# Information about support for KVM acceleration
++#     Information about support for KVM acceleration
  #
- # Since: 8.2
- ##
-@@ -23,8 +22,7 @@
+ # @enabled: true if KVM acceleration is active
+ #
+@@ -26,8 +25,7 @@
  
  ##
- # @CpuTopologyLevel:
+ # @query-kvm:
 -#
--# An enumeration of CPU topology levels.
-+#     An enumeration of CPU topology levels.
+-# Return information about KVM acceleration
++#     Return information about KVM acceleration
  #
- # @thread: thread level, which would also be called SMT level or
- #     logical processor level.  The @threads option in
-@@ -84,8 +82,7 @@
+ # Features:
+ #
+@@ -46,8 +44,7 @@
  
  ##
- # @SmpCacheProperties:
+ # @x-accel-stats:
 -#
--# Cache information for SMP system.
-+#     Cache information for SMP system.
+-# Query accelerator statistics
++#     Query accelerator statistics
  #
- # @cache: Cache name, which is the combination of cache level and
- #     cache type.
-@@ -103,8 +100,7 @@
+ # Features:
+ #
+@@ -63,8 +60,7 @@
  
  ##
- # @SmpCachePropertiesWrapper:
+ # @Accelerator:
 -#
--# List wrapper of `SmpCacheProperties`.
-+#     List wrapper of `SmpCacheProperties`.
+-# Information about support for MSHV acceleration
++#     Information about support for MSHV acceleration
  #
- # @caches: the list of `SmpCacheProperties`.
+ # @hvf: Apple Hypervisor.framework
+ #
+@@ -88,8 +84,7 @@
+ 
+ ##
+ # @AcceleratorInfo:
+-#
+-# Information about support for various accelerators
++#     Information about support for various accelerators
+ #
+ # @enabled: the accelerator that is in use
+ #
+@@ -102,8 +97,7 @@
+ 
+ ##
+ # @query-accelerators:
+-#
+-# Return information about accelerators
++#     Return information about accelerators
+ #
+ # Returns: @AcceleratorInfo
  #
 -- 
 2.55.0
