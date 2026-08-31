@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A35CC61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 19:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D09C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 19:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x17EV-0001PS-LG; Mon, 31 Aug 2026 14:59:51 -0400
+	id 1x17Kw-0003KA-RS; Mon, 31 Aug 2026 15:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tgamblin@baylibre.com>)
- id 1x17ET-0001Ob-Fp
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:59:49 -0400
-Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1x17Kv-0003Jc-8A
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 15:06:29 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tgamblin@baylibre.com>)
- id 1x17EQ-0000B0-Mj
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:59:49 -0400
-Received: by mail-qv1-xf32.google.com with SMTP id
- 6a1803df08f44-90cdebdfe63so419776d6.3
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 11:59:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1x17Kt-0001kC-On
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 15:06:28 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2d944747d41so10452475ad.0
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 12:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=baylibre.com; s=google; t=1788202785; x=1788807585; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=9ZzUZ9M0dAHPjqS+kpTChb3yfXAJvWD9K5TPUlBVbHI=;
- b=MWVuncmm37LZBnYbsRRuDbxr2oILKsF/vO4iFkihXb/WhC2fsbI+IDUhs9RKGz1R0j
- jfn5N7HF+SrEPXOFt+decuJFgc2gqMymTKuZTw96Y/reDHR5uycsBKksW5uOvFQLmKpU
- jsU5yf0QHC3v6XjTBhYHfcS5uNYZCcwlDOMRsCb2A7bDgpyLkrvJQzTgXlRbossdx2E0
- N0mAJotl9FDBgeqVPHhTxJ0TWKhph6WD7up23DW9wVcxQUPlMHcfXLLUlsrIxzQQktKI
- L0xHMHOd+Y1iEHojqdrBKPWH2Vi5fINm+Ngte9fmBxph9h/nfhk1velaT3zxVTh7t6Ex
- pFYQ==
+ d=gmail.com; s=20251104; t=1788203186; x=1788807986; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tZ+iTEZMuDoLCrtoXGdQZeAICyA3MoElzRAXRcYfLLI=;
+ b=oNJaH+YT59sZ5YzlOKefqcvjgzHYxbRvzWNISWZhVG7XrS99XQV+aYn6JMc8Kkyw9b
+ 0pPwSYX+PsEX1xyd5oJLxP7dDO4nJVI4lf2cmNe6KtMdVOg2y+qjj8WyJh4y16/brrvN
+ yAtW8AFctECfupDe78DMErOYgP6l9O/q4r6rz7oXpok/8GjGqFSTZCrc+tvtU7KSkegV
+ OV9QLI55Zs746xTthlcA8PjWf7Iz5pfsppqdB9R2fl4W9/744sHzph+634pr102mPVlS
+ Kgg9otMouPDFO/4zO2R7+rU51lSbxtGMDcTlPFH2b2sCwgSX23XjTAB6G7HiMeHXUjQ9
+ K4+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788202785; x=1788807585;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9ZzUZ9M0dAHPjqS+kpTChb3yfXAJvWD9K5TPUlBVbHI=;
- b=McoxU6IVyqZXjjmFV3Nl8KucM/xZSd6nlDakUl34jlu37h7cN9QojkNKlM16Ih/GeN
- JKNLn2urewVboDcgXu8Z27qy3UlZbF0YWweMYsciomrvEh8prYRRw0D9rXY+SV7pbIrz
- MeRP9jM28G/g/PAmAnU2NkkzsC49hapFkJVnuCcZuW9FPcpFJDY4NiqLERUgEHOJX/CZ
- BAWHbdhVa9EmVubJEIbpTxukvJOlzSaVv/hKMgvX7VgUz17tU4aQp7nGVYuhbyGBfkNv
- 17fHenB7jxin9fWzfnGvPjvc3BNG5f2EJLGhyFk2YJLRaz6wG75qVXVq0irweZ6JM5S7
- d0Aw==
-X-Gm-Message-State: AFuF++kUFLbHfqRXjIVijrO0xJNoQ/CywUHz1kmB/E0yRgg+ET1Chnuw
- M5gJugcUGRSORlUSnNPKwd/lVHHNbJcrAtVyckOSxHNPoX0PV6r6yCFfwIpu/6kyZig=
-X-Gm-Gg: AYBFou08ShJG4FcypTjeGimosYr5qf90MYeO201YooEAp/RJH5spW7TGv8VdaKWPGco
- QeTGz2TB48IwaNrX0+O8e42nsLt3xKuXOR+KGFA8n8B/CT5q0Rr3l/cMjFSaDPxGxvuVpX49CGT
- JHnSboI/rlAII+aFCV5qC3jH/E1gUCfyxTVuZFvOkPtf0fJhkhhvwpTlOqRfHTpgrgE9PHg4S5R
- SLw7qlAZG6GZIyITYqe7FyrKELkYpovj2TSYLpidVgUIoevQoWkpVVVEWeOq42aWXqWTa5zU9Yk
- 2HtcUkDMmmPSBWFyX8AY2gtGo4BFxvxizIay6n3zrY6Ib3y8/St+e0OubQ8pq8Z7r00hjNCTemZ
- EtALDwNnxO5zpEnU6fatwYU3vaDL49WhNpuqbajD9f6OFiSP0tRpisDxOrV1QXG6ioH49pZGwl8
- l98XAIq6dxxNleCpnUdmYiBcYbCVIZVnWt5+YJwqeW2tOs6Q0Wth4NvneFQ7Uktf/elJsGVqm1
-X-Received: by 2002:ad4:594f:0:b0:90e:8022:b673 with SMTP id
- 6a1803df08f44-90e8022b6d5mr173787566d6.9.1788202785311; 
- Mon, 31 Aug 2026 11:59:45 -0700 (PDT)
-Received: from [192.168.40.230] ([2001:1970:3847:e000:1977:be2f:4a71:2892])
+ d=1e100.net; s=20251104; t=1788203186; x=1788807986;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tZ+iTEZMuDoLCrtoXGdQZeAICyA3MoElzRAXRcYfLLI=;
+ b=dsGgcl2P16B89lkgGoGcrT7pG1IN7sJDVsaEsc06gLZ1D964WhcsNP4F3xXsI/dNPQ
+ F6osncQ85SKsel0xgHLMs7HnSFNjuCcAGrbVQZyFc0P//z6k315vxeaVQQNOLu8TtEyo
+ B99YFzfR+VUbqIGbYnz3zPo9hMttApG/IuvIPIv/XiTBDweN7J7yHKxOade6tej5Aerp
+ x2Z5ZSAasStNi1CVkZMKdcwpWFGujBVTrVetRdbG0TxxMumSMyFeEmhSot4Xrp6hDnr/
+ tH9GupofcteZ3/EaiFGq6GDninDNkGtg3MencwGvp+1OxF5vcN9CE3YjEirMJcGyEmBX
+ tSoQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByN89esV3Om/Uu5tC2B41cEm9Arzh6Xbe28dB+jkGtZ39Ve+eg57DEecXgbpuVqCqVeYQ869wME1fQV@nongnu.org
+X-Gm-Message-State: AFuF++m0wiahi7fzbkWhAgde3PtfZcJGxlZnKkZffxn5Z1x5tpJYy7DA
+ rqFUc5USeTYOIyHx9KkMXckhvg6xm+s6S8SyF4A/DP7zi92Ub+UUzybd
+X-Gm-Gg: AYBFou2A/ZdHF4NBnHCj0Ct9AtObVVqrCNCkvjftnOXEqS24aorXFL2xqr+6aoyl5cV
+ geCo+39bxzgqDSE1t01Riqu9r3CCRYW8AzKTZQyJqMh+KyRfYKJxpU46Kt+zNSAzPsPmuyn6Npx
+ Qrk4wA/BJWAbondijcOPd5jQJrN5SVaxFMMz5kLqEvqk1ByD2gUMRh37JQo5m6A5MHP2sL6l155
+ dzCyr+gF8qrE8KUrKIPbe1IjHXRM0VZds7IQbDoxb78mIcUboebw2I6l8SakTVzcUFCQil4iCLK
+ fEZXBQFwT2G21sgJfI2nDY3CNC7Y63ZDOQSkEBsBoaSUvDuP15XS7DqFDlg//yNfnk9lZI6kXRT
+ 9D/B3lrsTBUwRPpnQvzHi9rgRodAtvXL06PR7A/ONhGvisxYySuz4K0H/KVKiOBSxGO1VJ371wC
+ 6SSmezD4W2dC4rhqUs0E60XsrW6RMJ4LkBsBytYxRo8R1LVI9zAjewZXyE7MEfWNMr4+T/AdMWM
+ 8pc/bGnlzSGFUfnUgOdIYLfJrv04pQDuP/DNYeyDjWUfYRhpeLz2Jv46Ca3p7+QGg==
+X-Received: by 2002:a17:903:37c5:b0:2d1:134:b86e with SMTP id
+ d9443c01a7336-2d74dbe9608mr440606465ad.2.1788203185573; 
+ Mon, 31 Aug 2026 12:06:25 -0700 (PDT)
+Received: from visitorckw-work01.c.googlers.com.com
+ (202.176.229.35.bc.googleusercontent.com. [35.229.176.202])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90ce44f5695sm90952986d6.26.2026.08.31.11.59.43
+ d9443c01a7336-2d7598c1cb4sm40595765ad.81.2026.08.31.12.06.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 11:59:44 -0700 (PDT)
-From: Trevor Gamblin <tgamblin@baylibre.com>
-Date: Mon, 31 Aug 2026 14:59:39 -0400
-Subject: [PATCH 1/3] target/riscv: extract sfence_vma_allowed() from
- helper_tlb_flush()
+ Mon, 31 Aug 2026 12:06:24 -0700 (PDT)
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: mst@redhat.com
+Cc: jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com,
+ qemu-devel@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>
+Subject: [PATCH] virtio-rtc: Report smeared UTC clock type
+Date: Mon, 31 Aug 2026 19:06:12 +0000
+Message-ID: <20260831190612.369235-1-visitorckw@gmail.com>
+X-Mailer: git-send-email 2.55.0.897.gb25b4bd76c-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260831-riscv_tlb_page_flush-v1-1-4fc6af95673a@baylibre.com>
-References: <20260831-riscv_tlb_page_flush-v1-0-4fc6af95673a@baylibre.com>
-In-Reply-To: <20260831-riscv_tlb_page_flush-v1-0-4fc6af95673a@baylibre.com>
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- Trevor Gamblin <tgamblin@baylibre.com>
-X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
- envelope-from=tgamblin@baylibre.com; helo=mail-qv1-xf32.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=visitorckw@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,53 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a new function to encapsulate the privilege/hypervisor checks
-performed inside helper_tlb_flush(). The idea is to pass GETPC() as an
-argument directly to it inside the helper_tlb_flush() function.
+The Linux virtio_rtc driver only registers an RTC class device when the
+clock type is VIRTIO_RTC_CLOCK_UTC_SMEARED to avoid leap second steps on
+pure UTC clocks.
 
-Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
+Report VIRTIO_RTC_CLOCK_UTC_SMEARED in clock capabilities so the guest
+can expose the device as an RTC device.
+
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- target/riscv/tcg/op_helper.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ hw/virtio/virtio-rtc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 3e94005d2b..8039df2b48 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -588,18 +588,25 @@ void helper_wrs_nto(CPURISCVState *env)
-     }
- }
- 
--void helper_tlb_flush(CPURISCVState *env)
-+static bool sfence_vma_allowed(CPURISCVState *env, uintptr_t ra)
- {
--    CPUState *cs = env_cpu(env);
-     if (!env->virt_enabled &&
-         (env->priv == PRV_U ||
-          (env->priv == PRV_S && get_field(env->mstatus, MSTATUS_TVM)))) {
--        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
-+        return false;
-     } else if (env->virt_enabled &&
-                (env->priv == PRV_U || get_field(env->hstatus, HSTATUS_VTVM))) {
--        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
--    } else {
--        tlb_flush(cs);
-+        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, ra);
-+        return false;
-+    }
-+    return true;
-+}
-+
-+void helper_tlb_flush(CPURISCVState *env)
-+{
-+    if (sfence_vma_allowed(env, GETPC())) {
-+        tlb_flush(env_cpu(env));
-     }
- }
- 
-
+diff --git a/hw/virtio/virtio-rtc.c b/hw/virtio/virtio-rtc.c
+index 32de9c1650..0dcbe94758 100644
+--- a/hw/virtio/virtio-rtc.c
++++ b/hw/virtio/virtio-rtc.c
+@@ -62,7 +62,8 @@ static void virtio_rtc_handle_request(VirtIODevice *vdev, VirtQueue *vq)
+                 resp.head.status = VIRTIO_RTC_S_ENODEV;
+             } else {
+                 resp.head.status = VIRTIO_RTC_S_OK;
+-                resp.type = VIRTIO_RTC_CLOCK_UTC;
++                resp.type = VIRTIO_RTC_CLOCK_UTC_SMEARED;
++                resp.leap_second_smearing = VIRTIO_RTC_SMEAR_UNSPECIFIED;
+             }
+             written = iov_from_buf(elem->in_sg, elem->in_num, 0, &resp,
+                                    sizeof(resp));
 -- 
-2.55.0
+2.55.0.897.gb25b4bd76c-goog
 
 
