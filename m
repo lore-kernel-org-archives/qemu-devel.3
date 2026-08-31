@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29312C61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 10:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30142C61DE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 10:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0yqO-0003dZ-QA; Mon, 31 Aug 2026 06:02:24 -0400
+	id 1x0yq5-0003Wm-4A; Mon, 31 Aug 2026 06:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0yqG-0003bR-E7
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:02:21 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0ypx-0003VT-Tr
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:01:57 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0yqE-0001jX-FF
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:02:16 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-482f2ee53e7so1462229f8f.1
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 03:02:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x0ypw-0001hR-2E
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 06:01:57 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4843e9c5960so389985f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 03:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788170533; x=1788775333; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=23CFRW4wlT4KTlZB9/d9F3Ig9fE0VudgUIy5XUnsxBQ=;
- b=iCc7EWy/YNCZmUBcKUJVj+AifO11EFRMUQt6Qzi0Swng6tMokNaH7r/GWBQflNbSsf
- Fsjpwxu28ki5de1Rmamoeo7fkOAP454xNS/fnFLJZjISnhdcgivBT5HQhq4R0Md9zs+H
- uMSq23mgVZYQdVaoKRVOFzfGMNjI/oosdtDzTeVbYfgyyWysHVRghB7GeP6Yu6nl3VqI
- uKR3xw4FQ8WK0TumD03IjWvBAFxuW3hXvzhh8Mz/2FO5pRTZAy+/Mw9aG1jLc12pI8K/
- JCBOyE0LVV67PuwLXbFZOr9YGDWZv0Aqzf4Csd7nudUGt15HHT3ghSqWerJ2gBfjabSn
- IQSQ==
+ d=openvz.org; s=google; t=1788170514; x=1788775314; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=6mzly1CBUe4Sf/Yf/dvAMrTn8OmlXYos0/3g7s29vJk=;
+ b=bYIXEBRiVCUyHkFhgdrH4myyI7KuRCU+0m7yAIiaDtis7rD2264l+ys/nZvarKSqNX
+ eEtA29VTTErO0cHkBc91QG66Ohfj21cLIo8DFkpOBqHxFfl5qrgoPr1vifbBiPQn5374
+ tDAvyCjw0r7M3D8cf2X24q9bYz1l2QDFmWd+KyQAFrl0tsu6ovESyFXAG1zzggm9R9ZL
+ AmB2wfdYMAJ8l/1nSGH93PoiggBX5blMP4JXIRFS7h1uCQff50CC7dIYMZHbo8Obqn5O
+ iPbCciWvnaqC2RvUjgDXtdV7XIM9aqQ6EIn+R873BIkk8qFU/IltaRqrKf3jBHnFMAr8
+ WNLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788170533; x=1788775333;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=23CFRW4wlT4KTlZB9/d9F3Ig9fE0VudgUIy5XUnsxBQ=;
- b=YJAd90DSbpmFHTJQXnOeIM5ZMazP+pcqIChgOiX3R9HZH+zv13dcPQ0Dy7WwZGeigA
- 6jK1Ti7Ch3pboP5jHoLELuMqPAkM2ZL9lK3svYVRa35Yri0QtMcgDxgUywYWuI94MbP0
- 6NrDZyovfSqGeu+lAX8wPkwl6Y3TIkU7ZEF6HqqJHsmOsWTTepw5friUdSewgZfD+pbO
- Bj9KFIP8l8NbSvZZnatUreY+Uf2tNeqpMh1BFVQCmojFtD3mvRBll0ttxx33LLaJtJGI
- N6Flr9eIha8zIqMVDynozLC2LgsY2nOUxbLzvqHncvyRX/X3fdJUYBwbwzFG46Ny1SgU
- Zgfg==
-X-Gm-Message-State: AFuF++mrQxIjwegXmLlXANBMbCKSESJ46PRfV8obXzimZc23e3PYwkbW
- 9xqMeEN1LvF46DuMkgb1BABDpCR+v0UOgewb4jfRFxfEvJqCCtPh1m3JuuLYNbiI/TGNMTFAfIo
- LswUu
-X-Gm-Gg: AYBFou2mXIcdhTi8qaf3YwCVxd2m3/UZwGd9b/f+2ykMThPB8PRAEK76KLUTpeyJtDo
- uofAESyC71tIfNYruZvyJmcuXhCcSvDioYFyaRhn7ig8ZAeXUWx6YLhLpREphlsfnLmIODuerVq
- cYcSdAyuoJbY/KqkLO+WA1ZOJxhnK4LmMzgZp+6vw220iY/Hz14skue6YGMHyalEbQAUYEiHOYe
- uMfIHFQZxr8UQIe3pJPaBoiYcm+iw/4m2B0MLTeSxgU3r8V5Fim/zuIbfHj+KdY9JePCB6n6zaL
- OFlokGxm8G8/DdRAdCvnaDqBQGhdDIxybpKU1J68wWqpwKTqJLMjD1Ifa/1gAx2Z6X5vVQbMoED
- S6ASACcGXiC9d73YH98LdYQvYFMgRptgoCRLObX48nX1c6Ila4mf1j1ndQibFz20Vf+CXtjLd2P
- 2OhtA9s5cDJhLCMAPfD6fsGf/J1Lie+HtUPhWrVK7NegYkKvSghXqXY0/7
-X-Received: by 2002:a05:6000:4917:b0:482:9dc6:16c4 with SMTP id
- ffacd0b85a97d-4843f894ce9mr2039089f8f.1.1788170520472; 
- Mon, 31 Aug 2026 03:02:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788170514; x=1788775314;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=6mzly1CBUe4Sf/Yf/dvAMrTn8OmlXYos0/3g7s29vJk=;
+ b=bBP0IIz1hST19MSPGcZN5VWAPtx9p6ZnYdjuq9DYnF//Y1geR4FEPIriNp68OotO7E
+ se3D91PnMZGXtJFQdLVgH0veeXwX1sFY0B1IwrmT+x+qw/APG7epvNZiqMjgQ1mBs75h
+ cGVaon/TVLVFvKd/aeNOZdgbg+LDTwnhHsy1ZxyeJ9HPZMCk78Dz17ADr9OdjiumCZnV
+ bB9VEbsCDm2pNJqmCrlHqvGCYo7Ro5W4WxLpReMypsvAuAQrBveoIzyDEYHPHyXAXJm0
+ lr6X7a5ckTGRlVkGBTvwfkpn6Jl09t7FDlLMMMP3fONldwj/UPzzE/R1InDpk/TjqfWB
+ 0l3A==
+X-Gm-Message-State: AFuF++lWfDNo/5AUcNWNi3N3nFrUZOQHzJePx6L3a7JiTy+/zMJTW/aS
+ 4X1o7IAczBNVHtNnxjhA2yuKNyegqiECOlJ5tEhnaKM8FI0qFL56yeGTEaM2XQdJMQAA3PmGahF
+ nbhFA
+X-Gm-Gg: AYBFou0hnDlqnwQt60BYIgocmAeIDsvnlE/z2QGFxdn2YYtlUodOq1Wfeqqeah5Fvt3
+ 3dtdpOnOWPUNTFQWRBTSfwYEtLRHs+H/Gc1IezVDlWUSNVmVE7d+4RU3GFxLMP8hwGnsI9XLCfa
+ AgI0qq3RWyNGGEpJMUWEczu3q5i01duwccrdqrl692dIgwCN7CcShN0ZhsN0fMz7GseDED4gtF1
+ 9tlj8GFRMIcsFV6NsWUJjzh4zFU4z/GkBTF5za6cJRKtOmy0AofnwAZZgChUBnyKRq7bG/RCRxg
+ jqWxwbqEXcu1j1naUNc+0irhHmuTlaVEzVeJZ0Udr1tqpIm00IZsSKeJyG30K3AFpRGUkZ3pTTM
+ SSacU/EDIDALsftsx7wzr5NP7HLMLabcP/RHgC1VXt3rtGcoLNOh67ydVhBDNkC/Ip+yoeSYoXL
+ nuj2LX9icN0F2+YNseCuGShz6H7Q9t8NRm8iuNa1yROuD6ZwRV2cqS/mRX3oaJnz4S9UY=
+X-Received: by 2002:a05:6000:2281:b0:482:e1b0:8a1a with SMTP id
+ ffacd0b85a97d-4843f88480emr1691387f8f.15.1788170514167; 
+ Mon, 31 Aug 2026 03:01:54 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:3bc1:c53b:30b:203e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbb33070sm22362383f8f.36.2026.08.31.03.01.59
+ ffacd0b85a97d-482fbb33070sm22362383f8f.36.2026.08.31.03.01.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 03:02:00 -0700 (PDT)
+ Mon, 31 Aug 2026 03:01:53 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 6/6] tests/unit: cover blocked IO during the websock handshake
-Date: Mon, 31 Aug 2026 12:01:51 +0200
-Message-ID: <20260831100151.914178-7-den@openvz.org>
+Subject: [PATCH 0/6] io/channel-websock: fix an unauthenticated crash in the
+ handshake
+Date: Mon, 31 Aug 2026 12:01:45 +0200
+Message-ID: <20260831100151.914178-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831100151.914178-1-den@openvz.org>
-References: <20260831100151.914178-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=den@openvz.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,226 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+A client which can reach a VNC websocket port crashes QEMU before it has
+authenticated, by sending an HTTP greeting whose request line holds no
+space:
 
-Add a channel which reports QIO_CHANNEL_ERR_BLOCK on demand, the way a
-TLS channel does when a record arrives split across segments or when
-the socket cannot take the whole reply at once, and drive the server
-handshake through it in both directions. Without the fixes each
-direction dereferences a NULL Error and the test dies on SIGSEGV.
+  printf 'stats\r\nx\r\n\r\n' | nc $host $port
 
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Three defects line up to produce it. The greeting is rejected without
+queueing a response, so the handshake goes on to flush an empty buffer.
+A zero length sendmsg() succeeds and returns 0, which
+qio_channel_socket_writev() mistakes for failure and reports as
+QIO_CHANNEL_ERR_BLOCK with errp left unset. The handshake treats every
+negative return as fatal and hands that NULL Error to
+error_get_pretty(). Patches 1 to 3 close the three links.
+
+Patch 5 is the same NULL Error on the read side of the handshake, where
+ERR_BLOCK is folded into -1. It is reachable for a wss:// client, whose
+master channel is then a TLS channel: a wakeup carrying only part of a
+record makes gnutls report EAGAIN.
+
+The tests drive the handshake through a channel which reports ERR_BLOCK
+on demand, covering both directions. No test reproduces the original
+crash itself, which turns on a stale errno and is not reliably
+reproducible in a unit test. What they pin is that a 400 is emitted and
+that ERR_BLOCK no longer reaches error_get_pretty().
+
 Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- tests/unit/test-io-channel-websock.c | 150 ++++++++++++++++++++++++++-
- 1 file changed, 147 insertions(+), 3 deletions(-)
+CC: Daniel P. Berrangé <berrange@redhat.com>
+CC: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-diff --git a/tests/unit/test-io-channel-websock.c b/tests/unit/test-io-channel-websock.c
-index 2a55a4bcdf..88da24f993 100644
---- a/tests/unit/test-io-channel-websock.c
-+++ b/tests/unit/test-io-channel-websock.c
-@@ -12,6 +12,123 @@
- #include "qapi/error.h"
- #include "qemu/module.h"
- #include "qemu/sockets.h"
-+#include "qom/object.h"
-+
-+#define TYPE_QIO_CHANNEL_STALL "qio-channel-stall"
-+OBJECT_DECLARE_SIMPLE_TYPE(QIOChannelStall, QIO_CHANNEL_STALL)
-+
-+/*
-+ * Reports QIO_CHANNEL_ERR_BLOCK for the first @rstalls reads and @wstalls
-+ * writes, the way a TLS channel does when a record arrives split across TCP
-+ * segments or the socket cannot take the whole reply at once.
-+ */
-+struct QIOChannelStall {
-+    QIOChannel parent;
-+    QIOChannel *master;
-+    unsigned rstalls;
-+    unsigned wstalls;
-+};
-+
-+static ssize_t qio_channel_stall_readv(QIOChannel *ioc,
-+                                       const struct iovec *iov,
-+                                       size_t niov,
-+                                       int **fds,
-+                                       size_t *nfds,
-+                                       int flags,
-+                                       Error **errp)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
-+
-+    if (sioc->rstalls) {
-+        sioc->rstalls--;
-+        return QIO_CHANNEL_ERR_BLOCK;
-+    }
-+    return qio_channel_readv_full(sioc->master, iov, niov, fds, nfds,
-+                                  flags, errp);
-+}
-+
-+static ssize_t qio_channel_stall_writev(QIOChannel *ioc,
-+                                        const struct iovec *iov,
-+                                        size_t niov,
-+                                        int *fds,
-+                                        size_t nfds,
-+                                        int flags,
-+                                        Error **errp)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
-+
-+    if (sioc->wstalls) {
-+        sioc->wstalls--;
-+        return QIO_CHANNEL_ERR_BLOCK;
-+    }
-+    return qio_channel_writev_full(sioc->master, iov, niov, fds, nfds,
-+                                   flags, errp);
-+}
-+
-+static int qio_channel_stall_set_blocking(QIOChannel *ioc, bool enabled,
-+                                          Error **errp)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
-+
-+    return qio_channel_set_blocking(sioc->master, enabled, errp) ? 0 : -1;
-+}
-+
-+static int qio_channel_stall_close(QIOChannel *ioc, Error **errp)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
-+
-+    return qio_channel_close(sioc->master, errp);
-+}
-+
-+static GSource *qio_channel_stall_create_watch(QIOChannel *ioc,
-+                                               GIOCondition condition)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(ioc);
-+
-+    return qio_channel_create_watch(sioc->master, condition);
-+}
-+
-+static void qio_channel_stall_finalize(Object *obj)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(obj);
-+
-+    object_unref(OBJECT(sioc->master));
-+}
-+
-+static void qio_channel_stall_class_init(ObjectClass *klass,
-+                                         const void *class_data G_GNUC_UNUSED)
-+{
-+    QIOChannelClass *ioc_klass = QIO_CHANNEL_CLASS(klass);
-+
-+    ioc_klass->io_writev = qio_channel_stall_writev;
-+    ioc_klass->io_readv = qio_channel_stall_readv;
-+    ioc_klass->io_set_blocking = qio_channel_stall_set_blocking;
-+    ioc_klass->io_close = qio_channel_stall_close;
-+    ioc_klass->io_create_watch = qio_channel_stall_create_watch;
-+}
-+
-+static const TypeInfo qio_channel_stall_info = {
-+    .parent = TYPE_QIO_CHANNEL,
-+    .name = TYPE_QIO_CHANNEL_STALL,
-+    .instance_size = sizeof(QIOChannelStall),
-+    .instance_finalize = qio_channel_stall_finalize,
-+    .class_init = qio_channel_stall_class_init,
-+};
-+
-+static QIOChannelStall *qio_channel_stall_new(QIOChannel *master,
-+                                              unsigned rstalls,
-+                                              unsigned wstalls)
-+{
-+    QIOChannelStall *sioc = QIO_CHANNEL_STALL(
-+        object_new(TYPE_QIO_CHANNEL_STALL));
-+
-+    object_ref(OBJECT(master));
-+    sioc->master = master;
-+    sioc->rstalls = rstalls;
-+    sioc->wstalls = wstalls;
-+
-+    return sioc;
-+}
- 
- typedef struct {
-     bool finished;
-@@ -31,10 +148,12 @@ static void test_websock_handshake_done(QIOTask *task, gpointer opaque)
-  * the server wrote back, NUL terminated. The handshake is expected to
-  * fail; the point of the test is the HTTP response that goes with it.
-  */
--static char *test_websock_handshake_reply(const char *request)
-+static char *test_websock_handshake_reply(const char *request,
-+                                          unsigned rstalls, unsigned wstalls)
- {
-     QIOChannelWebsockHandshake res = { false, false };
-     QIOChannelSocket *cli, *srv;
-+    QIOChannelStall *stall;
-     QIOChannelWebsock *wioc;
-     GMainContext *mainloop;
-     int channel[2];
-@@ -48,7 +167,8 @@ static char *test_websock_handshake_reply(const char *request)
-     qio_channel_set_blocking(QIO_CHANNEL(srv), false, &error_abort);
-     qio_channel_set_blocking(QIO_CHANNEL(cli), false, &error_abort);
- 
--    wioc = qio_channel_websock_new_server(QIO_CHANNEL(srv));
-+    stall = qio_channel_stall_new(QIO_CHANNEL(srv), rstalls, wstalls);
-+    wioc = qio_channel_websock_new_server(QIO_CHANNEL(stall));
-     qio_channel_websock_handshake(wioc, test_websock_handshake_done,
-                                   &res, NULL);
- 
-@@ -68,6 +188,7 @@ static char *test_websock_handshake_reply(const char *request)
-     }
- 
-     object_unref(OBJECT(wioc));
-+    object_unref(OBJECT(stall));
-     object_unref(OBJECT(srv));
-     object_unref(OBJECT(cli));
- 
-@@ -77,7 +198,23 @@ static char *test_websock_handshake_reply(const char *request)
- static void test_websock_bad_request(const void *opaque)
- {
-     const char *request = opaque;
--    g_autofree char *reply = test_websock_handshake_reply(request);
-+    g_autofree char *reply = test_websock_handshake_reply(request, 0, 0);
-+
-+    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
-+}
-+
-+static void test_websock_stalled_read(const void *opaque)
-+{
-+    const char *request = opaque;
-+    g_autofree char *reply = test_websock_handshake_reply(request, 1, 0);
-+
-+    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
-+}
-+
-+static void test_websock_stalled_write(const void *opaque)
-+{
-+    const char *request = opaque;
-+    g_autofree char *reply = test_websock_handshake_reply(request, 0, 1);
- 
-     g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
- }
-@@ -85,6 +222,7 @@ static void test_websock_bad_request(const void *opaque)
- int main(int argc, char **argv)
- {
-     module_call_init(MODULE_INIT_QOM);
-+    type_register_static(&qio_channel_stall_info);
-     g_test_init(&argc, &argv, NULL);
- 
- #define TEST_BAD_REQUEST(name, request)                         \
-@@ -101,5 +239,11 @@ int main(int argc, char **argv)
-     TEST_BAD_REQUEST("bad-method", "POST / HTTP/1.1\r\nx: y\r\n\r\n");
-     TEST_BAD_REQUEST("bad-version", "GET / HTTP/1.0\r\nx: y\r\n\r\n");
- 
-+    /* A read which blocks before any header arrives is not a fatal error. */
-+    g_test_add_data_func("/io/channel/websock/stalled-read",
-+                         "stats\r\nx\r\n\r\n", test_websock_stalled_read);
-+    g_test_add_data_func("/io/channel/websock/stalled-write",
-+                         "stats\r\nx\r\n\r\n", test_websock_stalled_write);
-+
-     return g_test_run();
- }
+Denis V. Lunev (6):
+  io/channel-socket: do not treat a zero length write as an error
+  io/channel-websock: send an HTTP 400 when the greeting has no space
+  io/channel-websock: handle a blocked write during the handshake
+  tests/unit: add websock handshake test
+  io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
+  tests/unit: cover blocked IO during the websock handshake
+
+ io/channel-socket.c                  |   2 +-
+ io/channel-websock.c                 |  10 +-
+ tests/unit/meson.build               |   1 +
+ tests/unit/test-io-channel-websock.c | 249 +++++++++++++++++++++++++++
+ 4 files changed, 260 insertions(+), 2 deletions(-)
+ create mode 100644 tests/unit/test-io-channel-websock.c
+
 -- 
 2.53.0
 
