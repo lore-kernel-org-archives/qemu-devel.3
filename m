@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CA7C61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 19:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A772C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:21:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x180Y-0000Hw-7X; Mon, 31 Aug 2026 15:49:30 -0400
+	id 1x18Us-0007np-N9; Mon, 31 Aug 2026 16:20:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1x180W-0000Hg-8f; Mon, 31 Aug 2026 15:49:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Uq-0007lt-Rl
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:20:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1x180U-0002az-K1; Mon, 31 Aug 2026 15:49:28 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VIVm613164739; Mon, 31 Aug 2026 19:49:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=l60cJXdXKPyjIW1Gz4tzveVdaYDzOCzclPOatRXBl
- CA=; b=QE1BWWd5dGyv/am5V6rX0F6Y56eCpeEMryADBDlET4/QjEw7dYq6wKtom
- XMbBcQmfhNIkNjSi7WxZ5cW78agRjxc8mlo1+0S+IQPcn0os0F5aydBxBQTD+e+v
- 3S7n572pkc9w4Enmbk2HJBp0dLtJeoctygE/0+HO7sIne/tjr5P6cxKIVO5Fv7l7
- sb3sG1qEopdRMmQWaAZTx41ggNaZBQgdh32qYTrfWaovcXaQJWV0LIl6Xi7Itn1j
- amnXClUXrYXnmBr5xOAOUWEDYuhfVCQKEQv14lTXrpyrlrjMTYnLcxJ8Vsm42xxB
- 3OAwRR/LhhjldDB01gzcobWFOsHCw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq2t39ey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 19:49:23 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VJfMkm012839;
- Mon, 31 Aug 2026 19:49:23 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4vyune-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 19:49:23 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VJnLnn24511114
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 19:49:22 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DE10B58052;
- Mon, 31 Aug 2026 19:49:21 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5394A58056;
- Mon, 31 Aug 2026 19:49:21 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.69.254])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 19:49:21 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- zycai@linux.ibm.com
-Subject: [PATCH v3 0/8] s390x: Add support for virtio-scsi-pci boot device
-Date: Mon, 31 Aug 2026 15:49:11 -0400
-Message-ID: <20260831194919.3830270-1-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Up-0007Ng-Br
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:20:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788207646;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wffPVCvszX/U31azigwXEqCRZFarXIHCtsWE3o10AB0=;
+ b=iUn0iJHduJRb7rFXZUJazQKAMEmSFj0MRrXCFb6Nde2xFJn13+6cw/pmn6NMGR8PUcPrxs
+ zuHMocXSvs3zD1UMxxF7u3S7r+yu4jj+R0GE7QWw6bVcrAlqxOl749rnLi1cNT6NH7OXQY
+ U1OitOKPPmI+Mh+KAsTL/raKaZpcQVE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-oZyXUQrLMW-IzbvWwxCjYA-1; Mon,
+ 31 Aug 2026 16:20:42 -0400
+X-MC-Unique: oZyXUQrLMW-IzbvWwxCjYA-1
+X-Mimecast-MFC-AGG-ID: oZyXUQrLMW-IzbvWwxCjYA_1788207639
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A8801945CB1; Mon, 31 Aug 2026 20:20:39 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 52C2B1800347; Mon, 31 Aug 2026 20:20:29 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Jonathan Cameron <jic23@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Jiri Pirko <jiri@resnulli.us>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ qemu-block@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, linux-cxl@vger.kernel.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ linux-edac@vger.kernel.org, Michael Tokarev <mjt@tls.msk.ru>,
+ John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Zhao Liu <zhao1.liu@intel.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 04/43] qapi: convert trivial intro sections for compat.json
+Date: Mon, 31 Aug 2026 16:19:06 -0400
+Message-ID: <20260831201945.287730-5-jsnow@redhat.com>
+In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
+References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=bc1bluPB c=1 sm=1 tr=0 ts=6a95dac3 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=v67RXZh9NETehd4EobsA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE2OSBTYWx0ZWRfXwMy9lBcHyd5Q
- +9eWZFo3OPfB9rnQO5oSD/o3yFZo7zGqLGeOigCiWinJU+oLmUDIJXQhf18mMhrQVt/SMpvOCpQ
- cYCokNqQvRYo2qwGtjR/5JWLbB2XyJs=
-X-Proofpoint-ORIG-GUID: 80duf0_D1RPkQKs0X5oxLekSMufZFcW5
-X-Proofpoint-GUID: 80duf0_D1RPkQKs0X5oxLekSMufZFcW5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE2OSBTYWx0ZWRfX8Gjn9cyvBsW/
- 4qvzd5wB9y8MjjfgHHcjZYjdybMh72H8Gg9L3iKW0MKbkFc5FMVT3HTbMjzGK3QQgqtyrY9xZaJ
- fBRPjCOWXIiW0wnC2RYau1pYHdm8GBVj4UMNz2yjF9MbivLGs2KtOoipPCcT+bZVNa3orNXSbRQ
- x7UTNCFHwn4YHj+o3JP5rjgwttEMmEi3b9HZXF64Yf2Wr22ghg6o4oWERoRUH5Ky6GBtGyDF1+o
- LvDzS43kPf0NrgE88Ib/3UhiiAuO4va4qdtlRRICozxBGnzkSMZHIvI0Feo7qCO0Z6WLvkdAeWD
- j++EhS6PsXDqfG7HXPDU1k/7pLj0ke+6fEWHcmb6ESduhGo/nIFd1ifkyIqOCWA+h5qr/DphUbQ
- 6a5PXAiKmIHZ49oiHwb1KG/HRCC1XMU4sDWK0spll0rZFTGORseSAMG5TfWQngESJ1Ia+AMk2tn
- cNxx/E55p5492u5wemw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_06,2026-08-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608310169
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,47 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ qapi/compat.json | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Add support for booting from SCSI devices with a virtio-scsi-pci controller.
-
-Some minor clean-up is done with naming in order to clarify if the function
-or value used with CCW, PCI, or generic IPL and to check if a PCI function
-is already enabled.
-
-Changes v2 -> v3:
-    - Rebase on recently added Secure IPL features added to BIOS
-    - Define PCI IPLB length using offset and sizeof rather than magic
-    - Check for virtio setup failures during scsi setup
-    - Fix commit messages
-    - Update the title of patch 3 to indicate multiple lengths change
-
-Jared Rossi (8):
-  pc-bios/s390-ccw: Check if a PCI function is already enabled before
-    trying to enable it
-  hw/s390x/ipl: Fix incorrect PCI IPL block lengths
-  pc-bios/s390-ccw: Use bus specific IPL_TYPE directly for scsi IPL
-  s390x/ipl: Add PCI and bus fields to IplBlockQemuScsi
-  pc-bios/s390-ccw: Abstract virtio_run() for generic use
-  pc-bios/s390-ccw: Add support for virtio-scsi-pci IPL
-  s390x: Find scsi-pci boot device and build IPLB
-  tests/qtest: Add s390x PCI SCSI fallback test to cdrom-test.c
-
- hw/s390x/ipl.c                   | 40 ++++++++++++++++++++++++++++++++
- hw/s390x/ipl.h                   |  2 ++
- include/hw/s390x/ipl/qipl.h      | 15 ++++++++----
- pc-bios/s390-ccw/clp.c           |  4 ++++
- pc-bios/s390-ccw/main.c          | 19 +++++++++++----
- pc-bios/s390-ccw/virtio-blkdev.c |  1 -
- pc-bios/s390-ccw/virtio-ccw.c    | 17 --------------
- pc-bios/s390-ccw/virtio-ccw.h    |  1 -
- pc-bios/s390-ccw/virtio-pci.c    | 31 ++++++++++++++++++++++++-
- pc-bios/s390-ccw/virtio-scsi.c   | 18 +++++++++++++-
- pc-bios/s390-ccw/virtio.c        | 21 +++++++++--------
- tests/qtest/cdrom-test.c         |  8 +++++++
- 12 files changed, 137 insertions(+), 40 deletions(-)
-
+diff --git a/qapi/compat.json b/qapi/compat.json
+index 90b8d51cf27..ef1853b9acd 100644
+--- a/qapi/compat.json
++++ b/qapi/compat.json
+@@ -9,8 +9,7 @@
+ 
+ ##
+ # @CompatPolicyInput:
+-#
+-# Policy for handling "funny" input.
++#     Policy for handling "funny" input.
+ #
+ # @accept: Accept silently
+ #
+@@ -25,8 +24,7 @@
+ 
+ ##
+ # @CompatPolicyOutput:
+-#
+-# Policy for handling "funny" output.
++#     Policy for handling "funny" output.
+ #
+ # @accept: Pass on unchanged
+ #
 -- 
-2.54.0
+2.55.0
 
 
