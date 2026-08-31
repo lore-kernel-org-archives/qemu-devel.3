@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FDE7C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB721C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x127r-0008Ph-Nc; Mon, 31 Aug 2026 09:32:39 -0400
+	id 1x12Bw-0000qK-Cp; Mon, 31 Aug 2026 09:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x127p-0008PC-OA
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:32:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x12Bt-0000pW-Pp
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:36:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x127n-0000F0-2k
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:32:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x12Bs-00010L-8T
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:36:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788183154;
+ s=mimecast20190719; t=1788183407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xGQZE89u+mmoSryvOFDpEKXotLmex/GnUzcEVHRI6xc=;
- b=FFITdy/EHvFQJI2LGZCoUOug0dSNLsWVlXLGKfwUb5dGuvLOQljNnhITB69uOqlnLVZskc
- 3GskMKmqbrSeiQLxGosBzuJkQ7sw0y885vZENekd+qepE47VjHijPysmkYqyOf/AuISHDs
- b4ULeDd+0d81OkVhl+chOHU0v6Ko/lc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=WCs2Aq9tg9fBZkM3AoyGj6bTEL9C6nYwd+ohMUtyCFo=;
+ b=RkLP37SWvgWrMSm5dxrKS2x0vTrnPeAzaAGtROiENug7Ngc9ZZ0SnaXrcBq08kQvztktxI
+ VlveC+sGkG76Z3ZZjiGMfgQfNDkH4HPar828ZM5YZFWM+ZLx8pBNWesftLeQCzdCyor5y9
+ s4BjrseROCaxOi+R8jevjV9G8iBa9FE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-PzpVHGEgMgGFF9oPr1lNXA-1; Mon,
- 31 Aug 2026 09:32:29 -0400
-X-MC-Unique: PzpVHGEgMgGFF9oPr1lNXA-1
-X-Mimecast-MFC-AGG-ID: PzpVHGEgMgGFF9oPr1lNXA_1788183145
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-p2frzGdJOeKlgdYB206L-A-1; Mon,
+ 31 Aug 2026 09:36:43 -0400
+X-MC-Unique: p2frzGdJOeKlgdYB206L-A-1
+X-Mimecast-MFC-AGG-ID: p2frzGdJOeKlgdYB206L-A_1788183399
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1130119344BC; Mon, 31 Aug 2026 13:32:23 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75A94183F9DB; Mon, 31 Aug 2026 13:36:38 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F171E1955F05; Mon, 31 Aug 2026 13:32:19 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A0FA3000223; Mon, 31 Aug 2026 13:36:36 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6E69B21E682E; Mon, 31 Aug 2026 15:32:17 +0200 (CEST)
+ id 24F5821E6837; Mon, 31 Aug 2026 15:36:34 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Alex Williamson <alex@shazbot.org>,  Daniel P.
@@ -71,28 +71,27 @@ Cc: qemu-devel@nongnu.org,  Alex Williamson <alex@shazbot.org>,  Daniel P.
  <pbonzini@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Philippe
  =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Lukas Straub
  <lukasstraub2@web.de>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 43/43] qapi: convert trivial intro sections for
- block-core.json
-In-Reply-To: <20260826193840.2152000-44-jsnow@redhat.com> (John Snow's message
- of "Wed, 26 Aug 2026 15:38:40 -0400")
+Subject: Re: [PATCH v3 42/43] qapi: convert trivial intro sections for
+ machine.json
+In-Reply-To: <20260826193840.2152000-43-jsnow@redhat.com> (John Snow's message
+ of "Wed, 26 Aug 2026 15:38:39 -0400")
 References: <20260826193840.2152000-1-jsnow@redhat.com>
- <20260826193840.2152000-44-jsnow@redhat.com>
-Date: Mon, 31 Aug 2026 15:32:17 +0200
-Message-ID: <87tsoae7q6.fsf@pond.sub.org>
+ <20260826193840.2152000-43-jsnow@redhat.com>
+Date: Mon, 31 Aug 2026 15:36:34 +0200
+Message-ID: <87pkyye7j1.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,68 +111,62 @@ John Snow <jsnow@redhat.com> writes:
 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  qapi/block-core.json | 448 ++++++++++++++++---------------------------
->  1 file changed, 164 insertions(+), 284 deletions(-)
+>  qapi/machine.json | 208 ++++++++++++++++------------------------------
+>  1 file changed, 73 insertions(+), 135 deletions(-)
 >
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 199efc1e008..bed736d86f9 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 2d63c1bac3b..3a5c6df9cff 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
 
 [...]
 
-> @@ -1378,10 +1357,9 @@
+> @@ -469,8 +453,7 @@
 >  
 >  ##
->  # @BlockdevOnError:
+>  # @NumaOptions:
 > -#
-> -# An enumeration of possible behaviors for errors on I/O operations.
-> -# The exact meaning depends on whether the I/O was initiated by a
-> -# guest or by a block job
-> +#     An enumeration of possible behaviors for errors on I/O
-> +#     operations.  The exact meaning depends on whether the I/O was
-> +#     initiated by a guest or by a block job
+> -# A discriminated record of NUMA options.  (for OptsVisitor)
+> +#     A discriminated record of NUMA options.  (for OptsVisitor)
 >  #
->  # @report: for guest operations, report the error to the guest; for
->  #     jobs, cancel the job
+>  # @type: NUMA option type
+>  #
+
+The parenthesis is questionable.  As long as it's there, this isn't
+"very trivial".
+
+> @@ -488,8 +471,7 @@
+>  
+>  ##
+>  # @NumaNodeOptions:
+> -#
+> -# Create a guest NUMA node.  (for OptsVisitor)
+> +#     Create a guest NUMA node.  (for OptsVisitor)
+>  #
+>  # @nodeid: NUMA node ID (increase by 1 from 0 if omitted)
+>  #
+
+Likewise.
+
+
+[...]
+
+> @@ -1156,10 +1125,9 @@
+>  
+>  ##
+>  # @BALLOON_CHANGE:
+> -#
+> -# Emitted when the guest changes the actual BALLOON level.  This value
+> -# is equivalent to the @actual field return by the `query-balloon`
+> -# command
+> +#     Emitted when the guest changes the actual BALLOON level.  This
+> +#     value is equivalent to the @actual field return by the
+> +#     `query-balloon` command
+>  #
+>  # @actual: the logical size of the VM in bytes.  Formula used:
+>  #     logical_vm_size = vm_ram_size - balloon_size
 
 Two sentences, i.e. not "very trivial".
-
-[...]
-
-> @@ -4780,9 +4692,8 @@
->  
->  ##
->  # @BlockdevOptions:
-> -#
-> -# Options for creating a block device.  Many options are available for
-> -# all block devices, independent of the block driver:
-> +#     Options for creating a block device.  Many options are available
-> +#     for all block devices, independent of the block driver:
-
-Likewise.
-
->  #
->  # @driver: block driver name
->  #
-
-[...]
-
-> @@ -5589,9 +5479,8 @@
->  
->  ##
->  # @BlockdevAmendOptionsQcow2:
-> -#
-> -# Driver specific image amend options for qcow2.  For now, only
-> -# encryption options can be amended
-> +#     Driver specific image amend options for qcow2.  For now, only
-> +#     encryption options can be amended
-
-Likewise.
-
->  #
->  # @encrypt: Encryption options to be amended
->  #
 
 [...]
 
