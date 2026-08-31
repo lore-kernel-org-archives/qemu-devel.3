@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413EAC624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 16:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509D6C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x15Gj-0000Hw-Dn; Mon, 31 Aug 2026 12:54:01 -0400
+	id 1x15N3-0001bG-5W; Mon, 31 Aug 2026 13:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1x15Gd-0000HR-9h; Mon, 31 Aug 2026 12:53:55 -0400
+ id 1x15N1-0001au-7y; Mon, 31 Aug 2026 13:00:31 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1x15Ga-0006hY-Hi; Mon, 31 Aug 2026 12:53:55 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1x15My-0008OY-Ss; Mon, 31 Aug 2026 13:00:30 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VG1eNb2749260; Mon, 31 Aug 2026 16:53:39 GMT
+ 67VG1ZSG871285; Mon, 31 Aug 2026 17:00:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=lnhh0RT2qk2Y/EQ3cL/iJZLV/SxVFL
- u9GXkcSyeKcLI=; b=HU9CVIWfk0nesGhVHlwdVLatEsYenshJFGaZaHz8AZDVYi
- wcMCTJ5NhvjPRLgF8fx/PZqeIC6Wgxm4nu4b63XptXG6JMHV3mViSWdhwumlwM9H
- qoVhl+Wfk3x/VNyQe4SVABQWdxvhVhLnDAiCSgYyh0LV8tuoVBU4/5s52W8OLy6c
- bbJd/UBXDGPg8aBX6UoHup7pPVke2QgFS3g3pO5lz9zlmrfZ8aTMUUWFcwjJFyqH
- fj4W8Mpf8iaNg6PQDzIzhVwT/kpWhtGqZx/FRXfQTN8i4oOf+uS4hSzG/0T8Q9nB
- 9uahI68Kjk+Klc39dr+aaLsgE1WPEb6LdzQPNRsA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5aph9-1
+ :references:subject:to; s=pp1; bh=yb1OjW83yRtWKXEDeAc7fLC4uHoQcm
+ 17KyByDTBJP24=; b=poB/lRmkLeAOYDOa+p1KN6nA7BXwwc9MF2zrrKnLmMmDpc
+ aNxGkxFhc0nF3vJxhJ+LOJ0TOAiBnScyQ5L64VMDB93E7NUMwGrg2vLIgLuJPfvI
+ 94NknKsMOsMOTKcDshxvPrRai+FWSMbUnQoKc8Mz0kJqipsNSZQDh/3P2YJXNxOi
+ tgfTpiWDvBXRif1yt7s4X04WC7YRkRHEM9lpmM/eVJJDNR0FYmZqnyXzOz9PA3tn
+ wnRbuwj5ZeOMWyaNXutVoT4v8mQjPkVKVF3kiRm2X3dthpkCRfUEvJgjJYDu5m9f
+ j60ZTGh2CZFuAL4aKAFGy5bMgzDfsM9Ua8gtqoEw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3r2pea-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 16:53:38 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VGfJNJ011136;
- Mon, 31 Aug 2026 16:53:37 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8h6xur-1
+ Mon, 31 Aug 2026 17:00:17 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VGuI7c017957;
+ Mon, 31 Aug 2026 17:00:16 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarjy2ud-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 16:53:37 +0000 (GMT)
+ Mon, 31 Aug 2026 17:00:16 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VGra907603038
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67VH0Eke24642250
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 16:53:36 GMT
+ Mon, 31 Aug 2026 17:00:15 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D872658052;
- Mon, 31 Aug 2026 16:53:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D621658069;
+ Mon, 31 Aug 2026 17:00:14 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25DAC58067;
- Mon, 31 Aug 2026 16:53:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 143F35806E;
+ Mon, 31 Aug 2026 17:00:08 +0000 (GMT)
 Received: from [9.43.79.120] (unknown [9.43.79.120])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 16:53:26 +0000 (GMT)
+ Mon, 31 Aug 2026 17:00:07 +0000 (GMT)
 Content-Type: multipart/alternative;
- boundary="------------vgkh5S0L5eVGGklQJDfTKL02"
-Message-ID: <67b9ee96-5684-42b8-8e7c-61fed3ed93ce@linux.vnet.ibm.com>
-Date: Mon, 31 Aug 2026 22:23:25 +0530
+ boundary="------------VzM0ZsxFdhIEkvN4RLTF0wbV"
+Message-ID: <e292c2c1-6032-43ba-aebe-17537c5a5b52@linux.vnet.ibm.com>
+Date: Mon, 31 Aug 2026 22:30:07 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/9] qtest/phb5: Add testbench for PHB
+Subject: Re: [PATCH v5 2/9] pnv/phb5: Add reset logic to PHB5
 To: Aditya Gupta <adityag@linux.ibm.com>, Saif Abrar <saif.abrar@linux.ibm.com>
 Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
  clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
@@ -72,42 +72,40 @@ Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
  kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
  milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
 References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
- <20260617095058.652789-2-saif.abrar@linux.ibm.com>
- <ajzojholiKw1DkFH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <20260617095058.652789-3-saif.abrar@linux.ibm.com>
+ <alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Language: en-US
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-In-Reply-To: <ajzojholiKw1DkFH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+In-Reply-To: <alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a95b193 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a95b321 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=r77TgQKjGQsHNAKrUKIA:9 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=PjmdL4u1kqMFsDHB8qsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GEXfVxSDLSK7QMoJF0sA:9 a=66YvoR9EpsYC8bkm:21
- a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: yF4BL8tHa4v7XW9-kcIl9QMkUKFhS9AN
-X-Proofpoint-ORIG-GUID: UNYdEuXCeiWTVpGUakGF-4NEhWgZWEHV
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0MyBTYWx0ZWRfX4/4lVMlmEGnQ
- DQcXTNJX6XyrGAlkUCseLKSta5b3PINpw68sM23B1bU6ey+osmwfFKKP5BGGhEhuxDTLeHUBM4V
- NDTlWLt9WvVkNa7AyE71IViuclvUGX4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0MyBTYWx0ZWRfX/Mw3BRmS9vII
- yI56oTVg3a8ImFqdZUdTL7GUF64xoNUeBHmkE5ZGa0DkX0NrlNGdkkxROMKI2HlEcBqMtOdxz+W
- ThdK9SvrvN2bq7yIrueAtX3JsGFE8BT7/Ln0ADRperWabZyutRESP5IUEyFaj+tVTiLVDQunUbB
- HvOPFmzuCdhuyT9B4shAOUidJRxxbMEu62ZoGGJorytj7rerW5f63ELg9nPkrQh0HkvQXO4FAlf
- xl7yxMEddDYWqu9D9MtEmvDcx1w+6Y6e/aYUJ5FRBsIz5M92hFy10ZHtnEDbmEYyIy6G38eiQek
- MMDL6162fCoUiuY4srvh7bWkbYTN/HA3H/b3h1eOHtTORwpmn83AYJbqSWpW0aNTnwjfgbs7NrH
- I0HRg7AU4bh1SsKY++hbp9nxFXYVh0C8PhERoiY/xA1rq3X38csYuaMF6+aZsZbrXlfDOA6NLYQ
- LbADP+/MvPH7KMd23KQ==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=r77TgQKjGQsHNAKrUKIA:9 a=fZnzPqFuvzv6SQjt6DUA:9
+ a=QEXdDO2ut3YA:10 a=VnNF1IyMAAAA:8 a=YedxgJ_sP0URI6W74OkA:9
+ a=Gsul2j4anvSwYPvX:21 a=_W_S_7VecoQA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0MyBTYWx0ZWRfXylqVhFslwRFb
+ sxMGOjuUZcmqesWieRq3KA7+CRv4UWtghsJC+oVzi8fKI7qmhHpRAyOeSl/3tkC549qFNZ8ip/2
+ QNx6Fn99lyRaVHLGa0mwKdB9WKYBYZzUpMHejVIEx/Tp+d84EbkaRa+LBO6ClbNY+gd1sZcf8aN
+ xq/g7DAV7HZz0uwusG2PcJBCl4CcRNbA45FKLnbF542CioqOWMWty286d1iCb9NWg/TmT00gxLy
+ 9epcvA4T2E9twGg3F/a1ug85X1njo4qcl7Yrlfutmb9g8w9P6mIwxZ5+mEr2L+9k+OxdfOOe93d
+ Da75iV4B1yYZcISAp/hs2qmjlGB7AARU5lzAg6e1juLaMPpAyIUsTZbSAfonhyWvsILyVy9Ikaf
+ UL0P4xRLJUTqTWNripYNIKVDs1fkCnmb66tdwjwFwOQF/JlqTX8US3GdBzOlZWW9zYl9qOlRtSG
+ +3p3f5xQZSMAoMDbC0A==
+X-Proofpoint-GUID: PnU2iWSmgVqmwWYpaYe6Tre8Wf0q1-qo
+X-Proofpoint-ORIG-GUID: kNP5PD14_pSgIfF2GX4d6kNYdtL-sRxJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0MyBTYWx0ZWRfX6cMyU38gIiEM
+ 6h5HsUXqOaYcxCpSbmLwxfemPuVzFT3ls9DNVWCsA+YjYdHPliad8QjTwy6GvX02mmtCZicv8Ms
+ g1ujfdhbp4yGfPsKBT8DmdiKdhs2Yto=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_05,2026-08-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608310143
+ bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310143
 Received-SPF: none client-ip=148.163.156.1;
  envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -133,110 +131,169 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is a multi-part message in MIME format.
---------------vgkh5S0L5eVGGklQJDfTKL02
+--------------VzM0ZsxFdhIEkvN4RLTF0wbV
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
-On 25-06-2026 22:32, Aditya Gupta wrote:
-> On 26/06/17 04:50AM, Saif Abrar wrote:
->> From: Saif Abrar<saif.abrar@linux.vnet.ibm.com>
->>
->> New qtest testbench added for PHB[345].
->> Testbench reads PHB Version register and asserts that
->> bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
->>
->> Signed-off-by: Saif Abrar<saif.abrar@linux.ibm.com>
->> Reviewed-by: Cédric Le Goater<clg@kaod.org>
->> Reviewed-by: Harsh Prateek Bora<harshpb@linux.ibm.com>
->> Reviewed-by: Aditya Gupta<adityag@linux.ibm.com>
->> Reviewed-by: Jishnu Warrier<Jishnu.Warrier@ibm.com>
+On 16-07-2026 10:54, Aditya Gupta wrote:
 > Thanks for the patches !
+>
+> On 26/06/17 04:50AM, Saif Abrar wrote:
+>> diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
+>> index 0b556d1bf5..d4f452d7b2 100644
+>> --- a/hw/pci-host/pnv_phb.c
+>> +++ b/hw/pci-host/pnv_phb.c
+>> @@ -232,6 +232,7 @@ static void pnv_phb_root_port_reset_hold(Object *obj, ResetType type)
+>>       pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
+>>       pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
+>>       pci_config_set_interrupt_pin(conf, 0);
+>> +    pnv_phb4_cfg_core_reset(d);
+> nit: phb4 reset in common phb path ? will it affect phb3 too ?
 
 
-Hello Aditya,
-
-Thanks for your in-depth review!
+The code checks for phb3 and returns before coming to the phb4 reset.
 
 
 >
+>>   }
+>>   
 >> <...snip...>
->> +/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
->> +static void phb_version_test(const void *data)
+>> +void pnv_phb4_cfg_core_reset(PCIDevice *d)
 >> +{
->> +    const PnvChip *chip = (PnvChip *)data;
->> +    QTestState *qts;
->> +    const char *machine = "powernv8";
->> +    uint64_t phb_xscom = 0x4809e000;
->> +    uint64_t reg_phb_version = PHB_VERSION;
->> +    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
->> +    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
->> +    uint32_t expected_ver = 0xA3;
->> +    uint64_t ver;
+>> +    uint8_t *conf = d->config;
+>> +    uint32_t exp_offset = get_exp_offset(d);
 >> +
->> +    if (chip->chip_type == PNV_CHIP_POWER9) {
->> +        machine = "powernv9";
->> +        phb_xscom = 0x68084800;
->> +        indirect_addr = PHB_SCOM_HV_IND_ADDR;
->> +        indirect_data = PHB_SCOM_HV_IND_DATA;
->> +        reg_phb_version |= PPC_BIT(0);
->> +        expected_ver = 0xA4;
->> +    } else if (chip->chip_type == PNV_CHIP_POWER10) {
->> +        machine = "powernv10";
->> +        phb_xscom = PHB4_XSCOM;
->> +        indirect_addr = PHB_SCOM_HV_IND_ADDR;
->> +        indirect_data = PHB_SCOM_HV_IND_DATA;
->> +        reg_phb_version |= PPC_BIT(0);
->> +        expected_ver = 0xA5;
+>> +    pci_set_word(conf + PCI_COMMAND, PCI_COMMAND_SERR);
+>> +    pci_set_word(conf + PCI_STATUS, PCI_STATUS_CAP_LIST);
+>> +    pci_set_long(conf + PCI_CLASS_REVISION, 0x06040000);
+>> +    pci_set_long(conf + PCI_CACHE_LINE_SIZE, BIT(16));
+>> +    pci_set_word(conf + PCI_MEMORY_BASE, BIT(4));
+>> +    pci_set_word(conf + PCI_PREF_MEMORY_BASE, BIT(0) | BIT(4));
+>> +    pci_set_word(conf + PCI_PREF_MEMORY_LIMIT, PCI_PREF_RANGE_TYPE_64);
+>> +    pci_set_long(conf + PCI_CAPABILITY_LIST, BIT(6));
+>> +    pci_set_word(conf + PCI_BRIDGE_CONTROL, PCI_BRIDGE_CTL_SERR);
+>> +    pci_set_long(conf + PCI_BRIDGE_CONTROL + PCI_PM_PMC, 0xC8034801);
+>> +
+>> +    pci_set_long(conf + exp_offset, 0x420010);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP,  0x8022);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL, PCI_EXP_DEVCTL_EXT_TAG
+>> +                                              | PCI_EXP_DEVCTL_PAYLOAD_512B);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP, PCI_EXP_LNKCAP_LBNC
+>> +                 | PCI_EXP_LNKCAP_DLLLARC | BIT(8) | PCI_EXP_LNKCAP_SLS_32_0GB);
+>> +    pci_set_word(conf + exp_offset + PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_RCB);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_SLTCTL,
+>> +                                                   PCI_EXP_SLTCTL_ASPL_DISABLE);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP2, BIT(16)
+>> +                  | PCI_EXP_DEVCAP2_ARI | PCI_EXP_DEVCAP2_COMP_TMOUT_DIS | 0xF);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_ARI);
+>> +    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP2, BIT(23)
+>> +                       | PCI_EXP_LNKCAP2_SLS_32_0GB
+>> +                       | PCI_EXP_LNKCAP2_SLS_16_0GB | PCI_EXP_LNKCAP2_SLS_8_0GB
+>> +                       | PCI_EXP_LNKCAP2_SLS_5_0GB | PCI_EXP_LNKCAP2_SLS_2_5GB);
+>> +    pci_set_long(conf + PHB_AER_ECAP, PCI_EXT_CAP(0x1, 0x1, 0x148));
+>> +    pci_set_long(conf + PHB_SEC_ECAP, (0x1A0 << 20) | BIT(16)
+>> +                                                       | PCI_EXT_CAP_ID_SECPCI);
+>> +    pci_set_long(conf + PHB_LMR_ECAP, 0x1E810027);
+>> +    /* LMR - Margining Lane Control / Status Register # 2 to 16 */
+>> +    for (int i = PHB_LMR_CTLSTA_2 ; i <= PHB_LMR_CTLSTA_16 ; i += 4) {
+>> +        pci_set_long(conf + i, 0x9C38);
 >> +    }
-> We are adding PNV_CHIP_POWER11 in qtests in
-> https://lore.kernel.org/qemu-devel/20260624195924.1422821-1-adityag@linux.ibm.com/T/#m5ccc85c90fce585b11ec4a89317c21bc6504b10e
->
-> fwiw, depending on which series is merged first, we will have to update
-> this in future, just keeping a note
->
 >> +
->> +    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip->cpu_model);
+>> +    pci_set_long(conf + PHB_DLF_ECAP, 0x1F410025);
+>> +    pci_set_long(conf + PHB_DLF_CAP,  0x80000001);
+>> +    pci_set_long(conf + P16_ECAP, 0x22410026);
+>> +    pci_set_long(conf + P32_ECAP, 0x1002A);
+>> +    pci_set_long(conf + P32_CAP,  0x103);
+>> +}
 >> +
->> +    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
->> +                                indirect_addr, indirect_data, reg_phb_version);
->> +
->> +    /* PHB Version register bits [24:31] */
->> +    ver = (ver & PPC_BITMASK(24, 31)) >> (63 - 31);
-> GETFIELD(PPC_BITMASK(24, 31), ver) ?
+>> +static void pnv_phb4_pbl_core_reset(PnvPHB4 *phb)
+>> +{
+>> +    /* Zero all registers initially */
+>> +    for (int i = PHB_PBL_CONTROL ; i <= PHB_PBL_ERR1_STATUS_MASK ; i += 8) {
+> nit: should we use PNV_PHB4_NUM_REGS here, since we want to set all
+> phb->regs to 0 here ?
+>
+> #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
 
 
-Updated with GETFIELD().
+We are only setting the PBL registers here.
 
 
 >
->> +    g_assert_cmpuint(ver, ==, expected_ver);
+>> +        phb->regs[i >> 3] = 0x0;
+>> +    }
+>> +
+>> +    /* Set specific register values */
+>> +    phb->regs[PHB_PBL_CONTROL       >> 3] = 0xC009000000000000;
+> This reset value is different for PHB4 and PHB5.
+>
+> The PHB4 spec that i am referring to marks the bits 8:15 as reserved,
+> and unimplemented. While PHB5 suggests the reset value of 0x9.
+>
+> I am okay with considering those bits as implementation defined and let
+> qemu set those bits, but maybe it's better to separate it out in
+> pnv_phb5.c ?
+
+
+Implemented separate methods for PHB4 and PHB5, each method setting the 
+appropriate reset value.
+
+
+>
+>> +    phb->regs[PHB_PBL_TIMEOUT_CTRL  >> 3] = 0x2020000000000000;
+>> +    phb->regs[PHB_PBL_NPTAG_ENABLE  >> 3] = 0xFFFFFFFF00000000;
+> Same 8:31 are reserved bits in PHB4, while not in PHB5.
+>
+> Maybe separating out PHB5 from PHB4 helps in such cases.
+
+
+Same separation of methods for PHB4 and PHB5.
+
+
+>
+>> +    phb->regs[PHB_PBL_SYS_LINK_INIT >> 3] = 0x80088B4642473000;
+>> +}
+>> +
+>> <...snip...>
+>> +static void phb5_tests(void)
+>> +{
+>> +    QTestState *qts = NULL;
+>> +
+>> +    qts = qtest_initf("-machine powernv10 -accel tcg");
+>> +
+>> +    /* Check reset value of a register */
+>> +    phb5_reset_test(qts);
 >> +
 >> +    qtest_quit(qts);
 >> +}
 >> +
->> +/* Verify versions of all supported PHB's */
->> +static void add_phbX_version_test(void)
->> +{
->> +    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
->> +        char *tname = g_strdup_printf("pnv-phb/%s",
->> +                                      pnv_chips[i].cpu_model);
->> +        qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
->> +        g_free(tname);
-> can use g_autofree:
->      g_autofree char *tname = g_strdup_printf("pnv-phb/%s",
->                                    pnv_chips[i].cpu_model);
->      qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
+>>   /* Assert that 'PHB - Version Register' bits[24:31] are as expected */
+>>   static void phb_version_test(const void *data)
+>>   {
+>> @@ -59,7 +83,7 @@ static void phb_version_test(const void *data)
+>>           expected_ver = 0xA4;
+>>       } else if (chip->chip_type == PNV_CHIP_POWER10) {
+>>           machine = "powernv10";
+> This patch is giving an error on compilation now in upstream, due to
+> introduction of 'pnv_get_machine_type'. We can use
+> 'pnv_get_machine_type' here in the start in place of machine = "powernv8".
+> What do you say ?
 
 
-Updated with g_autofree.
+Now updated with the usage of 'pnv_get_machine_type'.
 
->
 > Thanks,
 > - Aditya G
---------------vgkh5S0L5eVGGklQJDfTKL02
+
+
+Thanks,
+
+/Saif
+
+--------------VzM0ZsxFdhIEkvN4RLTF0wbV
 Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 <!DOCTYPE html>
 <html>
@@ -246,143 +303,230 @@ Content-Transfer-Encoding: 8bit
   <body>
     <p><br>
     </p>
-    <div class="moz-cite-prefix">On 25-06-2026 22:32, Aditya Gupta
+    <div class="moz-cite-prefix">On 16-07-2026 10:54, Aditya Gupta
       wrote:<br>
     </div>
     <blockquote type="cite"
-cite="mid:ajzojholiKw1DkFH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
-      <pre wrap="" class="moz-quote-pre">On 26/06/17 04:50AM, Saif Abrar wrote:
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">Thanks for the patches !
+
+On 26/06/17 04:50AM, Saif Abrar wrote:
 </pre>
       <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">From: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.vnet.ibm.com">&lt;saif.abrar@linux.vnet.ibm.com&gt;</a>
-
-New qtest testbench added for PHB[345].
-Testbench reads PHB Version register and asserts that
-bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
-
-Signed-off-by: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.ibm.com">&lt;saif.abrar@linux.ibm.com&gt;</a>
-Reviewed-by: Cédric Le Goater <a class="moz-txt-link-rfc2396E" href="mailto:clg@kaod.org">&lt;clg@kaod.org&gt;</a>
-Reviewed-by: Harsh Prateek Bora <a class="moz-txt-link-rfc2396E" href="mailto:harshpb@linux.ibm.com">&lt;harshpb@linux.ibm.com&gt;</a>
-Reviewed-by: Aditya Gupta <a class="moz-txt-link-rfc2396E" href="mailto:adityag@linux.ibm.com">&lt;adityag@linux.ibm.com&gt;</a>
-Reviewed-by: Jishnu Warrier <a class="moz-txt-link-rfc2396E" href="mailto:Jishnu.Warrier@ibm.com">&lt;Jishnu.Warrier@ibm.com&gt;</a>
+        <pre wrap="" class="moz-quote-pre">diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
+index 0b556d1bf5..d4f452d7b2 100644
+--- a/hw/pci-host/pnv_phb.c
++++ b/hw/pci-host/pnv_phb.c
+@@ -232,6 +232,7 @@ static void pnv_phb_root_port_reset_hold(Object *obj, ResetType type)
+     pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
+     pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
+     pci_config_set_interrupt_pin(conf, 0);
++    pnv_phb4_cfg_core_reset(d);
 </pre>
       </blockquote>
       <pre wrap="" class="moz-quote-pre">
-Thanks for the patches !</pre>
+nit: phb4 reset in common phb path ? will it affect phb3 too ?</pre>
     </blockquote>
     <p><br>
     </p>
-    <p>Hello Aditya, </p>
-    <p>Thanks for your in-depth review!</p>
+    <p>The code checks for phb3 and returns before coming to the phb4
+      reset.</p>
     <p><br>
     </p>
     <blockquote type="cite"
-cite="mid:ajzojholiKw1DkFH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
       <pre wrap="" class="moz-quote-pre">
 
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre"> }
+ 
+&lt;...snip...&gt;
++void pnv_phb4_cfg_core_reset(PCIDevice *d)
++{
++    uint8_t *conf = d-&gt;config;
++    uint32_t exp_offset = get_exp_offset(d);
++
++    pci_set_word(conf + PCI_COMMAND, PCI_COMMAND_SERR);
++    pci_set_word(conf + PCI_STATUS, PCI_STATUS_CAP_LIST);
++    pci_set_long(conf + PCI_CLASS_REVISION, 0x06040000);
++    pci_set_long(conf + PCI_CACHE_LINE_SIZE, BIT(16));
++    pci_set_word(conf + PCI_MEMORY_BASE, BIT(4));
++    pci_set_word(conf + PCI_PREF_MEMORY_BASE, BIT(0) | BIT(4));
++    pci_set_word(conf + PCI_PREF_MEMORY_LIMIT, PCI_PREF_RANGE_TYPE_64);
++    pci_set_long(conf + PCI_CAPABILITY_LIST, BIT(6));
++    pci_set_word(conf + PCI_BRIDGE_CONTROL, PCI_BRIDGE_CTL_SERR);
++    pci_set_long(conf + PCI_BRIDGE_CONTROL + PCI_PM_PMC, 0xC8034801);
++
++    pci_set_long(conf + exp_offset, 0x420010);
++    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP,  0x8022);
++    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL, PCI_EXP_DEVCTL_EXT_TAG
++                                              | PCI_EXP_DEVCTL_PAYLOAD_512B);
++    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP, PCI_EXP_LNKCAP_LBNC
++                 | PCI_EXP_LNKCAP_DLLLARC | BIT(8) | PCI_EXP_LNKCAP_SLS_32_0GB);
++    pci_set_word(conf + exp_offset + PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_RCB);
++    pci_set_long(conf + exp_offset + PCI_EXP_SLTCTL,
++                                                   PCI_EXP_SLTCTL_ASPL_DISABLE);
++    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP2, BIT(16)
++                  | PCI_EXP_DEVCAP2_ARI | PCI_EXP_DEVCAP2_COMP_TMOUT_DIS | 0xF);
++    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_ARI);
++    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP2, BIT(23)
++                       | PCI_EXP_LNKCAP2_SLS_32_0GB
++                       | PCI_EXP_LNKCAP2_SLS_16_0GB | PCI_EXP_LNKCAP2_SLS_8_0GB
++                       | PCI_EXP_LNKCAP2_SLS_5_0GB | PCI_EXP_LNKCAP2_SLS_2_5GB);
++    pci_set_long(conf + PHB_AER_ECAP, PCI_EXT_CAP(0x1, 0x1, 0x148));
++    pci_set_long(conf + PHB_SEC_ECAP, (0x1A0 &lt;&lt; 20) | BIT(16)
++                                                       | PCI_EXT_CAP_ID_SECPCI);
++    pci_set_long(conf + PHB_LMR_ECAP, 0x1E810027);
++    /* LMR - Margining Lane Control / Status Register # 2 to 16 */
++    for (int i = PHB_LMR_CTLSTA_2 ; i &lt;= PHB_LMR_CTLSTA_16 ; i += 4) {
++        pci_set_long(conf + i, 0x9C38);
++    }
++
++    pci_set_long(conf + PHB_DLF_ECAP, 0x1F410025);
++    pci_set_long(conf + PHB_DLF_CAP,  0x80000001);
++    pci_set_long(conf + P16_ECAP, 0x22410026);
++    pci_set_long(conf + P32_ECAP, 0x1002A);
++    pci_set_long(conf + P32_CAP,  0x103);
++}
++
++static void pnv_phb4_pbl_core_reset(PnvPHB4 *phb)
++{
++    /* Zero all registers initially */
++    for (int i = PHB_PBL_CONTROL ; i &lt;= PHB_PBL_ERR1_STATUS_MASK ; i += 8) {
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+nit: should we use PNV_PHB4_NUM_REGS here, since we want to set all
+phb-&gt;regs to 0 here ?
+
+#define PNV_PHB4_NUM_REGS          (0x3000 &gt;&gt; 3)</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>We are only setting the PBL registers here.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+        phb-&gt;regs[i &gt;&gt; 3] = 0x0;
++    }
++
++    /* Set specific register values */
++    phb-&gt;regs[PHB_PBL_CONTROL       &gt;&gt; 3] = 0xC009000000000000;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This reset value is different for PHB4 and PHB5.
+
+The PHB4 spec that i am referring to marks the bits 8:15 as reserved,
+and unimplemented. While PHB5 suggests the reset value of 0x9.
+
+I am okay with considering those bits as implementation defined and let
+qemu set those bits, but maybe it's better to separate it out in
+pnv_phb5.c ?</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>Implemented separate methods for PHB4 and PHB5, each method
+      setting the appropriate reset value.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+    phb-&gt;regs[PHB_PBL_TIMEOUT_CTRL  &gt;&gt; 3] = 0x2020000000000000;
++    phb-&gt;regs[PHB_PBL_NPTAG_ENABLE  &gt;&gt; 3] = 0xFFFFFFFF00000000;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Same 8:31 are reserved bits in PHB4, while not in PHB5.
+
+Maybe separating out PHB5 from PHB4 helps in such cases.</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>Same separation of methods for PHB4 and PHB5.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+    phb-&gt;regs[PHB_PBL_SYS_LINK_INIT &gt;&gt; 3] = 0x80088B4642473000;
++}
++
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
 </pre>
       <blockquote type="cite">
         <pre wrap="" class="moz-quote-pre">&lt;...snip...&gt;
-+/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
-+static void phb_version_test(const void *data)
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+static void phb5_tests(void)
 +{
-+    const PnvChip *chip = (PnvChip *)data;
-+    QTestState *qts;
-+    const char *machine = "powernv8";
-+    uint64_t phb_xscom = 0x4809e000;
-+    uint64_t reg_phb_version = PHB_VERSION;
-+    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
-+    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
-+    uint32_t expected_ver = 0xA3;
-+    uint64_t ver;
++    QTestState *qts = NULL;
 +
-+    if (chip-&gt;chip_type == PNV_CHIP_POWER9) {
-+        machine = "powernv9";
-+        phb_xscom = 0x68084800;
-+        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-+        indirect_data = PHB_SCOM_HV_IND_DATA;
-+        reg_phb_version |= PPC_BIT(0);
-+        expected_ver = 0xA4;
-+    } else if (chip-&gt;chip_type == PNV_CHIP_POWER10) {
-+        machine = "powernv10";
-+        phb_xscom = PHB4_XSCOM;
-+        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-+        indirect_data = PHB_SCOM_HV_IND_DATA;
-+        reg_phb_version |= PPC_BIT(0);
-+        expected_ver = 0xA5;
-+    }
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-We are adding PNV_CHIP_POWER11 in qtests in
-<a class="moz-txt-link-freetext" href="https://lore.kernel.org/qemu-devel/20260624195924.1422821-1-adityag@linux.ibm.com/T/#m5ccc85c90fce585b11ec4a89317c21bc6504b10e">https://lore.kernel.org/qemu-devel/20260624195924.1422821-1-adityag@linux.ibm.com/T/#m5ccc85c90fce585b11ec4a89317c21bc6504b10e</a>
-
-fwiw, depending on which series is merged first, we will have to update
-this in future, just keeping a note
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+
-+    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip-&gt;cpu_model);
++    qts = qtest_initf("-machine powernv10 -accel tcg");
 +
-+    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
-+                                indirect_addr, indirect_data, reg_phb_version);
-+
-+    /* PHB Version register bits [24:31] */
-+    ver = (ver &amp; PPC_BITMASK(24, 31)) &gt;&gt; (63 - 31);
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-GETFIELD(PPC_BITMASK(24, 31), ver) ?</pre>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>Updated with GETFIELD().</p>
-    <p><br>
-    </p>
-    <blockquote type="cite"
-cite="mid:ajzojholiKw1DkFH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
-      <pre wrap="" class="moz-quote-pre">
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+    g_assert_cmpuint(ver, ==, expected_ver);
++    /* Check reset value of a register */
++    phb5_reset_test(qts);
 +
 +    qtest_quit(qts);
 +}
 +
-+/* Verify versions of all supported PHB's */
-+static void add_phbX_version_test(void)
-+{
-+    for (int i = 0; i &lt; ARRAY_SIZE(pnv_chips); i++) {
-+        char *tname = g_strdup_printf("pnv-phb/%s",
-+                                      pnv_chips[i].cpu_model);
-+        qtest_add_data_func(tname, &amp;pnv_chips[i], phb_version_test);
-+        g_free(tname);
+ /* Assert that 'PHB - Version Register' bits[24:31] are as expected */
+ static void phb_version_test(const void *data)
+ {
+@@ -59,7 +83,7 @@ static void phb_version_test(const void *data)
+         expected_ver = 0xA4;
+     } else if (chip-&gt;chip_type == PNV_CHIP_POWER10) {
+         machine = "powernv10";
 </pre>
       </blockquote>
       <pre wrap="" class="moz-quote-pre">
-can use g_autofree:
-    g_autofree char *tname = g_strdup_printf("pnv-phb/%s",
-                                  pnv_chips[i].cpu_model);
-    qtest_add_data_func(tname, &amp;pnv_chips[i], phb_version_test);</pre>
+This patch is giving an error on compilation now in upstream, due to
+introduction of 'pnv_get_machine_type'. We can use
+'pnv_get_machine_type' here in the start in place of machine = "powernv8".
+What do you say ?</pre>
     </blockquote>
     <p><br>
     </p>
-    <p>Updated with <span style="white-space: pre-wrap">g_autofree.</span></p>
+    <p>Now updated with the usage of '<span
+      style="white-space: pre-wrap">pnv_get_machine_type'.</span></p>
     <p><span style="white-space: pre-wrap">
 </span></p>
     <blockquote type="cite"
-cite="mid:ajzojholiKw1DkFH@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
       <pre wrap="" class="moz-quote-pre">
-
 Thanks,
-- Aditya G
+- Aditya G</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>Thanks,</p>
+    <p>/Saif</p>
+    <blockquote type="cite"
+cite="mid:alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">
 </pre>
     </blockquote>
   </body>
 </html>
 
---------------vgkh5S0L5eVGGklQJDfTKL02--
+--------------VzM0ZsxFdhIEkvN4RLTF0wbV--
 
 
