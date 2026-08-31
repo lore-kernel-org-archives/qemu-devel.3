@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3645C61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B6CC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:26:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18Zk-0005tx-RD; Mon, 31 Aug 2026 16:25:52 -0400
+	id 1x18ZE-00031V-FM; Mon, 31 Aug 2026 16:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Zi-0005gm-33
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZA-0002j3-8l
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Zf-0000ao-LS
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:49 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Z7-0000A6-NU
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207946;
+ s=mimecast20190719; t=1788207913;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GT4vbniYPu2T0an15X/kc4fJpS4Ogad+KYFFAMad4RM=;
- b=T8QojIZxN+Rk+jepm0AS+w8fKGb+KhxSXgqkaJzkwqzItMJin4x6iGpOdKDPw+IU05T3YL
- 0hvbiYV4X8gZJshnaOIaCyN8I5CIrV1PWUvSZn9AjpL6FYj9uaeR3fP//qMxGrpEsTvqyK
- S4WLydKM+yavoEzhIuusnPr5QbpV/iU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=xv5Hc3Epjp7PUpL8zcU32FN49lioPMZa3oxVmw1Jn+I=;
+ b=B9TOkmMBW8rmgTb7YK9aZZNp5Nu6C5wvzTp3Eu/SDeSk7vZj7shI/RlhLTRE59hCXPpPLI
+ jbHs9Peh9PVD88I4qSjDCpQ8Og8wX/wjCRU7t6AYgF9wjAQ44UdOVpyJr1EQDvIIckgHdn
+ 412IT9NoLp3P/iRSV0v4MwsJIH3lPMw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-YD3I1q7EOtmx6X9TRg2puw-1; Mon,
- 31 Aug 2026 16:25:41 -0400
-X-MC-Unique: YD3I1q7EOtmx6X9TRg2puw-1
-X-Mimecast-MFC-AGG-ID: YD3I1q7EOtmx6X9TRg2puw_1788207938
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-UL8-StDYOTihKjq8V3Pgeg-1; Mon,
+ 31 Aug 2026 16:25:08 -0400
+X-MC-Unique: UL8-StDYOTihKjq8V3Pgeg-1
+X-Mimecast-MFC-AGG-ID: UL8-StDYOTihKjq8V3Pgeg_1788207905
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 971111944DF1; Mon, 31 Aug 2026 20:25:38 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 653E5184A082; Mon, 31 Aug 2026 20:25:05 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23D741800577; Mon, 31 Aug 2026 20:25:32 +0000 (UTC)
+ id B180B1800577; Mon, 31 Aug 2026 20:24:58 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -70,24 +70,27 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 40/43] qapi: convert trivial intro sections for ui.json
-Date: Mon, 31 Aug 2026 16:19:42 -0400
-Message-ID: <20260831201945.287730-41-jsnow@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v4 35/43] qapi: convert trivial intro sections for
+ run-state.json
+Date: Mon, 31 Aug 2026 16:19:37 -0400
+Message-ID: <20260831201945.287730-36-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,661 +107,352 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/ui.json | 199 ++++++++++++++++++---------------------------------
- 1 file changed, 68 insertions(+), 131 deletions(-)
+ qapi/run-state.json | 113 ++++++++++++++++----------------------------
+ 1 file changed, 42 insertions(+), 71 deletions(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index b2c42a7f578..960d02d1429 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -13,8 +13,7 @@
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index e4fdead1e0b..2a968a6bc0b 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -10,8 +10,7 @@
  
  ##
- # @DisplayProtocol:
+ # @RunState:
 -#
--# Display protocols which support changing password options.
-+#     Display protocols which support changing password options.
+-# An enumeration of VM run states.
++#     An enumeration of VM run states.
  #
- # Since: 7.0
- ##
-@@ -23,9 +22,8 @@
+ # @debug: QEMU is running on a debugger
+ #
+@@ -63,8 +62,7 @@
  
  ##
- # @SetPasswordAction:
+ # @ShutdownCause:
 -#
--# An action to take on changing a password on a connection with active
--# clients.
-+#     An action to take on changing a password on a connection with
-+#     active clients.
+-# An enumeration of reasons for a shutdown.
++#     An enumeration of reasons for a shutdown.
  #
- # @keep: maintain existing clients
+ # @none: No shutdown request pending
  #
-@@ -40,8 +38,7 @@
+@@ -103,8 +101,7 @@
  
  ##
- # @SetPasswordOptions:
+ # @StatusInfo:
 -#
--# Options for `set_password`.
-+#     Options for `set_password`.
+-# Information about VM run state
++#     Information about VM run state
  #
- # @protocol:
- #     - 'vnc' to modify the VNC server password
-@@ -64,8 +61,7 @@
+ # @running: true if all VCPUs are runnable, false if not runnable
+ #
+@@ -118,8 +115,7 @@
  
  ##
- # @SetPasswordOptionsVnc:
+ # @query-status:
 -#
--# Options for `set_password` specific to the VNC protocol.
-+#     Options for `set_password` specific to the VNC protocol.
- #
- # @display: The id of the display where the password should be
- #     changed.  Defaults to the first.
-@@ -77,8 +73,7 @@
- 
- ##
- # @set_password:
--#
--# Set the password of a remote display server.
-+#     Set the password of a remote display server.
- #
- # Errors:
- #     - If Spice is not enabled, DeviceNotFound
-@@ -95,8 +90,7 @@
- 
- ##
- # @ExpirePasswordOptions:
--#
--# General options for `expire_password`.
-+#     General options for `expire_password`.
- #
- # @protocol:
- #     - 'vnc' to modify the VNC server expiration
-@@ -125,8 +119,7 @@
- 
- ##
- # @ExpirePasswordOptionsVnc:
--#
--# Options for `expire_password` specific to the VNC protocol.
-+#     Options for `expire_password` specific to the VNC protocol.
- #
- # @display: The id of the display where the expiration should be
- #     changed.  Defaults to the first.
-@@ -138,8 +131,7 @@
- 
- ##
- # @expire_password:
--#
--# Expire the password of a remote display server.
-+#     Expire the password of a remote display server.
- #
- # Errors:
- #     - If @protocol is 'spice' and Spice is not active,
-@@ -157,8 +149,7 @@
- 
- ##
- # @ImageFormat:
--#
--# Supported image format types.
-+#     Supported image format types.
- #
- # @png: PNG format
- #
-@@ -171,8 +162,7 @@
- 
- ##
- # @screendump:
--#
--# Capture the contents of a screen and write it to a file.
-+#     Capture the contents of a screen and write it to a file.
- #
- # @filename: the path of a new file to store the image
- #
-@@ -208,8 +198,7 @@
- 
- ##
- # @SpiceBasicInfo:
--#
--# The basic information for SPICE network connection
-+#     The basic information for SPICE network connection
- #
- # @host: IP address
- #
-@@ -227,8 +216,7 @@
- 
- ##
- # @SpiceServerInfo:
--#
--# Information about a SPICE server
-+#     Information about a SPICE server
- #
- # @auth: authentication method
- #
-@@ -241,8 +229,7 @@
- 
- ##
- # @SpiceChannel:
--#
--# Information about a SPICE client channel.
-+#     Information about a SPICE client channel.
- #
- # @connection-id: SPICE connection id number.  All channels with the
- #     same id belong to the same SPICE session.
-@@ -267,8 +254,7 @@
- 
- ##
- # @SpiceQueryMouseMode:
--#
--# An enumeration of Spice mouse states.
-+#     An enumeration of Spice mouse states.
- #
- # @client: Mouse cursor position is determined by the client.
- #
-@@ -285,8 +271,7 @@
- 
- ##
- # @SpiceInfo:
--#
--# Information about the SPICE session.
-+#     Information about the SPICE session.
- #
- # @enabled: true if the SPICE server is enabled, false otherwise
- #
-@@ -325,8 +310,7 @@
- 
- ##
- # @query-spice:
--#
--# Return information about the current SPICE server
-+#     Return information about the current SPICE server
+-# Query the run status of the VM
++#     Query the run status of the VM
  #
  # Since: 0.14
  #
-@@ -370,8 +354,7 @@
+@@ -134,9 +130,8 @@
  
  ##
- # @SPICE_CONNECTED:
+ # @SHUTDOWN:
 -#
--# Emitted when a SPICE client establishes a connection
-+#     Emitted when a SPICE client establishes a connection
+-# Emitted when the virtual machine has shut down, indicating that QEMU
+-# is about to exit.
++#     Emitted when the virtual machine has shut down, indicating that
++#     QEMU is about to exit.
  #
- # @server: server information
- #
-@@ -395,9 +378,8 @@
+ # @guest: If true, the shutdown was triggered by a guest request (such
+ #     as a guest-initiated ACPI shutdown request or other
+@@ -162,9 +157,8 @@
  
  ##
- # @SPICE_INITIALIZED:
+ # @POWERDOWN:
 -#
--# Emitted after initial handshake and authentication takes place (if
--# any) and the SPICE channel is up and running
-+#     Emitted after initial handshake and authentication takes place
-+#     (if any) and the SPICE channel is up and running
+-# Emitted when the virtual machine is powered down through the power
+-# control system, such as via ACPI.
++#     Emitted when the virtual machine is powered down through the
++#     power control system, such as via ACPI.
  #
- # @server: server information
+ # Since: 0.12
  #
-@@ -423,8 +405,7 @@
+@@ -177,8 +171,7 @@
  
  ##
- # @SPICE_DISCONNECTED:
+ # @RESET:
 -#
--# Emitted when the SPICE connection is closed
-+#     Emitted when the SPICE connection is closed
+-# Emitted when the virtual machine is reset
++#     Emitted when the virtual machine is reset
  #
- # @server: server information
- #
-@@ -448,8 +429,7 @@
+ # @guest: If true, the reset was triggered by a guest request (such as
+ #     a guest-initiated ACPI reboot request or other hardware-specific
+@@ -199,8 +192,7 @@
  
  ##
- # @SPICE_MIGRATE_COMPLETED:
+ # @STOP:
 -#
--# Emitted when SPICE migration has completed
-+#     Emitted when SPICE migration has completed
+-# Emitted when the virtual machine is stopped
++#     Emitted when the virtual machine is stopped
  #
- # Since: 1.3
+ # Since: 0.12
  #
-@@ -468,8 +448,7 @@
+@@ -213,8 +205,7 @@
  
  ##
- # @VncBasicInfo:
+ # @RESUME:
 -#
--# The basic information for vnc network connection
-+#     The basic information for vnc network connection
+-# Emitted when the virtual machine resumes execution
++#     Emitted when the virtual machine resumes execution
  #
- # @host: IP address
+ # Since: 0.12
  #
-@@ -492,8 +471,7 @@
+@@ -227,9 +218,8 @@
  
  ##
- # @VncServerInfo:
+ # @SUSPEND:
 -#
--# The network connection information for server
-+#     The network connection information for server
+-# Emitted when guest enters a hardware suspension state, for example,
+-# S3 state, which is sometimes called standby state
++#     Emitted when guest enters a hardware suspension state, for
++#     example, S3 state, which is sometimes called standby state
  #
- # @auth: authentication method used for the plain (non-websocket) VNC
- #     server
-@@ -507,8 +485,7 @@
+ # Since: 1.1
+ #
+@@ -261,9 +251,8 @@
  
  ##
- # @VncClientInfo:
+ # @WAKEUP:
 -#
--# Information about a connected VNC client.
-+#     Information about a connected VNC client.
+-# Emitted when the guest has woken up from suspend state and is
+-# running
++#     Emitted when the guest has woken up from suspend state and is
++#     running
  #
- # @x509_dname: If x509 authentication is in use, the Distinguished
- #     Name of the client.
-@@ -525,8 +502,7 @@
+ # Since: 1.1
+ #
+@@ -276,8 +265,7 @@
  
  ##
- # @VncInfo:
+ # @WATCHDOG:
 -#
--# Information about the VNC session.
-+#     Information about the VNC session.
+-# Emitted when the watchdog device's timer is expired
++#     Emitted when the watchdog device's timer is expired
  #
- # @enabled: true if the VNC server is enabled, false otherwise
+ # @action: action that has been taken
  #
-@@ -576,8 +552,7 @@
+@@ -300,9 +288,8 @@
  
  ##
- # @VncPrimaryAuth:
+ # @WatchdogAction:
 -#
--# vnc primary authentication method.
-+#     vnc primary authentication method.
+-# An enumeration of the actions taken when the watchdog device's timer
+-# is expired
++#     An enumeration of the actions taken when the watchdog device's
++#     timer is expired
  #
- # Since: 2.3
- ##
-@@ -588,8 +563,7 @@
+ # @reset: system resets
+ #
+@@ -330,8 +317,7 @@
  
  ##
- # @VncVencryptSubAuth:
+ # @RebootAction:
 -#
--# vnc sub authentication method with vencrypt.
-+#     vnc sub authentication method with vencrypt.
+-# Possible QEMU actions upon guest reboot
++#     Possible QEMU actions upon guest reboot
  #
- # Since: 2.3
- ##
-@@ -603,8 +577,7 @@
+ # @reset: Reset the VM
+ #
+@@ -345,8 +331,7 @@
  
  ##
- # @VncServerInfo2:
+ # @ShutdownAction:
 -#
--# The network connection information for server
-+#     The network connection information for server
+-# Possible QEMU actions upon guest shutdown
++#     Possible QEMU actions upon guest shutdown
  #
- # @auth: The current authentication type used by the servers
+ # @poweroff: Shutdown the VM and exit
  #
-@@ -621,8 +594,7 @@
+@@ -377,8 +362,7 @@
  
  ##
- # @VncInfo2:
+ # @watchdog-set-action:
 -#
--# Information about a vnc server
-+#     Information about a vnc server
+-# Set watchdog action.
++#     Set watchdog action.
  #
- # @id: vnc server name.
+ # @action: `WatchdogAction` action taken when watchdog timer expires.
  #
-@@ -655,8 +627,7 @@
+@@ -394,9 +378,8 @@
  
  ##
- # @query-vnc:
+ # @set-action:
 -#
--# Return information about the current VNC server
-+#     Return information about the current VNC server
+-# Set the actions that will be taken by the emulator in response to
+-# guest events.
++#     Set the actions that will be taken by the emulator in response
++#     to guest events.
  #
- # Since: 0.14
+ # @reboot: `RebootAction` action taken on guest reboot.
  #
-@@ -695,8 +666,7 @@
+@@ -427,8 +410,7 @@
  
  ##
- # @change-vnc-password:
+ # @GUEST_PANICKED:
 -#
--# Change the VNC server password.
-+#     Change the VNC server password.
+-# Emitted when guest OS panic is detected
++#     Emitted when guest OS panic is detected
  #
- # @password: the new password to use with VNC authentication
+ # @action: action that has been taken, currently always "pause"
  #
-@@ -712,8 +682,7 @@
+@@ -447,8 +429,7 @@
  
  ##
- # @VNC_CONNECTED:
+ # @GUEST_CRASHLOADED:
 -#
--# Emitted when a VNC client establishes a connection
-+#     Emitted when a VNC client establishes a connection
+-# Emitted when guest OS crash loaded is detected
++#     Emitted when guest OS crash loaded is detected
  #
- # @server: server information
+ # @action: action that has been taken, currently always "run"
  #
-@@ -741,9 +710,8 @@
+@@ -467,8 +448,8 @@
  
  ##
- # @VNC_INITIALIZED:
+ # @GUEST_PVSHUTDOWN:
 -#
--# Emitted after authentication takes place (if any) and the VNC
--# session is made active
-+#     Emitted after authentication takes place (if any) and the VNC
-+#     session is made active
+-# Emitted when guest submits a shutdown request via pvpanic interface
++#     Emitted when guest submits a shutdown request via pvpanic
++#     interface
  #
- # @server: server information
+ # Since: 9.1
  #
-@@ -768,8 +736,7 @@
+@@ -481,8 +462,8 @@
  
  ##
- # @VNC_DISCONNECTED:
+ # @GuestPanicAction:
 -#
--# Emitted when the connection is closed
-+#     Emitted when the connection is closed
+-# An enumeration of the actions taken when guest OS panic is detected
++#     An enumeration of the actions taken when guest OS panic is
++#     detected
  #
- # @server: server information
+ # @pause: system pauses
  #
-@@ -800,8 +767,7 @@
+@@ -497,8 +478,7 @@
  
  ##
- # @MouseInfo:
+ # @GuestPanicInformationType:
 -#
--# Information about a mouse device.
-+#     Information about a mouse device.
+-# An enumeration of the guest panic information types
++#     An enumeration of the guest panic information types
  #
- # @name: the name of the mouse device
+ # @hyper-v: hyper-v guest panic information type
  #
-@@ -820,8 +786,7 @@
+@@ -515,8 +495,7 @@
  
  ##
- # @query-mice:
+ # @GuestPanicInformation:
 -#
--# Return information about each active mouse device
-+#     Return information about each active mouse device
+-# Information about a guest panic
++#     Information about a guest panic
  #
- # Returns: a list of info for each device
+ # @type: Crash type that defines the hypervisor specific information
  #
-@@ -1005,8 +970,7 @@
+@@ -532,8 +511,7 @@
  
  ##
- # @KeyValue:
+ # @GuestPanicInformationHyperV:
 -#
--# Represents a keyboard key.
-+#     Represents a keyboard key.
+-# Hyper-V specific guest panic information (HV crash MSRs)
++#     Hyper-V specific guest panic information (HV crash MSRs)
  #
- # @type: key encoding
- #
-@@ -1021,8 +985,7 @@
+ # @arg1: for Windows, `STOP` code for the guest crash.  For Linux,
+ #     an error code.
+@@ -562,8 +540,7 @@
  
  ##
- # @send-key:
+ # @S390CrashReason:
 -#
--# Send keys to guest.
-+#     Send keys to guest.
+-# Reason why the CPU is in a crashed state.
++#     Reason why the CPU is in a crashed state.
  #
- # @keys: An array of `KeyValue` elements.  All @KeyValues in this
- #     array are simultaneously sent to the guest.  A `KeyValue`.number
-@@ -1050,8 +1013,7 @@
+ # @unknown: no crash reason was set
+ #
+@@ -588,8 +565,7 @@
  
  ##
- # @InputButton:
+ # @GuestPanicInformationS390:
 -#
--# Button of a pointer input device (mouse, tablet).
-+#     Button of a pointer input device (mouse, tablet).
+-# S390 specific guest panic information (PSW)
++#     S390 specific guest panic information (PSW)
  #
- # @side: front side button of a 5-button mouse (since 2.9)
+ # @core: core id of the CPU that crashed
  #
-@@ -1067,8 +1029,7 @@
+@@ -632,9 +608,8 @@
  
  ##
- # @InputAxis:
+ # @GuestPanicInformationSev:
 -#
--# Position axis of a pointer input device (mouse, tablet).
-+#     Position axis of a pointer input device (mouse, tablet).
+-# Information for AMD SEV-specific termination request (GHCB MSR
+-# contents)
++#     Information for AMD SEV-specific termination request (GHCB MSR
++#     contents)
  #
- # Since: 2.0
- ##
-@@ -1077,8 +1038,7 @@
+ # @set: The reason code set provided by the guest
+ #
+@@ -648,8 +623,7 @@
  
  ##
- # @InputMultiTouchType:
+ # @MEMORY_FAILURE:
 -#
--# Type of a multi-touch event.
-+#     Type of a multi-touch event.
+-# Emitted when a memory failure occurs on host side.
++#     Emitted when a memory failure occurs on host side.
  #
- # @begin: A new touch event sequence has just started.
+ # @recipient: recipient is defined as `MemoryFailureRecipient`.
  #
-@@ -1097,8 +1057,7 @@
+@@ -675,8 +649,7 @@
  
  ##
- # @InputKeyEvent:
+ # @MemoryFailureRecipient:
 -#
--# Keyboard input event.
-+#     Keyboard input event.
+-# Hardware memory failure occurs, handled by recipient.
++#     Hardware memory failure occurs, handled by recipient.
  #
- # @key: Which key this event is for.
- #
-@@ -1112,8 +1071,7 @@
+ # @hypervisor: memory failure at QEMU process address space.  (none
+ #     guest memory, but used by QEMU itself).
+@@ -691,8 +664,7 @@
  
  ##
- # @InputBtnEvent:
+ # @MemoryFailureAction:
 -#
--# Pointer button input event.
-+#     Pointer button input event.
+-# Actions taken by QEMU in response to a hardware memory failure.
++#     Actions taken by QEMU in response to a hardware memory failure.
  #
- # @button: Which button this event is for.
- #
-@@ -1127,8 +1085,7 @@
+ # @ignore: the memory failure could be ignored.  This will only be the
+ #     case for action-optional failures.
+@@ -719,8 +691,7 @@
  
  ##
- # @InputMoveEvent:
+ # @MemoryFailureFlags:
 -#
--# Pointer motion input event.
-+#     Pointer motion input event.
+-# Additional information on memory failures.
++#     Additional information on memory failures.
  #
- # @axis: Which axis is referenced by @value.
- #
-@@ -1143,8 +1100,7 @@
+ # @action-required: whether a memory failure event is action-required
+ #     or action-optional (e.g. a failure during memory scrub).
+@@ -736,8 +707,8 @@
  
  ##
- # @InputMultiTouchEvent:
+ # @NotifyVmexitOption:
 -#
--# MultiTouch input event.
-+#     MultiTouch input event.
+-# An enumeration of the options specified when enabling notify VM exit
++#     An enumeration of the options specified when enabling notify VM
++#     exit
  #
- # @type: The type of multi-touch event.
- #
-@@ -1226,8 +1182,7 @@
- 
- ##
- # @InputEvent:
--#
--# Input event union.
-+#     Input event union.
- #
- # @type: the type of input event
- #
-@@ -1316,8 +1271,7 @@
- 
- ##
- # @DisplayGTK:
--#
--# GTK display options.
-+#     GTK display options.
- #
- # @clipboard: Enable host-guest clipboard sharing.  Defaults to "off".
- #     (Since 11.1)
-@@ -1357,8 +1311,7 @@
- 
- ##
- # @DisplayEGLHeadless:
--#
--# EGL headless display options.
-+#     EGL headless display options.
- #
- # @rendernode: Which DRM render node should be used.  Default is the
- #     first available node on the host.
-@@ -1370,8 +1323,7 @@
- 
- ##
- # @DisplayDBus:
--#
--# DBus display options.
-+#     DBus display options.
- #
- # @addr: The D-Bus bus address (default to the session bus).
- #
-@@ -1393,8 +1345,7 @@
- 
- ##
- # @DisplayGLMode:
--#
--# Display OpenGL mode.
-+#     Display OpenGL mode.
- #
- # @off: Disable OpenGL (default).
- #
-@@ -1413,8 +1364,7 @@
- 
- ##
- # @DisplayCurses:
--#
--# Curses display options.
-+#     Curses display options.
- #
- # @charset: Font charset used by guest (default: CP437).
- #
-@@ -1425,8 +1375,7 @@
- 
- ##
- # @DisplayCocoa:
--#
--# Cocoa display options.
-+#     Cocoa display options.
- #
- # @left-command-key: Enable/disable forwarding of left command key to
- #     guest.  Allows command-tab window switching on the host without
-@@ -1461,8 +1410,8 @@
- 
- ##
- # @HotKeyMod:
--#
--# Set of modifier keys that need to be held for shortcut key actions.
-+#    Set of modifier keys that need to be held for shortcut key
-+#    actions.
- #
- # Since: 7.1
- ##
-@@ -1471,8 +1420,7 @@
- 
- ##
- # @DisplaySDL:
--#
--# SDL2 display options.
-+#     SDL2 display options.
- #
- # @grab-mod: Modifier keys that should be pressed together with the
- #     "G" key to release the mouse grab.
-@@ -1484,8 +1432,7 @@
- 
- ##
- # @DisplayType:
--#
--# Display (user interface) type.
-+#     Display (user interface) type.
- #
- # @default: The default user interface, selecting from the first
- #     available of gtk, sdl, cocoa, and vnc.
-@@ -1535,8 +1482,7 @@
- 
- ##
- # @DisplayOptions:
--#
--# Display (user interface) options.
-+#     Display (user interface) options.
- #
- # @type: Which `DisplayType` QEMU should use.
- #
-@@ -1573,8 +1519,7 @@
- 
- ##
- # @query-display-options:
--#
--# Return information about display configuration
-+#     Return information about display configuration
- #
- # Since: 3.1
- ##
-@@ -1583,8 +1528,7 @@
- 
- ##
- # @DisplayReloadType:
--#
--# Available DisplayReload types.
-+#     Available DisplayReload types.
- #
- # @vnc: VNC display
- #
-@@ -1595,8 +1539,7 @@
- 
- ##
- # @DisplayReloadOptionsVNC:
--#
--# Specify the VNC reload options.
-+#     Specify the VNC reload options.
- #
- # @tls-certs: reload tls certs or not.
- #
-@@ -1607,8 +1550,7 @@
- 
- ##
- # @DisplayReloadOptions:
--#
--# Options of the display configuration reload.
-+#     Options of the display configuration reload.
- #
- # @type: Specify the display type.
- #
-@@ -1621,8 +1563,7 @@
- 
- ##
- # @display-reload:
--#
--# Reload display configuration.
-+#     Reload display configuration.
- #
- # Since: 6.0
- #
-@@ -1638,8 +1579,7 @@
- 
- ##
- # @DisplayUpdateType:
--#
--# Available DisplayUpdate types.
-+#     Available DisplayUpdate types.
- #
- # @vnc: VNC display
- #
-@@ -1650,8 +1590,7 @@
- 
- ##
- # @DisplayUpdateOptionsVNC:
--#
--# Specify the VNC reload options.
-+#     Specify the VNC reload options.
- #
- # @addresses: If specified, change set of addresses to listen for
- #     connections.  Addresses configured for websockets are not
-@@ -1664,8 +1603,7 @@
- 
- ##
- # @DisplayUpdateOptions:
--#
--# Options of the display configuration reload.
-+#     Options of the display configuration reload.
- #
- # @type: Specify the display type.
- #
-@@ -1678,8 +1616,7 @@
- 
- ##
- # @display-update:
--#
--# Update display configuration.
-+#     Update display configuration.
- #
- # Since: 7.1
- #
+ # @run: enable the feature, do nothing and continue if the notify VM
+ #     exit happens.
 -- 
 2.55.0
 
