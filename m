@@ -4,120 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4506DC61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4091AC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x15dg-00059X-G7; Mon, 31 Aug 2026 13:17:44 -0400
+	id 1x16Gs-0002BY-Fc; Mon, 31 Aug 2026 13:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x15de-00058y-JO; Mon, 31 Aug 2026 13:17:42 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x16Gq-0002BM-1Y
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 13:58:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x15dc-0005Hz-NL; Mon, 31 Aug 2026 13:17:42 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VG1jKw1615924; Mon, 31 Aug 2026 17:17:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lH/0W9
- MW5wsu2vBd7udarBPifBukp1Gu/MTuQDUjoL4=; b=HGBn4vXjdtlECIY2v9wUhR
- UB6kVN50jk83+MsCCpXyxm7opAVUaweJCFBhjvPy+bHMPnvj+oYZ/qyK47V1hLfY
- vGduxmnbJGjpD2nlrKpNDfuIN/IZPJAMhyFx6AtQspFjhssGnNSsY2mo/XThqI/I
- FaAYy1zCXf0S7r10Imre54vj6DeV3PH6ZRu87o6HojEBxGDidNVyCm3UnvTDLCsF
- fJLEKxvvRi53cExvuvzNif0ZjQLUxbahGL/eZmYlN/vJwfgbQ2KzzptPnqy4P+qv
- Bbjx46kJwLitQpiYBSp5in1kWFcrd/I8oeX+8/lahQbBT3GmXTY0xdiwPVAJjV1A
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudjseb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 17:17:38 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VHBO9l017282;
- Mon, 31 Aug 2026 17:17:37 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4vy7fn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 17:17:37 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VHGt1u14287516
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 17:16:56 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 783875805D;
- Mon, 31 Aug 2026 17:17:36 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3481558058;
- Mon, 31 Aug 2026 17:17:35 +0000 (GMT)
-Received: from [9.61.73.66] (unknown [9.61.73.66])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 17:17:35 +0000 (GMT)
-Message-ID: <06d1f170-7a26-49b4-9d01-594ba5f8efa4@linux.ibm.com>
-Date: Mon, 31 Aug 2026 13:17:34 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x16Gn-0000SZ-Tm
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 13:58:11 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67VGPcCK4073539
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 17:58:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ vTz958gnS79OoI9st/TWdsA7lCx3UfOS+8am5kUq6kE=; b=KEp4AMIiQbt31K8e
+ lNwoUuwGkPIDYoCuQ3B2FdyFJrwdTY1Wz8FXTCLvviCqr/iJoah8v3OwucTeysDH
+ MVVlAG32H0bch1I3D8OqOQBABrRPkP3s+/t7BiCQ9dJnTD/Vo9liM7yti+oCSf4o
+ h+Ps5I3Q0qQmy50mKWBbAijAWGEXfVZdApESDxfgpMF+K3yo9LyQOsTJ2fe15rjF
+ DUeOVG+pIMr+k91gfCoBSZ1vVdhy79FbhQb77oTuNG0b+VmHmOqtcQ7lPabwj3Gl
+ 1Z3T8sjnk97QQscDg184cwVH9kd9jCi/Q2+JoHydeRKyYVHgzzMj5x2J3eRRjXPj
+ d3abzQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdd4drghs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 17:58:05 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-398d7e0f3b4so2186103a91.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 10:58:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788199084; x=1788803884; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vTz958gnS79OoI9st/TWdsA7lCx3UfOS+8am5kUq6kE=;
+ b=H8HAXgsjkeocN5VawBUWLhKkUSofExGUTWHCxeWxhRHMob+gI1IpJMC3Cd8xaoMx+A
+ OC7VG+k4IDu9rwzzQSyn6sfxfH48ckUhmuuwTkJ0N4i5k/cYDKkQgRKsuO+HI7YQGX1H
+ Hw300MMaw9/Kqr+4IkOrCEcBPDxqVuRcaLQC1RHluk9TYgCjHm2j2A7aymFn3I3f8U+e
+ GA0ZgWJnFhb15uY3uO9I/eM0jenEZqyWZGG3egU6Vu8XdrSSPDcMk88l879tRXOMciPU
+ x+e8dMfITpsu50+KWy0KVtW+a+O7+noxpjCyxptILvUcl7mLMS/kiMJYcrc1cbQnHt6x
+ AGNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788199084; x=1788803884;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=vTz958gnS79OoI9st/TWdsA7lCx3UfOS+8am5kUq6kE=;
+ b=OFjL0uY6UqvvfrZD3Qmt5WFW2PBGp7xVmaCc6FnUMsHuhuK4rAYrVqzHSvNvyzzyyJ
+ p8v4WlDgjSyMB1Ec1ExR9ll9k5MrDM9VWlzChLPTFc9MjKDT80BtWc5KeChQFzQ2kUPZ
+ CLDC4wlkMnZL4S/fWaiIfbQrd9Bz4HpYtXGhLRzLfV0FnHChf5nJAvgs2zXMUCuEk8bx
+ /XEsphc8rg1BeiCEN1cV0u/c1rWACvZFnEdx8Lg+ygXPlY3lEXVSwWamh4jxRq+yRfeU
+ 4ldy/24aoU2D1Rnb4AjVNz+oKG0D9I/IPgSb3NdQcVn+5dYcoKzP99cVeA2D1J6ebMcZ
+ c3mw==
+X-Gm-Message-State: AFuF++l0qEQuV31gEeZt9BQYASysMF/niHblHj07xJUKyVNL13fgFqtM
+ u0By/C+RmoQq9cLi0DP8NY3doXDEG67KruJyI42Z31C+R8JM6L4QHDUYUsawOTDWrnLMF01Kjz/
+ sndYiS9n9Fo0jbVfNjBrxp+ggjVDShqZsnWbrk3755RI2I2jxsFBjDUQsOg==
+X-Gm-Gg: AYBFou2eNIZI7iia4MVVHWcu1OziiNv1lxtefI8TB9UK3FOBTPb9T7qUY0AxPTQxOfn
+ QP3RzzYNO8UDWg5wD3j2Fx+RKwq8l/GGoNFU56YgI2Qva19YO5Dt3q93O33Y2zTU58LaYltc+BN
+ 3lcTyi+EE6q6SSUlB1vVfVBNaU1nXFi7JqFa1C4KoWrYMjzH9bkUIu9Wkn8j0nw6nmuxWoHcJNB
+ 8C/QLeoksrLlHR3bl+ze+LAlVU9FYtJhUvPRBCv3zs0co4S8FzB/dsL4GtH8p9B91yMTwrV6mTb
+ HxjVbXuSMUFc7J3UpJVnzYJA+MmUZB5Sbab2blutWvV5qW+usGhZpr3MKk7LJY1DNtApD7q2ehs
+ gW7VhgsNkpc55Y6+xoEe/t8rye2XHZ1Sfwzc1+Jt9/7LhJFpvnPbENm/NLXokrU+CqyZa
+X-Received: by 2002:a17:90b:48d1:b0:398:9be6:f996 with SMTP id
+ 98e67ed59e1d1-39907e07947mr3334847a91.21.1788199084485; 
+ Mon, 31 Aug 2026 10:58:04 -0700 (PDT)
+X-Received: by 2002:a17:90b:48d1:b0:398:9be6:f996 with SMTP id
+ 98e67ed59e1d1-39907e07947mr3334801a91.21.1788199083955; 
+ Mon, 31 Aug 2026 10:58:03 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-142e0de4de3sm41646508c88.12.2026.08.31.10.58.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Aug 2026 10:58:03 -0700 (PDT)
+Message-ID: <99f45844-4ef4-4b46-8ba4-21593a0cad29@oss.qualcomm.com>
+Date: Mon, 31 Aug 2026 10:58:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/7] pc-bios/s390-ccw: Split virtio-ccw and generic
- virtio net
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, pasic@linux.ibm.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
-References: <20260818205324.580199-1-zycai@linux.ibm.com>
- <20260818205324.580199-2-zycai@linux.ibm.com>
- <b9dafa7d-d3d0-46c7-8ef1-c800811181dc@linux.ibm.com>
- <3b52a781-ea4c-4fec-b059-bebecc27ad3f@linux.ibm.com>
- <91c8fb44-fcc0-4c94-8494-084d6eaa6504@linux.ibm.com>
- <59fcd3e6-e0aa-4078-b36d-e7d51a4f4558@linux.ibm.com>
- <b7a5f123-3da8-4d3a-b011-1f431c4bf1d9@linux.ibm.com>
+Subject: Re: [PATCH 22/47] hw/riscv: remove machines-qom.h
+To: luoyonggang@gmail.com
+Cc: qemu-devel@nongnu.org, anjo@rev.ng,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ philmd@oss.qualcomm.com, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260828225901.367438-23-pierrick.bouvier@oss.qualcomm.com>
+ <CAE2XoE_HU9RO-pQVmrAv76k-oJshpNEgNE64fWb7AN+-eySvdg@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <b7a5f123-3da8-4d3a-b011-1f431c4bf1d9@linux.ibm.com>
+In-Reply-To: <CAE2XoE_HU9RO-pQVmrAv76k-oJshpNEgNE64fWb7AN+-eySvdg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ijAhZHYuL-YWia5QimHF97TfIPAc6xh5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX5XdVf7jNH09S
- /qVDgljin0lfhHVgNMj+1LZCpIAX15RTWrhfyM8kBGQanvosLknRgUxH0nJTD+nU+UrGA6PKJpZ
- Pw44OZBv3A+fg51s1ikMZxOfz2ABIpc/j86Ml0HOhllaGKC8zdrjjZ/aE71m60FvcvVkynecvnS
- sJyf2H/CyBnbg4vNP7bANcXmTrn5sdoPps7GFB2np7wDnNcUJuWHijwicDVT7WUrapixR0aOWXW
- YYfKksDGeArFnk2zn79iZUtHkOOJXCsVdNL1awLsD8MCR7Hp3niZ2dRZNo4SqSFDLzY3JhGzi9j
- wTZkVkz1FEi/sTDWCEnHMBK4CRdk518uirqfrB1K/w5xN8XE6MmXe4ohvbaTWnAnS6IdB9rtF2f
- HeASeOk7uEdzMKhZrYNtMpoAOFKK+GJX/Shd1PJRFT8eE0/xRJ8LkvCuMmho+i/KJWDsRyIkPG5
- BgC+aM4fbIVHBC8JTwQ==
-X-Proofpoint-ORIG-GUID: ijAhZHYuL-YWia5QimHF97TfIPAc6xh5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX8CfMdodJvj08
- HJH4WMbP5LjmCIz1ScI5+Yhwr+B5KRcyz0Kui6a0VqV0Gd8ti7Ifd1UqP/0g656Vv9enZEC8rXx
- AMwxgBSJuZqIv11SIb+K33c7M9PpCYA=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a95b732 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=zs3X2yJ19ZC09JavB2kA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Authority-Analysis: v=2.4 cv=b9qCJNGx c=1 sm=1 tr=0 ts=6a95c0ad cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=NEAV23lmAAAA:8 a=D5tzaz3PprbddFQoL8QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE1NSBTYWx0ZWRfXwzvvLBu+/QdD
+ t6LfG4+4I2uvK+CA+Ot7roMVM3WWkr+x4zGVNIGqC3ZcFFIPR0lGKxWRIuCHihG6kuj8e2uNLJO
+ XZC1OjybJhnQYoiv8XM8UYrf4Gfk/nIbzq4+SbykDATZhDzRL45Xs1PO0g0vUs4wDD8+q9EYXQI
+ PHNkvRGS0s2DJbTSvmZA4a6ZfQ+F7xtzrVaPuB4419PpUpQIJYUU1yxbC4OINzg7I0AuLwevGfj
+ slECFFKbcp04Xpg0UaCE2Bodd142N1kxbCAGQiofvap9jgFigBTmXtCAry/ApSQk2S1pQvOFqvH
+ hxkJUXkHgGCsXXqfUp1lOlx5vCJE39suRMPiXETeZIubF7+JRkfuOiDDzlFkUd+s5y0M2O+E75t
+ BWL/lH1vExH8VxPU+MtZacypLassc9pYe4TDgs4Ze4G4AvXZxDh8b2yW27jyo+f5I3B8M8XLXTp
+ xLtA7gQPU2cmUVl61Ew==
+X-Proofpoint-GUID: H4-kNgGo7toxou54EN-4nfj-U54DxSnp
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE1NSBTYWx0ZWRfX7Lxk+hRdyQUG
+ eA7025hjwC06M770bElUcPskt1DvEaG8GuO8zWhT4lYiV2I67rXmkkd5M2IiE+kJrEDH0LNbisf
+ SvakYrmnJQpDFRtzyGINgHbtMOnnwIM=
+X-Proofpoint-ORIG-GUID: H4-kNgGo7toxou54EN-4nfj-U54DxSnp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_05,2026-08-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608310147
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ lowpriorityscore=0 bulkscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310155
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,105 +159,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/26 4:49 PM, Matthew Rosato wrote:
-> On 8/26/26 4:23 PM, Jared Rossi wrote:
->>
->>
->> On 8/26/26 3:41 PM, Matthew Rosato wrote:
->>> On 8/26/26 3:30 PM, Jared Rossi wrote:
->>>>
->>>> On 8/26/26 1:33 PM, Matthew Rosato wrote:
->>>>>> +bool virtio_net_setup(void)
->>>>>> +{
->>>>>> +    switch (virtio_get_device()->ipl_type) {
->>>>>> +    case S390_IPL_TYPE_CCW:
->>>>>> +        return virtio_ccw_net_setup();
->>>>>> +    default:
->>>>>> +        return false;
->>>>>> +    }
->>>>>> +}
->>>>> This patch is largely renaming, but this does seem to have a subtle
->>>>> functional change right here.
->>>>>
->>>>> AFAICT before this patch attempting to netboot with anything other than
->>>>> a ccw device would hit
->>>>> IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
->>>>>
->>>>> Now, we will never call virtio_ccw_net_setup(), return false and
->>>>> instead
->>>>> bail out with
->>>>> "No virtio net device found."
->>>>>
->>>>> That is new behavior for !IPL_TYPE_CCW after this patch.  For
->>>>> IPL_TYPE_PCI, patch 4 will change the behavior again.
->>>>>
->>>>> That's not a deal-breaker, but I do think it's worth a mention in the
->>>>> commit message.  I then also wonder if the message
->>>>> "No virtio net device found"
->>>>> would be more accurate if it instead read something like:
->>>>> "No supported virtio net device found"
->>>>>
->>>>> Thanks,
->>>>> Matt
->>>>>
->>>> I’m not sure this is a valid concern.  A non-ccw net device would be
->>>> rejected before getting to virtio_net_setup() earlier at the
->>>> find_boot_device() step either way.  In the case of virtio-net-pci
->>>> specifically, it would fail because VIRTIO_ID_NET is not a supported PCI
->>>> type yet.  For some sort of non-ccw non-pci netboot device, I believe
->>>> there
->>>> wouldn't ever be an IPLB built for it, so it wouldn’t be recognized as
->>>> boot eligible at all.  I don’t think this patch affects any of that.
->>>>
->>>
->>> Based on that description it sounds like we don't even ever to expect to
->>> reach the new default: case then, as prior checks should have already
->>> weeded out all but the supported IPL_TYPE_* values.
->>>
->>> Should the default: case have an IPL_assert with its own message then?
->>
->> Right, we shouldn’t ever hit the default case, but I don’t follow your
->> suggestion about an IPL_assert.  What condition might be asserted there?
+On 8/31/2026 5:36 AM, Yonggang Luo wrote:
+> The changes to DEFINE_MACHINE_* is too much and redundant
 > 
-> Since it's a switch statement looking at the type value would be
-> redundant, but something like
-> IPL_assert(false, "unexpected IPL type");
-> should work
+> They can be simplified by preserving DEFINE_MACHINE_RISCV32
+> DEFINE_MACHINE_RISCV64 DEFINE_MACHINE_RISCV32_64, along with ARM related
+> macros.
 > 
->>
->> In my opinion simply returning false is appropriate, which will just print
->> the error and move on to the next boot device if there one.  A full panic
->> could be justified since something weird would need to happen to get into
->> the default case at all, but I don’t think it’s really necessary.
-> 
-> Yeah, my line of thinking was that if we shouldn't reach this code but
-> somehow do, then something unexpected happened but we would kind of mask
-> that by simply moving onto the next device.
-> 
->>
->> If virtio_net_setup() does fail though, regardless of why, I do agree the
->> subsequent error message needs to be updated to clarify that no “valid” or
->> “supported” virtio network device was found rather than stating none was
->> found at all.
->>
-> I leave it up to you and Joy to decide if you feel it makes sense to
-> assert or update the message to be more accurate, but please do at least
-> one of those.
-> 
-> Outside of that, this patch LGTM.
-> 
-> Thanks,
-> Matt
+> For example: for riscv we can do this, we can do the same for arm and
+> other arch when use  DEFINE_MACHINE_*.
+>
 
-Thanks for the suggestion!
+We went down this way, mostly because Richard asked us to factorize
+interfaces array to not create static data duplication.
+Now we don't need this anymore, this is questionable to keep this.
 
-Based on the discussion, I'd prefer having an IPL_assert/panic in the
-default case and updating the subsequent error message to: "No valid
-virtio-net device found." Since the default path should be unreachable,
-reaching it would indicate an unexpected condition and should be treated
-as fatal.
+Since it requires to duplicate those macros/header for *all*
+architectures, IMHO, it would be better to not do this. That's why
+current series removes this.
 
-Please let me know if you'd prefer a different approach.
+> Pierrick
+> 
+> I've reworked the commits at https://github.com/lygstate/qemu/tree/
+> s11.1-riscv-arm-tmp1.0.1 <https://github.com/lygstate/qemu/tree/s11.1-
+> riscv-arm-tmp1.0.1>, you can check the commits there, I do not post
+> patches to mail-list to avoid review burden.
+>
 
+Be careful to not do extra work for nothing. We first need to agree on
+current filtering approach, before dealing with details on the
+single-binary itself.
 
+...
+
+Regards,
+Pierrick
 
