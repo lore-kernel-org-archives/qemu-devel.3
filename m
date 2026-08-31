@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BDCC624A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE75C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0wws-0001YX-UE; Mon, 31 Aug 2026 04:00:58 -0400
+	id 1x0wzx-0002HH-Fc; Mon, 31 Aug 2026 04:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x0wwr-0001Y7-1X; Mon, 31 Aug 2026 04:00:57 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x0wzq-0002Gf-5l
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:04:03 -0400
+Received: from smtpout10.mo539.mail-out.ovh.net ([51.210.91.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x0wwo-00021L-Pl; Mon, 31 Aug 2026 04:00:56 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4hYLyq2nczz66YM;
- Mon, 31 Aug 2026 08:00:51 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Mon, 31 Aug 2026 08:00:51 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.214])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hYLyq1lwrz1yST; Mon, 31 Aug 2026 08:00:51 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x0wzn-0002tP-Ll
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:04:01 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hYM2P0Ng7z41xm;
+ Mon, 31 Aug 2026 08:03:57 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Mon, 31 Aug 2026 08:03:56 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.129])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hYM2N6J2tz1xv1; Mon, 31 Aug 2026 08:03:56 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 4929212E3FD4;
- Mon, 31 Aug 2026 08:00:49 +0000 (UTC)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 0437E941BCE; 
+ Mon, 31 Aug 2026 08:03:54 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-112S0063173ee2b-73de-40d1-b78b-276ede811474,
+ (GARM-104R00586932015-059f-40bb-a56c-9c0d6a7860b0,
  20713A92955D5A277E4AF24F7FE8A47CC1774BFC) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <ab66fcc9-adcc-4208-91a5-6e405ef82f05@kaod.org>
-Date: Mon, 31 Aug 2026 10:00:48 +0200
+Message-ID: <7d141b4c-8f72-4414-b2ee-316711a1a26f@kaod.org>
+Date: Mon, 31 Aug 2026 10:03:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] hw/misc/aspeed_sbc: Support the ECDSA verify
- command
+Subject: Re: [PATCH v3 7/9] hw/misc/aspeed_sbc: Increase register space to
+ 0x1000
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -56,7 +56,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260831034153.192916-1-jamin_lin@aspeedtech.com>
- <20260831034153.192916-7-jamin_lin@aspeedtech.com>
+ <20260831034153.192916-8-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -101,30 +101,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260831034153.192916-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260831034153.192916-8-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 3797378912116452397
+x-ovh-tracer-id: 3849451782853798957
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEurJxCPxNQlHL3Z7sOji2Ir/A/HWKMp1vQzN1iopglhiM/K+5CcIcaIRW6mRtnAIsMhHph+mb5TB2OzJG/a4+eMU64NaSsc1W7Sgzx+QQB4A+w836mH/C3GxAcMi4VfrxEFE+dRAN0sBkzGJGUnAvVhekxvmW8zpHgWxZb1WE50tvl/+21Ks1P90zoFjlS90KGEmE2+849z8/JkK4uCINujUJA5oGmJUH6U/FjMpkqcWEa5gEsnsuuOTfAP+nHu8o2h7oTjVeRgNe2QIl9308WG0J4i0zQo5VkKQ9SVr8lJXITEF4UsbPSEIL9JLF5aEQj2N0YC563jd9vfNh93Mc2L9z3eDnupsBHBUrqwd3W//8pluvxykwpSA86XIPgFgE94Vwof79fVk/O8lWX1c1+jU0L1PgtbgfS7bwVWtuTSJXtnBzfX3mqwe6YayB0lKXWKR/BZ8F2j3wi7e6jriTsWx1XwV3jX/x6PCgFhj86y4CYI6RH6/GcRoouq4vrIzWFm9Qo3ObcpUdB9OTEG4YU2mG+5bkcFhpswYUJkJvBTtrhUrPu+NsHwBPKuwWoboamVQt9mA8mSzFEf3gE3FDemyblQaYQ+2bInjdep4ttiOKnVdxlpZdV0eqNaeqtmYQadm5egsJfoM8xAC+Rh/ahICAhnSMlAwXZhJvM5OpyyQ
-DKIM-Signature: a=rsa-sha256; bh=lcSZvioUrETuIEfXmSb5Y4cpQMTqfEQWp+abnGFqvdY=; 
+X-VR-SPAMCAUSE: dmFkZTFsqCKVDCrq+AJDwjAG6zTpVQ1I1Zq/Vxy1uQLlt5jEHVxapc3EMiHRQo+n1VF4/YzjbgmbhMWMRed5QvtZ0MDlSE0FcRTF5ZvEQpNdtZHGv7mdcZurSGdYADSw5njf1gT1oqch5Qj6A1MXX/gptvaiVZHTHdVS/B1Xom54tNmUVPBerUjnA8TUCcUmcaLmvaa35q/hyxaRZadYZsHcOZYQO/QCGuMjRQNgg0X2CFCwm36XSwur6OJ2cUKJ4sIBTrD1O05cPg96c/96NhBVzXn7aPAo6MBOTqx7SvYWFKOvcTwESPQAd+zD3M8yljl4FmdIS/atMes0NIoZCIjRkbrKSIsmjaN7+kEOtrfkqgQiNHlYBeTM3KsJyfgk6eL3yjfC0A6LlD7p7UnZV/qrXelduXOC2royvj6fhVnMxvci5D1WgAB5XvBouwFXgtVWT1YqYiXFr8khpCWGDxIHIGMFKGFcFNg+RYmb2Z375oe/ZHKTPV/ecZ/C6/uyn6umilSY/5z2Y/1z5pDRZ3qfoZPyy0cHUKVfLdCImHLvbyS2uyDTh9SA0WmSn4Z9NHnWpm1ZHkFgLAWn2vST8/q4tT7O7jxfFyY41Pcn8vMu5UEwB6tzGFef7EIieuCIggoRN1xvpCznKNDUXwPTfyznIZc0YCqAKxKycGAXKP9PH46upA
+DKIM-Signature: a=rsa-sha256; bh=PFpipJLBeSdILC6t0pkAsFVuVnwACi0GX+3uRYEOCpM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788163251; v=1;
- b=Zzq03QHcceQWJbw18YO2PhlaK0rKN/KPT26wpTdupeEeJrD1N/72Wbx/dK0xYaxGGiWTTgJ3
- V7gWdo1gjg9QQbiMa+9LrHMp8Ra+8lEDrChLlhJrOJnv8dGDXAKvpVrq6LvaEItrqA4cQlAdogn
- lYb4/BEXRsYn0dhFhr8ppKQ3cXpDdNdavV0mNYVmcaxGPWVb+WpOAO9WG5JWZRBfxKtfiFcUVCQ
- lhS0tWwHeyeZsD1Ll3QcXHW1V0v//YQ3pwdi8Xf/Vrcvbh4Nb+wmB4sgaBoh0Hxg0L6/8AURBB+
- Jxx4+hee2GFfXIHaqS8jw2A/0FIeXDumzOfMkkXQ2zfVw==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ t=1788163437; v=1;
+ b=JfjrXQchHaTIRr7GwvyhOXW9kvkq/aKVyqTiuJFFyLD/UW5QVikEGPRb5LiIZSah1JLcCeY+
+ 1uz279GrzB0db3mqZtBozOsf/maNAypGmCWDUfUbTK3aC4zVdBWcnjettx8EQ7DpsG99xhs+ZOR
+ HX8J/aG0eOhpgw2jYuwc3y8bzbU8hAAcnGg3ZLP7/qIQemWdj607Lqh6x5P7cfnIBCXHTF695S6
+ v8V5F5wM3sZ+ccgad7y/Dl3+AQVOyBE9oLNe9F0Bo3dcD+o7n86LrjSI6pHyQJCZK3qcZSxgj1L
+ OqzzsZvadP7NATamTWx2SOJ5HId2iQxja/Q6V/9vx8LbQ==
+Received-SPF: pass client-ip=51.210.91.49; envelope-from=clg@kaod.org;
+ helo=smtpout10.mo539.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,285 +141,64 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/31/26 05:42, Jamin Lin wrote:
-> The AST10x0 secure boot controller register block also hosts an ECDSA
-> engine. Emulate its secp384r1 "verify" command: on a trigger write to
-> the command register, read the public key, signature and SHA-384 digest
-> that the firmware staged in the SEC SRAM and defer the verification to the
-> crypto akcipher backend, reporting the result through the status
-> register.
+> The SBC controller register space is 0x1000.
+> Increase ASPEED_SBC_NR_REGS accordingly to cover the
+> full register space.
 > 
-> The model reads its operands from the SEC SRAM through a dedicated
-> address space, using a 'sram' link. The SEC SRAM is mapped at offset 0
-> of that address space, so the engine addresses each operand directly
-> with its SRAM-relative offset.
+> Bump the VMState version to 2.
+
+Which means QEMU cannot load a migration stream from any older QEMU
+version. Just add that migration compatibilty is broken.
+
+That's ok, Aspeed machines are not intended for virtualization use
+case.
+
+Thanks,
+
+C.
+
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/misc/aspeed_sbc.h |   4 +
->   hw/misc/aspeed_sbc.c         | 152 +++++++++++++++++++++++++++++++++++
->   hw/misc/trace-events         |   2 +
->   3 files changed, 158 insertions(+)
+>   include/hw/misc/aspeed_sbc.h | 2 +-
+>   hw/misc/aspeed_sbc.c         | 6 +++---
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
 > diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
-> index 07c7c22a86..8d3f9207fc 100644
+> index 8d3f9207fc..756c612356 100644
 > --- a/include/hw/misc/aspeed_sbc.h
 > +++ b/include/hw/misc/aspeed_sbc.h
-> @@ -40,12 +40,16 @@ struct AspeedSBCState {
->       uint32_t regs[ASPEED_SBC_NR_REGS];
+> @@ -17,7 +17,7 @@
+>   #define TYPE_ASPEED_AST10X0_SBC TYPE_ASPEED_SBC "-ast10x0"
+>   OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
 >   
->       AspeedOTPState otp;
-> +
-> +    MemoryRegion *sram;
-> +    AddressSpace sram_as;
->   };
+> -#define ASPEED_SBC_NR_REGS (0x93c >> 2)
+> +#define ASPEED_SBC_NR_REGS (0x1000 >> 2)
 >   
->   struct AspeedSBCClass {
->       SysBusDeviceClass parent_class;
->   
->       bool has_otp;
-> +    bool has_ecdsa;
->   };
->   
->   #endif /* ASPEED_SBC_H */
+>   #define QSR_AES                     BIT(27)
+>   #define QSR_RSA1024                 (0x0 << 12)
 > diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> index 1dfcf14e5b..aa167be4c0 100644
+> index aa167be4c0..5c193d9086 100644
 > --- a/hw/misc/aspeed_sbc.c
 > +++ b/hw/misc/aspeed_sbc.c
-> @@ -10,11 +10,13 @@
->   
->   #include "qemu/osdep.h"
->   #include "qemu/log.h"
-> +#include "qemu/cutils.h"
->   #include "qemu/error-report.h"
->   #include "hw/core/qdev-properties.h"
->   #include "hw/misc/aspeed_sbc.h"
->   #include "qapi/error.h"
->   #include "migration/vmstate.h"
-> +#include "crypto/akcipher.h"
->   #include "trace.h"
->   
->   #define R_PROT          (0x000 / 4)
-> @@ -24,8 +26,22 @@
->   #define R_CAMP1         (0x020 / 4)
->   #define R_CAMP2         (0x024 / 4)
->   #define R_QSR           (0x040 / 4)
-> +#define R_SEC_TRIGGER   (0x0bc / 4)
-> +
-> +/*
-> + * SEC SRAM layout for a secp384r1 ECDSA verify operation. All operands are
-> + * 48-byte big-endian values.
-> + */
-> +#define ECDSA_SRAM_QX   0x2080
-> +#define ECDSA_SRAM_QY   0x20c0
-> +#define ECDSA_SRAM_R    0x21c0
-> +#define ECDSA_SRAM_S    0x2200
-> +#define ECDSA_SRAM_M    0x2240
-> +#define ECDSA_P384_COORD_LEN    48
->   
->   /* R_STATUS */
-> +#define ECDSA_VERIFY_PASS       BIT(21)
-> +#define ECDSA_VERIFY_DONE       BIT(20)
->   #define ABR_EN                  BIT(14) /* Mirrors SCU510[11] */
->   #define ABR_IMAGE_SOURCE        BIT(13)
->   #define SPI_ABR_IMAGE_SOURCE    BIT(12)
-> @@ -42,6 +58,10 @@
->   #define OTP_MEM_IDLE            BIT(1)
->   #define OTP_COMPARE_STATUS      BIT(0)
->   
-> +/* R_SEC_TRIGGER */
-> +#define ECDSA_CMD_TRIGGER BIT(1)
-> +#define RSA_CMD_TRIGGER   BIT(0)
-> +
->   /* QSR */
->   #define QSR_RSA_MASK           (0x3 << 12)
->   #define QSR_HASH_MASK          (0x3 << 10)
-> @@ -220,10 +240,111 @@ static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
->       s->regs[R_STATUS] |= (OTP_MEM_IDLE | OTP_IDLE);
->   }
->   
-> +static void sbc_ecdsa_hexdump(const char *desc, const char *buf, size_t size)
-> +{
-> +    g_autoptr(GString) str = g_string_sized_new(64);
-> +    size_t len;
-> +    size_t i;
-> +
-> +    for (i = 0; i < size; i += len) {
-> +        len = MIN(16, size - i);
-> +        g_string_truncate(str, 0);
-> +        qemu_hexdump_line(str, buf + i, len, 1, 4);
-> +        trace_aspeed_sbc_ecdsa_hexdump(desc, i, str->str);
-> +    }
-> +}
-> +
-> +/*
-> + * The hardware only supports ECDSA secp384r1 (NIST P-384). The firmware has
-> + * already staged the public key, signature and digest in the SEC SRAM; read
-> + * them out and defer the actual verification to the crypto backend.
-> + */
-> +static bool aspeed_sbc_ecdsa_verify(AspeedSBCState *s)
-> +{
-> +    QCryptoAkCipherOptions opts = {
-> +        .alg = QCRYPTO_AK_CIPHER_ALGO_ECDSA,
-> +        .u.ecdsa.curve_id = QCRYPTO_CURVE_ID_SECP384R1,
-> +    };
-> +    g_autoptr(QCryptoAkCipher) akcipher = NULL;
-> +    uint8_t pubkey[ECDSA_P384_COORD_LEN * 2];
-> +    uint8_t sig[ECDSA_P384_COORD_LEN * 2];
-> +    uint8_t dgst[ECDSA_P384_COORD_LEN];
-> +    Error *err = NULL;
-> +
-> +    if (!qcrypto_akcipher_supports(&opts)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: ECDSA secp384r1 is not supported by the crypto "
-> +                      "backend\n", __func__);
-> +        return false;
-> +    }
-> +
-> +    if (address_space_read(&s->sram_as, ECDSA_SRAM_QX,
-> +                           MEMTXATTRS_UNSPECIFIED, pubkey,
-> +                           ECDSA_P384_COORD_LEN) != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: failed to read ECDSA QX from SEC SRAM\n", __func__);
-> +        return false;
-> +    }
-> +    if (address_space_read(&s->sram_as, ECDSA_SRAM_QY,
-> +                           MEMTXATTRS_UNSPECIFIED,
-> +                           pubkey + ECDSA_P384_COORD_LEN,
-> +                           ECDSA_P384_COORD_LEN) != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: failed to read ECDSA QY from SEC SRAM\n", __func__);
-> +        return false;
-> +    }
-> +    if (address_space_read(&s->sram_as, ECDSA_SRAM_R,
-> +                           MEMTXATTRS_UNSPECIFIED, sig,
-> +                           ECDSA_P384_COORD_LEN) != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: failed to read ECDSA R from SEC SRAM\n", __func__);
-> +        return false;
-> +    }
-> +    if (address_space_read(&s->sram_as, ECDSA_SRAM_S,
-> +                           MEMTXATTRS_UNSPECIFIED, sig + ECDSA_P384_COORD_LEN,
-> +                           ECDSA_P384_COORD_LEN) != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: failed to read ECDSA S from SEC SRAM\n", __func__);
-> +        return false;
-> +    }
-> +    if (address_space_read(&s->sram_as, ECDSA_SRAM_M,
-> +                           MEMTXATTRS_UNSPECIFIED, dgst,
-> +                           ECDSA_P384_COORD_LEN) != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: failed to read ECDSA M from SEC SRAM\n",
-> +                      __func__);
-> +        return false;
-> +    }
-> +
-> +    if (trace_event_get_state_backends(TRACE_ASPEED_SBC_ECDSA_HEXDUMP)) {
-> +        sbc_ecdsa_hexdump("pubkey", (char *)pubkey, sizeof(pubkey));
-> +        sbc_ecdsa_hexdump("signature", (char *)sig, sizeof(sig));
-> +        sbc_ecdsa_hexdump("digest", (char *)dgst, sizeof(dgst));
-> +    }
-> +
-> +    akcipher = qcrypto_akcipher_new(&opts, QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
-> +                                    pubkey, sizeof(pubkey), &err);
-> +    if (!akcipher) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: %s\n", __func__,
-> +                      error_get_pretty(err));
-> +        error_free(err);
-> +        return false;
-> +    }
-> +
-> +    if (qcrypto_akcipher_verify(akcipher, sig, sizeof(sig),
-> +                                dgst, sizeof(dgst), &err) != 0) {
-> +        error_free(err);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
->                                 unsigned int size)
->   {
->       AspeedSBCState *s = ASPEED_SBC(opaque);
-> +    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(s);
->   
->       addr >>= 2;
->   
-> @@ -244,6 +365,26 @@ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
->       case R_CMD:
->           aspeed_sbc_handle_command(opaque, data);
->           return;
-> +    case R_SEC_TRIGGER:
-> +        if (data & RSA_CMD_TRIGGER) {
-> +            qemu_log_mask(LOG_UNIMP,
-> +                          "%s: RSA is not supported\n", __func__);
-> +        }
-> +        if (data & ECDSA_CMD_TRIGGER) {
-> +            if (!sc->has_ecdsa) {
-> +                qemu_log_mask(LOG_GUEST_ERROR,
-> +                              "%s: ECDSA is not supported\n", __func__);
-> +                return;
-> +            }
-> +            s->regs[R_STATUS] &= ~(ECDSA_VERIFY_DONE | ECDSA_VERIFY_PASS);
-> +            if (aspeed_sbc_ecdsa_verify(s)) {
-> +                s->regs[R_STATUS] |= ECDSA_VERIFY_PASS;
-> +            }
-> +            s->regs[R_STATUS] |= ECDSA_VERIFY_DONE;
-> +            trace_aspeed_sbc_ecdsa_verify(
-> +                (s->regs[R_STATUS] & ECDSA_VERIFY_PASS) ? "pass" : "fail");
-> +        }
-> +        return;
->       default:
->           break;
->       }
-> @@ -306,6 +447,14 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
->           }
+> @@ -456,15 +456,15 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
 >       }
 >   
-> +    if (sc->has_ecdsa) {
-> +        if (!s->sram) {
-
-Bisectability is broken because the link is only set in patch 8.
-
-
-> +            error_setg(errp, TYPE_ASPEED_SBC ": 'sram' link not set");
-> +            return;
-> +        }
-> +        address_space_init(&s->sram_as, s->sram, TYPE_ASPEED_SBC ".sram");
-> +    }
-> +
 >       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
->               TYPE_ASPEED_SBC, 0x1000);
+> -            TYPE_ASPEED_SBC, 0x1000);
+> +            TYPE_ASPEED_SBC, ASPEED_SBC_NR_REGS << 2);
 >   
-> @@ -325,6 +474,8 @@ static const VMStateDescription vmstate_aspeed_sbc = {
->   static const Property aspeed_sbc_properties[] = {
->       DEFINE_PROP_BOOL("emmc-abr", AspeedSBCState, emmc_abr, 0),
->       DEFINE_PROP_UINT32("signing-settings", AspeedSBCState, signing_settings, 0),
-> +    DEFINE_PROP_LINK("sram", AspeedSBCState, sram,
-> +                     TYPE_MEMORY_REGION, MemoryRegion *),
->   };
->   
->   static void aspeed_sbc_class_init(ObjectClass *klass, const void *data)
-> @@ -355,6 +506,7 @@ static void aspeed_ast10x0_sbc_class_init(ObjectClass *klass, const void *data)
->   
->       dc->desc = "AST10X0 Secure Boot Controller";
->       sc->has_otp = true;
-> +    sc->has_ecdsa = true;
+>       sysbus_init_mmio(sbd, &s->iomem);
 >   }
 >   
->   static const TypeInfo aspeed_sbc_types[] = {
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index bbec0d2178..735d11d447 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -95,6 +95,8 @@ aspeed_sbc_ignore_cmd(uint32_t cmd) "Ignoring command 0x%" PRIx32
->   aspeed_sbc_handle_cmd(uint32_t cmd, uint32_t addr, bool ret) "Handling command 0x%" PRIx32 " for OTP addr 0x%" PRIx32 " Result: %d"
->   aspeed_sbc_otp_read(uint32_t addr, uint32_t value) "OTP Memory read: addr 0x%" PRIx32 " value 0x%" PRIx32
->   aspeed_sbc_otp_prog(uint32_t addr, uint32_t value) "OTP Memory write: addr 0x%" PRIx32 " value 0x%" PRIx32
-> +aspeed_sbc_ecdsa_verify(const char *result) "ECDSA verify done: %s"
-> +aspeed_sbc_ecdsa_hexdump(const char *desc, uint32_t offset, const char *s) "%s: 0x%08x: %s"
->   
->   # aspeed_scu.c
->   aspeed_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+>   static const VMStateDescription vmstate_aspeed_sbc = {
+>       .name = TYPE_ASPEED_SBC,
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32_ARRAY(regs, AspeedSBCState, ASPEED_SBC_NR_REGS),
+>           VMSTATE_END_OF_LIST(),
 
 
