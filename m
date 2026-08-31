@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E9ADC61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7A8C61DFD
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18Yc-0008Dp-09; Mon, 31 Aug 2026 16:24:42 -0400
+	id 1x18Zc-0005HV-VA; Mon, 31 Aug 2026 16:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Ya-000823-7c
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Za-0004zc-Bs
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YY-0008OQ-5s
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:39 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZX-0000Xj-O6
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207877;
+ s=mimecast20190719; t=1788207939;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z3E4l/9ZBojjapKTPoc2rkBnvoRHsP4FarABuj8M8OA=;
- b=HpU9GQQBhlg/zeyqZx/DyfSrSRW3qyePy4MR9Nn1jfsbDC1vXO/h/aSWd1FTSOVP1Z1aSb
- yPOvVEg9Jl0sTJt+hw2arq4mIa0Pbp2nRcDYVYlgGS1ylaDKpKywYWJYgvxQvA7V5tlaQK
- BnQBm6mB+kYBvpul48dcGxlv3dQ92oE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=2QuKO15oyZt8iK9uQrm37D00LC/3KnAtcu6Y6GzPK/U=;
+ b=QMUlRGt812nR5PqqP6Ck/7ehUUFNWLPT/YB8SlO6qKS398xhuU+oTHcmVINFLnyZQeWF2b
+ BKePUIkwUih7izjKPTe190aqpR0tAkopoFglIPWMDHIGrb3y1NKMkKWS92GRzUX9BxgBhr
+ rwSDK9VXLuxZCSBgPXEc0+P7JeZvlNg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-oZbFfP_-PC-tN--Gv2Rq1Q-1; Mon,
- 31 Aug 2026 16:24:31 -0400
-X-MC-Unique: oZbFfP_-PC-tN--Gv2Rq1Q-1
-X-Mimecast-MFC-AGG-ID: oZbFfP_-PC-tN--Gv2Rq1Q_1788207869
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-YBUzUfduNf-jSrGGnvQSyA-1; Mon,
+ 31 Aug 2026 16:25:35 -0400
+X-MC-Unique: YBUzUfduNf-jSrGGnvQSyA-1
+X-Mimecast-MFC-AGG-ID: YBUzUfduNf-jSrGGnvQSyA_1788207932
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 277AE184A08C; Mon, 31 Aug 2026 20:24:29 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E2ABA1954212; Mon, 31 Aug 2026 20:25:31 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 818D11800577; Mon, 31 Aug 2026 20:24:22 +0000 (UTC)
+ id 60CF01800347; Mon, 31 Aug 2026 20:25:25 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -70,24 +70,27 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 30/43] qapi: convert trivial intro sections for audio.json
-Date: Mon, 31 Aug 2026 16:19:32 -0400
-Message-ID: <20260831201945.287730-31-jsnow@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v4 39/43] qapi: convert trivial intro sections for qom.json
+Date: Mon, 31 Aug 2026 16:19:41 -0400
+Message-ID: <20260831201945.287730-40-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,270 +107,501 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/audio.json | 88 ++++++++++++++++++-------------------------------
- 1 file changed, 32 insertions(+), 56 deletions(-)
+ qapi/qom.json | 150 +++++++++++++++++---------------------------------
+ 1 file changed, 51 insertions(+), 99 deletions(-)
 
-diff --git a/qapi/audio.json b/qapi/audio.json
-index 2df87b97101..72190f20993 100644
---- a/qapi/audio.json
-+++ b/qapi/audio.json
-@@ -14,9 +14,8 @@
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 4a9b7f90884..51af9485e6d 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -77,8 +77,7 @@
  
  ##
- # @AudiodevPerDirectionOptions:
+ # @qom-list:
 -#
--# General audio backend options that are used for both playback and
--# recording.
-+#     General audio backend options that are used for both playback
-+#     and recording.
+-# List properties of a object given a path in the object model.
++#     List properties of a object given a path in the object model.
  #
- # @mixing-engine: use QEMU's mixing engine to mix all streams inside
- #     QEMU and convert audio formats when not supported by the
-@@ -53,8 +52,7 @@
+ # @path: the path within the object model.  See `qom-get` for a
+ #     description of this parameter.
+@@ -103,8 +102,7 @@
  
  ##
- # @AudiodevGenericOptions:
+ # @qom-get:
 -#
--# Generic driver-specific options.
-+#     Generic driver-specific options.
+-# Get a property value.
++#     Get a property value.
  #
- # @in: options of the capture stream
- #
-@@ -69,8 +67,7 @@
+ # @path: The path within the object model.  There are two forms of
+ #     supported paths--absolute and partial paths.
+@@ -154,9 +152,8 @@
  
  ##
- # @AudiodevDBusOptions:
+ # @qom-list-get:
 -#
--# Options of the D-Bus audio backend.
-+#     Options of the D-Bus audio backend.
+-# List properties and their values for each object path in the input
+-# list.
++#     List properties and their values for each object path in the
++#     input list.
  #
- # @in: options of the capture stream
- #
-@@ -89,9 +86,8 @@
+ # @paths: The absolute or partial path for each object, as described
+ #     in `qom-get`.
+@@ -176,8 +173,7 @@
  
  ##
- # @AudiodevAlsaPerDirectionOptions:
+ # @qom-set:
 -#
--# Options of the ALSA backend that are used for both playback and
--# recording.
-+#     Options of the ALSA backend that are used for both playback and
-+#     recording.
+-# Set a property value.
++#     Set a property value.
  #
- # @dev: the name of the ALSA device to use (default 'default')
+ # @path: see `qom-get` for a description of this parameter
  #
-@@ -111,8 +107,7 @@
+@@ -202,8 +198,7 @@
  
  ##
- # @AudiodevAlsaOptions:
+ # @ObjectTypeInfo:
 -#
--# Options of the ALSA audio backend.
-+#     Options of the ALSA audio backend.
+-# This structure describes a search result from `qom-list-types`
++#     This structure describes a search result from `qom-list-types`
  #
- # @in: options of the capture stream
+ # @name: the type name found in the search
  #
-@@ -130,8 +125,7 @@
+@@ -219,8 +214,7 @@
  
  ##
- # @AudiodevSndioOptions:
+ # @qom-list-types:
 -#
--# Options of the sndio audio backend.
-+#     Options of the sndio audio backend.
+-# Return a list of types given search parameters.
++#     Return a list of types given search parameters.
  #
- # @in: options of the capture stream
- #
-@@ -152,9 +146,8 @@
+ # @implements: if specified, only return types that implement this
+ #     type name
+@@ -238,8 +232,7 @@
  
  ##
- # @AudiodevCoreaudioPerDirectionOptions:
+ # @qom-list-properties:
 -#
--# Options of the Core Audio backend that are used for both playback
--# and recording.
-+#     Options of the Core Audio backend that are used for both
-+#     playback and recording.
+-# List properties associated with a QOM object.
++#     List properties associated with a QOM object.
  #
- # @buffer-count: number of buffers
+ # @typename: the type name of an object
  #
-@@ -167,8 +160,7 @@
+@@ -258,8 +251,7 @@
  
  ##
- # @AudiodevCoreaudioOptions:
+ # @CanHostSocketcanProperties:
 -#
--# Options of the coreaudio audio backend.
-+#     Options of the coreaudio audio backend.
+-# Properties for can-host-socketcan objects.
++#     Properties for can-host-socketcan objects.
  #
- # @in: options of the capture stream
+ # @if: interface name of the host system CAN bus to connect to
  #
-@@ -183,8 +175,7 @@
+@@ -275,8 +267,7 @@
  
  ##
- # @AudiodevDsoundOptions:
+ # @ColoCompareProperties:
 -#
--# Options of the DirectSound audio backend.
-+#     Options of the DirectSound audio backend.
+-# Properties for colo-compare objects.
++#     Properties for colo-compare objects.
  #
- # @in: options of the capture stream
- #
-@@ -203,9 +194,8 @@
+ # @primary_in: name of the character device backend to use for the
+ #     primary input (incoming packets are redirected to @outdev)
+@@ -323,9 +314,8 @@
  
  ##
- # @AudiodevJackPerDirectionOptions:
+ # @CryptodevBackendProperties:
 -#
--# Options of the JACK backend that are used for both playback and
--# recording.
-+#     Options of the JACK backend that are used for both playback and
-+#     recording.
+-# Properties for cryptodev-backend and cryptodev-backend-builtin
+-# objects.
++#     Properties for cryptodev-backend and cryptodev-backend-builtin
++#     objects.
  #
- # @server-name: select from among several possible concurrent server
- #     instances (default: environment variable $JACK_DEFAULT_SERVER if
-@@ -237,8 +227,7 @@
+ # @queues: the number of queues for the cryptodev backend.  Ignored
+ #     for cryptodev-backend and must be 1 for
+@@ -344,8 +334,7 @@
  
  ##
- # @AudiodevJackOptions:
+ # @CryptodevVhostUserProperties:
 -#
--# Options of the JACK audio backend.
-+#     Options of the JACK audio backend.
+-# Properties for cryptodev-vhost-user objects.
++#     Properties for cryptodev-vhost-user objects.
  #
- # @in: options of the capture stream
- #
-@@ -253,9 +242,8 @@
+ # @chardev: the name of a Unix domain socket character device that
+ #     connects to the vhost-user server
+@@ -359,8 +348,7 @@
  
  ##
- # @AudiodevOssPerDirectionOptions:
+ # @DBusVMStateProperties:
 -#
--# Options of the OSS backend that are used for both playback and
--# recording.
-+#     Options of the OSS backend that are used for both playback and
-+#     recording.
+-# Properties for dbus-vmstate objects.
++#     Properties for dbus-vmstate objects.
  #
- # @dev: file name of the OSS device (default '/dev/dsp')
+ # @addr: the name of the DBus bus to connect to
  #
-@@ -275,8 +263,7 @@
+@@ -375,9 +363,8 @@
  
  ##
- # @AudiodevOssOptions:
+ # @NetfilterInsert:
 -#
--# Options of the OSS audio backend.
-+#     Options of the OSS audio backend.
+-# Indicates where to insert a netfilter relative to a given other
+-# filter.
++#     Indicates where to insert a netfilter relative to a given other
++#     filter.
  #
- # @in: options of the capture stream
+ # @before: insert before the specified filter
  #
-@@ -305,9 +292,8 @@
+@@ -390,8 +377,7 @@
  
  ##
- # @AudiodevPaPerDirectionOptions:
+ # @NetfilterProperties:
 -#
--# Options of the Pulseaudio backend that are used for both playback
--# and recording.
-+#     Options of the Pulseaudio backend that are used for both
-+#     playback and recording.
+-# Properties for objects of classes derived from netfilter.
++#     Properties for objects of classes derived from netfilter.
  #
- # @name: name of the sink/source to use
+ # @netdev: id of the network device backend to filter
  #
-@@ -330,8 +316,7 @@
+@@ -423,8 +409,7 @@
  
  ##
- # @AudiodevPaOptions:
+ # @FilterBufferProperties:
 -#
--# Options of the PulseAudio audio backend.
-+#     Options of the PulseAudio audio backend.
+-# Properties for filter-buffer objects.
++#     Properties for filter-buffer objects.
  #
- # @in: options of the capture stream
- #
-@@ -349,9 +334,8 @@
+ # @interval: a non-zero interval in microseconds.  All packets
+ #     arriving in the given interval are delayed until the end of the
+@@ -438,8 +423,7 @@
  
  ##
- # @AudiodevPipewirePerDirectionOptions:
+ # @FilterDumpProperties:
 -#
--# Options of the PipeWire backend that are used for both playback and
--# recording.
-+#     Options of the PipeWire backend that are used for both playback
-+#     and recording.
+-# Properties for filter-dump objects.
++#     Properties for filter-dump objects.
  #
- # @name: name of the sink/source to use
+ # @file: the filename where the dumped packets should be stored
  #
-@@ -374,8 +358,7 @@
+@@ -455,8 +439,7 @@
  
  ##
- # @AudiodevPipewireOptions:
+ # @FilterMirrorProperties:
 -#
--# Options of the PipeWire audio backend.
-+#     Options of the PipeWire audio backend.
+-# Properties for filter-mirror objects.
++#     Properties for filter-mirror objects.
  #
- # @in: options of the capture stream
- #
-@@ -390,9 +373,8 @@
+ # @outdev: the name of a character device backend to which all
+ #     incoming packets are mirrored
+@@ -498,8 +481,7 @@
  
  ##
- # @AudiodevSdlPerDirectionOptions:
+ # @FilterRewriterProperties:
 -#
--# Options of the SDL audio backend that are used for both playback and
--# recording.
-+#     Options of the SDL audio backend that are used for both playback
-+#     and recording.
+-# Properties for filter-rewriter objects.
++#     Properties for filter-rewriter objects.
  #
- # @buffer-count: number of buffers (default 4)
- #
-@@ -405,8 +387,7 @@
+ # @vnet_hdr_support: if true, vnet header support is enabled
+ #     (default: false)
+@@ -512,8 +494,7 @@
  
  ##
- # @AudiodevSdlOptions:
+ # @InputBarrierProperties:
 -#
--# Options of the SDL audio backend.
-+#     Options of the SDL audio backend.
+-# Properties for input-barrier objects.
++#     Properties for input-barrier objects.
  #
- # @in: options of the recording stream
- #
-@@ -421,8 +402,7 @@
+ # @name: the screen name as declared in the screens section of
+ #     barrier.conf
+@@ -545,8 +526,7 @@
  
  ##
- # @AudiodevWavOptions:
+ # @InputLinuxProperties:
 -#
--# Options of the wav audio backend.
-+#     Options of the wav audio backend.
+-# Properties for input-linux objects.
++#     Properties for input-linux objects.
  #
- # @in: options of the capture stream
+ # @evdev: the path of the host evdev device to use
  #
-@@ -440,8 +420,7 @@
+@@ -569,8 +549,7 @@
  
  ##
- # @AudioFormat:
+ # @EventLoopBaseProperties:
 -#
--# An enumeration of possible audio formats.
-+#     An enumeration of possible audio formats.
+-# Common properties for event loops
++#     Common properties for event loops
  #
- # @u8: unsigned 8 bit integer
- #
-@@ -464,8 +443,7 @@
+ # @aio-max-batch: maximum number of requests in a batch for the AIO
+ #     engine, 0 means that the engine will use its default.
+@@ -591,8 +570,7 @@
  
  ##
- # @AudiodevDriver:
+ # @IothreadProperties:
 -#
--# An enumeration of possible audio backend drivers.
-+#     An enumeration of possible audio backend drivers.
+-# Properties for iothread objects.
++#     Properties for iothread objects.
  #
- # @jack: JACK audio backend (since 5.1)
- #
-@@ -488,8 +466,7 @@
+ # @poll-max-ns: the maximum number of nanoseconds to busy wait for
+ #     events.  0 means polling is disabled (default: 32768 on POSIX
+@@ -626,8 +604,7 @@
  
  ##
- # @Audiodev:
+ # @MainLoopProperties:
 -#
--# Options of an audio backend.
-+#     Options of an audio backend.
+-# Properties for the main-loop object.
++#     Properties for the main-loop object.
  #
- # @id: identifier of the backend
- #
-@@ -534,8 +511,7 @@
+ # Since: 7.1
+ ##
+@@ -637,8 +614,7 @@
  
  ##
- # @query-audiodevs:
+ # @MemoryBackendProperties:
 -#
--# Return information about audiodev configuration
-+#     Return information about audiodev configuration
+-# Properties for objects of classes derived from memory-backend.
++#     Properties for objects of classes derived from memory-backend.
  #
- # Since: 8.0
+ # @merge: if true, mark the memory as mergeable (default depends on
+ #     the machine type)
+@@ -696,8 +672,7 @@
+ 
  ##
+ # @MemoryBackendFileProperties:
+-#
+-# Properties for memory-backend-file objects.
++#     Properties for memory-backend-file objects.
+ #
+ # @align: the base address alignment when QEMU mmap(2)s @mem-path.
+ #     Some backend stores specified by @mem-path require an alignment
+@@ -757,8 +732,7 @@
+ 
+ ##
+ # @MemoryBackendMemfdProperties:
+-#
+-# Properties for memory-backend-memfd objects.
++#     Properties for memory-backend-memfd objects.
+ #
+ # @hugetlb: if true, the file to be created resides in the hugetlbfs
+ #     filesystem (default: false)
+@@ -813,8 +787,7 @@
+ 
+ ##
+ # @PrManagerHelperProperties:
+-#
+-# Properties for pr-manager-helper objects.
++#     Properties for pr-manager-helper objects.
+ #
+ # @path: the path to a Unix domain socket for connecting to the
+ #     external helper
+@@ -827,8 +800,7 @@
+ 
+ ##
+ # @QtestProperties:
+-#
+-# Properties for qtest objects.
++#     Properties for qtest objects.
+ #
+ # @chardev: the chardev to be used to receive qtest commands on.
+ #
+@@ -842,8 +814,7 @@
+ 
+ ##
+ # @RemoteObjectProperties:
+-#
+-# Properties for x-remote-object objects.
++#     Properties for x-remote-object objects.
+ #
+ # @fd: file descriptor name previously passed via `getfd` command
+ #
+@@ -857,8 +828,7 @@
+ 
+ ##
+ # @VfioUserServerProperties:
+-#
+-# Properties for x-vfio-user-server objects.
++#     Properties for x-vfio-user-server objects.
+ #
+ # @socket: socket to be used by the libvfio-user library
+ #
+@@ -871,8 +841,7 @@
+ 
+ ##
+ # @IOMMUFDProperties:
+-#
+-# Properties for iommufd objects.
++#     Properties for iommufd objects.
+ #
+ # @fd: file descriptor name previously passed via `getfd` command,
+ #     which represents a pre-opened /dev/iommu.  This allows the
+@@ -887,8 +856,7 @@
+ 
+ ##
+ # @AcpiGenericInitiatorProperties:
+-#
+-# Properties for acpi-generic-initiator objects.
++#     Properties for acpi-generic-initiator objects.
+ #
+ # @pci-dev: PCI device ID to be associated with the node
+ #
+@@ -902,8 +870,7 @@
+ 
+ ##
+ # @AcpiGenericPortProperties:
+-#
+-# Properties for acpi-generic-port objects.
++#     Properties for acpi-generic-port objects.
+ #
+ # @pci-bus: QOM path of the PCI bus of the hostbridge associated with
+ #     this SRAT Generic Port Affinity Structure.  This is the same as
+@@ -941,8 +908,7 @@
+ 
+ ##
+ # @RngProperties:
+-#
+-# Properties for objects of classes derived from rng.
++#     Properties for objects of classes derived from rng.
+ #
+ # @opened: if true, the device is opened immediately when applying
+ #     this option and will probably fail when processing the next
+@@ -961,8 +927,7 @@
+ 
+ ##
+ # @RngEgdProperties:
+-#
+-# Properties for rng-egd objects.
++#     Properties for rng-egd objects.
+ #
+ # @chardev: the name of a character device backend that provides the
+ #     connection to the RNG daemon
+@@ -975,8 +940,7 @@
+ 
+ ##
+ # @RngRandomProperties:
+-#
+-# Properties for rng-random objects.
++#     Properties for rng-random objects.
+ #
+ # @filename: the filename of the device on the host to obtain entropy
+ #     from (default: "/dev/urandom")
+@@ -990,8 +954,7 @@
+ 
+ ##
+ # @IgvmCfgProperties:
+-#
+-# Properties common to objects that handle IGVM files.
++#     Properties common to objects that handle IGVM files.
+ #
+ # @file: IGVM file to use to configure guest
+ #
+@@ -1003,8 +966,7 @@
+ 
+ ##
+ # @SevCommonProperties:
+-#
+-# Properties common to objects that are derivatives of sev-common.
++#     Properties common to objects that are derivatives of sev-common.
+ #
+ # @sev-device: SEV device to use (default: "/dev/sev")
+ #
+@@ -1038,8 +1000,7 @@
+ 
+ ##
+ # @SevGuestProperties:
+-#
+-# Properties for sev-guest objects.
++#     Properties for sev-guest objects.
+ #
+ # @dh-cert-file: guest owners DH certificate (encoded with base64)
+ #
+@@ -1136,8 +1097,7 @@
+ 
+ ##
+ # @TdxGuestProperties:
+-#
+-# Properties for tdx-guest objects.
++#     Properties for tdx-guest objects.
+ #
+ # @attributes: The 'attributes' of a TD guest that is passed to
+ #     KVM_TDX_INIT_VM
+@@ -1181,8 +1141,7 @@
+ 
+ ##
+ # @ThreadContextProperties:
+-#
+-# Properties for thread context objects.
++#     Properties for thread context objects.
+ #
+ # @cpu-affinity: the list of host CPU numbers used as CPU affinity for
+ #     all threads created in the thread context (default: QEMU main
+@@ -1202,8 +1161,7 @@
+ 
+ ##
+ # @MonitorProperties:
+-#
+-# Properties for all monitors
++#     Properties for all monitors
+ #
+ # @chardev: ID of the character device providing the monitor transport
+ #
+@@ -1214,8 +1172,7 @@
+ 
+ ##
+ # @MonitorHMPProperties:
+-#
+-# Properties for the HMP monitor
++#     Properties for the HMP monitor
+ #
+ # @readline: whether to enable readline for line editing
+ #      (default: true)
+@@ -1229,8 +1186,7 @@
+ 
+ ##
+ # @MonitorQMPCloseAction:
+-#
+-# Action to take when the character device backend is closed.
++#     Action to take when the character device backend is closed.
+ #
+ # @none: take no action
+ #
+@@ -1244,8 +1200,7 @@
+ 
+ ##
+ # @MonitorQMPProperties:
+-#
+-# Properties for the QMP monitor
++#     Properties for the QMP monitor
+ #
+ # @pretty: whether to pretty print JSON responses (default: false)
+ #
+@@ -1338,8 +1293,7 @@
+ 
+ ##
+ # @ObjectOptions:
+-#
+-# Describes the options of a user creatable QOM object.
++#     Describes the options of a user creatable QOM object.
+ #
+ # @qom-type: the class name for the object to be created
+ #
+@@ -1416,8 +1370,7 @@
+ 
+ ##
+ # @object-add:
+-#
+-# Create a QOM object.
++#     Create a QOM object.
+ #
+ # Errors:
+ #     - If @qom-type is not a valid class name
+@@ -1436,8 +1389,7 @@
+ 
+ ##
+ # @object-del:
+-#
+-# Remove a QOM object.
++#     Remove a QOM object.
+ #
+ # @id: the name of the QOM object to remove
+ #
 -- 
 2.55.0
 
