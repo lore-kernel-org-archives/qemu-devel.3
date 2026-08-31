@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFB7C61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 19:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C30DDC624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 19:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x17EW-0001Pp-9m; Mon, 31 Aug 2026 14:59:52 -0400
+	id 1x17EX-0001Qg-Gm; Mon, 31 Aug 2026 14:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tgamblin@baylibre.com>)
- id 1x17EU-0001P7-2q
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:59:50 -0400
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
+ id 1x17EV-0001PV-KO
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:59:51 -0400
+Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tgamblin@baylibre.com>)
- id 1x17ES-0000BX-EN
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:59:49 -0400
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-90cdffe8e3eso697516d6.2
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 11:59:48 -0700 (PDT)
+ id 1x17ET-0000CT-W9
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 14:59:51 -0400
+Received: by mail-qv1-xf2f.google.com with SMTP id
+ 6a1803df08f44-90cd8e45460so49320296d6.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 11:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=baylibre.com; s=google; t=1788202787; x=1788807587; darn=nongnu.org;
+ d=baylibre.com; s=google; t=1788202789; x=1788807589; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Q22FbeHXDtMxaPsftwhFKOpil5kY+8aobAw9NdBwCdw=;
- b=D+RzVjBKZiYSWs6rsM7Vb6d9gxz0tvqdnHuCLRLXRxa+2rjcDayMvJjijUDjhZa6gT
- j7MIh/AWIuYg7pCKYHN4GNAxIpjAdqvYXjSV7XUHyZ6Jj01vk39Eph+j7vcJkHOz543o
- Z43Cig+Petf1qNN/CtX0r6nZQKiSISnYcQ6g+NqAVvIDjm4omV2vJPdOhk1UN3lcKBdy
- MVXsBNkvc0Ne7IteOL0VEZU/tWFcWfSVRTddV4CzBaSLOe/CQxRWeX1CjQZlCxTVOSjh
- Y3cAqbCQ2/nRW/cJAQctUgxPl32kw6YrvpvZtvowSyj/cu3BqzB5i8YVazl13He9wM2e
- q3dw==
+ bh=J9GtGsBAQ9mS/SzBobD8ZOX7tnyIv8clzprzMF5QKwA=;
+ b=mHzQHtwTHQYnVt6m+6KdCU+kXujviMvR8K3BMOWKK/0q1/XZsfHesLdrPtQA9WF0cR
+ jwshAteTnXCUZqBtwHlnhuIJFpbm0C1IUr60I3EYHwrgKgwTB+xUt+nqOAdQhpBsEb6G
+ tTVD9ZhnMLtthJ2YXLx2Rf5aF5cM1o1bnojHVajtcGel4oUZlSQ5A8MGg1MD7t/gU155
+ zw0WIEPqaWc3Ni1eNoIVU6sQsVDC7ySbs/EVBCYI+Q+C7mAvb0qo/i++NhKCO7vAZCWZ
+ PK2Dq0+exH1gDFCDYyvFcJJ1F4s9EWyVT4J6uuC6qPfHUQuBcMLoa7nRaoAGEQjKjll3
+ UM7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788202787; x=1788807587;
+ d=1e100.net; s=20251104; t=1788202789; x=1788807589;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Q22FbeHXDtMxaPsftwhFKOpil5kY+8aobAw9NdBwCdw=;
- b=LoTx+n6L14wDAA6JTdc5SUUT7l9fucKLErhrozszWTaJKr2nRIqCOVYA7ZhNUl9lSJ
- Rs6crbsUZEDdCksp6YdcZfXjQ4hl3TUf8B6SCeinxJ3t4NG7i2JuB9bcgTH+Py1VszP/
- zFfr/j5yCj4GAHFaoGS6Fdz96Uj9Ufgb279LOXriYCW4fy/0DYhgvgotIviaejMaFGJo
- gkxWWstXjK2l3n5jotsWz0G/Nv6icX49FtEjm2+RYWj/PneelfedU24bVRBMsm+arVnD
- BpshUv0UMxkB7IsPs5QFpa2RRU45XdQ94ae6jrhhANx+Y6seXki+ox2ATtGW3uzFeiYz
- bezA==
-X-Gm-Message-State: AFuF++lWX96I2Ldxc+JbJHRMo2aTMQ16zTRB07seKSSTRosZsyBj2DIz
- rniEgQBm+zP3Bc2FobgONs5675tANmtPGDZgYJaVXW7dNxQKJe2IlvYn9w0jtB4EIdM=
-X-Gm-Gg: AYBFou3s57VAEFnt9nfv/4RWppctre7rUgVCOFsGZ4OaUY+p3lqoHOxW7FvvRcTD2eY
- 6o91EL3Rt8ZA9qEl77Cz70moobim+/nF21Jphx+ZMPvslcC8s7n7RcbCq+tHvdwE2Tux/Meg2IE
- QhAF/HIR5sxo9Qd3JlVdXv98l+cTqDwOGHG69dJ/S0XNoYjYM7mHY/4nCleWRxRfUa6C395b55S
- 4di2CDNlhQpb5d9OkuSjq9vS1RmP0Gpqr6U6tnQw5a22lVGyX1LmHNwQ76ATeNc5gHZekknXk7I
- vUor3MNXxLSqUbdyPl3VhHeolJxmgT7pT3jDyo+xv8pjxOl7lS/0RP+W9Jw6lqgg5Lccsjg38se
- ht5tsgmsBelJH2VIs3GuN8bf8a3rI4bVO0HvHsyo48rLffscMAwx91B7lW+h0FmQSrib4msH4oO
- BtCauZnS9VYItagyNvwT6j+WQOLBMuzTYHW7BbgH64CcCt8zigBXcWYYOcSryIy/jEecIEGFKnJ
- 2yKfBROZfc=
-X-Received: by 2002:a05:6214:4902:b0:8f3:13e4:739d with SMTP id
- 6a1803df08f44-90ce0e55d6cmr399378866d6.7.1788202787128; 
- Mon, 31 Aug 2026 11:59:47 -0700 (PDT)
+ bh=J9GtGsBAQ9mS/SzBobD8ZOX7tnyIv8clzprzMF5QKwA=;
+ b=P5AGDSff9mGSzCvu0pXDl4BX0z5BXZ29UJHDQwq4xtlDOqkx8TBn8LCmlS8qiOMDE2
+ RtVWcNeM0lL1GBOmoTzIVlw3CpYqjCE71I5O42LK5bvmPCWRZkn4p8vFsTqOnv25wOWb
+ 0bAU9XGVDm4slpOv8h4YCTkWtOogR8ZWzNN5LyqUM0SgmH9UkW5WsOrr9deMlJtFiVPQ
+ Cd5doZygz51CJNv8OBnS5y2WhoQwtolHixvh3OXWrNjY9v4pvr5UbbkuLQtUN6jXnQRx
+ nBT+bwWNm25MW4Pfm1zBXuxT9rPWkjFlimWV9KvFpAfl2G8qeqUHTdhTC0A26KbRPbtU
+ nuaA==
+X-Gm-Message-State: AFuF++kEmzGZRAcPaK6xeUlgGFMDLAfZxY56CPR8xTa1FU3Ycb2ZD6wv
+ Bw/fW7u4yNrG+9YtBhV2Om5EXF0iO3KJMM294AYxGzFfcZOHBLjfZ/OU7w7vba1VUN8=
+X-Gm-Gg: AYBFou1uvtmHAmpLQnFXCVYz9y3wsuyarxCksFb8I0b1KEvHScQ04PyK5whsYzfQRy9
+ cfH06SWGz3yJS4UNjQftj0ewhCi02uZuglp2Ne5zD3mzx63LGwhqlAFtUnQtFjsGs+ViA924OEt
+ rhYqyZxbOSzO31Q/z3txc6FLWlyuhLO3Ebyt1wdgg5hDO4X7EFzXtC9yBuJheFbPV2F3Yyy3GG6
+ 2SzEZKfrM9oz4GbcwNA++Wu6++vNrztdQCnddb26sE8S/aGMw58TO8JFmJW2kfcDGYXKe6oMI9n
+ 3wz+5ZHam0j99BbwtbbK3WP+U8sfQ0z/AWK2Ta+ma1hSng/O9NVGo3hxPBl394LeBhlLbF/6hv+
+ QI/YESqw0+8DxTsI5gAWJS0wf6Kc5K83a6enjDx0vJ2K7tCmFHmx2juQgBXCxOBFJUi+/xS4QWM
+ 02YHK/SgPeEoI2uhqnaahX/BSqd5whFsw8QJlUUZrmMakth8vjcBDdCaDtt3eZODwP3SQYOTBAG
+ w==
+X-Received: by 2002:a05:6214:5990:b0:90e:8424:4068 with SMTP id
+ 6a1803df08f44-90e842442c5mr189085796d6.24.1788202788876; 
+ Mon, 31 Aug 2026 11:59:48 -0700 (PDT)
 Received: from [192.168.40.230] ([2001:1970:3847:e000:1977:be2f:4a71:2892])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90ce44f5695sm90952986d6.26.2026.08.31.11.59.45
+ 6a1803df08f44-90ce44f5695sm90952986d6.26.2026.08.31.11.59.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 11:59:46 -0700 (PDT)
+ Mon, 31 Aug 2026 11:59:47 -0700 (PDT)
 From: Trevor Gamblin <tgamblin@baylibre.com>
-Date: Mon, 31 Aug 2026 14:59:40 -0400
-Subject: [PATCH 2/3] target/riscv: add helper_tlb_flush_page()
+Date: Mon, 31 Aug 2026 14:59:41 -0400
+Subject: [PATCH 3/3] target/riscv: use a targeted TLB page flush for
+ sfence.vma with a vaddr operand
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260831-riscv_tlb_page_flush-v1-2-4fc6af95673a@baylibre.com>
+Message-Id: <20260831-riscv_tlb_page_flush-v1-3-4fc6af95673a@baylibre.com>
 References: <20260831-riscv_tlb_page_flush-v1-0-4fc6af95673a@baylibre.com>
 In-Reply-To: <20260831-riscv_tlb_page_flush-v1-0-4fc6af95673a@baylibre.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +85,8 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
  Trevor Gamblin <tgamblin@baylibre.com>
 X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=tgamblin@baylibre.com; helo=mail-qv1-xf30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
+ envelope-from=tgamblin@baylibre.com; helo=mail-qv1-xf2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,46 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a page-level counterpart to helper_tlb_flush(), and condition its
-internal call to tlb_flush_page() on return value from the new
-sfence_vma_allowed() function.
+sfence.vma unconditionally called helper_tlb_flush(), regardless of the
+rs1 (vaddr) and rs2 (asid) operands, forcing a page-table walk on the
+next access. Use helper_tlb_flush_page() whenever rs1 != 0, falling back
+to the existing full flush for rs1 == 0. This makes RISC-V behaviour
+more similar to ARM's equivalent (tlbi_aa64_vae1_write), which already
+does tlb_flush_page_by_mmuidx() instead of a full flush.
+
+Pass get_address(ctx, a->rs1, 0) to gen_helper_tlb_flush_page() rather
+than get_gpr(), so that the address being passed matches the current
+addr_xl width regardless of '-cpu' input. Otherwise, the raw register
+value can carry garbage above that width and never match the address the
+TLB entry was actually filled under, so the flush silently misses and a
+stale mapping survives.
 
 Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 ---
- target/riscv/helper.h        | 1 +
- target/riscv/tcg/op_helper.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ target/riscv/tcg/insn_trans/trans_privileged.c.inc | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 4fc2d3a155..652f85a5c7 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -137,6 +137,7 @@ DEF_HELPER_1(ctr_clear, void, env)
- DEF_HELPER_1(wfi, void, env)
- DEF_HELPER_1(wrs_nto, void, env)
- DEF_HELPER_1(tlb_flush, void, env)
-+DEF_HELPER_2(tlb_flush_page, void, env, tl)
- DEF_HELPER_1(tlb_flush_all, void, env)
- DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
- /* Native Debug */
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 8039df2b48..723a45d181 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -610,6 +610,13 @@ void helper_tlb_flush(CPURISCVState *env)
-     }
- }
- 
-+void helper_tlb_flush_page(CPURISCVState *env, target_ulong addr)
-+{
-+    if (sfence_vma_allowed(env, GETPC())) {
-+        tlb_flush_page(env_cpu(env), addr);
-+    }
-+}
-+
- void helper_tlb_flush_all(CPURISCVState *env)
+diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+index a8eaccef67..8655fa332e 100644
+--- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+@@ -155,7 +155,11 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
  {
-     CPUState *cs = env_cpu(env);
+ #ifndef CONFIG_USER_ONLY
+     decode_save_opc(ctx, 0);
+-    gen_helper_tlb_flush(tcg_env);
++    if (a->rs1 == 0) {
++        gen_helper_tlb_flush(tcg_env);
++    } else {
++        gen_helper_tlb_flush_page(tcg_env, get_address(ctx, a->rs1, 0));
++    }
+     return true;
+ #endif
+     return false;
 
 -- 
 2.55.0
