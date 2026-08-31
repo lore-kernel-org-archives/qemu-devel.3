@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8108AC624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 16:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B69C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 16:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x14RU-0001Uw-PS; Mon, 31 Aug 2026 12:01:04 -0400
+	id 1x14RY-0001qy-8b; Mon, 31 Aug 2026 12:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x14RP-0001UH-Ff
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:00:59 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1x14RW-0001il-Dg
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:01:06 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x14RN-0001RO-AM
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:00:59 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-38759bcd877so3557690a91.2
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 09:00:56 -0700 (PDT)
+ id 1x14RU-0001TI-SP
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 12:01:06 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2d942c7cc2fso7864595ad.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 09:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788192055; x=1788796855; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=1s54z5ZwourrqTkxvsaHEocNUk3XFhEIL/5dO3GbIGg=;
- b=o2QQ0FRs/0jN0qu7lHO9rahe730kYMzmDYyafNKxaagDvlhrhtdR6Nz7uxOrVNPsdg
- amXjcEkblXaRx9UvZGMTqnrcKIZ9MUYgePEQjnIiyiPZDbG4pe1lQJ9fDEFwUv2VAQeM
- aj2OQS4C6HfEjqfffyUmS3Lzh6QU5G8mkLBAxVWN0k7rhiGdho6J6RWFE9GBwgc2DDfX
- UAHKvO329H36Jj0mHf8vt565NDtzs1vjihJ38Qk6Jwvb7ivgVWiMQWSqCcuOmWSBi9gY
- 67tCx5jQRDASGBTiydqC5rQTCU8jAQkODXv6ERoqwQRrZbmgdbcm4N2qKjdTPtMBDxBt
- frJg==
+ d=gmail.com; s=20251104; t=1788192062; x=1788796862; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GKPbyoUsJ8IzjDSZ/9gIj07Iz6lN96BBEtJXGjNiovA=;
+ b=OwXLC/17X8jkAh2f4GTCH5flDjuxxU+27m0CBKF77ukpqZ8g2aBkdZU1YkSfGSKy2M
+ HPN4Vj0UHkxrsAE62sMZxWgtvG1/XORRVTKYGCk81C4OD/7w1/+u+odU5qmBpc8pJGZk
+ nQajFHYsRyko8V1pY7F1gBi4dwkAeJKxT8HJ6nh+QPp0wToKN9JhcVvyBEh/aKfIXfKT
+ oXADsDj/oYJSoAgJVRMDsK4tELIMwHEEUWEUNnz98kI9qhgkjYmce0fRVEZjR016+HJq
+ gpBhPtaXFNtu7bxdHF2B2hbyzIG6PlM6W9Jb4VC9V79ovDpRjzNltOCRqC+uRrTAuHf9
+ t6eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788192055; x=1788796855;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=1s54z5ZwourrqTkxvsaHEocNUk3XFhEIL/5dO3GbIGg=;
- b=hiVYitejHBX5lgjU+VGmZYqRwTdmaAQshxuN8i/oNTVHlBi6Wgns8iRuMSNw1fiT8a
- YVdDDAzEWtkyYMvYh03Sm9ZdDLMaGxDFa3Vfkj6enXI2C1olEbKxgMw2XX2Yn7pyvRBd
- fl3r05NSErtw/7vRpREWUrK/VVbk3XRCcYQsoDHcLQ426QrfE8EDiU2mmv/wWUqy/+FL
- +4P2O05ruOHPlC8pN8DL0nWKAXf8VrT68MkMhsiaj5wwCaSMs36DVw4rRReJEjL+L7zG
- 2eBuqb97oBQwqZGsmhaK3fbO/dDYdysQdRpITOHNqX8k1hG3bMsuafxw0Od9ueaK8YmM
- wzpA==
-X-Gm-Message-State: AFuF++mogiLAAlLF6mVYrjZUOsJDmfkkmaWtkis88TPJaqCgdhwS/Kk5
- M7nKzoDS7fw0HmaNfk7AkMye1K8TYNCxprzv1XsSPRGfn4i1m7jDVM4C5TOforQwoGGscqh7
-X-Gm-Gg: AYBFou0nVE6c3scgURM5Zs9mlrvQbOc71Dl7CzwKJkF++ArLhQ0D2+840qXrTK2KEma
- SqlTFEU5EitwMTQzpboNXzLpp5jOqzwdd8Uw80bIJ9CcGq0DeAhYIDzVwz/wYc4g0+Rd5D8HytO
- sZYYlzjWoGgWaJXr8vnSDkQHgnmx0juIkwZ4SSUYmzd1eSelruSeU+wTUEYFiDbArZp9VmqUt4Z
- 6NUNK+RYhlS5cUqExZMuxIluhocDMQ11/SAKMXT5rCwqsYmtqLQyzxQfb3FnAPwMZT1tp8peWsC
- x55OFZTF0QlG+Cz6b6a4ptuCYQhQqZDWK4veXOkHc5dbLzXtliqhrYH880Y3u8oL5hvIv29f/y1
- LryBry/9YsnlwoZuuAtzhKBHBnkOcPNKKn6GcMMC2/bJfrnJZZc8w30WBY4okzVMXDq71yCEwaf
- hl2lD5Y3P6THNA4YelIug0UmzWPwWfH4iZjOOQAh05M0iBXzR1oWPb+o/oTBiTm/hazJTJLUAlk
- 6DIEEX7
-X-Received: by 2002:a17:90b:5544:b0:398:bd37:6a49 with SMTP id
- 98e67ed59e1d1-398bd376c65mr20304993a91.12.1788192054772; 
- Mon, 31 Aug 2026 09:00:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788192062; x=1788796862;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GKPbyoUsJ8IzjDSZ/9gIj07Iz6lN96BBEtJXGjNiovA=;
+ b=eePj9kIULBqoqbK0G9z8mKDFXKfzH4KBpBbsCHlvRIeewR+5mrv15Wyqbod9snNzSd
+ zsm11fLlthc1YJToHSMpycNPpYWkTdI5LeTZby2sE8LYlXDqgWL1Td2HNghbkpoi4wmP
+ b20UWUKkt0cfpBjp+M7Ks5ZH/PsvavIzp2pf6wELvQSPooE06rqU6fCNU1iauUeXko75
+ RSZBPwGHTJkGMf9LYrpcnyNuWLi5WTJXgFXHfowItlp/of+gTYnmYeqIwfdHDC1KrVDY
+ kAnCbB5N2Um2Zn6V1d2Za7/z/ARfME7dUxiwD1gVYkUPHrtMS6ur1X28AIPvEMj1XF3n
+ lf/Q==
+X-Gm-Message-State: AFuF++mHETF3apsm8VuUBDvT1mFQBF40P6gV8NrrAPfiO8h2bhIkyXN5
+ GlJF8iNpNxkrji8pVHHmwYIO6E2riIv5KBq9SCUKDoL6Juuud50ZV3tbpSjX9WN9KF8tKybW
+X-Gm-Gg: AYBFou0d9X5wxJwkbpxV64sKcr4PLRfSLT65w5MFdaCYmBau6JsKttUaGTq/05J35Ur
+ Z7j/JSfDUh/Y3K7OJY/qtyASZaqO1HmE04Ro4eHEmIJ1B8yq0hLQykAHZus/14bgMlnWQz47m3L
+ +rxkDbXtN6GDFfA0VvP9+1NRTznhFU6J5oCut6ZkHqNdhqAwsO/dVt1n00pdDfhEkmCj0LQUIco
+ +t4Qg8FvsVrJ6N+f9MmCvp5svRA/wfk6/B84kEIyvtdWSHKBqLyKsa43+buD9JQN69ORQFb5jLE
+ Ne7iT7nugx3aQDvye7HHDbEWGirp/Esw6wluO7bUO/mtvThconPIktmtv3YHshR1WVC32QXbY3q
+ gN5FcflmS/IVIk2IiOThuwvK4P8K/e6wuHO/QQ5rpZPgu+aYUXA8sYJKG2ZpJMNrtIKXSwfiYV0
+ cJ5FZQ8l8oAi9jAgMhHNMzx6Ro/O0bvPWLPo6xYwjVeNWwCR6oIXTtfL3tXbPQ73cwsFL+pMY8R
+ uKLlhyB
+X-Received: by 2002:a17:902:e74f:b0:2d7:5ebe:a588 with SMTP id
+ d9443c01a7336-2d75ebeabbbmr342355695ad.13.1788192062261; 
+ Mon, 31 Aug 2026 09:01:02 -0700 (PDT)
 Received: from catgo-fnos.taila0cd24.ts.net ([104.28.201.73])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-32b28ab0571sm22689520eec.4.2026.08.31.09.00.50
+ 5a478bee46e88-32b28ab0571sm22689520eec.4.2026.08.31.09.00.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 09:00:53 -0700 (PDT)
+ Mon, 31 Aug 2026 09:01:00 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -71,17 +72,18 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V14 00/15] iothread: Support tracking and querying IOThread
- holder
-Date: Tue,  1 Sep 2026 00:00:21 +0800
-Message-ID: <20260831160038.221776-1-zhangckid@gmail.com>
+Cc: Zhang Chen <zhangckid@gmail.com>,
+	qemu-stable@nongnu.org
+Subject: [PATCH V14 01/15] qapi/misc: Fix missed query-iothreads items
+Date: Tue,  1 Sep 2026 00:00:22 +0800
+Message-ID: <20260831160038.221776-2-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831160038.221776-1-zhangckid@gmail.com>
+References: <20260831160038.221776-1-zhangckid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=zhangckid@gmail.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,152 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-### Motivation
-Currently, the relationship between IOThreads and the resources using them is
-opaque. From a management perspective, it is difficult to determine which
-devices or block exports are currently associated with a specific IOThread
-via QMP or HMP.
+The example is incomplete: it misses members @poll-max-ns, @poll-grow,
+@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
+(monitor: add poll-* properties into query-iothreads result) and
+commit 1793ad0247c (iothread: add aio-max-batch parameter).
 
-This series introduces a "holder" tracking mechanism based on QOM paths or
-block exports to significantly improve IOThread observability.
-In high-performance virtualization environments, users often pre-allocate
-a set of IOThreads to serve as a persistent thread pool. During device
-hotplug/unplug cycles, while IOThread objects remain persistent,
-their attachment state changes dynamically.
+cc: qemu-stable@nongnu.org
 
-By tracking these "holders," administrators can use `query-iothreads` to
-monitor the real-time load distribution of the thread pool and identify which
-specific devices (e.g., virtio-blk, BlockExport) are attached to which thread.
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+---
+ qapi/misc.json | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-### Technical Overview
-* Holder tracking
-
-  Add a QAPI holder list to each IOThread.  A holder identifies either
-  a QOM object by its canonical path or a block export by its unique
-  BlockExportOptions ID.
-
-* Explicit reference lifecycle
-
-  Add iothread_ref_and_get_aio_context() and the matching
-  iothread_unref_and_put_aio_context().  Acquiring an AioContext registers a
-  holder and keeps the IOThread alive until the matching put.
-
-  Legacy callers without a matching lifecycle use the explicitly named
-  iothread_unsafe_get_aio_context().  The ambiguous legacy
-  iothread_get_aio_context() is removed after all production callers
-  are migrated.
-
-* Subsystem integration
-
-  Track holders for block exports, monitors, virtio-blk, virtio-scsi,
-  virtio queue mappings, virtio balloon thread pinning, COLO compare,
-  vfio-user proxy, and xen-block.
-
-* Introspection
-
-  Extend IOThreadInfo with a holders array returned by
-  query-iothreads.  Display the same information with info iothreads.
-
-
-### V14 -> V13 Changelog
-  - Renamed patch 3 and clarified that it introduces holder-tracking
-    infrastructure, with users converted in subsequent patches.
-  - Documented that monitor holders are not visible to management
-    applications, while retaining the tracking for a consistent holder
-    and IOThread reference lifecycle.
-  - Rebased on the latest upstream.
-
-### V13 -> V12 Changelog
-  - Refactored block export IOThread reference handling with shared
-    init/cleanup helpers and preserved the existing single-IOThread
-    driver arguments.
-  - Moved monitor IOThread cleanup to the QOM unparent callback,
-    where the canonical path is still available.
-  - Kept internal IOThreads hidden from query-iothreads.
-  - Made virtio queue-mapping holder arguments const.
-  - Improved some detail comments.
-
-### V12 -> V11 Changelog
-  - Change the function name from the "iothread_put_aio_context()"
-    to "iothread_unref_and_put_aio_context()" match the
-    "iothread_unref_and_put_aio_context".
-  - Fix unnecessary char * cast since the holder variable is
-    declared const.
-  - Add detailed commit msg in patch 06/15.
-  - Optimize the HMP print in patch 13/15.
-  - Rebase code on upstream.
-
-### V11 -> V10 Changelog
-  - Keep iothread_ref_and_get_aio_context() as an explicit acquiring API
-    instead of merging it into iothread_get_aio_context().
-  - Retain iothread_get_aio_context() during the caller migration so
-    every intermediate patch builds, then remove it in patch 14.
-  - Update patch 15 to use the holder-aware get/put API in unit-test
-    stubs and callers.
-  - Rework patch 2 documentation to describe holders as QOM objects or
-    block exports, simplify the ref/unref descriptions, and use
-    imperative function comments.
-  - Identify block export holders with BlockExportOptions member id and
-    rename the QAPI field to export-id.
-  - Fix monitor cleanup so it only releases an AioContext acquired by
-    that monitor, preventing an iothread_unref() assertion at shutdown.
-  - Rebase the series onto the current upstream tree.
-
-### V10 -> V9 Changelog
-  - Rebase this series on the Daniel P. Berrangé's series:
-    [PATCH v7 00/35] monitor: turn QMP and HMP into QOM objects
-    https://lore.kernel.org/qemu-devel/20260706135824.2623960-1-berrange@redhat.com/
-  - Remove the monitor type of IOThreadHolder, make the monitor as a QOM object.
-  - Remove GList related code and stays within QAPI instead of mixing GList and QAPI.
-  - Fix missed comments in the patch 2.
-  - Rewrite parts of commit log generated by AI.
-  - Keep Stefan's reviewed-by in patch 2 and addressed Markus's comments.
-  - Rewrite parts of code comments.
-  - Drop original patch 6/7/8 for monitor parts.
-
-Zhang Chen (15):
-  qapi/misc: Fix missed query-iothreads items
-  iothread: introduce holder tracking
-  iothread: add holder-aware AioContext accessors
-  iothread: introduce iothread_unsafe_get_aio_context()
-  block/export: track IOThread references
-  monitor: track IOThread users with QOM paths
-  virtio-vq-mapping: track iothread-vq-mapping references using device
-    path
-  virtio: track IOThread references for thread pinning
-  net/colo: track IOThread references using path-based holder
-  virtio-balloon: Update tracking iothread users with holder
-  vfio-user/proxy: Update tracking iothread users with holder name
-  xen-block: Update tracking iothread users with holder name
-  monitor/hmp: display IOThread holders
-  iothread: remove legacy iothread_get_aio_context()
-  tests/unit/iothread: update AioContext ref/put helpers
-
- block/export/export.c                   | 62 ++++++++++++++---
- blockdev.c                              |  2 +-
- hw/block/dataplane/xen-block.c          | 19 +++++-
- hw/block/virtio-blk.c                   | 21 ++++--
- hw/scsi/virtio-scsi-dataplane.c         | 22 ++++--
- hw/vfio-user/proxy.c                    | 16 ++++-
- hw/virtio/iothread-vq-mapping.c         | 20 ++++--
- hw/virtio/virtio-balloon.c              | 22 ++++--
- include/block/export.h                  |  5 ++
- include/hw/virtio/iothread-vq-mapping.h |  6 +-
- include/system/iothread.h               | 38 ++++++++++-
- iothread.c                              | 89 ++++++++++++++++++++++++-
- monitor/hmp-cmds.c                      | 20 ++++++
- monitor/monitor-internal.h              |  3 +
- monitor/monitor.c                       | 33 +++++++--
- monitor/qmp.c                           |  5 +-
- net/colo-compare.c                      | 29 +++++---
- qapi/misc.json                          | 86 ++++++++++++++++++++++--
- tests/unit/iothread.c                   | 18 +++--
- tests/unit/iothread.h                   |  7 +-
- tests/unit/test-aio-multithread.c       |  5 +-
- tests/unit/test-bdrv-drain.c            | 18 +++--
- tests/unit/test-block-iothread.c        | 21 ++++--
- 23 files changed, 485 insertions(+), 82 deletions(-)
-
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 22b7afed9f..c71a5fe657 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -123,11 +123,19 @@
+ #     <- { "return": [
+ #              {
+ #                 "id":"iothread0",
+-#                 "thread-id":3134
++#                 "thread-id":3134,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              },
+ #              {
+ #                 "id":"iothread1",
+-#                 "thread-id":3135
++#                 "thread-id":3135,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              }
+ #           ]
+ #        }
 -- 
 2.55.0
 
