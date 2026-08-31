@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30390C61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA1AC624C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18YL-0005yL-Kl; Mon, 31 Aug 2026 16:24:25 -0400
+	id 1x18Yn-0001kG-6n; Mon, 31 Aug 2026 16:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Y6-0005Hz-Lb
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:13 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Yl-0001Ti-Kh
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Y4-0008GF-1b
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Yj-0008Sn-HG
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207847;
+ s=mimecast20190719; t=1788207888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RQLl9Fz/e90VKbZH8iPZEXrmE8EWsrDRt4hVfZ8Hrwo=;
- b=RELPYFe13Je12KnPkIevC/B+YLCDIe/zJkJOGja54QJLDx8n3p8vGOmaHj2Q2TR/J++ype
- OPG2MNh/8YvOpWE1LJoIxioQ5x+/+Win1RE6yhG5lhwQv2X2cNngryHCeQqsIuKij3ZPyO
- AvUdsJDMF1vbJmnxGYnbxzA1uwIUEvM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Y8pqXrIvr/yRTQ3rsO16r+lqlJjBRU1uvUFq6p7chi8=;
+ b=hgNIxOFxZraSOsYVZ5+Eh2/BNjdZ+ZDoAZFLt5ulex+K1LENRxjE6MIcR/IH2SooqTSUah
+ tkYvQGTPNPGJPlsnOV571bqdjP9+lhu+EH3SV8B4AMnGjfZ+++xtcRn9+N3tuhQOtJEFoK
+ qbzr2vvw4O9BLcEpt4m7GW9zX0pijiA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-hiXyKAF_Np2tW4fGQR2WHA-1; Mon,
- 31 Aug 2026 16:24:02 -0400
-X-MC-Unique: hiXyKAF_Np2tW4fGQR2WHA-1
-X-Mimecast-MFC-AGG-ID: hiXyKAF_Np2tW4fGQR2WHA_1788207840
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-VgiO1ekmMsm3UUxhDdvEcg-1; Mon,
+ 31 Aug 2026 16:24:47 -0400
+X-MC-Unique: VgiO1ekmMsm3UUxhDdvEcg-1
+X-Mimecast-MFC-AGG-ID: VgiO1ekmMsm3UUxhDdvEcg_1788207884
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CFC1184A08F; Mon, 31 Aug 2026 20:24:00 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E1A61843AD9; Mon, 31 Aug 2026 20:24:44 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A60101800577; Mon, 31 Aug 2026 20:23:52 +0000 (UTC)
+ id 2D9041800577; Mon, 31 Aug 2026 20:24:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,10 +71,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 26/43] qapi: convert trivial intro sections for
- introspect.json
-Date: Mon, 31 Aug 2026 16:19:28 -0400
-Message-ID: <20260831201945.287730-27-jsnow@redhat.com>
+Subject: [PATCH v4 32/43] qapi: convert trivial intro sections for misc.json
+Date: Mon, 31 Aug 2026 16:19:34 -0400
+Message-ID: <20260831201945.287730-33-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -88,7 +87,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,137 +105,234 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/introspect.json | 40 ++++++++++++++--------------------------
- 1 file changed, 14 insertions(+), 26 deletions(-)
+ qapi/misc.json | 74 ++++++++++++++++++--------------------------------
+ 1 file changed, 27 insertions(+), 47 deletions(-)
 
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index c8432c8ed8e..172ed389997 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -112,8 +112,7 @@
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 22b7afed9f6..b3c2a1421f3 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -44,8 +44,7 @@
  
  ##
- # @SchemaInfoBuiltin:
+ # @NameInfo:
 -#
--# Additional `SchemaInfo` members for meta-type 'builtin'.
-+#     Additional `SchemaInfo` members for meta-type 'builtin'.
+-# Guest name information.
++#     Guest name information.
  #
- # @json-type: the JSON type used for this type on the wire.
+ # @name: The name of the guest
  #
-@@ -124,10 +123,9 @@
+@@ -55,8 +54,7 @@
  
  ##
- # @JSONType:
+ # @query-name:
 -#
--# The four primitive and two structured types according to RFC 8259
--# section 1, plus 'int' (split off 'number'), plus the obvious top
--# type 'value'.
-+#     The four primitive and two structured types according to RFC
-+#     8259 section 1, plus 'int' (split off 'number'), plus the
-+#     obvious top type 'value'.
+-# Return the name information of a guest.
++#     Return the name information of a guest.
  #
- # @string: JSON string
+ # Since: 0.14
  #
-@@ -153,8 +151,7 @@
+@@ -69,8 +67,7 @@
  
  ##
- # @SchemaInfoEnum:
+ # @IOThreadInfo:
 -#
--# Additional `SchemaInfo` members for meta-type 'enum'.
-+#     Additional `SchemaInfo` members for meta-type 'enum'.
+-# Information about an iothread
++#     Information about an iothread
  #
- # @members: the enum type's members, in no particular order.
- #     (since 6.2)
-@@ -178,8 +175,7 @@
+ # @id: the identifier of the iothread
+ #
+@@ -137,8 +134,7 @@
  
  ##
- # @SchemaInfoEnumMember:
+ # @stop:
 -#
--# An object member.
-+#     An object member.
+-# Stop guest VM execution.
++#     Stop guest VM execution.
  #
- # @name: the member's name, as defined in the QAPI schema.
+ # Since: 0.14
  #
-@@ -193,8 +189,7 @@
+@@ -159,8 +155,7 @@
  
  ##
- # @SchemaInfoArray:
+ # @cont:
 -#
--# Additional `SchemaInfo` members for meta-type 'array'.
-+#     Additional `SchemaInfo` members for meta-type 'array'.
+-# Resume guest VM execution.
++#     Resume guest VM execution.
  #
- # @element-type: the array type's element type.
+ # Since: 0.14
  #
-@@ -207,8 +202,7 @@
+@@ -208,8 +203,7 @@
  
  ##
- # @SchemaInfoObject:
+ # @human-monitor-command:
 -#
--# Additional `SchemaInfo` members for meta-type 'object'.
-+#     Additional `SchemaInfo` members for meta-type 'object'.
+-# Execute a command on the human monitor and return the output.
++#     Execute a command on the human monitor and return the output.
  #
- # @members: the object type's (non-variant) members, in no particular
- #     order.
-@@ -232,8 +226,7 @@
+ # @command-line: the command to execute in the human monitor
+ #
+@@ -251,8 +245,7 @@
  
  ##
- # @SchemaInfoObjectMember:
+ # @getfd:
 -#
--# An object member.
-+#     An object member.
+-# Receive a file descriptor via SCM rights and assign it a name
++#     Receive a file descriptor via SCM rights and assign it a name
  #
- # @name: the member's name, as defined in the QAPI schema.
+ # @fdname: file descriptor name
  #
-@@ -257,8 +250,7 @@
+@@ -273,11 +266,10 @@
  
  ##
- # @SchemaInfoObjectVariant:
+ # @get-win32-socket:
 -#
--# The variant members for a value of the type tag.
-+#     The variant members for a value of the type tag.
+-# Add a socket that was duplicated to QEMU process with
+-# WSADuplicateSocketW() via WSASocket() & WSAPROTOCOL_INFOW structure
+-# and assign it a name (the SOCKET is associated with a CRT file
+-# descriptor)
++#     Add a socket that was duplicated to QEMU process with
++#     WSADuplicateSocketW() via WSASocket() & WSAPROTOCOL_INFOW
++#     structure and assign it a name (the SOCKET is associated with a
++#     CRT file descriptor)
  #
- # @case: a value of the type tag.
+ # @info: the WSAPROTOCOL_INFOW structure (encoded in base64)
  #
-@@ -272,8 +264,7 @@
+@@ -301,8 +293,7 @@
  
  ##
- # @SchemaInfoAlternate:
+ # @closefd:
 -#
--# Additional `SchemaInfo` members for meta-type 'alternate'.
-+#     Additional `SchemaInfo` members for meta-type 'alternate'.
+-# Close a file descriptor previously passed via SCM rights
++#     Close a file descriptor previously passed via SCM rights
  #
- # @members: the alternate type's members, in no particular order.  The
- #     members' wire encoding is distinct, see
-@@ -288,8 +279,7 @@
+ # @fdname: file descriptor name
+ #
+@@ -317,8 +308,7 @@
  
  ##
- # @SchemaInfoAlternateMember:
+ # @AddfdInfo:
 -#
--# An alternate member.
-+#     An alternate member.
+-# Information about a file descriptor that was added to an fd set.
++#     Information about a file descriptor that was added to an fd set.
  #
- # @type: the name of the member's type.
+ # @fdset-id: The ID of the fd set that @fd was added to.
  #
-@@ -300,8 +290,7 @@
+@@ -331,8 +321,8 @@
  
  ##
- # @SchemaInfoCommand:
+ # @add-fd:
 -#
--# Additional `SchemaInfo` members for meta-type 'command'.
-+#     Additional `SchemaInfo` members for meta-type 'command'.
+-# Add a file descriptor, that was passed via SCM rights, to an fd set.
++#     Add a file descriptor, that was passed via SCM rights, to an fd
++#     set.
  #
- # @arg-type: the name of the object type that provides the command's
- #     parameters.
-@@ -322,8 +311,7 @@
+ # @fdset-id: The ID of the fd set to add the file descriptor to.
+ #
+@@ -361,8 +351,7 @@
  
  ##
- # @SchemaInfoEvent:
+ # @remove-fd:
 -#
--# Additional `SchemaInfo` members for meta-type 'event'.
-+#     Additional `SchemaInfo` members for meta-type 'event'.
+-# Remove a file descriptor from an fd set.
++#     Remove a file descriptor from an fd set.
  #
- # @arg-type: the name of the object type that provides the event's
- #     parameters.
+ # @fdset-id: The ID of the fd set that the file descriptor belongs to.
+ #
+@@ -387,8 +376,7 @@
+ 
+ ##
+ # @FdsetFdInfo:
+-#
+-# Information about a file descriptor that belongs to an fd set.
++#     Information about a file descriptor that belongs to an fd set.
+ #
+ # @fd: The file descriptor value.
+ #
+@@ -401,8 +389,7 @@
+ 
+ ##
+ # @FdsetInfo:
+-#
+-# Information about an fd set.
++#     Information about an fd set.
+ #
+ # @fdset-id: The ID of the fd set.
+ #
+@@ -415,8 +402,7 @@
+ 
+ ##
+ # @query-fdsets:
+-#
+-# Return information describing all fd sets.
++#     Return information describing all fd sets.
+ #
+ # Since: 1.2
+ #
+@@ -457,8 +443,7 @@
+ 
+ ##
+ # @CommandLineParameterType:
+-#
+-# Possible types for an option parameter.
++#     Possible types for an option parameter.
+ #
+ # @string: accepts a character string
+ #
+@@ -476,8 +461,7 @@
+ 
+ ##
+ # @CommandLineParameterInfo:
+-#
+-# Details about a single parameter of a command line option.
++#     Details about a single parameter of a command line option.
+ #
+ # @name: parameter name
+ #
+@@ -497,9 +481,8 @@
+ 
+ ##
+ # @CommandLineOptionInfo:
+-#
+-# Details about a command line option, including its list of parameter
+-# details
++#     Details about a command line option, including its list of
++#     parameter details
+ #
+ # @option: option name
+ #
+@@ -512,8 +495,7 @@
+ 
+ ##
+ # @query-command-line-options:
+-#
+-# Query command line option schema.
++#     Query command line option schema.
+ #
+ # @option: option name
+ #
+@@ -552,8 +534,7 @@
+ 
+ ##
+ # @RTC_CHANGE:
+-#
+-# Emitted when the guest changes the RTC time.
++#     Emitted when the guest changes the RTC time.
+ #
+ # @offset: offset in seconds between base RTC clock (as specified by
+ #     -rtc base), and new RTC clock value
+@@ -577,9 +558,8 @@
+ 
+ ##
+ # @VFU_CLIENT_HANGUP:
+-#
+-# Emitted when the client of a TYPE_VFIO_USER_SERVER closes the
+-# communication channel
++#     Emitted when the client of a TYPE_VFIO_USER_SERVER closes the
++#     communication channel
+ #
+ # @vfu-id: ID of the TYPE_VFIO_USER_SERVER object.  It is the last
+ #     component of @vfu-qom-path referenced below
 -- 
 2.55.0
 
