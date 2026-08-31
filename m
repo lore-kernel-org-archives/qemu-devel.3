@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB91C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05435C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:24:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18Xp-0004O0-NW; Mon, 31 Aug 2026 16:23:53 -0400
+	id 1x18YI-0005qk-Oo; Mon, 31 Aug 2026 16:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18XW-00035N-TZ
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xz-0004xY-CK
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18XT-000866-90
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xx-0008Et-QK
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207810;
+ s=mimecast20190719; t=1788207841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=paUL78gCdpaCrvbsmed4HTHvmj42cb8WXYX01ka0V0s=;
- b=gUg7U4JYt5q0v4GU017ap33bRCRKb46tchXqFfgbqYHcI/OWX0T9A+7ZGlGtba+e+i5O74
- Rv/vMPI6rS5OAsf2Ps65VyuQWSn4SsclxeiZK5WgUQSYdYfuiqLku0UvkPAfhHqzuI1Nju
- xcQsmHlWy5g+id3FY1je4h3Vta6XGAs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4l91jyPAAO7hilD1RJ8+HNLPzBoV65DoCBpgH8pqK0g=;
+ b=Eygl2A8QcnvrQDi2T3TPmk0Iy1i7E9xuoSjmzIlvUMr/rqlvfn9v+x3f5GAoppVAakzaqA
+ DIkK5ajzbbIHN0IZ2wvhMc8oTxvZCsv4ltZbW6GwemqPVkVuGkh6xK6NOqibXsb95M79ei
+ Uvr5az02ULfxO+IzQ25seG2V07f4ung=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-1POLMyqEOI2R_KshbGM8_A-1; Mon,
- 31 Aug 2026 16:23:28 -0400
-X-MC-Unique: 1POLMyqEOI2R_KshbGM8_A-1
-X-Mimecast-MFC-AGG-ID: 1POLMyqEOI2R_KshbGM8_A_1788207804
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-41--Cv9VqWIOBa22A9uM2LAFg-1; Mon,
+ 31 Aug 2026 16:23:55 -0400
+X-MC-Unique: -Cv9VqWIOBa22A9uM2LAFg-1
+X-Mimecast-MFC-AGG-ID: -Cv9VqWIOBa22A9uM2LAFg_1788207832
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24F14196F741; Mon, 31 Aug 2026 20:23:16 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76CFC1921ECF; Mon, 31 Aug 2026 20:23:52 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2DA391800347; Mon, 31 Aug 2026 20:23:09 +0000 (UTC)
+ id 460EC18005AC; Mon, 31 Aug 2026 20:23:46 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -70,25 +70,26 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 20/43] qapi: convert trivial intro sections for common.json
-Date: Mon, 31 Aug 2026 16:19:22 -0400
-Message-ID: <20260831201945.287730-21-jsnow@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v4 25/43] qapi: convert trivial intro sections for pci.json
+Date: Mon, 31 Aug 2026 16:19:27 -0400
+Message-ID: <20260831201945.287730-26-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,106 +106,105 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/common.json | 29 ++++++++++-------------------
- 1 file changed, 10 insertions(+), 19 deletions(-)
+ qapi/pci.json | 27 +++++++++------------------
+ 1 file changed, 9 insertions(+), 18 deletions(-)
 
-diff --git a/qapi/common.json b/qapi/common.json
-index af7e3d618a7..c1bbed21e7f 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -9,8 +9,7 @@
+diff --git a/qapi/pci.json b/qapi/pci.json
+index 694c741e420..a6a79f91afc 100644
+--- a/qapi/pci.json
++++ b/qapi/pci.json
+@@ -13,8 +13,7 @@
  
  ##
- # @IoOperationType:
+ # @PciMemoryRange:
 -#
--# An enumeration of the I/O operation types
-+#     An enumeration of the I/O operation types
+-# A PCI device memory region
++#     A PCI device memory region
  #
- # @read: read operation
+ # @base: the starting address (guest physical)
  #
-@@ -23,8 +22,7 @@
+@@ -26,8 +25,7 @@
  
  ##
- # @OnOffAuto:
+ # @PciMemoryRegion:
 -#
--# An enumeration of three options: on, off, and auto
-+#     An enumeration of three options: on, off, and auto
+-# Information about a PCI device I/O region.
++#     Information about a PCI device I/O region.
  #
- # @auto: QEMU selects the value between on and off
+ # @bar: the index of the Base Address Register for this region
  #
-@@ -39,8 +37,7 @@
+@@ -51,8 +49,7 @@
  
  ##
- # @OnOffSplit:
+ # @PciBusInfo:
 -#
--# An enumeration of three values: on, off, and split
-+#     An enumeration of three values: on, off, and split
+-# Information about a bus of a PCI Bridge device
++#     Information about a bus of a PCI Bridge device
  #
- # @on: Enabled
- #
-@@ -72,8 +69,7 @@
+ # @number: primary bus interface number.  This should be the number of
+ #     the bus the device resides on.
+@@ -80,8 +77,7 @@
  
  ##
- # @OffAutoPCIBAR:
+ # @PciBridgeInfo:
 -#
--# An enumeration of options for specifying a PCI BAR
-+#     An enumeration of options for specifying a PCI BAR
+-# Information about a PCI Bridge device
++#     Information about a PCI Bridge device
  #
- # @off: The specified feature is disabled
+ # @bus: information about the bus the device resides on
  #
-@@ -98,8 +94,7 @@
+@@ -94,8 +90,7 @@
  
  ##
- # @PCIELinkSpeed:
+ # @PciDeviceClass:
 -#
--# An enumeration of PCIe link speeds in units of GT/s
-+#     An enumeration of PCIe link speeds in units of GT/s
+-# Information about the Class of a PCI device
++#     Information about the Class of a PCI device
  #
- # @2_5: 2.5GT/s
- #
-@@ -120,8 +115,7 @@
+ # @desc: a string description of the device's class (not stable, and
+ #     should only be treated as informational)
+@@ -109,8 +104,7 @@
  
  ##
- # @PCIELinkWidth:
+ # @PciDeviceId:
 -#
--# An enumeration of PCIe link width
-+#     An enumeration of PCIe link width
+-# Information about the Id of a PCI device
++#     Information about the Id of a PCI device
  #
- # @1: x1
+ # @device: the PCI device id
  #
-@@ -144,8 +138,7 @@
+@@ -128,8 +122,7 @@
  
  ##
- # @HostMemPolicy:
+ # @PciDeviceInfo:
 -#
--# Host memory policy types
-+#     Host memory policy types
+-# Information about a PCI device
++#     Information about a PCI device
  #
- # @default: restore default policy, remove any nondefault policy
+ # @bus: the bus number of the device
  #
-@@ -164,9 +157,8 @@
+@@ -161,8 +154,7 @@
  
  ##
- # @NetFilterDirection:
+ # @PciInfo:
 -#
--# Indicates whether a netfilter is attached to a netdev's transmit
--# queue or receive queue or both.
-+#     Indicates whether a netfilter is attached to a netdev's transmit
-+#     queue or receive queue or both.
+-# Information about a PCI bus
++#     Information about a PCI bus
  #
- # @all: the filter is attached both to the receive and the transmit
- #     queue of the netdev (default).
-@@ -184,8 +176,7 @@
+ # @bus: the bus index
+ #
+@@ -174,8 +166,7 @@
  
  ##
- # @GrabToggleKeys:
+ # @query-pci:
 -#
--# Key combinations to toggle input-linux between host and guest.
-+#     Key combinations to toggle input-linux between host and guest.
+-# Return information about the PCI bus topology of the guest.
++#     Return information about the PCI bus topology of the guest.
  #
- # @ctrl-ctrl: left and right control key
- #
+ # Returns: a list of info for each PCI bus.  Each bus is
+ #     represented by a json-object, which has a key with a json-array
 -- 
 2.55.0
 
