@@ -4,114 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7E47C61DFD
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90417C61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 22:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18z3-0004cZ-UR; Mon, 31 Aug 2026 16:52:01 -0400
+	id 1x1A6s-0004j7-Ce; Mon, 31 Aug 2026 18:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18z2-0004bz-0Z
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:52:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x1A6q-0004in-RB; Mon, 31 Aug 2026 18:04:08 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18z0-0006Lk-72
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:51:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788209516;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=AkYsQKm4H+Wv2oMEmaOJZPn3MyHI4XETACimHQiQ88E=;
- b=hWPPWtRWueLTuW4F6DG4tH7KYSwvLm1R3RHgsU5/nTez3XKqzUs94lA9pWJkI63C1P0E9x
- iahPxWq4ItIs1Q+Q4hrNd0xn2UWB7nrlnEE4Y4Jvix/5DZBEY8/O+1NVgkpBPU4xZwavea
- ihgs1n0nm/Hq8CNEGNJs6NRoHYXWPJU=
-Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
- [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-43-wY7OLOh2gAZwXW3FbxQ-1; Mon, 31 Aug 2026 16:51:55 -0400
-X-MC-Unique: 43-wY7OLOh2gAZwXW3FbxQ-1
-X-Mimecast-MFC-AGG-ID: 43-wY7OLOh2gAZwXW3FbxQ_1788209514
-Received: by mail-yx1-f72.google.com with SMTP id
- 956f58d0204a3-66e5862a158so299898d50.2
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 13:51:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788209514; cv=none;
- d=google.com; s=arc-20260327;
- b=b2IKqqLQSwlkYopbuqUuqYg4beMJQmZWYCELbJ6gSICkS8/pHp8PVVwfqXlD+s6ljP
- RfjtlhL13i+ML8TX8rANLjTUuE5RLcsZJybfG/n7V/435anV2YqAFuyzd/vajrlquDrg
- fuRtqmJyms3cnmUBOV2Ug6HsbCGtNPtolAW1iyvpc7Q+SmKaQeCuGKt/99hHHLSPqhfg
- P4maeE3wbE7GZf/8aCyYAEreguMakLpCXvQk5fQlKtkmsw5xGUPnXVT054QbY5tHBz0q
- 8DeRvRqYqJHG8QvSALAxjYgp2RUteGE7B/j0LGLTOmfG9EYDkSkRBSwcjTKsHuUGTH7x
- DKSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=AkYsQKm4H+Wv2oMEmaOJZPn3MyHI4XETACimHQiQ88E=;
- fh=bkVI2tKSBaK1aZ/o/QCF7IE6HsHarvFGL+KUN7OuELQ=;
- b=neqbSOhiRRoyxFSBtNw0oMv2RIZEiWEvea+HdFGB72R/yzBTOtnbL2m9hZ6kQeyPOe
- lDeCxnoC4Eq4AB0TX2mjktCs+WaGTfiI3EMdBbYTtjWnxb215kkOz8jY6QOsQves0A5K
- a8afN6sjNjr4sGMYIoBlvJYP08uScpdtdAkURUBwXdkjEuiVRiwMNk8TeBhyfjKrxCsf
- rvybkG32h+a6tMofC1Oh9glx+QUNHM0OKoY/DD6Ogcm/HjFOqCZbduk0lHV2+6q4c9Yg
- JKsVxNrkuhcLHvxAhXuda5KX6i15ikg/r5tZic86xkxibcMFbTxXmvKMWn8jmP93MJvh
- Hm3g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788209514; x=1788814314; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AkYsQKm4H+Wv2oMEmaOJZPn3MyHI4XETACimHQiQ88E=;
- b=gaPQ+DOKAeY2xFKEU/Y+f2hstti0+x6X115hDw2oBtbrgKk8hNPapH1eN2c+I8a0Pj
- Hgy1QtMEUlgrkVpydvropCalhbXOt+7I/+yfuXaTPeuPxgGael3HCoHR8wx8Td0c330e
- 7GTGueIKKEzKbfQiJtUaNrDMd9flFvtUwUXbfqsNbq5yy0Wzo8vLhxQlfA4FfR24UHz9
- hUoNq83h5wA6PiFZA025OxHqDgqUbJwHkVAhpbzRTseG8C6btONvKSXajMQnXiYoY8Fn
- eS4PInRjnr50NCFj0LqCqZy/yHJ5rAGjqhl0XEWGrCGYXmzd+Q9H0uW8onr8s2eLp0Uu
- tOlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788209514; x=1788814314;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=AkYsQKm4H+Wv2oMEmaOJZPn3MyHI4XETACimHQiQ88E=;
- b=YJHgEdOP+Yq8LXRfwHOi286f544Hf/cYMJXdmzDdqvis8fI+poIRfcNXMzNd3RS8NT
- advRUF1IAH43t+OsqhDMx0KqoitDgZ7O0Jr/veII7EtfsGMsr6CCmVRJdikuBXhIn/2+
- uH7k+6Tcj8UO0yS1hUkIGGckc0qB5UWgYBq2/AZ4w8HW5mf+3Xi8qkL3IiZFdN4ZcbK3
- 5xhgw7hywJD6xJYk6aSLN8pFeqzPNkLDlEWiOZMVEj0osNjsfKQ+Wo0VeLdaAf5nUYAB
- LRsGEtBdQ5BaklZLjhwiheMLGxUp07sc3WM4h64ZRQH8zu+nkVWZJ6FENQ5ihIT9X9zR
- vz5g==
-X-Gm-Message-State: AFuF++l5DwZIwnCJ4GdtB4pJbfLCGN+I4UUx5cv1Kg2+8YfAqLAcTnXA
- s/EdZBRU31kLvPMjNHOsay/au2rmv++9Nr8y4E1OIWGaqMmt67N3s1v02LrvxD414FAo8fWAfUr
- TvnwM5QkQbl2t0b4avGd8/MbLAzJ3ciZiUMvNCbU6vprx/S5hGGEfGxhkSeQIon1IBGFhaFypGD
- wMQHE9bYNVewE7KmSHURW3p1NB1MkD2+Q5EUWs79A=
-X-Gm-Gg: AYBFou15PzB/KMTffQiRKeC1ILDQerzGMlxoNdyR1i5k9EXf/3mHN5vnSY0/CkSlXxR
- w/xQlQdkaFijrKk5AY4paL7vSLL1PdyVm2z/MVyiR1hihj6D19qeOMMOOULJro/X0wJVnxXVQHu
- +nS9ZFXPR+EHEmYkswkB3Ncnjp5r/MiZCvElwXyMxAqakGFiBuk9LiZ4Ac4DIH+ubkf17692u1q
- nRgxxKTkTtKQKkk
-X-Received: by 2002:a05:690e:1609:b0:66c:9a74:d34e with SMTP id
- 956f58d0204a3-66e4c5f03a5mr6861870d50.8.1788209512587; 
- Mon, 31 Aug 2026 13:51:52 -0700 (PDT)
-X-Received: by 2002:a05:690e:1609:b0:66c:9a74:d34e with SMTP id
- 956f58d0204a3-66e4c5f03a5mr6861736d50.8.1788209507220; Mon, 31 Aug 2026
- 13:51:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x1A6n-0005wA-PH; Mon, 31 Aug 2026 18:04:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bCDgNoNh1qw3KgIBkTi8VYEUp+R+PUxUK+87tzfPk9jwsNy1jlZEH1ataZ50aYl59MbjbLUxBWYTTA9edtAXJexpsAyvMtJpDGtsOZVkIUrNmhuIGQ9y2ZWt2OMYP1Dg6ob+B9C7MVznzJye+sYhNIaBFKsRR74YPZVrhG5Hn78YbTkjS5bRIKUxCZ2kGIeKkp7UGmVQ/Bsrs1R/c8GoU0Er6L7VBTz4AHGxxwlKJZ2XoI/ljza7ZMVAGykPWbY0pdGKR0JdlvE1oz1HtssExG4G9r3dHeJabGQgl5nxLiEyPq7vgHr2kW+jm8Wpp0/EAhnnQRao7Art2nO5ApmQZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dl1ouzCyx4/Mo+sA8kMGYbl84rfyyVLZSET4H0Xss0o=;
+ b=Qfckcj/av1U0fSh8xvN6xknkvEZOcqpgGOulWyzEaQwwKR6SRSP4GnI01e2NYwBPfKzyRLiuvhwDuIhpSMQUgs9a0iupKAXqPJYkghLTY7fybJRSseWSoWliGU6b5PIwWjU2D67Lt8pGeRpjni9krFO4uUazhiJQB4U73jvYbRrl2OwCY0dU3VDCwOSQXMmy24zMlttk+z8iUtAYFNNttB8wMyp9t9xhuT9YThQz9EQOhsnUiyM8vWLyPKsM6XEDoqiPqmzRhAz652PwUCmVeeVf6hscxz/u63uO15Uk5GnC+R2WZ++XCRHavq0PRjc35vXvNsmswkYAZAwBtTI95g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dl1ouzCyx4/Mo+sA8kMGYbl84rfyyVLZSET4H0Xss0o=;
+ b=wClyD3PWEMFcR8E8a+jXFW3MMSZdIvMljjdET60iAY1MbCiHUAxWUfaxQBoGGFC4M7HPr5dR54qU3U3HUxXMCZafuW2hwjqePpi/8PdDQ/Zz0xc9LtbdotSqLiZvnO94LI6xn6n4vlNAp5qGa7HD7zKuv77TVZrGMZ5c7zICcK+nFz75AdKskKb+XnGx3kS0C3ULplfbbQKwSVg0dJlsAyqovjEtomLz1n6H8imZTlaeuzjQ1mPqIwpj1Ur16iS+6HpC3Kod4LjfMvS4/GBq2UxnmK07jLLfYX5xzspSGPaKMXTeN5XIgw/PsZVg8ZOtc6DU52aNpsRvdb1hsIEFRQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by VI0PR08MB10760.eurprd08.prod.outlook.com (2603:10a6:800:20d::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Mon, 31 Aug
+ 2026 22:03:59 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.007; Mon, 31 Aug 2026
+ 22:03:59 +0000
+Message-ID: <7ad0843e-63d2-401a-8ce3-fbdfe317826d@virtuozzo.com>
+Date: Tue, 1 Sep 2026 00:03:57 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
+ writable
+From: "Denis V. Lunev" <den@virtuozzo.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-stable@nongnu.org
+References: <20260824133729.1141990-1-den@openvz.org>
+ <20260824133729.1141990-6-den@openvz.org> <87ld9umth3.fsf@pond.sub.org>
+ <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
+ <8733w0j45n.fsf@pond.sub.org>
+ <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com>
+ <87fqzzgc13.fsf@pond.sub.org>
+ <aacf393c-2688-47b4-a507-18119dc6d199@virtuozzo.com>
+ <87ik4qfp3r.fsf@pond.sub.org>
+ <8691b460-faa3-4562-9820-c63823041878@virtuozzo.com>
+Content-Language: en-US
+In-Reply-To: <8691b460-faa3-4562-9820-c63823041878@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI1P189CA0027.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:802:2a::40) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 31 Aug 2026 16:51:36 -0400
-X-Gm-Features: AcwNN1XfihkNYlE0wA4khTCFTeeMQbGnhSkAwxv1RZAK_pmOr8ZhDojFieqLI3U
-Message-ID: <CAFn=p-aVpKptC=G6yTWWuQoeG+peChgw60uJdOXr7B8r=m=iBQ@mail.gmail.com>
-Subject: Async machine appliance for testing (python)
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|VI0PR08MB10760:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3cf1602-37e8-4dfb-c6bf-08df07abc27b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|10070799003|376014|366016|23010399003|10067099003|4143699003|5023799004|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 5qChJhJX2QfbppHE6QotFfELPxa0LmMGt6SfTwSb0XnHL+jiqQUOaOtU2qIAY6u7RGLUWLKg7aNO8olmRHaE1K5c5a8EzgC5rso/iyEnXwrLFBSfrJE+FSiPQq/Z6CYNS3wLyDNzG5pU8AFUpgt5+YOAeghwmpr4V4hxfKyQQ9tCBzP2WOO6h1HUmh+CROeY1aYB/TPNvlbUtIFgAhAW0Hc2j747GWQ3BFGEJYWsNBRhvDUmW7HqRygoAnAHB8q5F8KUgqZAuv7tbk/CPaFz/vW4ivO4pbstJ9DM2AxPN99ahy7Jb87wvHbhIxGusBwZDS7ga0/QhmONU4f+zSqRsqXT5eWIV9ZR8+2MIG5UY6AnSpwj9LA3v7JwAQXAC2JyK9U6L/rIF9OKLCXMa1nNP7mmM7Q7uUiv14mX0hW53Wlt6e4Um9SYX5Hm8NoJNXEakmXSgpfPMBNpC19ScvpGhFOMWto7POGMebywA6rYGoAXRQjXVV2INeQT7m9gOKMKuE7/Ya/2v0v2oMIOUEiaUvpqM8+X5vEJwFqq46WvV9FF/IFLVNX+0fLxn200lN3MvTjrKCyUabdh+5kql8F+pjVFm1AUEaxJkZuMjx8H57xaKSqxklT1wJ55dyCAX5rjDg2aV3LNK/GJEVRTaxNzz2rTU2y5xP/yelLsElS/MMk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(10070799003)(376014)(366016)(23010399003)(10067099003)(4143699003)(5023799004)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RGFxaExRRUt3WUtZaDZWMVd5RVBockh1Y3g0Uy9abDhwb0FldTBrNzc2RnFi?=
+ =?utf-8?B?SHhvcnowN25MTHZsOW8yd2dhK1NrZmpVZGttOE15SmhFM1NwZWpuWkJLbXhz?=
+ =?utf-8?B?YUFvbXJRQks0VDg0K3hIYUwyY01qUE9qbGNEMlJPT3Q1UlUvOHY5anZ2YStE?=
+ =?utf-8?B?M05EZUJKSHR1ZDhyOWREUE1QSlhiOEV1enV1dFJuRjZRaklEQk9sRmNPdDFL?=
+ =?utf-8?B?dngvcXZQOFoyY1hZVU5jbEdlYS9ISG5SVGpMWU93MFZmbUZQTWRHQUFmVUc1?=
+ =?utf-8?B?eThvOEd2ZWRyN0JiV29HWVpQcEM3K09hZG51NVYyaFBaU2l6Ly9maHlVbFZx?=
+ =?utf-8?B?dVVWUFNudmg1OXV4ZjI2c0VBY09leFlCTm5KWnIvc3JXNTVtbm9WMzJycmlE?=
+ =?utf-8?B?SnAwTXo2ZWtFT1l4eWx6V2xCOEttN3RYZVJMZk9FQ0p4VFc1SVFQK21oeGRR?=
+ =?utf-8?B?bWF6aHR1cENncHNMbzdnR0llSnBCMWpkWExtU3YzaTZpdWc3RFNvRWQwWE9M?=
+ =?utf-8?B?eDRUUHVncDEvTFRUaWZpNDhJZ0VIQXZURGhwUzZyY1BkTUF5a0Vrd1RlQ3Jo?=
+ =?utf-8?B?OEdqQ1F1eUVHTGRoMFRkUnpzMVZHTmNSdFN5bGE3NURkL2Z0WUxjOXpkQm9K?=
+ =?utf-8?B?ZUFDQnVOM0YrMCtkUThnRVFVSG9qODlxYmZLSWhoVzNSb2ZUUFdqVzRqWjNz?=
+ =?utf-8?B?TTd3SUpkbndMVWtwOEc5NlJZWkxKSUNWbHdyaGJtSy9IMUx2Z1JvV2g3YUp1?=
+ =?utf-8?B?YVN0RzU5OU1jekl3THJ2a3Exb1FISUsvNzBSRXl2TU9RR1AzUGxCZWVBQTl4?=
+ =?utf-8?B?WFYyUDczVDhiZEJGUGJhN0FseERLV250ZlJIQ0tzbUhnY25wZ1BBdjZlM1cy?=
+ =?utf-8?B?SXduODVWMm5xVEdZZHlyNDZJSG4yWkVJa1cwbWxTd2NYMnN4NGo4Y0ZPaHB6?=
+ =?utf-8?B?bWNmU0ljSGRSSnRCNENuK3pwL1htWWRsU0ZBRWRSZlMzRjAzMGhXYWtIbXpY?=
+ =?utf-8?B?anBCbWZjV212K2N6VWpYN2VNSWFzaVhrdEdMU3N6TUpFSk9nSmNwWmsydnA3?=
+ =?utf-8?B?TGlkejBFRDJlQnhlVGZIMFlkNkgwdlViYXk2NGxHOTdueCtCaHRVaE9kb1hl?=
+ =?utf-8?B?K05JVkd6TmhQdFAxNU9INlY5byt6aWJHYS9lckJJOXhjTnY2NUNHUEsrYlR2?=
+ =?utf-8?B?OVZNMW1uZHN5YzBIVXBjay83WnNGZ3pNRUVJa0NvKzRNSXpJcFNNYys5M1B0?=
+ =?utf-8?B?Rk5CQlJMNGkyelJ1N1pGUDhpM1JCTUdGR2RVV3hWRURHa1JEWDVVaHhZUEhI?=
+ =?utf-8?B?TVlkZFpCb0pmMkIydjdmSmJERi9zampxNEh2SHVPU011NUlwTVlDVm9mM3BR?=
+ =?utf-8?B?Q0cxZTJZZWxrV1FtcFYrNVFUNVRadUVYK1orbFd2WXlEenVlajZTVzZnYmxa?=
+ =?utf-8?B?ZFpvczhoQnM2S2F3YkNqSklPR05ZVnVQc1l5R1gvNFZqTXVjZXJQMHpHYndh?=
+ =?utf-8?B?ZmhFUm9aeWxjVmNpRHZrRGRJVnI0dXdhSTBpWkk3UTI5WHBVcmJuSnc4SzhF?=
+ =?utf-8?B?TUtjeDYxSUFPRCt1NG9sQWhZaXR1a1QwaSswczhLQnh1Tm5NU2NLcFZLMk9n?=
+ =?utf-8?B?QzVEQ201UnNnUlNDTzVXQUVVRlo0NXNXTFY0b0hVV3ArOWpub1d2cnJzOUQx?=
+ =?utf-8?B?Z3M4RzVzK3ZDdzV1TTlMb2pkbSsvZ2Y4QkhTRjBYNXFtVnVReVB1cWVrTTE0?=
+ =?utf-8?B?SXpMN1Y5a0w4L1FwNDlIbmJYamJSSCtFM0FNUHlGZmV3SURRajU5dUlvdnIw?=
+ =?utf-8?B?K2syQlJycjd5MTZjZ01FT0dsQUQrN0NFZDJuUTR0d1JlMUFPdldheFVTeTFW?=
+ =?utf-8?B?QUxKS2ZOeEJXK3hrb1lPbEpRVGRwWmQwd1FJaEV5QkZOQVgyN2tDY0xnckVL?=
+ =?utf-8?B?UnBGU0FIbUVBbXZDd3k4RUhzaE9HNFRpSzZqRGJJUExRc2J2bWVmTmwrLzcz?=
+ =?utf-8?B?Wjl2ZFpYaEpsNm9wTVlzUmQrbHJxeXluaDNmWitVem1qV0xVUmF6d292SERp?=
+ =?utf-8?B?bGdseHpDWEZLMXI1aisxQlFwbUs2eSs3WmN3alZrNDlXNVAyQmlUSkRJMXlt?=
+ =?utf-8?B?Z2VsMDdCVm94aUN2THZ5M3JTOXhxdE94R0JzNGhIOElycEhwM2VTYlU3VXVE?=
+ =?utf-8?B?TS9qZHlFSDlac2NTMlhDb3ZlSXVQUm5RNFBKTVB2c2FJSDFkK2Y0aUJ5UjhV?=
+ =?utf-8?B?QlpKN01OV1Z3aWxsSk9rL244NWV1TjhHbVFXRU0wcHlpRW9FYUk0Vjc0dTJH?=
+ =?utf-8?B?SGFtc0htcE5ZMzU1NDNJSENFWTBaeVhWTHNhRXJibjUwNlJab0d4SjVrRUg0?=
+ =?utf-8?Q?Ux2isrmAOhW3zuuotbKlvtkrtVpOvYOag6/NdymuQ5Oao?=
+X-MS-Exchange-AntiSpam-MessageData-1: +nbZsU+rtJJtrw==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3cf1602-37e8-4dfb-c6bf-08df07abc27b
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 22:03:59.7287 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: d9oLa7PPvXqyZrUnH4cW11LdKqys4Udv8fDpKYe6VcocoPqZo0VZ5WjqjuYBKx7aW0qDx8rDMUB+cIfdLReI9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR08MB10760
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=den@virtuozzo.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,33 +162,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-WIth the upgrade to 3.12 imminent, now might be a good time for me to
-revisit the work I started when I converted QMP from sync to an async
-library. I have a draft of the library I wrote some time ago, but it's
-probably in somewhat dodgy shape after a year or two of being ignored.
+On 8/31/26 21:01, Denis V. Lunev wrote:
+> On 8/31/26 14:31, Markus Armbruster wrote:
+>> "Denis V. Lunev" <den@virtuozzo.com> writes:
+>>
+>>> On 8/27/26 11:15, Markus Armbruster wrote:
+>> [...]
+>>
+>>>> We must not (re)open a dirty image read/write without cleaning it,
+>>>> because writing to risks corruption, i.e. data loss.
+>>>>
+>>>> When we open a dirty image read/write, we can clean it without
+>>>> inconveniencing the guest, because the guest cannot access it until
+>>>> after open completes and we connect the newly open image.  Correct?
+>>> correct.
+>>>
+>>>> When we reopen a read/only dirty image read/write, cleaning it *can*
+>>>> affect the guest, as discussed above.
+>>>>
+>>>> As far as I can tell, all the trouble discussed above ultimately comes
+>>>> from letting the guest work with read-only dirty images.  Why is that
+>>>> useful?
+>>>>
+>>>> What are the use cases for opening dirty images read-only?
+>>> Read only images usually comes in image chains (snapshots, backing
+>>> stores). How RO image becomes dirty is very good question. May
+>>> be this was due to QEMU stop/node crash during running commit.
+>>>
+>>> Why this is needed? VM should continue to start with dirty
+>>> RO image. Doing maintenance at start? That is also problematic.
+>>> At this moment we can face shared lock on base image (so called
+>>> golden image scenario).
+>> We can "do maintenance" during initial open proactively, or during
+>> reopen read/write as needed.
+>>
+>> In both cases, we risk delays that can make the guest hang.
+>>
+>> Cleaning as needed might avoid some delays.  It can also shift delays
+>> from QEMU startup (sometimes bad) to guest operation (commonly worse).
+>>
+>> Cleaning as needed in its current state appears to violate
+>> blockdev-reopen's contract: it breaks the transaction.  This feels like
+>> a regression.
+>>
+>> I think cleaning as needed poses challenges to management applications.
+>> I figure sophisticated ones can make a reasonable choice between "clean
+>> offline before you pass to QEMU" and "don't, and manage the delay on
+>> reopen".  For less sophisticated ones, and also human users, all this
+>> feels like a trap.
+>>
+>> Have we considered dirty image open to require an "I'm sophisticated"
+>> flag?
+>>
+>> Anyway, this is how far I can take this.  Now the block layer
+>> maintainers need to chime in.
+>>
+>> [...]
+> The problem is that we are opening RO and could not change the
+> image. That is the worst part and not just by the fact that
+> we opening RO (we can try to reopen RW) but by the fact that
+> another QEMU has already opened that image and we could not
+> take the lock. Reopen here may not happen ever.
+>
+> Both ways are weird, the question is what is worse? :-)
+>
+> Den
+There are 2 additional note, which I would like to share.
 
-Before I dig in, I wanted to ask if this would be a helpful project.
-The main selling points would be:
+1. Denying start of VM with dirty RO image is no-go for
+any migration of such VM over shared storage. Nothing
+could be done with such a VM once node would need to be
+upgraded and thus to be moved. That would be real hell
+for any operation.
 
-(1) Ability to split it out from the main QEMU tree, like QMP was, for
-use in external testing
-(2) Better stream management so console information is consumed and
-logged reliably without deadlocks due to pipes hitting their buffer
-limit
-(3) Removing multiprocess and multithread processing of console and
-stdout/stderr logging from test suites in favor of using async
-user-threads for (hopefully) simpler, more straightforward processing
-and customization.
-(4) Ability to add listeners/event handlers to watch for specific
-patterns and trigger asynchronously when they occur; i.e. ability to
-handle and watch for specific patterns in an arbitrary order without
-deadlocking your test
-(5) Centralized timeout setting and handling.
+2. Though this could be mitigated with an addition of
+forced image check through QMP and that makes a lot of
+sense. Fixing image integrity for alive VM even with
+several seconds pause could be a real life saver. This
+functionality smells useful.
 
-I recall in the past that I heard some interest from various folks,
-can you just confirm this is still interesting for you at this time?
+Thus we could
+* make a check of RO images on start and deny if the fix
+could not be made for whatever reason
+* and add qmp-image-check as a command for specific node
+as command
+
+This could be correct API wise.
 
 Thanks,
---js
-
+    Den
 
