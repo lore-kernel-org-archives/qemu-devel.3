@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C20C624D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19A9C624D3
 	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18Y9-0005He-QE; Mon, 31 Aug 2026 16:24:13 -0400
+	id 1x18YT-0006xV-7Q; Mon, 31 Aug 2026 16:24:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Xc-0003B8-Fd
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YR-0006gR-DX
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18XX-00087d-BT
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:23:38 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18YP-0008Lp-Ko
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207814;
+ s=mimecast20190719; t=1788207869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QP7QUbGEfuohezFKRNTIokfJyo/v9qvglGiwlHcfMr4=;
- b=OtvQGf5thTtXeB3yiq0aD20Zb4oTniAhksWsIAfZoHzEBVqNb00jE4mqKvuIz8J5jGBO1C
- 4jabNCk3bSQDWn+5IOwPM3bjAhlvL4wwdWsqXMPj4CAWiuvA+ljBbXi6LL/lI14IyJ7FSY
- KTlM1Pm7Q+IeaQlg+emlKnp8eITNgjs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BCn/Ycwrut66144uUrLT80zpCgg+RoqrOgG6fdXeCGY=;
+ b=iL0vPIVM9jZyZQpHJgqd/UbjhtMdk5qEf5/2S8N8Jwx9Lq1CbwDZKFJO3hrAGfLMNTsEdE
+ Plffu04Wqe+SbvkKgxlNmQgTk2MfUJA/u28vIJNgqutR/P8c2sdExnVh4Vqc9vcDYyk06I
+ rrp8Pp0NGyEW2kYvJ2G1SvBJOfkIjkw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-2TTsUxsyMkqDJl8al62dtg-1; Mon,
- 31 Aug 2026 16:23:29 -0400
-X-MC-Unique: 2TTsUxsyMkqDJl8al62dtg-1
-X-Mimecast-MFC-AGG-ID: 2TTsUxsyMkqDJl8al62dtg_1788207807
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-w_h5KMCUOy67bYeZnNAPSA-1; Mon,
+ 31 Aug 2026 16:24:25 -0400
+X-MC-Unique: w_h5KMCUOy67bYeZnNAPSA-1
+X-Mimecast-MFC-AGG-ID: w_h5KMCUOy67bYeZnNAPSA_1788207862
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAC601945106; Mon, 31 Aug 2026 20:23:23 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6427A18E678F; Mon, 31 Aug 2026 20:24:22 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 692CB1800577; Mon, 31 Aug 2026 20:23:16 +0000 (UTC)
+ id 597B21800347; Mon, 31 Aug 2026 20:24:15 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,23 +71,25 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 21/43] qapi: convert trivial intro sections for sockets.json
-Date: Mon, 31 Aug 2026 16:19:23 -0400
-Message-ID: <20260831201945.287730-22-jsnow@redhat.com>
+Subject: [PATCH v4 29/43] qapi: convert trivial intro sections for
+ block-export.json
+Date: Mon, 31 Aug 2026 16:19:31 -0400
+Message-ID: <20260831201945.287730-30-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,99 +107,160 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/sockets.json | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ qapi/block-export.json | 50 +++++++++++++++---------------------------
+ 1 file changed, 18 insertions(+), 32 deletions(-)
 
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 473be2ac58a..210d07b5ef2 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -9,8 +9,7 @@
+diff --git a/qapi/block-export.json b/qapi/block-export.json
+index dd724acf1cb..154f07b0b95 100644
+--- a/qapi/block-export.json
++++ b/qapi/block-export.json
+@@ -80,9 +80,8 @@
  
  ##
- # @NetworkAddressFamily:
+ # @BlockExportOptionsNbdBase:
 -#
--# The network address family
-+#     The network address family
+-# An NBD block export (common options shared between `nbd-server-add`
+-# and the NBD branch of `block-export-add`).
++#     An NBD block export (common options shared between
++#     `nbd-server-add` and the NBD branch of `block-export-add`).
  #
- # @ipv4: IPV4 family
- #
-@@ -41,9 +40,8 @@
+ # @name: Export name.  If unspecified, the @device parameter is used
+ #     as the export name.  (Since 2.12)
+@@ -97,9 +96,8 @@
  
  ##
- # @InetSocketAddress:
+ # @BlockExportOptionsNbd:
 -#
--# Captures a socket address or address range in the Internet
--# namespace.
-+#     Captures a socket address or address range in the Internet
-+#     namespace.
+-# An NBD block export (distinct options used in the NBD branch of
+-# `block-export-add`).
++#     An NBD block export (distinct options used in the NBD branch of
++#     `block-export-add`).
  #
- # @numeric: true if the host/port are guaranteed to be numeric, false
- #     if name resolution should be attempted.  Defaults to false.
-@@ -98,8 +96,8 @@
- 
- ##
- # @UnixSocketAddress:
--#
--# Captures a socket address in the local ("Unix socket") namespace.
-+#     Captures a socket address in the local ("Unix socket")
-+#     namespace.
- #
- # @path: filesystem path to use
- #
+ # @bitmaps: Also export each of the named dirty bitmaps reachable from
+ #     @device, so the NBD client can use NBD_OPT_SET_META_CONTEXT with
 @@ -121,8 +119,7 @@
  
  ##
- # @VsockSocketAddress:
+ # @BlockExportOptionsVhostUserBlk:
 -#
--# Captures a socket address in the vsock namespace.
-+#     Captures a socket address in the vsock namespace.
+-# A vhost-user-blk block export.
++#     A vhost-user-blk block export.
  #
- # @cid: unique host identifier
- #
-@@ -140,8 +137,7 @@
+ # @addr: The vhost-user socket on which to listen.  Both 'unix' and
+ #     'fd' `SocketAddress` types are supported.  Passed fds must be
+@@ -143,8 +140,7 @@
  
  ##
- # @FdSocketAddress:
+ # @FuseExportAllowOther:
 -#
--# A file descriptor name or number.
-+#     A file descriptor name or number.
+-# Possible allow_other modes for FUSE exports.
++#     Possible allow_other modes for FUSE exports.
  #
- # @str: decimal is for file descriptor number, otherwise it's a file
- #     descriptor name.  Named file descriptors are permitted in
-@@ -197,9 +193,8 @@
+ # @off: Do not pass allow_other as a mount option.
+ #
+@@ -195,8 +191,7 @@
  
  ##
- # @SocketAddressLegacy:
+ # @BlockExportOptionsVduseBlk:
 -#
--# Captures the address of a socket, which could also be a named file
--# descriptor
-+#     Captures the address of a socket, which could also be a named
-+#     file descriptor
+-# A vduse-blk block export.
++#     A vduse-blk block export.
  #
- # @type: Transport type
+ # @name: the name of VDUSE device (must be unique across the host).
  #
-@@ -219,8 +214,7 @@
+@@ -221,8 +216,7 @@
  
  ##
- # @SocketAddressType:
+ # @NbdServerAddOptions:
 -#
--# Available `SocketAddress` types
-+#     Available `SocketAddress` types
+-# An NBD block export, per legacy `nbd-server-add` command.
++#     An NBD block export, per legacy `nbd-server-add` command.
  #
- # @inet: Internet address
+ # @device: The device name or node name of the node to be exported
  #
-@@ -237,9 +231,8 @@
+@@ -266,8 +260,7 @@
  
  ##
- # @SocketAddress:
+ # @BlockExportRemoveMode:
 -#
--# Captures the address of a socket, which could also be a socket file
--# descriptor
-+#     Captures the address of a socket, which could also be a socket
-+#     file descriptor
+-# Mode for removing a block export.
++#     Mode for removing a block export.
  #
- # @type: Transport type
+ # @safe: Remove export if there are no existing connections, fail
+ #     otherwise.
+@@ -289,8 +282,7 @@
+ 
+ ##
+ # @nbd-server-remove:
+-#
+-# Remove NBD export by name.
++#     Remove NBD export by name.
+ #
+ # @name: Block export id.
+ #
+@@ -316,9 +308,8 @@
+ 
+ ##
+ # @nbd-server-stop:
+-#
+-# Stop QEMU's embedded NBD server, and unregister all devices
+-# previously added via `nbd-server-add`.
++#     Stop QEMU's embedded NBD server, and unregister all devices
++#     previously added via `nbd-server-add`.
+ #
+ # Since: 1.3
+ ##
+@@ -327,8 +318,7 @@
+ 
+ ##
+ # @BlockExportType:
+-#
+-# An enumeration of block export types
++#     An enumeration of block export types
+ #
+ # @nbd: NBD export
+ #
+@@ -412,9 +402,8 @@
+ 
+ ##
+ # @BlockExportIothreads:
+-#
+-# Specify a single or multiple I/O threads in which to run a block
+-# export's I/O.
++#     Specify a single or multiple I/O threads in which to run a block
++#     export's I/O.
+ #
+ # @single: Run the export's I/O in the given single I/O thread.
+ #
+@@ -436,8 +425,7 @@
+ 
+ ##
+ # @block-export-add:
+-#
+-# Creates a new block export.
++#     Creates a new block export.
+ #
+ # Since: 5.2
+ ##
+@@ -470,8 +458,7 @@
+ 
+ ##
+ # @BLOCK_EXPORT_DELETED:
+-#
+-# Emitted when a block export is removed and its id can be reused.
++#     Emitted when a block export is removed and its id can be reused.
+ #
+ # @id: Block export id.
+ #
+@@ -482,8 +469,7 @@
+ 
+ ##
+ # @BlockExportInfo:
+-#
+-# Information about a single block export.
++#     Information about a single block export.
+ #
+ # @id: The unique identifier for the block export
  #
 -- 
 2.55.0
