@@ -4,113 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A53C61DE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51AE2C624A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:21:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0xG1-00068i-0p; Mon, 31 Aug 2026 04:20:45 -0400
+	id 1x0xGL-0006GF-EX; Mon, 31 Aug 2026 04:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1x0xG0-00068P-8S
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:20:44 -0400
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1x0xGK-0006FT-4C; Mon, 31 Aug 2026 04:21:04 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1x0xFx-0007Ha-To
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:20:44 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=c8qG4E65xb4DObb7dJcsFh9Vd0yH2Y+JrkDgQmvOORIxM29ITnpFTKvc6iealQmcG+4dv1PBvQMuvsL9sTEH8rcXOaI5v3ana1Ponetz6rzZZCkGURjvTW+z4MEM369DpbtaC8j3udXELVyuBHxHUx19XoadTFfLvrE4U4AoK7wds9FtKxNkEVh4YN+67+YVCz/IZKHjCs+65UMnyTYXHHZ61vQ6nZWSMsZ1vmYetkQpMSuPPVnunuMuC3XAPG/l6X5n2CxgM3BUnVfe2B++LiyNcEGyFILjw0fDO/YKGt9IHUxopDWd2ggkG7457SGY8ybN9GuTqBjqbs2X7Wyqnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PUspbzI8RTBIhtFinY06poyyBxD3pwxPtE7nLTtZRI8=;
- b=PAWxDr1PExP3Exdgh4ac9uz4dZYCVS4mlMyX8Rf1mshAenrcCtYhipMATN2N0MZ1ZZclMwlWnEk75pynQCduppRCkTr6+FnTCv02W/8KORTb9v4EFfLFuP+qX5q1ZycqNIVwHyRlw28sySaMZ1b8VyqJgO+2LcSxzN9TZ7oy9vS2C6eOIi0eA/DpU//iiViAOYJ4QwFLY//16NQYaMJNLGyCSWEjjqc8V4j5yDknOZooywFeddFs1rt7o0HYSqCPt7FjQ0xx47a5GnG8XZM7/xRxuLyMselaj2X/Ve3MP2LeFmy5EmBKWtIhzFzeK4635iTQ2D9ZDCwYVzM4XPnM0w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PUspbzI8RTBIhtFinY06poyyBxD3pwxPtE7nLTtZRI8=;
- b=KgteT4n0L7z0jSoWbid5YI36tyxtSv5OzWeat/76pwRdce+P+1oiqfYnFfPSuAGizT0KYAMJsSkvErzIYQ19gikm7yiO9fLx+SRC4QJmv32o38vleTUqLanLQGupocTcjcMWd61LSI2NWCHNYubsHcXL7bhQO3v6vgZ1+bsjl2A=
-Received: from BL1PR13CA0011.namprd13.prod.outlook.com (2603:10b6:208:256::16)
- by PH7PR12MB7426.namprd12.prod.outlook.com (2603:10b6:510:201::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
- 2026 08:20:34 +0000
-Received: from BN3PEPF0000B069.namprd21.prod.outlook.com
- (2603:10b6:208:256:cafe::82) by BL1PR13CA0011.outlook.office365.com
- (2603:10b6:208:256::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.10 via Frontend Transport; Mon,
- 31 Aug 2026 08:20:34 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN3PEPF0000B069.mail.protection.outlook.com (10.167.243.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.382.0 via Frontend Transport; Mon, 31 Aug 2026 08:20:32 +0000
-Received: from [10.85.43.97] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 31 Aug
- 2026 03:20:30 -0500
-Message-ID: <a4b0e620-727e-40b5-85a0-b028fd43f435@amd.com>
-Date: Mon, 31 Aug 2026 13:50:28 +0530
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1x0xGH-0007M9-3a; Mon, 31 Aug 2026 04:21:03 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4hYMQ10FWXz66Zb;
+ Mon, 31 Aug 2026 08:20:57 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <liwei1518@gmail.com>; Mon, 31 Aug 2026 08:20:56 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.22])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hYMQ06SvBz1xv1; Mon, 31 Aug 2026 08:20:56 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 392AC1B43F5B;
+ Mon, 31 Aug 2026 08:20:55 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-102R00471d0ea2f-0ef7-4459-8dcc-a0cee931210d,
+ 20713A92955D5A277E4AF24F7FE8A47CC1774BFC) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <bd0e113a-6495-4f4b-9ed7-bfd206a6acf7@kaod.org>
+Date: Mon, 31 Aug 2026 10:20:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <alejandro.j.jimenez@oracle.com>,
- <pbonzini@redhat.com>, <richard.henderson@linaro.org>, <mst@redhat.com>,
- <joe.jin@oracle.com>
-Subject: Re: [PATCH v2 3/5] amd_iommu: Define MMIO register masks
-Content-Language: en-US
-To: Dongli Zhang <dongli.zhang@oracle.com>, <qemu-devel@nongnu.org>
-References: <20260724223216.108667-1-dongli.zhang@oracle.com>
- <20260724223216.108667-4-dongli.zhang@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260724223216.108667-4-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 02/16] hw/intc/riscv_aclint: Take a MemoryRegion for
+ the created devices
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260831021500.82565-1-joel@jms.id.au>
+ <20260831021500.82565-3-joel@jms.id.au>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260831021500.82565-3-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B069:EE_|PH7PR12MB7426:EE_
-X-MS-Office365-Filtering-Correlation-Id: fec0c8e4-286a-4338-12a8-08df0738b9f8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700016|23010399003|82310400026|10067099003|4143699003|11063799006|56012099006|6133799003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: zuZd6zmEH7xUWNOjKibLDm3Sh+vmPWydiM+C6LuJ9/iwYM0HJwqMGg2dMMSWrQzqdswAW0VrcV510+DEET7DcxXMoEOAaHKw19z43r/TugqtuCNiRuuRQl0OTjcI4IOuURUSAgU/wILZ+vh4lT+zLhf1DtqhBWWG81EujoHAdc0AO4YbUDGT5xDZq3Ak09cBVkUhpvsuKXB3G1hKLRRI4m8t0Q6/KjitPEi5/S9WUZCF2QHqVgKO9xAbFg+rcgod9bB9wXBSpE40WYiOhZCi1bojXM7sa9g0dujzUaFqkUXZQkhq5uE9S1ynwHsAuyLPWd3P/JL9zXxASTw3zUhXaN01SXwAYhUqAY36fj3mDG9vyX88mkFi4w43EJ9o8u5tHS3+L0PIuoO3E9eIOo/Zyhd6ZLG/f9bMAeJnD2x3MJO3oqAF8qof1aEAelpNFF+aUcBEZ6D6dfu76m10+ppszsACv0HT6Me5O8c7kk+ZnEYnc76V4a2+DUhV4p0Di+rj5dgWqDUvSJrSIO+GEawDqR1/sYUA8dGTnkMAtg7zDK4QEPkIx7R/QD40MavVd1DhR6gd19La1Dc+w4kTfepW/cBH0sCGGMgx99fhi2GWQhQBV3/Hbz0ZiHu40OKve+jHRd+0AxR8EWP6YXWlEcd/etKaBvfI1V7oRqu40cHMic0jm8/MXxhjxjEmywruIPFIlJ5gIfPZsLPkKqMYhRf2dA==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700016)(23010399003)(82310400026)(10067099003)(4143699003)(11063799006)(56012099006)(6133799003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 3m2TSLFLEyGIU6sBzJI/XQ9Hwp0pcFbN1j7Is26UwMWwey6HKYCrkb22tGRAjh6uO5pL4AOS30X2ouKowa3S9unMQljKwV21ynyEHJMctEFjv573IfR9HX3hsUg8BwHFW6jSFxbq0RsP/CpeqvMtkO6s2oM8ArtwRnXbEWUwO/9axdfLF9/SQySPqePMLhmCRf9OUaYpMs+yvAAV5tL8cyQD+33F7IHyz+GxT0MNoikMdb8rztsWpJvnrnJAymVNIUtyltosVIW+7G9pf6TrdQFIOHoQT7cRwUaNPn4jJaQWZPoNuh9NxbxdM07h2foY7zVq25xxcgFuGNRs1NT2PrA88nHSevhqnsj69nM7iY+6BmHcfihxYfYeP7+QHIQUnZjXLROk+h/1082E+bTWT8AAwP08Nn8oSK1wUx3RF/2X7ATfVOWWaIL70Hvmgr0s
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 08:20:32.9083 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fec0c8e4-286a-4338-12a8-08df0738b9f8
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B069.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7426
-Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
- envelope-from=Sairaj.K@amd.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+x-ovh-tracer-id: 4136556258947017737
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFj/14Gu4I2wps2FLNz9Z5c0sv736XlXJJy0t1uNa4+DffTIO0tlCcBdV0yIL3CvYN+DoRpk/mBobvRLtK54meZAKHYS1l6jMHQIaKiQLGidLKRdq2nI/KwdYrDRTZtxgwNI0ZnBLoh3XUQS0fGx17C2/K5Dz0XpL/e/6pnN5BLVJmp4lsviw0NfCJMwrWEcLvIjHPm6oeIrKQcrP/bRJ8wZuzuIpubo61zTAGfWVYf2rgoY+619hruVlfz4fErdL6+CDWpeQ5dCS73k9DWR1zeHzOLGCNfVmH6cHodA2GQ2lU1VdOej3yZMWO0pbT5/G1iEK7Kb9avuKkAW0Y2+qDFfsxRmZWjA0sZBytevdnjIuu7WYrDadFoux3HuaTFbglqjC0hX5lpK3MNh28ErP8OSNcK9WG93QjXrsmo+wy394Th4o/wRxmuZtN/JSxigCu5VCdPzfUVu2hmcEQyt03CdshnoEMT2deruPu13fQUx3soH16NpfqwswN1HZLrJAkuz2JoZKB79+zN7ctVShZiErwzHDxF9dhiKBY+9a/vw5uDEgFZSO0w0wy9b9nXcjsKApXA52BaoDCR+SgNEy9Lq9Sdj7P6JU9T/gFNOjASBGEseOFyo5AgETEIpWF27/a5b80TmuybniWORH7xf215+M4Qi/Da9U/9G4fxAqJ9BA
+DKIM-Signature: a=rsa-sha256; bh=tWhiNjIWMFrZkFoqJYajZAgANowrxQhZ7hTjbawwQH8=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1788164457; v=1;
+ b=eCl5uJiK7O43dwLk6xVC2EXin84EpQuRCyOamOTY0wMJkBaI60G/pjgpbH+kjHeintO9V5wS
+ SvWl36VlvmvfsZPPvuN3oITZSvItnDN7lcVlcs4SG9v1chxYj7+fJ8fKloLrMpneZsH1dJ8O5wm
+ 0yRimm35pCZE/pmAZHoM8IRAkjQtjiO1d4Tbeke3iyPPSeSgx5wl1cjlMMP/feUMRPD/3uJ5H19
+ 9E6fTxluDZuBzR/kD52A5Lwlqb5L/iin1abbyKRSrkIrut1j+9/mG4+4GYUpc0m5khxGoAQEhzu
+ dsXQWd7K8MWRmNTVsG5c7822dcW0wKY4vtrdxxMX4uLwQ==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,98 +137,314 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/31/26 04:14, Joel Stanley wrote:
+> The riscv_aclint_mtimer_create() and riscv_aclint_swi_create() helpers
+> map the device they create into system_memory, which prevents their use
+> by SoCs that map devices into a memory container of their own.
 
+Since these routines are going to be used later on in a realize()
+handler, I would add a 'Error **errp' parameter.
 
-On 7/25/2026 4:01 AM, Dongli Zhang wrote:
-> The MMIO read-only and write-1-to-clear masks used by amdvi_init() are
-> currently hardcoded. The hardcoded values look ambiguous.
-> 
-> Define named masks for the AMD-Vi MMIO registers to make the code easier
-> to read and understand. Use status bit names that match the Linux AMD
-> IOMMU driver definitions.
-> 
-> This is a cleanup.
+Cheers,
 
-Instead of "This is a cleanup", we usually use "No functional change is
-intended"
+C.
 
 > 
-> Suggested-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Add a MemoryRegion parameter and map the device into it instead of
+> calling sysbus_mmio_map(). All callers pass system_memory, so there is
+> no change in behaviour.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
->  hw/i386/amd_iommu.c |  5 +++--
->  hw/i386/amd_iommu.h | 24 ++++++++++++++++++++----
->  2 files changed, 23 insertions(+), 6 deletions(-)
+>   include/hw/intc/riscv_aclint.h |  7 ++++---
+>   hw/intc/riscv_aclint.c         | 12 ++++++++----
+>   hw/riscv/cps.c                 |  6 ++++--
+>   hw/riscv/k230.c                |  6 ++++--
+>   hw/riscv/microchip_pfsoc.c     |  5 +++--
+>   hw/riscv/shakti_c.c            |  7 ++++---
+>   hw/riscv/sifive_e.c            |  4 ++--
+>   hw/riscv/sifive_u.c            |  7 ++++---
+>   hw/riscv/spike.c               |  4 ++--
+>   hw/riscv/tt_atlantis.c         |  3 ++-
+>   hw/riscv/virt.c                | 17 +++++++++++------
+>   hw/riscv/xiangshan_kmh.c       |  6 ++++--
+>   12 files changed, 52 insertions(+), 32 deletions(-)
 > 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 2fd680c4ff..7ca6d33abb 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -2563,8 +2563,9 @@ static void amdvi_init(AMDVIState *s)
->      memset(s->mmior, 0, AMDVI_MMIO_SIZE);
->      amdvi_set_quad(s, AMDVI_MMIO_EXT_FEATURES,
->                     amdvi_extended_feature_register(s),
-> -                   0xffffffffffffffef, 0);
-> -    amdvi_set_quad(s, AMDVI_MMIO_STATUS, 0, 0x98, 0x67);
-> +                   AMDVI_MMIO_EXT_FEATURE_RO_MASK, 0);
-> +    amdvi_set_quad(s, AMDVI_MMIO_STATUS, 0, AMDVI_MMIO_STATUS_RO_MASK,
-> +                   AMDVI_MMIO_STATUS_W1C_MASK);
->  }
->  
->  static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
-> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-> index 687691ec1c..f86e37fe93 100644
-> --- a/hw/i386/amd_iommu.h
-> +++ b/hw/i386/amd_iommu.h
-> @@ -107,11 +107,25 @@
->  #define AMDVI_MMIO_CONTROL_INTCAPXTEN     (1ULL << 51)
->  
->  /* MMIO status register bits */
-> -#define AMDVI_MMIO_STATUS_CMDBUF_RUN  (1 << 4)
-> -#define AMDVI_MMIO_STATUS_EVT_RUN     (1 << 3)
-> -#define AMDVI_MMIO_STATUS_COMP_INT    (1 << 2)
-> -#define AMDVI_MMIO_STATUS_EVENT_INT   (1 << 1)
->  #define AMDVI_MMIO_STATUS_EVT_OVF     (1 << 0)
-> +#define AMDVI_MMIO_STATUS_EVENT_INT   (1 << 1)
-> +#define AMDVI_MMIO_STATUS_COMP_INT    (1 << 2)
-> +#define AMDVI_MMIO_STATUS_EVT_RUN     (1 << 3)
-> +#define AMDVI_MMIO_STATUS_CMDBUF_RUN  (1 << 4)
-> +#define AMDVI_MMIO_STATUS_PPR_OVF     (1 << 5)
-> +#define AMDVI_MMIO_STATUS_PPR_INT     (1 << 6)
-> +#define AMDVI_MMIO_STATUS_PPR_RUN     (1 << 7)
-> +#define AMDVI_MMIO_STATUS_GALOG_RUN   (1 << 8)
-> +#define AMDVI_MMIO_STATUS_GALOG_OVF   (1 << 9)
-> +#define AMDVI_MMIO_STATUS_GALOG_INT   (1 << 10)
-> +
-
-Please make macro names consistent, here you are defining event and ppr
-log related macros without "LOG" suffix but using "GALOG" for ga log.
-Either one is fine but make sure that it is consistent.
-
-Other that this,
-
-Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
-
-> +#define AMDVI_MMIO_STATUS_RO_MASK \
-> +    (AMDVI_MMIO_STATUS_EVT_RUN | AMDVI_MMIO_STATUS_CMDBUF_RUN | \
-> +     AMDVI_MMIO_STATUS_PPR_RUN)
-
-> +#define AMDVI_MMIO_STATUS_W1C_MASK \
-> +    (AMDVI_MMIO_STATUS_EVT_OVF | AMDVI_MMIO_STATUS_EVENT_INT | \
-> +     AMDVI_MMIO_STATUS_COMP_INT | AMDVI_MMIO_STATUS_PPR_OVF | \
-> +     AMDVI_MMIO_STATUS_PPR_INT)
->  
-
->  #define AMDVI_CMDBUF_ID_BYTE              0x07
->  #define AMDVI_CMDBUF_ID_RSHIFT            4
-> @@ -227,6 +241,8 @@
->          AMDVI_FEATURE_IA | AMDVI_FEATURE_GT | AMDVI_FEATURE_HE | \
->          AMDVI_GATS_MODE | AMDVI_HATS_MODE | AMDVI_FEATURE_GA)
->  
-> +#define AMDVI_MMIO_EXT_FEATURE_RO_MASK 0xffffffffffffffefULL
-> +
->  /* capabilities header */
->  #define AMDVI_CAPAB_FEATURES (AMDVI_CAPAB_FLAT_EXT | \
->          AMDVI_CAPAB_FLAG_NPCACHE | AMDVI_CAPAB_FLAG_IOTLBSUP \
+> diff --git a/include/hw/intc/riscv_aclint.h b/include/hw/intc/riscv_aclint.h
+> index 0e0b98acb08a..a8c5d4eb5895 100644
+> --- a/include/hw/intc/riscv_aclint.h
+> +++ b/include/hw/intc/riscv_aclint.h
+> @@ -46,7 +46,8 @@ typedef struct RISCVAclintMTimerState {
+>       qemu_irq *timer_irqs;
+>   } RISCVAclintMTimerState;
+>   
+> -DeviceState *riscv_aclint_mtimer_create(hwaddr addr, hwaddr size,
+> +DeviceState *riscv_aclint_mtimer_create(MemoryRegion *mr,
+> +    hwaddr addr, hwaddr size,
+>       uint32_t hartid_base, uint32_t num_harts,
+>       uint32_t timecmp_base, uint32_t time_base, uint32_t timebase_freq,
+>       bool provide_rdtime);
+> @@ -68,8 +69,8 @@ typedef struct RISCVAclintSwiState {
+>       qemu_irq *soft_irqs;
+>   } RISCVAclintSwiState;
+>   
+> -DeviceState *riscv_aclint_swi_create(hwaddr addr, uint32_t hartid_base,
+> -    uint32_t num_harts, bool sswi);
+> +DeviceState *riscv_aclint_swi_create(MemoryRegion *mr,
+> +    hwaddr addr, uint32_t hartid_base, uint32_t num_harts, bool sswi);
+>   
+>   enum {
+>       RISCV_ACLINT_DEFAULT_MTIMECMP      = 0x0,
+> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+> index 361a8d1bcb45..972c6c99b044 100644
+> --- a/hw/intc/riscv_aclint.c
+> +++ b/hw/intc/riscv_aclint.c
+> @@ -371,7 +371,8 @@ static const TypeInfo riscv_aclint_mtimer_info = {
+>   /*
+>    * Create ACLINT MTIMER device.
+>    */
+> -DeviceState *riscv_aclint_mtimer_create(hwaddr addr, hwaddr size,
+> +DeviceState *riscv_aclint_mtimer_create(MemoryRegion *mr,
+> +    hwaddr addr, hwaddr size,
+>       uint32_t hartid_base, uint32_t num_harts,
+>       uint32_t timecmp_base, uint32_t time_base, uint32_t timebase_freq,
+>       bool provide_rdtime)
+> @@ -392,7 +393,8 @@ DeviceState *riscv_aclint_mtimer_create(hwaddr addr, hwaddr size,
+>       qdev_prop_set_uint32(dev, "aperture-size", size);
+>       qdev_prop_set_uint32(dev, "timebase-freq", timebase_freq);
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> -    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+> +    memory_region_add_subregion(mr, addr,
+> +        sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+>   
+>       for (i = 0; i < num_harts; i++) {
+>           CPUState *cpu = cpu_by_arch_id(hartid_base + i);
+> @@ -556,7 +558,8 @@ static const TypeInfo riscv_aclint_swi_info = {
+>   /*
+>    * Create ACLINT [M|S]SWI device.
+>    */
+> -DeviceState *riscv_aclint_swi_create(hwaddr addr, uint32_t hartid_base,
+> +DeviceState *riscv_aclint_swi_create(MemoryRegion *mr,
+> +    hwaddr addr, uint32_t hartid_base,
+>       uint32_t num_harts, bool sswi)
+>   {
+>       int i;
+> @@ -569,7 +572,8 @@ DeviceState *riscv_aclint_swi_create(hwaddr addr, uint32_t hartid_base,
+>       qdev_prop_set_uint32(dev, "num-harts", num_harts);
+>       qdev_prop_set_uint32(dev, "sswi", sswi ? true : false);
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> -    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+> +    memory_region_add_subregion(mr, addr,
+> +        sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+>   
+>       for (i = 0; i < num_harts; i++) {
+>           CPUState *cpu = cpu_by_arch_id(hartid_base + i);
+> diff --git a/hw/riscv/cps.c b/hw/riscv/cps.c
+> index 86172be5b3ca..5cfb54aa27d2 100644
+> --- a/hw/riscv/cps.c
+> +++ b/hw/riscv/cps.c
+> @@ -151,9 +151,11 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+>                              false, false, s->aplic);
+>           /* PLIC changes msi_nonbroken to ture. We revert the change. */
+>           msi_nonbroken = false;
+> -        riscv_aclint_swi_create(cm_base + AIA_CLINT_OFFSET,
+> +        riscv_aclint_swi_create(get_system_memory(),
+> +                                cm_base + AIA_CLINT_OFFSET,
+>                                   hartid_base, MAX_HARTS, false);
+> -        riscv_aclint_mtimer_create(cm_base + AIA_CLINT_OFFSET +
+> +        riscv_aclint_mtimer_create(get_system_memory(),
+> +                                   cm_base + AIA_CLINT_OFFSET +
+>                                      RISCV_ACLINT_SWI_SIZE,
+>                                      RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+>                                      hartid_base,
+> diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+> index 558f30b97e9d..1ef4260c5391 100644
+> --- a/hw/riscv/k230.c
+> +++ b/hw/riscv/k230.c
+> @@ -196,9 +196,11 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+>       s->c908_plic = k230_create_plic(C908_CPU_HARTID, c908_cpus);
+>   
+>       /* CLINT */
+> -    riscv_aclint_swi_create(memmap[K230_DEV_CLINT].base,
+> +    riscv_aclint_swi_create(sys_mem,
+> +                            memmap[K230_DEV_CLINT].base,
+>                               C908_CPU_HARTID, c908_cpus, false);
+> -    riscv_aclint_mtimer_create(memmap[K230_DEV_CLINT].base + 0x4000,
+> +    riscv_aclint_mtimer_create(sys_mem,
+> +                               memmap[K230_DEV_CLINT].base + 0x4000,
+>                                  RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+>                                  C908_CPU_HARTID, c908_cpus,
+>                                  RISCV_ACLINT_DEFAULT_MTIMECMP,
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index 4017129c8304..a6026776d4de 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -250,9 +250,10 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>           memmap[MICROCHIP_PFSOC_BUSERR_UNIT4].size);
+>   
+>       /* CLINT */
+> -    riscv_aclint_swi_create(memmap[MICROCHIP_PFSOC_CLINT].base,
+> +    riscv_aclint_swi_create(system_memory,
+> +        memmap[MICROCHIP_PFSOC_CLINT].base,
+>           0, ms->smp.cpus, false);
+> -    riscv_aclint_mtimer_create(
+> +    riscv_aclint_mtimer_create(system_memory,
+>           memmap[MICROCHIP_PFSOC_CLINT].base + RISCV_ACLINT_SWI_SIZE,
+>           RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+>           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+> diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
+> index 835b1f879b7f..86ff8f8fcaab 100644
+> --- a/hw/riscv/shakti_c.c
+> +++ b/hw/riscv/shakti_c.c
+> @@ -127,10 +127,11 @@ static void shakti_c_soc_state_realize(DeviceState *dev, Error **errp)
+>           SHAKTI_C_PLIC_CONTEXT_STRIDE,
+>           shakti_c_memmap[SHAKTI_C_PLIC].size);
+>   
+> -    riscv_aclint_swi_create(shakti_c_memmap[SHAKTI_C_CLINT].base,
+> +    riscv_aclint_swi_create(system_memory,
+> +        shakti_c_memmap[SHAKTI_C_CLINT].base,
+>           0, 1, false);
+> -    riscv_aclint_mtimer_create(shakti_c_memmap[SHAKTI_C_CLINT].base +
+> -            RISCV_ACLINT_SWI_SIZE,
+> +    riscv_aclint_mtimer_create(system_memory,
+> +        shakti_c_memmap[SHAKTI_C_CLINT].base + RISCV_ACLINT_SWI_SIZE,
+>           RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, 1,
+>           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+>           RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, false);
+> diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+> index 71925583bd97..0ea444f43bc5 100644
+> --- a/hw/riscv/sifive_e.c
+> +++ b/hw/riscv/sifive_e.c
+> @@ -225,9 +225,9 @@ static void sifive_e_soc_realize(DeviceState *dev, Error **errp)
+>           SIFIVE_E_PLIC_CONTEXT_BASE,
+>           SIFIVE_E_PLIC_CONTEXT_STRIDE,
+>           memmap[SIFIVE_E_DEV_PLIC].size);
+> -    riscv_aclint_swi_create(memmap[SIFIVE_E_DEV_CLINT].base,
+> +    riscv_aclint_swi_create(sys_mem, memmap[SIFIVE_E_DEV_CLINT].base,
+>           0, ms->smp.cpus, false);
+> -    riscv_aclint_mtimer_create(memmap[SIFIVE_E_DEV_CLINT].base +
+> +    riscv_aclint_mtimer_create(sys_mem, memmap[SIFIVE_E_DEV_CLINT].base +
+>               RISCV_ACLINT_SWI_SIZE,
+>           RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+>           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+> index 57a57c96e16b..58b4744318f8 100644
+> --- a/hw/riscv/sifive_u.c
+> +++ b/hw/riscv/sifive_u.c
+> @@ -788,10 +788,11 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+>           serial_hd(0), qdev_get_gpio_in(DEVICE(s->plic), SIFIVE_U_UART0_IRQ));
+>       sifive_uart_create(system_memory, memmap[SIFIVE_U_DEV_UART1].base,
+>           serial_hd(1), qdev_get_gpio_in(DEVICE(s->plic), SIFIVE_U_UART1_IRQ));
+> -    riscv_aclint_swi_create(memmap[SIFIVE_U_DEV_CLINT].base, 0,
+> +    riscv_aclint_swi_create(system_memory,
+> +        memmap[SIFIVE_U_DEV_CLINT].base, 0,
+>           ms->smp.cpus, false);
+> -    riscv_aclint_mtimer_create(memmap[SIFIVE_U_DEV_CLINT].base +
+> -            RISCV_ACLINT_SWI_SIZE,
+> +    riscv_aclint_mtimer_create(system_memory,
+> +        memmap[SIFIVE_U_DEV_CLINT].base + RISCV_ACLINT_SWI_SIZE,
+>           RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+>           RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+>           CLINT_TIMEBASE_FREQ, false);
+> diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+> index 630b65f56977..a227e0eca147 100644
+> --- a/hw/riscv/spike.c
+> +++ b/hw/riscv/spike.c
+> @@ -163,10 +163,10 @@ static void spike_board_init(MachineState *machine)
+>           sysbus_realize(SYS_BUS_DEVICE(&s->soc[i]), &error_fatal);
+>   
+>           /* Core Local Interruptor (timer and IPI) for each socket */
+> -        riscv_aclint_swi_create(
+> +        riscv_aclint_swi_create(system_memory,
+>               memmap[SPIKE_CLINT].base + i * memmap[SPIKE_CLINT].size,
+>               base_hartid, hart_count, false);
+> -        riscv_aclint_mtimer_create(
+> +        riscv_aclint_mtimer_create(system_memory,
+>               memmap[SPIKE_CLINT].base + i * memmap[SPIKE_CLINT].size +
+>                   RISCV_ACLINT_SWI_SIZE,
+>               RISCV_ACLINT_DEFAULT_MTIMER_SIZE, base_hartid, hart_count,
+> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+> index d69851df0a01..3f183db5c302 100644
+> --- a/hw/riscv/tt_atlantis.c
+> +++ b/hw/riscv/tt_atlantis.c
+> @@ -509,7 +509,8 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>                                     TT_IRQCHIP_NUM_MSIS,
+>                                     TT_IRQCHIP_NUM_PRIO_BITS);
+>   
+> -    riscv_aclint_mtimer_create(s->memmap[TT_ATL_ACLINT].base,
+> +    riscv_aclint_mtimer_create(system_memory,
+> +            s->memmap[TT_ATL_ACLINT].base,
+>               TT_ACLINT_MTIME_SIZE,
+>               0, hart_count,
+>               TT_ACLINT_MTIMECMP,
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 22a607ed10bf..6e4b39315aaa 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -1370,7 +1370,8 @@ static void virt_machine_init(MachineState *machine)
+>           if (virt_aclint_allowed() && s->have_aclint) {
+>               if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
+>                   /* Per-socket ACLINT MTIMER */
+> -                riscv_aclint_mtimer_create(s->memmap[VIRT_CLINT].base +
+> +                riscv_aclint_mtimer_create(system_memory,
+> +                        s->memmap[VIRT_CLINT].base +
+>                               i * RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+>                           RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+>                           base_hartid, hart_count,
+> @@ -1379,10 +1380,12 @@ static void virt_machine_init(MachineState *machine)
+>                           RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
+>               } else {
+>                   /* Per-socket ACLINT MSWI, MTIMER, and SSWI */
+> -                riscv_aclint_swi_create(s->memmap[VIRT_CLINT].base +
+> +                riscv_aclint_swi_create(system_memory,
+> +                        s->memmap[VIRT_CLINT].base +
+>                               i * s->memmap[VIRT_CLINT].size,
+>                           base_hartid, hart_count, false);
+> -                riscv_aclint_mtimer_create(s->memmap[VIRT_CLINT].base +
+> +                riscv_aclint_mtimer_create(system_memory,
+> +                        s->memmap[VIRT_CLINT].base +
+>                               i * s->memmap[VIRT_CLINT].size +
+>                               RISCV_ACLINT_SWI_SIZE,
+>                           RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+> @@ -1390,16 +1393,18 @@ static void virt_machine_init(MachineState *machine)
+>                           RISCV_ACLINT_DEFAULT_MTIMECMP,
+>                           RISCV_ACLINT_DEFAULT_MTIME,
+>                           RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
+> -                riscv_aclint_swi_create(s->memmap[VIRT_ACLINT_SSWI].base +
+> +                riscv_aclint_swi_create(system_memory,
+> +                        s->memmap[VIRT_ACLINT_SSWI].base +
+>                               i * s->memmap[VIRT_ACLINT_SSWI].size,
+>                           base_hartid, hart_count, true);
+>               }
+>           } else if (tcg_enabled()) {
+>               /* Per-socket SiFive CLINT */
+> -            riscv_aclint_swi_create(
+> +            riscv_aclint_swi_create(system_memory,
+>                       s->memmap[VIRT_CLINT].base + i * s->memmap[VIRT_CLINT].size,
+>                       base_hartid, hart_count, false);
+> -            riscv_aclint_mtimer_create(s->memmap[VIRT_CLINT].base +
+> +            riscv_aclint_mtimer_create(system_memory,
+> +                    s->memmap[VIRT_CLINT].base +
+>                       i * s->memmap[VIRT_CLINT].size + RISCV_ACLINT_SWI_SIZE,
+>                       RISCV_ACLINT_DEFAULT_MTIMER_SIZE, base_hartid, hart_count,
+>                       RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+> diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
+> index 384624d69ad5..94f9d02a00b9 100644
+> --- a/hw/riscv/xiangshan_kmh.c
+> +++ b/hw/riscv/xiangshan_kmh.c
+> @@ -116,9 +116,11 @@ static void xiangshan_kmh_soc_realize(DeviceState *dev, Error **errp)
+>                      115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+>   
+>       /* CLINT */
+> -    riscv_aclint_swi_create(memmap[XIANGSHAN_KMH_CLINT].base,
+> +    riscv_aclint_swi_create(system_memory,
+> +                            memmap[XIANGSHAN_KMH_CLINT].base,
+>                               0, num_harts, false);
+> -    riscv_aclint_mtimer_create(memmap[XIANGSHAN_KMH_CLINT].base +
+> +    riscv_aclint_mtimer_create(system_memory,
+> +                               memmap[XIANGSHAN_KMH_CLINT].base +
+>                                  RISCV_ACLINT_SWI_SIZE,
+>                                  RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+>                                  0, num_harts, RISCV_ACLINT_DEFAULT_MTIMECMP,
 
 
