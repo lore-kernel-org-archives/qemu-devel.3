@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1823DC61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 11:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4112CC61DE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 11:36:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x10Cy-0006KS-Pe; Mon, 31 Aug 2026 07:29:48 -0400
+	id 1x10JM-0007ZK-KU; Mon, 31 Aug 2026 07:36:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x10Cw-0006KK-L2
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 07:29:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x10Cu-0006GG-AZ
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 07:29:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788175782;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MJXytDvKu/edgksKPG3JhKbgWSC3f5O2t2VzIBvsNRw=;
- b=Ap0b1KneGKOlHKPDvbQ41qGlXxjP0U+9LrEufHR9uBZwe3rLs2vJJQGNCU6aD8XAOR14Nd
- 2YMOaUuLNe72/QqyqMbEh/NIS4xVloegQQqEU1BhKpo5kCDNGRK8OftBldOikVI5+idHAx
- Hc211JKXbnu7h4CI0Jt86Y2iPRzc7hI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-OyLMcJaIMxmDyDIQeB7DKQ-1; Mon,
- 31 Aug 2026 07:29:38 -0400
-X-MC-Unique: OyLMcJaIMxmDyDIQeB7DKQ-1
-X-Mimecast-MFC-AGG-ID: OyLMcJaIMxmDyDIQeB7DKQ_1788175777
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A6D3195DE25; Mon, 31 Aug 2026 11:29:37 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF7FB3000223; Mon, 31 Aug 2026 11:29:34 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x10JK-0007Wn-Hz
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 07:36:23 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x10JI-0006y1-TJ
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 07:36:22 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-86162c086f8so20107807b3.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 04:36:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788176179; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZHHfU8nCiZR2UPm5LIEJRML3qp/SEnFqY6FkLCSHVjVvqhVe80QtTeeFNb/Gb9YxVA
+ +JwtZWl2mT4lNfTqi7wbxg9YsloEZEFmPp1hF8qBlNPI90XQu1H+McYOXf6SKTNtqu4x
+ jB1otansol8FbeM26B9osGaIpSnoBZje4mcQ0wYEZQ0YiBceXXe09jaD1cLd3tYXMnzL
+ INKjVUCgOk78w5CDMluckQtwjsrahVCejHYR86ao5mAY5JqsMPbLQr1ocu5+zggAorPX
+ Qe2jhCfSj80U0r2p3OXzFacvHc1qWr5WnaQuK4C6hUtt1gqxTFM2WrsHLQtDurRIf7S1
+ vNrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PG9p354toZVh26ejfuxNVjpXc9iuS5rH+HKF405DW2Y=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=n9FzpkdQE6xEgAPuPwKYpUKecBUGv8x+qgECk+a9qDn5EJUgUhRoToNKsCQ18DkhRX
+ YRRyl3XAVoHC6lYPB90FHmnI12VcPomGIC6z8DgTFo7e2RJ1eYwDr9ziBpHg3rjda+Up
+ rQwe69et+DqIEphbrimVrO8T2UeF22CMAUIJ8Z5DiJeEkWMesUL9dIQuejVxiGo+5Cba
+ UcKpSWm8ryHttQWd5nD7EUs2wfU296A5v06z2nlFu8l0JpAZFDyJaSGa2ir4YEQIWCnR
+ erKfUVYyvBeABpYAN2hJcRZwlpQtfUrjb2InqcZKr6FW/mHTEnfinoi6WGzXkLND9+c1
+ hPFA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788176179; x=1788780979; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PG9p354toZVh26ejfuxNVjpXc9iuS5rH+HKF405DW2Y=;
+ b=NCxcl0ZYjjAIxCtV3sgBNki+LB5AH8VnDfsLc4wuO6JBfI47vSMuL6jX2dd2VXFD3D
+ xfdrOc135B4usuqV8XmBPBCBpciISMPd++Xbm6SV/X9p6p1HjHVlG0CfdSRSRU3wItF4
+ wkqf7kWtZNUxu45d5+PnRDV23el1i2OWjetzuYAMeDs2VS04bU8cXScctsnqcqG7zf6X
+ PrS4kvIy32utKEDRtODOBOhOOQAJ+hkHYClk60nSt9BJt3M1jTSJUwCF8TeJNAuoBo0r
+ AKVNO0gxuUF8cw6P/JuEJ3CYMYxLRvlZoTLORusT1hHPH9B+mGaUCeceHftV2l1FWPSM
+ kGxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788176179; x=1788780979;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PG9p354toZVh26ejfuxNVjpXc9iuS5rH+HKF405DW2Y=;
+ b=EOXPuJNz7H4Cn/7RrMQ+ZC3pXkoHizTEgRNMIVEdjBrpSan+GX7fs1+hfEtCKHoUCY
+ ubEbV5F4+qSV6Id0P19orcVhvUgaxyuylPPYD2ArAD+v1qLPPGUbjhtqhXSJ4B8lqIc7
+ BR2GApfjtE4L14MPtTP0eKQyxjJsrvDOyAP5hbFXNIz/uFG6CpY5uTlXTf9zF+VSiYRi
+ 8bRKJcbuNWwBncLzFBAvzRnAO3mm96s9ML8w73grAwVS3kFke1zOLKBMnU/RMrSakRaS
+ VG1/TRrnJB/WGl1dv8UW2iBljJ8mDKjM81UQZO8ttP7wPImgBsmiOGq3askB6FExNm6T
+ JilQ==
+X-Gm-Message-State: AFuF++mPQWRzEWb4fOijnOy+5DU0am9C2QK7jcukm0EEbo85XOsHbhfK
+ POw4MF/K8M2+0/xZuTXWkhKDF6uJ4K2tghbfzsQkJ4cy1SQHQAN1/LDXQTMX9NE5Itio9tp4Ub7
+ fjZBYPCyYCQlaXrX7007mwTrH+xlsepM0SQ==
+X-Gm-Gg: AYBFou3NHBbUpAVbvOHJbog/OKjWvo3zaIb5gC80zzdwq1DI4HGUUzKbDpQqurL57dE
+ 18ZxT40UKTUZeW9YAPwPB+1hJDjFySLUaor/E33C1yCPkFTfJbpMPtGcYalz7dIFVtAKvErdfJs
+ vTf5ZvV+SJ3Af6uFd3lwEb9r+xFAtOF3loj9QfuXXqZDdNunHAPUD2phJJlvL0VbsUPpLBir3Sl
+ zQzoG+SrclouxI6JMT623G1dqGxqWMeX8FT+mpNhGwgnkFCs/F/HauCWIDqxuOWiI4NedjljSky
+ xka+ttDsk7DejSX9z+ZKgSiVRBxa6ri4MZK+HQNjuN8lKOp7lDuWcb0RaIQAIJX0WM9d4bq/jnw
+ S
+X-Received: by 2002:a05:690c:6e08:b0:855:f387:98dc with SMTP id
+ 00721157ae682-864f42404dcmr29615487b3.11.1788176179315; Mon, 31 Aug 2026
+ 04:36:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/6] io/channel-websock: fix an unauthenticated crash
- in the handshake
-From: marcandre.lureau@redhat.com
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-In-Reply-To: <20260831100151.914178-1-den@openvz.org>
-References: <20260831100151.914178-1-den@openvz.org>
-Date: Mon, 31 Aug 2026 15:29:28 +0400
-Message-Id: <178817576852.2700790.2039576285438786814.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2406;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=GrF16Y3Z1p1fW+FFfUaezQ7gpNaatjYUJ91xcUMcUZk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqlWWbmOci1jRZt7RRS2ZZkNkuGua0Pt76XNJXc
- M7JKLpkHmyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapVlmwAKCRDa6OEJdZac
- 5cv1EACTiPalcWC96f63mzuksQH2kY4Qa2r3srcnyjoQOSxQ1QyUnDusyOOP7q58P6tKjXB0X2Q
- LU6Lj0O0dzaHhk1i/fxsTT3Wc+eYgv4UOy37ntxdePah28nE1n0MejyiI9fnHQybPAAFnPymv+c
- 2RpxEa1DJX3xQoBgFGTcxym/MSV149kQEFTNn8MmF2riIt1TVeHgam1G8E2ZhZ5GikY+pW05zlD
- r5PbD1lKcijQFmOyv8U6cixLsZRifCdR6qGCWjFmGkxJ7JF59hnautkX5mWiNo+A+LK74YDUZ3b
- T8onrhLfbZLberR4nxCWRMmxfsKYxe/QZ/l6N2Rk0piKG3/c6WbNCW8GTbvEQfVZzbX6+BEpRWj
- eeOMIvDoRwI7vxwp+4IXcq76x1RXDaeJMno+uFjMZs/JdxJoP1n1KFvoQaWjM7mgWN62gf82N/B
- TNQzSj5qHHEHpAWJfJk83ufc3JjPCVQZozw6nRmjFIUNElC2rbVqXH0IDmA9ykTXcA6mEydqfdN
- dUaK1LmcspFPalmwtAKBcFtz79MQDchai2WpiWhFVv4aTF2Yzg1ofNGX+N3bm2/rk1flsrFubq3
- O1ebUeA2QGg4yg0nFgqLrZF5pYM0alqlOQKkn8mUr6DdhzG8XsEdIb/Ps+jlTxshn5w5BlMDryF
- a6u3Sgl8X8l4qKg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
+In-Reply-To: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 31 Aug 2026 15:36:06 +0400
+X-Gm-Features: AcwNN1X8iD384MymCGtBcTKRQAX6h-DmKacMf1txSboDHR6tB8iV1xr2AGKU68E
+Message-ID: <CAJ+F1CKfsCkk_dtEd2YXTdT1Bno_5Z5kKJxg-22y69+cXem-qA@mail.gmail.com>
+Subject: Re: [PATCH 00/27] CCID smartcard reader fixes
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,56 +116,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> A client which can reach a VNC websocket port crashes QEMU before it has
-> authenticated, by sending an HTTP greeting whose request line holds no
-> space:
-> 
->   printf 'stats\r\nx\r\n\r\n' | nc $host $port
-> 
-> Three defects line up to produce it. The greeting is rejected without
-> queueing a response, so the handshake goes on to flush an empty buffer.
-> A zero length sendmsg() succeeds and returns 0, which
-> qio_channel_socket_writev() mistakes for failure and reports as
-> QIO_CHANNEL_ERR_BLOCK with errp left unset. The handshake treats every
-> negative return as fatal and hands that NULL Error to
-> error_get_pretty(). Patches 1 to 3 close the three links.
-> 
-> Patch 5 is the same NULL Error on the read side of the handshake, where
-> ERR_BLOCK is folded into -1. It is reachable for a wss:// client, whose
-> master channel is then a TLS channel: a wakeup carrying only part of a
-> record makes gnutls report EAGAIN.
-> 
-> The tests drive the handshake through a channel which reports ERR_BLOCK
-> on demand, covering both directions. No test reproduces the original
-> crash itself, which turns on a stale errno and is not reliably
-> reproducible in a unit test. What they pin is that a 400 is emitted and
-> that ERR_BLOCK no longer reaches error_get_pretty().
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Daniel P. Berrangé <berrange@redhat.com>
-> CC: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Denis V. Lunev (6):
->   io/channel-socket: do not treat a zero length write as an error
->   io/channel-websock: send an HTTP 400 when the greeting has no space
->   io/channel-websock: handle a blocked write during the handshake
->   tests/unit: add websock handshake test
->   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
->   tests/unit: cover blocked IO during the websock handshake
-> 
->  io/channel-socket.c                  |   2 +-
->  io/channel-websock.c                 |  10 +-
->  tests/unit/meson.build               |   1 +
->  tests/unit/test-io-channel-websock.c | 249 +++++++++++++++++++++++++++
->  4 files changed, 260 insertions(+), 2 deletions(-)
->  create mode 100644 tests/unit/test-io-channel-websock.c
-> 
+Hi all
 
-Patch series lgtm. You cc stable, why didn't you file a CVE?
+On Wed, Aug 5, 2026 at 3:52=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Hi,
+>
+> While tackling some CVEs issues, I also found several correctness and
+> robustness improvements/fixes. The series:
+>
+> - has 3 CVE fixes (OOB/assert)
+> - fixes xHCI compatibility
+> - some endianness fixes
+> - blocks & fixes migration
+> - better spec compliancy
+>
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
-
+almost a month, and no feedback. Should I just send a PR?
 
