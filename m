@@ -4,147 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FFC9C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A09C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 17:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x15Ry-0002t3-QG; Mon, 31 Aug 2026 13:05:38 -0400
+	id 1x15WZ-0003dB-3b; Mon, 31 Aug 2026 13:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x15Rw-0002oG-DU
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 13:05:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1x15WW-0003ci-SR; Mon, 31 Aug 2026 13:10:20 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x15Rt-0001Ya-2e
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 13:05:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788195930;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=asgAc5dWjjb38a9V+qk1adPMSmyly73cIk2R1tCMdVg=;
- b=FwT3U05moxF6lJ+OuIKFr/n01asvj5uVYbTmtAj0nd1b+13Txj4Y9U0uFIgYMWfYKlPdK+
- xF6m07wB0wWB5Xx8pJP4AtGjXcUEFDxsNAxAlCVCYYe7oUi7EqM0jhpQ+hMFXQCd9zTpnG
- xV3YKxn4PTRhutim34LeJcOXccOyyRU=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-Kxqi9QaPN_m3VhHyRR82FA-1; Mon, 31 Aug 2026 13:05:25 -0400
-X-MC-Unique: Kxqi9QaPN_m3VhHyRR82FA-1
-X-Mimecast-MFC-AGG-ID: Kxqi9QaPN_m3VhHyRR82FA_1788195925
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-90cc2b97f8fso65044706d6.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 10:05:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788195925; x=1788800725; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=asgAc5dWjjb38a9V+qk1adPMSmyly73cIk2R1tCMdVg=;
- b=hlTRYFvHEkO7zey9Vd65eQuPX38v2RPFWJAgR2vSEuc8+LV/IsPl+5mYesWVN1r485
- +ILvUkMR+HpP3DNlD7ZLfNVYOUW6puBDCTiDBqEeccFNouwJPYrPzPGJYhhgSVDtVOLk
- 5QOsYH+wVXV0zCRJs1dRrGHhhyj0/IfASCyP/+HwdinnMVKCnVyGfVfMiQiTITgCuUz0
- HEliDnioLvp9nayZhDYMQuIwNMKUbnQkgZg/mAvgLdR7TamvRgAst7d7rs7P7fYulRnu
- Ct2ubpH9GYBieVRIkDsFGqZjfh0N5c6wL6tGQyIMVBz3n3Q3+x/hWAq2GwmzY5SBaqxV
- rZAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788195925; x=1788800725;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=asgAc5dWjjb38a9V+qk1adPMSmyly73cIk2R1tCMdVg=;
- b=KIMYIRFjC1WCHYz+tlmja31mac3ELF+LoauKCv/zfK3ER5suXKrDbekLWFPvSpWZFp
- r6kPqqfqW+xrXxqZklsHUiRbML2sz6cxxem5bezipIIaSfZhEAEyeaUyG3pmfZj0WR2d
- VEiyMZ1CeB31jOPaP4yLdsTpoiX4kpDLdRNgwwJqtGoMurPhjfHEhCxGTNgtK8/BbRCS
- J9OcRfNrgYJvktV/FlOP5Uuvmz33DKxZVQdavOr4j/YQJfHSBPU66uY5mwZLeHuflzNm
- k2y0SoKQ9km3begPDq8oiWPpW5zuUyqg29GWdz5ym4golgIK6iv8m/ECRvifcFPKgZ+p
- N0wg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqiln2EeLDJVDapIBiAlNRzbwtok6D0VfyJiQC5elyNAFyJAS6ypXsca3b7/smiaNl8viZfTVDRSS7q@nongnu.org
-X-Gm-Message-State: AFuF++n+cd4m0HQsCUFu2dLowtYHrSXs7Hn7AiIfgEKFC8qjoY6lN5cs
- BVys7bFKDNCHaZNee+fiAsaiRADndYdxn+cHiJXOm+lZX94AUbuaIqLfQrmcdvIKdO+D+juLAEX
- QaYunvjCpF2Rabf7KBCOm08nYutI+9GwDC5T+EtZrjUrmtH0ICXLXC4Cj
-X-Gm-Gg: AR+sD123t5DoC7LyuIqkf+WEfQpzRjAeUG+9us33QLBGYJZAVNn8dExS83UbDLr/AcV
- P9MeSzelvuBIkiGu3gRqi3aaMGIrqsA9cHnqg3QP8SyT6Ar/9l8bcOdDdnq+8WaRoX9ysd7hVY1
- EqgRMzAW9+xuTY+/qc9HQxt4WMl84HjiYwl0z+Tt0x0dhWxFimfjFpnqpCyWH9ZFl2x7QW/U4v3
- 786PbyAvVsxh6HpGHjE9f+QUzXvTzjb5gCeROV58ha3EFKv9MPZgsV1+NVtW1MUREX3ADXqS00B
- wsc1id6AXq8eAWgA7m0cgpxUn1MChaKWGyDLq3ZAYfBNhQYvyRNw7xupA54cxiAqPZsDA1swRKv
- 2EB3hWSiIBN+u2q8wDSKzeeIRzuW2xot0nNjs8zf8yAzFyGO9WwYq0aa0og==
-X-Received: by 2002:a05:6214:21e6:b0:90c:4d1f:f88e with SMTP id
- 6a1803df08f44-90ce0ed1626mr323776256d6.16.1788195924467; 
- Mon, 31 Aug 2026 10:05:24 -0700 (PDT)
-X-Received: by 2002:a05:6214:21e6:b0:90c:4d1f:f88e with SMTP id
- 6a1803df08f44-90ce0ed1626mr323774196d6.16.1788195923685; 
- Mon, 31 Aug 2026 10:05:23 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90ce444e2c5sm88932886d6.10.2026.08.31.10.05.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 10:05:22 -0700 (PDT)
-Date: Mon, 31 Aug 2026 13:05:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: BillXiang <xiangwencheng@lanxincomputing.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
- Markus Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, cw@f00f.org,
- dbarboza@qti.qualcomm.com,
- Demi Marie Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com,
- Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
- helge.deller@googlemail.com, Alyssa Ross <hi@alyssa.is>,
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
- jacob.oursland@gmail.com, Jan Kiszka <jan.kiszka@web.de>,
- Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
- Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
- Luc Michel <luc@lmichel.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- matthieu@minio.io, Max Chou <max.chou@sifive.com>,
- Mark Burton <mburton@qti.qualcomm.com>,
- "Ho, Nelson" <nelson.ho@windriver.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- Thomas Huth <thuth@redhat.com>, utsingh@redhat.com,
- Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: Re: KVM/QEMU community call tomorrow - agenda items?
-Message-ID: <apW0SkNxWPCyvVV6@x1.local>
-References: <877bl6eoqv.fsf@draig.linaro.org>
- <413b9ba2-20cf-4af6-9998-be46da277c84@lanxincomputing.com>
- <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1x15WU-0003Fl-Q7; Mon, 31 Aug 2026 13:10:20 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67VG1RnB2743348; Mon, 31 Aug 2026 17:10:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=TsuXR+pJBnP/Ao4QZWHI9wa+TOK9q2
+ L8AUEPclHR+ng=; b=lLbh10PZQ3x/tHiM2MN0L6mv4IuSqxJ8JE9Dv2NLIFvCHN
+ M+9VKOu6OeNR+XTXzShzucUJwU4z+OSpTlzbTCG3DpwQH8kqYZdcwEelqK1mOO/Z
+ I+7H0GKglOWmO3v/QjkoYT6OlxfXsO2/RHl0D6ZUMF6aitqOL2XdInfR58oFlf+N
+ t5auckD9d/VoPLGz5h/9ljfNHNdlQT7tABCBonPdYL6a4sjH1grBWkI2SDw5ktSS
+ bMiJzOQdCpP5tcnaSgPlNvW7TSwsBGxFttogGUqCZfaGVhWz+kkOxuIawAAJq46T
+ pqR+CMbNLPMBoY01rp6KukIxwJdMEgyoXgRQo/7A==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq54jrqm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 31 Aug 2026 17:10:07 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VGuGYr028676;
+ Mon, 31 Aug 2026 17:10:06 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gc9rq79jy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 31 Aug 2026 17:10:06 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67VHA4uE5964398
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 31 Aug 2026 17:10:05 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A4E1A58065;
+ Mon, 31 Aug 2026 17:10:04 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 44CE358056;
+ Mon, 31 Aug 2026 17:09:58 +0000 (GMT)
+Received: from [9.43.79.120] (unknown [9.43.79.120])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 31 Aug 2026 17:09:57 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------G3KcogNSrEs0XibCUnUwgHJD"
+Message-ID: <4fd7316d-9a70-4074-bf12-3d89d1575470@linux.vnet.ibm.com>
+Date: Mon, 31 Aug 2026 22:39:57 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/9] pnv/phb5: Implement write-clear and return 1's on
+ unimplemented reg read
+To: Aditya Gupta <adityag@linux.ibm.com>, Saif Abrar <saif.abrar@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
+ clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
+ milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
+References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
+ <20260617095058.652789-6-saif.abrar@linux.ibm.com>
+ <aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+In-Reply-To: <aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX6puy31CDyoTi
+ vatW9VVvCKIwWCb/AwhaOGpMaPfOJwHLearB38WO34WC2e5aw58AIZFE3C+/Z6mPU9SbCLhYTbp
+ 1NnLaatUgAATyy4WHb3upCXb7DSLC2Vt9Zz+TCVKB8DxOCm/ZXsTm4TXeNIy1wLGMQWBhCyq1vX
+ Xs0x3FsmFJfTBe5WA64IAmRhPT6MIx1jYYb1zEmaB8RFGjaDgb7ropckIgkSzjdxSflOna3LHkN
+ GhHSThycZKM6SaeHit2y3MH+p1dGOdWyGB7/tw/T5dmHbwLUYPB/qrkZ38SoSePkqNHV7hnoXmF
+ OKnGLR4NwzVk6Aewlp5XlyNGbgGFXLvsx5rWzKCCUy4fm2YWdg/RfRyNj2mTzdcgTAx8Cbwmyns
+ qL2AhoYbYyrAlwtVRcJv9Uxnl801SbUHjAgY1kzzNND8k8eLZ2IxcX9E5Hthaf4c1FjQKK1bZaF
+ Dhg8U0WvOvi41EN3lHg==
+X-Proofpoint-ORIG-GUID: zUzqYFr4gG_KVYFHCoyQP1GOQYfNercm
+X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a95b570 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=r77TgQKjGQsHNAKrUKIA:9 a=xIFDG7mMh4kwqAeel0kA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=VnNF1IyMAAAA:8 a=ZFQ4W_TumASF_08ED1YA:9
+ a=_gr1ixP96QugBaqV:21 a=_W_S_7VecoQA:10
+X-Proofpoint-GUID: UTYNyT2H32cXZRjuQbYpW5rjGToiG5BR
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE0NyBTYWx0ZWRfX3F3elNY/CXIO
+ 4q+mr08q2xFLvAc+2svTxWPOJhM1q8g4iG6uz1YQuD5/6C6DgLtWHrx3je94NFEQIQ0anHDOU4E
+ 0soV9zHcxrNjM+bHjcB6PWZEcvCo0LI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-31_05,2026-08-31_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310147
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,49 +131,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 31, 2026 at 05:46:12PM +0200, Philippe Mathieu-Daudé wrote:
-> On 31/8/26 13:49, BillXiang wrote:
-> 
-> > How about discussing the patch[1]:
-> > "virtio: Add aligned ld/st accessors for vring".
-> > 
-> > As pointed out in the patch, this has been a long-standing issue. It is
-> > now necessary to introduce atomic accessors for fields that require
-> > atomicity, such as the avail_idx field in virtio. This support is
-> > especially crucial for architectures like RISC-V, which do not natively
-> > support misaligned memory accesses.
-> > 
-> > I'm particularly eager to receive more suggestions for it.
+This is a multi-part message in MIME format.
+--------------G3KcogNSrEs0XibCUnUwgHJD
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I saw the last email was from me..
 
-https://lore.kernel.org/qemu-devel/aoxiBB2Wn8NiL5s6@x1.local/
+On 16-07-2026 18:19, Aditya Gupta wrote:
+> On 26/06/17 04:50AM, Saif Abrar wrote:
+>> <...snip...>
+>>
+>> @@ -724,6 +762,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>>               pnv_phb4_update_all_msi_regions(phb);
+>>           }
+>>           break;
+>> +
+>>       case PHB_M32_START_ADDR:
+>>       case PHB_M64_UPPER_BITS:
+>>           if (changed) {
+>> @@ -771,27 +810,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>>           break;
+>>   
+>>       /* Silent simple writes */
+>> -    case PHB_ASN_CMPM:
+>> -    case PHB_CONFIG_ADDRESS:
+>> -    case PHB_IODA_ADDR:
+>> -    case PHB_TCE_KILL:
+>> -    case PHB_TCE_SPEC_CTL:
+>> -    case PHB_PEST_BAR:
+>> -    case PHB_PELTV_BAR:
+> Few of these are not handled in new code, like ASN_CMPM.
+>
+> As you said in v4 that these are removed in PHB5 spec. The ASN_CMPM in
+> particular was anyways a silent skip, and now it will turn up as
+> unimplemented.
+>
+> With separation of phb5, i will let you remove them or keep them as
+> silent skip for phb4.
+>
+> Can you also check if there are any other such regs which may have been
+> skipped ?
 
-I believe that was what PeterM suggested. I think Richard also at least
-partly agrees. so I thought we had at least partial consensus on the rough
-idea, if not exactly how.
 
-I confess I haven't fully got the latter part of Richard's comment,
-regarding the possibility to reuse accel/tcg/ldst_atomicity.c.inc: that
-path seems to invole a guest CPU context, where in the case of reading
-virtio ring it is from host and it has no guest CPU context.  But I think
-we can continue the discussion on the list in that thread.
+Separate methods for PHB4 and PHB5 read/write are now handling such issues.
 
-> 
-> This is a very technical topic, not sure if the community call will
-> be a better place than the mailing list, in particular if no virtio /
-> atomic expert developers appears. We'll see :)
+e.g.
 
-Yes, I had such similar feeling that the problem was not yet blocked by
-something that a video call would better help..
+Read/write to registers that are present in PHB4 and removed from PHB5 are
 
-For example, I still want to double check if that change would work for
-your current use case, it will at least verify the thought, no matter if we
-want to use it or not.
+read/written as usual in PHB4 but flag an error in PHB5. ASN_CMPM is 
+also added back to PHB4.
+
+Registers that are new in PHB5 are read/written within PHB5 accordingly.
+
+>
+>> --- a/tests/qtest/pnv-phb-test.c
+>> +++ b/tests/qtest/pnv-phb-test.c
+>> @@ -88,11 +88,10 @@ static void phb5_sticky_rst_test(QTestState *qts)
+>>       g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
+>>                        PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
+>>                        PPC_BITMASK(52, 54)));
+>> -
+>>   }
+>>   
+>>   /* Check that write-only bits/regs return 0 when read */
+>> -static void phb4_writeonly_read_test(QTestState *qts)
+>> +static void phb5_writeonly_read_test(QTestState *qts)
+>>   {
+>>       uint64_t val;
+>>   
+>> @@ -143,6 +142,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
+>>       g_assert_cmpuint(val, ==, 0x0);
+>>   }
+>>   
+>> +/* Check that reading an unimplemented address 0x0 returns -1 */
+>> +static void phb5_unimplemented_read_test(QTestState *qts)
+>> +{
+>> +    g_assert_cmpint(PHB5_XSCOM_READ(0x0), ==, -1);
+>> +}
+>> +
+>>   static void phb5_tests(void)
+>>   {
+>>       QTestState *qts = NULL;
+>> @@ -156,7 +161,10 @@ static void phb5_tests(void)
+>>       phb5_sticky_rst_test(qts);
+>>   
+>>       /* Check write-only logic */
+>> -    phb4_writeonly_read_test(qts);
+>> +    phb5_writeonly_read_test(qts);
+> With PHB5 separated out from PHB4, let's keep phb4_writeonly_read_test
+> also.
+>
+> Thanks,
+> - Aditya G
+--------------G3KcogNSrEs0XibCUnUwgHJD
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 16-07-2026 18:19, Aditya Gupta
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">On 26/06/17 04:50AM, Saif Abrar wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">&lt;...snip...&gt;
+
+@@ -724,6 +762,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+             pnv_phb4_update_all_msi_regions(phb);
+         }
+         break;
++
+     case PHB_M32_START_ADDR:
+     case PHB_M64_UPPER_BITS:
+         if (changed) {
+@@ -771,27 +810,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         break;
+ 
+     /* Silent simple writes */
+-    case PHB_ASN_CMPM:
+-    case PHB_CONFIG_ADDRESS:
+-    case PHB_IODA_ADDR:
+-    case PHB_TCE_KILL:
+-    case PHB_TCE_SPEC_CTL:
+-    case PHB_PEST_BAR:
+-    case PHB_PELTV_BAR:
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Few of these are not handled in new code, like ASN_CMPM.
+
+As you said in v4 that these are removed in PHB5 spec. The ASN_CMPM in
+particular was anyways a silent skip, and now it will turn up as
+unimplemented.
+
+With separation of phb5, i will let you remove them or keep them as
+silent skip for phb4.
+
+Can you also check if there are any other such regs which may have been
+skipped ?</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>Separate methods for PHB4 and PHB5 read/write are now handling
+      such issues.</p>
+    <p>e.g.</p>
+    <p>Read/write to registers that are present in PHB4 and removed from
+      PHB5 are </p>
+    <p>read/written as usual in PHB4 but flag an error in PHB5. <span
+      style="white-space: pre-wrap">ASN_CMPM is also added back to PHB4.</span></p>
+    <p>Registers that are new in PHB5 are read/written within PHB5
+      accordingly.</p>
+    <pre wrap="" class="moz-quote-pre">
+</pre>
+    <blockquote type="cite"
+cite="mid:aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">--- a/tests/qtest/pnv-phb-test.c
++++ b/tests/qtest/pnv-phb-test.c
+@@ -88,11 +88,10 @@ static void phb5_sticky_rst_test(QTestState *qts)
+     g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
+                      PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
+                      PPC_BITMASK(52, 54)));
+-
+ }
+ 
+ /* Check that write-only bits/regs return 0 when read */
+-static void phb4_writeonly_read_test(QTestState *qts)
++static void phb5_writeonly_read_test(QTestState *qts)
+ {
+     uint64_t val;
+ 
+@@ -143,6 +142,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
+     g_assert_cmpuint(val, ==, 0x0);
+ }
+ 
++/* Check that reading an unimplemented address 0x0 returns -1 */
++static void phb5_unimplemented_read_test(QTestState *qts)
++{
++    g_assert_cmpint(PHB5_XSCOM_READ(0x0), ==, -1);
++}
++
+ static void phb5_tests(void)
+ {
+     QTestState *qts = NULL;
+@@ -156,7 +161,10 @@ static void phb5_tests(void)
+     phb5_sticky_rst_test(qts);
+ 
+     /* Check write-only logic */
+-    phb4_writeonly_read_test(qts);
++    phb5_writeonly_read_test(qts);
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+With PHB5 separated out from PHB4, let's keep phb4_writeonly_read_test
+also.
 
 Thanks,
+- Aditya G
+</pre>
+    </blockquote>
+  </body>
+</html>
 
--- 
-Peter Xu
+--------------G3KcogNSrEs0XibCUnUwgHJD--
 
 
