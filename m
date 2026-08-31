@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF67CC61DE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17809C624A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 08:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0xHC-0006vv-2S; Mon, 31 Aug 2026 04:21:58 -0400
+	id 1x0xHT-00070X-4E; Mon, 31 Aug 2026 04:22:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1x0xH9-0006vY-RP
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:21:56 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x0xHR-0006zl-Bq
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:22:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1x0xH8-0007cT-07
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:21:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FdPZzGduCoL8g+HQPckQUUhdA44nZDkhq7pAaGyLn2OXswA0vno7rJvBvoPxTSCq4Dtt3Wpr1bcgp5AsceVXPnMe8IyrEneaclGEaexEq/zb8bwq//6ggDPUlHKq00AeF4F3nouIR9GE/9w71Q7r6n5SVKT5Ymw2XE4tBk43YL/KwJ1e19Q/5x9U5YS5MLfJTXeinQ/wpZaOaw2WI/RD1C/GHetLfQJihlgRjAzEPfbXK0ZoPFmyB4qp0ps3ut8N08krqQwvJwpauhqe0/ShP4C3o9S3wLfztR7UWkEXdDpub/XmKiAZHH31CbDo8XzJHJ7pgvJC16I5IaMefcJGBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YyGgcp0NLuDRV8iq4ckl+8VzsGmofEoFFYas7ohuW1Y=;
- b=RnSiiFXfng86I1yD6oSTefP5uU5GEJw4MVS5i/4agO1VpLFdQUvJQLTgOw7+FNauczQFBAh0FEVmkdZN5kzcav8bAdOpljjtJuSU7wjW0eRb1xdy0EtWndoYggu2RwAj61tqOk55L4NEbEzgS0IxCiG85DqjqCh4ew7dlJ/AROe57lebPiquZRl5yCphwZ8g1ockTLdXM0NjycxQAoZOx80LwDHfAp5nrdOWz5XI6tBoaenpf8MfYt1wttUbN35F1esldr2r6QZeLG23E9zYpHYsTO10CGo2ep0m3YBO5SSYI7hSwLac/LIWZf90bztCwpzHbKKi4ovX5yvrt1Xhew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YyGgcp0NLuDRV8iq4ckl+8VzsGmofEoFFYas7ohuW1Y=;
- b=KlxKZHay3PEWa212gEYjI8N6JdPdxYOw96BeNEirjYCQ577h1SUKKtxXmrPfw1JdEZRRpKSPVnPdWv6VwKXzQOGRHV5V9ga7qWDG4o5IBYivHzSub47ab1lau73d+3FMMhjzmzpnPYeLSA0udF4YwKovsjs7JJUVKgwdXKEujrU=
-Received: from MN2PR01CA0053.prod.exchangelabs.com (2603:10b6:208:23f::22) by
- LV0PR12MB999068.namprd12.prod.outlook.com (2603:10b6:408:32d::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
- 2026 08:21:49 +0000
-Received: from BN3PEPF0000B06C.namprd21.prod.outlook.com
- (2603:10b6:208:23f:cafe::15) by MN2PR01CA0053.outlook.office365.com
- (2603:10b6:208:23f::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.13 via Frontend Transport; Mon,
- 31 Aug 2026 08:21:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN3PEPF0000B06C.mail.protection.outlook.com (10.167.243.71) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.382.0 via Frontend Transport; Mon, 31 Aug 2026 08:21:49 +0000
-Received: from [10.85.43.97] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 31 Aug
- 2026 03:21:44 -0500
-Message-ID: <562166dc-1b95-4d78-a9e4-f95754033f50@amd.com>
-Date: Mon, 31 Aug 2026 13:51:37 +0530
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x0xHP-0007fY-3S
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 04:22:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788164529;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L8Ldt1YBVISozb9qkOKpxIhlCDL59wdrai+nFgDmB7Q=;
+ b=b9tSDFGwImw7ujPZ8YOS/6ayFeCVHC+CZx1yESMpDs2JPyP9ejhZCtGnMGM6G4evBwytRh
+ 4j2On6xOjHWb3tVvcvhrB7jonGZivkVMKxYSingYCULxiljcEbh2Rvdc+EXdLuavNCD4J4
+ DbY++TGzOzvAFN+GAq+waobjQxavruU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-ovHz-0E3O7mcJ5saVJX-jA-1; Mon, 31 Aug 2026 04:22:08 -0400
+X-MC-Unique: ovHz-0E3O7mcJ5saVJX-jA-1
+X-Mimecast-MFC-AGG-ID: ovHz-0E3O7mcJ5saVJX-jA_1788164527
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4994d67d0e3so18043795e9.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 01:22:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788164527; x=1788769327;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=L8Ldt1YBVISozb9qkOKpxIhlCDL59wdrai+nFgDmB7Q=;
+ b=NX5yEGsEOZA+31dNUdeegL541b61ysyENlSEqxKxS+GZ4WdhiuMrHMle6hJf3d5Rrq
+ soW5dYHA+M8knoZLWo7xhkmjVwtj2AF1+OGK7hb26gGper1XFRDxAynsow/fBYEUUpLC
+ dI04QI5Wfuxp/4yDDZZlBFkeMmZQGDN0j9FDHKOI44TEwRwk89btecU9WGIXhDOkz4Yz
+ 5wYTLItGEk8FSNmA4WZyb6un0gHq1EMj2T37Bs5o8ykHmpWuf4VQmr4OQ19nXoNYR5Qd
+ OzUbeDHdStKrFK4qfr6Nl2Lq8PiUKUa/TdKNotlTEtXWZ4WBjsRkw0nRossJ5atE5Wx+
+ eoMw==
+X-Gm-Message-State: AFuF++nnRWW7y44y/b2WyBQrBdnjE77PjeZXdySh+4R72Xz8HkrZMnw0
+ hh8ubfVr2eB5u+UDZCyDQXGlmRkoCvjSN/E2HA1lMRxrk29hQ+aBqQjb3CQfpeBYvg1AU8E/Bbe
+ yIwOiKv3iyEFZixm+BJWE1KX1+YmXdcg8QzpsEE81yQk6PBwU1rKiZ/Y+
+X-Gm-Gg: AR+sD12X07anPPBGiRotkwDnZHKLBjBlDqiQUBSE9RXoukDc4kvSBKomGS5TnXPSlLS
+ of+FscbB0bHUGZJKQOCMwn0yjqZmp7bt0vI9TqHTLYdLRyFF6GXBDlOkM1QIPExTvQXOJmsJdEj
+ 5/w/wXDT+JsDkUTITwXPn8LGEkOPY39cneEBzS8nseQyFZBFOH3jsNXF7V1SOPR54ZrYvIf9ay2
+ LZlOEsZ3ztKmct0h9gJfET9rVohdjjULF9VEkCyXdKIAu+FGYXSZlwzpDamyLyKcULqqT1YTVU2
+ O9wbftzbTaUHiYsT3h3xdRtDfTVkTfQCKjglptpyrZdsToaBL+Vzd6F0zDhIVg3Jlh1osnHsEsQ
+ iq7VOIYXrK12WqpvnIQu9/PEPZlXyWtzcgy3OPfOIRtw26MKY
+X-Received: by 2002:a05:600c:4744:b0:499:8b13:3a98 with SMTP id
+ 5b1f17b1804b1-49b91c2479amr364442875e9.4.1788164526603; 
+ Mon, 31 Aug 2026 01:22:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:4744:b0:499:8b13:3a98 with SMTP id
+ 5b1f17b1804b1-49b91c2479amr364441805e9.4.1788164526116; 
+ Mon, 31 Aug 2026 01:22:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482fbad08d2sm23127779f8f.16.2026.08.31.01.22.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Aug 2026 01:22:05 -0700 (PDT)
+Message-ID: <33586975-6707-42d9-8744-d3cc70a38fb2@redhat.com>
+Date: Mon, 31 Aug 2026 10:22:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <alejandro.j.jimenez@oracle.com>,
- <pbonzini@redhat.com>, <richard.henderson@linaro.org>, <mst@redhat.com>,
- <joe.jin@oracle.com>
-Subject: Re: [PATCH v2 4/5] amd_iommu: Make extended feature register read-only
+Subject: Re: [RFC v5 24/28] hw/arm/smmuv3: Select sec-sid from PCI property
+ and validate SECURE_IMPL
 Content-Language: en-US
-To: Dongli Zhang <dongli.zhang@oracle.com>, <qemu-devel@nongnu.org>
-References: <20260724223216.108667-1-dongli.zhang@oracle.com>
- <20260724223216.108667-5-dongli.zhang@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260724223216.108667-5-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06C:EE_|LV0PR12MB999068:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c66fc51-c116-42e8-6b6d-08df0738e765
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|23010399003|36860700016|10067099003|56012099006|4143699003|11063799006|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: fYaorkezeVOB2KVJWssMddUz8QRom08J4wGS8qSSdaXQ209XIvm+8rjUvKskAygmnfKqbcOuBFNe/y8LinAWA3Ol6lh/oPYOfGng8SwcbkeMZ5qosYMbKjMekCdANTmjN7nTLflsVQFY31lP6n4hN4EqPitPuUq4BeBxhiyPsCuNcXWf8MDpPo3AjR61FgO2t0Ug9mmPTGTc3lir0HoCOl8MtONAtlUjqt2gtW9TlXBioM09Svg78ad0M3CNUnAku6CAYSFs8YxMlxFbjw/wv3OIYtxEFSAIboNB4wk9NhR8ATbznY49979x4WOrpyCwuYNxye/cgQi7kuOBVCFVuNpgsgELzu6uIfLHa6jCJrLik1eDo/uPxxQCPRtR28pJG1DlEocXfq2/OIpdTTjF3DffsknF8tmuUr0WwYX047ZVvoqxZ4QHSVf9wnEQU8umSgAu1n26RVvjsuhM3coU6bBAeLxEz6CvlPPRXP+a0Oyr4hc2jVTSVNCnTPdCdVRRFVW48+P5R8pQuHjOv8ezH+wK4u7tzEsbNlXglIBeo3aOxaAA3Y6MKVkuSdjCw4EBvNcus2BPpx3t+Q5BBpAHNsvImO1sGCUxTf67Rfau7M6Vgv7kVq5pxyIIuCNx+UGdwo4rxC/fIXa+BqyfKpcBDTxAnToLPpNqk/zhelULShw2k/PaejIAQPhHzKpphFC7H3TfGiEeVqDlZFDXIRcMFg==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(23010399003)(36860700016)(10067099003)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003)(6133799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: Gx2zh0rP6jMgUj0y/k6nk0VuGzWzNrP8Qjo7mP01CqLLAnzpKETwtbrPyq0OaVg6kIAB9PYbGOJaFyl7LYqYTvaCluUdvjVREZRzy36S9u5BkmiDiF0rQ1ssAVenfKaQEmLFhoLMGgqDfTr9A2saTZQD2hRp2ZZ1AtuAxSyDTjg/iffRYTMRyMgD7usfoJWvLl0qeXpCIttaxF9OmQ6avpDdGnxSM0CXhNKYvTaa1ete7Va2oKE0rBkWecVI2RYHJCQ7C/W7wLJkBTcO1PiGLIctQCldUV+tfJyOUk3xqn/Yqut0TJpNktt3XEPJ8ozL6+tnQw2b5d4LIbmtc4AcZtOug6o791fNKZDlN3pZf5Sf8kkm2oDPGtowGYhyxRtI3WWzWBsT4iru7VgBgksKNDk4zqtDO9OrPNf+www8rzOtGG1qIeSArEbu2QP4k3Qk
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 08:21:49.1232 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c66fc51-c116-42e8-6b6d-08df0738e765
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B06C.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR12MB999068
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
- envelope-from=Sairaj.K@amd.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162624.2809349-3-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260813162624.2809349-3-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,50 +116,260 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Tao,
 
-
-On 7/25/2026 4:01 AM, Dongli Zhang wrote:
-> AMDVI_MMIO_EXT_FEATURES is populated from QEMU's advertised AMD-Vi
-> extended feature set during reset. Guest writes to this register do not
-> enable or disable any corresponding QEMU emulation behavior.
-> 
-> The current mask leaves bit 4 writable, which only allows the guest to
-> modify the stored feature value without changing the device model. Make
-> the register fully read-only so the visible feature bits remain controlled
-> by QEMU.
-> 
-> According to the AMD IOMMU SDM, bits 25:24 (DualPprLogSup),
-> 29:28 (DualEventLogSup), and 37 (USSup) are not specified as RO.
-> This commit modifies only bit 4 (GTSup), while leaving the rest as they
-> are.
-> 
-> Suggested-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+On 8/13/26 6:26 PM, Tao Tang wrote:
+> Parse each PCI device's sec-sid property during SMMU device initialization
+> and cache it in SMMUDevice::sec_sid. Support "non-secure" and "secure",
+> default to non-secure when unspecified, and reject invalid values with an
+> explicit error. Use sdev->sec_sid in smmuv3_translate() to select the
+> register bank instead of hardcoding the non-secure context.
+>
+> Keep sec-sid parsing in smmu-common, and add a SMMUv3-specific validation
+> hook to enforce architectural constraints: fail fast when sec-sid=secure
+> while SMMU_S_IDR1.SECURE_IMPL is 0 or secure AS is not available.
+>
+> Typically, SEC_SID is a system-defined attribute (e.g. sideband or tied-off)
+> rather than something a PCIe endpoint can freely toggle in pre-RME scenario.
+> So this PCI sec-sid property is used as a static platform/testing knob to
+> drive the SMMU bank selection.
+>
+> For future RME-DA and TDISP support, this static property will need to be
+> replaced by runtime platform plumbing that derives the effective SEC_SID
+> from the device security assignment.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  hw/i386/amd_iommu.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-> index f86e37fe93..9cd510d790 100644
-> --- a/hw/i386/amd_iommu.h
-> +++ b/hw/i386/amd_iommu.h
-> @@ -241,7 +241,7 @@
->          AMDVI_FEATURE_IA | AMDVI_FEATURE_GT | AMDVI_FEATURE_HE | \
->          AMDVI_GATS_MODE | AMDVI_HATS_MODE | AMDVI_FEATURE_GA)
+>  hw/arm/smmu-common.c         | 37 ++++++++++++++++++++++
+>  hw/arm/smmuv3.c              | 61 +++++++++++++++++++++++++++++++++++-
+>  include/hw/arm/smmu-common.h |  2 ++
+>  3 files changed, 99 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index e8a1ed65c19..4a94799fb0d 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -21,6 +21,7 @@
+>  #include "exec/target_page.h"
+>  #include "hw/core/cpu.h"
+>  #include "hw/pci/pci_bridge.h"
+> +#include "hw/pci/pci_device.h"
+>  #include "hw/core/qdev-properties.h"
+>  #include "qapi/error.h"
+>  #include "qemu/jhash.h"
+> @@ -1100,14 +1101,50 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+>      return NULL;
+>  }
 >  
-> -#define AMDVI_MMIO_EXT_FEATURE_RO_MASK 0xffffffffffffffefULL
-> +#define AMDVI_MMIO_EXT_FEATURE_RO_MASK (~0ULL)
-
-Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
-
+> +static SMMUSecSID smmu_parse_pci_sec_sid(PCIDevice *pdev, int bus_num,
+> +                                         int devfn)
+> +{
+> +    const char *sec_sid;
+> +
+> +    if (!pdev || !pdev->sec_sid) {
+> +        return SMMU_SEC_SID_NS;
+> +    }
+> +
+> +    sec_sid = pdev->sec_sid;
+> +    if (!strcmp(sec_sid, "non-secure")) {
+> +        return SMMU_SEC_SID_NS;
+> +    }
+else if?
+> +    if (!strcmp(sec_sid, "secure")) {
+> +        return SMMU_SEC_SID_S;
+> +    }
+> +
+> +    error_report("Invalid sec-sid value '%s' for PCI device %02x:%02x.%x; "
+> +                 "allowed values: non-secure or secure (case-sensitive)",
+To me this is not the place where pci property validation should happen.
+This should happen in the pcie device instead, on property setting.
+> +                 sec_sid, bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn));
+> +    exit(EXIT_FAILURE);
+> +}
+> +
+>  void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn)
+>  {
+>      static unsigned int index;
+>      g_autofree char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn,
+>                                              index++);
+> +    SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(s);
+> +    PCIDevice *pdev;
+> +    int bus_num;
+> +
+>      sdev->smmu = s;
+>      sdev->bus = bus;
+>      sdev->devfn = devfn;
+> +    sdev->sec_sid = SMMU_SEC_SID_NS;
+do we need this init? smmu_parse_pci_sec_sid() already implements the
+default.
+> +
+> +    bus_num = pci_bus_num(bus);
+> +    pdev = pci_find_device(bus, bus_num, devfn);
+> +    sdev->sec_sid = smmu_parse_pci_sec_sid(pdev, bus_num, devfn);
+> +    if (sbc->validate_sec_sid &&
+> +        !sbc->validate_sec_sid(s, sdev, bus_num)) {
+> +        exit(EXIT_FAILURE);
+The problem is any attempt to hotplu a secure device will exit QEMU.
+I wonder if we shouldn't implement a PCIIOMMUOps that detects the
+incompatibility.
+Maybe supports_address_space() could do that. At the moment it is used
+to check accel mode only but another implementation could check secure
+compatibility I think. The advantage is this callback passes an errp.
+> +    }
+>  
+>      memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+>                               s->mrtypename, OBJECT(s), name, UINT64_MAX);
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index e5f0bc18415..a755f1ebd69 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -43,6 +43,12 @@
+>                                          ((ptw_info).stage == SMMU_STAGE_2 && \
+>                                          (cfg)->s2cfg.record_faults))
+>  
+> +enum {
+> +    SMMU_IOMMU_IDX_NS,
+> +    SMMU_IOMMU_IDX_S,
+> +    SMMU_IOMMU_IDX_NUM,
+> +};
+why do we need another enum, can't we reuse SMMUSecSID? 
+> +
+>  /**
+>   * smmuv3_trigger_irq - pulse @irq if enabled and update
+>   * GERROR register in case of GERROR interrupt
+> @@ -1157,6 +1163,33 @@ static void smmuv3_fixup_event(SMMUEventInfo *event, hwaddr iova)
+>      }
+>  }
+>  
+> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
+> +{
+> +    if (attrs.unspecified) {
+> +        return SMMU_IOMMU_IDX_NS;
+> +    }
+> +    return attrs.secure ? SMMU_IOMMU_IDX_S : SMMU_IOMMU_IDX_NS;
+> +}
+> +
+> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
+> +{
+> +    return SMMU_IOMMU_IDX_NUM;
+> +}
+> +
+> +static AddressSpace *smmuv3_bypass_target_as(SMMUv3State *s,
+> +                                             SMMUSecSID sec_sid,
+> +                                             int iommu_idx)
+> +{
+> +    g_assert(iommu_idx >= SMMU_IOMMU_IDX_NS &&
+> +             iommu_idx < SMMU_IOMMU_IDX_NUM);
+> +
+> +    if (smmu_sec_sid_is_secure(sec_sid) &&
+> +        iommu_idx == SMMU_IOMMU_IDX_S) {
+> +        return smmu_get_address_space(&s->smmu_state, SMMU_SEC_SID_S);
+> +    }
+> +    return smmu_get_address_space(&s->smmu_state, SMMU_SEC_SID_NS);
+> +}
+> +
+>  /* Entry point to SMMU, does everything. */
+>  static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>                                        IOMMUAccessFlags flag, int iommu_idx)
+> @@ -1164,7 +1197,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>      SMMUv3State *s = sdev->smmu;
+>      uint32_t sid = smmu_get_sid(sdev);
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUSecSID sec_sid = sdev->sec_sid;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>                             .sid = sid,
+> @@ -1181,6 +1214,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>      };
+>      SMMUTLBEntry *cached_entry = NULL;
+>  
+> +    entry.target_as = smmuv3_bypass_target_as(s, sec_sid, iommu_idx);
+> +
+>      qemu_mutex_lock(&s->mutex);
+>  
+>      if (!smmu_enabled(s, sec_sid)) {
+> @@ -1611,6 +1646,26 @@ static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
+>      return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
+>  }
+>  
+> +static bool smmuv3_validate_sec_sid(SMMUState *bs, SMMUDevice *sdev,
+> +                                    int bus_num)
+> +{
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +
+> +    if (sdev->sec_sid != SMMU_SEC_SID_S) {
+> +        return true;
+> +    }
+> +
+> +    if (!smmu_hw_secure_implemented(s)) {
+> +        error_report("Invalid sec-sid value 'secure' for PCI device "
+> +                     "%02x:%02x.%x: S_IDR1.SECURE_IMPL is 0, so only "
+> +                     "non-secure is allowed",
+> +                     bus_num, PCI_SLOT(sdev->devfn), PCI_FUNC(sdev->devfn));
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>  static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+>  {
+>      SMMUState *bs = ARM_SMMU(s);
+> @@ -2823,6 +2878,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>      ResettableClass *rc = RESETTABLE_CLASS(klass);
+>      SMMUv3Class *c = ARM_SMMUV3_CLASS(klass);
+> +    SMMUBaseClass *sbc = ARM_SMMU_CLASS(klass);
+>  
+>      dc->vmsd = &vmstate_smmuv3;
+>      resettable_class_set_parent_phases(rc, NULL, NULL, smmu_reset_exit,
+> @@ -2832,6 +2888,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>      device_class_set_props(dc, smmuv3_properties);
+>      dc->hotpluggable = false;
+>      dc->user_creatable = true;
+> +    sbc->validate_sec_sid = smmuv3_validate_sec_sid;
+>  
+>      object_class_property_set_description(klass, "accel",
+>          "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
+> @@ -2905,6 +2962,8 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+>  
+>      imrc->translate = smmuv3_translate;
+>      imrc->notify_flag_changed = smmuv3_notify_flag_changed;
+> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
+> +    imrc->num_indexes = smmuv3_num_indexes;
+Why do we need the above ops? Isn't it generic enough to stay in smmu
+base code?
+>  }
+>  
+>  static const TypeInfo smmuv3_type_info = {
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index a21c6061808..9da54221f20 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -134,6 +134,7 @@ typedef struct SMMUDevice {
+>      void               *smmu;
+>      PCIBus             *bus;
+>      int                devfn;
+> +    SMMUSecSID         sec_sid;
+>      IOMMUMemoryRegion  iommu;
+>      AddressSpace       as;
+>      uint32_t           cfg_cache_hits;
+> @@ -204,6 +205,7 @@ struct SMMUBaseClass {
+>      /*< public >*/
+>  
+>      DeviceRealize parent_realize;
+> +    bool (*validate_sec_sid)(struct SMMUState *s, SMMUDevice *sdev, int bus_num);
+>  
+>  };
+>  
 Thanks
-Sairaj
 
->  
->  /* capabilities header */
->  #define AMDVI_CAPAB_FEATURES (AMDVI_CAPAB_FLAT_EXT | \
+Eric
 
 
