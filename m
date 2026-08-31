@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16FEC61DE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 03:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B04AFC61DF0
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 03:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x0sud-00068H-GE; Sun, 30 Aug 2026 23:42:24 -0400
+	id 1x0sub-00067h-5Z; Sun, 30 Aug 2026 23:42:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x0suW-00066W-2J; Sun, 30 Aug 2026 23:42:17 -0400
+ id 1x0suT-00065D-49; Sun, 30 Aug 2026 23:42:14 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x0suT-0006yh-Vf; Sun, 30 Aug 2026 23:42:15 -0400
+ id 1x0suR-0006yh-G2; Sun, 30 Aug 2026 23:42:12 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ds22S0TDb2UekcaT1MMwvCgLLbYNwpdppNvQZwmS8lEkY/Zj5z0b85Hw7iz0GQZpGxjKyE1+184SXza/9ZMIWhmtYM7lFgqI+HQd++DFCzFRxCAxr4mth3Otan1L22RYYEr8+QR4KgGAmZqoTk6rElSAZE4oDkdEIAU/KZIeHqRw9pb2Sy0keeRtpQ8XzemsHOfJ5Zi0SsSEd+mBe3ETx9xPmxETbcgN4fmwGvr+Gfrg5ActH+1Y1owD/uyaZtfbiXDKqNe35allQyYcpvOQoaNECUgcKQdot0zSGzK2lzjHJHabPdvfTG9+zftQYNvSJtTs+hKZuQmcC6f5lhRwjA==
+ b=HL1s58A0XVqQymr4a0Z7GyOJdT+MSnOzc+IbmsSoUNOOXtplm1vaPWdoz9xVi0XwPh1QZogHYbJdV594Ou9vSW54aKiYicp0+y/M1k7NVU4Ss5u96HYL+qHKyrn1i4OkU6//RlL22F/8zjGEQNJ65OXDUIuWEC5E3q51Ns06caaKTRch6wIxOmcO+PF+/pENR1/WmEA+p/WrxvX2+157TUPe3fz6RQqbLei63LWFs3vecu3egvv8yHdDnkFXvYsm3UFXg2+g8yIfNPpFO/VjN3yJkXBbivOUEyA4PiPcR4H1uD0IzANugE7+oxPq/61U7bnIsiWEqNYREgrotTlbMA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qmExWYUhArH5VkZnV8VPWf2l7Qy0MgXSQs1kMNSueGk=;
- b=nSbCia1jSwxaD02sxjC3KrL5N+zaZPGXxmm5X8J4IX43w5qZYlJYG1FNBsfooAibNgxOYfAgNQNdiqtCpR+1gjqkC6OhAYhsWF2EobCpNEyv7Ty4zPvT7nzPIGuFq0cHGl5byds1xTojXWeK5eGtH/fCEMnOweCp8WNX3Tu0rZgGwlm4azEE2DsLIqVzYmKQFVhlJ4AcL75j7t7tTuAT8NwtX5Nqonzi6EFNRJzmkRJ+C/VYVpezUiQoit/F+rwFiudcmEiWNBidaaiQ8d5Sn/uhiJiQa9JIqLRm1FCLVXgf0R4BF3aR4FBtrI/Q+RKAtVwYdtK14hO17Ajdo1V/rQ==
+ bh=TWP2WCxZg2x7I6hZDy/TQJCYMPMstHxv8wsqtMGXNmE=;
+ b=tQ6DS01BMVnZY0+0MgFT+zixxp3A7t4ezkcxUMttxZqe2alsGp1DW1DofFBvj2tZ18xjeR80oh3/lLD1P1kVnm4Muv+lVCcrzevERWITFdnjVxwGEWqiysdVX2dcXzJDNTWeRHJhy/oV9QBUS1qyAxd0bZc7IkffSGXulZbyEcTY4lxnM1C6x9OVzcuZaaX94OuNPYSRnRbK1EMKm3JQKVqYMu967HOg4Te3IlOyLSDkGG5R2ays1SFHFF7Z4BEti0KdnL1sZf5jFm83jdlho/QOMlOCcRPlFdpswkrX0vt4lXxWG7dZ5GHtKrl/v+LJl2VTazTQy8rdmIgj4ef63g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qmExWYUhArH5VkZnV8VPWf2l7Qy0MgXSQs1kMNSueGk=;
- b=iCL79UtiQ+NRKCnMYJ1xxw8WTxnwQp1A8d7yakjt9JYhJX7dxv+ImNiMX3xJx/YrYdxwkAf2m82jd4FguK5UkwPIzuo8C2n5LPbA2+A8oS/Aiztx2YpvFkDM6kU3kMPQodA+o/oKkqO5P+hK6OY0/xO+txPERyyy6xcoLP55X4YAqDZUm50RYdTspLaEH+A+Z8tEiHeYDMxH1MaVoVkuDJKzV+sgfR0Ac36GHQuv98f2uuToKKWd70l2mbjYHYUvRGYsTjmBs1MCCWFzt/L3nIoCZD7enn3jvw0VaH05rAuSY566jc8jGcH0ubE6VwnOsikJid3zP2gAPoFryxtCtg==
+ bh=TWP2WCxZg2x7I6hZDy/TQJCYMPMstHxv8wsqtMGXNmE=;
+ b=aRuVcuAk3V3Xx8gBkw+QH+JnewW80U4QtdE4LBwPs4fEmfWoPJ2ri6BoSX8L+8jd9mh+uJ91YqqqpOF7izk2gSp/18Fs0JpCAMvcPobvF5xzBl4oObq4bChCCIZ69kNdROsixOrxcr3IFpmorGnP9S3l10QSivhSvHBqS/+H6IEWro+/CY0ees+/8M9zvY1hR3xYBS3198KLw7NPtskaHRmrhxVjnfBx1rG3yytkHCbUtjBpn5lHiPS45pnftACEHY2KqEZsgllTpp9qxauJEGgyplly6BkRObaD5lAGq/Ta0uUQyOcxC22+NVIcLP03MyzRmKjT2E3IPbYafqeZsw==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by KL1PR06MB6164.apcprd06.prod.outlook.com (2603:1096:820:d1::10)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
- 2026 03:41:58 +0000
+ 2026 03:41:56 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
- 03:41:58 +0000
+ 03:41:56 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
@@ -54,12 +54,11 @@ To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  <pbonzini@redhat.com>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 3/9] crypto/akcipher: Support ECDSA sign/verify with nettle
-Thread-Topic: [PATCH v3 3/9] crypto/akcipher: Support ECDSA sign/verify with
- nettle
-Thread-Index: AQHdOPqs+ct8yq9840aj7tyUupEjyg==
-Date: Mon, 31 Aug 2026 03:41:58 +0000
-Message-ID: <20260831034153.192916-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 1/9] qapi/crypto: Add ECDSA algorithm and curve id
+Thread-Topic: [PATCH v3 1/9] qapi/crypto: Add ECDSA algorithm and curve id
+Thread-Index: AQHdOPqrpRav75xPnUWeox8smqnuKQ==
+Date: Mon, 31 Aug 2026 03:41:56 +0000
+Message-ID: <20260831034153.192916-2-jamin_lin@aspeedtech.com>
 References: <20260831034153.192916-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260831034153.192916-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -70,61 +69,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KL1PR06MB6164:EE_
-x-ms-office365-filtering-correlation-id: 8d4d3001-4807-491a-d24f-08df0711cf63
+x-ms-office365-filtering-correlation-id: 455d1e83-d925-41b2-50d0-08df0711cdf8
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|7416014|376014|23010399003|366016|921020|38070700021|3023799007|10067099003|56012099006|22082099003|18002099003;
-x-microsoft-antispam-message-info: PQV9avPqVfDH74YLinqRcFgF1Wv/JdWIXqS1cQ1IMxBN9YTO+Ewb3x8cJjbVQvZ0+NfTY9NFkSraJ4c7uMjDriMv5kAbbHedfxtSFekLVKqnyokYVAGLnT3xsyKKTOujkSuqKFu1nVDCEnvn5DXCXOwsUBLn5QGfHPyzpz4EJZwu1Xw3TtuMO9VeSBWIF7ymOStuePQNE/fEOTgl+N/2oKB68+6OU+pAh9ho7UIk6/yXbM+C0nn1yhed3miq5gLSJmbZgauL8P80694Xl8TADsf952qrXCd8rocSQHPntUxJDVxrVDmbyNfpWyKv5eby5cEgblgAxL/kBzToPzurkpgPPnlBzK8mBLE9CjPT1rcJ/R00qVxWEkxnj8VzbQDodxuZWlejZacsw6JP5YVV76058gvPp/ntagGkW/bkHMMWiQ8dhLlsvN4Z9frQEP7hV4V0UJ5EJOZuSkqLTcp1h1b9uuxTd+VUZrNlf5JVsNoN7S/xCVUsftoYUPgzDDjoHJL6/80dX7jijiFUjk2Ys6nC+ZMhxxMZtIZP5VYotwh1Y+bsyxd/tpaYTFLNuKfJoanfgESChbI1AUyRxLJxvdriCJLXqqEeHuH+hHpA9S9ilUNN6J7SonVXiUq2VGxRN5mwUd+c/gu7NmblEUqORTKWVHDyyuHdnevIy9RgVKQ52WIPue/If40C4wlZRq+W78A/rlJsN842n5kFP/MJ1qC0gKj6ihGdx9QxQcwAE+jHGB2eeN9TdZX8VpfpWJJE
+x-microsoft-antispam-message-info: XcH/CJDtyTARqp3VdJcDOKVsK82lvOjCADOYzOPkFgFCH0cntPM7j0TnBCWzArqPxPs+gwD3+QfdPgg8FYdByTPd+q9xuJdkRBc7D1XW9FJn9QMZ1VQA4sjzkKdwuDdN1GC92Y92mnQPpS+xOLiZDyCmOgQC/aVaY2VJ1jKE7ze6FZnKYblDeV3tVLSydKX7Hsxk2VOGFv1ukkWvkYwyuCVIHS5jkYX9YnvDMSig5s27RR1QFgHTzBqLmI62ZceFGlKIzn34fqo/pzQuur99KnD3wGiAKJ53DW1PrU0u3ec7SJNah6mGNW4599ImdsT5u+DCqaU+DEJgsmIibhLRWUM0cSb77E3y+icu8ZTaAsB8e1Ete09qWrMz5gs2f6me0MEXh7rQ3TkxB9Uz0IVh0Rpp5Usxhvf8Yao/c/xo7d9QbTdhcHxctZStTgTUmI2D4FNMUCF3TEa2g7yYAcXOsCwvytrxhy7o+uO9F6F76hAlQ4kiLqMUpcniqjqeM2cbUBSDQL6S/WhkEJ9Aca8RIMHhWMCWhjP6WMKG3taA88vuSJ+O1GvWqnOL9HwUu1NGFk4kTzS2k0z5qYJEN+t1EhirgNuwfGZ2smZYO56gopL0WLkILjl/dAArJG79NDJjmPnW4Rr6sOYhLPF086F0f6yuEiH/mJGb6iK9vCEhaCHN+1a1v1OpihtebexX6HKfPgz+G3fVBX/MTaNoTt7rp6zWKn9tfERdT97etpfBTyE2RCN/pteMu5WOcMqoRD5T
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(921020)(38070700021)(3023799007)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?0NK7e35p4wUw+bAYnnn5mIyRJUi212QbsIs2McPq2iD+/tHc0YLEVP3Zm0?=
- =?iso-8859-1?Q?RtstGcHzhTcIBD11fk2REWepGlftEmmg3YQg5aMOsvEIX1DSKCjUkDVZaR?=
- =?iso-8859-1?Q?6HpCpKOo+MeWZHTnmdCU3bjwREwy54iHTz/URiMR6cakstXBbSB2106YPR?=
- =?iso-8859-1?Q?HJgSCtbVZU/xmmRoKFb2GK5rNsdPBC06tRQtKceK6UUz7ucu9MDcFdsJqU?=
- =?iso-8859-1?Q?bDGSxe7zuSCyIBQ2fiOdNs/AvJWFPTEG+YnyqEeVEXDs3rqLQYxUB4CY1H?=
- =?iso-8859-1?Q?ia8SAjbq3OXAsr4zau1K8cbYVy5+L4gb969H+ah9o4PP8E52R2jasECAeO?=
- =?iso-8859-1?Q?mHOYuItlUFL1f7QIgo3CvUVo7B6nwM8G3mGEOWwamvrrv6Ez7veBwqSWGl?=
- =?iso-8859-1?Q?NT80jCNYKt2WUJTuaC35UnXbfM6gRa+7fHD8hNX4jgZJu3/5y35znOv1ax?=
- =?iso-8859-1?Q?lc+BC2s9TZTH930Fqrtp+ybX28Kg3UBCSL07UBo0WoovdPwSWZQxiG/KzD?=
- =?iso-8859-1?Q?/o2B3Gg58kPaul7RMPqlCRAneziKUDZhEyBi2INlAtH6a52ZiV59OvLn8F?=
- =?iso-8859-1?Q?Df+E0h27wHOYwzESPvKgIIU/2jamYyYHTswpdqapccgsSyjGTOf1faStqi?=
- =?iso-8859-1?Q?c6E/zjh9XfG6imG4X6jnnRPT5tVSm2pSmf5mY3ns0dl9QvyCWEvDnyTXqk?=
- =?iso-8859-1?Q?NoA9dKgY8HbaB5V3zELEfASJKr4U3ylBbrNdIz/IABtR6ffVDlNMdlVLwA?=
- =?iso-8859-1?Q?LDKtmL8Ljs/pXXJMWnLa1DI7mzJt25bXJ49PhvphLl5nN5+N/tbuyQXd4+?=
- =?iso-8859-1?Q?8PpHI464wuiRpKNKmCMFhEdctQmzb/IRxkoDxYjPZYrnp2YP99jZlTUW81?=
- =?iso-8859-1?Q?CygVhK4IBiDzOX9z60dEhObQ3hbpkyjGEEdjjWBF+wcSXVmCpreX6zrjeO?=
- =?iso-8859-1?Q?9E2PSmNbfV37npJGQoE9hr6nnhKqWsm280hVzLWhovjmqHF5d+X5UZmbf9?=
- =?iso-8859-1?Q?Fs+LeF62kLWo3z9X/cl/S1qzRpwZyKguhvMB1AmzcVCPkGgxASD2/a7zHY?=
- =?iso-8859-1?Q?xvbKckIkoltxGPgeo62Oj8c4uGZGRjMUaISvzhE2U/+JlhTgmK5FWTdKDc?=
- =?iso-8859-1?Q?jdiH3vKKsRQt2bemRuh8JD4x5n6V5Cw0TLX47+DmXsK3AoWZqr/CePhuus?=
- =?iso-8859-1?Q?HPcj2/ZxeTzdnT6eYP9I59Q8876l+Yfgw8omkil9T6wC93MADmLG0cgV6g?=
- =?iso-8859-1?Q?Gg6KbSZwftEDCinKr5OPbFRr4Lo6la3IyrJTIdd3M27MXLY/Vu7ZP8eHTq?=
- =?iso-8859-1?Q?z3QLubMhHEMfbUGQ+WkqeGI354+9NMpbsV20YAFcR+RYIOOfDp2I9H7GaF?=
- =?iso-8859-1?Q?pt/Nchmc8NGy/RLbjOuyN4IAr84rX86N5ET8JQVeGjgXDgaKQe8X9PBpBm?=
- =?iso-8859-1?Q?ivyqt9nHGs+BPeW4gPhz7Fir1TEUt5fBPLxBNBWfMR76kK+REjxeOqJcT4?=
- =?iso-8859-1?Q?+QcyIOBFpg08QthALG3kYpkFW+Uz6YMQo1rwYSVuR6iSbOnAs5VsnGuY6l?=
- =?iso-8859-1?Q?oGq3vCGs0ZnFzAUU04Iy4RomXDooocmGzrBsfDDyTcmJYWXUTc5S/DrHgl?=
- =?iso-8859-1?Q?t98aK/HaCNS3bG0ZL3pbOJT2SY6Yta+pkq7FPzWIkER/KXUqhBXp3aSf8D?=
- =?iso-8859-1?Q?XRnuCbTapTJTWa60jJmTm8oiZvE95h6z7yE1yEsmFgLXf1JFRih9837lSO?=
- =?iso-8859-1?Q?JWa+8Uag9t6j0W4nE0f+I/NI2geHZknwHkxN2OxH2K1xpTnFIj3Y2PYmdm?=
- =?iso-8859-1?Q?hWWK1S+iAw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?eF44lu3xOClH4KRAc7ffD9/j9JnGbyl/49GSnyDG5g7co8bPLA/vPSb6ET?=
+ =?iso-8859-1?Q?2jGaYwHEOhMT/8C6U2/csUR6fC/m5H34voY8Izny4rp8LKa6+Bmmr7c12V?=
+ =?iso-8859-1?Q?27DBMLP3pkWuwiUOdxAZsP5gVEBQv2z025NBJVrKGobX0FiSM1SJ+VkLgN?=
+ =?iso-8859-1?Q?DXrIpqm3HQUFdboxgLzRcQq0z6IIMFwkNFevv563d84skMGFl/8qWfv9FV?=
+ =?iso-8859-1?Q?RRrR9MWdNmXB24dRtkqqs05WVDbezhISz7siURkIMGxt+Don0w8NCbrZQz?=
+ =?iso-8859-1?Q?32EGjCrIyhN592x+mC1/bGECNfjuQcuotSNZOmn99D8e+muMBQ/aVRzxkX?=
+ =?iso-8859-1?Q?MZp0O8Nx1eKzvrfL9zEZ03M1pTt0/Daj1op/sdgScq3v82rAt0DygrHI5y?=
+ =?iso-8859-1?Q?uoXwOWieJiPcGe60HIUNDwpeIecvo9JfXldJnBOaOcVXGAXyQemVpDaJK9?=
+ =?iso-8859-1?Q?oHZUtiEtBnBjMjerJSo9Nj4N+pG2Fn2eNUGqCEoWDlX1uwpSeXP62NHnOl?=
+ =?iso-8859-1?Q?oH0FEPsu29dwc8NBJ34uM5jJvbo3XsUZb8neZDIw+DKRQiQD2BIwSqUInz?=
+ =?iso-8859-1?Q?BWjS2Zmo0E3Z6ad/oMiLPwbhoRB8aNTF3+lEv+A3eXQKfULoV7wchOqyk9?=
+ =?iso-8859-1?Q?yB5krr3yiS8Y5ZMWkQPZHzfZ8r3YhX+WoMv5PTuaFrfJ0mj+ipIRWsIZcf?=
+ =?iso-8859-1?Q?gOH5I+cEIq+3pLDG9xj3j2gDrMsiy11U4+yeRMGHmjKYNW2GhTq66muo7I?=
+ =?iso-8859-1?Q?PB+U3yC+zkC/JB9rtoHVK/mL7/9CCjsoVYuO6PdCwVyisPSIzNVI6oc9XV?=
+ =?iso-8859-1?Q?HI29kJtti34I/S24Hek1t1XJBGggklUJRQFIZInhsHNh15DwhRH9ArHlCI?=
+ =?iso-8859-1?Q?zaUvE6L/iZyRG3UyXRn2M/pRstOusolDWLBJtyEUOFdvh53sQctO30yfjs?=
+ =?iso-8859-1?Q?febEMd98VhKawO/nI6PijNnGWV9P7CRBgQ68dliplIr27wcWaZeZmHQMDl?=
+ =?iso-8859-1?Q?H59cY4vI/+9XcQq9w6mCMFLis7R0lcHWiadH/zmyOqeIRzfrzkv3yIILaO?=
+ =?iso-8859-1?Q?ynRs1PkF1/WOh6O+NxMnRt3vP9939WruBqkq9h98jI2wA/iQ9bwBHWafxe?=
+ =?iso-8859-1?Q?rronkyi/NIS65ZAiFVW75kXSzS+zXpwJXY/n9xbQ6Fo6qIYxv+aQMD7RCP?=
+ =?iso-8859-1?Q?bJVBrT6Gq5lGc/TO7PAj0aRdVoW8TFi02HOI2p0do+RD2NaLIN2DToqeN5?=
+ =?iso-8859-1?Q?EITQJLL91aVqysTmIINh4RG6wHYRQlgWZtFFz9Ba7++w5tg7Xz3koJimzQ?=
+ =?iso-8859-1?Q?ZRU+bkR+YnfY8yD6X2OeMsFU+EsEtcP4BOTeQXINxkcDVAq8nD1PXSlhIp?=
+ =?iso-8859-1?Q?4qT22tztqp8q0SxrgOmLyRbXQP0gzXuZB/lG6giGdMhIxjL0eTyftXrLp0?=
+ =?iso-8859-1?Q?OCAn4dR56LmkxbNHzuitB7YFIkp/LbuxXx+oz/6Uhad81KnnRqt7QezFnG?=
+ =?iso-8859-1?Q?fZXcYVeCbbsxSHmPIlraau+rq9ZJ2Z8dpuvn4hLVYRHWzAExTMTEWJBxpU?=
+ =?iso-8859-1?Q?KYulWiBTreO9QhPzN2cZ7MAE/jFaR/yzVbVAymgTrH0sXmSWSA8qU3AARG?=
+ =?iso-8859-1?Q?x9XPtHUnD4CXiuhFlkTfdrjdj2/Og4HvezCPTysXNCEU35iwkMwX/XxhFR?=
+ =?iso-8859-1?Q?czStFTpcPQBeeK71p1lFlVpHd35Gv2p3ux9aK8vE5wRbSezqUwOObdyFXB?=
+ =?iso-8859-1?Q?f2kO8dBVe0334WMbapKD8sXMMwH/9+gmsxnI7j1nhRAA6oX5vkdROyh2Rq?=
+ =?iso-8859-1?Q?gAKHpH+r7A=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: bJmteHpip4fmii5eZm9PEAXaioshHhIfDyGCQdPZ4Y3vDxyNSAVG3ZBWo1EZ3Tt/evcJs5SE1zRHeU3ecdnql4RiKIttP+5o8ENRMIf3+Ym0wMacAxgBi9XTyFpSLwK4gUBI9nZwbIksnxgD6BMFrS1M+qR3r6WEKdIXjSGgKCumXAltBPRO2bZoa/BP5gH38VAe9pJvRoUZMSGrAUyaaOKN8XXigTaoZZ7YApN6Mk504LDzeMNZjYoXcKE4lq8vrfcNbz0SZsfKbfGUivvxzQvLdGO96i+5I9ODCJsQ6anOcY1nsH35dhwhqgya2emYkhls7dhbt+waJRWA7i8uig==
+X-Exchange-RoutingPolicyChecked: 45GHMokIVeEpcy6Ejaautdnsb0w00L0IBqhaHn2fLty1pQaye6i34D5SoC3yRt710Xvzf01fciCvxBEucpAbuPvaWjsfNu61EHqielMnJD5MIdfpR1RHc2oTVeo1xEumWzr1hxgi0sZZTW2nEThya7NSXb3cD6khCJrgTNIs4sgnW3jXTLxE7J0s0FBbWDqjFNWahxGwfZhrrb0wKzhxtVwifwUd2RwtCSPjJvNnSWgFkOY16RnomJKmDkvIbe4zHWlxQugSObVsbgblgHIoLpESPJNYk0XpQbqc8RRXcQ5f/syAec3Xkde2Fg8FzXI2XswDx9QKtLCehFYPX9Cwhw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d4d3001-4807-491a-d24f-08df0711cf63
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Aug 2026 03:41:58.4938 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 455d1e83-d925-41b2-50d0-08df0711cdf8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Aug 2026 03:41:56.1110 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CPd+TmiDUTNJc0eLeCBezS69RSgO6rzNvZlnLTQewAIpgLJVlQcOhI4YKR9RR9Z4oVVW2SemUa8yVc3y26IXYLHPi04V0nCdKSSxkLR1WPA=
+X-MS-Exchange-CrossTenant-userprincipalname: sivTOI/LOPj/UXRwvSoehR8cFX/AoBPqS4pXBZAnAs8pJFVe5i+cxBWAmcA41778fOsHQDi65IfsUH3RJUl/4dwfYVD2a9X4TOXNssdx9Xs=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6164
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -151,340 +150,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement ECDSA signing and verification for the nettle/hogweed backend,=0A=
-for the prime256v1 (NIST P-256) and secp384r1 (NIST P-384) curves.=0A=
-A public key (Qx || Qy) is loaded into an ecc_point for verify;=0A=
-a private key (the scalar d) into an ecc_scalar for sign,=0A=
-using nettle's ecdsa_sign() / ecdsa_verify().=0A=
+The ASPEED AST10x0 Secure Boot Controller has a hardware ECDSA engine=0A=
+that guest firmware uses to verify secp384r1 signatures. Emulating it=0A=
+requires ECDSA support in the crypto akcipher framework, which today=0A=
+only implements RSA.=0A=
 =0A=
-The encrypt/decrypt driver ops return an error.=0A=
+Introduce a new asymmetric cipher algorithm, ECDSA, a curve identifier=0A=
+enum (prime256v1 / NIST P-256 and secp384r1 / NIST P-384) and the=0A=
+per-algorithm ECDSA options. This is the QAPI groundwork consumed by the=0A=
+crypto akcipher backends in the following patches.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Acked-by: Markus Armbruster <armbru@redhat.com>=0A=
 Reviewed-by: Daniel P. Berrang=E9 <berrange@redhat.com>=0A=
 ---=0A=
- crypto/akcipher-nettle.c.inc | 267 +++++++++++++++++++++++++++++++++++=0A=
- 1 file changed, 267 insertions(+)=0A=
+ qapi/crypto.json | 33 +++++++++++++++++++++++++++++++--=0A=
+ 1 file changed, 31 insertions(+), 2 deletions(-)=0A=
 =0A=
-diff --git a/crypto/akcipher-nettle.c.inc b/crypto/akcipher-nettle.c.inc=0A=
-index 1d4bd6960e..34bdc3de27 100644=0A=
---- a/crypto/akcipher-nettle.c.inc=0A=
-+++ b/crypto/akcipher-nettle.c.inc=0A=
-@@ -20,6 +20,10 @@=0A=
-  */=0A=
+diff --git a/qapi/crypto.json b/qapi/crypto.json=0A=
+index 6e3a98ff68..cae2c678cb 100644=0A=
+--- a/qapi/crypto.json=0A=
++++ b/qapi/crypto.json=0A=
+@@ -557,10 +557,26 @@=0A=
+ #=0A=
+ # @rsa: RSA algorithm=0A=
+ #=0A=
++# @ecdsa: ECDSA algorithm (Since 11.2)=0A=
++#=0A=
+ # Since: 7.1=0A=
+ ##=0A=
+ { 'enum': 'QCryptoAkCipherAlgo',=0A=
+-  'data': ['rsa']}=0A=
++  'data': ['rsa', 'ecdsa']}=0A=
++=0A=
++##=0A=
++# @QCryptoCurveID:=0A=
++#=0A=
++# The supported elliptic curves.=0A=
++#=0A=
++# @prime256v1: NIST P-256 curve (prime256v1)=0A=
++#=0A=
++# @secp384r1: NIST P-384 curve (secp384r1)=0A=
++#=0A=
++# Since: 11.2=0A=
++##=0A=
++{ 'enum': 'QCryptoCurveID',=0A=
++  'data': ['prime256v1', 'secp384r1']}=0A=
  =0A=
- #include <nettle/rsa.h>=0A=
-+#include <nettle/ecdsa.h>=0A=
-+#include <nettle/ecc-curve.h>=0A=
-+#include <nettle/ecc.h>=0A=
-+#include <nettle/bignum.h>=0A=
+ ##=0A=
+ # @QCryptoAkCipherKeyType:=0A=
+@@ -605,6 +621,18 @@=0A=
+   'data': { 'hash-alg':'QCryptoHashAlgo',=0A=
+             'padding-alg': 'QCryptoRSAPaddingAlgo'}}=0A=
  =0A=
- #include "qemu/osdep.h"=0A=
- #include "qemu/host-utils.h"=0A=
-@@ -55,6 +59,12 @@ static QCryptoAkCipher *qcrypto_nettle_rsa_new(=0A=
-     const uint8_t *key,  size_t keylen,=0A=
-     Error **errp);=0A=
- =0A=
-+static QCryptoAkCipher *qcrypto_nettle_ecdsa_new(=0A=
-+    const QCryptoAkCipherOptionsECDSA *opt,=0A=
-+    QCryptoAkCipherKeyType type,=0A=
-+    const uint8_t *key,  size_t keylen,=0A=
-+    Error **errp);=0A=
++##=0A=
++# @QCryptoAkCipherOptionsECDSA:=0A=
++#=0A=
++# Specific parameters for the ECDSA algorithm.=0A=
++#=0A=
++# @curve-id: the elliptic curve to use=0A=
++#=0A=
++# Since: 11.2=0A=
++##=0A=
++{ 'struct': 'QCryptoAkCipherOptionsECDSA',=0A=
++  'data': { 'curve-id': 'QCryptoCurveID' }}=0A=
 +=0A=
- QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,=
-=0A=
-                                       QCryptoAkCipherKeyType type,=0A=
-                                       const uint8_t *key, size_t keylen,=
-=0A=
-@@ -64,6 +74,10 @@ QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCip=
-herOptions *opts,=0A=
-     case QCRYPTO_AK_CIPHER_ALGO_RSA:=0A=
-         return qcrypto_nettle_rsa_new(&opts->u.rsa, type, key, keylen, err=
-p);=0A=
- =0A=
-+    case QCRYPTO_AK_CIPHER_ALGO_ECDSA:=0A=
-+        return qcrypto_nettle_ecdsa_new(&opts->u.ecdsa, type, key, keylen,=
-=0A=
-+                                        errp);=0A=
-+=0A=
-     default:=0A=
-         error_setg(errp, "Unsupported algorithm: %u", opts->alg);=0A=
-         return NULL;=0A=
-@@ -422,6 +436,249 @@ error:=0A=
- }=0A=
- =0A=
- =0A=
-+/*=0A=
-+ * ECDSA support (sign and verify)=0A=
-+ *=0A=
-+ * Keys and signatures use raw big-endian formats:=0A=
-+ *   - public key: Qx || Qy, each 'coord_len' bytes=0A=
-+ *   - private key: the scalar d, 'coord_len' bytes=0A=
-+ *   - signature: r || s, each 'coord_len' bytes=0A=
-+ *   - the input to sign/verify is a raw message digest=0A=
-+ */=0A=
-+typedef struct QCryptoNettleECDSA {=0A=
-+    QCryptoAkCipher akcipher;=0A=
-+    QCryptoAkCipherKeyType type;=0A=
-+    struct ecc_point pub;=0A=
-+    struct ecc_scalar priv;=0A=
-+    QCryptoCurveID curve_id;=0A=
-+} QCryptoNettleECDSA;=0A=
-+=0A=
-+static const struct ecc_curve *qcrypto_nettle_ecdsa_curve(=0A=
-+    QCryptoCurveID curve_id)=0A=
-+{=0A=
-+    switch (curve_id) {=0A=
-+    case QCRYPTO_CURVE_ID_PRIME256V1:=0A=
-+        return nettle_get_secp_256r1();=0A=
-+=0A=
-+    case QCRYPTO_CURVE_ID_SECP384R1:=0A=
-+        return nettle_get_secp_384r1();=0A=
-+=0A=
-+    default:=0A=
-+        return NULL;=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+static size_t qcrypto_nettle_ecdsa_coord_len(QCryptoCurveID curve_id)=0A=
-+{=0A=
-+    switch (curve_id) {=0A=
-+    case QCRYPTO_CURVE_ID_PRIME256V1:=0A=
-+        return 32;=0A=
-+=0A=
-+    case QCRYPTO_CURVE_ID_SECP384R1:=0A=
-+        return 48;=0A=
-+=0A=
-+    default:=0A=
-+        return 0;=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+static void qcrypto_nettle_ecdsa_free(QCryptoAkCipher *akcipher)=0A=
-+{=0A=
-+    QCryptoNettleECDSA *ecdsa =3D (QCryptoNettleECDSA *)akcipher;=0A=
-+    if (!ecdsa) {=0A=
-+        return;=0A=
-+    }=0A=
-+=0A=
-+    if (ecdsa->type =3D=3D QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {=0A=
-+        ecc_scalar_clear(&ecdsa->priv);=0A=
-+    } else {=0A=
-+        ecc_point_clear(&ecdsa->pub);=0A=
-+    }=0A=
-+    g_free(ecdsa);=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_ecdsa_encrypt(QCryptoAkCipher *akcipher,=0A=
-+                                        const void *in, size_t in_len,=0A=
-+                                        void *out, size_t out_len,=0A=
-+                                        Error **errp)=0A=
-+{=0A=
-+    error_setg(errp, "ECDSA does not support encryption");=0A=
-+    return -1;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_ecdsa_decrypt(QCryptoAkCipher *akcipher,=0A=
-+                                        const void *in, size_t in_len,=0A=
-+                                        void *out, size_t out_len,=0A=
-+                                        Error **errp)=0A=
-+{=0A=
-+    error_setg(errp, "ECDSA does not support decryption");=0A=
-+    return -1;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_ecdsa_sign(QCryptoAkCipher *akcipher,=0A=
-+                                     const void *in, size_t in_len,=0A=
-+                                     void *out, size_t out_len,=0A=
-+                                     Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleECDSA *ecdsa =3D (QCryptoNettleECDSA *)akcipher;=0A=
-+    size_t coord_len =3D qcrypto_nettle_ecdsa_coord_len(ecdsa->curve_id);=
-=0A=
-+    struct dsa_signature sig;=0A=
-+=0A=
-+    if (ecdsa->type !=3D QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {=0A=
-+        error_setg(errp, "ECDSA sign requires a private key");=0A=
-+        return -1;=0A=
-+    }=0A=
-+=0A=
-+    if (in_len =3D=3D 0 || in_len > akcipher->max_dgst_len) {=0A=
-+        error_setg(errp, "Invalid digest length %zu", in_len);=0A=
-+        return -1;=0A=
-+    }=0A=
-+=0A=
-+    if (out_len < coord_len * 2) {=0A=
-+        error_setg(errp, "Signature buffer length %zu is less than %zu",=
-=0A=
-+                   out_len, coord_len * 2);=0A=
-+        return -1;=0A=
-+    }=0A=
-+=0A=
-+    dsa_signature_init(&sig);=0A=
-+    ecdsa_sign(&ecdsa->priv, NULL, wrap_nettle_random_func, in_len, in, &s=
-ig);=0A=
-+=0A=
-+    /* output is r || s, each zero-padded to the curve size */=0A=
-+    nettle_mpz_get_str_256(coord_len, out, sig.r);=0A=
-+    nettle_mpz_get_str_256(coord_len, (uint8_t *)out + coord_len, sig.s);=
-=0A=
-+=0A=
-+    dsa_signature_clear(&sig);=0A=
-+    return coord_len * 2;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_ecdsa_verify(QCryptoAkCipher *akcipher,=0A=
-+                                       const void *in, size_t in_len,=0A=
-+                                       const void *in2, size_t in2_len,=0A=
-+                                       Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleECDSA *ecdsa =3D (QCryptoNettleECDSA *)akcipher;=0A=
-+    size_t coord_len =3D qcrypto_nettle_ecdsa_coord_len(ecdsa->curve_id);=
-=0A=
-+    struct dsa_signature sig;=0A=
-+    int ret =3D -1;=0A=
-+=0A=
-+    /* signature is r || s */=0A=
-+    if (in_len !=3D coord_len * 2) {=0A=
-+        error_setg(errp, "Signature length %zu is not %zu",=0A=
-+                   in_len, coord_len * 2);=0A=
-+        return ret;=0A=
-+    }=0A=
-+=0A=
-+    if (in2_len =3D=3D 0 || in2_len > akcipher->max_dgst_len) {=0A=
-+        error_setg(errp, "Invalid digest length %zu", in2_len);=0A=
-+        return ret;=0A=
-+    }=0A=
-+=0A=
-+    dsa_signature_init(&sig);=0A=
-+    nettle_mpz_set_str_256_u(sig.r, coord_len, in);=0A=
-+    nettle_mpz_set_str_256_u(sig.s, coord_len, (const uint8_t *)in + coord=
-_len);=0A=
-+=0A=
-+    if (ecdsa_verify(&ecdsa->pub, in2_len, in2, &sig) =3D=3D 1) {=0A=
-+        ret =3D 0;=0A=
-+    } else {=0A=
-+        error_setg(errp, "Failed to verify signature");=0A=
-+    }=0A=
-+=0A=
-+    dsa_signature_clear(&sig);=0A=
-+    return ret;=0A=
-+}=0A=
-+=0A=
-+QCryptoAkCipherDriver nettle_ecdsa =3D {=0A=
-+    .encrypt =3D qcrypto_nettle_ecdsa_encrypt,=0A=
-+    .decrypt =3D qcrypto_nettle_ecdsa_decrypt,=0A=
-+    .sign =3D qcrypto_nettle_ecdsa_sign,=0A=
-+    .verify =3D qcrypto_nettle_ecdsa_verify,=0A=
-+    .free =3D qcrypto_nettle_ecdsa_free,=0A=
-+};=0A=
-+=0A=
-+static QCryptoAkCipher *qcrypto_nettle_ecdsa_new(=0A=
-+    const QCryptoAkCipherOptionsECDSA *opt,=0A=
-+    QCryptoAkCipherKeyType type,=0A=
-+    const uint8_t *key, size_t keylen,=0A=
-+    Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleECDSA *ecdsa;=0A=
-+    const struct ecc_curve *curve =3D qcrypto_nettle_ecdsa_curve(opt->curv=
-e_id);=0A=
-+    size_t coord_len =3D qcrypto_nettle_ecdsa_coord_len(opt->curve_id);=0A=
-+    mpz_t x;=0A=
-+    mpz_t y;=0A=
-+=0A=
-+    if (!curve || coord_len =3D=3D 0) {=0A=
-+        error_setg(errp, "Unsupported curve id: %u", opt->curve_id);=0A=
-+        return NULL;=0A=
-+    }=0A=
-+=0A=
-+    switch (type) {=0A=
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:=0A=
-+        if (keylen !=3D coord_len * 2) {=0A=
-+            error_setg(errp, "Public key length %zu is not %zu",=0A=
-+                       keylen, coord_len * 2);=0A=
-+            return NULL;=0A=
-+        }=0A=
-+        break;=0A=
-+=0A=
-+    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:=0A=
-+        if (keylen !=3D coord_len) {=0A=
-+            error_setg(errp, "Private key length %zu is not %zu",=0A=
-+                       keylen, coord_len);=0A=
-+            return NULL;=0A=
-+        }=0A=
-+        break;=0A=
-+=0A=
-+    default:=0A=
-+        error_setg(errp, "Unknown akcipher key type %d", type);=0A=
-+        return NULL;=0A=
-+    }=0A=
-+=0A=
-+    ecdsa =3D g_new0(QCryptoNettleECDSA, 1);=0A=
-+    ecdsa->akcipher.driver =3D &nettle_ecdsa;=0A=
-+    ecdsa->type =3D type;=0A=
-+    ecdsa->curve_id =3D opt->curve_id;=0A=
-+    ecdsa->akcipher.max_dgst_len =3D coord_len;=0A=
-+    ecdsa->akcipher.max_signature_len =3D coord_len * 2;=0A=
-+=0A=
-+    if (type =3D=3D QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC) {=0A=
-+        /* public key: Qx || Qy */=0A=
-+        ecc_point_init(&ecdsa->pub, curve);=0A=
-+        mpz_init(x);=0A=
-+        mpz_init(y);=0A=
-+        nettle_mpz_set_str_256_u(x, coord_len, key);=0A=
-+        nettle_mpz_set_str_256_u(y, coord_len,=0A=
-+                                 (const uint8_t *)key + coord_len);=0A=
-+=0A=
-+        if (!ecc_point_set(&ecdsa->pub, x, y)) {=0A=
-+            error_setg(errp, "Invalid ECDSA public key (not on curve)");=
-=0A=
-+            mpz_clear(x);=0A=
-+            mpz_clear(y);=0A=
-+            qcrypto_nettle_ecdsa_free((QCryptoAkCipher *)ecdsa);=0A=
-+            return NULL;=0A=
-+        }=0A=
-+=0A=
-+        mpz_clear(x);=0A=
-+        mpz_clear(y);=0A=
-+    } else {=0A=
-+        /* private key: the scalar d */=0A=
-+        ecc_scalar_init(&ecdsa->priv, curve);=0A=
-+        mpz_init(x);=0A=
-+        nettle_mpz_set_str_256_u(x, coord_len, key);=0A=
-+=0A=
-+        if (!ecc_scalar_set(&ecdsa->priv, x)) {=0A=
-+            error_setg(errp, "Invalid ECDSA private key");=0A=
-+            mpz_clear(x);=0A=
-+            qcrypto_nettle_ecdsa_free((QCryptoAkCipher *)ecdsa);=0A=
-+            return NULL;=0A=
-+        }=0A=
-+=0A=
-+        mpz_clear(x);=0A=
-+    }=0A=
-+=0A=
-+    return (QCryptoAkCipher *)ecdsa;=0A=
-+}=0A=
-+=0A=
- bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)=0A=
- {=0A=
-     switch (opts->alg) {=0A=
-@@ -445,6 +702,16 @@ bool qcrypto_akcipher_supports(QCryptoAkCipherOptions =
-*opts)=0A=
-         }=0A=
-         break;=0A=
- =0A=
-+    case QCRYPTO_AK_CIPHER_ALGO_ECDSA:=0A=
-+        switch (opts->u.ecdsa.curve_id) {=0A=
-+        case QCRYPTO_CURVE_ID_PRIME256V1:=0A=
-+        case QCRYPTO_CURVE_ID_SECP384R1:=0A=
-+            return true;=0A=
-+=0A=
-+        default:=0A=
-+            return false;=0A=
-+        }=0A=
-+=0A=
-     default:=0A=
-         return false;=0A=
-     }=0A=
+ ##=0A=
+ # @QCryptoAkCipherOptions:=0A=
+ #=0A=
+@@ -618,4 +646,5 @@=0A=
+ { 'union': 'QCryptoAkCipherOptions',=0A=
+   'base': { 'alg': 'QCryptoAkCipherAlgo' },=0A=
+   'discriminator': 'alg',=0A=
+-  'data': { 'rsa': 'QCryptoAkCipherOptionsRSA' }}=0A=
++  'data': { 'rsa': 'QCryptoAkCipherOptionsRSA',=0A=
++            'ecdsa': 'QCryptoAkCipherOptionsECDSA' }}=0A=
 -- =0A=
 2.53.0=0A=
 
