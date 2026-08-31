@@ -4,62 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6659C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C279C624A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x11zr-0001z5-HV; Mon, 31 Aug 2026 09:24:23 -0400
+	id 1x1217-0004qB-8Y; Mon, 31 Aug 2026 09:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x11zm-0001t0-Ur; Mon, 31 Aug 2026 09:24:19 -0400
-Received: from [115.124.30.118] (helo=out30-118.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1x1216-0004lj-D4
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:25:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1x11zc-0006pa-J0; Mon, 31 Aug 2026 09:24:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1788182635; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=0nmMw2Y8HdA9mlrvGNBXlhCXvv74hVwwPWH6o99skok=;
- b=iAS/LWyUx4Xrd2fes8bhzUpTSHkXN9O/sXQxGSIcZCL44s5pcRx2sjoRVSYpd2dqJSQ8kpCuIQBdRmHbEjku0G6/4LokZo2QYqXArO9/o7JC3yGZAdGDXT7U0Zbaz+MLbHVW7c6SsIFey+rWVPHWpG8T8k6HVrmHNFIGsPvW9B0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
- MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=20; SR=0;
- TI=SMTPD_---0X9znfq8_1788182633; 
-Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0X9znfq8_1788182633 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 31 Aug 2026 21:23:54 +0800
-From: Chen Pei <cp0613@linux.alibaba.com>
-To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
- imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
-Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
- junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- Sunil V L <sunilvl@oss.qualcomm.com>
-Subject: [PATCH v5 2/6] hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for CXL
- host bridge dependency
-Date: Mon, 31 Aug 2026 21:23:33 +0800
-Message-ID: <20260831132340.5345-3-cp0613@linux.alibaba.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260831132340.5345-1-cp0613@linux.alibaba.com>
-References: <20260831132340.5345-1-cp0613@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1x1214-0007HD-9k
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:25:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788182736;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZEK0PmZytTXd/hQoFTmucufl0WA8TC6IEgfPXV7mS1Y=;
+ b=WqkFKr3IsHJ0XsCb7pe54L41WqQkQGHalnmSmKKNcX9qBKBjYJcHTX02tPNTxHYtvu5bCB
+ yORREaVPGd30HSot+cKMLnHAMcfjkMh3BdETD8biDlqtA3jUJ/3e41MAIUUyU0OVJJRQxc
+ XXLAhUjGqm1mpkxg87mGhAiN5p9EtpA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605--9rHE051PyW1vX0LaqV6VQ-1; Mon,
+ 31 Aug 2026 09:25:30 -0400
+X-MC-Unique: -9rHE051PyW1vX0LaqV6VQ-1
+X-Mimecast-MFC-AGG-ID: -9rHE051PyW1vX0LaqV6VQ_1788182728
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 205CE196DFC6; Mon, 31 Aug 2026 13:25:00 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.41])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AB33A377EB; Mon, 31 Aug 2026 13:24:58 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 3C983180060B; Mon, 31 Aug 2026 15:24:09 +0200 (CEST)
+Date: Mon, 31 Aug 2026 15:24:09 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Alex Williamson <alex@shazbot.org>
+Cc: Tushar Dave <tdave@nvidia.com>, qemu-devel@nongnu.org, jgg@nvidia.com, 
+ skolothumtho@nvidia.com, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, devel@edk2.groups.io
+Subject: Re: [RFC PATCH v2 0/5] hw/pci, hw/arm/virt: fixed PCI BAR placement
+Message-ID: <apV1FXabgOVdAqQu@sirius.home.kraxel.org>
+References: <20260827004024.598351-1-tdave@nvidia.com>
+ <ao_fX3cYersq6TRd@sirius.home.kraxel.org>
+ <20260827074733.340aeb0c@shazbot.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.118 (deferred)
-Received-SPF: pass client-ip=115.124.30.118;
- envelope-from=cp0613@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260827074733.340aeb0c@shazbot.org>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,96 +86,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On RISC-V QEMU virt platform with CXL enabled, the probe ordering
-of acpi_pci_root (ACPI0016) and cxl_acpi (ACPI0017) is not
-guaranteed. If cxl_acpi probes before acpi_pci_root has attached
-the CXL host bridges, the CXL port topology will be incomplete
-because to_cxl_host_bridge() silently skips devices whose PCI root
-is not yet ready.
+On Thu, Aug 27, 2026 at 07:47:33AM -0600, Alex Williamson wrote:
+> On Thu, 27 Aug 2026 09:18:50 +0200
+> Gerd Hoffmann <kraxel@redhat.com> wrote:
+> 
+> > I'd strongly recommend to do the same for the fixed bars:  Add a pci
+> > capability to pass that information.  All the logic you have today to
+> > link the information in the fw_cfg file to the correct pci device is
+> > simply not needed any more then.
+> 
+> Placement of a VMM defined capability into a vfio-pci device is not
+> such a trivial problem as it is for emulated devices.  Space may not be
+> readily available and the capability may mask non-architected registers.
+> 
+> Does this suggestion relate to fixing the gap between mapping fw_cfg
+> entries by vendor/device IDs or is there something fundamentally
+> undesirable about using fw_cfg here?
 
-Add a _DEP object to the ACPI0017 device in the DSDT, declaring
-its dependency on the ACPI0016 CXL host bridge devices. This tells
-the OS to defer ACPI0017 enumeration until all ACPI0016 devices
-have been attached by acpi_pci_root.
+Well, fw_cfg is the fallback option if we don't have any better way.
+Attaching the information directly to the device by placing it in a
+pci capability is at very minimum worth exploring.  If this is not
+working for vfio devices, ok, we have to accept that I guess.
 
-This pairs with kernel commit 3a59c3b772e5 ("ACPI: PCI: Clear _DEP
-dependencies after PCI root bridge attach"), which calls
-acpi_dev_clear_dependencies() in acpi_pci_root_add().
+And, yes, the logic to match entries in the fw_cfg file with the correct
+device using vendor and device id looks somewhat fragile to me too.
 
-Note on kernel compatibility: this is a "new QEMU feature requires a
-sufficiently new kernel" situation.  Kernels that process _DEP but
-lack the acpi_dev_clear_dependencies() call will leave the CXLM device
-deferred, so CXL memory is unusable there; kernels old enough to ignore
-_DEP entirely behave exactly as before this change.  In neither case is
-existing (non-CXL) PCIe affected.
+Existing code in qemu+firmware (for example bootorder) uses the location
+in the physical device tree to identify devices, like this:
 
-The resulting DSDT fragment (iasl -d output) for a single CXL host
-bridge at bus 0x0C looks like:
+/pci@i0cf8/pci-bridge@3/*@0/*@0/*@0,0
+ ^^^^^^^^^                             pcie root bus
+           ^^^^^^^^^^^^                pcie root port @ slot 3
+                        ^^^            virtio-scsi-pci @ slot 0
+                            ^^^        scsi controller bus #0
+                                ^^^^^  scsi device target 0, lun 0
 
-  Device (CXLM)
-  {
-      Name (_HID, "ACPI0017")
-      Name (_DEP, Package (0x01)
-      {
-          \_SB.PC0C
-      })
-      Method (_STA, 0, NotSerialized)
-      {
-          Return (0x0B)
-      }
-      ...
-  }
+> > > * fixed-bar=on on a PCIe root port marks its subordinate hierarchy for
+> > >   fixed BAR placement. Every device with memory BARs in that hierarchy
+> > >   must provide a complete pci-bars= configuration.  
+> > 
+> > Why is this needed?
+> 
+> AIUI, the problem space is greatly expanded if we mix user provided
+> fixed-bars with firmware assigned BARs and it's possible that there is
+> no solution that meets the requirements.  This option both simplifies
+> the problem space and allows the resource windows to be audited to
+> generate user actionable errors in QEMU.
 
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
----
- hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+I can see that allowing fixed and non-fixed bars mix is much harder to
+handle.  Do we need to ask the user to manually set that though?  I'd
+prefer pci devices propagating automatically to the parent bus that they
+have fixed bars and additional constrains apply.
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 3188cdc5bf..56292f04a7 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -521,6 +521,38 @@ static void build_dsdt(GArray *table_data,
-     if (s->cxl_devices_state.is_enabled) {
-         Aml *cxl_dev = aml_device("CXLM");
-         aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
-+
-+        /*
-+         * Declare a _DEP on every ACPI0016 CXL host bridge so the OS
-+         * defers ACPI0017 enumeration until acpi_pci_root has attached
-+         * the CXL host bridges. Without this, cxl_acpi may probe before
-+         * to_cxl_host_bridge() can resolve the PCI root and the CXL
-+         * port topology comes up empty.
-+         */
-+        if (s->pci_bus) {
-+            PCIBus *bus;
-+            uint32_t num_cxl_hbs = 0;
-+
-+            QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
-+                if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
-+                    num_cxl_hbs++;
-+                }
-+            }
-+
-+            if (num_cxl_hbs > 0) {
-+                Aml *dep_pkg = aml_package(num_cxl_hbs);
-+
-+                QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
-+                    if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
-+                        aml_append(dep_pkg,
-+                                   aml_name("\\_SB.PC%.02X",
-+                                            pci_bus_num(bus)));
-+                    }
-+                }
-+                aml_append(cxl_dev, aml_name_decl("_DEP", dep_pkg));
-+            }
-+        }
-+
-         Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
-         aml_append(method, aml_return(aml_int(0x0B)));
-         aml_append(cxl_dev, method);
--- 
-2.50.1
+Also: if the main use case for this is to map vfio devices with guest
+physical address == host physical address, is there a need to specify
+this manually at all?  Shouldn't we have a 'vfio-pci-fixed' device which
+handles this automatically?
+
+> > > * pci-bars=barN@<addr>[,barM@<addr>]... on a PCI endpoint specifies the
+> > >   required address for each memory BAR. All memory BARs on the device
+> > >   must have an explicitly assigned address.  
+> > 
+> > fixed-bar-<nr>=<addr> ?
+> 
+> Could be a reasonable alternative.
+
+Parsing (and quoting) property strings with commas in the middle is a
+PITA, also when using numerical properties you can use the 'size'
+property type which accepts things like '16G'.
+
+take care,
+  Gerd
 
 
