@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA1AC624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7398EC61DFD
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18Yn-0001kG-6n; Mon, 31 Aug 2026 16:24:53 -0400
+	id 1x18ZY-0004mj-IZ; Mon, 31 Aug 2026 16:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Yl-0001Ti-Kh
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZU-0004QO-Fp
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Yj-0008Sn-HG
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:24:51 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18ZR-0000VN-Dc
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207888;
+ s=mimecast20190719; t=1788207932;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y8pqXrIvr/yRTQ3rsO16r+lqlJjBRU1uvUFq6p7chi8=;
- b=hgNIxOFxZraSOsYVZ5+Eh2/BNjdZ+ZDoAZFLt5ulex+K1LENRxjE6MIcR/IH2SooqTSUah
- tkYvQGTPNPGJPlsnOV571bqdjP9+lhu+EH3SV8B4AMnGjfZ+++xtcRn9+N3tuhQOtJEFoK
- qbzr2vvw4O9BLcEpt4m7GW9zX0pijiA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=U/qXQ7y8j8vRIuhHXNBGEntkR65K80MZ6kjFW8kUyKM=;
+ b=M/EB5kqLSDHI8U5do8FncgQHsCBI9jubyWLmYTtbOdFuxb5r1SXMuGv0y/V6Ryo9OgKBmB
+ rbWz8gjCt7MpW2U4HEVaOC2vPWnxx6Kj2y04bQTiIbX6V/Y197P99q4dh2RVO2HfiZ8/ZV
+ OwKKcgDRxC6aiTurA8IaPssi6D/UQ2s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-VgiO1ekmMsm3UUxhDdvEcg-1; Mon,
- 31 Aug 2026 16:24:47 -0400
-X-MC-Unique: VgiO1ekmMsm3UUxhDdvEcg-1
-X-Mimecast-MFC-AGG-ID: VgiO1ekmMsm3UUxhDdvEcg_1788207884
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-XNahUdQTN_etkX5G4gySqQ-1; Mon,
+ 31 Aug 2026 16:25:28 -0400
+X-MC-Unique: XNahUdQTN_etkX5G4gySqQ-1
+X-Mimecast-MFC-AGG-ID: XNahUdQTN_etkX5G4gySqQ_1788207925
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E1A61843AD9; Mon, 31 Aug 2026 20:24:44 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AAB018E6789; Mon, 31 Aug 2026 20:25:25 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D9041800577; Mon, 31 Aug 2026 20:24:36 +0000 (UTC)
+ id 6064018005AC; Mon, 31 Aug 2026 20:25:18 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,23 +71,24 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 32/43] qapi: convert trivial intro sections for misc.json
-Date: Mon, 31 Aug 2026 16:19:34 -0400
-Message-ID: <20260831201945.287730-33-jsnow@redhat.com>
+Subject: [PATCH v4 38/43] qapi: convert trivial intro sections for net.json
+Date: Mon, 31 Aug 2026 16:19:40 -0400
+Message-ID: <20260831201945.287730-39-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,234 +106,301 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/misc.json | 74 ++++++++++++++++++--------------------------------
- 1 file changed, 27 insertions(+), 47 deletions(-)
+ qapi/net.json | 92 ++++++++++++++++++---------------------------------
+ 1 file changed, 33 insertions(+), 59 deletions(-)
 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 22b7afed9f6..b3c2a1421f3 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -44,8 +44,7 @@
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c5..4ea4bd1bc72 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -12,8 +12,7 @@
  
  ##
- # @NameInfo:
+ # @set_link:
 -#
--# Guest name information.
-+#     Guest name information.
+-# Sets the link status of a virtual network adapter.
++#     Sets the link status of a virtual network adapter.
  #
- # @name: The name of the guest
+ # @name: the device name of the virtual network adapter
  #
-@@ -55,8 +54,7 @@
+@@ -60,8 +59,7 @@
  
  ##
- # @query-name:
+ # @netdev_del:
 -#
--# Return the name information of a guest.
-+#     Return the name information of a guest.
+-# Remove a network backend.
++#     Remove a network backend.
  #
- # Since: 0.14
+ # @id: the name of the network backend to remove
  #
-@@ -69,8 +67,7 @@
+@@ -80,8 +78,7 @@
  
  ##
- # @IOThreadInfo:
+ # @NetLegacyNicOptions:
 -#
--# Information about an iothread
-+#     Information about an iothread
+-# Create a new Network Interface Card.
++#     Create a new Network Interface Card.
  #
- # @id: the identifier of the iothread
+ # @netdev: id of -netdev to connect to
  #
-@@ -137,8 +134,7 @@
+@@ -140,8 +137,7 @@
  
  ##
- # @stop:
+ # @NetdevPasstOptions:
 -#
--# Stop guest VM execution.
-+#     Stop guest VM execution.
+-# Unprivileged user-mode network connectivity using passt
++#     Unprivileged user-mode network connectivity using passt
  #
- # Since: 0.14
- #
-@@ -159,8 +155,7 @@
+ # @path: Filename of the passt program to run (by default 'passt', and
+ #     use PATH)
+@@ -301,9 +297,8 @@
  
  ##
- # @cont:
+ # @NetdevUserOptions:
 -#
--# Resume guest VM execution.
-+#     Resume guest VM execution.
+-# Use the user mode network stack which requires no administrator
+-# privilege to run.
++#     Use the user mode network stack which requires no administrator
++#     privilege to run.
  #
- # Since: 0.14
+ # @hostname: client hostname reported by the builtin DHCP server
  #
-@@ -208,8 +203,7 @@
+@@ -389,8 +384,7 @@
  
  ##
- # @human-monitor-command:
+ # @NetdevTapOptions:
 -#
--# Execute a command on the human monitor and return the output.
-+#     Execute a command on the human monitor and return the output.
+-# Used to configure a host TAP network interface backend.
++#     Used to configure a host TAP network interface backend.
  #
- # @command-line: the command to execute in the human monitor
+ # @ifname: interface name
  #
-@@ -251,8 +245,7 @@
+@@ -447,9 +441,8 @@
  
  ##
- # @getfd:
+ # @NetdevSocketOptions:
 -#
--# Receive a file descriptor via SCM rights and assign it a name
-+#     Receive a file descriptor via SCM rights and assign it a name
+-# Socket netdevs are used to establish a network connection to another
+-# QEMU virtual machine via a TCP socket.
++#     Socket netdevs are used to establish a network connection to
++#     another QEMU virtual machine via a TCP socket.
  #
- # @fdname: file descriptor name
+ # @fd: file descriptor of an already opened socket
  #
-@@ -273,11 +266,10 @@
+@@ -476,8 +469,7 @@
  
  ##
- # @get-win32-socket:
+ # @NetdevL2TPv3Options:
 -#
--# Add a socket that was duplicated to QEMU process with
--# WSADuplicateSocketW() via WSASocket() & WSAPROTOCOL_INFOW structure
--# and assign it a name (the SOCKET is associated with a CRT file
--# descriptor)
-+#     Add a socket that was duplicated to QEMU process with
-+#     WSADuplicateSocketW() via WSASocket() & WSAPROTOCOL_INFOW
-+#     structure and assign it a name (the SOCKET is associated with a
-+#     CRT file descriptor)
+-# Configure an Ethernet over L2TPv3 tunnel.
++#     Configure an Ethernet over L2TPv3 tunnel.
  #
- # @info: the WSAPROTOCOL_INFOW structure (encoded in base64)
+ # @src: source address
  #
-@@ -301,8 +293,7 @@
+@@ -531,8 +523,7 @@
  
  ##
- # @closefd:
+ # @NetdevVdeOptions:
 -#
--# Close a file descriptor previously passed via SCM rights
-+#     Close a file descriptor previously passed via SCM rights
+-# Connect to a vde switch running on the host.
++#     Connect to a vde switch running on the host.
  #
- # @fdname: file descriptor name
+ # @sock: socket path
  #
-@@ -317,8 +308,7 @@
+@@ -553,8 +544,7 @@
  
  ##
- # @AddfdInfo:
+ # @NetdevBridgeOptions:
 -#
--# Information about a file descriptor that was added to an fd set.
-+#     Information about a file descriptor that was added to an fd set.
+-# Connect a host TAP network interface to a host bridge device.
++#     Connect a host TAP network interface to a host bridge device.
  #
- # @fdset-id: The ID of the fd set that @fd was added to.
+ # @br: bridge name
  #
-@@ -331,8 +321,8 @@
+@@ -569,8 +559,7 @@
  
  ##
- # @add-fd:
+ # @NetdevHubPortOptions:
 -#
--# Add a file descriptor, that was passed via SCM rights, to an fd set.
-+#     Add a file descriptor, that was passed via SCM rights, to an fd
-+#     set.
+-# Connect two or more net clients through a software hub.
++#     Connect two or more net clients through a software hub.
  #
- # @fdset-id: The ID of the fd set to add the file descriptor to.
+ # @hubid: hub identifier number
  #
-@@ -361,8 +351,7 @@
+@@ -586,8 +575,8 @@
  
  ##
- # @remove-fd:
+ # @NetdevNetmapOptions:
 -#
--# Remove a file descriptor from an fd set.
-+#     Remove a file descriptor from an fd set.
+-# Connect a client to a netmap-enabled NIC or to a VALE switch port
++#     Connect a client to a netmap-enabled NIC or to a VALE switch
++#     port
  #
- # @fdset-id: The ID of the fd set that the file descriptor belongs to.
- #
-@@ -387,8 +376,7 @@
+ # @ifname: Either the name of an existing network interface supported
+ #     by netmap, or the name of a VALE port (created on the fly).  A
+@@ -607,8 +596,7 @@
  
  ##
- # @FdsetFdInfo:
+ # @AFXDPMode:
 -#
--# Information about a file descriptor that belongs to an fd set.
-+#     Information about a file descriptor that belongs to an fd set.
+-# Attach mode for a default XDP program
++#     Attach mode for a default XDP program
  #
- # @fd: The file descriptor value.
+ # @skb: generic mode, no driver support necessary
  #
-@@ -401,8 +389,7 @@
+@@ -623,8 +611,7 @@
  
  ##
- # @FdsetInfo:
+ # @NetdevAFXDPOptions:
 -#
--# Information about an fd set.
-+#     Information about an fd set.
+-# AF_XDP network backend
++#     AF_XDP network backend
  #
- # @fdset-id: The ID of the fd set.
+ # @ifname: The name of an existing network interface.
  #
-@@ -415,8 +402,7 @@
+@@ -675,8 +662,7 @@
  
  ##
- # @query-fdsets:
+ # @NetdevVhostUserOptions:
 -#
--# Return information describing all fd sets.
-+#     Return information describing all fd sets.
+-# Vhost-user network backend
++#     Vhost-user network backend
  #
- # Since: 1.2
+ # @chardev: name of a unix socket chardev
  #
-@@ -457,8 +443,7 @@
+@@ -836,8 +822,7 @@
  
  ##
- # @CommandLineParameterType:
+ # @NetdevStreamOptions:
 -#
--# Possible types for an option parameter.
-+#     Possible types for an option parameter.
+-# Configuration info for stream socket netdev
++#     Configuration info for stream socket netdev
  #
- # @string: accepts a character string
- #
-@@ -476,8 +461,7 @@
+ # @addr: socket address to listen on (server=true) or connect to
+ #     (server=false)
+@@ -861,8 +846,7 @@
  
  ##
- # @CommandLineParameterInfo:
+ # @NetdevDgramOptions:
 -#
--# Details about a single parameter of a command line option.
-+#     Details about a single parameter of a command line option.
+-# Configuration info for datagram socket netdev.
++#     Configuration info for datagram socket netdev.
  #
- # @name: parameter name
+ # @remote: remote address
  #
-@@ -497,9 +481,8 @@
+@@ -898,8 +882,7 @@
  
  ##
- # @CommandLineOptionInfo:
+ # @NetClientDriver:
 -#
--# Details about a command line option, including its list of parameter
--# details
-+#     Details about a command line option, including its list of
-+#     parameter details
+-# Available netdev drivers.
++#     Available netdev drivers.
  #
- # @option: option name
+ # @l2tpv3: since 2.1
  #
-@@ -512,8 +495,7 @@
+@@ -933,8 +916,7 @@
  
  ##
- # @query-command-line-options:
+ # @Netdev:
 -#
--# Query command line option schema.
-+#     Query command line option schema.
+-# Captures the configuration of a network device.
++#     Captures the configuration of a network device.
  #
- # @option: option name
+ # @id: identifier for monitor commands.
  #
-@@ -552,8 +534,7 @@
+@@ -972,8 +954,7 @@
  
  ##
- # @RTC_CHANGE:
+ # @RxState:
 -#
--# Emitted when the guest changes the RTC time.
-+#     Emitted when the guest changes the RTC time.
+-# Packets receiving state
++#     Packets receiving state
  #
- # @offset: offset in seconds between base RTC clock (as specified by
- #     -rtc base), and new RTC clock value
-@@ -577,9 +558,8 @@
+ # @normal: filter assigned packets according to the mac-table
+ #
+@@ -987,8 +968,7 @@
  
  ##
- # @VFU_CLIENT_HANGUP:
+ # @RxFilterInfo:
 -#
--# Emitted when the client of a TYPE_VFIO_USER_SERVER closes the
--# communication channel
-+#     Emitted when the client of a TYPE_VFIO_USER_SERVER closes the
-+#     communication channel
+-# Rx-filter information for a NIC.
++#     Rx-filter information for a NIC.
  #
- # @vfu-id: ID of the TYPE_VFIO_USER_SERVER object.  It is the last
- #     component of @vfu-qom-path referenced below
+ # @name: net client name
+ #
+@@ -1033,8 +1013,8 @@
+ 
+ ##
+ # @query-rx-filter:
+-#
+-# Return rx-filter information for all NICs (or for the given NIC).
++#     Return rx-filter information for all NICs (or for the given
++#     NIC).
+ #
+ # @name: net client name
+ #
+@@ -1082,9 +1062,8 @@
+ 
+ ##
+ # @NIC_RX_FILTER_CHANGED:
+-#
+-# Emitted once until the `query-rx-filter` command is executed, the
+-# first event will always be emitted
++#     Emitted once until the `query-rx-filter` command is executed,
++#     the first event will always be emitted
+ #
+ # @name: net client name
+ #
+@@ -1104,8 +1083,7 @@
+ 
+ ##
+ # @AnnounceParameters:
+-#
+-# Parameters for self-announce timers
++#     Parameters for self-announce timers
+ #
+ # @initial: Initial delay (in ms) before sending the first GARP/RARP
+ #     announcement
+@@ -1178,8 +1156,7 @@
+ 
+ ##
+ # @NETDEV_STREAM_CONNECTED:
+-#
+-# Emitted when the netdev stream backend is connected
++#     Emitted when the netdev stream backend is connected
+ #
+ # @netdev-id: QEMU netdev id that is connected
+ #
+@@ -1208,8 +1185,7 @@
+ 
+ ##
+ # @NETDEV_STREAM_DISCONNECTED:
+-#
+-# Emitted when the netdev stream backend is disconnected
++#     Emitted when the netdev stream backend is disconnected
+ #
+ # @netdev-id: QEMU netdev id that is disconnected
+ #
+@@ -1226,8 +1202,7 @@
+ 
+ ##
+ # @NETDEV_VHOST_USER_CONNECTED:
+-#
+-# Emitted when the vhost-user chardev is connected
++#     Emitted when the vhost-user chardev is connected
+ #
+ # @netdev-id: QEMU netdev id that is connected
+ #
+@@ -1246,8 +1221,7 @@
+ 
+ ##
+ # @NETDEV_VHOST_USER_DISCONNECTED:
+-#
+-# Emitted when the vhost-user chardev is disconnected
++#     Emitted when the vhost-user chardev is disconnected
+ #
+ # @netdev-id: QEMU netdev id that is disconnected
+ #
 -- 
 2.55.0
 
