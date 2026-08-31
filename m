@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F05C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A1F6C624C6
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 13:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x12R8-0004DZ-Nc; Mon, 31 Aug 2026 09:52:34 -0400
+	id 1x12RS-0004Rl-3S; Mon, 31 Aug 2026 09:52:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12R7-0004D6-N2
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:33 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12RN-0004NN-Rc
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12R5-0003yE-Sn
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:33 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x12RM-00041c-EV
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 09:52:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788184351;
+ s=mimecast20190719; t=1788184367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mARaIROY7KV7DEbzkF9LPUd5zvGcOmMBrV5r51m4f3k=;
- b=C6YWcAWugI9rckkpXL2MoWSP5Tb2FIik4sFo1z5bpTuwvW4rXqXWy9QQqMGe7z6ymhL6Gj
- XrfHjPjiALXHZF8+hi7ul0qUzCCc0mWw6wd4J4OUbf3tSpueKWsRKngnB/bbPYJv0SMaF1
- v51vJHq8hD9dNyEF56yTgELqgODcLtA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tBPynONSXt50qWGPPxB8QrsPyQCuzGu7AJuh/pD4AQk=;
+ b=MDHRgOQuTV0ssV+15v7m8u/UH52NpZcTef9/FGi4dDWXEjP5iawOuz7YMN0dTJa4PNOKgp
+ g49R6rWuKPzNuosOsPIvRqD/yDMt6fbFi0GL12Vd6pVDvG8AMoLSJJQLURK92O0wKxL1zx
+ kRuZfzvUckdD/citxB3ApSMUXLSXIOs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-lUGHsFX6OEyk_kw5ibttxA-1; Mon, 31 Aug 2026 09:52:29 -0400
-X-MC-Unique: lUGHsFX6OEyk_kw5ibttxA-1
-X-Mimecast-MFC-AGG-ID: lUGHsFX6OEyk_kw5ibttxA_1788184349
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49b0d7a07acso34422845e9.3
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:29 -0700 (PDT)
+ us-mta-388-xxkbcGi2OMWMMcFI_KDCXg-1; Mon, 31 Aug 2026 09:52:46 -0400
+X-MC-Unique: xxkbcGi2OMWMMcFI_KDCXg-1
+X-Mimecast-MFC-AGG-ID: xxkbcGi2OMWMMcFI_KDCXg_1788184365
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49b0d7a07acso34426565e9.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 06:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788184348; x=1788789148; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788184365; x=1788789165; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=mARaIROY7KV7DEbzkF9LPUd5zvGcOmMBrV5r51m4f3k=;
- b=oCCo8lFvO3PVf9zoN824Yzew470/IA1MFCii3MTXQmZH+Y7LEQ+mxGesf859+Sol2V
- dXo+ONy+aXtoGtnYmwEGC/P+pPV6MgV61il0x3iEMBWWYwV+y+ri4eBTMdnFPYTdt4fC
- UtvnXVgFCfHJAJhv43VB7pxrGtqxXnAOJAgASLtnW2s6HMBqzOfiiJR2jh7rXsIP0xW3
- 5z5omHMFBqV0eWd60CWZHQJ4xW/ZIufUIlbFzn+v+G0H7MtLjwYKUF4J/LS+4JK/qnJv
- Vu6FK7Gh0eOUnx7dayvWH5IK1h18hruhswBLvcs435PJymC7SJC89A4QTiUCn3cjmo2U
- oVzg==
+ bh=tBPynONSXt50qWGPPxB8QrsPyQCuzGu7AJuh/pD4AQk=;
+ b=mVKjLlDzAVnj6wanjKVpAw6zmllUZFKU/0rCjMkUrLGMv3JZS0Iefgrhhe5UUFuICa
+ lOlUvdJc8H4c4HTsdQqMeNOSEwlJKtT12WWf57f7CmJWgupA4P9+mGjDAYEKNZgGFptr
+ 7L/LOXTjCz3CjHc+BOl2GMAgU7ddtmk31UqUPD4NYEavnUVCpcyOVSIYKauo+uwKMJXd
+ F+0TPUWktgltI9oq8BXWXNhafWAsa43vnlNokS4bRmqVjGFJrhLI7BEx49ui75ZsGo4q
+ YmGWtCpwogfCTxbOFH1+Ri7/Gr78hcmzD1D+KNzCJrpnz9Etl//djz/VLXnNwk6ucAoy
+ mRWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788184348; x=1788789148;
+ d=1e100.net; s=20251104; t=1788184365; x=1788789165;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mARaIROY7KV7DEbzkF9LPUd5zvGcOmMBrV5r51m4f3k=;
- b=CHvBPCaAu1XLfZLPJS/hJ4ludW67ZJcdnPPEtt2jwddHoS+yOW6PXkMS/90zRrPeqM
- 6h7iGDTCC/rbC4anhH02hRhruK2aLxPVQRg6+NqhQXrmjvoClTD8DJvM9Xw6sxGiQ3ry
- jFh8W1cX3eHdbbSrK5P0Hnl9z0B6fpJMZ32V5pPI5sU+gKRTYWuDg7J0l2PuBteSstXD
- X0cFlgG6dfsl7xSTdAJo097t7SzB5hTo9gQXgxaqxzDEsl0Q8eUj0SYNJF6Dn13ZOXdK
- hk/nccBHVkttseVtyqvAP9K3KRCIT3hzeWC2PLTIp+THDgKxH+6+IYL7DWQ8Cb5xvy0A
- F0yg==
-X-Gm-Message-State: AFuF++lHqpEh1x/rh2aHc+6apQF1hMNWBGZqJExVkNOrYSlg8JCQaCtf
- WQX2rZn7Pgb08GA8kyQYEM/6HrQV5Vh8vHPyoyDjZmd3dvYO4FSnSVnVxeSA0IiSG7uVRjO98j4
- IytecL5Z8z6SH27fCVyiS3g5W6aTHb668oA5ReG52R4qhk2lCGOBr+CjL
-X-Gm-Gg: AR+sD11iqXSL3LOqcgRS0sW2eeXwo9hX4KcFtAkSE1GxwR7ehcl1w1sPhhpqehsalL4
- qxDnXVWDDu/y1DRb/BZrnMNgz5Ma1z5fNm2GR6PrgTb6FgLrdR9hNbdU90COJDTINBjpzP3Nn7w
- DMJE67BZfBNtIiFO9u31uWPEo/zmUrA3rbRIa9FEGxcYndpg1coI1JktUC8L5cB6Vpnd2umEQzE
- dwHEiYoo9JH1o99EmjHv1xPHwVJPYyxCsh9ENC/cPuL02xzcYK7o3Hdc/lvAvg9UuLnJ5YjifsR
- sJ/6OBxho94H5x/ycV6S5kS+F3TtOxDNO0emXBF+JNeZ+mOi1lX7FBo4QbE6cetxC76xwbpCHsE
- dLJogK2nNPqY7mSB8nFJGRjjSR9PFPyaHwrpVYgELY8HgJLpmqwvFY4NcMFM=
-X-Received: by 2002:a05:600c:1d1d:b0:49b:d45:703e with SMTP id
- 5b1f17b1804b1-49b91c2dfecmr398052745e9.8.1788184348546; 
- Mon, 31 Aug 2026 06:52:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d1d:b0:49b:d45:703e with SMTP id
- 5b1f17b1804b1-49b91c2dfecmr398051545e9.8.1788184347971; 
- Mon, 31 Aug 2026 06:52:27 -0700 (PDT)
+ bh=tBPynONSXt50qWGPPxB8QrsPyQCuzGu7AJuh/pD4AQk=;
+ b=E75w3E5sBBcpvsXpPfexHQBtV1UgS/eaHhEnly/6++7lAAKYz1DDr/Icl5sGk/mm//
+ EuBNTwQ96ACp/JV4/ckG5WoDd1QQfQjXdUk7hS3b4bJZkwSJ2V8V+otcbNkYcYKfX5+l
+ 4CqYnb2pvRY9mGvk2XFyUuvR4unoysjo/rEyzMgcWGlE9mg3ItYd6AitjGUWVstGtvjB
+ Gwq2kbRbzHCscW/B09yXPV2tGXg/j7ldLTLrCCZew9cdFzaPek2h96ZmbJ/B4DfKNVhh
+ J5fnPWnWlW6enbNM+laJVfgX80bSru4zfhofEgPglHR458XE6A4MakZ8vfQFfKRbvB93
+ 63Jw==
+X-Gm-Message-State: AFuF++kTIu22NhCfnDZFyinwoI4hCf6zP6QdqqXzpk8XgG2u4FDtY2Po
+ ts8GJp5jn1cvzatdtxbTtJW5J4gBAO7nu8IZSCO+AcpOaJUAw7cN3Llbx5PINFS+YkxlDUWanQ8
+ uIzLZhbeFzQ2qtab1mLMuQTaSgZDmtfHqXVa2tkXAm0f+t2EJlR0wd0G6
+X-Gm-Gg: AR+sD11qdR/CjaXyve/yneo9wZpm4nNRZAcHgu9Vtb+GSbduEfmdsrPaXsajRcWHL4p
+ Lc15+vrQbyVoNLKvfPeHDJBi8BD1eyVkninv4g/h+nTfcy+GiyOBd+mkX/b1dDMonr35eD2GntW
+ ox/beUrxjJlOb4/6C4p4a1NLfkTf80hxg1km2RPukelCzgDME5TgqO1kecKsYFiEmL3/MDjpgtT
+ cyqlM12R9U/Qyr1Rs+u8hl2433I2ck3/kzkMtcyWyWZEmvvuJxTItdEElSBCwT2y9hpfKersqjz
+ oqRP/lrsxeES3g5n7txKQZ1WbyOb80D0cz3rYJjbs5jhKxZnxN+jFuWrTPfkb9y0SgH/xuA5+nl
+ dygL/OjKa07hSVl0kD+eciIgudioEiZq/XnHSjQnwB6zvNsFJMmAaHU/Hh6Y=
+X-Received: by 2002:a05:600c:1d8c:b0:49b:916f:1471 with SMTP id
+ 5b1f17b1804b1-49b91c1df21mr447700625e9.3.1788184364899; 
+ Mon, 31 Aug 2026 06:52:44 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d8c:b0:49b:916f:1471 with SMTP id
+ 5b1f17b1804b1-49b91c1df21mr447699535e9.3.1788184364465; 
+ Mon, 31 Aug 2026 06:52:44 -0700 (PDT)
 Received: from localhost
  (p200300cfd72080187472d8ceb75e67b1.dip0.t-ipconnect.de.
  [2003:cf:d720:8018:7472:d8ce:b75e:67b1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b49cc61cfsm410444125e9.6.2026.08.31.06.52.27
+ 5b1f17b1804b1-49b95018ee8sm288163055e9.15.2026.08.31.06.52.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 06:52:27 -0700 (PDT)
+ Mon, 31 Aug 2026 06:52:42 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -91,9 +91,9 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 4/9] block-backend: Public blk_get_attached_dev_path()
-Date: Mon, 31 Aug 2026 15:52:00 +0200
-Message-ID: <20260831135206.126184-5-hreitz@redhat.com>
+Subject: [PATCH 8/9] block/accounting: Move latency_ns override down
+Date: Mon, 31 Aug 2026 15:52:04 +0200
+Message-ID: <20260831135206.126184-9-hreitz@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831135206.126184-1-hreitz@redhat.com>
 References: <20260831135206.126184-1-hreitz@redhat.com>
@@ -124,52 +124,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make blk_get_attached_dev_path() public so we can use it in the I/O
-operation delay QMP event to identify the affected guest block device.
+I am not quite sure why `latency_ns` is overridden by a fixed value in
+qtest mode because personally, I find it much better if I can
+individually change requests' latency by modifying the qtest clock.
+
+But I'm not going to change existing behavior for the histogram and
+such, so I will just move this override after the latency has been
+evaluated regarding a potential BLOCK_IO_DELAY event.
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- include/system/block-backend-io.h | 9 +++++++++
- block/block-backend.c             | 6 +-----
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ block/accounting.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index fd84723d9d0..63b2dd2e24f 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -41,6 +41,15 @@ bool blk_iostatus_is_enabled(const BlockBackend *blk);
-  */
- char *blk_get_attached_dev_id(BlockBackend *blk);
+diff --git a/block/accounting.c b/block/accounting.c
+index debf1924455..223becd2e04 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -271,10 +271,6 @@ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
+     int64_t time_ns = qemu_clock_get_ns(clock_type);
+     int64_t latency_ns = time_ns - cookie->start_time_ns;
  
-+/*
-+ * Return the QOM path of the block device attached to the
-+ * BlockBackend.
-+ *
-+ * The caller is responsible for releasing the value returned
-+ * with g_free() after use.
-+ */
-+char *blk_get_attached_dev_path(BlockBackend *blk);
+-    if (qtest_enabled()) {
+-        latency_ns = qtest_latency_ns;
+-    }
+-
+     assert(cookie->type < BLOCK_MAX_IOTYPE);
+ 
+     if (cookie->type == BLOCK_ACCT_NONE) {
+@@ -292,6 +288,10 @@ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
+                                        cookie->bytes);
+     }
+ 
++    if (qtest_enabled()) {
++        latency_ns = qtest_latency_ns;
++    }
 +
- BlockAIOCB *blk_aio_pwrite_zeroes(BlockBackend *blk, int64_t offset,
-                                   int64_t bytes, BdrvRequestFlags flags,
-                                   BlockCompletionFunc *cb, void *opaque);
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 37ba7e9fc40..164bda846f4 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1053,11 +1053,7 @@ char *blk_get_attached_dev_id(BlockBackend *blk)
-     return blk_get_attached_dev_id_or_path(blk, true);
- }
- 
--/*
-- * The caller is responsible for releasing the value returned
-- * with g_free() after use.
-- */
--static char *blk_get_attached_dev_path(BlockBackend *blk)
-+char *blk_get_attached_dev_path(BlockBackend *blk)
- {
-     return blk_get_attached_dev_id_or_path(blk, false);
- }
+     WITH_QEMU_LOCK_GUARD(&stats->lock) {
+         if (failed) {
+             stats->failed_ops[cookie->type]++;
 -- 
 2.55.0
 
