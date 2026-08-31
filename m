@@ -4,106 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9411C624A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 15:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF9FC624A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 15:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x13pJ-0001va-V9; Mon, 31 Aug 2026 11:21:37 -0400
+	id 1x14DJ-000644-O6; Mon, 31 Aug 2026 11:46:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x13pI-0001vS-Ra
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 11:21:36 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x13pF-0004T7-D1
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 11:21:36 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c1c52d920b8so449677866b.2
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 08:21:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788189691; cv=none;
- d=google.com; s=arc-20260327;
- b=Vww/78W5TucxHYWHRd5460fhjPOHe5VPP0QutiKHTT+U5M6Hh1oRlISj15xp+0X+24
- 1/RobtVqwhLdCTvYcjt36iT7QS2ZgwQFEF4gKq9fnjhEvnB+Wur74tiMxCI7Br/Xg67T
- pAeXzLHiTV9jqXsEZPNShOM2J7wwIoYhhV5A/H9r+1iPT7rVL0vQH3pVpgrXifMqprhR
- bSRAGxyEHM1f9HsOGGcW5K/mbSeHVkUGkvYMDzvE6IMPcJ6TZsvEqV5PVq20qvvFbGy1
- QmpgP6WwpszthOE0qJFa/zAJxbfbsLtWRmXX1godKWsTmGl25yE9yAV7Wv/vJChA1okC
- yrrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=RiWDeMWZjDTB9sF3reKgzO1rXFPnwfrqjlBIhK/sM2w=;
- fh=dLrxXhNFLYOe0h//qW0yf246b4AxzSerEDHU468ijm8=;
- b=PL97oveDqUViVw6tHkYVyalFKJ1plW/BoJpi2Bisx2ZMdV5coOhELdrX3lRje/BxQE
- cf4WhDn2DloK0DIqW2kISzi6wD8MKQETkbEZgby/G1YjPNLBpVS/tRfRe+8E0D8kKJR5
- IBun8rkX5V3cgtfim4uUGxoJ+7W8gbAnN+D1F6QMKyIMWr1XkkHH6WwnOAjtm1TULaFO
- S9LJrHx3y5DGGpHgpAeUBuvcAzw1ipM4hRkXshgyvmwEltv4A+mHAGUGRxJOauOvvqfV
- cKbefGEQ0xI23GD/0rQHYqnhNoByS2N/vh5umsl6S7Aeqwjp+amE4oaxmwWKRRg++2B7
- qXww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x14DI-00063R-0g
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 11:46:24 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x14DG-0003m2-36
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 11:46:23 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67VETPpu3895543
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 15:46:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ qrenrI91tqtemJhMS4GYDVifb1QaGI4VKsg810+hiL8=; b=KFpnQNUFjQ8L4VFG
+ Bz+HIByjuhAOxL7kqgEjU5a8mc7VTyl3pMtn89PudVEy5j0W+hxHmeHMSzU77tkL
+ FL4oEQ6qTH0KFAIduZE95DIPrjjscM2Gg9PDozH+xS3ZWAerK8aTkWaqm8epgJ3b
+ 4MO/T0zUJT2sHGmH9BKFmmikS2y43YuCnJHkCrkivouCck3SRxUNSQRavFLfrV2Y
+ H2EhzymidZPSlV1Juju/jS/AFc6HyNuuRWhLkROrorUYTG0ClD06Vq9xzmdiRWpr
+ 7v5+II75BrEykxewJyH8XOJbTGaCxdANpa04KsMdqLFoZjmLCuMMm4KPpBJbwPh3
+ LQ7ykw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gd6rb9jnw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 15:46:19 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92ec3146553so875128885a.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 08:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788189691; x=1788794491; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RiWDeMWZjDTB9sF3reKgzO1rXFPnwfrqjlBIhK/sM2w=;
- b=RBx//PUg/WtL/OvYix4z1RKPQo+h8lZUfuq35vzWw5cDalBbsjKqfDiYf2bXCFD4fM
- jci/8Yn08n34ZH9wPxnhqsHHi/G46TgIrJVopzbICPYGYNjfp0rKGeZXzXj4FH6/yGd5
- P2Y4EVHqUk3euD0VAsYginQ3TkD3JeY/dAkKeSl0MJHAwncjnSL/b+2LWr0xmDyNsjIF
- YG18GEWggobSOCoFSOnTFbODFN5NhJVBPPHOE5mwjPcBYrSKsaw2ao4Y5HW+T80Ds/F5
- JUAp61KOu90VacJm6DjNBbWilJE0wDZ0oxsA7W0JlFujX6y5ydx1TRGGQobevMH4osDa
- xoxw==
+ d=oss.qualcomm.com; s=google; t=1788191178; x=1788795978; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qrenrI91tqtemJhMS4GYDVifb1QaGI4VKsg810+hiL8=;
+ b=Sa/g03HlBe5VNI5WVj0zlmcIxoe+VdQguoBaw4dNk+XyLC/nbHk2sI0qZzlrRGBNVI
+ C2ZMIY8lqgyFJffQVzWeOcKkhYN19/yGumNghtRsaDkAHlLz+pExjavW3ZOue4aV9lm0
+ KbFquQ6Gh7Rmb7VyuOk0rQnw7/f10y5WyN6ElxNF0j4gyDInyf1h625B9WhGXNwae4Wn
+ ImdOMMUopZ2wtZixZiAd100iwwJIuOLmoFdvUB96QfmIxg15f7OrCMOM+91YZM0ykZT/
+ Cr56z34AQjiwqrCtFiJfhLUy9D4N281C6HAqug7rnnNvReP95CzxXm84m36FXlnyuFmL
+ 2PjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788189691; x=1788794491;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RiWDeMWZjDTB9sF3reKgzO1rXFPnwfrqjlBIhK/sM2w=;
- b=klobWXd++/lPBQDMBFTBdsWNDOyhlJPsHXCnb8lwho0O8fzDIQY/Ts0pPbj/TGJdub
- OD3RO1oKH8JcWguGXmD+gUOnyhi7wv7VYzk1vXnRAIo20vBi82Mya6p3ELziMK7HjR6c
- XyCF8QAXG+iLkj7iyLItWoxC3CDKK3qbLvNW4JvN4aHoETOgpUp8E8F77ho6+Z5RSTpq
- d8hSfkCGtjVyuXYzOrnnGHsHM0mvR2d+rdMc/+GtC5XskPr2pkUGtOm4DUysxBmM2vrY
- O3oWLKqd1Zg+ZsUmxG6+RDIA6lbFdMRQXJmY0IcZ69z+uJ90/Rk8RMyTiWmvDdoGtILy
- TMLw==
-X-Gm-Message-State: AFuF++kJhw9fOHW/yjmdZm7Zw2WJzlLQkJ31SgkXqs6FCIO0E3uqOLH4
- 3T7UpN5Tn2kNGoMVdjvA1m85QsjMdpHiyzupf5MJmG693elbgAvCLkMNpng1eyqShvcpcZvrxpG
- oJDY7/3yz+69K/Y/c9LsqgcJb+UX9XN8=
-X-Gm-Gg: AR+sD11Br5djBUIOe7EyKxA7+whcYy9qMKHg4EwDR7WkE+wT3d4jZptsBEktsfRWxpD
- LLF3il9CTyqOyqM6f+GEeEXAWv/nk6CaajVKWAd1e2VEhZ65aOql79KuRANaj4e1WP/KHbhIhV5
- WR4ySEY5AIWO1bHlJVTUyRukjJVMYVw8K+j3HD3vSfPxBRze6a3sPDUgHdXhr6x1XLUsbTB4QfJ
- bNCV/EN3qYsm0JHqj2UQDkHxugr+gW+tgASHwH/uAbAV2GCBVzUVVQD9bnLkP0pr0Ica0Lq5aUq
- PZzz8iP1TOXcdt4RVQFiLSRmAoFuQ64ReNrmc6goSzaW
-X-Received: by 2002:a17:906:f58d:b0:c20:f913:9337 with SMTP id
- a640c23a62f3a-c25571cc627mr1759825866b.20.1788189690359; Mon, 31 Aug 2026
- 08:21:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788191178; x=1788795978;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=qrenrI91tqtemJhMS4GYDVifb1QaGI4VKsg810+hiL8=;
+ b=nPaMPzOfyx97F+kEsqMphuxYUysOZiHE4jxgfGSLfzJxz9Mlkz8pzvU1pK1+yArsyl
+ VeZ/ZDmznxU5j6DVuwMuEN3030aE2pA9QnTN6jcM3HbjvXtSs1QxrkkVeluqJQXaaEsZ
+ VxnIRpWPRDEWv337PI46WbA1ryhfDHCoxtQYMP0fT9cFBzFvT9NrrAqmlHfgGvgg6LoF
+ B9ipy8Du8JfDwvhZH0JaYa9MDnHDtJ+eYQiYxxMLsZY/HmBRo7ksTvJIfMeW3Ow6zpW4
+ Ac7lHzDoEAxU35SaQrxlWxSOIHuUDDmq8EYGBWo+v3L2BHY8yeG+zuOIrFHNbD2NWlq0
+ KoFQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrW0My2FRegMZJ1W3KepiAjiHDQkofEiiUe5DzLWSHxFvf1zqyis566Xgt9FoqUxPBcw9/T1I0ug7My@nongnu.org
+X-Gm-Message-State: AFuF++lydn+lfOQMbWlf+O87jy61QTMc75evE4R+C6IBQkbAOp5JzoZp
+ mPeHgpzkMlh07A9hC6UF18IVlcDmkpVsvhYkL/8I9SKVcjlUYbu0i5ycAEiEBDdI0uD+N1OzRQY
+ 6g6KCkHqxJn92NgVu4FLwZjZWDXd5Nx6xox4uLnTGKIaGo6+wIewPOY2Bmw==
+X-Gm-Gg: AR+sD136iM9wFZs+cwJ3hzU6/hpxYQi5ACeLh011L0LFO2uAzi26ljtPzJc7o8eLajk
+ eSX6KQzeJV2ixH40217AnMr4PmVOdLvfkEeUDGbFLpPoHsMQJhEStEuhi6bZrRBsaS+dJYsPeGG
+ sSd+NVlerBZrnCGJn5wrCovJIAF0WTHuAJTo0P2H4xVTlMpRl6xVXz2yJrCnl3TMfahg7I2X2Jj
+ 2Et1jHy4zh+EZR42kEyD+Jfsi20yER/GLsugFbnHDswQVZ8Gt3ZnIi/L/Zjbl2DAptsKl3M6PG0
+ 9xMh1G2pTnJxvPiH6eLTZBjDCqFwduj9f842m1SnPf8GlyLPJURIBvZQh5nEh6no6l0XKyHFQvY
+ M2hV39zQ2ewZ4yYlEp9VtLU2FurOCtqtnDA==
+X-Received: by 2002:a05:620a:458a:b0:939:3696:6509 with SMTP id
+ af79cd13be357-93936967122mr1020498885a.0.1788191177958; 
+ Mon, 31 Aug 2026 08:46:17 -0700 (PDT)
+X-Received: by 2002:a05:620a:458a:b0:939:3696:6509 with SMTP id
+ af79cd13be357-93936967122mr1020467485a.0.1788191175580; 
+ Mon, 31 Aug 2026 08:46:15 -0700 (PDT)
+Received: from [192.168.69.226] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b926874fdsm295281255e9.4.2026.08.31.08.46.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Aug 2026 08:46:14 -0700 (PDT)
+Message-ID: <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
+Date: Mon, 31 Aug 2026 17:46:12 +0200
 MIME-Version: 1.0
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
- <20260828225901.367438-36-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260828225901.367438-36-pierrick.bouvier@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Mon, 31 Aug 2026 23:21:17 +0800
-X-Gm-Features: AcwNN1WrYaQEqQotVwRVy7F8rAzx7RD6xkkNOrLM2q4ZJ6es5lEy4bngGvN_aFM
-Message-ID: <CAE2XoE9JF6eY08oRJ4qxQTn=u4bQ61vtWN-1Eyi5DpbsChdczw@mail.gmail.com>
-Subject: Re: [PATCH 35/47] meson: build single binary for arm+aarch64 targets
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, anjo@rev.ng, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- philmd@oss.qualcomm.com, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: KVM/QEMU community call tomorrow - agenda items?
+Content-Language: en-US
+To: BillXiang <xiangwencheng@lanxincomputing.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anton Johansson <anjo@rev.ng>, Markus Armbruster <armbru@redhat.com>,
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, cw@f00f.org,
+ dbarboza@qti.qualcomm.com, Demi Marie Obenour <demiobenour@gmail.com>,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>,
+ eblot@rivosinc.com, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
+ helge.deller@googlemail.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
+ jacob.oursland@gmail.com, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
+ Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ matthieu@minio.io, Max Chou <max.chou@sifive.com>,
+ Mark Burton <mburton@qti.qualcomm.com>, "Ho, Nelson"
+ <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>,
+ Roberto Campesato <rbc@meta.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/mixed; boundary="000000000000492afc065a595b91"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ utsingh@redhat.com, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
+ peterx@redhat.com
+References: <877bl6eoqv.fsf@draig.linaro.org>
+ <413b9ba2-20cf-4af6-9998-be46da277c84@lanxincomputing.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <413b9ba2-20cf-4af6-9998-be46da277c84@lanxincomputing.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: mbSYawh1LJvqy78UnRW8A_Q4Eppu4o6N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEzNSBTYWx0ZWRfX5ErXuXQjBUDP
+ h0wqZ8d0dXu5pieNkzAEEyyueL9Po7B7vXzJv63KAdF4liSTEeETB4sbIEB4/xTTZoDe8OQU6tl
+ G66D6AQ7Gqv17gIT+ztEVpwB3x8/0CtbQmto17MHv0ZZm5dX3UtYj7OrGHoCXpmV1t8QSFxBghf
+ BsBD74f4C7QzyZii2UxzaksoSpCamyrojVuNA/d85K45kF8vYfdlKoOlL5WBzia/U5M/Yxr5TLc
+ DE8zRQsU7gJBGIERsi9W+ggze+DZ/+/airqe1t+3lExNZnUcqQZ8BeKTIO9hHTdDt15QOJiTjnj
+ Ad+tVle43yWCGWkU/O3uaTS+w9tXP8r7RgQbrdS4eD929lajdJKQsOnXWwiV38LC324AAFPHx+F
+ fIzLIcqGVSPgaftO/keeAnWpBZoXiWCp6RZTyjMftycmm8x1SmzNxKdOaizQZ1V59EW5OANy4CD
+ 0XVOG7vl4/5y9J38ETw==
+X-Proofpoint-GUID: mbSYawh1LJvqy78UnRW8A_Q4Eppu4o6N
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEzNSBTYWx0ZWRfX06q6FiBN/cHn
+ b3RGbs3nvUMjbOr7ESWQaAolfaAtxM66TEuxKIPz4RF5hIFeCJy2iuXQwHgNxDqqfw8icoVDn9D
+ yEX0XpALT79wE3L82S0sOrTnwjM0Dss=
+X-Authority-Analysis: v=2.4 cv=d/fFDxjE c=1 sm=1 tr=0 ts=6a95a1cb cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=RJW7u8JZm8_-9JpRUZEA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-31_05,2026-08-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310135
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,236 +185,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000492afc065a595b91
-Content-Type: multipart/alternative; boundary="000000000000492afa065a595b8f"
+On 31/8/26 13:49, BillXiang wrote:
 
---000000000000492afa065a595b8f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> How about discussing the patch[1]:
+> "virtio: Add aligned ld/st accessors for vring".
+> 
+> As pointed out in the patch, this has been a long-standing issue. It is
+> now necessary to introduce atomic accessors for fields that require
+> atomicity, such as the avail_idx field in virtio. This support is
+> especially crucial for architectures like RISC-V, which do not natively
+> support misaligned memory accesses.
+> 
+> I'm particularly eager to receive more suggestions for it.
 
-On Sat, Aug 29, 2026 at 7:03=E2=80=AFAM Pierrick Bouvier <
-pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> Build with: ninja -C build qemu-system
-> This is not built by default.
->
-> All available *-softmmu targets are aggregated, ./configure
-> --target-list can be used to restrict which targets are included.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  meson.build | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
->
-> diff --git a/meson.build b/meson.build
-> index 8023da4a147..9cf441382d3 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4250,6 +4250,16 @@ if host_os =3D=3D 'darwin'
->  endif
->
->  traceable =3D []
-> +single_binary_libs =3D []
-> +single_binary_deps =3D []
-> +single_binary_crates =3D []
-> +single_binary_available =3D false
-> +
-> +single_binary_supported_targets =3D [
-> +  'aarch64-softmmu',
-> +  'arm-softmmu',
-> +]
-> +
->  emulators =3D {}
->  foreach target : target_dirs
->    config_target =3D config_target_mak[target]
-> @@ -4402,6 +4412,13 @@ foreach target : target_dirs
->                   build_by_default: false)
->
->    if target.endswith('-softmmu')
-> +    if target in single_binary_supported_targets
-> +      single_binary_libs +=3D lib
-> +      single_binary_deps +=3D arch_deps
-> +      single_binary_deps +=3D target_stubs
-> +      single_binary_crates +=3D main_rs
-> +      single_binary_available =3D true
-> +    endif
->      execs =3D [{
->        'name': 'qemu-system-' + target_name,
->        'win_subsystem': 'console',
-> @@ -4483,6 +4500,33 @@ foreach target : target_dirs
->    endforeach
->  endforeach
->
-> +single_binary_objects =3D []
-> +foreach lib: single_binary_libs
-> +  single_binary_objects +=3D lib.extract_all_objects(recursive: true)
-> +endforeach
-> +
-> +single_binary_link_args =3D emulator_link_args
-> +single_binary_link_args +=3D enable_modules ? ['@block.syms',
-'@qemu.syms'] : []
-> +
-> +if single_binary_available
-> +  executable('qemu-system',
-> +             sources: [single_binary_crates, files('system/main.c')],
-> +             dependencies: single_binary_deps,
-> +             objects: single_binary_objects,
-> +             link_depends: [block_syms, qemu_syms],
-> +             link_args: single_binary_link_args,
-> +             build_by_default: false)
-
-A. better assign executable to qemu_system. so it can be tested.
-Maybe a simple test is better.
-B. single_binary_available should be a meson option, maybe
-single_binary_enabled, and disabled by default maybe... don't know which is
-better.
-as it's still experiential
-
-The patch to squash is attached.
-
-
-
-> +else
-> +  error_str =3D f'''qemu-system only support targets:
-> +@single_binary_supported_targets@
-> +
-> +use ./configure --target-list=3D to choose at least one of them'''
-> +  t =3D custom_target(command: ['sh', '-c', 'echo "' + error_str + '" &&
-exit 1'],
-> +                    output: 'none',
-> +                    build_by_default: false)
-> +  alias_target('qemu-system', t)
-> +endif
-> +
->  # Other build targets
->
->  if get_option('plugins')
-> --
-> 2.43.0
->
->
-
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---000000000000492afa065a595b8f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Sat, Aug 29, 2026 at 7:03=E2=80=AFAM Pierrick B=
-ouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.bo=
-uvier@oss.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; Build with: ninja -C =
-build qemu-system<br>&gt; This is not built by default.<br>&gt;<br>&gt; All=
- available *-softmmu targets are aggregated, ./configure<br>&gt; --target-l=
-ist can be used to restrict which targets are included.<br>&gt;<br>&gt; Sig=
-ned-off-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qua=
-lcomm.com">pierrick.bouvier@oss.qualcomm.com</a>&gt;<br>&gt; ---<br>&gt; =
-=C2=A0meson.build | 44 ++++++++++++++++++++++++++++++++++++++++++++<br>&gt;=
- =C2=A01 file changed, 44 insertions(+)<br>&gt;<br>&gt; diff --git a/meson.=
-build b/meson.build<br>&gt; index 8023da4a147..9cf441382d3 100644<br>&gt; -=
--- a/meson.build<br>&gt; +++ b/meson.build<br>&gt; @@ -4250,6 +4250,16 @@ i=
-f host_os =3D=3D &#39;darwin&#39;<br>&gt; =C2=A0endif<br>&gt;<br>&gt; =C2=
-=A0traceable =3D []<br>&gt; +single_binary_libs =3D []<br>&gt; +single_bina=
-ry_deps =3D []<br>&gt; +single_binary_crates =3D []<br>&gt; +single_binary_=
-available =3D false<br>&gt; +<br>&gt; +single_binary_supported_targets =3D =
-[<br>&gt; + =C2=A0&#39;aarch64-softmmu&#39;,<br>&gt; + =C2=A0&#39;arm-softm=
-mu&#39;,<br>&gt; +]<br>&gt; +<br>&gt; =C2=A0emulators =3D {}<br>&gt; =C2=A0=
-foreach target : target_dirs<br>&gt; =C2=A0 =C2=A0config_target =3D config_=
-target_mak[target]<br>&gt; @@ -4402,6 +4412,13 @@ foreach target : target_d=
-irs<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-build_by_default: false)<br>&gt;<br>&gt; =C2=A0 =C2=A0if target.endswith(&#=
-39;-softmmu&#39;)<br>&gt; + =C2=A0 =C2=A0if target in single_binary_support=
-ed_targets<br>&gt; + =C2=A0 =C2=A0 =C2=A0single_binary_libs +=3D lib<br>&gt=
-; + =C2=A0 =C2=A0 =C2=A0single_binary_deps +=3D arch_deps<br>&gt; + =C2=A0 =
-=C2=A0 =C2=A0single_binary_deps +=3D target_stubs<br>&gt; + =C2=A0 =C2=A0 =
-=C2=A0single_binary_crates +=3D main_rs<br>&gt; + =C2=A0 =C2=A0 =C2=A0singl=
-e_binary_available =3D true<br>&gt; + =C2=A0 =C2=A0endif<br>&gt; =C2=A0 =C2=
-=A0 =C2=A0execs =3D [{<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;name&#39;: &=
-#39;qemu-system-&#39; + target_name,<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0&#3=
-9;win_subsystem&#39;: &#39;console&#39;,<br>&gt; @@ -4483,6 +4500,33 @@ for=
-each target : target_dirs<br>&gt; =C2=A0 =C2=A0endforeach<br>&gt; =C2=A0end=
-foreach<br>&gt;<br>&gt; +single_binary_objects =3D []<br>&gt; +foreach lib:=
- single_binary_libs<br>&gt; + =C2=A0single_binary_objects +=3D lib.extract_=
-all_objects(recursive: true)<br>&gt; +endforeach<br>&gt; +<br>&gt; +single_=
-binary_link_args =3D emulator_link_args<br>&gt; +single_binary_link_args +=
-=3D enable_modules ? [&#39;@block.syms&#39;, &#39;@qemu.syms&#39;] : []<br>=
-&gt; +<br>&gt; +if single_binary_available<br>&gt; + =C2=A0executable(&#39;=
-qemu-system&#39;,<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sourc=
-es: [single_binary_crates, files(&#39;system/main.c&#39;)],<br>&gt; + =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 dependencies: single_binary_deps,<br=
->&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 objects: single_binary_ob=
-jects,<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 link_depends: [b=
-lock_syms, qemu_syms],<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-link_args: single_binary_link_args,<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 build_by_default: false)<br><br>A. better assign executable t=
-o qemu_system. so it can be tested.<br>Maybe a simple test is better.<br>B.=
- single_binary_available should be a meson option, maybe single_binary_enab=
-led, and disabled by default maybe... don&#39;t know which is better.<br>as=
- it&#39;s still experiential<br><br>The patch to squash is attached.<div><b=
-r></div><div><br><br>&gt; +else<br>&gt; + =C2=A0error_str =3D f&#39;&#39;&#=
-39;qemu-system only support targets:<br>&gt; +@single_binary_supported_targ=
-ets@<br>&gt; +<br>&gt; +use ./configure --target-list=3D to choose at least=
- one of them&#39;&#39;&#39;<br>&gt; + =C2=A0t =3D custom_target(command: [&=
-#39;sh&#39;, &#39;-c&#39;, &#39;echo &quot;&#39; + error_str + &#39;&quot; =
-&amp;&amp; exit 1&#39;],<br>&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0output: &#39;none&#39;,<br>&gt; + =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0build_by_default=
-: false)<br>&gt; + =C2=A0alias_target(&#39;qemu-system&#39;, t)<br>&gt; +en=
-dif<br>&gt; +<br>&gt; =C2=A0# Other build targets<br>&gt;<br>&gt; =C2=A0if =
-get_option(&#39;plugins&#39;)<br>&gt; --<br>&gt; 2.43.0<br>&gt;<br>&gt;<br>=
-<br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=
-=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<=
-br>Yonggang Luo</div></div>
-
---000000000000492afa065a595b8f--
-
---000000000000492afc065a595b91
-Content-Type: text/plain; charset="US-ASCII"; 
-	name="0001-meson-keep-qemu-system-executable-for-tests.patch"
-Content-Disposition: attachment; 
-	filename="0001-meson-keep-qemu-system-executable-for-tests.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mthdyipd0>
-X-Attachment-Id: f_mthdyipd0
-
-RnJvbSBiZWQ0ODM5OTE1NWIyMmVmMTQzZjdmYTBlZjcxMTEzODEwZjU5MmQ2IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBZb25nZ2FuZyBMdW8gPGx1b3lvbmdnYW5nQGdtYWlsLmNvbT4K
-RGF0ZTogTW9uLCAzMSBBdWcgMjAyNiAyMzoxNzowMCArMDgwMApTdWJqZWN0OiBbUEFUQ0hdIG1l
-c29uOiBrZWVwIHFlbXUtc3lzdGVtIGV4ZWN1dGFibGUgZm9yIHRlc3RzCgotIEFzc2lnbiB0aGUg
-Y29tYmluZWQgcWVtdS1zeXN0ZW0gdGFyZ2V0IHRvIHFlbXVfc3lzdGVtIHNvIHF0ZXN0cyBjYW4K
-ICBkZXBlbmQgb24gaXQuCi0gQWxpZ24gZXhlY3V0YWJsZSgpIGt3YXJncyB3aXRoIHRoZSBhc3Np
-Z25tZW50LgotLS0KIG1lc29uLmJ1aWxkIHwgMTQgKysrKysrKy0tLS0tLS0KIDEgZmlsZSBjaGFu
-Z2VkLCA3IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvbWVzb24u
-YnVpbGQgYi9tZXNvbi5idWlsZAppbmRleCA5YjlmNzI3MTE5Li5kMjk1YzkxZjJjIDEwMDY0NAot
-LS0gYS9tZXNvbi5idWlsZAorKysgYi9tZXNvbi5idWlsZApAQCAtNDUxMCwxMyArNDUxMCwxMyBA
-QCBzaW5nbGVfYmluYXJ5X2xpbmtfYXJncyA9IGVtdWxhdG9yX2xpbmtfYXJncwogc2luZ2xlX2Jp
-bmFyeV9saW5rX2FyZ3MgKz0gZW5hYmxlX21vZHVsZXMgPyBbJ0BibG9jay5zeW1zJywgJ0BxZW11
-LnN5bXMnXSA6IFtdCiAKIGlmIHNpbmdsZV9iaW5hcnlfYXZhaWxhYmxlCi0gIGV4ZWN1dGFibGUo
-J3FlbXUtc3lzdGVtJywKLSAgICAgICAgICAgICBzb3VyY2VzOiBbc2luZ2xlX2JpbmFyeV9jcmF0
-ZXMsIGZpbGVzKCdzeXN0ZW0vbWFpbi5jJyldLAotICAgICAgICAgICAgIGRlcGVuZGVuY2llczog
-c2luZ2xlX2JpbmFyeV9kZXBzLAotICAgICAgICAgICAgIG9iamVjdHM6IHNpbmdsZV9iaW5hcnlf
-b2JqZWN0cywKLSAgICAgICAgICAgICBsaW5rX2RlcGVuZHM6IFtibG9ja19zeW1zLCBxZW11X3N5
-bXNdLAotICAgICAgICAgICAgIGxpbmtfYXJnczogc2luZ2xlX2JpbmFyeV9saW5rX2FyZ3MsCi0g
-ICAgICAgICAgICAgYnVpbGRfYnlfZGVmYXVsdDogZmFsc2UpCisgIHFlbXVfc3lzdGVtID0gZXhl
-Y3V0YWJsZSgncWVtdS1zeXN0ZW0nLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgc291cmNl
-czogW3NpbmdsZV9iaW5hcnlfY3JhdGVzLCBmaWxlcygnc3lzdGVtL21haW4uYycpXSwKKyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIGRlcGVuZGVuY2llczogc2luZ2xlX2JpbmFyeV9kZXBzLAor
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgb2JqZWN0czogc2luZ2xlX2JpbmFyeV9vYmplY3Rz
-LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgbGlua19kZXBlbmRzOiBbYmxvY2tfc3ltcywg
-cWVtdV9zeW1zXSwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgIGxpbmtfYXJnczogc2luZ2xl
-X2JpbmFyeV9saW5rX2FyZ3MsCisgICAgICAgICAgICAgICAgICAgICAgICAgICBidWlsZF9ieV9k
-ZWZhdWx0OiBmYWxzZSkKIGVsc2UKICAgZXJyb3Jfc3RyID0gZicnJ3FlbXUtc3lzdGVtIG9ubHkg
-c3VwcG9ydCB0YXJnZXRzOgogQHNpbmdsZV9iaW5hcnlfc3VwcG9ydGVkX3RhcmdldHNACi0tIAoy
-LjUyLjAud2luZG93cy4xCgo=
---000000000000492afc065a595b91--
+This is a very technical topic, not sure if the community call will
+be a better place than the mailing list, in particular if no virtio /
+atomic expert developers appears. We'll see :)
 
