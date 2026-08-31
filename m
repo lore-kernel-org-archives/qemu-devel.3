@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EA1C61DFD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2658AC624C6
 	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 18:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x16nk-0001fE-Po; Mon, 31 Aug 2026 14:32:12 -0400
+	id 1x16nd-0001cr-WF; Mon, 31 Aug 2026 14:32:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x16nc-0001co-2u; Mon, 31 Aug 2026 14:32:05 -0400
+ id 1x16nZ-0001bu-AS; Mon, 31 Aug 2026 14:32:01 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x16na-0001wY-7F; Mon, 31 Aug 2026 14:32:03 -0400
+ id 1x16nX-0001vU-D9; Mon, 31 Aug 2026 14:32:01 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67VIVgHN1235283; Mon, 31 Aug 2026 18:32:00 GMT
+ 67VIVulN1235525; Mon, 31 Aug 2026 18:31:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=HEHqM8dCGEsXOGRJf
- 9BpeteJyeLkyWlz1mj++G40d3o=; b=Xx3ccHr9IDe5Owlf2zjBWGSvWxR1YDMLa
- haXqeN3VYFz3jpY0G5lCoZ2s7YgRxPy+tRRX2yJYfJYiA+KKNrGOCX1+x6hYM3GT
- TE1bO5yEIyzmKCmZRYTBC2QJEX2eDpEhJog3XTZppOC0WNHiaozloSTrryfngbQ1
- 331vvPTmmn1McRkQrNesp4qm+GF1PcjHywTrXFwbJYmqJMMBWm1NnNgaCMegTXHu
- BaJG7wBvL8S8GPXWK60cKbFmPwxc6J/5X2YY9TfBBXdlIt7Q5Cd4YVpndciNRWH3
- fBHjozCGmCA0exy471nDQyNXJVRvY6ZB5YwVwi4h+jD/z4xB0ejAg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3r34d3-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=frCaMr2YGuQAhq9fnBCTBllM2PjUTrtZPkuiWOW90
+ SE=; b=EDpIUI+jYAo3uGIdVOZX6wELfhZcWBWigQik4HN6zcjnxxCbW0osBNXvE
+ /rNbICaFVLA3LzEZkf4AY7ALG9AGdPBHN9F+P2V9AfKoTD/hZRyjcKgd+tB7MPQS
+ fanNZWENptX6XprZei2GIpcgWMZrh9JtMCQ6q4dkSB1h9iekSDLp/nBh4vZQhJH8
+ SBHE9MUhZiGWqmtFJo7arRvTVlmaoFINS2GG8ffkwLdZhnJ4ICgwIXlxEfj97OaS
+ 3y/RClm6yfOtW+s69DbwVC39/LLcyB3XbVASdeJHefGwpeP48vma+My6bZsRWUxA
+ M6bt3g3Q3AkJbqF58So3b/6JKBcbw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3r34cn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 18:32:00 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VIBI1s013146;
- Mon, 31 Aug 2026 18:31:59 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcbyg79cb-1
+ Mon, 31 Aug 2026 18:31:55 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67VIU8RV018883;
+ Mon, 31 Aug 2026 18:31:54 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gc9rq7m9y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 31 Aug 2026 18:31:59 +0000 (GMT)
+ Mon, 31 Aug 2026 18:31:54 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67VIVwWN17105428
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67VIVroN24576610
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 31 Aug 2026 18:31:58 GMT
+ Mon, 31 Aug 2026 18:31:53 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F15D15805F;
- Mon, 31 Aug 2026 18:31:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 205B55805F;
+ Mon, 31 Aug 2026 18:31:53 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F30CA5805C;
- Mon, 31 Aug 2026 18:31:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1A2945805A;
+ Mon, 31 Aug 2026 18:31:52 +0000 (GMT)
 Received: from IBM-D32RQW3.ibm.com (unknown [9.61.241.20])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 31 Aug 2026 18:31:56 +0000 (GMT)
+ Mon, 31 Aug 2026 18:31:51 +0000 (GMT)
 From: Farhan Ali <alifm@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  cohuck@redhat.com, alex@shazbot.org, clg@redhat.com, armbru@redhat.com
-Subject: [PATCH v4 4/4] s390x/pci: Reset a device in error state
-Date: Mon, 31 Aug 2026 11:31:51 -0700
-Message-ID: <20260831183151.12626-5-alifm@linux.ibm.com>
+Subject: [PATCH v4 0/4] Error recovery for zPCI passthrough devices
+Date: Mon, 31 Aug 2026 11:31:47 -0700
+Message-ID: <20260831183151.12626-1-alifm@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260831183151.12626-1-alifm@linux.ibm.com>
-References: <20260831183151.12626-1-alifm@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a95c8a0 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a95c89b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=LJhZezRDHHgF91vl2EQA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE2MCBTYWx0ZWRfX9pJ0EjvxbIUX
- /xiPqiPPwRxpdmKMxCGeCd/0tLLNXAVDkHmxuaBngf0rX1mveRNZSMiDYEdwvojIefWrQSBpf/r
- PzxdU4TQisvzQ7pADXYgAGSx1V8unVOIDGjBGmBXvmJhiMvz/AGxu2M4zbyi1+nwJ5skwE+sC3d
- G6YzPIMvpwnXYwLAGzdUlMRN8s6Ftm0rKv208iPpcpns8cKjpPH1SGSPhjkzWMNufzI6XaaV4ji
- MKjNmFz92mESVWMRd6p4JTyI8dDKKHyWxI/xiDW2fKAkBPEZJ7eubTa8dmsBmdIlVNZCVQcr8LR
- Cgi+TVOEP5Fr9aWGQ9mYA03TP454cEYh/ZoCa1HB5Q1rE32L+xSHTZItCUVyOmeH+yitaxFkd2s
- qpECWjbTEeH2iYtZin7TmPfEiUaWuSQRUGsOn7JAkTvtr36Byi8aFk1HmFYI+loB3vcjOH6H2LJ
- XBi7+XYsO4GaJC2zOBg==
-X-Proofpoint-GUID: S5EG3oVIpgupypnlY7P_ZE-423yQ21zB
-X-Proofpoint-ORIG-GUID: S5EG3oVIpgupypnlY7P_ZE-423yQ21zB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE2MCBTYWx0ZWRfXw4+OxgV3zwuI
- u7hnwu81oU2jqvFDmOFD7jDjjlwLy5OVFwxIkB8PH3sP9oczW8tFHjRRvd8Y0ucGOqi86WPVSTP
- a8KTI+ZLT7Minj8pNsbIc5AuIPLNth8=
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=r1p2_3pzAAAA:8 a=VnNF1IyMAAAA:8
+ a=jPNWSg8WF9iJXmU8qocA:9 a=r_pkcD-q9-ctt7trBg_g:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDE2MCBTYWx0ZWRfXwXH7ZJcvo4Pm
+ 7bKW6RY5BS/7S665z8NEDLC6a8O5jk64T+j/8AAZt+qJG/zCdSjuYFFR/LyyKYHEQVrxAOH83Rq
+ u7CTHJR8oV7NZ7Qfq9nP6x+d3mPxTgPQiufPpAJp3OYdRJ8leoyuYvOAX4T83zvr7HGrrMYtgSc
+ inZRYOuIvTxp36PhUwkQTGdsD1ydp6BVw+HOqwKJ7C9ux3iiJ8mdcpWYF7H0bdsXAi9BrvDcVtG
+ ff62lqEeIhpFt4tjjD03yrQB7laJdRrAgsuUqW3za+HdROsEFC01mxl9KBPeyDOg04etSk/XxY0
+ t2GHmWAAtv9+DzkKK7N785tfMl8tPjEcOqg+JxhsyodhzXR6e2KFdQi6YrPPGY4zNHF94H7LFJA
+ 0XvGV6NGOXcadi4MdlIgCzfQLZVtC7jPlA2Sm5F5X3f3gHsrg9rItk3ixKrB3XwxiVN/Bi8gkjL
+ /IUKsltEcFZZHGtvIKg==
+X-Proofpoint-GUID: u6nYi3pJAS0DNkobyOb0Jz8LP_SP0zbv
+X-Proofpoint-ORIG-GUID: u6nYi3pJAS0DNkobyOb0Jz8LP_SP0zbv
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDE2MCBTYWx0ZWRfXwiT27YOofOnA
+ lYmpBECyD26F1cJlnh522Bn/tRnZXdfydt6r9kK/h5T13I3lJ70EXZaO2YjwaiuGT5Wlk53LwOL
+ PGfQ/wmKM9DOqJcsFa4f4F7vg43BKRM=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-31_06,2026-08-31_01,2025-10-01_01
@@ -119,95 +118,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For passthrough devices in error state, for a guest driven reset of the
-device we can attempt a reset to recover the device. A reset of the device
-will trigger a CLP disable/enable cycle on the host to bring the device
-into a recovered state.
+Hi,
 
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
----
- hw/s390x/s390-pci-bus.c          |  7 +++++++
- hw/s390x/s390-pci-vfio-stubs.c   |  4 ++++
- hw/s390x/s390-pci-vfio.c         | 10 ++++++++++
- include/hw/s390x/s390-pci-vfio.h |  1 +
- 4 files changed, 22 insertions(+)
+This patch series introduces support for error recovery for passthrough PCI
+devices on System Z (s390x). This is the user space component for the Linux
+kernel patches [1]. The kernel patches were merged for 7.3 and it had some
+significant changes in VFIO API since the last QEMU series was posted. But the
+design for QEMU component is still the same.
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index b2db7f3df4..283b5b62b0 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1546,6 +1546,8 @@ static void s390_pci_device_reset(DeviceState *dev)
-         return;
-     case ZPCI_FS_STANDBY:
-         break;
-+    case ZPCI_FS_ERROR:
-+        break;
-     default:
-         pbdev->fh &= ~FH_MASK_ENABLE;
-         pbdev->state = ZPCI_FS_DISABLED;
-@@ -1558,6 +1560,11 @@ static void s390_pci_device_reset(DeviceState *dev)
-     } else if (pbdev->summary_ind) {
-         pci_dereg_irqs(pbdev);
-     }
-+
-+    if (pbdev->state == ZPCI_FS_ERROR) {
-+        s390_pci_reset(pbdev);
-+    }
-+
-     if (pbdev->iommu->enabled) {
-         pci_dereg_ioat(pbdev->iommu);
-     }
-diff --git a/hw/s390x/s390-pci-vfio-stubs.c b/hw/s390x/s390-pci-vfio-stubs.c
-index 9fc84ca135..c68c612038 100644
---- a/hw/s390x/s390-pci-vfio-stubs.c
-+++ b/hw/s390x/s390-pci-vfio-stubs.c
-@@ -36,3 +36,7 @@ bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp)
-     error_setg(errp, "VFIO not available, cannot setup error handler");
-     return false;
- }
-+
-+void s390_pci_reset(S390PCIBusDevice *pbdev)
-+{
-+}
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 9a63040e22..64eb28104b 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- 
- #include <sys/ioctl.h>
- #include <linux/vfio.h>
-@@ -172,6 +173,15 @@ static bool s390_pci_err_handler(VFIOPCIDevice *vfio_pci, Error **errp)
-     return success;
- }
- 
-+void s390_pci_reset(S390PCIBusDevice *pbdev)
-+{
-+    VFIOPCIDevice *vfio_pci = VFIO_PCI_DEVICE(pbdev->pdev);
-+    if (ioctl(vfio_pci->vbasedev.fd, VFIO_DEVICE_RESET)) {
-+        error_report("Failed to reset PCI device %s : %s ",
-+                      vfio_pci->vbasedev.name, strerror(errno));
-+    }
-+}
-+
- static void s390_pci_read_base(S390PCIBusDevice *pbdev,
-                                struct vfio_device_info *info)
- {
-diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
-index c7886b63ea..38ccf445ea 100644
---- a/include/hw/s390x/s390-pci-vfio.h
-+++ b/include/hw/s390x/s390-pci-vfio.h
-@@ -21,5 +21,6 @@ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
- bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
- void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
- bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp);
-+void s390_pci_reset(S390PCIBusDevice *pbdev);
- 
- #endif
+For QEMU on eventfd notification for PCI error from vfio-pci driver we call the
+vfio error handler. We can use a per device error handler callback to override
+the default vfio error handler.  For s390x specific error handler, we retrieve
+the architecture specific PCI error information and inject the information into
+the guest. Once the guest receives the error information, the guest drivers will
+drive the error recovery.  Typically recovery involves a device reset which
+translate to CLP disable/enable cycle for the device.
+
+I would appreciate some feedback on this patch series.
+
+Thanks 
+Farhan
+
+[1] https://lore.kernel.org/all/20260818164326.387bb27b@shazbot.org/
+
+ChangeLog
+---------
+v3 https://lore.kernel.org/qemu-devel/20250925174852.1302-1-alifm@linux.ibm.com/
+v3 -> v4
+    - Include linux headers for 7.3-rc1.
+    - Rework VFIO API changes based on the kernel API (patch 3).
+    - Address Markus's comments from v3 (patch 2).
+
+v2 https://lore.kernel.org/qemu-devel/20250825212434.2255-1-alifm@linux.ibm.com/
+v2 -> v3
+    - Update arch_err_handler to err_handler and include Error ** in
+    function definition. (patch 2)
+
+    - Introduce helper function to hide the internal indirection of device_feature()
+    (patch 3)
+
+    - Update function definitions to include Error ** (patch 4)
+    
+
+
+v1 https://lore.kernel.org/qemu-devel/20250813174152.1238-1-alifm@linux.ibm.com/
+v1 -> v2
+   - Use VFIO_DEVICE_FEATURE ioctl to get device error information.
+   (Based on Alex's feedback on kernel series)
+
+Farhan Ali (4):
+  linux-headers: Update Linux header to 7.3-rc1
+  vfio/pci: Add an error handler callback
+  s390x/pci: Add PCI error handling for vfio pci devices
+  s390x/pci: Reset a device in error state
+
+ hw/s390x/s390-pci-bus.c                     |  16 ++
+ hw/s390x/s390-pci-vfio-stubs.c              |  10 +
+ hw/s390x/s390-pci-vfio.c                    | 110 +++++++++++
+ hw/vfio/pci.c                               |  27 ++-
+ hw/vfio/pci.h                               |   1 +
+ include/hw/s390x/s390-pci-bus.h             |   2 +
+ include/hw/s390x/s390-pci-vfio.h            |   2 +
+ include/standard-headers/drm/drm_fourcc.h   | 209 ++++++++++++++++++--
+ include/standard-headers/linux/ethtool.h    |   6 +
+ include/standard-headers/linux/fuse.h       |  63 +++++-
+ include/standard-headers/linux/virtio_ids.h |   1 +
+ linux-headers/asm-arm64/kvm.h               |   1 +
+ linux-headers/asm-riscv/kvm.h               |  13 ++
+ linux-headers/linux/iommufd.h               |  45 ++++-
+ linux-headers/linux/kvm.h                   |   1 +
+ linux-headers/linux/userfaultfd.h           |  54 ++++-
+ linux-headers/linux/vduse.h                 |  28 +++
+ linux-headers/linux/vfio.h                  |  21 ++
+ linux-headers/linux/vfio_zdev.h             |   2 +
+ 19 files changed, 579 insertions(+), 33 deletions(-)
+
 -- 
 2.43.0
 
