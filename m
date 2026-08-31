@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FD0C61DD3
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375FEC61DD3
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 20:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x18a6-0006oQ-IF; Mon, 31 Aug 2026 16:26:14 -0400
+	id 1x18ZE-00032d-J3; Mon, 31 Aug 2026 16:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Zz-0006hC-8I
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:26:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Z2-0002TU-FQ
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Zv-0000f7-3k
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:26:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x18Z0-000075-QH
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 16:25:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788207962;
+ s=mimecast20190719; t=1788207904;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2Qki3202jzB0uNmrJ8G0JeNCMEhWZDtvlbuFVuOEQck=;
- b=icHkrofQwWTNA32Xh+o+NxF3aIVp+UVpCqDsDzw4tir6bqnleIKL42miPvIPMp6SvMKTiV
- 8ODBwCWo9IlwpT8TJUBd5BKAsQ/02ytRjAGSqAPOP7I/xGLNqBk/9SAyK5HGAhpXl7qxQ6
- uZzgqgwHzd1GKNkUYIUsu6QbzTURy4s=
+ bh=ld5g/j6L0lxSwaRZjY3pcA3TM2VpEohq25svIVL3ldM=;
+ b=I4trDYXob9QYT7JF2PB7CfgNhXHBUjZc+NAHLx9l6ysDaViEdJ00KUKOzrhW9pIAzLZnm+
+ QecSf/bG7TOhAevv+7uXC9umS01HkGH40ZSl8rnA9JJgmhyCG03eytk3GjtN/Q0sA6k2n/
+ fYaFLMb+0vlc2XEDwSxbLlycFHMn06E=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-MuUPaqfNOUOTxF0dYeKCsQ-1; Mon,
- 31 Aug 2026 16:25:56 -0400
-X-MC-Unique: MuUPaqfNOUOTxF0dYeKCsQ-1
-X-Mimecast-MFC-AGG-ID: MuUPaqfNOUOTxF0dYeKCsQ_1788207953
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-471-p1RpSxUbM7urPmhdWjBNnQ-1; Mon,
+ 31 Aug 2026 16:25:01 -0400
+X-MC-Unique: p1RpSxUbM7urPmhdWjBNnQ-1
+X-Mimecast-MFC-AGG-ID: p1RpSxUbM7urPmhdWjBNnQ_1788207898
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B299184A09B; Mon, 31 Aug 2026 20:25:53 +0000 (UTC)
+ id 422B9184A090; Mon, 31 Aug 2026 20:24:58 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.63])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6340018005AC; Mon, 31 Aug 2026 20:25:46 +0000 (UTC)
+ id EBF4B1800577; Mon, 31 Aug 2026 20:24:51 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,23 +71,23 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-trivial@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 42/43] qapi: convert trivial intro sections for machine.json
-Date: Mon, 31 Aug 2026 16:19:44 -0400
-Message-ID: <20260831201945.287730-43-jsnow@redhat.com>
+Subject: [PATCH v4 34/43] qapi: convert trivial intro sections for cxl.json
+Date: Mon, 31 Aug 2026 16:19:36 -0400
+Message-ID: <20260831201945.287730-35-jsnow@redhat.com>
 In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com>
 References: <20260831201945.287730-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,635 +105,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/machine.json | 195 ++++++++++++++++------------------------------
- 1 file changed, 68 insertions(+), 127 deletions(-)
+ qapi/cxl.json | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 2d63c1bac3b..8ef12504d65 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -46,9 +46,8 @@
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 81d6198ba03..aef849a4c2a 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -365,8 +365,7 @@
  
  ##
- # @S390CpuState:
+ # @CXLUncorErrorRecord:
 -#
--# An enumeration of cpu states that can be assumed by a virtual S390
--# CPU
-+#     An enumeration of cpu states that can be assumed by a virtual
-+#     S390 CPU
+-# Record of a single error including header log.
++#     Record of a single error including header log.
  #
- # Since: 2.12
- ##
-@@ -57,8 +56,7 @@
+ # @type: Type of error
+ #
+@@ -399,8 +398,7 @@
  
  ##
- # @CpuInfoS390:
+ # @CxlCorErrorType:
 -#
--# Additional information about a virtual S390 CPU
-+#     Additional information about a virtual S390 CPU
+-# Type of CXL correctable error to inject
++#     Type of CXL correctable error to inject
  #
- # @cpu-state: the virtual CPU's state
+ # @cache-data-ecc: Data ECC error on CXL.cache
  #
-@@ -75,8 +73,7 @@
- 
- ##
- # @CpuInfoFast:
--#
--# Information about a virtual CPU
-+#     Information about a virtual CPU
- #
- # @cpu-index: index of the virtual CPU
- #
-@@ -105,8 +102,7 @@
- 
- ##
- # @query-cpus-fast:
--#
--# Return information about all virtual CPUs.
-+#     Return information about all virtual CPUs.
- #
- # Since: 2.12
- #
-@@ -143,9 +139,8 @@
- 
- ##
- # @CompatProperty:
--#
--# Property default values specific to a machine type, for use by
--# scripts/compare-machine-types.
-+#     Property default values specific to a machine type, for use by
-+#     scripts/compare-machine-types.
- #
- # @qom-type: name of the QOM type to which the default applies
- #
-@@ -163,8 +158,7 @@
- 
- ##
- # @MachineInfo:
--#
--# Information describing a machine.
-+#     Information describing a machine.
- #
- # @name: the name of the machine
- #
-@@ -213,8 +207,7 @@
- 
- ##
- # @query-machines:
--#
--# Return a list of supported machines
-+#     Return a list of supported machines
- #
- # @compat-props: if true, also return compatibility properties.
- #     (default: false) (since 9.1)
-@@ -255,8 +248,7 @@
- 
- ##
- # @CurrentMachineParams:
--#
--# Information describing the running machine parameters.
-+#     Information describing the running machine parameters.
- #
- # @wakeup-suspend-support: true if the machine supports wake up from
- #     suspend
-@@ -268,8 +260,7 @@
- 
- ##
- # @query-current-machine:
--#
--# Return information on the current virtual machine.
-+#     Return information on the current virtual machine.
- #
- # Since: 4.0
- ##
-@@ -277,8 +268,8 @@
- 
- ##
- # @QemuTargetInfo:
--#
--# Information on the target configuration built into the QEMU binary.
-+#     Information on the target configuration built into the QEMU
-+#     binary.
- #
- # @arch: the target architecture
- #
-@@ -289,8 +280,7 @@
- 
- ##
- # @query-target:
--#
--# Return information about the target for this QEMU
-+#     Return information about the target for this QEMU
- #
- # Since: 1.2
- ##
-@@ -298,8 +288,7 @@
- 
- ##
- # @UuidInfo:
--#
--# Guest UUID information (Universally Unique Identifier).
-+#     Guest UUID information (Universally Unique Identifier).
- #
- # @UUID: the UUID of the guest
- #
-@@ -312,8 +301,7 @@
- 
- ##
- # @query-uuid:
--#
--# Query the guest UUID information.
-+#     Query the guest UUID information.
- #
- # Since: 0.14
- #
-@@ -326,8 +314,7 @@
- 
- ##
- # @GuidInfo:
--#
--# GUID information.
-+#     GUID information.
- #
- # @guid: the globally unique identifier
- #
-@@ -337,8 +324,7 @@
- 
- ##
- # @query-vm-generation-id:
--#
--# Show Virtual Machine Generation ID
-+#     Show Virtual Machine Generation ID
- #
- # Since: 2.9
- ##
-@@ -346,8 +332,7 @@
- 
- ##
- # @system_reset:
--#
--# Performs a hard reset of a guest.
-+#     Performs a hard reset of a guest.
- #
- # Since: 0.14
- #
-@@ -360,8 +345,7 @@
- 
- ##
- # @system_powerdown:
--#
--# Requests that a guest perform a powerdown operation.
-+#     Requests that a guest perform a powerdown operation.
- #
- # Since: 0.14
- #
-@@ -521,8 +505,7 @@
- 
- ##
- # @NumaDistOptions:
--#
--# Set the distance between 2 NUMA nodes.
-+#     Set the distance between 2 NUMA nodes.
- #
- # @src: source NUMA node.
- #
-@@ -542,8 +525,7 @@
- 
- ##
- # @CXLFixedMemoryWindowOptions:
--#
--# Create a CXL Fixed Memory Window
-+#     Create a CXL Fixed Memory Window
- #
- # @size: Size of the Fixed Memory Window in bytes.  Must be a multiple
- #     of 256MiB.
-@@ -565,8 +547,7 @@
- 
- ##
- # @CXLFMWProperties:
--#
--# List of CXL Fixed Memory Windows.
-+#     List of CXL Fixed Memory Windows.
- #
- # @cxl-fmw: List of `CXLFixedMemoryWindowOptions`
- #
-@@ -578,8 +559,7 @@
- 
- ##
- # @X86CPURegister32:
--#
--# A X86 32-bit register
-+#     A X86 32-bit register
- #
- # Since: 1.5
- ##
-@@ -588,8 +568,7 @@
- 
- ##
- # @X86CPUFeatureWordInfo:
--#
--# Information about a X86 CPU feature word
-+#     Information about a X86 CPU feature word
- #
- # @cpuid-input-eax: Input EAX value for CPUID instruction for that
- #     feature word
-@@ -611,9 +590,8 @@
- 
- ##
- # @DummyForceArrays:
--#
--# Not used by QMP; hack to let us use X86CPUFeatureWordInfoList
--# internally
-+#     Not used by QMP; hack to let us use X86CPUFeatureWordInfoList
-+#     internally
- #
- # Since: 2.5
- ##
-@@ -795,8 +773,7 @@
- 
- ##
- # @memsave:
--#
--# Save a portion of guest memory to a file.
-+#     Save a portion of guest memory to a file.
- #
- # @val: the virtual address of the guest to start from
- #
-@@ -828,8 +805,7 @@
- 
- ##
- # @pmemsave:
--#
--# Save a portion of guest physical memory to a file.
-+#     Save a portion of guest physical memory to a file.
- #
- # @val: the physical address of the guest to start from
- #
-@@ -857,8 +833,7 @@
- 
- ##
- # @Memdev:
--#
--# Information about memory backend
-+#     Information about memory backend
- #
- # @id: backend's ID if backend has 'id' property (since 2.9)
- #
-@@ -898,8 +873,7 @@
- 
- ##
- # @query-memdev:
--#
--# Return information for all memory backends.
-+#     Return information for all memory backends.
- #
- # Since: 2.1
- #
-@@ -1074,9 +1048,9 @@
- 
- ##
- # @set-numa-node:
--#
--# Runtime equivalent of '-numa' CLI option, available at preconfigure
--# stage to configure numa mapping before initializing machine.
-+#     Runtime equivalent of '-numa' CLI option, available at
-+#     preconfigure stage to configure numa mapping before initializing
-+#     machine.
- #
- # Since: 3.0
- ##
-@@ -1087,8 +1061,7 @@
- 
- ##
- # @balloon:
--#
--# Request the balloon driver to change its balloon size.
-+#     Request the balloon driver to change its balloon size.
- #
- # @value: the target logical size of the VM in bytes.  We can deduce
- #     the size of the balloon using this formula:
-@@ -1122,8 +1095,7 @@
- 
- ##
- # @BalloonInfo:
--#
--# Information about the guest balloon device.
-+#     Information about the guest balloon device.
- #
- # @actual: the logical size of the VM in bytes.  Formula used:
- #     logical_vm_size = vm_ram_size - balloon_size
-@@ -1134,8 +1106,7 @@
- 
- ##
- # @query-balloon:
--#
--# Return information about the balloon device.
-+#     Return information about the balloon device.
- #
- # Errors:
- #     - If the balloon driver is enabled but not functional because
-@@ -1179,8 +1150,7 @@
- 
- ##
- # @HvBalloonInfo:
--#
--# hv-balloon guest-provided memory status information.
-+#     hv-balloon guest-provided memory status information.
- #
- # @committed: the amount of memory in use inside the guest plus the
- #     amount of the memory unusable inside the guest (ballooned out,
-@@ -1196,9 +1166,8 @@
- 
- ##
- # @query-hv-balloon-status-report:
--#
--# Return the hv-balloon driver data contained in the last received
--# "STATUS" message from the guest.
-+#     Return the hv-balloon driver data contained in the last received
-+#     "STATUS" message from the guest.
- #
- # Errors:
- #     - If no hv-balloon device is present, guest memory status
-@@ -1239,8 +1208,7 @@
- 
- ##
- # @MemoryInfo:
--#
--# Actual memory information in bytes.
-+#     Actual memory information in bytes.
- #
- # @base-memory: size of "base" memory specified with command line
- #     option -m.
-@@ -1273,8 +1241,7 @@
- 
- ##
- # @PCDIMMDeviceInfo:
--#
--# PCDIMMDevice state information
-+#     PCDIMMDevice state information
- #
- # @id: device's ID
- #
-@@ -1309,8 +1276,7 @@
- 
- ##
- # @VirtioPMEMDeviceInfo:
--#
--# VirtioPMEM state information
-+#     VirtioPMEM state information
- #
- # @id: device's ID
- #
-@@ -1332,8 +1298,7 @@
- 
- ##
- # @VirtioMEMDeviceInfo:
--#
--# VirtioMEMDevice state information
-+#     VirtioMEMDevice state information
- #
- # @id: device's ID
- #
-@@ -1367,8 +1332,7 @@
- 
- ##
- # @SgxEPCDeviceInfo:
--#
--# Sgx EPC state information
-+#     Sgx EPC state information
- #
- # @id: device's ID
- #
-@@ -1393,8 +1357,7 @@
- 
- ##
- # @HvBalloonDeviceInfo:
--#
--# hv-balloon provided memory state information
-+#     hv-balloon provided memory state information
- #
- # @id: device's ID
- #
-@@ -1523,8 +1486,7 @@
- 
- ##
- # @MemoryDeviceInfo:
--#
--# Union containing information about a memory device
-+#     Union containing information about a memory device
- #
- # @type: memory device type
- #
-@@ -1545,8 +1507,7 @@
- 
- ##
- # @SgxEPC:
--#
--# Sgx EPC cmdline information
-+#     Sgx EPC cmdline information
- #
- # @memdev: memory backend linked with device
- #
-@@ -1562,8 +1523,7 @@
- 
- ##
- # @SgxEPCProperties:
--#
--# SGX properties of machine types.
-+#     SGX properties of machine types.
- #
- # @sgx-epc: list of ids of memory-backend-epc objects.
- #
-@@ -1575,8 +1535,7 @@
- 
- ##
- # @query-memory-devices:
--#
--# Lists available memory devices and their state
-+#     Lists available memory devices and their state
- #
- # Since: 2.1
- #
-@@ -1626,8 +1585,7 @@
- 
- ##
- # @BootConfiguration:
--#
--# Schema for virtual machine boot configuration.
-+#     Schema for virtual machine boot configuration.
- #
- # @order: Boot order (a=floppy, c=hard disk, d=CD-ROM, n=network)
- #
-@@ -1711,8 +1669,7 @@
- 
- ##
- # @x-query-irq:
--#
--# Query interrupt statistics
-+#     Query interrupt statistics
- #
- # Features:
- #
-@@ -1728,8 +1685,7 @@
- 
- ##
- # @x-query-jit:
--#
--# Query TCG compiler statistics
-+#     Query TCG compiler statistics
- #
- # Features:
- #
-@@ -1746,8 +1702,7 @@
- 
- ##
- # @x-query-numa:
--#
--# Query NUMA topology information
-+#     Query NUMA topology information
- #
- # Features:
- #
-@@ -1763,8 +1718,7 @@
- 
- ##
- # @x-query-ramblock:
--#
--# Query system ramblock information
-+#     Query system ramblock information
- #
- # Features:
- #
-@@ -1780,8 +1734,7 @@
- 
- ##
- # @x-query-roms:
--#
--# Query information on the registered ROMS
-+#     Query information on the registered ROMS
- #
- # Features:
- #
-@@ -1797,8 +1750,7 @@
- 
- ##
- # @x-query-usb:
--#
--# Query information on the USB devices
-+#     Query information on the USB devices
- #
- # Features:
- #
-@@ -1829,8 +1781,7 @@
- 
- ##
- # @MemorySizeConfiguration:
--#
--# Schema for memory size configuration.
-+#     Schema for memory size configuration.
- #
- # @size: memory size in bytes
- #
-@@ -1847,8 +1798,7 @@
- 
- ##
- # @dumpdtb:
--#
--# Save the FDT in dtb format.
-+#     Save the FDT in dtb format.
- #
- # @filename: name of the dtb file to be created
- #
-@@ -1866,8 +1816,7 @@
- 
- ##
- # @x-query-interrupt-controllers:
--#
--# Query information on interrupt controller devices
-+#     Query information on interrupt controller devices
- #
- # Features:
- #
-@@ -1897,8 +1846,7 @@
- 
- ##
- # @query-firmware-log:
--#
--# Find firmware memory log buffer in guest memory, return content.
-+#     Find firmware memory log buffer in guest memory, return content.
- #
- # @max-size: limit the amount of log data returned.  Up to 1 MiB of
- #     log data is allowed.  In case the amount of log data is larger
-@@ -1912,8 +1860,7 @@
- 
- ##
- # @dump-skeys:
--#
--# Dump the storage keys for an s390x guest
-+#     Dump the storage keys for an s390x guest
- #
- # @filename: the path to the file to dump to
- #
-@@ -1951,8 +1898,7 @@
- 
- ##
- # @CpuModelExpansionType:
--#
--# An enumeration of CPU model expansion types.
-+#     An enumeration of CPU model expansion types.
- #
- # @static: Expand to a static CPU model, a combination of a static
- #     base model name and property delta changes.  As the static base
-@@ -2009,8 +1955,7 @@
- 
- ##
- # @CpuModelBaselineInfo:
--#
--# The result of a CPU model baseline.
-+#     The result of a CPU model baseline.
- #
- # @model: the baselined `CpuModelInfo`.
- #
-@@ -2021,8 +1966,7 @@
- 
- ##
- # @CpuModelCompareInfo:
--#
--# The result of a CPU model comparison.
-+#     The result of a CPU model comparison.
- #
- # @result: The result of the compare operation.
- #
-@@ -2153,8 +2097,7 @@
- 
- ##
- # @CpuModelExpansionInfo:
--#
--# The result of a cpu model expansion.
-+#     The result of a cpu model expansion.
- #
- # @model: the expanded `CpuModelInfo`.
- #
-@@ -2223,8 +2166,7 @@
- 
- ##
- # @CpuDefinitionInfo:
--#
--# Virtual CPU definition.
-+#     Virtual CPU definition.
- #
- # @name: the name of the CPU definition
- #
-@@ -2285,8 +2227,7 @@
- 
- ##
- # @query-cpu-definitions:
--#
--# Return a list of supported virtual CPU definitions
-+#     Return a list of supported virtual CPU definitions
- #
- # Since: 1.2
- ##
 -- 
 2.55.0
 
