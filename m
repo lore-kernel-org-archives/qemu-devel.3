@@ -4,93 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714CCC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707C4C624D5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1SLc-000586-Gb; Tue, 01 Sep 2026 13:32:36 -0400
+	id 1x1SN9-0005aF-9V; Tue, 01 Sep 2026 13:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1x1SLb-00057f-BM
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:32:35 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1x1SLZ-0007p7-GX
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:32:35 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6a5f1d0af69so177714a12.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 10:32:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x1SN3-0005Xv-Ec
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:34:06 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x1SN1-00080n-Oo
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:34:05 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 681H6QCl2033274
+ for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 17:34:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ uRXMpWYP4aEFj13LYG0i9lWd6tmMXkmCiJ+ebFTu87Y=; b=faZk62dN7EsRgyCv
+ yclJl25nIWLeWNXQl3ZsYZP5mucF8MgnYvKZVYE26vb8szVPL6ZwVfcoIcPqm0Bq
+ /V4MK5YSmGgob50d3KuOb9AQQVjlXwHX6EwqaxOgm+gXroc0pfgqqGjqa65Hmtn2
+ /ZiJxRuTt2rBugl5bpJb5NCZbjONMSjBKeQNc9UF+iK4RiWnAv6Sj/O9daG6/Rpf
+ 6c95RLJ7NQAKQrXN3ld4NXO/okCX37V/kzyTIetT9bdwHRQ8yqi3Y9VfD04F3HhQ
+ 011IKUqwd+d8CxL43OIMZPE2PhDEOJg5V/nIGr+au3NMSJBQi35wA+rMi1NdbRKN
+ 5LXZtA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdrcskd67-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 17:34:02 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-39512608fb1so201045a91.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 10:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788283950; x=1788888750; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:content-type:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Lz80P4paY/pguLwqrMMKHK8LbtL48CgUlfa/c7sK+Kg=;
- b=EOHs9B5IVq2v92+UVxBXTuPj07T3CLt3PRlqxZ2O8tVijffpIyna4kL1yjMK9Y9PHz
- NqeWIpkdBm2oUK1txrs+Mg8keaMRUdqefwGQmxfdjPbSQjkzCXlvH5AbsskiJQPCVe3T
- HbUOK/zc1J5i9gcx9GSCyAqUUFTfDq0UhYfQM3ADQ/j+NT6ukvPHHyMnKthsmngHrQaO
- O+uiGkkIyUY8ujtrbHUDTepfOz5MoJhppgVbwb3qrbl4agellLJLChYUlUzX5mcJDBEf
- byzAT3yaIkkZC95MF17Kz8KRXxL6XQsaH3sggnP4WJ22eQPOPhVyoGWNWv3dQHCyII+v
- snFQ==
+ d=oss.qualcomm.com; s=google; t=1788284042; x=1788888842; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uRXMpWYP4aEFj13LYG0i9lWd6tmMXkmCiJ+ebFTu87Y=;
+ b=GjLdKyepTohByQJyme7NnS8nI19xf8S9IQcIPjaYGEch68HzJH4k7KTWs/bJRrU6ll
+ ojAuwM4amUJxw1y34+/zlnBUElbJk2JvO2KT3UgrmMS2BKGt1cHgche3FZVigO5SYe+6
+ 5lqE7Pam0dkVqkzYRiQj6y5Ib9iz5dOt+h2X7IyND+15RgIahlQjVJTqxIWIYRW+6/dh
+ lNDYJL2wJx6YYG9ScCBfDAouIf0nx2PlflU4geIZYoPG1AL2U1WA66dg81oVlRo/N+o3
+ Lgb+6yybO9PtSWvXO4qj7bBYlynf7zSbvXGfiLYU8PKuPK0aZIapgweWRQs3mI4KPgvK
+ lwOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788283950; x=1788888750;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:content-type:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Lz80P4paY/pguLwqrMMKHK8LbtL48CgUlfa/c7sK+Kg=;
- b=rBqUAQc9qyVk2qz2b+XjoG4S1EoqXBvt236vRJp69GPEGhve/z0wtrDgAJDOuJclAN
- cshJkWjzQt7w/6O+yF2md3dpNjlwEUF1mqh1+VYopyC4+GJlU9usrHW5K+P0RDOUCm91
- oZw2iTuAYIbjSd0mL3lRS+J08z6icmt4Qsf2J5BMMRtZeQYtwstCU9eYrgAP/AuBKGY1
- Y79AF0BAS4SwT/yDo0B39dpzsfEFeTKBHk7mlPMTNPWwesu/bDr5g9AsF7mbCXNJfKmx
- S0B90t93RigT6X6YoPWZOa3so8UctwYPzcKVVfpEpkKFNITE22AQ4dXta/B4sQzZNQ3L
- COeA==
-X-Gm-Message-State: AFuF++n6HSOgS26K1ZSmWZEgk4SEASw+lXLZlEr8HUEwRTBne1J6TYC9
- sSjM9opx36Lp3c9+evdHYX+w1FdbSO6wc7vc8GhALnm0YNkhsE7DCpkf
-X-Gm-Gg: AR+sD10TeHjqc+YOyOT62Gsx9TDWt8jxJ9GITwK+N1XYz0t5SCsrUentArqLHOXQhqD
- akeX1N06bHVlBTR575BylF+xFMDvxXgA46TB/fUIGA1CdoNek6kD/yY+bXgm+uJ6aXhRg99gFoU
- Ye3iozqXCdWWSrc+3V/OtK1F1ulXQBF6JzKUfktwLTkLetSXucnNNy9CpqO3KO1FUsmIJNjPFps
- 8ZJMbxLVOmA1tzcE/mfGOH87QlH0YnGP1kvbQJrPdGDRhBBvNFowzOEltro0Mh7otR8We414ahE
- efJZFdrEJmPLkYihzFC7lf1ru38GjiQlUlRBXBiQq9W0OVcrZol4RMHz8OtJdJQ0SyIOzKVMcVQ
- YREElKjCvF/Xw518WKOqbaEB7deO0XCOZ2gp/OQpkN961hY6aJvvLHC4w0inJjD4bH2q4NQZOXH
- TDF7Y15tG5Wg3XFZ1dgm54xRqrQFwzDPQ/h+Qy6+Fs8fsPJlIaKGsLf+uCyd20JVk+y1j0EGvXW
- Bi35DWQo5nYp13V8FMEVPHvmKgS6th6JZry4o01YVARaNPugcoebftIIeARYg==
-X-Received: by 2002:a17:907:da16:b0:c1c:4858:c19c with SMTP id
- a640c23a62f3a-c255740d809mr2191365766b.23.1788283949842; 
- Tue, 01 Sep 2026 10:32:29 -0700 (PDT)
-Received: from tulp
- (2001-1c02-1a15-3000-ee82-4536-a8f2-9e22.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:ee82:4536:a8f2:9e22])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c25d039d2c2sm3257466b.32.2026.09.01.10.32.29
+ d=1e100.net; s=20251104; t=1788284042; x=1788888842;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uRXMpWYP4aEFj13LYG0i9lWd6tmMXkmCiJ+ebFTu87Y=;
+ b=HDeUvyvZuWMRMCeMPD6k0TC5f5igLwW7eJajXIWExhqAc/rKpz0RxfDj8N309lbasH
+ ruovHyDzWfpgXNMnc11U1uxfSld+ZCU+gkH4QAVGrQjj8UbAOMdzn/l5XuX6XgvHfvId
+ VDlB1WGpY6EPXm5Pb2Vo1ZHu5P2Dr+bfWb3J/2hfO51u0dOuOAY9GK+98N+IZnMtK+5O
+ CcEN/w6hVYMVX8JIIswzo1I5cTenxZoW+RkmeQw9Wk+EDoxuFBwCEaSI9Zu1roRC6xNy
+ XuwsobLAcvkhxe2iiblOzOsjJwd9pmKeZCwOpVJ37aMRxYcM5TLpElcOHZojm0DzsKDs
+ v1fw==
+X-Gm-Message-State: AFuF++nt4dH8QeflWw5YjLLkOnBNDQk4eMYPgENq/x4/CqlmSQI/zHQ6
+ f1BJ6tdG4Dafn+jrW9W6Pvv0yR2rl+a2yGHN/a58M57gBdvzjkxbD/8z8/vvv7+X/lM1hdp4jao
+ 4fOADQU6CxA7uyaiZ61JgOe+ikxc4ckqDLJmVtfSf/HJ+HYe2wyJSq4J4Bb38TbgedQ==
+X-Gm-Gg: AYBFou0QGvSLJtUtqJ1lJ8tPa60NRac1shSbzsqixBZLre+p3I0rrEJxPCZ2sK+6q5S
+ h3Sx41X7Ifj/qyM+FZm4yWmFsnFqpXvHwEtuc1qJSlp1e2zsyBlLxmP/6WWHYnv9DbngNmwbVDp
+ fK7BSYRQgHWY58ZR2hDLemoch66ddekxPlMT9is/MfpixJx5MAjmfQ0zZdTQgdRfRdTkSV6unMd
+ RsZwahH+0kDrCNe0RNTDKGXnRwE4J9stqNj+TkX6pGGZEjww27SUzyq0gTj5dSV5JS/bSd37VyF
+ fYkwbkQug/hA6kaXgUgoa2DFDwItF4/DaZyel+1+NLDtceU5uDdzpPSZ61Y70mR2GS4lljGz6Kr
+ eVuyk3EXlox8y1+jI6OKqCeFGb30AQen4aD9qLSEwROxNnyPD
+X-Received: by 2002:a17:90a:e7cb:b0:398:bbe9:73af with SMTP id
+ 98e67ed59e1d1-398bbe97548mr28316351a91.7.1788284041666; 
+ Tue, 01 Sep 2026 10:34:01 -0700 (PDT)
+X-Received: by 2002:a17:90a:e7cb:b0:398:bbe9:73af with SMTP id
+ 98e67ed59e1d1-398bbe97548mr28316276a91.7.1788284041164; 
+ Tue, 01 Sep 2026 10:34:01 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3286f95a160sm39702934eec.18.2026.09.01.10.33.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 10:32:29 -0700 (PDT)
-Date: Tue, 1 Sep 2026 19:31:09 +0200
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH] qga: implement 'guest-get-diskstats' for FreeBSD
-Message-ID: <apcL3cfPcBw9YEf9@tulp>
-References: <20260719160329.73695-1-bogorodskiy@gmail.com>
- <CAPMcbCrLmS2NXASKAWujm6=do9cAvMcB4p5Yxp73T_6HshRGQA@mail.gmail.com>
+ Tue, 01 Sep 2026 10:33:59 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
+Subject: [PATCH v2 04/11] target/hexagon: guard writes to unimplemented guest
+ registers
+Date: Tue,  1 Sep 2026 10:33:46 -0700
+Message-Id: <20260901173353.200474-5-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260901173353.200474-1-brian.cain@oss.qualcomm.com>
+References: <20260901173353.200474-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPMcbCrLmS2NXASKAWujm6=do9cAvMcB4p5Yxp73T_6HshRGQA@mail.gmail.com>
-User-Agent: Mutt/2.2.16 (2025-11-22)
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfXxn5IwD1Utgqz
+ 5N6fQDbYtwneFbP7xeP8p8Hcp4DDXR/OczIT5Sq/G1aCAx8RqvEjDMtLR7SKx6388ATtynQaK9p
+ yaiCqTH2hMqPEGtDbIFK/SLV3t3x62U=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX8yKeaE1UGPWy
+ hrK+NLkbjwB9PZhkweP0jEIZKKXO7wuPz5vXFqg1N6iHlgpO5fjwPU/JCxiDVFtMSyEVaWArMhZ
+ Aqx2eXOWs5j7WebZUVmLQ5TDd3NuvQsGa1gDaO6e10RS/+siwYwSOW7SUiqY17DhuLCc1fDRWFd
+ 2Cm2tpshJUErdYqP7zRlsrM/zZNJfeLs0K8UUHc4v8GAsrLrUuEuNOmBzl9EuYLsU9qlh9ElzmK
+ eil3nAm4RfRZtxoquYrH/F1iUgIXuQ6GsZZp+R3jb4gco+NMH0oUscFLAOgppLymXS4sTt/0hF0
+ faU00fPUtGfGfm0zXmE94lNzox/yCgn4UQ8eIINZpTYDWg+LVl8QP1Knm9rjDE9iIlNOAas5crq
+ lQyTzgg9dw/5yIV+67YuP/+t2YUQlIginw3xDHx9Ld8GN3Ap7N7UX1t3+FPI1SZPuWb3XfD6lkU
+ eGZ347ouLKjDuA367oQ==
+X-Proofpoint-GUID: R6Vqbmxb7hsxJdqlFvIdINc0jim3heSx
+X-Proofpoint-ORIG-GUID: R6Vqbmxb7hsxJdqlFvIdINc0jim3heSx
+X-Authority-Analysis: v=2.4 cv=QsNuG1yd c=1 sm=1 tr=0 ts=6a970c8a cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=q6_NcmobPIDMa4dJqmQA:9 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-01_05,2026-09-01_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 phishscore=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609010155
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,119 +154,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Kostiantyn Kostiuk wrote:
-
-> Hi Roman,
-> 
-> Thanks for your patch, and sorry for the late reply
-> 
-
-Thanks for review!
-
-> On Sun, Jul 19, 2026 at 7:04 PM Roman Bogorodskiy <bogorodskiy@gmail.com>
-> wrote:
-> 
-> > Implement the 'guest-get-diskstats' for FreeBSD.
-> > This implementation uses the devstat(3) library which is a part
-> > of the FreeBSD base system.
-> >
-> > The build system is updated to link qga with `-ldevstat`.
-> >
-> > Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-> > ---
-> >  qga/commands-bsd.c   | 127 +++++++++++++++++++++++++++++++++++++++++++
-> >  qga/meson.build      |   3 +
-> >  qga/qapi-schema.json |   6 +-
-> >  3 files changed, 133 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
-> > index 94ff6fee6a..763db33c9f 100644
-> > --- a/qga/commands-bsd.c
-> > +++ b/qga/commands-bsd.c
-> > @@ -27,6 +27,9 @@
-> >  #include <net/ethernet.h>
-> >  #endif
-> >  #include <paths.h>
-> > +#ifdef CONFIG_FREEBSD
-> > +#include <devstat.h>
-> > +#endif
-> >
-> >  #if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
-> >  bool build_fs_mount_list(FsMountList *mounts, Error **errp)
-> > @@ -178,3 +181,127 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigned
-> > char *buf,
-> >      return true;
-> >  }
-> >  #endif /* HAVE_GETIFADDRS */
-> > +
-> > +#ifdef CONFIG_FREEBSD
-> > +static uint64_t bintime_to_msec(const struct bintime *bt)
-> > +{
-> > +    return (uint64_t)bt->sec * 1000ULL + (((bt->frac >> 32) * 1000ULL) >>
-> > 32);
-> > +}
-> > +
-> > +static void guest_diskstats_append(GuestDiskStatsInfoList ***tailp,
-> > +                                   const struct devstat *dev)
-> >
-> 
-> Can we simplify pointer logic?
-> For example, return GuestDiskStatsInfo* for devstat* and then append the
-> list in guest_get_diskstats.
-> ***tailp -> more pointers - easier to make a mistake or memory leak.
-
-Yes, will address in v2.
-
-> > +
-> > +    diskstat->has_ios_pgr = true;
-> > +    if (dev->start_count >= dev->end_count) {
-> > +        diskstat->ios_pgr = dev->start_count - dev->end_count;
-> > +    }
-> >
-> 
-> In case start_count < end_count, you have has_ios_pgr = true, and ios_pgr =
-> 0 (g_new0 initialized to 0’s)
-> Is this expected? And in general, is this possible?
-
-That's an interesting question.
-`start_count` and `end_count` are uint's. It is possible that
-`start_count` will wrap sooner than `end_count`, so 
-
-   start_count < end_count
-
-But apparently the correct behaviour is still report the difference
-instead of reporting 0.
-
-devstat(9) describes that:
-
-     start_count        Number of operations started.
-
-     end_count          Number of operations completed.  The “busy_count” can
-                        be calculated by subtracting end_count from
-                        start_count.  (sequence0 and sequence1 are used to get
-                        a consistent snapshot.)  This is the current number of
-                        outstanding transactions for the device.  This should
-                        never go below zero, and on an idle device it should
-                        be zero.  If either one of these conditions is not
-                        true, it indicates a problem.
-
-
-So it looks like the conditional is not needed. libdevstat in FreeBSD
-does not have it too [1].
-I'll remove that in v2.
-
-> > +
-> > +GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
-> > +{
-> > +    return guest_get_diskstats(errp);
-> >
-> 
-> Any reason for this wrapper?
-> I see it in the Linux implementation, but not for other commands.
-
-I followed the Linux implementation schema here. Apparently it is not
-necessary. Will address in v2 as well.
-
-1: https://cgit.freebsd.org/src/tree/lib/libdevstat/devstat.c#n1547
- 
+R3Vlc3QgcmVnaXN0ZXIgRzQgYW5kIGFib3ZlIGhhdmUgUE1VLWlzaCBmZWF0dXJlcyB0aGF0IGFy
+ZSB5ZXQKdG8gYmUgaW1wbGVtZW50ZWQuICBXZSdsbCBza2lwIHRoZXNlIHdoZW4gd2UgZW5jb3Vu
+dGVyIHRoaXMgY29kZQpyYXRoZXIgdGhhbiBmYXVsdCBvbiBhbiBhc3NlcnRpb24uCgpOb3RlIHRo
+YXQgdGhlIGdlbmVyYXRlZCBjYWxsIHRvIGdyZWdfd3JpdGFibGUoKSBoYXMgdGhlIHNpZGUtZWZm
+ZWN0Cm9mIGRvaW5nIGEgTE9HX1VOSU1QIGZvciB0aGVzZSByZWdpc3RlciBhY2Nlc3Nlcy4KClNp
+Z25lZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0t
+CiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuaCAgIHwgIDQgKysrLQogdGFyZ2V0L2hleGFnb24v
+aGV4X2NvbW1vbi5weSB8IDE4ICsrKysrKysrKysrKysrKysrLQogMiBmaWxlcyBjaGFuZ2VkLCAy
+MCBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhh
+Z29uL3RyYW5zbGF0ZS5oIGIvdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRlLmgKaW5kZXggMDBkZTJi
+MGQyZWMuLmQ4NjI4MzgzZjFkIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUu
+aAorKysgYi90YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuaApAQCAtOTcsNyArOTcsOSBAQCBib29s
+IGlzX2dhdGhlcl9zdG9yZV9pbnNuKERpc2FzQ29udGV4dCAqY3R4KTsKICNpZm5kZWYgQ09ORklH
+X1VTRVJfT05MWQogc3RhdGljIGlubGluZSB2b2lkIGN0eF9sb2dfZ3JlZ193cml0ZShEaXNhc0Nv
+bnRleHQgKmN0eCwgaW50IHJudW0pCiB7Ci0gICAgYXNzZXJ0KHJudW0gPD0gSEVYX0dSRUdfRzMp
+OworICAgIGlmIChybnVtID4gSEVYX0dSRUdfRzMpIHsKKyAgICAgICAgcmV0dXJuOworICAgIH0K
+ICAgICBjdHgtPmdyZWdfbG9nW2N0eC0+Z3JlZ19sb2dfaWR4XSA9IHJudW07CiAgICAgY3R4LT5n
+cmVnX2xvZ19pZHgrKzsKIH0KZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2hleF9jb21tb24u
+cHkgYi90YXJnZXQvaGV4YWdvbi9oZXhfY29tbW9uLnB5CmluZGV4IGUzM2Q0M2UzY2UwLi5jMTgw
+YzE5YjA5MiAxMDA3NTUKLS0tIGEvdGFyZ2V0L2hleGFnb24vaGV4X2NvbW1vbi5weQorKysgYi90
+YXJnZXQvaGV4YWdvbi9oZXhfY29tbW9uLnB5CkBAIC0xMDk3LDExICsxMDk3LDI0IEBAIGRlZiBh
+bmFseXplX3dyaXRlKHNlbGYsIGYsIHRhZywgcmVnbm8pOgogICAgICAgICAiIiIpKQogCiBjbGFz
+cyBHdWVzdFJlZ2lzdGVyKFJlZ2lzdGVyKToKLSAgICBwYXNzCisgICAgZGVmIGdlbl9jaGVja19p
+bXBsKHNlbGYsIGYsIHJlZ25vKToKKyAgICAgICAgaWYgc2VsZi5pc193cml0dGVuKCk6CisgICAg
+ICAgICAgICBmLndyaXRlKGNvZGVfZm10KGYiIiJcCisgICAgICAgICAgICAgICAgaWYgKCFncmVn
+X3dyaXRhYmxlKGluc24tPnJlZ25vW3tyZWdub31dLAorICAgICAgICAgICAgICAgICAgICB7c3Ry
+KHNlbGYuaXNfcGFpcigpKS5sb3dlcigpfSkpIHt7CisgICAgICAgICAgICAgICAgICAgIHJldHVy
+bjsKKyAgICAgICAgICAgICAgICB9fQorICAgICAgICAgICAgIiIiKSkKKyAgICAgICAgZWxzZToK
+KyAgICAgICAgICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKKyAgICAgICAgICAgICAgICBjaGVj
+a19ncmVnX2ltcGwoaW5zbi0+cmVnbm9be3JlZ25vfV0sCisgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHtzdHIoc2VsZi5pc19wYWlyKCkpLmxvd2VyKCl9KTsKKyAgICAgICAgICAgICIi
+IikpCiAKIGNsYXNzIEd1ZXN0RGVzdChHdWVzdFJlZ2lzdGVyLCBTaW5nbGUsIERlc3QpOgogICAg
+IGRlZiBkZWNsX3RjZyhzZWxmLCBmLCB0YWcsIHJlZ25vKToKICAgICAgICAgc2VsZi5kZWNsX3Jl
+Z19udW0oZiwgcmVnbm8pCisgICAgICAgIHNlbGYuZ2VuX2NoZWNrX2ltcGwoZiwgcmVnbm8pCiAg
+ICAgICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKICAgICAgICAgICAgIFRDR3ZfaTMyIHtzZWxm
+LnJlZ190Y2coKX0gPSB0Y2dfdGVtcF9uZXdfaTMyKCk7CiAgICAgICAgICIiIikpCkBAIC0xMTIx
+LDYgKzExMzQsNyBAQCBkZWYgZGVjbF9yZWdfbnVtKHNlbGYsIGYsIHJlZ25vKToKICAgICAgICAg
+IiIiKSkKICAgICBkZWYgZGVjbF90Y2coc2VsZiwgZiwgdGFnLCByZWdubyk6CiAgICAgICAgIHNl
+bGYuZGVjbF9yZWdfbnVtKGYsIHJlZ25vKQorICAgICAgICBzZWxmLmdlbl9jaGVja19pbXBsKGYs
+IHJlZ25vKQogICAgICAgICBmLndyaXRlKGNvZGVfZm10KGYiIiJcCiAgICAgICAgICAgICBUQ0d2
+X2kzMiB7c2VsZi5yZWdfdGNnKCl9ID0gdGNnX3RlbXBfbmV3X2kzMigpOwogICAgICAgICAgICAg
+Z2VuX3JlYWRfZ3JlZyh7c2VsZi5yZWdfdGNnKCl9LCB7c2VsZi5yZWdfbnVtfSk7CkBAIC0xMTMx
+LDYgKzExNDUsNyBAQCBkZWYgYW5hbHl6ZV9yZWFkKHNlbGYsIGYsIHJlZ25vKToKIGNsYXNzIEd1
+ZXN0UGFpckRlc3QoR3Vlc3RSZWdpc3RlciwgUGFpciwgRGVzdCk6CiAgICAgZGVmIGRlY2xfdGNn
+KHNlbGYsIGYsIHRhZywgcmVnbm8pOgogICAgICAgICBzZWxmLmRlY2xfcmVnX251bShmLCByZWdu
+bykKKyAgICAgICAgc2VsZi5nZW5fY2hlY2tfaW1wbChmLCByZWdubykKICAgICAgICAgZi53cml0
+ZShjb2RlX2ZtdChmIiIiXAogICAgICAgICAgICAgVENHdl9pNjQge3NlbGYucmVnX3RjZygpfSA9
+IHRjZ190ZW1wX25ld19pNjQoKTsKICAgICAgICAgIiIiKSkKQEAgLTExNTAsNiArMTE2NSw3IEBA
+IGRlZiBkZWNsX3JlZ19udW0oc2VsZiwgZiwgcmVnbm8pOgogICAgICAgICAiIiIpKQogICAgIGRl
+ZiBkZWNsX3RjZyhzZWxmLCBmLCB0YWcsIHJlZ25vKToKICAgICAgICAgc2VsZi5kZWNsX3JlZ19u
+dW0oZiwgcmVnbm8pCisgICAgICAgIHNlbGYuZ2VuX2NoZWNrX2ltcGwoZiwgcmVnbm8pCiAgICAg
+ICAgIGYud3JpdGUoY29kZV9mbXQoZiIiIlwKICAgICAgICAgICAgIFRDR3ZfaTY0IHtzZWxmLnJl
+Z190Y2coKX0gPSB0Y2dfdGVtcF9uZXdfaTY0KCk7CiAgICAgICAgICAgICBnZW5fcmVhZF9ncmVn
+X3BhaXIoe3NlbGYucmVnX3RjZygpfSwge3NlbGYucmVnX251bX0pOwotLSAKMi4zNC4xCgo=
 
