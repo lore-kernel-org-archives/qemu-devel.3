@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F60C624D5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DB6C624D8
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONB-00012J-Tc; Tue, 01 Sep 2026 09:17:57 -0400
+	id 1x1ONG-00015r-5F; Tue, 01 Sep 2026 09:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ON8-00010v-PX
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:54 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1x1ONE-00014z-NQ
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:00 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ON7-0007BH-8f
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:54 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c25344a8c6cso640520066b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:52 -0700 (PDT)
+ id 1x1OND-0007Cc-2q
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:00 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c252c7270faso793189866b.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268672; x=1788873472; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=XR5LpIFh5hEx0c+Fcku7eIeS/4QG0ngt9VN8SHvA1ms=;
- b=DX3QXncjb7ACXb9gp84DJEbha/MPAu6S8/f4sKq4ynfExMzEAm/17AoeS/NU/CIVAN
- tGtlX0mBSsbFJvs3Aa+TWjQ5vZo3z3OcaMJco04A3CMHjZlHmKwvSeVfA0aGhXiSJmGJ
- 0p6Btmi6k4Otv5XSxa7grLP9uwTvNIqdaLIiHo1kOZ8NSC4aOB0DwoC3olmNM95mxgyN
- ZD+8j53hWyCXVk0nzX2s1ZB1x+5rsTm8oHp366N47eIjo0WKYdO9G2xrGeRDhYlCAMKm
- ayKulaaZjXTSFGRphVOP+38l2Zc7JOkXHVGr/lvT5k9TeZGFV/cPkpZtkHkZeRaV1Vth
- Te4w==
+ d=linaro.org; s=google; t=1788268678; x=1788873478; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=OCnS1TSwyGi8oae/WH470zGgu7DaGQ2CJrcgjTVsuBE=;
+ b=jH6tv8K+YHS8IsDBGPs6nJLgtjCcLFiYCSrigRpI8sEQgWlJSzIvkfBqNSpYWeSdfW
+ oL8zJkRWL2qP/2GE9AmVkQq2xcgSNZH0acF2UnJsj/nDHDH2B9ZEBnqcYKbOEa1G2UtH
+ rnNxe8DHHTrbxivp8mNo5z/QRTBuLZ7tHUPY6becyheaQhaK94914FWOa6VCociW7LGk
+ IFLpYiQMMHm7Gt4fRV+XOIF3ATdZaOugQBykWE/RaOg2Z+7lQ9g2OzzwcF6n2T4wBxeg
+ YpPvRYn126EKAHH7VLgTzoaEyhEU1Z9MxxnP1FvQ6o9i20XniUnczTn5M8WbTt+L3CLd
+ 6yGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268672; x=1788873472;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=XR5LpIFh5hEx0c+Fcku7eIeS/4QG0ngt9VN8SHvA1ms=;
- b=Tdkgj2SeJT5uK6OZKrVweh4eSzW6bS6l0+74rhbJR4mrecGujmfL+2lD3hQcxyBVEN
- AbplOMiuPm7+4mSyPdfuXP/B89ExtgLtzSeqwy5V7AsOn2Bm77scbCIyLDVbKBN7Aj2h
- fCet3siXGfh0Ot4613Ceo8eKmPKPEWXSq55o1M1lfb9/HuzKwwMgaR/1nDqDiAlET6Bt
- gqpzKT/4tZVzCAP7fOba063fO9D2Us7Rk4gSUTZMMQqQ2cC3g/SsvGd0NpxSbq+fvEH6
- 41jSwmMdhwyKPXm6t+t8iR4oahwl16L4Rh1EUkq0YHxgYZ8VYtAuu0OFY62SnhwcM3by
- Aywg==
-X-Gm-Message-State: AFuF++no+++EXqsiQTJOnnf4kn8C6L3Y39pZ+QZBkDQlVlPFGakKfb+E
- i2KuqKDCeMFM+NNYYcnTwFJO3/bSYI/m04+n9UcD/7g4SYh00f27gYdWVsqP6G5zc4u+oHg4x4a
- q9fQrpM4=
-X-Gm-Gg: AR+sD13g5Hfv4742cJSL44/4ggVuMPNaJIN4hLLZwe/d5ZkP0MjjgoOU1JM/L3GtbJA
- OsfWj/8mnfFo3ep5DUK6hVz1RU6b8YZoVNS2JUBvH8hbCr8taWjADZwQMXO2TM6HIIFIzza03+8
- 59lwHmuNeAoo145NTFeB+y48zXpLdOFthJPsQLjaFwTLUGLQdEJ3exGATpkAmWv8iNt4NdB5WAo
- e0YQQXAXqt2seZFyxueRcWnmuNtmdAkA/c5Y9JIMFyhRendwlzbNlCw92Q+LloU4TmDrGl/0ivY
- It22GfwhoJYWu/DgmToVDWAfuM3+cSU7iO4mGn0yw4RLYy6JVPV6z5pLexhp6O6pTUbEC14Nn0+
- G04Bm4Gg+Ke+R/dAO3w0QkjNn4/A75WaFR2+jy6OjCYZOD59Qoe4Rr6dgLyS0ywccwQDNtktuL7
- 5dNh4Nmh7Ox5gzdFBJG4ZlYK/jpsNphPdYPjzA7ctHf7t99yEX4mgo0IkC/NfRqvn7oHSqOo90g
- uiAxqTiWt5BOj5rfAAOyNbnvJE9lIGgO4fY4da8/O5089JFtObl77DCkWvOuPiA3uz1MhSsu/hd
- brcI
-X-Received: by 2002:a17:907:3cc2:b0:c1c:5aa1:de57 with SMTP id
- a640c23a62f3a-c2557030696mr2098786666b.13.1788268671589; 
- Tue, 01 Sep 2026 06:17:51 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788268678; x=1788873478;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=OCnS1TSwyGi8oae/WH470zGgu7DaGQ2CJrcgjTVsuBE=;
+ b=WxT4ijw+ZyxHHSF1eSV8965kpi1f2kNCsXzDZt8nyOdVGaSTvrW5Qp8ucTd3ODfSwM
+ KSTP4hG160hxoJgDXDjnKMLGnqfAWOaK58cGBUsfyuVXFEXE1lC1Ef/9xzjWPkOaeZCo
+ G7TTA/XYXRqqO17OsU9SA9P6eT9pdpvnZR+yY39WgwQvTn/vWnLUnomXqvCzVQvJ6U/E
+ CUZZGYg1FEpNtG50UcOX+/krrYwYSSzj9lxb3VbiIZ0vbUVtN+c9jsSpx6yela8Gy4kW
+ YZ13nqNH0iFw3mfn8RqGr7+GgtoGZlGmglY4XvwTaDzrtAbeqWFJl5QjC1iQTgPtB9xz
+ KSxw==
+X-Gm-Message-State: AFuF++k6H0+6BkX5mBgUYZi/0/7Fs1wHWCwf2Z/mXQGS2QuFjWBzf4Sp
+ pTnFTMbw3/knZ+jhrV4XivQeQ9eSIeJ0Q2Qzp+ZuDn1EWbl4QrHG4p2CAoht7xbXzi5rjUl1GQz
+ Cc1ph4gY=
+X-Gm-Gg: AR+sD13dXYE3JfwwgQ9NQd9+IyJyxqwCna1OTg93Z9xgXhsd6OEHP5fXGB3M0R85rfF
+ QspQd30i3ClRu9wbuQjL1yixUKtTBZmkupHt+DwMtVg9rIooTTD8jkvErW+oRX2SucDbf4hAlWi
+ b8sCOgBL+Ai2XCFhotp59WnmZ12ts+Cfr5oM+NI3MNm9A0DRxxMXErmIRbi+L+Be/MZYRvw8bZi
+ 7Y3+BCIC0/QPdTrivE4ddMea9bTosFFYN0ZxEAP2Y5iWxUnWAnY4l/o5LEJHNPD4weQLI7V4HnX
+ HRbBJoImEA9SBXyulePB40ZJff8TY4Fwn2iVWj7bi5fxgorHlEZOTYQWaF1eWJlFjoGP2i7lkUs
+ ChmgzdkLYsXEvamtyswnAAZkVHnsBAs5NrR6WdcRWMWlvfdDDWUAbK8ae8ZG3Ge6Kwpi6Ag+Mcm
+ LvncpRN98KD1lwUrnSnbXlX/rS4U6mVWP8xrUHiMI10RvJtWCt1CL+RYvu67DW9xZTsELGjl5uT
+ rWwIhafh1PbtAJ1wqsN1rLIEeL4IcN8po3NO72Mg5Mp0L7p7xM6y9NgGO7Kk2lQQQ76CilPnk7G
+ J712
+X-Received: by 2002:a17:906:170b:b0:c24:d6f0:1223 with SMTP id
+ a640c23a62f3a-c25b3cba78bmr438952966b.12.1788268677665; 
+ Tue, 01 Sep 2026 06:17:57 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.50
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:17:50 -0700 (PDT)
+ Tue, 01 Sep 2026 06:17:56 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/58] hw/misc/iotkit-secctl.c: add SSE-310 support
-Date: Tue,  1 Sep 2026 14:16:51 +0100
-Message-ID: <20260901131732.2263947-18-peter.maydell@linaro.org>
+Subject: [PULL 23/58] target/arm: Build cpu32.c once in system mode
+Date: Tue,  1 Sep 2026 14:16:57 +0100
+Message-ID: <20260901131732.2263947-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,63 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Xu <simonxhy0404@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add SSE-310 secure and non-secure ID registers.
+"Move" the ifdef to meson.build rules.
 
-Reviewed-by: Owen Giles <owen.giles@hpe.com>
-Reviewed-by: Robert Elliott <elliott@hpe.com>
-Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260827041557.775080-3-richard.henderson@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260805153005.9989-6-simonxhy0404@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/iotkit-secctl.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ target/arm/tcg/cpu32.c     |  5 -----
+ target/arm/tcg/meson.build | 10 +++++-----
+ 2 files changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/hw/misc/iotkit-secctl.c b/hw/misc/iotkit-secctl.c
-index 93753c2ced2..9f6fb81088d 100644
---- a/hw/misc/iotkit-secctl.c
-+++ b/hw/misc/iotkit-secctl.c
-@@ -109,6 +109,18 @@ static const uint8_t iotkit_secctl_ns_sse300_idregs[] = {
-     0x0d, 0xf0, 0x05, 0xb1,
- };
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 94a705e8066..f292a269bf2 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -19,9 +19,6 @@
+ #include "cpregs.h"
  
-+static const uint8_t iotkit_secctl_s_sse310_idregs[] = {
-+    0x04, 0x00, 0x00, 0x00,
-+    0x52, 0xb8, 0x3b, 0x00,
-+    0x0d, 0xf0, 0x05, 0xb1,
-+};
-+
-+static const uint8_t iotkit_secctl_ns_sse310_idregs[] = {
-+    0x04, 0x00, 0x00, 0x00,
-+    0x53, 0xb8, 0x3b, 0x00,
-+    0x0d, 0xf0, 0x05, 0xb1,
-+};
-+
  
- /* The register sets for the various PPCs (AHB internal, APB internal,
-  * AHB expansion, APB expansion) are all set up so that they are
-@@ -232,6 +244,9 @@ static MemTxResult iotkit_secctl_s_read(void *opaque, hwaddr addr,
-         case ARMSSE_SSE300:
-             r = iotkit_secctl_s_sse300_idregs[(offset - A_PID4) / 4];
-             break;
-+        case ARMSSE_SSE310:
-+            r = iotkit_secctl_s_sse310_idregs[(offset - A_PID4) / 4];
-+            break;
-         default:
-             r = iotkit_secctl_s_idregs[(offset - A_PID4) / 4];
-             break;
-@@ -499,6 +514,9 @@ static MemTxResult iotkit_secctl_ns_read(void *opaque, hwaddr addr,
-         case ARMSSE_SSE300:
-             r = iotkit_secctl_ns_sse300_idregs[(offset - A_PID4) / 4];
-             break;
-+        case ARMSSE_SSE310:
-+            r = iotkit_secctl_ns_sse310_idregs[(offset - A_PID4) / 4];
-+            break;
-         default:
-             r = iotkit_secctl_ns_idregs[(offset - A_PID4) / 4];
-             break;
+-/* CPU models. These are not needed for the AArch64 linux-user build. */
+-#if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
+-
+ static void arm926_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -756,5 +753,3 @@ static void arm_tcg_cpu_register_types(void)
+ }
+ 
+ type_init(arm_tcg_cpu_register_types)
+-
+-#endif /* !CONFIG_USER_ONLY || !TARGET_AARCH64 */
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 35e70b004d9..a3e9d55e853 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -30,10 +30,6 @@ translate32_d = [
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
+ arm_stubs_ss.add(files('stubs32.c'))
+ 
+-arm_ss.add(files(
+-  'cpu32.c',
+-))
+-
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'gengvec64.c',
+   'translate-a64.c',
+@@ -49,7 +45,10 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+ ))
+ 
+ arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
+-arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
++arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
++  'cpu-v7m.c',
++  'cpu32.c',
++))
+ 
+ arm_common_ss.add(zlib)
+ arm_common_ss.add(files(
+@@ -86,6 +85,7 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
+ ))
+ 
+ arm_common_system_ss.add(files(
++  'cpu32.c',
+   'cpregs-at.c',
+   'gicv5-cpuif.c',
+   'psci.c',
 -- 
 2.43.0
 
