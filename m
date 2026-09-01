@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C8BC61DD3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC17FC624CF
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 12:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1NDw-0001wT-04; Tue, 01 Sep 2026 08:04:20 -0400
+	id 1x1NE1-0001zt-TU; Tue, 01 Sep 2026 08:04:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1x1NDu-0001vv-4V
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 08:04:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x1NE0-0001yo-H4
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 08:04:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1x1NDs-00071W-DI
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 08:04:17 -0400
+ id 1x1NDy-00074k-KB
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 08:04:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788264254;
+ s=mimecast20190719; t=1788264261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=VHSUA6upzNGECkdJcbaIJ6C7sTKu7I3QIRpugTEwoPo=;
- b=Z1cmnxic60vcCtw8rlLvesUrxcsnKrGOU2K+TVPDDToJXbBaEIJjI206wSjMUMw1OFwFsN
- pBh4/abEUKrK025qRmUmeM6aHdeRrYnQ5XupZ+uu3YlNAq71wZNU2cMCqmLyM3cLROhKfQ
- Fppdq589hG+oRbmhnD9xBlME9wUqLt8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TIcgWeDHp3iKmGpW6Lgkcfewds7jzt3Io0gG8YUmjcw=;
+ b=Wx+0TLf2miFVkZIPOCtlSa/fF2PUhmPvAcjeKSnaWUjoqJzpc+gmfWMXEIIkf1pe3Lqmtm
+ +QTEJs3dnUQSNkX0qN9lZ86O9kwgW/wbkUOcUIwipNQgeiYtmhmKYPr25Vd4pUwbbozgkG
+ niUfku8xr4N37SwJHZCZO98dIzho5po=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-zlvfC0mlMsmwHdQCJhaQfw-1; Tue,
- 01 Sept 2026 08:04:11 -0400
-X-MC-Unique: zlvfC0mlMsmwHdQCJhaQfw-1
-X-Mimecast-MFC-AGG-ID: zlvfC0mlMsmwHdQCJhaQfw_1788264250
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-Mglzu5xwMKqwaISloFII9g-1; Tue,
+ 01 Sept 2026 08:04:18 -0400
+X-MC-Unique: Mglzu5xwMKqwaISloFII9g-1
+X-Mimecast-MFC-AGG-ID: Mglzu5xwMKqwaISloFII9g_1788264257
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE9E0195DE35; Tue,  1 Sep 2026 12:04:09 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5DABB19775FB; Tue,  1 Sep 2026 12:04:17 +0000 (UTC)
 Received: from aesteve-thinkpadp1gen8.rmtes.csb
  (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FF1C1955F02; Tue,  1 Sep 2026 12:04:06 +0000 (UTC)
+ id 1A4351955F01; Tue,  1 Sep 2026 12:04:14 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v2 0/3] hw/display: add vhost-user-media device
-Date: Tue, 01 Sep 2026 14:04:03 +0200
-Message-Id: <20260901-virtio-media-v2-0-bd3cc9347ab9@redhat.com>
+Date: Tue, 01 Sep 2026 14:04:06 +0200
+Subject: [PATCH v2 3/3] hw/display/vhost-user-media: add shared memory
+ region BAR
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
- vPSU3UzU4B8JSMDIzMDSwND3bLMopLMfN3c1JTMRF0LwyRji0QzA5PExEQloJaCotS0zAqwcdG
- xtbUAMOH4RF4AAAA=
-X-Change-ID: 20260901-virtio-media-81b38a604aaa
+Message-Id: <20260901-virtio-media-v2-3-bd3cc9347ab9@redhat.com>
+References: <20260901-virtio-media-v2-0-bd3cc9347ab9@redhat.com>
+In-Reply-To: <20260901-virtio-media-v2-0-bd3cc9347ab9@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
  Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
@@ -65,24 +65,23 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Albert Esteve <aesteve@redhat.com>, manos.pitsidianakis@linaro.org, 
  alex.bennee@linaro.org, Dorinda Bassey <dbassey@redhat.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788264246; l=2880;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788264246; l=6072;
  i=aesteve@redhat.com; s=20260827; h=from:subject:message-id;
- bh=pJkY0TVnPXdIkqRisp8r+82regxoytAJu/WPR5I2//c=;
- b=p5AKP35Mo0Y+md9plJtXd43/s0OPcJ6kOKz0P/sFBbDrFcowPmn0wbshkNDIlJ8/mJ4bgGXUY
- y/65kvOI2lJB+eiK/MDwwU2m0SbNywKnI7l+nboayhKnxrQfIwTQVTl
+ bh=zIDnrimJu8SaF2bdSpoMB7As/XRQmE0mPXSQDHEFYng=;
+ b=eLXzVQ1dNwpXua19FqgODBiowT1446Hl0cWR8mMIbsiCfmA7pJat8tNTtIf+BKnlV/VgeIFTq
+ AASWNyYEGEbDCefgBzkvxi75qi4rAwrsunZewYt3oA8lVsgYCWP1CSd
 X-Developer-Key: i=aesteve@redhat.com; a=ed25519;
  pk=zI2RBeZgocwYm3AkJW4CtjoJnKoDZrfBl1xe5Ed6h+U=
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,77 +97,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces the QEMU frontend for the virtio-media device,
-a VirtIO device that exposes V4L2 video device functionality to the guest
-over the virtio-media protocol, as specified in the VirtIO specification
-v1.4, section 5.22 [1].
+Expose virtio-media shared memory region 0 (spec 5.22.6.1.6) as a
+prefetchable 64-bit PCI BAR (BAR 2) with a VirtIO shm capability.
+The size is obtained through GET_SHMEM_CONFIG and requires at least
+one shared region. The guest maps host-provisioned MMAP buffers into
+this window; QEMU creates a container region on realize, not a
+full-sized RAM allocation.
 
-Overview
---------
-Patch 1 adds VIRTIO_ID_MEDIA definition from Linux v7.3-rc1.
+modern-pio-notify is rejected because it claims BAR 2.
 
-Patch 2 introduces the vhost-user-media device frontend as defined by
-the specification.
+vhost-user still needs shareable guest RAM, e.g.:
 
-Patch 3 adds a shared memory PCI BAR (BAR 2) sized by GET_SHMEM_CONFIG
-and used by the guest driver as a MMAP mapping window for video buffer
-exchange with the host backend. The region is exposed to the guest
-through a VirtIO shared memory capability.
+    -object memory-backend-memfd,id=mem,size=4G,share=on \
+    -numa node,memdev=mem
 
-Testing
--------
-The series was tested with:
-
-  Guest driver: the virtio-media out-of-tree Linux kernel driver [2].
-  An upstream series for this driver has also been posted [3].
-
-  Host backend: the rust-vmm vhost-device-media backend [4]:
-      cargo run -- -s /path/to/media.sock -d /dev/video0 --backend v4l2-proxy
-
-  Full QEMU invocation:
-
-      qemu-system-x86_64 \
-          -chardev socket,path=/path/to/media.sock,id=media \
-          -device vhost-user-media-pci,chardev=media,id=media \
-          -object memory-backend-memfd,id=mem,size=4G,share=on \
-          -numa node,memdev=mem
-
-[1] https://docs.oasis-open.org/virtio/virtio/v1.4/cs01/virtio-v1.4-cs01.html
-[2] https://github.com/chromeos/virtio-media/tree/main/driver
-[3] https://lore.kernel.org/all/20260622204343.1994418-1-briandaniels@google.com/
-[4] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-media
-
---
-Changes in v2:
-- virtio_ids.h header updated from kernel sources
-- Updated copyright year to current
-- Added MAINTAINERS entry for vhost-user-media
-- Added GET_SHMEM_CONFIG request for media shm region
-- Few other changes to align media with other backends
-- Link to v1: https://lore.kernel.org/qemu-devel/20260630112310.552606-1-aesteve@redhat.com/
-
+Tested-by: Dorinda Bassey <dbassey@redhat.com>
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
-Albert Esteve (3):
-      linux-headers: add VIRTIO_ID_MEDIA
-      hw/display: add vhost-user-media device
-      hw/display/vhost-user-media: add shared memory region BAR
+ hw/display/vhost-user-media-pci.c | 35 ++++++++++++++++++++++++++++++++
+ hw/display/vhost-user-media.c     | 42 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 76 insertions(+), 1 deletion(-)
 
- MAINTAINERS                                 |   6 +
- hw/display/Kconfig                          |   5 +
- hw/display/meson.build                      |   3 +
- hw/display/vhost-user-media-pci.c           | 115 +++++++++
- hw/display/vhost-user-media.c               | 388 ++++++++++++++++++++++++++++
- hw/virtio/virtio.c                          |   3 +-
- include/hw/virtio/vhost-user-media.h        |  46 ++++
- include/standard-headers/linux/virtio_ids.h |   1 +
- 8 files changed, 566 insertions(+), 1 deletion(-)
----
-base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
-change-id: 20260901-virtio-media-81b38a604aaa
+diff --git a/hw/display/vhost-user-media-pci.c b/hw/display/vhost-user-media-pci.c
+index 3e09fcfdd0..7681f7505d 100644
+--- a/hw/display/vhost-user-media-pci.c
++++ b/hw/display/vhost-user-media-pci.c
+@@ -13,12 +13,18 @@
+ #include "hw/virtio/vhost-user-media.h"
+ #include "hw/virtio/virtio-pci.h"
+ 
++/* BAR 2 is used for the shared memory region exposed to the guest */
++#define VIRTIO_MEDIA_PCI_SHM_BAR 2
++
++#define VIRTIO_MEDIA_PCI_SHMCAP_ID_SHM 0
++
+ #define TYPE_VHOST_USER_MEDIA_PCI "vhost-user-media-pci-base"
+ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserMEDIAPCI, VHOST_USER_MEDIA_PCI)
+ 
+ struct VHostUserMEDIAPCI {
+     VirtIOPCIProxy parent_obj;
+     VHostUserMEDIA vdev;
++    MemoryRegion shmbar;
+ };
+ 
+ static const Property vumedia_pci_properties[] = {
+@@ -32,14 +38,43 @@ static void vumedia_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+ {
+     VHostUserMEDIAPCI *dev = VHOST_USER_MEDIA_PCI(vpci_dev);
+     DeviceState *dev_state = DEVICE(&dev->vdev);
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
++    VirtioSharedMemory *shmem;
++    uint64_t shm_size;
+ 
+     if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
+         vpci_dev->nvectors = 1;
+     }
+ 
++    if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
++        error_setg(errp, "modern-pio-notify is not supported due to PCI BAR "
++                         "layout limitations");
++        return;
++    }
++
+     if (!qdev_realize(dev_state, BUS(&vpci_dev->bus), errp)) {
+         return;
+     }
++
++    shmem = virtio_find_shmem_region(vdev, VIRTIO_MEDIA_PCI_SHMCAP_ID_SHM);
++    if (!shmem) {
++        error_setg(errp, "vhost-user-media: missing shared memory region");
++        return;
++    }
++    shm_size = memory_region_size(&shmem->mr);
++
++    memory_region_init(&dev->shmbar, OBJECT(vpci_dev),
++                       "vhost-media-pci-shmbar", shm_size);
++    memory_region_add_subregion(&dev->shmbar, 0, &shmem->mr);
++    virtio_pci_add_shm_cap(vpci_dev, VIRTIO_MEDIA_PCI_SHM_BAR, 0,
++                           shm_size, VIRTIO_MEDIA_PCI_SHMCAP_ID_SHM);
++
++    /* After 'realized' so the memory region exists */
++    pci_register_bar(&vpci_dev->pci_dev, VIRTIO_MEDIA_PCI_SHM_BAR,
++                     PCI_BASE_ADDRESS_SPACE_MEMORY |
++                     PCI_BASE_ADDRESS_MEM_PREFETCH |
++                     PCI_BASE_ADDRESS_MEM_TYPE_64,
++                     &dev->shmbar);
+ }
+ 
+ static void vumedia_pci_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/display/vhost-user-media.c b/hw/display/vhost-user-media.c
+index 14edc7c668..eaf99dc6a2 100644
+--- a/hw/display/vhost-user-media.c
++++ b/hw/display/vhost-user-media.c
+@@ -19,6 +19,7 @@
+ #include "standard-headers/linux/virtio_ids.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/vhost-user-media.h"
++#include "migration/blocker.h"
+ 
+ static const int feature_bits[] = {
+     VIRTIO_F_VERSION_1,
+@@ -259,8 +260,9 @@ static void vu_media_device_realize(DeviceState *dev, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostUserMEDIA *media = VHOST_USER_MEDIA(dev);
++    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+     struct vhost_virtqueue *vhost_vqs;
+-    int ret;
++    int ret, nregions;
+ 
+     if (!media->conf.chardev.chr) {
+         error_setg(errp, "vhost-user-media: chardev is mandatory");
+@@ -290,9 +292,47 @@ static void vu_media_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    ret = media->vhost_dev.vhost_ops->vhost_get_shmem_config(&media->vhost_dev,
++                                                             &nregions,
++                                                             memory_sizes,
++                                                             errp);
++    if (ret < 0) {
++        goto q_fail;
++    }
++
++    if (!nregions || !memory_sizes[0]) {
++        error_setg(errp, "vhost-user-media: backend did not provide "
++                         "shared memory region 0");
++        goto q_fail;
++    }
++
++    if (memory_sizes[0] % qemu_real_host_page_size() != 0) {
++        error_setg(errp, "shared memory region 0 size must be a multiple "
++                         "of the host page size");
++        goto q_fail;
++    }
++
++    if (media->vhost_dev.migration_blocker == NULL) {
++        error_setg(&media->vhost_dev.migration_blocker,
++                   "Migration disabled: devices with VIRTIO Shared Memory "
++                   "Regions do not support migration yet.");
++        ret = migrate_add_blocker_normal(&media->vhost_dev.migration_blocker,
++                                         errp);
++        if (ret < 0) {
++            goto q_fail;
++        }
++    }
++
++    virtio_new_shmem_region(vdev, 0, memory_sizes[0]);
++
+     qemu_chr_fe_set_handlers(&media->conf.chardev, NULL,
+                              NULL, vu_media_event,
+                              NULL, (void *)dev, NULL, true);
++    return;
++
++q_fail:
++    vhost_dev_cleanup(&media->vhost_dev);
++    do_vhost_user_cleanup(vdev, media, vhost_vqs);
+ }
+ 
+ static void vu_media_device_unrealize(DeviceState *dev)
 
-Best regards,
 -- 
-Albert Esteve <aesteve@redhat.com>
+2.55.0
 
 
