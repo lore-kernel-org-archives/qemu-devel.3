@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8FAC624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61EE1C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1OMx-0000vv-W7; Tue, 01 Sep 2026 09:17:44 -0400
+	id 1x1OMz-0000w7-EK; Tue, 01 Sep 2026 09:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1OMv-0000vY-9j
+ id 1x1OMv-0000vW-0S
  for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:41 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1OMt-000774-HS
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:41 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-c252e703fa3so694917566b.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:38 -0700 (PDT)
+ id 1x1OMs-00076n-BW
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:40 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-c25366c9b42so102254766b.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268658; x=1788873458; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=KvmZdE5sHZHsp8nQ4URbmqmTTXnudp+zBG9tJOq6/2M=;
- b=Qun7uIPJWYbfTrQ7bCJkNzefhlLDsX/DywxdRRhRx48dO9p2yamlBQy6M72E9ZJGLa
- xQa7R4S5FuUjDA6SU8aCDWX68bqQMbDmnKHAtl0+L9FaQ76HYjZfTPnu5nNcJFa5uffH
- jBiVz/SV9zFIfLDa/w927m7Nk/OU9ooFOi6Z8EkoGAmL1IC2tVvSsAhdFkNA+9TY28nM
- wY3HB5JSRurLHg37HFhsy9tvzfNvBSOL1vdLZldwhkcawSStzXk0uguiOj7UJLhmcc0m
- PjzrrtxgzNpF5OzQGzhamDoUu0LHCJb5/ldYX6YJMXTU9Ljog1VpRQtXuRsKwydQxKiD
- m91g==
+ d=linaro.org; s=google; t=1788268656; x=1788873456; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ygClSMwDjEFyP3afUj3IeO5rZvDHlKl8+PhkVw27Jz8=;
+ b=kXlmQ8U4gmWnjTBK8umJk/ujrd7wNL3T7FuMJ/VOtAAOlDyqzZo4K+lKCt51avelr/
+ VLnR00aMFFtTH9RrdyMiAf3dL2wplhwUXZeD4AR19hxxsYuaV1Adtu4lyteJ4jla/2Wu
+ SuKY7ekK59uyxgdhSKgW0O6cj2XAx/KwGvJzHS0n2/Gib+bVNnC9XV3rDyI5IujtMWYN
+ T3h2WQQgRPyYlhIZOLcV+jYaBmh2mJ7VxDOVb12C42WPrs8OazEqtw3n4BQASwUnPo5o
+ LghHwxOWfC14+OGNBUwpNpmPF9OnM+dG2MlxCHK1Ov565xWTCZ7cLaNydbcV01i9mdxx
+ 2UlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268658; x=1788873458;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=KvmZdE5sHZHsp8nQ4URbmqmTTXnudp+zBG9tJOq6/2M=;
- b=dHnUYzGCH7whjOT/hZqWv1OFaSA4VY3GnO4Ym1wg3wAM2OeyglOGHVkO3R+kvkH2Qk
- IRDLXFXBgPFrxJEW7sENmefUCxkhGQCFxz0Q1fjcHIv4ZNxOUQLkl0pS1vsAVuIEb8vp
- pS9aFiUzyyhQj8x+ZecWVUj3vryAVRPhOrX2tUgojGYzvlSGU/ckRtWfsExl/ltaXIle
- WwV/5gXcvp0jQT+L26twbjwTJpsfMGZYbyQ1juKIuGkBNxa4i3czPnrK6NM/CbHTH1vW
- EzV3y7ZHn+txKFuX3Ase4e1LQWlqKAAz+R4iIlKpI4zmZiE3o6fK5lwCyL6RFjvBiXoC
- P9Sg==
-X-Gm-Message-State: AFuF++lcNzV7ist7TEK/PYIB1oHCjCFDrkCOz07ZKF2i4HZNj4O1BNpF
- srZomfm73uibvCReRNqW/GJyfXxgTdIorZAFHXfHSmyJHFcFvEMw+rf54hGI2M9Z08OXcV1GRT5
- FevMhRL0=
-X-Gm-Gg: AR+sD11eYtCrUd73mIxYfzexwJH9gmvWzfxNULeDRtwFO0pKD8FKrK/yUrH7x1ESEKw
- 9rShTMJyrKgqIS+KRtihRl9PjuBOC4XkB9KsOBo7kZvYql+g5+6FiFU4VFqeRv9WxDGnq6jvUZA
- o62vaKH5W2GcpBs5/UO5EjRCZWlVcD39rq+F7YyxlExGuUgT2ob8LoeMzslJl4Gjzt6LrPe2MwK
- IE1jflXC4rgAp1Pjz0CQeD0k5CrAuExRMechx0NTcGsxj94QeHl4pBKWXpDLjmxpQWuMSa3CwxY
- TfJcIgPZF6/yFANUzPX9BUJ0PSzT/N2NUQqJShrTg+EnGmeE8/K+SAgVrzVo4YdC7snx2Bj5xba
- wL6krb/iPVn8OXpuXQl9LhHvu8R0z1vjCc/vLxB/smGWwgW1NSV3aZS1rnFfHcCpzxfIlx8OleF
- tz+rnXwAIt5BEWUIJSm7ITKaixJEcZdXusM9/R7GPxXe2nFV9rx0LZU4ZHt2J9QzzHxZtuwKiJU
- C7OLUXXxRP9JJB8ggOt3YdckWstEA1JpDRAhu6e7v/YfjEuJHi2puT1yNP5M6zIhvbkYp69Tm5g
- 6O2v
-X-Received: by 2002:a17:906:2545:b0:c25:977e:5377 with SMTP id
- a640c23a62f3a-c25b3bde234mr501456966b.10.1788268657757; 
- Tue, 01 Sep 2026 06:17:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788268656; x=1788873456;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ygClSMwDjEFyP3afUj3IeO5rZvDHlKl8+PhkVw27Jz8=;
+ b=LDpk2TtIiF0SmXgsoCEbczxpP443i+/hnBsKnsXziJUgO0CPIZorGPu8D9KhXkBusM
+ dFgpsO66NfmsTpeiV8ya3CxDCReGURHMOr+2rWXrekGzB9m0JPzbyqAVMI3z/0q4tG8c
+ 8+i4YFSX/PNEbz+cJX/ac0JmiZnzgpIgSgyJ2VtjClxRioTOUzgZ5iso8iUTRpDRJrNl
+ e/s70PNpgxInSoOHJ3zN9vtrflWmU5OBfSvMfgTQU3G7cZiYfpMksDEbldB8bnLKvZkl
+ UKBq2F0TBGkHeVP5/oGdz1ZK4l22/7qAcpzoiNQsbv/cMLRSMHrGIbOZRYkxsN/qJV8j
+ zydQ==
+X-Gm-Message-State: AFuF++mfpzFcAWNCFJyW0xksXwzjaTg8UQwRodM77FlwuwkWXnZ3ezNy
+ lbX2EMqC1L7+6rVz8StlLH0yRPh/4StNKcngzMwZWcfEGlq+qeZWWdLZEBW7S+7+xZjhzrv9oXo
+ ytQKS9gA=
+X-Gm-Gg: AR+sD104Z2RHsjNkEVrJ0Gba1hjv6YDNpMVacQyQXucY/F1bgj2aYqAPJh+qlR919Rd
+ 68Hj0drRFIyGEsA6OvLHN4sQOViW68uaQFHPBBlsyDnutTB/DHsd05mtHj3SxZFUCVY96caRFpk
+ b/XwqLGpad3bV2fHS3RvOflIUCxPsXZKI5mLf1h+x2Z7KbtOLLf9l3srr5pc7Ps4EkIIq7P7JKT
+ xdSmo3uTWxkN4fssrrJ+tBBcNcELtmMH4kEh/+ucNWFOFINEB6B2zkfj6YCdli3337GsTJqsshm
+ 8ELOexDKsUOoNdYj1dSlPo+BOA9LNA49vnd5J5qVvlNjSoqCVYBMckJHYvZ4049RS9HvHEwwURG
+ t75ZpoIYa1XlSO7b4CNf+oEy69Kc7nT2A/QB0cp9KYgrG9QYl2PHDdlOBYNHmKS/1vBv2sMAjqD
+ pB1UuNbG9Esj1uG1qdZw+BzuM8fMFNHYypbDNo3QSYgjSIFy1FJW3Rw9IWDztp5DbmH0ZbgLzoK
+ UTfU1sDNzQLXydgWXpB5JNEm0RYGZb8VLOXC+/HQtoqIZcM6ruOPZWaRlwSDf9uAA4xbCk=
+X-Received: by 2002:a17:906:730e:b0:c25:254:292e with SMTP id
+ a640c23a62f3a-c25567a9274mr2115403966b.0.1788268655129; 
+ Tue, 01 Sep 2026 06:17:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.36
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:17:36 -0700 (PDT)
+ Tue, 01 Sep 2026 06:17:34 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/58] target/arm: Correct reset value of SCTLR for arm926,
- arm1026
-Date: Tue,  1 Sep 2026 14:16:37 +0100
-Message-ID: <20260901131732.2263947-4-peter.maydell@linaro.org>
+Subject: [PULL 01/58] hw/char/pl011: support backend hotswap
+Date: Tue,  1 Sep 2026 14:16:35 +0100
+Message-ID: <20260901131732.2263947-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,56 +103,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the arm926 CPU we reset the SCTLR to 0x00090078.  This is not the
-value specified in the ARM926EJ-S TRM (ARM DDI 0198E), which states
-that bits 16 and 18 are SBO, bit 17 is SBZ, and bits [31:19] are SBZ.
-It's also not the value seen on real hardware.
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Similarly, for the arm1026 we use the same SCTLR reset value but
-the TRM says that bits 18 and 16 are the SBO ones.
+Currently, when Incus issues "chardev-change" QMP command to change
+chardev backend from ringbuf to socket it receives an error (with aarch64 VM):
+"Chardev user does not support chardev hotswap" [1], [2]
 
-This has been wrong in QEMU since 2007 when we first started actively
-resetting the SCTLR to some fixed value rather than zero.
+Let's fix this by properly implementing BackendChangeHandler for pl011.
 
-This wrong value didn't affect any of QEMU's behaviour, because we
-don't implement any handling of the old pre-v6 meanings of these bits
-(which were IMPDEF), and their v8 reuse is guarded by appropriate
-version checks.
+Please, note that we have to "replay" CHR_IOCTL_SERIAL_SET_BREAK, because
+if BRK bit was set before backend change (i.e. (s->lcr & LCR_BRK) is true),
+then after change we need to send break to a new backend too.
 
-Correct the reset values to 0x00050078 (i.e set bit 18 and not 19).
-
-Cc: qemu-stable@nongnu.org
-Fixes: 610c3c8afd99f4f11 ("Reset ARM cp15.c1_sys to default values. Fix XScale cp15 accesses.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4202
+Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-console-on-arm-architecture/23096/3 [1]
+Link: https://github.com/lxc/distrobuilder/issues/892 [2]
+Reported-by: Stéphane Graber <stgraber@stgraber.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Message-id: 20260821104832.151452-1-alexander@mihalicyn.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821114138.4068582-1-peter.maydell@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/cpu32.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/char/pl011.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index bc07e33877a..241c1f5e966 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -33,7 +33,7 @@ static void arm926_initfn(Object *obj)
-     cpu->midr = 0x41069265;
-     cpu->reset_fpsid = 0x41011090;
-     cpu->ctr = 0x1dd20d2;
--    cpu->reset_sctlr = 0x00090078;
-+    cpu->reset_sctlr = 0x00050078;
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index cb12c3e224f..5ad9e7358d5 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -425,6 +425,11 @@ static void pl011_loopback_break(PL011State *s, int brk_enable)
+     }
+ }
  
-     /*
-      * ARMv5 does not have the ID_ISAR registers, but we can still
-@@ -74,7 +74,7 @@ static void arm1026_initfn(Object *obj)
-     cpu->midr = 0x4106a262;
-     cpu->reset_fpsid = 0x410110a0;
-     cpu->ctr = 0x1dd20d2;
--    cpu->reset_sctlr = 0x00090078;
-+    cpu->reset_sctlr = 0x00050078;
-     cpu->reset_auxcr = 1;
++static inline void pl011_set_break(PL011State *s, int brk_enable)
++{
++    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK, &brk_enable);
++}
++
+ static void pl011_write(void *opaque, hwaddr offset,
+                         uint64_t value, unsigned size)
+ {
+@@ -462,9 +467,8 @@ static void pl011_write(void *opaque, hwaddr offset,
+             pl011_reset_tx_fifo(s);
+         }
+         if ((s->lcr ^ value) & LCR_BRK) {
+-            int break_enable = value & LCR_BRK;
+-            qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
+-                              &break_enable);
++            bool break_enable = value & LCR_BRK;
++            pl011_set_break(s, break_enable);
+             pl011_loopback_break(s, break_enable);
+         }
+         s->lcr = value;
+@@ -660,12 +664,29 @@ static void pl011_init(Object *obj)
+     s->id = pl011_id_arm;
+ }
  
-     /*
++static int pl011_be_change(void *opaque);
++
++static inline void pl011_set_handlers(PL011State *s)
++{
++    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
++                             pl011_event, pl011_be_change, s, NULL, true);
++}
++
++static int pl011_be_change(void *opaque)
++{
++    PL011State *s = opaque;
++
++    pl011_set_handlers(s);
++    pl011_set_break(s, s->lcr & LCR_BRK);
++
++    return 0;
++}
++
+ static void pl011_realize(DeviceState *dev, Error **errp)
+ {
+     PL011State *s = PL011(dev);
+ 
+-    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
+-                             pl011_event, NULL, s, NULL, true);
++    pl011_set_handlers(s);
+ }
+ 
+ static void pl011_reset(DeviceState *dev)
 -- 
 2.43.0
 
