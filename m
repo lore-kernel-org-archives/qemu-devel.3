@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F901C624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31D9C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONZ-0001Dv-FW; Tue, 01 Sep 2026 09:18:21 -0400
+	id 1x1OND-00013N-LG; Tue, 01 Sep 2026 09:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONX-0001Ct-0R
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:19 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1x1ONC-00012K-0C
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:58 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONV-0007Ju-Df
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:18 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c15e592da74so567781866b.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:17 -0700 (PDT)
+ id 1x1ONA-0007Bw-3T
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:57 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-69c108fee7fso6253758a12.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268696; x=1788873496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788268674; x=1788873474; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=YSrvZ4Rhcw1n3WZsHzE3E0qS5jCZCm+NTt1dWv0DclQ=;
- b=HCfVQebw/G20UYaiS33zcmlY93n5b+7AJZtUNNbaWq+X+2S4t3OZLznTlWxAO8hgmo
- qRBYOcaRoE8DONY+bzdTml3xbm46Q4jcKl6IiXW/aw3BCeJBYs2GccS3jNJMeeRMkKZ/
- k2mKojZw5wlKj7O3Q73lTTFv2GyDBjY3l4+pYy0sKK91blcpM+lQrI6/S+S7Dd1LCX2p
- osnV/7SX8p43nVZ4coIdSTCdp0z9Qw1OVxpzCjDEWickW28p1KF1vDimBtDWCWcbRNVA
- cfABkrsWQeNZnrM3iWgg06FmSCxXJUGwX9g2ZRexEpickXIx1vkM+PgTrI0fL3BqQrrR
- ethA==
+ bh=o1nePPo8i10ilYcV4CD8N6UBKH0v+1I5NmABoSXkSQs=;
+ b=W38HtqgfwgzqDKBPUKuJMyxf7eNzejvJiwN/iOo/pVlQOU5eaZgnsMHSs4yG/WJQ7C
+ fxHKK5x0/PqqWozH7nIohKXT0/bmbEBgiALrGmxGNVGkORljZxXvknHaEvOfeSVOzu0U
+ vU2bAN0yZe6JjV1Oe4egHBJonFuxkWJJWe2KisgGQF8QBmz8Nap9J1h3jlyOBEGNW2ie
+ NXe1+bTnsm04uH5V5Xy47OyxizwhaxYeIcovEAGypifWiAJAZqyALHvhVB0x8RJjUjVx
+ rCLR0feqwa5I1jHGRhLk+fzQdPXzGTlH76nJzWFwuLdXW9rMvqxX/1hHxAxy85zoRB3T
+ BfOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268696; x=1788873496;
+ d=1e100.net; s=20251104; t=1788268674; x=1788873474;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=YSrvZ4Rhcw1n3WZsHzE3E0qS5jCZCm+NTt1dWv0DclQ=;
- b=DaXSFAeVF59x12Ah5YOy3JpymFUlwlKmo5dIePZMEhLIzY4fTDXWlRvdPzacSOVzYa
- 3QpGUMNk/lrv4EvqbKpLgRWpM4EFmblAhlCmUWeEpRRxmgdCW/vcPlt1V5sr411xlR8X
- f2YX4CJj5uLXgTXq/NW7fiTMHrcwkMT8i6n9Pg9fMd33ipnBdLqUMeC/Qa1NG3gRsAO+
- za91z7YwV+m/3gKPX69GX3vx1IkiSbn3Tq4ne0fVqcyJgsWaqHKkLRzv7PO8OZO0lXty
- 51Dsad/aEMqVc4/N/dk3hq+WnYsiStBKSiGlvXLoxp2w6hijj4Z88rm8YeHZgChCkuyE
- WOaw==
-X-Gm-Message-State: AFuF++lbYXRsEVSFD7BDsnCtmwWAEBYRDAjBn4EgG+tNKZyNxHzt8vcB
- 398jO60Oy8hIaIF8R0ZaI9/x9b7jBi/qEBBSTfqvZuRKkCqSmGLXTCTUbyTbjV78WGPc5tMVoYS
- XeUovDb0=
-X-Gm-Gg: AR+sD13e6UmvnZGM7zzoklmQYQBiqEQVQRLiF8whls/MhMSkiZxso1xfcDWyV4qBWHR
- cgRYHB6IZ0pSNrWYW3gn5vFy+rmMqSrEPGldMmmvvWCLMVyPsmnc/9jzsnY2ca8lrln0DVlG8sa
- xrnIwhnALMWtdTusE0tK2KqmeEZXHigOBUOXd+IV46osk4UJPmM9Uq7QQTFS4fV7TJJg2qNZhEi
- k8gtX0tp6/MMq44Gx8HrtX1W5Bf67bPEYM4xAkQVHIDcut4YXd0+7njsGKj2glj0BxDHBnbJl4s
- iBl3pvXy7/Nq9w+/y/A2RzF/EXlgJ5os1v2kQZ3cOfQjv5F54ul5LSef/udvkiVCOx/pRwaSh/w
- j4C+1MiIbQzMsWasHsyynuKMkBY7ecAM3xdT8EwPwTFxmoyLsBXC3xbA3rvKtSPkEPWNWIXoJUI
- eS4pmZZ36i/RYg01fhGZ4+xX4RhX0p36yyhl5qn1h/iCp/SwQwI64CTwMG7n5pA2TTSynvZHaxq
- 2bjo5+AxnDi3aSB8+1ba4grSGY5Xx2JAfvk9BuLqapxljI3S7l8fo04fNkAl7zIos+06e05mGBW
- uYcs
-X-Received: by 2002:a17:907:1b20:b0:c25:89fa:5a8e with SMTP id
- a640c23a62f3a-c2589fa6169mr1219832866b.10.1788268695900; 
- Tue, 01 Sep 2026 06:18:15 -0700 (PDT)
+ bh=o1nePPo8i10ilYcV4CD8N6UBKH0v+1I5NmABoSXkSQs=;
+ b=JDraTHxivi3YZ/vyUbcQAqFDYWSpqHb6qA2xmeO9c0JLnuUeucMSOMgALTCpnK6IzX
+ lC7ib6to1t5d6YJngXKHIZe7vRQUlw7ofJGzwqM2Vs/+eUhwjg6Srr7CNsD+8lpWYCJp
+ ltvgEBfiwnHEK98DzGONRUBkgHqQnqdtTlBoXs1NAuov9Ut6leA/DfrzdAseGbMb/tkm
+ UZiYokxS0hATgsvdccuWU1Tz4Vlk0OwcZJa8gbeXNGga1Vlr4vV4o9Bj+mL9ErDinh9s
+ 2hVEvnRINQYF9EJf7kS8Z1FxEWHfSpF6rsRpg2Nw4sQOfr1GRWoGXMEOVDuRZSwBbZvt
+ c/Fg==
+X-Gm-Message-State: AFuF++kTS3/TppbfCvC7jX2QGPSvPVWrvGIQ/kKpMD34fZj1SFOJw6/b
+ 3Bq6eJ2t6ioFkbT7pjBQeMP3B1Ez1LLiLAaOjRMpALWC7MtTRVbulh2vPSLM1hS/8ybqw04sS1Y
+ Jm+Dg28A=
+X-Gm-Gg: AR+sD12+GURV816M3bomm3M09pxzonGA8VfKZZl3roL6jyaUuviIi7LrvK1XB8dBNzD
+ blpye8aQqBB9dyXobFZqmWVtatUe61ruojB/tuzUXEEnlydIrgHOdaSZHXhqKUdOPcCJUzwWWSl
+ ZCJzu70qH9+5MvrdQ4JwiqIqBhPpQNaNNmiCdIQgCkrMkbcjRwyk3ZWLOKQcP9J9gtOrSkbBmnc
+ yXmCR9ouE9yGeN27BUZhLyTF/SUbW23RdZy3LN/hpw4ueaEm+Q/jxD6F0OA+phDAg2u0qfEwY0Q
+ mdWU49u8Tf9nzbkeNEGeiQx7twuTtai0xrpL42OQh6kBPSsqN9D+lX7TnEGydGbO0V4CesIoB4g
+ bDyBCTYhS+crXxZVvvtxSGBYdOB3s2xXztnTuuUOUQYacDM6zan43IM6m5tsfOcKGbF7CSwK/M4
+ i5UA2cVYCtTRl8RxUmY6TXpDwcawxYWBWKdGfLZ7LryhMXZM3l+nEOFuW1msj9Ld3qt7SHOFGv9
+ tclFE86r+hPCvjevOXTalrkLOuJ96XHp3DC7Lth2UlYIEo1c/uPqonFixmbPxdVrTY0fRA=
+X-Received: by 2002:a17:907:6d24:b0:c25:4cff:5d01 with SMTP id
+ a640c23a62f3a-c25571b1b5amr2076552066b.18.1788268674508; 
+ Tue, 01 Sep 2026 06:17:54 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.15
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:18:15 -0700 (PDT)
+ Tue, 01 Sep 2026 06:17:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 42/58] target/arm: Remove DO_ZPZZ_AH_FP_B16 from translate-sme.c
-Date: Tue,  1 Sep 2026 14:17:16 +0100
-Message-ID: <20260901131732.2263947-43-peter.maydell@linaro.org>
+Subject: [PULL 20/58] hw/misc/mps2-fpgaio.c: add GPIOALT2 register
+Date: Tue,  1 Sep 2026 14:16:54 +0100
+Message-ID: <20260901131732.2263947-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,69 +101,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Simon Xu <simonxhy0404@gmail.com>
 
-Expand the macro at each use site.
-Merge the two arrays and index by fpcr_ah.
+Add GPIOALT2 register for new an555 board.
+Implement register access as RW with LOG_UNIMP for writes.
+Add "has-gpioalt2" property to make each board configurable.
+Add gpioalt2 vmstate subsection for device state migration.
 
+Reviewed-by: Owen Giles <owen.giles@hpe.com>
+Reviewed-by: Robert Elliott <elliott@hpe.com>
+Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+Message-Id: <20260805153005.9989-10-simonxhy0404@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260826174213.614571-10-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-sve.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ hw/arm/mps2-tz.c              |  6 ++++++
+ hw/misc/mps2-fpgaio.c         | 35 +++++++++++++++++++++++++++++++++++
+ include/hw/misc/mps2-fpgaio.h |  2 ++
+ 3 files changed, 43 insertions(+)
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 6e984d02f82..f65c2b0af53 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4425,19 +4425,6 @@ TRANS_FEAT_NONSTREAMING(FTSMUL, aa64_sve, gen_gvec_fpst_arg_zzz,
-  *** SVE Floating Point Arithmetic - Predicated Group
-  */
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index d6d178642ba..79f53a0d09e 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -122,6 +122,7 @@ struct MPS2TZMachineClass {
+     uint32_t fpgaio_num_leds; /* Number of LEDs in FPGAIO LED0 register */
+     bool fpgaio_has_switches; /* Does FPGAIO have SWITCH register? */
+     bool fpgaio_has_dbgctrl; /* Does FPGAIO have DBGCTRL register? */
++    bool fpgaio_has_gpioalt2; /* Does FPGAIO have GPIOALT2 register? */
+     int numirq; /* Number of external interrupts */
+     int uart_overflow_irq; /* number of the combined UART overflow IRQ */
+     uint32_t init_svtor; /* init-svtor setting for SSE */
+@@ -494,6 +495,7 @@ static MemoryRegion *make_fpgaio(MPS2TZMachineState *mms, void *opaque,
+     qdev_prop_set_uint32(DEVICE(fpgaio), "num-leds", mmc->fpgaio_num_leds);
+     qdev_prop_set_bit(DEVICE(fpgaio), "has-switches", mmc->fpgaio_has_switches);
+     qdev_prop_set_bit(DEVICE(fpgaio), "has-dbgctrl", mmc->fpgaio_has_dbgctrl);
++    qdev_prop_set_bit(DEVICE(fpgaio), "has-gpioalt2", mmc->fpgaio_has_gpioalt2);
+     sysbus_realize(SYS_BUS_DEVICE(fpgaio), &error_fatal);
+     return sysbus_mmio_get_region(SYS_BUS_DEVICE(fpgaio), 0);
+ }
+@@ -1350,6 +1352,7 @@ static void mps2tz_an505_class_init(ObjectClass *oc, const void *data)
+     mmc->fpgaio_num_leds = 2;
+     mmc->fpgaio_has_switches = false;
+     mmc->fpgaio_has_dbgctrl = false;
++    mmc->fpgaio_has_gpioalt2 = false;
+     mmc->numirq = 92;
+     mmc->uart_overflow_irq = 47;
+     mmc->init_svtor = 0x10000000;
+@@ -1384,6 +1387,7 @@ static void mps2tz_an521_class_init(ObjectClass *oc, const void *data)
+     mmc->fpgaio_num_leds = 2;
+     mmc->fpgaio_has_switches = false;
+     mmc->fpgaio_has_dbgctrl = false;
++    mmc->fpgaio_has_gpioalt2 = false;
+     mmc->numirq = 92;
+     mmc->uart_overflow_irq = 47;
+     mmc->init_svtor = 0x10000000;
+@@ -1418,6 +1422,7 @@ static void mps3tz_an524_class_init(ObjectClass *oc, const void *data)
+     mmc->fpgaio_num_leds = 10;
+     mmc->fpgaio_has_switches = true;
+     mmc->fpgaio_has_dbgctrl = false;
++    mmc->fpgaio_has_gpioalt2 = false;
+     mmc->numirq = 95;
+     mmc->uart_overflow_irq = 47;
+     mmc->init_svtor = 0x10000000;
+@@ -1457,6 +1462,7 @@ static void mps3tz_an547_class_init(ObjectClass *oc, const void *data)
+     mmc->fpgaio_num_leds = 10;
+     mmc->fpgaio_has_switches = true;
+     mmc->fpgaio_has_dbgctrl = true;
++    mmc->fpgaio_has_gpioalt2 = false;
+     mmc->numirq = 96;
+     mmc->uart_overflow_irq = 48;
+     mmc->init_svtor = 0x00000000;
+diff --git a/hw/misc/mps2-fpgaio.c b/hw/misc/mps2-fpgaio.c
+index da78cb60701..208f9fd60fb 100644
+--- a/hw/misc/mps2-fpgaio.c
++++ b/hw/misc/mps2-fpgaio.c
+@@ -31,6 +31,7 @@
+ REG32(LED0, 0)
+ REG32(DBGCTRL, 4)
+ REG32(BUTTON, 8)
++REG32(GPIOALT2, 0xc)
+ REG32(CLK1HZ, 0x10)
+ REG32(CLK100HZ, 0x14)
+ REG32(COUNTER, 0x18)
+@@ -142,6 +143,9 @@ static uint64_t mps2_fpgaio_read(void *opaque, hwaddr offset, unsigned size)
+          */
+         r = 0;
+         break;
++    case A_GPIOALT2:
++        r = s->gpioalt2;
++        break;
+     case A_PRESCALE:
+         r = s->prescale;
+         break;
+@@ -210,6 +214,14 @@ static void mps2_fpgaio_write(void *opaque, hwaddr offset, uint64_t value,
+                       "MPS2 FPGAIO: DBGCTRL unimplemented\n");
+         s->dbgctrl = value;
+         break;
++    case A_GPIOALT2:
++        if (!s->has_gpioalt2) {
++            goto bad_offset;
++        }
++        qemu_log_mask(LOG_UNIMP,
++                      "MPS2 FPGAIO: GPIOALT2 unimplemented\n");
++        s->gpioalt2 = value;
++        break;
+     case A_PRESCALE:
+         resync_counter(s);
+         s->prescale = value;
+@@ -301,6 +313,24 @@ static void mps2_fpgaio_realize(DeviceState *dev, Error **errp)
+     }
+ }
  
--#define DO_ZPZZ_AH_FP_B16(NAME, FEAT, name, ah_name)                    \
--    static gen_helper_gvec_4_ptr * const name##_zpzz_fns[4] = {         \
--        gen_helper_##name##_b16, gen_helper_##name##_h,                 \
--        gen_helper_##name##_s, gen_helper_##name##_d                    \
--    };                                                                  \
--    static gen_helper_gvec_4_ptr * const name##_ah_zpzz_fns[4] = {      \
--        gen_helper_##ah_name##_b16, gen_helper_##ah_name##_h,           \
--        gen_helper_##ah_name##_s, gen_helper_##ah_name##_d              \
--    };                                                                  \
--    TRANS_FEAT(NAME, FEAT, gen_gvec_fpst_arg_zpzz,                      \
--               s->fpcr_ah ? name##_ah_zpzz_fns[a->esz] :                \
--               name##_zpzz_fns[a->esz], a)
--
- static gen_helper_gvec_4_ptr * const sve_fadd_zpzz_fns[4] = {
-     gen_helper_sve_fadd_b16,
-     gen_helper_sve_fadd_h,
-@@ -4465,8 +4452,23 @@ static gen_helper_gvec_4_ptr * const sve_fmul_zpzz_fns[4] = {
- TRANS_FEAT(FMUL_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fmul_zpzz_fns[a->esz], a)
- 
--DO_ZPZZ_AH_FP_B16(FMIN_zpzz, aa64_sme_or_sve, sve_fmin, sve_ah_fmin)
--DO_ZPZZ_AH_FP_B16(FMAX_zpzz, aa64_sme_or_sve, sve_fmax, sve_ah_fmax)
-+static gen_helper_gvec_4_ptr * const sve_fmin_fns[4][2] = {
-+    { gen_helper_sve_fmin_b16, gen_helper_sve_ah_fmin_b16 },
-+    { gen_helper_sve_fmin_h, gen_helper_sve_ah_fmin_h },
-+    { gen_helper_sve_fmin_s, gen_helper_sve_ah_fmin_s },
-+    { gen_helper_sve_fmin_d, gen_helper_sve_ah_fmin_d },
-+};
-+TRANS_FEAT(FMIN_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-+           sve_fmin_fns[a->esz][s->fpcr_ah], a)
++static bool needed_gpioalt2(void *opaque)
++{
++    MPS2FPGAIO *s = MPS2_FPGAIO(opaque);
 +
-+static gen_helper_gvec_4_ptr * const sve_fmax_fns[4][2] = {
-+    { gen_helper_sve_fmax_b16, gen_helper_sve_ah_fmax_b16 },
-+    { gen_helper_sve_fmax_h, gen_helper_sve_ah_fmax_h },
-+    { gen_helper_sve_fmax_s, gen_helper_sve_ah_fmax_s },
-+    { gen_helper_sve_fmax_d, gen_helper_sve_ah_fmax_d },
++    return s->has_gpioalt2;
++}
++
++static const VMStateDescription mps2_fpgaio_gpioalt2_vmstate = {
++    .name = "mps2-fpgaio/gpioalt2",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = needed_gpioalt2,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(gpioalt2, MPS2FPGAIO),
++        VMSTATE_END_OF_LIST()
++    }
 +};
-+TRANS_FEAT(FMAX_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-+           sve_fmax_fns[a->esz][s->fpcr_ah], a)
++
+ static const VMStateDescription mps2_fpgaio_vmstate = {
+     .name = "mps2-fpgaio",
+     .version_id = 3,
+@@ -317,6 +347,10 @@ static const VMStateDescription mps2_fpgaio_vmstate = {
+         VMSTATE_INT64(pscntr_sync_ticks, MPS2FPGAIO),
+         VMSTATE_END_OF_LIST()
+     },
++    .subsections = (const VMStateDescription * const []) {
++        &mps2_fpgaio_gpioalt2_vmstate,
++        NULL
++    }
+ };
  
- static gen_helper_gvec_4_ptr * const sve_fmaxnum_fns[4] = {
-     gen_helper_sve_fmaxnum_b16,
+ static const Property mps2_fpgaio_properties[] = {
+@@ -326,6 +360,7 @@ static const Property mps2_fpgaio_properties[] = {
+     DEFINE_PROP_UINT32("num-leds", MPS2FPGAIO, num_leds, 2),
+     DEFINE_PROP_BOOL("has-switches", MPS2FPGAIO, has_switches, false),
+     DEFINE_PROP_BOOL("has-dbgctrl", MPS2FPGAIO, has_dbgctrl, false),
++    DEFINE_PROP_BOOL("has-gpioalt2", MPS2FPGAIO, has_gpioalt2, false),
+ };
+ 
+ static void mps2_fpgaio_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/misc/mps2-fpgaio.h b/include/hw/misc/mps2-fpgaio.h
+index edd9f231212..75126866169 100644
+--- a/include/hw/misc/mps2-fpgaio.h
++++ b/include/hw/misc/mps2-fpgaio.h
+@@ -40,11 +40,13 @@ struct MPS2FPGAIO {
+     uint32_t num_leds;
+     bool has_switches;
+     bool has_dbgctrl;
++    bool has_gpioalt2;
+ 
+     uint32_t led0;
+     uint32_t prescale;
+     uint32_t misc;
+     uint32_t dbgctrl;
++    uint32_t gpioalt2;
+ 
+     /* QEMU_CLOCK_VIRTUAL time at which counter and pscntr were last synced */
+     int64_t pscntr_sync_ticks;
 -- 
 2.43.0
 
