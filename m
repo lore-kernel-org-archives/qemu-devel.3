@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CFCC624CF
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 07:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BCAC624C6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 07:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ISX-0002nC-2I; Tue, 01 Sep 2026 02:59:05 -0400
+	id 1x1ISX-0002nL-6c; Tue, 01 Sep 2026 02:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x1ISV-0002mi-9b; Tue, 01 Sep 2026 02:59:03 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ id 1x1ISU-0002mU-KQ; Tue, 01 Sep 2026 02:59:02 -0400
+Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x1ISS-0001TT-T8; Tue, 01 Sep 2026 02:59:03 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4hYxXy1ldMz66t4;
- Tue,  1 Sep 2026 06:58:58 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 06:58:58 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.102])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hYxXy0r1yz1xq6; Tue,  1 Sep 2026 06:58:58 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ id 1x1ISS-0001T0-JY; Tue, 01 Sep 2026 02:59:02 -0400
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [79.137.60.223])
+ by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4hYxXn14Npz3xwZ;
+ Tue,  1 Sep 2026 06:58:49 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 06:58:48 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.33])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hYxXm6qm8z1xrg; Tue,  1 Sep 2026 06:58:48 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 31E32203FDC; 
- Tue,  1 Sep 2026 06:58:56 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 8F50112E3FDD;
+ Tue,  1 Sep 2026 06:58:47 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-103G0058e7b7037-b4b8-4ade-9c73-95526049b310,
+ (GARM-104R005a8a5af55-fcfa-470e-99ef-dffef0e3ba18,
  60FF1D1BA71F1148B3CBA6CDBAED02576558214C) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <25088200-1f95-41ee-8ee6-127e0d7326c4@kaod.org>
-Date: Tue, 1 Sep 2026 08:58:55 +0200
+Message-ID: <790b50e4-9ddb-4463-bf22-5b6c8ccdcc70@kaod.org>
+Date: Tue, 1 Sep 2026 08:58:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/25] hw/sensor: tmp105: implement Resettable reset
+Subject: Re: [PATCH v2 02/25] hw/sensor: tmp105: name the parent object field
+ parent_obj
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -54,7 +55,7 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Emmanuel Blot <eblot@meta.com>
 References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
- <20260731-sanmiguel-bmc-locator-v2-3-1266926ba769@free.fr>
+ <20260731-sanmiguel-bmc-locator-v2-2-1266926ba769@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -99,23 +100,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-3-1266926ba769@free.fr>
+In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-2-1266926ba769@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 8624956237470215213
+x-ovh-tracer-id: 8622141487276207149
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFCz8ENcifGGc7lwMsh5Km2xuR+xdVhCLoxl+J2tovlCADjZE+WbMnanW7kgYgQe1Xb30hsAtuy6Zdh3JAhi6x2xIv0v1XCEdPl3zPVRXVt5hjCmOq/ZpuqEhKYNf8xVymhh8KyRxc6vTjsgFENdi6tszQlEq8FCwobqBFX8MEKZhFbq1M/+xzqMFrMBrJxefSUfZ2mAx/Mmj98zFs8rSYoGmSYa8hp4Qmxm+k7rl1SKe4/Mp3afxzMeOZDjd8oBqNZM63rfKRRkKDccYy/hmCmI66unOknYfrD9bhs8c9qkAUt7fGjDSuiUibfBtFU5ZtXhyuCJ/gU1dRq45DzfQKyHskdcOJWw9j9o0sQLPMyt202OOmOgUc6+vJb09nPPiTcrPvEgi8+oiKiQ4Xa4E8ykiMHmYTJ9KJ5Z+boWd/tXinCRM9IU1czj+/P0dYjCWdyMN6hFr4QQQwCtrB6jwTt6g/+s0ShDXT5RzdbZJ0Q8LGAQJ/8Fb/CXaI4VMNqXPU4YoeRgSUa2GgHgShN2rXTM1f1RwSo1WfrxAjT1q66OQ+FQVy7OsTGJZlZApkHI/EuId/OHbkYQH/lNIz7MI9rwWxb7M38z7ztAwYMu792jNHHv9AGyy8l46RVP4KPz11yTHUbpBqH/lDwdJx/3TRkHJ5fs51Arxo5Offi8j41nQ
-DKIM-Signature: a=rsa-sha256; bh=4LFyvp2ZIQXjB+Gvwh055f3rvuWAO7UgNFp3hf/Fpy0=; 
+X-VR-SPAMCAUSE: dmFkZTGxufBk2Eg2lfgW0HN7MYGfVnmNKhjefcdxQEyAoiUz4QfNSymZsDgpLAhtEgI8+oE3o0jd2MTAnUAcq64nI4vxZ2ah57ehBlX6bV1XqCDwM6GewsfJQjP0rZHnmsDrsCLCH6fQTbPotAXXfbGBLsBs80IrmlbJJSILSHsKQKMRqE/Fbi3+6webTNtmKYfb/9hXD3anfPQx0VGbX7gUqu1LALQmXaUi6pWq3Nck6aVCHTDvdJ1VPXbxCyhGHKCat+yPLIxfNIiyIB/YoJaKj9X0DxaoAsWdyf2NY58+CsZIXbiN1nCoZ57sFAwWB76AdLMy5Kn8E+6Ko77hwI87AVrloSk4g3ZvaMX88KBolVAgMmEtsMFQrhDqPnryjG4/avxeov9yXCz0cgPOs5jfdSvjHGiAvCrrJNm9m7oMW+WDfyDrbeLTnkl1KrBs1me8G/MX0Wr7oi+OvRg+Y2JQtiyXHoLJLP/ed8dX1TxwCtCsuxvb7gjOvvGIDdYi1YpwTSAVYKBPF/X6AeFqtx64+6Gbwj0vfB1KrfelltYOmYJP/jnOuw9iFgLtI/Hn2LNoFfNfsO/wecxBgY+tUDDWEJpJpCHmiKw8BcP3zWH8edFu1Vhtv3LBemVTK2dxuPUv4j4SHUAoDaZ9LF1zqcO2lF+itjtFm+QLRA+s+ReySltjGA
+DKIM-Signature: a=rsa-sha256; bh=ZBe9LuI4jhNxifhrlLVNM/kOLjh+j9j77cir40Uh9TI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788245938; v=1;
- b=aUa+v5BJ8qsU/y8ykHFJZtivM2OVdHbJKk2XRNT0/T1TgbCvpcHNYfIi9q8goGqid2xY7g1e
- yOQgOntQ5u3nzkty3v5Brv4i5uZDyffqlBCV7Ih/LJoEd9S/pIoUdIrzNUrIMD83g5dZ9d5CCYO
- r2WGZ2g+QXqR4JDdqE/I+7uZTvANYpoOlBVto3NpzKaz49A5zmW2TBhAW/PZqZiAgoC0WoE8X9l
- CULVjAa0iNJQiFP/YOsB2FC8n5JzevlAbSliLiIEsvSfnYt3nfhawdIrAZRu968r/NCRYRKyXyb
- qH2TM0890BO3p5OswUY3ZQKiEVUTrsG5sl/xQ/6ibffOQ==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
+ t=1788245930; v=1;
+ b=CvaI9Sy8f+gfSS5rUf740xg29BF93EbQBBnMc7yBBTE++jQx7K5OuRdhQkvWRhEN4B037bIw
+ oLhPYdySjw7AiRi4RX6zU/klFa5plNm3PgtcJJSEfC8d2wepUQF/juzoseikjFuH0liEhlaePsQ
+ s4+VnAh6L3AKcC1pzTGLOGjiAN/dupaG0m635/GBqF4WNJa7v5aPxtfAZqtR/rKv3HZwbMQ/19G
+ Ugtj/yof5akLlzzq6kGPki7X5B/NqoRnIpLmuGFhiz3hJmLveOza2nSjQP/SohTqZpiRp1FJ0gF
+ +WzGSutDxmR7gKMEboAnaMubifwR3GoCvRwlb/jup3zug==
+Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo2.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -139,58 +140,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/26 12:45, Emmanuel Blot wrote:
-> Previously the device reset routine was invoked once from realize() and
-> never registered with the reset subsystem, so a system or bus reset left
-> the TMP105 registers untouched. Convert tmp105_reset() into a proper
-> Resettable hold phase (tmp105_reset_hold) registered through
-> ResettableClass::phases.hold, and drop the manual call from realize() as
-> the reset framework now drives it. This matches the scheme used by the
-> other hw/sensor I2C devices.
+> QEMU coding conventions expect the embedded parent object of a QOM type
+> to be named parent_obj. Rename the TMP105State I2CSlave member
+> accordingly and update its references; the change is purely cosmetic.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   hw/sensor/tmp105.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   hw/sensor/tmp105.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 > 
 > diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-> index aabeb34f08..f7d0c738ca 100644
+> index 6069c0905d..aabeb34f08 100644
 > --- a/hw/sensor/tmp105.c
 > +++ b/hw/sensor/tmp105.c
-> @@ -314,9 +314,9 @@ static const VMStateDescription vmstate_tmp105 = {
+> @@ -42,7 +42,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
+>    */
+>   struct TMP105State {
+>       /*< private >*/
+> -    I2CSlave i2c;
+> +    I2CSlave parent_obj;
+>       /*< public >*/
+>   
+>       uint8_t len;
+> @@ -187,12 +187,12 @@ static void tmp105_read(TMP105State *s)
+>           break;
 >       }
->   };
 >   
-> -static void tmp105_reset(I2CSlave *i2c)
-> +static void tmp105_reset_hold(Object *obj, ResetType type)
+> -    trace_tmp105_read(s->i2c.address, s->pointer);
+> +    trace_tmp105_read(s->parent_obj.address, s->pointer);
+>   }
+>   
+>   static void tmp105_write(TMP105State *s)
 >   {
-> -    TMP105State *s = TMP105(i2c);
-> +    TMP105State *s = TMP105(obj);
+> -    trace_tmp105_write(s->i2c.address, s->pointer);
+> +    trace_tmp105_write(s->parent_obj.address, s->pointer);
 >   
->       s->temperature = 0;
->       s->pointer = 0;
-> @@ -337,8 +337,6 @@ static void tmp105_realize(DeviceState *dev, Error **errp)
->       TMP105State *s = TMP105(i2c);
+>       switch (s->pointer & 3) {
+>       case TMP105_REG_TEMPERATURE:
+> @@ -200,7 +200,7 @@ static void tmp105_write(TMP105State *s)
+>   
+>       case TMP105_REG_CONFIG:
+>           if (FIELD_EX8(s->buf[0] & ~s->config, CONFIG, SHUTDOWN_MODE)) {
+> -            trace_tmp105_write_shutdown(s->i2c.address);
+> +            trace_tmp105_write_shutdown(s->parent_obj.address);
+>           }
+>           s->config = FIELD_DP8(s->buf[0], CONFIG, ONE_SHOT, 0);
+>           s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+> @@ -305,7 +305,7 @@ static const VMStateDescription vmstate_tmp105 = {
+>           VMSTATE_INT16(temperature, TMP105State),
+>           VMSTATE_INT16_ARRAY(limit, TMP105State, 2),
+>           VMSTATE_UINT8(alarm, TMP105State),
+> -        VMSTATE_I2C_SLAVE(i2c, TMP105State),
+> +        VMSTATE_I2C_SLAVE(parent_obj, TMP105State),
+>           VMSTATE_END_OF_LIST()
+>       },
+>       .subsections = (const VMStateDescription * const []) {
+> @@ -338,7 +338,7 @@ static void tmp105_realize(DeviceState *dev, Error **errp)
 >   
 >       qdev_init_gpio_out(&i2c->qdev, &s->pin, 1);
-> -
-> -    tmp105_reset(&s->parent_obj);
+>   
+> -    tmp105_reset(&s->i2c);
+> +    tmp105_reset(&s->parent_obj);
 >   }
 >   
 >   static void tmp105_initfn(Object *obj)
-> @@ -352,11 +350,13 @@ static void tmp105_class_init(ObjectClass *klass, const void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
->   
->       dc->realize = tmp105_realize;
->       k->event = tmp105_event;
->       k->recv = tmp105_rx;
->       k->send = tmp105_tx;
-> +    rc->phases.hold = tmp105_reset_hold;
->       dc->vmsd = &vmstate_tmp105;
->   }
->   
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
