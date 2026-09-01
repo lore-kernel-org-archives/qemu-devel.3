@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41055C624CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Aug 2026 23:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A27C61DFD
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 01:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1BpH-0007IL-6y; Mon, 31 Aug 2026 19:54:07 -0400
+	id 1x1Did-0006rw-J9; Mon, 31 Aug 2026 21:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roiklevansky@gmail.com>)
- id 1x19SQ-0000fh-Mt
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 17:22:22 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roiklevansky@gmail.com>)
- id 1x19SP-0004nE-1s
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 17:22:22 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4980fe6b3beso2645045e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 14:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788211337; x=1788816137; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=80Y4SurtAQyLFH1WkBITnQUNVJhWLzqO4uAeKQP26D8=;
- b=ch7FuotbIJnt7Iy3u2LrcSzTulyAi5mVNR/EzcVq3sGnjQqXZ82wAX9r9DcO4eDJ2I
- 7PqZvWmTZqDPNGPynVZwms4pn2xvOEzlnMuVrrrGfhrsz9/nEnCcg9O/JvLJGDPwZCoY
- y0YenuXKY07NgDb9hR5QHTqUhgJtSdBGQML7UEeJ1+TehWTGKUCx8sylcVuLncmRK9YO
- kkvfHdyU+j6pVOJLB4fT88LrfXagtK+hnNaUrknMQIGPAtHA39XdIh+oNH0PyKgG3sei
- rUzIf3coxEeY/7ZsG5rPao+vK9JyJSlqv8nQx60KxfSoHBu9j4s+GNy93iQcfuggmc9w
- Htyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788211337; x=1788816137;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=80Y4SurtAQyLFH1WkBITnQUNVJhWLzqO4uAeKQP26D8=;
- b=EXhXotAhmDDsZIJ7rOa8QxoZ5VVJP6w7gc1BN/9BpxBcz+PwuH37YzZYyZ6LW7GVTb
- DzPqUC4nO3IRcK2wfF2/f+WV1Ox2hr9ZqPdsk6izbZk4lUCjKsWs2rUBXFK0r9XNRSBt
- 4KAkMDpACjqbJ4JbueoE6XhaZVmkWUgd2TJGR3wK2I+BMPpo6cyNhspj1NXSLDuO/ejQ
- C5Qa5vAyWDmmzrwIuWSu4VHx8cSXFgs8O7GuEVP9hUkHMfFax1wn1FAxFx7kR9LlkFKJ
- 9xWYMb1QNcqQR862HTQ/xwUGRsLnFe4dh9W8M9lxEjh2mwhDogxQ8wW77r3zeKQ1xRgX
- 1xyg==
-X-Gm-Message-State: AFuF++lAVHTvJNrSZiFlPgu4HKj2m7xuY4SS+Lz7m+P3rEFJQQlgUoQ5
- 6zQlrsC02qNhcMaVR+GKJ2DZmVji+Go8+z4C+qqVOCkZj80dCzoaBXvXI/3M/Zrl4Ck3Lg==
-X-Gm-Gg: AR+sD103S7A5suAWV3325qsrmrrw5SzjWWeSaLakB30KRr5Na8AzkDsPTV0wAf1q4tI
- R45rpGYeZGFi052gQK//N7q5cm+ZhEN+4er5MpD5gbHF48z6srV7Nljhb+TqGoNTbJq+Un3ObsR
- ZYNkhahk5+I4sipUM3oBofjDu5j+h/b7hEBuctpZ3QZd+MSiWUGhVMwypeQYbUa3Xn+dtq4DF+N
- TZMdYuPIlvLDJB8pR6xtJ2a+zp1tsw9EWkTeV4FilZQx1/oDpr+96M8EhIRs14WPxnoAkBbakeD
- 1OagfxlSm3/mHbDC8/LrdguykZpn+ZcRZiK24/apUrdWDn6HmU4hDngi0QzAaFwXMDWEGvYNVY7
- bIqVPfAkwFfz5+dQHFsSbpPuCdRSAn9MK2JtOIVhC+lN4axn9ZsZVfkYI8nxM9pdCx8jEPtwWBI
- +zQGsHHqyglV3zVoAP9jkKOVvbhuoldG5VNeyNwG+ZhkJrvbQJUQE8BIbqB2f8ELL82gdQ8NJ/M
- pfGZtewHCUIkcBP/HsZFrvwOG3N+KvO12jQMmIX3l3jv2BCQl0=
-X-Received: by 2002:a05:600c:6819:b0:493:f783:c46a with SMTP id
- 5b1f17b1804b1-49cdd41ca5amr16652515e9.6.1788211336947; 
- Mon, 31 Aug 2026 14:22:16 -0700 (PDT)
-Received: from sima-pc.tail8094aa.ts.net
- (CBL217-132-71-241.bb.netvision.net.il. [217.132.71.241])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce10148sm18749815e9.5.2026.08.31.14.22.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 14:22:16 -0700 (PDT)
-From: Roi Klevansky <roiklevansky@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Roi Klevansky <roiklevansky@gmail.com>
-Subject: [PATCH 0/2] linux-user: return ENOMEM from madvise on unmapped ranges
-Date: Tue,  1 Sep 2026 00:20:38 +0300
-Message-ID: <20260831212040.1833650-1-roiklevansky@gmail.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x1DiZ-0006rh-KG
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 21:55:19 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x1DiW-0005WM-J5
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 21:55:19 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxpvB8MJZqmzkHAA--.20217S3;
+ Tue, 01 Sep 2026 09:55:08 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAx2c15MJZq65cYAA--.52001S2;
+ Tue, 01 Sep 2026 09:55:07 +0800 (CST)
+Subject: Re: [PATCH V4] target/loongarch: clear the registers when cpu is reset
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
+ Song Gao <gaosong@loongson.cn>
+References: <20260709111901.61597-1-lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <3f7a0590-53f6-4248-485a-07199ae32acb@loongson.cn>
+Date: Tue, 1 Sep 2026 09:54:50 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20260709111901.61597-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=roiklevansky@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJAx2c15MJZq65cYAA--.52001S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Jw4Dtw1fXFWxZF48GrW8KrX_yoWxCw43pr
+ 45KFZFkw45Kr4UCr45X398AFn8Zr18Gw4Iq3sxKr1FkrW5Xr9aqFW0qr4FkFZrA34fCr48
+ XFnFgrZFqF4UA3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOF4_U
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.034,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 31 Aug 2026 19:54:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,26 +81,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The kernel fails madvise() with ENOMEM when it is given a partially or a
-fully unmapped address range. qemu-user differed from this and returned
-0 instead.
+Applied in loongarch-next
 
-Patch 1 makes target_madvise() check the range with page_check_range()
-and potentially fail with ENOMEM while still giving precedence to
-advice specific errors.
-
-Patch 2 adds test cases, calling madvise() with partially and fully
-unmapped address ranges.
-
-Roi Klevansky (2):
-  linux-user: return ENOMEM from madvise on unmapped ranges
-  tests/tcg: add linux-user test for madvise returning ENOMEM
-
- linux-user/mmap.c                         |  7 +++-
- tests/tcg/multiarch/linux/linux-madvise.c | 43 +++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 1 deletion(-)
-
--- 
-2.55.0
+On 2026/7/9 下午7:19, Xianglai Li wrote:
+> Use virt-manager to start a virtual machine, and then use the following
+> command to manually trigger the crash of the virtual machine:
+> echo c > /proc/sysrq-trigger
+> 
+> After the VM is abnormal, the ESTAT register has a certain probability of
+> remaining interrupted. Then the VM is forced to restart and the VM is
+> suspended in the interrupt handling function during startup.
+> 
+> In order to clear the remaining interrupt information in the ESTAT
+> register, we performed this operation during the reset process, while also
+> checking and optimizing the status of other CSR registers.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> 
+> changelog:
+> V3->V4:
+> Remove the field end_reset_fields from the CPUSysState structure, and
+> rearrange other fields as needed to avoid them being zeroed out.
+> 
+> V2->V3:
+> Remove or update outdated comments related to this patch.
+> 
+> V1->V2:
+> 1.Add a description of the issues related to this patch
+> 2.Replace the macro definition MAX_PERF_EVENTS with the variable
+> perf_event_num as the condition for the for loop.
+> 3.Rebase against the latest codebase.
+> 4.Refer to the usage of end_reset_fields on ARM and other architectures,
+> and modify the current implementation accordingly.
+> 
+>   target/loongarch/cpu.c | 56 ++++++++----------------------------------
+>   target/loongarch/cpu.h | 19 ++++++++------
+>   2 files changed, 22 insertions(+), 53 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index fb03424ffa..11b7e374c3 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -601,11 +601,19 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>       LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
+>       CPULoongArchState *env = cpu_env(cs);
+>       CPUSysState *sys = env_sys(env);
+> +    uint64_t reg_prcfg2;
+>   
+>       if (lacc->parent_phases.hold) {
+>           lacc->parent_phases.hold(obj, type);
+>       }
+>   
+> +    reg_prcfg2 = sys->CSR_PRCFG2;
+> +    /*
+> +     * Workaround for edk2-stable202408, CSR PGD register is set only if
+> +     * its value is equal to zero for boot cpu, it causes reboot issue.
+> +     */
+> +    memset(env, 0, offsetof(CPULoongArchState, end_reset_fields));
+> +
+>   #ifdef CONFIG_TCG
+>       env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
+>   
+> @@ -620,47 +628,12 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>                              R_TLBENTRY_32_PPN_MASK;
+>       }
+>   #endif
+> -    env->fcsr0 = 0x0;
+>   
+> -    int n;
+> -    /* Set csr registers value after reset, see the manual 6.4. */
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
+>       sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
+> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
+> -
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
+> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
+> -
+> -    sys->CSR_MISC = 0;
+> -
+> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
+> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
+> -
+> -    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+> -    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+>       sys->CSR_CPUID = cs->cpu_index;
+> -    sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+> -    sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
+> -    sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+> -    sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
+>       sys->CSR_TID = cs->cpu_index;
+> -    /*
+> -     * Workaround for edk2-stable202408, CSR PGD register is set only if
+> -     * its value is equal to zero for boot cpu, it causes reboot issue.
+> -     *
+> -     * Here clear CSR registers relative with TLB.
+> -     */
+> -    sys->CSR_PGDH = 0;
+> -    sys->CSR_PGDL = 0;
+> -    sys->CSR_PWCH = 0;
+> -    sys->CSR_EENTRY = 0;
+> -    sys->CSR_TLBRENTRY = 0;
+> -    sys->CSR_MERRENTRY = 0;
+> +    sys->CSR_PRCFG2 = reg_prcfg2;
+> +
+>       /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
+>       if (sys->CSR_PRCFG2 == 0) {
+>           sys->CSR_PRCFG2 = 0x3fffff000;
+> @@ -668,18 +641,9 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>       tlb_ps = ctz32(sys->CSR_PRCFG2);
+>       sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
+>       sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
+> -    for (n = 0; n < 4; n++) {
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV0, 0);
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV1, 0);
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV2, 0);
+> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV3, 0);
+> -    }
+>   
+>   #ifndef CONFIG_USER_ONLY
+>       env->pc = 0x1c000000;
+> -#ifdef CONFIG_TCG
+> -    memset(env->tlb, 0, sizeof(env->tlb));
+> -#endif
+>       if (kvm_enabled()) {
+>           kvm_arch_reset_vcpu(cs);
+>       }
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index ad30c73167..28760bdca4 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -390,16 +390,11 @@ typedef struct CPUArchState {
+>       uint32_t fcsr0;
+>       lbt_t  lbt;
+>   
+> -    uint32_t cpucfg[21];
+> -    uint32_t pv_features;
+> -    uint64_t vendor_id;
+> -    uint64_t cpu_id;
+>       CPUSysState sys_states[1];
+>   
+>       struct {
+>           uint64_t guest_addr;
+>       } stealtime;
+> -    uint32_t perf_event_num;
+>   
+>   #ifdef CONFIG_TCG
+>       float_status fp_status;
+> @@ -409,12 +404,22 @@ typedef struct CPUArchState {
+>       uint64_t llval_high; /* For 128-bit atomic SC.Q */
+>       uint64_t llbit_scq; /* Potential LL.D+LD.D+SC.Q sequence in effect */
+>       uint64_t hw_pte_mask; /* Mask of architecturally-defined (hardware) PTE bits. */
+> -#endif
+> +
+>   #ifndef CONFIG_USER_ONLY
+> -#ifdef CONFIG_TCG
+>       LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
+> +#endif
+>   #endif
+>   
+> +    /* Fields up to this point are cleared by a CPU reset */
+> +    struct {} end_reset_fields;
+> +
+> +    uint32_t cpucfg[21];
+> +    uint32_t pv_features;
+> +    uint64_t vendor_id;
+> +    uint64_t cpu_id;
+> +    uint32_t perf_event_num;
+> +
+> +#ifndef CONFIG_USER_ONLY
+>       AddressSpace *address_space_iocsr;
+>       uint32_t mp_state;
+>   #endif
+> 
 
 
