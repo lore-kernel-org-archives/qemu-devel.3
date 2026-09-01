@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CD3C624CE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8AFC61DFD
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Eeu-0001uR-CW; Mon, 31 Aug 2026 22:55:36 -0400
+	id 1x1Eep-0001tW-Pe; Mon, 31 Aug 2026 22:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x1Ees-0001ts-KB
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:34 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ id 1x1Eeo-0001pS-8P
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:30 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x1Eeq-0005N0-W1
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:34 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-3a1981228f8so38067141fa.1
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 19:55:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788231331; cv=none;
+ id 1x1Eem-0005MF-7a
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:30 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-3a0faa764beso29250811fa.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 19:55:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788231325; cv=none;
  d=google.com; s=arc-20260327;
- b=D6Sy4xOUFypUOf8G0XWLkFK4LMxZvk3dATrKyWL6sGyHle4VsJEr7b7ZechdCCCyGs
- x9B8k86DmLq8P0rJP6lnmy2acpw0QgYsWwZfwnR4RslzyykY3OJ+NmTKDiSdM2FrSV9Y
- MUjx+HdqM8LVBHPbTDC/VZ8tMrUmyRfXpQ79jG99Ee+iBLel2p3hmKHnulfr0QhIt9Is
- /rsCH3JL502aWsTxbrwNhuyZ/CkPJ4mALZ3EIJDAlhFSfo6DfZLUyycAAOvjioPI1Iyt
- E9kjBNCA3oOTN/eoXcFmoyHQ9sP2gcK9kJacu5o0Q4AjV8xfbIvBubEynHzw6msRA8fG
- W/XA==
+ b=KRof/ykuwC+F3jgNA4evEJyMEmYVdcpMHSaCrPdr27q8Hq8okGOeJZM9sgJATm02v/
+ x9DDlTZpgT2NkPcxkPSgf7laMnfs4sTPs9bEFkic+Ub//FKwDTNMJvjsbhltNtvLKCLU
+ 2peiib5Osa5Z0lSabqoDFU7gO5BWUS+0mzX/pRRr6giFz5x0VBMm289WShMUxQEM25Su
+ MNvhWT0ApJ4Nqe3Bxp26vARdUiZJRS6HxOD97WzqPb2p2Am4tO72hXmam6BrutPjZ652
+ UgjG7pI9GuB0jwRH1AfhElgVtOxyuFNNSN/VPz/9gdPKwOJreabSdsIOutwStFjNQLqN
+ HoIA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=J4hzdpcPvQ19JekSIhEi2Y4CpyK+88jHsfCTjIEeyxc=;
+ bh=3BVne0iHEJBuJJBBcvikvYA+h1z4CGNmGqbLwbRctqI=;
  fh=QVe/7zv5OrYmrprO28ljpRmhYeOlvvTBoRQtHWn+3sI=;
- b=FgfnxQwdJrVMO8D+UpYi+u1EARhpOUU2e0rWhVdkSazbFmkp0XKLfQIQ3l0t1REQ8Q
- y5c6vfpn07X0LWd+qQ44RuSZ+ld7y81xvYv2SA1njLHo5NvKyBMfzZKlolj1SiGCRrwd
- 1xgP8i3MhKxatXnrAHew98nA7spN3us0+q3bfHUVUNmHJqIXHv9HffmaseQuyBh10bUq
- A9VqawQDBRyUmXip4J/LgPHna9rgBIrosmBRt6tRU4tUi4kS2ccs1oyLMidxfoyuSHA9
- jN+dEEhUdtXOR2pZ17aEI8rivMgN5kM222yHeRbJ4oE9hHXNpdteqUBEFERGp5dlTCXG
- nDNQ==; darn=nongnu.org
+ b=HJWNjksjdDgbKS0dJ6UlZyewM7I1x7ia4KRBONWrJBBwzqeD7ZghY81dbSOyRZbeZA
+ qOr6n2GzyoQL7zWopcczyOm/SB5khMmTqg0BJf0j0k/jLJZB6eVTDx9hbCtpvYIvzGBX
+ vPG2jFQ6IEr+/dy8pC8mOu5pANfjdEK//JPFWakd3EIBnRWNjOMwVdhIkIkCq9WX961k
+ tJbT0NZW1tb8LJSHm8IcOsRh9/7v6OMIKkQYoGzRV+oLYHScyrItv3ztRoEypQ1DU5Fx
+ DDwGCKby60wy/ZMeSBfc8giVtGQN8fkJQaO/j3Gh0QyIR5neENQdPC4pL4LEjsJVHTod
+ 8BrQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788231331; x=1788836131; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788231325; x=1788836125; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=J4hzdpcPvQ19JekSIhEi2Y4CpyK+88jHsfCTjIEeyxc=;
- b=YWyJwCKbVC2/Gs7upWiTE9yZsTN8IcJ65Du8I7V3nIAez1ggqn1poQD8pn7H6bAZUW
- 0y3Yb9vym1bPkEq3X+4Ydg6+OSGnScdSJwgEBlbiKdEQo40EHnii8JcM+DdcokWRnXrw
- 5ejtFjv8oWM8biyOo6+oEUemDKkghij52SWNV+65sriNiTRhiKR41SQSsysvJMhuiWqN
- KmzVsaNhnHoNz2jqNy/C9FkAqgnJHxWSTygRh75k3HUgtffO430BdfUeHiFIYjqIKoix
- zcqUMpZXNiKsNLa/rIoYNK+s+FJqYvFoIbFgMNgBAVkKc/gmeZ+FdhjgbvONGeuDEqpn
- j4NA==
+ bh=3BVne0iHEJBuJJBBcvikvYA+h1z4CGNmGqbLwbRctqI=;
+ b=QRMmgZoSIWLO/oFRnQQ/7GujjsaS7bZUYHdJigBIkAN2uNkxZqLxcVnqUESiXlIp5S
+ kc0EASFNUN3SoRgAPtleZ6W3nNK87rb43PBM7PugdTJ0XuasVam2IfESEHBltinFekrR
+ qTESpYGgkUTE8xFyzjHYEazE1FPC18/eAuP+c6ibQpeVWmDE5EA66rcUJr3iKEgwN+rR
+ C4fQe95wFRdME2I2N184Cw9JzsDRq7BM3KsgSp7OpHEVhnU4IO5R5KaZRQZuK0Qcx7mH
+ Uj8t1H0n41lTwkJyBVyzEiAsnG78+S4EmXnJlg4+YCtDWngCznoq3cyUEB0sJJJvLigG
+ wuNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788231331; x=1788836131;
+ d=1e100.net; s=20251104; t=1788231325; x=1788836125;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=J4hzdpcPvQ19JekSIhEi2Y4CpyK+88jHsfCTjIEeyxc=;
- b=CYHw2TEAeDvmm8JYFa1Cp5sefhg4b+hV4Muu6MR/JNcqEr+gtzofPcwPKVg5XXMDNK
- FgVD/VuH7CsXVHRDGXF9vhroxNz0hwPN0L3pn+TV+dAnM/7gdeRHqMwcJ4nLyUJBQs6x
- EgdklNrPl7NGv+/0Z+VKpjF71Z9C/g/WPhAw8w0EkdgnAUqMCEFn3XQB+b9+i5PmXwpF
- vyiNYrjHFdSOMS4okXLn+H2lGyQyC/lRE9vrpvTy7a7qZrAhWcUkQzN7I/6rPUI/ltQA
- o5KogMcRe6HM91BwVaf675u7q0t1zHbUJhBQEXiUOMRuElqZZVvFSnk2OGiIiqdCbRVr
- tjFA==
-X-Gm-Message-State: AFuF++mfuT72Tdg34UxuA4yOGDZUVKSzHSzpUB5RadhGhZJzeThKfxIp
- MSoL0Hb95J5i54KBD5fmEBEWj0WI7UcwcoUWxyp0y//88wWnug8mbflvwBejDTpUfxMbWKuIN8J
- vossBnF2m7GsgFEFDpafqKuevjFNR0LY=
-X-Gm-Gg: AYBFou2B7efWllsDiw5aLdc6UA9i7y13KCI69vlBfb8He8h/G7wBTKcUhPYg5G688e1
- ZN3vMmpT3IpXIJpfB6oAOiVEhmQ/t5MilEBrAtvP191uiye2UUm0AY4SpAI+Chte2tY5M2zoInz
- HZ1jmWQug597hJ8X2Kk2+IWJGPHG934etInPCIVrAI+1qgJaPv6FOhMwVc4K++FLeGJECPjCYOp
- UckARlSe21tSPS9dpbCIgRAaRFn62/4RiGowfdmQB26fdq2GgMVbJdg26wX0rC1gQBlTbTrU2Tc
- tGDdaqy8LvTfcEkqCJj4o1ktRDFIzR8bmE6BOMN33AChAEc=
-X-Received: by 2002:a2e:a985:0:b0:3a1:b1e4:419c with SMTP id
- 38308e7fff4ca-3a301b12edfmr63831081fa.10.1788231330817; Mon, 31 Aug 2026
- 19:55:30 -0700 (PDT)
+ bh=3BVne0iHEJBuJJBBcvikvYA+h1z4CGNmGqbLwbRctqI=;
+ b=ppyYYbKpBwxcj5lBkKOs43yKrCKBC/tVNr1vdNQ73S9rBdnjjhlH0o6n+y5pqZ7LGq
+ esnsiTRRSeaq30w6sw7/USykAuaTWST+7uBZwxaovA0l3EHqF5IVMavybxFA4ODoFYIo
+ uhKqEmBrV5ZDm2lmLIdim2tlxbNRE0hPsmO31LyZz6rGQjThbQdUzJipQWGpHJQ5pQAG
+ XuFgzMm2I1w/8hteYOJzH24CFs9mje5h0+uHeV+fT/hYSyAuAm25akNXsTeqmPzW7c5C
+ RhEGT4jIUfxNLEmXMbfrZ8PzF7000RGjPlpfV6wESeABSgw/ntrrHAyb0lNfA//PGLws
+ dJRA==
+X-Gm-Message-State: AFuF++l7EQwkBx/kZtLI4+403Yegmy5IVH2BOzPAfMOtH9w+NPin32Af
+ 1gI/2ty53lO+gvavDIHw1b8A9s+BSgTdSyoApbSDk7q6OAgsnxc/4ntTVo7LDJdpgXmn7tTuCbK
+ bFJkX5Y3V3W4HU5kLagFaNg3ORaLS8cY=
+X-Gm-Gg: AYBFou3u3rqWWA7gPe1i2mHvPUXSSjJZE6Nry9Fi3OM2loGdhPHFk8SgwcxwXcejsfQ
+ jQUeSKEML5gRg/kfVOVV4nGRuUq6JsYYgdpofb7jPBd++rUZwe2EenSFntUfMR4YVFscufY6ZyH
+ 7HBB0NwbzPErRB32u5JVxMHmKxmc7EhqGSqbINmEK9Fo42c0zBeMxcGQdRGasQiDh4lIKY5688K
+ y365wRBWQbigldDXdXQwLm1fFOJ6cUpxywTMq/D4Susmu6sz/3sqvp6TKAm7sq4qJjIiNNamkgl
+ yFAwNE6VSFfYUzI/+aBshEQIt9BXadh01dVY1+wnMMdWoBo=
+X-Received: by 2002:a2e:be0e:0:b0:39c:7d57:a3ae with SMTP id
+ 38308e7fff4ca-3a3393ebb67mr9785471fa.0.1788231324820; Mon, 31 Aug 2026
+ 19:55:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260827050241.3713332-7-mattst88@gmail.com>
- <b6265b43-8f26-4703-9ca1-88214c06905a@linaro.org>
-In-Reply-To: <b6265b43-8f26-4703-9ca1-88214c06905a@linaro.org>
+ <20260827050241.3713332-6-mattst88@gmail.com>
+ <0a19da5b-e50f-447e-9630-37f951cc94db@linaro.org>
+In-Reply-To: <0a19da5b-e50f-447e-9630-37f951cc94db@linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Mon, 31 Aug 2026 22:55:16 -0400
-X-Gm-Features: AcwNN1XktwDIwbPf-ykUVNXaeFKsy8HIFk3e5sF9biUztopIxEImgmP0uP07BBI
-Message-ID: <CAEdQ38FjS+GWYVR2UEApMSE7pJaTBYQrXbArHaBa3+epHTuHaQ@mail.gmail.com>
-Subject: Re: [PATCH v4 6/9] RFC: tcg: probe the TB jump cache inline instead
- of calling a helper
+Date: Mon, 31 Aug 2026 22:55:10 -0400
+X-Gm-Features: AcwNN1W4hlb5qW19CnHnBGLg7qoD-hwjiEQglNXtZ48XUPBo8_5zRH_QtUivNQs
+Message-ID: <CAEdQ38EOECXHejZbQLbgFS9+XkAhb0nMZWbAPF=5DJR01UgtNg@mail.gmail.com>
+Subject: Re: [PATCH v4 5/9] accel/tcg: give the TB jump cache a second base
+ pointer for generated code
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@oss.qualcomm.com, 
  alex.bennee@linaro.org, zhao1.liu@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -7
 X-Spam_score: -0.8
 X-Spam_bar: /
@@ -121,123 +121,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 27, 2026 at 7:34=E2=80=AFPM Richard Henderson
+On Thu, Aug 27, 2026 at 4:03=E2=80=AFPM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > On 8/26/26 22:02, Matt Turner wrote:
-> > +static void gen_jmp_cache_probe(TCGv_i64 pc, const TranslationBlock *t=
-b)
+> > +/*
+> > + * The inline jump cache probe reads cpu->tb_jmp_cache_probe and takes=
+ the
+> > + * slow path when the entry it finds has a NULL tb.  Pointing the prob=
+e at a
+> > + * region that is all zeroes therefore forces every indirect dispatch =
+into
+> > + * helper_lookup_tb_ptr(), which does the full lookup the inline probe=
+ only
+> > + * approximates.  The real jump cache is untouched, so no contents are=
+ lost
+> > + * and recovery is a single store.
+> > + *
+> > + * Only ever read from, and only one entry per dispatch, so one shared
+> > + * zero-filled cache is enough for every CPU.  Not const: that would p=
+ut a
+> > + * megabyte of zeroes in .rodata and so in the binary, where .bss cost=
+s
+> > + * nothing on disk and only faults in the handful of pages a poisoned =
+run
+> > + * happens to probe.
+> > + */
+> > +static CPUJumpCache tb_jmp_cache_poison;
+>
+> Hmm.  Maybe we should mmap it at startup then, because while we're not
+> supposed to be writing into this, it would be nice to enforce that.
+
+Done, also in 8/9.  It's a page-aligned qemu_memalign() + mprotect at
+startup instead of a .bss object, which also removes the "1MB never
+written" note from that patch's RFC list.  I added qemu_mprotect_ro()
+next to the existing _rw/_rwx/_none forms for it.  A stray store into
+a page every vCPU dispatches through is worth trapping rather than
+debugging.
+
+> > +/*
+> > + * Poison @cpu's probe, from any thread.  Called when a breakpoint is
+> > + * inserted, which is what makes the poison take effect at the dispatc=
+h
+> > + * after the insert rather than whenever @cpu next reaches its main lo=
+op:
+> > + * a vCPU chaining indirectly need never reach it, and would run past =
+a
+> > + * breakpoint another thread had just set.
+> > + *
+> > + * A plain store is enough.  The value only ever costs a slow path tha=
+t is
+> > + * correct on its own, and the generated code re-reads the base on eve=
+ry
+> > + * dispatch.  Un-poisoning is tcg_cpu_sync_jmp_cache()'s job.
+> > + */
+> > +void tcg_cpu_poison_jmp_cache(CPUState *cpu)
 > > +{
-> > +    TCGv_ptr jc, ent, tbp, ptr;
-> > +    TCGv_i64 h, tmp;
-> > +    TCGLabel *slow;
-> > +    uint64_t fpair;
-> > +
-> > +    QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) !=3D 16);
-> > +    QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) % 8 !=3D 0);
-> > +    /* One 64-bit load has to cover both, so they must be adjacent... =
-*/
-> > +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=3D
-> > +                      offsetof(TranslationBlock, flags) + 4);
-> > +    /* ...and aligned, which nothing else currently relies on. */
-> > +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, flags) % 8 !=3D 0);
-> > +
-> > +    jc =3D tcg_temp_ebb_new_ptr();
-> > +    ent =3D tcg_temp_ebb_new_ptr();
-> > +    tbp =3D tcg_temp_ebb_new_ptr();
-> > +    ptr =3D tcg_temp_ebb_new_ptr();
-> > +    h =3D tcg_temp_ebb_new_i64();
-> > +    tmp =3D tcg_temp_ebb_new_i64();
-> > +    slow =3D gen_new_label();
-> > +
-> > +    /* ent =3D &jc->array[tb_jmp_cache_hash_func(pc)] */
-> > +    gen_jmp_cache_hash(h, pc);
-> > +    tcg_gen_shli_i64(h, h, 4);
-> > +
-> > +    /*
-> > +     * Not cpu->tb_jmp_cache: the probe reads its own base so that the=
- main
-> > +     * loop can poison it, which is how conditions the probe cannot te=
-st for
-> > +     * itself force every dispatch back into the helper.  See
-> > +     * tcg_cpu_sync_jmp_cache().
-> > +     */
-> > +    tcg_gen_ld_ptr(jc, tcg_env,
-> > +                   offsetof(CPUState, tb_jmp_cache_probe) - sizeof(CPU=
-State));
-> > +    tcg_gen_trunc_i64_ptr(ent, h);
-> > +    tcg_gen_add_ptr(ent, jc, ent);
-> > +
-> > +    /*
-> > +     * The pc first: on a hash miss it is the field most likely to dif=
-fer,
-> > +     * and an entry whose tb is NULL has a zero pc that only pc 0 matc=
-hes.
-> > +     */
-> > +    tcg_gen_ld_i64(tmp, ent, offsetof(CPUJumpCache, array[0].pc));
-> > +    tcg_gen_brcond_i64(TCG_COND_NE, tmp, pc, slow);
-> > +
-> > +    tcg_gen_ld_ptr(tbp, ent, offsetof(CPUJumpCache, array[0].tb));
-> > +    tcg_gen_brcondi_ptr(TCG_COND_EQ, tbp, 0, slow);
-> > +
-> > +    /*
-> > +     * flags and cflags are adjacent uint32_t, so one aligned 64-bit l=
-oad
-> > +     * and compare covers both.
-> > +     */
-> > +#if HOST_BIG_ENDIAN
-> > +    fpair =3D ((uint64_t)tb->flags << 32) | tb->cflags;
-> > +#else
-> > +    fpair =3D ((uint64_t)tb->cflags << 32) | tb->flags;
-> > +#endif
->
-> I'd use
->
->      fpair =3D (HOST_BIG_ENDIAN
->               ? deposit64(tb->cflags, 32, 32, tb->flags)
->               : deposit64(tb->flags, 32, 32, tb->cflags));
->
-> Whenever possible, avoid ifdefs to make sure all paths compile on every
-> host.
-
-Good call. Fixed.
-
-> > +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, flags));
-> > +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, fpair, slow);
-> > +
-> > +    /*
-> > +     * cs_base is a second word of target-specific flags despite the n=
-ame,
-> > +     * and the pc alone does not imply it on a target that uses it.
-> > +     */
-> > +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, cs_base));
-> > +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, tb->cs_base, slow);
-> > +
-> > +    tcg_gen_ld_ptr(ptr, tbp, offsetof(TranslationBlock, tc.ptr));
-> > +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
-> > +
-> > +    /*
-> > +     * Emit a second goto_ptr rather than branching to a shared one: a=
- temp
-> > +     * live across the label would be spilled and reloaded on every di=
-spatch.
-> > +     */
-> > +    gen_set_label(slow);
-> > +    ptr =3D tcg_temp_ebb_new_ptr();
-> > +    gen_helper_lookup_tb_ptr(ptr, tcg_env);
-> > +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+> > +    if (qatomic_read(&cpu->tb_jmp_cache_probe) !=3D NULL) {
+> > +        qatomic_set(&cpu->tb_jmp_cache_probe, &tb_jmp_cache_poison);
+> > +    }
 > > +}
-> This is pretty good.  As a follow-up I suspect we'll want a tcg backend
-> expansion of this.  For instance:
 >
->    - x86_64 and s390x can use memory-operand comparisons.
->
->    - aarch64
->      - use shift-add insn for env_plus_off + h * 16.
->      - use ldp to load (tb, pc) and (cs_base, flags) in one insn.
->      - use ccmp to halve the number of branches.
->
-> etc.
+> Why do we need to check for NULL?
 
-Yeah, that sounds good. I'd like to look into that.
+Fixed, see below.
+
+> > +
+> > +/*
+> > + * Called from the main loop, which is the only context that can estab=
+lish
+> > + * that no reason to be poisoned is left.  Cheap enough to call every =
+time
+> > + * round: the common case is a load, a compare and no store at all.
+> > + */
+> > +void tcg_cpu_sync_jmp_cache(CPUState *cpu)
+> > +{
+> > +    CPUJumpCache *want;
+> > +
+> > +    if (qatomic_read(&cpu->tb_jmp_cache_probe) =3D=3D NULL) {
+> > +        return;  /* not realized, or already unrealized */
+> > +    }
+>
+> If this function is only called by the main loop, we shouldn't have to
+> deal with either unrealized state.
+>
+> > +
+> > +    want =3D tcg_cpu_may_dispatch(cpu)
+> > +           ? cpu->tb_jmp_cache
+> > +           : &tb_jmp_cache_poison;
+> > +
+> > +    if (qatomic_read(&cpu->tb_jmp_cache_probe) !=3D want) {
+> > +        qatomic_set(&cpu->tb_jmp_cache_probe, want);
+> > +
+> > +        if (want =3D=3D cpu->tb_jmp_cache) {
+> > +            /*
+> > +             * Un-poisoning races a concurrent tcg_cpu_poison_jmp_cach=
+e():
+> > +             * the reason may have appeared after tcg_cpu_may_dispatch=
+() read
+> > +             * it, and the poison may have landed before the store abo=
+ve.
+> > +             * Order that store against the re-read below, so that the=
+ race
+> > +             * is lost in the safe direction.
+> > +             */
+> > +            smp_mb();
+> > +            if (!tcg_cpu_may_dispatch(cpu)) {
+> > +                tcg_cpu_poison_jmp_cache(cpu);
+>
+> Why do we need to check for breakpoints twice?
+> I don't think I understand this race.
+
+Fixed, see below.
+
+> I'm not familiar with how gdbstub interacts with user threads, but this
+> feels overly complicated.  Up to and including needing to poison the
+> jump cache just for adding a breakpoint.
+>
+> I suspect what we need is to add a CF_NO_GOTO_JC flag that suppresses
+> the inline jump cache, which is set whenever any breakpoint exists,
+> which falls back to the helper, which checks for breakpoints.
+
+You're right, and this is much better.  v5 replaces this patch with
+"accel/tcg: add CF_NO_GOTO_JC, set while a breakpoint is present".
+
+What makes the cflag sufficient rather than merely convenient: the
+inline probe already compares the destination TB's cflags against the
+constant cflags of the block doing the dispatching, and only takes the
+destination when they're equal.  So a block translated while a
+breakpoint exists neither dispatches inline itself nor can be reached
+by a block that does. tcg_update_cflags() sets the flag while
+cpu->breakpoints is non-empty, and
+cpu_breakpoint_insert()/cpu_breakpoint_remove_by_ref() call it -- the
+only two places the list changes, both of which already run on the
+CPU's own thread or with it stopped, or reach another CPU exactly the
+way cpu_single_step() does.
+
+That deletes the entire mechanism you were objecting to.  The
+cross-thread poison from breakpoint insertion, the un-poison, and the
+double breakpoint check are all gone, so the questions above mostly
+answer themselves.
 
