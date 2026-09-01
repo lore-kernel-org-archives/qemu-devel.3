@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73ACC624CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA632C624D0
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 11:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1N6i-0006uC-F8; Tue, 01 Sep 2026 07:56:52 -0400
+	id 1x1N6i-0006u8-6Y; Tue, 01 Sep 2026 07:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rtvernam@gmail.com>)
- id 1x1DMc-0003EJ-60
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 21:32:38 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
+ id 1x1Ln8-0001Wl-Py
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:32:34 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rtvernam@gmail.com>)
- id 1x1DMa-0003Ad-HB
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 21:32:37 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-66e5d39cfe1so2058389d50.3
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 18:32:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788226355; cv=none;
- d=google.com; s=arc-20260327;
- b=iLlkFlZJZeyHG0mjl1473W6c8a/GRHk16JD3EDxeHIIhB1gVBvug0SdxwTrjECUy+P
- mNKXrtMxjqIifpJFMnhqwDtQ4F97woBGHwE4+Oo+TsTvhm8c/WtY2UYzPO7/Rn7o7O1S
- SE4PANGVIX1wAwaC2BifssUWZgdvHLLxG2ZWboSomXmniLGGpCuh6CL+WlVa/Usyo+cE
- xJvHoglzkzqbwD1W6ukdU7Y4EXO7OvdAYBklMI2mrC4asC2KEQd0VPouaHkF/oYaW0eg
- PhXK0rQKLrZFL6dGJEE1KLQp9ZPix+tkqPDhfcbDHsAt8RbcbMK/6uROJUatOoKMDziF
- ZAVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=gWcFKAmhLAR14Y5QDnQw8pNSjtdfdiU1rPQNQzkk9YE=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=UDZQWMGqu+uQN4FX9kg/at8m4aPTSqEucDXR5BlYrhlrciJZihm2p3xi4hYPyeaqcW
- uv6WnBXMllKIBoj0MwEdeDn/uqXErcap/flSMYgsAbnuZ86C7rh13h8GYf5gqa+1hP9q
- X9FXKqxiX2LwNZVOntoPI3V9SfsYPYo4XBHW8ZIsAD1B8cX2RHI/INojwGg2jp5ZJK0o
- fVxhcVEL0Pjs4SnbzNZn37+jfdVE0rhAMtdYcZrsRVM06D/JpbPIcaJujI4P8EH5c9Us
- XzZFI1hoJP3m6wi45XtqXcv8WaJCdk5PgXAaorZHhuuumtzlkjsJzJy3++2y5x2CE4t2
- vbOg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
+ id 1x1Ln6-0004m9-MH
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:32:34 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-ca766c1c9ccso3150230a12.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788226355; x=1788831155; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:mime-version:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=gWcFKAmhLAR14Y5QDnQw8pNSjtdfdiU1rPQNQzkk9YE=;
- b=FjFCccA+RlhBbecncwPsrXIude/AtV86R5x6kye/q/xqe071x89sDOPm45FTeM8q+n
- qpjbJD1C27xka4HPPAtrTYLSJ/EkJVPQLcyPXrLf8YouROQU8LQALTLd9t5TDf8eF/M4
- rDb6+PxOulxFSgVvVmoIxjLTyxoDAf376LkzlZ8pNtFeMyoCeQq3Hu86wR+EvHMrsPbM
- 6oU29xhxSU3zB8MED13JQukRFUAZJrsl7nTwJqTj2ABpyXwq3C10vST1fITIhn/12K9i
- 8NhXG3++sf7dvdtXAklt16B4bBmvI3MDWdIfGFJrX8KzJkDRfFgK9deuAd6vcuMPMkw3
- 5DQg==
+ d=gmail.com; s=20251104; t=1788258751; x=1788863551; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7kwdjrF+q/XbeywvWNcw3Wj5lkryI6dPWIi6HjkeNoE=;
+ b=Cm0Y8y53wZ0XaYlOvD7Y24BX5jrJ2PebhjgfGVUo/eq1oiknDF+0Sv0qcRQ2YOlYEW
+ LSRZCC3doGGnTQlxClFjvoBZeu4BC1SZSDP4GDYzogLi/dE+cu01QYQWRVze5Qv5jHMf
+ /ISNnFr/71l+qqAv/M2ZnsrMaO0ES1KiCetxUWwkUtwCtyPXC1GUKfTTI/R3qaBhW46k
+ IG/554owRJYBqvnHSMeFRuO9B6nFpAu1YVb8wukM3vyFMwOdNj5nk10inTwpOs69okLX
+ ixNuy++GZD5F2Wnmseh7x5Hd+4glLsBEadKMyzsjLmIDEtcp3LlLOGqUvdhDWEfq/QbL
+ xT1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788226355; x=1788831155;
- h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=gWcFKAmhLAR14Y5QDnQw8pNSjtdfdiU1rPQNQzkk9YE=;
- b=SvsuuD447iFQkJwf4+LEdMKMcwRg4Vpdigo2t3tiGkmTkkf8q1wruoFXdsSOi6U4rO
- XRpzBdI3VyCDV0os5tqUG2/97dK/kbdzoEj/usCSNphYg7lDlN5+k4gdEkRvqfV/sRBd
- BAf4bj6da+sOxSGPqoOJN7ZtnWOOoL3ITMdvHC3D/gkqK4JDDptVGmkTqmpCINb9RcXl
- BOwlrFZMwvcG8AB0usyAfJ9hT4OZ/E6foJ1WVugFPRkQi6muBz0Kk+iZ0l0OxyIKZKWX
- mTuBJjg4Lc5FXQRDaLXzaDhiOkYyPpGZfv2Wowg8J2oWxoLRPa7XjqOF5vQuDgxJX6if
- Bvog==
-X-Gm-Message-State: AFuF++lk37q9IrQDelmagVVGkDVkypWIWIKCKxxJercMxrZKiLe0Uu7F
- FF3wIM2TBqW7DaYF4zH/5SpkFCgLW2L14jZrrEJ9kF8mQO80RTT+8Lg2bxXNIUoO/SN/UZNRow7
- NNbgnn942YCY8aeN3510LRSzZRzUj8bjhOpSlM4c=
-X-Gm-Gg: AYBFou1IJQftUEMFycbnvkCxsmBugodKUWGo3Yzz0bGyXpJUfPMfwJuGrw3dYMOEmH9
- nzE8LZw7MZxQMkVNU/vDAM5Bx7sjn7MdFZjty0G87t7CXKBg/ffsqYjXmMrAyva+m63aIzNX2pw
- vnhqcHyImAmfGpU+525UksZNAKUdqAXhzKtYWOi2efGoysgiR08i+yV9nTWyfyN2ePjuVIn2FA0
- fsx5EyD79dHlkElfzubEOcipujacsQ4e6aPWr4gXpyy2PdDi06LAUONg9Uh/G/iNF2Irj5zbxBZ
- C9BODJpD91UZtxsikcXbz7fGPpEQOEWLjABct7K3WjehNw==
-X-Received: by 2002:a05:690e:3d0:b0:66d:1a5a:1d27 with SMTP id
- 956f58d0204a3-66e4c6985f4mr5844050d50.12.1788226354597; Mon, 31 Aug 2026
- 18:32:34 -0700 (PDT)
-MIME-Version: 1.0
-From: rick vernam <rtvernam@gmail.com>
-Date: Mon, 31 Aug 2026 20:32:22 -0500
-X-Gm-Features: AcwNN1WjHmZTcWxDqbeW3_AEWxs69ov4FXwCB_ECElhVQC3LsNDCbMwezjKoBCw
-Message-ID: <CAFH9MbUdL=HuSvqpwHF-1yo-MeCGREQoqKjdT7us=5CiKSxp3w@mail.gmail.com>
-Subject: qemu-vdagent guest to host clipboard sync
+ d=1e100.net; s=20251104; t=1788258751; x=1788863551;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7kwdjrF+q/XbeywvWNcw3Wj5lkryI6dPWIi6HjkeNoE=;
+ b=QliFRif2WVqtYZMwDdgHvhXFCd7oy803ZJOcLZuQDNSlYKjgUski07KJJwRLx9YwrD
+ mYdHzVTwgjSqAqSxjZPo/nRIDf6cLgmUA5rhFlg7Hk2taWbg5zIRKxbkBGZ0S5N/myIk
+ G6gkTiE7XDPUuBn0AZvbS//nH50Hbt6mhOoQSk5Ysr5JOMWZ8B1R15WOIh+X8ZhpxXUQ
+ B6UrMbJegBHBz1xBTS6JnDi+PV44tcMJBcXAAF6WicEg6vijuXOfHL2ejujgicE0pbV2
+ OOlJHSrqs//iyCRqhszUuJMXpT+TLTRAOg6EC9dVLTjDvboitOGi4TMcji/lAwBKn0xt
+ VdTg==
+X-Gm-Message-State: AFuF++kKCGDaiWgO6w+x64hjWDrpES2z+16AVNxHskQdn/3IxWHb8dR2
+ sK0jh/gY2Pvzuo6ocWupbdzfR2DZ5tKBv8+rWmwncDxukrfsXkRRMp0BqMimGA==
+X-Gm-Gg: AYBFou3Zbenq35ytVITjBFZAwb+pZhEusYn/Qcdd7dJw6XQS+gwkNiIrmd3wKQB5Ryh
+ MeLkV0XWzJ8dbyqhRMnE7MN/shMAT6Jdr52pOsWq0xqvJb+33uBfhzcuojyGSrdYISucQDh3Ons
+ U+tzG1w+72Yr0+U2bsKAf6iF4NciiuN998P5iA6ETpgEpqRhuewnL2PA77EGCPCJkIPVRiAhjrM
+ Uv5MeTUnQ8fbW6KbLXNxOhixM0AKbuZ7LIqk8w8pmH181vIOzp0xVmQnXLajsQdOLILCuWwkmC6
+ h45frXIzBeWvq/JRzja5T4veI8RgXtXBYVW+/i1ZB2PdnwYaUhEnrt4VoCgOvDw0fl4q3C3jNWr
+ ftpn4dLtzynPFtfkP/viuw3HUJpLs4JcJCAj9iXoZM8M7AA1FkS6wDvZPpjdIkPK7hJXYAH/ax1
+ uXw0HFSx1jQP5B+8rhOit/sQDJyYATiHIKGhdw+9J+KCylNYDsnSqibIiu2AA2gX5rAkNw2+Yi7
+ aLdRhpB
+X-Received: by 2002:a17:90b:50c6:b0:38e:97f0:aa4b with SMTP id
+ 98e67ed59e1d1-396d1017316mr51494987a91.13.1788258750620; 
+ Tue, 01 Sep 2026 03:32:30 -0700 (PDT)
+Received: from DESKTOP-G8U0VEE ([2405:201:e03d:cb:7583:6eee:4319:afcd])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3286f80a0a5sm41589717eec.11.2026.09.01.03.32.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Sep 2026 03:32:29 -0700 (PDT)
+From: Nagendran K <nagendranjairam52@gmail.com>
 To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000a4d390065a61e498"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=rtvernam@gmail.com; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Cc: philmd@linaro.org,
+	Nagendran K <nagendranjairam52@gmail.com>
+Subject: [PATCH] hw/core/loader.c: Added Extended Tektronix HEX file support
+Date: Tue,  1 Sep 2026 16:02:17 +0530
+Message-ID: <20260901103223.710-1-nagendranjairam52@gmail.com>
+X-Mailer: git-send-email 2.54.0.windows.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=nagendranjairam52@gmail.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 01 Sep 2026 07:56:50 -0400
+X-Mailman-Approved-At: Tue, 01 Sep 2026 07:56:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,92 +100,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a4d390065a61e498
-Content-Type: text/plain; charset="UTF-8"
+Added support for loading Extended Tektronix HEX files through the
+generic loader.
 
-Hello,
+The loader parses Extended Tektronix records, validates their
+checksums, and loads the data at the addresses specified in the file.
 
-With -display dbus, clipboard sync only works host to guest; guest to host
-fails without any failure messaging.
+This allows Extended Tektronix files to be loaded directly without
+manual conversion to another supported format.
 
-The guest's 'clipboard-grab' message is received correctly by ui/vdagent.c,
-but ui/dbus-clipboard.c:dbus_clipboard_update_info() drops it before it
-ever reaches the D-Bus display client.
-Checking info->has_serial in dbus_clipboard_update_info() always fails for
-guest to host as has_serial is never assinged:
+Tested by loading an Extended Tektronix file containing a simple UART
+application on the RealView EB machine. The application executed
+successfully and produced the expected UART output.
 
-if (self_update || !info->has_serial) {
-    return;
-}
+Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
+---
+ hw/core/loader.c         | 141 +++++++++++++++++++++++----------------
+ include/hw/core/loader.h |   7 +-
+ 2 files changed, 87 insertions(+), 61 deletions(-)
 
-Steps to reproduce:
-1. Start QEMU with:
-   "-display dbus,gl=on -chardev qemu-vdagent,...,name=vdagent,clipboard=on
--device virtserialport,...,name=com.redhat.spice.0"
-2. Connect a D-Bus display client implementing "org.qemu.Display1.Clipboard"
-3. In the guest, copy text to the clipboard.
-4. Observe on the host side.
-
-Expected result:
-Guest clipboard content is forwarded to the D-Bus client via
-"Clipboard.Grab".
-
-Actual result:
-Nothing is forwarded. "dbus_clipboard_update_info()" returns early, a
-subsequent "Clipboard.Request" from the host fails with "Empty clipboard".
-
-Fix tested locally:
-Removing the check of info->has_serial resolves the issue with no observed
-regression on Windows or Linux guests:
-
--    if (self_update || !info->has_serial) {
-+    if (self_update) {
-         return;
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 2943f69e92..33ccb51d56 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -1958,8 +1958,11 @@ typedef struct {
+ } Ext_Tek_HexLine;
+ 
+ /* return 0 or -1 if error */
+-static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line, uint8_t *our_checksum, const uint8_t c,
+-                         uint32_t *index, const bool in_process)
++static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line,
++                                     uint8_t *our_checksum,
++                                     const uint8_t c,
++                                     uint32_t *index,
++                                     const bool in_process)
+ {
+     /* +---------+---------------+-----------+---------------+-------------+
+      * | record  |    record     |           |               |             |
+@@ -1977,27 +1980,35 @@ static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line, uint8_t *our_checksu
+     if (!g_ascii_isxdigit(c) || !in_process) {
+         return false;
      }
+-    //still idx is computed nibble wise
++    /* still idx is computed nibble wise */
+     value = g_ascii_xdigit_value(c);
+     value = (idx & 0x1) ? (value & 0xf) : (value << 4);
+     if (idx < 2) {
+         line->record_length |= value;
+-    } else if (idx==2) {
++    } else if (idx == 2) {
+         line->record_type |= value;
+-    } else if (2 < idx && idx <=4) {
++    } else if (2 < idx && idx <= 4) {
+         line->checksum |= value;
+     }
+-    //Extracting address length from record to fill that many no of address characters in the address field of the line structure. 
+-    else if ( idx==5){
++    /*
++     * Extracting address length from record to fill that many no of address
++     * characters in the address field of the line structure.
++     */
++    else if (idx == 5) {
+         address_len |= value;
+-    }else if (6 <= idx && idx <= (6 + address_len)) {
++    } else if (6 <= idx &&
++                   idx <= (6 + address_len)) {
+         line->address <<= address_len;
+         line->address += g_ascii_xdigit_value(c);
+     }
+-    //Checking whether index above address last char index and reaches till record length 
++    /*
++     * Checking whether index above address last char index
++     * and reaches till record length. Right shifting one divides the
++     * nibble wise index by 2 to get the byte wise index to
++     * fill the data field of the line structure
++     */
+     else if ((6 + address_len) < idx &&
+-               idx <= line->record_length) {
+-        //Right shifting one divides the nibble wise index by 2 to get the byte wise index to fill the data field of the line structure.
++              idx <= line->record_length) {
+         line->data[(idx - (6 + address_len)) >> 1] |= value;
+     } else {
+         return false;
+@@ -2040,12 +2051,12 @@ static int handle_ext_tek_hex_record_type(Ext_TekHexParser *parser)
+         }
+ 
+         /* copy from line buffer to output bin_buf */
+-        //sizeof(line->data) is given to dynamically calculate the size of data field
++        /* sizeof(line->data) dynamically calculates the size of data field */
+         memcpy(parser->bin_buf + parser->current_rom_index, line->data,
+                sizeof(line->data));
+         parser->current_rom_index += sizeof(line->data);
+         parser->total_size += sizeof(line->data);
+-        //As address is absolute address, we dont need to calculate next address to write
++        /* As address is absolute, we dont need to calculate next address */
+         break;
+ 
+     case TEK_TERMINATION_RECORD:
+@@ -2065,15 +2076,18 @@ static int handle_ext_tek_hex_record_type(Ext_TekHexParser *parser)
+ }
+ 
+ /* return size or -1 if error */
+-static int parse_ext_tek_hex_blob(const char *filename, hwaddr *addr, uint8_t *ext_tek_blob,
+-    size_t ext_tek_blob_size, AddressSpace *as)
+-{
+-        bool in_process = false; /* avoid re-enter and
+-                * check whether record begin with '%' */
++static int parse_ext_tek_hex_blob(const char *filename,
++                                  hwaddr *addr,
++                                  uint8_t *ext_tek_blob,
++                                  size_t ext_tek_blob_size,
++                                  AddressSpace *as)
++{
++    /* avoid re-enter and check whether record begin with '%' */
++        bool in_process = false;
+         uint8_t *end = ext_tek_blob + ext_tek_blob_size;
+         uint8_t our_checksum = 0;
+         uint32_t record_index = 0;
+-        
++
+         Ext_TekHexParser parser = {
+         .filename = filename,
+         .bin_buf = g_malloc(ext_tek_blob_size),
+@@ -2085,47 +2099,52 @@ static int parse_ext_tek_hex_blob(const char *filename, hwaddr *addr, uint8_t *e
+         rom_transaction_begin();
+ 
+         for (; ext_tek_blob < end && !parser.complete; ++ext_tek_blob) {
+-        switch (*ext_tek_blob) {
+-        case '\r':
+-        case '\n':
+-        if (!in_process) {
+-        break;
+-        }
++            switch (*ext_tek_blob) {
++            case '\r':
++            case '\n':
++                if (!in_process) {
++                    break;
++                }
+ 
+-        in_process = false;
+-        //record_length byte stores the number of hex characters (nibbles) in the record
+-        //so, record_length as the authoritative count of hex characters (nibbles) in the record 
+-        //and compare it directly to the nibble index(record index).
+-        if ((parser.line.record_length != record_index) || (our_checksum != 0)) {
+-        parser.total_size = -1;
+-        goto out;
+-        }
++                in_process = false;
++                /*
++                 * record_length byte stores the number of hex characters
++                 * (nibbles) in the record and compare it directly to
++                 * the nibble index(record index).
++                 */
++                if ((parser.line.record_length != record_index) ||
++                    (our_checksum != 0)) {
++                    parser.total_size = -1;
++                    goto out;
++                }
+ 
+-        if (handle_ext_tek_hex_record_type(&parser) == -1) {
+-        parser.total_size = -1;
+-        goto out;
+-        }
+-        break;
++                if (handle_ext_tek_hex_record_type(&parser) == -1) {
++                    parser.total_size = -1;
++                    goto out;
++                }
++                break;
+ 
+-        /* start of a new record. */
+-        case '%':
+-        memset(&parser.line, 0, sizeof(Ext_Tek_HexLine));
+-        in_process = true;
+-        record_index = 0;
+-        break;
++            /* start of a new record. */
++            case '%':
++                memset(&parser.line, 0, sizeof(Ext_Tek_HexLine));
++                in_process = true;
++                record_index = 0;
++                break;
+ 
+-        /* decoding lines */
+-        default:
+-        if (!parse_ext_tek_hex_record(&parser.line, &our_checksum, *ext_tek_blob,
+-                &record_index, in_process)) {
+-        parser.total_size = -1;
+-        goto out;
+-        }
+-        break;
+-        }
++            /* decoding lines */
++            default:
++                if (!parse_ext_tek_hex_record(&parser.line,
++                                            &our_checksum,
++                                            *ext_tek_blob,
++                                            &record_index, in_process)) {
++                    parser.total_size = -1;
++                    goto out;
++                }
++                break;
++            }
+         }
+ 
+-        out:
++    out:
+         g_free(parser.bin_buf);
+         rom_transaction_end(parser.total_size != -1);
+         return parser.total_size;
+@@ -2133,18 +2152,22 @@ static int parse_ext_tek_hex_blob(const char *filename, hwaddr *addr, uint8_t *e
+ 
+ 
+ /* return size or -1 if error */
+-ssize_t load_targphys_ext_tek_hex_as(const char *filename, hwaddr *entry, AddressSpace *as)
++ssize_t load_targphys_ext_tek_hex_as(const char *filename,
++                                     hwaddr *entry,
++                                     AddressSpace *as)
+ {
+     gsize ext_tek_blob_size;
+     gchar *ext_tek_blob;
+     int total_size = 0;
+ 
+-    if (!g_file_get_contents(filename, &ext_tek_blob, &ext_tek_blob_size, NULL)) {
++    if (!g_file_get_contents(filename, &ext_tek_blob,
++                             &ext_tek_blob_size, NULL)) {
+         return -1;
+     }
+-    total_size = parse_ext_tek_hex_blob(filename, entry, (uint8_t *)ext_tek_blob,
+-                                ext_tek_blob_size, as);
++    total_size = parse_ext_tek_hex_blob(filename, entry,
++                                       (uint8_t *)ext_tek_blob,
++                                       ext_tek_blob_size, as);
+ 
+     g_free(ext_tek_blob);
+     return total_size;
+-}
+\ No newline at end of file
++}
+diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
+index 336a987f85..c0d29b1d44 100644
+--- a/include/hw/core/loader.h
++++ b/include/hw/core/loader.h
+@@ -57,7 +57,8 @@ ssize_t load_image_targphys_as(const char *filename,
+ ssize_t load_targphys_hex_as(const char *filename, hwaddr *entry,
+                              AddressSpace *as);
+ 
+-                             /**load_targphys_ext_tek_as:
++/**
++ * load_targphys_ext_tek_as:
+  * @filename: Path to the .tek file
+  * @entry: Store the entry point given by the .tek file
+  * @as: The AddressSpace to load the .tek file to. The value of
+@@ -67,7 +68,9 @@ ssize_t load_targphys_hex_as(const char *filename, hwaddr *entry,
+  *
+  * Returns the size of the loaded .tek file on success, -1 otherwise.
+  */
+-ssize_t load_targphys_ext_tek_hex_as(const char *filename, hwaddr *entry, AddressSpace *as);
++ssize_t load_targphys_ext_tek_hex_as(const char *filename,
++                                     hwaddr *entry,
++                                     AddressSpace *as);
+ 
+ /** load_image_targphys:
+  * Same as load_image_targphys_as(), but doesn't allow the caller to specify
+-- 
+2.54.0.windows.1
 
-I didn't really consider an approach of setting info->has_serial as that
-looked like a larger patch, and it appears dbus_clipboard_grab() takes a
-similar approach to this fix by setting has_serial unconditionally for host
-to guest clipboard sync.
-
-I believe this if statement has been unchanged since the initial commit
-ff1a5810f61f78b47ddad995f49bcc70171d9e38 "ui/dbus: add clipboard interface".
-
-Thanks,
-- Rick
-
---000000000000a4d390065a61e498
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello,</div><div><br></div>With -display dbus, clipbo=
-ard sync only works host to guest; guest to host fails without any failure =
-messaging.<br><br>The guest&#39;s &#39;clipboard-grab&#39; message is recei=
-ved correctly by ui/vdagent.c, but ui/dbus-clipboard.c:dbus_clipboard_updat=
-e_info() drops it before it ever reaches the D-Bus display client.<br>Check=
-ing info-&gt;has_serial in dbus_clipboard_update_info() always fails for gu=
-est to host as has_serial is never assinged:<br><br>if (self_update || !inf=
-o-&gt;has_serial) {<br>=C2=A0 =C2=A0 return;<br>}<br><br>Steps to reproduce=
-:<br>1. Start QEMU with:<br>=C2=A0 =C2=A0&quot;-display dbus,gl=3Don -chard=
-ev qemu-vdagent,...,name=3Dvdagent,clipboard=3Don -device virtserialport,..=
-.,name=3Dcom.redhat.spice.0&quot;<br>2. Connect a D-Bus display client impl=
-ementing &quot;org.qemu.Display1.Clipboard&quot;<br>3. In the guest, copy t=
-ext to the clipboard.<br>4. Observe on the host side.<br><br>Expected resul=
-t:<br>Guest clipboard content is forwarded to the D-Bus client via &quot;Cl=
-ipboard.Grab&quot;.<br><br>Actual result:<br>Nothing is forwarded. &quot;db=
-us_clipboard_update_info()&quot; returns early, a subsequent &quot;Clipboar=
-d.Request&quot; from the host fails with &quot;Empty clipboard&quot;.<br><b=
-r>Fix tested locally:<br>Removing the check of info-&gt;has_serial resolves=
- the issue with no observed regression on Windows or Linux guests:<br><br>-=
- =C2=A0 =C2=A0if (self_update || !info-&gt;has_serial) {<br>+ =C2=A0 =C2=A0=
-if (self_update) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>=C2=A0 =
-=C2=A0 =C2=A0}<br><br><div>I didn&#39;t really consider an approach of sett=
-ing info-&gt;has_serial as that looked like a larger patch, and it appears =
-dbus_clipboard_grab() takes a similar approach to this fix by setting has_s=
-erial unconditionally for host to guest clipboard sync.</div><br><div>I bel=
-ieve this if statement has been unchanged since the initial commit ff1a5810=
-f61f78b47ddad995f49bcc70171d9e38 &quot;ui/dbus: add clipboard interface&quo=
-t;.</div><div><br></div><div>Thanks,</div><div>- Rick</div></div>
-
---000000000000a4d390065a61e498--
 
