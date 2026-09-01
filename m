@@ -4,144 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CF0C61DD6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 20:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C745BC61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 21:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1VXO-0004Tw-LM; Tue, 01 Sep 2026 16:56:58 -0400
+	id 1x1Vcx-0005aM-P7; Tue, 01 Sep 2026 17:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x1VXN-0004Tb-4D
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 16:56:57 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1x1Vcv-0005ZC-KT
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 17:02:41 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x1VXK-0002Pb-8l
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 16:56:56 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1x1Vcs-0003IJ-1i
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 17:02:41 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 681KTbeU3849571
- for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 20:56:52 GMT
+ 681KT9P23108193
+ for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 21:02:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fGXLmr9s5e7KQvSpL3qjd6lAoNjD1HhhwcxFdEQrqJs=; b=LUtbn3rBWgCXt2bA
- MPD4uu1d0uIzk5uZe8EkPCiZZqp1YS8/Sd6UZH9dbmscAYutUelYOUNTZtkQO6qc
- D5ya1ueqpBLexYPkaWmsEIEnVjUFCB8b5iZLvW5A44T+M2wT4G2VzpciJOnnwhI5
- 31HINJYD6H1u5DgyL95xgdtvzZTytaCSn9rPtVck329zlRVdpEZuRMK6FCmVWQC0
- miat0CM1Du7dQ0QitB52FryTrl/qMF6Sd2DepTGeCEDnwPdkc7uclqalJ1SOaqYg
- mkuOn/U9eB5AjuVBysO0PjDDLcBYGLTCnfExSvKQA4Z3q0+sYZ2CIvZe7V7Voy0E
- HaoUvw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ge3n0rqsk-1
+ 2TIkADdDYKGeGeVyxhzr754GGDvPdN4I3ngKzOkJs+w=; b=Nagn54dlDYHDZVRn
+ OazyWPEyQIuSAfdv8DhzBfFpC/ETi8A87VBa6qQy1UwZM5RdLv+L/nCmANGjD3nG
+ ZRfOAcllYbl0qCq2ZFlCPZ1hy0syy/KVGjX5izk1MZktDRabvUnTKVmDx5DqQ/uL
+ 7xViKkLmMdAiT9iws9fbOHoN5JJPYXzvQuK+k8t7y4PmRECCsGy7MDGJpryFZ7zp
+ h+QPSsj8BX36UKLh+x8hgbankuQOggBeGmb4yqckT52FLIydTrumUjs8rF2wWxd6
+ Lhzi1xI3zHv9P21DHFiWbvctagWn5ntdF4jIRQun0Lq/UBMn2lSyV33vclrD2iJy
+ jSYt6Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ge1wp9cd4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 20:56:52 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c26012cd0so5590611cf.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 13:56:52 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 21:02:35 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-90cc934fe9eso7138596d6.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 14:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788296211; x=1788901011; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788296554; x=1788901354; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fGXLmr9s5e7KQvSpL3qjd6lAoNjD1HhhwcxFdEQrqJs=;
- b=Us1CcI1arBCKzpJrpHTMw8/uVACI4U/9NKQpLL+mOnl5nxuK6LWN7HqNeOFqRaA0P3
- OfF3kiXlyT4Vj7CPKPH2r6ZeNcgkvZTKQa/e3x/rE5zrANeiKnUQOiLQT7yVjDzfjYiB
- oE5X5HmfaGuwA6Xuq9I4z2Uo0BnJRCHuW/ZbIZqs8A7VotYqZWHgEiKjxZSn1n+mQBUG
- y5G9y6t+mkCYoGVodr7uCXKcuxgeG26SmFaIraAFOIcQcX4io3cKkBLQIfF5gK8TQbGE
- +cg6IAWuX8MZ73JI++wnBsmMor3VHuF3bwhVY1YHI/deMZlb/T6/ssFRTw+H6d1F3xTD
- 6yJA==
+ bh=2TIkADdDYKGeGeVyxhzr754GGDvPdN4I3ngKzOkJs+w=;
+ b=eKOcvrYR5v3mzmgc3zXKSBgTl/DXGUz+du3oK+u3Nv4/cIKvEMppk1eLd5nhxzHATx
+ ePczU3KOi+aORJPejTUq6GT/C9pCEBD71iSHCazAydgUyj7iLUwnVwWYp49f37w/ysqn
+ 38KV8GOfuEy4bhpmkOkhvUWa3MSVUpdmJGW1shS6ySXzOKpqIw6K7KVQaJDeo9DFm4DW
+ ckqOdbG9UlFF0oIGdS7WJ8Gdv7uThnRk0hNP30BcN9drKCmUpy1AfLym5NAeMIJpX/BV
+ YEk6KrAfazAgT0YNPexRBkjHkuqJgrtH+D3uPo58RYUBeYCZOqVQdkrceB9K7oJFy63L
+ dYig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788296211; x=1788901011;
+ d=1e100.net; s=20251104; t=1788296554; x=1788901354;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fGXLmr9s5e7KQvSpL3qjd6lAoNjD1HhhwcxFdEQrqJs=;
- b=TRfDWOflwXh+O9LDaSz1JldEa+jwQdzVlRoSbEsfv1uPzXnJ1MSZi+orBhSXxps7ZU
- OiGtDVErpaUC09yyf8/o74R4MPI5Yck9JK4zYZmEsCrrTUaa8O4cjMdgx/YOjeC23n8x
- lkJGfTpQ2gVunudurmPBWp8mqpF/mA+mWgA9ytyfD/9u7IFm+L4Zf9pL1M+vGkRYleDI
- oqsORHQoYzcNicrg187AVQPnbwqXEcvSX3n7RS7x8bY6mCMozD2UHP2e4zxu7xvylWWI
- qxbP7DwlWbQVlsAn4rsGneTzSoQ+VcZAG/ZIt/J5/yVZCUsOHYtJrvcK5a8U6aSNk95r
- 3xvg==
+ bh=2TIkADdDYKGeGeVyxhzr754GGDvPdN4I3ngKzOkJs+w=;
+ b=iqCvwxf0AXavp+h3Bu6gNWsr+argO62bYD7tWhDAfotmupgS6LZ35T+Tm+xN5Ma2CN
+ eyULoDHk2X8t3LVXHMWnnx0aRsl2HacrdGspDBWLbyTHkUuxEjDmJgUUzWRJo9GCTU19
+ SkPKdkoYPNjXKhdRKSPGQrFR/qZt5tnPW5rvXiKuWWYpCNFaMeLThgDyxjzj4GH1aBX6
+ xH8ax6hCyijgZI0TJSm125cRcOyoMIcOEQnFOzPpAjvRV1lyk6S1Uzue+8nySOxZTUyi
+ TdGjYUW2dHtTpGlJMlUdMBCBESSEOGRMcGQnWYht4wkcrtvFxAXGYlyZin28JreLHc3J
+ aaMQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqtvBKCHyBOTnmM8MjEH7p/EKrS+4VbFjhLCLjo86KMhWPwo+ZC3a+6Dixcwbyo12Byy27Tk55nslbM@nongnu.org
-X-Gm-Message-State: AFuF++mfibxpIhZEPzesCotXhHoMzsmF9GPIg/Fsfgu6qGZl1v5O3K73
- 8vqepnWeaEmqorcucg+FZzJ4yIgLXVaOWCcyhIQcIwqIhW3ORp+5/PyuaFPgqfA335H7KG8ueQD
- EEiItMJuNJkC7PMULJjuEicadZcwZj3BpX3/BXJvquQcq2pJKdo87gywn5w==
-X-Gm-Gg: AR+sD11sj1XdyGKD3A79ZiWUZSdrdEuBmcQi/pdtF6fK9I3aUG7/+xmu0L1ut9NoOp6
- vEGHbnotHe0QZCWcxsK6EhNjDdgm/5SnypqX0T+YK4Odo9n40pUIbYuYWI8kR6ghUNmu6cXUfQX
- YqqlAld7Fr48+k4OtpV5lbMjvCKxZyXdheNsLzNEVDCNYgHOuyWBeRtVmxyyNhJ2AJ7Xs7awmi1
- A9/o+1ing9pbhdGNpMwF9HlfXADU39RBkOke7tfPgxqQ22hx6J8zgJDA0maJeluB62Hh14teBQn
- 1mWX1O16KdOkVqECStLkCCP0jSeK4Ws1MHUQh8oR5JPLp9ryjTYuVx9tS1kXrMwkDfOO582IpDc
- FoPtARFF+NcNpy1Cr/y8Xo4Vy3eOTKA0CP1I0
-X-Received: by 2002:ac8:7dcc:0:b0:51c:52a:8e70 with SMTP id
- d75a77b69052e-530341b9935mr15099481cf.2.1788296211449; 
- Tue, 01 Sep 2026 13:56:51 -0700 (PDT)
-X-Received: by 2002:ac8:7dcc:0:b0:51c:52a:8e70 with SMTP id
- d75a77b69052e-530341b9935mr15098981cf.2.1788296210906; 
- Tue, 01 Sep 2026 13:56:50 -0700 (PDT)
+ AKwUvBw81U+4ojuA3kBCBJFcsFUfAZw3Ufcc6AfnoU7RPdr1QOEseNnYv/Z1IkbmW5y8IQPihP2d3s8u5yw2@nongnu.org
+X-Gm-Message-State: AFuF++m9zrv0wIQ3hynmJHTupXi43eqdyepNpc2LjAcW0oO7w2GOxI6K
+ NJC3hQkf5gUTxLm4T9v0OrU/lCStxoWZNQMRQdgHkYdylNfracN+7dePHxZNPk4bl1bapxWVmyE
+ JOm8/TeVYLctYYsq3WoL7rLuH4iBCRRlYPpqWTvgdeqtoHrVqWQ9mhMp67Q==
+X-Gm-Gg: AYBFou1Q8mcn8PncKLHxCOI8tPYapOm6o22xB1I+NozXUixcyr3I0pqoLP+mMeczBB+
+ Ml1hjBFseF9nnjidNeuoYL4qXLiTuLXRGZTdM9UIGauHlfm3TyYVpMfi/zuX9+y1a5mfUgVK8PS
+ ZguGBsZ2x3GaCvxyuf/uYqo9QFXHpBROv8/r8BIvy97ho2FqIS10nGhRPxIHmNepmQUFeVJ4nnw
+ QbXgmFQPSceOBDh4plW0GLkp+nz5aYaCZmitOuTgbjeR0Hru2CHzI7jbtxWfXg53zmgpdVo4r7/
+ i/8feTlOxlqJqiTxPP/o1nul5OD41LLfo8lQL5pTpakN90UQasuJBJp4zQozfMkITmXKQ/+pLcN
+ JnBnlbSGQrCJuZ+uwJILY9oi7pmJ1ziZuU2mE
+X-Received: by 2002:a05:6214:1c09:b0:90e:975c:7805 with SMTP id
+ 6a1803df08f44-90ebab701dbmr7441636d6.20.1788296554403; 
+ Tue, 01 Sep 2026 14:02:34 -0700 (PDT)
+X-Received: by 2002:a05:6214:1c09:b0:90e:975c:7805 with SMTP id
+ 6a1803df08f44-90ebab701dbmr7440716d6.20.1788296553945; 
+ Tue, 01 Sep 2026 14:02:33 -0700 (PDT)
 Received: from [192.168.68.101] ([152.250.131.13])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-530332453a7sm4830181cf.26.2026.09.01.13.56.48
+ 6a1803df08f44-90e9eee7f12sm2614376d6.39.2026.09.01.14.02.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Sep 2026 13:56:50 -0700 (PDT)
-Message-ID: <df956444-3db2-4039-9d96-ca045c463956@oss.qualcomm.com>
-Date: Tue, 1 Sep 2026 17:56:46 -0300
+ Tue, 01 Sep 2026 14:02:33 -0700 (PDT)
+Message-ID: <87af3207-dee2-48e2-bafd-f8e714c2d566@oss.qualcomm.com>
+Date: Tue, 1 Sep 2026 18:02:30 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] target/riscv: Add experimental Zvabd extension
- support
+Subject: Re: [PATCH v2 2/3] disas/riscv: Support vabs.v pseudo-instruction
 To: Mingliang Liu <liumingliang.dev@bytedance.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
  zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com,
- chao.liu@processmission.com, Zhibo Hong <hongzhibo@bytedance.com>
+ chao.liu@processmission.com
 References: <20260831133000.982059-1-liumingliang.dev@bytedance.com>
- <20260831133000.982059-2-liumingliang.dev@bytedance.com>
+ <20260831133000.982059-3-liumingliang.dev@bytedance.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260831133000.982059-2-liumingliang.dev@bytedance.com>
+In-Reply-To: <20260831133000.982059-3-liumingliang.dev@bytedance.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE4NCBTYWx0ZWRfX97W8S36AQMf4
- GdBVZrI08LLWr/2VjIKYAqJUll4KBnQjFShSMldYshqDlWNvYw0fh8nOvTvJSHiMFr6z7aNanaF
- XNArTOM3G+XlAXPZnxgW0rni6jlmdTaA3AUUwklGPjRyhRiBDsMnqZnZx2SrTAL3v8hrO0jbCph
- hI7SBlsAc20khZv7qWSedH77fGPIMkmTPe4DNiVxySnaq+W60T4nTbVQbMpUsAvBX4Z3vfiRZpe
- O+jHLixIwQAX+NU/mND/W5ih+AUIkONE2JGBJQmlpCwZ3MSAfMA2JubC4EGx+fQpW8VVUqcwzed
- 4sqUvcvg18CRqNBZV0eYFxFcJH3XIgvXoDd8wRpA1K4zqCpLH04nnvaMIobdx859hfULpmd2oeA
- w0GcRG+NecLaS1YEr1JIfXzFtgV0OP1YGf/ffO1Psrq6gCPXpuwNvLKoHtySurhR3uNNdaz8cfB
- P20mDPFKZAoyrck1G/w==
-X-Proofpoint-GUID: diMxA6IDNadcuqGiarJPk3YWa92d3Vh_
-X-Proofpoint-ORIG-GUID: diMxA6IDNadcuqGiarJPk3YWa92d3Vh_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE4NCBTYWx0ZWRfXzQ1BHr1x2p1v
- lvI00vaR3aJyOffNgnJPOgg3MjuxwpmlVsQAq1PGPRD2TPprHGakCmGI/jjNsro/u/hi6yr2aTL
- ItlO/WHQC6KCL4/jZsfELW//Wc99r/w=
-X-Authority-Analysis: v=2.4 cv=R9oz39RX c=1 sm=1 tr=0 ts=6a973c14 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=CXdxNCAnTuDr1kYd6DjE4g==:17
+X-Authority-Analysis: v=2.4 cv=F8JnsKhN c=1 sm=1 tr=0 ts=6a973d6b cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=CXdxNCAnTuDr1kYd6DjE4g==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=NEAV23lmAAAA:8 a=968KyxNXAAAA:8 a=EUspDBNiAAAA:8 a=4CRskVc9TFN2fs5PJI4A:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=968KyxNXAAAA:8 a=EUspDBNiAAAA:8 a=oV8bDTWlGSPqd8E9x_IA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: Ac4oFOOTSwP9MmWFNDOdGEkFcF0txF7A
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE4NCBTYWx0ZWRfX6Vc12swBFM37
+ WszhbL1h/G2nH+C2MQOvlb0aAis9U9DU5H9SYVkDMHAb6lOaD+tNaZLHNnQALcHnetdhGApXeLZ
+ CWXbb25laMDtbEwVvVBUQfsMlmYj2Kk=
+X-Proofpoint-ORIG-GUID: Ac4oFOOTSwP9MmWFNDOdGEkFcF0txF7A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE4NCBTYWx0ZWRfX+q23hnULOcGg
+ KvkAqTCjyS+nbFgpHT+oxmpo/L6aQf7dgi3HjEJKVOhlzK2s1USGaQrjWEjzgTor0W9V+wm5Mwh
+ uWbpI1XlgL4txKvgpn5Nfbs9kvPziEBhkw2cmzYVFi4qu9AdC6vEBtpR/knB6+bf7JuqHRpSRmu
+ YFa9KRi1SfHRe0671GK7YfXYd4SWzENuZWcgwbgGs87yMCQPUcyYINgJSkSqcoGDrXEsrm1SQ7T
+ wE2Ea5mVi+rLpekztfblTXcckrGOMsNeRxv0fwEFzDjPLVUezPruRNufU9inO2tw3UatKBtv+ar
+ xGQ5s6fgHNnPtEOtdEDNJSTQ6f+2HIBQ88CO071WuJEl5ltshmFoNKS7RKbkiQ1aDS3vOLfCyM5
+ XJfcdJc2TdXlWL/nV8u/lZ1Rdcwo36NZzKQpQT7aXQsMiCLsAqgAh+Up/O6/UUhxr4EfaR1ELCQ
+ gcAoAFfV36NEKDGpbWQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-01_06,2026-09-01_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
+ bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010184
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,317 +159,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 8/31/2026 10:29 AM, Mingliang Liu wrote:
-> From: Zhibo Hong <hongzhibo@bytedance.com>
-> 
-> The draft Zvabd extension provides vector integer absolute-difference
-> operations for image, video, and other data-processing workloads. It
-> introduces eight new instructions:
-> 
->    - vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW values from
->      8 through ELEN, with SEW 64 requiring Zve64x.
->    - vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support SEW 8
->      and 16 and accumulate into a double-width destination.
-> 
-> This patch implement this instruction extension, including instruction
-> decoder, TCG translation, and helpers, etc.
-> 
-> The specification is under review at:
-> https://github.com/riscv/riscv-isa-manual/pull/3279
-> 
 > Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   disas/riscv-op.c.inc                        |  8 +++
->   disas/riscv.c                               |  8 +++
->   target/riscv/cpu.c                          |  1 +
->   target/riscv/cpu_cfg_fields.h.inc           |  1 +
->   target/riscv/helper.h                       | 26 ++++++++++
->   target/riscv/insn32.decode                  | 10 ++++
->   target/riscv/tcg/insn_trans/trans_rvv.c.inc | 45 +++++++++++++++++
->   target/riscv/tcg/tcg-cpu.c                  |  6 +++
->   target/riscv/tcg/vector_helper.c            | 56 +++++++++++++++++++++
->   9 files changed, 161 insertions(+)
+>   disas/riscv-op.c.inc | 3 ++-
+>   disas/riscv.c        | 6 ++++++
+>   2 files changed, 8 insertions(+), 1 deletion(-)
 > 
 > diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-> index 1d334e4857..07b56f5d52 100644
+> index 07b56f5d52..425473ee61 100644
 > --- a/disas/riscv-op.c.inc
 > +++ b/disas/riscv-op.c.inc
-> @@ -490,6 +490,10 @@ OP(vaadd_vv, "vaadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->   OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
+> @@ -491,9 +491,10 @@ OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
 >   OP(vaaddu_vv, "vaaddu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
 >   OP(vaaddu_vx, "vaaddu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> +OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> +OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> +OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> +OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
+>   OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+> -OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
+> +OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, rvcp_vabd_vx)
+>   OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+>   OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
+> +OP(vabs_v, "vabs.v", rv_codec_illegal, rv_fmt_vd_vs2_vm)
 >   OP(vadc_vim, "vadc.vim", rv_codec_v_i, rv_fmt_vd_vs2_imm_vl)
 >   OP(vadc_vvm, "vadc.vvm", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vl)
 >   OP(vadc_vxm, "vadc.vxm", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vl)
-> @@ -861,6 +865,10 @@ OP(vsuxei16_v, "vsuxei16.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->   OP(vsuxei32_v, "vsuxei32.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->   OP(vsuxei64_v, "vsuxei64.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
->   OP(vsuxei8_v, "vsuxei8.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
-> +OP(vwabda_vv, "vwabda.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> +OP(vwabda_vx, "vwabda.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-> +OP(vwabdau_vv, "vwabdau.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-> +OP(vwabdau_vx, "vwabdau.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->   OP(vwadd_vv, "vwadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
->   OP(vwadd_vx, "vwadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
->   OP(vwadd_wv, "vwadd.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
 > diff --git a/disas/riscv.c b/disas/riscv.c
-> index b8099cbdf8..e0a8b3a756 100644
+> index e0a8b3a756..2aecaaa25a 100644
 > --- a/disas/riscv.c
 > +++ b/disas/riscv.c
-> @@ -2022,6 +2022,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->                   case 48: return &op_vwredsumu_vs;
->                   case 49: return &op_vwredsum_vs;
->                   case 53: return &op_vwsll_vv;
-> +                case 61: return &op_vwabda_vv;
-> +                case 62: return &op_vwabdau_vv;
->                   }
->                   break;
->               case 1:
-> @@ -2164,6 +2166,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->                           break;
->                       }
->                       break;
-> +                case 21: return &op_vabd_vv;
-> +                case 22: return &op_vabdu_vv;
->                   case 23:
->                       if ((inst >> 25) & 1) {
->                           return &op_vcompress_vm;
-> @@ -2349,6 +2353,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->                   case 46: return &op_vnclipu_wx;
->                   case 47: return &op_vnclip_wx;
->                   case 53: return &op_vwsll_vx;
-> +                case 61: return &op_vwabda_vx;
-> +                case 62: return &op_vwabdau_vx;
->                   }
->                   break;
->               case 5:
-> @@ -2417,6 +2423,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
->                   case 13: return &op_vclmulh_vx;
->                   case 14: return &op_vslide1up_vx;
->                   case 15: return &op_vslide1down_vx;
-> +                case 21: return &op_vabd_vx;
-> +                case 22: return &op_vabdu_vx;
->                   case 16:
->                       switch ((inst >> 20) & 0b11111) {
->                       case 0:
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a13177b7b7..4b8944b051 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -220,6 +220,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(zksh, PRIV_VERSION_1_12_0, ext_zksh),
->       ISA_EXT_DATA_ENTRY(zkt, PRIV_VERSION_1_12_0, ext_zkt),
->       ISA_EXT_DATA_ENTRY(ztso, PRIV_VERSION_1_12_0, ext_ztso),
-> +    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvabd, PRIV_VERSION_1_13_0, ext_zvabd),
->       ISA_EXT_DATA_ENTRY(zvbb, PRIV_VERSION_1_12_0, ext_zvbb),
->       ISA_EXT_DATA_ENTRY(zvbc, PRIV_VERSION_1_12_0, ext_zvbc),
->       ISA_EXT_DATA_ENTRY(zve32f, PRIV_VERSION_1_10_0, ext_zve32f),
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index f8c27a574f..6018e58195 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -83,6 +83,7 @@ BOOL_FIELD(ext_zve32x)
->   BOOL_FIELD(ext_zve64f)
->   BOOL_FIELD(ext_zve64d)
->   BOOL_FIELD(ext_zve64x)
-> +BOOL_FIELD(ext_zvabd)
->   BOOL_FIELD(ext_zvbb)
->   BOOL_FIELD(ext_zvbc)
->   BOOL_FIELD(ext_zvkb)
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index 4fc2d3a155..3aef6e0e3e 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -1350,6 +1350,32 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
->   DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
->   DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+> @@ -103,6 +103,7 @@ static const rvc_constraint rvcc_j[] = { rvc_rd_eq_x0, rvc_end };
+>   static const rvc_constraint rvcc_ret[] = { rvc_rs1_eq_ra, rvc_end };
+>   static const rvc_constraint rvcc_jr[] = { rvc_rd_eq_x0, rvc_imm_eq_zero,
+>                                             rvc_end };
+> +static const rvc_constraint rvcc_vabs_v[] = { rvc_rs1_eq_x0, rvc_end };
+>   static const rvc_constraint rvcc_true[] = { rvc_end };
 >   
-> +/* Zvabd Extension */
-> +DEF_HELPER_6(vabd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vabdu_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vwabda_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vwabda_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vwabda_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vwabda_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vwabdau_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vwabdau_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_6(vwabdau_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-> +DEF_HELPER_6(vwabdau_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-> +
->   /* CFI (zicfiss) helpers */
->   #ifndef CONFIG_USER_ONLY
->   DEF_HELPER_1(ssamoswap_disabled, void, env)
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 21272fdb50..1c991a6f42 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -1084,3 +1084,13 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
->   sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
->   sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
->   sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-> +
-> +# *** Zvabd Extension ***
-> +vabd_vv       010101 . ..... ..... 010 ..... 1010111 @r_vm
-> +vabd_vx       010101 . ..... ..... 110 ..... 1010111 @r_vm
-> +vabdu_vv      010110 . ..... ..... 010 ..... 1010111 @r_vm
-> +vabdu_vx      010110 . ..... ..... 110 ..... 1010111 @r_vm
-> +vwabda_vv     111101 . ..... ..... 000 ..... 1010111 @r_vm
-> +vwabda_vx     111101 . ..... ..... 100 ..... 1010111 @r_vm
-> +vwabdau_vv    111110 . ..... ..... 000 ..... 1010111 @r_vm
-> +vwabdau_vx    111110 . ..... ..... 100 ..... 1010111 @r_vm
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> index a22e2cae6c..14ef961607 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-> @@ -4091,3 +4091,48 @@ GEN_INT_EXT_TRANS(vzext_vf8, 3, 2)
->   GEN_INT_EXT_TRANS(vsext_vf2, 1, 3)
->   GEN_INT_EXT_TRANS(vsext_vf4, 2, 4)
->   GEN_INT_EXT_TRANS(vsext_vf8, 3, 5)
-> +
-> +/* Zvabd Extension */
-> +#define GEN_ABD_CHECK(NAME, CHECK_FN, MAX_SEW)                       \
-> +static bool NAME(DisasContext *s, arg_rmrr *a)                       \
-> +{                                                                    \
-> +    return CHECK_FN(s, a) && s->cfg_ptr->ext_zvabd &&                \
-> +           s->sew <= MAX_SEW &&                                      \
-> +           (s->sew != MO_64 || s->cfg_ptr->ext_zve64x);              \
-> +}
-> +GEN_ABD_CHECK(vabd_vv_check, opivv_check, MO_64)
-> +GEN_ABD_CHECK(vabd_vx_check, opivx_check, MO_64)
-> +GEN_ABD_CHECK(vwabd_vv_check, opivv_overwrite_widen_check, MO_16)
-> +GEN_ABD_CHECK(vwabd_vx_check, opivx_overwrite_widen_check, MO_16)
-> +
-> +GEN_OPIVV_TRANS(vabd_vv, vabd_vv_check)
-> +GEN_OPIVX_TRANS(vabd_vx, vabd_vx_check)
-> +GEN_OPIVV_TRANS(vabdu_vv, vabd_vv_check)
-> +GEN_OPIVX_TRANS(vabdu_vx, vabd_vx_check)
-> +
-> +#define GEN_ABD_OPIVV_WIDEN_TRANS(NAME, CHECK)                          \
-> +static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-> +{                                                                       \
-> +    static gen_helper_gvec_4_ptr * const fns[2] = {                     \
-> +        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                   \
-> +    };                                                                  \
-> +    return s->sew <= MO_16 && do_opivv_widen(s, a, fns[s->sew], CHECK); \
-> +}
-> +
-> +#define GEN_ABD_OPIVX_WIDEN_TRANS(NAME, CHECK)                          \
-> +static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-> +{                                                                       \
-> +    if (CHECK(s, a)) {                                                  \
-> +        static gen_helper_opivx * const fns[2] = {                      \
-> +            gen_helper_##NAME##_b, gen_helper_##NAME##_h,               \
-> +        };                                                              \
-> +        return opivx_trans(a->rd, a->rs1, a->rs2, a->vm,                \
-> +                           fns[s->sew], s);                             \
-> +    }                                                                   \
-> +    return false;                                                       \
-> +}
-> +
-> +GEN_ABD_OPIVV_WIDEN_TRANS(vwabda_vv, vwabd_vv_check)
-> +GEN_ABD_OPIVX_WIDEN_TRANS(vwabda_vx, vwabd_vx_check)
-> +GEN_ABD_OPIVV_WIDEN_TRANS(vwabdau_vv, vwabd_vv_check)
-> +GEN_ABD_OPIVX_WIDEN_TRANS(vwabdau_vx, vwabd_vx_check)
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 9e3cc87f8a..4c2fb6f063 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -732,6 +732,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
->           return;
->       }
+>   /* pseudo-instruction metadata */
+> @@ -242,6 +243,11 @@ static const rv_comp_data rvcp_fsgnjx_q[] = {
+>       { },
+>   };
 >   
-> +    if ((cpu->cfg.ext_zvabd) && !cpu->cfg.ext_zve32x) {
-> +        error_setg(errp,
-> +                   "Zvabd extensions require V or Zve* extensions");
-> +        return;
-> +    }
+> +static const rv_comp_data rvcp_vabd_vx[] = {
+> +    { &op_vabs_v, rvcc_vabs_v },
+> +    { },
+> +};
 > +
->       if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
->           if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicntr))) {
->               error_setg(errp, "zicntr requires zicsr");
-> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-> index e28d8a3d9f..bdb1efcebc 100644
-> --- a/target/riscv/tcg/vector_helper.c
-> +++ b/target/riscv/tcg/vector_helper.c
-> @@ -5906,3 +5906,59 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
->   GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
->   GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
->   GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
-> +
-> +/* Zvabd Extension */
-> +#define DO_ABD(N, M)  (N > M ? N - M : M - N)
-> +#define DO_ABDACC(N, M, D) (DO_ABD(N, M) + D)
-> +
-> +RVVCALL(OPIVV2, vabd_vv_b, OP_SSS_B, H1, H1, H1, DO_ABD)
-> +RVVCALL(OPIVV2, vabd_vv_h, OP_SSS_H, H2, H2, H2, DO_ABD)
-> +RVVCALL(OPIVV2, vabd_vv_w, OP_SSS_W, H4, H4, H4, DO_ABD)
-> +RVVCALL(OPIVV2, vabd_vv_d, OP_SSS_D, H8, H8, H8, DO_ABD)
-> +RVVCALL(OPIVX2, vabd_vx_b, OP_SSS_B, H1, H1, DO_ABD)
-> +RVVCALL(OPIVX2, vabd_vx_h, OP_SSS_H, H2, H2, DO_ABD)
-> +RVVCALL(OPIVX2, vabd_vx_w, OP_SSS_W, H4, H4, DO_ABD)
-> +RVVCALL(OPIVX2, vabd_vx_d, OP_SSS_D, H8, H8, DO_ABD)
-> +RVVCALL(OPIVV2, vabdu_vv_b, OP_UUU_B, H1, H1, H1, DO_ABD)
-> +RVVCALL(OPIVV2, vabdu_vv_h, OP_UUU_H, H2, H2, H2, DO_ABD)
-> +RVVCALL(OPIVV2, vabdu_vv_w, OP_UUU_W, H4, H4, H4, DO_ABD)
-> +RVVCALL(OPIVV2, vabdu_vv_d, OP_UUU_D, H8, H8, H8, DO_ABD)
-> +RVVCALL(OPIVX2, vabdu_vx_b, OP_UUU_B, H1, H1, DO_ABD)
-> +RVVCALL(OPIVX2, vabdu_vx_h, OP_UUU_H, H2, H2, DO_ABD)
-> +RVVCALL(OPIVX2, vabdu_vx_w, OP_UUU_W, H4, H4, DO_ABD)
-> +RVVCALL(OPIVX2, vabdu_vx_d, OP_UUU_D, H8, H8, DO_ABD)
-> +
-> +RVVCALL(OPIVV3, vwabda_vv_b, WOP_SSS_B, H2, H1, H1, DO_ABDACC)
-> +RVVCALL(OPIVV3, vwabda_vv_h, WOP_SSS_H, H4, H2, H2, DO_ABDACC)
-> +RVVCALL(OPIVX3, vwabda_vx_b, WOP_SSS_B, H2, H1, DO_ABDACC)
-> +RVVCALL(OPIVX3, vwabda_vx_h, WOP_SSS_H, H4, H2, DO_ABDACC)
-> +RVVCALL(OPIVV3, vwabdau_vv_b, WOP_UUU_B, H2, H1, H1, DO_ABDACC)
-> +RVVCALL(OPIVV3, vwabdau_vv_h, WOP_UUU_H, H4, H2, H2, DO_ABDACC)
-> +RVVCALL(OPIVX3, vwabdau_vx_b, WOP_UUU_B, H2, H1, DO_ABDACC)
-> +RVVCALL(OPIVX3, vwabdau_vx_h, WOP_UUU_H, H4, H2, DO_ABDACC)
-> +
-> +GEN_VEXT_VV(vabd_vv_b, 1)
-> +GEN_VEXT_VV(vabd_vv_h, 2)
-> +GEN_VEXT_VV(vabd_vv_w, 4)
-> +GEN_VEXT_VV(vabd_vv_d, 8)
-> +GEN_VEXT_VX(vabd_vx_b, 1)
-> +GEN_VEXT_VX(vabd_vx_h, 2)
-> +GEN_VEXT_VX(vabd_vx_w, 4)
-> +GEN_VEXT_VX(vabd_vx_d, 8)
-> +GEN_VEXT_VV(vabdu_vv_b, 1)
-> +GEN_VEXT_VV(vabdu_vv_h, 2)
-> +GEN_VEXT_VV(vabdu_vv_w, 4)
-> +GEN_VEXT_VV(vabdu_vv_d, 8)
-> +GEN_VEXT_VX(vabdu_vx_b, 1)
-> +GEN_VEXT_VX(vabdu_vx_h, 2)
-> +GEN_VEXT_VX(vabdu_vx_w, 4)
-> +GEN_VEXT_VX(vabdu_vx_d, 8)
-> +
-> +GEN_VEXT_VV(vwabda_vv_b, 2)
-> +GEN_VEXT_VV(vwabda_vv_h, 4)
-> +GEN_VEXT_VX(vwabda_vx_b, 2)
-> +GEN_VEXT_VX(vwabda_vx_h, 4)
-> +GEN_VEXT_VV(vwabdau_vv_b, 2)
-> +GEN_VEXT_VV(vwabdau_vv_h, 4)
-> +GEN_VEXT_VX(vwabdau_vx_b, 2)
-> +GEN_VEXT_VX(vwabdau_vx_h, 4)
+>   /* Convert compressed insns into normal insns via pseudo expansion. */
+>   #define DECOMP(X)  &(const rv_comp_data){ &X, rvcc_true }
+>   
 
 
