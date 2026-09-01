@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EF2C624D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC3DC61DD3
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Og4-0000Q1-Gr; Tue, 01 Sep 2026 09:37:28 -0400
+	id 1x1Ofx-0000HQ-Qh; Tue, 01 Sep 2026 09:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x1Og3-0000P5-3o; Tue, 01 Sep 2026 09:37:27 -0400
+ id 1x1Ofv-0000Fn-Ln; Tue, 01 Sep 2026 09:37:19 -0400
 Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x1Og1-0004If-G4; Tue, 01 Sep 2026 09:37:26 -0400
+ id 1x1Oft-0004KL-Di; Tue, 01 Sep 2026 09:37:19 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zL8aXLoSv+VOcqxE5ES1mxskZQQnYyDiOSrsmJHb13SHZY4EK+HI2wQaKGZ9uXeFOTeM9tClerY5rt/+pnXS0G1W+gjOWfCQTiGQeyAW+QgPiWjDf/lMbADeq8jbPXC97cUI489GeEE8pV8FoFu/xVkm/cqrQGzKsRzeSDqi7x/6GFKZNfLAnRlJ1s5NVotR8Fp6PWFN41zpqM8hmHf4WovEkr8yoeD7qDOF0/tn7XBkRVdrEVFpgfKE9HLvdRLoGnkYaXO7XevHuha1NKYLVC1Mo8l3BUu9YVM5l3gSf0ey6Qz/SI5oH8NvYy2xUZG0IF1PrEQnbb/dILH0vCLp5w==
+ b=Z6eqByUJFbzD3xXc3GiXvrEuS/9IQ++7IJvL9bz3W9c9eOknvHQX7u8BFuqGBdhpX4k5k1UMZ45jXoWnOZQuiFX18nFbZXiwdkfAhoNOaK3DekivviCdtkit545nBUvLvoaR5fHJbPuH2wMqfdSxFytTxiefOhj0kVGWSnrYEgWKQzmsnGvVCs7FBDEwGcFWhDUC8Namf5ub4Xdkzxt+ZvdVlZgu6ogBOWd45vHISv369CEfX6NyEcjWTyP3Td52cIED215cNScuqtrdMxA4aK4LLlLPtnrrGmUdAoB7krGhN+Bg3/5evVIHiuG3eqQDskdXh8tGOOLv5t5EYp3U+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=epejsT3/hw59sPkuSvSNnZGDZ82ExAd4Z0jGZ+L6QQI=;
- b=PKf+BY0yikMYf3tV0VjgfW6A1xKrREzwkVi1zV0WbDxHsaGOqxSrrFTtboIf5cAX/Eb4BAHIvQNKVkOPAW+SyTVxHVuM0zXXWcJURB/+o4ccMvprNaFwKZ9pG560SX6TFj5oeDxOszsDkgFydl/pivaC/3DtpkKqFcZcxmLgNPXmtp5BrojcLDVGuTdv/jkYf+9I/vRr45x+lR7OgxukiZdR6Lt1qrisWuriZOASZy0MJ9ZOPqaaaaYTPypvGPQIhOCa5QwRbHQzd4RekzYOo1Nh8EqQRCQ3jiLunzxHYBq9Ra5ASBppg+GvE3xu83nfK/DXYWPdv+X8R3Ug34FAFw==
+ bh=FeZeNEnNNyiLFIrMaf8clg94zkBlStVG3QLtBXx7DOA=;
+ b=mSEfxZjDGFOgmmWOLqVoEN4bbrdSDqqY5natciIMqRelntRlEPRIQ7E/hR3uiODqb4lp1LQ8GfyR+TMoA0VZfZuEHCBWwh2GIdKFYhprn87kWd0aWnHgDjAPPMrctLdH6M6rjrwypwlaaxa0zF772bS7mqPzDJyOhC/1BFD4QCMKUYrzsazbBxmYR42ZLOtC32kCXHKBhLKH37foWpt5T4vzFeyODPXXUeutROBNUqS+w+A7sNdyDHht3sy/X1/AgMA6vfFIiPiFvosN2DF3BNd+iZD7ituPugYGAQ7FFBamUB1Y1z7jwvbkWb0E8E6fm6YW91W5GSI6ziZAogUZcQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=epejsT3/hw59sPkuSvSNnZGDZ82ExAd4Z0jGZ+L6QQI=;
- b=D+qoSsPkc0kJv+0XugeZPkEUmUhxCLHxhs8CRIFZ7GrhuAiwiQdOkQv3pfN33n5YfGX3Z7v0ApYHsmJnzuFnaSEh552KisdwIubmw45e1nKAkWxTIX119SzhDUSUDwchcuNVTwFWT+I64HzeZiU3A/Vv24QVrbLWfu7n9S+LfrL0JVQUghH3gzvFu3pNu17xhYSsbxYRrjcbz5SekKB2DCKaRWbYQpCSBFaDwCTjq8D1KuzHUlcXOKK+/1vdamXNuuz9C/g68C3ajcr4SfrKdLgaxvG2O4tZWGnCw/BBPRp9KzhZjBy4MMkcSacVuhj7ZutwhN/dqhfMCjMesjTO8A==
+ bh=FeZeNEnNNyiLFIrMaf8clg94zkBlStVG3QLtBXx7DOA=;
+ b=HN2zXEnpx5T88BZ5JfJV5gp650Zr0YhhZ0k8VmXGGCN2IB6Ew5y7jDLJ61CF2z0IEVUGcY5SP/4aNJWj3HCRuJQvNvvt95Rn1PNL6efXh//PmnXSOn3pQfC2n8LkTXH6Ksd+X51KMlxUXX3z7EPs3TShlK51jIaCU/p5uhmSBLXBED5phgAemcfTX5EDD3vIvxtZ4EUfBHMlWmYVywoKnAC/PpITHQNG0uspxT7/e21pElYqGVYhUjy+ebgmw7aC80tG8dlEQS2TzG4n4sL6wg7hogrufpgJU/S2D1WxNOUWBCJlDD1wp1nJgVadqH3ah1xa5T9osbO+KHJfNuTBhA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by FRRPR08MB11965.eurprd08.prod.outlook.com
  (2603:10a6:d10:1cd::8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Tue, 1 Sep
- 2026 13:37:13 +0000
+ 2026 13:37:10 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0382.007; Tue, 1 Sep 2026
- 13:37:13 +0000
+ 13:37:10 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 9/9] block/block-copy: coalesce write-zeroes tasks
+Subject: Re: [PATCH 2/9] iotests/040: cover large and fragmented commit
+ runs
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: "Denis V. Lunev" <den@openvz.org>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
  John Snow <jsnow@redhat.com>, 
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20260828144554.1741910-10-den@openvz.org>
+In-Reply-To: <20260828144554.1741910-3-den@openvz.org>
 References: <20260828144554.1741910-1-den@openvz.org>
- <20260828144554.1741910-10-den@openvz.org>
+ <20260828144554.1741910-3-den@openvz.org>
 Date: Tue, 01 Sep 2026 16:37:05 +0300
-Message-Id: <178826982594.73810.9138039014408511227.b4-review@b4>
+Message-Id: <178826982593.73810.11352368693763396759.b4-review@b4>
 X-Mailer: b4 0.16.0
 X-ClientProxiedBy: VIUP296CA0114.AUTP296.PROD.OUTLOOK.COM
  (2603:10a6:800:350::18) To VI0PR08MB10656.eurprd08.prod.outlook.com
@@ -66,66 +67,66 @@ X-ClientProxiedBy: VIUP296CA0114.AUTP296.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|FRRPR08MB11965:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4762cc68-54a3-4212-82d7-08df082e214c
+X-MS-Office365-Filtering-Correlation-Id: 1762dcb2-2816-4211-547c-08df082e1f24
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|52116014|23010399003|1800799024|366016|38350700014|6133799003|10067099003|4143699003|5023799004|18002099003|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: 3jM2Gi8EyTLKSlO2r3i2d1I4wphCdoW8jl0NDxeUim0CdPF+kN7FddUZU4Q5wil5ydYWB+aue6QkVFL2ZEFrYhIGZGmayNVacHefJ4qvWlTUcIWslAduOSkiIaC+/fhqj+i00vqHFyvMu12wH5wJjYU9R49tFntXPTu53ecgXqo/PgLMNW+6Hp2MLutyJzZ0IIWxN4KuWU8rPgVawYBCh51Jz+OVlSm2cqu6U+L/fXkKhBONqZnB8whuk7g+o2fJcs/Eum1h/kzKE/R6KG++3aD1Cf0ZR80VT/QLR4eGbLDL38Io6vsXESVqkhVFi7is6F4MX7oG2UWh1bMEpABjtpFmssr0f9T+A3e/4ybHAQjXVhNh3PZ67KzqRkRsJ0lztHEtdFF9di1TFICEXZEzuAd7H8OtRjmczBtJ9CH6wTfleRN2AKTXMS+GdY5e9GO0zEwxKsd4fENxZGVB3XGv2kqnA1miOYGH6ntnn2uU8UD9rOTy1p2GL+XxbYvrg/Ugu23cSm1u0/NrObVho52rd5iReRINzCewdrd9dFwXAiGfRjtQOPoH//c8y1ENI1gCMq4x1Bb6uSUR1VORz3FfrQxV0OuT2xlg7vzb2AsswdDlCqFgoWLZX+EnC2L5XQ0wwxEPuxf19Nfo6SjdGPJOJt6EdBMbxo5Z3iyCYCoJVivntih2QA7xwDmlcn8b5aBhlqp30fTqI6TWcFLExhmkCw==
+ ARA:13230040|376014|52116014|23010399003|1800799024|366016|3023799007|38350700014|6133799003|10067099003|4143699003|18002099003|22082099003|56012099006;
+X-Microsoft-Antispam-Message-Info: 6FcayAuSIePU++QCCPwYQQsx87FrIoxRHtVDCYBqwuTJbi2mLxYrQgiyglXRa25/G/M5bTYTezkl5nCWg7Q3gxwpyljoK2PSnwlCvf2Jmq7UoeYynCAdi9GyYzxjevgSJ5OQTd+FWpsMr3KQ74VGN//xQnjUlRxrRL+5wgwsQXjIvNEqyGhuchl7FVhNqYQeKhDC237hVGrbDnPDtMXcyhmB5QaReDWBcLhJorRtDT3KGRBdta/GaAscuTh0mwhY5BECJHPKkf5BMX7yULQft4Ved1yZiRBFypZJ4RYAz7Ml7XkCwV3FBw12Nd6Nv58hp6biu7xTVAQuIXxjPAL3ZoqGTzUeny+zNAjzcxmFKQRZdnXal2BbX4wUF4FNGtKa770dJz7R47QUucMgBF7TGP4CkvQgaxGY9IRCMvixWQ/nmwoV+/mIGJPEWYv31T5Okyu6PGS6HlSmsVGwENpBUu2B1QtL6+da9+X2Z028Bpp77zBT/nnOVECAtWLKwfx3ClWLgYsooKwEe6AXr0caXMN+f7sMxANk9P5NicFgIAUgJIBT7yuCaLpZTErFdMOv6IH003aM2IHb1Z7/3au1qjqALHTPYgYWzVAyWawh4uvVxljdpDAhO2y6MN4KgBRiekpKXS+z10LggC/cX1E/M/WxsKW/wdcoKj9dTXnUultTEDjjrzrwWin5CaaYE7oP6ua3ecpIh8AsuaVkgXgCSg==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(52116014)(23010399003)(1800799024)(366016)(38350700014)(6133799003)(10067099003)(4143699003)(5023799004)(18002099003)(22082099003)(56012099006);
+ SFS:(13230040)(376014)(52116014)(23010399003)(1800799024)(366016)(3023799007)(38350700014)(6133799003)(10067099003)(4143699003)(18002099003)(22082099003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V3JtSXUrdnpnSEJKenRxcFMrdFBzNkJiSXFqajRFRTZ3QnAzdytwQ1grbG0y?=
- =?utf-8?B?VHZZVzkvNUx1NjdDQUNhQ011SzN3WnM1NHFEYmkxd0RaenliQkhFUmsybDR2?=
- =?utf-8?B?UjI2TklqTTNxa2c3b2pqL2tUZzdOR2xNK0pENXBEYjk3VEtabEVyUmtDUktG?=
- =?utf-8?B?d3pRL1c1NUdPOEo0ZVNUdkRTU1N6eFA0STFld0xmZnBpOThJZHY0UGFFZk1n?=
- =?utf-8?B?ZFBiMUhFaE1XbDIzRWRTVjBBZGdzOFZhTXhXSmowd3d6VDhueXFTT054emIx?=
- =?utf-8?B?ZHJZYk5ONFJsdytqallvMXd6TXRONWs3SnNrL1daclFvdnMvbTlhdEZMbWE3?=
- =?utf-8?B?eDRqTVc5TkQxeitnYjdqT3I3dlJzVFZzZmVCUkJqQ1pHZDJheWpSbDIzNWlC?=
- =?utf-8?B?ZWIwZDV5Rlk4alJHQjFCemFuOTZvVXcvbktGRXg0NURhSUo0cUY0R3VDbC9s?=
- =?utf-8?B?a3g2YUgzSkQvcDdEMTVUYTRLblFlN1FmbjZ4UVRsZHJSMVM1WDM5bVpTWFVu?=
- =?utf-8?B?dlBvcXN0UGRYT3RRMEMwcVlDM0N4V1ZQUEVtWVBqMEF2bTRtMTUwK0dMK3Jl?=
- =?utf-8?B?cXVjS25abEIrYm9BMEhBWnNIWTU5RWFaTlJoR29BeStPZXJQMXRXYUV6T0du?=
- =?utf-8?B?S0JBNjJhbTFabldQVVdvR0t2bGZQZ0dSK1IvK0k5c3JyQ3VoeHJ1TTVQMWRI?=
- =?utf-8?B?YWRXM3hBT2dRUjdZNzRPa28vMVNtTGZ5MjRObE9ldnAyQlJBaEcydzdoa2t5?=
- =?utf-8?B?S2JlbUVVelBEeW53S0UycWNCaC9lblZRVkpUUjlGa1NsWkx4YTVJWEZRaWxY?=
- =?utf-8?B?SFhwcytuQU8vN0drTUFkYWpIckQ3K2Y2d0lGT0VuZ09qZkR4RG9ZaE8zZ0xy?=
- =?utf-8?B?RkM5V1FQZWNPS2x0QUhBaTVLSndoWUdOOXpDUHdSalNBeHlBcThhU09uL0FB?=
- =?utf-8?B?Q0tpdnNCRVBQSmlZTUlZQlZhVERLYTJ0N2JNWHhhbDQyTW5jbHhqMDhnODdD?=
- =?utf-8?B?VVFCTG42b1pNV3Q0dG1qYjVQTVhnajI1RXg2ellGYUFzWThQRjJSVkpQUERw?=
- =?utf-8?B?Rk9JdTVNYmxPRnF3L1VLT2ZoT3I5RDUzVGIvZzV1MTRZeG9QeGVSSVRWNE1C?=
- =?utf-8?B?VmFnRm1YRVJLdlVsSEdVZTNQdkNuenB3NXNwNDA1ZHdrT1FvcUlmdXU1T3hi?=
- =?utf-8?B?MGcvN2xBSEswN1Uxd25TWDZzTHNyeWpYMDJObGVMWVU0alZtallkYlp4cXRm?=
- =?utf-8?B?aVJDUDlmVVMrRmcrNFlQK2J2ek15TDIxdXZad0F5MmJCR3BFdVR0S05QQVVT?=
- =?utf-8?B?cWk3eHhYNUFmc25LbUs1WWc3ZDZ4Y0c1emFzaGtjTk1yL3JQY0cyRGdRZ0FH?=
- =?utf-8?B?YWFmZ0NDZWpGTkJSaG5tZ2hNNG9Fb3k2eWdOYlRIOUd3NldFSFlkMTJTZ050?=
- =?utf-8?B?ZXBXL1ZVYWhPaWltWGFIOGRTN0tDYkJMeWdGT0NzQ1hyVlRHZ2IrWkhYZGpH?=
- =?utf-8?B?ekpsWFM0VGJJdncweVJTTlRPSE45K2IyMTMzRTJ4SEVCWG1QUkVqYkRzcXZu?=
- =?utf-8?B?US92Z2t2ZXlCT2NiOElOT2srUHNlWUdhZHZlUVpNdTR2b1RpaWY5Z3Y4eW5s?=
- =?utf-8?B?V0FDQlVWdTlHZFo2di85K3NBMGJyNUxWSHA2U2tkdGNoTi9tMzdvd3Zyb09V?=
- =?utf-8?B?SUVhUzlZcVFnRmg5bFpPOW1vY05YUkU2c3ZQaUc0Z1krVmdlN1NTTUtpU0VT?=
- =?utf-8?B?YXBRVmtyZGN4SktGWEg2Mnk0Uk1scldxTm9hZ3FxbXZXY3ZxM0hoOC9hMTg3?=
- =?utf-8?B?ZnFDQktKbXhDMUNZaTNQUk1rMzU0aStyeWR2V0xvaGdEdXZhd05wWTQ0cklY?=
- =?utf-8?B?ZExRZ2F4a2U5eWRPQVpsclBFcWhBa2pLb3J1dUdXOWdnUHNxajMzUkJwSldS?=
- =?utf-8?B?U291Zml6RVhWWGVMWFYrczZReTFRa1ZESFh4eU9Oc1NQVVY0aExtN3lMSi80?=
- =?utf-8?B?eFd6NmF6ejNIeFZOSFMweVhHeU9HcW85S0JXbm96a2U0aDlrRjAzSk1sOXBJ?=
- =?utf-8?B?LzFxcGlzQzc3a2lSSERiOE1KVmFOT0IyWTNDdHMwb1RCRGxRNldqOVNGeDdB?=
- =?utf-8?B?bndzMnhGNUU2RHd2YWI3bFBUMzVzYlpudnU0Q2k3R2t0dTVSeDRWcjBDcnNm?=
- =?utf-8?B?YTZaUDVnOEdUOGtzZ2VPNTdTUTF0QlczYndtcGFrN1IxR2MrbzNJY0NsMnBj?=
- =?utf-8?B?WmlkQUJvMjd2VkJDMVJOdTQ3Q2dTUUlUU0YzK0dMMmd2V1g2UW44TUJraDdp?=
- =?utf-8?B?UGkyK2hUa1FCMUZWOGUxU01QM3lObSs2ZjUrejhjMkYyZFZUTmtRbjhVWWhp?=
- =?utf-8?Q?Xluxj0kWz4ygARXM=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eWNBeE9nK1Vod0I3VnpPQzFZMmpJeXlRcDlKaldHTStkMG1MWXJFSDdGRjN4?=
+ =?utf-8?B?SjU5WGVTTFFxZ0h2cU1iajlub2o4NXduRUhMZ0xLS0liSkV5VTRHRldWUUI4?=
+ =?utf-8?B?NkN2UnBMTVhBRWVnZTFINGF0NEUyR24zakdQaFY3K1VHemRJcGhPU0VvYVVn?=
+ =?utf-8?B?OXdrbVMxZXVVSmQ1SzU2czBINzZxY2p3QWZXT2dtL09sZk8wTlJFdWQyQXJy?=
+ =?utf-8?B?TDZGL0VGMDZJb3k1eEpuNGowQ2xVNkFmcGh0dUpKY0Y0Z0tlV1J5WkI4VXR5?=
+ =?utf-8?B?SFdwWCtTQkZkMjZzTzR2TmNlTXE3aVNsUkxTc01JeHJvSzYwTmVKNVNGVXdM?=
+ =?utf-8?B?MWhrRkZoRmozeE94K0o5YzRpL3hJSlNBTTRtQThGcEhLU3pEaFZlWnphNEQw?=
+ =?utf-8?B?NGlWMzRUUUVtUlVsYXU1cVlaanlEWlMxYnB5dk5LNGhlZVNQWDZqYXd2anRD?=
+ =?utf-8?B?ZkpYUXNyZFBDbzNQMVhiakgvVC9hTGFqSWdieEMyYktFaGVrRUVQVDBJN21k?=
+ =?utf-8?B?TVZ2OVFtaHlJbVV1YkMzbkdwWjY3U0xhUW5kTXE2aWppajZNQllrNVF2N0FY?=
+ =?utf-8?B?YUFUV1Vrc3Zqb2VpRURDbG11RStrNlZBRWFiYlAwbTNvR1ZvQUptQVh5TTF1?=
+ =?utf-8?B?N1REblZOcVpvQm8xUkdIQU16TElsYWJ6RVVSZVMrT0o4aHhpOEg4dGtYSnVU?=
+ =?utf-8?B?SS83MWdaMVpLUlpRNkplY29SZzBQbVM2WUNHdjRKZWdZNGVxc1U5RGJrZCsr?=
+ =?utf-8?B?eDZoMFVnTHUyZFZIVVlWeFF1R3gvS0FSVHZJdWFaNkdHdk13a093anVjUHpL?=
+ =?utf-8?B?cnRiTUpQQ2ZEcWZod1F4UVVoQnBtcXF6UG03Z2gxaTZNMzNQdktuNVY1ZTVF?=
+ =?utf-8?B?aTREQjhDK1FrN2FxUmthMERONUZNWFhYV3B4aXBwVWNVc0F1Y3ZRNWtZTE1v?=
+ =?utf-8?B?c2ZFRVcwTXVFOXI4MnAySU9VbS8xb1VRWS9CelhqTVJRaUljUmo3OURSRk5h?=
+ =?utf-8?B?MjBmcVgrWW51ZGg5bXhyZ2VhaldRbkttVVZhZEV1MkxKb09jWGxOVTc2Z2Y0?=
+ =?utf-8?B?MENMekYwb0FsZm1SYnZqR0R5U015ZVBMeXBuYVFWOXUrZXk2M0JBWnFHVjZn?=
+ =?utf-8?B?dUtkaStTYzdTaW5yY1JOeW05R3JIL2JXeEpmYTlQK3JNT0ZNUnRZL2MvYWZN?=
+ =?utf-8?B?ZnlMTFUrUzMySGwvRzRwRldBeVoyTGJZSWx0UGZQUENzOG5IK0xnZW9MVkJi?=
+ =?utf-8?B?MmhYVjRzbGZ4L2liWjR0WUdienFMYVk5Y3lPSGFPbzhUaUZOWGxPWTFuUUh6?=
+ =?utf-8?B?WG5VOGI2dE1IMUJodDg5cWZRd3JEU1VRRXQwcGs1TkJNL2dSMWJSSWVPT2Z3?=
+ =?utf-8?B?Q0VaK0svcTBKRFQ4Y3JsYThhZEZ1dVFkb1ltMlNSYUtKdE96SXhVQzZNQnRn?=
+ =?utf-8?B?THh4MGJKZ2owVXdyaGVSdmVHbGljR2tiWGticjlEbWRORXZFQVRMRVhWT1Fk?=
+ =?utf-8?B?NXNmWXZVUHFxK3hIcm8wRkdwOFpXWlRpSzBCWFVXeG84bE5vT3M5dEdscTFW?=
+ =?utf-8?B?dGorczJnWEx0TFN1bHRpcFd4WE50eGpKb1ppNTlLRW5aeDZVdDB1dTRZMDdX?=
+ =?utf-8?B?alpZS1ZsQkZwSUFGdC91aHIvbnkrb0dLLy9nQm9xVC84MmFROTZwKytuaW9o?=
+ =?utf-8?B?Q0JTUEE3T3VUQU1lYW8wU01lOXRMeUlQYy9zaFg1SXJtaW10WjRjclR6UGdR?=
+ =?utf-8?B?R0JlMlpDYWMxaFdEOE5od2NRN1FWSnNSZW43UzFqNHhyQkRxcUZVL3VZMVkx?=
+ =?utf-8?B?c2tkcVdlVExLK1RlK3ZDSFVud1FkaXlCS1BCS1NwVHlFUWErYmVIZDZsMmVa?=
+ =?utf-8?B?OERMNk1mMkloZHRLcmphR0EvbjZGYmpBd2hoTkEraUdJRXpZOHhJL1FHaFJy?=
+ =?utf-8?B?am5LcjZCcm5mTXIrSVlFU1BReWQrOG91NGtVU0g2T0tOSGZocGNPbk9SeUJW?=
+ =?utf-8?B?b3NjMXlXbVFnK1Q3WVhhc1UxRHlWczFXd3pwU2VrM1V1WmErRXI4a083S2dk?=
+ =?utf-8?B?WGhVblN2RWZrRmlWOC9qL0xIbVJQaFFwZmEvZFVkUmhOWTVPd1NySVFNZXNU?=
+ =?utf-8?B?YkpSQjZiQy9ndkhPN0s5NVVMV2lucS9WWXhic0hQc21FM2V3RXQ2UGhtaDhr?=
+ =?utf-8?B?V1ZyMEFRcytBVXVTM0dNMmEzNUZPL0loZ1ZpUVZwWlo4YXlWNTZaSHZMd1hm?=
+ =?utf-8?B?OTFZQUtqbW8yN2ZrUXkxbW5OK1BlSm50MGlQcEg2UXFpUGswd0pncWYrdC9G?=
+ =?utf-8?B?Y25aL2lvVitvMjF1OXFWL29Cd29uMms4U0VSTk8wSjkvbnVyMFJqUjd5T3Bp?=
+ =?utf-8?Q?no3V7b83ZlMdWAEQ=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4762cc68-54a3-4212-82d7-08df082e214c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1762dcb2-2816-4211-547c-08df082e1f24
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 13:37:13.3033 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 13:37:09.5223 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Jch3rRZkUy+ssP5/3q3xh5UorVq+FW9x9f+502WnX2mfDqgP+r78bUTwcW247kGCMFpGzqGQA2bgLG8/cXmV4KWGASkkdlTvyu11bHqMUTE=
+X-MS-Exchange-CrossTenant-UserPrincipalName: ERd+TZNxqDtrXnpwmdAwjOdSQbsAPYUu1eU2SgFEen0Qi/BeUaBg9DmXwRUgOIwf9LUZl/oxACjh2qK9b8ovyD9rg42r1B5dxyOnnPv6x+s=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRRPR08MB11965
 Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -152,52 +153,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Task size was capped to block_copy_chunk_size() regardless of method,
-> which sizes a task by the copy buffer. A write-zeroes task carries no
-> buffer, so that cap only splits one long known-zero run into a crowd of
-> small COPY_WRITE_ZEROES tasks, each with its own request against the
-> target.
+> 040 never commits runs long enough to span more than one block-status
+> query, so the answer that commit_iteration() is about to start caching
+> goes untested.
 > 
-> block_copy_task_create() already decides from zero_bitmap how far a task
-> may run, so add block_copy_widen_zero_area() to that decision: for a
-> write-zeroes task, re-search the dirty area under
-> BLOCK_COPY_MAX_ZERO_CHUNK instead of the buffer chunk size, and let the
-> existing clamp cut it back to where the zero run ends. Widening is safe:
-> an overlapping caller waits on the task's BlockReq via
-> reqlist_wait_one() rather than observing it mid-flight.
-> 
-> The 256M cap stays well under BDRV_REQUEST_MAX_BYTES, where
-> block_copy_do_copy() would trip assert(nbytes < INT_MAX), keeps the rate
-> limiter usable, leaves enough tasks to fill BLOCK_COPY_MAX_WORKERS and
-> bounds how long a cancel waits on one request. It is aligned at the use
-> site rather than in the constant, since nothing bounds cluster_size.
+> Add two cases on a base <- mid <- active chain, committing mid so the
+> job takes the regular commit path rather than active commit, and compare
+> base against a snapshot of mid taken before the commit. One case mixes
+> multi-megabyte data and hole runs, the other fragments them down to
+> single clusters with every transition off the 512K boundary.
 > 
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
 > CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > CC: John Snow <jsnow@redhat.com>
 > CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 >
-> diff --git a/block/block-copy.c b/block/block-copy.c
-> index c0a33599384..16b76484cbd 100644
-> --- a/block/block-copy.c
-> +++ b/block/block-copy.c
-> @@ -37,6 +37,8 @@
->  #define BLOCK_COPY_MAX_WORKERS 64
->  #define BLOCK_COPY_SLICE_TIME 100000000ULL /* ns */
->  #define BLOCK_COPY_CLUSTER_SIZE_DEFAULT (1 << 16)
-> +/* Bounded by BDRV_REQUEST_MAX_BYTES, rate limiting and cancel latency. */
-> +#define BLOCK_COPY_MAX_ZERO_CHUNK (256 * MiB)
+> diff --git a/tests/qemu-iotests/040 b/tests/qemu-iotests/040
+> index 5c18e413ec9..57e32b99c10 100755
+> --- a/tests/qemu-iotests/040
+> +++ b/tests/qemu-iotests/040
+> @@ -25,13 +25,14 @@
+>  import time
+>  import os
+>  import iotests
+> -from iotests import qemu_img, qemu_io
+> +from iotests import qemu_img, qemu_img_create, qemu_io, compare_images
+>  import struct
+>  import errno
+>  
+>  backing_img = os.path.join(iotests.test_dir, 'backing.img')
+>  mid_img = os.path.join(iotests.test_dir, 'mid.img')
+>  test_img = os.path.join(iotests.test_dir, 'test.img')
+> +reference_img = os.path.join(iotests.test_dir, 'reference.img')
+>  
+>  class ImageCommitTestCase(iotests.QMPTestCase):
+>      '''Abstract base class for image commit test cases'''
+> @@ -951,6 +952,98 @@ class TestCommitWithOverriddenBacking(iotests.QMPTestCase):
+>          self.vm.qmp('block-job-complete', device='commit')
+>          self.vm.event_wait('BLOCK_JOB_COMPLETED')
+>  
+> +class TestCommitLargeRuns(iotests.QMPTestCase):
+> +    """Commit runs long enough to cross commit_iteration()'s cached span."""
+> +
+> +    MB = 1024 * 1024
+> +    CLUSTER = 64 * 1024
+> +
+> +    # Runs several COMMIT_BUFFER_SIZE (512K) chunks long, both kinds.
+> +    SIZE = 32 * MB
+> +    LAYOUT = [
+> +        (0, 4 * MB, 'data'),
+> +        (4 * MB, 6 * MB, 'hole'),
+> +        (10 * MB, 4 * MB, 'data'),
+> +        (14 * MB, 6 * MB, 'hole'),
+> +        (20 * MB, 4 * MB, 'data'),
+> +    ]
+> +
+> +    # The same, with every transition off the 512K boundary.
+> +    SIZE_FRAGMENTED = 384 * CLUSTER  # 24M
+> +    LAYOUT_FRAGMENTED = [
+> +        (0, 45 * CLUSTER, 'data'),
+> +        (100 * CLUSTER, CLUSTER, 'data'),   # data island in a hole
+> +        (150 * CLUSTER, 80 * CLUSTER, 'data'),
+> +        # [230C, 231C) is a hole island in a data run
+> +        (231 * CLUSTER, 69 * CLUSTER, 'data'),
+> +    ]
 
-AFAIU with this new cap we enlarge the range, a guest IO to which will
-trigger CBW.  It used to be 1M or 16M depending on copy method, now it's
-256M.  If the target is qcow2 - then write_zeroes() is size-independent
-and is a simple metadata write.  But what if target doesn't support fast
-write_zeroes() operation?  Then guest IO will be stalled for the entire
-CBW, and the latency increases.  Please correct me if I'm wrong.
+We explicitly mark 'hole' in LAYOUT, but not in LAYOUT_FRAGMENTED.
+Maybe make it consistent?
 
-If it's true - shouldn't we probe for write_zeroes support adding
-BDRV_REQ_NO_FALLBACK to the flags?  And if -ENOTSUP is returned - don't
-widen zero area.
+Also, the next commit changes how block-commit doing write_zeroes() -
+shouldn't we add 'zero' regions as well to test that?
 
 Andrey
 
