@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FE3C624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CB3C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1P3B-0000r4-M0; Tue, 01 Sep 2026 10:01:21 -0400
+	id 1x1P7c-0002IQ-Ci; Tue, 01 Sep 2026 10:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1x1P39-0000qn-Gk
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:01:19 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1x1P7a-0002Hy-NL
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:05:54 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1x1P32-0003zp-MM
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:01:14 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-499add6348fso44605e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:01:12 -0700 (PDT)
+ id 1x1P7Y-0005Xq-Jh
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:05:54 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6a5f9b036f9so2731a12.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788271271; x=1788876071; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IJmCYHpIBIuHNDmQQer1TWt7CH9bYiWDHysJqGNW7C4=;
- b=A0WMRa3ZiB7mzeA6hdMZjJZReaRzXDVDRYPbwX32UdN73cok/B7JFLJr+Qfz1OZvca
- 12koqR6/4PJS0Pz4IRT0n0TkxCpP3YBXv89Q+hbMovNG6f8aZvo7f/7FEFbiZfB7vEpO
- 5MGYBXGeXTq9k2l8e61yuMhspPlJQwCZAvcXBGQTb8hfJFwJ1IONh6+Y8kbR/Uhgkatc
- hzVGqTGY7VUG0RHPt722ciUc10xeCBxAFLf2OiOSd6N8HwM6XWqRI9VcfpsFeWUBdHjt
- /x3X9BNQpYRjDPNIDurQIMOxX04gxyQMyd/56Psi4JBMdX3e+euN9apu1k4Z+k8JAh7U
- b3cw==
+ d=google.com; s=20251104; t=1788271551; x=1788876351; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=yGM4cNT0iV8pE9yltcSfvu9CgBaiZ5zk96nOQRB2F6I=;
+ b=LzM2cpN+rb3faps6C/p6LvUDArlTNW0Lo+uowL+tOrsh4QSMmtzWKJe0mxu+yaFntk
+ Fl7sErFfvOzzem02g315B9GB/SBBqAayJtfcJvWoD4HFfF/SJZQ4HhsUoF1JrpGjj1uz
+ a3Sj+xErdP/bzXErj9HvaV9SjjHn0nojV7gxm6s068kTK6pBmglirtGnHVpwUhWR8qtA
+ 2PRYqNt5IunmDskl0C/Up5Cit//r+cxyOzzETv8fK525ZsT51NWj1GnT8k8MnhF3NPYX
+ DcRx02y+SRrSnRtofH+ApnnXTsY7ci1cI3UYF2TMuIzu5ptdx8ZPUu5OZnFx0QIP3l8p
+ EjEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788271271; x=1788876071;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=IJmCYHpIBIuHNDmQQer1TWt7CH9bYiWDHysJqGNW7C4=;
- b=Ys7GACdNHjNgQ/rydvoQXOY4vtNumfTpwTsLSOADVqZ6+w3ywRqTMpuOzPktHc8/ln
- NnMaSiNtzgp095v3yfyxadM5XvAdGayophhn3CDVlc/BodjHFhVnlBOuleEO8/QtH2JT
- Hgo/fBtPaXOiHcIJKNT2DE6DzOEeFmayTS5mO5jHbH2NHH6kQfzNUy9Wfa7fgqio5G9R
- vRooFFVJSciZwmbveu93oyKy/dE1XSOLzQ+nwFTAcFe+hFTXXjt2fWGbU8wS6y0cOYYU
- /QozW0IUapaBuNbF8HUp4ufi5x65lrqv+ZC84CAGMEfoN230KDckgTLjjsvVIReOUC3n
- jW0w==
+ d=1e100.net; s=20251104; t=1788271551; x=1788876351;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=yGM4cNT0iV8pE9yltcSfvu9CgBaiZ5zk96nOQRB2F6I=;
+ b=FRfvKkngjFVY29vi5NBELKtzPQBrIB4yTWtu13QCYH0H4AxSenJW+RJ36ihpHpdOMY
+ xJPTDpOrBORUkZDLySI+MGzDWu2fyZMb5wuk/oI4/RGvAgOL1rWcgZ5b+0SMNbWu+Bp9
+ nV/qBUC5Ut66CIESMsnnHXcrENiCH8Ex9siKYXm9FnictUPE+/mM7vB5A3Px5CdRj7UW
+ JLnbgUQjyEjk72mnmbEvGYauLHJMK+mYmloSbCjTA2hmaIJspjrF/FQkz0kRv4mZgVGM
+ 7kzAtIkWmgW/9LtqTUmuwjFhFR/9nWnd3wQRPqRohMw19nasTEVd0IfT6/dFwATACOaq
+ K6Ow==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrAgxjxMKwCTwiYlOFLY/U60Kmu3W8LgN0YCXw0L8EuYkvXXTDvT1Fd2dTi2Y/RGM1NJy8FHZfRpAjn@nongnu.org
-X-Gm-Message-State: AFuF++m7ALiiSou4BVGm5KGgBvHH1zI65AX7WYG7KM9EK0mELpLP/J+u
- L7MwuP1f3sq3QC2QSzOuQ4eg5Ot2NzTcdDUdacItd6b13jOJwnlFprZYA/iVebr46w==
-X-Gm-Gg: AR+sD12gjeTWa6Zdbps0DjXZSpJyxED06FohyXQvg5ySzXcmqI8DCtFFmNFYTzE2T5J
- rykeixdTUygOpxj/DaTNPoLzOFR0azZ34TbesW+6+APKfZ8ASJ6dJpr0q/T+ScPaVI1N/upfzHI
- M2mMH5ZSYIgGuJ5xRM7I22EJQhItRgtl+9tnoBXNEKwfP0H57MVeHwtEAW5tNuyJI4gEAO3e8Yx
- 3y2bYqoxciYjgGbA3uZRr27g2sFPyYnvR5N4OfuxfkDPnBph1UXiOZ73i9ixIJRPJM06OoWsPDy
- ylis/Rd819uY1J2pxN+nm7DuPs+xnqOYb+H73HN3PP75uIyPCJ0I3DyDQHR+0wfkdQlkSNY79AU
- N8ydGFrM9id+OUlVYo/VAJX7kUTln86HvfMZct2dCuqglUJLfE1vj5Ge6MnOvikUBu8qOayr7DZ
- I1mDLLnai5RQZOEuLNtfNBr8pQeBcoqKSFu8L8x/T26CEYvR1WJ8Kc2yXwu7OWx9DrW9ze85HG4
- iQxYfXIz67+bShj43r41yC5g+RkYQ==
-X-Received: by 2002:a05:600c:8a09:20b0:499:cb15:4511 with SMTP id
- 5b1f17b1804b1-49cdd269ad3mr705285e9.8.1788271269221; 
- Tue, 01 Sep 2026 07:01:09 -0700 (PDT)
+ AKwUvBzZ77szRhuVtjKiF2EFGV0aidpKDxu9DlKjrLn1uhXuRGOLypTMy049PHJlVTZ0uIWvmybQloMkFA4N@nongnu.org
+X-Gm-Message-State: AFuF++kznvOnj4uh1gFROPKIJQjyl1YqNCP0itHQ4/NnCS115Wto1tng
+ 1YKiYpWE+j3onsgAykCxsBex94qh6UuXZ+3MIBBMeaKJFYE6HphinXY6LtUM2e/Hhg==
+X-Gm-Gg: AYBFou3OuiNYhov267vSSBCFqVqHV7puRmtGykc7OJ1jy+rSTi/rP/0xw7vMApFU+2y
+ xHeLSHsPCFKry6+1oktEZ2/q0jeDfyEPFCRBMmTTE720yp7UbSzkfhb2/XORiqiQEDmut6rGY4Y
+ AGd+CxEWEWSkxl3H/nO6w8OPyMhcTZNQ9HIuCsrrWEhPDWvCwNiFul6qeTZSug9Vb/gOhlRvRR5
+ qPDBY7C4P0VA1j6rp45yV2wt4iAr94LamAtMl/YcOXXtCU4hqr90pYULtiYFWtbp/eIkD1SSppp
+ /ObZH11hGKXahEbNVZviMXFGesCNl88Hx9Z76CIYB22wOqu/tI0JwmcwcO+2omjxly+9efX4H1Y
+ 4tapFfyLDRXeU3dt6845vY6FZ+O38oT2pe78O91Dqu59waOoizF0iLj5ZlONfxKdOflwWqjAFhX
+ THqBMaJpYab9oiezo5jP3XI4h37Ja+3J4pto7/xFjM9AijURiA6DjiZrCaNeKEmC7qGSSqCFD2Q
+ edlPrACsWKpLM7/8JAQvRirkCZggg==
+X-Received: by 2002:a05:6402:a18f:b0:69e:98c8:e958 with SMTP id
+ 4fb4d7f45d1cf-6a66d8db181mr34907a12.7.1788271550320; 
+ Tue, 01 Sep 2026 07:05:50 -0700 (PDT)
 Received: from google.com (250.192.189.35.bc.googleusercontent.com.
  [35.189.192.250]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce0d22dsm69399515e9.4.2026.09.01.07.01.06
+ a640c23a62f3a-c255ee2865dsm615871766b.25.2026.09.01.07.05.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 07:01:07 -0700 (PDT)
-Date: Tue, 1 Sep 2026 14:01:01 +0000
+ Tue, 01 Sep 2026 07:05:49 -0700 (PDT)
+Date: Tue, 1 Sep 2026 14:05:45 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Tao Tang <tangtao1634@phytium.com.cn>
 Cc: Eric Auger <eric.auger@redhat.com>,
@@ -78,18 +78,16 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
  Chao Liu <chao.liu@processmission.com>,
  Jim MacArthur <jim.macarthur@linaro.org>
-Subject: Re: [RFC v5 07/28] hw/arm/smmuv3: Reject secure STEs with stage-2
- enabled
-Message-ID: <apbanfZIyTlA5fvk@google.com>
+Subject: Re: [RFC v5 09/28] hw/arm/smmu: Add PTE NS/NSTable helpers
+Message-ID: <apbbuRSwfGzzaJZy@google.com>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162446.2806393-2-tangtao1634@phytium.com.cn>
+ <20260813162446.2806393-4-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813162446.2806393-2-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=smostafa@google.com; helo=mail-wm1-x32c.google.com
+In-Reply-To: <20260813162446.2806393-4-tangtao1634@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=smostafa@google.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -175
 X-Spam_score: -17.6
 X-Spam_bar: -----------------
@@ -113,65 +111,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:24:43AM +0800, Tao Tang wrote:
-> Pass sec_sid into decode_ste() and treat a secure STE that enables stage-2
-> translation as an illegal STE.
-> 
-> The current model does not implement Secure stage-2 translation, so reject
-> Secure STE configurations that enable stage 2 and report BAD_STE. This
-> restriction can be relaxed when SEL2 and Secure stage-2 support are
-> implemented.
+On Fri, Aug 14, 2026 at 12:24:45AM +0800, Tao Tang wrote:
+> Add helper macros for NS and NSTable bits and group PTE attribute
+> accessors for clarity. No functional change beyond the new helpers.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  hw/arm/smmuv3.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index b5dc67dcb01..3ff2f498a3b 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -597,7 +597,7 @@ static void decode_ste_config(SMMUTransCfg *cfg, uint32_t config)
->  
->  /* Returns < 0 in case of invalid STE, 0 otherwise */
->  static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
-> -                      STE *ste, SMMUEventInfo *event)
-> +                      STE *ste, SMMUEventInfo *event, SMMUSecSID sec_sid)
->  {
->      uint32_t config;
->      /* OAS field only presents on NS-IDR5 so we use hardcoded SMMU_SEC_SID_NS */
-> @@ -651,6 +651,14 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
->          if (ret) {
->              goto bad_ste;
->          }
-> +
-> +        /*
-> +         * It is ILLEGAL to set STE.Config == 0b11x according to (IHI 0070G.b)
-> +         * 5.2 STE, Stream Table Entry, Page 218.
-> +         */
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This is not the latest spec, and there is no need to mention the page.
-It might be more clear to mention that Qemu doesn’t support secure
-stage-2 rather than say it is ILLEGAL.
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
 Thanks,
 Mostafa
 
-> +        if (sec_sid == SMMU_SEC_SID_S) {
-> +            goto bad_ste;
-> +        }
->      }
+> ---
+>  hw/arm/smmu-internal.h | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
+> index d143d296f34..004abd58bca 100644
+> --- a/hw/arm/smmu-internal.h
+> +++ b/hw/arm/smmu-internal.h
+> @@ -58,16 +58,27 @@
+>      ((level == 3) &&                                                    \
+>       ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
 >  
->      /* Multiple context descriptors require SubstreamID support */
-> @@ -916,7 +924,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
->          return ret;
->      }
+> +/* Stage 1 attribute fields in VMSAv8-64 Block and Page descriptors */
+> +/* Non-secure bit */
+> +#define PTE_NS(pte) \
+> +    (extract64(pte, 5, 1))
+> +
+>  /* access permissions */
 >  
-> -    ret = decode_ste(s, cfg, &ste, event);
-> +    ret = decode_ste(s, cfg, &ste, event, sec_sid);
->      if (ret) {
->          return ret;
->      }
+>  #define PTE_AP(pte) \
+>      (extract64(pte, 6, 2))
+>  
+> +/* Stage 1 VMSAv8-64 Table descriptor fields */
+>  #define PTE_APTABLE(pte) \
+>      (extract64(pte, 61, 2))
+>  
+> +#define PTE_NSTABLE(pte) \
+> +    (extract64(pte, 63, 1))
+> +
+> +/* Access flag: defined for both Block/Page and Table descriptors. */
+>  #define PTE_AF(pte) \
+>      (extract64(pte, 10, 1))
+> +
+>  /*
+>   * TODO: At the moment all transactions are considered as privileged (EL1)
+>   * as IOMMU translation callback does not pass user/priv attributes.
 > -- 
 > 2.34.1
 > 
