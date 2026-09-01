@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77775C624D7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738B2C624D4
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ON9-000119-36; Tue, 01 Sep 2026 09:17:55 -0400
+	id 1x1ONC-000130-QB; Tue, 01 Sep 2026 09:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ON3-0000xn-25
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:49 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1x1ONA-00011v-H3
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:56 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ON1-00078x-GB
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:48 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c25420fe973so145335366b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:46 -0700 (PDT)
+ id 1x1ON8-0007Bb-Tb
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:56 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c2531f453eeso727320266b.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268666; x=1788873466; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788268673; x=1788873473; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=m3t5attEc6DBgbJ3tNga/MsrgOgKkBBlm9lBtl53/Sc=;
- b=lHHg25t3GH+g+uMWz8saYbVJOdJk00T48o0b45XIoWxgUrM+802gyZkXRyopHPiCpk
- F97SGMivZQ6kdjVF0vn9F1Lam0rc8LGqdu6gWMhLaBNaOggmJwBNoMcvUKWu32wLPabo
- NT+ndh3uUFkrkJ4xZhNyagS+AYMvAjzR+RKn5bp4CJVTaGywI7wSWGgHVzeJLNTC8kON
- HG0eAFlV9DA1nr3rdM8GXRnSLgwsVyrDh8NdbtxaZEXXR2/h8Ns5oh1e3uvlOjuMkAjs
- +skZIYSBdHjaxIqDtHw/tDnDTbeKHduIFFJTOmHNC69UKYMR4zu9DUvTuNgpxHhwHq7F
- C+uQ==
+ bh=Fwv5pyfNb8QZcfDc8HjkDq34cIxSmnuvmyZtBTjC3AA=;
+ b=G/FVRfYwfmVk3EZFqmGxhmqiEMRqt4+8lq3wCeheNQRklo87DyBIdvaxNK+069GKku
+ enbwW92G6C0z/gLhUj792XVvd/kcfPopmLwMgZacZe1EV+fbaLHXyhmAzPS3aOkz4j+k
+ NPQzyPxEIwQILxVgJgD/NygzC1smEHIonB6ivJgLHbgJ6JEC/IC0TUgA3MH0MJN+GqaM
+ /mH4348OwMgVBbgEgczrRpX9g7diYRFW2zlObTVEPOXLkaeJXKOm8zZEVtH9qcl7G04l
+ jjCLyzD+QczmG2vyoxwbYkdNcVq7H7zg9ZGn+6s6lAdcJIHo4NtD3/Ly6KZrTAz1tYTN
+ Kj7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268666; x=1788873466;
+ d=1e100.net; s=20251104; t=1788268673; x=1788873473;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=m3t5attEc6DBgbJ3tNga/MsrgOgKkBBlm9lBtl53/Sc=;
- b=f+PbmHK7Z3jx+FmWIeIXB8l5I7jgmXsXKJ9i1UrXD74tOIgfCt40jZ6TB1er2zimOe
- 92Z0gM6Yg8PrD8xiJFORLskF9SJYbgOYaNR3Sc81z+GyVFHE4lja3R5Av5o2h0CYJ0bl
- 9S2h3lUxRewCpqp2JtXtTKfO8O1zFOoq5t4X0nGX7A+jq4dtRZ5bhLQKq7qYyQJzbBIt
- rxDkZLo7+G/ob3PgOx8JmrwR9YIvnL7xDIzFpu70Y7vpTOkmNOa93XOhwgjaGtgZWYZV
- F9meydvYwAIj27cM33UiqBqqDW4CUJjrKks1offU8p/mwue2pHfPs7wUWAWtMjdX6vHN
- RMWQ==
-X-Gm-Message-State: AFuF++mlQ7d/o2hrluv4l4/DsF77sgCzkMd5fM3i+yG5SiZGLir3aT0z
- FDv7pRBPUBaeLlfeKTMBNO8sFqO8F3RZFbPaTrxjqVGSOqU96LZEvs0Ldq/2QzTrRgNFBClXfZk
- WXKFlba0=
-X-Gm-Gg: AR+sD126GQPmruglpE+akZ2B7EMOZLPfJ+qxnSHPWMG9d9jJl/oVj8zpXLazJ06vizs
- 5fP1CoHchSTSfBGqFVIsDRDJ8SS8gjiLnn07BGfw7eyVZeeJ0p52TY5jTnTCEAd/q7+C59ZfL66
- GqaRtRQwzpQkSi4WN55Vj1yDUoQnQViPzcu1AL1+ld3XV2CilpZ938P27FvUdhMkFzyG91LIeXP
- r8MrYybbbxVYrjhcNBi9NrC/GPeHIINS5DmKT/iXSNKWvzHLcur28qONHgVu+GxJoz1eAcuzvvq
- FRt2CiNRIexUrx7b/7Lub0eRooGgUe5/CIvMR1rT1v96y5up4A6EPTF5tKQZshJ+QR2nzSGs+5D
- Uq5qCOuwogYfE6N12Lts+OZSlSbUo5jWYlCghjfS8ChVHCKL+HLvF3K1QwHArArwr8kc1doeWl1
- T6t6/oAhZJPcB51RH0hE8MeEGiixF2b56vuwTJk3enbQGlzeip3AedBi+1tBPwKkBF7Kn6si/SJ
- Mg6g2wQdxxzshJB6aSxL9JMsZEX+Y6QiU1NASTaB2frnBvJPZpzz1f0nVhN7FBoWf0rSA==
-X-Received: by 2002:a17:907:9809:b0:c24:6f60:3f7e with SMTP id
- a640c23a62f3a-c2556fe8495mr2355910866b.2.1788268665712; 
- Tue, 01 Sep 2026 06:17:45 -0700 (PDT)
+ bh=Fwv5pyfNb8QZcfDc8HjkDq34cIxSmnuvmyZtBTjC3AA=;
+ b=DVSzzuxDmjRkF9qKgWX0S0gQ2V2gFZx2kXfI6KnHcOhoG90oLpDmHa2NHIW9+ct4fc
+ bFzg5dHeF7VCAAqoI4YsYOJ29n7Rs5cMWNfEOA9uUPxCDHnhq122wyD6lkKlo4/agpmA
+ YFKDBtEhczBUKlRiZIZmxXk7x5p7Iro4Zh3YIms2PIBbAr/8tFLGpVQVNMUnB5YAURO6
+ cmW2kiE/cvy822t/9nTmegcygvQg2xfE2JruSpVgYoya2h0H1YNvV1p0GCTjy6sreGsU
+ M02eP4EJALhe/T1yxVM+4vcm/1UWqy+bvgzbUUhK5OoSTcoiXfiWNs0yBNZhWMj9drsj
+ QHrQ==
+X-Gm-Message-State: AFuF++m16G4u1sO++/2R3cm+PT7DkcGI2tG0X33wnLdG+v/Iuw0KoxzV
+ B3ots+eUopFqgrJl9a00zQwQKjfvv8RWTamWFRa4hNIPiivjWr8yd9RELirTTF7zzwr5KMMoNcl
+ ls8qy2aY=
+X-Gm-Gg: AR+sD1058XvFfkK4VlVVnt5Y7QiNwkLDn/9HXftifLAfC56GKbFN5GjAa7VaSyikz6M
+ c3vxA7mJyDEn3svkc/at8LaIIcQhuUcnEo0aqeSnn0RUdXvyc+bvFPM/e4ToTSdNPcqiGUO417c
+ NNDfKuCRP3gbpNQonM+8sOrLHaw8CewokACmWkXooki9Mukj8Zq+CgOFIkKpZ/8MDPV1U5AtaDT
+ Ia4OzU1hpfO9wzTkUTDfs/e1iQ8U8p/Tnsz4dr2JQQyPtdOxw/uYKljojr/OMuut1Y3mVTo8B7S
+ 9r3ktXgJJ6x1z5fcx/Qtycr8ZV3MQapY9IeayTRBXMJsFMk4lpkg8O/H8mNd04cCa4O7TJSjn0I
+ 8S1iF0ls83wN3DOMpk3XfML604xS9GCqeBh9nQuYwKgQp6nEweNFzPBgkQA4mUWCQ/MKsYky4PJ
+ czkkJ0NhpLe5gJOHUZzV+1pgFX2dKFQDIu1LqRArMPFQ8kQApTUUV/nhdHnfplfls9tnJXk4NWd
+ TSxFC3vRtLwyjjMYvRELDiKVXzFUlpw6mw8CF53nd+/LAQWobZcCW8wnFIJZth1GdwiaK3UIIcy
+ C7Zy
+X-Received: by 2002:a17:907:3d56:b0:c25:47a4:fedc with SMTP id
+ a640c23a62f3a-c25b3bb9089mr581095266b.2.1788268673508; 
+ Tue, 01 Sep 2026 06:17:53 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.44
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:17:44 -0700 (PDT)
+ Tue, 01 Sep 2026 06:17:52 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/58] target/arm: Make CBZ/CBNZ UNDEF before v6T2
-Date: Tue,  1 Sep 2026 14:16:45 +0100
-Message-ID: <20260901131732.2263947-12-peter.maydell@linaro.org>
+Subject: [PULL 19/58] hw/misc/iotkit-sysinfo.c: add SSE-310 support
+Date: Tue,  1 Sep 2026 14:16:53 +0100
+Message-ID: <20260901131732.2263947-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,41 +102,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Thumb CBZ/CBNZ encodings are only introduced in v6T2 (for
-A-profile) and v7M (for M-profile).  We missed out the feature-check
-in trans_CBZ(), so don't UNDEF on v5T or v6M.  Add the missing check:
-conveniently, the ARM_FEATURE_THUMB2 feature is true for exactly the
-cases where CBZ is implemented.
+From: Simon Xu <simonxhy0404@gmail.com>
 
-Cc: qemu-stable@nongnu.org
-Fixes: 9ee6e8bb853bde ("ARMv7 support.")
+Add SSE-310 PIDR and CIDR registers. Add sys_config2 register and
+always report 0 on read as we do not implement the NPU.
+
+Reviewed-by: Owen Giles <owen.giles@hpe.com>
+Reviewed-by: Robert Elliott <elliott@hpe.com>
+Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20260805153005.9989-8-simonxhy0404@gmail.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-2-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/misc/iotkit-sysinfo.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c866148383f..1a7dd77a9c8 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -5783,7 +5783,14 @@ static bool trans_TBH(DisasContext *s, arg_tbranch *a)
+diff --git a/hw/misc/iotkit-sysinfo.c b/hw/misc/iotkit-sysinfo.c
+index 19f089e6ee9..f3d07f32474 100644
+--- a/hw/misc/iotkit-sysinfo.c
++++ b/hw/misc/iotkit-sysinfo.c
+@@ -31,6 +31,7 @@
+ REG32(SYS_VERSION, 0x0)
+ REG32(SYS_CONFIG, 0x4)
+ REG32(SYS_CONFIG1, 0x8)
++REG32(SYS_CONFIG2, 0xc)
+ REG32(IIDR, 0xfc8)
+ REG32(PID4, 0xfd0)
+ REG32(PID5, 0xfd4)
+@@ -58,6 +59,12 @@ static const int sysinfo_sse300_id[] = {
+     0x0d, 0xf0, 0x05, 0xb1, /* CID0..CID3 */
+ };
  
- static bool trans_CBZ(DisasContext *s, arg_CBZ *a)
++static const int sysinfo_sse310_id[] = {
++    0x04, 0x00, 0x00, 0x00, /* PID4..PID7 */
++    0x58, 0xb8, 0x2b, 0x00, /* PID0..PID3 */
++    0x0d, 0xf0, 0x05, 0xb1, /* CID0..CID3 */
++};
++
+ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
+                                     unsigned size)
  {
--    TCGv_i32 tmp = load_reg(s, a->rn);
-+    TCGv_i32 tmp;
-+
-+    /* CBZ was introduced in v6T2 and v7M */
-+    if (!arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        return false;
-+    }
-+
-+    tmp = load_reg(s, a->rn);
- 
-     arm_gen_condlabel(s);
-     tcg_gen_brcondi_i32(a->nz ? TCG_COND_EQ : TCG_COND_NE,
+@@ -68,13 +75,22 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
+     case A_SYS_VERSION:
+         r = s->sys_version;
+         break;
+-
+     case A_SYS_CONFIG:
+         r = s->sys_config;
+         break;
+     case A_SYS_CONFIG1:
+         switch (s->sse_version) {
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
++            return 0;
++            break;
++        default:
++            goto bad_read;
++        }
++        break;
++    case A_SYS_CONFIG2:
++        switch (s->sse_version) {
++        case ARMSSE_SSE310:
+             return 0;
+             break;
+         default:
+@@ -84,6 +100,7 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
+     case A_IIDR:
+         switch (s->sse_version) {
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             return s->iidr;
+             break;
+         default:
+@@ -95,6 +112,9 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
+         case ARMSSE_SSE300:
+             r = sysinfo_sse300_id[(offset - A_PID4) / 4];
+             break;
++        case ARMSSE_SSE310:
++            r = sysinfo_sse310_id[(offset - A_PID4) / 4];
++            break;
+         default:
+             r = sysinfo_id[(offset - A_PID4) / 4];
+             break;
 -- 
 2.43.0
 
