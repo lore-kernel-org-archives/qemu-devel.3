@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECCCC624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D2AC624D5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONf-0001RL-SH; Tue, 01 Sep 2026 09:18:27 -0400
+	id 1x1OPf-0008KS-4V; Tue, 01 Sep 2026 09:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONd-0001Pq-Nv
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:25 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1x1OPb-0007rW-C1
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:20:27 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONb-0007LO-Tg
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:25 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-c252e703fa3so695065666b.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:23 -0700 (PDT)
+ id 1x1OPZ-0007qI-2B
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:20:27 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8588583a7c3so10759437b3.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:20:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788268823; cv=none;
+ d=google.com; s=arc-20260327;
+ b=alcJH27mpJXUYVWDPJYmL68wvMF5Mtyz1/ZeNEBV6AViXB2If5HRpHyCvN4y/IlxN0
+ e3M2ph7FM8l+k8jqYN+Pmy/lIt9iw2TN++80r4eYzX/Xh4UeH5hEjMxt8UzbPuZPMnkO
+ 5aEG5uhIAHFWcYO753bM3X7ZrBxUf/Xg0T3O3+cW4LYvw5iGvLSZ58lRHtshfefBnoRA
+ nMteANUuseonLProXOzcL1KmVgfrXT6n2UhkWlNB7z7CKOP/9xP4PAmftadMJzdpvR4l
+ BXoJ2JWbt2FENwiNjTS//nlvpZA8Agx7+kKTdNmlHimW7YLnG4I1vWVz3h+aAj6ds22z
+ BrZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ct7+AnY8V0yf+2DAzDh9P0UCIPmmGup+l7IAwG1zyUA=;
+ fh=nMjTaNQZtwlGLqK0OnR7VDm1+9cMmYC6ReKXas8Av2g=;
+ b=QEObw9Izt+huLzY7o727qxgTnhbRqKTON99EGpa4z2uN4NE+MPMD1ITjscqaNQSLaK
+ jty67zwg4qFGLmcsXFSXSMKfoiD79PMZJC4t1Z2u7kPSQQ7M/DbueE2kaOt10Kj/WAVi
+ 7941VJgsblkokzTgRkD171bankqbn60ZEci8sIzZnTqTmlFuxOh2H2hJOLd8OQY8e+/a
+ 334dpBgJeUu1b7EAK7YzfmVZ9j2/kQcrnvQgB5KiRV+3TcAjoJ+dOhfmFwutxe2aCKKa
+ Xc7/CZydia0kpdNZvt44rkA29gPI5UnpLMxqZMOf7UlEVEUQ1REi8rNgguH08QmJEnKZ
+ ooMg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268702; x=1788873502; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=dz1l3VuVj9cJprVqo0yw94nF4DrO866Rb+MPBOk477g=;
- b=Wgt6Ime/PWY1DGMRo8s2BCAC1ce53GQBF3f3P0EfSj0r/ykfUsr649D5LE9h4SJ/w4
- 1tHj5y3O78GocBeyT8lyrzWXw1dGP7UET8yptrdKwHmKXaq3+CMnT01SZ7embbJxOTdV
- JXXqDzzNYCOqbMPcAFU9B//RCdkUo6stRgCrdFlCGnjMssNHN72ucf2u5/WezbbWoO+V
- aVjoClXVkGEPScG+rXF2GGPW/lEKsCEIYFAHMp0bZ+ZYMs0ZUrAbUdIaLttDvlpYpddO
- 2EXCub8oArqGfjgoeU24omomk6BscB1s9pPDPReIggqS+4YkUSbR8JJzQzYFfzGUTJwy
- 75kw==
+ d=linaro.org; s=google; t=1788268823; x=1788873623; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ct7+AnY8V0yf+2DAzDh9P0UCIPmmGup+l7IAwG1zyUA=;
+ b=g8U03ifUn2IxhhuWOyDYvoeE2bIXlpfCM0ogvjM4k9zyRY7H6AmOjcmPvTzYW1VM9s
+ EPjo0N17EsqFjzLgC2el+poJhKoYHsXyAWuvjAvguS8z5EuGdM65OrCipr9E7JS7RJvm
+ qvkpFXHXUSxEmHdpsp2HVY0c1B5TIoZ6SJKwCX99iScZ0F24IJaieCgvi/F1XBzDjc05
+ vd5QB72H3WCPnujxpypklgBF91lz/2VWbfgaG7LgV1UvG9cUHSDWHeCQVC3bW493U1lx
+ WuC5f79a0viR6jDjgBX9BztGsVTAMtGsk1c1Gdh2t0c2VpQYGfMcrtgFRwsGwgMK85ps
+ s6iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268702; x=1788873502;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=dz1l3VuVj9cJprVqo0yw94nF4DrO866Rb+MPBOk477g=;
- b=Nhv+ULOaQpxEnu17/6UpMq0dd5c2nIkL9h1WpLR1NQ4ccfGp58FsKv/B/+LC244aPn
- SJymsVqWMehqD0ETThJR7CId04UmGgdBK7diVX4KhdZFoK1AbuuEUvPFKjpW09JgeVIr
- yg/s/6jXo/9fqrNBYwOMnaCFzsp/dHV3KRq+XPlbMvvlgrApCo4HSwUgTFg+ddrIdZ6s
- 56itkmpFMZG9jfU+cW9jnhpznKR0zC82DjnZelSWKOwgi7EUIxb765O+esVZ70i0hBHf
- YyNiefYZefCYipjcs+d9tChggIz69JErDzoHb4W9s94nY5pHQGOaBeFVkbG5X7jecgfo
- WO2Q==
-X-Gm-Message-State: AFuF++kw7i5VW8CIVqoo2IU6cLzJ0fClXAOEsNuaoE+kJ0ghp18/Dky7
- eF4K5piLTlHNX4E0+dt9y0BUrzYwD/saILzCDxdPVR8EXosZvHzXRNd0nPYmtb2bhlV7+nn4Z4U
- KbTOv/AE=
-X-Gm-Gg: AR+sD13xbopp0zHn4y6yg2dT7EN3YtPoJIBrDcjwEJLq/VIJLz0kfezp09ZMvyZ9oiV
- QPVZfiBRj90d9IEo+PyOXT3SlRhBtFJWzz1rgbesQ1NOcGvDsk6G7NX0RPMp5WZzvA471qmqclR
- CZssOJSbLj/OWtDShLnCZ/tYgySt0dx8R3B3GDiJ5+N0q2P/wCGR2atWx0HXAW9OjBq7YHcEiM3
- 2x85UW+l5FJoNSBMb1LC46fSSdX+wXqruuCJ4qszfkVWAuXDAXfT0uUaWI6pcLITslJw0Ftb2gY
- 3IBM/0PhSdcAMoQyzNcAsgiE8hq4zChab8jXD/8rcY3G7CVVKqfN0XEH00EF7PXi+kqb2ZO3/Yi
- j6ch8MobVDGflEmrWCPlSauN1ekL8d8C4zm0PoJyFN9qXN+6yh4LxBG120ihB4illRsJjwIcCDN
- NZxoA3RtHBEIYFOfCYMnte5zQgcJas1puxkPJ/GmMtN6OQwg3QEPSRnEWKt/cycXbdGAV5I2HKJ
- lq8jlJ4lTCldfTZElzyM+/YEX+YuCHzofQ5MYR4NaO8xzMvZUrJSMHRvEbFhb9YF1KGCg==
-X-Received: by 2002:a17:906:eb54:b0:c25:23d:5295 with SMTP id
- a640c23a62f3a-c25b3cdfea1mr472927466b.17.1788268702316; 
- Tue, 01 Sep 2026 06:18:22 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.21
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:18:21 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 49/58] target/arm: Rename isar_feature_aa64_sve_bitperm
-Date: Tue,  1 Sep 2026 14:17:23 +0100
-Message-ID: <20260901131732.2263947-50-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
-References: <20260901131732.2263947-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1788268823; x=1788873623;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ct7+AnY8V0yf+2DAzDh9P0UCIPmmGup+l7IAwG1zyUA=;
+ b=J7loC08FGyK5DGOMbTLJZW17d12x48bIHc1PWWvQV5tSYYSxGOUTo1fRtoyA4NJGC6
+ iDQBMZSkU4XoBLdnKLZUkPvXvu9IdJZM7yxnAj8ancLaQSThzX3HYMdNtqxJ3o7Sh3jj
+ W8D9WRZHLKlT/Dh+k/qfUydH3bKrxovg9EfLdAD8TvIdMInlOde/bpsIgsFdWG50c5e3
+ YA7DX58TRXpVHla4JsGAF8Cf1dW7ihjSvz1uFoJ7r77h5k++S/6SxsXPA4MtZ0sVupwl
+ gidd/26zRDnR/7W/kKHkKt9QVbcAGUBg7B7Q3clyk5WhARRKqQq7u97qDoIKt9ZpUITW
+ 4Qrw==
+X-Gm-Message-State: AFuF++k9lyUJEvK5T10ih/HuNpp6UiSXm7BKfq+f49g/Uo/hQssppoop
+ VKGvBLvl18uIYam5XhvWY6Q4y/bx8KTW44O0Yar6h3ZaWIJDhfbbyhcpBRnJx0JvlhgzLqy8k/o
+ 0mTi2EMAOqatqo74UXa7zJ45oV2dRq4dVx2n2/iti9w==
+X-Gm-Gg: AYBFou0G5/hPw77e7lUpcRIssEqTtp7RMZgm8qKpm5VAPRcS8/simjH8eZLAdiJQNW6
+ 1knzHT03MTPTryrWIa2BXQLlpCD4+SK1zjddDFCkif8xU579JrG4+p3mk5OJ+TcN5L763bEbINf
+ z1tst8m6ghXb81eTMnEiymERZCB5A+q1w3u4ir2ns5RwsL5y5q2zmuSWrlF30wi6JwlT+BCel2U
+ z06jLDuIIDvPnMVkhJfII7zhelU87TwQpayVnvk6Dpedm73oPNs2pvon6QABgbVLoONFZqT4jo8
+ AkddmU6pdU//ASy2k0xcdc24TL8z8OB8qeQpiFroJLCklEPWVhMBcC8vMSbFK9rqE5IHd+/iIn9
+ SWxFomzhj+sOtXScTClEdxbtwca7T
+X-Received: by 2002:a05:690c:4f89:b0:80d:15a3:7b1c with SMTP id
+ 00721157ae682-85d68a8ebdamr105327067b3.4.1788268823229; Tue, 01 Sep 2026
+ 06:20:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+References: <20260901082554.804169-1-kraxel@redhat.com>
+In-Reply-To: <20260901082554.804169-1-kraxel@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Sep 2026 14:20:11 +0100
+X-Gm-Features: AcwNN1WIFltK8mA7V5QJnNGttCl8kCJEF3mi0T7-1Lb-yQkejh_hgoNIFvXtGIY
+Message-ID: <CAFEAcA_Cc8DmDDw4Ea9EW_Ph_24=YghTXWkty9RmjShxek33xw@mail.gmail.com>
+Subject: Re: [PULL 00/13] Firmware 20260901 patches
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ qemu-arm@nongnu.org, 
+ Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,91 +116,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 1 Sept 2026 at 09:26, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>
+> The following changes since commit d2e570cc0f97b936902a5b1b86b73c0f5998b475:
+>
+>   Merge tag 'pull-ppc-for-11.2-20260828' of https://gitlab.com/harshpb/qemu into staging (2026-08-28 15:17:04 -0700)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/kraxel/qemu.git tags/firmware-20260901-pull-request
+>
+> for you to fetch changes up to 5ce32f7fdb786014255d4cfff749de307cdfdbfa:
+>
+>   hw/misc/vmlaunchupdate: do not clear control bits upon fw-cfg select op (2026-09-01 09:25:53 +0200)
+>
+> ----------------------------------------------------------------
+> - edk2: update to 2026-08 stable tag
+> - edk2: remove 32-bit platforms (following upstream removal)
+> - acpi: test updates for the new edk2 firmware
+> - igvm/vmlaunchupdate: fix control bit handling
+>
 
-Rename from isar_feature_aa64_sve2_bitperm to match
-the feature name: FEAT_SVE_BITPERM.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260826174213.614571-17-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- bsd-user/aarch64/target_arch_elf.h | 2 +-
- linux-user/aarch64/elfload.c       | 2 +-
- target/arm/cpu-features.h          | 2 +-
- target/arm/tcg/translate-sve.c     | 6 +++---
- 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/bsd-user/aarch64/target_arch_elf.h b/bsd-user/aarch64/target_arch_elf.h
-index 6f9d192b4ff..818b6f690a3 100644
---- a/bsd-user/aarch64/target_arch_elf.h
-+++ b/bsd-user/aarch64/target_arch_elf.h
-@@ -128,7 +128,7 @@ static uint32_t get_elf_hwcap2(void)
-     GET_FEATURE_ID(aa64_sve2, ARM_HWCAP2_A64_SVE2);
-     GET_FEATURE_ID(aa64_sve_aes, ARM_HWCAP2_A64_SVEAES);
-     GET_FEATURE_ID(aa64_sve_pmull128, ARM_HWCAP2_A64_SVEPMULL);
--    GET_FEATURE_ID(aa64_sve2_bitperm, ARM_HWCAP2_A64_SVEBITPERM);
-+    GET_FEATURE_ID(aa64_sve_bitperm, ARM_HWCAP2_A64_SVEBITPERM);
-     GET_FEATURE_ID(aa64_sve2_sha3, ARM_HWCAP2_A64_SVESHA3);
-     GET_FEATURE_ID(aa64_sve2_sm4, ARM_HWCAP2_A64_SVESM4);
-     GET_FEATURE_ID(aa64_condm_5, ARM_HWCAP2_A64_FLAGM2);
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 40c5e1dbd38..0569350e376 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -194,7 +194,7 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
-     GET_FEATURE_ID(aa64_sve2, ARM_HWCAP2_A64_SVE2);
-     GET_FEATURE_ID(aa64_sve_aes, ARM_HWCAP2_A64_SVEAES);
-     GET_FEATURE_ID(aa64_sve_pmull128, ARM_HWCAP2_A64_SVEPMULL);
--    GET_FEATURE_ID(aa64_sve2_bitperm, ARM_HWCAP2_A64_SVEBITPERM);
-+    GET_FEATURE_ID(aa64_sve_bitperm, ARM_HWCAP2_A64_SVEBITPERM);
-     GET_FEATURE_ID(aa64_sve2_sha3, ARM_HWCAP2_A64_SVESHA3);
-     GET_FEATURE_ID(aa64_sve2_sm4, ARM_HWCAP2_A64_SVESM4);
-     GET_FEATURE_ID(aa64_condm_5, ARM_HWCAP2_A64_FLAGM2);
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 8e00b82ad18..7d7837c6851 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1544,7 +1544,7 @@ static inline bool isar_feature_aa64_sve_pmull128(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64ZFR0, AES) >= 2;
- }
- 
--static inline bool isar_feature_aa64_sve2_bitperm(const ARMISARegisters *id)
-+static inline bool isar_feature_aa64_sve_bitperm(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64ZFR0, BITPERM) != 0;
- }
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 773e4ba4e7b..87d6b5785c4 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7430,21 +7430,21 @@ static gen_helper_gvec_3 * const bext_fns[4] = {
-     gen_helper_sve2_bext_b, gen_helper_sve2_bext_h,
-     gen_helper_sve2_bext_s, gen_helper_sve2_bext_d,
- };
--TRANS_FEAT_NONSTREAMING(BEXT, aa64_sve2_bitperm, gen_gvec_ool_arg_zzz,
-+TRANS_FEAT_NONSTREAMING(BEXT, aa64_sve_bitperm, gen_gvec_ool_arg_zzz,
-                         bext_fns[a->esz], a, 0)
- 
- static gen_helper_gvec_3 * const bdep_fns[4] = {
-     gen_helper_sve2_bdep_b, gen_helper_sve2_bdep_h,
-     gen_helper_sve2_bdep_s, gen_helper_sve2_bdep_d,
- };
--TRANS_FEAT_NONSTREAMING(BDEP, aa64_sve2_bitperm, gen_gvec_ool_arg_zzz,
-+TRANS_FEAT_NONSTREAMING(BDEP, aa64_sve_bitperm, gen_gvec_ool_arg_zzz,
-                         bdep_fns[a->esz], a, 0)
- 
- static gen_helper_gvec_3 * const bgrp_fns[4] = {
-     gen_helper_sve2_bgrp_b, gen_helper_sve2_bgrp_h,
-     gen_helper_sve2_bgrp_s, gen_helper_sve2_bgrp_d,
- };
--TRANS_FEAT_NONSTREAMING(BGRP, aa64_sve2_bitperm, gen_gvec_ool_arg_zzz,
-+TRANS_FEAT_NONSTREAMING(BGRP, aa64_sve_bitperm, gen_gvec_ool_arg_zzz,
-                         bgrp_fns[a->esz], a, 0)
- 
- static gen_helper_gvec_3 * const cadd_fns[4] = {
--- 
-2.43.0
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
+for any user-visible changes.
+
+-- PMM
 
