@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A22C624D5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A49DFC624D3
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1S6d-0007cB-4Q; Tue, 01 Sep 2026 13:17:07 -0400
+	id 1x1S72-0007dt-Vh; Tue, 01 Sep 2026 13:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1S6c-0007c2-Ca
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:17:06 -0400
+ id 1x1S71-0007di-Lt
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:17:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1S6a-00049B-L8
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:17:06 -0400
+ id 1x1S70-0004DR-1p
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:17:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788283023;
+ s=mimecast20190719; t=1788283049;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o80ahL8yaeGje8VrNGc/5fIaVio9x6bKdzBiONuPoRM=;
- b=awEbZ4nw63B4ZTyTsZnNzn78uMk8Ctt1NgPkYWr5NBZtPwvExltwC6o9oX/9Zkvr5p5M3T
- ZFF/FNbzvhY/Pe+oRkcA7ibvhYfyz98b9AEEudYx67Ad4SMUfMD4nDFTJmpr5ObtxfB3Je
- qgA8Agf5gNMQABoi2T7LQx3HYLWSvWc=
+ bh=4tpv6bW4/Lq4XTny7JDjHndrs3R9Xfa35WC3da4yTWg=;
+ b=CpppNVyR5IMoq4H8RbRH6lvhSlWQM+K0OpcLAdV0kutZlVCoaDGXOwTlGGyxEsMxyubo5N
+ Fuf6I8zbeDAw0kocgH8DWBS5G8QwfEFnBokA7xHlN80Zqc8Dx6LqmQW8qdbCvWri4qcLLo
+ bBTBW5KrmXGlA8wfNyHpguC5eUfQmSw=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-8lXCOPPgPCaKOAr-DYZmTg-1; Tue,
- 01 Sept 2026 13:17:01 -0400
-X-MC-Unique: 8lXCOPPgPCaKOAr-DYZmTg-1
-X-Mimecast-MFC-AGG-ID: 8lXCOPPgPCaKOAr-DYZmTg_1788283020
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-WWJATKdTN06VjnUz7gxW2Q-1; Tue,
+ 01 Sept 2026 13:17:26 -0400
+X-MC-Unique: WWJATKdTN06VjnUz7gxW2Q-1
+X-Mimecast-MFC-AGG-ID: WWJATKdTN06VjnUz7gxW2Q_1788283045
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A94E1844069; Tue,  1 Sep 2026 17:17:00 +0000 (UTC)
+ id F2E081802554; Tue,  1 Sep 2026 17:17:24 +0000 (UTC)
 Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E4F31955F70; Tue,  1 Sep 2026 17:16:59 +0000 (UTC)
-Date: Tue, 1 Sep 2026 18:16:56 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6D191803A59; Tue,  1 Sep 2026 17:17:23 +0000 (UTC)
+Date: Tue, 1 Sep 2026 18:17:20 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, zycai@linux.ibm.com
-Subject: Re: [PATCH] crypto/x509-utils: propagate the error
-Message-ID: <apcIiIfuvYl0S2UV@redhat.com>
-References: <20260831121009.2810804-1-marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] crypto/x509-utils: don't double set errp
+Message-ID: <apcIoApmIl0SMs7b@redhat.com>
+References: <20260831120926.2809313-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260831121009.2810804-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260831120926.2809313-1-marcandre.lureau@redhat.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,22 +88,20 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 31, 2026 at 04:10:09PM +0400, marcandre.lureau@redhat.com wrote:
+On Mon, Aug 31, 2026 at 04:09:26PM +0400, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Propagate the error when qcrypto_x509_get_pk_algorithm fails, instead of
-> falling through to return 0 (success) with *errp set.
+> qcrypto_x509_get_ecc_curve() already sets errp on failure.
 > 
 > Fixes: e8317c4c9f68 ("crypto/x509-utils: Add helper functions for DIAG 320 subcode 2")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  crypto/x509-utils.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  crypto/x509-utils.c | 1 -
+>  1 file changed, 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-and queued.
-
+and queued
 
 With regards,
 Daniel
