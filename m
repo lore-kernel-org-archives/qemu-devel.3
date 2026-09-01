@@ -4,88 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6313AC61DD6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 16:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D87D7C61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 16:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1QxY-0008Hh-L0; Tue, 01 Sep 2026 12:03:40 -0400
+	id 1x1R86-0002bB-VI; Tue, 01 Sep 2026 12:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1x1QxW-0008H4-TO
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:03:38 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1x1QxV-0001UD-AR
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:03:38 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-49987367394so2106465e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:03:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x1R85-0002aZ-0W
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:14:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x1R83-0004EQ-6V
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:14:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788279269;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=19G4sFaAyvOiqZLggzmyDfE+f2TgUAGJu34IcNqZtc0=;
+ b=Z7yK1YUAwykLepO4KjtcAbt5Yf/hiXzF5B5FX+J0tK3OtI0W1SlceOxPy4mJj08voAJ3Jc
+ n7qbblvEQ5AMkMwkwjDTA6pHF375xaNO6057gEiv4FnEPMeLMPaj9hW/LIesN+QelZlJSL
+ EsPV5g/VYPc0lvH/krI22aFd2yIydEQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-427-mwHVzj_ZMFKS6J-f5IygyQ-1; Tue, 01 Sept 2026 12:14:28 -0400
+X-MC-Unique: mwHVzj_ZMFKS6J-f5IygyQ-1
+X-Mimecast-MFC-AGG-ID: mwHVzj_ZMFKS6J-f5IygyQ_1788279267
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-495474a5fbcso10135715e9.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1788278615; x=1788883415; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=q4F26dJ9S5ki5CbSjijwOxlzEcyyjNqV4qCvuR7o8pM=;
- b=IJZY+qkPBZlVfhJT8uuArCKvlq4HT03mrDg/9Pm9WCpKfu+QMINBTP4D1fPe6CUHh+
- 7jY+uN97gay1RxOhk9V2LwtGSIcwW2KyjrdU33Ifk8tEdb1d4OBv3aWOul/3OuGgSw8O
- nJzX4e60g8J0nFhIdkddqO7Eo1tUlNdSBPUu1eXGn56hzgrg4mZ/L0h7Z/oFnh6NePgA
- NFRb/jdf0gQlVA6CMLN4Dc4c+7VMEIH1SkLxFhn7fxh5WeZYAuKWNrCRCVZ7/dc3pjJA
- NZzf7A7/FznQTvahJvwT69aZ1i2vL/hwa6zWjdMJrA2uYUIasWArpNCSRw9l2kU7ou70
- DDjw==
+ d=redhat.com; s=google; t=1788279267; x=1788884067; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=19G4sFaAyvOiqZLggzmyDfE+f2TgUAGJu34IcNqZtc0=;
+ b=sx5qOAcSW4aaDncu/tOOT0a0r/VsNSJwDuH5lunG6OoJyjaWKQe4Xk0PtCvTb6jA3r
+ TVTiPbcmeq8qsPSb8ougcbIvyx8DvYM3U6w8lh5MU/NLTI+fKZERPH5Y1LEfZLYtoUH+
+ ZdEMmWnegyHkhSLl6YgMpL0MpJ4Xk57gt/U4UC6llly7T3f345P2RllzapM7d+re3kbH
+ aA2pvC4A8z86JgFkT0rqSgN3fPp60Vh6/VkIlmk4Y9FYh6LD7M0n2YCPtoGI3LDxDOCL
+ cER7uDHl4gRr0bp25w5XJkGBiIqIsQA3wC3z9k8DET82M/1osegC4KqrJMXayk0uUNj3
+ YrBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788278615; x=1788883415;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=q4F26dJ9S5ki5CbSjijwOxlzEcyyjNqV4qCvuR7o8pM=;
- b=cVjOkpOIv+zcrjv4pxOPMgozJ3raDcPY6wbiTHVAfat7r0kBUmeQ8JCxaoOnILcSta
- WlOhC/SXSur5wMpt/sBumi39Jo1dlhteYja/rIScwKMuK5l94kjO9ByRwhmtXO3U9da3
- ySjDDDrDd5uIcXFIldnhDrhxSaEtuJ6M16Z33cE8S24ABrmUvmkr3FIrce3wsZG9AD0x
- 5odyNuWpJq/hSCZfNdO2WSc/FmX57sQ2jGSTPjiZNhBl2DMC/8XlwgfWWel81rZMRnax
- uh9+MU3O81BoLMgqqj0DLOF4RAVTFLC2T2wj1STaKyz5E28fVGWLIrpcbQ+FFmlRg8J1
- 29Ew==
-X-Gm-Message-State: AFuF++mY7bqe42Lu/SV2vzYDg5xGTrVdaj1j1n4dT9dXLN73DlAVM8x2
- 32JotLF4u+KcfztRisHNLAPcvlq/xCSlcf4OKXYqjx2iDJWNdeKxWK5NID1Brw782eXQ493x1ia
- A4n2QfYs=
-X-Gm-Gg: AR+sD12g5pOGeeBS38YXzdXdcv+HyiHPbzyUy0g2h5mzkrKymQhQkQL/DFEfFjA76+p
- Dd2Rwo0mdQ7oaPIEMnA1Y86fpaEDSVGnthscRyvp17XrMVGqCUwIYEFjXLnkvtz94LJ7KfNhdAf
- SGZ8KaCzl5DvqABXpUORpqOAUsJWcS5bm3m/i4e8eVexPciSSihsZm+2LFxWFdI3zbLt5s3l1Qy
- 42hCjY15zVIH025RuBgVpTx3zx49fmPCXw3H2gy1JnoRAwWZEJNb703NqbYBl4FHMszYZyq7l9Q
- NaM/sIXEopWSWFugvmuEg5gYoNuBdfN2GAGLcCLoGYWglwLZ0gPBcv/OTR8Bt2uoFA+eQdmMr7N
- Yb/xxdX2ci4/dpbWWlwnu/Lhhv3HYtVgegJc7Sa8A7jrZiHfBDQbEWTPm67mWmypTkSEco43TCm
- KppxgZ8vjoBFalSD0ni5nUUWT4YDAVoQqtqnmgm0CYDaJW3MHWh8W6fHUvDwzj9Oph4i+AWVkth
- 9fx/ctkmy5GFVh1w8VDcX3VybotroPuNwgNz1VAC3EIuxY=
-X-Received: by 2002:a05:600c:4712:b0:49b:910c:76fb with SMTP id
- 5b1f17b1804b1-49b91c4567dmr207795885e9.2.1788278614878; 
- Tue, 01 Sep 2026 09:03:34 -0700 (PDT)
-Received: from jwang-ThinkPad-T14-Gen-6.fkb.profitbricks.net
- ([2001:9e8:1471:a200:e095:5b15:7c12:5f73])
+ d=1e100.net; s=20251104; t=1788279267; x=1788884067;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=19G4sFaAyvOiqZLggzmyDfE+f2TgUAGJu34IcNqZtc0=;
+ b=cabMUqp1HRuamTDWr0G/a1MJ37P3UdAjWR0Hw3UKGYI62P5RJ1i1NRNKzFHT3H1q2Q
+ oEyBGaPEh9KXwfOgRJcKDMCukXXDTmllGi5R57LM4GpJNrYs0eXC7XiAraC2TI131Li4
+ NS5i4eVUsRwllZlMl1s1b3Gq3030fzYyuNCQbfbtLGt72Jok9vks1zjKDxvjTOR2hB3l
+ FbLPW8xLRBjMR0d0dpaXbjJraXh6r4Ol6vPSOmLhiPqd8aIT4YDSzXVfVb3muh02CtnU
+ rAjKb9P/YbAKdCNGH/DWKvQ29/TTtUK1ghIr2jh0HVy0T/jx/xKHOOrtuzfOm5ZYLkle
+ ulJw==
+X-Gm-Message-State: AFuF++m7dwW50jQA/8mVzskVC1PbtGcs4S+29XMUi1PO/f3sK3r9b3en
+ 0G3pFEh0UtpcxMVvUk7NBYrQe3PZEB/IhwFxi9ShgPX5S05Vwg+Uxz9QZjp6UDxpi6sLLZsS/5h
+ M7kqvEPFXaE5ptCqhyfXLQ3fX3YIoaYw6lmnGRPe6SN2Xj88cAsh3Ofc+iuL+fsepxPdlGRNBMk
+ rHhcwsmBEwC34tLNl/c6bUuADJjLZ4q0thEVzFnGRu
+X-Gm-Gg: AR+sD12eCsIWjuxTZa3ER4I4LnLYpa822AH3DEiaoBwAsRgjLeThxGJcci6TyfQXXYc
+ eX+Dq7dP7J0/0ylchMAPkkC4oiE4vLfkyhqAqXn4Ny2LKJd2yq+dZkKhuPWBK+e3c2yiVtaaEvO
+ uL6nalXq/x8VPcCO4xhfGSn30RGxjIaGO5vsbxpOjijbsFoaliNWYb6QuGMmt/4JXyRZjp+D1NS
+ WN8S5FrQ6QxZQku6+M3YBlqlPxoty+p7ZuKF1tnZJG1sWnPvOgHB+LfZFHwZ3VbhOmXl93apACc
+ m/4l9YtfIzPNApvYjVZOpWGZx337FsCC6rbYA8lt02QFBYpnS0a6KEmhOIeMqU4htxSuHKItHZq
+ wFjxCp2+XrBCPWywEdjiXnIxrJW1bC5lYgPDdFvMrkunE0vBorWmxn8WiAJPtb5hBX+FRNRCU20
+ AH7GA=
+X-Received: by 2002:a05:600c:8b6b:b0:49b:c8e:8e6 with SMTP id
+ 5b1f17b1804b1-49b91bd99b7mr609993675e9.0.1788279267012; 
+ Tue, 01 Sep 2026 09:14:27 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b6b:b0:49b:c8e:8e6 with SMTP id
+ 5b1f17b1804b1-49b91bd99b7mr609991135e9.0.1788279265991; 
+ Tue, 01 Sep 2026 09:14:25 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce0b456sm87367435e9.2.2026.09.01.09.03.34
+ 5b1f17b1804b1-49ccd1e19desm341365315e9.1.2026.09.01.09.14.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 09:03:34 -0700 (PDT)
-From: Jack Wang <jinpu.wang@ionos.com>
+ Tue, 01 Sep 2026 09:14:25 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>, yanfei.xu@bytedance.com,
- Jack Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PATCH 0/2] migration/rdma: send small control messages inline
-Date: Tue,  1 Sep 2026 17:51:19 +0200
-Message-ID: <20260901160333.29859-1-jinpu.wang@ionos.com>
-X-Mailer: git-send-email 2.43.0
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH v2 0/4] docs/devel,
+ AGENTS.md: a completely new policy on AI-generated contributions
+Date: Tue,  1 Sep 2026 18:14:18 +0200
+Message-ID: <20260901161422.314581-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::335;
- envelope-from=jinpu.wang@ionos.com; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,38 +125,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jack Wang <jinpu.wang@cloud.ionos.com>
+WARNING: this is *intentionally* a full U-turn from the previous policy
+and discussions.  This is not a refusal of the arguments presented in
+those discussions.  It is also a request for comments, and not something
+that is ready to go.
 
-Control-channel sends (registration requests, ram block replies, etc.)
-carry only a few dozen bytes, but qemu_rdma_post_send_control() still
-always memcpy()s them into a pre-registered scratch buffer and lets the
-HCA fetch them with a separate local memory read before sending.
+The reason to "try something else" is that previous discussion have come
+to be a unanimity trap.  Attempting to introduce small carve-outs for
+tests, for doc comments, for bugfixes did not work; each case will
+have someone (rightfully) expressing disagreement and the only possible
+equilibrium remains the current "no AI for code generation" policy.
+The Rust project also acknowledged the impossibility of reaching a
+widespread consensus on this topic.
 
-This series asks the QP for a little inline send space at creation time
-(patch 1) and then, once that plumbing exists, drops the mandatory
-memcpy() by pointing the SGEs directly at the header/payload for any
-message that fits inline (patch 2). Messages too large to inline keep
-using the old copy-into-registered-buffer path, so there is no wire
-protocol change.
+Furthermore, we have clear signs that the current policy is not blocking
+some contributors from posting AI-generated patches or even larger series,
+most likely in good faith.  While the policy does not require maintainers
+to police AI usage, "don't ask, don't tell" approaches are best treated as
+a red flag.
 
-In testing, this doesn't show an obvious improvement in total migration
-time or downtime -- the control channel isn't the bottleneck there.
-Still, it seems like the right thing to do: inline sends are supported
-by modern HCAs and reduce per-message latency on the control channel by
-skipping the extra local memory read, so it should help control-plane
-responsiveness (e.g. registration round trips) even where it doesn't
-move the overall migration numbers.
+At the same time, a free-for-all is not a good idea either.  Maintainers
+will want to apply their own considerations (see [1] for a good list),
+and I think we want to heed Conservancy's advice to not shun contributors
+or maintainers belonging to either camp.
 
+So let's make a new hypothesis: that the no-AI policy is an equilibrium
+only because it's stable, not because it's good.  Attack the problem
+from the point of view of maintainer burnout rather than copyright/DCO.
+Apply a large perturbation, and see where *that* discussion takes us.
 
+As usual, the text including the commit messages is informed by discussion
+with plenty of people, mentioned in the Cc trailers of patch 1.
 
-Jack Wang (2):
-  migration/rdma: send small control messages inline
-  migration/rdma: avoid memcpy for inline control sends
+Paolo
 
- migration/rdma.c | 82 +++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 63 insertions(+), 19 deletions(-)
+[1] https://lore.kernel.org/qemu-devel/CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com/
+
+Paolo Bonzini (4):
+  docs/devel: introduce a new policy on AI-generated contributions
+  AGENTS.md: Let agents know what the participation rules are
+  AGENTS.md: make the human part of the design process
+  agents: add CLAUDE.md and GEMINI.md
+
+ docs/devel/code-provenance.rst |  71 ++-----------
+ docs/devel/index-process.rst   |   1 +
+ docs/devel/llm-usage.rst       | 179 +++++++++++++++++++++++++++++++++
+ AGENTS.md                      | 116 +++++++++++++++++++++
+ CLAUDE.md                      |   1 +
+ GEMINI.md                      |   1 +
+ 6 files changed, 304 insertions(+), 65 deletions(-)
+ create mode 100644 docs/devel/llm-usage.rst
+ create mode 100644 AGENTS.md
+ create mode 100644 CLAUDE.md
+ create mode 100644 GEMINI.md
 
 -- 
-2.43.0
+2.55.0
 
 
