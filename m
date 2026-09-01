@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFCCC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 10:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953F9C624CF
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 10:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1LR2-0002WA-DI; Tue, 01 Sep 2026 06:09:44 -0400
+	id 1x1LQw-0002UP-Hl; Tue, 01 Sep 2026 06:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x1LR0-0002Vm-V6
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:09:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x1LQv-0002UA-JP
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:09:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x1LQz-0000xh-AA
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:09:42 -0400
+ id 1x1LQr-0000uX-SP
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:09:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788257380;
+ s=mimecast20190719; t=1788257372;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QIEprrdH7LZapW8zVSYHVi8VsanTJW2FyNSSrivNz7A=;
- b=OmsDzJy1DRXBh0da4+OfwS9MaY8JK/CGvuqX5cXxgj/TuKbR6D68lWf5ltzlZ38FQV94aI
- fp4MVHvAe3NEPxcHypLq4gXniCPl9yIpgOrsWRCnX8MM6w/pn4h+8Q5VeC+8TH2GhgiTTE
- VQXolCWpoigknpTtTnUa0rxrNbtqN48=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0Dzi1bBTzXXjpEm5tVaw17VipUCXdh9YJHGDHV+JNAg=;
+ b=OmQhLAoQn9m8fT2fiG4y4Y4PIrWBESlpoq3F2OKP0kjAtCJmRt40/1P+7DVowL0hI+07UY
+ Q0w50AXG0XPFFNw/esgHR3r/opGLgXOPGCH6s14Ym+OixDQzYj21V1K7AGXEzewfkK6wJT
+ D898mEWT2ZTo8cg2+m/nchiafjS1m9w=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-267-vBmRl-fZO6SVu56GXhhTcw-1; Tue, 01 Sept 2026 06:09:34 -0400
-X-MC-Unique: vBmRl-fZO6SVu56GXhhTcw-1
-X-Mimecast-MFC-AGG-ID: vBmRl-fZO6SVu56GXhhTcw_1788257373
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4843313047eso1735819f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:09:33 -0700 (PDT)
+ us-mta-34-OpTciXhmM220K73tMOYDkA-1; Tue, 01 Sept 2026 06:09:30 -0400
+X-MC-Unique: OpTciXhmM220K73tMOYDkA-1
+X-Mimecast-MFC-AGG-ID: OpTciXhmM220K73tMOYDkA_1788257369
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4957287363bso30685465e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788257373; x=1788862173; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=QIEprrdH7LZapW8zVSYHVi8VsanTJW2FyNSSrivNz7A=;
- b=VXGdwe6ST/bUNVtPyUCwkLGSs9fqWjZ6+n70Ce8AjldfhTeHUhXxk76ziiWU+9SvY3
- zmRbK+OLfcgFFwp1JechPYIOBEwTnYFI+1ipoWA0vGgpWgBnN9c3DKbFe83y+PEq+x1Q
- 9jkn/0lGQefxZYcATkDAS2JK/VmN2CKrNOBIQdu2tOZuZrcrsZzYQH6/nVKFzT8CPj2a
- unJX1Ag+6LKmWg68wTFDXLosRa4DGSRP+epmDRfjImskBeZWKej3EK7YxsYyMEXfKaBt
- jwS5JxuSXEJlU87R5BrRI+0akEccs2861wCaRzIENOd6w2pXxATGzH3rVI3XmIL8UtkT
- 2HZg==
+ d=redhat.com; s=google; t=1788257369; x=1788862169; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=0Dzi1bBTzXXjpEm5tVaw17VipUCXdh9YJHGDHV+JNAg=;
+ b=DLaF7BBkfZGHS1ZWLNxia34v7hjQq1OPgrQ9Up6XO1vXrXR5SaEbWOkw6ILZnXmMZQ
+ Ei2htGYuw2zHDwtLW9hIq9rLoABg1FRsaAgdm+XJdS0cPpLEamt9iBsEZ4u+nm7U12cE
+ 5cGiq9l08Tc6nyfdBMEHljsZzUG/sDwzB9Z3VpGcX9Lw6Gf1e7h+Zl+Ots8s6leh0xep
+ OkhEUG4MnjUn4aT4ue5PFU0FbJiPPArFMGCuk/BVwKrEanTiWr3uxqNKdfvSZjW+pllU
+ NYIomScR3lCZ4i0sJ5G5S4jVzIa/rz9hXNxWBmzU3U2Ksevmqz1Xy1Xj7vRiD3saP5Iz
+ MXBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788257373; x=1788862173;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QIEprrdH7LZapW8zVSYHVi8VsanTJW2FyNSSrivNz7A=;
- b=jquc61IUgfZCKcKdt9cVluKVVdQ5YMISZ9Ym+Z9ambmG4ADEsM8JTd9iHF9jsf+6be
- AwGOxDrbLZpaHxFwbPaKtYMASc4kCEoSHNGK4h4PSmBPvIvhbRz4GtkCdZ6Ki0ukUbAr
- sZKmK4MuXxxD7xOIb6m8Ds1K1YRlnJLUu5QzwPO2yAhTVasxH+rAW0Ty59wjUzrBPGtH
- ytlRH71YUAP47Q9lR63+7r+E33OlH89PSPepGEQeOlEhFojQQrMGez85JBkKW4vbSdb5
- paCfw3zJRhedwzEah3kBYhXWTfSagDIGBso/bY/mtTvoQ42U4O2zBflinEF6UX96vQc/
- aoMA==
-X-Gm-Message-State: AFuF++mpSb/u9xoi41nbKyQGHdhhpM/DzxJiV4ZfYkUsHQzYsyF9cpBD
- kaCRmKhmF29K7cHiWFy39b/xnW+rYN/q0ylw6plADNklwvuZGXDzdlxTD3qDYhQhDt8M8GflPcm
- ROFlw1FHWE9Suj5Vejx4BFzq9nE98nmkleWRQCfdQX2Heb89OjrSVdsQP
-X-Gm-Gg: AR+sD11B2x+cU7wpgE2e9Lq9Lul4HHhuOl6+Woq0SXklW7Lh2EItyFeKERjTat2nDNQ
- 8M/b4h/hck2GMLJqA6HKYobGHXAi3LEMpyTuhTV3RWRRiRRDnjSsKltFpmyiArL0Lt4Y2BwiBN2
- J4dQ1aP4h69IFNLJTrP3rsQEahwwffeSwXD3AwFPLVZu744Wx4ADWMR7HaQq/qKS8Vk0lct00C4
- fJQbusF08MfzTkf31kDzyzNW4/g23NSzV3qCTPcCR5EfFBvhJxVmZkUz9Ur+sgHzCN7McUkHL4t
- kM09VEXesCQA2jjSVrW9Nv2BgE40SC2r0G0Nzp+moWb5ewekp+p8UQHE52sysVkBGkC22yYkE1q
- sHOz6d0uobbi5qKcanJzcEPc1OOP8ypDv3nhP5sOrNwTtu8P+7a1C5qGw3MpG+/456njf
-X-Received: by 2002:a05:600c:8411:b0:499:bf0e:95c8 with SMTP id
- 5b1f17b1804b1-49cdc405494mr133905095e9.1.1788257372974; 
- Tue, 01 Sep 2026 03:09:32 -0700 (PDT)
-X-Received: by 2002:a05:600c:8411:b0:499:bf0e:95c8 with SMTP id
- 5b1f17b1804b1-49cdc405494mr133904365e9.1.1788257372560; 
- Tue, 01 Sep 2026 03:09:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788257369; x=1788862169;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=0Dzi1bBTzXXjpEm5tVaw17VipUCXdh9YJHGDHV+JNAg=;
+ b=ixmOf7JAXTDM4YCzSRqqDcsJsVixVUi5eDdw9hhecwPhfG+2KrlYMd626Rdf/Q2Rtt
+ e6zsTssz3l6QRwG1r+wIxEr0d7r1sQK8CeU339ZHIHs4gid819k8WCAgqGbIWOIPlHAU
+ os34TVWEUxvb/h7WWJGpEXnpK1hR3mRUHKAwjUKVz9/Yy6jfxEeMQYCo4itPlBbCffME
+ +ayOHfYs37MPOYPYj+D7gNc+EtKKDOYu344l4jWnBsCN0MO4bvMGypk94ZpgJ1ftmLaz
+ ZpOEXDmLJ4Z2t53K81USw7W2ygzau4QKQzFRtf396qFdWmeFJgrfKKc5cJ24eNj8ElXW
+ V1eQ==
+X-Gm-Message-State: AFuF++lGOsWRZSFoXJaqVesee7C+WAKhQ3lMCSci8BpG/GA5JJGJ3Wm6
+ WWWI4sxKkRttC0BGpC2pT9sAGjfvM7RU70uhYW856+mkRkfplPjomNzcS0cxNH8I706AYwCYkvJ
+ zXyjqQmu3/KEfyVWsxfLq7+Sz4SmK+7t/blaPlWsD6qTMDw0x6HId83PU
+X-Gm-Gg: AYBFou1Sr8zdVI4RODrp7144lxnjWplVm2eqgfe+MLZLm9tiolFcVZupfGvIzUtQIxz
+ 0Uy/c58H8tKM/aN6MhUNiCHBryngP7yaA99+wOLLGJrqfTQWtau5SV0qwhLuiBSK7cQp49COChM
+ FlLJYBrnKgIo3fBfX0vaWo+QYp2AYmV8aUyrWjj1fXN//WDv+y1tautFDjKKD55LILHTXr7XWCS
+ x7BTzJTf+HuEEaOCNzXl5fDIdv8m6l7BJBw42N/HH+Zkt9tMdbyjozkrUmJnNOcw/jiWlgrbw3a
+ o8FIkOXYHg6qwi5aGT2QUZvaIr4WF/DN7T3NHNexV+3s9YFgWV0XG+CgtRbB0b9EwDTOKUjkSun
+ YWriNDiu5fHnrN7Cpom9b2aUwG3JLg3eb9j9bA28NtIgh3CBI4RpHGi+pbZvz9UgozS45
+X-Received: by 2002:a5d:5e01:0:b0:480:c5:d635 with SMTP id
+ ffacd0b85a97d-482f782a4a2mr47922506f8f.0.1788257369552; 
+ Tue, 01 Sep 2026 03:09:29 -0700 (PDT)
+X-Received: by 2002:a5d:5e01:0:b0:480:c5:d635 with SMTP id
+ ffacd0b85a97d-482f782a4a2mr47922420f8f.0.1788257369163; 
+ Tue, 01 Sep 2026 03:09:29 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48442d7c1c0sm3941620f8f.32.2026.09.01.03.09.31
+ ffacd0b85a97d-48442d7c1c0sm3941620f8f.32.2026.09.01.03.09.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 03:09:32 -0700 (PDT)
+ Tue, 01 Sep 2026 03:09:28 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Date: Tue, 01 Sep 2026 12:09:20 +0200
-Subject: [PATCH 3/4] i386/sev: convert the guest policy properties to
- custom accessors
+Subject: [PATCH 0/4] igvm/sev: apply the IGVM guest policy before launch
+Date: Tue, 01 Sep 2026 12:09:17 +0200
+Message-Id: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260901-fix_igvm_policy-v1-3-e93a6cf8c5ac@redhat.com>
-References: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
-In-Reply-To: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MWwqAIBAAryL7naBGUV0lQky3WughClJId0/6H
+ JiZDBEDYYSBZQiYKNJ1FpAVA7uZc0VOrjAooVrR1ZIvdGta06H9tZN9uJh75bBRzrUGSuUDFuU
+ /jtP7fiupNzFhAAAA
+X-Change-ID: 20260831-fix_igvm_policy-0b92de52dd6a
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
@@ -101,15 +100,15 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, 
  Luigi Leonardi <leonardi@redhat.com>
 X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,78 +124,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both SEV/SEV-ES and SEV-SNP expose a "policy" object property. The
-SEV/SEV-ES one was registered as a plain uint32 pointer property, and
-the SEV-SNP setter ignored the result of the visit.
+The guest policy from an IGVM file never actually made it to the platform
+before launch. The callback that was supposed to forward it ran after
+LAUNCH_START, so it did nothing and the guest was launched with the
+default policy instead of the one requested by the file.
 
-Give both properties explicit getter/setter functions and check the
-return value of the visit in the setters. This is preparation for
-tracking whether the guest policy was set on the command line.
+The policy is part of the attestation report, so this quietly breaks
+attestation: the resulting measurement does not match what the IGVM file
+was built for.
 
-No functional change intended.
+Patches 1 to 3 are cleanups needed to get there: dropping an overloaded
+callback, moving the SNP ID block handling and giving the policy
+properties proper accessors. Patch 4 is the actual fix.
+
+One thing worth calling out: if a policy is also passed on the command
+line and it differs from the IGVM one, we now return an error instead of
+silently picking one over the other.
 
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
- target/i386/sev.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+Luigi Leonardi (4):
+      sev: rename set_guest_policy to set_id_block and remove dead policy code
+      igvm: move set_id_block call into the SNP ID block directive handler
+      i386/sev: convert the guest policy properties to custom accessors
+      igvm/sev: forward the IGVM guest policy to the platform before launch
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 465415c535..c76cdba8d2 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -2956,6 +2956,22 @@ sev_guest_class_init(ObjectClass *oc, const void *data)
-             "use legacy VM type to maintain measurement compatibility with older QEMU or kernel versions.");
- }
- 
-+static void
-+sev_guest_get_policy(Object *obj, Visitor *v, const char *name,
-+                     void *opaque, Error **errp)
-+{
-+    visit_type_uint32(v, name, &SEV_GUEST(obj)->policy, errp);
-+}
-+
-+static void
-+sev_guest_set_policy(Object *obj, Visitor *v, const char *name,
-+                     void *opaque, Error **errp)
-+{
-+    if (!visit_type_uint32(v, name, &SEV_GUEST(obj)->policy, errp)) {
-+        return;
-+    }
-+}
-+
- static void
- sev_guest_instance_init(Object *obj)
- {
-@@ -2964,8 +2980,8 @@ sev_guest_instance_init(Object *obj)
-     sev_guest->policy = DEFAULT_GUEST_POLICY;
-     object_property_add_uint32_ptr(obj, "handle", &sev_guest->handle,
-                                    OBJ_PROP_FLAG_READWRITE);
--    object_property_add_uint32_ptr(obj, "policy", &sev_guest->policy,
--                                   OBJ_PROP_FLAG_READWRITE);
-+    object_property_add(obj, "policy", "uint32", sev_guest_get_policy,
-+                        sev_guest_set_policy, NULL, NULL);
-     object_apply_compat_props(obj);
- 
-     sev_guest->legacy_vm_type = ON_OFF_AUTO_AUTO;
-@@ -3004,9 +3020,13 @@ static void
- sev_snp_guest_set_policy(Object *obj, Visitor *v, const char *name,
-                          void *opaque, Error **errp)
- {
--    visit_type_uint64(v, name,
--                      (uint64_t *)&SEV_SNP_GUEST(obj)->kvm_start_conf.policy,
--                      errp);
-+    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
-+
-+    if (!visit_type_uint64(v, name,
-+                           (uint64_t *)&sev_snp_guest->kvm_start_conf.policy,
-+                           errp)) {
-+        return;
-+    }
- }
- 
- static char *
+ backends/confidential-guest-support.c       |  17 ++-
+ backends/igvm.c                             |  85 +++++++------
+ include/system/confidential-guest-support.h |  28 +++--
+ target/i386/sev.c                           | 181 ++++++++++++++++------------
+ 4 files changed, 174 insertions(+), 137 deletions(-)
+---
+base-commit: d2e570cc0f97b936902a5b1b86b73c0f5998b475
+change-id: 20260831-fix_igvm_policy-0b92de52dd6a
 
+Best regards,
 -- 
-2.55.0
+Luigi Leonardi <leonardi@redhat.com>
 
 
