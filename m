@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4B4C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F73C61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:43:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1SUY-0002Ht-5c; Tue, 01 Sep 2026 13:41:50 -0400
+	id 1x1SUd-0002JJ-Rd; Tue, 01 Sep 2026 13:41:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x1SUX-0002HT-7t; Tue, 01 Sep 2026 13:41:49 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1x1SUc-0002Ic-7G; Tue, 01 Sep 2026 13:41:54 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x1SUV-00019N-1M; Tue, 01 Sep 2026 13:41:48 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1x1SUZ-0001A7-PJ; Tue, 01 Sep 2026 13:41:53 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 681H55l5655709; Tue, 1 Sep 2026 17:41:45 GMT
+ 681H4wWD1782834; Tue, 1 Sep 2026 17:41:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=1nw8PCOLTD0VK9436
- PCBG4fSjzm2OWbJZpqM0vJOyBs=; b=Ysrm7E+lu96pYy6qUNDvxOodgpKA3Uwn9
- 0U3n1V567KoT1ydZwYpi0KLb8Xr6GubEAQaiSo51b+byNm5ajyCCek3YNCGcy1Yx
- Rssnc8ix0q5lgk+P7cAFnCMcyl7UJSdoBQ2l2lpWUfCpcMz2Z1wuTd5BEFtxvUdT
- oBdJSsMqRiYDPuV5WDzjQO2qGg/qWVvdtl21DIx+mCsxNGAyNwK1P/XQA7TLHvgo
- 2oHxksBbyuv+9HA8BxdoJnWu9LQrtn1qcQ4UCO3NEKcY6fGUmpD+fLSXtidLtppr
- DXc4pm+rL8xCQGHk81ATWpipxmveEJw3/dz8hNR9/oxXWx2TJKyUA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudsbf4-1
+ :mime-version:references:subject:to; s=pp1; bh=FmbjQPgbbsZQ4S3Su
+ Szt0YAgZkAxY3tvdgF/o5k3rqw=; b=AV4TLBDH0ljL3Aa/pYlgDROnm18rvYutc
+ hyXjyPnetXNiRjyUSr2EIHvCEep0btU8bLOrYnkurY7r/BLLahlpujPBma7lg/Or
+ ySfH0cIsXpEXS4/SD1X4kXOMSMv6ZJyx9l4s/F3Z31BcFiy/IYuiYqQRcrH1noiS
+ gjWyFVogvvuFx8X2WBCYqYW0k+i9+19RLIx4QAKsUW9186/eiRCB4kFT3ea9EB5W
+ 2FaMa+3nUGwEdgq4TC76aA44nhuCbmGvnlHF1DpJStqv9kw6fkOvbEMD01ci5NX3
+ DZ1ARPdO7M1QIuPwIBf1IhhBtSB8r/Z9ddd/KxJP8gN4Xv6ODq6hg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq54sfpw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2026 17:41:45 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 681HQI6g016528;
- Tue, 1 Sep 2026 17:41:44 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gccey4ue3-1
+ Tue, 01 Sep 2026 17:41:49 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 681HQLh3026084;
+ Tue, 1 Sep 2026 17:41:48 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcark529a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2026 17:41:44 +0000 (GMT)
+ Tue, 01 Sep 2026 17:41:47 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 681Hfdw19044392
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 681HfgSY46137752
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 1 Sep 2026 17:41:39 GMT
+ Tue, 1 Sep 2026 17:41:43 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EAF662004B;
- Tue,  1 Sep 2026 17:41:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CD83220043;
+ Tue,  1 Sep 2026 17:41:42 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76D2020040;
- Tue,  1 Sep 2026 17:41:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 53C1E2004B;
+ Tue,  1 Sep 2026 17:41:39 +0000 (GMT)
 Received: from Narayanas-MacBook-Pro.ibm.com (unknown [9.124.219.126])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  1 Sep 2026 17:41:35 +0000 (GMT)
+ Tue,  1 Sep 2026 17:41:39 +0000 (GMT)
 From: Narayana Murty N <nnmlinux@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, mahesh@linux.ibm.com,
  sbhat@linux.ibm.com, anushree.mathur@linux.vnet.ibm.com,
@@ -65,9 +65,9 @@ To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, mahesh@linux.ibm.com,
 Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
  harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
  shivangu@linux.ibm.com
-Subject: [PATCH v5 1/6] ppc/spapr: Add VFIO EEH error injection backend
-Date: Tue,  1 Sep 2026 23:11:05 +0530
-Message-ID: <20260901174110.45356-2-nnmlinux@linux.ibm.com>
+Subject: [PATCH v5 2/6] ppc/spapr: Add ibm,errinjct RTAS call handler
+Date: Tue,  1 Sep 2026 23:11:06 +0530
+Message-ID: <20260901174110.45356-3-nnmlinux@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
 References: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
@@ -75,40 +75,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 8bfXYIB7J2hcj8WAN1D5qnOrg7KzpXWU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX1fcsNPBlmEEu
- VLqtni5q62HjeyhpfnHy+Ae4Ri7DfHaHVbfJh5e6k+qOiGtsDlPyWMBwaN1AVG4m95MkZmedFWR
- w7ehCUS7fzvuwzNakd4XcFbqpfrOu8SKl7jDcYx/OnobCZYnzzYGf7oqVWAuRKgSttf1ksw3aBu
- e7+cNdwYqp2TKQhFr7ZZCpSXgTxNWDQjgrdKwzVUJpYvqgnKFeT28oLbxTnw/YkzZViXOTazHiP
- 44kVzJrwffX52VjVyDVluDKBUBC1fvljR3hmZd+JSjgQPJSuOfx+pm6UZpARbnae8ii0UxPc9AD
- PZ2LCIXoTfWG73c1lJay5qbmeRe8cVtO+h3ov223gFj3NmbRDkDikSUcG+YmMxOlkvCajxwAaAk
- GNaUojfR2NJC3yD8n8ETwR2OPQxdwiChPT644jfp+xDJA+BQF6wAgt6RqDXqOPMvW+ng2FV8eFk
- 3ouyzQ3x7A+e6TtvURw==
-X-Proofpoint-ORIG-GUID: RXVtnVYNwh4jv12XD2P8MqBs2uOGrUew
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX1KNHndwZeiUw
- Pb+jpFFEfLcQlCiYecjP7jLxM2x9tzq/naDvADZE/U/zNisUF30lTPrWBstFcxU38iCfUaL4tIH
- dePiTwTmKtTwTjcJh8CHhC0Cm6dsReY=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a970e59 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX/Fd6vom+C7Pr
+ v2fxfdKJvn1T72Or3S6LjXkLn9D3rN7DIiXbeHzcBH7OEMt/TyS32VprycYsCe+dN/9nLj4LqUs
+ kC7dMRXQOc3Um4id0WaFPF2X9mJp+UeWRoj6+3VK3bqiA8TxkzlIO9C95iqB0POyhnaaIzwM6+L
+ c2muIk1vI9rm1a+1/Phdg/51zaSv1B8iPUaSbh9YILOsfEeHuEGSIn7NY+mXQ6tgi8LF0r+iUWD
+ tRLdTGtoIVipik3Rofo9pkr+Qt0fjvckr/JpFSeAzOKCRClljYC7pnxikr6avHcTy/QfnXAKN1p
+ anB5DpIHw+t8KQmycPP+6Vn5vRLUHS2pWOHP2d+ptWmPHZiZZ4Qfpgrf/xxAqat7aiQRRYt13gl
+ uif3UKYOEZJUQeb7zJFJUJfjp7dZ31Py+HdVJmfrpJDIoH5BAglydgyWaT9iq2N38a2Z48pOMuf
+ J5ggqOMRp4V6ed63akQ==
+X-Proofpoint-ORIG-GUID: KlxmL0Jru6BoCKGsElzgS9B5VTEx40j6
+X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a970e5d cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=0fC1r5mNT4k1lSFpsBYA:9
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=ckvBqbd_4HPzd86GAI0A:9
+X-Proofpoint-GUID: 6qJbETqgdJ-_MIydWgP2ZUrxm0T_mGyq
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfXz5J0zNAaJcvz
+ WhSnRIJjfwoRS6YQgQ4JV0UN0ex+byPlG0R0BpF9l8vhhIav71kfqMplXJ2nwldjQbNTBIJqFNZ
+ HI7fIm/V5ECHmU7TSRVbWkBni1U4KZ0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-01_05,2026-09-01_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609010155
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+ spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010155
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,237 +124,456 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add spapr_phb_vfio_errinjct() to the VFIO EEH backend in
-spapr_pci_vfio.c.  The function maps guest RTAS IOA bus-error types to
-the corresponding VFIO EEH ioctl error types:
+Implement the 'ibm,errinjct' RTAS call for PHB-level PCI error injection
+via firmware.  The handler decodes the RTAS parameter buffer, validates
+arguments, selects the target PHB by BUID, and delegates the injection
+to the VFIO EEH backend.
 
-  RTAS_ERR_TYPE_IOA_BUS_ERROR    -> EEH_ERR_TYPE_32
-  RTAS_ERR_TYPE_IOA_BUS_ERROR_64 -> EEH_ERR_TYPE_64
+IOA bus-error injection (types 0x7 and 0xF) is fully supported:
+  - The BUID field in the RTAS parameter block selects the target PHB
+    via spapr_pci_find_phb();
+  - For addr != 0 or mask != 0 the guest BAR address is translated to
+    the corresponding host resource base address before calling the VFIO
+    backend.  Translation matches the guest BAR layout under the
+    selected PHB, computes offset = guest_addr - guest_bar, reads the
+    host sysfs resource file for the matching BAR, and yields
+    host_addr = host_bar + offset.
+  - For addr == 0 and mask == 0 translation is skipped and zero
+    addr/mask are forwarded directly (powerpc-utils errinjct -a 0 -m 0).
 
-EEH_ERR_TYPE_32 / EEH_ERR_TYPE_64 are imported from the powerpc UAPI
-EEH header where available; fallback numeric definitions are provided
-to guard against older build environments.
+Non-IOA error types (corrupted-page, dcache, icache, tlb,
+recovered-special-event) are decoded and validated, then rejected with
+RTAS_OUT_NOT_SUPPORTED because their RTAS work buffers do not carry a
+BUID, making safe VFIO PHB/PE selection impossible.
 
-The backend consumes type, func, addr, and mask from the caller.  It
-does not accept or interpret config_addr; PHB/PE selection is the
-caller's responsibility via the sphb pointer.
+The translation helpers added to spapr_pci_vfio.c:
+  - spapr_phb_vfio_translate_errinjct_addr() - public entry point
+  - spapr_vfio_errinjct_find_bar_cb()        - per-device BAR scan
+  - spapr_vfio_errinjct_get_host_bar()       - host sysfs BAR reader
 
-Supporting type definitions are added to include/hw/ppc/spapr.h:
-  - EEH_ERR_FUNC_* and EEH_ERR_FUNC_MAX
-  - EEH_ERR_TYPE_32 / EEH_ERR_TYPE_64 (with #ifndef guards)
-  - enum rtas_err_type (RTAS ibm,errinjct error token values)
-  - RTAS_IBM_ERRINJCT token
-
-The function prototype is added to include/hw/pci-host/spapr.h inside
-the CONFIG_LINUX ifdef block alongside the other EEH hooks.
+config_addr is retained as a logging/debug parameter only; PHB
+selection relies on BUID.
 
 Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
 ---
- include/hw/pci-host/spapr.h |  8 ++++
- include/hw/ppc/spapr.h      | 60 ++++++++++++++++++++++++++++-
- hw/ppc/spapr_pci_vfio.c     | 75 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 142 insertions(+), 1 deletion(-)
+ include/hw/pci-host/spapr.h |  11 ++
+ include/hw/ppc/spapr.h      |   3 +
+ hw/ppc/spapr_pci.c          | 135 ++++++++++++++++++++++++
+ hw/ppc/spapr_pci_vfio.c     | 203 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 352 insertions(+)
 
 diff --git a/include/hw/pci-host/spapr.h b/include/hw/pci-host/spapr.h
-index 0db87f1281..24109409f4 100644
+index 24109409f4..492f66e1ef 100644
 --- a/include/hw/pci-host/spapr.h
 +++ b/include/hw/pci-host/spapr.h
-@@ -125,6 +125,8 @@ int spapr_phb_vfio_eeh_get_state(SpaprPhbState *sphb, int *state);
- int spapr_phb_vfio_eeh_reset(SpaprPhbState *sphb, int option);
- int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb);
+@@ -127,6 +127,10 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb);
  void spapr_phb_vfio_reset(DeviceState *qdev);
-+int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
-+                            uint32_t func, uint64_t addr, uint64_t mask);
+ int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
+                             uint32_t func, uint64_t addr, uint64_t mask);
++int spapr_phb_vfio_translate_errinjct_addr(SpaprPhbState *sphb,
++                                           uint32_t config_addr,
++                                           uint64_t guest_addr,
++                                           uint64_t *host_pci_bus_addr);
  #else
  static inline bool spapr_phb_eeh_available(SpaprPhbState *sphb)
  {
-@@ -151,6 +153,12 @@ static inline int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
- static inline void spapr_phb_vfio_reset(DeviceState *qdev)
+@@ -159,6 +163,13 @@ static inline int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
  {
+     return RTAS_OUT_NOT_SUPPORTED;
  }
-+static inline int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
-+                                          uint32_t func, uint64_t addr,
-+                                          uint64_t mask)
++static inline int spapr_phb_vfio_translate_errinjct_addr(SpaprPhbState *sphb,
++                                                         uint32_t config_addr,
++                                                         uint64_t guest_addr,
++                                                         uint64_t *host_addr)
 +{
-+    return RTAS_OUT_NOT_SUPPORTED;
++    return -ENOTSUP;
 +}
  #endif
  
  void spapr_phb_dma_reset(SpaprPhbState *sphb);
 diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 9acda15d4f..253dc0e862 100644
+index 253dc0e862..47791c71bd 100644
 --- a/include/hw/ppc/spapr.h
 +++ b/include/hw/ppc/spapr.h
-@@ -682,6 +682,63 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
- #define RTAS_EEH_PE_UNAVAIL_INFO         1000
- #define RTAS_EEH_PE_RECOVER_INFO         0
- 
-+/* EEH error injection types and functions */
-+#define EEH_ERR_FUNC_MIN                0
-+#define EEH_ERR_FUNC_LD_MEM_ADDR        0       /* Memory load  */
-+#define EEH_ERR_FUNC_LD_MEM_DATA        1
-+#define EEH_ERR_FUNC_LD_IO_ADDR         2       /* IO load      */
-+#define EEH_ERR_FUNC_LD_IO_DATA         3
-+#define EEH_ERR_FUNC_LD_CFG_ADDR        4       /* Config load  */
-+#define EEH_ERR_FUNC_LD_CFG_DATA        5
-+#define EEH_ERR_FUNC_ST_MEM_ADDR        6       /* Memory store */
-+#define EEH_ERR_FUNC_ST_MEM_DATA        7
-+#define EEH_ERR_FUNC_ST_IO_ADDR         8       /* IO store     */
-+#define EEH_ERR_FUNC_ST_IO_DATA         9
-+#define EEH_ERR_FUNC_ST_CFG_ADDR        10      /* Config store */
-+#define EEH_ERR_FUNC_ST_CFG_DATA        11
-+#define EEH_ERR_FUNC_DMA_RD_ADDR        12      /* DMA read     */
-+#define EEH_ERR_FUNC_DMA_RD_DATA        13
-+#define EEH_ERR_FUNC_DMA_RD_MASTER      14
-+#define EEH_ERR_FUNC_DMA_RD_TARGET      15
-+#define EEH_ERR_FUNC_DMA_WR_ADDR        16      /* DMA write    */
-+#define EEH_ERR_FUNC_DMA_WR_DATA        17
-+#define EEH_ERR_FUNC_DMA_WR_MASTER      18
-+#define EEH_ERR_FUNC_DMA_WR_TARGET      19
-+#define EEH_ERR_FUNC_MAX                EEH_ERR_FUNC_DMA_WR_TARGET
+@@ -274,6 +274,9 @@ struct SpaprMachineState {
+     bool fadump_registered;
+     bool fadump_dump_active;
+     FadumpMemStruct registered_fdm;
 +
-+/*
-+ * RTAS ibm,errinjct error type byte values.  These are RTAS ABI token
-+ * numbers, not the same as the VFIO EEH ABI type values consumed by
-+ * VFIO_EEH_PE_INJECT_ERR.  An explicit mapping is required.
-+ */
-+/* Use powerpc EEH UAPI constants where available; define locally otherwise. */
-+#ifndef EEH_ERR_TYPE_32
-+#define EEH_ERR_TYPE_32                 0
-+#endif
-+#ifndef EEH_ERR_TYPE_64
-+#define EEH_ERR_TYPE_64                 1
-+#endif
-+
-+/* RTAS PCI Error Injection Token Types */
-+enum rtas_err_type {
-+    RTAS_ERR_TYPE_FATAL                   = 0x1,
-+    RTAS_ERR_TYPE_RECOVERED_RANDOM_EVENT  = 0x2,
-+    RTAS_ERR_TYPE_RECOVERED_SPECIAL_EVENT = 0x3,
-+    RTAS_ERR_TYPE_CORRUPTED_PAGE          = 0x4,
-+    RTAS_ERR_TYPE_CORRUPTED_SLB           = 0x5,
-+    RTAS_ERR_TYPE_TRANSLATOR_FAILURE      = 0x6,
-+    RTAS_ERR_TYPE_IOA_BUS_ERROR           = 0x7,
-+    RTAS_ERR_TYPE_PLATFORM_SPECIFIC       = 0x8,
-+    RTAS_ERR_TYPE_CORRUPTED_DCACHE_START  = 0x9,
-+    RTAS_ERR_TYPE_CORRUPTED_DCACHE_END    = 0xA,
-+    RTAS_ERR_TYPE_CORRUPTED_ICACHE_START  = 0xB,
-+    RTAS_ERR_TYPE_CORRUPTED_ICACHE_END    = 0xC,
-+    RTAS_ERR_TYPE_CORRUPTED_TLB_START     = 0xD,
-+    RTAS_ERR_TYPE_CORRUPTED_TLB_END       = 0xE,
-+    RTAS_ERR_TYPE_IOA_BUS_ERROR_64        = 0xF,
-+    RTAS_ERR_TYPE_UPSTREAM_IO_ERROR       = 0x10
-+};
-+
- /* ibm,set-slot-reset */
- #define RTAS_SLOT_RESET_DEACTIVATE       0
- #define RTAS_SLOT_RESET_HOT              1
-@@ -764,8 +821,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
- #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
- #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
- #define RTAS_CONFIGURE_KERNEL_DUMP              (RTAS_TOKEN_BASE + 0x2D)
-+#define RTAS_IBM_ERRINJCT                       (RTAS_TOKEN_BASE + 0x2E)
++    /* ibm,errinjct session token (0 = no session open) */
++    uint32_t errinjct_token;
+ };
  
--#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
-+#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2F)
- 
- /* RTAS ibm,get-system-parameter token values */
- #define RTAS_SYSPARM_SPLPAR_CHARACTERISTICS      20
-diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
-index a748a0bf4c..7afca0cec6 100644
---- a/hw/ppc/spapr_pci_vfio.c
-+++ b/hw/ppc/spapr_pci_vfio.c
-@@ -26,6 +26,7 @@
- #include "hw/pci/pci_device.h"
- #include "hw/vfio/vfio-container-legacy.h"
- #include "qemu/error-report.h"
-+#include "hw/vfio/pci.h"
- #include CONFIG_DEVICES /* CONFIG_VFIO_PCI */
- 
- /*
-@@ -317,6 +318,74 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
-     return RTAS_OUT_SUCCESS;
+ #define H_SUCCESS         0
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index c1d4b7806e..cff12ef268 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -704,6 +704,138 @@ param_error_exit:
+     rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
  }
  
-+static int spapr_vfio_errinjct_rtas_type_to_vfio(uint32_t rtas_type)
++static int spapr_errinjct_parse_ioa_bus_error(target_ulong param_buf,
++                                              bool is_64bit,
++                                              uint64_t *addr, uint64_t *mask,
++                                              uint32_t *config_addr,
++                                              uint64_t *buid, uint32_t *func)
 +{
-+    switch (rtas_type) {
-+    case RTAS_ERR_TYPE_IOA_BUS_ERROR:
-+        return EEH_ERR_TYPE_32;
-+    case RTAS_ERR_TYPE_IOA_BUS_ERROR_64:
-+        return EEH_ERR_TYPE_64;
-+    default:
-+        return -1;
++    if (is_64bit) {
++        *addr        = ((uint64_t)rtas_ld(param_buf, 0) << 32) |
++                       rtas_ld(param_buf, 1);
++        *mask        = ((uint64_t)rtas_ld(param_buf, 2) << 32) |
++                       rtas_ld(param_buf, 3);
++        *config_addr = rtas_ld(param_buf, 4);
++        *buid        = ((uint64_t)rtas_ld(param_buf, 5) << 32) |
++                       rtas_ld(param_buf, 6);
++        *func        = rtas_ld(param_buf, 7);
++    } else {
++        *addr        = rtas_ld(param_buf, 0);
++        *mask        = rtas_ld(param_buf, 1);
++        *config_addr = rtas_ld(param_buf, 2);
++        *buid        = ((uint64_t)rtas_ld(param_buf, 3) << 32) |
++                       rtas_ld(param_buf, 4);
++        *func        = rtas_ld(param_buf, 5);
 +    }
-+}
-+
-+static bool spapr_vfio_errinjct_func_valid(uint32_t func)
-+{
-+    return func <= EEH_ERR_FUNC_MAX;
-+}
-+
-+int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
-+                            uint32_t func, uint64_t addr, uint64_t mask)
-+{
-+    VFIOLegacyContainer *container;
-+    struct vfio_eeh_pe_op op = {
-+        .op   = VFIO_EEH_PE_INJECT_ERR,
-+        .argsz = sizeof(op),
-+    };
-+    int vfio_type;
-+
-+    if (!sphb) {
-+        return RTAS_OUT_PARAM_ERROR;
-+    }
-+
-+    if (!spapr_vfio_errinjct_func_valid(func)) {
-+        return RTAS_OUT_PARAM_ERROR;
-+    }
-+
-+    vfio_type = spapr_vfio_errinjct_rtas_type_to_vfio(type);
-+    if (vfio_type < 0) {
-+        return RTAS_OUT_NOT_SUPPORTED;
-+    }
-+
-+    container = vfio_eeh_as_container(&sphb->iommu_as);
-+    if (!container) {
-+        error_report("vfio/eeh errinjct: no VFIO EEH container for PHB");
-+        return RTAS_OUT_NOT_SUPPORTED;
-+    }
-+
-+    op.err.type = vfio_type;
-+    op.err.func = func;
-+    op.err.addr = addr;
-+    op.err.mask = mask;
-+
-+    if (ioctl(container->fd, VFIO_EEH_PE_OP, &op) < 0) {
-+        error_report("vfio/eeh errinjct: VFIO_EEH_PE_OP failed: %s",
-+                     strerror(errno));
-+        switch (errno) {
-+        case EINVAL:
-+            return RTAS_OUT_PARAM_ERROR;
-+        case ENOTTY:
-+        case EOPNOTSUPP:
-+            return RTAS_OUT_NOT_SUPPORTED;
-+        default:
-+            return RTAS_OUT_HW_ERROR;
-+        }
-+    }
-+
 +    return RTAS_OUT_SUCCESS;
 +}
 +
- #else
++/*
++ * Non-IOA RTAS error types (page corrupt, dcache, icache, tlb, special
++ * event) are validated but not supported for VFIO injection.  VFIO EEH
++ * is PE/PHB-scoped and those work buffers do not carry a BUID, so QEMU
++ * cannot select the right VFIO container safely.
++ */
++static void spapr_errinjct_return_non_ioa_unsupported(target_ulong rets)
++{
++    rtas_st(rets, 0, RTAS_OUT_NOT_SUPPORTED);
++}
++
++static void rtas_ibm_errinjct(PowerPCCPU *cpu, SpaprMachineState *spapr,
++                              uint32_t token, uint32_t nargs,
++                              target_ulong args, uint32_t nret,
++                              target_ulong rets)
++{
++    SpaprPhbState *sphb = NULL;
++    target_ulong param_buf;
++    uint64_t addr = 0, mask = 0, buid = 0;
++    uint64_t inject_addr = 0;
++    uint32_t config_addr = 0;
++    uint32_t func = 0;
++    uint32_t type, o_token;
++    bool is_64bit;
++    int ret;
++
++    if (nargs != 3 || nret != 1) {
++        goto param_error_exit;
++    }
++
++    type    = rtas_ld(args, 0);
++    o_token = rtas_ld(args, 1);
++    param_buf = rtas_ld(args, 2);
++
++    if (!param_buf) {
++        goto param_error_exit;
++    }
++
++    if (!spapr->errinjct_token || o_token != spapr->errinjct_token) {
++        goto param_error_exit;
++    }
++
++    switch (type) {
++    case RTAS_ERR_TYPE_IOA_BUS_ERROR:
++    case RTAS_ERR_TYPE_IOA_BUS_ERROR_64:
++        is_64bit = (type == RTAS_ERR_TYPE_IOA_BUS_ERROR_64);
++        ret = spapr_errinjct_parse_ioa_bus_error(param_buf, is_64bit,
++                                                 &addr, &mask,
++                                                 &config_addr, &buid, &func);
++        if (ret != RTAS_OUT_SUCCESS) {
++            goto param_error_exit;
++        }
++        break;
++
++    case RTAS_ERR_TYPE_RECOVERED_SPECIAL_EVENT:
++    case RTAS_ERR_TYPE_CORRUPTED_PAGE:
++    case RTAS_ERR_TYPE_CORRUPTED_DCACHE_START:
++    case RTAS_ERR_TYPE_CORRUPTED_DCACHE_END:
++    case RTAS_ERR_TYPE_CORRUPTED_ICACHE_START:
++    case RTAS_ERR_TYPE_CORRUPTED_ICACHE_END:
++    case RTAS_ERR_TYPE_CORRUPTED_TLB_START:
++    case RTAS_ERR_TYPE_CORRUPTED_TLB_END:
++        spapr_errinjct_return_non_ioa_unsupported(rets);
++        return;
++
++    default:
++        goto param_error_exit;
++    }
++
++    /* IOA path: BUID selects the target PHB */
++    if (!buid) {
++        goto param_error_exit;
++    }
++
++    sphb = spapr_pci_find_phb(spapr, buid);
++    if (!sphb) {
++        error_report("ibm,errinjct: no PHB for BUID=0x%016" PRIx64, buid);
++        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        return;
++    }
++
++    inject_addr = addr;
++
++    /*
++     * addr=0, mask=0 means a non-address-scoped IOA injection.  This
++     * matches powerpc-utils errinjct -a 0 -m 0 behaviour; skip translation
++     * and forward addr/mask as zero.
++     */
++    if (addr || mask) {
++        ret = spapr_phb_vfio_translate_errinjct_addr(sphb, config_addr,
++                                                     addr, &inject_addr);
++        if (ret) {
++            rtas_st(rets, 0, ret == -EOPNOTSUPP ? RTAS_OUT_NOT_SUPPORTED
++                                                 : RTAS_OUT_PARAM_ERROR);
++            return;
++        }
++    }
++
++    ret = spapr_phb_vfio_errinjct(sphb, type, func, inject_addr, mask);
++    rtas_st(rets, 0, ret);
++    return;
++
++param_error_exit:
++    rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++}
++
+ static void pci_spapr_set_irq(void *opaque, int irq_num, int level)
+ {
+     /*
+@@ -2380,6 +2512,9 @@ void spapr_pci_rtas_init(void)
+     spapr_rtas_register(RTAS_IBM_SLOT_ERROR_DETAIL,
+                         "ibm,slot-error-detail",
+                         rtas_ibm_slot_error_detail);
++    spapr_rtas_register(RTAS_IBM_ERRINJCT,
++                        "ibm,errinjct",
++                        rtas_ibm_errinjct);
+ }
  
- bool spapr_phb_eeh_available(SpaprPhbState *sphb)
-@@ -349,4 +418,10 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
+ static void spapr_pci_register_types(void)
+diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
+index 7afca0cec6..2f428531cc 100644
+--- a/hw/ppc/spapr_pci_vfio.c
++++ b/hw/ppc/spapr_pci_vfio.c
+@@ -318,6 +318,201 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
+     return RTAS_OUT_SUCCESS;
+ }
+ 
++typedef struct SpaprVFIOErrinjctBarMatch {
++    uint64_t guest_addr;
++
++    PCIDevice *pdev;
++    VFIOPCIDevice *vdev;
++    int bar;
++
++    uint64_t guest_bar_start;
++    uint64_t bar_size;
++    uint64_t offset;
++} SpaprVFIOErrinjctBarMatch;
++
++static VFIOPCIDevice *spapr_vfio_errinjct_pci_to_vfio(PCIDevice *pdev)
++{
++    if (!object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI)) {
++        return NULL;
++    }
++
++    return container_of(pdev, VFIOPCIDevice, parent_obj);
++}
++
++static void spapr_vfio_errinjct_find_bar_cb(PCIBus *bus,
++                                            PCIDevice *pdev,
++                                            void *opaque)
++{
++    SpaprVFIOErrinjctBarMatch *ctx = opaque;
++    VFIOPCIDevice *vdev;
++    int bar;
++
++    if (ctx->pdev) {
++        return;
++    }
++
++    vdev = spapr_vfio_errinjct_pci_to_vfio(pdev);
++    if (!vdev) {
++        return;
++    }
++
++    for (bar = 0; bar < PCI_STD_NUM_BARS; bar++) {
++        pcibus_t guest_bar_start;
++        uint64_t bar_size;
++        uint64_t offset;
++
++        bar_size = vdev->bars[bar].region.size;
++        if (!bar_size) {
++            continue;
++        }
++
++        guest_bar_start = pci_get_bar_addr(pdev, bar);
++        if (guest_bar_start == PCI_BAR_UNMAPPED) {
++            continue;
++        }
++
++        if (ctx->guest_addr < guest_bar_start ||
++            ctx->guest_addr - guest_bar_start >= bar_size) {
++            if (vdev->bars[bar].mem64) {
++                bar++;
++            }
++            continue;
++        }
++
++        offset = ctx->guest_addr - guest_bar_start;
++
++        ctx->pdev = pdev;
++        ctx->vdev = vdev;
++        ctx->bar = bar;
++        ctx->guest_bar_start = guest_bar_start;
++        ctx->bar_size = bar_size;
++        ctx->offset = offset;
++
++        return;
++    }
++}
++
++static int spapr_vfio_errinjct_get_host_bar(VFIOPCIDevice *vdev,
++                                            int bar,
++                                            uint64_t *host_bar_start)
++{
++    g_autofree char *path = NULL;
++    g_autofree char *contents = NULL;
++    char *line;
++    char *saveptr = NULL;
++    unsigned long long start;
++    unsigned long long end;
++    unsigned long long flags;
++    int i;
++
++    if (!vdev || !host_bar_start || bar < 0 || bar >= PCI_STD_NUM_BARS) {
++        return -EINVAL;
++    }
++
++    /*
++     * Read the host Linux sysfs resource file for the BAR.  Do not use a
++     * VFIO PCI config-space read because that may return the
++     * guest-programmed BAR value rather than the host resource address.
++     */
++    path = g_strdup_printf("/sys/bus/pci/devices/%04x:%02x:%02x.%u/resource",
++                           vdev->host.domain,
++                           vdev->host.bus,
++                           vdev->host.slot,
++                           vdev->host.function);
++
++    if (!g_file_get_contents(path, &contents, NULL, NULL)) {
++        error_report("vfio/eeh errinjct: failed to read %s", path);
++        return -ENOENT;
++    }
++
++    line = strtok_r(contents, "\n", &saveptr);
++
++    for (i = 0; line; i++, line = strtok_r(NULL, "\n", &saveptr)) {
++        if (i != bar) {
++            continue;
++        }
++
++        if (sscanf(line, "%llx %llx %llx", &start, &end, &flags) != 3) {
++            error_report("vfio/eeh errinjct: malformed %s BAR%d",
++                         path, bar);
++            return -EINVAL;
++        }
++
++        if (!start || end < start) {
++            error_report("vfio/eeh errinjct: invalid host resource BAR%d "
++                         "start=0x%llx end=0x%llx flags=0x%llx",
++                         bar, start, end, flags);
++            return -EINVAL;
++        }
++
++        *host_bar_start = start;
++        return 0;
++    }
++
++    return -EINVAL;
++}
++
++int spapr_phb_vfio_translate_errinjct_addr(SpaprPhbState *sphb,
++                                           uint32_t config_addr,
++                                           uint64_t guest_addr,
++                                           uint64_t *host_pci_bus_addr)
++{
++    PCIHostState *phb;
++    SpaprVFIOErrinjctBarMatch ctx = {
++        .guest_addr = guest_addr,
++        .pdev       = NULL,
++        .vdev       = NULL,
++        .bar        = -1,
++    };
++    uint64_t host_bar_start;
++    int rc;
++
++    if (!sphb || !host_pci_bus_addr) {
++        return -EINVAL;
++    }
++
++    phb = PCI_HOST_BRIDGE(sphb);
++
++    /*
++     * BUID has already selected @sphb before this helper is called.
++     * config_addr is retained for logging/debug only.  Do not rely on it
++     * to find the target device; some RTAS IOA buffers may not carry a
++     * valid guest BDF-style config address.  Scan VFIO BARs under this
++     * PHB and match guest_addr against the guest BAR layout instead.
++     */
++    pci_for_each_device_under_bus(phb->bus,
++                                  spapr_vfio_errinjct_find_bar_cb,
++                                  &ctx);
++
++    if (!ctx.pdev) {
++        error_report("vfio/eeh errinjct: guest addr 0x%" PRIx64
++                     " not within any VFIO BAR under BUID=0x%016" PRIx64
++                     " config_addr=0x%08x",
++                     guest_addr, sphb->buid, config_addr);
++        return -ENODEV;
++    }
++
++    rc = spapr_vfio_errinjct_get_host_bar(ctx.vdev, ctx.bar, &host_bar_start);
++    if (rc) {
++        error_report("vfio/eeh errinjct: failed to get host BAR%d for "
++                     "dev=%s BUID=0x%016" PRIx64 " config_addr=0x%08x rc=%d",
++                     ctx.bar, ctx.pdev->name, sphb->buid, config_addr, rc);
++        return rc;
++    }
++
++    if (host_bar_start == ctx.guest_bar_start) {
++        error_report("vfio/eeh errinjct: refusing guest BAR as host BAR: "
++                     "dev=%s BAR%d guest_bar=0x%" PRIx64
++                     " host_bar=0x%" PRIx64,
++                     ctx.pdev->name, ctx.bar,
++                     ctx.guest_bar_start, host_bar_start);
++        return -EOPNOTSUPP;
++    }
++
++    *host_pci_bus_addr = host_bar_start + ctx.offset;
++    return 0;
++}
++
+ static int spapr_vfio_errinjct_rtas_type_to_vfio(uint32_t rtas_type)
+ {
+     switch (rtas_type) {
+@@ -424,4 +619,12 @@ int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
      return RTAS_OUT_NOT_SUPPORTED;
  }
  
-+int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t type,
-+                            uint32_t func, uint64_t addr, uint64_t mask)
++int spapr_phb_vfio_translate_errinjct_addr(SpaprPhbState *sphb,
++                                           uint32_t config_addr,
++                                           uint64_t guest_addr,
++                                           uint64_t *host_pci_bus_addr)
 +{
-+    return RTAS_OUT_NOT_SUPPORTED;
++    return -ENOTSUP;
 +}
 +
  #endif /* CONFIG_VFIO_PCI */
