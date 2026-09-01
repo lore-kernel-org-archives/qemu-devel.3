@@ -4,47 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82422C624CE
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB05C61DFD
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:13:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1DuT-0000kK-Lx; Mon, 31 Aug 2026 22:07:37 -0400
+	id 1x1Dze-0001vZ-AW; Mon, 31 Aug 2026 22:12:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
- id 1x1DuR-0000jV-1d
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:07:35 -0400
-Received: from va-2-30.ptr.blmpb.com ([209.127.231.30])
+ id 1x1Dzb-0001vD-AV
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:12:56 -0400
+Received: from va-2-28.ptr.blmpb.com ([209.127.231.28])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
- id 1x1DuL-0006a1-DV
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:07:34 -0400
+ id 1x1DzX-0007Gh-AP
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:12:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1788228433;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1788228765;
  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
  reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=jlWQ/QEIg0xKPAsz00svWyPSaN99QF1COBov7pNReRQ=;
- b=REJpEIxPajsHNOlcL1gS/v7/jquADw7i7eqb7FGBTiMM09UI4EpuTsXFCoGzKOUP/DQpNI
- QRhs5N98w1FKeb+q8BIWmNR7R7X5L06ocd33zW5wGj3AsBJZfRajijT6I5if8LUpHp4wGb
- OOpnKqAGkEUAnSXJ/RviwWua3CpCHSehW+HCvhSfswIGPpHXj4y96HwCfmCjS7kbR5iepg
- RpNhiCA6PUmfy+2fCytGKQelZB/lVnlJzsrn5fNiX5FMrCogcpUrd8xFOBUcHseI2Hxbdf
- GfE1izhIA3MkZqyS8hBgIiX7ItzvarjLT8gj4FZcLhCJRBnxf19JGK3oI1ZEYw==
-Content-Type: text/plain; charset=UTF-8
-X-Lms-Return-Path: <lba+26a96334f+343a1b+nongnu.org+xiangwencheng@lanxincomputing.com>
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-From: "BillXiang" <xiangwencheng@lanxincomputing.com>
-References: <877bl6eoqv.fsf@draig.linaro.org>
- <413b9ba2-20cf-4af6-9998-be46da277c84@lanxincomputing.com>
- <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
+ bh=ltLphJMhYwfdkcEfIotk1IteW6j95X8KR4j7/Rw79+Q=;
+ b=qmXNy+GqxEYMAToZBeqzSTKiNVOKQTGzUa5DVvA3BFuYdmAK1afjaBXnuarSOpvpTUCdVF
+ mlBotmHkK2BGgRASPOQR7HkNMGll/zFOO1pBqDCChHHxoypdmB3PsryAgyPJUY/sg9Slj+
+ KyeOTLIhj1fpdczsOwuNn41DvqwWG9iZw/0rpGyvDNS7I7THHr2P/tAfD1AATKa8aakR3R
+ IpBNteJPdGEIlHE2xNS11/Yg/55skjnRr23SCbZTSCA1F9S0w8ci6p4/o//GP8/6oj0eGa
+ Ypis4SwXdLaVfhYG9qI4+QtgD0iy9L8uV42G1cKZFdKcv5snrhSKsP9yCD8a6g==
 X-Original-From: BillXiang <xiangwencheng@lanxincomputing.com>
 User-Agent: Mozilla Thunderbird
-Message-Id: <930ccce8-a520-4387-82ed-982f2b824505@lanxincomputing.com>
-Received: from [127.0.0.1] ([123.120.5.129]) by smtp.feishu.cn with ESMTPS;
- Tue, 01 Sep 2026 10:07:09 +0800
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+X-Lms-Return-Path: <lba+26a96349b+21d340+nongnu.org+xiangwencheng@lanxincomputing.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <apW0SkNxWPCyvVV6@x1.local>
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  "Albert Esteve" <aesteve@redhat.com>, 
  "Alberto Faria" <afaria@redhat.com>, 
  "Alessandro Di Federico" <ale@rev.ng>, 
@@ -84,14 +75,24 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  "Bernhard Beschow" <shentey@gmail.com>, 
  "Stefan Hajnoczi" <stefanha@gmail.com>, "Thomas Huth" <thuth@redhat.com>, 
  <utsingh@redhat.com>, "Wei Wang" <wei.w.wang@intel.com>, <z.huo@139.com>, 
- "LIU Zhiwei" <zhiwei_liu@linux.alibaba.com>, <zwu.kernel@gmail.com>, 
- <peterx@redhat.com>
-Subject: Re: KVM/QEMU community call tomorrow - agenda items?
-Date: Tue, 1 Sep 2026 10:07:06 +0800
+ "LIU Zhiwei" <zhiwei_liu@linux.alibaba.com>, <zwu.kernel@gmail.com>
 Mime-Version: 1.0
-In-Reply-To: <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
-Received-SPF: pass client-ip=209.127.231.30;
- envelope-from=xiangwencheng@lanxincomputing.com; helo=va-2-30.ptr.blmpb.com
+Subject: Re: KVM/QEMU community call tomorrow - agenda items?
+Message-Id: <951ba9d4-e3b4-4205-ac87-a92afe302a6b@lanxincomputing.com>
+Content-Language: en-US
+References: <877bl6eoqv.fsf@draig.linaro.org>
+ <413b9ba2-20cf-4af6-9998-be46da277c84@lanxincomputing.com>
+ <48cef34d-18c1-4b8c-a75d-19d1d1321634@oss.qualcomm.com>
+ <apW0SkNxWPCyvVV6@x1.local>
+Content-Type: text/plain; charset=UTF-8
+To: "Peter Xu" <peterx@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Date: Tue, 1 Sep 2026 10:12:37 +0800
+From: "BillXiang" <xiangwencheng@lanxincomputing.com>
+Received: from [127.0.0.1] ([123.120.5.129]) by smtp.feishu.cn with ESMTPS;
+ Tue, 01 Sep 2026 10:12:41 +0800
+Received-SPF: pass client-ip=209.127.231.28;
+ envelope-from=xiangwencheng@lanxincomputing.com; helo=va-2-28.ptr.blmpb.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -113,34 +114,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/31/2026 11:46 PM, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 31/8/26 13:49, BillXiang wrote:
->=20
->> How about discussing the patch[1]:
->> "virtio: Add aligned ld/st accessors for vring".
+On 9/1/2026 1:05 AM, Peter Xu wrote:
+> On Mon, Aug 31, 2026 at 05:46:12PM +0200, Philippe Mathieu-Daud=C3=A9 wro=
+te:
+>> On 31/8/26 13:49, BillXiang wrote:
 >>
->> As pointed out in the patch, this has been a long-standing issue. It is
->> now necessary to introduce atomic accessors for fields that require
->> atomicity, such as the avail_idx field in virtio. This support is
->> especially crucial for architectures like RISC-V, which do not natively
->> support misaligned memory accesses.
->>
->> I'm particularly eager to receive more suggestions for it.
+>>> How about discussing the patch[1]:
+>>> "virtio: Add aligned ld/st accessors for vring".
+>>>
+>>> As pointed out in the patch, this has been a long-standing issue. It is
+>>> now necessary to introduce atomic accessors for fields that require
+>>> atomicity, such as the avail_idx field in virtio. This support is
+>>> especially crucial for architectures like RISC-V, which do not natively
+>>> support misaligned memory accesses.
+>>>
+>>> I'm particularly eager to receive more suggestions for it.
 >=20
-> This is a very technical topic, not sure if the community call will
-> be a better place than the mailing list, in particular if no virtio /
-> atomic expert developers appears. We'll see :)
+> I saw the last email was from me..
+>=20
+> https://lore.kernel.org/qemu-devel/aoxiBB2Wn8NiL5s6@x1.local/
+>=20
+> I believe that was what PeterM suggested. I think Richard also at least
+> partly agrees. so I thought we had at least partial consensus on the roug=
+h
+> idea, if not exactly how.
+>=20
+> I confess I haven't fully got the latter part of Richard's comment,
+> regarding the possibility to reuse accel/tcg/ldst_atomicity.c.inc: that
+> path seems to invole a guest CPU context, where in the case of reading
+> virtio ring it is from host and it has no guest CPU context.  But I think
+> we can continue the discussion on the list in that thread.
+>=20
+>>
+>> This is a very technical topic, not sure if the community call will
+>> be a better place than the mailing list, in particular if no virtio /
+>> atomic expert developers appears. We'll see :)
+>=20
+> Yes, I had such similar feeling that the problem was not yet blocked by
+> something that a video call would better help..
+>=20
+> For example, I still want to double check if that change would work for
+> your current use case, it will at least verify the thought, no matter if =
+we
+> want to use it or not.
+>=20
+> Thanks,
+>=20
 
-Sorry, I'm not yet familiar with the community call process. If this=20
-isn't for technical topic, please feel free to disregard my message.
+Thanks for your reply. Your change works for the virtio use case. While=20
+waiting for further comments, I've also gathered some additional=20
+information. Let's continue the discussion on the original thread.
 
-BTY, this patch isn't limited to virtio. The load/store functions are=20
-intended to handle various use cases across different architectures.=20
-This might also serve as a good example for Philippe's topic: "How to=20
-merge a series that touches many subsystems, with most reviews already=20
-done but a few maintainers still not responding."
-
-Thanks,
 --
 BillXiang
 
