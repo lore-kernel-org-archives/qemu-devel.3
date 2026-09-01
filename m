@@ -4,68 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A27C61DFD
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 01:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5761DC624CE
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Did-0006rw-J9; Mon, 31 Aug 2026 21:55:23 -0400
+	id 1x1Dpi-0007ww-Qp; Mon, 31 Aug 2026 22:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x1DiZ-0006rh-KG
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 21:55:19 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x1DiW-0005WM-J5
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 21:55:19 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxpvB8MJZqmzkHAA--.20217S3;
- Tue, 01 Sep 2026 09:55:08 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAx2c15MJZq65cYAA--.52001S2;
- Tue, 01 Sep 2026 09:55:07 +0800 (CST)
-Subject: Re: [PATCH V4] target/loongarch: clear the registers when cpu is reset
-To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
- Song Gao <gaosong@loongson.cn>
-References: <20260709111901.61597-1-lixianglai@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <3f7a0590-53f6-4248-485a-07199ae32acb@loongson.cn>
-Date: Tue, 1 Sep 2026 09:54:50 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x1Dpf-0007vC-Fx; Mon, 31 Aug 2026 22:02:39 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x1Dpc-00065p-Vj; Mon, 31 Aug 2026 22:02:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=edZJzqSKXEfLj2hea/WV2dRRuippXBwqV63G9HPsQD1imf5BhZJhDmSi+SRczSoUXC1iiSO7ieyWx0FTKPSPNqTFDfTNDLSaKpIjkJyAGy9FaYBWy1cORQOqbo1EUaSUv6mBLq7ObX8oWT8UK/hOdmFeSP0FbYHar7jJAwBbdIGNqU/V41fds6WpVlwFXmje0/hvn2QE/ucEEl+HfGkeaKE60Op4GlskjQzuEY2XcnwXEPNEFuVXW6gzZq5zaJw/7Zu38ioWRbSUjvjezq42vTnFWDCFV3+P3xKx9eYSr0llgh8Q0Ps8FS7AzMUkNt9C6AbktmXM9rCKyYTcltfUHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EmcIpQaNitcXsyREh/XnDqBUGD/8PQ7DQz5sFfRqUM4=;
+ b=xN9hmonTlcL7Gr3xHHfUsIFhJdVy2AvEfAVpifaHzvstszkf08X7PP0Hzc9NjZRRLnDR6x4UuV9ca6/QbtCyoEjEE4Cu+sJC51AAorht/agV1YMmDhMFQWGsZTB1shbdmDmZnpUAwIGYvDs0ZoNuMUZyjq42r2hU/2BZ0GA83tMJ/EVefiTwk9imd0cANjwUyvFdvfHSX3m7Ymah6cFxxexOWjWqP0y2OUBuiKZWdhFiX5XF7NAvp5u7HT6JjBcULD600KIVl99ceQFLQPzszZSaiF7W47qgb85mndl99/DutHU9mY3kFc3h1FQitboI/d5TTRSRYRq+FfMW/x+xLg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EmcIpQaNitcXsyREh/XnDqBUGD/8PQ7DQz5sFfRqUM4=;
+ b=OcVA1FEK/kBJWjzZZczaVjloTcY4t8xRvZ47WIXpRJ/MIZxoYZ+L4Pvek1QIftqRxqBRoZJkaKH22VKLHR13nxtxCbn87nMrvkfQQFZSqExb5jIp7kjbYvorxMYchqP7PY2Xnz8ec3o7u3rzzJyGhNItA9ICIzjOAtciQksRvm9wFFLnralfC28+2n9P/hN7v83VSmFubnq/29egxbaixP5NkbTo1OehAk/HFwt7dnok1SAvJotiXD29ECTyPQOAIpDNQh1ZFCjf+/KgYAFqSNnavnkmYbj8zJP9xUMQrVvJbV8HjVbx5gWTUjs9FJGQ86eE2EoLARqCwQhZsbY+XQ==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by SEYPR06MB5039.apcprd06.prod.outlook.com (2603:1096:101:53::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
+ 2026 02:02:25 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
+ 02:02:25 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open list:ARM
+ TCG CPUs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+Subject: RE: [PATCH v3 1/4] hw/usb/aspeed-udc: Add ASPEED UDC device controller
+Thread-Topic: [PATCH v3 1/4] hw/usb/aspeed-udc: Add ASPEED UDC device
+ controller
+Thread-Index: AQHdOSoZ2J5PzhCKA0WJEJsAkb27yra37auAgAELtkA=
+Date: Tue, 1 Sep 2026 02:02:25 +0000
+Message-ID: <TYZPR06MB498032FED60DF9F1416B7197FCA82@TYZPR06MB4980.apcprd06.prod.outlook.com>
+References: <20260831092125.1022201-1-jamin_lin@aspeedtech.com>
+ <20260831092125.1022201-2-jamin_lin@aspeedtech.com>
+ <ff5c148e-d187-4d97-aeb4-6ab5448f79e6@oss.qualcomm.com>
+In-Reply-To: <ff5c148e-d187-4d97-aeb4-6ab5448f79e6@oss.qualcomm.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SEYPR06MB5039:EE_
+x-ms-office365-filtering-correlation-id: 41c87406-9329-43f6-989d-08df07cd1193
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|376014|366016|921020|38070700021|6133799003|3023799007|10067099003|4143699003|5023799004|56012099006|22082099003|18002099003;
+x-microsoft-antispam-message-info: XYu3Hb8LRcIPgVaDlu9CbwaSvphCOdomCiHiznWP2Vvr369WkfgTmiDzpRyTh2YYfkWeGLspzqbr4g2o/qntjSHnnyGY99eMaPB9b9qEuWZoN2D+OV2AFAt+chetcrOhGXswYKVsRBBKp3HN8HStQNCJEFk7UTnhVsMwCLhhmYThxz+R4T5RFxJHLCNwsVfd4fnUytNOsMAV0vFjTIX5zyL8nZ0v1oFBr7ojt9xMqfKKXQqpFn+XChj4YrZu+FM/pZAUd9XA2Ho1iqA6a1kZegQQsEpFRdQbJNLTrhawvyfb8WuOXx/9fHGOsyt+8WmvlUptEq6s+1fmFK/QNcjXqk7XtiNOYTlCChuvyM5yaP+RgeH96VgEvfHrsX3Ks/Cq/NcVknGaeAIDzY9bK50byGKESBJG9JG9ZA6ocPs6hhWY96Vl8q2cOm0auChO6roJ484UcyRb8Q9pFGkJvFL2km4x3mwWVf/8OvyE6aM1TC5Y7G1CFcpv/Ch3cEPh2P69rKgyoKuP0XFc04i9sHz/+fMGVvvbUXusgqfqDb1t2EsW/TWvCL5tOlfXuxHoznp7KYukzOUUcyU4Xz3C1PzH0kU31Z8x6D7ie7XQMT3bFWUkwj1AXTvp0FDIeE4b4eGCzY4uXt8vdR4DVOsYgVca1IMpQYBg0eiEg9Z1Gt34stBwNYFSIBl8h4ZIH5oniSNir+Hc78jHMJgjI43LO2VdKG1ksWW1F6awe3GNLsJDWyg=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(921020)(38070700021)(6133799003)(3023799007)(10067099003)(4143699003)(5023799004)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YlpyUjF1NURwbThxTXFtVkt5WGhhS3NnaVpsWHJWN2ZIY3BNN081ZEsrbnF3?=
+ =?utf-8?B?UkdEdXFIaHU0MkVYYnNFTEdrNStINXRyTXowT0NjZmI1eGYzYWJxZm5qWmhM?=
+ =?utf-8?B?QWtabXE1V1greHZlRmxMMm9BR0liSkdKYzY2QTU4ZTVQRTVnZDdTbTBQTlpX?=
+ =?utf-8?B?Tm9ScDBEMDEwR0FzTE9saGk1bDF3ZTIzQkxNMFVnMEkra05ZbW9yMHVHaWxY?=
+ =?utf-8?B?UWxwclpSWkQwZmhPS1FGZzNmRjlWWmp2cnErb3hrc0RqZWJSWnlzTHRmYVl3?=
+ =?utf-8?B?V05JSmltY2hPcE52aXVUME1UWkYzVFphN3lEcE15TTE4REdlS2hXM0xkMnRT?=
+ =?utf-8?B?VlFOb0UrUVlRalI1MFJWcG11dGhiZEpjVTU1WlY2a3NRcWRDN21iUUxwWkEr?=
+ =?utf-8?B?dkZIWkpnT2swcU4xSkhpeHpEQ0Q2d2JKV0N0UUJFbEk1K2hPZG93UTdRN3cx?=
+ =?utf-8?B?d25CZjZITCsvVXdpTjMzMEtSZGFRRnd1NnhNRGxsSHJLZVlxWGx3MUJPc2F0?=
+ =?utf-8?B?ejNISkdRL3BjWmhQQ2dYbkFvek92aW5vbWdqaGU2YVluNWU5S0NNNzk5R1NF?=
+ =?utf-8?B?NmFySjdCZWNDMnl1djFjYXR1emVNN3BqS2pDUWF6dVl0ZDB1cEpHb0pURmVV?=
+ =?utf-8?B?cVVHN2pSdklwck5VSEhRUGRRbjFxNVNjaGVKL1ZNWDB0VllMTTRRZGFXTzVM?=
+ =?utf-8?B?UXU0VTB5dllubW5OQ3dDTW5PaUcvTzJGWmRSaUkwUURFckEyOWw5U3hDbnRq?=
+ =?utf-8?B?N2ZDMEsxa29McldkTkRyc3dUVGgrUDdKbUpmaTAwc2dPM2xRam5LQk0zSWN0?=
+ =?utf-8?B?MWVRZkdjcHR1Z3crelNPd2IyVHNWQ0c3OHEvcC9QcDMxcU5KK3E5czErQ0p2?=
+ =?utf-8?B?WGcyelpOT1I4RnJKQ2NTbkQ1cWplSEV3YzJlRHorLzFCNmRSbGJXM1ZnekJY?=
+ =?utf-8?B?cnlyeE1TdzV4NTlqM1BOTTBITjVBUnpFV2E3TnlwRmpYTjVxNkJrbHF0ZVg3?=
+ =?utf-8?B?K3lScWEwMHEyYUcxKzNvSzRmRzN4ekNpUk9sMVA2YnRZdjh6MmJqUFVaOGhE?=
+ =?utf-8?B?ZjYvcmczZDBQMWljeUFkNFNoaEtIb3BFdlU0K0ZiWWtCdE5hRks4RFdaQUZr?=
+ =?utf-8?B?MVJJQnhHMGJMMkhrdnlZeG1lQlZvM05PNmdzSlFpTmNKTXdEVHBiTmdtWVhS?=
+ =?utf-8?B?d2wvNzkwUHU5Ylp6dmprdmhBRUhMR2NFWDhwNGZaSndlWDI4WnVHSzdyL1pO?=
+ =?utf-8?B?eHRZSXpQZ1VTZVBGN3pBUHpVZDgyVjh3WUNnSGtWclZkaEQ1enB3azJNOHJI?=
+ =?utf-8?B?Z0crYTJzWE5hVm5JTTV2SG93UU1vSCs2N0ZqMFZYbW5oeVdybzdJWk5vOWpG?=
+ =?utf-8?B?cGwrM3FEN203Y1Zkc0RoaEd5Y1EzSG5vVXc5RjBtclROb0NOL1hKaVQvbWNi?=
+ =?utf-8?B?NWlnL0pTcUVHenZCSlV6VU5sYllKK0dJY2I3SzlKaURlaHhSaDEyNkY5MTBS?=
+ =?utf-8?B?TjRwMGE0S0lrRXJjU3JjQW9yZVhqSU55VEw2TE5US01ZZ08zdTBKNnJmVm9G?=
+ =?utf-8?B?ZDJ6NVhQZ1dKQk1pMXBKeWlSUTBkNmhRVWRYWFJyaGNIbzZ2QVp0eGFEUVdQ?=
+ =?utf-8?B?NHhid3QrbE1uWXN6VjFncVFBSm9iWE9NOXdWa1p3bkY2d0k4NnRKZXVsaFFs?=
+ =?utf-8?B?bTU3VFpJR3UyOVZlWFBsR1JQb25LUk5ESlRDRjU3TS9jU0Rzc3lESTJKb3lB?=
+ =?utf-8?B?Tm1OZzlBMW84SzFFU1NkT1N1NkgxT1RVTVpMajdGN2syVEJLVXRSaFc5a2FI?=
+ =?utf-8?B?UFhxZHJKdWVBOEVoKzY1SG5SZTlNMndYYllZOFhvOG9TZzduQ21FU2lmckpy?=
+ =?utf-8?B?UERKSEhBRzNsYXF1aHZ0ZEE5OS9uRG82SXc5dnJtUzEyaG5RcXF6eGt4NlZt?=
+ =?utf-8?B?T0hSSUprQjNFZjdoNzlCNTc4K0JLa2VPWEYxNUt3VDAxb01tcTA4WHVMSUhU?=
+ =?utf-8?B?QzZoRWJ6eXU2SjRKZ2lKMXNBZjllQXp4UnB5T0pPRFlic2hPc3ZNcmVCSnp6?=
+ =?utf-8?B?L0ViNm1YYkpNM092N1A2S01aKzFuRVdnTU84NTRjeG5Rb1FUcTJ5NzZ1UWxV?=
+ =?utf-8?B?Q1BXclM1YkhQZ3FDK3ZDNitrZFY4a3M3NmdhM3VSek1XS0I1djFXYzM1MkRk?=
+ =?utf-8?B?VVg5L095VmF3Z241N1VWd3ZYYnNmQmFUcnkzYWFrV0NhL0YwbFB6dSsvTTVH?=
+ =?utf-8?B?QXNHTjBXNE1DZXFtSDNsZnlsbkZrT2xHUGlVYUxmQzRYQmJtODY5YS9QUmd4?=
+ =?utf-8?B?NDlPcG5rdTZ6M0wwNUpOdmNoRmZqVTdyYlZJRDJSWFNTbjVJRmI2QT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <20260709111901.61597-1-lixianglai@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx2c15MJZq65cYAA--.52001S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Jw4Dtw1fXFWxZF48GrW8KrX_yoWxCw43pr
- 45KFZFkw45Kr4UCr45X398AFn8Zr18Gw4Iq3sxKr1FkrW5Xr9aqFW0qr4FkFZrA34fCr48
- XFnFgrZFqF4UA3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOF4_U
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.034,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Exchange-RoutingPolicyChecked: PEbJ8MF/gySq42kwRs3bYFzBsmbjUaxhfSXvSyA23utGAdR7GOR/NrKBlpKDBPZ+8kyfaachvxuQc3VUgysOjpNQ2u1PnlA4959ZtbkXcudYxf8ukV28nJDwMCqzKvENiuselaoJhiEZy5tHPhAFp5YblDJ9uel7rtgehkR0ecCEcKjcu9HxTQriRdpC25262/WVikN+ah0LJHuwCrgkZKqnCKva8VpJMcyxkVEo+GyxNPulqseg+uxXzuoypAS4JoCHmv0rt+GA9GOOOCNLEDUpXy2qGTx4GT0EefbMB2X2sDPUDiYlEv3fu1xH4jWTHXPSp9LB1wBGutSm36Ob3g==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41c87406-9329-43f6-989d-08df07cd1193
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Sep 2026 02:02:25.3871 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: URrQDYq4trjjf4YO74ILNC4kJjKDjA0H+HAEEeEHvXTd944iXSExrb9/Ha2IYXrSOWjEHrcTpBtCVn0v5tY0qcFyfAcmonmbyDi5UqitLuU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5039
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,187 +161,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Applied in loongarch-next
-
-On 2026/7/9 下午7:19, Xianglai Li wrote:
-> Use virt-manager to start a virtual machine, and then use the following
-> command to manually trigger the crash of the virtual machine:
-> echo c > /proc/sysrq-trigger
-> 
-> After the VM is abnormal, the ESTAT register has a certain probability of
-> remaining interrupted. Then the VM is forced to restart and the VM is
-> suspended in the interrupt handling function during startup.
-> 
-> In order to clear the remaining interrupt information in the ESTAT
-> register, we performed this operation during the reset process, while also
-> checking and optimizing the status of other CSR registers.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> ---
-> Cc: Bibo Mao <maobibo@loongson.cn>
-> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Cc: Song Gao <gaosong@loongson.cn>
-> 
-> changelog:
-> V3->V4:
-> Remove the field end_reset_fields from the CPUSysState structure, and
-> rearrange other fields as needed to avoid them being zeroed out.
-> 
-> V2->V3:
-> Remove or update outdated comments related to this patch.
-> 
-> V1->V2:
-> 1.Add a description of the issues related to this patch
-> 2.Replace the macro definition MAX_PERF_EVENTS with the variable
-> perf_event_num as the condition for the for loop.
-> 3.Rebase against the latest codebase.
-> 4.Refer to the usage of end_reset_fields on ARM and other architectures,
-> and modify the current implementation accordingly.
-> 
->   target/loongarch/cpu.c | 56 ++++++++----------------------------------
->   target/loongarch/cpu.h | 19 ++++++++------
->   2 files changed, 22 insertions(+), 53 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index fb03424ffa..11b7e374c3 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -601,11 +601,19 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->       LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
->       CPULoongArchState *env = cpu_env(cs);
->       CPUSysState *sys = env_sys(env);
-> +    uint64_t reg_prcfg2;
->   
->       if (lacc->parent_phases.hold) {
->           lacc->parent_phases.hold(obj, type);
->       }
->   
-> +    reg_prcfg2 = sys->CSR_PRCFG2;
-> +    /*
-> +     * Workaround for edk2-stable202408, CSR PGD register is set only if
-> +     * its value is equal to zero for boot cpu, it causes reboot issue.
-> +     */
-> +    memset(env, 0, offsetof(CPULoongArchState, end_reset_fields));
-> +
->   #ifdef CONFIG_TCG
->       env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
->   
-> @@ -620,47 +628,12 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->                              R_TLBENTRY_32_PPN_MASK;
->       }
->   #endif
-> -    env->fcsr0 = 0x0;
->   
-> -    int n;
-> -    /* Set csr registers value after reset, see the manual 6.4. */
-> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
-> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
->       sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
-> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
-> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
-> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
-> -
-> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
-> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
-> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
-> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
-> -
-> -    sys->CSR_MISC = 0;
-> -
-> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
-> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
-> -
-> -    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
-> -    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
->       sys->CSR_CPUID = cs->cpu_index;
-> -    sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
-> -    sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
-> -    sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
-> -    sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
->       sys->CSR_TID = cs->cpu_index;
-> -    /*
-> -     * Workaround for edk2-stable202408, CSR PGD register is set only if
-> -     * its value is equal to zero for boot cpu, it causes reboot issue.
-> -     *
-> -     * Here clear CSR registers relative with TLB.
-> -     */
-> -    sys->CSR_PGDH = 0;
-> -    sys->CSR_PGDL = 0;
-> -    sys->CSR_PWCH = 0;
-> -    sys->CSR_EENTRY = 0;
-> -    sys->CSR_TLBRENTRY = 0;
-> -    sys->CSR_MERRENTRY = 0;
-> +    sys->CSR_PRCFG2 = reg_prcfg2;
-> +
->       /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
->       if (sys->CSR_PRCFG2 == 0) {
->           sys->CSR_PRCFG2 = 0x3fffff000;
-> @@ -668,18 +641,9 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->       tlb_ps = ctz32(sys->CSR_PRCFG2);
->       sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
->       sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
-> -    for (n = 0; n < 4; n++) {
-> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV0, 0);
-> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV1, 0);
-> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV2, 0);
-> -        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV3, 0);
-> -    }
->   
->   #ifndef CONFIG_USER_ONLY
->       env->pc = 0x1c000000;
-> -#ifdef CONFIG_TCG
-> -    memset(env->tlb, 0, sizeof(env->tlb));
-> -#endif
->       if (kvm_enabled()) {
->           kvm_arch_reset_vcpu(cs);
->       }
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index ad30c73167..28760bdca4 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -390,16 +390,11 @@ typedef struct CPUArchState {
->       uint32_t fcsr0;
->       lbt_t  lbt;
->   
-> -    uint32_t cpucfg[21];
-> -    uint32_t pv_features;
-> -    uint64_t vendor_id;
-> -    uint64_t cpu_id;
->       CPUSysState sys_states[1];
->   
->       struct {
->           uint64_t guest_addr;
->       } stealtime;
-> -    uint32_t perf_event_num;
->   
->   #ifdef CONFIG_TCG
->       float_status fp_status;
-> @@ -409,12 +404,22 @@ typedef struct CPUArchState {
->       uint64_t llval_high; /* For 128-bit atomic SC.Q */
->       uint64_t llbit_scq; /* Potential LL.D+LD.D+SC.Q sequence in effect */
->       uint64_t hw_pte_mask; /* Mask of architecturally-defined (hardware) PTE bits. */
-> -#endif
-> +
->   #ifndef CONFIG_USER_ONLY
-> -#ifdef CONFIG_TCG
->       LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
-> +#endif
->   #endif
->   
-> +    /* Fields up to this point are cleared by a CPU reset */
-> +    struct {} end_reset_fields;
-> +
-> +    uint32_t cpucfg[21];
-> +    uint32_t pv_features;
-> +    uint64_t vendor_id;
-> +    uint64_t cpu_id;
-> +    uint32_t perf_event_num;
-> +
-> +#ifndef CONFIG_USER_ONLY
->       AddressSpace *address_space_iocsr;
->       uint32_t mp_state;
->   #endif
-> 
-
+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYzIDEvNF0gaHcvdXNiL2FzcGVlZC11ZGM6IEFkZCBBU1BF
+RUQgVURDIGRldmljZQ0KPiBjb250cm9sbGVyDQo+IA0KPiBPbiAzMS84LzI2IDExOjIxLCBKYW1p
+biBMaW4gd3JvdGU6DQo+ID4gVGhlIEFTVDI2MDAgaGFzIGEgVVNCIDIuMCBEZXZpY2UgQ29udHJv
+bGxlciAoVURDKSBhdCAweDFlNmEyMDAwIHdpdGgNCj4gPiBvbmUgY29udHJvbCBlbmRwb2ludCBh
+bmQgZm91ciBwcm9ncmFtbWFibGUgZW5kcG9pbnRzLg0KPiA+DQo+ID4gQWRkIHRoZSBjb250cm9s
+bGVyIGFzIGEgc3lzYnVzIChzeXN0ZW0pIGRldmljZTogdGhlIE1NSU8gcmVnaXN0ZXIgbWFwDQo+
+ID4gZGVzY3JpYmVkIHdpdGggdGhlIHJlZ2lzdGVyZmllbGRzIG1hY3JvcywgdGhlIGludGVycnVw
+dCBsaW5lIGFuZCB0aGUNCj4gPiBzb2Z0IHJlc2V0LiBUaGlzIGlzIG9ubHkgdGhlIHJlZ2lzdGVy
+L3N5c3RlbSBzaWRlLg0KPiA+DQo+ID4gTm90ZTogdGhpcyAiZGV2aWNlIGNvbnRyb2xsZXIiIGlz
+IHRoZSBzeXN0ZW0tYnVzIGRldmljZSAoVFlQRV9BU1BFRURfVURDKS4NCj4gPiBJdCBpcyBub3Qg
+dGhlIGdhZGdldCBVU0IgZGV2aWNlIChUWVBFX0FTUEVFRF9VRENfR0FER0VUKSB0aGF0IGEgaG9z
+dA0KPiA+IGNvbnRyb2xsZXIgZW51bWVyYXRlcywgd2hpY2ggaXMgYWRkZWQgaW4gdGhlIG5leHQg
+cGF0Y2guDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3Bl
+ZWR0ZWNoLmNvbT4NCj4gPiAtLS0NCj4gPiAgIGluY2x1ZGUvaHcvdXNiL2FzcGVlZC11ZGMuaCB8
+ICA0OSArKysrKysrKw0KPiA+ICAgaHcvdXNiL2FzcGVlZC11ZGMuYyAgICAgICAgIHwgMjM2DQo+
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiA+ICAgaHcvYXJtL0tjb25m
+aWcgICAgICAgICAgICAgIHwgICAxICsNCj4gPiAgIGh3L3VzYi9LY29uZmlnICAgICAgICAgICAg
+ICB8ICAgNCArDQo+ID4gICBody91c2IvbWVzb24uYnVpbGQgICAgICAgICAgfCAgIDEgKw0KPiA+
+ICAgaHcvdXNiL3RyYWNlLWV2ZW50cyAgICAgICAgIHwgICA3ICsrDQo+ID4gICA2IGZpbGVzIGNo
+YW5nZWQsIDI5OCBpbnNlcnRpb25zKCspDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaW5jbHVk
+ZS9ody91c2IvYXNwZWVkLXVkYy5oDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvdXNiL2Fz
+cGVlZC11ZGMuYw0KPiANCj4gDQo+ID4gZGlmZiAtLWdpdCBhL2h3L3VzYi9LY29uZmlnIGIvaHcv
+dXNiL0tjb25maWcgaW5kZXgNCj4gPiBkZTk1Njg2NzIwLi5lOGMwMGY4MTNhIDEwMDY0NA0KPiA+
+IC0tLSBhL2h3L3VzYi9LY29uZmlnDQo+ID4gKysrIGIvaHcvdXNiL0tjb25maWcNCj4gPiBAQCAt
+MTQ2LDMgKzE0Niw3IEBAIGNvbmZpZyBYTE5YX1VTQl9TVUJTWVMNCj4gPiAgIGNvbmZpZyBVU0Jf
+Q0hJUElERUENCj4gPiAgICAgICBib29sDQo+ID4gICAgICAgc2VsZWN0IFVTQl9FSENJX1NZU0JV
+Uw0KPiA+ICsNCj4gPiArY29uZmlnIEFTUEVFRF9VREMNCj4gPiArICAgIGJvb2wNCj4gPiArICAg
+IHNlbGVjdCBVU0INCj4gTm90aGluZyBkZXBlbmRzIG9uIFVTQiBzbyBmYXIsIHNvICJzZWxlY3Qg
+VVNCIiB3b3VsZCBiZSBiZXR0ZXIgYWRkZWQgaW4gdGhlDQo+IGZvbGxvd2luZyBwYXRjaC4gT3Ro
+ZXJ3aXNlIFFPTS9RRGV2Og0KPiANClRoYW5rcyBmb3IgdGhlIHJldmlldyBhbmQgc3VnZ2VzdGlv
+bi4NCldpbGwgc2VuZCB2NA0KSmFtaW4NCj4gUmV2aWV3ZWQtYnk6IFBoaWxpcHBlIE1hdGhpZXUt
+RGF1ZMOpIDxwaGlsbWRAb3NzLnF1YWxjb21tLmNvbT4NCg0K
 
