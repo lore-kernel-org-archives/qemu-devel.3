@@ -4,112 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15DA8C624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67278C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1OnV-0004m6-Lu; Tue, 01 Sep 2026 09:45:09 -0400
+	id 1x1Oqu-0005bf-H6; Tue, 01 Sep 2026 09:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1OnR-0004h0-OU
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:45:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1OnO-0006qf-0F
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:45:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788270301;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fTtHrz1ZOvF8OXqosUvZDp0LO7c88jUZIChV6ftdiSk=;
- b=fg+Gzzay6OgMtzp5UtdIZ9PBxqkG7uZ1UpfvZjB8W+Wy8fsH1dfZwfRRc+uYSo/ETeOt8Z
- Gx6yEjnKW/nHxNqqSS65V5l8/FASgXDe12DMPnusR9NxML3P6eOMi+EgDNWAWsI6u3WRJV
- VAnUa4altDDssP3CWZc72h5fkm0TNhQ=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-362-imCeH3FaMr-Q7xAKJPav5g-1; Tue, 01 Sept 2026 09:44:59 -0400
-X-MC-Unique: imCeH3FaMr-Q7xAKJPav5g-1
-X-Mimecast-MFC-AGG-ID: imCeH3FaMr-Q7xAKJPav5g_1788270298
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-c213d5fb55aso485514966b.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:44:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1x1Oqn-0005am-Rq
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:48:35 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1x1Oqk-0008A0-8M
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:48:33 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6a5f95a879cso12534a12.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788270298; x=1788875098; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fTtHrz1ZOvF8OXqosUvZDp0LO7c88jUZIChV6ftdiSk=;
- b=NWfVJ0M/x3ff0OnoTyfNByeV7wd2ZCjcTzHFXck6bXYnIS6pvN4cXkfoZGb/DvzXj7
- 2TV1KrOFD9eQp/TY7CzCCUG0SDInMP1ZXf6CKUjny6EjxC/jUbUrXCz8J8/2D6omSacu
- AFneXWZQUlsqxEw3bhy8roL3Uw3fTEp3wrcBnTEuXCulbasFtpHl5+4SvFNpKRqHsm70
- IXpmJb2SkBBM3nZOHOM28WpguNchk25kq8bFbegmtgaDzUtSvuF+b/zCy9l0MgLtlyKn
- gx7rE6y/k4e8tRL8wMZzqu1CHwX1aC6aCVxh79qdm6WdplZF+SYmBbQoXdQ2OxBwcTnN
- tNDQ==
+ d=google.com; s=20251104; t=1788270505; x=1788875305; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=K63IKdxpRkj+wSeMXuT09ZZ6TDwRyJQNycnmcr30AI0=;
+ b=A8KuVJ0ixJMCPC2Fk3sBTt6L+n9dw/46U6hc73eh9ijm6aWwWjWYop1F/g7h5KuR2i
+ 3Kgjjvd2r8U+Sv3xYi7j7zv13CFIm5nuM8B551eybPPOlBwh0hZr0AHxVShoR8BoEksx
+ SMGXDVZHCtUrZTBs1hunNtb+M9AI0WnIIN0DqPj4MwNIoylPSQ0OGCvEFU8J0uZGkFNa
+ C+uYiLhOJzlQapGuRJKQxA76ivgkgBrvH9LLeQTP0YLGUCXXAsyW9GPFvglrhKT0BlYi
+ LNk9vomLFI1SZS80vgq4fU80kYak+F8GRXZXYLrEFhB/0v6ZUMdeYrHF4oH4tDpCwcYG
+ vupQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788270298; x=1788875098;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fTtHrz1ZOvF8OXqosUvZDp0LO7c88jUZIChV6ftdiSk=;
- b=aF8gs/m7o0MmCJnv/Fj1xJk6c5a+e5be8Rf6GwNx3t5vcM5/ZggPmQEbUgfKal5IpF
- s+L8bsnFMStLQjizb0yywpHcIKcvt0TFmZG2Z1sIEz1mhCJJbXqfoSq/6hBTwne5Hkn3
- 0LKH6gAj15kG4BQLqBk0ivhToyA/stdBS9SO7SrktP7I/rTG5ziXKSdNVGAwBczH3jbi
- 9fYB219mRwGstcj5YNy2GWE/kP2WdFkQIomQKdCb58WRMXZwBjTDY1Psaey6xo1cnUig
- cXQxk7P5ijBd+RPIr1E9M+gPmje04V8sNDMYkrSxhs2cG7ecs6obK+SwKKQ51KAj5iVq
- DBuA==
+ d=1e100.net; s=20251104; t=1788270505; x=1788875305;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=K63IKdxpRkj+wSeMXuT09ZZ6TDwRyJQNycnmcr30AI0=;
+ b=VGlgSJlIXwiZuQ9gjgNuSuicqy/SOACBZ303MFmc5mrfIR0ILZiIDdr17OTLkIA6gM
+ EJP5Jahx0140tzpxSh4oT3j9ydnFRmsiUPd9Ag8Xfsn4xrmxHotDsrswo3mzYu03qN9L
+ OIKEvHcPJFACpZ4Nt/BX+R38KzKoXCky1C/nzQIEy2NVzEbu8O+7sA5i0xebaX3QzbPN
+ dSKvC1y2h97aQZd9K0xeUY8JLI4hJTRW70H1moPNZklQw8VjAng/F9NQ5UiWQqjrE3dk
+ IaY4Si6NOHmT0GGLckSmr45nb1rFGiLIlAxNE/WNZdZbV1mM3ZnQgZh6iYC6Ydc9czfB
+ ZDaA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpFwTZJTMCdFr+F9mNk106jVEoZ8dZZY6loRW8ZoHSYFA/EQ0t35BLvyD6diKd4xVJe4HD5af+qeQxe@nongnu.org
-X-Gm-Message-State: AFuF++mYZ41lJtOqSAUd2CZCjYPLu5LubTuYmaDmYcDJRFzObWo63lT+
- s4TOsIGT8RgA2j4LUkoA4ytERQ59HJndwPpXdlYRbcpFY7ZRDwnSOTDgw5BmmIxNfZrEFX2xM5g
- jlR5nJ1e2jdJAwRV9mXnftE2oePqJHzQjFZ4MsbPWm7L1+P6xm2iRo3pq
-X-Gm-Gg: AR+sD125idycxxsRytO8y4yGQ4rydMxPrZtIwDPF17VPceWgEOrlkCAbOhHxTwlJQGC
- u243g5tP6V/B3sDG4Z2swr1a8XGBlwJI4WOW9wNlyWHw7Li6+kLcpspTm5xtb4dHpPY+iXL6DwB
- U89sNTw7Xy0Eti0AUAoGu6flK+Y/sg0iHIBoYyY3EZ5YHmw3S5DJKJYCGjP8oR1MIqmDXiUL3g/
- MauTYn2wrum/4MdBwRint7EslVh11uAiwZXYV89/ZOnZKvDSIl/vA1yx6Hgw3OFw/f5cXx/uEEr
- nvHfCjXZZoDxaUypqdSh4qAhEnN+Aik0gzgdYAZIxPei2O1b7tmLYzZa4VPWtLcowtdr1ND6v9O
- dAwbaaNFf5Y1r3xY7TJMjIj8=
-X-Received: by 2002:a17:907:3ccc:b0:c25:2cbe:edeb with SMTP id
- a640c23a62f3a-c255741a624mr2360394866b.21.1788270297689; 
- Tue, 01 Sep 2026 06:44:57 -0700 (PDT)
-X-Received: by 2002:a17:907:3ccc:b0:c25:2cbe:edeb with SMTP id
- a640c23a62f3a-c255741a624mr2360387566b.21.1788270297000; 
- Tue, 01 Sep 2026 06:44:57 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255f1b2049sm611249566b.36.2026.09.01.06.44.55
+ AKwUvBxSAxWk9yNbKheEb+VrgLpW0oOYd55MGfNHBcL1vMpmJJ8idCrAqnZrR1WE0uEbcXaq0rgYIZcpj7My@nongnu.org
+X-Gm-Message-State: AFuF++ksNUELjeU6Kshh8Eg8XUgfBoysbnyrzEkKJUQosWZEPFz6MMm5
+ sfCf9cDGKTJDc8YIA6lt3rBZ5JrTgZAPvTNvkKHK95Ds92v21jpo8IaQzmWer7AN5g==
+X-Gm-Gg: AYBFou1FYsZFyHsfL7EoBw1MTA6qmWiXkmhthlWXr+5cQe8dqUthOOsZxoNLQf2CX5x
+ TSIAS7blJmokMZqcw8HyDhsVUgDyS+2esgRILIugvUYztVcRCw88yjAfZyNYH6PFdHpw7SlmrQ0
+ ZunbCCxjbnbUwr5d2g3UKCUbwzuY2vZllg87nZd+sbsgXtxYEaHoaRZtFQ7h6o89oZLS4lX+XIn
+ lPBeVFhFIFlGCQ4xSfLYBejf/DqhyP0r0EC3y84wAMHYetmbFkl3mhMpXcscFOU3h48bujXERF8
+ MZFVeK+/DYsvCNk0f3BMEvuC5h7TGGFbFxGGfpxkspfA3CimWfhNF3oFnbBrk5OpeJTy3Ygg7Nz
+ lmkvi+3hm+PXY2xGPOvv+ZG7aSxNaZDKbNDsV7ZmKmAXQt20rCO4ovtREGjCemMsHEuD8qfKm7i
+ DV/GJA4bhKtLQyxiV/y0C8JMSnUsIO3Tl9LFO/zNB3VP9c1ZIO2skY7G3fOVMSkQ+RZJFnblDnk
+ N4xFdNOpc4YyDBDdY7kW5jLgfjlAg==
+X-Received: by 2002:aa7:c417:0:b0:6a6:32f6:2841 with SMTP id
+ 4fb4d7f45d1cf-6a66a293d1cmr52768a12.14.1788270504403; 
+ Tue, 01 Sep 2026 06:48:24 -0700 (PDT)
+Received: from google.com (250.192.189.35.bc.googleusercontent.com.
+ [35.189.192.250]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c255ee0b330sm592472866b.1.2026.09.01.06.48.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:44:56 -0700 (PDT)
-Date: Tue, 1 Sep 2026 09:44:53 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel Paziyski <danielpaziyski@gmail.com>
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- qemu-stable@nongnu.org, Jesper Devantier <foss@defmacro.it>,
- "open list:nvme" <qemu-block@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 3/3] pcie_sriov: register user created virtual function
- before realizing it
-Message-ID: <20260901094419-mutt-send-email-mst@kernel.org>
-References: <20260805124519.30054-1-danielpaziyski@gmail.com>
- <20260805124519.30054-4-danielpaziyski@gmail.com>
- <20260901071543-mutt-send-email-mst@kernel.org>
- <CANukVxvZMPp_1ZkZzmrE1pSAryW7DWpBOOWV5=QUmnQf3LH48Q@mail.gmail.com>
+ Tue, 01 Sep 2026 06:48:23 -0700 (PDT)
+Date: Tue, 1 Sep 2026 13:48:19 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+Subject: Re: [RFC v5 03/28] hw/arm/smmuv3: Thread SEC_SID through helper APIs
+Message-ID: <apbXozA1-F-FniKI@google.com>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162410.2805113-3-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CANukVxvZMPp_1ZkZzmrE1pSAryW7DWpBOOWV5=QUmnQf3LH48Q@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260813162410.2805113-3-tangtao1634@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=smostafa@google.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,185 +112,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 01, 2026 at 03:24:08PM +0200, Daniel Paziyski wrote:
-> On Tue, 1 Sept 2026 at 13:19, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Wed, Aug 05, 2026 at 02:45:18PM +0200, Daniel Paziyski wrote:
-> >> There are two ways of creating virtual functions: by using the sriov-pf device
-> >> parameter (this way, creating a user created VF and binding it to a PF), or
-> >> by using a device specific parameter, where the device manually creates a given
-> >> amount of VFs.
-> >>
-> >> When a PCI device is realized, the device specific realize function is called
-> >> first, and then the pcie_sriov_register_device function is called, which checks
-> >> whether the device that has been created is a user created VF, and if it is the
-> >> case and the device allows this kind of VFs, it inserts it into a hashmap, with
-> >> the key being the ID of the PF, and the items being arrays of VFs.
-> >>
-> >> User created VFs are instantiated independently, and later, when the PF calls
-> >> pcie_sriov_pf_init_from_user_created_vfs, it discovers its VFs from the hashmap
-> >> mentioned previously, and sets up in their PCIDevice.ex.sriov_pf structure
-> >> the pointer to the PF. This means that, during realization, VFs have no access
-> >> to the PF.
-> >>
-> >> Device created VFs are instantiated during or after PF realization using the
-> >> pcie_sriov_pf_init function, which sets up for the VFs the pointer to the PF
-> >> before their realization, so when they're realized, they can access the PF
-> >> with no issues.
-> >>
-> >> The problem here is that pcie_sriov_register_device is called after the
-> >> realization, and not before. This means that when a user created VF is created
-> >> for a device which does not support user created VFs, but supports device
-> >> created VFs, the realize function will notice that a VF is being created, and
-> >> may try to access the PF, causing a null pointer dereference fault.
-> >>
-> >> Fix this by placing the user created VF check and registering before the
-> >> realization. This way, incorrectly created user created VFs will be noticed,
-> >> and device creation will be aborted.
-> >>
-> >> Additionally, remove from the pcie_sriov_register_device function the top
-> >> check. It seems that this check is done to error out if the PF failed for some
-> >> reason to initialize its list of user created VFs. However, in such situations,
-> >> the pcie_sriov_pf_init_from_user_created_vfs function will error during
-> >> realization, and it will be caught before the check is done at all. Moreover,
-> >> since now pcie_sriov_register_device is called before realization, the check
-> >> will always fail for PFs with user created VFs, because the list will be
-> >> populated during realization.
-> >>
-> >> The rest of the function though, correctly errors out if a user created VF
-> >> is created for an unsupported device type, if a VF is created for a non-PCIe
-> >> device, or if the PF is already instantiated, with now the advantage being
-> >> that the check is done before the VF instantiation.
-> >>
-> >> When instantiating a user created VF for a NVME controller:
-> >>
-> >> Command line:
-> >>
-> >>     qemu-system-x86_64 -device nvme-subsys,id=subsys0 \
-> >>     -device nvme,id=vctrl0,sriov-pf=ctrl0,subsys=subsys0 \
-> >>     -device nvme,id=ctrl0,subsys=subsys0,serial=s
-> >>
-> >> ASAN splat:
-> >>
-> >> ../hw/nvme/ctrl.c:9613:28: runtime error: member access within null pointer of type 'struct NvmeCtrl'
-> >> AddressSanitizer:DEADLYSIGNAL
-> >> =================================================================
-> >> ==91050==ERROR: AddressSanitizer: SEGV on unknown address 0x000000001cf0 (pc 0x7f79a8573dcd bp 0x7ffd622c1bc0 sp 0x7ffd622c1b68 T0)
-> >> ==91050==The signal is caused by a READ memory access.
-> >>     #0 0x7f79a8573dcd  (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
-> >>     #1 0x5644c6c0266e in nvme_realize ../hw/nvme/ctrl.c:9613
-> >>     #2 0x5644c6c67213 in pci_qdev_realize ../hw/pci/pci.c:2316
-> >>     #3 0x5644c7a2cfc1 in device_set_realized ../hw/core/qdev.c:514
-> >>     #4 0x5644c7a4f767 in property_set_bool ../qom/object.c:2484
-> >>     #5 0x5644c7a48d0b in object_property_set ../qom/object.c:1548
-> >>     #6 0x5644c7a568a5 in object_property_set_qobject ../qom/qom-qobject.c:28
-> >>     #7 0x5644c7a49385 in object_property_set_bool ../qom/object.c:1618
-> >>     #8 0x5644c7a2aeb0 in qdev_realize ../hw/core/qdev.c:277
-> >>     #9 0x5644c735f29f in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
-> >>     #10 0x5644c735f3ab in qdev_device_add ../system/qdev-monitor.c:758
-> >>     #11 0x5644c72b1901 in device_init_func ../system/vl.c:1217
-> >>     #12 0x5644c829d4a3 in qemu_opts_foreach ../util/qemu-option.c:1148
-> >>     #13 0x5644c72bc33e in qemu_create_cli_devices ../system/vl.c:2762
-> >>     #14 0x5644c72bcaa1 in qmp_x_exit_preconfig ../system/vl.c:2822
-> >>     #15 0x5644c72c3241 in qemu_init ../system/vl.c:3862
-> >>     #16 0x5644c801abf8 in main ../system/main.c:71
-> >>     #17 0x7f79a8427780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
-> >>     #18 0x7f79a84278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
-> >>     #19 0x5644c5f0a1f4 in _start (BuildId: 8483f952216d9e345c3744300d0aefa38feb50d7)
-> >>
-> >> ==91050==Register values:
-> >> rax = 0x00007e49988640f0  rbx = 0x00007e49988640f0  rcx = 0x00000fc9b3104828  rdx = 0x0000000000000058
-> >> rdi = 0x00007e49988640f0  rsi = 0x0000000000001cf0  rbp = 0x00007ffd622c1bc0  rsp = 0x00007ffd622c1b68
-> >>  r8 = 0x00000fc9b3104829   r9 = 0x00000fc9b3104828  r10 = 0x00000fc9b310481e  r11 = 0x00000fc9b310481e
-> >> r12 = 0x0000000000001cf0  r13 = 0x00000f6f32e78578  r14 = 0x00000000ffffffff  r15 = 0x00007ffd622c1c10
-> >> AddressSanitizer can not provide additional info.
-> >> SUMMARY: AddressSanitizer: SEGV (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
-> >> ==91050==ABORTING
-> >>
-> >> Cc: qemu-stable@nongnu.org
-> >> Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
-> >> Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
-> >> ---
-> >>  hw/pci/pci.c        | 11 ++++++-----
-> >>  hw/pci/pcie_sriov.c |  6 ------
-> >>  2 files changed, 6 insertions(+), 11 deletions(-)
-> >>
-> >> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> >> index d3191609e2..a5b4482bb6 100644
-> >> --- a/hw/pci/pci.c
-> >> +++ b/hw/pci/pci.c
-> >> @@ -2312,20 +2312,21 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
-> >>      if (pci_dev == NULL)
-> >>          return;
-> >>
-> >> +    if (!pcie_sriov_register_device(pci_dev, errp)) {
-> >> +        do_pci_unregister_device(pci_dev);
-> >
-> >
-> > This skips acpi-index rollback which pci_qdev_unrealize currently does.
-> > Needs generic PCI cleanup.
+On Fri, Aug 14, 2026 at 12:24:08AM +0800, Tao Tang wrote:
+> Extend the register and queue helper routines to accept an explicit
+> SEC_SID argument instead of hard-coding the non-secure bank.
 > 
-> I see. pci_qdev_unrealize unregisters the device's acpi-index after calling
-> do_pci_unregister_device. What do you think if I moved the snippet for
-> unregistering the acpi-index to a new function, and then call it in
-> do_pci_unregister_device?
+> All existing callers are updated to pass SMMU_SEC_SID_NS, so the
+> behavior remains identical. This prepares the code for handling
+> additional security state banks in the future. So Non-secure state
+> is the only state bank supported for now.
 > 
-> Moreover, this would fix the fact that in do_pci_register_device and outside of
-> it the acpi-index is not released in case of failure, since this new function
-> could then be called if necessary, if do_pci_unregister_device is not called.
-> 
-> Additionally, while I'm at it, why don't I move pcie_sriov_unregister_device to
-> do_pci_unregister_device? This way, I avoid calling it explicitly in
-> pci_qdev_realize, which is necessary now because user created VFs are registered
-> before realization.
-> 
-> Regards,
-> Daniel
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Hard to say like that pls send a patch.
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
-> >
-> >
-> >> +        return;
-> >> +    }
-> >> +
-> >>      if (pc->realize) {
-> >>          pc->realize(pci_dev, &local_err);
-> >>          if (local_err) {
-> >>              error_propagate(errp, local_err);
-> >> +            pcie_sriov_unregister_device(pci_dev);
-> >>              do_pci_unregister_device(pci_dev);
-> >>              return;
-> >>          }
-> >>      }
-> >>
-> >> -    if (!pcie_sriov_register_device(pci_dev, errp)) {
-> >> -        pci_qdev_unrealize(DEVICE(pci_dev));
-> >> -        return;
-> >> -    }
-> >> -
-> >>      /*
-> >>       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
-> >>       * associate only Device 0 with the device attached to the bus
-> >> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> >> index c41ac95bee..69930c7b8c 100644
-> >> --- a/hw/pci/pcie_sriov.c
-> >> +++ b/hw/pci/pcie_sriov.c
-> >> @@ -357,12 +357,6 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-> >>
-> >>  bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
-> >>  {
-> >> -    if (!dev->exp.sriov_pf.vf && dev->qdev.id &&
-> >> -        pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
-> >> -        error_setg(errp, "attaching user-created SR-IOV VF unsupported");
-> >> -        return false;
-> >> -    }
-> >> -
-> >>      if (dev->sriov_pf) {
-> >>          PCIDevice *pci_pf;
-> >>          GPtrArray *pf;
-> >> --
-> >> 2.55.0
-> >
+Thanks,
+Mostafa
 
+> Link: https://lore.kernel.org/qemu-devel/3097d58e-3793-4434-8beb-2e4f4c52f772@redhat.com/
+> ---
+>  hw/arm/smmuv3-accel.c    |  5 +++--
+>  hw/arm/smmuv3-internal.h | 21 +++++++++------------
+>  hw/arm/smmuv3.c          | 15 ++++++++-------
+>  3 files changed, 20 insertions(+), 21 deletions(-)
+> 
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 3ff3da66acd..fa079c8acea 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -294,6 +294,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+>      SMMUS1Hwpt *s1_hwpt = NULL;
+>      const char *type;
+>      STE ste;
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>  
+>      if (!accel || !accel->viommu) {
+>          return true;
+> @@ -323,7 +324,7 @@ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+>       * attach/alloc fails, since the Guest–Host SID mapping stays
+>       * valid as long as the device is behind the accelerated SMMUv3.
+>       */
+> -    if (!smmu_enabled(s)) {
+> +    if (!smmu_enabled(s, sec_sid)) {
+>          hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
+>      } else {
+>          config = STE_CONFIG(&ste);
+> @@ -558,7 +559,7 @@ bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
+>          return true;
+>      }
+>  
+> -    if (!smmuv3_eventq_enabled(s)) {
+> +    if (!smmuv3_eventq_enabled(s, sec_sid)) {
+>          return true;
+>      }
+>  
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index 10154ca161d..a88743ba9cd 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -39,9 +39,8 @@ typedef enum SMMUTranslationClass {
+>      SMMU_CLASS_IN,
+>  } SMMUTranslationClass;
+>  
+> -static inline int smmu_enabled(SMMUv3State *s)
+> +static inline int smmu_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
+>  {
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      return FIELD_EX32(bank->cr[0], CR0, SMMUEN);
+>  }
+> @@ -69,16 +68,16 @@ static inline uint32_t smmuv3_idreg(int regoffset)
+>      return smmuv3_ids[regoffset / 4];
+>  }
+>  
+> -static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s)
+> +static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s,
+> +                                             SMMUSecSID sec_sid)
+>  {
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+>  }
+>  
+> -static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
+> +static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s,
+> +                                             SMMUSecSID sec_sid)
+>  {
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
+>  }
+> @@ -123,23 +122,21 @@ static inline void queue_cons_incr(SMMUQueue *q)
+>      q->cons = deposit32(q->cons, 0, q->log2size + 1, q->cons + 1);
+>  }
+>  
+> -static inline bool smmuv3_cmdq_enabled(SMMUv3State *s)
+> +static inline bool smmuv3_cmdq_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
+>  {
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      return FIELD_EX32(bank->cr[0], CR0, CMDQEN);
+>  }
+>  
+> -static inline bool smmuv3_eventq_enabled(SMMUv3State *s)
+> +static inline bool smmuv3_eventq_enabled(SMMUv3State *s, SMMUSecSID sec_sid)
+>  {
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      return FIELD_EX32(bank->cr[0], CR0, EVENTQEN);
+>  }
+>  
+> -static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type)
+> +static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type,
+> +                                       SMMUSecSID sec_sid)
+>  {
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      bank->cmdq.cons = FIELD_DP32(bank->cmdq.cons, CMDQ_CONS, ERR, err_type);
+>  }
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index d3baae8a32a..51e970d710a 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -60,7 +60,7 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+>  
+>      switch (irq) {
+>      case SMMU_IRQ_EVTQ:
+> -        pulse = smmuv3_eventq_irq_enabled(s);
+> +        pulse = smmuv3_eventq_irq_enabled(s, sec_sid);
+>          break;
+>      case SMMU_IRQ_PRIQ:
+>          qemu_log_mask(LOG_UNIMP, "PRI not yet supported\n");
+> @@ -80,7 +80,7 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+>          bank->gerror ^= new_gerrors;
+>          trace_smmuv3_write_gerror(new_gerrors, bank->gerror);
+>  
+> -        pulse = smmuv3_gerror_irq_enabled(s);
+> +        pulse = smmuv3_gerror_irq_enabled(s, sec_sid);
+>          break;
+>      }
+>      }
+> @@ -156,7 +156,7 @@ static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
+>      SMMUQueue *q = &bank->eventq;
+>      MemTxResult r;
+>  
+> -    if (!smmuv3_eventq_enabled(s)) {
+> +    if (!smmuv3_eventq_enabled(s, sec_sid)) {
+>          return MEMTX_ERROR;
+>      }
+>  
+> @@ -191,8 +191,9 @@ void smmuv3_propagate_event(SMMUv3State *s, Evt *evt)
+>  void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
+>  {
+>      Evt evt = {};
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>  
+> -    if (!smmuv3_eventq_enabled(s)) {
+> +    if (!smmuv3_eventq_enabled(s, sec_sid)) {
+>          return;
+>      }
+>  
+> @@ -1127,7 +1128,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>  
+>      qemu_mutex_lock(&s->mutex);
+>  
+> -    if (!smmu_enabled(s)) {
+> +    if (!smmu_enabled(s, sec_sid)) {
+>          if (FIELD_EX32(bank->gbpa, GBPA, ABORT)) {
+>              status = SMMU_TRANS_ABORT;
+>          } else {
+> @@ -1357,7 +1358,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+>      SMMUQueue *q = &bank->cmdq;
+>      SMMUCommandType type = 0;
+>  
+> -    if (!smmuv3_cmdq_enabled(s)) {
+> +    if (!smmuv3_cmdq_enabled(s, sec_sid)) {
+>          return 0;
+>      }
+>      /*
+> @@ -1617,7 +1618,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+>  
+>      if (cmd_error) {
+>          trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
+> -        smmu_write_cmdq_err(s, cmd_error);
+> +        smmu_write_cmdq_err(s, cmd_error, sec_sid);
+>          smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
+>      }
+>  
+> -- 
+> 2.34.1
+> 
 
