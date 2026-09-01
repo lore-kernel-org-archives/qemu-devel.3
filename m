@@ -4,93 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0EA8C624CF
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 11:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C7EC624CF
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 11:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1MJH-00062S-Tl; Tue, 01 Sep 2026 07:05:47 -0400
+	id 1x1MJY-0006Ah-Tq; Tue, 01 Sep 2026 07:06:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x1MJG-00061q-I2
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 07:05:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x1MJE-0002Sx-CE
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 07:05:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788260743;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wET2hheVOXu2dloDjPLhB0/+IUvdyjY2j1T9fRYhgpI=;
- b=g7l0Wzu8cX62Yf+2WnpgcGBB7sxJSKKIdqB6fS8vIQO7almGn8CwvGEsPRlNb6oYnXnDaV
- 9m6dR0A3c9aWl1PrUz3VfitjP+u3U8NHFC6YvSkA7KH5oNj/1L6bJt3XR8/lp2l+a2NE96
- CnlxJpnh7oO62G2VxGyFIcpZ1rzK3Rw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-xOWqWDWeMjqMYUd6-o2HBw-1; Tue,
- 01 Sept 2026 07:05:39 -0400
-X-MC-Unique: xOWqWDWeMjqMYUd6-o2HBw-1
-X-Mimecast-MFC-AGG-ID: xOWqWDWeMjqMYUd6-o2HBw_1788260736
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D8C41845537; Tue,  1 Sep 2026 11:05:34 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE47A1800257; Tue,  1 Sep 2026 11:05:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3A38021E682B; Tue, 01 Sep 2026 13:05:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1MJX-00067y-13
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 07:06:03 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1MJV-0002Vr-98
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 07:06:02 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-498028b3d5eso53138815e9.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 04:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788260759; x=1788865559; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=lUgAUhd2rXlgrh/xTe4gpmKro7R7g5bjnf8JPhRAS0w=;
+ b=lhONVxImyMkoDuS5OmU4UrbnBIkXezDvVa1gpU9zCS8ZYmBnTOEnnHxBwFFkrCpMpy
+ RMInTiZPnsFap8zBh67GasWqrZtveAwdmf++O5nAqgGP0znNmEdD3KBgN5JWGidYWrj1
+ tnfMmHu+doheKgmVFfZCB9Bu2T2hhglDJWCo3h9F9XO/eun/BLBa8mhAw06j4DkfDbmX
+ u+hUkKOJaUJmTzkVekA8YNxopkMPJuVh0fxq/1udk8gfvviIPrWXOUr9dGuQnxp9Kj+G
+ gpvafwPEw6i1SuyMbPXeksXyfSfPrkqtQyNv6NvPpsTvoMApKC7sZpdqTcj0dnuG1HsS
+ x9CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788260759; x=1788865559;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=lUgAUhd2rXlgrh/xTe4gpmKro7R7g5bjnf8JPhRAS0w=;
+ b=YyIWdVSoeZm8u5QLBSUMFtlmebXRGtSX5CSJnWAyOoR/WogNBpZ7XzBatDUO6SxNBg
+ Q3R/EL9D+j3CN92lmcw9rku1XJd09XYeXjqp0KD7b0PwppJd251wLFMznBYAsoj/QQok
+ XdB5+CSzOHahVRI27itOxtVADzkif1yKguywwxv7YdtB0g7bNXv6OxMlh9EnZTZxgXfU
+ gglmXq81uVpg0AnLTstzMgG5FzGKZyO4cjZK0ykyf6BtVZzIBJ6yv2a0R2LsNh+Mzp2+
+ QsWPv2oidqMEzE1P5kWdGehP7gcUiefP09NCOtQ56xE6u+irx5y8y+ZeaVECpAniAC2W
+ hkAw==
+X-Gm-Message-State: AFuF++mtFCZBvqVmhQdriZc96vJAIq+ZSWpD1n6qc1ow16bs/dS1uwKX
+ rNmOzC3qkUCb6jub21RaI4mLXB4uqIadWVJGLCQaXeZJxTreB6o7GM3j63RH0pUqivw=
+X-Gm-Gg: AR+sD11WhvMUpo8ylhugnjx867jJ+VuERofYT+IRHqPRPfGVMo0tf4v9uut2mzXigqX
+ ZIe/5Of+OzW6YaVV/L3KNbbq43Gc1PuR7MAh7jndAAQvuAvDwJiQZ/umd4jE3QLQO6o11EaI/XZ
+ ut8sLECYTXQY9+qQMUJ7DBstgkKQiZIqS+0RIp1igvJHpE0uWeuMwlCzM+LRaLz+WJLH0C+mVfX
+ 3asBmqsyuY8HhzkRSKeabba39pI89ceSKAkxHc0fxxUeKJBHa2RY9Bj4hlXpKHA8bJp5SxEe8iF
+ wc6U3zK3c0CJZiRb3pjhY3Fn0veZd5OHWXiLOGh4dqsI3u5c6U1iMMqbqXeoN8NRjDNPU4Qc1wf
+ DaDwXYX0+vpT3CNzssHW9UTtVR62KwJclNXVNV4CW0BlKISvSvHEvl+jOBm3HH063Qz3fb6mzX6
+ aNF28rlFZaOc15Drftrl8eqBvUsTKJRHJPTJjyk/5hYem5QQ==
+X-Received: by 2002:a05:600c:3584:b0:49c:dada:30b7 with SMTP id
+ 5b1f17b1804b1-49cdada30e1mr133990995e9.2.1788260759497; 
+ Tue, 01 Sep 2026 04:05:59 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b926874fdsm348301715e9.4.2026.09.01.04.05.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Sep 2026 04:05:58 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 96BBC5F829;
+ Tue, 01 Sep 2026 12:05:57 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
  <marcandre.lureau@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  zhenwei pi <zhenwei.pi@linux.dev>,
- Jonathan Cameron <jic23@kernel.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Jiri Pirko
- <jiri@resnulli.us>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,
- qemu-block@nongnu.org,  Ani Sinha <anisinha@redhat.com>,  Jason Wang
- <jasowangio@gmail.com>,  linux-cxl@vger.kernel.org,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Alex Williamson <alex@shazbot.org>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,  linux-edac@vger.kernel.org,  Michael
- Tokarev <mjt@tls.msk.ru>,  Fabiano Rosas <farosas@suse.de>,  Zhao Liu
- <zhao1.liu@intel.com>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,  Eric
- Blake <eblake@redhat.com>,  Peter Xu <peterx@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Mauro Carvalho
- Chehab <mchehab+huawei@kernel.org>,  qemu-trivial@nongnu.org,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v4 00/43] qapi: convert (very) trivial intro sections
-In-Reply-To: <20260831201945.287730-1-jsnow@redhat.com> (John Snow's message
- of "Mon, 31 Aug 2026 16:19:02 -0400")
-References: <20260831201945.287730-1-jsnow@redhat.com>
-Date: Tue, 01 Sep 2026 13:05:29 +0200
-Message-ID: <871pbd9qpy.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  John Snow
+ <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: Re: [PULL 12/25] gdbstub: Introduce GDBFeature structure
+In-Reply-To: <e9d8c2ad-4412-4299-bb1d-34709b6e42d5@redhat.com> (Thomas Huth's
+ message of "Thu, 27 Aug 2026 12:45:39 +0200")
+References: <20231011103329.670525-1-alex.bennee@linaro.org>
+ <20231011103329.670525-13-alex.bennee@linaro.org>
+ <e9d8c2ad-4412-4299-bb1d-34709b6e42d5@redhat.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Tue, 01 Sep 2026 12:05:57 +0100
+Message-ID: <877bl5w7sa.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PYZOR_CHECK=1.392, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,7 +111,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Series
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Thomas Huth <thuth@redhat.com> writes:
 
+> On 11/10/2023 12.33, Alex Benn=C3=A9e wrote:
+>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Before this change, the information from a XML file was stored in an
+>> array that is not descriptive. Introduce a dedicated structure type to
+>> make it easier to understand and to extend with more fields.
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Message-Id: <20230912224107.29669-6-akihiko.odaki@daynix.com>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Message-Id: <20231009164104.369749-13-alex.bennee@linaro.org>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 9e7dec4a58..c3cc12dc29 100644
+<snip>
+>> +        if c =3D=3D b'"'[0]:
+>> +            sys.stdout.write('\\"')
+>> +        elif c =3D=3D b'\\'[0]:
+>> +            sys.stdout.write('\\\\')
+>> +        elif c =3D=3D b'\n'[0]:
+>> +            sys.stdout.write('\\n"')
+>> +            quoted =3D False
+>> +        elif c >=3D 32 and c < 127:
+>> +            sys.stdout.write(c.to_bytes(1, 'big').decode())
+>> +        else:
+>> +            sys.stdout.write(f'\{c:03o}')
+>
+>  Hi!
+>
+> FWIW, this causes a warning on NetBSD:
+>
+> [913/4769] Generating gdbstub/gdbstub-xml.c with a custom command
+> (wrapped by meson to capture output)
+> /home/qemu/qemu-test.QowHuk/src/gdbstub/../scripts/feature_to_c.py:28:
+> SyntaxWarning: invalid escape sequence '\{'
+>   sys.stdout.write(f'\{c:03o}')
+>
+> I guess the backslash should simply be dropped? Or duplicated?
+
+Paolo already fixed this in 7bca0ea74a049839e030c7fb33e82c0a7f7cd791
+although I had a similar patch I obviously forgot to send....
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
