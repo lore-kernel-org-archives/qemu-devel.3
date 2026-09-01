@@ -4,145 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DE3C624D6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 20:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38A0C61DD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 20:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1UqW-0007zM-DQ; Tue, 01 Sep 2026 16:12:40 -0400
+	id 1x1Uvc-0001YP-9R; Tue, 01 Sep 2026 16:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x1UqQ-0007xy-HP
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 16:12:34 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x1UqO-0000ih-2K
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 16:12:34 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 681I2nPP3531056
- for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 20:12:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pIEA+k/hOpXQzlpwDeNyWilYEm+CWDzp0YKvIQiMSrk=; b=GdpxLV6T2Belj0fQ
- 5CSjLTSGFkdIEAvFw2rxs+u8XnnyVQc2bpRSeWLsguJtWuOudvM9OTYGis5GNspA
- xmOrlZ1b79aoCykFWhpBPliy64/cFsBFYORVS6In/CR2NsTh7XlwTCkBflmhrxnF
- JK/v592iKX5Y6Dj/f18Y/muNbwxw/ZCMaad8sp4EmOTPY3tuWhisZNz3LYEIgEqE
- 5wMuFADy87+ePdbUAK9IHmNihMhVMILWawnMVnOjXplXqUrNGSkys/w3GHmMJL2C
- WLk5ZB4IFaMHHYnYXSBacA1NhA1oL3IqyI2qjeGMmfoLr7f7OAjWE30nv8LYKidR
- siqEWA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ge3n0rgxr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 20:12:30 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93494527488so69932785a.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 13:12:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x1Uvb-0001YD-GA
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 16:17:55 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x1UvZ-0002Ye-Lr
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 16:17:55 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-38dc4553f62so369103a91.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 13:17:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788293872; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hmClI+jZaVUBI+Rpzjrv43lMJNjb70exsSOxVrvSROktohGIqE33JoDN36Y/9VW2jF
+ OCfOjUexo50bXKGtTLOp7JC5E6QC20VpFirwoDir3kOPIOr4QkjQAn9KoCdrHgJXaEHd
+ EqsVObwTRUH9tbs6Sa0xRW+Ldy77FQDHCuJKBs96qHNVqh/z39oqdrtv5amfrkX9GuOw
+ jG7p5ymAN0nqnq12PxlhAT5dEr8hln6U1UDOXIbEANuBhJvGGAYro7t9UCoWsz0bTXCG
+ di26oNFUoi9N+XEnnx6qQQpy+sRQXjN0umcuQm/yvtClorJuKi80sUd3LafTjm1S8G/z
+ VFsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=b6FLdr0o2cZ4ANeX8st8I/VAgTL0oasJXz7PbhJ7IfY=;
+ fh=9EfZk84xpGKhymtmZreIYkfMlh54OsiL0enBsPvuUHM=;
+ b=ZvyyI5BqpW9L7f4XtEw2GNufjf6o6O/Zlz1/f6zVyDfMW48fXsjdFfTxDstFn+qXE5
+ in8p6P/gwj1932YrcIBXznQtcj6sQbtWDYKZRmY6OQaa2RYR0XeQhVZmGXzsdTqpmFtU
+ i79pof2ytt1JRhv9i10GCVTONYFq+QrcpT03M6UfzAuwXeIprDMQLeLL80b2LX+4497w
+ whsQjQ4MgszYM3VwsWlBVhAUMqR3/CuGcQ7HCGzGVXC53ztlJ9ya0ypSJK5YeZYLG/4c
+ UpbLo4E7DEaASrI+Bvu5NRkV/qGX/c3X6StT9TGFRD17rWXnmzUaXv/btGJSul8abIgG
+ ebDw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788293550; x=1788898350; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pIEA+k/hOpXQzlpwDeNyWilYEm+CWDzp0YKvIQiMSrk=;
- b=Li0MbONMSHRKvtLeus2FT6gMEzg0L3XCK9oeTjVn+1hGIlc0Bgz30guDKtuNX9v+zn
- CjmGnV1WVsRVAK681FKuf6382O9BwSB8jLPlnrzokDYixi8tILN7MLZLSfrNseLdoIju
- 0m3slYLtINDyLgOiZdkyY2/jYAsXW0+fgK8LdfQxr7r0XD9+J3tXrdAk8IgoOV1woaId
- gQZ5GJVyPYCi7GLxHMch4M6TBJ6lD5dyy3pS9NG8cYpO4a4EYtJ2bzBpPzIhOsHy77Gh
- YmXkJrLBjwIQBh3uYp21VCMkWcRKPYlfgdhDCCV3l8KIkPx2l3Lw/O+MBFbY/nzlJcYv
- uznQ==
+ d=gmail.com; s=20251104; t=1788293872; x=1788898672; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=b6FLdr0o2cZ4ANeX8st8I/VAgTL0oasJXz7PbhJ7IfY=;
+ b=M44JpEbV1PGNqxEN6tmqMla1fJ7aonb2nu3i1QE7diSCUVdE5ojjLSwpXuoZgCqSyN
+ NwtfD1K1lricj8iefihaBDOmvIrlInsi7iCLxJJSovvRqui+gir4K89zDx7qetY+AVmL
+ QbOAyEg9Es4oYerO1kFuxQ/veTLHsFssGy4AKwckPoZWExI8DGicRbGWCXC14v8JcJB1
+ XJM8/nswwyL6xzJDjKRDD3iU+52mVIgzhQ0/tLS43Z6k8KuLhE1eMA3+34Y8MCBOfuTN
+ mPZzhkhdjXNEhOoJcx9BTyUeVXYMtxPHeswJNCc8C4T9dubXikSHsGMi/hdRZ9Zu8+Um
+ t4Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788293550; x=1788898350;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pIEA+k/hOpXQzlpwDeNyWilYEm+CWDzp0YKvIQiMSrk=;
- b=EVUgBlnkXmX7sLoJ0cCn+d4zqQ1sMQnmeo48XV7KlddNUgOZtBxQ/i4HXMt6qLPseA
- VHFzJPcNEoRSiQyMpVRqQHc5dbK4BtNKr+Bu0K3H/JA5DOA70ydSX6+lYhFtAlXvsfiL
- zZ5KrfA5biK28EgEV9YUL9SBVBmGA8HssC/wk6fBX8VLAaG184zkQEfoe/FaQgT8HxE7
- dZp1mfmt9a4ojE2q9jHVCdY3jrB5BB+b2bRa+kFJOpXx932C03PRnVPNE/hiWd8/o8sV
- HmZIglk75bgiw2cBxTCQTiPXYBgO2S6RtV8SWxDumOl5JDu/FZw0Zs+2evaHK8lUmRZo
- YnaQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RopZ0gCy8uAJ87Dd9vZB7ikLJCmbJE+waDQ7jEwFznZ5A/JcteTbDJxd3W2FTj+WpTaPiTZ3/Co8w2f@nongnu.org
-X-Gm-Message-State: AFuF++lAnHBlED+/AH7QqShwU+/OyVEZTPGYsFco/aIrzeXl8nUlyjys
- dGR8olxJGEzOXB/npeiXV9H2RdRpQHROEazix6KYOp+DPSALz8/hoHerNNM6YTYkeT1+LqEsh4Q
- 12X8PUqXUGntZPt4rhV2vlti8wQ5mpnCk9jBArEURGmjYTSJWNv+3NjAR/g==
-X-Gm-Gg: AR+sD101/ldtjpJB0hYZhnYA5uaCkOYXfzJ1tghAyyW/X+HNhVbN3PXGU9M6wSPrDHN
- fizzrT7ZSegO1sWlYrUODUS2BHLulZXhlcA8ac2zv1xTc5rcltEy8VeS0yVjWvy5rVuGreh9rc1
- 5Q72gXmJXPuwstjv/R+4spzMtQPlnWeNKT09NQuxKLhX3ux4ly46xnbxEqhobbR7K96DsaJ5DmP
- Qf9mWZsyPqBwzbxvTeqpjhZ/wfQVq9Hh28xeM/dbMgOJ8LeD1jgBgBCH9zRZHB3oAUUFBjmZSbA
- dpsP1Z0iAa4FDsmGQluT4V/v4DtUa9XVVnCQVKd9SgKSjXvmsCpXLCzt6+0rLDJdYC6nT4XfQNS
- QqQ+7KmunIkvciEtR0NL8/+lJUmplxUV0Q6Sq
-X-Received: by 2002:a05:620a:1b92:b0:937:356d:eec with SMTP id
- af79cd13be357-93913816194mr4499880085a.16.1788293549658; 
- Tue, 01 Sep 2026 13:12:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:1b92:b0:937:356d:eec with SMTP id
- af79cd13be357-93913816194mr4499875585a.16.1788293549137; 
- Tue, 01 Sep 2026 13:12:29 -0700 (PDT)
-Received: from [192.168.68.101] ([152.250.131.13])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9395f35ac8esm22430485a.24.2026.09.01.13.12.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Sep 2026 13:12:28 -0700 (PDT)
-Message-ID: <ea7a6362-54e6-4ff5-9a03-3f50e4f2ae96@oss.qualcomm.com>
-Date: Tue, 1 Sep 2026 17:12:26 -0300
+ d=1e100.net; s=20251104; t=1788293872; x=1788898672;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=b6FLdr0o2cZ4ANeX8st8I/VAgTL0oasJXz7PbhJ7IfY=;
+ b=K70BfdEtELAxqS4es+WcOWvl8DLmy301M5hDZOsGRckPh4Mvr6himpDo67gUlmUtTk
+ rCPvK9FbqklCIrfU2QG452mEN1I9YJwrmfW1jaAlC+k72Zsa2LpvcH2RzmMsfyywcxHq
+ 6K77BJq3C18UYHzZ9ITdC5i49YzhfL9/LY9vAyc4MrEWsCtsvXnGF0L9tDo9HSDQLbDc
+ q2DKURNXd74ZcpzxofKCwBEyTC6UOJKv21VbisCtx0b7xq9dghynP/X4qX/xijU3kHly
+ 1noi2X0o8GDWIexfX4P07Vsn2+gae7/JOgk7J2hESJ28QltkvbxyC9rlr9BD0u0gObiy
+ VGhw==
+X-Gm-Message-State: AFuF++khruYHNTKGKlPIQnWPQhT31TInxnE/1Ix0aH0M3B5DxEThKBm4
+ t2xdwo/IzlUqPsXHU32vEum0mTQVVeMk4B8Ius60Hn4kxo1nWb0ASqTKWZD5AsCeQm+fnH3IRHS
+ UAtKE4YDHKY+9KQAAAO3lwLeFWv0NaeA=
+X-Gm-Gg: AYBFou35f8BJVk2av+8A5xipG1dKXTmVHnyKIXub6RbmWyBCbr1fLMThP/jCsNrCtMF
+ wVBnToZSbanTQIbDFhg4yUlRWegQI51EBBzW+ecsgOdQVAkVGBZh6Ia+Xmi2c/7FqWJj/HrbIPX
+ AI2xpFYx7+f0QzXTHLCOLvrrysph8F/uuPF10duT5WiMX+Uh9vhl5GkqxgnoL4hI22NnYhEPKmc
+ yG82loFURZtBn0oPklWajKwdwhQAEK/gUwlTNmeVji3GC6LUlwDafzz75JsvmXAlO33eg+tTUwR
+ qPyoUgFM5ybQ6jcjPSzhzIEwcWKOn8Itblc1YJrKay7md+g2lxhuyDIjBo37nZR80NMbKc1Uy9g
+ 4
+X-Received: by 2002:a17:90a:1c08:b0:399:1b08:28de with SMTP id
+ 98e67ed59e1d1-3991b082a7emr8245252a91.7.1788293871940; Tue, 01 Sep 2026
+ 13:17:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/riscv/kvm: Reject migration with a different
- timer frequency
-To: Xie Bo <xb@ultrarisc.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- qemu-stable@nongnu.org
-References: <20260831074106.1798671-1-xb@ultrarisc.com>
- <20260831074106.1798671-3-xb@ultrarisc.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260831074106.1798671-3-xb@ultrarisc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE3NyBTYWx0ZWRfXwXTLkchc/kxw
- TdoPtTXF6HsiKcsZ+ywT6ZMkL+Hw2C8ivRWTmLmF7gBGH0ytKtAya2vrVWsNtXbfqtu6Edmw3qR
- WBxCGwCegTeKem/RBUzyCpZclCDggsKA8WVXzafeOztE9umcNAYOP/oTXkUtLZjbAvoMbgMZo3w
- YDMG8ax2dT44lSlieRFeU9fNbjciv+CBvtlMhABJgiKCallyBkmEWLCqkewaF0j85hBj6gNdS1y
- 5TA4dDwW0UwTKvkZxG/NCMjtn9F5IFBPgPabkKHEtpWe8dvDzqAubPEqrfteQ1iujFY79hiqrLp
- mssdaqRV9vQVZ39/zuP39HLPWgKiREOBFDxWyyEprcPBLnqRZz0y8OYI+cVH/KTcldIDkvYSyaY
- w/R296n1MDeakjX0v/14UjM2ClnyQls1M/+6E1vbrQDv1QFd4qKAYLAqDhOLIyKe5lHr1LhB6pM
- Pa/NlZLUn/Wc5q3ejVg==
-X-Proofpoint-GUID: ovshdeUKRT-Vm1SS3StFGLPKSw1ySTSb
-X-Proofpoint-ORIG-GUID: ovshdeUKRT-Vm1SS3StFGLPKSw1ySTSb
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE3NyBTYWx0ZWRfX5jbWHWUdm2qb
- 62/9fcTLsghPdLk5kE9++9st/TrPRjL+YRRz1JHxJOYAhWAMQq4QJxqmkNamhkFrkghfHMWylFP
- aXJr/5ziClZRh8CosGNcs9RvrjmZ5jo=
-X-Authority-Analysis: v=2.4 cv=R9oz39RX c=1 sm=1 tr=0 ts=6a9731ae cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=CXdxNCAnTuDr1kYd6DjE4g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=Lx1EvxgrAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=7FCzdUK1WRIJhpUUWwkA:9
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=ZFi1QaP_tuf8dODdgmj-:22
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-01_05,2026-09-01_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010177
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260901195334.463267-1-jsnow@redhat.com>
+In-Reply-To: <20260901195334.463267-1-jsnow@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 2 Sep 2026 00:17:41 +0400
+X-Gm-Features: AcwNN1W7SkPSHGV9BGnpdaLUPpC5ZQO52ogJDXXkj7UBu1wgCcQkppTf1lBt6M4
+Message-ID: <CAJ+F1CKA-UPwzx7XLLhvA+VW8PuDQGbXKXDBK0mVfo0E4C6-hA@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Remove stale contact info for Stefan Berger
+To: John Snow <jsnow@redhat.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Stefan Berger <stefanb@linux.ibm.com>
+Cc: QEMU <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000fdbc09065a719c07"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,178 +115,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000fdbc09065a719c07
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi
+
+Le mar. 1 sept. 2026, 23:54, John Snow <jsnow@redhat.com> a =C3=A9crit :
+
+> I was unable to get in touch with Stefan and I am not currently sure
+> if this module is maintained or not. To prevent an avalanche of
+> bounced emails, remove his contact information.
+>
+
+Really? There must be something wrong. He is a very responsive and active
+maintainer.
 
 
-On 8/31/2026 4:41 AM, Xie Bo wrote:
-> The timer frequency check is currently in kvm_riscv_put_regs_timer()
-> and guarded by migration_is_running().  That condition is false on the
-> incoming side, and the source frequency is not part of the migration
-> stream, so migration between hosts with different frequencies completes.
-> 
-> Add the source frequency to a KVM-only subsection.  Its post_load checks
-> the destination frequency before the timer registers are restored and
-> rejects a mismatch.  When loading an older stream without the subsection,
-> skip the check and retain the old behavior.
-> 
-> Fixes: 27abe66f31ef ("target/riscv: Add kvm_riscv_get/put_regs_timer")
-> Signed-off-by: Xie Bo <xb@ultrarisc.com>
-> Cc: qemu-stable@nongnu.org
+> Signed-off-by: John Snow <jsnow@redhat.co <jsnow@redhat.com>
 > ---
+>  MAINTAINERS | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2a0ee348c4e..69803afe995 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3839,8 +3839,7 @@ S: Maintained
+>  F: scripts/simpletrace.py
+>
+>  TPM
+> -M: Stefan Berger <stefanb@linux.ibm.com>
+> -S: Maintained
+> +S: Orphan
+>  F: system/tpm*
+>  F: hw/tpm/*
+>  F: include/hw/acpi/tpm.h
+> @@ -3849,7 +3848,6 @@ F: qapi/tpm.json
+>  F: backends/tpm/
+>  F: tests/qtest/*tpm*
+>  F: docs/specs/tpm.rst
+> -T: git https://github.com/stefanberger/qemu-tpm.git tpm-next
+>
+>  SPDM, PCIe DOE
+>  M: Alistair Francis <alistair.francis@wdc.com>
+> --
+> 2.55.0
+>
+>
+>
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+--000000000000fdbc09065a719c07
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->   target/riscv/cpu.h           |  1 +
->   target/riscv/kvm/kvm-cpu.c   | 40 +++++++++++++++++++++++-------------
->   target/riscv/kvm/kvm_riscv.h |  1 +
->   target/riscv/machine.c       | 31 ++++++++++++++++++++++++++++
->   4 files changed, 59 insertions(+), 14 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index a5ec69c3cc..193f81f00d 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -541,6 +541,7 @@ struct CPUArchState {
->       uint64_t kvm_timer_compare;
->       uint64_t kvm_timer_state;
->       uint64_t kvm_timer_frequency;
-> +    bool kvm_timer_frequency_loaded;
->   
->       /* KVM multiprocessor state */
->       uint32_t kvm_mp_state;
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index c8ccd9124e..1993bd446b 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -45,7 +45,6 @@
->   #include "kvm_riscv.h"
->   #include "sbi_ecall_interface.h"
->   #include "chardev/char-fe.h"
-> -#include "migration/misc.h"
->   #include "system/runstate.h"
->   #include "hw/riscv/numa.h"
->   
-> @@ -822,9 +821,34 @@ static void kvm_riscv_get_regs_timer(CPUState *cs)
->       env->kvm_timer_dirty = true;
->   }
->   
-> +int kvm_riscv_check_timer_frequency(RISCVCPU *cpu)
-> +{
-> +    CPUState *cs = CPU(cpu);
-> +    CPURISCVState *env = &cpu->env;
-> +    int ret;
-> +    uint64_t frequency;
-> +
-> +    if (!env->kvm_timer_frequency_loaded) {
-> +        return 0;
-> +    }
-> +
-> +    ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(frequency), &frequency);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    if (frequency != env->kvm_timer_frequency) {
-> +        error_report("KVM timer frequency mismatch: source %" PRIu64
-> +                     " Hz, destination %" PRIu64 " Hz",
-> +                     env->kvm_timer_frequency, frequency);
-> +        return -EINVAL;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->   static void kvm_riscv_put_regs_timer(CPUState *cs)
->   {
-> -    uint64_t reg;
->       CPURISCVState *env = &RISCV_CPU(cs)->env;
->   
->       if (!env->kvm_timer_dirty) {
-> @@ -844,18 +868,6 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
->           KVM_RISCV_SET_TIMER(cs, state, env->kvm_timer_state);
->       }
->   
-> -    /*
-> -     * For now, migration will not work between Hosts with different timer
-> -     * frequency. Therefore, we should check whether they are the same here
-> -     * during the migration.
-> -     */
-> -    if (migration_is_running()) {
-> -        KVM_RISCV_GET_TIMER(cs, frequency, reg);
-> -        if (reg != env->kvm_timer_frequency) {
-> -            error_report("Dst Hosts timer frequency != Src Hosts");
-> -        }
-> -    }
-> -
->       env->kvm_timer_dirty = false;
->   }
->   
-> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-> index 61eaa12443..0e27ce8bf3 100644
-> --- a/target/riscv/kvm/kvm_riscv.h
-> +++ b/target/riscv/kvm/kvm_riscv.h
-> @@ -29,6 +29,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
->                             uint64_t guest_num);
->   void riscv_kvm_aplic_request(void *opaque, int irq, int level);
->   bool kvm_riscv_has_mp_state(void);
-> +int kvm_riscv_check_timer_frequency(RISCVCPU *cpu);
->   void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
->   uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
->   
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 2685338901..14a50f1d33 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -198,6 +198,35 @@ static const VMStateDescription vmstate_rv128 = {
->   };
->   
->   #ifdef CONFIG_KVM
-> +static bool kvm_timer_frequency_needed(void *opaque)
-> +{
-> +    return kvm_enabled();
-> +}
-> +
-> +static int kvm_timer_frequency_post_load(void *opaque, int version_id)
-> +{
-> +    RISCVCPU *cpu = opaque;
-> +
-> +    if (!kvm_enabled()) {
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    cpu->env.kvm_timer_frequency_loaded = true;
-> +    return kvm_riscv_check_timer_frequency(cpu);
-> +}
-> +
-> +static const VMStateDescription vmstate_kvm_timer_frequency = {
-> +    .name = "cpu/kvm-timer-frequency",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = kvm_timer_frequency_needed,
-> +    .post_load = kvm_timer_frequency_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64(env.kvm_timer_frequency, RISCVCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   static bool kvm_fcsr_needed(void *opaque)
->   {
->       RISCVCPU *cpu = opaque;
-> @@ -256,6 +285,7 @@ static int riscv_cpu_kvm_pre_load(void *opaque)
->   {
->       RISCVCPU *cpu = opaque;
->   
-> +    cpu->env.kvm_timer_frequency_loaded = false;
->       cpu->env.kvm_mp_state_loaded = false;
->       return 0;
->   }
-> @@ -592,6 +622,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->           &vmstate_rv128,
->   #ifdef CONFIG_KVM
->           &vmstate_kvm_fcsr,
-> +        &vmstate_kvm_timer_frequency,
->           &vmstate_kvmtimer,
->           &vmstate_kvm_mp_state,
->   #endif
+<div dir=3D"auto"><div><div><br></div><div>Hi</div><br><div class=3D"gmail_=
+quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">Le mar. =
+1 sept. 2026, 23:54, John Snow &lt;<a href=3D"mailto:jsnow@redhat.com">jsno=
+w@redhat.com</a>&gt; a =C3=A9crit=C2=A0:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left=
+:1ex">I was unable to get in touch with Stefan and I am not currently sure<=
+br>
+if this module is maintained or not. To prevent an avalanche of<br>
+bounced emails, remove his contact information.<br></blockquote></div></div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">Really? There must be someth=
+ing wrong. He is a very responsive and active maintainer.</div><div dir=3D"=
+auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_con=
+tainer"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border=
+-left:1px #ccc solid;padding-left:1ex">
+<br>
+Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"=
+_blank" rel=3D"noreferrer">jsnow@redhat.co</a><br>
+---<br>
+=C2=A0MAINTAINERS | 4 +---<br>
+=C2=A01 file changed, 1 insertion(+), 3 deletions(-)<br>
+<br>
+diff --git a/MAINTAINERS b/MAINTAINERS<br>
+index 2a0ee348c4e..69803afe995 100644<br>
+--- a/MAINTAINERS<br>
++++ b/MAINTAINERS<br>
+@@ -3839,8 +3839,7 @@ S: Maintained<br>
+=C2=A0F: scripts/simpletrace.py<br>
+<br>
+=C2=A0TPM<br>
+-M: Stefan Berger &lt;<a href=3D"mailto:stefanb@linux.ibm.com" target=3D"_b=
+lank" rel=3D"noreferrer">stefanb@linux.ibm.com</a>&gt;<br>
+-S: Maintained<br>
++S: Orphan<br>
+=C2=A0F: system/tpm*<br>
+=C2=A0F: hw/tpm/*<br>
+=C2=A0F: include/hw/acpi/tpm.h<br>
+@@ -3849,7 +3848,6 @@ F: qapi/tpm.json<br>
+=C2=A0F: backends/tpm/<br>
+=C2=A0F: tests/qtest/*tpm*<br>
+=C2=A0F: docs/specs/tpm.rst<br>
+-T: git <a href=3D"https://github.com/stefanberger/qemu-tpm.git" rel=3D"nor=
+eferrer noreferrer" target=3D"_blank">https://github.com/stefanberger/qemu-=
+tpm.git</a> tpm-next<br>
+<br>
+=C2=A0SPDM, PCIe DOE<br>
+=C2=A0M: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@wdc.com" t=
+arget=3D"_blank" rel=3D"noreferrer">alistair.francis@wdc.com</a>&gt;<br>
+-- <br>
+2.55.0<br>
+<br>
+<br>
+</blockquote></div></div></div>
 
+--000000000000fdbc09065a719c07--
 
