@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA632C624D0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F0BC624D1
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 11:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1N6i-0006u8-6Y; Tue, 01 Sep 2026 07:56:52 -0400
+	id 1x1N6l-0006uk-AH; Tue, 01 Sep 2026 07:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
- id 1x1Ln8-0001Wl-Py
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:32:34 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1x1LnU-0001Y4-Cf
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:32:56 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
- id 1x1Ln6-0004m9-MH
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:32:34 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-ca766c1c9ccso3150230a12.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:32:31 -0700 (PDT)
+ id 1x1LnS-0004ph-8f
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:32:56 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-398d2b28acfso1820772a91.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:32:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788258751; x=1788863551; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788258773; x=1788863573; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
  bh=7kwdjrF+q/XbeywvWNcw3Wj5lkryI6dPWIi6HjkeNoE=;
- b=Cm0Y8y53wZ0XaYlOvD7Y24BX5jrJ2PebhjgfGVUo/eq1oiknDF+0Sv0qcRQ2YOlYEW
- LSRZCC3doGGnTQlxClFjvoBZeu4BC1SZSDP4GDYzogLi/dE+cu01QYQWRVze5Qv5jHMf
- /ISNnFr/71l+qqAv/M2ZnsrMaO0ES1KiCetxUWwkUtwCtyPXC1GUKfTTI/R3qaBhW46k
- IG/554owRJYBqvnHSMeFRuO9B6nFpAu1YVb8wukM3vyFMwOdNj5nk10inTwpOs69okLX
- ixNuy++GZD5F2Wnmseh7x5Hd+4glLsBEadKMyzsjLmIDEtcp3LlLOGqUvdhDWEfq/QbL
- xT1w==
+ b=k7n1Y0pO5kkAxtDNSQUBgEpKtivteW7JVbdScELNSc0DO2FxmI99ast/4e6cJ7iYO8
+ ZW+k3ZwYXcytkKwg3B07pHqiE0nNEJTXfFts8Jb7M8u5Zyk3IyoWfZ76vxPCC1MgYKp+
+ 3pg55f3wtyQkBLKcQtSIdxBO7x8+r8PqLN+XABV9ckHxrp62aFYRv0azNkq/NKzS9wY/
+ VhbnaQC5uGLfwdI93IOKnd5wZziS3yfZIlkvVMcGdM+pZbYU57sDT1+llYAGYiLiuazN
+ OruRofF10/4AD9hVM1sGEMX4WEkK6mpwbOVtbee1UPqOk9kgLuai2TuS+2HXDfp/VZT+
+ qvfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788258751; x=1788863551;
+ d=1e100.net; s=20251104; t=1788258773; x=1788863573;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
  bh=7kwdjrF+q/XbeywvWNcw3Wj5lkryI6dPWIi6HjkeNoE=;
- b=QliFRif2WVqtYZMwDdgHvhXFCd7oy803ZJOcLZuQDNSlYKjgUski07KJJwRLx9YwrD
- mYdHzVTwgjSqAqSxjZPo/nRIDf6cLgmUA5rhFlg7Hk2taWbg5zIRKxbkBGZ0S5N/myIk
- G6gkTiE7XDPUuBn0AZvbS//nH50Hbt6mhOoQSk5Ysr5JOMWZ8B1R15WOIh+X8ZhpxXUQ
- B6UrMbJegBHBz1xBTS6JnDi+PV44tcMJBcXAAF6WicEg6vijuXOfHL2ejujgicE0pbV2
- OOlJHSrqs//iyCRqhszUuJMXpT+TLTRAOg6EC9dVLTjDvboitOGi4TMcji/lAwBKn0xt
- VdTg==
-X-Gm-Message-State: AFuF++kKCGDaiWgO6w+x64hjWDrpES2z+16AVNxHskQdn/3IxWHb8dR2
- sK0jh/gY2Pvzuo6ocWupbdzfR2DZ5tKBv8+rWmwncDxukrfsXkRRMp0BqMimGA==
-X-Gm-Gg: AYBFou3Zbenq35ytVITjBFZAwb+pZhEusYn/Qcdd7dJw6XQS+gwkNiIrmd3wKQB5Ryh
- MeLkV0XWzJ8dbyqhRMnE7MN/shMAT6Jdr52pOsWq0xqvJb+33uBfhzcuojyGSrdYISucQDh3Ons
- U+tzG1w+72Yr0+U2bsKAf6iF4NciiuN998P5iA6ETpgEpqRhuewnL2PA77EGCPCJkIPVRiAhjrM
- Uv5MeTUnQ8fbW6KbLXNxOhixM0AKbuZ7LIqk8w8pmH181vIOzp0xVmQnXLajsQdOLILCuWwkmC6
- h45frXIzBeWvq/JRzja5T4veI8RgXtXBYVW+/i1ZB2PdnwYaUhEnrt4VoCgOvDw0fl4q3C3jNWr
- ftpn4dLtzynPFtfkP/viuw3HUJpLs4JcJCAj9iXoZM8M7AA1FkS6wDvZPpjdIkPK7hJXYAH/ax1
- uXw0HFSx1jQP5B+8rhOit/sQDJyYATiHIKGhdw+9J+KCylNYDsnSqibIiu2AA2gX5rAkNw2+Yi7
- aLdRhpB
-X-Received: by 2002:a17:90b:50c6:b0:38e:97f0:aa4b with SMTP id
- 98e67ed59e1d1-396d1017316mr51494987a91.13.1788258750620; 
- Tue, 01 Sep 2026 03:32:30 -0700 (PDT)
+ b=Nwvq1Mg8N4vMVxPDPxnYKw/6UDkd9hg+Q62d37kHImk45vN2x/yAP7GG+DscXNwLt4
+ 8hd0Gx74z2GaO/m3eE3EPK8mP3TddgKbi6gWMcy4L+8OrCEMEoJoFvGSqorjv9N/hlye
+ TToYiB3jwbPw5c3LSGWCz35lMKdAXeVLZnTW98ZzHsLsA9kNOdxAwLkRYz9kSEJ7dVDz
+ FUQrXOnGafCO8dp9xLwBGhYZT9ucIJaA8ftQjhyj9rlVP7T2Xhy17Nsp57VuhBLFIcBJ
+ gFL2B5h/WZ6hQi2J90l+2umYVzfZxDd9rBNXyvSrdgLFGwEZk8w1FBFQfdWyz8wTit3j
+ nfRg==
+X-Gm-Message-State: AFuF++mXbvUKcMlHrn6qnWOAXsEn4givdp2L58MzLK2sHb0cy1908LTq
+ lzwSUrWKHF1LfgCWfkpwdgFa2m4V5yN60v8Wow42Ne/nPVRwWhDArYKlchIt0w==
+X-Gm-Gg: AYBFou20HmJwdTWim5FHd26GQcGQyduvxnzYLaIa/3M5l5yPKRHuHLxgHzF1GXDBvbf
+ zbeyeRy7B5G/dO9ojNaCENEBpvAaPf7uoNf6IjvMxpi35M1lS4ZnwhiSfDDneFI9eAR32PSnMpU
+ zOaCgBrJ4hS3Jbow5KovGT6LNrt/R40OknFnQLdxRUtxTlDr2sbhsJUVodT16X1u/9tHAVgm/Lb
+ 7xJrwKPOsBgZ48Py4sR5c85WLYnS088yh1zHD1/Hc0MZCAAciM49B8hdbYSUdH7bS+7j1MMnCOA
+ +WlT7HNEPSPfrr/DvSLBun9YtgY3aXv1oR33hqNRyokrlwhBE8fnJSRISAuvojbLHSDa/EO8+QE
+ torh53ZnqGgeDS039gBnQOsrxOqzk8wdSlWTc+PTOsjG+c9uv6/Y/FqqSlkP4DLagqQutQDK0JZ
+ mt0bT7n/li+DUQ/BxahLpMii1y9OxHxsc8Wmn3BfVR5KZMeMAibJcPQa5mYcTDoRUI9ModKz1qv
+ dSfs7ghaA==
+X-Received: by 2002:a17:90b:4e88:b0:398:a145:5d3d with SMTP id
+ 98e67ed59e1d1-39907b17a4dmr11231042a91.6.1788258772414; 
+ Tue, 01 Sep 2026 03:32:52 -0700 (PDT)
 Received: from DESKTOP-G8U0VEE ([2405:201:e03d:cb:7583:6eee:4319:afcd])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3286f80a0a5sm41589717eec.11.2026.09.01.03.32.28
+ 5a478bee46e88-3286f9e2a95sm35968368eec.23.2026.09.01.03.32.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 03:32:29 -0700 (PDT)
+ Tue, 01 Sep 2026 03:32:51 -0700 (PDT)
 From: Nagendran K <nagendranjairam52@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	Nagendran K <nagendranjairam52@gmail.com>
 Subject: [PATCH] hw/core/loader.c: Added Extended Tektronix HEX file support
-Date: Tue,  1 Sep 2026 16:02:17 +0530
-Message-ID: <20260901103223.710-1-nagendranjairam52@gmail.com>
+Date: Tue,  1 Sep 2026 16:02:39 +0530
+Message-ID: <20260901103244.549-1-nagendranjairam52@gmail.com>
 X-Mailer: git-send-email 2.54.0.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=nagendranjairam52@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=nagendranjairam52@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -85,7 +85,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 01 Sep 2026 07:56:49 -0400
+X-Mailman-Approved-At: Tue, 01 Sep 2026 07:56:50 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
