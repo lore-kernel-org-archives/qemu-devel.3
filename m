@@ -4,92 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37E6C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 18:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D6FC624D0
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 19:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Tdq-0005vp-Qw; Tue, 01 Sep 2026 14:55:30 -0400
+	id 1x1Trt-0008WA-CH; Tue, 01 Sep 2026 15:10:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1Tdm-0005vH-AJ
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 14:55:26 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1x1Trp-0008VW-5j
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:09:58 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1Tdj-0001fc-3j
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 14:55:26 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-4843e397f74so168244f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 11:55:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1x1Trn-0004Qa-J9
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:09:56 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-517dc520840so1415901cf.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 12:09:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788289794; cv=none;
+ d=google.com; s=arc-20260327;
+ b=l/QHvDDdLSz3/7THiKoVaSRctmpG36BR/++mbbu0bemG6Z62NRh8Yql4RWYIWh0MAX
+ Fw2z2stXW9USeWOwIC6ArgOV6l0RvHVsCn3E4hrxXff222rBBL9zQTpuFYX+/mIRxMbb
+ A4n/G6t033pKMQXiMSJD/n3OO19nbgH2PClN92yIL+iXB8xvPpnkVVlJbROuQAk69z5s
+ N4w/puGwbX1a8ODUPpwhDdnE+Hka9ggYj7ss46BO4GJLdeWZrv3nbTPXSCd6FPZAgYob
+ J8Iz9v48Ibm3d654Q3a23xrM7rgLRaZax1FPFQwzb9eBFi95U6WEAQzZOVzYOJj/2kVX
+ PrcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LzrY3kQLyl1dbjndSKm2x24o7tAe9NeimDIm782FwvM=;
+ fh=IbDIADSBmbZ3w+f1dYc7m/52zEuUum72SMMs1IAUQzc=;
+ b=TYw0B3nIV923XpSWFfwav61ejXmp14WxqqU0Ua644CUsXuE++KYsS/VQeNDtwpLqls
+ XEUQUZZZyD8613pe4k1AXhEJsOgaktqf3AxP24j91i4FbiNeo/oM67Mxndu0aa7Dxzqf
+ ggGe0uQwsmvSU9zgSgEDgfXOBhUx/BSeWAfVGCaL30CImD41IeK9qstQzKceyBNhKKKR
+ nZzq+T708XIdAOD1WSkM3youopE3V7CEs/JVOslzCZZpmVrHroH8LtloS4yUEkAzy0Tw
+ PtrIL+qHgTga6vhYGp0KFDDgTYmJcnLM9qjRl3dEAV7Z/ddI1s7IPzYBHcT6+sTjDMlR
+ 2P0A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788288921; x=1788893721; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=O6B9mgNv0lUCNH/FsjR3EQTSgWnBSlCbriKuJnHUw5Y=;
- b=mF08yM8FhY7qELDd92R1qplExGGDFpMfbUcgC7eh2HK3JkfxX0thQUIMSNYLBX4Cmb
- OaRXsh+ENdclI+bcVXmKOEWqoFFM7EdOZnBPiBex8uDNFV4vAF77WU5JkI/0NK/na/Nq
- q18BW/CcPXr4O48CuG+liX1aMT0v9Q5IhkUqQzGcTcmQLNAXDr2T7MpZ2VojHC94rC9g
- 2ncnla1DTU1FTeXzYgst0nowCnvZI2NeaHxItzlFvC3oJZ9H0mnSdZlUwPfX37C65tLW
- xiNzHhwgltAid8Ld+rcVN/5lUGMcOibsdUDmozpO/8YxITsYTlTM07hLQO0WhrpKplwT
- VaLA==
+ d=gmail.com; s=20251104; t=1788289794; x=1788894594; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LzrY3kQLyl1dbjndSKm2x24o7tAe9NeimDIm782FwvM=;
+ b=RnRl06KzhUVz9hetPIDTcxz6KXc6L0BYoll7jqKSs64vRKoCiSXFf+yY/HzinmHppQ
+ o9LoLxAe9zYlVqmU/F5bjK/jzKyqgjHm4kt8UxaY1ZTswTdPd2oeWK0J4p+uXHUfKVba
+ 2qQc8Iw1KlkYK5xaCsB0JEvjHzqMDnZP5RtQBiwVC14CfNxB+WV7ynV+YlSuK3HfG732
+ c4p9zOCm042RmEAmXppZVdSQs9ENHlkl5asl8aaK08SgM9gRAAyQjfJz/rG8pFFhtKBD
+ ywkSyeIi2Sw5Lq40uyZ+nmQTcV5lJzEtMaWQapf441ELPoRtwL119LYGoKNgxhjhYS4a
+ hpZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788288921; x=1788893721;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1788289794; x=1788894594;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=O6B9mgNv0lUCNH/FsjR3EQTSgWnBSlCbriKuJnHUw5Y=;
- b=aC1khRq1R061CQyYbFQQ3WgrIBxKToK2TCZ0uSA9GgqrBV0Cgbi1lntC6QXRG2pe9E
- QfwQ5tx4GhCLMbpeFNyZEqhZin3L/x/X1myep0NmLXVOSouVkXaPbUQbWjs9NAEf7QpF
- bP3uBbLgGwiYaNlEEQha0HUDvfoLqlJp+EPWiKhwOJkr9kSAhJLuLsF3KsW9I8dX3ohp
- pGhwGrmdUANNYawIULjYQtZNgJ3Jh4ulPgmCHG951dKmvBdSiTcu8VRfXX5r0GZ8uWJn
- a60OC4xZVSgGtsAmqQbW0TOrmM/NLmoSXQp1MlqHQXrTlwecBjSaX+6j94+ayONoODsm
- 8FVQ==
-X-Gm-Message-State: AFuF++mC7BCz+YaAal/BHPu9+7JIgZNCdeIS1YXoPO7IT5Pt0Z5xY1Te
- ZJE56IZdiBbM4tYdZKLK3ShHWfDoUDgLGfzWRTsPEi245tD5acEaWXptGz85gbFN5hCgR7B3odS
- S8hG2Uno=
-X-Gm-Gg: AYBFou2IMORI+dHUZBPDmZSxN9cprYOC8TduxjOWswAZXoYQKc0zAGGgl5WvOPR2Zp/
- plFy4vvMa9UZm7Yj7gVfo2bkAOnO+UDxN828pF9FwPa35bkRvVze5VrPvdnDkC5Lzn6uyg1hMiG
- wjDjITKvNkRbJc1chzGIWeI4ZyCEOQKojSaGbBCrb/dXR1XtfUbBMFC5T75uOFSzld+tFwqpsLg
- kf6P/t2jyE9bgVd9mECD/y2L+AOAytVjz/9uGkrCQOnXyPFXF+eU1i+isgSj6XXpwiVaTz+PNU3
- X8NW2Grnfuwpa207QMXY5KsTYfgWGXnR176xi6L6HT9K90P65hcpniMxpRbfECe/v6z0WebEhPw
- cT1v7H9RAc614MWVQ71UySUxJkc3im7L4G0LJWrosYWMi0IzJJpP+DnQDplQIL1Zlcj58MudSqq
- XF1VCcUsUuJ73BLFNQXHHIPTGi0U7dDc2s+oBxaZxPwpEYq2VDHdJJJAF1noAd
-X-Received: by 2002:adf:e004:0:10b0:484:440d:f5a8 with SMTP id
- ffacd0b85a97d-484440df7c3mr10720639f8f.14.1788288921067; 
- Tue, 01 Sep 2026 11:55:21 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448e80745sm919774f8f.15.2026.09.01.11.55.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 11:55:20 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 35F535F829;
- Tue, 01 Sep 2026 19:55:19 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] configure: correctly honour --disable-containers
-In-Reply-To: <20260901163858.1570626-1-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 1 Sep 2026 17:38:58 +0100")
-References: <20260901163858.1570626-1-berrange@redhat.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Tue, 01 Sep 2026 19:55:19 +0100
-Message-ID: <874ig8u7hk.fsf@draig.linaro.org>
+ bh=LzrY3kQLyl1dbjndSKm2x24o7tAe9NeimDIm782FwvM=;
+ b=sDfabA0GMC7eaWbPcJwP/3aI/T+v40gaQK1TDJHuz58YalZtJDszU1riSwbjMuHTS1
+ /rrgIU/a5fUvxtw53oi7qmI45pRVV+IzmJF9NKPt1lqfYvC4akvBvMOhid7zAvTc7tkl
+ SH7y/G07sewaQHzC2WXOuiGCOfvnak/bpG7EOjVJgiE6FYFdUhZELLt2jzhCYSqUDRDm
+ xWkY8ykMevfMlQ38olT+z7umpgCBWRmjKdGhlIJHee7tpfAQ0p55qChpWKWWFhM3FjWe
+ Q3T9nOL6lkvqXAysVP3po4UbOkSvcSCXk7JfPp7L1L6Hx2UOhVef7RlnpTS/v7CjjX2s
+ 7EBQ==
+X-Gm-Message-State: AFuF++loqyfWyBiKDSQ18vu4ehSUi7Qwd82/uSZharnlKb2aelzB52c+
+ T6vZxDQPlFd5DB33NGncg6edK2LTJmyyqkzhHLe0MYY6n4AninBeRNhKEd9jBRxYNolOR8kqqN2
+ JQ7ihVBUi4KNDp/klBF4jeMa5hhd6RWQ=
+X-Gm-Gg: AR+sD11dplRSYvqLV6GjyYuTkX9H/Q9G5W2VDYusIlLCTEb/mqLzdEH5YgLOCj6aR/w
+ YhevAuFAvKURMVFHV/I8qcVD7WVRmFI0ri2jQtJKefxS/YXClUHiVD/DgUKSJGRCbCUDLLobLa2
+ rJ7JkdQKQ7m6H+S4liMPyJoysyhDgL2SZV2dvpYX6pug95gmxLWaZ69GWpfHp73kGbZgsS40QiO
+ 3uVYxhSBwXpSJAR0z3X03NLlsXb5Hvvmp3a+NtcwwKNGogAw3vm6uC5tScx9fM1vKOWBj2N3BSh
+ j8CMgpsJf43AWEajSf1MLPzmreY9AWZ7bN3dTTd7qiVb8qLovB8WOfI9AM26fpNxA7pYzhq6EMa
+ l+3+iwig1TUehug==
+X-Received: by 2002:ac8:5702:0:b0:52d:cf85:aeea with SMTP id
+ d75a77b69052e-530342b8cddmr5193391cf.24.1788289793744; Tue, 01 Sep 2026
+ 12:09:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
+ <20260817-vhost-user-isolated-memory-v2-5-948aae960abb@gmail.com>
+ <CAJaqyWcO3bSakzykPr-p=eBrqntNaTdUuvZdo2-B_DVxrt6wjw@mail.gmail.com>
+In-Reply-To: <CAJaqyWcO3bSakzykPr-p=eBrqntNaTdUuvZdo2-B_DVxrt6wjw@mail.gmail.com>
+From: Connor Kite <connorkite@gmail.com>
+Date: Tue, 1 Sep 2026 12:09:42 -0700
+X-Gm-Features: AcwNN1XNCKTlqjQGZhm19tCi0YpaqKL7VfH06S3TiO1xT5RaoJw_SlMzUkJivoE
+Message-ID: <CA+spn3pSp6ZEnF+Y7_ukirg570QX8Nwa71fPEw=02h3_k3r6jw@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 05/13] hw/virtio/vhost-shadow-virtqueue: specified
+ vring placement
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, 
+ Peter Xu <peterx@redhat.com>, Alyssa Ross <hi@alyssa.is>, 
+ Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,33 +139,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Fri, Aug 28, 2026 at 5:16=E2=80=AFAM Eugenio Perez Martin
+<eperezma@redhat.com> wrote:
+>
+> On Tue, Aug 18, 2026 at 7:12=E2=80=AFAM Connor Kite <connorkite@gmail.com=
+> wrote:
+> >
+> > By default svq vrings are placed in an anonymous memory map. As svqs
+> > will be leveraged to enable memory isolation in vhost-user, it is usefu=
+l
+> > to be able to place the vrings in a shared isolation memory region.
+> >
+> > Adds the option to specify vring placement by providing a vring base
+> > address before starting the svq.
+> >
+> > Signed-off-by: Connor Kite <connorkite@gmail.com>
+> > ---
+> >  hw/virtio/vhost-shadow-virtqueue.c | 69 ++++++++++++++++++++++++++++++=
+++------
+> >  hw/virtio/vhost-shadow-virtqueue.h |  8 ++++-
+> >  2 files changed, 66 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
+w-virtqueue.c
+> > index 496e7e58a3..f54a61439a 100644
+> > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > @@ -812,6 +812,13 @@ size_t vhost_svq_device_area_size(const VhostShado=
+wVirtqueue *svq)
+> >      return ROUND_UP(used_size, qemu_real_host_page_size());
+> >  }
+> >
+> > +size_t vhost_svq_vring_total_size(VirtIODevice *vdev, VirtQueue *vq)
+> > +{
+> > +    VhostShadowVirtqueue svq;
+> > +    svq.vring.num =3D virtio_queue_get_num(vdev, virtio_get_queue_inde=
+x(vq));
+> > +    return vhost_svq_driver_area_size(&svq) + vhost_svq_device_area_si=
+ze(&svq);
+> > +}
+> > +
+> >  /**
+> >   * Set a new file descriptor for the guest to kick the SVQ and notify =
+for avail
+> >   *
+> > @@ -842,6 +849,19 @@ void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueu=
+e *svq, int svq_kick_fd)
+> >      }
+> >  }
+> >
+> > +/**
+> > + * Set vring base address if using fixed locations
+> > + *
+> > + * @svq: Shadow Virtqueue
+> > + * @addr: Points to new base address
+> > + */
+> > +
+> > + void vhost_svq_set_base_addr(VhostShadowVirtqueue *svq, void *addr)
+> > + {
+> > +    svq->base_addr =3D addr;
+> > + }
+> > +
+>
+> Would it work to keep that allocation detail in SVQ, instead of
+> letting it leak outside? Something like a flag to allocate the areas
+> with mmap or qemu_memfd_alloc, instead of the base_addr itself.
+>
 
-> The configure script originally only probed for 'runc' command
-> in order to handle cross-compilation containers. The Makefile
-> under tests/docker would then probe again when used.
->
-> In order to eliminate the additional probeing, we changed
-> configure in commit c4ce04cfb7460d46c0262d437a7f35bb5c5fc449
-> to always probe for 'runc', so the result could be passed
-> along to tests/docker make rules.
->
-> That commit overlooked that the 'probe_target_compiler' func
-> was relying on '$runc' =3D=3D 'no' as a proxy for the state of
-> the --disable-containers arg.
->
-> When we started unconditionally probing, that short cut no
-> longer works and we must explicitly check "$use_containers"
-> too.
->
-> Fixes: c4ce04cfb7460d46c0262d437a7f35bb5c5fc449
-> Reported-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+For the purposes of the isolation mode as it currently stands, I'm not
+sure the allocation can be entirely hidden without adding significant
+complexity.  The vrings need to be allocated in a region that gets
+sent to the vhost-user backend.  If
+VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS isn't negotiated, then we
+are limited to 8 regions in total, so it is beneficial to be able to
+allocate them all in the same region, and in fact, the vrings are
+currently tacked onto the beginning of one of the bounce buffer
+regions so that they don't count against the limit.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Having said that, a longer term desire would be to update the
+isolation region implementation such that it is no longer organized as
+a 1:1 copy of guest memory in terms of size and number of subregions.
+We would then need an allocator when copying guest buffers into the
+shared region, but it would be much less wasteful, and we could
+guarantee that only 1 region need be sent to the backend for the
+bounce buffers.  At that point, the vrings could be mapped into their
+own region.  There would need to be some mechanism to ensure they all
+get mapped into the same region, but I think those implementation
+details could be kept within SVQ.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks!
+Connor
 
