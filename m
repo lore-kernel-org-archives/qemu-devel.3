@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D65DC624D0
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 09:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E6D0C61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 09:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1LBq-0000x2-Sv; Tue, 01 Sep 2026 05:54:02 -0400
+	id 1x1LCZ-0003Fo-2s; Tue, 01 Sep 2026 05:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1LBk-0000pp-EI
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:53:56 -0400
+ id 1x1LCU-00033w-7x
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:42 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1LBi-0007d2-PT
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:53:56 -0400
+ id 1x1LCR-0007jj-6B
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:41 -0400
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68179PfR1282911
- for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 09:53:54 GMT
+ 68179NOL1282750
+ for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 09:54:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- l/YzYoACAzMQZT0mHSEMi7Bfq6APst8PG0qMwh1Z/kg=; b=RsyXXd0MD/AtLzaw
- KYvaeBf8SeyWKOPn+88xmJ8FnBpaJjXaKG4ba1n76hVRD29BXy/zyCYwc+RWEuNg
- GayZWbtFLJQWGm0djJJcFchCdrPS4SRgIvfd8TcyAnB4njopryeD43xzoB4h118I
- 4ZeLcAGwDVQOVyWKUr6YfoHrBoN2VB0sX2d9HTDWbeKSCGThkPR/sEUisBTztika
- 3XzHxkK2bCFawi1Ws2QQOhUYU0R3sN+cn7Rwdf6BJC3sqED5odM/vkpERyUqE3dA
- fBch0Sfjkw8QWfVJWqqB84BDWLyj9fwOn42rYgV/EoeDKxVoJRImwSSM9rEiwlHM
- /AyVPw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdndx9vq8-1
+ GkfJ0DUVwjpw7Jql39GIYw8AYSod2OF3xVsMsf7lww4=; b=j1gbCTFs2ME0NHR1
+ Si5sv9yxeLr+CCCzcdAu3+E7CiByFObb0fVykdr1nbk1tl4qDyNHF2qWGEOXnfS6
+ CNi2QS1pFoA+X2dmyy2PsITZ5/0cft5MCV5XzDoSBWE2dkcB4PUv1Jk0mXASbyrA
+ 3XKNLcnEl6z5RXxIJ1zCV8z1xIvsLfcS198DezgOgXNJP3Ur+fRmv/lByQIzBjbd
+ qGoNbH9nO1WLF4WDNp2vdXSm1ezAOhE359N2geJ7wTVNuH1DqAOPpzB5mkOcvie8
+ yBcIPMs0dfx7AV57BP/g5CVZNNrF+TjiNOPlQ7wFto5pTMZ5HJ8y3rRNw8qShaQZ
+ 18iF9g==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdndx9vtp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:53:53 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-933023a5980so945295385a.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 02:53:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:54:38 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93903982af1so1056198285a.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 02:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788256433; x=1788861233; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788256477; x=1788861277; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=l/YzYoACAzMQZT0mHSEMi7Bfq6APst8PG0qMwh1Z/kg=;
- b=WvJUk+K956MGCFFwNO+cwX24wZvjwURdQYWxtl8hyIhUKSJsS1I4Y1GbrmyfNSaoDd
- +zFgqxPJQ0rdnxI7V0/n7JfRs7Z49WldHAmmeo+jDzkEd9pn+R0rCcCGe/4s5Y7vsqkr
- BdwB8NsC/zDEF1BfRvEpDlFT21VOdyjO7ki0JnzVO3e4bhCorXQZxhGteRbJANcrksUw
- OwM2TvTmqzTazkTw/2QdCwajfLqysur4LfvZ8P5YtWcyHY0GyFmjiqU7AFl10l0A1x7b
- mx9TAo+nvlv/PKm76xE6R1w2b8h/S6FQHsKMlJfH7+aGgDrZtYsK3CWBy8am4dZmiCth
- FkHA==
+ bh=GkfJ0DUVwjpw7Jql39GIYw8AYSod2OF3xVsMsf7lww4=;
+ b=SCsZezbYHZRZ1HGeK/eIbFLy5UwIPMwEKhiGHCTUoA3HDN/krQyQL097OrnZFfcFZq
+ DVW8slzfPke74zqTZBbG1r7+ufjFo6Wj+UlkHTjkhTuxSDnwcZqBCSV6eEtTxon9R7i/
+ M6zCpBfJUPCj9AHL92umYdf8ey0Ibg1xiG4yepvZ8QgYlnb5jW/a4Ev0kQ5ziytuaBJp
+ hHNTwZnF7gQUYPzb1lYC6HUZyfEPRKlOQ4JZZYkEkc40TtmEfB4H7NRs89ioSHPQjzKN
+ 24G3IhfMRSY8siffJ3rsfAObtKHSPo0TkbSiVFhg711EATEofweRpkYXRRuroKv3SzM7
+ gBFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788256433; x=1788861233;
+ d=1e100.net; s=20251104; t=1788256477; x=1788861277;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=l/YzYoACAzMQZT0mHSEMi7Bfq6APst8PG0qMwh1Z/kg=;
- b=m7g+c5eRp66ufH+YVN894Xbx6RMjc1g4LyN7zAmKU1IO0FD0Vp9YRXap9zyebwOruW
- Y24eUmWRgjTo6TcAQfHGDTxTAvf9RpTNuWV2k65sVEwtef4wEvgqQm9Njw3+aRgbivTe
- aXkdDhCB0+61GqowSmzsqy4SwwX0R82Tj40sKxkJsNgmnlZDvUpZn9V9YqzWg9rIZNmi
- 5ruZXDteWkfFkVezuOQFvqplBawffdHVlaWSQIt+DkLfs7Ojb5Z+stxA4ylW+WTTHqv+
- b0qLYtrnQkLUlYBhADIzp0Fg9jEYpDa3rTURNoGOkDsXgAEUiv0sA8MqPqWNB9QmnENe
- GBSQ==
-X-Gm-Message-State: AFuF++mlp9PSdoZavM1BWYXMzjcKVq+ltJW/sJ2IMAnhhQS+JF0fK+42
- Wg0Atl53oj75SLMDsQYWNO8aY3+njOIqJs5oq9gHTRJZLqDUF7rYnF8c/l+VLi5tbaWpNP+Xpvi
- 75bIrvGQ0LcLXst+FSwf0rdkhm63B4BfJ2YH8P3pWXAhQan7BldBS41BQi+L7+F/RLg==
-X-Gm-Gg: AR+sD10p5eAuPKrbAuYAcPf9SzLmhMCNo6ViYKRniB/DwYd8NnMR1VeNshQedKEi/iR
- ZvI+BXL9keeU3CQeIeAzYIrQ5iJjZZJR7+UEGR1cQL+D+FMHANhWSgrjLPJ36gKdZ6Nil4IblCp
- 26y9+FRbPNZIRMha4m7wTR7g+Jb1+bkLlJnlUH77+E3tqe+tpqbnS3k9khTF+a7EzyUcjls/FvO
- cAKDQcWUnc3VFsTD+cc2SGKhyHzJMMQUhZx0cXFsM+Slp635UDm6RH/HUjxjvqnJM3FUrkCN7jI
- lGFRWwPyac6fA2ghtnhh5UZFheWReHd0apnXS6yT/a8A5MGRxPbTPSzIQvNhgbG3HdG/vSIHtj8
- qsBR2OYyPFkRUiJU2CYkcnW5qsd8AIOfLLONMvvOS
-X-Received: by 2002:a05:620a:44c4:b0:933:a17:c0c4 with SMTP id
- af79cd13be357-9391378416emr3344181085a.9.1788256433005; 
- Tue, 01 Sep 2026 02:53:53 -0700 (PDT)
-X-Received: by 2002:a05:620a:44c4:b0:933:a17:c0c4 with SMTP id
- af79cd13be357-9391378416emr3344178885a.9.1788256432597; 
- Tue, 01 Sep 2026 02:53:52 -0700 (PDT)
+ bh=GkfJ0DUVwjpw7Jql39GIYw8AYSod2OF3xVsMsf7lww4=;
+ b=DEvmMhrtXNfPTmWGYWcePpxgjVT+oUJJ5g9OYREHkeT7eJSX93+nJ7A+mY6tee0m1n
+ rnRYmhyZQs8rwi3mFOYqvY4fq7X1/Cr7Yph/iRcmYb5v6eYoLSDKC39Ites8kg8L0vcz
+ ow+mqBvkN2sV4CzqFZ8B3BrlcKtt5wqjNaI4sLm/RmpiXK+BcO7qMTmZYzJo4TJJEu/t
+ VXs4hcW3Hp15cQNgYmnheuMWxFpeRxNVUyOBlTW+kQMKr8vxNASPb5hquLYXErOum/jm
+ l1zmnWurSGASnCMKH1khugDA8KdpWWbz9rJQ1/tJZ0bBQTZnx6UxfWfhJNMR6HrY1ToM
+ BFFw==
+X-Gm-Message-State: AFuF++nKJgmk2x8/WRs3NRy0uihIJmceRUbLv6e2/SfJkOPWqLDLWyo0
+ YrG+4Sa5+/YCgweRZNa8fmylWHb3gA+BAaBADfES6Wza0owaiBTCOWhxMs7g/mfTqF2izedxpiN
+ 2C6F1m881bbKfnuJ5Z8N4WCFyK34k/1GorfG6dAATiyvQoN30B7aiO8Noh1x3OzwnLA==
+X-Gm-Gg: AR+sD12/uNUNV6m+x9UaEULBQcePPgr2/PtlKMIkDH275RasPATrtHmQU4vQcMSWv8N
+ Rx//hd9yoo8YPv1aXqfXVgyXOhQE78ZsjNYq1S5mgMZBLijn+LNH/6IFuMUNAEhH4b48AkWCCdE
+ mgNOVxaUbw7e+uXZB2Arm1lJek1YvgX9lTxPv5a6D+fUkxSCej9MBio6UAxnGFGS827f5P5vPMJ
+ n+dQLzL3+SCgX54tWzvWj9H+HeWHhtzx4PF2gPURyDSi2TFVA3MhLjOeMKbyCCtqtIgSxZgjKIi
+ GGlUiowT+/mxSbUimmOj8C2jZW6op0NGMNixfUkOyddWOgzPBR7QJnt54R4WAklHqy23o6A5EbN
+ rAWgYd67/Jj/3pwmi/53xPu9qQXhox6Gk1z1BsQXp
+X-Received: by 2002:a05:620a:3c96:b0:937:690d:a37c with SMTP id
+ af79cd13be357-939137b46a8mr2623262485a.3.1788256477564; 
+ Tue, 01 Sep 2026 02:54:37 -0700 (PDT)
+X-Received: by 2002:a05:620a:3c96:b0:937:690d:a37c with SMTP id
+ af79cd13be357-939137b46a8mr2623260285a.3.1788256477167; 
+ Tue, 01 Sep 2026 02:54:37 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b91c5790csm294645385e9.0.2026.09.01.02.53.51
+ 5b1f17b1804b1-49cdce1e1ebsm56936285e9.14.2026.09.01.02.54.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Sep 2026 02:53:51 -0700 (PDT)
+ Tue, 01 Sep 2026 02:54:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -94,37 +94,37 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Bibo Mao <maobibo@loongson.cn>, Song Gao <17746591750@163.com>,
- Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v5 11/21] target/loongarch: Constify CPULoongArchState for
- various cpu_*() getters
-Date: Tue,  1 Sep 2026 11:52:17 +0200
-Message-ID: <20260901095229.72018-12-philmd@oss.qualcomm.com>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH v5 17/21] target/sparc: Constify CPUSPARCState for various
+ cpu_*() getters
+Date: Tue,  1 Sep 2026 11:52:23 +0200
+Message-ID: <20260901095229.72018-18-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260901095229.72018-1-philmd@oss.qualcomm.com>
 References: <20260901095229.72018-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 5PwisF5febGUyBcmwswlgACvItf7fc1i
-X-Proofpoint-ORIG-GUID: 5PwisF5febGUyBcmwswlgACvItf7fc1i
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX0sBMP/F6r1vy
- 2h127+CEXObIZ2UQTWFGyrcME8KsvJxLCCtUBit/Qi/jLiRcGUbC+sl/gzAauX8VPO5TzhZq94E
- uvmTSTZlUmV0QqN8MzWRewWfD7f6Zlk=
-X-Authority-Analysis: v=2.4 cv=U8eiy+ru c=1 sm=1 tr=0 ts=6a96a0b1 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: HRga7CGyvUkQ6h5E4ljVIk0xoSWG4k3I
+X-Proofpoint-ORIG-GUID: HRga7CGyvUkQ6h5E4ljVIk0xoSWG4k3I
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfXwS0rlnf5pwwc
+ udIAEmFQcr8Fi1Uuktl50TpfVJd3lR1iCQCB0ChpxzJfvr0FGdDjKqHRfSGUt0YZ+RrgN/tbiuK
+ M0e30WZIiGAjTWRNhkU/a6fQ7HzeZQI=
+X-Authority-Analysis: v=2.4 cv=U8eiy+ru c=1 sm=1 tr=0 ts=6a96a0de cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=IBuu09U9_flyDEDmYOIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX4GokxkQR9Unr
- qmZq8azXMDzxOILzl6gwEoqU1IsTj9Vo0skPmRp7zbDjJ+cvAcQg37kh+w+HFBUv6daaAeY9Vtg
- rUeK+arndH5JEMD8E/WouRsc8JwekQS4fmCME/Z3H7rRbOzLnqxObGpB2/sEa1ZXf84DYznEIPl
- IG9W1TX8GCusG8/O/JJUsOLnflwy9UBaBI7JmVOtGGWnJj4s/ALlnA9gc9f3pm5+WMNppRRZgQr
- 2DIzJoBrUFUAJjtFCznnpHQRu2CwoeKxFIbDgG7CaKSUJRISmDux64ocrB6ZHnvKh1wJnr96J0i
- NHs0F1InhGpBnZsvBMWCzzhjXXbU8f02EAlhixmelHP4Q6cYYADljWRFHhQRgGIshsmFZ6bI4V8
- QgiqHqXID2GBjYi7rw9Q4a+kiKhqZTXb/81WTAb2e0nhMip4p2tDS8HadsPApDdWs01dMA0s6Hy
- Ms541dIUCw+IgXJOxLw==
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=tlxghdvPRZsVr19qFskA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfXzcTqWYjocHhN
+ ycsQ6ogt28hMT8P1ZeAzcHcTmhvApJXiECztMwXUNc6975G4Y/n3swQaf0x75PiApzjnr99tSsn
+ O9p+1xJnHIe6JPw8InbE3wUBTSb/13XHj39jM2XEHUpAc1v3p9CoX7r77WQOP4Za4UXXZfCte+9
+ tLb2zM6NMoV9wOtZUfX8EAZFh9N/Xy2PN7p7kVSjGgvpbq7koyic1TD+zujXa3rx+baWIaL8MJw
+ +kvyFk1WadCRQp4iLQMcr5tE0U1OfMOh4/H+8QiuPJeIHpWv6NnF6XjizJ2dyS3qbyNcNrSstkw
+ rv6dIHlRGz34As2ql0DAtf0G5m1fjd7tKmHJQLOJIgb7epBfM4Y9g1hLggLpyTQ+kVqvVy2rVki
+ iVt+iFpyzObf+DWaPt7V/63ARGjijCSKDJstgsXqKnT9t0d/UX8KCqKY01aaRMk9ewyr2cfrlGj
+ 26P6OdxGQsXjyMwzvAA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-01_02,2026-08-31_01,2025-10-01_01
@@ -157,72 +157,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the const qualifier to CPULoongArchState when
+Add the const qualifier to CPUSPARCState when
 the argument is accessed without modification.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.h       | 6 +++---
- target/loongarch/internals.h | 2 +-
- target/loongarch/cpu.c       | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ target/sparc/cpu.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 97db3b453fe..ad8e7497279 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -486,7 +486,7 @@ struct LoongArchCPUClass {
- #define MMU_USER_IDX     MMU_PLV_USER
- #define MMU_DA_IDX       4
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 5f583ed9de2..31a16c2af03 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -680,28 +680,28 @@ hwaddr cpu_get_phys_page_nofault(CPUSPARCState *env, target_ulong addr,
+ #endif
  
--static inline CPUSysState *env_sys(CPULoongArchState *env)
-+static inline CPUSysState *env_sys(const CPULoongArchState *env)
+ #if defined (TARGET_SPARC64)
+-static inline int cpu_has_hypervisor(CPUSPARCState *env1)
++static inline int cpu_has_hypervisor(const CPUSPARCState *env1)
  {
-     return env->sys_state;
- }
-@@ -496,12 +496,12 @@ static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
-     env->sys_state = sys;
+     return env1->def.features & CPU_FEATURE_HYPV;
  }
  
--static inline bool is_la64(CPULoongArchState *env)
-+static inline bool is_la64(const CPULoongArchState *env)
+-static inline int cpu_hypervisor_mode(CPUSPARCState *env1)
++static inline int cpu_hypervisor_mode(const CPUSPARCState *env1)
  {
-     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
+     return cpu_has_hypervisor(env1) && (env1->hpstate & HS_PRIV);
  }
  
--static inline bool is_va32(CPULoongArchState *env)
-+static inline bool is_va32(const CPULoongArchState *env)
+-static inline int cpu_supervisor_mode(CPUSPARCState *env1)
++static inline int cpu_supervisor_mode(const CPUSPARCState *env1)
  {
-     /* VA32 if !LA64 or VA32L[1-3] */
-     bool va32 = !is_la64(env);
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 5e9a6c7bd65..a831507f439 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -39,7 +39,7 @@ uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
- uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
- void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
-                                                uint64_t value);
--bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
-+bool cpu_loongarch_hw_interrupts_pending(const CPULoongArchState *env);
- #endif /* !CONFIG_USER_ONLY */
+     return env1->pstate & PS_PRIV;
+ }
+ #else
+-static inline int cpu_supervisor_mode(CPUSPARCState *env1)
++static inline int cpu_supervisor_mode(const CPUSPARCState *env1)
+ {
+     return env1->psrs;
+ }
+ #endif
  
- uint64_t read_fcc(CPULoongArchState *env);
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 7b601bd3728..3b3cbde882f 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -96,7 +96,7 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+-static inline int cpu_interrupts_enabled(CPUSPARCState *env1)
++static inline int cpu_interrupts_enabled(const CPUSPARCState *env1)
+ {
+ #if !defined (TARGET_SPARC64)
+     if (env1->psret != 0)
+@@ -715,7 +715,7 @@ static inline int cpu_interrupts_enabled(CPUSPARCState *env1)
+     return 0;
  }
  
- /* Check if there is pending and not masked out interrupt */
--bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
-+bool cpu_loongarch_hw_interrupts_pending(const CPULoongArchState *env)
+-static inline int cpu_pil_allowed(CPUSPARCState *env1, int pil)
++static inline int cpu_pil_allowed(const CPUSPARCState *env1, int pil)
  {
-     uint32_t pending;
-     uint32_t status;
+ #if !defined(TARGET_SPARC64)
+     /* level 15 is non-maskable on sparc v8 */
 -- 
 2.53.0
 
