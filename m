@@ -4,94 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 166EBC61DD6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 16:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88748C624D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 16:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1RDk-00054k-Jh; Tue, 01 Sep 2026 12:20:26 -0400
+	id 1x1RHs-0006KD-G7; Tue, 01 Sep 2026 12:24:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1RDi-00054b-1L
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:20:22 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1RDg-0005mF-1S
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:20:21 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so50364865e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:20:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1RHq-0006JJ-1t
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:24:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1RHn-0007Eq-VH
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 12:24:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788279875;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=25fiuP6bOK0DBpPLD1aTgxA0PLNIIfB1Ji8xpraYRSM=;
+ b=dUASubra16ISwc7htDsMCZTNHdXPbR0eE/ICH1JjNr6Y6igI+gly3Y8vuoWqAidRqxoUS3
+ 1jX38vnJjODsX+HP6GopvZUFHrZr7lNsJM0mQYZpIoX1L9tYu4RZPYQn4O56LtjCCS6fT6
+ bg/FzkW6eO/0yJ3PtndYDkQQ1XSvIHo=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-652-N7j_WZo-MMm0kfmnZ9xvqA-1; Tue, 01 Sept 2026 12:24:34 -0400
+X-MC-Unique: N7j_WZo-MMm0kfmnZ9xvqA-1
+X-Mimecast-MFC-AGG-ID: N7j_WZo-MMm0kfmnZ9xvqA_1788279873
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9308eafb465so19793185a.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:24:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788279873; cv=none;
+ d=google.com; s=arc-20260327;
+ b=glsGlcS8fIYbdphmNPZxAH805REiuZOKP96v77lUtmLytD2yaLAxLyHPkRP1ShQ3CT
+ hJK8Tty2kTkTchp3gxPytoBrwGPpfkVnx8Yy/gSKspcy5m0LwjqI4qJomxqAtRaNjDHw
+ T2df4hVwsxZTeuqPhVdpU5zwjormmV2dhh9gaPVNyNzTvSdJUCSTnPBWyFeyq6WtKmma
+ GvT6hgT7CdkvlIjJW728QwB/N1oyeqQkwu5yXzJZcsdd2M8HrBedFsga4C9vN7SKXzkC
+ 2zOeKSyEmg8TaIB+Am1frX0oEsW11OQBX49PxO/XhGroP+BoFGiwQgnygAc1xBiSBb5k
+ ECMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=25fiuP6bOK0DBpPLD1aTgxA0PLNIIfB1Ji8xpraYRSM=;
+ fh=xizSxd+jaOv06DKbfuw32B41n2rBki2lFEb8Vushet0=;
+ b=T/1b4Qmw9XB3SQXY6NG7bgLwaeti7f20roLvzGPWCcreruzJYf5y/lWJfp8PygUgzf
+ DHbGXSNV1Nx5UyuDQA2RGby4KGk5apThpfo+jpdFf2xZDRdRk9VMTD1d+cUeb76nhC+t
+ xGM4ABFCcCR5hmWxkj+sTE3IpLip11CO0ixlP6vhxB1syNfPRf96v0BGsV/pGE1h+mnP
+ LFDxtMKSw8ArTEYnCkBLjqlrgIrXXuMC0UtGXiLsTte2aiBEz2OMNjKghvchmoqRzFVz
+ xUjVfW9vOxGEGTyAC+k6fI2eu+SPoDOonpzjpN5SVFANPCdclrvVcjNUfr7l/2NtIl+B
+ qRPQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788279618; x=1788884418; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ephyY1eI9SteQSV7EWRsttTS0JX6QIhioumwXSG2CUM=;
- b=RTpaFgaVmagQwfbd/1TDSAo+TVAgid1SFUfo9NuRu3kn2jtuirs/Zeh0iAj/pHwEdg
- FKBeO9cCuG1GqnF+p97ZLVx/MKbJqmKflPNfGP3bX5AM6/2EbynhcKCcuquQUM2pve4l
- EQGTJe5MMfgXU4L1DLTYM3atXA4Y0xl7v4liyBOhKn4R5lyzNQDhRdx0/0dEjdPAhz9D
- KqJ4VmRRINLeX5fEAq4fssIvLLdCvZxZeeKZQu6sH83pr5dV25Fh4XkLJfFxhTmZJsCf
- 2zVpv6RDkJJaSFA66iuQ23/nSzJp+CtmILXigDyU3QsnJSsnS0nRjLYMMyinTEMFKg28
- EqXw==
+ d=redhat.com; s=google; t=1788279873; x=1788884673; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=25fiuP6bOK0DBpPLD1aTgxA0PLNIIfB1Ji8xpraYRSM=;
+ b=RRHpj8/GN9WiyISYwt46j/KZUy8L4EOqGZ+gLMAe7dL7MSpgPFp1PAZSo6ZrIzEKKQ
+ 0QMGoor3+ulPxGbJD6U081LQY3yP8+Oq8OQa7TMvhM/JxCQtBcoAJ1eLLq+jOEpjF0+V
+ sbUnP1yHKUZ2ZYKQ8TU5gHX3H6y8dDeq3k8ACgiEdVrzqMC20Xz7Ixo2A3PsfCnPrdhm
+ QzsXA1zEpA8KGxk6Fw03Ee343s4kLC2GAMaYDJgpfQqoX9TH2YclrxdWsEkway69+dnR
+ iq7oFfDTRfFcsSpMiM3m5DO3a0nkl15eBa4ng1WFG3TF/lA0D+ajjwTRHZMERjbEJBP6
+ 7vTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788279618; x=1788884418;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1788279873; x=1788884673;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ephyY1eI9SteQSV7EWRsttTS0JX6QIhioumwXSG2CUM=;
- b=Yo9gIvEUAoRvnrZLqlI2u07t1UddXviUDMP629W7IHWNMiLXbpG7I3BDPju0rk6joB
- Q3lrsPrdOo7XMMEU0kvk/YNLEl4ytthDSjZUZ/Gpc5kAYVLkp9mgc2b0yEuxFFQENPFS
- QD3702m4Wd57/59eo3jcK72mtUqxXM7nRz8XPcazW3mrkv/l6WMAZjxrGht8h5LhcQzn
- aQhZZvx7BVrLZHTYJ0flQmaEbpcrBt4M+AP7c5SPi0DrZbQaoLPWHkWiSLXAFdwyouTV
- pCTPYXiCo/Dt3XM/U+RQqfxnfts00T/hxCXzgvhBN03L1wuyl6OPhPTN4w/5sKdRI56X
- 3RNg==
-X-Gm-Message-State: AFuF++mUzaJwusCQFvLwGuxiD033NRsGTufP5BMRRzvIGRmIKmmYoghp
- m0qpxYiSHBIHD7Aun1n0jp29kCHY8zYxEm3IADIiE+dsPU5gutOrKDKo9LIajS2LiN0=
-X-Gm-Gg: AR+sD111C2xhM9aEp24ERaJypD2GnDV/KnfSbiCrLU4mj0OHPFg1RvhX5fGr5v5YBBR
- pkQMOYtSXA7B9/lFXF4RgH1s/DylnpvR6N9rMFNrmDys3t0NJ2F/C/K2LWc7KnMK3G8ESVuySC7
- JJhLaa7JDH8RfxbQqQ4gBmfFTIiplweH33EJ5lryc8mM7IhcZwAb7TxlOMTH5U8viTYjFJqifJv
- QQHoAOOhvwlWjrAZNTqq53hrpzU/U/yOoO+wIN5Eb2onT21acV2j84eDPhgLPy9X/X8zQ5Q62+L
- wRVdyqHvOjSBudEfFfkqLfbNbq8ewps78VG1880xc84HkO9Y090QV6f+RcUaNRf4+3yTEBrpr/m
- J2Xmxo22XZeKpCrKbCbeBDBQVjwEpns114CBsJfBna9dxExTI6M+LRihkKlOagzLkqcxnJoFGc+
- 8y+kiYdu4JQ15sTRsQNHLaA1BKv6ZWWhllvw51GCbCszNxEScCzJdlL0mV5IqO
-X-Received: by 2002:a05:600c:3492:b0:49b:909e:922e with SMTP id
- 5b1f17b1804b1-49cdc4523d5mr191623345e9.10.1788279617883; 
- Tue, 01 Sep 2026 09:20:17 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce1025asm76481695e9.6.2026.09.01.09.20.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 09:20:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 40CF25F829;
- Tue, 01 Sep 2026 17:20:15 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Peter Maydell
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH] gitlab: use --emacs --quiet for checkpatch.pl instead
- of --terse
-In-Reply-To: <20260901154741.1488763-1-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 1 Sep 2026 16:47:41 +0100")
-References: <20260901154741.1488763-1-berrange@redhat.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Tue, 01 Sep 2026 17:20:15 +0100
-Message-ID: <8733vtueo0.fsf@draig.linaro.org>
+ bh=25fiuP6bOK0DBpPLD1aTgxA0PLNIIfB1Ji8xpraYRSM=;
+ b=Ew3qQJ/RjtTAsJtcutMzImQbYcHduusB4i2o8OmELtzxqbpqOXCbbA+I7OUxgFLQcJ
+ Dct3+ovE7WQU+6jpQlEBDtGILJeAYO5JIN5mQ4KpSYGttO7hQdhexheLdGoVXwQF7EuU
+ 9vSypT/Dc2OGuJREqMl3pIE6pM/fxTulmKkDekW5VoLmWTm2ljHMS4kvyUdOAllIjykA
+ gbJJvRCi+psyrW0vOuf9rqE7frniRyZlzWx19wZyM4iTKullHH/H/pvlYJBXFLEcjxR5
+ iBu5uHT6UU719qMAPGUjTMqP1SrzyzkkJAjzZ5oHnIHOSb9/sKwQiG2ATnVXry0s0g3h
+ Y3Ig==
+X-Gm-Message-State: AFuF++nBEAuCLKF8SD8xj3JeRFvhErYbkwSzHahW/b9xdgAEgwchEGTz
+ mVF2bsgsqH0A/hVoXRe1TpwFvwTVLar931EA+v0HpDCFhHQCYr4HKpkAzLI1lPUgJpYxuSkHuI5
+ z0LiXU1ayouSlyGwvX7qQpJb1WJfJv1yt9LaCPa/o2fNu8L3BWHLSHDEVlKCKRmtUimaVMdSZP1
+ Y8CAhcol66oWqoKY7OtpwnUYOu6wOVWhk=
+X-Gm-Gg: AR+sD11e7vjd7HffGnq7xFQ4ESeboncmj97nv/53OUaRqK+jBgHTzHqaFtL55P0zZ/w
+ cWqK5Rvz65KqxcuwcOPnOVJDi5p67kgAWaKqCFrMjKv9U4WKXHHHaQmuDcyklOUflWJBEfrxr2S
+ 9lFY52DiwXMSqdKTMlL25NWQZ6pe42VEHAyhxB3Od+HFz6/qJZrgnemQVjgJwIi7jJ46BkDMiaR
+ jZNNKDAUXYpM4E0
+X-Received: by 2002:a05:620a:3c09:b0:939:409:708a with SMTP id
+ af79cd13be357-939137d1dc3mr3317057485a.13.1788279872350; 
+ Tue, 01 Sep 2026 09:24:32 -0700 (PDT)
+X-Received: by 2002:a05:620a:3c09:b0:939:409:708a with SMTP id
+ af79cd13be357-939137d1dc3mr3317047485a.13.1788279871663; Tue, 01 Sep 2026
+ 09:24:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260224181440.832943-1-jsnow@redhat.com>
+ <20260224181440.832943-8-jsnow@redhat.com>
+ <CAFEAcA_r9n9e10WWqikiNwocrLPTDEofk8gxpi3_7RuA5yu0-w@mail.gmail.com>
+In-Reply-To: <CAFEAcA_r9n9e10WWqikiNwocrLPTDEofk8gxpi3_7RuA5yu0-w@mail.gmail.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 1 Sep 2026 12:24:19 -0400
+X-Gm-Features: AcwNN1VO2mIDf-ZymnR4Fftw-Brppp4-mzH32gamTDT3bJqArqfqTFoFk9miDCY
+Message-ID: <CAFn=p-Yg5Z6mbwcJeeri0d2XxeyQQwgpgy8k-+PCLAC_E0nd7g@mail.gmail.com>
+Subject: Re: [PULL v2 07/19] iotests: tolerate being run outside of pyvenv
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kyle Evans <kevans@freebsd.org>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Warner Losh <imp@bsdimp.com>, Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Ed Maste <emaste@freebsd.org>, 
+ qemu-block@nongnu.org, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,65 +151,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Tue, Sep 1, 2026 at 6:14=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Tue, 24 Feb 2026 at 18:15, John Snow <jsnow@redhat.com> wrote:
+> >
+> > Modify the iotests environment preparation so that it can detect when i=
+t
+> > is being run outside of the configure-time virtual environment and give
+> > a warning to the user, suggesting the use of the meson run script
+> > instead.
+>
+>
+> > +        if self.python !=3D str(venv_python):
+> > +            runpath =3D os.path.join(self.build_root, "run")
+> > +            cmd =3D ' '.join(shlex.quote(x) for x in sys.argv)
+> > +            print(
+> > +                "\n\033[93m\033[1mWARNING\033[0m: "
+> > +                "iotests is being run from outside of the configure-ti=
+me "
+> > +                "python virtual environment\n\n"
+> > +                f"current python: {self.python}\n"
+> > +                f"pyvenv python:  {venv_python}\n\n"
+> > +                "Individual python tests will be executed inside the p=
+yvenv,\n"
+> > +                "but the test runner will continue to run outside.\n\n=
+"
+> > +                "\033[1mPlease use the meson run script:\033[0m\n"
+> > +                f"\t{runpath} {cmd}\n",
+> > +                file=3Dsys.stderr
+> > +            )
+> > +            self.python =3D str(venv_python)
+>
+> I just noticed that our CI triggers this warning, e.g. in
+> the block: [parallels] job:
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/16226916350
+>
+> WARNING: iotests is being run from outside of the configure-time
+> python virtual environment
+> current python: /builds/qemu-project/qemu/build/pyvenv/bin/python3.11
+> pyvenv python:  /builds/qemu-project/qemu/build/pyvenv/bin/python3
+>
+> Presumably something here needs to be fixed so we run our own
+> tests in the way that they expect to be run ? Or does the warning
+> need to be adjusted so it doesn't complain about the difference
+> between executing the same python as "python3.11" vs "python3" ?
 
-> The default checkpatch.pl output includes a lot of "progress"
-> information...
->
->    NN/MM Checking commit HASH (SUBJECT)
->    total: 0 errors, 0 warnings, 105 lines checked
->
-> for large patch series, this results in alot of noise from
-> clean patches (which are the common case), obscuring the
-> info about the patch violations.
->
-> Since the alerts from gitlab job failures only include the
-> last few lines of log output, we want the checkpatch.pl
-> output to be highly relevant to the failure.
->
-> We previously addressed that by adding use of the --terse
-> flag in 7025111a199b97ae806817788bec50f456c47d85, but that
-> made the output a bit too terse. It no longer prints the
-> offending line of code, so understanding the CI job failure
-> now requires manually re-running checkpatch.pl locally.
->
-> Using the '--quiet' flag gets rid of the "Check commit HASH.."
-> messages which create noise, while adding '--emacs' causes
-> the WARNING/ERROR message lines to include the commit hash.
->
-> This is a more useful tradeoff for the CI job logs. The
-> output is limited to only patches which include code
-> violations, while still including the offending lines of
-> code in the output.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  .gitlab-ci.d/check-patch.py | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
-> index be13e6f77d..45be77295d 100755
-> --- a/.gitlab-ci.d/check-patch.py
-> +++ b/.gitlab-ci.d/check-patch.py
-> @@ -46,7 +46,11 @@
->=20=20
->  print("\nChecking all commits since %s...\n" % ancestor, flush=3DTrue)
->=20=20
-> -ret =3D subprocess.run(["scripts/checkpatch.pl", "--terse", ancestor + "=
-..."])
-> +# We don't want "noise" for clean patches, but do want to see
-> +# the full commit hash for each violation, along with the
-> +# offending patch content
-> +ret =3D subprocess.run(["scripts/checkpatch.pl", "--emacs", "--quiet",
-> +                      ancestor + "..."])
->=20=20
->  if ret.returncode !=3D 0:
->      print("    =E2=9D=8C FAIL one or more commits failed scripts/checkpa=
-tch.pl")
+Looks like it just needs an adjustment to the heuristic, yes.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Normally I'd say we should resolve all symlinks, but as venv python
+executables are themselves also just symlinks to your system's python,
+it's not a reliable indicator of if you're inside the same venv if you
+do that. We have similar code in mkvenv.py that can probably be
+leveraged here, I'll fix it.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+(Hey, cool, all of the info I put in the warning was useful for
+diagnosing the issue without going digging in the code. Awesome, I
+love when little affordances I put in the code pay off for me in the
+future.)
+
+>
+> (The actual failure of the job I think is unrelated, it's just the
+> reason I was looking at the log file and noticed teh warning).
+
+I agree.
+
+>
+> thanks
+> -- PMM
+
+Thanks for the report,
+--js
+
 
