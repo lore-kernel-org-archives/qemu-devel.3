@@ -4,139 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF31C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FEDC624D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1SNA-0005at-Q1; Tue, 01 Sep 2026 13:34:12 -0400
+	id 1x1SUU-0002Gn-Ed; Tue, 01 Sep 2026 13:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x1SN8-0005ZT-7O
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:34:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1x1SUS-0002GN-Az; Tue, 01 Sep 2026 13:41:44 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x1SN6-00082F-9a
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:34:09 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 681HY5cn3285336
- for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 17:34:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LA3LpPUcsAsJJH0v7IALoyhsek3de2dSlP0tKUJxcdc=; b=lAMcI6JBQwFmPto6
- QVNtbw4m4Q4SSMaMl6HDhD2U3vYIRAZ3BNiVhnDJ0yFxI7l3IL23BFOVHzwM3Ys0
- mZ8mQOpF3O1R2nsfytNOIwS/A7FTNNHJW7VI3FYIXFUWZ7J6ZVPtK2eQ7ml5niYF
- rQv1L4P87HPdcGqWaUQuo3MQEtiIoRkA4kPYQ+I2nxdB/zR97hbEAj/L1k4Lgik9
- DHMEkZbhdOj0lzVW9P5smwhmqw0eluCu84s7yAF4vnHQmZ/GoCGklj4wpGZevlsh
- gF8FDaj9F4Cg/Ymoz+mfK1nQClRMck1uXhh66+oDFuiqh9FdkUO8MK4dUABzpIZ9
- W4RExg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ge37j000k-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 17:34:06 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-39512608fb1so201209a91.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 10:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788284046; x=1788888846; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=LA3LpPUcsAsJJH0v7IALoyhsek3de2dSlP0tKUJxcdc=;
- b=TExzt87Y+Q2nAJ+hmD9zfPBqY/nVnQ7lYW3aeqA0ScOukr3MQUK0C7w0Jw/o/NfHyQ
- X6F+0shbdFoGnPvjMxexL8gs8MSchJWQN8nF9CNIdplpUEza1JgkS1DuZHCj15m1MP+5
- yy1welOFctnWpj4eSi3EkeMSzQuQljgY4BxCpwNB/zrU5FpaWmfjfAqNYcOb/EaLiBns
- TAtj/fIR71ARgndR6V3/iE5yaqaMnTXqvCZodJjwFWv+tYlR3xpkZAQOuq78AsNgMjrH
- /J/dEs9KeTjMdr47nepDcAnQ+Frex2qXNdl6uNxe6krIKFJvXo9O8gOUQ43hgjCU86a8
- 4flA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788284046; x=1788888846;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LA3LpPUcsAsJJH0v7IALoyhsek3de2dSlP0tKUJxcdc=;
- b=F9RL2ZKXxYbpr9NinyXFe0iaEXJtTyZ19srD9VhUDXtJk6Sz94b4Pf4mB61ne8uTr1
- Tv7WVNqGUasFwFSgWfYVZwiXy+JLNMi0qHIinhcrKeRxt/NbpnrHv0+p3Foj6Ump03fd
- S6q6JJynW/rg3Qad0/xmpjcrG2hzDe49v/aqDkj2rW2wvqZ3P37wB2BZoEY29AFDxWAJ
- VLz4MEAnlxZ8USTpS6SYJmsl86FQYHTzq73QQURW/jUD2FA0MwhH8966hd/wHdzmKzbl
- lu2euOLeRUqpQ7OnPfuFYN/GBjoDktyL+MNjLdudsE/xFjETBOvgWBFnh1HxP7NcPSUm
- Ssug==
-X-Gm-Message-State: AFuF++nnkJw2YVLfMiGKT8cEJU91kdhi4CKEHbe8oKQbHaO5gmcq52Q9
- Px6f+U1eoUjfd99OYdgm7sSSJqTHcmN+ClM1f7Q3hC1e2rb4dZySspLgJhoI94nvCTxu2+SIjo7
- Wnm8Lta06iTip38mrIMAzlKcBJ1pnxxq/9MBJm/M9LoN3F0JSRN7k0UK2Z4gIwmSMYg==
-X-Gm-Gg: AYBFou2R152GCYr+fKIb231WoDMn4xhlgfxS3F0l21Ex1uy06oZ6ihiIAbwhYC5VYey
- uOjBhTK4yDn8KSC33h1pk8CzEmyR8G7Kx16yU4SdPwiHu8T4sBIpLc7M2WLF16nBPFRHPTnwKNF
- cDlfgMhLwZiMCsJwOEMCE0HHo9AOnYrzLeI3q6Yel7hrOUv/K3YZ+woq/2BlXNb9a4V0y/v1aaA
- FQ4qmn0fhluMhjVTe+wqqjoKDICjYxFEVQYJeHcrw/zL/07IPF8vv3a/XhKUqpecduPMtQz93AZ
- RhIPwydWqMC0bYgvRmBeNnBUuhANWJhExnaYb21uYWD75WjEqRbZwr7p2GYZQ+AOF1gEtxteFAC
- nBRTrpD1nFgWt3bcLZUGrF3Jw58MzXIAnEoUP2/NWL46vwI6t
-X-Received: by 2002:a17:90b:17cc:b0:398:d8eb:cb2a with SMTP id
- 98e67ed59e1d1-398d8ebcd21mr21258596a91.23.1788284045616; 
- Tue, 01 Sep 2026 10:34:05 -0700 (PDT)
-X-Received: by 2002:a17:90b:17cc:b0:398:d8eb:cb2a with SMTP id
- 98e67ed59e1d1-398d8ebcd21mr21258507a91.23.1788284045070; 
- Tue, 01 Sep 2026 10:34:05 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3286f95a160sm39702934eec.18.2026.09.01.10.34.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 10:34:04 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
-Subject: [PATCH v2 07/11] target/hexagon: read UTIMERLO/UTIMERHI from the
- global timer
-Date: Tue,  1 Sep 2026 10:33:49 -0700
-Message-Id: <20260901173353.200474-8-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260901173353.200474-1-brian.cain@oss.qualcomm.com>
-References: <20260901173353.200474-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1x1SUP-00017Q-F9; Tue, 01 Sep 2026 13:41:43 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 681H5Ead1668537; Tue, 1 Sep 2026 17:41:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=SH8+I15euMRCor96TZRo2LUb56VNaAnYt9Lqp9MrA
+ 0E=; b=JSQLizVxA9eBW1/ce8VyqXEJi1VM0ypKQ+BupF1PeL6IvtTxpstXtQL1V
+ jzooU86yCgxBt58uZFWkklv5GxGpP56L2XPKZr0gwicquJBish3ehOuerd1HzQLg
+ nsp60m9qXAkGwlPbgZNXHClphTK7cFGjv9RxpEhebOZYQolPx0vbYu/ty2wckuzo
+ yeuYh2g8X2q0BYVNmBwN1onNCWbvJJLc3KMNntDouyWOUxURi5YzyU/Qdw9ELciI
+ A79BWRrL2UN6TshK50maO4A6NmabjsAbxZx4TjR442Pcf0NfRqJ5YvGgEyQIXoMX
+ kPQWO8ib1DL234aTlIshex1LJNW6g==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbmuhsffc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Sep 2026 17:41:36 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 681HQGAr021854;
+ Tue, 1 Sep 2026 17:41:35 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcbygcvbj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Sep 2026 17:41:35 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 681HfUHZ36635038
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 1 Sep 2026 17:41:30 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4554E20043;
+ Tue,  1 Sep 2026 17:41:30 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C43EA20040;
+ Tue,  1 Sep 2026 17:41:26 +0000 (GMT)
+Received: from Narayanas-MacBook-Pro.ibm.com (unknown [9.124.219.126])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  1 Sep 2026 17:41:26 +0000 (GMT)
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, mahesh@linux.ibm.com,
+ sbhat@linux.ibm.com, anushree.mathur@linux.vnet.ibm.com,
+ clg@redhat.com, sourabhjain@linux.ibm.com, adityag@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com, npiggin@gmail.com, 
+ harshpb@linux.ibm.com, amachhiw@linux.ibm.com, hbathini@linux.ibm.com,
+ shivangu@linux.ibm.com
+Subject: [PATCH v5 0/6] ppc/spapr: Add RTAS error injection support for VFIO
+ EEH
+Date: Tue,  1 Sep 2026 23:11:04 +0530
+Message-ID: <20260901174110.45356-1-nnmlinux@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: uMtElhgjsxy-lMOyp8yuPW0qUCUpyFoi
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX1Or86lHnmiZx
- J2dAAoyMiLHkUyVbtQPmATWDQcfPrRlhpWL/6+S+GlCH88wvPFQWfd4ICrKhlqbXsr+ncSCz82M
- +E+I9BFguyPYyOoLBTsCh6nXA8cyLvw=
-X-Proofpoint-ORIG-GUID: uMtElhgjsxy-lMOyp8yuPW0qUCUpyFoi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX213QytYJnEyg
- PtKxGFzPLSgV4oQvzl0nsE9OAhG6h3cNbQDBwQUJmvRIRMmoamGvybFXqxzuzCq6uJY2xlHDgBO
- G4E/PGT3SnGj8N/EnLLP8RSHbFPcJzo+wqWcOT1iTBGUuBbIH3Oqp4pe/Q2uXD7aj3KlUefiFyk
- m8QMML1yzGlwiY/pqy8l0VmKCaNvXMj0sT00bFNIE0wOydxkwda8kqK6siG2fJG4SPQrzwxIkMc
- +hd4WygppImrScyLcnvxOYVAkIN60Idk9Y8tipTUJSA8Jw/ewEb9VqlQh/xc0yMtBYWN6m2k9k4
- 6YDfEqVvbk4mTJylFuphFg6lBq0EcCeRS9ejSvQOw4+mtM0igCTHBTqqJEERoII5GjyNmM9wipV
- dKGgMCcQivfuN/aDdFwBzZWCBbaXfH6ZOuBPxkEbyKddS73Pkw6vF3w7lvLT/66zKWrtfPVYuJh
- EpBWSGlA1GLAPv5GrUw==
-X-Authority-Analysis: v=2.4 cv=PKg/P/qC c=1 sm=1 tr=0 ts=6a970c8e cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=q_fxtLUCAn1J2UUIEkUA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: b8K9xVRKy9xMqwsOfljjBRA_wR6EeD7b
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX2YMwQglfcHJ4
+ Yh7jwp9FVsI2EGkrS+jwClb9wq0xrgiWwkUpu1hrqqzIYXwPaGpFRulqSr1jTMJYezNrI63eE3k
+ VmaY11a1POOow3ieVbvAORxJCxwD7xtjAMnKMAOWFlzBFNV3XLQz9OXfGerzDq0YQy936ezkwMT
+ pKqPQNLiIXbOFjOVayH/QVnH5kBd65Apq1oT+iQZNQlXmd9ox+4WIDtOg7Fleub2hnP0HFv5Whb
+ YL5KtHz6WNSqUgBu5XJTq32jmsSWY9P9i3+iVOEbu/cuOmmxgDYbbiiaIHZXhbLSecGvsNGi6ex
+ mPH3Ohja2QsOWeSNER0jEKgMHMWxSHv6SV+CaJiE8nQ8HEqdkU4UGa953dppoCLTHL/KFezXTTm
+ 3RMUcdOVKtJcbrZHvD9e+klACVKQVhn64GyvnvRqVac40Dwql6QPJGMmwv6/zZaPITcW2Umd3Wf
+ 057M/pnHZMPjAZ4C+Lg==
+X-Authority-Analysis: v=2.4 cv=Osl/DS/t c=1 sm=1 tr=0 ts=6a970e51 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=NEAV23lmAAAA:8
+ a=jd-kljAV4aIsPUV3Z5sA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE1NSBTYWx0ZWRfX7oyDQuqkmDBY
+ jTQWOPzdDfSkd8sr459RVddpIAFXmOALjRlmlzBAP2HKG4EsFJTjF8mGRYETwcoFmdXSci3swMz
+ fBvchRynLefuIuaXoJoCCjWxWvCc0GQ=
+X-Proofpoint-ORIG-GUID: hoQzvfGkvKctzbBHTjDARldXoLVC9aSI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-01_05,2026-09-01_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010155
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,104 +124,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SW4gc3lzdGVtIG1vZGUsIHJvdXRlIGFjY2Vzc2VzIHRvIHRoZSBxdGltZXItYmFja2VkIGdsb2Jh
-bApUSU1FUkxPL1RJTUVSSEkgc28gZ3Vlc3QgcmVhZHMgc2VlIGEgbGl2ZSwgbW9ub3RvbmljYWxs
-eSBpbmNyZWFzaW5nCnRpbWVyLgoKSW4gdXNlciBtb2RlIHdlIGRlcml2ZSBpdCBmcm9tIFFFTVVf
-Q0xPQ0tfVklSVFVBTC4KClJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5i
-b3V2aWVyQG9zcy5xdWFsY29tbS5jb20+ClNpZ25lZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFu
-LmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0YXJnZXQvaGV4YWdvbi9oZWxwZXIuaCAgICAg
-fCAgNCArKysrCiB0YXJnZXQvaGV4YWdvbi9nZW5wdHIuYyAgICAgfCAyOSArKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKwogdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMgIHwgMjEgKysrKysr
-KysrKysrKysrKysrKysrCiB0ZXN0cy90Y2cvaGV4YWdvbi9yZWdfbXV0LmMgfCAxMSArKysrKysr
-Ky0tLQogNCBmaWxlcyBjaGFuZ2VkLCA2MiBpbnNlcnRpb25zKCspLCAzIGRlbGV0aW9ucygtKQoK
-ZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2hlbHBlci5oIGIvdGFyZ2V0L2hleGFnb24vaGVs
-cGVyLmgKaW5kZXggNzhkYzI4Y2E5ZTUuLmUzOWFmZDYyM2I1IDEwMDY0NAotLS0gYS90YXJnZXQv
-aGV4YWdvbi9oZWxwZXIuaAorKysgYi90YXJnZXQvaGV4YWdvbi9oZWxwZXIuaApAQCAtMTEzLDYg
-KzExMywxMCBAQCBERUZfSEVMUEVSX0ZMQUdTXzQoZ3ZlY19zYWJzZGlmZl93LCBUQ0dfQ0FMTF9O
-T19SV0csIHZvaWQsIHB0ciwgcHRyLCBwdHIsIGkzMikKIERFRl9IRUxQRVJfRkxBR1NfNChndmVj
-X3VhYnNkaWZmX2IsIFRDR19DQUxMX05PX1JXRywgdm9pZCwgcHRyLCBwdHIsIHB0ciwgaTMyKQog
-REVGX0hFTFBFUl9GTEFHU180KGd2ZWNfdWFic2RpZmZfaCwgVENHX0NBTExfTk9fUldHLCB2b2lk
-LCBwdHIsIHB0ciwgcHRyLCBpMzIpCiAKKyNpZiBkZWZpbmVkKENPTkZJR19VU0VSX09OTFkpCitE
-RUZfSEVMUEVSX0ZMQUdTXzAodXRpbWVyLCBUQ0dfQ0FMTF9OT19SV0csIGk2NCkKKyNlbmRpZgor
-CiAjaWYgIWRlZmluZWQoQ09ORklHX1VTRVJfT05MWSkKIERFRl9IRUxQRVJfMyhyYWlzZV9zdGFj
-a19vdmVyZmxvdywgdm9pZCwgZW52LCBpMzIsIGkzMikKIERFRl9IRUxQRVJfMihzd2ksIHZvaWQs
-IGVudiwgaTMyKQpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vZ2VucHRyLmMgYi90YXJnZXQv
-aGV4YWdvbi9nZW5wdHIuYwppbmRleCAyYTk4YjEzYjcxNC4uMjgyYTY5N2QxOTAgMTAwNjQ0Ci0t
-LSBhL3RhcmdldC9oZXhhZ29uL2dlbnB0ci5jCisrKyBiL3RhcmdldC9oZXhhZ29uL2dlbnB0ci5j
-CkBAIC00MTEsNiArNDExLDIzIEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBnZW5fcmVhZF9jdHJsX3Jl
-ZyhEaXNhc0NvbnRleHQgKmN0eCwgY29uc3QgaW50IHJlZ19udW0sCiAgICAgfSBlbHNlIGlmIChy
-ZWdfbnVtID09IEhFWF9SRUdfUUVNVV9IVlhfQ05UKSB7CiAgICAgICAgIHRjZ19nZW5fYWRkaV90
-bChkZXN0LCBoZXhfZ3ByW0hFWF9SRUdfUUVNVV9IVlhfQ05UXSwKICAgICAgICAgICAgICAgICAg
-ICAgICAgIGN0eC0+bnVtX2h2eF9pbnNucyk7CisjaWZuZGVmIENPTkZJR19VU0VSX09OTFkKKyAg
-ICB9IGVsc2UgaWYgKHJlZ19udW0gPT0gSEVYX1JFR19VVElNRVJMTykgeworICAgICAgICBnZW5f
-aGVscGVyX3NyZWdfcmVhZChkZXN0LCB0Y2dfZW52LAorICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICB0Y2dfY29uc3RhbnRfaTMyKEhFWF9TUkVHX1RJTUVSTE8pKTsKKyAgICB9IGVsc2UgaWYg
-KHJlZ19udW0gPT0gSEVYX1JFR19VVElNRVJISSkgeworICAgICAgICBnZW5faGVscGVyX3NyZWdf
-cmVhZChkZXN0LCB0Y2dfZW52LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0Y2dfY29u
-c3RhbnRfaTMyKEhFWF9TUkVHX1RJTUVSSEkpKTsKKyNlbHNlCisgICAgfSBlbHNlIGlmIChyZWdf
-bnVtID09IEhFWF9SRUdfVVRJTUVSTE8pIHsKKyAgICAgICAgVENHdl9pNjQgdXRpbWVyID0gdGNn
-X3RlbXBfbmV3X2k2NCgpOworICAgICAgICBnZW5faGVscGVyX3V0aW1lcih1dGltZXIpOworICAg
-ICAgICB0Y2dfZ2VuX2V4dHJsX2k2NF9pMzIoZGVzdCwgdXRpbWVyKTsKKyAgICB9IGVsc2UgaWYg
-KHJlZ19udW0gPT0gSEVYX1JFR19VVElNRVJISSkgeworICAgICAgICBUQ0d2X2k2NCB1dGltZXIg
-PSB0Y2dfdGVtcF9uZXdfaTY0KCk7CisgICAgICAgIGdlbl9oZWxwZXJfdXRpbWVyKHV0aW1lcik7
-CisgICAgICAgIHRjZ19nZW5fZXh0cmhfaTY0X2kzMihkZXN0LCB1dGltZXIpOworI2VuZGlmCiAg
-ICAgfSBlbHNlIHsKICAgICAgICAgdGNnX2dlbl9tb3ZfdGwoZGVzdCwgaGV4X2dwcltyZWdfbnVt
-XSk7CiAgICAgfQpAQCAtNDM5LDYgKzQ1NiwxOCBAQCBzdGF0aWMgaW5saW5lIHZvaWQgZ2VuX3Jl
-YWRfY3RybF9yZWdfcGFpcihEaXNhc0NvbnRleHQgKmN0eCwgY29uc3QgaW50IHJlZ19udW0sCiAg
-ICAgICAgIHRjZ19nZW5fYWRkaV90bChodnhfY250LCBoZXhfZ3ByW0hFWF9SRUdfUUVNVV9IVlhf
-Q05UXSwKICAgICAgICAgICAgICAgICAgICAgICAgIGN0eC0+bnVtX2h2eF9pbnNucyk7CiAgICAg
-ICAgIHRjZ19nZW5fY29uY2F0X2kzMl9pNjQoZGVzdCwgaHZ4X2NudCwgaGV4X2dwcltyZWdfbnVt
-ICsgMV0pOworI2lmbmRlZiBDT05GSUdfVVNFUl9PTkxZCisgICAgfSBlbHNlIGlmIChyZWdfbnVt
-ID09IEhFWF9SRUdfVVRJTUVSTE8pIHsKKyAgICAgICAgVENHdiBsbyA9IHRjZ190ZW1wX25ldygp
-OworICAgICAgICBUQ0d2IGhpID0gdGNnX3RlbXBfbmV3KCk7CisgICAgICAgIGdlbl9oZWxwZXJf
-c3JlZ19yZWFkKGxvLCB0Y2dfZW52LCB0Y2dfY29uc3RhbnRfaTMyKEhFWF9TUkVHX1RJTUVSTE8p
-KTsKKyAgICAgICAgZ2VuX2hlbHBlcl9zcmVnX3JlYWQoaGksIHRjZ19lbnYsIHRjZ19jb25zdGFu
-dF9pMzIoSEVYX1NSRUdfVElNRVJISSkpOworICAgICAgICB0Y2dfZ2VuX2NvbmNhdF9pMzJfaTY0
-KGRlc3QsIGxvLCBoaSk7CisjZWxzZQorICAgIH0gZWxzZSBpZiAocmVnX251bSA9PSBIRVhfUkVH
-X1VUSU1FUkxPKSB7CisgICAgICAgIC8qIE9uZSBoZWxwZXIgY2FsbCwgc28gdGhlIHBhaXIgaXMg
-YSBjb2hlcmVudCA2NC1iaXQgc25hcHNob3QuICovCisgICAgICAgIGdlbl9oZWxwZXJfdXRpbWVy
-KGRlc3QpOworI2VuZGlmCiAgICAgfSBlbHNlIHsKICAgICAgICAgdGNnX2dlbl9jb25jYXRfaTMy
-X2k2NChkZXN0LAogICAgICAgICAgICAgaGV4X2dwcltyZWdfbnVtXSwKZGlmZiAtLWdpdCBhL3Rh
-cmdldC9oZXhhZ29uL29wX2hlbHBlci5jIGIvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMKaW5k
-ZXggMmNlYTE5MjcyNjMuLmRmMzFlZDI0ODhhIDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9v
-cF9oZWxwZXIuYworKysgYi90YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYwpAQCAtMzcsNiArMzcs
-OSBAQAogI2luY2x1ZGUgImNwdV9oZWxwZXIuaCIKICNpbmNsdWRlICJ0Y2cvdGNnLWd2ZWMtZGVz
-Yy5oIgogI2luY2x1ZGUgInRyYW5zbGF0ZS5oIgorI2lmZGVmIENPTkZJR19VU0VSX09OTFkKKyNp
-bmNsdWRlICJxZW11L3RpbWVyLmgiCisjZW5kaWYKICNpZm5kZWYgQ09ORklHX1VTRVJfT05MWQog
-I2luY2x1ZGUgImh3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuaCIKICNpbmNsdWRlICJoZXhf
-bW11LmgiCkBAIC00Niw2ICs0OSwyNCBAQAogI2luY2x1ZGUgImhleHN3aS5oIgogI2VuZGlmCiAK
-KyNpZmRlZiBDT05GSUdfVVNFUl9PTkxZCisvKgorICogVXNlciBtb2RlIGhhcyBubyBxdGltZXIg
-ZGV2aWNlIGJhY2tpbmcgVElNRVJMTy9USU1FUkhJLCBzbyBkZXJpdmUgdGhlCisgKiB1c2VyIHRp
-bWVyIGRpcmVjdGx5IGZyb20gdGhlIHZpcnR1YWwgY2xvY2sgLS0gdGhlIHNhbWUgY2xvY2sgdGhl
-IHF0aW1lcgorICogY291bnRzIC0tIGF0IHRoZSBxdGltZXIncyBkZWZhdWx0IDE5LjJNSHogdGlj
-ayByYXRlLCBtYXNrZWQgdG8gdGhlCisgKiBxdGltZXIncyBjb3VudGVyIHdpZHRoLgorICovCisj
-ZGVmaW5lIEhFWF9VVElNRVJfRlJFUV9IWiAgMTkyMDAwMDBVTEwKKyNkZWZpbmUgSEVYX1VUSU1F
-Ul9DTlRfTUFTSyAweDAwZmZmZmZmZmZmZmZmZmZVTEwKKwordWludDY0X3QgSEVMUEVSKHV0aW1l
-cikodm9pZCkKK3sKKyAgICByZXR1cm4gbXVsZGl2NjQocWVtdV9jbG9ja19nZXRfbnMoUUVNVV9D
-TE9DS19WSVJUVUFMKSwKKyAgICAgICAgICAgICAgICAgICAgSEVYX1VUSU1FUl9GUkVRX0haLCBO
-QU5PU0VDT05EU19QRVJfU0VDT05EKSAmCisgICAgICAgICAgIEhFWF9VVElNRVJfQ05UX01BU0s7
-Cit9CisjZW5kaWYKKwogI2RlZmluZSBTRl9CSUFTICAgICAgICAxMjcKICNkZWZpbmUgU0ZfTUFO
-VEJJVFMgICAgMjMKIApkaWZmIC0tZ2l0IGEvdGVzdHMvdGNnL2hleGFnb24vcmVnX211dC5jIGIv
-dGVzdHMvdGNnL2hleGFnb24vcmVnX211dC5jCmluZGV4IGM1YTM5ZTU1MTAwLi45Y2UxOGYzZWJl
-NSAxMDA2NDQKLS0tIGEvdGVzdHMvdGNnL2hleGFnb24vcmVnX211dC5jCisrKyBiL3Rlc3RzL3Rj
-Zy9oZXhhZ29uL3JlZ19tdXQuYwpAQCAtNzcsMTAgKzc3LDEwIEBAIHN0YXRpYyBpbmxpbmUgdm9p
-ZCB3cml0ZV9jb250cm9sX3JlZ2lzdGVycyh2b2lkKQogICAgIGNoZWNrMzIocmVzdWx0LCAweDAw
-MDAwMDAwKTsKIAogICAgIFdSSVRFX1JFR19OT0NMT0JCRVIocmVzdWx0LCAidXRpbWVybG8iLCAw
-eGZmZmZmZmZmKTsKLSAgICBjaGVjazMyKHJlc3VsdCwgMHgwMDAwMDAwMCk7CisgICAgY2hlY2sz
-Ml9uZShyZXN1bHQsIDB4ZmZmZmZmZmYpOwogCiAgICAgV1JJVEVfUkVHX05PQ0xPQkJFUihyZXN1
-bHQsICJ1dGltZXJoaSIsIDB4ZmZmZmZmZmYpOwotICAgIGNoZWNrMzIocmVzdWx0LCAweDAwMDAw
-MDAwKTsKKyAgICBjaGVjazMyX25lKHJlc3VsdCwgMHhmZmZmZmZmZik7CiAKICAgICAvKgogICAg
-ICAqIFBDIGlzIHNwZWNpYWwuICBTZXR0aW5nIGl0IHRvIHRoZXNlIHZhbHVlcwpAQCAtMTA2LDgg
-KzEwNiwxMyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgd3JpdGVfY29udHJvbF9yZWdpc3Rlcl9wYWly
-cyh2b2lkKQogICAgIFdSSVRFX1JFR19OT0NMT0JCRVIocmVzdWx0LCAiYzE1OjE0IiwgMHhmZmZm
-ZmZmZmZmZmZmZmZmKTsKICAgICBjaGVjazY0KHJlc3VsdCwgMHgwMDAwMDAwMDAwMDAwMDAwKTsK
-IAorICAgIC8qCisgICAgICogYzMxOjMwIGlzIFVUSU1FUkhJOlVUSU1FUkxPLCBhIHJlYWQtb25s
-eSBmcmVlLXJ1bm5pbmcgY291bnRlci4gIFRoZQorICAgICAqIHdyaXRlIG11c3QgYmUgZGlzY2Fy
-ZGVkOyB0aGUgcmVhZC1iYWNrIGlzIHdoYXRldmVyIHRoZSB0aW1lciBzYXlzLAorICAgICAqIHNv
-IG9ubHkgY2hlY2sgdGhhdCB0aGUgd3JpdHRlbiB2YWx1ZSBkaWQgbm90IHN0aWNrLgorICAgICAq
-LwogICAgIFdSSVRFX1JFR19OT0NMT0JCRVIocmVzdWx0LCAiYzMxOjMwIiwgMHhmZmZmZmZmZmZm
-ZmZmZmZmKTsKLSAgICBjaGVjazY0KHJlc3VsdCwgMHgwMDAwMDAwMDAwMDAwMDAwKTsKKyAgICBj
-aGVjazY0X25lKHJlc3VsdCwgMHhmZmZmZmZmZmZmZmZmZmZmKTsKIAogICAgIFdSSVRFX1JFR19Q
-QUlSX0VOQ09ERUQocmVzdWx0LCAiYzk6OCIsICh1aW50NjRfdCkgMHgwMDAwMDAwMDAwMDAwMDAw
-LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgQzlfOF9FUV9SMV8wKTsKLS0gCjIuMzQuMQoK
+This patch series implements comprehensive RTAS-based error injection
+support for VFIO EEH (Enhanced Error Handling) on PowerPC sPAPR platforms.
+The implementation enables guest-initiated PCI error injection for improved
+testing and diagnostics of EEH recovery mechanisms.
+
+Background
+----------
+EEH is a critical feature on PowerPC platforms that provides error detection,
+isolation, and recovery for PCI devices. Testing EEH recovery paths requires
+the ability to inject various types of errors into the system. While physical
+hardware supports error injection through firmware interfaces, QEMU's VFIO
+implementation previously lacked this capability.
+
+This series bridges that gap by implementing the IBM RTAS error injection
+interface, allowing guests to inject PCI errors through the same firmware
+calls used on physical hardware. This enables comprehensive testing of device
+drivers' EEH recovery code paths in virtualized environments.
+
+Implementation Overview
+-----------------------
+The patch series introduces three new RTAS calls:
+  - ibm,open-errinjct:  Opens an error injection session
+  - ibm,errinjct:       Injects a specific error type
+  - ibm,close-errinjct: Closes the error injection session
+
+The implementation supports multiple error types including:
+  - IOA bus errors (32-bit and 64-bit addressing)
+
+For IOA bus-error types, QEMU uses the BUID from the RTAS parameter buffer to
+select the target PHB. For address-scoped IOA injections, QEMU translates the
+guest BAR address to the corresponding host resource address before invoking
+the VFIO EEH backend.
+
+RTAS IOA error types are converted to the EEH type values expected by
+VFIO_EEH_PE_INJECT_ERR:
+
+ - RTAS_ERR_TYPE_IOA_BUS_ERROR    -> EEH_ERR_TYPE_32
+ - RTAS_ERR_TYPE_IOA_BUS_ERROR_64 -> EEH_ERR_TYPE_64
+
+Requests with addr=0 and mask=0 are treated as non-address-scoped IOA
+injections and are forwarded without address translation.
+
+Non-IOA RTAS error types are parsed and validated, but return
+RTAS_OUT_NOT_SUPPORTED in this series because their RTAS work buffers do not
+carry enough target information to safely select a VFIO PE.
+
+Tested on pseries and PowerNV hosts with KVM guests using the powerpc-utils
+errinjct tool, together with the corresponding host kernel EEH RTAS error
+injection patches:
+https://lore.kernel.org/all/20260831065441.48654-1-nnmlinux@linux.ibm.com/
+
+Patch Organization
+------------------
+Patch 1: Adds the VFIO backend for error injection
+Patch 2: Implements the ibm,errinjct RTAS call handler
+Patch 3: Adds session management (open/close) RTAS calls
+Patch 4: Advertises capabilities via device tree properties
+Patch 5: Refactors EEH specific code/stubs to new files.
+Patch 6: Updates MAINTAINERS file
+
+Changelog:
+
+v5:
+ - added the missing files on patch 0005.
+ - move the VFIO EEH stubs into a separate stub file.
+ - Keep spapr_pci_vfio.c as the Linux/non-VFIO fallback path
+  and build the real EEH implementation from spapr_eeh.c 
+  when CONFIG_VFIO_PCI is enabled.
+v4: 
+  - Removed the first-PHB assumption in ibm,errinjct.
+  - Use BUID from the IOA RTAS parameter buffer to select the target PHB.
+  - Added guest BAR to host resource address translation for address-scoped
+  IOA injections.
+  - Skip address translation for addr=0 and mask=0 IOA requests.
+  - Convert RTAS IOA error types to VFIO EEH type values before issuing
+  VFIO_EEH_PE_INJECT_ERR.
+  - Keep spapr_phb_vfio_errinjct() signature unchanged.
+  - Validate non-IOA RTAS error types but return RTAS_OUT_NOT_SUPPORTED.
+  - Removed host /proc/device-tree/rtas/ibm,errinjct-tokens probing.
+  - Always build the guest-facing ibm,errinjct-tokens blob in QEMU.
+  - Fixed ibm,open-errinjct return-cell layout on error paths.
+  - Fixed ibm,close-errinjct token validation when no session is open.
+  - Initialized errinject_tokens to NULL.
+  - Removed stale CONFIG_DEVICES include after dropping the associated ifdefs
+  - Renamed the split EEH file to hw/ppc/spapr_eeh.c.
+  - Added Pierrick's Reviewed-by tag on the refactor patch.
+  - Added sPAPR VFIO EEH reviewer entry in MAINTAINERS.
+v3: 
+  - Fixed the build failure reported at https://github.com/p-b-o/qemu-ci/actions/runs/26094993976
+  - Also fixed a gitlab CI breakage in patch 2 (qemu_log_mask LOG_UNIMP)
+v2: Addressed refactor suggestions from Cedric, Pierrick
+v1: https://lore.kernel.org/all/20260512071112.9675-1-nnmlinux@linux.ibm.com/
+
+Narayana Murty N (6):
+  ppc/spapr: Add VFIO EEH error injection backend
+  ppc/spapr: Add ibm,errinjct RTAS call handler
+  ppc/spapr: Add support for ibm, open-errinjct and ibm, close-errinjct
+  ppc/spapr: Advertise RTAS error injection call support via FDT
+    property
+  ppc/spapr: Split VFIO EEH support from general VFIO code
+  MAINTAINERS: Add self as sPAPR EEH reviewer under PPC RAS
+
+ include/hw/pci-host/spapr.h  |  37 +--
+ include/hw/ppc/spapr.h       |  69 ++++-
+ include/hw/ppc/spapr_vfio.h  |  31 ++
+ hw/ppc/spapr.c               |  61 ++++
+ hw/ppc/spapr_eeh.c           | 571 +++++++++++++++++++++++++++++++++++
+ hw/ppc/spapr_pci.c           | 193 ++++++++++++
+ hw/ppc/spapr_pci_vfio.c      | 315 +------------------
+ stubs/spapr_phb_vfio-stubs.c |  62 ++++
+ MAINTAINERS                  |   2 +
+ hw/ppc/Kconfig               |   2 +-
+ hw/ppc/meson.build           |   1 +
+ stubs/meson.build            |   1 +
+ 12 files changed, 994 insertions(+), 351 deletions(-)
+ create mode 100644 include/hw/ppc/spapr_vfio.h
+ create mode 100644 hw/ppc/spapr_eeh.c
+ create mode 100644 stubs/spapr_phb_vfio-stubs.c
+
+-- 
+2.51.1
+
 
