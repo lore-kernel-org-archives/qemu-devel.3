@@ -4,149 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51CCDC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 21:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EF9C61DD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 22:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1WUp-0007hI-R4; Tue, 01 Sep 2026 17:58:23 -0400
+	id 1x1WhO-00022Z-JD; Tue, 01 Sep 2026 18:11:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1x1WUn-0007gN-Oe; Tue, 01 Sep 2026 17:58:21 -0400
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1WhM-000221-Px
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 18:11:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1x1WUm-0003Ko-0W; Tue, 01 Sep 2026 17:58:21 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RSBUOwqijquk88e9L9kkZVHTfp3lJLnNtA/rupfNasAmMajRlog8qWbkF4C98OGuvMn12Hx67v5J2oqrgVFrKmIfLKYjAXcd+wBQ7vzTgmvF4pizAKqp7wlqtIJqirhHnjUXcu5Y8cdp8S8fPMQOisyf9PWomOJ+GkJDoDwkUirHWhafZM2WlRNce7YD8IKTtGMXT/Ud3pEtVLoOw3Vcchw/Nl+XsJW+aKq5L4ptj9OQavUj2tFjhy0PfMdK7a0eied8xbsC3VoS1RCw9SWKPipgIMrBZ/Qe7hPmLIUs8Mtzx6+BgNiacRBTpjWQ0JrgsPs4NieuFs5mzqNrKBdz4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Gyrmvcm0Cww0eakvTd1LwQl1AOl0M1Y4cQ0Ti+u6950=;
- b=VV0hO3L4UrLATeIOqN/ld2yGGo2L4JQcl3pf0sbAxrKE2NA+7LM/2CrfTB7Hw5suIJ6L0+Otpotkfz3ccGraSAB8y0CjpYSKyPhJTWavU2Bco2PytkLHvagCY6xLb9OWLjvxvja7Fd9wbAy/Cme0t2jgqA3sJD8Wj4bO2o5WDdlo/mYET4JvKkt6wU/VOjXxAOTPWDPHIVHMzipDac3lWOc6rBKOb63Iew5z83KlV1s5IkFscBQnH0O3+TXMeTWqL1lxDbfN+J2YQgJ7J3l4pK7B8dA/+LB2PcPJcXgkwbIoeJnUc/xopijyQcScZXd0W3BnYss987u3ttiJBc3pLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gyrmvcm0Cww0eakvTd1LwQl1AOl0M1Y4cQ0Ti+u6950=;
- b=coytB5BKtdwo1jnj5cPMVjZLU6b6+hKUOo9IwZahLVUgeHpmEfZJfZ01Be5S1l04EGEvPtfvGpBjyhsM0i7OXOEXDAxHXVUrG+1DbkCDCXxseEzknE/FV7XOQU9wzAvwbqXs9kCwCsEvEJV6+bG6OMAbT+gcLh8hWWHxZ1pqo/ggpbV5FPOx2cLS/jCUkpyeUqoWg3wrdU/7VGaVlSAmVxZJq2hwxxsHUYEgBbYHXcI8yehLgDVJMmsaNVKhZn2NWjLGGx+FWOmxYMnRv8/oU1XEV/kvHBOpUf4Fq9fmXF63+B3jzLivQw+gDdPTQu6lsSB285ZT3n0StWbxa9+rTg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB9736.namprd12.prod.outlook.com (2603:10b6:8:225::9) by
- CYXPR12MB9277.namprd12.prod.outlook.com (2603:10b6:930:d8::19) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.360.13; Tue, 1 Sep 2026 21:58:12 +0000
-Received: from DM4PR12MB9736.namprd12.prod.outlook.com
- ([fe80::ed33:f342:886b:dc8e]) by DM4PR12MB9736.namprd12.prod.outlook.com
- ([fe80::ed33:f342:886b:dc8e%6]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
- 21:58:12 +0000
-Message-ID: <39c5034b-7bfa-4f04-84b6-42cee42b0c96@nvidia.com>
-Date: Tue, 1 Sep 2026 16:58:09 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [edk2-devel] [RFC PATCH v2 0/5] hw/pci, hw/arm/virt: fixed PCI
- BAR placement
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>,
- "devel@edk2.groups.io" <devel@edk2.groups.io>,
- Alex Williamson <alex@shazbot.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Jason Gunthorpe <jgg@nvidia.com>,
- Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>
-References: <20260827004024.598351-1-tdave@nvidia.com>
- <ao_fX3cYersq6TRd@sirius.home.kraxel.org>
- <20260827074733.340aeb0c@shazbot.org>
- <46b4544a-6e97-4433-b3e2-60cf43e62c7b@app.fastmail.com>
- <f2fe3c7f-4a8f-4025-ac09-777eb5cfc31c@nvidia.com>
- <apWAprXWglNIWjdp@sirius.home.kraxel.org>
-From: Tushar Dave <tdave@nvidia.com>
-Content-Language: en-US
-In-Reply-To: <apWAprXWglNIWjdp@sirius.home.kraxel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SA0PR11CA0128.namprd11.prod.outlook.com
- (2603:10b6:806:131::13) To DM4PR12MB9736.namprd12.prod.outlook.com
- (2603:10b6:8:225::9)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1WhK-0005Ms-TM
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 18:11:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788300677;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QEFCNN2LckXdbe1klCa0jvrR3iMS7ZADwKbFR/sVO1I=;
+ b=hN9do90iGshnJdl/g4cgSDyn8q9NdFjdOJ6Zi3sOc4M9DxWYBYduw6VZy0rWaNAEztZZ2H
+ ofT5ygzSRaYhQDObWiyFNof/IsSzQSyGt6qR9yGGv1KeasmURzxuWdcRg9s/mbAsmfP1Ap
+ PJpfWjLWNOonrxKllA2VJOnQKUZkRiI=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-z8r9nt1nM5KERrRfyNg6hg-1; Tue, 01 Sept 2026 18:11:15 -0400
+X-MC-Unique: z8r9nt1nM5KERrRfyNg6hg-1
+X-Mimecast-MFC-AGG-ID: z8r9nt1nM5KERrRfyNg6hg_1788300675
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-81ea59b5979so7901847b3.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 15:11:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788300675; cv=none;
+ d=google.com; s=arc-20260327;
+ b=AfyGsQC1GdD5aRR9rls+PA55HMfCGgR7keW3kIWiDQbuSFp1MLXjkg5UgN9RC+88ZU
+ 1vnBDaWHiXeYtTp2/LL3Al3qvA1FYGO+C00iPYKq4+hIS0KA/8bVwgq3wmYhhwFC/j4N
+ xlZ9C1BFb3XfABvMCp9T3jlUy4aLc9DLxzKyxFhuZ0i2/0ZKaVofVSvzjGD2VHARJnyq
+ WzvXlvu1c51LqKgeyFZuS1v4pcxB95B02l164qpwA+FveD/N1ns9ZGTUZiNL8cMIDNC3
+ mhStjREoIGvjbXtqT2gGDCMiT6jsQMzMRQG8Z5f8RgKbaGt9SMCIZQ6Mb3P1C2ng3ZCK
+ EUew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QEFCNN2LckXdbe1klCa0jvrR3iMS7ZADwKbFR/sVO1I=;
+ fh=ZVbG+wZiL98MrptYcscNwmP0w5yEEHjRC6ctslP0Hpc=;
+ b=sdOtA2ao/jXuUadXP8lLhx2t/8tQRteSYSPx6O8R4o4Mc38kmkCU9bMVXoOT+8ToB+
+ pGy/qP31lNkqMNCvkEA706zHKAAN8/EGc7Cq7MQtAnbgYb1zb37zF+Dnp/0G5C1eRYX8
+ uKwOL2jZGg+dk2JYEB6AkZk/TmOY0Pz+veI0M1kDA2Lbshpze2DxEjLqGHUOmB7NJNIt
+ IPebKcHLrup0yytHLGXyizTW7WBU5R5hC92/iB1E7duVisuzVL7/F0stEZz1Mu9pBxld
+ UTOvj3S+k/DHnRw+DM73xaWgFFjVoaKeuPd2lRaF+AS2sMe1CS23P6dhMwdu0kVwBxcy
+ qbwA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788300675; x=1788905475; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QEFCNN2LckXdbe1klCa0jvrR3iMS7ZADwKbFR/sVO1I=;
+ b=q+hW9srtLC8q3oBNtNXGlZLJT0kAbPbLs5lPZlEg+JO3VL9E8ZYC9XhaC0iz31jUch
+ l05l1feVsMEwvuJ+bbmxpCdNZeuEd4znEY/T3NzrxrXeHUY2QN3eKvtfDOYVmmz9KZ/F
+ iBSlaehwKlkUZ5Vi/33KQ2snUTZ+PzZq15JG634O5kb1Q7GwIpzd32XBXK0hOsbwMe0y
+ xGWVIiAh16qe88bES0drKHmfIohQqGzzgS1iSTYrNy44kgR7x+dJ9BryVi9l+DHwReEF
+ 9FpF/8wkofvtgb887zjgA0ed9/kqefKP1+Woe28eJA97sqX006OJWS+ULZn6kqzLrT8g
+ CQiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788300675; x=1788905475;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QEFCNN2LckXdbe1klCa0jvrR3iMS7ZADwKbFR/sVO1I=;
+ b=q7dq1t2kQyJnNEPOzqcuBmstHqZRFwKRYsltX9dgAo1N2NuatKeaY05VyBL1z2Nnyo
+ E6wfOQI4sIsKBwrdalS/FBbrnTYcOLg+GOUVENJ+tvFkOjS+RpI4LC/6guY1gyR8cbtH
+ qyiGWcZLB7akSlBUgFEfjNjixuiJpUC1u0Z+p06pWLf0bBrkcvlPIlRz9lgKhj1TUgrr
+ 82AKf6jLerDv2Fi9526YX1WBRDlaFUiW8uETOMat74DxOOZcGPvinRisYXAr8qVt28Te
+ eSAOeWar8JdprzYIicdmVWlaEtfzuluc5gTW3dwARTkaxgrhyxe381l46T1arMe3bjyu
+ Wmkg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzFaCTbDzez4rjAHsqeqka2Psl079wTXbbULXUygItiI3G1R4sTeL+XSdHFasvrvYTRU0dZ+yghR9yW@nongnu.org
+X-Gm-Message-State: AFuF++mZbVEwEmZpvtj9UT15dvWLMUT1y2blNXwjkk1TgSLhrFwGRYa1
+ Sl2bd5kZDg2gjZi1+zU3KoVjO7xzXXCrQUJoSEXUA0O5FzQgTk0kFmFGt/Ufjr3EtBjXJu0VZMH
+ MNoyn/by40xZwKnQFSHE9IgRkr1a0q/uro+Y3ZPhmbs4nW/FgCHL+M1CyEML0kxsOujq4Dp6SZs
+ C0FsRGp5tqay2Y6gWZZexg3/83zGUsprw=
+X-Gm-Gg: AYBFou3IM05/1Dt/Y5hwgQe+bDNIOV/tiNJOMAwL2M+bCYR56mV3XxttsQAxNoGHVXw
+ BUjNdsxASMmENVr+4QEIObfe8HPbntfi32Fz7AZFwMK6rKOAi/cQSZHGhVuKO7dd6KiUbtSc4d9
+ SNpN5hKmGDvqvn1D8uX41eBUvveUMErXJZak++gBySVKQG24ZWVXObxw==
+X-Received: by 2002:a05:690e:b47:b0:66f:860e:7f3c with SMTP id
+ 956f58d0204a3-66f9ba40fb7mr140463d50.14.1788300675018; 
+ Tue, 01 Sep 2026 15:11:15 -0700 (PDT)
+X-Received: by 2002:a05:690e:b47:b0:66f:860e:7f3c with SMTP id
+ 956f58d0204a3-66f9ba40fb7mr140418d50.14.1788300674438; Tue, 01 Sep 2026
+ 15:11:14 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB9736:EE_|CYXPR12MB9277:EE_
-X-MS-Office365-Filtering-Correlation-Id: 489f1290-9d2a-4187-2fe6-08df08741de5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|376014|366016|10067099003|56012099006|11063799006|3023799007|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: QQTFBkrIZ5wiUveHolz+adLhVC1lieOmKUamJ7PcXVEoGFJ4vCIylKEp4sBlCzdiFmkVbr8p+OPLrbq5MAeDQ7yKr5WNaCM104i/gTIbwFc2YgxbWnY2KgqF3XYBjCY/JEibVNdXPGw9+ct4/zbJ7LWtgFYIMUJUYGAU0v4H9LMvtoYBGOVag7IaUoHhMS+P7TIUg0wP13JkOuaGWxUKCEPGRwBTyDSbJkDEdtu9+GwfcN+2TQwACEMgUEltB0RkJQUHL9EA5jwvE7pjn2rPtHxWnt89+qOtUM2Fl2i9ppFIthfKbWDy5LUbch883v3Tw+32vuvzxElmHPoR1vI1F5PtaXT2cQNFAF8yGaKxmXX8QmzV6mM/UryfMcJxzubADHyIrIuVbscIYQvHZZh+7iKIUcvdQbNKkDlvt8uC8pwwupww3Vlv3KmSCYkoGf1ydXmAKNo9LuvJBdMye9tlogbU3EOa3Agf9qwo+uAhTP2C+23k1A5QczrDlzdUZoqw0kl5QN8o6HNxsv/gZoPFrUvClB8P23vdZdcBK/3cGYWZqqnwbADbGDjvw6dUAOMFvpZZXORHkuIiXjnv7jzfxUsbRngds9HM6Tro1w7A7ILIDJElQIKyXhqVZ88bzLkSvtOwODbDxAkWpF1lTQvpQbDQt3WaTodBkmACLDwMsbk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB9736.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(10067099003)(56012099006)(11063799006)(3023799007)(4143699003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S2hQVWZLNmppMVRjL25xUXZocVdHNHJWNTZlKytDR3Z6b3pSRWVNOTgrQ1U4?=
- =?utf-8?B?SkswdEhvTGY2YkcybEorQTdwYmY5NFlQOTNQRlZNYVJsU1VnSjV2QkVYeXlm?=
- =?utf-8?B?Mi8wa3Z2MkFyTGlRbERCNzJJZFNPWjNqNUlGUkc4Zk9XT3VIQzBYQUJ5UlpE?=
- =?utf-8?B?RVQwRGo4TTJxMm9yeUJoU2dGbGZNV3N0QktqWWdUK1ZFUUk0KzM5MWJUeDQy?=
- =?utf-8?B?dmJzUEJHK3djZDc5aG5OSGZscXVXbHVzVGlGZno2c21CZUpCRWIrUExGZHFv?=
- =?utf-8?B?Tms3b3RtOTBmQXRXQ1lCcW4xYjh4SjBDSWtkT1FTSVBMdERxT3NnTDVqeTBv?=
- =?utf-8?B?YlpKU3RqeFRnL2pBN0Q2SGJyOHp2bno2ekVnUkdVTUdlVGx1TVoyZWVvTHQy?=
- =?utf-8?B?QS9uUExTWE1weWVwOHNRYXJHQ2grK0poVmh5TnRjVW5peGk4UzRaQndXSmpT?=
- =?utf-8?B?YlBSUnMwYWxxN3I1aFczcWp2V29KOWJRdVBwUXN6bzdFS29HRmsrd0VMT2lX?=
- =?utf-8?B?QStjZW9PRDk1aVR3ZUxZMDhmZkMyS2prZHZjN3FxQ1c1MVFqdlZpbXoxUGpX?=
- =?utf-8?B?d2w0TS9MbjZHNU45dm1wWWI2ZDlBdWVzK0lGQnF1Z3FYSkU4aTJ5OEkxTlhk?=
- =?utf-8?B?MG5lRHdXZHUvdXJ1ak5RVEF0Vnk5MVI3QlRHU1NiRnhOT2VWMDM5T0lEMGpD?=
- =?utf-8?B?eTB5c2w3MnRMMHVkUnlQOHVBZ0ZQN0NtZUl4U3A3aUN3QmkzRXZOUVNCYWtr?=
- =?utf-8?B?SWdTbWZzY1drOGxaVGhuVUJPTkhwVkR6MnZzNzlJdlR3N3lKNWgwVkpnZTgw?=
- =?utf-8?B?U28yMjRRR09ycXlqWFVKLytKL2dENWZyNk9ic2dWYmwvekFLMUpONmxiMnBW?=
- =?utf-8?B?cit0KzJZalhNdzVYalVndUxLNjlpd1dnOXMrOXQxRjdqNmNIQWo1Rm40QVEz?=
- =?utf-8?B?bFZWcXQxbFhNTktidEdYRnU0OXNNRDJwZG5DcHF1aEpIbkxURkU2TUZxZ245?=
- =?utf-8?B?OEx2ZFJmd2xFU2dENTRFUUkzc0NaWVNlWkZJQW56enFVVThHZEgvcG9sNjEx?=
- =?utf-8?B?VnY0R2t0U0MxQXJXM0Jyd0UwT1EzdnExTzdON0lCSmZIQTZET2xreGRDVUZx?=
- =?utf-8?B?M2duMjdqblB2LzRtdXRXdzdBYmFJaFNGWUg5TVhVOGtuUkpzRFQydWgxbE1o?=
- =?utf-8?B?SFZXd0pZM28rV2xRWjBEMjc2SVMzcUUvTnIvZ2d4VlRDR0lQQmJwdVFPNEdM?=
- =?utf-8?B?Q0xERFlGS0NIVkhCYW5hUTZFdDVncjBMT0ovS29PVzdhc1JiZGNiVzBHSkRY?=
- =?utf-8?B?WXB2bXo0QUhpSWgrMWc1SDBabFhVaVZhZitmaE9kNVM5dGhGdU03blNjdG5s?=
- =?utf-8?B?YTdZeGVneHgrSHZqVFI0bHYreG9wdHQ2QjJkY0IwWHlPVE1iSVBPRk1wQXhu?=
- =?utf-8?B?b2NiQjdzOU9SVnFFaGVRK1lJcitLcTlnRzdSL3pCN3A0YUp3THBYNTE3ZVM5?=
- =?utf-8?B?UzdZUC9ObzhZMXRjWlI1b0Z0aHZjb0JpemJzYUoyMXBoTDhnUFZ1SU5MMndZ?=
- =?utf-8?B?SnNqaFlQY2N6bFA2WUMwcUsvSVo3T3RKdWswYkhydngwU1U0RTc5VnpkWmNS?=
- =?utf-8?B?Q2Y1Tk9IU3o1alJiOVFqbnROTUsrOHZqcDlrUFk2WllYZzRwUjVodlZHZ243?=
- =?utf-8?B?MG41WHBUR2pRTlFSRlZCNFNWTUo0WVQvdVVqelNCSkU0dVNLOTlPeXdrU2gw?=
- =?utf-8?B?L2NPdkJ0aXpXKzFiMnd4WnpQTDdiSzZycEdwM3lTL1QyQ0dxdzdjRzB0ZmJ3?=
- =?utf-8?B?OVR3NlBNVWo4OU5QUGY1c1hITWRkZXhXOElWL0xQRmx4YnlqV3oveUF3enli?=
- =?utf-8?B?RUpWZXBVVDRKYVZ2c1FlMDVQWW45TGg3UjJEeE1aV2psTjlSNU5MaDhRTnVa?=
- =?utf-8?B?c09Pb05OVU9hcnA3NTg5cE50Ulh6QTNzeHRJaHZMcTNSL2E4emd3bWs4QlNC?=
- =?utf-8?B?bXVmSjFXei9PMHMvMVRIblU4cGVjeDFmMG0xOEJxbnY5RUN6Rmo1OVoxUUxx?=
- =?utf-8?B?TnppNGFrbjhXVE5JQVdjSGlMNHdBRHh2VndJVkJ2ZkljMDZVTFpIM1FMNGpj?=
- =?utf-8?B?T3lUTFRleEd6RDVjK3RjUlNDbVFVbHM4aVMraHkwaHJrS0JVMGdQcExGTGdz?=
- =?utf-8?B?bWVpR1BxNkRzaEF2b3hQZUZ5M09uM1ZOcEEwMG1MYmpZS3IrR3VZSFF5TlNx?=
- =?utf-8?B?OGtmTjFkQWQ3ZGo5R1BzU1lxa2owQ1ZLQmtJcVFVRXlRanhnRUNTU29nR2NZ?=
- =?utf-8?Q?D+cJ4TQriY4o+iZw1c?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 489f1290-9d2a-4187-2fe6-08df08741de5
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB9736.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 21:58:12.2082 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u7SJHIWbWAZOSfxQ4vX+R27M/nZvIdfmAQsGTjl6PwK4T7vhzGK/WfOhcuk3uIZH/Ictmz55Mbkkl712ouppzA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR12MB9277
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
- envelope-from=tdave@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
+References: <20260901195334.463267-1-jsnow@redhat.com>
+ <CAJ+F1CKA-UPwzx7XLLhvA+VW8PuDQGbXKXDBK0mVfo0E4C6-hA@mail.gmail.com>
+In-Reply-To: <CAJ+F1CKA-UPwzx7XLLhvA+VW8PuDQGbXKXDBK0mVfo0E4C6-hA@mail.gmail.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 1 Sep 2026 18:11:03 -0400
+X-Gm-Features: AcwNN1XccOVlfR71w73uCWVf9-55ZT96WKHUXz-_UO-VaB0ZmhDxyhvs4fTjnlw
+Message-ID: <CAFn=p-Zix9rEXMQsCj=zanoOUXbS_dSTnWY3OaiLRSN4viTtjA@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Remove stale contact info for Stefan Berger
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Stefan Berger <stefanb@linux.ibm.com>, QEMU <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,86 +136,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/31/2026 8:42 AM, Gerd Hoffmann wrote:
->   Hi,
-> 
->>> Is this the reason we cannot rely on the Enhanced Allocation (EA)
->>> capability here?
+On Tue, Sep 1, 2026 at 4:18=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+>
+> Hi
+>
+> Le mar. 1 sept. 2026, 23:54, John Snow <jsnow@redhat.com> a =C3=A9crit :
 >>
->> AFAICT, this was explored on RFC v1.
-> 
->> EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL was suggested as the
->> shorter path at the time, which is what this series uses.
-> 
-> Essentially we have *two* problems to solve here.  The first is how do
-> we get the fixed bar information from qemu to the firmware, and the
-> second is how we integrate that into edk2.
-> 
-> So we could have a driver which parses EA and passes along the
-> information found to PciDxe using
-> EFI_INCOMPATIBLE_PCI_DEVICE_SUPPORT_PROTOCOL.
-> 
-> Not sure how much of a win that would be compared to adding EA support
-> to PciDxe directly given that the PciDxe bridge window logic needs
-> enhancements to properly handle fixed bars (as discussed below).
+>> I was unable to get in touch with Stefan and I am not currently sure
+>> if this module is maintained or not. To prevent an avalanche of
+>> bounced emails, remove his contact information.
+>
+>
+> Really? There must be something wrong. He is a very responsive and active=
+ maintainer.
 
-Agreed, EA doesn't buy us much here; the bridge-window fix is needed
-either way.
+All of the emails I have are bouncing; I hope they turn up! I would
+love to be proven hasty.
 
-> 
->>> Agreed - if the bridge windows are not programmed correctly on the first
->>> pass, there is something in the code that needs to be fixed. I don't think
->>> papering over it like this is the right approach.
->>
->> That's a fair point. I did the window-sizing after PciBusDxe because I
->> didn't want to touch existing PciBusDxe code too much.
->>
->> As per my understanding, PciBusDxe's enumeration splits into three phases:
->>
->> Phase 1 (PciHostBridgeEnumerator) walks the whole tree and calls
->> CheckDevice() per device — by the time this phase finishes, every fixed
->> BAR address is already known and cached on the device
->> (PciBar[Bar].FixedBaseAddress).
->>
->> Phase 2 (PciHostBridgeResourceAllocator) prepares an address for every
->> resource node in the tree — both individual BARs and bridge windows
->> alike — purely from size and alignment; PCI_RESOURCE_NODE has no address
->> field at all, so this is entirely blind to whether a fixed address was
->> already required.
->>
->> Phase 3 (ProgramResource) then writes the actual PCI config-space
->> registers, and by default it just writes whatever address Phase 2
->> prepared, for both BARs and bridge windows. The one exception is
->> ProgramBar() — it specifically checks whether that particular BAR was
->> marked fixed back in Phase 1, and if so, overrides Phase 2's prepared
->> base address with the real fixed one. However, ProgramPpbApperture(),
->> which writes the bridge's own window registers, has no equivalent
->> override — it always writes whatever Phase 2 prepared, with no awareness
->> of a fixed BAR anywhere underneath it. And that needs fixing, and for
->> that I have to change the existing code.
->>
->> I think the fix would be to extend Phase 2's own sizing step
->> (CalculateResourceAperture() in PciResourceSupport.c) to check for the
->> already-known fixed address on each child and, when present, size and
->> position the window as the exact union of those addresses instead of the
->> blind size-only sum. Does that match the direction you had in mind, or
->> is there a different integration point you'd suggest?
-> 
-> Sounds about right, when propagating resource requirements up from
-> devices to bridges looking only at the size is not enough if we want
-> properly support pci bars at fixed locations.
-
-Thanks for confirming the direction. I'll implement this and post it as
-part of the next round.
-
-> 
-> take care,
->   Gerd
-
-
-Thanks.
--Tushar
+--js
 
 
