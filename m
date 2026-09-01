@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BCD0C624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B42FC624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONB-00012A-8R; Tue, 01 Sep 2026 09:17:57 -0400
+	id 1x1ONB-00012G-Mg; Tue, 01 Sep 2026 09:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ON5-00010C-T3
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:52 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1x1ON7-00010k-HE
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:54 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ON4-0007A6-0j
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:51 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-c25420fe973so145344566b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:48 -0700 (PDT)
+ id 1x1ON5-0007Ap-9r
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:53 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-c250f28f1cdso745937466b.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268667; x=1788873467; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788268670; x=1788873470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=x6RZtMUWEU74PB1FgRz3pqt0ToXGlta6YwXXlSSBNRk=;
- b=a5SXPX111un6KznJjxzMLbTKgJXIzyXoa2xr1WhNBm1KLDNHXLcZCi4ofUC7VoVPbX
- tQorSmN4nmgdGbXUD3mFr/rpzzfkpFJHVJrG8aacsDqIaVRXuDwcuoYwfJSSUup90SRf
- RKbPnC511tpXa9Q3OnkgAqwQfUE69XgGWyNcmOpXOFu/R/MKo4C+ANuW3h+PTFDwXuRM
- V0zcyEfmRCy4+gGR69DxXkMu1FIZ/b7nbxw06Mwu8J/XxHEeAa7cYEMOgzfkVnlDH7Yf
- lLy9Yl96oLsJHLZq5Y14oxl6/ZtU9uaZdbBapTTzRmMxwQG4nGTgZTd7/e97+Dcj2PSa
- 4AIg==
+ bh=CoZBy8mdMV8ir86rLFIE1AfaPu8GaWAQzlSGhPYwi/0=;
+ b=yu5a3Pr2QWMmz6SYN6H962TsMZHG+I37SYyeWhNSULMidOEnVeP/4t7r0Ijwg0UnnP
+ V+YItssO3MHRjHwIvsS/SExMbNPlK9LVjV3BHRVTPnkpv9YF49iGzWf1Q9eJru4s9BjH
+ Rs4eozLzU/Z8KshHGxMyba7MTSMsHFH5lJlZ9qzXZWoAM3mvjDy8NSWBzYz8XjCPfqZx
+ CL/tO5K1W21yOGWWl6cez+mf0XBSUBnKG4DiZ1qAdnBP4dad6g7IGG5/zsahtijT/JEy
+ HkO7ETg2Xu7t78dvvouW1yK7i4fLl25oRxBCr+tKXZLrShUXflMZMSCI4LscOnf4ehj8
+ SPQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268667; x=1788873467;
+ d=1e100.net; s=20251104; t=1788268670; x=1788873470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=x6RZtMUWEU74PB1FgRz3pqt0ToXGlta6YwXXlSSBNRk=;
- b=ovN87HZc1I7oajoUPESKtmBpGKFFa5byO0im8laayNhCHLe8xbkwf3Vr3s/GoRn2f7
- KOKckmRjm3/2iOmPkeqTBLbsCPwIgFv6T9ZBffeRvqx5Zvmt/0HO4gTOPzuakZGV+2J/
- Pga5iBKG8qo8jDEPfDcPqmbuU9uyE5JwjevZnQhDVEg1dr5D4NqVJ69VW4x9vzUp0B3P
- 7RTF3kSCEX6VTeazuMEwdEK+Dmf9N7AUn7oL5qJFOVRziFtXOMq4xm21IJqzipqEWWrs
- XJEhjM7LpKyO+sZqOg66gb9hInVEJP6XwEaPOcwF1zj9UYW51lVbrxfuTbgfS4oF/VEE
- Kmng==
-X-Gm-Message-State: AFuF++kxJfg0dHxmJaTz3fhF4d8WvqLrYKNEwuT1RxE4RvmiV4RtgzwS
- 6DtMUjmyvjnF8QhPaZjKA4SiaV5V5V3P2S/G1/FQA0sw28pQTave1ExzNaEzyDUD3kAT9dc/4Im
- SE1HUyLc=
-X-Gm-Gg: AR+sD119EtHCzgIwO6k4xqwmFxESetWZJ8jJrU7m5vzaXudQykKl06s5Uh4S/k+ZQjz
- rX6yc/bP91XxAei+SkplVV3aLPsy6L2lSTAhkhe8Xz7gs/4NBFzE2Mda0u/BUyzeJAzWorrYLYS
- J3v2UnNjaFKX74ZtVNpaHtu5//+Ipw1s+n3o/HJjzq8bW0Ym800Mmi9BXiuUQ0A543VFkbc+NMu
- HKQwJ/cdtsnQZ/q+LsWZMeGALt3jg7pAdI75PSi2uUmuoDoGshWNfTiOWKjyhKws8JlG0KU6ysf
- D2e/DBqKWBNKicfur/ywIos641bv4BxyJHoTmM8KkRd5fsG522kYiWD/nRLUJmLQ0I0UjEG7NxL
- 6J74++1KP712FiG1pVctwTAWFlHMLxUSM1QOgT0pxEHVtskIkKvNAS1dQfiHZvfPaNkFtUD03Zo
- KrHkNJsEGUS6KY2Fo1F11DTXypfJ2xFKeB5rSk4s0YFgvPd8CB8/XN8FM3ty8FjX9Ssp2+rmX8+
- jPDX6/jQnpLQUsVUYaTrr7DFX7rth42W1qgYvBpVC3QiJqjdxPe97gtnRmna66WXCf1fQ==
-X-Received: by 2002:a17:907:3e04:b0:c1c:2173:d412 with SMTP id
- a640c23a62f3a-c2556fe9307mr2076595066b.1.1788268667603; 
- Tue, 01 Sep 2026 06:17:47 -0700 (PDT)
+ bh=CoZBy8mdMV8ir86rLFIE1AfaPu8GaWAQzlSGhPYwi/0=;
+ b=gZ3P6WwtHn2JMnl6xbOih01EAYhVJvUl+LPn/Oc8n2FmIMyEKpZ4NLUMurMruKjz0Y
+ fRv+uo09Fve/vmglkCkQM3WoB8U/GPr/mB0uUTMW0b/PMS1C+0uDPbnsVlmbarRnYn5m
+ W6SM0/3pxbfaAoQos9XuWI9E0zBoFAp2FKeBnOzLuS6ofOnQ0O327/oCNw7pWJpP0ocd
+ SmVY6nff4/p8u2FHPFJzIexS7cj0C2Q3DqyQDOBLO5Ehd8LWVXy0kkNLKfmiI27In97p
+ mPegnvtE8E98sL94/MuHEXMk6dL2SBWYvynw4QAocJ1QiqEmdpBqhyec97GYW3jzQQpl
+ RnbQ==
+X-Gm-Message-State: AFuF++nBrVp4HUjnVABwFzX4VEK7Vcs2GJVwBbl95oR7zl4OXwS5ciqQ
+ poQHid6Ug9Aa8bK8jKEx0S/asCjW5W61xnXLkdY7AYsa+7DiI5B2Tji2a+7OhLXt/eSoQD86GNI
+ CsMvn6O8=
+X-Gm-Gg: AR+sD11E/+4NeXVL/bSVoEbwTxe4j78ve5UbQ6fceHBTuOGsx3Tk5ajuXzqURxTeKcQ
+ anFhE7LkBFQJKmlSBePeO3LVNKsLNhx/Zrvzutdn8u23u02zmZllZG0HBfZ6PzUO7u/RMYyNNFZ
+ V7phW5hy6/fkIAwCqiNBeHJ+bPP63l2VlqXx6hq5ZwhjtipCpcyXYdQLCvzF8uioUF3m6zbhEeT
+ Sb6MF7MbymOu6RfvYDX4bStC+23r4hoGhMzPsfhH25I2/ymAriw5Lu6JBfYQUi5lb6kDzh5bRXH
+ E1KfxVJcUsIYQG+16h1tH4NLT9pQC1NydxOIEn0ouEVPDgLkjWI8S/ViIREXxMvrhGytbmWe4O2
+ W6dqUuVMYI2+88JldJRzW0Whb+7ZwzVGUQCpZUdqXnNwdAungRlrKbv3GwEbkJBhuuhP6pvrQ72
+ 9HmOu9c6F79kK91rPLKgVquHu/yailJAiqL70M2CgbkQBjfWAPIS22hE2GaAQmodHD5QT5DHXZa
+ tQiQGWv4AZ2e4nebMO4Jjuh8020hnNjSc0epevn6QlnUIWZ16h+afO+AhYWadwyYKA+vQ==
+X-Received: by 2002:a17:906:7306:b0:c20:3402:bd35 with SMTP id
+ a640c23a62f3a-c25571683ccmr2183468766b.12.1788268669637; 
+ Tue, 01 Sep 2026 06:17:49 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.46
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:17:46 -0700 (PDT)
+ Tue, 01 Sep 2026 06:17:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/58] target/arm: Make Thumb T1 hint space UNDEF before v6T2
-Date: Tue,  1 Sep 2026 14:16:47 +0100
-Message-ID: <20260901131732.2263947-14-peter.maydell@linaro.org>
+Subject: [PULL 15/58] hw/arm/armsse: add Arm Corstone SSE-310
+Date: Tue,  1 Sep 2026 14:16:49 +0100
+Message-ID: <20260901131732.2263947-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,76 +101,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "hint space" is a region of the encoding space which is defined
-to NOP if not specified as an architected instruction, so that future
-instructions can be added there which fall back to NOPs on older
-CPUs.  In the A32 encoding, this hint space was carved out of the MSR
-(imm) insn by using the fact that a field_mask (bits [19:15]) of
-0b0000 meant that an MSR (imm) would set no parts of the CPSR from
-the immediate, so it was always NOP on existing CPUs.
+From: Simon Xu <simonxhy0404@gmail.com>
 
-For the T1 encoding, the hint space is in a range that used to UNDEF
-in Armv5, and so the hint insns and the NOP region must all UNDEF
-before v6T2.  Rather than putting this check in the trans functions
-for each hint insn and for the NOP space (which is a lot of places,
-and awkward since those trans functions are often shared with the A64
-and A32 encodings), put in a decode line that covers the whole space
-which we check before any of the hints and which will explicitly
-UNDEF if necessary.
+Add baseline Arm Corstone SSE-310 model.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4208
+Device list changes between SSE-310 and SSE-300:
+New NPU0 Power Policy Unit and Configuration interface.
+All other devices are the same.
+
+Update comments in include/hw/arm/armsse.h to include SSE-300 and
+SSE-310 and their respective documentations. New SSE-310 IRQ mapping.
+sys_version and iidr values from the "SSE-310 with M85 and U55 FPGA"
+documentation for the mps3-an555. Refractor comments and code
+pertaining to both the SSE-300 and SSE-310.
+
+Arm Corstone SSE-310 TRM:
+https://developer.arm.com/documentation/102778/0000/
+
+Reviewed-by: Owen Giles <owen.giles@hpe.com>
+Reviewed-by: Robert Elliott <elliott@hpe.com>
+Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20260805153005.9989-3-simonxhy0404@gmail.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260821132550.168896-4-peter.maydell@linaro.org
 ---
- target/arm/tcg/t16.decode  |  3 +++
- target/arm/tcg/translate.c | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+)
+ hw/arm/armsse.c                 | 208 +++++++++++++++++++++++++++++++-
+ include/hw/arm/armsse-version.h |   2 +
+ include/hw/arm/armsse.h         |   9 +-
+ 3 files changed, 211 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-index 9a8f89538ac..43cd36e949c 100644
---- a/target/arm/tcg/t16.decode
-+++ b/target/arm/tcg/t16.decode
-@@ -224,6 +224,9 @@ REVSH           1011 1010 11 ... ...            @rdm
+diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
+index 55fbc2c2901..8ea4caaef24 100644
+--- a/hw/arm/armsse.c
++++ b/hw/arm/armsse.c
+@@ -26,7 +26,7 @@
+ #include "hw/core/qdev-clock.h"
  
- {
-   {
-+    # Before v6T2 this was not NOP space and must UNDEF
-+    MAYBE_UNDEF_T1_HINT 1011 1111 ---- 0000
+ /*
+- * The SSE-300 puts some devices in different places to the
++ * The SSE-300 and SSE-310 put some devices in different places to the
+  * SSE-200 (and original IoTKit). We use an array of these structs
+  * to define how each variant lays out these devices. (Parts of the
+  * SoC that are the same for all variants aren't handled via these
+@@ -118,6 +118,18 @@ static const Property sse300_properties[] = {
+     DEFINE_PROP_UINT32("CPU0_MPU_S", ARMSSE, cpu_mpu_s[0], 8),
+ };
+ 
++static const Property sse310_properties[] = {
++    DEFINE_PROP_LINK("memory", ARMSSE, board_memory, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
++    DEFINE_PROP_UINT32("EXP_NUMIRQ", ARMSSE, exp_numirq, 64),
++    DEFINE_PROP_UINT32("SRAM_ADDR_WIDTH", ARMSSE, sram_addr_width, 21),
++    DEFINE_PROP_UINT32("init-svtor", ARMSSE, init_svtor, 0x10000000),
++    DEFINE_PROP_BOOL("CPU0_FPU", ARMSSE, cpu_fpu[0], true),
++    DEFINE_PROP_BOOL("CPU0_DSP", ARMSSE, cpu_dsp[0], true),
++    DEFINE_PROP_UINT32("CPU0_MPU_NS", ARMSSE, cpu_mpu_ns[0], 8),
++    DEFINE_PROP_UINT32("CPU0_MPU_S", ARMSSE, cpu_mpu_s[0], 8),
++};
 +
-     YIELD       1011 1111 0001 0000
-     WFE         1011 1111 0010 0000
-     WFI         1011 1111 0011 0000
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f013f94b217..8c56348a665 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3340,6 +3340,24 @@ static bool trans_NOP(DisasContext *s, arg_NOP *a)
-     return true;
- }
+ static const ARMSSEDeviceInfo iotkit_devices[] = {
+     {
+         .name = "timer0",
+@@ -480,6 +492,146 @@ static const ARMSSEDeviceInfo sse300_devices[] = {
+     }
+ };
  
-+static bool trans_MAYBE_UNDEF_T1_HINT(DisasContext *s,
-+                                      arg_MAYBE_UNDEF_T1_HINT *a)
-+{
-+    /*
-+     * The Thumb T1 encoding hint space was only defined starting
-+     * in v6T2 for A-profile. For M-profile it always exists, even
-+     * in v6M.
-+     */
-+    if (arm_dc_feature(s, ARM_FEATURE_M) ||
-+        arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
-+        /* Allow decode to fall through to the hint insns and NOP space */
-+        return false;
++static const ARMSSEDeviceInfo sse310_devices[] = {
++    {
++        .name = "timer0",
++        .type = TYPE_SSE_TIMER,
++        .index = 0,
++        .addr = 0x48000000,
++        .ppc = 0,
++        .ppc_port = 0,
++        .irq = 3,
++    },
++    {
++        .name = "timer1",
++        .type = TYPE_SSE_TIMER,
++        .index = 1,
++        .addr = 0x48001000,
++        .ppc = 0,
++        .ppc_port = 1,
++        .irq = 4,
++    },
++    {
++        .name = "timer2",
++        .type = TYPE_SSE_TIMER,
++        .index = 2,
++        .addr = 0x48002000,
++        .ppc = 0,
++        .ppc_port = 2,
++        .irq = 5,
++    },
++    {
++        .name = "timer3",
++        .type = TYPE_SSE_TIMER,
++        .index = 3,
++        .addr = 0x48003000,
++        .ppc = 0,
++        .ppc_port = 5,
++        .irq = 27,
++    },
++    {
++        .name = "s32ktimer",
++        .type = TYPE_CMSDK_APB_TIMER,
++        .index = 0,
++        .addr = 0x4802f000,
++        .ppc = 1,
++        .ppc_port = 0,
++        .irq = 2,
++        .slowclk = true,
++    },
++    {
++        .name = "s32kwatchdog",
++        .type = TYPE_CMSDK_APB_WATCHDOG,
++        .index = 0,
++        .addr = 0x5802e000,
++        .ppc = NO_PPC,
++        .irq = NMI_0,
++        .slowclk = true,
++    },
++    {
++        .name = "watchdog",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 0,
++        .addr = 0x48040000,
++        .size = 0x2000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "armsse-sysinfo",
++        .type = TYPE_IOTKIT_SYSINFO,
++        .index = 0,
++        .addr = 0x48020000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "armsse-sysctl",
++        .type = TYPE_IOTKIT_SYSCTL,
++        .index = 0,
++        .addr = 0x58021000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "SYS_PPU",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 1,
++        .addr = 0x58022000,
++        .size = 0x1000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "CPU0CORE_PPU",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 2,
++        .addr = 0x58023000,
++        .size = 0x1000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "MGMT_PPU",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 3,
++        .addr = 0x58028000,
++        .size = 0x1000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "DEBUG_PPU",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 4,
++        .addr = 0x58029000,
++        .size = 0x1000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "NPU0_PPU",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 5,
++        .addr = 0x5802a000,
++        .size = 0x1000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = "NPU0_CFG",
++        .type = TYPE_UNIMPLEMENTED_DEVICE,
++        .index = 6,
++        .addr = 0x40004000,
++        .size = 0x1000,
++        .ppc = NO_PPC,
++        .irq = NO_IRQ,
++    },
++    {
++        .name = NULL,
 +    }
-+    /* On the earlier cores, we must UNDEF */
-+    unallocated_encoding(s);
-+    return true;
-+}
++};
 +
- static bool trans_MSR_imm(DisasContext *s, arg_MSR_imm *a)
- {
-     uint32_t val = ror32(a->imm, a->rot * 2);
+ /* Is internal IRQ n shared between CPUs in a multi-core SSE ? */
+ static const bool sse200_irq_is_common[32] = {
+     [0 ... 5] = true,
+@@ -507,6 +659,20 @@ static const bool sse300_irq_is_common[32] = {
+     /* 30, 31: reserved */
+ };
+ 
++static const bool sse310_irq_is_common[32] = {
++    [0 ... 5] = true,
++    /* 6-8: reserved */
++    [9 ... 12] = true,
++    /* 13: reserved */
++    [14] = true,
++    /* 15: reserved */
++    [16] = true,
++    /* 17-26: reserved */
++    [27] = true,
++    /* 28, 29: per-CPU CTI interrupts */
++    /* 30, 31: reserved */
++};
++
+ static const ARMSSEInfo armsse_variants[] = {
+     {
+         .name = TYPE_IOTKIT,
+@@ -574,6 +740,28 @@ static const ARMSSEInfo armsse_variants[] = {
+         .devinfo = sse300_devices,
+         .irq_is_common = sse300_irq_is_common,
+     },
++    {
++        .name = TYPE_SSE310,
++        .sse_version = ARMSSE_SSE310,
++        .cpu_type = ARM_CPU_TYPE_NAME("cortex-m85"),
++        .sram_banks = 2,
++        .sram_bank_base = 0x21000000,
++        .num_cpus = 1,
++        .sys_version = 0x7e10043b,
++        .iidr = 0x74e0043b,
++        .cpuwait_rst = 0,
++        .has_mhus = false,
++        .has_cachectrl = false,
++        .has_cpusecctrl = true,
++        .has_cpuid = true,
++        .has_cpu_pwrctrl = true,
++        .has_sse_counter = true,
++        .has_tcms = true,
++        .props = sse310_properties,
++        .props_count = ARRAY_SIZE(sse310_properties),
++        .devinfo = sse310_devices,
++        .irq_is_common = sse310_irq_is_common,
++    }
+ };
+ 
+ static uint32_t armsse_sys_config_value(ARMSSE *s, const ARMSSEInfo *info)
+@@ -604,6 +792,14 @@ static uint32_t armsse_sys_config_value(ARMSSE *s, const ARMSSEInfo *info)
+         sys_config = deposit32(sys_config, 4, 5, s->sram_addr_width);
+         sys_config = deposit32(sys_config, 16, 3, 3); /* CPU0 = Cortex-M55 */
+         break;
++    case ARMSSE_SSE310:
++        sys_config = 0;
++        sys_config = deposit32(sys_config, 0, 4, info->sram_banks);
++        sys_config = deposit32(sys_config, 4, 5, s->sram_addr_width);
++        sys_config = deposit32(sys_config, 10, 1, 0); /* No CoreSight SoC */
++        sys_config = deposit32(sys_config, 11, 2, 0); /* Basic level PI */
++        sys_config = deposit32(sys_config, 16, 3, 4); /* CPU0 = Cortex-M85 */
++        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -1205,7 +1401,7 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+     qdev_connect_gpio_out(DEVICE(&s->nmi_orgate), 0,
+                           qdev_get_gpio_in_named(DEVICE(&s->armv7m), "NMI", 0));
+ 
+-    /* The SSE-300 has a System Counter / System Timestamp Generator */
++    /* The SSE-300/SSE-310 has a System Counter / System Timestamp Generator */
+     if (info->has_sse_counter) {
+         SysBusDevice *sbd = SYS_BUS_DEVICE(&s->sse_counter);
+ 
+@@ -1225,12 +1421,12 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     if (info->has_tcms) {
+-        /* The SSE-300 has an ITCM at 0x0000_0000 and a DTCM at 0x2000_0000 */
+-        memory_region_init_ram(&s->itcm, NULL, "sse300-itcm", 512 * KiB, errp);
++        /* SSE-300/SSE-310 have ITCM at 0x0000_0000 and DTCM at 0x2000_0000 */
++        memory_region_init_ram(&s->itcm, NULL, "itcm", 512 * KiB, errp);
+         if (*errp) {
+             return;
+         }
+-        memory_region_init_ram(&s->dtcm, NULL, "sse300-dtcm", 512 * KiB, errp);
++        memory_region_init_ram(&s->dtcm, NULL, "dtcm", 512 * KiB, errp);
+         if (*errp) {
+             return;
+         }
+@@ -1461,7 +1657,7 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+      *  0x50010000: L1 icache control registers
+      *  0x50011000: CPUSECCTRL (CPU local security control registers)
+      *  0x4001f000 and 0x5001f000: CPU_IDENTITY register block
+-     * The SSE-300 has an extra:
++     * The SSE-300 and SSE-310 have an extra:
+      *  0x40012000 and 0x50012000: CPU_PWRCTRL register block
+      */
+     if (info->has_cachectrl) {
+diff --git a/include/hw/arm/armsse-version.h b/include/hw/arm/armsse-version.h
+index 60780fa9843..6b498cb3342 100644
+--- a/include/hw/arm/armsse-version.h
++++ b/include/hw/arm/armsse-version.h
+@@ -25,6 +25,7 @@ enum {
+     ARMSSE_IOTKIT = 0,
+     ARMSSE_SSE200 = 200,
+     ARMSSE_SSE300 = 300,
++    ARMSSE_SSE310 = 310
+ };
+ 
+ static inline bool armsse_version_valid(uint32_t sse_version)
+@@ -33,6 +34,7 @@ static inline bool armsse_version_valid(uint32_t sse_version)
+     case ARMSSE_IOTKIT:
+     case ARMSSE_SSE200:
+     case ARMSSE_SSE300:
++    case ARMSSE_SSE310:
+         return true;
+     default:
+         return false;
+diff --git a/include/hw/arm/armsse.h b/include/hw/arm/armsse.h
+index bdf2d4db8e2..ab2ece07567 100644
+--- a/include/hw/arm/armsse.h
++++ b/include/hw/arm/armsse.h
+@@ -11,12 +11,16 @@
+ 
+ /*
+  * This is a model of the Arm "Subsystems for Embedded" family of
+- * hardware, which include the IoT Kit and the SSE-050, SSE-100 and
+- * SSE-200. Currently we model:
++ * hardware, which include the IoT Kit and the SSE-050, SSE-100,
++ * SSE-200, SSE-300, and SSE-310. Currently we model:
+  *  - the Arm IoT Kit which is documented in
+  *    https://developer.arm.com/documentation/ecm0601256/latest
+  *  - the SSE-200 which is documented in
+  *    https://developer.arm.com/documentation/101104/latest/
++ *  - the SSE-300 which is documented in
++ *    https://support.arm.com/documentation/101773/latest/
++ *  - the SSE-310 which is documented in
++ *    https://support.arm.com/documentation/102778/latest/
+  *
+  * The IoTKit contains:
+  *  a Cortex-M33
+@@ -127,6 +131,7 @@ OBJECT_DECLARE_TYPE(ARMSSE, ARMSSEClass,
+ #define TYPE_IOTKIT "iotkit"
+ #define TYPE_SSE200 "sse-200"
+ #define TYPE_SSE300 "sse-300"
++#define TYPE_SSE310 "sse-310"
+ 
+ /* We have an IRQ splitter and an OR gate input for each external PPC
+  * and the 2 internal PPCs
 -- 
 2.43.0
 
