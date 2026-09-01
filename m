@@ -4,140 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E89CC624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 12:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A71C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Nx9-0005Nd-Tp; Tue, 01 Sep 2026 08:51:03 -0400
+	id 1x1OAF-0007pu-PG; Tue, 01 Sep 2026 09:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x1Nx7-0005Mw-Us; Tue, 01 Sep 2026 08:51:02 -0400
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x1Nx6-0002Gs-0Q; Tue, 01 Sep 2026 08:51:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TyeoRe6pb1valOS8fWmwN7lmmb7RmA5dphlh+yZn2tSVNR4/r2AXW5zHba0QvEVQvZU5D7u00G4CmLNV+LtP/BxeOTDhu16on9sLCLWUe8PEDnzXusOM09+3oqOAumdTTfUw4k+TWA2ri6Y7E8OKJ+JfNstoVF+9jdnRF22Yos2zAfV3Bzq2wFkuZYZlL7vq/y7nyTmUneRocwdXcDhan5VOm2ExpjhzfzvHcCVskjBU55cNUM3amcPpc6B6FmJDKVc58Bs1icmlyNPqsi7Kge+samFUiUa5QEwWVlhHMxFwCb1KKba+W3r77VX54eJxhaDoG1Z9HiB7PKnYIaxAWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SegLIUexXWHJ1YUZAFD9exv1dlJ1bjm3OSeapj8bFpo=;
- b=BeIe86Hg4CeaQANj5FXyfoic4Zp3m7YxiHi1S0dJVs6IZ0lGI6iC8hoe3omjuOsJOgb6I56Q0i0kzIcVrpiY5WQoiJ2xutKeREUeAHfYuKj5AqSTSKffZmQ+oli73PyaVtGr5eTZt2tzRHe6CeAKcyyrV8AnzgmKc0IeAEcE6vpSYKsvnDm8V0D3PQvVQFKaBbYhwjZD2Zpfc/Q+RZcsySo7cbYBv1nhKeCRUjeihwCGkS5au4QB2uBF42d3SQqZKqf7KOxFAxvAPhruHGcR9FSicfVlrL3t7ywOUetbM0fqpi0UYeH179m8ZNcfYC9FQBdMqmpI91CT6SrbmqiSOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SegLIUexXWHJ1YUZAFD9exv1dlJ1bjm3OSeapj8bFpo=;
- b=LEqX1oLqWQy6q3O3BZ+lyO6xlvisJkFBFGgXy3GdJCSeouU0tT9zUXTFT9WKLZrC9A1opXUeQRJHRnJNqH1dE/PFHenCCVjNEdxrEG4eec3vK+FqNwX6/+uUJUlbZnJh2mcNfEGhccf1qg5U0t1keU6KHSsJMMqBuB0XK1JycGfZxk0ffRAk0hd+k90BQk4fxa2tzcFdFrwxmsFJ7tLCWjFqbx4TdefUwXh5dbcQAVViq29z6NzNyDW873HnCYVsIGKO7k0QpA6cEvJD0gjNfhevBGUpjInr0eBQfa+aMH5IzrXlw9JKax3vlazVXGgt4pii5E51GVuEfQOkI/Mp1w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by AS4PR08MB7950.eurprd08.prod.outlook.com (2603:10a6:20b:576::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Tue, 1 Sep
- 2026 12:50:43 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.007; Tue, 1 Sep 2026
- 12:50:43 +0000
-Message-ID: <95e5ffd8-d193-41ff-9d65-433ed2ce6949@virtuozzo.com>
-Date: Tue, 1 Sep 2026 14:50:42 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: fix bdrv_next() skipping monitor-owned nodes
-To: Fiona Ebner <f.ebner@proxmox.com>, "Denis V. Lunev" <den@openvz.org>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-stable@nongnu.org
-References: <20260828222005.2888213-1-den@openvz.org>
- <05df98ca-e5d7-4cb2-99d2-74a1a276f58a@proxmox.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <05df98ca-e5d7-4cb2-99d2-74a1a276f58a@proxmox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR07CA0239.eurprd07.prod.outlook.com
- (2603:10a6:802:58::42) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <stanleyjhu@google.com>)
+ id 1x1OAE-0007pi-I4
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:04:34 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stanleyjhu@google.com>)
+ id 1x1OAC-0004V6-Js
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:04:34 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-51c10e86e52so226411cf.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:04:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788267869; cv=none;
+ d=google.com; s=arc-20260327;
+ b=qApw2WHBcRQ8GmVDggt8yGVDwKOtF8MWfjjw0shdFI7ZQ2HXYdMhjz3er8T58tNRtH
+ ZWAg005rn/SyxgQLPftJjB8wEggVda1A150Hz0RwbUT1Yatw4ZnxFCCnlNmn30UIBKR7
+ ArQqGXVA79D1rl7k6z5G4pTD/vtOWF487NFjPpCISNH2ashBCtFAqKjRtmfdAV1u7vm7
+ pwqdzCdyBwiy7WTJyGqalrLG7b+CeNoqc/BK9U61kaLzU679UNwaVys4NttpqcoBTMAn
+ odBSYR/ylSmWQWgYAfvOwQsiJ3WxLuqjc+7ZNo/tPGWhmUhZNiL3AULRTvwW5EpGCNSD
+ 4mbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=NVAk6GBl/Epdh6mN5LVBBwrLBYBnY5VNFtE6oeW+ccc=;
+ fh=PJUBCGRQhFruHgZtFVzU33RxwcrkxyEpHEWT05+ZO68=;
+ b=ZgVEYB3Tj8vlmCqy+ZYURVEfXn54ODD0WXy6iLQWujXZqFWQRhmmRdTe3o90wUbtCJ
+ G01JQxsdCUQqtjEm/sHn0Nx385Yco4fChuab2tBk260+nz7giOXugJPCYVbV8j4xyIgt
+ 5mgulXkkegorEjQ2zFJcXGVv2Y4A8GDQNH4mqSjNZuRFkTHh8ZTUVZdE95uA3rfv/GKg
+ EU3+ab9DNtRcIjQ/L+aKw8Zjo8vVCO4B1Fkufmy5Y7KgFtBCgLTLNUyM/RUXYNQuqsEi
+ ng0h16TP59SCMAHcHQnwYCXXa0LA6OADgEYHagAOXhV5yq9yKLV/VqnfAQNYUfz4mNfH
+ +NGg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1788267869; x=1788872669; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=NVAk6GBl/Epdh6mN5LVBBwrLBYBnY5VNFtE6oeW+ccc=;
+ b=MRZzl8F9Na9yuuj9zO9pttebt20YXhHfM56pyU1/7bLatLnMEFVb4fPM6MLateyZsv
+ Ur8GKVu/xqn5mpJpH5/UYSbmDBDJ66MGaVoQ0W8kbMrkbRGLdCSxo5VyZi6anMmBH+Wq
+ REQFyMs6SOPGf6jEXryIPnp3xWslKZ3FnR+o61M0Z5tpoxWL4pAi15qIXMNVQPDLxLsF
+ /5XmavE905xvKgzAxXV4zGxXiqghiF+4unULhtSCEOdfIT+umtZ9VTBro7wwNa3pt0kc
+ wIXW7c7p0Yf4JX0NV19Xvw4oGNkgY955TirJOyc0mNFuoIrxQjOQCSILaiRa0+UIucco
+ BRww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788267869; x=1788872669;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=NVAk6GBl/Epdh6mN5LVBBwrLBYBnY5VNFtE6oeW+ccc=;
+ b=DR9IcUIuKeEYy6Kn6tLdoeqXDgY7nrFP+A/PDskin7hwKMIsMTufLpncZZ2Vz5QHPt
+ EOFUbgQS0k/kkAm6bNVToBKs1XxJ8cO2hx6euZhornPcY4v55Du1EYyXd58d2OxP8kKz
+ tfsdwqiZlP9VoIB1hreJXqch5o2jPrXnOVXZMl/t4qlz/kNkLBE52o+Y2OAQDNPITkVm
+ OcuasIK8K39Ok375TvhoxLxiVp5bEb1qEjWTKZPK6Wqcl2RIa7gkNxlegAqHVRS6f7vS
+ a0kfEVxs9wKxxLvp7CkeO9gv5EoilDIBSWmC8YaayqRIrf1C6OQTLdY9BxB0xh8OXlSb
+ G4vA==
+X-Gm-Message-State: AFuF++mkt4h1f1bwCjMjbLrDQJBCzqrsuGY9Vib6YdxR0JXS8Hv5J6dW
+ rZeg9iR0XO1Eqh+zNFGx78VE1oY/8bY1QvdP9GvOXBw3o/Pn4SF2cDUP0okqZXaAJvu7atOb5oN
+ rGR8rlBf1EMbfCD1BOfLMCBJQnX6Kqd75jJkFEta7
+X-Gm-Gg: AR+sD10FZL1E2gq8rRqbBpyTx7490Sews3AKo28QVCSgUcEiK05v7z7L40kN3rW6hMS
+ FTNoPygzZoS6t7ZkQgfI7GL5KAX8Zg5v8CK+ZmfL7m6ooWjxNWOfai7gDEtnDumckNEtolvfCBX
+ 0jgUoQsy0Gbb+Wb6YlcxWJHlOyllERxjsQojSS5Q+yE3T4403Ga/e+UpFALJpkuZyK3KTt2Hfm+
+ 9MSRHQHDTA0/+d6FIOAVQA8paFZz9LrasMOBohQC1yugfQMnSGZtrRmf6fVvY+DF/v8lTXPjR4M
+ vmVhLKJRhoQTBjgPKPdvBVPqN8YR1N2kEiKhR0/FMLLA6LRzI9u5ICU=
+X-Received: by 2002:a05:622a:428b:b0:52f:8389:29e0 with SMTP id
+ d75a77b69052e-53024be8e1cmr14966921cf.0.1788267868402; Tue, 01 Sep 2026
+ 06:04:28 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS4PR08MB7950:EE_
-X-MS-Office365-Filtering-Correlation-Id: 714dc3b0-c375-43eb-7b07-08df0827a299
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|10070799003|376014|1800799024|10067099003|56012099006|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: qxvjM9SNp+XhAzQWj0jcXUqBSMk7MpdcAAR0kgl0lbDPsvs1RGwId6qcvnHErx4o4NVWLLhVDdFFO6/RuSQofjNjioAcseON6H1d3Zkrrm0OqUOUw77XvAcVzvHc9Rf8xK7usnX0LpDr/7vb74PiBuGtsZPYAPBRM36B2AZFGAJArs66RBEFBh5iVR6zNyXV+hRVunAb68p+lU8vbFisOcRPTVbRqgBmGkIWNSPy2jskN/TLmUyvEydq+pbfDvSn4OaCi7yrB4HVIfj0zh8INhPNV/v+EaU6A4AsyJWe7Pb+TA8E+/q63Hp6YKUdOOXQnN/UF3VgaqW2FOw2rnxNLuDUzWQSEIhtWBsmgjYtKPWhrsyngu8f3/0yzJBZX8U8AxEi2+dEWgcjvGl5HqpU4XDFaASNmjE4q9JYm04KNNiNyI3hb5WyYdi8YXnRiw9pjOfUPTR0k+wpz/lchoVbmQxuduGbbjLJcHPwTPFr0X+/q72v53Ojgviv5ZQvQUdv/NHG+5WTQwjuUE0Mpx3nJCoYHYzAaqr5ysjkyyLMC1SIhuYpaVRc95AsXwrvXt1/8w26wLUsBon0UAWmPnPFiINeip+uOTR2SgDKXvHrc0wV3jEqMeiYe+6frkBcb3b2kWM54y69TQkSoXT1MBfhBedVMKkEF4J4r06eKJO5HpU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(10070799003)(376014)(1800799024)(10067099003)(56012099006)(4143699003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bXp1RUo2dmxnSEJoZUp6TDZZWDVkZ3EzZy9jcDdzdTU3ZUdaNmNIcXhZekRQ?=
- =?utf-8?B?K1dsZnBqaUQ3d1JRYXpGVHJvbDBpYkNOYXk0aHNUdkhIVVFxWWc1aVgvOTkr?=
- =?utf-8?B?cVJsaTJqUHM2QUgzZFJ4bjlvcFdTU3Z2b0hVWExITTVpcDdPNHh6Wkx2aTkw?=
- =?utf-8?B?RnQ3ckF5emtJQXJqbjcwSkRtL0hRQk9wTVhZYktRdU5KNUZsek4yQzdIaDVM?=
- =?utf-8?B?WTRsTzFBS2cyWU5PTUFSNzVDVnI4QldCWGVOZk44TGdvOEt6SU9zTGVOdjhH?=
- =?utf-8?B?cWpCT2hHZnBXL1NTcHE5UUxISURjaEVXRXNNNWN4Ym9XaGFoblVXUTNEVDBI?=
- =?utf-8?B?S1FwYWRWa0M3V1BHd1BTaml6Z0tKUzEwVjJnSHpxWjJvK0ErOHcwbjNWcWNW?=
- =?utf-8?B?c3FaMU5zVEovUXpBUG5ScWpZZSs2NFdpcHRpdnVXRDRaZmFNZWlMaUlQQUdx?=
- =?utf-8?B?MUlXc0p1Wm5WUGlkZFhhejdoek1UZ2VqR3FQK3hCdlFINWJ1c1hFcjhPcmQr?=
- =?utf-8?B?OFNZL2M2Nmk3dHhMYWdjWTNaamM5dXYwc0hQaXRvM252Tm5XZE1PYmF5ZlN4?=
- =?utf-8?B?T1BiODF1RW1zVElhUk8xd2FiL2ZSdmZ3UzZpNlUzeHJPaGlrQzhlcUlNT1Ji?=
- =?utf-8?B?ZkoxOGpSdU9XYndqZ2hBdzU5cjIzSUxMOTV2RmZFQUNVOXlDUDVIZHdUVnJt?=
- =?utf-8?B?Rmw2U1BkSWRycE5ia25RNlVtekdhZXhyVUdKUlpaMmF6RkR2WERuVXFDc1B4?=
- =?utf-8?B?enpuK1hoRFZvRzVJWlduVWs4bDdZT3hUSnlIeVlUWjViSkMvOTA2RVAzS01i?=
- =?utf-8?B?ZXFpdmJhNW0wQTdjblR4L2RZZVhITTBsZzI2MlhOZEgwcUY5cW96NGdqQVA2?=
- =?utf-8?B?QmRVTDhyR0ZLUXVseVl0cHJocFpDNzlYV2lGSEoxNUg2L2tiazUzYXBoK05l?=
- =?utf-8?B?bVp3U0grKzBiaHlUcUtJZTlzdUFzSHFNTjY3OWhBRHhDMldqWms5QVdNU1g3?=
- =?utf-8?B?dVVPZ0ZvQjM2Y3dlSlgyNWNHa2NydnFwQWRHSnZQUS9hMjdnMHY3am9ZOU1P?=
- =?utf-8?B?cG5RTWhzQkJQSzJMQXZwN3R4Q2o5M2kxT0VJVXgvV0dRYjBGaWpRczFGakVO?=
- =?utf-8?B?YWR4N2NXL0UrS2ZCd1JHcjRkTjlyTUNmSmE1NzVFSi8ybTE1OWdKYXl3UThW?=
- =?utf-8?B?dHVtOThUbnY4YmhVTk5DME5PcjhqbTliU0dYZEwxRHV5bVBrQk9lbDRmZDkx?=
- =?utf-8?B?amF0LzJYNGVLUDJONDVUeXJ4bGF5UUwwMXBxUE9aMEVjRGtOSTQwdnFHdUwr?=
- =?utf-8?B?aDcwR3g4YlBNRkZqUFRCME5DNWFMa0RCMDhHYWN3c2p5NlUvT2FxeHVHR2hR?=
- =?utf-8?B?aWltMGtKQUJ4RnlFZGpHdmRWSVVoSEJPd0o3SDhkSFJqamh4UTVIYy9LcWZR?=
- =?utf-8?B?QkYrZDd1a0w4VFZmUklvVzRWeTRJMmY1SkVNeHpUYTdrZjFSbytHb2xGY2di?=
- =?utf-8?B?Wk4za2hrT3RvbjI1Zkp1TlpaQXRKUUFVeTNCZ0dOaFFFODg0UWNjVlh2ak9k?=
- =?utf-8?B?RFdSdUtqZGV2UDBoSndBdWhvdmU4UUc4WndheUVSTXBPNWdHakk5T1dXUnM0?=
- =?utf-8?B?eWcvUXZWemRHc3BhZWF1K0V1MENYZFVFdlFXanBobjN3TGxqRklOZVhDOGI3?=
- =?utf-8?B?cysvNXpsK2FEaVMvZ0o4Uld5WXZjb2JuaThLTWczS3FNaldtNUg4a2JPdS9u?=
- =?utf-8?B?S1ppNDhjYmlaRTF6M1VGeGVITGxSY25ZTEFZeFQyZmJaRU1MWjJvSDY1dGhR?=
- =?utf-8?B?VFE5a1Mxd2hpbE5OOWJSNms4VW4rRDFQd1cyUG5iWHUyKytHVXVpb1lhQ2ll?=
- =?utf-8?B?WWZnRkVreDlTSk54ZXRsdER2ZzFtcHFrWlZTSlVoSjdrb3o0U29WOXJMUmkw?=
- =?utf-8?B?UytoT0NEbVBIVXJZWklpTkVKZXFSQTBud3NHS0VPc2JtZHQycXZIQTFPSExI?=
- =?utf-8?B?d0t6bmVad1Jvak9USTZOcGk0cTFURTd4SzZiS3ZUTmNWb0xlRDlpb3U2bVgy?=
- =?utf-8?B?WHNHUzVGa2dBa3ZUQXM1R3VpSTAxU0l2Wm1nK2VORG16RXlpMlUxZmdhVDZ3?=
- =?utf-8?B?WmpGL3k3SHJJcDZyWUdmTE42ZkRSMW5MQUZtbFQwR3E0ZW5uNmJoOHpVRWFs?=
- =?utf-8?B?UCszNXdwd29NeTc2NHZQWWNDc3NnOU1pNWtVWnRlV3BienVPY29mcktCSVRy?=
- =?utf-8?B?UWFjZ2lDN05ldnVqU0JueUZYMXdYVmlUMDltMDZvMlhrWTNPc1FpclRBSFBW?=
- =?utf-8?B?T0wxR0o2ejR3V3FXaERSL015SWdROVkzQ042K2ZPalZJaXdsYkI4WXN1S1Nw?=
- =?utf-8?Q?j1Jh4jepRCRnRAJ+yJ99DrolDJwu50dgAfGygo2glQHJN?=
-X-MS-Exchange-AntiSpam-MessageData-1: 6xdedqwZ6tP4tg==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 714dc3b0-c375-43eb-7b07-08df0827a299
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 12:50:43.5583 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OsAUN9o3GapbOTpuMPCgt//4P7CRbMaPb08bwNbuhMEH/7SFfsQ88M22YdbyPSxqMlCmAS291DVauk0KleTcRg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7950
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
- envelope-from=den@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Stanley Jhu <stanleyjhu@google.com>
+Date: Tue, 1 Sep 2026 21:03:52 +0800
+X-Gm-Features: AcwNN1WQesaLm-6c_6dsMTJeHwrXmMQl7lGutVxeZ-CH3CyKQ7dKIvnZ8k0UBfc
+Message-ID: <CAE14pdd_8whV+A_2qpujNTS+zeCes8M0e53LfN_zLY+v7iKPcw@mail.gmail.com>
+Subject: [PATCH] hw/ufs: Reset controller and MCQ state on HCE transition to 0
+To: Jeuk Kim <jeuk20.kim@samsung.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=stanleyjhu@google.com; helo=mail-qt1-x82b.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,43 +111,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/26 14:23, Fiona Ebner wrote:
-> Hi Denis,
->
-> Am 29.08.26 um 12:20 AM schrieb Denis V. Lunev:
->> From: Denis V. Lunev <den@openvz.org>
->>
->> it->bs is the cursor into monitor_bdrv_states for the second phase of
->> bdrv_next(), so it has to be NULL when that phase starts. Commit
->> f6d38c9f6d made the first phase store the node it returns there, to
->> unreference the right one when the graph changes underneath. The cursor
->> is now left pointing at the last BlockBackend root, so the second phase
->> resumes from there instead of from the head of the list and never
->> returns a node added before it.
->>
->> A skipped node drops out of the vm_stop and migration handover paths:
->> not flushed, not inactivated, not snapshotted. bdrv_inactivate_all()
->> still reports success, so the node keeps its image lock and the
->> migration target cannot open the image. Only detached nodes are hit in
->> practice, as these callers also recurse into children.
->>
->> Reset the cursor when the second phase starts. old_bs is taken at the
->> top of the function, so f6d38c9f6d keeps working.
->>
->> Fixes: f6d38c9f6d ("block-backend: fix edge case in bdrv_next() where BDS associated to BB changes")
->> Signed-off-by: Denis V. Lunev <den@openvz.org>
->> Cc: Fiona Ebner <f.ebner@proxmox.com>
->> Cc: Kevin Wolf <kwolf@redhat.com>
-> thank you for the fix!
->
-> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
->
-> Should also go into stable I suppose?
+According to the JEDEC Universal Flash Storage Host Controller Interface
+(UFSHCI) specification (Section 5.2.1 "Host Controller Enable"):
+when Host Controller Enable (HCE) transitions from 1 to 0, a host
+controller reset is initiated. The host controller shall abort all
+active transfers, return internal state machines to idle, and de-assert
+all interrupts.
 
-Unsure. We do not know real consequences, there are no reports.
-I found this problem by accident only testing migration with
-big trees a lot.
+Currently, QEMU's UFS emulator only clears HCS and HCE registers upon
+HCE=0, leaving internal state active. Specifically:
+- Outstanding SCSI requests in the block layer are not purged.
+- Active bottom halves (doorbell_bh and complete_bh) remain scheduled.
+- Allocated MCQ Submission and Completion Queues (sq and cq) are not freed.
+- Dynamic MCQ queue registers and legacy UTRL request states remain stale.
 
-Den
+Implement ufs_hce_reset() to:
+1. Purge outstanding SCSI requests for all logical units via
+   scsi_device_purge_requests().
+2. Cancel active bottom halves (doorbell_bh and complete_bh).
+3. Clear standard request list slots and release SGLs via
+   ufs_clear_req().
+4. Free allocated MCQ queues and clear dynamic queue registers while
+   preserving static capability offsets.
+5. De-assert interrupts via ufs_irq_check().
+6. Add a trace_ufs_hce_reset() trace event.
+
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+---
+ hw/ufs/trace-events |  1 +
+ hw/ufs/ufs.c        | 64 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+)
+
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 00e263c7ba..1eb85c6978 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -14,6 +14,7 @@ ufs_process_uiccmd(uint32_t uiccmd, uint32_t
+ucmdarg1, uint32_t ucmdarg2, uint
+ ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
+ ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t
+size) "mcq create sq sqid %"PRIu8", cqid %"PRIu8", addr 0x%"PRIx64",
+size %"PRIu16""
+ ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq
+create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
++ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ
+and request lists"
+
+ # error condition
+ ufs_err_dma_read_utrd(uint32_t slot, uint64_t addr) "failed to read
+utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index a8e2df8087..b729b247f1 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -679,6 +679,69 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+     return true;
+ }
+
++static void ufs_hce_reset(UfsHc *u)
++{
++    int i;
++
++    trace_ufs_hce_reset();
++
++    /* 1. Purge outstanding SCSI requests for all logical units */
++    for (i = 0; i < UFS_MAX_LUS; i++) {
++        if (u->lus[i] && u->lus[i]->scsi_dev) {
++            scsi_device_purge_requests(u->lus[i]->scsi_dev, SENSE_CODE(RESET));
++        }
++    }
++
++    /* 2. Cancel active Bottom Halves */
++    if (u->doorbell_bh) {
++        qemu_bh_cancel(u->doorbell_bh);
++    }
++    if (u->complete_bh) {
++        qemu_bh_cancel(u->complete_bh);
++    }
++
++    /* 3. Reset standard request list slots and doorbells */
++    for (i = 0; i < u->params.nutrs; i++) {
++        ufs_clear_req(&u->req_list[i]);
++        u->req_list[i].state = UFS_REQUEST_IDLE;
++    }
++    u->reg.utrldbr = 0;
++    u->reg.utmrldbr = 0;
++    u->reg.is = 0;
++
++    /* 4. Free MCQ Queues and reset MCQ dynamic registers */
++    if (u->params.mcq) {
++        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
++            if (u->sq[i]) {
++                ufs_mcq_free_sq(u->sq[i]);
++                u->sq[i] = NULL;
++            }
++        }
++        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
++            if (u->cq[i]) {
++                ufs_mcq_free_cq(u->cq[i]);
++                u->cq[i] = NULL;
++            }
++        }
++
++        /* Clear dynamic queue configuration without touching static offsets */
++        for (i = 0; i < ARRAY_SIZE(u->mcq_reg); i++) {
++            u->mcq_reg[i].sqattr = 0;
++            u->mcq_reg[i].sqlba = 0;
++            u->mcq_reg[i].squba = 0;
++            u->mcq_reg[i].sqcfg = 0;
++            u->mcq_reg[i].cqattr = 0;
++            u->mcq_reg[i].cqlba = 0;
++            u->mcq_reg[i].cquba = 0;
++            u->mcq_reg[i].cqcfg = 0;
++        }
++        memset(&u->mcq_op_reg, 0, sizeof(u->mcq_op_reg));
++    }
++
++    /* 5. De-assert IRQ */
++    ufs_irq_check(u);
++}
++
+ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data,
+unsigned size)
+ {
+     switch (offset) {
+@@ -696,6 +759,7 @@ static void ufs_write_reg(UfsHc *u, hwaddr offset,
+uint32_t data, unsigned size)
+             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 1);
+         } else if (FIELD_EX32(u->reg.hce, HCE, HCE) &&
+                    !FIELD_EX32(data, HCE, HCE)) {
++            ufs_hce_reset(u);
+             u->reg.hcs = 0;
+             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 0);
+         }
+--
+2.43.0
 
