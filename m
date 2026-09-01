@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A24FC624D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8315BC624D5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1QPf-0007Vc-16; Tue, 01 Sep 2026 11:28:39 -0400
+	id 1x1QU3-0000VP-Qc; Tue, 01 Sep 2026 11:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1QPd-0007UC-Gh
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:28:37 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1x1QU0-0000UI-12
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:33:08 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1QPa-0001dv-G8
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:28:37 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8623b1e7cb2so703057b3.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 08:28:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788276508; cv=none;
+ id 1x1QTx-0002hL-On
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:33:07 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-864cd11a932so14459927b3.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 08:33:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788276784; cv=none;
  d=google.com; s=arc-20260327;
- b=p5N1Cv0MjqHtl3RDg0Rvtnxqgt31jfXclz0wnldKlH7uRe6v2+bp41XbdCVxUa9gsk
- r6pty7vFYCHeLzgI5zt9lAq+D8NqF1OeXWdVAb/wHG27VdDet9FMSeB48sVp0UX0+QdA
- JOFCAfKsPHiVhhIuR8HOEjkGv6CiuCXf/r6wnB8Bajr5gh4HbkF0D3ug8CZkbM5JMhyI
- ll/TOOvUtwIq4rwjxfLkFtvJzGvUFZt7bVHKam4RMMmkmSxzwHYO5BOHvKB4bdXYFyXG
- Nk9B8RqlcyZIdyRnOQg4cO/4onST87qbWjnB25/QmPv+o2wdzDzb6hsJAhNFkyzO+x3R
- z/Lw==
+ b=VRIN1EYyVm1t7bN9Nl39xzG2rmXvqJ5BZMODL5tuY5n85xY1hMFe16dEr37y4wQc93
+ rjGRPNZ/aAY/9N6SGQrzSfkxb1JK/O1BpgX/9dh6KBwjkD9TdivGHXprg/vLT8f2kMUA
+ 7S4DBKRb6ztftlfKiUV+wGF+/bWtCa1Bqym27PthaRvMkXZm/R1p/z97SfQ6jmxc9KLI
+ IcHArS0ujWDpEkTKRushsYav/9nIqm8wUiQJ5WTqyMWsK7TZLr65xH9GUccI5J4EZBaM
+ gTe0vS75VKGtPjg1m38KyNxcRRwDTrVKBrg/C4d6nugaa24QDrVdVBaupT+wNnELCTHW
+ 6Q2A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Shgzb5eJJo9lYhjmGyOmo/iUM2L9WckXZSOG7+edZvU=;
+ bh=TfsYZWGUp3JEz46SYJF6kaNN+w8kJcJepqqETpNYZOw=;
  fh=vx6WqBV7ZkFr5+0c5croOznQhRJT596ekVEWV1sovE8=;
- b=TS5weY7z6ti5tGoju1Qk5+KdBnCu+vFET0w+BoFsEYnyXlkQYaVvEWoxN6RfQpcvmB
- hyxcbRuBrKFxlAcJnNyghHrhKvYxaqOWdKjBHdHlvdwpoZmfkdX15LgvTBZ9d57QI+HZ
- nqPocMHetMpAE/ZzxuPqSfX62N/8GguqfLfnrmDhbe22cAX68ChHPnZ7zl12lCOfW2x3
- XYoegfBipgNKKwB0lY0VtN8He2PzqlqHPtv0S7otx/9yCxrdfCV9tIyuIN7w2l/qeQy4
- j6lQESwI+q4fNQE3hdJU5gmhVFnww6c4y9o3uH2z5db0G5T5wdkjqLbTCDVhmI18k2yt
- x7Cw==; darn=nongnu.org
+ b=Zzz1Ypqug4DCi5zbY+SztqM01J2mOsFPW3DPBSgLBvZxvSbzqzVGYFhB8WmPRPW4iw
+ +imUW8lKVpDYKsuL1HuTFMBPOs3mNX+5M8fuHDWqy/l4wgr0rJu1756rmO6G/B34kQx9
+ 6iQhA7mM1yyCd1cjW3v9bc0euMsE5G8iFO+91WvMc81jP7ZVuR8BY7DhtO6frKG/FHR1
+ EEmMfwXc44BQww2cHDuGmLdpo4TOqcBylXJNvW6Iqq6mnRleICMcfB4CFwws+egYdGMn
+ tWxb/QXmk2ze3qyufJUJp+2RlP4bhzEUrDoVFcYbBVANbckuSkFJ3kQwp+oL67deQcm6
+ 4AzQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788276508; x=1788881308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788276784; x=1788881584; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Shgzb5eJJo9lYhjmGyOmo/iUM2L9WckXZSOG7+edZvU=;
- b=ELOg+ZPm8pboWOsLFH2mbJ3itW6tczXGHAkFxkP9WSE1mOoqO89jQvnWEnsWpvOETk
- s5EYNxoWbBpIWQKkh+tytzMM6sbtu1jubhjilefA2Zg3PL42XRikaLTwMhJ+OXfPqJdP
- e5JzIxGm3GOd7KDzU5VE41qDTVKBaKwnJPcwPLamtLyZPcodlAyAJbfJOM7XQRir/h5M
- u00hMOBmkXYkduRO12RUSXxaeO4eSlxZejE8muEBgeyyB0xM/KKI48SzS8sDEsfYP2e2
- ZinjNalaIucwJwviaMTRYt/K3sVhaGWSx8gL/NB12KPQASqKVCre355oy5UTqo61WX33
- +gnQ==
+ :content-type; bh=TfsYZWGUp3JEz46SYJF6kaNN+w8kJcJepqqETpNYZOw=;
+ b=GIgNi2qjpdKeeKU/zUTyG8MGQB+b/f/kF1xnUD7B19vRw3vw67eea1Nayb3gnAMM8c
+ OT9RgnLuFHUz6Vkqe2hbnGTnSy6sB+KchPW7pkpRkjtfDiFI0ifDiBqnBGenyKGKVCgK
+ opFss+hmEEJTSMxuDAllSqt766Hc0u5VjtG0cTf0n/qwTk3v4XhhU9m/KfzU4QujvlWL
+ i4FD11eMiM8A/iUFTf4BiqWLGoSnvNl4vEGxaeB1tPnKjFZGztX+vUN28/LzAocYsib2
+ LQC6tHtcqJJmK30H691PcxQHhIxkXwnKH7dOyIK/0QEu0p9FmukyiBrtxfhHvaoiAebl
+ M/Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788276508; x=1788881308;
+ d=1e100.net; s=20251104; t=1788276784; x=1788881584;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=Shgzb5eJJo9lYhjmGyOmo/iUM2L9WckXZSOG7+edZvU=;
- b=pCp8Luffo968YzM5nzqR48C0gZzqmCol1sXbL3KOCJK+8YdPUmezb2wpcX3lWY14yr
- hwQwlBY3V1+tInfnDD0dI/d6sVnFgDzvzFGN9GLBbblLw9LVeoqy/LpFL4vIjoGAfG44
- g/17yBuSbJE9X6ocKOue4o5tHyEwlJT9mtJzx8WfAMo1D7c2up3YZD0OuPRLZukQU+hf
- blmUDxSM43dIm1AtnmUEleCdlU1PFaVl0GqdhOxWmSd6sdueg8ia6DmfB5MIslJdbmT+
- kM81hs8y/0kpX5TeFe8UYSzOO06JM8wTcymby2qy/9gzx9tso+NnBxFEOHhbi3RZvhNR
- VHDA==
-X-Gm-Message-State: AFuF++msS8XfQDW0OB+EFfPq3h+BB/xawG4zy0GrXrecB78SkggdFjaX
- cYhHQ67GNLWxov3xtGUEeSsPSozkwx3XTKnlwuomRAvWezGto5zr/3g0PQ+ABcZB2a3QepDjRlk
- zc+RfMSVxMoa6xu0GF2YuBqbxAZi6Dk+WknjDUMNpkQ==
-X-Gm-Gg: AYBFou3MItyfiXqiy1zLWJmNDPAY4QD5pYwkTmYCs7h3sk3MGqlJ+nFjj1XfU1rYYoF
- xCsEbbJGLPd38qKln8XVUejnjkjTuZ8VNHGakwdzsQQxAfr+WxkXRsLIuTg5++mJCBW1Yshy0UF
- sGyycYeOlBF1I+pgSgBBCnMAo/lURBZ8oGxadGodCuqFoXO8TuniDXew3Yfw5TwDmG7ScvK/CT0
- ohUSfX0Vbz30P7hTE6YoETK6tgGiV1btOPcU57Q6E73Cytax21annS5CUtzcR2ydxBJmGmhquJW
- lIB5SywqyClw94xffU+IGnXBNCHdCXvrKocdUTiDahii0EPATUv1b86RRVba761KsccBnMi14nF
- W0mpsDKU3oAlxU3jK2+UDb6tK//jh
-X-Received: by 2002:a81:8a06:0:b0:866:7724:3bcd with SMTP id
- 00721157ae682-86677244407mr47618307b3.16.1788276508474; Tue, 01 Sep 2026
- 08:28:28 -0700 (PDT)
+ bh=TfsYZWGUp3JEz46SYJF6kaNN+w8kJcJepqqETpNYZOw=;
+ b=CCyhCGedGoiygtXyXA6L0q7/lT3pzXp0JCxRxjRjYf7yZo0/y63kh5sY/vZA1/xiY3
+ Np0nvDnAYE5F1zeQoVegR6/BefvJ8r/PucerVaYdnJrvIXFb8FYw053llMMpp1jjpsjE
+ xLNTrn4SaUyGTY3XIrRsUpzVDxkTqXJd3d++FkDuPlqHHfxAcbuP8pUNDxQZ6wvQ6kEv
+ 8inbw6aHT/rtbBYAppZCbl9CZbTOn+1bhDgbnstdOiQxGnQdrZAOvhaVr1rdS7M/jNkd
+ J9xDZqSbajMlvzt19CjATYg+TyfoeZjAkX04/3EkitYa583r95G+8eRWGa6I4hOrrRwy
+ 0MsA==
+X-Gm-Message-State: AFuF++llKfk2RKYThzB+KUAULTymoAAX9QvbeGkRgzfCfSjLRX3v+Agm
+ PN80AUTN7DYgNC9yfhXGUbEW5a/ISJxv6dyEdtEPCBLNOewBe2sx+zoWit9QjD2Xn5Byl0gODW4
+ abYQK29vRGnTczErDi9lB8kgu49K2fO09uwzNLfA1lQ==
+X-Gm-Gg: AYBFou1JdXl2xyw5fIy5pTATJHckSFV2MPUiPCz9eN0awyUEDekz+lUBNINqREtMgVp
+ nCnT5hfKuppi1+h3u8M8euUS3EfUB4tNlfvwv5oXJuCuRRzud4H95Tg1GqrsCiZ/kwyuzBZbQmV
+ 41YO196Vkkh+Yk90E4C8/IlqZWsbXqzy2GZU1hxpiLkNKM0AG200cCJcDWOk3zk3U1yA4QPNo11
+ QHRFULZAEcJsG4wmX0qg+IA3BV/VYVyGJZ8HOlJdTkoAXUbZj4ePIKchkr2lwcnB6T1NyVvnd85
+ CGbLr2GQx20KHoM/f6XIuaxsmtVf8FVD53VGf6N+Pg+E6YWEH0+o3Fooadjna8Aggge0M5GFCCi
+ zIZyKaF8KIaFq+O+t5Cic+uXhDHb+QKkkt91eSho=
+X-Received: by 2002:a05:690c:6612:b0:82d:8dc0:9cf with SMTP id
+ 00721157ae682-8694d8b47dfmr27793407b3.13.1788276784411; Tue, 01 Sep 2026
+ 08:33:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260815203730.1468365-1-richard.henderson@linaro.org>
- <20260815203730.1468365-11-richard.henderson@linaro.org>
-In-Reply-To: <20260815203730.1468365-11-richard.henderson@linaro.org>
+ <20260815203730.1468365-12-richard.henderson@linaro.org>
+In-Reply-To: <20260815203730.1468365-12-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 1 Sep 2026 16:28:16 +0100
-X-Gm-Features: AcwNN1UEijV3u2vwuPn9QJOEPmesDhDxIlcb0F-5KajZ3mCR4IXC3hbHoeP00Rs
-Message-ID: <CAFEAcA-MVRya=Y8i+rURHqizQzJLh=Gp5tQxHSK_VNBUQCAzdg@mail.gmail.com>
-Subject: Re: [RFC PATCH 10/18] accel/tcg: Replace size with first/last in
- probe_access_internal
+Date: Tue, 1 Sep 2026 16:32:52 +0100
+X-Gm-Features: AcwNN1VaWNaLBvJzUz4ncwiHukBE1sGNIdi--zfmzWUHZDkOOjWrXqjsU6ZrGdw
+Message-ID: <CAFEAcA_SLOJ9HufYt5B88S5LwCKo1Cmj8EqcvRn1Ym0jCFc_WA@mail.gmail.com>
+Subject: Re: [RFC PATCH 11/18] accel/tcg: Replace size with first/last in
+ tlb_fill_align
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,62 +116,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 15 Aug 2026 at 21:38, Richard Henderson
+On Sat, 15 Aug 2026 at 21:39, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Propagate the API change down one step further within cputlb.c.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  accel/tcg/cputlb.c | 37 ++++++++++++++++++++-----------------
->  1 file changed, 20 insertions(+), 17 deletions(-)
->
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index c2ea31a397..b8c23b2948 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -1358,8 +1358,8 @@ static void notdirty_write(CPUState *cpu, vaddr mem_vaddr, unsigned size,
->      }
->  }
->
-> -static int probe_access_internal(CPUState *cpu, vaddr addr,
-> -                                 int fault_size, MMUAccessType access_type,
-> +static int probe_access_internal(CPUState *cpu, vaddr addr, vaddr first,
-> +                                 vaddr last, MMUAccessType access_type,
->                                   int mmu_idx, bool nonfault,
->                                   void **phost, CPUTLBEntryFull **pfull,
->                                   uintptr_t retaddr, bool check_mem_cbs)
-> @@ -1375,7 +1375,7 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
->      if (!tlb_hit_page(tlb_addr, page_addr)) {
->          if (!victim_tlb_hit(cpu, mmu_idx, index, access_type, page_addr)) {
->              if (!tlb_fill_align(cpu, addr, access_type, mmu_idx,
-> -                                0, fault_size, nonfault, retaddr)) {
-> +                                0, last - addr + 1, nonfault, retaddr)) {
->                  /* Non-faulting page table read failed.  */
->                  *phost = NULL;
->                  *pfull = NULL;
-> @@ -1423,7 +1423,7 @@ int probe_access_full(CPUArchState *env, vaddr addr, vaddr first, vaddr last,
->      assert(addr <= last);
->      assert(((first ^ last) & TARGET_PAGE_MASK) == 0);
->
-> -    flags = probe_access_internal(env_cpu(env), addr, last - addr + 1,
-> +    flags = probe_access_internal(env_cpu(env), addr, first, last,
->                                    access_type, mmu_idx, nonfault,
->                                    phost, pfull, retaddr, true);
->
-> @@ -1440,6 +1440,7 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
->                            MMUAccessType access_type, int mmu_idx,
->                            void **phost, CPUTLBEntryFull **pfull)
->  {
-> +    vaddr last = size ? addr + size - 1 : addr;
 
-This can never overflow for the convenient reason that all four callers to
-probe_access_full_mmu() pass a size of zero :-)
 
-Do we update probe_access_full_mmu() to the first/last convention later
-in this series ? I couldn't see anywhere we do that, but maybe I missed it.
+> @@ -1664,8 +1665,8 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
+>      if (!tlb_hit(tlb_addr, addr)) {
+>          if (!victim_tlb_hit(cpu, mmu_idx, index, access_type,
+>                              addr & TARGET_PAGE_MASK)) {
+> -            tlb_fill_align(cpu, addr, access_type, mmu_idx,
+> -                           memop, data->size, false, ra);
+> +            tlb_fill_align(cpu, addr, addr, addr + data->size - 1,
+> +                           access_type, mmu_idx, memop, false, ra);
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Can the "addr + data->size - 1" in these mmu lookup functions overflow?
+
+>              maybe_resized = true;
+>              index = tlb_index(cpu, mmu_idx, addr);
+>              entry = tlb_entry(cpu, mmu_idx, addr);
+> @@ -1833,8 +1834,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>      if (!tlb_hit(tlb_addr, addr)) {
+>          if (!victim_tlb_hit(cpu, mmu_idx, index, MMU_DATA_STORE,
+>                              addr & TARGET_PAGE_MASK)) {
+> -            tlb_fill_align(cpu, addr, MMU_DATA_STORE, mmu_idx,
+> -                           mop, size, false, retaddr);
+> +            tlb_fill_align(cpu, addr, addr, addr + size - 1,
+> +                           MMU_DATA_STORE, mmu_idx, mop, false, retaddr);
+>              did_tlb_fill = true;
+>              index = tlb_index(cpu, mmu_idx, addr);
+>              tlbe = tlb_entry(cpu, mmu_idx, addr);
+> @@ -1849,8 +1850,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>       * but addr_read will only be -1 if PAGE_READ was unset.
+>       */
+>      if (unlikely(tlbe->addr_read == -1)) {
+> -        tlb_fill_align(cpu, addr, MMU_DATA_LOAD, mmu_idx,
+> -                       0, size, false, retaddr);
+> +        tlb_fill_align(cpu, addr, addr, addr + size - 1,
+> +                       MMU_DATA_LOAD, mmu_idx, 0, false, retaddr);
 
 thanks
 -- PMM
