@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7DDC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 12:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD84C624D2
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 12:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Nbp-0007TG-Bg; Tue, 01 Sep 2026 08:29:01 -0400
+	id 1x1Nci-00088N-4J; Tue, 01 Sep 2026 08:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x1Nbn-0007P5-FB; Tue, 01 Sep 2026 08:28:59 -0400
-Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
+ id 1x1Ncg-00087s-4g; Tue, 01 Sep 2026 08:29:54 -0400
+Received: from smtpout6.mo536.mail-out.ovh.net ([51.210.91.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x1Nbl-0004o0-Na; Tue, 01 Sep 2026 08:28:59 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [79.137.60.226])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4hZ4sc5SMlz43YB;
- Tue,  1 Sep 2026 12:28:52 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 12:28:52 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.30])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hZ4sb6yhNz46ZJ; Tue,  1 Sep 2026 12:28:51 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
+ id 1x1Ncd-0004x1-SU; Tue, 01 Sep 2026 08:29:53 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4hZ4th3lJJz88t2;
+ Tue,  1 Sep 2026 12:29:48 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 12:29:48 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.115])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hZ4th26r1z1xqW; Tue,  1 Sep 2026 12:29:48 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 184C512E3FE1;
- Tue,  1 Sep 2026 12:28:50 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 1D63D1B43FDA;
+ Tue,  1 Sep 2026 12:29:46 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-102R004256cf169-2f46-4809-a825-22cc16a59ac7,
+ (GARM-114S00856fe61b7-9bc6-45f2-baa6-075132207f28,
  60FF1D1BA71F1148B3CBA6CDBAED02576558214C) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <e7609532-3c79-4c98-ac0f-7c2f5220c492@kaod.org>
-Date: Tue, 1 Sep 2026 14:28:49 +0200
+Message-ID: <0237980f-b2ba-41bb-976c-beac1c7ec05d@kaod.org>
+Date: Tue, 1 Sep 2026 14:29:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/9] hw/misc/aspeed_sbc: Increase register space to
- 0x1000
+Subject: Re: [PATCH v4 7/9] hw/arm/aspeed_ast10x0: Wire SEC SRAM to the SBC
+ model
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -56,7 +56,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260901085238.995968-1-jamin_lin@aspeedtech.com>
- <20260901085238.995968-7-jamin_lin@aspeedtech.com>
+ <20260901085238.995968-8-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -101,30 +101,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260901085238.995968-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260901085238.995968-8-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 14196471928623836205
+x-ovh-tracer-id: 14212234525898550317
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF27JEOR71oLYwQb8g65RFgQU16GoBOJWBgQzpzsCyxvcPXO8cHCc7kYZn8DHuSPjVu721PPTQQ7FIwJzf8dbEPCFP7WAfZfnqmJSoPAwKviNVqRh26CTafw88TMOhUEuekr2tgBcZgjEMy2cNe4luynQDBCAmEVf8em6xKUOfq+VoAH9xnjsESqpKfYPtMDLo/8BO65AEn9uiK5rGhdVkmGyKBCA4k3iyiV0rxv6pUi+mNf1NYFpRhm/0L/3xw15mDNeVtjxfUTh67KwCcZ9n5qG1IPznWUQ4PbG2nMpm7OVpi2mY8GLXH9RbLQmOIwOViXqZ0NEy0zrKqX0rXnER2tV1LSor0IHfIOIH3zVwRRID9axDuibwdQHFawH393rKp9SD9NZqQHRq2Bjq6flZaIg8LyKWtJuwtaAQijpTPQ2DQZOi5tKeRc0gsn8qlXl6iCHsYSs1skjx2mwncDIzivbXkDodweodfbwtKF2p3U5De22rJXozV023ITRGyxzO65kUbVekY0uqMhGeHe6kYr21XvRHPsoYAQUtAEnH/vibLXU1VBwu+A5PJuD2P4573dLWE75EsxCUC6OQfMqVuUkHUHo9KeCwUh7G0+Bfl7HXpJTEASCt90Pb3cIjmmOfK/KB1krdfC32t+9q45q0pm2cUafLbk0WHk/qK1hRZXw
-DKIM-Signature: a=rsa-sha256; bh=AzLAeTL4nTemqDPPywzVpNPIZCH4JXaYoUyRKYsN3Xs=; 
+X-VR-SPAMCAUSE: dmFkZTG1ogxU9cBrkFrGiEYuYurOBKTouwxTEu0bLFuXKyHdRh+ZHyDSf54rO2Tm3WZNM0QOSqZ2H3/HrSZ6U+gnjghyZDWfucvPmYLh8VQEAQvN3/vmhkRsYUhZ5udPJ+D64mm5o1WndBqebC2pRi/MiLyOfdG0vyQBxOECc6S0PA4AaoL0rgxYvicflZy1sgtJr85H7zlPJCIGYVluqRgSEFMGjttNLIUDkc1qArPae3HskNvAT/pnSUAvKsEvgwse5zrW9e0YoeeX6sTEqsKtmpT3jp8dKvlBoBwsYvGIDCu79TF07tPBll8yy76Wq7FnnsmXn9Dv7Q0hK6iSTf72ZBt2gnkYibw4haXdJOqBy6xSV1gpmhw7QU7CPh9tTsdiN/gzj2yHyVfksIcOQ9F3AkoeHbhYFKGM5kRWeSJRTFHJEaHXhsYfurFXL6a1ZY844F76h+UaInWcCPfmQD3VoicdcfIeH34LI4wKNRPpzpqVx5nYksgYcnadRYe9kI/vyLL88PK5+mj0F8jnRpd6N0RDEMC0VCGQlGnWFUoy7gEgCBbDswOyA9o/qhtnbbhJwx90xuenWQ7BvHM1FuLYZ1HPveWtS8/OPQdG5CO2UiPaQpv0l0Cd9l4zalYgWZ+fhIp6SAzwFsAfCe92rraLbo7UtwnTlyGDFqQ++NqaKeZ+tw
+DKIM-Signature: a=rsa-sha256; bh=N4MFFinttoDr60oo7Q7eTIfb2Icd0bR2i1nrJVsrS1I=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788265734; v=1;
- b=fFxtkQP9jwz3sw+R+lMR8tEqM0IZnerECgNL17ORWtrX+AKlmAnA5P98kcaQ+fJfB2euos5W
- G4ftZYawDLHXCUi3jfdmW4BrxvtxseoU5ZO+tlCppj+vROKsjEHE6bHlfLwm+hjU9HRC63K5KxE
- E0G1dmcCyzcs265nQ2HA/FzMMr+FzYnr+Hov3V89mFQiG0KJ+6ZS1FrYrWordGQrPdi8ACy1RsX
- 0XFCZgvxfvCZqLbLjiuvo1uLBidRy9MkmLsEKfyGiP9MfIF7DPqFaew1m6r3Zwje16+oL1jYlpP
- x2iTz7I6S3a2r5BhA7WerZUbFf+J4NEji3ZHHw/iqbbeQ==
-Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
- helo=smtpout1.mo2.mail-out.ovh.net
+ t=1788265789; v=1;
+ b=MsMBXWXEn7ZJsWRLyrN/0z64wexaXQFxpsQj3jl3acwIv7IJyqyY1XzMxE61QhSBaiUHvZUA
+ L+/MMfiMAE9Tw24CzTBjvF2cHZgmim228lTGzJf/k1gVCU8PdeB6VT6D3Gg9jCHwOv1u27wFNTm
+ X059vGH97B42INexyeLuDegKDRRNNp/ycsmRNpxAG8bEcoCUlRCRJBcvmZbjp1xKD14E4zSQn1Y
+ jhdkkugLkWLER43e9sixHM7ayffkvklN+7DCaChPrnQVIOWVlCqvjyt4RxOH+y0lxWdcqCkq1lo
+ VlxBakTr2NzmXUolsoWeOaXruO4ltHEyXG0jiIAPSyF1w==
+Received-SPF: pass client-ip=51.210.91.15; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo536.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,58 +141,107 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/1/26 10:52, Jamin Lin wrote:
-> The SBC controller register space is 0x1000.
-> Increase ASPEED_SBC_NR_REGS accordingly to cover the
-> full register space.
+> Introduce the "has_ecdsa" class attribute and enable it for the AST10x0 SBC,
+> as ECDSA is only supported on this platform.
 > 
-> This changes the size of the VMState register array and
-> therefore breaks migration compatibility with older QEMU
-> versions. Simply bump the VMState version to 2,
-> as Aspeed machines are not intended for
-> virtualization use cases.
+> Add an "sram" link property to the SBC model and initialize a dedicated address
+> space for accessing the SEC SRAM. This will be used by the ECDSA verify command
+> to read the public key, signature, and digest from SRAM.
+> 
+> Wrap the SEC SRAM in a container mapped at offset 0. This allows the ECDSA
+> engine added in a later patch to access the SRAM using relative offsets without
+> requiring the SBC model to know the SRAM's system address.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/misc/aspeed_sbc.h | 2 +-
->   hw/misc/aspeed_sbc.c         | 6 +++---
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   include/hw/misc/aspeed_sbc.h |  4 ++++
+>   hw/arm/aspeed_ast10x0.c      |  7 ++++++-
+>   hw/misc/aspeed_sbc.c         | 11 +++++++++++
+>   3 files changed, 21 insertions(+), 1 deletion(-)
 > 
 > diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
-> index 07c7c22a86..eea6e2b27f 100644
+> index eea6e2b27f..756c612356 100644
 > --- a/include/hw/misc/aspeed_sbc.h
 > +++ b/include/hw/misc/aspeed_sbc.h
-> @@ -17,7 +17,7 @@
->   #define TYPE_ASPEED_AST10X0_SBC TYPE_ASPEED_SBC "-ast10x0"
->   OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
+> @@ -40,12 +40,16 @@ struct AspeedSBCState {
+>       uint32_t regs[ASPEED_SBC_NR_REGS];
 >   
-> -#define ASPEED_SBC_NR_REGS (0x93c >> 2)
-> +#define ASPEED_SBC_NR_REGS (0x1000 >> 2)
+>       AspeedOTPState otp;
+> +
+> +    MemoryRegion *sram;
+> +    AddressSpace sram_as;
+>   };
 >   
->   #define QSR_AES                     BIT(27)
->   #define QSR_RSA1024                 (0x0 << 12)
-> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> index 1dfcf14e5b..7397d9bbf0 100644
-> --- a/hw/misc/aspeed_sbc.c
-> +++ b/hw/misc/aspeed_sbc.c
-> @@ -307,15 +307,15 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
+>   struct AspeedSBCClass {
+>       SysBusDeviceClass parent_class;
+>   
+>       bool has_otp;
+> +    bool has_ecdsa;
+>   };
+>   
+>   #endif /* ASPEED_SBC_H */
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index 5165dcce59..aeb5a4423d 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -250,8 +250,11 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCState *a, Error **errp)
+>           error_propagate(errp, err);
+>           return false;
+>       }
+> +    memory_region_init(&s->sram_container[1], OBJECT(s), "sec.sram-container",
+> +                       sc->sram_size[1]);
+> +    memory_region_add_subregion(&s->sram_container[1], 0, &s->sram[1]);
+>       memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],
+> -                                &s->sram[1]);
+> +                                &s->sram_container[1]);
+>   
+>       /* SCU */
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+> @@ -350,6 +353,8 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCState *a, Error **errp)
 >       }
 >   
->       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
-> -            TYPE_ASPEED_SBC, 0x1000);
-> +            TYPE_ASPEED_SBC, ASPEED_SBC_NR_REGS << 2);
+>       /* Secure Boot Controller */
+> +    object_property_set_link(OBJECT(&s->sbc), "sram", OBJECT(&s->sram[1]),
+> +                             &error_abort);
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
+>           return false;
+>       }
+> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+> index 7397d9bbf0..f10f7ac578 100644
+> --- a/hw/misc/aspeed_sbc.c
+> +++ b/hw/misc/aspeed_sbc.c
+> @@ -306,6 +306,14 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
+>           }
+>       }
 >   
->       sysbus_init_mmio(sbd, &s->iomem);
+> +    if (sc->has_ecdsa) {
+> +        if (!s->sram) {
+> +            error_setg(errp, TYPE_ASPEED_SBC ": 'sram' link not set");
+> +            return;
+> +        }
+> +        address_space_init(&s->sram_as, s->sram, TYPE_ASPEED_SBC ".sram");
+> +    }
+> +
+>       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
+>               TYPE_ASPEED_SBC, ASPEED_SBC_NR_REGS << 2);
+>   
+> @@ -325,6 +333,8 @@ static const VMStateDescription vmstate_aspeed_sbc = {
+>   static const Property aspeed_sbc_properties[] = {
+>       DEFINE_PROP_BOOL("emmc-abr", AspeedSBCState, emmc_abr, 0),
+>       DEFINE_PROP_UINT32("signing-settings", AspeedSBCState, signing_settings, 0),
+> +    DEFINE_PROP_LINK("sram", AspeedSBCState, sram,
+> +                     TYPE_MEMORY_REGION, MemoryRegion *),
+>   };
+>   
+>   static void aspeed_sbc_class_init(ObjectClass *klass, const void *data)
+> @@ -355,6 +365,7 @@ static void aspeed_ast10x0_sbc_class_init(ObjectClass *klass, const void *data)
+>   
+>       dc->desc = "AST10X0 Secure Boot Controller";
+>       sc->has_otp = true;
+> +    sc->has_ecdsa = true;
 >   }
 >   
->   static const VMStateDescription vmstate_aspeed_sbc = {
->       .name = TYPE_ASPEED_SBC,
-> -    .version_id = 1,
-> -    .minimum_version_id = 1,
-> +    .version_id = 2,
-> +    .minimum_version_id = 2,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32_ARRAY(regs, AspeedSBCState, ASPEED_SBC_NR_REGS),
->           VMSTATE_END_OF_LIST(),
+>   static const TypeInfo aspeed_sbc_types[] = {
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
