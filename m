@@ -4,87 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EDEC61DD3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448ACC624D6
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONa-0001El-VJ; Tue, 01 Sep 2026 09:18:22 -0400
+	id 1x1OTk-0001Fu-Gz; Tue, 01 Sep 2026 09:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONY-0001DP-AJ
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:20 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1x1OTQ-0000zi-Gk
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:24:25 -0400
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONW-0007K6-AV
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:19 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c197e7e4e94so715295866b.2
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1x1OTN-0008Sk-Ga
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:24:24 -0400
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-92e68aec5f7so45031485a.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:24:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788269060; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lotDaPVD9Kvhqn9iP+Htg4tbxv6+KbecwtUGEQq+jWt7uPrVJUvklVWpxNuC1NYnsa
+ 1wPVMbtl7JWLKzmtBLTm/lVbcf2vuNmZ1oIN7HpZ03AdgchlO4dX6iPFZGojR3A3r5HN
+ PplkBXJEBX3d3ob92D0EYarDt/GXD5XHzqjoCXZHvbmo8dGedpQ+YjkFixqf4nC3O32X
+ 5bmbuEwQX5EMxGrgJS1Z9qUFR/mRpYojMN/+TiFjRATjTaUH1pJsIqWUYuOTSdEX2b2P
+ 0tyoOvxbQ8QXhpXc2Gh9n8R85Ex00jrik5JRHLy/z6TGqz3pwzC1MB/Yam+bGSN02LOH
+ zsaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=jFHMMfU/AABciGdqX2FL1/tNVxxbuj4u342GE4yPMbU=;
+ fh=G53S9XEToP2DyVd8XZNGLTSGh8fHoRs6BuIsIvHfAJY=;
+ b=f4eQby8bCENjIr4og4w0Je8Wb8xF5Pn6OViJZvTIhzvpCbDeV4R5xWDjW+ijjnZoBd
+ xuwumEVf9rKJYs0UeSQe0datLwigiImvDGUtMMxsdgHGZ4Qmi4tKwWoqiOg45RB13c0B
+ LqMooPodXUybFfGoAQHh9O1lelQ7uai1BKlMT82Gheqb48EswfrbQ0pjZTX4zotjTlbI
+ 0gtL58cUd5oLlWVBgdu22OgBZLLGVrnXwx0Q7nkwgV0BWPW0A/F32YDT9LJAlPlkENVz
+ rwtkBdlkS8oVLU+7RQyN9ke8zOfPF1SEkmxRh02QqySZbh8A2wAHeBeKNwUWYe7gacrX
+ ptfg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268697; x=1788873497; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ck+G1J8XeMofV26XYg3w08XT7q7hGF82RVGXpKaMHQE=;
- b=TBuAwzz4Vw/adC1Eo1GSOtSI+LMYhBI9LycEVTg3EDXycb1sYueOeUgPAkJYnhvchm
- W0n/Y3VTSrESZn1flhA+2+w+RLGpHWhhcf/6+nQNUFqGmcOGnR/EAItO8BT5f5WL8LcP
- 97zbFNKInYazoBUYXKSCpRy0z2z1twt0EkOjnAIcrby/LKi8UUnjAX/deXePhgQG7dw+
- nyYSnE2Zt1DL4lXHl4A26h9O6JjYQznOsHroga9d8k/v6zRWtrW7ZjCX7jaa3seKtH4d
- rn6qnj5eaXL6MxWSuMR4r+U1FvuOuwf0Tt1nk9s8b11CfhC6S1+ZiTxaCFJyAGa7y8ZA
- uFGg==
+ d=gmail.com; s=20251104; t=1788269060; x=1788873860; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=jFHMMfU/AABciGdqX2FL1/tNVxxbuj4u342GE4yPMbU=;
+ b=r5Lyr3kHIbO1ZT7OUPGkolDzudSWaq1/mF/TvD7Uuh4pjMo0MmLzl1hmfKQPlUL/om
+ jtDuQnbSYgSKVN+FaChPbl3qi9x57K2q5S8rGZPYWWXnluG7qMDMWJ1nxqsEIcWvYUQK
+ xvNzcJUZEUoR2R091BZKCdi/J+kD/LkKuHsgICuX+K6QBXEZr/v/g+NRkFdhTExHfsCb
+ GP5LWwk/cFir+dNlp9xVmllBbq0193LzyO/a92NfxUV/VoqeYCOlEORt7hR56xNzVKjQ
+ dnyGaOuBYs17zKnol6IzzPGbOypmge5PE28N+2NqZQ53zpvlduNWPNwHu6rLle90bPgC
+ 5n4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268697; x=1788873497;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=ck+G1J8XeMofV26XYg3w08XT7q7hGF82RVGXpKaMHQE=;
- b=SZmMpDOcExCf2AmUG4OtcT4Mp2OvBgZoj71evPF6rkiDv6o/8sZdkWQMSJZY+wOSbT
- nrIOKdmP74zvDMTu3HYcerTGgG5dM3gMLOpU+gseRcpn9bnTwJgb1RfjOBlbmDevFkmG
- 4+m6UuNJJdSZ/xZzD5vcKn4UKvioHFf8IGa2d/HdrT4EeXdZ5EgD0phFcqGtQuBoK5dR
- Ykn+HBYFazgOXwMRn0z04+Q3kiKPDxGH1BC7P2wo2ZSQuEbRYcsl0BcaLxo/tk2/HyDn
- BMK4jvEnvEKm15n4JOtSpG1sZSrtgJAJ4sxhSd12SyXBdCMuWA0Ow14yLnm0r5sLRF7X
- 4XiQ==
-X-Gm-Message-State: AFuF++ldWIC2594FBIhA25j2vWV97H34jLioVDRFqqn8vVYViuANAF6s
- 8tLPm58NIdwdf3vXVjyUQ1cz95562EcLD6bSoyfQNHrQlFF3ez5jbcR6CbPgPWLxsB47vMyH3t9
- IHZfXvgw=
-X-Gm-Gg: AR+sD11726bXWRleCnlSaQ4MzLB3vaoDM1S7zjwoMmKkV82affc1884/eBMpFy+7hDf
- evv2tEp3K/qc2nW34CX+ZyQe7qU1ke2Uz6YWa6o7bX/xpGvpogzkmaZUhSJjFU3CsXdcIxY1Hlm
- W7TDeZGGs3HcyCX/DjlIFx1BNX+qm8jJy4cZTtFDPRG+Q6gUm8IS28yCvMQmc8FGl8sOFZeXZqa
- Pr9dUICXN7GtaXJJnVTa+FMBifcOs7YfvSxAner/gsdDs5rLDi5fipmTFpc+VmJ0CMfY2VFvnag
- u+xAslkxGMMCuij8e0EQ9lxiPNGaQBznehNYUfiaJoZZHphaT9iLcAzQ/VETOXg5kuy+K1JKqHS
- Cldhk6WhP98hBlQXuDMuUfs2ljhOfmJA224PC1Tjg7KpneAc9T3c+2opKlGO7muZvqqCIEM0GFE
- NosJtEGwws1Pob8piRAV6DUF6tVgvjqrG/2UDub6opBIRofMZrx75gbgMgl6fzAe9ihY+h57+AE
- gNrTzbrNsouqOtO7g6o/sm6ZXAnPVn+KLVld/EyzXixLalpLKj8k1weEoDtGwSkZJJWQn0=
-X-Received: by 2002:a17:907:8b95:b0:c19:6104:e5e4 with SMTP id
- a640c23a62f3a-c25571fecb8mr2220603166b.20.1788268696859; 
- Tue, 01 Sep 2026 06:18:16 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.16
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:18:16 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 43/58] target/arm: Split decode of BFloat SVE FADD, FSUB, FMUL,
- FMIN*, FMAX*
-Date: Tue,  1 Sep 2026 14:17:17 +0100
-Message-ID: <20260901131732.2263947-44-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
-References: <20260901131732.2263947-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1788269060; x=1788873860;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=jFHMMfU/AABciGdqX2FL1/tNVxxbuj4u342GE4yPMbU=;
+ b=fYhScTwP02reGt0OvEHxzHqwKkDhsIkWlPiTaWFflHTocC7hs1ovQi1IhBm7oIysOO
+ YkmfJoy4yKLQJkrsDj3FbY+dF6HVstgxNcvcwKUFMnRhz8bQ7gx5TNWyIorESDtjQzQp
+ BxcTJvsuyZpCg+NM+8JfwtgRoknP9EvIUgRY53ZdK/k4yROkcKGGsGUQwff54bLrnvEW
+ 5XQlw+Nf1wY2Pb1D8Pv0lu49ZApkQ2TWFjwID83v9dyGkufsEnHnO5TQol8qEj3OWQQW
+ O5YxD+XPq/tzRHMMpZl4jrgVp4K8bxQVanU7Khj3ZQ7m6xTCFXeqCvyivO5m6Q3MlVKh
+ wxww==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzJZLwdd1C71Gtp4CeTKPifvbQFwoFDOc3tPKUbxYZuORnjnqxPtw25H8uZ68mcA21h9fNbRp24A4Is@nongnu.org
+X-Gm-Message-State: AFuF++mn3jS37K89jGcGmEezOAGcCV8m6W3N+pWJUvk7ziSJEQI1Zi/+
+ 24/Qq9BaHmrn+yeZoTBNpFi3alKGeNaCMJBSuGqZq6dcv/XvzfWd2wzvszUcAfzQjnv7PhzIX/m
+ qCUJqQAqcszKt1BdRGrkHbQtElLhgAxvKw2tHsRE=
+X-Gm-Gg: AYBFou2aWUsZVkH/lAUugZDlJIMSwWCaiZ7ZFj0dt0cQKtSMoeqQG9dIjSN4++/vq/i
+ TFDZiG+1mMiZtFMwpDr7AoSe9czGGfaWyiRapn6c/4+jP2heclO/IDeqMiaZB3l4FaHmhb9wYD1
+ PUzt/SyrWqE7hyLIJ+fTGqhlrX/yMfex83XmfW0GyXT5IIvcqc8pPuacrB0oPuJ5N4mRa+Vkhb0
+ mNGwB2K4nMrqo+hciEAi6vphe1y4ksG/acI65G9FwstwWF10uwb3LwndFHOZxM3rXO9VxihMmKv
+ u7m9lvzBCS8RQjMLhlaeeUeCtULDsSeeV+zPVn8HCQkF
+X-Received: by 2002:a05:6214:2687:b0:90e:8f1a:1bde with SMTP id
+ 6a1803df08f44-90e8f1a1c1bmr85936996d6.1.1788269059991; Tue, 01 Sep 2026
+ 06:24:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
+References: <20260805124519.30054-1-danielpaziyski@gmail.com>
+ <20260805124519.30054-4-danielpaziyski@gmail.com>
+ <20260901071543-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260901071543-mutt-send-email-mst@kernel.org>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+Date: Tue, 1 Sep 2026 15:24:08 +0200
+X-Gm-Features: AcwNN1XhKXZ6JRpRE4pXBxZcp6RDvzJ-sEs2antG91DybmPkxT5Rm4ys13E006Q
+Message-ID: <CANukVxvZMPp_1ZkZzmrE1pSAryW7DWpBOOWV5=QUmnQf3LH48Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] pcie_sriov: register user created virtual function
+ before realizing it
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ qemu-stable@nongnu.org, 
+ Jesper Devantier <foss@defmacro.it>, "open list:nvme" <qemu-block@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-qk1-x733.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,180 +121,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 1 Sept 2026 at 13:19, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Wed, Aug 05, 2026 at 02:45:18PM +0200, Daniel Paziyski wrote:
+>> There are two ways of creating virtual functions: by using the sriov-pf device
+>> parameter (this way, creating a user created VF and binding it to a PF), or
+>> by using a device specific parameter, where the device manually creates a given
+>> amount of VFs.
+>>
+>> When a PCI device is realized, the device specific realize function is called
+>> first, and then the pcie_sriov_register_device function is called, which checks
+>> whether the device that has been created is a user created VF, and if it is the
+>> case and the device allows this kind of VFs, it inserts it into a hashmap, with
+>> the key being the ID of the PF, and the items being arrays of VFs.
+>>
+>> User created VFs are instantiated independently, and later, when the PF calls
+>> pcie_sriov_pf_init_from_user_created_vfs, it discovers its VFs from the hashmap
+>> mentioned previously, and sets up in their PCIDevice.ex.sriov_pf structure
+>> the pointer to the PF. This means that, during realization, VFs have no access
+>> to the PF.
+>>
+>> Device created VFs are instantiated during or after PF realization using the
+>> pcie_sriov_pf_init function, which sets up for the VFs the pointer to the PF
+>> before their realization, so when they're realized, they can access the PF
+>> with no issues.
+>>
+>> The problem here is that pcie_sriov_register_device is called after the
+>> realization, and not before. This means that when a user created VF is created
+>> for a device which does not support user created VFs, but supports device
+>> created VFs, the realize function will notice that a VF is being created, and
+>> may try to access the PF, causing a null pointer dereference fault.
+>>
+>> Fix this by placing the user created VF check and registering before the
+>> realization. This way, incorrectly created user created VFs will be noticed,
+>> and device creation will be aborted.
+>>
+>> Additionally, remove from the pcie_sriov_register_device function the top
+>> check. It seems that this check is done to error out if the PF failed for some
+>> reason to initialize its list of user created VFs. However, in such situations,
+>> the pcie_sriov_pf_init_from_user_created_vfs function will error during
+>> realization, and it will be caught before the check is done at all. Moreover,
+>> since now pcie_sriov_register_device is called before realization, the check
+>> will always fail for PFs with user created VFs, because the list will be
+>> populated during realization.
+>>
+>> The rest of the function though, correctly errors out if a user created VF
+>> is created for an unsupported device type, if a VF is created for a non-PCIe
+>> device, or if the PF is already instantiated, with now the advantage being
+>> that the check is done before the VF instantiation.
+>>
+>> When instantiating a user created VF for a NVME controller:
+>>
+>> Command line:
+>>
+>>     qemu-system-x86_64 -device nvme-subsys,id=subsys0 \
+>>     -device nvme,id=vctrl0,sriov-pf=ctrl0,subsys=subsys0 \
+>>     -device nvme,id=ctrl0,subsys=subsys0,serial=s
+>>
+>> ASAN splat:
+>>
+>> ../hw/nvme/ctrl.c:9613:28: runtime error: member access within null pointer of type 'struct NvmeCtrl'
+>> AddressSanitizer:DEADLYSIGNAL
+>> =================================================================
+>> ==91050==ERROR: AddressSanitizer: SEGV on unknown address 0x000000001cf0 (pc 0x7f79a8573dcd bp 0x7ffd622c1bc0 sp 0x7ffd622c1b68 T0)
+>> ==91050==The signal is caused by a READ memory access.
+>>     #0 0x7f79a8573dcd  (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>>     #1 0x5644c6c0266e in nvme_realize ../hw/nvme/ctrl.c:9613
+>>     #2 0x5644c6c67213 in pci_qdev_realize ../hw/pci/pci.c:2316
+>>     #3 0x5644c7a2cfc1 in device_set_realized ../hw/core/qdev.c:514
+>>     #4 0x5644c7a4f767 in property_set_bool ../qom/object.c:2484
+>>     #5 0x5644c7a48d0b in object_property_set ../qom/object.c:1548
+>>     #6 0x5644c7a568a5 in object_property_set_qobject ../qom/qom-qobject.c:28
+>>     #7 0x5644c7a49385 in object_property_set_bool ../qom/object.c:1618
+>>     #8 0x5644c7a2aeb0 in qdev_realize ../hw/core/qdev.c:277
+>>     #9 0x5644c735f29f in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+>>     #10 0x5644c735f3ab in qdev_device_add ../system/qdev-monitor.c:758
+>>     #11 0x5644c72b1901 in device_init_func ../system/vl.c:1217
+>>     #12 0x5644c829d4a3 in qemu_opts_foreach ../util/qemu-option.c:1148
+>>     #13 0x5644c72bc33e in qemu_create_cli_devices ../system/vl.c:2762
+>>     #14 0x5644c72bcaa1 in qmp_x_exit_preconfig ../system/vl.c:2822
+>>     #15 0x5644c72c3241 in qemu_init ../system/vl.c:3862
+>>     #16 0x5644c801abf8 in main ../system/main.c:71
+>>     #17 0x7f79a8427780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>>     #18 0x7f79a84278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>>     #19 0x5644c5f0a1f4 in _start (BuildId: 8483f952216d9e345c3744300d0aefa38feb50d7)
+>>
+>> ==91050==Register values:
+>> rax = 0x00007e49988640f0  rbx = 0x00007e49988640f0  rcx = 0x00000fc9b3104828  rdx = 0x0000000000000058
+>> rdi = 0x00007e49988640f0  rsi = 0x0000000000001cf0  rbp = 0x00007ffd622c1bc0  rsp = 0x00007ffd622c1b68
+>>  r8 = 0x00000fc9b3104829   r9 = 0x00000fc9b3104828  r10 = 0x00000fc9b310481e  r11 = 0x00000fc9b310481e
+>> r12 = 0x0000000000001cf0  r13 = 0x00000f6f32e78578  r14 = 0x00000000ffffffff  r15 = 0x00007ffd622c1c10
+>> AddressSanitizer can not provide additional info.
+>> SUMMARY: AddressSanitizer: SEGV (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>> ==91050==ABORTING
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
+>> Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+>> ---
+>>  hw/pci/pci.c        | 11 ++++++-----
+>>  hw/pci/pcie_sriov.c |  6 ------
+>>  2 files changed, 6 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>> index d3191609e2..a5b4482bb6 100644
+>> --- a/hw/pci/pci.c
+>> +++ b/hw/pci/pci.c
+>> @@ -2312,20 +2312,21 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+>>      if (pci_dev == NULL)
+>>          return;
+>>
+>> +    if (!pcie_sriov_register_device(pci_dev, errp)) {
+>> +        do_pci_unregister_device(pci_dev);
+>
+>
+> This skips acpi-index rollback which pci_qdev_unrealize currently does.
+> Needs generic PCI cleanup.
 
-Split decode so that feature detection can be handled
-external to gen_gvec_fpst_arg_zpzz
+I see. pci_qdev_unrealize unregisters the device's acpi-index after calling
+do_pci_unregister_device. What do you think if I moved the snippet for
+unregistering the acpi-index to a new function, and then call it in
+do_pci_unregister_device?
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260826174213.614571-11-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/sve.decode      | 38 +++++++++++++++++++++++++++-------
- target/arm/tcg/translate-sve.c | 32 ++++++++++++++++++----------
- 2 files changed, 52 insertions(+), 18 deletions(-)
+Moreover, this would fix the fact that in do_pci_register_device and outside of
+it the acpi-index is not released in case of failure, since this new function
+could then be called if necessary, if do_pci_unregister_device is not called.
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index bdc2b7f0c04..07dac681acf 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -159,6 +159,9 @@
- @rd_pg4_rn_rm   ........ esz:2 . rm:5  .. pg:4  rn:5 rd:5       &rprr_esz
- @pd_pg_rn_rm    ........ esz:2 . rm:5 ... pg:3 rn:5 . rd:4      &rprr_esz
- 
-+@rdn_pg_rm_e0   ........ .. ... ... ... pg:3 rm:5 rd:5 \
-+                &rprr_esz esz=0 rn=%reg_movprfx
-+
- # Three register operand, with governing predicate, vector element size
- @rda_pg_rn_rm   ........ esz:2 . rm:5  ... pg:3 rn:5 rd:5 \
-                 &rprrr_esz ra=%reg_movprfx
-@@ -1163,14 +1166,35 @@ FRSQRTS         01100101 .. 0 ..... 000 111 ..... .....         @rd_rn_rm
- ### SVE FP Arithmetic Predicated Group
- 
- # SVE floating-point arithmetic (predicated)
--FADD_zpzz       01100101 .. 00 0000 100 ... ..... .....    @rdn_pg_rm
--FSUB_zpzz       01100101 .. 00 0001 100 ... ..... .....    @rdn_pg_rm
--FMUL_zpzz       01100101 .. 00 0010 100 ... ..... .....    @rdn_pg_rm
-+{
-+  BFADD_zpzz    01100101 00 00 0000 100 ... ..... .....    @rdn_pg_rm_e0
-+  FADD_zpzz     01100101 .. 00 0000 100 ... ..... .....    @rdn_pg_rm
-+}
-+{
-+  BFSUB_zpzz    01100101 00 00 0001 100 ... ..... .....    @rdn_pg_rm_e0
-+  FSUB_zpzz     01100101 .. 00 0001 100 ... ..... .....    @rdn_pg_rm
-+}
-+{
-+  BFMUL_zpzz    01100101 00 00 0010 100 ... ..... .....    @rdn_pg_rm_e0
-+  FMUL_zpzz     01100101 .. 00 0010 100 ... ..... .....    @rdn_pg_rm
-+}
- FSUB_zpzz       01100101 .. 00 0011 100 ... ..... .....    @rdm_pg_rn # FSUBR
--FMAXNM_zpzz     01100101 .. 00 0100 100 ... ..... .....    @rdn_pg_rm
--FMINNM_zpzz     01100101 .. 00 0101 100 ... ..... .....    @rdn_pg_rm
--FMAX_zpzz       01100101 .. 00 0110 100 ... ..... .....    @rdn_pg_rm
--FMIN_zpzz       01100101 .. 00 0111 100 ... ..... .....    @rdn_pg_rm
-+{
-+  BFMAXNM_zpzz  01100101 00 00 0100 100 ... ..... .....    @rdn_pg_rm_e0
-+  FMAXNM_zpzz   01100101 .. 00 0100 100 ... ..... .....    @rdn_pg_rm
-+}
-+{
-+  BFMINNM_zpzz  01100101 00 00 0101 100 ... ..... .....    @rdn_pg_rm_e0
-+  FMINNM_zpzz   01100101 .. 00 0101 100 ... ..... .....    @rdn_pg_rm
-+}
-+{
-+  BFMAX_zpzz    01100101 00 00 0110 100 ... ..... .....    @rdn_pg_rm_e0
-+  FMAX_zpzz     01100101 .. 00 0110 100 ... ..... .....    @rdn_pg_rm
-+}
-+{
-+  BFMIN_zpzz    01100101 00 00 0111 100 ... ..... .....    @rdn_pg_rm_e0
-+  FMIN_zpzz     01100101 .. 00 0111 100 ... ..... .....    @rdn_pg_rm
-+}
- FABD            01100101 .. 00 1000 100 ... ..... .....    @rdn_pg_rm
- FSCALE          01100101 .. 00 1001 100 ... ..... .....    @rdn_pg_rm
- FMULX           01100101 .. 00 1010 100 ... ..... .....    @rdn_pg_rm
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index f65c2b0af53..0ad0aff0504 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -412,10 +412,6 @@ static bool gen_gvec_fpst_zzzp(DisasContext *s, gen_helper_gvec_4_ptr *fn,
- static bool gen_gvec_fpst_arg_zpzz(DisasContext *s, gen_helper_gvec_4_ptr *fn,
-                                    arg_rprr_esz *a)
- {
--    /* These insns use MO_8 to encode BFloat16. */
--    if (a->esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
--        return false;
--    }
-     return gen_gvec_fpst_zzzp(s, fn, a->rd, a->rn, a->rm, a->pg, 0,
-                               a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
- }
-@@ -4426,65 +4422,79 @@ TRANS_FEAT_NONSTREAMING(FTSMUL, aa64_sve, gen_gvec_fpst_arg_zzz,
-  */
- 
- static gen_helper_gvec_4_ptr * const sve_fadd_zpzz_fns[4] = {
--    gen_helper_sve_fadd_b16,
-+    NULL,
-     gen_helper_sve_fadd_h,
-     gen_helper_sve_fadd_s,
-     gen_helper_sve_fadd_d
- };
-+TRANS_FEAT(BFADD_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           gen_helper_sve_fadd_b16, a)
- TRANS_FEAT(FADD_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fadd_zpzz_fns[a->esz], a)
- 
- static gen_helper_gvec_4_ptr * const sve_fsub_zpzz_fns[4] = {
--    gen_helper_sve_fsub_b16,
-+    NULL,
-     gen_helper_sve_fsub_h,
-     gen_helper_sve_fsub_s,
-     gen_helper_sve_fsub_d
- };
-+TRANS_FEAT(BFSUB_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           gen_helper_sve_fsub_b16, a)
- TRANS_FEAT(FSUB_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fsub_zpzz_fns[a->esz], a)
- 
- static gen_helper_gvec_4_ptr * const sve_fmul_zpzz_fns[4] = {
--    gen_helper_sve_fmul_b16,
-+    NULL,
-     gen_helper_sve_fmul_h,
-     gen_helper_sve_fmul_s,
-     gen_helper_sve_fmul_d
- };
-+TRANS_FEAT(BFMUL_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           gen_helper_sve_fmul_b16, a)
- TRANS_FEAT(FMUL_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fmul_zpzz_fns[a->esz], a)
- 
- static gen_helper_gvec_4_ptr * const sve_fmin_fns[4][2] = {
--    { gen_helper_sve_fmin_b16, gen_helper_sve_ah_fmin_b16 },
-+    { NULL, NULL },
-     { gen_helper_sve_fmin_h, gen_helper_sve_ah_fmin_h },
-     { gen_helper_sve_fmin_s, gen_helper_sve_ah_fmin_s },
-     { gen_helper_sve_fmin_d, gen_helper_sve_ah_fmin_d },
- };
-+TRANS_FEAT(BFMIN_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           s->fpcr_ah ? gen_helper_sve_ah_fmin_b16 : gen_helper_sve_fmin_b16, a)
- TRANS_FEAT(FMIN_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fmin_fns[a->esz][s->fpcr_ah], a)
- 
- static gen_helper_gvec_4_ptr * const sve_fmax_fns[4][2] = {
--    { gen_helper_sve_fmax_b16, gen_helper_sve_ah_fmax_b16 },
-+    { NULL, NULL },
-     { gen_helper_sve_fmax_h, gen_helper_sve_ah_fmax_h },
-     { gen_helper_sve_fmax_s, gen_helper_sve_ah_fmax_s },
-     { gen_helper_sve_fmax_d, gen_helper_sve_ah_fmax_d },
- };
-+TRANS_FEAT(BFMAX_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           s->fpcr_ah ? gen_helper_sve_ah_fmax_b16 : gen_helper_sve_fmax_b16, a)
- TRANS_FEAT(FMAX_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fmax_fns[a->esz][s->fpcr_ah], a)
- 
- static gen_helper_gvec_4_ptr * const sve_fmaxnum_fns[4] = {
--    gen_helper_sve_fmaxnum_b16,
-+    NULL,
-     gen_helper_sve_fmaxnum_h,
-     gen_helper_sve_fmaxnum_s,
-     gen_helper_sve_fmaxnum_d
- };
-+TRANS_FEAT(BFMAXNM_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           gen_helper_sve_fmaxnum_b16, a)
- TRANS_FEAT(FMAXNM_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fmaxnum_fns[a->esz], a)
- 
- static gen_helper_gvec_4_ptr * const sve_fminnum_fns[4] = {
--    gen_helper_sve_fminnum_b16,
-+    NULL,
-     gen_helper_sve_fminnum_h,
-     gen_helper_sve_fminnum_s,
-     gen_helper_sve_fminnum_d
- };
-+TRANS_FEAT(BFMINNM_zpzz, aa64_sve_b16b16, gen_gvec_fpst_arg_zpzz,
-+           gen_helper_sve_fminnum_b16, a)
- TRANS_FEAT(FMINNM_zpzz, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
-            sve_fminnum_fns[a->esz], a)
- 
--- 
-2.43.0
+Additionally, while I'm at it, why don't I move pcie_sriov_unregister_device to
+do_pci_unregister_device? This way, I avoid calling it explicitly in
+pci_qdev_realize, which is necessary now because user created VFs are registered
+before realization.
 
+Regards,
+Daniel
+
+>
+>
+>> +        return;
+>> +    }
+>> +
+>>      if (pc->realize) {
+>>          pc->realize(pci_dev, &local_err);
+>>          if (local_err) {
+>>              error_propagate(errp, local_err);
+>> +            pcie_sriov_unregister_device(pci_dev);
+>>              do_pci_unregister_device(pci_dev);
+>>              return;
+>>          }
+>>      }
+>>
+>> -    if (!pcie_sriov_register_device(pci_dev, errp)) {
+>> -        pci_qdev_unrealize(DEVICE(pci_dev));
+>> -        return;
+>> -    }
+>> -
+>>      /*
+>>       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
+>>       * associate only Device 0 with the device attached to the bus
+>> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+>> index c41ac95bee..69930c7b8c 100644
+>> --- a/hw/pci/pcie_sriov.c
+>> +++ b/hw/pci/pcie_sriov.c
+>> @@ -357,12 +357,6 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+>>
+>>  bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
+>>  {
+>> -    if (!dev->exp.sriov_pf.vf && dev->qdev.id &&
+>> -        pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
+>> -        error_setg(errp, "attaching user-created SR-IOV VF unsupported");
+>> -        return false;
+>> -    }
+>> -
+>>      if (dev->sriov_pf) {
+>>          PCIDevice *pci_pf;
+>>          GPtrArray *pf;
+>> --
+>> 2.55.0
+>
 
