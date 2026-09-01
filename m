@@ -4,58 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D07BC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 10:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA886C61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 11:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Lj0-0008UR-SP; Tue, 01 Sep 2026 06:28:19 -0400
+	id 1x1MEp-00051c-6x; Tue, 01 Sep 2026 07:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x1Liy-0008U2-0D
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:28:16 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x1MEn-00051P-Ed
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 07:01:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x1Liv-0003pw-RF
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:28:15 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 681AS4Wa055391
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 1 Sep 2026 19:28:05 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=9z0u3v7BDSu12ZX/VvN4VpQncrXQxLqt6dMcRoAPbEo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788258485; v=1;
- b=WtHAfMZqDpmPDmWpOuuo7b2x9+BAra8aU53sGJQQPr9XiFMhZeaj8iLq0N2Iwm89
- AJPckDdUgsdSMTkIcgbA5ys16MUWnjIm3CSF3P3H/8/heSEd1qw9gdLIGwPk0tC+
- ZBzquxsxnrl9bUdsluHNC6WEdpbWf8/Ka0xrWQOx52Xu9ZRZzMuPrkpLvj0oGzfI
- TdffbZEQ0PFFQ2/cyek2YztmkzJLnzFZa8K7a4hwBfBkzRSR0v51uHdvLRrk8yGl
- MTvuHxfgUYiLiC8Nbhdv7VcaTrtELBRC4J2A8MbDFVrbEUy59/Gu/vZTKr0mbwW1
- gRZkbVQGV8JD2gKNgJu7AQ==
-Message-ID: <f315fe44-0935-4ead-a7cf-b2af2e9580d3@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 1 Sep 2026 19:28:03 +0900
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x1MEl-0001Sl-3g
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 07:01:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788260465;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=c8eM6II566DxYYtBXArEMnM0DOInzht6yzfrZidUejE=;
+ b=UZfypS8T15SkotUt/oQTiunn3kVvkYVkrJ3fVvkjhsR7E/zPp2mL8VMNokfhTg7tsDDDz5
+ 5wg7MsMMXC5esUkPOBJS0f3qC0HtF/HM43Ku6FaHA2k2ZJa2+Ti4gLimB4z/kFrHR+cZ3I
+ 7UZbwtA/E5bkBuaOaroB/WSd42EZ6Ek=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-172-MGHDeLOfP0mvEZKYsVMJvQ-1; Tue, 01 Sept 2026 07:01:03 -0400
+X-MC-Unique: MGHDeLOfP0mvEZKYsVMJvQ-1
+X-Mimecast-MFC-AGG-ID: MGHDeLOfP0mvEZKYsVMJvQ_1788260462
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49cc954a3edso25865835e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 04:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788260462; x=1788865262; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=c8eM6II566DxYYtBXArEMnM0DOInzht6yzfrZidUejE=;
+ b=Zvih+R6ORRsC5IVGGNWNjSGw96olFJloKG+0UztBZynLqCVXq7aPbYWeZUS+scedmB
+ Vmof/ZatZK/2JBD7PV4uhU6WUvV43/PFMDzMLUENFYzPqPJtRz/Lru6IJ7LAsJm6N8K+
+ sO2YDoitYseoTRFai/Z4cwtFISqOtkcKaTr4AJ0WGYCHV3h3gqyyTh2rKkMrsFHvjAfB
+ Jpb9YBr2z1N9SCOb16zinf/Y2vI5nue4eNPvBwfL6NcbpaDQrNdEkBbHMfAYI5PS2mgM
+ +scLdHQTxuFlyAxeDn3/jDx5W24bNeHkO8fNafGxvThrYfLI9KnMWvv2sO8XOL1A1+wA
+ Qc6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788260462; x=1788865262;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=c8eM6II566DxYYtBXArEMnM0DOInzht6yzfrZidUejE=;
+ b=fAQkhhe3xyMtxzWlpy1sYDBYQhBedwQ/xWbXd1Wm2PNLqb5dcPgo5/MbgCWhCzT77I
+ J25+0Y7mrYk1sZo6F35tKuXPrENn0S+ihmwERMByt+0TCTKaxQsCBToyb5I75SS5KJAN
+ +Albnkugd9ZjN8pb/RAJElUzFNf3RZcCuNSlEFKivaXnHv9qklEtgqLQjyxn5heEvDRE
+ 4M9jWlxu7YBXJ7sqS/DDB5RTIr6RBJhglTaQYzPWTOHBqjyeERR+A44GNpO+5ro7RlgS
+ lBkS2hKxqbJcj8Df82dsyV4ifJi1TYPmgXvyAajLWPVX3IMfXV8v0JtqRg8OUY14eTqM
+ ee+A==
+X-Gm-Message-State: AFuF++lrRIl3n91Yu2GG/GAzW1+9B2wxIkOJQAGvRllvBt0qwXJWv664
+ yQSEj3Y1BLMUdq06Xg6hVAXfLPmRmLPb13+Yf78MY58Iz28ILkq5TaUBeHe5+/n1JDacUQzZgPu
+ 2vIzSvPUqCVFyBFveX1W19tNTDdiHg8nAl6StFMBe+bRRK3uxC/XSfjcso3HmQgPbcgoiSrLYdy
+ 4wWMYMB6A497iDt1A9Rxd8HCIXBZND8SwCzePxUaPK
+X-Gm-Gg: AR+sD10i5FLg6CtRRMhBt0HhVIa6wD/e83sT2GT7xEIBRBCyqS8k1xnUxTmjFVWW3WV
+ v94HRQplUzrpAKYOFuCJ12th2pZq3FJI0CV02jm727NcflHeccBoP0yKc35WBQwCeynews+wx2Z
+ N96960iiTeTiTI3fyTdBreSuNobK23KtLBWnOi9/4uGwFK9UKkMcpKVmNGKZ+s2BR6ZvYYGHg65
+ tK9CC09QaFEvUHb0XRzMG3aPdgTQznva5BV2FxC2KJdjLfqjLUYpLGTBIu7pw93jbBiA64CfuOm
+ cZtLbAtlmHGyRdQKUxpt3dqrupJ3Zd/Av29zneUK98mk4vZktnrDtsREtRFbLpn0x5qYQUXqRmp
+ 0RDUJ/NkMWq+RT0XMap0D8QDS6XG/sO3iIIwGvUt+3cuocYzC8MeMeCFQbC5p57HmqWwfuJNulI
+ zVEzM=
+X-Received: by 2002:a05:600c:1c27:b0:49c:cfae:34d2 with SMTP id
+ 5b1f17b1804b1-49ccfae35c2mr327707255e9.4.1788260462169; 
+ Tue, 01 Sep 2026 04:01:02 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c27:b0:49c:cfae:34d2 with SMTP id
+ 5b1f17b1804b1-49ccfae35c2mr327705585e9.4.1788260461472; 
+ Tue, 01 Sep 2026 04:01:01 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.151.49])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49b9266be71sm744461215e9.2.2026.09.01.04.01.00
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Sep 2026 04:01:00 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] docs: link to website for IRC and mailing list
+Date: Tue,  1 Sep 2026 13:00:59 +0200
+Message-ID: <20260901110059.191022-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/dbus: fix cursor race, copy cursor data
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260829141447.1677081-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260829141447.1677081-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,56 +116,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/29 23:14, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Eleminates the undefined behavior where virtio-gpu's memcpy() overwrites
-> the buffer that an in-flight gvariant still references. Fixes the data
-> race where the GDBus worker thread calls cursor_unref() concurrently
-> with main thread.
+Provide an easy and always up-to-date way to get more information on
+how to contact maintainers and other developers.
 
-s/Eleminates/Eliminates/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ docs/devel/conflict-resolution.rst | 7 ++++---
+ docs/devel/index.rst               | 4 ++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-> 
-> Fixes: 142ca628a733 ("ui: add a D-Bus display backend")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   ui/dbus-listener.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-> index 2e2f6ba4183a..aca802cb11cb 100644
-> --- a/ui/dbus-listener.c
-> +++ b/ui/dbus-listener.c
-> @@ -896,16 +896,18 @@ static void dbus_cursor_define(DisplayChangeListener *dcl,
->   {
->       DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
->       GVariant *v_data = NULL;
-> +    size_t size = c->width * c->height * 4;
-> +    void *copy = g_memdup2(c->data, size);
->   
->       ddl_discard_cursor_messages(ddl);
->   
->       v_data = g_variant_new_from_data(
->           G_VARIANT_TYPE("ay"),
-> -        c->data,
-> -        c->width * c->height * 4,
-> +        copy,
-> +        size,
->           TRUE,
-> -        (GDestroyNotify)cursor_unref,
-> -        cursor_ref(c));
-> +        g_free,
-> +        copy);
-
-This can use g_variant_new_fixed_array(G_VARIANT_TYPE_BYTE, ...), which 
-internally performs the same copy and ownership setup.
-
-Regards,
-Akihiko Odaki
-
->   
->       qemu_dbus_display1_listener_call_cursor_define(
->           ddl->proxy,
+diff --git a/docs/devel/conflict-resolution.rst b/docs/devel/conflict-resolution.rst
+index bb25f61865f..b6122323978 100644
+--- a/docs/devel/conflict-resolution.rst
++++ b/docs/devel/conflict-resolution.rst
+@@ -18,9 +18,10 @@ How we resolve conflicts
+ 
+ If you are experiencing conflict, please consider first addressing the
+ perceived conflict directly with other involved parties, preferably through
+-a real-time medium such as IRC. You could also try to get a third-party (e.g.
+-a mutual friend, and/or someone with background on the issue, but not
+-involved in the conflict) to intercede or mediate.
++a real-time medium such as `IRC <https://www.qemu.org/contribute/>`__. You could
++also try to get a third-party (e.g. a mutual friend, and/or someone with
++background on the issue, but not involved in the conflict) to intercede or
++mediate.
+ 
+ If this fails or if you do not feel comfortable proceeding this way, or
+ if the problem requires immediate escalation, report the issue to the QEMU
+diff --git a/docs/devel/index.rst b/docs/devel/index.rst
+index 29f032d6a82..6f9ff4a0b91 100644
+--- a/docs/devel/index.rst
++++ b/docs/devel/index.rst
+@@ -10,8 +10,8 @@ QEMU is a large and mature project with a number of complex subsystems
+ that can be overwhelming to understand. The development documentation
+ is not comprehensive but hopefully presents enough to get you started.
+ If there are areas that are unclear please reach out either via the
+-IRC channel or mailing list and hopefully we can improve the
+-documentation for future developers.
++`IRC channel or mailing list <https://www.qemu.org/contribute/>`__ and
++hopefully we can improve the documentation for future developers.
+ 
+ All developers will want to familiarise themselves with
+ :ref:`development_process` and how the community interacts. Please pay
+-- 
+2.55.0
 
 
