@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20951C61DFD
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CD3C624CE
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Ef0-0001vK-Pm; Mon, 31 Aug 2026 22:55:42 -0400
+	id 1x1Eeu-0001uR-CW; Mon, 31 Aug 2026 22:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x1Eey-0001up-RH
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:40 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1x1Ees-0001ts-KB
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:34 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x1Eew-0005NS-Ui
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:40 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5b4ab40d839so4094247e87.3
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 19:55:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788231336; cv=none;
+ id 1x1Eeq-0005N0-W1
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:34 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-3a1981228f8so38067141fa.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 19:55:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788231331; cv=none;
  d=google.com; s=arc-20260327;
- b=S2u09PHG6r7sFPfoRATUE9XIw4Oa2dE3DR/LJC9fOSMOF82Qo2ARLMGdmJ13mPtqh1
- d70GQqSmfVAHE7iRHf6MmUOhc9voDsc7AGFrKlGR1iSyLnvO8FLf5oEIWTnTZc9RpIMC
- njPqxHYnLDo1cAFK2oQC+9az/2cNm32Ds+enjL2AzoELXI62gjqehxriSwlKUXtPOLPE
- pzaaYYDNdOFbJY9/0CkebVyVQnsTSz9EHgpKbiD99wUntWS7CremYqX5y5FKdD0WPyGy
- WqVIhhAcpbww7ikoGJLUUwR7+ZmBqB5LGW+v8cFzgWZsP4rAtFfu1np/1Acf7RhztFuU
- mTNA==
+ b=D6Sy4xOUFypUOf8G0XWLkFK4LMxZvk3dATrKyWL6sGyHle4VsJEr7b7ZechdCCCyGs
+ x9B8k86DmLq8P0rJP6lnmy2acpw0QgYsWwZfwnR4RslzyykY3OJ+NmTKDiSdM2FrSV9Y
+ MUjx+HdqM8LVBHPbTDC/VZ8tMrUmyRfXpQ79jG99Ee+iBLel2p3hmKHnulfr0QhIt9Is
+ /rsCH3JL502aWsTxbrwNhuyZ/CkPJ4mALZ3EIJDAlhFSfo6DfZLUyycAAOvjioPI1Iyt
+ E9kjBNCA3oOTN/eoXcFmoyHQ9sP2gcK9kJacu5o0Q4AjV8xfbIvBubEynHzw6msRA8fG
+ W/XA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=judF+7VNBVLISGbwC+C3z7r96CarS5b5R5YR9O8GCGc=;
+ bh=J4hzdpcPvQ19JekSIhEi2Y4CpyK+88jHsfCTjIEeyxc=;
  fh=QVe/7zv5OrYmrprO28ljpRmhYeOlvvTBoRQtHWn+3sI=;
- b=n7h77WxTwCNNWQqM9uqJTduT4bPx3AUHWuF11NYx1jEomx6HC/XJYvKTQx/s3i9bxG
- KMm2NmvvbHORMUNb0c1fdp6qFGdl2i1Lwz9DAeDrRnYepFI8Bgsxn8zbz8GRuFjV2mVE
- JuK1laqob+Cb0YqdylYpCN5cx2IgPV7TBGTS7VbMpDzAlWo97GYWjuRCREmjtVzq/FCm
- m/JQcaFBZjPcH76Dh3F+Lc+UOx14LP+faXz0Nh9LLb64NXRKwC2OxfftSepNhQT4NEO0
- 1yWlqbgQEIv3B8u6cNssa8tRBNPbHBxLx45YVB9Hwa0fBBwZLykw3C9DFkRTIM5UVH6e
- EdVQ==; darn=nongnu.org
+ b=FgfnxQwdJrVMO8D+UpYi+u1EARhpOUU2e0rWhVdkSazbFmkp0XKLfQIQ3l0t1REQ8Q
+ y5c6vfpn07X0LWd+qQ44RuSZ+ld7y81xvYv2SA1njLHo5NvKyBMfzZKlolj1SiGCRrwd
+ 1xgP8i3MhKxatXnrAHew98nA7spN3us0+q3bfHUVUNmHJqIXHv9HffmaseQuyBh10bUq
+ A9VqawQDBRyUmXip4J/LgPHna9rgBIrosmBRt6tRU4tUi4kS2ccs1oyLMidxfoyuSHA9
+ jN+dEEhUdtXOR2pZ17aEI8rivMgN5kM222yHeRbJ4oE9hHXNpdteqUBEFERGp5dlTCXG
+ nDNQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788231336; x=1788836136; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788231331; x=1788836131; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=judF+7VNBVLISGbwC+C3z7r96CarS5b5R5YR9O8GCGc=;
- b=SgXcqKkTeUqxbGIdOI/XWwAjXpwh1Ev1pR+H9OzJy8eSkB5RiQdhgCE+BLe29M1vBP
- yYvPTGQXu64/1GXKPtcTdPcvyrGWaqV+nYfh2aN8T65kckxs1ny0nZnA8Jz/JabrECW7
- FK9HEfSFaSUqfpagt6BMQfrrwRHaP7XAZSZhztCUDBVgwxGFbmtTJM1lWwFmfkQkeuZo
- AtCkgjuMCF2hJSIPBWt2Og4j4cLsO5dE7aRXKV76KI0FvOMOVpT8hMNZBkPcME3mSIeP
- MyTJvxgBE7YpBNEdUkvLcM4WFnZCTxI2oyn9zYJ74dl/3kkduOf4bf+/gUgnBGQk9smd
- s23Q==
+ bh=J4hzdpcPvQ19JekSIhEi2Y4CpyK+88jHsfCTjIEeyxc=;
+ b=YWyJwCKbVC2/Gs7upWiTE9yZsTN8IcJ65Du8I7V3nIAez1ggqn1poQD8pn7H6bAZUW
+ 0y3Yb9vym1bPkEq3X+4Ydg6+OSGnScdSJwgEBlbiKdEQo40EHnii8JcM+DdcokWRnXrw
+ 5ejtFjv8oWM8biyOo6+oEUemDKkghij52SWNV+65sriNiTRhiKR41SQSsysvJMhuiWqN
+ KmzVsaNhnHoNz2jqNy/C9FkAqgnJHxWSTygRh75k3HUgtffO430BdfUeHiFIYjqIKoix
+ zcqUMpZXNiKsNLa/rIoYNK+s+FJqYvFoIbFgMNgBAVkKc/gmeZ+FdhjgbvONGeuDEqpn
+ j4NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788231336; x=1788836136;
+ d=1e100.net; s=20251104; t=1788231331; x=1788836131;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=judF+7VNBVLISGbwC+C3z7r96CarS5b5R5YR9O8GCGc=;
- b=D5VYieTcqXWLhSmdUqSN1docQUTny1eXn4Jpn2p5cOWQYdODVcJ535pRsUuFkcSgY8
- F9q8LcvPkSPEregrm7VY1QJowtaYxqHeuxHgDTzK64bLae/GxfDvHcV8UiEoD8K3wDbv
- YEV0HG8hs4EDxBvmP35VbJ4kkAD0bh8HeN//h0JOVquYD0rOF5OUZUeqmiPevG0+w4m2
- nBlvEHZgWUwKr0IJeoUm2MhRyZUtm1+2iar/i2QmoYJDguo4uN1pHUAfWK3O5SU0ARBg
- ulyodhqxqcArJ2aCJuLAMwYVBtTxQM/1SvAtEdLuxa/Vhi+IpZPh5P0i7P+4oLJENupv
- 4lGA==
-X-Gm-Message-State: AFuF++nihzJqMfEznAeYeJxD7YrexwT13xliOQdXW2raqRp9peM96O2p
- wY8JAJ35FUhKXsYJC3DmjD5JO9WmX92qnZF1Ul5Ku3uKpvUYvG+3Kc17H1Sj0QBYYm/XI61HpAU
- p65VPXSmL8+Ew0RHxmUCzdhF5X7oObwA=
-X-Gm-Gg: AYBFou2us03fblpz80Tm9ySWmhcJ9iC6Kenj0irxE94nz5RMIAKBnKc0lFtuSS1lqfb
- 1LgNdOAdFOqRKoD5Qy7vgAiAyFlFGgTZqx07bEHUPDCoYCExtUr+9nHLCtWt76MDJB+zayDmd5N
- iB0kZ31e73vJd6BQTlse7qMG6M6n8o4h+HrqAals2F6y/FfgQD+dMtlitHZ/DrFNw0XfKGp1/sI
- a1k8nX2/7HPIWoNW1A2u4t/22Y+KfE4yFiKHvSE1HLrUjewLNDc43MF1SLojfZHpcFJn9V/7/pf
- SWT+uc4abvHnoElPgz7ff4z/krYeDBYdUwQAbl7nI3XmVPRaoV0Dg55+gQ==
-X-Received: by 2002:a05:6512:3b85:b0:5b5:e29b:a1df with SMTP id
- 2adb3069b0e04-5b5fe0b39d5mr1567802e87.8.1788231335723; Mon, 31 Aug 2026
- 19:55:35 -0700 (PDT)
+ bh=J4hzdpcPvQ19JekSIhEi2Y4CpyK+88jHsfCTjIEeyxc=;
+ b=CYHw2TEAeDvmm8JYFa1Cp5sefhg4b+hV4Muu6MR/JNcqEr+gtzofPcwPKVg5XXMDNK
+ FgVD/VuH7CsXVHRDGXF9vhroxNz0hwPN0L3pn+TV+dAnM/7gdeRHqMwcJ4nLyUJBQs6x
+ EgdklNrPl7NGv+/0Z+VKpjF71Z9C/g/WPhAw8w0EkdgnAUqMCEFn3XQB+b9+i5PmXwpF
+ vyiNYrjHFdSOMS4okXLn+H2lGyQyC/lRE9vrpvTy7a7qZrAhWcUkQzN7I/6rPUI/ltQA
+ o5KogMcRe6HM91BwVaf675u7q0t1zHbUJhBQEXiUOMRuElqZZVvFSnk2OGiIiqdCbRVr
+ tjFA==
+X-Gm-Message-State: AFuF++mfuT72Tdg34UxuA4yOGDZUVKSzHSzpUB5RadhGhZJzeThKfxIp
+ MSoL0Hb95J5i54KBD5fmEBEWj0WI7UcwcoUWxyp0y//88wWnug8mbflvwBejDTpUfxMbWKuIN8J
+ vossBnF2m7GsgFEFDpafqKuevjFNR0LY=
+X-Gm-Gg: AYBFou2B7efWllsDiw5aLdc6UA9i7y13KCI69vlBfb8He8h/G7wBTKcUhPYg5G688e1
+ ZN3vMmpT3IpXIJpfB6oAOiVEhmQ/t5MilEBrAtvP191uiye2UUm0AY4SpAI+Chte2tY5M2zoInz
+ HZ1jmWQug597hJ8X2Kk2+IWJGPHG934etInPCIVrAI+1qgJaPv6FOhMwVc4K++FLeGJECPjCYOp
+ UckARlSe21tSPS9dpbCIgRAaRFn62/4RiGowfdmQB26fdq2GgMVbJdg26wX0rC1gQBlTbTrU2Tc
+ tGDdaqy8LvTfcEkqCJj4o1ktRDFIzR8bmE6BOMN33AChAEc=
+X-Received: by 2002:a2e:a985:0:b0:3a1:b1e4:419c with SMTP id
+ 38308e7fff4ca-3a301b12edfmr63831081fa.10.1788231330817; Mon, 31 Aug 2026
+ 19:55:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260827050241.3713332-5-mattst88@gmail.com>
- <dcd678bb-83ca-4a41-8230-66fd72278bde@linaro.org>
-In-Reply-To: <dcd678bb-83ca-4a41-8230-66fd72278bde@linaro.org>
+ <20260827050241.3713332-7-mattst88@gmail.com>
+ <b6265b43-8f26-4703-9ca1-88214c06905a@linaro.org>
+In-Reply-To: <b6265b43-8f26-4703-9ca1-88214c06905a@linaro.org>
 From: Matt Turner <mattst88@gmail.com>
-Date: Mon, 31 Aug 2026 22:55:20 -0400
-X-Gm-Features: AcwNN1WmfdlDhxd_iafuGEwYr58IaVNgs11QF4JYXNzXEc0fNZ--7ku76tuGPXU
-Message-ID: <CAEdQ38F3PRUpOuUqJwtCPJeZ=mLVE2rz6tqD2zDB=FcthuxNJA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/9] tcg: pass the destination to
- tcg_gen_lookup_and_goto_ptr()
+Date: Mon, 31 Aug 2026 22:55:16 -0400
+X-Gm-Features: AcwNN1XktwDIwbPf-ykUVNXaeFKsy8HIFk3e5sF9biUztopIxEImgmP0uP07BBI
+Message-ID: <CAEdQ38FjS+GWYVR2UEApMSE7pJaTBYQrXbArHaBa3+epHTuHaQ@mail.gmail.com>
+Subject: Re: [PATCH v4 6/9] RFC: tcg: probe the TB jump cache inline instead
+ of calling a helper
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@oss.qualcomm.com, 
  alex.bennee@linaro.org, zhao1.liu@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,135 +121,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 27, 2026 at 7:13=E2=80=AFPM Richard Henderson
+On Thu, Aug 27, 2026 at 7:34=E2=80=AFPM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > On 8/26/26 22:02, Matt Turner wrote:
-> > tcg_gen_lookup_and_goto_ptr() takes no arguments and emits a call to
-> > helper_lookup_tb_ptr(), which recovers the destination PC from env by
-> > calling back into the target through TCGCPUOps::get_tb_cpu_state(). At
-> > translation time the caller already has the destination PC in a temp, a=
-nd
-> > knows the flags, cflags and cs_base any destination it may reach has to
-> > match, because they are the ones the block being generated was translat=
-ed
-> > with.
-> >
-> > Pass both, so that a later patch can use them to look the destination u=
-p
-> > inline. Nothing reads them yet and the generated code does not change.
-> >
-> > The contract on @pc is the whole of the interface: it must hold exactly
-> > what get_tb_cpu_state() reports as the pc for the destination block. Fi=
-ve
-> > targets keep their PC in a temp whose value is that pc by construction =
-and
-> > so can pass it: alpha, loongarch, mips, ppc and s390x. Everything else
-> > passes NULL and keeps today's behavior.
-> >
-> > For six of those the TB pc is derived and passing the PC temp would be
-> > wrong: avr's TB pc is the word address doubled, i386's is eip before
-> > segmentation, riscv masks it to 32 bits when xl is MXL_RV32, hppa deriv=
-es
-> > it from the IAQ, hexagon adjusts it inside a hardware loop, and sparc p=
-uts
-> > npc in cs_base. The remaining seven -- arm, m68k, microblaze, or1k, rx,=
- sh4
-> > and tricore -- look like they could pass it, but I have not convinced
-> > myself of the contract for them and have nothing to test them with. Eac=
-h is
-> > a one-line change for whoever wants it.
-> >
-> > The common entry point takes a TCGTemp rather than a TCGv and reads the
-> > width from it, because the translators that are built for both values o=
-f
-> > TARGET_LONG_BITS -- arm, s390x, microblaze -- cannot include tcg-op.h.
-> > tcg-op.h wraps it for everyone else. This is the same split as
-> > tcg_gen_qemu_ld_*_chk().
-> >
-> > v4: Split out of "tcg: probe the TB jump cache inline instead of callin=
-g a
-> >      helper", which did the API change and the inline probe in one patc=
-h.
-> >      Requested by Richard Henderson.
-> >
-> > Signed-off-by: Matt Turner<mattst88@gmail.com>
-> > ---
+> > +static void gen_jmp_cache_probe(TCGv_i64 pc, const TranslationBlock *t=
+b)
+> > +{
+> > +    TCGv_ptr jc, ent, tbp, ptr;
+> > +    TCGv_i64 h, tmp;
+> > +    TCGLabel *slow;
+> > +    uint64_t fpair;
+> > +
+> > +    QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) !=3D 16);
+> > +    QEMU_BUILD_BUG_ON(offsetof(CPUJumpCache, array[0].pc) % 8 !=3D 0);
+> > +    /* One 64-bit load has to cover both, so they must be adjacent... =
+*/
+> > +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=3D
+> > +                      offsetof(TranslationBlock, flags) + 4);
+> > +    /* ...and aligned, which nothing else currently relies on. */
+> > +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, flags) % 8 !=3D 0);
+> > +
+> > +    jc =3D tcg_temp_ebb_new_ptr();
+> > +    ent =3D tcg_temp_ebb_new_ptr();
+> > +    tbp =3D tcg_temp_ebb_new_ptr();
+> > +    ptr =3D tcg_temp_ebb_new_ptr();
+> > +    h =3D tcg_temp_ebb_new_i64();
+> > +    tmp =3D tcg_temp_ebb_new_i64();
+> > +    slow =3D gen_new_label();
+> > +
+> > +    /* ent =3D &jc->array[tb_jmp_cache_hash_func(pc)] */
+> > +    gen_jmp_cache_hash(h, pc);
+> > +    tcg_gen_shli_i64(h, h, 4);
+> > +
+> > +    /*
+> > +     * Not cpu->tb_jmp_cache: the probe reads its own base so that the=
+ main
+> > +     * loop can poison it, which is how conditions the probe cannot te=
+st for
+> > +     * itself force every dispatch back into the helper.  See
+> > +     * tcg_cpu_sync_jmp_cache().
+> > +     */
+> > +    tcg_gen_ld_ptr(jc, tcg_env,
+> > +                   offsetof(CPUState, tb_jmp_cache_probe) - sizeof(CPU=
+State));
+> > +    tcg_gen_trunc_i64_ptr(ent, h);
+> > +    tcg_gen_add_ptr(ent, jc, ent);
+> > +
+> > +    /*
+> > +     * The pc first: on a hash miss it is the field most likely to dif=
+fer,
+> > +     * and an entry whose tb is NULL has a zero pc that only pc 0 matc=
+hes.
+> > +     */
+> > +    tcg_gen_ld_i64(tmp, ent, offsetof(CPUJumpCache, array[0].pc));
+> > +    tcg_gen_brcond_i64(TCG_COND_NE, tmp, pc, slow);
+> > +
+> > +    tcg_gen_ld_ptr(tbp, ent, offsetof(CPUJumpCache, array[0].tb));
+> > +    tcg_gen_brcondi_ptr(TCG_COND_EQ, tbp, 0, slow);
+> > +
+> > +    /*
+> > +     * flags and cflags are adjacent uint32_t, so one aligned 64-bit l=
+oad
+> > +     * and compare covers both.
+> > +     */
+> > +#if HOST_BIG_ENDIAN
+> > +    fpair =3D ((uint64_t)tb->flags << 32) | tb->cflags;
+> > +#else
+> > +    fpair =3D ((uint64_t)tb->cflags << 32) | tb->flags;
+> > +#endif
 >
-> Ok, I was a bit surprised at your claim that only 5 targets qualify, as
-> there are plenty that have a simple PC.
+> I'd use
 >
-> However! The subtlety of the interface, that we are asserting that the
-> current TranslationBlock flags are still valid, now leads me to think
-> that it's a mistake to adjust the current interface.
+>      fpair =3D (HOST_BIG_ENDIAN
+>               ? deposit64(tb->cflags, 32, 32, tb->flags)
+>               : deposit64(tb->flags, 32, 32, tb->cflags));
 >
-> We need to introduce a new interface to which targets may be migrated.
-> This won't be difficult, but it's not entirely trivial.
+> Whenever possible, avoid ifdefs to make sure all paths compile on every
+> host.
+
+Good call. Fixed.
+
+> > +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, flags));
+> > +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, fpair, slow);
+> > +
+> > +    /*
+> > +     * cs_base is a second word of target-specific flags despite the n=
+ame,
+> > +     * and the pc alone does not imply it on a target that uses it.
+> > +     */
+> > +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, cs_base));
+> > +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, tb->cs_base, slow);
+> > +
+> > +    tcg_gen_ld_ptr(ptr, tbp, offsetof(TranslationBlock, tc.ptr));
+> > +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+> > +
+> > +    /*
+> > +     * Emit a second goto_ptr rather than branching to a shared one: a=
+ temp
+> > +     * live across the label would be spilled and reloaded on every di=
+spatch.
+> > +     */
+> > +    gen_set_label(slow);
+> > +    ptr =3D tcg_temp_ebb_new_ptr();
+> > +    gen_helper_lookup_tb_ptr(ptr, tcg_env);
+> > +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+> > +}
+> This is pretty good.  As a follow-up I suspect we'll want a tcg backend
+> expansion of this.  For instance:
 >
-> For instance, target/arm/ has
+>    - x86_64 and s390x can use memory-operand comparisons.
 >
->          case DISAS_UPDATE_NOCHAIN:
->              gen_update_pc(dc, curr_insn_len(dc));
->              /* fall through */
->          case DISAS_JUMP:
->              gen_goto_ptr();
->              break;
+>    - aarch64
+>      - use shift-add insn for env_plus_off + h * 16.
+>      - use ldp to load (tb, pc) and (cs_base, flags) in one insn.
+>      - use ccmp to halve the number of branches.
 >
-> where DISAS_UPDATE_NOCHAIN requires the helper because of state change
-> and DISAS_JUMP does not.
->
-> This is subtle enough that we probably want to verify that the flags are
-> unchanged with --enable-debug-tcg.
+> etc.
 
-Agreed, and done.  tcg_gen_lookup_and_goto_ptr(void) is unchanged in
-v5. Nothing that isn't migrated sees any difference.
-
-> Perhaps tcg_gen_goto_jc_{i32,i64,tl)?
-
-Sounds good. Done.
-
-Replying to bits out of order:
-
-> The simplest solution, IMO is to define functions for _i32 and _i64, as
-> for most everything else, and to have a _tl alias in tcg-op.h.
-
-Also done -- the _tmp()/TCGTemp form is gone.  tcg_gen_goto_jc_i32()
-and tcg_gen_goto_jc_i64() are declared in tcg-op-common.h, and
-tcg-op.h has the _tl alias in each TARGET_LONG_BITS arm alongside the
-qemu_ld/st ones. The _i32 entry point zero-extends into a temp and
-shares the body, so there is one implementation.
-
-s390x is the one migrated target that cannot include tcg-op.h, so it
-calls tcg_gen_goto_jc_i64(psw_addr) directly; that reads fine.
-
-> the subtlety is asserting that the current TB flags are still valid ...
-> target/arm: DISAS_UPDATE_NOCHAIN requires the helper because of the
-> state change, DISAS_JUMP does not.
-
-Right, and that distinction is exactly what the new interface makes
-the caller state.  The contract is now written dow the goto_jc runs,
-the CPU state must already be the destination's -- @pc must be what
-get_tb_cpu_state() would report, it would report must be the ones this
-block was translated with.  A translator that hasn't finished updating
-state lookup key (avr's word address, i386's eip before segmentation),
-keeps using tcg_gen_lookup_and_goto_ptr().
-
-> we probably want to verify that the flags ar
-> --enable-debug-tcg
-
-Done.  Under CONFIG_DEBUG_TCG the goto_jc emits a call to a new
-helper_goto_jc_check(env, pc, flags, cs_base), get_tb_cpu_state() and
-asserts all three against what the block was translated with.  It
-costs nothing in a normal contract being stated rather than assumed
-while I migrated the targets.
-
-Five targets are migrated in v5: alpha, loongarch, mips, ppc and s390x
--- the ones whose lookup_and_goto_ptr sites are u already the
-destination's, and the pc register is the key".  arm, i386 and the
-rest are untouched and can be migrated point of it being a separate
-interface.
-
-All five build and run their indirect-dispatch paths (computed goto,
-function pointers, returns, and a longjmp out completion under
---enable-debug-tcg, so the assert has actually been exercised on each.
+Yeah, that sounds good. I'd like to look into that.
 
