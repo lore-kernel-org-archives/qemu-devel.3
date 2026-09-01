@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649B8C624D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79E9C61DD3
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ON3-0000xH-6y; Tue, 01 Sep 2026 09:17:49 -0400
+	id 1x1ONd-0001Pj-E2; Tue, 01 Sep 2026 09:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1OMy-0000wD-M3
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:45 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1x1ONb-0001Kl-Sx
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:23 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1OMw-00077U-MR
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:17:44 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c25420fe973so145314166b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:17:41 -0700 (PDT)
+ id 1x1ONa-0007Ky-1x
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:23 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c247f6687dcso775703066b.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268660; x=1788873460; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LhK8ng4dHk6UGuzECtUXyM2fYusVOLIbD0caqcPUyD4=;
- b=htgroZ7D/A6KSrYGK6pPUIPKhgZwic3SEQN1WuJpu9j0yvt4Fm7vz7+vy1jBs0HSGb
- Ty3O3EHimR35u7Ea7z+N6/Fu7Wq9wNFyVOnuBrb8uk3adC9wGToKWztY/dJtlOtw5cuF
- OxcRsCyFNkUlUjj/aYU1NvbmlXf6/z9QR1RQjszrA6/qDagM+sFeCsW/rb2fF1ZKQDFs
- SE5yiFnYL2Z567PbpGfiNoaMr6sJzGThfZTaVwV1sauuQZhagPsmJ393cwNTey1uTTVJ
- ZqvR5hgpBUZqzuMJ5pZtT9WmwWWJKtdt303PL0QLZjwNefGjtmhwR9LlpYLA3q1V5hE+
- w5Dg==
+ d=linaro.org; s=google; t=1788268701; x=1788873501; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=PEi8jGFgaRCgBW7jEoxN8hzMz3pAXb3DvYTFRVPdJvI=;
+ b=bEdwN0TcpMIcEcKGS7yXNhvnK/TGfh3fSP423F5VI++P2S6XL0Kz6joSZY6NZn5dfw
+ QCdnSpw7CTlSPv/3Qv8ZhXMYRbaWn3sW6MihbOvgetfPRa6Ikf+uIAqECEf470vE2AY1
+ 66XY3wUB+IDAHakvyHc0gnnSL2FtgTNKocWP2xDhTshCJLREg7CwtDxBi9bw50RSBdI5
+ bZINTk/26yQvSA1D4peGB1QMR1sbrkt/3rWo+swmTIwsS0Xtkqg4pNYUypgBFCRTtnk5
+ hxn26d9a7bor2eq6QxUZ/dAXV3GhEe0V0C3IKv+buVZ2QYU+RHMzhk9/H/gqc9Q5wZF+
+ ggVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268660; x=1788873460;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LhK8ng4dHk6UGuzECtUXyM2fYusVOLIbD0caqcPUyD4=;
- b=n4Pm0bSNb6DLlhz66a6eY/FLzjQtzeYJ2O+PTskIFa8vo771cU0xfLCdBJHyeCksXa
- NYCCKbbG4bkTiO2drC9XY79XnigUHd6HWGTnSQGx44HbrI+xjzRJaGsCJAXaU1uMt9K2
- KqgPRqTLEGj3qoDNT83cBPh4YZ8itee7WcCKx67QouKMGmHlaQtrBgzv+PoFW7fmIeIR
- TPHFJ1vGwFK2Ljdf9rOx99J+UkzGQb235aU00dmYFJCslWjddby5uKaU4MFTWEr6sAlO
- 4cvarsiJzembf6wj7E5Me3qm5prbHd5aoo0MgFWbqRBVySzCNmKSikE15OIG1sELOyiF
- 4hBg==
-X-Gm-Message-State: AFuF++kisf+/IUXXaT6PkZ5hZIKg9Sv5kmLemBtzrOY9oIgWK3zwD5UT
- UIO/i4UbYUmGP1ILeGvR/8kVECRuCK1TEgqBv8HQRvEKCqwBaDNmERk22ixkYV6Qh1hUNPnaga3
- SpotDoAE=
-X-Gm-Gg: AR+sD11OXtz0+34daMZvpj0enAKlcwUcM7fJTO37mtFBgpcaSkZRZf0g9Gsc8zVGM9w
- GAm1iUZgNpo7z75/BiRrZgUjG8D46n5e8cNEc60Unc3SFWZqCNkkXZha8d3Ms6kWfzOR1Rtvzlc
- mIf3Gx1h2ASXCQfOkW7gJlPyTCQLWITLzA8FxHiXlT7rlpIAoDKQ0NR++rhlvODEJLgESFDSK8r
- GYxxRd6hmfQItxeeNsPM7PKl4+BxSyLTEnKvVno7qJAhiBCPJxDSELzRSpyYjuQmaLEERqR3nfe
- oILIDdXEhT8UmAQMjjD3VJBcrKoD39d6vLNVIJxPhonGmNwXnXCQcPBSyoYmY7aMHNQlyfPSgPq
- cKxDC4dlyf1hS637uzeShrwaAPUGo4YnTy+d7ozVO5CsDpikQdjpdGo29FflsWUOyh/FCqLk/UG
- E6UTUft29rnDdLOVyRxmwP/jEJzuq7T70iumdHkvtJG0VJyzDQ0Y8h8NaltCZ4M9/HsQfVkdpey
- QIvI6UzZHROfViexZsN/prIGMSFIYa1t9b0K7ZDaZGb8tDIWPU0unFjUpYXx/y9wIfp+A==
-X-Received: by 2002:a17:907:9286:b0:c1c:2007:298e with SMTP id
- a640c23a62f3a-c25575b3e98mr2181046266b.24.1788268659744; 
- Tue, 01 Sep 2026 06:17:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788268701; x=1788873501;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=PEi8jGFgaRCgBW7jEoxN8hzMz3pAXb3DvYTFRVPdJvI=;
+ b=GnZPJVHa85ZCOSCTXZtPKZVdh1NGqt7hTkl5Vt5wKFCkoFbObd76aKAc7d5NODAUjn
+ Q7htxKvaJetneJqonOpmcMtwQkmZpUhmKSg4C+dFycsy1uJy/q3pxne/PfKqRbTjlOwb
+ KGTYk9ud+Zcz0YK4meNI8SA/fO1va09dixSOT9cni9qlAmyAwoLwIaLzU+LVsAYGrYN+
+ vOoZR5RxeV3yeaWyhi6IpxV6AUPr99JjFqG+xb8kOsk82S7BwiiU3fy3kQZ3Zm9RwWds
+ Xz9Or6+D4I6G7Qka0iPmzbEyVmspdjyhqRfa5hOv7aL4sxA9YVqmHPnO9X5D8KN1TYhk
+ HP5A==
+X-Gm-Message-State: AFuF++kGTrHPIkBttZwNDMFNSxqOdTMEWeD7l1xL+1ozoEGYBoBjNHoP
+ /DNjrTNafbYwbnGpSFRiJ0nTZ9k550CgYh4yV6aQR8yI39WKIX5eV8lgzEHe37Kf6vpertQs2Sb
+ +LfrGOc8=
+X-Gm-Gg: AYBFou1PpGGAbt4nWgu0/P0pEqu8I7bb5tkSjZhM/pcNv5Eod3JNpMvwmljOtMS06C9
+ M3mXynqJKOZdaj57pnF9/eMpSGJDE9rFPjmZRnq9OrAUV2Lr2c1lFdxvuXI35g2Bs7Mp9gA+9Oi
+ K/vA5kR55SFg+9D5DgdUyxt3IQNkJNDONZTQGH8AxDgyWCmCJXchpAfMmqYre9eqZfzZEslFQxS
+ /EYNJ1F8UuiS7o7lWaoFnvgF+j/Fr1b/b6Ey42Ukj7KLCef15UiTjjqee1hXO6oLPHBZct4gjvY
+ 4VOr6+m4yDCfxi2Bwz0P41nrGzcxquNkOxYZQXU4uUzDEQ1O3v+JNbGeyjsbhU1evZ/P89Xry7s
+ sYJ1niZNPnFNHHg9I0JmncS4eWD9UP/rXSWhQolg9WK3t8cw0M9dFF/MRGZm29hb0lhtr0KCS8y
+ xDoHe/mXCNgVwwWQOUNTVfqZezphS5xCofPbwxjrSLIqAvJ1a3CcFSk1F6U0MM11R8rJHy8sMX4
+ 5y8I1rInDswJtAmG7D7G6/exKmE6IRmO7U4VLPZAHfN88weT7YBLEZzFxytcoGP26Qzsg0=
+X-Received: by 2002:a17:906:564c:b0:c25:9195:6ece with SMTP id
+ a640c23a62f3a-c25b3d82a76mr504054466b.23.1788268700568; 
+ Tue, 01 Sep 2026 06:18:20 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.38
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:17:38 -0700 (PDT)
+ Tue, 01 Sep 2026 06:18:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/58] tests/qtest/pflash-cfi02-test: Don't use musicpal
- machine for testing
-Date: Tue,  1 Sep 2026 14:16:39 +0100
-Message-ID: <20260901131732.2263947-6-peter.maydell@linaro.org>
+Subject: [PULL 47/58] target/arm: Enable FEAT_SVE_BFSCALE for -cpu max
+Date: Tue,  1 Sep 2026 14:17:21 +0100
+Message-ID: <20260901131732.2263947-48-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,178 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We currently use the musicpal machine for testing the pflash-cfi02
-device.  We'd like to remove that machine, so switch the tests to the
-sh4 r2d board type instead.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-We use r2d because it happens to have the same "2 bank" config that
-musicpal did.  (Of our other options, xilinx-zynq-a9 has only a
-1-bank setup so wouldn't allow the same range of testing, and the
-canon-a1100 board both doesn't support specifying a flash drive via
--drive if=pflash, plus it seems likely it too might be a candidate
-for deprecate-and-drop.)
-
-The r2d flash device is not quite the same config as the musicpal
-one: it has a different base address and size, and different
-ID values. So we need to update the test to match.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260826174213.614571-15-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Acked-by: Jan Kiszka <jan.kiszka@web.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260819185430.3467629-2-peter.maydell@linaro.org
 ---
- tests/qtest/meson.build         |  6 +++---
- tests/qtest/pflash-cfi02-test.c | 38 ++++++++++++++++++++-------------
- 2 files changed, 26 insertions(+), 18 deletions(-)
+ docs/system/arm/emulation.rst | 1 +
+ linux-user/aarch64/elfload.c  | 1 +
+ target/arm/tcg/cpu64.c        | 2 +-
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index cbdef5a5455..6393b447754 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -198,7 +198,9 @@ qtests_ppc64 = \
-   (config_all_devices.has_key('CONFIG_USB_XHCI_NEC') ? ['usb-hcd-xhci-test'] : []) +         \
-   qtests_pci + ['migration-test', 'cpu-plug-test', 'drive_del-test']
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 862341933ac..af5245cd21b 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -199,6 +199,7 @@ the following architecture extensions:
+ - FEAT_SVE (Scalable Vector Extension)
+ - FEAT_SVE_AES (Scalable Vector AES instructions)
+ - FEAT_SVE_B16B16 (Non-widening BFloat16 arithmetic for SVE2)
++- FEAT_SVE_BFSCALE (BFloat16 Floating-Point Adjust Exponent)
+ - FEAT_SVE_BitPerm (Scalable Vector Bit Permutes instructions)
+ - FEAT_SVE_PMULL128 (Scalable Vector PMULL instructions)
+ - FEAT_SVE_SHA3 (Scalable Vector SHA3 instructions)
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index c086548f7fd..bcf2e6b9c18 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -180,6 +180,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+     GET_FEATURE_ID(aa64_sme_tmop, ARM_HWCAP_A64_SME_STMOP);
+     GET_FEATURE_ID(aa64_sve2p2, ARM_HWCAP_A64_SVE2P2);
+     GET_FEATURE_ID(aa64_sme2p2, ARM_HWCAP_A64_SME2P2);
++    GET_FEATURE_ID(aa64_sve_bfscale, ARM_HWCAP_A64_SVE_BFSCALE);
  
--qtests_sh4 = (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : [])
-+qtests_sh4 = (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_PFLASH_CFI02') and
-+   config_all_devices.has_key('CONFIG_R2D') ? ['pflash-cfi02-test'] : [])
- qtests_sh4eb = (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : [])
- 
- qtests_sparc = ['prom-env-test', 'm48t59-test', 'boot-serial-test'] + \
-@@ -245,8 +247,6 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_STELLARIS') or
-    config_all_devices.has_key('CONFIG_MPS2') ? ['cmsdk-apb-watchdog-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_PFLASH_CFI02') and
--   config_all_devices.has_key('CONFIG_MUSICPAL') ? ['pflash-cfi02-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed : []) + \
-   (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
-   (config_all_devices.has_key('CONFIG_GENERIC_LOADER') ? ['hexloader-test'] : []) + \
-diff --git a/tests/qtest/pflash-cfi02-test.c b/tests/qtest/pflash-cfi02-test.c
-index 8c073efcb4b..fe630c9c168 100644
---- a/tests/qtest/pflash-cfi02-test.c
-+++ b/tests/qtest/pflash-cfi02-test.c
-@@ -11,17 +11,25 @@
- #include "libqtest.h"
- 
- /*
-- * To test the pflash_cfi02 device, we run QEMU with the musicpal machine with
-+ * To test the pflash_cfi02 device, we run QEMU with the sh4 r2d machine with
-  * a pflash drive. This enables us to test some flash configurations, but not
-  * all. In particular, we're limited to a 16-bit wide flash device.
-  */
- 
--#define MP_FLASH_SIZE_MAX (32 * 1024 * 1024)
--#define BASE_ADDR (0x100000000ULL - MP_FLASH_SIZE_MAX)
-+/*
-+ * These need to match the flash size and address in r2d.c.
-+ * If the flash size changes then the sector_len[] and nb_blocs[]
-+ * values in configuration[] below will need to be updated to match.
-+ */
-+#define BASE_ADDR 0x00000000
- 
--#define UNIFORM_FLASH_SIZE (8 * 1024 * 1024)
-+#define UNIFORM_FLASH_SIZE (16 * 1024 * 1024)
- #define UNIFORM_FLASH_SECTOR_SIZE (64 * 1024)
- 
-+/* These must match the id0, id1 args to pflash_cfi02_register() in r2d.c */
-+#define FLASH_ID0 0x0001
-+#define FLASH_ID1 0x227E
-+
- /* Use a newtype to keep flash addresses separate from byte addresses. */
- typedef struct {
-     uint64_t addr;
-@@ -260,7 +268,7 @@ static void test_geometry(const void *opaque)
- {
-     const FlashConfig *config = opaque;
-     QTestState *qtest;
--    qtest = qtest_initf("-M musicpal"
-+    qtest = qtest_initf("-M r2d"
-                         " -drive if=pflash,file=%s,format=raw,copy-on-read=on"
-                         /* Device geometry properties. */
-                         " -global driver=cfi.pflash02,"
-@@ -295,16 +303,16 @@ static void test_geometry(const void *opaque)
-     /* Check the IDs. */
-     unlock(c);
-     flash_cmd(c, UNLOCK0_ADDR, AUTOSELECT_CMD);
--    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, 0xBF));
-+    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, FLASH_ID0));
-     if (c->bank_width >= 2) {
-         /*
--         * XXX: The ID returned by the musicpal flash chip is 16 bits which
-+         * XXX: The ID returned by the r2d flash chip is 16 bits which
-          * wouldn't happen with an 8-bit device. It would probably be best to
-          * prohibit addresses larger than the device width in pflash_cfi02.c,
-          * but then we couldn't test smaller device widths at all.
-          */
-         g_assert_cmphex(flash_query(c, FLASH_ADDR(1)), ==,
--                        replicate(c, 0x236D));
-+                        replicate(c, FLASH_ID1));
-     }
-     reset(c);
- 
-@@ -436,7 +444,7 @@ static void test_geometry(const void *opaque)
-     flash_cmd(c, FLASH_ADDR(0x5555), UNLOCK0_CMD);
-     flash_cmd(c, FLASH_ADDR(0x2AAA), UNLOCK1_CMD);
-     flash_cmd(c, FLASH_ADDR(0x5555), AUTOSELECT_CMD);
--    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, 0xBF));
-+    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, FLASH_ID0));
-     reset(c);
- 
-     /*
-@@ -580,7 +588,7 @@ static void test_cfi_in_autoselect(const void *opaque)
- {
-     const FlashConfig *config = opaque;
-     QTestState *qtest;
--    qtest = qtest_initf("-M musicpal"
-+    qtest = qtest_initf("-M r2d"
-                         " -drive if=pflash,file=%s,format=raw,copy-on-read=on",
-                         image_path);
-     FlashConfig explicit_config = expand_config_defaults(config);
-@@ -590,7 +598,7 @@ static void test_cfi_in_autoselect(const void *opaque)
-     /* 1. Enter autoselect. */
-     unlock(c);
-     flash_cmd(c, UNLOCK0_ADDR, AUTOSELECT_CMD);
--    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, 0xBF));
-+    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, FLASH_ID0));
- 
-     /* 2. Enter CFI. */
-     flash_cmd(c, CFI_ADDR, CFI_CMD);
-@@ -600,7 +608,7 @@ static void test_cfi_in_autoselect(const void *opaque)
- 
-     /* 3. Exit CFI. */
-     reset(c);
--    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, 0xBF));
-+    g_assert_cmphex(flash_query(c, FLASH_ADDR(0)), ==, replicate(c, FLASH_ID0));
- 
-     qtest_quit(qtest);
+     return hwcaps;
  }
-@@ -613,7 +621,7 @@ static void cleanup(void *opaque)
- 
- /*
-  * XXX: Tests are limited to bank_width = 2 for now because that's what
-- * hw/arm/musicpal.c has.
-+ * hw/sh4/r2d.c has.
-  */
- static const FlashConfig configuration[] = {
-     /* One x16 device. */
-@@ -624,13 +632,13 @@ static const FlashConfig configuration[] = {
-     {
-         .bank_width = 2,
-         .nb_blocs = { 127, 1, 2, 1 },
--        .sector_len = { 0x10000, 0x08000, 0x02000, 0x04000 },
-+        .sector_len = { 0x20000, 0x10000, 0x04000, 0x08000 },
-     },
-     /* Nonuniform sectors (bottom boot). */
-     {
-         .bank_width = 2,
-         .nb_blocs = { 1, 2, 1, 127 },
--        .sector_len = { 0x04000, 0x02000, 0x08000, 0x10000 },
-+        .sector_len = { 0x08000, 0x04000, 0x10000, 0x20000 },
-     },
- };
- 
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 12270b42977..2eb049b6002 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1474,7 +1474,7 @@ void aarch64_max_v9_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* v9.0: FEAT_SVE_PMULL128 */
+     t = FIELD_DP64(t, ID_AA64ZFR0, ELTPERM, 1);   /* v9.4: FEAT_SVE2p2 */
+     t = FIELD_DP64(t, ID_AA64ZFR0, BITPERM, 1);   /* v9.0: FEAT_SVE_BitPerm */
+-    t = FIELD_DP64(t, ID_AA64ZFR0, B16B16, 1);    /* v9.2: FEAT_SVE_B16B16 */
++    t = FIELD_DP64(t, ID_AA64ZFR0, B16B16, 2);    /* v9.2: FEAT_SVE_BFSCALE */
+     t = FIELD_DP64(t, ID_AA64ZFR0, SHA3, 1);      /* v9.0: FEAT_SVE_SHA3 */
+     t = FIELD_DP64(t, ID_AA64ZFR0, SM4, 1);       /* v9.0: FEAT_SVE_SM4 */
+     SET_IDREG(isar, ID_AA64ZFR0, t);
 -- 
 2.43.0
 
