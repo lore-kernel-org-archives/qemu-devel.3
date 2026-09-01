@@ -4,78 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C898C624D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 17:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98F5C624D0
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 18:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Sh0-000889-4T; Tue, 01 Sep 2026 13:54:42 -0400
+	id 1x1T8I-0004Lm-7E; Tue, 01 Sep 2026 14:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1Sgz-00087y-8m
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:54:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x1T8F-0004LS-Nw
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 14:22:51 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1Sgw-0003vs-Pm
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 13:54:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788285277;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HNtp0MogpxedTDzsD6+eDFMpCoqhgzd0SDwdJ6FAx/Y=;
- b=crbzkcVeaHBy7sYcTiyPhU2IMwjEDZlzuFWoQ27T5p3LKHSLLFcI90Xcrny9rl4OpRmasH
- qKss3LJ9Lh2BJ6/hc086aWigHESKYbc4KnCkSWj0RZpfkqe7z0IrQ3x8z+H3KDDL2Ywo78
- o8KF9YQLGGZl5YYZ9NRFhdweynHdGFY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-WGzw848iODiDIjWe275gVg-1; Tue,
- 01 Sept 2026 13:54:36 -0400
-X-MC-Unique: WGzw848iODiDIjWe275gVg-1
-X-Mimecast-MFC-AGG-ID: WGzw848iODiDIjWe275gVg_1788285275
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BBCC3182A108; Tue,  1 Sep 2026 17:54:34 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21BB0279; Tue,  1 Sep 2026 17:54:32 +0000 (UTC)
-Date: Tue, 1 Sep 2026 18:54:30 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>,
- Mauro Matteo Cascella <mcascell@redhat.com>
-Cc: marcandre.lureau@redhat.com, "Denis V. Lunev" <den@openvz.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/6] io/channel-websock: fix an unauthenticated crash in
- the handshake
-Message-ID: <apcRVryHi8EfRVl8@redhat.com>
-References: <20260831100151.914178-1-den@openvz.org>
- <178817576852.2700790.2039576285438786814.b4-review@b4>
- <41cebb76-bc3c-4f69-82b3-7517122ab2e5@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x1T8D-00020z-TB
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 14:22:51 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 681HgJmV199891
+ for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 18:22:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ WxGcqlMRe1h8rufChKdnipJn+gFcVL7ZCJnaWhoft5s=; b=b069A89dTyXBAgtp
+ 7cyUZasxsK2O3U89aETJWB3NedWSFla6/m7zG0V25y33PUFKFVfaQ6UdwbpKxOcT
+ hETb+KwxFNfZKPLcWV4fU1YlqzyIT/qiA9QwmcKgBSgsjcKlqHo0GlegWNyc2SFA
+ oV7jz5/jswvtKtruWmNy0kIg963GY4reAs2LrTL60JTm1yU98WnTvPYd1kCx5G+e
+ HEQE0gAuWUEk3ulSYjnTGpQaN+Yv+4pYIQqk1kORyh6ulTIBaf0RxZAGhTD7bIoY
+ GdAgRyHUkDizsTHzDR8jOyZpTxgCnsaFQZ+igdpcLRkMc4Wihy6ZOE2o126cd3j6
+ KqNTOA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdsnu3cw4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 18:22:45 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cf1c86963bso13788385ad.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 11:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788286965; x=1788891765; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WxGcqlMRe1h8rufChKdnipJn+gFcVL7ZCJnaWhoft5s=;
+ b=kEVJwTdYdEL53EFfWOKGpunGuO72ptuc4Fi3/VsJg1t0sc8Chk7PYs1o96Ak/VlZ9H
+ Evt0tpokP/fAd8iZK5X+F4DyIHUcEpBZC0sIbQ2ruAQBuEk934txx6yRXpeHLwfoko6u
+ f/Z349NCmifyNwWBxRyiFKGK7pMKDVlRO2Bh4LB2ev2xa3nwOiYZVgLde9/5HBQ2hzrw
+ uuXU2QBSZdHVPJScIbZMZ9yiDN0eaQsRJ2zsqQdMIu1Xnf1qEiPurx1+viQHjL0nQicN
+ xbhR4+AIQVdjfcUW0y/avRJ2RwPwSNv7IUj8ZNXvmt04DRpljwrbq2ALr4WiXoEnZBCN
+ 256w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788286965; x=1788891765;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WxGcqlMRe1h8rufChKdnipJn+gFcVL7ZCJnaWhoft5s=;
+ b=B98G9665cEyRaZmr7bmB4AgdcTVvBpSxX8l+SbTYqhj0q7GdQ6BGXvpmwlrCl60hHO
+ DnUtbtrVty5t9DR0zViVSW1V426I2Gzk+IB/HMr3o3lZ9VT/0/izrAOo7i6eC64+VefB
+ /2IsdScpcqW1oedr30hSI8QYllveTsE61UWv9Vfm31GBKzBX3MTT9sS4hGOt7tYDrSfq
+ 5uVpFcjZ7RfTcgH3WHU7JzqrcHunyi3Mx42rM0kP5gOIsf/V2ADgFfzRMKPbLu1NZjrr
+ n92lOo95sNup/IWodDTrPK3kiJ9V4vNFsve7c97PK+ZEWW306zqOLDiGjOxC31RK5Ugz
+ BXIg==
+X-Gm-Message-State: AFuF++lm45429cFkyNMVn3sfRrswlvUkBh4hD7lu43iXuCT25GI90dVC
+ 9HVdCImJHBgym/o9RF9Beyb+vUTO8QFK5Wf0406T1gkGbwFus3yOgVCJ0BzGB0R63LnajyM1B22
+ t1D/eDDEmMFyjW8kW3Y00EgR+R5SXkszcaNJXePcSf/kQRIp74WGs4KSn8g==
+X-Gm-Gg: AYBFou2tRLRa4IZ2z+fAvutd3c2OWzi6RkKeWLvGIQxLu9UsnaUyVos3uF38vadLm3/
+ OPEdwoAZ2h2MsAa1oyw/YT0EvynbzLQpwTlhPnNueiWMo4xR37Cy3CRxCBRmqs25EyGeSCKj4by
+ oPzeV1OwCgumluEpo3ZrroD6FYB2Ctqofinwx5Ur5fc/OFrtkTWkrL0CsRUOJMg98GzF7dtV8fF
+ /opWEwx9xxdCygF1WgvMkC7ZnYCmJ3keG/qHFRlpkftdUU/DbLP90m6uX6vqrMdd/azmxDCNjkn
+ 8egpTmpz9smhbNeJUrQTt0R83+nVdZaQLyRlMjYHMzRnGo7qyW9VTjRpGJZ1r1PKG3awYvVTgbR
+ h5hfKEGuhmVYLcXQiee7bZ6IDiW1mX/R0BaYGJEBhlGBA7bQ3IhrFJ+hnJHIpC3UwHyFU
+X-Received: by 2002:a17:903:228c:b0:2d8:d4d2:d13a with SMTP id
+ d9443c01a7336-2d95296ea94mr71613285ad.22.1788286964819; 
+ Tue, 01 Sep 2026 11:22:44 -0700 (PDT)
+X-Received: by 2002:a17:903:228c:b0:2d8:d4d2:d13a with SMTP id
+ d9443c01a7336-2d95296ea94mr71612725ad.22.1788286964359; 
+ Tue, 01 Sep 2026 11:22:44 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-32f077fad2dsm27105eec.0.2026.09.01.11.22.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Sep 2026 11:22:43 -0700 (PDT)
+Message-ID: <c3a1b237-36bc-4150-8aab-21aeebf22273@oss.qualcomm.com>
+Date: Tue, 1 Sep 2026 11:22:42 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 000/105] tests/tcg: run tests with meson - last chance
+ to review
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Stafford Horne <shorne@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bibo Mao <maobibo@loongson.cn>, Helge Deller <deller@gmx.de>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <17746591750@163.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Laurent Vivier
+ <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>
+References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
+ <878q5lugc5.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <878q5lugc5.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <41cebb76-bc3c-4f69-82b3-7517122ab2e5@virtuozzo.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDE2MiBTYWx0ZWRfX2BQsae58OMw6
+ K+UQr8q9w7HpnS/EhT53A4MJXxarpSYik2w7BCkcsovzYiM6OEfT/1BHXX6YWXqWXbmyHov3t1q
+ 8wiW9OCbPGQpJzo/zv7aXtAcB1OBtCWyKoZdjXIGIMIYbFhp2svCr4k4/sIvBj643x/yKhAfO8X
+ Tim4seHAkf+St7/zu4BSlzjDmIBY6wgc3t1W9y16M9+vLauit9CMr4tIGdgdVpoLXwbwMxnWQBm
+ 250QINwf11lFDN8v2i1MiIJEwLn2B8Z5Wtn/8hniv5O0b7Yc2Z3a6cC3FSy0EhRWm2RZlJLUA2t
+ gemU+D/zyGgOY79FjAK4pOMgnNbIsQtky2F4QHufS6XgxXTHdSNEdcLmtlT/f8kmkMad3zw+J68
+ b+Y7ykjKEu/8O6DUMErl1VGzaa4zfvym6bA8p/PbmONw5imfe4A5KBubH+lrRB+qghuaQ8U9cR8
+ ZXYIVbIlGu3kUNV5wAg==
+X-Authority-Analysis: v=2.4 cv=L6ItheT8 c=1 sm=1 tr=0 ts=6a9717f5 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=HwHlEJMHbfk88DceLFMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDE2MiBTYWx0ZWRfX6u18T8NMLBXa
+ Dzj9OUx6jwcTrkJAm6XFKTM8ptTr1TVa/W3t+eXqVCHTXHL3XPo6wqByi9L1cJ3tuIRDAz05QC8
+ 5B3l16XKLRAEdnyII99vMzF9N/hjZeU=
+X-Proofpoint-ORIG-GUID: yErZsfV5BdczyLp5XG4S0CtS4PCe4wF3
+X-Proofpoint-GUID: yErZsfV5BdczyLp5XG4S0CtS4PCe4wF3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-01_05,2026-09-01_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010162
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,79 +163,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 31, 2026 at 01:33:14PM +0200, Denis V. Lunev wrote:
-> On 8/31/26 13:29, marcandre.lureau@redhat.com wrote:
-> >> A client which can reach a VNC websocket port crashes QEMU before it has
-> >> authenticated, by sending an HTTP greeting whose request line holds no
-> >> space:
-> >>
-> >>   printf 'stats\r\nx\r\n\r\n' | nc $host $port
-> >>
-> >> Three defects line up to produce it. The greeting is rejected without
-> >> queueing a response, so the handshake goes on to flush an empty buffer.
-> >> A zero length sendmsg() succeeds and returns 0, which
-> >> qio_channel_socket_writev() mistakes for failure and reports as
-> >> QIO_CHANNEL_ERR_BLOCK with errp left unset. The handshake treats every
-> >> negative return as fatal and hands that NULL Error to
-> >> error_get_pretty(). Patches 1 to 3 close the three links.
-> >>
-> >> Patch 5 is the same NULL Error on the read side of the handshake, where
-> >> ERR_BLOCK is folded into -1. It is reachable for a wss:// client, whose
-> >> master channel is then a TLS channel: a wakeup carrying only part of a
-> >> record makes gnutls report EAGAIN.
-> >>
-> >> The tests drive the handshake through a channel which reports ERR_BLOCK
-> >> on demand, covering both directions. No test reproduces the original
-> >> crash itself, which turns on a stale errno and is not reliably
-> >> reproducible in a unit test. What they pin is that a 400 is emitted and
-> >> that ERR_BLOCK no longer reaches error_get_pretty().
-> >>
-> >> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> >> CC: Daniel P. Berrangé <berrange@redhat.com>
-> >> CC: Marc-André Lureau <marcandre.lureau@redhat.com>
-> >>
-> >> Denis V. Lunev (6):
-> >>   io/channel-socket: do not treat a zero length write as an error
-> >>   io/channel-websock: send an HTTP 400 when the greeting has no space
-> >>   io/channel-websock: handle a blocked write during the handshake
-> >>   tests/unit: add websock handshake test
-> >>   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
-> >>   tests/unit: cover blocked IO during the websock handshake
-> >>
-> >>  io/channel-socket.c                  |   2 +-
-> >>  io/channel-websock.c                 |  10 +-
-> >>  tests/unit/meson.build               |   1 +
-> >>  tests/unit/test-io-channel-websock.c | 249 +++++++++++++++++++++++++++
-> >>  4 files changed, 260 insertions(+), 2 deletions(-)
-> >>  create mode 100644 tests/unit/test-io-channel-websock.c
-> >>
-> > Patch series lgtm. You cc stable, why didn't you file a CVE?
-> >
-> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> >
-> I have calculated the scope and get around 6.2 which is
-> not looking too impressive to spend a time.
+On 9/1/2026 8:44 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> This series replaces TCG tests makefiles with meson, with the
+>> goal of having something more readable and maintainable in the long term.
+>> Also it closes the gap that tcg tests had with the rest of tests, by integrating
+>> them with meson directly.
+>>
+>> It covers all existing tests for all architectures, including
+>> user/system/multiarch-user/multiarch-system. It implements all requirements
+>> listed on original thread [1].
+>>
+>> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
+>>
+> <snip>
+> 
+> I think this series is ready to merge so consider this a final chance to
+> review any architecture related bits. I shall generate the PR on Friday.
+>
 
-In the context of a VNC server enabling websocket. If we assume the
-VNC server has authentication enabled, including the TLS extension
-VeNCrypt, then the deployment can be said to be protecting against
-a malicious client.
+Glad to hear, thanks Alex.
 
-The flaws mean the malicious client can inflict a denial of service
-attack on the VM before getting to the VNC authentication step. IMHO
-that is enough to justify a CVE assignment.
+Just be aware it does not apply at the moment (since yesterday), because
+of armv7 flag added to tcg/arm/Makefile.softmmu-target. You just need to
+apply it an anterior commit, and do a git rm to go past the conflict. I
+don't think it's worth respining just for it.
 
-CC'ing Mauro to double check my view & assign a CVE if appropriate
+I'll be off next week FYI, so won't be able to help if anything else is
+blocking.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Regards,
+Pierrick
 
