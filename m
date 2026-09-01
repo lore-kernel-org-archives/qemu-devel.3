@@ -4,99 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983E5C624D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F391C624D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Plg-0006ML-8e; Tue, 01 Sep 2026 10:47:20 -0400
+	id 1x1Pmj-00071K-Fq; Tue, 01 Sep 2026 10:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1x1Ple-0006Lb-EX
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:47:18 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x1Pmf-0006z9-Qo
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:48:21 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1x1Pla-0007Oi-G2
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:47:17 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49ccf12bed0so46375e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:47:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x1Pmd-0007Zx-L6
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:48:21 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-c2531f453eeso746675166b.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:48:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788274098; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IeRdnfUa0AhzcDelnJqWfNLtSUk4J8gWOieWpFSRYXRmh12nGUrJFgb4xRc7PvE8QC
+ mNfsg9NlSVA8O/yptDYA1RbZo13InH/qBRB1k/gQX2zHQwC/eMxQcBdaY41Ux8DpL3O/
+ ce8gC/KLQyM7JEEsT8YusGDZ87xsUrR4IFoEq+EAfW28kkRqwa/VfxxSBwNiCVaZJd6c
+ gR/582kV7Rj7Kmn0ELTqUJw6Eh9RKCLqX8pb+K8BL0O6OS4besMHlWH2DTZ64orpegTL
+ eNEk7Q9tF7Er2fW8MJtCZS1mK6eSBh+MP/XHSawpZ/Mw1/scClJXh5+iRhwGYIwgUbpn
+ I2Eg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=wiFjTrxe6C1UxDNIIzaWThV4UDLGyZ8eK88c7qkD8r0=;
+ fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
+ b=nnu28muuUQT3P6xPS1C1UMCdC7Mf9w+sKxTyUPlZZUclBcQrJFdPsh9h4CLbZyoYgY
+ Q0jDIy+jUuFzs0PJDV7K5WhFO7odBjMOyrzxOmBQ3i2wPSOYIIgPF6PRoLzc1TczbePO
+ QwO9KrOa1Yk2iRSS3qb/VHSxQhWJwR6n+YZD0wx+ZFw6rPj9YxShFe7rVvUsvtIsxLUN
+ Puq8JMSxwTkm4iNCqcDQJS6TN3RrKmLlNaDgeWenJq08jabxMPR5+1s+VSCYDEr6FjRg
+ VYOJ/PVmSxCfUvmdg+UyeK2yZ3gLuXNktF7qYd2GtPsSH97HZcnpJ6OiCy8gyh81zy/k
+ ebNA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788274028; x=1788878828; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=gmail.com; s=20251104; t=1788274098; x=1788878898; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=MSvz2lR6dpinnvgPKTv3DuY2BF1CgLCvjsZyosCDWe0=;
- b=RytwsOWV/Qj3AXB7P/PzZlFe+aQQ7J+cgHqL7rq/E6iS94PNGwjj6ollot2O0DvRQb
- PyWMnpyuBwDTNsy8UzyKeA6HU3No9a4Ud0v7zwJnZX4pEq8qlt6jN/RmcBpGDpUxVEMK
- 8y+pQtOr7GjIB+FzTfC6vay6UUmN5ryj7JiYhU6vYHKNQ3pPg6G7j5b6D+IBDTGLNz7e
- ANAQgHmnKSwApBP4AuJ55ddRgCzf85oK3oWFeA+YClLzDNnnBuDjsKNLLlfbPeP92OGx
- PeJPic/6rQ+m3ZO1RawnAX9YLM29zVU8ImoE4nfbDVmFiWRMMbsibbwFTPfCLkDPNTfq
- NDxw==
+ bh=wiFjTrxe6C1UxDNIIzaWThV4UDLGyZ8eK88c7qkD8r0=;
+ b=GuNEXjNuCwKg+w/TpO+MPVn0NTF3q2eGM+KJez0HYj+dRSGqs/voTHocbt6w4gilAc
+ Qf5YGj5PPXTxbdH+kHW6vTDWN8LMPBEBrzVz8bmmKCVGOGOaFGLg/pQ+SjT7ZGi3Xh2S
+ pqB91QgZJvd479sgyN0sfWVRqQBFKUS3z1drwHED1Da7b+W5Vk/JeBntaP/s46B5skbR
+ zFNgUMEWSuDR/rZGaghvpXQAv3EYhyWxDbHXa9h8Kd6JiiqGfL6RdvQqmmLGGF/GwW1D
+ R5t8tUwK6URjmcmBCb7qigWIVJS6PIW9EldrfJFmskbLwQI04xFoKYOw3pMf3Rjz+J0F
+ oyXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788274028; x=1788878828;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788274098; x=1788878898;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=MSvz2lR6dpinnvgPKTv3DuY2BF1CgLCvjsZyosCDWe0=;
- b=HtTrV3mvTgur5kKm6eipWnud6ZaXM8yxmEuw0m3innhbxDL86jFnBVXFZsDbE/3VMp
- ZQpr4z6wmQrd9lFcEQiJ+JlixfLjIvyKjaOr7EtB2+ME6IKamvyk2hZpYJNrkrVujrrF
- pAK6l8vCpUczHaS/003acRvQBBJzxqrv2HC/zdqKTBmqqM6jX165IR4dp7hMCiiKXJn8
- 3hioCy8HPBBupcfB5e9cv+9gFiW6bWed+MestUIJIZYZ64pUT5Tk8m73xr0ZqkOy2tUW
- +QEdIOF7Cdj0f/2E/DeO8DmlL6aLlrFpCAulgzslppqXG9rFD+Afl/MDCkS09ApsLu81
- snMw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqUU/DpWU1rnKA2sCfE3uBX0sC2o3OjbAlMiIF9v62JGUc2fNmAkBXRXmf+FYV/2fXtD29gDBDA0TJF@nongnu.org
-X-Gm-Message-State: AFuF++kYooMahL4iHCMwslHmZkd7LWOLi9uMkIY/KkQf1xIB7iZqY3aU
- QpiZekRsqPx7CiVULaT5aCcPt6O4V94qKnACKKUhRQYOZ+Oy/FMV9J/jEdkkTleW8w==
-X-Gm-Gg: AR+sD12tZSGsOrunbWq0++pkxJOuZuWhO90+LiV3oeIuzJJ2uNj84vXOifesm7HQnJb
- qvFUaH93cET3H+Xka/gfvxWHRn3M/Icl9H+ZPrfiVqg2ReHYvLdge30gobF/XDqBUS4YQottPJs
- w+Z8/WS/AhgJ7sVladQy9r/D2rrQUPh+AN2VsvNjHBYSYDaDer681L8iHAPKzogi8DQSiaIxiuO
- 8JA4rDLKOxION2yiqfA8bI2zrDcO8YEVQ2feCioDUwZwuhssxZL8AbmQ4/6vIWDBOx92NMzBV85
- EVqPmvrRPtdSgrymnKVHdne7gJOeQUJIAk6VDRcTYaY2knQrwvYi2QLcw3NDHn5CE8JtGrQzGtS
- aTQSRVpE12O5nDz4ZL7kgSCEKpi2dN/uWthwhQbrj3xokVyK5Ccl4Soqo/zWGx4Nj8/kwbLH//H
- 7fly9lAdum0cA9kItdqn59qFq1IRqD/pfeZdB3Kcb3GBCun0S0fGvwVdtYpdpzE+UVUaODbWxKT
- R4vkojrARkhSN+94sYFjOmgIt5M+Z8=
-X-Received: by 2002:a7b:cc99:0:b0:49c:cede:eeed with SMTP id
- 5b1f17b1804b1-49cde7cbc28mr602095e9.15.1788274027702; 
- Tue, 01 Sep 2026 07:47:07 -0700 (PDT)
-Received: from google.com (250.192.189.35.bc.googleusercontent.com.
- [35.189.192.250]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce171c3sm75684865e9.8.2026.09.01.07.47.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 07:47:05 -0700 (PDT)
-Date: Tue, 1 Sep 2026 14:47:02 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Chao Liu <chao.liu@processmission.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>
-Subject: Re: [RFC v5 00/28] hw/arm/smmuv3: Support Secure state for SMMUv3
-Message-ID: <apblZqQ26iFM-X3t@google.com>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ bh=wiFjTrxe6C1UxDNIIzaWThV4UDLGyZ8eK88c7qkD8r0=;
+ b=J2IUmfJnmJouLDlqTutTLZOtjY7zwnUCfVV4QL87BVRoWDqGhuTsLsxN3BP54wiIzH
+ 8Z06Vbtc4DbgbwvWFIi3aZXKqKaMBgisoCYQ4nYT5SEKFzxtYVto7PJzKv0TWSKsIvZv
+ FMRrtgEMkMgVLhdJUjA0o8IgfxB57fy3rQRJvFCIYPq4hog7m9WUnAdMpQjLgA8l7MDJ
+ jEZRNZDPiohaCCpl9t03Ve7D+sBKO4FU86iMeNjRCSE3KMuY6/AikNNT7i6i5h8bIC8q
+ GWHO0cJ31FbLVfDqM34d/CMdE1I/NP27XslDczaP6bxeVCzpaEzZ/ZvrGd0EOCjA8kNF
+ tN8Q==
+X-Gm-Message-State: AFuF++n24BJ6Vz+1tsw1hbhpAuLftZ98b8xXBTP2Nwh6EykOrtpHZJks
+ lCJqtIEKJG4bBEr5LLLtVQwALA/QUG5XZFs4Exlo9tYLsqZ8Ty4YTD0/OAgZVth2H5mZy3vftu/
+ 8xfdLrknC/FzqRFFD3+0k3kOBkDp3b2E=
+X-Gm-Gg: AR+sD106+2m4bmI3BNJTuRG1rMPZxw1Gjb4Ux2RcvCGZpPqBmG4WtKJ0MuQvPdCNyeB
+ mx7ZfcjoheCzUtD/E8ku/JHIAxjo+3KX39XGi43HyPoG3oZMqIJZwasIaL4aeuYKjXOdKx/d0Np
+ /HcNPzJorFMPKdNTTdkurhQiIdlJ1vhLhic9RIRZTYtS13yWJ3zeAluIGd9Rr5qLbz7rM2ShOZI
+ zN1O/zhkTrcPfHqHy68RiFb+eIsQxcOA1TQe7JQouE5CSN//x2mNVvX+NohaHfbBT2Cjp7SPl71
+ bNNMdCZmCD5sXJ9sjpfgAhkf3vbgmMiMEgEszdfYf3qM
+X-Received: by 2002:a17:907:73cd:b0:c24:b11a:470f with SMTP id
+ a640c23a62f3a-c25b39d698cmr656491566b.0.1788274097737; Tue, 01 Sep 2026
+ 07:48:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=smostafa@google.com; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-7-zhangckid@gmail.com>
+ <8733vtbk16.fsf@pond.sub.org>
+In-Reply-To: <8733vtbk16.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 1 Sep 2026 22:47:41 +0800
+X-Gm-Features: AcwNN1WI6DFak982mL999BkUrLgCx5d3seTh1eX9Gs9RV4NZGtSatDILoSCo4CI
+Message-ID: <CAK3tnvLbaJ4b+gRhXC678cye-cHv+aP3FFwRvhPNjyfSHxL6MA@mail.gmail.com>
+Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,178 +122,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:15:15AM +0800, Tao Tang wrote:
-> Hi all,
-> 
-> This is v5 of the Secure SMMUv3 series.
-> 
-> Many thanks to everyone who reviewed the earlier versions. This version contains
-> 28 commits in total. Only one patch touches hw/pci (patch #23); the remaining
-> patches are confined to the Arm SMMUv3 model. Also some patches in v4 have been
-> merged into the mainline QEMU tree, so the v5 series is now smaller than v4.
-> 
-> Secure Stage 2 is not implemented. Secure STEs which enable Stage 2 are
-> rejected with C_BAD_STE. Realm and Root programming interfaces are outside the
-> scope of this series.
-> 
-> Commits layout:
-> ---------------
-> The commits are roughly grouped as follows:
-> 1. (#23, hw/pci only) Add a PCIDevice "sec-sid" property so boards can mark a
->   device's SEC_SID (system integration knob).
-> 2. (#1-2, #24-27) Core data-structure and plumbing refactors.
-> 3. (#3-8) Introduce SEC_SID through caches, notifiers, and helpers.
-> 4. (#9-12) Page table walk related updates (e.g. NSCFG/PTE helpers).
-> 5. (#13-15) EVTQ/CMDQ handling and invalidation paths.
-> 6. (#16-22) MMIO/register access checks and architectural corner cases.
-> 7. (#28) A temporary [NOT-MERGE] commit used with Hafnium to exercise
->   secure-bank register access.
-> 
-> 
-> Main updates:
-> -------------
-> - (#23, hw/pci only) Add a "sec-sid" property to PCIDevice and consume it from
->   the SMMU in #24 to select the security context and validate capabilities.
-> 
->   @Michael: could you please review the hw/pci change
->   ("hw/pci: Add sec-sid property to PCIDevice") and confirm this kind of
->   system-integration property is acceptable for the PCI subtree?
-> 
->   For context, I previously posted this as a standalone patch [1]:
->   [1] https://lore.kernel.org/qemu-devel/20251211102729.227376-1-tangtao1634@phytium.com.cn/
-> 
->   The commit in this v5 series is an updated version based on Pierrick's
->   feedback (notably switching sec-sid to a string property). We also discussed
->   the need for this knob as a prerequisite for accurately modelling SMMU secure
->   state here [2]:
-> 
->   [2] https://lore.kernel.org/qemu-devel/4870b7df-4cb3-457e-9a18-87f3558adf09@linaro.org/
-> 
->   We do need a stable way for boards to statically mark devices that may issue
->   Secure transactions.
-> 
-> other updates:
-> - Drop the CR0 and CFGI_CD fixes which are already upstream.
-> - Select MemTxAttrs and AddressSpace on demand from SEC_SID and keep the
->   programming-interface namespace in the configuration and IOTLB keys.
-> - Route CMDQ, EventQ, IRQ and GERROR handling through the originating
->   programming-interface bank.
-> - Tighten MMIO RAZ/WI, writability and reserved-bit handling.
-> - Reject unsupported non-NS IOMMU notifier registration.
-> - Make secure-impl an on/off/auto property, resolve auto from the Secure
->   AddressSpace, and require Stage 1 support when enabled.
-> 
-> 
-> Testing notes:
-> --------------
-> - Testing MMIO accesses
->   The branch currently contains one commit explicitly marked [NOT-MERGE]. It is
->   only used to cooperate with Hafnium to exercise and validate secure-bank
->   register read/write paths in a small, reproducible setup as described in [3]:
->   [3] https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG/
-> 
->   This commit is not intended for upstream and will be dropped before posting
->   the final mergeable series.
-> 
->   For reference, the Hafnium test logs show the SMMU being initialized
->   successfully:
-> 
->   INFO: Loading VM id 0x8001: op-tee.
->   INFO: Loaded with 4 vCPUs, entry at 0xe300000.
->   INFO: Hafnium initialisation completed
-> 
->   With all smmu* traces enabled in QEMU, we can also observe secure-bank MMIO
->   accesses and secure CMDQ consumption (sec_sid=1), including CFGI invalidations
->   with ssec=1.
-> 
-> - Testing DMA translation
->   DMA translation/invalidation is tested with qtest and iommu-testdev.
->   The required secure/space extensions are still under RFC at [4].
->   Branch [5] adds the integration needed to test this series.
-> 
->   [4] https://gitlab.com/TaoTang/qemu/tree/qtest-secure-v5
->   [5] https://gitlab.com/TaoTang/qemu/tree/integration/secure-smmu-v5-qtest
-> 
->   This covers Secure S1 translation and the unsupported SEL2 negative case:
-> 
->     QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
->       ./build/tests/qtest/iommu-smmuv3-test --tap -k \
->       -p /aarch64/iommu-testdev/translation/secure-s1-only
-> 
->     QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
->       ./build/tests/qtest/iommu-smmuv3-test --tap -k \
->       -p /aarch64/iommu-testdev/translation/secure-s2-only-bad-ste
-> 
-> 
-> The patches are available in:
-> https://gitlab.com/TaoTang/qemu/tree/series/secure-smmu-v5
-> 
-> CI is all green:
-> https://gitlab.com/TaoTang/qemu/-/pipelines/2757878178
-> 
-> Best regards,
-> Tao
-> 
-> 
-> Tao Tang (28):
->   hw/arm/smmuv3: Introduce secure registers
->   hw/arm/smmuv3: Introduce banked registers for SMMUv3 state
->   hw/arm/smmuv3: Thread SEC_SID through helper APIs
->   hw/arm/smmuv3: Track SEC_SID in configs and events
->   hw/arm/smmu-common: Add security-aware address space selector
->   hw/arm/smmuv3: Plumb transaction attributes into config helpers
->   hw/arm/smmuv3: Reject secure STEs with stage-2 enabled
->   hw/arm/smmu-common: Key configuration cache on SMMUDevice and SEC_SID
->   hw/arm/smmu: Add PTE NS/NSTable helpers
->   hw/arm/smmuv3: Store CD NSCFG in TT info
->   hw/arm/smmu-common: Implement secure state handling in ptw
->   hw/arm/smmuv3: Tag IOTLB cache keys with SEC_SID
->   hw/arm/smmuv3: Pass sec_sid into cmdq consume path
->   hw/arm/smmuv3: Make evtq producer use SEC_SID
->   hw/arm/smmu: Make CMDQ invalidation security-state aware
->   hw/arm/smmuv3: Add access checks for GERROR_IRQ_CFG registers
->   hw/arm/smmuv3: Add access checks for STRTAB_BASE and CR2 registers
->   hw/arm/smmuv3: Add access checks for CMDQ and EVENTQ registers
->   hw/arm/smmuv3: Determine register bank from MMIO offset
->   hw/arm/smmuv3: Route IRQ and GERROR handling by SEC_SID
->   hw/arm/smmuv3: Implement SMMU_S_INIT register
->   hw/arm/smmuv3: Harden security checks in MMIO handlers
->   hw/pci: Add sec-sid property to PCIDevice
->   hw/arm/smmuv3: Select sec-sid from PCI property and validate
->     SECURE_IMPL
->   hw/arm/smmuv3: Reject IOMMU notifiers for non-NS devices
->   hw/arm/smmuv3: Initialize the secure register bank
->   hw/arm/smmuv3: Add secure bank migration and secure-impl property
->   [NOT-MERGE] hw/arm/smmuv3: temporarily enable SEL2 bit and some other
->     features
-> 
->  hw/arm/smmu-common.c           |  406 +++++++--
->  hw/arm/smmu-internal.h         |   13 +
->  hw/arm/smmuv3-accel-stubs.c    |    6 +-
->  hw/arm/smmuv3-accel.c          |  104 ++-
->  hw/arm/smmuv3-accel.h          |    6 +-
->  hw/arm/smmuv3-internal.h       |   39 +-
->  hw/arm/smmuv3.c                | 1426 +++++++++++++++++++++++++-------
->  hw/arm/tegra241-cmdqv.c        |    6 +-
->  hw/arm/trace-events            |   37 +-
->  hw/pci/pci.c                   |    7 +
->  include/hw/arm/smmu-common.h   |   74 +-
->  include/hw/arm/smmuv3-common.h |   77 +-
->  include/hw/arm/smmuv3.h        |   33 +-
->  include/hw/pci/pci_device.h    |    3 +
->  14 files changed, 1780 insertions(+), 457 deletions(-)
+On Tue, Sep 1, 2026 at 1:47=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > Monitors that require an IOThread share the internal mon_iothread.
+> > Account for each monitor explicitly in IOThread holder tracking, using
+> > the monitor's canonical QOM path to distinguish holders.
+> >
+> > Acquire the shared monitor IOThread AioContext once, using the monitor
+> > QOM path as the holder, and reuse the stored context for later
+> > operations.
+> >
+> > Release the holder from the Monitor ObjectClass::unparent callback,
+> > while the canonical QOM path is still available. This covers every
+> > object_unparent() path and avoids duplicating the cleanup in
+> > monitor_cleanup() and monitor_qmp_prepare_delete().
+> >
+> > The internal mon_iothread remains hidden from query-iothreads, as befor=
+e.
+> > Management applications therefore cannot use it to determine which
+> > monitors are using the IOThread. Nevertheless, track the monitor
+> > holders so that they follow the same explicit holder and
+> > IOThread reference lifecycle as other AioContext users.
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>
+> I have a question for our QOM experts (Paolo and Daniel).
+>
+> This patch takes a reference in its UserCreatableClass method
+> complete(), and relinquishes it in its ObjectClass unparent() method.
+> Is that correct and clean?  Or should complete() pair with
+> prepare_delete()?
 
-I verified this series without the last patch does not break my
-nested (NS) SMMUv3 setup.
 
-Also, I see the series is getting in a good shape and have many tags,
-so it might be a good idea to drop the RFC.
+Add some background information in previous reviews for here:
+https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05318.html
 
-Thanks,
-Mostafa
+Thanks
+Chen
 
-> 
-> --
-> 2.34.1
-> 
+>
+> > ---
+> >  monitor/monitor-internal.h |  3 +++
+> >  monitor/monitor.c          | 33 ++++++++++++++++++++++++++++-----
+> >  monitor/qmp.c              |  5 +++--
+> >  3 files changed, 34 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> > index e0a124a317..74ea15c85f 100644
+> > --- a/monitor/monitor-internal.h
+> > +++ b/monitor/monitor-internal.h
+> > @@ -154,6 +154,9 @@ struct Monitor {
+> >      guint out_watch;
+> >      int mux_out;
+> >      int reset_seen;
+> > +
+> > +    /* iothread context */
+> > +    AioContext *ctx;
+> >  };
+> >
+> >  struct MonitorHMPClass {
+> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > index 6af09f2f6e..9e3b639eff 100644
+> > --- a/monitor/monitor.c
+> > +++ b/monitor/monitor.c
+> > @@ -81,6 +81,22 @@ int monitor_device_index;
+> >  OBJECT_DEFINE_TYPE_EXTENDED(Monitor, monitor, MONITOR, OBJECT, true,
+> >                              { TYPE_USER_CREATABLE }, {});
+> >
+> > +static void monitor_unparent(Object *obj)
+> > +{
+> > +    Monitor *mon =3D MONITOR(obj);
+> > +
+> > +    if (mon->ctx && monitor_requires_iothread(mon)) {
+> > +        g_autofree char *path =3D object_get_canonical_path(obj);
+> > +        const IOThreadHolder io_holder =3D {
+> > +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> > +            .u.qom_object.qom_path =3D path,
+> > +        };
+> > +
+> > +        iothread_unref_and_put_aio_context(mon_iothread, &io_holder);
+> > +        mon->ctx =3D NULL;
+> > +    }
+> > +}
+> > +
+> >  static void monitor_finalize(Object *obj)
+> >  {
+> >      Monitor *mon =3D MONITOR(obj);
+> > @@ -116,6 +132,8 @@ static void monitor_class_init(ObjectClass *cls, co=
+nst void *data)
+> >  {
+> >      UserCreatableClass *ucc =3D USER_CREATABLE_CLASS(cls);
+> >
+> > +    cls->unparent =3D monitor_unparent;
+> > +
+> >      object_class_property_add_str(cls, "chardev",
+> >                                    monitor_get_chardev_id,
+> >                                    monitor_set_chardev_id);
+> > @@ -575,7 +593,7 @@ void monitor_suspend(Monitor *mon)
+> >           * Kick I/O thread to make sure this takes effect.  It'll be
+> >           * evaluated again in prepare() of the watch object.
+> >           */
+> > -        aio_notify(iothread_get_aio_context(mon_iothread));
+> > +        aio_notify(mon->ctx);
+> >      }
+> >
+> >      trace_monitor_suspend(mon, 1);
+> > @@ -715,7 +733,6 @@ char *monitor_compat_id(void)
+> >  static void monitor_complete(UserCreatable *uc, Error **errp)
+> >  {
+> >      Monitor *mon =3D MONITOR(uc);
+> > -    AioContext *ctx;
+> >
+> >      if (mon->chardev_id) {
+> >          Chardev *chr =3D qemu_chr_find(mon->chardev_id);
+> > @@ -734,11 +751,17 @@ static void monitor_complete(UserCreatable *uc, E=
+rror **errp)
+> >              mon_iothread =3D iothread_create("mon_iothread", &error_ab=
+ort);
+> >          }
+> >
+> > -        ctx =3D iothread_get_aio_context(mon_iothread);
+> > +        g_autofree char *path =3D object_get_canonical_path(OBJECT(mon=
+));
+> > +        const IOThreadHolder io_holder =3D {
+> > +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> > +            .u.qom_object.qom_path =3D path,
+> > +        };
+> > +
+> > +        mon->ctx =3D iothread_ref_and_get_aio_context(mon_iothread, &i=
+o_holder);
+> >      } else {
+> > -        ctx =3D qemu_get_aio_context();
+> > +        mon->ctx =3D qemu_get_aio_context();
+> >      }
+> > -    mon->accept_input_bh =3D aio_bh_new(ctx, monitor_accept_input, mon=
+);
+> > +    mon->accept_input_bh =3D aio_bh_new(mon->ctx, monitor_accept_input=
+, mon);
+> >  }
+> >
+> >  int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+> > diff --git a/monitor/qmp.c b/monitor/qmp.c
+> > index aec0315775..de56345456 100644
+> > --- a/monitor/qmp.c
+> > +++ b/monitor/qmp.c
+> > @@ -734,7 +734,8 @@ static void monitor_qmp_complete(UserCreatable *uc,=
+ Error **errp)
+> >           * thread.  Schedule a bottom half.
+> >           */
+> >          mon->setup_pending =3D true;
+> > -        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread)=
+,
+> > +
+> > +        aio_bh_schedule_oneshot(MONITOR(mon)->ctx,
+> >                                  monitor_qmp_setup_handlers_bh, mon);
+> >          /* The bottom half will add @mon to @mon_list */
+> >      } else {
+> > @@ -789,7 +790,7 @@ static bool monitor_qmp_prepare_delete(UserCreatabl=
+e *uc, Error **errp)
+> >
+> >      /* Synchronize with in-flight iothread callbacks. */
+> >      if (monitor_requires_iothread(mon)) {
+> > -        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
+> > +        aio_wait_bh_oneshot(MONITOR(mon)->ctx,
+> >                              monitor_qmp_iothread_quiesce, NULL);
+> >      }
+>
 
