@@ -4,73 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A412C61DD6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF69C61DD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1QiQ-000497-Hd; Tue, 01 Sep 2026 11:48:02 -0400
+	id 1x1Qo7-00052A-Nu; Tue, 01 Sep 2026 11:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1QiI-00048M-JA
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:47:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1QiF-00060Z-Fx
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:47:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788277669;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ZCpljYCLdtZNipZBfonf8ZC1J22mKRnn0zpDGufHVcE=;
- b=frx6EvR4N7BMdHqhpzn6Z24qxfK9OZHi6ecWCHUp8hvUpKWvATpY6NHfKZU4wyoQR5w554
- T2hrUZP5WBtZLI4TQ8guBxFc9tovlVIAB81mYnW8MDxsnuhpLerKVlg0qf6cZU/a9WDMs7
- 3pJQsiu7KFwsvVNxXrvAka27I/uYhkE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-H4aT8nL_NzmtyNJezoeANg-1; Tue,
- 01 Sept 2026 11:47:46 -0400
-X-MC-Unique: H4aT8nL_NzmtyNJezoeANg-1
-X-Mimecast-MFC-AGG-ID: H4aT8nL_NzmtyNJezoeANg_1788277665
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA35B195609F; Tue,  1 Sep 2026 15:47:44 +0000 (UTC)
-Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6CAD41955E72; Tue,  1 Sep 2026 15:47:43 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] gitlab: use --emacs --quiet for checkpatch.pl instead of
- --terse
-Date: Tue,  1 Sep 2026 16:47:41 +0100
-Message-ID: <20260901154741.1488763-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x1Qo7-00051z-1B
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:53:55 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x1Qo5-0007aY-Hh
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:53:54 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-38e58034d05so4214469a91.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 08:53:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788278032; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BaAaeJUceIIBjU6ovrSkn2hXjQ7s8IEf+HccCnkg341RV78VuoL/YP9rhrLGw9GvZz
+ 4cw5Iq4sNJ6rTnIl4SrvmrGA0xkieJT3TbPIbBvd7fBsUwHtkD7bTzIHejIu9f4uM2Pk
+ bq+0LEb+0MneTamG0bD9+Kg28GFZ4tj8Mv3dzEQCXMpfq6+N9Wm1EvS3sdh94UKob2aJ
+ GM68FyPBnBT5D6HGepUKjqejr+oBMFOEwUdUepYL6/VHVSEZ1Xfe0KTgOsekeR5EOfCe
+ QaANlUK3rwcet/S+7m4MPPa5mNzgg/CB8tp6adhAtBlRqKIhXtR5P2A8YXlmildbqcgJ
+ rSeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LVaYddNfSpxB/UMC0blh9OZbdR5tEPSnaG3LM0qYrlI=;
+ fh=jV04TIUfDjzYNoDhFIivgDBsLoks7SiMcTzgigNwyCQ=;
+ b=F9wTdqqKYEf9EYsJouKft1DDljFp0gCR0IqXlICgKidGjwEzqyWj4bp0xWo5cDctyq
+ 50dcS49E7/FyZs5leSNmtKEYek3EPYKY9dm9lODNjlpTmgKRsEmGuh3OSmEcbj3DyTpr
+ OpV2Pcb/XARPItItQtwVqwVWA8wdK8BpulBwJ3l1fkImOTBTYhQws6yzK9W6RKmaRv33
+ 3j4Hgw3bsUeet2/szLryO1rNEOw5+VgXHLfbrkierefnFOpiZY5zo/pPOKDH9n0L8A+g
+ z/YpMPK8+gu5vcdHzE2tnwyYblLeRuYIhu4O1+jIVGObI3lV9u8N++l5vmUkDD9XfsWX
+ CFeg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788278032; x=1788882832; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LVaYddNfSpxB/UMC0blh9OZbdR5tEPSnaG3LM0qYrlI=;
+ b=OA7f8T9SHLsnxgdb5Wkc5NEvm4iFmxVEAdgY3EpmJsezz+FrLUhIgB8lir1o7aNqGG
+ HaromR7i0eTIvmhBKiqhkh2UazTfMYECVif/7Hj+atkQuCyeOLKQZoZtyU/XymAwzMqn
+ OM6EVM6VPhbKc64ezMLI/R5V1r3921AVNStmW1WF/XeyaTboIgT+1/axy2lzNPJznmFU
+ MCFazzsMPVmVD9l7rrjRhgBHdVUrF+QrdivtM/BWkSWF0DroZCGJvTj07z6YmGqxRXCf
+ PCwOxtRI6ufykeQNLqYC3+fYtQltgWs2xbiJzLjEq6Nqn5yn+4eb+yd8OLVi/0jSBfAz
+ b8Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788278032; x=1788882832;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LVaYddNfSpxB/UMC0blh9OZbdR5tEPSnaG3LM0qYrlI=;
+ b=IA5aZxXtwSaz26YWiiP99ZBiMMYfuTcbiCn7S9LTXN3H5yuJN4n6cvYoSG6JDgFesN
+ Xy1iE0LmbFKyZRNU5Nk4BZcnoyaUzJCvJHoV1LoXe1MPMI5lI7ugiOxFbp2//F/xPnWJ
+ E0anYYyXF1LiI++UTC/i5UOvu9Z89IIRZmr90O25Fdb5gq0nn+m48s6aDMsg/QBDGtHc
+ S9yhiMmBTK9E+0Wv1H+Ad6hjyyF/iTTGzNBIdTGrxrtXalIXNKtHvbv2kGm9Nbowr0ga
+ 6DYQa8U88SPpsFBKbZyS8IF0Eq0EN1sLFVk2TTeyNIbayxHWdOlE3zg7Ps1qg1vLLl3i
+ dEqA==
+X-Gm-Message-State: AFuF++krUo0XQazufCbNW3ms6OHK2BAtKcJD1ZyuqTFX5Yp8374NVDrK
+ vhP8KYJrHDeOVbWTI9/gBTU8/di1qm+BmdyUX9mDNhcopMrlnWUEizB4FIFPB3tdREBcIqLW5iH
+ kkzMRUUDGUhVPVkrFK9R1qHv2NaMUjog=
+X-Gm-Gg: AYBFou3EU2+DuOBojSOC4bezBKmveguG4EjQ0qL+8n5iIjFYr3OmdG7qCL5UcU7v+lx
+ vfhVwbYDdfRdNiodor1YSqGaYDg8hjOJIsGK7Qnw+vv+FOqsSdHKPnDz3lm8HgMCZ2kXR9Lw8a0
+ M6lUqTXGrUQjOTbgIJddXko314p6DyPHVaKSAG+qqVpasgFvReGXqVWzMbAZz+4awkFdVfPS+Xh
+ l52Q1qV2JPp+WYZaa3eS6Lvg2DMzPLEkD31yDbi5OPMJ3myJ5iL3gb4sy5KNJ+IlvohC3LT7k5h
+ +fhLVS3EPCSiyi69iZ4W3LVXguAYdW0BEZiYIv5zTVrdlWvvCy8sIajSww3kifuhspJukeICGjV
+ z
+X-Received: by 2002:a17:90a:1182:b0:399:1b64:e0d7 with SMTP id
+ 98e67ed59e1d1-3991b64e5dcmr6139932a91.19.1788278031701; Tue, 01 Sep 2026
+ 08:53:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <CAFH9MbUdL=HuSvqpwHF-1yo-MeCGREQoqKjdT7us=5CiKSxp3w@mail.gmail.com>
+In-Reply-To: <CAFH9MbUdL=HuSvqpwHF-1yo-MeCGREQoqKjdT7us=5CiKSxp3w@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 1 Sep 2026 19:53:39 +0400
+X-Gm-Features: AcwNN1WAPmnehheeLvKcCHGpr0sN0lqnP4GsFK9Zrs6qUL4QVChaq2k3lZhYSsg
+Message-ID: <CAJ+F1CJHpTLPdacLa31J1m_oUkH-TZ0MOpQJNwMAt806sdZmNg@mail.gmail.com>
+Subject: Re: qemu-vdagent guest to host clipboard sync
+To: rick vernam <rtvernam@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,58 +117,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default checkpatch.pl output includes a lot of "progress"
-information...
+Hi Rick
 
-   NN/MM Checking commit HASH (SUBJECT)
-   total: 0 errors, 0 warnings, 105 lines checked
+On Tue, Sep 1, 2026 at 3:57=E2=80=AFPM rick vernam <rtvernam@gmail.com> wro=
+te:
+>
+> Hello,
+>
+> With -display dbus, clipboard sync only works host to guest; guest to hos=
+t fails without any failure messaging.
+>
+> The guest's 'clipboard-grab' message is received correctly by ui/vdagent.=
+c, but ui/dbus-clipboard.c:dbus_clipboard_update_info() drops it before it =
+ever reaches the D-Bus display client.
+> Checking info->has_serial in dbus_clipboard_update_info() always fails fo=
+r guest to host as has_serial is never assinged:
+>
+> if (self_update || !info->has_serial) {
+>     return;
+> }
+>
+> Steps to reproduce:
+> 1. Start QEMU with:
+>    "-display dbus,gl=3Don -chardev qemu-vdagent,...,name=3Dvdagent,clipbo=
+ard=3Don -device virtserialport,...,name=3Dcom.redhat.spice.0"
+> 2. Connect a D-Bus display client implementing "org.qemu.Display1.Clipboa=
+rd"
+> 3. In the guest, copy text to the clipboard.
+> 4. Observe on the host side.
+>
+> Expected result:
+> Guest clipboard content is forwarded to the D-Bus client via "Clipboard.G=
+rab".
+>
+> Actual result:
+> Nothing is forwarded. "dbus_clipboard_update_info()" returns early, a sub=
+sequent "Clipboard.Request" from the host fails with "Empty clipboard".
+>
+> Fix tested locally:
+> Removing the check of info->has_serial resolves the issue with no observe=
+d regression on Windows or Linux guests:
+>
+> -    if (self_update || !info->has_serial) {
+> +    if (self_update) {
+>          return;
+>      }
+>
+> I didn't really consider an approach of setting info->has_serial as that =
+looked like a larger patch, and it appears dbus_clipboard_grab() takes a si=
+milar approach to this fix by setting has_serial unconditionally for host t=
+o guest clipboard sync.
+>
+> I believe this if statement has been unchanged since the initial commit f=
+f1a5810f61f78b47ddad995f49bcc70171d9e38 "ui/dbus: add clipboard interface".
 
-for large patch series, this results in alot of noise from
-clean patches (which are the common case), obscuring the
-info about the patch violations.
+What's your guest agent? Can you send a patch with all the details and
+proprosed fix, rather than a regular mail?
 
-Since the alerts from gitlab job failures only include the
-last few lines of log output, we want the checkpatch.pl
-output to be highly relevant to the failure.
+thanks!
 
-We previously addressed that by adding use of the --terse
-flag in 7025111a199b97ae806817788bec50f456c47d85, but that
-made the output a bit too terse. It no longer prints the
-offending line of code, so understanding the CI job failure
-now requires manually re-running checkpatch.pl locally.
-
-Using the '--quiet' flag gets rid of the "Check commit HASH.."
-messages which create noise, while adding '--emacs' causes
-the WARNING/ERROR message lines to include the commit hash.
-
-This is a more useful tradeoff for the CI job logs. The
-output is limited to only patches which include code
-violations, while still including the offending lines of
-code in the output.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- .gitlab-ci.d/check-patch.py | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
-index be13e6f77d..45be77295d 100755
---- a/.gitlab-ci.d/check-patch.py
-+++ b/.gitlab-ci.d/check-patch.py
-@@ -46,7 +46,11 @@
- 
- print("\nChecking all commits since %s...\n" % ancestor, flush=True)
- 
--ret = subprocess.run(["scripts/checkpatch.pl", "--terse", ancestor + "..."])
-+# We don't want "noise" for clean patches, but do want to see
-+# the full commit hash for each violation, along with the
-+# offending patch content
-+ret = subprocess.run(["scripts/checkpatch.pl", "--emacs", "--quiet",
-+                      ancestor + "..."])
- 
- if ret.returncode != 0:
-     print("    ❌ FAIL one or more commits failed scripts/checkpatch.pl")
--- 
-2.55.0
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
