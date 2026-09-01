@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79283C624C6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644B3C61DD6
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 06:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ISo-0002s5-8b; Tue, 01 Sep 2026 02:59:22 -0400
+	id 1x1ISR-0002mN-I0; Tue, 01 Sep 2026 02:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x1ISl-0002r8-Qr
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 02:59:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x1ISQ-0002lk-A6
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 02:58:58 -0400
 Received: from smtpout4.mo540.mail-out.ovh.net ([51.210.91.53])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x1ISk-0001V1-Br
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 02:59:19 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [79.137.60.226])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4hYxYK10B9z45c3;
- Tue,  1 Sep 2026 06:59:17 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 06:59:17 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.159])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hYxYK0K5Mz422n; Tue,  1 Sep 2026 06:59:17 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x1ISN-0001SI-Kx
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 02:58:58 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4hYxXg5sp6z454K;
+ Tue,  1 Sep 2026 06:58:43 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 06:58:43 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.33])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hYxXg14xkz1xtq; Tue,  1 Sep 2026 06:58:43 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 2586412E3FDD;
- Tue,  1 Sep 2026 06:59:15 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 3E53E12E3FDD;
+ Tue,  1 Sep 2026 06:58:41 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G001b19ffe6d-7838-478c-977f-7f4cb8aef9cf,
+ (GARM-104R00554ae51dc-7779-41e1-a4d9-d019c8161ae4,
  60FF1D1BA71F1148B3CBA6CDBAED02576558214C) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <599cfd64-00e8-4f09-8b9d-959fa4a65120@kaod.org>
-Date: Tue, 1 Sep 2026 08:59:14 +0200
+Message-ID: <8c2a781f-7614-4069-8717-7b779d761435@kaod.org>
+Date: Tue, 1 Sep 2026 08:58:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/25] hw/arm: aspeed: guard board-local
- temperature-sensor aliases
+Subject: Re: [PATCH v2 01/25] hw/sensor: tmp105: make device state private to
+ the implementation
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -55,7 +55,7 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Emmanuel Blot <eblot@meta.com>
 References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
- <20260731-sanmiguel-bmc-locator-v2-6-1266926ba769@free.fr>
+ <20260731-sanmiguel-bmc-locator-v2-1-1266926ba769@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -100,21 +100,21 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-6-1266926ba769@free.fr>
+In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-1-1266926ba769@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 8630304261138590765
+x-ovh-tracer-id: 8620734113018522669
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFCz8ENcifGGc7lwMsh5Km2xuR+xdVhCLoxl+J2tovlCADjZE+WbMnanW7kgYgQe1Xb30hsAtuy6Zdh3JAhi6x2xIv0v1XCEdPl3zPVRXVt5hjCmOq/ZpuqEhKYNf8xVymhh8KyRxc6vTjsgFENdi6tszQlEq8FCwobqBFX8MEKZhFbq1M/+xzqMFrMBrJxefSUfZ2mAx/Mmj98zFs8rSYoGmSYa8hp4Qmxm+k7rl1SKe4/Mp3afxzMeOZDjd8oBqNZM63rfKRRkKDccYy/hmCmI66unOknYfrD9bhs8c9qkAUt7fGjDSuiUibfBtFU5ZtXhyuCJ/gU1dRq45DzfQKytD3saJbNA6p1tbRJpdsegVz4V/wqh8veQyoHhXgO6yyZrR/bGh+p5wpsb3U81TLv4vIs/2hpl2dNhwrsiINOLOtl3EtKBOtvLJGHaW5LgQ92n9MDQqXoejcQ7v0plfhSV+lr5E3Aj2zE69GJm5akSHfX1kTPqVS0lJyneFfJel1+fmeuclKJGurOAltv1fER4pX7KmvO8ud9HIGcVrd8f4Ljz0vZxn3RnHFpsYoAenNnR7KFH8JoNzUkMR+Gi6GqTfayR3TQQ4TjqMiZgO7UsH3xexzPljXdUgY1IYuVuyJyuL2uGcy8Pmc1Lu1oFx+Ikt0NoZnOazwl0XI5qisDpg
-DKIM-Signature: a=rsa-sha256; bh=knVhpnRcKxIvwEjfRk0PJL7CJr3P9zVyq+eF01aF4Zk=; 
+X-VR-SPAMCAUSE: dmFkZTFkhYwIgM6OorUqvwnbfq/XbjSJkA6E/t+D0+W2+Ug84GXGNDzeOS01kdCwKR/hGQwLk1t/s4FvcsvlAyQMhMgpPrYJ5+owUQUcOjsHggQR2+Lqms/0xIq7nYXr/vWJkNtgruSNEAP7SmFExZGdXdmyrNE0vJNeJ/TfrsGSj7ThNXVjZrEisC3eMueNchi0Cv4xFEBf4/VdZDSDuqzub8eY65jIxkMfzl5PlSN9yjuAWxloJExJHMNWgTt1/ncROr6lQg/04PHVtG6y3MQTx+jbXxmHrunQJ8ocg3uPZttXsq1HUgct+soNPTd73TBxqpfOE7bddLXH8zeRq4JHJYqBKxls/aAkvbLEbp2jStswqtsJzXv+FZAiEGZfyiOtSnRiKHfr6ITYpYpwYl8ZYRJeD/toJkvjhVjt3wBbuSoMk6AicsxcXA98SEo6LbPKRIpjmTQhaRfsTrZkxy4Ej/BLII/MgmVkenYJaqAHo+Ykkv+KQTeQ11ggO4wzH/nSdhsM1iFg0jJDthjhX6pMMU2ey4KcY0gzqshuuBFUX+8n0v3dE7/TqWAfCK3Lwq2LRINDvOKjDEMkO5q8Fl9v528SzymGyKuMYC0UnfO/XZTIixuzmFGbYIAgw2q2jjRBj7tMePJqn3RnOJwAKfYdcrwS/O1R6RcVhiO2m2zFjgYHEQ
+DKIM-Signature: a=rsa-sha256; bh=k2aqUgH3Yn/o/CGSbM82Oz/fJCux9AfwHysPkda5u+U=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788245957; v=1;
- b=Zqbw7iov/5g38eA+BTpyFXjgL5fwARUYmonuEewW1GyNLAzGqi10JWXl5RM1xZj4v7gBW9im
- 9pn7+ZFMoOogXNuIaIMdcNAjMyL3HoHB87RdNSaZMQ2nGrHNMJSDsj1nj1SjvnRYEV99rzwtw6N
- fmVMsczovipv6Gh+VxC5T2A3mhcqD07FMrZNjCpOiaF7txdInx3dLgecFrvxlul0nU1oNSYi5el
- AvdhiX5JevPRvnSHckFG/CZGNFaczI+yzHYEuLAynYpVrDJ++SsT8MjXJQemXavgLTfx5C/LQD+
- LLKMMvPstna0VCph0u3WvxANFjNu5ELwt3rQ/pPgzki5g==
+ t=1788245925; v=1;
+ b=EozQBWMxDee3o3orblEZbQjEG6Qvsh+xT5QU5L0ezW6qqAajS9WAUr/DXD70cTzxYhRKNaci
+ 0yXIO/gOEYN9rKA8RYnITGgWM6nvyZqcqf1DITnfeKYEoE4ABSBO1jSStPUWgyMammIo/hmqjKM
+ 383OPXTKnq67lQj3waCxsel7jqAh9TH5a9BsnMnmsF4nltKzUEyTdukShca3No3OVBRQs9zskgr
+ z3Vltma9sMKHXngq7b+FKPwGJCsjuFX/KhZFeDZd6wY/tcyvkmz06bRaBmUKlweEv70ThFFGU2V
+ 5065aO4EfKFHT7P7hzcuUsU3U0UOEVjRI+SKv4Z+NMrCw==
 Received-SPF: pass client-ip=51.210.91.53; envelope-from=clg@kaod.org;
  helo=smtpout4.mo540.mail-out.ovh.net
 X-Spam_score_int: -20
@@ -123,7 +123,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,55 +140,134 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/26 12:45, Emmanuel Blot wrote:
-> The Catalina and Fuji machines define TYPE_TMP75 (and, on Fuji,
-> TYPE_LM75) as local aliases of TYPE_TMP105 because no distinct model
-> existed. A following change adds a canonical TYPE_TMP75 to
-> hw/sensor/tmp105.h that would clash with these aliases.
+> The TMP105State struct, its cast macro and typedef are used only within
+> tmp105.c. Move them out of the public header into the source file and
+> drop the now-unused includes; the header is reduced to the TYPE_TMP105
+> name, with its guard renamed to the path-derived form per current QEMU
+> convention.
 > 
-> Guard each alias with an #undef so the header definition can be
-> introduced without a redefinition warning, ahead of switching the boards
-> to the real models. No functional change.
+> While here, normalize the source file include order to match the other
+> hw/sensor devices.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   hw/arm/aspeed_ast2600_catalina.c | 5 +++++
->   hw/arm/aspeed_ast2600_fuji.c     | 6 ++++++
->   2 files changed, 11 insertions(+)
+>   hw/sensor/tmp105.c         | 45 ++++++++++++++++++++++++++++++++++++++++-----
+>   include/hw/sensor/tmp105.h | 40 ++--------------------------------------
+>   2 files changed, 42 insertions(+), 43 deletions(-)
 > 
-> diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-> index f714c9d1b32..33e75338efc 100644
-> --- a/hw/arm/aspeed_ast2600_catalina.c
-> +++ b/hw/arm/aspeed_ast2600_catalina.c
-> @@ -22,6 +22,11 @@
->   #define CATALINA_BMC_HW_STRAP2 0x00000800
->   #define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
+> index c5089d74f4b..6069c0905d9 100644
+> --- a/hw/sensor/tmp105.c
+> +++ b/hw/sensor/tmp105.c
+> @@ -19,16 +19,51 @@
+>    */
 >   
-> +/*
-> + * Guard the alias against the TYPE_TMP75 that hw/sensor/tmp105.h now
-> + * defines.
+>   #include "qemu/osdep.h"
+> -#include "hw/i2c/i2c.h"
+> -#include "hw/core/irq.h"
+> -#include "migration/vmstate.h"
+> -#include "hw/sensor/tmp105.h"
+> +#include "qemu/module.h"
+>   #include "qapi/error.h"
+>   #include "qapi/visitor.h"
+> -#include "qemu/module.h"
+> +#include "qom/object.h"
+> +#include "hw/sensor/tmp105.h"
+> +#include "hw/sensor/tmp105_regs.h"
+> +#include "hw/core/irq.h"
+>   #include "hw/core/registerfields.h"
+> +#include "hw/i2c/i2c.h"
+> +#include "migration/vmstate.h"
+>   #include "trace.h"
+>   
+> +OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
+> +
+> +/**
+> + * TMP105State:
+> + * @config: Bits 5 and 6 (value 32 and 64) determine the precision of the
+> + * temperature. See Table 8 in the data sheet.
+> + *
+> + * @see_also: http://www.ti.com/lit/gpn/tmp105
 > + */
-> +#undef TYPE_TMP75
->   #define TYPE_TMP75 TYPE_TMP105
->   #define TYPE_TMP421 "tmp421"
->   #define TYPE_DS1338 "ds1338"
-> diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
-> index 37db252e276..6dc3535f0cb 100644
-> --- a/hw/arm/aspeed_ast2600_fuji.c
-> +++ b/hw/arm/aspeed_ast2600_fuji.c
-> @@ -15,7 +15,13 @@
->   #include "hw/sensor/tmp105.h"
->   #include "hw/nvram/eeprom_at24c.h"
+> +struct TMP105State {
+> +    /*< private >*/
+> +    I2CSlave i2c;
+> +    /*< public >*/
+> +
+> +    uint8_t len;
+> +    uint8_t buf[2];
+> +    qemu_irq pin;
+> +
+> +    uint8_t pointer;
+> +    uint8_t config;
+> +    int16_t temperature;
+> +    int16_t limit[2];
+> +    int faults;
+> +    uint8_t alarm;
+> +    /*
+> +     * The TMP105 initially looks for a temperature rising above T_high;
+> +     * once this is detected, the condition it looks for next is the
+> +     * temperature falling below T_low. This flag is false when initially
+> +     * looking for T_high, true when looking for T_low.
+> +     */
+> +    bool detect_falling;
+> +};
+> +
+>   FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
+>   FIELD(CONFIG, THERMOSTAT_MODE,      1, 1)
+>   FIELD(CONFIG, POLARITY,             2, 1)
+> diff --git a/include/hw/sensor/tmp105.h b/include/hw/sensor/tmp105.h
+> index 244e2989feb..daece592e9b 100644
+> --- a/include/hw/sensor/tmp105.h
+> +++ b/include/hw/sensor/tmp105.h
+> @@ -11,45 +11,9 @@
+>    * This work is licensed under the terms of the GNU GPL, version 2 or
+>    * later. See the COPYING file in the top-level directory.
+>    */
+> -#ifndef QEMU_TMP105_H
+> -#define QEMU_TMP105_H
+> -
+> -#include "hw/i2c/i2c.h"
+> -#include "hw/sensor/tmp105_regs.h"
+> -#include "qom/object.h"
+> +#ifndef HW_SENSOR_TMP105_H
+> +#define HW_SENSOR_TMP105_H
 >   
-> +/*
-> + * Guard the aliases against the TYPE_TMP75 that hw/sensor/tmp105.h now defines;
-> + * TYPE_LM75 is guarded too for consistency (no LM75 model exists yet).
-> + */
-> +#undef TYPE_LM75
->   #define TYPE_LM75 TYPE_TMP105
-> +#undef TYPE_TMP75
->   #define TYPE_TMP75 TYPE_TMP105
->   #define TYPE_TMP422 "tmp422"
+>   #define TYPE_TMP105 "tmp105"
+> -OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
+> -
+> -/**
+> - * TMP105State:
+> - * @config: Bits 5 and 6 (value 32 and 64) determine the precision of the
+> - * temperature. See Table 8 in the data sheet.
+> - *
+> - * @see_also: http://www.ti.com/lit/gpn/tmp105
+> - */
+> -struct TMP105State {
+> -    /*< private >*/
+> -    I2CSlave i2c;
+> -    /*< public >*/
+> -
+> -    uint8_t len;
+> -    uint8_t buf[2];
+> -    qemu_irq pin;
+> -
+> -    uint8_t pointer;
+> -    uint8_t config;
+> -    int16_t temperature;
+> -    int16_t limit[2];
+> -    int faults;
+> -    uint8_t alarm;
+> -    /*
+> -     * The TMP105 initially looks for a temperature rising above T_high;
+> -     * once this is detected, the condition it looks for next is the
+> -     * temperature falling below T_low. This flag is false when initially
+> -     * looking for T_high, true when looking for T_low.
+> -     */
+> -    bool detect_falling;
+> -};
 >   
+>   #endif
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
