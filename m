@@ -4,102 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D73C61DD6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A412C61DD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Qem-00033K-S4; Tue, 01 Sep 2026 11:44:16 -0400
+	id 1x1QiQ-000497-Hd; Tue, 01 Sep 2026 11:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1Qem-00033B-2v
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:44:16 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1Qek-0005Dv-7j
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:44:15 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49cd77e0f95so11917705e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 08:44:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788277452; x=1788882252; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=tUuFcuwCiDqLK5Uu2wbBGdYRvvB2DBW43PoOnMoSYtg=;
- b=NJ53aRTJ6lotDJxJ75X7qLC/hgxM+tWvFy5Io7iMMCb+l1IxICdaqeArG4QorpR+kq
- pBhXAe/dKZK57hVWZJBjt/4s16mPFZNZ9TYYnWI6Hb3aZ/Ao1jrnlud2JZyy0xmInE33
- nE0n+hxNbUP3s3AMOJ1YfzJUIQ5N2HSGEBPzOx2GD+lnr/u6HFOEWiaRoW7K/ax4sFpX
- pCe9xJQUjzANnFwdcuXo0NG8mBnYWUwhNcObRd5tEpBobJ4eeAB2DfxruQmFeL5hby5b
- 5TXaZqUaNoQPIZMAwQMR5nEDwq/bQIYTSO7EPudh3wm5GZR8G9YA0+tT5HFQRzPj46j/
- Xhlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788277452; x=1788882252;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tUuFcuwCiDqLK5Uu2wbBGdYRvvB2DBW43PoOnMoSYtg=;
- b=L9Im7wliy6iMSFnftkbrOzx+f64J7E2n8znTnkkOp1G5b1mxm++MElRRO4MmlQ92QF
- jBtLtqFsN1uCVLiZ8sUbWIeXPcwgd98/7r+8F8pe2vor1y69sqTLrknqbCl4UjEvIwBO
- e+idVnRHQy74JyWmYiOldJyjpbqlJ4VhtCOnPtIQjypBkZZjY/BPv1jp+vgW493m98oH
- d8aRjl69www6luB0/9oPlUEZ/5wkJcPYwm/oOxVjD9wJFo6l8jnP6a9/IWhWyjtQdcD0
- GsPCt/kZDZQp/jgK8OsHqg6WAhyUha0HDd/W9ruuhF2yoUTe6ZJayGKYJNY0JKGRsj43
- daHw==
-X-Gm-Message-State: AFuF++lVV5NNVUpd10RNjs/+oCayLuHvXm6QAaNjoXoqLciRr0+Ha75M
- QwcAMIT0zZYnTmKgc5O6/jRAO9qlxh9sWvwmSrxIcdEiB3PKeEJj25dEzC6o28D1cG4=
-X-Gm-Gg: AR+sD12/DhTe//7N8LxgSiLd8RneAFPYu+rJS6m7hQnA+p3ZgAAiq6VqV5Xhrawi/w8
- 9IiHZoj8+d1dls76mT5jqT1ANWFNyK7cFZiCRYC9NgBy6Kvie9s4NUgeIYSihrGNWhQAEeANMGK
- sNH06Zfs2bUFqbHyIwHHC7g6gTl9xBjW3fOwNnmQsoyNccSYneS15Amzt34fiIPB+o8wqas2pzg
- hBUZVTtJ3CS3+0D0ImC/nXVRSHMDUb7PAzFTeo3TmnARnYSQrpeYMhxIjldJaGbUhA/+OX7e9Zm
- J7CJKQQDpYscby/cNjrWuZ00+Q+l73HXeEfKG+G6m/keZJGdVJ3A92SoLK85XPbii1zrvbpUeBc
- ZATBzoguVqW5/yPSl0miBxvFIjnrrsjhBD5Uer11PdEJeAstZynZUodr0V/6ud8m4GIFdwTYpH+
- o9F8U7sKr4gMpim7yw/o4W+YXO/o8Y3hjqiMQBOVezDv49AykrBnB/YKv9A8py
-X-Received: by 2002:a05:600c:3511:b0:499:adb4:a922 with SMTP id
- 5b1f17b1804b1-49b91c4bab5mr405696345e9.12.1788277452306; 
- Tue, 01 Sep 2026 08:44:12 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48442d78444sm6424888f8f.25.2026.09.01.08.44.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 08:44:11 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6AD3B5F829;
- Tue, 01 Sep 2026 16:44:10 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Stafford Horne <shorne@gmail.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Palmer
- Dabbelt
- <palmer@dabbelt.com>,  Richard Henderson <richard.henderson@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>,  Helge Deller <deller@gmx.de>,  Max
- Filippov <jcmvbkbc@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Song Gao <17746591750@163.com>,  Yoshinori
- Sato <yoshinori.sato@nifty.com>,  Laurent Vivier <laurent@vivier.eu>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v8 000/105] tests/tcg: run tests with meson - last
- chance to review
-In-Reply-To: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Thu, 27 Aug 2026 22:13:21 +0000")
-References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Tue, 01 Sep 2026 16:44:10 +0100
-Message-ID: <878q5lugc5.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x1QiI-00048M-JA
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:47:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x1QiF-00060Z-Fx
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:47:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788277669;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZCpljYCLdtZNipZBfonf8ZC1J22mKRnn0zpDGufHVcE=;
+ b=frx6EvR4N7BMdHqhpzn6Z24qxfK9OZHi6ecWCHUp8hvUpKWvATpY6NHfKZU4wyoQR5w554
+ T2hrUZP5WBtZLI4TQ8guBxFc9tovlVIAB81mYnW8MDxsnuhpLerKVlg0qf6cZU/a9WDMs7
+ 3pJQsiu7KFwsvVNxXrvAka27I/uYhkE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-H4aT8nL_NzmtyNJezoeANg-1; Tue,
+ 01 Sept 2026 11:47:46 -0400
+X-MC-Unique: H4aT8nL_NzmtyNJezoeANg-1
+X-Mimecast-MFC-AGG-ID: H4aT8nL_NzmtyNJezoeANg_1788277665
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA35B195609F; Tue,  1 Sep 2026 15:47:44 +0000 (UTC)
+Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6CAD41955E72; Tue,  1 Sep 2026 15:47:43 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] gitlab: use --emacs --quiet for checkpatch.pl instead of
+ --terse
+Date: Tue,  1 Sep 2026 16:47:41 +0100
+Message-ID: <20260901154741.1488763-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,51 +86,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+The default checkpatch.pl output includes a lot of "progress"
+information...
 
-> This series replaces TCG tests makefiles with meson, with the
-> goal of having something more readable and maintainable in the long term.
-> Also it closes the gap that tcg tests had with the rest of tests, by inte=
-grating
-> them with meson directly.
->
-> It covers all existing tests for all architectures, including
-> user/system/multiarch-user/multiarch-system. It implements all requiremen=
-ts
-> listed on original thread [1].
->
-> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
->
-<snip>
+   NN/MM Checking commit HASH (SUBJECT)
+   total: 0 errors, 0 warnings, 105 lines checked
 
-I think this series is ready to merge so consider this a final chance to
-review any architecture related bits. I shall generate the PR on Friday.
+for large patch series, this results in alot of noise from
+clean patches (which are the common case), obscuring the
+info about the patch violations.
 
->
-> For reviews, this is the list of maintainers per target:
-> alpha: Richard Henderson <richard.henderson@linaro.org>
-> arm: Peter Maydell <peter.maydell@linaro.org>
-> hexagon: Brian Cain <brian.cain@oss.qualcomm.com>
-> hppa: Brian Cain <brian.cain@oss.qualcomm.com>, Helge Deller <deller@gmx.=
-de>
-> loongarch: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>
-> m68k: Laurent Vivier <laurent@vivier.eu>
-> mips: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> or1k: Stafford Horne <shorne@gmail.com>
-> ppc: Nicholas Piggin <npiggin@gmail.com>
-> riscv: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis <alistair.fr=
-ancis@wdc.com>
-> s390x: Richard Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich=
- <iii@linux.ibm.com>
-> sh4: Yoshinori Sato <yoshinori.sato@nifty.com>
-> x86: Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson <richard.hend=
-erson@linaro.org>
-> xtensa: Max Filippov <jcmvbkbc@gmail.com>
-> tricore: orphan
-> multiarch: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-<snip>
+Since the alerts from gitlab job failures only include the
+last few lines of log output, we want the checkpatch.pl
+output to be highly relevant to the failure.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+We previously addressed that by adding use of the --terse
+flag in 7025111a199b97ae806817788bec50f456c47d85, but that
+made the output a bit too terse. It no longer prints the
+offending line of code, so understanding the CI job failure
+now requires manually re-running checkpatch.pl locally.
+
+Using the '--quiet' flag gets rid of the "Check commit HASH.."
+messages which create noise, while adding '--emacs' causes
+the WARNING/ERROR message lines to include the commit hash.
+
+This is a more useful tradeoff for the CI job logs. The
+output is limited to only patches which include code
+violations, while still including the offending lines of
+code in the output.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ .gitlab-ci.d/check-patch.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
+index be13e6f77d..45be77295d 100755
+--- a/.gitlab-ci.d/check-patch.py
++++ b/.gitlab-ci.d/check-patch.py
+@@ -46,7 +46,11 @@
+ 
+ print("\nChecking all commits since %s...\n" % ancestor, flush=True)
+ 
+-ret = subprocess.run(["scripts/checkpatch.pl", "--terse", ancestor + "..."])
++# We don't want "noise" for clean patches, but do want to see
++# the full commit hash for each violation, along with the
++# offending patch content
++ret = subprocess.run(["scripts/checkpatch.pl", "--emacs", "--quiet",
++                      ancestor + "..."])
+ 
+ if ret.returncode != 0:
+     print("    ❌ FAIL one or more commits failed scripts/checkpatch.pl")
+-- 
+2.55.0
+
 
