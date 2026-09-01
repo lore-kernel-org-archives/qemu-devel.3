@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCC9C624D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B2BC624D3
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1PfG-0003Vl-D3; Tue, 01 Sep 2026 10:40:42 -0400
+	id 1x1Pf6-0003UN-J3; Tue, 01 Sep 2026 10:40:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x1PfD-0003VD-2f
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:39 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1x1Pf2-0003TW-T7
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:28 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x1Pf9-0005nq-Di
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:38 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c160420289bso625802066b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:40:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788273631; cv=none;
+ id 1x1Pex-0005ke-0M
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:25 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c255acff671so691436866b.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:40:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788273619; cv=none;
  d=google.com; s=arc-20260327;
- b=JIWybHX/cWPrDnYbZTTV1UY4LQTbK4ivZt/dDh7uBnPi8LPXNxt+kT2pb8ILqcJw3B
- 9LjXlZ5lGbW0xioId50z/x8wFvYmS/ORIHRkRgtZ9nxWEbK3rTLdN1goZievBjZ9Lrko
- 8XJgFocmxgB9PeyjXBVEjAVtWk2MUlFQGKRvHZpsAtpU14Y4+YF1E7d7H04vgzbyrfdD
- EC5+GGefamCGkoUyBACEYT3w/xtWP8qUiQEed169TIJb4Ek2OiQPqT1RL/uzhAPjdNDn
- 0vYs9P+GpoBxs9E41gGrj9pbRTTC141rcEXThcgFld4PobGMu9ZXiIDgAZgho+dVuHKm
- qDGg==
+ b=obnSA56zW8yIS1j1yZU9oC8p7xbgXEAFMz11rbp9y0aQc1T7JBq/vI81NvIOeLqzKQ
+ YcS7FiMjKH6lpI4RB/+BtBJKxFt37vw20Erbs9MFqyz5zoATezybXULD/8D5zWel4QEe
+ /RkA9WN2yTgWvkp5JXuZsKIoyLB85a5XxmQ+Ruu/i+OzfxaPj5nzlkrCJvOo3EqfEgwS
+ w7j5+Ztps9HL+asCy++b2FmFhuaSqe4dpTEqOz8LWAWIoYdbvTvJ4h3W1QbnUZoi/cSQ
+ OYQIQwEmj/4LZ+x4RDAyIG8tokGdU7af4dypnDSU2liWXy8SqVqeiVsuNk2zN7b1z3gH
+ CW/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=+mIp+V5+2vQjKg8LuzJXA+gwIhZ26K/dzOFdKWn8KGg=;
+ bh=qfqJIJwC+GF0giJFA8RR6zafgzzeMUNjTALFGNc7UE4=;
  fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=e5lWCgQEBZFlXwKlbDqSZZG6fa3oJohlnjsciWtmEjrhbEPZHiHjS0+71lJd00XPwW
- AEHvw6lUfKbu3K+NJnPZoNZtYKVA8sA0NqLiFFgtKHHp4DoV7jdcoYtOq1SnDSKkLrey
- zW3uAAlCTfop0tAq4LVThMfpHztoZu6iU40oK6GAXEndrwbnRg+JOVNHwOZ9Y2kVVKbw
- yQsv+91mAWRzLwI0wY2ueM8juug5IVfAMNZJ6jCgrsZcgmmTqC4mIlR5n6O5mmFX1XWp
- 38FUXZGgGM4MYblKrZQIblvVPkT8eTtgZ3M4SogBMeZa52T4rnoUGthVKsALEERXXr+w
- QwcQ==; darn=nongnu.org
+ b=Urp9f7TfEkS5pgSj+vZWXGAwKDWdpeaVO+FBdhRr+0plaiKoIwG0f6soPYgFefwjBX
+ RNTOq38Flvh9szyGahauvci+vjZJbsDcA5X9gJkhyD/nGwgUa36zZJch6Hwzj7JfEZup
+ uhseLkFj7y8Zy+ilV+db7/Mhx5ICqHlHixSZQWCwd2pv6DvpQmRUFMtQcjDfoejZqcYh
+ LzGuwC8zwiL44YsYxEM+o1X7PE+aoId5zphVTFV9ki8o0DnV5FOFS9/Ve0EH3HTc3Gv+
+ ln/lcygpXbigDBmLqaxWiNjANtfhyoTTwVv1Th4RChIFY3qySgnusc+QPRe7BDtHiBZ/
+ JZqA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788273631; x=1788878431; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788273619; x=1788878419; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=+mIp+V5+2vQjKg8LuzJXA+gwIhZ26K/dzOFdKWn8KGg=;
- b=XRNKd/ynneePvztmIixCAtLumoT1XX467VGmIy8aAQ63S/mvL37YZg1HhhZshtz8io
- vQA9nPPPFrzSVFKw5ZaPklQeIHxpJz9n443up+LYCu1kbAr+QwIDSXm5hZ5FA2hrqxkp
- oNllTzgWFz8H03FxuwBhe9fklqq2lrgq3azhs24HHwQOfM6j8nuaa3gadrQct0wIs3RB
- sBH1hLLAV3QXGws6nqJlK+mxDBG2BwKdiVHOP6gfvi2pZkPYCcmxjwjWRjyLmb1CPHyM
- g3fEyg6qpP1Wx3Nn3JbqM8c39s8Cn1fTLXTWxBtIacErhYU25si5oNRwkz9xn8X8oIng
- wabQ==
+ bh=qfqJIJwC+GF0giJFA8RR6zafgzzeMUNjTALFGNc7UE4=;
+ b=J/GfWG8PTUtWDRqnLmOAg6OJkwPJPCyxdoQPODdrf6irRdgzc7zm8S1Hd4iR7HcCBM
+ P2VA3YZfCuRversAIwkbBk3j38+8rNBjICeGsFYXH6Ujz7k38FWq4VUrkHv2auW8sB0v
+ qAF5WS3zCxCCDfRwePPgDP+m2rAHBdrhO6L7216A+wkGQmhU07T1nuCF4IFl9LkPzuZy
+ bnMRFeHAQTSEK//i2DDgH16mM0w6/54t6db0hxzIxQdgdS6o6jNYrVN3eWlrxvPWKVAh
+ pj9fYSlVz+SVxsecg6MCVvZJF/OksVvqmRPACsjOvktF1pE+GpcJ3dHfoQgsQfQjN2gh
+ Ejhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788273631; x=1788878431;
+ d=1e100.net; s=20251104; t=1788273619; x=1788878419;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=+mIp+V5+2vQjKg8LuzJXA+gwIhZ26K/dzOFdKWn8KGg=;
- b=o1BByuFe1KWOOkCtsuFcV1xoQtnG18XYuPHNtUB5wvFvlxisGX9v34a4sVDlJB87+B
- VSGG7zts2Uu0b6szrgRZ6wDjNDAKhu1/29A0Ydw+jsiofjHiJOj6RtoLq92bTOw9rwpG
- 6uM4e5citijGrAOQOnzYErPt8oHiR+qEPNhZ36C8V/K0u9N5vwabs1HE+BXH2HaPLVNp
- mEaj6JDDt7mgpEQPVJKKqxKzmnH1No3SYSpg6boic+Iokr/vVmUTKydCr71X8dFjiDNV
- svDwpfz/PnoIIFAfNHTIJbeod7qcavmpH2oiNsREihcXM/meMJgWsCkqmOa6LX4JGtE/
- h/ZA==
-X-Gm-Message-State: AFuF++lsOzQLJ+Za2jGUvdWZVkQ6Cpm1OjUkaioNgHXgjvPgJc0q0r/Q
- VAonv9No4SbTGaALyBhcS1S8MHNEra6lhZXZtRTcQVpFPmUIb8h074H1RfI7KNxdlV6xxuKGo6Z
- 5RUEpHujVaFHNU62DWLofBtcruSwPkfE=
-X-Gm-Gg: AR+sD12r7I6BWrD57f1tWH3NUiTGVWdxO9KGJ1TImkDJ5kIigYfk84uzeqhZmP7k0OX
- HKFkykB3Sxxh342TI7gf2H89jud7Hb/gu5bhspmV9YoKz8TX5rMfmqhM8RUFxKbjpM6KYmGNKUs
- F7ieb+9Mc3ULlo0D4+EAFE/ue1RXc7DLBYZhxCwijzFALgCqK/xXuBH4sSD3bGJd2DGcF2nnsg9
- nZv/SEL5C3qBUhmtqQUp0iVfQMGJ4Ph7PreRD8hCR2h4mJ1CF1Xvu1bKWyDolyunb9StJFWgCCC
- tj4v9BwLZJWiSpGwZjKgxHd4ArKo0pPBwfT898LrxJKo
-X-Received: by 2002:a17:906:4788:b0:c25:8bcb:ea0b with SMTP id
- a640c23a62f3a-c25b3bb8e6dmr766554466b.4.1788273631002; Tue, 01 Sep 2026
- 07:40:31 -0700 (PDT)
+ bh=qfqJIJwC+GF0giJFA8RR6zafgzzeMUNjTALFGNc7UE4=;
+ b=goAm64xrIWvmLVjqzcqkioKs6Jl5l8Zg32C5y+7rGtH+6ccn6JZ3j2QaQHvZeSDqT3
+ SQsQmPievnDLMtbM+Q5ywh7Mg6h/HwFIVyJ1W97DwfRWeTDpvLXtDLM6OYPZxB/4vnek
+ GaUOyRHmm74XyT69qHQxrdFzDvOEDNVBkYZ+ylOIIePI0RVJ0VCfSr5TjIBlWO0c5ZbY
+ rmHwL3aPNn3+/2IEIXPIEAtGH7ttWr3x3KPIHREZIwzyNEzPyIudUbUDlYl2LwkzSjjP
+ 6TZBgI24aak1Mcz1ihHc4w7TlFglAaD/48jTnU23p5G9LMe0+ZRSdAKCRqE1cEPSSv8f
+ NabQ==
+X-Gm-Message-State: AFuF++lRkQDrz8klNdNQA2KUW77FD+7fJL9D6aZfIz2ynoFiaJ8uJ3fX
+ 6IU823B3gD2849oIslV48rL4cc3Zychugwcm2t1XKnP+PZ5xrLD1R+cNrMcbVeFU05KIxKBF1VP
+ XwD6BjyHEA9WA2TC7IPrJO5pmPLDVBzA=
+X-Gm-Gg: AR+sD13t+aEz6Ru/A5V4DtvNDiagJRokrk55k82Rsk2MtmOcdf7aLNP2ESZzbFu6xGp
+ d9bntGC8HU8z2Ke50rZYMsH2jeexZBPVUg+O4g9IzFlgbu2PZ8uPDUaG1T4ixkVArKrn97bO65B
+ NnmQCwKcCd8Iml+dz2GnsgmfRy0YpDGQ3DHdymXQop1L/Mi14i8Bx7ynHnl1T+lxJu3UerCblFk
+ jp6tCJbR+/Id/3Ts5IsUHDbGw2CkPuZasiSRhrtTV1T8oV7/fiby+RTXKmG7Bl9AV8ftkZQedBc
+ SLB2YcZCeSq0jrNow+iVhqOnFTT+7eodWOFEwFDlLYbQ3w==
+X-Received: by 2002:a17:907:c08c:b0:c1c:3b06:ed03 with SMTP id
+ a640c23a62f3a-c2557423bfemr2400919566b.23.1788273619036; Tue, 01 Sep 2026
+ 07:40:19 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260831160038.221776-1-zhangckid@gmail.com>
- <20260831160038.221776-15-zhangckid@gmail.com>
- <877bl5bkkx.fsf@pond.sub.org>
-In-Reply-To: <877bl5bkkx.fsf@pond.sub.org>
+ <20260831160038.221776-5-zhangckid@gmail.com>
+ <87bjahbksk.fsf@pond.sub.org>
+In-Reply-To: <87bjahbksk.fsf@pond.sub.org>
 From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 1 Sep 2026 22:39:54 +0800
-X-Gm-Features: AcwNN1VbM660-bFlfF_UTv30XhdHiKad7_Ju0N8d9HxMnhbmaCMGJRaLXNG4A6g
-Message-ID: <CAK3tnv+7m2exh9jc+cyAFx+JZv4xunxtRaSmUWH7QgpXPzBCFQ@mail.gmail.com>
-Subject: Re: [PATCH V14 14/15] iothread: remove legacy
- iothread_get_aio_context()
+Date: Tue, 1 Sep 2026 22:39:42 +0800
+X-Gm-Features: AcwNN1XC-IrL7Cetvp_Ft6jJmZmxKt09SIHbPQHfmlGW_uC4rvsafGsh2Fho7JA
+Message-ID: <CAK3tnvKE14GhTcmQ5UPgQSCAvJhR8e=_F=ehukd4Mv9wXFuzrQ@mail.gmail.com>
+Subject: Re: [PATCH V14 04/15] iothread: introduce
+ iothread_unsafe_get_aio_context()
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
  "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
@@ -99,8 +99,8 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,65 +123,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 1, 2026 at 1:35=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+On Tue, Sep 1, 2026 at 1:30=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
 > wrote:
 >
 > Zhang Chen <zhangckid@gmail.com> writes:
 >
-> > All production callers have migrated to either the holder-tracking
-> > iothread_ref_and_get_aio_context() API or the explicitly unsafe legacy
-> > accessor. Remove the now-unused ambiguous getter.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  include/system/iothread.h | 1 -
-> >  iothread.c                | 5 -----
-> >  2 files changed, 6 deletions(-)
-> >
-> > diff --git a/include/system/iothread.h b/include/system/iothread.h
-> > index 2ef8c1a1bb..9850cdb3dc 100644
-> > --- a/include/system/iothread.h
-> > +++ b/include/system/iothread.h
-> > @@ -66,7 +66,6 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
-> >
-> >  char *iothread_get_id(IOThread *iothread);
-> >  IOThread *iothread_by_id(const char *id);
-> > -AioContext *iothread_get_aio_context(IOThread *iothread);
-> >
-> >  /*
-> >   * Return @iothread's AioContext without registering a holder or takin=
-g a
-> > diff --git a/iothread.c b/iothread.c
-> > index 803d6ce3c3..3a092119ee 100644
-> > --- a/iothread.c
-> > +++ b/iothread.c
-> > @@ -422,11 +422,6 @@ char *iothread_get_id(IOThread *iothread)
-> >      return g_strdup(object_get_canonical_path_component(OBJECT(iothrea=
-d)));
-> >  }
-> >
-> > -AioContext *iothread_get_aio_context(IOThread *iothread)
-> > -{
-> > -    return iothread->ctx;
-> > -}
-> > -
-> >  AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
-> >                                               const IOThreadHolder *hol=
-der)
-> >  {
+> > Add an explicitly unsafe accessor for legacy callers that cannot
+> > provide a matching holder lifecycle, and convert blockdev.c to use it.
 >
-> Easier, I think: squash PATCH 04 into this one.  Turns "add copy of old
-> function, change a caller to the copy, then delete old function eight
-> patches later" into "rename function to mark it unsafe".
+> Why is blockdev.c unable to "provide a matching holder lifecycle"?
 
-Agreed. Keeping two identical accessors temporarily is unnecessary.
-I=E2=80=99ll squash PATCH 4 into this patch, leave blockdev.c on the old ge=
-tter
-while the holder-aware callers are converted, and finally rename the
-getter together with its blockdev.c call site.
+x-blockdev-set-iothread only retains the AioContext in the block graph.
+It does not retain the corresponding IOThread, and the eventual context
+detach or block-node destruction happens outside this command. Therefore
+there is no point in this call site where a matching put can be issued.
+Supporting that properly would require adding IOThread ownership to the
+block graph context lifecycle (and likely a block-node holder kind).
+
+The unsafe accessor only makes the command's existing lifetime assumption
+explicit; it does not make that lifetime safe. I will reword the commit
+message accordingly in the new version of the patch 14.
+
+>
+> > Keep iothread_get_aio_context() temporarily so that later caller
+> > conversions remain independently buildable. It will be removed after
+> > all production callers have migrated.
+>
+> Which callers aren't "production callers"?
+
+I meant the standalone IOThread implementation to the patch 14.
 
 Thanks
 Chen
 
+>
+> > New code should use iothread_ref_and_get_aio_context().
+> >
+> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 >
 
