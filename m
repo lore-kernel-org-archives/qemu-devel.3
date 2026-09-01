@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36BDC624CF
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 10:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD05C61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 10:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Lbl-0006hy-AI; Tue, 01 Sep 2026 06:20:49 -0400
+	id 1x1LcA-0006nd-HM; Tue, 01 Sep 2026 06:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1Lbk-0006hj-0T
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:20:48 -0400
+ id 1x1Lc8-0006mm-RS
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:21:12 -0400
 Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1Lbi-0002Xv-BP
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:20:47 -0400
+ id 1x1Lc7-0002ZD-DJ
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 06:21:12 -0400
 Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-81ecf499af9so54089097b3.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:20:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788258045; cv=none;
+ 00721157ae682-861a2ae9c51so5581807b3.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 03:21:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788258070; cv=none;
  d=google.com; s=arc-20260327;
- b=q8Uq3WPwNevLKr4DOUj/UFcXZdxilXyenOxSi5eAI4PoPABsVsJcdeKrqvrVqQ94f6
- Eb8t9wtJmyVzqT9l1umwcobM6XiVnJVDEaoIPDCiF7hX1I54Jdp1HHDbuCgH0yGE13Wx
- 8yOId1yKgjKDoizPC2f2m/8S+Xt9O4awO4/UgpWgcTEnIhaxYr+dgkUIijSTxY0gPjU8
- 4HWnehbc6Cchek7Yy/pd0Uj+Jyrfty7FvGxmBl554SRWoUwdsXUMd5ncrP3lTSKIXrjO
- SWWXqv5iqQ2tA31/Wk9Y6qdaKxajIgI4HynLUQrpcn2I+f5boVAeOe7/oGDwsBqHcztX
- Gd0A==
+ b=r//cH9HwtrBRAcfTO+HAHnhBYXxFbLPR179McjAwTbPCsSsJ9nvNrqlsyLR2aZ1N8u
+ C4i0S3S4HdksTfN5vYTfx43U1zk4ky/3R7Is3VE+4Op/bApfgNb7ebKJtUSRaoe6/ZZJ
+ y7+k+fsa3mJoZugA/PJQ5SeB9xKn83XsszI3J9zwADUdNYi8W9XIQKEBnd3uDpgvsq1i
+ 4PAqHk1NoHLDP6BApLHZrAGXMklHRWCbBldpoFLXLveP7lgHzvCPAReJsHEfEiCUf7N9
+ GtcfkVAdIA+Bmt0yAGaKAUPcP1RLghkdP06zMkPQqXTO9DNWPsIxULmZvUxu7f22m1JM
+ w2qA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=QNcckCwmmv60hnws8+62+nxtDz2VNaU9Y8eXf7nRzb0=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=mTJtRo0jNigYwWkOGcheK2vbYJdps4JdTx80ZAGQqWMGVj9Qw7Qe6f82U7OkwYP0Ui
- odH+6TsSel62E2vj+az+z88D0UsCkHaq+4m8vrAgWqMZE75h81EDw2TheALRSw5N0JSm
- s7c8Ak68+Rik5lJohWmGsXp4ZsBKhTpWlGYokAwmxF+fN4fW5wjgimfcUo2rjZvyuh0O
- ZhJioAx19BSug7U0Sydho9M8W81SlrizN0L9pG9gKFhFqXTn5ftxjlhkPGy5sKY6rzyx
- ezMc28rb7nULoHQlHyKKcFFE9IdAQk+jGPl/gsTot05dGwG21XnNmJVpcanf4Dtg3O7J
- tpBg==; darn=nongnu.org
+ bh=vY/MJJp4a+TGy2l3aR3eRVRxcKLxQb5D6XtRmioKqT8=;
+ fh=bIE/bXSCkVaBwWnI5E22W+KoiLTAK5S4CW9f53swsiE=;
+ b=gK2TTX973WuTI7v6Vdtf2R22qVczrzYqz7tBJITvN2gMFaxFta/QysLFNisd/YC8if
+ izVRcwGJ5u1/O6sT9pVW8JEfpPiFM1mAOA/2R/USDweUfbNJoQUdzlx6Sde0rVJduAnz
+ fE1GCggNGFJMHys/eZNbXxw9UibsfsUfowvjzJ53I3N7hoL9CF8TqLI7eUCFzgtlt9dE
+ PXAEdJL1o5FydQ+vN8tkkdb1kw0vR/RpQQcnOgwErYYAlSKL+oL/kwHkC9bBkMLmw+H9
+ PEjTOlS8i8KhFizochFtbnJzRHeDK41rMC/iN4EenHVH70alqcoF75XF20ujyJrYpfrg
+ 4Xaw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788258045; x=1788862845; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788258070; x=1788862870; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=QNcckCwmmv60hnws8+62+nxtDz2VNaU9Y8eXf7nRzb0=;
- b=RSdFyxNCHe29TYEWg6VqUY1nJEn4tPnP+ggFyFgd461qYtBL9GDbvo5AaS43cLhIRC
- xy55CClJ/LfsSaXkxIzKwGZ88EWNErddiUCmuSsMiaAPpTDqcps4fued+HKvOlPWQB/e
- GspUbxmUvNN98PZdVE+SrKjirG4nP70teqs20l7qkiS/ChEij7tmTJuK5rN0RKebBPC1
- QOTUSrMg3zrr86uWIv4aUbTJBxLtIYQsPs3gEWJUNJMr8p5+fONIluGMUDL45KGygfBk
- X9knLz47WY61ymyfz5ApZNjBGRk9e6bGZFlOr+45M3ScqBEc7bfm2LXoX+5/08ipCApL
- RngQ==
+ :content-type; bh=vY/MJJp4a+TGy2l3aR3eRVRxcKLxQb5D6XtRmioKqT8=;
+ b=vJLbF2v81Bo+F1GVyl482udMsWmchOXUIoPzGDDQS2VcH4rN1k9WtQH8Hvvl5EtKjm
+ exQYM01653ysw23CIpuLWP1r3ut4B+eBiqVIhAXC63cLNb1FstnkUt9LbuX4e6wgqZcP
+ 38zUhHuzlgzpBTirEHd1Bse838goNDSM6N/eKlA7F261LOBfPS0ORbEXWmQcz24QWRJV
+ PdWyT908fg8KPnho13MpPlC1pnWD58woZquksQ+RNayye5m1gx+DV4P0IrS6IuiZvnUp
+ lxvr2Ksfqaim9avCQXGSA8XEGTKQa4gfdMFFRysOecKtCtFgBLALviiEXq3zaZ/+ve7f
+ WTPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788258045; x=1788862845;
+ d=1e100.net; s=20251104; t=1788258070; x=1788862870;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=QNcckCwmmv60hnws8+62+nxtDz2VNaU9Y8eXf7nRzb0=;
- b=UCxG7toQlfPIzKRDDqfu0Jfrzkj3EF4F0kgpHIq0zm02bbUFmSxVJ/45kLRoJuO/e9
- YzeUcyQEoI0REr+pVyGUxFfEOvl3RuJCN2M/yAWTcdRbuP0u4bZsgpP6kZ8411bPZSpe
- +bMkzczwnrTMBuj5P5aSNvpUTRzatiWtbJXfqZ1Zjpewu0IXX5TZCUJTPBI9UfFzZd/3
- D/NYf1XRoDeMauIzssD7cCjO/vgXk+MyuWjDSzE7i4xZGyCP/sJijMZYGV2x508oBhFL
- rjU+iS16GKt00cYPPZVw81Ebud/SyPHl698Own53z3lB8S4sESCzf1dpO2FHi6NhJDh8
- Tsww==
-X-Gm-Message-State: AFuF++kaNs+zV9dyZJzucWga4DVdyn3EMw9M2lIc5X7+Vz7ajYBRCWOZ
- OJVcZuWczopYErTwYt74A6piY5SFXntQPXmpGIGtgyG+fvml9mssmYXuJoYILkxD5EqSoD9nZL4
- t08YwTdxd7a16npMHeNw1a5SG/M5G4hBPSxxY7gGx6Q==
-X-Gm-Gg: AYBFou0m1fMhTSSUuQxZlDPdTEEeymPHZQpA1KTNImM/VSWqvgksDwDQYLBW1gu6RKW
- H304d4fY6fC9gQ8K8rHUz3WmYRgwW9z46G4WymtX2B2kYTXk4ZEVWlV6s78oK2RJ7eUP7UkO5TE
- 6W72FFmKt0uRl49ioljfI6XzpT03qIGi1OYbVcmk1yEwH60F6b6nJtkvDmtnExyPMadPhq4qzO8
- Gi1LV7xRrHTTZdlnuc2Ty94A0VNf9UZurEE90/yt00XQDfXo4BhlA0Y9+z+rIjdRJ5QbJYjVkZK
- A0S8yJlzfhjF9qdiHT7MkIjnr0HQcg3OBDph1jeLfMyWSb0F/8ESILhEk2CHcLDlPpT7dKOHV00
- Vqf/mJwWrmlu1hEoWy0+Os8XnVVyD
-X-Received: by 2002:a05:690c:d91:b0:84f:cd89:30f1 with SMTP id
- 00721157ae682-85d6a1ec0famr129707567b3.18.1788258044530; Tue, 01 Sep 2026
- 03:20:44 -0700 (PDT)
+ bh=vY/MJJp4a+TGy2l3aR3eRVRxcKLxQb5D6XtRmioKqT8=;
+ b=AGE27zXsTBvWdmPz5NU61A3CnDr30BV/Z+uQYKXeWf4yt5gFrqK+NRgEBeiaECr72Z
+ pnvmP7JgmJnNDXwK/vFs5VmuX5zamKHvujV9JeOsu76zEwNrNUnN4yTjsa93+Ee9VXse
+ T+/UMFhSjPxsFdZISVxBAleDX9HU6AdibZ/8BWLEnU1CT/ixLCDv7F+ovksQoWMcP9P2
+ KIwxJcb9Q21KO59/EbB64ot3OfkaZhnQw8MLQWU4stSjvqjp73bdjb8QKsMeLhHC2cC9
+ 20CtFkNslrbnmkHy5SgmxCNMWgJ3GarvAS/y6f7YEaGxrkAaiw1oSXG6HPGbZljrkcIm
+ TDoA==
+X-Gm-Message-State: AFuF++klHQRsdynChLT79VJ/TYWFuUArhKh3qWiVuF8Ia3d9hEeQnkot
+ eanIaWkIm8LJDm4GriU6TZoUjz2j7380oDRZ0HLHWyRJQOwMslKTy6eEmPIvIS1mzn0mIMudv80
+ 8sBhXz6XoWF8E7vu7iKPz7HbdQ2xbF7uM1ZlQNVWnMA==
+X-Gm-Gg: AYBFou3IpqteMlklrsoHafxXrAmylyyw9dGIBrEjHgVrj12P/GfjW2xy2PtxqwMcDJ7
+ 31d2+Mh7wdoJIr/KGV0GxEvGxcaN378wmIcdNKTq7AsslYvvbV5ezmiVf0JibrAxCnAWELgowfx
+ w2GFYRmetVZNVV8UL5RBDuYZOndehBtRkqBMJVBRpes7a8WOTmJKWeBe4a4QlFyXn98jlRCtMY8
+ y0kY4XWXMouVSPciaSsEUz53OUVOeTphBYdPBMBioxZVGQmFXwNxFXHkJ0PCudfArLBhHjVvQUK
+ HLEqt/xfVqlbOWX3tstTk8iEgEi4IkPvZEmzdj2TmHLVzcX35CDqxUKmCReWJ5VZjTjqRbjErY0
+ HlQkB5lf+dskx0CtWTBZ/dhPQGDfN
+X-Received: by 2002:a05:690c:102:b0:867:ae30:4ea8 with SMTP id
+ 00721157ae682-867ae307bcamr34698257b3.34.1788258069917; Tue, 01 Sep 2026
+ 03:21:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260806172709.333300-1-richard.henderson@linaro.org>
-In-Reply-To: <20260806172709.333300-1-richard.henderson@linaro.org>
+References: <20260827041557.775080-1-richard.henderson@linaro.org>
+In-Reply-To: <20260827041557.775080-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 1 Sep 2026 11:20:31 +0100
-X-Gm-Features: AcwNN1Uylh42WQyiR1dQ8s9ahMwqx0YxIyDleKvAN3cfNCEVdZaxUF6ZpVBrUhk
-Message-ID: <CAFEAcA_RTXJrwjsYGT5GOtmULbRNGFTTaokiqV031XqTtUXPEA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] target/arm: Implement FEAT_FGWTE3
+Date: Tue, 1 Sep 2026 11:20:58 +0100
+X-Gm-Features: AcwNN1U2e22oyC5Ud-grvKEybw1Aw0cJb3hMreZMP0qwrJKWHNXRPRzISrgORTI
+Message-ID: <CAFEAcA8WARZRJ1GVf2or8g01N47WFLtEgswU2QhOQP_TNhNHAQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] target/arm: Introduce cpu types max-v8 and max-v9
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ pierrick.bouvier@oss.qualcomm.com, philmd@oss.qualcomm.com
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
@@ -98,7 +99,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,26 +115,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Aug 2026 at 18:27, Richard Henderson
+On Thu, 27 Aug 2026 at 05:17, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Based-on: 20260806163939.328201-1-richard.henderson@linaro.org
-> ("[PATCH 0/7] target/arm: Introduce cpu types max-v8 and max-v9")
+> This is something that we've talked about for quite some time,
+> having separate "max" cpu types for Armv{8,9}, because Armv9
+> prohibits some deprecated Armv8 features.  Retaining all features
+> simultaneously has the potential to cause confusion.
 >
-> Changes for v2:
->   - Rebase on the max-v9 split.
->   - Review comment fixups.
->   - Set fgt for MECID_RL_A_EL3.
+> Pierrick, patch 2 replaces the one you posted using ifdefs.
 >
-> r~
+> Changes for v4:
+>   - Adjust for single-binary.
 >
-> Richard Henderson (6):
->   target/arm: Add FGWTE3_EL3
->   target/arm: Add FGWTE3_EL3 bit definitions
->   target/arm: Add FGWTE3 FGT bit definitions
->   target/arm: Implement FGWTE3 traps
->   target/arm: Set fgt in cpregs for FGWTE3
->   target/arm: Enable FEAT_FGWTE3 for -cpu max
+> Changes for v3:
+>   - Several patches merged.
+>   - max-v8 is also present for qemu-{system-}arm.
+>
 
 
 
