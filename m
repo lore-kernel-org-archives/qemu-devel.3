@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38F9C624D6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A140C61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONt-0001j6-Rb; Tue, 01 Sep 2026 09:18:41 -0400
+	id 1x1ONQ-0001A1-EO; Tue, 01 Sep 2026 09:18:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONl-0001Vj-N8
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:33 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1x1ONN-00019H-R9
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:09 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONk-0007N8-0t
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:33 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c2544ff970dso734835766b.2
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:31 -0700 (PDT)
+ id 1x1ONL-0007Ea-KX
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:09 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-c20e70a0962so635842066b.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268709; x=1788873509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788268686; x=1788873486; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=sJHgV7oPLtw/+NOO/79pyvwPiKhoKGcWmZoZ5oqpKb0=;
- b=Pjuo8FhflCDkBvnEJ6vqhxSqE8YlhdJgT/N6UdDcdySSgIArjG8mHXkqR3RPTYYC+Y
- uicVZ8aw5hkXwmxPiZXpn7Sg+OCCapiTqsgLQwhtXkJZPeUmxuot6V8hCh+bpuVNpAeJ
- UYQy0QbvDvt2IXNjKzbqEJXjWbje84sypnPsejm/LKBxq1f2FQDZID+f4tGEpvfcDjtQ
- KCSQxT2IWJrqEVyydik251RnWTIW7vQDMRI9eJ2x55gBDMBOQ+Z4A8ObZDCWCYQXh1Z5
- tYaAuNB6ID7R/jZITwfhNlPZDpyosfpeQ+s+IMJKpL1tVnDvLA20OxtBODK8nSsCTcV3
- 3YSg==
+ bh=Byye1p6jZOlA8UVq6wuf/FUpGy8EScHzGLLCOwOeGSo=;
+ b=zH/govqCYUeRDh+0AMzFRbi4PvzYs0CN5xM462bthY2s2nZqSdHzCxLMuUOSHnAMQ6
+ j0qcBT0HFaQ2z6UM9PUwn3fD9DujYMB14VPtnZr589ZsUMltqDB8fbWx8CrWFJpOirJl
+ j9OwcdeyEC53u4Tiwr2NwwrQstlq6ZvIS5GsNiI6yrK7heS431+/XrQLkq/KMJo0Yvgb
+ l0KmibSWTvCSe2KcIOA0NFAyK/+AUVUsG3njVFuix4ywpZ/yWeWSgJQMg/cLd0nE0wJq
+ jjzocm6nToX5FYbMCMk09O0680t5ro5F0zQPV4xXK2UIzNrYWkUHRnmmt20DbN504zZ1
+ fg0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268709; x=1788873509;
+ d=1e100.net; s=20251104; t=1788268686; x=1788873486;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=sJHgV7oPLtw/+NOO/79pyvwPiKhoKGcWmZoZ5oqpKb0=;
- b=Gb6Z7ggOwAcLO316iyy+dV0H6WTgkvwpVbzrnPTfZ04bEKkyyXkaOGW8Tv3YaGK/va
- EX3FJ6BR2zXNQP7s81wNATDJ8u0Q1s0dU6J8eGSE5+kBdedRL7yMQ42XgL5gf66vka+8
- NjX+X+IkGI3pSdGy2F3GhcxT47E2TlCwJuxjXqx5sdr26E5+n4mzhp9G1uL1ZGtDoMoj
- di4mxTK4WS9CwfqG7xxAkN7n+Smir3MC/6wrCbQkjcwLCYPNVa8c1OEoJtoMP3oqJ8v2
- emIgIAd6X0dtlFz5jhRjuwl5Lr/04PSJe5oqQlrIHwh4SDdmOA825zrtRw95kQaNDCNU
- 7O0Q==
-X-Gm-Message-State: AFuF++ndhNcYQLQBpzCjZYTCnxAq/wOsoKGqw8vDq0Ri8cCQd99xu8rb
- WoovDxqkdHiRazHyqUksBUEq+kNbUKZU1FobTJt+mU9aQmEFpi1ECfcbVv3lObV6hOpb82kwe3c
- WTaCIwy4=
-X-Gm-Gg: AR+sD11ZsOPQOV9qU9bQCabL2Mr9ClIlPTQHWV5b1fp7nh+2UPaze72UBhBKR2Ska7B
- g8dSQTeT33ukEkLgrJ24MlQwfGluGnEfT2IaGFwZ4gSYMnudwCfpqahIsCoJo64WqgXbk5OAPMX
- Y97Wmf9dyLqp1UsvIjZZxNGAtNwzNHR0gGa5qPsFLXAMvsdyxL06zTMcnQY1SAiYPtz7jtC0+pc
- 020rJbJGtU95fBm2E/96HfiXshBLxHVjQW8iWnQlxGJZgrf+VAkhZTvfjf15U0e+Qb8uCFcMFFs
- fB1ozqsggz+GNloNMy927K1M07WaYHCOxFIZbHWnSI8JUKI4DwTitNlq7Hrb/tox2DWkKKEIfAe
- Z/fUd4b4c+Ux+0jT3+dmZlDB5l8b6H8ytY1eMjdVwzlPF8jcANydn50r71uHU7QSfrfGTI20q6r
- gu61ul8fg8+BpUIsBd1zol2H25jdwBhssl08tDtP08zi2+kjuCFa+yPxGQczlr8pLuoBjaYhK72
- jgasJTEmQn6jt59ccIASfz+ek2cWA4ssw1YFxD/t+ByiHTPmzySl+2v2Ytjm90U4i/FLQ==
-X-Received: by 2002:a17:907:6094:b0:c25:34c7:44d1 with SMTP id
- a640c23a62f3a-c255667bfc7mr2049066966b.0.1788268709248; 
- Tue, 01 Sep 2026 06:18:29 -0700 (PDT)
+ bh=Byye1p6jZOlA8UVq6wuf/FUpGy8EScHzGLLCOwOeGSo=;
+ b=jGWtGy9d8cpSXdbBDAIHcaDRgGmIiXR9jX4yw18nuQgNicKlGnDVuCH359k9ufff6h
+ xiHtPwSaQBJ2WdsVFeqbnHl0enhXs2S13G6NtQ+veNMUuSJR9bq/u+uNPSqdPqLjbwJG
+ E7dYCNc3e3qwCvmpOQqrTrkB8QpdGFB77h+7Ttz+NxGnO0zFPwvUqq/IAtV+1DeFIWXC
+ 7VLu5vmhw9CN4eTx9z6OmGL1NYxS98V9JzIGI4WEgxMjlLNKLfG8PGswrxhjZn33q7AF
+ PzQ1eJwuqZvrxDHyWxQpWghLfHOHeBaxvIbOE7JefxeqbqreiuxFGlAFEVa/lfS91ZHy
+ qGmA==
+X-Gm-Message-State: AFuF++lOEwR67owPWysy2VQJtkeUcYCBNelwv23L9icftRMETrkP+VhF
+ B5g2o0xpFGlWe/mygYq4arVHFQ0KyASxdKnswNERMKQ/B3HjPGTsJa92TKO7rgSwGbXvi7ST3dW
+ IPRnSpAE=
+X-Gm-Gg: AR+sD13xFJ978bHCt0h3cHVlweL0V7aEy5fJFJT2+lRbtuLjUPnVvsr81QZl/asXxTi
+ VunthS/chCRUfmgLK8yT9tLdLp7xBLdbh0lphc6l7Ix10i6lMrmsagXYH/6ynsnohZ0v/rwZFCx
+ IFZKjdlgj/Djh/79mLxiFlecbtwhGa4c2bcPTrer2sTJ1kO35BSBhCaXgP0eCXDBlhHGphcQzZg
+ 0SOyIXpO9I7U0txojJoEU+Yd4PYHETcxyXc2Y74rT3CN+Kg2wlGzK7QMQLQfBVanL4XgCn5TUfB
+ c66TDN8kJT4EW4ZjyfcV6tA58DltZiYyU1hwiqrpiOA4Qe0YVB89oF5xest2LoAMUQ+/X5JtJBL
+ 9vd3DqpsVhRk1aL7UX1cSOsX2X8KzA5u66h4WHGEPfrHLaglfxg/hVShOSdEe2Fzql0W0RKPiib
+ J8VTsFNCgnlSU9A1KSfj8Hcqyul3DWfpJSxeRLsGZ1MgrKo796xMGPhwjqE5Lb5g8WBknKH9H0l
+ VLJUspekL4fVkcQJq+vdRp6z0X8w8n+NHkmj3DS83UunZbIaBWUs4YCQ/Azz8MLPnA6pg==
+X-Received: by 2002:a17:906:f852:b0:c25:c7a9:7b8a with SMTP id
+ a640c23a62f3a-c25c7a98a29mr93725866b.12.1788268686093; 
+ Tue, 01 Sep 2026 06:18:06 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.28
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:18:28 -0700 (PDT)
+ Tue, 01 Sep 2026 06:18:05 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 56/58] target/arm: Implement AESDIMC
-Date: Tue,  1 Sep 2026 14:17:30 +0100
-Message-ID: <20260901131732.2263947-57-peter.maydell@linaro.org>
+Subject: [PULL 32/58] target/arm: Set fgt in cpregs for FGWTE3
+Date: Tue,  1 Sep 2026 14:17:06 +0100
+Message-ID: <20260901131732.2263947-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,96 +105,196 @@ From: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260826174213.614571-24-richard.henderson@linaro.org
+Message-id: 20260806172709.333300-6-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/crypto_helper.c | 31 +++++++++++++++++++++++++++++++
- target/arm/tcg/helper-defs.h   |  1 +
- target/arm/tcg/sve.decode      |  3 +++
- target/arm/tcg/translate-sve.c |  2 ++
- 4 files changed, 37 insertions(+)
+ target/arm/cpregs-gcs.c |  5 +++--
+ target/arm/helper.c     | 49 ++++++++++++++++++++++-------------------
+ 2 files changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/target/arm/tcg/crypto_helper.c b/target/arm/tcg/crypto_helper.c
-index ae677cdf209..07d008c1be5 100644
---- a/target/arm/tcg/crypto_helper.c
-+++ b/target/arm/tcg/crypto_helper.c
-@@ -224,6 +224,37 @@ void HELPER(crypto_aesemc)(void *vd, void *vn, void *vm, uint32_t desc)
-     } while (s > 0);
- }
+diff --git a/target/arm/cpregs-gcs.c b/target/arm/cpregs-gcs.c
+index e31827342d9..9c9ae9cd715 100644
+--- a/target/arm/cpregs-gcs.c
++++ b/target/arm/cpregs-gcs.c
+@@ -97,7 +97,7 @@ static const ARMCPRegInfo gcs_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.gcscr_el[2]) },
+     { .name = "GCSCR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 5, .opc2 = 0,
+-      .access = PL3_RW,
++      .access = PL3_RW, .fgt = FGT_GCSCR_EL3,
+       .fieldoffset = offsetof(CPUARMState, cp15.gcscr_el[3]) },
  
-+void HELPER(crypto_aesdimc)(void *vd, void *vn, void *vm, uint32_t desc)
-+{
-+    intptr_t opr_sz = simd_oprsz(desc);
-+    intptr_t idx = simd_data(desc);
-+    void *vm_idx = vm + idx * 16;
-+    intptr_t s = opr_sz - 16;
-+
-+    do {
-+        intptr_t base = ROUND_DOWN(s, 4 * 16);
-+        AESState rk = *(AESState *)(vm_idx + base);
-+        do {
-+            AESState *ad = (AESState *)(vd + s);
-+            AESState *st = (AESState *)(vn + s);
-+            AESState t;
-+
-+            /* Like above: Arm AK comes first; api AK comes last */
-+            if (HOST_BIG_ENDIAN) {
-+                t.d[0] = st->d[1] ^ rk.d[1];
-+                t.d[1] = st->d[0] ^ rk.d[0];
-+                aesdec_ISB_ISR_IMC_AK(&t, &t, &aes_zero, false);
-+                ad->d[0] = t.d[1];
-+                ad->d[1] = t.d[0];
-+            } else {
-+                t.v = st->v ^ rk.v;
-+                aesdec_ISB_ISR_IMC_AK(ad, &t, &aes_zero, false);
-+            }
-+            s -= 16;
-+        } while (s >= base);
-+    } while (s > 0);
-+}
-+
- /*
-  * SHA-1 logical functions
-  */
-diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
-index 512054d2f5d..269ac515065 100644
---- a/target/arm/tcg/helper-defs.h
-+++ b/target/arm/tcg/helper-defs.h
-@@ -461,6 +461,7 @@ DEF_HELPER_FLAGS_4(crypto_aesd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(crypto_aesmc, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(crypto_aesimc, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(crypto_aesemc, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(crypto_aesdimc, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+     { .name = "GCSPR_EL0", .state = ARM_CP_STATE_AA64,
+@@ -119,7 +119,8 @@ static const ARMCPRegInfo gcs_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.gcspr_el[2]) },
+     { .name = "GCSPR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 5, .opc2 = 1,
+-      .access = PL3_RW, .writefn = gcspr_write,
++      .access = PL3_RW, .fgt = FGT_GCSPR_EL3,
++      .writefn = gcspr_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.gcspr_el[2]) },
  
- DEF_HELPER_FLAGS_4(crypto_aese_idx, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(crypto_aesd_idx, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 5832e0190c6..7030d81db7e 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1991,6 +1991,9 @@ AESD_idx        01000101 00 1 .. .10111011 ..... ...00   @aes2_4
- AESEMC          01000101 00 1 .. .11111010 ..... ....0   @aes2_2
- AESEMC          01000101 00 1 .. .11111010 ..... ...00   @aes2_4
+     { .name = "GCSPUSHM", .state = ARM_CP_STATE_AA64,
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 1b24aca2937..c3f607e6d6b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1056,7 +1056,8 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+       .resetvalue = 0 },
+     { .name = "MAIR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 10, .crm = 2, .opc2 = 0,
+-      .access = PL3_RW, .fieldoffset = offsetof(CPUARMState, cp15.mair_el[3]),
++      .access = PL3_RW, .fgt = FGT_MAIR_EL3,
++      .fieldoffset = offsetof(CPUARMState, cp15.mair_el[3]),
+       .resetvalue = 0 },
+     /*
+      * For non-long-descriptor page tables these are PRRR and NMRR;
+@@ -3728,7 +3729,7 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
+       .type = ARM_CP_IO,
+       .opc0 = 3, .opc1 = 6, .crn = 1, .crm = 3, .opc2 = 1,
+       .resetvalue = 0,
+-      .access = PL3_RW,
++      .access = PL3_RW, .fgt = FGT_MDCR_EL3,
+       .writefn = mdcr_el3_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.mdcr_el3) },
+     { .name = "SDCR", .type = ARM_CP_ALIAS | ARM_CP_IO,
+@@ -4498,11 +4499,11 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.mvbar) },
+     { .name = "TTBR0_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 0, .opc2 = 0,
+-      .access = PL3_RW, .resetvalue = 0,
++      .access = PL3_RW, .fgt = FGT_TTBR0_EL3,
+       .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[3]) },
+     { .name = "TCR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 0, .opc2 = 2,
+-      .access = PL3_RW,
++      .access = PL3_RW, .fgt = FGT_TCR_EL3,
+       /* no .writefn needed as this can't cause an ASID change */
+       .resetvalue = 0,
+       .fieldoffset = offsetof(CPUARMState, cp15.tcr_el[3]) },
+@@ -4524,7 +4525,7 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, banked_spsr[BANK_MON]) },
+     { .name = "VBAR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 12, .crm = 0, .opc2 = 0,
+-      .access = PL3_RW, .writefn = vbar_write,
++      .access = PL3_RW, .fgt = FGT_VBAR_EL3, .writefn = vbar_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.vbar_el[3]),
+       .resetvalue = 0 },
+     { .name = "CPTR_EL3", .state = ARM_CP_STATE_AA64,
+@@ -4533,20 +4534,20 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.cptr_el[3]) },
+     { .name = "TPIDR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 13, .crm = 0, .opc2 = 2,
+-      .access = PL3_RW, .resetvalue = 0,
++      .access = PL3_RW, .fgt = FGT_TPIDR_EL3,
+       .fieldoffset = offsetof(CPUARMState, cp15.tpidr_el[3]) },
+     { .name = "AMAIR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 10, .crm = 3, .opc2 = 0,
+-      .access = PL3_RW, .type = ARM_CP_CONST,
+-      .resetvalue = 0 },
++      .access = PL3_RW, .fgt = FGT_AMAIR_EL3,
++      .type = ARM_CP_CONST, .resetvalue = 0 },
+     { .name = "AFSR0_EL3", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .opc1 = 6, .crn = 5, .crm = 1, .opc2 = 0,
+-      .access = PL3_RW, .type = ARM_CP_CONST,
+-      .resetvalue = 0 },
++      .access = PL3_RW, .fgt = FGT_AFSR0_EL3,
++      .type = ARM_CP_CONST, .resetvalue = 0 },
+     { .name = "AFSR1_EL3", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .opc1 = 6, .crn = 5, .crm = 1, .opc2 = 1,
+-      .access = PL3_RW, .type = ARM_CP_CONST,
+-      .resetvalue = 0 },
++      .access = PL3_RW, .fgt = FGT_AFSR1_EL3,
++      .type = ARM_CP_CONST, .resetvalue = 0 },
+ };
  
-+AESDIMC         01000101 00 1 .. .11111011 ..... ....0   @aes2_2
-+AESDIMC         01000101 00 1 .. .11111011 ..... ...00   @aes2_4
-+
- # SVE2 crypto constructive binary operations
- SM4EKEY         01000101 00 1 ..... 11110 0 ..... .....  @rd_rn_rm_e0
- RAX1            01000101 00 1 ..... 11110 1 ..... .....  @rd_rn_rm_e0
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 64ff2345307..1098cf0b388 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -8348,6 +8348,8 @@ TRANS_FEAT_STREAMING_IF(AESD_idx, aa64_sve_aes2, aa64_ssve_aes,
-                         do_aes2_idx, a, gen_helper_crypto_aesd_idx)
- TRANS_FEAT_STREAMING_IF(AESEMC, aa64_sve_aes2, aa64_ssve_aes,
-                         do_aes2_idx, a, gen_helper_crypto_aesemc)
-+TRANS_FEAT_STREAMING_IF(AESDIMC, aa64_sve_aes2, aa64_ssve_aes,
-+                        do_aes2_idx, a, gen_helper_crypto_aesdimc)
+ #ifndef CONFIG_USER_ONLY
+@@ -5114,15 +5115,17 @@ static void gpcbw_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ static const ARMCPRegInfo rme_reginfo[] = {
+     { .name = "GPCCR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 6,
+-      .access = PL3_RW, .writefn = gpccr_write, .resetfn = gpccr_reset,
++      .access = PL3_RW, .fgt = FGT_GPCCR_EL3,
++      .writefn = gpccr_write, .resetfn = gpccr_reset,
+       .fieldoffset = offsetof(CPUARMState, cp15.gpccr_el3) },
+     { .name = "GPCBW_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 5,
+-      .access = PL3_RW, .writefn = gpcbw_write,
++      .access = PL3_RW, .fgt = FGT_GPCBW_EL3, .writefn = gpcbw_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.gpcbw_el3) },
+     { .name = "GPTBR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 4,
+-      .access = PL3_RW, .fieldoffset = offsetof(CPUARMState, cp15.gptbr_el3) },
++      .access = PL3_RW, .fgt = FGT_GPTBR_EL3,
++      .fieldoffset = offsetof(CPUARMState, cp15.gptbr_el3) },
+     { .name = "MFAR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 6, .crm = 0, .opc2 = 5,
+       .access = PL3_RW, .fieldoffset = offsetof(CPUARMState, cp15.mfar_el3) },
+@@ -5232,7 +5235,7 @@ static const ARMCPRegInfo mec_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.mecid_a1_el2) },
+     { .name = "MECID_RL_A_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .opc2 = 1, .crn = 10, .crm = 10,
+-      .access = PL3_RW, .accessfn = mecid_access,
++      .access = PL3_RW, .accessfn = mecid_access, .fgt = FGT_MECID_RL_A_EL3,
+       .writefn = mecid_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.mecid_rl_a_el3) },
+     { .name = "VMECID_P_EL2", .state = ARM_CP_STATE_AA64,
+@@ -6182,7 +6185,7 @@ static const ARMCPRegInfo sctlr2_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.sctlr2_el[2]) },
+     { .name = "SCTLR2_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .opc2 = 3, .crn = 1, .crm = 0,
+-      .access = PL3_RW, .writefn = sctlr2_el3_write,
++      .access = PL3_RW, .fgt = FGT_SCTLR2_EL3, .writefn = sctlr2_el3_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.sctlr2_el[3]) },
+ };
  
- TRANS_FEAT(FCVTNT_sh_m, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtnt_sh, a, 0, FPST_A64)
+@@ -6308,7 +6311,7 @@ static const ARMCPRegInfo s1pie_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.pir_el[2]) },
+     { .name = "PIR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .opc2 = 3, .crn = 10, .crm = 2,
+-      .access = PL3_RW,
++      .access = PL3_RW, .fgt = FGT_PIR_EL3,
+       .fieldoffset = offsetof(CPUARMState, cp15.pir_el[3]) },
+     { .name = "PIRE0_EL1", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 0, .opc2 = 2, .crn = 10, .crm = 2,
+@@ -6366,7 +6369,7 @@ static const ARMCPRegInfo aie_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.mair2_el[2]) },
+     { .name = "MAIR2_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 10, .crm = 1, .opc2 = 1,
+-      .access = PL3_RW,
++      .access = PL3_RW, .fgt = FGT_MAIR2_EL3,
+       .fieldoffset = offsetof(CPUARMState, cp15.mair2_el[3]) },
+ 
+     { .name = "AMAIR2_EL1", .state = ARM_CP_STATE_AA64,
+@@ -6382,7 +6385,7 @@ static const ARMCPRegInfo aie_reginfo[] = {
+       .type = ARM_CP_CONST, .resetvalue = 0 },
+     { .name = "AMAIR2_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 10, .crm = 3, .opc2 = 1,
+-      .access = PL3_RW,
++      .access = PL3_RW, .fgt = FGT_AMAIR2_EL3,
+       .type = ARM_CP_CONST, .resetvalue = 0 },
+ };
+ 
+@@ -7110,7 +7113,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .resetvalue = arm_feature(env, ARM_FEATURE_AARCH64) },
+             { .name = "SCTLR_EL3", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 6, .crn = 1, .crm = 0, .opc2 = 0,
+-              .access = PL3_RW,
++              .access = PL3_RW, .fgt = FGT_SCTLR_EL3,
+               .raw_writefn = raw_write, .writefn = sctlr_write,
+               .fieldoffset = offsetof(CPUARMState, cp15.sctlr_el[3]),
+               .resetvalue = cpu->reset_sctlr },
+@@ -7485,8 +7488,8 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .resetvalue = 0 },
+             { .name = "ACTLR_EL3", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 6, .crn = 1, .crm = 0, .opc2 = 1,
+-              .access = PL3_RW, .type = ARM_CP_CONST,
+-              .resetvalue = 0 },
++              .access = PL3_RW, .fgt = FGT_ACTLR_EL3,
++              .type = ARM_CP_CONST, .resetvalue = 0 },
+         };
+         define_arm_cp_regs(cpu, auxcr_reginfo);
+         if (cpu_isar_feature(aa32_ac2, cpu)) {
 -- 
 2.43.0
 
