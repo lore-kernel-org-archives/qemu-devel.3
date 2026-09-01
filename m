@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D180C624D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 19:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511BDC61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 19:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1UOp-0005zv-Vl; Tue, 01 Sep 2026 15:44:04 -0400
+	id 1x1UP9-0006DY-CW; Tue, 01 Sep 2026 15:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UOg-0005wi-Dl
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:43:54 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UP8-0006D2-Fd
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:44:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UOe-0002HJ-Sa
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:43:54 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UP6-0002Mt-Tg
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:44:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788291832;
+ s=mimecast20190719; t=1788291860;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pZRiJOI37FD1ZgS9gMKMSe0r96Tyek+mAWzJpuOKJFU=;
- b=Yr+b2vP5L+qpbuGslnLPcxqh54MLmR1LZO2rL+opq422coX2jvoyNV6O3feKCKTShvFbfs
- tek+ursL5gun5SrVPV/XDWPwyOy+ImZV9rdixc0M8eb6SkECmzog5KDdyxOJE0VtFiPcg/
- DEU3xNE2dohtCL0Fji70+r+d+/PrEPc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=zjkSyZOR5UlGah9/I+f5WgT27XktokYJQ0TS7TR+kIg=;
+ b=hQS1OKTY5cc4oi0n4zvxIN5Lh8Z8cjmiNUuwZYld1Y+XcWd8VmMIbkB46jmiK7LWLDEXrr
+ LdCwhMyjdLbnxwnQHsrO8dvMua+eZGaPeu6iUaFmw2D+3z4lPfLQmrWgyaix958xqTOrhk
+ rBlvAVwoGk0NnNzcl9gSoTbXPbhF4JA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-MMtjr78OO5eWiELBMYUTYA-1; Tue,
- 01 Sept 2026 15:43:47 -0400
-X-MC-Unique: MMtjr78OO5eWiELBMYUTYA-1
-X-Mimecast-MFC-AGG-ID: MMtjr78OO5eWiELBMYUTYA_1788291826
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-yxqWWaFxPwm1TuWPR9D_sw-1; Tue,
+ 01 Sept 2026 15:44:18 -0400
+X-MC-Unique: yxqWWaFxPwm1TuWPR9D_sw-1
+X-Mimecast-MFC-AGG-ID: yxqWWaFxPwm1TuWPR9D_sw_1788291857
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBCF21834579; Tue,  1 Sep 2026 19:43:45 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF2A11933EA5; Tue,  1 Sep 2026 19:44:16 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.192])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B59C818005BD; Tue,  1 Sep 2026 19:43:41 +0000 (UTC)
+ id 7FF1518005B8; Tue,  1 Sep 2026 19:44:13 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -59,9 +59,9 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 03/12] qapi: convert simple command intros for replay.json
-Date: Tue,  1 Sep 2026 15:43:15 -0400
-Message-ID: <20260901194324.458482-4-jsnow@redhat.com>
+Subject: [PATCH 10/12] qapi: convert simple command intros for migration.json
+Date: Tue,  1 Sep 2026 15:43:22 -0400
+Message-ID: <20260901194324.458482-11-jsnow@redhat.com>
 In-Reply-To: <20260901194324.458482-1-jsnow@redhat.com>
 References: <20260901194324.458482-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -69,13 +69,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,80 +94,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/replay.json | 39 ++++++++++++++++++---------------------
- 1 file changed, 18 insertions(+), 21 deletions(-)
+ qapi/migration.json | 51 +++++++++++++++++++--------------------------
+ 1 file changed, 22 insertions(+), 29 deletions(-)
 
-diff --git a/qapi/replay.json b/qapi/replay.json
-index 66dff797553..db1440c09a6 100644
---- a/qapi/replay.json
-+++ b/qapi/replay.json
-@@ -45,10 +45,9 @@
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8b6abcee2ca..e3beaea87bb 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -333,9 +333,9 @@
  
  ##
- # @query-replay:
+ # @query-migrate:
 -#
--# Retrieve the record/replay information.  It includes current
--# instruction count which may be used for `replay-break` and
--# `replay-seek` commands.
-+#     Retrieve the record/replay information.  It includes current
-+#     instruction count which may be used for `replay-break` and
-+#     `replay-seek` commands.
+-# Return information about current migration process.  If migration is
+-# active there will be another json-object with RAM migration status.
++#     Return information about current migration process.  If
++#     migration is active there will be another json-object with RAM
++#     migration status.
  #
- # Returns: record/replay information.
+ # Since: 0.14
  #
-@@ -64,13 +63,13 @@
+@@ -824,8 +824,7 @@
  
  ##
- # @replay-break:
+ # @migrate-set-parameters:
 -#
--# Set replay breakpoint at instruction count @icount.  Execution stops
--# when the specified instruction is reached.  There can be at most one
--# breakpoint.  When breakpoint is set, any prior one is removed.  The
--# breakpoint may be set only in replay mode and only "in the future",
--# i.e. at instruction counts greater than the current one.  The
--# current instruction count can be observed with `query-replay`.
-+#     Set replay breakpoint at instruction count @icount.  Execution
-+#     stops when the specified instruction is reached.  There can be
-+#     at most one breakpoint.  When breakpoint is set, any prior one
-+#     is removed.  The breakpoint may be set only in replay mode and
-+#     only "in the future", i.e. at instruction counts greater than
-+#     the current one.  The current instruction count can be observed
-+#     with `query-replay`.
+-# Set migration parameters.  All arguments are optional.
++#     Set migration parameters.  All arguments are optional.
  #
- # @icount: instruction count to stop at
+ # Since: 2.4
  #
-@@ -85,9 +84,8 @@
+@@ -1047,11 +1046,10 @@
  
  ##
- # @replay-delete-break:
+ # @query-migrate-parameters:
 -#
--# Remove replay breakpoint which was set with `replay-break`.  The
--# command is ignored when there are no replay breakpoints.
-+#     Remove replay breakpoint which was set with `replay-break`.  The
-+#     command is ignored when there are no replay breakpoints.
+-# Return information about the current migration parameters.  Optional
+-# members of the return value are always present, except
+-# @block-bitmap-mapping, which is only present if it has been
+-# previously set.
++#     Return information about the current migration parameters.
++#     Optional members of the return value are always present, except
++#     @block-bitmap-mapping, which is only present if it has been
++#     previously set.
  #
- # Since: 5.2
+ # Since: 2.4
  #
-@@ -100,13 +98,12 @@
+@@ -1072,10 +1070,9 @@
  
  ##
- # @replay-seek:
+ # @migrate-start-postcopy:
 -#
--# Automatically proceed to the instruction count @icount, when
--# replaying the execution.  The command automatically loads nearest
--# snapshot and replays the execution to find the desired instruction.
--# When there is no preceding snapshot or the execution is not
--# replayed, then the command fails.  Instruction count can be obtained
--# with the `query-replay` command.
-+#     Automatically proceed to the instruction count @icount, when
-+#     replaying the execution.  The command automatically loads
-+#     nearest snapshot and replays the execution to find the desired
-+#     instruction.  When there is no preceding snapshot or the
-+#     execution is not replayed, then the command fails.  Instruction
-+#     count can be obtained with the `query-replay` command.
+-# Followup to a migration command to switch the migration to postcopy
+-# mode.  The postcopy-ram capability must be set on both source and
+-# destination before the original migration command.
++#     Followup to a migration command to switch the migration to
++#     postcopy mode.  The postcopy-ram capability must be set on both
++#     source and destination before the original migration command.
  #
- # @icount: target instruction count
+ # Since: 2.5
  #
+@@ -1222,12 +1219,11 @@
+ 
+ ##
+ # @x-colo-lost-heartbeat:
+-#
+-# Tell QEMU that heartbeat is lost, request it to do takeover
+-# procedures.  If this command is sent to the PVM, the Primary side
+-# will exit COLO mode.  If sent to the Secondary, the Secondary side
+-# will run failover work, then takes over server operation to become
+-# the service VM.
++#     Tell QEMU that heartbeat is lost, request it to do takeover
++#     procedures.  If this command is sent to the PVM, the Primary
++#     side will exit COLO mode.  If sent to the Secondary, the
++#     Secondary side will run failover work, then takes over server
++#     operation to become the service VM.
+ #
+ # Features:
+ #
+@@ -1442,9 +1438,8 @@
+ 
+ ##
+ # @migrate-incoming:
+-#
+-# Start an incoming migration.  QEMU must have been started with
+-# -incoming defer.
++#     Start an incoming migration.  QEMU must have been started with
++#     -incoming defer.
+ #
+ # @uri: The Uniform Resource Identifier identifying the source or
+ #     address to listen on
+@@ -1514,9 +1509,8 @@
+ 
+ ##
+ # @xen-save-devices-state:
+-#
+-# Save the state of all devices to file.  The RAM and the block
+-# devices of the VM are not saved by this command.
++#     Save the state of all devices to file.  The RAM and the block
++#     devices of the VM are not saved by this command.
+ #
+ # @filename: the file to save the state of the devices to as binary
+ #     data.  See `xen-save-devices-state`.txt for a description of the
+@@ -1554,9 +1548,8 @@
+ 
+ ##
+ # @xen-load-devices-state:
+-#
+-# Load the state of all devices from file.  The RAM and the block
+-# devices of the VM are not loaded by this command.
++#     Load the state of all devices from file.  The RAM and the block
++#     devices of the VM are not loaded by this command.
+ #
+ # @filename: the file to load the state of the devices from as binary
+ #     data.  See `xen-save-devices-state`.txt for a description of the
 -- 
 2.55.0
 
