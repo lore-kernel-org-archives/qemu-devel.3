@@ -4,144 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377E3C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15DA8C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Ok1-0003eu-DP; Tue, 01 Sep 2026 09:41:33 -0400
+	id 1x1OnV-0004m6-Lu; Tue, 01 Sep 2026 09:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x1Ok0-0003eg-Fy; Tue, 01 Sep 2026 09:41:32 -0400
-Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1OnR-0004h0-OU
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:45:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x1Ojy-00063k-SB; Tue, 01 Sep 2026 09:41:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iaVVt5SkO9aXwbeIUN2QBkidYSLniv4yMCVer3zI2E3mB5LyblScwiu8nCfgdYUWfGBqqPnpHjBLtH/ijkFyNzUZWhFBV/vkr6wnvTt6+M6nZSUx8NudqeHDoh1rWm7H064uSo9rp/3/ipNzDi80x68YVBq1r9SsdLYYDg1Vje9FodMoGFI5Mg/iUxESqw4DNQhcuJ3rte98oRg/aOFPh07bRF2G69gYg9WWlXvdwih6IS0WdOw7kvUNpcKST4ABhFpv/iTlyetZd6mo1LpR3yD5IYWcUIp0cTPDFW/sMLjdO+E6qSh7l8qujaPSditjDH9sehcDfTyLBfCfiRGqjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h/rekf8dx3nbSNmvXAK6ZsnVWaQAnXMFXOVuezTxafQ=;
- b=mOGxoFAybOQyG84xdz8ldFBLNbivNo3tqKueBbKSW6JuczPp0KTtJBa411h5Cu3rMRBkQkgffb2/w33tp1fdfTxdSJmo2xoL5jdgSAswwIIqmbnI8YE7dAHe+SX/xxkg9TKef48TTIZFek2eu6m1Odo//0z9WEE5/fVxs0eJ/HM8LW0SvmQnj1uaByFbHWEwGKQ3ooE7QI8zx6KwRB278e5uEotOM9+3YxCUMQ938kNKpSzRIOT/jQ2EhV1WJIgWUYRTVIksHaE1M9SbywLtGIqJYqy1kukOmIAI11+GZSsbHsW/SjOmrwTBCEQsy7qn1NrfWn+LV+o9qrbhrz5JuQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h/rekf8dx3nbSNmvXAK6ZsnVWaQAnXMFXOVuezTxafQ=;
- b=hwEFhfE92E0dRcG1jWAal37e/ykrbe/LFPORa9EVfjuTIcJ+iluYPPd/ydiNlISqttZkJBWefMvPceLM05FnBD8tWH2Op1VNAO1Ynxj8ZoAGug/ob1oH5GagRgB99G2rk5jIjwhJv7IF6+HcFwHRZB9ZF0sT6Xy/3/H4VeywewKFCtDwqKQl4xQgBy3eG9b/sa3LhdZaNP/xliNkSMF1mG5Y1w/taHfIRrZYmROj/VRi3CQJZcVfV79d7Rw5cVHcUA+9Ta0+WmifJEjBAJcsjCAo2FWuRF7lEG03x3SjA8FDS6U1IjGrIJd7+zY/nROzJ60XI1OzTeVVkRfSK1bqdQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by AS8PR08MB6199.eurprd08.prod.outlook.com (2603:10a6:20b:296::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Tue, 1 Sep
- 2026 13:41:26 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.007; Tue, 1 Sep 2026
- 13:41:26 +0000
-Message-ID: <8604eafa-c683-4d89-b180-5b26c56b7817@virtuozzo.com>
-Date: Tue, 1 Sep 2026 15:41:25 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] tests/qtest: fix the disk tests on a host with a
- small /tmp
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Reinoud Zandijk <reinoud@netbsd.org>, Fabiano Rosas <farosas@suse.de>
-References: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
- <20260824200627.2180635-1-den@openvz.org>
- <a1a7cdc7-5458-4d1b-bf1e-9aa89502317b@redhat.com>
- <apAZaRwIdm1yLiLV@redhat.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <apAZaRwIdm1yLiLV@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0070.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:337::8) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1OnO-0006qf-0F
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:45:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788270301;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fTtHrz1ZOvF8OXqosUvZDp0LO7c88jUZIChV6ftdiSk=;
+ b=fg+Gzzay6OgMtzp5UtdIZ9PBxqkG7uZ1UpfvZjB8W+Wy8fsH1dfZwfRRc+uYSo/ETeOt8Z
+ Gx6yEjnKW/nHxNqqSS65V5l8/FASgXDe12DMPnusR9NxML3P6eOMi+EgDNWAWsI6u3WRJV
+ VAnUa4altDDssP3CWZc72h5fkm0TNhQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-362-imCeH3FaMr-Q7xAKJPav5g-1; Tue, 01 Sept 2026 09:44:59 -0400
+X-MC-Unique: imCeH3FaMr-Q7xAKJPav5g-1
+X-Mimecast-MFC-AGG-ID: imCeH3FaMr-Q7xAKJPav5g_1788270298
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-c213d5fb55aso485514966b.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:44:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788270298; x=1788875098; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fTtHrz1ZOvF8OXqosUvZDp0LO7c88jUZIChV6ftdiSk=;
+ b=NWfVJ0M/x3ff0OnoTyfNByeV7wd2ZCjcTzHFXck6bXYnIS6pvN4cXkfoZGb/DvzXj7
+ 2TV1KrOFD9eQp/TY7CzCCUG0SDInMP1ZXf6CKUjny6EjxC/jUbUrXCz8J8/2D6omSacu
+ AFneXWZQUlsqxEw3bhy8roL3Uw3fTEp3wrcBnTEuXCulbasFtpHl5+4SvFNpKRqHsm70
+ IXpmJb2SkBBM3nZOHOM28WpguNchk25kq8bFbegmtgaDzUtSvuF+b/zCy9l0MgLtlyKn
+ gx7rE6y/k4e8tRL8wMZzqu1CHwX1aC6aCVxh79qdm6WdplZF+SYmBbQoXdQ2OxBwcTnN
+ tNDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788270298; x=1788875098;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fTtHrz1ZOvF8OXqosUvZDp0LO7c88jUZIChV6ftdiSk=;
+ b=aF8gs/m7o0MmCJnv/Fj1xJk6c5a+e5be8Rf6GwNx3t5vcM5/ZggPmQEbUgfKal5IpF
+ s+L8bsnFMStLQjizb0yywpHcIKcvt0TFmZG2Z1sIEz1mhCJJbXqfoSq/6hBTwne5Hkn3
+ 0LKH6gAj15kG4BQLqBk0ivhToyA/stdBS9SO7SrktP7I/rTG5ziXKSdNVGAwBczH3jbi
+ 9fYB219mRwGstcj5YNy2GWE/kP2WdFkQIomQKdCb58WRMXZwBjTDY1Psaey6xo1cnUig
+ cXQxk7P5ijBd+RPIr1E9M+gPmje04V8sNDMYkrSxhs2cG7ecs6obK+SwKKQ51KAj5iVq
+ DBuA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpFwTZJTMCdFr+F9mNk106jVEoZ8dZZY6loRW8ZoHSYFA/EQ0t35BLvyD6diKd4xVJe4HD5af+qeQxe@nongnu.org
+X-Gm-Message-State: AFuF++mYZ41lJtOqSAUd2CZCjYPLu5LubTuYmaDmYcDJRFzObWo63lT+
+ s4TOsIGT8RgA2j4LUkoA4ytERQ59HJndwPpXdlYRbcpFY7ZRDwnSOTDgw5BmmIxNfZrEFX2xM5g
+ jlR5nJ1e2jdJAwRV9mXnftE2oePqJHzQjFZ4MsbPWm7L1+P6xm2iRo3pq
+X-Gm-Gg: AR+sD125idycxxsRytO8y4yGQ4rydMxPrZtIwDPF17VPceWgEOrlkCAbOhHxTwlJQGC
+ u243g5tP6V/B3sDG4Z2swr1a8XGBlwJI4WOW9wNlyWHw7Li6+kLcpspTm5xtb4dHpPY+iXL6DwB
+ U89sNTw7Xy0Eti0AUAoGu6flK+Y/sg0iHIBoYyY3EZ5YHmw3S5DJKJYCGjP8oR1MIqmDXiUL3g/
+ MauTYn2wrum/4MdBwRint7EslVh11uAiwZXYV89/ZOnZKvDSIl/vA1yx6Hgw3OFw/f5cXx/uEEr
+ nvHfCjXZZoDxaUypqdSh4qAhEnN+Aik0gzgdYAZIxPei2O1b7tmLYzZa4VPWtLcowtdr1ND6v9O
+ dAwbaaNFf5Y1r3xY7TJMjIj8=
+X-Received: by 2002:a17:907:3ccc:b0:c25:2cbe:edeb with SMTP id
+ a640c23a62f3a-c255741a624mr2360394866b.21.1788270297689; 
+ Tue, 01 Sep 2026 06:44:57 -0700 (PDT)
+X-Received: by 2002:a17:907:3ccc:b0:c25:2cbe:edeb with SMTP id
+ a640c23a62f3a-c255741a624mr2360387566b.21.1788270297000; 
+ Tue, 01 Sep 2026 06:44:57 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c255f1b2049sm611249566b.36.2026.09.01.06.44.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Sep 2026 06:44:56 -0700 (PDT)
+Date: Tue, 1 Sep 2026 09:44:53 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel Paziyski <danielpaziyski@gmail.com>
+Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ qemu-stable@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ "open list:nvme" <qemu-block@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 3/3] pcie_sriov: register user created virtual function
+ before realizing it
+Message-ID: <20260901094419-mutt-send-email-mst@kernel.org>
+References: <20260805124519.30054-1-danielpaziyski@gmail.com>
+ <20260805124519.30054-4-danielpaziyski@gmail.com>
+ <20260901071543-mutt-send-email-mst@kernel.org>
+ <CANukVxvZMPp_1ZkZzmrE1pSAryW7DWpBOOWV5=QUmnQf3LH48Q@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS8PR08MB6199:EE_
-X-MS-Office365-Filtering-Correlation-Id: beeb8534-5a7b-4cec-e732-08df082eb852
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|10070799003|366016|376014|18002099003|22082099003|56012099006|3023799007|4143699003|10067099003|5023799004;
-X-Microsoft-Antispam-Message-Info: heQvkcrD3++4UwMrjTwVKsRQT1Lf1CfevFPZDn2EGxUTI5+tQn7CKNwGGgI48Pu+BHWS+nWc3Z5BfMEgDBGDwsJ01wQ9MHZ53bVF575Mgt4G8FJ2NIzMinINsnAazdyz0lV6il3f77qmHA+Z4EQNGqosrQBWbEbHL0l/CraGmtu0stFPI5BahP7HOufA+r4GVl1US1EqBTcNB8xFcCHLeuGLPfcdEhSYGhyLc4UNeJe6ULPJIhAy3qmLNH99nN3sIbNB1b/nhwM5aTrGg0o2ZsrRomnFuNwI5pE+JIonSz7iV5PPpS1oAbevWw1Ee+2k2cmp0xJ2De8+NuqdzpUktneqZfLxeoavp/oV8UfK9QgJaYmTqigFQfgJ20Rsla/GNNyyO0qVVa6HKOEsHRRB7NchXo3cFqyjqTHD/Q03Dl7tLbpRBDrjX8A1GOPjE8f0lnyCEpWiIgbL6S0Bx+essE9gp7Ba8MHRUzz0kPo/9JQhceA2RUHDKZWZIfklOK1/JDQsZfs/ZQ+3Vi6MfmDz37EmgVfjpZfu3/ui8Gp9aZH5em09/fvmvtaK54Kb8ZvsyxLHf4gTPssV4hCk/MjzzCn1ho2+JmcD9Ckg/b6O8fXtcgrW5+KGChwaM+HTg6FcC7vDxF8zCEF1KnnjIniJ9LSfHOk/SA9cTeVKBzn+WZM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(10070799003)(366016)(376014)(18002099003)(22082099003)(56012099006)(3023799007)(4143699003)(10067099003)(5023799004);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c0JaYUpPaDdDTExLTE9DTjRJWFJDakdrbzczaVovLzRidzMwS3k4dlV5M0xi?=
- =?utf-8?B?UXo4WHRUaE51OFZ2RUs5SFBKdUtNUGZvS0Vla2V4VjJCbHYvK1k1VStnenEw?=
- =?utf-8?B?SWNwT1h1Q3Y4S3d6dmRLRG5iSHB4N1Ezd1R6bTVHL0RNVWRkMEdPWE9tM2Zn?=
- =?utf-8?B?VmtDMGluYzkrMWNJODlVQm9hWGdySWNWMFlQN2R0YmRXTkNSV1VaZ0QydnRH?=
- =?utf-8?B?cys4NlpWVnJDTWw5YmxqYVQrN3VGKzBIOXRVNlgwQ3pOLzFWOFNFNHR6eWlu?=
- =?utf-8?B?ZHpsM0czcFpOdVVOTUpqSWswL2hXaExTR1VuRmtTRTcvVXhWR3BTYmhvdkhN?=
- =?utf-8?B?Mm5BVjF2RzJXNThpRHRRZ0tGL0kwMVNHYjd3WWNXQjdEaUJDZjA5SHV2ZFha?=
- =?utf-8?B?Nm1jWFZDd0FrR204MStGekZFM1paVjQxc28rT0RXY3l1SjExOVN5dDRRc2oy?=
- =?utf-8?B?akVjWWVLdUpmL2JteWh1dGRwaUdveGl4NWxGdzhWZ1YwcEVRYlhxRXovTW01?=
- =?utf-8?B?K1M1Znhmd2g4MVZzV1BMNzBMWmp5NWN0bFRsS2tiTjk1VGxhdDJ3dHREUGcw?=
- =?utf-8?B?MlV6cm1YazdQQlJIR3FhMVNzZm9jRHVjTEE3WlR5M1c4TnhiMk9SWE4yUHV2?=
- =?utf-8?B?RFowS0pMV2hLd2lZNkpKU2pqbXJQcUZieTRoNExnL2JxbE41Q2ZsVnRyL05u?=
- =?utf-8?B?bmZwemloVVRDMUpsZVVzUnY5U09QTnVWQm5ldVpVNjJSL0pFcmtBemdCb3Q0?=
- =?utf-8?B?djJxWmJDLzJlUzhOWjdPSWhPQ1NxaUNVK3laVlBKQ1ZHOUE2ZE4vNTNCdkNY?=
- =?utf-8?B?WXBzTmh0UFc4VVlGNGVSSGxNZXJvQTlVekFPUzdvQlRuaFlEVG4zdUNxcGYx?=
- =?utf-8?B?Q3NmcFVHclBLNTA2TnVtMU1Ma1Y2NTBDT3lHTDk0NDYwSHdDSS90QzUvb2Fo?=
- =?utf-8?B?TTdBVk9PLzRvZU9FWVQxai9KQXlwaEF1eUI5N0tnWHhEbnVpalFzWCtPZGpR?=
- =?utf-8?B?VjNOTFVDcXJFVERXdVhSQVZNUmlPVGF5cnUxSGwxRExQbW9EVHJMMURaRUg2?=
- =?utf-8?B?ZUhCSnRXMUNyQjJUcTQ0YTRqSHBkcDNqSmJodkp0amlmS1gzKy9SaG5qemJM?=
- =?utf-8?B?Z1k0OWpDS0RjWXZiSS8vdWVJa2Q0Qjh1R3hGelloRG9aUldkTUtiZjdpc2xM?=
- =?utf-8?B?SDNJd00zVSt4djcycXplSEhmTFRuYW8wRmVsUGJPNEtyRVpmWUl2T2xqODZB?=
- =?utf-8?B?clBNTzFyVk5GOWR3bkdFekpMRG9ESkNIZHFCcDdBT2NqWlBrODdBbXp5aHp0?=
- =?utf-8?B?RUNGNDB1dFh1ZnR4VTR0LzFBK3hHeUpKaktmYU84c2NncVJVMTJwNVR6cVhJ?=
- =?utf-8?B?R2JsKzBJNG9xVHNuSDdXYU9jRElOR2NmUkRidThZZEorM1hBbVFQUzlhMzhj?=
- =?utf-8?B?TEFwV1luS1lXVU1TMnQxYTBKN0p0QWNJRXBraXVVNUFMcVUyKzdlVG9KZDdX?=
- =?utf-8?B?Mkh3ZU1nb1hPNkdsd3doVmd1NnFKK28xZkJ3U0NYR0JROEdQT3h1Q3k3SENT?=
- =?utf-8?B?eHZxd01TNXJTMmJCK3cvN21HamJDY1RsTmN0VFdjSTRCMlhqMzBkTEdkZ25Q?=
- =?utf-8?B?S29jbVVZTzRza1R5THpuRnZJSitSSnVMcWFycVorN1VLbmpzMzNsYWxUaFht?=
- =?utf-8?B?bi9NbG0yWG5UczlJak40MVQ5NzAzYm1qTlhONGVNeUkrUFc2OGRLc2JyaEx3?=
- =?utf-8?B?MG5nUWcrcDRUUU1BY093Y0c0MlRJZklZTEI5QWJBc0dkUGFrdDBueVgwWVBI?=
- =?utf-8?B?dktIaWJyaGpmRHpPYnRscjVyYStkVC9nbGFmclovblAxeWRSOWV1SGNNOVI4?=
- =?utf-8?B?TFEzdm8zdm50M3VPcEZjVmIzVzZFZitIT1A0OXBCd2FtRm1nR0lvSTZCdUpz?=
- =?utf-8?B?RzFJR2cvbGpiN0k0M0pieGZCakp2N0xhQXZ5aWtueXoyKzZrK2R0bWRtS2hE?=
- =?utf-8?B?WEhpMy9sRlZNSkZwSWpXSWhoYlhhNm4vemlHeG5STUc0MitSaUFiMjBLVlc5?=
- =?utf-8?B?Vm9va212WW5FVyttV2JMUVhFQmRDcVNMOUN5aUVsYXc3NE5PM3VSL1VFNnBC?=
- =?utf-8?B?a3V6K28xWko3R2pTU0dCU1F4ZWdzdWo3cEZrei9jTzVySUFBVDFrSDhuTlpP?=
- =?utf-8?B?eHRTQzFld0FyMWRqaDJxR2M3V1NyM2ZHQjdUUDdtcXR1SEw3QnF4c1JoaWlr?=
- =?utf-8?B?S2xhQWxMU3VDNUVJVXdtdzh6ZEdJSzhBdnVWbm5NRUcxTHdBOVFIYnZURjd3?=
- =?utf-8?B?OXh3RnhrMVBRaUNURVRhdktGRm1vZG8vOXVleFJ6aUhRRWprYUUyOTJSRmRi?=
- =?utf-8?Q?ZY9wAv1t32vFMD0+h/PcUTg0hP04268OypYV44y0aNHKp?=
-X-MS-Exchange-AntiSpam-MessageData-1: MlPI+Lw5hXJQUQ==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: beeb8534-5a7b-4cec-e732-08df082eb852
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 13:41:26.5320 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: M2XajtICOsXEFNVFGBkN/tGTjdN8IO7gbIRtJGmH3YBdpQFQTJJC+1XhXkpoYIkyNLqxziBpmzs8ngldWVSGbg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB6199
-Received-SPF: pass client-ip=2a01:111:f403:c201::3;
- envelope-from=den@virtuozzo.com;
- helo=AS8PR04CU009.outbound.protection.outlook.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANukVxvZMPp_1ZkZzmrE1pSAryW7DWpBOOWV5=QUmnQf3LH48Q@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,59 +125,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/26 13:03, Daniel P. Berrangé wrote:
-> On Thu, Aug 27, 2026 at 12:16:56PM +0200, Thomas Huth wrote:
->>  Hi Denis!
->>
->> Please make sure to CC: the qtest maintainer (Fabiano Rosas) on series like
->> this.
->>
->> On 24/08/2026 22.06, Denis V. Lunev wrote:
->>> John reported ide-test dying at startup in the NetBSD VM:
->>>
->>>    ERROR:../src/tests/qtest/ide-test.c:1260:main: assertion failed:
->>>    (ret == 0)
->>>
->>> The hypothesys is that the ftruncate() of a 64 MiB scratch image. NetBSD
->>> mounts /tmp as a tmpfs sized at 25% of RAM and charges a file its full
->>> length themoment it is extended, so a sparse image is not free there and
->>> the call returns ENOSPC. The assert dates to 2013, nothing regressed.
->> Does NetBSD have another file like /var/tmp that might be friendlier to
->> sparse files? If so, maybe that should be used instead?
->>
->> OTOH, our NetBSD VM in tests/vm/ uses 4G of RAM, so a temporary file with
->> just 64 MiB should really not be a problem...?
-> Or this is a concurrency scaling problem, or racing with another test
-> that also uses stuff ?
->
-> We hard code memory to 4 GB, but -smp we scale to "$NUM-CPUs / 2"
-> for the "make vm-build-DIST" commands.
->
-> IOW, regardless of whether QEMU is launched with -smp 1 or -smp 20,
-> we only give it 4 GB to play with. We could be using a lot of RAM
-> for concurrent build jobs leaving almost nothing for the tmpfs for
-> the test.
->
-> If we were that close to exhaustion I'd expected to see out of
-> memory errors, but I'm unclear what NetBSD's behaviour is in
-> this respect ?  Maybe normal RAM usage can be pushed to swap
-> (of which I see another 4 GB) while tmpfs can't be pushed
-> to swap ?
->
->
->
->
-> With regards,
+On Tue, Sep 01, 2026 at 03:24:08PM +0200, Daniel Paziyski wrote:
+> On Tue, 1 Sept 2026 at 13:19, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Wed, Aug 05, 2026 at 02:45:18PM +0200, Daniel Paziyski wrote:
+> >> There are two ways of creating virtual functions: by using the sriov-pf device
+> >> parameter (this way, creating a user created VF and binding it to a PF), or
+> >> by using a device specific parameter, where the device manually creates a given
+> >> amount of VFs.
+> >>
+> >> When a PCI device is realized, the device specific realize function is called
+> >> first, and then the pcie_sriov_register_device function is called, which checks
+> >> whether the device that has been created is a user created VF, and if it is the
+> >> case and the device allows this kind of VFs, it inserts it into a hashmap, with
+> >> the key being the ID of the PF, and the items being arrays of VFs.
+> >>
+> >> User created VFs are instantiated independently, and later, when the PF calls
+> >> pcie_sriov_pf_init_from_user_created_vfs, it discovers its VFs from the hashmap
+> >> mentioned previously, and sets up in their PCIDevice.ex.sriov_pf structure
+> >> the pointer to the PF. This means that, during realization, VFs have no access
+> >> to the PF.
+> >>
+> >> Device created VFs are instantiated during or after PF realization using the
+> >> pcie_sriov_pf_init function, which sets up for the VFs the pointer to the PF
+> >> before their realization, so when they're realized, they can access the PF
+> >> with no issues.
+> >>
+> >> The problem here is that pcie_sriov_register_device is called after the
+> >> realization, and not before. This means that when a user created VF is created
+> >> for a device which does not support user created VFs, but supports device
+> >> created VFs, the realize function will notice that a VF is being created, and
+> >> may try to access the PF, causing a null pointer dereference fault.
+> >>
+> >> Fix this by placing the user created VF check and registering before the
+> >> realization. This way, incorrectly created user created VFs will be noticed,
+> >> and device creation will be aborted.
+> >>
+> >> Additionally, remove from the pcie_sriov_register_device function the top
+> >> check. It seems that this check is done to error out if the PF failed for some
+> >> reason to initialize its list of user created VFs. However, in such situations,
+> >> the pcie_sriov_pf_init_from_user_created_vfs function will error during
+> >> realization, and it will be caught before the check is done at all. Moreover,
+> >> since now pcie_sriov_register_device is called before realization, the check
+> >> will always fail for PFs with user created VFs, because the list will be
+> >> populated during realization.
+> >>
+> >> The rest of the function though, correctly errors out if a user created VF
+> >> is created for an unsupported device type, if a VF is created for a non-PCIe
+> >> device, or if the PF is already instantiated, with now the advantage being
+> >> that the check is done before the VF instantiation.
+> >>
+> >> When instantiating a user created VF for a NVME controller:
+> >>
+> >> Command line:
+> >>
+> >>     qemu-system-x86_64 -device nvme-subsys,id=subsys0 \
+> >>     -device nvme,id=vctrl0,sriov-pf=ctrl0,subsys=subsys0 \
+> >>     -device nvme,id=ctrl0,subsys=subsys0,serial=s
+> >>
+> >> ASAN splat:
+> >>
+> >> ../hw/nvme/ctrl.c:9613:28: runtime error: member access within null pointer of type 'struct NvmeCtrl'
+> >> AddressSanitizer:DEADLYSIGNAL
+> >> =================================================================
+> >> ==91050==ERROR: AddressSanitizer: SEGV on unknown address 0x000000001cf0 (pc 0x7f79a8573dcd bp 0x7ffd622c1bc0 sp 0x7ffd622c1b68 T0)
+> >> ==91050==The signal is caused by a READ memory access.
+> >>     #0 0x7f79a8573dcd  (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >>     #1 0x5644c6c0266e in nvme_realize ../hw/nvme/ctrl.c:9613
+> >>     #2 0x5644c6c67213 in pci_qdev_realize ../hw/pci/pci.c:2316
+> >>     #3 0x5644c7a2cfc1 in device_set_realized ../hw/core/qdev.c:514
+> >>     #4 0x5644c7a4f767 in property_set_bool ../qom/object.c:2484
+> >>     #5 0x5644c7a48d0b in object_property_set ../qom/object.c:1548
+> >>     #6 0x5644c7a568a5 in object_property_set_qobject ../qom/qom-qobject.c:28
+> >>     #7 0x5644c7a49385 in object_property_set_bool ../qom/object.c:1618
+> >>     #8 0x5644c7a2aeb0 in qdev_realize ../hw/core/qdev.c:277
+> >>     #9 0x5644c735f29f in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+> >>     #10 0x5644c735f3ab in qdev_device_add ../system/qdev-monitor.c:758
+> >>     #11 0x5644c72b1901 in device_init_func ../system/vl.c:1217
+> >>     #12 0x5644c829d4a3 in qemu_opts_foreach ../util/qemu-option.c:1148
+> >>     #13 0x5644c72bc33e in qemu_create_cli_devices ../system/vl.c:2762
+> >>     #14 0x5644c72bcaa1 in qmp_x_exit_preconfig ../system/vl.c:2822
+> >>     #15 0x5644c72c3241 in qemu_init ../system/vl.c:3862
+> >>     #16 0x5644c801abf8 in main ../system/main.c:71
+> >>     #17 0x7f79a8427780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >>     #18 0x7f79a84278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >>     #19 0x5644c5f0a1f4 in _start (BuildId: 8483f952216d9e345c3744300d0aefa38feb50d7)
+> >>
+> >> ==91050==Register values:
+> >> rax = 0x00007e49988640f0  rbx = 0x00007e49988640f0  rcx = 0x00000fc9b3104828  rdx = 0x0000000000000058
+> >> rdi = 0x00007e49988640f0  rsi = 0x0000000000001cf0  rbp = 0x00007ffd622c1bc0  rsp = 0x00007ffd622c1b68
+> >>  r8 = 0x00000fc9b3104829   r9 = 0x00000fc9b3104828  r10 = 0x00000fc9b310481e  r11 = 0x00000fc9b310481e
+> >> r12 = 0x0000000000001cf0  r13 = 0x00000f6f32e78578  r14 = 0x00000000ffffffff  r15 = 0x00007ffd622c1c10
+> >> AddressSanitizer can not provide additional info.
+> >> SUMMARY: AddressSanitizer: SEGV (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >> ==91050==ABORTING
+> >>
+> >> Cc: qemu-stable@nongnu.org
+> >> Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
+> >> Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+> >> ---
+> >>  hw/pci/pci.c        | 11 ++++++-----
+> >>  hw/pci/pcie_sriov.c |  6 ------
+> >>  2 files changed, 6 insertions(+), 11 deletions(-)
+> >>
+> >> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> >> index d3191609e2..a5b4482bb6 100644
+> >> --- a/hw/pci/pci.c
+> >> +++ b/hw/pci/pci.c
+> >> @@ -2312,20 +2312,21 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> >>      if (pci_dev == NULL)
+> >>          return;
+> >>
+> >> +    if (!pcie_sriov_register_device(pci_dev, errp)) {
+> >> +        do_pci_unregister_device(pci_dev);
+> >
+> >
+> > This skips acpi-index rollback which pci_qdev_unrealize currently does.
+> > Needs generic PCI cleanup.
+> 
+> I see. pci_qdev_unrealize unregisters the device's acpi-index after calling
+> do_pci_unregister_device. What do you think if I moved the snippet for
+> unregistering the acpi-index to a new function, and then call it in
+> do_pci_unregister_device?
+> 
+> Moreover, this would fix the fact that in do_pci_register_device and outside of
+> it the acpi-index is not released in case of failure, since this new function
+> could then be called if necessary, if do_pci_unregister_device is not called.
+> 
+> Additionally, while I'm at it, why don't I move pcie_sriov_unregister_device to
+> do_pci_unregister_device? This way, I avoid calling it explicitly in
+> pci_qdev_realize, which is necessary now because user created VFs are registered
+> before realization.
+> 
+> Regards,
 > Daniel
-Guys,
 
-will somebody take a look into what was done?
-This makes sense anyway - unified same class error tracking
-plus requirements reduction.
+Hard to say like that pls send a patch.
 
-Or if nobody care I could just push along with another
-test fix?
+> >
+> >
+> >> +        return;
+> >> +    }
+> >> +
+> >>      if (pc->realize) {
+> >>          pc->realize(pci_dev, &local_err);
+> >>          if (local_err) {
+> >>              error_propagate(errp, local_err);
+> >> +            pcie_sriov_unregister_device(pci_dev);
+> >>              do_pci_unregister_device(pci_dev);
+> >>              return;
+> >>          }
+> >>      }
+> >>
+> >> -    if (!pcie_sriov_register_device(pci_dev, errp)) {
+> >> -        pci_qdev_unrealize(DEVICE(pci_dev));
+> >> -        return;
+> >> -    }
+> >> -
+> >>      /*
+> >>       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
+> >>       * associate only Device 0 with the device attached to the bus
+> >> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> >> index c41ac95bee..69930c7b8c 100644
+> >> --- a/hw/pci/pcie_sriov.c
+> >> +++ b/hw/pci/pcie_sriov.c
+> >> @@ -357,12 +357,6 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+> >>
+> >>  bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
+> >>  {
+> >> -    if (!dev->exp.sriov_pf.vf && dev->qdev.id &&
+> >> -        pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
+> >> -        error_setg(errp, "attaching user-created SR-IOV VF unsupported");
+> >> -        return false;
+> >> -    }
+> >> -
+> >>      if (dev->sriov_pf) {
+> >>          PCIDevice *pci_pf;
+> >>          GPtrArray *pf;
+> >> --
+> >> 2.55.0
+> >
 
-Thank you in advance,
-    Den
 
