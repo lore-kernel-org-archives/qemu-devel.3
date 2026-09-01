@@ -4,143 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB8FC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 09:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC06C624CF
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 09:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1LBu-0001QS-IW; Tue, 01 Sep 2026 05:54:06 -0400
+	id 1x1LCQ-0002y4-Th; Tue, 01 Sep 2026 05:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1LBt-0001Ki-9m
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1x1LCO-0002q8-RL
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1LBr-0007ek-54
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:05 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1x1LCN-0007hs-Al
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:36 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68179OYt1282783
- for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 09:54:02 GMT
+ 681797VN1211394
+ for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 09:54:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hsq1JIRdh79Vu7x6NM4uFXlT94qjGqXG7DyO7tUPxUc=; b=jaQLUly1+OAr8t7G
- b1rPAi2J/Je1EvoZrulXXS/GBmJIODY+yyxOJPN/CpWP9ECsdARi/plTzkGs3vRT
- ModHbd5mkRwbrbHoF5NSQFqf4rYLY6F2egJ5wRUDZGK5kLR5OHHgJJGob4wrNndA
- /Nz6z7U/qkJK8ctFko7EtvfFw9czn1utracPbGw7qpwofMyxcu0VKDCUCg6+7ZiP
- a7fFWq2923O3+WeEtSf2RCCLQBk5SxzBcuF6A+wGaCmK9+ZOhlnicOeeeozg3uiT
- fXQk+GbD2jP7XjYPHU7nhpOO9o/CxitEnd9wcpvmI1ySkFYYTBMJeuInzVJdJKwq
- CqzTxQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdndx9vr0-1
+ 38a/DWkUdMCnjY8t6uZkE4/mO5BQpmR3K14Wsfw3xBU=; b=UcQAoGKUfCstH+VG
+ ajcnHosqOuyifjRfiXiJQDLjtYG7rckkoPtAZPvH/j7hMQkpsa8pxCxPmN1zutE8
+ 9q/x+HOWy0GuMBarAT/fl5++0Ik1w+NlVcelf7OGA8nBR3W/FXIt5j1MvNeSzgz0
+ /ZXKJyDi1o2D46MPcAbXDX+Sr0niGqdxmujtWd7QxjYxBRqaWC5W3rV8UMIsOM2r
+ PK7YS4qUtgF8gNdgN4EPBrypk5uvPPWfq0UahR/GMDAhAjGxKf2seb2O5geogVzg
+ p1wknAH9Y4xA/pPUtUzLZztep6+1k9cSSL5BWCJCdKiDiu6BXuMhi0NVD7A9cZ6s
+ jLf5+g==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdnk8sw4v-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:54:01 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e53b8a302so662125685a.1
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 02:54:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:54:23 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-9390a2c895bso1016544285a.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 02:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788256441; x=1788861241; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788256463; x=1788861263; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=hsq1JIRdh79Vu7x6NM4uFXlT94qjGqXG7DyO7tUPxUc=;
- b=gL9geS80mZGT7AZCLnsZMxRMHwji17SoLnrjLyq9yiZjklcGJ7zspD941GqAzr04Rc
- tE6CfzE9lZpygHiG20kVMiL+lUSLQ5TD7+E/sZWnxebqDiWvq1jYRnY971r+OgpZaitd
- mTuvcoYnb9Hv0QWPHgAWxLMyuzS6S6cNhtGSHI6fBeaU+i8Z5kc6FvaAiEuzy9PVmo6m
- cv7X0uvFZKIJ28WLzdTiS2HcOsE871sAtclFvgCz3CKh+UPkIf3N/AX+bYs4r7e6H6Eq
- koBjGLciTnE7Ge8dmDU8sAXFtth4Xep13U27DM9k+T0rXiu88VcZQ1xVydXfq/ReFMsa
- UNTA==
+ bh=38a/DWkUdMCnjY8t6uZkE4/mO5BQpmR3K14Wsfw3xBU=;
+ b=Zj6notMRSdTzY9Jxvd5czjFONWs8Y3CSZjR+EwxxAIIVUygstf80wva8FGQo+3t/5p
+ rPlyfWXyYoFw4/SxX1F0hFoFAW9GfaxIROIXHl2vWvbt873KdyPA/enD15CJsk9MsBA9
+ IwmAZsUWFO5//Ag1RWnLMfq1HvsVepk0qCYfC8Pakt1cmbY0H2HEZCLNTPngRltiGjL9
+ zls/Ds2K9bDr9JiWrfUgS5CeSe7QcTUKgtSLMmRkBBNlgQ8ghYRS39y2dDU2AxK8vxqu
+ bDfI8k2VBca1c+ItUFZ7adIRwHqim+UyydTwucC+sG5wt/wJhu0UbvJhc/Fg/X0DVJTt
+ SQdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788256441; x=1788861241;
+ d=1e100.net; s=20251104; t=1788256463; x=1788861263;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hsq1JIRdh79Vu7x6NM4uFXlT94qjGqXG7DyO7tUPxUc=;
- b=O9YkpgDuAEg797a6VzwVX+WHFOGBOVV7PZEWG4rL6diTn3uOFkJWxIOJuNImOE2qEa
- b2nWQKHnOt8/UGlm1MKOxnN25pvMwoycmgvc7N0hnm08NpBqh86oZkjoxwiMdiRVkY/z
- 7IfX4HDdu2NBpqA7+Hcmgoco64ykYPlEuY/cz+5DZ93y1uIbbcl0HzcJETjq1DQHAhiE
- Tv0oEMut54Crg5+ZEuCbdlj+YIhGlrYy8WBDjGWAYbkPe/JHRsdetEVim9gh3mQTNSDV
- KRf9ie0GCFvZ0jkI7IC3Jl1b/R47owFHCHXKGPJ57w7C8aNYuxcghdCjQCt04xnvT4KY
- HocA==
-X-Gm-Message-State: AFuF++nDwRPyJAeY9E1ugkgQDpTzAqhq2+lXRBZ/Xc+K8BQ1qjhIkZkE
- EQnHBesQBRcB1YCqhoZir51kIMQ4iXPZ8nT3a4bxjFUS34WEkxQhjlbTC0P7jRceq0C7JSdvxJR
- O5h0sYaeHgnEM1xyTVmEqFn7r4Nt5r71KPGnI4Uuu5uERTJy+/SDXq6817cfiRqTHAA==
-X-Gm-Gg: AR+sD113ENu5cCflogbPVmrSYZtg3MgKtn1M47bu6DQScjYKEvburNxKXH1gPMbFpXc
- Sxm2dcQPiie538+gBQSyq+m7Oi+e7R3j6KbJOpPDNrEo3vmNKVe5OrdqQVDAfCHK7CcRHHtNjvO
- 1TiDEQdByK024gUmW9X7i4ANpW5L5J4QdEHEOvRTd0jMfNKyMd5o4DGTYRgRrewFmJh8aggmMbo
- o0OPL/RLRNUcaCmB4hFsK2cra9FQohK/FtvzvDbQvNEWj6u7XPySQ0GJze4n2mDN0qH5rHyhlCi
- aSDgp+uD6eRMfl22Qy0e9mONtm9g1310zCljqaqsfDj1NuRz9JBBx+drkaBlYL/9k4ih/5Exwas
- xowGFgTuxh0mX4lq0yunjzI9WHAagEBZZaJTq2tow
-X-Received: by 2002:a05:620a:8086:b0:939:16f6:4d01 with SMTP id
- af79cd13be357-93916f64e85mr3521139685a.21.1788256440858; 
- Tue, 01 Sep 2026 02:54:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:8086:b0:939:16f6:4d01 with SMTP id
- af79cd13be357-93916f64e85mr3521135685a.21.1788256440377; 
- Tue, 01 Sep 2026 02:54:00 -0700 (PDT)
+ bh=38a/DWkUdMCnjY8t6uZkE4/mO5BQpmR3K14Wsfw3xBU=;
+ b=mR48MsBmzjqFBYImzBiHRNJxW715qarqi4o3qDuTNn+5IYmtunrlzXw0YTh9Itia7n
+ lqLrvFFY9IXaAjJxVk5da1ArkXfAZu6pLxNc1wQysshd6IbqZ1HjzmrhFHZxSvsavATH
+ vP5xKXZoQJB3UNOs3AAntnU16Os4i4Lf8rJ58bVg2seP3irwdXgi9h5IUTGvGgyHpYan
+ Ivg/1dWUjPDJVfk9R8SY+E5qkqYEKXYv6C1o5cj3++xtnogZUrB0Nv8y1tVDTMxPgrBU
+ yKv0Lezjz0ORwWiLA0l42ovnlChN/NXMasbpYMyJ6POJnnhyrY9tWqD3wetHHkcxuV8O
+ CLxA==
+X-Gm-Message-State: AFuF++nTElMD6blu807BS4C1orcaz+XbTQch/Y2XKvXfmiH2sNgs1NfE
+ f7I4cjjYjtM1cWwJGNyHiCOB6WjZQam8/jSeVlyI8d7QNwzDBT/lb4yi4OpgJP5Hwr0qAL9pvQQ
+ bZRr7rBjrjthLhMiQDVgCwB0z25oO1y5g+KsU1caIr5Xl72OnCU6+22ZdCXidsfi2ZA==
+X-Gm-Gg: AR+sD12P7sGdMqxefBdhfNzF/Ep+f56cFQzOQ+mcpF5+Rbv7y5c5cUnKEfZgNLGlPrA
+ JXNFl23MZ/CBwjVYRgl5rHE0q0/a85DKb/Js8bXxMMXPnb0AWkY/w4/SCtUCwwLcc2o1fQ8fecy
+ dBUfOpuUkx5xKd4q+hbNmKB2ifOeIZagdDYuAb9EfdTgfsqUOYlPBWJr52cmTMqvR2tidJUKUKK
+ wp1vJUrXNyXdGKAArfvekdRu8LAC7wNs3xG/EJr+M8Gq0pbOLYpb2YzoMkmqDhNQQ7bgujOUWLz
+ Vkkicvt5O8gCDoDfG1J5hSWHFHhKBAFyy/566iz3JzjegRem9b1Zq7ag9AmHetrr4tI3FNRpC3K
+ 8BG1EUnBN5cIWA4kSngbe/kwCPsuSnfLXf+8T0oKW
+X-Received: by 2002:a05:620a:6b8b:b0:92e:5d44:73fc with SMTP id
+ af79cd13be357-93913807228mr3088887185a.12.1788256462971; 
+ Tue, 01 Sep 2026 02:54:22 -0700 (PDT)
+X-Received: by 2002:a05:620a:6b8b:b0:92e:5d44:73fc with SMTP id
+ af79cd13be357-93913807228mr3088884485a.12.1788256462462; 
+ Tue, 01 Sep 2026 02:54:22 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b927d462dsm162657125e9.0.2026.09.01.02.53.58
+ 5b1f17b1804b1-49cdce199aasm58761745e9.11.2026.09.01.02.54.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Sep 2026 02:53:59 -0700 (PDT)
+ Tue, 01 Sep 2026 02:54:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Bibo Mao <maobibo@loongson.cn>, Song Gao <17746591750@163.com>,
- Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v5 12/21] target/loongarch: Constify CPULoongArchState for
- various tlb_*() getters
-Date: Tue,  1 Sep 2026 11:52:18 +0200
-Message-ID: <20260901095229.72018-13-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v5 15/21] target/riscv: Constify @iprio argument in
+ riscv_cpu_pending_to_irq()
+Date: Tue,  1 Sep 2026 11:52:21 +0200
+Message-ID: <20260901095229.72018-16-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260901095229.72018-1-philmd@oss.qualcomm.com>
 References: <20260901095229.72018-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: H7PLYpVZ6nLxL-GdiR2Uk7ZdxalhwK1H
-X-Proofpoint-ORIG-GUID: H7PLYpVZ6nLxL-GdiR2Uk7ZdxalhwK1H
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX+Srz31cNMZn/
- A9BPltcYMCe83GuRpd0iNVuhr3Xm4VQzGsNax/gG1od+dkuyzXi+1KZCLNbpqYLLxv2chVCmSrJ
- g2jCRTIXvn1PrQR+a6+4gayjEga2gys=
-X-Authority-Analysis: v=2.4 cv=U8eiy+ru c=1 sm=1 tr=0 ts=6a96a0b9 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=f6p4wuyM c=1 sm=1 tr=0 ts=6a96a0cf cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=XHwqZfJ-JXiraPowwWYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfXzWrNfK3GY4qp
- MRs6hyUpbPI9Z9i57jQboT+UABe8ii+ujLPi/19HG72CBghOT5XE47F8gTxbKr3U1mtjV3UePrU
- ZNe5gord7JbwhhgVL0xLvVcqKfLCRgbbfOccm+J30zgzLbaUMlfks4N1muIA6YcF21lSn5GSB6z
- 0ijWhSQtTBFciWekO+nvbmMuI0jlFM4NiIe5qY+yGSuRi5BA5xayoYy4kte6Ur6DCgYDJzQtFyL
- vd1OEsLaFc8SMiA/QwMalwvRhBjgJABf+vr6SDlSmAJmOVEPfZqzoVRmoc01lPyAhfm+VlIWmQU
- VX9molTyfDMAxm8iyt4vtcK6jz9Um2V8LKbTnsVzCa5TCFtL9RTTNss+SrS9pkC7sZmr0IPbRIq
- T0vuzxWvFR3j+ID2tm0Ew1g4BGwDeYkAP0w5Qy1hcTaSdV6rRFdxdMYGsbD47GPRS6V0uAjQoy1
- p/mpHWlVo2tMHsMzfww==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=tlxghdvPRZsVr19qFskA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfXz0UKg04m/WFV
+ FlIVONVoLUOFmQOGoab9afnaGWhNcDDVQmIdhvUtG3MBZEXdV9Rcrzr4EBpDCODxQqViKpU+k7b
+ DaG6hNf2UayOFRLbzcQkTbWn+Bx1OmEwBlyzItSGm4bFaff+39uySGWgLa/xd6xSVrkuJttLq9P
+ jcepOxtL1tp0TPBVr30WlPY0JDuFVeLUV5XZk7deY94NQD2gwtx6i3Jw27tSvshOy2orjowJqWn
+ ohJ/NxY3mrRglKGXVVj6Gea72OtlHejMWsfcCLn0CHLGQFgLJQ74Yb51WEcOngFC6rHxzwuv2OV
+ phACfHmhYsqUDCsJoQGvZymGCoPBLH2H0YaVxVTjepgCxQXS0Qu3Otrkb7QRZKc2Tafh0C8HKOP
+ G7IaCz6bFjbr0eQDM/WHVqI5YADB5qYaW/Kk3qFH5GK3LJH5snrvoVzqdPmzPRuAOmwwr5sV9Bz
+ wWR79W8JP/MwX9xzkRA==
+X-Proofpoint-ORIG-GUID: 9NOH0BZOHHYC78eJzyxn_yx2YjJBatXn
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX1btlTNGCwsWg
+ 2q7Ady6mc1lNsaaGXdLUjYeexvLONg/Y56ZXDmEBMDICVRXCIhdPQKrfVnz//K5kNR2Qn5ruJ99
+ eSUb51F+RcDZwbIPNgA9ufyAKcYFDRo=
+X-Proofpoint-GUID: 9NOH0BZOHHYC78eJzyxn_yx2YjJBatXn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-01_02,2026-08-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 adultscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010087
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ clxscore=1015 malwarescore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609010087
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,223 +162,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the const qualifier to CPULoongArchState when
-the argument is accessed without modification.
+@iprio[] is an array only accessed read-only.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/loongarch/cpu-mmu.h           | 20 ++++++++++----------
- target/loongarch/tcg/tcg_loongarch.h |  2 +-
- target/loongarch/cpu_helper.c        | 20 ++++++++++----------
- target/loongarch/tcg/tlb_helper.c    | 12 ++++++------
- 4 files changed, 27 insertions(+), 27 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ target/riscv/cpu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 54fb732d62d..61b59f3d3f3 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -30,14 +30,14 @@ typedef struct MMUContext {
-     uint64_t      pte_buddy[2];
- } MMUContext;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 718b66487a2..b974c2f4b4f 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -646,7 +646,7 @@ int riscv_cpu_sirq_pending(CPURISCVState *env);
+ int riscv_cpu_vsirq_pending(CPURISCVState *env);
+ int riscv_cpu_pending_to_irq(CPURISCVState *env,
+                              int extirq, unsigned int extirq_def_prio,
+-                             uint64_t pending, uint8_t *iprio);
++                             uint64_t pending, const uint8_t *iprio);
  
--static inline bool cpu_has_ptw(CPULoongArchState *env)
-+static inline bool cpu_has_ptw(const CPULoongArchState *env)
+ 
+ bool riscv_cpu_fp_enabled(CPURISCVState *env);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ab68ce65e93..953e598babb 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -869,7 +869,7 @@ uint8_t riscv_cpu_default_priority(int irq)
+ 
+ int riscv_cpu_pending_to_irq(CPURISCVState *env,
+                              int extirq, unsigned int extirq_def_prio,
+-                             uint64_t pending, uint8_t *iprio)
++                             uint64_t pending, const uint8_t *iprio)
  {
--    CPUSysState *sys = env_sys(env);
-+    const CPUSysState *sys = env_sys(env);
- 
-     return !!FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, HPTW_EN);
- }
- 
--static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
-+static inline bool pte_present(const CPULoongArchState *env, uint64_t entry)
- {
-     uint8_t present;
- 
-@@ -50,7 +50,7 @@ static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
-     return !!present;
- }
- 
--static inline bool pte_write(CPULoongArchState *env, uint64_t entry)
-+static inline bool pte_write(const CPULoongArchState *env, uint64_t entry)
- {
-     uint8_t writable;
- 
-@@ -89,17 +89,17 @@ static inline bool pte_dirty(uint64_t entry)
-     return !!FIELD_EX64(entry, TLBENTRY, D);
- }
- 
--bool check_ps(CPULoongArchState *ent, uint8_t ps);
--TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
-+bool check_ps(const CPULoongArchState *ent, uint8_t ps);
-+TLBRet loongarch_check_pte(const CPULoongArchState *env, MMUContext *context,
-                            MMUAccessType access_type, int mmu_idx);
--TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
-+TLBRet get_physical_address(const CPULoongArchState *env, MMUContext *context,
-                             MMUAccessType access_type, int mmu_idx,
-                             int is_debug);
--TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-+TLBRet loongarch_ptw(const CPULoongArchState *env, MMUContext *context,
-                      int access_type, int mmu_idx, int debug);
--void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-+void get_dir_base_width(const CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level);
- hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
--uint64_t loongarch_palen_mask(CPULoongArchState *env);
-+uint64_t loongarch_palen_mask(const CPULoongArchState *env);
- 
- #endif  /* LOONGARCH_CPU_MMU_H */
-diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
-index 7fb627f2d63..0f20c60d73d 100644
---- a/target/loongarch/tcg/tcg_loongarch.h
-+++ b/target/loongarch/tcg/tcg_loongarch.h
-@@ -16,7 +16,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                             MMUAccessType access_type, int mmu_idx,
-                             bool probe, uintptr_t retaddr);
- 
--TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
-+TLBRet loongarch_get_addr_from_tlb(const CPULoongArchState *env,
-                                    MMUContext *context,
-                                    MMUAccessType access_type, int mmu_idx);
- 
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index 123cad3d930..3401e7ed727 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -18,10 +18,10 @@
- #include "cpu-mmu.h"
- #include "tcg/tcg_loongarch.h"
- 
--void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-+void get_dir_base_width(const CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level)
- {
--    CPUSysState *sys = env_sys(env);
-+    const CPUSysState *sys = env_sys(env);
- 
-     switch (level) {
-     case 1:
-@@ -48,7 +48,7 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-     }
- }
- 
--TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
-+TLBRet loongarch_check_pte(const CPULoongArchState *env, MMUContext *context,
-                            MMUAccessType access_type, int mmu_idx)
- {
-     uint64_t plv = mmu_idx;
-@@ -111,7 +111,7 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
-     return TLBRET_MATCH;
- }
- 
--static MemTxResult loongarch_cmpxchg_phys(CPUState *cs, hwaddr phys,
-+static MemTxResult loongarch_cmpxchg_phys(const CPUState *cs, hwaddr phys,
-                                           uint64_t old, uint64_t new)
- {
-     hwaddr addr1, l = 8;
-@@ -146,11 +146,11 @@ static MemTxResult loongarch_cmpxchg_phys(CPUState *cs, hwaddr phys,
-     return ret;
- }
- 
--TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-+TLBRet loongarch_ptw(const CPULoongArchState *env, MMUContext *context,
-                      int access_type, int mmu_idx, int debug)
- {
-     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
--    CPUState *cs = env_cpu(env);
-+    const CPUState *cs = env_cpu(env);
-     hwaddr index = 0, phys = 0;
-     uint64_t palen_mask = loongarch_palen_mask(env);
-     uint64_t dir_base, dir_width;
-@@ -273,7 +273,7 @@ restart:
-     return ret;
- }
- 
--static TLBRet loongarch_map_address(CPULoongArchState *env,
-+static TLBRet loongarch_map_address(const CPULoongArchState *env,
-                                     MMUContext *context,
-                                     MMUAccessType access_type, int mmu_idx,
-                                     int is_debug)
-@@ -299,7 +299,7 @@ static TLBRet loongarch_map_address(CPULoongArchState *env,
-     return TLBRET_NOMATCH;
- }
- 
--static hwaddr dmw_va2pa(CPULoongArchState *env, vaddr va, uint64_t dmw)
-+static hwaddr dmw_va2pa(const CPULoongArchState *env, vaddr va, uint64_t dmw)
- {
-     if (is_la64(env)) {
-         return va & TARGET_VIRT_MASK;
-@@ -310,7 +310,7 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, vaddr va, uint64_t dmw)
-     }
- }
- 
--TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
-+TLBRet get_physical_address(const CPULoongArchState *env, MMUContext *context,
-                             MMUAccessType access_type, int mmu_idx,
-                             int is_debug)
- {
-@@ -376,7 +376,7 @@ hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-     return context.physical;
- }
- 
--uint64_t loongarch_palen_mask(CPULoongArchState *env)
-+uint64_t loongarch_palen_mask(const CPULoongArchState *env)
- {
-     /* PALEN stores physical address bits - 1 */
-     uint64_t phys_bits = FIELD_EX32(env->cpucfg[1], CPUCFG1, PALEN) + 1;
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 40cc0764248..6194b976c36 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -35,9 +35,9 @@ static bool tlb_match_asid(bool global, int asid, int tlb_asid)
-     return !global && tlb_asid == asid;
- }
- 
--bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
-+bool check_ps(const CPULoongArchState *env, uint8_t tlb_ps)
- {
--    CPUSysState *sys = env_sys(env);
-+    const CPUSysState *sys = env_sys(env);
- 
-     if (tlb_ps >= 64) {
-         return false;
-@@ -239,7 +239,7 @@ static uint32_t get_random_tlb(uint32_t low, uint32_t high)
-  * virt_vpn = vaddr[47:13]
-  */
- static const LoongArchTLB *
--loongarch_tlb_search_cb(CPULoongArchState *env, vaddr vaddr,
-+loongarch_tlb_search_cb(const CPULoongArchState *env, vaddr vaddr,
-                         int csr_asid, tlb_match func)
- {
-     const LoongArchTLB *tlb;
-@@ -291,7 +291,7 @@ loongarch_tlb_search_cb(CPULoongArchState *env, vaddr vaddr,
-     return NULL;
- }
- 
--static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-+static bool loongarch_tlb_search(const CPULoongArchState *env, vaddr vaddr,
-                                  int *index)
- {
-     int csr_asid;
-@@ -837,7 +837,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-     sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI, PS, ps);
- }
- 
--static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
-+static TLBRet loongarch_map_tlb_entry(const CPULoongArchState *env,
-                                       MMUContext *context,
-                                       MMUAccessType access_type, int index,
-                                       int mmu_idx)
-@@ -853,7 +853,7 @@ static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
-     return loongarch_check_pte(env, context, access_type, mmu_idx);
- }
- 
--TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
-+TLBRet loongarch_get_addr_from_tlb(const CPULoongArchState *env,
-                                    MMUContext *context,
-                                    MMUAccessType access_type, int mmu_idx)
- {
+     int irq, best_irq = RISCV_EXCP_NONE;
+     unsigned int prio, best_prio = UINT_MAX;
 -- 
 2.53.0
 
