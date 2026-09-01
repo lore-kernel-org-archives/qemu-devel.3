@@ -4,111 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FFCC624A4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20951C61DFD
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 02:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Edm-0001Nd-To; Mon, 31 Aug 2026 22:54:26 -0400
+	id 1x1Ef0-0001vK-Pm; Mon, 31 Aug 2026 22:55:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1x1Edm-0001NM-1X; Mon, 31 Aug 2026 22:54:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1x1Edk-00051g-D9; Mon, 31 Aug 2026 22:54:25 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68111ooG2808688; Tue, 1 Sep 2026 02:54:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=o5e/TQ
- k0XlIYoaH+PfyBsnkXbXYIr6Sc0agJ+SX8AlQ=; b=F+KSxhuPmTqwvz1KudKXno
- 7yCjYV80htn7gE4KEOQabEQBSYkJvQ6MRDQN1/lRFFP2w0nlcZhfQEmgss0aCJfZ
- +Jeo8X/qfIaCUYxW7XTT01a7QhBTZEIIH8DTCb1VGZaQLUoxbRSWEtUYEkGO4QMU
- v1mhpOkaq0b9BzzgU6SciIOmWSQgkxiYI1pTn4DG23z7AR/9itDX5TL38Fj0HWOa
- xmdNw7zcjVLQXESsY1bjYBKJjtTwrHDCqgrPjTbD4B3vB9D91KyjJLWhkz6TAtWo
- T+iXfvyvSbYoAXcMvMcEDVTQohH2JKIjjsTmcJxENtwZ7vP0ZrmfuLlrxeByd68g
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudn8ga-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2026 02:54:22 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6812QLBd002861;
- Tue, 1 Sep 2026 02:54:21 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gca4w1hp0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2026 02:54:21 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6812sKuR41353716
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 1 Sep 2026 02:54:20 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 671AE58058;
- Tue,  1 Sep 2026 02:54:20 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BCE5E58057;
- Tue,  1 Sep 2026 02:54:19 +0000 (GMT)
-Received: from [9.61.253.112] (unknown [9.61.253.112])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  1 Sep 2026 02:54:19 +0000 (GMT)
-Message-ID: <445485b2-2bb3-424d-b087-0a9f3dc86312@linux.ibm.com>
-Date: Mon, 31 Aug 2026 22:54:19 -0400
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1x1Eey-0001up-RH
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:40 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1x1Eew-0005NS-Ui
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 22:55:40 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-5b4ab40d839so4094247e87.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 19:55:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788231336; cv=none;
+ d=google.com; s=arc-20260327;
+ b=S2u09PHG6r7sFPfoRATUE9XIw4Oa2dE3DR/LJC9fOSMOF82Qo2ARLMGdmJ13mPtqh1
+ d70GQqSmfVAHE7iRHf6MmUOhc9voDsc7AGFrKlGR1iSyLnvO8FLf5oEIWTnTZc9RpIMC
+ njPqxHYnLDo1cAFK2oQC+9az/2cNm32Ds+enjL2AzoELXI62gjqehxriSwlKUXtPOLPE
+ pzaaYYDNdOFbJY9/0CkebVyVQnsTSz9EHgpKbiD99wUntWS7CremYqX5y5FKdD0WPyGy
+ WqVIhhAcpbww7ikoGJLUUwR7+ZmBqB5LGW+v8cFzgWZsP4rAtFfu1np/1Acf7RhztFuU
+ mTNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=judF+7VNBVLISGbwC+C3z7r96CarS5b5R5YR9O8GCGc=;
+ fh=QVe/7zv5OrYmrprO28ljpRmhYeOlvvTBoRQtHWn+3sI=;
+ b=n7h77WxTwCNNWQqM9uqJTduT4bPx3AUHWuF11NYx1jEomx6HC/XJYvKTQx/s3i9bxG
+ KMm2NmvvbHORMUNb0c1fdp6qFGdl2i1Lwz9DAeDrRnYepFI8Bgsxn8zbz8GRuFjV2mVE
+ JuK1laqob+Cb0YqdylYpCN5cx2IgPV7TBGTS7VbMpDzAlWo97GYWjuRCREmjtVzq/FCm
+ m/JQcaFBZjPcH76Dh3F+Lc+UOx14LP+faXz0Nh9LLb64NXRKwC2OxfftSepNhQT4NEO0
+ 1yWlqbgQEIv3B8u6cNssa8tRBNPbHBxLx45YVB9Hwa0fBBwZLykw3C9DFkRTIM5UVH6e
+ EdVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788231336; x=1788836136; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=judF+7VNBVLISGbwC+C3z7r96CarS5b5R5YR9O8GCGc=;
+ b=SgXcqKkTeUqxbGIdOI/XWwAjXpwh1Ev1pR+H9OzJy8eSkB5RiQdhgCE+BLe29M1vBP
+ yYvPTGQXu64/1GXKPtcTdPcvyrGWaqV+nYfh2aN8T65kckxs1ny0nZnA8Jz/JabrECW7
+ FK9HEfSFaSUqfpagt6BMQfrrwRHaP7XAZSZhztCUDBVgwxGFbmtTJM1lWwFmfkQkeuZo
+ AtCkgjuMCF2hJSIPBWt2Og4j4cLsO5dE7aRXKV76KI0FvOMOVpT8hMNZBkPcME3mSIeP
+ MyTJvxgBE7YpBNEdUkvLcM4WFnZCTxI2oyn9zYJ74dl/3kkduOf4bf+/gUgnBGQk9smd
+ s23Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788231336; x=1788836136;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=judF+7VNBVLISGbwC+C3z7r96CarS5b5R5YR9O8GCGc=;
+ b=D5VYieTcqXWLhSmdUqSN1docQUTny1eXn4Jpn2p5cOWQYdODVcJ535pRsUuFkcSgY8
+ F9q8LcvPkSPEregrm7VY1QJowtaYxqHeuxHgDTzK64bLae/GxfDvHcV8UiEoD8K3wDbv
+ YEV0HG8hs4EDxBvmP35VbJ4kkAD0bh8HeN//h0JOVquYD0rOF5OUZUeqmiPevG0+w4m2
+ nBlvEHZgWUwKr0IJeoUm2MhRyZUtm1+2iar/i2QmoYJDguo4uN1pHUAfWK3O5SU0ARBg
+ ulyodhqxqcArJ2aCJuLAMwYVBtTxQM/1SvAtEdLuxa/Vhi+IpZPh5P0i7P+4oLJENupv
+ 4lGA==
+X-Gm-Message-State: AFuF++nihzJqMfEznAeYeJxD7YrexwT13xliOQdXW2raqRp9peM96O2p
+ wY8JAJ35FUhKXsYJC3DmjD5JO9WmX92qnZF1Ul5Ku3uKpvUYvG+3Kc17H1Sj0QBYYm/XI61HpAU
+ p65VPXSmL8+Ew0RHxmUCzdhF5X7oObwA=
+X-Gm-Gg: AYBFou2us03fblpz80Tm9ySWmhcJ9iC6Kenj0irxE94nz5RMIAKBnKc0lFtuSS1lqfb
+ 1LgNdOAdFOqRKoD5Qy7vgAiAyFlFGgTZqx07bEHUPDCoYCExtUr+9nHLCtWt76MDJB+zayDmd5N
+ iB0kZ31e73vJd6BQTlse7qMG6M6n8o4h+HrqAals2F6y/FfgQD+dMtlitHZ/DrFNw0XfKGp1/sI
+ a1k8nX2/7HPIWoNW1A2u4t/22Y+KfE4yFiKHvSE1HLrUjewLNDc43MF1SLojfZHpcFJn9V/7/pf
+ SWT+uc4abvHnoElPgz7ff4z/krYeDBYdUwQAbl7nI3XmVPRaoV0Dg55+gQ==
+X-Received: by 2002:a05:6512:3b85:b0:5b5:e29b:a1df with SMTP id
+ 2adb3069b0e04-5b5fe0b39d5mr1567802e87.8.1788231335723; Mon, 31 Aug 2026
+ 19:55:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] s390x: Find scsi-pci boot device and build IPLB
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, jjherne@linux.ibm.com, zycai@linux.ibm.com
-References: <20260831194919.3830270-1-jrossi@linux.ibm.com>
- <20260831194919.3830270-8-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Joshua Daley <jdaley@linux.ibm.com>
-In-Reply-To: <20260831194919.3830270-8-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: teFjToXY4jD0fd-B8Bxc9Tx6T9G-HyAd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDAyMCBTYWx0ZWRfXxZ2AAiVH6s2/
- FA1AviFyS+X+0LvVaxWTiVLvThdGdZKDJdl0G00Fbn8nYxDE3v5XgKCC+++KkwBdyzLGctz222i
- err5uJsrjR29p3IEseMN8n3Ira/Cm32uXNjIgKXOQuPTjlHLr+iYqe722/FWZgJNMgLpFraNs8W
- jCA6T17jUpTXVbJoSpP7vkj9vuPlDz+RGoQRuxxR7tfQbJ2z7XEXkoAy6YVvdfBXzcdRn002jKY
- ShL+5VIroWQWf0HV2X3cXc3FjszNo0q47RS4fgcp7FJyuwh5O+HK+Z7M001SW3DnjZ7G8ig7lej
- xKvSrbw3KhfNNE8vk/YdHiMTYwZO3otpYVapTNd2exUiJ8tG7mLKbakB5v59IlzILAYD1uuNVgL
- 2IS4oRjcDzwghJIywChykg1Xi1RwgKqEpCBduj+mj7LuUKjacyk3Fkixla4MvZHiatHWUlbm3HY
- P+im0nfCcswySIn5crA==
-X-Proofpoint-ORIG-GUID: teFjToXY4jD0fd-B8Bxc9Tx6T9G-HyAd
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDAyMCBTYWx0ZWRfXwFN7nZFFpQ5V
- +VMiGmkwiR13jZhMX/1rk0K/qpyQpaXmXIAnD70X0unk3UPgHweI2AMHtu9p8DAl/kQcqIdxhkD
- /a3m1c/mHnyhqdvCGBrIE2tePZt6svg=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a963e5e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=z2GIV3De8ZczWHra9CsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-01_01,2026-08-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609010020
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20260822190818.1829249-1-mattst88@gmail.com>
+ <20260827050241.3713332-5-mattst88@gmail.com>
+ <dcd678bb-83ca-4a41-8230-66fd72278bde@linaro.org>
+In-Reply-To: <dcd678bb-83ca-4a41-8230-66fd72278bde@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
+Date: Mon, 31 Aug 2026 22:55:20 -0400
+X-Gm-Features: AcwNN1WmfdlDhxd_iafuGEwYr58IaVNgs11QF4JYXNzXEc0fNZ--7ku76tuGPXU
+Message-ID: <CAEdQ38F3PRUpOuUqJwtCPJeZ=mLVE2rz6tqD2zDB=FcthuxNJA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/9] tcg: pass the destination to
+ tcg_gen_lookup_and_goto_ptr()
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@oss.qualcomm.com, 
+ alex.bennee@linaro.org, zhao1.liu@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=mattst88@gmail.com; helo=mail-lf1-x133.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,98 +121,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/31/2026 3:49 PM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Add logic to identify a virtio-pci scsi controller and target lun with
-> assigned bootindex, then build IPLB for it.
-> 
-> Unfence PCI case for scsi devices in BIOS.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c          | 37 +++++++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/main.c |  3 +++
->   2 files changed, 40 insertions(+)
-> 
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 6969e11b27..0cab043b12 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -402,6 +402,7 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
->   }
->   
->   #define PCI_DEVTYPE_VIRTIO       0x05
-> +#define PCI_DEVTYPE_SCSI         0x06
->   
->   static S390PCIBusDevice *s390_get_pci_device(DeviceState *dev_st, int *devtype)
->   {
-> @@ -417,6 +418,26 @@ static S390PCIBusDevice *s390_get_pci_device(DeviceState *dev_st, int *devtype)
->               if (pbdev) {
->                   tmp_dt = PCI_DEVTYPE_VIRTIO;
->               }
-> +        } else {
-> +            SCSIDevice *sd = (SCSIDevice *)
-> +                object_dynamic_cast(OBJECT(dev_st), TYPE_SCSI_DEVICE);
-> +            if (sd) {
-> +                SCSIBus *sbus = scsi_bus_from_device(sd);
-> +                VirtIODevice *vdev = (VirtIODevice *)
-> +                    object_dynamic_cast(OBJECT(sbus->qbus.parent),
-> +                                                TYPE_VIRTIO_DEVICE);
-Small nit: indentation is not quite right here.
-TYPE_VIRTIO_DEVICE should align with OBJECT in the line above.
+On Thu, Aug 27, 2026 at 7:13=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 8/26/26 22:02, Matt Turner wrote:
+> > tcg_gen_lookup_and_goto_ptr() takes no arguments and emits a call to
+> > helper_lookup_tb_ptr(), which recovers the destination PC from env by
+> > calling back into the target through TCGCPUOps::get_tb_cpu_state(). At
+> > translation time the caller already has the destination PC in a temp, a=
+nd
+> > knows the flags, cflags and cs_base any destination it may reach has to
+> > match, because they are the ones the block being generated was translat=
+ed
+> > with.
+> >
+> > Pass both, so that a later patch can use them to look the destination u=
+p
+> > inline. Nothing reads them yet and the generated code does not change.
+> >
+> > The contract on @pc is the whole of the interface: it must hold exactly
+> > what get_tb_cpu_state() reports as the pc for the destination block. Fi=
+ve
+> > targets keep their PC in a temp whose value is that pc by construction =
+and
+> > so can pass it: alpha, loongarch, mips, ppc and s390x. Everything else
+> > passes NULL and keeps today's behavior.
+> >
+> > For six of those the TB pc is derived and passing the PC temp would be
+> > wrong: avr's TB pc is the word address doubled, i386's is eip before
+> > segmentation, riscv masks it to 32 bits when xl is MXL_RV32, hppa deriv=
+es
+> > it from the IAQ, hexagon adjusts it inside a hardware loop, and sparc p=
+uts
+> > npc in cs_base. The remaining seven -- arm, m68k, microblaze, or1k, rx,=
+ sh4
+> > and tricore -- look like they could pass it, but I have not convinced
+> > myself of the contract for them and have nothing to test them with. Eac=
+h is
+> > a one-line change for whoever wants it.
+> >
+> > The common entry point takes a TCGTemp rather than a TCGv and reads the
+> > width from it, because the translators that are built for both values o=
+f
+> > TARGET_LONG_BITS -- arm, s390x, microblaze -- cannot include tcg-op.h.
+> > tcg-op.h wraps it for everyone else. This is the same split as
+> > tcg_gen_qemu_ld_*_chk().
+> >
+> > v4: Split out of "tcg: probe the TB jump cache inline instead of callin=
+g a
+> >      helper", which did the API change and the inline probe in one patc=
+h.
+> >      Requested by Richard Henderson.
+> >
+> > Signed-off-by: Matt Turner<mattst88@gmail.com>
+> > ---
+>
+> Ok, I was a bit surprised at your claim that only 5 targets qualify, as
+> there are plenty that have a simple PC.
+>
+> However! The subtlety of the interface, that we are asserting that the
+> current TranslationBlock flags are still valid, now leads me to think
+> that it's a mistake to adjust the current interface.
+>
+> We need to introduce a new interface to which targets may be migrated.
+> This won't be difficult, but it's not entirely trivial.
+>
+> For instance, target/arm/ has
+>
+>          case DISAS_UPDATE_NOCHAIN:
+>              gen_update_pc(dc, curr_insn_len(dc));
+>              /* fall through */
+>          case DISAS_JUMP:
+>              gen_goto_ptr();
+>              break;
+>
+> where DISAS_UPDATE_NOCHAIN requires the helper because of state change
+> and DISAS_JUMP does not.
+>
+> This is subtle enough that we probably want to verify that the flags are
+> unchanged with --enable-debug-tcg.
 
-> +                if (vdev) {
-> +                    pci_dev = (PCIDevice *)
-> +                        object_dynamic_cast(OBJECT(qdev_get_parent_bus(DEVICE(vdev))->parent),
-> +                                            TYPE_PCI_DEVICE);
-> +                    if (pci_dev) {
-> +                        pbdev = s390_pci_find_dev_by_pci(s390_get_phb(), pci_dev);
-> +                        if (pbdev) {
-> +                            tmp_dt = PCI_DEVTYPE_SCSI;
-> +                        }
-> +                    }
-> +                }
-> +            }
->           }
->       }
->       if (devtype) {
-> @@ -621,6 +642,22 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->               iplb->pbt = S390_IPL_TYPE_PCI;
->               iplb->pci.fid = cpu_to_be32(pbdev->fid);
->               break;
-> +        case PCI_DEVTYPE_SCSI:
-> +            sd = SCSI_DEVICE(dev_st);
-> +            scsi_lp = object_property_get_str(OBJECT(sd), "loadparm", NULL);
-> +            if (scsi_lp && strlen(scsi_lp) > 0) {
-> +                lp = scsi_lp;
-> +            }
-> +            iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
-> +            iplb->blk0_len =
-> +                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
-> +            iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
-> +            iplb->scsi.lun = cpu_to_be32(sd->lun);
-> +            iplb->scsi.target = cpu_to_be16(sd->id);
-> +            iplb->scsi.channel = cpu_to_be16(sd->channel);
-> +            iplb->scsi.bus = S390_IPL_TYPE_PCI;
-> +            iplb->scsi.fid = cpu_to_be32(pbdev->fid);
-> +            break;
->           default:
->               return false;
->           }
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index a2a24b024f..d2a2ac3138 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -267,6 +267,9 @@ static bool find_boot_device(void)
->               blk_schid.ssid = iplb->scsi.ssid & 0x3;
->               found = find_subch(iplb->scsi.devno);
->               break;
-> +        case S390_IPL_TYPE_PCI:
-> +            found = find_fid(iplb->scsi.fid);
-> +            break;
->           default:
->               puts("Unrecognized SCSI controller");
->               break;
+Agreed, and done.  tcg_gen_lookup_and_goto_ptr(void) is unchanged in
+v5. Nothing that isn't migrated sees any difference.
 
+> Perhaps tcg_gen_goto_jc_{i32,i64,tl)?
+
+Sounds good. Done.
+
+Replying to bits out of order:
+
+> The simplest solution, IMO is to define functions for _i32 and _i64, as
+> for most everything else, and to have a _tl alias in tcg-op.h.
+
+Also done -- the _tmp()/TCGTemp form is gone.  tcg_gen_goto_jc_i32()
+and tcg_gen_goto_jc_i64() are declared in tcg-op-common.h, and
+tcg-op.h has the _tl alias in each TARGET_LONG_BITS arm alongside the
+qemu_ld/st ones. The _i32 entry point zero-extends into a temp and
+shares the body, so there is one implementation.
+
+s390x is the one migrated target that cannot include tcg-op.h, so it
+calls tcg_gen_goto_jc_i64(psw_addr) directly; that reads fine.
+
+> the subtlety is asserting that the current TB flags are still valid ...
+> target/arm: DISAS_UPDATE_NOCHAIN requires the helper because of the
+> state change, DISAS_JUMP does not.
+
+Right, and that distinction is exactly what the new interface makes
+the caller state.  The contract is now written dow the goto_jc runs,
+the CPU state must already be the destination's -- @pc must be what
+get_tb_cpu_state() would report, it would report must be the ones this
+block was translated with.  A translator that hasn't finished updating
+state lookup key (avr's word address, i386's eip before segmentation),
+keeps using tcg_gen_lookup_and_goto_ptr().
+
+> we probably want to verify that the flags ar
+> --enable-debug-tcg
+
+Done.  Under CONFIG_DEBUG_TCG the goto_jc emits a call to a new
+helper_goto_jc_check(env, pc, flags, cs_base), get_tb_cpu_state() and
+asserts all three against what the block was translated with.  It
+costs nothing in a normal contract being stated rather than assumed
+while I migrated the targets.
+
+Five targets are migrated in v5: alpha, loongarch, mips, ppc and s390x
+-- the ones whose lookup_and_goto_ptr sites are u already the
+destination's, and the pc register is the key".  arm, i386 and the
+rest are untouched and can be migrated point of it being a separate
+interface.
+
+All five build and run their indirect-dispatch paths (computed goto,
+function pointers, returns, and a longjmp out completion under
+--enable-debug-tcg, so the assert has actually been exercised on each.
 
