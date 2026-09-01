@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDE8C61DE4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 03:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6001C61DE4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 03:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1FUS-0000b7-0p; Mon, 31 Aug 2026 23:48:52 -0400
+	id 1x1FUj-0000eL-ED; Mon, 31 Aug 2026 23:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x1FUP-0000a3-Dq
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 23:48:49 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1x1FUa-0000cb-Qe
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 23:49:00 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x1FUL-0004Ks-Nl
- for qemu-devel@nongnu.org; Mon, 31 Aug 2026 23:48:49 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66c7127a73dso3837811d50.2
- for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 20:48:45 -0700 (PDT)
+ id 1x1FUX-0004M0-NP
+ for qemu-devel@nongnu.org; Mon, 31 Aug 2026 23:49:00 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-856114a8247so4741047b3.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Aug 2026 20:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788234524; x=1788839324; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=eWjXDAoAoNO1Xa1CL1NbLIHI1iMJN5aLKQTrDCXvIg0=;
- b=kx6SyDg3Ye/bYZwVxi6c/dQekB0+uzmg7+SucTm+rz99x23vrwikVt4nv4E83/hcrB
- NxujaYcZbP/1RX1VDiDKA4DMkgM3i4z2PKalvVSMFk+n+5p3SMX4mQckwFatDXCN2DX/
- dbGOq17RmirpIAilBQYVt9l8qUjvEkmAlgwtjS/1GNHpRm51zzD+WOulMiAqMmWwBvHK
- cFoAO00gt5aZsWiU5VPcpVBPYpYv/j2Hm0KuX/rcxF9Z/57wpgvyhbPu8zUUJ+Z6eouC
- mOtjS0chWsD7KpT/sdpkMFGndTqk1WupLuPT1YRS1BBeTh1wGXJglS/+z3tbIE7en2CD
- VY4Q==
+ d=gmail.com; s=20251104; t=1788234537; x=1788839337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=HOjRzfQpe3kE34Y2l5KyKrR2biv2SpLqm7CIXewxRtU=;
+ b=s3WaxJXVR4vZx+CvsTI7De9GD0E//SP/jRfU13QYcpm4X5yuwIGTzFrQ/DXmkQa1MI
+ OWEH2eU4dPdg5c9UkMsIsGtFCGSioLG9N006CsIcBkW34J3K6cFzNdXEeKIBuo0p7kEA
+ FY7biKsnpdwMe+SpG6+Wh4fnnTu+HybHB1i9Q5jSYF2QRDOAdUklQ0+hCET8Mb7PUTzk
+ 8CT/1N2ThloWqQmQynKGkKgNFDjj+jeFp3FlUcwq1ox733eNLhpPJ/YDDJngdJh+pweH
+ Q07IEZ1daBctrMYQPKrkccYn8MDfa1TwUG22OBMiCC8o65B6AqoG6V5wgYmrIm/vxJ66
+ aOoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788234524; x=1788839324;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=eWjXDAoAoNO1Xa1CL1NbLIHI1iMJN5aLKQTrDCXvIg0=;
- b=jiGfBZ+2t4KDqYP3HhXoO+xZUsucXeEwkDZnOpBRqEqZ7ZQv/x7JX+3eY5YdI2BA8Q
- NHlkVfjyMZaEVoSykt9aUO6nH/Mo8uQTk+fB4diKNdGdeGTpozmjHj4BxdA8OXCW1k1l
- xNw1bWzidR2qdCSgeHtv+YYkdgiAvTz8fNBj9Zu346v4MOIozAmbN7Cr/e9KJn8SxdRv
- HmEw+qtw5IzYD67GYFXJXFnkTo5jGIrELjzWFuS1zqtinqCsR1A1ndrHCinhVkfv42dx
- ZONIESr2wqWlo+FmXwr6BA1hoc9xGKHzt49zsMh6GCGpaoU7MKwmG5D6rNcCkDzvra8a
- xoeA==
-X-Gm-Message-State: AFuF++kRyYhM3d+EKg9PJKQh++91a4Z84Q7McP4jW2SJ/j3WO/LjScvZ
- 9tgGqzLQSa9qAf+dY976d5oLVyBa5cFLurzS+BeM2fQQEZhq1y5f2pKI7/D1Zg==
-X-Gm-Gg: AYBFou2s2zxWpbHXFV195VY4lJV2WSmjFvRJ1ni/0dOhSeQ4eJjsXX6xum/VeQTKPO/
- JTpUNKZnzl5I6T3uxRdLmKF1RljFO0P3lkSpS/pcb/Y0w3dF6QYW1zv/baqq8WrG3PfnzVYAgp+
- 9gfDqx20rI1TNzBZB08Ce3Ja5p8Pe8EwMFpQylg4AXzR9pgrhaFhZA5sOaK09IuiWr4I28GsBU9
- y87t2VmgjfYdqa+785fI1OwFwLe6x66umeBawabwsI9xCfiQY91JPRm9Dl6IdCPWc7x4MGoEizi
- B0scdzLslgqZIMkL46+kRk5tZlA5POm+oEipq/43yKk0nAbbp82ijETYu2sQ1M7u8FSSx9ZunIU
- EcoGcGGI1LQTZP72mDwKmmTXQhjmJPi0yZkqP0MYL/hTLF0/5+gC3RCzUXqzQlzayaZMZyN5m5H
- 2tbyrHzYSLAlDQyinjm62vrUwuYjlvppf2hXkn9VxMkwp3MjMfIxm847XYjN81bzOa6QoUc3wSt
- 5OvE9iG0biPDXnCO/7CHWjTgvMN33Oz5bZamA63L/YjiFzNyo4=
-X-Received: by 2002:a53:d848:0:b0:66d:1e2e:9cd0 with SMTP id
- 956f58d0204a3-66e4c6db69bmr7199812d50.28.1788234521805; 
- Mon, 31 Aug 2026 20:48:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788234537; x=1788839337;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HOjRzfQpe3kE34Y2l5KyKrR2biv2SpLqm7CIXewxRtU=;
+ b=cchsepQ/8DpQDYZwp9QPhGvz+ECyVmypwOk4UoFZd17QEHikVdQ5u2uOuY4cXy4Vgv
+ ojEGxHDaVhEddpoL0XC1K54/C/0rpii0bxE53rjS/ZNpH4fLG50y6GUwOUuP903AbEzt
+ 9ZPoA6t9KYLNqO2eOvI8OTDE6/I8kt/SUnhaR2SHc0IdCdwVURJkWBhfaP9HDJvNCtEO
+ /o1bHdCK8HnQ5LgQTyvkmFi0vaDfI4Ea9WKJMEJ0Mp6Jt2trpZxr6BeARBDyd1o2WtUw
+ 9wNuo/LP8A+7qgBGSOMSuO+KZJ6dXm+ga/hHcr3kDTbYnkTDDG2CgpiUsJV/Oii3k6Tr
+ ga9w==
+X-Gm-Message-State: AFuF++lWc9H5AJ0kKW5yPSFDYoc3TatB55FL9zTlCDTgfmD9jl8FUMf/
+ 8H6YhYPOazhR+V1flM3IvC3c/4yUo4xfrsL/MONGHp13eInyBV0wM1o3Lo+Ogg==
+X-Gm-Gg: AYBFou2CWdcSely8u4O7I/vDmy+Su/ThhCTE43LDPAE5RJVjh86f6SqHVbtYayB2VSh
+ IJ1ya/3bNg3gHBc7i3KhvGnAniXxpNHlTB+Ys1C4gucYaAuqhhgmmuEDfGKGGNhZ2y93fr4JqLq
+ iNSSNvmpP8j0XpW2lzRJdd5jUbgO2JtH9WOqG+jHVyYP90YZb82zI19OGBguIFeJ/lWRYpURmdf
+ 8I8P02GiUY79Z4PybPrsU1pS69jJS6+6F4QvUqfUYdbiiyMGgLQUxa3jXeROvc4FMYR3Y28TZRj
+ 99w1sBQVvVIl7ZJbYTW5YI8B31pTaEiMu+/GYtVjsuyBZZVQsI3gW++B3cOFV2bbIV2NXy8uR1A
+ 5g+y0Js7GwDA7r3/5xWfvvWRZkGdvzNk4a0WgeZ2rF6vLdLl3FuC0rT0FyGqL03dXHqIup0/Fzo
+ h4M/F9DQJKyQ5ZTKE/s1FPxqq4xlWUbq35YfAJrvX6Cg5x0/tAb6IsrSrQsrxhs2Se7FFZMo9cZ
+ Qpv2FumenRWMCCQ+zuajtCkRvLiuPJPq7XMN2XG
+X-Received: by 2002:a05:690c:386:b0:855:2d6d:2db5 with SMTP id
+ 00721157ae682-85d69e03e9cmr118514477b3.12.1788234531581; 
+ Mon, 31 Aug 2026 20:48:51 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66e4ecf24a6sm7518849d50.11.2026.08.31.20.48.39
+ 00721157ae682-85e66f9a5d8sm66385787b3.41.2026.08.31.20.48.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Aug 2026 20:48:40 -0700 (PDT)
+ Mon, 31 Aug 2026 20:48:49 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@oss.qualcomm.com,
  alex.bennee@linaro.org, zhao1.liu@intel.com,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v5 0/9] accel/tcg: cut per-block dispatch overhead
-Date: Mon, 31 Aug 2026 23:47:59 -0400
-Message-ID: <20260901034808.3524945-1-mattst88@gmail.com>
+Subject: [PATCH v5 4/9] tcg: add tcg_gen_goto_jc_{i32,i64,tl}()
+Date: Mon, 31 Aug 2026 23:48:03 -0400
+Message-ID: <20260901034808.3524945-5-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260827050241.3713332-1-mattst88@gmail.com>
+In-Reply-To: <20260901034808.3524945-1-mattst88@gmail.com>
 References: <20260827050241.3713332-1-mattst88@gmail.com>
+ <20260901034808.3524945-1-mattst88@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,313 +104,425 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For guests running large amounts of code, most of what TCG executes is not
-translated guest work but the fixed overhead around it. Blocks are short and
-there are a great many of them, so the constant cost at each end of a block
-(the interrupt poll and the can_do_io stores on entry, the dispatch on exit)
-ends up dominating everything else.
+tcg_gen_lookup_and_goto_ptr() takes no arguments and emits a call to
+helper_lookup_tb_ptr(), which recovers the destination PC from env by
+calling back into the target through TCGCPUOps::get_tb_cpu_state(). At
+translation time the caller often already has the destination PC in a temp,
+and knows the flags, cflags and cs_base any destination it may reach has to
+match, because they are the ones the block being generated was translated
+with. A later patch uses that to look the destination up inline.
 
-The workload throughout is qemu-alpha running an emulated alpha gcc 16.2.0
-compiling the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64
-host, in a --static --enable-lto --target-list=alpha-linux-user build. It
-executes 34.2 billion TBs at 6.04 guest instructions each, and 24.6% of its
-TB exits cannot use goto_tb. That is a representative shape for any guest
-whose text is much larger than a page: indirect calls and returns
-everywhere, plus direct branches that merely crossed a page boundary.
+But it is not something every caller of tcg_gen_lookup_and_goto_ptr() can
+promise, and the promise is subtle. target/arm has
 
-The first three patches are ordinary cleanups that stand on their own; patch
-1 picked up a review tag in v4 and patch 3 in v2. Patches 4 and 5 are
-preparation and move nothing on their own. The remaining four are marked RFC
-individually and are where the interesting questions are.
+        case DISAS_UPDATE_NOCHAIN:
+            gen_update_pc(dc, curr_insn_len(dc));
+            /* fall through */
+        case DISAS_JUMP:
+            gen_goto_ptr();
+            break;
 
-  1  accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags
+where DISAS_JUMP could make the promise and DISAS_UPDATE_NOCHAIN could not,
+because it is there precisely because the state changed. Two call sites,
+one line apart, on opposite sides of the contract.
 
-     curr_cflags() recomputed three unlikely tests on every one of the run's
-     8.4 billion dispatches, from state that changes only when gdb enables
-     single-step, when one-insn-per-tb is toggled, or when the log mask
-     moves. Fold each into tcg_cflags where it changes.          -5.15%
+So add a second entry point rather than growing an argument on the first.
+tcg_gen_lookup_and_goto_ptr() keeps today's meaning and today's signature:
+dispatch, and let the helper work out where. tcg_gen_goto_jc_*() means
+dispatch to the destination that env already describes, and takes the pc as
+proof that the caller knows which one that is. Targets migrate one call
+site at a time, and a call site that cannot promise simply does not move.
 
-  2  accel/tcg: enlarge the TB jump cache to 64K entries
+The contract is:
 
-     4096 entries is too small for a guest running a large program;
-     tb_htable_lookup() is 6.10% of samples. 16 bits is the knee of the
-     sizing curve, at 1 MiB per CPUState.               -5.92%, -8.71% wall
+  - @pc holds exactly what get_tb_cpu_state() reports as the destination pc.
+  - The flags and cs_base it reports are the ones this block was translated
+    with, which is what lets them be constants in the generated code.
 
-  3  accel/tcg: skip the can_do_io stores in user-only builds
+--enable-debug-tcg checks all three against get_tb_cpu_state() at run time,
+via a new helper_goto_jc_check(). That turns a mistake into an assertion at
+the offending call site instead of a block that runs with someone else's
+flags.
 
-     Two stores per TB that nothing in a user-only build reads: 68 billion
-     of them over the run.                              -4.57%, -4.53% wall
+Five targets have a call site whose pc temp is that key by construction, and
+are migrated here: alpha, loongarch, mips, ppc and s390x. Nothing else
+changes; the generated code does not change either, since goto_jc still
+emits the same helper call for now.
 
-  4  tcg: add tcg_gen_goto_jc_{i32,i64,tl}()
+For six targets the TB pc is derived and passing the pc temp would be wrong:
+avr's TB pc is the word address doubled, i386's is eip before segmentation,
+riscv masks it to 32 bits when xl is MXL_RV32, hppa derives it from the IAQ,
+hexagon adjusts it inside a hardware loop, and sparc puts npc in cs_base.
+The remaining seven -- arm, m68k, microblaze, or1k, rx, sh4 and tricore --
+have call sites that look like they could move, but I have not convinced
+myself of the contract for them and have nothing to test them with. Each is
+a one-line change for whoever wants it, and debug-tcg will say if it is
+wrong.
 
-     Preparation. A second dispatch interface alongside
-     tcg_gen_lookup_and_goto_ptr(), which is unchanged. The caller passes
-     the destination PC and thereby states that the CPU state is already
-     the destination's, which is what an inline lookup needs and what the
-     existing interface cannot promise. --enable-debug-tcg checks that
-     claim at runtime. Five targets are migrated; every other target and
-     every unmigrated call site is untouched.
+The i32 and i64 forms are separate functions, with a _tl alias in tcg-op.h,
+as for most everything else. A translator built for more than one value of
+TARGET_LONG_BITS cannot include tcg-op.h and calls the sized form directly,
+which is what s390x does here.
 
-  5  accel/tcg: add CF_NO_GOTO_JC, set while a breakpoint is present
+Neither form takes the TranslationBlock: tcg_ctx->gen_tb is the block being
+generated, the same one tcg_gen_goto_tb() and tcg_gen_lookup_and_goto_ptr()
+already read, so there is no way for a caller to pass the wrong one.
 
-     Preparation. The one thing an inline jump cache probe cannot check is
-     breakpoints, and it does not have to: the probe compares cflags, so a
-     cflag set while cpu->breakpoints is non-empty keeps such blocks both
-     from dispatching inline and from being reached by a block that does.
-     Nothing reads it yet.
+v4: Split out of "tcg: probe the TB jump cache inline instead of calling a
+    helper", which did the API change and the inline probe in one patch.
+    Requested by Richard Henderson.
 
-  6  RFC: tcg: probe the TB jump cache inline instead of calling a helper
+v5: Add a new interface rather than growing an argument on
+    tcg_gen_lookup_and_goto_ptr(), and check the contract under
+    --enable-debug-tcg. Requested by Richard Henderson, who named it
+    tcg_gen_goto_jc_*(); the DISAS_UPDATE_NOCHAIN example above is his.
 
-     95.8% of those 8.4 billion helper_lookup_tb_ptr() calls hit the jump
-     cache. Emit the probe inline (hash, four guarded loads, goto_ptr) and
-     call the helper only on a miss.                   -34.67%, -25.94% wall
+v5: Define _i32 and _i64 entry points with a _tl alias in tcg-op.h, rather
+    than one entry point taking a TCGTemp. Requested by Richard Henderson:
+    as targets migrate to single-binary, code is built once and stops
+    relying on TARGET_LONG_BITS, so the TCGTemp split was the wrong shape.
 
-  7  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ accel/tcg/cpu-exec.c                          | 27 +++++++++
+ accel/tcg/tcg-runtime.h                       |  4 ++
+ include/tcg/tcg-op-common.h                   | 20 +++++++
+ include/tcg/tcg-op.h                          |  2 +
+ target/alpha/translate.c                      |  4 +-
+ .../tcg/insn_trans/trans_branch.c.inc         |  2 +-
+ target/loongarch/tcg/translate.c              |  4 +-
+ target/mips/tcg/nanomips_translate.c.inc      |  2 +-
+ target/mips/tcg/translate.c                   |  6 +-
+ target/ppc/translate.c                        |  4 +-
+ target/s390x/tcg/translate.c                  |  4 +-
+ tcg/tcg-op.c                                  | 59 +++++++++++++++++--
+ 12 files changed, 119 insertions(+), 19 deletions(-)
 
-     translator_use_goto_tb() refuses to chain across a page. In user-only
-     builds the invalidation path already covers what that was protecting
-     against: every mmap/mprotect/munmap reaches page_set_flags(), which
-     invalidates and unlinks. Lift it there for runs that can never acquire
-     a breakpoint, keep it for system mode.             -2.75%, -4.84% wall
-
-  8  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-     exits
-
-     A block only needs the icount_decr poll if it can leave by goto_tb;
-     every other exit already passes through a dispatch. Give generated
-     code its own jump cache base pointer and point it at a read-only page
-     of zeroes when an exit is requested, so every dispatch misses into the
-     helper, which returns the epilogue. Emit the poll only in blocks that
-     emitted a goto_tb.                                 -2.52%, -1.96% wall
-
-  9  RFC: tcg: fold a guest displacement into the host addressing mode
-
-     tcg_gen_qemu_ld/st cannot express a based access, so a target with a
-     displacement in its encodings materializes the address with an lea
-     that the host addressing mode would have done for free. Fold a
-     preceding constant add into a new argument on the op, opt-in per
-     backend, wired up for x86_64 user-only.            -5.70%, -3.20% wall
-
-Each percentage is against the patch before it. Every stage was measured in
-one session on the same host, so end to end, from an unmodified LTO build of
-the same base to the full series:
-
-    instructions retired: 1,646,994,254,249 -> 819,262,147,022   -50.26%
-    wall clock:                     133.19s ->          77.30s   -41.96%
-
-Those are still the v3 measurements, unchanged and not re-run; the machine
-they were taken on is busy. Nothing in v4 or v5 is expected to move them --
-both revisions are reorganization, and the emulated compiler's output is
-still byte-identical -- but they are not a measurement of this posting and
-should not be read as one.
-
-The two figures do not track each other, and that is the interesting part:
-what the series removes is cheap, well-predicted, highly pipelined work, so
-it retires far more instructions than it saves time. Patch 6 also cuts L1
-icache load misses by 39.0%, because a dispatch no longer jumps into qemu's
-.text and evicts translated code; qemu's own .text falls from 38.8% to 5.3%
-of profile samples.
-
-Every step builds and runs on its own, so the series bisects, and the
-emulated compiler produces byte-identical assembly output at every step,
-which is the correctness check these patches most need. Three tests under
-tests/tcg/multiarch cover the hazards the series creates: test-xpage-chain.c
-and gdbstub/xpage-bp.py (patch 7) and test-indirect-irq.c (patch 8). Each
-fails or hangs if the mechanism it covers is removed, which is what makes
-them tests of the new behavior rather than of the old.
-
-Changes since v4
-================
-
-The structural change is that v4's patches 4 and 5 are gone, replaced by
-different patches with the same job.
-
-v4's patch 4 added an argument to tcg_gen_lookup_and_goto_ptr() and made
-every caller pass NULL. Richard's example is target/arm, where
-DISAS_UPDATE_NOCHAIN needs the helper because the state has changed while
-DISAS_JUMP does not; that subtlety, he pointed out, means the existing
-interface should not be adjusted at all, and that targets should migrate to
-a new one instead. So v5 leaves tcg_gen_lookup_and_goto_ptr(void) as it was
-and adds tcg_gen_goto_jc_{i32,i64,tl}() beside it. Only the five migrated
-targets are touched, rather than all twenty; the diffstat is a good summary
-of the difference.
-
-v4's patch 5 gave generated code a second jump cache base pointer and
-poisoned it when a breakpoint was inserted, which needed a cross-thread
-poison, an un-poison, and a double check of the breakpoint list. Richard
-suggested a cflag instead, which is both simpler and sufficient: the probe
-already compares cflags, so CF_NO_GOTO_JC alone keeps both the block itself
-and anything chaining to it off the inline path. The whole poison mechanism
-leaves this patch. The base pointer moves down to patch 8, where a pending
-exit is the only reason left to want one, that being a per-execution
-condition no cflag can express.
-
-  1  Reviewed-by: Richard Henderson.
-
-  2  Unchanged.
-
-  3  Unchanged.
-
-  4  Replaces "tcg: pass the destination to tcg_gen_lookup_and_goto_ptr()".
-     New interface rather than a changed one; _i32 and _i64 entry points
-     with a _tl alias in tcg-op.h rather than one entry point taking a
-     TCGTemp, since single-binary targets build once and stop relying on
-     TARGET_LONG_BITS; and a new helper_goto_jc_check() that asserts pc,
-     flags and cs_base against get_tb_cpu_state() under CONFIG_DEBUG_TCG.
-     (All Richard.) The contract is now written on the declaration rather
-     than left to be inferred.
-
-  5  Replaces "accel/tcg: give the TB jump cache a second base pointer for
-     generated code" (Richard, as above). That leaves a residual window,
-     in which blocks translated before the insert keep chaining on their
-     old cflags until the vCPU reaches its main loop. It is the same window
-     goto_tb chaining already has, and in system mode gdb inserts
-     breakpoints with the vCPUs stopped, so there is none. The commit
-     message says so rather than leaving it implicit.
-
-  6  Build the folded flags/cflags constant with deposit64() rather than
-     under #if HOST_BIG_ENDIAN, so both arms compile on every host
-     (Richard). Read cpu->tb_jmp_cache directly and honor CF_NO_GOTO_JC,
-     following patch 5. Commit message notes the backend expansion this
-     wants as a follow-up, which is Richard's list: x86_64 and s390x can
-     compare against a memory operand, and aarch64 has shift-add for the
-     entry address, ldp to load (tb, pc) and (cs_base, flags), and ccmp to
-     halve the branches. Not attempted here: the probe as posted is correct
-     on every backend, and the expansions are strictly additive and deserve
-     their own numbers, particularly the aarch64 one, which changes the
-     shape enough that it should be measured on aarch64 hardware.
-
-  7  Unchanged.
-
-  8  Gains CPUState::tb_jmp_cache_probe from v4's patch 5. With breakpoints
-     handled by a cflag, a pending exit is the only reason left to poison,
-     so there is one condition rather than two, no cross-thread poison from
-     cpu_breakpoint_insert(), and no unrealized or NULL state for either
-     helper to consider: the probe is initialized alongside tb_jmp_cache
-     and unrealize leaves it pointing at the poison (Richard). The poison
-     is now a page-aligned allocation mapped read-only at startup rather
-     than a writable .bss object (Richard); qemu_mprotect_ro() is added for
-     it beside the existing _rw, _rwx and _none forms. That also settles
-     v4's own note about a 1 MiB object that is never written.
-
-  9  Unchanged.
-
-Testing
-=======
-
-alpha, loongarch64, mips, mipsel, mips64, ppc, ppc64 and s390x all build and
-run an indirect-dispatch exerciser (computed-goto back edges, function
-pointer calls, returns and a longjmp out of a SIGALRM handler) to
-completion under --enable-debug-tcg, so helper_goto_jc_check()'s assertions
-have actually been exercised on every migrated target rather than only on
-alpha. The gdbstub path (insert, hit, backtrace, delete, continue) and
-test-indirect-irq still pass, and the emulated compiler's output is still
-byte-identical.
-
-What I would most like reviewed
-===============================
-
-  - Patch 7 reverses a deliberate decision made in d3a2a1d803 on the
-    strength of an argument about the user-only invalidation paths, plus a
-    gate on whether gdb can ever attach.
-
-  - Patch 8's un-poison in the main loop races a concurrent poison from
-    another thread. I believe the existing barrier around
-    icount_decr.u16.high covers it, but my testing was single-threaded user
-    mode.
-
-  - Patch 5's argument that a cflag is sufficient rests on the probe
-    comparing cflags and on the residual window being one goto_tb chaining
-    already accepts. Both seem clearly true to me, which is why they are
-    worth a second reader.
-
-  - Patch 6 treats cpu flags, cflags and cs_base as translation-time
-    constants in its guards, reads a jump cache entry without qatomic_read(),
-    and leaves one_insn_per_tb and -d nochain toggles visible only at the
-    next non-inline exit.
-
-  - Patch 9 only examines the immediately preceding op, refuses any access
-    with a slow path (so user-only, and no alignment check), and leaves the
-    i128 pairs alone. Richard asked whether the alignment test could stay on
-    the base register when the displacement is itself aligned; it can, and
-    the reason the fold is still refused there is the slow path handing
-    addr_reg to the helper. Recording the displacement in TCGLabelQemuLdst
-    and emitting one lea on the slow path would cover alignment-checked
-    accesses too, at no fast path cost. Not attempted here.
-
-  - Patch 2's 1 MiB per CPUState is easy to justify for a single-threaded
-    linux-user process and less obvious for system emulation with many
-    vCPUs, or for a heavily threaded guest. It may want to be sized per
-    target or made tunable rather than raised unconditionally.
-
-Patches 6 and 9 are wired up for alpha and x86_64 respectively; everything
-else is target-independent, and no other backend changes behavior or needs
-touching.
-
-v4: https://lore.kernel.org/qemu-devel/20260827050241.3713332-1-mattst88@gmail.com/
-v3: https://lore.kernel.org/qemu-devel/20260822190818.1829249-1-mattst88@gmail.com/
-v2: https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/
-
-Matt Turner (9):
-  accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags
-  accel/tcg: enlarge the TB jump cache to 64K entries
-  accel/tcg: skip the can_do_io stores in user-only builds
-  tcg: add tcg_gen_goto_jc_{i32,i64,tl}()
-  accel/tcg: add CF_NO_GOTO_JC, set while a breakpoint is present
-  RFC: tcg: probe the TB jump cache inline instead of calling a helper
-  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
-  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-    exits
-  RFC: tcg: fold a guest displacement into the host addressing mode
-
- accel/stubs/meson.build                       |   1 +
- accel/stubs/tcg-stub.c                        |  16 +
- accel/tcg/cpu-exec-common.c                   |  44 ++-
- accel/tcg/cpu-exec.c                          | 121 +++++++
- accel/tcg/internal-common.h                   |  20 +-
- accel/tcg/tb-jmp-cache.h                      |   2 +-
- accel/tcg/tcg-accel-ops.c                     |   2 +
- accel/tcg/tcg-runtime.h                       |   4 +
- accel/tcg/translator.c                        |  94 ++++-
- cpu-common.c                                  |   7 +
- cpu-target.c                                  |   3 +
- gdbstub/user.c                                |  14 +
- include/exec/translation-block.h              |   1 +
- include/gdbstub/user.h                        |  11 +
- include/hw/core/cpu.h                         |   9 +
- include/qemu/mprotect.h                       |   1 +
- include/system/tcg.h                          |  12 +
- include/tcg/tcg-op-common.h                   |  21 ++
- include/tcg/tcg-op.h                          |   2 +
- include/tcg/tcg-opc.h                         |   9 +-
- include/tcg/tcg.h                             |   2 +
- monitor/hmp-cmds.c                            |   5 +
- system/runstate-hmp-cmds.c                    |   4 +
- target/alpha/translate.c                      |   4 +-
- .../tcg/insn_trans/trans_branch.c.inc         |   2 +-
- target/loongarch/tcg/translate.c              |   4 +-
- target/mips/tcg/nanomips_translate.c.inc      |   2 +-
- target/mips/tcg/translate.c                   |   6 +-
- target/ppc/translate.c                        |   4 +-
- target/s390x/tcg/translate.c                  |   4 +-
- tcg/tcg-op-ldst.c                             |   3 +-
- tcg/tcg-op.c                                  | 182 +++++++++-
- tcg/tcg.c                                     | 132 ++++++-
- tcg/x86_64/tcg-target.c.inc                   |  41 +++
- tcg/x86_64/tcg-target.h                       |   3 +
- tests/tcg/multiarch/Makefile.target           |  12 +-
- tests/tcg/multiarch/gdbstub/xpage-bp.py       |  37 ++
- tests/tcg/multiarch/test-indirect-irq.c       |  62 ++++
- tests/tcg/multiarch/test-xpage-chain.c        | 336 ++++++++++++++++++
- util/osdep.c                                  |   9 +
- 40 files changed, 1216 insertions(+), 32 deletions(-)
- create mode 100644 accel/stubs/tcg-stub.c
- create mode 100644 tests/tcg/multiarch/gdbstub/xpage-bp.py
- create mode 100644 tests/tcg/multiarch/test-indirect-irq.c
- create mode 100644 tests/tcg/multiarch/test-xpage-chain.c
-
-
-base-commit: eea8fe61b8be8f3016e522e6af24924a0266ca95
+diff --git ./accel/tcg/cpu-exec.c ./accel/tcg/cpu-exec.c
+index 148e0f583e..ca90a77a7b 100644
+--- ./accel/tcg/cpu-exec.c
++++ ./accel/tcg/cpu-exec.c
+@@ -407,6 +407,33 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
+     return tb->tc.ptr;
+ }
+ 
++#ifdef CONFIG_DEBUG_TCG
++/**
++ * helper_goto_jc_check: check the contract of tcg_gen_goto_jc_*()
++ * @env: current cpu state
++ * @pc: the destination pc the caller passed at translation time
++ * @flags: the flags the dispatching block was translated with
++ * @cs_base: the cs_base the dispatching block was translated with
++ *
++ * A goto_jc looks the destination up on the caller's @pc with the flags and
++ * cs_base of the block doing the dispatching, so all three have to be what
++ * get_tb_cpu_state() reports by the time the dispatch runs.  That is a
++ * property of the translator, not of the generated code, so check it here
++ * rather than leaving a target that gets it wrong to be debugged as a block
++ * running with someone else's flags.
++ */
++void HELPER(goto_jc_check)(CPUArchState *env, uint64_t pc, uint64_t flags,
++                           uint64_t cs_base)
++{
++    CPUState *cpu = env_cpu(env);
++    TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
++
++    assert(s.pc == pc);
++    assert(s.flags == flags);
++    assert(s.cs_base == cs_base);
++}
++#endif
++
+ /* Return the current PC from CPU, which may be cached in TB. */
+ static vaddr log_pc(CPUState *cpu, const TranslationBlock *tb)
+ {
+diff --git ./accel/tcg/tcg-runtime.h ./accel/tcg/tcg-runtime.h
+index 0b832176b3..ec99170698 100644
+--- ./accel/tcg/tcg-runtime.h
++++ ./accel/tcg/tcg-runtime.h
+@@ -22,6 +22,10 @@ DEF_HELPER_FLAGS_1(ctpop_i64, TCG_CALL_NO_RWG_SE, i64, i64)
+ 
+ DEF_HELPER_FLAGS_1(lookup_tb_ptr, TCG_CALL_NO_WG_SE, cptr, env)
+ 
++#ifdef CONFIG_DEBUG_TCG
++DEF_HELPER_FLAGS_4(goto_jc_check, TCG_CALL_NO_WG_SE, void, env, i64, i64, i64)
++#endif
++
+ DEF_HELPER_FLAGS_1(exit_atomic, TCG_CALL_NO_WG, noreturn, env)
+ 
+ #ifndef IN_HELPER_PROTO
+diff --git ./include/tcg/tcg-op-common.h ./include/tcg/tcg-op-common.h
+index 9b321f959c..4f334faaaa 100644
+--- ./include/tcg/tcg-op-common.h
++++ ./include/tcg/tcg-op-common.h
+@@ -85,6 +85,26 @@ void tcg_gen_goto_tb(unsigned idx);
+  */
+ void tcg_gen_lookup_and_goto_ptr(void);
+ 
++/**
++ * tcg_gen_goto_jc_i32() - dispatch to the destination TB via the jump cache
++ * tcg_gen_goto_jc_i64() - dispatch to the destination TB via the jump cache
++ * @pc: temp holding the destination guest PC
++ *
++ * As tcg_gen_lookup_and_goto_ptr(), but the caller states where the
++ * dispatch is going, which allows the lookup to be done inline.
++ *
++ * The contract is that when this runs, the CPU state must already be
++ * exactly the destination's: @pc must hold what get_tb_cpu_state() would
++ * report as the destination pc, and the flags and cs_base it would report
++ * must be the ones the block being generated was translated with.  A
++ * translator that has not finished updating the state, or whose pc is
++ * derived rather than being the lookup key -- avr's word address, i386's
++ * eip before segmentation -- must use tcg_gen_lookup_and_goto_ptr()
++ * instead.  --enable-debug-tcg checks the contract at runtime.
++ */
++void tcg_gen_goto_jc_i32(TCGv_i32 pc);
++void tcg_gen_goto_jc_i64(TCGv_i64 pc);
++
+ void tcg_gen_plugin_cb(unsigned from);
+ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+ 
+diff --git ./include/tcg/tcg-op.h ./include/tcg/tcg-op.h
+index 3721164236..cd4794d745 100644
+--- ./include/tcg/tcg-op.h
++++ ./include/tcg/tcg-op.h
+@@ -38,6 +38,7 @@ typedef TCGv_i32 TCGv;
+ #define tcgv_tl_temp tcgv_i32_temp
+ #define tcg_gen_qemu_ld_tl tcg_gen_qemu_ld_i32
+ #define tcg_gen_qemu_st_tl tcg_gen_qemu_st_i32
++#define tcg_gen_goto_jc_tl tcg_gen_goto_jc_i32
+ #elif TARGET_LONG_BITS == 64
+ typedef TCGv_i64 TCGv;
+ #define tcg_temp_new() tcg_temp_new_i64()
+@@ -45,6 +46,7 @@ typedef TCGv_i64 TCGv;
+ #define tcgv_tl_temp tcgv_i64_temp
+ #define tcg_gen_qemu_ld_tl tcg_gen_qemu_ld_i64
+ #define tcg_gen_qemu_st_tl tcg_gen_qemu_st_i64
++#define tcg_gen_goto_jc_tl tcg_gen_goto_jc_i64
+ #else
+ #error Unhandled TARGET_LONG_BITS value
+ #endif
+diff --git ./target/alpha/translate.c ./target/alpha/translate.c
+index c66e3f9c14..8318487cd8 100644
+--- ./target/alpha/translate.c
++++ ./target/alpha/translate.c
+@@ -449,7 +449,7 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx, int32_t disp)
+         tcg_gen_exit_tb(ctx->base.tb, tb_slot_idx);
+     } else {
+         gen_pc_disp(ctx, cpu_pc, disp);
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_pc);
+     }
+ }
+ 
+@@ -2917,7 +2917,7 @@ static void alpha_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+         gen_pc_disp(ctx, cpu_pc, 0);
+         /* FALLTHRU */
+     case DISAS_PC_UPDATED:
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_pc);
+         break;
+     case DISAS_PC_UPDATED_NOCHAIN:
+         tcg_gen_exit_tb(NULL, 0);
+diff --git ./target/loongarch/tcg/insn_trans/trans_branch.c.inc ./target/loongarch/tcg/insn_trans/trans_branch.c.inc
+index da07778658..d4318dfa43 100644
+--- ./target/loongarch/tcg/insn_trans/trans_branch.c.inc
++++ ./target/loongarch/tcg/insn_trans/trans_branch.c.inc
+@@ -27,7 +27,7 @@ static bool trans_jirl(DisasContext *ctx, arg_jirl *a)
+     tcg_gen_mov_tl(cpu_pc, addr);
+     tcg_gen_movi_tl(dest, make_address_pc(ctx, ctx->base.pc_next + 4));
+     gen_set_gpr(a->rd, dest, EXT_NONE);
+-    tcg_gen_lookup_and_goto_ptr();
++    tcg_gen_goto_jc_tl(cpu_pc);
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return true;
+ }
+diff --git ./target/loongarch/tcg/translate.c ./target/loongarch/tcg/translate.c
+index 124dce6269..6ac0c3773a 100644
+--- ./target/loongarch/tcg/translate.c
++++ ./target/loongarch/tcg/translate.c
+@@ -111,7 +111,7 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx, vaddr dest)
+         tcg_gen_exit_tb(ctx->base.tb, tb_slot_idx);
+     } else {
+         tcg_gen_movi_tl(cpu_pc, dest);
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_pc);
+     }
+ }
+ 
+@@ -311,7 +311,7 @@ static void loongarch_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+     switch (ctx->base.is_jmp) {
+     case DISAS_STOP:
+         tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next);
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_pc);
+         break;
+     case DISAS_TOO_MANY:
+         gen_goto_tb(ctx, 0, ctx->base.pc_next);
+diff --git ./target/mips/tcg/nanomips_translate.c.inc ./target/mips/tcg/nanomips_translate.c.inc
+index 4b0b01ba37..106f49990d 100644
+--- ./target/mips/tcg/nanomips_translate.c.inc
++++ ./target/mips/tcg/nanomips_translate.c.inc
+@@ -2406,7 +2406,7 @@ static void gen_compute_nanomips_pbalrsc_branch(DisasContext *ctx, int rs,
+ 
+     /* unconditional branch to register */
+     tcg_gen_mov_tl(cpu_PC, btarget);
+-    tcg_gen_lookup_and_goto_ptr();
++    tcg_gen_goto_jc_tl(cpu_PC);
+ }
+ 
+ /* nanoMIPS Branches */
+diff --git ./target/mips/tcg/translate.c ./target/mips/tcg/translate.c
+index e3467d1525..dea1ba4c1e 100644
+--- ./target/mips/tcg/translate.c
++++ ./target/mips/tcg/translate.c
+@@ -4374,7 +4374,7 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx,
+         tcg_gen_exit_tb(ctx->base.tb, tb_slot_idx);
+     } else {
+         gen_save_pc(dest);
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_PC);
+     }
+ }
+ 
+@@ -11014,7 +11014,7 @@ static void gen_branch(DisasContext *ctx, int insn_bytes)
+             } else {
+                 tcg_gen_mov_tl(cpu_PC, btarget);
+             }
+-            tcg_gen_lookup_and_goto_ptr();
++            tcg_gen_goto_jc_tl(cpu_PC);
+             break;
+         default:
+             LOG_DISAS("unknown branch 0x%x\n", proc_hflags);
+@@ -15244,7 +15244,7 @@ static void mips_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+     switch (ctx->base.is_jmp) {
+     case DISAS_STOP:
+         gen_save_pc(ctx->base.pc_next);
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_PC);
+         break;
+     case DISAS_NEXT:
+     case DISAS_TOO_MANY:
+diff --git ./target/ppc/translate.c ./target/ppc/translate.c
+index 06ed2adf10..21e21102fc 100644
+--- ./target/ppc/translate.c
++++ ./target/ppc/translate.c
+@@ -3664,7 +3664,7 @@ static void gen_lookup_and_goto_ptr(DisasContext *ctx)
+             pmu_count_insns(ctx);
+         }
+ 
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_nip);
+     }
+ }
+ 
+@@ -6690,7 +6690,7 @@ static void ppc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+             pmu_count_insns(ctx);
+         }
+ 
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_tl(cpu_nip);
+         break;
+ 
+     case DISAS_EXIT_UPDATE:
+diff --git ./target/s390x/tcg/translate.c ./target/s390x/tcg/translate.c
+index 1b6023168b..906951c7df 100644
+--- ./target/s390x/tcg/translate.c
++++ ./target/s390x/tcg/translate.c
+@@ -1162,7 +1162,7 @@ static DisasJumpType help_branch(DisasContext *s, DisasCompare *c,
+         tcg_gen_goto_tb(0);
+         tcg_gen_exit_tb(s->base.tb, 0);
+     } else {
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_goto_jc_i64(psw_addr);
+     }
+ 
+     gen_set_label(lab);
+@@ -6477,7 +6477,7 @@ static void s390x_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+         if (dc->exit_to_mainloop) {
+             tcg_gen_exit_tb(NULL, 0);
+         } else {
+-            tcg_gen_lookup_and_goto_ptr();
++            tcg_gen_goto_jc_i64(psw_addr);
+         }
+         break;
+     default:
+diff --git ./tcg/tcg-op.c ./tcg/tcg-op.c
+index 28d3b2a847..a2f35359fe 100644
+--- ./tcg/tcg-op.c
++++ ./tcg/tcg-op.c
+@@ -2715,18 +2715,65 @@ void tcg_gen_goto_tb(unsigned idx)
+     tcg_gen_op1i(INDEX_op_goto_tb, 0, idx);
+ }
+ 
++static void gen_lookup_tb_ptr_and_goto(void)
++{
++    TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
++
++    gen_helper_lookup_tb_ptr(ptr, tcg_env);
++    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
++    tcg_temp_free_ptr(ptr);
++}
++
+ void tcg_gen_lookup_and_goto_ptr(void)
+ {
+-    TCGv_ptr ptr;
+-
+     if (tcg_ctx->gen_tb->cflags & CF_NO_GOTO_PTR) {
+         tcg_gen_exit_tb(NULL, 0);
+         return;
+     }
+ 
+     plugin_gen_disable_mem_helpers();
+-    ptr = tcg_temp_ebb_new_ptr();
+-    gen_helper_lookup_tb_ptr(ptr, tcg_env);
+-    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+-    tcg_temp_free_ptr(ptr);
++    gen_lookup_tb_ptr_and_goto();
++}
++
++/*
++ * The common half of tcg_gen_goto_jc_i32() and tcg_gen_goto_jc_i64().  @pc
++ * is widened to i64 because the jump cache is keyed on a vaddr; for a
++ * 32-bit guest PC that is its zero extension.
++ */
++static void gen_goto_jc(TCGv_i64 pc)
++{
++    const TranslationBlock *tb = tcg_ctx->gen_tb;
++
++    if (tb->cflags & CF_NO_GOTO_PTR) {
++        tcg_gen_exit_tb(NULL, 0);
++        return;
++    }
++
++    plugin_gen_disable_mem_helpers();
++
++#ifdef CONFIG_DEBUG_TCG
++    /*
++     * The caller has asserted that env already describes the destination.
++     * Check it, rather than leaving a target that gets it wrong to be
++     * debugged as a block that runs with someone else's flags.
++     */
++    gen_helper_goto_jc_check(tcg_env, pc, tcg_constant_i64(tb->flags),
++                             tcg_constant_i64(tb->cs_base));
++#endif
++
++    gen_lookup_tb_ptr_and_goto();
++}
++
++void tcg_gen_goto_jc_i64(TCGv_i64 pc)
++{
++    gen_goto_jc(pc);
++}
++
++void tcg_gen_goto_jc_i32(TCGv_i32 pc)
++{
++    TCGv_i64 pc64 = tcg_temp_ebb_new_i64();
++
++    tcg_gen_extu_i32_i64(pc64, pc);
++    gen_goto_jc(pc64);
++    tcg_temp_free_i64(pc64);
+ }
 -- 
 2.54.0
 
