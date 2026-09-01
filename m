@@ -4,99 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C70BC61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCC9C624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1PYP-0001qd-5D; Tue, 01 Sep 2026 10:33:37 -0400
+	id 1x1PfG-0003Vl-D3; Tue, 01 Sep 2026 10:40:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1x1PYM-0001pu-W5
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:33:35 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x1PfD-0003VD-2f
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:39 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1x1PYK-000413-Qz
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:33:34 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4996e2575dbso58035e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:33:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x1Pf9-0005nq-Di
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:38 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-c160420289bso625802066b.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:40:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788273631; cv=none;
+ d=google.com; s=arc-20260327;
+ b=JIWybHX/cWPrDnYbZTTV1UY4LQTbK4ivZt/dDh7uBnPi8LPXNxt+kT2pb8ILqcJw3B
+ 9LjXlZ5lGbW0xioId50z/x8wFvYmS/ORIHRkRgtZ9nxWEbK3rTLdN1goZievBjZ9Lrko
+ 8XJgFocmxgB9PeyjXBVEjAVtWk2MUlFQGKRvHZpsAtpU14Y4+YF1E7d7H04vgzbyrfdD
+ EC5+GGefamCGkoUyBACEYT3w/xtWP8qUiQEed169TIJb4Ek2OiQPqT1RL/uzhAPjdNDn
+ 0vYs9P+GpoBxs9E41gGrj9pbRTTC141rcEXThcgFld4PobGMu9ZXiIDgAZgho+dVuHKm
+ qDGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=+mIp+V5+2vQjKg8LuzJXA+gwIhZ26K/dzOFdKWn8KGg=;
+ fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
+ b=e5lWCgQEBZFlXwKlbDqSZZG6fa3oJohlnjsciWtmEjrhbEPZHiHjS0+71lJd00XPwW
+ AEHvw6lUfKbu3K+NJnPZoNZtYKVA8sA0NqLiFFgtKHHp4DoV7jdcoYtOq1SnDSKkLrey
+ zW3uAAlCTfop0tAq4LVThMfpHztoZu6iU40oK6GAXEndrwbnRg+JOVNHwOZ9Y2kVVKbw
+ yQsv+91mAWRzLwI0wY2ueM8juug5IVfAMNZJ6jCgrsZcgmmTqC4mIlR5n6O5mmFX1XWp
+ 38FUXZGgGM4MYblKrZQIblvVPkT8eTtgZ3M4SogBMeZa52T4rnoUGthVKsALEERXXr+w
+ QwcQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788273211; x=1788878011; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=gmail.com; s=20251104; t=1788273631; x=1788878431; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=3dx06ZQ88A8yshj8imQPf1gLzKKQA0hwr+mNSgHM4xU=;
- b=Qk9e/YRlHzBfShb1u6YLg6ufEAuyjVEbPj2DINiW2dJASeP9rJzhIOLgJuuyFxbrur
- 4nVcEBWijKXSGygLN8Bp8AgddwgQ/4qWfYCN0oPYCONylEmtWYXd06AiBaws+30dFGft
- 17GZO7DYx60IB5/bmdaQDCz/giDbt+EqU7aFY15Hcf8lr1KyzWpVeUHmSzPvEYP8Rj2P
- T7zc5/l+OaItZw+WxSQTXVSKJWxDpjOcSe6NqHHK0LQiaho2S//Z/DjT+yii7lDi1982
- SsO2bJP8+5MONWEDBwy86ET/4fU1+kmQoBE5RRE0tfJQ1cPjMDj3XZOs//lgBPuAjpxo
- iRCA==
+ bh=+mIp+V5+2vQjKg8LuzJXA+gwIhZ26K/dzOFdKWn8KGg=;
+ b=XRNKd/ynneePvztmIixCAtLumoT1XX467VGmIy8aAQ63S/mvL37YZg1HhhZshtz8io
+ vQA9nPPPFrzSVFKw5ZaPklQeIHxpJz9n443up+LYCu1kbAr+QwIDSXm5hZ5FA2hrqxkp
+ oNllTzgWFz8H03FxuwBhe9fklqq2lrgq3azhs24HHwQOfM6j8nuaa3gadrQct0wIs3RB
+ sBH1hLLAV3QXGws6nqJlK+mxDBG2BwKdiVHOP6gfvi2pZkPYCcmxjwjWRjyLmb1CPHyM
+ g3fEyg6qpP1Wx3Nn3JbqM8c39s8Cn1fTLXTWxBtIacErhYU25si5oNRwkz9xn8X8oIng
+ wabQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788273211; x=1788878011;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788273631; x=1788878431;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=3dx06ZQ88A8yshj8imQPf1gLzKKQA0hwr+mNSgHM4xU=;
- b=Lmc+Oql5QTdTO5bNwNcmZJQhacMCsTw5u4OEeVVjAxUgEqsfAFqGZ88dY4wJnyxyFL
- NenBk5vAmoG/Q4LYWah84WE0ff5/ChmXhLyqGQJRgYMiJog6/eKDv/CHYxw/voxuQt05
- XzzHyho+xPOAhbHEX0AEQUC3SjqHjEr7MGdsniGDnqox9+SqB23IcbJV2yIDo6xL4xOj
- gSN0caIfLuhIK0vTeMY6zTwe+386rz+gns434KW/lcDsTbSDzilAdR9Rmf0ghtr4SeRk
- ia+9aBNjznVLE7rctdJ6aY2TTnwZ6ayp1M6XWM11YNm4P5rI+CJbZBYwxsA3pXo19I0S
- 5xVg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrmCak1ypJo7HWjU1yKYzZyfIvukpVKyoCcI/HMvAlsBJEY8Ws5aPd4+oHwz+HaXTgbWxwgDBXfswpU@nongnu.org
-X-Gm-Message-State: AFuF++nCySZ5bG6Cp53uPTLxFMf5yeLcb8yzJg8GtV18ZxGYMw4WmkrQ
- Tl6GDixGsWu4utI0GCb495s4AiLuuWXVNBm3INXK3+UvIp4gWsKAEgkqrzaiBgLSFw==
-X-Gm-Gg: AR+sD11ajZt10iTEYe8gL8m/rTnw89dPn9tiG+NIKb/BPtAFC+JAboA/y5tAewjQ46o
- nOpWLglyLJzfQAi/nLdgk8rEU8v3yS2+nuZCl9DntnniGix+f2j6vUH/5u1t6a+cCzSGVvU5Vkm
- coWeqnwtDIcxWoDoYW+2/0PKDZYrS0owLNgj0bHeLQKEMBoU9/P4IVOYmK/8exlvcRp9OPUOTtJ
- ftQmJIfiaNEAw0O5+dUL6hvuKku0cCYJEpLW6xyoEoa5+Z7k5dOpgZlQigoLnUNxBFaEIe9ZjoS
- BpwuF27fSp2BpmeAjohRqbItn9gntKAo95nnuam3U5Yegscrn+TPH3XcTZSa1mDQ7ST71i+V1Y6
- tQuDUU7jOLyU6B7vekuQ0k0and+JBPXItV5j7Tiiu696oDZcmpmGp5/xOMB2mSA/5j4xXSa0DNP
- Wjg7J/26YrjQLca4d1glxdeXd9zjPWL3A1fvod7veS+Doj/h1J0JfG5RzsTG2mgTnU31rwP/NyI
- iZAYmvi3yq938WUgUlbIpjqJZMHtQ==
-X-Received: by 2002:a05:600c:c088:b0:499:c4db:2ea9 with SMTP id
- 5b1f17b1804b1-49cde7bdfaamr576235e9.9.1788273210263; 
- Tue, 01 Sep 2026 07:33:30 -0700 (PDT)
-Received: from google.com (250.192.189.35.bc.googleusercontent.com.
- [35.189.192.250]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48442d36e9csm5660424f8f.3.2026.09.01.07.33.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 07:33:27 -0700 (PDT)
-Date: Tue, 1 Sep 2026 14:33:22 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-Subject: Re: [RFC v5 20/28] hw/arm/smmuv3: Route IRQ and GERROR handling by
- SEC_SID
-Message-ID: <apbiMt6x_PUrhluf@google.com>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162558.2808607-5-tangtao1634@phytium.com.cn>
+ bh=+mIp+V5+2vQjKg8LuzJXA+gwIhZ26K/dzOFdKWn8KGg=;
+ b=o1BByuFe1KWOOkCtsuFcV1xoQtnG18XYuPHNtUB5wvFvlxisGX9v34a4sVDlJB87+B
+ VSGG7zts2Uu0b6szrgRZ6wDjNDAKhu1/29A0Ydw+jsiofjHiJOj6RtoLq92bTOw9rwpG
+ 6uM4e5citijGrAOQOnzYErPt8oHiR+qEPNhZ36C8V/K0u9N5vwabs1HE+BXH2HaPLVNp
+ mEaj6JDDt7mgpEQPVJKKqxKzmnH1No3SYSpg6boic+Iokr/vVmUTKydCr71X8dFjiDNV
+ svDwpfz/PnoIIFAfNHTIJbeod7qcavmpH2oiNsREihcXM/meMJgWsCkqmOa6LX4JGtE/
+ h/ZA==
+X-Gm-Message-State: AFuF++lsOzQLJ+Za2jGUvdWZVkQ6Cpm1OjUkaioNgHXgjvPgJc0q0r/Q
+ VAonv9No4SbTGaALyBhcS1S8MHNEra6lhZXZtRTcQVpFPmUIb8h074H1RfI7KNxdlV6xxuKGo6Z
+ 5RUEpHujVaFHNU62DWLofBtcruSwPkfE=
+X-Gm-Gg: AR+sD12r7I6BWrD57f1tWH3NUiTGVWdxO9KGJ1TImkDJ5kIigYfk84uzeqhZmP7k0OX
+ HKFkykB3Sxxh342TI7gf2H89jud7Hb/gu5bhspmV9YoKz8TX5rMfmqhM8RUFxKbjpM6KYmGNKUs
+ F7ieb+9Mc3ULlo0D4+EAFE/ue1RXc7DLBYZhxCwijzFALgCqK/xXuBH4sSD3bGJd2DGcF2nnsg9
+ nZv/SEL5C3qBUhmtqQUp0iVfQMGJ4Ph7PreRD8hCR2h4mJ1CF1Xvu1bKWyDolyunb9StJFWgCCC
+ tj4v9BwLZJWiSpGwZjKgxHd4ArKo0pPBwfT898LrxJKo
+X-Received: by 2002:a17:906:4788:b0:c25:8bcb:ea0b with SMTP id
+ a640c23a62f3a-c25b3bb8e6dmr766554466b.4.1788273631002; Tue, 01 Sep 2026
+ 07:40:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260813162558.2808607-5-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=smostafa@google.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-15-zhangckid@gmail.com>
+ <877bl5bkkx.fsf@pond.sub.org>
+In-Reply-To: <877bl5bkkx.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 1 Sep 2026 22:39:54 +0800
+X-Gm-Features: AcwNN1VbM660-bFlfF_UTv30XhdHiKad7_Ju0N8d9HxMnhbmaCMGJRaLXNG4A6g
+Message-ID: <CAK3tnv+7m2exh9jc+cyAFx+JZv4xunxtRaSmUWH7QgpXPzBCFQ@mail.gmail.com>
+Subject: Re: [PATCH V14 14/15] iothread: remove legacy
+ iothread_get_aio_context()
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,115 +123,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:25:58AM +0800, Tao Tang wrote:
-> Interrupt and global error handling currently always selects the
-> Non-secure register bank, even when the event or command originates
-> from the Secure programming interface. This splits CMDQ_CONS.ERR from
-> GERROR.CMDQ_ERR and prevents Secure software from acknowledging the
-> error through S_GERRORN.
-> 
-> Pass SEC_SID through the IRQ and GERROR helpers and all queue call
-> sites so interrupt enable checks, global error reporting, and
-> acknowledgement use the originating programming-interface bank.
-> 
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  hw/arm/smmuv3.c | 20 +++++++++++---------
->  1 file changed, 11 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index b36bc4a54e0..d69fc0898af 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -49,11 +49,11 @@
->   *
->   * @irq: irq type
->   * @gerror_mask: mask of gerrors to toggle (relevant if @irq is GERROR)
-> + * @sec_sid: security state of the programming interface
->   */
->  static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
-> -                               uint32_t gerror_mask)
-> +                               uint32_t gerror_mask, SMMUSecSID sec_sid)
->  {
-> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->  
->      bool pulse = false;
-> @@ -90,9 +90,9 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
->      }
->  }
->  
-> -static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
-> +static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn,
-> +                                 SMMUSecSID sec_sid)
->  {
-> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->      uint32_t pending = bank->gerror ^ bank->gerrorn;
->      uint32_t toggled = bank->gerrorn ^ new_gerrorn;
-> @@ -173,7 +173,7 @@ static MemTxResult smmuv3_write_eventq(SMMUv3State *s, SMMUSecSID sec_sid,
->      }
->  
->      if (!smmuv3_q_empty(q)) {
-> -        smmuv3_trigger_irq(s, SMMU_IRQ_EVTQ, 0);
-> +        smmuv3_trigger_irq(s, SMMU_IRQ_EVTQ, 0, sec_sid);
->      }
->      return MEMTX_OK;
->  }
-> @@ -187,7 +187,8 @@ void smmuv3_propagate_event(SMMUv3State *s, Evt *evt, SMMUSecSID sec_sid)
->      QEMU_LOCK_GUARD(&s->mutex);
->      r = smmuv3_write_eventq(s, sec_sid, evt);
->      if (r != MEMTX_OK) {
-> -        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
-> +        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR,
-> +                           R_GERROR_EVENTQ_ABT_ERR_MASK, sec_sid);
->      }
->  }
->  
-> @@ -1645,7 +1646,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->          switch (type) {
->          case SMMU_CMD_SYNC:
->              if (CMD_SYNC_CS(&cmd) & CMD_SYNC_SIG_IRQ) {
-> -                smmuv3_trigger_irq(s, SMMU_IRQ_CMD_SYNC, 0);
-> +                smmuv3_trigger_irq(s, SMMU_IRQ_CMD_SYNC, 0, sec_sid);
->              }
->              break;
->          case SMMU_CMD_PREFETCH_CONFIG:
-> @@ -1879,7 +1880,8 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->      if (cmd_error) {
->          trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
->          smmu_write_cmdq_err(s, cmd_error, sec_sid);
-> -        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
-> +        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR,
-> +                           R_GERROR_CMDQ_ERR_MASK, sec_sid);
+On Tue, Sep 1, 2026 at 1:35=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > All production callers have migrated to either the holder-tracking
+> > iothread_ref_and_get_aio_context() API or the explicitly unsafe legacy
+> > accessor. Remove the now-unused ambiguous getter.
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  include/system/iothread.h | 1 -
+> >  iothread.c                | 5 -----
+> >  2 files changed, 6 deletions(-)
+> >
+> > diff --git a/include/system/iothread.h b/include/system/iothread.h
+> > index 2ef8c1a1bb..9850cdb3dc 100644
+> > --- a/include/system/iothread.h
+> > +++ b/include/system/iothread.h
+> > @@ -66,7 +66,6 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+> >
+> >  char *iothread_get_id(IOThread *iothread);
+> >  IOThread *iothread_by_id(const char *id);
+> > -AioContext *iothread_get_aio_context(IOThread *iothread);
+> >
+> >  /*
+> >   * Return @iothread's AioContext without registering a holder or takin=
+g a
+> > diff --git a/iothread.c b/iothread.c
+> > index 803d6ce3c3..3a092119ee 100644
+> > --- a/iothread.c
+> > +++ b/iothread.c
+> > @@ -422,11 +422,6 @@ char *iothread_get_id(IOThread *iothread)
+> >      return g_strdup(object_get_canonical_path_component(OBJECT(iothrea=
+d)));
+> >  }
+> >
+> > -AioContext *iothread_get_aio_context(IOThread *iothread)
+> > -{
+> > -    return iothread->ctx;
+> > -}
+> > -
+> >  AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+> >                                               const IOThreadHolder *hol=
+der)
+> >  {
+>
+> Easier, I think: squash PATCH 04 into this one.  Turns "add copy of old
+> function, change a caller to the copy, then delete old function eight
+> patches later" into "rename function to mark it unsafe".
 
-Won't we need a new line for the secure smmu instead of sharing
-the same one in this function "qemu_irq_pulse(s->irq[irq])"?
-The spec says:
-	The SMMU has the following interrupt sources. Depending on the
-	implementation, each interrupt source asserts a wired interrupt
-	output that is unique to the source, or sends an MSI, or both.
-		- Event queue
-		- Secure Event queue
+Agreed. Keeping two identical accessors temporarily is unnecessary.
+I=E2=80=99ll squash PATCH 4 into this patch, leave blockdev.c on the old ge=
+tter
+while the holder-aware callers are converted, and finally rename the
+getter together with its blockdev.c call site.
 
-The way I read it, they have to be different.
+Thanks
+Chen
 
-Thanks,
-Mostafa
-
->      }
->  
->      trace_smmuv3_cmdq_consume_out(Q_PROD(q), Q_CONS(q),
-> @@ -1996,7 +1998,7 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->          bank->irq_ctrl = data;
->          break;
->      case A_GERRORN:
-> -        smmuv3_write_gerrorn(s, data);
-> +        smmuv3_write_gerrorn(s, data, reg_sec_sid);
->          /*
->           * By acknowledging the CMDQ_ERR, SW may notify cmds can
->           * be processed again
-> -- 
-> 2.34.1
-> 
+>
 
