@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A38C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 12:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7DDC61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 12:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Nb6-0007Ad-Bt; Tue, 01 Sep 2026 08:28:16 -0400
+	id 1x1Nbp-0007TG-Bg; Tue, 01 Sep 2026 08:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x1Nb4-0007A8-Sq
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 08:28:14 -0400
-Received: from smtpout10.mo538.mail-out.ovh.net ([51.210.91.39])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1x1Nbn-0007P5-FB; Tue, 01 Sep 2026 08:28:59 -0400
+Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x1Nb2-0004fx-Ka
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 08:28:14 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4hZ4rl74cJz67BQ;
- Tue,  1 Sep 2026 12:28:07 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 12:28:07 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.101.120])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hZ4rl3PCrz1xss;
- Tue,  1 Sep 2026 12:28:07 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1x1Nbl-0004o0-Na; Tue, 01 Sep 2026 08:28:59 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [79.137.60.226])
+ by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4hZ4sc5SMlz43YB;
+ Tue,  1 Sep 2026 12:28:52 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue,  1 Sep 2026 12:28:52 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.30])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hZ4sb6yhNz46ZJ; Tue,  1 Sep 2026 12:28:51 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 460F81923FA3; Tue,  1 Sep 2026 12:28:05 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 184C512E3FE1;
+ Tue,  1 Sep 2026 12:28:50 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003a74d813b-bc5d-4004-8749-ce3c00659c12,
+ (GARM-102R004256cf169-2f46-4809-a825-22cc16a59ac7,
  60FF1D1BA71F1148B3CBA6CDBAED02576558214C) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f3b4305d-802f-4edf-8e95-f143dd6f19fb@kaod.org>
-Date: Tue, 1 Sep 2026 14:28:04 +0200
+Message-ID: <e7609532-3c79-4c98-ac0f-7c2f5220c492@kaod.org>
+Date: Tue, 1 Sep 2026 14:28:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Add ASPEED ACRY RSA model for the AST2600
+Subject: Re: [PATCH v4 6/9] hw/misc/aspeed_sbc: Increase register space to
+ 0x1000
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260901081531.898176-1-jamin_lin@aspeedtech.com>
+References: <20260901085238.995968-1-jamin_lin@aspeedtech.com>
+ <20260901085238.995968-7-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -97,30 +101,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260901081531.898176-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260901085238.995968-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 14183805553972522029
+x-ovh-tracer-id: 14196471928623836205
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEClX8cXBR6RA2DFJGGQcFrLRBJDwhxGu9ncLjXzDeJ+SyF2fjmSap2Ik/uoscOdPwSbngZrBOa1HUbQHpEPd+7cUn7Wkewny9P8TBriu3LScAHBJdgFkxoVuhifWu0arjIK4Q66QGtdGGZoHDtF2DaYS2dTAVa7cx7yg145E/AmBTPfHsvhe50xwQXTkU2Rk1OelMVkbaWXjACzlgpVtZ10+3/hSGss6OBIQQrclVENyT5u1bImcX+LODXQxIZCezN5JfnghJwLAPUyWJ/pNIx/F2lDnnyYhQIFMVnFcnQIzqK0kc5yl3z5GveX39JMyGlyF6HEWnuC++nqiIYjFhxEmMgZAyyQeGj5Rp4InDB07GWV7zhmB0Vxjbq1vBlSzh9F1ZPALZURn4wryq3nZ0JxeYygkuHtIGTByo+LwdXjs9hes6jT8ec6OuoiQjmWvW/fBYbI4xhe95XfYi70zlk6UrNHodCMnVVge8C8ufiCuggSbxLKS7L2bLdaMgApTxaWdE6PYix6o9JuMPltjv2ectNt/2nRHGy+9MkkYmvHPMURftUJJ4mzA9xdItecWYFIMS1D335LecoxlbLi8HddkrwCi8CeAVdoj6tK5m5zdKwlfrIpz0Hz5d81wREhtvN+vhzMyzK60/MzqcOALd7fHTYemB/O4WnUiI6ejF2Qg
-DKIM-Signature: a=rsa-sha256; bh=bq64J9zOM4lsVCdxFMajCtecKOrb6hgOrvuHJTjgJos=; 
+X-VR-SPAMCAUSE: dmFkZTF27JEOR71oLYwQb8g65RFgQU16GoBOJWBgQzpzsCyxvcPXO8cHCc7kYZn8DHuSPjVu721PPTQQ7FIwJzf8dbEPCFP7WAfZfnqmJSoPAwKviNVqRh26CTafw88TMOhUEuekr2tgBcZgjEMy2cNe4luynQDBCAmEVf8em6xKUOfq+VoAH9xnjsESqpKfYPtMDLo/8BO65AEn9uiK5rGhdVkmGyKBCA4k3iyiV0rxv6pUi+mNf1NYFpRhm/0L/3xw15mDNeVtjxfUTh67KwCcZ9n5qG1IPznWUQ4PbG2nMpm7OVpi2mY8GLXH9RbLQmOIwOViXqZ0NEy0zrKqX0rXnER2tV1LSor0IHfIOIH3zVwRRID9axDuibwdQHFawH393rKp9SD9NZqQHRq2Bjq6flZaIg8LyKWtJuwtaAQijpTPQ2DQZOi5tKeRc0gsn8qlXl6iCHsYSs1skjx2mwncDIzivbXkDodweodfbwtKF2p3U5De22rJXozV023ITRGyxzO65kUbVekY0uqMhGeHe6kYr21XvRHPsoYAQUtAEnH/vibLXU1VBwu+A5PJuD2P4573dLWE75EsxCUC6OQfMqVuUkHUHo9KeCwUh7G0+Bfl7HXpJTEASCt90Pb3cIjmmOfK/KB1krdfC32t+9q45q0pm2cUafLbk0WHk/qK1hRZXw
+DKIM-Signature: a=rsa-sha256; bh=AzLAeTL4nTemqDPPywzVpNPIZCH4JXaYoUyRKYsN3Xs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788265689; v=1;
- b=M8ULOJULGAnVdMBqRycwm4IKVrl8ntg6/99U+KRw3hBkCV3BhTFpf5m2132iHD9ildwVPMvB
- a0M27zBeElBNCpcd1dq8+syTa23JdWTVUJIn5AAfBW+IkLQQuEpABgK78JYzeDwwSaevbvg/rCm
- FczdtLbxX5TFe5DDvZKGbMjJuGJK0eAlF39JxiEEF5NtOxXdZ2RZlM8UsunkU9ewmJ7cnpZiKFa
- R7YgN2pzCeT4rjwru1KREhEMlgmgRY1+JcT0FoPS4JKWeRma8XOuIng0NA84ypVOcfj1Sei5j4D
- qYzd4WsBv6rK6GufudqcmVXVWd4GyFmugjeUYXOne8TUg==
-Received-SPF: pass client-ip=51.210.91.39; envelope-from=clg@kaod.org;
- helo=smtpout10.mo538.mail-out.ovh.net
+ t=1788265734; v=1;
+ b=fFxtkQP9jwz3sw+R+lMR8tEqM0IZnerECgNL17ORWtrX+AKlmAnA5P98kcaQ+fJfB2euos5W
+ G4ftZYawDLHXCUi3jfdmW4BrxvtxseoU5ZO+tlCppj+vROKsjEHE6bHlfLwm+hjU9HRC63K5KxE
+ E0G1dmcCyzcs265nQ2HA/FzMMr+FzYnr+Hov3V89mFQiG0KJ+6ZS1FrYrWordGQrPdi8ACy1RsX
+ 0XFCZgvxfvCZqLbLjiuvo1uLBidRy9MkmLsEKfyGiP9MfIF7DPqFaew1m6r3Zwje16+oL1jYlpP
+ x2iTz7I6S3a2r5BhA7WerZUbFf+J4NEji3ZHHw/iqbbeQ==
+Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo2.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,73 +140,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/26 10:15, Jamin Lin wrote:
-> This series adds a model of the ASPEED ACRY engine found on the AST2600
-> SoC, wires it into the SoC, and adds a qtest.
+On 9/1/26 10:52, Jamin Lin wrote:
+> The SBC controller register space is 0x1000.
+> Increase ASPEED_SBC_NR_REGS accordingly to cover the
+> full register space.
 > 
-> The ACRY engine performs RSA modular exponentiation (c = m^e mod n). It
-> DMAs the operands (data, exponent, and modulus) from guest DRAM and writes
-> the result to a dedicated 64 KiB SRAM region.
+> This changes the size of the VMState register array and
+> therefore breaks migration compatibility with older QEMU
+> versions. Simply bump the VMState version to 2,
+> as Aspeed machines are not intended for
+> virtualization use cases.
 > 
-> Guest firmware uses the engine for RSA signature verification during boot.
-> Without a model, the guest starts the engine and waits indefinitely for a
-> completion interrupt, causing the boot to hang.
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   include/hw/misc/aspeed_sbc.h | 2 +-
+>   hw/misc/aspeed_sbc.c         | 6 +++---
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> The model uses QEMU's generic akcipher API to perform raw (unpadded) RSA.
-> Raw RSA is currently supported only by the libgcrypt backend, which can be
-> enabled alongside gnutls with -Dgcrypt=enabled, so a build does not have to
-> choose between the two. When raw RSA is unavailable, the engine still
-> completes and raises its interrupt, but returns an all-zero result. This
-> allows the guest's signature verification to fail cleanly instead of
-> hanging. The qtest is skipped when the selected crypto backend does not
-> support raw RSA.
-> 
-> Although the hardware documentation describes both RSA and ECDSA support,
-> ECDSA is known to be broken on this hardware and is therefore not modeled.
-> 
-> v1:
->   1. Add ASPEED ACRY RSA model for the AST2600
->   2. Add qtest for AST2600 ASPEED ACRY RSA model
+> diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
+> index 07c7c22a86..eea6e2b27f 100644
+> --- a/include/hw/misc/aspeed_sbc.h
+> +++ b/include/hw/misc/aspeed_sbc.h
+> @@ -17,7 +17,7 @@
+>   #define TYPE_ASPEED_AST10X0_SBC TYPE_ASPEED_SBC "-ast10x0"
+>   OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
 >   
-> v2:
->   1. squash "Add the ACRY model to AspeedSoCState" into "Wire up the ACRY
->      model"
->   2. wrap the ACRY SRAM in a container mapped at offset 0 so the device
->      addresses it by relative offset (drop the "sram-base" property)
->   3. build the scattered SRAM byte offsets on the fly instead of caching
->      them in per-instance lookup tables
->   4. write the result with address_space_stl_le() and check the MemTxResult
-> 
-> v3:
->    1. Return early when the DMA read of the operand buffer fails
->    2. Replace g_printerr with g_test_skip
->    
-> v4:
->    1. Remove unused macros.
->    2. Dynamically allocate data and src_buf to reduce stack usage in aspeed_acry_do_rsa().
->    3. Add a helper function to clear the result when aspeed_acry_do_rsa() fails.
->    4. Add bounds checking to aspeed_acry_operand_offset() and replace magic numbers with
->       compile-time constants.
-> 
-> Jamin Lin (4):
->    hw/misc/aspeed_acry: Add ASPEED ACRY model
->    hw/arm/aspeed_ast2600: Introduce the ACRY SRAM
->    hw/arm/aspeed_ast2600: Wire up the ACRY model
->    tests/qtest/aspeed-acry-test: Add RSA ModExp tests
-> 
->   include/hw/arm/aspeed_soc.h    |   4 +
->   include/hw/misc/aspeed_acry.h  |  39 +++
->   hw/arm/aspeed_ast2600.c        |  34 +++
->   hw/misc/aspeed_acry.c          | 481 +++++++++++++++++++++++++++++++++
->   tests/qtest/aspeed-acry-test.c | 406 ++++++++++++++++++++++++++++
->   hw/misc/meson.build            |   1 +
->   hw/misc/trace-events           |   6 +
->   tests/qtest/meson.build        |   5 +-
->   8 files changed, 975 insertions(+), 1 deletion(-)
->   create mode 100644 include/hw/misc/aspeed_acry.h
->   create mode 100644 hw/misc/aspeed_acry.c
->   create mode 100644 tests/qtest/aspeed-acry-test.c
-> 
+> -#define ASPEED_SBC_NR_REGS (0x93c >> 2)
+> +#define ASPEED_SBC_NR_REGS (0x1000 >> 2)
+>   
+>   #define QSR_AES                     BIT(27)
+>   #define QSR_RSA1024                 (0x0 << 12)
+> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+> index 1dfcf14e5b..7397d9bbf0 100644
+> --- a/hw/misc/aspeed_sbc.c
+> +++ b/hw/misc/aspeed_sbc.c
+> @@ -307,15 +307,15 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
+> -            TYPE_ASPEED_SBC, 0x1000);
+> +            TYPE_ASPEED_SBC, ASPEED_SBC_NR_REGS << 2);
+>   
+>       sysbus_init_mmio(sbd, &s->iomem);
+>   }
+>   
+>   static const VMStateDescription vmstate_aspeed_sbc = {
+>       .name = TYPE_ASPEED_SBC,
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32_ARRAY(regs, AspeedSBCState, ASPEED_SBC_NR_REGS),
+>           VMSTATE_END_OF_LIST(),
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
