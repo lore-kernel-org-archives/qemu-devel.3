@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F061FC61DD6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D73C61DD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 15:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Qei-000328-57; Tue, 01 Sep 2026 11:44:12 -0400
+	id 1x1Qem-00033K-S4; Tue, 01 Sep 2026 11:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1Qeh-00031t-H3
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:44:11 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1Qem-00033B-2v
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:44:16 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1Qef-0005Bb-UT
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:44:11 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-81ed2a06b9eso653867b3.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 08:44:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788277443; cv=none;
- d=google.com; s=arc-20260327;
- b=HsEGp1CA0lypWJyehiGr4UnzjbI8C5MAXbCoigOLMxiXEjKACmLtjTElPLMyFNRDls
- D7IWdDVZ/bBAZXCh0V85W08WLxbG/3vH8c7TZCOaRtc+vl8GkxpBP6JkMkLn+KIgj9kQ
- IcVP8jAjn43oHcH/vmldVehekw4SBfCjLTrZtQ66L5e6OPububdrjvgKQ6kL31qd1BWe
- p8rABC8FGdjOarUmusjQLOvvCF7twZjcGUFKo+h3pfowlcoI/xacWAxYbe0cmxmlrI5q
- mbWg4JDrF4Xv9D4tzgv96sNVPvkscUQDS529Z7UuoVM2d/HIljXv/8bOtFju/Q8773t7
- hPVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=1kvjv5Gfdk/GMHKRwBrkjHRbEfyU/KRdl6K73Z8xPg4=;
- fh=vx6WqBV7ZkFr5+0c5croOznQhRJT596ekVEWV1sovE8=;
- b=N15iIwd75UmnqxtN1elWTfQVwCrQ7FzYY8g93klkjW3Uv+fOq2wrYXvNj4ET9bCm+h
- AXabydXk40wwMUPBXtd4dgbec4scoFi56w5YZy9XRHcdcZmeEqnVsnd9WfEV/m0zK1na
- 5dnZXM+BPv+IE+HxECEG9nkjXVIvGjer22xG2WLSDZ+ZpDh71qjz250qaqwanuaT1Jsx
- RA1l2mf4/2YWZdRW1yzRCgi+kews+hs0pzMVOGpb2Anyw3TH2yj3v5OTc2WHmUNfyxGi
- oxg/uKoMicDsZKjwrha5wUUASetiz7fOhLHl1bunLqtPOtzcmx8Tvo81twff+Vp9bebW
- DWjw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1Qek-0005Dv-7j
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 11:44:15 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49cd77e0f95so11917705e9.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 08:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788277443; x=1788882243; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=1kvjv5Gfdk/GMHKRwBrkjHRbEfyU/KRdl6K73Z8xPg4=;
- b=yUXEMo5tbn1ZAU/i7dVVbDJXLf8c9yN3NQT/6lsMoa2VV691vwqvBcT75HLl9VolWZ
- Lw/hgLCpJXi0UOqVlyrqHqgQA5X9goEm2bNHhHW4CNA9PGfglMBr2ol1tLFXwxwCGMUp
- 5lQ2EijfjnCbePyx3f/aK1lMnYb4WDdZJgAq3OqpYfb8jXKirDM3uyWwYnl2oC13sRyN
- AHNUbKPMg2rcXtrHBwPVGpEmGNfpqSjffW9I/jrb62ssHwhFXgu8wjPAyED6LQSUypBg
- cIOVa5I3rE9o9uMUMxuvC7z3Iy4xmvPxY4HRMLNkOB3zq3kxLJ4rfee+ZGF04FSwy/b7
- iucw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788277443; x=1788882243;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1788277452; x=1788882252; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=1kvjv5Gfdk/GMHKRwBrkjHRbEfyU/KRdl6K73Z8xPg4=;
- b=ngFGDbNL6NMyzSpMRRR27kyBjQv/fm968ibO/2xsKD3Yarqd64LuyE8On+9RATUCYn
- Y3aiT8w/UyZhDtfJ+BxlCzN0/7VhHNvVIOvQz2ELrzjh5/gk1Oe1KD5ks2ZehfOTTKH6
- A18AKNvyC1Ae50DUb+zcjQURImLb6RfRMZJfvN+LhjUjPQsXPDkGNdvoOayuKfd6AZbk
- DwpINptcyv0EZBYc0rBvOg6gPNM3uZTDhDiCRkgUPE7+O0ls8iNNd0wrlBL8CRwgjqd6
- qUgFwv0jp5E8Yb41bjCBIu93KKWuVMqR9nnrBwXZsLIB8qMKMHEXFei1oxGzlOHl3mow
- QCjQ==
-X-Gm-Message-State: AFuF++lN+l4tTxQvJu7yOqddJ3+mH33cmURiZTI9oPYPHlaQq3Gsbs/l
- /0sq8Yw1k3CWCYvB62CKwwnnI9d9ox98ek+7KHtOU3aWMbwtIbTE0oLK2uk3N5QWVSya9bdGuUF
- 7p6xxKcVg1uU9MRJomSxV0lobP8VR8u41bGODTkT4Ebt7ybr+NxiPfQ8=
-X-Gm-Gg: AYBFou3kxO4QrsA1ZTEMDBoZb33VOPy48mr1PzT8rFp35b7KpwQ5WcHczVrr664ChuF
- uOLGLGx0ETgycBgYyKOn3ODP5zD8K1m7DD2kjKObYXarAMNW/75uh1b5toUmg2rOogGAI21f0+/
- Iex2z/tHldU8sTk/ZDBTv+OKRU1L+dSd0NpW5op4nvbXQXbX5kjVgM7l7+6oUVUWblMPdwJDmFk
- MbL2rKnl9iI2jgSiniTQgzD9s0+xVVtryfWD+191wScxlYChd7+OMi7D8S+yxPhv+H/nu9fmlVn
- +blTERRmFBlTeCGM7GdmYX8d/3g+JkZS+ipq7qJPHunc9vgTGpBTpywH9uTpBZfcFZxCsPzK/l2
- kkKbMwv6Poc1vN2sT87LmDY0lLXeI
-X-Received: by 2002:a05:690c:a642:b0:820:15ad:522c with SMTP id
- 00721157ae682-85d67251799mr116246197b3.11.1788277443006; Tue, 01 Sep 2026
- 08:44:03 -0700 (PDT)
+ bh=tUuFcuwCiDqLK5Uu2wbBGdYRvvB2DBW43PoOnMoSYtg=;
+ b=NJ53aRTJ6lotDJxJ75X7qLC/hgxM+tWvFy5Io7iMMCb+l1IxICdaqeArG4QorpR+kq
+ pBhXAe/dKZK57hVWZJBjt/4s16mPFZNZ9TYYnWI6Hb3aZ/Ao1jrnlud2JZyy0xmInE33
+ nE0n+hxNbUP3s3AMOJ1YfzJUIQ5N2HSGEBPzOx2GD+lnr/u6HFOEWiaRoW7K/ax4sFpX
+ pCe9xJQUjzANnFwdcuXo0NG8mBnYWUwhNcObRd5tEpBobJ4eeAB2DfxruQmFeL5hby5b
+ 5TXaZqUaNoQPIZMAwQMR5nEDwq/bQIYTSO7EPudh3wm5GZR8G9YA0+tT5HFQRzPj46j/
+ Xhlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788277452; x=1788882252;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tUuFcuwCiDqLK5Uu2wbBGdYRvvB2DBW43PoOnMoSYtg=;
+ b=L9Im7wliy6iMSFnftkbrOzx+f64J7E2n8znTnkkOp1G5b1mxm++MElRRO4MmlQ92QF
+ jBtLtqFsN1uCVLiZ8sUbWIeXPcwgd98/7r+8F8pe2vor1y69sqTLrknqbCl4UjEvIwBO
+ e+idVnRHQy74JyWmYiOldJyjpbqlJ4VhtCOnPtIQjypBkZZjY/BPv1jp+vgW493m98oH
+ d8aRjl69www6luB0/9oPlUEZ/5wkJcPYwm/oOxVjD9wJFo6l8jnP6a9/IWhWyjtQdcD0
+ GsPCt/kZDZQp/jgK8OsHqg6WAhyUha0HDd/W9ruuhF2yoUTe6ZJayGKYJNY0JKGRsj43
+ daHw==
+X-Gm-Message-State: AFuF++lVV5NNVUpd10RNjs/+oCayLuHvXm6QAaNjoXoqLciRr0+Ha75M
+ QwcAMIT0zZYnTmKgc5O6/jRAO9qlxh9sWvwmSrxIcdEiB3PKeEJj25dEzC6o28D1cG4=
+X-Gm-Gg: AR+sD12/DhTe//7N8LxgSiLd8RneAFPYu+rJS6m7hQnA+p3ZgAAiq6VqV5Xhrawi/w8
+ 9IiHZoj8+d1dls76mT5jqT1ANWFNyK7cFZiCRYC9NgBy6Kvie9s4NUgeIYSihrGNWhQAEeANMGK
+ sNH06Zfs2bUFqbHyIwHHC7g6gTl9xBjW3fOwNnmQsoyNccSYneS15Amzt34fiIPB+o8wqas2pzg
+ hBUZVTtJ3CS3+0D0ImC/nXVRSHMDUb7PAzFTeo3TmnARnYSQrpeYMhxIjldJaGbUhA/+OX7e9Zm
+ J7CJKQQDpYscby/cNjrWuZ00+Q+l73HXeEfKG+G6m/keZJGdVJ3A92SoLK85XPbii1zrvbpUeBc
+ ZATBzoguVqW5/yPSl0miBxvFIjnrrsjhBD5Uer11PdEJeAstZynZUodr0V/6ud8m4GIFdwTYpH+
+ o9F8U7sKr4gMpim7yw/o4W+YXO/o8Y3hjqiMQBOVezDv49AykrBnB/YKv9A8py
+X-Received: by 2002:a05:600c:3511:b0:499:adb4:a922 with SMTP id
+ 5b1f17b1804b1-49b91c4bab5mr405696345e9.12.1788277452306; 
+ Tue, 01 Sep 2026 08:44:12 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48442d78444sm6424888f8f.25.2026.09.01.08.44.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Sep 2026 08:44:11 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6AD3B5F829;
+ Tue, 01 Sep 2026 16:44:10 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Stafford Horne <shorne@gmail.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Palmer
+ Dabbelt
+ <palmer@dabbelt.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Bibo Mao <maobibo@loongson.cn>,  Helge Deller <deller@gmx.de>,  Max
+ Filippov <jcmvbkbc@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Song Gao <17746591750@163.com>,  Yoshinori
+ Sato <yoshinori.sato@nifty.com>,  Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v8 000/105] tests/tcg: run tests with meson - last
+ chance to review
+In-Reply-To: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Thu, 27 Aug 2026 22:13:21 +0000")
+References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Tue, 01 Sep 2026 16:44:10 +0100
+Message-ID: <878q5lugc5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260815203730.1468365-1-richard.henderson@linaro.org>
-In-Reply-To: <20260815203730.1468365-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 1 Sep 2026 16:43:51 +0100
-X-Gm-Features: AcwNN1X_-5DwmKotV19zndnktRTnWLg1Di2wnrhkJJV_liuHxx3Ln1RlQZS1iok
-Message-ID: <CAFEAcA9CXPA=3AHqqCu8Kv9iHUGra37wBUfVcikMdBrAkX54qQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 00/18] accel/tcg: Change tlb_fill/probe_access to
- (addr, first, last) tuple
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,34 +115,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 15 Aug 2026 at 21:37, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The driver for this RFC is
-> https://lore.kernel.org/qemu-devel/ce3a48b5-9847-4cc4-a02f-86db497c91ae@linaro.org/
->
-> Based-on: 20260815194549.1377505-1-richard.henderson@linaro.org
-> ("[PATCH 00/23] target/riscv: Reorg vector load/store")
->
-> But also merged to master, so for avoidance of doubt:
-> https://gitlab.com/rth7680/qemu/-/commits/tcg-probe
->
-> Convert probe_access_full, probe_access_flags, and the backend tlb_fill
-> hooks, but not (yet) probe_access itself.  I'm less certain about that,
-> since its uses are (1) less complicated and (2) there's also a path,
-> which I can't prove isn't used but neither can I find, which avoids
-> both watchpoints and notdirty pages.
->
-> I've tweaked the riscv pmp check to use the new parameters.
-> The similar Armv8-M code is a bit more complicated to push through,
-> and I need to study it a bit more.
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-I think this is a good API change, and getting rid of the confusing
-"probe with size 0" is definitely worthwhile. I think we need to
-be careful as we do this refactor about places where we calculate
-a "last" address via "addr + size - 1" and that might wrap around;
-I've left comments where I think that might happen.
+> This series replaces TCG tests makefiles with meson, with the
+> goal of having something more readable and maintainable in the long term.
+> Also it closes the gap that tcg tests had with the rest of tests, by inte=
+grating
+> them with meson directly.
+>
+> It covers all existing tests for all architectures, including
+> user/system/multiarch-user/multiarch-system. It implements all requiremen=
+ts
+> listed on original thread [1].
+>
+> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
+>
+<snip>
 
-thanks
--- PMM
+I think this series is ready to merge so consider this a final chance to
+review any architecture related bits. I shall generate the PR on Friday.
+
+>
+> For reviews, this is the list of maintainers per target:
+> alpha: Richard Henderson <richard.henderson@linaro.org>
+> arm: Peter Maydell <peter.maydell@linaro.org>
+> hexagon: Brian Cain <brian.cain@oss.qualcomm.com>
+> hppa: Brian Cain <brian.cain@oss.qualcomm.com>, Helge Deller <deller@gmx.=
+de>
+> loongarch: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>
+> m68k: Laurent Vivier <laurent@vivier.eu>
+> mips: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> or1k: Stafford Horne <shorne@gmail.com>
+> ppc: Nicholas Piggin <npiggin@gmail.com>
+> riscv: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis <alistair.fr=
+ancis@wdc.com>
+> s390x: Richard Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich=
+ <iii@linux.ibm.com>
+> sh4: Yoshinori Sato <yoshinori.sato@nifty.com>
+> x86: Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson <richard.hend=
+erson@linaro.org>
+> xtensa: Max Filippov <jcmvbkbc@gmail.com>
+> tricore: orphan
+> multiarch: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+<snip>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
