@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB370C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 19:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DBCC61DD3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 19:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1UOw-00063O-Sq; Tue, 01 Sep 2026 15:44:10 -0400
+	id 1x1UOz-00064k-Vb; Tue, 01 Sep 2026 15:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UOv-00062r-Qv
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:44:09 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UOx-00064I-TF
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:44:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UOu-0002Ji-Fc
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:44:09 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1UOw-0002KZ-Ka
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 15:44:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788291847;
+ s=mimecast20190719; t=1788291850;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CwbTdgzzUcSwy+hrITS+w+5qh1jOhaXlKQFQTMXAMTU=;
- b=L4vn//az2SGrWq7OZsd7kGAP/EqRN2l75Paa8wUMhDxcVfCYHTNSlN93IqOMbACuBwT3m7
- LKFx7Z4ZDbGp6N/gbsVwVZVX7kz1axYTO/4v5fWVrGXSKAXWDjH7QTkpDlCOzNYYmt/SHa
- dXEIjIKQHUHGloCRnu+Vdr5iicZD9AU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=EhEPoJOfAPJl4Q3bWi/DoXMalBBiohSqVhqdrnGXTGk=;
+ b=UR0um90npOtowoAtUkXK1UHAA7aNd/zM1aK8crgw5N5e+22ygo6Pvqpcfd3QEam9hQZ47/
+ hxaXmoqzEEmOAYzttKkn77Ov3WKj42fhYDaIOQp/eQPKudAQvFrsB11DgWyYlcNJ6RoeM4
+ HuUHi8wEa/Dw6eqiBR6ZayIupGmJHj0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-gVkqrcZfMzmZFn-HpUeEpw-1; Tue,
- 01 Sept 2026 15:44:02 -0400
-X-MC-Unique: gVkqrcZfMzmZFn-HpUeEpw-1
-X-Mimecast-MFC-AGG-ID: gVkqrcZfMzmZFn-HpUeEpw_1788291841
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-005aYDdtPKyfxZWVS1Ysrg-1; Tue,
+ 01 Sept 2026 15:44:06 -0400
+X-MC-Unique: 005aYDdtPKyfxZWVS1Ysrg-1
+X-Mimecast-MFC-AGG-ID: 005aYDdtPKyfxZWVS1Ysrg_1788291845
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CBC041955BE0; Tue,  1 Sep 2026 19:44:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4514B1844069; Tue,  1 Sep 2026 19:44:05 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.192])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C00118005BD; Tue,  1 Sep 2026 19:43:56 +0000 (UTC)
+ id 1C92B18005B8; Tue,  1 Sep 2026 19:44:00 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -59,10 +59,9 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 06/12] qapi: convert simple command intros for
- block-export.json
-Date: Tue,  1 Sep 2026 15:43:18 -0400
-Message-ID: <20260901194324.458482-7-jsnow@redhat.com>
+Subject: [PATCH 07/12] qapi: convert simple command intros for block.json
+Date: Tue,  1 Sep 2026 15:43:19 -0400
+Message-ID: <20260901194324.458482-8-jsnow@redhat.com>
 In-Reply-To: <20260901194324.458482-1-jsnow@redhat.com>
 References: <20260901194324.458482-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -70,13 +69,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,44 +93,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block-export.json | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ qapi/block.json | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 154f07b0b95..2893c6456d5 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -63,11 +63,11 @@
+diff --git a/qapi/block.json b/qapi/block.json
+index 189f2e28204..9569afc6e0f 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -261,10 +261,10 @@
  
  ##
- # @nbd-server-start:
+ # @blockdev-insert-medium:
 -#
--# Start an NBD server listening on the given host and port.  Block
--# devices can then be exported using `nbd-server-add`.  The NBD server
--# will present them as named exports; for example, another QEMU
--# instance could refer to them as "nbd:HOST:PORT:exportname=NAME".
-+#     Start an NBD server listening on the given host and port.  Block
-+#     devices can then be exported using `nbd-server-add`.  The NBD
-+#     server will present them as named exports; for example, another
-+#     QEMU instance could refer to them as
-+#     "nbd:HOST:PORT:exportname=NAME".
+-# Inserts a medium (a block driver state tree) into a block device.
+-# That block device's tray must currently be open (unless there is no
+-# attached guest device) and there must be no medium inserted already.
++#     Inserts a medium (a block driver state tree) into a block
++#     device.  That block device's tray must currently be open (unless
++#     there is no attached guest device) and there must be no medium
++#     inserted already.
  #
- # Errors:
- #     - if the server is already running
-@@ -435,10 +435,10 @@
- 
- ##
- # @block-export-del:
--#
--# Request to remove a block export.  This drops the user's reference
--# to the export, but the export may still stay around after this
--# command returns until the shutdown of the export has completed.
-+#     Request to remove a block export.  This drops the user's
-+#     reference to the export, but the export may still stay around
-+#     after this command returns until the shutdown of the export has
-+#     completed.
- #
- # @id: Block export id.
+ # @id: The name or QOM path of the guest device
  #
 -- 
 2.55.0
