@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF97CC624D4
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07798C624D5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONc-0001OJ-TM; Tue, 01 Sep 2026 09:18:24 -0400
+	id 1x1ONL-00017n-H7; Tue, 01 Sep 2026 09:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONZ-0001E9-SV
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:21 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1x1ONJ-00016z-Nc
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:05 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONY-0007KZ-4n
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:21 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-c255acff671so671654766b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:19 -0700 (PDT)
+ id 1x1ONI-0007Dg-20
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:05 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c1600d040e4so197289666b.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268699; x=1788873499; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=7EpQqs/EO1u2Z/s0CO7u5NFiL0ls0KxxXzXG+ncCo6U=;
- b=UkX/f9BBdkICZreWFxsueLXH4ECf05YC2aiH9ngVevncP2jVcUC4uJuqN868QzGIjA
- HLqE0npX1o04cGEF1WRg1vCLjIXgjGL/B33o70JrSOJOvJCDwQUpiYMJvANkJ89rn2ba
- mn8fChBt9GNR1ZfyU02T+JsUf5wM09c1Uhck+4fnPc9gdakm3gaH1YJT4vmCyaf5WBYp
- p1qHu0sPbsV4ITFV/SeSqpqwcLzbTpR0fybzU0Uwu7Xb1PF0ZPZmVTRgzFC+4ztKr9UZ
- 2EGCjkEjiNqqHGWpdHnhP+djqYFa3wciGc/UIHH2AdguUwjXSkH5Louv6sRDDRZCVIMW
- mPyQ==
+ d=linaro.org; s=google; t=1788268682; x=1788873482; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WMrQzEuCYPK+ENvy0053RhOA/tDuA3lAYdzC9luLSvU=;
+ b=WGU+e8MsCL7zT+m1zn/kGNblcEhcWY5dgKrkzUmSkkE8hRsUQem++izTsfIDwY2emV
+ K/2bX7gCHsSAwOyhD1ycN3FB2c0XZuB3Yc5I9ixUs2YnP4/DrYq7VDOyY7zgh8hJY84L
+ CqlKzq0vjLvYK1nFyGDPMsyjODawXodXUhB/bt1Nd8qcOk2LlSd2+hRYFmHaNbu1YroV
+ 4dZ52Q5Ndqh9Dl29sz60ivJEOd3eI/Ybv19dNdFbFMrXsCuCvL5mfu5mRbrDcdJ9iQeI
+ AL4+oB6zHMhv9RMIM5KX0CzNQu2asSPTThNKWZ0tahxceiPh6d6TU/cj0fa2lzMymgmH
+ VDNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268699; x=1788873499;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=7EpQqs/EO1u2Z/s0CO7u5NFiL0ls0KxxXzXG+ncCo6U=;
- b=mdmmHxkg+38wpGr3bk07O8s6IF6x0YDEGQRnuzKtYozGix6+ofmxFWUAdnwSdwgJ0P
- w3hy/rY1PlqGjWFbp0mMweG+ftVfNXY4euo4Tt+wGoDdvxfu8YO1j1H6QoE7Li/yMaUD
- 7n3Hx2yQDyrPZylSJ9qGdc0R1x3EROLjf7BWKSvHLvsL1LNsLnTlzLLyy6E4xB6n9BR6
- Slft4pgs//XHUJHUoJiy0VZVraQZ1tfW9skZdiCbLsMQqXoi2oQfEDkI4Y4cctJ/n6Z+
- +aB4VmpP1pIIYWI3SXwwF4dZHUIIdk7VJkyHRboSDMJ0R07FpgXZL2WQeYdusXBB34LO
- olcA==
-X-Gm-Message-State: AFuF++npKk5CAlZRKxl8TQBhFACnSUqUG6BbCJq4qQZPiB++TmGSSsX1
- hH209imnN5Tm5Rn/oleu+BICkHyDIFfTByxdjyVCPyovb5B1VvRvFtmGRL15Q8uJV0mMbkz4rj5
- 1OM9Qmgo=
-X-Gm-Gg: AR+sD10Xb/bubTKKizxt8tgpokSzNNLDmsw0DEgV/ObNOqJ3yUBjOfhzB3Lb2vGjx3j
- BABlaM22+US0rGt+97LCXaFOnzWWB1qtaokZOez+faCVSOH36VN1KjMEIHd2RARUjDOCnvmpRWo
- 8FK9Ox0/o6nMiyi2BwpO6m6+kO2LNRGXpUrB9jxM5CU5DN97DMvVcZBttNPk9Kqs0edissZa9iA
- GJFAxVIkDw37OTWHhHriH1HSbZUbvADmEqhEwqs78/YDnS9SzMSyN1XLhcapw1wk/nHooXc7inn
- lGn15TJiRR0oHNb7vHuiwnY1w7RJ/BZxrJ2yoFcMco+uLTB67sprjifNvMN7Ngtkgn1YqmY5lYT
- KI7DUBM0erXEp7uwF360awEWHVebzdbp51r/R9oK4P3sRv1ycGYvwJ8S8Yz2tseBsp5bFbmmY+F
- XGkGBz1r5FHs5mSTH+Zrb5of8LvL2FQyrD/z/lRisaBlJqNVel+2Me7BQ8E5u9+DfEXwMPteiad
- upEZdCTFeiwdj49QhgzSW4lcSxPghdvBVk0vfqM8xEUHeE+OgenE/5ANZamOYdvyRyLVD+ff8E2
- EpF0
-X-Received: by 2002:a17:906:9fc5:b0:c20:f4ee:7c97 with SMTP id
- a640c23a62f3a-c2556c19e06mr2197125766b.5.1788268698616; 
- Tue, 01 Sep 2026 06:18:18 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788268682; x=1788873482;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=WMrQzEuCYPK+ENvy0053RhOA/tDuA3lAYdzC9luLSvU=;
+ b=n9pWbmlaRkBcDolVXHmculJktkJFMTHnpEMtYix8/anRQblUCKfocz+bueDejWahpK
+ ByMoMDbhdt2JjIZFPHbUM7AJI6ZhSLeXu6RpZGBVhGOw96S04hPUCNuyuGpf6Nf9twCV
+ /pKfBI/67at0FSLoiBNO+3Cdz0RJJttvCMovZZxo44xYL1tJCqCdZaxykiVJCnSDfnC9
+ 9Ey81TX0DM4UnInETgx5CItzkYoJcgZXhp2gm7zWNNiVlKPlUrTMW1eNrnHXKTrGz11A
+ TTrhyt4fXN2q5uO/bYIptaMSMTjDKk2pWK+dlEmyq+Ss48y9ITujOhBfdtiewE16iLNP
+ a8QQ==
+X-Gm-Message-State: AFuF++m6cZwGg54DoSH06KU7YJu0myco61Or9LOZOsC0InAf5Pb74Qs1
+ E/Cmt9cyo0Qw1dI/gUN3p7Ic83i+l6/w+ZIzpSfuXV/NtyqsCOh7hqM40FzLNZRofEdXc4xzkmG
+ WotfbBfI=
+X-Gm-Gg: AR+sD129KXru77PNVplyQa8yXbYh29wGVUd3REATtpplOSCaex+mC79qMgdHnwG/kuY
+ NvWKSJv7y6qoM5+xZgVvwitOkcDmNVkLOQTzW4Jjnzqnqa0S/7hxH7S5pQDm3VUs8zUhfOrE8nv
+ Zsd0opyHLR1xMOCOGzUPhqtmydwOW4swhdmXAnTP8QUw2pWnAs2S2l3hhZUe4XmYsIi9d/oMp7n
+ jbcS8fdSWoZyOuWaSVMtRSnCGOnOpE5Sk12ajMwUsukgBnMyZoCOu5FOlLKE/U7LWHI6SAasVPC
+ R0tOVxB9G/Y+hHGmbaqsWg0TerxGZTs5LChKV43jpteZLCqjvbK5Vj5T68N2qBb9+tBSbL6Op8Z
+ U/34S6L8IGPzcxBIf34J6oWo3FGa0N5msVyXb/rgGisp7tm90YKVvwPh0Vkkam3njIuitN0YhMm
+ cRLNUwjJVBwbYy7lvbf1SZV8iA+yhwCjNDYbDg6mEJnfB9IAARAA7m8+jpOwa82psZVHnavpOgw
+ F3NsykQ+1vXaWwShg5icSJLRGPPPPgaOyNcLc7GbIE4beqg31iZBtzzL9y0byRlTPvP5g==
+X-Received: by 2002:a17:907:c8c6:b0:c21:5cd6:3e49 with SMTP id
+ a640c23a62f3a-c25b91fa262mr412858866b.9.1788268680441; 
+ Tue, 01 Sep 2026 06:18:00 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.17
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.17.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:18:17 -0700 (PDT)
+ Tue, 01 Sep 2026 06:17:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 45/58] target/arm: Implement SME BFSCALE
-Date: Tue,  1 Sep 2026 14:17:19 +0100
-Message-ID: <20260901131732.2263947-46-peter.maydell@linaro.org>
+Subject: [PULL 26/58] target/arm: Use -cpu max-v8 with aarch64=off
+Date: Tue,  1 Sep 2026 14:17:00 +0100
+Message-ID: <20260901131732.2263947-27-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,111 +105,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Armv9 does not support privileged aarch32 execution, so
+aarch64 cannot be disabled.  These tests must use Armv8.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260826174213.614571-13-richard.henderson@linaro.org
+Message-id: 20260827041557.775080-6-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h        |  5 +++++
- target/arm/tcg/helper-a64-defs.h |  1 +
- target/arm/tcg/sme.decode        | 20 ++++++++++++++++----
- target/arm/tcg/translate-sme.c   |  4 ++++
- target/arm/tcg/vec_helper64.c    |  1 +
- 5 files changed, 27 insertions(+), 4 deletions(-)
+ tests/functional/aarch64/test_virt_aarch64_off.py | 4 ++--
+ tests/qtest/arm-cpu-features.c                    | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 60463a67431..07507d263e9 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1877,6 +1877,11 @@ static inline bool isar_feature_aa64_sme_tmop_f8f32(const ARMISARegisters *id)
-     return isar_feature_aa64_sme_tmop(id) && isar_feature_aa64_sme_f8f32(id);
- }
+diff --git a/tests/functional/aarch64/test_virt_aarch64_off.py b/tests/functional/aarch64/test_virt_aarch64_off.py
+index 13d8b73b0d7..73c9a4109c0 100755
+--- a/tests/functional/aarch64/test_virt_aarch64_off.py
++++ b/tests/functional/aarch64/test_virt_aarch64_off.py
+@@ -18,9 +18,9 @@ class ArmVirtMachine(LinuxKernelTest):
+     def test_arm_virt(self):
+         self.set_machine('virt')
+         # KVM aarch64=off requires a host CPU that supports it, so
+-        # restrict the test to TCG only
++        # restrict the test to TCG ARMv8.
+         self.require_accelerator('tcg')
+-        self.vm.add_args('-cpu', 'max,aarch64=off')
++        self.vm.add_args('-cpu', 'max-v8,aarch64=off')
  
-+static inline bool isar_feature_aa64_sme2_sve_bfscale(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme2(id) && isar_feature_aa64_sve_bfscale(id);
-+}
-+
- /*
-  * Feature tests for "does this exist in either 32-bit or 64-bit?"
-  */
-diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
-index 12f58c6a442..c1e5d86b272 100644
---- a/target/arm/tcg/helper-a64-defs.h
-+++ b/target/arm/tcg/helper-a64-defs.h
-@@ -151,6 +151,7 @@ DEF_HELPER_FLAGS_5(gvec_famin_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32
- DEF_HELPER_FLAGS_5(gvec_famax_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_famin_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+         kernel_path = self.ASSET_KERNEL.fetch()
  
-+DEF_HELPER_FLAGS_5(gvec_fscale_b16, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fscale_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fscale_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fscale_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 60c7cacc10e..4e19c42b196 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -287,8 +287,14 @@ ADD_n1         1100000 1 .. 10 .... 1010.0 11000 .... 0    @z2z_4x1
- SQDMULH_n1     1100000 1 .. 10 .... 1010.1 00000 .... 0    @z2z_2x1
- SQDMULH_n1     1100000 1 .. 10 .... 1010.1 00000 .... 0    @z2z_4x1
+diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
+index cb4d01fd46a..7348fb8d28b 100644
+--- a/tests/qtest/arm-cpu-features.c
++++ b/tests/qtest/arm-cpu-features.c
+@@ -493,8 +493,8 @@ static void test_query_cpu_model_expansion(const void *data)
+         sve_tests_default(qts, "max");
+         pauth_tests_default(qts, "max");
  
--FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_2x1
--FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_4x1
-+{
-+  BFSCALE_n1   1100000 1 00 10 .... 1010.0 01100 .... 0    @z2z_2x1_e0
-+  FSCALE_n1    1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_2x1
-+}
-+{
-+  BFSCALE_n1   1100000 1 00 10 .... 1010.0 01100 .... 0    @z2z_4x1_e0
-+  FSCALE_n1    1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_4x1
-+}
+-        /* TCG allows us to turn off AArch64 on the 'max' CPU type */
+-        assert_set_feature(qts, "max", "aarch64", false);
++        /* TCG allows us to turn off AArch64 on the 'max-v8' CPU type */
++        assert_set_feature(qts, "max-v8", "aarch64", false);
+     }
  
- FMUL_n1        1100000 1 esz:2 1 zm:4 0 111010 ....0 ....0 \
-                &zzz_en n=2 zd=%zd_ax2 zn=%zn_ax2
-@@ -365,8 +371,14 @@ FAMAX_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 0    @z2z_4x4
- FAMIN_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 1    @z2z_2x2
- FAMIN_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 1    @z2z_4x4
- 
--FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_2x2
--FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_4x4
-+{
-+  BFSCALE_nn   1100000 1 00 1 ..... 1011.0 01100 .... 0    @z2z_2x2_e0
-+  FSCALE_nn    1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_2x2
-+}
-+{
-+  BFSCALE_nn   1100000 1 00 1 ..... 1011.0 01100 .... 0    @z2z_4x4_e0
-+  FSCALE_nn    1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_4x4
-+}
- 
- FMUL_nn        1100000 1 esz:2 1 ....0 111001 ....0 ....0  \
-                &zzz_en n=2 zd=%zd_ax2 zn=%zn_ax2 zm=%zm_ax2
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 463754b057f..d28574a8cf0 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -890,6 +890,10 @@ static gen_helper_gvec_3_ptr * const f_vector_fscale[4] = {
- };
- TRANS_FEAT(FSCALE_n1, aa64_sme2_f8cvt, do_zzz_n1_fpst, a, f_vector_fscale[a->esz])
- TRANS_FEAT(FSCALE_nn, aa64_sme2_f8cvt, do_zzz_nn_fpst, a, f_vector_fscale[a->esz])
-+TRANS_FEAT(BFSCALE_n1, aa64_sme2_sve_bfscale, do_zzz_n1_fpst, a,
-+           gen_helper_gvec_fscale_b16)
-+TRANS_FEAT(BFSCALE_nn, aa64_sme2_sve_bfscale, do_zzz_nn_fpst, a,
-+           gen_helper_gvec_fscale_b16)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmul[4] = {
-     NULL,
-diff --git a/target/arm/tcg/vec_helper64.c b/target/arm/tcg/vec_helper64.c
-index d8b25b868ea..88799693507 100644
---- a/target/arm/tcg/vec_helper64.c
-+++ b/target/arm/tcg/vec_helper64.c
-@@ -179,6 +179,7 @@ DO_3OP(gvec_famin_s, float32_famin, float32)
- DO_3OP(gvec_famax_d, float64_famax, float64)
- DO_3OP(gvec_famin_d, float64_famin, float64)
- 
-+DO_3OP(gvec_fscale_b16, bfloat16_scalbn, int16_t)
- DO_3OP(gvec_fscale_h, float16_scalbn, int16_t)
- DO_3OP(gvec_fscale_s, float32_scalbn, int32_t)
- DO_3OP(gvec_fscale_d, scalbn_d, int64_t)
+     qtest_quit(qts);
 -- 
 2.43.0
 
