@@ -4,136 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93160C61DD3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 09:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77679C624CF
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 09:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1LAp-0007Ub-Ji; Tue, 01 Sep 2026 05:52:59 -0400
+	id 1x1LC1-00020E-2i; Tue, 01 Sep 2026 05:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1LAo-0007UE-8Z
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:52:58 -0400
+ id 1x1LC0-0001yj-4M
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:12 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1LAm-0007Fh-BU
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:52:58 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1x1LBy-0007fc-Ck
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 05:54:11 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 681792dn705426
- for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 09:52:55 GMT
+ 68179GlV2561935
+ for <qemu-devel@nongnu.org>; Tue, 1 Sep 2026 09:54:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- aim88kbyx4mLrKFfSdKR/nIKrzOmFcmOxoRL9bSxY1A=; b=NqivMWtn1pH5O6mw
- l57LF6CKzcTONVL3A78xQjkjBYOqBxdFQr1NIa8xEgX7ELrc6BfDuJ/xca0VcgOD
- SxMa6eFymyLpZUE1FBkZYHS0d+1Oi3Vr/f04NVTKOKwGZb1W3dzDBkqLDw1fitl4
- ptyZazhCRnyMO2QUeES3B6monnTavSXvTgmA/jbfob1a93F18B+9o/dGkvoXJrWq
- 5i2ycrYT8gBroLEgUArYembhW5NQWwrKeci2y1spicb3F2CCl1Zxzf1/6NPTEODs
- ACglKLx0R2ZdSLwqMy96OfvN64pF4GfO4g4IL+PA464npaT7ZsokVIx+8LaJaUfw
- ThUv0Q==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdrcsh61v-1
+ ujtZfmyEeRuspxcgfhS3V2xIrt3RbrmKuzrHykBSXQI=; b=ccn16Hcx1CjwfTnh
+ jukcwrF90/I+Pq08vxeEkhaJbogyQMfcciK+7j3eq9MAEuQNapDBPZ+ydinQ+8v2
+ GWP8ZO3QAXzMmt3Awhc2kUTRZdAT0uqB2BXVhe0GmENxFFttnmhngIrxnZmxXY47
+ 1PgH+Ajo3kOuny1BbbZsBi7ze/hapELb6B6e+ZT7HWBc2SeSXhMng6cDcZv671dY
+ jk7Dvy+mTXIwIDMdiBLv/1/z3GR/aY4ziRtgbXIGvNRzyI6+mMvGBoMUv/P+b8ZS
+ FiZM9aFeQ960r/fa0M7vnoiMCcKxTy36zBYQkutdBVfxga5sPEdfZBaFeiZHPxnf
+ HZY49Q==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gdeg3bqr1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:52:54 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-939281526e1so71895585a.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 02:52:54 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 09:54:09 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-9390ca1a9abso116130285a.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 02:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788256374; x=1788861174; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788256448; x=1788861248; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=aim88kbyx4mLrKFfSdKR/nIKrzOmFcmOxoRL9bSxY1A=;
- b=S6ZxnSknp62KRAgWzC81470jzU5uyiJVdRctwVR/vfgh++vzCtkO2O1p7QGC9SLxSt
- Gfpq1K32K4gY2JyjwI0G51kg11172CI5AP58mW+Ta9UomDGAyvQ9e+T13g0X2KGhrZog
- ktVxvpUYHVK/WgKTcTc4Aq7IlqDEBRaeFxpM/fn1OGNfpmEgM7e7vXhCrt8MuSNtapVu
- Pul92mMSkTaVre3NumUFK4z+lZYMY8j+RKUoMY/5FFMArtMBegs1ISpTCr82K+CfM4Lz
- yE7vB7xU2rePQ4ImVKkAd4Fj4w7VLRxmUDisbzNNw9Jf5O9Wa8chYzIUkJiLyutjxyPa
- Si/w==
+ bh=ujtZfmyEeRuspxcgfhS3V2xIrt3RbrmKuzrHykBSXQI=;
+ b=HnP9slVVZg2CHCHQ8ALdZM7Daslx6FUkYlwqOel0PllvoPnTdMKzTlkXSYM/zm7dsW
+ A4ILn+BYhE3c6UmdiYSfeqALuf8i5qjHZsEHgOQmeqjpsgqamrLST4jin4oBXD7SCFRj
+ vnok/rjAGXD0yGrnq0JgoxYH027tttc3iY7PUSF1nHuBEPQxwxKBsAu45aE5Dsg8CNJk
+ JrteGfVI9AUAMV+PmgQ3ABDgr+fmsFPl9EixoPq+0B7nl4l3+OxIUXj7fd3wk2qspW1m
+ SL/ynNBYC7dECDoNSDjlDAOWq3T/KRIB2HQ3FKeSD5ue8kaflL3dbsIukv2G/oqVap/m
+ Z+BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788256374; x=1788861174;
+ d=1e100.net; s=20251104; t=1788256448; x=1788861248;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=aim88kbyx4mLrKFfSdKR/nIKrzOmFcmOxoRL9bSxY1A=;
- b=Ys6V1WtIRP2pQTsyjr1ad0pOcHbV4HBtrjieoGlevCsJeG9kdEdWSKnL7B2a7D/TME
- 9uLKfWEvKw6Uzi8FKdDeBJzw60cOZjcqqssBWYTv4+HujvfYraTaTqwWCGAErscPk+ed
- 0x4cmKlQLARfhbLZgR6At8R7ZozCAirv79LNfL6NL9fDWvhIA9lHsng2hGyTO7UYkUY8
- z/jKuFb4J4AYZ6WbGey6z/pA93ua0/nzeJ2KFwtzSGlIer3FFIpLA/rUrniJ3pvJdx7Z
- xvJA99YqHIXgzZUw9IkPgO+asMu5xc//6iCiSoWcGkIxFjKsBgDEPwMjWOcV0d0Qgw5g
- XLGg==
-X-Gm-Message-State: AFuF++mk7jZHfyGq1dh3anA9kVDnr5a53MdilDcvKX4vdQidsK07XKQt
- X+BqOoU93wrkJZiJqA+DGnLH+yGGRqBc75GTOCyJoCXZvx/Jg22VQVOcWPTLB85IvB1PXJku5iy
- NLpletOzBjz62ykZ5IlI+q1hdhMFERoh0D7+o0G+1Sqvuy0QkZsuezIqEmcMiBX2woA==
-X-Gm-Gg: AR+sD11u9L3z6nA3W5cAcCvZvlcvGwKy6DpnhR0g71dIUwG6LPPywRUPvHW2FJi40Sk
- tE4QII6i8HP+36pByAssRu6TU2zcu/bOR4iY9XSvN9hjF1jNgEwaqleskgcOpsP6TMGFI4nhM5e
- 5T1udxqKCzDHhrqHd7hm8n+aei35dOecFfagMz6qIPWgNStdoxgT6dNZTLiRVyfdpei4hiG7pLc
- VtQkU55fZ1iJfo/SxHP8c+PL321yH8Y7/gWQiBSBuv6ocU2+boFo3rVFw1y6XZ1c2VmOrMtp7m+
- SEQjWt6Gj8Ta5ROo0rXxkITwN/WmHyKFpuYoEqvWKp7gwtVxL/zZ2fVTDYvb9fZcB7L1Jq/WzN6
- SVotopUoHw360inOk+zYar9Ey2akFeMnqPbIoa4OS
-X-Received: by 2002:a05:620a:8904:b0:939:10f7:1a41 with SMTP id
- af79cd13be357-9391377aa01mr3721998385a.3.1788256373630; 
- Tue, 01 Sep 2026 02:52:53 -0700 (PDT)
-X-Received: by 2002:a05:620a:8904:b0:939:10f7:1a41 with SMTP id
- af79cd13be357-9391377aa01mr3721994385a.3.1788256373143; 
- Tue, 01 Sep 2026 02:52:53 -0700 (PDT)
+ bh=ujtZfmyEeRuspxcgfhS3V2xIrt3RbrmKuzrHykBSXQI=;
+ b=D7r4RC7TJ2aUynSnbpjXXSOyou16LiBkeogNhv8nKATMRPoE39mTH8e7JeIhQA5DIq
+ GJpD12trxoG1j+T5dTDYzxUwzztPmma9PlwHcgNj91/YXFzsO+qQko780672avvWKDZ8
+ PEFaw7aCeeYc0FbfFyB2yMKhGcD++UkVOvOKDd0fqMFiHHQocOM1bSHp1KRz5rFLQJy3
+ FVuUGq7WaXQYPOjHX2b6BEgMlHtt1fVei93WK7WjUNuq9eTl/LfLzzSdDjLLs2jppklz
+ BVJQ3vvThdmwLOyhoSZOTUcbWLUSg2nI8Zb581kgZ6cPSF5NsrSsxMnvpzWYmG/Ae/56
+ O0GA==
+X-Gm-Message-State: AFuF++kEvGTjzIjFIjyiLob/WVs4zA4IRGx1FP/l7OQ7QSJfOxhUPQd6
+ kK740MMZDrfD/QIOwd7WArbHG/HNzhfxr4GGqiZGP/4Xg5ShjFHsltMH+6KYroRGW6Ury9DJsbP
+ appcm2Iig5U77E0tv5CvvmX+N7vgertq0ZiKoCdTWxKvpX2hBxONO9uNgV+RVPlW33w==
+X-Gm-Gg: AR+sD12hcS4Rlggujjrf4zrjEvqZ5FUvTdWgpUohI+5to0JRyavFE9QOK/A4+TEw3e4
+ o6whfmXQRcvDzjwBbMVe5JB3ai7ZWlI6GdLrugO3sbTpAlQDWZBtmMoBlE6q6Sd2ZBB+ZNWjwtn
+ ipdGLR+az3mhTJ1COCbvt1cFo5FMOQGQPpi/HvDpc7N8juSu9rrRHwr+I+5OM9HSHJc6ZWxDlex
+ bXJtyv6aUkglqiNmJ0stUVx6ZPPi722nudj3SIjYi2NtCFscobnQ3v7S0BkGCuweamnO0YiZa0/
+ gHvsJ3PVH4LizYqypfXXcqsFWmoXIIK4lfBcAU1odxIEdaUoEtkCqenVctifz313au3w/rPV2Dx
+ dFS6CjX8UmRNVvRaBrWjzPPR6HJuikTvNv2hOO6ba
+X-Received: by 2002:a05:620a:458e:b0:939:3cb9:553d with SMTP id
+ af79cd13be357-9393cb956bemr1401255985a.38.1788256448134; 
+ Tue, 01 Sep 2026 02:54:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:458e:b0:939:3cb9:553d with SMTP id
+ af79cd13be357-9393cb956bemr1401252985a.38.1788256447715; 
+ Tue, 01 Sep 2026 02:54:07 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49b9266be71sm735858625e9.2.2026.09.01.02.52.51
+ 5b1f17b1804b1-49b9267c369sm237418685e9.3.2026.09.01.02.54.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Sep 2026 02:52:52 -0700 (PDT)
+ Tue, 01 Sep 2026 02:54:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v5 03/21] cpus: Add const-qualified CPU environment accessors
-Date: Tue,  1 Sep 2026 11:52:09 +0200
-Message-ID: <20260901095229.72018-4-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH v5 13/21] target/mips: Constify CPUMIPSState for various
+ cpu_*() getters
+Date: Tue,  1 Sep 2026 11:52:19 +0200
+Message-ID: <20260901095229.72018-14-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260901095229.72018-1-philmd@oss.qualcomm.com>
 References: <20260901095229.72018-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX2fZJH4NUHa18
- kF2vktfWTzey17IbiFb0dulSSV5chJwq0E8U+vMDNCAmA5VNlJveJBSaAHxsZ2NkRs3z+1xQ5HY
- aczBH9GYhMz6+0/uCCpv0tHCfYS6PRo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX5qhqocM7vPiJ
- O4r5qVqpFOAjNyKcMiomaQ8Z4pUsAkIGOboYfndURQolhqWYK+BGmM38ebq5Q3h4UyRe3IWLnT8
- F/HoFRHB4Ui/4FT1dg9rFf+nq68pU+jg3V48te8Ob7288+o1i2AqxYsXmbnmHPNxtlC9Ngm5GBl
- xBagKsR5v/kHnwPVtFjp/dF5hqa6zZ4HRAchP+yQcXeWplyL5V/r6Gxb0ZWHmNcKez+xLv3GOni
- iUTYi4jDko+iFV/q0SNyCByx0d7tQQbxwEfdT7uuWin9JV6ik65p84dQQPjnlLWSv5Q9OJ+qsQD
- 8ubDQMss++CgINEj3yfKv9VX8oLDnvrLUrU99DSoMs0+lnI6DF5TdU8idi/WO+Div75N29dqpZb
- h2xibFe0yBqj8j2BtlFVzXDSJr1SmIUdNJRhIyh61CeV07FI3iouLhJtJfsk/K7n1k2Z1ISumnj
- rjlFpEcCqjWh9DnbWKQ==
-X-Proofpoint-GUID: BfHLyIyaLQF_IguHiq7rTXJy5sxmZhMr
-X-Proofpoint-ORIG-GUID: BfHLyIyaLQF_IguHiq7rTXJy5sxmZhMr
-X-Authority-Analysis: v=2.4 cv=QsNuG1yd c=1 sm=1 tr=0 ts=6a96a076 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfXyBtciEt3SWTC
+ Q0B5JY95Xj4sopXkZtVamCFOt0mPwN736jRBVqeXj1yRR8kfI9SdV0GCpDx7nJYoR+aPDKLzMrz
+ Bqbj1ZvFeXIOD8tJGlajsGz8oSXqkKM8e87niyHiMQxNxHPhRnJ6NkeyhRq/aP6KukL6/yJQ5sQ
+ jyF30H4KX4VML+hExRpckzJU3W7xp1iEj73LYeJ/vn+WlIjtJlGlmtlVMGE/175CDaYNMD7fVas
+ GvEmm+Ak12+2TKVh75HeZblpAYw2B9LU/m9o2iE8ml6E5EHEGXpK9PwmyLlK97tKNf024FkwEuG
+ 0ySISzPef1LX0gPlNS0eEOAjsA28Xq1251snKLkmQQ48coxDFUxu1qG9PXln42+mNj2nv9kPKBv
+ IIDVMF7atYFvKyKcQeGGqUZvWTEtbDHAmkLsJGQ0z45wYANMU7hZT4091zhnOYqNcus4SPC+t3X
+ C0ROClEZz833XHVnWWw==
+X-Proofpoint-GUID: p2L7Iiyt1e6O-p4DoBgzOsRkcatU38nY
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAxMDA4NyBTYWx0ZWRfX37D2EaOy4b8u
+ Q6QF9TLqj2/9rb6G6tO5ZWbCj9P95C/ZMXLqt76MdMrSB+nBYkez4DmAtaAVZbNK9gyI9Ee78u8
+ TSMWoWaevnT7uiB2OUc4536jLnNGZAM=
+X-Authority-Analysis: v=2.4 cv=NZnWEWD4 c=1 sm=1 tr=0 ts=6a96a0c1 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=x16qC-9I3E3lrIGWYX0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=h4i2fRRWLofFFTjKLt8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: p2L7Iiyt1e6O-p4DoBgzOsRkcatU38nY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-01_02,2026-08-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 phishscore=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609010087
+ impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609010087
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -142,7 +143,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,115 +159,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add the const qualifier to CPUMIPSState when
+the argument is accessed without modification.
 
-Use _Generic() controlling-expression to add the const-qualified
-variants of cpu_env(), env_cpu() and env_archcpu(). This allows to
-safely access CPU architecture state when it should not be modified.
-
-Alias env_cpu_const() which is still used.
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Following checkpatch.pl errors ignored:
+ target/mips/cpu.h      |  8 ++++----
+ target/mips/internal.h | 10 +++++-----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-  ERROR: spaces required around that ':' (ctx:VxE)
-  #46: FILE: include/exec/cpu-common.h:89:
-  +            CPUArchState: \
-                           ^
-  ERROR: spaces required around that ':' (ctx:VxE)
-  #62: FILE: include/exec/cpu-common.h:101:
-  +            CPUArchState: \
-                           ^
-  ERROR: spaces required around that ':' (ctx:VxE)
-  #90: FILE: include/hw/core/cpu.h:605:
-  +        CPUState: \
-                   ^
-  total: 3 errors, 0 warnings, 64 lines checked
----
- include/exec/cpu-common.h | 30 +++++++++++-------------------
- include/hw/core/cpu.h     | 17 ++++++++++++-----
- 2 files changed, 23 insertions(+), 24 deletions(-)
-
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 6594f7fa1be..60997628cc6 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -85,21 +85,11 @@ static inline bool cpu_loop_exit_requested(const CPUState *cpu)
-  *
-  * Return the ArchCPU associated with the environment.
-  */
--static inline ArchCPU *env_archcpu(CPUArchState *env)
--{
--    return (void *)env - sizeof(CPUState);
--}
--
--/**
-- * env_cpu_const(env)
-- * @env: The architecture environment
-- *
-- * Return the CPUState associated with the environment.
-- */
--static inline const CPUState *env_cpu_const(const CPUArchState *env)
--{
--    return (void *)env - sizeof(CPUState);
--}
-+#define env_archcpu(env) _Generic(env, \
-+            CPUArchState *: \
-+                (ArchCPU *)((void *)env - sizeof(CPUState)), \
-+            const CPUArchState *: \
-+                (const ArchCPU *)((const void *)env - sizeof(CPUState)))
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 319147a948c..32549791a18 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1300,7 +1300,7 @@ static inline int hflags_mmu_index(uint32_t hflags)
+     }
+ }
  
- /**
-  * env_cpu(env)
-@@ -107,9 +97,11 @@ static inline const CPUState *env_cpu_const(const CPUArchState *env)
-  *
-  * Return the CPUState associated with the environment.
-  */
--static inline CPUState *env_cpu(CPUArchState *env)
--{
--    return (CPUState *)env_cpu_const(env);
--}
-+#define env_cpu(env) _Generic(env, \
-+            CPUArchState *: \
-+                (CPUState *)((void *)(env) - sizeof(CPUState)), \
-+            const CPUArchState *: \
-+                (const CPUState *)((const void *)(env) - sizeof(CPUState)))
-+#define env_cpu_const(cpu) env_cpu(cpu)
+-static inline int mips_env_mmu_index(CPUMIPSState *env)
++static inline int mips_env_mmu_index(const CPUMIPSState *env)
+ {
+     return hflags_mmu_index(env->hflags);
+ }
+@@ -1372,19 +1372,19 @@ static inline bool ase_3d_available(const CPUMIPSState *env)
+ }
  
- #endif /* CPU_COMMON_H */
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 81af7b9ee1a..18970ea39f5 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -594,11 +594,18 @@ struct CPUState {
- QEMU_BUILD_BUG_ON(offsetof(CPUState, neg) !=
-                   sizeof(CPUState) - sizeof(CPUNegativeOffsetState));
+ /* Check presence of MSA implementation */
+-static inline bool ase_msa_available(CPUMIPSState *env)
++static inline bool ase_msa_available(const CPUMIPSState *env)
+ {
+     return env->CP0_Config3 & (1 << CP0C3_MSAP);
+ }
  
--static inline CPUArchState *cpu_env(CPUState *cpu)
--{
--    /* We validate that CPUArchState follows CPUState in cpu-target.c */
--    return (CPUArchState *)(cpu + 1);
--}
-+/**
-+ * cpu_env(cpu)
-+ * @cpu: The vCPU
-+ *
-+ * Return the CPUArchState associated with the CPU.
-+ */
-+#define cpu_env(cpu) _Generic(cpu, \
-+    /* We validate that CPUArchState follows CPUState in target-info-stub.c */ \
-+    CPUState *: \
-+        (CPUArchState *)((cpu) + 1), \
-+    const CPUState *: \
-+        (const CPUArchState *)((cpu) + 1))
+ /* Check presence of Loongson CSR instructions */
+-static inline bool ase_lcsr_available(CPUMIPSState *env)
++static inline bool ase_lcsr_available(const CPUMIPSState *env)
+ {
+     return env->lcsr_cpucfg2 & (1 << CPUCFG2_LCSRP);
+ }
  
- #ifdef CONFIG_TCG
- /*
+ /* Check presence of multi-threading ASE implementation */
+-static inline bool ase_mt_available(CPUMIPSState *env)
++static inline bool ase_mt_available(const CPUMIPSState *env)
+ {
+     return env->CP0_Config3 & (1 << CP0C3_MT);
+ }
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index c5c286872eb..7dba22300b1 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -165,7 +165,7 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val);
+ 
+ extern const VMStateDescription vmstate_mips_cpu;
+ 
+-static inline bool cpu_mips_hw_interrupts_enabled(CPUMIPSState *env)
++static inline bool cpu_mips_hw_interrupts_enabled(const CPUMIPSState *env)
+ {
+     return (env->CP0_Status & (1 << CP0St_IE)) &&
+         !(env->CP0_Status & (1 << CP0St_EXL)) &&
+@@ -180,7 +180,7 @@ static inline bool cpu_mips_hw_interrupts_enabled(CPUMIPSState *env)
+ }
+ 
+ /* Check if there is pending and not masked out interrupt */
+-static inline bool cpu_mips_hw_interrupts_pending(CPUMIPSState *env)
++static inline bool cpu_mips_hw_interrupts_pending(const CPUMIPSState *env)
+ {
+     int32_t pending;
+     int32_t status;
+@@ -247,9 +247,9 @@ static inline void restore_pamask(CPUMIPSState *env)
+     }
+ }
+ 
+-static inline int mips_vpe_active(CPUMIPSState *env)
++static inline int mips_vpe_active(const CPUMIPSState *env)
+ {
+-    MIPSCPU *cpu = env_archcpu(env);
++    const MIPSCPU *cpu = env_archcpu(env);
+     int active = 1;
+ 
+     /* Check that the VPE is enabled.  */
+@@ -281,7 +281,7 @@ static inline int mips_vpe_active(CPUMIPSState *env)
+     return active;
+ }
+ 
+-static inline int mips_vp_active(CPUMIPSState *env)
++static inline int mips_vp_active(const CPUMIPSState *env)
+ {
+     CPUState *cs;
+ 
 -- 
 2.53.0
 
