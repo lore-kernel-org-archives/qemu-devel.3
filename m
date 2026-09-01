@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9558C624D6
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026FEC624D4
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 13:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ONR-0001AQ-Hf; Tue, 01 Sep 2026 09:18:13 -0400
+	id 1x1ONU-0001Ba-0s; Tue, 01 Sep 2026 09:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONQ-00019t-1b
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:12 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1x1ONS-0001Al-IQ
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:14 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1ONO-0007FU-0M
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:11 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-c25b661d37dso130235766b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:09 -0700 (PDT)
+ id 1x1ONQ-0007HV-Mr
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 09:18:14 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6a611ba5130so6742386a12.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 06:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788268688; x=1788873488; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788268691; x=1788873491; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Pq/lXObsND0I6ZGmnncbJGtepRu3UH3ZUCTMeXXBjbY=;
- b=vqPBzu/HtaAzr4OwhxLq3fnS3X6SxnSASjvLqr+V6O+4kQST6fUt3NXl52yQSOs923
- 80ce0Dou8Rdy+uH6UmXsE0U+uHdluuTN+6AqGbsADY7t6kL9B1Mde89IVMaV0fqUFwYC
- lkKyC3r6N1/5BCQ8d/hep7wxnzSDzwzRLxvhyjzN//elOHUxS59atLU3649Z3skR/gXG
- 5jRvNHCJ0nrPbSmGuqZB9lAp3o3eBH/tSpXZGel6SJG6KrUNOMz8WoJFCrAB75OwmM8L
- LdOZDx4svz3FM2Fx9m9nU4sBqkLIBD5PDkuVGeWqpCWSdPCSXxNcr3eu84rEHeyyzAQo
- lsfg==
+ bh=k2CZXSiNU7H5DW2oCoy9Ap7uGD+odcUNSVonkrvQp/U=;
+ b=RYbbMt40GHi+H2CEiJKOJA4+A1skHXqXdukLKsJpEnXYKbH8T8FflNFXNr2Y5E6tDZ
+ RkUhFKCNXoS83prGPdYzz0O73HC1KsY7xZeE/Us/DVHltsmecppnWZSXAzZ51A39zu76
+ TzNM4XiTNxvRTUXKfyTdYi3+6M3RcQaBUuncXOROBeqysTEFMi2CeqoIHhwHerHC25dY
+ oKTLvXM5FInbliOQPXiU/3UAvRpMLytSGVO/66rkQ3r8faRlfe/3/TMmfwu2WTmMFCev
+ pH199x42yOuBsP1pujN0a8oQ8tnZCWgK5b1IPii9hFiVbxOT5jWNNSKyJ2RqeUwKSKuL
+ cJlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788268688; x=1788873488;
+ d=1e100.net; s=20251104; t=1788268691; x=1788873491;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Pq/lXObsND0I6ZGmnncbJGtepRu3UH3ZUCTMeXXBjbY=;
- b=N82C3zNZxJ7jOgRSm5tqbRKMed3fEME0PsfUTGdNPQxJ9FQTuORLqjJdY3OwNWTpN9
- XBnLQXJeBeLlvB4sDdXBQHqM9gwGmBxgS/Lc/2Gwv9VZbexnhCUzhwu2nkZKKj6lWf1W
- urJnWnyZS9hYi6cxOghcTZcvVXXRW2XV8FpMb94nc2Rz/u1GO/gwqWEBuJKJKhb904mx
- 4+tcile2f/TcWGinZ0YKywTlz/Yb8Gp0c5fvNGt12Ka600Vbet/QugYGgjtrthtsx3PT
- dfqN5rLDQH5hRlM2xSNlkHthfIbOqeW/7gw6erloDAAfwH6jTMipCuDlC2LCLmbdMIlX
- Fpkw==
-X-Gm-Message-State: AFuF++m6boB4Ov+ozOk60qu/TrH2CI8aOyNYX1hLUbiPFIEBz5AtWO5c
- 8TzAFAfofhxxpgdYTwAr7FGJx7ZLYdBmNg7V/CBJoviKr4LZ/tnMaRMxuJVD49py4e0MM7nPB1h
- EnJQavw0=
-X-Gm-Gg: AR+sD11wV3s6W4FC7hsGU5t7dzhThtuYZQZJfzNzJ/+X22F28ABUA0to3boZ/hnKRPU
- JtXAxopUEVFjB3I7H/NQ3vZxFYvVRgHsUaE/1KQZaAcl0NkgtomBrbJ/EbT1qmiIwX4sP4QuAqa
- 0QvFFSwGyquIsUz7Ypn+c2f7rlWCfVpdbb00jYAX2dRzCkZ5nsQK/V4aS9brjYPg4J6caueZHTO
- 65FZKAPxm/QSQpP8P8RIn/F0BRDRfpweDB9U8CTb4uV5TLKt1QAMoqtVr5/jXarUFyeQnVja2fX
- LxDTwgFuN0GOWT2PyiOk+5xOks66mGSOjTrgIo2U52VzjF3YuKtx7yT5sNqWUFGoVqgkrROmWL7
- TmJnDoIA0zuBQH4AZHn3RNp7k/hW34X9XxRgyLBJBKQ0bT/MNKJ46CSSYJD94KvCZL3N3/MOihY
- OH/jy0sDrwfYXLEWMiAERgWNyhCjyZL+axNGbClOG3QalZnNbgc8F/AOREA5AGWw2otruPUf0Nq
- zw75jxcqX4WKRNVZbQhR/FdEEigJ5n4dhD11xU33Y0q6EVbViA08TfAPaOPl+qTtXd+Vw==
-X-Received: by 2002:a17:906:99c9:b0:c19:473b:dc8f with SMTP id
- a640c23a62f3a-c2556fb8fc7mr1780488766b.3.1788268688326; 
- Tue, 01 Sep 2026 06:18:08 -0700 (PDT)
+ bh=k2CZXSiNU7H5DW2oCoy9Ap7uGD+odcUNSVonkrvQp/U=;
+ b=Z8XLOw6HhWnYAhKupm3lKjLDlW0xBMidzaqzJUuYpjWGTRco101IhJIpYyuZLyhvSx
+ i/nj9zj2nTITgHNby5TspdHIkabqAZAsYuf8j5b+gprMUY+9Sza3bq0PUMEdVc0PMaCt
+ b6hThrXGbMdEHWc+41h3HE56goMzRYFc5UAohDHJ83F1B+CvGoIvykl1XuLGxWKqoegU
+ 1tMUil0LF7FWXpG+3pZDQy5AKvsq0s2nlqtNdGJaQGdWNh81qm2hXOEelfc9XrlVG4Kr
+ p5Lm7DWinP9tc3PUC8h0Bmunl/nQe9Rhc/Gw+WtelLuyAWfSf6miOFC/nVVwoeQ9BdLG
+ LzbA==
+X-Gm-Message-State: AFuF++l7xyhCfxz/5imMo4WEPj+t+jkNyS6FoUOUUVPAvrFLacOANiq4
+ ZMh7mDTRDGqxk8tRKjsjsbeTGTWF6GjRcoj3PbVxjezo90sdy2Z7rC+03r/0pcFDDDzZN2eBo7s
+ sLWpGD64=
+X-Gm-Gg: AR+sD13cvRkMD3fp4HZn/6fEVqHvJk5nyxR7mzIgFXO5hPz5K6yOdZAk4w+ZSm4P8ob
+ JJOID+6WsRw35oE46nezHmGU+8tfMXgvstCi/HWVMdx25QkHobj4VUSuQMgpnnY1N5VsAapFrPx
+ uqJ4PWRH/ZPlwoA7fF64HLI/gAGWI7DvbDCjG2LDiNqYiJOeEDdgfWvvO6Eea1l4Qvx64Gvkocv
+ UrxLXCpj99TSBqODTlbvMLjmbu79sP899TYLK+0lEmBwltpmQ66wXxHzpwCr4phk+RulE/FkPjS
+ tLHXAqDA2LpoNzq2e1v2ZQuxwz+DCildB3tUESsXPrbJ8hlq5A1wOu4bbj60y+mpE7HUtxpGQ1T
+ spgoQ766pwX+SEPL58V2ZuHJKk5SOzqHg4QGRmbPOK6ownz/PujTPp6W/Q/Hlm+z2Alt+RtEyc2
+ o0Rd8yHc8nTAtjLw3TUIlpN5tPrD2HJcJYSbFQwKH2WC695nbxFVNhIcXq8/9b+U9Sg/sXgeULe
+ Yw1ahvuDFPR65QL7+oa4ZnPmBMDqy+QkRvJZI8QOXwDOyuQOinfw75gMt8beA1X3t7uUg==
+X-Received: by 2002:a17:907:c1f:b0:c16:12ff:dc93 with SMTP id
+ a640c23a62f3a-c25b3d6fd4amr456526666b.18.1788268691193; 
+ Tue, 01 Sep 2026 06:18:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.07
+ a640c23a62f3a-c255ee2853dsm617907466b.18.2026.09.01.06.18.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 06:18:07 -0700 (PDT)
+ Tue, 01 Sep 2026 06:18:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/58] target/arm: Split zdn in do_z2z_n1 and do_z2z_n1_fpst
-Date: Tue,  1 Sep 2026 14:17:08 +0100
-Message-ID: <20260901131732.2263947-35-peter.maydell@linaro.org>
+Subject: [PULL 37/58] target/arm: Implement FMUL (multiple/multiple and single
+ vectors)
+Date: Tue,  1 Sep 2026 14:17:11 +0100
+Message-ID: <20260901131732.2263947-38-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260901131732.2263947-1-peter.maydell@linaro.org>
 References: <20260901131732.2263947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,208 +104,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Rename from z2z to zzz to indicate zd and zn may not overlap.
-During decode, retain z2z name and duplicate the same field
-into zd and zn.
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260826174213.614571-2-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260826174213.614571-5-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sme.decode      |  8 ++--
- target/arm/tcg/translate-sme.c | 71 +++++++++++++++++-----------------
- 2 files changed, 39 insertions(+), 40 deletions(-)
+ target/arm/tcg/sme.decode      | 15 ++++++++++++---
+ target/arm/tcg/translate-sme.c |  9 +++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
 diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index e8176fffdbf..30946330ffe 100644
+index e1bef9987b0..60c7cacc10e 100644
 --- a/target/arm/tcg/sme.decode
 +++ b/target/arm/tcg/sme.decode
-@@ -220,11 +220,13 @@ UMOPA2_s        1010000 1 10 0 ..... ... ... ..... . 10 ..      @op_32
+@@ -219,6 +219,8 @@ UMOPA2_s        1010000 1 10 0 ..... ... ... ..... . 10 ..      @op_32
+ 
  %zd_ax2         1:4 !function=times_2
  %zd_ax4         2:3 !function=times_4
++%zn_ax2         6:4 !function=times_2
++%zn_ax4         7:3 !function=times_4
  
-+&zzz_en         zd zn zm esz n
- &z2z_en         zdn zm esz n
+ &zzz_en         zd zn zm esz n
+ 
+@@ -288,6 +290,11 @@ SQDMULH_n1     1100000 1 .. 10 .... 1010.1 00000 .... 0    @z2z_4x1
+ FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_2x1
+ FSCALE_n1      1100000 1 .. 10 .... 1010.0 01100 .... 0    @z2z_4x1
+ 
++FMUL_n1        1100000 1 esz:2 1 zm:4 0 111010 ....0 ....0 \
++               &zzz_en n=2 zd=%zd_ax2 zn=%zn_ax2
++FMUL_n1        1100000 1 esz:2 1 zm:4 1 111010 ...00 ...00 \
++               &zzz_en n=4 zd=%zd_ax4 zn=%zn_ax4
 +
- @z2z_2x1        ....... . esz:2 .. zm:4 ....0. ..... .... . \
--                &z2z_en n=2 zdn=%zd_ax2
-+                &zzz_en n=2 zd=%zd_ax2 zn=%zd_ax2
- @z2z_4x1        ....... . esz:2 .. zm:4 ....1. ..... ...0 . \
--                &z2z_en n=4 zdn=%zd_ax4
-+                &zzz_en n=4 zd=%zd_ax4 zn=%zd_ax4
+ ### SME2 Multi-vector Multiple Vectors SVE Destructive
  
- SMAX_n1        1100000 1 .. 10 .... 1010.0 00000 .... 0    @z2z_2x1
- SMAX_n1        1100000 1 .. 10 .... 1010.0 00000 .... 0    @z2z_4x1
-@@ -990,8 +992,6 @@ UZP_2           11000001 esz:2 1 zm:5 110100 zn:5 .... 1    \
- UZP_2           11000001 00    1 zm:5 110101 zn:5 .... 1    \
-                 &zzz_e zd=%zd_ax2 esz=4
+ %zm_ax2         17:4 !function=times_2
+@@ -361,6 +368,11 @@ FAMIN_nn       1100000 1 .. 1 ..... 1011.0 01010 .... 1    @z2z_4x4
+ FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_2x2
+ FSCALE_nn      1100000 1 .. 1 ..... 1011.0 01100 .... 0    @z2z_4x4
  
--&zzz_en         zd zn zm esz n
++FMUL_nn        1100000 1 esz:2 1 ....0 111001 ....0 ....0  \
++               &zzz_en n=2 zd=%zd_ax2 zn=%zn_ax2 zm=%zm_ax2
++FMUL_nn        1100000 1 esz:2 1 ...01 111001 ...00 ...00  \
++               &zzz_en n=4 zd=%zd_ax4 zn=%zn_ax4 zm=%zm_ax4
++
+ ### SME2 Multi-vector Multiple and Single Array Vectors
+ 
+ &azz_n          n off rv zn zm
+@@ -521,9 +533,6 @@ FDOT_n1_hb      11000001 001 1 .... 0 .. 100 ..... 01 ...   @azz_nx1_o3 n=4
+ 
+ ### SME2 Multi-vector Multiple Array Vectors
+ 
+-%zn_ax2         6:4 !function=times_2
+-%zn_ax4         7:3 !function=times_4
 -
- FCLAMP          11000001 esz:2 1 zm:5 110000 zn:5 .... 0    \
-                 &zzz_en zd=%zd_ax2 n=2
- FCLAMP          11000001 esz:2 1 zm:5 110010 zn:5 ...0 0    \
+ @azz_2x2_o3     ........ ... ..... . .. ... ..... .. off:3  \
+                 &azz_n n=2 rv=%mova_rv zn=%zn_ax2 zm=%zm_ax2
+ @azz_4x4_o3     ........ ... ..... . .. ... ..... .. off:3  \
 diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 768b76f01ec..e3b96914dad 100644
+index db1950f407b..463754b057f 100644
 --- a/target/arm/tcg/translate-sme.c
 +++ b/target/arm/tcg/translate-sme.c
-@@ -659,31 +659,30 @@ TRANS_FEAT(BMOPA, aa64_sme2, do_outprod, a, MO_32, gen_helper_sme2_bmopa_s)
- TRANS_FEAT(SMOPA2_s, aa64_sme2, do_outprod, a, MO_32, gen_helper_sme2_smopa2_s)
- TRANS_FEAT(UMOPA2_s, aa64_sme2, do_outprod, a, MO_32, gen_helper_sme2_umopa2_s)
+@@ -891,6 +891,15 @@ static gen_helper_gvec_3_ptr * const f_vector_fscale[4] = {
+ TRANS_FEAT(FSCALE_n1, aa64_sme2_f8cvt, do_zzz_n1_fpst, a, f_vector_fscale[a->esz])
+ TRANS_FEAT(FSCALE_nn, aa64_sme2_f8cvt, do_zzz_nn_fpst, a, f_vector_fscale[a->esz])
  
--static bool do_z2z_n1(DisasContext *s, arg_z2z_en *a, GVecGen3Fn *fn)
-+static bool do_zzz_n1(DisasContext *s, arg_zzz_en *a, GVecGen3Fn *fn)
- {
--    int esz, dn, vsz, mofs, n;
--    bool overlap = false;
-+    int esz = a->esz, vsz, mofs;
-+    int overlap = -1;
- 
-     if (!sme_sm_enabled_check(s)) {
-         return true;
-     }
- 
--    esz = a->esz;
--    n = a->n;
--    dn = a->zdn;
-     mofs = vec_full_reg_offset(s, a->zm);
-     vsz = streaming_vec_reg_size(s);
- 
--    for (int i = 0; i < n; i++) {
--        int dofs = vec_full_reg_offset(s, dn + i);
-+    for (int i = 0, n = a->n; i < n; i++) {
-+        int dofs = vec_full_reg_offset(s, a->zd + i);
-+        int nofs = vec_full_reg_offset(s, a->zn + i);
-         if (dofs == mofs) {
--            overlap = true;
-+            overlap = i;
-         } else {
--            fn(esz, dofs, dofs, mofs, vsz, vsz);
-+            fn(esz, dofs, nofs, mofs, vsz, vsz);
-         }
-     }
--    if (overlap) {
--        fn(esz, mofs, mofs, mofs, vsz, vsz);
-+    if (overlap >= 0) {
-+        int nofs = vec_full_reg_offset(s, a->zn + overlap);
-+        fn(esz, mofs, nofs, mofs, vsz, vsz);
-     }
-     return true;
- }
-@@ -710,14 +709,14 @@ static void gen_sme2_urshl(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-     tcg_gen_gvec_3_ool(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, 0, fns[vece]);
- }
- 
--TRANS_FEAT(ADD_n1, aa64_sme2, do_z2z_n1, a, tcg_gen_gvec_add)
--TRANS_FEAT(SMAX_n1, aa64_sme2, do_z2z_n1, a, tcg_gen_gvec_smax)
--TRANS_FEAT(SMIN_n1, aa64_sme2, do_z2z_n1, a, tcg_gen_gvec_smin)
--TRANS_FEAT(UMAX_n1, aa64_sme2, do_z2z_n1, a, tcg_gen_gvec_umax)
--TRANS_FEAT(UMIN_n1, aa64_sme2, do_z2z_n1, a, tcg_gen_gvec_umin)
--TRANS_FEAT(SRSHL_n1, aa64_sme2, do_z2z_n1, a, gen_sme2_srshl)
--TRANS_FEAT(URSHL_n1, aa64_sme2, do_z2z_n1, a, gen_sme2_urshl)
--TRANS_FEAT(SQDMULH_n1, aa64_sme2, do_z2z_n1, a, gen_gvec_sve2_sqdmulh)
-+TRANS_FEAT(ADD_n1, aa64_sme2, do_zzz_n1, a, tcg_gen_gvec_add)
-+TRANS_FEAT(SMAX_n1, aa64_sme2, do_zzz_n1, a, tcg_gen_gvec_smax)
-+TRANS_FEAT(SMIN_n1, aa64_sme2, do_zzz_n1, a, tcg_gen_gvec_smin)
-+TRANS_FEAT(UMAX_n1, aa64_sme2, do_zzz_n1, a, tcg_gen_gvec_umax)
-+TRANS_FEAT(UMIN_n1, aa64_sme2, do_zzz_n1, a, tcg_gen_gvec_umin)
-+TRANS_FEAT(SRSHL_n1, aa64_sme2, do_zzz_n1, a, gen_sme2_srshl)
-+TRANS_FEAT(URSHL_n1, aa64_sme2, do_zzz_n1, a, gen_sme2_urshl)
-+TRANS_FEAT(SQDMULH_n1, aa64_sme2, do_zzz_n1, a, gen_gvec_sve2_sqdmulh)
- 
- static bool do_z2z_nn(DisasContext *s, arg_z2z_en *a, GVecGen3Fn *fn)
- {
-@@ -750,11 +749,11 @@ TRANS_FEAT(SRSHL_nn, aa64_sme2, do_z2z_nn, a, gen_sme2_srshl)
- TRANS_FEAT(URSHL_nn, aa64_sme2, do_z2z_nn, a, gen_sme2_urshl)
- TRANS_FEAT(SQDMULH_nn, aa64_sme2, do_z2z_nn, a, gen_gvec_sve2_sqdmulh)
- 
--static bool do_z2z_n1_fpst(DisasContext *s, arg_z2z_en *a,
-+static bool do_zzz_n1_fpst(DisasContext *s, arg_zzz_en *a,
-                            gen_helper_gvec_3_ptr * const fns[4])
- {
--    int esz = a->esz, n, dn, vsz, mofs;
--    bool overlap = false;
-+    int esz = a->esz, vsz, mofs;
-+    int overlap = -1;
-     gen_helper_gvec_3_ptr *fn = fns[esz];
-     TCGv_ptr fpst;
- 
-@@ -770,21 +769,21 @@ static bool do_z2z_n1_fpst(DisasContext *s, arg_z2z_en *a,
-     }
- 
-     fpst = fpstatus_ptr(esz == MO_16 ? FPST_A64_F16 : FPST_A64);
--    n = a->n;
--    dn = a->zdn;
-     mofs = vec_full_reg_offset(s, a->zm);
-     vsz = streaming_vec_reg_size(s);
- 
--    for (int i = 0; i < n; i++) {
--        int dofs = vec_full_reg_offset(s, dn + i);
-+    for (int i = 0, n = a->n; i < n; i++) {
-+        int dofs = vec_full_reg_offset(s, a->zd + i);
-+        int nofs = vec_full_reg_offset(s, a->zn + i);
-         if (dofs == mofs) {
--            overlap = true;
-+            overlap = i;
-         } else {
--            tcg_gen_gvec_3_ptr(dofs, dofs, mofs, fpst, vsz, vsz, 0, fn);
-+            tcg_gen_gvec_3_ptr(dofs, nofs, mofs, fpst, vsz, vsz, 0, fn);
-         }
-     }
--    if (overlap) {
--        tcg_gen_gvec_3_ptr(mofs, mofs, mofs, fpst, vsz, vsz, 0, fn);
-+    if (overlap >= 0) {
-+        int nofs = vec_full_reg_offset(s, a->zn + overlap);
-+        tcg_gen_gvec_3_ptr(mofs, nofs, mofs, fpst, vsz, vsz, 0, fn);
-     }
-     return true;
- }
-@@ -831,7 +830,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fmax[2][4] = {
-       gen_helper_gvec_ah_fmax_s,
-       gen_helper_gvec_ah_fmax_d },
- };
--TRANS_FEAT(FMAX_n1, aa64_sme2, do_z2z_n1_fpst, a, f_vector_fmax[s->fpcr_ah])
-+TRANS_FEAT(FMAX_n1, aa64_sme2, do_zzz_n1_fpst, a, f_vector_fmax[s->fpcr_ah])
- TRANS_FEAT(FMAX_nn, aa64_sme2, do_z2z_nn_fpst, a, f_vector_fmax[s->fpcr_ah])
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmin[2][4] = {
-@@ -844,7 +843,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fmin[2][4] = {
-       gen_helper_gvec_ah_fmin_s,
-       gen_helper_gvec_ah_fmin_d },
- };
--TRANS_FEAT(FMIN_n1, aa64_sme2, do_z2z_n1_fpst, a, f_vector_fmin[s->fpcr_ah])
-+TRANS_FEAT(FMIN_n1, aa64_sme2, do_zzz_n1_fpst, a, f_vector_fmin[s->fpcr_ah])
- TRANS_FEAT(FMIN_nn, aa64_sme2, do_z2z_nn_fpst, a, f_vector_fmin[s->fpcr_ah])
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmaxnm[4] = {
-@@ -853,7 +852,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fmaxnm[4] = {
-     gen_helper_gvec_fmaxnum_s,
-     gen_helper_gvec_fmaxnum_d,
- };
--TRANS_FEAT(FMAXNM_n1, aa64_sme2, do_z2z_n1_fpst, a, f_vector_fmaxnm)
-+TRANS_FEAT(FMAXNM_n1, aa64_sme2, do_zzz_n1_fpst, a, f_vector_fmaxnm)
- TRANS_FEAT(FMAXNM_nn, aa64_sme2, do_z2z_nn_fpst, a, f_vector_fmaxnm)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fminnm[4] = {
-@@ -862,7 +861,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fminnm[4] = {
-     gen_helper_gvec_fminnum_s,
-     gen_helper_gvec_fminnum_d,
- };
--TRANS_FEAT(FMINNM_n1, aa64_sme2, do_z2z_n1_fpst, a, f_vector_fminnm)
-+TRANS_FEAT(FMINNM_n1, aa64_sme2, do_zzz_n1_fpst, a, f_vector_fminnm)
- TRANS_FEAT(FMINNM_nn, aa64_sme2, do_z2z_nn_fpst, a, f_vector_fminnm)
- 
- static gen_helper_gvec_3_ptr * const f_vector_famax[4] = {
-@@ -887,7 +886,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fscale[4] = {
-     gen_helper_gvec_fscale_s,
-     gen_helper_gvec_fscale_d,
- };
--TRANS_FEAT(FSCALE_n1, aa64_sme2_f8cvt, do_z2z_n1_fpst, a, f_vector_fscale)
-+TRANS_FEAT(FSCALE_n1, aa64_sme2_f8cvt, do_zzz_n1_fpst, a, f_vector_fscale)
- TRANS_FEAT(FSCALE_nn, aa64_sme2_f8cvt, do_z2z_nn_fpst, a, f_vector_fscale)
- 
++static gen_helper_gvec_3_ptr * const f_vector_fmul[4] = {
++    NULL,
++    gen_helper_gvec_fmul_h,
++    gen_helper_gvec_fmul_s,
++    gen_helper_gvec_fmul_d,
++};
++TRANS_FEAT(FMUL_n1, aa64_sme2p2, do_zzz_n1_fpst, a, f_vector_fmul[a->esz])
++TRANS_FEAT(FMUL_nn, aa64_sme2p2, do_zzz_nn_fpst, a, f_vector_fmul[a->esz])
++
  /* Add/Sub vector Z[m] to each Z[n*N] with result in ZA[d*N]. */
+ static bool do_azz_n1(DisasContext *s, arg_azz_n *a, int esz,
+                       GVecGen3FnVar *fn)
 -- 
 2.43.0
 
