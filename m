@@ -4,108 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B2BC624D3
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DCDC624D3
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Sep 2026 14:41:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1Pf6-0003UN-J3; Tue, 01 Sep 2026 10:40:32 -0400
+	id 1x1Pfv-0003pl-2Q; Tue, 01 Sep 2026 10:41:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x1Pf2-0003TW-T7
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:28 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x1Pfn-0003eu-C4
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:41:16 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x1Pex-0005ke-0M
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:40:25 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-c255acff671so691436866b.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:40:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788273619; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x1Pfl-00061n-NK
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 10:41:15 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-85aa9c1308dso48474467b3.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 07:41:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788273672; cv=none;
  d=google.com; s=arc-20260327;
- b=obnSA56zW8yIS1j1yZU9oC8p7xbgXEAFMz11rbp9y0aQc1T7JBq/vI81NvIOeLqzKQ
- YcS7FiMjKH6lpI4RB/+BtBJKxFt37vw20Erbs9MFqyz5zoATezybXULD/8D5zWel4QEe
- /RkA9WN2yTgWvkp5JXuZsKIoyLB85a5XxmQ+Ruu/i+OzfxaPj5nzlkrCJvOo3EqfEgwS
- w7j5+Ztps9HL+asCy++b2FmFhuaSqe4dpTEqOz8LWAWIoYdbvTvJ4h3W1QbnUZoi/cSQ
- OYQIQwEmj/4LZ+x4RDAyIG8tokGdU7af4dypnDSU2liWXy8SqVqeiVsuNk2zN7b1z3gH
- CW/w==
+ b=smD6CC+qd/qclVLD+aA/x2cGOLh6Sgqdp5b8tUxAdpgc9T5iNlvH7M5W+cl0tvb7HP
+ DvZn5Ef9SqfGnDQIqVc5TVvisVOuFtXle7jVsxXupsIJohrISEoYNNbI62/OVzEwANBF
+ QoMX7osApEcVkaxIX6Zv6GMhHFdBzFyDRP1TwpwG44kxuxfxA24We9Yw9MiyALXRAf9R
+ nemfdJ/4pwho/wNpu877QJofsKUKS2wyUz1XidtuLVj4dpTuIZDCto9cS+vX45bOa4vt
+ Sts02PABPQplllsvx44mx+Lg5+g7eY8dUqSjM25nnwXAoFTw4K41pG7V52bJoNB2v+yq
+ fbJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=qfqJIJwC+GF0giJFA8RR6zafgzzeMUNjTALFGNc7UE4=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=Urp9f7TfEkS5pgSj+vZWXGAwKDWdpeaVO+FBdhRr+0plaiKoIwG0f6soPYgFefwjBX
- RNTOq38Flvh9szyGahauvci+vjZJbsDcA5X9gJkhyD/nGwgUa36zZJch6Hwzj7JfEZup
- uhseLkFj7y8Zy+ilV+db7/Mhx5ICqHlHixSZQWCwd2pv6DvpQmRUFMtQcjDfoejZqcYh
- LzGuwC8zwiL44YsYxEM+o1X7PE+aoId5zphVTFV9ki8o0DnV5FOFS9/Ve0EH3HTc3Gv+
- ln/lcygpXbigDBmLqaxWiNjANtfhyoTTwVv1Th4RChIFY3qySgnusc+QPRe7BDtHiBZ/
- JZqA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Ss9lVa1WoFp5SLkXNTCKE7ZQJZkcyYo5+kKKXmMUTkM=;
+ fh=vx6WqBV7ZkFr5+0c5croOznQhRJT596ekVEWV1sovE8=;
+ b=OmrLt3YNAc50KfGR+ZEwcmyNqkagO+Dn87dB6ox0hR2aY1QE6quukClChceMbHBpcR
+ n3gbI9EBgcbDHON/jZEhOqKp/vXnTO1UzjxyJ/tDPUcts+KO3U/2W8t6mhDiN3WHuQ2/
+ c/nvSZEj9lgMx/DoASXXVT7DApyuDzBo9V8pylEmylr48VtKLNFt1ltUDuCOAiEzfgKZ
+ +Xg1wdhclGS3SWmm9rxl+a/5MF3SB2Lxe1tbW5QxYdwxnVOsVY/DiVpgkFk9YlV/VJXk
+ sqrnysGsY8zSF8ShHWSRpFtxCrP44bTs/Cgk/OkvPFuKNty1JM84javg0IpiKReFOpVR
+ XuvA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788273619; x=1788878419; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qfqJIJwC+GF0giJFA8RR6zafgzzeMUNjTALFGNc7UE4=;
- b=J/GfWG8PTUtWDRqnLmOAg6OJkwPJPCyxdoQPODdrf6irRdgzc7zm8S1Hd4iR7HcCBM
- P2VA3YZfCuRversAIwkbBk3j38+8rNBjICeGsFYXH6Ujz7k38FWq4VUrkHv2auW8sB0v
- qAF5WS3zCxCCDfRwePPgDP+m2rAHBdrhO6L7216A+wkGQmhU07T1nuCF4IFl9LkPzuZy
- bnMRFeHAQTSEK//i2DDgH16mM0w6/54t6db0hxzIxQdgdS6o6jNYrVN3eWlrxvPWKVAh
- pj9fYSlVz+SVxsecg6MCVvZJF/OksVvqmRPACsjOvktF1pE+GpcJ3dHfoQgsQfQjN2gh
- Ejhw==
+ d=linaro.org; s=google; t=1788273672; x=1788878472; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Ss9lVa1WoFp5SLkXNTCKE7ZQJZkcyYo5+kKKXmMUTkM=;
+ b=X4b3SGutYgN0aym2fMqlH8C7I0v1dl37gL/CTfn9Ld5BdpB0SaD//D54jebpWf2XU0
+ w6CsA7USB+I/iuz2iQO7lJsNyhM5h4CB42TdhG/zKgI+dptAHCK3gJM3udog9ScDhNg7
+ sBmaRyFG0p/4ybEhBuVf/S8DYd3ejHnTFrX3P+jPLPQy/UDpJny6HeG5/K8QkPNsyv2r
+ EvvE+clBFkBsYvIzPijevOB8kLryiAecZgntuI8IjhqTOuj0E35FGvAA8heCPiJUAY8n
+ h1zIa8ugG4q0szJeHE4pPCZovmVaIDBosPPS2UXfYlfNVxAob//DNeiNSMlQNhwl0t8G
+ 31dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788273619; x=1788878419;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qfqJIJwC+GF0giJFA8RR6zafgzzeMUNjTALFGNc7UE4=;
- b=goAm64xrIWvmLVjqzcqkioKs6Jl5l8Zg32C5y+7rGtH+6ccn6JZ3j2QaQHvZeSDqT3
- SQsQmPievnDLMtbM+Q5ywh7Mg6h/HwFIVyJ1W97DwfRWeTDpvLXtDLM6OYPZxB/4vnek
- GaUOyRHmm74XyT69qHQxrdFzDvOEDNVBkYZ+ylOIIePI0RVJ0VCfSr5TjIBlWO0c5ZbY
- rmHwL3aPNn3+/2IEIXPIEAtGH7ttWr3x3KPIHREZIwzyNEzPyIudUbUDlYl2LwkzSjjP
- 6TZBgI24aak1Mcz1ihHc4w7TlFglAaD/48jTnU23p5G9LMe0+ZRSdAKCRqE1cEPSSv8f
- NabQ==
-X-Gm-Message-State: AFuF++lRkQDrz8klNdNQA2KUW77FD+7fJL9D6aZfIz2ynoFiaJ8uJ3fX
- 6IU823B3gD2849oIslV48rL4cc3Zychugwcm2t1XKnP+PZ5xrLD1R+cNrMcbVeFU05KIxKBF1VP
- XwD6BjyHEA9WA2TC7IPrJO5pmPLDVBzA=
-X-Gm-Gg: AR+sD13t+aEz6Ru/A5V4DtvNDiagJRokrk55k82Rsk2MtmOcdf7aLNP2ESZzbFu6xGp
- d9bntGC8HU8z2Ke50rZYMsH2jeexZBPVUg+O4g9IzFlgbu2PZ8uPDUaG1T4ixkVArKrn97bO65B
- NnmQCwKcCd8Iml+dz2GnsgmfRy0YpDGQ3DHdymXQop1L/Mi14i8Bx7ynHnl1T+lxJu3UerCblFk
- jp6tCJbR+/Id/3Ts5IsUHDbGw2CkPuZasiSRhrtTV1T8oV7/fiby+RTXKmG7Bl9AV8ftkZQedBc
- SLB2YcZCeSq0jrNow+iVhqOnFTT+7eodWOFEwFDlLYbQ3w==
-X-Received: by 2002:a17:907:c08c:b0:c1c:3b06:ed03 with SMTP id
- a640c23a62f3a-c2557423bfemr2400919566b.23.1788273619036; Tue, 01 Sep 2026
- 07:40:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788273672; x=1788878472;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Ss9lVa1WoFp5SLkXNTCKE7ZQJZkcyYo5+kKKXmMUTkM=;
+ b=NL7IGraVhIgB176yZvG75QIdgoywBaOLvz9CYs09q4wMPpc5auBIODOrrDi3szrElB
+ dMCoKq/O5omlb8IAW+OjUMBCezHqwhhVh6o5tblR0nEYu6TeDnaNmh1qYzEBk1dU4Ls4
+ ewXqujgDPUNFMAcl6vwqciIa9UoWAWBF7Rb4fIxvAkv3PEEv1cUD9cOxFl/THFIxH8Y5
+ skdLujN5JDa09mZmxz1+Cd3uvj25+0QoVaYhxCv4knvM7rnfG4vghg/psVSzx92oaquE
+ UbpUEqk1bfmTGZ2cOnqG22IysUQoHdK2F8kIGuxtZ9F4Gegq1wnpe4tWEdKuz9b6UDCa
+ vi/w==
+X-Gm-Message-State: AFuF++kr8yLimSeOJWR2BLroFPOna06GpwSukq627sYoFI2EK5Ig4zy4
+ W9ZnHkpcTgAesWFklakhlSUHJu4WfgTrHFa6ZI2IzRhte1FCwnAbmVGQM86LrGWoPSgVn3TXVm0
+ i5j6atQJDsZefR6WneksZwc+tAKgDWuhx9K4gJ0fMtQ==
+X-Gm-Gg: AYBFou2IBNpEQDqm4QNwVJ87WgxTrk1IAbnhhfar6YfL1HXeBNsCPnbT1pLQLrKwctz
+ KKBAb1KvmQvQZxrq6/NmHeagf8yws+XfCBN4WohCBPbjz3Nk/kqasOLG/spDIHbAOvpQUBkOPtF
+ 0yx8+yOKx5u6RGT8l5EWVLf/wVm6rQYHEljmlVK9zohTIdWJqMgD86EgIr50yJXzh8/y2KOcdhC
+ jgI4Z4JHfdc3yiDI8IQijtBJBKMXIKPy2lAJzn1kLct+K8f3j5UDD+lS2WMvO4x4VXB0a5RC6oI
+ IVUfFKOV2I+N72+M3zJ69aJqvSa+24S+6IM/U1+mOZcOkoNQnmq0cDpH8PIRtowIEc9Rd/Z6KTL
+ UUDZrxhAYD3oTm1j0dAXuMJRNP24F
+X-Received: by 2002:a05:690c:4017:b0:859:9c98:b8b4 with SMTP id
+ 00721157ae682-86875b7b5a6mr39126547b3.31.1788273672159; Tue, 01 Sep 2026
+ 07:41:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260831160038.221776-1-zhangckid@gmail.com>
- <20260831160038.221776-5-zhangckid@gmail.com>
- <87bjahbksk.fsf@pond.sub.org>
-In-Reply-To: <87bjahbksk.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 1 Sep 2026 22:39:42 +0800
-X-Gm-Features: AcwNN1XC-IrL7Cetvp_Ft6jJmZmxKt09SIHbPQHfmlGW_uC4rvsafGsh2Fho7JA
-Message-ID: <CAK3tnvKE14GhTcmQ5UPgQSCAvJhR8e=_F=ehukd4Mv9wXFuzrQ@mail.gmail.com>
-Subject: Re: [PATCH V14 04/15] iothread: introduce
- iothread_unsafe_get_aio_context()
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
+References: <20260815203730.1468365-1-richard.henderson@linaro.org>
+ <20260815203730.1468365-5-richard.henderson@linaro.org>
+In-Reply-To: <20260815203730.1468365-5-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Sep 2026 15:41:00 +0100
+X-Gm-Features: AcwNN1UJKfZbjKh2bd_FuMYds1GxfgSxuJBFRTy6fyi2zfdUtM1DbjjX0Ul-b4I
+Message-ID: <CAFEAcA90XrBA4EzTY_jQd0MtyXSpFn7tGy-jvRDwAe=HHmgdjg@mail.gmail.com>
+Subject: Re: [RFC PATCH 04/18] target/arm: Generalize probe argument to
+ allocation_tag_mem_internal
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,43 +116,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 1, 2026 at 1:30=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
+On Sat, 15 Aug 2026 at 21:39, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Zhang Chen <zhangckid@gmail.com> writes:
+> We had a confusing relationship between 'probe' and 'ra == 0'.
+> Make this explicit via an enumeration.
 >
-> > Add an explicitly unsafe accessor for legacy callers that cannot
-> > provide a matching holder lifecycle, and convert blockdev.c to use it.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/mte_helper.c | 130 ++++++++++++++++++++++--------------
+>  1 file changed, 80 insertions(+), 50 deletions(-)
 >
-> Why is blockdev.c unable to "provide a matching holder lifecycle"?
+> diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+> index dd4c10ef4f..31bf58c937 100644
+> --- a/target/arm/tcg/mte_helper.c
+> +++ b/target/arm/tcg/mte_helper.c
+> @@ -87,28 +87,48 @@ typedef struct AllocationTagMem {
+>      MemTxAttrs attrs;
+>  } AllocationTagMem;
+>
+> +typedef enum {
+> +    /* Trap on missing pages, invalid tag access, or watchpoints. */
+> +    ATM_NORMAL,
+> +    /* Gracefully return no tag memory for invalid pages. */
+> +    ATM_PROBE_PAGES,
+> +    /*
+> +     * Basic page access has already been checked,
+> +     * so a missing tlb entry is some sort of bug.
+> +     * Assert the tlb entry is present, but gracefully fail if tag
+> +     * access is not permitted to the page.
+> +     */
+> +    ATM_ASSERT_PAGES,
+> +} AllocationTagMemKind;
+> +
+>  static AllocationTagMem
+>  allocation_tag_mem_internal(CPUARMState *env, int ptr_mmu_idx,
+>                              vaddr ptr, MMUAccessType ptr_access,
+>                              int ptr_size, MMUAccessType tag_access,
+> -                            bool probe, uintptr_t ra)
+> +                            uintptr_t ra, AllocationTagMemKind atm_kind)
 
-x-blockdev-set-iothread only retains the AioContext in the block graph.
-It does not retain the corresponding IOThread, and the eventual context
-detach or block-node destruction happens outside this command. Therefore
-there is no point in this call site where a matching put can be issued.
-Supporting that properly would require adding IOThread ownership to the
-block graph context lifecycle (and likely a block-node holder kind).
+I think we generally prefer to make 'uintptr_t ra' the final argument
+to a function call (though we don't 100% follow that convention).
 
-The unsafe accessor only makes the command's existing lifetime assumption
-explicit; it does not make that lifetime safe. I will reword the commit
-message accordingly in the new version of the patch 14.
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
->
-> > Keep iothread_get_aio_context() temporarily so that later caller
-> > conversions remain independently buildable. It will be removed after
-> > all production callers have migrated.
->
-> Which callers aren't "production callers"?
-
-I meant the standalone IOThread implementation to the patch 14.
-
-Thanks
-Chen
-
->
-> > New code should use iothread_ref_and_get_aio_context().
-> >
-> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
->
+thanks
+-- PMM
 
