@@ -4,127 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0ACC624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8653DC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1i4N-00083G-33; Wed, 02 Sep 2026 06:19:51 -0400
+	id 1x1i6R-0000RE-Cj; Wed, 02 Sep 2026 06:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1x1i4M-00082s-1W
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:19:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1x1i6M-0000QB-Hk; Wed, 02 Sep 2026 06:21:55 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1x1i4J-0005lt-Hx
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:19:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788344385;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=L+xHRTSUtSXfvI1sCTk/nMv+IJ2+RWhUzWYuNM6MC7g=;
- b=GF/Sp4aQ4mcVf59SKoZIG27+Owq+WzU4h4On0DstZLFsUZtaEv0QdDgBKoZRxrnVrPt78R
- N5PZUnO5LFyrM9qA10BXrHjpsi5HU3ergn3iJfnuxMsS3Pa9VHH+2kP2bWnDcTOv8xnKpo
- FLYICZIPvBEVpKG/qvREN8B4tzRCs/I=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-UvGvobDUOTSdFMz498iD9g-1; Wed, 02 Sept 2026 06:19:44 -0400
-X-MC-Unique: UvGvobDUOTSdFMz498iD9g-1
-X-Mimecast-MFC-AGG-ID: UvGvobDUOTSdFMz498iD9g_1788344383
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2d6df0a1e18so17292005ad.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 03:19:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788344383; cv=none;
- d=google.com; s=arc-20260327;
- b=tCQ1SML2rEDWbQS5vEwgfmhyWH4zgPPjwRXXR/zJsvQGu4KtK2jo1uSR1WoELxTEfA
- DoYsUJ8Nb2wA/VgIJIHad11GPXS+jH6+JmAfw2NoOuFBJo1+XeUDSbjtbxk0dRHOEJyy
- 12gdbXwGsKNB5/XtDbLm+6E42YH1TmyAu6/IshX+YrHc41hx6nFBJMLMg7WWobtyW+CR
- ANCR9Ex53w/FIe4sPkjnDwevPTFFnnlUl1bGBIj6kP1eYdYZkuC5TBcfUoA7aMF81Fg7
- IIoxEIb1jtVi6gHWczEEy4lD910tkDap8YM8V6dxlLgfRVdsBzqaYxILVQ7ZgSW/aEna
- 3S6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=L+xHRTSUtSXfvI1sCTk/nMv+IJ2+RWhUzWYuNM6MC7g=;
- fh=09aG2iX2qdhRO67llXhiFinqKlB3CXkxiBO6zIa8yI4=;
- b=qxZ7kLnZOkXYQhiRwvWEiJpPqNlzcI7kOLZ8xKqDmWz+f2Td+fQJBIKGWrAkDook/N
- 5vgEhiba4ZfcBIougk5wuMrviv0YkGC89X5qKYFvV+G0K+sH+ObGMem9sOkXGyJc+zJK
- cq3KRC5KFPz2Yvku4uKjxUHjDcRj039skVep4M42OlbYzLiXVwVZE+IoH79fTXtXFcAr
- otxY5l3cpfs99vkO0jJflLr1WSA5nKl1xBt2vxK6X1w0lfEr3sORiOvFFwwoiPm0dDjp
- AtDDYAoNH8dHo1we5eiUzK8pB78hGqNp+zGszrGbxpyNGfinMmswFt4gfhsoDS+oxKu8
- iIMg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788344383; x=1788949183; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=L+xHRTSUtSXfvI1sCTk/nMv+IJ2+RWhUzWYuNM6MC7g=;
- b=tMqAbaNycHB31ASOdnGP0U0oVUIfdi3EQqItVH7sCR2JPVLQFzWj1lpz5SBbhAkcmi
- NdG1YXHniTFJv3dNO2uL7t76bQBCbBy+TkGDoNIuDRCbvv3KjxU2CONfZ6guBc26ONsu
- wUAOudZAS+iHpLjEGxNuJYU4xT2y9MIDlptKcBmUjHEot/S1QmesccjM3oqUM2caab/w
- /9FGjWp+9OX3V2PUCpe1iXb6RGo29Gi5WkDsoOZEoghaAVtPIF+9Pbznc6tXZLDlFuN+
- TfYUvKjP0KIWlsg0Sg3PpF57Y6HB39UmEu7J3htgDhc+2G0PklMF6SYVS+u5F5frH5xH
- MVxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788344383; x=1788949183;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=L+xHRTSUtSXfvI1sCTk/nMv+IJ2+RWhUzWYuNM6MC7g=;
- b=Tbl46p0mWHBwKE1A0qOffCLXSYz7bHwAnFRPBxYj4JIWdb0zlDqi/CnZsz3CY0Km2T
- Fhz4WhfMPtf6+wZ29tZKeqaohWvu5cjC+MzBgHa1LJnJjIOHD+xubYHC11+NVqq56UCE
- 2sNTMhMFluOhbLdDyN4PIa3ERgFsw3baUgDKT655K97jnCqebJto1Ubvpn51NAFzBbam
- c45lF/wf/DVgnpfRmV6ObYKTLZP990XK4XQ+ud4QZNu3EBb4y4+STVm7SzoDtk98T4UZ
- guC5N7QWe00FLrgOKFEJtH07+91+dpTkA91gXYPY33al+J5RNXRjWC757SefSBxj9aQv
- d0HQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwXhzxDa1RPU61xkA3UkLnmpR/+zsy22HNlv5RwrQmwMAgn8bRn0kQlykuMc4pWJ9t4AW87dncljCIf@nongnu.org
-X-Gm-Message-State: AFuF++nUfF20ZKONRCcNIwFRt1aU3y5ZEZ5ZJPAqQke81EZna2qAkee4
- xSVmCmEECvmfsGOHeRe7lNJnv96rzg4Y+/U5Pf6xuXYnGjptRBElk1P3kngP7v1KycgMQg9Jmrn
- exQZyyIF3RW/aRowpA8fDpmvnk60RCDS7qL2+jsLxBnlZXni0xfPXmE7H/jUW9S5WTe0aXSLRqh
- oqiyMCIaQ6rBUUqXst4rlhF23rJzgXiTg=
-X-Gm-Gg: AYBFou0j9uBB562gpes2/MCotglWo3YdLzGPKKu1QVxXh108ExB7nKcgs84IUjOQ01n
- DVX4S+G46ENu20rwqIT7ZEGUKfCc4VOYkPi7vWu2TTlAv0euH8EGhuZLQyovYPqgUPEnRf1aah0
- /rurxHDj1XBuhY4ppi8VqkddEL968A/wCUhQWAt4ppIZUivZ4fJSxTsEHk
-X-Received: by 2002:a17:902:d4d0:b0:2d7:3f6e:5cb9 with SMTP id
- d9443c01a7336-2daec6248c2mr44154535ad.8.1788344382947; 
- Wed, 02 Sep 2026 03:19:42 -0700 (PDT)
-X-Received: by 2002:a17:902:d4d0:b0:2d7:3f6e:5cb9 with SMTP id
- d9443c01a7336-2daec6248c2mr44154075ad.8.1788344382459; Wed, 02 Sep 2026
- 03:19:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
+ id 1x1i6K-0006ZF-A4; Wed, 02 Sep 2026 06:21:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dl2J02aD1H5IX2GM2GRBMO/uKYynJwOVKgFwikqh0XWCN2uGtuu9Oe3HGrPUeDesc68tCe6LsR25V5Fe+EjNJPnA/6YC04rPr1O3Sar2XC1y04/orHwS0Gil70EQVS/yc9qePKql/bwOSKaWRS8hlwfr8y6M9A9/okOcdyOTQkNnX+nwq3RLfzNtx7dVyVjiuWwQi05bcHOYyKhkcodMvYD7tubF6Sp6pMPpij4ZJQX1SeHXM4AT8VDYWfN4CKKcAAfAP9X75pgAkn82IW2zqJm7VjasafsqbgbTIy/xWV8jHC1yiKqTqYN4VZb7I+0ndkT8Yjz3/X00HTWZn0fy4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i6F8XgcNuMCMH1jtrJEppo3WJqnjtGHQ9IZcckd1dj0=;
+ b=d24IO8OskWX9N5xH+ze7WyD8IP1MzrMeJqEGIIenP5FhVAzfN3xWmtjweG4Vf97/sfX9VGnlLwhOH0Wb/d88SaA4aUg/YEZVvC1qpsusqPrmGhjrtyNkbNY2uDh2jBIqo2jWXdqZ4A+2z4Tpo6G+hMGe0Uu5GaxygsJR14RMbH4N60EcIfbNqA7JVWokbYyOOTMD0l7HlEmXSU82kN24Ikj6aXdNARQmtD3DpchF01TSJuZjh7T6Ig9syHW6NG7lVCTNo32CBcSq7AS5q+I2l94b35+/FPP9X14n3cMvuCGQjfXQj4SwU7yIEJI11U8RF6tMS/d/DcY+Dfbsx8TcQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i6F8XgcNuMCMH1jtrJEppo3WJqnjtGHQ9IZcckd1dj0=;
+ b=VMyxXTLX/UA966x2MugNrdw1XXRbPOYcB+zMnXfa6e/49xauEhhxZY3fNRb/HhxKnHnBXEsWkeFB8qS/hgTpcq5ymEr4DT2eOiGD6NX8XaApDSXAIABg+Q7/2908h3C1aenjiKNAWbvvf3WDsGXjbSQEpdQNQOdqkjjj1cZ7ZlFDDDuxSjIE8m3rfgny2xgpWVE7v/TCBgs470aFyBDuzQVy6MDXGVgTyZlV8B7D61dvMu9ueADKvFlRtJw3AoaYoZ/XsdSKsnNFgxzxOiM8kj38udVIAzMG7xPlgCQZwef9+OaYhV6O5L1P7oTcw37sBrhmMLkIjSYDZ434y0RJ1Q==
+Received: from BY1P220CA0007.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:59d::13)
+ by DS4PPF4C1E661CE.namprd18.prod.outlook.com (2603:10b6:f:fc00::a97)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
+ 2026 10:21:45 +0000
+Received: from MWH0EPF000A672E.namprd04.prod.outlook.com
+ (2603:10b6:a03:59d:cafe::88) by BY1P220CA0007.outlook.office365.com
+ (2603:10b6:a03:59d::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.11 via Frontend Transport; Wed, 2
+ Sep 2026 10:21:44 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ MWH0EPF000A672E.mail.protection.outlook.com (10.167.249.20) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.8
+ via Frontend Transport; Wed, 2 Sep 2026 10:21:44 +0000
+Received: from axiado.com (unknown [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id EBB6A4186B53;
+ Wed,  2 Sep 2026 03:21:43 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: philmd@oss.qualcomm.com, 163wangjack@gmail.com, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, qemu-arm@nongnu.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v5 00/13] Add Axiado SoC AX3005 and EVB
+Date: Wed,  2 Sep 2026 03:21:32 -0700
+Message-Id: <20260902102134.3039174-1-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20260831100151.914178-1-den@openvz.org>
- <178817576852.2700790.2039576285438786814.b4-review@b4>
- <41cebb76-bc3c-4f69-82b3-7517122ab2e5@virtuozzo.com>
- <apcRVryHi8EfRVl8@redhat.com>
-In-Reply-To: <apcRVryHi8EfRVl8@redhat.com>
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Wed, 2 Sep 2026 12:19:31 +0200
-X-Gm-Features: AcwNN1V1UJY1Kd9-p00XdgYDnw6aNogknFEbB6Uy4vQxLlB0oZcJjKraS0dvvAM
-Message-ID: <CAA8xKjXPHdFh7uB+eOygLz25y=WQFZ=Uwe_WS-1L7yWnw8gN-A@mail.gmail.com>
-Subject: Re: [PATCH 0/6] io/channel-websock: fix an unauthenticated crash in
- the handshake
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "Denis V. Lunev" <den@virtuozzo.com>, marcandre.lureau@redhat.com, 
- "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcascell@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A672E:EE_|DS4PPF4C1E661CE:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a04b3ef-c0ef-46ec-457b-08df08dbfd02
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|36860700016|82310400026|1800799024|376014|13003099007|56012099006|10067099003|18002099003;
+X-Microsoft-Antispam-Message-Info: GtzrvgM6YKPRSanxnDCBwbvxStkBkxEBI34zr0FNy7MSwQb7wIa2VDWpAq8u7Kq2o3GCSEvL0aXVEdsJI9M9dlnUO/TKkYghUPTG39fJ7709v7kq4l7sCKuDMmsfCCgRu7speoww6kWRhSvXLTzir9Dt10bfOSyyo6LKmPVdHLLY9Q6hYYY3HO/BhPpZNiGN7QUzVajj/uaYVzoyNLtDeEXcFH+Uo6GtjAltcSGZ5E07YCv5TP8dXpXStBPsL+YLJrbV44l7hLzbFbKAid3chizzD6ui4ZlJapmhrNoXAg9SK0XmU/5+W0kVKpvCeC9PWilxFsZ1QT/VHm4CYGslHSWIrD4EZRbxLw+iNDCB2SOli51fiNfl5d1tROAln1jrcD9oje/7WOZZGT11KcGA5hi1N/XqTi6fRCmeM2wlSha4FHkPZON4r0vaQzDnckDK6TpqWaMUPMdpRNSiembnCUKgowqfEoKF2wZrSLLN4KgkVcLfLzAgiePO8mjBmvwKv5diEMQ7WelpAOSip0eaPE2tk9F1wFHhi3T0umCfPHRk179i+y7+7knIlhlPIj1d+/rQ6BVEkC89rPGhZnk2bpn6whBCl89DBb8ors4FhMIdcPvtbHLs643AtOuGo7n6nq+nrHcuTgIXI7tjUTUoYnf3tun2Ui2fEGLpD6AGiLs=
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(23010399003)(36860700016)(82310400026)(1800799024)(376014)(13003099007)(56012099006)(10067099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 5m0Lf2vny0n2YuU94VKTt2VhJ5oeAC5iynDm4IzCcMn96WgJ+LQBeZEfu8gZ5GQIndzT+TNDgMiOrQNuOhGiBjCor84eIY2WGfouhoX0MAGZeNQz0uXTyXEb8ZtCooYAS1XSYjUh0oUTKYCOnMRD0q4BBpdIJ4OA76ia+1aie+JgL9X7e+fh+E7g0cRNBm6KQlXMxyjEKV4EFukBBEmQTx/5muc3djCIg/tbcfX29MYg+oPuue0HqEDfnkiWrhd9cTANtKU0qNItPS3HqckaYrXogbDAIzM87UeWZlGMjL159yWotbehHIcSRiUqzLPDEHMiwjCeOINI6BngvcSYW+OuCehXvd1Qv02JkiZ4JxY52DCYu+pwnsrqXfbTkBU3tiWoMCvWPf/Ks4KulxTVwcIo1rqL+WIXFjJSW/m9LWR/6ysHP2F6qhbTT/C5L2zM
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 10:21:44.4659 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a04b3ef-c0ef-46ec-457b-08df08dbfd02
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A672E.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF4C1E661CE
+Received-SPF: pass client-ip=2a01:111:f403:c100::f;
+ envelope-from=kchiu@axiado.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,103 +118,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 1, 2026 at 7:54=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Mon, Aug 31, 2026 at 01:33:14PM +0200, Denis V. Lunev wrote:
-> > On 8/31/26 13:29, marcandre.lureau@redhat.com wrote:
-> > >> A client which can reach a VNC websocket port crashes QEMU before it=
- has
-> > >> authenticated, by sending an HTTP greeting whose request line holds =
-no
-> > >> space:
-> > >>
-> > >>   printf 'stats\r\nx\r\n\r\n' | nc $host $port
-> > >>
-> > >> Three defects line up to produce it. The greeting is rejected withou=
-t
-> > >> queueing a response, so the handshake goes on to flush an empty buff=
-er.
-> > >> A zero length sendmsg() succeeds and returns 0, which
-> > >> qio_channel_socket_writev() mistakes for failure and reports as
-> > >> QIO_CHANNEL_ERR_BLOCK with errp left unset. The handshake treats eve=
-ry
-> > >> negative return as fatal and hands that NULL Error to
-> > >> error_get_pretty(). Patches 1 to 3 close the three links.
-> > >>
-> > >> Patch 5 is the same NULL Error on the read side of the handshake, wh=
-ere
-> > >> ERR_BLOCK is folded into -1. It is reachable for a wss:// client, wh=
-ose
-> > >> master channel is then a TLS channel: a wakeup carrying only part of=
- a
-> > >> record makes gnutls report EAGAIN.
-> > >>
-> > >> The tests drive the handshake through a channel which reports ERR_BL=
-OCK
-> > >> on demand, covering both directions. No test reproduces the original
-> > >> crash itself, which turns on a stale errno and is not reliably
-> > >> reproducible in a unit test. What they pin is that a 400 is emitted =
-and
-> > >> that ERR_BLOCK no longer reaches error_get_pretty().
-> > >>
-> > >> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> > >> CC: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > >> CC: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > >>
-> > >> Denis V. Lunev (6):
-> > >>   io/channel-socket: do not treat a zero length write as an error
-> > >>   io/channel-websock: send an HTTP 400 when the greeting has no spac=
-e
-> > >>   io/channel-websock: handle a blocked write during the handshake
-> > >>   tests/unit: add websock handshake test
-> > >>   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while readin=
-g
-> > >>   tests/unit: cover blocked IO during the websock handshake
-> > >>
-> > >>  io/channel-socket.c                  |   2 +-
-> > >>  io/channel-websock.c                 |  10 +-
-> > >>  tests/unit/meson.build               |   1 +
-> > >>  tests/unit/test-io-channel-websock.c | 249 ++++++++++++++++++++++++=
-+++
-> > >>  4 files changed, 260 insertions(+), 2 deletions(-)
-> > >>  create mode 100644 tests/unit/test-io-channel-websock.c
-> > >>
-> > > Patch series lgtm. You cc stable, why didn't you file a CVE?
-> > >
-> > > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > >
-> > I have calculated the scope and get around 6.2 which is
-> > not looking too impressive to spend a time.
->
-> In the context of a VNC server enabling websocket. If we assume the
-> VNC server has authentication enabled, including the TLS extension
-> VeNCrypt, then the deployment can be said to be protecting against
-> a malicious client.
->
-> The flaws mean the malicious client can inflict a denial of service
-> attack on the VM before getting to the VNC authentication step. IMHO
-> that is enough to justify a CVE assignment.
->
-> CC'ing Mauro to double check my view & assign a CVE if appropriate
+This patchset introduces Axiado SoC AX3005 and evaluation board for emulation
+The model for Axiado SoC AX3005 supports
+  4 Cortex-A53 CPUs
+  Arm Generic Interrupt Controller v3
+  9 Cadence UARTs
+  1 SDHCI controller with PHY
+  8 Cadence GPIOs
 
-Agreed; a pre-auth VNC crash warrants CVE assignment. This is similar
-to https://access.redhat.com/security/cve/cve-2025-11234
+Refer Axiado website for more product information
+https://axiado.com/products/
 
-Please use CVE-2026-84788 for this one.
+and minor changes for the compatibility with existing AX3000 SoC model
 
-Thanks,
+Test plan:
+1. Verified the machine "ax3005-evb" with following command
 
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+qemu-system-aarch64 \
+    -machine ax3005-evb \
+    -device loader,file=bl31.bin,addr=0x88300000 \
+    -device loader,file=tee-raw.bin,addr=0x88400000 \
+    -device loader,file=u-boot.bin,addr=0x80000000 \
+    -device loader,file=fitImage,addr=0x80100000 \
+    -device loader,file=obmc-phosphor-image-evk-ax3005-qemu.squashfs-xz,addr=0x80B00000 \
+    -device loader,cpu-num=0,addr=0x88300000 \
+    -device loader,cpu-num=1,addr=0x88300000 \
+    -device loader,cpu-num=2,addr=0x88300000 \
+    -device loader,cpu-num=3,addr=0x88300000 \
+    -nographic \
+    -serial null \
+    -serial null \
+    -serial null \
+    -serial mon:stdio \
+    -drive if=sd,file=obmc-phosphor-image-evk-ax3005-qemu.wic.qcow2,format=qcow2
 
---=20
-Mauro Matteo Cascella
-Red Hat Product Security
+2. Run QEMU test suite
+make check
+Ok:                331
+Fail:              0
+Skipped:           17
+
+make check-functional
+Ok:                30
+Fail:              0
+Skipped:           7
+
+Changes in v5:
+  1. Add patch ("hw/char/cadence_uart: Add BXRS register definition") to add
+     BXRS register into CADENCE UART model and add new property to control this
+     feature.
+  2. Drop patch ("hw/char/cadence_uart: Reserve MMIO with dynamic size")
+  3. Add patch ("hw/arm/ax3000-soc: Enable BXRS support of CADENCE UART") to
+     enable BXRS support in Ax3000 SoC
+  4. Add patch ("hw/char/cadence_uart: Reduce the size of MMIO to 0x80") to
+     change the MMIO size to 0x80 from 0x1000.
+  5. Add patch for Ax3000 SoC
+     ("hw/arm/ax3000-boards: Add modify_dtb for discontiguous memory") to fix
+     memory issue while -dtb option is applied
+  6. Add patch for Ax3000 SoC
+     ("hw/arm/ax3000-boards: Remove redundant pointor from struct") to create
+     SoC instance during init() and remove redundant pointor from struct
+  7. Add document for Axiado SoCs and EVKs
+  8. Add functional test for Axiado SoCs and EVKs
+
+Changes in v4:
+  1. Add patch ("hw/char/cadence_uart: Reserve MMIO with dynamic size") which
+     allow other models to revise the MMIO size of Cadence UART
+  2. Change the MMIO size of Cadence UART to 512 KiB in Ax3000/Ax3005 SoC to
+     resolve the overlapping region issue
+  3. Add memory guard in Ax3000/Ax3005 EVK to check the memory size specified by
+     -m option and set the default_ram_size to the RAM size supported by Axiado
+     SoC
+
+Changes in v3:
+  1. Remove patch ("hw/arm/ax3000-soc: Add missing class_size to TypeInfo")
+     because it was fixed by commit 4f50d637e2
+     ("hw/arm/ax3000-soc: fix heap overflow from missing class_size")
+
+Changes in v2:
+  1. Add patch "hw/arm/ax3000-soc: Add missing class_size to TypeInfo"
+     to fix incorrect class size
+  2. Add missing class_size "Ax3005SoCClass" to ax3005_soc_types
+
+Kuan-Jui Chiu (13):
+  hw/char/cadence_uart: Reduce the size of MMIO to 0x80
+  hw/char/cadence_uart: Add BXRS register definition
+  hw/arm/ax3000-soc: Enable BXRS support of CADENCE UART
+  hw/sd/axiado_sdhci: Add header guard
+  hw/arm: Rename ax3000-boards as axiado-boards
+  hw/arm/ax3000: Specify SoC name in header and variable
+  hw/arm/ax3000-boards: Add memory guard
+  hw/arm/ax3000-boards: Add modify_dtb for discontiguous memory
+  hw/arm/ax3000-boards: Remove redundant pointor from struct
+  hw/arm: Add Axiado SoC AX3005
+  hw/arm: Add Axiado Ax3005 EVB
+  docs/system/arm: Document Axiado boards
+  tests/functional/aarch64: Add functional test for Axiado EVKs
+
+ MAINTAINERS                                   |   5 +
+ docs/system/arm/axiado.rst                    | 128 ++++++++++
+ docs/system/target-arm.rst                    |   1 +
+ hw/arm/ax3000-boards.c                        |  71 +++++-
+ hw/arm/ax3000-evk.c                           |   4 +-
+ hw/arm/ax3000-soc.c                           |   5 +-
+ hw/arm/ax3005-evk.c                           | 117 +++++++++
+ hw/arm/ax3005-soc.c                           | 226 ++++++++++++++++++
+ hw/arm/meson.build                            |   6 +-
+ hw/char/cadence_uart.c                        |  17 +-
+ include/hw/arm/ax3000-soc.h                   |   1 +
+ include/hw/arm/ax3005-soc.h                   | 102 ++++++++
+ .../arm/{ax3000-boards.h => axiado-boards.h}  |  10 +-
+ include/hw/char/cadence_uart.h                |   4 +-
+ include/hw/sd/axiado_sdhci.h                  |   5 +
+ tests/functional/aarch64/meson.build          |   4 +
+ tests/functional/aarch64/test_ax3005_evb.py   | 140 +++++++++++
+ .../functional/aarch64/test_axiado_scm3003.py |  62 +++++
+ 18 files changed, 889 insertions(+), 19 deletions(-)
+ create mode 100644 docs/system/arm/axiado.rst
+ create mode 100644 hw/arm/ax3005-evk.c
+ create mode 100644 hw/arm/ax3005-soc.c
+ create mode 100644 include/hw/arm/ax3005-soc.h
+ rename include/hw/arm/{ax3000-boards.h => axiado-boards.h} (71%)
+ create mode 100755 tests/functional/aarch64/test_ax3005_evb.py
+ create mode 100755 tests/functional/aarch64/test_axiado_scm3003.py
+
+-- 
+2.34.1
 
 
