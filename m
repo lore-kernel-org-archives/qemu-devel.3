@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19C1C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4730AC624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1i1M-0005z5-3i; Wed, 02 Sep 2026 06:16:44 -0400
+	id 1x1i1j-0006Gu-Ol; Wed, 02 Sep 2026 06:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1x1i1L-0005yt-18
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:16:43 -0400
+ id 1x1i1e-0006Cg-Dl
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:17:02 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1x1i1J-00053a-5B
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:16:42 -0400
+ id 1x1i1c-00057t-Sw
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:17:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788344201; x=1819880201;
+ t=1788344221; x=1819880221;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=XuWsCwVEmw1nsuFB/mbj8N981k8/d1KCbc+09ImqyQY=;
- b=LK3nXO9gYbffpzmgrLb9MuSb5IYsZgzy+MG41RM9jByEDuHARXwugW09
- z/gi+Qn2+QY5tQl+PlhxICVB0HciZd3MrbOJyrITnXnl0oqxw5HHO9+BX
- ZEuCasEzbvTjkxRRNdWtxkSGKxYlXP+S3bWhx7QMQEmGGfEtgIDKo1XKs
- yES11z3dGlqQZ2zu6MtFlm/HIf8bdR6n+0Z8dzpmY8Tea9Arr1K28LSKK
- HGY6b4jR92GHJN7IcfIvWwvoEminp1RXIPSUGyBQgyxQaXpsyTRCxBNSG
- SYNdhA1AON3xShdhZlZoMKq+KGNW4VI8emRxnj3HaHzkXBFwt9MV3uueF g==;
-X-CSE-ConnectionGUID: rka01f1eQ4iuRgkH6sjKYw==
-X-CSE-MsgGUID: p9PMqckXRRCbSxgmcWgmfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="92665424"
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="92665424"
+ bh=3mrv0SmyYUtoltFxvjBhfe7xLwtnV6flfTfcqh42GSU=;
+ b=fiF97MXODeUNq2/riab1UVCRck1I9p0PYwcN8RhETBMBG1tfczVYWOg3
+ 9J7qZ999yx05976y7woD2Ed11LgSlHThqxweAobGouwEuDEvLkE1sdVnv
+ EP6TbBBEOv8byFn6H/TtCuP9HyrdlVb2Gphjkbt2cKjTvFSJk+B/Qi7HZ
+ vezxtpZXZndPO7xI34sSqtXqeT+modOjQYlebDwk75MRIrWB3/Y52T78+
+ M5QMVGpLDdauOyyD4IwOHMXYuxPZKFM13tL2/eyYqDKMlJYxczLDRQtVT
+ CyWYjY4qtJ3UxwQCgvOd7NKhrTsMiJnYYJUXWW2YgP8H2TW9erL0biXVZ Q==;
+X-CSE-ConnectionGUID: FdAhSyJPQqSiCDSBHkx3mg==
+X-CSE-MsgGUID: iKiYuxpnTCG1NVJ+gL/4rg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="92665439"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="92665439"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 03:16:39 -0700
-X-CSE-ConnectionGUID: HT5Mz9KnSLWumBC+bu0xkA==
-X-CSE-MsgGUID: Qsu9kHNARIOFz8yJPghDmg==
+ 02 Sep 2026 03:16:59 -0700
+X-CSE-ConnectionGUID: t/pH+jfMTL2PjaZjo2fAzw==
+X-CSE-MsgGUID: DaKkfQlmT4akNzePE8UKBQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="274623500"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="274623550"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by fmviesa005.fm.intel.com with ESMTP; 02 Sep 2026 03:16:36 -0700
-Date: Wed, 2 Sep 2026 18:16:35 +0800
+ by fmviesa005.fm.intel.com with ESMTP; 02 Sep 2026 03:16:57 -0700
+Date: Wed, 2 Sep 2026 18:16:56 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Kishen Maloor <kishen.maloor@intel.com>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, kvm@vger.kernel.org,
  sohil.mehta@intel.com, xiaoyao.li@intel.com,
  binbin.wu@linux.intel.com, farrah.chen@intel.com
-Subject: Re: [PATCH 2/5] target/i386: Add LASS support in CR4
-Message-ID: <apf3g2MQrt72OKdO@intel.com>
+Subject: Re: [PATCH 3/5] target/i386: Introduce DiamondRapids-v3 to enable LASS
+Message-ID: <apf3mEv1+8uSgukX@intel.com>
 References: <20260826035734.114685-1-kishen.maloor@intel.com>
- <20260826035734.114685-3-kishen.maloor@intel.com>
+ <20260826035734.114685-4-kishen.maloor@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260826035734.114685-3-kishen.maloor@intel.com>
+In-Reply-To: <20260826035734.114685-4-kishen.maloor@intel.com>
 Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
@@ -83,34 +83,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 08:57:31PM -0700, Kishen Maloor wrote:
-> Date: Tue, 25 Aug 2026 20:57:31 -0700
+On Tue, Aug 25, 2026 at 08:57:32PM -0700, Kishen Maloor wrote:
+> Date: Tue, 25 Aug 2026 20:57:32 -0700
 > From: Kishen Maloor <kishen.maloor@intel.com>
-> Subject: [PATCH 2/5] target/i386: Add LASS support in CR4
+> Subject: [PATCH 3/5] target/i386: Introduce DiamondRapids-v3 to enable LASS
 > X-Mailer: git-send-email 2.47.1
 > 
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
+> Add DiamondRapids-v3 to expose Linear Address Space Separation (LASS)
+> on the DiamondRapids CPU model.
 > 
-> CR4.LASS[bit 27] enables Linear Address Space Separation, and may be set
-> only when CPUID.(EAX=7,ECX=1):EAX[6] enumerates LASS.
-> 
-> Recognize CR4.LASS as a valid bit by adding CR4_LASS_MASK to the known
-> bits, i.e. clearing it from CR4_RESERVED_MASK. Mark it reserved in
-> cr4_reserved_bits() and clear it in cpu_x86_update_cr4() when the guest
-> CPUID does not enumerate LASS. This keeps CR4 handling consistent on
-> paths that reach cpu_x86_update_cr4(), such as gdbstub register writes.
-> 
-> LASS is not emulated by TCG, so it is not added to TCG_7_1_EAX_FEATURES
-> and cannot be set under TCG (helper_write_crN() and helper_vmrun() both
-> reject reserved bits via cr4_reserved_bits()).
-> 
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> [kishen: rewrote commit message, rebased, fixed formatting]
 > Signed-off-by: Kishen Maloor <kishen.maloor@intel.com>
 > ---
->  target/i386/cpu.h    | 7 ++++++-
->  target/i386/helper.c | 4 ++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
+>  target/i386/cpu.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
