@@ -4,100 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E7EC624D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 17:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F55C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 17:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1p6f-000879-6B; Wed, 02 Sep 2026 13:50:41 -0400
+	id 1x1p72-0008Ir-3C; Wed, 02 Sep 2026 13:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1p6c-00086s-3e
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 13:50:38 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x1p6a-0004Dm-8A
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 13:50:37 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-49b0d8bc2aaso12940355e9.0
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 10:50:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788371434; x=1788976234; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=QyOibfLIkvxX3VHUscMoeACDdmBr1w7iwyrDHgfNxqs=;
- b=Ux7FIe8i923uRRw63FgA3C16gvmfpiDuTNRY5CBxRNqBY/Opo4nzsND4rjOICMYW8S
- hl41iJA/HrpwbRKiMJ9AFC/r23AdBX1UuTr+ahF4zh7d9Fm4wT8twrwFqZXWTI0zL7lU
- k+7fhHAOe+gWXub1sYN/Pj6dj+jTINGDJhOkAq36zkaQWISelhz1P/OEhHpweCX6tT6Y
- hZLMlDH3W58uAPENx1CZgU1QZwVp/stiXnssqdayGhyDU3LxXKXGO+euVIU9Zxqrw1tI
- drqBfg3xsIBYl1p4Ez4q3zRAGsl5rAUIlF6VE6iOSxCIxgGhFrWzFH7OlKfvMuzK2Ry+
- kfOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788371434; x=1788976234;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QyOibfLIkvxX3VHUscMoeACDdmBr1w7iwyrDHgfNxqs=;
- b=gglx2D4VZmgeAtesUfpcHI+L3z7IbH4LG4uzzoBtHmC2IG7iQMARzSVc4Y4nYb0mtZ
- SjMlGLwYvNl7gtf8hZHLFmsbMITA24P4kt8KlLehmdlq74Nxqb9qybr/KcctzuzSduef
- tDeY5p0b+ZzfepkfLRK1gEPEOCAHhCdhjUCvww4DQ9PBBfheH3AIeS1e1sZEf0Bs7vhm
- wBP+FQrFyOupF+v3SIbhAB3VvKI9av03SK6mbcgyVFqGK01X93nYDLsztgahd4BQPLzH
- xp/kty3Oto+WbK0aYrdaNxIhJvQnlC7aG2EneTqXxsmdtSUY1H3rfQvA7S4kgoA5tlp6
- elzQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpUt6jKmvbikwXa3w+b7280JcgWnKYjYYrind+OgbHNLVFt6xeEJee+FF9mu6W/wfZn6VX9lWjbOXyY@nongnu.org
-X-Gm-Message-State: AFuF++lEsWaOY5VQyauDIopl7IEFRLnnExvB38r5kfjEll0QIemy7Rx2
- igbq+gSM5TAM1bman1u45RumsfbNJF6vtnbJPtQXndgwFMItMtS95P/NcmX6Lr+eeNc=
-X-Gm-Gg: AR+sD12WnKUIKhmNzqIhk6TdeC6rbcOW8kkkFpYZK2msfIxmUryWGbjR0TY+A3CNT6a
- /53tEISOyOAzMw8bQ4X3afitLdX+6pDMjEThS09nppTNgJF8lKtw2KcrAItcKH7tyb1Z3lSH2kO
- wTehk/dLkPuT731OzyCvEbk7KJQy4pplnHf+apkYSBxQlm85aDfPSvr9UbubHmRzJVvE6el6WVC
- O0yWd+YJVwTRb8d2Q8LUc3iOSPhVsQkNHE4Crp6di3BCyRtpOYA0rSIUqVe21e7yQJ3GDXuas3h
- KeglDAoIG3/erEwp4Ch1YIZdNL48Sim0QyyQQFxRDgb+Yxr+A3KA/eblPGnoq3SJhnektXJt4S4
- tutdIrZL+Gw0NI3iRcbYIaso5uwHMJjvf7PbYay/VJSUwmHDzV/z7yO1tfbuPmsnhtMuozI7yAr
- Vn8RMWOQcfH/JGffywj+rP39p84qm/w0Nv4uE+hOkEO5Lr+j4Bovk4Kxl+RZYJm+W6JB0qzuU=
-X-Received: by 2002:a05:600c:4fc8:b0:49c:c96a:d36b with SMTP id
- 5b1f17b1804b1-49ce581f269mr124313285e9.12.1788371434502; 
- Wed, 02 Sep 2026 10:50:34 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee7fec25sm8018625e9.13.2026.09.02.10.50.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 10:50:33 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8D4F85F85F;
- Wed, 02 Sep 2026 18:50:32 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  "Michael S
- . Tsirkin" <mst@redhat.com>,  Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Kevin Wolf
- <kwolf@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Philippe =?utf-8?Q?Ma?=
- =?utf-8?Q?thieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [RFC PATCH v2 0/4] docs/devel, AGENTS.md: a completely new
- policy on AI-generated contributions
-In-Reply-To: <CAFEAcA8s=P6_SUFss9AikhfpLrFOi8p81idM6YZ=De-Z488RCQ@mail.gmail.com>
- (Peter Maydell's message of "Wed, 2 Sep 2026 16:54:11 +0100")
-References: <20260901161422.314581-1-pbonzini@redhat.com>
- <CAFEAcA8s=P6_SUFss9AikhfpLrFOi8p81idM6YZ=De-Z488RCQ@mail.gmail.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Wed, 02 Sep 2026 18:50:32 +0100
-Message-ID: <874ig7r193.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x1p6x-0008HP-JN
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 13:51:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x1p6v-0004GV-Hb
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 13:50:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788371456;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=VnUc12l6yh2oGa7qbMhdE28rw+smndZgJh06752uTlA=;
+ b=DIB3GjJ1Tfj6kQKDTDJadEPYy4zNvKpIrdX2xqehZqNZXqqiRJTTIwWxXVxFI0JSNhXWwG
+ hbtNVzSOLoYJTeNH3VRaejeBGrI2c87GyaDtt/Yj7ZSZQM9iH45fmBOthwr91sRZjMioZ+
+ M6uXfy6Vs8b/V+nqgEzdsIAABCAAhRM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-4zaCeJQVNyKx9dG9_5GjBg-1; Wed,
+ 02 Sep 2026 13:50:54 -0400
+X-MC-Unique: 4zaCeJQVNyKx9dG9_5GjBg-1
+X-Mimecast-MFC-AGG-ID: 4zaCeJQVNyKx9dG9_5GjBg_1788371454
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0166B180AE2F
+ for <qemu-devel@nongnu.org>; Wed,  2 Sep 2026 17:50:54 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71A0B195608A; Wed,  2 Sep 2026 17:50:52 +0000 (UTC)
+Date: Wed, 2 Sep 2026 18:50:49 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: Async machine appliance for testing (python)
+Message-ID: <aphh-XHBjGicZDD7@redhat.com>
+References: <CAFn=p-aVpKptC=G6yTWWuQoeG+peChgw60uJdOXr7B8r=m=iBQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Disposition: inline
+In-Reply-To: <CAFn=p-aVpKptC=G6yTWWuQoeG+peChgw60uJdOXr7B8r=m=iBQ@mail.gmail.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,43 +83,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Mon, Aug 31, 2026 at 04:51:36PM -0400, John Snow wrote:
+> WIth the upgrade to 3.12 imminent, now might be a good time for me to
+> revisit the work I started when I converted QMP from sync to an async
+> library. I have a draft of the library I wrote some time ago, but it's
+> probably in somewhat dodgy shape after a year or two of being ignored.
+> 
+> Before I dig in, I wanted to ask if this would be a helpful project.
+> The main selling points would be:
+> 
+> (1) Ability to split it out from the main QEMU tree, like QMP was, for
+> use in external testing
+> (2) Better stream management so console information is consumed and
+> logged reliably without deadlocks due to pipes hitting their buffer
+> limit
 
-> On Tue, 1 Sept 2026 at 17:14, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>
->> WARNING: this is *intentionally* a full U-turn from the previous policy
->> and discussions.  This is not a refusal of the arguments presented in
->> those discussions.  It is also a request for comments, and not something
->> that is ready to go.
->
->
->> Paolo Bonzini (4):
->>   docs/devel: introduce a new policy on AI-generated contributions
->>   AGENTS.md: Let agents know what the participation rules are
->>   AGENTS.md: make the human part of the design process
->>   agents: add CLAUDE.md and GEMINI.md
->
-> Could somebody write a short AGENTS.md which is *just* an
-> encoding of *current* AI policy, please? I think this is now
-> the second series that provides an AGENTS.md as part of
-> doing something more ambitious. But right now we have nothing
-> at all, which means we have no guard against users who have
-> missed our AI policy asking an LLM to generate code that they
-> intend to submit upstream.
+I can't remember the specific details, but I do recall some
+scenarios where it would have been valuable to have the console
+output continuously streamed to the log file on disk, while
+at the same time retainining the ability to do expected
+output matching from the API.
 
-Can anyone test their agents against:
+> (3) Removing multiprocess and multithread processing of console and
+> stdout/stderr logging from test suites in favor of using async
+> user-threads for (hopefully) simpler, more straightforward processing
+> and customization.
 
-  20260902174942.614254-1-alex.bennee@linaro.org
+Which tests were you refering to here ?  I didn't think we had
+python tests using multiprocess/multithread ?
 
+Tangentially related, in debugging failures of the functional
+test suite, and to a lesser extent I/O tests / qmp-shell, I've
+often found myself heavily confused by the asyncio call paths
+and control flow, making it really hard to debug.
 
->
-> thanks
-> -- PMM
+In particular I've never fully figured out how to get qmp-shell
+to have a clean exit path without stack traces being thrown.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I'm unclear if this is related to our having QEMUMachine class
+expose a sync API on top of an async QMP class (square peg in
+a round hole situation), or if this is just something inherent
+to Python asyncio APIs, or probably a bit of both ?
+
+If switching to a fully async API throughout the stack makes
+debugging simpler, I'd welcome it.
+
+> (4) Ability to add listeners/event handlers to watch for specific
+> patterns and trigger asynchronously when they occur; i.e. ability to
+> handle and watch for specific patterns in an arbitrary order without
+> deadlocking your test
+> (5) Centralized timeout setting and handling.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
