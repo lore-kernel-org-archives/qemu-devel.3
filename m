@@ -4,103 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F64C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 11:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BEDC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 11:49:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1jSS-0005Ak-8z; Wed, 02 Sep 2026 07:48:48 -0400
+	id 1x1jSX-0005Bi-13; Wed, 02 Sep 2026 07:48:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x1jSQ-0005AH-UC; Wed, 02 Sep 2026 07:48:46 -0400
+ id 1x1jSV-0005BA-4N; Wed, 02 Sep 2026 07:48:51 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1x1jSP-0002Ql-Bo; Wed, 02 Sep 2026 07:48:46 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1x1jST-0002Ri-AV; Wed, 02 Sep 2026 07:48:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6829VtR33694632; Wed, 2 Sep 2026 11:48:44 GMT
+ 6829Vrsv2682987; Wed, 2 Sep 2026 11:48:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=1KfLH1
- JXMaR2g4wWlgr8lmiM3in9NyhRsL+TxVacxeU=; b=iZ+WR7QoXThKia37Syyfyf
- GgGaAtRseTG3xFXSih3zsUoqsnpzTkSIKOWo3NyYA80sIOJhFHGbm9iDXAG7yVPx
- m1Acc2J1goYdxuwz09ZAcJ07wQyg34+F5KnckdE4rBGGVZNIJVy8iuLquPGajGLU
- nt+ASf7J2L7708zJWBodNS8ViPh63faIzTdzUvaCYf/lhfr2OeflwzpFGro4EBBn
- jwb3RmqG/C+d5zC1K/VeZpaicEIq2HkQ5whcX20iVVEZ3oirqYnstV8yZTR3/zpe
- 0mahbkFXSznhvqhIxUOb83JmbBG1CbeA+DqBSVTt5OkIhfQYIQRH30mWHIdICHsQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbmuhx1ue-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=AwD1aylYY2X4Fz305
+ M4RE/oo+keZ0tJCOnpKkTKYQzg=; b=JDN9UYG+I7llpt5vVtO4u5UImk5CnVLWi
+ NC2pT+y8l2eliScsC9M2dGUIED9wUSIMP2pAsnlff1wRCamgZnkaHFYf9aGa5C3h
+ VKGvZVwVKkT1S334cQLn6fNsMIXSDc7hr61Sww0uX1rMdm9qm4wcWxOReLiQ+YRW
+ y5G/PzmSulgjel7rGpGiDAnctguk0kT5G/49/80irAs4MoyfkitVJ/yjwjOZdh4q
+ NpDecUWH0lQvIv99HB792QWpC35gQ83ugNNpRSNRzH7f4TKVo7kjBnryFWJqLX80
+ qT5EST5SrD2IAG2Kx00q9gwQoBrPfo7jU5l85qFLq0QDkSiDAlhEA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudww9w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 11:48:43 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682BfNwf031227;
- Wed, 2 Sep 2026 11:48:42 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hhc47-1
+ Wed, 02 Sep 2026 11:48:47 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682BfMii019060;
+ Wed, 2 Sep 2026 11:48:46 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcark9e99-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 11:48:42 +0000 (GMT)
+ Wed, 02 Sep 2026 11:48:46 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 682BmbGL51249658
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 682Bme3g46661906
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Sep 2026 11:48:37 GMT
+ Wed, 2 Sep 2026 11:48:40 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B5D3F20040;
- Wed,  2 Sep 2026 11:48:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 510252004B;
+ Wed,  2 Sep 2026 11:48:40 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 75AD92004D;
- Wed,  2 Sep 2026 11:48:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0EB7B20043;
+ Wed,  2 Sep 2026 11:48:38 +0000 (GMT)
 Received: from Narayanas-MacBook-Pro.bl1-in.ibm.com (unknown [9.123.3.199])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  2 Sep 2026 11:48:35 +0000 (GMT)
+ Wed,  2 Sep 2026 11:48:37 +0000 (GMT)
 From: Narayana Murty N <nnmlinux@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, sbhat@linux.ibm.com,
  mahesh@linux.ibm.com, sourabhjain@linux.ibm.com
 Cc: npiggin@gmail.com, harshpb@linux.ibm.com, amachhiw@linux.ibm.com,
  adityag@linux.ibm.com, hbathini@linux.ibm.com, shivangu@linux.ibm.com,
  anushree.mathur@linux.vnet.ibm.com
-Subject: [PATCH v1 1/2] ppc/spapr: Preserve MSI-X shadow across EEH PE reset
-Date: Wed,  2 Sep 2026 17:17:57 +0530
-Message-ID: <20260902114758.85160-2-nnmlinux@linux.ibm.com>
+Subject: [PATCH v1 2/2] ppc/spapr: Temporarily disable VFIO BAR mmap during
+ EEH PE reset
+Date: Wed,  2 Sep 2026 17:17:58 +0530
+Message-ID: <20260902114758.85160-3-nnmlinux@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260902114758.85160-1-nnmlinux@linux.ibm.com>
 References: <20260902114758.85160-1-nnmlinux@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: U-sW4tgoOK9HVA-y5kw2klqhyIid2EOt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEwMiBTYWx0ZWRfXzgxF+WU7r+mC
- USyy/nGrDx/acqLr8AX+GZ4e0dw+THM6/+XEhkGBX+LZQo9f6kH7KIt9XaAv1jarSPmOBaR0vro
- wAXvmChXsYUCCzVPReZUEJIuJxVXnbVsawO6Rome2n04LueSSHjaFI5TWJ3Mne3+3mY1QV3W5/8
- UQroGEkl0FYXG5LzwgM1Rs5iKZddJwAKF/ZCxOJi6uKWbZ1LXS8lzr8OktO8GkoQnFF+0gAj4Ie
- wy6pfG8qSTrFFFSB5UNeBwHvGLVBKg98zSDeQJU3xgXKNReq+FTAgQYQqkykUNXYEgKSa5YvAqG
- laQaZAA91oCIFZGAGGjbp/hKkQk1qs1T7z8qbzP+IjKhilMVdYEdcwnwbjE2Av7y9X1+o/tbe3j
- Uqai3yOtyttIxVgEy+qF07lCXEMi9LPMEQaLWgOqrxVwCUTFNvYU8xaiRGI0jFMX2ryxtQjBMpA
- mC7U+qaH1pkxDYxKmJQ==
-X-Authority-Analysis: v=2.4 cv=Osl/DS/t c=1 sm=1 tr=0 ts=6a980d1b cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=OvJMSl6P30iQFxEnM-sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEwMiBTYWx0ZWRfXxJvvUobpyjRl
- WC0FGulx3s/WrPyF/ciHRpsU8YRmZhgo7LUGD0SLI4dK1ednjrv/v1yZ7N/Fb+vejAXBcsBn8bx
- Agf+punnefr8d8DDcg20v0jvXsy5Wro=
-X-Proofpoint-ORIG-GUID: R9NP4urkbnzOAdABOmaKTxRVAd_7gB70
+X-Proofpoint-GUID: Y8hIS8FSXvZx5ceJZPjmPj_FovICK85P
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEwMiBTYWx0ZWRfX6Sj1uU5fqTwg
+ COq46iNhPBqEtBPp/EwIts83oNiqc37qPN2yyBpUZOso+SGcgFfnnQqHTISz/JvFh1uZ4rCjgml
+ BoXkK+sCmacUtDjNixeuI3OKGNJMbXQWIKYNaC9zce5uHcmimTiLlu4xL7IDUDb7Ys3r5T7vEH0
+ +JVY4lNx/Q0Zf+a7yo4t28nfRAxDdsqcOHGlTLRXrJybJsWNcZ3pRd7l3+5hWCsyvEUzEo+6M5c
+ L6l/pN2cSI3WwX79JwANfhKIl3LGbLVJdTVnP1TPriaEBrl11mkMgBOyaqAWbMKo92PjjMwdNHc
+ 59oq6eTWN2lFDzbLK03rNQbsBQOEG0837M0kL5VMjdfgcpYk7AyH1WlSFczot+xoi2/HjGtu19P
+ S/qajcnHlqy5rF+Oyldu7kVq/hb8G8yHzsE8WOc3UiRzgb+QGJjiog897Xzn639PLkB8HwQhJVP
+ joN2xuTlphAuuj11QZA==
+X-Proofpoint-ORIG-GUID: R-YxeuR5HMIVvASuoLj8U_vkkdzRXIq0
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEwMiBTYWx0ZWRfX0Okjd78By9Eh
+ T+KFM7o1fWNoVsLIdAlggLxJo0cziJZxtaWo7HnL2OLpXVjA+65zaeCS5Y+pNEblW4eRTe11ePM
+ A/t2nqxAknqCu8O89TQ7YaSbXNhL+bw=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a980d1f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=DWdBjL4F_57hvwjeMwgA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-02_02,2026-09-01_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020102
+ adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609020102
 Received-SPF: pass client-ip=148.163.158.5;
  envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -125,129 +124,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On pSeries, the MSI-X table shadow in QEMU is not sourced from the
-physical device.  It is populated by sPAPR RTAS through the
-ibm,change-msi call path:
+An EEH PE hot or fundamental reset involves a synchronous kernel ioctl
+(VFIO_EEH_PE_RESET_HOT / VFIO_EEH_PE_RESET_FUNDAMENTAL) that asserts
+then de-asserts a PCI reset signal to the endpoint.  During this window
+the device's BARs are inaccessible, but QEMU may still have those BARs
+memory-mapped for direct guest access.  A guest MMIO fault that arrives
+while the hardware is in reset can cause an unexpected host kernel page
+fault or an indeterminate read value.
 
-  ibm,change-msi
-    -> spapr_msi_setmsg()
-      -> msix_set_message()      /* writes each shadow entry */
+Fix this by disabling the BAR mmap windows for every VFIO PCI device
+under the PHB before issuing the PE reset ioctl, and re-enabling them
+after VFIO_EEH_PE_CONFIGURE succeeds.
 
-As per PAPR+ §7.3.10.5.1 R1–14, the platform must restore the IOA's MSI
-configuration space across a reset; the guest therefore does not
-re-issue ibm,change-msi after EEH recovery, and the QEMU shadow must
-survive the PE reset intact.
-
-EEH recovery does not necessarily cause the guest to re-issue
-ibm,change-msi.  The guest VFIO PCI driver restores interrupt delivery
-by writing MSI-X Enable = 1 directly via config space.  QEMU then
-dispatches through:
-
-  vfio_msix_enable()
-    -> vfio_msix_vector_do_use()  /* re-arms KVM irqfd from shadow */
-
-The existing EEH pre-reset helper calls msix_reset() after clearing
-MSI-X Enable.  msix_reset() zeroes every shadow entry.  Without the
-shadow, vfio_msix_vector_do_use() cannot reconstruct the KVM irqfd
-routes and device interrupts do not recover after EEH.
+A new spapr_phb_vfio_eeh_post_configure() bus walker calls
+vfio_region_mmaps_set_enabled(..., true) on the configure success
+path inside spapr_phb_vfio_eeh_configure().  On failure the mmaps
+remain disabled; the next EEH reset attempt will call pre_reset
+again.
 
 Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
 ---
- hw/ppc/spapr_pci_vfio.c | 56 ++++++++++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 23 deletions(-)
+ hw/ppc/spapr_pci_vfio.c | 68 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
 diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
-index a748a0bf4c..c233822d14 100644
+index c233822d14..1cf058cbde 100644
 --- a/hw/ppc/spapr_pci_vfio.c
 +++ b/hw/ppc/spapr_pci_vfio.c
-@@ -25,6 +25,7 @@
- #include "hw/pci/msix.h"
- #include "hw/pci/pci_device.h"
- #include "hw/vfio/vfio-container-legacy.h"
-+#include "hw/vfio/pci.h"
- #include "qemu/error-report.h"
- #include CONFIG_DEVICES /* CONFIG_VFIO_PCI */
- 
-@@ -233,47 +234,56 @@ int spapr_phb_vfio_eeh_get_state(SpaprPhbState *sphb, int *state)
-     return RTAS_OUT_SUCCESS;
- }
- 
--static void spapr_phb_vfio_eeh_clear_dev_msix(PCIBus *bus,
--                                              PCIDevice *pdev,
--                                              void *opaque)
-+/*
-+ * Prepare a single VFIO PCI device for an EEH PE hot or fundamental reset.
+@@ -252,17 +252,28 @@ int spapr_phb_vfio_eeh_get_state(SpaprPhbState *sphb, int *state)
+  * pci_host_config_write_common() so that the VFIO config-write handler calls
+  * vfio_msix_disable(), cleanly releasing vectors and KVM irqfd routes while
+  * leaving the shadow intact.
 + *
-+ * On pSeries the MSI-X table shadow is populated by ibm,change-msi via
-+ * spapr_msi_setmsg() -> msix_set_message().  EEH recovery does not
-+ * necessarily re-issue ibm,change-msi; the guest restores MSI-X Enable
-+ * directly, causing QEMU to dispatch through vfio_msix_enable() ->
-+ * vfio_msix_vector_do_use(), which re-arms the KVM irqfd routes from the
-+ * existing shadow entries.
-+ *
-+ * Therefore, msix_reset() must NOT be called here.  Calling it would wipe
-+ * those shadow entries and prevent interrupt delivery after EEH recovery.
-+ *
-+ * Instead, clear MSI-X Enable using the cached pdev->config shadow (avoiding
-+ * a read from potentially frozen device config space) and write through
-+ * pci_host_config_write_common() so that the VFIO config-write handler calls
-+ * vfio_msix_disable(), cleanly releasing vectors and KVM irqfd routes while
-+ * leaving the shadow intact.
-+ */
-+static void spapr_phb_vfio_eeh_prepare_dev(PCIBus *bus,
-+                                           PCIDevice *pdev,
-+                                           void *opaque)
++ * After disabling interrupts, disable BAR mmap windows so that the host
++ * kernel PE reset ioctl does not race with QEMU direct-mapped guest accesses.
++ * The timer that would ordinarily re-enable mmaps after an INTx quiet period
++ * is cancelled here; mmaps are restored after VFIO_EEH_PE_CONFIGURE succeeds
++ * in spapr_phb_vfio_eeh_configure().
+  */
+ static void spapr_phb_vfio_eeh_prepare_dev(PCIBus *bus,
+                                            PCIDevice *pdev,
+                                            void *opaque)
  {
--    /* Check if the device is VFIO PCI device */
--    if (!object_dynamic_cast(OBJECT(pdev), "vfio-pci")) {
-+    uint16_t flags;
-+
-+    if (!object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI_DEVICE)) {
++    VFIOPCIDevice *vdev;
+     uint16_t flags;
++    int i;
+ 
+     if (!object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI_DEVICE)) {
          return;
      }
  
--    /*
--     * The MSIx table will be cleaned out by reset. We need
--     * disable it so that it can be reenabled properly. Also,
--     * the cached MSIx table should be cleared as it's not
--     * reflecting the contents in hardware.
--     */
++    vdev = VFIO_PCI_DEVICE(pdev);
++
++    /* Step 1: disable MSI-X without wiping the shadow table (see above). */
      if (msix_enabled(pdev)) {
--        uint16_t flags;
--
--        flags = pci_host_config_read_common(pdev,
--                                            pdev->msix_cap + PCI_MSIX_FLAGS,
--                                            pci_config_size(pdev), 2);
-+        flags = pci_get_word(pdev->config + pdev->msix_cap + PCI_MSIX_FLAGS);
+         flags = pci_get_word(pdev->config + pdev->msix_cap + PCI_MSIX_FLAGS);
          flags &= ~PCI_MSIX_FLAGS_ENABLE;
-         pci_host_config_write_common(pdev,
+@@ -270,6 +281,19 @@ static void spapr_phb_vfio_eeh_prepare_dev(PCIBus *bus,
                                       pdev->msix_cap + PCI_MSIX_FLAGS,
                                       pci_config_size(pdev), flags, 2);
      }
--
--    msix_reset(pdev);
++
++    /*
++     * Step 2: cancel any pending INTx mmap re-enable timer.  The timer is
++     * only allocated when PCI_INTERRUPT_PIN is non-zero, so guard the call.
++     */
++    if (vdev->intx.mmap_timer) {
++        timer_del(vdev->intx.mmap_timer);
++    }
++
++    /* Step 3: disable BAR mmaps last, after interrupt teardown. */
++    for (i = 0; i < PCI_ROM_SLOT; i++) {
++        vfio_region_mmaps_set_enabled(&vdev->bars[i].region, false);
++    }
  }
  
--static void spapr_phb_vfio_eeh_clear_bus_msix(PCIBus *bus, void *opaque)
-+static void spapr_phb_vfio_eeh_prepare_bus(PCIBus *bus, void *opaque)
- {
--       pci_for_each_device_under_bus(bus, spapr_phb_vfio_eeh_clear_dev_msix,
--                                     NULL);
+ static void spapr_phb_vfio_eeh_prepare_bus(PCIBus *bus, void *opaque)
+@@ -286,6 +310,43 @@ static void spapr_phb_vfio_eeh_pre_reset(SpaprPhbState *sphb)
+     pci_for_each_bus(phb->bus, spapr_phb_vfio_eeh_prepare_bus, NULL);
+ }
+ 
++/*
++ * Re-enable BAR mmap windows for a single VFIO PCI device after a successful
++ * EEH PE configure.  Called only on the configure success path; on failure the
++ * mmaps remain disabled until the next hot/fundamental reset attempt.
++ */
++static void spapr_phb_vfio_eeh_post_configure_dev(PCIBus *bus,
++                                                   PCIDevice *pdev,
++                                                   void *opaque)
++{
++    VFIOPCIDevice *vdev;
++    int i;
++
++    if (!object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI_DEVICE)) {
++        return;
++    }
++
++    vdev = VFIO_PCI_DEVICE(pdev);
++
++    for (i = 0; i < PCI_ROM_SLOT; i++) {
++        vfio_region_mmaps_set_enabled(&vdev->bars[i].region, true);
++    }
++}
++
++static void spapr_phb_vfio_eeh_post_configure_bus(PCIBus *bus, void *opaque)
++{
 +    pci_for_each_device_under_bus(bus,
-+                                  spapr_phb_vfio_eeh_prepare_dev,
++                                  spapr_phb_vfio_eeh_post_configure_dev,
 +                                  NULL);
- }
- 
- static void spapr_phb_vfio_eeh_pre_reset(SpaprPhbState *sphb)
- {
--       PCIHostState *phb = PCI_HOST_BRIDGE(sphb);
++}
++
++static void spapr_phb_vfio_eeh_post_configure(SpaprPhbState *sphb)
++{
 +    PCIHostState *phb = PCI_HOST_BRIDGE(sphb);
++
++    pci_for_each_bus(phb->bus, spapr_phb_vfio_eeh_post_configure_bus, NULL);
++}
++
+ int spapr_phb_vfio_eeh_reset(SpaprPhbState *sphb, int option)
+ {
+     uint32_t op;
+@@ -293,6 +354,11 @@ int spapr_phb_vfio_eeh_reset(SpaprPhbState *sphb, int option)
  
--       pci_for_each_bus(phb->bus, spapr_phb_vfio_eeh_clear_bus_msix, NULL);
-+    pci_for_each_bus(phb->bus, spapr_phb_vfio_eeh_prepare_bus, NULL);
+     switch (option) {
+     case RTAS_SLOT_RESET_DEACTIVATE:
++        /*
++         * Deactivate does not perform a full PE reset; BAR mmaps were already
++         * disabled by the preceding HOT or FUNDAMENTAL reset call and must not
++         * be re-enabled here.
++         */
+         op = VFIO_EEH_PE_RESET_DEACTIVATE;
+         break;
+     case RTAS_SLOT_RESET_HOT:
+@@ -324,6 +390,8 @@ int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb)
+         return RTAS_OUT_PARAM_ERROR;
+     }
+ 
++    spapr_phb_vfio_eeh_post_configure(sphb);
++
+     return RTAS_OUT_SUCCESS;
  }
  
- int spapr_phb_vfio_eeh_reset(SpaprPhbState *sphb, int option)
 -- 
 2.51.1
 
