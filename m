@@ -4,143 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E642C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 21:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68225C624D4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 21:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1sOT-0001uc-I4; Wed, 02 Sep 2026 17:21:17 -0400
+	id 1x1sUu-0002gI-Ty; Wed, 02 Sep 2026 17:27:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1sOR-0001uQ-B9
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 17:21:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x1sUs-0002g0-Rc
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 17:27:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1sOP-0004Ka-Oz
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 17:21:15 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682KHaaW3045219
- for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 21:21:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- o0t76ahDcMWdnrnmOw1/KxZkQ1yzoyX5m1ZbuMw+qkQ=; b=ZTdCo9k3KvnSx+Qe
- Op5YmcV/qE7YFDsutQ0Vum5E7XhJxDOy5j0YTy+KRqfuarvAAjWwVfXfjjB/VilK
- K5crXgd2MqMv/wOsBRyNGm9P523JHOCb8Fi/y2ZXYKVdaclGnXMI8pE54h5AqX8w
- bGo3Es57AX0Bg0Kx4PDN+KL6S8Xamn1acvqwJhuzjAF+WSc8Cjyr6eQdJasGhqcl
- ZDR/W/al0JoI7h0JZF+tZOVPRC9DbBCpyMhMzAT0kmuyYCKw7ONPcBQeKqcGLpqy
- O/bcEU+UJTnAtrcVY3Xc5cEHJy8+uwRCHYTjYyzOf9E6xg12Xb3cY1u/AyQ2rmq2
- TcNS+g==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4geguy346b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:21:12 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9308eafb465so424109885a.2
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 14:21:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788384071; x=1788988871; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=o0t76ahDcMWdnrnmOw1/KxZkQ1yzoyX5m1ZbuMw+qkQ=;
- b=EF6cFiCr9Or2vcCNIiVduyq2UMkAs0jl/x4kF/VfQnBQEjJcVotZ6AlHSIfJ1x/oD2
- 0ymhI6+p1SYuANOb5n90ULvX6fH0BKmwnsEaAYbTgwf+W/6Z2JHXxV5VlKMFfGpSNTt9
- qZz18iRLYWtOV/iLQkXDA1nTuRJpfmpKCkr+D/dWuy4Tpkrq2PjqmrpX9BnzpnNSr845
- Xkc1G7cOj2VxdOJDkouKN0fOSjgr7NQrXQ8SS1OgWDjKgFd70/nLaWWiiXXe2znwaakJ
- Gdu6w9lT68CDNBZjGeMX5f3lNdFM7l9V0ziCajhWjt2Oyk1K/J2QmBSVM//+tsQ1Lv1m
- WsNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788384071; x=1788988871;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=o0t76ahDcMWdnrnmOw1/KxZkQ1yzoyX5m1ZbuMw+qkQ=;
- b=gADvBlOyAl6AK7uX0UpIYKzrwndsloTkHdltqIXpv8UzzDlsUDhE3S/9B6VclBY7HX
- 5TmENrOoPNTYqgmseu1cNCk7tntmsdx06DIGEAD/l22TaivsTAj0yAfABCfKmeEODOm4
- jkKXkr3mb6hItXcaqBT4T2EhDYPi0nV4n6KRd7jHbesNUuv2DRl5xuvcePQm+4I3Wss8
- Z9HhllgiaR4g2htwiA97IYhxDwETET3v2z+FNM6TB3iWod5xjoH3rfi2V1S4kdAzG31W
- c0/J9qBr0UFqCv6Fdu7VHaut2vSC44bcLrlJxGw4iYcJBIiFHwArpcOrJhQjif2EHtz0
- jBzQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxhYoi4J4pGPOYr04dWVG+2BBScDWTIamw9zXCtpM6wczTfPnrmyd1gGUiXzTdBaYIUjgKCbRdJBkLy@nongnu.org
-X-Gm-Message-State: AFuF++mwqrpTCP6zXiyZLaEcDu9CplAdFwdI5CJHYsdqGP+wqJmk3gDU
- h44wQXJBFATKU9zRa8z5CWrzS/kNUOgZevwLffg3E1j+gBR/1kU65SiUW8+Y+oiZzmQKFj2DWIk
- H0ZMf7yqBoSrbmh4cgIsh8g7SwwbPOW6l1NaAJV5C3fnmVsCe8DLc4fDHNqBhBQ37Aw==
-X-Gm-Gg: AYBFou2pcPdYSJmwQRXmpjBSPrdGZg0Ss9JFBJW4sNwrLR65IJr7FD8WI4OPPZgJ9+T
- 3Y9x6V1u19UBgtvV4Detevy2UX9lDr4ryvHMA4X9cWIIXwW+beZgjXLVm50KtPHzCxCfSWAemgN
- Bx5cw2eFELnzfYT+mLMNWQBrT7S2MIEpSazpX6bK8WNs9CFgBuGqLErZZQLL5IuF84yQ5sC9Flr
- foIqD6UNgOBkq8Yic6E+JOpVS5dlpxDcpnKzDAXdyqUvEP50xMBeau1zrqo4xnS2/aQP05UCu5j
- vI6KXoVW3l4XVDfsg2MSGUT3fXYoAqva7ygmOcSuJFCvCtVpm0PcB5mLLnmvgeaXy3NvVbJpHjw
- I36NzJgva29GfXERtza0A6dGkI33lt04wGg==
-X-Received: by 2002:a05:620a:28c7:b0:932:ddff:1241 with SMTP id
- af79cd13be357-93960efc6d7mr964848585a.26.1788384071528; 
- Wed, 02 Sep 2026 14:21:11 -0700 (PDT)
-X-Received: by 2002:a05:620a:28c7:b0:932:ddff:1241 with SMTP id
- af79cd13be357-93960efc6d7mr964840885a.26.1788384070796; 
- Wed, 02 Sep 2026 14:21:10 -0700 (PDT)
-Received: from [192.168.69.200] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448e13db0sm9168669f8f.0.2026.09.02.14.21.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Sep 2026 14:21:10 -0700 (PDT)
-Message-ID: <251e13c5-7b7f-4cd4-b060-2335c4b377ca@oss.qualcomm.com>
-Date: Wed, 2 Sep 2026 23:21:09 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x1sUr-0004nQ-8m
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 17:27:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788384472;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=klYIkCh8fmLPHcVe2b4mm1l7dFqolnxcjWy9ktgx27U=;
+ b=S3ImjaCdllcnJsY8MqHvmSp2UhHGXxgBcaBr4ryQhpeKKzeGk7y1JtxEyV42IFHhgnj5iR
+ G8GftGky8jLDSRLQnSI5yxyKF/Lpam8JZga5kgxhyWNS7EsZHPPcJv+OuTVCEO12Ti9bV+
+ NxHVBNv8YivyXVqA0DVBIqPp4pX0J50=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-p2OQF7KFNSC1AwkFzi7JHA-1; Wed,
+ 02 Sep 2026 17:27:47 -0400
+X-MC-Unique: p2OQF7KFNSC1AwkFzi7JHA-1
+X-Mimecast-MFC-AGG-ID: p2OQF7KFNSC1AwkFzi7JHA_1788384466
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BD631805A20; Wed,  2 Sep 2026 21:27:46 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A11ED1956044; Wed,  2 Sep 2026 21:27:45 +0000 (UTC)
+Date: Wed, 2 Sep 2026 15:35:18 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ 'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
+Message-ID: <20260902193518.GB787498@fedora>
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-7-zhangckid@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] target/hexagon: read UTIMERLO/UTIMERHI from the
- global timer
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
-References: <20260901173353.200474-1-brian.cain@oss.qualcomm.com>
- <20260901173353.200474-8-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260901173353.200474-8-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=UZthjqSN c=1 sm=1 tr=0 ts=6a989348 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=3mrZ0iiCT4S30eFRzQoA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: dMLd7Y1RCGjbLzhT7yDQK77n1eyN42gl
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE4OCBTYWx0ZWRfX0hK0rvE+bAgS
- cfzsDvAufTZ/RUJ0bdBSrgg7RF3jyNbJCkF1vfgRdfgfWCVL1HoiYCHnLNtEgfzVtGcB1eXLdAQ
- RB3qa7Izqwo6YJw40cXiViP/GYkWHIM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE4OCBTYWx0ZWRfXwFpJPXEQ/QBZ
- 9tQiK3lZiQGeHAUs8nCsWADBsRZTJji71r6KTHWSbqWMIHa3Of/pfSpGECM1mh0Zcc/KeCbkWPx
- dw4RN3V1PG2MIzPebHARjB4WmUEJ+DXMPfWjW+4aJxgr6/dA88DGRgnvKVBkkBfRZ+Hkaaa01G1
- yuwiXu9PHN3bqtOZRZxMz3H1p8JCEmCCdIr9RIXPlKqRM7FQNX/orX0PqFXejXRdill/Ikob9Xm
- vVGpqiQQyj9oC2rbuqaW0z5mN75eWTB5gBf2NZO2NeStoZVzx323RmPevoOtFogvpfVtIvNUZpG
- ipiLq5g0B/x0f5pKKmVOFFjEf5GmWJBeZmK3SZF09oS+6Vsz/0XCNodbh5DxQ0V3kSht89HUllO
- C+/esUtJd2yDUyTPiL7NmrUAQKyMUjl7WGJNOxxiLn0L7M/CPZJEjQgFtYVBSafY6x+KIFjtJkP
- WmqaY0kpztoUrhPtc5w==
-X-Proofpoint-ORIG-GUID: dMLd7Y1RCGjbLzhT7yDQK77n1eyN42gl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-02_05,2026-09-02_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020188
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="kLrcqgJw+T0EYOR1"
+Content-Disposition: inline
+In-Reply-To: <20260831160038.221776-7-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,59 +90,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 19:33, Brian Cain wrote:
-> In system mode, route accesses to the qtimer-backed global
-> TIMERLO/TIMERHI so guest reads see a live, monotonically increasing
-> timer.
-> 
-> In user mode we derive it from QEMU_CLOCK_VIRTUAL.
-> 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+--kLrcqgJw+T0EYOR1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Sep 01, 2026 at 12:00:27AM +0800, Zhang Chen wrote:
+> Monitors that require an IOThread share the internal mon_iothread.
+> Account for each monitor explicitly in IOThread holder tracking, using
+> the monitor's canonical QOM path to distinguish holders.
+>=20
+> Acquire the shared monitor IOThread AioContext once, using the monitor
+> QOM path as the holder, and reuse the stored context for later
+> operations.
+>=20
+> Release the holder from the Monitor ObjectClass::unparent callback,
+> while the canonical QOM path is still available. This covers every
+> object_unparent() path and avoids duplicating the cleanup in
+> monitor_cleanup() and monitor_qmp_prepare_delete().
+>=20
+> The internal mon_iothread remains hidden from query-iothreads, as before.
+> Management applications therefore cannot use it to determine which
+> monitors are using the IOThread. Nevertheless, track the monitor
+> holders so that they follow the same explicit holder and
+> IOThread reference lifecycle as other AioContext users.
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 > ---
->   target/hexagon/helper.h     |  4 ++++
->   target/hexagon/genptr.c     | 29 +++++++++++++++++++++++++++++
->   target/hexagon/op_helper.c  | 21 +++++++++++++++++++++
->   tests/tcg/hexagon/reg_mut.c | 11 ++++++++---
->   4 files changed, 62 insertions(+), 3 deletions(-)
-
-
-> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-> index 2cea1927263..df31ed2488a 100644
-> --- a/target/hexagon/op_helper.c
-> +++ b/target/hexagon/op_helper.c
-> @@ -37,6 +37,9 @@
->   #include "cpu_helper.h"
->   #include "tcg/tcg-gvec-desc.h"
->   #include "translate.h"
-> +#ifdef CONFIG_USER_ONLY
-> +#include "qemu/timer.h"
-> +#endif
->   #ifndef CONFIG_USER_ONLY
->   #include "hw/hexagon/hexagon_globalreg.h"
->   #include "hex_mmu.h"
-> @@ -46,6 +49,24 @@
->   #include "hexswi.h"
->   #endif
->   
-> +#ifdef CONFIG_USER_ONLY
-> +/*
-> + * User mode has no qtimer device backing TIMERLO/TIMERHI, so derive the
-> + * user timer directly from the virtual clock -- the same clock the qtimer
-> + * counts -- at the qtimer's default 19.2MHz tick rate, masked to the
-> + * qtimer's counter width.
-> + */
-> +#define HEX_UTIMER_FREQ_HZ  19200000ULL
-> +#define HEX_UTIMER_CNT_MASK 0x00ffffffffffffffULL
+>  monitor/monitor-internal.h |  3 +++
+>  monitor/monitor.c          | 33 ++++++++++++++++++++++++++++-----
+>  monitor/qmp.c              |  5 +++--
+>  3 files changed, 34 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index e0a124a317..74ea15c85f 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -154,6 +154,9 @@ struct Monitor {
+>      guint out_watch;
+>      int mux_out;
+>      int reset_seen;
 > +
-> +uint64_t HELPER(utimer)(void)
+> +    /* iothread context */
+> +    AioContext *ctx;
+>  };
+> =20
+>  struct MonitorHMPClass {
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 6af09f2f6e..9e3b639eff 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -81,6 +81,22 @@ int monitor_device_index;
+>  OBJECT_DEFINE_TYPE_EXTENDED(Monitor, monitor, MONITOR, OBJECT, true,
+>                              { TYPE_USER_CREATABLE }, {});
+> =20
+> +static void monitor_unparent(Object *obj)
 > +{
-> +    return muldiv64(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL),
-> +                    HEX_UTIMER_FREQ_HZ, NANOSECONDS_PER_SECOND) &
-> +           HEX_UTIMER_CNT_MASK;
-> +}
-> +#endif
+> +    Monitor *mon =3D MONITOR(obj);
+> +
+> +    if (mon->ctx && monitor_requires_iothread(mon)) {
+> +        g_autofree char *path =3D object_get_canonical_path(obj);
+> +        const IOThreadHolder io_holder =3D {
+> +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> +            .u.qom_object.qom_path =3D path,
+> +        };
+> +
+> +        iothread_unref_and_put_aio_context(mon_iothread, &io_holder);
+> +        mon->ctx =3D NULL;
 
-Long term it could be easier to maintain a new user-specific file,
-adding it to hexagon_user_ss[] then target_user_arch (less #ifdefs).
+mon->accept_input_bh still exits and uses the AioContext at this point
+(it is freed in monitor_finalize()). Strictly speaking, this violates
+the idea of not using the AioContext anymore after calling
+iothread_unref_and_put_aio_context().
+
+This could be a source of bugs, but mon->accept_input_bh won't be
+scheduled anymore in this code path, so I think we can live with this.
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--kLrcqgJw+T0EYOR1
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqYenYACgkQnKSrs4Gr
+c8hPOwgAmDWTTjCfP4g+PTRNM1ONn8vl3azoHn+AteVWbHzEprDoS5Qma0tfwqYT
+76+F5OjJ7UyVaf0uNYuWnKLtdLu95kFpJ/pZbjADfjyO2p3IKUf3yvZA1GZ2CXJU
+N5oyijAm4uREmQfjs9p3cJjMPbr11Gi3AsZs0s29sZYPIGgQ1P/BCylvXAU5LYAo
+ZzT3aLRx8BqXyZuTW5Ncn0LJlAgnGbvZjoezk/nXXG+hwh1OZPpVqZbIlO61fK6X
+3X+Mj8mzRqO9XDovyge7zSqfUUMxapnZMFQqaLhbrE7ZuFhQO+VSLHt3swB3TO51
+WW9OB4yrz3nXwxXWGbYSzNQ9I9JLpg==
+=xwnC
+-----END PGP SIGNATURE-----
+
+--kLrcqgJw+T0EYOR1--
+
 
