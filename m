@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A49C624D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB2DC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1kYC-00077R-C9; Wed, 02 Sep 2026 08:58:48 -0400
+	id 1x1kY3-00076K-4e; Wed, 02 Sep 2026 08:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1x1kY6-00076v-Ar
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:58:42 -0400
+ id 1x1kY1-00076B-DL
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:58:37 -0400
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1x1kY3-0003Q0-55
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:58:41 -0400
+ id 1x1kXy-0003Q0-QI
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:58:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788353919; x=1819889919;
+ t=1788353915; x=1819889915;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=fXIebj+ZaEf/9Iq4+HFIJ0q3B+pT8Td1hUyc6xRJbwE=;
- b=JskQE8wv+S5FDp8XIW+QndJZCEfwXfCeMiSs2POJBrByZryechF9nZfY
- ES4jI1xIDnLgS7IF+reBsD8ItbCCSJ1gS91bC4cUNPRuA/HeOledwT8wj
- KkMvsed/ZfBiYyiC3bpSdgzxc2hjA1EgDlXer/pg5cU6DnXfFGy+jZISM
- m/g5HkmyFnsYtJAiSE/blrVjRu475anrdPOaffwjijvGgwnPhSuuSjeHk
- egxsZtcnGooe0LrGkmEfGjE8AcVZ2K9I5AmE/y02GlcYzFkYm4H8OfAjW
- QQ5aemQ4pPENzF8fqUqVJR7XpbWXFg0BEm2GMkN6jsFI8cH9zCKtOlISP Q==;
-X-CSE-ConnectionGUID: C+dmyahSQJeKXt2z0ueDwQ==
-X-CSE-MsgGUID: H7o/ByxqR+elaZa7Sq2LhA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="111579143"
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="111579143"
+ bh=bNXDujXisiSKx2yaE1wq2g1hV2EnLcQxxVhgylO7ICg=;
+ b=jic8nfencbt7gp8Zy9uhwvR2qVrfc99FT8eUgl1rBbgYRD0PSG4Va/Gh
+ lDhpVNxVmtgzdvzS7xnIHgPtNsE99TlcOL4TWF7KFA1/VP57fLtXtEZkf
+ Fb+eLuZIgg3DfgvMuLkHHI0cQq2nHdRfJAxLA5wuSaFgHfSseliW6rmr4
+ acLqq/3DdE4h9OSAdn+F0DFqAJWtoNyk7q9xTKXSTSfSmgbFPsXFQlwDb
+ gzvZHlCX16HlFMNbApWHW4ci5/6o8dp7fVdhX58l1o0KEBxn0LHGaul7j
+ XZmocQv3aXCGXd4sgwTqGZpU/3EQ0joXpfPxnHtRnFEruYiRFId6UPjYs g==;
+X-CSE-ConnectionGUID: VZYIs18kRFm4imyUOchWIQ==
+X-CSE-MsgGUID: rvI7FwM1Q5uAgMFq3NAUiQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="111579105"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="111579105"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 05:58:39 -0700
-X-CSE-ConnectionGUID: 0ZI5IrexSASQT5J9RPzKBA==
-X-CSE-MsgGUID: 5wMiCAVjQJuGSKK3vyJ9ow==
+ 02 Sep 2026 05:58:31 -0700
+X-CSE-ConnectionGUID: yVVoJi8zQne1a6+8lVsCrg==
+X-CSE-MsgGUID: pcd6/q07Rm2DEYqvAruIrQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="266168494"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="266168487"
 Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 05:58:38 -0700
+ 02 Sep 2026 05:58:30 -0700
 Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
  fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 2 Sep 2026 05:58:37 -0700
+ 15.2.2562.46; Wed, 2 Sep 2026 05:58:29 -0700
 Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
  FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 05:58:37 -0700
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.29) by
+ 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 05:58:29 -0700
+Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.29) by
  edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 2 Sep 2026 05:58:37 -0700
+ 15.2.2562.46; Wed, 2 Sep 2026 05:58:29 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ITes7wsbAcDxLrMkH4oTPaOZJAXlCwZMq5eQQNrLx9vzXvjN44eWuMFyw0/z61VGA8rNn2p4uaRC4T8LJzyONMvSNbWEGA3A9s5G2ycQFVxzbHRkmcqOw8VLBUDcEykE0LyhYDC4FmQuM6YHjkPHFJe4kLhDwHaAw4mqed5ydD9acjoIeiNRbUkif9IYLM+7u4MnmCOPB18LmCJyBGOsVZx1iaBSRprqQ5ikN8qsowVloxw28fmF6Ko7oPjO+WgXQNavdtgnAddiraGkO7kyS5JeM2rOVc2BcRlIiYc4rheULhEce163cr4yItSObFGdDpjYLR/O1GjpphIjveJ4bQ==
+ b=PXAs/NTempd+EXPxAA/5YlhqlSsSG3PvWnJmHpYWuYEz3tTOpwYz5PzLu+v6oLtXeeWIjxFRRm7t178Cvc+jBn1f1YJcyh0qIwhe5kpbSwH0leLju0NcgdA1KJYiO6Zebr8AwncHy5ndgJkWjlAMOh1jehlL/jAdB7zgdcYAX1IN8ZkMzvJeYl/RFYFn3O4YCA4UJWRt/TuCY/+5VfAdg7GxsbNcj62V/Ia19YMNlVG0s0kFNOFB7/CNP5lbrAhFPhRAzAZcvbiQ0ElJsdUh1RHnt5izqrcnxLvJKQj4nkq0j4jMKFdNc7dtr/fWKwYnM0+vj9GBGfnorSVXyAyBnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+h/PIZIjjmsg109uDZuthYQZ0mepgErH+FNePLJHy04=;
- b=eL0JEAoNKRYW2qR/AenGJGNpT4F2T1GBB97vITuqhblBtlrGvTl9LOxYrxzMJ++JXJSZROhDMSQYfKxHGXlO3t57+WE5z/szDRZbILJKLqWI6stJI8oyNcTPnwKmzel0XKkZxnwIeXJIe+JvdgwrmNKPmhbixCEwGaa88vO+TYSReWBPZE9ZfSMb+VjMTT37g1GSjiby7o8kFtEg2izsQ7tJGqxIAGhCbULZiW7lhEGQFaWioR+Lvv7PgJiOolSOnpV57DphF6tXdhBthRRKDPcscZ2d6qdfOYo1WVamFOehm31Oi1mcqC1z2Nsy+lNo9FfXdx+WkUkeDM7Qfgzu0w==
+ bh=nlSSXatr3STC/Q6qmk8OGPhyNu6y2f3vj4kMNmRSrWw=;
+ b=lyEVi2R7suFE+z4lT85rtTbyIRNsxzYy0VulXZZUV/xZdWkOYRalqSsHdX5Qq6BBGN+bf0dSaqwJxVgB+cC7prkaCU7jGzGQJMwdrhhbaZEnsdSrcKj3kx1UWvsLW67Vq4uTuAM6abXUb1zH0Z3ubLHpJhjV1zvIZmUHC8JBegEpDej0G+76369UPm3V00bO5qfpv7FqgwnCIfS8lSEsO4qeo1cJcoGm1vSYBbak/1iqt9T3J6X/zw0Wf5eaPSBQR9fhgfgFYU7yZDjnDUx0X4tBl0F45HrnHipbxdp1Z1zYn6XmzffbXMJ7bZukkHwfpOi/0O51NY7KFAmNlon4+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -74,94 +74,95 @@ Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
  by DS0PR11MB8666.namprd11.prod.outlook.com (2603:10b6:8:1bd::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 12:58:34 +0000
+ 2026 12:58:25 +0000
 Received: from LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 12:58:34 +0000
-Message-ID: <26c49670-0918-45e1-b07e-199362081714@intel.com>
-Date: Wed, 2 Sep 2026 21:06:53 +0800
+ 12:58:23 +0000
+Message-ID: <bd0dd80f-17e6-49e1-af62-f55cc11dc500@intel.com>
+Date: Wed, 2 Sep 2026 21:06:46 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/6] intel_iommu_accel: Add PRQ injection for
- passthrough device
+Subject: Re: [PATCH v5 1/6] intel_iommu_accel: Guard VTDAccelPASIDCacheEntry
+ definition
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
 CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <mst@redhat.com>, <jasowangio@gmail.com>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <skolothumtho@nvidia.com>,
  <joao.m.martins@oracle.com>, <clement.mathieu--drif@bull.com>,
- <kevin.tian@intel.com>, Xudong Hao <xudong.hao@intel.com>
+ <kevin.tian@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>
 References: <20260831095200.1279366-1-zhenzhong.duan@intel.com>
- <20260831095200.1279366-5-zhenzhong.duan@intel.com>
+ <20260831095200.1279366-2-zhenzhong.duan@intel.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260831095200.1279366-5-zhenzhong.duan@intel.com>
+In-Reply-To: <20260831095200.1279366-2-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: SI2PR01CA0012.apcprd01.prod.exchangelabs.com
  (2603:1096:4:191::8) To LV8PR11MB8509.namprd11.prod.outlook.com
  (2603:10b6:408:1e6::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|DS0PR11MB8666:EE_
-X-MS-Office365-Filtering-Correlation-Id: faa77390-c871-4d5d-16ca-08df08f1e5b7
+X-MS-Office365-Filtering-Correlation-Id: 9c893a0b-3181-4e53-240a-08df08f1ded7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|42112799006|1800799024|23010399003|7416014|376014|10067099003|6133799003|18002099003|4143699003|11063799006|56012099006|22082099003;
-X-Microsoft-Antispam-Message-Info: 1qfMGRecb9DTV9UHJVEom9BUblXpP608FyLNddZN6xY0TwEGj/CSH/AlHHFCTLtUFffurN6/xZD6BfHOBBCbaiasngLYKl55TEN2UyLaxe7ZmWh2BQrwupi/uSNYHSMC7s8dxSKypdafeqJSoySaL7qj5Z7+9uoycc2QrRT25L49I25yLOiN8HZ+B107ezYZ9CnA4DjaRlx/T40ixR34c0ZXr2B+CspjSnPKsXqoguvpFEvVSHyQRiuXpDCWyHs7Tg897Q2AJX2aTlji3o6e2ONUG1zYl7XfdY+Zy//jzNCFCpme2TxNfWu1frilLvX1FWIlb+6ZoD2hMOHhWeqlJYv+jjxlCXpfI1F3X1P7Ucr9icGKIMGmD72YMHdf3WkZja3lEIv4BGf1P15fZyodB5OUtQGHupGFKmB53TiNgPIOwTu24whiUQ22wOqjrJcvJQCAmsp3W6H+d+QarS/K5/iRNC+3i14sK/BpEzUtRXHNma3zU+rINAThfEqMdUZE80i7zl96xHPpLvmn0o9hRbRgQRlqWJ1AR6dhxI2jsU0AZcY+p4d08PrY2mfft3XkWzZxvGzfhZq+9IUPjKfK732LCXUr9cSURaSmXVTRFlP7oZ6xIVSiaaSKs96tuYEsCAPLP5JSRaUXFOhQM/20H9hWdafSFgGJN4lLeqRRrwk=
+ ARA:13230040|366016|42112799006|1800799024|23010399003|7416014|376014|10067099003|18002099003|4143699003|11063799006|56012099006|22082099003;
+X-Microsoft-Antispam-Message-Info: firTz8v9UjlhpGHPs/W9baQeGNWDdR/hVKS+ttDeJebj6k50NTtFV3ZbAXw26jE64F1+YE5tMLeqRa6s108tTxCKxynr5QFiljUkWnHev+pm5F26TjS0H7eCiUq5qay64UGOZW5RpxAr6yB1ZOHySUtzQ3zGVPhXBQlJDC8vVWXGV5QXMXkkLJ5Y4rCi1gxraNQdU0zp5UvSMA1qBnjLb8BkUqTjWKFeaHoywY6/vkxPzmQk6faTjMOdj9VI1vnuNwnqYxlrT5srqV9Ddm5FS3hBHO7qBER5Sr+p19hZ9kH71MZOX9FVYdnTODygJDSe2089nO6pPeknqZ26IJVTEWZ6f0qsZlXcsQAsN0MhloWn+j+WrcWkbeUVyqqf4VkL76p2xjxESCzb7qA2oZg6SSZHmvYQhip6OwgNYgE/pit8ba0+ZKgmJdi0VQ+SRa96deCFfyyY/eKhfmRr5MlIpu0tDG13WlXZ/kQ3CK7Zh3YWIEY1qhE+IYyV0Jlyfg3rN/fW9bp7hGp4mptDNJEer0n5eXg5OOlzmRNsCVuYQNlBWlXPLWnlAXjeuWHOQPn0x+b7NXrrB+xlR9MMCtmagbeJ/QshcCGO387zQ+cxqRwGt/qYk0ZhWRqBq6bjv4Yoj6pq7qewaxejuyXWI3ACQ7idW0uHskk+fTS/R7PlSg4=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(42112799006)(1800799024)(23010399003)(7416014)(376014)(10067099003)(6133799003)(18002099003)(4143699003)(11063799006)(56012099006)(22082099003);
+ SFS:(13230040)(366016)(42112799006)(1800799024)(23010399003)(7416014)(376014)(10067099003)(18002099003)(4143699003)(11063799006)(56012099006)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SDYxT1BYLzl0ZGdsZ2ZMcGczeHVKZDNQVW1WTjQ2R0l3TGRjWmVXMnFOVWwy?=
- =?utf-8?B?SFNPOEtvZTh4ZDRTVytzdEt3VlZPdThheGM2bk9oMzQwNXYxQnVZTTAzSWV0?=
- =?utf-8?B?dEVIakl1MDViWEJTcnhnSkU5OFVlRTY4K1hRNzF4K2JUK2JjY1NsUVFLYkJ2?=
- =?utf-8?B?Rmt6RXFQa0FReEJZK0Y2RjJPaXEvUVZZN3RPYkZ2d2tmUVFKY3F2bEFwVjVC?=
- =?utf-8?B?dlNMRUQvYktUUkIzSG9WWWhaTG5tTFh1ZzE1TStZNmlNNkhENTJURVJSeVVC?=
- =?utf-8?B?aGxCdjJxUjVCejhNNFkwcENOc0dZTTdIbm81U3JrSFJpRXpVa0xMYk9DeEdZ?=
- =?utf-8?B?TzZVQUI1c3JnZWc0MXNaVE9uSitvUDFreE4rMjFEdzhPbENHTE9IL0pEeGxB?=
- =?utf-8?B?YXlxeG53RjA5Wld5ZEQrMG40VzNaYUVOWkhNTXFNWHNoVC9yUmlxSWJGY2s3?=
- =?utf-8?B?dTVobGVwUU4veDB1Ym5jY0JlQXJuV3U2REZHMG5uVDhxWklLTzFZRmtiRkEx?=
- =?utf-8?B?Y05QUGNaWlQxd3ROam0zQXlRY3BRSlJJRGt2NXF4R29pYTd2d0FrZ3NwTlZo?=
- =?utf-8?B?S3M2cnNqOGVQMSsxNjJya01Xa1lBeFN1bXhlT2tjdHkwNDQ3cU5ic2JBOXIx?=
- =?utf-8?B?aVJmVzRMQTNkc01iTndWc3l3cURrN1dRUEpLcGhmM2N5RDVOYzgyeFkwSUJj?=
- =?utf-8?B?d0c0RlNOZHNBUHZLdU1EdlJLRUlqUWd6d0NvWnhSN2NGQ0VadndOR3dSdDln?=
- =?utf-8?B?cDd2Z0s0b3d1cWhvZURBM2pENFJZVVZwTG1BUHNRMkpmOHRzdTZ0MXVHN3dW?=
- =?utf-8?B?MXg3WW92c1JQS1VMZmttTzk1aHdUVDJqMDdBL0tLck42U3F4Sy9xQThCM3h4?=
- =?utf-8?B?ZG0xWCt4MS84Y0M1c2JjUzhGcHlXS3Rhc1B4c0dieEJ1ekk0c0M0TXhuSFhv?=
- =?utf-8?B?Y1RDdkU3R3Z0QjJHSDB3RmpiS1lSbU5MNlZCOU44RmN2aEZsNXJ5TnJicTFN?=
- =?utf-8?B?YTUxaTFTcXJzWGF4TE02eUdWR0R3QlRsRzVxUW92U3NoSW9jdEJ5VEFiVkJD?=
- =?utf-8?B?d1UwcmU0ZGp6TGdpUVpKV0hPQng2ZGFMNTBuWHJWRk5OY0VDWURVMTJ5RXg4?=
- =?utf-8?B?c3ZmY3ordk1hZ0NmQmpzZG93L3czeXlLdmtYWVBNTmxqNXFEMXNoKzZ2VWQ5?=
- =?utf-8?B?NXBMVU4xVUN4bVhyZzVXckpKekhNUCt6Q1ljL1hZUVhkaHlzZkI3K0RLbHVS?=
- =?utf-8?B?a05GVU9Nb0gzWm1OeDl5UHg0bnEvdkVuSFpRT2s2MUFOR0tJRkRoVXdvU2Z4?=
- =?utf-8?B?MjRpU2RDY3hYdmxFNXVkRHNYelhZcXhxNnE4ajNTOEVoN1hud3NGbEF1M0dr?=
- =?utf-8?B?YklpblBJZEJwMmtFUitqOG9CZlJwTTlBQi9tYy9QNmJnMWhQYUtBVjdUbGVq?=
- =?utf-8?B?QzBMdldOY0tIU01sQVQxTGkrSzUzZnBkTEVHc0hmR25IeDhPZS9VdjdSbGxO?=
- =?utf-8?B?MXRlcm9UclcrcFVzUFlrdTlPaUdjd0N4KzhuYS9UbHRnYXBaKzVXcUl6eHlt?=
- =?utf-8?B?L2lYRGRFVUpabyt1eHJOL3ZIc0tBTmpvRitSOFlJWnpjYUhIeDVmaWw2ZlU0?=
- =?utf-8?B?ZkhPNXNkc3ZhVUQyODBNckRRcXlMdHFJVXNqK1pXazJPcUJxOXNPcnp3Q09m?=
- =?utf-8?B?ZjFsMWtVa0hKMFgvOEZ2NG9kN1V4NjJ1ek1LblNodlFpNjZBQi9YS2VMakNx?=
- =?utf-8?B?RlhjdlZ3djBsV0p4c09Qb1FrbTE5cVV0VGRTMGQxd2tYL0JrTm4vdjZiYmZs?=
- =?utf-8?B?Ukc1OFJnL08vRXhoWlZLTnk0OGQ3SmlLMlk3dXhCOHp3b3djc2ZsVFJBUHcr?=
- =?utf-8?B?Ujg5TkVtdE91Nnk3RmlZc3JwYW1IWnlkWGhlTTdkSjU0Q1pSM3IrQ2dOV3lt?=
- =?utf-8?B?cGptTThoVC80VVNzbTNxVHZ1MW55S1BDdjFwZWh2bEt6ZC9wOWFlN0x4VW1R?=
- =?utf-8?B?OTcrWWRibmlPcVd1UTJxTjE4MWtWN2crQnVWNno4M0N4d3NjVXZ3ZzVrRlJy?=
- =?utf-8?B?TzdPU1RFZUd0Yk9RSWIxVHJpWlo0UWZVa0E5enJySVpCN1loS1R3bGxxUkM3?=
- =?utf-8?B?RGRNazFhUjVlRjdVNy94czgzRTBNbEVvU2xzUHdlMmlJYlM2dHo0MGMySXRN?=
- =?utf-8?B?clNvY1JDL2xDOWQ1YUNxRm9TNk1weEJvRm5rd3J0UkFIWU05WXEzVHoxaEdJ?=
- =?utf-8?B?eklGWFhnWHRveE1sSHJEaHFnWDc1aVZDeVdDbGpPTVRONFVOaDI3ZHJ3VUZw?=
- =?utf-8?B?N0pJTlF2dUdHOVJNWUJZMjJmckxvRmtHaUZPR2czS3IzYnpma0NSUT09?=
-X-Exchange-RoutingPolicyChecked: Y6iRHevHwVWPzoJjDMaHilnuKkyoa3/aHU/N1+IoY9E2gyChWeIbUt1DOl7eS5LGxjDcYvis6fJrJRSWMDe/Q/MEHLJNpST2TFjZfinyeir/LFRJoB/EoTUYSSV9zbqJkWhY2nz9aDPZdFGBsd08zYE5CjD0vBhgDys+F3EjBN4V6BhfaM9AHSsjJBetOES0AxiIzeyigNmT50tTLvGfTujc3eHH23cF9Thhz/tqJE5pF1t01ETgFpsqv3HptZtxmFmAaFDs1ugITuGLYWwT+E4Xjpeb6xuS3bEbJsS1W6CnGIPfFFbTBRl9MWy8aDUETdr7TAGt3bFr+L403iQ1Hg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: faa77390-c871-4d5d-16ca-08df08f1e5b7
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dC9GTWRwQXkrcDd6U1g4TmFMQUY2QVBNYWVORmZrOE5lRmhadHhCYnNiREw4?=
+ =?utf-8?B?UkZua3d5U1pCeUEvNzBud1NkSXJsOG9GMU9qNWNQdi9COFh1aUdtSnQ1UG1K?=
+ =?utf-8?B?ZC80Z2puZDJBYTR2c3lBUUhiWllmQlFCSk82OTFIQUR5Uzk4Wk1kRncveXpo?=
+ =?utf-8?B?MG82SEhPSVpZUWZEWGlqTEV1UDBCeHcwVlZpa0xJRmdvc2xhNm45TFVvYUJa?=
+ =?utf-8?B?M3JkVkJxektiQ0dmZ2kzM002TVZ6UmRtSnFZL0JpR2w4clc3Wlljc1M2MGdz?=
+ =?utf-8?B?S1psd3gyeFJrNmozV1YwNjRFS3dkUy83cDNYVFY2L1BCTTd3MjlvajM4aDRU?=
+ =?utf-8?B?YzBCSXNVR1k1R2J3Z1RHYVVWaWFrekVuOU9RcEM4ZXdQVzVYVmh5b01hSm5s?=
+ =?utf-8?B?TjQ0Z2NCbGdGVWFYWHFqdFpoRUlkak1IZitOcENnOXhNekR0WUgxeE1QVEUy?=
+ =?utf-8?B?NHFXN1JLRDc4UUhhK1hEMHlkd3JUVCtJSE4yOE9sdk1tZVI1MkNWT3lDUkhK?=
+ =?utf-8?B?VXZ4VGg2bXl4QU40UGlvMXpSTlFZUFhwZUcxZW1KZEMxd3I1bDQzWlBHcnYy?=
+ =?utf-8?B?bU5PaTNtblcyT0daSjZRZ2VhOU9wUWN2eGtoUHgwUVp3QXJJdjYyR09JNGVx?=
+ =?utf-8?B?Q3hBZGFqcTZzYmhoR1JNcng5ZXJxSjUxRXVXVlRybjVFdHFZUnFYWk00U3Nw?=
+ =?utf-8?B?UVFCNGZCUWF3VkVQNzdxQngyMWZyaktkNENnUGFxdXFaOHd5VUp0RWovT2VG?=
+ =?utf-8?B?bDg5c1NjZDI5NmcvaFdwRTE0SkZJQUtpUWM1UlpUSnA1cjh0TU41TTdTbUVZ?=
+ =?utf-8?B?bEl5RHRuMkxnMEtpd0dZZUdNbC9FNkFtTnR5bTZoUVk4YXd6Q1hFb3o4UzAv?=
+ =?utf-8?B?Z3p1bEphTytBRmdGYUkwdWJBWERrSlRNSHRPTlRuZVRuSmJCcmtZV01uWlNB?=
+ =?utf-8?B?M1pwZFk4Q3F6Q3RBY1l1a21yNTFUOE5yU0JKZVNOeEdhNmZ0MHR2d0ZaRjc4?=
+ =?utf-8?B?bE42NU9EcWY3TDdRNDlJQS9IVXdGYUtiTmpyMmxKL3VBL09Nd0F0d3hKbmNK?=
+ =?utf-8?B?TnhzaXlNa1BCcWsvUlNsNmxKdG0ySXlIemtEdUYybmMwQVo4YVY0YnB4dCtz?=
+ =?utf-8?B?N2doVnBNdW1NdTFGS1JFOWhVTVEyT1VsVVRUT09MS1lWZzFCSDBTQzN1M3ZX?=
+ =?utf-8?B?MXhwN2hoZ0FVRFBma1Z2N3N2Vk9RazdRb0JSRUZab0JQell1QTFJT25pdTU4?=
+ =?utf-8?B?dTQ3UGlSZE9BQk1KRS9HZkF2Z3hlRmI2YzUyWUFMQTlySm1FMUthOUYzckJy?=
+ =?utf-8?B?czhaRHNUSjBIaElBWUVqMTdWSjUvTlI3TklFSFFIY2s3S20vVmNyQW53Y1ZT?=
+ =?utf-8?B?UGhmU0lBYkhNL1JMajZvU3Q5bWhpdkd3dGwveUV2U2lLYUJLeHh5ak9yajJP?=
+ =?utf-8?B?c1JBMWFOR2VnejhWMEN4TGN4ZHp3emtTQ0V3Y1lsRHoydmlWczVIbDk1dDBH?=
+ =?utf-8?B?SERGM3pxV0ZvNEtzNm9TWHFIWFRzQ3dZcDZVNTNPSEN3ejJYMGZVY1FOdCtk?=
+ =?utf-8?B?OEkrQzk3c2hYV3FSTmZ0UDV5bkRXbjZQYk5vL2NTSTFKMkoveXZwaXlPa01S?=
+ =?utf-8?B?b3ZIUFl4SFZnVmU2dVg5QWdEV3VReXNCcmJQdDBnRDM4M2l5S1dzM0JaeSs2?=
+ =?utf-8?B?ajRNMFdPbW1EUTV6bDFmMFhDZVlGZFNIREEySUJIeWNqNTNGN2FEQkpoaTJi?=
+ =?utf-8?B?b0I1aDFoZmErM3g5QWd0TWcyOHY1R2thV1U4ZS9HcisybjFJWnV0enhUanlr?=
+ =?utf-8?B?dXlDbWNtamdYbnVZRVZzSmFiSHJZZGhLdndjOTk3RTcvdWk0V2hQb3lISy9V?=
+ =?utf-8?B?NEdOeDlmQmlyTnhxSi8vc0xSZFdpaUdvWmdVVU4vSUtFL3duQ1R5OGRVbDlp?=
+ =?utf-8?B?TmJHTFkwelJzT21oaDFuVTUrVlp4TWlwTU9UNENRMm51OWRHd0VhUDErVmxw?=
+ =?utf-8?B?TFBjbXFTemhKdk5wOXJpZVc3cFNkcXJwak10VndJZ1NyalRlUk5TN3E0Sk5x?=
+ =?utf-8?B?K3lFM2ZJcnk3a3o2R1lUUkdiNFNVMEM3dFN6eEFQQnNpRGJYODdnbHBEQVVF?=
+ =?utf-8?B?LytDWURWNktTVUNXRDJPQnRmZlM3TnZ0TTIvVEJudXMrR1MyczN6VjlMUVlJ?=
+ =?utf-8?B?Yi9CVU9UaFgvNGJPWS9sVVVaZ0IrUFB1aXZyL05XVWlwdlYwQ2ZmZ01ROWZX?=
+ =?utf-8?B?R2NOdFVXVDA2MThsM1c5WWdsaXJabXNaQzA0TnRLcU8zdERBVENkT1FBWjdK?=
+ =?utf-8?B?UEpXRFBlaWg5dFNma1diMi9odm1PWnpCYVFVd0ZzUjVZWG45T2R3QT09?=
+X-Exchange-RoutingPolicyChecked: IpU8Ek0v0j+7Q2AF628CoPbyYRZJNRrHtmhp/B9NwD2p8mNkF9H56bNruyGUavKx5cwSc86dDEDTTWqL4+xPXqlS/5dvE49R2tVAl6paHZhjpUrpP2EyuWKad4MeJoHrJ7rB9JuOusRUqNOJ8WjOnpHHjpQm1C0kmo9CaBlkHPFIZ3zQOaF74dKZ6AKoo/omuRfqbbdypf7j0cKOTHjBbzmqb3xi0WrsklGcWHlG/KFOIh/9cv6hBdI2sXcifgcINQYlnFveGCPAm2HsSjc2mybEmxhILGAKkgV6yXgSwQhlZEWmb6lRsKU5hMU0Bku6mlpaIJDnwychVMfie2uQxQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c893a0b-3181-4e53-240a-08df08f1ded7
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 12:58:34.5549 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 12:58:23.2585 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YdUYpMSnY/2Yx1xe+C+V1tF+VpBwMuX106+I8LUP7eavKjB4Y6D0LutOXhvvDF+8WBBUZrmbWv0HyG3z4TRFIw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: IbXBGFvmGDmiTXb4td4HtnTyUCZANf/KUYDp4ZuQNmUIpaDp3z2V5RCwHDuycexx/HHXzsqFdrf4zRXpsmmbEA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8666
 X-OriginatorOrg: intel.com
 Received-SPF: pass client-ip=198.175.65.9; envelope-from=yi.l.liu@intel.com;
@@ -189,344 +190,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/31/26 17:51, Zhenzhong Duan wrote:
-> When the guest enables the PRQ in vIOMMU, allocate a FAULTQ object so that
-> host-side recoverable fault events can be received and propagated back to
-> the guest.
-
-I thought FAULTQ object is allocated at the time when PRE bit is set. :) 
-How about below?
-
-When PRQ is enabled in guest, vIOMMU side allocates FAULTQ object for 
-each s1_hwpt, so that host-side recoverable fault events can be received 
-and propagated to guest.
-
-> Install an event handler on the FAULTQ fd to read and propagate host
-> generated recoverable fault events to the guest.
+> Move the VTDAccelPASIDCacheEntry typedef structure inside the
+> CONFIG_VTD_ACCEL ifdef block.
 > 
-> The handler runs in QEMU's main loop, using a non-blocking fd registered
-> via qemu_set_fd_handler().
+> When CONFIG_VTD_ACCEL is disabled, this structure is entirely unused
+> throughout the code. Moving the layout under the existing preprocessor
+> guard prevents exposing dead type definitions and ensures the header
+> remains clean when building without VTD acceleration support.
 > 
+> Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Tested-by: Xudong Hao <xudong.hao@intel.com>
+> Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 > ---
->   hw/i386/intel_iommu_accel.h    |   2 +
->   hw/i386/intel_iommu_internal.h |   3 +
->   hw/i386/intel_iommu.c          |   9 +-
->   hw/i386/intel_iommu_accel.c    | 160 +++++++++++++++++++++++++++++++--
->   hw/i386/trace-events           |   1 +
->   5 files changed, 164 insertions(+), 11 deletions(-)
+>   hw/i386/intel_iommu_accel.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-> index 46c1a29409..e0319749a5 100644
+> index 4a9003c92d..46c1a29409 100644
 > --- a/hw/i386/intel_iommu_accel.h
 > +++ b/hw/i386/intel_iommu_accel.h
-> @@ -18,6 +18,8 @@ typedef struct VTDAccelPASIDCacheEntry {
+> @@ -12,6 +12,7 @@
+>   #define HW_I386_INTEL_IOMMU_ACCEL_H
+>   #include CONFIG_DEVICES
+>   
+> +#ifdef CONFIG_VTD_ACCEL
+>   typedef struct VTDAccelPASIDCacheEntry {
+>       VTDHostIOMMUDevice *vtd_hiod;
 >       VTDPASIDEntry pasid_entry;
->       uint32_t pasid;
->       uint32_t fs_hwpt_id;
-> +    uint32_t fault_id;
-> +    int fault_fd;
+> @@ -20,7 +21,6 @@ typedef struct VTDAccelPASIDCacheEntry {
 >       QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
 >   } VTDAccelPASIDCacheEntry;
 >   
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index 924e91cb8a..5ebc204e9a 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -786,4 +786,7 @@ int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
->   VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid);
->   int vtd_dev_get_pe_from_pasid(IntelIOMMUState *s, PCIBus *bus, uint8_t devfn,
->                                 uint32_t pasid, VTDPASIDEntry *pe);
-> +int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn, uint32_t pasid,
-> +                         bool priv_req, bool exec_req, hwaddr addr, bool lpig,
-> +                         uint16_t prgi, bool is_read, bool is_write);
->   #endif
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 82c3c3b2c3..dcf23924ef 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -5369,11 +5369,10 @@ static int vtd_pri_perform_implicit_invalidation(VTDAddressSpace *vtd_as,
->       return ret;
->   }
->   
-> -/* Page Request Descriptor : 7.4.1.1 */
-> -static int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn,
-> -                                uint32_t pasid, bool priv_req, bool exec_req,
-> -                                hwaddr addr, bool lpig, uint16_t prgi,
-> -                                bool is_read, bool is_write)
-> +/* Accept the PCI PASID as input. Page Request Descriptor : 7.4.1.1 */
+> -#ifdef CONFIG_VTD_ACCEL
+>   bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+>                             Error **errp);
+>   VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
 
-can this "Accept the PCI PASID" be more accurate? Because it is facing
-the emulated device models, so this should be PCI PASID instead of the
-pasids used within vIOMMU.
+LGTM.
 
-> +int vtd_pri_request_page(PCIBus *bus, void *opaque, int devfn, uint32_t pasid,
-> +                         bool priv_req, bool exec_req, hwaddr addr, bool lpig,
-> +                         uint16_t prgi, bool is_read, bool is_write)
->   {
->       IntelIOMMUState *s = opaque;
->       VTDAddressSpace *vtd_as;
-> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-> index d2f41f18f1..3808112f79 100644
-> --- a/hw/i386/intel_iommu_accel.c
-> +++ b/hw/i386/intel_iommu_accel.c
-> @@ -9,6 +9,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
->   #include "system/iommufd.h"
->   #include "intel_iommu_internal.h"
->   #include "intel_iommu_accel.h"
-> @@ -77,14 +78,150 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
->       return NULL;
->   }
->   
-> -static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
-> -                               VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
-> -                               Error **errp)
-> +static void vtd_prq_report_fault(VTDAccelPASIDCacheEntry *vtd_pce,
-> +                                 struct iommu_hwpt_pgfault *fault, unsigned cnt)
-
-vtd_prq_report_fault is a bit confusing. seems like reporting a fault of 
-PRQ. how about naming vtd_recoverable_fault_report? or any other name?
-
-> +{
-> +    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
-> +    uint32_t pasid =
-> +        vtd_pce->pasid == IOMMU_NO_PASID ? PCI_NO_PASID : vtd_pce->pasid;
-> +
-> +    for (; cnt--; fault++) {
-> +        bool last_page = fault->flags & IOMMU_PGFAULT_FLAGS_LAST_PAGE;
-> +
-> +        vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
-> +                             vtd_hiod->devfn, pasid,
-> +                             fault->perm & IOMMU_PGFAULT_PERM_PRIV,
-> +                             fault->perm & IOMMU_PGFAULT_PERM_EXEC,
-> +                             fault->addr, last_page, fault->grpid,
-> +                             fault->perm & IOMMU_PGFAULT_PERM_READ,
-> +                             fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-> +    }
-> +}
-> +
-> +/* Batch size per read(); remaining faults trigger another callback */
-> +#define FAULTQ_BUF_SIZE 100
-> +
-
-anyhow, we won't miss any fault. right?
-
-> +static void vtd_prq_read_fault(void *opaque)
-> +{
-perhapss s/vtd_prq_read_fault/vtd_fs_faultq_read/, then aligned with the
-below create/destroy/setup helpers.
-
-> +    VTDAccelPASIDCacheEntry *vtd_pce = opaque;
-> +    struct iommu_hwpt_pgfault fault[FAULTQ_BUF_SIZE];
-> +    uint32_t id = vtd_pce->fault_id;
-> +    int fd = vtd_pce->fault_fd;
-> +    ssize_t bytes, last_bytes;
-> +
-> +    bytes = read(fd, fault, sizeof(fault));
-> +    trace_vtd_prq_read_fault(id, fd, bytes);
-> +    if (bytes < 0) {
-> +        if (errno != EAGAIN && errno != EINTR) {
-> +            error_report_once("FAULTQ(id %u): read failed (%m)", id);
-> +        }
-> +        return;
-> +    } else if (!bytes) {
-> +        error_report_once("FAULTQ(id %u): fault group too big", id);
-> +        return;
-> +    }
-> +
-> +    last_bytes = bytes % sizeof(fault[0]);
-> +    if (last_bytes) {
-> +        error_report_once("FAULTQ(id %u): discard partial fault data: %zd/%zu",
-> +                          id, last_bytes, sizeof(fault));
-> +    }
-> +
-> +    vtd_prq_report_fault(vtd_pce, fault, bytes / sizeof(fault[0]));
-> +}
-> +
-> +static void vtd_destroy_fs_faultq(VTDHostIOMMUDevice *vtd_hiod,
-> +                                  uint32_t fault_id, int fault_fd)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +
-> +    if (fault_fd < 0) {
-> +        return;
-> +    }
-> +
-> +    close(fault_fd);
-> +    iommufd_backend_free_id(hiodi->iommufd, fault_id);
-> +}
-> +
-> +static bool vtd_create_fs_faultq(VTDHostIOMMUDevice *vtd_hiod,
-> +                                 uint32_t *fault_id_p, int *fault_fd_p,
-> +                                 Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +    IntelIOMMUState *s = vtd_hiod->iommu_state;
-> +    uint8_t bus_n = pci_bus_num(vtd_hiod->bus);
-> +    uint32_t fault_id, fault_fd;
-> +    VTDContextEntry ce;
-> +    int flags;
-> +
-> +    if (!s->svm ||
-> +        vtd_dev_to_context_entry(s, bus_n, vtd_hiod->devfn, &ce) ||
-> +        !VTD_CE_GET_PRE(&ce)) {
-> +        *fault_id_p = 0;
-> +        *fault_fd_p = -1;
-> +        return true;
-> +    }
-> +
-
-this PRE validation hunk better in the caller side. This helper would be
-pure creation helper. BTW. is there any point that we can cach the CE
-instead of fetching it here. It seems we won't come to this helper if no
-CE.
-
-> +    if (!iommufd_backend_alloc_faultq(hiodi->iommufd, &fault_id, &fault_fd,
-> +                                      errp)) {
-> +        return false;
-> +    }
-> +
-> +    flags = fcntl(fault_fd, F_GETFL);
-> +    if (flags < 0) {
-> +        error_setg_errno(errp, errno, "Failed to get flags for FAULTQ fd");
-> +        goto free_faultq;
-> +    }
-> +
-> +    if (fcntl(fault_fd, F_SETFL, flags | O_NONBLOCK) < 0) {
-> +        error_setg_errno(errp, errno, "Failed to set O_NONBLOCK on FAULTQ fd");
-> +        goto free_faultq;
-> +    }
-> +
-> +    *fault_id_p = fault_id;
-> +    *fault_fd_p = fault_fd;
-> +    return true;
-> +
-> +free_faultq:
-> +    vtd_destroy_fs_faultq(vtd_hiod, fault_id, fault_fd);
-> +    return false;
-> +}
-> +
-> +static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
-> +{
-> +    if (vtd_pce->fault_fd < 0) {
-> +        return;
-> +    }
-> +
-> +    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
-> +    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
-> +                          vtd_pce->fault_fd);
-> +    vtd_pce->fault_id = 0;
-> +    vtd_pce->fault_fd = -1;
-> +}
-> +
-> +static void vtd_setup_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
-> +                                uint32_t fault_id, int fault_fd)
-> +{
-> +    if (fault_fd < 0) {
-> +        return;
-> +    }
-> +
-> +    vtd_pce->fault_id = fault_id;
-> +    vtd_pce->fault_fd = fault_fd;
-> +    qemu_set_fd_handler(fault_fd, vtd_prq_read_fault, NULL, vtd_pce);
-> +}
-> +
-> +static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod, VTDPASIDEntry *pe,
-> +                               bool has_fault_id, uint32_t fault_id,
-> +                               uint32_t *fs_hwpt_id, Error **errp)
->   {
->       HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
->       struct iommu_hwpt_vtd_s1 vtd = {};
->       uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
->   
-> +    flags |= has_fault_id ? IOMMU_HWPT_FAULT_ID_VALID : 0;
-> +
->       vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
->                   (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
->                   (VTD_SM_PASID_ENTRY_EAFE(pe) ? IOMMU_VTD_S1_EAFE : 0);
-> @@ -94,7 +231,7 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
->       return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
->                                         hiodi->hwpt_id, flags,
->                                         IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
-> -                                      0, fs_hwpt_id, errp);
-> +                                      fault_id, fs_hwpt_id, errp);
->   }
->   
->   static void vtd_destroy_old_fs_hwpt(VTDAccelPASIDCacheEntry *vtd_pce)
-> @@ -115,7 +252,8 @@ static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
->       VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
->       HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
->       VTDPASIDEntry *pe = &vtd_pce->pasid_entry;
-> -    uint32_t hwpt_id = hiodi->hwpt_id, pasid = vtd_pce->pasid;
-> +    uint32_t hwpt_id = hiodi->hwpt_id, pasid = vtd_pce->pasid, fault_id = 0;
-> +    int fault_fd = -1;
->       bool ret;
->   
->       /*
-> @@ -130,7 +268,12 @@ static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
->       }
->   
->       if (vtd_pe_pgtt_is_fst(pe)) {
-> -        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
-> +        if (!vtd_create_fs_faultq(vtd_hiod, &fault_id, &fault_fd, errp)) {
-> +            return false;
-> +        }
-> +        if (!vtd_create_fs_hwpt(vtd_hiod, pe, fault_fd >= 0, fault_id,
-
-this funciton call can reuse the PRE bit validation result instead of
-checking fault_fd.
-
-> +                                &hwpt_id, errp)) {
-> +            vtd_destroy_fs_faultq(vtd_hiod, fault_id, fault_fd);
->               return false;
->           }
->       }
-> @@ -140,11 +283,14 @@ static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
->       if (ret) {
->           /* Destroy old fs_hwpt if it's a replacement */
->           vtd_destroy_old_fs_hwpt(vtd_pce);
-> +        vtd_destroy_old_fs_faultq(vtd_pce);
->           if (vtd_pe_pgtt_is_fst(pe)) {
->               vtd_pce->fs_hwpt_id = hwpt_id;
-> +            vtd_setup_fs_faultq(vtd_pce, fault_id, fault_fd);
->           }
->       } else if (vtd_pe_pgtt_is_fst(pe)) {
->           iommufd_backend_free_id(hiodi->iommufd, hwpt_id);
-> +        vtd_destroy_fs_faultq(vtd_hiod, fault_id, fault_fd);
->       }
->   
->       return ret;
-> @@ -177,6 +323,7 @@ static bool vtd_device_detach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
->   
->       if (ret) {
->           vtd_destroy_old_fs_hwpt(vtd_pce);
-> +        vtd_destroy_old_fs_faultq(vtd_pce);
->       }
->   
->       return ret;
-> @@ -276,6 +423,7 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
->       vtd_pce->vtd_hiod = vtd_hiod;
->       vtd_pce->pasid = pasid;
->       vtd_pce->pasid_entry = *pe;
-> +    vtd_pce->fault_fd = -1;
->       QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
->   
->       if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-> index a1a50d0910..dca726c9b8 100644
-> --- a/hw/i386/trace-events
-> +++ b/hw/i386/trace-events
-> @@ -77,6 +77,7 @@ vtd_reset_exit(void) ""
->   vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
->   vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
->   vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
-> +vtd_prq_read_fault(uint32_t fault_id, uint32_t fault_fd, ssize_t bytes) "fault_id %d fault_fd %d ret: %zd"
->   
->   # amd_iommu.c
->   amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
-
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 
