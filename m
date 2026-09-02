@@ -4,156 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A7EC61DFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A03F3C624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1gK1-00030g-Dz; Wed, 02 Sep 2026 04:27:53 -0400
+	id 1x1gSS-00047f-13; Wed, 02 Sep 2026 04:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1gJz-00030Q-TZ
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:27:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x1gSO-000478-P2
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:36:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1gJy-0004HK-7N
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:27:51 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x1gSN-0005Zv-9a
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:36:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788337669;
+ s=mimecast20190719; t=1788338189;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XIJ3kQujLCKSWLtFqQxhpjoCKWLt35C8Ggbu0Nem0M0=;
- b=BDCfTn84yxtIkIgLZOBVrWQy+D/RwqTiDvApm8ructONwBsF6cI1+xPhn5dg3TTjk/TrAj
- EIC8AoEIYgr67c6ord+Pl6wSCBx/4na4ZH/Laccw2WWuM6EixS/NAxLAsI0CG5Tahbbv7x
- CdQmlR5WmTBQwaSVBsCcK/R/sen/mdA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jtiE9yBfB0ZIgNcLdU2YjuvkyBaDXrjozS44UC4Ekgk=;
+ b=U/sOiNtmp/aH/Fc8fJVafcSm+q6QipA7n55BPyXZkc/GnNmqnaAcRUAfC4elrhhsscmuUj
+ TooASFvmYYEbaAtHNCxfSHtBTCXwdV4W/Clf5d2lj5611Hx5ELf4cBH6TiwN5NFL537glk
+ /4WQvcL4+hQtF2gBMzks2sz0Lop4coc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-NZc0OR-KNdiahrobRSi0eA-1; Wed, 02 Sept 2026 04:27:48 -0400
-X-MC-Unique: NZc0OR-KNdiahrobRSi0eA-1
-X-Mimecast-MFC-AGG-ID: NZc0OR-KNdiahrobRSi0eA_1788337667
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-c25501f4aa2so100100866b.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 01:27:47 -0700 (PDT)
+ us-mta-496-25eR1kxePBW0tIRS9hAAqQ-1; Wed, 02 Sept 2026 04:36:28 -0400
+X-MC-Unique: 25eR1kxePBW0tIRS9hAAqQ-1
+X-Mimecast-MFC-AGG-ID: 25eR1kxePBW0tIRS9hAAqQ_1788338187
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49545071724so5522845e9.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 01:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788337667; x=1788942467; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=XIJ3kQujLCKSWLtFqQxhpjoCKWLt35C8Ggbu0Nem0M0=;
- b=KmrglAQFbk7dU8tbS++iE4/g4iEGvWm7dsGJXGPQUCKVYV90QapxtTExfmtMuBtBcG
- 2kQTvQm/rTWhzDCh9HOcVD+FE6987uwri1dYYMiah49VRZMhKFfztJEFVZ11oGlCbmvO
- DA42YDFBKMD2KvmF7NlnkjMLuZrQAbdl8uwWf6ypzs2z0SdYUJREKiU0qQAeO4/Et4El
- gd6+lfEeWsxgcI6o0kgx0ujU6X96q2u6umapEfQhAyLbHN+QkHQfRrvXSvckmXOfTHc6
- nzrAQTGW2+kKG8+sh59TRANyrN1tmR2VRIAUbtHhZOPG3UjsVSydxP8bLpePiZiZ6rex
- ptiQ==
+ d=redhat.com; s=google; t=1788338187; x=1788942987; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jtiE9yBfB0ZIgNcLdU2YjuvkyBaDXrjozS44UC4Ekgk=;
+ b=BAu5h1XDuUO6pJCpFS7pGCOLAgCg7VeOR7q4cLzGDJSIYON3dPZI4eMrkLJBShgDNp
+ MS+Gpmw+fiJC5C3WXcIjrOVpa8GbyuyBOXe9pmIT6tWCaNarTTD2AXiXloEX2ggJfqXU
+ aWG7GzU7RquxtFEOeV0/R9lK282CvXBPo+OxVN4afhBQe+ujQ9mZREKHCi5d5FKJgdca
+ KK6lqx/qt63/c3Q/abAnUFxAvXz5ZzjVM7b7bUznqhcF3UbVneCn6UbJ6mx0uW9tV4Wq
+ dr2KL/f57ZxxWijT/lVdepKayOX+nrYnlREtC7h1i57ts13mvVat/Qhe/M+5zHgj19cq
+ 9YVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788337667; x=1788942467;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=XIJ3kQujLCKSWLtFqQxhpjoCKWLt35C8Ggbu0Nem0M0=;
- b=gDzQ9b6RK4Z+oIKYYDdpfOV48BASHexWyAF1VAmqIpJu460h0KQmKxb5Gtrn29zL4X
- XJFkLRaa3VEPwAgdiD2PNuN5HjXfrn4JKXkrP9JWGNdrjfvbj6DshtQft0/PiLyd0Ura
- 6l9Kmbh3EYUs3cjkAO6ujMEZk4OOr6BZxCtj2HIJAGX4w69003337AWkWv2xiGc45QtZ
- zJLvDLBb8iDt8UZdhZOMlLE5b5D63xeE0luxm2DeGk8LqNrVpGLaatvF0/mJl6n/30/Z
- QKeEGNCtAiPkR0WoIgxY7UTMhnzKIRMFD6Civ46eQrmfpqdHEvMGe7zMgTNPV2gP35KY
- HNBQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxUpozZziO0P40So1b//4sAi9MbLTlPa773Et7tuwy49r1/kCzhgDeiRCePXiVolxD72zE7zfboWu/D@nongnu.org
-X-Gm-Message-State: AFuF++lOQGrpP3lB5IHqg5pRa8RMOdKWGTu2EnO27OeIX27PcjMHHLzA
- 2wCd5e17codHk8ALXXCIJFTaysPAvH3vd26ONUCpfKNVDNHsgexu9Id/LgCwS8PX4BHE57TXOMu
- OHTat47fE1mEJFypZcT3ahTXEtz6U1GIuAbP3uv7hWREZu22Pf6mE9WYO
-X-Gm-Gg: AYBFou1mVfoBn4stdxxv6IW0LDuUP2TxpVI4E45xO/w5ENXys1XQr92XjW1FPkRd1yV
- +4rJXO41py0kgtMTwtHqO+/1YRRx+9tmF9Plcmfdv2kHPAcG8C8JVqjGe4AQs2exoyudIfjnxbi
- xxWmhD3LInmaD6DT+OvjV+LRLdFKrTLRqbpKcLXqEcbg3phE/oVA+PhHMoTcwq6VNT7RLhyemhD
- QDsOe21Fc+ZzYv1hYOZrhkUcf5zOC8uxntkcEVV6rp0D3dgXnw4t+scPWboX3Dj1mdNFSTXGdEa
- MUUtt8vjAF8nONTeZpwDorv02Fsj0L+gxsdbLKe8BuEuPBWCrjXlMRYV4RnyD+x29f+VUaIShoG
- XHEAvjogrf95ail7AWq8kTm6WE+2VtPUBDnd4Di0=
-X-Received: by 2002:a17:907:3fa6:b0:c1c:2218:f317 with SMTP id
- a640c23a62f3a-c25dc9bedbcmr83979766b.2.1788337666825; 
- Wed, 02 Sep 2026 01:27:46 -0700 (PDT)
-X-Received: by 2002:a17:907:3fa6:b0:c1c:2218:f317 with SMTP id
- a640c23a62f3a-c25dc9bedbcmr83976766b.2.1788337666385; 
- Wed, 02 Sep 2026 01:27:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4?
- ([2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4])
+ d=1e100.net; s=20251104; t=1788338187; x=1788942987;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jtiE9yBfB0ZIgNcLdU2YjuvkyBaDXrjozS44UC4Ekgk=;
+ b=M+VHG5/5EZJ9c9u4rhjJZLmhj1OfluG9KJYh5aTzONT0kIvOHh2ytTUY3j9+g72L5S
+ 2e5me4Q7PsgogX/G3sIx3PCE4Gj4Xw2K2jdll0U2DWdUXMt4EY4Ut39O3o/1CJAd2Uef
+ Baeu4TgLt53yk7+WlpGF16oMEwoi7+RA2pLkBIMuXJoh879LsynFlwp2rF2RByOx2IGt
+ bXi7hVZqVuzx3s26Zp5L6roZiQNNTJ5uFMNaLPYCN5w+UsLyh2PmQylhp7fvFWuID3ti
+ 2QQzLImTdEsBA+hd81h5daSQpRKrgUuQppTbwg86f102SyGrA51Szbu+FaSqdc5ZBLuH
+ Nfew==
+X-Gm-Message-State: AFuF++m5t17YxXWdDowJgPVY5XbWmp70HFJuSQ8pgHDDyMyszehx6sre
+ HStPXh25yW0Ie9AMj/eQD18vx36E8iBEkUgguPvofT6REpfA72W/vcfgM+d44ig/NEZjAU0Qg/z
+ tzxw2n6qkPEsTJN2EgHHDrPzrxKivsk+wXny3AyeoHGXMKz6o7UJX+A7+Ys50hOeWhAzQuGAjMF
+ KFqqkI+zdNoEIwfE/B2GfmqkWXEgwmENg9tI4doznr
+X-Gm-Gg: AR+sD10Bo76GiDdRWNYL7xE/YS7dXRcKcGFx1L0OCTp+vPviNOoo4evUZpiYJu+fsgV
+ gPa8xZX5djSfVXbQICy8o2eanclH0yf+xaS+fL/Tu2BmjHhrUrfswZM7G+YfGFYfBwUcxzp1mgT
+ GWcDLlka+8o0pAbG5/jf14wxlSPfTUpn9v8xyCnSN0DcYRE0i0+J5VRel2ly5nMexXS+QumFrGZ
+ KaTKJ+sm/VdTvuFn4Yz/R16KJ6Z53PMTnoM2B+Rt8MTJEsimv1Q1WIhwEtcApe7wsiibL+PiPws
+ ogmqf5EXA3Ao97wX5zhkOyxu40MF7ciRap9JvUQH9l+FH/LuMR262wyY1cL30rop1ofwkvg61EC
+ vHccxeIo1MhzaV3Owyxpk9m6V6hkWo92fMKaXf+K5z4nbQTdtar77SIvvdCnGZtSZiFGe5APMVf
+ WHYqk=
+X-Received: by 2002:a05:600c:1906:b0:499:8b13:3a98 with SMTP id
+ 5b1f17b1804b1-49ce57e7a9dmr48554035e9.4.1788338186960; 
+ Wed, 02 Sep 2026 01:36:26 -0700 (PDT)
+X-Received: by 2002:a05:600c:1906:b0:499:8b13:3a98 with SMTP id
+ 5b1f17b1804b1-49ce57e7a9dmr48552985e9.4.1788338186541; 
+ Wed, 02 Sep 2026 01:36:26 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.151.49])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c25d0058a6bsm91899266b.24.2026.09.02.01.27.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Sep 2026 01:27:45 -0700 (PDT)
-Message-ID: <7af10759-402d-43de-b590-dab0368d6273@redhat.com>
-Date: Wed, 2 Sep 2026 10:27:44 +0200
+ 5b1f17b1804b1-49ce4647472sm50949745e9.4.2026.09.02.01.36.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 01:36:25 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] rustfmt: disable wrap_comments
+Date: Wed,  2 Sep 2026 10:36:24 +0200
+Message-ID: <20260902083624.419157-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] s390x/pci: Reset a device in error state
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
- alex@shazbot.org, armbru@redhat.com
-References: <20260831183151.12626-1-alifm@linux.ibm.com>
- <20260831183151.12626-5-alifm@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260831183151.12626-5-alifm@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,100 +116,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/31/26 20:31, Farhan Ali wrote:
-> For passthrough devices in error state, for a guest driven reset of the
-> device we can attempt a reset to recover the device. A reset of the device
-> will trigger a CLP disable/enable cycle on the host to bring the device
-> into a recovered state.
-> 
-> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-bus.c          |  7 +++++++
->   hw/s390x/s390-pci-vfio-stubs.c   |  4 ++++
->   hw/s390x/s390-pci-vfio.c         | 10 ++++++++++
->   include/hw/s390x/s390-pci-vfio.h |  1 +
->   4 files changed, 22 insertions(+)
-> 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index b2db7f3df4..283b5b62b0 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -1546,6 +1546,8 @@ static void s390_pci_device_reset(DeviceState *dev)
->           return;
->       case ZPCI_FS_STANDBY:
->           break;
-> +    case ZPCI_FS_ERROR:
-> +        break;
->       default:
->           pbdev->fh &= ~FH_MASK_ENABLE;
->           pbdev->state = ZPCI_FS_DISABLED;
-> @@ -1558,6 +1560,11 @@ static void s390_pci_device_reset(DeviceState *dev)
->       } else if (pbdev->summary_ind) {
->           pci_dereg_irqs(pbdev);
->       }
-> +
-> +    if (pbdev->state == ZPCI_FS_ERROR) {
-> +        s390_pci_reset(pbdev);
-> +    }
-> +
->       if (pbdev->iommu->enabled) {
->           pci_dereg_ioat(pbdev->iommu);
->       }
-> diff --git a/hw/s390x/s390-pci-vfio-stubs.c b/hw/s390x/s390-pci-vfio-stubs.c
-> index 9fc84ca135..c68c612038 100644
-> --- a/hw/s390x/s390-pci-vfio-stubs.c
-> +++ b/hw/s390x/s390-pci-vfio-stubs.c
-> @@ -36,3 +36,7 @@ bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp)
->       error_setg(errp, "VFIO not available, cannot setup error handler");
->       return false;
->   }
-> +
-> +void s390_pci_reset(S390PCIBusDevice *pbdev)
-> +{
-> +}
-> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-> index 9a63040e22..64eb28104b 100644
-> --- a/hw/s390x/s390-pci-vfio.c
-> +++ b/hw/s390x/s390-pci-vfio.c
-> @@ -10,6 +10,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
->   
->   #include <sys/ioctl.h>
->   #include <linux/vfio.h>
-> @@ -172,6 +173,15 @@ static bool s390_pci_err_handler(VFIOPCIDevice *vfio_pci, Error **errp)
->       return success;
->   }
->   
-> +void s390_pci_reset(S390PCIBusDevice *pbdev)
-> +{
-> +    VFIOPCIDevice *vfio_pci = VFIO_PCI_DEVICE(pbdev->pdev);
-> +    if (ioctl(vfio_pci->vbasedev.fd, VFIO_DEVICE_RESET)) {
-> +        error_report("Failed to reset PCI device %s : %s ",
-> +                      vfio_pci->vbasedev.name, strerror(errno));
-> +    }
+This was in practice not enabled until now, and now that it is
+the results are not great.  Disable it so that the CI job
+check-rust-tools-nightly does not fail gratuitously.
 
-and pbdev->state remains  ZPCI_FS_ERROR ? I don't see it cleared.
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/rustfmt.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-C.
-
-> +}
-> +
->   static void s390_pci_read_base(S390PCIBusDevice *pbdev,
->                                  struct vfio_device_info *info)
->   {
-> diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
-> index c7886b63ea..38ccf445ea 100644
-> --- a/include/hw/s390x/s390-pci-vfio.h
-> +++ b/include/hw/s390x/s390-pci-vfio.h
-> @@ -21,5 +21,6 @@ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
->   bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
->   void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
->   bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp);
-> +void s390_pci_reset(S390PCIBusDevice *pbdev);
->   
->   #endif
+diff --git a/rust/rustfmt.toml b/rust/rustfmt.toml
+index ebecb99fe09..a7d610bce21 100644
+--- a/rust/rustfmt.toml
++++ b/rust/rustfmt.toml
+@@ -4,4 +4,4 @@ format_code_in_doc_comments = true
+ format_strings = true
+ imports_granularity = "Crate"
+ group_imports = "StdExternalCrate"
+-wrap_comments = true
++wrap_comments = false
+-- 
+2.55.0
 
 
