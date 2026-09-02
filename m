@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75572C61DFD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EE0C624D3
 	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 05:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1drf-0002Iv-RB; Wed, 02 Sep 2026 01:50:28 -0400
+	id 1x1drw-0002SY-RF; Wed, 02 Sep 2026 01:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1dre-0002IM-1n
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 01:50:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1drt-0002QY-UE
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 01:50:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1drc-0001Jw-K6
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 01:50:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1drq-0001Kd-SU
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 01:50:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788328223;
+ s=mimecast20190719; t=1788328238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=WX+fsdVFyY7mNVSxue30xKMvfzY/BteS/Iu/6gPfflY=;
- b=gRDYm8XdJWgAnhyv672mwj+Um4OuFsknVWypXhC0hcBqtR7CvzTSI1jm7VC36Zw8j9mq+7
- 5pvtKrX9ZmrBOKA/nrj0RLhc7NheWx0jRLiHE2xQf1ck73REOHqjeq0YlRdNMWdWFiqM+I
- OOF5UvsMN8mdAi6dXmeKdhz1Tf4NzC0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5V3VTwlHkDJgpuVX0x3VwKDkCg354JodP2TSVjJ1Kog=;
+ b=ZGQYqbHjXCHVyCRFIqZnIrTQLVFlrrTHptQTARtXXOhS2cD1CwfnX3PEeRtEtnbu4LbYsR
+ FxZV5Zk61Ewr9tB41J0U6YUXFK8jGUzdSAxAOoSEjJZ5wNRkpI124ProzLrVc+MDuIuYsN
+ Q66OvQrAkmYWLFx4zlYZNCe+BVOUBNA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-jeaD635NMeeB5sbk91YyYQ-1; Wed, 02 Sept 2026 01:50:22 -0400
-X-MC-Unique: jeaD635NMeeB5sbk91YyYQ-1
-X-Mimecast-MFC-AGG-ID: jeaD635NMeeB5sbk91YyYQ_1788328221
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4994aebe932so5792675e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 22:50:22 -0700 (PDT)
+ us-mta-529-8K2K479DONalpGAucDTSNw-1; Wed, 02 Sept 2026 01:50:36 -0400
+X-MC-Unique: 8K2K479DONalpGAucDTSNw-1
+X-Mimecast-MFC-AGG-ID: 8K2K479DONalpGAucDTSNw_1788328235
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49545071724so4078605e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 22:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788328221; x=1788933021; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788328235; x=1788933035; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:references:cc:to:subject:from:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=WX+fsdVFyY7mNVSxue30xKMvfzY/BteS/Iu/6gPfflY=;
- b=mN30+I/KU604TVt26fkXquaby5yL3HG9gHmeZsPLftCeWBvAZK1zo+BeZxKGfTduxD
- CCqHPOGZOTQHarwBMRYVNJIdJKOGP36VUassITLwa1hNr2ov3KLmcEFY7682f/WkGM9G
- 8ibugu5VOBtCgZ7VYQDKzJKnTn1wl7wZyEdb4KBicI179WM8Id5qnj4OCkPVO2AatmJ2
- KHf7zuxAaBx+jNOOHovkepQil25tro87mhcuOw/Etl3lNsGOVEMiXvNTAPUMF+JI/0I5
- UZc2xqH5k9n+OtddeSf+oEG7WgZHevoP6cA19RZqVUb/Z86/4q5h+UkoNDgVeJi4kNtw
- G8lQ==
+ bh=5V3VTwlHkDJgpuVX0x3VwKDkCg354JodP2TSVjJ1Kog=;
+ b=mAbM9NZmJDp/12HJ9vk85OUHHIPvecR2Kt4HFQ1+kmdAlfSs+6R7i9dq0bI9A6aDvj
+ qaUiZqO8Kv0LtdBDCChEk3oOxv7fG9ymvEH3LPbrPT5XYJQhvKLwC7dY2JLof/rciu5A
+ X5y4xnEMTroAvXdoGz+Mc0NYF7g7W6WBoirA1jQYkMQ83l2esNHYFjycB/rojLrpt5BQ
+ kvk7ecpG9yJVRG8lybgId/+fY1WRglrjPOE/MX3N/mu41KZn+7HEMXDjGM6s9hBFObu6
+ oUsKoOsDsAnI2yQvVgUHThceCKxDasJCGS2FV8Ab1HHAlpZdeun9JAgNcataLmlX+ZWZ
+ 2tpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788328221; x=1788933021;
+ d=1e100.net; s=20251104; t=1788328235; x=1788933035;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:references:cc:to:subject:from:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=WX+fsdVFyY7mNVSxue30xKMvfzY/BteS/Iu/6gPfflY=;
- b=j5cvL3lWirKKKG1LDDih/n/olCWeek/D71BshRHLagRCIb5gm+Q5Gh35I8H7OwCnGi
- dQiHbTe6TaPJxJvWtRO8H4xexu/JYc2Iv6z08tklCC2iG13hZpKuTmKupnN6Huw1+DAB
- UF/iTnrNR6Wxgzva5b0hogX3qrzZNIvhqF+c40gWLEJerL3ECx6nU9DpzFu9E/yemD5w
- lz/TqXykEbuQ86fa7CccIAZHQqeiK0hS4YIW5TGTkpzBR7Wnc/RSYg8iwBmY8OGtNIr+
- sNvn1Kdvmw+KWGklp6e4mGr+4P+Fyn3lfF2b4iZI7pZnF24aj+XFy/tgLKz1iPd/UCPz
- pUYQ==
+ bh=5V3VTwlHkDJgpuVX0x3VwKDkCg354JodP2TSVjJ1Kog=;
+ b=p4/ZI9KYvCz/Z2KJznyISllD68kMxTOYzFEOUtvtOHNGH0/r85qTpuErvLuiW6kYKU
+ uMUKIyoexL6XczHAWwDdmLMfBv63gN2Pwu+hFZTocFPUH/s2H0FehxrbmddEjtTGTkL1
+ CyOreM9tW6Rih8lRxG5W5gEbQeXYqkS8hZXWmqqOIfMmjHOUcsMUb+1cvYlu87Cxxnof
+ b9VnvwL7fXySsT04MljoHXtMLfpjJ9MacSDmIuKd+teh9J6FdNio9A2U5BiUVSjI0VTQ
+ 1lLmiAoNYWrzkvOLsBIQmoPryHvZhpsKROc/dUttHkSzStZYlKMCXlXBqj7k1mv+LAba
+ qg/Q==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpMjUAZ8h/pVA54LQj2vmsOT4nJhuxiJZP4NXrKH1n8QQQKwmL2BzBchG5Yc5nHckqkCxQkjwV6Nq6q@nongnu.org
-X-Gm-Message-State: AFuF++nCqMPD6wTqAKhU2hXL4K9BRLbZ7fNS/Lbw7ihFSSRjdnbk25PT
- 8D5WDbov6x91gM59S1z5LvqsLde/6N/Sg4pfsHLjnmMc5g3lNhzTCn/hoOgS3/+eonDq9VOYCAh
- n+59iD+vZGsd93H02FnVEAIH+5o06LuEnZRgwZ2e/Vvg+f9+TEO69KXBf
-X-Gm-Gg: AR+sD10zwGIAmdku6dOMLHGkE4i4CqjCA8LhL8pCilOb4RPbtgrf32vSCxggwlJFoxL
- 1IIH5FBzngtD8JMMQb2++gzTQ7vzZxBb+0QiB1TYPLcgu0ky1DnwHlJqDXRW4bweNnwrD4BSiHO
- pABt49fnGPv00l52GHChSh/sOP7xm31OXUm8a9VKXXi6P0eVXUMsWqOvJK/ZlEUYI2mmV6vjnRq
- 30nA094O20rsFOx/fcyxHP+5kytHq3+PdPFyX6eR9ewYquuEIMXTK6EugM24dpRy5cRYb4irthR
- PbbR6beRzngjS4LQYOG1hPwNewSJZlc3qbq7uKPsFT+POj7+MPOdMZYPMXqy09VuTEcWNuQVId/
- kovgAGBRhINyBOuKmUgaAb8gXESkCwpIGMGfFBd4=
-X-Received: by 2002:a05:600c:1987:b0:49b:4d64:bbc4 with SMTP id
- 5b1f17b1804b1-49ce58211demr34431075e9.8.1788328221211; 
- Tue, 01 Sep 2026 22:50:21 -0700 (PDT)
-X-Received: by 2002:a05:600c:1987:b0:49b:4d64:bbc4 with SMTP id
- 5b1f17b1804b1-49ce58211demr34430565e9.8.1788328220809; 
- Tue, 01 Sep 2026 22:50:20 -0700 (PDT)
+ AHgh+RoK7lu9ovnJIAXbeIx3BO941dtnGQYzg3PX3fSUD/at5ONG0JQzCPR3k8xlxgJydm1Ac5Bdj3PEFJFf@nongnu.org
+X-Gm-Message-State: AFuF++nPuE7YT8TOX06M6GN3vPj1fbdSD8AZ9W9Oro8Iwf5QRKmaAaP8
+ zBR89voRZWg8esTJ+COHYxhk3OZcXWinv1oJ0931qvB7FnGmwFFX7CuQycYt5/lcsYDRG4+mT6H
+ jlg/w/YN4jQFdu+Z1SeXxWw2xgMfo56sGUO86hNI5reqAVzdFymaSsPSx
+X-Gm-Gg: AR+sD11IfzZUHClrQ5gOR8UyBnzW2RCHMY8hEShDbuOwMzUYd21W3Idv3vZO0f8X/pg
+ pbIipQYJytGVWSKXJYzIol+31tFvBaLMQEa8AP5uCjZl050qEFCEpw3rvjmahpyeOj1Q9jo0njj
+ XI2SrqhcBKm6hRc4EZYpHf62NybGD63t00qQUxRniD/hI2sAwKdkYik57W2Ub5aJcepwGpubNbD
+ USsMZB3Pl6ORs7JxvJe7q1rJyDP7zHgqIyfTH+1RRYEsb8+eifCuWGNtgiboNp47UCpGezkHlsP
+ +PI/BUlL7zKcwx8JYK1oMp02ZZQLmwOJ1SnkzfTwhtwvNuX4XnO2ruDdw5JuBJ+lMkz//rzuWdL
+ u9luugVsuiNf/P42NpanMCEsObOOlViMwsN6pwZM=
+X-Received: by 2002:a05:600c:6388:b0:49b:916f:1471 with SMTP id
+ 5b1f17b1804b1-49ce55effa0mr36566495e9.3.1788328235444; 
+ Tue, 01 Sep 2026 22:50:35 -0700 (PDT)
+X-Received: by 2002:a05:600c:6388:b0:49b:916f:1471 with SMTP id
+ 5b1f17b1804b1-49ce55effa0mr36566055e9.3.1788328234988; 
+ Tue, 01 Sep 2026 22:50:34 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4?
  ([2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce4a804sm141038755e9.15.2026.09.01.22.50.19
+ 5b1f17b1804b1-49cdce10153sm130954715e9.4.2026.09.01.22.50.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Sep 2026 22:50:20 -0700 (PDT)
-Message-ID: <8456b922-05be-47d3-9a97-de61ef773ae6@redhat.com>
-Date: Wed, 2 Sep 2026 07:50:18 +0200
+ Tue, 01 Sep 2026 22:50:34 -0700 (PDT)
+Message-ID: <1d08459d-9feb-435b-9c93-62da53c15f91@redhat.com>
+Date: Wed, 2 Sep 2026 07:50:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH v2 14/25] hw/arm: catalina: use the real TMP75 model
+Subject: Re: [PATCH v2 15/25] hw/arm: fuji: use the real TMP75 and LM75B
+ temperature sensors
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -104,7 +105,7 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Emmanuel Blot <eblot@meta.com>
 References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
- <20260731-sanmiguel-bmc-locator-v2-14-1266926ba769@free.fr>
+ <20260731-sanmiguel-bmc-locator-v2-15-1266926ba769@free.fr>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
@@ -149,18 +150,18 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-14-1266926ba769@free.fr>
+In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-15-1266926ba769@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,33 +178,71 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/26 12:45, Emmanuel Blot wrote:
-> The Catalina BMC instantiates several ti,tmp75 temperature sensors. Now
-> that hw/sensor/tmp105.h provides a proper TMP75 model, drop the local
-> TYPE_TMP75 alias (and its guard) so the board instantiates the accurate
-> device rather than a plain TMP105.
+> The Fuji BMC instantiates many ti,tmp75 sensors and several NXP LM75B
+> sensors; the original board code approximated both with a plain TMP105
+> via local TYPE_TMP75 and TYPE_LM75 aliases (the latter mislabelling the
+> LM75B parts as LM75).
+> 
+> Now that hw/sensor/tmp105.h provides proper TMP75 and LM75B models, drop
+> the local aliases (and their guards) and instantiate the accurate
+> devices.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   hw/arm/aspeed_ast2600_catalina.c | 6 ------
->   1 file changed, 6 deletions(-)
+>   hw/arm/aspeed_ast2600_fuji.c | 22 +++++++---------------
+>   1 file changed, 7 insertions(+), 15 deletions(-)
 > 
-> diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-> index 33e75338ef..928e140b21 100644
-> --- a/hw/arm/aspeed_ast2600_catalina.c
-> +++ b/hw/arm/aspeed_ast2600_catalina.c
-> @@ -22,12 +22,6 @@
->   #define CATALINA_BMC_HW_STRAP2 0x00000800
->   #define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
+> index 6dc3535f0c..fe0c294e14 100644
+> --- a/hw/arm/aspeed_ast2600_fuji.c
+> +++ b/hw/arm/aspeed_ast2600_fuji.c
+> @@ -15,14 +15,6 @@
+>   #include "hw/sensor/tmp105.h"
+>   #include "hw/nvram/eeprom_at24c.h"
 >   
 > -/*
-> - * Guard the alias against the TYPE_TMP75 that hw/sensor/tmp105.h now
-> - * defines.
+> - * Guard the aliases against the TYPE_TMP75 that hw/sensor/tmp105.h now defines;
+> - * TYPE_LM75 is guarded too for consistency (no LM75 model exists yet).
 > - */
+> -#undef TYPE_LM75
+> -#define TYPE_LM75 TYPE_TMP105
 > -#undef TYPE_TMP75
 > -#define TYPE_TMP75 TYPE_TMP105
->   #define TYPE_TMP421 "tmp421"
->   #define TYPE_DS1338 "ds1338"
+>   #define TYPE_TMP422 "tmp422"
 >   
+>   /* Fuji hardware value */
+> @@ -63,8 +55,8 @@ static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+>           get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
+>       }
+>   
+> -    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
+> -    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
+> +    i2c_slave_create_simple(i2c[17], TYPE_LM75B, 0x4c);
+> +    i2c_slave_create_simple(i2c[17], TYPE_LM75B, 0x4d);
+>   
+>       /*
+>        * EEPROM 24c64 size is 64Kbits or 8 Kbytes
+> @@ -74,15 +66,15 @@ static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+>       at24c_eeprom_init(i2c[20], 0x50, 256);
+>       at24c_eeprom_init(i2c[22], 0x52, 256);
+>   
+> -    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
+> -    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
+> -    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
+> +    i2c_slave_create_simple(i2c[3], TYPE_LM75B, 0x48);
+> +    i2c_slave_create_simple(i2c[3], TYPE_LM75B, 0x49);
+> +    i2c_slave_create_simple(i2c[3], TYPE_LM75B, 0x4a);
+>       i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
+>   
+>       at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
+> -    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
+> +    i2c_slave_create_simple(i2c[8], TYPE_LM75B, 0x4a);
+>   
+> -    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
+> +    i2c_slave_create_simple(i2c[50], TYPE_LM75B, 0x4c);
+>       at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
+>       i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
+>       i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
