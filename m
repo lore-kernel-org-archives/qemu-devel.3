@@ -4,90 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BEFFC624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E1A0C624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1jhm-0002V6-UL; Wed, 02 Sep 2026 08:04:39 -0400
+	id 1x1k4c-0006SM-35; Wed, 02 Sep 2026 08:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1x1jhg-0002UV-FF
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:04:32 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1x1jhf-0007hR-0C
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:04:32 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4921eed3fa2so8298215e9.0
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 05:04:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788350669; x=1788955469; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4A2M/98xuuK7dzXHs7G0KQ/0Yn0HODH/YqQwMvlBc+U=;
- b=HSI5cnguB49m1YWgA00kc/Xe2GaJwukqJ94mSgw20myIz7W99PT8ua71LHcKNV4/Xa
- G9lc9Ie38wpnhAxvf8sbjFCF0OB5gRBV3cy5vsqZGyxJKEmGxFLDtrnLaWbrxYoVLaru
- ptYZOfgOPxa9V0ZcpPElE2/g6dIsQwDPbHEJ6dA5kbEwZVAKoxR1YFNvFLA7eeMgxHrQ
- 3jyB7SKvNCPOqG1sXMR4JHlQ8dZdqMXB9WryaVvxtCg7YExDtPQCISQay0afIkzmMkAe
- McGmAu+7mYGBvN5XhUGN30Sp0mDMB3f9LlukuLZX/IlFqg6/k4QMEsKO3BRA/OxOAYZM
- QwlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788350669; x=1788955469;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4A2M/98xuuK7dzXHs7G0KQ/0Yn0HODH/YqQwMvlBc+U=;
- b=DVHhA+yGG3s7bFhUKoQo41nfYdfGQfRCvjPNwsmfMLwOxi5k9ZZSiK0T1CN0oxF6tN
- WfI5pASvgAetsi7q0fdCLRBPoQsCQXtmJt1gUUR88Xk2oHiSCDATr+f869W71Qoyq9qQ
- FMT/32DoeUZ71/PSrB/rH/RsiauNAnipXmVtMMPR1vDCfVbCwjd9tiS/uaghgXwaSu2Z
- u6x/l04nbuCPSk21p17aWpskTYtfALornvWariFaB0WmmFOWCfI2oWpPujsf7USf+C7V
- wTEWfRi0jNhVtCnUk2LXmGBQVZr+VjAoTUIiaRaoYPuc1bJqsyy+Yi/Hj8Q0VQD9jXQW
- JLzg==
-X-Gm-Message-State: AFuF++ka70DXBdh/us6wgy1BzeqM34ZHvsL9+Om7RSKW4KT7uVGR+iXD
- YW091YnuQHcnZRy7TUxmQn4KlrWQOWaXdF9RD1S2T1hjWia5hqNLY5yyQSVEZ69v6CE=
-X-Gm-Gg: AR+sD10WSu03tNf2/n2EvHftsBKs2bjEd6F4XmoQycll0B7OaPJpZXoMQYFbtOIb7e2
- ufhxFcD1OTFpKM7eAYZbLi/zXRW/fGMJJFDE9wwzXLhWQ72KGgLF387wEkCGRhVZFbb41HAA4ww
- fX7KNYcvG3m8bVMToLYDf96vZMxx2nUYEb7w0n13IO2HV61Opl9EkbjH6Oqc1LlQA18SuAFPrXl
- RQi5RRnF7KoXxFgnTBbsF2dTl1nw0UYY5k05yJpo1mwjiH1nB4AMBvtNJL4q6gAzseInUuZhpnV
- eB5LOCpXMZrQ/8yJbnFYkwWfZXW1Y4QdkSl7kVJqqtESDapjEnStyVQl4PWbtkfLpXWqoIC2wPa
- YxF0p/J9EZhwxcBRfvMiFnWQFV3Z92x3AQe3GVRsI7w5wi3n5Chxj5ggbDvpcwP/h7jZdOhKq2o
- UDVAzu7zCXOAEwAur458WfpVX+mQyBvmgSGYsKulZMZGQ5EtxgpQQsO0iv31+lOEPTeEM90N6t4
- /qU6XSidGWYlbIG7XVPJKWarJH9S/fFoj3P083osKonvmG/H1aeyOFAd2ZtkpSfvpheUjnpSx9+
- BLv8Z8/5PboPv9Km8iF4OyfkBHVCdL0=
-X-Received: by 2002:a05:600c:310e:b0:49c:e3ad:41d3 with SMTP id
- 5b1f17b1804b1-49ce55906cfmr58088705e9.0.1788350669094; 
- Wed, 02 Sep 2026 05:04:29 -0700 (PDT)
-Received: from simon-macbookpro.tugraz.local (tug-swl-225-161.tugraz.at.
- [129.27.225.161]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-484492cdc37sm6504420f8f.34.2026.09.02.05.04.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 05:04:28 -0700 (PDT)
-From: Simon Scherer <scherer.simon89@gmail.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1x1k4Y-0006RD-IK
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:28:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1x1k4X-0004sw-0t
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:28:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788352088;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=N5rMCPVhjC068rQLLNDke/LvXpMq7YJ3+AEL8uMXIMc=;
+ b=KY96nWllhaWRCmxal+gIMldqLB2W7cYxtAZM0AGtfvMLDYCuvSFaWgZGXWWUhn3ECyoJsq
+ u9eUlJmHWUU5Z0D+aXk1n0RSR4A0a3yhiFWj1KjbP05u/V16Yy9nx1erQ3N7Nui+vc6gCx
+ wjzpfC9lH8e6oUR3D0JawRqozpjNHl0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-vMK76Q9xM-iM95PAaY3F_A-1; Wed,
+ 02 Sept 2026 08:26:54 -0400
+X-MC-Unique: vMK76Q9xM-iM95PAaY3F_A-1
+X-Mimecast-MFC-AGG-ID: vMK76Q9xM-iM95PAaY3F_A_1788352013
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFEEC1953994; Wed,  2 Sep 2026 12:26:52 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2DF603000223; Wed,  2 Sep 2026 12:26:50 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
- Simon Scherer <scherer.simon89@gmail.com>
-Subject: [PATCH 2/2] target/i386: Update FPU tag word for FXCH
-Date: Wed,  2 Sep 2026 14:04:19 +0200
-Message-ID: <20260902120419.212855-3-scherer.simon89@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260902120419.212855-1-scherer.simon89@gmail.com>
-References: <20260902120419.212855-1-scherer.simon89@gmail.com>
+Cc: peter.maydell@linaro.org, leif.lindholm@oss.qualcomm.com,
+ eauger@redhat.com, Eric Auger <eric.auger@redhat.com>
+Subject: [PATCH 1/6] sbsa-gwdt: reduce code ident
+Date: Wed,  2 Sep 2026 14:26:41 +0200
+Message-ID: <20260902122646.2848464-2-imammedo@redhat.com>
+In-Reply-To: <20260902122646.2848464-1-imammedo@redhat.com>
+References: <20260902122646.2848464-1-imammedo@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +85,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FXCH ST(i) exchanges the contents of ST(0) and ST(i). Both registers
-receive a new value, so both should end up marked valid in the FPU tag
-word, regardless of what they were tagged before the swap.
-
-helper_fxchg_ST0_STN() swaps the two values but never touches either
-register's tag. So if either register happened to be tagged empty
-beforehand, it is still wrongly tagged empty afterwards.
-
-Mark both ST0 and ST(st_index) valid after the swap.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- target/i386/tcg/fpu_helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/watchdog/sbsa_gwdt.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 6ccc3c3b4e..9df9f2f375 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -520,6 +520,8 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
-     tmp = ST(st_index);
-     ST(st_index) = ST0;
-     ST0 = tmp;
-+    env->fptags[env->fpstt] = 0;
-+    env->fptags[(env->fpstt + st_index) & 7] = 0;
+diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+index 330a74798a..7cc5609b83 100644
+--- a/hw/watchdog/sbsa_gwdt.c
++++ b/hw/watchdog/sbsa_gwdt.c
+@@ -105,25 +105,27 @@ static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+ 
+     timer_del(s->timer);
+ 
+-    if (s->wcs & SBSA_GWDT_WCS_EN) {
+-        /*
+-         * Extract the upper 16 bits from woru & 32 bits from worl
+-         * registers to construct the 48 bit offset value
+-         */
+-        timeout = s->woru;
+-        timeout <<= 32;
+-        timeout |= s->worl;
+-        timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
+-        timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-
+-        if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
+-                (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
+-            /* store the current timeout value into compare registers */
+-            s->wcvu = timeout >> 32;
+-            s->wcvl = timeout;
+-        }
+-        timer_mod(s->timer, timeout);
++    if (!(s->wcs & SBSA_GWDT_WCS_EN)) {
++        return;
++    }
++
++    /*
++     * Extract the upper 16 bits from woru & 32 bits from worl
++     * registers to construct the 48 bit offset value
++     */
++    timeout = s->woru;
++    timeout <<= 32;
++    timeout |= s->worl;
++    timeout = muldiv64(timeout, NANOSECONDS_PER_SECOND, s->freq);
++    timeout += qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++
++    if ((rtype == EXPLICIT_REFRESH) || ((rtype == TIMEOUT_REFRESH) &&
++            (!(s->wcs & SBSA_GWDT_WCS_WS0)))) {
++        /* store the current timeout value into compare registers */
++        s->wcvu = timeout >> 32;
++        s->wcvl = timeout;
+     }
++    timer_mod(s->timer, timeout);
  }
  
- /* FPU operations */
+ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
 -- 
-2.53.0
+2.52.0
 
 
