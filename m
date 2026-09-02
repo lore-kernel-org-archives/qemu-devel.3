@@ -4,79 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3CEAC61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7BEC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1g8q-0000jX-HR; Wed, 02 Sep 2026 04:16:20 -0400
+	id 1x1gDv-0001TM-IC; Wed, 02 Sep 2026 04:21:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3TNuXagoKCr0vwdqoh1mkxjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--stanleyjhu.bounces.google.com>)
- id 1x1g8n-0000jH-Fr
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:16:18 -0400
-Received: from mail-pg1-x545.google.com ([2607:f8b0:4864:20::545])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3TNuXagoKCr0vwdqoh1mkxjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--stanleyjhu.bounces.google.com>)
- id 1x1g8l-0002rD-Bd
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:16:17 -0400
-Received: by mail-pg1-x545.google.com with SMTP id
- 41be03b00d2f7-cbedb8673ceso798201a12.0
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 01:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788336973; x=1788941773; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:mime-version:date:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+DqXSiXSd5Ap8jDYZFTtLp1p/eHTiuNOtfvZN48ftLs=;
- b=QpalH68CU/1ebQbKJg5vwkphME2lLER7AnrCW5FuwhXZJDr/aHR22FhgESnrfdgM0G
- /4b76TQ3E8shID81KfK8L0lhgZxmg7n+qzv8CZnJYJiSMOd44ZfiBtuubTv5lDngEhqV
- uj+UhRDuArDix/zedF7IJ8dZ/w2wuleWyIjWGcnqEHvxKfQF76fuRDYIbCT015UdnFBn
- lfTt2gLXD5hXXdCh8Ay2vNeNLE2XhJMRdMnIBKcI4WrKqJ180Cw9zoA0undIs5vb6lGv
- AaxPX5nGBvvpvKC3EPbs4CcOq2ugMCUglfYIXuqh1WmsAvNUiJJJQgSGYpfi9Mel6nvM
- Vm1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788336973; x=1788941773;
- h=content-type:cc:to:from:subject:message-id:mime-version:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+DqXSiXSd5Ap8jDYZFTtLp1p/eHTiuNOtfvZN48ftLs=;
- b=TbndPTNKfFIQA2Q0sdS3jtA3qNytbCxIboJDUvYq4TavOevaft4vEgxiRMiuXuePqV
- ViLyb6G1eVELzn5Mj74vj+7lyDQf8Kt2LOsfiG/DWsoppBQvQPVn/JmN0n28HMP0p/n9
- WD51fH7Vx9dzRo2SuC/ffqXBhB6tgzkf1PtK3KzBVYuRTu9d0sxiXGWZ3Clp51Q1TAPX
- +fUGVdwBTnqJh9B8CNlnNEB/X/vf55nrQP6oP0QVp96v1WJlEZwrZSLO7vfpcAlmjoan
- AzhxtXKoubI8eT8lfPrdDW+MHjnch+uGKd43NSz2gRCa7bwvQzB2smflAURxuScCk1iQ
- YPvA==
-X-Gm-Message-State: AFuF++lwOSaxTOFvbw4I3ew2hMiSFGgW7WqsobvxPXemzSG4PrLkDvWT
- wOtPMXk9YRhgNNlP3luj4oIVJ+xYEK5EFuuj88rW8mCbUmDrgch8U1N9JyTbtlxzAjw5nakS+Id
- PGBTLanlyt16GLHueRBKGHg==
-X-Received: from pgbaz16.prod.google.com ([2002:a05:6a02:50:b0:cbe:9dc7:9ee8])
- (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:a120:b0:3d3:afd9:6197 with SMTP id
- adf61e73a8af0-3d9b0f41d74mr4274774637.27.1788336972411; 
- Wed, 02 Sep 2026 01:16:12 -0700 (PDT)
-Date: Wed,  2 Sep 2026 16:16:10 +0800
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.55.0.970.g62bdec98f9-goog
-Message-ID: <20260902081610.2290123-1-stanleyjhu@google.com>
-Subject: [PATCH v3] hw/ufs: Reset controller and MCQ state on HCE transition
- to 0
-From: Stanley Jhu <stanleyjhu@google.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>
-Cc: qemu-devel@nongnu.org, Jeuk Kim <jeuk20.kim@gmail.com>, 
- Jinyoung Choi <j-young.choi@samsung.com>, Stanley Jhu <stanleyjhu@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::545;
- envelope-from=3TNuXagoKCr0vwdqoh1mkxjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--stanleyjhu.bounces.google.com;
- helo=mail-pg1-x545.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1x1gDt-0001Sb-CW; Wed, 02 Sep 2026 04:21:33 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1x1gDr-0003fR-AP; Wed, 02 Sep 2026 04:21:33 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JyLt27LbtTqjZSKNeXgBUqDDEYzhoRuvgLHAJMay4L3gJmYU1AX7F5ZQgWYGmKw0ka/WA+gWhcUJLyfnQp1AhESANqybXgCi+bEwY8W8mX1794JBj41RWIkFuTifpGkvmnQV7XJjHgAL9FiGV7Ag4XpB6zkeW+V5hA6O3kfGezrmywTm5wtzEXZgRK81lLXSbx/9MjDOWXgWI/ephk6KguCtHasngcu4uvLD/LwnjvcVvXheUqP2ZlCyeOeeUgPh10GNTDFI5v+lq5tyI5Ayz7SXKl3X8nVEsRXnWyQ0vcQHHEF2/j1FCWKVnCxKBk6bioDufl1iN+fv7T5yLzHBsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xiq3jxLy713AZqZnsGb4nTD/Z3YGVTMKCRCqAFopSnE=;
+ b=K982mUCKFh1DjLhqCzH+u4Wjh5ix8g/RYb75k/JMSVVFSOVKTh0oyVVS/3BaOTi5QaxczxZEC7mtrIiXE6z8OckGDL35olFtsoR7I1nBwerdWaQgMRfug67qCZRyaqGmXbXs+i9Y8Usg3sNCd4FUC3QN5WG97VnZN/kc61pEzC/EF83qS66gppFRkGJbg0HKNEBP6RowCQ5vpNfbNv4qSzoMp77nnE8WsEYVER3cQwVAe9S3vQfRDoML+xPKB8xDbTuGZxYlCkUjHEctaECYt87iT8qFa+Unff3d8YU8/y5u/QqWmlrdYv9ljRmYLVv5wpJCf937gTOCbfuhwm7TaA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xiq3jxLy713AZqZnsGb4nTD/Z3YGVTMKCRCqAFopSnE=;
+ b=FqQmLGc9o/Bpnvnb4+oqWe61Z6g8TugZQquO2dQobcl1srq/dlXSHRj3mWXC0X38Gd3oVt9YkpBbr4RDHjXC2H5drNfQnWT4YWiHq/Px5CHXQVe7/3NAu+Q5hq/vi6SfnJEhvu7UuzRNmYaoUJz/LZTziK/uq4SivMwHyTzcmZW0gFOMFByhyX3wi6WNXZg7nBtbMAFNTUM9X4UvSdzBFF0XNbajqxLb++vv3SEle4Ar9kcQpJ7K/ZQ1i6kYfKYIyT3eKeBXnqp7CHdBol7wt2nLUSc1PTm2dKFdeMbobouqu+QgDbB27HxH/1PDAfDgbAAHuF3mLbVVVe8LQy21LA==
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
+ by DS7PR12MB8418.namprd12.prod.outlook.com (2603:10b6:8:e9::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
+ 2026 08:21:24 +0000
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b%5]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
+ 08:21:24 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Farhan Ali
+ <alifm@linux.ibm.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>
+CC: "mjrosato@linux.ibm.com" <mjrosato@linux.ibm.com>, "farman@linux.ibm.com"
+ <farman@linux.ibm.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "alex@shazbot.org" <alex@shazbot.org>, "armbru@redhat.com"
+ <armbru@redhat.com>
+Subject: RE: [PATCH v4 2/4] vfio/pci: Add an error handler callback
+Thread-Topic: [PATCH v4 2/4] vfio/pci: Add an error handler callback
+Thread-Index: AQHdOXcv0gUaqc3nq0S/eQQmasGmmLa68WKAgAABzXA=
+Date: Wed, 2 Sep 2026 08:21:24 +0000
+Message-ID: <SJ0PR12MB8614C382D6696B05D9AD6C5AABB72@SJ0PR12MB8614.namprd12.prod.outlook.com>
+References: <20260831183151.12626-1-alifm@linux.ibm.com>
+ <20260831183151.12626-3-alifm@linux.ibm.com>
+ <7d930283-11c1-4b54-b8e9-1158eed5b442@redhat.com>
+In-Reply-To: <7d930283-11c1-4b54-b8e9-1158eed5b442@redhat.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|DS7PR12MB8418:EE_
+x-ms-office365-filtering-correlation-id: ccb7fdd4-7736-49ec-ed1d-08df08cb2d75
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|376014|1800799024|366016|38070700021|4143699003|10067099003|6133799003|11063799006|18002099003|22082099003|56012099006;
+x-microsoft-antispam-message-info: /YKw7e5pmsoxaj5t9mHbD2NwY8VJKk9B5lyRlWe5/E4N5OBNzTVwCBu5tExnDKCX6HyKS2Gc6UbdC85ncztF9MoZO6N6eBeqk/wvmeleCEwougBfJwzPq1NanJ33sZ0jsjThvwiVSfQxLI/cWjmn2fcyaMrB3pBA07zvpRsl5nS2+Yj38buM9FDHXUFJVBHhczwJ7YMw0BdCy+pPojCDZvq9yZ0OXqkOfr6Hhne3zKfA2tWB7/Gd7DO4+qrV7E7OCu+nqVd5v8RfqoHqeI0YBmwDMMTnGPrVo3SR2NNQj9eSEsgAVDXll9CxCxxO0+gSFPF3EJY/ultdaxw/AyNJ5GEDofCoIur3wNRsjJJ+UK0N5HC49ctfCM38+JML26AmKwDkTSAzBQzTyVSwj+A3JWS16yWwXSj8IpYy45LLHQmqMVP0EVs0GmTU5ytq6tyKh9t9SQuhfclRJSZzw5l4C0q/hmYDUk3seUkpQykTPIpfwAtOBrZ7dFwVWmY0Wvgh0qdwkGcJqfB6+J9pZeMggPonCXOj2F+yCAZKp1xS7z4VvRJdSxrBRzMUl1iG5ufckWDgl57h/0fbkWn2i6w8D+QWholXbmMRo2OdVB3JkFaQicARVrnH943K7WSCQcrh1gAQcUxhPc1flUFKpqaz95IMMJXEaNWeKjbP5doLDWFHuvw5ky9KNi6z5AUCjSZKFQo39CSrCBFYqES3wRbP/zA00BJKx8G7YbcJzQedrog=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(38070700021)(4143699003)(10067099003)(6133799003)(11063799006)(18002099003)(22082099003)(56012099006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OUkwQkw0L3BDUVlrdjNWOE9TQ3JWa1RpcE84MUd0VXd5K1h5RkcxY0hrT2VL?=
+ =?utf-8?B?QXA5d1FBczZ3WG5nY3NkWjY3VlFRdmpuenlWUlhISXo2UXVoMWJTM2RGbHU4?=
+ =?utf-8?B?NG1nQTdrbDNVQk1lZVNXQ2s5NnlDMDVlc0FpYzlNc2t2Q05VT3FrZGRHdC9a?=
+ =?utf-8?B?N3BGVWFaVlgrSmhadjNUNXZrUHZQMVkxOEhSOGx5NkJJL2JpcTdMa3dmREds?=
+ =?utf-8?B?MXkvSVpCUG81SUFSVFFueWhLalZpMGJxMWxKNTJzTXIzTy9iaDl0VENVR2xH?=
+ =?utf-8?B?UXRNbXNzQm9FSUdzbTFLZHpnTFkxSmFSdlFuMmM5a1UyOEFWdGhOc0lWNkFM?=
+ =?utf-8?B?dHk4MUNES0lWbkxsSDVNd3YzNjZHSTl1Z3A4Ti9hZkpxUElPcHVvVGU1bS9r?=
+ =?utf-8?B?SEVJNlRUcWJpZnZSSXROUUNjbmZGY2t6WndVNitoSGM4QWt2UzRmMjB1RnVv?=
+ =?utf-8?B?VjF0b0YzZnBOVFk3N0ZLRmJkbUJsbU1KMmJTZjVKYmlZdmFvc2ZrMlhBVGJw?=
+ =?utf-8?B?SVNVSXc3c2FYRllIT1pXRGY2NlNnRjNTSDk4OVBCUk5kVmxrcmw1dWZnTTBs?=
+ =?utf-8?B?OHhkKzZyN0t2SFhTM0JlNjQ4V2VjV1c2UStpOXNUaDVTMFVmN2xxYXdyQlYv?=
+ =?utf-8?B?VVNHaCtudGtYN29yZFJWOHVXWEZMSnpPQk4wa0xvMTFlMjJLQTRXWFVuMkV1?=
+ =?utf-8?B?Y1Z6NTFRUm92TFVTakVzV0gvRWFRWXJkM21sczZXMDNFZE9VWjcvVnNrSkIw?=
+ =?utf-8?B?NEp6S25lak0vQlF1bTlLNTZuYnBwUEE4U0pENjNHODVjSE0zYVRJOWdVamRy?=
+ =?utf-8?B?c2ZoN1NMbC82ZWVhR2JFd2YydFNFMGU1Uno5SGFxcnR0QW9ROVR5Wm0vcjRC?=
+ =?utf-8?B?eU03S09pckY3N2ZsUURWazFxYy9xNGE1b2s0ZW1HenVvMWZpajJhaXdoU0Fa?=
+ =?utf-8?B?NHNiSVp4WnZHamZPT1JaenlETnR0ZHFNcmJHRysxNHp1QVVXWTNLTDl6cXNF?=
+ =?utf-8?B?ckNkSVV0ZlNHdzlpb1dyTlp1cmo1NHRMNHB6cTA1am9lTFRpSHlZS3Q4R3kv?=
+ =?utf-8?B?RnNqT0pkTDZYMEF5dDFXK0tpWnY1aDRvSVE4U29aM0kzUHB1VmNZTjJJd0po?=
+ =?utf-8?B?ZlNoTXJ6MlR1QUZFNlhmalhKS1dDUFVlVmZDbWtvREM1TVArSlh2azlOb2xP?=
+ =?utf-8?B?WDFDN0ZpRGljc3JEY2VxYnRqUUcxT2hWSVBobDNtZTh6M2ozZEdRT3Mxb0Qx?=
+ =?utf-8?B?clBxWVRKUU1BcHZSMXVyM29kUXh2MzJnOGd1UHg3UDIzcVE3TjFrSXI0TWRi?=
+ =?utf-8?B?UzZqNW9wMVpTYWNrSGRBc1hkMEhIRDNKOUZZMWlmb2tEUXFhSHQ2cnRRQTNT?=
+ =?utf-8?B?blFvbWFQMVJlUnFFU29ENnhsV2Y5ZzhRRHl4b3ZEelJMOEI0MDFVMHFpSHZL?=
+ =?utf-8?B?cDhvQWRPcG9QZVk2ZHNNZXQwN1RPKys3dTcrQ041WUk0U1dsQkdINHhpYjll?=
+ =?utf-8?B?RkFzVlBtdHRiandra2VXWEFXWFNvbzR4cGJQWHREZjZnNk8vWWh3MW56VDYr?=
+ =?utf-8?B?bTJFaWJOTmdVWkNtUC83UXg2ZnFlK1JEd1I5L2IwRHVhZ3AzK2VhTy9xSElV?=
+ =?utf-8?B?b1Z0K2hNcFBRRzZJMWx2U0hkWE1iTEVHWGpaYkNDZXBLSk9DK0N2ekFKSlcy?=
+ =?utf-8?B?Y1lRMmhYaEpyeWR3aXc5K1RHd0lpWERnZmJ0MjdYVFVaSlp5bmZwWEsrZita?=
+ =?utf-8?B?czd6a3hwOXpKRnRiYmo0dTdjcmttVE41UU5UYmdTMHhSaFNzZEp6YVB3cjhH?=
+ =?utf-8?B?L3VzZUhkRFhEcEhnaUlhTzV1YVdya1A3Q1Rxd1U2WWNSb3AyWVA5MFdQbXFl?=
+ =?utf-8?B?VTFaaTBBVmhuOWJqc28rQVhRdUxPa2NVSDhsT3dCZ0g1REd5bi9lTmtoakZV?=
+ =?utf-8?B?dmxFSkpTK2ZEMExKSTIyYWthQXI5R2lIVXM1RXBHelJJVll6SGZWSWgvZ1RP?=
+ =?utf-8?B?NkUrNXp6dSttcFVTYWFTUm15S2pvUDRqV0t2UDZIekpvRHJLa09MZnhINTNM?=
+ =?utf-8?B?eXlQMkFNbUhQbUMzcTRFYTluUlViYmd6VnhoZUNFWW45M2JlQnNqSisyeUdw?=
+ =?utf-8?B?bFVpZlRXN1dhaGpDdHhsUGFFbUtBUENOSmRRTEhSaGp1M09pQUJTbVdxY1Zi?=
+ =?utf-8?B?UWM4ZWlxSHArQ092c0g2QmZvd0x4N3RGR0NtNXFCR3ZWMHN5TTQrdWpDRlhK?=
+ =?utf-8?B?N2R5K0dKNnVKVHg1Unl6MWxJcFNTZTZreUV5dDB0aTVvZ0NyM0pOclk1bG5k?=
+ =?utf-8?B?SDh5RzlPYmh3aWk4c0VTY2xTTDRDRVlycmdDRTJDWEZIWVJjMXpCQT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ccb7fdd4-7736-49ec-ed1d-08df08cb2d75
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2026 08:21:24.3492 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: MYumALlNnZqoYGTEANW5EVZZTlkTwHIqEaqwVE1pQ7ZKVNXvP3ihx2v6GgCu/HCwzTzQY72hIbpTLOQLb/MjUg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8418
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,256 +156,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the JEDEC Universal Flash Storage Host Controller Interface
-(UFSHCI) specification (Section 5.2.1 "Host Controller Enable"):
-when Host Controller Enable (HCE) transitions from 1 to 0, a host
-controller reset is initiated. The host controller shall abort all
-active transfers, return internal state machines to idle, and de-assert
-all interrupts.
-
-Currently, QEMU's UFS emulator only clears HCS and HCE registers upon
-HCE=0, leaving internal state active. Specifically:
-- Outstanding SCSI requests in the block layer are not purged.
-- Active bottom halves (doorbell_bh, complete_bh, and MCQ sq/cq BHs)
-  remain scheduled.
-- Allocated MCQ Submission and Completion Queues (sq and cq) are
-  not freed.
-- Dynamic MCQ queue registers, legacy UTRL request states, and status
-  registers (UTRLCNR, UTRLRSR) remain stale.
-
-Implement ufs_hce_reset() to:
-1. Implement .cancel callback in ufs_scsi_info to properly unref
-   scsi_req and prevent reference leaks when SCSI requests are purged.
-2. Cancel active bottom halves (doorbell_bh, complete_bh, and MCQ sq/cq
-   BHs) and guard them with a resetting flag before purging requests,
-   ensuring blk_drain() cannot run or reschedule request-producing BHs.
-3. Purge outstanding SCSI requests for all logical units via
-   scsi_device_purge_requests().
-4. Clear standard request list slots and release SGLs via
-   ufs_clear_req(), and clear doorbells and status registers (UTRLCNR,
-   UTRLRSR).
-5. Free allocated MCQ queues and clear dynamic queue registers while
-   preserving static capability offsets.
-6. De-assert interrupts via ufs_irq_check().
-7. Add a trace_ufs_hce_reset() trace event.
-
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
----
-v2 -> v3:
-- Rebased on top of current upstream master (resolving context conflict
-  with recently merged Write Booster in hw/ufs/ufs.h).
-- Fixed patch formatting and line-wrapping issues.
-
-v1 -> v2:
-- Added ufs_scsi_command_cancelled() as .cancel callback in ufs_scsi_info
-  to drop scsi_req reference and avoid leaks upon purge (Jeuk Kim).
-- Reordered sequence to cancel all active BHs before
-  scsi_device_purge_requests() and introduced resetting flag to prevent
-  CQ BH from rescheduling SQ BH during blk_drain() (Jeuk Kim).
-- Cleared UTRLCNR and UTRLRSR registers upon reset (Jeuk Kim).
-- Guarded ufs_process_req() and ufs_complete_req() against execution while
-  resetting is in progress.
-- Cleaned up array address-of idiom in mcq_op_reg memset.
----
- hw/ufs/lu.c         |  7 ++++
- hw/ufs/trace-events |  1 +
- hw/ufs/ufs.c        | 96 ++++++++++++++++++++++++++++++++++++++++++++-
- hw/ufs/ufs.h        |  2 +
- 4 files changed, 105 insertions(+), 1 deletion(-)
-
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index eeca865..bdb1650 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -188,6 +188,12 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
-     scsi_req_unref(scsi_req);
- }
- 
-+static void ufs_scsi_command_cancelled(SCSIRequest *scsi_req)
-+{
-+    scsi_req->hba_private = NULL;
-+    scsi_req_unref(scsi_req);
-+}
-+
- static QEMUSGList *ufs_get_sg_list(SCSIRequest *scsi_req)
- {
-     UfsRequest *req = scsi_req->hba_private;
-@@ -202,6 +208,7 @@ static const struct SCSIBusInfo ufs_scsi_info = {
- 
-     .get_sg_list = ufs_get_sg_list,
-     .complete = ufs_scsi_command_complete,
-+    .cancel = ufs_scsi_command_cancelled,
- };
- 
- static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 0cd3ba9..9222933 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -14,6 +14,7 @@ ufs_process_uiccmd(uint32_t uiccmd, uint32_t ucmdarg1, uint32_t ucmdarg2, uint32
- ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
- ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t size) "mcq create sq sqid %"PRIu8", cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
- ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
-+ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request lists"
- 
- # error condition
- ufs_err_dma_read_utrd(uint32_t slot, uint64_t addr) "failed to read utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 160a4ac..3c4d742 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -452,6 +452,10 @@ static void ufs_mcq_process_sq(void *opaque)
-     uint16_t head = ufs_mcq_sq_head(u, sq->sqid);
-     int err;
- 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     while (!(ufs_mcq_sq_empty(u, sq->sqid) || QTAILQ_EMPTY(&sq->req_list))) {
-         addr = sq->addr + head;
-         err = ufs_addr_read(sq->u, addr, (void *)&sqe, sizeof(sqe));
-@@ -525,7 +529,7 @@ static void ufs_mcq_process_cq(void *opaque)
-         tail = (tail + sizeof(req->cqe)) % (cq->size * sizeof(req->cqe));
-         ufs_mcq_update_cq_tail(u, cq->cqid, tail);
- 
--        if (QTAILQ_EMPTY(&req->sq->req_list) &&
-+        if (!u->resetting && QTAILQ_EMPTY(&req->sq->req_list) &&
-             !ufs_mcq_sq_empty(u, req->sq->sqid)) {
-             /* Dequeueing from SQ was blocked due to lack of free requests */
-             qemu_bh_schedule(req->sq->bh);
-@@ -722,6 +726,87 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
-     return true;
- }
- 
-+static void ufs_hce_reset(UfsHc *u)
-+{
-+    int i;
-+
-+    trace_ufs_hce_reset();
-+
-+    u->resetting = true;
-+
-+    /* 1. Cancel active Bottom Halves before purging requests */
-+    if (u->doorbell_bh) {
-+        qemu_bh_cancel(u->doorbell_bh);
-+    }
-+    if (u->complete_bh) {
-+        qemu_bh_cancel(u->complete_bh);
-+    }
-+    if (u->params.mcq) {
-+        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+            if (u->sq[i] && u->sq[i]->bh) {
-+                qemu_bh_cancel(u->sq[i]->bh);
-+            }
-+        }
-+        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+            if (u->cq[i] && u->cq[i]->bh) {
-+                qemu_bh_cancel(u->cq[i]->bh);
-+            }
-+        }
-+    }
-+
-+    /* 2. Purge outstanding SCSI requests for all logical units */
-+    for (i = 0; i < UFS_MAX_LUS; i++) {
-+        if (u->lus[i] && u->lus[i]->scsi_dev) {
-+            scsi_device_purge_requests(u->lus[i]->scsi_dev, SENSE_CODE(RESET));
-+        }
-+    }
-+
-+    /* 3. Reset standard request list slots, doorbells, and status registers */
-+    for (i = 0; i < u->params.nutrs; i++) {
-+        ufs_clear_req(&u->req_list[i]);
-+        u->req_list[i].state = UFS_REQUEST_IDLE;
-+    }
-+    u->reg.utrldbr = 0;
-+    u->reg.utmrldbr = 0;
-+    u->reg.utrlcnr = 0;
-+    u->reg.utrlrsr = 0;
-+    u->reg.is = 0;
-+
-+    /* 4. Free MCQ Queues and reset MCQ dynamic registers */
-+    if (u->params.mcq) {
-+        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+            if (u->sq[i]) {
-+                ufs_mcq_free_sq(u->sq[i]);
-+                u->sq[i] = NULL;
-+            }
-+        }
-+        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+            if (u->cq[i]) {
-+                ufs_mcq_free_cq(u->cq[i]);
-+                u->cq[i] = NULL;
-+            }
-+        }
-+
-+        /* Clear dynamic queue configuration registers without overwriting static capability offsets */
-+        for (i = 0; i < ARRAY_SIZE(u->mcq_reg); i++) {
-+            u->mcq_reg[i].sqattr = 0;
-+            u->mcq_reg[i].sqlba = 0;
-+            u->mcq_reg[i].squba = 0;
-+            u->mcq_reg[i].sqcfg = 0;
-+            u->mcq_reg[i].cqattr = 0;
-+            u->mcq_reg[i].cqlba = 0;
-+            u->mcq_reg[i].cquba = 0;
-+            u->mcq_reg[i].cqcfg = 0;
-+        }
-+        memset(u->mcq_op_reg, 0, sizeof(u->mcq_op_reg));
-+    }
-+
-+    u->resetting = false;
-+
-+    /* 5. De-assert IRQ */
-+    ufs_irq_check(u);
-+}
-+
- static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
- {
-     switch (offset) {
-@@ -739,6 +824,7 @@ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
-             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 1);
-         } else if (FIELD_EX32(u->reg.hce, HCE, HCE) &&
-                    !FIELD_EX32(data, HCE, HCE)) {
-+            ufs_hce_reset(u);
-             u->reg.hcs = 0;
-             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 0);
-         }
-@@ -2089,6 +2175,10 @@ static void ufs_process_req(void *opaque)
-     UfsRequest *req;
-     int slot;
- 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     for (slot = 0; slot < u->params.nutrs; slot++) {
-         req = &u->req_list[slot];
- 
-@@ -2115,6 +2205,10 @@ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result)
- 
-     req->state = UFS_REQUEST_COMPLETE;
- 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     if (ufs_mcq_req(req)) {
-         trace_ufs_mcq_complete_req(req->sq->sqid);
-         QTAILQ_INSERT_TAIL(&req->sq->cq->req_list, req, entry);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index aa8361d..6f2693b 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -173,6 +173,8 @@ typedef struct UfsHc {
-     UfsSq *sq[UFS_MAX_MCQ_QNUM];
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
- 
-+    bool resetting;
-+
-     /* Extended features */
-     UfsWb wb;
- 
--- 
-2.55.0.970.g62bdec98f9-goog
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogQ8OpZHJpYyBMZSBHb2F0
+ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPiBTZW50OiAwMiBTZXB0ZW1iZXIgMjAyNiAwOTowOA0KPiBU
+bzogRmFyaGFuIEFsaSA8YWxpZm1AbGludXguaWJtLmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9y
+ZzsgcWVtdS0NCj4gczM5MHhAbm9uZ251Lm9yZw0KPiBDYzogbWpyb3NhdG9AbGludXguaWJtLmNv
+bTsgZmFybWFuQGxpbnV4LmlibS5jb207IGNvaHVja0ByZWRoYXQuY29tOw0KPiBhbGV4QHNoYXpi
+b3Qub3JnOyBhcm1icnVAcmVkaGF0LmNvbTsgU2hhbWVlciBLb2xvdGh1bSBUaG9kaQ0KPiA8c2tv
+bG90aHVtdGhvQG52aWRpYS5jb20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjQgMi80XSB2Zmlv
+L3BjaTogQWRkIGFuIGVycm9yIGhhbmRsZXIgY2FsbGJhY2sNCj4gDQo+IEV4dGVybmFsIGVtYWls
+OiBVc2UgY2F1dGlvbiBvcGVuaW5nIGxpbmtzIG9yIGF0dGFjaG1lbnRzDQo+IA0KPiANCj4gK1No
+YW1lZXIsIHdobyBpcyBsb29raW5nIGF0IGZvcndhcmRpbmcgQUVSIGVycm9ycyB0byBndWVzdCA6
+DQoNClRoYW5rcyBDw6lkcmljLg0KDQpJIGhhdmUgc2VudCBvdXQgYSBrZXJuZWwgUkZDIHNlcmll
+cyB5ZXN0ZXJkYXk6DQpodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyNjA5MDEwOTMyMTcu
+ODUzOS0xLXNrb2xvdGh1bXRob0BudmlkaWEuY29tLw0KDQpQbGVhc2UgdGFrZSBhIGxvb2suIFBy
+b2JhYmx5IHRoaXMgc2VyaWVzIGNhbiBiZSBleHRlbmRlZCBsYXRlciB0byBjb21lIHdpdGggYSBn
+ZW5lcmljDQpBRVIgZXJyb3IgaGFuZGxpbmcgaW5jb3Jwb3JhdGluZyB0aGUgbmV3IGV2ZW50ZmQg
+cHJvcG9zZWQgaW4gdGhhdCBSRkMuIEkgd2lsbA0KZ28gdGhyb3VnaCB0aGlzIG9uZS4NCg0KVGhh
+bmtzLA0KU2hhbWVlcg0KDQo+IA0KPiAgICBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LQ0K
+PiBkZXZlbC9TSjBQUjEyTUI4NjE0RERGRUUzQTk1NzU1NjRFREVGOTlBQkZGMkBTSjBQUjEyTUI4
+NjE0Lm4NCj4gYW1wcmQxMi5wcm9kLm91dGxvb2suY29tLw0KPiANCj4gT24gOC8zMS8yNiAyMDoz
+MSwgRmFyaGFuIEFsaSB3cm90ZToNCj4gPiBQcm92aWRlIGEgdmZpbyBlcnJvciBoYW5kbGluZyBj
+YWxsYmFjaywgdGhhdCBjYW4gYmUgdXNlZCBieSBkZXZpY2VzIHRvDQo+ID4gaGFuZGxlIFBDSSBl
+cnJvcnMgZm9yIHBhc3N0aHJvdWdoIGRldmljZXMuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBG
+YXJoYW4gQWxpIDxhbGlmbUBsaW51eC5pYm0uY29tPg0KPiA+IC0tLQ0KPiA+ICAgaHcvdmZpby9w
+Y2kuYyB8IDI3ICsrKysrKysrKysrKysrKysrKysrKy0tLS0tLQ0KPiA+ICAgaHcvdmZpby9wY2ku
+aCB8ICAxICsNCj4gPiAgIDIgZmlsZXMgY2hhbmdlZCwgMjIgaW5zZXJ0aW9ucygrKSwgNiBkZWxl
+dGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9ody92ZmlvL3BjaS5jIGIvaHcvdmZpby9w
+Y2kuYyBpbmRleA0KPiA+IDQyOGFiMmYwNjkuLmEyZjQ4OWIzNGQgMTAwNjQ0DQo+ID4gLS0tIGEv
+aHcvdmZpby9wY2kuYw0KPiA+ICsrKyBiL2h3L3ZmaW8vcGNpLmMNCj4gPiBAQCAtMzI0NCwyMSAr
+MzI0NCwzNiBAQCB2b2lkIHZmaW9fcGNpX3B1dF9kZXZpY2UoVkZJT1BDSURldmljZQ0KPiAqdmRl
+dikNCj4gPiAgIHN0YXRpYyB2b2lkIHZmaW9fZXJyX25vdGlmaWVyX2hhbmRsZXIodm9pZCAqb3Bh
+cXVlKQ0KPiA+ICAgew0KPiA+ICAgICAgIFZGSU9QQ0lEZXZpY2UgKnZkZXYgPSBvcGFxdWU7DQo+
+ID4gKyAgICBFcnJvciAqZXJyID0gTlVMTDsNCj4gPg0KPiA+ICAgICAgIGlmICghZXZlbnRfbm90
+aWZpZXJfdGVzdF9hbmRfY2xlYXIoJnZkZXYtPmVycl9ub3RpZmllcikpIHsNCj4gPiAgICAgICAg
+ICAgcmV0dXJuOw0KPiA+ICAgICAgIH0NCj4gPg0KPiA+ICAgICAgIC8qDQo+ID4gLSAgICAgKiBU
+QkQuIFJldHJpZXZlIHRoZSBlcnJvciBkZXRhaWxzIGFuZCBkZWNpZGUgd2hhdCBhY3Rpb24NCj4g
+PiAtICAgICAqIG5lZWRzIHRvIGJlIHRha2VuLiBPbmUgb2YgdGhlIGFjdGlvbnMgY291bGQgYmUg
+dG8gcGFzcw0KPiA+IC0gICAgICogdGhlIGVycm9yIHRvIHRoZSBndWVzdCBhbmQgaGF2ZSB0aGUg
+Z3Vlc3QgZHJpdmVyIHJlY292ZXINCj4gPiAtICAgICAqIGZyb20gdGhlIGVycm9yLiBUaGlzIHJl
+cXVpcmVzIHRoYXQgUENJZSBjYXBhYmlsaXRpZXMgYmUNCj4gPiAtICAgICAqIGV4cG9zZWQgdG8g
+dGhlIGd1ZXN0LiBGb3Igbm93LCB3ZSBqdXN0IHRlcm1pbmF0ZSB0aGUNCj4gPiArICAgICAqIFdl
+IGNhbiByZXRyaWV2ZSB0aGUgZXJyb3IgZGV0YWlscyBhbmQgZGVjaWRlIHdoYXQgYWN0aW9uDQo+
+ID4gKyAgICAgKiBuZWVkcyB0byBiZSB0YWtlbiBpbiBlcnJfaGFuZGxlcigpLiBPbmUgb2YgdGhl
+IGFjdGlvbnMgY291bGQNCj4gPiArICAgICAqIGJlIHRvIHBhc3MgdGhlIGVycm9yIHRvIHRoZSBn
+dWVzdCBhbmQgaGF2ZSB0aGUgZ3Vlc3QgZHJpdmVyDQo+ID4gKyAgICAgKiByZWNvdmVyIGZyb20g
+dGhlIGVycm9yLiBUaGlzIHJlcXVpcmVzIHRoYXQgUENJZSBjYXBhYmlsaXRpZXMgYmUNCj4gPiAr
+ICAgICAqIGV4cG9zZWQgdG8gdGhlIGd1ZXN0Lg0KPiA+ICsgICAgICoNCj4gPiArICAgICAqIElm
+IGVycl9oYW5kbGVyKCkgaXMgbm90IGltcGxlbWVudGVkL2ZhaWxzLCB3ZSBqdXN0IHRlcm1pbmF0
+ZQ0KPiA+ICsgdGhlDQo+ID4gICAgICAgICogZ3Vlc3QgdG8gY29udGFpbiB0aGUgZXJyb3IuDQo+
+ID4gICAgICAgICovDQo+ID4NCj4gPiAtICAgIGVycm9yX3JlcG9ydCgiJXMoJXMpIFVucmVjb3Zl
+cmFibGUgZXJyb3IgZGV0ZWN0ZWQuIFBsZWFzZSBjb2xsZWN0IGFueQ0KPiBkYXRhIHBvc3NpYmxl
+IGFuZCB0aGVuIGtpbGwgdGhlIGd1ZXN0IiwgX19mdW5jX18sIHZkZXYtPnZiYXNlZGV2Lm5hbWUp
+Ow0KPiA+ICsgICAgaWYgKHZkZXYtPmVycl9oYW5kbGVyICYmIHZkZXYtPmVycl9oYW5kbGVyKHZk
+ZXYsICZlcnIpKSB7DQo+ID4gKyAgICAgICAgcmV0dXJuOw0KPiA+ICsgICAgfQ0KPiA+ICsNCj4g
+PiArICAgIGlmIChlcnIpIHsNCj4gPiArICAgICAgICBlcnJvcl9wcmVwZW5kKCZlcnIsICJVbnJl
+Y292ZXJhYmxlIFBDSWUgZXJyb3IgZGV0ZWN0ZWQgZm9yIGRldmljZQ0KPiAlcyIsDQo+ID4gKyAg
+ICAgICAgICAgICAgICAgICAgICB2ZGV2LT52YmFzZWRldi5uYW1lKTsNCj4gPiArICAgICAgICBl
+cnJvcl9yZXBvcnRfZXJyKGVycik7DQo+ID4gKyAgICB9IGVsc2Ugew0KPiA+ICsgICAgICAgIGVy
+cm9yX3ByaW50ZigiVW5yZWNvdmVyYWJsZSBQQ0llIGVycm9yIGRldGVjdGVkIGZvciBkZXZpY2Ug
+JXMiLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICB2ZGV2LT52YmFzZWRldi5uYW1lKTsNCj4g
+PiArICAgIH0NCj4gPiArICAgIGVycm9yX3ByaW50ZigiUGxlYXNlIGNvbGxlY3QgYW55IGRhdGEg
+cG9zc2libGUgYW5kIHRoZW4ga2lsbCB0aGUNCj4gPiArIGd1ZXN0Iik7DQo+IA0KPiBob3cgYWJv
+dXQgdGhhdCBpbnN0ZWFkIDoNCj4gDQo+ICAgIGlmIChlcnIpIHsNCj4gICAgICAgIGVycm9yX3Jl
+cG9ydCgiVW5yZWNvdmVyYWJsZSBQQ0llIGVycm9yIGRldGVjdGVkIGZvciBkZXZpY2UgJXM6ICVz
+IiwNCj4gICAgICAgICAgICAgICAgICAgICB2ZGV2LT52YmFzZWRldi5uYW1lLCBlcnJvcl9nZXRf
+cHJldHR5KGVycikpOw0KPiAgICAgICAgZXJyb3JfZnJlZShlcnIpOw0KPiAgICB9IGVsc2Ugew0K
+PiAgICAgICAgZXJyb3JfcmVwb3J0KCJVbnJlY292ZXJhYmxlIFBDSWUgZXJyb3IgZGV0ZWN0ZWQg
+Zm9yIGRldmljZSAlcyIsDQo+ICAgICAgICAgICAgICAgICAgICAgdmRldi0+dmJhc2VkZXYubmFt
+ZSk7DQo+ICAgIH0NCj4gICAgZXJyb3JfcHJpbnRmKCJQbGVhc2UgY29sbGVjdCBhbnkgZGF0YSBw
+b3NzaWJsZSBhbmQgdGhlbiBraWxsIHRoZSBndWVzdFxuIik7DQo+IA0KPiA+DQo+ID4gICAgICAg
+dm1fc3RvcChSVU5fU1RBVEVfSU5URVJOQUxfRVJST1IpOw0KPiA+ICAgfQ0KPiA+IGRpZmYgLS1n
+aXQgYS9ody92ZmlvL3BjaS5oIGIvaHcvdmZpby9wY2kuaCBpbmRleA0KPiA+IGM5YWI5NDk4NzAu
+LmMwNjdiYmJlYmMgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvdmZpby9wY2kuaA0KPiA+ICsrKyBiL2h3
+L3ZmaW8vcGNpLmgNCj4gPiBAQCAtMTQ2LDYgKzE0Niw3IEBAIHN0cnVjdCBWRklPUENJRGV2aWNl
+IHsNCj4gPiAgICAgICBFdmVudE5vdGlmaWVyIGVycl9ub3RpZmllcjsNCj4gPiAgICAgICBFdmVu
+dE5vdGlmaWVyIHJlcV9ub3RpZmllcjsNCj4gPiAgICAgICBpbnQgKCpyZXNldGZuKShzdHJ1Y3Qg
+VkZJT1BDSURldmljZSAqKTsNCj4gPiArICAgIGJvb2wgKCplcnJfaGFuZGxlcikoc3RydWN0IFZG
+SU9QQ0lEZXZpY2UgKiwgRXJyb3IgKiopOw0KPiANCj4gUGxlYXNlIGFkZCBkb2N1bWVudGF0aW9u
+LCBzb21ldGhpbmcgbGlrZSA6DQo+IA0KPiAgICAvKg0KPiAgICAgKiBQbGF0Zm9ybS1zcGVjaWZp
+YyBlcnJvciByZWNvdmVyeSBoYW5kbGVyLg0KPiAgICAgKg0KPiAgICAgKiBDYWxsZWQgd2hlbiB0
+aGUgaG9zdCByZXBvcnRzIGEgUENJIGVycm9yIHZpYSB0aGUgVkZJTyBlcnJvciBub3RpZmllci4N
+Cj4gICAgICogVGhlIGhhbmRsZXIgc2hvdWxkIGF0dGVtcHQgdG8gcmVjb3ZlciB0aGUgZGV2aWNl
+IGFuZCBmb3J3YXJkIHRoZQ0KPiAgICAgKiBlcnJvciB0byB0aGUgZ3Vlc3QgaWYgdGhlIHBsYXRm
+b3JtIHN1cHBvcnRzIGl0Lg0KPiAgICAgKg0KPiAgICAgKiBAdmRldjogdGhlIFZGSU8gUENJIGRl
+dmljZSB0aGF0IHRyaWdnZXJlZCB0aGUgZXJyb3INCj4gICAgICogQGVycnA6IHNldCB3aXRoIHRo
+ZSBmYWlsdXJlIHJlYXNvbiBvbiBmYWxzZSByZXR1cm4NCj4gICAgICoNCj4gICAgICogUmV0dXJu
+IHRydWUgb24gc3VjY2VzcywgdGhlIFZNIGNvbnRpbnVlcyBydW5uaW5nLg0KPiAgICAgKiBSZXR1
+cm4gZmFsc2Ugb24gZmFpbHVyZSBhbmQgc2V0IEBlcnJwLCB0aGUgVk0gd2lsbCBiZSBzdG9wcGVk
+Lg0KPiAgICAgKi8NCj4gICAgYm9vbCAoKmVycl9oYW5kbGVyKShzdHJ1Y3QgVkZJT1BDSURldmlj
+ZSAqdmRldiwgRXJyb3IgKiplcnJwKTsNCj4gDQo+IA0KPiBUaGF0IHNhaWQsIEknZCBwcmVmZXIg
+dG8gc2VlIEFFUiBmb3J3YXJkaW5nIGZpcnN0Lg0KPiANCj4gVGhhbmtzLA0KPiANCj4gQy4NCj4g
+DQo+IA0KPiA+ICAgICAgIHVpbnQzMl90IHZlbmRvcl9pZDsNCj4gPiAgICAgICB1aW50MzJfdCBk
+ZXZpY2VfaWQ7DQo+ID4gICAgICAgdWludDMyX3Qgc3ViX3ZlbmRvcl9pZDsNCg0K
 
