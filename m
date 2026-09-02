@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BDFC624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B975C624D4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1gdg-0005ok-FJ; Wed, 02 Sep 2026 04:48:12 -0400
+	id 1x1gdf-0005o1-Tw; Wed, 02 Sep 2026 04:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x1gdf-0005mP-3Q; Wed, 02 Sep 2026 04:48:11 -0400
+ id 1x1gdd-0005lP-ID; Wed, 02 Sep 2026 04:48:09 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x1gdb-0007AO-Ca; Wed, 02 Sep 2026 04:48:10 -0400
+ id 1x1gdb-0007AK-Ah; Wed, 02 Sep 2026 04:48:09 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 5804D80C95;
- Wed, 02 Sep 2026 11:48:02 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 108D880CAB;
+ Wed, 02 Sep 2026 11:48:01 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:b72::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id xlfWR5raWmI0-599BR3ea; Wed, 02 Sep 2026 11:48:01 +0300
+ id xlfWR5raWmI0-cVpGw13b; Wed, 02 Sep 2026 11:48:00 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1788338881;
- bh=MSQwPg9T76w4b9mbdmbrXR5i4SsHZg6DGxvsJNzEM0E=;
+ s=default; t=1788338880;
+ bh=7UOc3lB593G6YM8JLokUpJXT/bLzE/U+Gwzl1Qe/LpY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=NbyFVn3VuW3TBuHolJT/UNHmu3X9YF1a57LDfBb6Z3fG2H6/0oUqbCFfOBUN86XEp
- 8104dqN2ewZWARDPzl66zAykeblaQE2jVZo7evHtCRgF3AdQf6uNZ7keSBq/pycyFt
- k7YNiko9RYmsJobCTHPYJqOgzSuPz/Ev4nSJc/oI=
+ b=BKjpiCdDVmyWEN91fVHBJYGJ0rRGoFVIvWN5KtVzFzQ2F97oC5D8uZCzXCztBdRdW
+ OIc2o4hR9oLovcDZH+TdBFNBA9K4mY0He+qReJaTQaRtnd6AbbZk6+OQmhSHbm7b5C
+ TGPT31fWIYE4BZ72SRJdcSI8BZuSqxlrCLlFmoUU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, den@openvz.org, vsementsov@yandex-team.ru,
  Eric Blake <eblake@redhat.com>
-Subject: [PULL 3/8] block/nbd: clear reply.cookie under receive_mutex
-Date: Wed,  2 Sep 2026 11:47:49 +0300
-Message-ID: <20260902084754.140103-4-vsementsov@yandex-team.ru>
+Subject: [PULL 1/8] block/nbd: clear reply.cookie when the reply is rejected
+Date: Wed,  2 Sep 2026 11:47:47 +0300
+Message-ID: <20260902084754.140103-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260902084754.140103-1-vsementsov@yandex-team.ru>
 References: <20260902084754.140103-1-vsementsov@yandex-team.ru>
@@ -74,107 +74,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-s->reply is documented as protected by s->receive_mutex, but the cookie
-is cleared without it once the owning request has consumed its chunk.
-A waiter in nbd_receive_replies() inspects the very same field under
-the mutex, and does so with two separate loads:
+nbd_receive_replies() reads a reply header into s->reply and, when the
+header turns out to be unusable, reports a channel error and returns
+without touching it. The cookie stays there until the request which
+owns the reply clears it, and until then the waiters are explicitly
+allowed to look at a cookie which is not theirs:
 
     if (s->reply.cookie != 0) {
         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
         assert(!s->requests[ind2].receiving);
 
-Nothing keeps those two loads consistent. If the owner clears the
-cookie in between, the second one reads 0, COOKIE_TO_INDEX() turns it
-into an index of -1, and s->requests[] is accessed out of bounds:
+Two of the error paths leave a value chosen by the server behind: one
+returns before the cookie is validated at all, the other returns
+because that validation has failed. A waiter which picks such a cookie
+up turns it into an index which is not in requests[] and accesses the
+array out of bounds, at an offset the server controls.
 
-  Assertion `!s->requests[ind2].receiving' failed.
+The reply is of no use to anybody at this point, so clear the cookie
+before the mutex is released and keep the invariant that a non-zero
+s->reply.cookie is always an index of a live request.
 
-  (gdb) p cookie
-  $1 = 8
-  (gdb) p s->reply.cookie
-  $2 = 0
-  (gdb) p &((NBDClientRequest *)s->requests)[-1].receiving
-  $3 = (_Bool *) 0x5555558416c0
-  (gdb) p &s->in_flight
-  $4 = (unsigned int *) 0x5555558416c0
-  (gdb) p s->in_flight
-  $5 = 8
+Observing the stale cookie takes a second thread, which a multiqueue
+configuration provides. Within one AioContext there is no yield point
+between the failed read and the clearing done by the owner in
+nbd_co_receive_one_chunk(), so nothing else of this node runs in
+between. The parked waiters cannot see it either, as they are woken
+only after the cookie has been cleared. What can get in is a request
+entering nbd_receive_replies() afresh, one just sent or one back for
+its next reply chunk, because that path takes the mutex without
+looking at the state.
 
-The cookie we wait for is 8, yet reply.cookie reads 0 one line after it
-was found non-zero, so the index is -1. requests[-1].receiving lands on
-in_flight, which is non-zero while requests are outstanding, and that is
-what the assertion trips over.
-
-Hitting this requires two coroutines of one NBD node to run in
-different threads, as there is no yield point between the two loads
-for the owner to squeeze into. A multiqueue configuration provides
-exactly that, with the virtqueues of one disk spread over several
-iothreads. Note that a compiler is free to merge the two loads into
-one, in which case the race is invisible, so builds with reduced
-optimization are much more likely to trip over it.
-
-Accessing s->reply without the mutex is fine for the coroutine that
-owns the reply: a non-zero cookie makes the field private to it.
-Releasing that ownership is not, as it races with the waiters which
-are explicitly allowed to look at the cookie. Clear it under the
-mutex, in the same critical section as the wakeup, and make
-nbd_recv_coroutines_wake() caller-locked, as CoMutex is not
-recursive. It has a single caller.
-
-The added acquisition cannot block behind the header read in
-nbd_receive_replies(), because that path is only reachable with
-reply.cookie == 0 while we still own a non-zero cookie. Merging the
-clear with the wakeup also keeps a newcomer from starting a header
-read in between, which would stall this already completed request for
-the duration of that read.
-
-There is no cookie to own when we get here after an error, and then a
-newcomer can indeed be inside that read. It does not hold us for long
-either, as the channel has been shut down before the error was
-reported, so the read it sits in returns right away.
-
-Fixes: 4ddb5d2fde ("block/nbd: drop connection_co")
 Cc: Eric Blake <eblake@redhat.com>
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-4-den@openvz.org>
+Message-ID: <20260820115228.587427-2-den@openvz.org>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/nbd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ block/nbd.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/block/nbd.c b/block/nbd.c
-index d0a7097034c..e5e16722ba2 100644
+index 5d231d5c4e4..d9b776283f4 100644
 --- a/block/nbd.c
 +++ b/block/nbd.c
-@@ -161,11 +161,11 @@ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
-     return false;
- }
- 
-+/* Called with s->receive_mutex taken. */
- static void coroutine_fn nbd_recv_coroutines_wake(BDRVNBDState *s)
- {
-     int i;
- 
--    QEMU_LOCK_GUARD(&s->receive_mutex);
-     for (i = 0; i < MAX_NBD_REQUESTS; i++) {
-         if (nbd_recv_coroutine_wake_one(&s->requests[i])) {
-             return;
-@@ -974,9 +974,11 @@ static coroutine_fn int nbd_co_receive_one_chunk(
-         /* For assert at loop start in nbd_connection_entry */
-         *reply = s->reply;
+@@ -466,20 +466,19 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+             error_setg(errp, "server dropped connection");
+         }
+         if (ret < 0) {
+-            nbd_channel_error(s, ret);
+-            return ret;
++            goto err;
+         }
+         if (nbd_reply_is_structured(&s->reply) &&
+             s->info.mode < NBD_MODE_STRUCTURED) {
+-            nbd_channel_error(s, -EINVAL);
++            ret = -EINVAL;
+             error_setg(errp, "unexpected structured reply");
+-            return -EINVAL;
++            goto err;
+         }
+         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+         if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
+-            nbd_channel_error(s, -EINVAL);
++            ret = -EINVAL;
+             error_setg(errp, "unexpected cookie value");
+-            return -EINVAL;
++            goto err;
+         }
+         if (s->reply.cookie == cookie) {
+             /* We are done */
+@@ -487,6 +486,13 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+         }
+         nbd_recv_coroutine_wake_one(&s->requests[ind2]);
      }
--    s->reply.cookie = 0;
- 
--    nbd_recv_coroutines_wake(s);
-+    WITH_QEMU_LOCK_GUARD(&s->receive_mutex) {
-+        s->reply.cookie = 0;
-+        nbd_recv_coroutines_wake(s);
-+    }
- 
-     return ret;
++
++err:
++    /* Waiters look at this cookie, so do not leave a rejected one behind. */
++    s->reply.cookie = 0;
++    nbd_channel_error(s, ret);
++
++    return ret;
  }
+ 
+ static int coroutine_fn GRAPH_RDLOCK
 -- 
 2.43.0
 
