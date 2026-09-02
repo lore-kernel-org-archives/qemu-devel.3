@@ -4,151 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC47C624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0859BC624D4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1nzJ-0007eX-Td; Wed, 02 Sep 2026 12:39:01 -0400
+	id 1x1o40-0000h2-3t; Wed, 02 Sep 2026 12:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x1nzI-0007e0-DJ
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:39:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x1o3x-0000g9-JY; Wed, 02 Sep 2026 12:43:49 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x1nzF-0000Kc-Ex
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:39:00 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682FcotV1806927
- for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 16:38:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- K3FzYttzXz9yCD2Z2Xx+n0vbxD4+LxbpHf+3nt5WHd8=; b=SCoWJcZa5JnsJitX
- 15kkJAvaYmz50Cbqrr9fZrkfENRvgFt9oNiAao7cNktuqPEB8JtJFJwwOL9VkRbp
- lqBT1grOyrVyBkiZ3dRAueSfcSxC/o8lcT2xOUzDlVLij3VS+qbgp4KXAVoVt3hg
- LSLGWXovNST6lKbpCP0sqpZXtq8qKweiy4ckUy3uVXjp96kSr04SpBfUX4Lb1bGV
- liqtZrJTJW+Jv1cR0n1BdG7HJQXzVNLYsste2GLX9Cy/WkRVTOmDszpvWvq3fSTu
- AM6IomHgw67KvdUUJj6swUIFPfNF5m9H7dqvMn4oPa/O64edwK1/7v0A+bKMGaEL
- J35d/A==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4genrdrfev-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 16:38:55 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e53b8a302so266099785a.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 09:38:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788367135; x=1788971935; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=K3FzYttzXz9yCD2Z2Xx+n0vbxD4+LxbpHf+3nt5WHd8=;
- b=IVaFG2UArykcCdFohphlkCcisI8X9G+aDbWQVKuyGHXQsaV5B0ixAuU+LjAB9RrUtC
- YvEgNJCWP6FdkyLRhu6liurgGu/jguo09u8bLr8dW3UoSqhxzY2N+NwlCpO5Q/Hy/wRo
- IdygL4AyxCwLaFdTz6kTlaX9QHuYbOLKDK3gt+5vZWkwZ2Oxa8AmuFhjrFZOkNgFvPxM
- FgNc3EwqT2AZKTPxo/j5fjKgCuE7+dTsM4DuLPJWc9pXmHUbKZ0o3DhXGKf4vYs4XlKL
- FUNbpRzdpBrYOEUlE+uFIVMxR/ubghS2rIq3fk/L0wcTpRSUV/T8MZ/Ir5ukTnBByPq4
- zj9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788367135; x=1788971935;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=K3FzYttzXz9yCD2Z2Xx+n0vbxD4+LxbpHf+3nt5WHd8=;
- b=Ut0TvnUOWPd1mR06anEWwbsEh5fjTvn+gnl6Z0AGF9n9Y6SmbfdhMmqbX5zJ5DbljB
- tBiGsM0rycfHZK4f6esdgXDiBQqvRGCGcdVxAGy7edjxp0JdUC/TXs32UI5EGli4gxYj
- Rh/6/tWkKsBwGG9a0SzK8Wc7QoxevRLobcC83MiYgmT+Te61tdpsmFIwjvmbkDaVX3Hz
- vYvx7eRHY2Q+aKSZQP3+bkwIhKOTIATwauCAixuaHcdQofSMqOMjdMeHa4Vpc31LUqNh
- AgwPDgm3VW2JQvbkZFVn9d7zALruBpgYlaYVivHUbWCpWjvBoB3Q9A5SGJVXjiVZHV7s
- d0kQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrK6Zzv0i8z1n6pPpi3WNrBkMUazH29qPyc1R3ROxbTSHf52Z/Mq3whLypD7m/d5u3++He6DGNMrETw@nongnu.org
-X-Gm-Message-State: AFuF++nfKFM/vJz995lGGQ4gmN9aZSQf3nkDkHAA1e3GpTjXQS5fwjB5
- vbCighFoZxyI17bgeth/T/s081GlK0FRPioKv1+lEScmzB0vTq7RCBpeTW+1XL3XKp9dm93WA4s
- OpfvjJ1uj79WnnLckLADHRPROoCyps43XU6vutza5vsi41hZkL3Yy5snUyA==
-X-Gm-Gg: AR+sD11ptJIoICe0UWL+tn52Y2cgSrlRLORtGK+Y5pPngAgof4o0/Mijmq7eu0fTVU8
- NaGt5JwLz7RLbPUXhfAdpFDGdfBwQwYlGSJKe+LwCj9iXRIlSjIWcWkld46T7RRlkBLi7aQzKoT
- cgJ1egJYJ+2XxUo3pp6k5ql1zS21XHahu8mtbliU64WHPIoZ+wAwmzvWtiAOxp/6C5gQBXs7pX3
- q5YF+ZhsOUSo9qu05hzB5ejE6cdG0HH+Fh7ukOWCl5yZra3xlNVnttHR2y6neuaqnL/Gix73JRz
- x3wXABDH7SYZeLE7Gvt7ZTqJAPDRE0Ur9CfDVwc+pYKudfk8FYNHZ886ATL9cSEsrJ5wWS/tw9A
- EUcLXmJUEms/uiwmpTSg4s2h26t1LYFzSnp1u
-X-Received: by 2002:a05:620a:6f42:b0:939:6dbd:de57 with SMTP id
- af79cd13be357-9396dbdde82mr83946785a.32.1788367134617; 
- Wed, 02 Sep 2026 09:38:54 -0700 (PDT)
-X-Received: by 2002:a05:620a:6f42:b0:939:6dbd:de57 with SMTP id
- af79cd13be357-9396dbdde82mr83941085a.32.1788367134035; 
- Wed, 02 Sep 2026 09:38:54 -0700 (PDT)
-Received: from [192.168.68.107] ([152.250.131.13])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9395f39b594sm241808785a.36.2026.09.02.09.38.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Sep 2026 09:38:53 -0700 (PDT)
-Message-ID: <2974643c-1e95-4cf3-b0cf-34a1ef3985cd@oss.qualcomm.com>
-Date: Wed, 2 Sep 2026 13:38:49 -0300
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x1o3u-0001iX-Th; Wed, 02 Sep 2026 12:43:48 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 682GXS4c535927; Wed, 2 Sep 2026 16:43:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=LNa5mJ
+ bcIYuO7CIH4ZCkY1/EEFQbr9QB5vpef1gyvnM=; b=bsZAKc0XCSvE+lbUiaOQqQ
+ TobZVkci2UySh1cV/SWULdiKrrJPVr0beav/Zb7F8pe1n0f7MbDGLQMPJ47wxhrd
+ i17+1P+A9WRHdV98KzZ/E6J3FVZPnHDFMCtRM3PHqq0kTh5TX6nSb07UElG24S7z
+ vW2Fkr3k/6q4hbICC7GvjWxW4bPdvk0mwwCb5WX4DDldFRdqgqc7RLd8RlzRY+CI
+ uWsM1zfQjjfzQ0WKhRCk/NbFdBI4ElXffnwxF8IBoBlAbK8v05LjvkaozFWeoz8W
+ RCXXm56lAf+qasCbE8tZHTbKO9tUGoCZNm0F/hjWsRGuWorxrV3/CvAH17WdYC0Q
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5r28s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Sep 2026 16:43:44 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682Gfgo2028333;
+ Wed, 2 Sep 2026 16:43:43 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hk0eu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Sep 2026 16:43:43 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 682GhflF51183954
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 2 Sep 2026 16:43:41 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C504458056;
+ Wed,  2 Sep 2026 16:43:41 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C066558054;
+ Wed,  2 Sep 2026 16:43:40 +0000 (GMT)
+Received: from [9.61.241.1] (unknown [9.61.241.1])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  2 Sep 2026 16:43:40 +0000 (GMT)
+Message-ID: <a6f174c3-de6b-4b9e-97bc-179c44bd3237@linux.ibm.com>
+Date: Wed, 2 Sep 2026 09:43:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/15] hw/riscv/fdt-common: prepend helpers with
- "riscv_"
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- Palmer Dabbelt <palmer@dabbelt.com>, Joel Stanley <joel@jms.id.au>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>
-References: <20260828203918.350131-1-daniel.barboza@oss.qualcomm.com>
- <20260828203918.350131-2-daniel.barboza@oss.qualcomm.com>
- <cf4a29e2-20e7-4b03-a5d9-e8b0e39f44d4@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH v4 3/4] s390x/pci: Add PCI error handling for vfio pci
+ devices
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
+ alex@shazbot.org, armbru@redhat.com
+References: <20260831183151.12626-1-alifm@linux.ibm.com>
+ <20260831183151.12626-4-alifm@linux.ibm.com>
+ <5e59ad40-e50e-4671-b55f-2d891898b6e7@redhat.com>
 Content-Language: en-US
-In-Reply-To: <cf4a29e2-20e7-4b03-a5d9-e8b0e39f44d4@oss.qualcomm.com>
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <5e59ad40-e50e-4671-b55f-2d891898b6e7@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=H4/rBeYi c=1 sm=1 tr=0 ts=6a98511f cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=CXdxNCAnTuDr1kYd6DjE4g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=FRSEYCzRAAAA:8
- a=SUrE62rMcF1UMKfSMsoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: EKlTXr2dkDyD6Nfd0eRUCjR32otCFkj2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE0NiBTYWx0ZWRfX43GNqAwrnWYP
- bZDXnPF2In69ULwsguyXYATAoXYgmTNHo57hk6AsnpMPizf7lIxAe1sq/cwVe4+jY5lswDLxMt2
- 9JsX04shpgKxTxydS7zv+9VcD4nsP8J3WknrkkCgqTal7+5PUviivh6adioGJOpw6DsNNWVzw0M
- 0oRFzMrwnevVNZPlMRpE01i/adX2d/DtQOfscRqIyoxz54acLlSsuudcB6eCIqnsBEctS75pSMo
- Pcl40kSYV0EfI216flhYSxgHixhMtSGlKrR27jUZsG0lgqornZvVBGvO26YnQR2DGCM+Pmiznkl
- YEcb/wG8KrjQeXPEsDSJt+iTkwkfrQUwUNENcjnRbV/d+s7sTNpNLiZWOEZjOiSGObrA556HnwJ
- dM5TyaFKwV4Vghf12pu7Mp5PNHI4giDQWnr2NC8qhiONnxFqykUNvkJgeErj8e0CKcjTjCOi+m/
- KgNHe3FA2JQ09087T0g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE0NiBTYWx0ZWRfX3JzUS8Cy+lgj
- SUOS7w6KO7GQQ4FAhWwe6gv25iYX++qPYEwAi5ioPZpzPZGYb5zokzvYqit9Cgm7YBMhJu09Zvq
- iFN+lCi3T8FrtzEUBsgN0zz+WOdakqg=
-X-Proofpoint-ORIG-GUID: EKlTXr2dkDyD6Nfd0eRUCjR32otCFkj2
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a985240 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=rkBsMlECKNENESMDzYIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: BJ63OUknvHQbsBthk55r1hF1T-Wsu098
+X-Proofpoint-ORIG-GUID: BJ63OUknvHQbsBthk55r1hF1T-Wsu098
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE0NiBTYWx0ZWRfX2Ic0orh5h9eD
+ btQc5dxi0cCDH3NxGK0uGBcuUJAQJzde8Qjs3cf1ROIsOQdQcAVfStIcVL0v6oMQ4RBmMQBT7PA
+ 9sjXSPwi0WwM5dJP7V6S085o+MjbTiQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE0NiBTYWx0ZWRfX8KSW8f9iEH4y
+ HdvLc09iimGJEwosg3Q057iNzz+n1qB5Be17TQsPOQa7Gz39uUpAhkpmsqIvFPUNUWCeQzk4paU
+ o967ipl3KKb4RIfpF+T6ANRYnxo6wJ2lKAemEE++8GEQjS0gq/pWgAdlCbknvvNPGDYZ5kPYwqZ
+ Vd0X7mryvp3Egtkj/qr0yNKNRc1QX/MyIV3iBuvGcxV90zT4higmc963Ps93A5X4k2XJ6BK6Da9
+ 3QYDhrA5mVFTY2SSYCL9UK+/1Xqwld6ECidUcph5D5ip/bOI21lSv79YJifXN6WZb6+8JR7MxgR
+ pogN+Z6GA5QmZZx7b6UhcFnO3d1ivNzb82RogZZxXcXMnNXCFgTChM7umxFLajYJ/z251H8efd2
+ gKcoEkWAeZAsIH+2JXSDWC7irkP52f3cOkyCML/Df3zqJAI2w4nfT3xqDE7bMNMp/8wXcp38HvJ
+ US+LiJqP5mJoYTy9cKw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-02_04,2026-09-01_03,2025-10-01_01
+ definitions=2026-09-02_04,2026-09-02_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020146
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ clxscore=1015 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609020146
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,53 +129,271 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
-On 9/2/2026 1:24 PM, Philippe Mathieu-Daudé wrote:
-> Hi Daniel,
-> 
-> On 28/8/26 22:39, Daniel Henrique Barboza wrote:
->> Given that the helpers are public API we should prefix them with
->> "riscv_" to avoid conflicts when linking with different targets in the
->> future, i.e. we should not use generic names like
->> "create_fdt_socket_memory".
+On 9/2/2026 1:22 AM, Cédric Le Goater wrote:
+> On 8/31/26 20:31, Farhan Ali wrote:
+>> Add an s390x specific callback for vfio error handling. For s390x pci 
+>> devices,
+>> we have platform specific error information. We need to retrieve this 
+>> error
+>> information for passthrough devices. This is done via a 
+>> VFIO_DEVICE_FEATURE
+>> ioctl which exposes that information.
 >>
->> Despite the amount of lines this is a mechanical change and no real
->> FDT changes are intended.
+>> Once this error information is retrieved we can then inject an error 
+>> into
+>> the guest, and let the guest drive the recovery.
 >>
->> Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> Reviewed-by: Chao Liu <chao.liu@processmission.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 >> ---
->>   hw/riscv/fdt-common.c         | 45 ++++++++++++++++----------------
->>   hw/riscv/sifive_u.c           | 34 +++++++++++++------------
->>   hw/riscv/spike.c              | 30 ++++++++++++----------
->>   hw/riscv/tt_atlantis.c        | 22 ++++++++--------
->>   hw/riscv/virt.c               | 42 +++++++++++++++---------------
->>   include/hw/riscv/fdt-common.h | 48 ++++++++++++++++++-----------------
->>   6 files changed, 117 insertions(+), 104 deletions(-)
-> 
-> I had the following patch tagged but it will conflict with your
-> series which is apparently ready (and at v5):
-> https://lore.kernel.org/qemu-devel/20260823150731.896-6-luoyonggang@gmail.com/
-> I'll let see with Yonggang what is the simpler (likely have
-> his patch rebased once your series is merged).
+>>   hw/s390x/s390-pci-bus.c          |   9 +++
+>>   hw/s390x/s390-pci-vfio-stubs.c   |   6 ++
+>>   hw/s390x/s390-pci-vfio.c         | 100 +++++++++++++++++++++++++++++++
+>>   include/hw/s390x/s390-pci-bus.h  |   2 +
+>>   include/hw/s390x/s390-pci-vfio.h |   1 +
+>>   5 files changed, 118 insertions(+)
+>>
+>> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+>> index 9ecf3c30ad..b2db7f3df4 100644
+>> --- a/hw/s390x/s390-pci-bus.c
+>> +++ b/hw/s390x/s390-pci-bus.c
+>> @@ -160,6 +160,8 @@ static void 
+>> s390_pci_perform_unplug(S390PCIBusDevice *pbdev)
+>>   {
+>>       HotplugHandler *hotplug_ctrl;
+>>   +    qemu_mutex_destroy(&pbdev->err_handler_lock);
+>> +
+>>       if (pbdev->pft == ZPCI_PFT_ISM) {
+>>           notifier_remove(&pbdev->shutdown_notifier);
+>>       }
+>> @@ -1123,6 +1125,7 @@ static void s390_pcihost_plug(HotplugHandler 
+>> *hotplug_dev, DeviceState *dev,
+>>       S390pciState *s = S390_PCI_HOST_BRIDGE(hotplug_dev);
+>>       PCIDevice *pdev = NULL;
+>>       S390PCIBusDevice *pbdev = NULL;
+>> +    Error *local_err = NULL;
+>>       int rc;
+>>         if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_BRIDGE)) {
+>> @@ -1189,6 +1192,7 @@ static void s390_pcihost_plug(HotplugHandler 
+>> *hotplug_dev, DeviceState *dev,
+>>           pbdev->iommu->pbdev = pbdev;
+>>           pbdev->state = ZPCI_FS_DISABLED;
+>>           set_pbdev_info(pbdev);
+>> +        qemu_mutex_init(&pbdev->err_handler_lock);
+>>             if (object_dynamic_cast(OBJECT(dev), "vfio-pci")) {
+>>               /*
+>> @@ -1213,6 +1217,11 @@ static void s390_pcihost_plug(HotplugHandler 
+>> *hotplug_dev, DeviceState *dev,
+>>               pbdev->iommu->dma_limit = s390_pci_start_dma_count(s, 
+>> pbdev);
+>>               /* Fill in CLP information passed via the vfio region */
+>>               s390_pci_get_clp_info(pbdev);
+>> +            /* Setup error handler for error recovery */
+>> +            if (!s390_pci_setup_err_handler(pbdev, &local_err)) {
+>> +                warn_report_err(local_err);
+>> +            }
+>> +
+>>               if (!pbdev->interp) {
+>>                   /* Do vfio passthrough but intercept for I/O */
+>>                   pbdev->fh |= FH_SHM_VFIO;
+>> diff --git a/hw/s390x/s390-pci-vfio-stubs.c 
+>> b/hw/s390x/s390-pci-vfio-stubs.c
+>> index d9882b7aad..9fc84ca135 100644
+>> --- a/hw/s390x/s390-pci-vfio-stubs.c
+>> +++ b/hw/s390x/s390-pci-vfio-stubs.c
+>> @@ -30,3 +30,9 @@ bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, 
+>> uint32_t *fh)
+>>   void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
+>>   {
+>>   }
+>> +
+>> +bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp)
+>> +{
+>> +    error_setg(errp, "VFIO not available, cannot setup error handler");
+>> +    return false;
+>> +}
+>> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+>> index db6de00bd2..9a63040e22 100644
+>> --- a/hw/s390x/s390-pci-vfio.c
+>> +++ b/hw/s390x/s390-pci-vfio.c
+>> @@ -105,6 +105,73 @@ void s390_pci_end_dma_count(S390pciState *s, 
+>> S390PCIDMACount *cnt)
+>>       }
+>>   }
+>>   +static int s390_pci_get_feature_err(VFIOPCIDevice *vfio_pci,
+>
+> returning a bool would be preferred unless the errno is important
+>
+I can change it to bool. Don't have a strong preference here.
 
-Yeah, I appreciate if you can wait for this series to be merged and then rebase
-things on top of it, in particular because the patches are already queued
 
-Another alternative is to rebase the prefix ACPI helpers patch on top of
-alistair/riscv-to-apply.next, given that it should already contain these patches.
-Then we could queue that patch alone via a qemu-riscv PR.  It would alleviate
-the size of that single-binary series a bit.
+>
+>> + PciCcdfErr *ccdf,
+>> +                                    uint32_t ccdf_err_length,
+>> +                                    Error **errp)
+>> +{
+>> +    int ret;
+>> +    size_t total_size;
+>> +    struct vfio_device_feature_zpci_err *err;
+>> +    g_autofree void *buf = NULL;
+>> +    g_autofree struct vfio_device_feature *feature = NULL;
+>> +
+>> +    total_size = sizeof(*feature) + sizeof(*err);
+>> +    feature = g_malloc(total_size);
+>> +    feature->argsz = total_size;
+>> +    feature->flags = VFIO_DEVICE_FEATURE_GET | 
+>> VFIO_DEVICE_FEATURE_ZPCI_ERROR;
+>> +
+>> +    buf = g_malloc(ccdf_err_length);
+>> +    err = (void *)feature->data;
+>> +    err->data = (uint64_t)buf;
+>> +    ret = vfio_device_get_feature(&vfio_pci->vbasedev, feature);
+>> +
+>> +    if (ret) {
+>> +        if (ret != -ENOMSG) {
+>> +            error_setg(errp, "Failed feature get 
+>> VFIO_DEVICE_FEATURE_ZPCI_ERROR"
+>> +                              " (rc=%d)", ret);
+>> +        }
+>> +        return ret;
+>> +    }
+>> +
+>> +    memcpy(ccdf, (PciCcdfErr *) err->data, ccdf_err_length);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static bool s390_pci_err_handler(VFIOPCIDevice *vfio_pci, Error **errp)
+>> +{
+>> +    S390PCIBusDevice *pbdev;
+>> +    PciCcdfErr ccdf;
+>> +    bool success = false;
+>
+> This means errp should be set. It is not obvious from the code below.
+>
+>> +    int ret = 0;
+>> +
+>> +    pbdev = s390_pci_find_dev_by_target(s390_get_phb(),
+>> + DEVICE(&vfio_pci->parent_obj)->id);
+>
+> can pbdev be NULL ?
+>
+>   if (!pbdev) {
+>       error_setg(errp, "No matching zpci device found");
+>       return false;
+>   }
+>> +
+>> +    QEMU_LOCK_GUARD(&pbdev->err_handler_lock);
+>> +    pbdev->state = ZPCI_FS_ERROR;
+>> +
+>> +    if (sizeof(ccdf) != pbdev->ccdf_err_length) {
+>> +        error_setg(errp,
+>> +                   "CCDF size mismatch expected size=%zu, provided 
+>> size=%d",
+>> +                   sizeof(ccdf), pbdev->ccdf_err_length);
+>> +        return false;
+>> +    }
+>> +
+>> +    while (ret == 0) {
+>> +        ret = s390_pci_get_feature_err(vfio_pci, &ccdf,
+>> + pbdev->ccdf_err_length, errp);
+>> +        if (ret) {
+>> +            success = ret == -ENOMSG ? true : false;
+>> +            break;
+>> +        }
+>> +        s390_pci_generate_error_event(ccdf.pec, pbdev->fh, 
+>> pbdev->fid, 0, 0);
+>
+> why not use ccdf.e and ccdf.faddr for more diagnostic details ?
 
+That's a fair point, will add that. I think this was based on the older 
+version which only had the pec as the valid information.
 
-Cheers,
-Daniel
+Thanks
 
-> 
-> Regards,
-> 
-> Phil.
+Farhan
 
+>
+>
+>> +    }
+>> +
+>> +    return success;
+>> +}
+>> +
+>>   static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+>>                                  struct vfio_device_info *info)
+>>   {
+>> @@ -134,6 +201,10 @@ static void s390_pci_read_base(S390PCIBusDevice 
+>> *pbdev,
+>>       /* Store function type separately for type-specific behavior */
+>>       pbdev->pft = cap->pft;
+>>   +    if (hdr->version >= 3) {
+>> +        pbdev->ccdf_err_length = cap->ccdf_err_length;
+>> +    }
+>> +
+>>       /*
+>>        * If the device is a passthrough ISM device, disallow relaxed
+>>        * translation.
+>> @@ -371,3 +442,32 @@ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
+>>       s390_pci_read_util(pbdev, info);
+>>       s390_pci_read_pfip(pbdev, info);
+>>   }
+>> +
+>> +bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp)
+>> +{
+>> +    int ret;
+>> +    VFIOPCIDevice *vfio_pci = VFIO_PCI_DEVICE(pbdev->pdev);
+>> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
+>> +                              sizeof(uint64_t))] = {};
+>> +    struct vfio_device_feature *feature = (struct 
+>> vfio_device_feature *)buf;
+>> +
+>> +    feature->argsz = sizeof(buf);
+>> +    feature->flags = VFIO_DEVICE_FEATURE_PROBE | 
+>> VFIO_DEVICE_FEATURE_ZPCI_ERROR;
+>> +
+>> +    ret = vfio_device_get_feature(&vfio_pci->vbasedev, feature);
+>> +
+>> +    if (ret != 0) {
+>> +        if (ret == -ENOTTY) {
+>> +            error_setg(errp, "Automated error recovery unavailable 
+>> for device");
+>> +        } else {
+>> +            error_setg(errp,
+>> +                       "Failed to probe for 
+>> VFIO_DEVICE_FEATURE_ZPCI_ERROR (ret=%d)",
+>> +                       ret);
+>> +        }
+>> +        return false;
+>> +    }
+>> +
+>> +    vfio_pci->err_handler = s390_pci_err_handler;
+>> +
+>> +    return true;
+>> +}
+>> diff --git a/include/hw/s390x/s390-pci-bus.h 
+>> b/include/hw/s390x/s390-pci-bus.h
+>> index 9228523ce8..bc67f7e065 100644
+>> --- a/include/hw/s390x/s390-pci-bus.h
+>> +++ b/include/hw/s390x/s390-pci-bus.h
+>> @@ -364,6 +364,8 @@ struct S390PCIBusDevice {
+>>       bool forwarding_assist;
+>>       bool aif;
+>>       bool rtr_avail;
+>> +    QemuMutex err_handler_lock;
+>> +    uint32_t ccdf_err_length;
+>>       QTAILQ_ENTRY(S390PCIBusDevice) link;
+>>   };
+>>   diff --git a/include/hw/s390x/s390-pci-vfio.h 
+>> b/include/hw/s390x/s390-pci-vfio.h
+>> index f7d6149daf..c7886b63ea 100644
+>> --- a/include/hw/s390x/s390-pci-vfio.h
+>> +++ b/include/hw/s390x/s390-pci-vfio.h
+>> @@ -20,5 +20,6 @@ S390PCIDMACount 
+>> *s390_pci_start_dma_count(S390pciState *s,
+>>   void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
+>>   bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
+>>   void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
+>> +bool s390_pci_setup_err_handler(S390PCIBusDevice *pbdev, Error **errp);
+>>     #endif
+>
 
