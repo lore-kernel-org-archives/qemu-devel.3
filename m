@@ -4,112 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5EAC624D6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB65C624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1lsc-0003tD-0n; Wed, 02 Sep 2026 10:23:58 -0400
+	id 1x1lvy-0004as-J6; Wed, 02 Sep 2026 10:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x1lsa-0003sn-6o
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:23:56 -0400
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1x1lvv-0004a2-RP; Wed, 02 Sep 2026 10:27:24 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x1lsY-00083D-M4
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:23:55 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1x1lvu-0008P6-1u; Wed, 02 Sep 2026 10:27:23 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682CWK8T4190499; Wed, 2 Sep 2026 14:23:53 GMT
+ 682CVkYk2312056; Wed, 2 Sep 2026 14:27:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Ods+m3
- 1hBQwWpchFpHJW9HudKDr5ARgxfcMr87kMwnQ=; b=KZjiD9lKYu9G3O6tX8USby
- HbmvoHyvG6VdYuMrF4Vt6x2o5pzgYQNfAa2QBnEhgdOeGLOgZEu8+EV8fl1CFfSK
- dxgR6HB5tJT830z0I9yG/R54cZPzhLcHzc+Yt91lgf9McqkLSo7wLtJ18doFprwL
- wIilgzGFRzmc3zuxrpH5NaiIRQbszdVTG+I9nMJrxcIJP+xfY9NwMdEcrtdWss3u
- Bzf6pZjTJNfzBBUSz3qRt540cBBVjaB2x7IQ66i2xRHelgEw1cyJCqHkxSHiR95Y
- K4K/cgJy2QUd80LCduQesJ6uTG28iKr9jdBVzk/5gP81zar7+s40jZPKb6HT54iA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nLzQR2
+ zTysjrNqc9+fAwQ2dKh7A5VC5BQvXV68cDIDs=; b=PhfFVOpXvldL62DencdDX0
+ IbcUSfXDEzZEKpSQNC7an7kBoe/+ZwhKPHM1oc8LehF0gOkmZ9QeJ35bnELx2nbb
+ MK8erU+O22xjgFe4Ms/Pg/DzeFvWmbTuThxJbVENLd9I4jtrjgh5a7WOVjTanOPI
+ RwEI8tz1oe5wyKRTAKKOzxOP9hxiH9BcRkgyoIlkkRFyfGoMNfEYOH/ZF/MjuZaj
+ K+bElR6a+Y2u9/4xvYByZJfsfem7sw9OgRG9ci8E0U4/4CqHo4tLTzvyUyTfqaSS
+ sQA9Y6ZqCUPdSWwf0mA3b33e4dwWhygvj9ksnHrfOXhlLZAHYqAFmJKmImOUeVZg
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5q53r-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3rf5h1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 14:23:52 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682EBHBK030338;
- Wed, 2 Sep 2026 14:23:51 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarka8xp-1
+ Wed, 02 Sep 2026 14:27:16 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682EQFHl030321;
+ Wed, 2 Sep 2026 14:27:15 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gc9rqjf7h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 14:23:51 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 682ENpr812714704
+ Wed, 02 Sep 2026 14:27:15 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 682EQXUV22807174
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Sep 2026 14:23:51 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0196D58062;
- Wed,  2 Sep 2026 14:23:51 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9899F58052;
- Wed,  2 Sep 2026 14:23:50 +0000 (GMT)
-Received: from [9.47.158.153] (unknown [9.47.158.153])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  2 Sep 2026 14:23:50 +0000 (GMT)
-Message-ID: <f492e217-bc70-4090-8d37-167b6ae00efc@linux.ibm.com>
-Date: Wed, 2 Sep 2026 10:23:50 -0400
+ Wed, 2 Sep 2026 14:26:33 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D6F0D58052;
+ Wed,  2 Sep 2026 14:27:13 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E002D5805D;
+ Wed,  2 Sep 2026 14:27:12 +0000 (GMT)
+Received: from [9.61.249.201] (unknown [9.61.249.201])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  2 Sep 2026 14:27:12 +0000 (GMT)
+Message-ID: <0eb91d88-dcf6-45a2-b18b-ca79b09e3748@linux.ibm.com>
+Date: Wed, 2 Sep 2026 10:27:12 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Remove stale contact info for Stefan Berger
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, QEMU <qemu-devel@nongnu.org>
-References: <20260901195334.463267-1-jsnow@redhat.com>
- <CAJ+F1CKA-UPwzx7XLLhvA+VW8PuDQGbXKXDBK0mVfo0E4C6-hA@mail.gmail.com>
- <CAFn=p-Zix9rEXMQsCj=zanoOUXbS_dSTnWY3OaiLRSN4viTtjA@mail.gmail.com>
- <apfhDvrlNFQKJLI7@redhat.com> <87ik4o3psc.fsf@pond.sub.org>
+Subject: Re: [PATCH v2 3/3] tests/functional/s390x/test_secure_ipl: Add
+ virtio-blk-pci boot dev case
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, zycai@linux.ibm.com,
+ borntraeger@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com
+References: <20260826145756.2324598-1-jdaley@linux.ibm.com>
+ <20260826145756.2324598-4-jdaley@linux.ibm.com>
+ <4012f184-e3d8-4b48-abf2-66b694076f97@linux.ibm.com>
 Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <87ik4o3psc.fsf@pond.sub.org>
+From: Joshua Daley <jdaley@linux.ibm.com>
+In-Reply-To: <4012f184-e3d8-4b48-abf2-66b694076f97@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a983179 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a983244 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
- a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=xYFGmzvKs1anFAXFgxkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 9YhhRMbtEK1i-W6ZgW2ae1twXiB51FaQ
-X-Proofpoint-ORIG-GUID: 0w4aEFior5IShTMpx2woQpcnWxTswxPZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEyNCBTYWx0ZWRfX7uOSzMnZ7q6g
- uhGtwLLNO/J8vIHII6t5rPgmdE5nzVXSnFnLoxTPigD0IjFELzJJlgjSV9o2nVY7Q2KCheguld+
- sKj9huR+lzWPiFDAfF74Re5KBTiys6E=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEyNCBTYWx0ZWRfX1GrlRrw3X39n
- KU+zK0izrUZSh9P4VsXSZcSu51iXovTLTgtJadR/m3lbKrl4mWg7DqrpOvsLtWd8aJCfK3gKXN9
- rwiv2gzVlmY/0Yq0kdaScV5/LlY4Zp3FmRtxwMtS/OsIO2MHM1jDsD5nWFVAJZs5FNyrN2CQsWW
- OjSppxb9+gbE2SGl8STx0+cb40Xg8I+rPUS3HGgkZGtL8M7klJL9vMhIyuv33A8uMu8DaFpJN3S
- GHKtLEIzz79iH1wVQ42HHPn7EVYrEyMaAoV3+lYsXRlOzOmQ3OADoZRi5S09F8FxDsn8rLYLMXF
- EK99Exmk+L0WiZyb4+ttYp0nJQ6CT77PIhcPwQ+YYzduiCF+Qz87ECOFYfuvSmjxv6yZFG02cP8
- zuwyoCSxGzMAyYZZIBtPi7x/Hf/QAuRdU87QanepD+E+6FfB0fyui3e4Xujd8jqiIw0kjEl5ZGk
- v6WS+TcJ464NgyN+WtQ==
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=C4-LNCLPQWV5QtP9yxMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEyNCBTYWx0ZWRfX7oS4labRXWI/
+ oFixUi6YKfpXrky2PF2Od8rSdRTvQ2wBdSXyMUjzApbCTDmZjVCidVU9uopFL4vXkndU9vJluev
+ Qr2yP8SHXVKcurIKOi+bcawkCLly3DIda2ulns5Cs+UHT+8dcx2lHf91Z9XG4w5w2npr6RutNUQ
+ AIMQ021ZcPVqgKPX9IU6R2r10UGwDZSHYF4i25u13tTPevUWgEJTcpqk/6cvOdyKjNtaiUt6jK5
+ HAabbZ37gV1HAmxG+luvGxMMndk2mUHREVRZ13l+ejhwdVr7pXMpRPurQBGIQ1RvTMQwhjYSiwe
+ XvwZacRyowJgxDghN3o+kkrDwbgG80mqEUVOwgAvQvX4cIaU/z8mGp/5bUweyui9gb2JMRC8EKI
+ Cfdqb+tx/pG74mNuyfbMeAUAhou2hOLiLR05yv+r6ug2oe3o3JLSEBW3b7fVio3YhWIDNszC8Jc
+ LVyeS6gMPiK2ZLBvNxQ==
+X-Proofpoint-GUID: JVYjnpnOg90puMx6wa071usJi3YadmaZ
+X-Proofpoint-ORIG-GUID: JVYjnpnOg90puMx6wa071usJi3YadmaZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEyNCBTYWx0ZWRfX/OU4IZ4Xte0h
+ HcwUzn2WNeKylRLL5SNuTF2yEyq9RmZwKTz7xtKvbkywqF8e8OmDwQPk/vbwcjO/qDJ7Kp3nF8P
+ WNd8F0zc6TUoDpeM/00VL1oGhPzwVaE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-02_03,2026-09-01_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609020124
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020124
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jdaley@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -133,51 +128,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/2/26 6:34 AM, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
->> On Tue, Sep 01, 2026 at 06:11:03PM -0400, John Snow wrote:
->>> On Tue, Sep 1, 2026 at 4:18 PM Marc-André Lureau
->>> <marcandre.lureau@gmail.com> wrote:
->>>>
->>>>
->>>> Hi
->>>>
->>>> Le mar. 1 sept. 2026, 23:54, John Snow <jsnow@redhat.com> a écrit :
->>>>>
->>>>> I was unable to get in touch with Stefan and I am not currently sure
->>>>> if this module is maintained or not. To prevent an avalanche of
->>>>> bounced emails, remove his contact information.
->>>>
->>>>
->>>> Really? There must be something wrong. He is a very responsive and active maintainer.
->>>
->>> All of the emails I have are bouncing; I hope they turn up! I would
->>> love to be proven hasty.
+On 9/1/2026 4:36 PM, Matthew Rosato wrote:
+> On 8/26/26 10:57 AM, Joshua Daley wrote:
+>> Split test_s390x_secure_ipl() into two subtests. Each tests with a
+>> different boot device: virtio-blk-ccw or virtio-blk-pci. Use class-level
+>> variables and a temporary shared workdir such that the time-consuming
+>> setup is not run multiple times.
 >>
->> When I replied to John's docs series last week it triggered a
->> blizzard of non-delivery emails for Stefan's address:
->>
->>    Attempting to deliver following mail to recipient(s):
->>      <stefanb@linux.ibm.com>
->>    VMSDVM9.POK.IBM.COM unable to connect for 1 days to recipient host.
->>    Delivery will be attempted for a total of 3 days.
->>
->> but I never got any more of those after that, and the 3 days passed,
->> so I'm thinking they did indeed get delivered in the end.
->>
->> With regards,
->> Daniel
+>> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
 > 
-> I got several "552 Over quota" bounces in the past few days.
+> Thanks, I verified that the setup is not run twice (and indeed, you can
+> tell that while the first test takes quite a while, the second test
+> finishes much faster)
 > 
-Right. I was trying to get Thunderbird to use my retention policy for 
-holding a certain number of emails per mailing list. No luck. It went 
-back to what *it* wanted and I went away for a few days and ran over 
-quota. Problem solved by unsubscribing.
-
+> One other thought below...
 > 
-
+> [...]
+> 
+>> @@ -109,39 +125,42 @@ def setup_s390x_secure_ipl(self):
+>>           temp_vm.set_machine('s390-ccw-virtio')
+>>   
+>>           asset_path = self.ASSET_F40_QCOW2.fetch()
+>> -        self.qcow2_path = self.scratch_file('f40.qcow2')
+>> +        qcow2_path = os.path.join(S390xSecureIpl._shared_workdir, 'f40.qcow2')
+>>           qemu_img = get_qemu_img(self)
+>>           check_call([qemu_img, 'create', '-f', 'qcow2', '-b', asset_path,
+>> -                    '-F', 'qcow2', self.qcow2_path], stdout=DEVNULL, stderr=DEVNULL)
+>> +                    '-F', 'qcow2', qcow2_path], stdout=DEVNULL, stderr=DEVNULL)
+>> +        S390xSecureIpl._qcow2_path = qcow2_path
+>>   
+>>           temp_vm.set_console()
+>>           temp_vm.add_args('-nographic',
+>>                            '-accel', 'kvm',
+>>                            '-m', '1024',
+>>                            '-drive',
+>> -                         f'id=drive0,if=none,format=qcow2,file={self.qcow2_path}',
+>> +                         f'id=drive0,if=none,format=qcow2,file={qcow2_path}',
+>>                            '-device', 'virtio-blk-ccw,drive=drive0,bootindex=1')
+>>           temp_vm.launch()
+>>   
+>>           self._require_host_secure_ipl_support(temp_vm)
+> 
+> If we find this fails the first time, then we are going to fail setup
+> and therefore the 2nd test will also enter here, create the qcow2 again,
+> and then fail again for the same reason.
+> Couldn't we also save the time spent creating the qcow2 and launching a
+> VM the second time if we know it didn't work the first time?  It's
+> checking the same host facilities.
+> 
+> Basically I'm wondering if we should just create another flag in
+> S390xSecureIpl that defaults to false and gets set to true in
+> _require_host_secure_ipl_support() if the support is missing.  And check
+> that flag in each test before checking _setup_done and skip right away
+> if it's true (with the same message as the one in
+> _require_host_secure_ipl_support().
+> 
+> 
+I think that's a good idea. I'll add it. Thanks for reviewing.
 
