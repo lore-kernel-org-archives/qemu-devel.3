@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26107C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CF6C624D5
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1i8b-0004DQ-DR; Wed, 02 Sep 2026 06:24:13 -0400
+	id 1x1i80-0002lV-CP; Wed, 02 Sep 2026 06:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1x1i8Y-00046o-0r; Wed, 02 Sep 2026 06:24:10 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ id 1x1i7y-0002kF-W7; Wed, 02 Sep 2026 06:23:35 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1x1i8W-00073z-0g; Wed, 02 Sep 2026 06:24:09 -0400
+ id 1x1i7x-0006uI-Fw; Wed, 02 Sep 2026 06:23:34 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wbNri2SgJgFacZ634IoPS9LLjTSaNRXpY2/Aze2UJ2kJfWUc1+6VqGDNH4Wzgd5LQAd1+z2uemJ3f/QSYnLDH+0/RvF/OivUsDnPY2u4Fwn1J5nvapB89B9QPzkgXEmG3dkCSKTCXEs/GQriyf1rth4Ze1NaCp/5mtpsUA+yNdmTUOp9UxOKEVTlSbiWfjc/pkTG7xRZOjJJwwJi/tDXGXbkN7Fm4kiyaOSmsAp5l8yc9Y8p7blwR9rSzE9SBe6Z1O1AAv+iR0DeiFDOKcVBgSuIqoxeHcYK2I4DGk8w8APWO+ln43x89jAGBC9rrLkQ5iiJXu2gVcvVSFDwu/pnyw==
+ b=PIVTFcfHhVZC81mI4/YHbQFQXQ7MnsiPG+G//W5hY7dLcqj1iPlB5NYC31HdFkQWbuFqd6TE9n5wunjfiaMu1UKyv7M3zh0ffVRFNGjbsJwmGaCFDyluuGoJQbcxXTIS5jqV1GIPyG5XPGbhHYwazuu4+BKY1bqbV2RRggQL1g6RagubQ6F6F29ynXBDeOmu9wg9AzlL8epdbAp4dPvlUNFT9/AEX7Bbji31qqwfCOepc7MYTRsb92XZGTcl/U8uRQUdEMqYHlCNlyjnLK81248oINYPzbNhR2bImMm3VUWhMoai2pVgcp2Ex6bEP7nnVHYkr1RjvOUDSHOJAwZIUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lq38r3dev09hPmPbQeKEQcmm1XmLPKG4paT81CIfM8Q=;
- b=faOOzDX290xSLS4O4xawKdb0nBIjf9HQDB+VoM7tLSI8BGL16ru76WDz6BT2gMvH20P72kBhVzPxa/7QkjMaMd56KCS1/hgtX3zm/e0Ka52/TifHODSU+M266o/1pP64sTeVOxwoTcf/NCCqsHbAQ5lxlvP+yZ/wYgADL76aYqqKzQ+4wa6DGlQVa1CHQH80PlLoyJKqhEutvfubzBer2ba8NhndYctxkhAlx4j4m/jNNfyTIoht226i8RtdzxZrjs9iLau1GB/uliic2kGNLrbw2vKPgN6/wrAlW/Okjt+Nefg0OhxaZH0CobURwn9O4o7XeiWDMKeiTZQ/WJQZdA==
+ bh=qdK29EIvdAPjx/GL/33knkdpNyU21m3mL9mtwvB6Jsk=;
+ b=bnUct2wzTHRxF+nwnn1Uoseed+Pu9UaK36v9ekY+zCrAFA0nAY2g8aohs5+i+2Xabnnj7cyivCVcrSn/TahnCMjuBwnVHliUZduQcvzQO5FW64u5AYkW9V8AW8zCz+NUjk75argzDeWO2/3yMcQ2LH97OLy8PkMpSindIRl0MAHPYjE847+uy1+maKzlMbC/nbiqqBcn6DORkioEHUXYRQ80Ylv2XCiIV8eylLinu8iT8d+sDpVibCvTJtGQG0ps+qgJH4L9V8dqoPFNXCr0fL3zYH3M50SBWo6owcXwE7fVBFxbM6nSRtz753DzgsGS6Qjxf8RirKST5JOhuVJjfw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
  64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
  dmarc=none action=none header.from=axiado.com; dkim=none (message not
@@ -33,18 +33,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lq38r3dev09hPmPbQeKEQcmm1XmLPKG4paT81CIfM8Q=;
- b=ZzITwnv4fDhvFkORgqMyTjnjPI4r6j6K5ZYLL6LzfDK8fL5NEt+fNan8JWvj2qHsNs91lOaZ7DIFZ2Q8O2eGxJmwhZ3BPfASrBf3yWDf85ZKF37JAOFW4MUU1dm3Pdcjv0aB130W/7/X2BtEX4L5ShRrPoDOB7HG6J/4jRgwzY13GjIKKWuGqWFDliuCWBbJwMk08aLErPFSK/JqBnx1/RgsauaT0QdMNfy0JuXEa9Gh6/0QckA96yoUQaCY+prbT5xEpVjhBgwjCvPOgiPnB0EhTEuxG/hPONPbgi9AVYRL6hclcPiOTPf0tIvObXdbmCXYfCKB+MReLYvEDZTD6Q==
-Received: from CH0PR03CA0332.namprd03.prod.outlook.com (2603:10b6:610:11a::9)
- by CO1PR18MB4746.namprd18.prod.outlook.com (2603:10b6:303:e9::8) with
- Microsoft SMTP Server (version=TLS1_2,
+ bh=qdK29EIvdAPjx/GL/33knkdpNyU21m3mL9mtwvB6Jsk=;
+ b=RWmE+mg8meJsjUcbglITNlsN7r3Mt82c+LKzSojgTvX8IKO4dlhknYmevE8aGTp7pLA+r5vy4Szg5HHBbr1my+9HywqP+/8zdH/ZBDwwBlFF/F3Am+F8m5+5aT6DeWF0VXPZGl4cb47PJTOvNTsu1TXwniEjPFzOqySU1IWk3tcNifGKPq3JGxVQYniCv9Dku+P7aWdI0iwihyfd0syl9MEtqGVUjRIERgY4AibLg+FgTCNJ0Clt3qviJ12oJeah7YH8AaesEW9QReh2EEhhQE/1jEfrtGd0s5fVEtT/8CI/sZGRp7bZ7sd0s0iBUG/dEqaFdyJlnh3AaonGx0sjTg==
+Received: from CH2PR03CA0006.namprd03.prod.outlook.com (2603:10b6:610:59::16)
+ by CH4PR18MB6261.namprd18.prod.outlook.com (2603:10b6:610:22e::11)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 10:24:01 +0000
-Received: from CH3PEPF00000010.namprd04.prod.outlook.com
- (2603:10b6:610:11a:cafe::1a) by CH0PR03CA0332.outlook.office365.com
- (2603:10b6:610:11a::9) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 10:23:27 +0000
+Received: from BL02EPF00029929.namprd02.prod.outlook.com
+ (2603:10b6:610:59:cafe::39) by CH2PR03CA0006.outlook.office365.com
+ (2603:10b6:610:59::16) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.11 via Frontend Transport; Wed, 2
- Sep 2026 10:24:00 +0000
+ Sep 2026 10:23:26 +0000
 X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
  smtp.mailfrom=axiado.com; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=axiado.com;
@@ -52,57 +52,57 @@ Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
  designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
  client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
 Received: from smtp.corp.axiado.com (64.62.143.114) by
- CH3PEPF00000010.mail.protection.outlook.com (10.167.244.41) with Microsoft
+ BL02EPF00029929.mail.protection.outlook.com (10.167.249.54) with Microsoft
  SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.8
- via Frontend Transport; Wed, 2 Sep 2026 10:23:59 +0000
+ via Frontend Transport; Wed, 2 Sep 2026 10:23:26 +0000
 Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id 59A844186B53;
- Wed,  2 Sep 2026 03:23:59 -0700 (PDT)
+ by smtp.corp.axiado.com (Postfix) with ESMTP id DAF0D4186B53;
+ Wed,  2 Sep 2026 03:23:25 -0700 (PDT)
 From: Kuan-Jui Chiu <kchiu@axiado.com>
 To: philmd@oss.qualcomm.com, 163wangjack@gmail.com, qemu-devel@nongnu.org,
  peter.maydell@linaro.org, qemu-arm@nongnu.org
 Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v5 12/13] docs/system/arm: Document Axiado boards
-Date: Wed,  2 Sep 2026 03:23:58 -0700
-Message-Id: <20260902102358.3039392-1-kchiu@axiado.com>
+Subject: [PATCH v5 08/13] hw/arm/ax3000-boards: Add modify_dtb for
+ discontiguous memory
+Date: Wed,  2 Sep 2026 03:23:24 -0700
+Message-Id: <20260902102324.3039334-1-kchiu@axiado.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000010:EE_|CO1PR18MB4746:EE_
+X-MS-TrafficTypeDiagnostic: BL02EPF00029929:EE_|CH4PR18MB6261:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 66f0610d-2a72-4a4f-adec-08df08dc4dc5
+X-MS-Office365-Filtering-Correlation-Id: 96dd89ac-9173-4099-1913-08df08dc39e2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|1800799024|23010399003|82310400026|376014|18002099003|13003099007|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info: gdCc5ddLYI+MNw6bqNb1UukgWNfk42PJt6vwYOFPFJ+FQHjauZH2a8EQEXf4MMkpj5Gb0Y3a8ckLR+9wr4Hz7/Y+d9zJ1vXYU/wc8cV6mLP1fL1q8znuCmdaXhmsBqIysR3UmNS1F5mwJ69iL6/Ufr9LeOaueugXqqQdtC7xNRpAA3LqC4cIxx2rs9/1mGKaYr2V7Ihrnlo7yypFpA0aAeB/4Hjxv5DX9RGhjTQY7rStR6YzcwqF7M0XMXtw1bMgSKJlZF5Mh+PvrH7NfjxxSNzkN5ZIVlB8Fe4CamWUU3fJ3evZMdgTUK5ZwBoNSkidCAAX6kACsgmLtAE+Ul6marBqcqgH0NGqfwtPdHp8HgVsoIwbPzlZsMs1y6TqS7UuHzpdFqlCPG6jk+0KSb+Ac/h2NBC/yfxKfP9KFKT/A6wiHrOcJnbIv72VgIQQ8KUNmz74gMqbF8CLmPrymQ/6q0IkLliM7yA3kuX6LTk8+nKAI+Fv+VK3vt2Mj61Y/0VlvgRYM84WP4H6TIYT48bCYVEZEd5tg9Dnf+QWR0OyxRZNxbV6fsqMCM1i1nJ2/5XIk8xHVdpT490a8iZiz6Mf9DlFl2abKi9xxRwfudAe57Sbc9C5qg4PUqFXk2Yu7/Cir+h7y2x1msKkRkymi2XdbPrd33lryoLPmMGISdMo1ETwWbL6BLB6XRC69XTlef0f3RzKgCFWyqm3yZqrRijb/w==
+ ARA:13230040|1800799024|376014|36860700016|23010399003|82310400026|10067099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: TAm0U73wvXZI3cYs/escOBKl1S3aORvaEiiDD6yJ3n9wBzXAxme6r/Vu59HStr3CBdKbOujteunD+VsVQj1bfnenNSr/LRhvEp+tWAfsW/ppY68OhaFlAUScmzSVtqnVNw4UwHNjNsKTcINc0iC87gWXqhqY6r6cyHGbAUfqrmKNUPhkFw98GoflXsQxy0ewfWh3MIBEuKXBhfxAi/8UZsAdh/KAFcLIrSyYe0aNuWJbHbDgRQZqggbKL+5Si3ZLw64CB4GTJEPKICxrqMCqIzcIRJ2YWVvIfgnunc5yOEKTa24RJDUj6Z7j1iS8tU9wiyIrIQdKbQjcF52S5tkog0FyIsoSOvtjMMMLLasg3Wuy/D82QBlwpgwneC2itsYngA/rFhlFNw2IMDNpxT90LZ7zjMtEqzpgBt+52l0nnyEBSwoyzCXGLvn0yuudKunlm7fAoT5gLDhCbv49AelQ1g7gM/682uJUnhs2kyym1jZhfG0mI270Xf23kh+HtWKvh7tHxoGmVoXbX7olxvPAyxo966ioh4yvCBRAImNjOPwruA4xnnN44B/Phb0wHyiWTChVWUq4YEkMCy/DH1P75RQk0u9wsHqGH0spiVtlJse+frt2aIB2qJiDM9FfeHsTvS0owNffy5J9yKwtlWtBdwt0Tk1WRzickzn/34RR404teWY5inhEEZH2CfW8DDL9RJGuPxCJeyk3s4+rwlA4RA==
 X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(1800799024)(23010399003)(82310400026)(376014)(18002099003)(13003099007)(56012099006)(10067099003);
+ SFS:(13230040)(1800799024)(376014)(36860700016)(23010399003)(82310400026)(10067099003)(56012099006)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 4UOj+wD65W+dpk6fX+J2CanPSvyvqSWqxUp8E3e0M1asnkoMR1wXQsNaC/qmvXgb6KUO6MBCSO+KChGq66bI1NgZWWkojC2+5Sz07sitCbAbjIP2Ln6Io//livZYGbnMY4ltoFPLBv6N7+GLBUkHsiSj6Plg2HVMNo2R+EYaodBm6V0BjfN3YB+vaRhB1cuYVucd+yJ8eYwMU/v7PNCynOjYseL4d1jVQ9MOYxecZEebqBUUTcItLAg1Aj7eekaba3/QyXElJI6MW+Zr7BSbDqICprKkmMMFRP2QsifileHbQniCnKAcF2eaaP/9IshM9msnaHxSlSJgMDT0HMTpd8t+6pVgRmIaWDLuKRr1K2xteFInM6f2tG7hjWi+4vq9zfbhNc48n0xzxou7SuGa0kIe5XhgNFDK6hi1fzVJ0ehlwg8k63f7HKzOq6QzDSQu
+X-MS-Exchange-AntiSpam-MessageData-0: MnuCWrVSHTpPzyfG39ry5u7+4SzCPBLgHdK6ZIJVMDWap+PTm1wpRSTZHx9oR5OtkNVQBy0Sl1R51vu8ttyoTI2FBR8+QhmmHJHH6RkxPHJZaWhm6LGu5jd7bq76sHH3aN7l1JU7AVjldH5VDYVPJDNfGQ0J5hWC8VvomkGbjj4doCXJIB+J1ziwwzFlednaIk2n1d065hnqWXz8dyzybfIV3r4hngH51EX61QzpMsz+vHYJgSUNXvQyC71UribuMOIEX0/MajEaYX2QQoRwgqKgKwU2ymN6MEW2csV1hKYKcBbrAAW6jSu5+bYDSd4kXQnF4d0vA6vGOmZWMQ1NRoNwPhDHRWBGIMHYSgPruCsRfY/QFX2BjfjgX9Gc4CyH1LetCXlVLA7PzRgjwtsE922zk/dgb0x6csskS0Muh4K4U5JEDD01aDwmV4zyCpXM
 X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 10:23:59.9148 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66f0610d-2a72-4a4f-adec-08df08dc4dc5
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 10:23:26.5156 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96dd89ac-9173-4099-1913-08df08dc39e2
 X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
  Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000010.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF00029929.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR18MB4746
-Received-SPF: pass client-ip=2a01:111:f403:c105::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR18MB6261
+Received-SPF: pass client-ip=2a01:111:f403:c107::9;
  envelope-from=kchiu@axiado.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,172 +119,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Ax3000 SoC has two memory banks:
+  1. 0x3C000000 with 1088 MiB
+  2. 0x400000000 wit 2 GiB
+
+When user boot kernel directly on axiado-scm3003 models, kernel would
+believe these memory are contiguous which cause the crash
+
+This patch add modify_dtb callback to revise the memory block
+
 Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 ---
- MAINTAINERS                |   1 +
- docs/system/arm/axiado.rst | 128 +++++++++++++++++++++++++++++++++++++
- docs/system/target-arm.rst |   1 +
- 3 files changed, 130 insertions(+)
- create mode 100644 docs/system/arm/axiado.rst
+ hw/arm/ax3000-boards.c | 48 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 22c5b984eb..baa2d2efbb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1319,6 +1319,7 @@ F: hw/*/axiado*.c
- F: include/hw/arm/ax3000*.h
- F: include/hw/arm/ax3005*.h
- F: include/hw/*/axiado*.h
-+F: docs/system/arm/axiado.rst
+diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
+index 4fd04e42f3..33e936a0dd 100644
+--- a/hw/arm/ax3000-boards.c
++++ b/hw/arm/ax3000-boards.c
+@@ -13,10 +13,58 @@
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qom/object.h"
++#include "system/device_tree.h"
++
++/*
++ * arm_load_dtb() drops every /memory node found in the DTB and replaces them
++ * with a single node spanning [loader_start, loader_start + ram_size).  The
++ * AX3000 DRAM is split into two banks with the MMIO region in between, so the
++ * generated node would describe unbacked addresses as RAM.  Describe the banks
++ * ourselves instead.
++ */
++static void ax3000_modify_dtb(const struct arm_boot_info *info, void *fdt)
++{
++    g_autofree char *nodename = NULL;
++    uint64_t reg[AX3000_NUM_BANKS * 2];
++    char **node_path;
++    Error *err = NULL;
++    int i;
++
++    node_path = qemu_fdt_node_unit_path(fdt, "memory", &err);
++    if (err) {
++        error_report_err(err);
++        exit(1);
++    }
++    for (i = 0; node_path[i]; i++) {
++        if (g_str_has_prefix(node_path[i], "/memory")) {
++            qemu_fdt_nop_node(fdt, node_path[i]);
++        }
++    }
++    g_strfreev(node_path);
++
++    const struct {
++        hwaddr addr;
++        size_t size;
++    } dram_table[] = {
++        { AX3000_DRAM0_BASE, AX3000_DRAM0_SIZE},
++        { AX3000_DRAM1_BASE, AX3000_DRAM1_SIZE}
++    };
++
++    for (i = 0; i < AX3000_NUM_BANKS; i++) {
++        reg[i * 2] = cpu_to_be64(dram_table[i].addr);
++        reg[i * 2 + 1] = cpu_to_be64(dram_table[i].size);
++    }
++
++    nodename = g_strdup_printf("/memory@%" HWADDR_PRIx, dram_table[0].addr);
++    qemu_fdt_add_subnode(fdt, nodename);
++    qemu_fdt_setprop_string(fdt, nodename, "device_type", "memory");
++    qemu_fdt_setprop(fdt, nodename, "reg", reg, sizeof(reg));
++}
  
- AVR Machines
- -------------
-diff --git a/docs/system/arm/axiado.rst b/docs/system/arm/axiado.rst
-new file mode 100644
-index 0000000000..bceaa77d83
---- /dev/null
-+++ b/docs/system/arm/axiado.rst
-@@ -0,0 +1,128 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+Axiado family boards (``axiado-scm3003``, ``ax3005-evb``)
-+================================================================
-+
-+The Axiado AX3000 and AX3005 are Arm-based system-on-chip devices intended
-+to be used as the management and security processor of a server platform,
-+in the same role as a traditional Baseboard Management Controller (BMC).
-+
-+Two machines are modelled:
-+
-+- ``axiado-scm3003``  Axiado SCM3003 evaluation kit, based on the AX3000
-+- ``ax3005-evb``      Axiado AX3005 evaluation board, based on the AX3005
-+
-+Neither SoC is supported by the upstream Linux kernel or by upstream
-+U-Boot, so there is currently no way to build a bootable image for these
-+machines from mainline sources. Axiado intends to publish a firmware
-+package suitable for QEMU; until then no ready-to-run image is publicly
-+available.
-+
-+Firmware download
-+-----------------
-+
-+Images can be downloaded from the Axiado Forked OpenBMC Github release repository :
-+
-+    https://github.com/axiado/openbmc/releases
-+
-+AX3000 (``axiado-scm3003``)
-+---------------------------
-+
-+Supported devices
-+~~~~~~~~~~~~~~~~~
-+
-+ * SMP (4 x Cortex-A53)
-+ * GICv3 interrupt controller
-+ * Arm generic timers
-+ * DRAM
-+ * Cadence UARTs
-+ * Cadence GPIO controllers
-+ * SD/eMMC host controller (SDHCI) with its eMMC PHY register block
-+ * Clock/reset controller (PLL) registers polled by the boot firmware
-+
-+Running
-+~~~~~~~
-+
-+Boot a kernel directly on the SCM3003 evaluation kit, with an eMMC/SD
-+image attached to the SD host controller:
-+
-+.. code-block:: bash
-+
-+  qemu-system-aarch64 -M axiado-scm3003 -nographic \
-+      -kernel Image \
-+      -dtb ax3000-scm3003-qemu.dtb \
-+      -initrd obmc-phosphor-initramfs-evk-axiado-qemu.cpio.xz \
-+      -serial null \
-+      -serial null \
-+      -serial null \
-+      -serial mon:stdio \
-+      -drive if=sd,file=obmc-phosphor-image-evk-axiado-qemu.wic.qcow2,format=qcow2 \
-+      -append "console=ttyPS3,115200 earlycon nr_cpus=1 rootwait root=PARTLABEL=rofs-a"
-+
-+or boot via u-boot:
-+
-+.. code-block:: bash
-+
-+  qemu-system-aarch64 -M axiado-scm3003 -nographic \
-+      -device loader,file=u-boot.bin,addr=0x3C000000,cpu-num=0 \
-+      -serial null \
-+      -serial null \
-+      -serial null \
-+      -serial mon:stdio \
-+      -drive if=sd,file=obmc-phosphor-image-evk-axiado-qemu.wic.qcow2,format=qcow2
-+
-+AX3005 (``ax3005-evb``)
-+-----------------------
-+
-+Supported devices
-+~~~~~~~~~~~~~~~~~
-+
-+ * SMP (4 x Cortex-A53)
-+ * GICv3 interrupt controller
-+ * Arm generic timers
-+ * DRAM
-+ * Cadence UARTs
-+ * Cadence GPIO controllers
-+ * SD/eMMC host controller (SDHCI) with its eMMC PHY register block
-+
-+Running
-+~~~~~~~
-+
-+Boot a kernel directly on the AX3005 evaluation board, with an eMMC/SD
-+image attached to the SD host controller:
-+
-+.. code-block:: bash
-+
-+  qemu-system-aarch64 -M ax3005-evb -nographic \
-+      -M ax3005-evb \
-+      -kernel Image \
-+      -dtb ax3005-evb-qemu.dtb \
-+      -initrd obmc-phosphor-initramfs-evk-ax3005-qemu.cpio.xz \
-+      -device loader,file=obmc-phosphor-image-evk-ax3005-qemu.squashfs-xz,addr=0x90000000 \
-+      -serial null \
-+      -serial null \
-+      -serial null \
-+      -serial mon:stdio \
-+      -drive if=sd,file=obmc-phosphor-image-evk-ax3005-qemu.wic.qcow2,format=qcow2 \
-+      -append "console=ttyPS3,115200 earlycon nr_cpus=1 root=/dev/ram rw phram.phram=ramrofs,0x90000000,0x6400000"
-+
-+or boot with ARM TrustZone:
-+
-+.. code-block:: bash
-+
-+  qemu-system-aarch64 -nographic \
-+      -M ax3005-evb \
-+      -device loader,file=bl31.bin,addr=0x88300000 \
-+      -device loader,file=tee-raw.bin,addr=0x88400000 \
-+      -device loader,file=u-boot.bin,addr=0x80000000 \
-+      -device loader,file=fitImage,addr=0x80100000 \
-+      -device loader,file=obmc-phosphor-image-evk-ax3005-qemu.squashfs-xz,addr=0x80B00000 \
-+      -device loader,cpu-num=0,addr=0x88300000 \
-+      -device loader,cpu-num=1,addr=0x88300000 \
-+      -device loader,cpu-num=2,addr=0x88300000 \
-+      -device loader,cpu-num=3,addr=0x88300000 \
-+      -serial null \
-+      -serial null \
-+      -serial null \
-+      -serial mon:stdio \
-+      -drive if=sd,file=obmc-phosphor-image-evk-ax3005-qemu.wic.qcow2,format=qcow2
-diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-index e34492402f..27b0634564 100644
---- a/docs/system/target-arm.rst
-+++ b/docs/system/target-arm.rst
-@@ -80,6 +80,7 @@ Board-specific documentation
-    arm/versatile
-    arm/vexpress
-    arm/aspeed
-+   arm/axiado
-    arm/bananapi_m2u.rst
-    arm/b-l475e-iot01a.rst
-    arm/sabrelite
+ static struct arm_boot_info ax3000_binfo = {
+     .loader_start = AX3000_DRAM0_BASE,
+     .board_id = -1,
++    .modify_dtb = ax3000_modify_dtb,
+ };
+ 
+ static void ax3000_machine_init(MachineState *machine)
 -- 
 2.34.1
 
