@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD192C624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53CEC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1qlz-0003T4-QH; Wed, 02 Sep 2026 15:37:27 -0400
+	id 1x1qm1-0003WN-9f; Wed, 02 Sep 2026 15:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qly-0003N3-9k
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:37:26 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qlz-0003TQ-VB
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:37:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qlw-0004rR-J7
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:37:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qly-0004rn-G4
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:37:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788377844;
+ s=mimecast20190719; t=1788377845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EzLz8ZlEIVzf4Rpt7lLepb9FZzFO03GU8b6FyMgWSxk=;
- b=YSK2w8YNy1+gzTVd5t41lRFt9SqYTapIxe2kjSquPslIjtmRNsHQ4kPZ7lUWz5soUMh4Rg
- r7CEFSsM1AuDHnUbO7dUV2aIbEXQ3pACFOEvhXva24jOtODaZHr/ljaqs6lL3uiy2vt/Qm
- o+IDzxnY5UmY2OF6F/km5VuUPasnxaI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2nXZ1918GwkdCSwvaXRUfabHgQdPNkv5oM7RUkhi2W4=;
+ b=FlH3CTMy9dbiM0SvSrJVmVxusVpBQBODBy0SoPNccYZN+gocEiKlcN4UWSpoXC9QY0xh9b
+ s8gPc+ddYALEh0gZcm31EBaEM4POfA/q/uT1cRtZLyJOJ4BSgDMatsGpbQNFqhjBBP5+B4
+ lNoiqEVelXcuhiyujctrjiWvHx9iB6M=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-mWg4dCFWO3GM791v4-wkBw-1; Wed,
- 02 Sep 2026 15:37:19 -0400
-X-MC-Unique: mWg4dCFWO3GM791v4-wkBw-1
-X-Mimecast-MFC-AGG-ID: mWg4dCFWO3GM791v4-wkBw_1788377836
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-QpuGrhOVO3GF3Qs6bpK2sw-1; Wed,
+ 02 Sep 2026 15:37:24 -0400
+X-MC-Unique: QpuGrhOVO3GF3Qs6bpK2sw-1
+X-Mimecast-MFC-AGG-ID: QpuGrhOVO3GF3Qs6bpK2sw_1788377841
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A55041843AC0; Wed,  2 Sep 2026 19:37:16 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95E0A180256E; Wed,  2 Sep 2026 19:37:21 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.24])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C742A1800261; Wed,  2 Sep 2026 19:37:11 +0000 (UTC)
+ id C545D1800240; Wed,  2 Sep 2026 19:37:16 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
@@ -66,9 +66,9 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Li-Wen Hsu <lwhsu@freebsd.org>, Peter Xu <peterx@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 12/16] python: remove distutils workarounds
-Date: Wed,  2 Sep 2026 15:35:47 -0400
-Message-ID: <20260902193551.582660-13-jsnow@redhat.com>
+Subject: [PULL 13/16] python: remove stale setup.cfg options
+Date: Wed,  2 Sep 2026 15:35:48 -0400
+Message-ID: <20260902193551.582660-14-jsnow@redhat.com>
 In-Reply-To: <20260902193551.582660-1-jsnow@redhat.com>
 References: <20260902193551.582660-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -99,52 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are no longer necessary now that we are using Python3.12+.
+With the recent version bumps, we no longer need these directives.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260825215851.1780608-13-jsnow@redhat.com>
+Message-ID: <20260825215851.1780608-14-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/tests/linters.py | 11 -----------
- 1 file changed, 11 deletions(-)
+ python/setup.cfg | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/python/tests/linters.py b/python/tests/linters.py
-index 82b88aebb20..dd89fb00ba8 100644
---- a/python/tests/linters.py
-+++ b/python/tests/linters.py
-@@ -83,23 +83,13 @@ def test_mypy_iotests(self):
-             cwd="../tests/qemu-iotests/",
-         )
+diff --git a/python/setup.cfg b/python/setup.cfg
+index f866f659574..ebb4230899c 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -65,7 +65,6 @@ exclude = __pycache__,
+ [mypy]
+ strict = True
+ namespace_packages = True
+-warn_unused_ignores = False
  
--    # Setuptools v60 introduced the SETUPTOOLS_USE_DISTUTILS=stdlib
--    # workaround; stdlib distutils was fully removed in Python
--    # 3.12+. Once we are on >=3.12+ exclusively, this workaround can be
--    # dropped safely. Until then, it is needed for some versions on
--    # Fedora/Debian distributions which relied upon distro-patched
--    # setuptools present in CPython, but not within setuptools itself.
+ [mypy-qemu.utils.qom_fuse]
+ # fusepy has no type stubs:
+@@ -76,12 +75,6 @@ allow_subclassing_any = True
+ [mypy-fuse]
+ ignore_missing_imports = True
+ 
+-[mypy-tomli]
+-ignore_missing_imports = True
 -
-     def test_pylint_pkg(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call([sys.executable, "-m", "pylint", "qemu/"])
+-[mypy-tomllib]
+-ignore_missing_imports = True
+-
+ [mypy-distlib]
+ ignore_missing_imports = True
  
-     def test_pylint_scripts(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call([sys.executable, "-m", "pylint", "scripts/"])
+@@ -91,12 +84,6 @@ ignore_missing_imports = True
+ [mypy-distlib.version]
+ ignore_missing_imports = True
  
-     def test_pylint_qapi(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call(
-             [
-                 sys.executable,
-@@ -113,7 +103,6 @@ def test_pylint_qapi(self):
-         )
+-[mypy-pip._vendor.distlib]
+-ignore_missing_imports = True
+-
+-[mypy-pip._vendor.distlib.scripts]
+-ignore_missing_imports = True
+-
+ [mypy-pip._vendor.distlib.version]
+ ignore_missing_imports = True
  
-     def test_pylint_iotests(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call(
-             [sys.executable, "-m", "linters", "--pylint"],
-             cwd="../tests/qemu-iotests/",
 -- 
 2.55.0
 
