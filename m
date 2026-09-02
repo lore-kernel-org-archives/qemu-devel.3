@@ -4,87 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7097AC61DFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A89C624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 09:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1gjo-0001IV-8k; Wed, 02 Sep 2026 04:54:32 -0400
+	id 1x1h3q-0003LX-Bx; Wed, 02 Sep 2026 05:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1x1gjm-0001Hl-OO
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:54:30 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1x1gjl-0007tW-84
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:54:30 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-482f9309813so800480f8f.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 01:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788339267; x=1788944067; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ess7pqfJa2NlMtnSA6lUjrEcfwTPcwU/6N1LeUxIGk8=;
- b=qUvwGaKJWUVbOfLPOTgFwBxuwwS7IL1A9A80GS9qg4+nAqBxsg/PgvAxNDL8e0ejVj
- j9b3tnC8CsUEODEqM9wn25OZc/AYJQrKsSYikOUwtoH2RFEoPhF9oq7tTafx3LJWGq1n
- Vobat0H9CWspvC4m0/NH9/dfe25dcuCSSrn9yKMrlorS4vVScgufkr7chPdjyL1J+BRl
- x6YZg+s+vARpeGFoB1Dru+b6Hx9HRDad5+30RmYw92cA6JQfxwksI74Xlm3OrAJbM6jc
- yQkOPtyUWHvwK8ufIozHv5U1StmJ/kfapytYDn24bmXD7SwpoVkeIMuzLAo9LqfWfnB3
- 1Wzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788339267; x=1788944067;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ess7pqfJa2NlMtnSA6lUjrEcfwTPcwU/6N1LeUxIGk8=;
- b=K43VQP4Z3fOszBhKSaEuSOAhvCfucp743gaDPR1xY0zv94D1EcDEeNVgXqLKwiq4Wd
- fpE7CNFsodEKNq7h0ZMDJk6qHQu4rplB6lh5v6MLf3lPgBb2A8tyhq1M6x8d5H6NISoG
- 6YE1k9On8ZzcvIScgnrR4ikkqMwYZNTtIz+dNM4QrhvtqYuX+GSewctuOYq+EIe9J65x
- uagTZgxIeJ1QQ4dHi9Ucefvv09wuIRz0RC+XW1bhBLn0hVUd7XQ3mb51hzljsYL5QN79
- FKE7tKbrQZJp6WpyRep27mLT2y0LG1JWevEBkAN07fFWKnOqm98kZJxQ7d6suZWlQCeD
- bEvA==
-X-Gm-Message-State: AFuF++k+S31pJgAk3kgif1mjV0mClEVJ5pQOGoBj40JNY+yaV63a8xAs
- 6/SdF7rNXylkQY190xByHJXQ5ex4cEEikzA/Xt3KFMSPpKCnXkhN8fP6neHPFNSxG+g=
-X-Gm-Gg: AYBFou3DIPwrUVQwUlj7fpGXnpkWQZRmeQl/5ER5k3VJIus5chGm77ecSqtQUAVWMmU
- 5F06gfsb/Brsq7vXV5DFCp31mMndcyr2MRzfvYIwrfxryc3CfRahbB2F9xus96ydGA+OCPPWJSh
- VWThZkF2l7b/8XPoaglyNW+AkgOfbkMxCcZVhWOd1qUYg2iAKI0rehdXbpYzriXN6P1GDOUC8mY
- K4UUhvM42VDCfNsy3dPOL5vLcaqKGd14QbrwgQ0FgfTbFvH15qEC/2sYNp7m6ERK19fsOBhYjEt
- jk/qjhNGrzAucBml3UroJAIUJNHYe0mzxHbWQLxH79wo2LI88KXkFQF6Ngy/ZM1nuTCKRB+jjN+
- 5oY2qOtGgkyACoezOWhZW7UMLDq7V/KLTw9qm2bnk72bDUot1jjI9wKVrv2AWqbB0ZqQOLQ4R9d
- 9hdF0PE0IaFAi5WIfJ0Beu7cgOphaS1x0eqVGk9DGAtfX/LmfcgWDIYYyIXm71pz72WIKCul8uZ
- ASl91EX+ZFy8onE3b7j9/pYAzs7JysmL/GpfgteOh/+Vm5VUJoKRp4lp04cgfCDoeSMGPA21t1W
- DSShWsdCYYAoF3bDqei5EbuHZxvttr0ytfOjuqgh6A==
-X-Received: by 2002:a05:6000:1885:b0:482:f0e4:3ef5 with SMTP id
- ffacd0b85a97d-4847b629897mr6013659f8f.0.1788339267149; 
- Wed, 02 Sep 2026 01:54:27 -0700 (PDT)
-Received: from simon-macbookpro.tugraz.local (tug-swl-225-161.tugraz.at.
- [129.27.225.161]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448e7f8f9sm5034634f8f.9.2026.09.02.01.54.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 01:54:26 -0700 (PDT)
-From: Simon Scherer <scherer.simon89@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
- Simon Scherer <scherer.simon89@gmail.com>
-Subject: [PATCH] target/i386: Fix FXCH to unconditionally clear C1
-Date: Wed,  2 Sep 2026 10:54:24 +0200
-Message-ID: <20260902085424.148650-1-scherer.simon89@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1x1h3o-0003Kq-DO
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 05:15:12 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1x1h3m-00028e-0K
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 05:15:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1788340510; x=1819876510;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=GBWd6TtW6GY3ZqtcgVHAvdNtoarJd31aa71x/S83FBU=;
+ b=GpS0C3sStTxuPECmpvDS+RBRgapsjL3UPN9fHU5mZ56tr/IrdNkjgD9t
+ LJwamZefIc3ViYMpYUArCAB6qAJ9hLsHlvGvy7YtjsVwrAdYN2SWCMFQh
+ gN2VMhtiJQgfmo7ehy5Rsr3o0JzTUWLnM+nPQcepVycgEN/X4liSODfLC
+ HZPL0D6gPhfp27ahOB/RSeAJZXQACGyXUrhgqr/It+TAM7bUWUUJUKsup
+ 6rz8hTSwNL2Enkw9dEFo6VbCT2+8CXfdQHh3m5uGkTdU6Ewi4e4vKxl+0
+ ntBRdvkGuu8x6mKQLZnBrQwmE/JifoD33LKXPIv3zKPxmMXGfpJRuLhX3 g==;
+X-CSE-ConnectionGUID: 5WMdeNe2QA29V5E19tfwJw==
+X-CSE-MsgGUID: XBDrt4S3QummPjx9YjRPgg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="114335635"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="114335635"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2026 02:15:06 -0700
+X-CSE-ConnectionGUID: WlwMsKVCTUSbZKhwmjh1eA==
+X-CSE-MsgGUID: YRT57IvGTGWxZitO9SQzUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="263206180"
+Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
+ by fmviesa009.fm.intel.com with ESMTP; 02 Sep 2026 02:15:06 -0700
+Date: Wed, 2 Sep 2026 17:15:04 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhaop1.liu@intel.com>
+Subject: Re: [PATCH 19/20] target/i386/tcg: mark APX as supported
+Message-ID: <apfpGLM4eZd2U9O1@intel.com>
+References: <20260825122921.431739-1-pbonzini@redhat.com>
+ <20260825122921.431739-20-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=scherer.simon89@gmail.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260825122921.431739-20-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,37 +81,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Per the SDM, FXCH unconditionally clears the FPU status word's C1
-flag. QEMU's helper_fxchg_ST0_STN swaps ST(0) and ST(i) but never
-touches fpus, so C1 is left untouched from whatever prior instruction
-set it.
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index e5ffb10d156..e966bd8049b 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1005,7 +1005,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+>  #define TCG_7_1_EAX_FEATURES (CPUID_7_1_EAX_FZRM | CPUID_7_1_EAX_FSRS | \
+>            CPUID_7_1_EAX_FSRC | CPUID_7_1_EAX_CMPCCXADD)
+>  #define TCG_7_1_ECX_FEATURES 0
+> -#define TCG_7_1_EDX_FEATURES 0
+> +#define TCG_7_1_EDX_FEATURES CPUID_7_1_EDX_APXF
 
-This patch clears C1 after the exchange matching the SDM.
+And NCI/NDD/NF is supported :-)
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4399
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
----
-See also my earlier patch (20260828082235.128360-1-scherer.simon89@gmail.com)
-to unconditionally clear C1 for the x87 compare instructions.
++#define TCG_29_0_EBX_FEATURES CPUID_29_0_EBX_APX_NCI_NDD_NF
 
- target/i386/tcg/fpu_helper.c | 3 +++
- 1 file changed, 3 insertions(+)
+>  #define TCG_7_2_EDX_FEATURES 0
+>  #define TCG_APM_FEATURES 0
+>  #define TCG_6_EAX_FEATURES CPUID_6_EAX_ARAT
+> @@ -1554,7 +1554,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>          },
+>          .tcg_features = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+>              XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+> -            XSTATE_PKRU_MASK,
+> +            XSTATE_PKRU_MASK | XSTATE_APX_MASK,
+>          .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+>              XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+>              XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
+> @@ -9722,6 +9722,17 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>       * inside x86_cpu_parse_featurestr() too.
+>       */
+>      if (xcc->max_features) {
+> +        /*
+> +         * TCG supports both MPX and APX.  Since they they cannot be enabled together,
+> +         * disable one---prefer APX if none was chosen explicitly.
+> +         */
+> +        if ((x86_cpu_get_supported_feature_word(cpu, FEAT_7_1_EDX) & CPUID_7_1_EDX_APXF) &&
+> +            env->user_features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX) {
+> +            feature_word_info[FEAT_7_1_EDX].no_autoenable_flags |= CPUID_7_1_EDX_APXF;
+> +        } else {
+> +            feature_word_info[FEAT_7_0_EBX].no_autoenable_flags |= CPUID_7_0_EBX_MPX;
+> +        }
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index b812125efa..32af8b79f4 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -519,6 +519,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
-     tmp = ST(st_index);
-     ST(st_index) = ST0;
-     ST0 = tmp;
-+
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
- }
- 
- /* FPU operations */
--- 
-2.53.0
+I have some thoughts here:
+
+1. we should check env->features[] instead of env->user_features[]
+since the latter just indicates whether user touches this feature (maybe
+on, or maybe off), in x86_cpu_set_bit_prop().
+
+2. if accel doesn't supports APXF, then it goes to "else" and disable
+MPX by default - I think this would hurt KVM.
+
+3. changing feature_word_info seems not good - it is a global variable
+and has longer life time than CPU object - so that changes to it will
+affect multiple CPU instances (QMP's dummy instance).
+
+For example,
+
+ (QMP) query-cpu-model-expansion type=full model={"name":"max"}
+
+ [mpx=off, apxf=on]
+
+ (QMP) query-cpu-model-expansion type=full model={"name":"max","props":{"mpx":true}}
+
+ [mpx=on, apxf=off]
+
+ (QMP) query-cpu-model-expansion type=full model={"name":"max"}
+
+ [mpx=off, apxf=off, NOTE: this gets the different result with 1st try!]
+
+So, I think that if we're going to change a feature, we should change the
+feature list that corresponds to the CPU lifetime, such as env->features[].
+
+But I find it's still tricky to keep this check before FEATURE_WORDS
+loop. So how about the following instead? 
+
+-        /*
+-         * TCG supports both MPX and APX.  Since they they cannot be enabled together,
+-         * disable one---prefer APX if none was chosen explicitly.
+-         */
+-        if ((x86_cpu_get_supported_feature_word(cpu, FEAT_7_1_EDX) & CPUID_7_1_EDX_APXF) &&
+-            env->user_features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX) {
+-            feature_word_info[FEAT_7_1_EDX].no_autoenable_flags |= CPUID_7_1_EDX_APXF;
+-        } else {
+-            feature_word_info[FEAT_7_0_EBX].no_autoenable_flags |= CPUID_7_0_EBX_MPX;
+-        }
+-
+         for (w = 0; w < FEATURE_WORDS; w++) {
+             /* Override only features that weren't set explicitly
+              * by the user.
+              */
+             env->features[w] |=
+                 x86_cpu_get_supported_feature_word(cpu, w) &
+                 ~env->user_features[w] &
+                 ~feature_word_info[w].no_autoenable_flags;
+         }
+
++        /*
++         * TCG supports both MPX and APX.  Since they they cannot be enabled together,
++         * disable one---prefer APX if none was chosen explicitly. If both were
++         * requested explicitly, leave them alone and let the check below report the
++         * conflict.
++         */
++        if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX) &&
++            (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF)) {
++            if (!(env->user_features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX)) {
++                env->features[FEAT_7_0_EBX] &= ~CPUID_7_0_EBX_MPX;
++            } else if (!(env->user_features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF)) {
++                env->features[FEAT_7_1_EDX] &= ~CPUID_7_1_EDX_APXF;
++            }
++        }
+
+Thanks,
+Zhao
 
 
