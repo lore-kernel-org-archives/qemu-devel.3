@@ -4,100 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86590C61DFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 07:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45239C61DFD
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1fmp-0006PC-TU; Wed, 02 Sep 2026 03:53:35 -0400
+	id 1x1g0v-000897-4a; Wed, 02 Sep 2026 04:08:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stanleyjhu@google.com>)
- id 1x1fmo-0006Op-LN
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 03:53:34 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stanleyjhu@google.com>)
- id 1x1fmm-0007H2-NF
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 03:53:34 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-52fac937235so116591cf.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 00:53:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788335612; cv=none;
- d=google.com; s=arc-20260327;
- b=TrJp3ozuXASCut14Y4RpFHWjbbdW41xiXoZFXAsyjZnX/wwNwnfcfKauNq1kkIaSHO
- +hcSifGCBvvp/ioV+F6eq5gkHP+rsRpLUW89V6QQj2Rl1Oknz0nszS/qujJX+7kVLuPo
- 5T2mlcb69lyCfTNECG3paBwynf/8RfwVGqvwhJcL/9eT0HWpS1F9oqEa3sZ5eG9MAfuJ
- 2KJRms8wktCLN9TJlBHSJSgAIFqyR7OdGL6nPsN24kBqb8O0uoLwNxK1BKJMX3AFFtLe
- NWLxaxAw3JUe0OhUH2b4bFU2B5z9cPSHq3LTkgx9vq0ff9Z3nL/1yGVDChIe4WMdnI10
- emRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=PfaLzZerxFLunMgLpS/gaZxp2YqbVEJ8PvbY/ZvlMaM=;
- fh=Q+ExfNvaVpPKDM9b/hN1ymGqm/OkETLmcZN9xCJzdWM=;
- b=CI1GTXSa0MnC0bb32FkxObauZHiDpxpD8PmKjCokN3w6eCvfDu52FWnKgM9FEPNWlW
- yy02MWZTJ5DOzLvHnl+hqn4FdTwcutNCmdW5kcOG095NTYgO16kVtBJETRU2nGCZ2yrk
- DMcw3hM2+qlfVlPeGltXzROVqp3H3TzxWBCpwhT8mJgMwAZLWNy76dA9ADm9uaSOEwYc
- zWdV34qQPztWRKEuYtrBCK0m/mIAG9wnylH4bmlxKvFYlXNpm9Qql78vIX3Jx+gWpmMQ
- 4oQi9ZcqcTMUUqdsao6gM2k3z49v/w3pGk/bcvooE/2Hm2YYFbTlsPOPUngDkn1vDe8Z
- OExg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1g0t-00088G-C9
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:08:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x1g0r-0001TR-Lm
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:08:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788336482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+HAC8TkeNDlzaqtdtqRZPPhBj8L+oZ1tyfLSCgdMrzE=;
+ b=JUG+i/Civie1eMVbOmxTnxSr49xuBs/rM2YVKkI72p3t3sRAPEqt2E4nKthJ7WHzBobYDF
+ AG61HGGAGczOkig+L12d7zxiHUhUC15x58Tyn54SnVx/S3zlPuDJUgpXHJB+x70lAckk71
+ yza736Zn6MEjnPCXDTpt5+3VD6mnLd0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-42-8otHfmuYNKOKs4Fv5gi36w-1; Wed, 02 Sept 2026 04:07:59 -0400
+X-MC-Unique: 8otHfmuYNKOKs4Fv5gi36w-1
+X-Mimecast-MFC-AGG-ID: 8otHfmuYNKOKs4Fv5gi36w_1788336478
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-482e2541c30so443112f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 01:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788335612; x=1788940412; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PfaLzZerxFLunMgLpS/gaZxp2YqbVEJ8PvbY/ZvlMaM=;
- b=D/NvR9hWyU1CgDj5fVKwUr/5ZJ57OPsIl3RHggj6m4bDidtnjEkoHZtxJr8z2tybaZ
- GjfUyN6NjL5o9FDA4ftAcSjA0OxvCotJUb5SGpQFlvdoY9v0/A/TlOIa/YF6yYFHQtQL
- kbBM+vvZo5Q8x23FZEy3i+XAzgctYCLVXo6i5ftDrq0bkq3mACLV7Yet2pfz1cGAlEAK
- Dky3PNUqB/9SajsjiNVo1mLbfC6Rn+Jxi7x5Bh+BGSk+GujLCgbj+zcKVeM7VPQcPiR6
- jDg0DNtxJiT6TIF6zN90syoxuoOa5wNrtPWk/PUxxugA2pL+VI9/cIKT8FTse0qY3QPT
- duHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788335612; x=1788940412;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=redhat.com; s=google; t=1788336478; x=1788941278; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=PfaLzZerxFLunMgLpS/gaZxp2YqbVEJ8PvbY/ZvlMaM=;
- b=mPL861UBqw5onDXZIDkmCX69Ld9pAhIFWJHQnupX1E7mErGPoEK0oPx3RESP6cLk1n
- m8aspFAx9JwOlDE3o2H4T3MsZ43bbqo6F8vo4eFqGXAKmO0J/aVuelrfDmrHDP09Hxu0
- 0o+zUbFksootRI+9LmaLpXmuGsGOJoF7mVi5y7QL3hkxtOMCi26ZX0QLBEY3UORJeVWE
- GiCTsGeup3H3qJuC5gpq6GYVX42Fy7BHwGxezbUV9Z+2SNPtlqVLQ+i0XrwwQK+/qy/w
- R7ez1l4SGVXmA8Xs40e+Ighbz7bOpSzf3XJNby7aNflSgmIN5huBlte5Yhdh6mcdVVi4
- vQFA==
-X-Gm-Message-State: AFuF++mB/lrnij7vSz/lI8FIQxz8wPuqPyA/89j4aIFIpVNTkvAV2in1
- yw/6zOdUSeoWA0wvRtJmmU2rK55TeBILP8lHnBWr8nFpj8NtKnT79iJrfNKR2WRJr+bITr0N4w+
- x3C6DPQcYqGQI/pyMP8WQqHfEAdo6SjjETEy57PMi
-X-Gm-Gg: AR+sD10YuWgPrT2XV9WlIXLnf0sm8pWiEnHV1XAyXasGaTX/Guy2HFNyd6ax/2TLx86
- k/9QZLUNGutq+FiirDMY3gM2A416vwtdqKKee55s231PcojAw9rwm3GSmziBSQKHze7O1QmR3v3
- ESulwH7OeHoWMKCJFMolObv2iBaloONZnx3Tbx4qt6s8u7oIOshvHJUOWtTc8+S+ZyKPaNN2Ic3
- 6HJv1kitvAA6S3gZUgabPxAA22WMXsm9uWkU9VQPprswVYMWNTGK8S3EaeYN2v9M+Qz0OvMN/+L
- zY2j7MP6VEMVoP7IrsxOuKnpKWabcPce1c/cLSaW/Zi8skgRBAzLOA==
-X-Received: by 2002:ac8:5cce:0:b0:52f:9ed4:8d74 with SMTP id
- d75a77b69052e-53033b5642dmr13655851cf.14.1788335610960; Wed, 02 Sep 2026
- 00:53:30 -0700 (PDT)
+ bh=+HAC8TkeNDlzaqtdtqRZPPhBj8L+oZ1tyfLSCgdMrzE=;
+ b=ORQcWjh1yw7YhxAmuLtUOSwjvDlrbntHa6HyJmQz3y5zxL1yoNTKC/trQUtYoQw11v
+ ot+4Ey6vmbO63vftseku3IUGZYj7V8AampYCRgazLc1eXvvPAdipEUkzpL7v1zBf+BYY
+ bGnt1h5NiLezHgFoJ6FjWS7iYl0S7gJNfvx52IWhi93/Ds2g+lVctbkGUplwEkKFwvCz
+ ZrEfwAxBSDrw/XYYKkQIBHZctJqZBk0Us7MI89Dexr60DUFNSmotUbIAWBFnSn6NBeRU
+ SWY50V5sy94xqbgkN9UYIIChHbS5bJJ/awB6dAAlLEXUgu9z43Y92Q8F1kBdtthWGZbe
+ wXZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788336478; x=1788941278;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=+HAC8TkeNDlzaqtdtqRZPPhBj8L+oZ1tyfLSCgdMrzE=;
+ b=fk2FlvEaFZv9KsHse92Gg4qG1MlBJ8hiDLU88isd2kvFA1afK/34fbucPoAGEkAIPh
+ XeL7B0xeGF5fnUqKQCeNKq/IHJqynEi6OKPJZyrD/KEY0d3saEBFffh8XskvXPxS138m
+ I9XMTuSNSf1Yq6DmBKOdkZXUn3oPHuvfymCIgVZ99xdvbpN3MfLAv6289SiKa0lQDp4e
+ /GktTjVGso1TC3DA2bqRWoEv05bygSeZdsfbBeFIpinT+l9Ck6z3dK3uovWb0nRPg83K
+ 5As5thDHiZ4FfxrDdaDqVtU2jB/Vk44naMzZaTQ8nK3A2ptOe37nNDH7nuGqSRDmv6fL
+ rcGg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwnbUD/cekzA/1t7Ho0kIBxsTtZ1mZb86Bs7euVcjWZ6B7WS9VheP0/r1H7fNS/xNFBDrbUtO6YxKO0@nongnu.org
+X-Gm-Message-State: AFuF++mPOtFrnrK8KYMrd1A0FRqmziTa+Yal6OGG3hsC+7F0SH35/CSy
+ ON0HIXk2FMO7ZO6XfPn7nHO+KJga9/sCySg8B3evNVmqmf+0JsMcmk2U1HAEXc0OM2h3Ci1Hkxn
+ 6yypkGrWWO3Ls7XXAulTJdha0iIO3YStYu4PK4xtFHu2M73i/Nb8TUZ5v
+X-Gm-Gg: AYBFou24RlZ/Y4pR2HFUIZT6IaZrnh7JnKcunEUmHT3dWwJPumj/NdhAISt//8aTL72
+ 9Ypnj1x3YaE5+BD+zPXeq3Tk7KoCGIAsXEzF6Gvv4rQgIY7Qkenl1qhZn6teQhbK2NKMv0Omwhn
+ qF0QuQQUVFNAZJyFADLz7inTDGoM0abrYIlvZmoKpAE37viEguHghojxmDnP1gnkArYogUMlYKo
+ C0Got9MxokD+NLZNm8UMoY17ENFf6kF6FYCoDZDFQ8jQJWORIUCuaWNXtnG/W+0mc6rG+H897YA
+ FrJ+eVV628v+lPLmL+Fst714vXJXJn+eIVACv5mtaT5i+tD1UsCY63xUXbJN2R4U4d9LUg/PWLp
+ QBK49e0QQCTHCtTIXcP82H8UVUz8MUSdzyeiuGU0=
+X-Received: by 2002:a5d:5e87:0:b0:482:dd86:348 with SMTP id
+ ffacd0b85a97d-485781d9ee8mr2486010f8f.4.1788336477716; 
+ Wed, 02 Sep 2026 01:07:57 -0700 (PDT)
+X-Received: by 2002:a5d:5e87:0:b0:482:dd86:348 with SMTP id
+ ffacd0b85a97d-485781d9ee8mr2485889f8f.4.1788336477139; 
+ Wed, 02 Sep 2026 01:07:57 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4?
+ ([2a01:e0a:280:24f0:2cd2:7ace:8238:f7f4])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48448e72f02sm4535896f8f.3.2026.09.02.01.07.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Sep 2026 01:07:56 -0700 (PDT)
+Message-ID: <7d930283-11c1-4b54-b8e9-1158eed5b442@redhat.com>
+Date: Wed, 2 Sep 2026 10:07:55 +0200
 MIME-Version: 1.0
-From: Stanley Jhu <stanleyjhu@google.com>
-Date: Wed, 2 Sep 2026 15:52:54 +0800
-X-Gm-Features: AcwNN1WPLhrJYxcAB2wobjcst3EgHWGpWz1r18aHMk7Bfn_Tc2XG7X1y4j8c-aU
-Message-ID: <CAE14pdeFtCpRNa8ps7ix2STOk3r8MmtPrkze=aNqgoES1iPkrg@mail.gmail.com>
-Subject: [PATCH v2] hw/ufs: Reset controller and MCQ state on HCE transition
- to 0
-To: Jeuk Kim <jeuk20.kim@samsung.com>
-Cc: qemu-devel@nongnu.org, Jeuk Kim <jeuk20.kim@gmail.com>, 
- Jinyoung Choi <j-young.choi@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=stanleyjhu@google.com; helo=mail-qt1-x833.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] vfio/pci: Add an error handler callback
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
+ alex@shazbot.org, armbru@redhat.com,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260831183151.12626-1-alifm@linux.ibm.com>
+ <20260831183151.12626-3-alifm@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260831183151.12626-3-alifm@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,260 +170,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the JEDEC Universal Flash Storage Host Controller Interface
-(UFSHCI) specification (Section 5.2.1 "Host Controller Enable"):
-when Host Controller Enable (HCE) transitions from 1 to 0, a host
-controller reset is initiated. The host controller shall abort all
-active transfers, return internal state machines to idle, and de-assert
-all interrupts.
++Shameer, who is looking at forwarding AER errors to guest :
 
-Currently, QEMU's UFS emulator only clears HCS and HCE registers upon
-HCE=0, leaving internal state active. Specifically:
-- Outstanding SCSI requests in the block layer are not purged.
-- Active bottom halves (doorbell_bh, complete_bh, and MCQ sq/cq BHs)
-  remain scheduled.
-- Allocated MCQ Submission and Completion Queues (sq and cq) are
-  not freed.
-- Dynamic MCQ queue registers, legacy UTRL request states, and status
-  registers (UTRLCNR, UTRLRSR) remain stale.
+   https://lore.kernel.org/qemu-devel/SJ0PR12MB8614DDFEE3A9575564EDEF99ABFF2@SJ0PR12MB8614.namprd12.prod.outlook.com/
 
-Implement ufs_hce_reset() to:
-1. Implement .cancel callback in ufs_scsi_info to properly unref
-   scsi_req and prevent reference leaks when SCSI requests are purged.
-2. Cancel active bottom halves (doorbell_bh, complete_bh, and MCQ sq/cq
-   BHs) and guard them with a resetting flag before purging requests,
-   ensuring blk_drain() cannot run or reschedule request-producing BHs.
-3. Purge outstanding SCSI requests for all logical units via
-   scsi_device_purge_requests().
-4. Clear standard request list slots and release SGLs via
-   ufs_clear_req(), and clear doorbells and status registers (UTRLCNR,
-   UTRLRSR).
-5. Free allocated MCQ queues and clear dynamic queue registers while
-   preserving static capability offsets.
-6. De-assert interrupts via ufs_irq_check().
-7. Add a trace_ufs_hce_reset() trace event.
+On 8/31/26 20:31, Farhan Ali wrote:
+> Provide a vfio error handling callback, that can be used by devices to
+> handle PCI errors for passthrough devices.
+> 
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> ---
+>   hw/vfio/pci.c | 27 +++++++++++++++++++++------
+>   hw/vfio/pci.h |  1 +
+>   2 files changed, 22 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 428ab2f069..a2f489b34d 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3244,21 +3244,36 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
+>   static void vfio_err_notifier_handler(void *opaque)
+>   {
+>       VFIOPCIDevice *vdev = opaque;
+> +    Error *err = NULL;
+>   
+>       if (!event_notifier_test_and_clear(&vdev->err_notifier)) {
+>           return;
+>       }
+>   
+>       /*
+> -     * TBD. Retrieve the error details and decide what action
+> -     * needs to be taken. One of the actions could be to pass
+> -     * the error to the guest and have the guest driver recover
+> -     * from the error. This requires that PCIe capabilities be
+> -     * exposed to the guest. For now, we just terminate the
+> +     * We can retrieve the error details and decide what action
+> +     * needs to be taken in err_handler(). One of the actions could
+> +     * be to pass the error to the guest and have the guest driver
+> +     * recover from the error. This requires that PCIe capabilities be
+> +     * exposed to the guest.
+> +     *
+> +     * If err_handler() is not implemented/fails, we just terminate the
+>        * guest to contain the error.
+>        */
+>   
+> -    error_report("%s(%s) Unrecoverable error detected. Please collect any data possible and then kill the guest", __func__, vdev->vbasedev.name);
+> +    if (vdev->err_handler && vdev->err_handler(vdev, &err)) {
+> +        return;
+> +    }
+> +
+> +    if (err) {
+> +        error_prepend(&err, "Unrecoverable PCIe error detected for device %s",
+> +                      vdev->vbasedev.name);
+> +        error_report_err(err);
+> +    } else {
+> +        error_printf("Unrecoverable PCIe error detected for device %s",
+> +                     vdev->vbasedev.name);
+> +    }
+> +    error_printf("Please collect any data possible and then kill the guest");
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
----
-v1 -> v2:
-- Added ufs_scsi_command_cancelled() as .cancel callback in ufs_scsi_info
-  to drop scsi_req reference and avoid leaks upon purge (Jeuk Kim).
-- Reordered sequence to cancel all active BHs before
-  scsi_device_purge_requests() and introduced resetting flag to prevent
-  CQ BH from rescheduling SQ BH during blk_drain() (Jeuk Kim).
-- Cleared UTRLCNR and UTRLRSR registers upon reset (Jeuk Kim).
-- Guarded ufs_process_req() and ufs_complete_req() against execution while
-  resetting is in progress.
----
- hw/ufs/trace-events |  1 +
- hw/ufs/ufs.h        |  2 ++
- hw/ufs/lu.c         |  7 +++++
- hw/ufs/ufs.c        | 94 +++++++++++++++++++++++++++++++++++++++++++++++------
- 4 files changed, 98 insertions(+), 6 deletions(-)
+how about that instead :
 
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 00e263c7ba..1eb85c6978 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -14,6 +14,7 @@ ufs_process_uiccmd(uint32_t uiccmd, uint32_t
-ucmdarg1, uint32_t ucmdarg2, uint
- ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
- ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t
-size) "mcq create sq sqid %"PRIu8", cqid %"PRIu8", addr 0x%"PRIx64",
-size %"PRIu16""
- ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq
-create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
-+ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ
-and request lists"
+   if (err) {
+       error_report("Unrecoverable PCIe error detected for device %s: %s",
+                    vdev->vbasedev.name, error_get_pretty(err));
+       error_free(err);
+   } else {
+       error_report("Unrecoverable PCIe error detected for device %s",
+                    vdev->vbasedev.name);
+   }
+   error_printf("Please collect any data possible and then kill the guest\n");
 
- # error condition
- ufs_err_dma_read_utrd(uint32_t slot, uint64_t addr) "failed to read
-utrd. UTRLDBR slot %"PRIu32", UTRD dma addr %"PRIu64""
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index a9cb8e9df6..42e7713837 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -147,6 +147,8 @@ typedef struct UfsHc {
-     UfsSq *sq[UFS_MAX_MCQ_QNUM];
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
+>   
+>       vm_stop(RUN_STATE_INTERNAL_ERROR);
+>   }
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index c9ab949870..c067bbbebc 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -146,6 +146,7 @@ struct VFIOPCIDevice {
+>       EventNotifier err_notifier;
+>       EventNotifier req_notifier;
+>       int (*resetfn)(struct VFIOPCIDevice *);
+> +    bool (*err_handler)(struct VFIOPCIDevice *, Error **);
 
-+    bool resetting;
-+
-     uint8_t temperature;
- } UfsHc;
+Please add documentation, something like :
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index a792c342f5..4f9d0c2429 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -74,6 +74,12 @@ static void ufs_scsi_command_complete(SCSIRequest
-*scsi_req, size_t resid)
-     scsi_req_unref(scsi_req);
- }
+   /*
+    * Platform-specific error recovery handler.
+    *
+    * Called when the host reports a PCI error via the VFIO error notifier.
+    * The handler should attempt to recover the device and forward the
+    * error to the guest if the platform supports it.
+    *
+    * @vdev: the VFIO PCI device that triggered the error
+    * @errp: set with the failure reason on false return
+    *
+    * Return true on success, the VM continues running.
+    * Return false on failure and set @errp, the VM will be stopped.
+    */
+   bool (*err_handler)(struct VFIOPCIDevice *vdev, Error **errp);
 
-+static void ufs_scsi_command_cancelled(SCSIRequest *scsi_req)
-+{
-+    scsi_req->hba_private = NULL;
-+    scsi_req_unref(scsi_req);
-+}
-+
- static QEMUSGList *ufs_get_sg_list(SCSIRequest *scsi_req)
- {
-     UfsRequest *req = scsi_req->hba_private;
-@@ -88,6 +94,7 @@ static const struct SCSIBusInfo ufs_scsi_info = {
 
-     .get_sg_list = ufs_get_sg_list,
-     .complete = ufs_scsi_command_complete,
-+    .cancel = ufs_scsi_command_cancelled,
- };
+That said, I'd prefer to see AER forwarding first.
 
- static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index a8e2df8087..def9935105 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -415,6 +415,10 @@ static void ufs_mcq_process_sq(void *opaque)
-     uint16_t head = ufs_mcq_sq_head(u, sq->sqid);
-     int err;
+Thanks,
 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     while (!(ufs_mcq_sq_empty(u, sq->sqid) || QTAILQ_EMPTY(&sq->req_list))) {
-         addr = sq->addr + head;
-         err = ufs_addr_read(sq->u, addr, (void *)&sqe, sizeof(sqe));
-@@ -482,7 +486,7 @@ static void ufs_mcq_process_cq(void *opaque)
-         tail = (tail + sizeof(req->cqe)) % (cq->size * sizeof(req->cqe));
-         ufs_mcq_update_cq_tail(u, cq->cqid, tail);
+C.
 
--        if (QTAILQ_EMPTY(&req->sq->req_list) &&
-+        if (!u->resetting && QTAILQ_EMPTY(&req->sq->req_list) &&
-             !ufs_mcq_sq_empty(u, req->sq->sqid)) {
-             /* Dequeueing from SQ was blocked due to lack of free requests */
-             qemu_bh_schedule(req->sq->bh);
-@@ -679,6 +683,87 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
-     return true;
- }
 
-+static void ufs_hce_reset(UfsHc *u)
-+{
-+    int i;
-+
-+    trace_ufs_hce_reset();
-+
-+    u->resetting = true;
-+
-+    /* 1. Cancel active Bottom Halves before purging requests */
-+    if (u->doorbell_bh) {
-+        qemu_bh_cancel(u->doorbell_bh);
-+    }
-+    if (u->complete_bh) {
-+        qemu_bh_cancel(u->complete_bh);
-+    }
-+    if (u->params.mcq) {
-+        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+            if (u->sq[i] && u->sq[i]->bh) {
-+                qemu_bh_cancel(u->sq[i]->bh);
-+            }
-+        }
-+        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+            if (u->cq[i] && u->cq[i]->bh) {
-+                qemu_bh_cancel(u->cq[i]->bh);
-+            }
-+        }
-+    }
-+
-+    /* 2. Purge outstanding SCSI requests for all logical units */
-+    for (i = 0; i < UFS_MAX_LUS; i++) {
-+        if (u->lus[i] && u->lus[i]->scsi_dev) {
-+            scsi_device_purge_requests(u->lus[i]->scsi_dev, SENSE_CODE(RESET));
-+        }
-+    }
-+
-+    /* 3. Reset standard request list slots, doorbells, and status registers */
-+    for (i = 0; i < u->params.nutrs; i++) {
-+        ufs_clear_req(&u->req_list[i]);
-+        u->req_list[i].state = UFS_REQUEST_IDLE;
-+    }
-+    u->reg.utrldbr = 0;
-+    u->reg.utmrldbr = 0;
-+    u->reg.utrlcnr = 0;
-+    u->reg.utrlrsr = 0;
-+    u->reg.is = 0;
-+
-+    /* 4. Free MCQ Queues and reset MCQ dynamic registers */
-+    if (u->params.mcq) {
-+        for (i = 0; i < ARRAY_SIZE(u->sq); i++) {
-+            if (u->sq[i]) {
-+                ufs_mcq_free_sq(u->sq[i]);
-+                u->sq[i] = NULL;
-+            }
-+        }
-+        for (i = 0; i < ARRAY_SIZE(u->cq); i++) {
-+            if (u->cq[i]) {
-+                ufs_mcq_free_cq(u->cq[i]);
-+                u->cq[i] = NULL;
-+            }
-+        }
-+
-+        /* Clear dynamic queue configuration registers without
-overwriting static capability offsets */
-+        for (i = 0; i < ARRAY_SIZE(u->mcq_reg); i++) {
-+            u->mcq_reg[i].sqattr = 0;
-+            u->mcq_reg[i].sqlba = 0;
-+            u->mcq_reg[i].squba = 0;
-+            u->mcq_reg[i].sqcfg = 0;
-+            u->mcq_reg[i].cqattr = 0;
-+            u->mcq_reg[i].cqlba = 0;
-+            u->mcq_reg[i].cquba = 0;
-+            u->mcq_reg[i].cqcfg = 0;
-+        }
-+        memset(u->mcq_op_reg, 0, sizeof(u->mcq_op_reg));
-+    }
-+
-+    u->resetting = false;
-+
-+    /* 5. De-assert IRQ */
-+    ufs_irq_check(u);
-+}
-+
- static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data,
-unsigned size)
- {
-     switch (offset) {
-@@ -696,6 +781,7 @@ static void ufs_write_reg(UfsHc *u, hwaddr offset,
-uint32_t data, unsigned size)
-             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 1);
-         } else if (FIELD_EX32(u->reg.hce, HCE, HCE) &&
-                    !FIELD_EX32(data, HCE, HCE)) {
-+            ufs_hce_reset(u);
-             u->reg.hcs = 0;
-             u->reg.hce = FIELD_DP32(u->reg.hce, HCE, HCE, 0);
-         }
-@@ -1631,6 +1717,10 @@ static void ufs_process_req(void *opaque)
-     UfsRequest *req;
-     int slot;
+>       uint32_t vendor_id;
+>       uint32_t device_id;
+>       uint32_t sub_vendor_id;
 
-+    if (u->resetting) {
-+        return;
-+    }
-+
-     for (slot = 0; slot < u->params.nutrs; slot++) {
-         req = &u->req_list[slot];
-
-@@ -1656,6 +1746,10 @@ void ufs_complete_req(UfsRequest *req,
-UfsReqResult req_result)
-     }
-
-     req->state = UFS_REQUEST_COMPLETE;
-+
-+    if (u->resetting) {
-+        return;
-+    }
-
-     if (ufs_mcq_req(req)) {
-         trace_ufs_mcq_complete_req(req->sq->sqid);
---
-2.43.0
 
