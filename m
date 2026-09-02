@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED622C624D6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 13:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 071D8C624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 13:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1lDL-00024j-Qh; Wed, 02 Sep 2026 09:41:19 -0400
+	id 1x1lEO-0002tV-PP; Wed, 02 Sep 2026 09:42:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1x1lDK-00024a-Is
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:41:18 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1lEM-0002r9-9p
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:42:22 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1x1lDI-00013k-O9
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:41:18 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66f96418909so639198d50.0
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 06:41:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788356475; cv=none;
- d=google.com; s=arc-20260327;
- b=IzSyEW6fiyqxXjCc0NM1fTvVfZtEHYmW7Ers7pL2oGsD6Ry0Vz6j23HXNbTTDciGsB
- vmloMYScgzPp8xtghUKCBCnszXeh8Td+fxwnbjO+wHDH+uX6xxAnu2kK40ivqWIS1wxK
- Ipc8mhgekhULL30wSAiJ2eiOLvdSVwIYukDbm91TWQtoQEnknr+XRgTP2XIKxQe/d3oI
- jaOBarD/meEI0lHF8rRL5cLPNWnKItB+tbCVeHNBqwvU2dMZERNFPINuhwE6wfjXfPaW
- GPsoLwwremPgdbPSsKPxLtuPih5mw0DvIjpGVqUq1hUtNy4IzauIWI1xyt4UhCjaO5EA
- A+zA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=VERsNWoynUHNETv9wjDRiXUAjSYkcWI6GvgebkmbrTg=;
- fh=qUOFTwWG+G+YmxTz+HxoQUPJX6AFWbaPYrnquSe1BBk=;
- b=kC34nnXlqmWrOc6HV250GjpT1Pz9kSF+8tY6zOxbwoSeCcG3fQ/TuMlkMZgJa8LQcX
- iBtPmTVXVru1j1aeOP1Ttu4OV1COTAF3XoLec0Tufz6M2q87oV+Sg8vmI1uRoFWa8itM
- Ef3uZBdWFMHGk9sMGKAK7z5xlZnWFhmjid6TPhVoyQVw59Uld0zIkNNoVStIVzTs82Bp
- A1TAB/b8oUgWw9AzpDJopSzqrAUk4kBlPwFl+xdRJZrzFwn/HYHxs6/kA2WOen4Chb5G
- GaxxL3kXzqqS75pNLYZxOFvznrwVpCe8s4f2zgQkLA+H9r0kjyA4VzW66uIpV9tc7Csl
- U9Wg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1lEK-00018c-Ge
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:42:22 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4998b5a63e2so10695495e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 06:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788356475; x=1788961275; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=VERsNWoynUHNETv9wjDRiXUAjSYkcWI6GvgebkmbrTg=;
- b=LfIgqPUWhSAB/a307nGmFHm5vqyZukRJOh3LdF4GTuxZa+ZFwKX/k2qqNAA3sVGHn0
- VGs5CjzKWaj7eJwV2VpHJQ21aj5IHI+fELMNKAIb4p01fNGRm0mSOcDCzzKDccsvordI
- INlbUDjOfBfpoJdokpauaCTq+/HoWswYqxnZUpkqa6uR+JJHW/iX4BLv/4EV/w/FA5gk
- 86MyZI+HzFAR/AtpGzwdd3WGlvkmBJR7NnvKzn73hNxHraXLESCZkpzSz/+bqq+8bPHF
- Xc5UcmMoEZO0XB17qfZlN6Ulp5BqGsCeV1KysvNd22Mmj67JrHJXDA+6s0eFkH7x2lGK
- 6sCQ==
+ d=linaro.org; s=google; t=1788356539; x=1788961339; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=48zrh2LliEkMC8LYdcngefR+Q9cAIh2c+po09OVEZQU=;
+ b=ypczvTIOhLFitkTAnpkiRZqr4MQwrSxT6svyt0NB/3xk75wdk8i9qDHsLaFJwrX41x
+ aH5IZvks2MUPZYHuQ4XdW+cc9aWQkKW2Z3zXNlMF1VsxDt6w1Nf1yHwImOi4/c6gRPQI
+ MRCbrUZSbxLIUc0dPIv/bLYJKOSFyyXzRWuHPgQlae3f3M94Z9/sxb2EMJZB3jGHLEW8
+ R9YRFO2UYFvE8gxOQ1GJpEti0H5OikPDTIO+GQfh8uOQaStRAVAVia/ARyQQ9pH2nKW+
+ Q6wizNl/ERENU49Q3zCKhZTGcTnrxRcFv/vD1ExHZubUPoreCDsmDjBDVlrDRSThW76c
+ v+PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788356475; x=1788961275;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1788356539; x=1788961339;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=VERsNWoynUHNETv9wjDRiXUAjSYkcWI6GvgebkmbrTg=;
- b=cwE0hZt+mvr2tZprITQPkVbgaevSgwwTRa53BN0OLR9Vk76yc8zN2wOLOyZyemrFLg
- +X8vALnb9DB4b4S+4RqpJJcF6tRPZpn9VNQ3ifO+xExcGK3TS0kodMkWNDurnJbjw2Ri
- vrrdjMiOZ5vCKIgEs4zv/E/dquT8rHUnE4bHSiv9m9okhEoBBQpI9TbUwOKj9UT9QvPF
- NPMHGYsaZAVSfFdQshiNRFEHJqFOLQdfjE7caebwGIoLFuL2telob6D2uMVHgN9gYJsn
- R2BfmKCiCN+bu6JY6bei0d3r/3zP59Al4msPxCUcKl2kfhNnqjhcKBke23wevVlgnslw
- ucfA==
-X-Gm-Message-State: AFuF++mBB0Ni6gNcz/BUd+VUkBMLkZGa/h5Yq/v7zXYiIGg6RPrqNP5q
- 5LN2NtHZ8a2EyDqA+rVY29TGp/7nOMFOUj5OgzvlkCvWKZQfiE7RiHc5Pt9Ge0Mi7EGPMv8Z+wg
- mfbuCLBlKEnJmadMvdRS16MLZPaMwxlfu8Lcz9/2+Zg==
-X-Gm-Gg: AYBFou3BA4D7GDlTmsL2yGv0EAMJrUcW/79cPowvKzdauQBmrXxdC24fNOlN29lJD4h
- 8X/DD4jUWl44dN5ifWKn/dFOCckxxAbY3S5gDJ2wuGQreDyyxhkTTaednJi/dPK4qkkZ9KNdH0X
- IeqOpxvDSzb8Onq/b0z+NWqd7sXAMrQc3DshB6GzVGCBGUT78FDnlRpP9AiuUkWwC5GV3F9blot
- dmxUA1tY3LKU0mmT6e5evGU9bG2YLYEN49YksImYAZf2d0Gvi8r/FBDMNLg6Ua+XWDDEX7K9T8X
- kSxM4erdQOwflMtT7vk1y1XcvyyLM3EDbJUeg146L7B0Yq3JmRMmXF42qsFc6a8xhzpYbcwjPxu
- 6mwtzhCMP3MAeCcS75OP+So7CIjgUcaFRy2qamWy54g==
-X-Received: by 2002:a05:690e:118d:b0:66e:62cb:bb6e with SMTP id
- 956f58d0204a3-66f9b934580mr1363900d50.11.1788356475228; Wed, 02 Sep 2026
- 06:41:15 -0700 (PDT)
+ bh=48zrh2LliEkMC8LYdcngefR+Q9cAIh2c+po09OVEZQU=;
+ b=JFTxlLXD//LklAVdnCoOhjNLyHh6qbP5GeiMsTiosJ8AZ7Y+uorXiFzrWOLyF4UkIJ
+ f/xPHaGX/5tJxbl5a/IQvyIKwpmiTpJ66Ek/MKOylenicgd1QVgWQklhTde7HM3+2hwR
+ TgaKQpeDlHkmEEACIXR/OcuzObvX4XFpvtF5R1Tq1yNUwRELz8XWj0trZtR8ZDEsIK9L
+ 4LyV7CDG3aX5KDXC8m3EOs8EZCQpwOffGopauWTFp2/du8q/xqfCxytAkBMD6mA1ncBz
+ 5G9Q4oeZfZ4atqZ2Lnh72d+z8hN42Fz5F6qgQX8+cDwve/5zCVLEq7JtMporaC0/6YiA
+ WgSQ==
+X-Gm-Message-State: AFuF++lUcHHZPaIlrEuhFDZ/41HGAOA1FZ+nbjTkcF9PApmT0+FjL0w9
+ h0rYG2SPL0NNFzjIVMwpUR+orT/fyOaH+bicVw1eiq2LrVLMENNsq+drxBch4FufKJ8=
+X-Gm-Gg: AR+sD104S3mcj6i9x65OvBiJQ6l0IR4tKPIdlDo25+c3auaeH2ysBASP0DKQrPb9Qfj
+ WtpZayl3KvupMUkrFvvQBl2XghKo6KhW1YkPFdfNmocR36jkDFX9G5Gh9/KNKFku/dOqUkOl+tS
+ uLQvAAaJlhGN0a1oovnAoVmOuSHXmdY7p/QWiQZOCa0XGkN5M5xqNvkzSyvGyw8RszAFJ2h5baA
+ KrLHEgGWaINYr+SNuoD4MHwn5hNjncoWHf8UOLZ51ev+SyaTT80Ek134usuDVj3ClristiPBWzi
+ AylaeMFRqNFd4h3iX5iDMLbzNRjOLYZcYYzeYjI6t2jzrkJ2fTENAxRZ5DbBkkZEnp37rnB9KlE
+ ED/CDuJMkwL0mkAISAfZ4O0cL0FMMR2AHzpEYtRsfguKaLJD7du20iDQpps7i9gB69w62P8Yb5G
+ 88WeAK+ZGKCfYfBTXaHleesUEfRz3NKe6b2/SnFjz6c7RN9rQeYB0rRBCPYo8Q
+X-Received: by 2002:a05:600c:1f88:b0:49c:ee01:8c53 with SMTP id
+ 5b1f17b1804b1-49cee018c5cmr2079585e9.2.1788356538370; 
+ Wed, 02 Sep 2026 06:42:18 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ce3c86a0asm79816035e9.9.2026.09.02.06.42.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 06:42:17 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B2A855F85F;
+ Wed, 02 Sep 2026 14:42:15 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,  BALATON Zoltan
+ <balaton@eik.bme.hu>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/4] AGENTS.md: Let agents know what the participation
+ rules are
+In-Reply-To: <20260901161422.314581-3-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 1 Sep 2026 18:14:20 +0200")
+References: <20260901161422.314581-1-pbonzini@redhat.com>
+ <20260901161422.314581-3-pbonzini@redhat.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Wed, 02 Sep 2026 14:42:15 +0100
+Message-ID: <87a4pzrcqw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260828082235.128360-1-scherer.simon89@gmail.com>
-In-Reply-To: <20260828082235.128360-1-scherer.simon89@gmail.com>
-From: Simon Scherer <scherer.simon89@gmail.com>
-Date: Wed, 2 Sep 2026 15:41:04 +0200
-X-Gm-Features: AcwNN1XbGT2FrgP17sf94TZJjvnVzZYJRIPOXa9bPfbd30xQBqTYhVvedmtuzrk
-Message-ID: <CAEQwQtLhM0mgwtroE5UbK8fE3VHGzaRDRGdg8qFYRJiEVy+pWQ@mail.gmail.com>
-Subject: Re: [PATCH v2] target/i386: clear C1 for all x87 compare instructions
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=scherer.simon89@gmail.com; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,101 +112,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update on this patch: I tested the C1 behavior directly on real x86-64
-hardware again for all of these instructions, and it turns out the
-FCOMI/FCOMIP/FUCOMI/FUCOMIP part is wrong.
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOMP do genuinely clear
-C1 on real hardware, matching the SDM and the
-helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 fix in this patch.
+> Humans seem to be extremely unreliable in following rules around this,
+> even after being told directly and repeatedly. Telling agents what to
+> do seems to yield better results.
+>
+> This document is based on GStreamer's AGENTS.md file, as of its commit
+> d08375499c279a56c0e77c928fbeae0d80cdf937.  However, GStreamer's agent
+> instructions are "effective" enough to require an explicit carve-out
+> for maintainers.  I actually believe that such a carve-out is a sign of
+> going too far, especially given the good quality of some suspected-AI
+> contributions we've received.
+>
+<snip>
+> diff --git a/AGENTS.md b/AGENTS.md
+> new file mode 100644
+> index 00000000000..8fb96ebfc38
+> --- /dev/null
+> +++ b/AGENTS.md
+> @@ -0,0 +1,100 @@
+> +# Agent Guidelines for the QEMU Project
+> +
+> +QEMU is a cross-platform emulator and virtualizer. Due to the complexity
+> +of the domain and codebase, and the interactions therein, the QEMU
+> +project relies extensively on the effort of **human reviewers**, which
+> +is **a scarce resource**.
+> +
+> +There are strictly-enforced rules for you, the agent, to participate in =
+the
+> +project.
+> +
+> +## Interactions with maintainers must be human-human
+> +
+> +The QEMU project has strict rules on what AI-generated material can
+> +reach the maintainers.
+> +
+> +### No automated posting
+> +
+> +- Agents **must not** use any API, CLI, or web UI automation to:
+> +  - Interact with the QEMU mailing lists
+> +  - Create, edit, or close **issues ("work items")**
 
-FCOMI/FCOMIP/FUCOMI/FUCOMIP, however, leave C1 unchanged on real
-silicon, despite the SDM listing "C1 Set to 0" under FPU Flags
-Affected for these too. My best guess is that this line in the SDM was
-carried over from the FCOM/FUCOM description.
+The others I'm fine with but I currently use an agent to do triage on
+un-tagged issues. It only updates labels and occasionally posts a
+comment when more information or a human input is required.
 
-I will send a v3 that drops the
-helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0 changes.
+That said with a minimal patch to agents to inform it of the
+qemu-issue-triage skill Gemini didn't stop itself:
 
-Thanks,
-Simon
+  The `qemu-issue-triage` skill is now loaded. Please let me know how you w=
+ould like me to assist with triaging QEMU GitLab issues, keeping in mind th=
+at all triage tasks must be performed by spawning dedicated sub-agents as p=
+er the QEMU project's strict rules.
+  triage 4930, 4391, 4392, 4393, 4394, 4395
 
-On Fri, Aug 28, 2026 at 10:22=E2=80=AFAM Simon Scherer
-<scherer.simon89@gmail.com> wrote:
->
-> The SDM specifies that FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOM=
-P/
-> FCOMI/FCOMIP/FUCOMI/FUCOMIP unconditionally clear C1 in the FPU status wo=
-rd,
-> regardless of the comparison result.
->
-> helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 only cleared C3, C2, C0 (mask
-> 0x4500) before OR-ing in the comparison result, leaving C1 (bit 9) at
-> whatever value it already had. FICOM/FICOMP dispatch through the same
-> helpers after converting their integer operand, so they inherited the
-> same bug.
->
-> helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0 never touched the FPU status
-> word at all, so C1 was left untouched by those too.
->
-> This patch clears C1 explicitly in all four helpers, adding the clear
-> into the existing fpus mask for fcom/fucom since fcom_ccval never sets
-> bit 9. For fcomi/fucomi add a new separate clear.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4378
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> ---
-> v2: merge the C1 clear into the existing fpus mask for
->     fcom_ST0_FT0/fucom_ST0_FT0 (Richard Henderson)
->
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> ---
->  target/i386/tcg/fpu_helper.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-> index b812125efa..aa6527b0f5 100644
-> --- a/target/i386/tcg/fpu_helper.c
-> +++ b/target/i386/tcg/fpu_helper.c
-> @@ -531,7 +531,8 @@ void helper_fcom_ST0_FT0(CPUX86State *env)
->      FloatRelation ret;
->
->      ret =3D floatx80_compare(ST0, FT0, &env->fp_status);
-> -    env->fpus =3D (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
-> +    /* C1 is unconditionally cleared to 0 */
-> +    env->fpus =3D (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
->      merge_exception_flags(env, old_flags);
->  }
->
-> @@ -541,7 +542,8 @@ void helper_fucom_ST0_FT0(CPUX86State *env)
->      FloatRelation ret;
->
->      ret =3D floatx80_compare_quiet(ST0, FT0, &env->fp_status);
-> -    env->fpus =3D (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
-> +    /* C1 is unconditionally cleared to 0 */
-> +    env->fpus =3D (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
->      merge_exception_flags(env, old_flags);
->  }
->
-> @@ -556,6 +558,8 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
->      /* OF, SF, and AF are unconditionally cleared to 0 */
->      CC_SRC =3D fcomi_ccval[ret + 1];
->      CC_OP =3D CC_OP_EFLAGS;
-> +    /* C1 is unconditionally cleared to 0 */
-> +    env->fpus &=3D ~0x0200;
->      merge_exception_flags(env, old_flags);
->  }
->
-> @@ -568,6 +572,8 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
->      /* OF, SF, and AF are unconditionally cleared to 0 */
->      CC_SRC =3D fcomi_ccval[ret + 1];
->      CC_OP =3D CC_OP_EFLAGS;
-> +    /* C1 is unconditionally cleared to 0 */
-> +    env->fpus &=3D ~0x0200;
->      merge_exception_flags(env, old_flags);
->  }
->
-> --
-> 2.53.0
->
+  qemu-helper-agent: triage issue 4930 (2 steps, 21.7K / 1M) =E2=9C=85 8s
+
+  qemu-helper-agent: triage issue 4391 (6 steps, 31.9K / 1M) =E2=9C=85 30s
+
+  qemu-helper-agent: triage issue 4392 (5 steps, 27K / 1M) =E2=9C=85 35s
+
+  qemu-helper-agent: triage issue 4393 (5 steps, 27.5K / 1M) =E2=9C=85 47s
+
+  qemu-helper-agent: triage issue 4394 (5 steps, 26K / 1M) =E2=9C=85 51s
+
+  qemu-helper-agent: triage issue 4395 (4 steps, 25.7K / 1M) =E2=9C=85 15s
+
+  The requested GitLab issues have been triaged using parallel sub-agents. =
+Here is a summary of the outcomes:
+
+  *   **#4930**: Not found (404).
+  *   **#4391**: Triaged and labeled as `Kind::Bug`, `Workflow::Triaged`, `=
+Binary =E2=9E=A4 qemu-img`, `Storage`, `HostArch =E2=9E=A4 32bit`, `TestCas=
+e`.
+  *   **#4392**: Triaged and labeled as `Kind::Security`, `Device =E2=9E=A4=
+ USB`, `Migration`, `TestCase`, `Workflow::Triaged`.
+  *   **#4393**: Triaged and labeled as `Kind::Security`, `Device =E2=9E=A4=
+ VirtIO`, `Device =E2=9E=A4 Network`, `Audit Tooling::Sanitizer`, `TestCase=
+`, `Workflow::Triaged`.
+  *   **#4394**: Triaged and labeled as `Kind::Bug`, `Target =E2=9E=A4 X86`=
+, `HostArch =E2=9E=A4 AArch64`, `TestCase`, `Workflow::Triaged`.
+  *   **#4395**: Triaged and labeled as `Kind::Bug`, `Workflow::Triaged`, `=
+Emulation =E2=9E=A4 Softfloat`, `Target =E2=9E=A4 X86`, `HostArch =E2=9E=A4=
+ AArch64`, `TestCase`.
+
+  All issues (excluding the non-existent one) have been successfully proces=
+sed, labeled according to project standards, and verified as complete. No f=
+urther actions are required at this time.
+
+I guess arguably it is hard for a random to use the API anyway as we
+control who has API keys for the project.
+
+> +  - Post **comments** on merge requests, issues or commits
+> +  - Open or update **merge requests (MRs)**.  QEMU does not use merge re=
+quests anyway.
+> +
+<snip>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
