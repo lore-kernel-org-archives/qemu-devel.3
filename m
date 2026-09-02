@@ -4,113 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0B8C624D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 13:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B80DBC624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 13:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1lSB-00063n-BS; Wed, 02 Sep 2026 09:56:39 -0400
+	id 1x1lSm-0006AQ-0U; Wed, 02 Sep 2026 09:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1lS8-00063Y-Nb
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:56:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1lS6-00040j-M2
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:56:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788357393;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dRWUPAPZbVaHhho/GvgWVyHk2suwqHWxjlRezP8knf0=;
- b=KKAbRLrQhPK9cP005ft52oQgYsjF/bLu14LNTcu62Ie6XmQNE6oivnzL1uHdFyAaAoVqBH
- TwnDMrJoF6XQq0imYxchb5wA+v8HEfTWbo0uH8Qi3bvyPvsWDLA+dD5LaM/olHj9GDdhTk
- tponiELBzyJ4wzWJLERAozhtVixJdKU=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-gI1WoP0qPvys_C4kG21yZw-1; Wed, 02 Sep 2026 09:56:31 -0400
-X-MC-Unique: gI1WoP0qPvys_C4kG21yZw-1
-X-Mimecast-MFC-AGG-ID: gI1WoP0qPvys_C4kG21yZw_1788357390
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47d81cf0c4cso840481f8f.2
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 06:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1x1lSh-00067z-FV
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:57:12 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1x1lSf-00044k-Ip
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:57:11 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so11024935e9.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 06:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788357390; x=1788962190; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=dRWUPAPZbVaHhho/GvgWVyHk2suwqHWxjlRezP8knf0=;
- b=m50pa9o8jIA6s2lDCEMet7XUxiChbJlQcD05n5+qPL7x9zCKVQvd4fmpQHkb5mCy/s
- 0pQ356nL9+5kxvSMeQ7U4wq+cWi4iWN+aduXAvr5ah+qw6G4fYoJGlN5UlKiy957e5+8
- IbObYr5kYuTjAKWSRj5r/hTyKLiNgngYZo851QCDHxZL1OR/syeRUSazbpqhM0BVGOGJ
- RkGA7Rsbye7KJNJBuIjPsr2WzUqNrNLZ5HbXC3CynDlYH5HdRdzXekV20ZUA9fpu7L/4
- U3daCisyM6XunmKUvruZl4Qs1LH+A9IOjaVNG21H2ZSNzspyyDHKvIG56rsB94jXiYmt
- /lyQ==
+ d=gmail.com; s=20251104; t=1788357428; x=1788962228; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=O+sc3G9cvYiUykcdGl5g9NIzz1mVCaBhGVgsU1n/A+4=;
+ b=qIsG4eXttKVrFCkSVpI9uT5dUUIUYFFClznVdvVX8F5c8fepfgsTPHiMQz+sOIrsvB
+ d3oquhGS9NBHdswpnZhWvS6v4Lp/WujsXXeGGdSCwK8t8GMu/q6mmEIqjsDihoiceCV5
+ MWaJN9DlfbfNwLOkFCA0pZjGOCvJtUafc5+GVqevcQ3c/uzkP2MxLRG/ZoO/SApeRiCg
+ DWaphAXYzM9xyz6Ps39q9J5KTNLT3N0vT9ibCOEXCjDKh7u4acMQU2wcs+v6MQi4LnU2
+ TjXe0cbu9EVI+zJ6kae5zl4B7yRoo6I7HKUdoUO0Qq2caK23iwaOl7kioMndPJrwwk/V
+ pKfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788357390; x=1788962190;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=dRWUPAPZbVaHhho/GvgWVyHk2suwqHWxjlRezP8knf0=;
- b=Y0GfbzRJz4iZHQ/p6ammadzMC/KcdysJ7bs0M8bFXyXC2pHlHmHuK4Vgh9SlrodjT0
- OrCt+VKT4fvd4bL8e5pSRIi5HxcJg0Zlr5PLqWslOhf2hfaXxrWehYGT5M5jm3WcCT+9
- BqRIZoyfOPbwrgs5k6NBs8D2h5i8+p3v7v/yMIFYUGzzMQNjvJ7xVjWVLFSmJfUssNNM
- LALSD/iXUykHPNjHL/JwKQbGIlVJqO3Lv1tDuPCqefMLFmeEdKT+g5WDNI3gg85xHtCR
- b1fxR01jHUWHxm/3HGqz/DewB8RriASwqzJTvvd5y2fZO5EwuX74Jw1KGKexQhaD5O01
- w4/w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrJp/LqANVT4seVty2y3YjbF5WUrvcQtrA5WskRzE8MpQmLMsWdExUNHMVIUD0DLAJ4CEh9rEha50FK@nongnu.org
-X-Gm-Message-State: AFuF++nQvPtRSheIBRCE5w64k4GcPpaZh2A4IvqL7pWrQcZfkmOTCVHZ
- 95ipRDPWOHOC5l31KHX31zR/9V6n73nVddsj4ymuaVCduAIL00scZ83ALROyWrZs3+1XeID3roR
- 2vaEFYh4Vu/CbH0apKCuiZKwXNGjVRXISQgrZV7YpuvVDUj2Fw1d4WM2B
-X-Gm-Gg: AR+sD13SAc2x/Qb4uhHQUUCnXDuA6QTc4csW/oacwkx+hhbCEzRS/hWRb7Zx0Zc8rOP
- NZVO761ASHOUX9NCJMYDPMivVANWgvDQJlY9ar5zSTexrT4u+A2aMxkZ62nKtGb7XbHGY73JB1p
- cc8IDvepa12qdcDNAGZS6fh6vzuowx+ijDZaSIhTDVdE4H0assMflGQApf5TBPcr+YAyErDHOtQ
- DZj6CoimN4f156S9tkypxeGK6scapSwYF+a55tS0jJLDKBXlJFDkLeZyFjxeAMcvXB3+Zt5n10Z
- UIyWj0c8voFONtaDK1aIe59jmU7/XA9/V3w7F/nv5g6ea0ZPJ6aEDYtOHwPhB1L69Tc=
-X-Received: by 2002:a05:600c:8411:b0:49b:9105:cdaf with SMTP id
- 5b1f17b1804b1-49ce58204a0mr86964645e9.8.1788357390414; 
- Wed, 02 Sep 2026 06:56:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:8411:b0:49b:9105:cdaf with SMTP id
- 5b1f17b1804b1-49ce58204a0mr86963285e9.8.1788357389913; 
- Wed, 02 Sep 2026 06:56:29 -0700 (PDT)
-Received: from redhat.com ([187.15.128.103]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce5952560sm47183015e9.3.2026.09.02.06.56.27
+ d=1e100.net; s=20251104; t=1788357428; x=1788962228;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=O+sc3G9cvYiUykcdGl5g9NIzz1mVCaBhGVgsU1n/A+4=;
+ b=lryJsSR9K56w3rggmyTuUpJqZvto2toMxhxVinAiZfOEsSoyZlFezM6lgb6XShyzzr
+ xHu7kvWmEJhJo0VGgM3JEUuKpogUr4vZblXgwjpTlczPwQyAziMOBVaI+o1A51cVlg3G
+ rokylNeNKTURzb1c/k9KgWtyRgZtCthk3Vi2gA5EF995tSKkdUmEYbtg/20tMiRyQNeV
+ 4zRKXGXQVgnycDx9Ak6+7GZnQB9VHDM/TyqfSe7oP6ZhkGZ3W0HI3Y21hn+LTPiYN2Hp
+ 5IsOINoDoTg0xlFL+OGgLo1CZVLSwXRjbuJFhLpPYt5Q4SMcVthZf4oyHMRXs3uZNF04
+ H1Xg==
+X-Gm-Message-State: AFuF++nLzoMAIVXgsL2HfB+qcx+wdC5kywrBKkSuVej0G6Zpmrk/GkXe
+ KCrR64BBDp4h39SaanVFrdgsMTTIb0N5VkdRJm27FKiMyuwxwZJj4Rjr2qTeRCTsDzQ=
+X-Gm-Gg: AR+sD12fs+vfeldzzsEhUOFzOJgjdNj5qtvBBnkIZwIH8UKhqhxHYjtlsOzd6D8AxvF
+ u0S6gjMFfX5HaghjJEKCt5YoCWasdWoDA6E9IMCyQugow1rHVUUaUCvC2YtAft5dMhd/AbUMnvR
+ zVt16EeCTZ9sC/qEKLPoW8Q6nIVdqx/otaQLHcC39N8wP7ad0vHmAkvSQxMthVnLzjbczk8KLdH
+ v7Mqsvp881CICaxokM9BLlSZihGo7fLizUr9OtWj6q930L0wzVigHGK2BX5eswtX3PVCx9bxi7Q
+ 1J7rkV5aA/v2QauPI2PUgmI0I7kYeRMfhkSnwA2qyzpVAqtF9idEw7gtakhxYqbBtXXNamVk7EA
+ KwSgpb5hGJqQzxqEXmvyae71ZmUxty3JrtTL1pzzHVWbeeV4priMmONkUbP65JYecCSQHfIReXi
+ zAtxBkgvUrMe6DwHA+ChoEX+QxCcrnj2d+dH3TplTpu6xlFHasBpkDRr9iLPBjz/QfgVegZ0D9Z
+ 7qUK3sQgSJiB7uK6YiJEKLObOSVe/JLkGgSl4Ln4o8egX3XpHv9PTbFA/jWtlDxGXnkkehym2+w
+ LGqkb0C7JSfmql3KGcYcmkU4gIfH+YI=
+X-Received: by 2002:a05:600c:a40f:b0:49c:edfe:d525 with SMTP id
+ 5b1f17b1804b1-49cedfed583mr5870725e9.10.1788357427628; 
+ Wed, 02 Sep 2026 06:57:07 -0700 (PDT)
+Received: from simon-macbookpro.tugraz.local (tug-swl-225-161.tugraz.at.
+ [129.27.225.161]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ce47885b1sm71891635e9.14.2026.09.02.06.57.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 06:56:28 -0700 (PDT)
-Date: Wed, 2 Sep 2026 09:56:25 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 2/4] AGENTS.md: Let agents know what the participation
- rules are
-Message-ID: <20260902095523-mutt-send-email-mst@kernel.org>
-References: <20260901161422.314581-1-pbonzini@redhat.com>
- <20260901161422.314581-3-pbonzini@redhat.com>
- <87a4pzrcqw.fsf@draig.linaro.org> <apgpDaBqCaVPqmLH@redhat.com>
+ Wed, 02 Sep 2026 06:57:07 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH v3] target/i386: Clear C1 for FCOM/FUCOM/FICOM
+Date: Wed,  2 Sep 2026 15:57:05 +0200
+Message-ID: <20260902135705.261863-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <apgpDaBqCaVPqmLH@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,78 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 02, 2026 at 02:47:57PM +0100, Daniel P. Berrangé wrote:
-> On Wed, Sep 02, 2026 at 02:42:15PM +0100, Alex Bennée wrote:
-> > Paolo Bonzini <pbonzini@redhat.com> writes:
-> > 
-> > > Humans seem to be extremely unreliable in following rules around this,
-> > > even after being told directly and repeatedly. Telling agents what to
-> > > do seems to yield better results.
-> > >
-> > > This document is based on GStreamer's AGENTS.md file, as of its commit
-> > > d08375499c279a56c0e77c928fbeae0d80cdf937.  However, GStreamer's agent
-> > > instructions are "effective" enough to require an explicit carve-out
-> > > for maintainers.  I actually believe that such a carve-out is a sign of
-> > > going too far, especially given the good quality of some suspected-AI
-> > > contributions we've received.
-> > >
-> > <snip>
-> > > diff --git a/AGENTS.md b/AGENTS.md
-> > > new file mode 100644
-> > > index 00000000000..8fb96ebfc38
-> > > --- /dev/null
-> > > +++ b/AGENTS.md
-> > > @@ -0,0 +1,100 @@
-> > > +# Agent Guidelines for the QEMU Project
-> > > +
-> > > +QEMU is a cross-platform emulator and virtualizer. Due to the complexity
-> > > +of the domain and codebase, and the interactions therein, the QEMU
-> > > +project relies extensively on the effort of **human reviewers**, which
-> > > +is **a scarce resource**.
-> > > +
-> > > +There are strictly-enforced rules for you, the agent, to participate in the
-> > > +project.
-> > > +
-> > > +## Interactions with maintainers must be human-human
-> > > +
-> > > +The QEMU project has strict rules on what AI-generated material can
-> > > +reach the maintainers.
-> > > +
-> > > +### No automated posting
-> > > +
-> > > +- Agents **must not** use any API, CLI, or web UI automation to:
-> > > +  - Interact with the QEMU mailing lists
-> > > +  - Create, edit, or close **issues ("work items")**
-> > 
-> > The others I'm fine with but I currently use an agent to do triage on
-> > un-tagged issues. It only updates labels and occasionally posts a
-> > comment when more information or a human input is required.
-> 
-> While this is technically something you're doing via your personal
-> gitlab account, I none the less view the agent triage bot as something
-> run as an "official" project service.
-> 
-> IMHO the AGENTS.md policy primarily applies to actions done in an
-> individual capacity (whether contributor or maintainer).
-> 
-> If the project wants to deploy project level services that utilize
-> AI in some manner and that conflicts with AGENTS.md that's acceptable,
-> provided we discuss & agree that the project service in question is
-> desirable.
-> 
-> Perhaps this is me saying that the issue triage bot should be made
-> more official as a service, committed to git, etc
-> 
-> With regards,
-> Daniel
+The SDM specifies that FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOMP
+unconditionally clear C1 in the FPU status word, regardless of the
+comparison result.
 
+helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 only cleared C3, C2, C0 (mask
+0x4500) before OR-ing in the comparison result, leaving C1 (bit 9) at
+whatever value it already had. FICOM/FICOMP dispatch through the same
+helpers after converting their integer operand, so they inherited the
+same bug.
 
-well I have a script that uses gitlab API to run the security process
-workflow. But it's... how do I put it... AI assisted ;)
+This patch folds the C1 clear into the existing fpus mask
+for both helpers, since fcom_ccval never sets bit 9 itself.
 
-> -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+The SDM also lists "C1 Set to 0" for FCOMI/FCOMIP/FUCOMI/FUCOMIP.
+Testing against real x86-64 hardware shows this instruction group
+does not actually clear C1, unlike FCOM/FUCOM/FICOM. QEMU's
+existing behavior for those four is already correct, so
+they are intentionally left unchanged.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4378
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+---
+v3: drop the C1 clear in helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0.
+    Hardware testing shows FCOMI/FCOMIP/FUCOMI/FUCOMIP do not actually
+    clear C1, unlike FCOM/FUCOM/FICOM.
+v2: merge the C1 clear into the existing fpus mask for
+    fcom_ST0_FT0/fucom_ST0_FT0 (Richard Henderson)
+
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+
+ target/i386/tcg/fpu_helper.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index b812125efa..34670a1c2b 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -531,7 +531,8 @@ void helper_fcom_ST0_FT0(CPUX86State *env)
+     FloatRelation ret;
+ 
+     ret = floatx80_compare(ST0, FT0, &env->fp_status);
+-    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
+     merge_exception_flags(env, old_flags);
+ }
+ 
+@@ -541,7 +542,8 @@ void helper_fucom_ST0_FT0(CPUX86State *env)
+     FloatRelation ret;
+ 
+     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
+-    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
+     merge_exception_flags(env, old_flags);
+ }
+ 
+-- 
+2.53.0
 
 
