@@ -4,173 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938AAC61DD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 01:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A8BC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 01:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1a4f-0007uG-7k; Tue, 01 Sep 2026 21:47:37 -0400
+	id 1x1aEF-0001Cj-LB; Tue, 01 Sep 2026 21:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6980a3afb=Alistair.Francis@wdc.com>)
- id 1x1a4b-0007tu-Us
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 21:47:34 -0400
-Received: from esa4.hgst.iphmx.com ([216.71.154.42])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6980a3afb=Alistair.Francis@wdc.com>)
- id 1x1a4a-0003D4-DC
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 21:47:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1788313656; x=1819849656;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=Qqp50t+7cD2mjbbvgfNj2f0QE0MeDcw2tZe0mhceILQ=;
- b=Toj1dxZ1qrJN7DkV0lNJzYEYqIRWim6jVAKPnx3iHg0bklNEzXcg5Q5N
- FB7DX/Vv7I4dUPHk0aaV5kUOtUxX7hGmnZNaZbUV5Fq8QqnpqdgS/dTVL
- CiLgO8F2xn+Zys+vF3XhvTFdcw8CEUok3Atb/u107mt2/+M9kbAjdwNNl
- OJcKDvfdteDmxHroBZkqANAvo19/6y8eV8MwNM5d2qP8tZR09Eqg/v4Bd
- ju4m7K9vq90CvHTSFnqkElZg2cKgM9XlJSUeY9RjUm8ghcpPNzQmQDwwf
- TyLcoiBs3OFnJfeIkP5HP0ogPc/8F7beGtdpdxb5BWdzG3Nezthw8tM0w Q==;
-X-CSE-ConnectionGUID: Ijj4kVG6TOKUSTUyeCmB4Q==
-X-CSE-MsgGUID: Fu9LD0+BTomc9PHFLGZTIQ==
-X-IronPort-AV: E=Sophos;i="6.25,257,1779120000"; d="scan'208";a="150541905"
-Received: from mail-westus2azon11010067.outbound.protection.outlook.com (HELO
- CO1PR03CU002.outbound.protection.outlook.com) ([52.101.46.67])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 02 Sep 2026 09:47:34 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YWhsYHiU8UHi4kwntaHR7biI7RD5eKVwfCEBzFqm3nlcntBrOf/8j2jMEpa84LkxvCv6VNrCABesb/kBP2/kMuxp7gjjMeCWA2nfKJH5JniG+GErmSgQwe20EDSXkZLo/54sDSNx8PREZw7uVhh0RGAZ634aPA870bKN4gYtEe7LQbdvfPA855Vey3vlqmtPNdctLjmJ5Ee+W7CLeu4FgIKUG7w9M/uLYJqvbHHn3WMcJPCGE9se1h6OxkRp71xf5Bop70yvP/UnTNqlwbqK8XxEKqeIED1nEEI8ewXBiLMtkw9YKB44hMfIjECMKx/2IjHdEyd/A+aMG2Ci5j0/cg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Qqp50t+7cD2mjbbvgfNj2f0QE0MeDcw2tZe0mhceILQ=;
- b=gTwiy4DEJQAUsvT9lSRa5GESmMH1mtj5qv19IbN6AoGEk3/dUfPN2OeWRNTsUchJEO1YsAsEnKJ1xoOBY4/Wglp1RLABy04wZgcVknctA5mDvFLHKsCSy0q0mz+eLmxwwjiyJekqtSvkgCamzDta+PP4o/i6u25aIyoZs/7w3m7DKmZtp+m6GxOlUHmC1wGvWM9G1BMRdGdOxenKn2+k2fFTLQ3DrxtpJbv53gMdBgfgtv2V1ibaHet+CIvG5AAe3abFYqd8bnDIxUBtVzupldECWbtecHT769nwnqdUKFX6PoSmKng+o71ZCwd+98VXbJnwD/4hE24Tr1ALX0B/KA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x1aEE-0001CJ-LA
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 21:57:30 -0400
+Received: from mail-pj2-x0a.google.com ([2607:f8b0:4864:39::a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1x1aEB-0004ay-8P
+ for qemu-devel@nongnu.org; Tue, 01 Sep 2026 21:57:30 -0400
+Received: by mail-pj2-x0a.google.com with SMTP id
+ 98e67ed59e1d1-39641d0dba5so274697a91.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 18:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qqp50t+7cD2mjbbvgfNj2f0QE0MeDcw2tZe0mhceILQ=;
- b=YDb4LNZBVyMgWl+kzwA+e2z+tkmdzJCknBXogXxPEIzEgTwB52c/iXdI+YcaLRYdGIcygkfGBR+9lnrfSLKx1VYJRX13ZNxBEUkqfznFQdoO7n54INkXyiLXjsXbSNl4sQVVQBfj0KNwESHrAQJps5mfT7Typz0A0AOXuNbRQLo=
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
- by CO6PR04MB7697.namprd04.prod.outlook.com (2603:10b6:303:a3::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.12; Wed, 2 Sep
- 2026 01:47:28 +0000
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0382.007; Wed, 2 Sep 2026
- 01:47:28 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "pbonzini@redhat.com" <pbonzini@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "philmd@linaro.org"
- <philmd@linaro.org>, "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "kwolf@redhat.com" <kwolf@redhat.com>, "balaton@eik.bme.hu"
- <balaton@eik.bme.hu>, "mst@redhat.com" <mst@redhat.com>, "farosas@suse.de"
- <farosas@suse.de>, "berrange@redhat.com" <berrange@redhat.com>,
- "imp@bsdimp.com" <imp@bsdimp.com>
-Subject: Re: [PATCH 4/4] agents: add CLAUDE.md and GEMINI.md
-Thread-Topic: [PATCH 4/4] agents: add CLAUDE.md and GEMINI.md
-Thread-Index: AQHdOi0G6NWbKrL0CUquoSizwrHgCra6hamA
-Date: Wed, 2 Sep 2026 01:47:28 +0000
-Message-ID: <b5f31ec6d8de83847f8ecf4e8ccc07ad1b9677df.camel@wdc.com>
-References: <20260901161422.314581-1-pbonzini@redhat.com>
- <20260901161422.314581-5-pbonzini@redhat.com>
-In-Reply-To: <20260901161422.314581-5-pbonzini@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.60.2 (by Flathub.org) 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|CO6PR04MB7697:EE_
-x-ms-office365-filtering-correlation-id: 9617d7a1-594d-49fb-dd46-08df0894255e
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|10070799003|19092799006|23010399003|7416014|376014|22082099003|18002099003|56012099006|38070700021|10067099003|11063799006|4143699003;
-x-microsoft-antispam-message-info: GdJkm96kjLgZuiqGxHh/8V3MOSySNP4oGf+74JtF9JL5qyV6LoRwntwb8Nwp1kGSjLpvxFPL0JpP8luLDP/a1dtbXAv07weHGsgtUdIi8ESVkVLEsw3IpyNMlPRI1DgUn2t0gDjh1Q1GZpF2bZBDgjNBPTX6qAKwaxA4Zz5Rv8lfUL3BN6WfxATdMrqBPlymkeRw1291qZrxkYYM/XlCP5vp41UT/qcQSjL00fBm6vCF1i1p6Taf14mmiAZOfKm1JO61vVchq/VoSgRC07iEgFiC9PkJeRlY7zj+WfYmRf4SSu3ZFTFT9af1ZuMCaYZhje4CAZqIjtua0We8ubIPq2l53GuiGDBwpRroYleO7EkP2kWU1jRbNc08RACPNSXEZpFFWmBuWS9oROEXl6ZzIlSIt/SN5Pbr5/f2AUc2gS8DJVQS6iJfjDNnA/cxPJDmlSkWF4rdOCzmkvxG9FbkuZuGx3zv8zbRKwqa6sE7E5lBs/+UYWUtzq4jAUfOWa5p6FGUXRPqJbd0T/dlLkJ+XXekn3yrhj15gdgt5gfUsoD7AaUgsH2FQzFuFlId8gMUO30MIdDMUXnifoqkski5MH9PPCqF/uyYnA4zmrJBUhfCiz8LKFuehy0BgNAe613fnIX+hRcq+AP3N/wUTCiHDrEjKxMfZUmFEam9vq870KVPCpxBv/Z+W6xZQB7qV5wFLmwNsMXpxQCeS2Dh3BPmHiH9jJEhIYsT3eeC3FxGlSo=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(10070799003)(19092799006)(23010399003)(7416014)(376014)(22082099003)(18002099003)(56012099006)(38070700021)(10067099003)(11063799006)(4143699003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Sld2SXBOSTYyRGJhc3BiaDU4d2V1YWlYTkhKZ0ZsSjR0NkJxNFMzS0ZOZnhV?=
- =?utf-8?B?cDJyamZraWJaY1dsY2VRSDhvcEx5cWV0RDAzNDNtdUxxY1lZRlFadExSMlBR?=
- =?utf-8?B?cERpcW05TnVnRjRRWkJyTG5kSU44RE9CRUhXM1BrMlFRcWtvYytrbkd5ODVv?=
- =?utf-8?B?Mkp0QUsxMEZQMEhUOVpJSWM4OUJFaEVTZjVIR1JNais1a1pFblNYMnd0c3hx?=
- =?utf-8?B?dFRYTWFsUU9rRHRMdEZqTDRnQk5TRXp0MVRRaHRjbnd0UHd0bmZMYXl2dUVX?=
- =?utf-8?B?b0Q5enZDb2dyOVByeHY1YnlaWDlJZE9PdVBvNE85dnBIZTU3ZTdRVnNqSjNV?=
- =?utf-8?B?Z1dYUkgwOHBVWU5HYjhJcXJrRkFJNlFobGNIa2gwbFZBTExLeStrNmx0SlF3?=
- =?utf-8?B?anVOV1dlTGx1cGJ0eWxTZWduRzQwZHlFZVQ3QklCMFh0ZHJOQksyRWFtWW1Q?=
- =?utf-8?B?cjRzbndZRHNyNmxnSmcvekg5QU02UkVhVW8zeUJha28vYUJReHFmL29VVE12?=
- =?utf-8?B?aDNaNGlBTk5ZYmdKdnBENzViUXE1SDB4L3EyZGJ6c2ZXYmRlS0QwSjI1elh3?=
- =?utf-8?B?enUySHEvTGRoQldJMCs5SG9sMTNGQ3M5bC9PY09XVHRWWHlyT3hYSjloNzQ4?=
- =?utf-8?B?N25obzNyWTRZSWxhcGZTK0ZQY1V2bHZFMTZSVy81S1BSdGZBRWFTSk5yUjRH?=
- =?utf-8?B?blNiTThoWXlLZFRRUnJydXd0ZVh5QjRpd3JaOEltMk42UzhnejBXRDdpcEYx?=
- =?utf-8?B?RDFScXhhVDhEc1RLMnQ3TXJkZHFSSTZpK25rbzF6cmlhZGdDMW1CQmJjelVP?=
- =?utf-8?B?d1dZRkFkS2pUb2J1cDBsdmQ4dDgvUFhRck9rQnJiWitqV3hSN05mWC81cFQ3?=
- =?utf-8?B?OXE0Yjh4bWZGNDJJSWxxTDN6M1pEUEh1ajNoeUc3WElnQWhPTnRHTCtJUkNz?=
- =?utf-8?B?V3BiQTlURkVhODYzdnEvdVFqRnBLTnlIWHY0NmZKM0ZlSzcxQ243a242TFli?=
- =?utf-8?B?cjg5QXVka0lPbmpLL2JScjB3TUhMOGZ6V2I5Mm9kZE1xZDVRTEtJdDcyRDFn?=
- =?utf-8?B?MmMyTm96ZmtnUmdMT3VkMW5wWUpXcy9qdkZrNGpZT0l6dWhaL3NBdFNzZDdE?=
- =?utf-8?B?TXV3VmxZc1MweTVqKzVtWUpydGFBcGgyU3NzK0RHd2QxRjNWUWFvQnNleXg3?=
- =?utf-8?B?OStiUUYxd0JMRy9HOHRkRW9NWHMvcldXQ21JN3YvOXBLbzBvMWpUTFk3NkE0?=
- =?utf-8?B?eHRsaEt2MzJIdGxtemRvUXovN3BFTXYxcUFrOUsxTlV1ZkpSV0NtVllValRF?=
- =?utf-8?B?SUZSa0tycG5CR2ZxdWVXZzBFTjZXNDQ4b2FNbW1NOXkwdmZ2L1MzNmtINHNu?=
- =?utf-8?B?UldRNkprS2VoSmQwNjFwWklNTVRaZEZTa281T1hta0RvSnJDS0xYZCtNM25r?=
- =?utf-8?B?LzNjVlV3dVhBMFVPeVBORU1rNXlpckU5TnNMTGR4YzNQMkZKSEpyN000aDJS?=
- =?utf-8?B?dmErYkFMbzB0NjVWYk9YOEtCUTZCN0N0TEZoTGlpVXgxc2dOMGJCTithbzJG?=
- =?utf-8?B?OFFtbU0zM3oyUmczU2lWUlJrU2lTQy80dEhlRHcyVWIveVVCaGMzU3hZUUdC?=
- =?utf-8?B?T1RROFJ0ZlJMeU84TGJNUWFscUVzcmRzL1ZVWlZWTVVVSzZKeHlkWUl1eE93?=
- =?utf-8?B?My9zTlhOOSs0NmsvZ3FkRHVDY0xBcmV5WjdtNGdCTnRsWEpQYVRVeWE4dDM1?=
- =?utf-8?B?d3hvWmtuQWpyNUYwbXQ0V0paSlVaN21VczZtbmNwR1ZCM1FIZW1zbnhXVTdy?=
- =?utf-8?B?VHcvamNRU1hzTjEyY1NnTDh5MHJiOVcrVE5KVzhLSGhWdTBFTUdOZ1lSeFg1?=
- =?utf-8?B?NWZZNmltZ2lBV3RqYTZKeGpoUUF0YWtHOEl2VnF6bE5jcUVXYnJ0RlBKZURy?=
- =?utf-8?B?bmx3RisyeHFrSEt0cjE5WFl6ZGI5NGxzK3phUTZRdDY1ZXRIU3VrS2pBdTdw?=
- =?utf-8?B?Y1ZrSnJvWEtvd3FpN093TVBDOTFEd2ZyZ3hMbExtd2d0Q3VHWnhqUUZlUEZh?=
- =?utf-8?B?UGg2SEZDQVI2RlR4SENiajdKdU14b0ZEeHUwdGZnUjVUYXNnL0RDUlRjQmk4?=
- =?utf-8?B?emVvUmoxSTkzcENSblJhdTBMTDdhZHNDZHM5K0FmcmtZbnI5YkttTXZoN3lx?=
- =?utf-8?B?dXU1V25vZm10YTI5RHg5VWhkZ1AvN21La0tzTGJRZDBsbXZrMTZZbnkwNEhC?=
- =?utf-8?B?b0RKRmpCVWRkMkJDbmhkSXE2Z2xFczR0MzFIbHdjUEZmWTJOdHQ3Ri93ME9a?=
- =?utf-8?B?MWp5cWZHQzYydDlNekFTSVJaMWpISVFIanIzT0NJZE55U2FMcXZEVTBDM1gy?=
- =?utf-8?Q?MbDmEjZQuJBuQoWMzHcJqGqFluArnJCLd7phr4nEX9uW9?=
-x-ms-exchange-antispam-messagedata-1: Xw+BtqDwHF+Htmdd+PkCECyir1Dw3Ibl2Dg=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1170BEFB6C1FB348A0128E3714F8631A@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ d=gmail.com; s=20251104; t=1788314246; x=1788919046; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZejZZ2ZbB/EBfw/8xAvF1q+yOuOMpS/sGduFd1xS/QU=;
+ b=Ad++Ek1WVa3i75MsxUnjVl5Vj9aKTNCrZHoU/pCgpLWyS3nLogoWqAN2O4QtdYtsik
+ Vs4aLjS9E0KzTXcRn+SFg9xOZT7uXAhePC8H6AVbGT8O4sCx4TC3A57mjszclRI/SBGw
+ 0wnlwANmvScGugREaadyYZAxSxwT+gnjgamJS9FdgLkuuZi9i71P9s3TJhH+5Rx8rzoE
+ ikznO9P5oKsyzMuhYlOONZ+r7kRGaImqGa6UMdVXc/AqDH3qMnjFXYf9+5vz/mXoUZz2
+ qZmUgK+gbc2h4+/ypfLTHYFFOfZgzOWXAOYpoJD4STik4R9e+NTm0CpVjUO+TYdbbDaj
+ q+Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788314246; x=1788919046;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZejZZ2ZbB/EBfw/8xAvF1q+yOuOMpS/sGduFd1xS/QU=;
+ b=Es/pxQByGQXZeGIzcoQXf8MMYtwiffv2Mml2da7p1Kqr53kJ5HemwYMOLth3AHprSV
+ ZES1EcIwEFVKmBrvo3bQwS/kpkPOgfe9NRd5aJXvn5Wc2BXax1av4k62lV0ry1/wxPMM
+ iuP1LTPh4O4cn6Vv9hrkij+UrhzyxN+QbxiEZP5tVX1TVJRy0WVglRJvME7YphIF3Wni
+ kiuTxyO+HUF4PahdMnBatfFzdXhlnJLmz7xSX/Gtyr/0KY0ymGhk3MwW6492OipNx216
+ ghvd9T16zctWCKdmxR6nu5tICOByhCqy11UaKjneMItDYhV2cuLXhWEgbX6xF4IMP3vQ
+ KQwQ==
+X-Gm-Message-State: AFuF++k6myLv583NZuB/crU52y6WyQrXAZTQN6aK5Qwbtvd7/NKXvqgt
+ 9BB/ZUc4eWdcnZ0C/8JuVxdV/zkJE/Ag7wEOS8RABIlxiqCmUZqds2v/9vDvzgm1
+X-Gm-Gg: AYBFou0RkTZ19u5ohA5i+3aQr2Go2oM0uYxX5nN+VOFl0wWm2/znn0OjM+f4ml23iar
+ A9LHY7l9ksiOwTXbt8rjCBDZ3cSKT6ipC2G+jeppDi0bqFapwVHazqlhXMnG418IPBFVGeC30v/
+ PH9mHPewMtvoYbiiQvbZ0SQK6IIo/wf0YhU3VBkx0Q5bHb2ZMggJ7vJiwZG4WsvafN/G44+Bfdw
+ Z8edY7vzGe8rn9u/H1dTydIh3fBso0RSOyiCWWpOWzVNKCYyFDIiWFhwlbv9QWIUi7kubpzKljB
+ Mlx7bB3Hvlz1k9JedE8HSl8dyp3b+CIMIbr6iX33tywl8dqOLlemOkjna9zE4FluEJUrHRjcJXY
+ uFIOV23dIYuExf0LoSJTq82zkbgN05w+3gGIMtNdqRBayj9tP+t6zvWjp6ocRQCs4W3Ikjn1TAd
+ 7I9uL66tvl38t7YwNLCJZ5W0L077yEQSj7Tp/9RJ4fZ9aYeohVwP2Bt7HKdLNrh2xK6EoQgniWg
+ pfd8I1xJbzkPPtT
+X-Received: by 2002:a17:90b:17c3:b0:398:dcef:c040 with SMTP id
+ 98e67ed59e1d1-39aee1d6bf3mr1677227a91.19.1788314245545; 
+ Tue, 01 Sep 2026 18:57:25 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([149.118.62.92])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3990bd1b395sm9455664a91.1.2026.09.01.18.57.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Sep 2026 18:57:24 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH] target/riscv: save ELP in MPELP for NMIE=0 exceptions
+Date: Wed,  2 Sep 2026 09:57:04 +0800
+Message-ID: <20260902015704.101990-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: IfCk+mb+JtdUjMn/mzLtOU6KzKxgq/hjNPsXf60ZL2p94qlF5ixIgr0216qM0pu449Je87xiJAaM8RgjD1T5LxVmzQ+VntgYgA2gluUcSnRqJ3iGaU/uq4dnNlSpiI8JZGCJ3ev1xvfPMbMNV30ju+k3yRimAzVzdczXhAF+IbCj991Q5BhT2miQUHLuMozfhea3OZ1knhph9sanbrCeD62cGN6t7VaKLZZmp0plWhwyU5pYJoLgKbDw776MB4DokCHHDKpuGO2x+fHWLuRbpiVelDKZaFVLWcNLmrgRx63Zl/QKrQZ5eREWxkGQXaD10WoQ9Edat39F0BRbEhkyfA==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Fu/cDMSRM3+Z1Fm1MT2IPQneUWParepYjEWWszLKayrF8BPyhd0ZK6EtoUrvioweIZ3Q5MnlPiPO1+B2VeWlipv+pGqV0yY0aSiwR9vEjVrqvIJyi34d00NK76VXFcMwsBSn8Cj7L/bOwZSZjM9aicANimN9y4QbIf2TJXDI/htOXlytY9E9dG0CQhZM2Hp4dCi5Dv+B3YvDBHJMZMedkAlcxWSOoM5rn6xrg4+MvSjHrmRy66c5AOq2kOO1iDknY4RU/T+BEg4QYItXE2/5T47YmMty6ayH0zJoO4+xqivx3wN2jRrijiX5la6g3aBf3C1hMelALfnqb8UrTuLjv78fOXk7LzW9euN2X8ExwHViGugkwOlul8EGiqNsof8HKxOSa5iP5fTpuW5qiUd2OWZvAJ6MimBmlR6gqbHnoOp2Wlo7dLqMEawvNEbk77ivAfECr2DvuI1SF+lHRshQCW9M5Zr7K9eKprn8NTfiuwsuzG1xtSB4RYbu2GBcmCcC+5Zzs8XJ9f8FFe/J/uC22TIfxVMfKXzJ2sfykW1agE6lshGvnPH2YAtZpZAhHAb92infB4Qp63wg4Mtz4g4IDI3JRyEgjxLxNLbBpXy68RgSkEn3wJmYwFXi49FhfbOL
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9617d7a1-594d-49fb-dd46-08df0894255e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2026 01:47:28.4442 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WpDO7Dd+Mb9tQ2yUah4qvgpIg0lg+eljMpeeNRWzSlnDVhZRlq+21QEaKSMrX+vcwab1VWdJG2EJ3Igwdlpjh47cRETn8kzBiuh0ZNgLXGU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR04MB7697
-Received-SPF: pass client-ip=216.71.154.42;
- envelope-from=prvs=6980a3afb=Alistair.Francis@wdc.com;
- helo=esa4.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::a;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x0a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,19 +103,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVHVlLCAyMDI2LTA5LTAxIGF0IDE4OjE0ICswMjAwLCBQYW9sbyBCb256aW5pIHdyb3RlOg0K
-PiBDbGF1ZGUgQ29kZSBhbmQgR2VtaW5pIENMSSBkbyBub3QgcmVhZCBBR0VOVFMubWQuwqAgUmVs
-dWN0YW50bHkNCj4gYWR2ZXJ0aXNlDQo+IHRoZW0gdG8gZmFjaWxpdGF0ZSBmb2xsb3dpbmcgdGhl
-IHJ1bGVzLg0KDQpSZWFsbHk/DQoNCk5vdyB3ZSBhcmUgc3R1Y2sgd2l0aCB0aGVzZSBleHRyYSBm
-aWxlcywgd2hpY2ggYXJlIHByb2R1Y3QgbmFtZXMgOigNCg0KQWxpc3RhaXINCg0KPiANCj4gU2ln
-bmVkLW9mZi1ieTogUGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT4NCj4gLS0tDQo+
-IMKgQ0xBVURFLm1kIHwgMSArDQo+IMKgR0VNSU5JLm1kIHwgMSArDQo+IMKgMiBmaWxlcyBjaGFu
-Z2VkLCAyIGluc2VydGlvbnMoKykNCj4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgQ0xBVURFLm1kDQo+
-IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IEdFTUlOSS5tZA0KPiANCj4gZGlmZiAtLWdpdCBhL0NMQVVE
-RS5tZCBiL0NMQVVERS5tZA0KPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiBpbmRleCAwMDAwMDAw
-MDAwMC4uNDNjOTk0YzJkMzYNCj4gLS0tIC9kZXYvbnVsbA0KPiArKysgYi9DTEFVREUubWQNCj4g
-QEAgLTAsMCArMSBAQA0KPiArQEFHRU5UUy5tZA0KPiBkaWZmIC0tZ2l0IGEvR0VNSU5JLm1kIGIv
-R0VNSU5JLm1kDQo+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0DQo+IGluZGV4IDAwMDAwMDAwMDAwLi40
-M2M5OTRjMmQzNg0KPiAtLS0gL2Rldi9udWxsDQo+ICsrKyBiL0dFTUlOSS5tZA0KPiBAQCAtMCww
-ICsxIEBADQo+ICtAQUdFTlRTLm1kDQo=
+When an exception occurs in M-mode while mnstatus.NMIE is clear,
+Smrnmi only changes the exception handler address. Trap state is still
+saved in the regular M-mode CSRs and the handler returns with MRET.
+
+riscv_cpu_do_interrupt() instead saves ELP in mnstatus.MNPELP on this
+path. MRET restores ELP from mstatus.MPELP, so the expected landing-pad
+state is lost.
+
+Always save ELP in mstatus.MPELP for M-mode exceptions. Keep MNPELP for
+the actual RNMI interrupt path, which returns with MNRET.
+
+Add a TCG test that checks ELP preservation across an NMIE=0 M-mode
+exception and MRET.
+
+Fixes: 0266fd8b56a4 ("target/riscv: Add Zicfilp support for Smrnmi")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4223
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+---
+ target/riscv/tcg/cpu_helper.c             |  18 +---
+ tests/tcg/riscv64/Makefile.softmmu-target |   8 ++
+ tests/tcg/riscv64/test-zicfilp-smrnmi.S   | 117 ++++++++++++++++++++++
+ 3 files changed, 127 insertions(+), 16 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-zicfilp-smrnmi.S
+
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..a0d79b33a5 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -2264,23 +2264,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ 
+         src = env->sepc;
+     } else {
+-        /*
+-         * If the hart encounters an exception while executing in M-mode
+-         * with the mnstatus.NMIE bit clear, the exception is an RNMI exception.
+-         */
+-        nnmi_excep = cpu->cfg.ext_smrnmi &&
+-                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
+-                     !async;
+-
+-        /* handle the trap in M-mode */
+-        /* save elp status */
++        /* Save ELP for MRET. */
+         if (cpu_get_fcfien(env)) {
+-            if (nnmi_excep) {
+-                env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP,
+-                                          env->elp);
+-            } else {
+-                env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
+-            }
++            env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
+         }
+ 
+         if (riscv_has_ext(env, RVH)) {
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 6a219c306c..8522c3fe6f 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -45,6 +45,14 @@ comma:= ,
+ run-test-crc32: test-crc32
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-zicfilp-smrnmi
++run-test-zicfilp-smrnmi: test-zicfilp-smrnmi
++	$(call run-test, $<, \
++	  $(QEMU) \
++	  -cpu rv64$(comma)zicsr=true$(comma)zicfilp=true$(comma)smrnmi=true \
++	  -global rv64-riscv-cpu.rnmi-exception-vector=0x80000100 \
++	  $(QEMU_OPTS)$<)
++
+ # Zicclsm: misaligned load/store support. Assemble one source twice: the
+ # default build expects every misaligned access to succeed (zicclsm=true),
+ # the -DZICCLSM_DISABLED build expects every one to trap (zicclsm=false).
+diff --git a/tests/tcg/riscv64/test-zicfilp-smrnmi.S b/tests/tcg/riscv64/test-zicfilp-smrnmi.S
+new file mode 100644
+index 0000000000..b5965bf705
+--- /dev/null
++++ b/tests/tcg/riscv64/test-zicfilp-smrnmi.S
+@@ -0,0 +1,117 @@
++/*
++ * Test that an M-mode exception taken with mnstatus.NMIE clear saves ELP in
++ * mstatus.MPELP, so that it is restored by MRET.  MNPELP is reserved for the
++ * actual RNMI path, which returns with MNRET.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option	norvc
++
++	.equ	CSR_MNSTATUS, 0x744
++	.equ	CSR_MSECCFG, 0x747
++	.equ	MNSTATUS_NMIE, 1 << 3
++	.equ	MNSTATUS_MNPELP, 1 << 9
++	.equ	MSECCFG_MLPE, 1 << 10
++	.equ	MSTATUS_MPELP, 1 << 41
++	.equ	EXCP_INST_ACCESS_FAULT, 1
++	.equ	EXCP_SW_CHECK, 18
++	.equ	SW_CHECK_FCFI_TVAL, 2
++
++	.text
++	.global	_start
++_start:
++	/* Verify that NMIE is clear before exercising the exception path. */
++	csrr	t0, CSR_MNSTATUS
++	andi	t0, t0, MNSTATUS_NMIE
++	bnez	t0, fail_nmie
++
++	/* Enable landing-pad checks in M-mode, then start a new TB. */
++	li	t0, MSECCFG_MLPE
++	csrs	CSR_MSECCFG, t0
++	j	tracked_jump
++
++tracked_jump:
++	/* Make a Zicfilp-tracked indirect jump to an address that faults. */
++	li	t1, 0
++	jalr	zero, 0(t1)
++
++	/*
++	 * The instruction access fault should have redirected to the handler.
++	 */
++	li	a0, 1
++	j	_exit
++
++fail_nmie:
++	li	a0, 6
++	j	_exit
++
++	/* Must match rnmi-exception-vector in Makefile.softmmu-target. */
++	.org	0x100
++rnmi_exception:
++	csrr	t0, mcause
++	li	t1, EXCP_INST_ACCESS_FAULT
++	beq	t0, t1, handle_fetch_fault
++	li	t1, EXCP_SW_CHECK
++	beq	t0, t1, handle_sw_check
++
++	li	a0, 4
++	j	_exit
++
++handle_fetch_fault:
++	/* This is an M-mode exception and will return with MRET. */
++	csrr	t0, mstatus
++	li	t1, MSTATUS_MPELP
++	and	t0, t0, t1
++	beqz	t0, fail_mpelp
++
++	csrr	t0, CSR_MNSTATUS
++	andi	t0, t0, MNSTATUS_MNPELP
++	bnez	t0, fail_mnpelp
++
++	lla	t0, resume_non_lpad
++	csrw	mepc, t0
++	mret
++
++resume_non_lpad:
++	/* MRET must restore ELP, so this instruction must not retire. */
++	li	a0, 1
++	j	_exit
++
++handle_sw_check:
++	csrr	t0, mtval
++	li	t1, SW_CHECK_FCFI_TVAL
++	bne	t0, t1, fail_tval
++
++	li	a0, 0
++	j	_exit
++
++fail_mpelp:
++	li	a0, 2
++	j	_exit
++
++fail_mnpelp:
++	li	a0, 3
++	j	_exit
++
++fail_tval:
++	li	a0, 5
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+-- 
+2.43.0
+
 
