@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76FCC624D6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D2FC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:28:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1k4k-0006TO-Nj; Wed, 02 Sep 2026 08:28:22 -0400
+	id 1x1k4p-0006Ui-1D; Wed, 02 Sep 2026 08:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1x1k4Y-0006RE-P3
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:28:10 -0400
+ id 1x1k4Z-0006Rt-OQ
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:28:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1x1k4X-0004sy-10
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:28:10 -0400
+ id 1x1k4Y-0004tT-65
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:28:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788352088;
+ s=mimecast20190719; t=1788352089;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wv18segry+Lgnkcn+qSHeXfR93B1lxBaPzY4XZJZqnY=;
- b=SvezbZgqTf3K8VSBufuB0a4JYYTP1aZLC8iKsbafS4Cz7RwiVZQ8SxVTTIvJobTt4MDznl
- mUgB6B76rSSXOJzdynSq12ARpCAwMrLpt4pe5MbFYRbwfnQnNSU9duUVrLJR9++hKEv+gt
- 7sP/ISqgMWryQFqT8dKQumJVIsj5di8=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=r7oqY+FZMGLsBaeHNfEEOWl5GCdp9881hq1+4SwL6EQ=;
+ b=GuljDmGetLY1MsD8uEciyeGdMJYNfGvl9C7zAttRGAkYhqDGUcI2a2T0VqhIx5+fg+L746
+ eWtUasZh68FoyY8ooYXSsvYdz1Ovo3QAhcOSbGGoNNdAt9X5Xt9EFvOOsHl9/Ob8TX4zz9
+ HW1I9osYeJyCU1wlWyyzIk5i5VDhIx8=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-7qow3BWuONSuQ0N_6eR2Pw-1; Wed,
- 02 Sept 2026 08:26:52 -0400
-X-MC-Unique: 7qow3BWuONSuQ0N_6eR2Pw-1
-X-Mimecast-MFC-AGG-ID: 7qow3BWuONSuQ0N_6eR2Pw_1788352011
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-SBH_cxtuOU2uxA_Xzctf0Q-1; Wed,
+ 02 Sept 2026 08:27:02 -0400
+X-MC-Unique: SBH_cxtuOU2uxA_Xzctf0Q-1
+X-Mimecast-MFC-AGG-ID: SBH_cxtuOU2uxA_Xzctf0Q_1788352021
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC66619344F7; Wed,  2 Sep 2026 12:26:50 +0000 (UTC)
+ id 2ABFF1921ED0; Wed,  2 Sep 2026 12:27:01 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 77A773000223; Wed,  2 Sep 2026 12:26:49 +0000 (UTC)
+ id 014903000223; Wed,  2 Sep 2026 12:26:59 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, leif.lindholm@oss.qualcomm.com, eauger@redhat.com
-Subject: [PATCH 0/6] sbsa-gwdt cleanup and fixes
-Date: Wed,  2 Sep 2026 14:26:40 +0200
-Message-ID: <20260902122646.2848464-1-imammedo@redhat.com>
+Subject: [PATCH 6/6] sbsa-gwdt: reschedule timer on direct WCV load
+Date: Wed,  2 Sep 2026 14:26:46 +0200
+Message-ID: <20260902122646.2848464-7-imammedo@redhat.com>
+In-Reply-To: <20260902122646.2848464-1-imammedo@redhat.com>
+References: <20260902122646.2848464-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,34 +84,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+According to spec[1]:
 
-Series picks up dropped gwdt fixes from
+ "The compare value can either be loaded directly or indirectly on an
+  explicit refresh or timeout refresh"
 
-  [PATCH v3 00/17] Add watchdog support to arm/virt board
-  https://patchew.org/QEMU/20260624102830.1355552-1-imammedo@redhat.com/
+QEMU accepts writes to WCV but doesn't reschedule the timer,
+which it should per the spec pseudo code:
 
-patches were basically rewritten to make changes simpler/easier to reson about.
+ "TimeoutRefresh = ( SystemCounter [63:0] > CompareValue [63:0])"
 
-patch 6/6 is partial fix with open question:
+Fix it by updating the timer on WCV write.
 
-sbsa-gwdt currently mantains WVC in since VM start ticks, which works fine under
-TCG. However under KVM those system counter domains diverge and CNTPCT in guest
-starts to return host's value. As result WCV reads/writes got mixed up with
-QEMU still assuming VM timeframe while guest using host's one.
-Question is how should we fix it?
+partialy[2] fixes Windows in GTDT mode, which never issues a WRR refresh.
+Instead, it programs WOR to ~4 sec, enables WCS, and immediately
+writes a large absolute value into WCV to push the timeout far
+into the future. Without this, QEMU ignores the WCV write,
+the short WOR expires, and the guest reboots unexpectedly.
 
-Igor Mammedov (6):
-  sbsa-gwdt: reduce code ident
-  arm: gwdt: consolidate clear WS0 and WS1 on explicit refresh
-  arm: gwdt: simplify WCV update condition
-  sbsa-gwdt: rename sbsa_gwdt_update_timer() to
-    sbsa_gwdt_wor_update_timer()
-  sbsa-gwdt: don't arm timer for compare values above INT64_MAX
-  sbsa-gwdt: reschedule timer on direct WCV load
+1) Arm® Server Base System Architecture 6.0
+   Platform Design Document
+   DEN0029D 6.0
+   "A.2 Watchdog Operation"
+2) under KVM system counter (CNTPCT) as read by guest apprears to
+   produce host's value, so watchdog timeout effectively gets
+   extended on host uptime offset. But that's a separate issue
+   to be fixed.
 
- hw/watchdog/sbsa_gwdt.c | 81 +++++++++++++++++++++++++++--------------
- 1 file changed, 54 insertions(+), 27 deletions(-)
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ hw/watchdog/sbsa_gwdt.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
+diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+index 0a1d981072..9ed109d6eb 100644
+--- a/hw/watchdog/sbsa_gwdt.c
++++ b/hw/watchdog/sbsa_gwdt.c
+@@ -148,6 +148,13 @@ static void sbsa_gwdt_wor_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+     sbsa_gwdt_set_timer(s, timeout);
+ }
+ 
++static void sbsa_gwdt_wcv_update_timer(SBSA_GWDTState *s)
++{
++    if (s->wcs & SBSA_GWDT_WCS_EN) {
++        sbsa_gwdt_set_timer(s, (uint64_t)s->wcvu << 32 | s->wcvl);
++    }
++}
++
+ static void sbsa_gwdt_rwrite(void *opaque, hwaddr offset, uint64_t data,
+                              unsigned size) {
+     SBSA_GWDTState *s = SBSA_GWDT(opaque);
+@@ -187,10 +194,12 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offset, uint64_t data,
+ 
+     case SBSA_GWDT_WCV:
+         s->wcvl = data;
++        sbsa_gwdt_wcv_update_timer(s);
+         break;
+ 
+     case SBSA_GWDT_WCVU:
+         s->wcvu = data;
++        sbsa_gwdt_wcv_update_timer(s);
+         break;
+ 
+     default:
 -- 
 2.52.0
 
