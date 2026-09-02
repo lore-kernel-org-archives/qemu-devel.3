@@ -4,166 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E75AC624D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35047C624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1mAg-0007pl-OM; Wed, 02 Sep 2026 10:42:38 -0400
+	id 1x1mAX-0007kP-Hi; Wed, 02 Sep 2026 10:42:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x1mAe-0007p0-Cx
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:42:36 -0400
+ id 1x1mAT-0007hp-A4
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:42:26 -0400
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x1mAc-0002BP-Nl
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:42:36 -0400
+ id 1x1mAR-0002AM-8z
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:42:25 -0400
 Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682CXVom1205835; Wed, 2 Sep 2026 07:42:32 -0700
+ 682CXcM01205931; Wed, 2 Sep 2026 07:42:21 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=BVN3ixCUuBQg3/d1alnuhiWbIv8kL6WoKGnbxL4uU
- bw=; b=130YJkoSKrUs30U76LXdWKjLuvnX3Ht9KvQ3AbhxSit5wxKofYaLxJPZ3
- gSqhvEleV0u7ut4Ys+m0gGM5gKKi5X7nMdoIdSrD3OP1+AblMPWJAetCjGvGC2s+
- 3oP9p9xV4MypHu4oKf+K6E67HyWW1du7m0dcizTG6c7ACcX5PWzGz4+AyhnHBX65
- PmpZIvOzI28J5HHLPse/OBgNvEQZ4603H+KO6EvmScSdAVG+iCByYAVMJzP2XoVj
- l7+iYkqI0LYALgL978ZYMLRr/KzXHdLRJBtzuenxqktI2PKpvPoikMAnTseu1WQc
- 2nRt43zcsdBfR2mSH07CuwbyHhrdw==
-Received: from mw6pr02cu001.outbound.protection.outlook.com
- (mail-westus2azon11022120.outbound.protection.outlook.com [52.101.48.120])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ge100u3xk-1
+ proofpoint20171006; bh=faplxVQ72UmOJN5D4U7lML2iYCDtp/dE3pbnkwuiD
+ Es=; b=1T+iX79Zm+v/N+AdxnrhlHoOpWx6qA6bMKo9Ab7TvGvKC/twhiHNH6wO7
+ 3wzrLM8iESQdQAJx10BAhv5SDGYSV0AGMf18vDKSNwB2kaOqmxCn6KSustoZYBkc
+ i3mrFymx1VghD3HgsRK7kdGxvaf7FgXN96/hHCFMrBCrZdc8UmqGgl4YiRINmYxI
+ onqyu2dXbwDSaoNcgTpA0z4WGQc56pXcqhcLbA0wtVwRwhvHgU4dYLiMfc43RCY4
+ RflLYtF3s4uPWCvrR9imKPJWf09ddxrLEpvOFHs7KNTSiHNnCjROxnbE58agqoYY
+ Odst+7thotX7mBwRb8IYJDh70ISNA==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazon11021134.outbound.protection.outlook.com [52.101.52.134])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ge100u3x3-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 07:42:32 -0700 (PDT)
+ Wed, 02 Sep 2026 07:42:20 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uGuLjtszdrUjwuFqrvQ3D69GAXZqF2qU+RM8IthYVDkGTnXGYljJTzkRBCZgKMHyQi57RZp/xVXoeBqX5X3qM6kA5S1BZtryc47TpmNyy0UdXyca3oHbW+kRrwbBPC7d1Gg942YU2PpjY5fcCour72amR/n+Xkc0l5IwfRgZf8E2dfiKsQJC+TTvRkmPMpKpwkxU/6D514FnVpEZ6K+s8994SzcU1Qww2kXTRrHasRVLYisPe7d2IllFUtFmtdCIwdqDT/ydgy2wMglmAabRQI6CQbX0AUAMj0JtG34nsLFkMxgwqTMiHtBziLatlmWyTQkyhKb7uRizdNOFMHlxHg==
+ b=lSkwvyfQ9/hBwRQjHbryWEMZLJL39QCTVzXsOaLWzxJgXgjcpKuxy9MaYn/c+C76qsPoC/QhZj0d1EB8kJUIPg8KguaWjVx4Rl2U082QPATJZrzB6c1VMKy8BiOgCAImxKll3Kjuwqo1aMd7rNSfcgG4YVYX+RYev7IYiBrfnafeVFnbI2OIuUXGRjicp96AiZO//yonYAJ9hwlVuWiR4QNt59RsABcHsc0MuhFZEBQmackYG5tVAKKgb5VyiNNT/zpAfhy866UQe+cLEZUHnchQK3f4i3n+c/fl+qQWGwozGH4NvGjyGrCzKFG48ZYcJg9KAPsYBZTI+mP5xKjdqw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BVN3ixCUuBQg3/d1alnuhiWbIv8kL6WoKGnbxL4uUbw=;
- b=Zjs0zqzguE+tzdYI8r206x13b9Y6AiON4X+RT/FicowxhpjhUiH2Vu5cNxKE5D3j0x+VPDuUyUhn8YCsmhmJ4/OHvOZPPp/oZW+2JzH9prak2xwYmRClhmrhdP3QFwAPPnaYPw4xjdA/9J0KyKVRGJVWqRC/9z/3JyExdHy9iEAbHuyhHh3Lzh9401cTa/fIWT5oiZ8QgO6zbYcfCMgT/FhJtYLvYrllThBoOyi/l87mmpZHwrkNNkatrLwjIIJdp0R44LRecFdsHNxHJ/GwlOgCndtQuGWvWVvu+/c+2WOMp6u3ku2qL6xdinN3M/vh8jLR/yGiJrZP6KuwSU1LMA==
+ bh=faplxVQ72UmOJN5D4U7lML2iYCDtp/dE3pbnkwuiDEs=;
+ b=Jmi/4A0WzyE/QFcUPlPoncKwaHVtM4WuHfatOkewuNvwDAoLpKuOF2CeTQ6aIJYUN8sbAAc5p2UUnySTdDRiW5GUOffFcvegC/7wqcoGUQ3JAuEieizYp/+e0NorGPFHAn2hK7ummJSfnjAwLCE7jGHJ6xX2ERo24NPtq+UTpaNzPsi0JQ/U0DYjSCOmVXoyNEhk5FJEMEahyjsXLbf7rYBzskl7lGj4ZOhErBdWEKtHtz18l/Eh9RTDnA6N4TgoH8cfL7YC62SBF1qL6tIsOpoH/Rufwv6/PK9vr/aPNnPw5+qa8yuzfOxeV/mbDJMuo7/8IkFpBkfy5EPWAiBdIw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BVN3ixCUuBQg3/d1alnuhiWbIv8kL6WoKGnbxL4uUbw=;
- b=IOXoYqKXWmDYiSwaYHoYHyTflXlEeE1XbmjKBpnLjG9NmtG4+JFyXIxnTDZNSOKHVXh3dIPaFvBnL+IGYyTvymzxOPJqCcVqiLemS1Xd29BHvguSs/sJF+oW0EWSlwQe1xFJx8J9lN35CTK5nezDqrGpIHDJrr1usJ5mv+oaJD5MRTb3ypEGmm+Gk+hUFxUAFLXoXIDn1FKrIUE2P5Gj8/hoP3Rdb2QbWoTrSCoafOxLTM5fi8ehFqgTi8WXr6RGhYKbFkwGRwM0uoAshNbH7yrTGxbywqo+CubH2Ux1ey1OaTVFbxqQ1URnP2BQPgT7jL6FYq/+rzzg0AAQOf7vQg==
+ bh=faplxVQ72UmOJN5D4U7lML2iYCDtp/dE3pbnkwuiDEs=;
+ b=nDe4/FJcNeFVuvOTMe8l9ahh9VZ59d7Zpb/6aJ9DhBv0yIB07ofUE9gB+VCOgwnLcBK/Qa6OkZ0qQbTjvIMo4+WxybRqxtUqxSmpCoYNQ/tgD7zovl4smgQJ/mBFjkOhjm3PFGXdYPeesTwxv1i8HJMZFM3dyJAID8x5P67XoSbD44BncY3t/C2zNBo0sLwlQe2ko/YsIr6it2FX7KFV41IlskbJL7p792bBY2XokSBIcN0dJbqGwe0WMGZ0BToM3WxBJzLmpWSnbT+0TA10KrboY8R6MrFptKLedDCnEYrpFgAFZRTASn6hxe4IJ0FQiW0XGoL+mWrmKpwhlwCJ2g==
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by BY5PR02MB6978.namprd02.prod.outlook.com (2603:10b6:a03:23f::20) with
+ by CHXPR02MB11331.namprd02.prod.outlook.com (2603:10b6:610:2f9::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 14:42:30 +0000
+ 2026 14:42:18 +0000
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 14:42:30 +0000
+ 14:42:18 +0000
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 To: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
  mtosatti@redhat.com, marcandre.lureau@redhat.com, armbru@redhat.com,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 5/8] hw/i386/pc.c: convert rtc-time object prop to a class
- prop
-Date: Wed,  2 Sep 2026 15:40:52 +0100
-Message-ID: <20260902144207.2553037-6-mark.caveayland@nutanix.com>
+Subject: [PATCH v3 2/8] qom/object.c: introduce
+ object_class_property_add_alias()
+Date: Wed,  2 Sep 2026 15:40:49 +0100
+Message-ID: <20260902144207.2553037-3-mark.caveayland@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260902144207.2553037-1-mark.caveayland@nutanix.com>
 References: <20260902144207.2553037-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0270.namprd03.prod.outlook.com
- (2603:10b6:a03:3a0::35) To PH0PR02MB7159.namprd02.prod.outlook.com
+Content-Type: text/plain
+X-ClientProxiedBy: BY5PR04CA0018.namprd04.prod.outlook.com
+ (2603:10b6:a03:1d0::28) To PH0PR02MB7159.namprd02.prod.outlook.com
  (2603:10b6:510:16::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BY5PR02MB6978:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8fbd4991-fba9-4059-e50a-08df09006ac0
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CHXPR02MB11331:EE_
+X-MS-Office365-Filtering-Correlation-Id: 60b75c49-3e34-4910-66d9-08df090063a1
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|6133799003|22082099003|18002099003|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info: 4wrOQXx0rpcXCemst0L2tQ+c4uYhsbk0ryMVI+FP3qM9lbgKEt+noTIx6Wwmq7+u/iG5fWTaK4l7Px+ruffBT1NCM3V1cu1aVBw4uauEwb+RB/quh94E4vGZhDuBQqTyn3uKu7Owc00vjcKjS0oVgzfuj4PPSBJGnIjdUkS6ERmx63CTjao3n1PykDtCwOTpg0nGLZ3Yt9cS1uKTqEq/GP4SPRIufGgm/jUh1bRDh/dD5LDtGfsN4mBC2QlczGmKEI9e6VqButyQss1sqrBrN2fZQ4/niRAuByACKq049RrMZWieGcK8eG6pjj/lft1fbETKnAF6JIES/hC/MjRWFbfckOgoi+tgVCMHzEnD9HEO3xSR7DC88PzcCtKkqrwKQgP/j+wSEsRtqSNAooWaOPafhRrNF0Dy9QP6zfYqumaCVVfuYKgoSXdTH2j1RgBC8N52rt4J6xdWtFx/M6SdSHCZraQZGtA4zzvSgotLcXbLgSzlSG9jxyMWfNiF1CScN+XkgGBk3lcVKP1T7eNrb43Z3EL7MRYq7auim2jlJLmFcjoGqllXp3DS7ESeufedWyAH9XxM7JeRUoZZyACk29Z94wYKBBILAyNRvlSWWMsI/7Uf9G4V1qZTOua8C6tGjThIdhNXirmUh3TYt26ulaMtGhNEVZgmgLW4pbeLx8U=
+ ARA:13230040|1800799024|376014|23010399003|366016|10067099003|56012099006|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: JUToHX3dcshdlLIH18cCbzNPRUDkTVtEgeuL/bUlBCzBVHEQuHA7NVV5cLAGfZRRQV59XCGmKcjWvspl6KsyNu9ymnGNI354MJIgOciJwB5N5ZD6PYFVBE7upkJ8hY2dPGVRNsbMz0cUFncsoibMti+27GDUmfYMsTg28ehE0Tj4rYm9vw1XrbNhiWX9YOHTWSRpMyR8vVDykruR3IBdtgbEFocS2+VcSGK3m33a0SD2gZtwh3lTFr5r7zb6UM1MJw7/mbGXiFvHKi3RHwPXB7CDuMqRJEsKhN/q/glTrhTHcfKWSIhi6y2FLcNETJ/PME25yznG8UApJfrPUWvQQ5+3z51BqDAmwO1yRv83wWmQmy9uZTWhozMEpJRUxOVfxGJhVHrkEAB0KgS5/3H4rLidiVXEUC8Qg3L5rxx2LEeqZIbn6UDnlok5+QaeG1flq2oJT19phNEU1Lw+FE5hRkPq5xLWcHXWMo+ecaZTFC6uCCirDpIYJxuAkNCJ/ojN+9LH9l/mOKjlhtJXlXvZoGBSiHmWctCTojkkx4wp2LJ455E4nGbb3sV7VbygGm0Aki9A4Qi39M2xtLIVFcD4jAghFKz5bStjsOfI86owbQtaTzL8Dbne4KsUMAZKfrTfTwHSFzQPmSGL/r2RWbxoTXgswZUvOsBwCNnTI2bIDj0=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(6133799003)(22082099003)(18002099003)(56012099006)(10067099003);
+ SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UXlVbFl4KytwYURYcW5Va2FmY0p0bFR4T3VQSnlDYk1LWWRvNzQrWWdiTlBr?=
- =?utf-8?B?aUMvWm0rOVZDcnBsWWMwK2g0WS9UQ3VvRXlENXNGYWVKZXE0RnZkNVNUNjNV?=
- =?utf-8?B?VElVWFZjRU5ueXBQSVJxOWZReDhENW5NcWtrbXJMUExCcnR1MTZwODN4WUZj?=
- =?utf-8?B?Rnd3TEVmcldvMzJMdWwzSmRDMkNNSFhxQTRlQ1c1RGZzVmlQT3NMVXdVS3NC?=
- =?utf-8?B?cjVweTF3TUdIUmh5YU1BbmsyZzVaa0diQVZjajJkaWVtbFhLd3ZZNWtwd1Nt?=
- =?utf-8?B?UDREamFRb0laMUFIYWc5ZUd3VFRhSmIwMFhzQTQ0dVBRS0pNQTRzQ3g1U0dl?=
- =?utf-8?B?TndDV21ncEJmaFFseDFGNHBOS29PbFZVY3hMY2lzZk13MjRldnZLWmszUmU2?=
- =?utf-8?B?NWhJQkl5aHNmQUtEMVN0WnNHV1k3UkRvb09IZlkxVEZ3Vm52cWRIVU90U3pJ?=
- =?utf-8?B?TWZieFVZeVRFb2kyZEkxYXRaNGViV0hDQmx0M3dRbHRydnNZWnJaWTB4WlFp?=
- =?utf-8?B?R2h6c3RuaXRVOXFURUJETUtpRGxpN2t5TkphTXdsUFpNcVZIT2xwbEN0NmFI?=
- =?utf-8?B?SDVTdzlxYzhpWm0xL0NYSTdWUzRGWExpekhSQUtSS1BSdit5cE9PcldvSlVs?=
- =?utf-8?B?SjRRMUptM3I1cVVnMXRrRFluaEkxa2JQMXlMSFhLeWZPVW9TeDZ5SitMb21K?=
- =?utf-8?B?WUNRWGJiTXFqS2podG5HeDB2U3gvdFN0bzFONW5KVUtkZzFGZXViQ0dhOHYv?=
- =?utf-8?B?eTBZb3VzbmZzb0NMZXJnMlkxRTdDRlZkNkk2M2k2NFNiUEc5Z3l5U1pnaGl0?=
- =?utf-8?B?Q0kzdzI4S2wvZFN6REo3aWRqNjJpY1hVSmRkSnNVZnZWN1ZCMGhGSUhnVTBl?=
- =?utf-8?B?bFVHU1BSNFNRU3oyR2JlYy9MbHFEOUdNNHFqbTI1TWhYUU16aVRKcUdzUVdz?=
- =?utf-8?B?eUN6VStzbElTMHR3ME1xYTc5L0JnZHNBUXlMd0I1QlUycE5zZStvdTF5ajVp?=
- =?utf-8?B?bFBqMm8wYnpIK2UzVDdYZmZVbGV5TnhaczdmKzNGb0ZqNUgwdVlabHd2dHJn?=
- =?utf-8?B?MmVHbC9XR0QxbVVCTWd3TEdLY2xjZ2ZwZ2lYdjRkaC90NUViZ3dFRTIveDVC?=
- =?utf-8?B?NmpGNnpCYnM2a3krV0pnK2p1NU5rVDYzWEFxeVVrSFJKVFBUTHE5TzNwWExI?=
- =?utf-8?B?WGNucUVDd3pCYVh6c2YyM3RCMGhoL0pzTm5hdjRFTkhnd0U2SHZiZVNVS25a?=
- =?utf-8?B?b0llRlozSFE0VmNmQVRXREMyaFloaWJhb1pmQmNMUUVWK2NXczhBdUsrMi91?=
- =?utf-8?B?TVo3YlRmVk5zWHFNSnFnTVpQZ2xFKytzbUsxRnRPbUFjUnB5S29TdWhYOFBO?=
- =?utf-8?B?RUhvQ3dlbUNpV1B3WU9rOU1yc1JGaDJrV1NCMEU1VkJxUUlNejA3dnVsSHNE?=
- =?utf-8?B?SW5rN1VNUlFCOUc4ZTJEUFhzUS8vaTlLK3BCckVvL214dkZaUDhFSGpaN200?=
- =?utf-8?B?VVdhUVQ4Y3RzOFNtL2puR1U3NThBblJ0VWFUZU11NnVLSUE3aFdLK0pNYy9h?=
- =?utf-8?B?d1h2OG1Vc0RDWVNMNXRSbC9DNFVFSE5ralN5aDZOTmR4bDlRUWhVclhPU3NX?=
- =?utf-8?B?a05id0FicDFjN0VjZmY1eE53MHA0aGl1cjJrK3hGREI5Rk82U1dxeXNodjJO?=
- =?utf-8?B?Mk9QQ2t1Z0JZZG5NUnpjRWtuaGI3cFVLK2NIRWNqNzFnTEk4a3Q2aFJobXhY?=
- =?utf-8?B?Tm52ZlFSTWZBR2NZUnNuTHluZTFMMXVkQksxZlFsTTVRTkN6RDN2Qklqblln?=
- =?utf-8?B?VS82cU1EZzJ2SDNRaHJPT2puVm1NOWU2T3AyUVZmZWJtUGZkZExSRFY2V0RD?=
- =?utf-8?B?OXpnWEtpU2VldWNxSmdMVW9CcjBtNVV3eWRNalRZM0JtMmFoRTh5Q0xhUFUr?=
- =?utf-8?B?OHBlUnNXUG41bFR3RUQ0bTRqVVpwVmdrbVg1Q2pwcGNqT1ozOC9oUzFuZkNr?=
- =?utf-8?B?WWEvcDlISCtvZEtsa2I1U2V5OXFzc2ZhNkI0djVURnpObVJ6bEJobGMrQmxY?=
- =?utf-8?B?SzNvbTJmT2F4TUpHM1BHODVHZEo3SVZXdHEyNUhQMEh4WHZkWGdmTkVRVXB5?=
- =?utf-8?B?cnhPQ2RPc052TXlKWDFHZHdCK0VBZmROQXVPaUlPWlhPUXQ3SWdnYTM1QVBE?=
- =?utf-8?B?ZUZ1T3dEMDFFbmcrb1BESUdjYmMxRGhvaWppR2VlUVYvZHlLYmY1ZzBab0lh?=
- =?utf-8?B?c2NEQm4rTVpiVTFjVHoydVk4MXFLb2wwNTBUUUY0RmVEWFlhRUd4MTdIcW5T?=
- =?utf-8?B?WjlZNjZDVG81RnBEbW5mcCt4V09NMnFJbGFVWVVsV1RGT1NsY25BSFVWLy9C?=
- =?utf-8?Q?23kYTOUdpwegKMPc=3D?=
-X-Exchange-RoutingPolicyChecked: DSD/1joS++1zmMHcf2bSsPiOVEsfd2L4lS8qn9tZqCZLjqwcqD8cBsvHqMjfkyLkUPvUK0zzapxrEY+SoT06oWIp12UUGQEBl4VLYZwBjXlxHXLIRMA0vcvYtQ+tHwHGqL6TXv7Os9SICNv72kMDtWQgcIx0h92qqLpTqeSaY8TslOieYEH+wGQ9ERDgUmrEKcfI8AUJR3KpASHcG63cZ7ge471lULBhj09/aOZ18abWT/vxXhIvIOFtT5wrhs5ap45Fo2BewkMcanqG318joa9c7lBdhie/atldOwnhP/b34qw1943lV/3Dv54cXVUzzlB7e15g2w3cp9YVl7HDlw==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?axJQGVMG2PfVzoSzBRZz7hPK2i6gggVfYKlnhOwGpWbxCmhwSxz34dvFmOZg?=
+ =?us-ascii?Q?sbLFQp/TGtxe/Cj1PL9MWGXzrVisovu3FDJ/WkiJr77lKuZIcSXC3nUj+Cs+?=
+ =?us-ascii?Q?m1Cih4YNya4R0JVqqmDMIfeDGsFXR1NpfClqCb4bnTYAwe1DtvvchA8FeQwJ?=
+ =?us-ascii?Q?tRULfPMqtyfWdCO1osrfE4iJnaAkQu3cxIo8J0HhkK/TzI9frscIJfiGUMES?=
+ =?us-ascii?Q?Z3T61LDOik2Willt+BHtVUyq85x3fYfipPtQrzmjtJ+NdIwFvHWPgA9Gm0Y8?=
+ =?us-ascii?Q?2bhsBIRuLnvGz9C7drhb+VEQlAkxaKanqfBe2lHOfmmEVtedt3HYIgF4Dliv?=
+ =?us-ascii?Q?On47FCRA/R1GaDsdP+oWgEiLK5YBtjWfBc041szw0QzYhHviOqmiK8YOJsGU?=
+ =?us-ascii?Q?rdwVpUaCDGTwFcraRcq4dyavgxQE3ag2Ox/gWvaFfjr7cvDPhcE+TVBXpSK1?=
+ =?us-ascii?Q?DLCPbmiOlICHS6hsw9y5bC0fWxLCz9I2IgnQdO/4Te4KGPsaELXBit7oHetv?=
+ =?us-ascii?Q?kAksQcaKZ17JyhVvKpzxC+0lPUjvuLXeZ1YDCpBvVl7WByCqWD6rOE0Y8ybi?=
+ =?us-ascii?Q?COGxhSb0YKFEXlVCFmlZ//5d6CxEDmvvG/+/G8QK5kBrc5Gub5haXH3vw6IW?=
+ =?us-ascii?Q?dU1quwN7QvVvyDs++9vytjRS11h61X4DMbK4GhI06msQg680hdStnADiijaS?=
+ =?us-ascii?Q?vld0lC51yZyycxmzz1l38S+QH4nxTTquBgHcH8BI/59Sn6ixJyPvjCwh0+nJ?=
+ =?us-ascii?Q?N8Zq+BNykcB0sKO0YbOP10oWmcAenvwzJEoyfXXS1WLRj5BdsxjsCy42cDIE?=
+ =?us-ascii?Q?YO/QwwBTIOHLXlcXdtb71rxzmvj+G5nw84Q3il2/EAB0E1QuNR08thgKbGgY?=
+ =?us-ascii?Q?IlPs2e/XU8ZRz0fRdUu3A8fztrQKemxaSdA398ptFBEgqP9ic6p9zKs/9sbL?=
+ =?us-ascii?Q?tisumk9MDqAMsEab1ohpvB60QLt+CABj9XTuVkWPwD1tnU3JXKAssA7iFl7w?=
+ =?us-ascii?Q?YH5tBXotvlslBADswLcdMpVkcVCSplOF7s8HFG1rBOaF+Qg/i9Pudq3o7wO4?=
+ =?us-ascii?Q?g1Oc0Le0QI3QbI6+ri5Itcb2Pz614+tSTM/SHOdrn5ccyJp2WZZvDyzPqc/P?=
+ =?us-ascii?Q?L+uOp+qdxkml6ocF4DHtQA136upScaLDlmIf9FwOYbUnDfCleh/g7c4LwwYw?=
+ =?us-ascii?Q?6DnYWuarSqdPibf++joORbBWHH+tBEkK17amIhs1S43as9OKm7qiuxHVYupU?=
+ =?us-ascii?Q?Rt6EIhaF5CC2P8ItUC5CFM2mW3Nr1di2qLRg064+EULIfe5az32pEVXnP4IA?=
+ =?us-ascii?Q?yhWzVINpIe0uVrfnKmfwmAVM8ZeILLyhbuOQL41P0V0+P8ekQh/D7lQn5+u4?=
+ =?us-ascii?Q?1vMpFFvbN3i3Qryj8VSUgOa2qnUxiiCnEptF2pM1Vz1TS0x3prOx0xBr1hze?=
+ =?us-ascii?Q?tjtQV1IGRT+9W1jtXO2n1lDi6d/WKESNdB0QuFw/JAjXPitmfdkF9Et6e8Ry?=
+ =?us-ascii?Q?TwR8+kuysWuNOa1BgTaSsY5g3fPzjvVCtRd1klGOOi0wmT3jVEOk6UmztiQp?=
+ =?us-ascii?Q?2/AT6/GRGs5xfGTJKX1Dv4d5KiloZQz5bdYuLO+vjiF4NyUil15bLs8mfmXw?=
+ =?us-ascii?Q?QOV9sCdH8jdWqX8UqZr14+yv1knP57bNDyHaA/y+WyxLMih17t8rkNkE6WYb?=
+ =?us-ascii?Q?WM///8GUGYlKy1RA/oj/W/52K5QOUekswlONHtO38qXtNihmODwi9DuoOb7P?=
+ =?us-ascii?Q?rg/Z24T20J6gBDEIPT2FmGW5C1e09/0=3D?=
+X-Exchange-RoutingPolicyChecked: FdRw0bJQGI1RQtG0y6yDTYGWdxggMZoB7l1LJuBFDmHyzjm1Kbds6hZA+2eRIceCRrBGNckwhJs8pobNyIJZRhAIpADy6CrzQF3KbMxxpsbRdrjmfYBUU6JX68KlkLk9O94w6rltuplopS54rlgzGoCcyhkt9xlEbH6GIkhGUpoFveObhHeTQTGaZXvJAnUXiu5NWVOpvOgjwQTo8GyCQ4c9iLLUlHdcloXRB/HIUJBPPXkD6jqrjGF5T2WQkU296lV+pL8o24ChCTFmTvBZXQ/3asIvinvo2yfuu4pV6icbJak4IPyJ7jyRs7bYFAdwF5l/AR6IZKpyUEzVfeAo5w==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fbd4991-fba9-4059-e50a-08df09006ac0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 60b75c49-3e34-4910-66d9-08df090063a1
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 14:42:30.6559 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 14:42:18.8628 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bX0N7ztWQCHescSQWxqZukybQzvgJPNv59HtXXXoXRaRWyKDElyh6uV3oBCzqJfKG4LvisYRf7B0EydFBVKZH/zNb5OILeSTW8uS6ivbDG0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6978
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEzMCBTYWx0ZWRfX8S6JhMT6JNJ/
- VJXZP9FPTI0HqFyZKJiEpiWbrw+YAwPV3CqeB7HfYjzg3Dvf8D7WvaZK/S1gbsV34UQjLb+12U5
- iKmCt//KkQQY4XQmcVCGm3znMYTmCwI=
-X-Authority-Analysis: v=2.4 cv=JZuMa0KV c=1 sm=1 tr=0 ts=6a9835d8 cx=c_pps
- a=MceEdFpa07MrPAxPau0EtA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: FINoQy2UCGunAn2lwsiEYsCzt48OlxYyQbceY4ZnZKiP4BoZY8FWB/mhOxrXTP+kEyjsTAiFfE+yUewIjixiW+BEnpM6twkT6MciVM0ssas=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CHXPR02MB11331
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEzMCBTYWx0ZWRfX6vpCIeo9qPL/
+ Yn+nwArB7csvkhy737c9gBqgP4tUtlpxm2UWJbFxqU8Xr2DES3SvrQKOyfpfoWgZ/tPEnwSLEeb
+ vpKQZBo1VXmF1Lj2YH58NPsqlfdAiaQ=
+X-Authority-Analysis: v=2.4 cv=JZuMa0KV c=1 sm=1 tr=0 ts=6a9835cc cx=c_pps
+ a=UUmGjFhUr3uPr7k6e03iKg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
+ a=xqWC_Br6kY4A:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
- a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=DDMMZ6NTPqBClWpVUZEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Kt0FcYlphsP_4YpujNhA18BBUiOex_J_
-X-Proofpoint-ORIG-GUID: Kt0FcYlphsP_4YpujNhA18BBUiOex_J_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEzMCBTYWx0ZWRfXzGrCzsJKyB8u
- 1sAeaf3wAVt2JZJ9mMy8k5ErtZ5gOBCHau6Olb8DbGK4Y0NMMlfvtAaeIZRRHX8byw3DdBDCqzD
- R/e6of504KLdi5RqLxZRNjGEoyVP9xx5QdN8IHLyvUyEHWs490tlDgOO6AXvZybnGEg9JoRd/UC
- YKnDkTUdyNVG36H7FJLyqTAWfggXcqdfOBgfhf3Q/KqAygD3axfbWgLClxqfc1PVBfNJHNk5Mef
- XlwL4cbf/D1dUhsCeaNYlqmgKzybcDZIsRpFE1UjGkR4r9am6eB0EgelI2jow/iHk0mmz1jOZGC
- vBJPsc048HMaCzZe61tK0noiefOuSM5G+zhOeYVp/4LZaYWr/Gn2UNiAs4UPSHVJH2O+qnbtBv+
- gBIrslD289fVbOX2bSMuJe29bvG4giXOBXiCwlKbfE2aJoNU2azI7H5AHmuxkIANGpT6znHKNH0
- YCL9fHQxSqihcCIFbBw==
+ a=64Cc0HZtAAAA:8 a=5qpsIK_AQi6EPHI5KBEA:9
+X-Proofpoint-GUID: XjrXC-vFNBxkFDbzeqGvmae_xYvhGCLS
+X-Proofpoint-ORIG-GUID: XjrXC-vFNBxkFDbzeqGvmae_xYvhGCLS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEzMCBTYWx0ZWRfX7uD0SDOTlDJ1
+ IRq3yPZ6HHRTEFkTkkYpoF1Tk9jfGa63cnWUxmzw/MYwQ2+vsuPosxa/7zs/oTefCCGJe5Q8cq0
+ mtxf6BpvCgWKjOxNqMslirX9JEiLLiJYUvVB0owTu8N6NPPe39UEzfZDE8mvkajKpTijYLVaMzE
+ iJdcG/bKSomDckFskmjzRhpMudWbqMaUkzJFY6EojxDDG+rsPlpYFNppEM7mKpI+qEcxMeLoYl6
+ oOEKGRJmjAUlMlUmHogac5truMN1AIiqYLNHKReeOfjPdeiJSR/CKif0DfxHUxVZowyQMNjqeOe
+ JuNqt/sDqOLPN49bDnwHPLCALxXaOJIRzTIN0PvoQ2ThewNdhZorkvjjLfv/OlWE8/15ikWUrTU
+ CwH/VHwWLe0vkOewv27zVoJneAPtQB59JKs7WW13XYF+itirdeq3UaI2b3pJLrlKuqBqVH7eT1h
+ KE+oirXTkfl8Br6JGSg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-02_03,2026-09-01_03,2025-10-01_01
@@ -192,51 +181,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/hw/i386/pc.h | 1 +
- hw/i386/pc.c         | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+This is eventually intended to be a replacement for object_property_add_alias()
+which uses an object property instead of a class property.
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index bd800e7ff0..0b925ccd8f 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -39,6 +39,7 @@ typedef struct PCMachineState {
-     BusState *idebus[MAX_IDE_BUS];
+With the advent of class properties, it is possible that QOM may attempt to
+set or retrieve the value of an unset alias property. Update the existing
+property_get_alias() and property_set_alias() functions to use the null visitor
+if the alias target has not been set, and property_resolve_alias() to return
+NULL for the same case.
+
+This ensures that unset class alias properties accessed e.g. via the monitor do
+not cause QEMU to crash.
+
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+---
+ include/qom/object.h |  25 +++++++++++
+ qom/object.c         | 100 +++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 113 insertions(+), 12 deletions(-)
+
+diff --git a/include/qom/object.h b/include/qom/object.h
+index e24f0a2b2d..96c76975ef 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -2263,6 +2263,11 @@ ObjectProperty *object_class_static_property_add_uint64_ptr(ObjectClass *klass,
+                                           const uint64_t *v,
+                                           ObjectPropertyFlags flags);
  
-     Object *alias_pcspk;
-+    Object *alias_rtc_time;
++typedef enum {
++    /* private */
++    OBJ_PROP_ALIAS_CLASS = 0x1,
++} ObjectPropertyAliasFlags;
++
+ /**
+  * object_property_add_alias:
+  * @obj: the object to add a property to
+@@ -2283,6 +2288,26 @@ ObjectProperty *object_class_static_property_add_uint64_ptr(ObjectClass *klass,
+ ObjectProperty *object_property_add_alias(Object *obj, const char *name,
+                                Object *target_obj, const char *target_name);
  
-     /* Configuration options: */
-     uint64_t max_ram_below_4g;
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 5293c59d66..f8969ddebc 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1097,8 +1097,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-         qdev_connect_gpio_out(DEVICE(rtc_state), 0, rtc_irq);
-     }
- 
--    object_property_add_alias(OBJECT(pcms), "rtc-time", OBJECT(rtc_state),
--                              "date");
-+    object_property_set_alias(OBJECT(pcms), "rtc-time", OBJECT(rtc_state));
- 
- #ifdef CONFIG_XEN_EMU
-     if (xen_mode == XEN_EMULATE) {
-@@ -1792,6 +1791,10 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-                                     offsetof(PCMachineState, alias_pcspk),
-                                     TYPE_PC_SPEAKER,
-                                     "audiodev");
-+    object_class_property_add_alias(oc, "rtc-time",
-+                                    offsetof(PCMachineState, alias_rtc_time),
-+                                    TYPE_MC146818_RTC,
-+                                    "date");
++/**
++ * object_class_property_add_alias:
++ * @klass: the object class to add a property to
++ * @name: the name of the property
++ * @offset: the offset from the object instance where the object alias is
++ *   stored
++ * @target_type: QOM type we expect the alias to resolve to
++ * @target_name: the name of the property on the forwarded object
++ *
++ * Add an alias for a property on an object.  This function will add a property
++ * of the same type as the forwarded property.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *
++object_class_property_add_alias(ObjectClass *klass, const char *name,
++                                ptrdiff_t offset,
++                                const char *target_type,
++                                const char *target_name);
++
+ /**
+  * object_property_add_const_link:
+  * @obj: the object to add a property to
+diff --git a/qom/object.c b/qom/object.c
+index a904f53ed6..9a05e189ea 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -34,6 +34,7 @@
+ #include "qom/qom-qobject.h"
+ #include "qobject/qbool.h"
+ #include "qobject/qlist.h"
++#include "qobject/qnull.h"
+ #include "qobject/qnum.h"
+ #include "qobject/qstring.h"
+ #include "qemu/error-report.h"
+@@ -3039,14 +3040,22 @@ object_class_static_property_add_uint64_ptr(ObjectClass *klass,
  }
  
- static const TypeInfo pc_machine_info = {
+ typedef struct {
+-    Object *target_obj;
++    union {
++        Object *target_obj; /* if !OBJ_PROP_ALIAS_CLASS */
++        ptrdiff_t offset;   /* if OBJ_PROP_ALIAS_CLASS */
++    };
+     char *target_name;
++    ObjectPropertyAliasFlags flags;
+ } AliasProperty;
+ 
+ static Object **
+-object_alias_get_targetp(Object *obj, AliasProperty *lprop)
++object_alias_get_targetp(Object *obj, AliasProperty *aprop)
+ {
+-    return &lprop->target_obj;
++    if (aprop->flags & OBJ_PROP_ALIAS_CLASS) {
++        return (void *)obj + aprop->offset;
++    } else {
++        return &aprop->target_obj;
++    }
+ }
+ 
+ static void property_get_alias(Object *obj, Visitor *v, const char *name,
+@@ -3054,10 +3063,18 @@ static void property_get_alias(Object *obj, Visitor *v, const char *name,
+ {
+     AliasProperty *prop = opaque;
+     Object **target_obj = object_alias_get_targetp(obj, prop);
+-    Visitor *alias_v = visitor_forward_field(v, prop->target_name, name);
+ 
+-    object_property_get(*target_obj, prop->target_name, alias_v, errp);
+-    visit_free(alias_v);
++    if (*target_obj) {
++        Visitor *alias_v = visitor_forward_field(v, prop->target_name, name);
++
++        object_property_get(*target_obj, prop->target_name, alias_v, errp);
++        visit_free(alias_v);
++    } else {
++        QNull *null = NULL;
++
++        visit_type_null(v, NULL, &null, errp);
++        qnull_unref(null);
++    };
+ }
+ 
+ static void property_set_alias(Object *obj, Visitor *v, const char *name,
+@@ -3065,10 +3082,18 @@ static void property_set_alias(Object *obj, Visitor *v, const char *name,
+ {
+     AliasProperty *prop = opaque;
+     Object **target_obj = object_alias_get_targetp(obj, prop);
+-    Visitor *alias_v = visitor_forward_field(v, prop->target_name, name);
+ 
+-    object_property_set(*target_obj, prop->target_name, alias_v, errp);
+-    visit_free(alias_v);
++    if (*target_obj) {
++        Visitor *alias_v = visitor_forward_field(v, prop->target_name, name);
++
++        object_property_set(*target_obj, prop->target_name, alias_v, errp);
++        visit_free(alias_v);
++    } else {
++        QNull *null = NULL;
++
++        visit_type_null(v, NULL, &null, errp);
++        qnull_unref(null);
++    }
+ }
+ 
+ static Object *property_resolve_alias(Object *obj, void *opaque,
+@@ -3077,15 +3102,21 @@ static Object *property_resolve_alias(Object *obj, void *opaque,
+     AliasProperty *prop = opaque;
+     Object **target_obj = object_alias_get_targetp(obj, prop);
+ 
+-    return object_resolve_path_component(*target_obj, prop->target_name);
++    if (*target_obj) {
++        return object_resolve_path_component(*target_obj, prop->target_name);
++    } else {
++        return NULL;
++    }
+ }
+ 
+ static void property_release_alias(Object *obj, const char *name, void *opaque)
+ {
+     AliasProperty *prop = opaque;
+ 
+-    g_free(prop->target_name);
+-    g_free(prop);
++    if (!(prop->flags & OBJ_PROP_ALIAS_CLASS)) {
++        g_free(prop->target_name);
++        g_free(prop);
++    }
+ }
+ 
+ ObjectProperty *
+@@ -3110,6 +3141,7 @@ object_property_add_alias(Object *obj, const char *name,
+     prop = g_malloc(sizeof(*prop));
+     prop->target_obj = target_obj;
+     prop->target_name = g_strdup(target_name);
++    prop->flags = 0;
+ 
+     op = object_property_add(obj, name, prop_type,
+                              property_get_alias,
+@@ -3126,6 +3158,50 @@ object_property_add_alias(Object *obj, const char *name,
+     return op;
+ }
+ 
++ObjectProperty *
++object_class_property_add_alias(ObjectClass *klass, const char *name,
++                                ptrdiff_t offset,
++                                const char *target_type,
++                                const char *target_name)
++{
++    AliasProperty *prop;
++    ObjectProperty *op;
++    ObjectProperty *target_prop;
++    ObjectClass *target_class;
++    g_autofree char *prop_type = NULL;
++
++    target_class = object_class_by_name(target_type);
++    assert(target_class);
++    target_prop = object_class_property_find(target_class, target_name);
++    assert(target_prop);
++
++    if (object_property_is_child(target_prop)) {
++        prop_type = g_strdup_printf("link%s",
++                                    target_prop->type + strlen("child"));
++    } else {
++        prop_type = g_strdup(target_prop->type);
++    }
++
++    prop = g_malloc(sizeof(*prop));
++    prop->offset = offset;
++    prop->target_name = g_strdup(target_name);
++    prop->flags = OBJ_PROP_ALIAS_CLASS;
++
++    op = object_class_property_add(klass, name, prop_type,
++                                   property_get_alias,
++                                   property_set_alias,
++                                   property_release_alias,
++                                   prop);
++    op->resolve = property_resolve_alias;
++    if (target_prop->defval) {
++        op->defval = qobject_ref(target_prop->defval);
++    }
++
++    object_class_property_set_description(klass, op->name,
++                                          target_prop->description);
++    return op;
++}
++
+ void object_property_set_description(Object *obj, const char *name,
+                                      const char *description)
+ {
 -- 
 2.43.0
 
