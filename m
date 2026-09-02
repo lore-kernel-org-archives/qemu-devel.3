@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7CDC61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 22:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF86C624DB
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 22:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1tG4-0000yI-Tw; Wed, 02 Sep 2026 18:16:40 -0400
+	id 1x1tFr-0000tS-DF; Wed, 02 Sep 2026 18:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x1tG3-0000y4-GQ
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 18:16:39 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x1tFp-0000sv-Ly
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 18:16:25 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x1tG0-0002PE-IR
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 18:16:38 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x1tFo-0002N9-4N
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 18:16:25 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 19CFB21B2F;
- Wed,  2 Sep 2026 22:16:27 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6270F1FA9A;
+ Wed,  2 Sep 2026 22:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788387391; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788387378; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FFhddMlOkM/E6coKvNvUjF3rxjo+YGrjoamLfMNjAvc=;
- b=kpeCXohRbjlNmGofFf/pi9SC1dJgzIYa+RmJKVX6hM4P5pKXDdzFk4XTju8MqPUWGNchmM
- lY4JMCVGAiADemZLMX9/w8vyvBvhK39BUNBnECL/8cpbgn54s+VPT6etThpp8DCT+MEzkr
- LB2C/S+DtdIQiII8l5fGh3fTIxOoQus=
+ bh=X3OytNN0qIsfTEtxTlsxiaPkakfwsHemkEXqKysUj5M=;
+ b=kAVWVdeX06OsCBg7ULhK7K397IvP361FUoWPIaRMuaH+602BHtHwMtqTdNiy45nnlM3fau
+ FioHkyxXlBwFDHvsoKUeK5Rhy7bcqRXf0s8QYPu1jEDpOsdepiZUfLniWe/dJaW0R5Js+Q
+ Pabfaiv/qEfm6mDpc/t17IajnSqnHXM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788387391;
+ s=susede2_ed25519; t=1788387378;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FFhddMlOkM/E6coKvNvUjF3rxjo+YGrjoamLfMNjAvc=;
- b=h6wUHspsCODauM6BnRE4QYZuz5mR2UELXWEII2Evq+Ux3Lc+na547zp6epPhd6GjeSWFTC
- oGZWiRlLSlknrLAg==
-Authentication-Results: smtp-out1.suse.de;
+ bh=X3OytNN0qIsfTEtxTlsxiaPkakfwsHemkEXqKysUj5M=;
+ b=2sADHfe4iRBHl02sLhzPx/A8b0Engnm7eafs4WYzeMorOMzgRYBO77zAP83Me6Rj/7exsE
+ ck9fB8GSX8srAeAQ==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788387387; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788387374; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FFhddMlOkM/E6coKvNvUjF3rxjo+YGrjoamLfMNjAvc=;
- b=lmomWaf4KRehtOBIREXP8s6xIpocugAFGxIZUtz5vlYxAyjV6LUOXQ9f65vR01BoebBytS
- jiYAPZgWE5i9ngdCiRM47OyfifgpO74ZvN/DWU0WR7VHF3d7ZEOMtYQkbiziKNKt2NscV+
- wNb25NqbAM8MI/3+nZwCfCgg3gZmE4g=
+ bh=X3OytNN0qIsfTEtxTlsxiaPkakfwsHemkEXqKysUj5M=;
+ b=Ss7Rx8IhVapVNNjdzhPpDNIsgj+WCMIPnNcWVe2gBP7zevgIdVz4DGOzNxHpbpDtRHUmUs
+ eAJ4BKschRp1iPzI3ouxZOonIW/e/6QRLFkRmt7zmlf4CgqvxdTIZmZ4cIXus584q2naZO
+ rGlDkX2ZoifCEaKMYDYocFbn6oMURmo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788387387;
+ s=susede2_ed25519; t=1788387374;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FFhddMlOkM/E6coKvNvUjF3rxjo+YGrjoamLfMNjAvc=;
- b=KzMmdGMUSN1dpVei6C7GBTFPGVI/qH91iNPoZfisnRim64jjleUembg09vuwKzsiu7Honj
- mnlbRHqW/t3amfCw==
+ bh=X3OytNN0qIsfTEtxTlsxiaPkakfwsHemkEXqKysUj5M=;
+ b=JsGd6vUoRaiIFpCrYynsgtv9nETwBk2kN1IbSnlmnQ/t9enWa9lrJKY7yUVL6IYVzkchmC
+ cSPXoMfP4HRGYJBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D590213736;
- Wed,  2 Sep 2026 22:16:25 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3B7C513918;
+ Wed,  2 Sep 2026 22:16:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MPcYKTmgmGpxXwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 02 Sep 2026 22:16:25 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WKN+AyygmGpxXwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 02 Sep 2026 22:16:12 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 16/18] migration: Add capabilities into MigrationParameters
-Date: Wed,  2 Sep 2026 19:15:44 -0300
-Message-ID: <20260902221547.1812481-17-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Prasad Pandit <ppandit@redhat.com>
+Subject: [PATCH 06/18] migration: Open code migrate_params_apply
+Date: Wed,  2 Sep 2026 19:15:34 -0300
+Message-ID: <20260902221547.1812481-7-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260902221547.1812481-1-farosas@suse.de>
 References: <20260902221547.1812481-1-farosas@suse.de>
@@ -89,14 +89,12 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,358 +117,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add capabilities to MigrationParameters. This structure will hold all
-migration options. Capabilities will go away in the next patch.
+Remove migrate_params_apply so the logic of setting migration
+parameters is all in one spot.
 
-From this point on, both QMP and HMP versions of
-migrate-set-parameters and query-migrate-parameters gain the ability
-to work with capabilities.
-
-With MigrationParameters now having members for each capability, the
-migration capabilities commands (query-migrate-capabilities,
-migrate-set-capabilities) will soon be deprecated. Add a set of
-helpers to convert between the old MigrationCapability representation
-and the new representation as members of MigrationParameters.
-
-Acked-by: Peter Xu <peterx@redhat.com>
+Suggested-by: Prasad Pandit <ppandit@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c |   8 +++
- migration/options.c   | 127 ++++++++++++++++++++++++++++++++++++++++++
- migration/options.h   |   5 ++
- qapi/migration.json   | 118 ++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 255 insertions(+), 3 deletions(-)
+ migration/options.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index dab282dd2f3..c8e7e86ea05 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -4086,6 +4086,14 @@ static bool migration_object_check(MigrationState *ms, Error **errp)
-         return false;
-     }
- 
-+    /*
-+     * FIXME: Temporarily while -global capabilties are still using
-+     * s->capabilities. Will be gone by the end of the series.
-+     */
-+    for (int i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
-+        migrate_capability_set_compat(&ms->parameters, i, ms->capabilities[i]);
-+    }
-+
-     return migrate_caps_check(old_caps, ms->capabilities, errp);
- }
- 
 diff --git a/migration/options.c b/migration/options.c
-index f988b181f0e..7c638e204a1 100644
+index de091d2eee3..f7c154079bd 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -778,6 +778,108 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+@@ -1386,21 +1386,6 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
      return true;
  }
  
-+static bool *migrate_capability_get_addr(MigrationParameters *params, int i)
-+{
-+    bool *cap_addr = NULL;
-+
-+    switch (i) {
-+    case MIGRATION_CAPABILITY_XBZRLE:
-+        cap_addr = &params->xbzrle;
-+        break;
-+    case MIGRATION_CAPABILITY_RDMA_PIN_ALL:
-+        cap_addr = &params->rdma_pin_all;
-+        break;
-+    case MIGRATION_CAPABILITY_AUTO_CONVERGE:
-+        cap_addr = &params->auto_converge;
-+        break;
-+    case MIGRATION_CAPABILITY_EVENTS:
-+        cap_addr = &params->events;
-+        break;
-+    case MIGRATION_CAPABILITY_POSTCOPY_RAM:
-+        cap_addr = &params->postcopy_ram;
-+        break;
-+    case MIGRATION_CAPABILITY_X_COLO:
-+        cap_addr = &params->x_colo;
-+        break;
-+    case MIGRATION_CAPABILITY_RELEASE_RAM:
-+        cap_addr = &params->release_ram;
-+        break;
-+    case MIGRATION_CAPABILITY_RETURN_PATH:
-+        cap_addr = &params->return_path;
-+        break;
-+    case MIGRATION_CAPABILITY_PAUSE_BEFORE_SWITCHOVER:
-+        cap_addr = &params->pause_before_switchover;
-+        break;
-+    case MIGRATION_CAPABILITY_MULTIFD:
-+        cap_addr = &params->multifd;
-+        break;
-+    case MIGRATION_CAPABILITY_DIRTY_BITMAPS:
-+        cap_addr = &params->dirty_bitmaps;
-+        break;
-+    case MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME:
-+        cap_addr = &params->postcopy_blocktime;
-+        break;
-+    case MIGRATION_CAPABILITY_LATE_BLOCK_ACTIVATE:
-+        cap_addr = &params->late_block_activate;
-+        break;
-+    case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
-+        cap_addr = &params->x_ignore_shared;
-+        break;
-+    case MIGRATION_CAPABILITY_VALIDATE_UUID:
-+        cap_addr = &params->validate_uuid;
-+        break;
-+    case MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT:
-+        cap_addr = &params->background_snapshot;
-+        break;
-+    case MIGRATION_CAPABILITY_ZERO_COPY_SEND:
-+        cap_addr = &params->zero_copy_send;
-+        break;
-+    case MIGRATION_CAPABILITY_POSTCOPY_PREEMPT:
-+        cap_addr = &params->postcopy_preempt;
-+        break;
-+    case MIGRATION_CAPABILITY_SWITCHOVER_ACK:
-+        cap_addr = &params->switchover_ack;
-+        break;
-+    case MIGRATION_CAPABILITY_DIRTY_LIMIT:
-+        cap_addr = &params->dirty_limit;
-+        break;
-+    case MIGRATION_CAPABILITY_MAPPED_RAM:
-+        cap_addr = &params->mapped_ram;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    return cap_addr;
-+}
-+
-+/* Compatibility for code that reads capabilities in a loop */
-+bool migrate_capability_get_compat(MigrationParameters *params, int i)
-+{
-+    return *(migrate_capability_get_addr(params, i));
-+}
-+
-+/* Compatibility for code that writes capabilities in a loop */
-+void migrate_capability_set_compat(MigrationParameters *params, int i, bool val)
-+{
-+    *(migrate_capability_get_addr(params, i)) = val;
-+}
-+
-+/*
-+ * Set capabilities for compatibility with the old
-+ * migrate-set-capabilities command.
-+ */
-+void migrate_capabilities_set_compat(MigrationParameters *params,
-+                                     MigrationCapabilityStatusList *caps)
-+{
-+    MigrationCapabilityStatusList *cap;
-+
-+    for (cap = caps; cap; cap = cap->next) {
-+        migrate_capability_set_compat(params, cap->value->capability,
-+                                      cap->value->state);
-+    }
-+}
-+
- MigrationCapabilityStatusList *qmp_query_migrate_capabilities(Error **errp)
+-/*
+- * Caller must ensure the has_* fields of @params are true so they all
+- * get copied and the pointer members don't dangle.
+- */
+-static void migrate_params_apply(MigrationParameters *params)
+-{
+-    MigrationState *s = migrate_get_current();
+-    MigrationParameters *cur = &s->parameters;
+-
+-    migrate_tls_opts_free(cur);
+-    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
+-    qapi_free_strList(cur->cpr_exec_command);
+-    QAPI_CLONE_MEMBERS(MigrationParameters, cur, params);
+-}
+-
+ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
  {
-     MigrationCapabilityStatusList *head = NULL, **tail = &head;
-@@ -819,6 +921,8 @@ void qmp_migrate_set_capabilities(MigrationCapabilityStatusList *params,
-     for (cap = params; cap; cap = cap->next) {
-         s->capabilities[cap->value->capability] = cap->value->state;
+     MigrationParameters *cur = &migrate_get_current()->parameters;
+@@ -1423,8 +1408,15 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
+         return;
+     }
+ 
+-    if (migrate_params_check(new, errp)) {
+-        migrate_params_apply(new);
+-        migrate_post_update_params(input, errp);
++    if (!migrate_params_check(new, errp)) {
++        return;
      }
 +
-+    migrate_capabilities_set_compat(&s->parameters, params);
- }
- 
- /* parameters */
-@@ -1141,6 +1245,15 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
-         &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-+        &p->has_xbzrle, &p->has_rdma_pin_all,
-+        &p->has_auto_converge, &p->has_events,
-+        &p->has_postcopy_ram, &p->has_x_colo, &p->has_release_ram,
-+        &p->has_return_path, &p->has_pause_before_switchover, &p->has_multifd,
-+        &p->has_dirty_bitmaps, &p->has_postcopy_blocktime,
-+        &p->has_late_block_activate, &p->has_x_ignore_shared,
-+        &p->has_validate_uuid, &p->has_background_snapshot,
-+        &p->has_zero_copy_send, &p->has_postcopy_preempt,
-+        &p->has_switchover_ack, &p->has_dirty_limit, &p->has_mapped_ram,
-     };
- 
-     for (int i = 0; i < ARRAY_SIZE(has_fields); i++) {
-@@ -1465,6 +1578,20 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
-     tls_opt_to_str(input->tls_hostname);
-     tls_opt_to_str(input->tls_authz);
- 
-+    /*
-+     * FIXME: Temporarily while migrate_caps_check is not
-+     * converted to look at s->parameters. Will be gone the end of
-+     * the series.
-+     */
-+    bool new_caps[MIGRATION_CAPABILITY__MAX] = { 0 };
-+    for (int i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
-+        new_caps[i] = migrate_capability_get_compat(cur, i);
-+    }
-+    if (!migrate_caps_check(migrate_get_current()->capabilities, new_caps,
-+                            errp)) {
-+        return;
-+    }
++    migrate_tls_opts_free(cur);
++    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
++    qapi_free_strList(cur->cpr_exec_command);
 +
-     /* merge input on top of current */
-     if (!migrate_params_merge(cur, input, &new, errp)) {
-         return;
-diff --git a/migration/options.h b/migration/options.h
-index c7da2d0b5b0..eedd1aa1f93 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -94,4 +94,9 @@ uint64_t migrate_rdma_chunk_size(void);
- bool migrate_params_check(MigrationParameters *params, Error **errp);
- void migrate_params_init(MigrationParameters *params);
- bool migrate_params_free(MigrationParameters *params, Error **errp);
-+bool migrate_capability_get_compat(MigrationParameters *params, int i);
-+void migrate_capability_set_compat(MigrationParameters *params, int i,
-+                                   bool val);
-+void migrate_capabilities_set_compat(MigrationParameters *params,
-+                                     MigrationCapabilityStatusList *caps);
- #endif
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 78c6e933cf1..7952ef44db9 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -976,10 +976,101 @@
- #     Must be set to the same value on both source and destination
- #     before migration starts.  (Since 11.1)
- #
-+# @xbzrle: Migration supports xbzrle (Xor Based Zero Run Length
-+#     Encoding).  This feature allows us to minimize migration traffic
-+#     for certain work loads, by sending compressed difference of the
-+#     pages
-+#
-+# @rdma-pin-all: Controls whether or not the entire VM memory
-+#     footprint is mlock()'d on demand or all at once.  Refer to
-+#     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
-+#
-+# @events: Generate events for each migration state change.
-+#     (since 2.4)
-+#
-+# @auto-converge: If enabled, QEMU will automatically throttle down
-+#     the guest to speed up convergence of RAM migration.  (since 1.6)
-+#
-+# @postcopy-ram: Start executing on the migration target before all of
-+#     RAM has been migrated, pulling the remaining pages along as
-+#     needed.  The capacity must have the same setting on both source
-+#     and target or migration will not even start.  **Note:** If the
-+#     migration fails during postcopy the VM will fail.  (since 2.6)
-+#
-+# @x-colo: If enabled, migration will never end, and the state of the
-+#     VM on the primary side will be migrated continuously to the VM
-+#     on secondary side, this process is called COarse-Grain LOck
-+#     Stepping (COLO) for Non-stop Service.  (since 2.8)
-+#
-+# @release-ram: If enabled, QEMU will free the migrated ram pages on
-+#     the source during postcopy-ram migration.  (since 2.9)
-+#
-+# @return-path: If enabled, migration will use the return path even
-+#     for precopy.  (since 2.10)
-+#
-+# @pause-before-switchover: Pause outgoing migration before
-+#     serialising device state and before disabling block IO.
-+#     (since 2.11)
-+#
-+# @multifd: Use more than one fd for migration.  (since 4.0)
-+#
-+# @dirty-bitmaps: If enabled, QEMU will migrate named dirty bitmaps.
-+#     (since 2.12)
-+#
-+# @postcopy-blocktime: Calculate downtime for postcopy live migration.
-+#     (since 3.0)
-+#
-+# @late-block-activate: If enabled, the destination will not activate
-+#     block devices (and thus take locks) immediately at the end of
-+#     migration.  (since 3.0)
-+#
-+# @x-ignore-shared: If enabled, QEMU will not migrate shared memory
-+#     that is accessible on the destination machine.  (since 4.0)
-+#
-+# @validate-uuid: Send the UUID of the source to allow the destination
-+#     to ensure it is the same.  (since 4.2)
-+#
-+# @background-snapshot: If enabled, the migration stream will be a
-+#     snapshot of the VM exactly at the point when the migration
-+#     procedure starts.  The VM RAM is saved with running VM.
-+#     (since 6.0)
-+#
-+# @zero-copy-send: Controls behavior on sending memory pages on
-+#     migration.  When true, enables a zero-copy mechanism for sending
-+#     memory pages, if host supports it.  Requires that QEMU be
-+#     permitted to use locked memory for guest RAM pages.  (since 7.1)
-+#
-+# @postcopy-preempt: If enabled, the migration process will allow
-+#     postcopy requests to preempt precopy stream, so postcopy
-+#     requests will be handled faster.  This is a performance feature
-+#     and should not affect the correctness of postcopy migration.
-+#     (since 7.1)
-+#
-+# @switchover-ack: If enabled, migration will not stop the source VM
-+#     and complete the migration until an ACK is received from the
-+#     destination that it's OK to do so.  Exactly when this ACK is
-+#     sent depends on the migrated devices that use this feature.  For
-+#     example, a device can use it to make sure some of its data is
-+#     sent and loaded in the destination before doing switchover.
-+#     This can reduce downtime if devices that support this capability
-+#     are present.  'return-path' capability must be enabled to use
-+#     it.  (since 8.1)
-+#
-+# @dirty-limit: If enabled, migration will throttle vCPUs as needed to
-+#     keep their dirty page rate within @vcpu-dirty-limit.  This can
-+#     improve responsiveness of large guests during live migration,
-+#     and can result in more stable read performance.  Requires KVM
-+#     with accelerator property "dirty-ring-size" set.  (Since 8.1)
-+#
-+# @mapped-ram: Migrate using fixed offsets in the migration file for
-+#     each RAM page.  Requires a migration URI that supports seeking,
-+#     such as a file.  (since 9.0)
-+#
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
--#     @x-vcpu-dirty-limit-period are experimental.
-+# @unstable: Members @x-checkpoint-delay, @x-vcpu-dirty-limit-period,
-+#     @x-colo, @x-ignore-shared and @x-rdma-chunk-size are
-+#     experimental.
- #
- # Since: 2.4
- ##
-@@ -1017,7 +1108,28 @@
-             '*direct-io': 'bool',
-             '*x-rdma-chunk-size': { 'type': 'uint64',
-                                     'features': [ 'unstable' ] },
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*xbzrle': 'bool',
-+            '*rdma-pin-all': 'bool',
-+            '*auto-converge': 'bool',
-+            '*events': 'bool',
-+            '*postcopy-ram': 'bool',
-+            '*x-colo': { 'type': 'bool', 'features': [ 'unstable' ] },
-+            '*release-ram': 'bool',
-+            '*return-path': 'bool',
-+            '*pause-before-switchover': 'bool',
-+            '*multifd': 'bool',
-+            '*dirty-bitmaps': 'bool',
-+            '*postcopy-blocktime': 'bool',
-+            '*late-block-activate': 'bool',
-+            '*x-ignore-shared': { 'type': 'bool', 'features': [ 'unstable' ] },
-+            '*validate-uuid': 'bool',
-+            '*background-snapshot': 'bool',
-+            '*zero-copy-send': 'bool',
-+            '*postcopy-preempt': 'bool',
-+            '*switchover-ack': 'bool',
-+            '*dirty-limit': 'bool',
-+            '*mapped-ram': 'bool' } }
- 
- ##
- # @query-migrate-parameters:
++    QAPI_CLONE_MEMBERS(MigrationParameters, cur, new);
++
++    migrate_post_update_params(input, errp);
+ }
 -- 
 2.53.0
 
