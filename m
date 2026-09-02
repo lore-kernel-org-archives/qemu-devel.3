@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27F0C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EAE9C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1i2L-0006y0-Px; Wed, 02 Sep 2026 06:17:45 -0400
+	id 1x1i21-0006d6-Un; Wed, 02 Sep 2026 06:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1x1i2L-0006vp-06
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:17:45 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ id 1x1i20-0006Y5-Qy
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:17:24 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1x1i2I-0005Gp-6q
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:17:44 -0400
+ id 1x1i1w-0005Bu-W4
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:17:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788344262; x=1819880262;
+ t=1788344241; x=1819880241;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=GCVIbj/xGTDDwwWNAXoxHETUZ7Pnrwff7qXe4oPkzz8=;
- b=KPAUDcFRGkkx5WRMqPZOOwenbsVcElGs4lzbkR/ckg/+6g0rb3qUBCnc
- k9yTM1bokRn71L9b6IES8FKdnckEGf76zuj4BbextTa3vvq46afem8oNj
- LGida3fADCDWN2fEUSxET4Uh2gzCpXMWzQEWBl7TjZQDGrMFaOQhFeuNI
- 5JJEtaqR5NH6xLZzshYpA7M9zZp0vCnuDSvcx01wrBcllV2t9kxWkcxv/
- thUMnH+QL8cSYEHIdBolHCPpuT0Rj6YBJ3BbzMXEQ4mo6tLHAK7mQkbSJ
- 9m897R7l806ap110BFVAvU7p1nRYIfhwaPozwmmWWwDe8OGvx9WckdNY8 g==;
-X-CSE-ConnectionGUID: SyxfnbS/ROqTJ5I06MAC3Q==
-X-CSE-MsgGUID: 8XcE2I9BRrOuGjHpOrDk4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="92498028"
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="92498028"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 03:17:40 -0700
-X-CSE-ConnectionGUID: 2sY2uzNYRGC6CT6l21mO0g==
-X-CSE-MsgGUID: wVNOpjzmRfSicel8/s4p+A==
+ bh=5xDoOGVEAfaCNOBWKYCtz8R6SkpZnyMAfT6Ty7MY+48=;
+ b=eXm33WvXUfBX/tesAV0oeT5yR3XKIKpHVVKbIRzfpc8ktedZpaE/8DFF
+ +Hsx/p80LzdFhH+wybC/l8Bhhr3tbc9/VTG9hh1UlH6tDWTzHQb+1vaLC
+ 95y06itmq3or8zJ1ls4Pxg60TpZXQwz0pJyAmI2dXWLly7CnAcxMI+L5x
+ oelXe+M+6ntOFbI/GtFrP9ZJcODPxfk8HubmfwsvrfU9vsxbxT3fsatI2
+ uNfuqTxfYiQVjzH1BedDDRYlhkbmzyoIxFiiEqriqtD6Dsj80bclccbbV
+ P/RsjKfuV9RGw+M8wLseOWJK2YzFbkUuSsJm4Dvx87metirkxzrgfywjS Q==;
+X-CSE-ConnectionGUID: cqZbAhjYR8GAhnAjkHBSnw==
+X-CSE-MsgGUID: 9rt9rPtXStaFLxyN9QBx4A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="88826546"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="88826546"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2026 03:17:19 -0700
+X-CSE-ConnectionGUID: otuvmiMjQhu5XFdjwpqQ1Q==
+X-CSE-MsgGUID: pQ0p2WAvTOa0RO+eT7bOCQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="268066684"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="268827933"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by orviesa010.jf.intel.com with ESMTP; 02 Sep 2026 03:17:39 -0700
-Date: Wed, 2 Sep 2026 18:17:38 +0800
+ by orviesa008.jf.intel.com with ESMTP; 02 Sep 2026 03:17:18 -0700
+Date: Wed, 2 Sep 2026 18:17:16 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Kishen Maloor <kishen.maloor@intel.com>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, kvm@vger.kernel.org,
  sohil.mehta@intel.com, xiaoyao.li@intel.com,
  binbin.wu@linux.intel.com, farrah.chen@intel.com
-Subject: Re: [PATCH 5/5] target/i386: Introduce ClearwaterForest-v5 to enable
- LASS
-Message-ID: <apf3wqxIIFujdezs@intel.com>
+Subject: Re: [PATCH 4/5] target/i386: Introduce SierraForest-v7 to enable LASS
+Message-ID: <apf3rPqdNmhP88xe@intel.com>
 References: <20260826035734.114685-1-kishen.maloor@intel.com>
- <20260826035734.114685-6-kishen.maloor@intel.com>
+ <20260826035734.114685-5-kishen.maloor@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260826035734.114685-6-kishen.maloor@intel.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260826035734.114685-5-kishen.maloor@intel.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -84,15 +83,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 08:57:34PM -0700, Kishen Maloor wrote:
-> Date: Tue, 25 Aug 2026 20:57:34 -0700
+On Tue, Aug 25, 2026 at 08:57:33PM -0700, Kishen Maloor wrote:
+> Date: Tue, 25 Aug 2026 20:57:33 -0700
 > From: Kishen Maloor <kishen.maloor@intel.com>
-> Subject: [PATCH 5/5] target/i386: Introduce ClearwaterForest-v5 to enable
->  LASS
+> Subject: [PATCH 4/5] target/i386: Introduce SierraForest-v7 to enable LASS
 > X-Mailer: git-send-email 2.47.1
 > 
-> Add ClearwaterForest-v5 to expose Linear Address Space Separation (LASS)
-> on the ClearwaterForest CPU model.
+> Add SierraForest-v7 to expose Linear Address Space Separation (LASS)
+> on the SierraForest CPU model.
 > 
 > Signed-off-by: Kishen Maloor <kishen.maloor@intel.com>
 > ---
