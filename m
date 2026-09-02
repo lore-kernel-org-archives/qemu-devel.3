@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F90C624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB349C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:45:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1qtC-0000Q8-TB; Wed, 02 Sep 2026 15:44:54 -0400
+	id 1x1qtV-0000Yn-DC; Wed, 02 Sep 2026 15:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x1qtB-0000Op-6W; Wed, 02 Sep 2026 15:44:53 -0400
+ id 1x1qtM-0000WZ-Qv; Wed, 02 Sep 2026 15:45:05 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x1qt9-0005zF-CY; Wed, 02 Sep 2026 15:44:52 -0400
+ id 1x1qtL-00062t-4P; Wed, 02 Sep 2026 15:45:04 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 85F58600D4;
- Wed,  2 Sep 2026 19:44:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636E31F000E9;
- Wed,  2 Sep 2026 19:44:41 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 09A4C600D4;
+ Wed,  2 Sep 2026 19:45:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2791F000E9;
+ Wed,  2 Sep 2026 19:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788378283;
- bh=TO+F2pc2vn4cH6gj+eUGA+TbOU46rfxX7z+qzRTHsOk=;
+ s=k20260515; t=1788378301;
+ bh=PA7Yp0HhTd128mXFaQHf2upT6PMZf+sxSx5KKHH3HZs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ijvjjvf65bkvEt+MCXS1aFadfKNdAqAIOJlMpT1Wk/k20H9BSqoNrpT/ZZ9pSVnNt
- ycHMIC2A2ZUJnv1Tur3x9vR+EWld+E0aijWIKUp7kDEBnkrpmEjLIdAnDR7TUtFZZq
- w7REd8woljmiOSEYJefo4sstzCkO7OP52JSpLq1TylqarXNXh+lJn8BavmKsGE/aT5
- 4JlnBAfjbjlO8XQrHvSQeDv0cR3X0Tv/XcRXk9IFMlqiApwsw073bL97YxSFTJ5oB3
- 5cWGCqDxbo/CoNjk6oi4naILJasl2uh1z4PreHPMRW4Yy2HqYPKUyMImcUYjjB1oAC
- RoyQ63PquMvIg==
+ b=N5c12ZmeXK6pfu8Dh+3q+2yuliRkYYARURPpb3UzhIXMcCJsKvoxouzGz0Bv98gMZ
+ ucpNwVbbBMAyedfb4qsI7xRfbwP7CQHxghFiS4BVewqOiZwTku5WwttwkRiF+hcmEb
+ l4yn+hfU4VOkbjX2lqzF6pEkoC6js/Cu3lhiJSmp6jyziQND/BPzP9i7U54nOhA8o3
+ E0MIjK87gvSGnyEsH3hGQxKeIpzuLjMXoPVopN6r4jk6d2lox+TFB5rd9nKeo21VKP
+ SC7ddPPjtDBVgLCS0D9OgkZths+xc45yypFSSuhbWPgkIpotg/f83Ot7gAUsfJh92Z
+ notk5f2qHSA6g==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 01/11] block: widen BlockLimits.zone_size to uint64_t
-Date: Wed,  2 Sep 2026 21:44:12 +0200
-Message-ID: <20260902194423.759355-2-cassel@kernel.org>
+Subject: [PATCH v2 08/11] file-posix: base the zone append limit on the
+ transfer limit
+Date: Wed,  2 Sep 2026 21:44:19 +0200
+Message-ID: <20260902194423.759355-9-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260902194423.759355-1-cassel@kernel.org>
 References: <20260902194423.759355-1-cassel@kernel.org>
@@ -70,48 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sam Li <faithilikerun@gmail.com>
+The zone_append_max_bytes queue attribute is the largest
+REQ_OP_ZONE_APPEND that the device accepts, and Linux has no interface
+for issuing one from userspace: include/uapi has no such operation, and
+every submitter of REQ_OP_ZONE_APPEND is in the kernel. Userspace writes
+to a sequential zone with an ordinary write at the write pointer.
 
-The zone-size field in BlockLimits is currently uint32_t, capping
-expressible zone sizes at 4 GiB. Real zoned-device protocols
-like NVMe ZNS allow larger zones. Widen BlockLimits.zone_size to
-uint64_t to match.
+That is what this driver does. raw_co_zone_append() substitutes the write
+pointer of the zone for the offset and hands the request to raw_co_prw(),
+which reaches handle_aiocb_rw_vector() and issues a plain pwritev(). The
+kernel never sees a zone append, so the attribute describes a limit on an
+operation that is never issued.
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Nor is it a limit that this driver runs into. The kernel splits a write
+that exceeds the transfer limit rather than refusing it, so a larger
+append succeeds: on a null_blk device whose zone_append_max_bytes is
+130560, a 16 MiB append completes and advances the write pointer by
+16 MiB. Reporting the attribute only understates what the driver can do,
+because Linux derives it as a minimum that already includes max_sectors
+and chunk_sectors.
+
+Report max_hw_transfer instead, the limit that governs the write the
+driver actually issues. There is no use in telling a guest that it may
+append more than the device carries in one command, and a frontend then
+does not have to reason about how this driver implements an append in
+order to bound the value it advertises.
+
+On a null_blk device with max_hw_sectors_kb of 127 and
+zone_append_max_bytes of 130560, virtio-blk reports 255 sectors before
+and after.
+
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/file-posix.c               | 2 +-
- include/block/block_int-common.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ block/file-posix.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/block/file-posix.c b/block/file-posix.c
-index 9aad156aad..c0d6ee30e4 100644
+index f267513a4e..e019cc3cd8 100644
 --- a/block/file-posix.c
 +++ b/block/file-posix.c
-@@ -3598,7 +3598,7 @@ raw_co_zone_append(BlockDriverState *bs,
- 
-     if (*offset & zone_size_mask) {
-         error_report("sector offset %" PRId64 " is not aligned to zone size "
--                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
-+                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
-         return -EINVAL;
+@@ -1488,10 +1488,15 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
      }
+     bs->bl.nr_zones = ret;
  
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..7571ed9968 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -901,7 +901,7 @@ typedef struct BlockLimits {
-     BlockZoneModel zoned;
+-    ret = get_sysfs_long_val(st, "zone_append_max_bytes");
+-    if (ret > 0) {
+-        bs->bl.max_append_sectors = ret >> BDRV_SECTOR_BITS;
+-    }
++    /*
++     * raw_co_zone_append() carries out an append as an ordinary write at the
++     * write pointer, so the zone_append_max_bytes attribute, which bounds an
++     * operation that this driver never issues, does not apply. The kernel
++     * splits a write that is larger than the transfer limit rather than
++     * refusing it, but there is no use in telling a guest that it may append
++     * more than the device carries in one command.
++     */
++    bs->bl.max_append_sectors = bs->bl.max_hw_transfer >> BDRV_SECTOR_BITS;
  
-     /* zone size expressed in bytes */
--    uint32_t zone_size;
-+    uint64_t zone_size;
- 
-     /* total number of zones */
-     uint32_t nr_zones;
+     ret = get_sysfs_long_val(st, "zone_write_granularity");
+     if (ret >= 0) {
 -- 
 2.55.0
 
