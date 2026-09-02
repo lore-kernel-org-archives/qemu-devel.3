@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 392E6C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 15:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1A0C624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 15:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1mmH-0002ia-Uu; Wed, 02 Sep 2026 11:21:30 -0400
+	id 1x1mmr-0003ur-SN; Wed, 02 Sep 2026 11:22:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1mmE-0002Wo-VR
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:21:27 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1x1mmq-0003r4-Ai
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:22:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1mmD-0000EQ-6Z
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:21:26 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1x1mmo-0000Li-JR
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:22:03 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682CR8do1549926
- for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 15:21:14 GMT
+ 682CRF372001702
+ for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 15:21:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Ji5J4HKmPdW/CWTW2SUhTxHcUUTcenx5uhnZFfihhVE=; b=cqX616d/uyTXUNky
- cJut0zr4MaV7+EUooCerieI9I8TrtsBHshbM70H3UK9Dr47Wxv2ZHoBi7AzwTkBn
- gWQPdyCzT8A6nChtMHsKoGuNAqYlBgfiTbifEpGX/+9I3Hg3/9J5ViI7p3/itsIG
- vK0H8wMD4hitaKZa4Q6VtvQf/vnVKyyEP2wFLFBOSbQ5NQSyAMTO6DgAdbqC1KEc
- cgEktR8E3m1/dLAnMZ3QugU3ShnKO8leC48Dlh/oALNRvIfHwjnRmy98hVqW7XFJ
- Zlzg/ddITZiMX+oqiinFgRGCg55fToMQFACscoee84ANMaotLfd3ahkBFdwINSFR
- nfMQFg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gej2c94wa-1
+ u3sukywh0ccw7qimtYe5ZWsz5XS1jMV02iGullEuYuQ=; b=OfJqEvtgSkyBdzij
+ i8crWBsRff2zllkptMivcqE/b0COULYQ96bOebNoaz96YcuwtuMDsvKe9RwGY2ei
+ hit9egGJUbub4TuCSfOzFFnfCSsh7cWJHpMQsJG8Rz3QcWRyEd7g6RR8slg6jqpn
+ lxD0pD8eYF8kf1ne/CUo+/GzjNDcHR8q4u8dyd10b571U3TxT0PArm2ABrznNe7p
+ W2weUc97iuv7hbQOEcfTCF7f0Oe8Lda9VpPm0BsTkRloSMgSd4F119opjJoSIJEq
+ KuEVASRWC+fDCfDc4kT4hTUgM/SHDHqQEz2jzQsPbTH/Sq1PbnLZy0rsdiqcKnGA
+ 5sUIbA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4geguy1fff-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 15:21:13 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e5fc4c7e9so49211385a.3
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 08:21:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 15:21:51 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93922c75037so39232385a.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 08:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788362473; x=1788967273; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788362511; x=1788967311; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ji5J4HKmPdW/CWTW2SUhTxHcUUTcenx5uhnZFfihhVE=;
- b=KyopZ55Fb4cGJfufJBbsH+osNZJKqYauriBJAF440QgkjhGHpfj6YXIKZMMQ75DkPx
- 6Wydz/LhZfTa5+zLgLhwuiYQ/gEg+qEfRuI6MZm5xMLn3WT2GyhaQwMwG6sBUQ1HP8D0
- 7ECN+tg80FTjgQE/Eb9EbxgUieOAjT4EDxiBppl9SmDW3DUegbFTonZahizSTTmOkoBN
- ve9uUEMZYWUq5zuXntI+NQNJD0nfTxe0dGIdqi0bx/aVS88IPBfcySFZj2Lchcu8YYKG
- TPXzRhPFcZ0g1poZro6l92KY8w3V7xqsAMhpzNZ1mUhhF/VY8e0/GV4Kq/JFmVPcLaVV
- T/cg==
+ bh=u3sukywh0ccw7qimtYe5ZWsz5XS1jMV02iGullEuYuQ=;
+ b=eaTyyzKrpGtEUJOfTKWk05M+dK8AVs71bpzPKwEndskiJ+TnlEml1GwAEk5VS2dJ5w
+ YWYa4g+YsUO2SEY8jJK4ezeWNYGZHE7VoGs4ZQmjUv3TujXYEqRtKTtdM/HFxc7guSr3
+ mmWLA6f27lhqbKPVpBL+P7Pak0ROSEiJsHYqtQMlHLtgJy5rTPVbUVlGAQ3Az2rs9R1u
+ VwoEBI2piabEEEhqA+qP5EnfU2Cw61Rq+5AK5rQhztdlBF24Rn8RziS38yARbxfiAZ2d
+ PCouXSet+IFbG2dd0sdgCI1IYBj4prplfut19/lW306GxJuUN2LoVVPaHmRcoMDLa4St
+ Rlbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788362473; x=1788967273;
+ d=1e100.net; s=20251104; t=1788362511; x=1788967311;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ji5J4HKmPdW/CWTW2SUhTxHcUUTcenx5uhnZFfihhVE=;
- b=oqiT6WxXd2sQuf7LH/vYgxGy52Yfm+DZP3TV8VPQvdvY1n3CuhcG+gSq2SZefahwax
- tRS+KySmKfnaaYGyGNq5ZnHrh7ZOZ0z1QqWfJ8+kdWWccCYNIXKDQKD/KAFmprKpfHm4
- 2fe7cySqG70gGjd2aVOn2JANFHyDyW7eT3A9J/m6UM0wipRGwdTx/A9zLMKEJBm2FQbZ
- Qgzen5zwYCK7xubn+Zx712USrejAR48htglZ2QvstdJ0cuq2GJQXSTiOHOh5ZGx078AJ
- e9RdLA4GQsrIamUQVx0w5KRuWevJQDQQGUItL8G+kJazS5arxub6ltqvqiEnNrSqwxN8
- o3kQ==
-X-Gm-Message-State: AFuF++mHMimdLa4b2K/vjK29+R2Ny6mTZHAu3mL/bFpAe0lmOm4a1obZ
- KtFWeIHGaR03rsObJVdsnfbRs2p392lSqKl1WqAoUwkAK5ZfW2YKbzCw5vTlvm49DUIPUZEWM+R
- DTSjUsSJYnvCzpN6HoPD6uOo17oAXzg3VYJ9L/mSDA7fQsPxdzYxpEeD7OuTJaxOp8w==
-X-Gm-Gg: AR+sD11DJO/EsVKKrkQrkGAI/UPhs0rviElHO4qtSE48CFZTtAY5i46xNq4ZyApEXYv
- pQ+GTXnLmWAgOT2PljzVG8e6qQ6Z9IdsN9GwyGpQfBz92NU39lvNVt91NM9dRtmjG/EZyP3B7UX
- 2KcQL3Ag17YJ8FFTyzhLLPGjXNKDFMvLZZmmeR00yBvmheHZHozq11JFuaTmgsE1grc+h+ikF5c
- rI6eV5uI2+jMEdA7WdzFdWrNeHF8PwkExCABzWJ8I5e7KEZu/lKhKkZ5dTks4qAt59rr+nRg28q
- XxR8e9HKgwujETgoDynNwsgTZSx3DncdG5huQWDKjxnnB48FQDjvLir5mPirgab/3AuAu0d+IKn
- E9HhkH6r6jdU0YDnOJZcD1N2gT2Vmmo6mTJ1FEKJN
-X-Received: by 2002:a05:620a:371c:b0:937:6772:d8d with SMTP id
- af79cd13be357-93960f1811emr695433785a.20.1788362472228; 
- Wed, 02 Sep 2026 08:21:12 -0700 (PDT)
-X-Received: by 2002:a05:620a:371c:b0:937:6772:d8d with SMTP id
- af79cd13be357-93960f1811emr695415885a.20.1788362471438; 
- Wed, 02 Sep 2026 08:21:11 -0700 (PDT)
+ bh=u3sukywh0ccw7qimtYe5ZWsz5XS1jMV02iGullEuYuQ=;
+ b=BLPZKPPLPm9Tx02FoosrleDsvINdB6Rkmps33TFxp9+R3uiIpOmOUZY+TE9+eyQ6zD
+ DqvzXFwm7XY35rxvZvPLWfxZmjxTBgjs2/6VYfBdzglqurFMzUKsb0M9tsbS3UHhw7A7
+ /yavYlGERpMtk9FbVkzPNRE/xR70HJsPKoPqDA6V+g+yEZFz7Bl8VqbgMvzAVr7hARod
+ l9uzwKENa7BDl0gfIXqNXPQCs4AdyISjaJhHFQI7hPwIRVXsHmq9gWJ5gevg1xIZD1Vo
+ zpXAk/xGrrFf+Dapmq0b9fVMZg9MrKKWNr5sZY+xH+adAu1nEv20tzf5fBC7czc3CJnc
+ n8AA==
+X-Gm-Message-State: AFuF++kn6OvWgSR4vJ8O/hTy+5h3ZsnO3kDqn2WkNLyUzw4GrjyRnuBu
+ DxqsLODiNFcxYdy/ofNRw7FOHESsCVKGnmUr4vUfveR2FdyQZRWm3zfgm9Dx5iYtfHnrtEK17Ys
+ zYthwtUXQD7S0dLxWAUcUB7n+olnjjTTePGdwpODaiizMuSgTCF2F1FcTzvwukaJQJQ==
+X-Gm-Gg: AR+sD10vvVPrLx6alCl5jjTPAFJhcRLDkjJWbqN/GqrwpjTTLckY1VlAIrPZPCFsRWU
+ XwtDPAl+vAdZw1nJWoocWmRzlXLGkdlXcyFRvA5TesOfbA0MQPdv0HaBxluZsJumNwNzqv0NS3y
+ ktOG7GcMWbjDngalCxAjRZ3YFP/MOBYrj8c6JRdJ6hbSmE1ZcWqlBOLgP7cqWNGvXkvImwnR/Nz
+ A86FLEWkNCKvOni1EawMDTxYmM6P8PACEVlNIAyYbhTwaijrHVEGDd556YoiAsb4LtZuB2sG1o7
+ 1C3oiwbQUtQuM5K+LUCuuNCp8zd0fAKqCRGojDKMHHJwZHfyDCYK1ZgGoxxorLxBPtfUeTV5zx5
+ LpkyA3D9koLl/oZUfuPmXMhqGIlRe6C87zsDW2T+C
+X-Received: by 2002:a05:620a:1a15:b0:937:1538:6b93 with SMTP id
+ af79cd13be357-93960ff982bmr701341485a.40.1788362510782; 
+ Wed, 02 Sep 2026 08:21:50 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a15:b0:937:1538:6b93 with SMTP id
+ af79cd13be357-93960ff982bmr701328385a.40.1788362510044; 
+ Wed, 02 Sep 2026 08:21:50 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce58da3acsm127559305e9.0.2026.09.02.08.21.10
+ 5b1f17b1804b1-49ce47b9817sm57021005e9.1.2026.09.02.08.21.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Sep 2026 08:21:10 -0700 (PDT)
+ Wed, 02 Sep 2026 08:21:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -95,53 +95,54 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 03/11] target/i386: Rename fake_do_interrupt to
- fake_user_exception
-Date: Wed,  2 Sep 2026 17:20:34 +0200
-Message-ID: <20260902152044.31291-4-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH v3 08/11] target/hexagon: Move to do_interrupt() (BQL acquired
+ internally)
+Date: Wed,  2 Sep 2026 17:20:39 +0200
+Message-ID: <20260902152044.31291-9-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260902152044.31291-1-philmd@oss.qualcomm.com>
 References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEzNSBTYWx0ZWRfX9jqgn/py7DKH
- q0Uy848X5YAOJoiu7EOvFO0+KaJwe2DUGq8ZiAo1FZg9dRyDoYXStoveixpJzvYxSLD/jIeTmme
- aTIg/17wQTHkiuB7Tl1/8u5txCRJ+T0=
-X-Authority-Analysis: v=2.4 cv=G+ss1dk5 c=1 sm=1 tr=0 ts=6a983ee9 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=UZthjqSN c=1 sm=1 tr=0 ts=6a983f0f cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=QvbPrhRjooIPkqPMRvUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: ve7-lgHnRJQ3vsnRuWFJhWMAHt5OJw4K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEzNSBTYWx0ZWRfX9GplWtmmaUJd
- 1fXEJjROmKyZgTx7QOX/rpWNRG+vGTkuTkFVuGYn2vjP4gYm6rMpEYIKQy4m4VWg+dG0Uo8SviT
- c++3W4TP5Wfaae/QWcyrMtow6mf5dIAns62ouQVpCXvctCL6rm0U2b2g45kKndJdyutGNG4nlZu
- NLxBIetoKf9IACUG8mKQzuH82wh41l8SwB7cAqkBjYvyrvPjCje6P9XDBMRgJx9sw0CHJmWAn0M
- kla7Mtt+KAs1YeppQm4CA+tIG0qkCF5FveSnvxgVxhWVCVtd3Sc5nwS6nRE+52rrNJcCLTgy56X
- L8Iu78L334gm6UM1feOz/QIuUvTft+NnOLGooTvyPc1sVEMQtwAK38PU4Oq57nbiqM6r658EfNE
- wv/LI9F4gDgpMkiUWKovztNyUbfwg9/17lMe3tpQ2gSI1FOMRWe3XAmqONPq1Tlq6aAOK95PgJ+
- IrS2QR0LWb9J0PCSyIA==
-X-Proofpoint-ORIG-GUID: ve7-lgHnRJQ3vsnRuWFJhWMAHt5OJw4K
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=kjvkjD5W99lJKOkStTcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: 2b84j2cIh-TnUGHdZ7l0KaiimpWtT-Ai
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEzNiBTYWx0ZWRfX51hy0geBlO+p
+ i1SGYvAKMV40S2aTp/akOPrfk3ZphNw4ZK2PalzNZWWLotWP+CFFPVqveihqd0KpiOajlT/aveJ
+ y94+1U9ZehCazwcejjyA0Z9u6BtkkLs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEzNiBTYWx0ZWRfXxxasNkMxhw83
+ vy3YQ4BoYpM8SZWZrAP3IwgkDj+4/+EYKpKMf8uxC7RwTJ92x8R+c6JGW+buicnAZYETkbyJ4k3
+ Z7DDSuz24B8jIhFlVHidpICKWML8k3O6Pkw8Ir4HsTqd7l8QGe6u6FtPl9IxOdJ8TtKs4242Ycq
+ WA3dkIL6eTDuw3osnoWmfQE/Xq4UZnXDmr+sE9TbGF5rFFGS0jOeE3dk8S0AfSH1pXO5UcRQ2eq
+ 8prKXIIdnGPD1NV3FeBzAVJ3tZ6UVrGQmXCkwZe+UpRteBePmmbPnziia1NYde0T3R5C3l7jWmL
+ aermYp5NsxSNWl19Qlsl35jttaAXBN6JBgWchEhTVoivx+O5fVnd2pbtcWgPs6vG039mB5hBxGK
+ Mra9K7MXDhKj6+dqZVQIwWFEVuN75dWq5QU9f0ZtH2lIbEZ+oq3lhe/eOHC3gbtsNifObBi6uTN
+ WbIC66aeajFpLXi0aqA==
+X-Proofpoint-ORIG-GUID: 2b84j2cIh-TnUGHdZ7l0KaiimpWtT-Ai
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-02_03,2026-09-01_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 bulkscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020135
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020136
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,116 +158,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fake_user_exception hook handles exceptions in the outer
-exception loop (cpu_handle_exception), not inner loop interrupts
-(cpu_handle_interrupt). Rename to clarify the scope and intent.
+hexagon_cpu_do_interrupt() already acquires the BQL internally,
+so register it as do_interrupt() instead of do_interrupt_locked().
+This reflects the actual locking model used by the target.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/accel/tcg/cpu-ops.h       | 4 ++--
- target/i386/tcg/helper-tcg.h      | 4 +++-
- accel/tcg/cpu-exec.c              | 4 ++--
- target/i386/tcg/tcg-cpu.c         | 2 +-
- target/i386/tcg/user/seg_helper.c | 6 +++---
- 5 files changed, 11 insertions(+), 9 deletions(-)
+ target/hexagon/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index 3ff6e6810e0..ded7cc700df 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -106,12 +106,12 @@ struct TCGCPUOps {
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index b5dcbfc99db..7067e5b70f7 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -769,7 +769,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
+     .tlb_fill = hexagon_tlb_fill,
+     .do_unaligned_access = hexagon_cpu_do_unaligned_access,
+     .cpu_exec_halt = hexagon_cpu_has_work,
+-    .do_interrupt_locked = hexagon_cpu_do_interrupt,
++    .do_interrupt = hexagon_cpu_do_interrupt,
+ #endif /* !CONFIG_USER_ONLY */
+ };
  
- #ifdef CONFIG_USER_ONLY
-     /**
--     * @fake_user_interrupt: Callback for 'fake exception' handling.
-+     * @fake_user_exception: Callback for 'fake exception' handling.
-      *
-      * Simulate 'fake exception' which will be handled outside the
-      * cpu execution loop (hack for x86 user mode).
-      */
--    void (*fake_user_interrupt)(CPUState *cpu);
-+    void (*fake_user_exception)(CPUState *cpu);
- 
-     /**
-      * record_sigsegv:
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index f4b2ff740d5..5349ab71be9 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -35,11 +35,13 @@
-  * x86_cpu_do_interrupt:
-  * @cpu: vCPU the interrupt is to be handled by.
-  */
--void x86_cpu_do_interrupt(CPUState *cpu);
- #ifndef CONFIG_USER_ONLY
-+void x86_cpu_do_interrupt(CPUState *cpu);
- bool x86_cpu_exec_halt(CPUState *cpu);
- bool x86_need_replay_interrupt(int interrupt_request);
- bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
-+#else
-+void x86_cpu_fake_user_exception(CPUState *cs);
- #endif
- 
- void breakpoint_handler(CPUState *cs);
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 257211235db..609931a0d6e 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -717,8 +717,8 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-      * handled outside the cpu execution loop.
-      */
-     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
--    if (tcg_ops->fake_user_interrupt) {
--        tcg_ops->fake_user_interrupt(cpu);
-+    if (tcg_ops->fake_user_exception) {
-+        tcg_ops->fake_user_exception(cpu);
-     }
-     *ret = cpu->exception_index;
-     cpu->exception_index = -1;
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index 6f5dc06b3b9..7a4d73e7fee 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -173,7 +173,7 @@ const TCGCPUOps x86_tcg_ops = {
-     .cpu_exec_enter = x86_cpu_exec_enter,
-     .cpu_exec_exit = x86_cpu_exec_exit,
- #ifdef CONFIG_USER_ONLY
--    .fake_user_interrupt = x86_cpu_do_interrupt,
-+    .fake_user_exception = x86_cpu_fake_user_exception,
-     .record_sigsegv = x86_cpu_record_sigsegv,
-     .record_sigbus = x86_cpu_record_sigbus,
- #else
-diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
-index 3a4a6d5a745..019a781458b 100644
---- a/target/i386/tcg/user/seg_helper.c
-+++ b/target/i386/tcg/user/seg_helper.c
-@@ -42,7 +42,7 @@ void helper_syscall(CPUX86State *env, int next_eip_addend)
-  * instruction. It is only relevant if is_int is TRUE or if intno
-  * is EXCP_SYSCALL.
-  */
--static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
-+static void do_exception_user(CPUX86State *env, int intno, int is_int,
-                               int error_code, target_ulong next_eip)
- {
-     if (is_int) {
-@@ -76,7 +76,7 @@ static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
-     }
- }
- 
--void x86_cpu_do_interrupt(CPUState *cs)
-+void x86_cpu_fake_user_exception(CPUState *cs)
- {
-     X86CPU *cpu = X86_CPU(cs);
-     CPUX86State *env = &cpu->env;
-@@ -84,7 +84,7 @@ void x86_cpu_do_interrupt(CPUState *cs)
-     /* if user mode only, we simulate a fake exception
-        which will be handled outside the cpu execution
-        loop */
--    do_interrupt_user(env, cs->exception_index,
-+    do_exception_user(env, cs->exception_index,
-                       env->exception_is_int,
-                       env->error_code,
-                       env->exception_next_eip);
 -- 
 2.53.0
 
