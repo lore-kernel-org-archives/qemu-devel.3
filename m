@@ -4,179 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2EF9C624D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6078EC624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1mAo-00083o-13; Wed, 02 Sep 2026 10:42:46 -0400
+	id 1x1mBv-0001xf-Os; Wed, 02 Sep 2026 10:43:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x1mAn-0007zq-7z
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:42:45 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x1mBr-0001ud-My
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:43:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x1mAl-0002CW-6j
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:42:44 -0400
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682CXVon1205835; Wed, 2 Sep 2026 07:42:40 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=MEcPr37hL9xpTAk7gwA+e0zb629UKWWsoMf10HFS5
- lI=; b=2KXfPtJyIfIUeXwd/0GIyrfVEm1JuCddAJ7MYBXT7EOtqDm2pdlVowAfg
- cqywXo8tC71r0MZjif4Hpl7YzjSQdOnHSwrb42+8Q60LInX0PRjBH0OLPNee5wY3
- Pf0bKc5IJT7Cy01S02mhFYN7WGFEg+ts/4WEijtprLq0vD4c+0ldhB0D2yLtRq0f
- cngRZMdZfUw8sPxZJjwpGULJSMzG2y0FX2M1OVCKFAkbPtdEEL+NAMTjO26ByBUR
- EtvWuR0Tcsi25pX2ChGQYB1pAGOLkxDaooWM9SJ2o7lLCRM6Sza5B9Sy8ZDEXZyc
- /IhOoLdn0OTYlq7YhLSrf5Szd2Nvw==
-Received: from cy3pr05cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11023138.outbound.protection.outlook.com
- [40.93.201.138])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ge100u3xs-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 07:42:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rBjK2FV5iJXt27k/kOhq19uI9CIGbUdTp5MUUDxEvw92I3PVWnV+ZUkq9Ox3Jf80vzhfbrKvFYRUpHxDrddlE3+qOJdi7Km/op06iI18icYOaMl1H68UGq9JpUj1zHuyDvNb/IlmHPimwC/Okhdkyv1WJPOLCAB8V7iBtVTAuA9inyReZljTtYx1EzcefYwe8/2ugmv/sqj9SOQ1Ca/q/KCpYf75xrX6n/t66fmdT/OxTV9KTWrlxLgeXfuy+J2ToCXyxgfjsS6vKMS2hHgA8vHSnIMG7bthdP2J9WYTiDRFiYZVraDDt8mrJsOMme2VY+JzlMGEQIE55VgnxtsDQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MEcPr37hL9xpTAk7gwA+e0zb629UKWWsoMf10HFS5lI=;
- b=Psg9gCREbbxh8rgH1UgVMwE/wJRDPVsyiyuEKIns9+SDIJndau8ozkvCHIAmu80NFb8S7NiHz5a1//eOBiHZAYZO6M0rSDCQeM8XrYlZ+WeSFj2u0NytAeA8Se45n12DwUuI6JEKnEA2UL4YliL1WhLB753pccJXuAlf5cboqjV9QhXt2S9g+PExlJMQo32KO6Uh8bNymtyTpJzOSIkLGrNM9wurZHo3aSbW+rMOCg//Hzx1GzKikVEjv3Kv4JiifqpbpW4sjthAWnz0egrIKvWfymklRTAfv7/g1LYYYo+1dV+xVt0C6+Xj8ICUXVWgVlruyirbu5kIR8gis33gTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MEcPr37hL9xpTAk7gwA+e0zb629UKWWsoMf10HFS5lI=;
- b=J7/uY5QsAVKrfAGEI0IEQzerKI6ZchsaDUebJP5atTjDGxt+owzWWdGide2p8ddFOmWoQ12J+JPEAO5YZRoL2CeFxyQnRRRaFfDxpf3+RqW8YOLkEwz7zzZzGRs9mrLeF5a6LJ+RdvoPEXGUP7xzi+Q/BZb5yVfv+59KPFcflJAXFPj68rsBfQLv5als4J7Lnljt6/AGayBPimTo1THjR4EKWi0PqeEdLQPLwEmSg13r5HBiuHQPG1sW4p0I2eWzORWKQGaRrce6UlzXgPpE4uP26diRDf3fCgML832ab6pX4yBE2L1SnltOtqtALWkFOGlYrWZSo/fZb5CkrbyM8Q==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by BY5PR02MB6978.namprd02.prod.outlook.com (2603:10b6:a03:23f::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 14:42:39 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 14:42:39 +0000
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- mtosatti@redhat.com, marcandre.lureau@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org
-Subject: [PATCH v3 7/8] hw/i386/pc_sysfw.c: convert pflash0 and pflash1 object
- props to class props
-Date: Wed,  2 Sep 2026 15:40:54 +0100
-Message-ID: <20260902144207.2553037-8-mark.caveayland@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260902144207.2553037-1-mark.caveayland@nutanix.com>
-References: <20260902144207.2553037-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BY3PR10CA0004.namprd10.prod.outlook.com
- (2603:10b6:a03:255::9) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x1mBq-0002I2-7D
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:43:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788360228;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9MF2xUKT7BqaIFJZGRPTncoqwLMVPXGiP5ImEgxPJBY=;
+ b=R64u+XBcW3IYjZ2HysV5DwYtdHfVRnnAM1VqD6Od2K621bKFPmRVT05xYvgnkGhvoVpbFH
+ YmlCe2lJaq9yqOsKQjunlLLkNnoESsf4OV4W6wQVFXuHFm3VYDUl7IAR8N5IBgfC6s3goT
+ KI2qCbd+/4YfJeaWUpF96eWDN1wZLes=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-347-o38Z5ePOMsmEsScMBFwxrA-1; Wed, 02 Sep 2026 10:43:47 -0400
+X-MC-Unique: o38Z5ePOMsmEsScMBFwxrA-1
+X-Mimecast-MFC-AGG-ID: o38Z5ePOMsmEsScMBFwxrA_1788360226
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-495474a5fbcso10008725e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 07:43:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788360226; x=1788965026; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9MF2xUKT7BqaIFJZGRPTncoqwLMVPXGiP5ImEgxPJBY=;
+ b=McM27O2r9usP56NjyhIqHVVMf3tzPmwamIY+yYLbeA1idRsIOSHdPtZDSbALMHR3iF
+ WYmicl8AXgN5bv61YCPCp1k9RSJ66YLdK+EaFbpb3LVi5lvniNH0vn3Xvfvn7q3GMMZl
+ 0doZEVCHI2kTFV0/VEWP5CUGy1cfDhufbe0nzP5TYj3NZOg9s+PWzUv09MwRBuTtStWF
+ OwLO4r7S8OADiGL1qEr45nig5Fr7kLU7Aqmwo1BU3lj30J6a99jYPOD/VNPSasa2SQ3A
+ tt8krZrbocK/wtRMV8RvhMfcnhZ9eNPtKlDIcPXMzsIG3ueWD0f0lhYVsUdRjpUlCoGm
+ B2UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788360226; x=1788965026;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9MF2xUKT7BqaIFJZGRPTncoqwLMVPXGiP5ImEgxPJBY=;
+ b=Q2XjknXeFsrkr8+uHR7id9a6OK/T39DcLiEtLBZDrwBQmj0sgh5EAy4+b6XPyD0Dw1
+ QQhF7t+vo4UmJzmw+BGHN5HwDhfmAMnD1nv9jjhJ9877x3IeywNSHmTytK56yl4MNaKN
+ jr/pcAutLtXr5xaeSmzQcrc+iu9WOP7F8BJ27OdgFKspNdMCnBIWjHpxQPCAEXNLewsE
+ WSgrgMrj1RMOh4eem34qyMkYJXiQnI3hkWELksaQ+HnTc993ueKMiP/052fM03eHdNNP
+ FLTliVLTxFuNMrVU7WO/E3vv9F79+GeNKxD1jcn8CKXRW26a0Lsr1ohwO05dlux2kNl4
+ jO/A==
+X-Gm-Message-State: AFuF++kl3rYptzoFi8GZJMTJEV/2hdW6HHzUbLmFsO9K/B4z8X58NDq/
+ 4YYW2LHc//vG0ffEd9uo6+4cFTqdltG6Es4vUR4M7cBbsr5mzJRF0o2Gkk72lDHNfUu2Z+finl7
+ Bx4TTYLaafhFx2bTxMpj8/Uw9qwJ+bSDofgfin7uEFvaA8iL6Bp2NnOW8
+X-Gm-Gg: AR+sD106a9CSlCHS6/D+gONPb2F1KRTgM9lJDdjh5DtBecR6gnrEDsXBNt8PG7AsxDx
+ gCDh9eg5z/tfwUSEbLIm9pf6yMHsUIEtZIOaJkv5I+5IfE94fdov1xkFEVUzRcEILFqttLgC2Xx
+ FdpcHreYAoNj1eoMt81sd0DlavkrAxPbMwiPagYnTP5ejs1rKkgVua9HOgcTVah4RXCDcq2IlPO
+ IIg/61EQgAVmnfOL1Ao2diUviGNFwLDqU3WG3AkGfdRBAV3OSATP4Yez965hgK7ROxmrjUM33SY
+ KCgQnjvekok7DWJ5Gj9t895VlHol6D/keGkmVaNOnKB8rDcx6ykVpQKGoeD+/DyGhtltBrdcxzF
+ xH4u6LQI5Cz36MmCfKU4pexFGt3on9d0nmgMi1hM/BiTKaw==
+X-Received: by 2002:a05:600c:1395:b0:495:4d88:e630 with SMTP id
+ 5b1f17b1804b1-49ce5812c52mr82105365e9.10.1788360225921; 
+ Wed, 02 Sep 2026 07:43:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:1395:b0:495:4d88:e630 with SMTP id
+ 5b1f17b1804b1-49ce5812c52mr82103425e9.10.1788360225025; 
+ Wed, 02 Sep 2026 07:43:45 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
+ [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ce4776131sm82024145e9.11.2026.09.02.07.43.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 07:43:44 -0700 (PDT)
+Date: Wed, 2 Sep 2026 16:43:38 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH 1/2] igvm: honor byte_offset when writing memory map,
+ MADT and device tree
+Message-ID: <apg0vDnAiCLSJDSI@sgarzare-redhat>
+References: <20260902-fix_offset-v1-0-04b18f7595b2@redhat.com>
+ <20260902-fix_offset-v1-1-04b18f7595b2@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BY5PR02MB6978:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6f42c15c-333a-427e-0ee9-08df09006fbe
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|6133799003|22082099003|18002099003|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info: g8qw6/StdHPNntUGT9KrCMKULQjmYKoM44ssWOmdt4IrbTC5D4UMivbud1ydLNMFkxagjlbOnlBhwNgexuq1ZyLddyW+kywWGfuLCAb7e5qBYNN/buOM7GDc6G5KLn6Vue9N9P5VTB2GV/i7XEILNnVlCw0X9a8o6R6wEH31E0EbD3KS45PVjqYFdtVRI8JXDCRvOkrd2jYjbDL1KphX04jhi5kp8r74dooys5dYUGGUZp/Abt28JBcplEa8wDUERCD7klemitfcKBxAMEml2n+aBiRy6oeX8MEyYEOcpgag4jE2QCBOUWM7si2R/FK+Dvq0pFLbSTm/6vnVgKx5FwkvP60bVwxPoirWqz/3UwBOfUiVKQ6EzQSBQgOwTDwtEcZmV6cNHjD3yMAVzqLRCpPRW2LJ4plzImgw30w/BkemLCJUk4CPjb+/ReF1VaI+jxXA9xq6+AUbgXO+4KIwGnRhuSjhmQF59ve3rDGSiGchxOMB277/yrmKIdjYZiCgNyYDJ1LojZY1Z0VP8ZWmOYZKHS+gwpdTCZm5rzzhR3FY7yJv6q+S75oW/eywRUN/EjGjQOiEeidtM/uqR9VUAWnJxKkp5S2YoePzT7aRA/pafW3wPCc7tchOJsyqPi3F1qkm0vEGk8FszcasK1MxdCKeXvBrlK8NSxt6VvyIW6I=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(6133799003)(22082099003)(18002099003)(56012099006)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eWJOZ0RCQkRwSmRGZ1dlaHExRCtocENadm5TdWs4K21LaHY3ejhrVUtSNDMv?=
- =?utf-8?B?Uk5kaHdVb0d1TlVDL0ZiRVpab1FRUDNnQkwrRUV0b25GNmhMMkVZRWJpZWla?=
- =?utf-8?B?bVdSYXF0VUdrZURHdTk4OXNDYnQzZVJ5YldFV2pJMnhqZE95REpOd2dLOThi?=
- =?utf-8?B?clkyYjZqNTJLaWNBWkwvL255dFJqblZjQk5tL3pMYnlMZ29WNnB3emFuR3p6?=
- =?utf-8?B?c0JuY1d2UWVTSno2ZWdSQXFtNGt2Q1Y0WTRxazV5R3NRcFF5VnhJWmJLTmlz?=
- =?utf-8?B?V1NjS1lGblAzeHFFS2dEdW5SVHlGeCs1QkUwYy9WODNGVWR3cTBXa2lkMHNt?=
- =?utf-8?B?ODZQd3FpRGJNNTFBcFkyYmZxOXpPNjRnMk94UTVsdmRickhmejExWVR3YStu?=
- =?utf-8?B?bUF6ZHF3cE8xYkQ5OWRHcndNWWY0ajhZOFRta1RjMnIvcGJDMGwyUkI0bGs3?=
- =?utf-8?B?NkhWaVV4UXZDa0VpUy81c1Yvanh3QjFjUTR6NlVIb2k5QXV1YWgwOEpSTkRE?=
- =?utf-8?B?NHI4WUNVYW1JQ3dmNGR0UXhGd1JQNXIwZkNNYXVtVHFyaXBVd3JCdERoR05p?=
- =?utf-8?B?MVRSbEprNkZPVzRrMjFWK0xyenNMcjRTUXRhcmJXM0V1bGt2bFJuZjE1a2Vu?=
- =?utf-8?B?c2gxZDZ6dnZXb1NzcTJ5WGxhdlA1OFBxeUVnS1p6UDZXM0g4RVBHcjBpaHhX?=
- =?utf-8?B?WkZSejZMa0tHcjQ5M2FVNFJuVVZLbFFGOWFlS21pS1dnblY1TGlQdGgwc3JK?=
- =?utf-8?B?cFJzWk5acGZ6cnVUbUYzenBZNGFBaEl2d05GcVE4T1NRb2ZyRFRXRjJSSWJW?=
- =?utf-8?B?aHlNRE5FT1lmVW5vSWNaa2ZYRTFENnNiM2RNVjZ0VmtNaXJWUXFLaEdqVFVX?=
- =?utf-8?B?NjNQSFN5Y2tnVHVqOVY3ekdrUVBsWlNBZEFLN1hUVmVxUkE3ai9qMUFRQitI?=
- =?utf-8?B?R3JBTU9CWVZRcVlDajhUQjU0WXJvWTcyK1ZoZnpzMDhkeldXMnpqN1lONksv?=
- =?utf-8?B?bU5icHkxalNub2FwWUpMYjhVRno3VjlNRkFqdUpPUkNUMDVKYjI1YXNpRjBz?=
- =?utf-8?B?YmQrMDJYekpFeWhsRVIyVFdnaWpPV2dsWkdOaXluZ2NGSHdZQVJ6dDJHdlR5?=
- =?utf-8?B?VGxyNjNRL2hMZFRxa1NlaFZaamhYUGRYeTM0dnp4SWlCMUVzYmt2cVViNjlH?=
- =?utf-8?B?TkxoNzExSjBYZnc0NldGS3IzTW5mczdjVFhLbXhLTDkxZ21CbFZhb3pvYlF2?=
- =?utf-8?B?K25DMGM1S2t6UEVGR0dXSXZjR1V3Ukw1NUxkNXRsL0tPdUp2eW9SdmdWWlhO?=
- =?utf-8?B?RDNuZWRVd2RsWVhvbkEvQ1NubFBoMzBTQlNjelZUTFVReWVXVjh2blc0ZE9L?=
- =?utf-8?B?Z0JPQkZ2dmpDWm5UVUc3S1U2VVFURXFTeXNCQWd3WEZJelZoRGVqYkRlVnVW?=
- =?utf-8?B?YXpVNTE0QkowSWVpY2ZrUjJSNzZKSys5UkNlMytSdXVlWXFMajB6OHdWQUU2?=
- =?utf-8?B?RS9uaDNLMHBiditDcEt0WllxemtzeVBTWDM5T1VCa2VPQktnWDZEbFFkNlE0?=
- =?utf-8?B?TmFubUJhYml3RU50dWJSWHNwTVcrS3F6V2tCRjRWMGY4QjBjcDhuUEUvdFRm?=
- =?utf-8?B?WjZBdmt6OHNvZ1JoSkJSaERwT0lQQXE0Q1BnYldyMjJDT2s1R2k2cnFwYzVz?=
- =?utf-8?B?ZVBDV09PQm01ZzgvWmhMZkNmSU41WmxUV3hxWmtVS0pQRWU1dnIzYUMvWTJs?=
- =?utf-8?B?WmhQRG9IVnhnQ1FZdWduZWtiV0FrVkw1VjB0OGsydkpnVVdRbmRXSmUwVzBs?=
- =?utf-8?B?NlNSWW1tYTRwc3VlYTI4Tk1qeUpWWFVBdFdlU3A4eW92ZnRrQndBMEJLZnYr?=
- =?utf-8?B?L3hCdHVRekwwYlMvc0xYcHUwNnJTM1p0U3huU2Nxb2kvVVBzY21EMjBWQkxp?=
- =?utf-8?B?TzFVbUg4RnVaeHVwL2ZxSDdGd1FPVnByd2lwQWl3elZuUFhIUjJmR2I3aC93?=
- =?utf-8?B?U3plYXBzNUhNRjRBckVHNXpaOU9neVFTWXR4RzkyVVYrSTJOVVBTS1lzUjFL?=
- =?utf-8?B?OVh1Q0laUmdkRDI3TUI4Zzltc2JZTkFWaEh6WkRDOEkzYSszZDZlMUhad3F2?=
- =?utf-8?B?blBNb0dSM2FablNZZzl6SWJqaS92RkJla1RpM3g3NVRIMjVNREttck85c1Ur?=
- =?utf-8?B?aHNsSGpNTHZ1dUgvbDkxa0d0N2tILzZDNmFKb1FxUy9FTUkycnZTRFBEbk1X?=
- =?utf-8?B?SG52NnVrcS9LaC9OS3BHdXFheFdrMVVtMWIzZTNkc096OGliL3ZCZ3JaZ0pn?=
- =?utf-8?B?REw5MWZ4MU8wSnpGTGpzYi9xL20xbE9jeXB0N20rZldyWWlES0NVdk1BM0FU?=
- =?utf-8?Q?txuWmqdgJ4CU4ZD4=3D?=
-X-Exchange-RoutingPolicyChecked: k7iYWuCvByNBvRBpRQ5450KrZ4TSnoqpvX34h9LJKrUrEX94SG4S+jkyRapb+PLN8uUseQOyQXYhfNjPI207SA75XWQTT1oP+xUf9L4cZEoKmpFUkoZ4tCmnVSNTgk3GW0l+qCGFNise66Heffi7bvLRXn905tYN29nZWxLksBahbT/3yUNROTMa4j6JOyOwyOla/trDza7iYx1aWnmV+iB+Lt0bPfFUGSiiuYrdyRjs2RZT1l1ogY6HXiPlzP+YqhW5i2NxKaFP62o0RCcnTVXxK7VzqIgruJsaSRzlo9Vvgu2xG5Xq6a+BD5Hkb+qPVwkagqDGw6sco8jTaFlcaw==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f42c15c-333a-427e-0ee9-08df09006fbe
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 14:42:39.1501 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LxhJBusayY+U3Ds8WjEzljQYypdI8tgyx4OKIS5jZUJsAYn4k5AE3ke0k05mwq3GSYmDN22dmPctk7aJqOs+K94dbgkyBNQqOIsGhTXb0s0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6978
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDEzMCBTYWx0ZWRfX8B5RO1GFEqXH
- PaqoL26aHzBs3aEVkc++35uUpTK4vwRwMD8mnL/pW9qbgY20q5NTFOelICxQqOYkuWmJU4i8iBj
- AwNN7kF5s63FFv7YZEdSUUkhEyzlDck=
-X-Authority-Analysis: v=2.4 cv=JZuMa0KV c=1 sm=1 tr=0 ts=6a9835e0 cx=c_pps
- a=S0nsQJN0x0NZxitFF6bqdA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
- a=64Cc0HZtAAAA:8 a=EUspDBNiAAAA:8 a=8Hp0nKSQPNhna13KrZwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: gNe2tsGkfiZqDuBNJ82iT8c426dwl4VW
-X-Proofpoint-ORIG-GUID: gNe2tsGkfiZqDuBNJ82iT8c426dwl4VW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDEzMCBTYWx0ZWRfXwNPZdfJV0b6c
- pOS3mXPNGWd20jFoaLSiKzi9lOQd7EhO3a0uH8IfBMxhnykf0QgMfj5FCj/BxEClsJ5u8JyhEaM
- 0vz1mPcqkiAXX2kVl7k8l2bk7w8PL4LK1ZiWtriMfQZaIHmsXW48kEEF9L6SsAdlKI4QmTrl5Aw
- vxoG9jUGXYkGzZ9DDUPb4xRBQCJoXmuqSGFV7VqEnvuGJ82ad6JLwPVf1VzPLe+j26cUwby2Cyl
- kSe8sNvb83qfM/o9JH/RigqnPO8xRyBtMwoV8NHCQK3cEUmXvk31Auo9XprCY3ViICi+k035cQE
- HB4wCRUYGD2BlDRiwV7gZ7smFHmO8RRkJebO/G8B061sJATwLyCmi9/i4lq+PTATR0WfSbY26G+
- XsOp3tXW6moqyHy9cNkYueSXNmsXYt8rXlbfrx0PrNfUp+lsbEJGgirTSpQz520XGu7PRnXb5o4
- /Jgbtp4LO4Jmofs7TJA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-02_03,2026-09-01_03,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260902-fix_offset-v1-1-04b18f7595b2@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -193,96 +121,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the pflash0 and pflash1 machine properties are class properties, if
-they are unspecified then QOM returns an empty string as opposed to returning
-a property not found error.
+On Wed, Sep 02, 2026 at 04:21:58PM +0200, Luigi Leonardi wrote:
+>qigvm_directive_memory_map(), qigvm_directive_madt() and
+>qigvm_directive_device_tree() all wrote their data unconditionally at
+>the start of the parameter area's buffer, ignoring param->byte_offset
+>from the IGVM_VHS_PARAMETER header. This is harmless when a
+>directive's offset happens to be 0, but breaks for IGVM files that pack
+>multiple parameters into a single shared parameter area at different
+>offsets: a later directive would overwrite the data written by an earlier
+>one at the start of the buffer, corrupting it.
+>
+>Use param_entry->data + param->byte_offset as the write location and
+>size the bounds checks against the remaining space in the buffer
+>rather than its full size.
+>
+>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>---
+> backends/igvm.c    | 10 ++++++----
+> target/i386/igvm.c |  4 ++--
+> 2 files changed, 8 insertions(+), 6 deletions(-)
+>
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index 7b7bdc72b7..a6e3a58022 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -632,8 +632,10 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+>         return -1;
+>     }
+>
+>-    max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>-    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
+>+    max_entry_count = (param_entry->size - param->byte_offset) /
 
-Before this patch:
+Should we validate that byte_offset >= size to avoid underflows?
 
-$ ./build/qemu-system-x86_64 -M q35 -monitor stdio
-QEMU 11.1.50 monitor - type 'help' for more information
-(qemu) qom-get /machine pflash0
-Error: Property 'pc-q35-11.1-machine.pflash0' not found
+>+                      sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>+    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)(param_entry->data +
+>+                                              param->byte_offset);
 
-After this patch:
+Would it be better to add some helpers that return the size and the 
+pointer (with validations as well)?
 
-$ ./build/qemu-system-x86_64 -M q35 -monitor stdio
-QEMU 11.1.50 monitor - type 'help' for more information
-(qemu) qom-get /machine pflash0
-""
+That way, we can avoid having to do this everywhere and also prevent 
+future issues.
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/hw/i386/pc.h | 2 ++
- hw/i386/pc.c         | 8 ++++++++
- hw/i386/pc_sysfw.c   | 7 +------
- 3 files changed, 11 insertions(+), 6 deletions(-)
+Stefano
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 0b925ccd8f..8369263691 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -40,6 +40,8 @@ typedef struct PCMachineState {
- 
-     Object *alias_pcspk;
-     Object *alias_rtc_time;
-+    Object *alias_pflash0;
-+    Object *alias_pflash1;
- 
-     /* Configuration options: */
-     uint64_t max_ram_below_4g;
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 876ebaadb8..ddb75a2ec0 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1800,6 +1800,14 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-                                    offsetof(X86MachineState, acpi_dev),
-                                    object_property_allow_set_link,
-                                    OBJ_PROP_LINK_STRONG);
-+    object_class_property_add_alias(oc, "pflash0",
-+                                    offsetof(PCMachineState, alias_pflash0),
-+                                    TYPE_PFLASH_CFI01,
-+                                    "drive");
-+    object_class_property_add_alias(oc, "pflash1",
-+                                    offsetof(PCMachineState, alias_pflash1),
-+                                    TYPE_PFLASH_CFI01,
-+                                    "drive");
- }
- 
- static const TypeInfo pc_machine_info = {
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 1a41a5972b..441e777191 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -85,8 +85,7 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
-     qdev_prop_set_uint8(dev, "width", 1);
-     qdev_prop_set_string(dev, "name", name);
-     object_property_add_child(OBJECT(pcms), name, OBJECT(dev));
--    object_property_add_alias(OBJECT(pcms), alias_prop_name,
--                              OBJECT(dev), "drive");
-+    object_property_set_alias(OBJECT(pcms), alias_prop_name, OBJECT(dev));
-     /*
-      * The returned reference is tied to the child property and
-      * will be removed with object_unparent.
-@@ -109,16 +108,12 @@ void pc_system_flash_create(PCMachineState *pcms)
- 
- void pc_system_flash_cleanup_unused(PCMachineState *pcms)
- {
--    char *prop_name;
-     int i;
- 
-     assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
- 
-     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-         if (!qdev_is_realized(DEVICE(pcms->flash[i]))) {
--            prop_name = g_strdup_printf("pflash%d", i);
--            object_property_del(OBJECT(pcms), prop_name);
--            g_free(prop_name);
-             object_unparent(OBJECT(pcms->flash[i]));
-             pcms->flash[i] = NULL;
-         }
--- 
-2.43.0
+>
+>     retval = get_mem_map_entry(entry, &cgmm_entry, errp);
+>     while (retval == 0) {
+>@@ -837,14 +839,14 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+>     }
+>
+>     fdt_size = fdt_totalsize(fdt_packed);
+>-    if (fdt_size > param_entry->size) {
+>+    if (fdt_size > param_entry->size - param->byte_offset) {
+>         error_setg(errp,
+>                    "IGVM: device tree size exceeds parameter area"
+>                    " defined in IGVM file");
+>         return -1;
+>     }
+>
+>-    memcpy(param_entry->data, fdt_packed, fdt_size);
+>+    memcpy(param_entry->data + param->byte_offset, fdt_packed, fdt_size);
+>
+>     return 0;
+> }
+>diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+>index ad9bf87761..4d9d97385a 100644
+>--- a/target/i386/igvm.c
+>+++ b/target/i386/igvm.c
+>@@ -199,8 +199,8 @@ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+>
+>     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
+>
+>-    if (madt->len <= param_entry->size) {
+>-        memcpy(param_entry->data, madt->data, madt->len);
+>+    if (madt->len <= param_entry->size - param->byte_offset) {
+>+        memcpy(param_entry->data + param->byte_offset, madt->data, madt->len);
+>     } else {
+>         error_setg(
+>             errp,
+>
+>-- 
+>2.55.0
+>
 
 
