@@ -4,123 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34A2C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 06:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED350C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 06:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1eC6-00087a-Mv; Wed, 02 Sep 2026 02:11:34 -0400
+	id 1x1eG6-0001fY-EW; Wed, 02 Sep 2026 02:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x1eC4-0007x9-JX; Wed, 02 Sep 2026 02:11:32 -0400
-Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1x1eG4-0001eL-Mx
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 02:15:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1x1eC2-00033B-Ej; Wed, 02 Sep 2026 02:11:32 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [79.137.60.225])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4hZXRf25x4z3wsX;
- Wed,  2 Sep 2026 06:11:26 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed,  2 Sep 2026 06:11:26 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.14])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hZXRf0Nw2z6MbL;
- Wed,  2 Sep 2026 06:11:26 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 65D511B43FE6;
- Wed,  2 Sep 2026 06:11:24 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-103G005c31b6203-da98-45d4-8638-7b17b5e8887a,
- E05C9764BA5542D7874F2BFBE20C1A6231857223) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <689b7196-11cd-4925-93cc-87f00fab061b@kaod.org>
-Date: Wed, 2 Sep 2026 08:11:23 +0200
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1x1eG3-0003SL-0B
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 02:15:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788329737;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=c67ZLIePHPxQ8MjjcKoUytIhrkoCYu3zTPbGL0OnzyA=;
+ b=jLoCnxbA9LhSOoMw4g9+zqHHwzcu5MxeY5MZUOSB9A1Iwlya6hPi+VfSOKvFROL2dJBYNP
+ dP7ThAmhNRsQMWq1bIqov3/JsNY8giENxeIdOs4J0cUzv1Py6gGEdbHDOtwiTZBiED7Crp
+ j7nXl2tIqV0qLwEyDHuX+eRwX2eSFl8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-L4pevW_vNpyTZRNMzehZJw-1; Wed,
+ 02 Sept 2026 02:15:34 -0400
+X-MC-Unique: L4pevW_vNpyTZRNMzehZJw-1
+X-Mimecast-MFC-AGG-ID: L4pevW_vNpyTZRNMzehZJw_1788329732
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45656183F9CE; Wed,  2 Sep 2026 06:15:32 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.41])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 368331956044; Wed,  2 Sep 2026 06:15:31 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 1CD4118007B6; Wed, 02 Sep 2026 08:15:30 +0200 (CEST)
+Date: Wed, 2 Sep 2026 08:15:30 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Tushar Dave <tdave@nvidia.com>
+Cc: Alex Williamson <alex@shazbot.org>, qemu-devel@nongnu.org, 
+ jgg@nvidia.com, skolothumtho@nvidia.com, qemu-arm@nongnu.org, 
+ peter.maydell@linaro.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ devel@edk2.groups.io
+Subject: Re: [RFC PATCH v2 0/5] hw/pci, hw/arm/virt: fixed PCI BAR placement
+Message-ID: <ape0Mbd7Lt4KS-wN@sirius.home.kraxel.org>
+References: <20260827004024.598351-1-tdave@nvidia.com>
+ <ao_fX3cYersq6TRd@sirius.home.kraxel.org>
+ <20260827074733.340aeb0c@shazbot.org>
+ <apV1FXabgOVdAqQu@sirius.home.kraxel.org>
+ <b4d51232-43a0-4058-af96-5c3ca847edd8@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Add ASPEED ACRY RSA model for the AST2600
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260901081531.898176-1-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260901081531.898176-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 13694883520206384173
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGYuB4TTPgW09rXe7u1ePfEmjW4J8Eo20qrStMz+NwhhMJYL0KPdoumfBC/WzzI4uBiJ659L761m0Wt+zLhmc6il6DiXJ1D/cm1GT0R/IvrcfhN95LP9z3w1ypU+M8cXeZKPhCxdUYpKTF+vGELfdGy+9Q6XCFB4DqmxDYV4P+uZgBa8zdGl9QeIVBiF44AnvxFvrCluT36k4+Daxu2MstcBfWOj1YhCMV9iOWjd89bHOCHZ/lMMAIAsbDPrVHJeTKzbP9FVh3yGn79otqWhU6uQCThmWTfy1EtpET+UNTOIbi9/SWlsg3R0PsbYgpiNaA2ujZj6X4AGOG6pFCGoJngSMaPqH20MkW03QG3Wib+TErz9zesMJeLF7SDbKKcYa9E3uaIWA8ol1IMtXKFrMaQI8NKs22FU7jjcQ8fal92+tkuOV22qHY8NjjhmZ1T3OCFw47Qm4LFLbLqZk7x/ctXjh0sLvYomByEFwQIO2eezPi0ozUYVkPgVftICSAmqPIdQAzaZWj4G5e0bLBLaTmdVZW3D0N2+td2lAEBlcbcv8FPxbiB6yav3AsyBRTpmrQLj2Uif41I4nnkXRQsC3b9eehcbdtJScmVJa/0buwwJ/XWO6JNZdnX9fQon5evgAJ4TKHkLR02VqNrvvCsw3yzRkDRIu28P1MedN1wlQ6r0Q
-DKIM-Signature: a=rsa-sha256; bh=GW99TAfTDyuFLOjFPtTi6UNnIFpHmRF9KnOKBSzsUCg=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788329487; v=1;
- b=HpGfpZwT9N1ptXVrXa/pOD9F8SXI3uJNGW8qiZCUxLdA6vapt5aQ1ljf1aDILpHx0DHr5aPw
- 3UXyMUVEeBUdDRDmmJRGj8lJhT6nkpW/WJZMq7Zh7CgWc6dvliIEQMU5FKBGHBLEYfrllxnRp/O
- x2tTGsI/3236eVfh5XVAY9ayhQyrCg8eYVHlg+N2gFnKTcqi0jL0g/lf68mFxAG25clXnjIlIwZ
- P4c2DwEZLtvBggC5c/VGWBz/v+5xIeBiW+XRxHBNgMH3/Lea6TdhQn8K+OQA0JVKzpQ2/fO6np1
- Ym3HgXfuVZdPMJ2g9+YSikqQxlaqE4KqYcq5x2mP21grg==
-Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
- helo=smtpout1.mo2.mail-out.ovh.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b4d51232-43a0-4058-af96-5c3ca847edd8@nvidia.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,80 +89,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/26 10:15, Jamin Lin wrote:
-> This series adds a model of the ASPEED ACRY engine found on the AST2600
-> SoC, wires it into the SoC, and adds a qtest.
-> 
-> The ACRY engine performs RSA modular exponentiation (c = m^e mod n). It
-> DMAs the operands (data, exponent, and modulus) from guest DRAM and writes
-> the result to a dedicated 64 KiB SRAM region.
-> 
-> Guest firmware uses the engine for RSA signature verification during boot.
-> Without a model, the guest starts the engine and waits indefinitely for a
-> completion interrupt, causing the boot to hang.
-> 
-> The model uses QEMU's generic akcipher API to perform raw (unpadded) RSA.
-> Raw RSA is currently supported only by the libgcrypt backend, which can be
-> enabled alongside gnutls with -Dgcrypt=enabled, so a build does not have to
-> choose between the two. When raw RSA is unavailable, the engine still
-> completes and raises its interrupt, but returns an all-zero result. This
-> allows the guest's signature verification to fail cleanly instead of
-> hanging. The qtest is skipped when the selected crypto backend does not
-> support raw RSA.
-> 
-> Although the hardware documentation describes both RSA and ECDSA support,
-> ECDSA is known to be broken on this hardware and is therefore not modeled.
-> 
-> v1:
->   1. Add ASPEED ACRY RSA model for the AST2600
->   2. Add qtest for AST2600 ASPEED ACRY RSA model
->   
-> v2:
->   1. squash "Add the ACRY model to AspeedSoCState" into "Wire up the ACRY
->      model"
->   2. wrap the ACRY SRAM in a container mapped at offset 0 so the device
->      addresses it by relative offset (drop the "sram-base" property)
->   3. build the scattered SRAM byte offsets on the fly instead of caching
->      them in per-instance lookup tables
->   4. write the result with address_space_stl_le() and check the MemTxResult
-> 
-> v3:
->    1. Return early when the DMA read of the operand buffer fails
->    2. Replace g_printerr with g_test_skip
->    
-> v4:
->    1. Remove unused macros.
->    2. Dynamically allocate data and src_buf to reduce stack usage in aspeed_acry_do_rsa().
->    3. Add a helper function to clear the result when aspeed_acry_do_rsa() fails.
->    4. Add bounds checking to aspeed_acry_operand_offset() and replace magic numbers with
->       compile-time constants.
-> 
-> Jamin Lin (4):
->    hw/misc/aspeed_acry: Add ASPEED ACRY model
->    hw/arm/aspeed_ast2600: Introduce the ACRY SRAM
->    hw/arm/aspeed_ast2600: Wire up the ACRY model
->    tests/qtest/aspeed-acry-test: Add RSA ModExp tests
-> 
->   include/hw/arm/aspeed_soc.h    |   4 +
->   include/hw/misc/aspeed_acry.h  |  39 +++
->   hw/arm/aspeed_ast2600.c        |  34 +++
->   hw/misc/aspeed_acry.c          | 481 +++++++++++++++++++++++++++++++++
->   tests/qtest/aspeed-acry-test.c | 406 ++++++++++++++++++++++++++++
->   hw/misc/meson.build            |   1 +
->   hw/misc/trace-events           |   6 +
->   tests/qtest/meson.build        |   5 +-
->   8 files changed, 975 insertions(+), 1 deletion(-)
->   create mode 100644 include/hw/misc/aspeed_acry.h
->   create mode 100644 hw/misc/aspeed_acry.c
->   create mode 100644 tests/qtest/aspeed-acry-test.c
-> 
+  Hi,
 
-Applied to
+> > And, yes, the logic to match entries in the fw_cfg file with the correct
+> > device using vendor and device id looks somewhat fragile to me too.
+> > 
+> > Existing code in qemu+firmware (for example bootorder) uses the location
+> > in the physical device tree to identify devices, like this:
+> > 
+> > /pci@i0cf8/pci-bridge@3/*@0/*@0/*@0,0
+> >  ^^^^^^^^^                             pcie root bus
+> >            ^^^^^^^^^^^^                pcie root port @ slot 3
+> >                         ^^^            virtio-scsi-pci @ slot 0
+> >                             ^^^        scsi controller bus #0
+> >                                 ^^^^^  scsi device target 0, lun 0
+> 
+> Good point but the problem is CheckDevice()'s own signature, which is
+> fixed by UEFI PI spec (only passes
+> VendorId/DeviceId/RevisionId/SubsystemVendorId/SubsystemDeviceId). Even
+> though the path exists internally, the standard protocol interface
+> doesn't pass it to the callback.
 
-     https://github.com/legoater/qemu aspeed-next
+Hmm, yes.  Seems to be designed to apply quirks to device classes, not
+individual devices.
 
-Thanks,
+Also note that OVMF already has an incompatible pci device driver and
+there can be only one instance, so the code must be merged into the
+existing driver instead of adding a second.
 
-C.
+> Therefore, we prepare the blob entries
+> in the same order PciBusDxe discovers devices, so matching by VID:DID
+> inherently works.
+
+Question is whenever we want have that edk2 limitation and the knowledge
+about edk2 internals (pci scan order) encoded in the qemu <-> firmware
+protocol.  I think it makes sense to (additionally) pass the complete
+device path even if the current edk2 implementation doesn't use it, so
+we have the option to improve things later on without having to change
+the qemu <-> firmware protocolS for that.
+
+> > I can see that allowing fixed and non-fixed bars mix is much harder to
+> > handle.  Do we need to ask the user to manually set that though?  I'd
+> > prefer pci devices propagating automatically to the parent bus that they
+> > have fixed bars and additional constrains apply.
+> 
+> I looked at this again, and technically nothing actually needs the flag
+> to exist. The real reason I kept it is closer to a usability one; it's
+> meant to be a visible signal in the launch script itself, so anyone
+> reading or writing the qemu command line sees up front that every device
+> under that root port is expected to have pci-bars= configured, rather
+> than that requirement only surfacing as a runtime error if something's
+> missing.
+
+I'm not sure how much of a usability win that actually is, if you forget
+to set the flag you still get a runtime error.
+
+In general I like things which can be done automatically actually happen
+automatically as this simplifies things for the user in most cases.
+
+> > Also: if the main use case for this is to map vfio devices with guest
+> > physical address == host physical address, is there a need to specify
+> > this manually at all?  Shouldn't we have a 'vfio-pci-fixed' device which
+> > handles this automatically?
+> 
+> VFIO GPA == HPA is the primary motivation, but I don't think fixed-bar
+> should be tied to VFIO or automatically derive guest addresses from the
+> host.
+
+Why not?  It is a great usability improvement IMHO.
+
+> For the VFIO use case, the admin can choose to specify the host
+> BAR addresses as the fixed-bar configuration to get GPA == HPA, but the
+> mechanism itself doesn't assume or enforce that -- the desired guest
+> layout isn't always just a copy of the host's, so having fixed-bar
+> auto-derive it on its own would be incorrect in some cases, not just
+> less general.
+
+You still can have fixed-bar-<nr>=<addr> properties to override the
+auto-discovered address for some or all pci bars.
+
+> The mechanism remains a generic way to explicitly specify
+> PCI BAR addresses.
+
+Yes, the code which creates the fw_cfg files is generic and it makes
+sense to have that in the core pci code, so it can be used for every pci
+device.
+
+Nevertheless I'd tend to only expose the properties for devices where an
+actual use case exists.  Which is obviously vfio-pci(-fixed).  Also
+pci-testdev for development / testing / CI.  I can't see much beyond
+that though.
+
+take care,
+  Gerd
 
 
