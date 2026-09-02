@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8877AC624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6781EC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1kEX-00028L-1i; Wed, 02 Sep 2026 08:38:29 -0400
+	id 1x1kFC-0002Lx-H9; Wed, 02 Sep 2026 08:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1x1kEV-000285-SI
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:38:27 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ id 1x1kFA-0002Kk-6J
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:39:08 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1x1kET-0007DN-KX
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:38:27 -0400
+ id 1x1kF8-0007M4-9m
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:39:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788352705; x=1819888705;
+ t=1788352746; x=1819888746;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=VYTDI0Cbmrk40gL72Y5WMRcp2ljGL2Rq1jc5jYQa2yA=;
- b=dGi2y9/MgNsuxCXi6M7vHr7d3PiJOEOfpO853dUUrwv1DuIlQ1iYIljD
- 2czxp0UgS/VUFw+quTJhdmkGmoG7YA87GRsOoNUsHIhiH7n9l8FNGpbYA
- arDXDJAPUuB+hjM1FQWdEmTvkb8N9NOmEanGvVOXCyFHHb5vmvPS+e5dZ
- bAiWkPToroDyzYROT8vw5z7ymnA1VNADIKDmlHKcx7OojZ/7RKl9Dg4Vj
- ZCK/dwx3HYsyGqvG8NRCxYTCVtpsg8mXlGo++gLv5Y4llXcFHj7kx+Pz9
- WlhBIe0WlSAWBPStO0mVPaM4OwuMr+rknspngkL0v235o1+lb2DFFsF+3 w==;
-X-CSE-ConnectionGUID: fXYJrHLqQ++fm8NLsmLmxA==
-X-CSE-MsgGUID: 6h6iiHwqTKa9eK4BM8rm9Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="88932704"
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="88932704"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 05:38:21 -0700
-X-CSE-ConnectionGUID: 2wFWxBQ1SpSqPCJVQ6KEkw==
-X-CSE-MsgGUID: 2F9VIYSjRnSF66kKwCJi+Q==
+ bh=cn3iogYEPWpA9gI7bnwCiMYsWb8K3Y77UrWJBub9vzc=;
+ b=KUX8ab7SlO3Bw9HcG/setJTQo0TJbZwqS/N7MeEe9U7oEjIv03AwaETs
+ N5v8H7iglnSpVIfV8P7Ij+iA1az7NCDiZnVGHitdoDO6MQBBgRGHi+pqB
+ vCTJn6lyTXGxi4Mhcryknia+4hQSMI7tMwEcxt5aceKBrAS16bp17Cvxg
+ VCIu8mwaEqKqsSAAoxiEEFT85uuiZfXGV++l/M4lrKKvP1cLQIioF1+Z4
+ nJxZkPENM48XLDOvBcifYkEC+CcJNCS/8h0GYmHtU2SkBmn7KeH/7WDYT
+ bQhPoNl/02ofNdU+ZAhHkMy4hM5ahvT/X6g5pQt1Oo9ANoMQLt9uoPwXs A==;
+X-CSE-ConnectionGUID: wIj3AQA7S+iGSjvmUiFqcA==
+X-CSE-MsgGUID: AffQ8ADTRCm33deSccuoOQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="88829173"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="88829173"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2026 05:39:04 -0700
+X-CSE-ConnectionGUID: l7bdkdF+SqeueBuHCestIw==
+X-CSE-MsgGUID: K/yxMTVqTwiPEAI5DTaD/w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="266789249"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="269417761"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by fmviesa008.fm.intel.com with ESMTP; 02 Sep 2026 05:38:20 -0700
-Date: Wed, 2 Sep 2026 20:38:19 +0800
+ by orviesa007.jf.intel.com with ESMTP; 02 Sep 2026 05:39:03 -0700
+Date: Wed, 2 Sep 2026 20:39:01 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Ewan Hai-oc <ewanhai-oc@zhaoxin.com>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, ewanhai@zhaoxin.com,
  cobechen@zhaoxin.com
-Subject: Re: [PATCH v4 2/4] target/i386: Add Zhaoxin cryptographic CPUID
- features
-Message-ID: <apgYu+CPOLjrx5G0@intel.com>
+Subject: Re: [PATCH v4 3/4] target/i386: Introduce Zhaoxin Shijidadao CPU model
+Message-ID: <apgY5SQpUFnOFIkI@intel.com>
 References: <20260826084838.2107629-1-ewanhai-oc@zhaoxin.com>
- <20260826084838.2107629-3-ewanhai-oc@zhaoxin.com>
+ <20260826084838.2107629-4-ewanhai-oc@zhaoxin.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260826084838.2107629-3-ewanhai-oc@zhaoxin.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260826084838.2107629-4-ewanhai-oc@zhaoxin.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -83,27 +82,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 04:48:36PM +0800, Ewan Hai-oc wrote:
-> Date: Wed, 26 Aug 2026 16:48:36 +0800
+On Wed, Aug 26, 2026 at 04:48:37PM +0800, Ewan Hai-oc wrote:
+> Date: Wed, 26 Aug 2026 16:48:37 +0800
 > From: Ewan Hai-oc <ewanhai-oc@zhaoxin.com>
-> Subject: [PATCH v4 2/4] target/i386: Add Zhaoxin cryptographic CPUID
->  features
+> Subject: [PATCH v4 3/4] target/i386: Introduce Zhaoxin Shijidadao CPU model
 > X-Mailer: git-send-email 2.34.1
 > 
-> Add QEMU feature names and masks for the SM2, CCS, RNG2, PHE2 and RSA
-> feature pairs in CPUID 0xC0000001 EDX. The matching KVM support exposes
-> these bits through KVM_GET_SUPPORTED_CPUID.
+> Introduce the Zhaoxin Shijidadao CPU model with two versions:
 > 
-> TCG does not currently implement these instructions. Keep
-> TCG_EXT4_FEATURES at zero so QEMU filters the bits from realized TCG
-> CPUs.
+> - v1 (alias: Shijidadao-Server) - Server variant with CORE_CAPABILITY
+>   and SPLIT_LOCK_DETECT support
+> - v2 (alias: Shijidadao-Client) - Client variant with different FMS
+>   (model=0x6b, stepping=1), with neither CORE_CAPABILITY features nor
+>   the ACE2 feature pair
 > 
-> Link: https://lore.kernel.org/all/20260610023512.3690734-1-ewanhai-oc@zhaoxin.com/
+> Both versions include the SM2, CCS, RNG2, PHE2 and RSA feature pairs
+> exposed by KVM.
+> 
+> The model_id for both variants is 'Zhaoxin Shijidadao Processor'.
+> 
 > Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
 > ---
->  target/i386/cpu.c | 10 +++++-----
->  target/i386/cpu.h | 20 ++++++++++++++++++++
->  2 files changed, 25 insertions(+), 5 deletions(-)
+>  target/i386/cpu.c | 153 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 153 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
