@@ -4,64 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9272C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519F8C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 15:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1mNa-0005lu-CO; Wed, 02 Sep 2026 10:55:58 -0400
+	id 1x1mgW-0000wv-2i; Wed, 02 Sep 2026 11:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x1mNX-0005lX-Ea; Wed, 02 Sep 2026 10:55:55 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x1mNV-0003eS-4d; Wed, 02 Sep 2026 10:55:55 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwBHTxv0OJhqAMVHBQ--.14530S2; 
- Wed, 02 Sep 2026 22:55:48 +0800 (CST)
-Received: from [192.168.2.11] (unknown [113.246.117.164])
- by mail (Coremail) with SMTP id AQAAf8DwR3byOJhq3OqqAA--.44363S2;
- Wed, 02 Sep 2026 22:55:46 +0800 (CST)
-Message-ID: <cb29dd9c-67f1-461b-a33e-b9b3dcabaad8@phytium.com.cn>
-Date: Wed, 2 Sep 2026 22:55:46 +0800
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1mgU-0000wl-5Z
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:15:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1mgS-00075p-98
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:15:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788362127;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1SNHDBa6jDxfTnl0Q8D6KmBB9Pi21fo0artPfovSgnY=;
+ b=Bmr/sBh7nfJU2B1aADz05jznPtOB9Z+kgcD9btC/mhdf+z1dFzSrFk/irD+PFXopsBmkDe
+ Ehp0vXhquEbwXSqOI3/8pxgTAVJ6MXhH57B6yawHaLr3fmrb5eDlp/tQo5nJxNOhLff/3f
+ kJHVoNReIKuJqYC1kKexwblpmBefG6Q=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-442-cbS697i7O-CvVQQ_boLVTw-1; Wed, 02 Sep 2026 11:15:25 -0400
+X-MC-Unique: cbS697i7O-CvVQQ_boLVTw-1
+X-Mimecast-MFC-AGG-ID: cbS697i7O-CvVQQ_boLVTw_1788362123
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49b7c1dc61eso10520685e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 08:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788362123; x=1788966923; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=1SNHDBa6jDxfTnl0Q8D6KmBB9Pi21fo0artPfovSgnY=;
+ b=kV6VxG2Tqp0utWxU6w2kjZZYy7Kthr9NhIp65WDDmy6bqJiErEgSWAIUztRF7muDhd
+ DmsgtfxIaoPlPxc7LUvOOX0XbzM30grewow42Ywo+0inCevgv7RIGv7XcJuPdIFaF+EI
+ CT9lMrOC/cXBWBFE9G/5fNDHkbhu4s4sjcEY+Y/9l9/fsRVHwY6iDUgOk5aCKHe41DL9
+ fC5wdxPc0IiH55aBemoTd9ForxWDh2/sQmMujj9vGttpeqH4/8wqsE+fmyMKDAEusOEM
+ NgvbZyJCpPZD+zVgc7Cq64TAdWAeQ9yr/ftJsOt61PotgdYPjWvPLVF976B1sY/DEtqS
+ 6zOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788362123; x=1788966923;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=1SNHDBa6jDxfTnl0Q8D6KmBB9Pi21fo0artPfovSgnY=;
+ b=S8KEKvX5kvi/7+Yc3q40kwwYD+0dTWk3mSYjA1veNbdIdrMF9Fb/jA6ErOay7sN0Zx
+ sHgfcewGaiYuwO1fza7TW5Yr+Em/s6BZZuQDDvkuycmdMu4Uv1yNWRkEJAXiLirkpIzU
+ vCDWPvq6VzcP3+6q7uspoDTt46WmaM/ExRfzd2nYnmMX9rY5neDmsICEyRqD7U4+7o5E
+ kepJLRMPXLspjyzhITZjzo5IzQlhvY6rCddPaNvvSzYPCWssO2vDxFVSftwc9FaTtXO3
+ cLxkG+CYqYDLGIsBBiYoqtGrBjvalph+MqXJHWIY15L3jEoicLTJUCqpwqafu2MOOhcy
+ CzEw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqJlMUIMlDeb0eEJegk1EWx+lfMbOHo7PwHbonpkabFUfwLMhi0w4HH9i+L/uOYjnME4qwKZ9sICE1Z@nongnu.org
+X-Gm-Message-State: AFuF++nYg7ocS3pq3OU71kdNeqJd8H4RwKnkhaeZUAPVh5rfNaWSTmjh
+ SkAacztxfMvGKm/viKp7C6C+mRX36/SwKVVm7VlGxj4GsTxWjJd5/HRLuAd2od0GIXi1k6Osrge
+ 9wAUHL2NMP0mNIAMCYpnfaYGB+asTRtCbQEQJXI+SPEj8yEVQUGQAUv15
+X-Gm-Gg: AR+sD137y1l0S9Wi7NFKeNaN/IbF9LY5IkPCnE6BebwcsYuOF86U+g+xjKKLUC4gKSV
+ qC686NVF2xK8lJUz5/wCWBUT0pPi9AdRWO4FPNRHvrSpLuKhDoDChmIRrdF19tfHINMjG1mQwb1
+ 6vnjYeZnYIz40cm4lm7DyPuQw6RpEuT30Qyq4gxoMlHl8yCXcuImUArLTJn1HlGOyOqWpalquGQ
+ tDUSirq0T4AFmK12awP1eMdREAv57FFaT08OQld4qmL7dxlFAJK/shPR4jldoPTgmmHvqX4iKW5
+ diySU6F0hcmbSCGBCPfBEVLCURbyNBbdmHMjumUVYCKuTWdUrejIZcnFTHV8IPOhKj4=
+X-Received: by 2002:a05:600c:4e16:b0:49c:ee06:9c58 with SMTP id
+ 5b1f17b1804b1-49cee069c79mr13904515e9.4.1788362123076; 
+ Wed, 02 Sep 2026 08:15:23 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e16:b0:49c:ee06:9c58 with SMTP id
+ 5b1f17b1804b1-49cee069c79mr13902575e9.4.1788362122462; 
+ Wed, 02 Sep 2026 08:15:22 -0700 (PDT)
+Received: from redhat.com ([187.15.128.103]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ce5533ffbsm45976475e9.3.2026.09.02.08.15.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 08:15:21 -0700 (PDT)
+Date: Wed, 2 Sep 2026 11:15:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/4] AGENTS.md: Let agents know what the participation
+ rules are
+Message-ID: <20260902111324-mutt-send-email-mst@kernel.org>
+References: <20260901161422.314581-1-pbonzini@redhat.com>
+ <20260901161422.314581-3-pbonzini@redhat.com>
+ <87a4pzrcqw.fsf@draig.linaro.org> <apgpDaBqCaVPqmLH@redhat.com>
+ <20260902095523-mutt-send-email-mst@kernel.org>
+ <apgt6epzNKfo5AM0@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 22/28] hw/arm/smmuv3: Harden security checks in MMIO
- handlers
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162624.2809349-2-tangtao1634@phytium.com.cn>
- <40aae38d-a013-4be1-a259-93174fe52a69@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <40aae38d-a013-4be1-a259-93174fe52a69@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8DwR3byOJhq3OqqAA--.44363S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWqXJ8sGbwADs5
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKFy3Wr1kXw4Dur18Wr17Wrg_yoW7Wr4kpr
- WkG3WagFs8KF13CFsaqw4DZ3WfK3ykKryakrZ3G34UZayqyr1rX3W0k34YgFsrCryUZw4I
- gr4xCrZ3ur1jy3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <apgt6epzNKfo5AM0@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,143 +129,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
-
-On 2026/8/31 13:56, Eric Auger wrote:
-> Hi Tao,
->
-> On 8/13/26 6:26 PM, Tao Tang wrote:
->> This patch hardens the security validation within the main MMIO
->> dispatcher functions (smmu_read_mmio and smmu_write_mmio).
->>
->> First, accesses to the Secure register space are gated by whether
->> SECURE_IMPL is enabled. When it is disabled, all SMMU_S_* registers are
->> read-as-zero and write-ignored.
->>
->> Second, the check for the input stream's security is made more robust.
->> It now validates not only the legacy MemTxAttrs.secure bit, but also
->> the .space field. This improves compatibility with Arm security space
->> handling.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/smmuv3.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 55 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index dc3fa618883..e5f0bc18415 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1605,6 +1605,12 @@ static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
->>       return smmu_irq_cfg_writable(s, sec_sid, SMMU_IRQ_EVTQ);
->>   }
->>   
->> +/* Check if the SMMU hardware itself implements secure state features */
->> +static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
->> +{
->> +    return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
->> +}
->> +
->>   static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->>   {
->>       SMMUState *bs = ARM_SMMU(s);
->> @@ -1905,6 +1911,38 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
->>       return 0;
->>   }
->>   
->> +/*
->> + * Helper function for Secure register access validation.
->> + *
->> + * Follow S_IDR1.SECURE_IMPL accessibility rules for SMMU_S_*:
->> + *  - SECURE_IMPL == 0: Secure state is not implemented; SMMU_S_* are RAZ/WI to
->> + *    all accesses.
->> + *  - SECURE_IMPL == 1: Non-secure accesses to SMMU_S_* are RAZ/WI.
->> + */
->> +static bool smmu_check_secure_access(SMMUv3State *s, MemTxAttrs attrs,
->> +                                     hwaddr offset, bool is_read)
->> +{
->> +    /* Check if the access is secure */
->> +    if (!(attrs.space == ARMSS_Secure ||
->> +          attrs.secure == 1)) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +            "%s: Non-secure %s attempt at offset 0x%" PRIx64 " (%s)\n",
-> would suggest
->
-> "%s: Non-secure %s at secure offset 0x%" PRIx64 " (%s)\n"
-> I am not sure we shall detail the end behavior here but rather put that in the call site
->
->> +            __func__, is_read ? "read" : "write", offset,
->> +            is_read ? "RAZ" : "WI");
->> +        return false;
->> +    }
->> +
->> +    /* Check if the secure state is implemented. */
->> +    if (!smmu_hw_secure_implemented(s)) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +            "%s: Secure %s attempt at offset 0x%" PRIx64 ". But Secure state "
->> +            "is not implemented (RES0)\n",
->> +            __func__, is_read ? "read" : "write", offset);
-> "%s: Secure %s at secure offset 0x%" PRIx64 "without support of secure state\n"
-> RES0 is a bit ambiguous. is it the capability which is RES0 or is it some end behavior associated to the access? I would skip this and detail in the caller instead
->
-> + *  - SECURE_IMPL == 0: Secure state is not implemented; SMMU_S_* are RAZ/WI to
-> + *    all accesses.
->
->> +        return false;
->> +    }
->> +    return true;
->> +}
->> +
->>   static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->>                                   uint64_t data, MemTxAttrs attrs,
->>                                   SMMUSecSID reg_sec_sid)
->> @@ -2272,6 +2310,18 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
->>        * translate the Secure window to its bank-local register offsets.
->>        */
->>       if (offset >= SMMU_SECURE_REG_START) {
->> +        if (!smmu_check_secure_access(s, attrs, offset, false)) {
->> +            trace_smmuv3_write_mmio(offset, data, size, MEMTX_OK);
->> +            /*
->> +             * RAZ/WI/RES0 are deterministic register-level behaviors and do not
->> +             * imply a bus protocol error or abort. Therefore we acknowledge the
->> +             * MMIO transaction with MEMTX_OK and implement
->> +             * "Read-As-Zero / Write-Ignored" in the register model, instead of
->> +             * returning MEMTX_*_ERROR which is reserved for real decode/access
->> +             * failures.
-> So here you document again the associated end behavior. I think si could
-> be simplied to "WI single line", no?
+On Wed, Sep 02, 2026 at 03:08:41PM +0100, Daniel P. Berrangé wrote:
+> On Wed, Sep 02, 2026 at 09:56:25AM -0400, Michael S. Tsirkin wrote:
+> > On Wed, Sep 02, 2026 at 02:47:57PM +0100, Daniel P. Berrangé wrote:
+> > > On Wed, Sep 02, 2026 at 02:42:15PM +0100, Alex Bennée wrote:
+> > > > Paolo Bonzini <pbonzini@redhat.com> writes:
+> > > > 
+> > > > > Humans seem to be extremely unreliable in following rules around this,
+> > > > > even after being told directly and repeatedly. Telling agents what to
+> > > > > do seems to yield better results.
+> > > > >
+> > > > > This document is based on GStreamer's AGENTS.md file, as of its commit
+> > > > > d08375499c279a56c0e77c928fbeae0d80cdf937.  However, GStreamer's agent
+> > > > > instructions are "effective" enough to require an explicit carve-out
+> > > > > for maintainers.  I actually believe that such a carve-out is a sign of
+> > > > > going too far, especially given the good quality of some suspected-AI
+> > > > > contributions we've received.
+> > > > >
+> > > > <snip>
+> > > > > diff --git a/AGENTS.md b/AGENTS.md
+> > > > > new file mode 100644
+> > > > > index 00000000000..8fb96ebfc38
+> > > > > --- /dev/null
+> > > > > +++ b/AGENTS.md
+> > > > > @@ -0,0 +1,100 @@
+> > > > > +# Agent Guidelines for the QEMU Project
+> > > > > +
+> > > > > +QEMU is a cross-platform emulator and virtualizer. Due to the complexity
+> > > > > +of the domain and codebase, and the interactions therein, the QEMU
+> > > > > +project relies extensively on the effort of **human reviewers**, which
+> > > > > +is **a scarce resource**.
+> > > > > +
+> > > > > +There are strictly-enforced rules for you, the agent, to participate in the
+> > > > > +project.
+> > > > > +
+> > > > > +## Interactions with maintainers must be human-human
+> > > > > +
+> > > > > +The QEMU project has strict rules on what AI-generated material can
+> > > > > +reach the maintainers.
+> > > > > +
+> > > > > +### No automated posting
+> > > > > +
+> > > > > +- Agents **must not** use any API, CLI, or web UI automation to:
+> > > > > +  - Interact with the QEMU mailing lists
+> > > > > +  - Create, edit, or close **issues ("work items")**
+> > > > 
+> > > > The others I'm fine with but I currently use an agent to do triage on
+> > > > un-tagged issues. It only updates labels and occasionally posts a
+> > > > comment when more information or a human input is required.
+> > > 
+> > > While this is technically something you're doing via your personal
+> > > gitlab account, I none the less view the agent triage bot as something
+> > > run as an "official" project service.
+> > > 
+> > > IMHO the AGENTS.md policy primarily applies to actions done in an
+> > > individual capacity (whether contributor or maintainer).
+> > > 
+> > > If the project wants to deploy project level services that utilize
+> > > AI in some manner and that conflicts with AGENTS.md that's acceptable,
+> > > provided we discuss & agree that the project service in question is
+> > > desirable.
+> > > 
+> > > Perhaps this is me saying that the issue triage bot should be made
+> > > more official as a service, committed to git, etc
+> > 
+> > well I have a script that uses gitlab API to run the security process
+> > workflow. But it's... how do I put it... AI assisted ;)
+> 
+> Can we make that an official project script too, such that it is
+> something that is reviewed and thus "blessed" as acceptable ?
 
 
-Thanks, makes sense. I'll simplify the log messages as suggested, drop 
-the ambiguous RES0 wording, and keep the RAZ/WI behavior documented at 
-the call sites. I'll also reduce the read/write-side comment to a 
-single-line RAZ/WI note.
-
-Best regards,
-Tao
+Once we have a policy that allows including AI written code, sure.
 
 
->> +             */
->> +            return MEMTX_OK;
->> +        }
->>           reg_sec_sid = SMMU_SEC_SID_S;
->>           offset -= SMMU_SECURE_REG_START;
->>       }
->> @@ -2508,6 +2558,11 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
->>       /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
->>       offset &= ~0x10000;
->>       if (offset >= SMMU_SECURE_REG_START) {
->> +        if (!smmu_check_secure_access(s, attrs, offset, true)) {
->> +            *data = 0;
->> +            trace_smmuv3_read_mmio(offset, *data, size, MEMTX_OK);
->> +            return MEMTX_OK;
->> +        }
->>           reg_sec_sid = SMMU_SEC_SID_S;
->>           offset -= SMMU_SECURE_REG_START;
->>       }
-> Thanks
->
-> Eric
+> I'm pretty uncomfortable with the idea of policy that allows for
+> arbitrary AI agents processing issues with no independent review
+> of what they're doing until after they've already done it.
+> 
+> The issue agent Alex runs, while useful, also makes a decent number
+> of mistakes and wierd assertions in comments it adds. To some degree
+> that is unavoidable for AI based tools doing this work, but IMHO it
+> justifies the extra review to ensure the community is broadly happy
+> with the tradeoff in the tool in question.
+> 
+> With regards,
+> Daniel
+
+
+At least my script does not do anything like this.
+It just implements the security workflow.
+Does not add comments.
+
+-- 
+MST
 
 
