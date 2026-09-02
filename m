@@ -4,79 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E05C61DFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BDFC624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1gWo-0004nZ-1F; Wed, 02 Sep 2026 04:41:06 -0400
+	id 1x1gdg-0005ok-FJ; Wed, 02 Sep 2026 04:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1gWj-0004ms-UU
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:41:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x1gdf-0005mP-3Q; Wed, 02 Sep 2026 04:48:11 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1gWi-00064F-Bj
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 04:41:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788338458;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fQXXvvLoj47iixld6cvZL+yCBo2FdpnY4YJxjoMmsxU=;
- b=be90yPEfNRbGceP4/WjEIB010YVRv6emRu+aPJZTUwzXDRSSy5PViMjOWX4ScaMHmm2blr
- cTHCV643ilPmogDsL0JI4T/jPDUUekbmZSGGqr0DxVlpXyLAVgM0sNYYhPC9j9TKOPAmgY
- WsV8JWOqTXXrcrIOiTBGXwJ8XC7D7lU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-5n80-czHPV2x1ZrOb0huMA-1; Wed,
- 02 Sept 2026 04:40:52 -0400
-X-MC-Unique: 5n80-czHPV2x1ZrOb0huMA-1
-X-Mimecast-MFC-AGG-ID: 5n80-czHPV2x1ZrOb0huMA_1788338451
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60B611955BDD; Wed,  2 Sep 2026 08:40:51 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA2C618005BB; Wed,  2 Sep 2026 08:40:49 +0000 (UTC)
-Date: Wed, 2 Sep 2026 09:40:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Stefan Berger <stefanb@linux.ibm.com>, QEMU <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] MAINTAINERS: Remove stale contact info for Stefan Berger
-Message-ID: <apfhDvrlNFQKJLI7@redhat.com>
-References: <20260901195334.463267-1-jsnow@redhat.com>
- <CAJ+F1CKA-UPwzx7XLLhvA+VW8PuDQGbXKXDBK0mVfo0E4C6-hA@mail.gmail.com>
- <CAFn=p-Zix9rEXMQsCj=zanoOUXbS_dSTnWY3OaiLRSN4viTtjA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1x1gdb-0007AO-Ca; Wed, 02 Sep 2026 04:48:10 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 5804D80C95;
+ Wed, 02 Sep 2026 11:48:02 +0300 (MSK)
+Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:b72::1:17])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id xlfWR5raWmI0-599BR3ea; Wed, 02 Sep 2026 11:48:01 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1788338881;
+ bh=MSQwPg9T76w4b9mbdmbrXR5i4SsHZg6DGxvsJNzEM0E=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=NbyFVn3VuW3TBuHolJT/UNHmu3X9YF1a57LDfBb6Z3fG2H6/0oUqbCFfOBUN86XEp
+ 8104dqN2ewZWARDPzl66zAykeblaQE2jVZo7evHtCRgF3AdQf6uNZ7keSBq/pycyFt
+ k7YNiko9RYmsJobCTHPYJqOgzSuPz/Ev4nSJc/oI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@openvz.org, vsementsov@yandex-team.ru,
+ Eric Blake <eblake@redhat.com>
+Subject: [PULL 3/8] block/nbd: clear reply.cookie under receive_mutex
+Date: Wed,  2 Sep 2026 11:47:49 +0300
+Message-ID: <20260902084754.140103-4-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260902084754.140103-1-vsementsov@yandex-team.ru>
+References: <20260902084754.140103-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFn=p-Zix9rEXMQsCj=zanoOUXbS_dSTnWY3OaiLRSN4viTtjA@mail.gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,45 +69,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 01, 2026 at 06:11:03PM -0400, John Snow wrote:
-> On Tue, Sep 1, 2026 at 4:18 PM Marc-André Lureau
-> <marcandre.lureau@gmail.com> wrote:
-> >
-> >
-> > Hi
-> >
-> > Le mar. 1 sept. 2026, 23:54, John Snow <jsnow@redhat.com> a écrit :
-> >>
-> >> I was unable to get in touch with Stefan and I am not currently sure
-> >> if this module is maintained or not. To prevent an avalanche of
-> >> bounced emails, remove his contact information.
-> >
-> >
-> > Really? There must be something wrong. He is a very responsive and active maintainer.
-> 
-> All of the emails I have are bouncing; I hope they turn up! I would
-> love to be proven hasty.
+From: "Denis V. Lunev" <den@openvz.org>
 
-When I replied to John's docs series last week it triggered a
-blizzard of non-delivery emails for Stefan's address:
+s->reply is documented as protected by s->receive_mutex, but the cookie
+is cleared without it once the owning request has consumed its chunk.
+A waiter in nbd_receive_replies() inspects the very same field under
+the mutex, and does so with two separate loads:
 
-  Attempting to deliver following mail to recipient(s):
-    <stefanb@linux.ibm.com>
-  VMSDVM9.POK.IBM.COM unable to connect for 1 days to recipient host.
-  Delivery will be attempted for a total of 3 days.
+    if (s->reply.cookie != 0) {
+        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+        assert(!s->requests[ind2].receiving);
 
-but I never got any more of those after that, and the 3 days passed,
-so I'm thinking they did indeed get delivered in the end.
+Nothing keeps those two loads consistent. If the owner clears the
+cookie in between, the second one reads 0, COOKIE_TO_INDEX() turns it
+into an index of -1, and s->requests[] is accessed out of bounds:
 
-With regards,
-Daniel
+  Assertion `!s->requests[ind2].receiving' failed.
+
+  (gdb) p cookie
+  $1 = 8
+  (gdb) p s->reply.cookie
+  $2 = 0
+  (gdb) p &((NBDClientRequest *)s->requests)[-1].receiving
+  $3 = (_Bool *) 0x5555558416c0
+  (gdb) p &s->in_flight
+  $4 = (unsigned int *) 0x5555558416c0
+  (gdb) p s->in_flight
+  $5 = 8
+
+The cookie we wait for is 8, yet reply.cookie reads 0 one line after it
+was found non-zero, so the index is -1. requests[-1].receiving lands on
+in_flight, which is non-zero while requests are outstanding, and that is
+what the assertion trips over.
+
+Hitting this requires two coroutines of one NBD node to run in
+different threads, as there is no yield point between the two loads
+for the owner to squeeze into. A multiqueue configuration provides
+exactly that, with the virtqueues of one disk spread over several
+iothreads. Note that a compiler is free to merge the two loads into
+one, in which case the race is invisible, so builds with reduced
+optimization are much more likely to trip over it.
+
+Accessing s->reply without the mutex is fine for the coroutine that
+owns the reply: a non-zero cookie makes the field private to it.
+Releasing that ownership is not, as it races with the waiters which
+are explicitly allowed to look at the cookie. Clear it under the
+mutex, in the same critical section as the wakeup, and make
+nbd_recv_coroutines_wake() caller-locked, as CoMutex is not
+recursive. It has a single caller.
+
+The added acquisition cannot block behind the header read in
+nbd_receive_replies(), because that path is only reachable with
+reply.cookie == 0 while we still own a non-zero cookie. Merging the
+clear with the wakeup also keeps a newcomer from starting a header
+read in between, which would stall this already completed request for
+the duration of that read.
+
+There is no cookie to own when we get here after an error, and then a
+newcomer can indeed be inside that read. It does not hold us for long
+either, as the channel has been shut down before the error was
+reported, so the read it sits in returns right away.
+
+Fixes: 4ddb5d2fde ("block/nbd: drop connection_co")
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Message-ID: <20260820115228.587427-4-den@openvz.org>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ block/nbd.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/block/nbd.c b/block/nbd.c
+index d0a7097034c..e5e16722ba2 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -161,11 +161,11 @@ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
+     return false;
+ }
+ 
++/* Called with s->receive_mutex taken. */
+ static void coroutine_fn nbd_recv_coroutines_wake(BDRVNBDState *s)
+ {
+     int i;
+ 
+-    QEMU_LOCK_GUARD(&s->receive_mutex);
+     for (i = 0; i < MAX_NBD_REQUESTS; i++) {
+         if (nbd_recv_coroutine_wake_one(&s->requests[i])) {
+             return;
+@@ -974,9 +974,11 @@ static coroutine_fn int nbd_co_receive_one_chunk(
+         /* For assert at loop start in nbd_connection_entry */
+         *reply = s->reply;
+     }
+-    s->reply.cookie = 0;
+ 
+-    nbd_recv_coroutines_wake(s);
++    WITH_QEMU_LOCK_GUARD(&s->receive_mutex) {
++        s->reply.cookie = 0;
++        nbd_recv_coroutines_wake(s);
++    }
+ 
+     return ret;
+ }
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.43.0
 
 
