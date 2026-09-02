@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D96B2C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798ABC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1qkj-0001OF-3K; Wed, 02 Sep 2026 15:36:09 -0400
+	id 1x1qkq-0001Pd-OD; Wed, 02 Sep 2026 15:36:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qki-0001O5-06
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:36:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qkp-0001P9-BL
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:36:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qkg-0004j2-5V
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:36:07 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x1qko-0004jj-0i
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:36:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788377764;
+ s=mimecast20190719; t=1788377773;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=z+GcPTBTK0gjMeTEHiRlKRN7oYoOykWJBNhfGUsmCpw=;
- b=IhMstZZ1svoR8pUezBMHKbYYwIjOuv0z8GcXZZHGRAaDd1IUE5DLdTkpSlBObGV0nRjopb
- qw5QFZ1/aWM9Jp6jQoUiq1Yjdas3HTnqWRpCDPfBcujBWiAVx/5efm640z+qBkOHudmZz2
- aQDuatGcorwijUM/izKyvQWOznWTMKc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DuRMK/FTIgbpmJ68e8xaeoiOkOvvvLrbv7fqHpI7yoY=;
+ b=VKPTcll/Y8091Xrnz5De9Vez2i9qh5NE3Q6AFv13a68LjsFjz3myy88nAz7Bi3r1y/M6t3
+ qnYJnjJsjP7st/Of0McsibnSFN3VIsrjo42GYOUpmTTjhaCCwkj/wmaHawxGp44OlwVK8C
+ vMcJzautu3xCMWa6S07MOPQvvx/3j3A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-W_gdS0eONgiZ4MuaGy0bxg-1; Wed,
- 02 Sep 2026 15:36:03 -0400
-X-MC-Unique: W_gdS0eONgiZ4MuaGy0bxg-1
-X-Mimecast-MFC-AGG-ID: W_gdS0eONgiZ4MuaGy0bxg_1788377760
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-YnTuksFbOHaI4CYlO0Myqw-1; Wed,
+ 02 Sep 2026 15:36:09 -0400
+X-MC-Unique: YnTuksFbOHaI4CYlO0Myqw-1
+X-Mimecast-MFC-AGG-ID: YnTuksFbOHaI4CYlO0Myqw_1788377767
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2B5E195D03C; Wed,  2 Sep 2026 19:35:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 396E419560A2; Wed,  2 Sep 2026 19:36:06 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.24])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 845451800261; Wed,  2 Sep 2026 19:35:52 +0000 (UTC)
+ id F271B1800635; Wed,  2 Sep 2026 19:35:59 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
@@ -65,12 +66,14 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Li-Wen Hsu <lwhsu@freebsd.org>, Peter Xu <peterx@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 00/16] Python patches
-Date: Wed,  2 Sep 2026 15:35:35 -0400
-Message-ID: <20260902193551.582660-1-jsnow@redhat.com>
+Subject: [PULL 01/16] tests: update vm tests to prefer locally-built QEMU
+Date: Wed,  2 Sep 2026 15:35:36 -0400
+Message-ID: <20260902193551.582660-2-jsnow@redhat.com>
+In-Reply-To: <20260902193551.582660-1-jsnow@redhat.com>
+References: <20260902193551.582660-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -97,95 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit a925240509d1b4b656cc480f1cc79ba4d7c8bc08=
-:=0D
-=0D
-  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into s=
-taging (2026-09-02 13:40:43 +0100)=0D
-=0D
-are available in the Git repository at:=0D
-=0D
-  git@gitlab.com:jsnow/qemu.git tags/python-pull-request=0D
-=0D
-for you to fetch changes up to 4061c0e95c6e2736926ab8723606cddf582f58e6:=0D
-=0D
-  sphinx: drop qapidoc back-compat overboiled spaghetti dinner (2026-09-02 =
-15:02:58 -0400)=0D
-=0D
-----------------------------------------------------------------=0D
-python=0D
-=0D
-upgrade to py312=0D
-=0D
-----------------------------------------------------------------=0D
-=0D
-John Snow (16):=0D
-  tests: update vm tests to prefer locally-built QEMU=0D
-  tests: update libvirt-ci, lcitool=0D
-  tests: update netbsd dependencies=0D
-  tests: drop python3-devel mapping=0D
-  tests: re-add opencv2 and numpy dependencies=0D
-  tests: add Python3.12 to centos9.docker=0D
-  tests: update emsdk-wasm64-cross=0D
-  qapi: update type hint for objects_seen=0D
-  python: upgrade to Python3.12+=0D
-  python: fix license configuration=0D
-  python: allow mypy to run as the current python version=0D
-  python: remove distutils workarounds=0D
-  python: remove stale setup.cfg options=0D
-  sphinx: require sphinx 7.2.6=0D
-  sphinx: drop fakedbusdoc=0D
-  sphinx: drop qapidoc back-compat overboiled spaghetti dinner=0D
-=0D
- docs/conf.py                                  |  11 +-=0D
- docs/interop/dbus-display.rst                 |  14 +-=0D
- docs/interop/dbus-vmstate.rst                 |  14 +-=0D
- docs/interop/dbus-vnc.rst                     |  14 +-=0D
- docs/requirements.txt                         |   2 +-=0D
- docs/sphinx/compat.py                         | 230 ------------------=0D
- docs/sphinx/fakedbusdoc.py                    |  30 ---=0D
- docs/sphinx/qapi_domain.py                    |  53 ++--=0D
- configure                                     |  11 +-=0D
- tests/docker/dockerfiles/alpine.docker        |   1 +=0D
- tests/docker/dockerfiles/centos9.docker       |  14 +-=0D
- .../dockerfiles/debian-amd64-cross.docker     |   4 +-=0D
- .../dockerfiles/debian-arm64-cross.docker     |   4 +-=0D
- .../dockerfiles/debian-armhf-cross.docker     |   4 +-=0D
- .../dockerfiles/debian-i686-cross.docker      |   4 +-=0D
- .../dockerfiles/debian-ppc64el-cross.docker   |   4 +-=0D
- .../dockerfiles/debian-riscv64-cross.docker   |   4 +-=0D
- .../dockerfiles/debian-s390x-cross.docker     |   4 +-=0D
- tests/docker/dockerfiles/debian.docker        |   4 +-=0D
- .../dockerfiles/emsdk-wasm64-cross.docker     |   4 +-=0D
- .../dockerfiles/fedora-rust-nightly.docker    |   2 +=0D
- .../dockerfiles/fedora-win64-cross.docker     |   2 +=0D
- tests/docker/dockerfiles/fedora.docker        |   2 +=0D
- tests/docker/dockerfiles/opensuse-leap.docker |   4 +-=0D
- tests/docker/dockerfiles/ubuntu2404.docker    |   4 +-=0D
- .gitlab-ci.d/macos-14.vars                    |   2 +-=0D
- python/Makefile                               |  10 +-=0D
- python/scripts/mkvenv.py                      |  63 +----=0D
- python/setup.cfg                              |  33 +--=0D
- python/tests/linters.py                       |  11 -=0D
- python/tests/minreqs.txt                      |  66 ++---=0D
- pythondeps.toml                               |  13 +-=0D
- .../ci/setup/debian/debian-13-ppc64le.yaml    |   4 +-=0D
- .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |   4 +-=0D
- .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |   4 +-=0D
- scripts/qapi/types.py                         |   2 +-=0D
- tests/lcitool/libvirt-ci                      |   2 +-=0D
- tests/lcitool/mappings.yml                    |  25 +-=0D
- tests/lcitool/projects/qemu.yml               |   2 +=0D
- tests/lcitool/targets/centos-stream-9.yml     |   4 +-=0D
- tests/vm/Makefile.include                     |   2 +-=0D
- tests/vm/generated/freebsd.json               |  14 +-=0D
- tests/vm/netbsd                               |   1 +=0D
- 43 files changed, 185 insertions(+), 521 deletions(-)=0D
- delete mode 100644 docs/sphinx/compat.py=0D
- delete mode 100644 docs/sphinx/fakedbusdoc.py=0D
-=0D
--- =0D
-2.55.0=0D
-=0D
+In 05e4982, we updated our QMP tests to prefer `-object monitor-qmp`,
+but this requires a sufficiently recent and modern version of QEMU to
+run correctly.
+
+Update the "make vm-build-xxx" targets to use the runscript that will
+naturally prefer the locally built version of QEMU so that these tests
+launch successfully once more.
+
+Fixes: 05e4982 ("tests: switch from -mon to -object monitor-qmp")
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260825215851.1780608-2-jsnow@redhat.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ tests/vm/Makefile.include | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 0a53dc9fdd6..0ec1b47e63e 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -5,7 +5,7 @@ ifeq ($(realpath $(SRC_PATH)),$(realpath .))
+ VM_PYTHON = $(SRC_PATH)/vm-venv/bin/python3
+ VM_VENV = vm-venv
+ else
+-VM_PYTHON = $(PYTHON)
++VM_PYTHON = $(BUILD_DIR)/run $(PYTHON)
+ VM_VENV =
+ endif
+ 
+-- 
+2.55.0
 
 
