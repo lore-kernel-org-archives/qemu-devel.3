@@ -4,116 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F2FC624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 22:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92116C624D4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 00:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1tFs-0000u4-T6; Wed, 02 Sep 2026 18:16:28 -0400
+	id 1x1uws-0000qB-Fy; Wed, 02 Sep 2026 20:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x1tFp-0000t7-Vo
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 18:16:26 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x1tFn-0002N4-L2
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 18:16:25 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 44CD51FA90;
- Wed,  2 Sep 2026 22:16:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788387378; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AFPfzUU2OEdpmxfPl+scf6BGZCY/9rjJZQSZQYyvRXY=;
- b=yC7SCJo/7Kz5q3zl0pecIOpsK2ZzlU4KN75qfFspfSKjwXcAMF9pYopjqnafNwmp4oIrX8
- oVEQo5xk7IVpkJVFMC2FFzh9okKDbwr5jw7BA6J1QzGSN4Nm39RiuTbi/gLt8PjWRTpHPH
- Y1j2b8qJ8HWbgqY7J8GnJ6WF5mFSMj0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788387378;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AFPfzUU2OEdpmxfPl+scf6BGZCY/9rjJZQSZQYyvRXY=;
- b=EFyR2n7RRhl1oCbM+vQDIOXhQmvrNljdNdfn6uWh+BYUcuhJ37ov5QP8bxFh1NHgpFlaEh
- mzeLwyivLVs2jZAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jPCD8Wjn;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BsvM5ln5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788387374; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AFPfzUU2OEdpmxfPl+scf6BGZCY/9rjJZQSZQYyvRXY=;
- b=jPCD8Wjn6NPVhquwAPT5k6ziptFOQyxwMG/Ne7mkHIIK9FEIcNbtd2DVr1iZmQ2OB9asH4
- huvmGrxch7xQIaMDLlfWiNo5/D4Pnu27/m+zroWPD2IYwNxvaYdTghkdkNQJ7AWo5MubTq
- f1m+OqPF8RgOeSN5tGr/IOZOnyA0nIo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788387374;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AFPfzUU2OEdpmxfPl+scf6BGZCY/9rjJZQSZQYyvRXY=;
- b=BsvM5ln5bejDskG8K/Jb4XOx9WXGJu1TnnNtlzFK/1mu+8oPJpoI0FPS2r+5jKrY32ZzGQ
- U/QLrLKk2NZDfDCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 169E613888;
- Wed,  2 Sep 2026 22:16:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OOAaNiqgmGpxXwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 02 Sep 2026 22:16:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PATCH 05/18] migration: Merge parameter structs instead of assigning
- one by one
-Date: Wed,  2 Sep 2026 19:15:33 -0300
-Message-ID: <20260902221547.1812481-6-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260902221547.1812481-1-farosas@suse.de>
-References: <20260902221547.1812481-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <3138947285@qq.com>) id 1x1smz-0006EY-FE
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 17:46:37 -0400
+Received: from [203.205.221.191] (helo=out203-205-221-191.mail.qq.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <3138947285@qq.com>) id 1x1smw-0006fz-Lw
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 17:46:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1788385571; bh=griazrdLl1+fty1DmMxFxJZxpz/UEQ7LP0OXIEv1Heo=;
+ h=From:To:Cc:Subject;
+ b=JjMto38Xt/sLQcz1M4OGQLpRN8JDMtu6xEipFOP3WKKB+BJS0p5K16cOOvsOF0orh
+ i3/KttfRqMyw1mzAH8CatOdoa48EI1gu72K4Rykblmq3fEtxIdTT4hT7KVLUCgpFCH
+ U4likP7S27c25qjP0vVoiE3nSYSITSehsL/BuNC4=
+Received: from Win11-9700X.localdomain
+ ([240e:398:adf0:2560:208c:9ac8:67c:c74b])
+ by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
+ id B89886B6; Thu, 03 Sep 2026 05:46:09 +0800
+X-QQ-mid: xmsmtpt1788385569tpndfsvfn
+Message-ID: <tencent_1D76D0E3949EA74891E11E5572119CDE2E07@qq.com>
+X-QQ-XMAILINFO: MeukCuWaRbQlw18RAbuZxtDOXD5vr+hOO39yeyu8mETJNTnMyuFplXxKv2bGvL
+ M1JJKc1HGbVQ9t8FJaNtIAtZTt60FLX5qEK0GoAhwRQa2OuBnnoXAkzRKEfabp8IPJUf4RHxCVkr
+ XYd2/xDmq87M397hZw01CLBUzDpQTs8TlZ5Vs0yUvoYkUWJFe3clS7r5x/w8C2Olnzpx5KMXrQXi
+ xV+W+O0l81AOGBEXjhrr2BauOMFUqUyb+kSxwbljSO2jy3xhJOsVShRyU3BJwVhittcUrqsPsbeq
+ Ns2BgPAEpBU2KQlAM3dMNaSwIk8MD4mQ5BA/enK6/6GmIusIzg3fU4Fb0yBM5qUGpMmLqWlmoKKS
+ DyrjBGSzfIpNZMnHR3g8IHLFAA+4CYI9FCk4WHu/ROjTthdz8sbu+63+iaNVwCCZ7W2SEgl8VzxU
+ cuwttvqdCreyWM3NzZ8G7yDeYuMsDHav91/L7v3CfeQRS1WJ8XG+z4IyHDYu/6jmMOT4vA7VBUW/
+ aDv6iZddK/dXRb8w53mqAanuc57UbozTi9JADO1AQiWXx8wALTJSu8C4O53+Fmpp+9FBc1Yv+OEl
+ 7MvzkjgP+jF0fbqB2PWGklK04wbY7ITZDTd02nT2+m/3WbLVAh6deHV8wyo74j4ItnkauOOgi02O
+ cXD06mS45o9ZvpZ+TpRDlN9WVGi7t1NV+87ALVqtu+cL0Q3Aj/e3aIgHH4eSLT2Ik6/bodof9Xe6
+ YHLiG3HvPs36aDu5wWK9vuZtG5emIC6CljGHHo4oxcluB3B0ThK+WZ/inqeTRNgg13zUwYcoPrrw
+ UzLGE5xtOUVw/gFszn8FNAIF8U5188CgXz8v1xPPSw9rGi7ND2ktLCVkulehQbi18Hd/OHOXQRBh
+ y2shVqoSEd4vAGzSqaZMqqavKUzMe6AqAKZUVW6KJgtOP4B4mYHBOC/iDMuN1F4WyNKI3F9bLgMJ
+ wJrHtelq4Lo9U5rboWAu7JUDmEE+cL0OdMHL4iy7WbhlvhKFLhiX3LMBOujWpU6dcLEs/DJJY671
+ tzJtWqnLYR24f5GUyVpwzuWgdcDq1ceWX0rt/r/A==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 44CD51FA90
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: base64
+From: Jiajun Liang <3138947285@qq.com>
+To: mohamed@unpredictable.fr
+Cc: qemu-devel@nongnu.org
+Subject: WHPX: stale page-table shadow after delivered #PF stalls macOS guests;
+ VP recreation bugchecks the host
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 203.205.221.191 (deferred)
+Received-SPF: pass client-ip=203.205.221.191; envelope-from=3138947285@qq.com;
+ helo=out203-205-221-191.mail.qq.com
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001, MISSING_DATE=1.36,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+Date: Wed, 02 Sep 2026 17:46:37 -0400
+X-Mailman-Approved-At: Wed, 02 Sep 2026 20:04:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -128,297 +82,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the code in migrate_params_test_apply() from an open-coded
-copy of every migration parameter to a merge operation using QAPI
-visitors and QDict.
-
-The purpose of that routine is to update a temporary structure
-(pre-populated with the current migration parameters), with the values
-received from the user via QAPI. As a result, the temporary structure
-will then contain the "to be applied" parameters and it's validated
-before being used to overwrite the parameters currently in use.
-
-The update is currently done as follows:
-
-where 'params' is the user input from QAPI,
-for each parameter:
-
-  a) check if the option is present
-     params->has_<name> == true
-     params-><name> != NULL // for strings
-
-  b) if the parameter is a pointer, free the to-be-assigned member and
-     allocate memory for the copy from params
-
-  c) assign the user provided value to the temporary structure.
-
-Step (a) is the same in principle as what the QAPI visitors do at
-visit_type_MigrationParameters_members().
-
-Steps (b) and (c) are roughly the same as what the QDict
-implementation does when qdict_del() and qdict_put_obj() are combined.
-
-Therefore, replace the open-coded function with
-migrate_params_merge(), which achieves the same goal, but uses
-visitors and QDict. This hides the details of QAPI (has_*) from the
-migration code and avoids the need to update
-migrate_params_test_apply() every time a new migration parameter is
-added.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/options.c | 201 +++++++++++++++-----------------------------
- 1 file changed, 66 insertions(+), 135 deletions(-)
-
-diff --git a/migration/options.c b/migration/options.c
-index 6b787950808..de091d2eee3 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -20,6 +20,9 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
- #include "qapi/qmp/qerror.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qapi/qobject-output-visitor.h"
-+#include "qobject/qdict.h"
- #include "qobject/qnull.h"
- #include "system/runstate.h"
- #include "migration/colo.h"
-@@ -1074,6 +1077,28 @@ static void tls_opt_to_str(StrOrNull *opt)
-     opt->u.s = g_strdup("");
- }
- 
-+static QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp)
-+{
-+    QObject *obj = NULL;
-+    Visitor *v = qobject_output_visitor_new(&obj);
-+
-+    if (visit_type_MigrationParameters(v, NULL, &p, errp)) {
-+        visit_complete(v, &obj);
-+    }
-+    visit_free(v);
-+    return qobject_to(QDict, obj);
-+}
-+
-+static MigrationParameters *migrate_params_from_dict(QDict *d, Error **errp)
-+{
-+    Visitor *v = qobject_input_visitor_new(QOBJECT(d));
-+    MigrationParameters *tmp = NULL;
-+
-+    visit_type_MigrationParameters(v, NULL, &tmp, errp);
-+    visit_free(v);
-+    return tmp;
-+}
-+
- /*
-  * query-migrate-parameters expects all members of MigrationParameters
-  * to be present, but we cannot mark them non-optional in QAPI because
-@@ -1166,6 +1191,39 @@ static void migrate_post_update_params(MigrationParameters *new, Error **errp)
-     }
- }
- 
-+static bool migrate_params_merge(MigrationParameters *in1,
-+                                 MigrationParameters *in2,
-+                                 MigrationParameters **out,
-+                                 Error **errp)
-+{
-+    g_autoptr(QDict) d1 = NULL;
-+    g_autoptr(QDict) d2 = NULL;
-+    const QDictEntry *e;
-+
-+    d1 = migrate_params_to_dict(in1, errp);
-+    if (!d1) {
-+        return false;
-+    }
-+
-+    d2 = migrate_params_to_dict(in2, errp);
-+    if (!d2) {
-+        return false;
-+    }
-+
-+    for (e = qdict_first(d2); e; e = qdict_next(d2, e)) {
-+        const char *key = qdict_entry_key(e);
-+        QObject *value = qdict_entry_value(e);
-+
-+        qdict_del(d1, key);
-+        qobject_ref(value);
-+        qdict_put_obj(d1, key, value);
-+    }
-+
-+    *out = migrate_params_from_dict(d1, errp);
-+
-+    return !!*out;
-+}
-+
- /*
-  * Check whether the parameters are valid. Error will be put into errp
-  * (if provided). Return true if valid, otherwise false.
-@@ -1328,133 +1386,6 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-     return true;
- }
- 
--static void migrate_params_test_apply(MigrationParameters *params,
--                                      MigrationParameters *dest)
--{
--    MigrationState *s = migrate_get_current();
--
--    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
--
--    if (params->has_throttle_trigger_threshold) {
--        dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
--    }
--
--    if (params->has_cpu_throttle_initial) {
--        dest->cpu_throttle_initial = params->cpu_throttle_initial;
--    }
--
--    if (params->has_cpu_throttle_increment) {
--        dest->cpu_throttle_increment = params->cpu_throttle_increment;
--    }
--
--    if (params->has_cpu_throttle_tailslow) {
--        dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
--    }
--
--    if (params->tls_creds) {
--        qapi_free_StrOrNull(dest->tls_creds);
--        dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
--    }
--
--    if (params->tls_hostname) {
--        qapi_free_StrOrNull(dest->tls_hostname);
--        dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
--    }
--
--    if (params->tls_authz) {
--        qapi_free_StrOrNull(dest->tls_authz);
--        dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
--    }
--
--    if (params->has_max_bandwidth) {
--        dest->max_bandwidth = params->max_bandwidth;
--    }
--
--    if (params->has_avail_switchover_bandwidth) {
--        dest->avail_switchover_bandwidth = params->avail_switchover_bandwidth;
--    }
--
--    if (params->has_downtime_limit) {
--        dest->downtime_limit = params->downtime_limit;
--    }
--
--    if (params->has_x_checkpoint_delay) {
--        dest->x_checkpoint_delay = params->x_checkpoint_delay;
--    }
--
--    if (params->has_multifd_channels) {
--        dest->multifd_channels = params->multifd_channels;
--    }
--    if (params->has_multifd_compression) {
--        dest->multifd_compression = params->multifd_compression;
--    }
--    if (params->has_multifd_qatzip_level) {
--        dest->multifd_qatzip_level = params->multifd_qatzip_level;
--    }
--    if (params->has_multifd_zlib_level) {
--        dest->multifd_zlib_level = params->multifd_zlib_level;
--    }
--    if (params->has_multifd_zstd_level) {
--        dest->multifd_zstd_level = params->multifd_zstd_level;
--    }
--    if (params->has_xbzrle_cache_size) {
--        dest->xbzrle_cache_size = params->xbzrle_cache_size;
--    }
--    if (params->has_max_postcopy_bandwidth) {
--        dest->max_postcopy_bandwidth = params->max_postcopy_bandwidth;
--    }
--    if (params->has_max_cpu_throttle) {
--        dest->max_cpu_throttle = params->max_cpu_throttle;
--    }
--    if (params->has_announce_initial) {
--        dest->announce_initial = params->announce_initial;
--    }
--    if (params->has_announce_max) {
--        dest->announce_max = params->announce_max;
--    }
--    if (params->has_announce_rounds) {
--        dest->announce_rounds = params->announce_rounds;
--    }
--    if (params->has_announce_step) {
--        dest->announce_step = params->announce_step;
--    }
--
--    if (params->has_block_bitmap_mapping) {
--        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
--        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
--                                                params->block_bitmap_mapping);
--    }
--
--    if (params->has_x_vcpu_dirty_limit_period) {
--        dest->x_vcpu_dirty_limit_period =
--            params->x_vcpu_dirty_limit_period;
--    }
--    if (params->has_vcpu_dirty_limit) {
--        dest->vcpu_dirty_limit = params->vcpu_dirty_limit;
--    }
--
--    if (params->has_mode) {
--        dest->mode = params->mode;
--    }
--
--    if (params->has_zero_page_detection) {
--        dest->zero_page_detection = params->zero_page_detection;
--    }
--
--    if (params->has_direct_io) {
--        dest->direct_io = params->direct_io;
--    }
--
--    if (params->has_x_rdma_chunk_size) {
--        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
--    }
--
--    if (params->has_cpr_exec_command) {
--        qapi_free_strList(dest->cpr_exec_command);
--        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
--    }
--}
--
- /*
-  * Caller must ensure the has_* fields of @params are true so they all
-  * get copied and the pointer members don't dangle.
-@@ -1472,7 +1403,8 @@ static void migrate_params_apply(MigrationParameters *params)
- 
- void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
- {
--    MigrationParameters new;
-+    MigrationParameters *cur = &migrate_get_current()->parameters;
-+    g_autoptr(MigrationParameters) new = NULL;
- 
-     /*
-      * Convert QTYPE_QNULL and NULL to the empty string (""). Even
-@@ -1486,14 +1418,13 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
-     tls_opt_to_str(input->tls_hostname);
-     tls_opt_to_str(input->tls_authz);
- 
--    migrate_params_test_apply(input, &new);
-+    /* merge input on top of current */
-+    if (!migrate_params_merge(cur, input, &new, errp)) {
-+        return;
-+    }
- 
--    if (migrate_params_check(&new, errp)) {
--        migrate_params_apply(&new);
-+    if (migrate_params_check(new, errp)) {
-+        migrate_params_apply(new);
-         migrate_post_update_params(input, errp);
-     }
--
--    migrate_tls_opts_free(&new);
--    qapi_free_BitmapMigrationNodeAliasList(new.block_bitmap_mapping);
--    qapi_free_strList(new.cpr_exec_command);
- }
--- 
-2.53.0
+SGkgTW9oYW1lZCwKCldoaWxlIHJ1bm5pbmcgYW4gdW5tb2RpZmllZCB4ODZfNjQgbWFjT1MgMTMg
+Z3Vlc3Qgb24gUUVNVSAxMS4wLjUwL1dIUFggKFdpbmRvd3MgMTEsIEFNRCBSeXplbiA3IDk3MDBY
+KSwgd2UgaGl0IGEgcmVwcm9kdWNpYmxlIHNoYWRvdyBwYWdlLXRhYmxlIHN0YWxlbmVzczogYWZ0
+ZXIgYSAjUEYgaXMgZGVsaXZlcmVkIGFuZCB0aGUgZ3Vlc3QgaW5zdGFsbHMgdGhlIG1hcHBpbmcg
+KGhvc3Qtc2lkZSB3YWxrIHNob3dzIHRoZSBQRFBURSBwcmVzZW50LCBlLmcuIDB4MWY1NmM2MDI3
+KSwgV0h2UnVuVmlydHVhbFByb2Nlc3NvciBrZWVwcyBmYXVsdGluZyBvbiB0aGUgc2FtZSBhZGRy
+ZXNzIGZvcmV2ZXIuIFNhbWUtdmFsdWUgQ1IzIHdyaXRlcywgUENELXRvZ2dsZWQgQ1IzIHdyaXRl
+cywgYW5kIGhvc3Qtc2lkZSBwYWdlLXRhYmxlIHJlcGFpciBkbyBub3QgcmVmcmVzaCBpdC4gVGhl
+IGd1ZXN0IGxvb3BzIDE1LTIwIG1pbnV0ZXMgZHVyaW5nIGVhcmx5IGJvb3QgKGtleHQtbG9hZCBt
+ZW1jcHkgaW50byBmcmVzaGx5IG1hcHBlZCBrYWxsb2MgcGFnZXMpLgoKVHJ5aW5nIFdIdkRlbGV0
+ZVZpcnR1YWxQcm9jZXNzb3IgKyBXSHZDcmVhdGVWaXJ0dWFsUHJvY2Vzc29yIChyZWdpc3RlcnMg
+c2F2ZWQvcmVzdG9yZWQpIGluc3RlYWQgYnVnY2hlY2tzIHRoZSBIT1NUOiAweDAwMDIwMDAxIEhZ
+UEVSVklTT1JfRVJST1IsIHBhcmFtcyAoMHgxMSwgMHgzNTc4YzAsIDB4MTAwNSwgMHhmZmZmZTcw
+MDAwYzA0ZGMwKSAtIHJlcHJvZHVjZWQgdHdpY2UsIG1pbmlkdW1wcyAwOTAzMjYtMTA5ODQtMDEu
+ZG1wIC8gMDkwMzI2LTk0ODQtMDEuZG1wLgoKRnVsbCByZXBvcnQ6IGh0dHBzOi8vZ2l0bGFiLmNv
+bS9xZW11LXByb2plY3QvcWVtdS8tL3dvcmtfaXRlbXMvNDM4NSAobm90ZXMgMzc3ODEzNzU5OCBh
+bmQgMzc3ODE0NjUxMikuCgpBbnkgcG9pbnRlciBvbiBob3cgYSBXSFBYIGNvbnN1bWVyIGlzIHN1
+cHBvc2VkIHRvIHJlZnJlc2ggdGhlIHNoYWRvdyBhZnRlciBndWVzdCBwYWdlLXRhYmxlIHVwZGF0
+ZXMgd291bGQgYmUgbXVjaCBhcHByZWNpYXRlZC4KClRoYW5rcyEKSmlhanVuIExpYW5nCg==
 
 
