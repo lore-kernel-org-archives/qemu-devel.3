@@ -4,83 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29441C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692B0C624D4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1neI-0007OH-1h; Wed, 02 Sep 2026 12:17:18 -0400
+	id 1x1ndu-0007Co-N1; Wed, 02 Sep 2026 12:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1neG-0007LR-3i
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:17:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x1ndq-0007Bb-5G
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:16:50 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1neD-0003nw-VS
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:17:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788365831;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FJOV7hiPoJxwplnpw7L2U5pv+0ld7Plj9TCANS0i+ag=;
- b=SR/3aJ1Af69Yy5d/z8Son66qtb4ACwPWDGdNUPwBP2I0vtjJLQMBuUE+Evz2puPFDI4jTQ
- NmYZuenOS7t+f7tO9g3Z4LQGL5Yz42h7d3eRACg0W3rGfR+F4wD1Akvjr8yrbd5JB2TEsX
- CBOprLXF28wWoFHfFwm5U+dYB9o6k6E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-oB2YG42xPdq61BYvg9an9A-1; Wed,
- 02 Sep 2026 12:17:10 -0400
-X-MC-Unique: oB2YG42xPdq61BYvg9an9A-1
-X-Mimecast-MFC-AGG-ID: oB2YG42xPdq61BYvg9an9A_1788365828
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B4B3195DE21; Wed,  2 Sep 2026 16:17:08 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A461A423; Wed,  2 Sep 2026 16:17:05 +0000 (UTC)
-Date: Wed, 2 Sep 2026 17:17:02 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>, qemu-devel <qemu-devel@nongnu.org>,
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
-Message-ID: <aphL_rrAVYq8D7ie@redhat.com>
-References: <20260831160038.221776-1-zhangckid@gmail.com>
- <20260831160038.221776-7-zhangckid@gmail.com>
- <8733vtbk16.fsf@pond.sub.org>
- <CAK3tnvLbaJ4b+gRhXC678cye-cHv+aP3FFwRvhPNjyfSHxL6MA@mail.gmail.com>
- <87qzjb3nf6.fsf@pond.sub.org> <apgONqZ4sWaenjVG@redhat.com>
- <87jyp31zyf.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x1ndo-0003fX-JP
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:16:49 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 682FZUQ8770128
+ for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 16:16:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ z17DfiTuPOdKtRUZkNrKdlfUPUrgkrqMOtwxyQdQcTo=; b=ocW4YhPeoMO3XfAP
+ 9k4mIuVszEsWNAnZrfBkapRUBcqFO560vmhJBJsdP8/QiUwOHoOfUqexpmWvrFcI
+ 7vYfd/1PYN4vp+Hwp1cSNrzQulxm1dtkGPqs4xJvJ0gdHjMjQGSyD++a/th58auO
+ m7Fc3ZZJyiA/GPdIKeVdadTwZ9OUDvh4mnKhxVfH1wkVhQVIHAhVNfDTuT6LaPCK
+ L8pq6GpMH2HAwbSHNiZN3r3xlOuet8kkVe+7yRRGgWGPxPyzyDbAF4ZoykspXPqd
+ q5y49WUFbPJliN16/EaJ+OfshDmS/KmTSZlpS9V75zv2eC3WO+Ps7YKs1S4Cu5Fv
+ wy5Gnw==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gemja0pkv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 16:16:47 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-39af92138f9so52896a91.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 09:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788365806; x=1788970606; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=z17DfiTuPOdKtRUZkNrKdlfUPUrgkrqMOtwxyQdQcTo=;
+ b=RRru3TfCitQNCuL5axan/adu/6ul4KTCOJ+EvCk8IydXbOFVRLCpE0O4Gkee/HqckP
+ O7KjobRAnumw+LYEKBzyLU057VC+e67zOXmJ01osxfKJR7jgM7S4sFqyaoc6OM2vMMLP
+ ZWhwL6BR0wMh6Avx6NLInS6D1jMhXKZIuG22CTwCJf5/WYXoc4sYfzFQHM/3LTUkUyjk
+ YpVNAdqH9bNPBawC5cCn5+4ok6OCSw1eIDsvyn6n/KYz7EgK3NFfspF5v5GBZfqI6BGO
+ 0rAwRSSP7byAXcMx63Q7CCxw6OqRxqBuOOfhbZOcErmCTyAC3MUVfy6iB0jL0IG4GUKX
+ 9kjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788365806; x=1788970606;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=z17DfiTuPOdKtRUZkNrKdlfUPUrgkrqMOtwxyQdQcTo=;
+ b=YC0yAXL8qKB84btEYjkxJl7P1xR0cAaefkHUP38rdd6IV2DGlnUEPaj84V0bjdagzh
+ yBD+Ycs84c5u0uYWi12uBgIq03mHzU0wljXj0c2YzCWU94HtpeCs1Ab9IPC/oVike7gK
+ HwCdLK1lxc//C53cnUfaZUF6Rlhw/Z1Smjicp8zErvrkk/D6yl8COR9Toz/Xaq+CNEmu
+ +0UyX3ZBWMHmgEpCdVgfk8SPXjmQZRXK68ak+0IaWgV7v9AyuvEgthwDu9Aj3i+zalWJ
+ SZkfzFXvxA2hPHX4tFrBqfI9yHGuBdYDsewNf1K3ScN4hqxQDjgB/QziIH8lcSekb/bA
+ pQag==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByDrWSpZP07Ai5eUIXxJHreu1mT8jnJ+4Uny/IzA5OQ7N7dJeq/5Pe0eyxCGGQYPt2HG0bUk7SBSaIv@nongnu.org
+X-Gm-Message-State: AFuF++lfbb/JdSSzkXcR/THz+bhvhwhWLKgmANVHT+ORHriH2jBOMRQN
+ qH5wqeWBqjfuO6Xb2hUL1+6jpm93BGtcJdkyx/bnOsYdG/BUArjF74ExvLtN4o4fpZ0QndEtEFW
+ aloLcLLXvdjnvIwjKQAh1TwN2RzQYtx1MDB5klOquzNAXEL+a1y1AxbqcEw==
+X-Gm-Gg: AYBFou1Tecb46Nn7TXA4NQccyfT/xnZWN1yUV3FIF+T0e9A2nWoB1sb97ATDgPOYxlp
+ z/aDJlJrOLseiiSG3lJDOeLM0N7WxWUNr2Im6DQ6D5NHOc2GI6FPLrwV5jM9zYMKMFUrh2Vqo1C
+ p81qbbasbmDAZLj8oVvTKcz/QqesJM/K/QAWvCG8UHlB9K7dyxMXpgvH4DBWDX7J0Al1XVJ1y45
+ ceadYb+5Ok0DhtTeCgh4JGnBKE0/Q6eUAkhkevZxLSKsM1Q/lybVI82MKpfgfHvKa37Jz81KeXD
+ b3wZ6GlweFUwdkWQN7KemjJL36DP/NCOMUKNdFTvURyvB6viZtJvJ9YCgumk/SLAzHzMVOj3qVz
+ W8b02oHwcMMTB+i5urjXxtlZcu0A2s/TlqXmHWpVe3VAwYnXtzT0Yua37xa8xZgl1k7SS
+X-Received: by 2002:a17:90b:4c4e:b0:38e:a52e:a3c9 with SMTP id
+ 98e67ed59e1d1-39b07fe9dd8mr304257a91.8.1788365801524; 
+ Wed, 02 Sep 2026 09:16:41 -0700 (PDT)
+X-Received: by 2002:a17:90b:4c4e:b0:38e:a52e:a3c9 with SMTP id
+ 98e67ed59e1d1-39b07fe9dd8mr304205a91.8.1788365800976; 
+ Wed, 02 Sep 2026 09:16:40 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-32f07b7a175sm8344492eec.17.2026.09.02.09.16.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Sep 2026 09:16:40 -0700 (PDT)
+Message-ID: <4a989789-026b-4ec5-9c4f-4eacd8e510f2@oss.qualcomm.com>
+Date: Wed, 2 Sep 2026 09:16:39 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Stop reviewing meson-related patches
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+References: <20260902155105.32165-1-philmd@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260902155105.32165-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87jyp31zyf.fsf@pond.sub.org>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-GUID: UD9dfWF9-9sIoHtiF9uVfJkRw5v8TCGa
+X-Authority-Analysis: v=2.4 cv=FeAHAp+6 c=1 sm=1 tr=0 ts=6a984bef cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=S56xvJB5AAAA:8 a=EUspDBNiAAAA:8 a=2WPgOG2EWknFsmhYPfgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22 a=MH9Ivq0PDQRhlrFuIVvX:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE0MyBTYWx0ZWRfX9heVBEcOcPOD
+ L1ftp1iBbKF89nAgP15M3cvKPsRdBG4A09UcjmEgEFP9Q5hpmmFc37QUIkRFxg7GHsrRyWexIYu
+ kdkbHx3Z3rFcaPKbIiFDwIxIx4Tb05c=
+X-Proofpoint-ORIG-GUID: UD9dfWF9-9sIoHtiF9uVfJkRw5v8TCGa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE0MyBTYWx0ZWRfXz8F3aGkCjHm5
+ ASGtCWhE+hFxSugWIToa4NYilHuElEB5X5iXPXoPXUOFSy4gmMsO3ncgPCmmP+BloPiz0sZAGkx
+ ZnMpvGcoIDaAWsBk78+3l8/QRF1+o9mghQ6ThQ3va9JayqJBZkKh/SDrxPFLp2otgNGILWOI/Yv
+ Q+41gVf4yPkARzqHWnBvDBYNh5KgQGzQrlgtR/C8M9FDelezpdTOzU1jN9+mcNALlwiY9scAi7i
+ 05T+ZyDUWNrr3nYoln21TYOg7VoGFrG9+WHDiaxoZBBf4IYqCAPmTn+4gi+PGG9VMNkH48zYAYz
+ MqZ53TGs5TRvs2+YA0swLnrMsAt8+OK79onEjRA0J9f7CXmMrO0fBUKqst5rt7Srrj+BYdBqhMl
+ npCmSnpbSVCCtVws0vgY4z4YRb/cOtiqlZNaaXLnuXyZCIZV8FNwdIql94gYlLPdE+jyUhVLqs8
+ FgN3WMW/fvNvIZfdXKA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-02_04,2026-09-01_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020143
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,81 +153,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 02, 2026 at 04:37:44PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 9/2/2026 8:51 AM, Philippe Mathieu-Daudé wrote:
+> From: Philippe Mathieu-Daudé <philmd@mailo.com>
 > 
-> > On Wed, Sep 02, 2026 at 01:25:33PM +0200, Markus Armbruster wrote:
-> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >> 
-> >> > On Tue, Sep 1, 2026 at 1:47 PM Markus Armbruster <armbru@redhat.com> wrote:
-> >> >>
-> >> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >> >>
-> >> >> > Monitors that require an IOThread share the internal mon_iothread.
-> >> >> > Account for each monitor explicitly in IOThread holder tracking, using
-> >> >> > the monitor's canonical QOM path to distinguish holders.
-> >> >> >
-> >> >> > Acquire the shared monitor IOThread AioContext once, using the monitor
-> >> >> > QOM path as the holder, and reuse the stored context for later
-> >> >> > operations.
-> >> >> >
-> >> >> > Release the holder from the Monitor ObjectClass::unparent callback,
-> >> >> > while the canonical QOM path is still available. This covers every
-> >> >> > object_unparent() path and avoids duplicating the cleanup in
-> >> >> > monitor_cleanup() and monitor_qmp_prepare_delete().
-> >> >> >
-> >> >> > The internal mon_iothread remains hidden from query-iothreads, as before.
-> >> >> > Management applications therefore cannot use it to determine which
-> >> >> > monitors are using the IOThread. Nevertheless, track the monitor
-> >> >> > holders so that they follow the same explicit holder and
-> >> >> > IOThread reference lifecycle as other AioContext users.
-> >> >> >
-> >> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> >> >>
-> >> >> I have a question for our QOM experts (Paolo and Daniel).
-> >> >>
-> >> >> This patch takes a reference in its UserCreatableClass method
-> >> >> complete(), and relinquishes it in its ObjectClass unparent() method.
-> >> >> Is that correct and clean?  Or should complete() pair with
-> >> >> prepare_delete()?
-> >> >
-> >> >
-> >> > Add some background information in previous reviews for here:
-> >> > https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05318.html
-> >> 
-> >> Aha, Stefan asked for monitor_finalize(), which doesn't exist.  You then
-> >> moved it to the unparent() method.
-> >
-> > monitor_finalize() does exist as of about a month ago. It was
-> > introduced as part of my series that turned Monitor into a QOM
-> > object.
+> With retrospective to commit 48fad83ff49 ("MAINTAINERS: add
+> entries for the key build bits") I think I only wanted to be
+> listed in the "Top Level Makefile and configure", not the
+> meson one (I'm not following meson changes closely enough).
 > 
-> I was on an old branch.  Sorry for the noise!
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> >> My question for the QOM maintainers remains: is it okay to pair
-> >> complete() with unparent(), or should it pair with prepare_delete()?
-> >
-> > In general most things done in complete() can/should be undone in the
-> > finalize() callback IMHO.
-> 
-> I can't see a finalize() callback, and I *am* on current master now.  Do
-> you mean unparent(), or do you mean monitor_finalize()?
 
-Sorry for the ambiguity. The latter.
-
-When I wrote "finalize()" I meant to say "instance_finalize()", as the
-generic name of the callback field in the Type, which is
-"monitor_finalize()" in the specific Monitor implementation.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
