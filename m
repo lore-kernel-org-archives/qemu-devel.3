@@ -4,57 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 410CAC624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C0AC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1qtX-0000ao-2o; Wed, 02 Sep 2026 15:45:15 -0400
+	id 1x1r0u-0006Su-Qg; Wed, 02 Sep 2026 15:52:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x1qtP-0000XC-M0; Wed, 02 Sep 2026 15:45:08 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x1r0m-0006QY-3B
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:52:44 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x1qtN-0006Ds-Sh; Wed, 02 Sep 2026 15:45:07 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 6E29140984;
- Wed,  2 Sep 2026 19:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D271F000E9;
- Wed,  2 Sep 2026 19:45:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788378304;
- bh=TUzZqfR1ig5wvZkHz8lX6ALxKBm6YQTd5snIy28tktk=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bvGhPgp+FRv2KOCEjD0k/4GttOLErmIhIdH1Hc2+YvKdTJYSxSQ/R165uSW4CfpTA
- RJUCclx5TJf4hIazvWSWmlPcVCT0WsTK0dDeRXbnE5fZesMB7+wtzmBpcJGqMngmIz
- ddfDI2lEzDAaWL7UNQJrz8xrhmiNloPt0VnHsEDc6wbD1RXJODfr8JhD5sq7/NpX/0
- Uqa0No7pNdaGVgMyNfrN3SbzwK+k+eYMgE01dMyJ1cFBQ8Wic/MaIfBTRWIcBcE5FA
- JeyMGm9O3CqQuLL2CSMqmP6AuYa0xZ9h3ng7E5T1d2ntiUh6PPvMZg53RtfGw2d8gV
- LJ7VBRnGGlLhg==
-From: Niklas Cassel <cassel@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
- Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 09/11] virtio-blk: derive the maximum zone append size
-Date: Wed,  2 Sep 2026 21:44:20 +0200
-Message-ID: <20260902194423.759355-10-cassel@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260902194423.759355-1-cassel@kernel.org>
-References: <20260902194423.759355-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x1r0j-0007VV-Jf
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 15:52:43 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 682HrtvJ2731222
+ for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 19:52:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 6Te+6+lQS/EW8h6BW95iDe7+CWxLjVFrpGbJ8eltH2k=; b=ff3WpydxxYK7v2m5
+ jwBGQL6YIvJt5Ofl1uZsd2nBW7tmcy05rF98jv43wekJ96QE1YhsC0TSNnM6LLJl
+ 8ITDL1LX31K4p4gwCMlbMO7hWckkj1MzFUbi4Zfi5T8N5HXJPx+ismDjW5BIdsCZ
+ 8sxVWvd9RIkidCF3sRioZyFKgCau4vZv+6v5at4JyWtm5TFC6RgqLt0HjWq62uuZ
+ XC6R4iZrY5bcggWyFeZquYaoUvShTeB6XX5kRoxD4kL+ZBiNN2S3nwShvv9GS1Lr
+ va8QDl2GyKZPnUDrG5Zh/jANSHlBlULYGrsIVyf5FUUjzAOmPE6hiDUCRiDsiODJ
+ YLHbnQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4geguy2qch-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 19:52:40 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2ccb687f82eso20058545ad.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 12:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788378759; x=1788983559; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6Te+6+lQS/EW8h6BW95iDe7+CWxLjVFrpGbJ8eltH2k=;
+ b=PWBa96PViUliylVQGtgYdsFInidFljTJvjjX0SWhhMV6Rf2Q+3RT2uQ0Q5OKxZvqSf
+ kXcigdjSlG4BB03MCEHvbfafYf59KxZfjr8VMG0oa/II4HhWs/T266mDRsY/+kD5CUJQ
+ b5MEQhiX5GlAKBd84qYqx56jihwdKOBi7Mf2dGBP3rXkD+S9/dfc/Uze2LtGLAW7GenY
+ elUYuFSL7uMtfWh6QgBnTt8Ntk3tz20CWh+x5pKMm/WilZbovvw7TFafMkoW2S557JSI
+ MG2k/o8ekavLpH04HKKpG/WhOL7F8WfKrsA224ylWaOEg2PfzKHKQjssnEaE3ZK1NYMV
+ 5gCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788378759; x=1788983559;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6Te+6+lQS/EW8h6BW95iDe7+CWxLjVFrpGbJ8eltH2k=;
+ b=JdorurF1xKBxanB58Xx/tsxPQSqUsXsL97gW/Z0VcxX4pawf5OaxSLaU8GkbPkQmhR
+ BdL1BOXz1BfHg2UuJNejonbt/vsGC6YeUaXDAVtUv5TjPh6jJi1iZcKVPMESWTTtJ0Ek
+ 8AWHNULjA0SELsai1ssgev8+XUf1CGFwZk+SlD523MYqx+m2o1mCc/RMLkKPE3ezGM9Z
+ C9e7JZkHXfzZE0KgNxn9DEDOjz1SSAQYPnEPYqyxG2APyFrken9aK6UYcTHCJunfNmCi
+ 72LfRuvGVlSeEe1nrhr8rk2/5boJ8qOKX57momHJh5HQ9SoklwBvteI9vEaL70q7yA7U
+ sgCQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwdP6zl9KYKupC+pcwbz7lQQDcDwg9QTWkiK7TQWTI3jQc0446249M/EMQXhLKKG/cEUO4zbwGgC3dh@nongnu.org
+X-Gm-Message-State: AFuF++k0y6yIRIhvzk+lA/1XByMEtiIxupBZMOVoCkh2PQlhr6s8BpT1
+ hBR0S0AAEIYsJeC8Bb6G0s2J3TQrMIBpTtGsPe275HO02k+Wy8OXgDF1GT+bzkMBew368rt8HSS
+ FDlsZxTBAXfVUpkDnjtE2RMOjGUjoSoYZIYN1dh6wXeyuIXf6BRBpTpCJCw==
+X-Gm-Gg: AYBFou2vEasSU3D65fQR7IZLmcysLbEDZsyRKu6IcYxLN7mM662RJXWEZ5JTMX77nI+
+ N95g4vqY6UiB3MgIwwMeJJss7ZeqFJGM3Wx+C/NK4hEHt+7EKENfLnIV1SDQfU4ztqu4NQoy6f0
+ FqFlIegsG8YqxD/c8izTT5cahnX+mPysZaLVoUzq0L3gk1Qj6bcJ2s4S2oHjKRWd05B3NJNmvvG
+ 8KtsYGxkjWtWOWLZ/JQIFKjszCzWYwtc+6p5nlQziaP7qEexODS6Ds/sVLOuGYcNZwg+1L3NzGV
+ PIHxcxsM1WP0AEbNYZcfNnri6XFFbS4vWOB7ICyVGc6Sm9GaMKDeEFoXF+kW/fSx85El+YJoSN8
+ 1uD7xqM7wSsxxuI9gL2a8quSmvEHTAKMXFqstnKWp6Vjnb/yeeKMDbvlqzFo8Z/TjN3fA
+X-Received: by 2002:a17:903:3884:b0:2da:fa6a:b04f with SMTP id
+ d9443c01a7336-2dafa6ab21cmr26976325ad.2.1788378759578; 
+ Wed, 02 Sep 2026 12:52:39 -0700 (PDT)
+X-Received: by 2002:a17:903:3884:b0:2da:fa6a:b04f with SMTP id
+ d9443c01a7336-2dafa6ab21cmr26975535ad.2.1788378759129; 
+ Wed, 02 Sep 2026 12:52:39 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33256416966sm307194eec.23.2026.09.02.12.52.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Sep 2026 12:52:38 -0700 (PDT)
+Message-ID: <2f0f4aa9-54a7-411b-bf59-7c8442b099d1@oss.qualcomm.com>
+Date: Wed, 2 Sep 2026 12:52:37 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/11] target/s390x: Restrict interrupt handlers to
+ system mode
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
+References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
+ <20260902152044.31291-3-philmd@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260902152044.31291-3-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=UZthjqSN c=1 sm=1 tr=0 ts=6a987e88 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=1EuahR8dtqhgXXsTjK4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-GUID: S29GRMD0Zr9upgEDJDqOn8X-yWZjIl7z
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE3NiBTYWx0ZWRfX4zM4vfChltTQ
+ s8yed+Wh1g36jux/iFEBBSIBlmA3WoBee1YMn8+QMFATQyS8BYOdybDjc1IWgNXirkpfXCcVHi1
+ ba0QhT77ZBBniamDTmIGsSVmUejLOF8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE3NiBTYWx0ZWRfX7IByRrIKe4xd
+ SFYiHMnBv29x4mFLeIlyGVqWJfBxO86FoqlDLOO8SitufHtJDAXC9Av6fNsbnRlGX7/O0FfLx+Q
+ l7yzcp6hU+XCdsvEpuS84KK02jTltpDLDepj1zIKYxgrajVfNifd+5lgHA/Y2yDSOzd3+lADoda
+ qyqyRKCK1g4tAcEORi99UzClYgjVs9Sob0Cd0Wohk6IPdy+Jxl57eJrfIm9in84Kk1xTSyPtgS9
+ JAynrHyQ5wSPKrKhWG+qFsAeEzcfrMhdGKv7cO+sSRx37QXR8zfk4TpK1bjGjPpOkAKQG0bhW2c
+ ssI5LhPpt4kWUANGeUN6J8UDDD3fO+sXwyEba/7zYo1UORUVxxSMZNDJvi+my0NNH5EmwvTatwF
+ CyVzdzJ2zeeuaiDmUqkX/r8qWYL5Ej8p2ERmkLRuLQBOUnxdf4ZLUf71JxgOXLVXLomvG3mFV7d
+ Krzk1v0jdES+oV47zOA==
+X-Proofpoint-ORIG-GUID: S29GRMD0Zr9upgEDJDqOn8X-yWZjIl7z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-02_04,2026-09-02_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020176
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,90 +164,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The max_append_sectors field of virtio_blk_zoned_characteristics must be
-set by the device to the largest zone append request that can be issued
-to it, and a value of zero tells the guest driver that zone append is not
-supported at all (virtio 1.4, 5.2.5.2). Linux refuses to attach a zoned
-device that reports zero.
+On 9/2/2026 8:20 AM, Philippe Mathieu-Daudé wrote:
+> Move s390_cpu_do_interrupt() and s390_cpu_exec_interrupt()
+> declarations from system/user shared header to system-mode-only
+> section, removing the unused user-mode stub.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>  target/s390x/s390x-internal.h  | 5 ++---
+>  target/s390x/tcg/excp_helper.c | 5 -----
+>  2 files changed, 2 insertions(+), 8 deletions(-)
+> 
 
-We pass BlockLimits.max_append_sectors straight through, which makes that
-field mean "zone append unsupported" when it is unset, rather than "this
-backend imposes no limit of its own". Only a backend that has a limit of
-its own has anything to put there.
-
-Derive the value instead. A backend limit is honoured when there is one,
-and otherwise the request is bounded by the zone size, since an append
-cannot cross a zone boundary, and by the largest request the block layer
-can carry. The result cannot be zero.
-
-A backend that carries out an append itself, rather than passing it to a
-device that has a limit of its own, is the one that knows how large a
-request its implementation can take, so it reports that in
-BlockLimits.max_append_sectors and this does not have to guess at it.
-
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- hw/block/virtio-blk.c | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
-
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index f34d432e2b..7abe13919a 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -524,6 +524,27 @@ typedef struct ZoneCmdData {
-     };
- } ZoneCmdData;
- 
-+/*
-+ * The maximum zone append data size that the device reports to the driver in
-+ * virtio_blk_zoned_characteristics, in 512 byte sectors.
-+ *
-+ * A backend that has no limit of its own leaves BlockLimits.max_append_sectors
-+ * at zero, in which case the limit is whatever else bounds the request: an
-+ * append cannot cross a zone boundary, and the block layer cannot carry a
-+ * larger one. The result is never zero, which the driver would read as zone
-+ * append not being supported at all.
-+ */
-+static uint32_t virtio_blk_max_append_sectors(VirtIOBlock *s)
-+{
-+    BlockDriverState *bs = blk_bs(s->blk);
-+    uint64_t sectors;
-+
-+    sectors = MIN_NON_ZERO(bs->bl.zone_size >> BDRV_SECTOR_BITS,
-+                           bs->bl.max_append_sectors);
-+
-+    return MIN_NON_ZERO(sectors, BDRV_REQUEST_MAX_SECTORS);
-+}
-+
- /*
-  * check zoned_request: error checking before issuing requests. If all checks
-  * passed, return true.
-@@ -559,12 +580,8 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-             return false;
-         }
- 
--        if (len / 512 > bs->bl.max_append_sectors) {
--            if (bs->bl.max_append_sectors == 0) {
--                *status = VIRTIO_BLK_S_UNSUPP;
--            } else {
--                *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
--            }
-+        if ((len >> BDRV_SECTOR_BITS) > virtio_blk_max_append_sectors(s)) {
-+            *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-             return false;
-         }
-     }
-@@ -1312,7 +1329,7 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
-         virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
-                      blkconf_zone_write_granularity(conf));
-         virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
--                     bs->bl.max_append_sectors);
-+                     virtio_blk_max_append_sectors(s));
-     } else {
-         blkcfg.zoned.model = VIRTIO_BLK_Z_NONE;
-     }
--- 
-2.55.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
