@@ -4,157 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7953C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 09:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209FAC624D5
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 09:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1hfQ-0000LZ-CL; Wed, 02 Sep 2026 05:54:04 -0400
+	id 1x1hhP-00017N-UX; Wed, 02 Sep 2026 05:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x1hfO-0000KC-07; Wed, 02 Sep 2026 05:54:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x1hfM-0000yh-CV; Wed, 02 Sep 2026 05:54:01 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6829VXqA3814207; Wed, 2 Sep 2026 09:53:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/uy5Gm
- Oz77Q9nN0ZAffy835/zG8OigKu+nOSup6qT98=; b=n3hpMp08lqS1LgEygUuT/M
- /zqvCPOiV3LHbnmqQIw7gCuafEcPR5jOSiDuQvFj2m/btkDkACve8uouS+a70MrH
- f9F9LsGx7x4w9MCI23wkSs/2d1TbHg3cp0wLnwoOcWiB3yIlnaXmeW73WlpRyeBM
- GnFFduHVsiySBG8HhYnCeJIJ3IWw1JmiW9yDhuIkQ5KDTcApPsXRX0RQfH5EA6qE
- S3kzW8Z3LA9ZlaXBgrVIzwS4pjX73XlfYzMpYYhXAtTBUqN/qK+Oi/MjeLYEnYZQ
- U7ZmzWXlaJknHfpnj4wuhr5Rk5+Ni3MHHpb3kt5SumX3EGlq12a/fUg32qm/llUA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5nn33-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 09:53:56 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6829fIxa007692;
- Wed, 2 Sep 2026 09:53:55 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hgvn0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 09:53:55 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6829rs1825100920
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Sep 2026 09:53:54 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 584B558056;
- Wed,  2 Sep 2026 09:53:54 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1E5A58065;
- Wed,  2 Sep 2026 09:53:53 +0000 (GMT)
-Received: from [9.61.24.241] (unknown [9.61.24.241])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  2 Sep 2026 09:53:53 +0000 (GMT)
-Message-ID: <51ed5683-f75f-4941-b9c0-112394b8881e@linux.ibm.com>
-Date: Wed, 2 Sep 2026 05:53:53 -0400
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x1hhN-00017E-BP
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 05:56:05 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x1hhJ-0001Ve-UN
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 05:56:05 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxpvCr8pdq_LgHAA--.21894S3;
+ Wed, 02 Sep 2026 17:55:55 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxBc2o8pdqHoIZAA--.26221S2;
+ Wed, 02 Sep 2026 17:55:54 +0800 (CST)
+Subject: Re: [PATCH v4 08/14] target/loongarch: Add LVZ guest CSR helpers
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1787739852.git.prcups@krgm.moe>
+ <ff1b8657252d1247f22d68a0fb55dad2690357a4.1787739852.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <4cbe86a0-1cd8-b5fc-ed58-f179599a533b@loongson.cn>
+Date: Wed, 2 Sep 2026 17:55:36 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] hw/s390x/ipl: Fix incorrect PCI IPL block lengths
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: jjherne@linux.ibm.com, zycai@linux.ibm.com, qemu-stable@nongnu.org
-References: <20260831194919.3830270-1-jrossi@linux.ibm.com>
- <20260831194919.3830270-3-jrossi@linux.ibm.com>
+In-Reply-To: <ff1b8657252d1247f22d68a0fb55dad2690357a4.1787739852.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260831194919.3830270-3-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a97f234 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=96O0hvHzs7WlAFbs44YA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: IxbfeSsk78SmmeFn-tD9du6sHcrbzsej
-X-Proofpoint-ORIG-GUID: IxbfeSsk78SmmeFn-tD9du6sHcrbzsej
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDA4NCBTYWx0ZWRfX3J1mRO+bBL9j
- sI/BaAem2hCiZwUmRZ74zjb81sS4ULCrBYX2KWbKDcMoX0FSvjA+6jVqmrSe1lBZcDVWQTwlb5U
- 3vmM/gOq7mlUGCKEItic5POJ3BVrACs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDA4NCBTYWx0ZWRfXzroAYk+rTCax
- cr2QDbX2hi2+Ldz+Kwx2uqmAgMNtywUWdWPiXob5Ze6q7kScdGecLTcLy9NzjsFbJuVVoFRqHT7
- f2n4C5vZGl3A+RyQVVYQo1VPf9bfWlnbk6zx7yg1ajLOqriyMBoP8oj2dL6x7Zx55MnagtDaBW8
- rhrJ/C8ZLzEN6Rg6MA2ZUElRC7kHxpYTso5hCVotLDaN1OkOMrnLwc3oY7yrqOSnFWFTOItNQV5
- XkCxQ6XH3K3Y6rNYOAL/0YZPOibAbyMGnwrquTk5fqxZ/xdsMr2gy8LFpa5Nam0bVacJazy13vW
- QMmLyrpG97h7f9ygINQdoycYC1UcJinlL1PFCpn6lmH/Tit5OJVWp9eoqVzeIypZ+imrpOOI9mG
- r5PQcvdhjSyV7SenTTkxd53bVXFdzFsSfUE0hMZ4+bFGSKCjUHTIVhaisoZpFEAiQX9uTNY6HKE
- 4DfVdKhmiVFDEoDo7lg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-02_02,2026-09-01_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609020084
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxBc2o8pdqHoIZAA--.26221S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3uw43CF1rXw47tFyUXr17CFX_yoW8Gr45uo
+ WfCF4aya1rJwsYvF9rCwsxXw4UtFy8Aw4DZF92kws8C3Z7Ar4Y934rJryvya1xtFn5WrWU
+ CwnIga4DGF4fAryfl-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUYI7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAF
+ wI0_Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
+ 0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280
+ aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
+ xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
+ x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r
+ 1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
+ 7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
+ W8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU
+ 2DUUUUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.635,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,25 +84,397 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 8/31/26 3:49 PM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 2026/8/26 下午6:30, SignKirigami wrote:
+> Add helper behavior for guest PGD, ESTAT, ASID and timer interrupt clearing,
+> and for the host LVZ control CSRs.
 > 
-> The length of the PCI IPLB is calculated by size of the IplBlockPci struct
-> plus the number of bytes used for common IPLB fields.
+> Synchronize injected and currently pending passthrough interrupts into
+> the guest ESTAT value whenever GINTC changes.
 > 
-> Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
-> while we are at it.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 395116781df5 ("s390x: Build IPLB for virtio-pci devices")
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 > ---
->   hw/s390x/ipl.c              | 2 ++
->   include/hw/s390x/ipl/qipl.h | 2 +-
->   2 files changed, 3 insertions(+), 1 deletion(-)
+>   target/loongarch/tcg/csr_helper.c | 226 +++++++++++++++++++++++++-----
+>   target/loongarch/tcg/helper.h     |  10 ++
+>   2 files changed, 203 insertions(+), 33 deletions(-)
+> 
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index fa75508244..ba30060ba4 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -18,9 +18,10 @@
+>   #include "cpu-csr.h"
+>   #include "cpu-mmu.h"
+>   
+> -target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +static target_ulong helper_csrwr_stlbps_impl(CPULoongArchState *env,
+> +                                             target_ulong val, bool guest)
+>   {
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, guest);
+>       int64_t old_v = sys->CSR_STLBPS;
+>   
+>       /*
+> @@ -40,10 +41,21 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+> +target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_stlbps_impl(env, val, false);
+> +}
+> +
+> +target_ulong helper_gcsrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_stlbps_impl(env, val, true);
+> +}
+> +
+> +static target_ulong helper_csrrd_pgd_impl(CPULoongArchState *env,
+> +                                          bool guest)
+>   {
+>       int64_t v;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, guest);
+>   
+>       if (sys->CSR_TLBRERA & 0x1) {
+>           v = sys->CSR_TLBRBADV;
+> @@ -60,6 +72,16 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+>       return v;
+>   }
+>   
+> +target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+> +{
+> +    return helper_csrrd_pgd_impl(env, false);
+> +}
+> +
+> +target_ulong helper_gcsrrd_pgd(CPULoongArchState *env)
+> +{
+> +    return helper_csrrd_pgd_impl(env, true);
+> +}
+> +
+>   target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+>   {
+>       LoongArchCPU *lac = env_archcpu(env);
+> @@ -70,18 +92,22 @@ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+>       return sys->CSR_CPUID;
+>   }
+>   
+> -target_ulong helper_csrrd_tval(CPULoongArchState *env)
+> +static target_ulong helper_csrrd_tval_impl(CPULoongArchState *env,
+> +                                           bool guest)
+>   {
+>       LoongArchCPU *cpu = env_archcpu(env);
+>   
+> -    return cpu_loongarch_get_constant_timer_ticks(cpu, false);
+> +    return cpu_loongarch_get_constant_timer_ticks(cpu, guest);
+>   }
+>   
+> -target_ulong helper_gcsrrd_tval(CPULoongArchState *env)
+> +target_ulong helper_csrrd_tval(CPULoongArchState *env)
+>   {
+> -    LoongArchCPU *cpu = env_archcpu(env);
+> +    return helper_csrrd_tval_impl(env, false);
+> +}
+>   
+> -    return cpu_loongarch_get_constant_timer_ticks(cpu, true);
+> +target_ulong helper_gcsrrd_tval(CPULoongArchState *env)
+> +{
+> +    return helper_csrrd_tval_impl(env, true);
+>   }
+>   
+>   target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+> @@ -106,20 +132,45 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+>       return irq;
+>   }
+>   
+> -target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+> +static target_ulong helper_csrwr_estat_impl(CPULoongArchState *env,
+> +                                            target_ulong val, bool guest)
+>   {
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, guest);
+> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+>       int64_t old_v = sys->CSR_ESTAT;
+>   
+>       /* Only IS[1:0] can be written */
+>       sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
+> +    if (guest && env_vm_level(env) != LOONGARCH_VM_LEVEL_GUEST) {
+> +        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 2, 11,
+> +                                   extract64(val, 2, 11));
+> +        if (extract64(val, 2, 8) &
+> +            FIELD_EX64(host->CSR_GINTC, CSR_GINTC, HWIC)) {
+> +            host->CSR_ESTAT = deposit64(host->CSR_ESTAT, 2, 8,
+> +                                        extract64(host->CSR_ESTAT, 2, 8) &
+> +                                        ~extract64(val, 2, 8));
+> +        }
+> +        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 16, 15,
+> +                                   extract64(val, 16, 15));
+> +    }
+>   
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+>   {
+> -    CPUSysState *sys = env_sys(env);
+> +    return helper_csrwr_estat_impl(env, val, false);
+> +}
+> +
+> +target_ulong helper_gcsrwr_estat(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_estat_impl(env, val, true);
+> +}
+> +
+> +static target_ulong helper_csrwr_asid_impl(CPULoongArchState *env,
+> +                                           target_ulong val, bool guest)
+> +{
+> +    CPUSysState *sys = get_sys(env, guest);
+>       int64_t old_v = sys->CSR_ASID;
+>   
+>       /* Only ASID filed of CSR_ASID can be written */
+> @@ -130,45 +181,132 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_asid_impl(env, val, false);
+> +}
+> +
+> +target_ulong helper_gcsrwr_asid(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_asid_impl(env, val, true);
+> +}
+> +
+> +static target_ulong helper_csrwr_tcfg_impl(CPULoongArchState *env,
+> +                                           target_ulong val, bool guest)
+>   {
+>       LoongArchCPU *cpu = env_archcpu(env);
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, guest);
+>       int64_t old_v = sys->CSR_TCFG;
+>   
+> -    cpu_loongarch_store_constant_timer_config(cpu, val, false);
+> +    cpu_loongarch_store_constant_timer_config(cpu, val, guest);
+>   
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_gcsrwr_tcfg(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+>   {
+> -    LoongArchCPU *cpu = env_archcpu(env);
+> -    CPUSysState *guest = get_sys(env, LOONGARCH_VM_LEVEL_GUEST);
+> -    int64_t old_v = guest->CSR_TCFG;
+> -
+> -    cpu_loongarch_store_constant_timer_config(cpu, val, true);
+> +    return helper_csrwr_tcfg_impl(env, val, false);
+> +}
+>   
+> -    return old_v;
+> +target_ulong helper_gcsrwr_tcfg(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_tcfg_impl(env, val, true);
+>   }
+>   
+> -target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+> +static target_ulong helper_csrwr_ticlr_impl(CPULoongArchState *env,
+> +                                            target_ulong val, bool guest)
+>   {
+>       LoongArchCPU *cpu = env_archcpu(env);
+>       int64_t old_v = 0;
+>   
+>       if (val & 0x1) {
+>           bql_lock();
+> -        loongarch_cpu_set_irq(cpu, IRQ_TIMER, 0);
+> +        loongarch_cpu_set_irq_impl(cpu, IRQ_TIMER, 0, guest);
+>           bql_unlock();
+>       }
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_ticlr_impl(env, val, false);
+> +}
+> +
+> +target_ulong helper_gcsrwr_ticlr(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_ticlr_impl(env, val, true);
+> +}
+> +
+> +target_ulong helper_csrwr_gstat(CPULoongArchState *env, target_ulong val)
+> +{
+> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+> +    int64_t old_v = host->CSR_GSTAT;
+> +    uint8_t old_gid = FIELD_EX64(host->CSR_GSTAT, CSR_GSTAT, GID);
+> +
+> +    host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, PVM,
+> +                                 FIELD_EX64(val, CSR_GSTAT, PVM));
+> +    host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, GID,
+> +                                 FIELD_EX64(val, CSR_GSTAT, GID));
+> +
+> +    if (old_gid != FIELD_EX64(host->CSR_GSTAT, CSR_GSTAT, GID)) {
+> +        tlb_flush(env_cpu(env));
+> +    }
+> +
+> +    return old_v;
+> +}
+> +
+> +target_ulong helper_csrwr_gtlbc(CPULoongArchState *env, target_ulong val)
+> +{
+> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+> +    int64_t old_v = host->CSR_GTLBC;
+> +    uint8_t old_use_tgid = FIELD_EX64(old_v, CSR_GTLBC, USETGID);
+> +    uint8_t old_tgid = FIELD_EX64(old_v, CSR_GTLBC, TGID);
+> +
+> +    host->CSR_GTLBC = val;
+> +    if (old_use_tgid != FIELD_EX64(host->CSR_GTLBC, CSR_GTLBC, USETGID) ||
+> +        old_tgid != FIELD_EX64(host->CSR_GTLBC, CSR_GTLBC, TGID)) {
+> +        tlb_flush(env_cpu(env));
+> +    }
+> +
+> +    return old_v;
+> +}
+> +
+> +target_ulong helper_csrwr_gintc(CPULoongArchState *env, target_ulong val)
+> +{
+> +    CPUState *cs = env_cpu(env);
+> +    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+> +    CPUSysState *guest = get_sys(env, LOONGARCH_VM_LEVEL_GUEST);
+> +    int64_t old_v = host->CSR_GINTC;
+> +    uint8_t hwis = FIELD_EX64(val, CSR_GINTC, HWIS);
+> +    uint8_t hwip = FIELD_EX64(val, CSR_GINTC, HWIP);
+> +    uint8_t pending = extract64(host->CSR_ESTAT, 2, 8);
+> +
+> +    host->CSR_GINTC = val & 0xffff00;
+> +    guest->CSR_ESTAT = deposit64(guest->CSR_ESTAT, 2, 8,
+> +                                 hwis | (pending & hwip));
+> +
+> +    bql_lock();
+> +    if (FIELD_EX64(host->CSR_ESTAT, CSR_ESTAT, IS) & ~(hwip << 2)) {
+> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+> +    } else {
+> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> +    }
+it is not necessary to check CSR_ESTAT of host, and inject irq to host.
 
-Thanks. The rest of the cleanup will be nice, but for this as a -stable 
-candidate:
+> +    if (env_vm_level(env) == LOONGARCH_VM_LEVEL_GUEST &&
+When writing register gintc, CPU should work in host mode, is that 
+right? so it will never reach with env_vm_level(env) == 
+LOONGARCH_VM_LEVEL_GUEST.
+> +        FIELD_EX64(guest->CSR_ESTAT, CSR_ESTAT, IS)) {
+> +        cpu_interrupt(cs, CPU_INTERRUPT_GUEST);
+It should only set pending info and not necessary to kick cpu, how about 
+something like this:
+          cpu_set_interrupt(cs, CPU_INTERRUPT_GUEST);
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> +    } else {
+> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_GUEST);
+> +    }
+> +    bql_unlock();
+> +
+> +    return old_v;
+> +}
+> +
+> +static target_ulong helper_csrwr_pwcl_impl(CPULoongArchState *env,
+> +                                           target_ulong val, bool guest)
+>   {
+>       uint8_t shift, ptbase;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, guest);
+>       int64_t old_v = sys->CSR_PWCL;
+>   
+>       /*
+> @@ -190,18 +328,40 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+>   {
+> -    uint8_t has_ptw;
+> -    CPUSysState *sys = env_sys(env);
+> +    return helper_csrwr_pwcl_impl(env, val, false);
+> +}
+> +
+> +target_ulong helper_gcsrwr_pwcl(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_pwcl_impl(env, val, true);
+> +}
+> +
+> +static target_ulong helper_csrwr_pwch_impl(CPULoongArchState *env,
+> +                                           target_ulong val, bool guest)
+> +{
+> +    uint8_t host_has_ptw;
+> +    CPUSysState *sys = get_sys(env, guest);
+>       int64_t old_v = sys->CSR_PWCH;
+>   
+>       val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+> -    has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+> -    if (!has_ptw) {
+> +    //TODO: host can't read guest cpucfg
+> +    host_has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+> +    if (!host_has_ptw) {
+>           val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+>       }
+>   
+>       sys->CSR_PWCH = val;
+>       return old_v;
+> - }
+> +}
+> +
+> +target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_pwch_impl(env, val, false);
+> +}
+> +
+> +target_ulong helper_gcsrwr_pwch(CPULoongArchState *env, target_ulong val)
+> +{
+> +    return helper_csrwr_pwch_impl(env, val, true);
+> +}
+> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+> index b87de15a99..8e0ddd8693 100644
+> --- a/target/loongarch/tcg/helper.h
+> +++ b/target/loongarch/tcg/helper.h
+> @@ -98,18 +98,28 @@ DEF_HELPER_1(rdtime_d, i64, env)
+>   #ifndef CONFIG_USER_ONLY
+>   /* CSRs helper */
+>   DEF_HELPER_1(csrrd_pgd, i64, env)
+> +DEF_HELPER_1(gcsrrd_pgd, i64, env)
+>   DEF_HELPER_1(csrrd_cpuid, i64, env)
+>   DEF_HELPER_1(csrrd_tval, i64, env)
+>   DEF_HELPER_1(gcsrrd_tval, i64, env)
+>   DEF_HELPER_1(csrrd_msgir, i64, env)
+>   DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+> +DEF_HELPER_2(gcsrwr_stlbps, i64, env, tl)
+>   DEF_HELPER_2(csrwr_estat, i64, env, tl)
+> +DEF_HELPER_2(gcsrwr_estat, i64, env, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+> +DEF_HELPER_2(gcsrwr_asid, i64, env, tl)
+>   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+>   DEF_HELPER_2(gcsrwr_tcfg, i64, env, tl)
+>   DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+> +DEF_HELPER_2(gcsrwr_ticlr, i64, env, tl)
+> +DEF_HELPER_2(csrwr_gstat, i64, env, tl)
+> +DEF_HELPER_2(csrwr_gtlbc, i64, env, tl)
+> +DEF_HELPER_2(csrwr_gintc, i64, env, tl)
+It will be better if it is split into two patches, one is about 
+gstat/gtlbc/gintc, the other is gcsrwr/gcsrrd operation.
+
+Regards
+Bibo Mao
+>   DEF_HELPER_2(csrwr_pwcl, i64, env, tl)
+> +DEF_HELPER_2(gcsrwr_pwcl, i64, env, tl)
+>   DEF_HELPER_2(csrwr_pwch, i64, env, tl)
+> +DEF_HELPER_2(gcsrwr_pwch, i64, env, tl)
+>   DEF_HELPER_2(iocsrrd_b, i64, env, tl)
+>   DEF_HELPER_2(iocsrrd_h, i64, env, tl)
+>   DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+> 
+
 
