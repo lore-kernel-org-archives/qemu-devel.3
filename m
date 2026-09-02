@@ -4,90 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A8BC61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 01:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88448C624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 02:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1aEF-0001Cj-LB; Tue, 01 Sep 2026 21:57:31 -0400
+	id 1x1aW9-0003LE-DZ; Tue, 01 Sep 2026 22:16:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1x1aEE-0001CJ-LA
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 21:57:30 -0400
-Received: from mail-pj2-x0a.google.com ([2607:f8b0:4864:39::a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1x1aEB-0004ay-8P
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 21:57:30 -0400
-Received: by mail-pj2-x0a.google.com with SMTP id
- 98e67ed59e1d1-39641d0dba5so274697a91.0
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 18:57:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788314246; x=1788919046; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZejZZ2ZbB/EBfw/8xAvF1q+yOuOMpS/sGduFd1xS/QU=;
- b=Ad++Ek1WVa3i75MsxUnjVl5Vj9aKTNCrZHoU/pCgpLWyS3nLogoWqAN2O4QtdYtsik
- Vs4aLjS9E0KzTXcRn+SFg9xOZT7uXAhePC8H6AVbGT8O4sCx4TC3A57mjszclRI/SBGw
- 0wnlwANmvScGugREaadyYZAxSxwT+gnjgamJS9FdgLkuuZi9i71P9s3TJhH+5Rx8rzoE
- ikznO9P5oKsyzMuhYlOONZ+r7kRGaImqGa6UMdVXc/AqDH3qMnjFXYf9+5vz/mXoUZz2
- qZmUgK+gbc2h4+/ypfLTHYFFOfZgzOWXAOYpoJD4STik4R9e+NTm0CpVjUO+TYdbbDaj
- q+Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788314246; x=1788919046;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZejZZ2ZbB/EBfw/8xAvF1q+yOuOMpS/sGduFd1xS/QU=;
- b=Es/pxQByGQXZeGIzcoQXf8MMYtwiffv2Mml2da7p1Kqr53kJ5HemwYMOLth3AHprSV
- ZES1EcIwEFVKmBrvo3bQwS/kpkPOgfe9NRd5aJXvn5Wc2BXax1av4k62lV0ry1/wxPMM
- iuP1LTPh4O4cn6Vv9hrkij+UrhzyxN+QbxiEZP5tVX1TVJRy0WVglRJvME7YphIF3Wni
- kiuTxyO+HUF4PahdMnBatfFzdXhlnJLmz7xSX/Gtyr/0KY0ymGhk3MwW6492OipNx216
- ghvd9T16zctWCKdmxR6nu5tICOByhCqy11UaKjneMItDYhV2cuLXhWEgbX6xF4IMP3vQ
- KQwQ==
-X-Gm-Message-State: AFuF++k6myLv583NZuB/crU52y6WyQrXAZTQN6aK5Qwbtvd7/NKXvqgt
- 9BB/ZUc4eWdcnZ0C/8JuVxdV/zkJE/Ag7wEOS8RABIlxiqCmUZqds2v/9vDvzgm1
-X-Gm-Gg: AYBFou0RkTZ19u5ohA5i+3aQr2Go2oM0uYxX5nN+VOFl0wWm2/znn0OjM+f4ml23iar
- A9LHY7l9ksiOwTXbt8rjCBDZ3cSKT6ipC2G+jeppDi0bqFapwVHazqlhXMnG418IPBFVGeC30v/
- PH9mHPewMtvoYbiiQvbZ0SQK6IIo/wf0YhU3VBkx0Q5bHb2ZMggJ7vJiwZG4WsvafN/G44+Bfdw
- Z8edY7vzGe8rn9u/H1dTydIh3fBso0RSOyiCWWpOWzVNKCYyFDIiWFhwlbv9QWIUi7kubpzKljB
- Mlx7bB3Hvlz1k9JedE8HSl8dyp3b+CIMIbr6iX33tywl8dqOLlemOkjna9zE4FluEJUrHRjcJXY
- uFIOV23dIYuExf0LoSJTq82zkbgN05w+3gGIMtNdqRBayj9tP+t6zvWjp6ocRQCs4W3Ikjn1TAd
- 7I9uL66tvl38t7YwNLCJZ5W0L077yEQSj7Tp/9RJ4fZ9aYeohVwP2Bt7HKdLNrh2xK6EoQgniWg
- pfd8I1xJbzkPPtT
-X-Received: by 2002:a17:90b:17c3:b0:398:dcef:c040 with SMTP id
- 98e67ed59e1d1-39aee1d6bf3mr1677227a91.19.1788314245545; 
- Tue, 01 Sep 2026 18:57:25 -0700 (PDT)
-Received: from Dell-WorkStation.localdomain ([149.118.62.92])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3990bd1b395sm9455664a91.1.2026.09.01.18.57.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Sep 2026 18:57:24 -0700 (PDT)
-From: Zephyr Li <fritchleybohrer@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Zephyr Li <fritchleybohrer@gmail.com>
-Subject: [PATCH] target/riscv: save ELP in MPELP for NMIE=0 exceptions
-Date: Wed,  2 Sep 2026 09:57:04 +0800
-Message-ID: <20260902015704.101990-1-fritchleybohrer@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x1aW7-0003Kz-4Y; Tue, 01 Sep 2026 22:15:59 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x1aW3-0007bI-Tm; Tue, 01 Sep 2026 22:15:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PUiBgEdwtSUdSxx11PFZ8apV1NxxYE0zYwOtmzypLdu/+FvMdek3LwxGhndFy8NayQ5fHrAuycmQa1rE1w7aVo3LgYCQh/TtNLh9kPwC9sz5xlTsKEMeWs6hWm2e5RqUE3ZgU3ugQTI5/Bye47Q2tZqLw+dZ3CNgooOwYAXe8bzAIWuVz/4CAzufhDC5L7rpwQpBHDNRdPSxor7DQb8zT2xMZWfTzL+qxE6KrPIPi5IlcnO0G3JBgW0JcCqhWWGeAFha2R5kuou4Fv6p9eRyYxeuvUIntGsUstPeCL7pq7nmGdqt964G3O1T5Se9jW8wYHRGIcYRCupU27DIwqg42g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xLvlewxwtFB39v6hoAhtF3F4TWGMSSZeTjvTC0+IB3w=;
+ b=Hz3tn+TepTtW1WWjH7VFvlsYISHSGwjnr6yN0ly1DbXBgvZcUWBcCrRSZ4JaGGaxxLeF/NPic4Agrx9vw2lIeMIC8c6F5SLc2qfOaREZCLAg7ZRwxPE3WNal9GNTboLB3uwo00Mivxp8HTOQ85Emh3wc/x/KCeCFTZvOuZDOSPuhWtKValE3p3XJ8aBDPoE2hST2ERTSu+bXuphOJ6fgOcvkDIOYHVajK3V1SEqJFDSqpvq/G6nJ+JLLJUAYommnZvgC8Y/HtWtaPSlGMEGUGI/vx21k4KuPwy17P3q+KOBIjrCwviLyPSnMEA5l1uNjsYilBBuFzu35zY9relnGqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xLvlewxwtFB39v6hoAhtF3F4TWGMSSZeTjvTC0+IB3w=;
+ b=I8mejvgsbPGe9I1VTcUUctD8sMuS8tE7hAWNl3ytUeSQ7MhUgCMyOIo3GmtssiqJeu/05LSJ+ImnLa1JQyDbsXFyiOG6oPJvI8l796rCzbllBuiIx/e0Ax2WkX+R+rd48VRWl6HFHguuvxBGNG7HZ8CGrgboZrlLPAI065mnnkcmdyiXw4k4m/gqehMVCL6cb0hBVnXUVTaqHZ4oOPgsr0mSfCGfrZ8C5/DrqOgr3ZWhIZyUL8AOoI0077sN6LS+8Oyjoy0Aj2jlkAutgCRBVPxmbEa5+YlwS2pYqAYqZPEneem910WHQTR9NvfB4I+dF1IwYbVqv7QhEHgYKnkskg==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by TYZPR06MB5782.apcprd06.prod.outlook.com (2603:1096:400:26a::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
+ 2026 02:15:44 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
+ 02:15:43 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open list:ARM
+ TCG CPUs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v5 0/4] hw/usb: Add ASPEED USB Device Controller (UDC)
+Thread-Topic: [PATCH v5 0/4] hw/usb: Add ASPEED USB Device Controller (UDC)
+Thread-Index: AQHdOoD0IqlDMM+l4k6VtfmdzLXZZQ==
+Date: Wed, 2 Sep 2026 02:15:42 +0000
+Message-ID: <20260902021542.3194812-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYZPR06MB5782:EE_
+x-ms-office365-filtering-correlation-id: 72cce45c-4d05-4e87-8e7a-08df0898175c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|3023799007|10067099003|56012099006|921020|6133799003|38070700021|18002099003;
+x-microsoft-antispam-message-info: FYD9hlv9QJPzVtqqrFU0eo5SdesIGbx5FLIB6dzeb+GoaJ5ShE6XdyeeKs4OupDhIG85BJyOPwMo7IZjnPxMeP9OHhshMcVpjP/rKR1eR6aHreX6GaWsEpEqk1clSkbWU+diMrqZBaeZenIQqw6cdnbfUSCi8hHA1t/+kM5IWcmYaSGABfUxoZldli8jv/QwkjkzJgYrek3I3njew7JhKksqyKEvimpvosx+XGtfjfyyRbDgi2i/io8BLt1/j23GZdPUVfi5kKFDHMkm7lpNHRul88sWcZhUO+LiCNrHZaBDSJQEYZQgLB6dKwkOHAG/Cm2BTfPDVFRc2TMPUFur/ki7/OSu843hhkfjfA6S/UP2ohKR2L8hu+16sBhm7p+wH45tPejuFrojFw1NuAr6uERrD9HCs/npeXqlJUM9q0srEsAR+3XO6ECKEaRbyqlGX9fPAXdDY8zo0moMeYGUmYzCsKXJ0Lxo97EQ38ah3ZoxnWZAqAwu5tyTg5JciwlyYODElHTkiVIFyle1K+YSVa6JaJLJg91Igohtut06BCcmbdTHruTLHAv1G0PPZLSCR6CLxqV2ykQFFilzwWBrfsZowTGKBGoxrjAAm7qY1HabZ5QGjpbYeqiNMJxB2Hstzq+vt1vbnByLR0dka8/oBTPIwx5V9ISCp+quCWjszzXWMIdPhvlep40X5gWYc0ZnRVfLcKjf4PyOiZyyQCMpOn1EfLtYbjvXQmqaCoho9BtuvsKSn/LwLxHpfytr364k
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(3023799007)(10067099003)(56012099006)(921020)(6133799003)(38070700021)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?hkoQNOZATNwrathEc6nyg4yeHK4w3IpMXnMA2iVkQjbDnLsQlFK8aNYAyS?=
+ =?iso-8859-1?Q?WRCeIxAT09jWYy84Mp1BfPDkBZSjoxvhVVOxXoH6uLb8wpjZ3B+GNJG0Kt?=
+ =?iso-8859-1?Q?B/QVPDZTDk4rprJ5RQXjzut6xXRhsjcNSkfkvZWwuKGsIXwlquQdFuPc95?=
+ =?iso-8859-1?Q?/5xH393wKTjugd1zXenw2ulyhttul4EiDZ0KfidAvTHqx5f6dfkN6hH/Nt?=
+ =?iso-8859-1?Q?xkiG9JKj0S5cg86Erb7milQcUcaNC1opkqVqpIvLPs/leb1QKCX5rvwE/T?=
+ =?iso-8859-1?Q?Gx9afWGJdOUoxJPNUemHCOhfTo9utsK9lw9ZY4VsGjGG+NFSA++Hr7cXnT?=
+ =?iso-8859-1?Q?2tS6YpTuqPX8I0ItCgA6Fn/Nwj63se/MrsXqywU+fopIMIMdTGD2HD8vH1?=
+ =?iso-8859-1?Q?Mk+XNEFRtytlt5NNf74aHjve88mOMa7EPhsTtCzZ45isK1wbFpKsd+7bdn?=
+ =?iso-8859-1?Q?t2Z/N5PjxJvBlFQO6e5H8D6OS/ptfhTpAVIBVYvVND5F2JzqCJdhG5NItz?=
+ =?iso-8859-1?Q?u3BrwUk7Qm+zTLPTAhhRBbNuZs1Sw436qHGpHCkG6snVl9p62G2DFxsAb8?=
+ =?iso-8859-1?Q?o6wy5ZnvuGPJ9SpdOnVF1JoNPSnXl/Qw9W/AEMQFrP7KQBpJsvrQlaUokS?=
+ =?iso-8859-1?Q?wkkw5gVj2EYuBIL4qaB/saboVCYF3PBMHspfZO6N1J97jRCfOJ/5y3UoSk?=
+ =?iso-8859-1?Q?zY1yAq/Q06uuxIA/dsJfFyVk1VWgT7uAbGw2XtGg/ftAAck8K/3WtbnUYu?=
+ =?iso-8859-1?Q?8KcUt4VRxvBq2zQjLYWL3YTjNCnkIGU/5yROnN1hGt9rXOkTpELkpo7s5X?=
+ =?iso-8859-1?Q?keNx/KtJeo5NLoX35pYoi+xcufJsYtxx56t5DPO8+l/Dh3uIy/QH1KqB7Z?=
+ =?iso-8859-1?Q?+qssqIyKuxaW1SwnbjjrYO0Smgfn3ztH+tM7cmwds7630oL6xctEEORftg?=
+ =?iso-8859-1?Q?/SM1h+r6uRUWw4ov3DWcUKI85BOaTZWscf0DHmMr/C6N6BVOkJ4hFmJuRt?=
+ =?iso-8859-1?Q?/CJ1f39hLnuw/q4OeFvH2Q4z8XgAjkIukgEdOAm4T823EbV8Ib3t5awBGn?=
+ =?iso-8859-1?Q?z+6CUgQAD4LWPxH2Mz7djhnlmenQCpfkktxpaGGdyg6naVCj55LDQha1fb?=
+ =?iso-8859-1?Q?e6i/qRXa26igTMYbaZsyfMju7bjBf3shrppwuAqTNvlxPNqaINiCEjFOYo?=
+ =?iso-8859-1?Q?kZasoLHzO82zJ77MUL/s9Bm8V3Ra7KW8YBUqi+S47SQxlAiSJd5pzAcdlj?=
+ =?iso-8859-1?Q?GKFwYjwHR6h0ePn2SpnFhgxxOI2E1kVDN5x0eLFcKjDAppNAaws8vzCJnP?=
+ =?iso-8859-1?Q?niLFwTu9hcuGzrzFEuvFPdXi75BsDrYzX2oNPaMDLZVZ38AkuSRe7fipI5?=
+ =?iso-8859-1?Q?qDeFErIUcMr9PwBFB27BvAQZQbMcD61NH37SDkG+F+xrspsJ9Tjm+6wn39?=
+ =?iso-8859-1?Q?Ggi6E2BSFN5OeOxnqZAvKiFdvEZBqzHJLM0FxFjozewriYBhCG8ybX73nG?=
+ =?iso-8859-1?Q?p7dCfchA7tv+Rj/i0YjUW04M8fiBrWwnuD0N0YrsZviLb2WMRUBl0adHHj?=
+ =?iso-8859-1?Q?+cLEuI5myDHnxCB5yabZRJVicMRKiPhfDfLCxu9x3mtBA2gahDFllX11JZ?=
+ =?iso-8859-1?Q?qlGmp1QNHXJcdvv49ibfIMdM0asUbPRe8wEP8btP/kH2P8nOVWFRcwCwoT?=
+ =?iso-8859-1?Q?obwUZkTZwYrtfioiHVnx/+vfvzaYwLEkYjxpnywA8AhSfOH++Tk6IBA7iE?=
+ =?iso-8859-1?Q?G81Aidw457ud9KcJHhad/k663IFa3GxP8Y0Brtt8dxK24o9pH5LSnjUgNR?=
+ =?iso-8859-1?Q?1QkMhFtiLw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::a;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x0a.google.com
+X-Exchange-RoutingPolicyChecked: cxaXshd9OvUF6kpE1B24OHu6MLZMxpGMjWFNij803mKjsZr8JsuykugQN6VyhgVhgFv6q0lcPk9PHa4jUlNOC7RjPBki6CV581ZqITk0Y0meWWsa/NEivKixCLDAXGxInl8lWdLcgFbK6xTjLaR+v0Kok5xnW3OtCWk9/chtWh5eswCou1WwT8/Thyf2aStygtnxpK5mzKawWJLwKXN8XeRkwu9kt19NbDi0fEuWSJcfM5b21qfkkFHZxz+XNpjZLBIAZ+TITppzajm2NxGbLj7wkNRiliq//Yz3Ex+h3eWZ91lhlGs71UB14FsDL3EjoOF3ZES41LaasaXDy6AmpA==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72cce45c-4d05-4e87-8e7a-08df0898175c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2026 02:15:42.9341 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4zfiOAeUogffVGsGMrshgq29QRZzy2mmGudoTWjTuy6ixaIEsY3xDx4y0alhImwRm1vWKKWCi0AR4QHcOacUKMCbEYdavihecbj1rRlf2sU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5782
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,203 +145,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When an exception occurs in M-mode while mnstatus.NMIE is clear,
-Smrnmi only changes the exception handler address. Trap state is still
-saved in the regular M-mode CSRs and the handler returns with MRET.
-
-riscv_cpu_do_interrupt() instead saves ELP in mnstatus.MNPELP on this
-path. MRET restores ELP from mstatus.MPELP, so the expected landing-pad
-state is lost.
-
-Always save ELP in mstatus.MPELP for M-mode exceptions. Keep MNPELP for
-the actual RNMI interrupt path, which returns with MNRET.
-
-Add a TCG test that checks ELP preservation across an NMIE=0 M-mode
-exception and MRET.
-
-Fixes: 0266fd8b56a4 ("target/riscv: Add Zicfilp support for Smrnmi")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4223
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
----
- target/riscv/tcg/cpu_helper.c             |  18 +---
- tests/tcg/riscv64/Makefile.softmmu-target |   8 ++
- tests/tcg/riscv64/test-zicfilp-smrnmi.S   | 117 ++++++++++++++++++++++
- 3 files changed, 127 insertions(+), 16 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-zicfilp-smrnmi.S
-
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..a0d79b33a5 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -2264,23 +2264,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
- 
-         src = env->sepc;
-     } else {
--        /*
--         * If the hart encounters an exception while executing in M-mode
--         * with the mnstatus.NMIE bit clear, the exception is an RNMI exception.
--         */
--        nnmi_excep = cpu->cfg.ext_smrnmi &&
--                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
--                     !async;
--
--        /* handle the trap in M-mode */
--        /* save elp status */
-+        /* Save ELP for MRET. */
-         if (cpu_get_fcfien(env)) {
--            if (nnmi_excep) {
--                env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP,
--                                          env->elp);
--            } else {
--                env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
--            }
-+            env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
-         }
- 
-         if (riscv_has_ext(env, RVH)) {
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 6a219c306c..8522c3fe6f 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -45,6 +45,14 @@ comma:= ,
- run-test-crc32: test-crc32
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-test-zicfilp-smrnmi
-+run-test-zicfilp-smrnmi: test-zicfilp-smrnmi
-+	$(call run-test, $<, \
-+	  $(QEMU) \
-+	  -cpu rv64$(comma)zicsr=true$(comma)zicfilp=true$(comma)smrnmi=true \
-+	  -global rv64-riscv-cpu.rnmi-exception-vector=0x80000100 \
-+	  $(QEMU_OPTS)$<)
-+
- # Zicclsm: misaligned load/store support. Assemble one source twice: the
- # default build expects every misaligned access to succeed (zicclsm=true),
- # the -DZICCLSM_DISABLED build expects every one to trap (zicclsm=false).
-diff --git a/tests/tcg/riscv64/test-zicfilp-smrnmi.S b/tests/tcg/riscv64/test-zicfilp-smrnmi.S
-new file mode 100644
-index 0000000000..b5965bf705
---- /dev/null
-+++ b/tests/tcg/riscv64/test-zicfilp-smrnmi.S
-@@ -0,0 +1,117 @@
-+/*
-+ * Test that an M-mode exception taken with mnstatus.NMIE clear saves ELP in
-+ * mstatus.MPELP, so that it is restored by MRET.  MNPELP is reserved for the
-+ * actual RNMI path, which returns with MNRET.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+	.option	norvc
-+
-+	.equ	CSR_MNSTATUS, 0x744
-+	.equ	CSR_MSECCFG, 0x747
-+	.equ	MNSTATUS_NMIE, 1 << 3
-+	.equ	MNSTATUS_MNPELP, 1 << 9
-+	.equ	MSECCFG_MLPE, 1 << 10
-+	.equ	MSTATUS_MPELP, 1 << 41
-+	.equ	EXCP_INST_ACCESS_FAULT, 1
-+	.equ	EXCP_SW_CHECK, 18
-+	.equ	SW_CHECK_FCFI_TVAL, 2
-+
-+	.text
-+	.global	_start
-+_start:
-+	/* Verify that NMIE is clear before exercising the exception path. */
-+	csrr	t0, CSR_MNSTATUS
-+	andi	t0, t0, MNSTATUS_NMIE
-+	bnez	t0, fail_nmie
-+
-+	/* Enable landing-pad checks in M-mode, then start a new TB. */
-+	li	t0, MSECCFG_MLPE
-+	csrs	CSR_MSECCFG, t0
-+	j	tracked_jump
-+
-+tracked_jump:
-+	/* Make a Zicfilp-tracked indirect jump to an address that faults. */
-+	li	t1, 0
-+	jalr	zero, 0(t1)
-+
-+	/*
-+	 * The instruction access fault should have redirected to the handler.
-+	 */
-+	li	a0, 1
-+	j	_exit
-+
-+fail_nmie:
-+	li	a0, 6
-+	j	_exit
-+
-+	/* Must match rnmi-exception-vector in Makefile.softmmu-target. */
-+	.org	0x100
-+rnmi_exception:
-+	csrr	t0, mcause
-+	li	t1, EXCP_INST_ACCESS_FAULT
-+	beq	t0, t1, handle_fetch_fault
-+	li	t1, EXCP_SW_CHECK
-+	beq	t0, t1, handle_sw_check
-+
-+	li	a0, 4
-+	j	_exit
-+
-+handle_fetch_fault:
-+	/* This is an M-mode exception and will return with MRET. */
-+	csrr	t0, mstatus
-+	li	t1, MSTATUS_MPELP
-+	and	t0, t0, t1
-+	beqz	t0, fail_mpelp
-+
-+	csrr	t0, CSR_MNSTATUS
-+	andi	t0, t0, MNSTATUS_MNPELP
-+	bnez	t0, fail_mnpelp
-+
-+	lla	t0, resume_non_lpad
-+	csrw	mepc, t0
-+	mret
-+
-+resume_non_lpad:
-+	/* MRET must restore ELP, so this instruction must not retire. */
-+	li	a0, 1
-+	j	_exit
-+
-+handle_sw_check:
-+	csrr	t0, mtval
-+	li	t1, SW_CHECK_FCFI_TVAL
-+	bne	t0, t1, fail_tval
-+
-+	li	a0, 0
-+	j	_exit
-+
-+fail_mpelp:
-+	li	a0, 2
-+	j	_exit
-+
-+fail_mnpelp:
-+	li	a0, 3
-+	j	_exit
-+
-+fail_tval:
-+	li	a0, 5
-+
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence. */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
--- 
-2.43.0
-
+This series adds a QEMU model for the ASPEED USB Device Controller (UDC),=
+=0A=
+driven by the Linux "aspeed_udc" gadget driver.=0A=
+=0A=
+It is the first step of a larger plan to model USB device-side support on=
+=0A=
+ASPEED BMC/BIC SoCs, which has three goals:=0A=
+=0A=
+1. Model the ASPEED UDC (AST2600 / AST1030). The AST2600 also has USB host=
+=0A=
+   (EHCI) controllers, so this series targets the AST2600 UDC: its gadget c=
+an=0A=
+   be attached to the SoC's own EHCI bus, letting the guest enumerate its o=
+wn=0A=
+   gadget and exercise the UDC end-to-end.  [this series]=0A=
+=0A=
+2. AST1030 UDC. The AST1030 has no USB host controller, so testing its UDC=
+=0A=
+   needs a second QEMU instance. The plan is to redirect the UDC gadget out=
+=0A=
+   of the guest using libusbredir and attach it to another QEMU that runs a=
+=0A=
+   USB host (a VMM, or an AST2600 / AST2700 guest).  [on-going]=0A=
+   =0A=
+3. ASPEED vHub, as a longer-term goal towards BMC KVM / Virtual Media suppo=
+rt=0A=
+   in QEMU.  [future]=0A=
+=0A=
+This series implements goal 1 only.=0A=
+=0A=
+Design=0A=
+------=0A=
+The UDC is modelled as two QOM objects, because a single object cannot be=
+=0A=
+both a SysBusDevice and a USBDevice:=0A=
+=0A=
+  - "aspeed.udc": the sysbus device (MMIO register map, IRQ and DMA engine)=
+=0A=
+    that the guest gadget driver programs.=0A=
+=0A=
+  - "aspeed.udc-gadget": a user-creatable USB device presented on a USB hos=
+t=0A=
+    controller's bus. It links back to its controller through the "udc"=0A=
+    property.=0A=
+=0A=
+The SoC creates the controller; the gadget is added on the command line, e.=
+g.=0A=
+=0A=
+  -device aspeed.udc-gadget,udc=3D/machine/soc/udc=0A=
+     =0A=
+Test result:=0A=
+-----------=0A=
+The default ASPEED SDK prebuilt image does not enable the UDC driver, so=0A=
+build a kernel with CONFIG_USB_ASPEED_UDC=3Dy first.=0A=
+=0A=
+Start QEMU with the gadget attached to the on-SoC EHCI:=0A=
+=0A=
+  qemu-system-arm -machine ast2600-evb -drive file=3D<image>,if=3Dmtd,forma=
+t=3Draw \=0A=
+      -device aspeed.udc-gadget,udc=3D/machine/soc/udc -nographic=0A=
+=0A=
+In the guest, bring up a mass-storage gadget and verify enumeration and I/O=
+:=0A=
+=0A=
+1. Before: only the host controllers are present=0A=
+root@ast2600-default:~# lsusb=0A=
+unable to initialize usb specBus 001 Device 001: ID 1d6b:0002 Linux 6.18.20=
+-dirty-32e49fb4a22b-g32e49fb4a22b-dirty ehci_hcd EHCI Host Controller=0A=
+Bus 002 Device 001: ID 1d6b:0001 Linux 6.18.20-dirty-32e49fb4a22b-g32e49fb4=
+a22b-dirty uhci_hcd Generic UHCI Host Controller=0A=
+=0A=
+2. Enable the gadget=0A=
+root@ast2600-default:~# ./usb-storage.sh=0A=
+Using UDC: 1e6a2000.usb=0A=
+[  598.582205] Mass Storage Function, version: 2009/09/11=0A=
+[  598.582635] LUN: removable file: (no medium)=0A=
+USB Mass Storage gadget is enabled.=0A=
+Backing file: /home/root/jamin=0A=
+root@ast2600-default:~# [  598.876395] usb 1-1: new high-speed USB device n=
+umber 2 using ehci-platform=0A=
+[  599.070035] usb 1-1: New USB device found, idVendor=3D1d6b, idProduct=3D=
+0104, bcdDevice=3D 1.00=0A=
+[  599.070821] usb 1-1: New USB device strings: Mfr=3D1, Product=3D2, Seria=
+lNumber=3D3=0A=
+[  599.071448] usb 1-1: Product: ASPEED USB Storage=0A=
+[  599.072687] usb 1-1: Manufacturer: ASPEED=0A=
+[  599.073384] usb 1-1: SerialNumber: 1234567890=0A=
+[  599.103625] usb-storage 1-1:1.0: USB Mass Storage device detected=0A=
+[  599.136326] scsi host0: usb-storage 1-1:1.0=0A=
+[  600.230921] scsi 0:0:0:0: Direct-Access     Linux    File-Stor Gadget 06=
+18 PQ: 0 ANSI: 2=0A=
+[  600.243758] sd 0:0:0:0: Attached scsi generic sg0 type 0=0A=
+[  600.263452] sd 0:0:0:0: Power-on or device reset occurred=0A=
+[  600.289381] sd 0:0:0:0: [sda] 2048 512-byte logical blocks: (1.05 MB/1.0=
+0 MiB)=0A=
+[  600.297896] sd 0:0:0:0: [sda] Write Protect is off=0A=
+[  600.306379] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled,=
+ doesn't support DPO or FUA=0A=
+[  600.424608]  sda:=0A=
+[  600.425526] sd 0:0:0:0: [sda] Attached SCSI removable disk=0A=
+=0A=
+3. After: the gadget enumerates on the EHCI bus=0A=
+root@ast2600-default:~# lsusb=0A=
+unable to initialize usb specBus 001 Device 001: ID 1d6b:0002 Linux 6.18.20=
+-dirty-32e49fb4a22b-g32e49fb4a22b-dirty ehci_hcd EHCI Host Controller=0A=
+Bus 001 Device 002: ID 1d6b:0104 ASPEED ASPEED USB Storage=0A=
+Bus 002 Device 001: ID 1d6b:0001 Linux 6.18.20-dirty-32e49fb4a22b-g32e49fb4=
+a22b-dirty uhci_hcd Generic UHCI Host Controller=0A=
+=0A=
+4. Mount and verify data=0A=
+root@ast2600-default:~# mount /dev/sda /mnt/=0A=
+root@ast2600-default:~# sha256sum /mnt/testfile=0A=
+3308890a1289f6a327c014537523e8ebd0833301af3d25a7c5893dc7050d2c70  /mnt/test=
+file=0A=
+root@ast2600-default:~# umount /mnt=0A=
+=0A=
+5. Stop the gadget -> clean disconnect=0A=
+root@ast2600-default:~# ./usb-storage.sh stop=0A=
+Stopping USB gadget...=0A=
+[  669.866439] usb 1-1: USB disconnect, device number 2=0A=
+Stopped.=0A=
+root@ast2600-default:~# [  669.968156] sd 0:0:0:0: [sda] Synchronizing SCSI=
+ cache=0A=
+[  669.969307] sd 0:0:0:0: [sda] Synchronize Cache(10) failed: Result: host=
+byte=3D0x01 driverbyte=3DDRIVER_OK=0A=
+=0A=
+root@ast2600-default:~# lsusb=0A=
+unable to initialize usb specBus 001 Device 001: ID 1d6b:0002 Linux 6.18.20=
+-dirty-32e49fb4a22b-g32e49fb4a22b-dirty ehci_hcd EHCI Host Controller=0A=
+Bus 002 Device 001: ID 1d6b:0001 Linux 6.18.20-dirty-32e49fb4a22b-g32e49fb4=
+a22b-dirty uhci_hcd Generic UHCI Host Controller=0A=
+=0A=
+=0A=
+The contents of this scripts=0A=
+---------------------------=0A=
+root@ast2600-default:~# cat  usb-storage.sh=0A=
+#!/bin/sh=0A=
+set -e=0A=
+=0A=
+G=3D/sys/kernel/config/usb_gadget/g1=0A=
+IMG=3D/home/root/jamin=0A=
+SIZE_MB=3D64=0A=
+=0A=
+mount_configfs()=0A=
+{=0A=
+    mountpoint -q /sys/kernel/config || mount -t configfs none /sys/kernel/=
+config=0A=
+}=0A=
+=0A=
+get_udc()=0A=
+{=0A=
+    ls /sys/class/udc | head -n 1=0A=
+}=0A=
+=0A=
+stop_gadget()=0A=
+{=0A=
+    if [ ! -d "$G" ]; then=0A=
+        return=0A=
+    fi=0A=
+=0A=
+    echo "Stopping USB gadget..."=0A=
+=0A=
+    # Unbind UDC first=0A=
+    if [ -f "$G/UDC" ]; then=0A=
+        echo "" > "$G/UDC" 2>/dev/null || true=0A=
+    fi=0A=
+=0A=
+    # Clear backing file to release image=0A=
+    if [ -f "$G/functions/mass_storage.0/lun.0/file" ]; then=0A=
+        echo "" > "$G/functions/mass_storage.0/lun.0/file" 2>/dev/null || t=
+rue=0A=
+    fi=0A=
+=0A=
+    # Remove function link from config=0A=
+    rm -f "$G/configs/c.1/mass_storage.0" 2>/dev/null || true=0A=
+=0A=
+    echo "Stopped."=0A=
+}=0A=
+=0A=
+start_gadget()=0A=
+{=0A=
+    mount_configfs=0A=
+=0A=
+    UDC=3D"$(get_udc)"=0A=
+    if [ -z "$UDC" ]; then=0A=
+        echo "ERROR: No UDC found in /sys/class/udc"=0A=
+        exit 1=0A=
+    fi=0A=
+=0A=
+    stop_gadget=0A=
+=0A=
+    echo "Using UDC: $UDC"=0A=
+=0A=
+    modprobe libcomposite 2>/dev/null || true=0A=
+=0A=
+    mkdir -p "$G"=0A=
+    cd "$G"=0A=
+=0A=
+    echo 0x1d6b > idVendor=0A=
+    echo 0x0104 > idProduct=0A=
+    echo 0x0200 > bcdUSB=0A=
+    echo 0x0100 > bcdDevice=0A=
+=0A=
+    mkdir -p strings/0x409=0A=
+    echo "1234567890" > strings/0x409/serialnumber=0A=
+    echo "ASPEED" > strings/0x409/manufacturer=0A=
+    echo "ASPEED USB Storage" > strings/0x409/product=0A=
+=0A=
+    mkdir -p configs/c.1/strings/0x409=0A=
+    echo "Mass Storage" > configs/c.1/strings/0x409/configuration=0A=
+    echo 120 > configs/c.1/MaxPower=0A=
+=0A=
+    if [ ! -f "$IMG" ]; then=0A=
+        echo "Creating backing image: $IMG"=0A=
+        dd if=3D/dev/zero of=3D"$IMG" bs=3D1M count=3D"$SIZE_MB"=0A=
+        mkfs.vfat "$IMG"=0A=
+    fi=0A=
+=0A=
+    mkdir -p functions/mass_storage.0=0A=
+=0A=
+    # Make sure old LUN is detached before changing attributes=0A=
+    echo "" > functions/mass_storage.0/lun.0/file 2>/dev/null || true=0A=
+=0A=
+    echo 0 > functions/mass_storage.0/stall=0A=
+    echo 0 > functions/mass_storage.0/lun.0/cdrom=0A=
+    echo 0 > functions/mass_storage.0/lun.0/ro=0A=
+    echo 1 > functions/mass_storage.0/lun.0/removable=0A=
+    echo "$IMG" > functions/mass_storage.0/lun.0/file=0A=
+=0A=
+    ln -sf functions/mass_storage.0 configs/c.1/mass_storage.0=0A=
+=0A=
+    echo "$UDC" > UDC=0A=
+=0A=
+    echo "USB Mass Storage gadget is enabled."=0A=
+    echo "Backing file: $IMG"=0A=
+}=0A=
+=0A=
+case "$1" in=0A=
+    start|"")=0A=
+        start_gadget=0A=
+        ;;=0A=
+    stop)=0A=
+        stop_gadget=0A=
+        ;;=0A=
+    restart)=0A=
+        stop_gadget=0A=
+        sleep 1=0A=
+        start_gadget=0A=
+        ;;=0A=
+    *)=0A=
+        echo "Usage: $0 {start|stop|restart}"=0A=
+        exit 1=0A=
+        ;;=0A=
+esac=0A=
+=0A=
+=0A=
+v1:=0A=
+  1. Add ASPEED UDC device controller=0A=
+  2. Add ASPEED UDC gadget USB device=0A=
+=0A=
+v2:=0A=
+  1. Replace dynamic memory allocation with fixed-size arrays.=0A=
+  2. Use an OR gate to route the interrupt signals from the UDC and EHCI2.=
+=0A=
+  3. Split the "Add ASPEED UDC gadget USB device" patch into two patches:=
+=0A=
+    a. Add ASPEED UDC gadget USB device=0A=
+      Implement EP0 control transfers.=0A=
+    b. Add programmable endpoint DMA transfers=0A=
+      Implement DMA transfers for programmable endpoints.=0A=
+  4. Remove unused macros.=0A=
+  =0A=
+v3:=0A=
+  1. Remove unused macros.=0A=
+  2. Bind the gadget to the controller via a QOM link property=0A=
+   ("usbgadget", weak) instead of writing the back-pointer directly=0A=
+=0A=
+v4:=0A=
+  1. Move the "select USB" dependency to the appropriate patch.=0A=
+=0A=
+v5:=0A=
+  1. Dynamically allocate the buffer in aspeed_udc_ep_xfer_out() to reduce =
+stack usage.=0A=
+=0A=
+Jamin Lin (4):=0A=
+  hw/usb/aspeed-udc: Add ASPEED UDC device controller=0A=
+  hw/usb/aspeed-udc: Add ASPEED UDC gadget USB device=0A=
+  hw/usb/aspeed-udc: Add programmable endpoint DMA transfers=0A=
+  hw/arm/aspeed_ast2600: Wire up the UDC=0A=
+=0A=
+ include/hw/arm/aspeed_soc.h |    4 +=0A=
+ include/hw/usb/aspeed-udc.h |   85 +++=0A=
+ hw/arm/aspeed_ast2600.c     |   37 +-=0A=
+ hw/usb/aspeed-udc.c         | 1058 +++++++++++++++++++++++++++++++++++=0A=
+ hw/arm/Kconfig              |    1 +=0A=
+ hw/usb/Kconfig              |    4 +=0A=
+ hw/usb/meson.build          |    1 +=0A=
+ hw/usb/trace-events         |   16 +=0A=
+ 8 files changed, 1203 insertions(+), 3 deletions(-)=0A=
+ create mode 100644 include/hw/usb/aspeed-udc.h=0A=
+ create mode 100644 hw/usb/aspeed-udc.c=0A=
+=0A=
+-- =0A=
+2.53.0=0A=
 
