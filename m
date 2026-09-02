@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C37DC624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 03:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3760C61DFD
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 04:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1bqa-0004y7-23; Tue, 01 Sep 2026 23:41:12 -0400
+	id 1x1cOG-0002KC-LR; Wed, 02 Sep 2026 00:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rtvernam@gmail.com>)
- id 1x1bqY-0004xf-AZ
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 23:41:10 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1x1cOE-0002Jo-QV
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 00:15:58 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rtvernam@gmail.com>)
- id 1x1bqW-0000z3-KP
- for qemu-devel@nongnu.org; Tue, 01 Sep 2026 23:41:10 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-81ed2a06b9eso9880277b3.3
- for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 20:41:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788320467; cv=none;
+ id 1x1cOC-0006CP-P8
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 00:15:58 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-865bdc6ed72so11592947b3.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Sep 2026 21:15:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788322555; cv=none;
  d=google.com; s=arc-20260327;
- b=lgS/ikd/5MPJ9pyKmKQrEYm3LtN9aieasDC54QkjH/OROvIMWGQzYFkthGh8dZaMK1
- ihWElT5RWxjaAv0093a79rlUM6lvsJYCJjPuoMOtGNXikXpHieyf7S+MdAtvHjHbWJZL
- 1m+IAGrKl2HCzj1opidupwzOjwgNTA+yMi0dhNYX8lk6S7HGvHJX5n6Chgkjo55JVDl8
- NsF4sqJ0Zk148HHYuSel7RCSXZwxxklbDGBQg5Ajy8vtwrF873liqYcQfgdLCgKdEzUL
- 1KRA0L+2eMDgNvp5X3nyrXTejXh2ts6UXr6xOeqZx8IOUxkD/VTMhqMPeR5D6nn3/niY
- YzkQ==
+ b=rdwTIdDCbbf9PjpdO2LmDXwUjDO6WHI78d8v2FxcNHLpCAmBIq6+RUVRspXS3O8FSq
+ tUNigMfqbPSzbBZB2eqdQb+1ZweCqBknIsZk7jh62BOfv0srwf6wplKT49csCQ7kmpf8
+ I4odd+5qm22dXtGhwocMVWoTqqpryIW9dYZoArLTOWxfzVljw8gMG3UrQ+z845IZK/nQ
+ hfDVKdOSyFtqXkZCc6RjOnA4pyEUYGo33Z4WLy/uaGzV3g0EsmPgOd42DMrQcdBJroas
+ hq5nX7bSpT6RkxQnbhlD4KuSPI0AbkNjSyQwsrpVaWi+mKLU2mdl/BvJjyYmM0bVnTGr
+ LwdA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=NUyEM8rvBT9MI5baiqKWDxuRq3BiwSP6mn2cGxuP2Rw=;
+ bh=scJNhhcI4FtQLzGV1UZgH85tOWcKAnaNA9yUAo5FBbc=;
  fh=K+1FFnVBEkxNx/42+WERro1ZDpUg3jkoX1u5kPtdbys=;
- b=FFBuKnXpyvebugNsqTcH3oh8nh/vuXrsrITfw3EJ5ehO67mb95rsD0XDBHCEwNEuU6
- e2D9433dzTBEY5r76G+lL7pO1LDnV3h8hJ9wrcsCvxN30RUmRvXwxWyTD9ufhG1sD1jA
- WG5yWwLgkyw6vpo+OPnW8IZ0MR0q/UnDUur1OiZTtSJbtt3KaEBE7r2cRW/2LX7wJVge
- fvfmeOBzJ07g5F8uu9JM3aNCvNzzs6IacHJz5h2LXV6yFvYSNJRUEZxTMCw3g2bbPal1
- fiWOwaMshhGbMHSATfgrsUiHpAszH1J3OUyuoh5K0cmwNZ8CXH/xHGt72xEblJxZgUky
- n3Tg==; darn=nongnu.org
+ b=sw0ta+ZrhgfecsljW2BfTpDqk+2avXVJeCiByjE8Q53zKNTpF0hvg41gg3JgFtBfvA
+ 92R4SuvD/sn/rmbzCoYVeS+DySejvNRRhBs/HJgdVYmzpqC7DnZHKNhWbBhA3KC7Pyg8
+ gKb6wUfh/cJX0fG0HN4QGje+Qhd2bIh1XqZfqKkQUVGIgTrzKkJ9lyx19kwqMo5j9FJc
+ tPH/8KKmpbpiLXwedBAmkcxUeEPvy/7pcA6E/9h2algy+re4kAWgTEYCHXH000bXZsFQ
+ IOC2zAm0l3F5F7Onfr8iwRNlpuU2MkzW2cV+6gQjCkac0igElT7PwcRDrfwV/b7MotQN
+ v1uQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788320467; x=1788925267; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788322555; x=1788927355; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=NUyEM8rvBT9MI5baiqKWDxuRq3BiwSP6mn2cGxuP2Rw=;
- b=Mw8UEKESvey5UHdRZacLLNVcU0Ge8zNniM/75ppPMVUKqooUcNtxqmD8ZImsPcP/rA
- JCxEMDzjF+Q0CdUjEfnxDCVqGOrF5BRv+8b4pAcLmk4R5gCi1SLJSoONAamGzSTmUih6
- 12Uq3kY0IWPdf0f1bQcqnFtDIBTjphHbH4uUibw8s3pmgLpyyLGiKs4aSwLCsVHU8x2D
- AYnJ8Kw/rbujB8xAu7/01hKVN5d0WAz/in3VglXkROshPu7llH29oy9Ke72/Gw1ztoT2
- sVrnusvxY2j/jkgcEpsAf6CODzjC5kJAF2P/k/IGSaks7DBLa351SIumLa4CmaaBynuW
- zD4g==
+ :content-type; bh=scJNhhcI4FtQLzGV1UZgH85tOWcKAnaNA9yUAo5FBbc=;
+ b=gfyIeY4v35QJWu205F8cDhr0ekih6pf32ZnLVu6w0X7BmPKltpZDNyKcx67sJyaf2V
+ sNcaQYUsgfQOsUcwKEG3ziWkHgNP8eHYzU0IZdOBZhg2ov/+9gGcfr+EjHHDqzCDiuum
+ PHdc67O9hOte/jRbAi3SyQ9Z1tXu7Fvf3VexsMEw7qrl/OHH6wFLPllPOo+u95E0pxBt
+ 2XusNTXUJUBnENC0nn211y56DUi7tFNMtH/0jIzPv/A/vB0yG4ZFI/NB2CjmlcOjB+M4
+ wPnzJgw0cabPIwqmV9+s4GjQmQ8O5FJjBhYtJ6n8UD4GVvLHVvjLVMmakzHJv9sFRxLq
+ xFUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788320467; x=1788925267;
+ d=1e100.net; s=20251104; t=1788322555; x=1788927355;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=NUyEM8rvBT9MI5baiqKWDxuRq3BiwSP6mn2cGxuP2Rw=;
- b=pgU3TIZ9pFvw/eiIe9Mosju66rRQ+2mtOkI2n9MowkBQG0a5T4fOZolbNY/ECbmU3z
- bO+vATh5vIIKxGsBajfQ01hYkh8a0vY0JriQfftJwWrcbEo8l9YNBUWOugEJFwjDM6uZ
- QwUu1naHbWRKRy0Z58hOxHxARPejjD4dxY9XZ1nowVKcAKaNABHTMb2Y5qGZ3nSnKuKh
- uJE7ZeD4GbrYpgFDMTgvdopneZrXg3T2/MpTu3mkO0q8ySp8L4UNHW3//IGwkEUrCMus
- G5Y+qCAyqNszO1qZREAyjSvCTCRt79fx0zk6iH2VYeNAJ4jiV+nQSbTchYSjMD2b3QrW
- EZiw==
-X-Gm-Message-State: AFuF++maFrqK2KZHS+LSHmQnY5neAbADI2q2YcnyWZKZ90Z8f87z4juv
- Mp66uWmVlnujawB/S46tUNxDtLQEeEPSSpfQHFXdb/q9sGCUdp/l7pAe521SRfen1O9yKy+GIwj
- n5YOJw+osD+eeC6eofu25lgGQwKqC9hc=
-X-Gm-Gg: AYBFou09OfuTahjqUC+0feOzein7X/Xs2qxbYGktb2OawEhpFbE9H0vj3Z0iAqn08RZ
- 87iS4pl2NHGPOAka+g1RcTZ3P2I9+1tglM7giNnqnkSdT8P/tuLHSjMgoQqPG4QB4C69WEpHJWe
- Ndn2Bk0zt924hHWB8YVVjbN1k6fXn0Px6K7SEVbTpHyX6/5untSbwwkBIrqQ13yCjCcgMh7Jq5H
- fG/obuAN1q2o7NVDKXsuA4u4JtvnCdR3+QuySdccNA0lb8qXiE+82L0yNavsaYAlv5rCKwvi7we
- FUdEZ1trvfBhTMFYUzOoMobPtugbVxRji+IoXkK/+7ZwVA==
-X-Received: by 2002:a05:690c:1a:b0:862:2e2b:8639 with SMTP id
- 00721157ae682-86c558be269mr10171267b3.33.1788320467165; Tue, 01 Sep 2026
- 20:41:07 -0700 (PDT)
+ bh=scJNhhcI4FtQLzGV1UZgH85tOWcKAnaNA9yUAo5FBbc=;
+ b=q84WSifkTnQnMEtbE/QNE/KhOSBBqH05cHV/nm+QgTFqco/MzwBQhl3tPbvYTRKyCZ
+ 0NWx/kr4CcoOj1T8NmvxYPbdYyIi0k40RI+Q5mi702UDG5sB5UbsvfaktIVtMY5R+6F7
+ DscEZ6ghPKACJ/W1nM8/U2uAWivxOCmi3xQyRYCXyf58Gmm7TKteSztxnA+ttQABEJyA
+ 9hrHudsxo7IRI3ElLWqonIAO0MMW47Q8H5GBw+kPGR+HUrRjh91B+naMj8+scQKQwRoM
+ 8WUKDrT7peBXsPdKfT6xFx2YnkgkiVMC/K1jnTTg1x/3fdAEU4B043ZI0ST88KujBIeu
+ HwmQ==
+X-Gm-Message-State: AFuF++nCAQaxbcWK+dQ9LNLBbbBTEUDnGpxyVHuNzD3DUptaFCZdgHeB
+ qw0rWatWOrynjSE43qKwzdRhLnvDtv3jxpjguGppxaygGi9RtNV2iT0UJlpHYVPn4iKWmPBbfiy
+ A5Isq6M4+qTaTy7MbRSE48/1Qiis7uS8=
+X-Gm-Gg: AYBFou1kGvQ7UUdOHiV0XCRubJxq+tzzqEVoc22UhnMfqi662CtSeYpxHJ2vgxUh+w4
+ SyaLiQSgTnGQS5PG5uuOxSV0hipPMG8QeEBo6dm4BDCReRkh9gmN/14iEA3+fchq86Go6EmAbHC
+ lhJtnB0zz9cw+pcnzQKZPErZD+ystH5bZI0zgRWLY2f5oViYB+u8vzEWk7OH2hJWV6AEm5iHbjl
+ QMbq40UICH+raI+pdkw8x1hj8SsVW8nx4m5CzIv7xS5dRclBie5725EzAgjvCZQ94ch6IKRM5Ue
+ sh9siILDHyFOjLtcwNaUlP5Fg6KdOe88EfDxVsX/P1uwYCtavyRjWRXJ
+X-Received: by 2002:a05:690c:438c:b0:844:c27b:35dc with SMTP id
+ 00721157ae682-86c526fe88cmr8783387b3.18.1788322555201; Tue, 01 Sep 2026
+ 21:15:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAFH9MbUdL=HuSvqpwHF-1yo-MeCGREQoqKjdT7us=5CiKSxp3w@mail.gmail.com>
  <CAJ+F1CJHpTLPdacLa31J1m_oUkH-TZ0MOpQJNwMAt806sdZmNg@mail.gmail.com>
 In-Reply-To: <CAJ+F1CJHpTLPdacLa31J1m_oUkH-TZ0MOpQJNwMAt806sdZmNg@mail.gmail.com>
 From: rick vernam <rtvernam@gmail.com>
-Date: Tue, 1 Sep 2026 22:40:53 -0500
-X-Gm-Features: AcwNN1VPJECWulz1cNbP6-0oNUy3lD49wTve6PTkaUj8mcbnEAKPRxW7d4DGct0
-Message-ID: <CAFH9MbVSBw6Wv7W+erhtsdpHaBAqOJ=9poxeGbuEhjO2FQHFfg@mail.gmail.com>
+Date: Tue, 1 Sep 2026 22:57:24 -0500
+X-Gm-Features: AcwNN1U1upyUp_mqQ9WLe1_t-o2oKsi2ADL-PSFAZ9-w-dN1ZAHu5jk-oGpAf4A
+Message-ID: <CAFH9MbWQDp3BFpPK=0qPy5co+tNmaqoP9HkEmYAAddiDDcuOqg@mail.gmail.com>
 Subject: Re: qemu-vdagent guest to host clipboard sync
 To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
 Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000030a62c065a77ceb7"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=rtvernam@gmail.com; helo=mail-yw1-x1130.google.com
+Content-Type: multipart/alternative; boundary="000000000000a58dfe065a784a0c"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=rtvernam@gmail.com; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,19 +114,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000030a62c065a77ceb7
+--000000000000a58dfe065a784a0c
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-
-Guest agent is one I am working to develop presently; not a public repo
-yet.  Intended to be strictly local dbus only.  Narrow use case, but
-something I would like to have.
-
-I can try to send what you've requested, though it will be another day or
-two before I can get back to it.
-
-Thanks!
-- Rick
 
 On Tue, Sep 1, 2026, 10:53 Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.c=
 om>
@@ -201,26 +191,35 @@ e".
 > Marc-Andr=C3=A9 Lureau
 >
 
---00000000000030a62c065a77ceb7
+Clearly by top-posting I have shown my inexperience collaborating via mail
+lists.  Appologising & re-posting here so you can ignore my previous faux
+pas.
+
+Guest is Windows 11, guest agent is qemu-vdagent in the fedora virtio-win
+iso binary release (multiple versions, including recent v302).
+
+As for sending a patch with all the details and proprosed fix, I won't be
+able to get back to this for a few days, so I'll send something then.
+
+Thanks,
+- Rick
+
+>
+
+--000000000000a58dfe065a784a0c
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div>Guest agent is one I am working to develop presently=
-; not a public repo yet.=C2=A0 Intended to be strictly local dbus only.=C2=
-=A0 Narrow use case, but something I would like to have.</div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">I can try to send what you&#39;ve requeste=
-d, though it will be another day or two before I can get back to it.</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">Thanks!</div><div dir=3D"auto"=
->- Rick<br><br><div class=3D"gmail_quote gmail_quote_container" dir=3D"auto=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 1, 2026, 10:53 Marc-And=
-r=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@gmail.com">marcandre.=
-lureau@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hi =
-Rick<br>
+<div dir=3D"auto"><div><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
+"gmail_attr">On Tue, Sep 1, 2026, 10:53 Marc-Andr=C3=A9 Lureau &lt;<a href=
+=3D"mailto:marcandre.lureau@gmail.com" target=3D"_blank" rel=3D"noreferrer"=
+>marcandre.lureau@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-le=
+ft:1ex">Hi Rick<br>
 <br>
 On Tue, Sep 1, 2026 at 3:57=E2=80=AFPM rick vernam &lt;<a href=3D"mailto:rt=
-vernam@gmail.com" target=3D"_blank" rel=3D"noreferrer">rtvernam@gmail.com</=
-a>&gt; wrote:<br>
+vernam@gmail.com" rel=3D"noreferrer noreferrer" target=3D"_blank">rtvernam@=
+gmail.com</a>&gt; wrote:<br>
 &gt;<br>
 &gt; Hello,<br>
 &gt;<br>
@@ -281,8 +280,20 @@ proprosed fix, rather than a regular mail?<br>
 thanks!<br>
 <br>
 -- <br>
-Marc-Andr=C3=A9 Lureau<br>
+Marc-Andr=C3=A9 Lureau<br></blockquote></div></div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Clearly by top-posting I have shown my inexperience c=
+ollaborating via mail lists.=C2=A0 Appologising &amp; re-posting here so yo=
+u can ignore my previous=C2=A0faux pas.</div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto">Guest is Windows 11, guest agent is qemu-vdagent in the fed=
+ora virtio-win iso binary release (multiple versions, including recent v302=
+).</div><div dir=3D"auto"><br></div><div dir=3D"auto">As for sending a patc=
+h with all the details and proprosed fix, I won&#39;t be able to get back t=
+o this for a few days, so I&#39;ll send something then.</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">Thanks,</div><div dir=3D"auto">- Rick</div>=
+<div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"=
+>
 </blockquote></div></div></div>
 
---00000000000030a62c065a77ceb7--
+--000000000000a58dfe065a784a0c--
 
