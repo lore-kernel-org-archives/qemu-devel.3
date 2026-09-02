@@ -4,156 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9E5C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 20:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E4EC624D4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 20:49:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1rpL-0004Zp-3I; Wed, 02 Sep 2026 16:44:59 -0400
+	id 1x1rtB-0005Ld-IJ; Wed, 02 Sep 2026 16:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x1rpI-0004ZP-2V; Wed, 02 Sep 2026 16:44:57 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x1rt9-0005Jc-Rb
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 16:48:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x1rpG-0005my-Dk; Wed, 02 Sep 2026 16:44:55 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682KW2qt1049214; Wed, 2 Sep 2026 20:44:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=PjWR6b
- 6+B9pCL4nbMShTcUa0DIJEPK9Yg5/NZOM1X2s=; b=nsPX2Hkoe3b/VF26YghB4y
- HZC+2NkRSdXCkl4mnfmbOL227xnvRu2Fgz/T4mqjcvkHdUt3vxr1YaTRT//LeFcS
- U+WvcrzYpT149ptnO6KRy6Rsu1ZAireSG3s9HxrmxIIfMmCK/97v7y2Vmzu5EsBL
- QjaFB0TpQRr0UnAKvGtCWmWGx7F8ogj32LCBqLdrfqaDOOyiD6DbMSeaMdNQK4fx
- Csgg5zC3RRuL5/WxxJoLEuGmv7eL9wSP8Ndy8wzm/Bb/GbuVgBRh3BqJAixGIn2J
- WV3LScPJyl1eyZ5eLlZluWmFeKCZs0pptEBtqili9EuL3jvbe3ihg1QxlYyptOwA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq551ev9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 20:44:50 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682KBL5l025362;
- Wed, 2 Sep 2026 20:44:49 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hm8f0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2026 20:44:49 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 682KimT410224194
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Sep 2026 20:44:48 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D89558055;
- Wed,  2 Sep 2026 20:44:48 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 456755804B;
- Wed,  2 Sep 2026 20:44:47 +0000 (GMT)
-Received: from [9.61.24.241] (unknown [9.61.24.241])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  2 Sep 2026 20:44:47 +0000 (GMT)
-Message-ID: <c6017919-e941-4129-b14c-2fc07abefb91@linux.ibm.com>
-Date: Wed, 2 Sep 2026 16:44:46 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x1rt7-0006Eu-EB
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 16:48:55 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 682KHKOg2025608
+ for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 20:48:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 08sQKBeUS0Q+DiC5YvSIwZRoNWiSVPDShm7quIIK7hs=; b=Q7dIxGvy3xN6np9f
+ RWfg8JTh/1Bi6jg42vlu8o3oaRxWwRwehk+5T5FJ4GhjFHbXp/dTfVvI4SqKRZej
+ a16E4w1gfomeQShFllZS325RAmdSXX0Dzf5qrdq+4iwaosLRmNhwkQYGjsiU+Qg4
+ 0BJ5WMDxU0yccTeOoaShoxnAoI5v6PHiB/fY7wc2KsPIu2GsK4r3JF7mBCUnoLwf
+ XP8XvDLPTr0EI/jw1HKb2EbL1eB7h9eybycmAgiCt4WjUODa3DJSJfCqJMkWnMxo
+ 3vx1o+19AEdg0SOV4/SuMFn7Syt9OQRPVAWpTLyz6ZcOinx+I1QKV9QjZazgKPJw
+ IEi8mg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gemcea0hx-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 20:48:51 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93915f50a5cso64156885a.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 13:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788382130; x=1788986930; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=08sQKBeUS0Q+DiC5YvSIwZRoNWiSVPDShm7quIIK7hs=;
+ b=FQyrGYwZXgbl49omkw9pWOA1xWuHGxXfOxVLjfzPpqRZ8x3h6DkyrAEE1+vxG64Ec+
+ jo8yZAFSQpDNe+/QNu9Dxisecqn/1gSJU1X+dz/vPO2kgV+ASHYsR7xATVc931D8iq29
+ DwohaAwhqLyjQZ+FnskJEmcvi1tcsYbC99duDOOab67krZk3PumdF0+GGpcp/A+MneAq
+ KRBGfI/NGKF0WnJluxauDE3s+78mOt8sWbMwjwXqca0IhpVkPuBgy5svxJj1s6zROcRp
+ /Pl0Kr0ymdn/SS74ZgeJm1ObhAXiuk3mEqsHmtWDhX1OoqZoK0TRiZEV1FeVE5Aq6T2C
+ 8paA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788382130; x=1788986930;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=08sQKBeUS0Q+DiC5YvSIwZRoNWiSVPDShm7quIIK7hs=;
+ b=ehOO2sejPd4JGmmEGkVRtoI+6B6murcAI7RN205+RR7BNP8GzHx06UlzSeXp7f5JFK
+ v1xpCnJMbNe+ixFgnncUiGJ3buIveYioKlee0ICd5ePqrQaHTyOWyzlay/4gudDk8Mwv
+ cesZ3dnGGuU4+aM86MnSVaRePLiG03NBJan4u/OUyFSZ9eC+xeYp211QpvOXXak6rO6I
+ juBszwK8SgfwIgQqT8MjIV12zGvcVJ1jK/8yDuFbYAftGAWu3lNIginF+/0ZUmEcZgMF
+ AEiYlwa9gRkqD2DlkKEU1a0NHifCZPKXvtb3mCUF3JcvfyrDPiJXxS1R8GAWmgrjc3pX
+ 7bDw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz+Z9jHM49b7rVpuZ1g0/JkfXMNrDcQzATEBNPXc4RbgBOcqW/HUdmHW4vIQjiYUJgUCI2zdl41LSUz@nongnu.org
+X-Gm-Message-State: AFuF++lnCO3lv53nh69uShpCadafGn+tmryZbJ6YJI0fMehmS7n51tNB
+ vvguJYg5fkPiTq/61bGSXTHyrjE3gLAi7bHTqE4XtKmAEfd9Vqjysam5j+jHF8kYXhGsqBERm5o
+ xfEQD76NgzzNgT4C/dtQR/s9wGwTVA0rWN83htrI4YL/B836ny3F97+aG+A==
+X-Gm-Gg: AYBFou1NluPDtufLN67TQ6cJZh7LyCs+1tXiBrgeA2untSHPHohUTQvGhdGCotuHgw6
+ USZT7dZ7npxa2EcU/PXSFJCZ0ZyLVa8JLzQz7nXnFoOYeJ9dgnsBA4lIBfbYHa7GtwDg865U9Qv
+ wgFPGkaqfx9BrQVR8vemxz9VLPu7Rea60OdmUJhK82qOrkBndhFr+rWVL3+YAJxFdn5MU5AQe98
+ QkzFJT3P6ikc4uksDLWpVS8LoUASwjoBrevFPcZHXAZMXIYQvcA9tCXcVsM8Jb8Iodc7+IXBVjV
+ aM/fnRLx9jFGb4WEpUiFOD8UnAkqew0oA5cITKXI4t4hrkYuX+KU2xhoDRwPanfyy9D3jAoh31T
+ iWqjcoqO0+Ao7PBJbIBSIqA2L/taWkUbXHw==
+X-Received: by 2002:a05:620a:88e:b0:930:9cbc:7121 with SMTP id
+ af79cd13be357-9396deacbbdmr203133285a.3.1788382130543; 
+ Wed, 02 Sep 2026 13:48:50 -0700 (PDT)
+X-Received: by 2002:a05:620a:88e:b0:930:9cbc:7121 with SMTP id
+ af79cd13be357-9396deacbbdmr203128885a.3.1788382130074; 
+ Wed, 02 Sep 2026 13:48:50 -0700 (PDT)
+Received: from [192.168.69.200] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-484492ce236sm9890668f8f.35.2026.09.02.13.48.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Sep 2026 13:48:49 -0700 (PDT)
+Message-ID: <08547223-7789-45de-a0a2-251f412cedda@oss.qualcomm.com>
+Date: Wed, 2 Sep 2026 22:48:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] tests/qtest: Add s390x PCI SCSI fallback test to
- cdrom-test.c
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: jjherne@linux.ibm.com, zycai@linux.ibm.com
-References: <20260831194919.3830270-1-jrossi@linux.ibm.com>
- <20260831194919.3830270-9-jrossi@linux.ibm.com>
+Subject: Re: [PATCH v3 05/11] accel/tcg: Document do_interrupt() callback
+ contract
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260831194919.3830270-9-jrossi@linux.ibm.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
+ <20260902152044.31291-6-philmd@oss.qualcomm.com>
+ <1251f0e3-237f-4f31-8d2c-0dae5e9962b5@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <1251f0e3-237f-4f31-8d2c-0dae5e9962b5@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE4MiBTYWx0ZWRfX5ep1vNYvRwYK
- KOJR24VQVFLbgCSuH/kIZvSgZxwrlHF08r2sRE83guYmyVDH9sDMptcR6HkCOaymyYbOGsdgt6Y
- MxUI9I4QzdSqgp6RFmToDP8CitTiRyDahGJU1XcspwBZglS+oqo5LnG415i6OXSv/e7Vs0XGgWA
- d9dl19Z18MFOZA8hycvodUcgI1tiHRlO5PIllFbqT8wIZfzuC0wt5pqeVL4DCC20B72YSu5fNXM
- njSU+Fytib9k37CEZTlg703b7OCeY0kw1TK3Ck0qccLMmqckCuqvFGp7k9DQUWcNdhiZeetMe0I
- Luk9ZDmjbIsT73t40W3UG/uKMYjF7OwG5XQfLye4SkZWxbhoOB/cflUbYNhGf/+FzZYe6gtKy1R
- QGKS4PUsUunB8E0yFBy4pS5g+BWQZ3GFUEEaldaE4+N7cLL/8CqmPnNoAmbMpRTFEWFSZrbwLwh
- yncWeD0TFdnP+ocauNw==
-X-Proofpoint-ORIG-GUID: OToc-9TwXOSclGLkAV4HMFkgq0VKK3FL
-X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a988ac2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=cCOMim2apKK6yRrsR74A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: OToc-9TwXOSclGLkAV4HMFkgq0VKK3FL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE4MiBTYWx0ZWRfXy43LCg217uTO
- Pp0xOUWu9fHsFEZgDPDw86T7OqlOjHBGSAIVnliY3GtnyvPwRjGClPJhla/p6MYIs9uBoYbmCdx
- HYTMorsgwcCC0gjouiTyRa8OBoa/+0U=
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE4NCBTYWx0ZWRfXwECpxqU6y+ng
+ Fob7tz41+R5bmRhd94104IfrxTAknHs4Zg4P4+HVGehnrQBcCAcDh4/NdrR5JbQWTP45+mN1huS
+ 4wLIxpolbnM57QpjLEpIoMe4pSTslRAc740TqQzy5ARt/rTYsFz2AC77zGNS9tPre9R+vZGfwA/
+ lrKXhexj0VMZzkX9TeA+FmYhN2Ixc8BaqA4KskGcjrFa8AxondgNShVloIWyghgGaQbiRA7k5ha
+ qG6amufPwLrvl0Dsj0ZnIrAVMxiM23/i0pxX+ijKEV6mpTrebRGPurr5iJstqdGczh0W5AWl/gL
+ hpo3Zu22Yy1LxQ97kO1QEfw2n5Y6qpa59FtU4051sAC6Y317i+XaRI50UZnxo1GO2ex9oJqDr66
+ zhIE7yiCSOVADWqBVqFGBWl1mnFgkVlfpNk9tPIB+PpKeoRljqQ6k7Zpmxnfu8V8aw+7fHVvCZN
+ QZIAGSTidFP+tZwpxeA==
+X-Proofpoint-ORIG-GUID: Hce_4_ezRoY0-0T4y1y9WfhvRcefwcHP
+X-Authority-Analysis: v=2.4 cv=QfpWeMbv c=1 sm=1 tr=0 ts=6a988bb3 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=6ax27t2Q9qs3WTDDNCkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: Hce_4_ezRoY0-0T4y1y9WfhvRcefwcHP
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE4NCBTYWx0ZWRfX+LPLsDW6lgsS
+ 9N4hH5EKRDv8kV8R/kRHMwTPyLZtWP0OJdOScM7F5Y3QUIQ/E9QT17rfbOABG9oWrMh6+Sk2UWd
+ CFNoOay9uAP6Im+Ytly2PDaZGOurAss=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-02_05,2026-09-02_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020182
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609020184
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,44 +160,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/31/26 3:49 PM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 2/9/26 21:54, Pierrick Bouvier wrote:
+> On 9/2/2026 8:20 AM, Philippe Mathieu-Daudé wrote:
+>> Expand docstring to clarify the handler is called with BQL held.
+>> Add assertion that this callback is mandatory and never NULL, since
+>> all targets must implement interrupt handling.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   include/accel/tcg/cpu-ops.h | 11 ++++++++++-
+>>   accel/tcg/cpu-exec.c        |  1 +
+>>   2 files changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+>> index 87850402203..13df70eaa9f 100644
+>> --- a/include/accel/tcg/cpu-ops.h
+>> +++ b/include/accel/tcg/cpu-ops.h
+>> @@ -169,7 +169,16 @@ struct TCGCPUOps {
+>>        */
+>>       vaddr (*untagged_addr)(CPUState *cs, vaddr addr);
+>>   #else
+>> -    /** @do_interrupt: Callback for interrupt handling.  */
+>> +    /**
+>> +     * @do_interrupt: Deliver a pending exception/interrupt to the CPU
+>> +     * @cpu: cpu context
+>> +     *
+>> +     * Called when cs->exception_index contains an exception code to deliver.
+>> +     * Updates CPU architectural state (usually before executing a guest
+>> +     * exception handler).
+>> +     *
+>> +     * Called from cpu_handle_exception() with BQL held.
 > 
-> Add a test to verify that a guest can use a PCI controlled CD as a fallback boot
-> device after a failed CCW IPL.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   tests/qtest/cdrom-test.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+> Would that be clearer to ensure this with an assert instead or relying
+> on comment?
 
-There are more permutations that we can add in the future, but this is a 
-good start.
-
-Tested-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+This docstring contract is a help to implement callees.
 
 > 
-> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-> index a65854d2bc..ab34930404 100644
-> --- a/tests/qtest/cdrom-test.c
-> +++ b/tests/qtest/cdrom-test.c
-> @@ -253,6 +253,14 @@ static void add_s390x_tests(void)
->                               "-drive if=none,id=d1,media=cdrom,file=",
->                               test_cdboot);
->       }
-> +    if (qtest_has_device("virtio-scsi-pci")) {
-> +        qtest_add_data_func("cdrom/boot/pci-scsi-fallback-from-blk-ccw",
-> +                            "-device virtio-scsi-pci -device virtio-serial "
-> +                            "-device virtio-blk-ccw,drive=d1,bootindex=1 "
-> +                            "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
-> +                            "-device scsi-cd,drive=d2,bootindex=2 "
-> +                            "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
-> +    }
->   }
->   
->   int main(int argc, char **argv)
+>> +     */
+>>       void (*do_interrupt)(CPUState *cpu);
+>>   
+>>       /**
+>> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+>> index 609931a0d6e..2fae2c024b8 100644
+>> --- a/accel/tcg/cpu-exec.c
+>> +++ b/accel/tcg/cpu-exec.c
+>> @@ -1059,6 +1059,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+>>           assert(tcg_ops->cpu_exec_halt);
+>>           assert(tcg_ops->cpu_exec_interrupt);
+>>           assert(tcg_ops->cpu_exec_reset);
+>> +        assert(tcg_ops->do_interrupt);
+>>           assert(tcg_ops->pointer_wrap);
+>>   #endif /* !CONFIG_USER_ONLY */
+>>           assert(tcg_ops->translate_code);
+> 
+> 
 
 
