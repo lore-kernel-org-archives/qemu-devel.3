@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3DBC624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF49AC624D4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 19:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1qtE-0000So-Um; Wed, 02 Sep 2026 15:44:56 -0400
+	id 1x1qtW-0000aP-G0; Wed, 02 Sep 2026 15:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x1qtD-0000QG-7T; Wed, 02 Sep 2026 15:44:55 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x1qtR-0000XW-R9; Wed, 02 Sep 2026 15:45:09 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x1qtB-0005zr-Hc; Wed, 02 Sep 2026 15:44:54 -0400
+ id 1x1qtQ-0006EK-0V; Wed, 02 Sep 2026 15:45:09 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id AC0BA600D1;
- Wed,  2 Sep 2026 19:44:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA431F000E9;
- Wed,  2 Sep 2026 19:44:49 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CC96A43E7D;
+ Wed,  2 Sep 2026 19:45:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48EE1F00A3A;
+ Wed,  2 Sep 2026 19:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788378291;
- bh=2YJPuwHYqNlX6D6HFRPrMD9ckno5hSCVxl5z3aaycTE=;
+ s=k20260515; t=1788378306;
+ bh=zrXu7dhERiW+wXiBbdy71b9VStVhzZds0WPzZYsva5E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=K5sC+B8py39Q0xoaWvih8E05Wmm7XcxcFd1FOyj3XdcuZUQAe/405TISX3dIgG9lR
- 2yZA70qdn2WzLUo/4LdedYs3sE9MfQLUeSg9QCNouXDTtLa631iuv296071puiaGmZ
- /FM43djkIWzG36uR72UOOQ8xNi1T3cDO5YGyZFrx1x/4nQFJR9wPScl9iMi2Ynca6O
- 8ATW4WeO20uKe3y4tjDfJonqKC4fcxMUr4+w2snP3QKeKj6LJ/nzr2CjKDe6DqMAJk
- /BnoLmVu/JAyZfVcD/eBpvBi7jB6ujVhQsQg7/fZP6jh5CC9fTHAdgiROkV3wR/Qck
- ULKnO70Yd2Iuw==
+ b=Feun9WvJT9a7UL/Z3VAZGMW7JuOdQLn2FYDx4mtf1ug/hVOMr4WLZXtDG1RlqDkP8
+ HE6+6mCV6vg9s5SOlaDbqWcSmJyte2SDP/as0d+Uzj3u16p88X6DtoVPJXyztw4RXO
+ E7V0DDwNzNf6Hpkl/vU/X6ZHG2XIalKJhqeWrqE1NPaB4hthI8aNJ/Nr+ucvUMq4Fz
+ N1eAsKhhUfknmUCq0LNDtbwWCI6xaiTYwIkq9oOvW/MYBCJE8duKg257LOnJO8VWwN
+ IiVribX7eL4J7NL5+LN6qXxTJBvLZYhlp7kfGd8uGoPmSihsN3fKoD9GOCQMb3S7/n
+ xgJgFiZ1BStZg==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 04/11] virtio-blk: check the write granularity of writes to
- sequential zones
-Date: Wed,  2 Sep 2026 21:44:15 +0200
-Message-ID: <20260902194423.759355-5-cassel@kernel.org>
+Subject: [PATCH v2 10/11] file-posix: reject a zone append past the device
+ capacity
+Date: Wed,  2 Sep 2026 21:44:21 +0200
+Message-ID: <20260902194423.759355-11-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260902194423.759355-1-cassel@kernel.org>
 References: <20260902194423.759355-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,90 +71,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
-VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
-that are multiples of the write granularity reported by the device
-(virtio 1.4, 5.2.6.1), and a violation is reported as
-VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
+raw_co_zone_append() checks that the offset it is given is aligned to the
+zone size, but not that it names a zone of the device. raw_co_prw() then
+derives a zone index from it and reads that entry of the write pointer
+array, so an offset past the end of the device reads past the end of the
+array.
 
-Neither request type was fully checked. Zone appends validated only the
-offset, while writes were not checked at all.
+bdrv_co_zone_append() does not catch it either: bdrv_check_qiov_request()
+bounds the request against BDRV_MAX_LENGTH, which has nothing to do with
+the size of this device. A guest cannot reach it, because
+check_zoned_request() in virtio-blk rejects an out of range offset first,
+but qemu-io and any other caller of blk_co_zone_append() can:
 
-Check the size of the appended data, and both the offset and the size of
-a write, against blkconf_zone_write_granularity(), so that every request the
-device accepts is one that the guest driver was told is valid. Writes to
-conventional zones keep no alignment constraint beyond the logical block
-size. The write path performs the check after virtio_blk_sect_range_ok()
-so that the zone index derived from the guest supplied sector is known to
-be in range.
+  $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
+        -c "zap -p 0x100000000000 0x1000"
+  Segmentation fault
 
+On a null_blk device with 1000 zones of 256 MiB, that offset yields zone
+index 65536 and reads 512 KiB beyond an 8000 byte allocation.
+
+Reject an offset that lies outside the device. That also bounds the
+zone index that raw_co_prw() derives from it, so its write pointer
+lookup stays inside the array.
+
+Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- hw/block/virtio-blk.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ block/file-posix.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index b22aed04a1..247af53ae2 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -398,6 +398,32 @@ static bool virtio_blk_sect_range_ok(VirtIOBlock *dev,
-     return true;
- }
+diff --git a/block/file-posix.c b/block/file-posix.c
+index e019cc3cd8..85d735c079 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -3597,8 +3597,15 @@ raw_co_zone_append(BlockDriverState *bs,
+                    QEMUIOVector *qiov,
+                    BdrvRequestFlags flags) {
+     assert(flags == 0);
++    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
+     int64_t zone_size_mask = bs->bl.zone_size - 1;
  
-+/*
-+ * Both the offset and the size of a write to a sequential zone must be a
-+ * multiple of the write granularity that the device reports. Conventional
-+ * zones are not constrained. The zone index is derived from a guest supplied
-+ * sector, so this must only be called once virtio_blk_sect_range_ok() has
-+ * bounded it.
-+ */
-+static bool virtio_blk_zone_write_granularity_ok(VirtIOBlock *dev,
-+                                                 uint64_t sector, size_t size)
-+{
-+    BlockDriverState *bs = blk_bs(dev->blk);
-+    uint64_t offset = sector << BDRV_SECTOR_BITS;
-+    uint32_t wg_mask;
-+
-+    if (bs->bl.zoned == BLK_Z_NONE) {
-+        return true;
++    if (*offset >= capacity) {
++        error_report("*offset %" PRId64 " is equal to or greater than the "
++                     "device capacity %" PRId64 "", *offset, capacity);
++        return -ENOSPC;
 +    }
 +
-+    wg_mask = blkconf_zone_write_granularity(&dev->conf.conf) - 1;
-+    if (!(offset & wg_mask) && !(size & wg_mask)) {
-+        return true;
-+    }
-+
-+    return BDRV_ZT_IS_CONV(bs->wps->wp[offset / bs->bl.zone_size]);
-+}
-+
- static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
-     struct virtio_blk_discard_write_zeroes *dwz_hdr, bool is_write_zeroes)
- {
-@@ -522,7 +548,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-     if (append) {
-         uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
- 
--        if (offset & wg_mask) {
-+        if (offset & wg_mask || len & wg_mask) {
-             *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
-             return false;
-         }
-@@ -911,6 +937,15 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-             return 0;
-         }
- 
-+        if (is_write &&
-+            !virtio_blk_zone_write_granularity_ok(s, req->sector_num,
-+                                                  req->qiov.size)) {
-+            virtio_blk_req_complete(req, VIRTIO_BLK_S_ZONE_UNALIGNED_WP);
-+            block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
-+            g_free(req);
-+            return 0;
-+        }
-+
-         block_acct_start(blk_get_stats(s->blk), &req->acct, req->qiov.size,
-                          is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
- 
+     if (*offset & zone_size_mask) {
+         error_report("sector offset %" PRId64 " is not aligned to zone size "
+                      "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
 -- 
 2.55.0
 
