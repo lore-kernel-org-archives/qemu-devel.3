@@ -4,142 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A063C624D4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29441C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ndr-0007C9-8B; Wed, 02 Sep 2026 12:16:51 -0400
+	id 1x1neI-0007OH-1h; Wed, 02 Sep 2026 12:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1ndp-0007BX-VC
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:16:49 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x1neG-0007LR-3i
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:17:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x1ndn-0003fN-Nm
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:16:49 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682FYw7R3071123
- for <qemu-devel@nongnu.org>; Wed, 2 Sep 2026 16:16:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 5LDI2JScvormYirFbxmb7Mw8lZGcKuNc/CE0uQI5/o4=; b=K0RKmLZzMYoLtYAH
- geXZagYegzXTMHt2xiWn8Cl58oMfzHtfPA6j5rY03bYjHS7TRd1VyZjWYSIsYR1z
- MT3tZNCgSPgX7Bdt/bJxINqOsXeFrvTnzpVg5rkOb62vFbcG6jQuMZifUQ+2ZMIX
- L0l0KJ08RyL8+10yGv1wQ6j9FRPHsjbDoer2b0ydJyvsU8IeUe8B2JuN1j8goMyw
- gz/ipwOdVc8YzeK7+d1RZ7WpKp/9NLivO+z9hYSeOSiDV3AD9LHjCowOBCGgnC8Y
- MzARZsu6W8u0OAxt8Aqn3MMfPnmWRSQnio3AGWWR5Bl+u5mv82VwBjz1JmfnC+JW
- 3iflow==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4genrngcfv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 16:16:45 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-90e7db8d191so23120906d6.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 09:16:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788365805; x=1788970605; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=5LDI2JScvormYirFbxmb7Mw8lZGcKuNc/CE0uQI5/o4=;
- b=cl83iouWihPvdSrz+OwfggrFGgxh3oeICm+AerxUGa3ULgDOVPdjGrPvCQ02Pja61z
- kSQ9xK9LG/EtLEkEmsEZA23biX+HYE44wWp3c8WS3i4/U4ZQeEgMZdXMhLS19NGJWXx6
- gj7TCNLRaBo3dRs5wYWcq6fyz51jr7orTXH90BoaCqxEKcII6oU3Ijio05FZ8dM5J70J
- snp82kgK5cJKSkoTFVOxnKCXkgAGo1Z3YKEC0hxVBeXC2APYmHTQHmlxhoEweTWda/Ur
- nwrLg4Z/BKJB+ZRnGxNReUlPxoM9rXgvEUzxFRPmMn//g7TvNxf+IRU5FQZxbansVxsb
- Y5lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788365805; x=1788970605;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=5LDI2JScvormYirFbxmb7Mw8lZGcKuNc/CE0uQI5/o4=;
- b=q9KIPRle+bsq5BrFwTqA7arcBEWhdPO7ZtOwWf1iRl3uObbD12BfXY5ZR1y4RB2Tmo
- ZydqfDPaKUPvwj+5HYCe+9Q2mOJhHcfMldJLGNI6MwByhoEY1y/d+5WIQ1Xw99J+Wb7u
- JPp0om7/yJpH+blCTNel4OQzRbGU9nbxuBqENblT/X2o+tZFds7MubYVRM1smRAXiDLQ
- 1bOjMkC9cG9i/KxbqwyQYJsHvxHGZ74JM/cdg3WRZ4ZDAcN4TEPrlfmtwhZ+4gsh2FTx
- xKFHj/t+VyiSJYknA+3LnITpnFBk1F4OACCbH4IwuVK0DA0gKytprYIbMnadfmBBH1xB
- PtWw==
-X-Gm-Message-State: AFuF++mPDTB2SNppOuKsYDbcYDnNtpToQSpL5n1G4elFivxMH50a+2rL
- Z8lB06YjjO8VWq3HqkctzpKtoXcC6ait3S/K1as740aEywdEWzErgZEk1YM5hRzOmI8FU2N3qUh
- EenUZWyZn86xyNyS7bYCgOpPB9UyVPBzJ5XNTzBhnMyHs8BqUvDj+JFErng==
-X-Gm-Gg: AR+sD106ZK2zSfT04sX0BWQFAay5SOidAHscJNWbulsW8TVyHFULB4Ws4b+0+m76kpq
- y++3fX7vEiOvpmWmT7HqgMcm70OKLts3DyXfsrga5u9L4GItKesT9yjMzGcTMgCT7xVM/C+FFqu
- Olyx0b78aRWuqnhGzzOafJKMJwssCZaDcD7txgq56IgWPULVXwva0vpvoHyTQEILDFXkk2km/Vf
- n2aD1Dtu1f3j8LuiOoAskdBz/HHelbW/nPfNsZUv8h2l7j+VBYv/qzf/KAzDqZFbQcJDLwpuxrV
- pdhe29NUbKGagznMMTZBNdJL9Q59D8JRjzzSCg3jx7/MjlMoSLXfrGvL3liVinBdvIC86QqSFR9
- lW4uPyLUsw2kSFQUbMHKleiW5Ly9+s5gBJA==
-X-Received: by 2002:a05:620a:122a:b0:939:1d86:94aa with SMTP id
- af79cd13be357-9396e56ac4dmr5791385a.39.1788365804802; 
- Wed, 02 Sep 2026 09:16:44 -0700 (PDT)
-X-Received: by 2002:a05:620a:122a:b0:939:1d86:94aa with SMTP id
- af79cd13be357-9396e56ac4dmr5783285a.39.1788365804307; 
- Wed, 02 Sep 2026 09:16:44 -0700 (PDT)
-Received: from [192.168.69.200] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-484492cdbfbsm7369174f8f.33.2026.09.02.09.16.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Sep 2026 09:16:43 -0700 (PDT)
-Message-ID: <717fcf10-2d29-4894-893e-259aff8fe02e@oss.qualcomm.com>
-Date: Wed, 2 Sep 2026 18:16:42 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x1neD-0003nw-VS
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:17:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788365831;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FJOV7hiPoJxwplnpw7L2U5pv+0ld7Plj9TCANS0i+ag=;
+ b=SR/3aJ1Af69Yy5d/z8Son66qtb4ACwPWDGdNUPwBP2I0vtjJLQMBuUE+Evz2puPFDI4jTQ
+ NmYZuenOS7t+f7tO9g3Z4LQGL5Yz42h7d3eRACg0W3rGfR+F4wD1Akvjr8yrbd5JB2TEsX
+ CBOprLXF28wWoFHfFwm5U+dYB9o6k6E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-oB2YG42xPdq61BYvg9an9A-1; Wed,
+ 02 Sep 2026 12:17:10 -0400
+X-MC-Unique: oB2YG42xPdq61BYvg9an9A-1
+X-Mimecast-MFC-AGG-ID: oB2YG42xPdq61BYvg9an9A_1788365828
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B4B3195DE21; Wed,  2 Sep 2026 16:17:08 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A461A423; Wed,  2 Sep 2026 16:17:05 +0000 (UTC)
+Date: Wed, 2 Sep 2026 17:17:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
+Message-ID: <aphL_rrAVYq8D7ie@redhat.com>
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-7-zhangckid@gmail.com>
+ <8733vtbk16.fsf@pond.sub.org>
+ <CAK3tnvLbaJ4b+gRhXC678cye-cHv+aP3FFwRvhPNjyfSHxL6MA@mail.gmail.com>
+ <87qzjb3nf6.fsf@pond.sub.org> <apgONqZ4sWaenjVG@redhat.com>
+ <87jyp31zyf.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/cpuinfo-aarch64: Fix build with older glibc headers
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>
-References: <20260826163753.459661-1-tangtao1634@phytium.com.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260826163753.459661-1-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: yr1uRWxqANPCfe4JZrx9WoMYcCEtDlus
-X-Proofpoint-ORIG-GUID: yr1uRWxqANPCfe4JZrx9WoMYcCEtDlus
-X-Authority-Analysis: v=2.4 cv=YKuvDxGx c=1 sm=1 tr=0 ts=6a984bed cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=fgrLqfBXAAAA:8 a=A-5aKlvlEl7envUJ730A:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22 a=_Ge82aPy-h_wFa7gWU4u:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDE0MyBTYWx0ZWRfX4J5bJ/L9tfT2
- rRs62m1rfOyz7I4pkRfcTmT2qlwmXmYq5Tva8Kz4ms878Ctsjs1CpD8fjHIwKv3B84mBKQe3Q1P
- OSepAe+1DxZjnFwkVLhXrnwl2mRZ3raj+yeJ6MpjtiW6id2ar4jZioEyHG4yhGetdiWud95q0/0
- FjG+vJ6ecLwW3R+YPWqvfVwxuPsO73FaLScf270ELCvAZ2vaz9QeQGCdZ1wW4bJa6cQ51Pg4peH
- KwjJhBy9NHaSWSwW+ZzfjNgF5/wpzW9VKL9ID2xSdQNeOoQHf/4ItSscLRbOlCTtQFRmcAiR5bQ
- Gi6s+MIe1DFJWslgWJqRgW580vpAiRDhkbK/ZVdyWDnZ2N9rOHVTT5rrUKNHTell8JhV6RaJusQ
- 9KBDm8jdU/XtLHYVwjeI/aBr4FyB9WK1ZroD75IwNe6FA7cdl8GFxI19y0L9hvoQWVQrLL+Ngbz
- ePrlhp7rHrd/wvfy9jg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDE0MyBTYWx0ZWRfX2mhbmVy24Wmc
- 5B8CF407jAjCZ32Iek6OtrITUPhQ9GbsGKkzY5HtiMBLldu+RhFYP0ABFUoIPWoYmYncagUNrbT
- n95CzYsBbGA14/g5pKWoUNiewHmSYoA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-02_04,2026-09-01_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609020143
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jyp31zyf.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,25 +93,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/8/26 18:37, Tao Tang wrote:
-> Commit 761bfe07b2c9 ("util/cpuinfo-aarch64: Detect FEAT_CSSC")
-> started using HWCAP2_CSSC unconditionally. This macro was added to
-> glibc's AArch64 bits/hwcap.h during the glibc 2.38 development cycle,
-> so AArch64 hosts with older headers fail to build.
+On Wed, Sep 02, 2026 at 04:37:44PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> Follow the existing HWCAP2_BTI handling and define HWCAP2_CSSC to
-> zero when it is not provided by system headers. Such environments
-> simply do not use FEAT_CSSC host optimizations.
+> > On Wed, Sep 02, 2026 at 01:25:33PM +0200, Markus Armbruster wrote:
+> >> Zhang Chen <zhangckid@gmail.com> writes:
+> >> 
+> >> > On Tue, Sep 1, 2026 at 1:47 PM Markus Armbruster <armbru@redhat.com> wrote:
+> >> >>
+> >> >> Zhang Chen <zhangckid@gmail.com> writes:
+> >> >>
+> >> >> > Monitors that require an IOThread share the internal mon_iothread.
+> >> >> > Account for each monitor explicitly in IOThread holder tracking, using
+> >> >> > the monitor's canonical QOM path to distinguish holders.
+> >> >> >
+> >> >> > Acquire the shared monitor IOThread AioContext once, using the monitor
+> >> >> > QOM path as the holder, and reuse the stored context for later
+> >> >> > operations.
+> >> >> >
+> >> >> > Release the holder from the Monitor ObjectClass::unparent callback,
+> >> >> > while the canonical QOM path is still available. This covers every
+> >> >> > object_unparent() path and avoids duplicating the cleanup in
+> >> >> > monitor_cleanup() and monitor_qmp_prepare_delete().
+> >> >> >
+> >> >> > The internal mon_iothread remains hidden from query-iothreads, as before.
+> >> >> > Management applications therefore cannot use it to determine which
+> >> >> > monitors are using the IOThread. Nevertheless, track the monitor
+> >> >> > holders so that they follow the same explicit holder and
+> >> >> > IOThread reference lifecycle as other AioContext users.
+> >> >> >
+> >> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> >> >>
+> >> >> I have a question for our QOM experts (Paolo and Daniel).
+> >> >>
+> >> >> This patch takes a reference in its UserCreatableClass method
+> >> >> complete(), and relinquishes it in its ObjectClass unparent() method.
+> >> >> Is that correct and clean?  Or should complete() pair with
+> >> >> prepare_delete()?
+> >> >
+> >> >
+> >> > Add some background information in previous reviews for here:
+> >> > https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05318.html
+> >> 
+> >> Aha, Stefan asked for monitor_finalize(), which doesn't exist.  You then
+> >> moved it to the unparent() method.
+> >
+> > monitor_finalize() does exist as of about a month ago. It was
+> > introduced as part of my series that turned Monitor into a QOM
+> > object.
 > 
-> This has been tested on an Ubuntu 22.04 aarch64 host with glibc 2.35.
+> I was on an old branch.  Sorry for the noise!
 > 
-> Fixes: 761bfe07b2c9 ("util/cpuinfo-aarch64: Detect FEAT_CSSC")
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->   util/cpuinfo-aarch64.c | 3 +++
->   1 file changed, 3 insertions(+)
-Merged as 01e1455139196cc8d6bcde7d2f918348a90f7f26.
+> >> My question for the QOM maintainers remains: is it okay to pair
+> >> complete() with unparent(), or should it pair with prepare_delete()?
+> >
+> > In general most things done in complete() can/should be undone in the
+> > finalize() callback IMHO.
+> 
+> I can't see a finalize() callback, and I *am* on current master now.  Do
+> you mean unparent(), or do you mean monitor_finalize()?
+
+Sorry for the ambiguity. The latter.
+
+When I wrote "finalize()" I meant to say "instance_finalize()", as the
+generic name of the callback field in the Type, which is
+"monitor_finalize()" in the specific Monitor implementation.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
