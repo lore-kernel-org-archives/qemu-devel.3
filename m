@@ -4,51 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FD3C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A21C624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1gdh-0005pm-0p; Wed, 02 Sep 2026 04:48:13 -0400
+	id 1x1gdi-0005qW-61; Wed, 02 Sep 2026 04:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x1gdf-0005mo-BG; Wed, 02 Sep 2026 04:48:11 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1x1gdf-0005ms-Bf; Wed, 02 Sep 2026 04:48:11 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x1gdb-0007AL-CN; Wed, 02 Sep 2026 04:48:11 -0400
+ id 1x1gdb-0007B8-GV; Wed, 02 Sep 2026 04:48:11 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id AEFCF80CB4;
- Wed, 02 Sep 2026 11:48:01 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id E025982A62;
+ Wed, 02 Sep 2026 11:48:05 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:b72::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id xlfWR5raWmI0-e6xhaPvL; Wed, 02 Sep 2026 11:48:01 +0300
+ id xlfWR5raWmI0-k6AXxjNG; Wed, 02 Sep 2026 11:48:05 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1788338881;
- bh=TgxIjFOhuWPMszwvJ2w3DFwhDFqQquG/4E8vpUo8r7w=;
+ s=default; t=1788338885;
+ bh=Syx2uB5uU+sBiAi4YVEthtJZa+fTMLKKLKJyxkfFWEo=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=YOljxP/g98cUZJq4Bpwa1R63JEz+8luvnDa/HySeuqNZlBwPfveIOypZB2qolwghz
- +dsE2U9qSq+0u6ZvHfta4KoMb/yMWocVBisyzcwAsUmDxXCnv3Y7ZgHbgwIFDWO/SS
- mipbpabaJ7ovIZxWabd/oGj2eDo+vpp2nFfbFudY=
+ b=0PlLkEWFrxlvC3NVO4yqV4+tmmJYd8Sw16kqYkILcTe4RWjj8AB+WoEIPmGULP9Z7
+ lGE8QNSZGOOd2d9b3OXtD80Iteb/VLp11fyTvHS2+0IzILNghIBSTwI0X6z6nuAt2v
+ wzIjrhH971A2wzwvSkr9+toq+rf3lIo/4/L+Ybok=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, den@openvz.org, vsementsov@yandex-team.ru,
  Eric Blake <eblake@redhat.com>
-Subject: [PULL 2/8] block/nbd: never index requests[] with an unchecked cookie
-Date: Wed,  2 Sep 2026 11:47:48 +0300
-Message-ID: <20260902084754.140103-3-vsementsov@yandex-team.ru>
+Subject: [PULL 8/8] iotests/nbd-commands: cover the command flags and sparse
+ replies
+Date: Wed,  2 Sep 2026 11:47:54 +0300
+Message-ID: <20260902084754.140103-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260902084754.140103-1-vsementsov@yandex-team.ru>
 References: <20260902084754.140103-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -73,149 +75,159 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-Cookies are converted into indices of s->requests[] in several places
-and the result is used right away, without any check:
+No test sends the NBD command flags, so the server paths behind them
+go unexercised. Send them from the new client.
 
-    int i = COOKIE_TO_INDEX(cookie);
-    ...
-    return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
+A structured read answers a hole with an offset and a length rather
+than a cluster of zeroes. Lay out data, a hole and data again, and
+read the three arrangements a hole can appear in, since a leading hole
+and a hole between two extents take different turns through
+nbd_co_send_sparse_read(). NBD_CMD_FLAG_DF asks for one chunk instead,
+which is the same layout sent as real zeroes. Check the chunk
+boundaries in both forms, and that the data still reads back.
 
-COOKIE_TO_INDEX() subtracts one, so a zero cookie becomes an index of
--1 and the access lands in front of the array. This is undefined and,
-depending on the type of the index and on what the compiler has put
-there, it can as well pass silently: at the site above i is signed, so
-even a plain i < MAX_NBD_REQUESTS check would happily let -1 through.
+NBD_CMD_FLAG_REQ_ONE caps the extent array at one entry, so the block
+status reply covers only the first cluster of the three asked about.
+That a reply may describe less than was requested is also how the
+server keeps NBD_MAX_BLOCK_STATUS_EXTENTS from being exceeded on a
+long fragmented range, and a client assuming full coverage believes
+stale status.
 
-Route every conversion through a helper which hands out the slot only
-for a cookie in range and owned by a request in flight, so that the
-check can not be forgotten again. The helper reports through an Error,
-as the one cookie which is not ours to trust, the one taken from the
-wire in nbd_receive_replies(), is a protocol error rather than an
-internal inconsistency and has to stay a channel error. Every other
-cookie is one we have issued and still own, so a bad value there is a
-bug in this file, which is what &error_abort spells out.
+NBD_CMD_FLAG_FAST_ZERO becomes BDRV_REQ_NO_FALLBACK. A cluster aligned
+zero can be done by marking the cluster, while zeroing part of a
+cluster over a backing file needs the read modify write the flag
+forbids, so check both the success and the ENOTSUP.
 
-The cookie of the reply in flight goes through the helper as well. It
-is not an unchecked value either: it has passed the check on the wire
-path, or it has been cleared by the previous commit.
+NBD_CMD_FLAG_FUA is added to a write and a trim.
 
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Eric Blake <eblake@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-3-den@openvz.org>
+Message-ID: <20260827161002.310688-6-den@openvz.org>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/nbd.c | 39 ++++++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ tests/qemu-iotests/tests/nbd-commands     | 72 ++++++++++++++++++++++-
+ tests/qemu-iotests/tests/nbd-commands.out |  4 +-
+ 2 files changed, 71 insertions(+), 5 deletions(-)
 
-diff --git a/block/nbd.c b/block/nbd.c
-index d9b776283f4..d0a7097034c 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -136,6 +136,19 @@ static void nbd_clear_bdrvstate(BlockDriverState *bs)
-     s->x_dirty_bitmap = NULL;
- }
+diff --git a/tests/qemu-iotests/tests/nbd-commands b/tests/qemu-iotests/tests/nbd-commands
+index 09e811724b1..adfd4a495cb 100755
+--- a/tests/qemu-iotests/tests/nbd-commands
++++ b/tests/qemu-iotests/tests/nbd-commands
+@@ -25,6 +25,7 @@ nbd: ModuleType
  
-+static NBDClientRequest *nbd_request_by_cookie(BDRVNBDState *s, uint64_t cookie,
-+                                               Error **errp)
-+{
-+    uint64_t ind = COOKIE_TO_INDEX(cookie);
+ DEPTH_LOCAL = 1
+ DEPTH_BACKING = 2
++CLUSTER = 65536
+ 
+ 
+ class TestNbdCommands(iotests.QMPTestCase):
+@@ -90,7 +91,7 @@ class TestNbdCommands(iotests.QMPTestCase):
+             self.h.shutdown()
+             self.h = None
+ 
+-    def block_status(self, count=size, wanted=None):
++    def block_status(self, count=size, wanted=None, flags=0):
+         """Map each meta context in the reply to its list of extents."""
+         reply = {}
+ 
+@@ -99,9 +100,9 @@ class TestNbdCommands(iotests.QMPTestCase):
+                                                   entries[1::2]))
+ 
+         if wanted is None:
+-            self.h.block_status(count, 0, cb)
++            self.h.block_status(count, 0, cb, flags)
+         else:
+-            self.h.block_status_filter(count, 0, wanted, cb)
++            self.h.block_status_filter(count, 0, wanted, cb, flags)
+         return reply
+ 
+     def top_extents(self):
+@@ -158,6 +159,71 @@ class TestNbdCommands(iotests.QMPTestCase):
+         for wanted in (['base:allocation'], ['qemu:allocation-depth']):
+             self.assertEqual(sorted(self.block_status(wanted=wanted)), wanted)
+ 
++    def read_chunks(self, count, offset, flags=0):
++        chunks = []
 +
-+    if (ind >= MAX_NBD_REQUESTS || !s->requests[ind].coroutine) {
-+        error_setg(errp, "unexpected cookie value");
-+        return NULL;
-+    }
++        def cb(subbuf, off, status, _err):
++            chunks.append((off, len(subbuf), status))
 +
-+    return &s->requests[ind];
-+}
++        self.h.pread_structured(count, offset, cb, flags)
++        return chunks
 +
- /* Called with s->receive_mutex taken.  */
- static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
- {
-@@ -422,7 +435,8 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-                                             Error **errp)
- {
-     int ret;
--    uint64_t ind = COOKIE_TO_INDEX(cookie), ind2;
-+    NBDClientRequest *req = nbd_request_by_cookie(s, cookie, &error_abort);
-+    NBDClientRequest *owner;
-     QEMU_LOCK_GUARD(&s->receive_mutex);
++    def make_sparse(self):
++        """Lay out data, a hole and data again, one cluster each."""
++        self.h.pwrite(b'z' * CLUSTER, 0)
++        self.h.zero(CLUSTER, CLUSTER)
++        self.h.pwrite(b'z' * CLUSTER, 2 * CLUSTER)
++
++    def test_read_sparse_chunks(self):
++        self.make_sparse()
++
++        first = (0, CLUSTER, nbd.READ_DATA)
++        hole = (CLUSTER, CLUSTER, nbd.READ_HOLE)
++        second = (2 * CLUSTER, CLUSTER, nbd.READ_DATA)
++
++        # A hole is an offset and a length, not a cluster of zeroes,
++        # wherever it falls in the reply
++        self.assertEqual(self.read_chunks(2 * CLUSTER, 0), [first, hole])
++        self.assertEqual(self.read_chunks(2 * CLUSTER, CLUSTER),
++                         [hole, second])
++        self.assertEqual(self.read_chunks(3 * CLUSTER, 0),
++                         [first, hole, second])
++
++        self.assertEqual(self.h.pread(CLUSTER, CLUSTER), bytes(CLUSTER))
++        self.assertEqual(self.h.pread(CLUSTER, 0), b'z' * CLUSTER)
++
++    def test_read_dont_fragment(self):
++        self.make_sparse()
++
++        self.assertEqual(self.read_chunks(3 * CLUSTER, 0, nbd.CMD_FLAG_DF),
++                         [(0, 3 * CLUSTER, nbd.READ_DATA)])
++
++    def test_block_status_req_one(self):
++        hole = nbd.STATE_HOLE | nbd.STATE_ZERO
++        self.make_sparse()
++
++        alloc = self.block_status(3 * CLUSTER)['base:allocation']
++        self.assertEqual(alloc, [(CLUSTER, 0), (CLUSTER, hole), (CLUSTER, 0)])
++
++        # One extent, so the reply covers less than was asked for and the
++        # client has to come back for the rest
++        alloc = self.block_status(3 * CLUSTER, flags=nbd.CMD_FLAG_REQ_ONE)
++        self.assertEqual(alloc['base:allocation'], [(CLUSTER, 0)])
++
++    def test_write_and_trim_fua(self):
++        self.h.pwrite(b'y' * 4096, 4096, nbd.CMD_FLAG_FUA)
++        self.assertEqual(self.h.pread(4096, 4096), b'y' * 4096)
++        self.h.trim(4096, 4096, nbd.CMD_FLAG_FUA)
++
++    def test_fast_zero(self):
++        self.h.zero(CLUSTER, CLUSTER, nbd.CMD_FLAG_FAST_ZERO)
++        self.assertEqual(self.h.pread(CLUSTER, CLUSTER), bytes(CLUSTER))
++
++        # Zeroing part of a cluster needs the fallback the flag forbids
++        with self.assertRaises(nbd.Error) as caught:
++            self.h.zero(4096, 4096, nbd.CMD_FLAG_FAST_ZERO)
++        self.assertEqual(caught.exception.errno, 'ENOTSUP')
++
+     def test_cache_past_end_of_export(self):
+         self.assertRaises(nbd.Error, self.h.cache, size + 1, 0)
  
-     while (true) {
-@@ -437,10 +451,10 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-              * woken by whoever set s->reply.cookie (or never wait in this
-              * yield). So, we should not wake it here.
-              */
--            ind2 = COOKIE_TO_INDEX(s->reply.cookie);
--            assert(!s->requests[ind2].receiving);
-+            owner = nbd_request_by_cookie(s, s->reply.cookie, &error_abort);
-+            assert(!owner->receiving);
+diff --git a/tests/qemu-iotests/tests/nbd-commands.out b/tests/qemu-iotests/tests/nbd-commands.out
+index 2f7d3902f23..281b69efeac 100644
+--- a/tests/qemu-iotests/tests/nbd-commands.out
++++ b/tests/qemu-iotests/tests/nbd-commands.out
+@@ -1,5 +1,5 @@
+-.......
++............
+ ----------------------------------------------------------------------
+-Ran 7 tests
++Ran 12 tests
  
--            s->requests[ind].receiving = true;
-+            req->receiving = true;
-             qemu_co_mutex_unlock(&s->receive_mutex);
- 
-             qemu_coroutine_yield();
-@@ -454,7 +468,7 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-              */
- 
-             qemu_co_mutex_lock(&s->receive_mutex);
--            assert(!s->requests[ind].receiving);
-+            assert(!req->receiving);
-             continue;
-         }
- 
-@@ -474,17 +488,16 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-             error_setg(errp, "unexpected structured reply");
-             goto err;
-         }
--        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
--        if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
-+        owner = nbd_request_by_cookie(s, s->reply.cookie, errp);
-+        if (!owner) {
-             ret = -EINVAL;
--            error_setg(errp, "unexpected cookie value");
-             goto err;
-         }
-         if (s->reply.cookie == cookie) {
-             /* We are done */
-             return 0;
-         }
--        nbd_recv_coroutine_wake_one(&s->requests[ind2]);
-+        nbd_recv_coroutine_wake_one(owner);
-     }
- 
- err:
-@@ -861,7 +874,6 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
- {
-     ERRP_GUARD();
-     int ret;
--    int i = COOKIE_TO_INDEX(cookie);
-     void *local_payload = NULL;
-     NBDStructuredReplyChunk *chunk;
- 
-@@ -919,8 +931,9 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
-             return -EINVAL;
-         }
- 
--        return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
--                                                  qiov, errp);
-+        return nbd_co_receive_offset_data_payload(
-+                s, nbd_request_by_cookie(s, cookie, &error_abort)->offset,
-+                qiov, errp);
-     }
- 
-     if (nbd_reply_type_is_error(chunk->type)) {
-@@ -1067,7 +1080,7 @@ static bool coroutine_fn nbd_reply_chunk_iter_receive(BDRVNBDState *s,
- 
- break_loop:
-     qemu_mutex_lock(&s->requests_lock);
--    s->requests[COOKIE_TO_INDEX(cookie)].coroutine = NULL;
-+    nbd_request_by_cookie(s, cookie, &error_abort)->coroutine = NULL;
-     s->in_flight--;
-     qemu_co_queue_next(&s->free_sema);
-     qemu_mutex_unlock(&s->requests_lock);
+ OK
 -- 
 2.43.0
 
