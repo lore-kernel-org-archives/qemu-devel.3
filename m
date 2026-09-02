@@ -4,67 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB2DC61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FDFDC624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1kY3-00076K-4e; Wed, 02 Sep 2026 08:58:39 -0400
+	id 1x1kYM-0007AD-KS; Wed, 02 Sep 2026 08:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1x1kY1-00076B-DL
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:58:37 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1x1kYF-00077y-27; Wed, 02 Sep 2026 08:58:52 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1x1kXy-0003Q0-QI
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:58:37 -0400
+ id 1x1kYC-0003RO-UZ; Wed, 02 Sep 2026 08:58:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1788353915; x=1819889915;
+ t=1788353929; x=1819889929;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=bNXDujXisiSKx2yaE1wq2g1hV2EnLcQxxVhgylO7ICg=;
- b=jic8nfencbt7gp8Zy9uhwvR2qVrfc99FT8eUgl1rBbgYRD0PSG4Va/Gh
- lDhpVNxVmtgzdvzS7xnIHgPtNsE99TlcOL4TWF7KFA1/VP57fLtXtEZkf
- Fb+eLuZIgg3DfgvMuLkHHI0cQq2nHdRfJAxLA5wuSaFgHfSseliW6rmr4
- acLqq/3DdE4h9OSAdn+F0DFqAJWtoNyk7q9xTKXSTSfSmgbFPsXFQlwDb
- gzvZHlCX16HlFMNbApWHW4ci5/6o8dp7fVdhX58l1o0KEBxn0LHGaul7j
- XZmocQv3aXCGXd4sgwTqGZpU/3EQ0joXpfPxnHtRnFEruYiRFId6UPjYs g==;
-X-CSE-ConnectionGUID: VZYIs18kRFm4imyUOchWIQ==
-X-CSE-MsgGUID: rvI7FwM1Q5uAgMFq3NAUiQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="111579105"
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="111579105"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 05:58:31 -0700
-X-CSE-ConnectionGUID: yVVoJi8zQne1a6+8lVsCrg==
-X-CSE-MsgGUID: pcd6/q07Rm2DEYqvAruIrQ==
+ bh=UTJOeNn3WDm2Ef5uioGsiQ1M31p7uWGJ/HHqueFuksU=;
+ b=geKrfQHDO9MUEfTIKZZ0P9cbHCQUcRfHuFFJfoBKr1ZsBGcHx6aG+SII
+ ByJyefQfoBJtd269kIUnN4jJqDnyEyus3lttFQSW1dFun9wpm7YBQxEop
+ W4TiHclsTJyJNouObQCBzig/aXv5J9crgiRH8MqHGBI0bKfK5rbJ1NTrl
+ 3QVMqpyYwOBOp3+eudK/cHkW6JmS/RIBBDFYHww/++eAsuUgvTzIDvNOj
+ ngeP0FXdMCIiwDirDCnKmfqKCRdXS9j64l4L7HYKTvSybwvJNP7uKoCrs
+ PD8xkNGj/5+EZWL/d8tAQ50nmNnS5IzIBDvKf1TcRRjhTcu7syjr2p4jt g==;
+X-CSE-ConnectionGUID: sFayYXQBSOGE1sYIZd9hVQ==
+X-CSE-MsgGUID: 2V5cvWnsQ8yXOr37hjt6VA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11893"; a="106177958"
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="106177958"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2026 05:58:47 -0700
+X-CSE-ConnectionGUID: h623PCLMSo+kKAPi5qZXkA==
+X-CSE-MsgGUID: Ti91PXsLTAe6thEfZv/EKg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="266168487"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2026 05:58:30 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.25,257,1779174000"; d="scan'208";a="299279141"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2026 05:58:45 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 2 Sep 2026 05:58:29 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ 15.2.2562.46; Wed, 2 Sep 2026 05:58:44 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 05:58:29 -0700
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.29) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ 15.2.2562.46 via Frontend Transport; Wed, 2 Sep 2026 05:58:44 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.14) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 2 Sep 2026 05:58:29 -0700
+ 15.2.2562.46; Wed, 2 Sep 2026 05:58:43 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PXAs/NTempd+EXPxAA/5YlhqlSsSG3PvWnJmHpYWuYEz3tTOpwYz5PzLu+v6oLtXeeWIjxFRRm7t178Cvc+jBn1f1YJcyh0qIwhe5kpbSwH0leLju0NcgdA1KJYiO6Zebr8AwncHy5ndgJkWjlAMOh1jehlL/jAdB7zgdcYAX1IN8ZkMzvJeYl/RFYFn3O4YCA4UJWRt/TuCY/+5VfAdg7GxsbNcj62V/Ia19YMNlVG0s0kFNOFB7/CNP5lbrAhFPhRAzAZcvbiQ0ElJsdUh1RHnt5izqrcnxLvJKQj4nkq0j4jMKFdNc7dtr/fWKwYnM0+vj9GBGfnorSVXyAyBnQ==
+ b=wX38wzk/+yiL2Ot2vpuoy6/EiiEDpD30DSaguk154hD0crBFF4DZUQ5r5kdiBAhrqNQyvw48gqX8ERU7Pr/MLktTyONf2CDt6UqZFBAb28ROy4jkUWTC+0Aizi8B9I3Arw9hZX0i8ReLb29zvwZ09B310b5mELrudsy9ywftAt1Q9UHcQD4IQnls7gS+iUIZkM/xeIhLfmgU2cwbRhfhy6e8JU5R/FNuhLrPtDhWubBGFmt6dtqfHum/p5eSdWKyN/vY/7k6oo3kyeyw51Nxb+LNVu8CfjRRokOjkMcbxBeR+neYrVJdUNbR9vxLwskmcNkPoppQyz/5tOEwFqibDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nlSSXatr3STC/Q6qmk8OGPhyNu6y2f3vj4kMNmRSrWw=;
- b=lyEVi2R7suFE+z4lT85rtTbyIRNsxzYy0VulXZZUV/xZdWkOYRalqSsHdX5Qq6BBGN+bf0dSaqwJxVgB+cC7prkaCU7jGzGQJMwdrhhbaZEnsdSrcKj3kx1UWvsLW67Vq4uTuAM6abXUb1zH0Z3ubLHpJhjV1zvIZmUHC8JBegEpDej0G+76369UPm3V00bO5qfpv7FqgwnCIfS8lSEsO4qeo1cJcoGm1vSYBbak/1iqt9T3J6X/zw0Wf5eaPSBQR9fhgfgFYU7yZDjnDUx0X4tBl0F45HrnHipbxdp1Z1zYn6XmzffbXMJ7bZukkHwfpOi/0O51NY7KFAmNlon4+g==
+ bh=sfy1hUBwMJKCySrmF5L46Y9oblJ8+tu5sZWBK+oPbkg=;
+ b=S9NSKNB3YOxukcOB0v4wccIFtpQKJjz88UGV743GKJ7T39G0HQ3r3gBMBnWBzlJM81YcIBY4P7sEzhVBpgCd6b7GciUqGaYF34ncY38e8b5ZBAiVaP1zDqr6X1LFKdrKKhlvK1SCLlkYNSPzKfp2V2aHaaEzgndfX4guqnfTSG/wM0iyuDUcle3fl0HeYsO675pSzE8sY+vK9c2dvg99LuWqc7ktRwB2ihI4A6qWiT3oRO7EudXJzaQ/wwN5BiS0Vm8i1707Xx6unQLK/E5uFAc8/hBLezV8ftWLZcp2ZLd6BYDcVmpxMDiGsGFZL0npQ1BoFQTT+bEmz51i4atxGw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -74,98 +72,98 @@ Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
  by DS0PR11MB8666.namprd11.prod.outlook.com (2603:10b6:8:1bd::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 12:58:25 +0000
+ 2026 12:58:42 +0000
 Received: from LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 12:58:23 +0000
-Message-ID: <bd0dd80f-17e6-49e1-af62-f55cc11dc500@intel.com>
-Date: Wed, 2 Sep 2026 21:06:46 +0800
+ 12:58:42 +0000
+Message-ID: <8527cd6e-3cda-4da9-9137-9419d836ef88@intel.com>
+Date: Wed, 2 Sep 2026 21:07:09 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] intel_iommu_accel: Guard VTDAccelPASIDCacheEntry
- definition
+Subject: Re: [PATCH v5 3/6] backends/iommufd: Extend
+ iommufd_backend_alloc_hwpt() with fault_id
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
 CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <mst@redhat.com>, <jasowangio@gmail.com>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <skolothumtho@nvidia.com>,
  <joao.m.martins@oracle.com>, <clement.mathieu--drif@bull.com>,
- <kevin.tian@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>
+ <kevin.tian@intel.com>, Xudong Hao <xudong.hao@intel.com>,
+ <qemu-arm@nongnu.org>
 References: <20260831095200.1279366-1-zhenzhong.duan@intel.com>
- <20260831095200.1279366-2-zhenzhong.duan@intel.com>
+ <20260831095200.1279366-4-zhenzhong.duan@intel.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260831095200.1279366-2-zhenzhong.duan@intel.com>
+In-Reply-To: <20260831095200.1279366-4-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: SI2PR01CA0012.apcprd01.prod.exchangelabs.com
  (2603:1096:4:191::8) To LV8PR11MB8509.namprd11.prod.outlook.com
  (2603:10b6:408:1e6::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|DS0PR11MB8666:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c893a0b-3181-4e53-240a-08df08f1ded7
+X-MS-Office365-Filtering-Correlation-Id: 90b8d636-14ed-48cc-2e29-08df08f1ea0b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|366016|42112799006|1800799024|23010399003|7416014|376014|10067099003|18002099003|4143699003|11063799006|56012099006|22082099003;
-X-Microsoft-Antispam-Message-Info: firTz8v9UjlhpGHPs/W9baQeGNWDdR/hVKS+ttDeJebj6k50NTtFV3ZbAXw26jE64F1+YE5tMLeqRa6s108tTxCKxynr5QFiljUkWnHev+pm5F26TjS0H7eCiUq5qay64UGOZW5RpxAr6yB1ZOHySUtzQ3zGVPhXBQlJDC8vVWXGV5QXMXkkLJ5Y4rCi1gxraNQdU0zp5UvSMA1qBnjLb8BkUqTjWKFeaHoywY6/vkxPzmQk6faTjMOdj9VI1vnuNwnqYxlrT5srqV9Ddm5FS3hBHO7qBER5Sr+p19hZ9kH71MZOX9FVYdnTODygJDSe2089nO6pPeknqZ26IJVTEWZ6f0qsZlXcsQAsN0MhloWn+j+WrcWkbeUVyqqf4VkL76p2xjxESCzb7qA2oZg6SSZHmvYQhip6OwgNYgE/pit8ba0+ZKgmJdi0VQ+SRa96deCFfyyY/eKhfmRr5MlIpu0tDG13WlXZ/kQ3CK7Zh3YWIEY1qhE+IYyV0Jlyfg3rN/fW9bp7hGp4mptDNJEer0n5eXg5OOlzmRNsCVuYQNlBWlXPLWnlAXjeuWHOQPn0x+b7NXrrB+xlR9MMCtmagbeJ/QshcCGO387zQ+cxqRwGt/qYk0ZhWRqBq6bjv4Yoj6pq7qewaxejuyXWI3ACQ7idW0uHskk+fTS/R7PlSg4=
+X-Microsoft-Antispam-Message-Info: 8IjuRWVs340tNusMOXrqsbSaZ/7D0HH5kXi+JwHQb0moMVa7n3GMGsoF3pgXMW8mYtE5wlWI8odMrCMdYClT/3ATkGdRYx97FB/e3iKCum3PAbbkyU7ho02czywRHhpb7OaU78Y2NocH8liQDtSxSGa7lBu4YlOWxzmwjEXYbv6DyfcGTV1414hxXo3wWsMKv5R9ACsn6z/+E3Y9YJc6tJnBiRc0N/3CrDhZIGehGnhIOHOcaoWK3MzEu6DOr8c9u/IDNdISPhYoynmoxtYnpnlfQJb7N7m/aetCWrTsf7jXn1AQNZJVA+CxmDrEuXZ8+zQkWvViCpLOSHfLNqYYip7/UCLPQuNlUc9gECptNPJnP71t42QiilmyVqeLTyBp7IH2jzpiPnvjsEOd8rwtBVSAhrRDo7jZCtm0pB89pB+drPGTt4DOE5EdaJW1XvqbkpWAj3vq8FlMD/AAka13P27UrboW8AMeuDDCQN07we5+lGaDLqyW1m7ubhFM211YUHQajPPIZke00nuoboVIUsXxgT8EVkk5jgHFrvInN9rbifK4gO6Bn/GsbtvfSZ5yOcMyyHiVxwpbfJe/ep3X7SXo1tYJp0bwvBlDen5EfXKIzp87ijKrWNENfzbPM/aE/D77VC8QjOxDz1Jz4K1GJn4CFo6zT3jYYbcRR16HN2I=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(42112799006)(1800799024)(23010399003)(7416014)(376014)(10067099003)(18002099003)(4143699003)(11063799006)(56012099006)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dC9GTWRwQXkrcDd6U1g4TmFMQUY2QVBNYWVORmZrOE5lRmhadHhCYnNiREw4?=
- =?utf-8?B?UkZua3d5U1pCeUEvNzBud1NkSXJsOG9GMU9qNWNQdi9COFh1aUdtSnQ1UG1K?=
- =?utf-8?B?ZC80Z2puZDJBYTR2c3lBUUhiWllmQlFCSk82OTFIQUR5Uzk4Wk1kRncveXpo?=
- =?utf-8?B?MG82SEhPSVpZUWZEWGlqTEV1UDBCeHcwVlZpa0xJRmdvc2xhNm45TFVvYUJa?=
- =?utf-8?B?M3JkVkJxektiQ0dmZ2kzM002TVZ6UmRtSnFZL0JpR2w4clc3Wlljc1M2MGdz?=
- =?utf-8?B?S1psd3gyeFJrNmozV1YwNjRFS3dkUy83cDNYVFY2L1BCTTd3MjlvajM4aDRU?=
- =?utf-8?B?YzBCSXNVR1k1R2J3Z1RHYVVWaWFrekVuOU9RcEM4ZXdQVzVYVmh5b01hSm5s?=
- =?utf-8?B?TjQ0Z2NCbGdGVWFYWHFqdFpoRUlkak1IZitOcENnOXhNekR0WUgxeE1QVEUy?=
- =?utf-8?B?NHFXN1JLRDc4UUhhK1hEMHlkd3JUVCtJSE4yOE9sdk1tZVI1MkNWT3lDUkhK?=
- =?utf-8?B?VXZ4VGg2bXl4QU40UGlvMXpSTlFZUFhwZUcxZW1KZEMxd3I1bDQzWlBHcnYy?=
- =?utf-8?B?bU5PaTNtblcyT0daSjZRZ2VhOU9wUWN2eGtoUHgwUVp3QXJJdjYyR09JNGVx?=
- =?utf-8?B?Q3hBZGFqcTZzYmhoR1JNcng5ZXJxSjUxRXVXVlRybjVFdHFZUnFYWk00U3Nw?=
- =?utf-8?B?UVFCNGZCUWF3VkVQNzdxQngyMWZyaktkNENnUGFxdXFaOHd5VUp0RWovT2VG?=
- =?utf-8?B?bDg5c1NjZDI5NmcvaFdwRTE0SkZJQUtpUWM1UlpUSnA1cjh0TU41TTdTbUVZ?=
- =?utf-8?B?bEl5RHRuMkxnMEtpd0dZZUdNbC9FNkFtTnR5bTZoUVk4YXd6Q1hFb3o4UzAv?=
- =?utf-8?B?Z3p1bEphTytBRmdGYUkwdWJBWERrSlRNSHRPTlRuZVRuSmJCcmtZV01uWlNB?=
- =?utf-8?B?M1pwZFk4Q3F6Q3RBY1l1a21yNTFUOE5yU0JKZVNOeEdhNmZ0MHR2d0ZaRjc4?=
- =?utf-8?B?bE42NU9EcWY3TDdRNDlJQS9IVXdGYUtiTmpyMmxKL3VBL09Nd0F0d3hKbmNK?=
- =?utf-8?B?TnhzaXlNa1BCcWsvUlNsNmxKdG0ySXlIemtEdUYybmMwQVo4YVY0YnB4dCtz?=
- =?utf-8?B?N2doVnBNdW1NdTFGS1JFOWhVTVEyT1VsVVRUT09MS1lWZzFCSDBTQzN1M3ZX?=
- =?utf-8?B?MXhwN2hoZ0FVRFBma1Z2N3N2Vk9RazdRb0JSRUZab0JQell1QTFJT25pdTU4?=
- =?utf-8?B?dTQ3UGlSZE9BQk1KRS9HZkF2Z3hlRmI2YzUyWUFMQTlySm1FMUthOUYzckJy?=
- =?utf-8?B?czhaRHNUSjBIaElBWUVqMTdWSjUvTlI3TklFSFFIY2s3S20vVmNyQW53Y1ZT?=
- =?utf-8?B?UGhmU0lBYkhNL1JMajZvU3Q5bWhpdkd3dGwveUV2U2lLYUJLeHh5ak9yajJP?=
- =?utf-8?B?c1JBMWFOR2VnejhWMEN4TGN4ZHp3emtTQ0V3Y1lsRHoydmlWczVIbDk1dDBH?=
- =?utf-8?B?SERGM3pxV0ZvNEtzNm9TWHFIWFRzQ3dZcDZVNTNPSEN3ejJYMGZVY1FOdCtk?=
- =?utf-8?B?OEkrQzk3c2hYV3FSTmZ0UDV5bkRXbjZQYk5vL2NTSTFKMkoveXZwaXlPa01S?=
- =?utf-8?B?b3ZIUFl4SFZnVmU2dVg5QWdEV3VReXNCcmJQdDBnRDM4M2l5S1dzM0JaeSs2?=
- =?utf-8?B?ajRNMFdPbW1EUTV6bDFmMFhDZVlGZFNIREEySUJIeWNqNTNGN2FEQkpoaTJi?=
- =?utf-8?B?b0I1aDFoZmErM3g5QWd0TWcyOHY1R2thV1U4ZS9HcisybjFJWnV0enhUanlr?=
- =?utf-8?B?dXlDbWNtamdYbnVZRVZzSmFiSHJZZGhLdndjOTk3RTcvdWk0V2hQb3lISy9V?=
- =?utf-8?B?NEdOeDlmQmlyTnhxSi8vc0xSZFdpaUdvWmdVVU4vSUtFL3duQ1R5OGRVbDlp?=
- =?utf-8?B?TmJHTFkwelJzT21oaDFuVTUrVlp4TWlwTU9UNENRMm51OWRHd0VhUDErVmxw?=
- =?utf-8?B?TFBjbXFTemhKdk5wOXJpZVc3cFNkcXJwak10VndJZ1NyalRlUk5TN3E0Sk5x?=
- =?utf-8?B?K3lFM2ZJcnk3a3o2R1lUUkdiNFNVMEM3dFN6eEFQQnNpRGJYODdnbHBEQVVF?=
- =?utf-8?B?LytDWURWNktTVUNXRDJPQnRmZlM3TnZ0TTIvVEJudXMrR1MyczN6VjlMUVlJ?=
- =?utf-8?B?Yi9CVU9UaFgvNGJPWS9sVVVaZ0IrUFB1aXZyL05XVWlwdlYwQ2ZmZ01ROWZX?=
- =?utf-8?B?R2NOdFVXVDA2MThsM1c5WWdsaXJabXNaQzA0TnRLcU8zdERBVENkT1FBWjdK?=
- =?utf-8?B?UEpXRFBlaWg5dFNma1diMi9odm1PWnpCYVFVd0ZzUjVZWG45T2R3QT09?=
-X-Exchange-RoutingPolicyChecked: IpU8Ek0v0j+7Q2AF628CoPbyYRZJNRrHtmhp/B9NwD2p8mNkF9H56bNruyGUavKx5cwSc86dDEDTTWqL4+xPXqlS/5dvE49R2tVAl6paHZhjpUrpP2EyuWKad4MeJoHrJ7rB9JuOusRUqNOJ8WjOnpHHjpQm1C0kmo9CaBlkHPFIZ3zQOaF74dKZ6AKoo/omuRfqbbdypf7j0cKOTHjBbzmqb3xi0WrsklGcWHlG/KFOIh/9cv6hBdI2sXcifgcINQYlnFveGCPAm2HsSjc2mybEmxhILGAKkgV6yXgSwQhlZEWmb6lRsKU5hMU0Bku6mlpaIJDnwychVMfie2uQxQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c893a0b-3181-4e53-240a-08df08f1ded7
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bGdocFFHODdtd3RvTVZNUUJwZFBFenZZZEhuNDFJdEhHbDhpTHc4Z0xwbHRS?=
+ =?utf-8?B?bEczOG8zRGhEbHdIRWFrc2FKcXZCYkJJNXRuTzJsODFJYzZPSmthMlRDVVVV?=
+ =?utf-8?B?b3VKMGtkcVl3LzBoUlVLaEdPYnNqcHZ0MEVwY09zU2cxQlhLQkUyTUc1K0hh?=
+ =?utf-8?B?OEtHNml1VGxaUy9rWWhqMWZBWER3d1JJSU9vcVpMTDRpZ2RHTUxzNy9Ba2VW?=
+ =?utf-8?B?MVNMazArVEdOZzVscXM1UUZ6TGFqM1F3MVpVYjYzWElFbVdCMVkvYmxxTnll?=
+ =?utf-8?B?YWNKWGZoR2hodzBzU0d4bmpzMm5wQWg1STJhaXpQc2NYU2RBOGlBQTR1MFJY?=
+ =?utf-8?B?VE9KZEZuTzhWWW4zWXk4RTBQWGJqWTFHa2d0RWxXSFpxYzdGQ2I2blN1S1N3?=
+ =?utf-8?B?N3cxRTd2cjk4MnlTRWo0bEVMTVlkWEl4WWVLblpPSzlRbFo4ak1BeFpoaUJQ?=
+ =?utf-8?B?Q1I1SkFzUU1pdHJlUThMM0lreVdHR01yWVdsczQ3cnV4NHNsN0JlQWQ1VjQr?=
+ =?utf-8?B?d2xkWDRvTzg5UmRmSXBSQURBSnoxeHQxQVlJdXAvWjJxVXZ5UE9vSHdIejlG?=
+ =?utf-8?B?aXFyMHhvdk8zaFdqZXpHRkdaZWd0QTZ0dGFrYmZDdmxBdXZCajVYTDhvdm91?=
+ =?utf-8?B?OVlQQlVaYjE4ODZXbmQvV3c4OW5JYitjcGc4djVnTXoyZUZoWWdhcVpYSnRy?=
+ =?utf-8?B?SmdrT2YxNERRMmRDWlFrN0ZyQ0JuYjk1N3JUeHIwOWtJQkdEVGFRaGlHQlE3?=
+ =?utf-8?B?R3FKTGJ0eEJhdXcvZWpkU0QwenU4RXFYVW5aUjdNa1JDY2MxbHZYeUxuS3l6?=
+ =?utf-8?B?Vm16NGxXclRNVkUyOEdxSTdtN3Uwb205elpUSTJJWEhvTExMQTdGNUgycWxt?=
+ =?utf-8?B?WXRQcWEzVDNlNXlGNU96MjZtclBJNS83L0czWExNZ2ZOY211RTdRVjQ3eTQ4?=
+ =?utf-8?B?NEhBOFduU28xNktVd2c0OXM0RXNZeEtOdExpN1U4Y0ROcEg3R2xTTjF0ZEdh?=
+ =?utf-8?B?RGIvUjFMTGI4Yy9oMlJ1cllMdlY0bTdLVmt3N04zOWNzd3E2bXZUakt1NDNr?=
+ =?utf-8?B?ZW14aVc2N3lad1JnYzNLOCtDK09tNzc2SUovekE1ajdtTWQyem9HTFJ0dU1n?=
+ =?utf-8?B?dkswZHJXUEpwRy9NZlc4ci9uQ1JHUkR1QXA4Mzhnc2F2RWpWQmpuK0dkL3pZ?=
+ =?utf-8?B?SFhUdm1IY1hqSVlvekVlV3g5aHovTXRnTTZwbHB2aFYvTGdJd2NaVHNjdWk3?=
+ =?utf-8?B?ZXl2bTZDMXZQclVFenBRV3RmeEtvZkZJT1B5cmRDVlhIalVWYU5pNHAwV1VC?=
+ =?utf-8?B?cXNmTXVQTWxBSU1EbEx6NDQ3M0Y2YzdtWXB5UVVkR3l5VnZOSVlSVHc4ams5?=
+ =?utf-8?B?S3FWUUhFNWx3QytpVWpJZjdLa0NHUmdObG4zQ2k3U1Z2akJRNXRWdzk1dzBY?=
+ =?utf-8?B?Z0xiVFdTS3YvRFE5ekpWSHFGMDdFaC9VbkFnL0d0Y2tydUFuYlRLS3lxbGJE?=
+ =?utf-8?B?UFJxSTZrN2pjUndVSkI0MjQ2ZUdVYUI3aTlnOExBcEZ3ZnUyZFp0WkFNM0hi?=
+ =?utf-8?B?UHp3eWJWSVJKSWhyRTZZQ2Zmd3REbUZ2TU5IbktPTWMyb3lDMzdxYUd5anJm?=
+ =?utf-8?B?UW4wcGE3N25BVlVPeTNMNzhESko3V0lJRUE3aFBqZ3RiNUxJczNRSkw2dUpW?=
+ =?utf-8?B?U2JMSU9rUXRTVHQzdmlCWnBZTkJzdk80T3lsZU1VK0VFd0NZeUV0cEJIWTA0?=
+ =?utf-8?B?VlltNDIzOCs0QXp0a1VRZVIxbUhualdlYjBPa0RzZ0NLQVF1a3pGcFNJVU12?=
+ =?utf-8?B?aTc0bytiL3hDL0t1WXltb212SnNiS3FGaXVXYU5TeisrQmZ2bGZpSGlGczE5?=
+ =?utf-8?B?V1psVVNmWDEreXp1ODBGUlJKTmpwZVAxM0V4MTZnRnoyMEJLWkFScnRQN0FT?=
+ =?utf-8?B?WHJybW81dTlJNHRKK0M3Z3Z0bU5PYlVFQ2Jwb1B1b296RDJ3TVlSKzlTWGJy?=
+ =?utf-8?B?SmpVVE9BWE5mMEEwSDZrSmtESVdkUzhjeDdONUZqcmRjL2h1YTJ0ZGJYcmhl?=
+ =?utf-8?B?bHZsaVRZcG5ZQ1BmdVZMMXdBTGZHalpXc3NrbmZ0WENOL1lGSnFTY29pZVph?=
+ =?utf-8?B?YjE3eElkdEhrcDMzcU9xdDlNeEQ2UUdrVDgvSDJCclU3ZnhVMHpvNDUwbkdt?=
+ =?utf-8?B?RkNTNWlNNE5qYnhKWXRUNCtGVUtxQnlXM2JGRTBjNjBlVFR6SDQ5UmpIMktj?=
+ =?utf-8?B?aVhGQWsxR05LamI1Wjd4RXZyNTV4ZU1QUjlBNWtVcWFFczk2TStOQU9HaVUx?=
+ =?utf-8?B?K3dBeTA3dFEvTzFLZHBOYllyVGFiZjRoY3c1NnRwcithcWNYV2pPZz09?=
+X-Exchange-RoutingPolicyChecked: FMfwd7EJBj3EvnNry8o9cK2dXW/aRFj1YO2bxVPfBkADDUuv0VLCtyAk41QJ8Tt6hamE5cjVhAVN6U42O3xO7YXHZfbYHz0MQEXYfZKiw3tN5QdGGetjZBiUQSBptKx1l+NN+JQcaFprgPm5yb5Pjv44SujoxYqjXUuBGaKwtSNkJ27TR3kLwAc1hFJHYn7HA9yYGkfcBDVeKzzFLZH2F9Sbfs/JdZw5V43bYF7plhQpPOBMlX8eUyQkAQi+ZIuZtP0NDUHuQqx6LdrFcaMn0vNc0slWZnhuhFYJlBvxU5PBoJQrel3kozUj4gI3gv22W91nCyOycdu65vF289r8xg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 90b8d636-14ed-48cc-2e29-08df08f1ea0b
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 12:58:23.2585 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 12:58:41.9847 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IbXBGFvmGDmiTXb4td4HtnTyUCZANf/KUYDp4ZuQNmUIpaDp3z2V5RCwHDuycexx/HHXzsqFdrf4zRXpsmmbEA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: onR8dHOCPVnv6frL0zsEklIsH1lNKQqC00q6XipqVeN4hFWy1vga4nEj7R16MbTyHKWYkZ3sgwfFK8YlnhoyAQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8666
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -190,43 +188,135 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/31/26 17:51, Zhenzhong Duan wrote:
-> Move the VTDAccelPASIDCacheEntry typedef structure inside the
-> CONFIG_VTD_ACCEL ifdef block.
+> We should set flags IOMMU_HWPT_FAULT_ID_VALID when pass in a fault
+> object id in the caller.
 > 
-> When CONFIG_VTD_ACCEL is disabled, this structure is entirely unused
-> throughout the code. Moving the layout under the existing preprocessor
-> guard prevents exposing dead type definitions and ensures the header
-> remains clean when building without VTD acceleration support.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+> Tested-by: Xudong Hao <xudong.hao@intel.com>
 > ---
->   hw/i386/intel_iommu_accel.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-> index 4a9003c92d..46c1a29409 100644
-> --- a/hw/i386/intel_iommu_accel.h
-> +++ b/hw/i386/intel_iommu_accel.h
-> @@ -12,6 +12,7 @@
->   #define HW_I386_INTEL_IOMMU_ACCEL_H
->   #include CONFIG_DEVICES
->   
-> +#ifdef CONFIG_VTD_ACCEL
->   typedef struct VTDAccelPASIDCacheEntry {
->       VTDHostIOMMUDevice *vtd_hiod;
->       VTDPASIDEntry pasid_entry;
-> @@ -20,7 +21,6 @@ typedef struct VTDAccelPASIDCacheEntry {
->       QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
->   } VTDAccelPASIDCacheEntry;
->   
-> -#ifdef CONFIG_VTD_ACCEL
->   bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
->                             Error **errp);
->   VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
-
-LGTM.
+>   include/system/iommufd.h    | 4 ++--
+>   backends/iommufd.c          | 7 ++++---
+>   hw/arm/smmuv3-accel.c       | 6 +++---
+>   hw/i386/intel_iommu_accel.c | 2 +-
+>   hw/vfio/iommufd.c           | 2 +-
+>   backends/trace-events       | 2 +-
+>   6 files changed, 12 insertions(+), 11 deletions(-)
 
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index 36b34b4899..79b8dabfb6 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -90,8 +90,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>   bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+>                                   uint32_t pt_id, uint32_t flags,
+>                                   uint32_t data_type, uint32_t data_len,
+> -                                void *data_ptr, uint32_t *out_hwpt,
+> -                                Error **errp);
+> +                                void *data_ptr, uint32_t fault_id,
+> +                                uint32_t *out_hwpt, Error **errp);
+>   bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+>                                     uint32_t viommu_type, uint32_t hwpt_id,
+>                                     void *data_ptr, uint32_t data_len,
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 2775eef741..f46b3bfa7e 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -315,8 +315,8 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>   bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+>                                   uint32_t pt_id, uint32_t flags,
+>                                   uint32_t data_type, uint32_t data_len,
+> -                                void *data_ptr, uint32_t *out_hwpt,
+> -                                Error **errp)
+> +                                void *data_ptr, uint32_t fault_id,
+> +                                uint32_t *out_hwpt, Error **errp)
+>   {
+>       int ret, fd = be->fd;
+>       struct iommu_hwpt_alloc alloc_hwpt = {
+> @@ -327,11 +327,12 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+>           .data_type = data_type,
+>           .data_len = data_len,
+>           .data_uptr = (uintptr_t)data_ptr,
+> +        .fault_id = fault_id,
+>       };
+>   
+>       ret = ioctl(fd, IOMMU_HWPT_ALLOC, &alloc_hwpt);
+>       trace_iommufd_backend_alloc_hwpt(fd, dev_id, pt_id, flags, data_type,
+> -                                     data_len, (uintptr_t)data_ptr,
+> +                                     data_len, (uintptr_t)data_ptr, fault_id,
+>                                        alloc_hwpt.out_hwpt_id, ret);
+>       if (ret) {
+>           error_setg_errno(errp, errno, "Failed to allocate hwpt");
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 91aca1aa14..66e6a5011a 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -268,7 +268,7 @@ smmuv3_accel_dev_alloc_translate(SMMUv3AccelDevice *accel_dev, STE *ste,
+>                                       accel->viommu->viommu_id, flags,
+>                                       IOMMU_HWPT_DATA_ARM_SMMUV3,
+>                                       sizeof(nested_data), &nested_data,
+> -                                    &hwpt_id, errp)) {
+> +                                    0, &hwpt_id, errp)) {
+>               return NULL;
+>       }
+>   
+> @@ -632,14 +632,14 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+>       if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+>                                       0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+>                                       sizeof(abort_data), &abort_data,
+> -                                    &accel->abort_hwpt_id, errp)) {
+> +                                    0, &accel->abort_hwpt_id, errp)) {
+>           goto free_viommu;
+>       }
+>   
+>       if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+>                                       0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+>                                       sizeof(bypass_data), &bypass_data,
+> -                                    &accel->bypass_hwpt_id, errp)) {
+> +                                    0, &accel->bypass_hwpt_id, errp)) {
+>           goto free_abort_hwpt;
+>       }
+>   
+> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+> index c03435f8a2..d2f41f18f1 100644
+> --- a/hw/i386/intel_iommu_accel.c
+> +++ b/hw/i386/intel_iommu_accel.c
+> @@ -94,7 +94,7 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+>       return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
+>                                         hiodi->hwpt_id, flags,
+>                                         IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
+> -                                      fs_hwpt_id, errp);
+> +                                      0, fs_hwpt_id, errp);
+>   }
+>   
+>   static void vtd_destroy_old_fs_hwpt(VTDAccelPASIDCacheEntry *vtd_pce)
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 242644aa00..74a5d77dcc 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -476,7 +476,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>       if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
+>                                       container->ioas_id, flags,
+>                                       IOMMU_HWPT_DATA_NONE, 0, NULL,
+> -                                    &hwpt_id, errp)) {
+> +                                    0, &hwpt_id, errp)) {
+>           return false;
+>       }
+>   
+> diff --git a/backends/trace-events b/backends/trace-events
+> index b1c1d89dd8..2f242feb78 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -16,7 +16,7 @@ iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t
+>   iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+> -iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
+> +iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t fault_id, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" fault_id=%u out_hwpt=%u (%d)"
+>   iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
+>   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+>   iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+
 
