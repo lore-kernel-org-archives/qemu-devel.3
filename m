@@ -4,106 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B4F9C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB82BC61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 10:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1hw0-0003id-F0; Wed, 02 Sep 2026 06:11:12 -0400
+	id 1x1hxM-00047s-3j; Wed, 02 Sep 2026 06:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1hvz-0003iR-9a
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:11:11 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1hvx-0004Cs-FM
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 06:11:11 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-85a50f6a7f7so11996017b3.2
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 03:11:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788343868; cv=none;
- d=google.com; s=arc-20260327;
- b=TGKDIiFdR+euLhccdvl14I/Q6fWPHGRxmsyIz/Q7EfKIPpn+ILvCBUQ+yl7haIfatK
- WJqz/OIK+EteDY0TBvu4wRtrbGa3jpn8fzsBMfC5rB+MPRpPjrkFv2aCilxgqC9jxX1e
- IOXWTsVbOXSY4fOpkNjBiiaombmHad84AZf1UeTwMtn04t0qskMvB7p3qAU9J9hEsquK
- IX6hZicBurXofRYBmahSPxAFxMxlFaJm3de9TbNl8liWPWP2BAGfww3Ziajsy6lFKRpy
- W8ykZX5lOsIh3Q8ril1ubnO7HlBc+ktGexqOnqICXAwsGaZVCYoMGZKuXt5+M9b8nzd3
- aj7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4IRGvjFu94f5q/QjZWPHwTXxMpstkGpeKXwjWwjNhwI=;
- fh=anZl6Td6NaKjHGFM8y4oK3yu8UEI3L8plTd5OD+C2Mo=;
- b=b5wpJjUyyd6Q/DApF7GPiwFxdLDAhW4OWREYT21sBrPapiziHh2IssAssyGiXTrZop
- czClWiRVTlTnhTBAb6wwG/dl5HpPrHAx1Bw3NpF7Tl7AdFsH/hbFCJeRus1Ar+jjUMcW
- U2CVrFR+TIR4o6g2O9dLjTdjpwMKuvcHhp5oq8NjZt38NgmfXxaAG8hRywv+DUTg2jXb
- DZ5Ux8yuocTWAX1GFQUXl/i/9Fr+STPpHn9s802pVEWxsNRRAyDl0rWgdYO5P0js6rzH
- nL/AHIRO3ZCIK6yflHWgsKuYgaBoVfZKFUKEgjqG/1jSexhxefNkfiecYW2Cf6hIF1od
- X4mw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788343868; x=1788948668; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=4IRGvjFu94f5q/QjZWPHwTXxMpstkGpeKXwjWwjNhwI=;
- b=yYu311F6mp6GJRzVewG/NkW+9GC2+QeGueSU7jBhyMvKTxzDlexrOuL08n8dTjuhzh
- zwBhuclNAWjj5OAkPvG4QweN33cmykeT1YEgZAAI1XKJGGnLeywmKTxrXfzEtjUhLK7t
- IQ5HpPauPSzEM+UFOOZC6+NI9+EMEqQd+gPzWrVzyfRsCjGwYF2YGtDqVVuFGQNVT0dR
- BKzxaQI7/sil6XYB9f0qjeGSOyRL5mXBR7pg72gxo2rUKj++QIJKOIKtc8rZpTvFP0XC
- r4S8yR/TA2Wqvb4D3jt+ix5DGXiQcUjG8H3f93vcccqzH5aAZ8YQdHywCqDeO9vAjJcJ
- 5/8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788343868; x=1788948668;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=4IRGvjFu94f5q/QjZWPHwTXxMpstkGpeKXwjWwjNhwI=;
- b=lr4xrWqgPVbpcBhvNDQ/aPOO9r/P7JiLkgRzjEREp6q/X7gltQK/+PLz25wFqcP8+W
- myKeQrubmPlPHrWRZADmy/E7wI8zySZO35h8Ln59H8XfOKFci/rQLHwPPwk4ow3DHAhz
- 4nHICwCG4NiyKPtFM0ebSpK1QtQmSQa15TJHJSCzjx1PEHw4KH9wMN74OWNxlUwsyR0a
- CAvhM9/Hyp6bf+GZ0YOeqo7fwOcC5W8hHADQj0RJ2Bj585lPudJES0o3KtgbcwZQM3zn
- sCz+RHnoiQxnsjsYGH5YRtmcjTqo5xQtK8nXYA5Z+7z35peWkg13M51AxnEnct+GocTf
- TPXQ==
-X-Gm-Message-State: AFuF++nh6zqa1YZh7NWBCYGGHzez6kXUfxuBriUbg/gm255ZYkD+1E5b
- 1M+vRNsWkJEwyKuUXv1lvfNw6Ho5bsborjm70cRV8dgq6BasmRURX/EWPZw4N2EVDbzuEK6BAAh
- DV8yTbsv7A7pUOyyRylAkMr4l5iWcAq4TJUG00LR8lt2tNGhf4UmCLEk=
-X-Gm-Gg: AYBFou17PZda7KRwbHE1ti4EANDdCn3qZjII+vPfAoc4IlgRxSj9UPQucfeW3y172N0
- rxoMjkJVW/2wZ3fSlbClAq4rrH2BzpDxMiz8rNTTqrSm56XbwXrNri48P45UxAM2MXimeyok80e
- pLgsc1OicmvgTVUWD9wOWYxisUerIRioTreC93v6YizJb8ApmTdPaSgyI0dzoHiMPWUqjq+JLPU
- vssxl9CCwtXgMnnUDzAssp+obFcuCFR/UTGKxVRGOk7OEYRmTYPc0COC/WyTqZZ4UUUTM+/GZLb
- 5P3ByDfkdE740XmA73PqiWAld5wzua4nJ+kqQoK/UT7F1opBAFyEGsQtCPiPWs6zMh1Skd+SxUS
- vOvdD2aO9a1MOpFp0LUokuIg2/2uY
-X-Received: by 2002:a05:690c:112:b0:861:67b4:9660 with SMTP id
- 00721157ae682-86c4db3cd11mr18091997b3.3.1788343867416; Wed, 02 Sep 2026
- 03:11:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x1hxK-00047b-LW; Wed, 02 Sep 2026 06:12:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x1hxJ-0004Ps-3x; Wed, 02 Sep 2026 06:12:34 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6829Vf5L2682817; Wed, 2 Sep 2026 10:12:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=91A+8V
+ KERldu6eXMgqh/yBY04vH7LXLaO5IbwXHFULY=; b=XsTUgjrr6yXOsPCX8nxZc6
+ 1NboL4apsWiMs8+gh3Mbae7el2DhEkz2N8sff7zvF4omoEpow15BQqea26flUxuc
+ B3Tb8ooWRuoOYQSBk6RKUXpmuJVwuGdCy8KhiqhLMVUtnLbYSlg0CydudzSTFG3/
+ hlLQ73tu8XeA5NrTJdPv8S/RnZ5LcQlL/J06faQsqpHPh1wKoj+prW/GGyib8Fs8
+ nepFQ2YU48at/+bHqZuBGw8Hh2vgH2E1hHWhD6ytx7qZHcUjZpx6zxIEOkqdKpm+
+ d3ZlRgZzLZrc7cbuqD45EikWRtzWmlkSgslvpeN60dBQOjwehDhEmRDfzXC51tbg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnudwf4g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Sep 2026 10:12:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 682ABW0Q002222;
+ Wed, 2 Sep 2026 10:12:30 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcark91hh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Sep 2026 10:12:30 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 682ACTwK27067058
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 2 Sep 2026 10:12:29 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6389C58068;
+ Wed,  2 Sep 2026 10:12:29 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6707558067;
+ Wed,  2 Sep 2026 10:12:28 +0000 (GMT)
+Received: from [9.61.24.241] (unknown [9.61.24.241])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  2 Sep 2026 10:12:28 +0000 (GMT)
+Message-ID: <be81c658-56a7-4383-bf5f-06401da84d4c@linux.ibm.com>
+Date: Wed, 2 Sep 2026 06:12:27 -0400
 MIME-Version: 1.0
-References: <20260829-nohmp-v1-0-4dcc2b4b0055@redhat.com>
- <20260829-nohmp-v2-0-c5bf7b766fe7@redhat.com>
- <CAFEAcA95yjf_qr8hkPvdxj+kpF9KuU7UHkDMLWfOvfa3WqhmTQ@mail.gmail.com>
- <CAMxuvaxvSdA8jJyg76ejSNetGiScFqtZ2Nu1ZGig5h8ZcSAnjw@mail.gmail.com>
-In-Reply-To: <CAMxuvaxvSdA8jJyg76ejSNetGiScFqtZ2Nu1ZGig5h8ZcSAnjw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 2 Sep 2026 11:10:54 +0100
-X-Gm-Features: AcwNN1UASc8pazzxabfmMRGFmoH5U-bUKLPbRY_9tTyi0-Z6gaA_K2gzkRPoGr0
-Message-ID: <CAFEAcA_HiZ-86Wf86G4TDJ9jYKQ8pkSGRS7U9t6arnZLaNoW=w@mail.gmail.com>
-Subject: Re: [GIT PULL v2 00/50] Make HMP optional
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 4/7] pc-bios/s390-ccw: Add support for virtio-net-pci
+ IPL
+To: Zhuoying Cai <zycai@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
+ cohuck@redhat.com, mjrosato@linux.ibm.com, pasic@linux.ibm.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+References: <20260818205324.580199-1-zycai@linux.ibm.com>
+ <20260818205324.580199-5-zycai@linux.ibm.com>
+ <5a7ed440-ed57-448a-9baa-4626464ee9f8@linux.ibm.com>
+ <bbbdc3cd-9389-4c32-a9d7-0e1c9336841a@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <bbbdc3cd-9389-4c32-a9d7-0e1c9336841a@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: LV6hLLURA-TnXE9zm7CoHMJKsGVFy-7s
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDA4OCBTYWx0ZWRfXyHOAes/XrMPc
+ y+ezbSmJj1ynJ3rx6BtZ0YQjUKW1lNlmTRGySw6Xd3776n8NQdn9Rl1romDc8w5aPWhfadXIHFW
+ FQeLT+kImz6IJOBdoKagqoO2EYfOHg1oVTJFM/x8CckkS2DpXxaolx78bK9Nrs61/DGQYdHNKDZ
+ omazrfunfNELlKd2xmMaw+4Uqh7uGsKcysPGgarussIc0Nytu5SlnR0iqWOEWsgibRG3eJcTKuE
+ urx+7HPQOycK8G6Ijnc1xWbeXWyRywIlqwXiJkQtkxWsQ42msg2aKiPEwbVvnQmgh5dC5JwKO80
+ hymZYaXAPji6uRjB2g5CDCmirEpWHQ+Rihy4FFuLUGbMwLCjrWsfJJaBXhDQVSwz7flq5X7UKp4
+ uWaizKXjv/qLmE0QMg3s4R6mQ6+m3wuo+p1dW6XVBXjrBgwThGppCPk7WZYGVmzGgtyTasJeh7i
+ 34BVUkNKCf+8Bxr/HlQ==
+X-Proofpoint-ORIG-GUID: LV6hLLURA-TnXE9zm7CoHMJKsGVFy-7s
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDA4OCBTYWx0ZWRfX5lYI90Jtn9Jk
+ RA6eTySJZOIKjgnHdf0eujl9m55E304kQWj3onndWD3CtXbHN+J3sVd/qjynl+adnDi67YBb5wR
+ H5oZd5IJSxc4lhQEvXwV4833MS9cHb4=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a97f68f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=7ib6KU6JprzTWRN-JWcA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-02_02,2026-09-01_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 clxscore=1011 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609020088
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,101 +174,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 1 Sept 2026 at 11:18, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi
->
-> On Tue, Sep 1, 2026 at 1:10=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
-> >
-> > On Sat, 29 Aug 2026 at 10:15, <marcandre.lureau@redhat.com> wrote:
-> > >
-> > > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > >
-> > > The following changes since commit d2e570cc0f97b936902a5b1b86b73c0f59=
-98b475:
-> > >
-> > >   Merge tag 'pull-ppc-for-11.2-20260828' of https://gitlab.com/harshp=
-b/qemu into staging (2026-08-28 15:17:04 -0700)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >   https://gitlab.com/marcandre.lureau/qemu.git tags/nohmp-pr-v2
-> > >
-> > > for you to fetch changes up to 7ef933e532a5f86778a16f5b0074f1c2d7b874=
-59:
-> > >
-> > >   gitlab: --disable-hmp in build-without-defaults (2026-08-29 12:08:2=
-1 +0400)
-> > >
-> > > ----------------------------------------------------------------
-> > > Make HMP optional
-> > > v2:
-> > >  - rebased, skip one new test
-> > >
-> > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > >
-> >
-> > This still fails "make check" on a local "--without-hmp" build:
-> >
-> >  118/1082 qtest+qtest-i386+slow - qemu:qtest-i386/ahci-test
-> >                 ERROR            4.86s   killed by signal 6 SIGABRT
-> >  119/1082 qtest+qtest-x86_64+slow - qemu:qtest-x86_64/ahci-test
-> >                 ERROR            5.58s   killed by signal 6 SIGABRT
-> >
-> > Assertion failure is
-> >  ERROR:../../tests/qtest/libqtest.c:998:qtest_vhmp: assertion failed: (=
-ret)
-> >
-> > "make check-functional" also fails:
-> >
-> >  23/361 func-thorough+func-s390x-thorough+thorough -
-> > qemu:func-s390x-ccw_virtio               FAIL             22.99s
-> > exit status 1
-> > 292/361 func-thorough+func-m68k-thorough+thorough -
-> > qemu:func-m68k-nextcube                   FAIL              0.17s
-> > exit status 1
-> > 311/361 func-thorough+func-ppc-thorough+thorough - qemu:func-ppc-ppe42
-> >                        FAIL              0.20s   exit status 1
-> > 359/361 func-thorough+func-x86_64-thorough+thorough -
-> > qemu:func-x86_64-nvme_migration         FAIL             34.99s   exit
-> > status 1
-> >
-> > The first three all fail because the test does
-> >  self.vm.cmd('human-monitor-command', command_line=3D'something')
-> > and this throws an exception. I think the nvme one is unrelated
-> > and is probably some existing intermittent failure.
-> >
-> > This suggests we need to add coverage of this config to CI.
->
-> I don't see those failure immediately on my build either.
 
-This is a build on Ubuntu 24.04 host with "configure --disable-hmp"
-and no other arguments.
 
-> Can we adress those remaining issues after the merge if it doesn't break =
-CI?
+On 8/31/26 2:36 PM, Zhuoying Cai wrote:
+> One thing worth noting is that virtio_net_init() calls virtio_*_setup(),
+> which performs virtio_is_supported() as its first step. However, the
+> return value of virtio_*_setup() is currently ignored in
+> virtio_net_init(). This is pre-existing behavior and applies to both the
+> CCW and PCI paths. If setup fails, execution still proceeds to MAC
+> negotiation and buffer allocation.
+> 
+> Since we are removing the network-specific setup from the PCI path,
+> would it make sense to also fix virtio_net_init() to check and propagate
+> the return value of virtio_*_setup()? The error is already reported by
+> virtio_*_setup(), but execution currently continues into MAC negotiation
+> and buffer allocation even when device initialization has failed.
 
-OK, I think that's reasonable, so I have merged this PR.
-Please do work on fixing the tests and getting some CI coverage
-for the --disable-hmp config.
-
-Probably for qtest in a --disable-hmp config the qtest_hmp() and
-qtest_vhmp() functions should assert with a useful message, just to
-make the failure cause a little clearer than the one you get when
-it sends the command to the QEMU instance and gets back the error.
-Perhaps they could g_test_skip(), but I'm not sure whether that's
-safe to do at that level down in the middle of trying to run a test.
-We should also update the doc comments for those two functions to
-say "don't use these unless absolutely necessary and you have the
-code to skip the test when HMP isn't available" (just in case
-anybody writing a new test reads doc comments ;-)).
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
-for any user-visible changes.
-
--- PMM
+Yes, I would recommend making that change here as well, just as Jared is 
+doing in the virtio-scsi path.
 
