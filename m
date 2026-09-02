@@ -4,97 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85AF7C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 16:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA586C624DB
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 17:01:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1oGk-0003cv-7c; Wed, 02 Sep 2026 12:57:02 -0400
+	id 1x1oK5-0004Qj-56; Wed, 02 Sep 2026 13:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1oGi-0003cH-Lw
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:57:00 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1oJx-0004Px-LX
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 13:00:21 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1oGh-0003mn-0f
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 12:57:00 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6a68ca482e2so972243a12.0
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 09:56:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788368217; cv=none;
- d=google.com; s=arc-20260327;
- b=kdFCRvueTamns322mRqacAukRsm+Acfw+l9gons8myqBFb608p2GeZiv9lXDfaV59c
- SBoSQU+9m4/3/NbrcfsyqViIF9YCWdjr/mXrme8kZCz9x6oQjqxiBsC46xlM0fcNb1a2
- 7A2OHqGVZJrDYk+iPqQdxWr3t+Pwlgs+kLDURYD8frIxtNq4gSlRs89Z2UlrfSfL9n8t
- 0CWURvt8YnsX2JvDPLttZoFytV6CGmkFuUmxnzrh8e+V+x8qMUigA9LiaHw31xoUhx/7
- QCA6G1bCybCk3p+wch8T+u/1vOtunNvY2amzbBwre8aembJpoEtpOTnPMOKzdd65SDyV
- WZ7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DIRVWgaoQlTzZa9uf06FBQ8i6CdI4hdi+gGUUn+XEho=;
- fh=hJaxYieE23j1y678YRNMAXWmW4V24xBaewJ95RYenSA=;
- b=VU8VtXQO2bqrJCgO3BR/xgK5BYX0Af9sVHagOh2tY+A+rUsLBwqUOimxfxyh+QOPc4
- S9F1YcZzRgqCZ2X0zsuUxXoAdxKCyQBWPhD8u7rHbv+qJ4OYafsBBjbGvQh1gi/cX5NE
- zrxP1sz65E+M9cgZDfQKPzU2dpQ1tiNXE6i7OlYh3e/HBrfO6mKLjjNJ3uafTr7alcEs
- dkoVJHu9+qPLChK8JHzFIH80wlzzLWarNchfWTbIingA7/xXvZ8wMbaZFuZCPfj6XY8t
- vV2tHyzzck1TxLSrTydacqCfLNCH3ZhQGDn+7qI3zl3jRGscOGeDWQK6I+8qDMvpKJzo
- jNfg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1oJt-0004N4-Mo
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 13:00:21 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-498028b3d5eso13487965e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 10:00:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788368217; x=1788973017; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=DIRVWgaoQlTzZa9uf06FBQ8i6CdI4hdi+gGUUn+XEho=;
- b=gNNwUVbu7U1nSx3a/aMtLyMXKg/RXZvgc8S39GscncuVWT/pLj9Z368hYh1nuu2tDV
- FL+L++JBesXSddHPmpYjmqJp607t0yurNpUxhSUSSURxQ2eDgvQQiiZcDKadM5MNOltV
- +pitQu1NfWoVw1OIoYBaj65d2fA3ubxZWFTSrFgbQTZU83PahsIaomnIulYAbj81yKce
- 7sE5sDSPyRiEBOhi9ZBXzfjK0+u0gmISrnFaY7xZfngIOWNZJTFKV4dvcH4jJXyPoZGr
- 4IFPYVn5GwP4LgLdykpmsz5fdzVe6MnjBbP0+uNQVgx4uBadKRA3K0Yi61v0AxjdcQEy
- 0v6Q==
+ d=linaro.org; s=google; t=1788368415; x=1788973215; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=VxjCDADMFtbU025cbNtGeiXEjtB4LHc2bYXLYp0e3hw=;
+ b=Z8lFUfD4Pvuzn/qTxaZ0dmmw9qsxBphuL8UQgQ2S7eN6ymVxV/oWRqdZNKwPr9FsaL
+ EpeXU8cb6GVbKQnWKa4CpmMFYZEmP9nk7/I2e9GlACcdh4bKiX+z+7LHcbbhEG3WGYpE
+ nKdBAaDEyJgN2lW7sE/TI7l6lofiwG4NuUosfcM7BGNe1gA2sLaO0d4xfrd2XZ4OjvFt
+ LZoF6plY9rBmKhfM6ykCMkloggk2Cm/EpSZkdkv/uK0MZ+420Oa82SOyeP2+ubsAP1zc
+ gEwVyrPZVapomnxMZoppsoDDrDD3CVYP9iZZkw/634K4k6UifV8vK+bvMre3j/KtKqaQ
+ Fdrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788368217; x=1788973017;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=DIRVWgaoQlTzZa9uf06FBQ8i6CdI4hdi+gGUUn+XEho=;
- b=p1CxH7zoIJGbeAxH4xWrXN6TWTbDw/pTprBmn2fiQI2o0RY7dIeKlBCAVN9Mks1rkS
- ft8sgSRVVdJdCxJSdcG+qbkBOqs6+qodtohbsGqjp+auoVQSxlP9Ih76RKVjHyBaFROl
- 8e2piqwbX52f1uWOUY2juYNcxGYup825YW2h0P337jU0NxjvP7CBZApsCmrfCDBHxjII
- CzXKnpP7QQ2sE6qMSmMJh7366PdpFNSjvJQ5aBSF1BY2lfUSyVEk9BHTVFWlyE9hirSr
- U+IVlYz80aN1FvUz7lviN4+eEVNb8Dx+VJp0M1WOH6X+VOk92YIPtiENdIVLvKdJA9j0
- d3kQ==
-X-Gm-Message-State: AFuF++mCe8caC2UcMMeX2xs6oZoSRAvdDEKAilkiyfYHSe0mnp5024HF
- LjFfpldvw/Qnrkh7D8KsXm/OSy2rLKnvqYclaGzWZ8bXbQDSV/p+pHw25r92U+48dr74I08CHBU
- RjzkE4GPSIMV7c/lUpTmAwk/kNoCNOC6BhAQxbF/nyw==
-X-Gm-Gg: AYBFou3rGZHpJiGAlWWjOegF9sR4M15ReMP93pWYpbqL8RCqvuHj6pKZhmdM8E/eqm/
- yBzAHxtT3BKC9KUmP2FMTBX/tmJknWSICw5hnaEqRY5KBPHomfQQPX9HhpWvcZPXGUP3ZugrOBX
- 2itqoVnoR/Trp9CMp98+wswqiRZmNZA4XiPVDwQzJ3qXYWNVbYHh5hcAzGnVPBJLAiaGQt7/f42
- AS143eLOWUpWjSmMn3ETYYEPA2NHhWO4j/bqcJZt0hjNCpxOLmH7H0Wf/l1KbhTDBWZvWe8aTkh
- zjpaNx7Qj/3ItmRs+exoG9iKGlUe7tFdhvOxCPCGYiPvX/n18B2bxbJPWp2MfZ7BYucOR08JZlu
- 943eujIq0/CK+0jKHVjQnBi5SBVbA
-X-Received: by 2002:a05:6402:440b:b0:6a5:d8eb:da01 with SMTP id
- 4fb4d7f45d1cf-6a6818d29e7mr5361582a12.0.1788368217345; Wed, 02 Sep 2026
- 09:56:57 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788368415; x=1788973215;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=VxjCDADMFtbU025cbNtGeiXEjtB4LHc2bYXLYp0e3hw=;
+ b=cFMfCN5nASj0tbCqmuY3JobceQ4UnIF9Tv/LCpap7pvJ8W3RsvfAQfCoxr1Hx1FXLx
+ wSOaRGTFQ2xF0pagdzhHS1tKbTVsx1aIqKP6TN7V22x2boYwKFo7g4mEPPXuSTz8btUc
+ te8IzqM2TwwLqZ72dASClXadl0QAvb8MTfP1ZLyfLbwENU4WA5EI1k0Jy+my7HfM0Hn8
+ R9TQWl8nvFe/o/W7/r47aB3LVGIRROIzZKnOxSXOS5cnXlJQXlsgk3ZbBdhhur8ZS9np
+ 4fVkX1OjiPZpbuFmovlmegKrT8v4zSxgSQ5myc+7kElLdjVZYUXGDVcPu5pnF+zhrKp4
+ SCIg==
+X-Gm-Message-State: AFuF++mIB9T+tHK/Or0Kwa1SPFzBACqHa0AdSyntn6TWSCJcSueuk6Iz
+ zvgxpe0U72JzHo8PXz4mfjMmWBjlO7phfBQF76IRM7ZSg9oRJZTxDR/QDZnjQConQfM=
+X-Gm-Gg: AR+sD139qOBfubdEmFMsvwgeKNfnM1nHFp9eXNY5iykOyUT84rlguPedgChES882qVo
+ 0vzfYoGZnX7C8PmnroS2KOhgSWi6WWYVs86oc0foIJKGlZXVaRuRYMPaPXkk2W6+LJaY6FzyCT1
+ T518isj7wuG7rNSVzQwbRxNJCfKC5UEME8d9800fGuVMA0tcaxgIUNLVKJHL07QR6fdr5UkK6tR
+ 59++MNPbOB+2GmsHkAK+hOtktU1vd/jG22vrwJzU1Qfz3XdpYmSxKGrtBBJNeD9s7ZMbVmOUiOr
+ 7eIUW3o+eDs2nP1yofUFYPqksB5a3l5pH2ufgIDeYDNxHGK/oQOtpPNRn1QLfHm1k96po6bcivw
+ Q3yB2JwPLhfkrT2jwSEtVtnHncdikECOYS92Fa5L1+CBWWDs17sGjIwAnLUE81A8kosmmx1za0a
+ dkhIF3/64xkCZTcYVsXSgDNRpxWJA4wyMcp5SPNbf0Oif1UTvGxG4zsEheO3YX
+X-Received: by 2002:a05:600c:1da1:b0:499:9eb8:a1d7 with SMTP id
+ 5b1f17b1804b1-49ce5842935mr139277165e9.9.1788368415039; 
+ Wed, 02 Sep 2026 10:00:15 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ce55259ecsm47071755e9.2.2026.09.02.10.00.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 10:00:13 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4BCCD5F85F;
+ Wed, 02 Sep 2026 18:00:12 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Samuel Tardieu <sam@rfc1149.net>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org (open list:STM32L4x5 SoC Family)
+Subject: [PATCH] hw/char/stm32l4x5_usart: Accept character input upon RDR read
+Date: Wed,  2 Sep 2026 17:59:55 +0100
+Message-ID: <20260902165956.582901-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260901184043.728292-1-stefanha@redhat.com>
-In-Reply-To: <20260901184043.728292-1-stefanha@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 2 Sep 2026 17:56:43 +0100
-X-Gm-Features: AcwNN1V4PVdNTXGDu9nQHuXZuEDV8qg8mZS-cauQoFmCaek4tQnlqV6Mt1iU7iI
-Message-ID: <CAFEAcA9n3Jig4wM7SqFf+aQyQcujz1GhHNZowZj-0ObsHA2ifg@mail.gmail.com>
-Subject: Re: [PULL 0/3] Block patches
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,33 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 1 Sept 2026 at 19:41, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->
-> The following changes since commit eb710c255642cd7dc947f25c9a06c9fc8191e98d:
->
->   Merge tag 'firmware-20260901-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-09-01 10:38:45 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stefanha/qemu.git tags/block-pull-request
->
-> for you to fetch changes up to 8e02b06882e5742fb760138e3db627a8591bdef3:
->
->   file-posix: fix zone write granularity assignment for zoned block devices (2026-09-01 14:38:03 -0400)
->
-> ----------------------------------------------------------------
-> Pull request
->
-> Fixes from Daniil Tatianin and Niklas Cassel. No new features.
->
+Looking through existing serial devices this seems to be a common
+pattern so it makes sense to me this is the right fix and matches the
+API description.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4389
+Reported-by: Jan Brittenson (@bson)
+Suggested-by: Jan Brittenson (@bson)
+AI-used-for: fetch issue, apply proposed patch, verify build and qtests
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
+---
+NOTE
+  - testing with the AGENTS.md patches - I asked the agent to:
+  "grab the details for 4389 and apply the fix to the local tree"
+  which it did. However it did remind me at the end:
 
+  *(Reminder per QEMU policy: this is a draft for you to review, adjust, and commit. Remember to check whether `Resolves:` and `Reported-by:` headers match your preferred attribution.)*
 
-Applied, thanks.
+  ```text
+  hw/char/stm32l4x5_usart: Accept character input upon RDR read
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
-for any user-visible changes.
+  When the guest reads from the USART Receive Data Register (RDR), the
+  RXNE flag is cleared to allow receiving subsequent characters. However,
+  without notifying the chardev backend via qemu_chr_fe_accept_input(),
+  backends such as socket-based chardevs in polling mode may stall and
+  only deliver characters once per second upon poll timeouts.
 
--- PMM
+  Call qemu_chr_fe_accept_input() after clearing RXNE in
+  stm32l4x5_usart_base_read().
+
+  Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4389
+  Reported-by: bson
+  Suggested-by: bson
+  AI-used-for: fetch issue, apply proposed patch, verify build and qtests
+  Signed-off-by: Your Name <your.email@domain.com>
+  ```
+---
+ hw/char/stm32l4x5_usart.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index dd1b0991956..0b02dde1f8c 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -441,6 +441,7 @@ static uint64_t stm32l4x5_usart_base_read(void *opaque, hwaddr addr,
+         /* Reset RXNE flag */
+         s->isr &= ~R_ISR_RXNE_MASK;
+         stm32l4x5_update_irq(s);
++        qemu_chr_fe_accept_input(&s->chr);
+         break;
+     case A_TDR:
+         retvalue = FIELD_EX32(s->tdr, TDR, TDR);
+-- 
+2.47.3
+
 
