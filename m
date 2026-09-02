@@ -4,140 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA08C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 15:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 921B2C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 15:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1n3S-0004DT-3i; Wed, 02 Sep 2026 11:39:14 -0400
+	id 1x1n9p-0005LW-7F; Wed, 02 Sep 2026 11:45:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x1n3P-0004Ch-NT; Wed, 02 Sep 2026 11:39:12 -0400
-Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x1n3O-0003uX-0l; Wed, 02 Sep 2026 11:39:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VV7Paoxtc7/Q/FEdCoZjb9Smwl9YhjDZHWZqEJ+0ihqoU+594mwAPtCV+3JRsWiC0Yy3R0jt0rL6K8qILgQkcsRvQk4Ll26os6vD+X4ZQv3ygQUIv3SiwHeDKOUHHIeIWmviRVtV6+eXQnpW4RosGUDj1G+b1UYWaYiTTS2XLK2D90NnkdirIPzgWnXmC66R1xKX6fn2Y86C1wvrsu6BBsI2RxWhmOhMOwzlYBD83UjOXp7P8bldDELSo8YoauBXloMDiPCuNozRHAxexuSydZAemcw91tsinb2sx/RIWxxm+YaNPns+PrtaygVBVKXy3qteQO4YGUf+dsRx0l5N9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aC4SmRxsP0U9gzARA+4QQnKU95V3AfM3c5ZgKt7OK04=;
- b=fVLF4LumSWm48lHPWBGB7SGjmeyazECrE7fK1X9FAYog/wygoMjnkEzj7W8IXN2lgHRupX5UBkGyYdP1vm3L41tYzUELiaQiTwLDpkXmoHM74QYRarEy5EtHY4B4b5bk/wyRuVgmvBW2UK9IWIMVvj6Dp5xdfMq5JMXQSqnqP30asuQv6iDg6RA9wy1hBzPtKgC1SJwI8cJWUCn7HEy9tNrqlOok7G/94HyA7LY7wSIYHl7Bnp4ZrWJ86Pp/i95q2qRHNe3kwP5iMMbM0pX4KvOyjFL8jOpT1ry+PZOy9ELUWOXQnPcFvmZVklp3Lky0KLBU79Yn4Us4ukCA+G0RMg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aC4SmRxsP0U9gzARA+4QQnKU95V3AfM3c5ZgKt7OK04=;
- b=JYNdSq6rKl+TOHY3J+cSH19PWciDIGS0jPHINFyme7fMbiiKqLfVeK9H3i0O/E/mdgua2TePDNCsgTv6DrVSJGAKRd8PszCz1a4Ke/4FhKGfcXpbU5Sz+njbgaZyeL/zOm5pchRl2tVJrF0EsCjtnwGgtKV+4+Nv1XY5OInsWilZb6u9dQ5VUurTY70fEF03rvlfvUscdZHOO89j0YRAhol5LGAxYAWYzeUjoHSVfuebFY38F4r/Hj//Ya+gmNWBS6eDAWhLm27f5FLx3elOEQxT4MTRuaqyQO32gSHPb6Xsi1c5J8/3F30+wnJTjwsmfgBEtlZUntjlrq43ghOtsQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by ZR6PR08MB233201.eurprd08.prod.outlook.com (2603:10a6:910:db::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Wed, 2 Sep
- 2026 15:39:02 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.007; Wed, 2 Sep 2026
- 15:39:02 +0000
-Message-ID: <65792421-83d6-45fc-afa3-fc332d54707a@virtuozzo.com>
-Date: Wed, 2 Sep 2026 17:39:01 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] block, scsi-disk: honour a size change on child
- replacement
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
-References: <20260812121500.1034178-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260812121500.1034178-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI1PR06CA0227.eurprd06.prod.outlook.com
- (2603:10a6:802:2c::48) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x1n9n-0005LA-JB
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:45:47 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x1n9k-00057e-P9
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 11:45:47 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2d53197d8b5so11318085ad.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 08:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788363942; x=1788968742; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=TPysDsGnpI9b+EwUBvoDR+Wcd16jrG2t2FBfRR3MC1c=;
+ b=URvndoNUVO2h5AwJAKAYmwu3/wlxgsrOYqz+bGfzBSy18QQir30KiQ4HaC2wao7STv
+ mmwGDn6Q/a/cJTgBH3RiuSOHKfWeSk2Wjs+16K7fKjxuT5Ckx5jvhWdaTURtYolbsbxU
+ R2OrQUpUCIVhQk7SXvCYQC1s0D6sWbucMcBZiyEtXXZaVytvJUaMhdVtvybI4ofL66XY
+ xpVj2cmv0G0Ax8NpzksaLA7O+uniilwVSoFxLhpPuRmhJrV4B/yyx4cO8XcWMjCroH9t
+ 7RdfoMwwqPJf9LvLMpPKFEaGYaLIYEBAzrcJd20SpCA5QILPHIZ1dSw8y5Ggti+jUG+F
+ vTxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788363942; x=1788968742;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=TPysDsGnpI9b+EwUBvoDR+Wcd16jrG2t2FBfRR3MC1c=;
+ b=kPMbYB66DkHVe/RuyaGd9Yta52m58qcUu+wjt2Gk+Q7F35XIJOpshkAkscIHaI7Nh4
+ 1dULnT+2bXQ4bFBpWyJSbJ45A4J3agnL4aRDGZfctGQWiO44e2SAC2gu5qJP1Kj9Xrva
+ BKd20hJJOU5/lr/US9mSLEr82e5DiUnVwmSgUGynuTe07QimhEJG1k8jQWQjTHiVGQN4
+ mQxkSlAQ+41dnU/M7EcNoRequhKaEcrdIe3R/6vakcZaNhUJwgSPmyZ8rMb0b/YJP0q6
+ QSmgCmlNCYAuQ8mLH+uk83LKsW+HeBul+N93r9fWja657fUOFgXJgotCtwXbe9WbYkgg
+ 0drA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzEnw/8qutv7YwZzomb6NPPYeH4TF5zy5Tos4Ql1SF983H47MkYwF4q6x053mLYqoaJOrqPjh+otfnk@nongnu.org
+X-Gm-Message-State: AFuF++kKf9aOBsJCrp1swQrrrKkA3yiXfjlSvhuj0/TgrSj/7zRu/SjA
+ E1UufRtPZXLkzj8HlWZIP6AwzAazoQtjS0g6QEyKaz7W3n93mCbCLyAYT/5Lgtpgrfs=
+X-Gm-Gg: AYBFou28wDwNI2Gg80kyfemw2I2mQ9QuO0jx8+w2xYKPZHtxW5MByN34UfuMv4RS+/K
+ r3nK63sjS2opEhzHrmN+2NH290xKkcTW7c//K4CqTO2ifcUrbJQ/SDlHJHehFjSKFA3zNXgwFf2
+ 0/Dl2pFwFBI0CB8Cpl61nCW4w2Ul5Fwz0shiu+ox5FEDDRUOfAuGkSdI79a3i7HqVA8C7NuoeZf
+ Bp98tm8HLmHivVskew980lb0oBFVxE3NVAV9agte8PaQklGkW562EBYvZIV+bV6UVbKndq45QHY
+ VuuXeTHflDn0W3Adkj/rZFlIWB5GdnqKwyMUxhDS1VNu/xXI5LM7VZ1pIxo/qw7Bsinea0l1ALr
+ Ler5y9Qy7Rxl4663XlQFzuUHfK+/kNRSqp94y6QRwST9UfyVnI2clR6ikLU4vLKyoCT6lgg3W3e
+ vvmwVCX7BmUNhFUaymOLllvDU4l6QzVKhkPuDxJiYozMHpEJOR1DNgTk6sAlN+HKbHQVJATIs5g
+ Wg=
+X-Received: by 2002:a17:902:d4ce:b0:2d8:d2bd:a111 with SMTP id
+ d9443c01a7336-2daec626dbdmr76719805ad.6.1788363942059; 
+ Wed, 02 Sep 2026 08:45:42 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:fff4:86c5:8d86:9e93])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2dadd48898fsm15694765ad.39.2026.09.02.08.45.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 08:45:41 -0700 (PDT)
+Date: Wed, 2 Sep 2026 09:45:38 -0600
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ eblake@redhat.com, lorenzo.pieralisi@linaro.org, gshan@redhat.com,
+ enju.kohei@fujitsu.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [RFC v3 00/24] Add Realm support to QEMU-VMM
+Message-ID: <aphEopEnM1pEDLV4@p14s>
+References: <20260825220101.3443954-1-mathieu.poirier@linaro.org>
+ <87wlt55cs2.fsf@pond.sub.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|ZR6PR08MB233201:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8d2ac637-0af8-4e5f-93af-08df090850a5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|10070799003|376014|366016|23010399003|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: O9zF574LK33CRARiAIWBwNbJ9YdQPFDE9prHf5uU1selkpj2af626UcLE/86BhzxQaDpA9pfITcFSIWvDubYnwOUnqUy+fU+jPgHJ/R05K0zB6lFfojPsKRdYJeysqqNZpOev97hWLbUjNuftz/2nnmOWEFulZcWIJ0xrVInHOe0JzVrKW3e5ySKR1QAzDwN0U0gOxuUDaMQDekZSu+8m76oHMgxlrBAR677Vd/yktIMg5SWmohA7aSHM68UnkAlzEQZ/BgNPgnDj4S9HZOv9XE40Kd0lQ3JooJ7lxxzm1kBY2TlryglLe6jGAl+K+SG8fdJ5hHWo6NtAjY6H76d3jDjMlKsJ1LjVpGHkrVgAr5SMRqSYFcyKHNlzSX9+VNf2dxcavQWAAl+oc0ohDO7ZJevBN6GDkDAGDcaj6Fc2TkE5JFDtWqFa43gLQ3qTS0yDbA22qt/2IuHpZXBmtbvSm3tcz4BHkG0Z68vwfPnUKJpSLLhsyuIfOiGOLY+RcWF4tYgq35BhqnzskC/RDwqyD0+JG4CoAPuKgLlYCsHmpmKl65WdQvn8qMxU8JkQmhZQGnbEbEWyDNgeCP5DxL4eFzhNUClFLcMmvHECyCltns0a54feTD+E6WF9kNM55GzzeVJmYW7vEiJTycx4/qUgSpS93LW6twkdAHOhlYynvk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(10070799003)(376014)(366016)(23010399003)(10067099003)(56012099006)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dW81VWtlakdYV29MVFFEcGNsd1hYdlFTWDB2d2lNK3hBeEU1d1Rjd01MZjhx?=
- =?utf-8?B?YkZpcWFKOFNEQ2dNaW1IT3VGbkNDZVp3amxBSW9DMk9kcDE4dGtYWkxyL1lN?=
- =?utf-8?B?M0s4dDU0aGNoZ0JKWTlDRTJ3ZmVpZm9zc2U5M3QwN09ZU2hMbVVDYzJGOXNJ?=
- =?utf-8?B?R3phQnJ3blFyMVA1cVMwMzZRQ1FpS2U3c1RpSGdJS3AyWXRFL0l2ODlFWUEw?=
- =?utf-8?B?Mm9yeWRyMzJDUGZtQ2ZPSE9xVVR1L1FmaXpKdmxaR3ZqNDZMYTZKUGhUSWR2?=
- =?utf-8?B?T0phczYrcy9aRXNIY2RuVzV6UWJlWElPb3VyNXVweXdGMnRqa2xvNkJLRDF0?=
- =?utf-8?B?cUhPWnkrWDkrc0xMUkRObFFzc1Fzem1hdHkxSkZ2b2ZCL3RhMTI5bFRiaGJZ?=
- =?utf-8?B?RXR0dU5URGdCc1hXOU1DWkxjT2JFajUwaENBN2FYUU0wOWJNUGNENzVaSXU0?=
- =?utf-8?B?SGhhTit1RVEzNXRJQUNLOW9QWHMwV0wwaWh6cjFkQ1BwQXdScmhVOWF0SGs3?=
- =?utf-8?B?bW5rK1ppV1RTc200SldtcHlyQlRUcFBzUmVsakRpOTRCakFiSG41Nlh0cTRH?=
- =?utf-8?B?YmdqM2pYSy96eGxiaXhiK1pPcFBnMEk1OWZTaGtYQ0VGZ3VsUjhKd1MvMXBR?=
- =?utf-8?B?R1U2R3FNUlVZMWF1dVdvbklWT0FvREdIc2luekFDUVcwR0JlWUdVRWtjQi9l?=
- =?utf-8?B?Z3VTOVVscTQ2TUtZM0dqcVl3ZGZOVEF2bTczTkNrQkFpOG04elg4WWlEZTZi?=
- =?utf-8?B?R2EzekloelRKaW12OENwZUhhMUhKcEVUVzZCQWM0TmF3M0JXYlozczJSV3cv?=
- =?utf-8?B?QTBUcDB0Z3VYT2wxTC8wd0Q2ZzB4SzJkd1pGdWF4dFB3bWZDVGNSNHc0ZHNM?=
- =?utf-8?B?b0NWbUhaajNCb2p2cU1OMU1pSG42L3Z2M1Q5RGdSc2VWOVRaZWZhc25pNUli?=
- =?utf-8?B?ZWp2YzJ4NkZ0K0tvKzRWdmNEb0ViSnVuTDNFTE1zcVBTdmVVbjljZXNUUGNN?=
- =?utf-8?B?L0pPQWVadFNOYjlhSnhFNis1WCtHbDkzbWpxQmtKblV5RGJaN21GR1VObEQy?=
- =?utf-8?B?Wi9TOHVFczE3VW1ESWw0WUZkMWFscTVuMGFPeE1yTlliRFNQSVFya3RSZXpz?=
- =?utf-8?B?Y3UrUzV5ckhTVk41WkFCbkpYTVVaaVFwQXducGUrcFUxUTZpaGJoN1lpU1Zo?=
- =?utf-8?B?TUxNUFlSdURBNWxwb05TdFc1V1NrOHZQa01TMW5oSzFDOFhlQzlXazVRSmps?=
- =?utf-8?B?QnNJY2w3UXdLVFlmckV4M013Q2EvdW8xMEhQd3BWZ0Flb0p2Nzh2V3QzSkRT?=
- =?utf-8?B?enhZVXFWRnRKT1VvdXBkNVhIdEVDaUgwb2w5WTBubEowc0pOR01BZ25NNjlz?=
- =?utf-8?B?dTJMQjBCeTVyRjl5Y3llaEovUjhvKzhwMFlBbHd5eElvQ3gzOE8vRGhPMU1x?=
- =?utf-8?B?UHNqdG9SNzN6T3VhemIwWW9oMnFBNzBmaGdWblFnUXZlRENhTXNRVEpYcHZW?=
- =?utf-8?B?NENjdGg3N214UGdLdFl3ZkFId1RnMWQraHJlM3V0STdGdEt1bm91SDhxZUx1?=
- =?utf-8?B?bWphN1pNM3lON0k5dWREa0p0VWxMUDBtNXM0UzI1cUpCejgyS1NtUFUvS3VG?=
- =?utf-8?B?ODBkaGtudmhlOHdOTzBsSklTSzVaWS9hb2JhT2c5V3BLeXdnU0lZT1BoM1RJ?=
- =?utf-8?B?VHNBUmhPbEpmdU5lcWhXMkcxVXJCZXBCUUhGV1VmVUUrQUhZM01lSklhR3p5?=
- =?utf-8?B?bkNjOENsbzV5VmQ3SCtZM29laGtKTWh3MjMxaHJaaGMvOXVkWmxFYVRTT3hT?=
- =?utf-8?B?SzNwWVozM1lSVHNTTmJZRnVlZFQwSlYvdlloQWV5WVJjNjdhTkt6eXg5UGt2?=
- =?utf-8?B?aEdUbTlRVDg5Y3huRDBUTFY5a2Jkb0M4WGZhUFpVMHhHam5LNGIwUmt0QVBv?=
- =?utf-8?B?Njl3a1VKcHpDZUVwRmIrRTJWNDBNelUvVFhnNkdNdHZYdUZoTnFuWk5IVFpl?=
- =?utf-8?B?Q1FyaHU1SURkd0xWZTZTSUxCK0hjaWczZXBvVThOTjhSQWk0VFg3Sml3RFNF?=
- =?utf-8?B?bDRPT3JiSlZPTWlSN1hRZFp5N3dQc2F1S1RWWWxhTjQzQU1sSlM5SEhhNkxQ?=
- =?utf-8?B?aC9VdjhrVkxsUzhoSWlqTnhDdjBxYzlFd01BeFVIUDAyTHhoc2NoVEpNcllT?=
- =?utf-8?B?dnFVWXJ4Mko5TmJweUR5SUhoaUYwVlJmTWVFV3ZVdDVoR2xQd1VqOVE1TVlw?=
- =?utf-8?B?ZHZnSkM0SFkxSUkrNUQyYVl4NmZxdjQyVmZrQ3RTUjZsY3FsdDk3WWRXUEFq?=
- =?utf-8?B?Tmx3b3hPSzRLbm1mSHdaTGZQZFVnelRha2x6TzkwT2p2TklxZmFpb1pHN1BP?=
- =?utf-8?Q?p4Wi80wh7KnRpafgEMi0D8JuHk3ZXLDeMjz2Mn70kdGKP?=
-X-MS-Exchange-AntiSpam-MessageData-1: nT9p759/uLq6tg==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d2ac637-0af8-4e5f-93af-08df090850a5
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 15:39:02.8491 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eZzMcBeBrKbP6v0+OHfgyjDfjRBjTZ6HpPKQZ+jXZTPw9oJb0EB35jeuv3YIWbvebDjI0sUsQjh/y0o9YhZqWw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR6PR08MB233201
-Received-SPF: pass client-ip=2a01:111:f403:c202::7;
- envelope-from=den@virtuozzo.com;
- helo=GVXPR05CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87wlt55cs2.fsf@pond.sub.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,57 +109,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/26 14:14, Denis V. Lunev wrote:
-> This email originated from an IP that might not be authorized by the domain it was sent from.
-> Do not click links or open attachments unless it is an email you expected to receive.
-> qom-set of the 'drive' property is allowed on a realized device and ends
-> up in bdrv_replace_child_bs(), which swaps the node a BdrvChild points to
-> without telling the parent anything about it. Every other way the size of
-> a node changes goes through bdrv_co_truncate(), which does notify, so a
-> device model caching the size of its child has no way to learn that it
-> changed.
->
-> scsi-disk is the one really hurt by this. check_lba_range() validates
-> every guest request against SCSIDevice.max_lba, filled in by
-> scsi_disk_reset() and updated only by the READ CAPACITY(10) and (16)
-> handlers. Point a scsi-hd at a larger node and every request past the end
-> of the old one is refused with ILLEGAL REQUEST / LOGICAL BLOCK ADDRESS
-> OUT OF RANGE for the whole life of the device, which Linux turns into
-> EREMOTEIO for reads as well as writes. It is silent on the host:
-> out-of-range requests are answered by scsi_check_condition() and never
-> reach scsi_handle_rw_error(), so there is no BLOCK_IO_ERROR event and
-> io-status stays 'ok'. virtio-blk and ide call blk_get_geometry() for
-> every request, so they end up with a stale idea of the size but never
-> refuse I/O the node underneath can serve.
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Kevin Wolf <kwolf@redhat.com>
-> Cc: Hanna Reitz <hreitz@redhat.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Fam Zheng <fam@euphon.net>
->
-> Denis V. Lunev (4):
->   block: notify the parent when a replaced child has a different size
->   scsi-disk: refresh the cached capacity from the resize callback
->   tests/qtest/virtio-scsi: cover a replacement that changes the size
->   tests/qemu-iotests/qom-set-drive: replace with a differently sized
->     node
->
->  block.c                                    | 13 +++++
->  hw/scsi/scsi-disk.c                        | 16 ++++--
->  include/block/block_int-io.h               |  3 ++
->  tests/qemu-iotests/tests/qom-set-drive     | 14 +++--
->  tests/qemu-iotests/tests/qom-set-drive.out |  2 +
->  tests/qtest/virtio-scsi-test.c             | 63 ++++++++++++++++++++++
->  6 files changed, 104 insertions(+), 7 deletions(-)
->
->
-> base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
-Kevin, Hanna,
+On Tue, Sep 01, 2026 at 03:20:13PM +0200, Markus Armbruster wrote:
+> Mathieu Poirier <mathieu.poirier@linaro.org> writes:
+> 
+> > This patchset provides minimal functionality to start a Realm VM
+> > from an Arm RME capable host using the following command line:
+> >
+> > qemu-system-aarch64 \
+> >  -M confidential-guest-support=rme0,memory-backend=ram0 \
+> >  -object rme-guest,id=rme0,convert-in-place=on \
+> >  -object memory-backend-guest-memfd,id=ram0,size=1G,share=on \
+> >  -cpu host -M virt -enable-kvm -M gic-version=3,its=on -nodefaults ..
+> >
+> > It is a refactoring of Jean-Philippe Brucker's initial work dating from a while
+> > back.  It is compatible with Steven Price's v16 revision [1] of his work adding
+> > CCA support to KVM.
+> >
+> > This revision is based on Michael Roth's work on guest memfd in-place memory
+> > conversion [2] and as such, the QEMU baseline is different from 'master'.  Other
+> 
+> Use
+> 
+>     Based-on: <20260528000416.8161-1-michael.roth@amd.com>
+> 
+> to document your base.  This stands out to humans, and is readable by
+> machines.  Next time :)
+> 
+> > than modifications to use in-place memory conversion from Lorenzo Pieralisi that
+> > were integrated to patches 04, 08-11, it is identical to V2.   
+> >
+> > It was tested on the QEMU SBSA machine.  For convenience, a repository is hosted
+> > here [3],
+> 
+> Michael's series doesn't apply on master anymore, so I fetched this
+> branch.  It's based on master as of *May*.  This won't do.  Please rebase.
 
-have you had a chance to take a look?
-I think block tree is correct one to go through.
+This was clearly explained above.  The goal was to provide a patchset that can
+be used for testing. I can attempt a rebase but can't guarantee a timeline or
+success.
 
-Thank you in advance,
-    Den
+> 
+> >           along with the TF-A [4] and RMM [5] for the SBSA machine (compatible
+> > with Steven's v16 patchset).  The Repository for the kernel [6] is available
+> > from Arm.
+> >
+> > Instructions to compile and run the entire stack can be found here [7].
+> >
+> > Device Assignment is not included.
+> >
+> > Thanks,
+> > Mathieu
+> >
+> > [1]. https://lore.kernel.org/kvm/20260803134403.80630-1-steven.price@arm.com/
+> > [2]. https://lore.kernel.org/kvm/20260528000416.8161-1-michael.roth@amd.com/
+> > [3]. https://gitlab.com/Linaro/cca-public/qemu/-/tree/upstream-v3?ref_type=heads
+> > [4]. https://gitlab.com/Linaro/cca-public/tf-a/trusted-firmware-a/-/tree/cca/v13?ref_type=heads
+> > [5]. https://gitlab.com/Linaro/cca-public/rmm/-/tree/cca/v16?ref_type=heads
+> > [6]. https://gitlab.arm.com/linux-arm/linux-cca/-/tree/cca-host/v16?ref_type=heads
+> > [7]. https://gitlab.com/Linaro/cca-public/build-instructions
+> >
+> > RFC v2: https://lore.kernel.org/kvm/20260728192630.240375-1-mathieu.poirier@linaro.org/
+> > RFC v1: https://lists.gnu.org/archive/html/qemu-devel/2026-07/msg02307.html
+> 
+> 
 
