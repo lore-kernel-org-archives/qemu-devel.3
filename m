@@ -4,105 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF246C61DD6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D437C624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 12:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1jft-00024F-6U; Wed, 02 Sep 2026 08:02:41 -0400
+	id 1x1jhl-0002Ut-1J; Wed, 02 Sep 2026 08:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1jfr-00023u-VH
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:02:40 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1x1jhe-0002U3-PO
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:04:31 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x1jfq-0007HD-DB
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:02:39 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-857ff9fef54so10781887b3.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 05:02:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788350557; cv=none;
- d=google.com; s=arc-20260327;
- b=Mi16Xvvjo/Pw0UWfqWGwTQtXV8ja/4KQND+9Dq42mDSR83R8J/Qfu6upIK0zDa4MGC
- Fdg5oONMsFqe+xaOHJ7yHcAetWjtNzljz1s0Mg8WAgfJeOGQfcUyJgG+pAKEJGUajU/l
- yrg3Fd6vSS6aL32AATVdY7WYzkPe4SZYZAvMKXRXt6DYqxTitfhfLP5jviBZAJxEqlkU
- ynR7MmQskbtVt+pui3h+6Z0OjTwiugtmpXP2L7SUOScnpeNKVNNSn4TSnR6iWCaSfdOt
- ZFXwbdcVXogxSyDKnHhw6QgPPK2rvTZ1/DGJ+NKO7czVJ3oAIjhCdXvkJI7AIxuUUyYi
- 4TMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9qk6ImHY667voTs9DIwtVKu6PG7TkSsRnaUuUx4vwXU=;
- fh=ufEK1cj6fIdUEYFiVU7sZUSO3Fk+JJvYl70xdBqogzo=;
- b=hStlDdE0KZQpq6e+OajXY1pWgCkmjVgxvvyldCxjHbKcWpZxXUCuq811w3V0TMzRj5
- IOrjnXhg8k9YIZgg3S/MhF8X81fLT6ovLOrN48GMOO5ZQI4qbtBd1X+h6NkUrRCZ+KD7
- PAeTpaTNhZvOxEw1ACOEbYw8NXpz1uhB7juDfVE6dElZfT1zfAs4s/6Hgh88fFVYo7Zs
- dTgNhTaV7jBbEQ6kBTV18ajVfD7m7O6RfDMrsd/SwLKzWdgAB4+L+0Qx+XeP4iMQG19A
- XiB42dLdfKcNzBkrQHudgR6g2yD/8WgU2PPY/BSDylBRlHdOWYlgFjmv27/dZ4xcqjFx
- 23ew==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1x1jhc-0007hI-A5
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 08:04:30 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-482e2fdf6ebso1060940f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 05:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788350557; x=1788955357; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9qk6ImHY667voTs9DIwtVKu6PG7TkSsRnaUuUx4vwXU=;
- b=o+O0BdERNRKIvKnIFxERSP1u2rxLfksfBjMXKvHTEgpbG4fjwrbDK97A/uXhzGbRHl
- 6U4fABFk1RaJLDtlm0oBydPe8hKS54qWrBazLaRciZ++u6r75xcOEChp95s8PQ50GodT
- D5vZiizjIXQf1KBp4EYXrQQ+F4M7GUeJe+EjTKSQIO36OFiwb9u8pexw5xVgZEvabi7s
- eYvC/J4Tzcv20B8pvNTkYNXm+nI/6ef4WFx2EXeRAIZPqfG86tku1Ad4e/N8MQpMtSeD
- Qhctrq4FhznxSdIN72RX9J927OwYQFkDX4fdlyf0ZIHaKxaenJ9ThSumwA1ntZOSQqNB
- LOTw==
+ d=gmail.com; s=20251104; t=1788350667; x=1788955467; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=XKiJrXTCr2mrBLghn7+HTm/dHfTHsGUaEoYFuaHFuSI=;
+ b=op7/RxtbncD/9BvIpmh9G3eGiX9b5Kiudr4XV9Dq5nYBAyr/0nASa0Q3uxDalX3UbB
+ DAthjGh5ZYqm3DNNAcIMJP77vAj/PZVQD4eIhDRcdyaANlSj6Gbjkb08X3/LQHEM8CSE
+ 7TUcwzpkuq6I5BFfZSUeF/l74CnkbB6rSix3TZwcAA5ugBUPIZYL94vcvXJ0YJv1D2Ur
+ RqQygVvd3tQRzNO8y4XQQnyyh9108RrDgyT4q3j8qcym4yTlgYoSV1eEh4exakIGLj3B
+ aWXOgT2ITrIcOuXp1Q48dOgPXKrkGEZ9kqmQQMdZwgW/zErrFDLseRiqb7UaMqBhbGQl
+ Qewg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788350557; x=1788955357;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9qk6ImHY667voTs9DIwtVKu6PG7TkSsRnaUuUx4vwXU=;
- b=l7KKg7QZ10pmh0cYnqYRBZCarSTJmG9GmYF7Dh/X/afAE58aBODYrbIKtHp1u70DjT
- Xk+uDeaPdEUbnZGN2HySV51HmnK+7GHpneOp88As7T9cowvWBjA5Ow19WygStiTg/EU/
- AJD51OuLuk0hAS1sYD8jI83nTtRmFyNJSw3Wsi+vS4Nq9ecy3ZBbVVGeH3VSLfoV3wls
- 1+j/VMIpuc8BxYIEIBVjzb3jKKTyhKSE6Cn90MYoO2mcJkqeQxECIBM0QBU2wVP372IU
- FxGZ2Ml17brQwfKwwWfUvj7rxdWlgVHIxyvUZcHo2FbXbNbdslWiAk0IqJ0jBohWCtzs
- cCcw==
-X-Gm-Message-State: AFuF++nVCF6lxLWKoY73R9EtmSBgfaVx2tgl0Pmpec00ICqC+jOw4KG+
- 4u4ERnL/K4LAA0+Byn2bCZn5exbf6tun6BdeCNl0zabnAjaluT0OZUTk4eWzHy2LHZKtAEp7IpD
- Svrsl90oh/LImwTB4YUaZr6wz23r7o4bzHnGT58KZINFmdwPpHqgJOOU=
-X-Gm-Gg: AYBFou29L76qtsGRSzPUYh5GP/aILQIWu/D58pYDg7iwQ6/l2p7AtfbXHFcfBOctMOm
- V3gJzk254FBKvFn2UoRimAPSgg+zqwvXtP8/sbYJfU6iMakMD9RRuCWv/l/EU3LvOiDUHKi7y/V
- zTmoUrJcHDiN3YZg+dhHSS/m2qwPP+HXumQOajjVNR2dr05EMf0vnk3wERajpy5AE43sNRi2lnU
- 2JmwTpiwe5Q4oR3onsRaGMO2C1bI69FZDQjUoPgriGFqmh8y1BSU1oN0ZtH6IPJM+yu2mr5bLCY
- FN+xDo3W8/3yGSLaNRpDRHF9Q/Hb3f5yD4YS356GWN5cyWa8h9Gba5yyL4bArzatSYQPUP2Aq1X
- 6GqcKTyPfSKvMv+rnkzBG56viXmFK
-X-Received: by 2002:a05:690c:60c1:b0:80c:cad:c4e5 with SMTP id
- 00721157ae682-86c5492a1d4mr20960407b3.30.1788350556144; Wed, 02 Sep 2026
- 05:02:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788350667; x=1788955467;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XKiJrXTCr2mrBLghn7+HTm/dHfTHsGUaEoYFuaHFuSI=;
+ b=VcPAGiqfuyIU/87/KlpBbWHdmYNyjjMwON63mvn+QGdntQuRpavLLUvN61Wu6gNaUV
+ 68IlYZUZmmTgMSpSe5Z32K9/fEGnrPArM2ZIlmDnZDhVzDZ+TbGlhsDR1rDTuHQNs62m
+ lBol9Ok1dg/Oy7fa640vBc46/DKGuAL4PR5Q4EZfO6INDkALZt2OdimAWVbOuddvuBQt
+ jCfmyXCx+Rdqtyr/TjMIPT1NKSGbYu6mCRHQ/l9o8gxqRAuEBk4ewEQZCcJwug9eHbyW
+ 5gVxL9/EnpWPhq35FuEcU7TRSMjZxqHuwnuz6mp+PeRp6c0/UXQpoT7gc/lWT59XbK1y
+ odxQ==
+X-Gm-Message-State: AFuF++nGIaFPJIoHOk0LtWeG0otXe7fv4w3sPuOHyrhJUq50e6ylEBuM
+ 2h2J21xxnVicvpSzwjQMEZaLK813yjRXKghI8di/Hv2GxyTkbl5q8flx65lcUy7ZQCo=
+X-Gm-Gg: AYBFou2idA7wDMAH4E94RPrjgGk1uwMf/5J4yoO4ct8zY1OttrraTqiGOEXg4wzmdMV
+ yNqiMaF2KahWexU+uIIXZZjT3/1pzzCHgJd60ALB4Oz4BfsyfTiIlG/IfPhtoMZAi6Elw9vS2Ub
+ 4kcMTNpiLF94Q6ByrfeZjyliBxci7W5y83LW3vvhP49LbY3FTYAWg5bszqn35VeTAl0+BrwZIIo
+ rlQumXByuZlYfUqhPN/tCvDcwqIgm3Q3gjFwSGDGy3aBYTYqd3DLGkV2vv9vO5atpwLamz9dvqv
+ HSfBJH/aDfM8IGjQiVyh7O2va7AjYT6xXaMXbU/ABJAe1D32S1wmveklrIL32Vx9c1HC2Bb+99J
+ 956k1MCtZZzmXfOzm9QZlzVSFIaFQ+yBAOCMRBrB0hrvtqM5HOZcF4fOAtQf9yi3rmdtA5FXY14
+ LgUTnh37r14uml5an1YENjFI85ZxM30oeVUl7IYUQUrySYL/wQKlfzxu2y0tccZXRSxBTPHur3X
+ kVVgMbFY/lfdCE8a0MLB7RRaeItXKuv6WsTRPqYtDW/Wwm8Ar5bo8AWDLbSBoa5Nif2wJHThKtq
+ 3zVef4CuM9+dwtuoGVKgx2VGAwAkYbM=
+X-Received: by 2002:a5d:5f92:0:b0:47f:8f8f:db74 with SMTP id
+ ffacd0b85a97d-48488f06da6mr7809888f8f.12.1788350665367; 
+ Wed, 02 Sep 2026 05:04:25 -0700 (PDT)
+Received: from simon-macbookpro.tugraz.local (tug-swl-225-161.tugraz.at.
+ [129.27.225.161]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-484492cdc37sm6504420f8f.34.2026.09.02.05.04.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 05:04:24 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH 0/2] target/i386: Fix FPU tag word for FSTP/FXCH
+Date: Wed,  2 Sep 2026 14:04:17 +0200
+Message-ID: <20260902120419.212855-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260902104753.1756783-1-berrange@redhat.com>
-In-Reply-To: <20260902104753.1756783-1-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 2 Sep 2026 13:02:24 +0100
-X-Gm-Features: AcwNN1XzABOvwPjFQQPUrP5eaxwGIGLT6Y5hClHjrqH3aCkPOpNObJJt2AgvM5k
-Message-ID: <CAFEAcA_8zwA+bP-95obC9f=-DHDP73n0RQ5JJ59r_bqVJXW-XQ@mail.gmail.com>
-Subject: Re: [PATCH v2] system: improve -mon deprecation warning
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,47 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Sept 2026 at 11:48, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> Expand the text a bit to make the new syntax more explicit and point
-> users to the man page for further info.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  system/vl.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/system/vl.c b/system/vl.c
-> index eded498fa7..d1d9209038 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -3239,8 +3239,13 @@ void qemu_init(int argc, char **argv)
->                  default_monitor =3D 0;
->                  break;
->              case QEMU_OPTION_mon:
-> -                warn_report_once("'-mon' is deprecated, use '-object' wi=
-th "
-> -                                 "'monitor-hmp' or 'monitor-qmp' types i=
-nstead");
-> +                warn_report_once(
-> +                    "'-mon' is deprecated. Switch to either "
-> +                    "'-object monitor-hmp,id=3DID,chardev=3DCHR-ID' or "
-> +                    "'-object monitor-qmp,id=3DID,chardev=3DCHR-ID' inst=
-ead. "
-> +                    "See '-object' docs in the QEMU manual for further "
-> +                    "configuration guidance: "
-> +                    "https://www.qemu.org/docs/master/system/invocation.=
-html");
->                  if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), opta=
-rg,
->                                               true)) {
->                      exit(1);
-> --
+Following up on a similar tag word bug in FXTRACT
+(https://patchew.org/QEMU/20260901085839.138094-1-scherer.simon89@gmail.com/)
+two more instructions sharing the same bug of not updating
+the tag word turned up:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Patch 1 fixes FSTP ST(i)
+Patch 2 fixes FXCH ST(i)
 
-thanks
--- PMM
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
+
+Simon Scherer (2):
+  target/i386: Update FPU tag word for FSTP
+  target/i386: Update FPU tag word for FXCH
+
+ target/i386/tcg/fpu_helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+-- 
+2.53.0
+
 
