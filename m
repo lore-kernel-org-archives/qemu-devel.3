@@ -4,108 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9A7C624D0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 09:46:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7953C624D0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 09:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1hXw-0007sl-GE; Wed, 02 Sep 2026 05:46:20 -0400
+	id 1x1hfQ-0000LZ-CL; Wed, 02 Sep 2026 05:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1hXv-0007sb-Ci
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 05:46:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x1hfO-0000KC-07; Wed, 02 Sep 2026 05:54:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1hXt-0007xb-4A
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 05:46:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788342376;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XhXWfGC81i73m+kEYm1JmOphmC6c6mk3GDheRY+GXyI=;
- b=iMjoMeVt8fM8pL7MGpK47JWgiCck4q31qv9DrcJ+9epTMkfM/uyy99hiGUHIQ+M63ASJ2j
- gBR1G3wCDiMWjvH7sp21W7FjX/2WscQyYYYy/yz7AqaLsydXp8B9gP4TjL1Mbjtf8takd0
- c/ufsvHJd1t4SCLaSCv4QXhXJmBU7lI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-3JvOFJIcN7a6Eee8FbBghw-1; Wed, 02 Sept 2026 05:46:14 -0400
-X-MC-Unique: 3JvOFJIcN7a6Eee8FbBghw-1
-X-Mimecast-MFC-AGG-ID: 3JvOFJIcN7a6Eee8FbBghw_1788342373
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49ccb223bceso5229185e9.0
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 02:46:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788342373; x=1788947173; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XhXWfGC81i73m+kEYm1JmOphmC6c6mk3GDheRY+GXyI=;
- b=Pe68wZriy5S1ML4tRZ3TK0Mb37irbwFMxxg7vPbs1l0qiYA8SreZs197IVGH+vGcG6
- BPAvqclea2RmbAVsJkeYE1QzlDnlx+N6VDj9OeCSXT6t/Ho+26p9y+e28b6q65OTrSp0
- Na5UQAJRO4WuIK2DCh/Okxb/FYZA6RnU7qJncJ3dkXHQl6EBr2HxilvO/vzxMysRN/AX
- +kcPNKVDSj+AvNoZu8bNsmpv8NZwWaFqI1/lVHSImUW/eyS+dwdZAPpHeDb2X4NsBcgc
- 9SPLKNGISweJS0c5hzQz7YemJFJNZIQ+ZajYsuEFyNnStj20Xy/gCJM2tI6CIdaav+MF
- DbKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788342373; x=1788947173;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XhXWfGC81i73m+kEYm1JmOphmC6c6mk3GDheRY+GXyI=;
- b=SxDeLB0aB+3oCaBhzCksb0bItxf5yERYzEcAcyQtNVgVyKBIDCoBIH0GZlknzSi+QG
- YhYG4ZuY9slpHGI1pKbPPwx10NOFHMc6qByNxk2EXANApKEAsHzg1DYijntw6noTTMNv
- JsoGV4PV+WlcQ3UWL1SwfTGr4d+Yl2JBKnEQS9GHvH0wrurZJBpc80Eg5GaHGRDBqlBW
- 8inoEHGQUhrp9qqaNfOgDN71IJ0zE5LFQDzZbhLNR//TXkN62QcmDbusJtjCrey5dOce
- LQuJ1h3YeRc8RfxbvEUwWT1HXYAfRPofcANVCeelzDjovjYzlyhJN9Mgvrq3VU9VXP42
- 9/vA==
-X-Gm-Message-State: AFuF++kP2Q/JC8s4j4IpM56RqR5wIukSczivWTLRMGvrJI5USekaz9PI
- wbY9iZOUyHRDObA76oQi8L9XwBHgQtD5qhoziSS9o66zJpFoD8VLXrKb4SGTFO4b253fUiwnzCp
- ulVTZjrVNOowWXtBHPsfdW1KaIH48VBABSVqSf+oDI/QpYK1cgpvXM6MN
-X-Gm-Gg: AR+sD10TIVwH+HdnG935eTKZN0OM/I9kzzA+jJRV8L1CBkX8GshVuNSM1zvf34lAEqZ
- xgZDRePmYwnMzi7GJGrJeJCtJtKgfGf/uB0tG/UiJ+grkjQ7X4pEEBAqQpH6x6UEzcQPda8pof2
- QTXTKimyStNQ+BSIrQQGWDAy9hG9SCpJA89snCxqNL2SwI6lKN95sMNv0RyUwrspyTZH/PYTkmu
- /zu89yLWxyZdvF72BobZ4fFQFuUU34zvg/UrjsBcpH+mE7msVNT8VfVsk8p9Twr1SJRTEl+Jcmx
- ipGuQ40qgkN3F4/DazmFmM+1n2C7DD4yIiUQFY7ufj72WOsPfQv90VOBpfL9n5HCAAk=
-X-Received: by 2002:a05:600c:3f0b:b0:49c:ced9:ab7f with SMTP id
- 5b1f17b1804b1-49ce7c316aemr30044965e9.8.1788342373375; 
- Wed, 02 Sep 2026 02:46:13 -0700 (PDT)
-X-Received: by 2002:a05:600c:3f0b:b0:49c:ced9:ab7f with SMTP id
- 5b1f17b1804b1-49ce7c316aemr30044085e9.8.1788342372822; 
- Wed, 02 Sep 2026 02:46:12 -0700 (PDT)
-Received: from redhat.com ([187.15.128.103]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cdce4a804sm158382965e9.15.2026.09.02.02.46.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 02:46:12 -0700 (PDT)
-Date: Wed, 2 Sep 2026 05:46:09 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 4/4] agents: add CLAUDE.md and GEMINI.md
-Message-ID: <20260902054543-mutt-send-email-mst@kernel.org>
-References: <20260901161422.314581-1-pbonzini@redhat.com>
- <20260901161422.314581-5-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x1hfM-0000yh-CV; Wed, 02 Sep 2026 05:54:01 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6829VXqA3814207; Wed, 2 Sep 2026 09:53:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/uy5Gm
+ Oz77Q9nN0ZAffy835/zG8OigKu+nOSup6qT98=; b=n3hpMp08lqS1LgEygUuT/M
+ /zqvCPOiV3LHbnmqQIw7gCuafEcPR5jOSiDuQvFj2m/btkDkACve8uouS+a70MrH
+ f9F9LsGx7x4w9MCI23wkSs/2d1TbHg3cp0wLnwoOcWiB3yIlnaXmeW73WlpRyeBM
+ GnFFduHVsiySBG8HhYnCeJIJ3IWw1JmiW9yDhuIkQ5KDTcApPsXRX0RQfH5EA6qE
+ S3kzW8Z3LA9ZlaXBgrVIzwS4pjX73XlfYzMpYYhXAtTBUqN/qK+Oi/MjeLYEnYZQ
+ U7ZmzWXlaJknHfpnj4wuhr5Rk5+Ni3MHHpb3kt5SumX3EGlq12a/fUg32qm/llUA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbpx5nn33-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Sep 2026 09:53:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6829fIxa007692;
+ Wed, 2 Sep 2026 09:53:55 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hgvn0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Sep 2026 09:53:55 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6829rs1825100920
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 2 Sep 2026 09:53:54 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 584B558056;
+ Wed,  2 Sep 2026 09:53:54 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B1E5A58065;
+ Wed,  2 Sep 2026 09:53:53 +0000 (GMT)
+Received: from [9.61.24.241] (unknown [9.61.24.241])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  2 Sep 2026 09:53:53 +0000 (GMT)
+Message-ID: <51ed5683-f75f-4941-b9c0-112394b8881e@linux.ibm.com>
+Date: Wed, 2 Sep 2026 05:53:53 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260901161422.314581-5-pbonzini@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/8] hw/s390x/ipl: Fix incorrect PCI IPL block lengths
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ cohuck@redhat.com, mjrosato@linux.ibm.com
+Cc: jjherne@linux.ibm.com, zycai@linux.ibm.com, qemu-stable@nongnu.org
+References: <20260831194919.3830270-1-jrossi@linux.ibm.com>
+ <20260831194919.3830270-3-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260831194919.3830270-3-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=PPc/P/qC c=1 sm=1 tr=0 ts=6a97f234 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=96O0hvHzs7WlAFbs44YA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: IxbfeSsk78SmmeFn-tD9du6sHcrbzsej
+X-Proofpoint-ORIG-GUID: IxbfeSsk78SmmeFn-tD9du6sHcrbzsej
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAyMDA4NCBTYWx0ZWRfX3J1mRO+bBL9j
+ sI/BaAem2hCiZwUmRZ74zjb81sS4ULCrBYX2KWbKDcMoX0FSvjA+6jVqmrSe1lBZcDVWQTwlb5U
+ 3vmM/gOq7mlUGCKEItic5POJ3BVrACs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAyMDA4NCBTYWx0ZWRfXzroAYk+rTCax
+ cr2QDbX2hi2+Ldz+Kwx2uqmAgMNtywUWdWPiXob5Ze6q7kScdGecLTcLy9NzjsFbJuVVoFRqHT7
+ f2n4C5vZGl3A+RyQVVYQo1VPf9bfWlnbk6zx7yg1ajLOqriyMBoP8oj2dL6x7Zx55MnagtDaBW8
+ rhrJ/C8ZLzEN6Rg6MA2ZUElRC7kHxpYTso5hCVotLDaN1OkOMrnLwc3oY7yrqOSnFWFTOItNQV5
+ XkCxQ6XH3K3Y6rNYOAL/0YZPOibAbyMGnwrquTk5fqxZ/xdsMr2gy8LFpa5Nam0bVacJazy13vW
+ QMmLyrpG97h7f9ygINQdoycYC1UcJinlL1PFCpn6lmH/Tit5OJVWp9eoqVzeIypZ+imrpOOI9mG
+ r5PQcvdhjSyV7SenTTkxd53bVXFdzFsSfUE0hMZ4+bFGSKCjUHTIVhaisoZpFEAiQX9uTNY6HKE
+ 4DfVdKhmiVFDEoDo7lg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-02_02,2026-09-01_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609020084
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,36 +170,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 01, 2026 at 06:14:22PM +0200, Paolo Bonzini wrote:
-> Claude Code and Gemini CLI do not read AGENTS.md.  Reluctantly advertise
-> them to facilitate following the rules.
+
+
+On 8/31/26 3:49 PM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> The length of the PCI IPLB is calculated by size of the IplBlockPci struct
+> plus the number of bytes used for common IPLB fields.
+> 
+> Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
+> while we are at it.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 395116781df5 ("s390x: Build IPLB for virtio-pci devices")
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  CLAUDE.md | 1 +
->  GEMINI.md | 1 +
->  2 files changed, 2 insertions(+)
->  create mode 100644 CLAUDE.md
->  create mode 100644 GEMINI.md
-> 
-> diff --git a/CLAUDE.md b/CLAUDE.md
-> new file mode 100644
-> index 00000000000..43c994c2d36
-> --- /dev/null
-> +++ b/CLAUDE.md
-> @@ -0,0 +1 @@
-> +@AGENTS.md
-> diff --git a/GEMINI.md b/GEMINI.md
-> new file mode 100644
-> index 00000000000..43c994c2d36
-> --- /dev/null
-> +++ b/GEMINI.md
-> @@ -0,0 +1 @@
-> +@AGENTS.md
+>   hw/s390x/ipl.c              | 2 ++
+>   include/hw/s390x/ipl/qipl.h | 2 +-
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 
-gemini seems to support agents.md - r u at the latest version?
+Thanks. The rest of the cleanup will be nice, but for this as a -stable 
+candidate:
 
-> -- 
-> 2.55.0
-
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
