@@ -4,116 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A706C624D3
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 13:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460C8C61DD6
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 13:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1ke9-0001lE-7p; Wed, 02 Sep 2026 09:04:57 -0400
+	id 1x1ktZ-0006Z6-BE; Wed, 02 Sep 2026 09:20:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1ke6-0001jV-1V
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:04:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x1ke3-0004Bc-Sz
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:04:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788354288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=I3TXe2Wa9qZ1vLE2Jo4BXMKCAGSrYDMKmfvSgA2feXc=;
- b=bVRFedwKbTvHs+DR1vLKNr3Gc9W3h5RcqJFGgHbtEhLfc8mb4UXdgcELXmzC6oTgrOJ2FP
- /yOxfnbc75vPi/Tyk+yKZTGaPpJKgkbTFNJR0nByX0Pz9t8awLT+vc2fuqnSAAH1D2bJkp
- Dyws4hEqp3JYDDBxoj8X7s7B1H9G/kU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-7FkyCHnVPligvoo7SeCprg-1; Wed, 02 Sept 2026 09:04:44 -0400
-X-MC-Unique: 7FkyCHnVPligvoo7SeCprg-1
-X-Mimecast-MFC-AGG-ID: 7FkyCHnVPligvoo7SeCprg_1788354283
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-495569acf8dso6690085e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 06:04:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1ktW-0006Xy-3G
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:20:50 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x1ktT-00076m-5i
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 09:20:49 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-498028b3d5eso10826115e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 06:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788354283; x=1788959083; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=I3TXe2Wa9qZ1vLE2Jo4BXMKCAGSrYDMKmfvSgA2feXc=;
- b=QoceWhvXvM5WfDspfZC0g3YW4f08OZNSPGWqgcHBT8NKW80nW263a3CBxyXxJjwg4w
- C4zpJgaC77aoRw7D81hF+N0n1Zh+VDyVf+h0+OUuGB22GDMISYeHUJaL/IROQfdYNm0K
- fpupz675XbU058jjByQgDWOXdqd8pCGlMiuJ+iO+EX+pUXwjSAyd+R49NwqGSkwJL9+R
- 3N1WVnUMEYlFlEsfoRMGVkGqpUka36eienw0ahAhJjrur4tCmYP+y5k8Nsn9DVMfa2dz
- BaERTLtDsfmlulqZySDzz5PWkq5HfABXp9seVBosoBZo0uJ0xLBpYe4PACp6O7FQ6ehQ
- m8Vg==
+ d=linaro.org; s=google; t=1788355244; x=1788960044; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=C+WdB3sH0pKz8efta5NVNWLlShVKyzTvfELYT2zM3J4=;
+ b=FCKKqnHZpnCjsxQZUnWZVWeVcGPsJvIihUld/x4tw70UtsGNTJvtoz5+RVcWO0SmGp
+ srW0xdywebuvn7mbJHi/ToUcn1WCrRa58mKavyPLnd4lrSXNcI4BMEkyFMed4PxTU/gZ
+ IZ/zLBJgRKGQBU3tmnJYjrUYYcmJLvvYGhxQ6OAe0SCJ+snAPvH26SVLPrVduAD60T+P
+ 7XxHQ4QvRtqe0hymOIWQ/ddp2cnFw6xUgj9+eh6rhqtPCk/ZS3Rt57AGHmpe6ag/kwh/
+ KaytBuJPQQaB5841eOq7aVL8aFh5o8vmfRArWdr2Xu6zFfNmQI2QuEHuVNMhU+CiQoiK
+ tzWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788354283; x=1788959083;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=I3TXe2Wa9qZ1vLE2Jo4BXMKCAGSrYDMKmfvSgA2feXc=;
- b=PwLnSrlko9SIBAxNNnjncoAph8Q0D/jSLx3Jq3CI/OWv1cFxgcSaEpN2TZMa7G2qsR
- GO3UaUaqnT2/YFm9dQfEWRmAMU54yT/1sRjiiPyzLKeVOp4fwwFvnaNgRWbyHCEKMoUY
- z1FmuUcDTmM4Jr5IqaiPwOIbtRQCT6t63iyP3ZC5sdschB19zs3eIKvqsmozasq2rB7i
- 47vFxBJ8eEesANFIJIdmWDmWUj48XueLc46YKEatiOVqIVCbsFISOs+LJY0Rsdl+W5kF
- PMn5RRq72IsDJ6Ul//HyOiTpVXpidDP5JU7uYDnCIslw8WjJd2emRdk6oiR+vpuEbzra
- PcJA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrc+tnlRT5cYfGgeXeFQdi1usFeZ9nGqLMlbZKYMRZHO3YFC3dvECYfn8NRESp/0ACP00S0Im/vksJm@nongnu.org
-X-Gm-Message-State: AFuF++kbFfeVqPX3LZumgRNMq3jFL19NZrtbCnbBawQEAOlD5wqLSzwz
- N3oww8ZepeidMIscvStalLRwmH6qfuA3fxiYuUYNcj09RGUgnw/Vv1Eqw0VrUP2qLNOKRhRZ4pO
- f0OK5lc1MQknWladWEzUuUPFdX/4SYtXerRctjMZO5dWJDgpv9kItLydE
-X-Gm-Gg: AR+sD11X090iwMigtcKgsRN/MnfNm/Rup+vzHdlG6jnC8V6pUesxH0M3DBs0rmdv2iT
- szdnFrlok0RKWY1MjvvQP+3Jg9T7qIqvc5eiLZPGBJ26CitdfWO8xNRilOEi2ri8Wp6Ih7m7OtY
- gxHUu+aVVDyCp514Oj4x9+36L9Cu00aCV0+XIItfWyUVPLIXMTlm2rbXZcxFjhRe41KOkgF8p86
- mPw5Pi8jwb89ELEp8P2VlZLwzd/2u2zqw4LRtEadZiioOEoXevZR27a4dymXcL74XFfDUMLWG8C
- 1u3aizC1ToPMicE6AKtD06I0qnQxZx7hzlH+ZF7eX+vNFpKYrXkxL3r5rRK+5DoqhwE=
-X-Received: by 2002:a05:600c:3b11:b0:49c:dca4:94c with SMTP id
- 5b1f17b1804b1-49ce5843baemr81247015e9.13.1788354283048; 
- Wed, 02 Sep 2026 06:04:43 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b11:b0:49c:dca4:94c with SMTP id
- 5b1f17b1804b1-49ce5843baemr81245735e9.13.1788354282541; 
- Wed, 02 Sep 2026 06:04:42 -0700 (PDT)
-Received: from redhat.com ([187.15.128.103]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448e72df2sm6855862f8f.1.2026.09.02.06.04.39
+ d=1e100.net; s=20251104; t=1788355244; x=1788960044;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=C+WdB3sH0pKz8efta5NVNWLlShVKyzTvfELYT2zM3J4=;
+ b=gAOSxUGFIN3FKJ+NUp1H/s5cTyrOOivDgcDXFidjWbDpFZpKd+aT14R8xr8Qo9hEWy
+ p9DfNvZgbW/2YVeYbKr961qmvR4TY9ufalXNCz9FVsO0mruHFGlbEdok7PnzVXCfIhDj
+ kv0uKBenbUOon907h5CbiGE/hU0UE13LcDaBKY+TWG+cKsBp95EnZgjyOBGSXcIjFpEG
+ ClCXeriQx70sOk7Qm0s5WBRkrTc8uoapwgKDxy8g0XljTJiKrGfWtvzm7FBhc21oIo81
+ cxKzp7/WyDPz4m7fhGqEk8dzxdAQyu4/9St6fLVyQ/73mk+MWjYXvg63mHB0DPYfrPVK
+ kkOQ==
+X-Gm-Message-State: AFuF++lAFJ5X7StNsrGQrzCv58ri92nPadc5zbEks7qasTqDoW9c5he/
+ Pa1BQWchHmV3Haf6rJxnpvVhy6ZUTSlwCZyvHNpxflyF6TGWIrdGJt9OUvwYZckCaO8=
+X-Gm-Gg: AR+sD1175X3DlPKIzubUUcgRNtb0BQx5laP3HE18hlSpk3w2Taj9MK5VAhQ2VqKqMBu
+ v4789Rc3C5I7K3Q3Du8GJ0pkQpS0Hcj2CI4w6XdShHXV3O+2N5etagPwuZwLvhoq7fO6yLpzKmW
+ EYVGbMlkoDRofPUPi5E7V16Orbu6fFGE4JaSM5j6gVy2de6hCEXsgr28bPcsq79KygEkQKS2pgr
+ S65VRqe60RAJu0XBb8B+Cpq73fRBZPpOXLdM3NiuoZRO7Azq8Yo8+CtsEG/xbo2mG6O1n4v2Ws6
+ 1XKpotKNxl+G6q1TQCy0HxHcuW/b/jWSniujNw7wAPV1fBYNEZYLpk5LGubqExqlHmfGr+z7yjr
+ 0LitiLw57vuflPz0kcZewdZcQOJyyVGJEodm0R9UoyZFhucCRg3HDDpzquaIqfJWViiLbeA8SPO
+ Ff50jjHw1Ob/kUDnoMVprLT36RJqqVYUIlyn+DwkWpkaW8nAhLd/uOnqEhyBWC
+X-Received: by 2002:a05:600c:8b4c:b0:49c:edd2:855 with SMTP id
+ 5b1f17b1804b1-49cedd20930mr10135665e9.6.1788355244336; 
+ Wed, 02 Sep 2026 06:20:44 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ce4642382sm75057215e9.3.2026.09.02.06.20.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 06:04:40 -0700 (PDT)
-Date: Wed, 2 Sep 2026 09:04:37 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 4/4] agents: add CLAUDE.md and GEMINI.md
-Message-ID: <20260902084735-mutt-send-email-mst@kernel.org>
-References: <20260901161422.314581-1-pbonzini@redhat.com>
- <20260901161422.314581-5-pbonzini@redhat.com>
- <20260902054543-mutt-send-email-mst@kernel.org>
- <CABgObfacwO0bx+wc2s=5aiaEbQghvt-gZc77D6eDigf88mS1zA@mail.gmail.com>
- <20260902060604-mutt-send-email-mst@kernel.org>
- <apf2gT5GBD6HZosQ@redhat.com>
+ Wed, 02 Sep 2026 06:20:43 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 391DE5F85F;
+ Wed, 02 Sep 2026 14:20:42 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org
+Subject: Re: [PATCH RFC v2 00/30] arm: add Raspberry Pi Pico/RP2040 machine
+In-Reply-To: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr> (Gilles
+ Grimaud's message of "Sun, 30 Aug 2026 01:42:34 +0200")
+References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Wed, 02 Sep 2026 14:20:42 +0100
+Message-ID: <87ik4nrdqt.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <apf2gT5GBD6HZosQ@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,56 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 02, 2026 at 11:12:17AM +0100, Daniel P. Berrangé wrote:
-> On Wed, Sep 02, 2026 at 06:06:14AM -0400, Michael S. Tsirkin wrote:
-> > On Wed, Sep 02, 2026 at 11:56:46AM +0200, Paolo Bonzini wrote:
-> > > On Wed, Sep 2, 2026 at 11:46 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > >
-> > > > On Tue, Sep 01, 2026 at 06:14:22PM +0200, Paolo Bonzini wrote:
-> > > > > diff --git a/GEMINI.md b/GEMINI.md
-> > > > > new file mode 100644
-> > > > > index 00000000000..43c994c2d36
-> > > > > --- /dev/null
-> > > > > +++ b/GEMINI.md
-> > > > > @@ -0,0 +1 @@
-> > > > > +@AGENTS.md
-> > > >
-> > > > gemini seems to support agents.md - r u at the latest version?
-> > > 
-> > > I tested and it doesn't load it for me.
-> > 
-> > ok then sorry.
-> 
-> It appears to be doable via a custom setting:
-> 
->   https://geminicli.com/docs/cli/gemini-md/#customize-the-context-file-name
-> 
+Gilles Grimaud <gilles.grimaud@univ-lille.fr> writes:
 
+> From: gilles grimaud <gilles.grimaud@univ-lille.fr>
+>
+> This RFC adds a Raspberry Pi Pico / RP2040 machine to QEMU.
+>
+> The work continues the RP2040/Pico RFC posted by Alex Bennee in 2022:
+>
+>   https://patchew.org/QEMU/20220110175104.2908956-1-alex.bennee%40linaro.=
+org/
+>
+> The target is intended primarily for debugging bare-metal Pico firmware a=
+nd
+> for running firmware tests in CI without physical hardware.  It provides a
+> functional, test-oriented model rather than a cycle-accurate RP2040 model.
+>
+> The machine supports two boot paths.  The default synthetic ROM implements
+> the RP2040 boot protocol and selected ROM service tables, with optional
+> QEMU-accelerated helpers for firmware testing.  Alternatively, users may
+> supply an RP2040 mask ROM image with -bios to exercise the modeled hardwa=
+re
+> path.  QEMU does not ship that image, and USB BOOTSEL mass storage is not
+> currently supported.
 
-oh I see, I have it, that's why.
+I've finished my first pass through, I'll re-review once you post v3.
+However some general points:
 
+  - checkpatch everything
+  - format commit messages
+  - reduce duplication
+  - ensure only one architectural features being modified per patch=20
 
-> IOW, we could add a .gemini/settings.json that points it to AGENTS.MD
-> instead of having a top level GEMINI.md file. Both are somewhat
-> unpleasant given they're tool specific, but I'd have a slight preference
-> towards the .gemini solution as dotfiles are a hidden files in many
-> contexts.
-> 
-> Similarly IIUC it would be possible to have a  .claude/CLAUDE.MD
-> file instead of the top level one.
+I've also included our experimental AI reviewer so takes it's
+suggestions with a pinch of salt:
 
-Indeed.
+  https://patchpilot.linaro.org/run/b132da76b734#stage=3Dreview
 
-I'd prefer a softlink under .claude/rules personally - i have my own stuff in
-an untracked .claude/CLAUDE.md and I feel it's nice to give user
-supplied files priority.
+but it might be worth a read through none the less.
 
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+<snip>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
