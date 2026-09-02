@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B975C624D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E75C61DFD
 	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 08:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1gdf-0005o1-Tw; Wed, 02 Sep 2026 04:48:11 -0400
+	id 1x1gdj-0005sB-Tz; Wed, 02 Sep 2026 04:48:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x1gdd-0005lP-ID; Wed, 02 Sep 2026 04:48:09 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1x1gdg-0005oi-DK; Wed, 02 Sep 2026 04:48:12 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x1gdb-0007AK-Ah; Wed, 02 Sep 2026 04:48:09 -0400
+ id 1x1gdc-0007Av-9c; Wed, 02 Sep 2026 04:48:12 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 108D880CAB;
- Wed, 02 Sep 2026 11:48:01 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 42A4D80CB2;
+ Wed, 02 Sep 2026 11:48:05 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:b72::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id xlfWR5raWmI0-cVpGw13b; Wed, 02 Sep 2026 11:48:00 +0300
+ id xlfWR5raWmI0-gAF91yBQ; Wed, 02 Sep 2026 11:48:04 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1788338880;
- bh=7UOc3lB593G6YM8JLokUpJXT/bLzE/U+Gwzl1Qe/LpY=;
+ s=default; t=1788338884;
+ bh=W2dWXaBudcA0BTbqpLGWO9Va0yvNHFfq/w1lvxGW0gY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=BKjpiCdDVmyWEN91fVHBJYGJ0rRGoFVIvWN5KtVzFzQ2F97oC5D8uZCzXCztBdRdW
- OIc2o4hR9oLovcDZH+TdBFNBA9K4mY0He+qReJaTQaRtnd6AbbZk6+OQmhSHbm7b5C
- TGPT31fWIYE4BZ72SRJdcSI8BZuSqxlrCLlFmoUU=
+ b=vL5DZ/3Mef36ZyV8MNUjZC+5FBpWgl2D6IXHziAQl5NtM/0KD0Noqa5nTo7VTP+k3
+ 3bgKmdAGoYh1aT+H4qk8P9pxJpZrLlrftJzQPUo+BwMC+HBCkVhNdetz68H3L9RgbJ
+ dqrZi2DXBsKoJPVHIMui++whqZzK6RooAmmI5Zxg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, den@openvz.org, vsementsov@yandex-team.ru,
  Eric Blake <eblake@redhat.com>
-Subject: [PULL 1/8] block/nbd: clear reply.cookie when the reply is rejected
-Date: Wed,  2 Sep 2026 11:47:47 +0300
-Message-ID: <20260902084754.140103-2-vsementsov@yandex-team.ru>
+Subject: [PULL 7/8] iotests/nbd-commands: cover NBD_CMD_BLOCK_STATUS with a
+ payload
+Date: Wed,  2 Sep 2026 11:47:53 +0300
+Message-ID: <20260902084754.140103-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260902084754.140103-1-vsementsov@yandex-team.ru>
 References: <20260902084754.140103-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -74,90 +74,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-nbd_receive_replies() reads a reply header into s->reply and, when the
-header turns out to be unusable, reports a channel error and returns
-without touching it. The cookie stays there until the request which
-owns the reply clears it, and until then the waiters are explicitly
-allowed to look at a cookie which is not theirs:
+With extended headers a client may name the meta contexts it wants in
+a request payload. Our own client never sends one, so the server side
+of it, nbd_co_block_status_payload_read(), is not exercised anywhere.
 
-    if (s->reply.cookie != 0) {
-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-        assert(!s->requests[ind2].receiving);
+Export two meta contexts and ask libnbd for each of them in turn,
+which is only answerable through that path.
 
-Two of the error paths leave a value chosen by the server behind: one
-returns before the cookie is validated at all, the other returns
-because that validation has failed. A waiter which picks such a cookie
-up turns it into an index which is not in requests[] and accesses the
-array out of bounds, at an offset the server controls.
-
-The reply is of no use to anybody at this point, so clear the cookie
-before the mutex is released and keep the invariant that a non-zero
-s->reply.cookie is always an index of a live request.
-
-Observing the stale cookie takes a second thread, which a multiqueue
-configuration provides. Within one AioContext there is no yield point
-between the failed read and the clearing done by the owner in
-nbd_co_receive_one_chunk(), so nothing else of this node runs in
-between. The parked waiters cannot see it either, as they are woken
-only after the cookie has been cleared. What can get in is a request
-entering nbd_receive_replies() afresh, one just sent or one back for
-its next reply chunk, because that path takes the mutex without
-looking at the state.
-
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Eric Blake <eblake@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-2-den@openvz.org>
+Message-ID: <20260827161002.310688-5-den@openvz.org>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/nbd.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ tests/qemu-iotests/tests/nbd-commands     | 14 ++++++++++++--
+ tests/qemu-iotests/tests/nbd-commands.out |  4 ++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/block/nbd.c b/block/nbd.c
-index 5d231d5c4e4..d9b776283f4 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -466,20 +466,19 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-             error_setg(errp, "server dropped connection");
-         }
-         if (ret < 0) {
--            nbd_channel_error(s, ret);
--            return ret;
-+            goto err;
-         }
-         if (nbd_reply_is_structured(&s->reply) &&
-             s->info.mode < NBD_MODE_STRUCTURED) {
--            nbd_channel_error(s, -EINVAL);
-+            ret = -EINVAL;
-             error_setg(errp, "unexpected structured reply");
--            return -EINVAL;
-+            goto err;
-         }
-         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-         if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
--            nbd_channel_error(s, -EINVAL);
-+            ret = -EINVAL;
-             error_setg(errp, "unexpected cookie value");
--            return -EINVAL;
-+            goto err;
-         }
-         if (s->reply.cookie == cookie) {
-             /* We are done */
-@@ -487,6 +486,13 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-         }
-         nbd_recv_coroutine_wake_one(&s->requests[ind2]);
-     }
-+
-+err:
-+    /* Waiters look at this cookie, so do not leave a rejected one behind. */
-+    s->reply.cookie = 0;
-+    nbd_channel_error(s, ret);
-+
-+    return ret;
- }
+diff --git a/tests/qemu-iotests/tests/nbd-commands b/tests/qemu-iotests/tests/nbd-commands
+index 3dfe9131900..09e811724b1 100755
+--- a/tests/qemu-iotests/tests/nbd-commands
++++ b/tests/qemu-iotests/tests/nbd-commands
+@@ -90,7 +90,7 @@ class TestNbdCommands(iotests.QMPTestCase):
+             self.h.shutdown()
+             self.h = None
  
- static int coroutine_fn GRAPH_RDLOCK
+-    def block_status(self, count=size):
++    def block_status(self, count=size, wanted=None):
+         """Map each meta context in the reply to its list of extents."""
+         reply = {}
+ 
+@@ -98,7 +98,10 @@ class TestNbdCommands(iotests.QMPTestCase):
+             reply.setdefault(meta, []).extend(zip(entries[0::2],
+                                                   entries[1::2]))
+ 
+-        self.h.block_status(count, 0, cb)
++        if wanted is None:
++            self.h.block_status(count, 0, cb)
++        else:
++            self.h.block_status_filter(count, 0, wanted, cb)
+         return reply
+ 
+     def top_extents(self):
+@@ -148,6 +151,13 @@ class TestNbdCommands(iotests.QMPTestCase):
+     def test_commands_extended_headers(self):
+         self.check_commands(structured=True, extended=True)
+ 
++    def test_block_status_payload_filter(self):
++        self.assertEqual(sorted(self.block_status()),
++                         ['base:allocation', 'qemu:allocation-depth'])
++
++        for wanted in (['base:allocation'], ['qemu:allocation-depth']):
++            self.assertEqual(sorted(self.block_status(wanted=wanted)), wanted)
++
+     def test_cache_past_end_of_export(self):
+         self.assertRaises(nbd.Error, self.h.cache, size + 1, 0)
+ 
+diff --git a/tests/qemu-iotests/tests/nbd-commands.out b/tests/qemu-iotests/tests/nbd-commands.out
+index 3f8a935a082..2f7d3902f23 100644
+--- a/tests/qemu-iotests/tests/nbd-commands.out
++++ b/tests/qemu-iotests/tests/nbd-commands.out
+@@ -1,5 +1,5 @@
+-......
++.......
+ ----------------------------------------------------------------------
+-Ran 6 tests
++Ran 7 tests
+ 
+ OK
 -- 
 2.43.0
 
