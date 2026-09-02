@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156E4C624D6
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D98C624D3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Sep 2026 14:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1le6-0008Jt-6q; Wed, 02 Sep 2026 10:08:58 -0400
+	id 1x1lfM-0000GN-Qp; Wed, 02 Sep 2026 10:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1le4-0008Jg-GO
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:08:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x1le2-0005fs-Cb
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:08:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788358133;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M5zgCeNvO2GXDp7t0Y/Jxc87lYexwloL0setbn1yOeA=;
- b=D7fTozPVn4uZ9OoY1EQ+8x4PzUshq9RVQBVcmehem1yGwpcAc/KO/WP4YDEWwmcXVFmBee
- 3lorUwr0lPytJCE8EHaHvSzBzOIP/rF3vwquNlzfiWcW/zkE5/d0rNci5glAEbaSsEbHAH
- EcyJfktqJZwcBgSkFINyQSy+MLkdP0U=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-vThXTAidMPycJz3bE-nPiA-1; Wed,
- 02 Sep 2026 10:08:49 -0400
-X-MC-Unique: vThXTAidMPycJz3bE-nPiA-1
-X-Mimecast-MFC-AGG-ID: vThXTAidMPycJz3bE-nPiA_1788358127
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F509195411D; Wed,  2 Sep 2026 14:08:47 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 550141800642; Wed,  2 Sep 2026 14:08:43 +0000 (UTC)
-Date: Wed, 2 Sep 2026 15:08:41 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 2/4] AGENTS.md: Let agents know what the participation
- rules are
-Message-ID: <apgt6epzNKfo5AM0@redhat.com>
-References: <20260901161422.314581-1-pbonzini@redhat.com>
- <20260901161422.314581-3-pbonzini@redhat.com>
- <87a4pzrcqw.fsf@draig.linaro.org> <apgpDaBqCaVPqmLH@redhat.com>
- <20260902095523-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <lihuiba@gmail.com>) id 1x1lfH-0000Cv-Pb
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:10:12 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lihuiba@gmail.com>) id 1x1lfF-0005xb-5x
+ for qemu-devel@nongnu.org; Wed, 02 Sep 2026 10:10:10 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-66c7127a73dso1042168d50.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 07:10:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788358207; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dDNiqx68s2FBj0sPN4HNVUfjLEWQnLDSwGPklR6ZglYBtFFG40kHMZ4yMAKz1rHT8g
+ klSapheukgtKjCwtzWSm4PmGaQNrJzVyYKL/EgVYT+Go23srxpN1MNAwioA5BMOPkzqu
+ dPjswTmeMzyC6Icy0oK3R/16oq6w4nyYG6sd/8/n/plN+UhMxlh6P0aSFnXaMk7+1N2/
+ bwhbzQnZhV1tT3CHGSHu904ieTkRCdbGn5CNR31Z0NpL5zOv7IzQM3Rf3s85igEpZMaM
+ GmjidGgqoCKNQINk+d78h7gFmJCmClEvYLtRp1Pa+xA+ozhFRNTfCG0qsG2zHmFe51C8
+ UOMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=/Cfhj5NvYuKqo1hjb3Z8HMfkxajB5eNOkuUUkYEWWpE=;
+ fh=qsxN197plMR+FCQ92udk1Ou/A/4bFspG7VS8f13tPkY=;
+ b=m2Hcp8BvxxMPpaz4Gxqdj+163CxxXcSy5Qh1fkoOjPZl4NfsbtaR3jCGsg1UGqRMFn
+ w6TokEeEHkV3OGuSJsOJoLCzT0PtPoj7vyj6kWUM83xUT/zAkt37GdPNmlpunfo3Abp1
+ AIzLsQzOQFluEB+bMCA93iwxplUQkYdAK6aIZQ4ojNmyMxEaEdb1dygH7Zm6GrtZRo+5
+ DQkAbM390dmiNlgPXjRntA72aGLc7yb2xU7zza3Edt8Cva8prP2KpHHndL5pHEzj0/Xx
+ Gx/AM9yRovbckqPtRaFYisZ3gKn644xhUp1XQxiq2PMlj2b2L3k0LvTP6ha6tP7JM0+2
+ 9hAw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788358207; x=1788963007; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/Cfhj5NvYuKqo1hjb3Z8HMfkxajB5eNOkuUUkYEWWpE=;
+ b=JUe9aPpo13mLWbosHkcnipaTBatnKl/fMfYlKGhyFbNuHKsa3wvYvFDT2whg1kU/wX
+ Y1N9dH3lTMJaU/TJexcagGNnk1V0oz0R/YkF+zTZMllPbqsV+NjKECf0Urnpf5MzTGqz
+ bxP98jl23YSmb/+qoY8nZ/6vynX8bVwUd8YSB4ZNst4gUbBRidP5W6iaWbOAOgZ9OBop
+ mal4sOcyoVYKl4pY3h9p2bviAMHgR/0n/wJmeDm0DghutGlsnXU436TpC5HdMMld/tuQ
+ hk8/JZXrz6mhrLrMZhmVJLzwvywIprQSTKlc5KCTby/y6Mt8/Q3il8//baH1xlsp6m2J
+ cB2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788358207; x=1788963007;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=/Cfhj5NvYuKqo1hjb3Z8HMfkxajB5eNOkuUUkYEWWpE=;
+ b=QTth1SdP8adkgNvMU6OQA+BlkyIYlIuau/7XkXc/GmhAxdiZ2q27v+A3qbmuag9HZY
+ FzG4H9tJxj7xNAhK5s/4cCDlyGbFekqa5gVNc9WcE0a9nDhT+4ikeRI4oX6eWb37yxgm
+ ltoBP5lrWutCSIPa3HTXP35JWkRMaAAYN+K/uMqNkq0ACL05SCvorCfAfljN8v5zpjUY
+ T9iIe7KfhEyiEDua2CJx/TsktNcrH7DTexUhetcfW5HjJJkLBpHpXks2ceV386VFELF+
+ owj71i/WAjnCx1n/r2OQjVnZRDuEsqHPR9XztEPMpoYxGBaNLdRmochPwrrlG+NP7oBl
+ mzcw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByo+Fg8HgBkKoJiU8dZAVaiYrRWKvoBX2+UbbRen57pfx+ktCzrYhGi/y+M9nPxugzKJzdDSMD4oJkw@nongnu.org
+X-Gm-Message-State: AFuF++k8O3iaPrinGk+GGecWU6TAhxBukBprX21nOgrRwsGimuaH0/OJ
+ aYbpsbvbcbmvWn8w0vMIkBd+sWv7YLpdAmb7ubgUk9Fv0OOZgF7kjhz83cuKumgjAvIcBS2YuwD
+ tvSycwzoRL0tLfb4MDsFzrJ8w97xdfZQ=
+X-Gm-Gg: AYBFou2SP/FRKDugEga6Bcp557TvRszb/wULgkI1zHRYaTVBVHtwz4n8iYy7qNW9FYk
+ JUWSj54kqLYudlQziBbJKnIWJemfXvuap9M20ILQAaMDx9EBavOYjzCprXOrwZIcOW+EFYRyTEV
+ z8OAawAXLG/Pgg2g/h6fkeSz07jFKa8VnyIXN0voLXscjgk5sGvClFMh4/VWZG9WwXHYaMe1TXA
+ sk9c33wfQ+7ZxVvMoSQFJ7lTA2emEa/PRhvaoouVTTCrEtAVseKb5W/WO4VmnDMrk2mgMcrUuhl
+ XaGwkfS5RthwdpmYOGTldnGkhfZsGEQwUoinwB1BO3gV4UpwmULztw==
+X-Received: by 2002:a05:690e:484d:b0:66f:78cb:9fe0 with SMTP id
+ 956f58d0204a3-66f9bb6fcdemr1424456d50.21.1788358207306; Wed, 02 Sep 2026
+ 07:10:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260902095523-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <CA+AFTT-iZ8wbUOkEaU_SCM0rnqRJsefkOr=CTgC6T22nz_ZFoA@mail.gmail.com>
+ <20260901212226.GA736562@fedora>
+In-Reply-To: <20260901212226.GA736562@fedora>
+From: Huiba Li <lihuiba@gmail.com>
+Date: Wed, 2 Sep 2026 22:09:55 +0800
+X-Gm-Features: AcwNN1WRMxN0AlDAeuo0MK6mfu_2SBXRXd4FuDgH2WSGTUA4jQZ3HaRtIRyKAVQ
+Message-ID: <CA+AFTT9GX5DGeiQXde0KOM9=5CSGcOPdEbt9ZEhPmFzwnZCdwA@mail.gmail.com>
+Subject: Re: [RFC] block: add an overlaybd image format driver
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=lihuiba@gmail.com; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,94 +111,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 02, 2026 at 09:56:25AM -0400, Michael S. Tsirkin wrote:
-> On Wed, Sep 02, 2026 at 02:47:57PM +0100, Daniel P. Berrangé wrote:
-> > On Wed, Sep 02, 2026 at 02:42:15PM +0100, Alex Bennée wrote:
-> > > Paolo Bonzini <pbonzini@redhat.com> writes:
-> > > 
-> > > > Humans seem to be extremely unreliable in following rules around this,
-> > > > even after being told directly and repeatedly. Telling agents what to
-> > > > do seems to yield better results.
-> > > >
-> > > > This document is based on GStreamer's AGENTS.md file, as of its commit
-> > > > d08375499c279a56c0e77c928fbeae0d80cdf937.  However, GStreamer's agent
-> > > > instructions are "effective" enough to require an explicit carve-out
-> > > > for maintainers.  I actually believe that such a carve-out is a sign of
-> > > > going too far, especially given the good quality of some suspected-AI
-> > > > contributions we've received.
-> > > >
-> > > <snip>
-> > > > diff --git a/AGENTS.md b/AGENTS.md
-> > > > new file mode 100644
-> > > > index 00000000000..8fb96ebfc38
-> > > > --- /dev/null
-> > > > +++ b/AGENTS.md
-> > > > @@ -0,0 +1,100 @@
-> > > > +# Agent Guidelines for the QEMU Project
-> > > > +
-> > > > +QEMU is a cross-platform emulator and virtualizer. Due to the complexity
-> > > > +of the domain and codebase, and the interactions therein, the QEMU
-> > > > +project relies extensively on the effort of **human reviewers**, which
-> > > > +is **a scarce resource**.
-> > > > +
-> > > > +There are strictly-enforced rules for you, the agent, to participate in the
-> > > > +project.
-> > > > +
-> > > > +## Interactions with maintainers must be human-human
-> > > > +
-> > > > +The QEMU project has strict rules on what AI-generated material can
-> > > > +reach the maintainers.
-> > > > +
-> > > > +### No automated posting
-> > > > +
-> > > > +- Agents **must not** use any API, CLI, or web UI automation to:
-> > > > +  - Interact with the QEMU mailing lists
-> > > > +  - Create, edit, or close **issues ("work items")**
-> > > 
-> > > The others I'm fine with but I currently use an agent to do triage on
-> > > un-tagged issues. It only updates labels and occasionally posts a
-> > > comment when more information or a human input is required.
-> > 
-> > While this is technically something you're doing via your personal
-> > gitlab account, I none the less view the agent triage bot as something
-> > run as an "official" project service.
-> > 
-> > IMHO the AGENTS.md policy primarily applies to actions done in an
-> > individual capacity (whether contributor or maintainer).
-> > 
-> > If the project wants to deploy project level services that utilize
-> > AI in some manner and that conflicts with AGENTS.md that's acceptable,
-> > provided we discuss & agree that the project service in question is
-> > desirable.
-> > 
-> > Perhaps this is me saying that the issue triage bot should be made
-> > more official as a service, committed to git, etc
-> 
-> well I have a script that uses gitlab API to run the security process
-> workflow. But it's... how do I put it... AI assisted ;)
+Hi Stefan,
 
-Can we make that an official project script too, such that it is
-something that is reviewed and thus "blessed" as acceptable ?
+> This looks interesting. I've pondered whether the layered and immutable
+> image trends in recent years can be used effectively for virtual
+> machines.
 
-I'm pretty uncomfortable with the idea of policy that allows for
-arbitrary AI agents processing issues with no independent review
-of what they're doing until after they've already done it.
+There are already some examples:
+https://www.databricks.com/blog/booting-databricks-vms-7x-faster-serverless-compute
+https://community.fly.io/t/experimental-speedy-machine-creation-with-overlaybd/18958
+And secure containers, agent sandboxes are special forms of VMs.
 
-The issue agent Alex runs, while useful, also makes a decent number
-of mistakes and wierd assertions in comments it adds. To some degree
-that is unavoidable for AI based tools doing this work, but IMHO it
-justifies the extra review to ensure the community is broadly happy
-with the tradeoff in the tool in question.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> The advantage of a block driver is that it has better integration with
+> QEMU and may avoid the need for privileges.
 
+> By the way, I see that overylaybd already supports tcmu-runner, so I
+> guess you've decided that the benefits of integrating directly into QEMU
+> are worth it.
+
+Yes.
+
+
+> >   4. CLI surface: point -drive at the OCI-style JSON image config
+> >      (which lists the layer blobs), or expose per-layer options?
+> Both :). Per-layer options allow for run-time (re)configuration or
+> hotplug using blockdev-add and similar monitor commands. Users may
+> prefer to point QEMU at a JSON file rather than building long
+> command-line options.
+
+OK
+
+
+> One thing I noticed is that the append-only format used for the upper
+> write layer is not documented. I guess it's different from the read-only
+> LSTM format since the index won't be kept in sorted order when
+> appending.
+> Do you want to document the append-only format?
+
+Yes, I'll document it later. It's only slightly different from the
+read-only one.
+
+
+Thanks
+
+Huiba
 
