@@ -4,105 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE3AC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 09:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D65C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 09:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x23KJ-00058W-Hd; Thu, 03 Sep 2026 05:01:43 -0400
+	id 1x23be-0007MG-G2; Thu, 03 Sep 2026 05:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x23KG-000585-GE
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 05:01:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x23bc-0007LT-KU
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 05:19:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x23KE-0003WA-1h
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 05:01:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x23ba-0007wQ-Lo
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 05:19:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788426095;
+ s=mimecast20190719; t=1788427172;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u6zdnMxiwVoDJP+1f6BoagiRDK0hbRU1SKNVv/b+icQ=;
- b=Qt1hYkoyDNEXv8IlftLy/F9cYGrnpUYOsdDbcr8tXpWxfKxntGeDESe/RLLsf6wZSFp57+
- /j1FajEhRodM9BV5dZ6flWkfajchQd7g04CuI2dSvpUwuO7lGOhWtuLsCQl71WDt6X45xM
- zKDzPcCY7QodCuXOKtpFUVNV/kxiEMY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nRNNXyStV+UiVEPQdxJPIBxU3AY469YUuxMqcKr3vkk=;
+ b=iPWUpBjP9pmAhdnZr/PEj7rSw0OxvfZg94bpx22AskivwS26gIfFxtZ+uzQQ374GOc0PU4
+ t1FJSBbZh3EVSQ/5BffTYKigPVTxo3Jx+iLWBayiJmUcgJ/yio6lnOtXtQy9OjH6uZSSxr
+ XX72Xy7M2Nq8spemM2f2bRhFssEBkaQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-tCr6ilGgOTm5bIuz4Jqf7g-1; Thu, 03 Sep 2026 05:01:34 -0400
-X-MC-Unique: tCr6ilGgOTm5bIuz4Jqf7g-1
-X-Mimecast-MFC-AGG-ID: tCr6ilGgOTm5bIuz4Jqf7g_1788426093
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c2531b5afe6so87397766b.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 02:01:34 -0700 (PDT)
+ us-mta-616-MO2D_XmjN1-C8oQq0PkJ9g-1; Thu, 03 Sep 2026 05:19:30 -0400
+X-MC-Unique: MO2D_XmjN1-C8oQq0PkJ9g-1
+X-Mimecast-MFC-AGG-ID: MO2D_XmjN1-C8oQq0PkJ9g_1788427169
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4994cf6cdb9so15033265e9.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 02:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788426093; x=1789030893; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=u6zdnMxiwVoDJP+1f6BoagiRDK0hbRU1SKNVv/b+icQ=;
- b=D5YP8PyptMD9xEWCMjVmWePfgCDA1sEarrBEmJFw7yjCNmW75Oe2SxkjcWM+Mky6zr
- kQQ01dvEgb1v6ubMgcYZsD2nXe39Vj8fcBLqT+OLjR5PTHuZyGpUr1ElvU4TpFm1orsE
- YzExCExn/wscigJYXkxtt/hGmKHAT4XBuk3wIbJAhCLzK+gWFPMztr8rzU6hFon/fCFm
- S3gcviyRMCEvCSYaVCW2BFFO2xoNLJgq5xfBo+bmMfv7jawi3UWcm51deyOm9hXXeqgL
- /VEpzBAFVvtUmQeqNDBvOeFLkumEF46AbwfiHbD3EmIhIEIGYPHrkTcF0Z5hoyHx6DkA
- 1MDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788426093; x=1789030893;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=redhat.com; s=google; t=1788427169; x=1789031969; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=u6zdnMxiwVoDJP+1f6BoagiRDK0hbRU1SKNVv/b+icQ=;
- b=PRep2gCwvX/ZzoJw0lnWZmljlfOyGL/3u3Qb4vY1JbbR97SnKQgwuJw7tlWUntFDII
- G/ypD8ZSaSu4h3EdbsSe/tz1ynRUuM52Zy6+p7zxEg0RjRitk2b4C2jl3vVGqrwZbEJX
- Taw2jKQTELssVXfUDL+B63MIaoKkrX4ziKaTXIuhvvKk0GXuyMeoAO7qxxiKHlOQb+ML
- YTgKMnF/JF15LRLxKtn9dBw6MgwV7+8uWF1lJuRp0OOKGrqSxhxxRUZcjr4v80HUL2DK
- P9xQHFxRQNJ7DhHuqu4zQGwSTLsnfhB+l02UE+9fWQupclwI5bQEwuBH62Y7rdeezAaV
- sfCw==
-X-Gm-Message-State: AFuF++n69bqJ7jWY8TxMob+DfOi1kM80ViVl4ebfFNeGRAAVW2f2oxcK
- DDjk8UMZu7XjDRusUVAA6EfLHDD83imqGH9TnJU0C2IEvj5b3B2S2I3qvnAPku2ANXnNvuU5GGM
- r0sQT5VXXzUlVAuKXoUaOuKzFRHMy5pHcuwM9DH6YSd+2S8/tIiYVOa+y
-X-Gm-Gg: AYBFou2gkk5LtpickCRMCWVWp/YnNosbsuqOVHAmMwxCRzC5h85ZbnOhhjKYifurA9M
- KpL/rVLfmAjcolMSJDs6EpdwxMW/FAJTctJu+yZ2hexppOAsNJWy+5NsaJUrrW6jN/e70QmvoQp
- kbuEgYtgLZ+RgWMHIfUJGXR36q9DLoiuVal622kbVfGnsgyNOPqyd1ab9DC442MGZiqNxib+1tA
- U29aiw75lZYeaSjqF4lVWpkO6FtUxRHTiksbQCe8FjjG7uO8yH0FTXg8tMkUpFCDnfHYAKuIRT9
- Q3XfZn0iDlDIVdm6Z+Aw9iHZNu4W5uu0NwqLGBOUEFsrhCHp9UJH5+mSKo7ShmutvODQfRSxsys
- qJap77d7SDxeP5NjH+sYm3lgp+DQ40RF0zRs=
-X-Received: by 2002:a17:907:9491:b0:c12:8a:7d7b with SMTP id
- a640c23a62f3a-c25efb67d56mr228301866b.1.1788426090739; 
- Thu, 03 Sep 2026 02:01:30 -0700 (PDT)
-X-Received: by 2002:a17:907:9491:b0:c12:8a:7d7b with SMTP id
- a640c23a62f3a-c25efb67d56mr228276366b.1.1788426088146; 
- Thu, 03 Sep 2026 02:01:28 -0700 (PDT)
-Received: from leonardi-redhat ([151.29.41.106])
+ bh=nRNNXyStV+UiVEPQdxJPIBxU3AY469YUuxMqcKr3vkk=;
+ b=bM2b9WTyZJq4xgGb5+07zr9wgRMvnwj83yBzp1XBm/wlIxA20MXfPCW5lZ+S9fRtLd
+ utY1suWqAK1OuHImIb+Mq3VQPUvxT+sw5YAOe8ijcvd7GHETKpp/BOc8npgXmYGqNvSF
+ U+LAt3Jlt6mGiHVi6RC2n2ZFtOVOYNfDaxi9dTiDvFsOVXlwmddvrbRb3d1jFhkjI9RM
+ Tb2urevhEz61L/SAVu1vMqcL3p2jrnIkBUDZYqDsUs9V/MTuepjttz+MsHjBx+qt7vKP
+ vDH1JmdR/bCfOwbnN1RJDEB2VI1dRBq4pNT352ZEIB4qSl1OWZjvCw9sdSyOorhWmcGI
+ g6kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788427169; x=1789031969;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=nRNNXyStV+UiVEPQdxJPIBxU3AY469YUuxMqcKr3vkk=;
+ b=L4lNTVnxn2pUebISXzS5nQkBNk7pIwEb5T6T2opfqXqAUvyHhu4m88Ws4J4QR7ICTo
+ 7mjA6NPOHMP2uu9NJUEuPCKjvZjFIRR0ktdzKrSw/cTAzRr3zGwjRXtUgpDC9JHLiQHB
+ Dx5fWfdlywlZD+qBdwxVtXHaxVZwDtwINtSz2f4mDN5czmYiadIgqNpMEMQjqwENA9pY
+ xHwGyq5Khy5+hjw8WVej3WTxCzw4ZBSubumHZ5Z1iQqaUrcxTh1ELYk8m6NyqTJys2z7
+ E5C8fZFO7sjyruMB8lNvLz5+MkLlZ8jP0NCGE3JOvXRag/mbXSS3ceNmKtb8XDw49U/p
+ fFeA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByFiclacDDbQIjGL92OP8OnvDV+zFMxjTTZvFO6Bm+JnLYzAKV1yQPeHs/7FZX/MsWP+sTQUtRNF44n@nongnu.org
+X-Gm-Message-State: AFuF++mjkVz2yMF/M8lMoykPnLN8StA823LE8bxr3yewkGAGaIYrnC7Z
+ Fkdxkb1dRSja9v0qhsiZeCRxwyh/AgXC2fzG+M7XPc/wjYTKlEOL6jik69OklAobmyIyABJxyL4
+ DPDaaJrUhpNJWcEI3CkogUXi30o0qBiPZa2wJmOryX9cLJMEwCT8WZAZY
+X-Gm-Gg: AYBFou3elZuRFHBe5Qcz6wnPAmoh1TZ48UC70vPUhi3p+RYZMyu4sveMloepnnqiRMt
+ +nNGtI4Hsqmmc9mgKP+KKGQSWtcXooUR0IB+AUa6sxZIldBYTFODhrI0MdLVU2QcUirP0c96jVh
+ mozUY2l1bar6F2UIwykzN0pC/DdO4A59iktTpnebujxcMnF4r1o/EwqDgJ0S8MIO72rQTpNIMjU
+ 8JhS8YVGRYK+2TM/+9TxgikS2tFVH1t26exWVNObRZGGU4Hhvv+hdGiJGQkyaP+vrQBAcZaOmsa
+ 3kOVDMgg45nu6e8NH3QBPpKAJT8cLcxBqQwkzVVkkE9EJAP4Kzujmnn4Q3BH1m/fcyHk0Yxf8FW
+ TfE+H56YZ+2SwQx+Kbrj4NyGeTrmxknp7z9anAQ0=
+X-Received: by 2002:a05:600c:8012:b0:49c:d818:8764 with SMTP id
+ 5b1f17b1804b1-49ce5842473mr212512375e9.11.1788427169221; 
+ Thu, 03 Sep 2026 02:19:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:8012:b0:49c:d818:8764 with SMTP id
+ 5b1f17b1804b1-49ce5842473mr212511605e9.11.1788427168768; 
+ Thu, 03 Sep 2026 02:19:28 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:1292:d530:bf4:da16:e208:c6bd?
+ ([2a01:e0a:1292:d530:bf4:da16:e208:c6bd])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448eeabbfsm11621531f8f.31.2026.09.03.02.01.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 02:01:26 -0700 (PDT)
-Date: Thu, 3 Sep 2026 11:01:22 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org
-Subject: Re: [PATCH 4/4] igvm/sev: forward the IGVM guest policy to the
- platform before launch
-Message-ID: <apk1djopa9z3tfYR@leonardi-redhat>
-References: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
- <20260901-fix_igvm_policy-v1-4-e93a6cf8c5ac@redhat.com>
- <16C1B63D-7E80-49DF-83AC-47769A6D9AE8@redhat.com>
+ 5b1f17b1804b1-49cee5d6029sm56263015e9.6.2026.09.03.02.19.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Sep 2026 02:19:28 -0700 (PDT)
+Message-ID: <a5dea766-1131-49cb-bd26-6a09673b176e@redhat.com>
+Date: Thu, 3 Sep 2026 11:19:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <16C1B63D-7E80-49DF-83AC-47769A6D9AE8@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] Error recovery for zPCI passthrough devices
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
+ alex@shazbot.org, armbru@redhat.com,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260831183151.12626-1-alifm@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260831183151.12626-1-alifm@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -126,141 +169,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
+On 8/31/26 20:31, Farhan Ali wrote:
+> Hi,
+> 
+> This patch series introduces support for error recovery for passthrough PCI
+> devices on System Z (s390x). This is the user space component for the Linux
+> kernel patches [1]. The kernel patches were merged for 7.3 and it had some
+> significant changes in VFIO API since the last QEMU series was posted. But the
+> design for QEMU component is still the same.
+> 
+> For QEMU on eventfd notification for PCI error from vfio-pci driver we call the
+> vfio error handler. We can use a per device error handler callback to override
+> the default vfio error handler.  For s390x specific error handler, we retrieve
+> the architecture specific PCI error information and inject the information into
+> the guest. Once the guest receives the error information, the guest drivers will
+> drive the error recovery.  Typically recovery involves a device reset which
+> translate to CLP disable/enable cycle for the device.
+> 
+> I would appreciate some feedback on this patch series.
 
-On Thu, Sep 03, 2026 at 02:16:30PM +0530, Ani Sinha wrote:
->
->
->> On 1 Sep 2026, at 3:39 PM, Luigi Leonardi <leonardi@redhat.com> wrote:
->>
->> The guest policy carried in the IGVM guest-policy initialization header
->> was parsed into QIgvm but never forwarded to the confidential guest
->> platform: the previous callback ran at the end of qigvm_process_file,
->> after LAUNCH_START had already been issued, so writing the policy had
->> no effect.
->>
->> Add a set_guest_policy callback and invoke it from the guest-policy
->> initialization handler, so the policy reaches the platform before
->> LAUNCH_START.
->>
->> The guest policy can also be set on the command line. As it is part of
->> the attestation report, silently overriding it would cause attestation
->> to fail, so return an error if the command-line value differs from the
->> one supplied by the IGVM file.
->>
->> Link: https://gitlab.com/qemu-project/qemu/-/work_items/4189
->> Fixes: 915b47078d ("backends/igvm: Handle policy for SEV guests")
->> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
->> ---
->> backends/confidential-guest-support.c |  9 ++++++++
->> backends/igvm.c                       |  4 ++++
->> target/i386/sev.c                     | 39 +++++++++++++++++++++++++++++++++++
->> 3 files changed, 52 insertions(+)
->>
->> diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
->> index a0b36d2da5..c0d15b4a76 100644
->> --- a/backends/confidential-guest-support.c
->> +++ b/backends/confidential-guest-support.c
->> @@ -38,6 +38,14 @@ static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
->>     return -1;
->> }
->>
->> +static int set_guest_policy(ConfidentialGuestPolicyType policy_type,
->> +                            uint64_t policy, Error **errp)
->> +{
->> +    error_setg(errp,
->> +               "Setting guest policy is not supported for this platform");
->> +    return -1;
->> +}
->> +
->> static int set_id_block(void *id_block, uint32_t id_block_size,
->>                         void *id_auth, uint32_t id_auth_size,
->>                         Error **errp)
->> @@ -62,6 +70,7 @@ static void confidential_guest_support_class_init(ObjectClass *oc,
->>     ConfidentialGuestSupportClass *cgsc = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
->>     cgsc->check_support = check_support;
->>     cgsc->set_guest_state = set_guest_state;
->> +    cgsc->set_guest_policy = set_guest_policy;
->>     cgsc->set_id_block = set_id_block;
->>     cgsc->get_mem_map_entry = get_mem_map_entry;
->> }
->> diff --git a/backends/igvm.c b/backends/igvm.c
->> index 6545382546..5131ee7829 100644
->> --- a/backends/igvm.c
->> +++ b/backends/igvm.c
->> @@ -868,6 +868,10 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
->>
->>     if (guest->compatibility_mask & ctx->compatibility_mask) {
->>         ctx->sev_policy = guest->policy;
->> +        if (ctx->cgsc) {
->> +            return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV,
->> +                                               guest->policy, errp);
->> +        }
->>     }
->>     return 0;
->> }
->> diff --git a/target/i386/sev.c b/target/i386/sev.c
->> index c76cdba8d2..533ea4b54e 100644
->> --- a/target/i386/sev.c
->> +++ b/target/i386/sev.c
->> @@ -128,6 +128,8 @@ struct SevCommonState {
->>     bool kernel_hashes;
->>     uint64_t sev_features;
->>     uint64_t supported_sev_features;
->> +    /* whether the guest policy was explicitly set on the command line */
->> +    bool policy_set;
->>
->>     /* runtime state */
->>     uint8_t api_major;
->> @@ -2723,6 +2725,40 @@ static int cgs_get_mem_map_entry(int index,
->>     return 0;
->> }
->>
->> +static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
->> +                                uint64_t policy, Error **errp)
->> +{
->> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
->> +
->> +    if (policy_type != GUEST_POLICY_SEV) {
->> +        error_setg(errp, "SEV: Invalid guest policy type provided for SEV: %d",
->> +                   policy_type);
->> +        return -1;
->> +    }
->> +
->> +    if (sev_snp_enabled()) {
->> +        SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
->> +
->> +        if (sev_common->policy_set &&
->> +            sev_snp_guest->kvm_start_conf.policy != policy) {
->> +            error_setg(errp, "SNP: policy mismatch between IGVM and CLI");
->> +            return -1;
->> +        }
->> +
->> +        sev_snp_guest->kvm_start_conf.policy = policy;
+Hi Farhan,
 
-Thanks for you review!
+Have you seen Shameer's kernel series for PCI error recovery [1] ?
+It uses a dedicated eventfd registered via VFIO_DEVICE_FEATURE_SET,
+with a self-contained handler independent of the legacy err_notifier.
 
->
->I had fixed a bug initially here where we need to check if the policy passed is not 0. I am not sure if that fix is still needed here.
->Please test this scenario:
->a) Generate an IGVM file with policy set to 0.
+The QEMU side [2] just probes the feature, installs the eventfd, and
+suppresses the legacy vm_stop path with a bool flag : no callback in
+generic VFIO PCI code, which is cleaner.
 
-0 is not a valid sev-snp guest policy: bit 17 is reserved and must be 1.
-It's a valid sev/sev-es policy though.
+This is also the pattern used by the other s390 VFIO devices: vfio-ccw
+has three dedicated eventfds (io_notifier, crw_notifier, req_notifier)
+and vfio-ap has two (req_notifier, cfg_notifier).
 
->b) Start a confidential SEV-SNP guest with policy set in command line and with this IGVM.
->I think with your patch this will fail as the policies won’t match.
+For zPCI, it would mean extending VFIO_DEVICE_FEATURE_ZPCI_ERROR to
+support SET with an eventfd field. The ABI is still new so the struct
+can be extended, keeping the s390 error recovery code self-contained,
+with no changes to generic VFIO  PCI code. I think this approach is
+preferable.
 
-Correct: this was suggested by Gerd, as this is something unexpected. I
-think it would break launch measurement.
+Thanks,
 
->This potentially breaks some tests. For example, with your patch, does my FUKI confidential tests still pass?
+C.
 
-To be fair, guest policy set via igvm _never_ worked. Only the policies
-set from CLI worked.
+[1] https://lore.kernel.org/all/20260901093217.8539-1-skolothumtho@nvidia.com/
+[2] https://github.com/shamiali2008/qemu-master/commit/e45458710cd8509fa5bd81f4376126b77b6f40be
 
-That said, I'll try to run your tests.
-
-Luigi
 
 
