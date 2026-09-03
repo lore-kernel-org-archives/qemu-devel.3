@@ -4,113 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8EAC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D4AC624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2BWY-0006RD-Hm; Thu, 03 Sep 2026 13:46:54 -0400
+	id 1x2BfA-0008Bl-SF; Thu, 03 Sep 2026 13:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2BWW-0006Qx-77
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:52 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2BWU-0005b0-DB
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:51 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1C36E1F7B4;
- Thu,  3 Sep 2026 17:46:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788457604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
- b=mSAAWYFBhrPVg1qghAVP6WdFudkpa78nYLjL/7mu6iI85mfZ+k4dgLnfpOr03pu7NzCSuu
- yrMm1IHnoZoNZ405etniuHyoi8grurTeVv7y475QOdvwimGQGfKBzcewpsEh+42aauPZo6
- 1wsJC4WGspay3pwBdKVNYeFxQpsvtn8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788457604;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
- b=Ho1xJ5WwKCWVmVLV04ERwAJi8udR5bdaf+n33ZUf0Rbutt02a9VSIjjQ+TloA3mStBtDLn
- 4CLS7HTHlbDadpBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="CH/wYFs0";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VlOuoQ38
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788457600; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
- b=CH/wYFs0v4ntDOJpn8Afvtix1qKMiV3bNzyQMzggaoN1xNkc/XLNolyOuTLgGz1FQbzy0S
- 6b/rk0ephWOPjRvtUbApF0jTWo3Ei/n/ZqN+rU8hRwdFOWD31QbNT3RESdzz6+AfGPCFor
- LyKAZopdcbIA8JZDf6MeCQnhxYThAKo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788457600;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
- b=VlOuoQ38GJnwRJLznSR6mrp1pgJB0AZ6HZP2Yd35tL6lbhtWJnywdo8cGmIuqdtNE+R+qV
- wG2BkbBm//n4b/AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 76B18136E6;
- Thu,  3 Sep 2026 17:46:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4LOREX+ymWpNWQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 03 Sep 2026 17:46:39 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>
-Subject: Re: [PATCH 01/18] checkpatch: Fix checking of newlines in error
- messages
-In-Reply-To: <apmwZbSLZ46yvGmT@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-2-farosas@suse.de> <apmwZbSLZ46yvGmT@x1.local>
-Date: Thu, 03 Sep 2026 14:46:37 -0300
-Message-ID: <87bjae8bya.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x2Bf9-0008BU-84; Thu, 03 Sep 2026 13:55:47 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x2Bf6-00073j-SH; Thu, 03 Sep 2026 13:55:46 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683G2e9E1550225; Thu, 3 Sep 2026 17:55:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tOFsbQ
+ 2xJhEAkIGWjvuU3YUQI73jFJ+DVxI6VQa2Wec=; b=hKHlYXzeLltjX9Rdi6wwR4
+ rhwKwBxoEBKN4Ces6kpGriAtyqm3VcGI550+fRZLbIGiaYqoFtI6bmF6ifNGvC1Y
+ e1Orj+lByv5Dxhg3NDnU0ATLJNknTtk1zQhyA6YbZidUliTGhpJIDrEWEGpd+Dyq
+ KXqosDPT5t4RMc/rfHlwhYbV8ATBkXjXm8SZF8Ng/L8c0Ku8JkF6+QcfGsEXt9kB
+ f7eknZw2QID1piqdORF84KwttBt5mYcWMAbiZ/z9VLUNN3IfJvqgpI0SWc4WD51e
+ iw+Wqd308Uak2oMqBeatT1SpbZ6eT7pgoYcPFER1W5dLLso8KJAKFsxYd+v32T7w
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3rp99g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 17:55:38 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683HfPC4032033;
+ Thu, 3 Sep 2026 17:55:37 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcbygrncr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 17:55:37 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683Hta983473942
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 3 Sep 2026 17:55:36 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3DA705805D;
+ Thu,  3 Sep 2026 17:55:36 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D95158054;
+ Thu,  3 Sep 2026 17:55:35 +0000 (GMT)
+Received: from [9.61.255.190] (unknown [9.61.255.190])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  3 Sep 2026 17:55:35 +0000 (GMT)
+Message-ID: <e6dfaf88-e1af-4744-baa2-ef1d760e0bd0@linux.ibm.com>
+Date: Thu, 3 Sep 2026 10:55:34 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 1C36E1F7B4
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] Error recovery for zPCI passthrough devices
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
+ alex@shazbot.org, armbru@redhat.com,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260831183151.12626-1-alifm@linux.ibm.com>
+ <a5dea766-1131-49cb-bd26-6a09673b176e@redhat.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <a5dea766-1131-49cb-bd26-6a09673b176e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a99b49a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=Ikd4Dj_1AAAA:8 a=NEAV23lmAAAA:8 a=d-hLNGcf60fGikFE0MUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE1MyBTYWx0ZWRfXw64C5/uqFs4d
+ JURIRkC6mw3eTRUml8T/8/9Dm9nVAYZeuiXUSs/eoYVSyF/7dwsqLNN+t5oxDiqPod5OSHMarbG
+ LVNMQ0R2e2j+CBF/Nj397CH2eAlByZPe8z6VTtyikmq2QGiTW/E4nXXBvB/px75zmULZOqSc2v3
+ vxS4mdaY2V3fSD62OmHw8YyAc1nK4ydB2SAjVpaZbLGbZB9iRbpTz42nuE4vgPGIJkVMvxgr7Gq
+ CD0l0jiwEwHMV801nWwHs//HODWQhbx97sj56PTuNVOE9G2eqkMhldFD5o5TNAvjtoIoBPur7F7
+ za/ahyZi6WkL1XYS5bDRjOqS0zyJAe9YgyU4dS8Tg9Rb5d+AUHBvrd52Zvnjk41zQv00lYnnrWB
+ wenXIQWDSoSUbS7b9ayRGvg1zaq5yWjEP7IPhinRSixFeAvNM27LJzKy4CSOpGsZ4peC3gcEfVr
+ Ooz2VrJoYX5H5GSR7ng==
+X-Proofpoint-GUID: N3-u3bK-25w7AkjDHBuhO0lxxub7YUSR
+X-Proofpoint-ORIG-GUID: N3-u3bK-25w7AkjDHBuhO0lxxub7YUSR
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE1MyBTYWx0ZWRfX7CT+gBS8PoW4
+ pGlCU7m3litlcYDyux3a867ajJEIpbiM9GF37ReFAQJaSO84qJ5TYuapRBvXaSck+aWN+3sumAp
+ fEOccdvk5Gfl3aNLKDErmrfKwevstqY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030153
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,71 +127,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> On Wed, Sep 02, 2026 at 07:15:29PM -0300, Fabiano Rosas wrote:
->> Using newlines in the g_test_message is fine. It automatically adds
->> the '#' required by the TAP protocol to the start of each line.
+On 9/3/2026 2:19 AM, Cédric Le Goater wrote:
+> On 8/31/26 20:31, Farhan Ali wrote:
+>> Hi,
+>>
+>> This patch series introduces support for error recovery for 
+>> passthrough PCI
+>> devices on System Z (s390x). This is the user space component for the 
+>> Linux
+>> kernel patches [1]. The kernel patches were merged for 7.3 and it had 
+>> some
+>> significant changes in VFIO API since the last QEMU series was 
+>> posted. But the
+>> design for QEMU component is still the same.
+>>
+>> For QEMU on eventfd notification for PCI error from vfio-pci driver 
+>> we call the
+>> vfio error handler. We can use a per device error handler callback to 
+>> override
+>> the default vfio error handler.  For s390x specific error handler, we 
+>> retrieve
+>> the architecture specific PCI error information and inject the 
+>> information into
+>> the guest. Once the guest receives the error information, the guest 
+>> drivers will
+>> drive the error recovery.  Typically recovery involves a device reset 
+>> which
+>> translate to CLP disable/enable cycle for the device.
+>>
+>> I would appreciate some feedback on this patch series.
 >
-> IIUC we have such check not because TAP, but because all these functions
-> will append one newline at the end, hence it's not needed.  IOW, if it
-> applies to g_test_message(), I don't see why it doesn't apply to the rest.
-> But maybe there're other reasons?
+Hi Cedric,
+
+> Hi Farhan,
 >
-> To make it simpler, maybe we just call a few times g_test_message()?
+> Have you seen Shameer's kernel series for PCI error recovery [1] ?
+> It uses a dedicated eventfd registered via VFIO_DEVICE_FEATURE_SET,
+> with a self-contained handler independent of the legacy err_notifier.
 >
+> The QEMU side [2] just probes the feature, installs the eventfd, and
+> suppresses the legacy vm_stop path with a bool flag : no callback in
+> generic VFIO PCI code, which is cleaner.
+>
+> This is also the pattern used by the other s390 VFIO devices: vfio-ccw
+> has three dedicated eventfds (io_notifier, crw_notifier, req_notifier)
+> and vfio-ap has two (req_notifier, cfg_notifier).
 
-Not sure I understand your point, Peter. I want to be able to print nice
-messages in patch 9:
+My thought process was to use the existing legacy err_notifier and let 
+each vfio-pci device handle the error. I thought the callback would also 
+provide some flexibility on each device handling the error.
 
- g_test_message("expected vs. found:\n\n%s\n---\n%s:%s", str, t2[match], t2[match + 1]);
+I can take a look at Shameer's approach and see if its something we can 
+do. Just briefly looking at the QEMU code, it looks like it it ties the 
+eventfd to the generic vfio-pci code (of course this is in flux). This 
+would become problematic for s390x as unfortunately AER recovery will 
+not work for zPCI devices due to platform firmware being involved in the 
+recovery process.
 
- # HMP output mismatch for entry at line 55:
- # expected vs. found:
- #
- # max-bandwidth: 10356305952768 bytes/hour
- # ---
- # max-bandwidth: 10356305952768 bytes/second
+> For zPCI, it would mean extending VFIO_DEVICE_FEATURE_ZPCI_ERROR to
+> support SET with an eventfd field. The ABI is still new so the struct
+> can be extended, keeping the s390 error recovery code self-contained,
+> with no changes to generic VFIO  PCI code. I think this approach is
+> preferable.
+>
+I would like to get some feedback from Alex to see if we could extend 
+the ABI.
 
-What would be the issue of having newlines here?
+Thanks
 
->> 
->> Relax the regex for this function, but still forbid a trailing newline
->> because it's added automatically and usually not what the user wants.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  scripts/checkpatch.pl | 11 +++++++++--
->>  1 file changed, 9 insertions(+), 2 deletions(-)
->> 
->> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
->> index 03f35e75012..fd4534b3a1e 100755
->> --- a/scripts/checkpatch.pl
->> +++ b/scripts/checkpatch.pl
->> @@ -3303,13 +3303,20 @@ sub process {
->>  					 info_vreport|
->>  					 error_report|
->>  					 warn_report|
->> -					 info_report|
->> -					 g_test_message}x;
->> +					 info_report}x;
->>  
->>  		if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
->>  			ERROR("Error messages should not contain newlines\n" . $herecurr);
->>  		}
->>  
->> +		# No newlines at the end
->> +		my $trail_newline_error_funcs = qr{g_test_message}x;
->> +
->> +		if ($rawline =~ /\b(?:$trail_newline_error_funcs)\(.*\".*\\n\"/) {
->> +		    ERROR("Error messages should not contain trailing " .
->> +			  "newlines\n" . $herecurr);
->> +		}
->> +
->>  		# Continue checking for error messages that contains newlines.
->>  		# This check handles cases where string literals are spread
->>  		# over multiple lines.
->> -- 
->> 2.53.0
->> 
+Farhan
+
+
+> Thanks,
+>
+> C.
+>
+> [1] 
+> https://lore.kernel.org/all/20260901093217.8539-1-skolothumtho@nvidia.com/
+> [2] 
+> https://github.com/shamiali2008/qemu-master/commit/e45458710cd8509fa5bd81f4376126b77b6f40be
+>
+>
 
