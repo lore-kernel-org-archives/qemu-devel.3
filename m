@@ -4,126 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B16BC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5347C624DA
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24sQ-0005nf-FD; Thu, 03 Sep 2026 06:41:02 -0400
+	id 1x24se-0006Ga-F3; Thu, 03 Sep 2026 06:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24sG-0005aU-V8
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:55 -0400
+ id 1x24sP-0005nh-N2
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:41:02 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24sB-0006Ti-Rd
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:50 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1x24sN-0006Yf-NV
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:41:01 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AHBMn3782254
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:44 GMT
+ 683AHE1v327174
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XyuN6PFVWKFuf1ZjipgLX6cblWICVka9Ua8+99l39Aw=; b=AMSCOYRWYg3C6eE5
- 0App834HVvU28DkWa62jyaow5t+2R/9FYsOyEaz6+eXwWwXQO0PaPPLXIeO4IBUQ
- YfKa+/R6YDeOf+ES721CcFHS2EXL1mfOTmWA7RyOwBNuE802vx+0YuqqFzLu254N
- 3acuHmdoYFBoGTM946GGD9O/NAhgOkJUX2IePG2sFDopSeQsB2pjbJfK5YxuyVuH
- 6AyfmSmBXXrhaQJvRB/N4TXJgMtkb45NDd/kz3aIKs96t0Pa7fk/YJZAMPe/Z23r
- 8BIXq1O/8zEBSmh7soBZcPCvGudPuGv4rqDc8s2e7iTWCbXiam5Tr7jWV1ljPITX
- 5JRxsw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf5pdrfsq-1
+ 4+tQhWxttEbmnMB8F0bWj+Xxz+Cc9Lzqzfqz7/+hjpg=; b=hBkOXqCWQiyqwBPS
+ e/kRXIDQyYrmb4O3Cl4KjOsW643L1ynxhdWqUSTyV3ZLYeOOoMBiiO9+RPTIfKMb
+ nZOyr6Itb01EAmNC4cj3pOyxuTgk43OHkJ22ko47geL2XrPVancpfwHs25JUAGyI
+ Hs4/Qu4HBerPG34A9IS9drQz42Qgv0pOJRFLhPuaq7wtVXNgG0IuwetFGCiyrf+X
+ Ew3DoJxAevPuPrZ2mj8JuD/kGnl/o257aU6vmW5YbvYiJm4dWvPQBlDL+KOnB9Dy
+ Y9WJL+XF/afTdBxdJBFqjvilQWV4hLQ12BCQcC76GO6Yxg1ilZuNVZxhelCK+T3+
+ /72yvQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf4ekgtg7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:44 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-939665a1ae6so413957185a.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:58 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-933023a5980so487750585a.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432044; x=1789036844; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788432058; x=1789036858; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XyuN6PFVWKFuf1ZjipgLX6cblWICVka9Ua8+99l39Aw=;
- b=MKbMf7fp8dyBLiTVyG55LEqeyHIEzNxaHYl4dGENmiCacsIMTvIp155NbkDufablB7
- zOjOUn1XSaRDg5EuOmukJBMRoLlFxhPOrKxKQ6IrkVaV6oipW7bcFEAddpLXQmBywCGt
- 4meyUMgsY0slz5CBP806EIbXv0Nj4tWXHdJNW7JymiJbCYLUrltBfrEvXhUtaR/0DJy3
- QfjHkfdSVJn5dF+g5drG3WRPB9ya+NhRbttraPqMLsEl0xeTOrPgqoMMH1njkxcHw/r3
- 6cyA9+QI9RKXda7GXs64dwaIkVkiPjv1nXrCKeklz/NAUU4h6x06bP38N6Th5XPQ/aIi
- z90w==
+ bh=4+tQhWxttEbmnMB8F0bWj+Xxz+Cc9Lzqzfqz7/+hjpg=;
+ b=VDxdJwG6o+JPWU3yrElVbdsx9c+ZJA23jpFKE2uyR2MJDEqc2W+TDs9+uYt82btxYB
+ K3D5VSTWMheybkx8cVYLnC3hajmK9APkxm+c2A64YrHAH5xjVhbRFBrO617dWSUMUzYJ
+ 4c3kkgppU1X/DtpfgF1hMffc1othct4qPgReBBCxVNfw3xrR0QjlOoljP9hse+yNYAT+
+ 1mY0V9SoZXA/VwLV2GhQxI0EWhKJdSi81MAUvKO+tZIKWp//dOIKkKY3hJ8iAD54r5S2
+ iMUIzpXC22txFOfqmktuKW1Hiw4eG/R8x2C0oBFV9H2tkQGFIyccHABNSOKgXXUsgyhl
+ AxRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432044; x=1789036844;
+ d=1e100.net; s=20251104; t=1788432058; x=1789036858;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=XyuN6PFVWKFuf1ZjipgLX6cblWICVka9Ua8+99l39Aw=;
- b=RmzOONs+beslfg0avb47AZKe0PaOJbE8eK15c0zeKagctoqlfmQBiOyo24EAmhfECc
- 3BRltA4DSssZN12mcyIw+dOY2iHvRFgjTgR29sRfm9ZmEo2otK8rg1v2LmsoGkEoWoRg
- 4FdMCaS/Zj1uh49rFO6GLEm1Iqk2dctfm+c5jDsOslaOfTCIz9ihBrKg7hDn3kS/x6Ak
- QBcf12201EqFg+2mN6yUSQhaDDA79lmg/B1qKWPAo5guHAiiwcw+A5e1ZRD19n46T29A
- BH7MPS4sCMbeyrllXMgq3JjKP9tZY6qg+fVZ46MSPNUBRa4JKl1cTuh+aKqwA9JosOQt
- uXuw==
-X-Gm-Message-State: AFuF++mmJv41X4/pxhALCc64dr45WDBaMZMInPHzO13EJq4vWwQyqnHw
- QTbWkCC2xu/I2cO89Apa4vrCkDM99lQAtNCdYpnodzw2AbA4TTTJTfdHcRdZ+IfR2gQfgGS+Ggl
- McVIq/dR9d0HAp2iq/nQLVMDRByPy4VQKW2bZrtGsbtVuC8tW480Qrod6DF4ID2ts+g==
-X-Gm-Gg: AYBFou1Bt7ayAiDdIMc7HwD650lPJjNaYfw4TvEWBSl5vJ1ZrIFms/2l+jVBkQlOtsi
- 4cw4PETROEdprlP/V+yk4n/U/+ULU5rhH9bQa+7iN2+1VQWFuclIQVhSCljchy1BEd+Bep0R3Zl
- NYpibOH4tqsDiGNAm9l/BG13je+jNZXJQew45Xmwce8EnCW7a4ZQIEq2qV3jZWG4efS6+xzyywm
- zFnKM8J99F9k4yCsG/e2D4Wl2BzEZXOYTDA+sKydyrwQQYKaeRfvlVWK1ylI9WEDYw2ahrXpKYe
- /b68byeuc2BWIZqy7GdcWYvexi4+oNf8w0gVicAsJwuf7xImdL8jEnGJBUBFg0L2RgopImF8urf
- xeNZlVVhKAS/vvW30Z5Hq2wnR5IDYY5pYrqYSR03l
-X-Received: by 2002:a05:620a:2886:b0:939:4891:6799 with SMTP id
- af79cd13be357-93960decb8fmr1347671585a.11.1788432043777; 
- Thu, 03 Sep 2026 03:40:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:2886:b0:939:4891:6799 with SMTP id
- af79cd13be357-93960decb8fmr1347667685a.11.1788432043303; 
- Thu, 03 Sep 2026 03:40:43 -0700 (PDT)
+ bh=4+tQhWxttEbmnMB8F0bWj+Xxz+Cc9Lzqzfqz7/+hjpg=;
+ b=paffH931gr7MB/0Vpm/mWNou39Dm3K1N0QIiUS4HdlWN30QE6R7XVF10Gpr99NLjET
+ ThzDZ+HAXKsZzNPnmGqrT0uY9JtBd4pGs02B/eYPKqvC/OWpXAGgefO2r5VSqkToJvKl
+ XgOFb7uNd4S3fw3J9MTYgi4I9KjV+KndGfCBG0hd1Tev7RcGiDD49wY75pPmQZkL3bMl
+ ENld45qvtQOcxYsMEiPzdPrLfyyumqaIzcCKOr7exDoJnRCAAbhg72cBgKivNF6My1c7
+ 3Yq096oWEXUgKBQk2/WhO1sEKZRIHPMDmUyM8gErjZi6MyajYyW9wqpqX/7xGzzEwJE/
+ lX9g==
+X-Gm-Message-State: AFuF++k8rAPt6SAnQDdb+JyS/YYhWN+LmFnr9mfla3mmVnK6pC0Pi/7g
+ 6YM+JBnu4Irthsno8H8ikDF2ExJ8qO/5JpkxYOXNSPVSLq2MEHmGbWvog3unh9UDLeubXQ4e0Xz
+ MjOILGS7Q9cBFBmYnf1j5Kg8cA4tLNi4eyLuS6MUXMGhzGHY2LynPYGIjke/NZRZ6TA==
+X-Gm-Gg: AYBFou2CEpnt31sbgxRpbrIFLhAwstL5WD6BQv1Y2tizwbGmyLZ4V9rFLyX5Eg2nwdJ
+ n2l2WHd7x5SrsMrIbDXFt9E7t40mLcMf+dHf90LC8u/xfMCVVJxw/6APDwG4fbww5+S1hv/Vgba
+ idDYMUgOTHX0ZfVsepRHWP4TzmBbrZwNadbuiL0k72HuqlGYmyp4gdzPoMAgDh/DLnKqUKf4OQb
+ G72+DNgP7aa279k8f1Z3Bpjgvm65CAk8ZFV8RJpCYXEH2hIkbQayyDl3VPp6v2jcqAA+BOUfo4s
+ ryR/tjqZhoOmwc+zonmzU6DKduEBrg77IxZmM5+aSDg47/2ySmfAwbPa1+VnkJFYlbANe9jG3PI
+ OCpIt8AFYJbc+qzg15D/vdChH4HkqdST8YzOgcZBV
+X-Received: by 2002:a05:620a:d8c:b0:92e:ef09:f8f3 with SMTP id
+ af79cd13be357-93960c91ccemr1287826385a.2.1788432058100; 
+ Thu, 03 Sep 2026 03:40:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:d8c:b0:92e:ef09:f8f3 with SMTP id
+ af79cd13be357-93960c91ccemr1287821685a.2.1788432057578; 
+ Thu, 03 Sep 2026 03:40:57 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448e81718sm12733262f8f.16.2026.09.03.03.40.42
+ ffacd0b85a97d-48448e7315bsm13149315f8f.7.2026.09.03.03.40.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:40:42 -0700 (PDT)
+ Thu, 03 Sep 2026 03:40:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/51] hw/sd: sdhci: Support version 4 ADMA 64-bit addressing
-Date: Thu,  3 Sep 2026 12:38:53 +0200
-Message-ID: <20260903103936.62355-10-philmd@oss.qualcomm.com>
+Subject: [PULL 11/51] hw/sd/sdcard: Register device ops in drives without media
+Date: Thu,  3 Sep 2026 12:38:55 +0200
+Message-ID: <20260903103936.62355-12-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX9VJ7Jy/dOXGZ
- 4b7Una7q+FbJcnXbEw1IiX8FM5vb44xDJMYKzO2w2avWvgt2WUDiKBSaILIPfEXgSzOkpH5GXIB
- YGkEk92ZVZZusYu2kBaYK/744iX+mhk=
-X-Proofpoint-ORIG-GUID: KAt9pfBB32njghQMbmdTSaRHjHnc0RVo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX21srroKqRSr1
- +7v49RL1gCNnvL4OKelW7r0XqPOvB/a9K+1BJ5wNZSuI8kzhlR57fPDHZUqgzcdoJAu5XBAYVCt
- VxVK8qX7wMGIwEfHz/zTSxb4qSfA8rB93lLVo92PYYq7e1CLKGgFsa/ntVW5f7ZQTJY1Dh9Nsxc
- AumwvP6wY2pW/omdL8Jr9cb6WA4tzEzKHHsBlI/y7DVv8AwsYceRe2njqkXqeLNBo62VpbciY+c
- cgLX1aBmtVaPjTpUL4HZIipixbKMQkNgZC6m3yvsyFTNiNBWAG9TfnqoenUqT0ItjKw9MD3UHnK
- B5XdLYaIR7mIcaYrP1+79Q/I9VblyvJRFWxFRuVvylaVFK2N1l2qVFNz9c3V5aCbjYz+MI3jtAI
- AhBR6tB3XtD3TiuP4TMEHbfPMwxsAdQJeV6BdmTb2cMDRRWyhIyW0wiD2t39Y/82wamtsoyyrML
- 2Qep3aFNt+3xijXZq9w==
-X-Authority-Analysis: v=2.4 cv=RsL16imK c=1 sm=1 tr=0 ts=6a994eac cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: ZX7yiwFUeo83m9sr5GnjDButvU-UKB87
+X-Proofpoint-GUID: ZX7yiwFUeo83m9sr5GnjDButvU-UKB87
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX4RJNmFQ586DS
+ tNoG+RPC8hOhcedvrasQc8YYkdBgk8e12XWnLYQHaufMYxolkyrSS7xRMDrO1D8063zOklSlzvZ
+ K6R738cSePt6XXAyLQX50qzZmZ5Q8RaOARsyaKqwmKdSZyv97TSgbeNKNGxncKDFI6VWmha90vf
+ 73BopIkN5+H8bi1cjICKpQIUpLiKvbVADotyOYok6luYW9w+gv3k2Jgbsy5DFBpVY1Hdlqv2Fgh
+ PViGnJV4qcCgkX9H+GjuOrAmXYtdwndh4AAuENZ3oH0bz81VLRDVf3w9H5mfsV/taCSmDO83a8u
+ lRcOQII3zWOjfvZ+L0MsU+Jw9Ghuyinl1hq0YiyBr38S8k+zoJqKBQY0EHE1bPPXRWqfkt5L+/j
+ Uzbp1PKvtOJV94c7LiIHUxvjM13hY2LCtw1xNqVW7AHhTUKo9k0z71g3qJ3rN1VNMUsCIxM+zrQ
+ PXk9X1fBbXB79DWOLUg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX1Q4sLM31vRCB
+ 0CDUkMXjiF9Lphx0cKkINdPt1eAo+TmTw0/TjaXNE7pW9t9vBI1szzoSX7hQeotir9rGc16bjCz
+ I2jyj/gZbl2cdeerS0PTC7e5Hgkwgjs=
+X-Authority-Analysis: v=2.4 cv=PKc/P/qC c=1 sm=1 tr=0 ts=6a994eba cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=cecaVjzdulOwRCAQsNoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: KAt9pfBB32njghQMbmdTSaRHjHnc0RVo
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=V2sgnzSHAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=WMtZ8JWQ2dOPEG_3IIAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=Z31ocT7rh6aUJxSkT1EX:22 a=Fg1AiH1G6rFz08G2ETeA:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
 Received-SPF: pass client-ip=205.220.180.131;
@@ -150,82 +151,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Alberto Garcia <berto@igalia.com>
 
-The Cadence Linux driver enables version 4 mode and 64-bit addressing in
-Host Control 2 but retains the ADMA2 encoding in Host Control 1. QEMU
-treats the transfer as 32-bit ADMA and uses 12-byte descriptors because
-it only decodes Host Control 1.
+Commit a362b19a39 ("hw/sd/sdcard: Fix size check for backing block
+image") accidentally moved the blk_set_dev_ops() call into the new
+'if (blk_size >= 0)' block in sd_realize().
 
-Resolve the DMA type from both control registers and use 16-byte version
-4 descriptors. Preserve the legacy 12-byte ADMA2 64-bit format when
-version 4 mode is disabled.
+Because of that, if a drive is attached without a medium then the
+condition is false (blk_size == -ENOMEDIUM) and blk_set_dev_ops() is
+never called, so the drive is registered as having non-removable
+media:
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+  $QEMU -device sd-card,drive=sdcard0 -drive if=none,id=sdcard0
+  (qemu) change sdcard0 sd-card.qcow2
+  Error: Device 'sdcard0' is not removable
+
+This patch moves the blk_set_perm() and blk_set_dev_ops() calls
+outside of the 'if (blk_size >= 0)' block so the device ops and
+permissions are registered when a drive is attached.
+
+Cc: qemu-stable@nongnu.org
+Fixes: a362b19a39 ("hw/sd/sdcard: Fix size check for backing block image")
+Signed-off-by: Alberto Garcia <berto@igalia.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723151853.2143177-11-bin.meng@processmission.com>
+Message-ID: <20260723205847.137001-1-berto@igalia.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sd/sdhci.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ hw/sd/sd.c | 47 +++++++++++++++++++++++------------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 3fba3970d4f..f0ba5c11dfc 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -227,6 +227,23 @@ static bool sdhci_update_irq(SDHCIState *s)
-     return pending;
- }
- 
-+static uint8_t sdhci_get_dma_type(SDHCIState *s)
-+{
-+    uint8_t type = SDHC_DMA_TYPE(s->hostctl1);
-+
-+    /*
-+     * In version 4 mode, the legacy ADMA2_32 encoding selects ADMA2,
-+     * while ADDRESSING_64 determines its address width.
-+     */
-+    if (type == SDHC_CTRL_ADMA2_32 &&
-+        FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, VERSION4) &&
-+        FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, ADDRESSING_64)) {
-+        return SDHC_CTRL_ADMA2_64;
-+    }
-+
-+    return type;
-+}
-+
- static void sdhci_raise_insertion_irq(void *opaque)
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 674ca09b49f..b1b3b1226a7 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -3100,7 +3100,6 @@ static void sd_blk_size_error(SDState *sd, int64_t blk_size,
+ static void sd_realize(DeviceState *dev, Error **errp)
  {
-     SDHCIState *s = (SDHCIState *)opaque;
-@@ -781,7 +798,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
-     uint32_t adma1 = 0;
-     uint64_t adma2 = 0;
-     hwaddr entry_addr = (hwaddr)s->admasysaddr;
--    switch (SDHC_DMA_TYPE(s->hostctl1)) {
-+    switch (sdhci_get_dma_type(s)) {
-     case SDHC_CTRL_ADMA2_32:
-         dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
-                         MEMTXATTRS_UNSPECIFIED);
-@@ -818,7 +835,9 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
-                         MEMTXATTRS_UNSPECIFIED);
-         dscr->addr = le64_to_cpu(dscr->addr);
-         dscr->attr &= (uint8_t) ~0xC0;
--        dscr->incr = 12;
-+        /* Version 4 pads 64-bit ADMA2 descriptors from 96 to 128 bits */
-+        dscr->incr = FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, VERSION4) ?
-+                     16 : 12;
-         break;
-     }
- }
-@@ -998,7 +1017,7 @@ static void sdhci_data_transfer(void *opaque)
-     SDHCIState *s = (SDHCIState *)opaque;
+     SDState *sd = SDMMC_COMMON(dev);
+-    int64_t blk_size = -ENOMEDIUM;
+     int ret;
  
-     if (s->trnmod & SDHC_TRNS_DMA) {
--        switch (SDHC_DMA_TYPE(s->hostctl1)) {
-+        switch (sdhci_get_dma_type(s)) {
-         case SDHC_CTRL_SDMA:
-             sdhci_sdma_transfer(s);
-             break;
+     switch (sd->spec_version) {
+@@ -3118,32 +3117,32 @@ static void sd_realize(DeviceState *dev, Error **errp)
+             return;
+         }
+ 
+-        blk_size = blk_getlength(sd->blk);
+-    }
+-    if (blk_size >= 0) {
+-        blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
+-        if (blk_size > SDSC_MAX_CAPACITY) {
+-            if (sd_is_emmc(sd) &&
+-                !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
+-                int64_t blk_size_aligned =
+-                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
+-                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+-                                  "multiples of 512", errp);
++        int64_t blk_size = blk_getlength(sd->blk);
++        if (blk_size >= 0) {
++            blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
++            if (blk_size > SDSC_MAX_CAPACITY) {
++                if (sd_is_emmc(sd) &&
++                    !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
++                    int64_t blk_size_aligned =
++                        ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
++                    sd_blk_size_error(sd, blk_size, blk_size_aligned,
++                                      "multiples of 512", errp);
++                    return;
++                } else if (!sd_is_emmc(sd) &&
++                    !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
++                    int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
++                    sd_blk_size_error(sd, blk_size, blk_size_aligned,
++                                      "multiples of 512K", errp);
++                    return;
++                }
++            } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
++                sd_blk_size_error(sd, blk_size, pow2ceil(blk_size),
++                                  "a power of 2", errp);
+                 return;
+-            } else if (!sd_is_emmc(sd) &&
+-                !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
+-                int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
+-                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+-                                  "multiples of 512K", errp);
++            } else if (blk_size < 0) {
++                error_setg(errp, "eMMC image smaller than boot partitions");
+                 return;
+             }
+-        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
+-            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power of 2",
+-                              errp);
+-            return;
+-        } else if (blk_size < 0) {
+-            error_setg(errp, "eMMC image smaller than boot partitions");
+-            return;
+         }
+ 
+         ret = blk_set_perm(sd->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
 -- 
 2.53.0
 
