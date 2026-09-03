@@ -4,126 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F83C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D68C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28KT-0003ok-UA; Thu, 03 Sep 2026 10:22:14 -0400
+	id 1x28MN-0005Vg-Pt; Thu, 03 Sep 2026 10:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x28KS-0003oN-1t
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:22:12 -0400
-Received: from smtpout4.mo538.mail-out.ovh.net ([51.210.91.33])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x28ML-0005V1-RW
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:24:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x28KL-0006ER-C6
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:22:11 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4hbMHD3Fw0z6DZf;
- Thu,  3 Sep 2026 14:21:59 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu,  3 Sep 2026 14:21:59 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.227])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hbMHC5b5gz1xt3;
- Thu,  3 Sep 2026 14:21:59 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.4])
- (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id D4D07203FDB; 
- Thu,  3 Sep 2026 14:21:57 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-97G0027f079425-9784-4436-836a-22b3b6615bf0,
- D9A964E3C5AFBF6BD84231720E0C998EB3D97DAC) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <cb1b5ec3-d7ba-42fe-a8ab-da7c236b1660@kaod.org>
-Date: Thu, 3 Sep 2026 16:21:55 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x28MI-0006xr-Qh
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:24:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788445446;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RxYdUQrBSqehc6eGs6lFDTKh91mMQZhWs5pBuysicBw=;
+ b=TILaJ2lsWSL3xq1B+fLM6nABcOU0V/pE3v2xg0NDgdUvTfJHvYHrMGfUwrM8mXtQ0HJ8gM
+ b+dzmIrWvqMgBY12V4n0HLlW4+tcW2pLE0ffIgPGseVhMF92848es6sJ/IfEOSS8RoZ3uk
+ C+MHvzKuRtIBzHvWUTwOFXRkBNU+nPQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-SgipflnGPza2y4xuhC8ZXg-1; Thu,
+ 03 Sep 2026 10:24:02 -0400
+X-MC-Unique: SgipflnGPza2y4xuhC8ZXg-1
+X-Mimecast-MFC-AGG-ID: SgipflnGPza2y4xuhC8ZXg_1788445441
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 786661944A88; Thu,  3 Sep 2026 14:24:01 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B74E47DA; Thu,  3 Sep 2026 14:24:00 +0000 (UTC)
+Date: Thu, 3 Sep 2026 10:23:59 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 6/9] block/accounting: Emit BLOCK_IO_DELAY event
+Message-ID: <20260903142359.GD825275@fedora>
+References: <20260831135206.126184-1-hreitz@redhat.com>
+ <20260831135206.126184-7-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Adding /machines/labels (was Re: [PATCH v2 18/25] tests/functional:
- add a pure-Python device-locator resolver)
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Emmanuel Blot <eblot@meta.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
- <20260731-sanmiguel-bmc-locator-v2-18-1266926ba769@free.fr>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-18-1266926ba769@free.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 9405486348910439469
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFQrZsomf6LbNSIIqVPisNl3lk9/5IuM+SAuHvf65FqznmUqzcrBdm4jUnTLXVF7sNBwjzXXfqRpkXfnhbzQiI/14fbE58CmMTWVj2zbIUtD6Zgdx29iP6lz+v/JQf4e1I8nrGkpR0IhbbNMFYDmlbZyelY0r3rd94/Nv0SbBW2rNBiH2pUQxrPRFQAJQY93OnzyKkwGqBBd08lwVHZ8S/zLqpYYB7d5lVAhpRQ5cGo8p5kFg2o5GIFAypHI3nCIyeJMUw7BYoHKpCJ8QT4EFoEAOl4Geh25EPUnA6txeuqR+jl1V3TIcz8dAaDaAJQy+Q6jy7RpTETN4jfxv6gl3KyktfLjawzp5pT4pxM/1gVJnd3AXU7gNPthGceOHiqUH6+9mZpGVu1pU/H1K8cIoW25y5nBYL8ccmMiDV/nSFtucabBJJXHSoyDNuP6SyqlUggw16b4Srdb4ib3NMmmm+bu7IGrygwNGXJB8dNnY8KwzJILO0Jvb8QQNR0J0EE8EujbF82CQf8VWTQ2swUN100oHR62w6xZV3L7UFgCsqLuqx/hlsZyHBPlp6VznXp2lKYwxqaJtM8NvfyIE93lNJFryOB/i7q9GI/tTnqqOaLhmijVFPaLcQRaDzrEjm3zxBtQaMbx6X9J9u+BqOalvVpAActM3PJcGIJKLIRC+i+MA
-DKIM-Signature: a=rsa-sha256; bh=pPGg/M0AdNeXK4HXQK4blyc77s+k656feKUCFAAkeLY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1788445321; v=1;
- b=bYy6XL5jSCe4uC4H5y2atTjOA35lP1xfUVOMv1qB13feU1uqzrOC3xoqMALmdQewWZkVcblg
- rd4OpPj9yEdWu/lejOr9d03TPZLVaOUx2KZoKCIoRe3TIFBz1I2za8x7Pkos280fA1mff8+pq/0
- XDWcQXn0wGmGifWZOYXcKmYxMlsTzwlLcCiU5Uwo56YU05oya5fabfl7WYN4fFqwxZ5LF6ktRPi
- /ocsVqfPFgNxoTGXtOrItaWecZ3Ih0s4dpzy4rpP03FAxVotHI9kV9cQ+zeCp15/KjS63KVHzhu
- OdBmJxgNTZ8rWoUwZczMAf9SLemtj9VajadACDRJuOVdg==
-Received-SPF: pass client-ip=51.210.91.33; envelope-from=clg@kaod.org;
- helo=smtpout4.mo538.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="vASYC52uuNyaIHRL"
+Content-Disposition: inline
+In-Reply-To: <20260831135206.126184-7-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,108 +89,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/26 12:45, Emmanuel Blot wrote:
-> Add DeviceLocator, a helper that addresses a device by its position on
-> the bus -- bus, address, type or index -- rather than by a QOM path. A
-> QOM path locates a device under the object that owns it, by enumeration
-> order, and so says nothing about where the device actually sits in the
-> bus topology. From a QOM anchor DeviceLocator instead walks the bus and
-> device hierarchy, alternating bus and device hops, to reach the target.
-> 
-> It relies only on standard QOM queries over QMP, needing no custom
-> commands or changes to QEMU.
+--vASYC52uuNyaIHRL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Let's recap first :
+On Mon, Aug 31, 2026 at 03:52:02PM +0200, Hanna Czenczek wrote:
+> When a request finishes with a higher latency than a predefined
+> threshold, emit the BLOCK_IO_DELAY event.
+>=20
+> Note there would be an alternative, more precise solution: We could keep
+> all active cookies per BlockBackend in a list and repeatedly iterate
+> over it in a background coroutine (woken on a timer so it would wake
+> always exactly when the next request would time out, so it generally
+> stays asleep until there is actually a timeout). This way, we could emit
+> the event exactly when a request crosses the delay threshold, while it
+> is still running; and we could hypothetically even take actions like
+> pausing the VM until the request is done so the guest operating system
+> is shielded from extreme latency spikes.
+>=20
+> In practice, this is very complicated because latency cookies are
+> created and finalized all over the place, so it is very hard to
+> guarantee that every `block_acct_start()` is matched by the right
+> finalization to ensure that cookies are properly removed from the list
+> when they are done. Even if we fix all non-matching places now, there is
+> hardly a guarantee this will be kept in order in the future.
 
-Several recent threads have touched the same topic: QOM
-composition-tree paths encode ownership, but developers and tests
-regularly need to identify devices by their position in the bus
-topology. The threads in question:
+I think this patch series already couples the accounting so closely with
+BlockBackend (i.e. adding the offset field into the cookie struct and
+adding a BB pointer into the stats struct) that we might as well fully
+integrate the two. Then callers don't need to manually manage cookies
+because BlockBackend does that internally and the concerns about
+lifetimes go away.
 
-   - "[PATCH v5 0/8] hw/sensor: Add new device emulation for TI ADC128D818" [1]
-   - "Call to clean up QOM onboard devices lacking a parent" [2]
-   - "[PATCH RFC 001/134] qom: Introduce object_new_child()" [3]
-   - "[PATCH RFC v2 0/137] qom: Make composition-tree parenting mandatory" [4]
-   - "[PATCH v2 0/25] hw/arm: Facebook SanMiguel BMC and TMP75-family sensors" [5]
+>=20
+> So, for now, just implement the simpler solution of only notifying the
+> management layer when the request does complete, so VMs with high
+> latency spikes can at least be identified when they happen without
+> having to regularly check the latency histogram.
+>=20
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  include/block/accounting.h | 10 ++++++++-
+>  block/accounting.c         | 42 +++++++++++++++++++++++++++++++++++++-
+>  blockdev.c                 |  2 +-
+>  hw/block/block.c           |  2 +-
+>  4 files changed, 52 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/include/block/accounting.h b/include/block/accounting.h
+> index 025536239e6..ba3a6859cf4 100644
+> --- a/include/block/accounting.h
+> +++ b/include/block/accounting.h
+> @@ -92,6 +92,7 @@ struct BlockAcctStats {
+>      QSLIST_HEAD(, BlockAcctTimedStats) intervals;
+>      bool account_invalid;
+>      bool account_failed;
+> +    int64_t delay_threshold_ns;
+>      BlockLatencyHistogram latency_histogram[BLOCK_MAX_IOTYPE];
+>  };
+> =20
+> @@ -103,9 +104,16 @@ typedef struct BlockAcctCookie {
+>  } BlockAcctCookie;
+> =20
+>  void block_acct_init(BlockBackend *blk, BlockAcctStats *stats);
+> +/**
+> + * Set up accounting for a block device in @stats.
+> + * @alert_ns specifies a latency so that if any request takes longer tha=
+n that
+> + * threshold, a BLOCK_IO_DELAY event will be generated (when that request
+> + * completes). Pass 0 to disable.
+> + */
+>  bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_inva=
+lid,
+>                        enum OnOffAuto account_failed, uint32_t *stats_int=
+ervals,
+> -                      uint32_t num_stats_intervals, Error **errp);
+> +                      uint32_t num_stats_intervals, int64_t alert_ns,
 
+There are a few names for the same thing:
+- delay_threshold_ns
+- alert_ns
+- BLOCK_IO_DELAY
 
-* The problem
+Pick one and use it consistently?
 
-QEMU has two device hierarchies serving different purposes:
+> +                      Error **errp);
+>  void block_acct_cleanup(BlockAcctStats *stats);
+>  void block_acct_add_interval(BlockAcctStats *stats, unsigned interval_le=
+ngth);
+>  BlockAcctTimedStats *block_acct_interval_next(BlockAcctStats *stats,
+> diff --git a/block/accounting.c b/block/accounting.c
+> index a74551d41f2..debf1924455 100644
+> --- a/block/accounting.c
+> +++ b/block/accounting.c
+> @@ -27,8 +27,10 @@
+>  #include "block/accounting.h"
+>  #include "block/block_int.h"
+>  #include "qemu/timer.h"
+> +#include "system/block-backend.h"
+>  #include "system/qtest.h"
+>  #include "qapi/error.h"
+> +#include "qapi/qapi-events-block.h"
+> =20
+>  static QEMUClockType clock_type =3D QEMU_CLOCK_REALTIME;
+>  static const int qtest_latency_ns =3D NANOSECONDS_PER_SECOND / 1000;
+> @@ -62,9 +64,35 @@ static bool bool_from_onoffauto(OnOffAuto val, bool de=
+f)
+>      }
+>  }
+> =20
+> +/**
+> + * Convert a BlockAcctType into its QAPI equivalent IoAccountingOperatio=
+n.
+> + *
+> + * Must only be called for valid BlockAcctType values, i.e. specifically=
+ not for
+> + * `BLOCK_ACCT_NONE`.
+> + */
+> +static IoAccountingOperation block_acct_qapi_type(enum BlockAcctType typ=
+e)
+> +{
+> +    switch (type) {
+> +    case BLOCK_ACCT_READ:
+> +        return IO_ACCOUNTING_OPERATION_READ;
+> +    case BLOCK_ACCT_WRITE:
+> +        return IO_ACCOUNTING_OPERATION_WRITE;
+> +    case BLOCK_ACCT_FLUSH:
+> +        return IO_ACCOUNTING_OPERATION_FLUSH;
+> +    case BLOCK_ACCT_ZONE_APPEND:
+> +        return IO_ACCOUNTING_OPERATION_ZONE_APPEND;
+> +    case BLOCK_ACCT_UNMAP:
+> +        return IO_ACCOUNTING_OPERATION_UNMAP;
+> +    case BLOCK_ACCT_NONE:
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+>  bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_inva=
+lid,
+>                        enum OnOffAuto account_failed, uint32_t *stats_int=
+ervals,
+> -                      uint32_t num_stats_intervals, Error **errp)
+> +                      uint32_t num_stats_intervals, int64_t alert_ns,
+> +                      Error **errp)
+>  {
+>      stats->account_invalid =3D bool_from_onoffauto(account_invalid,
+>                                                   stats->account_invalid);
+> @@ -79,6 +107,7 @@ bool block_acct_setup(BlockAcctStats *stats, enum OnOf=
+fAuto account_invalid,
+>              block_acct_add_interval(stats, stats_intervals[i]);
+>          }
+>      }
+> +    stats->delay_threshold_ns =3D alert_ns;
+>      return true;
+>  }
+> =20
+> @@ -252,6 +281,17 @@ static void block_account_one_io(BlockAcctStats *sta=
+ts, BlockAcctCookie *cookie,
+>          return;
+>      }
+> =20
+> +    if (stats->delay_threshold_ns && latency_ns > stats->delay_threshold=
+_ns) {
+> +        g_autofree char *dev_path =3D blk_get_attached_dev_path(stats->b=
+lk);
+> +        double latency =3D latency_ns / (double)NANOSECONDS_PER_SECOND;
+> +
+> +        qapi_event_send_block_io_delay(dev_path,
+> +                                       block_acct_qapi_type(cookie->type=
+),
+> +                                       latency,
+> +                                       cookie->offset >=3D 0, cookie->of=
+fset,
+> +                                       cookie->bytes);
+> +    }
+> +
+>      WITH_QEMU_LOCK_GUARD(&stats->lock) {
+>          if (failed) {
+>              stats->failed_ops[cookie->type]++;
+> diff --git a/blockdev.c b/blockdev.c
+> index 6e86c6262f9..195bac8af01 100644
+> --- a/blockdev.c
+> +++ b/blockdev.c
+> @@ -618,7 +618,7 @@ static BlockBackend *blockdev_init(const char *file, =
+QDict *bs_opts,
+>          bs->detect_zeroes =3D detect_zeroes;
+> =20
+>          block_acct_setup(blk_get_stats(blk), account_invalid, account_fa=
+iled,
+> -                         NULL, 0, NULL);
+> +                         NULL, 0, 0, NULL);
+> =20
+>          if (!parse_stats_intervals(blk_get_stats(blk), interval_list, er=
+rp)) {
+>              blk_unref(blk);
+> diff --git a/hw/block/block.c b/hw/block/block.c
+> index f187fa025d0..19301c6f995 100644
+> --- a/hw/block/block.c
+> +++ b/hw/block/block.c
+> @@ -251,7 +251,7 @@ bool blkconf_apply_backend_options(BlockConf *conf, b=
+ool readonly,
+> =20
+>      if (!block_acct_setup(blk_get_stats(blk), conf->account_invalid,
+>                            conf->account_failed, conf->stats_intervals,
+> -                          conf->num_stats_intervals, errp)) {
+> +                          conf->num_stats_intervals, 0, errp)) {
+>          return false;
+>      }
+>      return true;
+> --=20
+> 2.55.0
+>=20
 
-   - The QOM composition tree describes parent/child ownership.  Every
-     object has exactly one parent. Paths look like:
-     /machine/soc/i2c-controller/child-device.
-   - The bus topology describes electrical connectivity (visible
-     through "info qtree"). A device sits on a bus at an address.
+--vASYC52uuNyaIHRL
+Content-Type: application/pgp-signature; name=signature.asc
 
-Devices created without an explicit QOM parent fall into
-/machine/unattached/device[N], the "orphanage", with names that depend
-on enumeration order and are therefore unstable. Markus identified
-380+ such devices across all QEMU machines [2]. Even with a stable QOM
-path, the path says nothing about where the device sits in the bus
-topology or what purpose it serves.
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqZgv8ACgkQnKSrs4Gr
+c8jbGQf+ODZb72rXY571xw88Vmqft34W7YA0FZWAptcMWFg0xfcd0Y0Wz2g27o9i
+1SHo+PbXks9uHBG+4sawXZAwSJY17huKQ3z90W9c7nhJ5xbfAalXGd0+paTIBqFO
+EmxYoHrrEU+wRFDdItuAsqPgJjL97ZzZngePYWbu2/aB8biqrsRk5JoUnGqLNKbs
+zIhy7PR7uz1wnWZdXsBwR5lM4mpYLHlA6xBjzFUu6ABK6UINhwfrUk6N68IgtRh+
+IbJjHBf/oAjupJOsAkNctVF4MXuReucX07SlFTju+u4Hwviq8jgXhatOMCLfJs11
+i5JWzkpanClxCZ4vOEN8hT7PBruSyw==
+=3c0B
+-----END PGP SIGNATURE-----
 
-* Three approaches on the table
-
-   1. Mandatory QOM parenting (Graf [3][4] / Armbruster [2])
-      object_new_child() and per-bus creators enforce parenting at
-      creation time. Deletes the orphanage. Scope: 440 files, 137
-      patches.
-
-   2. Bus-child parenting (Blot [1], rejected)
-      i2c_slave_create_simple() would parent slaves to their bus,
-      named by hex address (e.g. /machine/i2c[0]/i2c-bus/0x6f).
-
-   3. DeviceLocator (Blot [5])
-      Pure-Python helper that resolves devices by bus-position
-      descriptors like:
-
-        /machine/soc::aspeed.i2c-ast2600[0]~i2c[9]~tmp75@0x4b
-
-      It walks the bus/device hierarchy using only qom-list/qom-get
-      over QMP, no QEMU code changes needed. 600 lines of python.
-
-
-* /machine/labels: DT-style alias container for QOM
-
-The idea: add a flat container /machine/labels under the machine, where
-board code registers link<> properties pointing to devices by
-purpose name. Like device tree /aliases (serial0  > /soc/uart@9000000).
-
-Container creation is one line in qemu_create_machine_containers().
-QMP introspection works today: qom-get /machine/labels/rtc returns the
-target's canonical path.
-
-A small helper is all that is needed:
-
-   void machine_add_label(const char *label, Object *target)
-   {
-       object_property_add_const_link(
-           machine_get_container("labels"), label, target);
-   }
-
-Board code registers one label per well-known device:
-
-   machine_add_label("rtc", OBJECT(dev));
-   machine_add_label("tmp75-bus9-0x4b", OBJECT(sensor));
-
-Tests resolve devices with a single QMP call instead of walking
-the bus hierarchy.  For the common case, functional tests targeting
-specific board devices (SanMiguel TMP75s, Catalina PCA9555s, Anacapa
-ADC128D818s), the board author already knows which devices matter.
-
-Thoughts?
-
-Thanks,
-
-C.
-
-[1] https://lore.kernel.org/qemu-devel/20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr
-[2] https://lore.kernel.org/qemu-devel/87se5scipx.fsf@pond.sub.org
-[3] https://lore.kernel.org/qemu-devel/20260711223707.42139-1-graf@amazon.com
-[4] https://lore.kernel.org/qemu-devel/20260718213652.37673-1-graf@amazon.com
-[5] https://lore.kernel.org/qemu-devel/20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr
+--vASYC52uuNyaIHRL--
 
 
