@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2146CC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD33AC624D7
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x26CR-0002ym-Oq; Thu, 03 Sep 2026 08:05:49 -0400
+	id 1x26CE-0002sx-IS; Thu, 03 Sep 2026 08:05:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CJ-0002vf-OA
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:39 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CC-0002o7-Ct
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:32 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CH-0005Ja-4U
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=g45znVZ
- oF+bNIMorAaT1+bSzk2NnW+RMJTreTWx/onZlQeT86jgn36NkOWECC8ac+JVpYRJkfx2w0
- MNa9bRUodcXW/lEtfsnQRM6q0ACDyp4VFb1IEbwujmzg75MjHH7CsVikQBSSzXzz/akaZP
- xuPo9kq5HM8V+ECS0pQ59S+maGrMjomey8Awx6bgm4WOPNks/nidAryY+i3l2Sfsa2phbq
- whFwnqmkguZ7FPEDELTCNuh2UiRNsxX93ZLTPeZutnBVwfrOWeIq4tXrQlm6IW51Qu3gcm
- nV0dgVZtbsSMhh6auv5AyJ/TC21yeHJnlTFxLTGC0fNDdwvqNB90Tpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=m
- QOfBRwYsif5OU9zSZGkXqSIX79WV63PqbKnoDUPw/c=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CA-0005JF-GO
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=V+7jQIX
+ wI7VJXJveXplngZDJUd0BOQfA77SDNeejnpIRLHjgx6GvYDuJXqhSXpzWXWUSSuu1qxbcg
+ 1V0/S3LpG/gYNXcTN0qtO9/e5C0EgQe9b07LnRv4cf1ns4QgTl+JynPIAhnxDu5jAm9BmN
+ W7HTLEKn0DA6kMW/O4U/nGzh+DsnLLPuKj1UZhbPmsRrVJShLe59TPbwwxTf8knHIJIoQO
+ GP0mrg2w0cwOSSI0O1Nh7PPtl1n4rNfNA5Infe32fuWsVCI4xDHvImDarP6iigG+dxSa63
+ s3rwgQfn9uByOn4zEn/2NdigcABqULdnD0S4AGZTdP9HSzp0HrjS49A==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=o
+ /KWYEDAjV7XEuyr3cWlPL9WXNJRoioeURGef9XcXS4=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=IXmShnwZZMhpc4KEo5zs8p4cWcIkap6HAERbzbwBICO52itpm70kzfnJu1JgHzLkIHD9
- 0kZcSeSmc5NXnzurmA1poTTiZdDwKzt6dyi4VEFkvZcxr5wW6GA/aDHFHLVJvKQMSYg3fo
- nMKA8bytrOQKpALJq2veWo7wcYjbLdHuzJG9r2jQJVIUx4At2R30ai5vnG0yeKkElQkjDp
- Mtyu/vjPCHzwHnK9W7Pk4amptiJ6xRPF9aiw7Wc/AGh0eVWIDhTMEiXXMIcO1J8znmdhzL
- IA3h1AqiLRIWwDDBiGSMAJINgv5aw+XOKfPYHZF/T24SyXjLgR7YH9Ny3VpbDJnQ==
+ b=ul2leS2/s8+YIGMSTL5NzSbhArU5Sca4NGhcoDl3f/Sga3PqXfQ2MfyfJoqoGhVrRp3H
+ GUKC36/xoP5Koi8hHu1NaLvERBHpbat/62zQOhON7P/AUzkaIrXT4MwDZ40j7YghtH1o0o
+ /7jVAeb7uyKgGRqnawFQJ5A7xSs0q4giZry1d/+E8XiJIqY2Rmy+oA0w/Yj+pplzfNWrZ6
+ L+0RvPD2HjhO7v6SVOq7+RAhF7TzwPBndF/Kh4buwlWeF8XLNPSebtoJOPbWi0D7Z0nyYg
+ YPpLNlEd6IrQ1oQDp8fcfSysXOJRfrI1TXkpyCZxiemk0bkSccMCtQy6ryuyny2A==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=F2WvADiL; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=2xH/aLA+;
- arc=none; iprev=fail; spf=none
+ header.b=Vcbh2Zw3; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=wvK2sbCN;
+ arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=mQOfBRwY
- sif5OU9zSZGkXqSIX79WV63PqbKnoDUPw/c=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=o/KWYEDA
+ jV7XEuyr3cWlPL9WXNJRoioeURGef9XcXS4=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=F2WvADiLMcHzWS5QrapDzxuWeRnp7oFPfw5
- gITLbAiFJRElcusw5VY5IuIQNXBbuzEnwdtEepw7FoqSWZwefxECSFwbkgEuxxrSQv5oJf
- eRK9gzSuWtPnCjGmR4B7NF05ZoBd6aaylJs4htmpdxyMmsL1HyDx2EQTeq2gkey6xpJOtP
- LevAjky/KanIFCgvuAD4gaYW9ZweNtPVtGCJc9Rs7uJ3qkeNiI+qtHQtZ7MK8RYaQzqAFG
- VuOjyhQx2CMFujAUuV9aqIbQnJ3wC/FYoL/Wd0yvJy1Ivp49zLbWLCWIABoSXAzjEXTBxs
- FJ3BjyOrygkfhwIscTygiO9Vftw==
+ subject:cc:to:from; d=korins.ky; b=Vcbh2Zw3CsMTn9P4KhVxdDxUpEUvndQT1f/
+ HDPmG0oI7Rn0V5zqKx+4zpqCWCileZzlMd29/sxodt6EmcYyFhgEQAzPki2IiRbtHwmM8O
+ VAHYrJgCmFtAHeckUfRIVGztViN35aJx8TlKz9wENkSAfRsHM/0qc9/dryyofH0ZBiFn23
+ SdSQ/QXCo3NgkDLoFMkP73MseDAz8DO78lTuRevbCmF6a8/HjDFvBKRJPqKCQgxcr7Kw+a
+ UJzAgQY8c93IJTqLs0Yc1Lb3kiBJJn1nEw2ypiP3ZFoTSdgBcdbDA5yRp59MdraQWytcRW
+ gTRbhzFYAvrcK3LCxyI0NtlvQRg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=mQOfBRwYsif5OU9zSZGkXqSIX79WV63PqbKnoDUPw/c=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=2xH/aLA+whjHPwLODw
- IKbS5J+SZX4RC5PWgL8xwETJMQQkZxtlugJ6opVDzceBy8EPfUaGZfnAHvdmSGx8TZDQ==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 42da90b6
+ bh=o/KWYEDAjV7XEuyr3cWlPL9WXNJRoioeURGef9XcXS4=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=wvK2sbCNhrnfd+F5wD
+ IXKwGorjpD6G6dZbfOc3As1xn3SJ7ciX3WaJpzKcvJXHEI4ZOCVYrVMh8cGETRPQZHBQ==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id b5224898
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 3 Sep 2026 14:05:29 +0200 (CEST)
+ Thu, 3 Sep 2026 14:05:22 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 2be6b98e;
- Thu, 3 Sep 2026 14:05:16 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 9ff2370d;
+ Thu, 3 Sep 2026 14:05:15 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -67,16 +67,16 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 17/25] hw/mips: wire the Octeon UART
-Date: Thu,  3 Sep 2026 14:02:05 +0200
-Message-ID: <20260903120510.34876-18-kirill@korins.ky>
+Subject: [PATCH v2 05/25] target/mips: add Octeon CN73xx CPU model
+Date: Thu,  3 Sep 2026 14:01:53 +0200
+Message-ID: <20260903120510.34876-6-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260903120510.34876-1-kirill@korins.ky>
 References: <20260903120510.34876-1-kirill@korins.ky>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -99,159 +99,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire the Octeon UART and its alias to the existing serial-mm device.
-Provide the special transmit register window and connect the UART
-interrupt to CIU and CIU3.
+Add a CN73xx CPU definition for the Octeon III machine. The PRId, FPU
+FIR, and L2 cache geometry come from EdgeRouter Infinity ER-8-XG data;
+the remaining CP0 fields come from a Juniper SRX300 CN70xx/CN71xx dump.
 ---
- hw/mips/Kconfig           |  1 +
- hw/mips/octeon.c          | 69 +++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |  5 +++
- 3 files changed, 75 insertions(+)
+ target/mips/cpu-defs.c.inc | 42 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index cb6057fe38..5fe5f885e3 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -72,6 +72,7 @@ config MIPS_OCTEON
-     default y
-     depends on MIPS64 && TARGET_BIG_ENDIAN
-     select PFLASH_CFI02
-+    select SERIAL_MM
- 
- config MIPS_CPS
-     bool
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 59754cb741..133b3636a0 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -10,6 +10,7 @@
- #include "qemu/units.h"
- #include "qemu/datadir.h"
- #include "qapi/error.h"
-+#include "hw/char/serial-mm.h"
- #include "hw/core/clock.h"
- #include "hw/core/irq.h"
- #include "hw/core/boards.h"
-@@ -48,7 +49,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
- #define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- 
-+#define OCTEON_CSR_32BIT_SIZE       4
- #define OCTEON_CSR_64BIT_SIZE       8
-+#define OCTEON_CSR_HI32_OFFSET      0
- 
- /*
-  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-@@ -155,6 +158,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
- #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
- 
-+#define OCTEON_UART0_BASE           0x1180000000800ULL
-+#define OCTEON_UART0_ALIAS_BASE     0x1180000000c00ULL
-+#define OCTEON_UART_TX_REG          0x40
-+#define OCTEON_UART_TX_HI32_OFFSET  OCTEON_CSR_HI32_OFFSET
-+#define OCTEON_UART_TX_SIZE         OCTEON_CSR_64BIT_SIZE
-+
- /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -1613,6 +1622,65 @@ static void octeon_init_mio_boot_loc(OcteonState *s)
- }
- 
- 
-+static uint64_t octeon_uart_tx_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void octeon_uart_tx_write(void *opaque, hwaddr addr,
-+                                 uint64_t value, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+
-+    if (size == OCTEON_CSR_32BIT_SIZE &&
-+        addr == OCTEON_UART_TX_HI32_OFFSET) {
-+        return;
-+    }
-+
-+    serial_io_ops.write(&s->uart->serial, 0, value & 0xff, 1);
-+}
-+
-+static const MemoryRegionOps octeon_uart_tx_ops = {
-+    .read = octeon_uart_tx_read,
-+    .write = octeon_uart_tx_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
+diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+index cc1916232f..ee638568db 100644
+--- a/target/mips/cpu-defs.c.inc
++++ b/target/mips/cpu-defs.c.inc
+@@ -1023,6 +1023,48 @@ const mips_def_t mips_defs[] =
+         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
+         .mmu_type = MMU_TYPE_R4000,
+     },
++    {
++        /*
++         * Minimal Octeon CN73xx model for EBB7304 firmware. PRId, FPU FIR,
++         * and L2 cache geometry match a Ubiquiti EdgeRouter Infinity
++         * ER-8-XG; the remaining CP0 values are a placeholder Octeon III
++         * model derived from a Juniper SRX300 CN70xx/CN71xx dump.
++         */
++        .name = "OcteonCN73XX",
++        .CP0_PRid = 0x000D9702,
++        .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
++                       (MMU_TYPE_R4000 << CP0C0_MT) | (1 << CP0C0_VI),
++        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
++                       (0x3F << CP0C1_MMU) |
++                       (0 << CP0C1_IS) | (6 << CP0C1_IL) | (7 << CP0C1_IA) |
++                       (0 << CP0C1_DS) | (0 << CP0C1_DL) | (7 << CP0C1_DA) |
++                       (1 << CP0C1_C2) | (1 << CP0C1_PC) |
++                       (1 << CP0C1_WR) | (1 << CP0C1_EP),
++        .CP0_Config2 = MIPS_CONFIG2 | (5 << CP0C2_SS) | (6 << CP0C2_SL) |
++                       (15 << CP0C2_SA),
++        .CP0_Config3 = MIPS_CONFIG3 | (1U << CP0C3_M) |
++                       (1 << CP0C3_BP) | (1 << CP0C3_BI) |
++                       (1 << CP0C3_VZ) | (1 << CP0C3_ULRI) |
++                       (1 << CP0C3_RXI) | (1 << CP0C3_LPA),
++        .CP0_Config4 = MIPS_CONFIG4 | (1U << CP0C4_M) |
++                       (0x3c << CP0C4_KScrExist),
++        .CP0_Config7 = 1 << CP0C7_WII,
++        .CP0_LLAddr_rw_bitmask = 0,
++        .CP0_LLAddr_shift = 4,
++        .CP0_PageGrain = (1 << CP0PG_ELPA),
++        .SYNCI_Step = 32,
++        .CCRes = 1,
++        .CP0_Status_rw_bitmask = 0x36F8FFFF,
++        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_L) | (1 << FCR0_W) |
++                    (1 << FCR0_D) | (1 << FCR0_S) |
++                    (0x97 << FCR0_PRID) | (0x0 << FCR0_REV),
++        .CP1_fcr31 = 0,
++        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
++        .SEGBITS = 42,
++        .PABITS = 49,
++        .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
++        .mmu_type = MMU_TYPE_R4000,
 +    },
-+};
-+
-+static void octeon_init_uart(OcteonState *s)
-+{
-+    SerialMM *uart;
-+    qemu_irq uart_irq;
-+    MemoryRegion *uart_mmio;
-+    int baudbase = s->io_hz / 16;
-+
-+    uart_irq = qemu_allocate_irq(octeon_irq_set, s, OCTEON_IRQ_UART);
-+    uart = serial_mm_init(get_system_memory(), OCTEON_UART0_BASE, 3, uart_irq,
-+                          baudbase, serial_hd(0), DEVICE_BIG_ENDIAN);
-+    s->uart = uart;
-+
-+    uart_mmio = sysbus_mmio_get_region(SYS_BUS_DEVICE(uart), 0);
-+    memory_region_init_alias(&s->uart_alias, NULL, "octeon.uart0-alias",
-+                             uart_mmio, 0, memory_region_size(uart_mmio));
-+    memory_region_add_subregion(get_system_memory(), OCTEON_UART0_ALIAS_BASE,
-+                                &s->uart_alias);
-+
-+    memory_region_init_io(&s->uart_tx, NULL, &octeon_uart_tx_ops, s,
-+                          "octeon.uart0-tx", OCTEON_UART_TX_SIZE);
-+    memory_region_add_subregion(get_system_memory(),
-+                                OCTEON_UART0_BASE + OCTEON_UART_TX_REG,
-+                                &s->uart_tx);
-+    memory_region_init_io(&s->uart_alias_tx, NULL, &octeon_uart_tx_ops, s,
-+                          "octeon.uart0-alias-tx", OCTEON_UART_TX_SIZE);
-+    memory_region_add_subregion(get_system_memory(),
-+                                OCTEON_UART0_ALIAS_BASE + OCTEON_UART_TX_REG,
-+                                &s->uart_alias_tx);
-+}
-+
-+
- static void octeon_mio_reset_hold(Object *obj, ResetType type)
- {
-     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-@@ -1833,6 +1901,7 @@ static void mips_octeon_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
-                                 &s->intc->ciu3);
  
-+    octeon_init_uart(s);
-     memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
-                           &octeon_csr_ops, s,
-                           "octeon.csr", OCTEON_CSR_SIZE);
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index 7b45daba10..fbe4875d66 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -10,6 +10,7 @@
- #define HW_MIPS_OCTEON_INTERNAL_H
- 
- #include "qemu/typedefs.h"
-+#include "hw/char/serial-mm.h"
- #include "system/memory.h"
- #include "target/mips/cpu.h"
- 
-@@ -64,6 +65,10 @@ struct OcteonState {
-     OcteonRstState *rst;
-     OcteonIntcState *intc;
-     OcteonCsrBankState *csr_bank;
-+    SerialMM *uart;
-+    MemoryRegion uart_alias;
-+    MemoryRegion uart_tx;
-+    MemoryRegion uart_alias_tx;
+ #endif
  };
- 
- guint octeon_uint64_hash(gconstpointer v);
 -- 
 2.55.0
 
