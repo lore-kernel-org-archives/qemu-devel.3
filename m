@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AB4C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89AE8C624D7
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24vV-0008PB-O4; Thu, 03 Sep 2026 06:44:13 -0400
+	id 1x24vc-0000Q9-GF; Thu, 03 Sep 2026 06:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24vU-0008I2-C2
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:44:12 -0400
+ id 1x24va-0000I5-TW
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:44:18 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24vS-00074r-LS
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:44:12 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1x24vZ-00076F-5Q
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:44:18 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AH8ZQ3203919
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:44:09 GMT
+ 683AHAtv212404
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:44:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hA3ien2PAEPF4LFUutqvJSyo93SVzDHV3/mOyRZE5PU=; b=pYc2WFlbqtRTvWVR
- iBi2QIP7eoPbUEgdN/1tRHFrzN+EKU0BjPgswXtEjYkJ9twn/wwKKbLth4RDpzIH
- 9kXsdzaWRQdN3yCBi4XafZRMBl3xuG5qFsEI/AK1+gZTsVZFdvZOZEVgPULjZSXZ
- LiSUgiTeDyVBUwNGDKM4QwmqPGENDEdWAHbbP+p17GioUBVaOUvtvLhfOFc2qb1p
- pCkyPuEHTxfuw1iU9rOMyWU3DanaLfgShBaONQzKuFZ0DHZCOlz9zNyR6afw3Mza
- uxiuQykzhRe+lag9ILvSHf69GdLAu7zjTv3J1bPANCPDcIwzYosRKzjXTmgVMT2M
- N2HUDA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf5d10hk0-1
+ pzUcGy0V1UtYmJH5fdlplTX3XLz53u46+IIgjzDeWHs=; b=Nnky2ku2sMVj7Ddr
+ NfhV9IWqJHKHowQgDBuRgsjpq7HWFHTWTwI0gqkZ09wTofUXDQ352+zSaqheSMmL
+ 1RYWtobmSLxicL7RCvzRJnE17WdWlvVLzG03kk6Rk4zY5aRHGnN/RCCLqpEFahW4
+ bnJZ1Tax11pqjwlMElsk8WYhjEOOib4t3HNNPhtVtsU6B8O8wG85ev+FpMQQ2Y4u
+ DFgJmboKMNZoMJWxJzS5hI3QDOl2qGSETg9c4Ep4nReRBUwa9Pp5ieeeHq3VBGMN
+ dVR35fAqNpbltiPkwgLNP5HEE29KZ/NP9wXZfnqusPb2EwWFYod8yK21tLDXs1U+
+ Se3kZg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf1pyhg1v-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:44:09 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9390a2c895bso580385685a.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:44:08 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:44:15 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9375d92d8cdso491321485a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:44:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432248; x=1789037048; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788432254; x=1789037054; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hA3ien2PAEPF4LFUutqvJSyo93SVzDHV3/mOyRZE5PU=;
- b=HsGqYk7L8aRkU2f7DXiAdtgZ12o0zTQ3AQAKVfdYRWlEhdT7d4vq4lAXGEPs/GhN2i
- UEfWBrCZ/dZxDlikjW5sf+y5kl58/l8X0Ag+tPJZXMwZD1qjh8uk6MnzMnUAvOKl+QvA
- 2KUnszg6FbrtPY3P99uaGbGb8kMnLpd8fQKEpJTaTLW+L7QjcgCQsTAq+oqWsbVHmWbK
- HlYzrotIQi/njE8x0aHDf0zLa49i467e86V8Vj8e2GW0C4KidHRFmPSqp3IC7WZ12lJI
- AKpysUukyjM6aV9FLSDY/yPlPYh1ES1Rn7HWVUck6E/QSKnA/Mc8QZbIX46mLiEt/2SL
- y0EQ==
+ bh=pzUcGy0V1UtYmJH5fdlplTX3XLz53u46+IIgjzDeWHs=;
+ b=BC4kmtxZbc7+ormqZmvvOuqayZXNyFD7i2Qiv1kkry6/pUEkqJnajW80XQD0s8VJSM
+ JXKueC92dN7+uHqJLckwdZ1vsQ6B2CTi/91N4hvngyz0VcfBwckHbMtgwsmtlUWNUuSE
+ Ul1D4taV2em8NTXc3RbkdLsu9KSxACm1KBg2rRX1gzNZbeZdzXww+/rj+qSW0hUWV0sd
+ L00bgKZ8NKRWWuTX/BPdHVarE5EeP8Q5nrXn2Lxz0jEDHTbuZvcQI4tgFhOLm1q7DCLi
+ Opg7yTAw7JSpOBXHhNsXEv0KMoB+ogCOBnvruuI6V6WoWKXfl4FFh0dHi6YzWtNGtJrt
+ leOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432248; x=1789037048;
+ d=1e100.net; s=20251104; t=1788432254; x=1789037054;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hA3ien2PAEPF4LFUutqvJSyo93SVzDHV3/mOyRZE5PU=;
- b=cC8RSda/OxWyKDb2BK0icxrPxsLdzu6x69IG5MDrS/eSi/OfWaG/ERsYtsYLIUNKMA
- ExS5tKhggbnhUr55iGDJj4MU2JDP5Rihi+x9CHwZUhKZolwFcJsQfe8J1/asCfsHT+IY
- 39/licJ+4FaNnV+RjFQ3uDAWM9vDLHEwIm5QrOtmPb6kRMosp84vC1wGXdeilndm05Sg
- 6sdIGXVuhsydu16EIH5M2pXppMH/I2RA9dJQIXJmVihonb2oCjoDrDP5ELkG4KC17M0x
- 8+KHmNpB7U9JS/zGPfURSTEUsXZIE0zXDuyeOicYiHQ2coR9gIk++pR9hS42VLB5IC6C
- hB7Q==
-X-Gm-Message-State: AFuF++lWltE818tzszryh2QTaaa0ES8HVNmBUv7ac3g85BMZnHssJREz
- mbtBailTV9yGRr3hHKArsH7RDDXHY/GVdIvQFiCWRQ9B8ILvfPpEAsOy81Yi4IJFIDCG+pMUuAU
- oIcPEbqBvWI/g88Ku9bA3vIH3SuNYWE3aANbSRrRGPZ4kSkk5+lbsYcVhrUX5fQytvw==
-X-Gm-Gg: AYBFou2zhAeG0oKXhWmfHj4gsiUPF3gtWPTELhpn2LXBVlPktFPdvkVZ86gYR/4q+Rp
- YjAtQaCxB/r+NGP2BqEzojBdQt6ulk/IkbzXKShprzTtJ/7M2bTVi+YWaKCRXtHT4WG+WIcYuoC
- mM1ymPq3fyuuG+50eXgM+wFU38VXX9L0/+QY/OpBrEBX9zzhLsr0yn57bqCvZOSW3heVkDhCCki
- W3VkKtWIaGfKuKyw9v1G1lTDd+lfgAuT1ewyGPSXzLrMVH7/u8mgwCp4aoRWqqoi+YTXwP6J23i
- i1K3olAqNNW0M0j43gFIGC8CcfIBSpN2JIFPSuR2k/EGEERiFLSP8/QYBANEY/mZ53HwMIp5ncq
- b5Plug155Hc8426Ly1ghKX40WiI5qhnRBMcd7fbyz
-X-Received: by 2002:a05:620a:19a1:b0:936:bcd8:8650 with SMTP id
- af79cd13be357-93960ff3badmr1140388885a.38.1788432247855; 
- Thu, 03 Sep 2026 03:44:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:19a1:b0:936:bcd8:8650 with SMTP id
- af79cd13be357-93960ff3badmr1140386985a.38.1788432247390; 
- Thu, 03 Sep 2026 03:44:07 -0700 (PDT)
+ bh=pzUcGy0V1UtYmJH5fdlplTX3XLz53u46+IIgjzDeWHs=;
+ b=GtGrsmBcabuSpnLncwTKTcpGHHXsGGMFf6mOi69xXHlr2kpn1KHzPsWZG6TGcYzWxc
+ yHSPhlP/OWdi9jA6AqHdfdL0bA12XDYLm7Udro+b7Xp/DEp1SGm6LHIBzc8sMnUz1Rwr
+ Ic+/8QDd7qInRhquayv+bhdWMsyHyTGYQ1lh2m5GGqY5YQGQrNehSfwrKzcKvR7kEvcA
+ CFf//K6SepjRanhLRRgaotBdBJ0Kgbqy+cBMq484sx13miB2csR2bBC6UHuXz2Ygi5Xp
+ E2rAgi/FphyjGB6YcAZZ89ipIGknVaJX315t30LV1ZaKWVlDm3nIyn1h44GI/wW5HVfv
+ XS1g==
+X-Gm-Message-State: AFuF++l4WCRJZBh01VYNnWl2EoOhLhRWPVBXIp0vSlyfp4OZbPB9nJmr
+ V8de0pqpI19Z465tIZKK122gW5EeGfgXW2W9jBwkADPtdtefUfuGwJyvJyUQvPm93r03opaMG76
+ L4lM5V2nW8oCPoLO1sGMy0z3MBTBtkBGyj9P9+q2v2yxM1+2MvsKkuEGJQSozwoVsow==
+X-Gm-Gg: AYBFou30OQCVMFwIRCdo4SPhJsdOeysBvk0lZ7g3Lz+3/JEY5GhLQMNugIJP4PPRImI
+ 5JhPQEgd68EBT8FbLMOM3usyPXotNi4cG82SXbTcmNssBLfcvtXAD0yFdJwIqlfjkv4MASMFTtY
+ Js9VLJmmlVpyLyg1A3+7CNQlAH1CijT3K+q7DcorzFrYi7VD0rbqjmQo6D24ayBzA5GVQtsnw6O
+ /BIMtwfBfkoS8UZkbIqDSXFi0f2ARpiKH+/3FRpS7t3rKzhZC/MdLeHYZhOo5rlfLrdki6iQrkI
+ IS90vq6XxLyjxn5fHDbKuq91dgUjD4CYcyTEsKYZRAbwmBDYe9spnwjgQRQbZQcXIfR20xdxkun
+ L15DN8QWCTCR4liANHRr4BuCGbs6m/E1kxV5yb9mx
+X-Received: by 2002:a05:620a:27d5:b0:939:6dfa:4a7d with SMTP id
+ af79cd13be357-9396dfa4c5emr584891685a.52.1788432254550; 
+ Thu, 03 Sep 2026 03:44:14 -0700 (PDT)
+X-Received: by 2002:a05:620a:27d5:b0:939:6dfa:4a7d with SMTP id
+ af79cd13be357-9396dfa4c5emr584888185a.52.1788432254059; 
+ Thu, 03 Sep 2026 03:44:14 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf2531232sm36130955e9.7.2026.09.03.03.44.05
+ 5b1f17b1804b1-49cee3acf2csm58833575e9.0.2026.09.03.03.44.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:44:06 -0700 (PDT)
+ Thu, 03 Sep 2026 03:44:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/51] qom/object: add is_available callback to TypeInfo
-Date: Thu,  3 Sep 2026 12:39:20 +0200
-Message-ID: <20260903103936.62355-37-philmd@oss.qualcomm.com>
+Subject: [PULL 37/51] hw/arm: filter minimal set of machines
+Date: Thu,  3 Sep 2026 12:39:21 +0200
+Message-ID: <20260903103936.62355-38-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX/6n6n+mCZpkF
- rsgxbzj+AigbubVvgiQ8zSWXQnFCCNc715RqfmPsNgS25V8P60G3d2H5oPmFG6ohvjZ928rPFsU
- YmmbsZhlQzwYBcyRgzs6bK6y9zQroHQBdxiA8dcQH3L11viyrsQPz/pQ7nSO4qKi64mIbI6E96e
- YS5oT8gDBZNHcyOCgwm3v5kSMkt8WG033Fo+D1SziPezHCgY2Lnur1xohIZhx5F8SWinY7k7VeB
- z6GW2reExksvV/O5R0VlQndA6ERaZLxb50q36NB1AplmyJEWZzDhE8b+rgq/n1+fxXpVdi54jeL
- Xz6aBNNpXaYQjgdx8RVdOeEh+SmHy7vqctjivorBjOMHo+nyncD41d9GRScZIdUhawhjEGKpFIQ
- 7507HL6WiFwmiIVJAbmz+uwNz3uNaaYV3xMj9GizXtK4ZZn9ACwgEFLtGctuWMNDUDrGL0v6hNZ
- uT2gD7IBXsEeTR1SgNg==
-X-Proofpoint-ORIG-GUID: rnniKiEB5ETzwFniYy93ZQetOaJ2BqR6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX7/e3GaaGc+/8
- fohEjAwAfJT7BaLnqSXBbf3p6Bfbia5TydiImBD9S+hxnxa7J4ZteHJbBcyu9B8SUQuyfQaBsWS
- bgnhNJWFtTLVb/e++S4ikKu7xVi4oyk=
-X-Proofpoint-GUID: rnniKiEB5ETzwFniYy93ZQetOaJ2BqR6
-X-Authority-Analysis: v=2.4 cv=J4GaKgnS c=1 sm=1 tr=0 ts=6a994f79 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX5p0z336hPv/F
+ 6EH02sY2H7N3mdoLrMVZ2rLnRk/ifUowYW+23qg3x0x41O7ufWC1Gpj32Jm+389wqr7zSiRcGWP
+ Of7bKOOliXmcRmB0P8OxIjcTKOkyhwx0V23gAsz22axhjpdcOLrSKxVdaa0QG51vLosUax+fDOO
+ qWBsM48QEGa+815pSkLgELMtqw38HNIxJKH2BU461VD2go9LpjiwqgIUoNbGMfSTXIJ+XpJCb+u
+ /ye49+9NuyakbOvqzsjOoPQAxzH5QLjqy9+p8dM1IvG6/HNezW9C96/SBuWjVnfmC1U3MyXIMKa
+ 7BHx5+Ah89AzzAqSk+tGlCyCWPaw3Dcz2dkiQAe4vAvXCsj3eyBLYv0NZ4Xm9vc75x0pVRD2oEA
+ P7oP8gGwO1Op9ofoNv+fIrtd54adNjHEhEKUt0ViR2QBPgwmpzNTAlwBgIerOpJ2T4x3se+kAty
+ +wMGNA1ScGH40ezklQg==
+X-Proofpoint-ORIG-GUID: bP-lbqtAJuo5o7ZC_zgYlx6iZ75XUmbR
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX+OiwSHJ3q5AF
+ orkOpd2d3EXcdMK1bpZugCJRrDDuXdfN4qjqG2h5Ny8llDlxkkzbS+O+FK29hiatGVNeOKgEPXo
+ CmtsowXHeoDgBJp6o1xarR0j5sXhGwg=
+X-Proofpoint-GUID: bP-lbqtAJuo5o7ZC_zgYlx6iZ75XUmbR
+X-Authority-Analysis: v=2.4 cv=DMO/JSNb c=1 sm=1 tr=0 ts=6a994f7f cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=AB6Ai_UoB1uFYp04BLIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=h_r1GPaHZSNDaGzxDFMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
 Received-SPF: pass client-ip=205.220.168.131;
@@ -152,73 +152,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-When removing target specific sections (#ifdef TARGET_X), we started
-exposing types for different targets in the same file.
+We are about to change the filtering logic for machines. These boards
+are impacted and already are conditionally available. To not break
+existing binaries, we need to filter them accordingly with new mechanic.
 
-Previously, we implemented a filter based on interfaces, but it
-proved to be too cumbersome, requiring duplication across architectures.
-To simplify it, we add a new callback, is_available, to TypeInfo, that
-will replace the existing filtering mechanism.
+From there, we are free to remove the previous filtering mechanic
+without changing any existing behaviour.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260901202043.26532-2-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260901202043.26532-3-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/qom/object.h | 3 +++
- qom/object.c         | 4 ++++
- rust/qom/src/qom.rs  | 1 +
- 3 files changed, 8 insertions(+)
+ hw/arm/aspeed_ast27x0-fc.c  | 1 +
+ hw/arm/aspeed_ast27x0_evb.c | 2 ++
+ hw/arm/raspi.c              | 2 ++
+ hw/arm/raspi4b.c            | 1 +
+ 4 files changed, 6 insertions(+)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index e24f0a2b2d0..7ecd0f210fb 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -469,6 +469,8 @@ struct Object
-  * @class_data: Data to pass to the @class_init,
-  *   @class_base_init. This can be useful when building dynamic
-  *   classes.
-+ * @is_available: callback invoked at registration time, to dynamically check if
-+ *   this type should be available or not.
-  * @interfaces: The list of interfaces associated with this type.  This
-  *   should point to a static array that's terminated with a zero filled
-  *   element.
-@@ -491,6 +493,7 @@ struct TypeInfo
-     void (*class_base_init)(ObjectClass *klass, const void *data);
-     const void *class_data;
- 
-+    bool (*is_available)(void);
-     const InterfaceInfo *interfaces;
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index ceeae336df1..54230aa92e6 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -235,6 +235,7 @@ static const TypeInfo ast2700fc_types[] = {
+         .parent         = TYPE_MACHINE,
+         .class_init     = ast2700fc_class_init,
+         .instance_size  = sizeof(Ast2700FCState),
++        .is_available   = target_aarch64,
+         .interfaces     = aarch64_machine_interfaces,
+     },
  };
- 
-diff --git a/qom/object.c b/qom/object.c
-index 85bbd7f9fe1..b1834a57cc9 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -163,6 +163,10 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
-         abort();
+diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
+index 0ff1bebeb0e..2b767808e12 100644
+--- a/hw/arm/aspeed_ast27x0_evb.c
++++ b/hw/arm/aspeed_ast27x0_evb.c
+@@ -76,12 +76,14 @@ static const TypeInfo aspeed_ast27x0_evb_types[] = {
+         .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2700a1_evb_class_init,
++        .is_available  = target_aarch64,
+         .interfaces    = aarch64_machine_interfaces,
+     },
+     {
+         .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2700a2_evb_class_init,
++        .is_available  = target_aarch64,
+         .interfaces    = aarch64_machine_interfaces,
      }
- 
-+    if (info->is_available && !info->is_available()) {
-+        return NULL;
-+    }
-+
-     ti = type_new(info);
- 
-     type_table_add(ti);
-diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
-index cc00ddcfc98..bbb485e2cfd 100644
---- a/rust/qom/src/qom.rs
-+++ b/rust/qom/src/qom.rs
-@@ -691,6 +691,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
-         class_init: Some(rust_class_init::<Self>),
-         class_base_init: Self::CLASS_BASE_INIT,
-         class_data: core::ptr::null(),
-+        is_available: None,
-         interfaces: core::ptr::null(),
-     };
+ };
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index 3f99e87428c..bbaa20bd630 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -407,11 +407,13 @@ static const TypeInfo raspi_machine_types[] = {
+         .name           = MACHINE_TYPE_NAME("raspi3ap"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3ap_machine_class_init,
++        .is_available   = target_aarch64,
+         .interfaces     = aarch64_machine_interfaces,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3b"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3b_machine_class_init,
++        .is_available   = target_aarch64,
+         .interfaces     = aarch64_machine_interfaces,
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index e1595a875fe..2ad561fdcfc 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -126,6 +126,7 @@ static const TypeInfo raspi4b_machine_type = {
+     .parent         = TYPE_RASPI_BASE_MACHINE,
+     .instance_size  = sizeof(Raspi4bMachineState),
+     .class_init     = raspi4b_machine_class_init,
++    .is_available   = target_aarch64,
+     .interfaces     = aarch64_machine_interfaces,
+ };
  
 -- 
 2.53.0
