@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D65C624D7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 860F6C61DD3
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x26CI-0002ud-FK; Thu, 03 Sep 2026 08:05:38 -0400
+	id 1x26CI-0002uv-Lf; Thu, 03 Sep 2026 08:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CF-0002t0-5g
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:35 -0400
-Received: from mx1.catap.net ([162.55.82.72])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CH-0002u5-1o
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:37 -0400
+Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CD-0005JF-7H
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=dP7nqBt
- A0cGC0E+yz0SCwQ460M0lkKu8MSO10A+alOEuHHm6yq2X8YtTEDPxSBb28TJKkVPPpKIIp
- dsLuDUXm3CS5lNu1NpV91+dXfXDXpgZ582lfA7HiyaV9wKW35/Ftubw4Ea2HHFuXgIc5Sj
- tYBmciYNrmeOG/9PB1MYMzrbbCweOuvTqpweB+8JF4C2fk01FWbuOW+m7UqOibljIw3hwN
- c4SgJe2A2NGmj0Ik1gx1McmhXCVJW4c2XCuiteOIbofqqXDJvLBSsppka0mg4G9Fpckm17
- huOCbvU8uTRkKb45KBXIGQqLOnyIEba1QAsypZRTolOs6fBxv9S2k3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=R
- hL2WKJct0UW7HSikSYL87UX23u1K8iS0O8O6sR/NpI=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CE-0005L8-Jl
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=oP+Hws9
+ s98Pbwlg+6Wf7Ki/ET4uJLtAFdtwG1ZCuE7o7e9v5pgQ2umexLcN4vgX6JVhXuorqhR9Wh
+ r2nquBdsKjv0lQ0sywIkW/vmiQCDE5dWQ78I8NyWRttX93YGJvrV0UHMQVlNcEwLlUAQTj
+ 5x21i1+IR6L5hu0wdGJcCc79cwywYHVCqlUA0ZV03P7R50JjIqRxeIaIW3yEp/4D/abbM5
+ SN88EwNAd1tN6LF8w8m5hmfsrBWIeWSzXfamaap7psyNhyazXoDUerBtD2Kglt2voq+Rkd
+ qcAViz3zNjsIkLDxGnVHsDbdVzN0YqfGihsd/J1SeZHdl/SILS9IoVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=Q
+ oF6Ukat3D3zNqldaJ2X6rAo1er7s3SapxN867lmMIQ=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=GFQFFaluxP6KCut1eI1xjR4jo1zllDKRMjhqoblaOW6eOuvQRowohmI3ZOZBtnQOqpRk
- xODEaDUQ/Zito3/AWGOV0FK4BZw05VD8U7QYb7gr07R4urdUqAsodOsgk+RWhzq487VFjo
- ao2xjThvPM4ctkJppC6grq4DdJwSKksngjTMIRv+J5lKs0dfOh0kl4JcITQStVup8FX4yN
- ZX/sZ2+WsuyN7nzMHGF+OF31xbbJuwnWIKHXc5+g/6ngJGud3tZPBVAsErcGyefw7CTO1B
- UZJUjrjx82bHYSJ1dvoETmOIrdu/MR70kOC7R8SVDOqA7OjGjV7PzkuWLSLcnhCg==
+ b=s8+bKLJ7tL8pfTnAgu7ulom0uWS9I2LMgNORdVSFVcYyqnErKjw6vQ+jm1+Pk5IlH0sM
+ AkPGOXg7RY8F3DPuhV71aqG83eluKoUYHrHjiHjuXdkRmwaqOD7Irh/CBV9fMlnu41NDpR
+ LvixkeDk/hQM/+qLMxT0lM47q6uLoZMqACSogeiqf4dTokXnCFFhm0nBEcM89B1w5KIsFd
+ 4250cjOyJnK45g3QmM8XzLZ+j3u/NJoRMbyyINAQqiZuOi0gFSolctT3QAvQB3eMxJkMum
+ V/hvaG3xeMoNuaT4wsgbIBwQmZc1ZbQ56qfOZbt4V7akzaHvwBARnJEvTjBX1jSg==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=J2uYES55; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=RM4X252P;
+ header.b=eytrx525; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=mmj3eWtX;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=RhL2WKJc
- t0UW7HSikSYL87UX23u1K8iS0O8O6sR/NpI=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=QoF6Ukat
+ 3D3zNqldaJ2X6rAo1er7s3SapxN867lmMIQ=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=J2uYES55TacZXJL0kXt1i7btpEezr22XEW2
- KbtGRF2+GnAQ4Q4qmRTO9DEpTn62xKFR9wmBJGjlOeSJBy9d3z/IOkBS5nRqayAtpwAr9K
- Lc+ppCQ7GP7ywRnTgCAc7kWdPqL+lJzE3kPjWgLeL3FyR4pwqziV169FBhZ0QM6s1zpqFx
- aNK2VxWDvg/JMOTPc/bDKxwiixFtOu00rb0fLPA82irT+in8gVasQ0el9GXZuawN5J72hU
- p+ladyY/p2o3pUANqSQI+E++ZqoC+crIXkno3BjmYFEWA4+ioDU+0mLHQijR9Saf5sPbM8
- uPRYhg2yWNnJicBOFdMGuCVyW4w==
+ subject:cc:to:from; d=korins.ky; b=eytrx525e7v0hkTtO3YXxThEAwBO4SdEaWX
+ K59eeoTVDlQHt8UWyp6XI2h5P7tobyRmerLPRj10pTk0FOEcsrZ2F1UjFUdyr/8K6vNeqc
+ WVDNrz3eCpqAsXTGuANOqNU4QzdySI0v+ycNwXO/NMgajke9ZKMaliLT3OhDyQD8qNnZAF
+ b8GlCgWBU5OQA7q8K9nTnYRwVU+BGwUiDBA1rXJAzN7RriS0NdSwsI4gKNo7a4zMMoE7Zy
+ E+OWZx/rjX5JgMkYiHJ4jNJV+NW9IHTS8TuDFqBWiZX1V45w4S60MNxARwZamFkt2G38QL
+ qDPk9qCqrgNWbBJM063vk7eBFuA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=RhL2WKJct0UW7HSikSYL87UX23u1K8iS0O8O6sR/NpI=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=RM4X252P7ceicLiFNo
- 13Ms7prTkzV5v2FeHWfhY5OWk2nuZdVnTZ5d1/RaDQYVKd6YVv+RYldTXIgUq/jPrqCQ==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 83d4bc85
+ bh=QoF6Ukat3D3zNqldaJ2X6rAo1er7s3SapxN867lmMIQ=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=mmj3eWtX2r7U9lCchu
+ +KvVCDB9U9bGQ2mQ+WuhcpUsRkg6yKyo5ilavif2AHKLL1ho0xxx1wU0KkTz7tHGfKDg==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 6ec0d3b4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 3 Sep 2026 14:05:26 +0200 (CEST)
+ Thu, 3 Sep 2026 14:05:28 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id bc3d2505;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id ee385e07;
  Thu, 3 Sep 2026 14:05:15 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
@@ -67,22 +67,22 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 10/25] hw/mips: add Octeon reset controller
-Date: Thu,  3 Sep 2026 14:01:58 +0200
-Message-ID: <20260903120510.34876-11-kirill@korins.ky>
+Subject: [PATCH v2 14/25] hw/mips: add Octeon CSR window
+Date: Thu,  3 Sep 2026 14:02:02 +0200
+Message-ID: <20260903120510.34876-15-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260903120510.34876-1-kirill@korins.ky>
 References: <20260903120510.34876-1-kirill@korins.ky>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
- helo=mx1.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
+ envelope-from=kirill@korins.ky; helo=mx1.catap.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,191 +99,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the common resettable peripheral base and model the Octeon RST
-state used to hold secondary cores in reset. Create and realize the
-controller as part of the machine without exposing its CSR interface
-yet.
+Add the shared CSR window and backing register storage. Keep mutable
+state in a resettable CSR bank device so later controllers can route
+their registers through it.
 ---
- hw/mips/octeon.c          | 105 ++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |   2 +
- 2 files changed, 107 insertions(+)
+ hw/mips/octeon.c          | 146 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |   7 ++
+ 2 files changed, 153 insertions(+)
 
 diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 0e02d3693d..4fc5a71a90 100644
+index 638d96559f..0caf088adf 100644
 --- a/hw/mips/octeon.c
 +++ b/hw/mips/octeon.c
-@@ -29,6 +29,13 @@
- #define TYPE_OCTEON_MACHINE MACHINE_TYPE_NAME("octeon3")
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonMachineState, OCTEON_MACHINE)
+@@ -41,6 +41,8 @@ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
+ #define TYPE_OCTEON_INTC "octeon-intc"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
++#define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
++OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
  
-+#define TYPE_OCTEON_PERIPHERAL "octeon-peripheral"
-+OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
-+                    OCTEON_PERIPHERAL)
-+
-+#define TYPE_OCTEON_RST "octeon-rst"
-+OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
-+
+ #define OCTEON_CSR_64BIT_SIZE       8
+ 
+@@ -120,6 +122,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
+ #define OCTEON_CIU3_ISC_SIZE        (OCTEON_CIU3_NINTSN * 8)
+ #define OCTEON_CIU3_MBOX_INTSN(cpu) ((cpu) + 0x4000U)
+ #define OCTEON_CIU3_UART0_INTSN     0x8000
++#define OCTEON_CSR_BASE             0x1180000000000ULL
++#define OCTEON_CSR_SIZE             0x100000000ULL
  /*
-  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-  * DDR follows the upstream EBB7304 U-Boot board default.
-@@ -85,6 +92,22 @@ struct OcteonMachineState {
-     uint64_t ddr_hz;
+  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
+  * the guest sees the virtual CVMSEG window, not this physical address.
+@@ -187,6 +191,24 @@ struct OcteonIntcState {
+     uint8_t ciu3_irq_line[OCTEON_MAX_CPUS][OCTEON_CIU3_CP0_IRQ_COUNT];
  };
  
-+struct OcteonPeripheralState {
-+    SysBusDevice parent_obj;
-+    OcteonState *board;
-+    unsigned int index;
-+};
-+
-+struct OcteonPeripheralClass {
-+    SysBusDeviceClass parent_class;
-+    ResettablePhases parent_phases;
-+};
-+
-+struct OcteonRstState {
++struct OcteonCsrBankState {
 +    OcteonPeripheralState parent_obj;
-+    uint64_t rst_pp_power;
++    MemoryRegion csr;
++    GHashTable *values;
 +};
 +
- static void octeon_validate_clocks(OcteonMachineState *oms)
++guint octeon_uint64_hash(gconstpointer v)
++{
++    uint64_t value = *(const uint64_t *)v;
++
++    return value ^ (value >> 32);
++}
++
++gboolean octeon_uint64_equal(gconstpointer a, gconstpointer b)
++{
++    return *(const uint64_t *)a == *(const uint64_t *)b;
++}
++
+ uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size)
  {
-     if (!oms->cpu_hz || !oms->ref_hz || !oms->io_hz || !oms->ddr_hz) {
-@@ -99,6 +122,16 @@ static void octeon_validate_clocks(OcteonMachineState *oms)
+     if (size == 4) {
+@@ -248,6 +270,38 @@ static void octeon_validate_clocks(OcteonMachineState *oms)
      }
  }
  
-+static uint64_t octeon_present_cpu_mask(OcteonState *s)
++bool octeon_reg_lookup(GHashTable *regs, uint64_t reg, uint64_t *value)
 +{
-+    return (1ULL << s->cpu_count) - 1;
++    uint64_t *stored = g_hash_table_lookup(regs, &reg);
++
++    if (!stored) {
++        return false;
++    }
++
++    *value = *stored;
++    return true;
 +}
 +
-+static uint64_t octeon_secondary_cpu_mask(OcteonState *s)
++void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
 +{
-+    return octeon_present_cpu_mask(s) & ~1ULL;
++    uint64_t *key = g_new(uint64_t, 1);
++    uint64_t *stored = g_new(uint64_t, 1);
++
++    *key = reg;
++    *stored = value;
++    g_hash_table_replace(regs, key, stored);
 +}
 +
- static void octeon_cpu_after_reset(OcteonCPUState *cs)
++bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
++{
++    return octeon_reg_lookup(s->csr_bank->values, reg, value);
++}
++
++static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
++{
++    octeon_reg_store(s->csr_bank->values, reg, value);
++}
++
+ static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
+                                           unsigned int *source)
  {
-     CPUMIPSState *env = &cs->cpu->env;
-@@ -303,6 +336,62 @@ static void octeon_init_flash(OcteonState *s)
-                                 &s->boot_flash_alias);
+@@ -1022,6 +1076,42 @@ static const MemoryRegionOps octeon_ciu3_ops = {
+     },
+ };
+ 
++static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t value;
++
++    if (!octeon_csr_lookup(s, reg, &value)) {
++        value = 0;
++    }
++    return octeon_read64(value, addr, size);
++}
++
++static void octeon_csr_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t old;
++
++    if (!octeon_csr_lookup(s, reg, &old)) {
++        old = 0;
++    }
++    value = octeon_write64(old, addr, value, size);
++    octeon_csr_store(s, reg, value);
++}
++
++static const MemoryRegionOps octeon_csr_ops = {
++    .read = octeon_csr_read,
++    .write = octeon_csr_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
+ void octeon_irq_set(void *opaque, int irq, int level)
+ {
+     OcteonState *s = opaque;
+@@ -1294,6 +1384,18 @@ static void octeon_intc_reset_hold(Object *obj, ResetType type)
+     octeon_intc_update_all_cpus(s);
  }
  
-+static void octeon_rst_reset_hold(Object *obj, ResetType type)
++static void octeon_csr_bank_reset_hold(Object *obj, ResetType type)
 +{
 +    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-+    OcteonRstState *rst = OCTEON_RST(obj);
++    OcteonCsrBankState *bank = OCTEON_CSR_BANK(obj);
 +
 +    if (opc->parent_phases.hold) {
 +        opc->parent_phases.hold(obj, type);
 +    }
 +
-+    rst->rst_pp_power = octeon_secondary_cpu_mask(rst->parent_obj.board);
++    g_hash_table_remove_all(bank->values);
 +}
 +
-+static void octeon_peripheral_class_init(ObjectClass *klass,
-+                                          const void *data)
+ static void octeon_peripheral_class_init(ObjectClass *klass,
+                                           const void *data)
+ {
+@@ -1302,6 +1404,23 @@ static void octeon_peripheral_class_init(ObjectClass *klass,
+     dc->user_creatable = false;
+ }
+ 
++static GHashTable *octeon_reg_table_new(void)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->user_creatable = false;
++    return g_hash_table_new_full(octeon_uint64_hash,
++                                 octeon_uint64_equal,
++                                 g_free, g_free);
 +}
 +
-+static void octeon_rst_class_init(ObjectClass *klass, const void *data)
++static void octeon_csr_bank_init(Object *obj)
++{
++    OCTEON_CSR_BANK(obj)->values = octeon_reg_table_new();
++}
++
++static void octeon_csr_bank_finalize(Object *obj)
++{
++    g_hash_table_destroy(OCTEON_CSR_BANK(obj)->values);
++}
++
+ static void octeon_rst_class_init(ObjectClass *klass, const void *data)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
+@@ -1320,6 +1439,16 @@ static void octeon_intc_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &opc->parent_phases);
+ }
+ 
++static void octeon_csr_bank_class_init(ObjectClass *klass, const void *data)
 +{
 +    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
 +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    resettable_class_set_parent_phases(rc, NULL, octeon_rst_reset_hold,
-+                                       NULL, &opc->parent_phases);
++    resettable_class_set_parent_phases(rc, NULL,
++                                       octeon_csr_bank_reset_hold, NULL,
++                                       &opc->parent_phases);
 +}
 +
-+static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
-+                                                     const char *type,
-+                                                     unsigned int index)
-+{
-+    DeviceState *qdev = qdev_new(type);
-+    OcteonPeripheralState *dev = OCTEON_PERIPHERAL(qdev);
-+
-+    dev->board = s;
-+    dev->index = index;
-+    return dev;
-+}
-+
-+static void octeon_create_peripherals(OcteonState *s)
-+{
-+    s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
-+}
-+
-+static void octeon_realize_peripheral(OcteonPeripheralState *dev)
-+{
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+}
-+
-+static void octeon_realize_peripherals(OcteonState *s)
-+{
-+    octeon_realize_peripheral(&s->rst->parent_obj);
-+}
-+
- static void mips_octeon_init(MachineState *machine)
+ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+                                                      const char *type,
+                                                      unsigned int index)
+@@ -1336,6 +1465,8 @@ static void octeon_create_peripherals(OcteonState *s)
  {
-     OcteonMachineState *oms = OCTEON_MACHINE(machine);
-@@ -316,6 +405,7 @@ static void mips_octeon_init(MachineState *machine)
-     s->ref_hz = oms->ref_hz;
-     s->io_hz = oms->io_hz;
-     s->ddr_hz = oms->ddr_hz;
-+    octeon_create_peripherals(s);
- 
-     if (machine->kernel_filename) {
-         error_report("-kernel is not implemented for octeon3; "
-@@ -328,6 +418,7 @@ static void mips_octeon_init(MachineState *machine)
-     octeon_load_firmware(s);
-     octeon_create_cpus(s);
- 
-+    octeon_realize_peripherals(s);
+     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
+     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
++    s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
++        s, TYPE_OCTEON_CSR_BANK, 0));
  }
  
- static void octeon_machine_reset(MachineState *machine, ResetType type)
-@@ -385,6 +476,20 @@ static void octeon_machine_class_init(ObjectClass *oc, const void *data)
+ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+@@ -1347,6 +1478,7 @@ static void octeon_realize_peripherals(OcteonState *s)
+ {
+     octeon_realize_peripheral(&s->intc->parent_obj);
+     octeon_realize_peripheral(&s->rst->parent_obj);
++    octeon_realize_peripheral(&s->csr_bank->parent_obj);
  }
  
- static const TypeInfo octeon_machine_types[] = {
+ static void mips_octeon_init(MachineState *machine)
+@@ -1386,6 +1518,12 @@ static void mips_octeon_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
+                                 &s->intc->ciu3);
+ 
++    memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
++                          &octeon_csr_ops, s,
++                          "octeon.csr", OCTEON_CSR_SIZE);
++    memory_region_add_subregion_overlap(get_system_memory(), OCTEON_CSR_BASE,
++                                        &s->csr_bank->csr, -1);
++
+     octeon_realize_peripherals(s);
+ }
+ 
+@@ -1464,6 +1602,14 @@ static const TypeInfo octeon_machine_types[] = {
+         .instance_size = sizeof(OcteonIntcState),
+         .class_init = octeon_intc_class_init,
+     },
 +    {
-+        .name = TYPE_OCTEON_PERIPHERAL,
-+        .parent = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(OcteonPeripheralState),
-+        .class_size = sizeof(OcteonPeripheralClass),
-+        .class_init = octeon_peripheral_class_init,
-+        .abstract = true,
-+    },
-+    {
-+        .name = TYPE_OCTEON_RST,
++        .name = TYPE_OCTEON_CSR_BANK,
 +        .parent = TYPE_OCTEON_PERIPHERAL,
-+        .instance_size = sizeof(OcteonRstState),
-+        .class_init = octeon_rst_class_init,
++        .instance_size = sizeof(OcteonCsrBankState),
++        .instance_init = octeon_csr_bank_init,
++        .instance_finalize = octeon_csr_bank_finalize,
++        .class_init = octeon_csr_bank_class_init,
 +    },
      {
          .name = TYPE_OCTEON_MACHINE,
          .parent = TYPE_MACHINE,
 diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index 2e568c29ea..9c1baee292 100644
+index cd810f3dd5..6327103f52 100644
 --- a/hw/mips/octeon_internal.h
 +++ b/hw/mips/octeon_internal.h
-@@ -15,6 +15,7 @@
- 
- #define OCTEON_MAX_CPUS             16
+@@ -32,6 +32,7 @@ typedef enum OcteonCiu3Source {
  typedef struct OcteonState OcteonState;
-+typedef struct OcteonRstState OcteonRstState;
+ typedef struct OcteonRstState OcteonRstState;
+ typedef struct OcteonIntcState OcteonIntcState;
++typedef struct OcteonCsrBankState OcteonCsrBankState;
  
  typedef struct OcteonCPUState {
      OcteonState *board;
-@@ -39,6 +40,7 @@ struct OcteonState {
-     MemoryRegion boot_flash;
-     MemoryRegion boot_flash_alias;
+@@ -58,11 +59,17 @@ struct OcteonState {
      MemoryRegion cvmseg;
-+    OcteonRstState *rst;
+     OcteonRstState *rst;
+     OcteonIntcState *intc;
++    OcteonCsrBankState *csr_bank;
  };
+ 
++guint octeon_uint64_hash(gconstpointer v);
++gboolean octeon_uint64_equal(gconstpointer a, gconstpointer b);
+ uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size);
+ uint64_t octeon_write64(uint64_t old, hwaddr addr,
+                         uint64_t value, unsigned size);
++bool octeon_reg_lookup(GHashTable *regs, uint64_t reg, uint64_t *value);
++void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value);
++bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value);
+ void octeon_irq_set(void *opaque, int irq, int level);
  
  #endif
 -- 
