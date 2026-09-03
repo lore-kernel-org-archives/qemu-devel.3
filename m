@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29D41C624DB
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37BDC624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x26C7-0002iN-Dy; Thu, 03 Sep 2026 08:05:29 -0400
+	id 1x26CY-0003AM-FF; Thu, 03 Sep 2026 08:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26C4-0002hJ-Sp
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:25 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CK-0002wD-U8
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:41 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26C2-0005Ja-Nb
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=NwJClQ6
- rxqCQywUO4C92xb0lZf3f9zNQlczCl4ds27/sqjCy5wXdGJ23KvwE9a4BbbxrA4t3nWI7Z
- u3ZszT30zXx8qAZh5ffFfhdQaxAqz5XAVV4aoMrZJIZoEjubFw3pVnbMIMAk9SUXja9zIT
- Gh6Ly0/FGqQhvVnhIC6zySlorjArT6fVnFm/OOEfVV+VXP/n1lN7ODOsk5fO5jGW7cnesi
- VnBFOfOD0b8JUkeknHwvpYVCGK2c2wCG4l5YKf/EKND/aNt0vo4M+4HMRrecGzi6UQSNqY
- sxxsT1nF0hMGJhfZetfcXIZNGyYmcMjhcWrDKGRWTxzMhtGs/ci9HkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=4
- pig9i2fHRxRANsh7tiMj+tEIYraNPzc4moL169W8vk=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1x26CI-0005JF-LD
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:05:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=NM48FED
+ chACfZ+4icZ+6eMxqqC23HSluTAbiH79u6ELGPpf49Er+SelVinbKtprLkvu80suc+CtRK
+ K4Lq8tzBZJpsHw66mO7XJzlOX3jk/q8qt6viMkpRRJ1O2FUNr9zEnaAyyzt6/3bZ7WY+Yx
+ WDmkRzQbxonZNgc4BIKCQmbjGESzOSGvWMh+W2wOuoyfdwL+odVB384biXMvtF/wQHBMcE
+ +LEEWRMFQQk4YxjR8CQqBPGUevL8GBFBg0JWqUuwLA9IMqxpwPSvFaMhFad92jWCYlgC2T
+ lMKTV76eAXwB4YQQzYeggGgWXaCxzbWcx05rx5Z7KrxjMZiDM6tpc7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=u
+ G4Wpq5dy0v9JEJ6kGmy5Xn/8RRoBpPloiNIYVwqEyw=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=MWCod3c5AgbAxnGr9xXqGOWNT8G4b4JSIpK5UPo+z8z0a6F4VEp18FqRSzuvkH1L5GPa
- 0WhzgmWyGSS6s+FGjiMWXw6gOX0xTdJfbr84bHgoz7PWpDZOUAQXYkgQabNesiBUq3odKC
- ftHwQbAAzcpJlIB3ISEDX6LNZT/31muUygbmCzKYAQAdLyUIh7jxQT6muIn1wHDL21MPo6
- UFBqhCTq7JSVQwLtKGLyth+yFvjECoh5tcPn5gKYKJJQBhPsFxn/FRTeOEcuXBaFlhTOvf
- eMfMAWykjk1SKZWJKME/j93szEh+/85ZZ+pkn/bzcIXXPcuw1S2N+tYIqIbhh0fg==
+ b=S30M2Vi499GnkzwBn7hlUjiwV8MZXMacybA1Cwzya/9LTP2F5184xWMCIVK+XYUo06ly
+ 4+km1Wg+A4vYRDJdmUmOhRSgblXKELORPbKm0UdYJU+YJt+Xvp75royPwb8eI8bR+lkVbV
+ gqs53Uu7T6XDkmQVN9yX2FyHkX8Zv9drgZFHe9HXqmd3Rdo3BvTWOeBBDGycGO1EEF0V7/
+ UE5HN4LLlayTWPyQFLCGF0cJhEibxlQ65mtRvTy9k5MGUt/SasByC34Zs3YC1HGH0CwL7F
+ 7FBJFkcPKKC+XZ9HuG71DMbmNL+wtZRa705Y/3ojSxIbiO+A7SM1GH8tqrgMGPCA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=Za9hJZYR; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=6NLDU0O3;
- arc=none; iprev=pass; spf=none
+ header.b=njTU7JZe; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=8DWOE7RB;
+ arc=none; iprev=fail; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=4pig9i2f
- HRxRANsh7tiMj+tEIYraNPzc4moL169W8vk=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=uG4Wpq5d
+ y0v9JEJ6kGmy5Xn/8RRoBpPloiNIYVwqEyw=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=Za9hJZYRNmFx9ogjfgwQmx5qKea36ZZ1yj2
- qHdXM1D20DEgvpk7iD6w/0o7VGLsQUZxVZ9u8IuqswmIZr3nukCUfqWuxSzi3K312R+QLO
- cEUD0OFSJc1psVfBGnEub//niFWsY6S2go357cwUW4CIHFNxNKbPnP+6OfJsq5MENS9lZD
- sStwGByg0DHurc7Ikufox1BUqNCwQ/i4ku9/Hn0wImemcB5eZkx9JshmLkpnlCwAqD6QtX
- bz25ISoSbb79TrStcKVvI2jZ38mwpLEG3xXD5OMzDiKaExZwap64fkIrJSoh4WOD3ewC3P
- 97JQegNrPfnloT23dhtx9oZeczA==
+ subject:cc:to:from; d=korins.ky; b=njTU7JZeop92ZSl9gtSzaZ4orAIVRr/AoW9
+ yI2A0Oiri5hdSwi8AGzRxUXnOs6Ft1keQ+xBZvRBzDCcV558v+EhDtj1yqS0WQKminmUkg
+ oFm6aQnNQDp6AgCKEsXga9BNBTv8y5hWW8tu9Z1HZs5pOL2WaM/POMJpX4WZbWyALw2oPF
+ YdxaWm4Yxii4Ogp7qhEJ/j7Ytb9MNaDvIEm6GFU8tbg3tuMM8HUNqZ42GBb2Q1VYlc0JsE
+ 5v/r+ThGvBGYe2DdyhBuwnlfDovUAimWoR/1AgKSF0PKv/AaYnFoczVT4qe2ZGjWojHV/M
+ YM5RvPplt9XAHMg1V19I81+KOVg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=4pig9i2fHRxRANsh7tiMj+tEIYraNPzc4moL169W8vk=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=6NLDU0O3XtohzWzDAa
- 6KBRbh1U8ey4yz7vyf1pG/czDyigiLv2GF6vbQqeXI3XrNTs+IMdho+tt7Wh+XEoy9Dw==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 4e406c7c
+ bh=uG4Wpq5dy0v9JEJ6kGmy5Xn/8RRoBpPloiNIYVwqEyw=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=8DWOE7RB44s6Tyf+6l
+ 6FHGLZArhBKp5mjI31eDfC7T9O4/Dy3LRlZ7FmGDu9v+CeFlD2M167EBiCtpkAvrHKCQ==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 1b2a744a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 3 Sep 2026 14:05:19 +0200 (CEST)
+ Thu, 3 Sep 2026 14:05:32 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 73407dda;
- Thu, 3 Sep 2026 14:05:15 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id be389880;
+ Thu, 3 Sep 2026 14:05:16 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -67,16 +67,16 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 02/25] target/mips: fix MIPS64 segment access checks
-Date: Thu,  3 Sep 2026 14:01:50 +0200
-Message-ID: <20260903120510.34876-3-kirill@korins.ky>
+Subject: [PATCH v2 21/25] hw/mips: add Octeon boot support registers
+Date: Thu,  3 Sep 2026 14:02:09 +0200
+Message-ID: <20260903120510.34876-22-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260903120510.34876-1-kirill@korins.ky>
 References: <20260903120510.34876-1-kirill@korins.ky>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -99,42 +99,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The xuseg and xsseg checks only tested UX and SX respectively; kernel
-and supervisor accesses must instead use the mode bit that applies to
-the current execution mode.
-
-Allow supervisor and kernel mode to use xuseg when SX or KX is set, and
-allow kernel mode to use xsseg when KX is set.
+Add the small DPI, FPA, IPD, PKO, RNG and POW register windows needed
+while firmware initializes the platform. Reuse the CSR bank for stored
+values and compute clock and random values on demand.
 ---
- target/mips/system/physaddr.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/mips/octeon.c          | 218 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |   6 ++
+ 2 files changed, 224 insertions(+)
 
-diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
-index 746dbf8aa4..626d7ccc4c 100644
---- a/target/mips/system/physaddr.c
-+++ b/target/mips/system/physaddr.c
-@@ -143,7 +143,9 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
- #if defined(TARGET_MIPS64)
-     } else if (address < 0x4000000000000000ULL) {
-         /* xuseg */
--        if (UX && address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-+        if (((user_mode && UX) || (supervisor_mode && SX) ||
-+             (kernel_mode && KX)) &&
-+            address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-             ret = env->tlb->map_address(env, physical, prot,
-                                         real_address, access_type);
-         } else {
-@@ -151,8 +153,8 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
-         }
-     } else if (address < 0x8000000000000000ULL) {
-         /* xsseg */
--        if ((supervisor_mode || kernel_mode) &&
--            SX && address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-+        if (((supervisor_mode && SX) || (kernel_mode && KX)) &&
-+            address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-             ret = env->tlb->map_address(env, physical, prot,
-                                         real_address, access_type);
-         } else {
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index 0553f8ea05..7e78511b8f 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -30,6 +30,7 @@
+ #include "system/runstate.h"
+ #include "system/system.h"
+ #include "exec/cpu-interrupt.h"
++#include "qemu/guest-random.h"
+ #include "qemu/error-report.h"
+ #include "qemu/atomic.h"
+ #include "hw/mips/octeon_internal.h"
+@@ -140,6 +141,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_CIU3_UART0_INTSN     0x8000
+ #define OCTEON_CSR_BASE             0x1180000000000ULL
+ #define OCTEON_CSR_SIZE             0x100000000ULL
++#define OCTEON_DPI_BASE             0x1df0000000000ULL
++#define OCTEON_DPI_SIZE             0x10000
+ #define OCTEON_MIO_BOOT_REG_CFGX(x) \
+     (0x0000000 + (x) * OCTEON_CSR_64BIT_SIZE)
+ #define OCTEON_MIO_BOOT_REG_CFG_INDEX(reg) \
+@@ -267,6 +270,23 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
+ #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
+ 
++#define OCTEON_FPA_BASE             0x1280000000000ULL
++#define OCTEON_FPA_SIZE             0x1000
++#define OCTEON_FPA_CLK_COUNT        0xf0
++
++#define OCTEON_IPD_BASE             0x14f0000000000ULL
++#define OCTEON_IPD_SIZE             0x1000
++#define OCTEON_IPD_CLK_COUNT        0x338
++
++#define OCTEON_PKO_BASE             0x1540000000000ULL
++#define OCTEON_PKO_SIZE             0x1000000
++
++#define OCTEON_RNG_BASE             0x1400000000000ULL
++#define OCTEON_RNG_SIZE             0x8
++
++#define OCTEON_POW_BASE             0x1670000000000ULL
++#define OCTEON_POW_SIZE             0x2000
++
+ #define OCTEON_UART0_BASE           0x1180000000800ULL
+ #define OCTEON_UART0_ALIAS_BASE     0x1180000000c00ULL
+ #define OCTEON_UART_TX_REG          0x40
+@@ -1955,6 +1975,174 @@ static const MemoryRegionOps octeon_csr_ops = {
+     },
+ };
+ 
++static uint64_t octeon_stateful_io_read(OcteonState *s, uint64_t base,
++                                        hwaddr addr, unsigned size)
++{
++    uint64_t value;
++    uint64_t reg = base + (addr & ~7ULL);
++
++    if (!octeon_csr_lookup(s, reg, &value)) {
++        value = 0;
++    }
++
++    return octeon_read64(value, addr, size);
++}
++
++static void octeon_stateful_io_write(OcteonState *s, uint64_t base,
++                                     hwaddr addr, uint64_t value,
++                                     unsigned size)
++{
++    uint64_t reg = base + (addr & ~7ULL);
++    uint64_t old;
++
++    if (!octeon_csr_lookup(s, reg, &old)) {
++        old = 0;
++    }
++
++    octeon_csr_store(s, reg, octeon_write64(old, addr, value, size));
++}
++
++static uint64_t octeon_dpi_read(void *opaque, hwaddr addr, unsigned size)
++{
++    return octeon_stateful_io_read(opaque, OCTEON_DPI_BASE, addr, size);
++}
++
++static void octeon_dpi_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++    octeon_stateful_io_write(opaque, OCTEON_DPI_BASE, addr, value, size);
++}
++
++static const MemoryRegionOps octeon_dpi_ops = {
++    .read = octeon_dpi_read,
++    .write = octeon_dpi_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++static uint64_t octeon_fpa_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++
++    if (reg == OCTEON_FPA_CLK_COUNT) {
++        return octeon_read64(octeon_clock_count(s->io_hz), addr, size);
++    }
++
++    return 0;
++}
++
++static void octeon_fpa_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++}
++
++static const MemoryRegionOps octeon_fpa_ops = {
++    .read = octeon_fpa_read,
++    .write = octeon_fpa_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++static uint64_t octeon_ipd_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++
++    if (reg == OCTEON_IPD_CLK_COUNT) {
++        return octeon_read64(octeon_clock_count(s->io_hz), addr, size);
++    }
++
++    return 0;
++}
++
++static void octeon_ipd_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++}
++
++static const MemoryRegionOps octeon_ipd_ops = {
++    .read = octeon_ipd_read,
++    .write = octeon_ipd_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++static uint64_t octeon_pko_read(void *opaque, hwaddr addr, unsigned size)
++{
++    return octeon_stateful_io_read(opaque, OCTEON_PKO_BASE, addr, size);
++}
++
++static void octeon_pko_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++    octeon_stateful_io_write(opaque, OCTEON_PKO_BASE, addr, value, size);
++}
++
++static const MemoryRegionOps octeon_pko_ops = {
++    .read = octeon_pko_read,
++    .write = octeon_pko_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++static uint64_t octeon_rng_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t value;
++
++    qemu_guest_getrandom_nofail(&value, sizeof(value));
++    return octeon_read64(value, addr, size);
++}
++
++static void octeon_rng_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++}
++
++static const MemoryRegionOps octeon_rng_ops = {
++    .read = octeon_rng_read,
++    .write = octeon_rng_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++static uint64_t octeon_pow_read(void *opaque, hwaddr addr, unsigned size)
++{
++    return octeon_stateful_io_read(opaque, OCTEON_POW_BASE, addr, size);
++}
++
++static void octeon_pow_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++    octeon_stateful_io_write(opaque, OCTEON_POW_BASE, addr, value, size);
++}
++
++static const MemoryRegionOps octeon_pow_ops = {
++    .read = octeon_pow_read,
++    .write = octeon_pow_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
++
+ void octeon_irq_set(void *opaque, int irq, int level)
+ {
+     OcteonState *s = opaque;
+@@ -2573,6 +2761,36 @@ static void mips_octeon_init(MachineState *machine)
+     memory_region_add_subregion_overlap(get_system_memory(), OCTEON_CSR_BASE,
+                                         &s->csr_bank->csr, -1);
+ 
++    memory_region_init_io(&s->dpi, NULL, &octeon_dpi_ops, s,
++                          "octeon.dpi", OCTEON_DPI_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_DPI_BASE,
++                                &s->dpi);
++
++    memory_region_init_io(&s->fpa, NULL, &octeon_fpa_ops, s,
++                          "octeon.fpa", OCTEON_FPA_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_FPA_BASE,
++                                &s->fpa);
++
++    memory_region_init_io(&s->ipd, NULL, &octeon_ipd_ops, s,
++                          "octeon.ipd", OCTEON_IPD_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_IPD_BASE,
++                                &s->ipd);
++
++    memory_region_init_io(&s->pko, NULL, &octeon_pko_ops, s,
++                          "octeon.pko", OCTEON_PKO_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_PKO_BASE,
++                                &s->pko);
++
++    memory_region_init_io(&s->rng, NULL, &octeon_rng_ops, s,
++                          "octeon.rng", OCTEON_RNG_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_RNG_BASE,
++                                &s->rng);
++
++    memory_region_init_io(&s->pow, NULL, &octeon_pow_ops, s,
++                          "octeon.pow", OCTEON_POW_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_POW_BASE,
++                                &s->pow);
++
+     octeon_realize_peripherals(s);
+ }
+ 
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index 96443a9d64..f2daa35cdb 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -71,6 +71,12 @@ struct OcteonState {
+     MemoryRegion boot_flash;
+     MemoryRegion boot_flash_alias;
+     MemoryRegion cvmseg;
++    MemoryRegion dpi;
++    MemoryRegion fpa;
++    MemoryRegion ipd;
++    MemoryRegion pko;
++    MemoryRegion rng;
++    MemoryRegion pow;
+     OcteonMioState *mio;
+     OcteonEmmState *emm;
+     OcteonRstState *rst;
 -- 
 2.55.0
 
