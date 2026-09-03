@@ -4,104 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F99C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 07:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5B4C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 07:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x220R-0006D8-35; Thu, 03 Sep 2026 03:37:07 -0400
+	id 1x22Gy-0008Fa-3O; Thu, 03 Sep 2026 03:54:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x220P-0006D0-Js
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 03:37:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x220N-0003PD-9m
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 03:37:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788421021;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Xcm1sLKv+ipY+j82xnEgT4mxOfLmHX9WxVfwC4HRr+c=;
- b=hBQqi1icjItgpYOyPz61hN+JFQLf+JATo9BiV2UiEu6UxQuBPtRUU0BIs5Ao5Z89+AGDWp
- NelKCiPsH90xZV9GTALkiimeOL2/Y9Vbtg4TXym+M2wFPf8S1tNyptZVRtkl3A76KbnUvC
- nSeglLdK1VH36iwxwv88TF5/2YVHDfU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-Ye0oxH0wPg-E5X32brj7_Q-1; Thu, 03 Sep 2026 03:37:00 -0400
-X-MC-Unique: Ye0oxH0wPg-E5X32brj7_Q-1
-X-Mimecast-MFC-AGG-ID: Ye0oxH0wPg-E5X32brj7_Q_1788421019
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-484337a63bbso1263186f8f.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 00:37:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788421019; x=1789025819; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Xcm1sLKv+ipY+j82xnEgT4mxOfLmHX9WxVfwC4HRr+c=;
- b=B5iOc4V9SGEj43BM5VSleL/LjvjTVxHDMj+lVoa0dBSdZnUtLZxl80cUZwXYpFS9mN
- fsh0LHnwC3fOq1cxd16Us+RPmwkN7R1FDxpQsR8rBQcEm2jrGDmoyJdn8a7K11harDRx
- qG/wq3TLhq8yr/xSlu+Xgh6nKkK4yoam2oLbPW3xFfxSHQNGwjdduma7mePnG6/DVsYf
- uYuvQM2HNVQiYUb3ZSFC0TtGwMPYwWWX8ID4gMW/7jVnijNd4xSkTjSRG+Ldr0HJforv
- OmE0jD847BXnVs3yaJkR+Usybs4fi7z05qbiQYCQ+h/ypmoJAUcWCUJs34+8eHHW/ZL+
- 6q1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788421019; x=1789025819;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Xcm1sLKv+ipY+j82xnEgT4mxOfLmHX9WxVfwC4HRr+c=;
- b=RVD0lm4JOw4ocIg+fSHoqOeTzPx6C11oIbuUH4fBTc8al6PO5rvPQg3P/FTfMTpHZg
- iAbUwO9nNP2qApQWoirorCVBeNpxZKrBqHGIbSU2ilqF2eF1n0duVFK2UoyJmc05b9Ld
- nZAqL8hgiYu55prCJmvkyTqiN34CsWwKnNaxkzwCmvHvCifMtLpaFqJwMdj5pxBrSSBB
- jwNPHE9TU2CWG2wNZMpRtu9VKXj9LjCkkNih4yKU4vq6VxuuKCo2hyMPSGVwvs/hhD1z
- 6ECPBmEIPjyUaXxg50IS+XOwo2Aonb0/nHqFl5Et3tF2zvHjAIc+61JX9Yko7WOnuhzt
- 2KXQ==
-X-Gm-Message-State: AFuF++m6mFzJ6FVABnrnT0YkJenkj31dQRs+mH2tcaWnT4P2k5yFv5hD
- nYvS3s2uLrkmMenDGcf6uaH6YZjq8eDSJVh+yy7qO7938x9doXX6P7yuCM3gGMa4Y12hWqwKFTf
- HmQAVweXp/wqdlEKV9tmdB2JYtikINx4GK/Vrwfc1Tw+xjgbNPN0E9twXLd8A3pOgFgP/nKAdma
- nf/3rUwigg8B37JGXVFRbRFJZqWxDuThX7/Y2t9OPy
-X-Gm-Gg: AYBFou0mIP8vTKo0syVm6Q9dBGWJtjgd+/zBNiwmoExNTqZ8EJkMZQqf2ozhytyR/NM
- d8NzeuxfF+6qbsVPQYLnPNszk9fySbqbWyCWd5XQ7RRq5aHim3cjFlaUF+9f4lFQvgr6ZSBe5Sn
- kV5+pH0sJUrxKho+C3favG5Rh7i9Ad3SJq45azMfRX2zk+nb8c84lHfvZaQTy3Mc2/+hObO28A8
- zU8Gu5zK8dFZ8cyAAac15iMf9UHRNuG6sd3Rq0x+3qpDUJKhwH24HTG/x7VOsgv5q6qURU4g9tP
- DT7EnmA2Rxzzo/gfq+z4bR+whxKldbuspHK9WuFjF2jFOyU9pSdNU0bP1ANOhytcdCN/xsebrIO
- m2+kzzpGWCall2ooMIsOxziERjLFxWXVzt1C1E7SHJUqoo56MmnMiKkE/Ylg0+Hk4VDwmVtr5ql
- 7bmJ0=
-X-Received: by 2002:a5d:588f:0:b0:484:4153:11df with SMTP id
- ffacd0b85a97d-48488f04b19mr17149938f8f.11.1788421018951; 
- Thu, 03 Sep 2026 00:36:58 -0700 (PDT)
-X-Received: by 2002:a5d:588f:0:b0:484:4153:11df with SMTP id
- ffacd0b85a97d-48488f04b19mr17149839f8f.11.1788421018359; 
- Thu, 03 Sep 2026 00:36:58 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.151.49])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ed3840sm12538218f8f.17.2026.09.03.00.36.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 00:36:57 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] agents: Add a skill for finding your way around QEMU
-Date: Thu,  3 Sep 2026 09:36:56 +0200
-Message-ID: <20260903073656.540570-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1x22Gv-0008FN-MY; Thu, 03 Sep 2026 03:54:09 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1x22Gt-0005Lr-22; Thu, 03 Sep 2026 03:54:09 -0400
+Received: from [172.21.96.1] (unknown [124.16.137.194])
+ by APP-03 (Coremail) with SMTP id rQCowADn8kCXJ5lqiQHQBg--.16018S3;
+ Thu, 03 Sep 2026 15:54:00 +0800 (CST)
+From: Wang Yang <wangyang25@otcaix.iscas.ac.cn>
+To: Alistair.Francis@wdc.com, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com,
+ chao.liu@processmission.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH 2/5] target/riscv: save ELP in MPELP for RNMI exceptions
+In-Reply-To: <d0de80b7fbf7981fceb58f921580616e3751745b.camel@wdc.com>
+References: <cover.1787489230.git.wangyang25@otcaix.iscas.ac.cn>
+ <ce36a27e6346228b12c926a6f95835521ba56f86.1787489230.git.wangyang25@otcaix.iscas.ac.cn>
+ <d0de80b7fbf7981fceb58f921580616e3751745b.camel@wdc.com>
+Message-ID: <178842203941.34748.15055654521332091813@otcaix.iscas.ac.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: rQCowADn8kCXJ5lqiQHQBg--.16018S3
+X-Coremail-Antispam: 1UD129KBjvdXoW7GrykJw1DGw47Xw13AFW3trb_yoWftFbE9F
+ 17J3sIk3W8Zw45W3W3trnxZr9Fgr98Xr1rAw4DJr1qvw1kZF9rAa1kur15ur1aqay0qrna
+ krsxW3y7ur92gjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUb3AYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+ 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
+ cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z2
+ 80aVCY1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28I
+ cVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx
+ 0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x02
+ 62kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GF4l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
+ 0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
+ zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
+ 4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
+ CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
+ nIWIevJa73UjIFyTuYvjxU45rcUUUUU
+X-Originating-IP: [124.16.137.194]
+Date: Thu, 3 Sep 2026 15:54:01 +0800 (CST)
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,136 +77,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some parts of this skill are based on
-https://lore.kernel.org/r/20260529101437.410181-4-alex.bennee@linaro.org/.
+Hi Alistair,
 
-Co-authored-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .agents/skills/qemu-codebase/SKILL.md | 93 +++++++++++++++++++++++++++
- .claude/skills                        |  1 +
- .gemini/skills                        |  1 +
- 3 files changed, 95 insertions(+)
- create mode 100644 .agents/skills/qemu-codebase/SKILL.md
- create mode 120000 .claude/skills
- create mode 120000 .gemini/skills
+Thank you for the feedback, and sorry that the commit message was unclear.
 
-diff --git a/.agents/skills/qemu-codebase/SKILL.md b/.agents/skills/qemu-codebase/SKILL.md
-new file mode 100644
-index 00000000000..6769c6c5ea4
---- /dev/null
-+++ b/.agents/skills/qemu-codebase/SKILL.md
-@@ -0,0 +1,93 @@
-+---
-+name: qemu-codebase
-+description: Orientation for QEMU — tree structure, build system, documentation pointers
-+---
-+
-+# Useful reminders for working on QEMU
-+
-+## Finding things
-+
-+`MAINTAINERS` is the authoritative map from file patterns to subsystems
-+and maintainers; use it to work out who owns code and which tree a
-+change goes through. `docs/devel/codebase.rst` is a guided tour of every
-+top-level directory.  Here are some important ones:
-+
-+- **target/** holds CPU models and the TCG frontends
-+- **tcg/** holds the backends and the IR. See `docs/devel/tcg.rst`,
-+  `docs/devel/tcg-ops.rst`.
-+- **hw/** is devices and boards, categorized by type.
-+- **linux-user/** and **bsd-user/** are almost entirely separate, and only
-+  have parts of **hw/core/** and **accel/**'s CPU emulation infrastructure
-+  in common with system emulation
-+
-+Other directories include the back-end subsystems, for example **`block/`**
-+for the block layer.
-+
-+The `include/` tree mostly mirrors the top-level tree.
-+
-+## Build layout
-+
-+Build is always out-of-tree; the build directory is created by
-+`configure` and a checkout can have several. Determine it from context
-+(`ls */meson-info`) rather than assuming.
-+
-+Every path below that starts with `pyvenv/` is relative to the build
-+directory: `configure` creates a Python venv there, and `pyvenv/bin/meson`
-+is the meson that must be used.
-+
-+`make` at the top level forwards to `ninja` in the configured build
-+directory, and any `build.ninja` target can be invoked that way.
-+
-+## Build & Test
-+- **Build**: `ninja -C build` (from build directory) or `make -jN`
-+- **Test All**: `make check`
-+- **Single Test**: `./pyvenv/bin/meson test <testname>` (e.g., `meson test qtest-x86_64/boot-serial-test`)
-+- **Suites**: `make check-unit`, `make check-qtest`, `make check-functional`, `make check-rust`
-+- **Debug**: Append `V=1` for verbose output or `DEBUG=1` for interactive test debugging.
-+
-+## Code Style
-+- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
-+- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
-+- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
-+- **C Comments**: Use `/* ... */` only. No `//` comments.
-+- **Naming**: `snake_case` for variables and functions; `CamelCase` for types and enums.
-+- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`) APIs. No `malloc`.
-+- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
-+- **Lints**: Run `./scripts/checkpatch.pl` on C patches. Use `make clippy` and `make rustfmt` for Rust.
-+
-+# Documentation pointers
-+
-+Developer docs live in `docs/devel`.  A `kernel-doc::` directive includes
-+documentation comments from source files when Sphinx builds the documentation.
-+These comments be consulted just as easily in the source tree without going
-+through e.g. `make html`.
-+
-+Here are some useful pointers.
-+
-+## Core abstractions
-+
-+- **QOM** (`qom/`, `include/qom/`) is the type/object system underneath
-+  everything.  It includes class and interface hierarchies, properties, and
-+  the object composition tree.  See `docs/devel/qom.rst`.
-+- **qdev** builds devices on top of QOM, adding for example buses, the
-+  realize/unrealize lifecycle (including hot-plug/unplug), and reset.  See
-+  `docs/devel/qdev-api.rst` and `docs/devel/reset.rst`.
-+- **MemoryRegion** (`system/memory.c`, `include/system/memory.h`) is the
-+  guest address-space model: regions, aliases, address spaces, dirty tracking,
-+  load/store and map/unmap operations, etc.  See `docs/devel/memory.rst`.
-+
-+## Concurrency
-+
-+Getting the threading model wrong is a common source of subtle bugs here.
-+
-+- The **BQL** (big QEMU lock) protects most device emulation; vCPU threads
-+  hold it when exiting to emulation.  See `include/qemu/main-loop.h`.
-+  Memory regions can (carefully) opt out of the BQL.
-+- **AioContext**/iothreads: block devices and their virtio front-ends can run
-+  outside the BQL.  See `docs/devel/multiple-iothreads.rst`.
-+- The **block layer** is coroutine-based.  `co_` prefixes and `coroutine_fn`
-+  annotations are advisory but relevant for reviewers.  Coroutines have their
-+  own locking primitives.
-+- **RCU** is used for hot, rarely-modified structures such as memory maps.
-+  Because of the BQL, RCU is mostly used with `call_rcu()` rather than
-+  `synchronize_rcu()`.  See `docs/devel/rcu.rst` and `docs/devel/atomics.rst`.
-diff --git a/.claude/skills b/.claude/skills
-new file mode 120000
-index 00000000000..a7540c24423
---- /dev/null
-+++ b/.claude/skills
-@@ -0,0 +1 @@
-+.agents/skills/
-\ No newline at end of file
-diff --git a/.gemini/skills b/.gemini/skills
-new file mode 120000
-index 00000000000..a7540c24423
---- /dev/null
-+++ b/.gemini/skills
-@@ -0,0 +1 @@
-+.agents/skills/
-\ No newline at end of file
--- 
-2.55.0
+This patch fixes the Smrnmi and Zicfilp case where an M-mode exception occurs=
+ with mnstatus.NMIE=3D0. QEMU currently saves ELP in mnstatus.MNPELP when red=
+irecting to the RNMI exception vector, but this path returns with MRET, which=
+ restores ELP from mstatus.MPELP. As a result, ELP is lost and a subsequent i=
+ndirect branch requiring a landing pad may avoid the expected software-check =
+exception. The patch saves ELP in mstatus.MPELP for this path; the true RNMI =
+interrupt path using MNPELP and MNRET is unchanged.
+
+I also found that Zephyr Li has submitted an equivalent fix, including a TCG =
+regression test: https://www.mail-archive.com/qemu-devel@nongnu.org/msg122208=
+4.html. Since that patch fixes the same issue, I will not submit a duplicate =
+revision. Please let me know if any further clarification is needed.
+
+Best regards,
+Wang Yang
 
 
