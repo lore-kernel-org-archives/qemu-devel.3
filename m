@@ -4,121 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6B1C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B16BC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24rp-0004xm-Ai; Thu, 03 Sep 2026 06:40:26 -0400
+	id 1x24sQ-0005nf-FD; Thu, 03 Sep 2026 06:41:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24rj-0004uS-QT
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:20 -0400
+ id 1x24sG-0005aU-V8
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:55 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24ri-0006QL-9p
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:19 -0400
+ id 1x24sB-0006Ti-Rd
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:50 -0400
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AHIFV3782479
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:16 GMT
+ 683AHBMn3782254
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yqIoxY4uvE/iA/VLE9haMr+T3JBp59A54zo4MolHNbQ=; b=n3XouhB1GLgV9odK
- JAKgcmM03iNr4JmEY+tsHFtMMkXzVq2hM4Rh/uf2ru1dBMtw3L4wtEOZTDgOQh2O
- UOc9bL13xRhGgeAAXAaLm8Coot8YluUiXEH+coms/7CSn5DeApUk2ozEVMXD4AvV
- BEnxn3Gi+HhW2/D04Zc5F3G26GsgIinuZ5SSWkePGazBFu84OEa1T0sYqXT3mivU
- GO5+8V8HJdbS/boan0u6ylTKnT8fVXDxGpuiUr5dLTohTqz13KiVyM47S64mLzDr
- W57Edeqc1SuH1goa6hs17WetgNyoKzYJ6uT35x+htw8kNHXwAtI6sYurCQznynQR
- oCTRSA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf5pdrfqe-1
+ XyuN6PFVWKFuf1ZjipgLX6cblWICVka9Ua8+99l39Aw=; b=AMSCOYRWYg3C6eE5
+ 0App834HVvU28DkWa62jyaow5t+2R/9FYsOyEaz6+eXwWwXQO0PaPPLXIeO4IBUQ
+ YfKa+/R6YDeOf+ES721CcFHS2EXL1mfOTmWA7RyOwBNuE802vx+0YuqqFzLu254N
+ 3acuHmdoYFBoGTM946GGD9O/NAhgOkJUX2IePG2sFDopSeQsB2pjbJfK5YxuyVuH
+ 6AyfmSmBXXrhaQJvRB/N4TXJgMtkb45NDd/kz3aIKs96t0Pa7fk/YJZAMPe/Z23r
+ 8BIXq1O/8zEBSmh7soBZcPCvGudPuGv4rqDc8s2e7iTWCbXiam5Tr7jWV1ljPITX
+ 5JRxsw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf5pdrfsq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:16 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9396e0515dcso58581385a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:16 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:44 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-939665a1ae6so413957185a.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432016; x=1789036816; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788432044; x=1789036844; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yqIoxY4uvE/iA/VLE9haMr+T3JBp59A54zo4MolHNbQ=;
- b=OwLTAj6IMEkV+xjcTj/p6otL9nSK+AZXH7sExAI+QdJI4xB+kKDOUSKvzTP8gHcNfx
- DVHOpKsLO6SieHwXoYNk4XmvkOK7k9mXei+unAiwyPwZo/pskSGd/g94U0aKwBgWCIhN
- nWeG0N0JL5lT/ovM0SrmimeysmiXJfyUNMU8Sv12BgX3c/TIWCPkENqN/PcHLg/bKGQZ
- VkEMKYxj65X/n5KoWJrOfByiWWul1xapb178qJBgAB9rjsN7kZVDpx4VcX5p3h3NSehg
- LFFjWuLXJxuMvNFl8NC4oU7QOT4kHfq4DQE1MuOKIUHJ6OACl7SLiqwrzZMWxAGadqNn
- l53w==
+ bh=XyuN6PFVWKFuf1ZjipgLX6cblWICVka9Ua8+99l39Aw=;
+ b=MKbMf7fp8dyBLiTVyG55LEqeyHIEzNxaHYl4dGENmiCacsIMTvIp155NbkDufablB7
+ zOjOUn1XSaRDg5EuOmukJBMRoLlFxhPOrKxKQ6IrkVaV6oipW7bcFEAddpLXQmBywCGt
+ 4meyUMgsY0slz5CBP806EIbXv0Nj4tWXHdJNW7JymiJbCYLUrltBfrEvXhUtaR/0DJy3
+ QfjHkfdSVJn5dF+g5drG3WRPB9ya+NhRbttraPqMLsEl0xeTOrPgqoMMH1njkxcHw/r3
+ 6cyA9+QI9RKXda7GXs64dwaIkVkiPjv1nXrCKeklz/NAUU4h6x06bP38N6Th5XPQ/aIi
+ z90w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432016; x=1789036816;
+ d=1e100.net; s=20251104; t=1788432044; x=1789036844;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=yqIoxY4uvE/iA/VLE9haMr+T3JBp59A54zo4MolHNbQ=;
- b=AqnL83+mi9FjX5RKZcSQRmPsTxcBd9+LBRr0fGnjDMCOeHoVahgJgQur3mICroCHDR
- DWSQC1SkrRcxNw0Bmfn0Gd1l0dnQHloDEpq4r6PfBpmLStQTF0gSiU5G0kMrGJWPKk5X
- v0BFJ4M0DLciTtPjOmuYzYKPcaS8gc0nre0Pr0EXxZxIFRm8/0hqAs7BlSoM6PrC2ZME
- g/yuEvlPL3xxoIk6svPPz2P3344UMT9r2sf4SklQa/pICm0GGy/9j0mskLBwSkFzKzYM
- KNDPo+ZKuLsfitvaavph4MdN+T3bN8ZTkzUp33wiI4v09SDU7BB4mvvzQIld1ruTFdzA
- cAJw==
-X-Gm-Message-State: AFuF++n+XVB0wMMqfr5ydLiNejpH2uvKEBtB9OU9Tx0cmRpMdb3GyaQc
- yNkE1WM5nR6NJGvHKzxrfp/2c72sJa5EgLjQ7EGtOmzWqWX/EhooVdE4PYJjXhuFRDXx7eKqDs2
- xooXsxY14aja46a2pP9DBlw9kRZgIezj80zGezDHwDAmo05T8Y43sCcQP9o+iQxkZ6w==
-X-Gm-Gg: AYBFou02TljgIehmP0xu+1wy8MfE4qPc3muBpOYgQW0USDorQHu1WSKfm13H1hmI5VM
- 52/lLtKX/ejXuhmERLYJxLKfrO2rYL1Tf0BjjCZD15pvRt0mxQK/srpY0jJ4i8p7IqeQxc8owCh
- 0OZNeElzllijPd/0YFIqyEQiFYN7anjQdpcC0SPJxi4lGQgReS+++t8KzUP+aJ+HMqXmu6RGMeA
- NwYBU7EQOWvVhpnJIPIA92s2H+zW+OJpBKI154Qxdgx9StAy5Igy0oJEd+aqt5+eZK6uPGakQD5
- jiuJaI17V0mHPBlG+JcSJvZsDBDiwhGVYtqZJWAX9+AGPtU9mgFSpeGHobH8Sc/bnACVkQ5JiGv
- 5LiEd/MHUS63jpzYrVovDnLwdrLlOvHVMKyjdDv9s
-X-Received: by 2002:a05:620a:934f:b0:939:820:2e71 with SMTP id
- af79cd13be357-93960f871c8mr1032652085a.33.1788432015586; 
- Thu, 03 Sep 2026 03:40:15 -0700 (PDT)
-X-Received: by 2002:a05:620a:934f:b0:939:820:2e71 with SMTP id
- af79cd13be357-93960f871c8mr1032647285a.33.1788432015011; 
- Thu, 03 Sep 2026 03:40:15 -0700 (PDT)
+ bh=XyuN6PFVWKFuf1ZjipgLX6cblWICVka9Ua8+99l39Aw=;
+ b=RmzOONs+beslfg0avb47AZKe0PaOJbE8eK15c0zeKagctoqlfmQBiOyo24EAmhfECc
+ 3BRltA4DSssZN12mcyIw+dOY2iHvRFgjTgR29sRfm9ZmEo2otK8rg1v2LmsoGkEoWoRg
+ 4FdMCaS/Zj1uh49rFO6GLEm1Iqk2dctfm+c5jDsOslaOfTCIz9ihBrKg7hDn3kS/x6Ak
+ QBcf12201EqFg+2mN6yUSQhaDDA79lmg/B1qKWPAo5guHAiiwcw+A5e1ZRD19n46T29A
+ BH7MPS4sCMbeyrllXMgq3JjKP9tZY6qg+fVZ46MSPNUBRa4JKl1cTuh+aKqwA9JosOQt
+ uXuw==
+X-Gm-Message-State: AFuF++mmJv41X4/pxhALCc64dr45WDBaMZMInPHzO13EJq4vWwQyqnHw
+ QTbWkCC2xu/I2cO89Apa4vrCkDM99lQAtNCdYpnodzw2AbA4TTTJTfdHcRdZ+IfR2gQfgGS+Ggl
+ McVIq/dR9d0HAp2iq/nQLVMDRByPy4VQKW2bZrtGsbtVuC8tW480Qrod6DF4ID2ts+g==
+X-Gm-Gg: AYBFou1Bt7ayAiDdIMc7HwD650lPJjNaYfw4TvEWBSl5vJ1ZrIFms/2l+jVBkQlOtsi
+ 4cw4PETROEdprlP/V+yk4n/U/+ULU5rhH9bQa+7iN2+1VQWFuclIQVhSCljchy1BEd+Bep0R3Zl
+ NYpibOH4tqsDiGNAm9l/BG13je+jNZXJQew45Xmwce8EnCW7a4ZQIEq2qV3jZWG4efS6+xzyywm
+ zFnKM8J99F9k4yCsG/e2D4Wl2BzEZXOYTDA+sKydyrwQQYKaeRfvlVWK1ylI9WEDYw2ahrXpKYe
+ /b68byeuc2BWIZqy7GdcWYvexi4+oNf8w0gVicAsJwuf7xImdL8jEnGJBUBFg0L2RgopImF8urf
+ xeNZlVVhKAS/vvW30Z5Hq2wnR5IDYY5pYrqYSR03l
+X-Received: by 2002:a05:620a:2886:b0:939:4891:6799 with SMTP id
+ af79cd13be357-93960decb8fmr1347671585a.11.1788432043777; 
+ Thu, 03 Sep 2026 03:40:43 -0700 (PDT)
+X-Received: by 2002:a05:620a:2886:b0:939:4891:6799 with SMTP id
+ af79cd13be357-93960decb8fmr1347667685a.11.1788432043303; 
+ Thu, 03 Sep 2026 03:40:43 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5d9db2sm63117615e9.8.2026.09.03.03.40.12
+ ffacd0b85a97d-48448e81718sm12733262f8f.16.2026.09.03.03.40.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:40:13 -0700 (PDT)
+ Thu, 03 Sep 2026 03:40:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/51] hw/sd: sdhci: Accept version 4 enable without UHS-I
-Date: Thu,  3 Sep 2026 12:38:49 +0200
-Message-ID: <20260903103936.62355-6-philmd@oss.qualcomm.com>
+Subject: [PULL 09/51] hw/sd: sdhci: Support version 4 ADMA 64-bit addressing
+Date: Thu,  3 Sep 2026 12:38:53 +0200
+Message-ID: <20260903103936.62355-10-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfXz/PhzFAiciij
- 0qi9ZHP4EpixhR+n06wWoROg/7RxlYlSFrJyAUh8YO9dcB7xKcT4gjYSLSGsSA1qUzeGU/LJ97h
- TJfOqNxAH1p85gE+I6HupyG+Vj2HySw=
-X-Proofpoint-ORIG-GUID: x6cJfWYhZO6KzU6wNCcqzD8JAfktiiFg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfXzLDIgtfis/E3
- 8xmDlxW353i+nL7G4RAqXChzpw0pK7Sl0hCZQfg99IIccU0gko6JjsPx7CjeYV2Pgk5RGkgJR/U
- +Wtpx3OIt74Qnf7KLsea7wP8GgnXMSeGg8U0u8BOJXlQEeHUxNLkjR5OZjQuCXUnXhNdfmWLmZE
- e8Bh8bpxtu/egv+k2Cwf6UyENE9+3MjNRDdaBm5/yL9r26NO3BCIK6nIqFRRG6cttS8PVqCfBT4
- TDKsC1zwiGzaumouyKb1a308Xv5ZVVwmVxUF1xJ6uKuwXRLRi8ey5c4GydKsANnLu2RwHAXJe6X
- LbuR9NUQU7FTmu6O4GltX/Qp7K/ZcGgdQFWJ+tK99CxdVeaYX+wXxPj1PN3ViFz72GwZOnBBoUH
- uuCdhbdGPIW2gqbQLmpM3m6ACK3PQU1KmnbJ9xRPQFso8Fin0wQjkaR3QW4PNVxH8uCNhCLKcQM
- LDokt0L08bo9KmzmCZg==
-X-Authority-Analysis: v=2.4 cv=RsL16imK c=1 sm=1 tr=0 ts=6a994e90 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX9VJ7Jy/dOXGZ
+ 4b7Una7q+FbJcnXbEw1IiX8FM5vb44xDJMYKzO2w2avWvgt2WUDiKBSaILIPfEXgSzOkpH5GXIB
+ YGkEk92ZVZZusYu2kBaYK/744iX+mhk=
+X-Proofpoint-ORIG-GUID: KAt9pfBB32njghQMbmdTSaRHjHnc0RVo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX21srroKqRSr1
+ +7v49RL1gCNnvL4OKelW7r0XqPOvB/a9K+1BJ5wNZSuI8kzhlR57fPDHZUqgzcdoJAu5XBAYVCt
+ VxVK8qX7wMGIwEfHz/zTSxb4qSfA8rB93lLVo92PYYq7e1CLKGgFsa/ntVW5f7ZQTJY1Dh9Nsxc
+ AumwvP6wY2pW/omdL8Jr9cb6WA4tzEzKHHsBlI/y7DVv8AwsYceRe2njqkXqeLNBo62VpbciY+c
+ cgLX1aBmtVaPjTpUL4HZIipixbKMQkNgZC6m3yvsyFTNiNBWAG9TfnqoenUqT0ItjKw9MD3UHnK
+ B5XdLYaIR7mIcaYrP1+79Q/I9VblyvJRFWxFRuVvylaVFK2N1l2qVFNz9c3V5aCbjYz+MI3jtAI
+ AhBR6tB3XtD3TiuP4TMEHbfPMwxsAdQJeV6BdmTb2cMDRRWyhIyW0wiD2t39Y/82wamtsoyyrML
+ 2Qep3aFNt+3xijXZq9w==
+X-Authority-Analysis: v=2.4 cv=RsL16imK c=1 sm=1 tr=0 ts=6a994eac cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=FRSEYCzRAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=cecaVjzdulOwRCAQsNoA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=H4N_Y-AU75W7NKDNhZlT:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: x6cJfWYhZO6KzU6wNCcqzD8JAfktiiFg
+ a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=cecaVjzdulOwRCAQsNoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-GUID: KAt9pfBB32njghQMbmdTSaRHjHnc0RVo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
@@ -153,65 +152,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bin Meng <bin.meng@processmission.com>
 
-Host Control 2 writes have been conditional on modeled UHS-I support
-since commit 0034ebe6ee31. Host Version 4 Enable does not control UHS
-signaling, so controllers without modeled UHS-I cannot enter version
-4 mode.
+The Cadence Linux driver enables version 4 mode and 64-bit addressing in
+Host Control 2 but retains the ADMA2 encoding in Host Control 1. QEMU
+treats the transfer as 32-bit ADMA and uses 12-byte descriptors because
+it only decodes Host Control 1.
 
-Retain Host Version 4 Enable independently of UHS-I while continuing
-to reject UHS-specific fields and keeping voltage changes UHS-gated.
+Resolve the DMA type from both control registers and use 16-byte version
+4 descriptors. Preserve the legacy 12-byte ADMA2 64-bit format when
+version 4 mode is disabled.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 0034ebe6ee31 ("sdhci: implement UHS-I voltage switch")
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723151853.2143177-9-bin.meng@processmission.com>
+Message-ID: <20260723151853.2143177-11-bin.meng@processmission.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sd/sdhci.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ hw/sd/sdhci.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 101fbcf2ff9..586e4680bee 100644
+index 3fba3970d4f..f0ba5c11dfc 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -1358,11 +1358,24 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-         }
-         sdhci_update_irq(s);
-         break;
--    case SDHC_ACMD12ERRSTS:
--        MASKED_WRITE(s->acmd12errsts, mask, value & UINT16_MAX);
--        if (s->uhs_mode >= UHS_I) {
--            MASKED_WRITE(s->hostctl2, mask >> 16, value >> 16);
-+    case SDHC_ACMD12ERRSTS: {
-+        uint16_t hostctl2_mask = mask >> 16;
-+        uint16_t hostctl2_value = value >> 16;
+@@ -227,6 +227,23 @@ static bool sdhci_update_irq(SDHCIState *s)
+     return pending;
+ }
  
-+        MASKED_WRITE(s->acmd12errsts, mask, value & UINT16_MAX);
-+        if (s->uhs_mode < UHS_I) {
-+            /*
-+             * VERSION4 is writable even without UHS-I. Preserve all other
-+             * Host Control 2 bits when UHS-I is not supported.
-+             */
-+            uint16_t independent = R_SDHC_HOSTCTL2_VERSION4_MASK;
++static uint8_t sdhci_get_dma_type(SDHCIState *s)
++{
++    uint8_t type = SDHC_DMA_TYPE(s->hostctl1);
 +
-+            hostctl2_mask |= ~independent;
-+            hostctl2_value &= independent;
-+        }
-+        MASKED_WRITE(s->hostctl2, hostctl2_mask, hostctl2_value);
-+
-+        if (s->uhs_mode >= UHS_I) {
-             if (FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, V18_ENA)) {
-                 sdbus_set_voltage(&s->sdbus, SD_VOLTAGE_1_8V);
-             } else {
-@@ -1370,6 +1383,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-             }
-         }
-         break;
++    /*
++     * In version 4 mode, the legacy ADMA2_32 encoding selects ADMA2,
++     * while ADDRESSING_64 determines its address width.
++     */
++    if (type == SDHC_CTRL_ADMA2_32 &&
++        FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, VERSION4) &&
++        FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, ADDRESSING_64)) {
++        return SDHC_CTRL_ADMA2_64;
 +    }
++
++    return type;
++}
++
+ static void sdhci_raise_insertion_irq(void *opaque)
+ {
+     SDHCIState *s = (SDHCIState *)opaque;
+@@ -781,7 +798,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+     uint32_t adma1 = 0;
+     uint64_t adma2 = 0;
+     hwaddr entry_addr = (hwaddr)s->admasysaddr;
+-    switch (SDHC_DMA_TYPE(s->hostctl1)) {
++    switch (sdhci_get_dma_type(s)) {
+     case SDHC_CTRL_ADMA2_32:
+         dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+                         MEMTXATTRS_UNSPECIFIED);
+@@ -818,7 +835,9 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+                         MEMTXATTRS_UNSPECIFIED);
+         dscr->addr = le64_to_cpu(dscr->addr);
+         dscr->attr &= (uint8_t) ~0xC0;
+-        dscr->incr = 12;
++        /* Version 4 pads 64-bit ADMA2 descriptors from 96 to 128 bits */
++        dscr->incr = FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, VERSION4) ?
++                     16 : 12;
+         break;
+     }
+ }
+@@ -998,7 +1017,7 @@ static void sdhci_data_transfer(void *opaque)
+     SDHCIState *s = (SDHCIState *)opaque;
  
-     case SDHC_CAPAB:
-     case SDHC_CAPAB + 4:
+     if (s->trnmod & SDHC_TRNS_DMA) {
+-        switch (SDHC_DMA_TYPE(s->hostctl1)) {
++        switch (sdhci_get_dma_type(s)) {
+         case SDHC_CTRL_SDMA:
+             sdhci_sdma_transfer(s);
+             break;
 -- 
 2.53.0
 
