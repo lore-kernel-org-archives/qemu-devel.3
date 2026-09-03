@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01815C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DD8C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2604-0003l2-Rr; Thu, 03 Sep 2026 07:53:00 -0400
+	id 1x2604-0003kf-1V; Thu, 03 Sep 2026 07:53:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x2602-0003jU-Lm; Thu, 03 Sep 2026 07:52:58 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ id 1x25zz-0003hw-SN; Thu, 03 Sep 2026 07:52:56 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x2601-0002h1-1D; Thu, 03 Sep 2026 07:52:58 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=aKqfIPv
- 8iJzdFI3a75NoeR/ynDbmY4jBIJAEuy9biFf6iMjnADlyhJRvCJA00kMXFFKhX6/lL527Z
- hqfZ+wMgV6hwM+ov3414222WR01BnwrvZyAnAXO1kEaiKMKPDvEmGw8zz6O98ak2rvEywF
- mbuJwdAmVcNEaxDoRI9PzVKsy1fFvhP+wOe8GSLwqj1pftVIJYxagSPbUqK7mOST9fJCe4
- klOwX5M5dOFYjvs2D12cRMsATL2FMlaVagOqq7oOLE7BVY1Zt8pLs0DIJpzSF4qKcvmZNS
- lag/awCb8RpBw8oGJ5gPl/Ol40jtvnSEMtXjWv2FNM8cwVz5qhgrCAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=O
- qTl22l5p6/CPHHVITgZQsvYvoHPLOjk9ekmkSr5Lw8=;
+ id 1x25zy-0002h2-4B; Thu, 03 Sep 2026 07:52:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=PcsW2/r
+ KJGro6qfT3w4RfpEaZeFaKvZhyozCRYxMDjWyytTqupz1Ep66PRC07IJaJAYNdHM+1jdUw
+ nxlIT47n1sRCDukQU2/BIY9Zdb2vMuImaswgw3Zb1gKxqe+M9OHrY8xEQ17UBekIXBCXY8
+ RA/kBqVYn7OAlfgMmDDLXTFWVXFo3Cb/ZTV1XH4C+3Smhqur8sglxNcQ36KcW4vwZ68hxc
+ fg+GrmfKLuaEvtdJ5fWc5dnfwKeNUK2YaX2CIanJyTIb6wuIafRLyzJgA6sEqY0uAk0vMU
+ dfD9AmFTU5ghGFTp0G+6JtYC7pXVxsHSpmHwGTNhQEMAOYPgcCLo3WA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=L
+ 38mssKJShTqPMLPvNfwMyO1HAru0zAlCLDv1fhZDAs=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=c6+6Wzgtpv28oM1hyQZoOPGyBIfT5WSBJr2v5mbXHw4OCCjqDvQVM2OPwBTil2oha7pZ
- OHecLkA1G7HSq4GOTVuSFuszSPW5zoRIM89o4iUHkGph0CdqRoUjWE+tL4pBELS0ZaV0tT
- wgdWCTdyFhDvYWa3kQdyJE5hFXunjTOcJylySdWlUV31255QAvSKx36jPXXFqbD73VXZvw
- oirxWJMQAtur8/m9L3r+il5IWx87ubT2/H568xMJsb6j7gCQaYgMeH0QGZoGUkE6YwW4Qp
- dtk9nBFdJZKJLIV/kATD4pjfTb4OwJwRu/mWF6vmg7pGGMu5qi6aUqkDjBdA0R1g==
+ b=LeG3ZikxumWJigEHkgb61RzkGd5BDwn2JbRDW6ly4Aa2fHiPvCCXEsWbYmdmPKoHZt+p
+ gzy+5Ifs3oaY6WnCitUrdpZkIv0+4SBAekBTIFIPFZStxI0LpR54Uky4WuJyNiyJ7W0n6M
+ Eue2K6YjXEL793nEmZ7/8DjuTDpi7+9OgF/gUzrnddjZQtWulS4g5OASvu3FUVPD5h+PIk
+ Vm4qz6le6yERo2u0ORxLiZFXd91rNuh4Uy2GcZ6SW1+RiVNF5xCKMhfU9JoMTA7nCTjUbs
+ 2S7ou4kQQkjxK509ZUXrclThtCifglT7v+l62YcehCvwzz+/uOkgKI6uspxe8oUA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=VqiKPQPw; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=K9n70op4;
+ header.b=JNl7wiu+; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=qZQBEu0z;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=OqTl22l5
- p6/CPHHVITgZQsvYvoHPLOjk9ekmkSr5Lw8=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=L38mssKJ
+ ShTqPMLPvNfwMyO1HAru0zAlCLDv1fhZDAs=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=VqiKPQPw+HWuORViuXT9LzJWG4ztr/2K1zy
- MIOzux4UGJLxJ2BgowMs8IsU1lZc3Wz/KsEW4/MSENSMC2I6yBTzw89GqPLvDh843bPH2V
- XttrsU7LPnIBcgXmwkXqw1GuYnoNorK0K8u36M+naiE2zKjL1z0ZcvlT6oXPKxjbOyy5zu
- GVlzmMhmMPLuzXlOwXSg39MyMflB3o7a9BkvYCHDycJrSZj/NgxHUlOnIRWqzL64wtcxls
- kQ7I8YQgehh2xGjSYyw3WfRew5klgII1f36D6JDs8ypJKPAubFJ0BjuqrVmRmHUEkvdphM
- CZOSqpd4jGJUfDrEzH6GBhkQ+3w==
+ subject:cc:to:from; d=korins.ky; b=JNl7wiu+UcKrs0S3Btf9saOKlGsGfLMY1uC
+ WL03XZ1KBcsQqJXk/cz7Lsk37XA8WJtsCqy4+3cSrAL6QDMTBozhhT0puRCAVwmJRmXd5f
+ f2N8ZsS/mWhOSvM6J1slgRvrQAbEaXlJhSU1N3NgaLj6fbKupXB2LyPTp/hPDpTLlDBjt9
+ RvpfLK4+ysNQ2U3olaioHf1qRsWQEBjiZRmCgJ0ybcM6bUe7nJM+s2rvWhIrGzPcIIE/vo
+ LO5MSpHXfx2zmIIlwMT+DMX7Uir+85/wcvobxe1cgp2SV4i+ubbCUDrcw9Be3BQwIPHd0D
+ R/vtnmv0gievPReviKGi5rS/KFw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=OqTl22l5p6/CPHHVITgZQsvYvoHPLOjk9ekmkSr5Lw8=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=K9n70op4XJjzRvXAXr
- YWbrsTuVl4Al7UvdfqVUEt8DJlpUTY815Gov3vlohsOz8NIjkzar1277UJMuQ276cmBw==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id ef7efe5f
+ bh=L38mssKJShTqPMLPvNfwMyO1HAru0zAlCLDv1fhZDAs=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=qZQBEu0zJnUToy07Ec
+ 4PPtxvhll9KVLSUF/m1SjdEZlHRKQ+9eeFU49gV/3QNeCXcFdaF9vsz4Jic9Ycya7WCA==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id facddbdd
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
  Thu, 3 Sep 2026 13:52:50 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id ac6433a2;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id ffec5fd8;
  Thu, 3 Sep 2026 13:52:47 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -66,16 +66,16 @@ To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 4/5] cuda: Make shift register delay configurable
-Date: Thu,  3 Sep 2026 13:50:29 +0200
-Message-ID: <20260903115229.95811-5-kirill@korins.ky>
+Subject: [PATCH 2/5] ppc: Raise decrementer IRQ on zero write
+Date: Thu,  3 Sep 2026 13:50:27 +0200
+Message-ID: <20260903115229.95811-3-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260903115229.95811-1-kirill@korins.ky>
 References: <20260903115229.95811-1-kirill@korins.ky>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -98,36 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CUDA model assumes a 20 microsecond delay before each shift
-register interrupt. OpenBSD times out during device discovery with that
-timing, so retain the existing default but allow an override.
+OpenBSD writes zero to an edge triggered decrementer, then enters idle
+expecting its interrupt. QEMU defers the already due edge to a timer at
+the current virtual time, leaving the guest stalled.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/misc/macio/cuda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/ppc/ppc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
-index ccb3e1d74b..a62fdf23b9 100644
---- a/hw/misc/macio/cuda.c
-+++ b/hw/misc/macio/cuda.c
-@@ -535,7 +535,6 @@ static void cuda_realize(DeviceState *dev, Error **errp)
-     s->tick_offset = (uint32_t)mktimegm(&tm) + RTC_OFFSET;
- 
-     s->sr_delay_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, cuda_set_sr_int, s);
--    s->sr_delay_ns = 20 * SCALE_US;
- 
-     adb_register_autopoll_callback(adb_bus, cuda_adb_poll, s);
- }
-@@ -557,6 +556,8 @@ static void cuda_init(Object *obj)
- 
- static const Property cuda_properties[] = {
-     DEFINE_PROP_UINT64("timebase-frequency", CUDAState, tb_frequency, 0),
-+    DEFINE_PROP_UINT64("sr-delay-ns", CUDAState, sr_delay_ns,
-+                       20 * SCALE_US),
- };
- 
- static void cuda_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index b123b4cc1c..d99e47d532 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+      * an edge interrupt, so raise it here too.
+      */
+     if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
++        ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0) ||
+         ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+           && signed_decr >= 0)) {
+         (*raise_excp)(cpu);
 -- 
 2.55.0
 
