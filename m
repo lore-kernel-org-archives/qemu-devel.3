@@ -4,93 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BFEC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F83C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28Kh-0003r3-Sj; Thu, 03 Sep 2026 10:22:27 -0400
+	id 1x28KT-0003ok-UA; Thu, 03 Sep 2026 10:22:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x28Kb-0003pu-Q3
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:22:21 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x28KY-0006MB-3K
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:22:19 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4995b0343c1so27301825e9.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788445336; x=1789050136; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NwDxLC/oWMRhdUIEhVG9Gi2RPoeDyYc/cxpG7J021lY=;
- b=ZgfWbj7ddC+zLKSlam88r1WYX27jgaodqd1cdDR1tjG3Nu9NWRrR4/r9L/ExZ4P9ui
- N3JH9xywkG6HOuoyIRodY/q85Siy3cenvb38hQ32PPNZkANSyTz7fMNO/X2jmJhalGXT
- NA0ZKXP8Xbr389wuu3EHPqW8mu7WiJHHy8rN62Z1TAULE2ocIB9UzDV1eZyg3qPdEGjD
- L7NENXMIB8b05yC+xuE2honQfsXpX0p0FxR9l8vI0KBup1bcKAjYRURwTmGSIYtu1tkZ
- 0bSSXPuXefI88vqqJKC9k6HscqGm0KtRhriEmu4V8aeI3Dgl++W/pmUxWe3HRXL02Kk3
- HGjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788445336; x=1789050136;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NwDxLC/oWMRhdUIEhVG9Gi2RPoeDyYc/cxpG7J021lY=;
- b=pM5IExt7hejwe9UFAWe38uW9T+n9d/uf3Mg0EmoX877apNQr/ynrxGcvcivkupFMJk
- EwZiJufJTm/MpEt3i4/OoK0PQuUlhio59oVKMdXTmVcVDefFuWrPcZUARwIzZ0qQctvc
- AmQ6crvLwECIC5DPV4r6IABTE1TXQgASvxBSjPPBK1GQvOL389Rfxt44Rzn3MYTeQzUV
- vj8+CLxJ7XXiwAxSmLhKPJHLTHtXPnELNDThXopCxPEbKPnIiY4cAz2gJUTtPkHNJ8WP
- dx9TarZuwY2k5L7y/0TAGVU1V5y8jVVXJoWtKhXULmGmKJj0HzCwBELr2wHmM2uNJvI/
- bhsg==
-X-Gm-Message-State: AFuF++kGb3fWOeB/dHBipChyrg9w7wti0f04ZJhV7E+fAB56V0ZCwZbt
- jSaaz6+I66fLU9N2n3xhCb2Co9ZOAaSO/F+VD/AUjmUY4X8P9+hL68s10ec1gyzmXA4=
-X-Gm-Gg: AYBFou2vm24eNQufGlhrox7nFRcJXtbSDmQRTUX7AmcJwMtB+B4yiBaCGrLnzOvzi1e
- qqqESDtyPyaukz2HwVUHp6oLX1E5WwRzK6ahQaQCU7/jBSAgALNg8dA5kTdZp5xVFq4TIGhkwD0
- iqX/jbllOhiSv9Gmb8eHiW2URS13u8BRHUBkWb28JsIGIlKwFRmOH2S1BxSClJABQWElyrqTpgE
- 4o1erDQFLhOM9f6eWWTKIMftUKd5XKD+mx8Im1W0engrXioJhiL8YdwdJgZdWN+JbFJcwT9IEET
- 1AbUnaf3860JvjNAvsPDcSwIX1EmmjVJEOcQnrBGOa2rUinV7b0664fRl5RylHETUbrxD3fFDW/
- edAav9PdybRxTIhOA5s71SBgRdseCgOAtIyweT7IMX/iI3nHnnZHwf/nGKnFWOfRoHV53ON9XdP
- UGigNTkuNzhtYMKLxC8Xl9xOfW71IgpT0FJkBtVI+zuH6nmY8uJRM2H9j8nCy8
-X-Received: by 2002:a05:600c:8b88:b0:49c:e1cd:536 with SMTP id
- 5b1f17b1804b1-49ce584b899mr224444315e9.12.1788445336451; 
- Thu, 03 Sep 2026 07:22:16 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ed3716sm15312142f8f.22.2026.09.03.07.22.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:22:13 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 982675F9CF;
- Thu, 03 Sep 2026 15:22:12 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/2] tests/qtest: add gicv2 qtest test case
-Date: Thu,  3 Sep 2026 15:22:12 +0100
-Message-ID: <20260903142212.1451770-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903142212.1451770-1-alex.bennee@linaro.org>
-References: <20260903142212.1451770-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x28KS-0003oN-1t
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:22:12 -0400
+Received: from smtpout4.mo538.mail-out.ovh.net ([51.210.91.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1x28KL-0006ER-C6
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:22:11 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4hbMHD3Fw0z6DZf;
+ Thu,  3 Sep 2026 14:21:59 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu,  3 Sep 2026 14:21:59 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.227])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hbMHC5b5gz1xt3;
+ Thu,  3 Sep 2026 14:21:59 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id D4D07203FDB; 
+ Thu,  3 Sep 2026 14:21:57 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-97G0027f079425-9784-4436-836a-22b3b6615bf0,
+ D9A964E3C5AFBF6BD84231720E0C998EB3D97DAC) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <cb1b5ec3-d7ba-42fe-a8ab-da7c236b1660@kaod.org>
+Date: Thu, 3 Sep 2026 16:21:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Adding /machines/labels (was Re: [PATCH v2 18/25] tests/functional:
+ add a pure-Python device-locator resolver)
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Emmanuel Blot <eblot@meta.com>, Markus Armbruster <armbru@redhat.com>
+References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
+ <20260731-sanmiguel-bmc-locator-v2-18-1266926ba769@free.fr>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-18-1266926ba769@free.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 9405486348910439469
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFQrZsomf6LbNSIIqVPisNl3lk9/5IuM+SAuHvf65FqznmUqzcrBdm4jUnTLXVF7sNBwjzXXfqRpkXfnhbzQiI/14fbE58CmMTWVj2zbIUtD6Zgdx29iP6lz+v/JQf4e1I8nrGkpR0IhbbNMFYDmlbZyelY0r3rd94/Nv0SbBW2rNBiH2pUQxrPRFQAJQY93OnzyKkwGqBBd08lwVHZ8S/zLqpYYB7d5lVAhpRQ5cGo8p5kFg2o5GIFAypHI3nCIyeJMUw7BYoHKpCJ8QT4EFoEAOl4Geh25EPUnA6txeuqR+jl1V3TIcz8dAaDaAJQy+Q6jy7RpTETN4jfxv6gl3KyktfLjawzp5pT4pxM/1gVJnd3AXU7gNPthGceOHiqUH6+9mZpGVu1pU/H1K8cIoW25y5nBYL8ccmMiDV/nSFtucabBJJXHSoyDNuP6SyqlUggw16b4Srdb4ib3NMmmm+bu7IGrygwNGXJB8dNnY8KwzJILO0Jvb8QQNR0J0EE8EujbF82CQf8VWTQ2swUN100oHR62w6xZV3L7UFgCsqLuqx/hlsZyHBPlp6VznXp2lKYwxqaJtM8NvfyIE93lNJFryOB/i7q9GI/tTnqqOaLhmijVFPaLcQRaDzrEjm3zxBtQaMbx6X9J9u+BqOalvVpAActM3PJcGIJKLIRC+i+MA
+DKIM-Signature: a=rsa-sha256; bh=pPGg/M0AdNeXK4HXQK4blyc77s+k656feKUCFAAkeLY=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1788445321; v=1;
+ b=bYy6XL5jSCe4uC4H5y2atTjOA35lP1xfUVOMv1qB13feU1uqzrOC3xoqMALmdQewWZkVcblg
+ rd4OpPj9yEdWu/lejOr9d03TPZLVaOUx2KZoKCIoRe3TIFBz1I2za8x7Pkos280fA1mff8+pq/0
+ XDWcQXn0wGmGifWZOYXcKmYxMlsTzwlLcCiU5Uwo56YU05oya5fabfl7WYN4fFqwxZ5LF6ktRPi
+ /ocsVqfPFgNxoTGXtOrItaWecZ3Ih0s4dpzy4rpP03FAxVotHI9kV9cQ+zeCp15/KjS63KVHzhu
+ OdBmJxgNTZ8rWoUwZczMAf9SLemtj9VajadACDRJuOVdg==
+Received-SPF: pass client-ip=51.210.91.33; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,130 +139,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have a bunch of bugs which provide qtest sequences to show faults
-in the GIC. Create a qtest to hold these and populate with the first
-test case.
+On 7/31/26 12:45, Emmanuel Blot wrote:
+> Add DeviceLocator, a helper that addresses a device by its position on
+> the bus -- bus, address, type or index -- rather than by a QOM path. A
+> QOM path locates a device under the object that owns it, by enumeration
+> order, and so says nothing about where the device actually sits in the
+> bus topology. From a QOM anchor DeviceLocator instead walks the bus and
+> device hierarchy, alternating bus and device hops, to reach the target.
+> 
+> It relies only on standard QOM queries over QMP, needing no custom
+> commands or changes to QEMU.
 
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4402
-AI-used-for: created qtest boilerplate based on bug report
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/qtest/arm-gicv2-test.c | 84 ++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build      |  2 +
- 2 files changed, 86 insertions(+)
- create mode 100644 tests/qtest/arm-gicv2-test.c
+Let's recap first :
 
-diff --git a/tests/qtest/arm-gicv2-test.c b/tests/qtest/arm-gicv2-test.c
-new file mode 100644
-index 00000000000..dbfb2cd801d
---- /dev/null
-+++ b/tests/qtest/arm-gicv2-test.c
-@@ -0,0 +1,84 @@
-+/*
-+ * ARM GICv2 Virtual Interface Control and Virtual CPU Interface Tests
-+ *
-+ * Copyright (c) 2026 Linaro Ltd.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+/* Addresses in the virt machine when virtualization=on */
-+#define GICH_BASE 0x08030000
-+#define GICV_BASE 0x08040000
-+
-+/* Hypervisor Control Registers */
-+#define GICH_HCR        0x0000
-+#define GICH_LR0        0x0100
-+
-+/* Virtual CPU Interface Registers */
-+#define GICV_CTLR       0x0000
-+#define GICV_PMR        0x0004
-+#define GICV_IAR        0x000c
-+#define GICV_EOIR       0x0010
-+#define GICV_HPPIR      0x0018
-+
-+/*
-+ * Test Highest Priority Pending Interrupt Register (GICV_HPPIR)
-+ * and Interrupt Acknowledge Register (GICV_IAR) for a virtual SGI.
-+ *
-+ * In GICv2, for an SGI, both HPPIR and IAR report:
-+ *   Bits [9:0]:   INTID
-+ *   Bits [12:10]: CPUID of the requesting processor
-+ * (See Issue 4402: GICV_HPPIR dropped the CPUID field and returned only INTID).
-+ */
-+static void test_virtual_interface_sgi(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt,virtualization=on,gic-version=2");
-+
-+    /* Enable virtual CPU interface and allow all interrupt priorities */
-+    qtest_writel(qts, GICV_BASE + GICV_CTLR, 0x1);
-+    qtest_writel(qts, GICV_BASE + GICV_PMR, 0xff);
-+
-+    /* Enable virtual interface in hypervisor control */
-+    qtest_writel(qts, GICH_BASE + GICH_HCR, 0x1);
-+
-+    /*
-+     * Configure GICH_LR0 with a pending SGI:
-+     *   VirtualID = 5 (bits [9:0])
-+     *   CPUID = 1     (bits [12:10]) -> 1 << 10 = 0x400
-+     *   Priority = 4  (bits [27:23]) -> 4 << 23 = 0x02000000
-+     *   State = 1     (bits [29:28]) -> PENDING = 0x10000000
-+     * Value: 0x12000405
-+     */
-+    qtest_writel(qts, GICH_BASE + GICH_LR0, 0x12000405);
-+
-+    /* Read highest pending interrupt and acknowledge register */
-+    uint32_t hppir = qtest_readl(qts, GICV_BASE + GICV_HPPIR);
-+    uint32_t iar = qtest_readl(qts, GICV_BASE + GICV_IAR);
-+
-+    g_test_message("GICV_HPPIR = 0x%08x, GICV_IAR = 0x%08x", hppir, iar);
-+
-+    /* GICV_IAR must report CPUID 1 and INTID 5 (0x405) */
-+    g_assert_cmphex(iar, ==, 0x405);
-+
-+    /*
-+     * GICV_HPPIR must also report CPUID 1 and INTID 5 (0x405).
-+     * In buggy QEMU, GICV_HPPIR erroneously returns 0x5.
-+     */
-+    g_assert_cmphex(hppir, ==, 0x405);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    if (qtest_has_machine("virt")) {
-+        qtest_add_func("/arm/gicv2/virtual_interface_sgi", test_virtual_interface_sgi);
-+    }
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 50a1a5272fa..37c21b8f9fb 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -265,6 +265,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
-    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
-   ['arm-cpu-features',
-+   'arm-gicv2-test',
-    'boot-serial-test']
- 
- # TODO: once aarch64 TCG is fixed on ARM 32 bit host, make bios-tables-test unconditional
-@@ -284,6 +285,7 @@ qtests_aarch64 = \
-    ['iommu-smmuv3-test'] : []) + \
-   qtests_cxl +                                                                                  \
-   ['arm-cpu-features',
-+   'arm-gicv2-test',
-    'numa-test',
-    'boot-serial-test',
-    'migration-test']
--- 
-2.47.3
+Several recent threads have touched the same topic: QOM
+composition-tree paths encode ownership, but developers and tests
+regularly need to identify devices by their position in the bus
+topology. The threads in question:
+
+   - "[PATCH v5 0/8] hw/sensor: Add new device emulation for TI ADC128D818" [1]
+   - "Call to clean up QOM onboard devices lacking a parent" [2]
+   - "[PATCH RFC 001/134] qom: Introduce object_new_child()" [3]
+   - "[PATCH RFC v2 0/137] qom: Make composition-tree parenting mandatory" [4]
+   - "[PATCH v2 0/25] hw/arm: Facebook SanMiguel BMC and TMP75-family sensors" [5]
+
+
+* The problem
+
+QEMU has two device hierarchies serving different purposes:
+
+   - The QOM composition tree describes parent/child ownership.  Every
+     object has exactly one parent. Paths look like:
+     /machine/soc/i2c-controller/child-device.
+   - The bus topology describes electrical connectivity (visible
+     through "info qtree"). A device sits on a bus at an address.
+
+Devices created without an explicit QOM parent fall into
+/machine/unattached/device[N], the "orphanage", with names that depend
+on enumeration order and are therefore unstable. Markus identified
+380+ such devices across all QEMU machines [2]. Even with a stable QOM
+path, the path says nothing about where the device sits in the bus
+topology or what purpose it serves.
+
+
+* Three approaches on the table
+
+   1. Mandatory QOM parenting (Graf [3][4] / Armbruster [2])
+      object_new_child() and per-bus creators enforce parenting at
+      creation time. Deletes the orphanage. Scope: 440 files, 137
+      patches.
+
+   2. Bus-child parenting (Blot [1], rejected)
+      i2c_slave_create_simple() would parent slaves to their bus,
+      named by hex address (e.g. /machine/i2c[0]/i2c-bus/0x6f).
+
+   3. DeviceLocator (Blot [5])
+      Pure-Python helper that resolves devices by bus-position
+      descriptors like:
+
+        /machine/soc::aspeed.i2c-ast2600[0]~i2c[9]~tmp75@0x4b
+
+      It walks the bus/device hierarchy using only qom-list/qom-get
+      over QMP, no QEMU code changes needed. 600 lines of python.
+
+
+* /machine/labels: DT-style alias container for QOM
+
+The idea: add a flat container /machine/labels under the machine, where
+board code registers link<> properties pointing to devices by
+purpose name. Like device tree /aliases (serial0  > /soc/uart@9000000).
+
+Container creation is one line in qemu_create_machine_containers().
+QMP introspection works today: qom-get /machine/labels/rtc returns the
+target's canonical path.
+
+A small helper is all that is needed:
+
+   void machine_add_label(const char *label, Object *target)
+   {
+       object_property_add_const_link(
+           machine_get_container("labels"), label, target);
+   }
+
+Board code registers one label per well-known device:
+
+   machine_add_label("rtc", OBJECT(dev));
+   machine_add_label("tmp75-bus9-0x4b", OBJECT(sensor));
+
+Tests resolve devices with a single QMP call instead of walking
+the bus hierarchy.  For the common case, functional tests targeting
+specific board devices (SanMiguel TMP75s, Catalina PCA9555s, Anacapa
+ADC128D818s), the board author already knows which devices matter.
+
+Thoughts?
+
+Thanks,
+
+C.
+
+[1] https://lore.kernel.org/qemu-devel/20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr
+[2] https://lore.kernel.org/qemu-devel/87se5scipx.fsf@pond.sub.org
+[3] https://lore.kernel.org/qemu-devel/20260711223707.42139-1-graf@amazon.com
+[4] https://lore.kernel.org/qemu-devel/20260718213652.37673-1-graf@amazon.com
+[5] https://lore.kernel.org/qemu-devel/20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr
 
 
