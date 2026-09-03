@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00333C624DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D10C624DB
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 18:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2CRk-0006Nx-Je; Thu, 03 Sep 2026 14:46:00 -0400
+	id 1x2CRj-0006Nq-Np; Thu, 03 Sep 2026 14:46:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2CRj-0006N5-82
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:45:59 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2CRg-0006Ms-UW
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:45:56 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2CRc-0005jr-UY
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:45:57 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-485843aeab8so204563f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 11:45:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2CRb-0005jV-6z
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:45:55 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-48584dc164fso207559f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 11:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788461149; x=1789065949; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788461147; x=1789065947; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NXY/k4DXwnVEw0o5L8gqyMDmFU5CqfUmgmY2axvAzY4=;
- b=Sf+tcmihsnBRd5IkvTO2GBkk2YyQ+yKNjezZW2MEaQpB0aKqyMh+FVKGfH5B0GpuhA
- A1+b/EUosGcdMegaMj5QnCBtaiUms6nONH/QWfMTY6tn/TAt/6LHDdOUKR589r5J6OkU
- GjggFBY2rpsrGFCjd85mZzLW83A0sQwrYCC+P+c/QCj9Tt4NRV9zonj44mn9kqewS0Uo
- OrNUVq+J0725K97KDBSYLjJjLbaR/cM15zQan+RMA8vpdYXGKbSmEWAPVLUmozLi8CJm
- IJYe8RNnnD7/uDe++ef7nU30t8s+qro7zU7bRGVfYpjZPmB2nyAL4xzu+yja9MQPcrTm
- Zf+A==
+ bh=UrbIZEyCzw4xzy+Cmj1PuqYkVIXKglAm7vgn5QsXkZ0=;
+ b=GFB9L6Oovc1WYcOSXtn1+I4AEGmHD+ZcipCsRjWpMbzD4x6MdrORIktWc1Y4ZkXIeT
+ 4rGGgMopryG0uuK6DEtvCTMMNqjXXhHueiiZs7Ibw+T68wLXKxD9FsN96yN1FjeJVan3
+ lsTB7jujeENTKxZfur7pfH7b6yGQLtR4oB5/QaQqhGOCdxlnxanzqP4FHxwANj6hKHQ5
+ QubrPdXWZih+qx04oWjeP39haBBRZIpLVHC5CNzfDe8myUvMfkP6XWltJjQ94ZPviuKV
+ fxQZ6emljIQ3ZvkMm+nSTDAjI779UvSMmbyW9yt1VACw7+7QEfR3s3Q1q9a8wMs97u4m
+ jS9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788461149; x=1789065949;
+ d=1e100.net; s=20251104; t=1788461147; x=1789065947;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NXY/k4DXwnVEw0o5L8gqyMDmFU5CqfUmgmY2axvAzY4=;
- b=J/7NS4nyq1021mby1yxonFwnqMsQjEkaxl6liGoKCqnLjUZfaNQZE7Jxw/Xozu5zW5
- jQmSmMumHCPhO0PRtJTxK7tFHK0xv4Byvc9g/cZG6IO18xuOOcP8j8I6Z4+rvFI2GJHY
- wFSda+kf0RG/ZNf9o82Wtq+5CUJ8QiwNUatMOjoAt3WVhObxcKkRxft70faY1tirhOPY
- V0ntALYm+hH5V55vs+nOAosM6lM+Yc5AZXRMEfXewnojhHk38jTlEJEio4zR9FysO01X
- cJoNSENpCcO8iUKo7w4wNYcsrOW7TLeYcZq36xC2xLqKceVHN7/jKRRUrMKjF0256niN
- ZTVg==
-X-Gm-Message-State: AFuF++lzSfqv0kymILAHXTjrJkrlyoypJAS+ys8DLlCuFyOUvgF06J/n
- lNw5MyeuqQNcAGt2xtIRfh0CJAXZl0SN+ZOeOilpPXUKtCHVE9mo9p5+dXF9EndTyGtbGFJvHCD
- 37x96
-X-Gm-Gg: AYBFou2Gf8yIuuhgnHo3IQnaPZkdBN5n6BsRp1/ODU2Yv9lzANmZJSw+EP1ObLtxIVQ
- 6HgM+jdTgIu10qF2pa2E9ojGn+T6PKrly+8NKzBAO9k+5JN8UKlOFt9yB+8ro9QVC5FVlRaitwN
- 2mbsvppxvDJggPawGSPdC/KQMAtkL2np6xVNx6Hacbk/k2XXNVwS3IbDeZ0UXQ5xgKx4yrbBRdT
- FjS30e1A5v+X5MvHeewuLmDEj7yBWQpCXighyaEFxbPySGmLu+g01iTWG8i50vUOEd+D+1oMZ+b
- KeZhgxX2W51hzVLiauTkT+bi3UNc5ZP6V+TWh9874X4y5f4OPegv6YD/gnlE3Ads3TvO4yb6Mk3
- ZLK+vL6oqMELp04K/rUeKLLyN8g4nqLA/nMSkZ2tyXdWxTRbRZM323dcv42Af0BBXdkb3U3RHuW
- +bDfuU85+FVdln68sjj5KA4mn5bUMkBSOwmR2RUBPoCvTO0NMEMd6TB2zJ
-X-Received: by 2002:a5d:5f92:0:b0:47f:8f8f:db74 with SMTP id
- ffacd0b85a97d-4858705ac32mr2114460f8f.12.1788461149309; 
- Thu, 03 Sep 2026 11:45:49 -0700 (PDT)
+ bh=UrbIZEyCzw4xzy+Cmj1PuqYkVIXKglAm7vgn5QsXkZ0=;
+ b=JLC+RB8CYl+UhkrABGxhpoSTQ2Ep9UU1w/+kJ+cNtn6JwtOGrFZ4+mEB8iZ3muJmqo
+ RVSLUtK8gdC+oiUuknPgwluRCYLX0mRU4hZ+KniZMu8MNVnZrUd8D5Q71LVebabOKnOT
+ d3kl8d/3X3bzJ/C+DGsWClocvZKI6qRgOWqBLFfScFqlKYnHRgOVVE2oenD2vqez8H6v
+ KCKQIUBAMjrblEy7AY54lWeziAbR7wvVZJPWFCngSRaaAv4J0shvojbO7KgJh8pY3y+a
+ XdGCwikPbw+vfB6X3KkbQYEeDpH5D/5S+/X+vRUzO/GOCAc6DjuaeAF0+vVs3+EaSMQ4
+ FuFg==
+X-Gm-Message-State: AFuF++knMTV5iUy82M3HG9t7gv+5omDaK0MKqnP2uat7j+/L6x2giWCn
+ CrmUyaTBdi7hnU5TWAM8BtgzGE0lWG06P60UN9RF4wrHCCKybxmREtxGQ/vDNH8yHJuLMQImDIg
+ Yn2vF
+X-Gm-Gg: AYBFou28mG5kUFpW5SEtFcheKvuDaYPTlrhykmcPxUJu87jDHzb16mn4ROYmX0eIZug
+ m9T1gFJqtDAMyFiC3vSDepG0iv1bEYHI1aRCEOU3JTMMFHtj+EGZ5qCWz4y4J/682PEBp7lSKQ2
+ NswqWCyUiLhMqwbqaJHWc5Ilk8L/DfyVAUbTy3b7JAGklb9xMWvCGF1iI64RBcE/l1R1BZRr9Aq
+ odWm0K6nX2ekFchc9FtRsmUcNo0lw4mCUAAI1FQDc7UKjQvVqNzFDziHiOp3MuSOxhTZzonRiKP
+ wQc6sWduxMQKKgICIh+Wfdn5/OnD9QYBWVpR91GxzGS0hAq/XvpdQtuiI2WrUnZlfizw19RZ4kc
+ xV3fWOZ1u/HZlAGnVZEeDCKWkl6HeQUaNhrHGkD2cNXNRseQz0RAhuqSfSGS8lwsCvtUWBOubqi
+ KubWLRMA7bRo7bcg/r9neDxCV8geMkIWGpWY75Hw+AYIDuZ+H4xYf+2/tkn7G9ITeL4+A=
+X-Received: by 2002:a05:6000:46c8:b0:485:847f:fd8b with SMTP id
+ ffacd0b85a97d-48587091978mr1779561f8f.5.1788461147124; 
+ Thu, 03 Sep 2026 11:45:47 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485883953cfsm395557f8f.13.2026.09.03.11.45.47
+ ffacd0b85a97d-485883953cfsm395557f8f.13.2026.09.03.11.45.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 11:45:47 -0700 (PDT)
+ Thu, 03 Sep 2026 11:45:46 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, "Michael S. Tsirkin" <mst@redhat.com>,
  "Denis V. Lunev" <den@virtuozzo.com>
-Subject: [PATCH 2/2] pci: load a device's config inside one memory transaction
-Date: Thu,  3 Sep 2026 20:45:42 +0200
-Message-ID: <20260903184542.2629976-3-den@openvz.org>
+Subject: [PATCH 1/2] pci: batch BAR remapping into one memory transaction
+Date: Thu,  3 Sep 2026 20:45:41 +0200
+Message-ID: <20260903184542.2629976-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903184542.2629976-1-den@openvz.org>
 References: <20260903184542.2629976-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=den@openvz.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=den@openvz.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,14 +101,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Restoring config space remaps the BARs, updates the bridge windows when
-the device is a bridge, and toggles the bus master region. Each of those
-commits a transaction of its own, so one device costs several flatview
-rebuilds where one would do, and the cost of a rebuild grows with the
-number of regions in the machine.
+pci_update_mappings() deletes and re-adds a subregion for each BAR
+whose address changed, and both of those commit their own transaction,
+so one BAR move costs two full flatview rebuilds.
 
-Nothing between them touches an address space, so the three can share a
-transaction. The saving scales with the number of PCI devices.
+Nothing between the delete and the add touches an address space, so
+the walk can run inside a single transaction. pci_bridge_update_mappings()
+already does this for the bridge windows.
 
 CC: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
@@ -117,27 +116,27 @@ Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 14c78e3c62..0efb4eb4bb 100644
+index c15f2b9f08..14c78e3c62 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
-@@ -840,6 +840,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
-     }
-     memcpy(s->config, config, size);
+@@ -1742,6 +1742,8 @@ static void pci_update_mappings(PCIDevice *d)
+     int i;
+     pcibus_t new_addr;
  
 +    memory_region_transaction_begin();
 +
-     pci_update_mappings(s);
-     if (IS_PCI_BRIDGE(s)) {
-         pci_bridge_update_mappings(PCI_BRIDGE(s));
-@@ -848,6 +850,8 @@ static int get_pci_config_device(QEMUFile *f, void *pv, size_t size,
-     pci_set_master(s, pci_get_word(s->config + PCI_COMMAND)
-                       & PCI_COMMAND_MASTER);
+     for(i = 0; i < PCI_NUM_REGIONS; i++) {
+         r = &d->io_regions[i];
  
-+    memory_region_transaction_commit();
+@@ -1778,6 +1780,8 @@ static void pci_update_mappings(PCIDevice *d)
+     }
+ 
+     pci_update_vga(d);
 +
-     g_free(config);
-     return 0;
++    memory_region_transaction_commit();
  }
+ 
+ int pci_irq_disabled(PCIDevice *d)
 -- 
 2.53.0
 
