@@ -4,156 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8373C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3A4EC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:50:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2AYN-0002FH-4c; Thu, 03 Sep 2026 12:44:43 -0400
+	id 1x2Adu-0003JU-4K; Thu, 03 Sep 2026 12:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2AYL-0002F9-Az
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 12:44:41 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1x2Ads-0003Ip-IF; Thu, 03 Sep 2026 12:50:24 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2AYJ-00045T-6W
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 12:44:41 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G39Yg927750
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 16:44:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- jFk2RTCSHkZaY67CFaLAXetFy2F2sAirj3L4r5P5TAk=; b=nznxhNAVX7bLfcEH
- 07GtKvjwUEBcSuz6Q+TcJKBdIQ+S/JUgGcV1wfXK31N5iZpwz/K2rev9a4n2oOSA
- CSbcrSSARn0RSIMzYIHeVfVUB9P6K1j+xh5nwcvYF+BA3SqSkh6zWmX8Ln5wGVX2
- dr2lnSR2zQ0bm29h+cIp5HbMHLC4egyhVDTivF75FtyZpCwjnKRr0oqoNi1NsEU0
- aaTgF0YDAIrkVJqrnoIqfYtGMg+X4q8y1BEbhg5HJ9QsJ8A60ekKf4QQmnAnuQFF
- XTCJqSzvNkAqdvu4TOmKy4Ebjnl8uDA6gHhiDphj1z0Lf0T7PU5Pz4sOSVMid0zH
- NXfpZQ==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf6tx1r3b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 16:44:37 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cc73f47bdcso173635ad.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 09:44:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788453876; x=1789058676; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jFk2RTCSHkZaY67CFaLAXetFy2F2sAirj3L4r5P5TAk=;
- b=BTowtYNLMQqkEoMTp6kw1QskwVCH3M5yoTPrVeXdStJRjXgvew0fefcvNF/wfjF/2N
- uxvaAL9U7yXejAF90Oca6WzGSqrLACVoq02G+wVlBdQ+JL/iVCKnNBFLUh1pknssnl5H
- HLUxCIlQlgw76oTDgaJ0clR8WEqjkyBE3mJ0/hXs5apngSRMOVLLtAYFWBNgiQQ0c2tH
- mQ79oa+adKTJochGrytQlgDVkc8pE+otbxWhYlmcmLXAYcEhT7jhj4ZjEEEMvy0Crwjz
- IUY9XY+s3yeloxqW9vhWjKDIMHcmSahGbcW8Vr7ZO/AwvjGprewrPp/XAOGso8gAxBzB
- J3FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788453876; x=1789058676;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jFk2RTCSHkZaY67CFaLAXetFy2F2sAirj3L4r5P5TAk=;
- b=Ml8IowpOnRtgRclJ1yZGOQkD4Qs8dxnriOeSPKPMgWSW69w0UCWQyvTjJyCKlN35Jw
- L1ciP5eIx3XwqHtz//35HxwjTujq0tLMEllg9jjHGQhATv7KX6jTab4AjnjgPsm+dnF4
- p1Y6LRlvqv0nN2NtOebmkM7HWs2St9V6foZTPzOR48+5it68C6W6l08iDRG5XTr3AiK4
- cNqkaVHMnTCWW9FUXi7I/nPSTdrfNcpugb+eknQ6OEY25/IX3j/6mu+etdVxJEDlI/Af
- 8NqYPfBlx0neAa3lVAk9+G8vE7Hj4Hovu+ujjv0IzfyaR3LLR2Png4Jux/zvIkbaZlZu
- gRYA==
-X-Gm-Message-State: AFuF++ltGD+GN0rH/qUe7Cq7wycUPoj0s6jzTW6tvJnldQ9iTnjuwZI9
- vuIdJbwGXj7jNR+1L31OjXBfRQlbiH/BHPx25jwCEZkxM6dFPZkfTaKW4EtH//ph1M5I/zYdIAR
- mjbSPB0UhPVF7Hsc4eWsw3MOcMGVKJkV+Vo5NgXgBQBEBE7OU66FDHMveAw==
-X-Gm-Gg: AYBFou08t8fAHR9msFGvF1zxtyu4FQ09iTBa94en5Q/T4jGDQql3xssP/QNy66P98nP
- sgGpeJemaiU5ejdQM93pz5LL+AoLon+fooLnSMzZWoyvyusSizhRDGf3lISfbLADGdFouBcc+7i
- 98eoyPhbJvcGHckdjkFb9Jg8zirlWS9fmXES7H6YaABOfJvgYXl/A/RhN132ZwEXtvsUdLjutbK
- fS84eJmaVun0savoNfSLTrOEVNHTrqBnP3OsL0/5nv5htU/q1kMJELWoYC638GOxKPYtdvJdpId
- YJDV/nZg08XFCdq8H+i+NCTaz4UVKkyvxvt4qbu7k37jMIFHKj+xv8HeAS2K2Uxi5eE8eojHWQJ
- 1AaroNp5ZVTQ0Zj1hwR7roDwZ6lalL6++mQJMv5pPHvBjOaOg8toUlphoe1XFcUaqt+nZ
-X-Received: by 2002:a17:903:903:b0:2da:e967:794e with SMTP id
- d9443c01a7336-2db12657cacmr3706315ad.19.1788453876213; 
- Thu, 03 Sep 2026 09:44:36 -0700 (PDT)
-X-Received: by 2002:a17:903:903:b0:2da:e967:794e with SMTP id
- d9443c01a7336-2db12657cacmr3705605ad.19.1788453875714; 
- Thu, 03 Sep 2026 09:44:35 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3339885ca07sm226629eec.1.2026.09.03.09.44.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 09:44:35 -0700 (PDT)
-Message-ID: <f01e1a0a-5794-42e4-addf-203590501b8e@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 09:44:33 -0700
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1x2Adq-0006kB-8a; Thu, 03 Sep 2026 12:50:24 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683G2QaL3425618; Thu, 3 Sep 2026 16:50:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=JB29K/kIFaXz9XpFpYD+6df8lbdPcO
+ 9pcu50JVzlBPc=; b=O6g2xJTD9KCrWQvxtJ4sU4EPY/i73W1yf10i/R10S1+FR+
+ 6q1TSbtfz85s5Y5g4WgmMQl9XH7dSDdHd7IzQFgWDLYD+dpJRee0pL0h60KH+eks
+ Jzc7Po6y9phhFE9rb6YWS7C4N+uC9hOiRPOwH6Ukkuq6pKdgRTVIbPirMeSVasC8
+ +sO/IB6jGllQvVclJZTG590M1hgYMespDTc7uzRCaWIvM3wxe8/CIv7g88bAWAUr
+ sSZbLRv7FZe2C9DflELINAvMkHNJH8DmUw9r4WTz5WafHfn5iSAyybxK3RiWJVYd
+ bkuLXy/45zel3111BzgSfVxrZbm+WQ3c2u0wY8zQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq5561rb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 16:50:11 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GfGjn003012;
+ Thu, 3 Sep 2026 16:50:10 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcb8hrfv8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 16:50:10 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683Go9xT8651458
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 3 Sep 2026 16:50:09 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F3DF558045;
+ Thu,  3 Sep 2026 16:50:08 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7B4D658052;
+ Thu,  3 Sep 2026 16:50:07 +0000 (GMT)
+Received: from [9.10.80.39] (unknown [9.10.80.39])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  3 Sep 2026 16:50:07 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------W4xTBoqsCBjW2G5fCUnKupfB"
+Message-ID: <7e4f5e0f-462a-4dae-aa58-cdb81545f934@linux.ibm.com>
+Date: Thu, 3 Sep 2026 11:50:05 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 000/105] tests/tcg: run tests with meson - last chance
- to review
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Stafford Horne <shorne@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <17746591750@163.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Laurent Vivier
- <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>
-References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
- <878q5lugc5.fsf@draig.linaro.org>
- <c3a1b237-36bc-4150-8aab-21aeebf22273@oss.qualcomm.com>
- <732d046a-dee0-4e83-b553-ef924f476363@oss.qualcomm.com>
- <3a3789eb-610a-4367-a72e-995a469e31d0@oss.qualcomm.com>
+Subject: Re: [PATCH v6 8/9] pnv/phb5: Implement IODA PCT table
+To: Saif Abrar <saif.abrar@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
+ fbarrat@linux.ibm.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, danielhb413@gmail.com, chalapathi.v@linux.ibm.com,
+ calebs@linux.ibm.com, milesg@linux.ibm.com, jishnuvw@linux.ibm.com,
+ adityag@linux.ibm.com, amachhiw@linux.ibm.com
+References: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
+ <20260831123005.1485518-9-saif.abrar@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <3a3789eb-610a-4367-a72e-995a469e31d0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: FiMR54aYookXTPl_9qDDXMlIAElzMDLh
-X-Authority-Analysis: v=2.4 cv=TqjWQjXh c=1 sm=1 tr=0 ts=6a99a3f5 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8
- a=iKV36UOfJ3wH4EvjPMsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: FiMR54aYookXTPl_9qDDXMlIAElzMDLh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0NSBTYWx0ZWRfX2tcq0bRbnq6T
- Ka+u1i4t0eSXsvPVSaw8rgLWEp1A0kqWww6u3nszyCepjKQcyVS8nUGdw+DY14DoI8bUIHgpT2l
- MgSwd8Ll1FyJCLfhShJ8TCVRWGFQnrORYCgFp7uZo6A8uRbvCSfsWxU1iVNlM3urLYEXJLb40bI
- 4BJlqVzhWCEsx6mQVkoWjOGdkUk9B3/kpAb4OvXFJkqOfc0csVMsEd+WTdzGciNxolZDlpqRxp5
- JZ8d8tSD7SenfLJ9BBXRK1af9QLDNkd6aSb4RR3GS45aYmeMzfacjK18bwIytS7XnGwn6knqUID
- ZPqHyRKgLMfIWlLMapQhWwSl//+WPqfIxNW8AYfo1qUSnEw02Gi0jyusrMDOP2kNMCCLVb51zyl
- 9nsd60Ys8JZ7BHDNbjxN8YJ8zvWTXLP1MWs8Mb410K6BFds0zSMFfYPdkxcqF3qKoyLqMNh1PpB
- HDfHPc9ca8ayzKtnnAg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0NSBTYWx0ZWRfXwd+I55kR9vMF
- KEVdJKc9Ur70YvTFBMSb848dXUhhpmn5GJCNhSyQu9aoUai0ev/sQr/mzITXuvatVHEfN8oei4+
- VeXXZktqMLwLUTrFxu57Shp45jGu+7k=
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <20260831123005.1485518-9-saif.abrar@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0NCBTYWx0ZWRfXyrZC72suPe0V
+ jP1HoblcEyq/kgenjJz1rpMk2zylPv7HDN0fn6zT1KTEV3Fr/lUgoKwLBuyujLcyyXcgvJYC87s
+ +uflqmKHlvodhJu4mvimRJsez6gq2W/AEIMKhul7pK7ZdyvQOJltXGM6UDlx9N/dzJhTUtxZ3NC
+ s21chRZjqloNVUbcAzRmC7sHlCkNCULX8SRKflYuIgDFJLLhihz16OZ6Lq1DfyRhafDakBf36CL
+ idRZevAefYsbg+oyfhcF9PbVngUqxRSJPVFdfqjzkqzEXgdTdPyAVRsXv6Qt0Hyrh09HHVE1K9f
+ t6pLfvaCuGhN/hOT3jFWBM2Bxz/z7JnIWQ7mAFSxZh2xGJsIuCiCTpRwOwIoKIZbuNGMyHmv9vA
+ fmx+sd0WiX0qZohRyQsvf94nbeEc/XwGfLLhrWBQs6b+ZqJEcqjxaygYJ9BPmvi2HOcksVqQFsH
+ IbFWPu7GmbHyeUwx+Zw==
+X-Proofpoint-ORIG-GUID: w2qTG4szFumfXCBE6GXN021_vb4Ja_ZM
+X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a99a543 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=r77TgQKjGQsHNAKrUKIA:9 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=CQXPn_koWp7IErjzBrgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zgsLwUnGCMBw8fX4dgEA:9 a=u6yHql4XC96yPjzb:21 a=_W_S_7VecoQA:10
+ a=lqcHg5cX4UMA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-GUID: hsqGhTbKGecK_mhANzuNyCNxBiEuvi-s
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0NCBTYWx0ZWRfXyTctyTwWGzk7
+ 8bTLGRL52dHfLDGXvkWi2n+HZL/JSGOV9oECzAfDb69rvJCwVIDitKRtsyAfuhW9nLmb/pRTQSf
+ A2VojdGumReI/epYmk98G0DI1IvhZ+0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030145
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030144
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,74 +131,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/2026 9:37 AM, Pierrick Bouvier wrote:
-> On 9/3/2026 9:34 AM, Pierrick Bouvier wrote:
->> On 9/1/2026 11:22 AM, Pierrick Bouvier wrote:
->>> On 9/1/2026 8:44 AM, Alex Bennée wrote:
->>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>
->>>>> This series replaces TCG tests makefiles with meson, with the
->>>>> goal of having something more readable and maintainable in the long term.
->>>>> Also it closes the gap that tcg tests had with the rest of tests, by integrating
->>>>> them with meson directly.
->>>>>
->>>>> It covers all existing tests for all architectures, including
->>>>> user/system/multiarch-user/multiarch-system. It implements all requirements
->>>>> listed on original thread [1].
->>>>>
->>>>> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
->>>>>
->>>> <snip>
->>>>
->>>> I think this series is ready to merge so consider this a final chance to
->>>> review any architecture related bits. I shall generate the PR on Friday.
->>>>
->>>
->>> Glad to hear, thanks Alex.
->>>
->>> Just be aware it does not apply at the moment (since yesterday), because
->>> of armv7 flag added to tcg/arm/Makefile.softmmu-target. You just need to
->>> apply it an anterior commit, and do a git rm to go past the conflict. I
->>> don't think it's worth respining just for it.
->>>
->>> I'll be off next week FYI, so won't be able to help if anything else is
->>> blocking.
->>>
->>> Regards,
->>> Pierrick
->>
->> A new conflict appeared today with latest hexagon PR.
->> If you feel like solving it and adding missing test cases, feel free to
->> do and send the PR.
->>
-> 
-> For reference, that's the change to add to conflicting commit:
-> 
-> diff --git a/tests/tcg/hexagon/meson.build b/tests/tcg/hexagon/meson.build
-> index aef9a53d773..4a2826c4276 100644
-> --- a/tests/tcg/hexagon/meson.build
-> +++ b/tests/tcg/hexagon/meson.build
-> @@ -49,6 +49,7 @@ tests += {
->    },
->    'invalid-encoding.c': {'cflags': cflags},
->    'invalid-slots.c': {'cflags': cflags},
-> +  'icinva.c': {'cflags': cflags},
->    'load_align.c': {'cflags': cflags},
->    'load_unpack.c': {'cflags': cflags},
->    # Build this test with -mv71 to exercise the CABAC instruction
-> @@ -60,6 +61,7 @@ tests += {
->    'multi_result.c': {'cflags': cflags},
->    'mem_noshuf.c': {'cflags': cflags},
->    'mem_noshuf_exception.c': {'cflags': cflags},
-> +  'privileged-insn.c': {'cflags': cflags},
->    'read_write_overlap.c': {'cflags': cflags},
->    'reg_mut.c': {'cflags': cflags},
->    'scatter_gather.c': {'cflags': [cflags, '-mhvx']},
+This is a multi-part message in MIME format.
+--------------W4xTBoqsCBjW2G5fCUnKupfB
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
+
+Thanks, MAK
+
+
+On 8/31/2026 7:30 AM, Saif Abrar wrote:
+> From: Saif Abrar<saif.abrar@linux.vnet.ibm.com>
 >
+> IODA PCT table is implemented
+> without any functionality, being a debug table.
+>
+> Signed-off-by: Saif Abrar<saif.abrar@linux.ibm.com>
+> Reviewed-by: Cédric Le Goater<clg@kaod.org>
+> Reviewed-by: Caleb Schlossin<calebs@linux.ibm.com>
+> Reviewed-by: Aditya Gupta<adityag@linux.ibm.com>
+> ---
+>   hw/pci-host/pnv_phb4.c              | 7 +++++++
+>   include/hw/pci-host/pnv_phb4.h      | 2 ++
+>   include/hw/pci-host/pnv_phb4_regs.h | 1 +
+>   3 files changed, 10 insertions(+)
+>
+> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> index 56952a6200..5f84550a7c 100644
+> --- a/hw/pci-host/pnv_phb4.c
+> +++ b/hw/pci-host/pnv_phb4.c
+> @@ -264,6 +264,11 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
+>           mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
+>           mask -= 1;
+>           break;
+> +    case IODA3_TBL_PCT:
+> +        tptr = phb->ioda_PCT;
+> +        mask = phb->big_phb ? PNV_PHB4_MAX_PCT : (PNV_PHB4_MAX_PCT >> 1);
+> +        mask -= 1;
+> +        break;
+>       case IODA3_TBL_RCAM:
+>           mask = phb->big_phb ? 127 : 63;
+>           break;
+> @@ -362,6 +367,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
+>       /* Handle side effects */
+>       switch (table) {
+>       case IODA3_TBL_LIST:
+> +    case IODA3_TBL_PCT:
+> +        /* No action for debug tables */
+>           break;
+>       case IODA3_TBL_MIST: {
+>           /* Special mask for MIST partial write */
+> diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+> index 33e11a3fe8..8d5822f339 100644
+> --- a/include/hw/pci-host/pnv_phb4.h
+> +++ b/include/hw/pci-host/pnv_phb4.h
+> @@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
+>   #define PNV_PHB4_MAX_LSIs          8
+>   #define PNV_PHB4_MAX_INTs          4096
+>   #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
+> +#define PNV_PHB4_MAX_PCT           (128 * 2)
+>   #define PNV_PHB4_MAX_MMIO_WINDOWS  32
+>   #define PNV_PHB4_MIN_MMIO_WINDOWS  16
+>   #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
+> @@ -138,6 +139,7 @@ struct PnvPHB4 {
+>       /* On-chip IODA tables */
+>       uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
+>       uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
+> +    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
+>       uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
+>       uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
+>       uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
+> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+> index 9ad6713d37..897c869d20 100644
+> --- a/include/hw/pci-host/pnv_phb4_regs.h
+> +++ b/include/hw/pci-host/pnv_phb4_regs.h
+> @@ -478,6 +478,7 @@
+>   
+>   #define IODA3_TBL_LIST          1
+>   #define IODA3_TBL_MIST          2
+> +#define IODA3_TBL_PCT           3
+>   #define IODA3_TBL_RCAM          5
+>   #define IODA3_TBL_MRT           6
+>   #define IODA3_TBL_PESTA         7
+--------------W4xTBoqsCBjW2G5fCUnKupfB
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-And, please find an updated branch for current series here:
-https://github.com/qualcomm/qemu/tree/pbouvier/series/tcg_tests_meson
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>
+    </p>
+    <div
+style="font-family: &quot;Consolas&quot;; font-size: 11.0pt; color: #000000;background-color: #FFFFFF; font-style: normal; font-weight: normal; text-decoration: none;">
+      <pre>Reviewed-by: Michael Kowal <a class="moz-txt-link-rfc2396E" href="mailto:kowal@linux.ibm.com">&lt;kowal@linux.ibm.com&gt;</a>
 
-Regards,
-Pierrick
+Thanks, MAK
+</pre>
+    </div>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 8/31/2026 7:30 AM, Saif Abrar wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20260831123005.1485518-9-saif.abrar@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">From: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.vnet.ibm.com">&lt;saif.abrar@linux.vnet.ibm.com&gt;</a>
+
+IODA PCT table is implemented
+without any functionality, being a debug table.
+
+Signed-off-by: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.ibm.com">&lt;saif.abrar@linux.ibm.com&gt;</a>
+Reviewed-by: Cédric Le Goater <a class="moz-txt-link-rfc2396E" href="mailto:clg@kaod.org">&lt;clg@kaod.org&gt;</a>
+Reviewed-by: Caleb Schlossin <a class="moz-txt-link-rfc2396E" href="mailto:calebs@linux.ibm.com">&lt;calebs@linux.ibm.com&gt;</a>
+Reviewed-by: Aditya Gupta <a class="moz-txt-link-rfc2396E" href="mailto:adityag@linux.ibm.com">&lt;adityag@linux.ibm.com&gt;</a>
+---
+ hw/pci-host/pnv_phb4.c              | 7 +++++++
+ include/hw/pci-host/pnv_phb4.h      | 2 ++
+ include/hw/pci-host/pnv_phb4_regs.h | 1 +
+ 3 files changed, 10 insertions(+)
+
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 56952a6200..5f84550a7c 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -264,6 +264,11 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
+         mask = phb-&gt;big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST &gt;&gt; 1);
+         mask -= 1;
+         break;
++    case IODA3_TBL_PCT:
++        tptr = phb-&gt;ioda_PCT;
++        mask = phb-&gt;big_phb ? PNV_PHB4_MAX_PCT : (PNV_PHB4_MAX_PCT &gt;&gt; 1);
++        mask -= 1;
++        break;
+     case IODA3_TBL_RCAM:
+         mask = phb-&gt;big_phb ? 127 : 63;
+         break;
+@@ -362,6 +367,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
+     /* Handle side effects */
+     switch (table) {
+     case IODA3_TBL_LIST:
++    case IODA3_TBL_PCT:
++        /* No action for debug tables */
+         break;
+     case IODA3_TBL_MIST: {
+         /* Special mask for MIST partial write */
+diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+index 33e11a3fe8..8d5822f339 100644
+--- a/include/hw/pci-host/pnv_phb4.h
++++ b/include/hw/pci-host/pnv_phb4.h
+@@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
+ #define PNV_PHB4_MAX_LSIs          8
+ #define PNV_PHB4_MAX_INTs          4096
+ #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs &gt;&gt; 2)
++#define PNV_PHB4_MAX_PCT           (128 * 2)
+ #define PNV_PHB4_MAX_MMIO_WINDOWS  32
+ #define PNV_PHB4_MIN_MMIO_WINDOWS  16
+ #define PNV_PHB4_NUM_REGS          (0x3000 &gt;&gt; 3)
+@@ -138,6 +139,7 @@ struct PnvPHB4 {
+     /* On-chip IODA tables */
+     uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
+     uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
++    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
+     uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
+     uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
+     uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
+diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+index 9ad6713d37..897c869d20 100644
+--- a/include/hw/pci-host/pnv_phb4_regs.h
++++ b/include/hw/pci-host/pnv_phb4_regs.h
+@@ -478,6 +478,7 @@
+ 
+ #define IODA3_TBL_LIST          1
+ #define IODA3_TBL_MIST          2
++#define IODA3_TBL_PCT           3
+ #define IODA3_TBL_RCAM          5
+ #define IODA3_TBL_MRT           6
+ #define IODA3_TBL_PESTA         7
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------W4xTBoqsCBjW2G5fCUnKupfB--
+
 
