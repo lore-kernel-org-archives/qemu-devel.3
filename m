@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29861C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 13:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1968C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 13:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x27aw-00005Q-9j; Thu, 03 Sep 2026 09:35:10 -0400
+	id 1x27cy-0000x1-1V; Thu, 03 Sep 2026 09:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x27av-00005C-1G
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 09:35:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x27cw-0000ws-Ex
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 09:37:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x27at-00040d-0a
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 09:35:08 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x27cu-0004Hz-Ty
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 09:37:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788442504;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1788442632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+D1KD+FdZ6EGoWCLn7HL2iIYBLzP2KRnbEGQvWj/iH0=;
- b=Xo90NyczjJW3AGrqOoxRH5qxFKuVsf08pDbQ/MC2vn2KNth4CkViyutPr77KSRvh9gcBsa
- yjd0AxKaxNU8FxVVsNGNDC7UHWqEgldKjVElxgB/TMUHbNEXpYYdwBUVbwmf1+pNeOOkg4
- U318X0XXFEzrS3LpQzJO+nKgSd7q5F4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=WumqCSDChyQmqDeur0vStfhIudXGg6R/C1TJURXM+bg=;
+ b=i65wHCuoNnMBqfbnmtMAHZEtupL8z7OmV0OIz6PE7zUKkTClqBCzCYoxVDg2DIShyAAThN
+ WuzBLQ4WodOgDOaWqoIysGQKRvOEY1Mkq6zKH9xqCksuUd2vGKJssHEQzB45nbXGN7bgqP
+ J0WRW/f75ZjIo1+RI1VJ+4lS83WKqf4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-6yBY7GkdNfqHm0hkby6rlg-1; Thu,
- 03 Sep 2026 09:35:01 -0400
-X-MC-Unique: 6yBY7GkdNfqHm0hkby6rlg-1
-X-Mimecast-MFC-AGG-ID: 6yBY7GkdNfqHm0hkby6rlg_1788442498
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-EXLONfYRNXmBhu41tM2urQ-1; Thu,
+ 03 Sep 2026 09:37:09 -0400
+X-MC-Unique: EXLONfYRNXmBhu41tM2urQ-1
+X-Mimecast-MFC-AGG-ID: EXLONfYRNXmBhu41tM2urQ_1788442628
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F931195DB9F; Thu,  3 Sep 2026 13:34:58 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14D3818001CE; Thu,  3 Sep 2026 13:34:56 +0000 (UTC)
-Date: Thu, 3 Sep 2026 14:34:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [RFC PATCH v3] AGENTS.md: basic bare minimal guide
-Message-ID: <apl3ftMWA44nHexR@redhat.com>
-References: <20260903122516.1377717-1-alex.bennee@linaro.org>
- <CAFEAcA_TaGW+7jvtp8OXjvGeJMce75MzZrimCWyaHrfa+ttx7w@mail.gmail.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DED56185FBBB; Thu,  3 Sep 2026 13:37:07 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7B37E3000239; Thu,  3 Sep 2026 13:37:07 +0000 (UTC)
+Date: Thu, 3 Sep 2026 09:37:06 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Huiba Li <lihuiba@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [RFC] block: add an overlaybd image format driver
+Message-ID: <20260903133706.GA825275@fedora>
+References: <CA+AFTT-iZ8wbUOkEaU_SCM0rnqRJsefkOr=CTgC6T22nz_ZFoA@mail.gmail.com>
+ <CA+AFTT-8odiRzg8mcnZiEQTyTiMeK5rHUFB6an+6wFgYLtyh1g@mail.gmail.com>
+ <20260902115439.GA754231@fedora>
+ <CA+AFTT8+vvXd5+UV9X1aS-4tDnMRynzDOcmLYE_HJUgSAvf6kQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="JitZOx6Kl4oioAUg"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA_TaGW+7jvtp8OXjvGeJMce75MzZrimCWyaHrfa+ttx7w@mail.gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <CA+AFTT8+vvXd5+UV9X1aS-4tDnMRynzDOcmLYE_HJUgSAvf6kQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,61 +85,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 03, 2026 at 02:24:39PM +0100, Peter Maydell wrote:
-> On Thu, 3 Sept 2026 at 13:25, Alex Bennée <alex.bennee@linaro.org> wrote:
-> >
-> > Currently people may be inadvertently not following our documented
-> > process for code submissions because people often don't read the docs.
-> > However AI Agents do tend to try and follow instructions so lets help
-> > them out.
-> >
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> > diff --git a/.claude/CLAUDE.md b/.claude/CLAUDE.md
-> > new file mode 120000
-> > index 00000000000..be77ac83a18
-> > --- /dev/null
-> > +++ b/.claude/CLAUDE.md
-> > @@ -0,0 +1 @@
-> > +../AGENTS.md
-> > \ No newline at end of file
-> 
-> Missing newline, as git notes.
+--JitZOx6Kl4oioAUg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-IIUC, that's just a result of how git represents symlinks
+On Thu, Sep 03, 2026 at 05:27:28PM +0800, Huiba Li wrote:
+> > One thing I noticed is that the append-only format used for the upper
+> > write layer is not documented.
+>=20
+> I have added the spec for writable layers:
+> https://github.com/containerd/overlaybd/pull/451/changes
 
-> 
-> > +## Security Policy (see `docs/system/security.rst`)
-> > +
-> > +You MUST NOT report potential security vulnerabilities to the public
-> > +GitLab issue tracker as a normal issue. They should be reported as a
-> > +GitLab "confidential" work item, as described at
-> > +https://www.qemu.org/contribute/security-process/
-> > +
-> > +**Crucial for AI Triage**: Not every crash, assertion failure, or
-> > +buffer overrun is a security vulnerability. Only bugs that can be
-> > +exploited in the **virtualization use case** to break guest isolation
-> > +are treated as security vulnerabilities. In brief these are:
-> > +- **Hardware Accelerators**: e.g. KVM and Xen, TCG is explicitly excluded.
-> 
-> "Xen. TCG", not a comma. Otherwise it's unclear whether you're
-> including or excluding KVM and Xen.
+Thanks, that clarifies things.
 
-If that change is made, then add
+Stefan
 
- Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
- 
+--JitZOx6Kl4oioAUg
+Content-Type: application/pgp-signature; name=signature.asc
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqZeAIACgkQnKSrs4Gr
+c8gcSAf/fKdG2ATPV98p33049unic/uQpKpo+ECVzNIyHxAQ8SGtmOAwsqfxlAHm
+dX/QeFNPZdSoMdanLYMtdPilbdHwa0ZggjaBfK8AQG0NbCqAdBeSw5mATYGqCYfc
+WRbvELGq5cvTbYEgCHVkk6d4iLSiY8TgoGbqEVExCoustog8wZx0kao5Kkp6RcJ5
+f8u3qd5gSgu9OxO+PcJjIAg4IX+F+ncJMlc4xUa26fhGy4VEsP64scpwytV9ICFo
+U1F+M2DHSiR1qWGl0qKhY9hUKMWDGepDVZmSs1nV7Ur/+1WDwBIdz6cSqNdyLSQo
+3Asayf/94+wYiAzxOvbWxb/xltXjvA==
+=S8+0
+-----END PGP SIGNATURE-----
+
+--JitZOx6Kl4oioAUg--
 
 
