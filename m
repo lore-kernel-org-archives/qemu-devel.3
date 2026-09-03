@@ -4,93 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A27C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B57C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28i5-0002TY-Po; Thu, 03 Sep 2026 10:46:37 -0400
+	id 1x28gv-0007Ze-WC; Thu, 03 Sep 2026 10:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x28i3-0002T7-0f
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:46:35 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x28hP-0004sS-BY
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:46:34 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-49cdc81f40eso17871735e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:45:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788446753; x=1789051553; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=z4mcTa20Q6K/eSAXdcv86SfpDZEirfKuPAnuP96c43s=;
- b=c/AMuRyC9lQsm03yObIgK1NgVstB5KSI80+otqOtScfSpbqKYie3jEWqEyDozb1bvO
- lCk+Xi/qGs6UYAwopT+V9xC/Pgp660rwyCrVFjiK6R0uwDvnddi+fWSyeAfgIuMmfLb1
- jMr33pfAndLeESy+viFOmJgBPZA24Uvf5wxDFzRk4pKHWYsUZD+FfSX/VnliFc9PexFM
- /nMtNe7NARwf5P5Vog9sraJMeITWDSUqk2a6r375TJJOwcvww8gO9CXnFZPeVvVAajJA
- cbybtX0WmGKsRr5nuHAUsnKgncLAyolPRoAds9wnm4+X954Nmmd0jCDx1vKoMp7WGUqz
- mrkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446753; x=1789051553;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=z4mcTa20Q6K/eSAXdcv86SfpDZEirfKuPAnuP96c43s=;
- b=r8xs+bwV30mlKs2gpMizgYHO9VmxqlKMryccmd/JXCNsc7WMVZe88urwSC6EF62PrW
- /0zv1tXLmttKOfGr+XZYSEtAF1PXSjIzztO7WRt9U3C3rGSr4TTfdAqurnYP15jXiEqa
- Dpdz9HWtaOcKJYJ7WiAquwqRerwbPuG2YH4PLSwUqzn6fkyL4gAyPdmZ+h8Fv3egYFc6
- gJbreXkxuSLDOCF/AMvwYKUKfCuf4UDyUAeUHQs2sa72oa+EHIEkBOUgNqSE7kxuhDGZ
- gWF6XefZ0fKIGMISN3wxeG97b9IalsfGXtAh/lzmQ4pDv7uxMBXnjJnVFc5Tcui+2erv
- 5klA==
-X-Gm-Message-State: AFuF++k5x8LD1BbTfaBViszDnqaYS+p/vdSGeq4s/SDv7U31Da8v6DYI
- gYkzsOR9qzCnUbw4hmMSkM0IgFDGG/IlnTyG4NHRJuL0iD4cLHT+tyzr2zS/ApSoL04=
-X-Gm-Gg: AYBFou13l3/Rgj6bGVVxDvXoIcGamb26Mwkf+2dGiJcuF35geakkj0JKTVZ0AkkzQDn
- pNyRAsJQHQ5c6frt0tgvSotEGOgUoieRpLC+dbfu0cJhRKrXHGOy/719giCvVE0GfmDYPtnZZOM
- j862OHI984bHZXoiUxFM2Mag/XJXG4RNK8xtImTF53ZeVzFzOGmSKhkaNjw7evZEkGY/R5KRXYa
- mFQ/OuwzChQJ5NXLFSRKiYTo7IYSL9Jwc1Ko+1JR/G+teyHDVnxX0tPWfN0nie0xhbJRVUph3vD
- bkMIE2YFFtZP5TRzv+dN3UqwTfUbKCL8n4G3w04Z+knh3JMtjKvygppsuVHurbl0a16my/StWFz
- vZN3TvoLl5SLpNA7jSBQm5hR3y2zDSdYIHtYDh8VNzc3+5CPxu+wl9N6ydyoYyRnK1SH/4ppGPc
- GFMO+mQtkxbnGhbGeSFACF9zsa+DM9yx6jXsUR55riYKEJKjMS92LddKzI0pQw
-X-Received: by 2002:a05:600c:83c8:b0:49c:d52e:d0ea with SMTP id
- 5b1f17b1804b1-49ce581779dmr243106045e9.4.1788446753379; 
- Thu, 03 Sep 2026 07:45:53 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5f914bsm92364115e9.3.2026.09.03.07.45.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:45:51 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B664D5F8FD;
- Thu, 03 Sep 2026 15:45:50 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Bin Meng <bin.meng@processmission.com>
-Cc: QEMU <qemu-devel@nongnu.org>,  Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH 01/33] target/arm: Add Phytium FTC310 and FTC664 CPU models
-In-Reply-To: <20260903112532.3276678-2-bin.meng@processmission.com> (Bin
- Meng's message of "Thu, 3 Sep 2026 19:24:41 +0800")
-References: <20260903112532.3276678-1-bin.meng@processmission.com>
- <20260903112532.3276678-2-bin.meng@processmission.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Thu, 03 Sep 2026 15:45:50 +0100
-Message-ID: <87se3qpf4x.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <3138947285@qq.com>) id 1x28gr-00076g-2C
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:45:21 -0400
+Received: from out162-62-57-64.mail.qq.com ([162.62.57.64])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <3138947285@qq.com>) id 1x28gn-0004X2-TU
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:45:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1788446709; bh=fJ9k/dSem7YzMUR1BF3IGkKm+UaJfdZetQfHilLfjfY=;
+ h=Subject:From:To:Date:In-Reply-To:References;
+ b=hpyEWNqqmgK6l1jvlEzhbNrWdGsjsNbo+/CCtQ/5N2vb8yrhSRLzsMz1A0hVYVT2D
+ 4I+9A1WfkzVgpOLPurvtuFyPfs+aq/ayd5FgVypOrwpl404FQ06obnCLglK/RDn4/m
+ P3EjAV1g5ATxIqmBNe8k4qQd12NTwULQo8jMI4nc=
+Received: from Win11-9700X.localdomain
+ ([240e:398:adf0:2560:dc86:1426:97f0:785b])
+ by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+ id B4826E9A; Thu, 03 Sep 2026 22:45:08 +0800
+X-QQ-mid: xmsmtpt1788446708tjj94jw7h
+Message-ID: <tencent_96F4449117E164746982AEA4983CD98B7C0A@qq.com>
+X-QQ-XMAILINFO: Nx5J06Esz7r7VVkH6Oxzj+Ul7Cg5abdQBEE54rSqIK3ypirS3//R8j1cRVEtFl
+ IGtN7dFEqHXnHZaje9xnLRcS+egucsJqqCMKG/ZOkg9RgZc/P/R8r2f5laF9ZEuRDqt12OSjyAQT
+ rzzKRh2GCDb6ETQbv1QxI7xPKyEGPDWCLjINxklDMgR+mUjnXVMHNQvOL5OYNlC5wf0dGEnPKQCt
+ 03Gn9Jvz4fpt9CYHLwZaMd98j6L2UVw6gvMy2sBX5d9B3FCPpyksnwpNaJA9BgOFPw6lVlg+lJrh
+ Sr/7HTVYCwFEF+1ftJtz8mgt81X2ILV9Y4GRPsf+wQ7n3o0xY/fKAhoN5psUxT8TAjFQtTzrae4E
+ EaFFvP2SO+e/HmokpGI2v0hnojHsyYbJUCImYV/OcKqqDli6EXHSxraLVnwfaidmd0ZX/bAxYWNq
+ tTR2SnB+0hH2SWwnoqxkM2JcqivXJd55DEzVbWYov7i+gOTDBlrYRP0vPdg3wtCZaLTTZuxn4494
+ 9n0NXGApvRO5gZ27OPURqVH04O/EB6dWxQgl7g7tDrLBQPRwVp5rn1GzV3RRhdYqm3ysugHlA7HN
+ hJgCOKyDTt6Ckv1rbX20EIbzixnMTHF6m6L2W5HkxqG4Y81V1ORXqy4uLO+qrifrMq+Fe+GP1aBU
+ Gm8T0R6I5C7q/L8Q4gGUC65JgTzc7xv/GwHOc7zyuNXM+3uHGflWeeNk1KY6HZHoRJiYDoKa0Rdk
+ jsama8DEEiRF1hT6TJQDUj/QDIVjJ6kIU7jKTWsWQ777jMcyTBaXTR6m2wabltK8ELtQiPZJnyIL
+ Ju1ySBHfE58hYLGx4yAsdwZYz79swotKNqI0X9B8OxCai4Um6vsMPPxoqGZPRbtWhP7kLvlUPRFZ
+ flwxa/SqWBNABJlvUoipeyNXnNJ/IdHamyMrSylVpf9mLWAnVlIh3S+qQsyazHfrAjIoUnf4pfvH
+ IfjkS2XSRo5a7zLRHluu4g1U8KhmHUw3awg2f55syxkz9HxJd1aH2LrR/disWDrW+XKx84j0SBeb
+ r4agfSwLDlMUEd/0LD
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: base64
+Subject: Re: [PATCH] whpx: intercept CPUID leaf 4 so guests get the host cache
+From: Jiajun Liang <3138947285@qq.com>
+To: qemu-devel@nongnu.org
+Date: Thu, 03 Sep 2026 22:45:07 +0800
+In-Reply-To: <tencent_FA380D5D8DA060298F4F0B220D3D00E45A08@qq.com>
+References: <tencent_FA380D5D8DA060298F4F0B220D3D00E45A08@qq.com>
+Received-SPF: pass client-ip=162.62.57.64; envelope-from=3138947285@qq.com;
+ helo=out162-62-57-64.mail.qq.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,154 +80,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bin Meng <bin.meng@processmission.com> writes:
+SGksCgpHZW50bGUgcGluZyBvbiB0aGlzIHBhdGNoIChDUFVJRCBsZWFmIDQgdHJhcCBmb3IgV0hQ
+WCkuIEl0IGlzIHN0aWxsIG9uCnBhdGNoZXcgYXdhaXRpbmcgcmV2aWV3OyBpcyB0aGVyZSBhbnl0
+aGluZyBJIGNhbiBkbyB0byBtb3ZlIGl0IGZvcndhcmQKKHJlYmFzZSwgY29tbWl0IG1lc3NhZ2Us
+IG9yIHNwbGl0dGluZyB0aGUgc2l4LWZpeCBzZXJpZXMpPwoKV2hpbGUgZGVidWdnaW5nIGZ1cnRo
+ZXIgb24gdGhlIHNhbWUgV2luZG93cy9BTUQgaG9zdCBJIGlzb2xhdGVkIHR3bwptb3JlIFdIUFgg
+ZGVmZWN0cyB0aGF0IGxvb2sgd29ydGggc2VuZGluZyBhcyBmb2xsb3ctdXAgcGF0Y2hlcywgYm90
+aCBvZgp3aGljaCByZXByb2R1Y2UgZ3Vlc3QtdmlzaWJsZSBjb3JydXB0aW9uOgoKMS4gU3RhbGUg
+WFNBVkUgaW1hZ2Ugd3JpdHRlbiBiYWNrIGludG8gSHlwZXItVi4gT24gdGhpcyBob3N0CiAgIFdI
+dkdldFZpcnR1YWxQcm9jZXNzb3JTdGF0ZShYc2F2ZSkgZmFpbHMgb24gZXZlcnkgY2FsbCwgc28g
+UUVNVSdzCiAgIGVudiBGUC9TU0UvQVZYIGltYWdlIGlzIG5ldmVyIHJlZnJlc2hlZDsgYW55IHZt
+X3N0b3Avdm1fc3RhcnQgY3ljbGUKICAgKGdkYiBhdHRhY2gsIFFNUCBzdG9wLCBtaWdyYXRpb24g
+cGF1c2UpIHRoZW4gd3JpdGVzIHRoZSBzdGFsZSBpbWFnZQogICBiYWNrIGFuZCBjbG9iYmVycyBs
+aXZlIHZlY3RvciByZWdpc3RlcnMgb24gYWxsIFZQcywgY29ycnVwdGluZyB0aGUKICAgZ3Vlc3Qu
+IFByb3Bvc2VkIGZpeDogdHJhY2sgeHNhdmUgdmFsaWRpdHkgcGVyIFZQIGFuZCBza2lwIHRoZQog
+ICB3cml0ZS1iYWNrIHdoZW4gdGhlIHJlYWQgbmV2ZXIgc3VjY2VlZGVkLgoKMi4gTWVtb3J5QWNj
+ZXNzIE1NSU8gZGlzcGF0Y2ggcnVucyB3aXRob3V0IHRoZSBCUUwuIHdocHhfdmNwdV9ydW4KICAg
+ZHJvcHMgdGhlIEJRTCBiZWZvcmUgV0h2UnVuVmlydHVhbFByb2Nlc3NvciBhbmQgdGhlIE1lbW9y
+eUFjY2VzcwogICBleGl0IHBhdGggbmV2ZXIgcmVhY3F1aXJlcyBpdCwgc28gZGV2aWNlIE1NSU8g
+aGFuZGxlcnMgcnVuIEJRTC1mcmVlCiAgIG9uIHZDUFUgdGhyZWFkcyAoS1ZNL1RDRy9IVkYgYWxs
+IGRpc3BhdGNoIE1NSU8gdW5kZXIgdGhlIEJRTCkuCiAgIERldmljZXMgdG91Y2hpbmcgTWVtb3J5
+UmVnaW9uIHN0YXRlIHJhY2UgdGhlIG1haW4gbG9vcC4gUHJvcG9zZWQKICAgZml4OiB0YWtlIHRo
+ZSBCUUwgYXJvdW5kIGVtdWxhdGVfaW5zdHJ1Y3Rpb24gaW4gd2hweF9oYW5kbGVfbW1pby4KCkkg
+Y2FuIHBvc3QgYm90aCBhcyBwcm9wZXIgcGF0Y2hlcyBpZiB0aGV5IGFyZSBub3QgYWxyZWFkeSBr
+bm93biAvCmluIGZsaWdodC4gSGFwcHkgdG8gZm9sbG93IHRoZSBwcm9qZWN0J3MgQUktY29udHJp
+YnV0aW9uIHBvbGljeQpzdGF0ZW1lbnQgYXMgZGlzY3Vzc2VkLgoKVGhhbmtzLApKaWFqdW4gTGlh
+bmcK
 
-> The Phytium E2000Q combines two FTC310 cores and two FTC664 cores.
-> Its EL3 firmware accesses implementation-defined system registers
-> while setting up the cores. Using generic Cortex-A72 CPUs leaves
-> these registers undefined and traps firmware before it can reach
-> U-Boot.
->
-> Add FTC310 and FTC664 CPU types using Cortex-A72 as their common
-> execution base. Provide conservative RAZ/WI and NOP stubs for the
-> firmware-visible E2000 controls that have no modeled behavior.
->
-> Set each CPU DT compatible string, MIDR, instruction feature fields,
-> AArch32 floating-point feature fields, and CTR_EL0.L1Ip field to
-> values observed on an E2000Q board. The FTC310 reports a VIPT
-> instruction cache, while the FTC664 reports a PIPT instruction cache.
->
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> ---
->
->  target/arm/tcg/cpu64.c | 81
->  ++++++++++++++++++++++++++++++++++++++++++
-
-I wonder if cpu64 is the best place to model this? The alternative is to
-treat it like other SoCs (e.g. the Pi's BCM SoCs). Was the reason it
-ended up here because you needed access to aarch64_a72_initfn? Could you
-not instantiate:
-
-    soc_base->cpu_type =3D ARM_CPU_TYPE_NAME("cortex-a72");
-=20=20=20=20
-and then at realize:
-
-    object_initialize_child(OBJECT(dev), "cpu[*]", &s->cpu[n].core,
-                                soc_base->cpu_type);
-
-or does that not allow for tweaking the CP regs?
-
-
->  1 file changed, 81 insertions(+)
->
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index affd87a3ae..0fd2f79bbc 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -336,6 +336,85 @@ static void aarch64_a72_initfn(Object *obj)
->      define_cortex_a72_a57_a53_cp_reginfo(cpu);
->  }
->=20=20
-> +static const ARMCPRegInfo phytium_e2000_cp_reginfo[] =3D {
-> +    /*
-> +     * The E2000 EL3 firmware touches implementation-defined CPU registe=
-rs
-> +     * during the PBF/BL1 cache and core setup. QEMU does not model these
-> +     * controls, so expose conservative RAZ/WI stubs for the boot firmwa=
-re.
-> +     *
-> +     * PBF reads these identification and cluster controls after writing
-> +     * them. Returning zero preserves the reset state without claiming t=
-hat
-> +     * QEMU implements the associated cache or coherency controls.
-> +     */
-> +    { .name =3D "E2000_CPUID_CTL1", .state =3D ARM_CP_STATE_AA64,
-> +      .opc0 =3D 3, .opc1 =3D 1, .crn =3D 15, .crm =3D 1, .opc2 =3D 0,
-> +      .access =3D PL1_RW, .type =3D ARM_CP_CONST | ARM_CP_NO_RAW,
-> +      .resetvalue =3D 0 },
-> +    { .name =3D "E2000_CLUSTER_CTL", .state =3D ARM_CP_STATE_AA64,
-> +      .opc0 =3D 3, .opc1 =3D 1, .crn =3D 11, .crm =3D 8, .opc2 =3D 6,
-> +      .access =3D PL1_RW, .type =3D ARM_CP_CONST | ARM_CP_NO_RAW,
-> +      .resetvalue =3D 0 },
-> +    /*
-> +     * The remaining controls are only programmed as part of firmware se=
-tup.
-> +     * Accept the writes without retaining state because no modeled CPU
-> +     * behavior depends on their values.
-> +     */
-> +    { .name =3D "E2000_EL1_CTL", .state =3D ARM_CP_STATE_AA64,
-> +      .opc0 =3D 3, .opc1 =3D 2, .crn =3D 15, .crm =3D 15, .opc2 =3D 0,
-> +      .access =3D PL1_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
-> +    { .name =3D "E2000_EL2_CTL", .state =3D ARM_CP_STATE_AA64,
-> +      .opc0 =3D 3, .opc1 =3D 4, .crn =3D 15, .crm =3D 15, .opc2 =3D 0,
-> +      .access =3D PL2_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
-> +    { .name =3D "E2000_EL2_CTL2", .state =3D ARM_CP_STATE_AA64,
-> +      .opc0 =3D 3, .opc1 =3D 4, .crn =3D 15, .crm =3D 2, .opc2 =3D 4,
-> +      .access =3D PL2_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
-> +    { .name =3D "E2000_EL3_CTL", .state =3D ARM_CP_STATE_AA64,
-> +      .opc0 =3D 3, .opc1 =3D 6, .crn =3D 15, .crm =3D 15, .opc2 =3D 0,
-> +      .access =3D PL3_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
-> +};
-> +
-> +/*
-> + * Use the Cortex-A72 execution model as the common E2000 TCG base, then
-> + * replace the architected identity fields that differ between the two
-> + * physical core types.
-> + */
-> +static void aarch64_phytium_e2000_base_initfn(Object *obj)
-> +{
-> +    ARMCPU *cpu =3D ARM_CPU(obj);
-> +
-> +    aarch64_a72_initfn(obj);
-> +    define_arm_cp_regs(cpu, phytium_e2000_cp_reginfo);
-> +}
-> +
-> +static void aarch64_phytium_ftc310_initfn(Object *obj)
-> +{
-> +    ARMCPU *cpu =3D ARM_CPU(obj);
-> +    ARMISARegisters *isar =3D &cpu->isar;
-> +
-> +    aarch64_phytium_e2000_base_initfn(obj);
-> +
-> +    /* FTC310 cores identify with the FTC303 part number */
-> +    cpu->dtb_compatible =3D "phytium,ftc310";
-> +    cpu->midr =3D 0x700f3034;
-> +    SET_IDREG(isar, ID_AA64ISAR0, 0x00011100012120);
-> +    cpu->isar.mvfr0 =3D 0x10110222;
-> +    cpu->ctr =3D FIELD_DP64(cpu->ctr, CTR_EL0, L1IP, 2); /* VIPT */
-> +}
-> +
-> +static void aarch64_phytium_ftc664_initfn(Object *obj)
-> +{
-> +    ARMCPU *cpu =3D ARM_CPU(obj);
-> +    ARMISARegisters *isar =3D &cpu->isar;
-> +
-> +    aarch64_phytium_e2000_base_initfn(obj);
-> +
-> +    cpu->dtb_compatible =3D "phytium,ftc664";
-> +    cpu->midr =3D 0x701f6643;
-> +    SET_IDREG(isar, ID_AA64ISAR0, 0x00000100012120);
-> +    cpu->isar.mvfr0 =3D 0x10111222;
-> +    cpu->ctr =3D FIELD_DP64(cpu->ctr, CTR_EL0, L1IP, 3); /* PIPT */
-> +}
-> +
->  static void aarch64_a76_initfn(Object *obj)
->  {
->      ARMCPU *cpu =3D ARM_CPU(obj);
-> @@ -1533,6 +1612,8 @@ static const ARMCPUInfo aarch64_cpus[] =3D {
->      { .name =3D "cortex-a55",         .initfn =3D aarch64_a55_initfn },
->      { .name =3D "cortex-a72",         .initfn =3D aarch64_a72_initfn },
->      { .name =3D "cortex-a76",         .initfn =3D aarch64_a76_initfn },
-> +    { .name =3D "phytium-ftc310",     .initfn =3D aarch64_phytium_ftc310=
-_initfn },
-> +    { .name =3D "phytium-ftc664",     .initfn =3D aarch64_phytium_ftc664=
-_initfn },
->      /*
->       * The Cortex-A78AE differs slightly from the plain Cortex-A78. We d=
-on't
->       * currently model the latter.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
