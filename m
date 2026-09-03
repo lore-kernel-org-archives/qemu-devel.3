@@ -4,75 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62638C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D04C624D7
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24Sg-0004Vr-Eb; Thu, 03 Sep 2026 06:14:26 -0400
+	id 1x24XQ-0005kA-UA; Thu, 03 Sep 2026 06:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x24Se-0004Vj-K9
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:14:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x24XP-0005jn-GV
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:19:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x24Sc-0000ok-KV
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:14:24 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x24XN-0001eC-Qf
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:19:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788430461;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1788430756;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f7rhymgnk9AbRjTSee4UU+/OgRhOtkXkex/Gls60TTI=;
- b=U/pc4GJX4LFbcqNjBZrc2JbSJhWOQNOjgMjaTpUPbwVb0x51iOAExw0XLxF1dVXUSKH/CP
- baOlzgT+EBCZxHODb86I4rNrA5db2SOXoeYGxTTenwOym/UhlaYkAPc2/jXlS3xIA0hPrh
- wJyGu6wVelY/RkrUINNKZ/4MM4u9VUk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=28Pb1+VEEd4OwXlxfzdi9RvPwoWjCMyf8HwGr2nTrLE=;
+ b=ZXsO2qhqHB4R5KmyL81IuNT9ZoA5x1club+8jXZpzdlopVNkbmPjHCPcMFrC3H9JmddwAg
+ Xfsg17y4joubXmVA+P4cozE0JknmCV0ovi0mQ4UYGc722lD5DSYMcOqNbKraFaDsftnr4y
+ l2+gJzveBe8LhAF2zKTgBeyUgWHrgFY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-As3RXAC1NYaZnDwfvyoRdw-1; Thu,
- 03 Sep 2026 06:14:19 -0400
-X-MC-Unique: As3RXAC1NYaZnDwfvyoRdw-1
-X-Mimecast-MFC-AGG-ID: As3RXAC1NYaZnDwfvyoRdw_1788430458
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-u8iBVt4lMTSn7FPmgljF4A-1; Thu,
+ 03 Sep 2026 06:19:14 -0400
+X-MC-Unique: u8iBVt4lMTSn7FPmgljF4A-1
+X-Mimecast-MFC-AGG-ID: u8iBVt4lMTSn7FPmgljF4A_1788430754
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72CFC185CE9F
- for <qemu-devel@nongnu.org>; Thu,  3 Sep 2026 10:14:18 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 988A1434; Thu,  3 Sep 2026 10:14:17 +0000 (UTC)
-Date: Thu, 3 Sep 2026 11:14:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] checkpatch: reject trailers that credit an AI agent
-Message-ID: <aplIdioRiKdK5gqg@redhat.com>
-References: <20260903100441.781277-1-pbonzini@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1057F19541B1
+ for <qemu-devel@nongnu.org>; Thu,  3 Sep 2026 10:19:14 +0000 (UTC)
+Received: from [100.90.56.12] (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5CA0B7DF; Thu,  3 Sep 2026 10:19:13 +0000 (UTC)
+Message-ID: <40f3f1da-ef32-4223-ada7-642f6798eb19@redhat.com>
+Date: Thu, 3 Sep 2026 12:19:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] checkpatch: reject trailers that credit an AI agent
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260903100441.781277-1-pbonzini@redhat.com>
+ <aplIdioRiKdK5gqg@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <aplIdioRiKdK5gqg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260903100441.781277-1-pbonzini@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,57 +121,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 03, 2026 at 12:04:40PM +0200, Paolo Bonzini wrote:
-> The QEMU community has broad consent to not accept assisted-by and similar
-> trailers, and much less fake co-authored-bys, independent of any AI policy.
-> Implement this in checkpatch.pl already, so that there is another way for
-> contributors to discover the AI policy.
+On 9/3/26 12:14, Daniel P. Berrangé wrote:
+>> +# Reject trailers that credit an AI agent.
+>> +		if ($realfile =~ /^$/ &&
+>> +		    ($line =~ /🤖/ ||
 > 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  scripts/checkpatch.pl | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> Oh wow, is that something people actually do :-)
+
+IIRC it's more in pull requests but it was fun to add.
+
+>> +		     $line =~ /^\s*(?:Assisted|Generated)-by:/i ||
+>> +		     ($line =~ /^\s*Co-authored-by:\s*(.*?)\s*$/i &&
+>> +		      $1 =~ /\bcopilot\b | \bchatgpt\b | \bcodex\b | \bcursor\b | \[bot\] |
+>> +			     \bllama\b | \bgemini\b.*(?:pro|flash|ultra|google\.com) |
+>> +			     \bclaude\b.*(?:opus|sonnet|fable|haiku|anthropic\.com)/xi))) {
 > 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 03f35e75012..90cb40dfe1f 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1811,6 +1811,18 @@ sub process {
->  			}
->  		}
->  
-> +# Reject trailers that credit an AI agent.
-> +		if ($realfile =~ /^$/ &&
-> +		    ($line =~ /🤖/ ||
+> I presume the qualifiers after gemini/claude are a mitigation against
+> accidentally matching a real person's name ?
 
-Oh wow, is that something people actually do :-)
+For Claude yes, for Gemini I guess it's not really needed.  BTW I have 
+no idea which coding harnesses use Co-authored-by specifically so this 
+is really just a guess.
 
-> +		     $line =~ /^\s*(?:Assisted|Generated)-by:/i ||
-> +		     ($line =~ /^\s*Co-authored-by:\s*(.*?)\s*$/i &&
-> +		      $1 =~ /\bcopilot\b | \bchatgpt\b | \bcodex\b | \bcursor\b | \[bot\] |
-> +			     \bllama\b | \bgemini\b.*(?:pro|flash|ultra|google\.com) |
-> +			     \bclaude\b.*(?:opus|sonnet|fable|haiku|anthropic\.com)/xi))) {
+Paolo
 
-I presume the qualifiers after gemini/claude are a mitigation against
-accidentally matching a real person's name ?
-
-> +			ERROR("QEMU does not allow using AI for contributions, " .
-> +				"see docs/devel/code-provenance.rst\n" . $herecurr);
-> +		}
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>> +			ERROR("QEMU does not allow using AI for contributions, " .
+>> +				"see docs/devel/code-provenance.rst\n" . $herecurr);
+>> +		}
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> 
+> With regards,
+> Daniel
 
 
