@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0213C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B6C3C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28Ul-0007b5-92; Thu, 03 Sep 2026 10:32:51 -0400
+	id 1x28Yh-0000A9-OZ; Thu, 03 Sep 2026 10:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x28Uj-0007aO-D5
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:32:49 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x28Yg-0000A0-Gy
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:36:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x28Ui-0000C6-0e
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:32:49 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x28Yf-0001g3-4h
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:36:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788445967;
+ s=mimecast20190719; t=1788446211;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=iniYQgcPZOJTNkQAZDJ1yHpnUOWGXkf2wNRRkWuShLg=;
- b=RQtgGxShmF+5//uMKR8QVlGTO5Ek6QVc4zFxJSqCdD0FjYc0Nw6pSBun7ryg6TA0WxHr8J
- /ACQ1IB6noGJ4Y49eE2WjJz7GFrFWXsXFqs6EEzcFP3jJkFcFXJGn8CKm+E9vZ3italNNx
- /c1y0UdyX1q8Bx24wxIaaiCi1fzHMJA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=f9bGvLP9CEbsbX/4jtWir6FM2KCbaj2kkmOX219FFCY=;
+ b=h92A/Fzs5kLPTNeOV4Mvd4mpLBuFxwrU1S2yMHtAgW/zo07mBso6YR9QszxXX9O88PJX/r
+ jxAetSr1JgSOCqu7I64S7Os22RPOelgSGmi1SV7qpw3T9JU2AcxSijM9fClltGG8OEi7JA
+ Vx1+xDG5Qyp1h5cwhMG894UtaIa6MTM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-G7zYxjC1OGyUI2SoNssp-Q-1; Thu,
- 03 Sep 2026 10:32:42 -0400
-X-MC-Unique: G7zYxjC1OGyUI2SoNssp-Q-1
-X-Mimecast-MFC-AGG-ID: G7zYxjC1OGyUI2SoNssp-Q_1788445962
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-Yz9uW8nHMsioq1zybTmRtg-1; Thu,
+ 03 Sep 2026 10:36:48 -0400
+X-MC-Unique: Yz9uW8nHMsioq1zybTmRtg-1
+X-Mimecast-MFC-AGG-ID: Yz9uW8nHMsioq1zybTmRtg_1788446206
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC9701945110; Thu,  3 Sep 2026 14:32:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 922071964CC5; Thu,  3 Sep 2026 14:36:46 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A01F19560AB; Thu,  3 Sep 2026 14:32:25 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47C991955F08; Thu,  3 Sep 2026 14:36:46 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E4F2E21E682E; Thu, 03 Sep 2026 16:32:22 +0200 (CEST)
+ id B8DDD21E682E; Thu, 03 Sep 2026 16:36:43 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Hanna Czenczek <hreitz@redhat.com>
 Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  Kevin Wolf
  <kwolf@redhat.com>,  John Snow <jsnow@redhat.com>,  "Denis V . Lunev"
  <den@openvz.org>,  Eric Blake <eblake@redhat.com>,  Stefan Hajnoczi
  <stefanha@redhat.com>
-Subject: Re: [PATCH 2/9] qapi/block: Add IoAccountingOperation enum
-In-Reply-To: <20260831135206.126184-3-hreitz@redhat.com> (Hanna Czenczek's
- message of "Mon, 31 Aug 2026 15:51:58 +0200")
+Subject: Re: [PATCH 3/9] qapi/block: Add BLOCK_IO_DELAY event
+In-Reply-To: <20260831135206.126184-4-hreitz@redhat.com> (Hanna Czenczek's
+ message of "Mon, 31 Aug 2026 15:51:59 +0200")
 References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260831135206.126184-3-hreitz@redhat.com>
-Date: Thu, 03 Sep 2026 16:32:22 +0200
-Message-ID: <87fqzqpfrd.fsf@pond.sub.org>
+ <20260831135206.126184-4-hreitz@redhat.com>
+Date: Thu, 03 Sep 2026 16:36:43 +0200
+Message-ID: <87a4pypfk4.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -89,53 +89,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hanna Czenczek <hreitz@redhat.com> writes:
 
-> This enum gives more information than IoOperationType (which is used for
-> the rerror/werror distinction) to identify operation types for block
-> accounting.
+> This event will be emitted when a disk operation takes longer than a
+> pre-defined threshold (as set on the block device).
 >
 > Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 > ---
->  qapi/block.json | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+>  qapi/block.json | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
 >
 > diff --git a/qapi/block.json b/qapi/block.json
-> index 46955bbb3e3..456118eb0b4 100644
+> index 456118eb0b4..1cdaffd5520 100644
 > --- a/qapi/block.json
 > +++ b/qapi/block.json
-> @@ -603,3 +603,25 @@
->             '*boundaries-zap': ['uint64'],
->             '*boundaries-flush': ['uint64'] },
->    'allow-preconfig': true }
+> @@ -625,3 +625,33 @@
+>  ##
+>  { 'enum': 'IoAccountingOperation',
+>    'data': [ 'read', 'write', 'flush', 'zone-append', 'unmap' ] }
 > +
 > +##
-> +# @IoAccountingOperation:
+> +# @BLOCK_IO_DELAY:
 > +#
-> +# A more finely grained enumeration of I/O operation types beyond what
-> +# `IoOperationType` provides (whose read/write distinction matches the
-> +# rerror/werror policy settings).
+> +# Emitted when a disk operation takes longer than the pre-defined
+> +# threshold (as set via the delay-alert-ms property on the block
+> +# device).
 
-Why is the comparison to IoOperationType useful?
+Double-quotes around delay-alert-ms, please.
 
-If making the connection between IoOperationType values and
-"rerror/werror policy setting" is useful, why isn't it made in
-IoOperationType's docs?
+"The block device" is the one at @qom-path?
 
-What settings exactly?  Could this be a link?
+As far as I can tell, this property doesn't yet exist at this point.
+Fine, but please mention the fact in the commit message.
 
 > +#
-> +# @read: Reading data
+> +# Note that delays deliberately incurred by throttling do count
+> +# towards the operation duration.
 > +#
-> +# @write: Writing data
+> +# @qom-path: path to the device object in the QOM tree
 > +#
-> +# @flush: Flushing data to disk
+> +# @operation: I/O operation
 > +#
-> +# @zone-append: Appending data to a zone of a zoned block device
+> +# @duration: Ongoing duration of the operation (in seconds)
 > +#
-> +# @unmap: Discarding a block of data
+> +# @offset: Request offset in the guest disk (in bytes), if available
+> +#
+> +# @bytes: Request length
 > +#
 > +# Since: 11.2
 > +##
-> +{ 'enum': 'IoAccountingOperation',
-> +  'data': [ 'read', 'write', 'flush', 'zone-append', 'unmap' ] }
+> +{ 'event': 'BLOCK_IO_DELAY',
+> +  'data': {
+> +      'qom-path': 'str',
+> +      'operation': 'IoAccountingOperation',
+> +      'duration': 'number',
+> +      '*offset': 'uint64',
+> +      'bytes': 'uint64' } }
 
 
