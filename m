@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD6A5C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35335C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2DEc-0001Mp-Ag; Thu, 03 Sep 2026 15:36:30 -0400
+	id 1x2DEv-0001Yj-Jq; Thu, 03 Sep 2026 15:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x2DEZ-0001KS-Sj
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:27 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1x2DEv-0001YU-13
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:49 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x2DEX-00048b-Ub
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:27 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2d53197d8b5so1909685ad.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:25 -0700 (PDT)
+ id 1x2DEt-0004KL-4u
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:48 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3964e480f76so227353a91.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788464184; x=1789068984; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788464206; x=1789069006; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pjEnAWjV/7L51IbxCkjqlwouDh6XAo827NCEZ3RXico=;
- b=FnQ1fjMY8S/LTrufIZbUKA1D71RrZdTaOmKmLdvfc5rJVC4jWGfzVuvuK/5nQcTAdY
- 9OqFAxL/sZaIrWoUjjT4cxEYX1aVT9LqgwqUa4jHT6JuoJfcV22+6kY/sKNtTLDQyIdt
- j8FUa/jtBkcwCN7TCR2UEd/6st4uEu3gwkdZJgzDZVypCKoUc0xoNpSW1LN6V0/MUxIT
- 3Z1MUXCZLyKvWXWZLyFbKwqvrB3wwi6XLZ8sC/tA68oq+HfeO+4khWF92LgQQi/u+XjA
- ZYAV1TH7Coq8njyp063AFt1nQjKQIstszpustAH/Q+Z0BGlJLI8TqekYdoaPZ2OS95OJ
- yGlw==
+ bh=FqEMLe/F4bhf+smjGpRF2fQvXrs0fPuNu8A5xb4n6+c=;
+ b=sa9ESye9Yd6xW4tU+CUtRfGKZ1hUKOGD6pheExEhKFtl8DzxJeSGi0q8n4Qp9lCR7L
+ aVYaTLww0jsYqHtSB4m+Pq9iCNYVxx5fxqyjPIYACP+dO+bIBaNRBK0NDnxcQrN5TUte
+ zWXaLq4p2lFgFLE83K+0U0eiK02Q4/VZZibd5AawPg1cCXzoN8GTXdCWvRdihYf74Nuh
+ eWJOzKIw094WmRDGM0Z6XpUuKwmkEC4DjoTGxoGgR/vl5xzgmUKTqhhj7esQMDznWq3v
+ Z6XxC6siF4JAxp2SbHouTB880dSdUpCSf4ZsyAWMJbsh6liN5Xm15tY82fSI1axzybFf
+ X5rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788464184; x=1789068984;
+ d=1e100.net; s=20251104; t=1788464206; x=1789069006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pjEnAWjV/7L51IbxCkjqlwouDh6XAo827NCEZ3RXico=;
- b=W1/mVkPbbWCF+4IP/i8cNoJ6SRVM2tY5crNTd1ImrZgFsSQANn1x/PQk84NG2zw1uv
- kgQNeHk5BNPYIv8TLX5Ux+bLR71yrb60YY+HGxqd0U0r+oYbXC/KViA1hU0z4OLSI6ZE
- hr1z7N5oFy7e/T4rao51jNHJVhPbuXkMvTxAHNGEz3yH38H6PBGCjUd+HPB45srOw2pb
- ZfqxJQR2i1glPJWvLlz9a3k7plP8p1Z/FV5c4xorsmNfJmSQHOVnflvrcOtwUVDa+MSy
- kHSb1u5EcGgbcQLInGPNZYvhLNF/tjc3gpvQyZS7rm1DUaaADwEip4q2CQRAxAZz8gIT
- Y1Pw==
-X-Gm-Message-State: AFuF++kHYnuLLjfLYO1lhz2SiEFMOaJsPCff7RTdAGvCtWvS8yTuGHbr
- vsPb0wG3w9zPTZdfZHJxcc38svSvM+zeYQDjyWpAH72rFGhB0r29DAmo9F5+q4/wZjk=
-X-Gm-Gg: AYBFou2UWArNXDsfYR60i8l3n8XyyybilUQA1yJzQpQ/Ja2Wya324L9bHnYjnPG7Aoc
- 020+mES9mbEdaPK06MbqjCJNjBDAbKES1+lVcEw3HwPvg5W9JxfA2PBwbQQ5Duxa502sV3GkvU8
- zrHM+CsaqKJJH4sckcocJR/ikbBGw7Iyl7YY2sTZGros0VsxmB5vv4fMhJ8RSaDj9+W82RggDrN
- Ku2ww2ysk7U3HfB2CaqCSS5ilDCO7kmslqC3R9R0QlW5jZX/YPQ1sLHYvIr9hKoQObGparhfOzi
- i1w1t+6DC7uGGXv7gHE6J9qvgy/+nFMVU1yZO24HZ3cYggKWocXHRMJ3GnbwmZod0XcdDypmFfO
- O2506NB0PQJHjqzQBvyyeyDCLP/0yU9ePt9JklcjR2swhJOv7KCpDff9ua0h63weFo4Mww4qFAw
- xgNz8qpTs2EE8JYfxLELahpPhFoe6SdXrcOicJaNuaM1TUUQ6yzz6ka4zkA4mpBoy3pdqkO8+dO
- HpHbjiqlQEYZAM=
-X-Received: by 2002:a17:90b:4c4a:b0:398:bc52:825b with SMTP id
- 98e67ed59e1d1-39b2624c32amr1003136a91.21.1788464184154; 
- Thu, 03 Sep 2026 12:36:24 -0700 (PDT)
+ bh=FqEMLe/F4bhf+smjGpRF2fQvXrs0fPuNu8A5xb4n6+c=;
+ b=ICbYoJyP0cf8h3LjtKEuH7LBEa/OpsrvSZKRO1DAkwNu/G0CpcQnPO4BHPqY1vhKRf
+ suoVRb/d18ePKwomhQ4ZZJICwHoSiigAEBCoMb1ANLNIZz4ULuL/joPewmb7L5rBUwa2
+ w7X32S4QGPqab8hbx84fpMaARL2uI6XbY+kKEF2BCA8qQDgOfF9MJSXW7p5VFkvhLXIW
+ hHqUo22aVFuuBQf4PTQezPlt4Bh9tKNp0sLA1pksb9gDYshNTqbV1EM4Ri4azp8Yil74
+ S9RvoeZbYuGSohkP8jFZgP8qnhB5wpEvNKBJXJhoAgE8viDdwkdlngmwO1qaAX2UPw/y
+ iTKw==
+X-Gm-Message-State: AFuF++neCmLIb12BZObtyTX8MfeD+vD6m9BA1MCeAeY52oFxQd6S6WCz
+ PNQch9QQfYG+GSccEtDQ28Uk0LbE09szXRFChhB6NzngBGlf0EIBbyFztottZDoxfak=
+X-Gm-Gg: AYBFou3f01FqTj9DlkObSzeV1tH/rJpEo3XsVCtMKVBY4oVe0/rO5mQ7i/44C9Gzi58
+ ZTk6Dy2WSNvWxp0Ks22udslfTUqlw4I95lyY1NpIZ6dxojIZffXSZyOHPa2JAOcRB2U5SGJ/JmT
+ zRYPysdmQrF6B5hI2qgMiH3YVq17xszGc1q2mHRPj9nK2Zr3pZQ6lZcIXBtJ6WBeV4H1QsMQSPV
+ +ox3fVXmC71GrH4JG3e68/vJTT+eA/LWF8MDJ7mTWDHC9drW70cuC1IBVArmqUFHeRarCkrrJ6S
+ K9XH05cb0e803IX1R3KGIv5zCbnF11u3L+vf1KtSGL2/YHsZXRFR+h+G6Y/3iTpZlKlLB+xAiGv
+ 61rUvxuOiYpuzNUMoHtNfIKwxPrjkuW6AoXi4uaY585X+cI93QpV9fvL6vbu3o8iXv5qy4wU4rQ
+ yGaPe0382e2tXHd3WLRLilbAi7K2P0w0uU3PJ/sFXiyDxeK9wsA0oez1n1zoFuGapKM7kxDNRU4
+ f+mmLztzxBYfd3R4fpy3vYK8A==
+X-Received: by 2002:a17:90b:3943:b0:398:d8eb:cb2a with SMTP id
+ 98e67ed59e1d1-39b26273e31mr1288750a91.23.1788464205719; 
+ Thu, 03 Sep 2026 12:36:45 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:40c0:ec33:6266:c275])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.22
+ 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 12:36:23 -0700 (PDT)
+ Thu, 03 Sep 2026 12:36:45 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,16 +74,17 @@ To: berrange@redhat.com, kchamart@redhat.com,
  enju.kohei@fujitsu.com
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
  mathieu.poirier@linaro.org
-Subject: [RFC v4 06/24] target/arm/kvm-rme: Initialize vCPU
-Date: Thu,  3 Sep 2026 13:35:53 -0600
-Message-ID: <20260903193611.1058589-7-mathieu.poirier@linaro.org>
+Subject: [RFC v4 18/24] hw/arm/virt: Disable DTB randomness for confidential
+ VMs
+Date: Thu,  3 Sep 2026 13:36:05 -0600
+Message-ID: <20260903193611.1058589-19-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
 References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,181 +109,161 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-The target code calls kvm_arm_vcpu_init() to mark the vCPU as part of a
-Realm. For a Realm vCPU, only x0-x7 can be set at runtime. Before boot,
-the PC can also be set, and is ignored at runtime. KVM also accepts a
-few system register changes during initial configuration, as returned by
-KVM_GET_REG_LIST.
+The dtb-randomness feature, which adds random seeds to the DTB, isn't
+really compatible with confidential VMs since it randomizes the Realm
+Initial Measurement. Enabling it is not an error, but it prevents
+attestation. It also isn't useful to a Realm, which doesn't trust host
+input.
+
+Currently the feature is automatically enabled, unless the user disables
+it on the command-line. Change it to OnOffAuto, and automatically
+disable it for confidential VMs, unless the user explicitly enables it.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- target/arm/cpu.h      |  3 +++
- target/arm/kvm-rme.c  |  9 ++++++++
- target/arm/kvm-stub.c |  5 ++++
- target/arm/kvm.c      | 54 +++++++++++++++++++++++++++++++++++++++++--
- target/arm/kvm_arm.h  | 10 ++++++++
- 5 files changed, 79 insertions(+), 2 deletions(-)
+ docs/system/arm/virt.rst |  9 +++++----
+ hw/arm/virt.c            | 41 +++++++++++++++++++++++++---------------
+ include/hw/arm/virt.h    |  2 +-
+ 3 files changed, 32 insertions(+), 20 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index e3f931dba26b..6bbc942f9a59 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1054,6 +1054,9 @@ struct ArchCPU {
-     /* KVM steal time */
-     OnOffAuto kvm_steal_time;
+diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+index 5f6dd1797862..9882b842ddd5 100644
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -238,10 +238,11 @@ dtb-randomness
+   rng-seed and kaslr-seed nodes (in both "/chosen" and
+   "/secure-chosen") to use for features like the random number
+   generator and address space randomisation. The default is
+-  ``on``. You will want to disable it if your trusted boot chain
+-  will verify the DTB it is passed, since this option causes the
+-  DTB to be non-deterministic. It would be the responsibility of
+-  the firmware to come up with a seed and pass it on if it wants to.
++  ``off`` for confidential VMs, and ``on`` otherwise. You will want
++  to disable it if your trusted boot chain will verify the DTB it is
++  passed, since this option causes the DTB to be non-deterministic.
++  It would be the responsibility of the firmware to come up with a
++  seed and pass it on if it wants to.
  
-+    /* Realm Management Extension */
-+    bool kvm_rme;
-+
-     /* Uniprocessor system with MP extensions */
-     bool mp_is_up;
+ dtb-kaslr-seed
+   A deprecated synonym for dtb-randomness.
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index cf3a9320dc3a..329c881eb91a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -401,6 +401,7 @@ static int gic_fdt_irq_type_spi(const VirtMachineState *vms)
  
-diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-index a4a5e195c196..f7c2cc786e2c 100644
---- a/target/arm/kvm-rme.c
-+++ b/target/arm/kvm-rme.c
-@@ -69,6 +69,15 @@ static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
-     return 0;
- }
- 
-+void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
-+{
-+    if (!rme_guest) {
-+        return;
-+    }
-+
-+    cpu->kvm_rme = true;
-+}
-+
- static void rme_guest_class_init(ObjectClass *oc, const void *data)
+ static void create_fdt(VirtMachineState *vms)
  {
-     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 88cbe8d85c41..5fde96f9b281 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
- {
-     g_assert_not_reached();
- }
-+
-+void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 33c3763aebfa..b4c6da1fb9f3 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2015,6 +2015,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
++    bool dtb_randomness = true;
+     MachineState *ms = MACHINE(vms);
+     int nb_numa_nodes = ms->numa_state->num_nodes;
+     void *fdt = create_device_tree(&vms->fdt_size);
+@@ -410,6 +411,16 @@ static void create_fdt(VirtMachineState *vms)
+         exit(1);
      }
  
-+    kvm_arm_rme_vcpu_init(cpu);
++    /*
++     * Including random data in the DTB causes random intial measurement on CCA,
++     * so disable it for confidential VMs.
++     */
++    if (vms->dtb_randomness == ON_OFF_AUTO_OFF ||
++        (vms->dtb_randomness == ON_OFF_AUTO_AUTO &&
++         virt_machine_is_confidential(vms))) {
++        dtb_randomness = false;
++    }
 +
-     /* Do KVM_ARM_VCPU_INIT ioctl */
-     ret = kvm_arm_vcpu_init(cpu);
-     if (ret) {
-@@ -2169,6 +2171,29 @@ static int kvm_arch_put_sve(CPUState *cs, uint32_t vq, bool have_ffr)
-     return 0;
+     ms->fdt = fdt;
+ 
+     /* Header */
+@@ -431,13 +442,13 @@ static void create_fdt(VirtMachineState *vms)
+ 
+     /* /chosen must exist for load_dtb to fill in necessary properties later */
+     qemu_fdt_add_subnode(fdt, "/chosen");
+-    if (vms->dtb_randomness) {
++    if (dtb_randomness) {
+         create_randomness(ms, "/chosen");
+     }
+ 
+     if (vms->secure) {
+         qemu_fdt_add_subnode(fdt, "/secure-chosen");
+-        if (vms->dtb_randomness) {
++        if (dtb_randomness) {
+             create_randomness(ms, "/secure-chosen");
+         }
+     }
+@@ -3512,18 +3523,21 @@ static void virt_set_virtio_transports(Object *obj, Visitor *v,
+     vms->virtio_transports = transports;
  }
  
-+static int kvm_arm_rme_put_core_regs(CPUState *cs, Error **errp)
-+{
-+    int i, ret;
-+    ARMCPU *cpu = ARM_CPU(cs);
-+    CPUARMState *env = &cpu->env;
-+
-+    /* The RME ABI only allows us to set 8 GPRs and the PC */
-+    for (i = 0; i < 8; i++) {
-+        ret = kvm_set_one_reg(cs, AARCH64_CORE_REG(regs.regs[i]),
-+                              &env->xregs[i]);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-+    ret = kvm_set_one_reg(cs, AARCH64_CORE_REG(regs.pc), &env->pc);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    return 0;
-+}
-+
- static int kvm_arm_put_core_regs(CPUState *cs, Error **errp)
+-static bool virt_get_dtb_randomness(Object *obj, Error **errp)
++static void virt_get_dtb_randomness(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
  {
-     uint64_t val;
-@@ -2280,7 +2305,11 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-     int ret;
-     ARMCPU *cpu = ARM_CPU(cs);
+     VirtMachineState *vms = VIRT_MACHINE(obj);
++    OnOffAuto dtb_randomness = vms->dtb_randomness;
  
--    ret = kvm_arm_put_core_regs(cs, errp);
-+    if (cpu->kvm_rme) {
-+        ret = kvm_arm_rme_put_core_regs(cs, errp);
-+    } else {
-+        ret = kvm_arm_put_core_regs(cs, errp);
-+    }
-     if (ret) {
-         return ret;
-     }
-@@ -2367,6 +2396,23 @@ static int kvm_arch_get_sve(CPUState *cs, uint32_t vq, bool have_ffr)
-     return 0;
+-    return vms->dtb_randomness;
++    visit_type_OnOffAuto(v, name, &dtb_randomness, errp);
  }
  
-+static int kvm_arm_rme_get_core_regs(CPUState *cs, Error **errp)
-+{
-+    int i, ret;
-+    ARMCPU *cpu = ARM_CPU(cs);
-+    CPUARMState *env = &cpu->env;
-+
-+    for (i = 0; i < 8; i++) {
-+        ret = kvm_get_one_reg(cs, AARCH64_CORE_REG(regs.regs[i]),
-+                              &env->xregs[i]);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static int kvm_arm_get_core_regs(CPUState *cs, Error **errp)
+-static void virt_set_dtb_randomness(Object *obj, bool value, Error **errp)
++static void virt_set_dtb_randomness(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
  {
-     uint64_t val;
-@@ -2478,7 +2524,11 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-     int ret;
-     ARMCPU *cpu = ARM_CPU(cs);
+     VirtMachineState *vms = VIRT_MACHINE(obj);
  
--    ret = kvm_arm_get_core_regs(cs, errp);
-+    if (cpu->kvm_rme) {
-+        ret = kvm_arm_rme_get_core_regs(cs, errp);
-+    } else {
-+        ret = kvm_arm_get_core_regs(cs, errp);
-+    }
-     if (ret) {
-         return ret;
-     }
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index e7c40fb003e4..d95381c13afa 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -240,4 +240,14 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
-  */
- char *kvm_print_register_name(uint64_t regidx);
+-    vms->dtb_randomness = value;
++    visit_type_OnOffAuto(v, name, &vms->dtb_randomness, errp);
+ }
  
-+/**
-+ * kvm_arm_rme_vcpu_init
-+ * @cs: the CPU
-+ *
-+ * If the user requested a Realm, setup the given vCPU accordingly. Realm vCPUs
-+ * behave a little differently, for example most of their register state is
-+ * hidden from the host.
-+ */
-+void kvm_arm_rme_vcpu_init(ARMCPU *cpu);
-+
- #endif
+ static char *virt_get_oem_id(Object *obj, Error **errp)
+@@ -4345,16 +4359,16 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Set MSI settings. "
+                                           "Valid values are auto, gicv2m, its and off");
+ 
+-    object_class_property_add_bool(oc, "dtb-randomness",
+-                                   virt_get_dtb_randomness,
+-                                   virt_set_dtb_randomness);
++    object_class_property_add(oc, "dtb-randomness", "OnOffAuto",
++                              virt_get_dtb_randomness, virt_set_dtb_randomness,
++                              NULL, NULL);
+     object_class_property_set_description(oc, "dtb-randomness",
+                                           "Set off to disable passing random or "
+                                           "non-deterministic dtb nodes to guest");
+ 
+-    object_class_property_add_bool(oc, "dtb-kaslr-seed",
+-                                   virt_get_dtb_randomness,
+-                                   virt_set_dtb_randomness);
++    object_class_property_add(oc, "dtb-kaslr-seed", "OnOffAuto",
++                              virt_get_dtb_randomness, virt_set_dtb_randomness,
++                              NULL, NULL);
+     object_class_property_set_description(oc, "dtb-kaslr-seed",
+                                           "Deprecated synonym of dtb-randomness");
+ 
+@@ -4417,9 +4431,6 @@ static void virt_instance_init(Object *obj)
+     /* MTE is disabled by default.  */
+     vms->mte = false;
+ 
+-    /* Supply kaslr-seed and rng-seed by default */
+-    vms->dtb_randomness = true;
+-
+     vms->irqmap = a15irqmap;
+ 
+     vms->virtio_transports = NUM_VIRTIO_TRANSPORTS;
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 22e66d1a113c..d4c1aa04f664 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -176,7 +176,7 @@ struct VirtMachineState {
+     bool virt;
+     bool ras;
+     bool mte;
+-    bool dtb_randomness;
++    OnOffAuto dtb_randomness;
+     bool second_ns_uart_present;
+     OnOffAuto acpi;
+     VirtGICType gic_version;
 -- 
 2.43.0
 
