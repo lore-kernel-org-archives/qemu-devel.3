@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88DE6C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65184C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:47:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1zLd-0002pj-16; Thu, 03 Sep 2026 00:46:49 -0400
+	id 1x1zLn-0002sJ-6o; Thu, 03 Sep 2026 00:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1x1zLc-0002pb-3U
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:48 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1x1zLl-0002s3-KT
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:57 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1x1zLa-0006Uz-K1
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:47 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-cc1c7364550so2117771a12.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:46:46 -0700 (PDT)
+ id 1x1zLj-0006X5-9A
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:57 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-38ec1402b05so1785667a91.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788410805; x=1789015605; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788410813; x=1789015613; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=I5Kx/vv5Aml97SX5v+rORs1NUsyXUXac0cX1brEGJwk=;
- b=FQ4ZKuKQ91nDA/2pONw3WP20rwjBJ/fzptOAeP6VeWfuOLDtouhqIohvcm1N4ZOnmx
- RNXwEqQYw3WlF2pIHPmat7dVfJJS/6QzqGA08wrqprU2iaJkjRTFsaN8arXo6+EDSQV/
- AhywBKNo7q2kDKUiGVTheG9BLbCMi/aRD0VizufhQVr2JZOlegV0TOJlkm+wfyeWhrzu
- 5Y3eWs7VZB4P+qhWAzr7+SgrXIdU3CTmbU9qzxM/avJaTD9h7YdN32ef++c8jMH++Tfc
- XQRTBHGTyRONOWfWBjQyc4r1eQcRwL71xbnXxzFDIiiFrjZRHiWkIGfH0RQJUP28EEEC
- ssXg==
+ bh=CPJLhtJ7BvDbnWW6+Tdj8mg2WSX1fkZA9cVF1ZBf32k=;
+ b=DITs4Wze2CeWSsCfNOuTxYuuSM9+e/WmVS5oTqns/eUyyivzQoxeS34jDEVhXb7F8u
+ MwqJEdP0oqcINJ2GBLQtFQvn6G/29gBUSnZMUVy4anH2HmcihFsvNhDC/F5cRkpp5ai1
+ JEUudOzxzMdEXsr+Y8CB5Z6cqeyqay14/OyhlKxzFq/oR65hhIEaWcBs6cgYajC7McqA
+ FyYOct9sTveCG68YwSqSpmDxoWYvmKMQtOfeTyxIKwnSqmQFAB5j+42GobSGcyJva10B
+ ICMXERqaMrJDMoH993vSQeXeJA3uIasS/CsWTzd4tVzRbLxUzcITpnMpJDMI1ovl32JW
+ 0qWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788410805; x=1789015605;
+ d=1e100.net; s=20251104; t=1788410813; x=1789015613;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=I5Kx/vv5Aml97SX5v+rORs1NUsyXUXac0cX1brEGJwk=;
- b=A8rRyOVBngypP8IHGjXRg5qhWoBfwF7M8T/DHpgSP9g1g9grmm1THWp++rWIBwHTzd
- +EsYgQfXEudP9vlduHlnhXEG792OkVsyNOLTMA19QyZMnE5S4IpTmOwLpXHxgssH0VRp
- mDjrjnjVpymeq0BADZHe2cyWQLvzPut4LimZPEvNV2FEOQfffN/NnihcxVJ9ZQjjp24e
- kj4IVkLVOZGeuIPZQbKPJ03+8WCooXBxuagNhGkiMC1S60fGrb6xTAMVgtOQ6gZMcGd9
- h1yKdYClXToRq9qEHM+EhmVUV2wmnES1iYmd0agvxdPD3fUZlnU6ni3ewuSrJKXRkD0V
- Ac/Q==
-X-Gm-Message-State: AFuF++k3q2MFwW2Dg/0WOnOiuc5if/Khxy11TWLBHMdvH6XpWMIDmLs2
- aZRWgzzojSKaMZJNJT1/tXuy30uu6wy/n2ndEt2C4dKLr3jqbYvoWweEzhdYyo27
-X-Gm-Gg: AYBFou3QB2BIPGIDadh9sLGf6ytmxuGXIJV+KPvgKrgFhKyKPeA5i1vXxhj6gJwxrvo
- azlMNQZbhoBtLDUr6ctrlGc7cZn/gMPQUeDA8jDmVboeJ3QbJAjKO/h1KYY3ddehAV42ghHKRN6
- 7/qnT/NvsKXut3eL5PBR7i98bUUI7bggc3ybcMg5/jq/xvlxu/t8LP5xKAzsw4yvjTTN498oSVB
- +24DC4mxqg0LCWtxpAmKnaJp/IuEPoMDOoJrzgM94zy7XoOhAKfiSQ9FKEtSJAdENGO8l3DpdxH
- 3P4m+8mzAasP9VZgIkAtQIt2/MuqpNTztwSFB4H6yVyqAL9IwfathP0b94NBFxnzpEVkgZm7BXO
- 8Xxwb4Vqyb8ISce4hXMMWIwEPX2HwPCI74V1rnY36P5ghyeUZWK7BQ9QIIBqfhQ7wZMgp7ZD6my
- L3OlQsWH1JK5a2ukt543iG35t1S/R0f2y7RCWloXKKZ7adkgysjurMLLjJLvZGE/z9R9tNB93O4
- 0nuHMqqxWkrruCF4Q==
-X-Received: by 2002:a05:6a20:9f92:b0:3cd:67e9:8565 with SMTP id
- adf61e73a8af0-3d9ae0c7efcmr16886199637.9.1788410805121; 
- Wed, 02 Sep 2026 21:46:45 -0700 (PDT)
+ bh=CPJLhtJ7BvDbnWW6+Tdj8mg2WSX1fkZA9cVF1ZBf32k=;
+ b=SbGtGcG/rjUoM1Mbfp81iSU6ZG2f1kqxuWvc/H3MO3KcVJxHNuNa7I4Gq6vticazer
+ V/0cGCI/ksFPAl2KyygPzHhZ8JK0dKf0hDhNndVSwL+i+D28M0WXjue80981eb5xAvS5
+ SbdKzq+xNXn08jBx6UC65o5j6j2xULZJN0bhFVvTmEqpYX/VBvhvlTqq+thhDI6r3/SA
+ RQF3LNczjgIIlIYqLdCzThnhtWHW79CSXMYPKQPY+5O6dDN3xXpQ+moZ/or+7LMC4mzz
+ fTzK+UuWmMpCqgYhkjed2pAvx3nyvsdHC2Wrrwu8E0IfSU038wRp7BzT1okc+EgCRSn9
+ XIHw==
+X-Gm-Message-State: AFuF++n8kVqS1U0YzIIOUs2QFGConfP/ZACQXBmSvHHof3D/kQudKA24
+ ji2XOMMuZKKDbr29PFk+j6tIQFgDuBX+dwHwS4mxId74g2mlqQkFoM4/5Myhtv4Q
+X-Gm-Gg: AYBFou1QSRIgyzBfbcM8pxE0BK0VraaOSYUn+tmgw+oC5yEN27IldMn7MLjAXOEaXex
+ pqJubLcmEZaN+/ZWWZfSqrBgfT+3olGug66diGAavmkhrfsYBihUmALTmGlb5PKDRN2jieINTQZ
+ HHEh1B+yonXt5W4bRq+Htv9WWzwSRG88gnGwYKnONZfz9IWHmi800CipX2R3Eome6TUTSuLz58l
+ B28xMUD0WTXL1iyMaEBEwX/uqt2HYKWLVtPfnFk8qFZgO1DhKe8v+Tk6mS2EpXQDo5k6OVuPvjJ
+ 8105VuO2tcK3fLPAOAxU3278YwGPiawQLPkP5qkS1nN/XJOv42Enh2pzufagIWuIE5iH3+evgEo
+ SsyMllkvOohvYQTbhcCu2bz1woLpnJanXuxL85iRbrqYgJkadgxoCUphstzd3i+ZzGr+reoT5zF
+ PspHsR7PZD4rY8IqI1TtZvdNVq6RHjKCZhO/ieLOc5Y5OxMsYzY1Enwqo12b2rdNtHSf6d7xjRR
+ VGq3Uber1usAZmh2g==
+X-Received: by 2002:a17:90b:3b8d:b0:398:c292:ac80 with SMTP id
+ 98e67ed59e1d1-39aedf55732mr13707299a91.10.1788410812915; 
+ Wed, 02 Sep 2026 21:46:52 -0700 (PDT)
 Received: from localhost.localdomain ([76.133.142.170])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1431994db8csm2337726c88.9.2026.09.02.21.46.43
+ a92af1059eb24-1431994db8csm2337726c88.9.2026.09.02.21.46.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Sep 2026 21:46:44 -0700 (PDT)
+ Wed, 02 Sep 2026 21:46:52 -0700 (PDT)
 From: 54weasels <54weasels@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	balaton@eik.bme.hu,
 	54weasels <54weasels@gmail.com>
-Subject: [PATCH v5 2/6] target/m68k: Fix fsave/frestore for 68881 FPU
-Date: Wed,  2 Sep 2026 21:45:15 -0700
-Message-ID: <20260903044626.24453-3-54weasels@gmail.com>
+Subject: [PATCH v5 6/6] target/m68k: Implement Physical Bus Error and Stack
+Date: Wed,  2 Sep 2026 21:45:19 -0700
+Message-ID: <20260903044626.24453-7-54weasels@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260903044626.24453-1-54weasels@gmail.com>
 References: <20260903044626.24453-1-54weasels@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=54weasels@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=54weasels@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,58 +103,233 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Why this change is made & How it will be used:
-The 68881/68882 FPUs require fsave/frestore instructions to read/write state frames. QEMU only fully implemented this for the 68040. The Sun-3 uses a 68881 FPU, and the boot ROM executes `fsave` to probe FPU presence. This patch adds basic 68881 FPU state frame handling (NULL frame) to accurately simulate an idle FPU state.
+Physical memory timeouts (e.g., probing unpopulated memory locations) must generate a Bus Error exception, resulting in Format 0xA or 0xB stack frames on the 68020. The Sun-3 PROM probes memory sizes by intentionally causing bus errors and analyzing the Special Status Word (SSW) on the stack frame. This patch implements hardware-injected EXCP_ACCESS cycle generation and the corresponding 84-byte long stack frame teardown.
 
 Impact on existing functionality:
-Fixes FPU detection for 68881/68882 across all M68k boards without affecting 68040 specific state logic.
+Accurately populates the 68020 84-byte SSW stack frames. Older architectures (like 68000) safely ignore the hook and gracefully exit without generating the advanced frames.
 
 Signed-off-by: 54weasels <54weasels@gmail.com>
 ---
- target/m68k/translate.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ target/m68k/helper.c    |   1 +
+ target/m68k/op_helper.c | 161 +++++++++++++++++++++++++++-------------
+ 2 files changed, 109 insertions(+), 53 deletions(-)
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 138c89d3e5..c89ef213ed 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -5364,11 +5364,11 @@ DISAS_INSN(frestore)
-         gen_exception(s, s->base.pc_next, EXCP_PRIVILEGE);
-         return;
-     }
--    if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
-+    if (m68k_feature(s->env, M68K_FEATURE_FPU)) {
-         SRC_EA(env, addr, OS_LONG, 0, NULL);
-         /* FIXME: check the state frame */
-     } else {
--        disas_undef(env, s, insn);
-+        disas_undef_fpu(env, s, insn);
-     }
- }
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 1eef6dcaaf..abfbcead69 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -29,6 +29,7 @@
+ #include "system/memory.h"
+ #include "gdbstub/helpers.h"
+ #include "fpu/softfloat.h"
++#include "qemu/log.h"
+ #include "qemu/qemu-print.h"
  
-@@ -5379,12 +5379,18 @@ DISAS_INSN(fsave)
-         return;
-     }
+ #define SIGNBIT (1u << 31)
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 30af4a2631..1d4b244416 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -26,6 +26,7 @@
+ #include "qemu/plugin.h"
  
--    if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
--        /* always write IDLE */
--        TCGv idle = tcg_constant_i32(0x41000000);
--        DEST_EA(env, insn, OS_LONG, idle, NULL);
-+    if (m68k_feature(s->env, M68K_FEATURE_FPU)) {
-+        TCGv frame;
-+        if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
-+            /* 68040 FSAVE: always write IDLE */
-+            frame = tcg_constant_i32(0x41000000);
+ #if !defined(CONFIG_USER_ONLY)
++#include "system/runstate.h"
+ 
+ static void cf_rte(CPUM68KState *env)
+ {
+@@ -74,6 +75,12 @@ throwaway:
+         case 7:
+             sp += 52;
+             break;
++        case 0xa: /* Short Bus Cycle Fault (Format 0xA) */
++            sp += 32 - 8; /* 32 bytes total - 8 bytes header = 24 bytes */
++            break;
++        case 0xb: /* Long Bus Cycle Fault (Format 0xB) */
++            sp += 92 - 8; /* 92 bytes total - 8 bytes header = 84 bytes */
++            break;
+         }
+     }
+     env->aregs[7] = sp;
+@@ -343,56 +350,80 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+     switch (cs->exception_index) {
+     case EXCP_ACCESS:
+         if (env->mmu.fault) {
+-            cpu_abort(cs, "DOUBLE MMU FAULT\n");
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "M68K: Double MMU Fault. Halting CPU and requesting reset.\n");
++            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++            cs->halted = 1;
++            cs->exception_index = EXCP_HLT;
++            cpu_loop_exit(cs);
+         }
+         env->mmu.fault = true;
+-        /* push data 3 */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* push data 2 */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* push data 1 */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 1 / push data 0 */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 1 address */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 2 data */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 2 address */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 3 data */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 3 address */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+-        /* fault address */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+-        /* write back 1 status */
+-        sp -= 2;
+-        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 2 status */
+-        sp -= 2;
+-        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* write back 3 status */
+-        sp -= 2;
+-        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+-        /* special status word */
+-        sp -= 2;
+-        cpu_stw_be_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
+-        /* effective address */
+-        sp -= 4;
+-        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+-
+-        do_stack_frame(env, &sp, 7, oldsr, 0, env->pc);
++
++        if (m68k_feature(env, M68K_FEATURE_M68040)) {
++            /* push data 3 */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* push data 2 */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* push data 1 */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 1 / push data 0 */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 1 address */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 2 data */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 2 address */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 3 data */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 3 address */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
++            /* fault address */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
++            /* write back 1 status */
++            sp -= 2;
++            cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 2 status */
++            sp -= 2;
++            cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* write back 3 status */
++            sp -= 2;
++            cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++            /* special status word */
++            sp -= 2;
++            cpu_stw_be_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
++            /* effective address */
++            sp -= 4;
++            cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
++
++            do_stack_frame(env, &sp, 7, oldsr, 0, env->pc);
 +        } else {
-+            /* 68881/68882 FSAVE: always write NULL frame */
-+            frame = tcg_constant_i32(0x00000000);
++            /* M68020 Long Bus Cycle Fault (Format 0xB) */
++            /*
++             * 84 bytes of internal state are pushed before the generic
++             * 8-byte header
++             */
++            sp -= 84;
++            for (int i = 0; i < 84; i += 4) {
++                cpu_stl_be_mmuidx_ra(env, sp + i, 0, MMU_KERNEL_IDX, 0);
++            }
++            /* Offset 0x02 from internal frame: SSW */
++            cpu_stw_be_mmuidx_ra(env, sp + 2, env->mmu.ssw, MMU_KERNEL_IDX, 0);
++            /* Offset 0x08 from internal frame: Fault Address */
++            cpu_stl_be_mmuidx_ra(env, sp + 8, env->mmu.ar, MMU_KERNEL_IDX, 0);
++
++            do_stack_frame(env, &sp, 0xb, oldsr, 0, env->pc);
 +        }
-+        DEST_EA(env, insn, OS_LONG, frame, NULL);
-     } else {
--        disas_undef(env, s, insn);
-+        disas_undef_fpu(env, s, insn);
-     }
+         env->mmu.fault = false;
+         if (qemu_loglevel_mask(CPU_LOG_INT)) {
+             qemu_log("            "
+@@ -438,7 +469,9 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+ 
+     env->aregs[7] = sp;
+     /* Jump to vector.  */
++    env->mmu.fault = true;
+     env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
++    env->mmu.fault = false;
+ 
+     do_plugin_vcpu_interrupt_cb(cs, last_pc);
  }
- #endif
+@@ -510,12 +543,34 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+         if (access_type != MMU_DATA_STORE) {
+             env->mmu.ssw |= M68K_RW_040;
+         }
+-
+-        env->mmu.ar = addr;
+-
+-        cs->exception_index = EXCP_ACCESS;
+-        cpu_loop_exit(cs);
++    } else if (m68k_feature(env, M68K_FEATURE_M68020)) {
++        /*
++         * M68020 Long Bus Cycle Fault (Format 0xB).
++         * The Motorola 68020 hardware intrinsically generates a physical
++         * Bus Error exception whenever the system bus flags a transaction
++         * timeout or failure (e.g., attempting to read an unpopulated bus
++         * address). This natively injects the EXCP_ACCESS cycle to build
++         * the generic 84-byte exception stack frame.
++         */
++        env->mmu.ssw = 0;
++        if (access_type == MMU_INST_FETCH) {
++            env->mmu.ssw |= 0x1000;
++        } else if (access_type == MMU_DATA_STORE) {
++            env->mmu.ssw |= 0x0040;
++        } else {
++            env->mmu.ssw |= 0x0080;
++        }
++    } else {
++        /*
++         * Older architectures (e.g. 68000) do not currently support
++         * hardware-injected transaction failures in QEMU.
++         */
++        return;
+     }
++
++    env->mmu.ar = addr;
++    cs->exception_index = EXCP_ACCESS;
++    cpu_loop_exit(cs);
+ }
+ 
+ bool m68k_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
 -- 
 2.50.1 (Apple Git-155)
 
