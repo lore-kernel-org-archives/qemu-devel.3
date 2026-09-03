@@ -4,100 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6811C624D4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 05:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BE3C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 06:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x20Nt-0006he-Qx; Thu, 03 Sep 2026 01:53:15 -0400
+	id 1x20YQ-0005rd-K9; Thu, 03 Sep 2026 02:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x20Nl-0006ad-Oh
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 01:53:05 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1x20YI-0005r4-ID
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 02:04:00 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x20Nk-0006Sg-7j
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 01:53:05 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-84e27035206so1789537b3a.3
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 22:53:03 -0700 (PDT)
+ id 1x20YB-0007Z9-O5
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 02:03:54 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-861f30636f9so27823107b3.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 23:03:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788415430; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Q6PEi44iUEUnC7PcOx7Cmck/qSpcc0kVomhUY9/aT/TjfSSBCyueNbSZ45z+LSyeV4
+ Cjefooz3mljszgQbcsL0I0uHh3S9zx/GQ4hURrxZgEbpDtWtA8RRZOnOWZ7oWPGENNxC
+ fTQtuMbJY4KU8cv+1eeBhSH1uRmOimagzuPBxpj1w2M+1Q2wwDZSOpMcz1LpoKpgcH1D
+ u3I0mgY+DfjCXIqtcIQzNnEA11GquIj9I2mLSSlleRDc52BI3/qsDDUweNPr137YdQ6y
+ 5QUkrrM4p51FZU/Z6jizdYo7m0befJ3yvoBemr1WyvPSpzRhplR73uTjOKbCTZoSjH27
+ A/Rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TQqJdGmgIswz+dHrwW970Ng1x54TxYt5LKqbBQDyswk=;
+ fh=8uTrJb90l5R3XB1p22UwGmGHmBMrgyp5rK7jzFP6Wg0=;
+ b=YLuJvUfdlaNUouUMX+yCyGbNKYzKjbOrNptMaVtp9zcLq2tv8juy5SJBwKa/iDVHhj
+ BHIvbSdAuSArESrkptONIV70zIyVmqdt0u8n3XJZow0TFbfHSwMsRWwsIog6j26igO9w
+ pnVbRkP+A+O43aSsNf/Ufm6ezJcYrCSm+Fvq5r97QshvfLl6ZaKSN2eF0ZBac498Umr5
+ Nosrqzq2r+4Yb9POEzz2qIALkAszt5H4tDaRHY0MpcSaar3QKj+LDDgR+DcjQJG8wTiF
+ kz5r8aoGh61TQeWX+GbuGWzJ5ieh8FXyU4XHNGRhvtO+mpuV+na++3RskUqW1QOOKxj4
+ Q7Aw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788414783; x=1789019583; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=+s6fEopBsd7ppapT8KmLn2uzOdAaKJBsOus7rTyRoiQ=;
- b=BUwzsxNFQkASONZA9oUyKAChshn/LlUK8DdDaype+ejB9me3Ozv8Ve0j6wTyIAFyBW
- Ftu5uJx8POraCNlBpSOilitDlk21rMBMaIjRojZIYCifZbjZAPeD6pdeO573tpj2m0LZ
- OT88FuWH3Q+YOWf+k75S5X3VIRONRQVPCigZ+ZIyuyaQYbNfyIgxm80COq7mKb9DadUR
- 0uoedgdZMUShGCGiVpc8vBsrir78rlr42BvuUjJoP9RFQCmbSqc2gbtB4EXNDVyNyfH3
- /TXKVLjp0MlTNF2g6CvwFdD4QlWGwJRltnxfqJdJeALLGNDGVeicKS0Lh2WdF/+kSQdC
- wLgA==
+ d=jms.id.au; s=google; t=1788415430; x=1789020230; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=TQqJdGmgIswz+dHrwW970Ng1x54TxYt5LKqbBQDyswk=;
+ b=TpR8bOl30I+KvzKOCgnMVZ8h4f7zsqvQLfsiQLvZ2FTu2beJ7fdc7pKFfoDGQcdHCJ
+ Z31mSxODJGv8E8UJIsV03nCYWoqMCoNBK14iWrsh2x4KHUxD8TMNKnO3d2dVG6Y2uQ+0
+ ZsPnUJacseCrgdULPGkf+NqHKf59tHimLiuPI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788414783; x=1789019583;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+s6fEopBsd7ppapT8KmLn2uzOdAaKJBsOus7rTyRoiQ=;
- b=cL+0v1Iq+qthVvwajlKeg/46XkUi7gojjhBVTkTY2NANihfWfQFimlSHPZijjEq0lI
- OXR3M1pfTfPGAffTxiOslakR4atESSLjoMSvUj0E9SLd2VpVnzrYwlHfiaRWfGv5oBs+
- ICW8Bd3Lm2YKDAwr8iPLnylJQF/2oUV2TPmXIB9KJItUWMKhey2OVv0XH4IJh8mR3r6O
- knh8lUHvGn/UrlCPb1Z2z5EoKnCJqnbpfNxPyfkxGNFnSeAX4p8lrTGY8pxyAhg08JGJ
- 9XaPqKQMS42XJsX8K5Kv7pL/ewGePnJDn1Hx9hphfhW3wHIrrGAfhY0YiwSfZOwnYzD3
- 9eGQ==
+ d=1e100.net; s=20251104; t=1788415430; x=1789020230;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=TQqJdGmgIswz+dHrwW970Ng1x54TxYt5LKqbBQDyswk=;
+ b=HAM+hwqxUv3SwyqmoluDYyHY6vuN+pjrh6Liywwsnt2+kfbibmyk/I5bFUbK3kPqhY
+ P5w3w/kFbyyDOKVHAZlgJEpsZbUy3ftHrSwf0W+Eg53dhSntFfmq3K7T9GoHi3+/bTqL
+ neInsVqoOVTumZUaA1urgMtQsY1zsddx8pzx3H/UDRhV2wEM0QexO7QuJc8tNK9Vt+Yj
+ ATI69rDn64w+Rsej1DzerQXv/oUDHgsBUNvKzanKiaJraGaOvBFYwQ+vTmL5rIvqJ719
+ RX3gJJ0zR9HxrmdZ8deBIdaN4GvYoCH9ijrHGmoT7P8XTLJCUcIEJCfSvfAJmApt/4ji
+ zmTg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzSATbUgDBKva95Ige1hwuyi4kChkKn0KVp/qIH+/64PGdSt0GZi2SHR8w0+Ps+y7peL2TzSeX/4mst@nongnu.org
-X-Gm-Message-State: AFuF++mxqCNB7guQWS8faKdJyL11GR4UJ7qvq/mNCgTPzFSr1O+E3DFz
- CeSEqbS7IyiNjEHImQh2/Tgj0F3kt6JbcmX6Q7g9qLJxRf5ZbbCrbEC+
-X-Gm-Gg: AYBFou0+X2V2gvfQXuNgGhssmSD/+VtWyGd16nDxthY4qIvf75DYP88U8Ey5Xjg4XM0
- OT4CYf0ISJ4z2QPJAlNd1bqWZNaALrDzUgBGqZpzXOmwswmbsAWtf5mPP6EPkhDwOFBtkwdDITs
- fD6OPgKFXbaUpafgPsEzj/enAr3u4avJoFQcY9RE5i8SsZR+an1v23xYuEAQaldVRlci5dUAY9B
- Svn/0GKVI3BtvdcZU/6cV7ylHrMQjEWIbhhhYWFZeheBaSmnkFIPx5IfaSn2AgVgT4Mfdtyq2jC
- 01jXGQTY90Qwq+dqGSagXRnUvhC/HMdgFFrEfWZCLtk0Jp9gnMCXTFk49jvymhTf+4CE4eJKV4C
- 2VNPpm/Umd/0mpDyqaAISxuLUGT3huBVbHDNkK3Vzkkxi7E3VGXs5+dQAC5+qxLlb5igT3BXy1U
- 9RR4BMqpXW2v1k8wigIGI2a0ZWR59DaMnndSY0Gs4C6CImFpT0dUWQ0FinOwa1T8DQiVX/3hw4s
- 9QK03zGm0MowZS50ySzoUf3BhBbuRsm3QrSch9Q27uxlxoy7/0oIokO5JxkGX8FGtQlWfObTy95
- R92nC/yP+NOp7MAQoRV8OlP9ZS+jlZw=
-X-Received: by 2002:a05:6a20:9381:b0:3c3:7179:a640 with SMTP id
- adf61e73a8af0-3d9adabade4mr14397385637.3.1788414782660; 
- Wed, 02 Sep 2026 22:53:02 -0700 (PDT)
-Received: from donnager-debian.. ([180.150.112.50])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1431990a39bsm2770619c88.3.2026.09.02.22.52.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 22:53:01 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 07/16] hw/riscv/atlantis: Make UART unimp region a SoC
- device
-Date: Thu,  3 Sep 2026 15:21:21 +0930
-Message-ID: <20260903055131.257903-8-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903055131.257903-1-joel@jms.id.au>
-References: <20260903055131.257903-1-joel@jms.id.au>
+ AKwUvBwPItN/6vxTAym28SHI4nGSS1WH+oiwvhmhYaLW1tm+TmfwWGzkvxouClYIcOzsk+vg7QvER6THEoV6@nongnu.org
+X-Gm-Message-State: AFuF++kVPduMbFi3zZz173JpfhW+Jx+VhoGA/73wnrT5wZAxUnuCduYw
+ vJ4po+ddsqLhoIQppp2wLwfMHmbXtDhiKFob7LXcy6FOyt0MEkhzkvu/HqEc35vmnokD+mM+QOW
+ ICo04unuGNemB0VOYXLKrHUfFzisSiDo=
+X-Gm-Gg: AYBFou0AW/fAmoXHYgqh5wms0O3h/CgPNUPQ7zDpB+Auh45Sym9iRQZq+2M8eGRuhxE
+ ddFDzbYIjqYvI2HMcJTzRXlYXEpL7b9JH2jq2EwbXQGaA2KHFB+FqleJ9bOE3ow4Ye3C01vhJPm
+ kIcTjHQjr0QpWrVHztfyqSpkkg8DJilX/M2DKh22Q27gNUtwz7rCziP2PVuBdWL4SXUYLwyJeVj
+ CBbV7P2KELJNq4XDRwq1KL9l4yjOzGJSYdTR/1smGAxBnKqZMPDqsO2xUDID1gAHEbbTombkohI
+ cIl+UV9dF/tGef96OcPoWRN0h9R8tLJAQlbpWRX3CHH30F+pOwrtjYQZlnet8ew0Q96zVdPb91a
+ IXox9cNKiuorq24LyLzFjIwthey63pavKN/inbikOYhT+uAb0GpamuqxlCac642+Zj7jZj0Renx
+ 5nSzAgrzHPpXY0MLBb
+X-Received: by 2002:a53:aa0c:0:b0:66f:8b35:dedd with SMTP id
+ 956f58d0204a3-66f9bb62519mr2580148d50.6.1788415430255; Wed, 02 Sep 2026
+ 23:03:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=joel.stan@gmail.com; helo=mail-pf1-x434.google.com
+References: <20260831021500.82565-1-joel@jms.id.au>
+ <b4605e538d7a49decef273b314e2c74dbaba9476.camel@wdc.com>
+In-Reply-To: <b4605e538d7a49decef273b314e2c74dbaba9476.camel@wdc.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 3 Sep 2026 15:33:38 +0930
+X-Gm-Features: AcwNN1XwcJ64jJpfqwVFp9MLjJ52FNjKWnYkHfsv-F9C6YiJUb81JYGhNIesxqc
+Message-ID: <CACPK8XeEnR1gnY6PaadsegmtDuOZXgkMJX4oeDO1QjswA_6row@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] hw/riscv: Socify Atlantis
+To: Alistair Francis <Alistair.Francis@wdc.com>
+Cc: "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>, 
+ "npiggin@gmail.com" <npiggin@gmail.com>, "mpe@kernel.org" <mpe@kernel.org>, 
+ "portias@oss.tenstorrent.com" <portias@oss.tenstorrent.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "clg@kaod.org" <clg@kaod.org>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>, 
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>, 
+ "asrinivasan@oss.tenstorrent.com" <asrinivasan@oss.tenstorrent.com>, 
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=joel.stan@gmail.com; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
  FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -116,82 +124,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the unimplemented region covering the remainder of the console
-UART's register space a SoC child device, mapped using a helper. This
-makes it easier to map it into the SoC's memory container along with
-the other devices in the future.
+On Thu, 3 Sept 2026 at 13:41, Alistair Francis <Alistair.Francis@wdc.com> wrote:
+>
+> On Mon, 2026-08-31 at 11:44 +0930, Joel Stanley wrote:
+> > v1:
+> > https://lore.kernel.org/qemu-riscv/20260826220528.54516-1-joel@jms.id.au/
+> >
+> > Changes in v2:
+> >
+> >  - Reword patch 14 "hart private memory" commit message to clarify
+> > hart
+> >    vs hart array
+> >  - Fix indentation in patch 4 (riscv_aplic MemoryRegion)
+> >
+> > Thanks to Daniel and Philippe for the reviews.
+> >
+> > Original commit message:
+> >
+> > This addresses the review given by Cedric on v1 of the Atlantis
+> > patches,
+> > where he suggested making the machine a SoC. This is the pattern
+> > followed by the Aspeed ARM machines, where the SoC represents the
+> > modelled hardware, attaching its devices to a memory container, with
+> > the
+> > SoC instantiated by a QEMU machine that provides the memory container
+> > and the machine's RAM.
+> >
+> > Aside from the clean abstraction that this encourages, this pattern
+> > will
+> > be useful in adding other SoCs to the Atlantis machine, such as the
+> > RCPU
+> > (boot microcontroller) and CPL (Cluster Power Logic microcontroller).
+> >
+> > The series converts the RISC-V interrupt controllers to take a
+> > MemoryRegion for mapping themselves, with no change in behaviour for
+> > existing machines, and then cleans up the CPS device to place its
+> > devices in the memory container provided.
+> >
+> > The next few patches clean up the Atlantis machine to make extracting
+> > the SoC device and mapping it in a container relatively
+> > straightforward.
+> >
+> > Joel Stanley (15):
+> >   hw/riscv/aia: Take a MemoryRegion for the created devices
+> >   hw/intc/riscv_aclint: Take a MemoryRegion for the created devices
+> >   hw/intc/riscv_imsic: Take a MemoryRegion for the created device
+> >   hw/intc/riscv_aplic: Take a MemoryRegion for the created device
+> >   hw/intc/sifive_plic: Take a MemoryRegion for the created device
+> >   hw/riscv/cps: Map interrupt controllers in SoC container
+> >   hw/riscv/atlantis: Make UART unimp region a SoC device
+> >   hw/riscv/atlantis: Remove unused fdt_size
+> >   hw/riscv/atlantis: Rename hart array 'soc' to 'cpus'
+> >   hw/riscv/atlantis: Rework device tree creation
+> >   hw/riscv/atlantis: Use local reference for system memory
+> >   hw/riscv/atlantis: Decouple RAM size from MachineState
+> >   hw/riscv/atlantis: Make TTAtlantisState own memory containers
+> >   hw/riscv/atlantis: Extract an Atlantis SoC device
+> >   hw/riscv/atlantis: Map the SoC through a memory container
+>
+> Thanks!
+>
+> Partially applied to riscv-to-apply.next.
+>
+> I applied the first few patches, after that I hit merge conflicts with
+> the recent FDT changes. Should be pretty easy to fix, but I pulled in
+> the first patches to keep the ball moving.
 
-While here, rename the region from uart0 to uart1. The uart0 name was
-a leftover from an earlier revision that used a different device for
-the console.
+No worries. I didn't see any of the patches when I pulled, so I sent
+the full series as a v3 rebased on the device tree patches you'd
+merged and pushed.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- include/hw/riscv/tt_atlantis.h |  2 ++
- hw/riscv/tt_atlantis.c         | 19 ++++++++++++++++---
- 2 files changed, 18 insertions(+), 3 deletions(-)
+Cheers,
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 7f7d4a5a5905..c9308aa57017 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -13,6 +13,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/i2c/designware_i2c.h"
- #include "hw/intc/riscv_imsic.h"
-+#include "hw/misc/unimp.h"
- #include "hw/riscv/riscv_hart.h"
- 
- #define TYPE_TT_ATLANTIS_MACHINE MACHINE_TYPE_NAME("tt-atlantis")
-@@ -31,6 +32,7 @@ struct TTAtlantisState {
-     RISCVHartArrayState soc;
-     DeviceState *irqchip;
-     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
-+    UnimplementedDeviceState uart1;
- 
-     int fdt_size;
- };
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 373d4dabf3a4..a2fb83aab78e 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -411,6 +411,17 @@ static void load_fdt(TTAtlantisState *s)
-     create_fdt_memory(s);
- }
- 
-+static void mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
-+                                   const char *name, hwaddr addr, uint64_t size)
-+{
-+    qdev_prop_set_string(DEVICE(dev), "name", name);
-+    qdev_prop_set_uint64(DEVICE(dev), "size", size);
-+    sysbus_realize(dev, &error_abort);
-+
-+    memory_region_add_subregion_overlap(memory, addr,
-+                                        sysbus_mmio_get_region(dev, 0), -1000);
-+}
-+
- static void tt_atlantis_machine_done(Notifier *notifier, void *data)
- {
-     TTAtlantisState *s = container_of(notifier, TTAtlantisState, machine_done);
-@@ -562,9 +573,11 @@ static void tt_atlantis_machine_init(MachineState *machine)
-      * Create an unimplemented device region so writes don't fault
-      * and reads return zero, which keeps Linux happy.
-      */
--    create_unimplemented_device("tt-atlantis.uart0",
--                                s->memmap[TT_ATL_UART1].base,
--                                s->memmap[TT_ATL_UART1].size);
-+    object_initialize_child(OBJECT(s), "uart1", &s->uart1,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
-+    mmio_map_unimplemented(system_memory, SYS_BUS_DEVICE(&s->uart1),
-+                           "tt-atlantis.uart1", s->memmap[TT_ATL_UART1].base,
-+                           s->memmap[TT_ATL_UART1].size);
- 
-     /* I2C */
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
--- 
-2.47.3
-
+Joel
 
