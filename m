@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440ABC624DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4880FC61DD3
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2D5K-0005DT-ET; Thu, 03 Sep 2026 15:26:54 -0400
+	id 1x2D5N-0005F0-Tk; Thu, 03 Sep 2026 15:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2D5J-0005Cy-3D
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:26:53 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2D5L-0005Dc-0W
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:26:55 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2D5H-0001Xr-Eq
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:26:52 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4980fe6b3beso10563555e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:26:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2D5J-0001YB-5L
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:26:54 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48444ec4fe2so177405f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:26:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788463610; x=1789068410; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=i83cE/17EisGeNXzdFqULz44McRdJDA8yxTFatemjNw=;
- b=JSbOYHaA/bHgEz+KatXcIi9mwA94TqB9DesEn8I8qlL2No6tctpg6iJFpp//9+N4c2
- nHnGic4xkvxUeNAa0jEFN0aX8Gp5Rs4wzyIKmYwMKFbhSI/ehMp9SxfRzviEa+3xYdBX
- xd+oOe+mIQp2ydZFByoIAEkpMhBrd60+eitPrwI3Ye1bxHbCPvTSnIuBQYPZBq8U2Fq6
- EXy/nqbprMZ0CaUwe/s7x9BcGvjYE9/rbjTHz+1xJP1RZnqGMA+Lfhxg2xN4jJPIbec2
- 5K+j7OT94UOFPIOlKPb3sUWfM6FTEgflHm3NIpcJSLqF8XIC9Xfxl23tJu8qexweR9d8
- rzHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788463610; x=1789068410;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=openvz.org; s=google; t=1788463612; x=1789068412; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=i83cE/17EisGeNXzdFqULz44McRdJDA8yxTFatemjNw=;
- b=K5bPhGH6Y+FCx4MZm9ydXkWzCMsAbKyuGtetO7RVKK/xAvKr00p3PR+nPPW8DwFIMS
- tHPkkRG1CuhpCC51b8OPzg8PMjH04cjCSK4OJxUMmEfsY9YakAGkoUj+OYHrth5+ij9Q
- iW/UPXwX6jouf/GiTMbn9sShYIjjUnyN0zjH0Sh7uk+rpY8gCyM39R1DuIMCqniY5NvH
- RhSb8DYSqTb2NynxB4km2q7sLsjFxilB6kWwluc/TzHajKk8h3mXoO9ZqjUkhnonPtx3
- 0cNzpShorUe2iaCJcd4hN4SHjFoECVGDw3Yd3EGNs7oRo/TWMqSy6KCu4FfpCrjApZAE
- itjA==
-X-Gm-Message-State: AFuF++mMzbBzNz4bHRC5JUAgWzAWr17JFJ8HlP/GLeZuRRXyMJ9wtv9F
- M5rTCUnA9LHbbuDRT0p5Ys5YZG4iFlAnIJK8rvbzbpeOLGFLv0CZSb6P5dDYZ6qCjSMS8PVV8Tp
- Hy9Zv
-X-Gm-Gg: AYBFou3fkbtRJZruTT89ihJ8f9q3MebDq7cFsX7P6HONApqCPzGFwtCpFT3EiM8qXy0
- Szu9q8QkZXS3iRD8sXDD2dEcpwM1KoStRSxvaWABqXQ8uZlgshpEaQeDwa90dOgaM3yjMCJOylg
- teI+g9Zd6z5XhKzw0s1iPxBDK52Q5mmeg0HkxFlROBmpOUmThljbrAVSJa40Zpav1mgwBipDW+z
- ZkpfYHfER35bosv6e71w2XzpOwhAEjZoByns4VP+Ze/pRgYPnNxyj72rT6RjdaDn2RwwF0nfuXm
- YGEKszz6rPXMQdPSxWUVbwL6Zh2t8FQKyaDkkOyXJfg7N6SccX+uiTE1nnGN1kaZsOxBSNBiFP7
- Z6zcQP2K2hbQV4h9RxNyhSSyykxPrg83rH1fs58/tqyXrKKwoonr49YJXnRAeIK4MviR2I2CoMg
- E7cfIVOyX8CG9kuYR95+eXDNTaHhd04UltGMZSgVHW+NkEoB7MhyZOGO8Y
-X-Received: by 2002:a05:600c:248:b0:49c:e160:cbdb with SMTP id
- 5b1f17b1804b1-49cee5b050fmr85378295e9.2.1788463609807; 
- Thu, 03 Sep 2026 12:26:49 -0700 (PDT)
+ bh=xTYKRztQFUG6AyCovUZ2ESge4XIrHCQrsZ8nsTsCGW8=;
+ b=hXKnzHGAKTR3sBSZoR9jjRW9vt4QC0E0UR21sbXcPsrZA7KRlLGHDyZS1ciLL/hm9i
+ cYjqpuqyGlVI+JB0FNR5BbR/fF27FK+zgKSoZOd4eiUo48xOgggtYN6usv7armHfT2AV
+ ZKz76WCU8aUhVpOeSz0pe4ORRwcBDS18pxwrlEQtMrmMFVLFXZ6GeXkC4usVeHGkj9tR
+ LfgR9gY3hx1XQHZ6lWBAQTdzemlohSH6bxR8o1h3GVwJEESbLhEr5WLnl93gswpPuxBb
+ +xLPpXdGIQ7bHiaGaEGgwq1d/0cHBGYI+aSqKe6g4kksjoy7EqH27IbaOxE8h8ZV1SDc
+ XsDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788463612; x=1789068412;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xTYKRztQFUG6AyCovUZ2ESge4XIrHCQrsZ8nsTsCGW8=;
+ b=i7T4wFsRCknPhQEzQ8sIW/iECXegGt1lzQvCFbgGhtPKlfi++S24yEYHydsmKgx6i7
+ tD1BY3pf8zM7Y3pR1YrMGVD1swMEmBMUdAf7SZhM25uIY9znFenN+tFoz76LtkxwA4uQ
+ bAmn6qJvVIuOR3gr/mLMn1W045eVqaOME3Gw45okFbjQ2hfrRWF9G1BLKDrb2ZFHnH71
+ FbCE5bGFD1wDKxqZTvIYHYeAtRiDAqXngecreeAnIEmXx+QwfvYi02JQATWdIOTcOtuA
+ ifyFrU0843QhA2vVFhOF2K5OO3ZnnTlfUe/SzA4XXw7uIjiNUhuRU0gvLoAFB9lAan1W
+ 1WjQ==
+X-Gm-Message-State: AFuF++lZEz8HQwr9lytkbw/4fc15JUNCt26vGikgfMkGT0o3mq23E9Ko
+ ZKesYbyLnL6r9E+G+EIQrgYvJDV3F8e4+U9RouKhSJhXPTedB6Mvx5GlXhp9H2teMjWYwT4tzHC
+ lJqvX
+X-Gm-Gg: AYBFou2hLjqSSNlvC8LpBvoiPNvyLRLkfyVE7MNJuijdc04nz9Uhds6HPfs9uFFsyXU
+ 6HeGFb4xvs7E3RgqMZdkhC8DB/EdueF5z9R0GUG7vHW3nF/4xGbEtvKCBfpwVofeHqXr3kRTYxp
+ /Srf57tv3TvhDeo8dh6CFTduW5VeyfNeizt+IArzkfuY3k73Sn0crpXOU+m6qva+kr9lz52rEXW
+ zcGt5H9AqqcSdONbauoPyccrybSAUQmMWCriS58cLx2ptLRI7pZkhAvG9JVY/edMeiIVOYTb1Vj
+ qw/RQe6TjiOcePNtDASkVPtD3rGoJKCQXg9NYn/khz8PQvxJGP2JJmnOY34/Jmsau4oLf3oYJqz
+ dY6YgO7bWZvgvuONtIDU5CSVt4KTe9PyFIU/KPBCrauhsv/47mLO7t/XSSnihltsIUq9yATmKZ4
+ OXzWZJtOu791vIZcukswuS8sHcGc+4xyDyrvS0DavO1fEJ1xaBGoGH/NUF
+X-Received: by 2002:a05:6000:2999:10b0:482:ea08:8c97 with SMTP id
+ ffacd0b85a97d-48587046b35mr2012099f8f.2.1788463611709; 
+ Thu, 03 Sep 2026 12:26:51 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885c5bbdsm663164f8f.36.2026.09.03.12.26.48
+ ffacd0b85a97d-485885c5bbdsm663164f8f.36.2026.09.03.12.26.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 12:26:49 -0700 (PDT)
+ Thu, 03 Sep 2026 12:26:51 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: den@openvz.org,
+Cc: den@openvz.org, qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 0/2] ui/cursor: fix two races that free a cursor early
-Date: Thu,  3 Sep 2026 21:26:45 +0200
-Message-ID: <20260903192647.2677279-1-den@openvz.org>
+Subject: [PATCH 2/2] ui/cursor: make the cursor refcount atomic
+Date: Thu,  3 Sep 2026 21:26:47 +0200
+Message-ID: <20260903192647.2677279-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260903192647.2677279-1-den@openvz.org>
+References: <20260903192647.2677279-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=den@openvz.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,52 +101,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest with a qxl display can make QEMU drop more references to a
-QEMUCursor than were taken. The cursor is freed while another owner
-still points at it, and that owner's later cursor_unref() decrements
-four bytes of a chunk the allocator has handed out again. Nothing
-aborts and nothing is logged; QEMU dies later in an unrelated
-allocation, in another thread.
+From: Denis V. Lunev <den@openvz.org>
 
-Two defects get there, and neither fix is sufficient alone:
+A QEMUCursor outlives the call that publishes it and is shared between
+threads, but its refcount was a plain int with no single lock covering
+every user. qemu_console_set_cursor() takes and drops references from
+the main loop under the BQL alone, hw/display/qxl-render.c does so from
+the SPICE display worker thread, and ui/spice-display.c does so under
+SimpleSpiceDisplay::lock. ui/cocoa.m and ui/dbus-listener.c add two more
+threads.
 
- - qxl_spice_reset_cursor() replaces qxl->ssd.cursor with no lock held,
-   while every other writer of that field takes ssd.lock. It runs on a
-   vCPU thread from QXL_IO_DESTROY_PRIMARY and, unlike qxl_hard_reset(),
-   leaves the SPICE display worker running.
+The pair that collides is qemu_spice_cursor_refresh_bh(), which drops
+ssd->lock before calling qemu_console_set_cursor(), and the worker
+refcounting the same cursor under that lock. A lost increment frees the
+cursor while the console still points at it, so the console's next unref
+decrements memory the allocator has already handed out again. Locking
+ssd.cursor is not enough on its own: with that done, this is the race
+that remains.
 
- - QEMUCursor.refcount is a plain int, taken and dropped from the main
-   loop, the SPICE worker, ui/cocoa.m and ui/dbus-listener.c, with no
-   lock common to all of them, so an increment can be lost.
+Assert on the value the decrement observed while here. Dropping a
+reference that was never taken used to be silent, because the decrement
+lands in the allocator metadata of the freed chunk: nothing is logged,
+the object is not freed twice, and the process runs on until some later
+allocation walks the damaged free list and faults, arbitrarily far from
+the code that caused it.
 
-A qxl device starts a spice-server instance for local rendering even
-with no -spice, so this is not limited to SPICE console setups.
-
-Patch 2 also asserts that the refcount was positive. Only qxl was
-exercised here, so if another display backend drops a reference it
-never took, that assert turns a silent leak into an abort.
-
-Reproducer: a libdrm program in the guest queues cursor SET commands,
-then disables the CRTC so the driver issues QXL_IO_DESTROY_PRIMARY.
-Unpatched QEMU dies within seconds; with the series it does not. Happy
-to post it.
-
-This is independent of the pending "ui/console: fix use-after-free in
-qemu_console_set_cursor", which fixes a self-assignment ordering bug at
-the same line. With that applied the crash here is unchanged.
-
+Fixes: 0b2824e5e48a ("spice: use bottom half instead of refresh timer for cursor updates")
+Cc: qemu-stable@nongnu.org
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-
-Denis V. Lunev (2):
-  hw/display/qxl: hold ssd.lock while replacing ssd.cursor
-  ui/cursor: make the cursor refcount atomic
-
- hw/display/qxl.c     |  2 ++
+---
  include/ui/console.h |  9 +++++++++
  ui/cursor.c          | 17 +++++++++++------
- 3 files changed, 22 insertions(+), 6 deletions(-)
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 29bf722888..3634956949 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -126,6 +126,15 @@ typedef struct QEMUCursor {
+ } QEMUCursor;
+ 
+ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height);
++
++/*
++ * A cursor may be shared between the main loop, a vCPU thread and a
++ * display backend's own thread, so the refcount is atomic and these two
++ * may be called from any of them.  The object itself is not otherwise
++ * thread-safe: take a reference before publishing the pointer anywhere
++ * another thread can reach it, and never dereference a cursor you do
++ * not hold a reference to.
++ */
+ QEMUCursor *cursor_ref(QEMUCursor *c);
+ void cursor_unref(QEMUCursor *c);
+ QEMUCursor *cursor_builtin_hidden(void);
+diff --git a/ui/cursor.c b/ui/cursor.c
+index 6e23244fbe..69d27d49a1 100644
+--- a/ui/cursor.c
++++ b/ui/cursor.c
+@@ -1,4 +1,5 @@
+ #include "qemu/osdep.h"
++#include "qemu/atomic.h"
+ #include "ui/console.h"
+ 
+ #include "cursor_hidden.xpm"
+@@ -103,24 +104,28 @@ QEMUCursor *cursor_alloc(uint16_t width, uint16_t height)
+     c = g_malloc0(sizeof(QEMUCursor) + datasize);
+     c->width  = width;
+     c->height = height;
+-    c->refcount = 1;
++    qatomic_set(&c->refcount, 1);
+     return c;
+ }
+ 
+ QEMUCursor *cursor_ref(QEMUCursor *c)
+ {
+-    c->refcount++;
++    qatomic_inc(&c->refcount);
+     return c;
+ }
+ 
+ void cursor_unref(QEMUCursor *c)
+ {
++    int refcount;
++
+     if (c == NULL)
+         return;
+-    c->refcount--;
+-    if (c->refcount)
+-        return;
+-    g_free(c);
++
++    refcount = qatomic_fetch_dec(&c->refcount);
++    assert(refcount > 0);
++    if (refcount == 1) {
++        g_free(c);
++    }
+ }
+ 
+ int cursor_get_mono_bpl(QEMUCursor *c)
 -- 
 2.53.0
 
