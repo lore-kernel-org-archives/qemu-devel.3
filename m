@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C8C4C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 05:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E048FC624D4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 05:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x20NW-0006YA-3l; Thu, 03 Sep 2026 01:52:50 -0400
+	id 1x20NL-0006UN-Av; Thu, 03 Sep 2026 01:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x20NU-0006Xe-T1
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 01:52:48 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1x20NI-0006Tu-UI
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 01:52:36 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x20NT-0006MO-02
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 01:52:48 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-39927410578so3482459a91.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 22:52:46 -0700 (PDT)
+ id 1x20N6-0006DM-8Y
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 01:52:26 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-3964dfb5a69so2709755a91.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 22:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788414766; x=1789019566; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=yGXqGOhFINrkzmTDkTgJiKMBSthXsc7AjRv1SKMbF64=;
- b=qx6SXxtuiixzQbW5JzljZLkNhsuDvE/7L+2fCAxi4C6K+LFT0qjN6lSIUS0QTzxRca
- rfyF7Ci8hPnskn/lCJb9QQ4ikI9VxysfR4x36PNj7303FlX6ND9kD/3CG1Phh5rfs3Fn
- aYAFMJ9NJEaXrcY/n7xbMwTt4HnD+eA3kE4WzxKflu2L7OQXZyv5ZCfgWyiXVosWqgUl
- eHnQ6w0ijujkt+mAMvHnMZSCxK/pN6MsEFiqjcpuxgq5EbEVDvcbtVAhy6CQridpKE8m
- FPpmfo9d4T7R7MTjHHLjmhS36v/yDtt3kOr2fgBsRk8sA+wCvBnO5WTepjKVWD+pf2zH
- UKyg==
+ d=gmail.com; s=20251104; t=1788414742; x=1789019542; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=dK6bje5b0/dxgW4rjh0ZrXVM3LSv9xhL0+dqZvcRtHM=;
+ b=Pqb+qm0oIc63Z14RUmip4dAWaShhR/jlJV3ACkKxrq7kpfelZez0aVZUq3P9TNQ6Te
+ nrBmn7yIEFr4apVpJ6dWSip1R7x2gJYhewxPerhfmsOLUnvhOpulukfCeYhzcOS7Mbe2
+ BdTms2JlUNygVFpc9c4PVpggZvzJ+ww55qAkyksBkd3fT8J0ZxvytREwFhOGlHpmj4di
+ A9Dkdjd6WFcj0s0n4CNkD6d3n+oMjSFVZr6KWJtAqWS4Sv7eSbpDF20niyps8LgNb/M2
+ 3V8RnIh3Y/YVuZubvOGLu0HNpGkVtyXlhkcNjclL4KAJ+ejk6HM52fzb3EoYgPI6jVDy
+ Zxcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788414766; x=1789019566;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yGXqGOhFINrkzmTDkTgJiKMBSthXsc7AjRv1SKMbF64=;
- b=tNhMW5u0JY8lXYh/G94GgNDMOrHH/etxptwbO9YE0IJjIMBl+XL/LFimHH2htTa1vF
- s2BDInllryBcUreKpMOjZpOJX2GmgQCTq/JZ72RPBwwIrFd5XNkyXE7uFJVW2xeHZxcm
- 9hZGV0ENPbABHawKFGOhZD0LHteyE7+or00hA/o1AM5v5BRYoX9J59fIR/XiQwb1MYok
- Fr/bPTKCmFlRqh5CQlq3BshKSItBVSc9tF9QWHFSEEYHExmUEg9LCRIJw0CLxMOkT2Kv
- 2SOiGwKDIN4PIa9UWzppll8LmoqkL/5uGYJca/5jDvi2FrNwcS5rpgZWqn75Vj31QFYa
- WVVw==
+ d=1e100.net; s=20251104; t=1788414742; x=1789019542;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=dK6bje5b0/dxgW4rjh0ZrXVM3LSv9xhL0+dqZvcRtHM=;
+ b=QLBmH0QyMZzajkgj0WJNRjzdPSzgJUDNG+25blJ+71zfTX78Tz6T9oiLykwSObY6De
+ s6iJCaYzrlO301pO7OBP2sP1LYPcqxvhsEAAtafKqIneowLRiOdOYzTIfTP7PqWdQQ+4
+ iT2509e5Q4j71AOiuzpLtBs8op09ZN8sGJhGEM7ksyMYIas8L1E6L13or5QiN7Tt9mLW
+ PPaVg66WKfIT4+zfh509retOpm3zkKs2s657H7Lq3q/L18mYLT1FsQk+cQkJzY6t7ecI
+ FTKOSHOEpLnSC1zthU+Id/KV7PMvemeEr0tBPT6k8Yi7VVXJ3ymQPQPtk88n35paiiFW
+ Qsdw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzJh+Xpp49qVC+3Gy0sQvQqJman8yWt1KdnQRyjAmBK4mWAS2jdKaVo5ujj9HTYru+T1f/PUMxiMpmG@nongnu.org
-X-Gm-Message-State: AFuF++kN20Ajzvj5y6itxi6N6BBehvJAX/noQp3itXChUwYk9ILp3Gli
- H9qCTjQjRDTbxczpiEwlCxK9yNy4FUJkWXXxslHEGnXvQD8Jb9WpFX15
-X-Gm-Gg: AYBFou0KK0gJpH0ZsllCSY8kTUEkouQZvVtd+XyOUsDlNKatQGqIq5eDIBvZcQ8UTDI
- uR4eB3jGFMwCOO7Ti+WGQLsbujb5ZQWqsA8//dKK5qJ46OTfPfEeJRsmvg19QZ+Do6kfNvjLNrI
- FyyyVhfFlbofXKUwrloJ8leXb9LSWRsIetE0UQmhLE5GrlzF1jXlOMzr+ywVpiX/IX4qJL1E3l5
- isOOKLLZzBiaGuoMA/XJ78jnLSYjK3D0AviFfLPUh5ZAUKJd2R8hdfGrB+lw3HSrCs/D8PX04BD
- z1u5b8ayDiGsC+kLQan3+Y4GULscXU60Bhdy5Ti90yQDOWM0AX1zcPNgHwA7+BFHyaz8REsvOqR
- ECdBHeo5vp0Dbh2EBKDJVlzoqjYdYTBDruyhCbgOZ2yPOTXlTS2KMJ8kgGp+YZO8XZRqXw+rXv6
- sQS5YDG7pRqIDiO69vJw/jvyu2eadvrwydKjulzGttiP6JBbRgPyW/fPyoXTmU4yBmnzO/nQ69B
- Yoe3UWMYalrmFLaxPWwigPqiusrTD4JvUtJRLW+jdetfwb8igZmka0A1+UOOtTSoFu+18RmQIIn
- G4jwQWkgtr73rqYh2ISR
-X-Received: by 2002:a17:90b:4a46:b0:399:ea1:5a82 with SMTP id
- 98e67ed59e1d1-39aedf7cc37mr14262163a91.3.1788414765589; 
- Wed, 02 Sep 2026 22:52:45 -0700 (PDT)
+ AKwUvBwN9SM6zVZ5AxGN78zuUab3f0xgKAbUzwRIteKXeHj0tYdeo95ztWhRoeEu/hXjBkJQVGKqyYJY+gLn@nongnu.org
+X-Gm-Message-State: AFuF++mpDv1q+ddkDiPOY/AQA+o8rwT4fLm0sWeUsky3Qzz3TomKAV7L
+ 4ax3bL/H0CCeRHwBMzP2Pmn8ZWRzl1TTDPLP6rswYXyI1K3kn2FZU1sF
+X-Gm-Gg: AYBFou0jpSCTB9Tij5GG0SiKiEbf5ShIo1ul9stHvTpcPBvHXDW1QpVvnLI3Qm7L7iq
+ R9/bjtevKJKzq81/oeIph2a+VFjiw/jPsTKj0PFHU6lZNHV04XkOslI7yHjHeoLgni5LYeimPyR
+ 2jzUwz5f/ncoAxpEn0+heBeVpIEMJ1JY9uh3/a8jKK9qmBGKcsQzHp6QBEyP3p95etR3/gAX/at
+ 7bfG1GDBzJavvJqvyYAbqTfkVo3Ljxs3d8uT5x/QdJ+4gDM1onFvUJXvsqXpDpnZWFJVqffjp8l
+ qwn/65d7iyHlh2+OVq1E9sne9wArvqrabvJoeSqUBNAQPwewnJUefvubK1wpL9lWiQKMF4RU7RR
+ kNXCz5wyXywCWxsCTfrOISdl43fkkzIMAj0n9B6KZlv3deubrSa5pRVmT3/QvXaMwixXkdFRBui
+ 6QAe4nXhRbKs4j/mehnwTmelrFBQ3nMmg094MkCYjHrYPxnefLWOR1kHJ4cx5N11zRcXZBZXz09
+ qHbDY/H/nEWvehlIPcdc+hdeEgiEGK11gfSzYNG93PZ8kUPmN3dhMu2BPEmxpkYhwvxelNhf3eR
+ Vng1q3Vhm0H3bCTChc0tjYPXXO1v2JWo
+X-Received: by 2002:a17:90b:4d82:b0:398:9be8:ea65 with SMTP id
+ 98e67ed59e1d1-39aee1ab4c4mr12691273a91.18.1788414742166; 
+ Wed, 02 Sep 2026 22:52:22 -0700 (PDT)
 Received: from donnager-debian.. ([180.150.112.50])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1431990a39bsm2770619c88.3.2026.09.02.22.52.39
+ a92af1059eb24-1431990a39bsm2770619c88.3.2026.09.02.22.52.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 22:52:43 -0700 (PDT)
+ Wed, 02 Sep 2026 22:52:20 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
@@ -79,20 +78,16 @@ Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Michael Ellerman <mpe@kernel.org>,
  Portia Stephens <portias@oss.tenstorrent.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 04/16] hw/intc/riscv_aplic: Take a MemoryRegion for the
- created device
-Date: Thu,  3 Sep 2026 15:21:18 +0930
-Message-ID: <20260903055131.257903-5-joel@jms.id.au>
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v3 00/16] hw/riscv: Socify Atlantis
+Date: Thu,  3 Sep 2026 15:21:14 +0930
+Message-ID: <20260903055131.257903-1-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903055131.257903-1-joel@jms.id.au>
-References: <20260903055131.257903-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -116,143 +111,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_aplic_create() maps the device it creates into system_memory,
-which prevents its use by SoCs that map devices into their own memory
-container.
+v2: https://lore.kernel.org/qemu-riscv/20260831021500.82565-1-joel@jms.id.au
 
-Add a MemoryRegion parameter and map the device into it instead of
-calling sysbus_mmio_map(). The mapping still only happens when the
-APLIC is emulated. All callers pass system_memory, so there is no
-change in behaviour.
+Changes in v3:
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- include/hw/intc/riscv_aplic.h |  7 ++++---
- hw/intc/riscv_aplic.c         | 10 ++++++----
- hw/riscv/aia.c                |  8 ++++----
- hw/riscv/cps.c                |  6 ++++--
- hw/riscv/xiangshan_kmh.c      |  6 ++++--
- 5 files changed, 22 insertions(+), 15 deletions(-)
+ - Rebase on today's riscv-to-apply.next, fixing conflicts with the
+   device tree rework
+ - Take up Phil's suggestion to change @mr to @container in the first
+   five patches
+ - Add r-b from Alistair, Daniel, Phil. Thank you!
 
-diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
-index c7a4d4ad0172..62d2b33ade61 100644
---- a/include/hw/intc/riscv_aplic.h
-+++ b/include/hw/intc/riscv_aplic.h
-@@ -80,8 +80,9 @@ bool riscv_is_kvm_aia_aplic_imsic(bool msimode);
- bool riscv_use_emulated_aplic(bool msimode);
- void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr);
- 
--DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
--    uint32_t hartid_base, uint32_t num_harts, uint32_t num_sources,
--    uint32_t iprio_bits, bool msimode, bool mmode, DeviceState *parent);
-+DeviceState *riscv_aplic_create(MemoryRegion *container,
-+    hwaddr addr, hwaddr size, uint32_t hartid_base, uint32_t num_harts,
-+    uint32_t num_sources, uint32_t iprio_bits, bool msimode, bool mmode,
-+    DeviceState *parent);
- 
- #endif
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 84606e9f3d88..d8e25bfda14b 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -1109,9 +1109,10 @@ void riscv_aplic_add_child(DeviceState *parent, DeviceState *child)
- /*
-  * Create APLIC device.
-  */
--DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
--    uint32_t hartid_base, uint32_t num_harts, uint32_t num_sources,
--    uint32_t iprio_bits, bool msimode, bool mmode, DeviceState *parent)
-+DeviceState *riscv_aplic_create(MemoryRegion *container,
-+    hwaddr addr, hwaddr size, uint32_t hartid_base, uint32_t num_harts,
-+    uint32_t num_sources, uint32_t iprio_bits, bool msimode, bool mmode,
-+    DeviceState *parent)
- {
-     DeviceState *dev = qdev_new(TYPE_RISCV_APLIC);
-     uint32_t i;
-@@ -1137,7 +1138,8 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     if (riscv_use_emulated_aplic(msimode)) {
--        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-+        memory_region_add_subregion(container, addr,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
- 
-         if (!msimode) {
-             for (i = 0; i < num_harts; i++) {
-diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
-index eae7638f972b..56fc06453321 100644
---- a/hw/riscv/aia.c
-+++ b/hw/riscv/aia.c
-@@ -72,8 +72,8 @@ DeviceState *riscv_create_aia(MemoryRegion *container,
- 
-     if (!kvm_enabled()) {
-         /* Per-socket M-level APLIC */
--        aplic_m_dev = riscv_aplic_create(aplic_m->base +
--                                     socket * aplic_m->size,
-+        aplic_m_dev = riscv_aplic_create(container,
-+                                     aplic_m->base + socket * aplic_m->size,
-                                      aplic_m->size,
-                                      (msimode) ? 0 : base_hartid,
-                                      (msimode) ? 0 : hart_count,
-@@ -83,8 +83,8 @@ DeviceState *riscv_create_aia(MemoryRegion *container,
-     }
- 
-     /* Per-socket S-level APLIC */
--    aplic_s_dev = riscv_aplic_create(aplic_s->base +
--                                 socket * aplic_s->size,
-+    aplic_s_dev = riscv_aplic_create(container,
-+                                 aplic_s->base + socket * aplic_s->size,
-                                  aplic_s->size,
-                                  (msimode) ? 0 : base_hartid,
-                                  (msimode) ? 0 : hart_count,
-diff --git a/hw/riscv/cps.c b/hw/riscv/cps.c
-index 5cfb54aa27d2..d2fd9638a08d 100644
---- a/hw/riscv/cps.c
-+++ b/hw/riscv/cps.c
-@@ -135,14 +135,16 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < num_of_clusters; i++) {
-         uint64_t cm_base = GLOBAL_CM_BASE + (CM_SIZE * i);
-         uint32_t hartid_base = i << MHARTID_CLUSTER_SHIFT;
--        s->aplic = riscv_aplic_create(cm_base + AIA_PLIC_M_OFFSET,
-+        s->aplic = riscv_aplic_create(get_system_memory(),
-+                                      cm_base + AIA_PLIC_M_OFFSET,
-                                       AIA_PLIC_M_SIZE,
-                                       hartid_base, /* hartid_base */
-                                       MAX_HARTS, /* num_harts */
-                                       APLIC_NUM_SOURCES,
-                                       APLIC_NUM_PRIO_BITS,
-                                       false, true, NULL);
--        riscv_aplic_create(cm_base + AIA_PLIC_S_OFFSET,
-+        riscv_aplic_create(get_system_memory(),
-+                           cm_base + AIA_PLIC_S_OFFSET,
-                            AIA_PLIC_S_SIZE,
-                            hartid_base, /* hartid_base */
-                            MAX_HARTS, /* num_harts */
-diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
-index 9eb608f8c578..c5a654ab417d 100644
---- a/hw/riscv/xiangshan_kmh.c
-+++ b/hw/riscv/xiangshan_kmh.c
-@@ -80,13 +80,15 @@ static DeviceState *xiangshan_kmh_create_aia(uint32_t num_harts)
-     }
- 
-     /* M-level APLIC */
--    aplic_m = riscv_aplic_create(memmap[XIANGSHAN_KMH_APLIC_M].base,
-+    aplic_m = riscv_aplic_create(get_system_memory(),
-+                                 memmap[XIANGSHAN_KMH_APLIC_M].base,
-                                  memmap[XIANGSHAN_KMH_APLIC_M].size,
-                                  0, 0, XIANGSHAN_KMH_APLIC_NUM_SOURCES,
-                                  1, true, true, NULL);
- 
-     /* S-level APLIC */
--    riscv_aplic_create(memmap[XIANGSHAN_KMH_APLIC_S].base,
-+    riscv_aplic_create(get_system_memory(),
-+                       memmap[XIANGSHAN_KMH_APLIC_S].base,
-                        memmap[XIANGSHAN_KMH_APLIC_S].size,
-                        0, 0, XIANGSHAN_KMH_APLIC_NUM_SOURCES,
-                        1, true, false, aplic_m);
+Original commit message:
+
+This addresses the review given by Cedric on v1 of the Atlantis patches,
+where he suggested making the machine a SoC. This is the pattern
+followed by the Aspeed ARM machines, where the SoC represents the
+modelled hardware, attaching its devices to a memory container, with the
+SoC instantiated by a QEMU machine that provides the memory container
+and the machine's RAM.
+
+Aside from the clean abstraction that this encourages, this pattern will
+be useful in adding other SoCs to the Atlantis machine, such as the RCPU
+(boot microcontroller) and CPL (Cluster Power Logic microcontroller).
+
+The series converts the RISC-V interrupt controllers to take a
+MemoryRegion for mapping themselves, with no change in behaviour for
+existing machines, and then cleans up the CPS device to place its
+devices in the memory container provided.
+
+The next few patches clean up the Atlantis machine to make extracting
+the SoC device and mapping it in a container relatively straightforward.
+
+Joel Stanley (15):
+  hw/riscv/aia: Take a MemoryRegion for the created devices
+  hw/intc/riscv_aclint: Take a MemoryRegion for the created devices
+  hw/intc/riscv_imsic: Take a MemoryRegion for the created device
+  hw/intc/riscv_aplic: Take a MemoryRegion for the created device
+  hw/intc/sifive_plic: Take a MemoryRegion for the created device
+  hw/riscv/cps: Map interrupt controllers in SoC container
+  hw/riscv/atlantis: Make UART unimp region a SoC device
+  hw/riscv/atlantis: Remove unused fdt_size
+  hw/riscv/atlantis: Rename hart array 'soc' to 'cpus'
+  hw/riscv/atlantis: Rework device tree creation
+  hw/riscv/atlantis: Use local reference for system memory
+  hw/riscv/atlantis: Decouple RAM size from MachineState
+  hw/riscv/atlantis: Make TTAtlantisState own memory containers
+  hw/riscv/atlantis: Extract an Atlantis SoC device
+  hw/riscv/atlantis: Map the SoC through a memory container
+
+Portia Stephens (1):
+  hw/riscv: Add property to hart array to allow private memory
+
+ hw/riscv/aia.h                 |   3 +-
+ include/hw/intc/riscv_aclint.h |   7 +-
+ include/hw/intc/riscv_aplic.h  |   7 +-
+ include/hw/intc/riscv_imsic.h  |   3 +-
+ include/hw/intc/sifive_plic.h  |   4 +-
+ include/hw/riscv/riscv_hart.h  |   2 +
+ include/hw/riscv/tt_atlantis.h |  32 +++-
+ hw/intc/riscv_aclint.c         |  12 +-
+ hw/intc/riscv_aplic.c          |  10 +-
+ hw/intc/riscv_imsic.c          |   6 +-
+ hw/intc/sifive_plic.c          |   7 +-
+ hw/riscv/aia.c                 |  17 +-
+ hw/riscv/cps.c                 |  12 +-
+ hw/riscv/k230.c                |   9 +-
+ hw/riscv/microchip_pfsoc.c     |   8 +-
+ hw/riscv/riscv_hart.c          |   8 +
+ hw/riscv/shakti_c.c            |  10 +-
+ hw/riscv/sifive_e.c            |   6 +-
+ hw/riscv/sifive_u.c            |  10 +-
+ hw/riscv/spike.c               |   4 +-
+ hw/riscv/tt_atlantis.c         | 280 +++++++++++++++++++++------------
+ hw/riscv/virt.c                |  21 ++-
+ hw/riscv/xiangshan_kmh.c       |  17 +-
+ 23 files changed, 326 insertions(+), 169 deletions(-)
+
 -- 
 2.47.3
 
