@@ -4,126 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65624C624D7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0563C61DD3
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24sQ-0005lP-F4; Thu, 03 Sep 2026 06:41:02 -0400
+	id 1x24rx-00057H-Uv; Thu, 03 Sep 2026 06:40:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24sJ-0005bQ-Qi
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:55 -0400
+ id 1x24rr-00053B-CG
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:28 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24sH-0006Uh-6X
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:55 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1x24ro-0006RR-KS
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:25 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AHEMF327166
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:52 GMT
+ 683AHAHC440122
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KhITqIJMF343IsucLQepk7vttbDnaMQQ3wYnSIoJank=; b=juNVDDmry+DsEjmT
- TAa2ueDCGtjWSI4DrcCMZxV+9IHGmf2jA7LybzojMGVYni+alzNIcA16bavrbE6u
- +EsNlmbZ127KKYC/kG3LhZkBdfa0zHTI3LhXy0y0OtnYaEBvsEjVd2CrnLNhk9PH
- PAQUPAaevPslFmX2ptkEWIilg28MNzm6gGqog6i00b+UAwL8m0FtJC/K+73+I6q/
- zqnGvVOsUkQUGvJJzKvuRJEL6TWXchhgZe4bl5SrqNLcPKIfB9GNt05CQSgnTpA3
- ooAPajusaLHh7b8t1qcSt0Vu1n9kl6c9+3IhNZn09RsMRCT/2MxK12aEi4AALfTR
- RG/aWQ==
+ 5m+bdfXDGjMSrjZN0mTqDRdt7Sb7Otfs6JWBNkXvRP8=; b=ptz74bg5QNF+Gh6d
+ shlt+vne5n8pjzqxeukNo4iNSg8L1wsaRIfCHUbwpMOyuk9XS1gNXuVjd+k+CtA6
+ r42ZfrDSlYoUxiuPjJiskXusCetQxm2wIMu9me0rZNRlLUXJYACQRGdOQeYBUZxX
+ wwLSj0VeMCaL8Xvtq58V4iLNZ9ixxWR5RsnAoz4EAiqdV3pZZgmw0/Bpsb/Y+GvP
+ I4X8P2kE2FCVoXrdc3UBI3sVxLxkI/pHnciKRvcM5B39Dx9DWCO3NXy5ahhYww93
+ aSYpKCwX/+QCHDZ5IhcH97QG8bMj8xpzATWAVVXU7hP6l9FwlnTe5v7CrFXDfeIC
+ 8PABWw==
 Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
  [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf4ekgtfs-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf6p705ur-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:51 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:23 +0000 (GMT)
 Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9390ca1a9abso354821885a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:51 -0700 (PDT)
+ af79cd13be357-93909014c85so403475785a.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432051; x=1789036851; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788432023; x=1789036823; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KhITqIJMF343IsucLQepk7vttbDnaMQQ3wYnSIoJank=;
- b=VDQkhzO665n4wKrqtmg0K9CUXO0lSe//FBmhHXDYwi3TkFyG3fJV9X12adITa0HjLU
- R6jlkhbe52FGzNwTub1QX/pG185tXvx68dobHTMxajRFKlOtYJ2qPXMMjJIBu3JUC4Uv
- TXVoZ34NZPF1KlLY+vRyjo/oy4lbgjELTt/Ip9VGd87JHQG09mHhjCAgaABoNjctZ/Ws
- Jszhb0QuUyyKxOH0d7kczl3+a4EWoRSf62CcOo/cUn7/gL94CG1v7maHG6hOxACEcvXU
- f3ZjrVxvSPH32oikhy2PYe9dah9Qe4BJHqXZV13tEtHwHVR0fIrPB5BQ2zNNiFe0u0rX
- KNWA==
+ bh=5m+bdfXDGjMSrjZN0mTqDRdt7Sb7Otfs6JWBNkXvRP8=;
+ b=M9xhfYBsVUUy+4fHGSpL8gB7PNU3dPDLr+rTX2dZ9IztsWr/vxeuWQncRG5FsDhHxE
+ jCuyslMNN9sqYe3cqkAbsa9L1vVESHFAj29Ncx+T+6FOx+gSKf14jFRMRYsQi0bHRSWe
+ Vjs5oyQ6H9Q/I+TGW5Awybuv/x2Q/CpmYgxvhV3RYdqMlzFV3c3IaHqWy4vAaK6E9PLj
+ 11RSXxNkSm8LcDlcH+iR+PEAmEE+/4K+cC97ikePOQlUJMeFFp3fD8Tm61DAqXQ/jLod
+ VXRe7EV0AWIhIdZLCjj34aT9/5i8VI74k5tubjzKsMEVKcd+r3gtGDzac6jCtrZg3xEo
+ MuLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432051; x=1789036851;
+ d=1e100.net; s=20251104; t=1788432023; x=1789036823;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=KhITqIJMF343IsucLQepk7vttbDnaMQQ3wYnSIoJank=;
- b=LF2n/B8s3GHrjiV0qIyjKBEBR5zbfMOZRzBBtz15YepYTh2WJ8P4fPDbPG/xV0nhuy
- V7lrfPlSr6TAmsxYxuDo23b5KW/ox+Ay7sOq3zjEQI1zXjXgCl39rq7DzyrSxcjrcYu6
- mO+Za/CWPh6s78K23MSvBFa0GUcHkwgJyUYEotyJGbr8LifL8GBxoZ677ldlXQFVvj9i
- LD/1m5POskPPdEpgf8Uh327/nXaChypa+vNMZhJPxbKNKCfo2dQXbuEN5tJI1hCZDv7L
- 7Y7j13mUUvFer7NByXyWavs8WW8bYdw3JZVJK8STcHOG8u5LYDaXxJd6f5foX/PyTByu
- Zx4Q==
-X-Gm-Message-State: AFuF++nnwJUtzOyTh6neiFCsP1xDiamr04EVfrcGdf9cz2WVtGU1w5pg
- 9zEFzFpEptGjhqCO7RPJu2FjnPRalFWtoijKZ6pweodYUvLemO8Wmm5Uift/z02uMUFfFBdNC0R
- /5Fw8QJIy3b9IXaL43wGbIis4Hzt5M97+XCC2aHQdC3gUOatJGujBidyH3bWMWbfbTg==
-X-Gm-Gg: AYBFou0098+rg3iPQv5lP2MuERa+iL+aGz3BSWBqLSM3OdiWrknk+kgDT6OpHTQ6gbS
- hEEK3MIXOirBkdluY2LGLw5Cxns9op66v1fIrk8wvcNBz5oXrcigVHT4/nOtDo4Z6Lz3l+ZFT6D
- GhuSTZUqWkt1jDGIIzfvsZjCx2MICzGfBX+m4MbcGnzC30tS/E74Z6V9iT940eqo+HIIA6s2N1s
- 266u7LcJsO5uj9Wq0LsU+jijxLej9MO6JLmZWqlvr7oJncIrqMQ5GR6spIv1yZAQKdamvacrDLJ
- SSjYEIgK8pl75OC9vedrxgyuF2s9qFR+5eQr1wv4Tt1+AfQiWFEEgje/trfMlRes92DWyTDAfF2
- WJto885kB1NOBPiQGgI0cqC41zQclVxHdtKyrHLF6
-X-Received: by 2002:a05:620a:40d5:b0:939:3571:bb90 with SMTP id
- af79cd13be357-93960f2b49bmr1274579685a.24.1788432051186; 
- Thu, 03 Sep 2026 03:40:51 -0700 (PDT)
-X-Received: by 2002:a05:620a:40d5:b0:939:3571:bb90 with SMTP id
- af79cd13be357-93960f2b49bmr1274576385a.24.1788432050713; 
- Thu, 03 Sep 2026 03:40:50 -0700 (PDT)
+ bh=5m+bdfXDGjMSrjZN0mTqDRdt7Sb7Otfs6JWBNkXvRP8=;
+ b=S52PurWuae67vXYbj2wyzJle45eYNND2CRsUI5RRfboUx+HO9FXN7idVBsrJ4uUS5Y
+ zhv0V5f3ONSoV+Z0LyHgXxA/jx+EIK5Uf8sYW6o00s9jln4WZIMJKaTf5vyF2Sx1f/vi
+ w1lS+5Fs3j3m7ArmnQs48mt+XHOOh9yroONGaEC03Js/DR9hfLIYh1CS3G5R6g08w/T3
+ Sy12ROVlOeMGwtJoYJHqNHRUhjZ5Mtu+bhMeRuQp5nDErQIimWKFl7UtOUnUH/wa/V9O
+ 1FuLPwqpMPOLMKLn4Ml5u0YL8X1CMQwa1075Uno3khM8QPNjq2+yjDO+g5AHz1QCV+Sj
+ YdEg==
+X-Gm-Message-State: AFuF++kiY5IniDabqGGviKyAcmYKKZO60Kv97bFf3fnVtlmt2WEKOn8w
+ SVFglp0in4N2Rz4XzS4A/kN4dLx0fVB5/oIGxyDI1M613on4jViGMvUj3YJBolJVE81jlOt/hw9
+ ls6JSFTsdgEQumtpuVMQWwuJKB8mKCgZKyqEMzJuQsd8A1yMbC/m6gjvONkcK69tbyw==
+X-Gm-Gg: AYBFou2E3CorDgHzrx6585KJJJRlbDOyjbMjVCYgyCKNfJRBJAWu93p6dhQh9S1OdHY
+ gpmi4XIyXRgnoMv21WN2M5gXWmyp73N4sAJQraUxyTapaDJmljVk+IavrvfwQd6MYpBAdXz3uMg
+ 7x+yqdOba9F9xKeXKWOifZcWoV6VWM2crZqXnlnxbfhLBmktmnqvA/mzjzwoqSRKza02bIyO7X/
+ RuFpH0bRfH1k6vq7v+HqGbVIDU+ofhq83Kh+lLWTKhtwKMcKmUvNSs7hHzy0SS2sSiAyHAIyYsR
+ FDYeMoEs7PF7wnQCHNzozDbEwkrOLDckCVIZAkHQH3QAQ7o9X6ZwpB6yWAj5c7l0NCIR1npYAoO
+ VEMEksi375a35mx7vbhUxiaEb4NgBuHhQFDGHr9nK
+X-Received: by 2002:a05:620a:6592:b0:92e:7d53:8e8d with SMTP id
+ af79cd13be357-93960f3887fmr931769985a.27.1788432023083; 
+ Thu, 03 Sep 2026 03:40:23 -0700 (PDT)
+X-Received: by 2002:a05:620a:6592:b0:92e:7d53:8e8d with SMTP id
+ af79cd13be357-93960f3887fmr931767785a.27.1788432022638; 
+ Thu, 03 Sep 2026 03:40:22 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ed38cfsm11889296f8f.19.2026.09.03.03.40.49
+ ffacd0b85a97d-48448e72f02sm12645249f8f.3.2026.09.03.03.40.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:40:49 -0700 (PDT)
+ Thu, 03 Sep 2026 03:40:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/51] hw/sd: sdhci: Resume version 4 SDMA at buffer boundaries
-Date: Thu,  3 Sep 2026 12:38:54 +0200
-Message-ID: <20260903103936.62355-11-philmd@oss.qualcomm.com>
+Subject: [PULL 06/51] hw/sd: sdhci: Factor sdhci_advance_sdma_address() helper
+ out
+Date: Thu,  3 Sep 2026 12:38:50 +0200
+Message-ID: <20260903103936.62355-7-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: PtICKcjJHwMBcUJQ3j4K17IsSX5mXZZf
-X-Proofpoint-GUID: PtICKcjJHwMBcUJQ3j4K17IsSX5mXZZf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX56ApJS6e1lK3
- wQp2MZ5H46nuCojibl8g1EsvoFkH8KHtzcIx1HVWwjSqrpryhRNhjhav9FiCyEY3hy3rFlzqjin
- WWK56HPlVjygmM3d+WpWEEVW065fgIAn+zfR0ZiWSA5X9IsQTH9/Kv8u1BAmlXNpAE6j6ZaTR0z
- HWsisNCXiKoterC8elPSaisjH3KfDcfXaJF/gvUNUHFe9MsRQZrIn/yt13ax32EI+IoQTorTZch
- xF3vLskZ3cZ9nP/G5QnLymzLuCLynaqyPSMCxolvCoAECkd2Amk/9IPQRF2giauSunVk7EJpsdA
- FY4J2lCTjZEfG+hhbWllkBF4tdIS6ua5d3CGKLLZee5Y6UOZDqaV9t0XzvC41lAW4L4wQeKZJDj
- EC1sZ8StOXpO54uV2WV3EM4VN1idU8Ha0xTSdr/hAD/4w2Mda+z90rfbSvmqg4tieVHuEBcSImW
- 4cw0yfswvSWsJS+AcAg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX+COmYYC5RZLl
- kokmlN9pTsKBgcXA4MLuh6Jj07Elg6MC2+IhnaEgK8Pi+CmoN2H1dYEhNttwTk7kWnDoRN3/sAc
- Nu2eM6nVDvot8xXf8VYJSbVS7I1Iynk=
-X-Authority-Analysis: v=2.4 cv=PKc/P/qC c=1 sm=1 tr=0 ts=6a994eb3 cx=c_pps
+X-Proofpoint-GUID: 04Yeef8tNXDByUF4l3viNmQ8-QkvuAtQ
+X-Proofpoint-ORIG-GUID: 04Yeef8tNXDByUF4l3viNmQ8-QkvuAtQ
+X-Authority-Analysis: v=2.4 cv=OZyoyBTY c=1 sm=1 tr=0 ts=6a994e97 cx=c_pps
  a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=3YG1UsAA5NaYTQao5CoA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=I8W03weja4XGKiVTSTMA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX5/kHlYydrXNg
+ e2yIXlRlZtyqfUaEEJlw42a8Vesywa0VOrenhsO7EMyvXnGFe2NQJdOF4g2kbtVDsOuDfHjaVeu
+ K1soNLVIBjCAfOH7YKEW/X908lReNTQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX9I+LMcGaK7h/
+ 6GRKtRK6ydJ9jYWeQslbuN+dN6f24BzDY7z11iG5ucG1//KuNId2QoFTqu0QUSAlojJLyyX/Jdw
+ iLQF4bzdOLzltULFjEJnkznOrVM6NpVmpzkMTMsccY6HDhEepZbXZu3C+747bFn1sjFRRWI7tdU
+ vaqZRci8Cf2wQcvlJ8VHWKDzLwHL1EscYAVTB6kmCyxXiZMt5k41Tir1bjwza2uJ/nCq7gLQCxL
+ zZehbNgYKubsNxes8F9OrcTXXwjPUsaveWwR7uZy2HB9c89iHvVpjyZD8NDJxUp/IZ1J3gQFYFP
+ BIrLeV9sql2SZxL/DZDnErT+RbbzdGl+WD0/4B534/RLdukFqKBvb1cPqL2l3S9rmCVYQZlY9cZ
+ g0RAxQtzYb1NuV/+i12KiXJ/ZGCvcEPA7dGQkWFg5boRt06QxGrTZuXb8MGcGAp8nIKoj9F+f9f
+ jqzrtObj0o9p4QkVIew==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015 phishscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 impostorscore=0 clxscore=1015 malwarescore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
 Received-SPF: pass client-ip=205.220.180.131;
@@ -152,86 +153,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bin Meng <bin.meng@processmission.com>
 
-Version 4 SDMA selects its system address from the registers also named
-as the ADMA System Address registers. Updating those registers does not
-resume a transfer that stopped at the configured SDMA buffer boundary.
-
-Resume 32-bit addressing after an access completes the lower 32 bits of
-the ADMA System Address register. For 64-bit addressing, wait until an
-access completes the upper 32 bits so software can update the low half
-before the high half without starting from a mixed address.
-
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Message-ID: <20260723151853.2143177-10-bin.meng@processmission.com>
+[PMD: Split of bigger patch]
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723151853.2143177-12-bin.meng@processmission.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sd/sdhci.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ hw/sd/sdhci.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index f0ba5c11dfc..bd74c60f728 100644
+index 586e4680bee..ad370407c6e 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -786,6 +786,12 @@ static bool sdhci_sdma_transfer_active(SDHCIState *s)
-             SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA;
- }
+@@ -598,6 +598,11 @@ static void sdhci_write_dataport(SDHCIState *s, uint32_t value, unsigned size)
+  * Single DMA data transfer
+  */
  
-+static void sdhci_resume_sdma_transfer(SDHCIState *s)
++static void sdhci_advance_sdma_address(SDHCIState *s, uint32_t bytes)
 +{
-+    s->sdma_boundary_paused = false;
-+    sdhci_sdma_transfer(s);
++        s->sdmasysad += bytes;
 +}
 +
- typedef struct ADMADescr {
-     hwaddr addr;
-     uint16_t length;
-@@ -1257,14 +1263,15 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
- 
-     switch (offset & ~0x3) {
-     case SDHC_SYSAD:
--        if (!TRANSFERRING_DATA(s->prnsts) || s->sdma_boundary_paused) {
-+        if (!TRANSFERRING_DATA(s->prnsts) ||
-+            (!sdhci_version4_enabled(s) && s->sdma_boundary_paused)) {
-             s->sdmasysad = (s->sdmasysad & mask) | value;
-             MASKED_WRITE(s->sdmasysad, mask, value);
--            /* Writing to last byte of sdmasysad might trigger transfer */
--            if (!(mask & 0xFF000000) && s->blkcnt &&
--                (s->blksize & BLOCK_SIZE_MASK) &&
--                SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA) {
--                sdhci_sdma_transfer(s);
-+            /* A completed selected-address write resumes stopped SDMA */
-+            if (!sdhci_version4_enabled(s) && !(mask & 0xff000000) &&
-+                s->sdma_boundary_paused &&
-+                sdhci_sdma_transfer_active(s)) {
-+                sdhci_resume_sdma_transfer(s);
+ /* Multi block SDMA transfer */
+ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+ {
+@@ -641,7 +646,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
              }
-         }
-         break;
-@@ -1401,10 +1408,23 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-     case SDHC_ADMASYSADDR:
-         s->admasysaddr = (s->admasysaddr & (0xFFFFFFFF00000000ULL |
-                 (uint64_t)mask)) | (uint64_t)value;
-+        if (sdhci_version4_enabled(s) &&
-+            !sdhci_64bit_addressing_enabled(s) &&
-+            !(mask & 0xff000000) && s->sdma_boundary_paused &&
-+            sdhci_sdma_transfer_active(s)) {
-+            sdhci_resume_sdma_transfer(s);
-+        }
-         break;
-     case SDHC_ADMASYSADDR + 4:
-         s->admasysaddr = (s->admasysaddr & (0x00000000FFFFFFFFULL |
-                 ((uint64_t)mask << 32))) | ((uint64_t)value << 32);
-+        /* A completed selected-address write resumes boundary-stopped SDMA */
-+        if (sdhci_version4_enabled(s) &&
-+            sdhci_64bit_addressing_enabled(s) &&
-+            !(mask & 0xff000000) && s->sdma_boundary_paused &&
-+            sdhci_sdma_transfer_active(s)) {
-+            sdhci_resume_sdma_transfer(s);
-+        }
-         break;
-     case SDHC_FEAER:
-         s->acmd12errsts |= value;
+             dma_memory_write(s->dma_as, s->sdmasysad, &s->fifo_buffer[begin],
+                              s->data_count - begin, MEMTXATTRS_UNSPECIFIED);
+-            s->sdmasysad += s->data_count - begin;
++            sdhci_advance_sdma_address(s, s->data_count - begin);
+             if (s->data_count == block_size) {
+                 s->data_count = 0;
+             }
+@@ -662,7 +667,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+             }
+             dma_memory_read(s->dma_as, s->sdmasysad, &s->fifo_buffer[begin],
+                             s->data_count - begin, MEMTXATTRS_UNSPECIFIED);
+-            s->sdmasysad += s->data_count - begin;
++            sdhci_advance_sdma_address(s, s->data_count - begin);
+             if (s->data_count == block_size) {
+                 sdbus_write_data(&s->sdbus, s->fifo_buffer, block_size);
+                 s->data_count = 0;
 -- 
 2.53.0
 
