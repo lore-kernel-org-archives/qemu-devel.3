@@ -4,114 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C2EC624DA
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 18:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFC5C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 18:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2CI1-00053q-3v; Thu, 03 Sep 2026 14:35:57 -0400
+	id 1x2CRn-0006Ov-38; Thu, 03 Sep 2026 14:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2CHz-00053e-46
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:35:55 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2CRj-0006N4-7n
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:45:59 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2CHx-0002fL-FX
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:35:54 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6E4BC21EF2;
- Thu,  3 Sep 2026 18:35:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788460547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nlSxG5iI0U4+Xdmh/VfZwsfgnnmuEGCitm9ltT6nopc=;
- b=uZ+iX3Rd7l550O7k4AVw5yxJJJvo90lv88OVohVnfV21sBfz3t77Sr02h3uYfaQ0TkBS58
- qtOlecMTuUTGJuBqTPoUY6sAFoZ3xhdLU53DZqLwxKR4LfCq0tnWVBU0mOCIPN4tMdQr0a
- R5kJFVuOBFOdl+drE6dfrQkSX6Io5Vg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788460547;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nlSxG5iI0U4+Xdmh/VfZwsfgnnmuEGCitm9ltT6nopc=;
- b=FywcvpXyvrrF4ZSOIdn3tPaxMJV0dlLpg08BVsfXuaUASwDo9at+pURnsYALQFwIym75tL
- 9G1nR6nf0Rit0dAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="hg7gCA/d";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=qFdbhwKG
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788460543; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nlSxG5iI0U4+Xdmh/VfZwsfgnnmuEGCitm9ltT6nopc=;
- b=hg7gCA/dnAqXU7htssjtj2wPNAbIM7m2B1hhH34P1Bh+D06X700OChxvbJmLlCdi6jHj4B
- PJeA9NGBDp3k+WJwU8jeo2u+8F1F2EBuvxdu7UFQmeBiMglKdx2MPfyRA8cLXbIH74lgDN
- zBBvBzNBndCxfkkQQBBClnpfbiFn1qk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788460543;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nlSxG5iI0U4+Xdmh/VfZwsfgnnmuEGCitm9ltT6nopc=;
- b=qFdbhwKGHDNgRXl8NX+J3GrEiBoH07qtLYX0Ihh5yW21cQnBhedPQgPCjGqfoVB2n35AGH
- IeEIFUX9tB6PqdBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EC116136D9;
- Thu,  3 Sep 2026 18:35:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wOC7Lv69mWreCQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 03 Sep 2026 18:35:42 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>
-Subject: Re: [PATCH 01/18] checkpatch: Fix checking of newlines in error
- messages
-In-Reply-To: <apm10EPO4vYlZLQZ@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-2-farosas@suse.de> <apmwZbSLZ46yvGmT@x1.local>
- <87bjae8bya.fsf@suse.de> <apm10EPO4vYlZLQZ@x1.local>
-Date: Thu, 03 Sep 2026 15:35:36 -0300
-Message-ID: <878q5i89on.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x2CRc-0005jD-U4
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 14:45:56 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-47f96c5b722so167150f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 11:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1788461145; x=1789065945; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=L3nlHceLMeRvdDQ35xaQ6jNOZmBQAWYtUnidtYJezrQ=;
+ b=Ade0dJRfExT9q+NQO0Z/yo6l/b05bSDe10Tk6M4D/7MwGIX8scYF4gR93xvgJUngk6
+ 8pa0H2ydyNxS3Eiy4daJIFC3UUhPPsAa/tpjOWh1gttZ4hyxfjxeDD8F2SBR7VDlAVDN
+ EtQTzyTYvU9G1tuMcIBWICNI+nO+6dAcUyj6HnUKqhpoTdSNQuwBfVC6ZHXDOQuWU+UA
+ D0vp8vxLtoOBqVe2B626dX1M35cfxgqkBeCH1IwK6E5qigMlMzLyLYH0gjWDHrYEnBcp
+ pWudts3WjXEuwOB7t1GZgt4r0+TWt2blZKIoP101To4wtuqGEe5LCvQXJ00MNARuSR9Y
+ 5oMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788461145; x=1789065945;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=L3nlHceLMeRvdDQ35xaQ6jNOZmBQAWYtUnidtYJezrQ=;
+ b=YLVLs7BOV4Og/87CZkvxtmpFA+TNjYlOKfMM75x7jfzuo3TJKEFxRCr6/f7kOTol9r
+ 3L8QR8Ad4Tzkbn4xkZVZgTAwqjkQLAMPRP4tjDq1wQFTyYAYcJCJkUrTBZuL0YTs1poW
+ lywxMckRLYgY4PCU5eNM12xybMe2MVR+9emBvB2yp+8ps6EoH1jSRGSDM0Xkx5Pz2hTX
+ Lp7mGAoJpyIDLMltTKGNMftF+dcBXB0vp7FnauLeRok088jg1bSXvrpw7RSkCWNY1cI9
+ ePkg/TGdK6/lZ6jSdmLkzWitYX5RiHx/XK0VHjxTiCoqLTKhlQWXyIZliRyb+8ssdjn2
+ w0GA==
+X-Gm-Message-State: AFuF++lzDiLJuxACZCxZ9E4ujlg5n7t6BC8KtsHHdpXbK+HUPd3HJ171
+ FYImt9YWdwwXv3lGpZRNAalMcGNFsAAhd2j/3I7ujq3hitEVmZXTmnUsHhUka4dLMedZW6e8JDW
+ n10dI
+X-Gm-Gg: AYBFou1YzHzPj86UY/z7aRMBuMzurEsRjZV4p2O+wsZLhE7qKhdmxOhFzgVoxzjISkb
+ 4FcUxDpI9x8ODHORjKcpf9ivi7E0Va8DLIvWBj13s1zuN+2cHXynvFbMzt0hvXgRbqJpvgx/p5a
+ ebP6k4ePUMORpMSn7yPABDd4qmoK8uJcFww9jkK2ZWenP+cL4xj5oPQixXHNFDLNM8KyLgR7xfn
+ c+IuJGD+8lqLOlFn2kZPNNKUGZvYunhiLt+Cj+LJJDlc6cIMQ8tyGu21BZpX7ohRucKHb/9UJBr
+ WXnDB00G5I8J65mX+cjt35W4aJEf0m1idePNYt5dQQSIk8FvtNLa3bnwCOv3nGjcxp1DTMMUCkt
+ wgxNPWgu4fV2Eox9XtKBqT35/RgiukxPHsXbQxFzo4+t+hMSJwC8e6I7Mb9vEXMhkSdJ7tN8qGo
+ S9ZMCJxOBOJwlkA50MAZt1/TbFPS2t9JqUZvTWgim/uelvK88l9oNKtopI
+X-Received: by 2002:a05:6000:46c8:b0:484:3732:c261 with SMTP id
+ ffacd0b85a97d-4858729b9b8mr1773955f8f.17.1788461145380; 
+ Thu, 03 Sep 2026 11:45:45 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-485883953cfsm395557f8f.13.2026.09.03.11.45.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Sep 2026 11:45:44 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: den@openvz.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Denis V. Lunev" <den@virtuozzo.com>
+Subject: [PATCH 0/2] pci: batch memory transactions around mapping updates
+Date: Thu,  3 Sep 2026 20:45:40 +0200
+Message-ID: <20260903184542.2629976-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 6E4BC21EF2
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,54 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Restoring a PCI device's config space remaps its BARs, updates the bridge
+windows when it is a bridge, and toggles the bus master region. Each of
+those ends a memory transaction of its own, and a transaction commit
+re-renders the flatviews it touches, at a cost which grows with the number
+of memory regions in the machine.
 
-> On Thu, Sep 03, 2026 at 02:46:37PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Wed, Sep 02, 2026 at 07:15:29PM -0300, Fabiano Rosas wrote:
->> >> Using newlines in the g_test_message is fine. It automatically adds
->> >> the '#' required by the TAP protocol to the start of each line.
->> >
->> > IIUC we have such check not because TAP, but because all these functions
->> > will append one newline at the end, hence it's not needed.  IOW, if it
->> > applies to g_test_message(), I don't see why it doesn't apply to the rest.
->> > But maybe there're other reasons?
->> >
->> > To make it simpler, maybe we just call a few times g_test_message()?
->> >
->> 
->> Not sure I understand your point, Peter. I want to be able to print nice
->> messages in patch 9:
->> 
->>  g_test_message("expected vs. found:\n\n%s\n---\n%s:%s", str, t2[match], t2[match + 1]);
->> 
->>  # HMP output mismatch for entry at line 55:
->>  # expected vs. found:
->>  #
->>  # max-bandwidth: 10356305952768 bytes/hour
->>  # ---
->>  # max-bandwidth: 10356305952768 bytes/second
->> 
->> What would be the issue of having newlines here?
->
-> No issue here that I can see.  My question was, why you moved
-> g_test_message() out only, but not all?
->
+So a machine with a rich PCIe topology pays that render many times over
+while an incoming migration stream is read, once or more per device, even
+though nothing between the steps looks at an address space.
 
-Ah, I see. I didn't want to touch the others because they are
-considerably more important than the tests' messages.
+Both patches wrap an existing sequence in a single transaction. There is
+no new API and no behaviour a guest can observe: each transaction opens and
+closes inside the function that starts it, so nothing sees an intermediate
+state which was not already reachable. pci_bridge_update_mappings() has
+worked this way for the bridge windows for a long time; the first patch
+just makes pci_update_mappings() consistent with it.
 
-> My gut feeling is we check this because people forget that all these
-> functions includes a newline.
->
-> So if your point stands here that "newlines can be in the middle", they
-> should apply to all, not one.
->
-> But still, I also don't see why we can't invoke g_test_message() a few
-> times here too, if we want to avoid any global touch like this to land the
-> whole thing faster..
+Measured on a Windows Server 2022 guest with 64 vCPUs and 65 pcie-root-ports,
+the non-iterable part of an incoming migration drops by about a third. The
+saving scales with the number of PCI devices, so it is small for a plain
+machine and large for the topologies which hurt today.
 
-Hopefully this patch is uncontroversial. Otherwise I can do what you
-suggest.
+Note that pci_update_mappings() is also reached from the runtime config
+write path, not only from migration. Several BAR moves in one config write
+now share a rebuild instead of taking one each, which is the same win in
+miniature and equally invisible to the guest.
+
+CC: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
+
+Denis V. Lunev (2):
+  pci: batch BAR remapping into one memory transaction
+  pci: load a device's config inside one memory transaction
+
+ hw/pci/pci.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+-- 
+2.53.0
+
 
