@@ -4,146 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D1AC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 350CCC624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28n4-0006bD-Ld; Thu, 03 Sep 2026 10:51:46 -0400
+	id 1x28pX-0008CV-I6; Thu, 03 Sep 2026 10:54:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1x28n0-0006a1-85
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:51:44 -0400
-Received: from smarthost2.eviden.com ([80.78.11.83])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1x28mt-0000V6-Ei
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:51:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=bull.com; i=@bull.com; q=dns/txt; s=mail;
- t=1788447095; x=1819983095;
- h=from:to:cc:subject:date:message-id:
- content-transfer-encoding:mime-version;
- bh=8RFzs8pOhgA9LNnoLFdhXsINHirw30x+KZqjMxgxftY=;
- b=HCN7aleKAOXgiGnAC1nbIaXy8S5p93QjU4SwsSQC2PHWFFycgCKWWL7b
- nQWN8iP192+S2x0tPPXkFQvb2tOlpok+0ehRYvMubI4bYzD4yYSr50cUs
- C3mQlFhlz1VcIOfVJgLOUtfmUllJgI9AME98B9dWDvlR1Ccu4XYe4rAMC
- LMFwOJsOPiYDzEAue9LDXN09dnFmlPp33q3AYmcP/0b2Qpi+/G6eoloCr
- l+WiYC4kBKv414QuzC6xmX4HHCy3ARLxIBaBUTshEE5uy7H9cz7NXwUvS
- umAutvGN1Bdjuwjvo9U8MMeuHJ6gKH3+gt28C8X9rznq1FcUzuqKsMsEy Q==;
-X-CSE-ConnectionGUID: PD9unpwWRcq75TxvKFIPYQ==
-X-CSE-MsgGUID: uUrJkxkCR+WqeAdrjiJimg==
-IronPort-SDR: 6a99896a_K0YD2+To5a80RJFIpGDqzYnNxLGhd8r4SxTDVO3tQyc49Ye
- DgLAWQ1cXfkxAMi/t+E+2EW21NQY5qoiXtpoS9A==
-X-IronPort-AV: E=Sophos;i="6.25,260,1779141600"; d="scan'208";a="48698900"
-X-MGA-submission: =?us-ascii?q?MDH1PYpLgFmnsEkqe4tvHJtk8uPtiiT3/K7emL?=
- =?us-ascii?q?Xk2vWz+04iUyCEIvubuWJ5Rudh9xmVdh5Atw9M7fJznyPaJurwcQ2cRV?=
- =?us-ascii?q?wi55laGq0OhbLGiK2OoLzoPU5ylygF2fyrekxLJPjnGBUv/Ul3lbQ81I?=
- =?us-ascii?q?va81T866S4bZDyGBAgqynZVA=3D=3D?=
-Received: from mail-northeuropeazon11010003.outbound.protection.outlook.com
- (HELO DB3PR0202CU003.outbound.protection.outlook.com) ([52.101.84.3])
- by smarthost2.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 03 Sep 2026 16:51:22 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zNIncY7Nfb2jHgYmqYtUJqFk8OmZq+YyHOiDXJMgRWx6i9q2p/05YeBIjqprmf9o79BuZQYhu/O0xjfIQyD2bIAWOwSE/YjiHaaD3TBAjy3FEVwbALpkRCwAuavpbZGRBR6zpsfa9iA0XYOfb5ySvJS3pt4NRNkelCB6YNd80nJKz2QLaObQcBnz0Sd8CB+pp9u/MAnSA/TxAmSMNYwRjpCjal+xAUqZZzjzDGVNpaa+FTOoWiUJyA7vZNB6hZaTYNQl43tZxUnVmwmqdvRlwnIV+wt4yBxyyCBrFANgZvulLy243J0ty9J3xnq9fhbfTyiVLfyjvWWfPacod2VAMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pjJ/ynesjNuNMIaXONpWrLNWVVEgzBvE1t0FIh/sS2Y=;
- b=MMCqJeJd1Gtv1Y8ejpvkX5zCWtjh8R33xuC/kVdQGcvxlwkDvmU+4Yn897AuvmsxmRAUzmLn5N0WW4mFByE8g3hg+yCRv0d7P7Llhn6ulkZ833Qq7xx9d+lLypb6bIKcUAACmrQcmqb1mUmY1MaeQ16zxSKAN/blfD9btFtgZpKudiDhSjZcUYaxNIwwzeKSA7yUcNu6q1sx/raT1WkK0ekklfv67JQEjHHriFQ2s7RTWz+nnnA3ily5RJJLNp0kd3shS6mRYH9zA/mjAHF8iXd0n3wE51phLxno7wh3AE+AKGx0ZrtF557MYYsy/ycwWOB/T8UbgTA9Vgj0wC8/9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
- dkim=pass header.d=bull.com; arc=none
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by GVUPR07MB11784.eurprd07.prod.outlook.com (2603:10a6:150:32e::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
- 2026 14:51:15 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
- 14:51:15 +0000
-From: =?iso-8859-1?Q?Cl=E9ment_MATHIEU--DRIF?= <clement.mathieu--drif@bull.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowangio@gmail.com" <jasowangio@gmail.com>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "baolu.lu@linux.intel.com"
- <baolu.lu@linux.intel.com>, =?iso-8859-1?Q?Cl=E9ment_MATHIEU--DRIF?=
- <clement.mathieu--drif@bull.com>
-Subject: [PATCH v1] intel_iommu: Support concurrent page fault handling with
- PRI
-Thread-Topic: [PATCH v1] intel_iommu: Support concurrent page fault handling
- with PRI
-Thread-Index: AQHdO7Orx/6HOHEK7kiJZZLQqCFugA==
-Date: Thu, 3 Sep 2026 14:51:15 +0000
-Message-ID: <20260903145044.2245609-1-clement.mathieu--drif@bull.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|GVUPR07MB11784:EE_
-x-ms-office365-filtering-correlation-id: 85f6f79f-b159-4f16-a6d9-08df09cacdf0
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|366016|376014|10067099003|6133799003|3023799007|18002099003|11063799006|56012099006|38070700021;
-x-microsoft-antispam-message-info: u7QvivOZyHP3Dj2MHd+AEdnUZDSc1dEs65JbrF0TxOwT6ZWonpA3NfR41gvLOPAp3sJOkOwW2m7Dikm2ddkN20SjsBerKlJzNboIR6w9jIhkmJRN74rF1kM7vrT7b7u29guEQlWXDzc1BkFDreBiBQIvH/KoDC1CuzFNnT7hiNsNuuiIyVdS2JpOxbN+NY3bVtnVUGrpbrojfw2Hgq9Z/qXoQcjV0CQuz1UBa/0R9vaLjrT5KRi62cHwAbuPqpnc7qZ0d+VYNSRcnhGicRveBMKzmjK/1FyF+2RpOYBNiRMmFI5kAEGnqV6BqS/2PRLbe5AkxstARc6/F54C/ltwqRlbj5bgYqI4YFx0vUin0Y+OZNtODRG03atqaS/lURcJckJ3a5ym8YTR/1bco7LMIiPr1TxHPuNvkUaGrJbI+3/IRol7RlJwwqQl6SQE/RKLPuNAMX+Be/bhyd0D9dx5utxltVBy3OwOHmJ+J3D/HtM91KKIjnoUixR99mIokNpGIi3JxViVtk2KvBMplHcMqmehCQ95AqEEEpOIbKcCWpG6baKxJfRTyGJ2d2uVeVC+ZAKIZhBrA8sN+DkZkVuEkcU/UWgXO2T62BWK00KKFdDffbOMBl93HBc1rnfk+vrZXusHHE+Wu9O9HE9s5GUYXOboYN/BuEl+17Eo7YnZqSDmpNcoYJK59JI3BiL6QqvsUoL6a1AmHDfoTAHHVmkzUw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(10067099003)(6133799003)(3023799007)(18002099003)(11063799006)(56012099006)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?WDSgQiWN8/9zJYeBm67u+EJBt8I24eSDHvFpaFGcJlJTIDUbGFPHeoIYGF?=
- =?iso-8859-1?Q?894WRV4+a8VcjI5pSx0vsF6HNpZlEgkplfwmjsCqNpaLL4TONRh1T1iweD?=
- =?iso-8859-1?Q?AsUcDdFzivbGun4NlfF9B8Kn0vMCdUbF8IRFqXtTdWHYeGvtxDeACQeV9t?=
- =?iso-8859-1?Q?wT13Nj0rfQX3WxdtYNTWs2MVTYnps/riSWlWhvWnulXto+hRuxT22fanek?=
- =?iso-8859-1?Q?tfm/DrVC+NMB8LGxyLL8XDjiPHu8cMI+mgXA4ixlgyqyTJG2mvFEJ8DdiO?=
- =?iso-8859-1?Q?cEJ4xuOi2zM4ect96kQRgOmc9xnDGsgO6QL/X2sxUWJHp5SYohCrTwHuUA?=
- =?iso-8859-1?Q?foKNDkoFBD64azgRwkWyrTnFPBnCPSa0c7vrgNC9NsrpzoxTUjD5vBS1Yi?=
- =?iso-8859-1?Q?MEqqW1e4ARmfMrJ/58M+qHK5NZdOAoHM1ecc6f/Al6XLQP6FanhvUTsFmU?=
- =?iso-8859-1?Q?f39vH67wE4IFmVVNgx8PdqoA3w0csTGUdyb0vr7bnihEh1hH9yFjR6dulq?=
- =?iso-8859-1?Q?BeUBVbjfFCDCQ+M0ipjLuebxOL20vC2p509JiJ04sk4L2hN7AOxP/8UEX9?=
- =?iso-8859-1?Q?bTc9eeRfl+MrBCO4H2bzjAkmJjRp2yqyspxfnXjfpcNJuSeGRCIVKREpeJ?=
- =?iso-8859-1?Q?DK+B8fijOUpyh3sGAQvihpP5a2bHdu3Tt9MvDZKEQ52qUgs3rBtBUt+J1m?=
- =?iso-8859-1?Q?OG8Vi36GO2FQ5LbXbNWeD5o2O2fmBl3iTNBB4B1BiONm4cci6MlRDaVrxF?=
- =?iso-8859-1?Q?XiRI5oHmTJ9VPmwATv2CALQOuHhexnFh3oc8V5QCqkEpjvZCtL83slioO6?=
- =?iso-8859-1?Q?Cnrk0j/NKf1Q9nnjZX30L6Km/bwHDkZO8+eFdb9/kNyOuqvikmv+d5kZCV?=
- =?iso-8859-1?Q?+ggur6WGE+gHwrvEkOc8V+Tk7F/bfNxOFSShw1jyds0Lk34KHt5CCB5AIY?=
- =?iso-8859-1?Q?XKeN7U0BkJPCH96kylVNzrz8Ort8e0/DGYZAMan6R0TiRG9GuY+01cI6Wz?=
- =?iso-8859-1?Q?gvfKtVF6H90yN5whMnpDFXSsVsTc3t+UzLcRdmX+dNuOGEVftkUknX1xnB?=
- =?iso-8859-1?Q?lSum8NpqaZ0UV24YPaZ7yoiwquOGvtNsdiI5JoMZt/1W7/2aUZUALFkTvI?=
- =?iso-8859-1?Q?Be15OALXzz/iFHT2iJSYPOVhgOC4TWn5G30C9rKUVBgqmEyrcj9hSQrdBl?=
- =?iso-8859-1?Q?QMrrAeTVphq7nUFfFiFhqMhUbMYwbtEjL9scNTwmc3HiI2Uy1CgHgdktql?=
- =?iso-8859-1?Q?lMUoH/Vj6eLPT8sTG7WkZCGHmMmgImkg6SvaqeykWpvZDZG0QlZhl/ZT60?=
- =?iso-8859-1?Q?M98UISQq586+kFO5U3mIIYDImTnmSX9vD6233B+htwFKGahXGb5oFbbzS7?=
- =?iso-8859-1?Q?1jo6YyQhrD+h6YEbCR8uE0d4xtCr4GhlYQz1aMV3o8nAXcekQ2xumlDOf7?=
- =?iso-8859-1?Q?jAs5dAcW2HjwRHfnIaoTaz9tvogUbBGzh9pvQrX38T8Iw2uDj6p95RlUZD?=
- =?iso-8859-1?Q?Yomwy3dMX19ox4stNk5GDTX2kiJ/sbUhH19Ct4Z89ZnpE5hvsIcxj3NfvH?=
- =?iso-8859-1?Q?GYXMvJJW/YS2GE7jjQrqB7/cTNVv+lqMZHrH4Q/7wadshqJHlvebiH9NN3?=
- =?iso-8859-1?Q?SnwGgfxiRVYmGonC9xhxfkNFWnbAMvmQT+hLP17NplPTECyzxi1q93/lFU?=
- =?iso-8859-1?Q?zx60U1wz8ph5JMoFhB0meD+yHHvjIHP5Ppjak95EBNCjLxi3SlY1Q0AoS9?=
- =?iso-8859-1?Q?oe4+LR5CE6NaswWZNE2Jo4eQozrV9wHE/7MsdFLgi9eCOG893CYa1VSpb7?=
- =?iso-8859-1?Q?OnGQu1KhNvZxlWmtzm83JKKhUUWoM7FOrDcYdHmESjtnILAnT61H?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x28pQ-0008BP-Nf
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:54:13 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x28oq-0002UI-Ic
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:54:12 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-c197e7e4e94so384850766b.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:53:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788447214; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jy6Hw+YRnQkJ9GZVW9O/DEGSFkqudjOTL/BhzFQ/C4N7mNdIan9wogRLt3Pi2sy7+d
+ HD3jSQtrSdTzCRqER9fzdxNUUuuIm2uxLV9bAN3sqIjwTccNuFaRs39JyFDv1TtykZxS
+ KyqNBuJdiD3Qg7HSGqtWU9j4Ag1pe40oD9RmZ+FaufBR+WpJDOMi6ZViuSyMRrqD2CT5
+ 2fI6p4hzM3H8NeMMOyJOqqDbVTvrvUCJI73meb8UF9bJ4mrrTB7btmyVZlYR76v3jTP4
+ 52PCm+smfpTUnV3Uh6EjP4xiKVKkdN07waVSC8mxh/KzfSa8UXMYT9FhQ7GU3ItdN7gs
+ 5qew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=11xrXspVX/VPt/wxJXaaqSfKi3MfF1Ly/V6SsTPnIi8=;
+ fh=G487WN5iI7wJU4P78jLtNwGGIfJNDYk43VUyyHm9OiU=;
+ b=DiyFKJaosESxvoFHh2uwXf293NI0vxu1jYlcfOZhhiNSZwwZHnTbcOGT6U1J8uN3P2
+ LdTJ0O+wjIE0TuNmIz9kIAC109u3I521WVn0gUTNqzNyNwNv+lC8LXZiIrbkkqSO8kDb
+ 14vSpYBo+bX4l6Sfcao1xeSKossoOQih2JXxEo9JJ6k+3zZsKjKdgPxym9fS3STZLh38
+ 3wBHaGnxEUYmGz043hSiWxGzSpCuoUm3wDwx8fiuRRNSgU2RY5UyxLcgipvg5bEvi7qB
+ yUvA05BEFTtuYH9q7qqSaB1zZpBERlOkTkDVTT/elA4PmqVtbBLgbQJYtS5Z8L3OcV8+
+ IcTA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788447214; x=1789052014; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=11xrXspVX/VPt/wxJXaaqSfKi3MfF1Ly/V6SsTPnIi8=;
+ b=Rzo63zYEph98F0RWhEq8hceZy4QAixk0rQPsCtKqggMiSWMZzLZkYLt1fvjWw5xrk4
+ L/td1ITsiEOPo/6G8oeR9Bni6InYZ7xk9yhh/i7TN65IfS5ahe6yUAB0JrjRFfuUrz7A
+ JzaPT3I81xjenjCufc07IGK+Jy0GN40gR2PlHstrMVsH3KNixMMGUGW60eSTLbv/vzfl
+ 0tOIPO5/N2byp8dF8tGPAuX/vy1Sz14j+8wfe+dgSxtrMu9QxcOLxwyVKrnS/s78uLOk
+ WBy71Vr+w8mtJ4kGz34Mdci08dgI077DmSDRUSDgCuW0Ze18B2JOh2DILVEjaAzytX6Y
+ CmvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788447214; x=1789052014;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=11xrXspVX/VPt/wxJXaaqSfKi3MfF1Ly/V6SsTPnIi8=;
+ b=a0ScrVxSwmcCR9ufgVPE3gKMlCh7yGy3iizObxxfzcT08LT7qI6txObAiTnsTYWSmw
+ Odd74mDA2Sm51xOGMSk6yO97rvxqlvDkOwsu7EgAtubNsFtsqdmTsV2f6TGJF67WbF8k
+ 6913I40EZjTQH/d6NmwYXKTWqJch6b68l/zqYCEMBxIjuIDvD/TaqU0B+gymyyToyKSN
+ ZAYbP1W9uKryOdXxFQc3lTbAFaYyrmGTmzbDLUp70oVj8we0Rfjd65mTuP0IDky1NT6t
+ TjjIv1JSxyYtg84ijpQW1c2ZjzveIjazPWhVHXyTIvsZup6jY7ZJYI4tppNYabQkVwD1
+ U8tQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwjVQE8pcUmpt33PG9eMCsFd9JJLR/+2I3DVeIwfOodpIQxit+nDtj/FhELMfKVEiK8361qDJ2ERgSg@nongnu.org
+X-Gm-Message-State: AFuF++llv407qrly/G42Sx9f2NdlMUdRts0R//GIEfH8aLQDJWjMs5b7
+ fQgalWlj8GJpmWBFqf9kQEYM5NoblvLQAGj90w6PAaPLqFaEBx+0uIWlZ8cuenPHjT9dMZ8x63/
+ vnAH6q/m1D+rFHufMutvpQj14sCrTVfI=
+X-Gm-Gg: AYBFou3cfMHgVU4yKpZwSbEGjF4KBnq0OYkhOwVNanlgxxnr5LgmpvG8mdsCIWxn0jt
+ jnNJo3D2JdE00+3RCUdBwT0E01VEKwS3d2JPv3EpVHLc2oS7EZ5TRGLtdxef4BZudmnR3JAi9Im
+ exxL3ZAXIs+8YclaJn8D/df6M5kEYa3BcPJntIFMSHF6BwV3Dx+2JzT4Ug10MKh4Ds1kTsw1b1h
+ qPTnrxI6CpXh4ACNjeD7NARsBn8WY+/um8v5TNnEDZ+Jy47QoIFs/oUCRzkTBlylBJev0qnexaJ
+ sSoyHtkhrWqq0eG40BQb6alpCdTv9H55Lhi3NazCyIgR
+X-Received: by 2002:a17:906:6a13:b0:c12:3059:4071 with SMTP id
+ a640c23a62f3a-c25d55bbd0fmr742740666b.15.1788447214211; Thu, 03 Sep 2026
+ 07:53:34 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: B/G43GP9cB0+9MOI7jdBW7LH8y3JdenH6BXydXFf3exuGQOmwiK9/bTuSCPTZ6fs0smurwUTWBcfFc6+riisEVV/h+uuuArjDRkt/Xqxw+QJd2FiZoRdQmDHMJiJHUO2guNdUX0zrP5Y0Ipmmj7nQSnMIryDaE9gnLkjEETKGqSxFmp+I2+PTegbfYWpyP5xJXB0BK3kJPIM2+LtBhaXMqi2sY6zPpraXFCpCtQq/9pnPBtjXID9B82PbIIYZJbpMjyQVH3MoyWnAn75Gw5cIpmww/7CiBSc1rrwfwSj1dB+meTUeT4CKYMWeUIXnNAWnbmq5P1fsQjdser8J+DHQA==
-X-OriginatorOrg: bull.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85f6f79f-b159-4f16-a6d9-08df09cacdf0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2026 14:51:15.2710 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /mnTBrAODH14Jkn1LagU/iSHPgBypaR34c4yFBtdLV5Xvvq0AGeanq5ZEtIPRKYy50kgzATqbPzjckdGw8Js01FvL6iYaKpbhvbwWA3YrxM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVUPR07MB11784
-Received-SPF: pass client-ip=80.78.11.83;
- envelope-from=clement.mathieu--drif@bull.com; helo=smarthost2.eviden.com
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-7-zhangckid@gmail.com>
+ <20260902193518.GB787498@fedora> <87ik4mzx7p.fsf@pond.sub.org>
+ <20260903134250.GB825275@fedora>
+In-Reply-To: <20260903134250.GB825275@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Thu, 3 Sep 2026 22:52:57 +0800
+X-Gm-Features: AcwNN1WTtKqe9Vu-Sf7Np8l7bzL_B4o58zc2XGLlbINiYX-zKrvJQTc9JSAlFQs
+Message-ID: <CAK3tnv+Woa47SibQhOht5bk0sWjWLn8GgN3GPAk+WAd-65hBYw@mail.gmail.com>
+Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -158,187 +125,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PRQ slot allocation must be thread safe to avoid posting multiple
-commands in the same slot so we take a lock in vtd_pri_request_page.
-
-This allows multiple devices to call the page request interface
-of the same iommu instance.
-
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
----
- hw/i386/intel_iommu.c | 91 +++++++++++++++++++++++++++----------------
- 1 file changed, 57 insertions(+), 34 deletions(-)
-
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 9f21622a4f..350d2b7753 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3627,15 +3627,26 @@ static void vtd_handle_iectl_write(IntelIOMMUState =
-*s)
-=20
- static void vtd_handle_prs_write(IntelIOMMUState *s)
- {
--    uint32_t prs =3D vtd_get_long_raw(s, DMAR_PRS_REG);
-+    uint32_t prs;
-+
-+    vtd_iommu_lock(s);
-+
-+    prs =3D vtd_get_long_raw(s, DMAR_PRS_REG);
-     if (!(prs & VTD_PR_STATUS_PPR) && !(prs & VTD_PR_STATUS_PRO)) {
-         vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
-     }
-+
-+    vtd_iommu_unlock(s);
- }
-=20
- static void vtd_handle_pectl_write(IntelIOMMUState *s)
- {
--    uint32_t pectl =3D vtd_get_long_raw(s, DMAR_PECTL_REG);
-+    uint32_t pectl;
-+
-+    vtd_iommu_lock(s);
-+
-+    pectl =3D vtd_get_long_raw(s, DMAR_PECTL_REG);
-+
-     if ((pectl & VTD_PR_PECTL_IP) && !(pectl & VTD_PR_PECTL_IM)) {
-         /*
-          * If IP field was 1 when software clears the IM field,
-@@ -3644,6 +3655,8 @@ static void vtd_handle_pectl_write(IntelIOMMUState *s=
-)
-         vtd_set_clear_mask_long(s, DMAR_PECTL_REG, VTD_PR_PECTL_IP, 0);
-         vtd_generate_interrupt(s, DMAR_PEADDR_REG, DMAR_PEDATA_REG);
-     }
-+
-+    vtd_iommu_unlock(s);
- }
-=20
- static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
-@@ -5378,19 +5391,18 @@ static int vtd_pri_request_page(PCIBus *bus, void *=
-opaque, int devfn,
- {
-     IntelIOMMUState *s =3D opaque;
-     VTDAddressSpace *vtd_as;
-+    uint64_t queue_addr_reg;
-+    uint64_t queue_tail_offset_reg;
-+    uint64_t new_queue_tail_offset;
-+    uint64_t queue_head_offset_reg;
-+    hwaddr queue_tail;
-+    uint32_t old_pr_status;
-+    uint16_t sid;
-+    VTDPRDesc desc;
-+    int ret =3D 0;
-=20
-     vtd_as =3D vtd_find_add_as(s, bus, devfn, pasid);
--
--    uint64_t queue_addr_reg =3D vtd_get_quad(s, DMAR_PQA_REG);
--    uint64_t queue_tail_offset_reg =3D vtd_get_quad(s, DMAR_PQT_REG);
--    uint64_t new_queue_tail_offset =3D (
--                                (queue_tail_offset_reg + VTD_PQA_ENTRY_SIZ=
-E) %
--                                (vtd_prq_size(s) * VTD_PQA_ENTRY_SIZE));
--    uint64_t queue_head_offset_reg =3D vtd_get_quad(s, DMAR_PQH_REG);
--    hwaddr queue_tail =3D (queue_addr_reg & VTD_PQA_ADDR) + queue_tail_off=
-set_reg;
--    uint32_t old_pr_status =3D vtd_get_long(s, DMAR_PRS_REG);
--    uint16_t sid =3D PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn=
+On Thu, Sep 3, 2026 at 9:42=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
+>
+> On Thu, Sep 03, 2026 at 08:05:14AM +0200, Markus Armbruster wrote:
+> > Stefan Hajnoczi <stefanha@redhat.com> writes:
+> >
+> > > On Tue, Sep 01, 2026 at 12:00:27AM +0800, Zhang Chen wrote:
+> > >> Monitors that require an IOThread share the internal mon_iothread.
+> > >> Account for each monitor explicitly in IOThread holder tracking, usi=
+ng
+> > >> the monitor's canonical QOM path to distinguish holders.
+> > >>
+> > >> Acquire the shared monitor IOThread AioContext once, using the monit=
+or
+> > >> QOM path as the holder, and reuse the stored context for later
+> > >> operations.
+> > >>
+> > >> Release the holder from the Monitor ObjectClass::unparent callback,
+> > >> while the canonical QOM path is still available. This covers every
+> > >> object_unparent() path and avoids duplicating the cleanup in
+> > >> monitor_cleanup() and monitor_qmp_prepare_delete().
+> > >>
+> > >> The internal mon_iothread remains hidden from query-iothreads, as be=
+fore.
+> > >> Management applications therefore cannot use it to determine which
+> > >> monitors are using the IOThread. Nevertheless, track the monitor
+> > >> holders so that they follow the same explicit holder and
+> > >> IOThread reference lifecycle as other AioContext users.
+> > >>
+> > >> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > >> ---
+> > >>  monitor/monitor-internal.h |  3 +++
+> > >>  monitor/monitor.c          | 33 ++++++++++++++++++++++++++++-----
+> > >>  monitor/qmp.c              |  5 +++--
+> > >>  3 files changed, 34 insertions(+), 7 deletions(-)
+> > >>
+> > >> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> > >> index e0a124a317..74ea15c85f 100644
+> > >> --- a/monitor/monitor-internal.h
+> > >> +++ b/monitor/monitor-internal.h
+> > >> @@ -154,6 +154,9 @@ struct Monitor {
+> > >>      guint out_watch;
+> > >>      int mux_out;
+> > >>      int reset_seen;
+> > >> +
+> > >> +    /* iothread context */
+> > >> +    AioContext *ctx;
+> > >>  };
+> > >>
+> > >>  struct MonitorHMPClass {
+> > >> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > >> index 6af09f2f6e..9e3b639eff 100644
+> > >> --- a/monitor/monitor.c
+> > >> +++ b/monitor/monitor.c
+> > >> @@ -81,6 +81,22 @@ int monitor_device_index;
+> > >>  OBJECT_DEFINE_TYPE_EXTENDED(Monitor, monitor, MONITOR, OBJECT, true=
+,
+> > >>                              { TYPE_USER_CREATABLE }, {});
+> > >>
+> > >> +static void monitor_unparent(Object *obj)
+> > >> +{
+> > >> +    Monitor *mon =3D MONITOR(obj);
+> > >> +
+> > >> +    if (mon->ctx && monitor_requires_iothread(mon)) {
+> > >> +        g_autofree char *path =3D object_get_canonical_path(obj);
+> > >> +        const IOThreadHolder io_holder =3D {
+> > >> +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> > >> +            .u.qom_object.qom_path =3D path,
+> > >> +        };
+> > >> +
+> > >> +        iothread_unref_and_put_aio_context(mon_iothread, &io_holder=
 );
--    VTDPRDesc desc;
-+    sid =3D PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
-=20
-     if (!(s->ecap & VTD_ECAP_PRS)) {
-         return -EPERM;
-@@ -5414,52 +5426,63 @@ static int vtd_pri_request_page(PCIBus *bus, void *=
-opaque, int devfn,
-         return -EPERM;
-     }
-=20
-+    /* Prepare the descriptor */
-+    desc.lo =3D VTD_PRD_TYPE | VTD_PRD_PP(true) | VTD_PRD_RID(sid) |
-+              VTD_PRD_PASID(vtd_as->pasid) | VTD_PRD_PMR(priv_req);
-+    desc.hi =3D VTD_PRD_RDR(is_read) | VTD_PRD_WRR(is_write) |
-+              VTD_PRD_LPIG(lpig) | VTD_PRD_PRGI(prgi) | VTD_PRD_ADDR(addr)=
-;
-+
-+    desc.lo =3D cpu_to_le64(desc.lo);
-+    desc.hi =3D cpu_to_le64(desc.hi);
-+
-+    if (vtd_pri_perform_implicit_invalidation(vtd_as, addr)) {
-+        return -EINVAL;
-+    }
-+
-+    vtd_iommu_lock(s);
-+
-+    queue_addr_reg =3D vtd_get_quad(s, DMAR_PQA_REG);
-+    queue_tail_offset_reg =3D vtd_get_quad(s, DMAR_PQT_REG);
-+    new_queue_tail_offset =3D ((queue_tail_offset_reg + VTD_PQA_ENTRY_SIZE=
-) %
-+                            (vtd_prq_size(s) * VTD_PQA_ENTRY_SIZE));
-+    queue_head_offset_reg =3D vtd_get_quad(s, DMAR_PQH_REG);
-+    queue_tail =3D (queue_addr_reg & VTD_PQA_ADDR) + queue_tail_offset_reg=
-;
-+    old_pr_status =3D vtd_get_long(s, DMAR_PRS_REG);
-+
-     if (old_pr_status & VTD_PR_STATUS_PRO) {
-         /*
-          * No action is taken by hardware to report a fault
-          * or generate an event
-          */
--        return -ENOSPC;
-+        ret =3D -ENOSPC;
-+        goto out;
-     }
-=20
-     /* Check for overflow */
-     if (new_queue_tail_offset =3D=3D queue_head_offset_reg) {
-         vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PRO);
-         vtd_generate_page_request_event(s, old_pr_status);
--        return -ENOSPC;
--    }
--
--    if (vtd_pri_perform_implicit_invalidation(vtd_as, addr)) {
--        return -EINVAL;
-+        ret =3D -ENOSPC;
-+        goto out;
-     }
-=20
--    desc.lo =3D VTD_PRD_TYPE | VTD_PRD_PP(true) | VTD_PRD_RID(sid) |
--              VTD_PRD_PASID(vtd_as->pasid) | VTD_PRD_PMR(priv_req);
--    desc.hi =3D VTD_PRD_RDR(is_read) | VTD_PRD_WRR(is_write) |
--              VTD_PRD_LPIG(lpig) | VTD_PRD_PRGI(prgi) | VTD_PRD_ADDR(addr)=
-;
--
--    desc.lo =3D cpu_to_le64(desc.lo);
--    desc.hi =3D cpu_to_le64(desc.hi);
-     if (dma_memory_write(&address_space_memory, queue_tail, &desc, sizeof(=
-desc),
-                          MEMTXATTRS_UNSPECIFIED)) {
-         error_report_once("IO error, the PQ tail cannot be updated");
--        return -EIO;
-+        ret =3D -EIO;
-+        goto out;
-     }
-=20
-     /* increment the tail register and set the pending request bit */
-     vtd_set_quad(s, DMAR_PQT_REG, new_queue_tail_offset);
--    /*
--     * read status again so that the kernel does not miss a request.
--     * in some cases, we can trigger an unecessary interrupt but this stra=
-tegy
--     * drastically improves performance as we don't need to take a lock.
--     */
--    old_pr_status =3D vtd_get_long(s, DMAR_PRS_REG);
-     if (!(old_pr_status & VTD_PR_STATUS_PPR)) {
-         vtd_set_clear_mask_long(s, DMAR_PRS_REG, 0, VTD_PR_STATUS_PPR);
-         vtd_generate_page_request_event(s, old_pr_status);
-     }
-=20
--    return 0;
-+out:
-+    vtd_iommu_unlock(s);
-+    return ret;
- }
-=20
- static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
---=20
-2.54.0
+> > >> +        mon->ctx =3D NULL;
+> > >
+> > > mon->accept_input_bh still exits and uses the AioContext at this poin=
+t
+>
+> exits -> exists
+>
+> > > (it is freed in monitor_finalize()). Strictly speaking, this violates
+> > > the idea of not using the AioContext anymore after calling
+> > > iothread_unref_and_put_aio_context().
+> > >
+> > > This could be a source of bugs, but mon->accept_input_bh won't be
+> > > scheduled anymore in this code path, so I think we can live with this=
+.
+> >
+> > Worth a comment?
+>
+> Yes.
+>
+
+OK, I will add a comment before the "iothread_unref_and_put_aio_context()" =
+:
+
+ /*
+  * accept_input_bh remains associated with this AioContext until
+  * monitor_finalize(), but monitor teardown ensures that it cannot
+  * be scheduled again after this point.
+  */
+
+Thanks
+Chen
+
+
+> >
+> > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> >
 
