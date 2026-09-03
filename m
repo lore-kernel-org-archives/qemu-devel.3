@@ -4,103 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F12C624DA
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A06C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Cj6-0004nq-Se; Thu, 03 Sep 2026 15:03:56 -0400
+	id 1x2Cog-0006IP-OD; Thu, 03 Sep 2026 15:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2Cj5-0004nK-5S
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:03:55 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2Cj2-0002Ea-W2
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:03:54 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 16AC61FFC6;
- Thu,  3 Sep 2026 19:03:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788462227; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4GK0XMOe/2MteNLMqkEaIIvtNOxu4eE6fZksC5ST9x8=;
- b=1bDafyLlRkBB27ARRXeyMl3aQI7wmLobwCPDPnE2wxlz4vCBdBZTSuiAdi0gIs6ZCPU7cg
- p53c4FlDepcWD1fWvR8vXf3w97m6vZghXxHyY9RGgYsrPnY+CEiv8JGyLYY61utuXS3vcm
- Gv+CD9J33UlT9TpFxufV/BsBaiquXM4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788462227;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4GK0XMOe/2MteNLMqkEaIIvtNOxu4eE6fZksC5ST9x8=;
- b=Vvub+hUKFboiPRGS4dC0tmcog40alRlju0FafXJjdml3AaQWJrPrR/ZHWCIgmE6F1YIWxy
- IAr+nP1enh7tD4Dg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788462223; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4GK0XMOe/2MteNLMqkEaIIvtNOxu4eE6fZksC5ST9x8=;
- b=P/5cWyqPStgsmk/JydRVLdvb/CI01ZGi/57G7AQwStG13lw9gbjrEfz1wafoQuegUs20Ei
- 6LDqafFoEBRRot7ujYttg/2n0lnJXIKD0rvfeNxkWA1GgNia5aVGHbUc/xzYwV2PSp5+T1
- d0MQxRK7lbOlFSDAn4MZRLYGXbrnJL8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788462223;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4GK0XMOe/2MteNLMqkEaIIvtNOxu4eE6fZksC5ST9x8=;
- b=T8mYSxHig4hRouyRzixOwk+eoHJNZy34H9D5GLkriWiv14p1nCWh+y/x/xtz0UIUhq9LCY
- 8wZMqlhGCol7zcCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8F31913869;
- Thu,  3 Sep 2026 19:03:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ZxExGI7EmWoBJQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 03 Sep 2026 19:03:42 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 05/18] migration: Merge parameter structs instead of
- assigning one by one
-In-Reply-To: <apm6h1ueJOL5zHyD@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-6-farosas@suse.de> <apm6h1ueJOL5zHyD@x1.local>
-Date: Thu, 03 Sep 2026 16:03:35 -0300
-Message-ID: <875x0m88e0.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1x2Coe-0006GQ-I2; Thu, 03 Sep 2026 15:09:40 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1x2Cod-00059P-1A; Thu, 03 Sep 2026 15:09:40 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683G36et1552022; Thu, 3 Sep 2026 19:09:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Mxbos8
+ yLoUG5l05cktSa/eE5AZRlKkT5dnJabdMoKZM=; b=OpgYyJ3sqPF3icuS6iTwbn
+ FOHlBKUKR6wHmG2jdtMQBw4E6g75uWShqPfqjE4eJo1AbZhL0VK4Gl0LpD86w7Si
+ rLSJTKqXe0yr6BgUOXttE496jfWlv7FFLcQmdJ4ksWR75asESR/DdAJP99xWXgwt
+ fFqEH9UtkzxHmOZImWm0FrM7f56IhNTVZ3Q+luONSgBe/oMWCUwFM1k6+rDgFENM
+ HWO8JxCIc9jzpIQJqRpSxT4lSItnf13WyMqj/OHb2L99jz40CLznrhzNPxyjEFAP
+ vIbTXcogz/KRD+5/AjpAuQYp55sazeTMlchtWevqwwZbhZPRJSAytGIw11KkgpKg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq3rpmag-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 19:09:10 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683IuFJp019025;
+ Thu, 3 Sep 2026 19:09:09 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gecjasgkn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 19:09:09 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683J8QNv28377652
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 3 Sep 2026 19:08:27 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A9E2658051;
+ Thu,  3 Sep 2026 19:09:07 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2712C5805E;
+ Thu,  3 Sep 2026 19:09:04 +0000 (GMT)
+Received: from [9.61.21.65] (unknown [9.61.21.65])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  3 Sep 2026 19:09:04 +0000 (GMT)
+Message-ID: <11d6e889-80f1-47ee-9335-4bf267195246@linux.ibm.com>
+Date: Thu, 3 Sep 2026 08:38:30 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 36/49] monitor: tighten monitor_printf*()
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Gonglei (Arei)"
+ <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowangio@gmail.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Hyman Huang <infra.ai.cloud@bitdeer.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org
+References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
+ <20260825-qemu-no-hmp-v4-36-af60857c2fbe@redhat.com>
+Content-Language: en-US
+From: "Jason J. Herne" <jjherne@linux.ibm.com>
+In-Reply-To: <20260825-qemu-no-hmp-v4-36-af60857c2fbe@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=EIc2FVZC c=1 sm=1 tr=0 ts=6a99c5d7 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=mY-fmJR8b8s-Z9VvxFgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE2NiBTYWx0ZWRfXw2J+kTXJGfn1
+ WcWhJsEEKsprqlfsqYgONRC4tPrPl/KW2YAz+ydFFPqURQAQrEhHyaP1NbTccY3EX4bWXK+6Wfh
+ PZPoupQ6vroqMPTRxYPXyvIlo9Pde8cY9PZtrRMd1WLBLcNgNkdxGXUjOf1al1kQlCaT/fgUheP
+ SextymGwkZ+1EyES9LOZGAeq2zltAJg0fzgcv3jDIXME72pp30Fxe/iDyhp5UgQ9hakCCokkZFY
+ +cPalHfuleHacrmfeiI5UMMqjUbkCq4OA51vdlSvSxxi9ZhQ5TTNEKTDu7BMXTZlaEhpS/8mZ2a
+ kKpHFgwFEH89wGxyzHwgozJygrwONovF7HchBWxVz8ofB3EgcOTZxt19MgnlkyljD038D89HabF
+ IuV64srRATcXIQUfjgW2xI7R6EWyQiXukBD4SrphNm8Aaxd7V3oevIPqBqTzL0NaZKvUSsm0X5J
+ UfHxa3svtK4RJvpmOTw==
+X-Proofpoint-GUID: EDEel76a6KP7UXpBN4hYy29pTPMb3EXw
+X-Proofpoint-ORIG-GUID: D_tguMhPXt_pKc1lezcNMaHsq0mH3uUL
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE2NiBTYWx0ZWRfX/J2dzAAJu03S
+ g1YtSBdlCCJIE7nHnAUiSZ725psmXf0F20KoIOuW/wWMyvfzAGxXFvNMLfWO3M7cJsxQ023Xw5v
+ v10N19VuKtRa4pfcSVV9QCnTqUVG/vI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030166
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,323 +168,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> On Wed, Sep 02, 2026 at 07:15:33PM -0300, Fabiano Rosas wrote:
->> Convert the code in migrate_params_test_apply() from an open-coded
->> copy of every migration parameter to a merge operation using QAPI
->> visitors and QDict.
->> 
->> The purpose of that routine is to update a temporary structure
->> (pre-populated with the current migration parameters), with the values
->> received from the user via QAPI. As a result, the temporary structure
->> will then contain the "to be applied" parameters and it's validated
->> before being used to overwrite the parameters currently in use.
->> 
->> The update is currently done as follows:
->> 
->> where 'params' is the user input from QAPI,
->> for each parameter:
->> 
->>   a) check if the option is present
->>      params->has_<name> == true
->>      params-><name> != NULL // for strings
->> 
->>   b) if the parameter is a pointer, free the to-be-assigned member and
->>      allocate memory for the copy from params
->> 
->>   c) assign the user provided value to the temporary structure.
->> 
->> Step (a) is the same in principle as what the QAPI visitors do at
->> visit_type_MigrationParameters_members().
->> 
->> Steps (b) and (c) are roughly the same as what the QDict
->> implementation does when qdict_del() and qdict_put_obj() are combined.
->> 
->> Therefore, replace the open-coded function with
->> migrate_params_merge(), which achieves the same goal, but uses
->> visitors and QDict. This hides the details of QAPI (has_*) from the
->> migration code and avoids the need to update
->> migrate_params_test_apply() every time a new migration parameter is
->> added.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> Nice,
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
-> Nitpicks only, inline,
->
->> ---
->>  migration/options.c | 201 +++++++++++++++-----------------------------
->>  1 file changed, 66 insertions(+), 135 deletions(-)
->> 
->> diff --git a/migration/options.c b/migration/options.c
->> index 6b787950808..de091d2eee3 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -20,6 +20,9 @@
->>  #include "qapi/qapi-commands-migration.h"
->>  #include "qapi/qapi-visit-migration.h"
->>  #include "qapi/qmp/qerror.h"
->> +#include "qapi/qobject-input-visitor.h"
->> +#include "qapi/qobject-output-visitor.h"
->> +#include "qobject/qdict.h"
->>  #include "qobject/qnull.h"
->>  #include "system/runstate.h"
->>  #include "migration/colo.h"
->> @@ -1074,6 +1077,28 @@ static void tls_opt_to_str(StrOrNull *opt)
->>      opt->u.s = g_strdup("");
->>  }
->>  
->> +static QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp)
->> +{
->> +    QObject *obj = NULL;
->> +    Visitor *v = qobject_output_visitor_new(&obj);
->> +
->> +    if (visit_type_MigrationParameters(v, NULL, &p, errp)) {
->> +        visit_complete(v, &obj);
->> +    }
->> +    visit_free(v);
->> +    return qobject_to(QDict, obj);
->> +}
->> +
->> +static MigrationParameters *migrate_params_from_dict(QDict *d, Error **errp)
->> +{
->> +    Visitor *v = qobject_input_visitor_new(QOBJECT(d));
->> +    MigrationParameters *tmp = NULL;
->> +
->> +    visit_type_MigrationParameters(v, NULL, &tmp, errp);
->> +    visit_free(v);
->> +    return tmp;
->> +}
->> +
->>  /*
->>   * query-migrate-parameters expects all members of MigrationParameters
->>   * to be present, but we cannot mark them non-optional in QAPI because
->> @@ -1166,6 +1191,39 @@ static void migrate_post_update_params(MigrationParameters *new, Error **errp)
->>      }
->>  }
->>  
->> +static bool migrate_params_merge(MigrationParameters *in1,
->> +                                 MigrationParameters *in2,
->
-> Perhaps rename in1/in2/d1/d2 similarly with "cur" / "new" / ..?  As in1 and
-> in2 are not equal: when merge it only overwrites in1 with in2, not vice
-> versa.
->
 
-Hm, let me google around, there might be some terms that fit here. Like
-'base' and ... something else.
+On 8/25/26 3:09 PM, Marc-André Lureau wrote:
+> Rename monitor_printf->monitor_hmp_printf, monitor_vprintf->
+> monitor_hmp_vprintf, and monitor_printc->monitor_hmp_printc, changing
+> the first parameter from Monitor * to MonitorHMP * to enforce type
+> safety. The implementation is also simplified: monitor_hmp_vprintf now
+> directly calls g_strdup_vprintf + monitor_puts, removing the virtual
+> dispatch via moncls->vprintf.
+> 
+> The dev_print() callbacks are temporarily using the MONITOR_HMP(mon)
+> cast, they are fixed in the following commits.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+> ...
+>   hw/s390x/s390-skeys.c                   |   9 +-
+>   hw/s390x/s390-stattrib.c                |  20 +--
+The s390 pieces,
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 
->> +                                 MigrationParameters **out,
->> +                                 Error **errp)
->> +{
->> +    g_autoptr(QDict) d1 = NULL;
->> +    g_autoptr(QDict) d2 = NULL;
->> +    const QDictEntry *e;
->> +
->> +    d1 = migrate_params_to_dict(in1, errp);
->> +    if (!d1) {
->> +        return false;
->> +    }
->> +
->> +    d2 = migrate_params_to_dict(in2, errp);
->> +    if (!d2) {
->> +        return false;
->> +    }
->> +
->> +    for (e = qdict_first(d2); e; e = qdict_next(d2, e)) {
->> +        const char *key = qdict_entry_key(e);
->> +        QObject *value = qdict_entry_value(e);
->> +
->> +        qdict_del(d1, key);
->
-> IIUC this line can be dropped due to a smart enough qdict_put_obj().
->
 
-There is a very obvious reason to keep it. I just don't remember what it
-is. I'll check.
-
->> +        qobject_ref(value);
->> +        qdict_put_obj(d1, key, value);
->> +    }
->> +
->> +    *out = migrate_params_from_dict(d1, errp);
->> +
->> +    return !!*out;
->> +}
->> +
->>  /*
->>   * Check whether the parameters are valid. Error will be put into errp
->>   * (if provided). Return true if valid, otherwise false.
->> @@ -1328,133 +1386,6 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->>      return true;
->>  }
->>  
->> -static void migrate_params_test_apply(MigrationParameters *params,
->> -                                      MigrationParameters *dest)
->> -{
->> -    MigrationState *s = migrate_get_current();
->> -
->> -    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
->> -
->> -    if (params->has_throttle_trigger_threshold) {
->> -        dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
->> -    }
->> -
->> -    if (params->has_cpu_throttle_initial) {
->> -        dest->cpu_throttle_initial = params->cpu_throttle_initial;
->> -    }
->> -
->> -    if (params->has_cpu_throttle_increment) {
->> -        dest->cpu_throttle_increment = params->cpu_throttle_increment;
->> -    }
->> -
->> -    if (params->has_cpu_throttle_tailslow) {
->> -        dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
->> -    }
->> -
->> -    if (params->tls_creds) {
->> -        qapi_free_StrOrNull(dest->tls_creds);
->> -        dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
->> -    }
->> -
->> -    if (params->tls_hostname) {
->> -        qapi_free_StrOrNull(dest->tls_hostname);
->> -        dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
->> -    }
->> -
->> -    if (params->tls_authz) {
->> -        qapi_free_StrOrNull(dest->tls_authz);
->> -        dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
->> -    }
->> -
->> -    if (params->has_max_bandwidth) {
->> -        dest->max_bandwidth = params->max_bandwidth;
->> -    }
->> -
->> -    if (params->has_avail_switchover_bandwidth) {
->> -        dest->avail_switchover_bandwidth = params->avail_switchover_bandwidth;
->> -    }
->> -
->> -    if (params->has_downtime_limit) {
->> -        dest->downtime_limit = params->downtime_limit;
->> -    }
->> -
->> -    if (params->has_x_checkpoint_delay) {
->> -        dest->x_checkpoint_delay = params->x_checkpoint_delay;
->> -    }
->> -
->> -    if (params->has_multifd_channels) {
->> -        dest->multifd_channels = params->multifd_channels;
->> -    }
->> -    if (params->has_multifd_compression) {
->> -        dest->multifd_compression = params->multifd_compression;
->> -    }
->> -    if (params->has_multifd_qatzip_level) {
->> -        dest->multifd_qatzip_level = params->multifd_qatzip_level;
->> -    }
->> -    if (params->has_multifd_zlib_level) {
->> -        dest->multifd_zlib_level = params->multifd_zlib_level;
->> -    }
->> -    if (params->has_multifd_zstd_level) {
->> -        dest->multifd_zstd_level = params->multifd_zstd_level;
->> -    }
->> -    if (params->has_xbzrle_cache_size) {
->> -        dest->xbzrle_cache_size = params->xbzrle_cache_size;
->> -    }
->> -    if (params->has_max_postcopy_bandwidth) {
->> -        dest->max_postcopy_bandwidth = params->max_postcopy_bandwidth;
->> -    }
->> -    if (params->has_max_cpu_throttle) {
->> -        dest->max_cpu_throttle = params->max_cpu_throttle;
->> -    }
->> -    if (params->has_announce_initial) {
->> -        dest->announce_initial = params->announce_initial;
->> -    }
->> -    if (params->has_announce_max) {
->> -        dest->announce_max = params->announce_max;
->> -    }
->> -    if (params->has_announce_rounds) {
->> -        dest->announce_rounds = params->announce_rounds;
->> -    }
->> -    if (params->has_announce_step) {
->> -        dest->announce_step = params->announce_step;
->> -    }
->> -
->> -    if (params->has_block_bitmap_mapping) {
->> -        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
->> -        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
->> -                                                params->block_bitmap_mapping);
->> -    }
->> -
->> -    if (params->has_x_vcpu_dirty_limit_period) {
->> -        dest->x_vcpu_dirty_limit_period =
->> -            params->x_vcpu_dirty_limit_period;
->> -    }
->> -    if (params->has_vcpu_dirty_limit) {
->> -        dest->vcpu_dirty_limit = params->vcpu_dirty_limit;
->> -    }
->> -
->> -    if (params->has_mode) {
->> -        dest->mode = params->mode;
->> -    }
->> -
->> -    if (params->has_zero_page_detection) {
->> -        dest->zero_page_detection = params->zero_page_detection;
->> -    }
->> -
->> -    if (params->has_direct_io) {
->> -        dest->direct_io = params->direct_io;
->> -    }
->> -
->> -    if (params->has_x_rdma_chunk_size) {
->> -        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
->> -    }
->> -
->> -    if (params->has_cpr_exec_command) {
->> -        qapi_free_strList(dest->cpr_exec_command);
->> -        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
->> -    }
->> -}
->> -
->>  /*
->>   * Caller must ensure the has_* fields of @params are true so they all
->>   * get copied and the pointer members don't dangle.
->> @@ -1472,7 +1403,8 @@ static void migrate_params_apply(MigrationParameters *params)
->>  
->>  void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
->>  {
->> -    MigrationParameters new;
->> +    MigrationParameters *cur = &migrate_get_current()->parameters;
->> +    g_autoptr(MigrationParameters) new = NULL;
->>  
->>      /*
->>       * Convert QTYPE_QNULL and NULL to the empty string (""). Even
->> @@ -1486,14 +1418,13 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
->>      tls_opt_to_str(input->tls_hostname);
->>      tls_opt_to_str(input->tls_authz);
->>  
->> -    migrate_params_test_apply(input, &new);
->> +    /* merge input on top of current */
->> +    if (!migrate_params_merge(cur, input, &new, errp)) {
->> +        return;
->> +    }
->>  
->> -    if (migrate_params_check(&new, errp)) {
->> -        migrate_params_apply(&new);
->> +    if (migrate_params_check(new, errp)) {
->> +        migrate_params_apply(new);
->>          migrate_post_update_params(input, errp);
->>      }
->> -
->> -    migrate_tls_opts_free(&new);
->> -    qapi_free_BitmapMigrationNodeAliasList(new.block_bitmap_mapping);
->> -    qapi_free_strList(new.cpr_exec_command);
->>  }
->> -- 
->> 2.53.0
->> 
 
