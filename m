@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86419C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A27C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28f7-0002lC-JP; Thu, 03 Sep 2026 10:43:33 -0400
+	id 1x28i5-0002TY-Po; Thu, 03 Sep 2026 10:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28ey-0002em-Tn
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:26 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x28i3-0002T7-0f
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:46:35 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28eu-00040C-RX
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:24 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-48442ea8f59so823791f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x28hP-0004sS-BY
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:46:34 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49cdc81f40eso17871735e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:45:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446599; x=1789051399; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RXDsLBu8joIphrEfoyGx6K2aDXa33qspSB71iT/LF3I=;
- b=QKLfBxUuqIVklzGp5DLyLE+rxUG7xuRS1eEUpyPk/64xP21CEBA0cAn+GOErGOzyXB
- krLd2byjG6C8YCzTVMnN42RTYeUjJZyEIbQAkg9uUf6q6rQ2CR44AT4KMDr1A26X6+V9
- oYdRI0euJeoJ8DAmVU2QS3JDNE3tuQN8/WPwZUK5zyJsr9b01GEgeFRdrlSVE8ssQsaE
- fhRtzBAHCJQv4OOwZFnygoaOFxuzhkam9zH50mBaRG3WLJqr9A+NJ5RlYX2phgfHjKYt
- SU8/0/CD9b6EWp5zNmjWj0hBDibH+H313sQMCD5Vju3VBBk6k3++UGg82l0fkcPUN49k
- tDCw==
+ d=linaro.org; s=google; t=1788446753; x=1789051553; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=z4mcTa20Q6K/eSAXdcv86SfpDZEirfKuPAnuP96c43s=;
+ b=c/AMuRyC9lQsm03yObIgK1NgVstB5KSI80+otqOtScfSpbqKYie3jEWqEyDozb1bvO
+ lCk+Xi/qGs6UYAwopT+V9xC/Pgp660rwyCrVFjiK6R0uwDvnddi+fWSyeAfgIuMmfLb1
+ jMr33pfAndLeESy+viFOmJgBPZA24Uvf5wxDFzRk4pKHWYsUZD+FfSX/VnliFc9PexFM
+ /nMtNe7NARwf5P5Vog9sraJMeITWDSUqk2a6r375TJJOwcvww8gO9CXnFZPeVvVAajJA
+ cbybtX0WmGKsRr5nuHAUsnKgncLAyolPRoAds9wnm4+X954Nmmd0jCDx1vKoMp7WGUqz
+ mrkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446599; x=1789051399;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RXDsLBu8joIphrEfoyGx6K2aDXa33qspSB71iT/LF3I=;
- b=aEFMg+LREZQMWot2YKmiWbhiF2uz5ZN7pwilnSljorEUpmZnjcaqeexEw20PZHi4AT
- lI8W+3NYbsJpyDtf2fZNbUkZDHqXZfPfMzsQOsc4WD+jD1O9nsC+nsqDQZ7IEVw6ZPPa
- jRPyUsLt7p+k0Hc1siJS4EfyKYCccOYpejf65JFbejhWSFQkF1n1mvDegx5QekZOrqLg
- hnJmrnJhVJMVfUyAs2UqqHKiS1p1P5UMP0bINCw8qATEUEcneFXIFsUs7e2v3H1cVZ/n
- vVJMYeoH238q3bwkjABEoSQXrC3L4iPL8kL/hy0FW+4lhBSUvBg1P+yYQEE3RdiSZF8U
- BXfw==
-X-Gm-Message-State: AFuF++mo56MjBErfr1vd3rl8jGhlkWEsDY9rx0R9TYQ+7+AYIPu8fLEC
- ES20dJed4EmEfGo3WZxzdnYwQOFf+GVQzWUKsuF4c3spxBKcd8K1w78ZjtXhUsm1NxpGz79F3ef
- E1g4k
-X-Gm-Gg: AYBFou15T8X9tgl6r0ZSDw/k+QjIfWZfLyA3jHOBAbfjLDGZgG2x//FAfr5+ZMyKQgo
- HX2E9KKZoTJDQX0Yw1+XBIT2dSyjBEKTJzDFv8skuCuBZYa4wP7kUbByMIRdmls857824x+JXmd
- 8KqiJKItmaiP8FpBMLuMbNnRS9OOfYcA1VHQHPnYAV3x5Qr9XCzuMFhVAyTJgpdGB2vSlf3q/dI
- PpdBekSMQbZM+/vyy7lJ2s0++e5NVmgC6w5vxCAEOlISfzmcU4sHshhXPIhMeV6u/6AJ4NToOME
- vB82JEH0tJFg2+3tyWVSFN6R6+ltCD8ByLHysAYuofjgqE54uBxekBnUCiSxt5ppd7PVtWlqPp7
- 0sc6CQpTmzc271sJFaUxJIqNl8YQBmHFXBVi75HnYKQSNhOqSOWNujNUWQ1pG4IfRpQ5RuX7jYe
- wGR2WZBj6L3mtHaKtsSvfu6Bx47qZTmTVlSfZALTjBdQ==
-X-Received: by 2002:a05:600c:a41a:b0:49c:f13d:ffe9 with SMTP id
- 5b1f17b1804b1-49cf13e05b7mr33534495e9.13.1788446599324; 
- Thu, 03 Sep 2026 07:43:19 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.18
+ d=1e100.net; s=20251104; t=1788446753; x=1789051553;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=z4mcTa20Q6K/eSAXdcv86SfpDZEirfKuPAnuP96c43s=;
+ b=r8xs+bwV30mlKs2gpMizgYHO9VmxqlKMryccmd/JXCNsc7WMVZe88urwSC6EF62PrW
+ /0zv1tXLmttKOfGr+XZYSEtAF1PXSjIzztO7WRt9U3C3rGSr4TTfdAqurnYP15jXiEqa
+ Dpdz9HWtaOcKJYJ7WiAquwqRerwbPuG2YH4PLSwUqzn6fkyL4gAyPdmZ+h8Fv3egYFc6
+ gJbreXkxuSLDOCF/AMvwYKUKfCuf4UDyUAeUHQs2sa72oa+EHIEkBOUgNqSE7kxuhDGZ
+ gWF6XefZ0fKIGMISN3wxeG97b9IalsfGXtAh/lzmQ4pDv7uxMBXnjJnVFc5Tcui+2erv
+ 5klA==
+X-Gm-Message-State: AFuF++k5x8LD1BbTfaBViszDnqaYS+p/vdSGeq4s/SDv7U31Da8v6DYI
+ gYkzsOR9qzCnUbw4hmMSkM0IgFDGG/IlnTyG4NHRJuL0iD4cLHT+tyzr2zS/ApSoL04=
+X-Gm-Gg: AYBFou13l3/Rgj6bGVVxDvXoIcGamb26Mwkf+2dGiJcuF35geakkj0JKTVZ0AkkzQDn
+ pNyRAsJQHQ5c6frt0tgvSotEGOgUoieRpLC+dbfu0cJhRKrXHGOy/719giCvVE0GfmDYPtnZZOM
+ j862OHI984bHZXoiUxFM2Mag/XJXG4RNK8xtImTF53ZeVzFzOGmSKhkaNjw7evZEkGY/R5KRXYa
+ mFQ/OuwzChQJ5NXLFSRKiYTo7IYSL9Jwc1Ko+1JR/G+teyHDVnxX0tPWfN0nie0xhbJRVUph3vD
+ bkMIE2YFFtZP5TRzv+dN3UqwTfUbKCL8n4G3w04Z+knh3JMtjKvygppsuVHurbl0a16my/StWFz
+ vZN3TvoLl5SLpNA7jSBQm5hR3y2zDSdYIHtYDh8VNzc3+5CPxu+wl9N6ydyoYyRnK1SH/4ppGPc
+ GFMO+mQtkxbnGhbGeSFACF9zsa+DM9yx6jXsUR55riYKEJKjMS92LddKzI0pQw
+X-Received: by 2002:a05:600c:83c8:b0:49c:d52e:d0ea with SMTP id
+ 5b1f17b1804b1-49ce581779dmr243106045e9.4.1788446753379; 
+ Thu, 03 Sep 2026 07:45:53 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cee5f914bsm92364115e9.3.2026.09.03.07.45.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:18 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v7 06/25] parallels: Move host clusters allocation to a
- separate function
-Date: Thu,  3 Sep 2026 16:41:24 +0200
-Message-ID: <20260903144143.2328870-7-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
-References: <20260903144143.2328870-1-den@openvz.org>
+ Thu, 03 Sep 2026 07:45:51 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B664D5F8FD;
+ Thu, 03 Sep 2026 15:45:50 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>,  Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH 01/33] target/arm: Add Phytium FTC310 and FTC664 CPU models
+In-Reply-To: <20260903112532.3276678-2-bin.meng@processmission.com> (Bin
+ Meng's message of "Thu, 3 Sep 2026 19:24:41 +0800")
+References: <20260903112532.3276678-1-bin.meng@processmission.com>
+ <20260903112532.3276678-2-bin.meng@processmission.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Thu, 03 Sep 2026 15:45:50 +0100
+Message-ID: <87se3qpf4x.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=den@openvz.org; helo=mail-wr1-x429.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,358 +106,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+Bin Meng <bin.meng@processmission.com> writes:
 
-For parallels images extensions we need to allocate host clusters
-without any connection to BAT. Move host clusters allocation code to
-parallels_allocate_host_clusters().
+> The Phytium E2000Q combines two FTC310 cores and two FTC664 cores.
+> Its EL3 firmware accesses implementation-defined system registers
+> while setting up the cores. Using generic Cortex-A72 CPUs leaves
+> these registers undefined and traps firmware before it can reach
+> U-Boot.
+>
+> Add FTC310 and FTC664 CPU types using Cortex-A72 as their common
+> execution base. Provide conservative RAZ/WI and NOP stubs for the
+> firmware-visible E2000 controls that have no modeled behavior.
+>
+> Set each CPU DT compatible string, MIDR, instruction feature fields,
+> AArch32 floating-point feature fields, and CTR_EL0.L1Ip field to
+> values observed on an E2000Q board. The FTC310 reports a VIPT
+> instruction cache, while the FTC664 reports a PIPT instruction cache.
+>
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> ---
+>
+>  target/arm/tcg/cpu64.c | 81
+>  ++++++++++++++++++++++++++++++++++++++++++
 
-This function can be called not only from coroutines so all the
-*_co_* functions were replaced by corresponding wrappers.
+I wonder if cpu64 is the best place to model this? The alternative is to
+treat it like other SoCs (e.g. the Pi's BCM SoCs). Was the reason it
+ended up here because you needed access to aarch64_a72_initfn? Could you
+not instantiate:
 
-Add parallels_mark_unused(), the helper releasing an area in the used
-bitmap, as the new function needs it to undo an allocation.
+    soc_base->cpu_type =3D ARM_CPU_TYPE_NAME("cortex-a72");
+=20=20=20=20
+and then at realize:
 
-The size of the request and the size of the area preallocated for it
-live in two variables here, where the code being moved kept them in
-one. The used bitmap has to grow by the latter, as it is what tells
-the allocator how far the image reaches: counting only the requested
-clusters hides the preallocated tail, so the next allocation starts
-over at the end it knows about and preallocates the very same space
-again.
+    object_initialize_child(OBJECT(dev), "cpu[*]", &s->cpu[n].core,
+                                soc_base->cpu_type);
 
-data_end has to grow past an allocation which lands in the space
-preallocated by an earlier one as well, not only past one which appends
-to the image. The field marks the end of the payload for the truncation
-on inactivation, so an allocation which leaves it behind is cut off the
-image the moment the node is closed, and the data written into it is
-lost.
+or does that not allow for tweaking the CP regs?
 
-Based on the original work from Alexander Ivanov.
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- block/parallels.c                             | 145 +++++++++++-------
- block/parallels.h                             |   5 +
- tests/qemu-iotests/tests/parallels-checks     |  34 ++++
- tests/qemu-iotests/tests/parallels-checks.out |  17 ++
- 4 files changed, 145 insertions(+), 56 deletions(-)
+>  1 file changed, 81 insertions(+)
+>
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index affd87a3ae..0fd2f79bbc 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -336,6 +336,85 @@ static void aarch64_a72_initfn(Object *obj)
+>      define_cortex_a72_a57_a53_cp_reginfo(cpu);
+>  }
+>=20=20
+> +static const ARMCPRegInfo phytium_e2000_cp_reginfo[] =3D {
+> +    /*
+> +     * The E2000 EL3 firmware touches implementation-defined CPU registe=
+rs
+> +     * during the PBF/BL1 cache and core setup. QEMU does not model these
+> +     * controls, so expose conservative RAZ/WI stubs for the boot firmwa=
+re.
+> +     *
+> +     * PBF reads these identification and cluster controls after writing
+> +     * them. Returning zero preserves the reset state without claiming t=
+hat
+> +     * QEMU implements the associated cache or coherency controls.
+> +     */
+> +    { .name =3D "E2000_CPUID_CTL1", .state =3D ARM_CP_STATE_AA64,
+> +      .opc0 =3D 3, .opc1 =3D 1, .crn =3D 15, .crm =3D 1, .opc2 =3D 0,
+> +      .access =3D PL1_RW, .type =3D ARM_CP_CONST | ARM_CP_NO_RAW,
+> +      .resetvalue =3D 0 },
+> +    { .name =3D "E2000_CLUSTER_CTL", .state =3D ARM_CP_STATE_AA64,
+> +      .opc0 =3D 3, .opc1 =3D 1, .crn =3D 11, .crm =3D 8, .opc2 =3D 6,
+> +      .access =3D PL1_RW, .type =3D ARM_CP_CONST | ARM_CP_NO_RAW,
+> +      .resetvalue =3D 0 },
+> +    /*
+> +     * The remaining controls are only programmed as part of firmware se=
+tup.
+> +     * Accept the writes without retaining state because no modeled CPU
+> +     * behavior depends on their values.
+> +     */
+> +    { .name =3D "E2000_EL1_CTL", .state =3D ARM_CP_STATE_AA64,
+> +      .opc0 =3D 3, .opc1 =3D 2, .crn =3D 15, .crm =3D 15, .opc2 =3D 0,
+> +      .access =3D PL1_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
+> +    { .name =3D "E2000_EL2_CTL", .state =3D ARM_CP_STATE_AA64,
+> +      .opc0 =3D 3, .opc1 =3D 4, .crn =3D 15, .crm =3D 15, .opc2 =3D 0,
+> +      .access =3D PL2_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
+> +    { .name =3D "E2000_EL2_CTL2", .state =3D ARM_CP_STATE_AA64,
+> +      .opc0 =3D 3, .opc1 =3D 4, .crn =3D 15, .crm =3D 2, .opc2 =3D 4,
+> +      .access =3D PL2_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
+> +    { .name =3D "E2000_EL3_CTL", .state =3D ARM_CP_STATE_AA64,
+> +      .opc0 =3D 3, .opc1 =3D 6, .crn =3D 15, .crm =3D 15, .opc2 =3D 0,
+> +      .access =3D PL3_RW, .type =3D ARM_CP_NOP | ARM_CP_NO_RAW },
+> +};
+> +
+> +/*
+> + * Use the Cortex-A72 execution model as the common E2000 TCG base, then
+> + * replace the architected identity fields that differ between the two
+> + * physical core types.
+> + */
+> +static void aarch64_phytium_e2000_base_initfn(Object *obj)
+> +{
+> +    ARMCPU *cpu =3D ARM_CPU(obj);
+> +
+> +    aarch64_a72_initfn(obj);
+> +    define_arm_cp_regs(cpu, phytium_e2000_cp_reginfo);
+> +}
+> +
+> +static void aarch64_phytium_ftc310_initfn(Object *obj)
+> +{
+> +    ARMCPU *cpu =3D ARM_CPU(obj);
+> +    ARMISARegisters *isar =3D &cpu->isar;
+> +
+> +    aarch64_phytium_e2000_base_initfn(obj);
+> +
+> +    /* FTC310 cores identify with the FTC303 part number */
+> +    cpu->dtb_compatible =3D "phytium,ftc310";
+> +    cpu->midr =3D 0x700f3034;
+> +    SET_IDREG(isar, ID_AA64ISAR0, 0x00011100012120);
+> +    cpu->isar.mvfr0 =3D 0x10110222;
+> +    cpu->ctr =3D FIELD_DP64(cpu->ctr, CTR_EL0, L1IP, 2); /* VIPT */
+> +}
+> +
+> +static void aarch64_phytium_ftc664_initfn(Object *obj)
+> +{
+> +    ARMCPU *cpu =3D ARM_CPU(obj);
+> +    ARMISARegisters *isar =3D &cpu->isar;
+> +
+> +    aarch64_phytium_e2000_base_initfn(obj);
+> +
+> +    cpu->dtb_compatible =3D "phytium,ftc664";
+> +    cpu->midr =3D 0x701f6643;
+> +    SET_IDREG(isar, ID_AA64ISAR0, 0x00000100012120);
+> +    cpu->isar.mvfr0 =3D 0x10111222;
+> +    cpu->ctr =3D FIELD_DP64(cpu->ctr, CTR_EL0, L1IP, 3); /* PIPT */
+> +}
+> +
+>  static void aarch64_a76_initfn(Object *obj)
+>  {
+>      ARMCPU *cpu =3D ARM_CPU(obj);
+> @@ -1533,6 +1612,8 @@ static const ARMCPUInfo aarch64_cpus[] =3D {
+>      { .name =3D "cortex-a55",         .initfn =3D aarch64_a55_initfn },
+>      { .name =3D "cortex-a72",         .initfn =3D aarch64_a72_initfn },
+>      { .name =3D "cortex-a76",         .initfn =3D aarch64_a76_initfn },
+> +    { .name =3D "phytium-ftc310",     .initfn =3D aarch64_phytium_ftc310=
+_initfn },
+> +    { .name =3D "phytium-ftc664",     .initfn =3D aarch64_phytium_ftc664=
+_initfn },
+>      /*
+>       * The Cortex-A78AE differs slightly from the plain Cortex-A78. We d=
+on't
+>       * currently model the latter.
 
-diff --git a/block/parallels.c b/block/parallels.c
-index d537b0bb53..c96bed5ed3 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -206,6 +206,25 @@ int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-     return 0;
- }
- 
-+int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
-+                          uint32_t bitmap_size, int64_t off, uint32_t count)
-+{
-+    BDRVParallelsState *s = bs->opaque;
-+    uint32_t cluster_index = host_cluster_index(s, off);
-+    uint64_t cluster_end = (uint64_t)cluster_index + count;
-+    unsigned long next_unused;
-+
-+    if (cluster_end > bitmap_size) {
-+        return -E2BIG;
-+    }
-+    next_unused = find_next_zero_bit(bitmap, cluster_end, cluster_index);
-+    if (next_unused < cluster_end) {
-+        return -EINVAL;
-+    }
-+    bitmap_clear(bitmap, cluster_index, count);
-+    return 0;
-+}
-+
- /*
-  * Collect used bitmap. The image can contain errors, we should fill the
-  * bitmap anyway, as much as we can. This information will be used for
-@@ -260,42 +279,21 @@ static void parallels_free_used_bitmap(BlockDriverState *bs)
-     s->used_bmap = NULL;
- }
- 
--static int64_t coroutine_fn GRAPH_RDLOCK
--allocate_clusters(BlockDriverState *bs, int64_t sector_num,
--                  int nb_sectors, int *pnum)
-+int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
-+                                                      int64_t *clusters)
- {
--    int ret = 0;
-     BDRVParallelsState *s = bs->opaque;
--    int64_t i, pos, idx, to_allocate, first_free, host_off;
--
--    pos = block_status(s, sector_num, nb_sectors, pnum);
--    if (pos > 0) {
--        return pos;
--    }
--
--    idx = sector_num / s->tracks;
--    to_allocate = DIV_ROUND_UP(sector_num + *pnum, s->tracks) - idx;
--
--    /*
--     * This function is called only by parallels_co_writev(), which will never
--     * pass a sector_num at or beyond the end of the image (because the block
--     * layer never passes such a sector_num to that function). Therefore, idx
--     * is always below s->bat_size.
--     * block_status() will limit *pnum so that sector_num + *pnum will not
--     * exceed the image end. Therefore, idx + to_allocate cannot exceed
--     * s->bat_size.
--     * Note that s->bat_size is an unsigned int, therefore idx + to_allocate
--     * will always fit into a uint32_t.
--     */
--    assert(idx < s->bat_size && idx + to_allocate <= s->bat_size);
-+    int64_t first_free, next_used, host_off, prealloc_clusters;
-+    int64_t bytes, prealloc_bytes;
-+    uint32_t new_usedsize;
-+    int ret = 0;
- 
-     first_free = find_first_zero_bit(s->used_bmap, s->used_bmap_size);
-     if (first_free == s->used_bmap_size) {
--        uint32_t new_usedsize;
--        int64_t bytes = to_allocate * s->cluster_size;
--        bytes += s->prealloc_size * BDRV_SECTOR_SIZE;
--
-         host_off = s->data_end * BDRV_SECTOR_SIZE;
-+        prealloc_clusters = *clusters + s->prealloc_size / s->tracks;
-+        bytes = *clusters * s->cluster_size;
-+        prealloc_bytes = prealloc_clusters * s->cluster_size;
- 
-         /*
-          * We require the expanded size to read back as zero. If the
-@@ -303,33 +301,29 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-          * force the safer-but-slower fallocate.
-          */
-         if (s->prealloc_mode == PRL_PREALLOC_MODE_TRUNCATE) {
--            ret = bdrv_co_truncate(bs->file, host_off + bytes,
--                                   false, PREALLOC_MODE_OFF,
--                                   BDRV_REQ_ZERO_WRITE, NULL);
-+            ret = bdrv_truncate(bs->file, host_off + prealloc_bytes, false,
-+                                PREALLOC_MODE_OFF, BDRV_REQ_ZERO_WRITE, NULL);
-             if (ret == -ENOTSUP) {
-                 s->prealloc_mode = PRL_PREALLOC_MODE_FALLOCATE;
-             }
-         }
-         if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE) {
--            ret = bdrv_co_pwrite_zeroes(bs->file, host_off, bytes, 0);
-+            ret = bdrv_pwrite_zeroes(bs->file, host_off, prealloc_bytes, 0);
-         }
-         if (ret < 0) {
-             return ret;
-         }
- 
--        new_usedsize = s->used_bmap_size + bytes / s->cluster_size;
-+        new_usedsize = s->used_bmap_size + prealloc_bytes / s->cluster_size;
-         s->used_bmap = bitmap_zero_extend(s->used_bmap, s->used_bmap_size,
-                                           new_usedsize);
-         s->used_bmap_size = new_usedsize;
-     } else {
--        int64_t next_used;
-         next_used = find_next_bit(s->used_bmap, s->used_bmap_size, first_free);
- 
-         /* Not enough continuous clusters in the middle, adjust the size */
--        if (next_used - first_free < to_allocate) {
--            to_allocate = next_used - first_free;
--            *pnum = (idx + to_allocate) * s->tracks - sector_num;
--        }
-+        *clusters = MIN(*clusters, next_used - first_free);
-+        bytes = *clusters * s->cluster_size;
- 
-         host_off = s->data_start * BDRV_SECTOR_SIZE;
-         host_off += first_free * s->cluster_size;
-@@ -341,14 +335,63 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-          */
-         if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE &&
-                 host_off < s->data_end * BDRV_SECTOR_SIZE) {
--            ret = bdrv_co_pwrite_zeroes(bs->file, host_off,
--                                        s->cluster_size * to_allocate, 0);
-+            ret = bdrv_pwrite_zeroes(bs->file, host_off, bytes, 0);
-             if (ret < 0) {
-                 return ret;
-             }
-         }
-     }
- 
-+    if (host_off + bytes > s->data_end * BDRV_SECTOR_SIZE) {
-+        s->data_end = (host_off + bytes) / BDRV_SECTOR_SIZE;
-+    }
-+
-+    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
-+                              host_off, *clusters);
-+    if (ret < 0) {
-+        /* Image consistency is broken. Alarm! */
-+        return ret;
-+    }
-+
-+    return host_off;
-+}
-+
-+static int64_t coroutine_fn GRAPH_RDLOCK
-+allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-+                  int nb_sectors, int *pnum)
-+{
-+    int ret = 0;
-+    BDRVParallelsState *s = bs->opaque;
-+    int64_t i, pos, idx, to_allocate, host_off;
-+
-+    pos = block_status(s, sector_num, nb_sectors, pnum);
-+    if (pos > 0) {
-+        return pos;
-+    }
-+
-+    idx = sector_num / s->tracks;
-+    to_allocate = DIV_ROUND_UP(sector_num + *pnum, s->tracks) - idx;
-+
-+    /*
-+     * This function is called only by parallels_co_writev(), which will never
-+     * pass a sector_num at or beyond the end of the image (because the block
-+     * layer never passes such a sector_num to that function). Therefore, idx
-+     * is always below s->bat_size.
-+     * block_status() will limit *pnum so that sector_num + *pnum will not
-+     * exceed the image end. Therefore, idx + to_allocate cannot exceed
-+     * s->bat_size.
-+     * Note that s->bat_size is an unsigned int, therefore idx + to_allocate
-+     * will always fit into a uint32_t.
-+     */
-+    assert(idx < s->bat_size && idx + to_allocate <= s->bat_size);
-+
-+    host_off = parallels_allocate_host_clusters(bs, &to_allocate);
-+    if (host_off < 0) {
-+        return host_off;
-+    }
-+
-+    *pnum = MIN(*pnum, (idx + to_allocate) * s->tracks - sector_num);
-+
-     /*
-      * Try to read from backing to fill empty clusters
-      * FIXME: 1. previous write_zeroes may be redundant
-@@ -365,33 +408,23 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
- 
-         ret = bdrv_co_pread(bs->backing, idx * s->tracks * BDRV_SECTOR_SIZE,
-                             nb_cow_bytes, buf, 0);
--        if (ret < 0) {
--            qemu_vfree(buf);
--            return ret;
-+        if (ret == 0) {
-+            ret = bdrv_co_pwrite(bs->file, host_off, nb_cow_bytes, buf, 0);
-         }
- 
--        ret = bdrv_co_pwrite(bs->file, s->data_end * BDRV_SECTOR_SIZE,
--                             nb_cow_bytes, buf, 0);
-         qemu_vfree(buf);
-         if (ret < 0) {
-+            parallels_mark_unused(bs, s->used_bmap, s->used_bmap_size,
-+                                  host_off, to_allocate);
-             return ret;
-         }
-     }
- 
--    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
--                              host_off, to_allocate);
--    if (ret < 0) {
--        /* Image consistency is broken. Alarm! */
--        return ret;
--    }
-     for (i = 0; i < to_allocate; i++) {
-         parallels_set_bat_entry(s, idx + i,
-                 host_off / BDRV_SECTOR_SIZE / s->off_multiplier);
-         host_off += s->cluster_size;
-     }
--    if (host_off > s->data_end * BDRV_SECTOR_SIZE) {
--        s->data_end = host_off / BDRV_SECTOR_SIZE;
--    }
- 
-     return bat2sect(s, idx) + sector_num % s->tracks;
- }
-diff --git a/block/parallels.h b/block/parallels.h
-index 68077416b1..493c89e976 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -92,6 +92,11 @@ typedef struct BDRVParallelsState {
- 
- int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-                         uint32_t bitmap_size, int64_t off, uint32_t count);
-+int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
-+                          uint32_t bitmap_size, int64_t off, uint32_t count);
-+
-+int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
-+                                                      int64_t *clusters);
- 
- int GRAPH_RDLOCK
- parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index d2a08049d9..99af4c5f52 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -301,6 +301,40 @@ echo "$(peek_file_le "$TEST_IMG" $VICTIM_OFFSET 4)"
- echo "== data reads back correctly =="
- { $QEMU_IO -r -c "read -P 0x88 0 $SMALL_CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
- 
-+# Clear image
-+_make_test_img $((64 * 1024 * 1024))
-+
-+echo "== TEST REUSE OF PREALLOCATED SPACE =="
-+
-+echo "== write 16 clusters, preallocating 16 of them at a time =="
-+opts=(--image-opts "driver=$IMGFMT,file.filename=$TEST_IMG,prealloc-size=16M")
-+for i in $(seq 0 15); do
-+    opts+=(-c "write -P 0x11 $(($i * $CLUSTER_SIZE)) $CLUSTER_SIZE")
-+done
-+# Die before close(), which would truncate the preallocated tail away
-+opts+=(-c "sigraise $(kill -l KILL)")
-+orig_io_options=$QEMU_IO_OPTIONS
-+QEMU_IO_OPTIONS=$QEMU_IO_OPTIONS_NO_FMT
-+echo "clusters written: `$QEMU_IO "${opts[@]}" 2>&1 | grep -c '^wrote'`"
-+QEMU_IO_OPTIONS=$orig_io_options
-+
-+echo "== the space preallocated first must have been handed out since =="
-+file_size=`stat --printf="%s" "$TEST_IMG"`
-+echo "clusters behind the header: $(($file_size / $CLUSTER_SIZE - 1))"
-+
-+# Clear image
-+_make_test_img $SIZE
-+
-+echo "== the second cluster comes from the space preallocated for the first =="
-+{ $QEMU_IO -c "write -P 0x11 0 $CLUSTER_SIZE" \
-+           -c "write -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+           "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+echo "== both of them survive the close =="
-+{ $QEMU_IO -r -c "read -P 0x11 0 $CLUSTER_SIZE" \
-+              -c "read -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+              "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index c33f3852a8..51eb3f1ef1 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -182,4 +182,21 @@ wrote 512/512 bytes at offset 0
- == data reads back correctly ==
- read 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
-+== TEST REUSE OF PREALLOCATED SPACE ==
-+== write 16 clusters, preallocating 16 of them at a time ==
-+clusters written: 16
-+== the space preallocated first must have been handed out since ==
-+clusters behind the header: 17
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== the second cluster comes from the space preallocated for the first ==
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== both of them survive the close ==
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- *** done
--- 
-2.53.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
