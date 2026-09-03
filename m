@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB9D5C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55503C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x265D-00089h-Tf; Thu, 03 Sep 2026 07:58:19 -0400
+	id 1x266z-0000D3-JY; Thu, 03 Sep 2026 08:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x265C-00088j-8M
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 07:58:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x266w-0000CY-Li
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:00:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x265A-0003nV-AQ
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 07:58:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x266t-00048r-Sw
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:00:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788436694;
+ s=mimecast20190719; t=1788436802;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=y335TWVo39vsowBiOnQAYMRObHq5obw7/lKIfDa2LFw=;
- b=gMe8Eu/69+yNqoveaRAZzdZC7c8h54S6UGMstqA72ZXKGvArMoRaWQJQ0Gmki0XCeOtRg6
- ktXHuzoDmpfrgMtP/9r3apiGFEjoTT7g+QKWLQbBm0b4wRcBxhQB50IflqrZ+q7Ao/h+L0
- 7CGpAYjo2mdUrDb53ivZNRNLlVNWubo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=wET2hheVOXu2dloDjPLhB0/+IUvdyjY2j1T9fRYhgpI=;
+ b=c1P4wQYflkK8MJRzLH3G1Iea6t2nf+yNgGEWdDnTCndnJ68p9Xv9waYw1NcfAmTqTb6ECS
+ z5E7zRYLGfUD7sJ2JPGgapzCgchv6MbjN3joKl9VfTyM/Y+bul/Cq7Ug+Ya0t8LzdILlJo
+ kTWsQY9NkxjCJ762cds7FqUQVignlV0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-Eg9KhktWNMOwRJmD0Gc6xw-1; Thu,
- 03 Sep 2026 07:58:10 -0400
-X-MC-Unique: Eg9KhktWNMOwRJmD0Gc6xw-1
-X-Mimecast-MFC-AGG-ID: Eg9KhktWNMOwRJmD0Gc6xw_1788436688
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-n-pXnJEsPEONAICU2_BpEg-1; Thu,
+ 03 Sep 2026 07:59:58 -0400
+X-MC-Unique: n-pXnJEsPEONAICU2_BpEg-1
+X-Mimecast-MFC-AGG-ID: n-pXnJEsPEONAICU2_BpEg_1788436797
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 892DF1954194; Thu,  3 Sep 2026 11:58:08 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 440C7195604E; Thu,  3 Sep 2026 11:59:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 930991955F0D; Thu,  3 Sep 2026 11:58:07 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A62493000239; Thu,  3 Sep 2026 11:59:55 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 04B1521E682E; Thu, 03 Sep 2026 13:58:05 +0200 (CEST)
+ id 34D8521E6837; Thu, 03 Sep 2026 13:59:53 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Hanna Reitz <hreitz@redhat.com>,  Philippe
@@ -53,33 +53,32 @@ Cc: qemu-devel@nongnu.org,  Hanna Reitz <hreitz@redhat.com>,  Philippe
  <anisinha@redhat.com>,
  qemu-block@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
  linux-cxl@vger.kernel.org,  Jonathan Cameron <jic23@kernel.org>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Kevin Wolf
- <kwolf@redhat.com>,  Lukas
- Straub <lukasstraub2@web.de>,  Fabiano Rosas <farosas@suse.de>,  Eric
- Blake <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Peter Xu
- <peterx@redhat.com>
-Subject: Re: [PATCH 12/12] qapi: convert simple command intros for
- block-core.json
-In-Reply-To: <20260901194324.458482-13-jsnow@redhat.com> (John Snow's message
- of "Tue, 1 Sep 2026 15:43:24 -0400")
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Markus Armbruster
+ <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,  Lukas Straub <lukasstraub2@web.de>,
+ Fabiano Rosas <farosas@suse.de>,  Eric Blake <eblake@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH 00/12] qapi: convert simple command intro sections
+In-Reply-To: <20260901194324.458482-1-jsnow@redhat.com> (John Snow's message
+ of "Tue, 1 Sep 2026 15:43:12 -0400")
 References: <20260901194324.458482-1-jsnow@redhat.com>
- <20260901194324.458482-13-jsnow@redhat.com>
-Date: Thu, 03 Sep 2026 13:58:04 +0200
-Message-ID: <87mrtyr1gz.fsf@pond.sub.org>
+Date: Thu, 03 Sep 2026 13:59:53 +0200
+Message-ID: <87ik4mr1dy.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 26
+X-Spam_score: 2.6
+X-Spam_bar: ++
+X-Spam_report: (2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ PYZOR_CHECK=1.392, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,160 +94,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  qapi/block-core.json | 96 +++++++++++++++++++++-----------------------
->  1 file changed, 46 insertions(+), 50 deletions(-)
->
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 33e1147792b..29f011dc209 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -1816,12 +1816,12 @@
->  
->  ##
->  # @change-backing-file:
-> -#
-> -# Change the backing file in the image file metadata.  This does not
-> -# cause QEMU to reopen the image file to reparse the backing filename
-> -# (it may, however, perform a reopen to change permissions from r/o ->
-> -# r/w -> r/o, if needed).  The new backing file string is written into
-> -# the image file metadata, and the QEMU internal strings are updated.
-> +#     Change the backing file in the image file metadata.  This does
-> +#     not cause QEMU to reopen the image file to reparse the backing
-> +#     filename (it may, however, perform a reopen to change
-> +#     permissions from r/o -> r/w -> r/o, if needed).  The new backing
-> +#     file string is written into the image file metadata, and the
-> +#     QEMU internal strings are updated.
->  #
->  # @image-node-name: The name of the block driver state node of the
->  #     image to modify.  The "device" argument is used to verify
-> @@ -1957,12 +1957,12 @@
->  
->  ##
->  # @drive-backup:
-> -#
-> -# Start a point-in-time copy of a block device to a new destination.
-> -# The status of ongoing `drive-backup` operations can be checked with
-> -# `query-block-jobs` where the `BlockJobInfo`.type field has the value
-> -# 'backup'.  The operation can be stopped before it has completed
-> -# using the `job-cancel` or `block-job-cancel` command.
-> +#     Start a point-in-time copy of a block device to a new
-> +#     destination.  The status of ongoing `drive-backup` operations
-> +#     can be checked with `query-block-jobs` where the
-> +#     `BlockJobInfo`.type field has the value 'backup'.  The operation
-> +#     can be stopped before it has completed using the `job-cancel` or
-> +#     `block-job-cancel` command.
->  #
->  # Features:
->  #
-> @@ -1988,12 +1988,12 @@
->  
->  ##
->  # @blockdev-backup:
-> -#
-> -# Start a point-in-time copy of a block device to a new destination.
-> -# The status of ongoing `blockdev-backup` operations can be checked
-> -# with `query-block-jobs` where the `BlockJobInfo`.type field has the
-> -# value 'backup'.  The operation can be stopped before it has
-> -# completed using the `job-cancel` or `block-job-cancel` command.
-> +#     Start a point-in-time copy of a block device to a new
-> +#     destination.  The status of ongoing `blockdev-backup` operations
-> +#     can be checked with `query-block-jobs` where the
-> +#     `BlockJobInfo`.type field has the value 'backup'.  The operation
-> +#     can be stopped before it has completed using the `job-cancel` or
-> +#     `block-job-cancel` command.
->  #
->  # Errors:
->  #     - If @device is not a valid block device, DeviceNotFound
-> @@ -2185,13 +2185,13 @@
->  
->  ##
->  # @drive-mirror:
-> -#
-> -# Start mirroring a block device's writes to a new destination.
-> -# target specifies the target of the new image.  If the file exists,
-> -# or if it is a device, it will be used as the new destination for
-> -# writes.  If it does not exist, a new file will be created.  @format
-> -# specifies the format of the mirror image, default is to probe if
-> -# mode='existing', else the format of the source.
-> +#     Start mirroring a block device's writes to a new destination.
-> +#     target specifies the target of the new image.  If the file
-
-@target, I think.
-
-> +#     exists, or if it is a device, it will be used as the new
-> +#     destination for writes.  If it does not exist, a new file will
-> +#     be created.  @format specifies the format of the mirror image,
-> +#     default is to probe if mode='existing', else the format of the
-
-@mode
-
-Where there are two, there are almost certainly more.
-
-> +#     source.
-
-Text that refers to arguments should probably go below the argument
-descriptions.  I.e. this "intro" should probably be split.
-
-Let's leave that for another day, just take note of future work:
-
-1. Add missing markup to argument / member / feature references.
-
-2. Review and improve doc comments where the intro refers to arguments /
-members / features.
-
-Not noting any of this again for this series.
-
->  #
->  # Errors:
->  #     - If @device is not a valid block device, GenericError
-> @@ -2387,10 +2387,9 @@
->  
->  ##
->  # @block-dirty-bitmap-remove:
-> -#
-> -# Stop write tracking and remove the dirty bitmap that was created
-> -# with `block-dirty-bitmap-add`.  If the bitmap is persistent, remove
-> -# it from its storage too.
-> +#     Stop write tracking and remove the dirty bitmap that was created
-> +#     with `block-dirty-bitmap-add`.  If the bitmap is persistent,
-> +#     remove it from its storage too.
->  #
->  # Errors:
->  #     - If @node is not a valid block device or node, DeviceNotFound
-> @@ -4937,10 +4936,9 @@
->  
->  ##
->  # @blockdev-del:
-> -#
-> -# Deletes a block device that has been added using `blockdev-add`.
-> -# The command will fail if the node is attached to a device or is
-> -# otherwise being used.
-> +#     Deletes a block device that has been added using `blockdev-add`.
-> +#     The command will fail if the node is attached to a device or is
-> +#     otherwise being used.
-
-Perhaps the "will fail" part should be in an Errors: section.
-
-The intros above use imperative mode, this one doesn't.  Elsewhere in
-this series, I even saw "Command to <do stuff>".
-
-More notes:
-
-3. Review and improve doc comments where the intro talks about failure
-modes.
-
-4. Consistently use imperative mood for command intros.
-
-Not noting any of this again for this series.
-
->  #
->  # @node-name: Name of the graph node to delete.
->  #
-
-[...]
+Series
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
