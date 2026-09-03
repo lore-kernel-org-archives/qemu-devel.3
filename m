@@ -4,111 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 350CCC624D6
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D572C624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28pX-0008CV-I6; Thu, 03 Sep 2026 10:54:19 -0400
+	id 1x28tj-0000zZ-A1; Thu, 03 Sep 2026 10:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x28pQ-0008BP-Nf
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:54:13 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x28oq-0002UI-Ic
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:54:12 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c197e7e4e94so384850766b.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:53:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788447214; cv=none;
- d=google.com; s=arc-20260327;
- b=jy6Hw+YRnQkJ9GZVW9O/DEGSFkqudjOTL/BhzFQ/C4N7mNdIan9wogRLt3Pi2sy7+d
- HD3jSQtrSdTzCRqER9fzdxNUUuuIm2uxLV9bAN3sqIjwTccNuFaRs39JyFDv1TtykZxS
- KyqNBuJdiD3Qg7HSGqtWU9j4Ag1pe40oD9RmZ+FaufBR+WpJDOMi6ZViuSyMRrqD2CT5
- 2fI6p4hzM3H8NeMMOyJOqqDbVTvrvUCJI73meb8UF9bJ4mrrTB7btmyVZlYR76v3jTP4
- 52PCm+smfpTUnV3Uh6EjP4xiKVKkdN07waVSC8mxh/KzfSa8UXMYT9FhQ7GU3ItdN7gs
- 5qew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=11xrXspVX/VPt/wxJXaaqSfKi3MfF1Ly/V6SsTPnIi8=;
- fh=G487WN5iI7wJU4P78jLtNwGGIfJNDYk43VUyyHm9OiU=;
- b=DiyFKJaosESxvoFHh2uwXf293NI0vxu1jYlcfOZhhiNSZwwZHnTbcOGT6U1J8uN3P2
- LdTJ0O+wjIE0TuNmIz9kIAC109u3I521WVn0gUTNqzNyNwNv+lC8LXZiIrbkkqSO8kDb
- 14vSpYBo+bX4l6Sfcao1xeSKossoOQih2JXxEo9JJ6k+3zZsKjKdgPxym9fS3STZLh38
- 3wBHaGnxEUYmGz043hSiWxGzSpCuoUm3wDwx8fiuRRNSgU2RY5UyxLcgipvg5bEvi7qB
- yUvA05BEFTtuYH9q7qqSaB1zZpBERlOkTkDVTT/elA4PmqVtbBLgbQJYtS5Z8L3OcV8+
- IcTA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788447214; x=1789052014; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=11xrXspVX/VPt/wxJXaaqSfKi3MfF1Ly/V6SsTPnIi8=;
- b=Rzo63zYEph98F0RWhEq8hceZy4QAixk0rQPsCtKqggMiSWMZzLZkYLt1fvjWw5xrk4
- L/td1ITsiEOPo/6G8oeR9Bni6InYZ7xk9yhh/i7TN65IfS5ahe6yUAB0JrjRFfuUrz7A
- JzaPT3I81xjenjCufc07IGK+Jy0GN40gR2PlHstrMVsH3KNixMMGUGW60eSTLbv/vzfl
- 0tOIPO5/N2byp8dF8tGPAuX/vy1Sz14j+8wfe+dgSxtrMu9QxcOLxwyVKrnS/s78uLOk
- WBy71Vr+w8mtJ4kGz34Mdci08dgI077DmSDRUSDgCuW0Ze18B2JOh2DILVEjaAzytX6Y
- CmvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788447214; x=1789052014;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=11xrXspVX/VPt/wxJXaaqSfKi3MfF1Ly/V6SsTPnIi8=;
- b=a0ScrVxSwmcCR9ufgVPE3gKMlCh7yGy3iizObxxfzcT08LT7qI6txObAiTnsTYWSmw
- Odd74mDA2Sm51xOGMSk6yO97rvxqlvDkOwsu7EgAtubNsFtsqdmTsV2f6TGJF67WbF8k
- 6913I40EZjTQH/d6NmwYXKTWqJch6b68l/zqYCEMBxIjuIDvD/TaqU0B+gymyyToyKSN
- ZAYbP1W9uKryOdXxFQc3lTbAFaYyrmGTmzbDLUp70oVj8we0Rfjd65mTuP0IDky1NT6t
- TjjIv1JSxyYtg84ijpQW1c2ZjzveIjazPWhVHXyTIvsZup6jY7ZJYI4tppNYabQkVwD1
- U8tQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwjVQE8pcUmpt33PG9eMCsFd9JJLR/+2I3DVeIwfOodpIQxit+nDtj/FhELMfKVEiK8361qDJ2ERgSg@nongnu.org
-X-Gm-Message-State: AFuF++llv407qrly/G42Sx9f2NdlMUdRts0R//GIEfH8aLQDJWjMs5b7
- fQgalWlj8GJpmWBFqf9kQEYM5NoblvLQAGj90w6PAaPLqFaEBx+0uIWlZ8cuenPHjT9dMZ8x63/
- vnAH6q/m1D+rFHufMutvpQj14sCrTVfI=
-X-Gm-Gg: AYBFou3cfMHgVU4yKpZwSbEGjF4KBnq0OYkhOwVNanlgxxnr5LgmpvG8mdsCIWxn0jt
- jnNJo3D2JdE00+3RCUdBwT0E01VEKwS3d2JPv3EpVHLc2oS7EZ5TRGLtdxef4BZudmnR3JAi9Im
- exxL3ZAXIs+8YclaJn8D/df6M5kEYa3BcPJntIFMSHF6BwV3Dx+2JzT4Ug10MKh4Ds1kTsw1b1h
- qPTnrxI6CpXh4ACNjeD7NARsBn8WY+/um8v5TNnEDZ+Jy47QoIFs/oUCRzkTBlylBJev0qnexaJ
- sSoyHtkhrWqq0eG40BQb6alpCdTv9H55Lhi3NazCyIgR
-X-Received: by 2002:a17:906:6a13:b0:c12:3059:4071 with SMTP id
- a640c23a62f3a-c25d55bbd0fmr742740666b.15.1788447214211; Thu, 03 Sep 2026
- 07:53:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x28th-0000z9-0L; Thu, 03 Sep 2026 10:58:37 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x28te-0003zZ-90; Thu, 03 Sep 2026 10:58:36 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwD3_xsOi5lqMlZhBQ--.49393S2; 
+ Thu, 03 Sep 2026 22:58:22 +0800 (CST)
+Received: from [192.168.2.11] (unknown [113.246.117.39])
+ by mail (Coremail) with SMTP id AQAAf8DwfXMIi5lqg6m0AA--.61257S2;
+ Thu, 03 Sep 2026 22:58:20 +0800 (CST)
+Message-ID: <ba9005ea-5616-495f-b817-5d90b4ce1ca0@phytium.com.cn>
+Date: Thu, 3 Sep 2026 22:58:13 +0800
 MIME-Version: 1.0
-References: <20260831160038.221776-1-zhangckid@gmail.com>
- <20260831160038.221776-7-zhangckid@gmail.com>
- <20260902193518.GB787498@fedora> <87ik4mzx7p.fsf@pond.sub.org>
- <20260903134250.GB825275@fedora>
-In-Reply-To: <20260903134250.GB825275@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 3 Sep 2026 22:52:57 +0800
-X-Gm-Features: AcwNN1WTtKqe9Vu-Sf7Np8l7bzL_B4o58zc2XGLlbINiYX-zKrvJQTc9JSAlFQs
-Message-ID: <CAK3tnv+Woa47SibQhOht5bk0sWjWLn8GgN3GPAk+WAd-65hBYw@mail.gmail.com>
-Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v5 28/28] [NOT-MERGE] hw/arm/smmuv3: temporarily enable SEL2
+ bit and some other features
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162644.2810021-2-tangtao1634@phytium.com.cn>
+ <a328d6e7-fa27-4279-b0da-bd68cf73e207@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <a328d6e7-fa27-4279-b0da-bd68cf73e207@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8DwfXMIi5lqg6m0AA--.61257S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAHBWqYeU0G5wAAsk
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7KFy7Jr4fJF48GFWxWw1DGFg_yoW8GFyrpF
+ W7Krn0kr4xWFyagr97Jw17WFn8Aa93JrW3JrZ3Jw1UZrZ8ur1rJrWIkrsY9F1kWrZ7Gana
+ gF1qvFyxJryYvrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,112 +77,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 3, 2026 at 9:42=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
-> wrote:
->
-> On Thu, Sep 03, 2026 at 08:05:14AM +0200, Markus Armbruster wrote:
-> > Stefan Hajnoczi <stefanha@redhat.com> writes:
-> >
-> > > On Tue, Sep 01, 2026 at 12:00:27AM +0800, Zhang Chen wrote:
-> > >> Monitors that require an IOThread share the internal mon_iothread.
-> > >> Account for each monitor explicitly in IOThread holder tracking, usi=
-ng
-> > >> the monitor's canonical QOM path to distinguish holders.
-> > >>
-> > >> Acquire the shared monitor IOThread AioContext once, using the monit=
-or
-> > >> QOM path as the holder, and reuse the stored context for later
-> > >> operations.
-> > >>
-> > >> Release the holder from the Monitor ObjectClass::unparent callback,
-> > >> while the canonical QOM path is still available. This covers every
-> > >> object_unparent() path and avoids duplicating the cleanup in
-> > >> monitor_cleanup() and monitor_qmp_prepare_delete().
-> > >>
-> > >> The internal mon_iothread remains hidden from query-iothreads, as be=
-fore.
-> > >> Management applications therefore cannot use it to determine which
-> > >> monitors are using the IOThread. Nevertheless, track the monitor
-> > >> holders so that they follow the same explicit holder and
-> > >> IOThread reference lifecycle as other AioContext users.
-> > >>
-> > >> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > >> ---
-> > >>  monitor/monitor-internal.h |  3 +++
-> > >>  monitor/monitor.c          | 33 ++++++++++++++++++++++++++++-----
-> > >>  monitor/qmp.c              |  5 +++--
-> > >>  3 files changed, 34 insertions(+), 7 deletions(-)
-> > >>
-> > >> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> > >> index e0a124a317..74ea15c85f 100644
-> > >> --- a/monitor/monitor-internal.h
-> > >> +++ b/monitor/monitor-internal.h
-> > >> @@ -154,6 +154,9 @@ struct Monitor {
-> > >>      guint out_watch;
-> > >>      int mux_out;
-> > >>      int reset_seen;
-> > >> +
-> > >> +    /* iothread context */
-> > >> +    AioContext *ctx;
-> > >>  };
-> > >>
-> > >>  struct MonitorHMPClass {
-> > >> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> > >> index 6af09f2f6e..9e3b639eff 100644
-> > >> --- a/monitor/monitor.c
-> > >> +++ b/monitor/monitor.c
-> > >> @@ -81,6 +81,22 @@ int monitor_device_index;
-> > >>  OBJECT_DEFINE_TYPE_EXTENDED(Monitor, monitor, MONITOR, OBJECT, true=
-,
-> > >>                              { TYPE_USER_CREATABLE }, {});
-> > >>
-> > >> +static void monitor_unparent(Object *obj)
-> > >> +{
-> > >> +    Monitor *mon =3D MONITOR(obj);
-> > >> +
-> > >> +    if (mon->ctx && monitor_requires_iothread(mon)) {
-> > >> +        g_autofree char *path =3D object_get_canonical_path(obj);
-> > >> +        const IOThreadHolder io_holder =3D {
-> > >> +            .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-> > >> +            .u.qom_object.qom_path =3D path,
-> > >> +        };
-> > >> +
-> > >> +        iothread_unref_and_put_aio_context(mon_iothread, &io_holder=
-);
-> > >> +        mon->ctx =3D NULL;
-> > >
-> > > mon->accept_input_bh still exits and uses the AioContext at this poin=
-t
->
-> exits -> exists
->
-> > > (it is freed in monitor_finalize()). Strictly speaking, this violates
-> > > the idea of not using the AioContext anymore after calling
-> > > iothread_unref_and_put_aio_context().
-> > >
-> > > This could be a source of bugs, but mon->accept_input_bh won't be
-> > > scheduled anymore in this code path, so I think we can live with this=
-.
-> >
-> > Worth a comment?
->
-> Yes.
->
+Hi Eric,
 
-OK, I will add a comment before the "iothread_unref_and_put_aio_context()" =
-:
-
- /*
-  * accept_input_bh remains associated with this AioContext until
-  * monitor_finalize(), but monitor teardown ensures that it cannot
-  * be scheduled again after this point.
-  */
-
-Thanks
-Chen
+On 2026/8/31 16:54, Eric Auger wrote:
+> Hi Tao,
+>
+> On 8/13/26 6:26 PM, Tao Tang wrote:
+>> Temporarily:
+>> - enable S_IDR1.SEL2,
+>> - change AIDR to 0x2 to indicate SMMUv3.2,
+>> - use smaller SID size and Cmd/Evt queue size.
+> Each of those changes shall be carefully justified.
+>
+> Weren't there any assumpion in previous patches that we supported 3.2.
+> tbh I did not notice you changed it in the last patch. wrt that change
+> we would need to be careful the 3.2 does not require us to implement new
+> features besides secure stuff.
 
 
-> >
-> > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> >
+You are right.  The cover letter explains that this is a Hafnium 
+bring-up patch, but the patch itself does not explain why each override 
+is needed.
+
+These overrides are only intended to let Hafnium reach the Secure-bank 
+MMIO access test.  They do not mean that QEMU implements Secure stage 2 
+or the complete SMMUv3.2 architecture. We should even drop this patch 
+when we test DMA translation with iommu-testdev [1]
+
+[1]: 
+https://gitlab.com/TaoTang/qemu/-/commits/integration/secure-smmu-v5-qtest
+
+I will document these individual constraints in the commit message and 
+keep this patch outside the final mergeable series.
+
+Best regards,
+Tao
+
+
+>
+> Thanks
+>
+> Eric
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmuv3.c                | 3 ++-
+>>   include/hw/arm/smmuv3-common.h | 6 +++---
+>>   2 files changed, 5 insertions(+), 4 deletions(-)
+>>
+>>
+
 
