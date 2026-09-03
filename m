@@ -4,145 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B8FC624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF6DC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2AsV-0003VR-TQ; Thu, 03 Sep 2026 13:05:31 -0400
+	id 1x2AxY-0005WJ-Ap; Thu, 03 Sep 2026 13:10:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x2AsU-0003Uu-7x; Thu, 03 Sep 2026 13:05:30 -0400
-Received: from mail-northeuropeazon11020131.outbound.protection.outlook.com
- ([52.101.84.131] helo=DB3PR0202CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1x2ArU-00058t-Pr; Thu, 03 Sep 2026 13:05:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W4sQyeIlpWO9TL54TeLlkKLq+i8Bz/4BQjbb4OFlywe5g8xZbGNGCw6Ow1u6sB1nTmhwombM7Ui4isoRtbNE4AMwSaZyEMmyuhvlKtjT56LSH+THrPVVgIZna/NDMgrtc6LGB+MwMdFPY3M1P2r+TDERxFwsXI79/Lo34g0VKqJDB6GLDJcLt2mtM5EJHillYqJnMB5HH3Bhlp7REvzx2/XzSlfOvTuarUX1gZVqmUUNIyz/jlQvgT8IQB5j823g0YDXySkrlWjd7yk7WiKw2NcJHqEM33f91ML9YK2drckKX5RA4pQV4AjbdMnHOSN3vZpJuwpDlPFp148IQG+KVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qq00WKBOGnhJHj9elboC5FEZZfFApKM7yh2H1pUJJRo=;
- b=CbvKVtOD2CRzty01qGKKZs9ITsjsx+rhFSfp+qHtWMbxREeMC6VrW/OwWcekrnJJo5xQ7Nn69Da3TdKeNp3aZwldJFWVhjl90UFw0/3toXALOcWyTKaqU+VL4sp+omvL5H3vhKs19YiMP2RSdl0UTjJjycEt7qZ72mecaEj9pVqdkcdVCnp2LhMMilwXJwspn6zXsR9X/dVGXYI49i+eeB7mJz8MNjcPmKiLzOeOITQ/VPIetFMIFmj6Sp9h22lpH/Z2IJjqsKs9tj9u0E/ou7WI9Qca0tnJIKW1PKO9bmwuXjJsxcQL5LpIlEYg4ELv17aXR+zVvWEYbEWdqtJn/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qq00WKBOGnhJHj9elboC5FEZZfFApKM7yh2H1pUJJRo=;
- b=s/aE7oIs9hrV49WvNSXviRBmWe+hzVl65SM2psCV3H+25SvMZWznQ4JSWgDk3G1CBEaACKNfi8RFfxqkGQTG0+sk3gWHEHK9z74ICOma1dR66F6YPmXIWkSpKCTI6bRLiX2vz9oiS1UeY75QXeQgFYX8EEvKLgrj55T5wIX/BiAAoQzHMPv5xDFzfrnfDu25Xxai5Qx6KJ+Ufu/VcHy+6Gr8FOZzT3Mlv6s5VJxu6581FiddXjnAm4Yn3/VsQM/q3nhiq9EIvTyQMct6x9FBeGsAV4F+kr9bWI2Ombi5riNMmne74IaIyKCuRHD1C72zctik+x9wwi9Di39B3DbxTw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by AS8PR08MB8899.eurprd08.prod.outlook.com (2603:10a6:20b:5b6::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Thu, 3 Sep
- 2026 17:04:20 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.007; Thu, 3 Sep 2026
- 17:04:20 +0000
-Message-ID: <f24a0f08-3b69-4bcc-9fcb-be7c611926f5@virtuozzo.com>
-Date: Thu, 3 Sep 2026 19:04:18 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] tests/qtest: fix the disk tests on a host with a
- small /tmp
-To: Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Reinoud Zandijk <reinoud@netbsd.org>
-References: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
- <20260824200627.2180635-1-den@openvz.org>
- <a1a7cdc7-5458-4d1b-bf1e-9aa89502317b@redhat.com>
- <apAZaRwIdm1yLiLV@redhat.com>
- <8604eafa-c683-4d89-b180-5b26c56b7817@virtuozzo.com> <87jyp2gtn0.fsf@suse.de>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <87jyp2gtn0.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0044.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:34b::15) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1x2AxW-0005W6-8W
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:10:42 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1x2AxQ-00025Z-Qv
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:10:41 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-66e63afda8fso39702d50.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:10:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788455431; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BnAEkRQmS8PmrHGC6EtI7I27zTdpybNO4ze7ll5/6eeNUOPVlA9q0sHm8z9LPlIZJA
+ KlVKLDE3okvEKEh2hg1ZRARMJVVAenmuvHlS9hyDCfmq3GIWdIPuzLoRy/1euUFgPat8
+ CZ90YgdJnhuCqtoxo1iOJ1+N9IUYR8vo8+T5fB9na75PV7sxMOOi9U50pCLkCPzz6Cgu
+ LJOVoaJFBqQ6RxTFIQtC6gzzDqKg6+CZXXj0Xr/33iuY8V5HB2nO2O4nENfQcHA+NFUR
+ 10muRc/DLUw+tOZy9SF8G3bkxlTuYZP1uR0gZrND/0XvSjXA9VJuxskgFkSJH6PS07IO
+ BkNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rMQ5PEE9csDsLkzMcktQnzQ0G1E36vkXdJ16Clec62c=;
+ fh=T7GZKU3pqGfZDaVHTkyCxWlgssTqcxXKF3+qSko7WPo=;
+ b=YGoM42dXxrKCNu50cTUnqZAspZ3TWjir4G5ifh5shp4m0gAP34s33mtsHOJcoes6IJ
+ hfnOEqzII4s1XBWRMf7/MXf6P9Z+4NQFiS4jOTMXI+t1kjKynGTsssvNgB15GtuIThu2
+ UQrR9AQrg7VqDUzPNDtYhmBA38/CYYvefX9dD2Ge1bPlPOhYfP/PzAwoOcdv4h7Y1HBr
+ s8gvtqzJ5ee8bMYZK4nA57fJCFT4hpdC4VSjNyzW4wuW3wfI9iSbvXSmdo+Hj7rzQVGG
+ d6ZyVQmAS3gC9KXG1P5QmUDm1r0GvNW6yD7cAyFzw1e8VEO3j2xnJZFbujlEyNIDiuB/
+ BhkA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1788455431; x=1789060231; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rMQ5PEE9csDsLkzMcktQnzQ0G1E36vkXdJ16Clec62c=;
+ b=XEnLI+4b16NKzEOT0MdRm5o2QWyVio9wWiQ5ewVgA+04/Il0oe5eqx6ZKHjvM5V2TZ
+ LysLNASF2xn7HsGrtlcfL0I9oMPpvYo7gyZ4RvOfMNBHQMwiITwD8up+CDK19YWZzmCj
+ qRd/s1ANwhZLayIvvChUvt0ZrdqBOlfoaZbG4qL17VGKDLstXaRIGOYRn7sUAT8e7U5W
+ IlcWK/Szko7Le73ofJ2u7Ukb2h9SG593Q7oR7nduzpNtXTtrl9SWjOKf09FOFUzThgF7
+ Pqw9gkT3hC2g5NwveGwMpuPsDTBKl63BytoeIKTbNHUVbKYyoOEHFgSmny8inQrvlMln
+ m9MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788455431; x=1789060231;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rMQ5PEE9csDsLkzMcktQnzQ0G1E36vkXdJ16Clec62c=;
+ b=S5AAAzFqG8ohTU9AbGWKZBd9V+FUioAk7Kws2KNiEKsFJOEzVxZBnG9OoZd0HtWdPa
+ 0kYCW1l6q4CMWBdbZKmEUOrz3lmugpnkzsxVIMOSueOmqx+y6U0mK6zUVxvYMdV0ZLIK
+ gmqKQ1bz/Oi5SJGqZAoqsEWCOQ9wMN7D7sl+R/EN25jmlH/dNNf61AWLSS575XJtJsLU
+ zcb5drfaFnWuhA6TXpyXwqSdcWnfMuU5w6mwvv21TBeC+1zdlbGOKJjy70g1HIJ49V0V
+ tuPNMthxPeBYG0Zss79ufqaQI+EEa3sR36guT3RLstjHWFpggwWb3A5qjUE3AfGUfmDO
+ wz0Q==
+X-Gm-Message-State: AFuF++m/ReuOzX+0Myhjd56f4uw5SLrOXv5r9vNQpANuR3LNyXZub9um
+ KAajaGRH1ohfD5+m4tVDw5kRy/6BQv95ffXvSBnc7fGNdMXvjYgPCpmLj97N95J+DnY2QTvGCY5
+ DtrjJSDpzy6TgiFw0H/03WNA35CUCs5HsMDXdgCoJ2g==
+X-Gm-Gg: AYBFou0qPynVCzAmqgJ79IGWKckf6T5A6tpIT94QKea66Uw1XNxd/I+oK3ANlvmjCRS
+ g3WDIgASUgEegAEnS9Wd2q3/JgWMzCylu6IHXt5iX9XPgiARQQ4ugpndZGE/GMEUufLdE6lw4QI
+ QTgtsxs/349H0QnErsHmyficXVTPedO7mMpe7MmwcXu8l42AgxLlXgHG28Px5+VijP8WoM7b+8I
+ rXljmtwaOjBMPTQK3kbBioGR+hTHEbNrF0P5ft0iXrdptMA8GCO/jrHByaytyCZoeS0R29zlPo8
+ +GkKwfWRdcPpFLluGI9yH/udqLJcNUkRqAKfbycsua44vg+0u5c2MNg5JuopqUf9gbpu9t+RqB4
+ =
+X-Received: by 2002:a05:690e:4419:b0:66f:a87e:4f2 with SMTP id
+ 956f58d0204a3-66fb59d6d77mr39317d50.17.1788455430714; Thu, 03 Sep 2026
+ 10:10:30 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS8PR08MB8899:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54bca47e-200a-42aa-1ccf-08df09dd654b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|23010399003|10070799003|366016|4143699003|10067099003|5023799004|18002099003|22082099003|56012099006|3023799007;
-X-Microsoft-Antispam-Message-Info: f/BMpUZd/cdiBl97au/E0Ebr8wejmE9PifskcTs4FMCgoClsqCDLrQ1XlnW2HcQNGRRh5o+PYkpMLxzLMBEuo8xg8lGMO6GEQYtgZj2s5qgEQT7PP3I7yKvR2Lc22szGM5lPjSd9fFwxcdmNOEPVribSchAav4mLR/KaL0XJgUDwqy110lF3RqUztSHv1WYFOiasyw/EU4bzDiQHf7OG64v8pv5CkBD9ll6YwsbXgzdo8s7CvEekdxPx6Io35sPpJOEKjusp33ZM67KwNsdLpV3Q85qoefjEWhX7Aim/m4lLif4/n7qYjOtO2yiP221VBKBQg6zll+JS2oKpHjKE3Vv6ool7CF1fiLCJs638ps9WW8URBUQrb+B8A8dV9oJk/z5lCe+ppZW1WBTksEaX3pLLq2eS+RB5O1kTIc9Lg08tKyisuM6V+qXKGQ/kKsVisVbOHUNaKzok8+fxCXj2Nt+Nj1/CJk1HWVDVONyyvktFjmZSidXmyS/umnBSrkeg4eR/FIoe2baGB0MsPt6V6jWGMnP5kKjzIkcu4DutuRcvSLL5wO5ijQG/31qzSV0BMJFZ520TzwMsDYGXMdDYoddXPfgKT5mAyTC23lqz/ME/0bd9L+9lLaE07gHSuYOIe8HD8b0ZdUH2ezNMoAaSMcXb+UKBF1aXNr4zaG4WdZA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(23010399003)(10070799003)(366016)(4143699003)(10067099003)(5023799004)(18002099003)(22082099003)(56012099006)(3023799007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QklGMkZiZlNhTnZvTEZGMC9EM2Vsdm8yV2FVUGNMVkZ5MFFEMnpSOGt4WjEz?=
- =?utf-8?B?TlBueHFvS0NNNzdxQ2VPL3QxMW1IelNRanN1MEhZYUE3QzdQdjA2emFrVThH?=
- =?utf-8?B?b1d2V082ZWJIdkNCaUZDTmttQmZQdlA1Yys4UmVRTHRUY0ZWUkRUZ2NZK1By?=
- =?utf-8?B?QXh4M1dQSDFuc1FFUndubTdHbnIxRjJPTDNMVEVjdnJxZVRDZ1NJeitHb2dN?=
- =?utf-8?B?c09TelAxUU9qN3hBRmtvbGpaUzh5TDlkS0FBa2p1VURkV1h1c3pUNHNHRCtI?=
- =?utf-8?B?OTkwdUdvQXZtMkFybVEzbXBSMnA5YWN3bVZWOTQ3NUVmWUR5dWpYK1pnUmo2?=
- =?utf-8?B?MEJ4UW0vaVM3RFZ6TWZ1aTVZaTdoazU1WTdUcVBzSmErY2xjL21meC9xLzNN?=
- =?utf-8?B?MFYrMmY3TEpxbUEwYWEzaFU4VlJMTGk3VktxMTFlR1R6TVNUbXhBL1ZhVXBv?=
- =?utf-8?B?WnUzVUx1d244R2o3YWlSSWVqeGpHZmNNK2V2ZFN1c0dnMjhEN1R2TENvcThR?=
- =?utf-8?B?NjQ3V3hqZ3BwRFhxTDd5cFEwMGdFM1RLb083c1ZrWmQzQ3lsZktCeUhBdTEr?=
- =?utf-8?B?WGhQSmxVQ3IxS3o4bHZQMDRuVFNGdFFjV2ZHT2NGR2JodjFjNHBvL2xTTmFK?=
- =?utf-8?B?VzFVRmo1Q1lzWUdSUHVsS3NMUml5YjNBNGZpeEwwdmx4RVp3TTF0MGtCZzB2?=
- =?utf-8?B?MlRxTlBKK29ueTloNDBLaTN4eGgrTjNSQm15SkdtYW1IYlQrenFxeDh6VFlX?=
- =?utf-8?B?M2VYQWhEVDROTEFUdGJWWCtNZzFaeUFxQTJnbUtrQTBqNVM5QkFEVDB6MnZF?=
- =?utf-8?B?c0JCcUQ1U2xIczR1cCtIYVZ6SlVEWENjTTB2T2d5amxUR3dTdW1EY3FuNUF4?=
- =?utf-8?B?NFlMOXpsYlN6L1o2VEJxRjBsZncvRm51WENJN1hLYWUrYmFxem5sWEQ1WjJt?=
- =?utf-8?B?YUdOemRnMFR4Vk1FTlBFZUhQVURYT3B2Ui9KbWE0SmNHMkVORG9Gc0Uxd1Zz?=
- =?utf-8?B?UnNsWHkrNXpFc3hyU2loVzdnTitDZHUvSnZTV1pCNVVrQlpjbU5WdWszN2hG?=
- =?utf-8?B?Rmp2ZHEyZG1NSjZDeXVtNFZCVENWM3FNdUlsUXJyT1NzWHJzTnFsY3M3SHBp?=
- =?utf-8?B?cWJVcCtuUU0xeHQzcTN0QWdYcE01UjdJNGx6eGZDeXJQMnNlcWx2YXBtS09k?=
- =?utf-8?B?ekFQczkzQkR0ZFlHb0lSMDZJYzVMWG1sUXE2ZU1DWGFIUWFxU2NxUW5jK1cx?=
- =?utf-8?B?OTdHZndISytoQTk1WGhaNE1BR0NDK0JBVXh4TTJiL0xYMkg1ZkQwaHpGSnRO?=
- =?utf-8?B?WHhOS1QvekxObStZaVFtVGhqM2NMZFArNHBiYjM5dTNGNUVRa0M3SjRBUDNu?=
- =?utf-8?B?VW5yRVprMFpzTzBudHdIb1p4N05uWWVjYUF5Q1FKNEp2MW00dmZDeElYcEh6?=
- =?utf-8?B?WUtWMnY2NDRIQ21DL0dEWmg2YXd6eC9nQ0Rmeit4YjJ6YjZLcXJjV243QTZx?=
- =?utf-8?B?ajdDMzJWOWVJSno5enZRM0diWVpKRG1tWkVYbVJrS2Nzd0hyOFFTYzFFdkNn?=
- =?utf-8?B?MW1CeFhJWUhUV0RLbGZjam1tbWZ1UmNkQVEvTWZORGp1eHhobG5ZU21vcFVF?=
- =?utf-8?B?OWhzbm1COSt1SkJCQU1sWStPQlg1S0FLTlZtWG8wMGY2OURxWEFBM3dWV0U1?=
- =?utf-8?B?TGVQZE9PWTVXbHBieXMyM2ErYUc5bHdTM2JqUG8rSHB0bFI3aWdFYSs1ckRm?=
- =?utf-8?B?KzFwRG1DcVZHK01KV0k4SEUyaTV3Uk9mcEVYcDNuZEpwY0IwVzBmc1kxdDZy?=
- =?utf-8?B?MzFIMVBkc3NPclVFOS91enQxc1hKV2NlNk1udTZuZmlINGQ4bG9oemlYOGJz?=
- =?utf-8?B?aHdVQmRHajZOdEVzZkNzSm16TVJVdFNQQmpYMUlKWFFpbTNzMGs4V3c3dk14?=
- =?utf-8?B?aGhBNWdNR2ZqZEREbGRpQXRUaVN5cEx1T0wxSlZ3ZjM1TjZpcnhBV2tzRS84?=
- =?utf-8?B?a1RVK2RLWnUrdS84dDZURzdDc3pHZnJ5QWNzUm4wTDBsQUQ4SERiUFNpcWVI?=
- =?utf-8?B?UHMreFVIS0E3Z0V5RTFjZ3F2V2RubEMyNGZtOGxuZUh1S0xaOXRoZkwzTXY3?=
- =?utf-8?B?QnBBVU02Ri9aemgwNzQ2ZWkxWmsrVE1lWi9uWjJFbmhVS2ZPbmtpYXFuWllV?=
- =?utf-8?B?RHozaTdCRnVrZyt4a0tVbU1FN0QrcWRieFRSOXM4cE9LNDFha2c1QWRrR0Qv?=
- =?utf-8?B?MTJnc1lXdkdaalZCMVEvZ3B3N1BXdTl3SkFMeXROaVlTYi9CQkVibm9abllj?=
- =?utf-8?B?bXBZWS9PSGxjQThOZWRka3E0S09mSnh5aGlCaFRsb1Zra0puZGxBdnBQMlNS?=
- =?utf-8?Q?52YozrhtqaD96GSgcmn9+zgi4TWO5xuhgDD/AZV5FTwDk?=
-X-MS-Exchange-AntiSpam-MessageData-1: kbuqqLoGgKKxGQ==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54bca47e-200a-42aa-1ccf-08df09dd654b
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 17:04:20.2908 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jB4VVPIhgq3sPGZrUv83uyxjTZaR0pTZef5PmG7RYhhhkVmWUEDfKnzpL9Z4Qn73TQ1bQ+J/vWEfV2a3IcWFZA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB8899
-Received-SPF: pass client-ip=52.101.84.131; envelope-from=den@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+References: <20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com>
+ <20260817-atlantis_prcm-v2-2-ffba0b944419@oss.tenstorrent.com>
+ <CACPK8XcEk4xXDYnY_FSZ7Wud0RQqyLzX_VVA3vXT2q27Z2dn8g@mail.gmail.com>
+In-Reply-To: <CACPK8XcEk4xXDYnY_FSZ7Wud0RQqyLzX_VVA3vXT2q27Z2dn8g@mail.gmail.com>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Thu, 3 Sep 2026 12:10:19 -0500
+X-Gm-Features: AcwNN1VWLJrd-s74tSaQuZa15t3crwU3mtJDEzqfe41cP9u42YzFgbeB4KENq_U
+Message-ID: <CAEev2e9i0evP3MLr_+QjJD9849DRs4M911VeCPxywkrL-z73qg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis
+ model
+To: Joel Stanley <joel@jms.id.au>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb12f.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -157,66 +120,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 18:57, Fabiano Rosas wrote:
-> "Denis V. Lunev" <den@virtuozzo.com> writes:
+Hi,
+
+On Mon, Aug 31, 2026 at 2:06=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrote=
+:
 >
->> On 8/27/26 13:03, Daniel P. Berrangé wrote:
->>> On Thu, Aug 27, 2026 at 12:16:56PM +0200, Thomas Huth wrote:
->>>>  Hi Denis!
->>>>
->>>> Please make sure to CC: the qtest maintainer (Fabiano Rosas) on series like
->>>> this.
->>>>
->>>> On 24/08/2026 22.06, Denis V. Lunev wrote:
->>>>> John reported ide-test dying at startup in the NetBSD VM:
->>>>>
->>>>>    ERROR:../src/tests/qtest/ide-test.c:1260:main: assertion failed:
->>>>>    (ret == 0)
->>>>>
->>>>> The hypothesys is that the ftruncate() of a 64 MiB scratch image. NetBSD
->>>>> mounts /tmp as a tmpfs sized at 25% of RAM and charges a file its full
->>>>> length themoment it is extended, so a sparse image is not free there and
->>>>> the call returns ENOSPC. The assert dates to 2013, nothing regressed.
->>>> Does NetBSD have another file like /var/tmp that might be friendlier to
->>>> sparse files? If so, maybe that should be used instead?
->>>>
->>>> OTOH, our NetBSD VM in tests/vm/ uses 4G of RAM, so a temporary file with
->>>> just 64 MiB should really not be a problem...?
->>> Or this is a concurrency scaling problem, or racing with another test
->>> that also uses stuff ?
->>>
->>> We hard code memory to 4 GB, but -smp we scale to "$NUM-CPUs / 2"
->>> for the "make vm-build-DIST" commands.
->>>
->>> IOW, regardless of whether QEMU is launched with -smp 1 or -smp 20,
->>> we only give it 4 GB to play with. We could be using a lot of RAM
->>> for concurrent build jobs leaving almost nothing for the tmpfs for
->>> the test.
->>>
->>> If we were that close to exhaustion I'd expected to see out of
->>> memory errors, but I'm unclear what NetBSD's behaviour is in
->>> this respect ?  Maybe normal RAM usage can be pushed to swap
->>> (of which I see another 4 GB) while tmpfs can't be pushed
->>> to swap ?
->>>
->>>
->>>
->>>
->>> With regards,
->>> Daniel
->> Guys,
->>
->> will somebody take a look into what was done?
->> This makes sense anyway - unified same class error tracking
->> plus requirements reduction.
->>
-> I cannot reproduce this. I also don't think ENOSPC on 64MB is something
-> worth the churn at all.
-Great.
+> On Tue, 18 Aug 2026 at 00:13, Anirudh Srinivasan
+> <asrinivasan@oss.tenstorrent.com> wrote:
+> >
+> > Atlantis has 4 PRCMs that are visible from S mode by the Ascalon Core
+> > (RCPU, HSIO, PCIe and MM). This commit adds these 4 PRCM blocks to the
+> > tt-atlantis model, along with necessary device tree nodes for them.
+> >
+> > Reviewed-by: Chao Liu <chao.liu@processmission.com>
+> > Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> > ---
+> >  docs/system/riscv/tt_atlantis.rst |  1 +
+> >  hw/riscv/tt_atlantis.c            | 94 +++++++++++++++++++++++++++++++=
+++++++++
+> >  include/hw/riscv/tt_atlantis.h    | 19 ++++++++
+> >  3 files changed, 114 insertions(+)
+> >
+> > diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_a=
+tlantis.rst
+> > index 1f2880d617..539c22354f 100644
+> > --- a/docs/system/riscv/tt_atlantis.rst
+> > +++ b/docs/system/riscv/tt_atlantis.rst
+> > @@ -14,6 +14,7 @@ tt-atlantis QEMU model features
+> >  * 8-core Ascalon-X CPU Cluster
+> >  * RISC-V compliant Advanced Interrupt Architecture
+> >  * 16550A compatible UART
+> > +* 4 PRCMs (Clock and Reset Controllers)
+> >
+> >  Known limitations
+> >  -----------------
+> > diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+> > index d808bcc11c..9ebba07703 100644
+> > --- a/hw/riscv/tt_atlantis.c
+> > +++ b/hw/riscv/tt_atlantis.c
+> > @@ -26,6 +26,7 @@
+> >  #include "hw/char/serial-mm.h"
+> >  #include "hw/intc/riscv_aclint.h"
+> >  #include "hw/misc/unimp.h"
+> > +#include "hw/misc/tt_atlantis_prcm.h"
+> >
+> >  #include "system/system.h"
+> >  #include "system/device_tree.h"
+> > @@ -59,6 +60,10 @@ static const MemMapEntry tt_atlantis_memmap[] =3D {
+> >      [TT_ATL_I2C3] =3D             { 0xd4070000,       0x10000 },
+> >      [TT_ATL_I2C4] =3D             { 0xd4080000,       0x10000 },
+> >      [TT_ATL_UART1] =3D            { 0xd4110000,       0x10000 },
+> > +    [TT_ATL_PRCM_RCPU] =3D        { 0xd0000000,       0x10000 },
+> > +    [TT_ATL_PRCM_PCIE] =3D        { 0xd8000000,         0x100 },
+> > +    [TT_ATL_PRCM_MM] =3D          { 0xdc000000,        0x1000 },
+> > +    [TT_ATL_PRCM_HSIO] =3D        { 0xe00c0000,         0x510 },
+> >      [TT_ATL_SAPLIC] =3D           { 0xe8000000,     0x4000000 },
+> >      [TT_ATL_DDR_HI] =3D          { 0x100000000,  0x1000000000 },
+> >  };
+> > @@ -328,11 +333,35 @@ static void create_fdt_i2c_device(TTAtlantisState=
+ *s, int bus,
+> >      qemu_fdt_setprop_cell(fdt, name, "reg", addr);
+> >  }
+> >
+> > +static char *create_fdt_prcm(void *fdt, const MemMapEntry *mem,
+> > +                             const char *prcm_name)
+> > +{
+> > +    hwaddr base =3D mem->base;
+> > +    hwaddr size =3D mem->size;
+> > +    char *name =3D g_strdup_printf("/soc/prcm_%s@%" PRIx64,
+> > +                                 prcm_name, mem->base);
+>
+> Use the locals, or drop them and use mem->base both times.
+>
+> > +    g_autofree char *compatible =3D
+> > +        g_strdup_printf("tenstorrent,atlantis-prcm-%s", prcm_name);
+> > +
+> > +    qemu_fdt_add_subnode(fdt, name);
+> > +    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
+> > +    qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, base, 2, size);
+> > +    qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
+> > +    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+> > +    qemu_fdt_setprop_cell(fdt, name, "#clock-cells", 1);
+> > +    qemu_fdt_setprop_cell(fdt, name, "#reset-cells", 1);
+> > +    qemu_fdt_setprop_cell(fdt, name, "phandle", next_phandle());
+>
+> If a phandle falls in the woods and nobody...
+>
+> If you're not saving this value anywhere, is there any need to set one?
 
-Clearly postponed, dropping this from watch list.
+Doesn't seem to work if I remove next_phandle(). I get an error at the
+qemu_fdt_get_phandle call below like this
 
-Thanks a lot for your time.
+qemu-system-riscv64: qemu_fdt_get_phandle: Couldn't get phandle for
+/soc/prcm_rcpu@d0000000: <no error>
 
-Den
+I think the correct solution would be to use qemu_fdt_alloc_phandle
+instead here. That seems to work.
+
+>
+> > +
+> > +    return name;
+> > +}
+> > +
+> >  static void finalize_fdt(TTAtlantisState *s)
+> >  {
+> >      uint32_t aplic_s_phandle =3D next_phandle();
+> >      uint32_t imsic_s_phandle =3D next_phandle();
+> >      uint32_t periph_clk_phandle =3D next_phandle();
+> > +    uint32_t osc_24m_phandle =3D next_phandle();
+> > +    uint32_t prcm_rcpu_phandle;
+> >      void *fdt =3D MACHINE(s)->fdt;
+> >
+> >      create_fdt_cpu(s, s->memmap, aplic_s_phandle, imsic_s_phandle);
+> > @@ -348,6 +377,34 @@ static void finalize_fdt(TTAtlantisState *s)
+> >                      aplic_s_phandle);
+> >
+> >      create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
+> > +    create_fdt_clk(fdt, "osc_24m", 24000000, osc_24m_phandle);
+>
+> With the PRCM enabled the UART and I2C can get a real clock? So we can
+> drop the periph-clk node and modify create_fdt_i2c as well as
+> create_fdt_uart to use the real PRCM phandles. This will shake out any
+> issues with how you're wiring up the device tree too.
+
+Updated.
+
+>
+> > +
+> > +    g_autofree char *rcpu_name =3D create_fdt_prcm(fdt,
+> > +        &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
+> > +    prcm_rcpu_phandle =3D qemu_fdt_get_phandle(fdt, rcpu_name);
+>
+> This is a great function that I didn't know of when I wrote
+> next_phandle(). I'm all for using it, but lets swap the entire file
+> over at once.
+
+I would like to keep this series limited to adding the PRCM, this
+cleanup can be done in a subsequent series.
+
+>
+> > +    qemu_fdt_setprop_cells(fdt, rcpu_name, "clocks", osc_24m_phandle);
+> > +    qemu_fdt_setprop_cells(fdt, rcpu_name, "assigned-clocks",
+> > +                           prcm_rcpu_phandle, TT_ATL_CLK_RCPU_ROOT,
+> > +                           prcm_rcpu_phandle, TT_ATL_CLK_NOCC_CLK);
+> > +    qemu_fdt_setprop_cells(fdt, rcpu_name, "assigned-clock-parents",
+> > +                           prcm_rcpu_phandle, TT_ATL_CLK_RCPU_PLL,
+> > +                           prcm_rcpu_phandle, TT_ATL_CLK_NOC_PLL);
+>
+> > @@ -545,6 +602,43 @@ static void tt_atlantis_machine_init(MachineState =
+*machine)
+> >      serial_mm_init(system_memory, s->memmap[TT_ATL_UART1].base, 2,
+> >                     qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ),
+> >                     115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> > +
+> > +    /* Add rcpu prcm block */
+> > +    object_initialize_child(OBJECT(s), "prcm-rcpu", &s->prcm[0],
+> > +                            TYPE_TT_ATLANTIS_PRCM_RCPU);
+> > +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[0]), &error_fatal);
+> > +    memory_region_add_subregion(system_memory,
+>
+> Since you're already sending a v3, can you rebase it on this series pleas=
+e:
+>
+>  https://lore.kernel.org/qemu-riscv/20260831021500.82565-1-joel@jms.id.au=
+/
+>
+> Aside from code shuffling, you will pass s->memory to
+> memory_region_add_subregion, the _realize calls go in
+> tt_atlantis_soc_realize, and the initalise calls go in
+> tt_atlantis_soc_init.
+
+Will do.
+
+>
+> > +                                s->memmap[TT_ATL_PRCM_RCPU].base,
+> > +                                sysbus_mmio_get_region(
+> > +                                    SYS_BUS_DEVICE(&s->prcm[0]), 0));
+> > +
+>
+> > diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlan=
+tis.h
+> > index 7f7d4a5a59..20bcdfeb52 100644
+> > --- a/include/hw/riscv/tt_atlantis.h
+> > +++ b/include/hw/riscv/tt_atlantis.h
+>
+> > @@ -59,6 +62,22 @@ enum {
+> >      TT_ATL_SAPLIC,
+> >      TT_ATL_SIMSIC,
+> >      TT_ATL_UART1,
+> > +    TT_ATL_PRCM_RCPU,
+> > +    TT_ATL_PRCM_HSIO,
+> > +    TT_ATL_PRCM_PCIE,
+> > +    TT_ATL_PRCM_MM,
+> > +};
+> > +
+> > +/* RCPU PRCM Clock IDs */
+>
+> Do these come from
+> include/dt-bindings/clock/tenstorrent,atlantis-prcm-rcpu.h in linux?
+> Add a comment.
+
+Yes.
+
+
+
+>
+> > +enum {
+> > +    TT_ATL_CLK_RCPU_PLL =3D 0,
+> > +    TT_ATL_CLK_RCPU_ROOT =3D 1,
+> > +    TT_ATL_CLK_NOC_PLL =3D 25,
+> > +    TT_ATL_CLK_NOCC_CLK =3D 26,
+> > +    TT_ATL_CLK_HSIO_PLL =3D 54,
+> > +    TT_ATL_CLK_PCIE_PLL =3D 55,
+> > +    TT_ATL_CLK_MM_PLL0 =3D 56,
+> > +    TT_ATL_CLK_MM_PLL1 =3D 57,
+> >  };
+> >
+> >  #endif
+> >
+> > --
+> > 2.43.0
+> >
 
