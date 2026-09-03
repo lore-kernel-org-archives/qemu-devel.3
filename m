@@ -4,108 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF6DC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA98C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2AxY-0005WJ-Ap; Thu, 03 Sep 2026 13:10:44 -0400
+	id 1x2B04-00067R-Fc; Thu, 03 Sep 2026 13:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1x2AxW-0005W6-8W
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:10:42 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2B03-000676-8S
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:13:19 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1x2AxQ-00025Z-Qv
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:10:41 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-66e63afda8fso39702d50.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:10:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788455431; cv=none;
- d=google.com; s=arc-20260327;
- b=BnAEkRQmS8PmrHGC6EtI7I27zTdpybNO4ze7ll5/6eeNUOPVlA9q0sHm8z9LPlIZJA
- KlVKLDE3okvEKEh2hg1ZRARMJVVAenmuvHlS9hyDCfmq3GIWdIPuzLoRy/1euUFgPat8
- CZ90YgdJnhuCqtoxo1iOJ1+N9IUYR8vo8+T5fB9na75PV7sxMOOi9U50pCLkCPzz6Cgu
- LJOVoaJFBqQ6RxTFIQtC6gzzDqKg6+CZXXj0Xr/33iuY8V5HB2nO2O4nENfQcHA+NFUR
- 10muRc/DLUw+tOZy9SF8G3bkxlTuYZP1uR0gZrND/0XvSjXA9VJuxskgFkSJH6PS07IO
- BkNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=rMQ5PEE9csDsLkzMcktQnzQ0G1E36vkXdJ16Clec62c=;
- fh=T7GZKU3pqGfZDaVHTkyCxWlgssTqcxXKF3+qSko7WPo=;
- b=YGoM42dXxrKCNu50cTUnqZAspZ3TWjir4G5ifh5shp4m0gAP34s33mtsHOJcoes6IJ
- hfnOEqzII4s1XBWRMf7/MXf6P9Z+4NQFiS4jOTMXI+t1kjKynGTsssvNgB15GtuIThu2
- UQrR9AQrg7VqDUzPNDtYhmBA38/CYYvefX9dD2Ge1bPlPOhYfP/PzAwoOcdv4h7Y1HBr
- s8gvtqzJ5ee8bMYZK4nA57fJCFT4hpdC4VSjNyzW4wuW3wfI9iSbvXSmdo+Hj7rzQVGG
- d6ZyVQmAS3gC9KXG1P5QmUDm1r0GvNW6yD7cAyFzw1e8VEO3j2xnJZFbujlEyNIDiuB/
- BhkA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1788455431; x=1789060231; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=rMQ5PEE9csDsLkzMcktQnzQ0G1E36vkXdJ16Clec62c=;
- b=XEnLI+4b16NKzEOT0MdRm5o2QWyVio9wWiQ5ewVgA+04/Il0oe5eqx6ZKHjvM5V2TZ
- LysLNASF2xn7HsGrtlcfL0I9oMPpvYo7gyZ4RvOfMNBHQMwiITwD8up+CDK19YWZzmCj
- qRd/s1ANwhZLayIvvChUvt0ZrdqBOlfoaZbG4qL17VGKDLstXaRIGOYRn7sUAT8e7U5W
- IlcWK/Szko7Le73ofJ2u7Ukb2h9SG593Q7oR7nduzpNtXTtrl9SWjOKf09FOFUzThgF7
- Pqw9gkT3hC2g5NwveGwMpuPsDTBKl63BytoeIKTbNHUVbKYyoOEHFgSmny8inQrvlMln
- m9MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788455431; x=1789060231;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rMQ5PEE9csDsLkzMcktQnzQ0G1E36vkXdJ16Clec62c=;
- b=S5AAAzFqG8ohTU9AbGWKZBd9V+FUioAk7Kws2KNiEKsFJOEzVxZBnG9OoZd0HtWdPa
- 0kYCW1l6q4CMWBdbZKmEUOrz3lmugpnkzsxVIMOSueOmqx+y6U0mK6zUVxvYMdV0ZLIK
- gmqKQ1bz/Oi5SJGqZAoqsEWCOQ9wMN7D7sl+R/EN25jmlH/dNNf61AWLSS575XJtJsLU
- zcb5drfaFnWuhA6TXpyXwqSdcWnfMuU5w6mwvv21TBeC+1zdlbGOKJjy70g1HIJ49V0V
- tuPNMthxPeBYG0Zss79ufqaQI+EEa3sR36guT3RLstjHWFpggwWb3A5qjUE3AfGUfmDO
- wz0Q==
-X-Gm-Message-State: AFuF++m/ReuOzX+0Myhjd56f4uw5SLrOXv5r9vNQpANuR3LNyXZub9um
- KAajaGRH1ohfD5+m4tVDw5kRy/6BQv95ffXvSBnc7fGNdMXvjYgPCpmLj97N95J+DnY2QTvGCY5
- DtrjJSDpzy6TgiFw0H/03WNA35CUCs5HsMDXdgCoJ2g==
-X-Gm-Gg: AYBFou0qPynVCzAmqgJ79IGWKckf6T5A6tpIT94QKea66Uw1XNxd/I+oK3ANlvmjCRS
- g3WDIgASUgEegAEnS9Wd2q3/JgWMzCylu6IHXt5iX9XPgiARQQ4ugpndZGE/GMEUufLdE6lw4QI
- QTgtsxs/349H0QnErsHmyficXVTPedO7mMpe7MmwcXu8l42AgxLlXgHG28Px5+VijP8WoM7b+8I
- rXljmtwaOjBMPTQK3kbBioGR+hTHEbNrF0P5ft0iXrdptMA8GCO/jrHByaytyCZoeS0R29zlPo8
- +GkKwfWRdcPpFLluGI9yH/udqLJcNUkRqAKfbycsua44vg+0u5c2MNg5JuopqUf9gbpu9t+RqB4
- =
-X-Received: by 2002:a05:690e:4419:b0:66f:a87e:4f2 with SMTP id
- 956f58d0204a3-66fb59d6d77mr39317d50.17.1788455430714; Thu, 03 Sep 2026
- 10:10:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2AzA-00035u-0H
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:13:19 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 08ED01F847;
+ Thu,  3 Sep 2026 17:12:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1788455538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VpX+SD3lEpcljTl7qqmJfAHhRCXEPyOU2PrYeH8tJHk=;
+ b=DjpBC/QPay/MJNzuOvKhCAsQy3Di1+oPSFKmj1E9sPR3kt2/ihwD4fBnAU329zZnv1TwX3
+ aSFk4UwhiXaAvVsKfiMU+Z/sONFlJaW+nsp6OmE9WZsuqt2J3FmcdvIYpVdDJDVGIAAfOt
+ QoLyN153Uriyd/zXkGPAwV97Xv+L5Ts=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1788455538;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VpX+SD3lEpcljTl7qqmJfAHhRCXEPyOU2PrYeH8tJHk=;
+ b=4XrupgWd9v8iLzpj1PU9Cf7+GnmVRvN7jFYfzMHxr+1H+nOxUvdSQnD+2h/6omLE6hVY3u
+ o2x+xbtPoZVw90Bw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fohLL6xf;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZUohhk00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1788455534; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VpX+SD3lEpcljTl7qqmJfAHhRCXEPyOU2PrYeH8tJHk=;
+ b=fohLL6xf1aKma4aJWc5oGSdzMWqimYGpcYXTaRfOYwRfk2xGpuDF5Ni26L9nbWwmyxpcxb
+ bXtRZ4YgIpn5kjut7lzCc7fP1xkqhWDjU8andOFU++qs5S17cUNQLjhSuF4ObjCoj7lW66
+ uCl/zVx0XzJzv+y3AmGLoWVV+EZXVVQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1788455534;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VpX+SD3lEpcljTl7qqmJfAHhRCXEPyOU2PrYeH8tJHk=;
+ b=ZUohhk002FX7nPIXQpTvTcQnqqmifFw81jCoq8NDTH/lRpQ/zsQBx2OKZzpDLRDx/W8JAF
+ 2t1lb8PdE7ajrrCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 879AF136E6;
+ Thu,  3 Sep 2026 17:12:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id alI+Fm2qmWp6NwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 03 Sep 2026 17:12:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, Juraj Marcin
+ <jmarcin@redhat.com>, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH 01/30] tests/unit/test-vmstate: move to new migration APIs
+In-Reply-To: <20260825213811.3725682-2-vsementsov@yandex-team.ru>
+References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
+ <20260825213811.3725682-2-vsementsov@yandex-team.ru>
+Date: Thu, 03 Sep 2026 14:12:07 -0300
+Message-ID: <87mrty8djs.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com>
- <20260817-atlantis_prcm-v2-2-ffba0b944419@oss.tenstorrent.com>
- <CACPK8XcEk4xXDYnY_FSZ7Wud0RQqyLzX_VVA3vXT2q27Z2dn8g@mail.gmail.com>
-In-Reply-To: <CACPK8XcEk4xXDYnY_FSZ7Wud0RQqyLzX_VVA3vXT2q27Z2dn8g@mail.gmail.com>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Thu, 3 Sep 2026 12:10:19 -0500
-X-Gm-Features: AcwNN1VWLJrd-s74tSaQuZa15t3crwU3mtJDEzqfe41cP9u42YzFgbeB4KENq_U
-Message-ID: <CAEev2e9i0evP3MLr_+QjJD9849DRs4M911VeCPxywkrL-z73qg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis
- model
-To: Joel Stanley <joel@jms.id.au>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb12f.google.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 08ED01F847
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,225 +124,352 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-On Mon, Aug 31, 2026 at 2:06=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrote=
-:
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  tests/unit/test-vmstate.c | 118 ++++++++++----------------------------
+>  1 file changed, 30 insertions(+), 88 deletions(-)
 >
-> On Tue, 18 Aug 2026 at 00:13, Anirudh Srinivasan
-> <asrinivasan@oss.tenstorrent.com> wrote:
-> >
-> > Atlantis has 4 PRCMs that are visible from S mode by the Ascalon Core
-> > (RCPU, HSIO, PCIe and MM). This commit adds these 4 PRCM blocks to the
-> > tt-atlantis model, along with necessary device tree nodes for them.
-> >
-> > Reviewed-by: Chao Liu <chao.liu@processmission.com>
-> > Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> > ---
-> >  docs/system/riscv/tt_atlantis.rst |  1 +
-> >  hw/riscv/tt_atlantis.c            | 94 +++++++++++++++++++++++++++++++=
-++++++++
-> >  include/hw/riscv/tt_atlantis.h    | 19 ++++++++
-> >  3 files changed, 114 insertions(+)
-> >
-> > diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_a=
-tlantis.rst
-> > index 1f2880d617..539c22354f 100644
-> > --- a/docs/system/riscv/tt_atlantis.rst
-> > +++ b/docs/system/riscv/tt_atlantis.rst
-> > @@ -14,6 +14,7 @@ tt-atlantis QEMU model features
-> >  * 8-core Ascalon-X CPU Cluster
-> >  * RISC-V compliant Advanced Interrupt Architecture
-> >  * 16550A compatible UART
-> > +* 4 PRCMs (Clock and Reset Controllers)
-> >
-> >  Known limitations
-> >  -----------------
-> > diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-> > index d808bcc11c..9ebba07703 100644
-> > --- a/hw/riscv/tt_atlantis.c
-> > +++ b/hw/riscv/tt_atlantis.c
-> > @@ -26,6 +26,7 @@
-> >  #include "hw/char/serial-mm.h"
-> >  #include "hw/intc/riscv_aclint.h"
-> >  #include "hw/misc/unimp.h"
-> > +#include "hw/misc/tt_atlantis_prcm.h"
-> >
-> >  #include "system/system.h"
-> >  #include "system/device_tree.h"
-> > @@ -59,6 +60,10 @@ static const MemMapEntry tt_atlantis_memmap[] =3D {
-> >      [TT_ATL_I2C3] =3D             { 0xd4070000,       0x10000 },
-> >      [TT_ATL_I2C4] =3D             { 0xd4080000,       0x10000 },
-> >      [TT_ATL_UART1] =3D            { 0xd4110000,       0x10000 },
-> > +    [TT_ATL_PRCM_RCPU] =3D        { 0xd0000000,       0x10000 },
-> > +    [TT_ATL_PRCM_PCIE] =3D        { 0xd8000000,         0x100 },
-> > +    [TT_ATL_PRCM_MM] =3D          { 0xdc000000,        0x1000 },
-> > +    [TT_ATL_PRCM_HSIO] =3D        { 0xe00c0000,         0x510 },
-> >      [TT_ATL_SAPLIC] =3D           { 0xe8000000,     0x4000000 },
-> >      [TT_ATL_DDR_HI] =3D          { 0x100000000,  0x1000000000 },
-> >  };
-> > @@ -328,11 +333,35 @@ static void create_fdt_i2c_device(TTAtlantisState=
- *s, int bus,
-> >      qemu_fdt_setprop_cell(fdt, name, "reg", addr);
-> >  }
-> >
-> > +static char *create_fdt_prcm(void *fdt, const MemMapEntry *mem,
-> > +                             const char *prcm_name)
-> > +{
-> > +    hwaddr base =3D mem->base;
-> > +    hwaddr size =3D mem->size;
-> > +    char *name =3D g_strdup_printf("/soc/prcm_%s@%" PRIx64,
-> > +                                 prcm_name, mem->base);
->
-> Use the locals, or drop them and use mem->base both times.
->
-> > +    g_autofree char *compatible =3D
-> > +        g_strdup_printf("tenstorrent,atlantis-prcm-%s", prcm_name);
-> > +
-> > +    qemu_fdt_add_subnode(fdt, name);
-> > +    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
-> > +    qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, base, 2, size);
-> > +    qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
-> > +    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
-> > +    qemu_fdt_setprop_cell(fdt, name, "#clock-cells", 1);
-> > +    qemu_fdt_setprop_cell(fdt, name, "#reset-cells", 1);
-> > +    qemu_fdt_setprop_cell(fdt, name, "phandle", next_phandle());
->
-> If a phandle falls in the woods and nobody...
->
-> If you're not saving this value anywhere, is there any need to set one?
+> diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
+> index df1fb4c7780..23f31730703 100644
+> --- a/tests/unit/test-vmstate.c
+> +++ b/tests/unit/test-vmstate.c
+> @@ -67,14 +67,9 @@ static QEMUFile *open_test_file(bool write)
+>  static void save_vmstate(const VMStateDescription *desc, void *obj)
+>  {
+>      QEMUFile *f = open_test_file(true);
+> -    Error *local_err = NULL;
+>  
+>      /* Save file with vmstate */
+> -    int ret = vmstate_save_state(f, desc, obj, NULL, &local_err);
+> -    if (ret) {
+> -        error_report_err(local_err);
+> -    }
+> -    g_assert(!ret);
+> +    vmstate_save_vmsd(f, desc, obj, NULL, &error_abort);
+>      qemu_put_byte(f, QEMU_VM_EOF);
+>      g_assert(!qemu_file_get_error(f));
+>      qemu_fclose(f);
+> @@ -112,7 +107,6 @@ static int load_vmstate_one(const VMStateDescription *desc, void *obj,
+>                              int version, const uint8_t *wire, size_t size)
+>  {
+>      QEMUFile *f;
+> -    int ret;
+>      Error *local_err = NULL;
+>  
+>      f = open_test_file(true);
+> @@ -120,15 +114,16 @@ static int load_vmstate_one(const VMStateDescription *desc, void *obj,
+>      qemu_fclose(f);
+>  
+>      f = open_test_file(false);
+> -    ret = vmstate_load_state(f, desc, obj, version, &local_err);
+> -    if (ret) {
+> +    if (!vmstate_load_vmsd(f, desc, obj, version, &local_err)) {
+>          error_report_err(local_err);
+>          g_assert(qemu_file_get_error(f));
+> -    } else{
+> -        g_assert(!qemu_file_get_error(f));
+> +        qemu_fclose(f);
+> +        return -EINVAL;
+>      }
+> +
+> +    g_assert(!qemu_file_get_error(f));
+>      qemu_fclose(f);
+> -    return ret;
+> +    return 0;
+>  }
+>  
+>  
+> @@ -362,8 +357,6 @@ static const VMStateDescription vmstate_versioned = {
+>  
+>  static void test_load_v1(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      uint8_t buf[] = {
+>          0, 0, 0, 10,             /* a */
+>          0, 0, 0, 30,             /* c */
+> @@ -374,10 +367,7 @@ static void test_load_v1(void)
+>  
+>      QEMUFile *loading = open_test_file(false);
+>      TestStruct obj = { .b = 200, .e = 500, .f = 600 };
+> -    ret = vmstate_load_state(loading, &vmstate_versioned, &obj, 1, &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(loading, &vmstate_versioned, &obj, 1, &error_abort);
+>      g_assert(!qemu_file_get_error(loading));
+>      g_assert_cmpint(obj.a, ==, 10);
+>      g_assert_cmpint(obj.b, ==, 200);
+> @@ -390,8 +380,6 @@ static void test_load_v1(void)
+>  
+>  static void test_load_v2(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      uint8_t buf[] = {
+>          0, 0, 0, 10,             /* a */
+>          0, 0, 0, 20,             /* b */
+> @@ -405,10 +393,7 @@ static void test_load_v2(void)
+>  
+>      QEMUFile *loading = open_test_file(false);
+>      TestStruct obj;
+> -    ret = vmstate_load_state(loading, &vmstate_versioned, &obj, 2, &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(loading, &vmstate_versioned, &obj, 2, &error_abort);
+>      g_assert_cmpint(obj.a, ==, 10);
+>      g_assert_cmpint(obj.b, ==, 20);
+>      g_assert_cmpint(obj.c, ==, 30);
+> @@ -442,16 +427,10 @@ static const VMStateDescription vmstate_skipping = {
+>  
+>  static void test_save_noskip(void)
+>  {
+> -    Error *local_err = NULL;
+>      QEMUFile *fsave = open_test_file(true);
+>      TestStruct obj = { .a = 1, .b = 2, .c = 3, .d = 4, .e = 5, .f = 6,
+>                         .skip_c_e = false };
+> -    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL,
+> -                                 &local_err);
+> -    if (ret) {
+> -        error_report_err(local_err);
+> -    }
+> -    g_assert(!ret);
+> +    vmstate_save_vmsd(fsave, &vmstate_skipping, &obj, NULL, &error_abort);
+>      g_assert(!qemu_file_get_error(fsave));
+>  
+>      uint8_t expected[] = {
+> @@ -469,16 +448,10 @@ static void test_save_noskip(void)
+>  
+>  static void test_save_skip(void)
+>  {
+> -    Error *local_err = NULL;
+>      QEMUFile *fsave = open_test_file(true);
+>      TestStruct obj = { .a = 1, .b = 2, .c = 3, .d = 4, .e = 5, .f = 6,
+>                         .skip_c_e = true };
+> -    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL,
+> -                                 &local_err);
+> -    if (ret) {
+> -        error_report_err(local_err);
+> -    }
+> -    g_assert(!ret);
+> +    vmstate_save_vmsd(fsave, &vmstate_skipping, &obj, NULL, &error_abort);
+>      g_assert(!qemu_file_get_error(fsave));
+>  
+>      uint8_t expected[] = {
+> @@ -494,8 +467,6 @@ static void test_save_skip(void)
+>  
+>  static void test_load_noskip(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      uint8_t buf[] = {
+>          0, 0, 0, 10,             /* a */
+>          0, 0, 0, 20,             /* b */
+> @@ -509,10 +480,7 @@ static void test_load_noskip(void)
+>  
+>      QEMUFile *loading = open_test_file(false);
+>      TestStruct obj = { .skip_c_e = false };
+> -    ret = vmstate_load_state(loading, &vmstate_skipping, &obj, 2, &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(loading, &vmstate_skipping, &obj, 2, &error_abort);
+>      g_assert(!qemu_file_get_error(loading));
+>      g_assert_cmpint(obj.a, ==, 10);
+>      g_assert_cmpint(obj.b, ==, 20);
+> @@ -525,8 +493,6 @@ static void test_load_noskip(void)
+>  
+>  static void test_load_skip(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      uint8_t buf[] = {
+>          0, 0, 0, 10,             /* a */
+>          0, 0, 0, 20,             /* b */
+> @@ -538,10 +504,7 @@ static void test_load_skip(void)
+>  
+>      QEMUFile *loading = open_test_file(false);
+>      TestStruct obj = { .skip_c_e = true, .c = 300, .e = 500 };
+> -    ret = vmstate_load_state(loading, &vmstate_skipping, &obj, 2, &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(loading, &vmstate_skipping, &obj, 2, &error_abort);
+>      g_assert(!qemu_file_get_error(loading));
+>      g_assert_cmpint(obj.a, ==, 10);
+>      g_assert_cmpint(obj.b, ==, 20);
+> @@ -863,8 +826,6 @@ static void test_save_q(void)
+>  
+>  static void test_load_q(void)
+>  {
+> -    int ret;
+> -    Error *local_err = NULL;
+>      TestQtailq obj_q = {
+>          .i16 = -512,
+>          .i32 = 70000,
+> @@ -894,10 +855,7 @@ static void test_load_q(void)
+>      TestQtailq tgt;
+>  
+>      QTAILQ_INIT(&tgt.q);
+> -    ret = vmstate_load_state(fload, &vmstate_q, &tgt, 1, &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(fload, &vmstate_q, &tgt, 1, &error_abort);
+>      char eof = qemu_get_byte(fload);
+>      g_assert(!qemu_file_get_error(fload));
+>      g_assert_cmpint(tgt.i16, ==, obj_q.i16);
+> @@ -1015,29 +973,29 @@ static void destroy_domain(gpointer data)
+>      g_free(domain);
+>  }
+>  
+> -static int domain_preload(void *opaque)
+> +static bool domain_preload(void *opaque, Error **errp)
+>  {
+>      TestGTreeDomain *domain = opaque;
+>  
+>      domain->mappings = g_tree_new_full((GCompareDataFunc)interval_cmp,
+>                                         NULL, g_free, g_free);
+> -    return 0;
+> +    return true;
+>  }
+>  
+> -static int iommu_preload(void *opaque)
+> +static bool iommu_preload(void *opaque, Error **errp)
+>  {
+>      TestGTreeIOMMU *iommu = opaque;
+>  
+>      iommu->domains = g_tree_new_full((GCompareDataFunc)int_cmp,
+>                                       NULL, NULL, destroy_domain);
+> -    return 0;
+> +    return true;
+>  }
+>  
+>  static const VMStateDescription vmstate_domain = {
+>      .name = "domain",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+> -    .pre_load = domain_preload,
+> +    .pre_load_errp = domain_preload,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_INT32(id, TestGTreeDomain),
+>          VMSTATE_GTREE_V(mappings, TestGTreeDomain, 1,
+> @@ -1073,7 +1031,7 @@ static const VMStateDescription vmstate_iommu = {
+>      .name = "iommu",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+> -    .pre_load = iommu_preload,
+> +    .pre_load_errp = iommu_preload,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_INT32(id, TestGTreeIOMMU),
+>          VMSTATE_GTREE_DIRECT_KEY_V(domains, TestGTreeIOMMU, 1,
+> @@ -1239,8 +1197,6 @@ static void diff_iommu(TestGTreeIOMMU *iommu1, TestGTreeIOMMU *iommu2)
+>  
+>  static void test_gtree_load_domain(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      TestGTreeDomain *dest_domain = g_new0(TestGTreeDomain, 1);
+>      TestGTreeDomain *orig_domain = create_first_domain();
+>      QEMUFile *fload, *fsave;
+> @@ -1253,11 +1209,7 @@ static void test_gtree_load_domain(void)
+>  
+>      fload = open_test_file(false);
+>  
+> -    ret = vmstate_load_state(fload, &vmstate_domain, dest_domain, 1,
+> -                             &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(fload, &vmstate_domain, dest_domain, 1, &error_abort);
+>      eof = qemu_get_byte(fload);
+>      g_assert(!qemu_file_get_error(fload));
+>      g_assert_cmpint(orig_domain->id, ==, dest_domain->id);
+> @@ -1360,8 +1312,6 @@ static void test_gtree_save_iommu(void)
+>  
+>  static void test_gtree_load_iommu(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      TestGTreeIOMMU *dest_iommu = g_new0(TestGTreeIOMMU, 1);
+>      TestGTreeIOMMU *orig_iommu = create_iommu();
+>      QEMUFile *fsave, *fload;
+> @@ -1373,10 +1323,7 @@ static void test_gtree_load_iommu(void)
+>      qemu_fclose(fsave);
+>  
+>      fload = open_test_file(false);
+> -    ret = vmstate_load_state(fload, &vmstate_iommu, dest_iommu, 1, &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(fload, &vmstate_iommu, dest_iommu, 1, &error_abort);
+>      eof = qemu_get_byte(fload);
+>      g_assert(!qemu_file_get_error(fload));
+>      g_assert_cmpint(orig_iommu->id, ==, dest_iommu->id);
+> @@ -1498,8 +1445,6 @@ static void test_save_qlist(void)
+>  
+>  static void test_load_qlist(void)
+>  {
+> -    Error *local_err = NULL;
+> -    int ret;
+>      QEMUFile *fsave, *fload;
+>      TestQListContainer *orig_container = alloc_container();
+>      TestQListContainer *dest_container = g_new0(TestQListContainer, 1);
+> @@ -1513,11 +1458,8 @@ static void test_load_qlist(void)
+>      qemu_fclose(fsave);
+>  
+>      fload = open_test_file(false);
+> -    ret = vmstate_load_state(fload, &vmstate_container, dest_container, 1,
+> -                             &local_err);
+> -    if (ret < 0) {
+> -        error_report_err(local_err);
+> -    }
+> +    vmstate_load_vmsd(fload, &vmstate_container, dest_container, 1,
+> +                      &error_abort);
+>      eof = qemu_get_byte(fload);
+>      g_assert(!qemu_file_get_error(fload));
+>      g_assert_cmpint(eof, ==, QEMU_VM_EOF);
+> @@ -1534,22 +1476,22 @@ typedef struct TmpTestStruct {
+>      int64_t diff;
+>  } TmpTestStruct;
+>  
+> -static int tmp_child_pre_save(void *opaque)
+> +static bool tmp_child_pre_save(void *opaque, Error **errp)
+>  {
+>      struct TmpTestStruct *tts = opaque;
+>  
+>      tts->diff = tts->parent->b - tts->parent->a;
+>  
+> -    return 0;
+> +    return true;
+>  }
+>  
+> -static int tmp_child_post_load(void *opaque, int version_id)
+> +static bool tmp_child_post_load(void *opaque, int version_id, Error **errp)
+>  {
+>      struct TmpTestStruct *tts = opaque;
+>  
+>      tts->parent->b = tts->parent->a + tts->diff;
+>  
+> -    return 0;
+> +    return true;
+>  }
+>  
+>  static const VMStateDescription vmstate_tmp_back_to_parent = {
+> @@ -1562,8 +1504,8 @@ static const VMStateDescription vmstate_tmp_back_to_parent = {
+>  
+>  static const VMStateDescription vmstate_tmp_child = {
+>      .name = "test/tmp_child",
+> -    .pre_save = tmp_child_pre_save,
+> -    .post_load = tmp_child_post_load,
+> +    .pre_save_errp = tmp_child_pre_save,
+> +    .post_load_errp = tmp_child_post_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_INT64(diff, TmpTestStruct),
+>          VMSTATE_STRUCT_POINTER(parent, TmpTestStruct,
 
-Doesn't seem to work if I remove next_phandle(). I get an error at the
-qemu_fdt_get_phandle call below like this
-
-qemu-system-riscv64: qemu_fdt_get_phandle: Couldn't get phandle for
-/soc/prcm_rcpu@d0000000: <no error>
-
-I think the correct solution would be to use qemu_fdt_alloc_phandle
-instead here. That seems to work.
-
->
-> > +
-> > +    return name;
-> > +}
-> > +
-> >  static void finalize_fdt(TTAtlantisState *s)
-> >  {
-> >      uint32_t aplic_s_phandle =3D next_phandle();
-> >      uint32_t imsic_s_phandle =3D next_phandle();
-> >      uint32_t periph_clk_phandle =3D next_phandle();
-> > +    uint32_t osc_24m_phandle =3D next_phandle();
-> > +    uint32_t prcm_rcpu_phandle;
-> >      void *fdt =3D MACHINE(s)->fdt;
-> >
-> >      create_fdt_cpu(s, s->memmap, aplic_s_phandle, imsic_s_phandle);
-> > @@ -348,6 +377,34 @@ static void finalize_fdt(TTAtlantisState *s)
-> >                      aplic_s_phandle);
-> >
-> >      create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
-> > +    create_fdt_clk(fdt, "osc_24m", 24000000, osc_24m_phandle);
->
-> With the PRCM enabled the UART and I2C can get a real clock? So we can
-> drop the periph-clk node and modify create_fdt_i2c as well as
-> create_fdt_uart to use the real PRCM phandles. This will shake out any
-> issues with how you're wiring up the device tree too.
-
-Updated.
-
->
-> > +
-> > +    g_autofree char *rcpu_name =3D create_fdt_prcm(fdt,
-> > +        &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
-> > +    prcm_rcpu_phandle =3D qemu_fdt_get_phandle(fdt, rcpu_name);
->
-> This is a great function that I didn't know of when I wrote
-> next_phandle(). I'm all for using it, but lets swap the entire file
-> over at once.
-
-I would like to keep this series limited to adding the PRCM, this
-cleanup can be done in a subsequent series.
-
->
-> > +    qemu_fdt_setprop_cells(fdt, rcpu_name, "clocks", osc_24m_phandle);
-> > +    qemu_fdt_setprop_cells(fdt, rcpu_name, "assigned-clocks",
-> > +                           prcm_rcpu_phandle, TT_ATL_CLK_RCPU_ROOT,
-> > +                           prcm_rcpu_phandle, TT_ATL_CLK_NOCC_CLK);
-> > +    qemu_fdt_setprop_cells(fdt, rcpu_name, "assigned-clock-parents",
-> > +                           prcm_rcpu_phandle, TT_ATL_CLK_RCPU_PLL,
-> > +                           prcm_rcpu_phandle, TT_ATL_CLK_NOC_PLL);
->
-> > @@ -545,6 +602,43 @@ static void tt_atlantis_machine_init(MachineState =
-*machine)
-> >      serial_mm_init(system_memory, s->memmap[TT_ATL_UART1].base, 2,
-> >                     qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ),
-> >                     115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
-> > +
-> > +    /* Add rcpu prcm block */
-> > +    object_initialize_child(OBJECT(s), "prcm-rcpu", &s->prcm[0],
-> > +                            TYPE_TT_ATLANTIS_PRCM_RCPU);
-> > +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[0]), &error_fatal);
-> > +    memory_region_add_subregion(system_memory,
->
-> Since you're already sending a v3, can you rebase it on this series pleas=
-e:
->
->  https://lore.kernel.org/qemu-riscv/20260831021500.82565-1-joel@jms.id.au=
-/
->
-> Aside from code shuffling, you will pass s->memory to
-> memory_region_add_subregion, the _realize calls go in
-> tt_atlantis_soc_realize, and the initalise calls go in
-> tt_atlantis_soc_init.
-
-Will do.
-
->
-> > +                                s->memmap[TT_ATL_PRCM_RCPU].base,
-> > +                                sysbus_mmio_get_region(
-> > +                                    SYS_BUS_DEVICE(&s->prcm[0]), 0));
-> > +
->
-> > diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlan=
-tis.h
-> > index 7f7d4a5a59..20bcdfeb52 100644
-> > --- a/include/hw/riscv/tt_atlantis.h
-> > +++ b/include/hw/riscv/tt_atlantis.h
->
-> > @@ -59,6 +62,22 @@ enum {
-> >      TT_ATL_SAPLIC,
-> >      TT_ATL_SIMSIC,
-> >      TT_ATL_UART1,
-> > +    TT_ATL_PRCM_RCPU,
-> > +    TT_ATL_PRCM_HSIO,
-> > +    TT_ATL_PRCM_PCIE,
-> > +    TT_ATL_PRCM_MM,
-> > +};
-> > +
-> > +/* RCPU PRCM Clock IDs */
->
-> Do these come from
-> include/dt-bindings/clock/tenstorrent,atlantis-prcm-rcpu.h in linux?
-> Add a comment.
-
-Yes.
-
-
-
->
-> > +enum {
-> > +    TT_ATL_CLK_RCPU_PLL =3D 0,
-> > +    TT_ATL_CLK_RCPU_ROOT =3D 1,
-> > +    TT_ATL_CLK_NOC_PLL =3D 25,
-> > +    TT_ATL_CLK_NOCC_CLK =3D 26,
-> > +    TT_ATL_CLK_HSIO_PLL =3D 54,
-> > +    TT_ATL_CLK_PCIE_PLL =3D 55,
-> > +    TT_ATL_CLK_MM_PLL0 =3D 56,
-> > +    TT_ATL_CLK_MM_PLL1 =3D 57,
-> >  };
-> >
-> >  #endif
-> >
-> > --
-> > 2.43.0
-> >
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
