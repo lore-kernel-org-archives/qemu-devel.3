@@ -4,64 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5B4C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 07:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA99C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 07:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x22Gy-0008Fa-3O; Thu, 03 Sep 2026 03:54:12 -0400
+	id 1x22Jh-0000dP-6Y; Thu, 03 Sep 2026 03:57:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x22Gv-0008FN-MY; Thu, 03 Sep 2026 03:54:09 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x22Gt-0005Lr-22; Thu, 03 Sep 2026 03:54:09 -0400
-Received: from [172.21.96.1] (unknown [124.16.137.194])
- by APP-03 (Coremail) with SMTP id rQCowADn8kCXJ5lqiQHQBg--.16018S3;
- Thu, 03 Sep 2026 15:54:00 +0800 (CST)
-From: Wang Yang <wangyang25@otcaix.iscas.ac.cn>
-To: Alistair.Francis@wdc.com, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com,
- chao.liu@processmission.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH 2/5] target/riscv: save ELP in MPELP for RNMI exceptions
-In-Reply-To: <d0de80b7fbf7981fceb58f921580616e3751745b.camel@wdc.com>
-References: <cover.1787489230.git.wangyang25@otcaix.iscas.ac.cn>
- <ce36a27e6346228b12c926a6f95835521ba56f86.1787489230.git.wangyang25@otcaix.iscas.ac.cn>
- <d0de80b7fbf7981fceb58f921580616e3751745b.camel@wdc.com>
-Message-ID: <178842203941.34748.15055654521332091813@otcaix.iscas.ac.cn>
+ (Exim 4.90_1) (envelope-from <3138947285@qq.com>) id 1x22Je-0000cv-Di
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 03:56:59 -0400
+Received: from out203-205-221-149.mail.qq.com ([203.205.221.149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <3138947285@qq.com>) id 1x22Jb-0005jy-EP
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 03:56:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1788422208; bh=ecihUJvTXqtI8yMcYIIzf34Sfa1kpNexUvrECdtHbdM=;
+ h=From:To:Cc:Subject:Date;
+ b=retA50Mg9HeYO1IZjr110w8jh7r+IW0UCkUbKbLO02oFY2B6nBubCk5CXNSWfDEuG
+ Mt6w5PDXsRVTAAbVsc1vaNphxtuLbRnc71Ce/qQRxq0MgA5MOwuasXwO2q0eBSMzzd
+ RkudCqLRwIONfSzOVxuynBy1SOjHNsiR3Wp/xAWM=
+Received: from Win11-9700X.localdomain
+ ([240e:398:adf0:2560:dc86:1426:97f0:785b])
+ by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+ id E2E3F2E2; Thu, 03 Sep 2026 15:56:46 +0800
+X-QQ-mid: xmsmtpt1788422206to5dkrs1n
+Message-ID: <tencent_FA380D5D8DA060298F4F0B220D3D00E45A08@qq.com>
+X-QQ-XMAILINFO: MOnz+xTS1+9i381h+Lwe0b6rxKsXg3AeVrJ7M75v5tx3kbpagQUM2P9+I7rUUZ
+ lyY4vv15ncZr35wzNx9qjALlFv5vtaD+YPspzmcCoxhmpqISkX3Mi+rZ7+wQAgoBqVF5oV+z1nU/
+ iHyEzMnNn18d+Gc/OM1qDwSYykA8G74AKkagLdmYPMuUwiEhQJkjC4AYnltERr/2RHpdZYmVAe+X
+ eLh5+gRgAcNg+MYwvSEgkSmx1uCZj1sxwiO8Ck6yfNC/pUT8CxBGGIK08D8wVNb1YrSZwLYnK8Re
+ NvuYDYd+OI+ikKPY0lWQXPrEYjEKB7WbQn/QwXe7LyePf+OuNYFSOhlfix3pKeZZkK/h1/FF9oCe
+ XrQniEizTzySzLwO1q7VmKGfby6gkF+sFonifZUoxUkpGV9psEC4768/9QgIDN/vDz19QKaeeCNC
+ gWi4MremEuPtfYo9JB1ewjU2pMsL+aFvr6+2gERYcITXQcrC/YZqKPaWPPAfE32yDjtFxtVyOQSD
+ mN6W+Ew35biRdCs8wZVk/eCYP65hnysp+B6sXimXodAswpbjO5B7osVPDHlsu3aC2r3lA7Ps9ZxZ
+ nLZinmV2gO+jIwSQfglCJ8tDfCw6zQpGy8YEUi0t7muFSVHZcMoHrDhdWiVyoNG2qBzr70EhbkLO
+ iR3afGxAGiDwtnibj0eNYToqQGFpfG/fDev6wSA+0eHFikKIE7rL6+QeGs+BD5jFpytUM7G6ida+
+ GuF0fUxbYM6/QtvwEv8IwzkJMoGS3190igb1qN2IY0Hwjl+YPOeO8hFtTMOdWOuQLzC4cNDzyLJY
+ i7eOXEBOaQcIjdo2PVKhDlHpOIZ2ySa5b+WA0hl3pPBM+h8b1NHgnvFaop5Ct//JadulXxAbZRhY
+ oYYWt7dd5VqbcOSfjVkIO7zhdgfmmMhd/hDuo+EN8Txg2WSr3txM0Vd2+cFgD1SGKJ30QNvJ6dJi
+ 4ExDsYXP5YH47BXVufdnOEwyxJ499CGBSaypE3vhb3xraL6WaqyBEVkesjDcy/GulJtDY5y/zEv9
+ Num6dJUvbj+ZHV3zmhZ+dehDM5mmQ=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-CM-TRANSID: rQCowADn8kCXJ5lqiQHQBg--.16018S3
-X-Coremail-Antispam: 1UD129KBjvdXoW7GrykJw1DGw47Xw13AFW3trb_yoWftFbE9F
- 17J3sIk3W8Zw45W3W3trnxZr9Fgr98Xr1rAw4DJr1qvw1kZF9rAa1kur15ur1aqay0qrna
- krsxW3y7ur92gjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUb3AYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
- 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
- 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
- cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z2
- 80aVCY1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28I
- cVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx
- 0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x02
- 62kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GF4l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
- 0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
- zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
- 4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
- CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
- nIWIevJa73UjIFyTuYvjxU45rcUUUUU
-X-Originating-IP: [124.16.137.194]
-Date: Thu, 3 Sep 2026 15:54:01 +0800 (CST)
-X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: base64
+From: Jiajun Liang <3138947285@qq.com>
+To: qemu-devel@nongnu.org
+Cc: pbarbuda@microsoft.com, mohamed@unpredictable.fr
+Subject: [PATCH] whpx: intercept CPUID leaf 4 so guests get the host cache
+ topology
+Date: Thu, 03 Sep 2026 15:56:46 +0800
+X-OQ-MSGID: <178842220603.9862.3674685426630821508@qq.com>
+X-Mailer: python-smtplib (git-send-email equivalent)
+Received-SPF: pass client-ip=203.205.221.149; envelope-from=3138947285@qq.com;
+ helo=out203-205-221-149.mail.qq.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,24 +82,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
-
-Thank you for the feedback, and sorry that the commit message was unclear.
-
-This patch fixes the Smrnmi and Zicfilp case where an M-mode exception occurs=
- with mnstatus.NMIE=3D0. QEMU currently saves ELP in mnstatus.MNPELP when red=
-irecting to the RNMI exception vector, but this path returns with MRET, which=
- restores ELP from mstatus.MPELP. As a result, ELP is lost and a subsequent i=
-ndirect branch requiring a landing pad may avoid the expected software-check =
-exception. The patch saves ELP in mstatus.MPELP for this path; the true RNMI =
-interrupt path using MNPELP and MNRET is unchanged.
-
-I also found that Zephyr Li has submitted an equivalent fix, including a TCG =
-regression test: https://www.mail-archive.com/qemu-devel@nongnu.org/msg122208=
-4.html. Since that patch fixes the same issue, I will not submit a duplicate =
-revision. Please let me know if any further clarification is needed.
-
-Best regards,
-Wang Yang
+RnJvbSA4OWM4Njg0MDhhMmI3MWY4MzhjNjk2NGQ0NDYxYzQ4MGExMDhkMGU3IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBKaWFqdW4gTGlhbmcgPDMxMzg5NDcyODVAcXEuY29tPgpEYXRl
+OiBNb24sIDMxIEF1ZyAyMDI2IDE4OjQ0OjQyICswODAwClN1YmplY3Q6IFtQQVRDSF0gd2hweDog
+aW50ZXJjZXB0IENQVUlEIGxlYWYgNCBzbyBndWVzdHMgZ2V0IHRoZSBob3N0IGNhY2hlCiB0b3Bv
+bG9neQoKVGhlIGh5cGVydmlzb3IgYW5zd2VyZWQgQ1BVSUQgbGVhZiA0IChkZXRlcm1pbmlzdGlj
+IGNhY2hlIHBhcmFtZXRlcnMpCml0c2VsZiBiZWNhdXNlIGxlYWYgNCB3YXMgbm90IGluIHRoZSBw
+YXJ0aXRpb24ncyBDUFVJRCBleGl0IGxpc3QuIEl0cwphbnN3ZXIgZGVnZW5lcmF0ZXMgb24gdGhp
+cyBzZXR1cDogdGhlIGZpcnN0IHN1YmxlYWYgcmVwb3J0cyBjYWNoZSB0eXBlIDAKKG5vIG1vcmUg
+Y2FjaGVzKSwgc28gYSBndWVzdCBkZXJpdmluZyBpdHMgY29yZSBjb3VudCBmcm9tCmxlYWY0LkVB
+WFszMToyNl0rMSBmYWxscyBiYWNrIHRvIDEgY29yZSBwZXIgcGFja2FnZSB3aGlsZSBsZWFmIDEg
+c3RpbGwKcmVwb3J0cyAxNiBsb2dpY2FsIHByb2Nlc3NvcnMuIFhOVSB0aGVuIGNvbXB1dGVzCm5Q
+VGhyZWFkc1BlckNvcmUgPSAxNiAvIDEgYW5kIGRpdmlkZXMgYnkgemVybyBkb3duc3RyZWFtIGlu
+CmNwdV90aHJlYWRfYWxsb2MgZHVyaW5nIHNtcF9pbml0IChrZXJuZWwgcGFuaWMsIGRpdmlkZSBl
+cnJvcikuCgpBZGQgbGVhZiA0IHRvIHRoZSBDUFVJRCBleGl0IGxpc3Qgc28gUUVNVSdzIGNwdV94
+ODZfY3B1aWQgYW5zd2VycyBpdAp3aXRoIHRoZSBjb25maWd1cmVkIGNhY2hlIHRvcG9sb2d5IGlu
+c3RlYWQuCgpDb250cmFjdDogSW50ZWwgU0RNIFZvbC4yIENQVUlEIGxlYWYgNCBkZWZpbmVzIEVB
+WFszMToyNl0gYXMgdGhlCm1heGltdW0gbnVtYmVyIG9mIGFkZHJlc3NhYmxlIElEcyBmb3IgbG9n
+aWNhbCBwcm9jZXNzb3JzIHNoYXJpbmcgdGhpcwpjYWNoZTsgUUVNVSBidWlsZHMgdGhhdCBmcm9t
+IGVudi0+Y2FjaGVfaW5mby4KClZlcmlmaWVkIG9uIHRoZSB4ODYgbWFjT1MgLyBXSFBYIHBhdGh3
+YXkgKFdpbmRvd3MgMTEgaG9zdCk6IHRoZSBndWVzdApub3cgcXVlcmllcyBsZWFmIDQgKHByZXZp
+b3VzbHkgaXQgbmV2ZXIgcmVhY2hlZCBRRU1VKSwgY29yZXMgcGVyIHBhY2thZ2UKaXMgZGVyaXZl
+ZCBhcyAxNiwgdGhlIGRpdmlkZSBlcnJvciBkaXNhcHBlYXJzLCBhbmQgdGhlIGd1ZXN0IGFkdmFu
+Y2VzCnBhc3Qgc21wX2luaXQgdGhyb3VnaCBWTSBib290c3RyYXAsIHNjaGVkdWxlciBpbml0LCBh
+bmQgTWFjaCBvYmplY3QKc2V0dXAuCgpTaWduZWQtb2ZmLWJ5OiBKaWFqdW4gTGlhbmcgPDMxMzg5
+NDcyODVAcXEuY29tPgotLS0KIHRhcmdldC9pMzg2L3docHgvd2hweC1hbGwuYyB8IDIgKy0KIDEg
+ZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBh
+L3RhcmdldC9pMzg2L3docHgvd2hweC1hbGwuYyBiL3RhcmdldC9pMzg2L3docHgvd2hweC1hbGwu
+YwppbmRleCAxMTNmNzlhLi5hOWU3NGM5IDEwMDY0NAotLS0gYS90YXJnZXQvaTM4Ni93aHB4L3do
+cHgtYWxsLmMKKysrIGIvdGFyZ2V0L2kzODYvd2hweC93aHB4LWFsbC5jCkBAIC0zMDM5LDcgKzMw
+MzksNyBAQCBpbnQgd2hweF9hY2NlbF9pbml0KEFjY2VsU3RhdGUgKmFzLCBNYWNoaW5lU3RhdGUg
+Km1zKQogICAgIFdIVl9QUk9DRVNTT1JfRkVBVFVSRVNfQkFOS1MgcHJvY2Vzc29yX2ZlYXR1cmVz
+OwogICAgIFdIVl9QUk9DRVNTT1JfUEVSRk1PTl9GRUFUVVJFUyBwZXJmbW9uX2ZlYXR1cmVzOwog
+Ci0gICAgVUlOVDMyIGNwdWlkRXhpdExpc3RbXSA9IHsweDAsIDB4MSwgMHg2LCAweDcsIDB4Yiwg
+MHhkLCAweDE0LCAweDI0LCAweDI5LCAweDFFLAorICAgIFVJTlQzMiBjcHVpZEV4aXRMaXN0W10g
+PSB7MHgwLCAweDEsIDB4NCwgMHg2LCAweDcsIDB4YiwgMHhkLCAweDE0LCAweDI0LCAweDI5LCAw
+eDFFLAogICAgICAgICAweDQwMDAwMDAwLCAweDQwMDAwMDAxLCAweDQwMDAwMDEwLCAweDgwMDAw
+MDAwLCAweDgwMDAwMDAxLAogICAgICAgICAweDgwMDAwMDAyLCAweDgwMDAwMDAzLCAweDgwMDAw
+MDA0LCAweDgwMDAwMDA3LCAweDgwMDAwMDA4LAogICAgICAgICAweDgwMDAwMDBBLCAweDgwMDAw
+MDIxLCAweDgwMDAwMDIyLCAweEMwMDAwMDAwLCAweEMwMDAwMDAxfTsKLS0gCjIuNTUuMAoK
 
 
