@@ -4,91 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD892C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32F2C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2AnY-0000PW-By; Thu, 03 Sep 2026 13:00:24 -0400
+	id 1x2Aq3-0001ds-VJ; Thu, 03 Sep 2026 13:02:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x2AnX-0000Oz-7T
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:00:23 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x2AnV-0002R3-33
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:00:22 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-39647aa9d52so76160a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1788454819; x=1789059619; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xMzA1Edr4/9AcwAAKxC0Ug+VONOQc457rjo8K3c+xXg=;
- b=N9t7JbtgbQS2qGUZ6v2wjJAILQK2STI1QtMCRB233DpKnxF3fZDQ+WXbQGtKJ41mB9
- 3v/s2pDzL6ptIJ+7Oeri5eXlHAwv/uuFQpEpXzw8ZAb/AplUXg988IYQnUGPsSUrezH1
- RgaFvIfS5+E0mUKNUY8nYo9PIipUYx73BYJt+iKSjXPXT5cOmXhfFrsNYcRGK8Pq0HMU
- PeDBIVc0h9vOoPkiuWCsnYnNmpkcmH6cc6RLwMf2sCWBhqRcQsvoNnO4gIz7/ebw5FaY
- 1MPfqifyEw/f1LJTdS607nsWsa6SwmGLHi4vL61RVGp4fgtjepVepf9vKSb85v5NNx7M
- /Kyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788454819; x=1789059619;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xMzA1Edr4/9AcwAAKxC0Ug+VONOQc457rjo8K3c+xXg=;
- b=sKrXRvJcLmHGc4KjCof0ulxEcmKe8H49/PzOlYmMpc51cEd2XgvEtZD4gQPnmkR1mv
- +zZLT9UewdxHT3q9vkQAFupnm9wMs6+5DsJxzPTgNtrpHIBtRt4xx8NfYwcK+1BDFPDC
- P62Oam+LJ9f8LTJ2+x7JYLBZjxw4jbDfUjeqvvSOKJaIX4HWNGdxiN+XmJs4EjTkhHJ3
- /taatq+orCcpVBWWLwoXNSA62raYt84PYA27q0zuWanAybsFhZaWuEFYPtCYSUmUX4Ml
- C8OCoqK+CcPps50DlX6KHhKVbVrSQLHl8SihRe6COTke1Akx73SbtB8dxvMKLr5V4pZg
- mS2w==
-X-Gm-Message-State: AFuF++lJebpYMmBEfwpslGWkh7NuLERNWCOLjEE0e4ZycHBUItLCjY4g
- 4S6vLaYq5WBAJHtKtDAOYgsBfaLpZZoWwtbJLnbBQU2NK9rGbSeuuZouvO/zT1Ii1kPaezHwaCn
- MTqP1JUpEKaNs8lZYnrZemyKb+JNjmYSuPfmjkRGEpf9kjXuXeuxabTsi3AXei4QewuxgDzTAsH
- qpPmIkRq5lBqOF3yJLv0pdWe9orueTtH0k19ddrfEkUA==
-X-Gm-Gg: AYBFou2Fi0nNJ5gMU9eBdh5R7myWuea2XxnRcw24lHhzUDnbGyiWpjhN7RcOpzK40om
- ZWz6+Er2WfoPWSX4AI5zqFt6ShUhr0gJt3f8LT9aJRHG0CYi+22/oFn5kR7xFCUwmfR6Eu60ssh
- QlyrPFw3Njbd7acXC6DZPdZmRBBDz2HatJwJ93uBnZ3OSdq5oufJdq9t8UGB+URxUo78vRtAvYC
- HfMPhC4MUx+LsZ7St32FUULxKPwrzY44POJ9VeFfA0HMn8/U+RjJzMitGGQYHLWTls0j0TsuMhZ
- 8SzaVyyCeijQjilADxjpvopGr8s5Dg19dPCMZM2wHGGhbN91rOVshw/cXSse13oGP8RnsIRBsY3
- p4O58KF+fvyPsKbOKbCImNHj42TvbwuXK+9JQ2E+xGQ8fRdD/3WizDxqLg9rFyn/V/w8veLcT9+
- KmMx9wrdoiZo2qPw6N2mwr3uhQ1sMT6b2t0BJowSv0ZDI+RHjMeQeBbxKlnMyXLyyjfNJFqrspQ
- f5JCgP2L+VyY/1spwc93IhtObU6CWd7rVvT53P5rRYzSNc5jTsdTu6MpckptA4=
-X-Received: by 2002:a17:90a:c106:b0:398:9bd3:d6d6 with SMTP id
- 98e67ed59e1d1-39b13324513mr3809123a91.16.1788454817550; 
- Thu, 03 Sep 2026 10:00:17 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39b087b59a0sm6592159a91.17.2026.09.03.10.00.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 10:00:17 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH] tcg/riscv64: Set vtype before whole-register vector moves
-Date: Fri,  4 Sep 2026 01:00:11 +0800
-Message-ID: <20260903170011.3627720-1-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1x2Apy-0001d4-Ti; Thu, 03 Sep 2026 13:02:55 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1x2Apw-0003wl-Oo; Thu, 03 Sep 2026 13:02:54 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683G2sGg3304756; Thu, 3 Sep 2026 17:02:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=1O4VoD08ZQY/fldd9xMY9W/lBFWu4i
+ vqzu9C9wNklfg=; b=Q4pkaQ/ukXFXJdY1BS9+Pa6ITW8M/nOx8TyIQKfvleUZRm
+ 85/L8YdIWQ/WcCEkVRYuT7Dk7IdIidRVYqTxdY+KxlH2gl7jv5y+/OD95c5mAelM
+ ZaqvW5iRezhN9fwQKayV/EH/r6PN0hXyPkcoMGl3WrsqdjGQBLrVulCOv3B90tiD
+ DDZaY1xU7fHhLfY1qDZM8GQK6Hj5M/jDdzFZ6syg/GF/9qzAUWWz+xPLuJHBW7r5
+ 7SQlfl4XfnzzuJeHbyeWl5EcwbG6NF0k2e2VuMh5WWu2xEhFsW3i/hxPm65sCdE4
+ QMMymk3UcY4qI25q59pIKs3Vh8ecu7qTg9I307rA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbmuj5sfd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 17:02:43 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GuIX8029224;
+ Thu, 3 Sep 2026 17:02:43 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gecjas029-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 17:02:42 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683H20e646137718
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 3 Sep 2026 17:02:00 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA2A258054;
+ Thu,  3 Sep 2026 17:02:41 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2B1DD58052;
+ Thu,  3 Sep 2026 17:02:40 +0000 (GMT)
+Received: from [9.10.80.39] (unknown [9.10.80.39])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  3 Sep 2026 17:02:40 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------2GJXSkpPzWLK9PGXTwx56OJm"
+Message-ID: <a25c7e9e-8d5a-4fae-a978-dc4bf478249d@linux.ibm.com>
+Date: Thu, 3 Sep 2026 12:02:38 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/9] pnv/phb5: Update PHB4 to the latest PHB5 spec
+To: Saif Abrar <saif.abrar@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
+ fbarrat@linux.ibm.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, danielhb413@gmail.com, chalapathi.v@linux.ibm.com,
+ calebs@linux.ibm.com, milesg@linux.ibm.com, jishnuvw@linux.ibm.com,
+ adityag@linux.ibm.com, amachhiw@linux.ibm.com
+References: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: JIuepUVTECB73BON3pQLc7Q0Dz8YgrBl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0OCBTYWx0ZWRfX8X4hh0K6xqjy
+ 9iVGE1m1eaTJ58HU/TFDT1BgzM235en0kOABi1Cc4bCvlGHi+B/2tET1S9Wzyx3w+B37taeT0kC
+ 2kQouJXToPUZCtt3D3iYMtYa0g7Sr/HRqYh644Yg6UdfrXVY+X1j1dQHz0qpVuTHEASlvrIsqKP
+ dLH0sj74KDjylqkBO4GIGV8nADCJ3IG8cCbz3OTrCgYsoac700oSnrofeoc9xfRYJdpQNa0djhF
+ Fz6XN2tbuaewI+97VBHCMJFIV3v8/5ZKOcMTmYcbkJ5xYrnWZwjJEVke1hBIokmb2fVc8WHR1OI
+ iOJZvpUZhTLoNuyQz2P7V447I9CuGD3D9+KUAY5EdvELKVKFxT4xsyC0S//p20f4YVC5ADRNDEX
+ QK7Z8fbgChRrsVPq16IPmaaaGWW4mlvheyXR5OHHuF34NvPDpQ3ITtogGn9w8CgNhKU2XYEGaa0
+ diXBYh0P7uoibkMfDCg==
+X-Authority-Analysis: v=2.4 cv=Osl/DS/t c=1 sm=1 tr=0 ts=6a99a834 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=r77TgQKjGQsHNAKrUKIA:9 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=N1-tE7rikoB3GCo6Uq0A:9 a=QEXdDO2ut3YA:10
+ a=4_wdIL-PfShv4t6dFjgA:9 a=giwTRlLOBNvZoAlH:21 a=_W_S_7VecoQA:10
+ a=lqcHg5cX4UMA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0OCBTYWx0ZWRfX2NV9e1xckv28
+ 4J0HSsyS0XG9VGTouJBj8OQ5xf8sQrTvYMz7jqdH36ohs+qYSTye0lzxH+DNF0hcRsXeY9+fzt1
+ B0VnQkVV4KBfrodfhZGeTccX5gpHY8A=
+X-Proofpoint-ORIG-GUID: pEYmEYGqeLAU2bvUD_uFNRjFOCixwYpe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030148
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +130,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the RISC-V unpriviledge spec,
-  "vset{i}vl{i} and whole register loads and stores do not depend upon
-   vtype."
-The whole-register vector move instructions reuqire legal vtype that
-trap when VILL is set.
+This is a multi-part message in MIME format.
+--------------2GJXSkpPzWLK9PGXTwx56OJm
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The tcg_out_mov in tcg/riscv64 missed the vtype setup before emitting the
-OPC_VMVNR_V.
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
-Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- tcg/riscv64/tcg-target.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+Thanks, MAK
 
-diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 2ce9d47a633..fbfb4c44470 100644
---- a/tcg/riscv64/tcg-target.c.inc
-+++ b/tcg/riscv64/tcg-target.c.inc
-@@ -778,6 +778,8 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
-         {
-             int lmul = type - riscv_lg2_vlenb;
-             int nf = 1 << MAX(lmul, 0);
-+
-+            set_vtype_len(s, type);
-             tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1);
-         }
-         break;
--- 
-2.43.0
+
+On 8/31/2026 7:29 AM, Saif Abrar wrote:
+> Hello,
+> This patchset resolves the review comments for v5:
+> https://lore.kernel.org/qemu-devel/20260617095058.652789-1-saif.abrar@linux.ibm.com/
+>
+> Major updates include the following:
+> - Separate reset and register read/write methods for PHB5.
+> - PHB4 and PHB5 specific reset values.
+> - Read/write logic for registers added and removed in PHB5.
+> - General cleanups.
+>
+> Tested with 'make check' and 'make check-functional-ppc64'.
+>
+> Regards.
+>
+> Saif Abrar (9):
+>    qtest/phb5: Add testbench for PHB
+>    pnv/phb5: Add reset logic to PHB5
+>    pnv/phb5: Implement sticky reset logic in PHB5
+>    pnv/phb5: Implement read-only and write-only bits of registers
+>    pnv/phb5: Implement write-clear and return 1's on unimplemented reg
+>      read
+>    pnv/phb5: Set link-active status in HPSTAT and LMR registers
+>    pnv/phb5: Set link speed and width in the DLP training control
+>      register
+>    pnv/phb5: Implement IODA PCT table
+>    pnv/phb5: Mask off LSI Source-ID based on number of interrupts
+>
+>   hw/pci-host/pnv_phb.c               |  20 +-
+>   hw/pci-host/pnv_phb4.c              | 552 +++++++++++++++++++++++++---
+>   hw/pci-host/pnv_phb4_pec.c          |   2 +-
+>   hw/pci-host/pnv_phb5.c              | 197 +++++++++-
+>   hw/pci-host/pnv_phb5_pec.c          |   1 +
+>   hw/ppc/pnv.c                        |   1 +
+>   include/hw/pci-host/pnv_phb4.h      |  43 ++-
+>   include/hw/pci-host/pnv_phb4_regs.h |  58 ++-
+>   include/hw/pci-host/pnv_phb5.h      |  52 +++
+>   tests/qtest/meson.build             |   1 +
+>   tests/qtest/pnv-host-i2c-test.c     |  13 +-
+>   tests/qtest/pnv-phb-test.c          | 235 ++++++++++++
+>   tests/qtest/pnv-qtest-common.h      |  24 ++
+>   tests/qtest/pnv-xive2-common.h      |   7 +-
+>   14 files changed, 1102 insertions(+), 104 deletions(-)
+>   create mode 100644 include/hw/pci-host/pnv_phb5.h
+>   create mode 100644 tests/qtest/pnv-phb-test.c
+>   create mode 100644 tests/qtest/pnv-qtest-common.h
+>
+--------------2GJXSkpPzWLK9PGXTwx56OJm
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>
+    </p>
+    <div
+style="font-family: &quot;Consolas&quot;; font-size: 11.0pt; color: #000000;background-color: #FFFFFF; font-style: normal; font-weight: normal; text-decoration: none;">
+      <pre>Reviewed-by: Michael Kowal <a class="moz-txt-link-rfc2396E" href="mailto:kowal@linux.ibm.com">&lt;kowal@linux.ibm.com&gt;</a>
+
+Thanks, MAK
+</pre>
+    </div>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 8/31/2026 7:29 AM, Saif Abrar wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20260831123005.1485518-1-saif.abrar@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">Hello,
+This patchset resolves the review comments for v5:
+<a class="moz-txt-link-freetext" href="https://lore.kernel.org/qemu-devel/20260617095058.652789-1-saif.abrar@linux.ibm.com/">https://lore.kernel.org/qemu-devel/20260617095058.652789-1-saif.abrar@linux.ibm.com/</a>
+
+Major updates include the following:
+- Separate reset and register read/write methods for PHB5.
+- PHB4 and PHB5 specific reset values.
+- Read/write logic for registers added and removed in PHB5.
+- General cleanups.
+
+Tested with 'make check' and 'make check-functional-ppc64'.
+
+Regards.
+
+Saif Abrar (9):
+  qtest/phb5: Add testbench for PHB
+  pnv/phb5: Add reset logic to PHB5
+  pnv/phb5: Implement sticky reset logic in PHB5
+  pnv/phb5: Implement read-only and write-only bits of registers
+  pnv/phb5: Implement write-clear and return 1's on unimplemented reg
+    read
+  pnv/phb5: Set link-active status in HPSTAT and LMR registers
+  pnv/phb5: Set link speed and width in the DLP training control
+    register
+  pnv/phb5: Implement IODA PCT table
+  pnv/phb5: Mask off LSI Source-ID based on number of interrupts
+
+ hw/pci-host/pnv_phb.c               |  20 +-
+ hw/pci-host/pnv_phb4.c              | 552 +++++++++++++++++++++++++---
+ hw/pci-host/pnv_phb4_pec.c          |   2 +-
+ hw/pci-host/pnv_phb5.c              | 197 +++++++++-
+ hw/pci-host/pnv_phb5_pec.c          |   1 +
+ hw/ppc/pnv.c                        |   1 +
+ include/hw/pci-host/pnv_phb4.h      |  43 ++-
+ include/hw/pci-host/pnv_phb4_regs.h |  58 ++-
+ include/hw/pci-host/pnv_phb5.h      |  52 +++
+ tests/qtest/meson.build             |   1 +
+ tests/qtest/pnv-host-i2c-test.c     |  13 +-
+ tests/qtest/pnv-phb-test.c          | 235 ++++++++++++
+ tests/qtest/pnv-qtest-common.h      |  24 ++
+ tests/qtest/pnv-xive2-common.h      |   7 +-
+ 14 files changed, 1102 insertions(+), 104 deletions(-)
+ create mode 100644 include/hw/pci-host/pnv_phb5.h
+ create mode 100644 tests/qtest/pnv-phb-test.c
+ create mode 100644 tests/qtest/pnv-qtest-common.h
+
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------2GJXSkpPzWLK9PGXTwx56OJm--
 
 
