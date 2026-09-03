@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84041C624D6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CA4C624DB
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1zLi-0002qf-QQ; Thu, 03 Sep 2026 00:46:54 -0400
+	id 1x1zLY-0002oe-3w; Thu, 03 Sep 2026 00:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1x1zLh-0002qU-0N
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:53 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1x1zLX-0002oF-2s
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:43 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1x1zLe-0006WY-SB
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:52 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-cb5b8572b70so2086871a12.2
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:46:50 -0700 (PDT)
+ id 1x1zLV-0006Sd-Ht
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:42 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-cc1c9879395so1699161a12.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788410809; x=1789015609; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pnRjqUvuxbPjuZO7YdnutdWizBVmUQWo0boyEFmZtt4=;
- b=colxmeE/iHJeL+KAbMtE82uUWL88KwDgeLKIZPp0hHQLdORaNi9rILfcuIqoeoi+EA
- CClvRzfEx2PoT1rnMcOC4H4wybsOWTtrRZmb+uLqJxD72kADGZHqytPLxmUobkGdxJaR
- Uyu9xg26IWJHRUv0f8IX5goB8INyRvmA+Ixuw8BlVVyOyPpmwXyacHi3bPDACaPUVK6f
- 9UyQkaPP6WiAbs5Rx1SuYx5kW0UpNO4YmUz8PbMvEYEMewMwuL/t+RmIvjnYAm2wmCHn
- CCII10fcrUEn3o4ypyQhPYVJwMuzMRBTdhYDvOXMoQhA1Ig24Fe/bjsbOoduNsLrusaj
- eeAA==
+ d=gmail.com; s=20251104; t=1788410799; x=1789015599; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=kWP2woB/8m81b+iVlvJ2ZY+9X6MHVsSiQXqVNZ811e0=;
+ b=cKGK9O8fgQtIW2ZwRafKQQEopI1870ZWE2BzyVzGxp9J0zxcnTWbb9efMlN8q6w71S
+ pFwf9WoQ3FB57kEGGklrcpA8Sx/XMn90522yzadHOsB9oEVcgUJ5mT2qndTk7SK6Qu57
+ f8bbYYHRVMkpvhuOU4lefOpDru+uMJgWunzumLsstLwJKrzuHddl7L1wwepSB90+L2HJ
+ i8Du68lVnphMnAd6PwXuZsr90UsC96AdgcGMYGPPjcllmvzEeasaR/AtU05KGFFWSslW
+ TZmdkPeZqanxhOGpb0pjKEynut21BJ8cQeARphrmN26/+zyzCqTPJQqk8qjVbumfaWmk
+ HG1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788410809; x=1789015609;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pnRjqUvuxbPjuZO7YdnutdWizBVmUQWo0boyEFmZtt4=;
- b=NgL/hSrlFk/pXh3I+qkBlH4DEBkIngZb4skcIIg0C6iQ9eliXNr9i9oCKEAgfeFS7Q
- pNC9nHkW7aG2cEJGZ4rHxWoyzbkQjvVuqWDUSSEHExq93TTF4yhGYgwredgwUDAslLCm
- 5l0h6u0TpOP9tqpwHg5gS/qiIUmDuh/hjrGQj3PoF2BAhjGILjtZaC91LewPRjc4mYOj
- u37MeB3AnfKZWWNLTQUC44BZHNKrfhw5gj/x19s5dykHM8Oe8tYYVlL/t/7BUDsuv5E4
- HJjkxBguuYUZFnJ9mbkgbURpj29W7eSV1wMkcNECGWxuKOEMsGtEf2KCP1NpTwkZGXr6
- NlxQ==
-X-Gm-Message-State: AFuF++nvk69lqXHlYj9YsjdYnkWWHdHzSYY1ug5a7IpaJHL11m46kszq
- 1s5D2G6MUSM8Kkn/CHscsHs2JKI2rCHUMNcoswsD5COFO4H8aA2WijRsSaSMOKUB
-X-Gm-Gg: AYBFou2MurTv1b3Z+wjjr7BFR0o4K1foOslVYjWUABOQzjd9Io4fWxaK+wk+A3BihBO
- YJ6EE0p5w/YULVL0g0sBlG29Xf6zft1f7hqVL8HD4NeVHakNjHJ7laPAanNm2wxEiOwY/miI3UN
- AZ8Qc/u/iOzrnKxedfK6/mr8fTgchw1v4RcbnPgaOsa4i5whbBRYRGsfPEgTcPxlngyVNuS135A
- TW15u6JRKKk8mq4GIH531fhdODkVDWxWswVWkIB1VJqheBeMMM+BDSa7bWSTLbFRxBMVWaukgH2
- E3zyQzIrWmdssL3KmbVqr/A74UzxQi4CbtdXdBjVleEVuSMMEE/4MnXe92hD99FEYt/M+Snrz9P
- vZAoPNwpFwJjJnou3b27rK7j76klP+E6fXmxVaVtD0I9u0n4Zr8nvZNjTz1nvKrvtKehSEnUYLw
- WXZgz2tddvMkxOviftnxOEFPhsLs6n9xJNIetaIuxKmtCzG63YuscRHhNbxWWxDE7FT5LuYZPbN
- NVBMyPRbqKdf3Cs7A==
-X-Received: by 2002:a05:6a21:6da9:b0:3d0:88f5:f806 with SMTP id
- adf61e73a8af0-3d9af9ff7b4mr13915122637.15.1788410809252; 
- Wed, 02 Sep 2026 21:46:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788410799; x=1789015599;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=kWP2woB/8m81b+iVlvJ2ZY+9X6MHVsSiQXqVNZ811e0=;
+ b=pTNERsMyAXFSp+ZLKWgufHnNdT2ZKziDAE0EmwRfomG0Q/gda6ziAuqT57XUjiZF/c
+ 1/XcOBDFW+orBg90LZjiEpI0xZe/QYK2ZuWyBYxceZNCWNw4BCcorzd621neNnRCCMfF
+ iUYl2XMygaTIIKIZdR4OI4/bcqoiSvpdBsnzPomLO3d77c6A68aRWtTijexMDqN2xQb6
+ pSDLe9dUxDftSgJBIl3Wwqkjhewke6QflFnU902WJ8Jc84xOJtKwOlg5fizZFaD3bhqA
+ wyr31CT7IB4VWidRuQtlNvUicfmEYCRzu4edEhEHDr1S00maJ+pFYfw9LJPu3XbWD73M
+ bQ2w==
+X-Gm-Message-State: AFuF++nwYaHBupwqXq8LLgVs+FM0G5M1hGjeI2CxxJZYeH+4YId2+Bfs
+ rwbg5mJxPSIBPs5QI38FPYcPrw+ydMdGE7pAQ/6Q0mJxKpT8cqqnkQyIEjbziEim
+X-Gm-Gg: AYBFou2y5odoewlRNhzfHbGcJOfzJQ0NmrJT1hzGF1hqgVSY1FLz9YC59SJ0ze6mUlz
+ C9OFGLr+/bsqe5rujOGpW/D/5LaGnABNX6rRXjluTwgKZ5LjrbuRWh4N1IeBUHpfbRN3q87G6Jv
+ aUrr7pNqAbpHwYRNgvkzzi5lq5eBWtGnB3oh5zo1y8ZjbLd6ZYJawO7ovm0XMYWyEtINX4mtsA/
+ 9zw5VjEbss3bw1TveMCkGNNnIx1RP1ayacz0Gt+9fqFCGNsxkK7FBSgNAuybdYlTerHjRtBCIj7
+ iNrVjIPKY5P+MGCsge0Y5xPcdeMKk/jLzIat1CSPmVv+MYwLPQHr5/gw+wX4R+H8Qas5MvsaPIq
+ uW6z58gMrd8LIxqt3gpNI9sRkPAwemakDtu4rMsQ220/K0v7JuK5a+NcquI615IiyW/x9t6i5C3
+ lqS5gfRnN94ZBn+RO9NfEkhxbA8bH9kcUO6WSMLPjGfXYFmKUNB3t59n50N6WqLgB1cDyilaJH0
+ yodVyI8jh4HPKMN2lAR/CasxIXQOA==
+X-Received: by 2002:a05:6a21:394a:b0:3d3:ad3c:49aa with SMTP id
+ adf61e73a8af0-3d9ae7e091emr15983109637.24.1788410799230; 
+ Wed, 02 Sep 2026 21:46:39 -0700 (PDT)
 Received: from localhost.localdomain ([76.133.142.170])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1431994db8csm2337726c88.9.2026.09.02.21.46.48
+ a92af1059eb24-1431994db8csm2337726c88.9.2026.09.02.21.46.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Sep 2026 21:46:48 -0700 (PDT)
+ Wed, 02 Sep 2026 21:46:38 -0700 (PDT)
 From: 54weasels <54weasels@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	balaton@eik.bme.hu,
 	54weasels <54weasels@gmail.com>
-Subject: [PATCH v5 4/6] target/m68k: Extract Function Codes during TLB fills
-Date: Wed,  2 Sep 2026 21:45:17 -0700
-Message-ID: <20260903044626.24453-5-54weasels@gmail.com>
+Subject: [PATCH v5 0/6] Implement missing functionality and hooks in m68k to
+ support upcoming Sun-3 implementation
+Date: Wed,  2 Sep 2026 21:45:13 -0700
+Message-ID: <20260903044626.24453-1-54weasels@gmail.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260903044626.24453-1-54weasels@gmail.com>
-References: <20260903044626.24453-1-54weasels@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=54weasels@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=54weasels@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,116 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Why this change is made & How it will be used:
-The Motorola 68020 architecture utilizes 3-bit Function Codes (FC0-FC2) to distinguish between User/Supervisor Data and Program memory spaces during MMU translation. Previously, QEMU's TLB fills did not explicitly extract or pass these codes down to the translation hooks. This patch extracts the explicit Function Codes (either natively or via the `moves` instruction) and packs them into the `access_type` field. This is required for the upcoming Sun-3 emulation, whose external MMU hardware maps entirely different physical address spaces depending on the Function Code asserted on the bus.
+This series adds M68020/030-specific features to the m68k target that
+are required by the Sun-3 machine (series C) and its PROM/SunOS guests:
 
-Impact on existing functionality:
-This change introduces no functional impact to existing ColdFire or Mac/Quadra m68k emulation targets. The extraction logic gracefully defaults to standard mapping modes for platforms that do not implement a custom MMU intercept hook, preserving existing TLB behavior.
+  1/6: CAAR register stub for 68020/030 cache control
+  2/6: fsave/frestore fix for 68881 (non-68040) FPU frames
+  3/6: Edge-triggered NMI semantics for Level 7 interrupts
+  4/6: Function code extraction during TLB fills
+  5/6: Custom MMU intercept hook for Sun-3 transparent translation
+  6/6: Physical Bus Error and M68020 Format 0xB stack frames
 
-Signed-off-by: 54weasels <54weasels@gmail.com>
----
- target/m68k/cpu.c       |  4 ++--
- target/m68k/cpu.h       | 10 ++++++----
- target/m68k/helper.c    | 26 ++++++++++++++++++++++++++
- target/m68k/translate.c | 10 ++++++----
- 4 files changed, 40 insertions(+), 10 deletions(-)
+Changes since v4:
+  - Added Signed-off-by to all patches.
+  - Patch 2/6 (fsave): Addressed Zoltan's review — replaced redundant
+    M68040||FPU check with just M68K_FEATURE_FPU, removed unnecessary
+    if/else in frestore, moved Context: below --- separator.
+  - Patch 3/6 (NMI): Addressed Zoltan's review — nmi_pending cannot be
+    replaced by testing pending_level == 7. The flag captures the edge
+    transition (level < 7 → 7) required by Motorola's NMI specification,
+    while pending_level only reflects the current interrupt level.
+    Testing pending_level alone would produce level-triggered behavior,
+    firing on every interrupt check rather than once per edge.
+  - Rebased on current master.
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index 6012dc3186..5d90bb075e 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -52,8 +52,8 @@ static TCGTBCPUState m68k_get_tb_cpu_state(CPUState *cs)
-     flags = (env->macsr >> 4) & TB_FLAGS_MACSR;
-     if (env->sr & SR_S) {
-         flags |= TB_FLAGS_MSR_S;
--        flags |= (env->sfc << (TB_FLAGS_SFC_S_BIT - 2)) & TB_FLAGS_SFC_S;
--        flags |= (env->dfc << (TB_FLAGS_DFC_S_BIT - 2)) & TB_FLAGS_DFC_S;
-+        flags |= (env->sfc << TB_FLAGS_SFC_S_BIT) & TB_FLAGS_SFC_S;
-+        flags |= (env->dfc << TB_FLAGS_DFC_S_BIT) & TB_FLAGS_DFC_S;
-     }
-     if (M68K_SR_TRACE(env->sr) == M68K_SR_TRACE_ANY_INS) {
-         flags |= TB_FLAGS_TRACE;
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index 8f4dec4a40..aadaea770a 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -604,12 +604,14 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
- #define TB_FLAGS_MSR_S_BIT      13
- #define TB_FLAGS_MSR_S          (1 << TB_FLAGS_MSR_S_BIT)
- #define TB_FLAGS_SFC_S_BIT      14
--#define TB_FLAGS_SFC_S          (1 << TB_FLAGS_SFC_S_BIT)
--#define TB_FLAGS_DFC_S_BIT      15
--#define TB_FLAGS_DFC_S          (1 << TB_FLAGS_DFC_S_BIT)
--#define TB_FLAGS_TRACE          16
-+#define TB_FLAGS_SFC_S          (7 << TB_FLAGS_SFC_S_BIT) /* 3 Bits reserved */
-+#define TB_FLAGS_DFC_S_BIT      17
-+#define TB_FLAGS_DFC_S          (7 << TB_FLAGS_DFC_S_BIT) /* 3 Bits reserved */
-+#define TB_FLAGS_TRACE          20
- #define TB_FLAGS_TRACE_BIT      (1 << TB_FLAGS_TRACE)
- 
-+#define MMU_MOVES_FC_BASE       2 /* mmu_idx 2-9 correspond to FC 0-7 */
-+
- void dump_mmu(CPUM68KState *env);
- 
- #endif
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 93739ccda7..f3ee95441a 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -975,6 +975,32 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     int ret;
-     target_ulong page_size;
- 
-+    if (qemu_access_type == MMU_INST_FETCH) {
-+        access_type = ACCESS_CODE;
-+    } else {
-+        access_type = ACCESS_DATA;
-+        if (qemu_access_type == MMU_DATA_STORE) {
-+            access_type |= ACCESS_STORE;
-+        }
-+    }
-+
-+    /* Decode explicit Function Codes from moves instructions */
-+    if (mmu_idx >= MMU_MOVES_FC_BASE) {
-+        uint8_t fc = mmu_idx - MMU_MOVES_FC_BASE;
-+        access_type |= (fc << 8); /* Pack explicit FC into access type */
-+        if (fc != 1 && fc != 2) {
-+            access_type |= ACCESS_SUPER;
-+        }
-+    } else {
-+        /* Standard memory accesses map logically to normal M68K FCs */
-+        if (mmu_idx == MMU_KERNEL_IDX) {
-+            access_type |= ACCESS_SUPER;
-+            access_type |= ((qemu_access_type == MMU_INST_FETCH ? 6 : 5) << 8);
-+        } else {
-+            access_type |= ((qemu_access_type == MMU_INST_FETCH ? 2 : 1) << 8);
-+        }
-+    }
-+
-     if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
-         /* MMU disabled */
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index c89ef213ed..5ca25a4881 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -163,10 +163,12 @@ static void do_writebacks(DisasContext *s)
- #define IS_USER(s) 1
- #else
- #define IS_USER(s)   (!(s->base.tb->flags & TB_FLAGS_MSR_S))
--#define SFC_INDEX(s) ((s->base.tb->flags & TB_FLAGS_SFC_S) ? \
--                      MMU_KERNEL_IDX : MMU_USER_IDX)
--#define DFC_INDEX(s) ((s->base.tb->flags & TB_FLAGS_DFC_S) ? \
--                      MMU_KERNEL_IDX : MMU_USER_IDX)
-+#define SFC_INDEX(s) (MMU_MOVES_FC_BASE + \
-+                     (((s)->base.tb->flags & TB_FLAGS_SFC_S) >> \
-+                      TB_FLAGS_SFC_S_BIT))
-+#define DFC_INDEX(s) (MMU_MOVES_FC_BASE + \
-+                     (((s)->base.tb->flags & TB_FLAGS_DFC_S) >> \
-+                      TB_FLAGS_DFC_S_BIT))
- #endif
- 
- typedef void (*disas_proc)(CPUM68KState *env, DisasContext *s, uint16_t insn);
+54weasels (6):
+  target/m68k: Add dummy CAAR register
+  target/m68k: Fix fsave/frestore for 68881 FPU
+  target/m68k: Fix NMI pending for Level 7 interrupts
+  target/m68k: Extract Function Codes during TLB fills
+  target/m68k: Implement custom MMU intercept hook
+  target/m68k: Implement Physical Bus Error and Stack
+
+ target/m68k/cpu.c       |   4 +-
+ target/m68k/cpu.h       |  21 ++++-
+ target/m68k/helper.c    | 130 ++++++++++++++++++++++++++++-
+ target/m68k/op_helper.c | 175 ++++++++++++++++++++++++++--------------
+ target/m68k/translate.c |  30 ++++---
+ 5 files changed, 280 insertions(+), 80 deletions(-)
+
 -- 
 2.50.1 (Apple Git-155)
 
