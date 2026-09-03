@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FEF5C624D6
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5265AC624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:45:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28fB-0002pf-3g; Thu, 03 Sep 2026 10:43:37 -0400
+	id 1x28fG-0002vs-NP; Thu, 03 Sep 2026 10:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f8-0002mN-JL
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:34 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28fE-0002t8-2m
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:40 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f6-00044o-AX
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:34 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-482e067e908so2162475f8f.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28fC-00047p-3E
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:39 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-47de0093c42so2436511f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446610; x=1789051410; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788446617; x=1789051417; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=y+iZAgzaoiObj44pBZTJ06CwchhMM20VAZVaSA9mDmA=;
- b=NmtPjQXNoAyZvawbQJyQ3rxsQdX8JN9j0vipAZhOkVX2Ugc6bUt2Kf1BX9IPeMoxPV
- /khp7eDvsL68y+qGKTOE4Unfi0pgVeIQrbkWvow3cPuZaY5CMB6jI+IE+Y5po7ybZQZv
- jPRr0FHph2PHRgGgTw3bZbn6F+clBarZpsI1Fh7X7mxGrzDEydfgYoWHjbkCsuod8RiV
- gLcdOUAuYtEV/nPo9J1dQjb3cqRjxrXc66WXdXuWs+aycl7i63YISKqZKR3Un/lBwhGz
- wZTg0yW7l0JUvF2VFwsH15oVswLN6nflxyMGHlaLjoDpthvTWbqs1350gI5ccuvt/hkX
- Puxg==
+ bh=0cFMp897/2LhAMY3XQX2UH5MPXIwRH5TBMsVmASGwDU=;
+ b=TC88sOCsTcCsdPYf8QnwLerOYhHDu2YMaY5RF9dHp2A/yEWEGJzgnDzlkPZyJJ3Ja5
+ kp+Br9bm9oInV9vKLCHxTtJAcE4aZo2ZFQxGjfno5kvcuY66JvAouv0JaIN2lBIe6G45
+ pjco0hO5aJAIT44kRKYZrSvy0hJErSEu9zWqkPApFizc/+wjPtPsCRte2GxjXgnY6WSV
+ 5Vj2FadZ755FXLSvHai5zD7bN2Oj8kVESf8ERvmMbvH0AvaAHWTOzqzctetb84mXvHPk
+ sY8i7YvdzohJCainluYJiNSyVME3iwejLNYUiGi7Q6qWENJIFDMeOdQ/5Q8p/beSOT44
+ 5UhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446610; x=1789051410;
+ d=1e100.net; s=20251104; t=1788446617; x=1789051417;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=y+iZAgzaoiObj44pBZTJ06CwchhMM20VAZVaSA9mDmA=;
- b=i1VcQLbLip5ZTPs70cxyW5We90hmvYSsa++520vKTOC4PQ1nHo1gk7mDJR5EYDaCLi
- a0TYAWhXoGK6L/eK+JpjG4aHUuWWfARA7NOT/Nisfv3mADuZotfmXfj3kMUZ9TBmPkQA
- 6gLE4mVrd/kDIIUM2DbWaevKTJa847P/lRsJaXsB7umd8fuTw1tnYQOx0nlcmBvtjjid
- R5MULs6qbsDMRyCFhxixRCaMw0oUD5KiDA8p5KLkmMaA//wDvqU/xOxIJmz2Fxl5v4KT
- a0friMQluz3DjQ+9P/m/iT/t8FIOrXuD9mMyA8snmN3uFFTpkSgeRgrxpPX85jUlIbJA
- 9dnQ==
-X-Gm-Message-State: AFuF++l8kftizgpdwVguR6NUFHJJSg0AJm4H8mLuXIrYOpog9/HZ4uST
- nT0BKKNN2aBmPbk7+13cob+2GRz1k5TlerVTfxMpl4TkhM6Z8aKbj4wn00ZV4KS6Kkbg39FAnKY
- WQh0z
-X-Gm-Gg: AYBFou2wSQ9Y0StIngbphYj2YWKGpxKHB9r7r+3XNCk7h5GYLOVOCj+2iHXoUm1s+uZ
- eD4JHjZYdJ7D7QphEdJFggLh/jqx+ZU7sqP2opPTeExZsBRCs/rFahCHeQ5OQRX+04LQzzLc1eG
- vCW5ICtwkwpNWEKlHj2XsHY6/6FWMpPS8eGUMHYrN9Prka1LutstBTQkkBAlxYx/ruwdRHfP/H3
- 3dB1GkzQb+myYAxNALFPSzAUjqXQbb+keoC7CYONHDsYNwdNX/qPV8FMtbN+zNsfxlqumsRLHqY
- yqvU1i2lPnx3sYlP6xFHGrz6UxcMk2LbhNVWvbN5gaBWxXvud0hAdcOIC81dDc5ssVp5HEaZtER
- dQ4bbRof/yUnd8TLwPmuL6t15RD2SRVOqsF7mxYkA4jyMEBlj4xrSt1TrxE2wJM4eBmqoENl81n
- 8fwikLJfp+L9xvhlCO70h26wIa9iG+dP7x2UYgo7gclcKVPovt7ljje/a+
-X-Received: by 2002:a05:6000:208a:b0:484:3311:3702 with SMTP id
- ffacd0b85a97d-48488f2205dmr21923319f8f.25.1788446610124; 
- Thu, 03 Sep 2026 07:43:30 -0700 (PDT)
+ bh=0cFMp897/2LhAMY3XQX2UH5MPXIwRH5TBMsVmASGwDU=;
+ b=e/gXpMJMaY/KefuXdOCRIQaNuTm0PE1LbBXVtCES3xyXxDPm7ltb5UnGRkmgM4nB7v
+ 2AMyETL2aXAHfKTQhOk0JEM4tElUtbZ5DNbiUKvFXp8l6DXGjUzkZB/JRQctu8OSLIoP
+ UaFj8y0IjuxIAIGWAMBPDiQ2BeApLzDH3QNA5TFpjaJYL8IG3mjLAcANh2x4AMb5OsA9
+ Cy+04ERdEpg7i7DvZmeXt311KF04y61O0AM/G4bLwe5BOOaxku++zJWw+v/kHwSq3D3b
+ QWl2ZC+ARKDxoxT93udv55g4yxRvMHX0i3g0iY/j9jCtlRLa2Dm/2nA6CVxZEZnV1pb7
+ +o8Q==
+X-Gm-Message-State: AFuF++nAbAXJoBU9PDiqC+AjNWdfzOsKtI/wf2rQPKayr/MG0NuIwRrm
+ ss3C542RDEVhiI613gD4HgLioLjuDtGc++HM2pbP6r4x32M73mOktJBJwFLYEfwqJGgy8P6IQn0
+ aleiA
+X-Gm-Gg: AYBFou16+uF+Hhscv2iyRX96FDuBq/g373VvoWjqv0u9Rbp2dCQCHIspg0m7aFqnjgr
+ 27DSPTKRooMJzLtc3wM1oc2K78mgD0KXQoqvBhvmZDnXHq1VX+R7jZcIVynB/ksnSIoNJaNAiZ6
+ wbG0I7Y66em3vDpVSl5H2DZQmM0hJawq98XAG45kQ95aRvSxDPSiyUnJDvOxvxN1+jHZmws8cCi
+ ax7ycskJmgxozDKIxxyPeAXwHlpiLWg4id37Ry1BMXzYWYetq3//fJVA42fdOvNcB2ni4Ff4mIe
+ Pot5MvHaj9FQlnysvCrr/lEyqM11ybpGPw85JaNcuT6Gv3s4sLcWzZL/ETUks2R2KpsAkoRx9ou
+ yUsYjsy7pcPX+v3gSy1tu0pfK/7bEjycKIbYZBLD9LfT7k1+vMEYCLzNWOtLOgKYTyYhh+w21Q6
+ XXImlmvnXA7FF+7yP7fFdQtZ2iVYK8ryaKPKrQ1gsWHU8mXr1RJTXNMPcX
+X-Received: by 2002:a5d:5f53:0:b0:482:de48:c445 with SMTP id
+ ffacd0b85a97d-4858608849bmr1657791f8f.11.1788446616604; 
+ Thu, 03 Sep 2026 07:43:36 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.29
+ ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:29 -0700 (PDT)
+ Thu, 03 Sep 2026 07:43:36 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v7 16/25] parallels: reject a bitmap L1 entry outside the data
- area
-Date: Thu,  3 Sep 2026 16:41:34 +0200
-Message-ID: <20260903144143.2328870-17-den@openvz.org>
+Subject: [PATCH v7 22/25] iotests: cover the qemu-img bitmap operations on
+ parallels
+Date: Thu,  3 Sep 2026 16:41:40 +0200
+Message-ID: <20260903144143.2328870-23-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
 References: <20260903144143.2328870-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=den@openvz.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,156 +102,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Nothing checks where a bitmap L1 entry points. The entry is turned into
-an offset and the cluster is read from there, so the image decides which
-part of the file, if any, is deserialized as bitmap data.
+qemu-img-bitmaps drives convert --bitmaps and every qemu-img bitmap
+sub-command, but for qcow2 alone. It is built on a backing chain and a
+rebase, which parallels has neither of, so half of it could not run
+there and the format is left with no coverage of any of this.
 
-A short read on the protocol node is zero filled rather than refused, so
-an entry beyond the end of the file does not even fail: the bitmap
-quietly loads as completely clean. An entry below data_off deserializes
-the header and the BAT as bitmap data instead. Both cases used to be
-harmless in the sense that the extension was only parsed for read-only
-images, but the bitmap becomes writable and is stored back as
-authoritative once the image can be opened read-write.
+Cover what applies in the parallels test instead. A copy made with
+--bitmaps has to carry them, and raw has to refuse them. --merge and
+--clear leave the bitmap count alone, --remove-all sweeps it to zero,
+and --remove-all --add in one invocation leaves only the bitmap which
+was just added.
 
-Bound the entry the way parallels_check_outside_image() bounds a BAT
-entry: it has to address the data area of the image file. The offset
-computation is bounded first, as the entry is a 64 bit value coming from
-the image and the shift by BDRV_SECTOR_BITS would overflow.
+An image which was not closed correctly is left out. parallels-checks
+covers that already, next to the code which drops the bitmaps.
 
-The overflow case was reported as an I/O error before, so the test
-expectation changes along with it.
-
-Fixes: baefd977002e ("parallels: support bitmap extension for read-only mode")
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels-ext.c                         | 30 ++++++++++++++++++-
- .../qemu-iotests/tests/parallels-read-bitmap  | 23 +++++++++++---
- .../tests/parallels-read-bitmap.out           |  6 +++-
- 3 files changed, 53 insertions(+), 6 deletions(-)
+ tests/qemu-iotests/tests/parallels-bitmap     | 39 +++++++++++++++++++
+ tests/qemu-iotests/tests/parallels-bitmap.out | 12 ++++++
+ 2 files changed, 51 insertions(+)
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 6a889d86fa..17445d183b 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -71,9 +71,17 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
-     int ret = 0;
-     uint64_t offset, limit;
-     uint64_t bm_size = bdrv_dirty_bitmap_size(bitmap);
-+    int64_t file_size, data_start_off;
-     uint8_t *buf = NULL;
-     uint64_t i;
+diff --git a/tests/qemu-iotests/tests/parallels-bitmap b/tests/qemu-iotests/tests/parallels-bitmap
+index be0ba8185d..8ae9314114 100755
+--- a/tests/qemu-iotests/tests/parallels-bitmap
++++ b/tests/qemu-iotests/tests/parallels-bitmap
+@@ -273,6 +273,7 @@ stored = file_path('stored')
+ copy = file_path('copy')
+ STORED = '9b7b8b2e-1c4a-4d3f-8e6a-1f2d3c4b5a69'
+ OTHER = '11111111-2222-3333-4444-555555555555'
++MERGED = '22222222-3333-4444-5555-666666666666'
  
-+    file_size = bdrv_getlength(bs->file->bs);
-+    if (file_size < 0) {
-+        error_setg_errno(errp, -file_size, "Failed to get image file length");
-+        return file_size;
-+    }
-+    data_start_off = s->data_start << BDRV_SECTOR_BITS;
+ 
+ def read_header(off, fmt):
+@@ -434,3 +435,41 @@ log('--- and the image is still readable')
+ info_out = qemu_img('info', '-f', iotests.imgfmt, stored, check=False)
+ log('image opened' if info_out.returncode == 0
+     else iotests.filter_testfiles(info_out.stdout).strip())
 +
-     buf = qemu_try_blockalign(bs->file->bs, s->cluster_size);
-     if (!buf) {
-         error_setg(errp, "Failed to allocate a bitmap data cluster");
-@@ -101,7 +109,27 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
-         if (entry == 1) {
-             bdrv_dirty_bitmap_deserialize_ones(bitmap, offset, count, false);
-         } else {
--            int64_t host_off = entry << BDRV_SECTOR_BITS;
-+            int64_t host_off;
 +
-+            if (entry > INT64_MAX / BDRV_SECTOR_SIZE) {
-+                error_setg(errp, "Bitmap L1 entry %" PRIu64 " is out of range",
-+                           i);
-+                ret = -EINVAL;
-+                goto finish;
-+            }
-+            host_off = entry * BDRV_SECTOR_SIZE;
-+            if (host_off < data_start_off) {
-+                error_setg(errp, "Bitmap L1 entry %" PRIu64 " points before "
-+                           "the data area of the image", i);
-+                ret = -EINVAL;
-+                goto finish;
-+            }
-+            if (host_off > file_size - (int64_t)s->cluster_size) {
-+                error_setg(errp, "Bitmap L1 entry %" PRIu64 " points outside "
-+                           "the image file", i);
-+                ret = -EINVAL;
-+                goto finish;
-+            }
- 
-             ret = bdrv_pread(bs->file, host_off, s->cluster_size, buf, 0);
-             if (ret < 0) {
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-read-bitmap
-index 6990926d60..f5a1f33907 100755
---- a/tests/qemu-iotests/tests/parallels-read-bitmap
-+++ b/tests/qemu-iotests/tests/parallels-read-bitmap
-@@ -93,9 +93,10 @@ def extension(body, magic=EXT_MAGIC, checksum=True):
-     return struct.pack('<Q16s', magic, csum) + body
- 
- 
--def parallels_header(tracks, bat_entries, nb_sectors, ext_sector):
-+def parallels_header(tracks, bat_entries, nb_sectors, ext_sector, data_off=1):
-     return struct.pack('<16sIIIIIQIIIQ', b'WithouFreSpacExt', 2, 16, 0,
--                       tracks, bat_entries, nb_sectors, 0, 1, 0, ext_sector)
-+                       tracks, bat_entries, nb_sectors, 0, data_off, 0,
-+                       ext_sector)
- 
- 
- def write_sparse_image(body, tracks, nb_sectors, bat_entries, ext_sector):
-@@ -133,12 +134,14 @@ def report(name):
-             log(line.strip())
- 
- 
--def check(name, ext, tracks=1):
--    header = parallels_header(tracks, SECTORS, SECTORS, EXT_SECTOR)
-+def check(name, ext, tracks=1, data_off=1, pad=0):
-+    header = parallels_header(tracks, SECTORS, SECTORS, EXT_SECTOR, data_off)
-     with open(crafted, 'wb') as f:
-         f.write(header)
-         f.write(bytes(EXT_SECTOR * 512 - len(header)))   # BAT, unallocated
-         f.write(ext)
-+        if pad:
-+            f.truncate(EXT_SECTOR * 512 + tracks * 512 * (1 + pad))
- 
-     report(name)
- 
-@@ -192,6 +195,18 @@ bf = bitmap_feature([0xffffffffffffffff])
- check('bitmap L1 entry overflows',
-       extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)))
- 
-+# A cluster which is not there reads back as zeroes, as short reads on the
-+# protocol node are zero filled, so the bitmap would silently load as clean.
-+bf = bitmap_feature([8])
-+check('bitmap L1 entry past the image file',
-+      extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)))
++# qemu-img-bitmaps drives these for qcow2 alone, as it is built on a
++# backing chain and a rebase, which parallels has neither of.
 +
-+# An entry pointing at the header would deserialize the header as bitmap data.
-+bf = bitmap_feature([4])
-+check('bitmap L1 entry inside the header',
-+      extension(feature(BITMAP_MAGIC, len(bf)) + bf + feature(0, 0)),
-+      data_off=8, pad=16)
++log('--- bitmaps can not be preserved into raw')
++make_image(STORED)
++raw_out = qemu_img('convert', '--bitmaps', '-f', iotests.imgfmt, '-O',
++                   'raw', stored, copy, check=False)
++log('    ' + iotests.filter_testfiles(raw_out.stdout).strip())
 +
- # Largest cluster_size parallels_open() accepts, about 2 GiB.
- check('cluster_size beyond the file size',
-       extension(feature(0, 0)), tracks=0x7fffffff // 513)
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-read-bitmap.out
-index 13b10af5a4..ebfc0acb4d 100644
---- a/tests/qemu-iotests/tests/parallels-read-bitmap.out
-+++ b/tests/qemu-iotests/tests/parallels-read-bitmap.out
-@@ -33,7 +33,11 @@ qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 1536
- --- bitmap granularity 8388608
- qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 4294967296, expected a power of two of at least 512 bytes
- --- bitmap L1 entry overflows
--qemu-img: Could not open 'TEST_DIR/PID-crafted': Failed to read bitmap data cluster: Input/output error
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Bitmap L1 entry 0 is out of range
-+--- bitmap L1 entry past the image file
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Bitmap L1 entry 0 points outside the image file
-+--- bitmap L1 entry inside the header
-+qemu-img: Could not open 'TEST_DIR/PID-crafted': Bitmap L1 entry 0 points before the data area of the image
- --- cluster_size beyond the file size
++log('--- convert --bitmaps carries the bitmaps into the copy')
++make_image(STORED, OTHER)
++qemu_io('-f', iotests.imgfmt, '-c', 'write -P 0x11 1M 64k', stored)
++qemu_img('convert', '--bitmaps', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
++         stored, copy)
++copy_info = iotests.qemu_img_info('-f', iotests.imgfmt, copy)
++copy_data = copy_info.get('format-specific', {}).get('data', {})
++log('    %d bitmaps in the copy' % len(copy_data.get('bitmaps', [])))
++
++log('--- merging one bitmap into a new one')
++qemu_img('bitmap', '--add', '--merge', STORED, '-f', iotests.imgfmt,
++         stored, MERGED)
++log('    %d bitmaps stored' % len(bitmaps_reported()))
++
++log('--- clearing a bitmap keeps it in the image')
++qemu_img('bitmap', '--clear', '-f', iotests.imgfmt, stored, STORED)
++log('    %d bitmaps stored' % len(bitmaps_reported()))
++
++log('--- remove-all sweeps every bitmap of the image')
++qemu_img('bitmap', '--remove-all', '-f', iotests.imgfmt, stored)
++log('    %d bitmaps after remove-all' % len(bitmaps_reported()))
++
++log('--- remove-all with --add leaves only the new bitmap')
++make_image(STORED, OTHER)
++qemu_img('bitmap', '--remove-all', '--add', '-f', iotests.imgfmt,
++         stored, MERGED)
++log('    ' + ' '.join(bitmaps_reported()))
+diff --git a/tests/qemu-iotests/tests/parallels-bitmap.out b/tests/qemu-iotests/tests/parallels-bitmap.out
+index 994c67390e..df6f676106 100644
+--- a/tests/qemu-iotests/tests/parallels-bitmap.out
++++ b/tests/qemu-iotests/tests/parallels-bitmap.out
+@@ -92,3 +92,15 @@ read 65536/65536 bytes at offset 0
+     0 bitmaps stored
+ --- and the image is still readable
  image opened
- qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Format Extension is outside the image file
++--- bitmaps can not be preserved into raw
++    qemu-img: Format driver 'raw' does not support bitmaps
++--- convert --bitmaps carries the bitmaps into the copy
++    2 bitmaps in the copy
++--- merging one bitmap into a new one
++    3 bitmaps stored
++--- clearing a bitmap keeps it in the image
++    3 bitmaps stored
++--- remove-all sweeps every bitmap of the image
++    0 bitmaps after remove-all
++--- remove-all with --add leaves only the new bitmap
++    22222222-3333-4444-5555-666666666666
 -- 
 2.53.0
 
