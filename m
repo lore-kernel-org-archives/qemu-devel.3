@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CA4C624DB
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD5EC624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1zLY-0002oe-3w; Thu, 03 Sep 2026 00:46:44 -0400
+	id 1x1zLl-0002ri-AV; Thu, 03 Sep 2026 00:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1x1zLX-0002oF-2s
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:43 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1x1zLj-0002r0-Ht
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:55 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1x1zLV-0006Sd-Ht
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:42 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-cc1c9879395so1699161a12.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:46:40 -0700 (PDT)
+ id 1x1zLh-0006Wm-7N
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:46:55 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2d9db539a54so17432275ad.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 21:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788410799; x=1789015599; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=kWP2woB/8m81b+iVlvJ2ZY+9X6MHVsSiQXqVNZ811e0=;
- b=cKGK9O8fgQtIW2ZwRafKQQEopI1870ZWE2BzyVzGxp9J0zxcnTWbb9efMlN8q6w71S
- pFwf9WoQ3FB57kEGGklrcpA8Sx/XMn90522yzadHOsB9oEVcgUJ5mT2qndTk7SK6Qu57
- f8bbYYHRVMkpvhuOU4lefOpDru+uMJgWunzumLsstLwJKrzuHddl7L1wwepSB90+L2HJ
- i8Du68lVnphMnAd6PwXuZsr90UsC96AdgcGMYGPPjcllmvzEeasaR/AtU05KGFFWSslW
- TZmdkPeZqanxhOGpb0pjKEynut21BJ8cQeARphrmN26/+zyzCqTPJQqk8qjVbumfaWmk
- HG1Q==
+ d=gmail.com; s=20251104; t=1788410811; x=1789015611; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rQsPzQa7eqpjkTonKJlYkpSnhYjMbhwY9QKZd7KCfos=;
+ b=jJZ/9K/HifO+Wkszn8EJSp26yLvRm9h8AIBpUASlHuVCyMhDlhX56p3Qf+YM4n+1y6
+ g0UQGJp73qZm+eXJWPbkXnlE/md3io6QQAzmLY/0B+srDsnotAStWI+meB9+l/v1UmOr
+ na1PmOhQI//gUbfE1SwlCu2jvJPGPG6KG1neh3E/7sE666RcmyXx67J2VgvK8Cc0G5a5
+ e1fBIq3kOjxc5D8fER3lIrf15YumyouB7qnvcPQa8+1zTy79Y9GNzjHwoahEIzLsXp5Q
+ kjVK0TJaeBQEEEm9CGH3DEepwRujc9phUuiJp65U5yiGhQ7UW7jN7pV6SMxz4GTtzKQ3
+ qA/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788410799; x=1789015599;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=kWP2woB/8m81b+iVlvJ2ZY+9X6MHVsSiQXqVNZ811e0=;
- b=pTNERsMyAXFSp+ZLKWgufHnNdT2ZKziDAE0EmwRfomG0Q/gda6ziAuqT57XUjiZF/c
- 1/XcOBDFW+orBg90LZjiEpI0xZe/QYK2ZuWyBYxceZNCWNw4BCcorzd621neNnRCCMfF
- iUYl2XMygaTIIKIZdR4OI4/bcqoiSvpdBsnzPomLO3d77c6A68aRWtTijexMDqN2xQb6
- pSDLe9dUxDftSgJBIl3Wwqkjhewke6QflFnU902WJ8Jc84xOJtKwOlg5fizZFaD3bhqA
- wyr31CT7IB4VWidRuQtlNvUicfmEYCRzu4edEhEHDr1S00maJ+pFYfw9LJPu3XbWD73M
- bQ2w==
-X-Gm-Message-State: AFuF++nwYaHBupwqXq8LLgVs+FM0G5M1hGjeI2CxxJZYeH+4YId2+Bfs
- rwbg5mJxPSIBPs5QI38FPYcPrw+ydMdGE7pAQ/6Q0mJxKpT8cqqnkQyIEjbziEim
-X-Gm-Gg: AYBFou2y5odoewlRNhzfHbGcJOfzJQ0NmrJT1hzGF1hqgVSY1FLz9YC59SJ0ze6mUlz
- C9OFGLr+/bsqe5rujOGpW/D/5LaGnABNX6rRXjluTwgKZ5LjrbuRWh4N1IeBUHpfbRN3q87G6Jv
- aUrr7pNqAbpHwYRNgvkzzi5lq5eBWtGnB3oh5zo1y8ZjbLd6ZYJawO7ovm0XMYWyEtINX4mtsA/
- 9zw5VjEbss3bw1TveMCkGNNnIx1RP1ayacz0Gt+9fqFCGNsxkK7FBSgNAuybdYlTerHjRtBCIj7
- iNrVjIPKY5P+MGCsge0Y5xPcdeMKk/jLzIat1CSPmVv+MYwLPQHr5/gw+wX4R+H8Qas5MvsaPIq
- uW6z58gMrd8LIxqt3gpNI9sRkPAwemakDtu4rMsQ220/K0v7JuK5a+NcquI615IiyW/x9t6i5C3
- lqS5gfRnN94ZBn+RO9NfEkhxbA8bH9kcUO6WSMLPjGfXYFmKUNB3t59n50N6WqLgB1cDyilaJH0
- yodVyI8jh4HPKMN2lAR/CasxIXQOA==
-X-Received: by 2002:a05:6a21:394a:b0:3d3:ad3c:49aa with SMTP id
- adf61e73a8af0-3d9ae7e091emr15983109637.24.1788410799230; 
- Wed, 02 Sep 2026 21:46:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788410811; x=1789015611;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rQsPzQa7eqpjkTonKJlYkpSnhYjMbhwY9QKZd7KCfos=;
+ b=OkBoDf3Uvhhn8MNvI41k0BaTRbwvRR9xrlv5PuGTV79VJZmRnsZi9vb4rqUyBn9oUS
+ MuZhVU9YZpRxgRV8sL1MY8xXTQNPi8QQcaF5Wf0nLz16fIerR+2aFHrurfWgyJUej8u4
+ 3PqoeDprT46bemrlFRbzt4j6i1Gbx6jgGsmdzTvpLNkYGthDiNL7OlPU5NoYFvcC5bpa
+ kXmk0OfAUr0QbZoW7v1Uy/VHPe1ISeZhNePsZzB4qMMZYvNQ9yVj1u6EswjHhER0zPxp
+ 933yW3SWQhvKbjg3lLe7Odw61FpBbNr7+JPlcpQHKjWYg3Fzlzo3lcO2m4haPKFEqzLx
+ aA9w==
+X-Gm-Message-State: AFuF++kkGWJpRzHPaJNuzl0gxSrHzL1RMbZHqtYdAVLP97FK78CKXGJ+
+ j4h1o1hMmbqG9Hnvscu0Ijpo5Z4uQMLi4EtPTwoMwS6Asi3oRLPWGjmI3tgTJhYH
+X-Gm-Gg: AYBFou1OOxqJNsImuqC63XfOg8o1+x66Ha87GQBDwSwAaZNkkgc0uzASGRCPBzZn76m
+ PNzE8uttHzgs4jkGQfgOHlbHCiJKUoZOPwxzrZOtp7aWekGUzp+kcAKrmp3/huWV2+iGf4YlE8u
+ D8Wj8aZjYgD4ISw3ySpjkgItO00b8T7ngJjA42uoYjk4y7fJKj2FErXXmZ2uGaCh0Ath4zYRb08
+ E/QsZzWciKmt909Phl+xorx2qNjTzKoAJD8daiM8LiiDzg08wlqm9c+ed3OC5wjHW7NsRZIiRF9
+ 7/n0LpCaPbENCEjThYb/wzffEN2T+GIuiOpQjESQ9/FKVMO01CUkf94CNL7veVCY99n2rXeLS+1
+ R60vEzIm1anhsodv4ahEStutqpw/bdx94WvlRr6muUKSm1kmXFPXHV/gj0WpnvV0ha0PXT3do+n
+ HcqXOQtaNBR+0LiEGJQTrmmIMOeTqpGxLbV5aEIUsDsWKNHZ2C6d8GHVMDSWcsFOk+SA6HpafiB
+ suKk7t5LIhEsY70+A==
+X-Received: by 2002:a17:90b:1dd1:b0:398:a486:81ec with SMTP id
+ 98e67ed59e1d1-39aedf5b05fmr16960751a91.11.1788410811114; 
+ Wed, 02 Sep 2026 21:46:51 -0700 (PDT)
 Received: from localhost.localdomain ([76.133.142.170])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1431994db8csm2337726c88.9.2026.09.02.21.46.38
+ a92af1059eb24-1431994db8csm2337726c88.9.2026.09.02.21.46.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Sep 2026 21:46:38 -0700 (PDT)
+ Wed, 02 Sep 2026 21:46:50 -0700 (PDT)
 From: 54weasels <54weasels@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	balaton@eik.bme.hu,
 	54weasels <54weasels@gmail.com>
-Subject: [PATCH v5 0/6] Implement missing functionality and hooks in m68k to
- support upcoming Sun-3 implementation
-Date: Wed,  2 Sep 2026 21:45:13 -0700
-Message-ID: <20260903044626.24453-1-54weasels@gmail.com>
+Subject: [PATCH v5 5/6] target/m68k: Implement custom MMU intercept hook
+Date: Wed,  2 Sep 2026 21:45:18 -0700
+Message-ID: <20260903044626.24453-6-54weasels@gmail.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260903044626.24453-1-54weasels@gmail.com>
+References: <20260903044626.24453-1-54weasels@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=54weasels@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=54weasels@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,44 +102,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds M68020/030-specific features to the m68k target that
-are required by the Sun-3 machine (series C) and its PROM/SunOS guests:
+Why this change is made & How it will be used:
+Boards like the Sun-3 use an external custom MMU logic array rather than the standard 68851/68030 embedded MMU. This patch introduces a `custom_mmu_get_physical_address` opaque hook, allowing board initialization code to intercept TLB fills and delegate translation directly to the machine's external MMU implementation.
 
-  1/6: CAAR register stub for 68020/030 cache control
-  2/6: fsave/frestore fix for 68881 (non-68040) FPU frames
-  3/6: Edge-triggered NMI semantics for Level 7 interrupts
-  4/6: Function code extraction during TLB fills
-  5/6: Custom MMU intercept hook for Sun-3 transparent translation
-  6/6: Physical Bus Error and M68020 Format 0xB stack frames
+Impact on existing functionality:
+Zero impact on existing boards. If the hook is not explicitly registered by the board initialization code, the standard 68k MMU translation pipeline executes normally.
 
-Changes since v4:
-  - Added Signed-off-by to all patches.
-  - Patch 2/6 (fsave): Addressed Zoltan's review — replaced redundant
-    M68040||FPU check with just M68K_FEATURE_FPU, removed unnecessary
-    if/else in frestore, moved Context: below --- separator.
-  - Patch 3/6 (NMI): Addressed Zoltan's review — nmi_pending cannot be
-    replaced by testing pending_level == 7. The flag captures the edge
-    transition (level < 7 → 7) required by Motorola's NMI specification,
-    while pending_level only reflects the current interrupt level.
-    Testing pending_level alone would produce level-triggered behavior,
-    firing on every interrupt check rather than once per edge.
-  - Rebased on current master.
+Signed-off-by: 54weasels <54weasels@gmail.com>
+---
+ target/m68k/cpu.h    |  7 ++++
+ target/m68k/helper.c | 89 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+)
 
-54weasels (6):
-  target/m68k: Add dummy CAAR register
-  target/m68k: Fix fsave/frestore for 68881 FPU
-  target/m68k: Fix NMI pending for Level 7 interrupts
-  target/m68k: Extract Function Codes during TLB fills
-  target/m68k: Implement custom MMU intercept hook
-  target/m68k: Implement Physical Bus Error and Stack
-
- target/m68k/cpu.c       |   4 +-
- target/m68k/cpu.h       |  21 ++++-
- target/m68k/helper.c    | 130 ++++++++++++++++++++++++++++-
- target/m68k/op_helper.c | 175 ++++++++++++++++++++++++++--------------
- target/m68k/translate.c |  30 ++++---
- 5 files changed, 280 insertions(+), 80 deletions(-)
-
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index aadaea770a..b850997a00 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -156,6 +156,13 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+ 
++    /* Custom MMU intercept logic, if any (e.g. for Sun-3) */
++    void *custom_mmu_opaque;
++    int (*custom_mmu_get_physical_address)(void *env, hwaddr *physical,
++                                           int *prot, vaddr address,
++                                           int access_type,
++                                           hwaddr *page_size);
++
+     /* Fields from here on are preserved across CPU reset. */
+     uint64_t features;
+ } CPUM68KState;
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index f3ee95441a..1eef6dcaaf 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -920,6 +920,21 @@ hwaddr m68k_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+     int access_type;
+     target_ulong page_size;
+ 
++    access_type = ACCESS_DATA | ACCESS_DEBUG;
++    if (env->sr & SR_S) {
++        access_type |= ACCESS_SUPER;
++    }
++
++    if (env->custom_mmu_get_physical_address) {
++        hwaddr custom_page_size;
++        if (env->custom_mmu_get_physical_address(env, &phys_addr, &prot, addr,
++                                                 access_type,
++                                                 &custom_page_size) == 0) {
++            return phys_addr;
++        }
++        return -1;
++    }
++
+     if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
+         /* MMU disabled */
+         return addr;
+@@ -1001,6 +1016,80 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+         }
+     }
+ 
++    if (env->custom_mmu_get_physical_address) {
++        hwaddr custom_page_size;
++
++        /* Delegate translation to external board-specific MMU if registered */
++        ret = env->custom_mmu_get_physical_address(env, &physical, &prot,
++                                                   address, access_type,
++                                                   &custom_page_size);
++
++        if (likely(ret == 0)) {
++            tlb_set_page(cs, address & TARGET_PAGE_MASK,
++                         physical & TARGET_PAGE_MASK, prot,
++                         mmu_idx, custom_page_size);
++            return true;
++        }
++
++        if (probe) {
++            return false;
++        }
++
++        /* page fault */
++        cs->exception_index = EXCP_ACCESS;
++        env->mmu.ar = address;
++
++        if (m68k_feature(env, M68K_FEATURE_M68040)) {
++            env->mmu.ssw = M68K_ATC_040;
++            switch (size) {
++            case 1:
++                env->mmu.ssw |= M68K_BA_SIZE_BYTE;
++                break;
++            case 2:
++                env->mmu.ssw |= M68K_BA_SIZE_WORD;
++                break;
++            case 4:
++                env->mmu.ssw |= M68K_BA_SIZE_LONG;
++                break;
++            }
++            env->mmu.ssw |= M68K_TM_040_DATA;
++        } else {
++            /* M68020/030 Special Status Word (SSW) */
++            uint16_t ssw = 0x0100; /* DF - Data Fault */
++            switch (size) {
++            case 1:
++                ssw |= 0x0010;
++                break;
++            case 2:
++                ssw |= 0x0020;
++                break;
++            case 3:
++                ssw |= 0x0030;
++                break;
++            case 4:
++                ssw |= 0x0000;
++                break;
++            }
++            if (qemu_access_type != MMU_DATA_STORE) {
++                ssw |= 0x0040; /* RW - Read */
++            }
++            /* Function Code */
++            uint8_t fc;
++            if (mmu_idx >= MMU_MOVES_FC_BASE) {
++                fc = mmu_idx - MMU_MOVES_FC_BASE;
++            } else {
++                if (mmu_idx == MMU_KERNEL_IDX) {
++                    fc = (qemu_access_type == MMU_INST_FETCH) ? 6 : 5;
++                } else {
++                    fc = (qemu_access_type == MMU_INST_FETCH) ? 2 : 1;
++                }
++            }
++            ssw |= (fc & 7);
++            env->mmu.ssw = ssw;
++        }
++        cpu_loop_exit_restore(cs, retaddr);
++    }
++
+     if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
+         /* MMU disabled */
+         tlb_set_page(cs, address & TARGET_PAGE_MASK,
 -- 
 2.50.1 (Apple Git-155)
 
