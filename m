@@ -4,111 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0860DC624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B53EC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x29lD-0008SS-D9; Thu, 03 Sep 2026 11:53:55 -0400
+	id 1x29pS-0000uF-MA; Thu, 03 Sep 2026 11:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x29lA-0008SI-1f
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:53:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1x29pR-0000t9-9X; Thu, 03 Sep 2026 11:58:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x29l8-00066R-9R
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:53:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788450829;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=64O14QvlKYY21ie3+Vkw2ShSAJTWSPmpeu8FrWkV094=;
- b=OerQKzY8ueSkof7dkIxbyA41S/oO6cE2Lagnqocbuc3OqZlYVkEKCdA643plm5vude+2Dp
- ruUyBipyci6/5tomdVXy8r53CEa4g0DeCQx0UwZOTUH8EyJxWAt1E5PuiEcLqvI5cxrJdW
- teGLg3+UoxG/b7F61q5RWRJa4z+NdzU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-Ayz0u-POPXyRbLMKwvKsLw-1; Thu, 03 Sep 2026 11:53:47 -0400
-X-MC-Unique: Ayz0u-POPXyRbLMKwvKsLw-1
-X-Mimecast-MFC-AGG-ID: Ayz0u-POPXyRbLMKwvKsLw_1788450826
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49cc954a3edso52965e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788450826; x=1789055626; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=64O14QvlKYY21ie3+Vkw2ShSAJTWSPmpeu8FrWkV094=;
- b=VzoxeumuyWN3ytv94C9ZcxoVtT/93dGFfjUU71/zaICNQIzFNR7uCP/Hu0ShHMfD67
- 5thwHKfMTVkSQYlRPr46d41rx8gIK4057DjxulB4t/oI5HdOAwNMpuBpz2/0yg0ityTY
- j3gtFUwj5pxgkbLrvJyCa5iKoh9PPXuSHW9/LobryuC9SV91XXKGu7yZqk/eiuImP/S/
- JiLI89+cd0XjX1Zr9vvk3IpPug35YUNvy9NpD7xpsi2K6E/fYp3WmVCuUWibHHkMBMT8
- 1LZ0do71XEKCW0qc849AxNpif/1iBH4uiuaRU8AEEHwImDhn60I833QF5t78ULErtcIC
- IHWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788450826; x=1789055626;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=64O14QvlKYY21ie3+Vkw2ShSAJTWSPmpeu8FrWkV094=;
- b=RnayYDfSKursOoaHpCNw1v+9rLnumFwK3MYc4pRQ1F8iJGeIiU4y/X5Ca6qiBxb6Xv
- dxMWD7oP+f4P4lu3bSGKxQwfLJbmgdQud6QhhfYcQ18gFkXtublG3l8mRfvF12aD6q3Y
- nuu9D5pXWErXHEHUSCnJXgcyZmOLe61q9h6yyK6K0oTuMsIvNXSZj1P1dCkA8oggdon/
- gGM5x7P2Fc9LNdltOdRzmAnHQu7rpOQaOqjSwkgp4i2acX9e+W3IJrXviNw8EG8mNejt
- pLv7WiJs6H4MrpN3BBE5SXZiwv7hU+xNVOCW3Wh25Fhv/6n0V8vWIt4E8Zjay/fRdBqs
- WXDg==
-X-Gm-Message-State: AFuF++n+2JwWxHG3yspOfCpjeKilEYR6pn4eF/pWy2fO+rtp6s3dR5JJ
- EqN9KqD6/461T9Zy2Jut419cWHs8fkTQhG4T2sEvEsfhNatBmVsxIyf+qE0/gpxdOwE+RaEhKTs
- ywjplMRqflCjhPEBcxbUvsl7F403iqQrrZzsR4FMya7IK6q1GwAlcYuVc
-X-Gm-Gg: AYBFou1Gvq5EX6PUupq+WU4ouROMU/HXK/9Y7uT/pDDgC4xtx+16HtSaRDKCEyQHJPt
- Qis7av3zgukRirc0myr+2ShfQK7drM5ctLRMCF12ZbzECtEum+44IeYI7G2E3GAlSCej6/qA6rR
- ou1VHS4jsH9+3g8kqY8t86iliyfDb0YSaTTxuhdAFQ8f7WnDpInkKY/CCVvFomHV1FV3XqA1RcP
- T47dtdcXLOe6woDfxkj+f0cld3uHUiYcWqLBpqFZYBN2K2fYkB0aAsTuJVLeLX8OpvEdxWwgvxD
- q1C5kio/bh5v0RQLJAwZ0EH62pfoZAcFDLsWNHpIWdu53TuBzCAuWlBflpHR4PWHOkwY23cknqv
- ujen0mFNbgicuAVNV4DTobE8fVvrxnKM7Bi24Cs5WqYWaeA==
-X-Received: by 2002:a05:600c:1907:b0:49c:ee08:6ed1 with SMTP id
- 5b1f17b1804b1-49cee1d993emr133709275e9.5.1788450826278; 
- Thu, 03 Sep 2026 08:53:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:1907:b0:49c:ee08:6ed1 with SMTP id
- 5b1f17b1804b1-49cee1d993emr133708455e9.5.1788450825824; 
- Thu, 03 Sep 2026 08:53:45 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5d587csm87064205e9.4.2026.09.03.08.53.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 08:53:45 -0700 (PDT)
-Date: Thu, 3 Sep 2026 17:53:37 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Luigi Leonardi <leonardi@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org
-Subject: Re: [PATCH 2/4] igvm: move set_id_block call into the SNP ID block
- directive handler
-Message-ID: <apmSUY-7DTUA1tzu@sgarzare-redhat>
-References: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
- <20260901-fix_igvm_policy-v1-2-e93a6cf8c5ac@redhat.com>
- <aplM8ZVCrsjuELHT@sgarzare-redhat>
- <aplyuTrLtvtrT0Kb@leonardi-redhat>
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1x29pP-0006rC-5l; Thu, 03 Sep 2026 11:58:17 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683DVcZq1977380; Thu, 3 Sep 2026 15:58:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=L71/X1CRqsCfDlqm8
+ PzyUT+3FcNN+dC9zV+GOkV/qV0=; b=Hqc+WzrGxIHcm0IqMbJ+TYdAL+Hhk32NK
+ LIPZPXWkT2Dp0rcZLuIJOqbt27MfsRcQlLo2r9Aka7bgTlTSeauBvkkl7mO7o/TB
+ 4k3g1q+EPMlrm/or3ZuOHVlLGOXaDajxENSriRbQVNg1tyJTttdtTCHakBDx+837
+ o4DH9FpIPyPJDIkSA0uiFsb9fm/u6+AjXxHHnghS68RHyoZS609NkFd1sb532n+D
+ 0ndzlQl24WvvaV6Y/XbgctH+0KsLElqJUYy0cRBSK77sDQVXxLwhcWkM3C9q2Wcj
+ 5p5nY6b5nopsSEIZNRNIRD0YTlPxx/Qbd8Aj5K3v3LXsNWiRV2S7w==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnue5brn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 15:58:10 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683FuI1u007185;
+ Thu, 3 Sep 2026 15:58:10 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarkgbvn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 15:58:09 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683Fw55R42402062
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 3 Sep 2026 15:58:05 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CA4ED20049;
+ Thu,  3 Sep 2026 15:58:05 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9EB1720040;
+ Thu,  3 Sep 2026 15:58:05 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Thu,  3 Sep 2026 15:58:05 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 56370)
+ id 7F4E3160DFB; Thu, 03 Sep 2026 17:58:05 +0200 (CEST)
+From: Joshua Daley <jdaley@linux.ibm.com>
+To: qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, zycai@linux.ibm.com,
+ borntraeger@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ cohuck@redhat.com, jdaley@linux.ibm.com
+Subject: [PATCH v3 1/3] hw/s390x/ipl: Add secure boot support to PCI dev IPLB
+ builder
+Date: Thu,  3 Sep 2026 17:58:03 +0200
+Message-ID: <20260903155805.1881366-2-jdaley@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260903155805.1881366-1-jdaley@linux.ibm.com>
+References: <20260903155805.1881366-1-jdaley@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aplyuTrLtvtrT0Kb@leonardi-redhat>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: b72aTVlnqmym22wVQuOZlJyA6WvKoEWN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDEzNSBTYWx0ZWRfX6sh9u2J71gUv
+ i3INOV7H03xMjAc9EScTIIkP5DZVbiqmArSiiwTZ3YuZm7LVXYb6k7a7N9YyrntUrjL+mKtddIN
+ cx1kuJqSqM/MSg4khxLPfTs3KE9ZtxTaA9AXfNMDmmltrguIxa5F6KOwmKlsjcsW2Q0aoF2dqk1
+ 47wXpwrxCTtkm+K4zAU01KuClI6xZWWlnqUGMUTcGvImK2hkmV7YDRAz0IWP/Jz5MADiDE1OCQ3
+ hkcPbRQHxxbVNu7n4TSjF7szxsTVFvDGR2ye6aiKNTTEhDs61XHEgJuSuDVpmVuZvVFAbLmTSd/
+ MSzVs/tOwWKJQxh65DJClxrNg84pygpiAfhsk18L4U00qhYmBLtBQ3lWHOqhKJtWdKQ+vxprBKX
+ UZz+1kQzwfi+rmlNP1JG3ugx7S8ZzpuZ6HtEng7qnekdKb0/0Xa9PeH5qtxECVUnjjC3aDEiljL
+ vYnm/idHuetFVwVFL7A==
+X-Proofpoint-ORIG-GUID: b72aTVlnqmym22wVQuOZlJyA6WvKoEWN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDEzNSBTYWx0ZWRfXzUrZWRPFrZIx
+ T7La1MfZATi5ANdWkoQ6qJBIeRcJ1lzwGNI395Sh7WiBJC9lVqZ1rDZigBaXnZGptmo4yWggdF2
+ WcV4T8bdwipDrh4zzhP49LwF8kQrF60=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a999912 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=4QctWtjvTb62bRHQMjcA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_04,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609030135
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,53 +126,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 03, 2026 at 03:29:35PM +0200, Luigi Leonardi wrote:
->On Thu, Sep 03, 2026 at 02:57:44PM +0200, Stefano Garzarella wrote:
->>On Tue, Sep 01, 2026 at 12:09:19PM +0200, Luigi Leonardi wrote:
->>>set_id_block only makes sense when the IGVM file contains an
->>>IGVM_VHT_SNP_ID_BLOCK directive. Move the call from the removed
->>>qigvm_handle_policy into qigvm_directive_snp_id_block, where the ID
->>>block and ID auth are populated. This avoids a no-op call to
->>>set_id_block when no ID block is present.
->>>
->>>The ID block embeds the guest policy, so the policy must be known by the
->>>time the directive is handled. Process the initialization section (which
->>>carries the GUEST_POLICY header) before the directive section, and
->>>copy ctx->sev_policy into the ID block in the directive handler.
->>>
->>>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
->>>---
->>>backends/igvm.c | 81 +++++++++++++++++++++++++++------------------------------
->>>1 file changed, 38 insertions(+), 43 deletions(-)
->>>
->>>diff --git a/backends/igvm.c b/backends/igvm.c
->>>index 85de0d54ec..6545382546 100644
->>>--- a/backends/igvm.c
->>>+++ b/backends/igvm.c
->>>@@ -778,6 +778,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
->>>   ctx->id_block->version = IGVM_SEV_ID_BLOCK_VERSION;
->>>   memcpy(ctx->id_block->ld, igvm_id->ld, sizeof(ctx->id_block->ld));
->>>
->>>+    ctx->id_block->policy = ctx->sev_policy;
->>
->>Is it fine to copy the sev_policy in the id_block in any case?
->>
->>I mean, what happen if IGVM_VHT_GUEST_POLICY is not in the IGVM 
->>file, so IIUC sev_policy is 0, but the user set the policy by the 
->>CLI?
->>
->>Maybe this was pre-existing and handled in the next patches.
->
->This is a very good question: id block per snp spec *requires* a policy
->to be set. So can we consider an IGVM file that contains a id block directive
->but not guest policy to be valid? If so, I need to modify the code and read
->the policy from `kvm_start_conf` with a new callback.
+In the PCI boot device case of s390_build_iplb(), call
+s390_apply_secure_boot() to update the IPLB when secure boot or audit
+mode are enabled.
 
-Yes, maybe we could throw an error in this case; otherwise, the only 
-other option I see is to use the same default we use for the CLI, and at 
-this point, reading `kvm_start_conf` might help you keep the default in 
-just one place.
+Secure IPL is now supported for virtio-blk-pci boot devices.
 
-Stefano
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+---
+ hw/s390x/ipl.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index d59ed36c783..b0da3cbb278 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -599,11 +599,6 @@ static bool s390_build_iplb(DeviceState *dev_st, Ipl=
+ParameterBlock *iplb)
+=20
+     pbdev =3D s390_get_pci_device(dev_st, &devtype);
+     if (pbdev) {
+-        if (s390_secure_boot_enabled() || s390_has_certificate()) {
+-            error_report("Virtio pci boot device does not support secure=
+ boot!");
+-            exit(1);
+-        }
+-
+         pci_lp =3D object_property_get_str(OBJECT(pbdev->pdev), "loadpar=
+m", NULL);
+         if (pci_lp && strlen(pci_lp) > 0) {
+             lp =3D pci_lp;
+@@ -625,6 +620,9 @@ static bool s390_build_iplb(DeviceState *dev_st, IplP=
+arameterBlock *iplb)
+         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+         iplb->flags |=3D DIAG308_FLAGS_LP_VALID;
+=20
++        s390_apply_secure_boot(iplb, devtype, s390_secure_boot_enabled()=
+,
++                               s390_has_certificate());
++
+         return true;
+     }
+=20
+--=20
+2.34.1
 
 
