@@ -4,129 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41575C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDE2C624D7
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24th-00033Z-2y; Thu, 03 Sep 2026 06:42:21 -0400
+	id 1x24tn-0003Un-KQ; Thu, 03 Sep 2026 06:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24te-0002w0-Lg
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:42:18 -0400
+ id 1x24tl-0003K2-8c
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:42:25 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24tc-0006pK-RU
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:42:18 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1x24tj-0006q5-CT
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:42:24 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AHR1r3852489
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:42:15 GMT
+ 683AH7MC1328087
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:42:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- o/0+Uxr6/ZY3JhK/GkDs6id+76A1kYT7Zsx+XZ3AK0Q=; b=E2gJbo2MdiWioXHX
- mVYsOqXNbPZKdja6JTyM6eVJwwPrA4SW69TpzIrWFG4oYPmou0vlv2QR1xOtpuiK
- uJFcqOLEDT175BzGA6msODADYPEGSdiW92aaTaHcb6MMMHgFc0jkJcCepTNNnJqs
- OtmGMJgOGdzyEU6U+K3k1s5A23bJgpH7c2k4QDfOHuS2C3Mtdys7VWf6Vb21Zaj+
- xYggEsMiz2yoXh1diMMcl+bInBtT0+Y7zO+ygnTUJ5wK1HtljUKOs+UhQA/9QexN
- i2zg50FLfVtZX/jkNAGmc6g09qSSIFfnavZK64r5694jOVmD3w97ufEnxJU8s2Jw
- t6EipA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf51m0nb4-1
+ CCa4c+fD8c9Ts0U5IK0eUH215QRLO0qDv+6PoeJ0FYY=; b=TDDmkJifG5BWKOml
+ vVadhms0jTnvAm05v5FPsAKtff53/lJMAWMrgJfLf2jRUuX3WtSRUoB3OHJpWQlX
+ NAgMEcquBp8zF0cn/it+GOdCbtaHGTAo/nl2EcAtEg+Nil/oquCaqhIgugbYWr4z
+ 4qMyx1LV0KbpRv0wNpmqfy0qfC70z63TcZVmeWpP4REWBpf+pbpZjJheVCpj6hs1
+ fws3i6vDjXYxhyKF8NzBHtA3U6DaxAv4bO7gfdnnIir8of/oYcQ8NhmXZ50/PoiD
+ Pn/yR6FoZ1tI9P2GEwe1dbvooaVBL1S3OJPC9v4pMrtX65jHI1zU+1KKd1uCFLh4
+ I4zwhw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4genrnmm4x-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:42:15 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e4f946461so457201385a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:42:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:42:21 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93771aa0379so597681285a.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432134; x=1789036934; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788432141; x=1789036941; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=o/0+Uxr6/ZY3JhK/GkDs6id+76A1kYT7Zsx+XZ3AK0Q=;
- b=OOGdZYICgBG+cJcetT+skKr70JIwoDf6XzdA9GjFKiVfWCK6hC9A+hHFoO+1uQoSdc
- sF3d4lN79Gan0u9QofoXTZGoY2UuRdiKyI6SwW3GS3QOzxgcSp1KWi0tWvNYt9y6eeY/
- Hwbsc6iiVLwgDywVfdupSs28dLcET32AlxEdXZMKWlOldU2rjFGgUHXv7FgLUqihIIEq
- wGakb0sUQN44fUtO66U3EzQaE0fAStr5TT3UJkGXx+qcf09vUccJgJbR8u4oB2ZajcWd
- 5IW0RmNqyiue0uw/poQt+5BhcXzb5WP5tVOu7S5C6Bxk6E9QIayS089d+WneqwbLpMAW
- AtKA==
+ bh=CCa4c+fD8c9Ts0U5IK0eUH215QRLO0qDv+6PoeJ0FYY=;
+ b=QnXHl8hYGFyBP/KVo+C6ALf1eKFp6pxdRt9SaEfd37+U0CbSjAT8vPK6c6qI+YTDvt
+ shg97dLG2kfhFjK1d7PFNcc+iaPvNfhELUINloqzv5vUwlcme1W0k8K4RmfLaxYOmGRi
+ KoapevpZMFkz+hFJtaXfIegZnWZh5E8USXY3o8Spl7N0HUOIO9yYoxShclwAkFBcnT9L
+ hbppxRBOXARvTcDctTcCEOk0l7bQJvRi938KWTJX9d02ZbLzVzgZBpxPnIvLYLuz3JnB
+ 60uQvMyetdHU7y7o29WQGowN4u+suICrQfTzD3Dovx0Co7ooAYRBwMM7gUcOEnpdLz0D
+ P0gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432134; x=1789036934;
+ d=1e100.net; s=20251104; t=1788432141; x=1789036941;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=o/0+Uxr6/ZY3JhK/GkDs6id+76A1kYT7Zsx+XZ3AK0Q=;
- b=YkoFuPoetGY5kD4ZpnYXGDnCbrWF0jTJy0OckORegKxf1GH+06JPhrJG2NSp4z6eYt
- +RD1oKJeGKJ7PDLb5uEYqRSp+zFVNtW7sJyxPPNeysNgrvKzbYuRYDWCVfLa6kU7JkCe
- b5HdeQkJ02rSFE5YwaqKGyeewCYfJHsEIiuLoIcFuAjTRFVbe6zagEI8bv4j2Ahbj5f8
- F5zGI33M/pM7g8MrtOJMj3fOAu85edEqp6bi3BNW5Hfh7E58rc7df4IYh2OoWqKvYoDP
- a+xb1wjTtRc08WrkjDj7nDY/CaQP6XYA5pLA4zgqHOF8YjLUoJnZL4CMFX4lf6fAkw1w
- P5oQ==
-X-Gm-Message-State: AFuF++kUEig7B4iszt1ncqF8tPzZ7Ypjyz45USPjm1wUy/VRVcdGWZkQ
- KwQMIOrlVFXxEPIYbFcYiRAoiKXq5Bf8pkpQRtcGeXyOj7Jg2TNMqeue6ooR+O6Ch8Yp+cZ4N4S
- Ocg4nyLl8ZuHK77WaqTzGsE0DB2mP5cyeOd0vO49BidCUNGdT4NH1LGsr4QDmSzWBbQ==
-X-Gm-Gg: AYBFou1cHYjwaBfUBGMfMFONzGlbYxK9kICejcBCi1F4G63fErHED65MSnJb2NDdY9H
- 9fwIDKLL/fqRm+GRPG9HS73aShlLeu99aKAy6AH85lS+CGpcorckW0/K0qs5LSheqSEGsAQCiZJ
- gJEFnO4GBxEnAHGl4uZ4/JMToA8vihiw430+7MYvoLnZ2g1OF+7ouNmJo1/rC/bOi+MJdyLZzQ/
- g6kh2PF27tdN2cOKUZAC0eWlJJgGTnDsN1F53PsswyWC03QYMehlK/jjfdT80JCP6a3XdHbsDrk
- tkTpHp+1a/3pe2F6AH1fw2gI3Rxi4pn+/4aBlr/0NtcApgqd38FtHQSzQD/62uWV+7P1/sBnVjZ
- Y+kIJ0kJ+800WXmMjnsRRY1/K1DoIeEilYfE+iFbQ
-X-Received: by 2002:a05:620a:4904:b0:939:6de7:a624 with SMTP id
- af79cd13be357-9396de7ccffmr466201585a.48.1788432134166; 
- Thu, 03 Sep 2026 03:42:14 -0700 (PDT)
-X-Received: by 2002:a05:620a:4904:b0:939:6de7:a624 with SMTP id
- af79cd13be357-9396de7ccffmr466198085a.48.1788432133644; 
- Thu, 03 Sep 2026 03:42:13 -0700 (PDT)
+ bh=CCa4c+fD8c9Ts0U5IK0eUH215QRLO0qDv+6PoeJ0FYY=;
+ b=sO5Pmb6vSKx2X/n3d8bqOu1p5zgHq9nNpAD3gMetUKu2yuAgH3aQrDR3GSzpBjb+59
+ LM+uR/ppnXwaCpa9fOmP8CQS+xNxfd19erkjCHMdaxeAva32hf/zpaBfAF42Dbv5s8wf
+ R5WLWN1dQ/NLguMvkgUKM4M/z3JR6NMItlFQi/INNq11D/ELvFf5U7g6kbEcgWu4cngC
+ J5QGp1RdQ2dAj1pz6nhdT3KTtWkiloBlJkCYPxjcC/QhwF7IgsF2vcQTkMpHmDsoSHWx
+ F5qtsULOZBAznG2MNF5KoNV0qKoXCrzrVU2GFkMUHvcpEgCHtKTB4s13DZy0+OoZ+ejf
+ 9goA==
+X-Gm-Message-State: AFuF++kRelXkzdjs9YTG9zsu2sXRhuU7I3SBHM3BVnDRXv5JHQSY/N73
+ fNj2lYwsKDPAS40gTpIgLMOjOQ5nIGkI8zDNgRTxyKIXzujWK0p1Dnc+trv58G/j6nzmI0oC17v
+ 7M10q1Gan+NWkXkmyUuO1/+Vc9l1RW0c5FkPUjLa6A12UE0rLxPacQjyfApfsy4exEw==
+X-Gm-Gg: AYBFou1XMdigvBZPuKUUwrfI4R1LQO5FJxJmAeHRvdW4qKBdGyO2WU+Q/cPs+fQ0JHD
+ jTq0AvTkkLvIHAjyUIkQCVyM4CXdt8Tv10OrByKgZr5yYxlNvJO7J5x0teey1hXlZ0X6wjcuZyw
+ DWjH3PdWZaBKOsTfurN2sFhZn8490WRdS8k1EvCmaY1SzxjzVqWHC+aFvcYLM1WB3K85qUJn3C/
+ B0kncN3uv2vM1viuJCc8SQDh7ZPMV1+hdvb3o6qjP9C8mTOBZQOvoUtLyqQjmjaoZiFubJGi+iS
+ QhWr7gq7I2oev7qGTBhZDlO7uieOrYDVUKoy3LyUZi3Xy3z9/FgCiuDUyshA8EGcdl9RjdI+MIx
+ p5vpwXGKHS+AIUhY7rtdvg6dELli9QkZHYcGJax05
+X-Received: by 2002:a05:620a:3d0b:b0:923:7821:dc0d with SMTP id
+ af79cd13be357-93960f786aamr917885885a.33.1788432141006; 
+ Thu, 03 Sep 2026 03:42:21 -0700 (PDT)
+X-Received: by 2002:a05:620a:3d0b:b0:923:7821:dc0d with SMTP id
+ af79cd13be357-93960f786aamr917883785a.33.1788432140545; 
+ Thu, 03 Sep 2026 03:42:20 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ed30c0sm13195916f8f.24.2026.09.03.03.42.10
+ ffacd0b85a97d-48448ed3716sm13961164f8f.22.2026.09.03.03.42.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:42:11 -0700 (PDT)
+ Thu, 03 Sep 2026 03:42:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/51] linux-user: Uncast void pointer argument as Object in
- target_cpu_free()
-Date: Thu,  3 Sep 2026 12:39:05 +0200
-Message-ID: <20260903103936.62355-22-philmd@oss.qualcomm.com>
+Subject: [PULL 22/51] cpus: Add const-qualified CPU environment accessors
+Date: Thu,  3 Sep 2026 12:39:06 +0200
+Message-ID: <20260903103936.62355-23-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 8gKP0iy0dOyeCaQHsy9u9TeeBsdclqpA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfXxWoPYHvtYkKG
- 1oc7PU2jc8O8t6LI4kdIjgFJ7XVBnm2pdB+Ax73SfJTrs2U4Hx3yTgijRPtluXkPtJFoS2srjIr
- 1ihPZrEF2D5lWqfEHVsd0gn9zxsAqOOFP0623TVfEGniKPA2wgLtCEk0e0ooSv9Z+b1FUsceO6P
- /OMNpzt9jGS0xDTErC8W2kIdxVlEm9SkE9MplAjHSDQR8/U5ipRZRU+8qZXVcOLrn8rU2KEC565
- nQAy2DcTuXUZMoKkSK078NswP+J9YA5UgB/cdp8i6bka9jPcbJV64yOCkfp/ineYG0+ilzz0gTg
- swAJ1Wj09Lhb7bXxiV61MxIYsfjTKXROoB0AHR118EWsInL4T8zUDoGcKYwjZvohvNhce8OmBMP
- zYq83S9oyJaFDhHhvGwI+zPg/mE40BaDq2xxB/xG72Krim5UC08sfQ2cnPVAhx6wvSfNq+vJf5T
- 8JJm/YBLr9/JvySftPA==
-X-Authority-Analysis: v=2.4 cv=X8Ji7mTe c=1 sm=1 tr=0 ts=6a994f07 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: -vxnXcyQ-3EDE30-J4yV7_E09XZXlD86
+X-Proofpoint-ORIG-GUID: -vxnXcyQ-3EDE30-J4yV7_E09XZXlD86
+X-Authority-Analysis: v=2.4 cv=YKuvDxGx c=1 sm=1 tr=0 ts=6a994f0d cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=2RGiIWwp3e7TAFkeQGYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX9DW+z3chZzy0
- 02OfmI40eMKUJQ2gHsVCwwgygg+Xp1RE4xHnHiEPlcSsW6+CNzYMVXQCQo/li7YKJ+JDBOtNzrd
- fcKzvmHS3Ohz4S4kvXT6MCLRqk8t3KU=
-X-Proofpoint-ORIG-GUID: 8gKP0iy0dOyeCaQHsy9u9TeeBsdclqpA
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=x16qC-9I3E3lrIGWYX0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfXwAScA2Ma4tYb
+ x08S/+YF6PU1eE6eDkLZ19A4JeRNQl1qJJACaAEiVQd5btCRhvuIgVagxTivlY4t4qconu8YZ58
+ 6LfdS/o16aY85c/sOXBa7E/TU71/WRfoRhEPhIXSKC4hLgG2f/RpX92+sKWXxj0u3nYy7UMAdOs
+ 57aZKNwghljwtzywusmEBWSQfXazlngwVooP9jTFdedQZfHM8J6vuMczBxQkGG2as0luhiWHarH
+ E6Mj/uvZrS6ZnyWvkAYwR3cnlYVs5s6lFLuTnufCkFCpOEx0eCA8tiMK5CwW1fhfNtAbTs4Whkq
+ pk0npaFnGTqfpMvEHc6BHfClTz/cvJJGif45Ra//BQr9dxXB4Kd4XCcwU/hPQplRKoKZBd7OOyg
+ JKEcpjjWssuVMiLvFWJTPP24OfmaAzRyCiLzaXOWY7FLyE1a+A6vWvNRqGBTCeDOqFBcrkEHlK5
+ P+cBEYC6YR70n66EtUw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX/PTP/WJBucsD
+ DinwZ6spWmpZ+tZZZA2x1c+mmCGDu1i5cXJKDgeDKAl9auokXv9UnanYuO/w0bNpzbM+vV7bqNm
+ HooOPX3+2yyC6RXaG4PiQ6qo7zAG6ms=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
+ bulkscore=0 spamscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609030092
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -151,43 +152,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-init_main_thread() is registered as Object::free() hook, thus
-take an Object* argument. Uncast the void pointer as such.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-While now cpu_env() accept any pointer type, next commit will
-restrict it to CPUState* type. QOM-cast the Object to CPU type,
-otherwise we will get:
+Use _Generic() controlling-expression to add the const-qualified
+variants of cpu_env(), env_cpu() and env_archcpu(). This allows to
+safely access CPU architecture state when it should not be modified.
 
-  ../linux-user/i386/cpu_loop.c: In function ‘target_cpu_free’:
-  include/hw/core/cpu.h:604:31: error: ‘_Generic’ selector of type ‘void’ is not compatible with any association
-../linux-user/x86_64/../i386/cpu_loop.c:331:19: note: in expansion of macro ‘cpu_env’
-  331 |     target_munmap(cpu_env(obj)->gdt.base,
-      |                   ^~~~~~~
+Alias env_cpu_const() which is still used.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260901095229.72018-3-philmd@oss.qualcomm.com>
+Message-Id: <20260901095229.72018-4-philmd@oss.qualcomm.com>
 ---
- linux-user/i386/cpu_loop.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/exec/cpu-common.h | 30 +++++++++++-------------------
+ include/hw/core/cpu.h     | 17 ++++++++++++-----
+ 2 files changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
-index fe922fceb5a..2f733b0b477 100644
---- a/linux-user/i386/cpu_loop.c
-+++ b/linux-user/i386/cpu_loop.c
-@@ -326,9 +326,10 @@ void cpu_loop(CPUX86State *env)
-     }
- }
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 6594f7fa1be..60997628cc6 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -85,21 +85,11 @@ static inline bool cpu_loop_exit_requested(const CPUState *cpu)
+  *
+  * Return the ArchCPU associated with the environment.
+  */
+-static inline ArchCPU *env_archcpu(CPUArchState *env)
+-{
+-    return (void *)env - sizeof(CPUState);
+-}
+-
+-/**
+- * env_cpu_const(env)
+- * @env: The architecture environment
+- *
+- * Return the CPUState associated with the environment.
+- */
+-static inline const CPUState *env_cpu_const(const CPUArchState *env)
+-{
+-    return (void *)env - sizeof(CPUState);
+-}
++#define env_archcpu(env) _Generic(env, \
++            CPUArchState *: \
++                (ArchCPU *)((void *)env - sizeof(CPUState)), \
++            const CPUArchState *: \
++                (const ArchCPU *)((const void *)env - sizeof(CPUState)))
  
--static void target_cpu_free(void *obj)
-+static void target_cpu_free(void *ptr)
- {
--    target_munmap(cpu_env(obj)->gdt.base,
-+    Object *obj = ptr;
-+    target_munmap(X86_CPU(obj)->env.gdt.base,
-                   sizeof(uint64_t) * TARGET_GDT_ENTRIES);
-     g_free(obj);
- }
+ /**
+  * env_cpu(env)
+@@ -107,9 +97,11 @@ static inline const CPUState *env_cpu_const(const CPUArchState *env)
+  *
+  * Return the CPUState associated with the environment.
+  */
+-static inline CPUState *env_cpu(CPUArchState *env)
+-{
+-    return (CPUState *)env_cpu_const(env);
+-}
++#define env_cpu(env) _Generic(env, \
++            CPUArchState *: \
++                (CPUState *)((void *)(env) - sizeof(CPUState)), \
++            const CPUArchState *: \
++                (const CPUState *)((const void *)(env) - sizeof(CPUState)))
++#define env_cpu_const(cpu) env_cpu(cpu)
+ 
+ #endif /* CPU_COMMON_H */
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 81af7b9ee1a..18970ea39f5 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -594,11 +594,18 @@ struct CPUState {
+ QEMU_BUILD_BUG_ON(offsetof(CPUState, neg) !=
+                   sizeof(CPUState) - sizeof(CPUNegativeOffsetState));
+ 
+-static inline CPUArchState *cpu_env(CPUState *cpu)
+-{
+-    /* We validate that CPUArchState follows CPUState in cpu-target.c */
+-    return (CPUArchState *)(cpu + 1);
+-}
++/**
++ * cpu_env(cpu)
++ * @cpu: The vCPU
++ *
++ * Return the CPUArchState associated with the CPU.
++ */
++#define cpu_env(cpu) _Generic(cpu, \
++    /* We validate that CPUArchState follows CPUState in target-info-stub.c */ \
++    CPUState *: \
++        (CPUArchState *)((cpu) + 1), \
++    const CPUState *: \
++        (const CPUArchState *)((cpu) + 1))
+ 
+ #ifdef CONFIG_TCG
+ /*
 -- 
 2.53.0
 
