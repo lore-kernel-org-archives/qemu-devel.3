@@ -4,103 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0662C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B77C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2BUi-0005fh-8z; Thu, 03 Sep 2026 13:45:00 -0400
+	id 1x2BWO-0006QP-A4; Thu, 03 Sep 2026 13:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2BUb-0005bw-N5
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:44:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2BUa-00057p-2T
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:44:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788457490;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bTPZYYSsxet6yu6XA2ZYmEwkI3qoy4aaimrBCx5z0Y8=;
- b=hmoefX/JhH8r7iL5HScVqa+bbdskx69zLYvQC0+nOm1aGuyz2+CM0+NAZwuzJtXqKk4fJT
- GNPwYK1sBcqzgYGqpICDoxhEZQpa8ukw2eKOdDNhMTna7JT2Ubb3zSZqAuNZUvcLJe9rKJ
- onNh3Dw1GnJLoRRGCnSPNTaM31sv1tg=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-xmftedNkPqSWI_NjL77NyQ-1; Thu, 03 Sep 2026 13:44:49 -0400
-X-MC-Unique: xmftedNkPqSWI_NjL77NyQ-1
-X-Mimecast-MFC-AGG-ID: xmftedNkPqSWI_NjL77NyQ_1788457489
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-90cc934fe9eso2362416d6.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:44:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <namangulati@google.com>)
+ id 1x2BWM-0006Q8-0o
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:42 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <namangulati@google.com>)
+ id 1x2BWJ-0005a6-Vx
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:41 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cda5e048fso67085e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:46:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788457597; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XoD3KlpGqbrB9V5v3wrMqa0DRwzB77kPW7tXbKAHTGX7sPu649z6XkeVMMUaxnHbq8
+ MvT/d2dmXoVgCwkaw+RoKdjixoQpH7TVKZ/AY4N+2ylMDmUqEIHnI1Gg8+7M9rw3Myhn
+ /7thYiHqC4kG17SjPOBx14stBHVdRwIYBuQwAljItfecvvzfQySGUc84Fo8TaMTXLdUp
+ RYwY4BQXjAySZVWWd1qQkR9DPd4inU3kvyoSJ58U0yyQ0Wjz3TLfLnfMcdRXrp2kMi7P
+ CQqRPCOd/wSk56oTMJmY1yaCbEhvbDs2VaBxKqoTFYDq9F+IAeRrkRR3ljmMbLMIWzTA
+ uqmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2fowOpZTxi+xe2ayPxtDnOLoCmD9y/rEJY815q5aK6o=;
+ fh=nuYir6uzwHJ/v0JB8oZskGPFAnguCSG8KREUxLN9qAI=;
+ b=K5R0exRsNbl51E1Y2kMnvfQCnlbpql8qVnfDIKKbwTZwV34PhnjpkwbiKrHXvAzTbm
+ 642jOsA0gXDvzONwxg2fy1CFeN8WXHxBN1nf5FS5ra8gzCMsQDU1tf5TG0fvF/36BDV0
+ t8cU8/RKV70K4MiZX/hu4mL7Qy25QgNAiMTRNcy523/Sbuk76XDSEHHAO0UsPx9NpkjU
+ JQig4zdEvPaGZosj9tRcp/sRAHaVohzHDpulKKwPMmON5mYsNvEL1+9e7yQ41pFIrn/n
+ pRkYYkZ7Pz9085Ldd9HKX5edbWIOUtU4Zzb1pGTtncxPuqv8YXWFndlSpjsdv21gRfV/
+ qf1w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788457489; x=1789062289; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=google.com; s=20251104; t=1788457597; x=1789062397; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=bTPZYYSsxet6yu6XA2ZYmEwkI3qoy4aaimrBCx5z0Y8=;
- b=eOqMSH2fdk3jVBiHMalinWw2C/IdgRxv+kotc9wyXf7aYHmJVrU9nGRHVoSFSjQSNP
- P2IxIXE2ma1wwKU3SdDQJWSHLW718z314l4HCp4oVlC3GNvLOvmg8dxSV3ggJ5jsLWz+
- WNYcDLJe58ZAyy5q+eJEmpQ5Lr4XrNXMt7Ju5SBFt7Ip01EA2Us0nHPQeqj5ZeNj2cwC
- 78vM5XR4efaAkBjraXMtIZ7IXwsUjvqxnseNTIMEwovVFTbIkAhVcMLJYeRM5Vd6MpNI
- S6tKeRA2Uxnkdr41YTWIbDwnFgRr4TPiGdoEROVENVC3wDUE4Lrd1bt693lqIU/JREqA
- oz/w==
+ bh=2fowOpZTxi+xe2ayPxtDnOLoCmD9y/rEJY815q5aK6o=;
+ b=oHX/K0OfZ4UWoxxsiwRkZemLT+94X9StZP9yHYuMd6TW+/kERciwMT9IGX1KrdF3Lb
+ RGKxEmHvQowuvnZP5MHc9XMCDEpwMo5s4BckvctoyMJz2z1myLdKb2E5jWVk83w1uZL/
+ ZF3yf2L0ccD9J3lSOJz2b5JLAx+PNFMEEUHN8qEqc7tzsK53y+HTjaSpAEF3eL4UGEbI
+ cy6ftvMl1sp7ea4vGo0r8+vGfITO4Q/QujU4z0mkZaa6ul0b/TiyTE1ezMQEw4yk2b6U
+ DzHHy7cr02vI3nGFk9pw18lVxbXnH+cttHPVDhgIrUhZzfezjUHLBIXYwIZgih82vw01
+ xnDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788457489; x=1789062289;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788457597; x=1789062397;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=bTPZYYSsxet6yu6XA2ZYmEwkI3qoy4aaimrBCx5z0Y8=;
- b=FmQOaxYAi0okR/vpNmimn7eUhIpBe18KbS7w/IS8MLRHDgPPgoRmL8bQoelMkBw4bk
- 6CO3cCttnR6MVjrWPusjq+pl/4BMMCJdHRPxeXbf98+LnvlXkt6qj3NUxvgkWoyL2C6a
- rqzcCmdDG+xDAN4OHK/kcgSZ3HpJNglRv1lNCdOEDuSd5iSeFu0wO3Pj8jIyjwsq7I8i
- zHClvWyldaQYBaEHjR3stnuJ3fToMEwnRanu0IMFcS9dwLADrkjMIIfi3sruzgG9aVMP
- 04F5bGYPwEBZL+jGR4ez7pGf/wmoeAEGqBiYsmivtOv9+FbNaahSd0PQjVOb1L2DtdAP
- ysYA==
-X-Gm-Message-State: AFuF++mcDBRLMS4Fr+UMHGuhxiA0f3+ly1HQA2RvBRH2gqA3AQEntAVI
- l9BpJdi1IJTdYRA6PhIORAjSgJOyxdY5WCM0/ILELg0nt/WLvKcCOODFFIG8A3dFGafxNbIixn5
- 4r/MljG4zrnTD3cfpRwbDMOpVTuk9ok6bN+O1eyvAufPdMbvycKWLdtYO
-X-Gm-Gg: AYBFou2sUTnLaz//aVLAygNZv/ue6mYEThC9mHMJp+LbuaACgQ0jSFzW+apOO/Oraop
- I0LftjDoEJ1VVYaCIKIetcY+HjVqnuQ4y284kQ3wOPxpAu/m/hzdzYenuEa/42DRUvjcl856cu7
- lepmOi03hcFHSF16AjI/bqfaIasDb2tQDhylPS768RhW9lIfeiMx5xse+ljdVA7pXpdGmMWbVWE
- uGdBe8BxoDfoZM97ExmUx6Lgw+8uwS3DJPofbMG8TO2wK5dQ9D9yKbyYWARQ+22OHiENaiPh34L
- OBsQPKJIj9CAh0IVRK5txAr1cEYUcxI6QcnM68PIktg20OzAFRPBAgEdC0wFFzTVZkrd
-X-Received: by 2002:a05:6214:8095:b0:910:3451:b182 with SMTP id
- 6a1803df08f44-9103efd580bmr10319166d6.35.1788457488719; 
- Thu, 03 Sep 2026 10:44:48 -0700 (PDT)
-X-Received: by 2002:a05:6214:8095:b0:910:3451:b182 with SMTP id
- 6a1803df08f44-9103efd580bmr10318516d6.35.1788457488130; 
- Thu, 03 Sep 2026 10:44:48 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90e9ee2678asm49198216d6.15.2026.09.03.10.44.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 10:44:47 -0700 (PDT)
-Date: Thu, 3 Sep 2026 13:44:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 03/18] migration: Rename variables in
- qmp_migrate_set_parameters
-Message-ID: <apmyBF8W4brbz4c7@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-4-farosas@suse.de>
+ bh=2fowOpZTxi+xe2ayPxtDnOLoCmD9y/rEJY815q5aK6o=;
+ b=iXA7do2opFjgC9o6671dDjjn8TuckeaWu6ObwnsrrbjrM3zsIPWLCLXYIM4qsnRm7n
+ X3gNHl1osU8X+EWnW0MxWLlv4wyC2H4+N86iaBiFKk4rd8uCDBb/AYqWAgnEmNxZ8STJ
+ S4jx72QtETVpdii3ZWfVH0puYi/bC13X0QeoaN1URAd4xBLf035H52PscMyU0DiC25Lt
+ aK262bM3xs/mVtALV4iuWhWpoZHy7/7w3drddnYstncKHy8b592ihVLUvUIUCy75Ddqr
+ WAI24gS+++NLSplGtYYMfBFIzLa01zQ2E8vxpdLpyB1yIKzSF3ubdxBJ+DuZ+DTEnIYX
+ Ey1g==
+X-Gm-Message-State: AFuF++m0DZPMbXp9hNeeE97MuXXkVzviqODSiC3uMQ481g+/FOoJ7i1B
+ 3h1seNF80T9Cpjjg+rMPYSrcdw1vzddK301Nca+GjlVqu180BIz98GaMcvdCuP1jM1s7ktgXciA
+ QoBfidhZpQJEe+hlom2FzScgNiDqpuYQuVP9yS+I0aUuvz5g82fZHWiY8
+X-Gm-Gg: AYBFou0G57vYoZ/nA2IuKbOCtGHI35o2NM4kCWkEpFCJgu55ul6/IhGYGWvoAwE5pUs
+ lVuMwugWCmpXb56YRG/x51SDbA6hW6HDbde3SAV/dzZw3SeH8c+d0INRRyIwa9u0jZZCi1bAFtG
+ oscFqzHr1OWFP28xdcPgNq82Erm2BAwMK13J4BAyIERzQAieofV+sO7SMu7ctdkmK94mH4peTt3
+ EKekrHt1QQoEbI9A73auHgkF+Q2RColZEd6Cb0qWRnf9dKlvfv7w/dbDSB2VSEW1Kq6+lRrUCwZ
+ xU7QIQuU10egFL9x6tO1jKR6buIZcVbplwjMYZ0pv40h9ybAg6IrJ6vz8a9ip3ToEUU/FvcS/tA
+ =
+X-Received: by 2002:a05:600d:864f:20b0:49b:8f5e:51f6 with SMTP id
+ 5b1f17b1804b1-49cf76fc502mr27305e9.3.1788457596932; Thu, 03 Sep 2026 10:46:36
+ -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260902221547.1812481-4-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20260826050039.2068138-1-namangulati@google.com>
+In-Reply-To: <20260826050039.2068138-1-namangulati@google.com>
+From: Naman Gulati <namangulati@google.com>
+Date: Thu, 3 Sep 2026 10:46:24 -0700
+X-Gm-Features: AcwNN1UdUr736Z_xW003M2B3Cgny2tMgbCnoT3w8AWCjVfYXNc9QJlK14Ejny-A
+Message-ID: <CAMP57yUuJUrpPtvf6Nf5SoDZ7Z+dfXFmHB-0AJ+vhzysjvgxYQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] vfio-user: support multiple FDs backing region
+ mmaps
+To: qemu-devel@nongnu.org
+Cc: John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Alex Williamson <alex@shazbot.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Matt Evans <matt@ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=namangulati@google.com; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,21 +124,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 02, 2026 at 07:15:31PM -0300, Fabiano Rosas wrote:
-> Give the variables in qmp_migrate_set_parameters more semantic
-> names.
-> 
-> s/params/input/
-> this is the user input from qapi
-> 
-> s/tmp/new/
-> this is the combination of the current parameters and the input
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Gentle ping on this series incase it got lost in the noise :)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+On Tue, Aug 25, 2026 at 10:00=E2=80=AFPM Naman Gulati <namangulati@google.c=
+om> wrote:
+>
+> This series extends the vfio-user protocol specification to allow
+> servers to pass multiple file descriptors for different sparse memory
+> areas to be mmap'ed within a single device region.
+>
+> This extension is intended for exposing paravirtualized PCI devices via
+> a vfio-user server that may have multiple unique sub-regions in a BAR
+> backed by some mmap'able buffers sourced from distinct file descriptors.
+>
+> This change introduces a new capability:
+>   VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+>
+> Unlike VFIO_REGION_INFO_CAP_SPARSE_MMAP (which maps all sparse areas
+> from a single open file descriptor), this new capability defines an
+> array of sparse mmap areas where each area contains an index into the
+> array of file descriptors.
+>
+> When all sparse areas share a single file descriptor, servers may
+> continue to emit VFIO_REGION_INFO_CAP_SPARSE_MMAP and send exactly one
+> file descriptor in SCM_RIGHTS for backwards compatibility with older
+> clients.
+>
+> The extensions in this series also lays the groundwork to make use of
+> the in-development series [1] extending vfio-pci to return distinct
+> dmabuf FDs for discrete regions of a device's BAR. A vfio-user server
+> may choose to return dmabuf FDs for various regions of a device's BAR to
+> map a vfio passthrough device into the guest, in order to retain control
+> of the device and be able to revoke mappings passed to the VM.
+>
+> libvfio-user server side changes WIP on github [2].
+>
+>
+> [1] https://lore.kernel.org/all/20260715174737.15287-1-matt@ozlabs.org
+> [2] https://github.com/NamanGulati/libvfio-user/tree/multi-region-fd
+>
+> ---
+> Changes from RFC:
+>   - Refactored the get_region_info callback to keep vbasedev constant
+>     and take in a VFIORegionFDs* out parameter to store the received fds.
+>   - Link to RFC: https://lore.kernel.org/qemu-devel/20260811233930.401797=
+-1-namangulati@google.com
+> ---
+>
+> Naman Gulati (3):
+>   vfio-user: add multi-fd region mmap capability
+>   vfio: mmap sparse regions backed by multiple FDs
+>   vfio-user: implement client support for multi-fd region mmap
+>
+>  docs/interop/vfio-user.rst    | 71 +++++++++++++++++++++++++++++++++--
+>  hw/vfio-user/device.c         | 66 ++++++++++++++++++++++++++++++--
+>  hw/vfio-user/protocol.h       | 20 ++++++++++
+>  hw/vfio/device.c              | 49 ++++++++++++++----------
+>  hw/vfio/region.c              | 41 ++++++++++++++++----
+>  hw/vfio/vfio-region.h         |  8 ++++
+>  include/hw/vfio/vfio-device.h | 32 ++++++++++++++--
+>  7 files changed, 249 insertions(+), 38 deletions(-)
+>
+> --
+> 2.55.0.860.g4b6b3295ed-goog
+>
 
