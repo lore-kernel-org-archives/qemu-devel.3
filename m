@@ -4,86 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B547C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05547C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:46:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28f8-0002lt-1g; Thu, 03 Sep 2026 10:43:34 -0400
+	id 1x28gt-0007R2-UD; Thu, 03 Sep 2026 10:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f5-0002hJ-71
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:32 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f2-00042v-Er
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:30 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-47ddf7b09e5so2349614f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x28go-00076E-MO
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:45:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x28gl-0004XF-Ou
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:45:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788446714;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L3VYwHo6nqPsf+Z+thgv4+G2AnlQsXdSo/Hv4kwOmSE=;
+ b=a0s1hvinUmIM6YRZ3a9PltTMvvyPCMMO19rg73rkxv1gtqlCSzwNiQhWjxlnK85RhiOVls
+ abd/eL21B3FS72O1b6mqQB+VkRf7CnLhP1rVMoQWHa7+kvk+4N0cw3kj5ULUzpKuII7jKn
+ DPZDCk+K8tsAeiz6NOmxyG1BJWJLf8Q=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-75-wM9dtCfWP3ObrcpYsyVIzQ-1; Thu, 03 Sep 2026 10:45:12 -0400
+X-MC-Unique: wM9dtCfWP3ObrcpYsyVIzQ-1
+X-Mimecast-MFC-AGG-ID: wM9dtCfWP3ObrcpYsyVIzQ_1788446712
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-66f92d36b8bso3080063d50.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:45:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788446712; cv=none;
+ d=google.com; s=arc-20260327;
+ b=soI0SBg9ys2IddMwV1V2YW1Oe9xiplv332MBvy9geMKGZK4Kq5RhxLugpRQLqENwd7
+ s08SG+P+u5QPnwUeL6wueJWRLWGVTEtw62qIRxktAbud4lWrluS48kVSBR2n6PM3m8zX
+ 0wD5/Li0o6ZYPvpMz2LnVxOc2kDNBt2pepadAmUFy6fQhkAKZsUlWkSjR5AulRbjkm9B
+ Kjry75yLS7Ng0UwDo5trtrPSckfOv1jggppANkQDo59+gYlA6/HEMlKWZl588lEezHeW
+ Vork/2mIU4bGK5wo0sAgdckVcUp7OvFkEusHOd6RZLFu/xQ7/+oEdLW5urqVt7dLx7AC
+ MCww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=L3VYwHo6nqPsf+Z+thgv4+G2AnlQsXdSo/Hv4kwOmSE=;
+ fh=Q/PnE79JAIK3lRyPbotyCvwsSqpcHA63136ZoPD1gTg=;
+ b=SlAF94mcLgORcYAwZiTP77LBXYzOL4miGmg0kgKIbDqiu6vvkW4VII7XVHlD1JUjsP
+ 15kpk6kczQoWqHE1czAhM0h/kiKmI7C8TxH+fYxLJ/pFg/fjw4kqpa7CjxSFRkf5zAZ1
+ n3Lxw+QQCMwW4GQGvL717TlvlCCM9JSmnoLszH8FAfIsIuW8Oa4sBIF6CmIiBHPp+ra/
+ ru5+a/IfVR/6pacfpCD9vh8nxrFW/zL1bLRBxwEYo7jofCVTM8wGyxuZS99UDJapG63P
+ OhKz3oN913gjmJYT2pfWTP/eekCgUIRGiXNKaesn8O2HV5Nk8DgQQwC6BIXHqlpQUShz
+ 5j5w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446606; x=1789051406; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oMU0rRkqJ/vpKM9oem0Tv9koaS7lHqSrp/84fAD5rYg=;
- b=WKnt3K1+2VaD1KgC+SuxZ2xuUrcsWeoVcJ1YxNsAMHww/ndymwxYeOc+4vqpSl1Qe1
- DoHO8V+LG7hUpQfqWWs6yQHtTbxHlX1aDlyMyJkb02rnvom9IQ6IMqN9FxLZwZ0ZXZ3b
- 7IQHxi32RZw5Nh+8s8TKr/rNH29ypIQTBgIbY76o4NSf7sd4uVAjbS6nZo3QqXyTZuXM
- oC3aPcn+PN5fHpvgSo942ozwzOaRAkVnGYyEncH0mC8vRSc7R7IieKHVR4AqVdGMJBfj
- TUVDZG3o2idXvhEZ5oFqxNpIgiNnIrP9ENJlJjUwjfnOTnJkqUekqbTqhKfHiekQGVAJ
- nvVA==
+ d=redhat.com; s=google; t=1788446712; x=1789051512; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=L3VYwHo6nqPsf+Z+thgv4+G2AnlQsXdSo/Hv4kwOmSE=;
+ b=b/wgAn3x5cS8K1YapsjVJGLFS33t1xp7aEiBlLZ5HSbaceadTdIk/mtLQ6f4kQUFIR
+ +PvKN826ZlNr8HD72L+tCzSokmawBJft0zBBFWz82JWh3SNlTILoyvjT8YsbBx9jALs8
+ /3UQFeTESh2zFUubhsv5V4sv7dcYyL0BnRBV6mn/oR9zCjFrWrrLG2It2tektVs7rn6r
+ VVFNKe+z5DQHzmnw1tD2zkdms/EM3DIAD0DWkMpON9FVlR3TpMqivCIxsGhdBfWTFUAp
+ lQRNXhfNCGvgvXEZbkIBLbf08sk1hFSmGq62WVr8aVRH8xLcwJpKpgdCg/fAjR5VGvxv
+ jFTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446606; x=1789051406;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oMU0rRkqJ/vpKM9oem0Tv9koaS7lHqSrp/84fAD5rYg=;
- b=FhsTuyQ/wRFH5m1g2xLdoP+nwBWo8ZfWYdgzlBFQ5MUxNsHR17JcqG7mqM84lBEbrY
- jZzXWFGbeiHrWRn9Ov64+RtK94gYY2kPmQpwrrQTRaUoWhZxzL+tpYEqVbVcwHHPf2L+
- 7gg6vbM8jWgcQN24Q7d2hcemi2tXC4eTdZM/csiO+Lg9RPpiEBNfC3lLw5R35MaWoalc
- 9T2jVS8229tlkaJni3+NCxnaZrmpDzUxq2RbgUrPx1FzYYWvVyf7GLyP1ABU+ZrskzNO
- 9/fusn0bs/l1CSIhE1rAVWWwpeNDCj33NjGkLSd2MnKUvZAdrb6yhgMFBkCRBxM14BHI
- NDEg==
-X-Gm-Message-State: AFuF++lF21xqXcHp3VR5XZ3CaWcYQwl+LaFwTzYJNWhGzNGQTENHozmv
- JugeTOSJDPpQ79H8DUoPf6NUlPnUzNi1lBdsKDKy+3vbfiRKRqKLegg5V6BAoQ7fxyhSXOr5K3j
- IrXBs
-X-Gm-Gg: AYBFou2aO5DzMTGb6uco1GHW1DzcWViLeDaij1WA43uhY5AVCAoJIDZPlcUvw66TtH2
- rLGDey7clmUGrxlTH6/IuekT+kej8u51CwG3Akd8Knw9m8yVu9Phz596VuBhCGfsXgrBSuN6MOc
- Q4LmBwng/JQA4lvTJEKWGFKoBH+/If9zz3meeEam2C1HUvQuR/YdfAwT8BDfv9/Uf/rq9f0gwoP
- YWGKNeK30EuZtrm327Z5HuU3iUCz68SAOgvUF0AslihF6hr48FnSol5DlP8pZdVeEFVRTr4xvE7
- yoMntH2SEvtz4skZkJi/skJ+VcdtmpxIzB46x7WH9JKbJwwYZjot3/AY+73sJHzpCo2jgSbR2cW
- krLXTMkKFxbU8AfcQIbQvdwJZ9xxrp2i1bsYlifjkepj2eErCCI+fju7nnMGWrsDqOpPov+ciJN
- PzidVDy8aqA3/T9WVrJZh9bBmnG1BbMD93DG5WpLoQq6meyAUT9Y0Wp4si
-X-Received: by 2002:a5d:59c7:0:b0:484:40b0:ef30 with SMTP id
- ffacd0b85a97d-48586028ca9mr1804455f8f.6.1788446605876; 
- Thu, 03 Sep 2026 07:43:25 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:25 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v7 12/25] parallels: Let image extensions work in RW mode
-Date: Thu,  3 Sep 2026 16:41:30 +0200
-Message-ID: <20260903144143.2328870-13-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
-References: <20260903144143.2328870-1-den@openvz.org>
+ d=1e100.net; s=20251104; t=1788446712; x=1789051512;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=L3VYwHo6nqPsf+Z+thgv4+G2AnlQsXdSo/Hv4kwOmSE=;
+ b=QUtReVXAe7l1qBiBvuqol/7Les9B9hjvusPoR2ry2wGe1HGFS30XD7glmlKQCpYfUz
+ LRYHiEJjvlRM/5oDR1C8cwsIOGj9RzQyRsM2V/ymtRNfP3nGCY4s1afJ3/6vFaAKHmj5
+ ak18d0RWgpUj8DRNrDt+fDU0s/2YoI6IQNuKnLDLdOvoqN8wAwfBDAuht8ZPd0wvRb0x
+ o6lLgSPLaHjRjVt4H+9U6C1fB70PThhc5XYPlM4AB68E11YQ2CKWkQA6R0mQB2LG0oxr
+ WUyv7SiK0dQvd+P/jLI0OGm6hcrwoDVaTJsgbdqB1efjxUuCBjp6nhRSWG5Py845RMAH
+ KWkA==
+X-Gm-Message-State: AFuF++nFpd8jFyDsehD3gGYgde3FhU6JQGf75+W7P6PJgqwAZAXjAgmg
+ UhuNYiLCTqJDEuCgnQUNf9OIZXy5tgveYu+PwuTuG4zGFsul4NYycN+5mfPoWppwzw43C5Mbm/g
+ UNX3w9HZSs2SuvcTv4i3zhizpr+tR6z6vIl8WklwqtMXwhFcpx+eppfTtFgDZaVDGUf092SFjAO
+ hXxm4p3iKWVhev08O/qNco2TrlTv4hEQs=
+X-Gm-Gg: AYBFou0l1IThGagVXDsWAbUN/5QBR0DG5AS5w+iVM75Ludl2hcF4+DuLHifnTqlzoMN
+ 0hgC9JZWyh1i3QNmZeXJK9465fidHmxKvbQXn+GuoBDDn38qLg2PkB5OFr4gM0mxM2pPewRtwW6
+ la9myS3RGcx12qCPdISZurqXSEKkNnz+zSDgXKvAIQV7WvmnlbFyItVX5LLWPflCMe1T6cbb6qm
+ f0p1P6B7Sq1aiNc
+X-Received: by 2002:a05:690e:204e:b0:66f:9995:d0c6 with SMTP id
+ 956f58d0204a3-66f9bd5cbbbmr3792327d50.25.1788446706970; 
+ Thu, 03 Sep 2026 07:45:06 -0700 (PDT)
+X-Received: by 2002:a05:690e:204e:b0:66f:9995:d0c6 with SMTP id
+ 956f58d0204a3-66f9bd5cbbbmr3792296d50.25.1788446706362; Thu, 03 Sep 2026
+ 07:45:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=den@openvz.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260901194324.458482-1-jsnow@redhat.com>
+ <87ik4mr1dy.fsf@pond.sub.org>
+In-Reply-To: <87ik4mr1dy.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 3 Sep 2026 10:44:55 -0400
+X-Gm-Features: AcwNN1VgNaN4xAvcs17DkNeBuR6R7xgxjHZ-filiFeIDSOm24eV2-6Sh2JVOWqg
+Message-ID: <CAFn=p-ZkBrj0MNq=P3Myw5b1o-xUotm7qmGmuRzD=X_appS4VA@mail.gmail.com>
+Subject: Re: [PATCH 00/12] qapi: convert simple command intro sections
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Ani Sinha <anisinha@redhat.com>, qemu-block@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, linux-cxl@vger.kernel.org, 
+ Jonathan Cameron <jic23@kernel.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,256 +144,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+On Thu, Sep 3, 2026 at 8:00=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> Series
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
 
-Saving extensions is supported now, so we can let them work in
-read-write mode as well.
-
-The bounds check rejecting a Format Extension outside the image file
-used to sit in the read-only branch of the condition. Perform it
-unconditionally, as the extension is now read in both modes.
-
-A loaded bitmap was marked read-only unconditionally, guarded by an
-assert that the image is not writable. Mark it so for a read-only node
-only, as qcow2_load_dirty_bitmaps() does, or the next inactivation
-fails with "No write access". The condition is read-only alone rather
-than the full write access qcow2 asks about, as an inactive node can
-become writable later and parallels has no path which would clear the
-flag again. Mark the bitmap persistent as well, or it disappears from
-the image the first time it is written out.
-
-An unreadable extension must not keep the image shut. Its clusters are
-deliberately left free for reuse, so a guest write may have landed on
-them, and every qemu up to this one ignores the extension in read-write
-mode and truncates the file to the end of the payload on close, leaving
-ext_off pointing past the end of the file. Both refuse an image whose
-payload is perfectly fine, in either mode, with no way back through
-qemu-img check or convert. So do not ask the in use flag, ask whether
-what the header points at is an extension at all: an offset outside the
-file, a wrong magic or a wrong checksum all say that it is not, whoever
-left it behind, so drop it with a warning and forget where it ended,
-which lets the leak check reclaim the space.
-
-Behind the checksum the extension says what its writer meant it to say,
-so a feature this driver does not implement, or a bitmap it can not
-parse, keeps the image shut as before. Only an image which was not
-closed correctly gives up its extension there, as its bitmaps predate
-every write which followed the last inactivation.
-
-Reading a bitmap allocates a cluster sized buffer with the aborting
-qemu_blockalign(), and parallels_open() lets a cluster reach almost
-2 GiB. That is reachable through every open now, so allocate it the way
-the storing side does and align it to bs->file.
-
-Based on the original work from Alexander Ivanov.
-
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- block/parallels-ext.c                         | 24 ++++++++-----
- block/parallels.c                             | 35 +++++++++++--------
- .../qemu-iotests/tests/parallels-read-bitmap  | 18 ++++++++--
- .../tests/parallels-read-bitmap.out           | 12 +++++--
- 4 files changed, 60 insertions(+), 29 deletions(-)
-
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index a0e2be395f..e89c489730 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -74,7 +74,11 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
-     uint8_t *buf = NULL;
-     uint64_t i;
- 
--    buf = qemu_blockalign(bs, s->cluster_size);
-+    buf = qemu_try_blockalign(bs->file->bs, s->cluster_size);
-+    if (!buf) {
-+        error_setg(errp, "Failed to allocate a bitmap data cluster");
-+        return -ENOMEM;
-+    }
-     limit = bdrv_dirty_bitmap_serialization_coverage(s->cluster_size, bitmap);
-     for (i = 0, offset = 0; i < l1_size; ++i, offset += limit) {
-         uint64_t count, entry;
-@@ -210,9 +214,9 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
-         }
-     }
- 
--    /* We support format extension only for RO parallels images. */
--    assert(!(bs->open_flags & BDRV_O_RDWR));
--    bdrv_dirty_bitmap_set_readonly(bitmap, true);
-+    if (!(bs->open_flags & BDRV_O_RDWR)) {
-+        bdrv_dirty_bitmap_set_readonly(bitmap, true);
-+    }
- 
-     return bitmap;
- 
-@@ -226,7 +230,7 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
-                                  Error **errp)
- {
-     BDRVParallelsState *s = bs->opaque;
--    int ret;
-+    int ret = -EINVAL;
-     int remaining = s->cluster_size;
-     uint8_t *pos = ext_cluster;
-     ParallelsFormatExtensionHeader eh;
-@@ -243,12 +247,12 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
-         error_setg(errp, "Wrong parallels Format Extension magic: 0x%" PRIx64
-                    ", expected: 0x%llx", eh.magic,
-                    PARALLELS_FORMAT_EXTENSION_MAGIC);
-+        ret = -ENOENT;
-         goto fail;
-     }
- 
--    ret = qcrypto_hash_bytes(QCRYPTO_HASH_ALGO_MD5, (char *)pos, remaining,
--                             &hash, &hash_len, errp);
--    if (ret < 0) {
-+    if (qcrypto_hash_bytes(QCRYPTO_HASH_ALGO_MD5, (char *)pos, remaining,
-+                           &hash, &hash_len, errp) < 0) {
-         goto fail;
-     }
- 
-@@ -256,6 +260,7 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
-         memcmp(hash, eh.check_sum, sizeof(eh.check_sum)) != 0) {
-         error_setg(errp, "Wrong checksum in Format Extension header. Format "
-                    "extension is corrupted.");
-+        ret = -ENOENT;
-         goto fail;
-     }
- 
-@@ -301,6 +306,7 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
-             if (!bitmap) {
-                 goto fail;
-             }
-+            bdrv_dirty_bitmap_set_persistence(bitmap, true);
-             bitmaps = g_slist_append(bitmaps, bitmap);
-             break;
- 
-@@ -319,7 +325,7 @@ fail:
-     }
-     g_slist_free(bitmaps);
- 
--    return -EINVAL;
-+    return ret;
- }
- 
- int parallels_read_format_extension(BlockDriverState *bs,
-diff --git a/block/parallels.c b/block/parallels.c
-index a9464d5352..90b7f7c8de 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -1454,25 +1454,30 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
- 
-     if (ph.ext_off) {
-         int64_t ext_off = le64_to_cpu(ph.ext_off);
-+        Error *ext_err = NULL;
- 
--        if (flags & BDRV_O_RDWR) {
--            /*
--             * It's unsafe to open image RW if there is an extension (as we
--             * don't support it). But parallels driver in QEMU historically
--             * ignores the extension, so print warning and don't care.
--             */
--            warn_report("Format Extension ignored in RW mode");
--        } else if (ext_off + s->tracks > file_nb_sectors) {
--            error_setg(errp, "Invalid image: Format Extension is outside the "
--                       "image file");
--            ret = -EINVAL;
--            goto fail;
-+        if (ext_off + s->tracks > file_nb_sectors) {
-+            ret = -ENOENT;
-+            error_setg(&ext_err, "Format Extension is outside the image file");
-         } else {
--            ret = parallels_read_format_extension(
--                    bs, ext_off << BDRV_SECTOR_BITS, errp);
--            if (ret < 0) {
-+            ret = parallels_read_format_extension(bs,
-+                                                  ext_off << BDRV_SECTOR_BITS,
-+                                                  &ext_err);
-+        }
-+        if (ret == -ENOENT) {
-+            s->ext_end = 0;
-+            warn_reportf_err(ext_err, "Dropping the Format Extension of node "
-+                             "'%s', which does not look like one: ",
-+                             bdrv_get_device_or_node_name(bs));
-+        } else if (ret < 0) {
-+            if (!s->header_unclean) {
-+                error_propagate(errp, ext_err);
-                 goto fail;
-             }
-+            s->ext_end = 0;
-+            warn_reportf_err(ext_err, "Dropping the Format Extension of node "
-+                             "'%s', which was not closed correctly: ",
-+                             bdrv_get_device_or_node_name(bs));
-         }
-     }
- 
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-read-bitmap
-index 5cbef25018..6990926d60 100755
---- a/tests/qemu-iotests/tests/parallels-read-bitmap
-+++ b/tests/qemu-iotests/tests/parallels-read-bitmap
-@@ -121,8 +121,16 @@ def report(name):
-         log(f'qemu-img died with signal {-exc.returncode}')
-         return
- 
--    log('image opened' if res.returncode == 0
--        else iotests.filter_testfiles(res.stdout).strip())
-+    out = iotests.filter_generated_node_ids(
-+        iotests.filter_testfiles(res.stdout))
-+    if res.returncode != 0:
-+        log(out.strip())
-+        return
-+
-+    log('image opened')
-+    for line in out.splitlines():
-+        if 'warning' in line:
-+            log(line.strip())
- 
- 
- def check(name, ext, tracks=1):
-@@ -148,6 +156,12 @@ check('wrong extension magic',
- check('wrong extension checksum',
-       extension(feature(0, 0), checksum=False))
- 
-+# An older qemu truncates the extension cluster away on close.
-+with open(crafted, 'wb') as img:
-+    img.write(parallels_header(1, SECTORS, SECTORS, EXT_SECTOR))
-+    img.truncate(EXT_SECTOR * 512)
-+report('extension cut off the end of the file')
-+
- check('unknown feature', extension(feature(BITMAP_MAGIC ^ 1, 0)))
- 
- check('feature flags set', extension(feature(0, 0, flags=1)))
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-read-bitmap.out
-index 3b3f90c8de..13b10af5a4 100644
---- a/tests/qemu-iotests/tests/parallels-read-bitmap.out
-+++ b/tests/qemu-iotests/tests/parallels-read-bitmap.out
-@@ -8,9 +8,14 @@ Kill NBD server
- --- well-formed extension
- image opened
- --- wrong extension magic
--qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong parallels Format Extension magic: 0xab234cef23dcea86, expected: 0xab234cef23dcea87
-+image opened
-+qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Wrong parallels Format Extension magic: 0xab234cef23dcea86, expected: 0xab234cef23dcea87
- --- wrong extension checksum
--qemu-img: Could not open 'TEST_DIR/PID-crafted': Wrong checksum in Format Extension header. Format extension is corrupted.
-+image opened
-+qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Wrong checksum in Format Extension header. Format extension is corrupted.
-+--- extension cut off the end of the file
-+image opened
-+qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Format Extension is outside the image file
- --- unknown feature
- qemu-img: Could not open 'TEST_DIR/PID-crafted': Unknown feature: 0x20385fae252cb34b
- --- feature flags set
-@@ -30,7 +35,8 @@ qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid bitmap granularity 4294
- --- bitmap L1 entry overflows
- qemu-img: Could not open 'TEST_DIR/PID-crafted': Failed to read bitmap data cluster: Input/output error
- --- cluster_size beyond the file size
--qemu-img: Could not open 'TEST_DIR/PID-crafted': Invalid image: Format Extension is outside the image file
-+image opened
-+qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Format Extension is outside the image file
- --- bitmap serialization coverage overflow
- image opened
- --- bitmap spanning two L1 entries
--- 
-2.53.0
+Nice!
 
 
