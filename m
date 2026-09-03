@@ -4,111 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F48BC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8112DC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:10:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2CoO-00063h-6o; Thu, 03 Sep 2026 15:09:24 -0400
+	id 1x2CoO-00063k-DQ; Thu, 03 Sep 2026 15:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1x2CoK-0005zs-Ba; Thu, 03 Sep 2026 15:09:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1x2CoK-0005zw-Fi; Thu, 03 Sep 2026 15:09:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1x2CoG-0004yb-QJ; Thu, 03 Sep 2026 15:09:19 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1x2CoG-0004z0-Fl; Thu, 03 Sep 2026 15:09:18 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G2Wso3425680; Thu, 3 Sep 2026 19:09:11 GMT
+ 683G2rf92292346; Thu, 3 Sep 2026 19:09:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GsXGKX
- BF+iKYmy4J9vof5FM88FwWEq3mUSNDyDd2AGk=; b=JWAGrVnfCTwHSEiA+Flmfe
- bKAOrx+8ZO7QjouFgy5teq4gGVa5DpYLJ0Yck/Q5yKITFUspHPVxA3D2qDf7pkSs
- doGYpwkcQVl1tIKUl0/M8HgurTfCUa0Y4bCUy3IHtcgTNsQkcR1j4ZYYQLYA1y1E
- 6RX2CnNbYwr/iQVlsM+gr6jTyQ9EOo/PgdxQphCXuUq3Cry1odPbzBt8NzxfvaBA
- h6slNqkP7AYEqbpfuPX6ZW2+Afq8hBq7nYDpcVHg5KypVh+7KOpXI0EjNynmUrsp
- Y99dOOHnY6m4Fc5rS6u6R74x5OZE5FeJVZxaQQnKfTzg34HqOD/gvXWj9ED9GCrQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=t9BeLO
+ 5c3zAyfLPg2cXlfQhbq/aKK8rRIPj5tisU714=; b=lTN0FzH7HWnKoKcu2DKM1v
+ OQQHHvhL+gf8+1Ag8M3Oezr1i+XtayMa9PukAeYDMiCS5OV4sbaARiTvy2IetJ/r
+ ooDdox6v9TFJysLObVT+ljyHpx/kYpTOiWvD82HMulCtS5wYJsvppC7kLg2Vqj8k
+ DyrsAaimXR89/V9v7+Kbs4xtxlaqY+tWDJ5X0t/Dyp3qdMAl8pVO+upDoDYQwBN3
+ Q1SDGjafaC8J7YN3Z/ZL1sbpPwbqBh3I1JWOyvIJUbZk2nAT80E9NRbXQI7PvipF
+ PRAJasm3MsaDjVHnu2ybBAcmxn8WdysVZCTDy5KUtRxHJsjw3SQpVToE78UnmtMg
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq556pqp-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnue66x9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Sep 2026 19:09:11 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683IfLtR017277;
- Thu, 3 Sep 2026 19:09:10 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gcarkh4fj-1
+ Thu, 03 Sep 2026 19:09:12 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683IuKP2002300;
+ Thu, 3 Sep 2026 19:09:12 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gc9rqs9fx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Sep 2026 19:09:10 +0000 (GMT)
+ Thu, 03 Sep 2026 19:09:12 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 683J99UN33555082
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683J9Adl7930408
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 3 Sep 2026 19:09:09 GMT
+ Thu, 3 Sep 2026 19:09:10 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 026CB58051;
+ by IMSVA (Postfix) with ESMTP id 349395805F;
+ Thu,  3 Sep 2026 19:09:10 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B92005805A;
  Thu,  3 Sep 2026 19:09:09 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A5485805C;
- Thu,  3 Sep 2026 19:09:08 +0000 (GMT)
 Received: from [9.61.21.65] (unknown [9.61.21.65])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  3 Sep 2026 19:09:08 +0000 (GMT)
-Message-ID: <0974da44-89de-433d-9f4f-2307237e58a8@linux.ibm.com>
-Date: Thu, 3 Sep 2026 08:56:32 -0400
+ Thu,  3 Sep 2026 19:09:09 +0000 (GMT)
+Message-ID: <a61ea1c1-38d1-4c53-86ab-56af1bfe5c26@linux.ibm.com>
+Date: Thu, 3 Sep 2026 09:53:25 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] hw/s390x/ipl: Fix incorrect PCI IPL block lengths
+Subject: Re: [PATCH v3 4/8] s390x/ipl: Add PCI and bus fields to
+ IplBlockQemuScsi
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, zycai@linux.ibm.com, qemu-stable@nongnu.org
+Cc: farman@linux.ibm.com, zycai@linux.ibm.com
 References: <20260831194919.3830270-1-jrossi@linux.ibm.com>
- <20260831194919.3830270-3-jrossi@linux.ibm.com>
+ <20260831194919.3830270-5-jrossi@linux.ibm.com>
 Content-Language: en-US
 From: "Jason J. Herne" <jjherne@linux.ibm.com>
-In-Reply-To: <20260831194919.3830270-3-jrossi@linux.ibm.com>
+In-Reply-To: <20260831194919.3830270-5-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE2NiBTYWx0ZWRfXzvh5+sN53FT4
- OtIJQU83ZQNIYmicy5lFI3O+AtbC2iTy3G7fmmkrfLPmnKRypT7WuPY3NvjcRB3r5fHbYDlHtTP
- rS8Ml46Nj3XS9yzYpeiDwgbdU+8ZU/s9RDx6Xb96Yt7K+L0CxBYZJtxv3zE7rRehGCDZPeRS9SO
- au3AMX4ZW7T9FHa/FmMDqfzFZjFlr9bbRNa8PBeUnCYQU7TWx+1EJ5bCQ9d7lLFu935DWL9RWgL
- CvEQC3k0Ja9muVXeMho3QgSJAr+jvGi0EaZK7HMNHujC8gR4kKDJNMTmbJo4mDrjXYUQK2H9L1Q
- RFgKKbyGcWffigYdqNp0KEhR2IvXAheoR5GxbaoV5j2I7NPiTzZD0RLsZUCtSIv7ElZ51Kjzb5J
- SZ2CkaFPDRzWpAnkbjUkd7Tz5UwvwYdOq8U0dGG9LgGJF5I/JaFa87aLYMjR0+A2uKA9KQMMud9
- hOqhH9GnGGW8xn1zVlA==
-X-Proofpoint-ORIG-GUID: Hw9kBIcp0pZ7bqRWFQl7pG6DYbkYinmV
-X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a99c5d7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-GUID: iiuaRCJx0a82F1lhDVhiTeWStwZ-a0aK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE2NiBTYWx0ZWRfX87QOYKMb5sSw
+ AyW0yxJkFZu+0R2vmu3AxZba4XtiYDLtqg5wje+W8RePKhN6+88+XGC8Z3TROAM03hvnzIGPprS
+ +c/Jooeud6fpgbO+iRvSNCL4RdCyTYSeV9iw3WE7BR68U1skkhZEr6EbZvg1rvx1iouKH2/jrRU
+ d+FuxeUTKZnUQtq1o4BCDKBhiF2DX7HiVXZHg23FNhz7g0AMDIhS6sZSVtmbNMJtu75JGEM0eCi
+ EAatntuGPdQ31qX5x/fng4rJfVrCyslC3x8SYWpTdawWzDZaBKiSGeaH46OtJu/QdWMU/YM4TTQ
+ CJ/nolPnPsNJzYx0KVaFvMAi8PwPGG1iAFMKkejmlTkLGKfFxuD99hURxw5mgfUhnvWaDTV5L0q
+ PhTRPfmuqFY61XxiuucBw6HaTmwiIfTG5gtukDEXUju85E6gIofEGVxT1ZCfRAjmYMHmRcedZGS
+ 5RBE0TECVAgNhvWEPEg==
+X-Proofpoint-ORIG-GUID: iiuaRCJx0a82F1lhDVhiTeWStwZ-a0aK
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE2NiBTYWx0ZWRfXwQZxz3NOR7Ng
+ iYieGtE5cBtdjqMlxQyDFPMqYIgivB8OJ8yNBDumrNciBYvwJEBk8BuVg7qMCHonyLkdqrRJJUE
+ b0mqEqslSoFqJ977Qtm0AVCILOwkELM=
+X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a99c5d8 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=F2PNqkVtL6hlYDCPSBMA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: Hw9kBIcp0pZ7bqRWFQl7pG6DYbkYinmV
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE2NiBTYWx0ZWRfX5hAOJH9uGNo7
- ZqaiBItYfWTub+mMLx5q8C+rkLQJY6U5VX7AWd6GW0Oh+VJJTBmKToVAgzwdEPfb6f8KznfAA/k
- L0QbRGVfWgr2LvfLMhyFvnPe9emBT9o=
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=hYy3HD8TdQRgzLyVltYA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1011 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
+ adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609030166
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jjherne@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,46 +129,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 8/31/26 3:49 PM, jrossi@linux.ibm.com wrote:
 > From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> The length of the PCI IPLB is calculated by size of the IplBlockPci struct
-> plus the number of bytes used for common IPLB fields.
+> Rather than add a second non-architected IPLB type for scsi-pci devices,
+> let's add the relevant fields to the existing struct so that it can handle
+> both PCI and CCW scsi controllers.
 > 
-> Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
-> while we are at it.
+> The PCI and CCW fields of the IplBlockQemuScsi are aligned with same
+> offsets as the corresponding fields in IplBlockPci and IplBlockCcw for
+> potential union access.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 395116781df5 ("s390x: Build IPLB for virtio-pci devices")
+> Add comments for PCI/CCW specifics and also denote that the S390IplType
+> enum values must fit in uint8_t.
+> 
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
 > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->   hw/s390x/ipl.c              | 2 ++
->   include/hw/s390x/ipl/qipl.h | 2 +-
->   2 files changed, 3 insertions(+), 1 deletion(-)
+>   hw/s390x/ipl.c              |  1 +
+>   hw/s390x/ipl.h              |  2 ++
+>   include/hw/s390x/ipl/qipl.h | 13 +++++++++----
+>   3 files changed, 12 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index d59ed36c78..ba69ee89bb 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -615,6 +615,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->           switch (devtype) {
->           case PCI_DEVTYPE_VIRTIO:
->               iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
-> +            iplb->blk0_len =
-> +                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
->               iplb->pbt = S390_IPL_TYPE_PCI;
->               iplb->pci.fid = cpu_to_be32(pbdev->fid);
->               break;
-> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-> index 3fa9649112..69b0023ea3 100644
-> --- a/include/hw/s390x/ipl/qipl.h
-> +++ b/include/hw/s390x/ipl/qipl.h
-> @@ -39,7 +39,7 @@ typedef enum S390IplType S390IplType;
->   #define S390_IPLB_MIN_PV_LEN 148
->   #define S390_IPLB_MIN_CCW_LEN 200
->   #define S390_IPLB_MIN_FCP_LEN 384
-> -#define S390_IPLB_MIN_PCI_LEN 376
-> +#define S390_IPLB_MIN_PCI_LEN (offsetof(IplParameterBlock, pci) + sizeof(IplBlockPci))
->   #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
->   #define S390_IPLB_MAX_LEN 4096
->   
-
 Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 
