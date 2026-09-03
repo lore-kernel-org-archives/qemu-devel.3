@@ -4,146 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F70C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FBCDC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x29CA-0006gs-OU; Thu, 03 Sep 2026 11:17:42 -0400
+	id 1x29Mz-0002FA-40; Thu, 03 Sep 2026 11:28:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x29C9-0006gh-Lq
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:17:41 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1x29Mt-0002EQ-1T
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:28:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x29C7-0007M9-KK
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:17:41 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683DARWu1040646
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 15:17:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pYwNXEEiWxVxLeEIj9w9qX+lvER5yNMoP1N0MkNrKf4=; b=FipvcmYBF79LiQUw
- MgqlJGQZketYyRnqOX9NdvoomEUC6Pa6PPoZFdkmbT/CKACTZnvHSJwxC9NrFxS3
- ARlBXhQLPczGDF2gbqS/KQ6uF/9/gxER0SitP+teQEH3vwT+n+FKVDjpQlphavO1
- IKvaACsHBoiQJm0VRKn9HyL8mbECoqgq1bw1CLK5NsYMej4ax988pma2t+zelTZq
- J+JrvRXpDsCRmnKXFoUW3WBQ/rnyhYRxwNDrxNi5OqushsrwCJ5Et44ODwMQZxPJ
- k8znOmhDJsKj+cg/LwDLZMqPsJ4ODUze0k/JZhtXmk91v8AtbMgVppwIS559eSAI
- 3f2A+w==
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf1j4jh7m-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 15:17:36 +0000 (GMT)
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-97e99615e0dso1011881241.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:17:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1x29Mq-0000wL-EL
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:28:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788449322;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zZlgcpyErJlCEJFwxXWLl2G2MJ6RenYBs5jbw6Dpw5Q=;
+ b=J4pXppy0naKn1dkwuqlIj/0B+3s1I+Pw1UypGQQQeXYLL9nLjNcKwD9Ij3bS/ArxDSRdwb
+ c7+nyICpQoOzdHFwNfg8Kne2Ir3hzLXGmSpxQ7sp8d9ZYhD0AD9e+I+hdZUmY95WhAhYyw
+ JGdcy5/cNGtFlwLZ5/uWVH98fekX4/w=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-678-dYNcHDelMrKPxKGsHayRWA-1; Thu, 03 Sep 2026 11:28:41 -0400
+X-MC-Unique: dYNcHDelMrKPxKGsHayRWA-1
+X-Mimecast-MFC-AGG-ID: dYNcHDelMrKPxKGsHayRWA_1788449320
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49b8c651ac0so29951355e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788448656; x=1789053456; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pYwNXEEiWxVxLeEIj9w9qX+lvER5yNMoP1N0MkNrKf4=;
- b=UwrBtqvo7znqjNID0Uw1OXw67a7kCnesrtNP9ggzzSWGLNx/gduZUoFIYGD9nOTtoC
- xArN+x42Dq0Ra8d9vjBqvhWjXiNvb75FMyibOItfYnGuvnJTgwmHCFyqpsNdDNafHAod
- df7o9gg0cJ2fMwNx16RwmB1Ttv/cBicf20AB4g7OqYLObGXLwTe4VvQpg0ZjduyeWnpS
- QcOqPZTKNxuuFYyJ7IbDLQm0WqjQtFjUmrelZcXkSh3i6VxQmd9NIRVFokh3assWKPjn
- EL13nH6BG07Iev/Bg/t19wutolI7Kswtk/3zN5mr7f0KP1V84gz89jSdW53q30vqsJSa
- bw3Q==
+ d=redhat.com; s=google; t=1788449320; x=1789054120; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=zZlgcpyErJlCEJFwxXWLl2G2MJ6RenYBs5jbw6Dpw5Q=;
+ b=OxEs9d80mtAdkC1lcb2JK4Nh81fnofnQ7GUxDXMY+JpTakc7BLuE+fjN6tI0qydLbi
+ 2d2kZSVhiOVrkeXCRxnBdHQ340rnHghJoJg+8A57wL65DvNkGjhG/GZY2hoK8BhEvUS1
+ nURSRDqWtf6DA8B2uz7qoaP7W5rbIoMUL6gYfYAacJMnc29G6vBxtErRd6+aPIsqpVKa
+ ZOgNFRdB2D/roJ7bKx+OHgXzn+3jUVXujdhoulsj/JSLXkJUAV4teXYKfTQymxbt31Df
+ 4QWR63po9eQPmWdoXTQ3nvpKfqtTrk3oaZg9KsIvm3aVAd80RvjWVepdBX5g8J2BbZGs
+ Y9nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788448656; x=1789053456;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pYwNXEEiWxVxLeEIj9w9qX+lvER5yNMoP1N0MkNrKf4=;
- b=povMu8ZkimqKuIXe4UcEywEnA2LmQO0yL+rQdOGAHQYzjMH07EBFd+lIVNhan+pnbU
- 5fZ+50ylKdihp2xBTfcW4FeRDzLCuQTpJUjdNyymRe82/kprm66adqpu4s6II7q2fRuZ
- S3je9noMy7GfUP3rIjgRbEjcBTTH/NEB5/W5Al5cEDNE1YhzwJQLMq9bP2h7ZX3It9Yl
- I5jb+7rARVM5TPP7E52etZZzxDMxTsUeswflcKcWTRzwx68vsbh5m8+lkpl0wSk7KSx/
- PzQSiRl72OIG5FvVtbXAvini5TPOnQsQCge//Lst666eqzho3kE3OdL0o1m6PzwfTla5
- u5ig==
+ d=1e100.net; s=20251104; t=1788449320; x=1789054120;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zZlgcpyErJlCEJFwxXWLl2G2MJ6RenYBs5jbw6Dpw5Q=;
+ b=DMxDdrXD/8kqYJNCumHqF3yCJiiubQAHWy74t37xEBH6zn+/dHaJD+BGknS3t435ML
+ UBO49eTL8BcH9Edg1c+3TOKWi8lkw0bMzc76lAFumBa1Lt7IydFdNxMNwzzTcagyVgkI
+ UDm+HuTnbLuKAJXrQb3fVLK2+jd0of+NR4Q13wPt0sKOviuL4rudLrbT+uqrNhKdePBg
+ 9KLJuZq+J7QCrF5JJBY1+l4unNrQxoWsYCeVzLuwYm8uo+re30Lkjyhk7F7qmJb2rkXF
+ gS52/3IdtKZ0LEvPEYQRCYgitMuJk11gQC7wVzuOo/0gv1H61YmNZlSeS/2rY+RaoAfb
+ 5gaQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwz+6Z7ICT88RHnSQw0LAVxdo+rJlgBVO2K19GbS7DmnpSx+lzeMWsz1GGdZy1WWZZNC/7Vqrgp+KN4@nongnu.org
-X-Gm-Message-State: AFuF++k9arT3ABsjGfiwe7vf2Zb2bGNKEgYOPRPTH5xjarXefopdeYUh
- qKPJNZn9U3yKtH5S5aoKda1sre/Lz6LQXudMBzrZkS+IYxipcSTtW8lGIMk2NacqGSyWPDJ/DZP
- Y7o+tCXAGXfXuTFB5HW954HRc+01pA8Vf+BHQ03URsUfQc3To58Vs5VkKag==
-X-Gm-Gg: AYBFou2Jhrwihloh3haIgzuD3krC2ZaQCXne1mi5z+Y/AslmoYTFGKElCxW9A/Ey5pM
- im54J6M5ztEcn5tJ4JUZrSu5TKS2nZPak3bEBvAIBnEkQw/joxkicMjWLmHRt191xu1cYElteZf
- GN21fOp3DeKFnTT+gVGI8ASy4oZFDfXJX0/LEF+NWBdvNYq5NNys82gwjwuJQ0uKsDy7ukMVBr6
- /AkN8IVYfuzgFrWGxZynPDqFA9FUA5uD//Fzu70MQCViBYHH5Pq3NaFLYnYMVZRlo8TEg7xG1+F
- BukUbdsZLrFQ1oclkscdZdzH6NUXbT+laR9dlkv92HfcKuobB9aVu9qqBnBW1yEhVyPqNglGeDv
- qh7UVsobM96e4YIBpOR5GwkrX/z/rP6cikw==
-X-Received: by 2002:a05:6102:83d1:10b0:736:f95c:4bd4 with SMTP id
- ada2fe7eead31-78a2eded4bdmr1449653137.6.1788448655932; 
- Thu, 03 Sep 2026 08:17:35 -0700 (PDT)
-X-Received: by 2002:a05:6102:83d1:10b0:736:f95c:4bd4 with SMTP id
- ada2fe7eead31-78a2eded4bdmr1449637137.6.1788448655504; 
- Thu, 03 Sep 2026 08:17:35 -0700 (PDT)
-Received: from [192.168.69.200] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5dec54sm93149515e9.12.2026.09.03.08.17.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 08:17:34 -0700 (PDT)
-Message-ID: <26656ba5-6243-4eee-a999-d6b5395ed8ad@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 17:17:33 +0200
+ AKwUvByzvDz2CH6yl3RMPO9tjGCS5vkqkDz9UBWtSnc/HZwzVnTFsNPzkISG6Y6mDY5A75SBjyGuWdo5E9h4@nongnu.org
+X-Gm-Message-State: AFuF++lJgd8KTzVEAbavM0N7gMHb//g6CqG5U+/UcsGibVmepmD01AmR
+ Ta+ZVxJVo3YASsD2rYJWX9FTDhLuJy75ntXtX6AXzvPkkL9Fgmw5qr4+bGr7xywPTUWgU88pEzY
+ Lp+7uf89JfM1FNOhnRzEWF2j7Jer+RWQ/fCYI8JmYhujdq+t2yVfWwY2S
+X-Gm-Gg: AYBFou2hcRvjQVVzOOTRa77Y3DFOOFE8qzofK5hdMm6GGq6k8a/juWb1C3VLVMHL9Il
+ FmB94lY80ECzff9PtvFWcnYiwIxM7GTZTmneesKpvE2x7hy7kO7xR8bJ0UzKaDsQThV5gajsBdz
+ bHftaVyAIsIXQAJBpNWvqoJyJdWrZRx9wYjjZjXiNnt9uCU41bZ7YuF5MGGus1UvaS2had7tVF2
+ hfS87Rhk1ydKDUenVWRtEOhr7ZnrfKHsajFvKgDMdvj5oJKrYUAZr68U/8ByMNmB8yvxOczi6j4
+ 8DruBgL1X76heNHp6sEKWGyU9+V4GQHjiQT/c7nu4L4/sCTw5T3oUUd0g8M=
+X-Received: by 2002:a05:600c:81c9:b0:49c:df2b:15fc with SMTP id
+ 5b1f17b1804b1-49cf5b79c84mr17210115e9.8.1788449319974; 
+ Thu, 03 Sep 2026 08:28:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:81c9:b0:49c:df2b:15fc with SMTP id
+ 5b1f17b1804b1-49cf5b79c84mr17209195e9.8.1788449319587; 
+ Thu, 03 Sep 2026 08:28:39 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cee5f9114sm76185195e9.5.2026.09.03.08.28.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Sep 2026 08:28:38 -0700 (PDT)
+Date: Thu, 3 Sep 2026 17:28:35 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ xen-devel@lists.xenproject.org, dave@treblig.org, mst@redhat.com,
+ anisinha@redhat.com, philmd@mailo.com, aurelien@aurel32.net,
+ mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, cohuck@redhat.com,
+ alex@shazbot.org, clg@redhat.com, akrowiak@linux.ibm.com,
+ jjherne@linux.ibm.com, sstabellini@kernel.org, anthony@xenproject.org,
+ edgar.iglesias@gmail.com, pbonzini@redhat.com, eblake@redhat.com,
+ armbru@redhat.com, joe.jin@oracle.com
+Subject: Re: [PATCH 0/8] Force detach PCI devices for ACPI-based and PCIe
+ native hot-unplug
+Message-ID: <20260903172835.0e253a25@imammedo>
+In-Reply-To: <01ee4841-76d8-4749-a80e-eb945ab8799a@oracle.com>
+References: <20260824011420.752806-1-dongli.zhang@oracle.com>
+ <aoxY4Rxst2qAyn5z@redhat.com>
+ <01ee4841-76d8-4749-a80e-eb945ab8799a@oracle.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3] AGENTS.md: basic bare minimal guide
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <graf@amazon.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>
-References: <20260903122516.1377717-1-alex.bennee@linaro.org>
- <CAFEAcA_TaGW+7jvtp8OXjvGeJMce75MzZrimCWyaHrfa+ttx7w@mail.gmail.com>
- <apl3ftMWA44nHexR@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <apl3ftMWA44nHexR@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=dufrzVg4 c=1 sm=1 tr=0 ts=6a998f90 cx=c_pps
- a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=ID6ng7r3AAAA:8 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=-5OaHjQWVAscTboXWC4A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TD8TdBvy0hsOASGTdmB-:22
- a=AkheI1RvQwOzcTXhi5f4:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: PtfwYL1tuHLpJwL89vsMjqiwgMWiUWV_
-X-Proofpoint-ORIG-GUID: PtfwYL1tuHLpJwL89vsMjqiwgMWiUWV_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDEzMyBTYWx0ZWRfXzT3MaWDik9y1
- Y0xHG90RzLCxA//r5wkeNZlvnW7mseb0suggVgxSFHI44tOYBVFy+clz8sfBvP0US/qf5QaBaIP
- vJygC2tfQFt4khlZSXT21IVPmQWHw04=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDEzMyBTYWx0ZWRfXzp8Uh9lveLj8
- 2ZWQ0zrwuJb5WqibXXFeloV+y17Uhw2ylJEwUr+ZwjEdGXLs7u9j7Ndr0tknEe2gHx2hzPuddvK
- X5dJKlmywjybHJ8WAxkqJV1c6IajEYQIJu7WwNuIWNhiBkbYc03me4D1uyrbp7ptBXnkfoThRL2
- ZL1795RilbMGOflySo/kTbb4BQENy9lugSb0AWS+CUsxL3FDRN94ckbycpH7bndPIF/cntURzdZ
- Nl0SphBnsCFM58+myx8AKqUk1n43VGtGHcjJscI+HOKdPAVGelV6kX8AVc/BkDqiWT6KO8wE9JQ
- a+RXWs10bYGRvHpbWLX2OPWpKRIvkfG7d/xdt685hfVrfZc+EV3OA5F6wcEjKxjA5KxgCeRm1g6
- 3qWO6S4shANC44jp4BO6dIdnnToP7kDrWgKPA4S1mf29HrASCoYamLWwjCyoJObbYkM92NHzYzS
- OxQN/bOnG9s7WayebZw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_04,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- clxscore=1015 spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030133
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,58 +133,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 15:34, Daniel P. BerrangÃ© wrote:
-> On Thu, Sep 03, 2026 at 02:24:39PM +0100, Peter Maydell wrote:
->> On Thu, 3 Sept 2026 at 13:25, Alex Bennée <alex.bennee@linaro.org> wrote:
->>>
->>> Currently people may be inadvertently not following our documented
->>> process for code submissions because people often don't read the docs.
->>> However AI Agents do tend to try and follow instructions so lets help
->>> them out.
->>>
->>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>
->>> diff --git a/.claude/CLAUDE.md b/.claude/CLAUDE.md
->>> new file mode 120000
->>> index 00000000000..be77ac83a18
->>> --- /dev/null
->>> +++ b/.claude/CLAUDE.md
->>> @@ -0,0 +1 @@
->>> +../AGENTS.md
->>> \ No newline at end of file
->>
->> Missing newline, as git notes.
-> 
-> IIUC, that's just a result of how git represents symlinks
-> 
->>
->>> +## Security Policy (see `docs/system/security.rst`)
->>> +
->>> +You MUST NOT report potential security vulnerabilities to the public
->>> +GitLab issue tracker as a normal issue. They should be reported as a
->>> +GitLab "confidential" work item, as described at
->>> +https://www.qemu.org/contribute/security-process/
->>> +
->>> +**Crucial for AI Triage**: Not every crash, assertion failure, or
->>> +buffer overrun is a security vulnerability. Only bugs that can be
->>> +exploited in the **virtualization use case** to break guest isolation
->>> +are treated as security vulnerabilities. In brief these are:
->>> +- **Hardware Accelerators**: e.g. KVM and Xen, TCG is explicitly excluded.
->>
->> "Xen. TCG", not a comma. Otherwise it's unclear whether you're
->> including or excluding KVM and Xen.
+On Wed, 26 Aug 2026 09:15:47 -0700
+Dongli Zhang <dongli.zhang@oracle.com> wrote:
 
-And Nitro?
+> On Mon, Aug 24, 2026 7:44:49AM -0700, Daniel P. Berrang=C3=A9 wrote:
+> > On Sun, Aug 23, 2026 at 06:13:30PM -0700, Dongli Zhang wrote: =20
+> >> Hot-unplugging a PCI device can require cooperation from the guest. For
+> >> ACPI PCI hotplug, QEMU notifies the guest through ACPI and the guest
+> >> eventually writes the ACPI PCI eject register. For PCIe native hotplug,
+> >> QEMU notifies the guest through the PCIe hotplug mechanism and waits f=
+or
+> >> the slot unplug flow to complete. Only after that completion does QEMU
+> >> unrealize the device and emit DEVICE_DELETED.
+> >>=20
+> >> This can leave a device stuck in the unplug pending state when the gue=
+st
+> >> does not cooperate. Examples include:
+> >>=20
+> >> 1. The guest has panicked, or the relevant ACPI/PCI hotplug driver is
+> >> unavailable.
+> >>=20
+> >> 2. The guest is stalled and cannot handle the hot-unplug event. For
+> >> example, stalling the Linux [irq/9-acpi] kernel thread can reproduce t=
+his
+> >> for ACPI-based hot-unplug.
+> >>=20
+> >> 3. The device was attached to a slot that the guest cannot use. For
+> >> example, a pcie-root-port only supports slot 0. If a device is added t=
+o a
+> >> non-zero slot below a pcie-root-port, the guest may never discover the
+> >> device and therefore may never complete the unplug request.
 
-Grey area for the rest :)
+all of above is actually expected, no (functioning) driver =3D> no hotplug/=
+unplug.
+it's the guest problem. Once device it exposed to guest its life-cycle
+not longer owned by QEMU.
 
-> If that change is made, then add
-> 
->   Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
->   
-> 
-> With regards,
-> Daniel
+That's what one would see in real hw as well, you press eject button
+but it will not do anything if OS doesn't process it.
+also see comment at the end.
+
+> >>=20
+> >> The non-zero slot case has also been discussed in:
+> >>=20
+> >> hw/pci: warn when PCIe device is plugged into non-zero slot of downstr=
+eam port
+> >> https://gitlab.com/qemu-project/qemu/-/commit/ =20
+> > ca92eb5defcf9d1c2106341744a73a03cf26e824 =20
+> >>=20
+> >> hw/pci: add comment to explain checking for available function 0 in pc=
+i hotplug
+> >> https://gitlab.com/qemu-project/qemu/-/ =20
+> > commit/67d045a0ef5b9c5f871c3a1d87325a8a42d2b9d5 =20
+> >>=20
+> >> pci: don't skip function 0 occupancy verification for devfn auto assign
+> >> https://gitlab.com/qemu-project/qemu/-/commit/ =20
+> > e228d62b4af29bca698ec57efdceb46f392f5444 =20
+> >>=20
+> >> For example, if root-port.1 is a pcie-root-port, the following command=
+ adds
+> >> a vhost-scsi-pci device to an invalid slot:
+> >>=20
+> >> (qemu) device_add vhost-scsi-pci,id=3Dscsi01,wwpn=3Dnaa.5001405324af09=
+85,bus=3Droot-port.1,addr=3D01.0
+> >> warning: PCI: slot 1 is not valid for vhost-scsi-pci, parent device on=
+ly allows plugging into slot 0. =20
+> >=20
+> > This rather looks like it should be a fatal error, not a mere warning.
+> >=20
+> > If I follow the commit ca92eb5def it links to https://bugzilla.redhat.c=
+om/show_bug.cgi?id=3D2128929
+> > which states that this configuration is going to lead to a crash in
+> > QEMU on guest OS shutdown. IMHO that crash is sufficient to justify
+> > making this a fatal error.
+> >=20
+> > If we actually wanted this to remain a warning, then that shutdown
+> > crash would need to be fixed.
+> >  =20
+>=20
+> Thank you very much!
+>=20
+> I see that the issue has been fixed. The ticket mentions the following.
+>=20
+> "What I am observing is that it seems when the slot ID !=3D 0, the guest =
+OS seems
+> to ignore this and we never seem to hit ich9_pm_device_unplug_cb()."
+>=20
+> Based on my experience and evaluation, ACPI-based hotplug is more likely =
+to
+> encounter an issue where the guest VM does not respond to an unplug opera=
+tion.
+
+I'm not sure it's a good idea to delete device when guest still thinks it's=
+ there
+(you can make guesses on QEMU side if it's in use, how useful those are is =
+questionable).
+
+as far as I know, ACPI hotplug has no notion of surprise removal (pls educa=
+te me if it's not the case),
+so I wouldn't do what you are proposing here at all, it's basically asking =
+for disaster to happen.
+And all this is basically for dealing with abused qemu flexibility.
+
+Please (re)formulate usecase and make it more clear as what is eludes me
+no matter how many times i've read this cover letter.
+
+On positive note:
+
+What you can try to implement is native PCI-E support for surprise removal.
+How hard that would be I don't know. And I would well expect if one deviate=
+s from
+real hw expectations/configs (such as not 0 slot/partial func removal),
+one would quickly stumble upon issues as  that's not what what vendors writ=
+e/test
+drivers for.
+
+Even if it's not likely to be used in practice (guest still might not suppo=
+rt it),
+it may serve as test-bed for guest drivers.
+
+> Thank you very much!
+>=20
+> Dongli Zhang
+>=20
 
 
