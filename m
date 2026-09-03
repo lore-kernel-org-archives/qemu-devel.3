@@ -4,130 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164E0C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9390C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24ui-0006KT-Ne; Thu, 03 Sep 2026 06:43:24 -0400
+	id 1x24uv-0006is-J7; Thu, 03 Sep 2026 06:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24uh-0006BY-Ge
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:43:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1x24uu-0006dF-13
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:43:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24uf-0006xr-LV
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:43:23 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1x24us-00070h-Al
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:43:35 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AHHOR327193
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:43:20 GMT
+ 683AHBW3212433
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:43:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- f0Skn+8bjf9L/XrkfsB3LtkwG3OP3OS/jIMH/4fHdro=; b=luTCsDC4vRMBoPKT
- SUhO0+qlFciICkEaVSrtEXAj0eCMrgShBsn7wa58tRin50lWETIFzFhgkKUEiLqD
- EF3wDOUvLIsjgG7WgqR8+8Hwen/7TJf95aIcjP3QbXKMlXC71no2Y7mGUozzNSQw
- N2dfsb6CWavrrDLqFsuY7wm7cwIbagUbcphVc9GkpZxd1aV/hmMlTbjnxUSS2vqn
- 7LgxO2473u7MtmEgx44H6hdb78Byp36w7TWf/poA7RkeAd0oJssXDOqMjUH1y4Q8
- PrB3I68C+KRIXq2EPlGUXLeByZQuGAC9nfTwf3pS9j8vKvy1sXjt7tTCUfEBKvyZ
- 4dRnlA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf4ekgts0-1
+ r1ILxo6mmx63aRLirfFj6dx57ZFPx3gOEtU3qssEgDM=; b=jAh7ae+5CWXKHK1t
+ 1a4yvT160RLKuxkao5LIdElR+eMNWzYW5banlmw6u2yw5710k6htEIPcMJoWwQDH
+ 8rwcdcbdi19hCuzOj54ewGQp9QMyCJBMZOlXNrK2PRGxSsnOe34vpomixnSNNeZc
+ D3Tkoua5bVJcY6cx4/rj6sqDE3FPVAEpkfGVmIklWiMXoj/8eA8rh4VCtm79070p
+ lsanJEXlBpBx0CAVg2VNupQqIicZxg3tuy43Ry1UnMyCkrVdOkZh2PtAIqJbSeqL
+ ljnPKj9YjLjLbyGAbZlcrNpvz3MeQuEgqd6vXs2OJ1/LSU7ZsuXQJXA+YxWphdRp
+ IRCXvg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf1pyhfyb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:43:20 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9394ad7f64aso430070485a.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:43:20 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:43:32 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-9382f9430deso412511785a.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432200; x=1789037000; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788432207; x=1789037007; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=f0Skn+8bjf9L/XrkfsB3LtkwG3OP3OS/jIMH/4fHdro=;
- b=YdAdDXZnxHUV3ZZWWSeXP+wyhG/j5hKurAXgqCitEAAj9p1Ai0cKH061iGIMPcf9x2
- qt5mZSe6x+cN2vyz03AsG801Nc3URMc+vveri9ercFHd9SNhZi34IsxRFZLFNu8OPpG9
- JKS/RnrJawmFhEcIzgoJrZsvl5dkFmHmastQh6yQkk7YBrN9VU1l1s7+sL277tTmzFZo
- 1ZVBQ30GXQeKvhHpZ7hNEvkj/J6q2Wbm2srLZJLHoZB+c3WIaqh5nGEInMwiosxSeyW/
- DyNamkIY3dkXuoao9t0eiMWO9YigQaoR5n65Lw2gJKc+fiCe5kyhXsoSJwMBgnbhg00f
- AIWA==
+ bh=r1ILxo6mmx63aRLirfFj6dx57ZFPx3gOEtU3qssEgDM=;
+ b=Ks9BzIMii6QjuEjqhDg8BHexJ6Hhku5bnF86cKQbUPaQfXKlV7dfwh2HFRpbP7gN0N
+ tftx+IhykCFMSYBNQouKtQH4kZsz7cHHXiWMLYDwN25gvP2iMzcS2jJZDk+cGxImK6NB
+ lsOQsB80P+pYmaJX46+sUPanSTrUBtCIdR74x/kZf/os/AScvKbD+lUwD/GXkXQuAlDL
+ p+juks4w0/K+ZhTkUq0nkDLg1D2/5k2fsA9UBiD+EM9Pw32MWdyzB6DLjQUo8d9m2pro
+ f0EuOrpsH0M+yo7+3cjsrJrUt2Cu6rH/KBi2dH4AM1CgjiODK1IoCBS5RnvL5MhsG7FC
+ SLFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432200; x=1789037000;
+ d=1e100.net; s=20251104; t=1788432207; x=1789037007;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=f0Skn+8bjf9L/XrkfsB3LtkwG3OP3OS/jIMH/4fHdro=;
- b=sQEcswhXAd16MyNUH1vX4N3HbBYRy59z6FyOu5CNThpKVa7HCDrdUdEpEfxwzqW8yp
- BEEISJ4l6/XT+g7wp1V3CjL3W6IMk2jmHyYlQUCYr5ZVkmzbwkNfDIvCMc2RCz+nnc+r
- RI6STDZizsJ5y9dYxl2Np4WDVRFb8CjuNa/hi/KvTAwJPLSnh+relckjrJ0T3wI04yny
- HyknSc3U7PDfiZx9yvT3ESb3QTBN8MxY74Ud0K8mlX8NFmfF1mvAGHglIE3+KNl/szFz
- p6FVgEstYTiNGXVWIZW1vtoL5gdpMQ573BnbVhqlIP6GH2oQTrnSVndHgw+xoqN0GNGw
- UiEw==
-X-Gm-Message-State: AFuF++mkI4uVdWFzsP1QRc28MLFA8Aaj6B2BWUFlvANmzkDeOf3fMUUr
- iU7GOZS8bR24Jy4K3s+Ai0i8n94vcYMOz37u/CgdFec4hwCORXCm8TttHLAV0CSFDAgnIg6q+QD
- 6CBOVP3HZ4dAuqTwXwF9Z+QfWXRlaeaPiwLPefwgi3tbT6+4PVqCLmdZ6Q1FE39S9zA==
-X-Gm-Gg: AYBFou1BavcqDw/UwmxYxr2EZFPRYxP11Z6IBYeOLCQgZtJo8c33sKtk0caXZL59Kca
- Bts/MZPv/e0eDVrywAPsvdUvlFkT/AemVotDu4ekauDuK5SJZZsqpKH75fuKIo602vJ3O9A+nh9
- V+PqEQBiExnF7dmheYLlE/0TZm2tV7+SOK3akgEw03VeSW2ftKFZbMLgKKDxJ/ZNCN2oGWFGy4z
- eh/6lEWp3N68GGSibUiq9mGcAgTmM6adelHlcXItry3+EO+6NtCd15uSY8XuvI84IvonOS6Bfuk
- CFrQKADUcRPxhSBkKnp0XqKAYH36juCPcFrcRr1pIHdBJK+XP3/UuUamD+S27ZWBxgDoEjvT7Jz
- wwyRkY0E0nba9CjRRkahIPYAh8kuXuS0VZwxkAkWI
-X-Received: by 2002:a05:620a:398f:b0:938:fd9b:c615 with SMTP id
- af79cd13be357-93960fdc482mr920186985a.40.1788432200018; 
- Thu, 03 Sep 2026 03:43:20 -0700 (PDT)
-X-Received: by 2002:a05:620a:398f:b0:938:fd9b:c615 with SMTP id
- af79cd13be357-93960fdc482mr920185485a.40.1788432199612; 
- Thu, 03 Sep 2026 03:43:19 -0700 (PDT)
+ bh=r1ILxo6mmx63aRLirfFj6dx57ZFPx3gOEtU3qssEgDM=;
+ b=aazOPzkSVner1uCUumVe3Jk+NTZw06wtuN1mDocJiYsojEGZ9LU1QouBlaZ420hsvo
+ xbrrJMyMjtvw5tcvrWOSMmwcKtXmOSV3uhPFEbRuD0Gy71zbe1AT/8KrvK6agRSF81kq
+ HNL5RS7oiwb8hZv8bQfTEqV2Bguq6DJzRYDHFsDaiBZVknQ/cMjRoPc/te3o9W3kSfp6
+ f0CDFwqKUuYmu/WiUMb21h5Rg9TRnxY83DsgFe2fA2a8ClAHaKAwc+4iXhFMohWJ8CMt
+ S53wdxyWk4SKgYMUJ85YdyWlGBoZLfvxBiUVwzXRWYoxHHkeZ0SZWD8Rgk/NAPyGAUkX
+ q/Ag==
+X-Gm-Message-State: AFuF++kkzjR144fotaFmp5rgE0PUZ5yTfqCOBC9a9+4yvCaTloFQM9FD
+ KEi88/tRK98qA0OeGQTwV9HPBqwezBtJW9alb+Z6ge9a21qzt3vCF8keVYzeizlooytersxS035
+ P/0b7tZjzpW6F7/vsFNoxUKGfrOkDzVUcwlfjdKKiFaOgMOQgTVFgjfjhbKzD7aT0wg==
+X-Gm-Gg: AYBFou12zwYCZzSL1EB6qdKu6zQl1amroX1ztAon/X6nYrv+A4q1YdyTuu2ufVVBV3R
+ yXT3YjOVQ0JSmECOKnBrY0EeY0rTQ1djKbZMe6W4nwe25NdNydWeww3Ei3eCV7mrDnKzMQiKy0c
+ QNDkXgOISHouLlSCyULwkj6492CRd2ofg04aFfwnMarJgVARpXbtcRIfz9YeqWG/MHKZHq43H7e
+ b+wtBDNLB4Zg+tP1IxkQfIEF59udFkGzAP3VP9VMFMLnjtsUTGx4riMKkYKS1T2OG85qe35J40S
+ fV7dwY6Dk6gpFwHEaIkdzpHLBDTB37oIggD3NCFHAQoI+MtOlXDHdSYgNjiBQsZDBlC0Ld3RAsE
+ lVvz7w88pIWd2Fob98P5mkDvWP4OR9nJpJ50/7/iU
+X-Received: by 2002:a05:620a:178b:b0:939:1d67:2231 with SMTP id
+ af79cd13be357-93960fb087emr1271849085a.34.1788432206803; 
+ Thu, 03 Sep 2026 03:43:26 -0700 (PDT)
+X-Received: by 2002:a05:620a:178b:b0:939:1d67:2231 with SMTP id
+ af79cd13be357-93960fb087emr1271846285a.34.1788432206377; 
+ Thu, 03 Sep 2026 03:43:26 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5d9db2sm63340755e9.8.2026.09.03.03.43.17
+ 5b1f17b1804b1-49cee5dec54sm73066395e9.12.2026.09.03.03.43.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:43:17 -0700 (PDT)
+ Thu, 03 Sep 2026 03:43:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/51] target/s390x: Constify S390CPU for cpu_has_*() getters
-Date: Thu,  3 Sep 2026 12:39:14 +0200
-Message-ID: <20260903103936.62355-31-philmd@oss.qualcomm.com>
+Subject: [PULL 31/51] target/riscv: Constify @iprio argument in
+ riscv_cpu_pending_to_irq()
+Date: Thu,  3 Sep 2026 12:39:15 +0200
+Message-ID: <20260903103936.62355-32-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: PHvLMalNfNowUmzkCfO-5uwotJhjf7rQ
-X-Proofpoint-GUID: PHvLMalNfNowUmzkCfO-5uwotJhjf7rQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX2wfmZXDCQLKT
- vZhnhwtzbJBJlkUDTM8RcCYEihZKgblgWUSKu0up1omRCDto8h6t9Sl8nWrEzQ0SUOQu3CCwVa0
- RMUq9ygCePSPgb6OHN2a2z6+viEAxLMziQCPSBn1kcUw11nDyETTwICiAI9gwhb+WiPzN1RiMh/
- X9vqwJgKzIaT+xHXIoQAYLZ7jyPlHF45OIDcDxeRgV72eEZ+8RYVIe5/jx4fJplxODaPza7KnHs
- U+aHQpYvvvltk3VkJ/u5ePYu0f7eA3+fpP+2E0vAOltDBCOlADagTS9Mii1KQMlmYwxB6pMfVoX
- ximu55X5qsjNG1S+yXg0rV3MU5FK1vLLuGwSuc25rwJe2dgB630ChjeowBxmsyJAX3CibQzemxJ
- JyIDiive0IZbwvxeFwcnMiyuRcPU8KHt4idQOQcKRcP1OlmpiT13m0PicuD9x2u8r6GOs2aG4tx
- VTsohS6ZCzubsUiTK7w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX5rQVHDvPlH3i
- GfHnzaVutX/GjNGeuF23llPQRN4EH7/QRTEJByDQCliWPqn5QnfDJfv/IErMecXpumSXdJhyAcW
- WXKSuaTQUGEwEen07n6XqJsRYergkEg=
-X-Authority-Analysis: v=2.4 cv=PKc/P/qC c=1 sm=1 tr=0 ts=6a994f48 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX3VtSuyMZYK1f
+ RuO8CVgAXpTil7BDkiCv3dEKN9KI/US2f/KU8fFUDyyXM06Rt5mHtfbf/2lqHJx9SL8nI+uroM8
+ TumRGXJc370/TRcAK0l959VoLyMqvFSOl6Pzdg7GTONr9QxoU97JMyIqjVg04+kmK77tWaE1scW
+ YNzYekjRFilxGvioh2JjgvRL4Ksg79kzz5iHWGp83N6lukeWunmDA/RhKWVUXSbB58m6csM3b7b
+ /iBO+KFo2S3+xJTBSj+bi1ODK14kV7+FYzH+7mumKtH1nttquELh9d1y/wBTlC3WOInPSgtYSyT
+ 1cbyFlmUU2ANJB8tMryGxbPxyUGFsMbtSAUO+8IFI+TaYO0Gsu5bNxdgKk9sX7E1D1CJryEGdIg
+ nkuHJbSFqcTsxfkHFbkhsWNZ48DYu4b0xlnNByLYaeT7g1t368/IIEg5fVFUb+Oq/lvQMcaviQ5
+ YKjx2wInQmMcqzva0xg==
+X-Proofpoint-ORIG-GUID: e52UG_jE55gw-9JM-MoHGtlpkXA4EHh4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX21v4QQwblD4+
+ gptOLq2W3kqDtjpHmABK+A8zOBtb9lQ3TsJpKDJHpDAUZqEk1bea3R4uU34UbrefKT4eY6L7o7/
+ wDEPGEFMfkyFKUiyygzHtm1MF4Eu0Ec=
+X-Proofpoint-GUID: e52UG_jE55gw-9JM-MoHGtlpkXA4EHh4
+X-Authority-Analysis: v=2.4 cv=DMO/JSNb c=1 sm=1 tr=0 ts=6a994f55 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=mU8mmpTTODwToQi1tsoA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=tlxghdvPRZsVr19qFskA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015 phishscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0
+ malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,126 +151,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the const qualifier to S390CPU when the argument
-is accessed without modification.
+@iprio[] is an array only accessed read-only.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Eric Farman <farman@linux.ibm.com>
-Message-Id: <20260901095229.72018-15-philmd@oss.qualcomm.com>
+Message-Id: <20260901095229.72018-16-philmd@oss.qualcomm.com>
 ---
- target/s390x/cpu.h            |  2 +-
- target/s390x/s390x-internal.h | 12 ++++++------
- target/s390x/interrupt.c      | 22 +++++++++++-----------
- 3 files changed, 18 insertions(+), 18 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ target/riscv/cpu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index f55b79ef8ac..998bbb0d7ff 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -854,7 +854,7 @@ static inline unsigned int s390_cpu_set_state(uint8_t cpu_state, S390CPU *cpu)
-     return 0;
- }
- #endif /* CONFIG_USER_ONLY */
--static inline uint8_t s390_cpu_get_state(S390CPU *cpu)
-+static inline uint8_t s390_cpu_get_state(const S390CPU *cpu)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 718b66487a2..b974c2f4b4f 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -646,7 +646,7 @@ int riscv_cpu_sirq_pending(CPURISCVState *env);
+ int riscv_cpu_vsirq_pending(CPURISCVState *env);
+ int riscv_cpu_pending_to_irq(CPURISCVState *env,
+                              int extirq, unsigned int extirq_def_prio,
+-                             uint64_t pending, uint8_t *iprio);
++                             uint64_t pending, const uint8_t *iprio);
+ 
+ 
+ bool riscv_cpu_fp_enabled(CPURISCVState *env);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a13177b7b77..fd1afbc7fe2 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -869,7 +869,7 @@ uint8_t riscv_cpu_default_priority(int irq)
+ 
+ int riscv_cpu_pending_to_irq(CPURISCVState *env,
+                              int extirq, unsigned int extirq_def_prio,
+-                             uint64_t pending, uint8_t *iprio)
++                             uint64_t pending, const uint8_t *iprio)
  {
-     return cpu->env.cpu_state;
- }
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index 81da207a5f4..da60b2b1fd4 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -334,12 +334,12 @@ void cpu_inject_clock_comparator(S390CPU *cpu);
- void cpu_inject_cpu_timer(S390CPU *cpu);
- void cpu_inject_emergency_signal(S390CPU *cpu, uint16_t src_cpu_addr);
- int cpu_inject_external_call(S390CPU *cpu, uint16_t src_cpu_addr);
--bool s390_cpu_has_io_int(S390CPU *cpu);
--bool s390_cpu_has_ext_int(S390CPU *cpu);
--bool s390_cpu_has_mcck_int(S390CPU *cpu);
--bool s390_cpu_has_int(S390CPU *cpu);
--bool s390_cpu_has_restart_int(S390CPU *cpu);
--bool s390_cpu_has_stop_int(S390CPU *cpu);
-+bool s390_cpu_has_io_int(const S390CPU *cpu);
-+bool s390_cpu_has_ext_int(const S390CPU *cpu);
-+bool s390_cpu_has_mcck_int(const S390CPU *cpu);
-+bool s390_cpu_has_int(const S390CPU *cpu);
-+bool s390_cpu_has_restart_int(const S390CPU *cpu);
-+bool s390_cpu_has_stop_int(const S390CPU *cpu);
- void cpu_inject_restart(S390CPU *cpu);
- void cpu_inject_stop(S390CPU *cpu);
- #endif /* CONFIG_USER_ONLY */
-diff --git a/target/s390x/interrupt.c b/target/s390x/interrupt.c
-index 1dca835c5d8..d7e3fd45e4b 100644
---- a/target/s390x/interrupt.c
-+++ b/target/s390x/interrupt.c
-@@ -139,10 +139,10 @@ void s390_crw_mchk(void)
-     fsc->inject_crw_mchk(fs);
- }
- 
--bool s390_cpu_has_mcck_int(S390CPU *cpu)
-+bool s390_cpu_has_mcck_int(const S390CPU *cpu)
- {
-     QEMUS390FLICState *flic = s390_get_qemu_flic(s390_get_flic());
--    CPUS390XState *env = &cpu->env;
-+    const CPUS390XState *env = &cpu->env;
- 
-     if (!(env->psw.mask & PSW_MASK_MCHECK)) {
-         return false;
-@@ -157,10 +157,10 @@ bool s390_cpu_has_mcck_int(S390CPU *cpu)
-     return false;
- }
- 
--bool s390_cpu_has_ext_int(S390CPU *cpu)
-+bool s390_cpu_has_ext_int(const S390CPU *cpu)
- {
-     QEMUS390FLICState *flic = s390_get_qemu_flic(s390_get_flic());
--    CPUS390XState *env = &cpu->env;
-+    const CPUS390XState *env = &cpu->env;
- 
-     if (!(env->psw.mask & PSW_MASK_EXT)) {
-         return false;
-@@ -199,10 +199,10 @@ bool s390_cpu_has_ext_int(S390CPU *cpu)
-     return false;
- }
- 
--bool s390_cpu_has_io_int(S390CPU *cpu)
-+bool s390_cpu_has_io_int(const S390CPU *cpu)
- {
-     QEMUS390FLICState *flic = s390_get_qemu_flic(s390_get_flic());
--    CPUS390XState *env = &cpu->env;
-+    const CPUS390XState *env = &cpu->env;
- 
-     if (!(env->psw.mask & PSW_MASK_IO)) {
-         return false;
-@@ -211,21 +211,21 @@ bool s390_cpu_has_io_int(S390CPU *cpu)
-     return qemu_s390_flic_has_io(flic, env->cregs[6]);
- }
- 
--bool s390_cpu_has_restart_int(S390CPU *cpu)
-+bool s390_cpu_has_restart_int(const S390CPU *cpu)
- {
--    CPUS390XState *env = &cpu->env;
-+    const CPUS390XState *env = &cpu->env;
- 
-     return env->pending_int & INTERRUPT_RESTART;
- }
- 
--bool s390_cpu_has_stop_int(S390CPU *cpu)
-+bool s390_cpu_has_stop_int(const S390CPU *cpu)
- {
--    CPUS390XState *env = &cpu->env;
-+    const CPUS390XState *env = &cpu->env;
- 
-     return env->pending_int & INTERRUPT_STOP;
- }
- 
--bool s390_cpu_has_int(S390CPU *cpu)
-+bool s390_cpu_has_int(const S390CPU *cpu)
- {
-     if (!tcg_enabled()) {
-         return false;
+     int irq, best_irq = RISCV_EXCP_NONE;
+     unsigned int prio, best_prio = UINT_MAX;
 -- 
 2.53.0
 
