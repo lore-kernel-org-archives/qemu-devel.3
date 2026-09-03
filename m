@@ -4,149 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F97C61DD6
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 00:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915ABC624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 00:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1v7N-0002ZY-FD; Wed, 02 Sep 2026 20:15:49 -0400
+	id 1x1vfb-0005jF-Au; Wed, 02 Sep 2026 20:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x1v7M-0002ZF-04
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 20:15:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
+ id 1x1vfa-0005j2-DN; Wed, 02 Sep 2026 20:51:10 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x1v7K-00083q-7g
- for qemu-devel@nongnu.org; Wed, 02 Sep 2026 20:15:47 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 682NHuQR2348409
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 00:15:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ihIYbwk9MLemaviwg136qnzZ070iXCIt5GZ5ewBPZjE=; b=GFvFdtFFFAR4uVf2
- y27ZvO2p0YmUzxn48yav1mf0g1kdb7HOQiy1BY+eMQ7gfKMgBags2q7zpTbEhmpo
- gJBA1FKaXuSqgml26auhG5O1nw2BxSgfxwUGO3Us1mn8M+XmzBk2vPXjDpjJyjgV
- ZE6lNr3SToQkbBa/CAVKVpeMwiGHyEwCDTSP7ybdICUX4wv6Mf2owwEmVs+hGjNU
- Dyxk9uTYfA6UqCWeJRWSABdxnxpXvLlnTrgBrELi+zD6sD1usZ3pFEP7Mywr9XfH
- byYD14hLpSyxLDxF6oBjaDHU7igp/v+PvvC/TJgwMdkd2OG5/U2j5mC7E2jZT0eV
- KGHf4g==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gemj4tq40-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 00:15:44 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-53001b668a6so40850091cf.1
- for <qemu-devel@nongnu.org>; Wed, 02 Sep 2026 17:15:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788394544; x=1788999344; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ihIYbwk9MLemaviwg136qnzZ070iXCIt5GZ5ewBPZjE=;
- b=Op1m90yA/vTYKYBlQlVfhfMCTPjlhsZ0W7hwdtYyWc3UUjhoKgL3r3jXfPG0P5XRQ9
- iz47GqLs81Uokgol+vqHgLDecdgJx/ofIdUpHgJlfS7iFT+Y6km29UDeGhZmDxHWBMSm
- 8yqivOukzFBUoFTwZ9sjeJwGJatcJS8R4/5mgoasgp3WqLXsKlPprwlzlFy2IzHwSb15
- lUT5P0SQGDGBnTIx5kCzHPOLaJg7/LKmnlTUG0/1jSnB3V+yYR6Q34yb/9X9pmieK8T/
- kxWmMM5aCxgU55adIoNXn9DyV3Fu80mO+DSZWBj2VFGTOUOqHTumFMlKWK2DgJwkk2jS
- m58Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788394544; x=1788999344;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ihIYbwk9MLemaviwg136qnzZ070iXCIt5GZ5ewBPZjE=;
- b=V5ekNoyvhf2lB1GUJr8n8JSSfHCdCFT8KML36Sq0u3lteWut6xreJg+FbxjZZeyvi6
- 2415MB9go5i5pmAHawrSfjFsM+gy24IiMeNK/LNwZafLGWbBE+VopxSNp9AM9QbPy04i
- wI/bMXBa3I2OsCp4y2BlIj9MM6eysdtN+RGg3NlbSn5mGwF4bYX7DHaA+1aZnBTHz/1E
- r8I2miC6cJct1Z3PyPQInMBDu13VkqncLVmiVh1URuKDhvrqg7Kc2fp432OqLB0xawLn
- y9I1majYf7TUQ2b7bqTSM6AAojL0fNI2IjJSOY8ubkliZ1axKpX1+KOxtcsbPtObd+Wz
- 4TCg==
-X-Forwarded-Encrypted: i=1;
- AKwUvByXPqA9jdOIuP801EhwpWrqjDK1au06BlsgHoKU+Gu446QUGy/8ZCIxuuaqDDTyaR1m9tNTFaBgIkki@nongnu.org
-X-Gm-Message-State: AFuF++nHvKyYN9S1q3XVScMb2k3cegn1ZKC/K/1tizTZUVbLwyHQWPzu
- sOF44ISGevXtw1wWEH/6e3LRl4PCNyNK4fyB9ZyrwoJlVfLywb9sK+ihcD3EVx6sOgnYrVsWNyK
- Lp0h/e40v/sCTMkS6/gGgntQt4or79JfUA65cctvGvdf0KnF3O4TEQkLNEw==
-X-Gm-Gg: AYBFou0rSJLYNCFHNcM0rznbfwjjHyZH5RFBEtlWNUL5xYUXUWlfy5ltGt+xm6V050g
- dRRvm05MfJfPDUkb3g2MvALYZnkLzpk7BY+rsQYp9i2U/xeZuYCI7Gr9tQj4G72kv1IXQ3YiFAc
- pc3mgfSj5R9pWRsIHvmUYkt0XbTjVFpDqER1DrWx8wTy+9EO9nZtl39QmVz9kQfViB6TZIAC+XV
- 72Kt74Ndnaz+drZNXzjishXjF43GVdT713av+mzrAUuWl7Y+vTJPMgNJDOMfQoWdIUnFAT7rr7P
- nkWRoCF+70I70jorhxIAXo5e3x4WNOGT3/G0+m3CboHHq4YDqWLLWdjYpTzIdr4rFF5EuanECgX
- bO5lqRYBV+hcVD0NxkdmNW947ADC9eGWo6OhjYpP96Cr4hQ2rjsw6DK/HgwkBvCnRaOaSUQ1q+Z
- TQfJOz
-X-Received: by 2002:a05:622a:4014:b0:530:3387:8cf4 with SMTP id
- d75a77b69052e-53036d17a25mr116480841cf.31.1788394544385; 
- Wed, 02 Sep 2026 17:15:44 -0700 (PDT)
-X-Received: by 2002:a05:622a:4014:b0:530:3387:8cf4 with SMTP id
- d75a77b69052e-53036d17a25mr116478051cf.31.1788394542019; 
- Wed, 02 Sep 2026 17:15:42 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90e9ef0e9b1sm30747006d6.43.2026.09.02.17.15.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Sep 2026 17:15:40 -0700 (PDT)
-Message-ID: <64ef65dc-fae0-44e5-ad96-c806e0a6d8d5@oss.qualcomm.com>
-Date: Wed, 2 Sep 2026 19:15:38 -0500
+ (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
+ id 1x1vfY-0003kU-Iw; Wed, 02 Sep 2026 20:51:10 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 7F719600C8;
+ Thu,  3 Sep 2026 00:51:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7391F000E9;
+ Thu,  3 Sep 2026 00:51:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1788396664;
+ bh=w7iDhP3JuhfOEvI4XVt3STgNBMKWPsP6voQdbRPD86A=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=IkpzB+uV0R+g0N2P9rA93tOLkO+8Sh6RHRtg+L3i2DYciYqAlQYI4InZB3Yvth3au
+ lEosvw6sR2qKIRGgvOU2Ab0GoqGg3pFxa1pFCvTcITIIOvvCjZEwo3R6txnmReRnrK
+ JTRQftA0QYeWTdtul6yC2KxyY8zNBra1rEsE0NIs9VUxPyPv5533nFM0J0VlIRtMRH
+ Cm9zUpgETpLIJiRbyz5Ky2O6OIj4VwtV5llA6MVTR4gkrP6X7DvbiSoXzsY2spA8pB
+ esgKhKRWPY+u5d9/8Am4Ebteryz5ucaC7DIUKTf4ie40wkqzG3nLFCYQNrG1EEFcNx
+ Uce01Js0A5EnA==
+Message-ID: <d4b0f1a3-02b5-417e-928a-808b065e7cc2@kernel.org>
+Date: Thu, 3 Sep 2026 09:51:01 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/11] target/hexagon: Move to do_interrupt() (BQL
- acquired internally)
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Subject: Re: [PATCH v2 04/11] virtio-blk: check the write granularity of
+ writes to sequential zones
+To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
- <20260902152044.31291-9-philmd@oss.qualcomm.com>
+References: <20260902194423.759355-1-cassel@kernel.org>
+ <20260902194423.759355-5-cassel@kernel.org>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260902152044.31291-9-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDAwMCBTYWx0ZWRfX5k00rSpxqbrZ
- 7mHjP6FTV/q7jR1t48cnE8E82NinYGwJ3xuGONVpkCBRPX+jrIYyrFmLRnYGijAxA9NRnQduM5O
- 5SCKDZ8THFZDZFXReVSR+wlMiwvCv7R7qyFxf/w/m7bD/UfCiBW1uahaoxZ5i3sD3HlgKJowLxQ
- nf7VXCVUgUZDgmz2pzpPn9MZaOydaD3rqQHcwVJoWJYLma7CkP6C40Bh4tkcAHYpon9AVnSC47k
- MVzgNTiByfYlwZIR3E2M49HBtgQvjOzoQUvGd4aPv0xbn78cS8aCQbhMaEDqB3rMIc3IpKS3Rjn
- emNewtYWRedKBb9fX1Cm15cQp+uC3AdD/Gpn+IIOocZqrqkSpqiLPl/oIp9ARNFzIugcckzUtq1
- H4RerYwi/TDQ06N+m2c1oYgMHE6v5gc2f8prfI+XPuEz++Ycj1U3AG6sZZL20xLpBrpwGmB3wf0
- xi75V0IfExv2sGjLfjA==
-X-Proofpoint-ORIG-GUID: 17QtcLpgl-Iv2WtOPUs5i991kJfunB_m
-X-Authority-Analysis: v=2.4 cv=MdhcfZ/f c=1 sm=1 tr=0 ts=6a98bc31 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=GUtW-XfJRLY4ZrtkAG8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: 17QtcLpgl-Iv2WtOPUs5i991kJfunB_m
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDAwMCBTYWx0ZWRfXw/KJKsHL4y2J
- +A4gu5rgXRAL/3Oa3UuXuMsXZI+1T5sjSCXdJD4yjccOTT+aHia+wng46TtDaZuTeTLXl6hvKPw
- 249lpCWExsyOHjIF9588zl7e4KJ6r4E=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-02_06,2026-09-02_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0
- phishscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030000
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20260902194423.759355-5-cassel@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=dlemoal@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,33 +75,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/2/2026 10:20 AM, Philippe Mathieu-Daudé wrote:
-> hexagon_cpu_do_interrupt() already acquires the BQL internally,
-> so register it as do_interrupt() instead of do_interrupt_locked().
-> This reflects the actual locking model used by the target.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
-
+On 9/3/26 04:44, Niklas Cassel wrote:
+> All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
+> VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
+> that are multiples of the write granularity reported by the device
+> (virtio 1.4, 5.2.6.1), and a violation is reported as
+> VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
+> 
+> Neither request type was fully checked. Zone appends validated only the
+> offset, while writes were not checked at all.
+> 
+> Check the size of the appended data, and both the offset and the size of
+> a write, against blkconf_zone_write_granularity(), so that every request the
+> device accepts is one that the guest driver was told is valid. Writes to
+> conventional zones keep no alignment constraint beyond the logical block
+> size. The write path performs the check after virtio_blk_sect_range_ok()
+> so that the zone index derived from the guest supplied sector is known to
+> be in range.
+> 
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
 > ---
->   target/hexagon/cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index b5dcbfc99db..7067e5b70f7 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -769,7 +769,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
->       .tlb_fill = hexagon_tlb_fill,
->       .do_unaligned_access = hexagon_cpu_do_unaligned_access,
->       .cpu_exec_halt = hexagon_cpu_has_work,
-> -    .do_interrupt_locked = hexagon_cpu_do_interrupt,
-> +    .do_interrupt = hexagon_cpu_do_interrupt,
->   #endif /* !CONFIG_USER_ONLY */
->   };
->   
+>  hw/block/virtio-blk.c | 37 ++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 36 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index b22aed04a1..247af53ae2 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -398,6 +398,32 @@ static bool virtio_blk_sect_range_ok(VirtIOBlock *dev,
+>      return true;
+>  }
+>  
+> +/*
+> + * Both the offset and the size of a write to a sequential zone must be a
+> + * multiple of the write granularity that the device reports. Conventional
+> + * zones are not constrained. The zone index is derived from a guest supplied
+> + * sector, so this must only be called once virtio_blk_sect_range_ok() has
+> + * bounded it.
+> + */
+> +static bool virtio_blk_zone_write_granularity_ok(VirtIOBlock *dev,
+> +                                                 uint64_t sector, size_t size)
+> +{
+> +    BlockDriverState *bs = blk_bs(dev->blk);
+> +    uint64_t offset = sector << BDRV_SECTOR_BITS;
+> +    uint32_t wg_mask;
+> +
+> +    if (bs->bl.zoned == BLK_Z_NONE) {
+> +        return true;
+> +    }
+> +
+> +    wg_mask = blkconf_zone_write_granularity(&dev->conf.conf) - 1;
+> +    if (!(offset & wg_mask) && !(size & wg_mask)) {
+> +        return true;
+> +    }
+> +
+> +    return BDRV_ZT_IS_CONV(bs->wps->wp[offset / bs->bl.zone_size]);
+> +}
+
+Even though in practice I do not think it would ever happen, technically,
+conventional zones are not bound by the physical sector size/write granularity
+and can accept LBA aligned writes even when LBA size < physical block size
+(write granularity).
+
+SO I think this should be:
+
++static bool virtio_blk_zone_write_granularity_ok(VirtIOBlock *dev,
++                                                 uint64_t sector, size_t size)
++{
++    BlockDriverState *bs = blk_bs(dev->blk);
++    uint64_t offset = sector << BDRV_SECTOR_BITS;
++    uint32_t wg_mask;
++
++    if (bs->bl.zoned == BLK_Z_NONE) {
++        return true;
++    }
++
++    if (BDRV_ZT_IS_CONV(bs->wps->wp[offset / bs->bl.zone_size]) {
++        return true;
++    }
++
++    wg_mask = blkconf_zone_write_granularity(&dev->conf.conf) - 1;
++    return !(offset & wg_mask) && !(size & wg_mask);
++}
+
+Side note not for this patch: it really would be nice to have a helper that
+gives a zone number from an offset, using a bit shift (bs->bl.zone_size_shift)
+instead of a costly division.
+
+> +
+>  static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
+>      struct virtio_blk_discard_write_zeroes *dwz_hdr, bool is_write_zeroes)
+>  {
+> @@ -522,7 +548,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+>      if (append) {
+>          uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
+>  
+> -        if (offset & wg_mask) {
+> +        if (offset & wg_mask || len & wg_mask) {
+>              *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
+>              return false;
+>          }
+> @@ -911,6 +937,15 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
+>              return 0;
+>          }
+>  
+> +        if (is_write &&
+> +            !virtio_blk_zone_write_granularity_ok(s, req->sector_num,
+> +                                                  req->qiov.size)) {
+> +            virtio_blk_req_complete(req, VIRTIO_BLK_S_ZONE_UNALIGNED_WP);
+> +            block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
+> +            g_free(req);
+> +            return 0;
+> +        }
+> +
+>          block_acct_start(blk_get_stats(s->blk), &req->acct, req->qiov.size,
+>                           is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
+>  
+
+
+-- 
+Damien Le Moal
+Western Digital Research
 
