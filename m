@@ -4,142 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A85C624DD
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195E3C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x25bp-0000H7-Ad; Thu, 03 Sep 2026 07:27:57 -0400
+	id 1x25f3-0001TL-Jc; Thu, 03 Sep 2026 07:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x25bk-0008BJ-7N
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 07:27:54 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x25et-0001Je-EZ
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 07:31:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x25bh-0006vi-Ev
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 07:27:50 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OikfO3/waBcBBgvhBa87oZ0MjjQd/EIyiAJg5NmtECTouh08b4TddVwgBa8xohKZysFX7/eB1lN733xRvgRPRCKLlk2wWn0dbvYeZRc8iC2iFS8qG+YZiV86uxJTkUARcaRoLwt4x0bNlEA5IE9V1MDtXKBV2fVRlkoCQOMOoJABFsPjCkRMvmIt2pYWwf3v2bkRHQ2VJRiHJCRa/RvWYy76ZS18gJd0RXx1bGe1IALs0Fsr29E8q+aOAP6x/wttDojURHFH5/AWburMC7MCnnxCBYpu6Hl3VCBPY1BJ1BlbHSrZSvFfr4UhJ2ddUsukJc0NMJYNKuYrNpT5IKUIEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bsMQISJQ5rY6YaDUWd+C1ICOoUWWBfyGIx6aVvaGDNk=;
- b=QQ/HcO4ujCKMAF8DDZRhnf6j3UmkNhSnkDyLnXmm61EULc5A07uDqaux6qJB/JCjMj0OnMFw+UcDty1UuLbzrRQY88MQUfR6OtCEwkdpz5qZDcCXuEIO5K2NccLpjUe6DYcFwMxkgx+/C3wRky9RE3XdhTZkLAr9pgny8HATthWmBLwTjVKHIZDQmtw2nUNnNNKjAP8Uwn3Ex0BY6LSGAj1sQAFrirbqAAbA2/6vrmEo9KSi8wZ/ZVa+0YUI76dlqY2Lz2crpkoaxfAtGTAjLB/xVDsi/h+mP+/c35SvHhqdcdFnB8Q7f42XEcLjPfVF2B0p9LHelFbBONAB0tSRYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bsMQISJQ5rY6YaDUWd+C1ICOoUWWBfyGIx6aVvaGDNk=;
- b=B07gSXnozBU4LcmyjB/iLLWxGFq0ZmNGeNmFlfzwS+oKglED3w0rmjHOgBXDqyZQgI/OCyYmY7wL6gaKFu0GcUehB4Omyn6bBn0glyqvNUcXIVqGveGn8IzSfLzaN/8vdWsIBUu5wgM1RSNzphDFjah0BR2e7mC9v53Xsa36e1erLRHsmASdUuFo/mTRkT4jYh1BNQNRwMqjHij93BlSNxpLaL1OG0JtIB4KHIbzQJnbnMLqB8AcSqOhFeiE3o2emYciV09kecpZztJhTAfzTUWC8CU9KY+3u6jtasYXdxw6SENVC8gkckHXaAx3EM500yxIAY+g1HrdatX7j9Fi6Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by PS1PPFF2E6AB00E.apcprd02.prod.outlook.com (2603:1096:308::2b1) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
- 2026 11:27:20 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Thu, 3 Sep 2026
- 11:27:20 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <th.huth@posteo.eu>
-Subject: [PATCH 33/33] MAINTAINERS: Add Phytium E2000Q machines
-Date: Thu,  3 Sep 2026 19:25:13 +0800
-Message-ID: <20260903112532.3276678-34-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260903112532.3276678-1-bin.meng@processmission.com>
-References: <20260903112532.3276678-1-bin.meng@processmission.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TY4P286CA0026.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:2b0::11) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1x25er-000812-UY
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 07:31:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788435065;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cEew52QMjNWmNYII3vQI2Rwv4QcM+xiK5rljE4+oG1w=;
+ b=E1JB7WIu22h+nPaiSVTOwbLEo5RKq7+XCYlkCTvOYk5DcIjDdGiOxhFVZ7XEmwr6MGNkO2
+ krMsa3oCTj2xaCYBsIcc01xUXZIEbQz8gxAr4Msn71UqLXagMz9Zqi5hwIeGuaROjaIsD/
+ pkA+TKjxcDZ8IiulOQ10TnROqxJ5IqE=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-644-SgDb95o0PLKsx9pcbFXcRw-1; Thu, 03 Sep 2026 07:31:03 -0400
+X-MC-Unique: SgDb95o0PLKsx9pcbFXcRw-1
+X-Mimecast-MFC-AGG-ID: SgDb95o0PLKsx9pcbFXcRw_1788435063
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cc4216aee8fso2628435a12.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 04:31:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788435063; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XlPPxsyh7M3kxR3OYeWZb779kGnqx4CFku8VlqT1sLPQqT4rk61FER1rVD8BBb44YY
+ aY+Mqsk4mdXwb4QEDtFyeNEKUKbg83H7YqyZSzcOkG4+HndAIEad1qTfJEmCCiv0VN/5
+ vm6R+SHw003y06i1CEXaCb+Lkt2e3aQnQHKnALBXY9DucFZSQoWyUZbUhQUczXxbBwSI
+ sV88bgYO+NGxdHWapnJk7ff57JvYx8jgdH/Cj0v+qsRwe8FRbhkNt6J9s+H9vY/GU9fS
+ ux1RsfWOFAcNSOixoOmM/60P9SDfaPaizP/pWlig5a5oyfIzm7ixnV+CsVKQaDgO5eSW
+ HiEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=cEew52QMjNWmNYII3vQI2Rwv4QcM+xiK5rljE4+oG1w=;
+ fh=cdRJnSWr0hdCEFqMJgY+ok+/4UsQGTzFjKLqSTY9C6M=;
+ b=Bj7/3pqoDqbjgykUmjfTz1JM+8ZC2xVYAM1vMK0df/FcpweDi77awn769K4KgOznNU
+ yFCNn8um6cmdKj9KYngPdyPQygPo9whC0dELeLgmf8sGptjcFHXO0LSacqdxDW87DlQ5
+ xgYQnEu+Xrstm0OnElMW0mYzVYi0AQTDp2pJmz4jvIzIq5D/56GTpw0Z6yilQB4VZcG0
+ AXVjkwGYfziI3a++jEz198I568iU9x34+yLB85XB1nNZEQVP2iw1lmyQwtPctfok++r4
+ hNYAfY6D3wS18yQGXp/3YzGgmU3oSizwRAMq7MQ00G4xhLPIXNTHNSZreVCRLoRFechu
+ Cueg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788435063; x=1789039863; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=cEew52QMjNWmNYII3vQI2Rwv4QcM+xiK5rljE4+oG1w=;
+ b=IJSucimAdfAKca9Axso/Q0KC8eHIYnxDnhuPK6wElu3xz1fzHWsD+ZUOzF3vWHCCBO
+ iSuexpkNOTv5PF7HPePbn6yHVmRJOmcdFBEl/ZDfBC+Oi4ZSbQf+9UG5tTCfDTrEuQg0
+ J/z+xpD79c5KUjtXXk25OVnQl0grVsOeoGR3xMAPnDgz3zbr8fH5QOZ+cuPJ6bWpN6a1
+ Mhl6jHjsL/dxAG+RB2Cy/1QPYd6gjChNZNSmNlm+6RvyS5kCaYEb2cAqVc6pS1Z8Wp+d
+ HxYxsvg8Zwc73zyzpk6JEcUFWkQ68MmZG4aToyOfhxOaudPRBsP+FLzkpbGk9TTkWMMo
+ eO/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788435063; x=1789039863;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cEew52QMjNWmNYII3vQI2Rwv4QcM+xiK5rljE4+oG1w=;
+ b=HBE+Ay/+YxDCLcHVm92PkTgtFpGNGsGXI5NYWKERXpQmo0N9RhNtcSM8i6HejWKeTU
+ AQHw8GbWPbBEL6lOqCfwkVP37XwD7zmDdKBLJc+bYHgns6PU2M9FxIxH/naoIwxC3RyU
+ 9oZKPEQ4b23qvBxsHd8Ri8mT9AODOjHBcO4giyZWtu7N+jCv1ygHpt83/NB6jzaGshUO
+ 7e5i9FZfe3Fx9Fc4sUBgFeALowKPlsdrp63yaHAUgUdgmuSUKGcza9ujNP79fpdbjIGA
+ RiX787mtX5EhpOGeXdhzVjjZ2a/vggFmneGtkmPEILFymuq89tqpaG/E0jy3evRfW6V8
+ MHRg==
+X-Gm-Message-State: AFuF++mvJzHfe3UjTPWz+Z6FROK1UQz50icF/Ho0EX6osTTje1wYk31k
+ 6PyqmIpqz7HGJYb2PK4HBHDZKf/YLyeKOtGIPgb/xUDQ/OEneosVxLCta+rztIz35hHIqNQpb3a
+ /yrx71XCZXASshpV2wUFi1WU7ynpsez6i5kM1+gGMmfN0VrLAPFfIESgY0xiSNla4xeNpoETv7P
+ URz1GVMsjWuW73X1yXMYIZMvkU+IiSzzs=
+X-Gm-Gg: AYBFou04Jnisk1ETOhLWRXqkJX+q8Ynr+rBelrQoWOGNmObRI05ALHceeVhPCu5tN7X
+ ujrLZ36PbLtHWF0WqvrngmkVm9ABVic+nLlqpc+52LG4LtsXLQeamKDwvN957DIe7QaH47rh+8a
+ p8Oe0se+LSdF9r9SvQOv/DakJUuWwCbtT6YGdYrMXRmN/SPmOnBWYGRqZhsJAsYCeleLJkpmBsN
+ Pbxe/dgwVMynDiYF2bSaQcLPrUTWQoVavUgclUnk0i2sIpziuo1wY/tQkHMPTLaT0cSh2EJ3dBZ
+ gw==
+X-Received: by 2002:a17:90b:3ec5:b0:37f:ed7e:7e42 with SMTP id
+ 98e67ed59e1d1-39aee172d61mr17059765a91.14.1788435062576; 
+ Thu, 03 Sep 2026 04:31:02 -0700 (PDT)
+X-Received: by 2002:a17:90b:3ec5:b0:37f:ed7e:7e42 with SMTP id
+ 98e67ed59e1d1-39aee172d61mr17059683a91.14.1788435062091; Thu, 03 Sep 2026
+ 04:31:02 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|PS1PPFF2E6AB00E:EE_
-X-MS-Office365-Filtering-Correlation-Id: 85eec4a0-9d7f-4339-1ab3-08df09ae4201
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|23010399003|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 0qQvdL8JqVl9bEb7Qa4Ne0j+zdnmPSXOoe84cLoz9y4nEmAdOJsOINZRVWHzOauJx7Gp+WROuPV/wfypXTWMiaydX/9BJ11x9sGjaP/n1TYwoz6CsydJ+wyLd6AWzN5WNiTjSeGcu04WskYaK/UIRWaGaLdkiVntBMcesmtnT2uTEyjrTfnuq5HmxJsaFVifnkGz4+bniElwVWWjSQgUL7I3h+SVgrkm50OxjKMlsJl6J8bzK9J99qTN0lsatHGN32yDZmqx/GDuN6ZDpkIJM6x8K49yEd7JmOoyiiTSbm98qfiqr3z7W/+N0LohYCFF8n0RPwp/4xd6cTXrYQJxHQg+HsMlR9JdP/23va10DN6zD3z7KNQGAf3+3NkZbtMZSGWSRl8edoJLm/EvmPlYHckeGKgMEbjJJMN8g8hE+ZJQ6pqeQGmg9cNgeFTYctCVkjvXwDOxCTKTEyNkhezTLpwzD12nE3+sBshmp57/dnExHSxRTLhkyfzKQa98Np4NxapULPTzMM//QK0NBPeM1JogaPdS5MHgBRHnsttv5IdYidDiLdAfmbPKvWsJvLTUQ2+vSSHVnU3qbzVmblsorrH4g9Mnmau0+/lxcIngTsGnnNsbcrRQEXleuD/micTFsngu/wpCJpnAanRcALnMVzJZOkLcqk8oFM2xiaxnGrA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(56012099006)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?em0wckdPSStJcm1DMlFRRWt0SnVMblZGYXRNcEpNcTVNWDZiU3ZLZlQySFc3?=
- =?utf-8?B?UjNGSGdIUWJnMTZ2aWNhbHFwUGNlSEdpWWlsRy95SW4zdkZNWXZqV1E4V0lu?=
- =?utf-8?B?SGFzRFk0dGo0MXUvQmZpZWkwOXZYdDM0K3hOMFZuS3lEek9nbkpHMU93N0xS?=
- =?utf-8?B?QXRSZTZPL1lram9nSmJ0OGFKTTJ5cU53SlV5aUc5dXd6QUVtK1RwMkZOZUd2?=
- =?utf-8?B?cEkyODBETGJPU3QrOGV5ZHRKdmh0UlRmak5MOFZPcENpdEVxWmdpOCtoREc3?=
- =?utf-8?B?eHlTclFkMS94YURZZDkrc01tWVR3OFY5Y21heFRRM2phVmhuSjFleVlOc2oz?=
- =?utf-8?B?VjEwZ3hIbG16clVtOGg2Rkd3bFFuLzU2NldKN0hVUU1TNVNmaDU2dk9qWFFz?=
- =?utf-8?B?RzdiMU9hSllaaGpuWlM3K0kxSGVGb0dTOVJpeFE2TkhEekhNMmNnWFpMSklr?=
- =?utf-8?B?TFN0eXFWSVdMODBqdERRSFpiR1U1Tmw3TDZtMkdGeWpyeWh0VzdydDBSRVY5?=
- =?utf-8?B?Yzh0WU9rTTUrUTFobXdvREczMnJZcFh3Y3NNV2NOVVB3cys5T2VFWkhwZ3hs?=
- =?utf-8?B?VmFmd1l4a2NQMzhXWjdnaE9tM1l4RGRtUXNBUis3ZVVwNHFrVFFUMkMzWFh3?=
- =?utf-8?B?MUg3Ri92M2ZqdmJwVkp6amFQVkNoU21sOHpSRHJWZkEzeEg3QzE4dzFPeDFy?=
- =?utf-8?B?UW1NRlY1eURnb2RjSjdHejVKNTJsQWsyRk9sNXlkdGVjK1UxM0FiSjBMS1pi?=
- =?utf-8?B?N21rNHpranJ1WXlYcVV0cHpzMEFabzFxQ1JTZTdEcFFLblUzdldodGc1TkVl?=
- =?utf-8?B?WkdzdjRocTlrbDNpaTlxM29wcWx3RWpua0ZlbGZScjRqcXU1V0cwNk50NU1G?=
- =?utf-8?B?emxFb2xjTGgvU1ZWMlcyNUV1b0FGWVVLdUNNaUkrQ0VkMGRleWdaRGdGcnVP?=
- =?utf-8?B?aE82STNEK2tnTXpoWnRZeERJRnFJWmZScXhmOUhmR0dxcjBYTGpqL3hxam1l?=
- =?utf-8?B?RE5Gam1tQlpiUEoxVEY3Z3I1aFNiaFZlSnVBeGlBN2U1ZHA2a2Job2lvYWpX?=
- =?utf-8?B?elFQZFlHUk5TTENWb25wcFpsQTdoY1prVWg1bnBvSTA1SW9vQWFkK3ViM0xv?=
- =?utf-8?B?UVdvSmZPb3NWYmV6VStjNk1WUGg3dEs5VmNYdEZBZ2FGUFc0QU9zQzlqRERz?=
- =?utf-8?B?ZjdGSnQycEVGTThFV1p5QlhZT3MzdFpDellwdklrWFVLSHlJR1ZkMVdiNlFj?=
- =?utf-8?B?cTd5Z1FLVjVpUDZBeHhNekd2MXZyZThUUklnQ25CbWUxMWlYUDdBblYrQk5W?=
- =?utf-8?B?bzRPUkMzZFhsS2N2Um1hdTBHbWF5MVdkdHFxV0RteHdNVW44SjdwaHpVcTBE?=
- =?utf-8?B?dmdBeDhHWVVtNjVjRHdtWlE2c2w4VFFIME5neGJhNWhQY04rSU9ZR2M3Q0JB?=
- =?utf-8?B?QUFCWmg3UkhjNXh6bVNMVXhmbG5tUTBINXhSY0JUSlBiL2RMdkxqd2tlaGxK?=
- =?utf-8?B?RVpvVytnTkYySlZDbzJHT2FkRlo3em5YMHhVc0JRZDIxZ01JNkVpZVdDRlpq?=
- =?utf-8?B?elBBeWIwM0NMODdSREFYS2lGVXhiOEhUOFVlVFlyaStJSFNKRmVBMGYyN1dy?=
- =?utf-8?B?ZW5tUmhpb3NBSzU4SUlscmtkeUNiSUVLejV0M0gzTWdyYWxuRUV0TUdqQ1VU?=
- =?utf-8?B?enlyK2pjbkpzY2VaWEYvQ2JLb2pQalYzZkxBSUs5NzZXR0hBb0xyZ1UvUytP?=
- =?utf-8?B?YXZnaGovM1Y4OHJGVVVuOTJaaVMzdzJ4R3lPNkZibk56bnowTmlsZ1RsSDlS?=
- =?utf-8?B?bWNoWU1jVXJEQzlodTZieVBHaGN6VFpyQTlRQ0UwN3NTNGJFZWw1Wmd1Qkwv?=
- =?utf-8?B?UFpCZDdLUGRqbkhGUVc0R3Q3R2YybUdrZHRCeXpJUGtEa0JxZGl4MGpRZ1pk?=
- =?utf-8?B?RFNzZnFPakJtWktTa3dEMkhsODh0MDVwQ21oU1ZZSklhZFphdlhiclA2TlQ0?=
- =?utf-8?B?U3ZSWTBHSk42M0daMnphV21HTHJWNmh3RkEvMTJWaDlsSDlvUjhJd3ErbGs3?=
- =?utf-8?B?bk1GQkxtS2RLQ0pDMSt0MW81RSs2eVpoMVE3ZURIN1lreTJWbmdSUDBBVWJR?=
- =?utf-8?B?bkNpQ29CVWtjbXdkb3FLdmpmK2N0d1JkSHdzcFVCUEJQRU5KVFVpWmJOVjNB?=
- =?utf-8?B?ZnQyNm4xb1RPdENFVHhyczhtY21ZZk5TdGlBYTBTZ0Y4bE1wTGVFem5WdnA0?=
- =?utf-8?B?RzhUeVRIVVhNVEs5Z1hmQnRXTFp5K1ZRVllCa25mSHZiMVpMMkRoZDREbGg3?=
- =?utf-8?B?cGs3NExlaGYxdjJHeHJIa0tUWklLMVhlZW42c2xhOVdHRnRIV05YejFHTGJ0?=
- =?utf-8?Q?K74uOeILU+idpRGs=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85eec4a0-9d7f-4339-1ab3-08df09ae4201
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 11:26:54.6843 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: erxrwETiax3YfbsWF7kEfXYq7leTCdWmseKZIGdmvzu8YCUIpGbx13NCkcYwrZG1twpLpE5dyw+lyemsHldM5k44hchUTiH2H1t8Lkki1tc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PPFF2E6AB00E
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+References: <20260903103548.2142568-1-berrange@redhat.com>
+ <20260903103548.2142568-4-berrange@redhat.com>
+In-Reply-To: <20260903103548.2142568-4-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 3 Sep 2026 15:30:50 +0400
+X-Gm-Features: AcwNN1XTEaTpp_CNpIpChdcHOp2KYm4_AVBc18qxQjesdIGN3o7sgGI-iz-EA-A
+Message-ID: <CAMxuvazjmF8QQAH5BwrUkxN8uAYK=2j9fBTm4-g2Ztyg-wDAuQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] meson: bump min upstream CLang to 17.0
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,46 +140,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Phytium Pi and E2000Q COMe series adds board and SoC models,
-documentation, and boot tests. Group them under one entry so changes
-reach the machine maintainer and the ARM list.
+On Thu, Sep 3, 2026 at 2:36=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> Per our supported platform policy, oldest distros we target
+> have the following CLang available:
+>
+>           Fedora 43: 21.1.2
+>     CentOS Stream 9: 22.1.8
+>           Debian 13: 17.0.6
+>        Ubuntu 24.04: 20.1.2
+>             OpenBSD: 22.1.8
+>             FreeBSD: 23.1.0
+>              NetBSD: 21.1.8
+>  OpenSUSE Leap 16.0: 19.1.7
+>
+> Thus Debian is our prime constraint and we can move from 10.0
+> to 17.0 as our min version.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Cover the machine, misc, SD wrapper, SSI, documentation, and
-functional test files introduced by the series.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-
----
-
- MAINTAINERS | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c915c5f996..4c80ee2244 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1011,6 +1011,20 @@ F: roms/vbootrom
- F: docs/system/arm/nuvoton.rst
- F: tests/functional/arm/test_quanta_gsj.py
- 
-+Phytium E2000Q machines
-+M: Bin Meng <bin.meng@processmission.com>
-+L: qemu-arm@nongnu.org
-+S: Maintained
-+F: docs/system/arm/phytium_e2000.rst
-+F: hw/arm/phytium*
-+F: hw/misc/phytium*
-+F: hw/sd/phytium*
-+F: hw/ssi/phytium*
-+F: include/hw/misc/phytium*
-+F: include/hw/sd/phytium*
-+F: include/hw/ssi/phytium*
-+F: tests/functional/aarch64/test_phytium_pi.py
-+
- Raspberry Pi
- M: Peter Maydell <peter.maydell@linaro.org>
- R: Philippe Mathieu-Daudé <philmd@mailo.com>
--- 
-2.53.0
+> ---
+>  meson.build | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 388423e4fd..5315420a41 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -334,15 +334,15 @@ foreach lang : all_languages
+>        #  error You need at least XCode Clang v17.0 to compile QEMU
+>        # endif
+>        #else
+> -      # if __clang_major__ < 10
+> -      #  error You need at least Clang v10.0 to compile QEMU
+> +      # if __clang_major__ < 17
+> +      #  error You need at least Clang v17.0 to compile QEMU
+>        # endif
+>        #endif''')
+>      # ok
+>    elif compiler.get_id() =3D=3D 'emscripten'
+>      # ok
+>    else
+> -    error('You either need GCC v10.4 or Clang v10.0 (or XCode Clang v17.=
+0) to compile QEMU')
+> +    error('You either need GCC v10.4 or Clang v17.0 (or XCode Clang v17.=
+0) to compile QEMU')
+>    endif
+>  endforeach
+>
+> --
+> 2.55.0
+>
 
 
