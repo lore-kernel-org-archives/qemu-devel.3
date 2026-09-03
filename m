@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF23EC624DB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29E0C79F80
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 20:51:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2EOR-0000tc-VC; Thu, 03 Sep 2026 16:50:43 -0400
+	id 1x2EOM-0000rp-73; Thu, 03 Sep 2026 16:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x2EOQ-0000sh-SB
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 16:50:42 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1x2EOL-0000rD-2H
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 16:50:37 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x2EOO-0002Ly-GP
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 16:50:42 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-398a5aad413so202648a91.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 13:50:40 -0700 (PDT)
+ id 1x2EOJ-0002LE-60
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 16:50:36 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-cbedd5aece4so1105260a12.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 13:50:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788468639; x=1789073439; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788468634; x=1789073434; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cRiHSGg8aFzQ9im/DzHBYXv1R98054JCriqwRL7CjX0=;
- b=VRc26g+a//5ME7tNODa1m5TYh4eTXeyWYe3v/h3QCFpfpUQ0T3EKC4kyFB3qErVW1C
- Npr4oosnRbCceUxrJWjXU9GR6mCfei8o2F5KRtzWeyomihxK0PUmTXHHJFq1EdZAPJAc
- ABYRCQdd1ydaCJEJKIpdlXFVFQZnHcoPaEnjoYFybUXM9tZS5cZV/pqAR3zZXzg4EP47
- xPBSBFZuWUgRk793QpcHL6x7AK7UrePayEkgaX4sqhBQCifUM0iRxqDL3yCfgB6ugYEm
- X5DPDlhozEO4tFxB80tdVcSPwF9RnGbQxG/sWf4zPIqQhZp8NU5c2dEwX93u96Ayfe1N
- wteQ==
+ bh=OHqXa1Je19E/e4B+GnDgGce6rjSmcnOFDuW0MG/IjQo=;
+ b=McOiiDg6H7msr2KNIkVhIhgtOi6NAXIFRkPO6M+xrv6SoHSaL09t4bG3m+Pb3crFgZ
+ xmGaUFSDAj4vS9uXJdrylKi8I7dGuDOTXKQeWi0YjK0bIYs9eFatAi2OIy6V0BbfFR1u
+ WyagKp0f2oSGRt+94E5WgYTkxWktl38WRciYV6S/e/6n4Jw+tUE33fxPFyxn9PH3Ywy0
+ QuAGULWOHSsz/1e4uvkG9vdxjTFuP5GD40XMqw5kEOnE8oIW2G0zFoHfT+PuD46LEMcf
+ J91yLqcnTNvdZkWMBBqf6Wl1ZWHcOYwxXg3Gxg7GqIyMX6Yfm3AhgNEWa9+ezK1d7zaF
+ KZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788468639; x=1789073439;
+ d=1e100.net; s=20251104; t=1788468634; x=1789073434;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cRiHSGg8aFzQ9im/DzHBYXv1R98054JCriqwRL7CjX0=;
- b=l19+SlP7tkJOIvMhPpYe1CyWgeUiuRBY/xQ1tZdKUyWxu2quVVxfV9pM3mHimMdRFH
- CocYS5rpIe/guZZ5hAeedaQ6AxlgNQd8dlQUvWCU7mhDFjUIZBowFOhlNGbFzBuj4Sw2
- 6TYXdYsMPTosKT1jlXbL9pFlCwnoCEaX2FKvKBI2QxlpX8DcEdAsGGcf9/cwl4TrxUJi
- GjZjUrX+4PcVUyy+3xuybYPKv/VvXOrT2UvEmh7d2M+sH8H9vOqjLsdzz3VicKbPc2zi
- OhD0ZjVPj93MBhWW+5YT3ocH+U9lF34Bzfsp3rYMWDLW3cdpAABlzIF/4vdOZKsgmlVZ
- xUtQ==
-X-Gm-Message-State: AFuF++kNcpneYPJBu/RNgTXwPHEfw6DA2ojkOPdNfOCJ94Q6n7Bk6g7m
- mAB3nOKliEGXTG9ENnfsylZL7N5emFHaRblx+wa+lmUi5okrDPR9iUXcZauM9VCA
-X-Gm-Gg: AYBFou2ShvxikVA6xfFK8LvOJPJfRA6YAFWdZ8/bfw1zpsr6MK5htwb7uwNxjFzPcTc
- t3zQukTVbA3VQcYde0Jl00AU0nShI4tp1Wc1+zLnPqzcHVZ6wkWvnkrpRlmCzU8Q6/mJL/9Y+Ug
- BVVeNsOY07FEFGeZzSyfvmaKofcIdqVYMjQHEjM5nRJvaEEO9dwaUdFJW/bjogUnN3bidH9L0CR
- ty4qBn+85F6olZj0UOGMtsEwPwteTcett4enwR/abclEQdWQrDKpdmcagYcoWiCqHWxUTh149Ib
- ZnUBwgxWom7dJ0I+JdjboqxDQUB7ky/jyYHqrM1e6QbsDDuc+Nlaj6z3Da0pEI+yn4534FaBqul
- FV0umOo67r3K0XZ3WSToqr2bu5+e/1lGDGp0w4W6xewROOhqjlOc7BmKsjU1pzJvAthlQELelqh
- VyONrSkY3oePI6xrfLh9duK4hzJEZ4nh7X3KZTqgJhdeOPOSAVxR7/aWaU63an63DoPvdox6otn
- M0NrMVL9s86YBPSo/tMpw==
-X-Received: by 2002:a17:90b:2c87:b0:398:990e:1587 with SMTP id
- 98e67ed59e1d1-39b26191cf2mr1717398a91.9.1788468639056; 
- Thu, 03 Sep 2026 13:50:39 -0700 (PDT)
+ bh=OHqXa1Je19E/e4B+GnDgGce6rjSmcnOFDuW0MG/IjQo=;
+ b=V50F7TvKE9uTLif7crLupf8xr21LtlJZSTfLZviPCnhSlavwkOIfSrq+DgCjJ524cb
+ CeDrc9egSEPRvyBgXva01E7dNZmdYg7zZU7YBB9PxNf3tYFd4w5B1wiHyjA/FX1jK9vr
+ sk3Ss3sU1SKjswjZcyZDP1kcL7WcNIRbOkp2HEDRYRzAx8LH7BimaSeaTAwqJbxG0Ugo
+ Gf2t7QAmnKrMFTpcAKqUgIKSPDEencK10sxj2p3oZecP+n5Pg5Ac4UJed6HGNh3qmBYu
+ 8yZ64bIeqFlDGfCZN2qavdql4bLyb6h7HVOCdVMkFwQgLzPc5rD99r0JxVLVpYn9rrIY
+ pHIA==
+X-Gm-Message-State: AFuF++la7JEnyvWuW5N6gyr3ZlyyVevAbAYMtMihuVPqOpqmV/gvNtHL
+ KRpwDUAzW/4IWbSF0KefPBdwtq047voQfLFArhxGXyPaI4LNs2hieWEV6fKSBQuT
+X-Gm-Gg: AYBFou1oIHYSsD093sTdq/k5bcaG1kQf10UtmfIQbiKDUgI30FekZDYL3WTvjhbFp2F
+ lNbokIqyWeM60jCOVwkYafjel4M5H00sTN7O+rDkT8TwiNdyc+TEMuNI3rdlhjLWjNtGwdOKV93
+ sPJnRXwO9VDdq3XHI0d3G48LKaEzl+OvuHnqf/urqvDLVJCBfzdxtdl4XqTe+SFRtBXEouJT6cy
+ NM824Z6jR2xxKYnbg4gIpxl2qJSEE0X8+1dpJsADUqosJYSyOFp4ASEDT5f6LqP2at9hIpOLZUq
+ M/O48fVhUPcqf6VGotq3F4phtwyEYHvPmJW9XwNbTSBMh1U6o6EChWR2Arv8EFHyBD9SGfI68go
+ iJ7GZSeu9n7HBi5LdKbGiIHpK7L3ZolN/a2GVo1WJyjmgnvO4/2QB3ETDLf1b7h95IDf9Ky4Sgr
+ R3Sj24gN/dCnpLL8F6iSps+BMG+CtRhgDb+1ii1BcOvbrbS7m4dYV0nAXuNujnpAyJwO1siJkku
+ 0mwxwZZ4L4Q+lz0IoJIeA==
+X-Received: by 2002:a17:90b:5804:b0:398:9beb:a2b6 with SMTP id
+ 98e67ed59e1d1-39b087e4c2fmr9602207a91.24.1788468633696; 
+ Thu, 03 Sep 2026 13:50:33 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-3339a534152sm1279679eec.10.2026.09.03.13.50.34
+ 5a478bee46e88-3339a534152sm1279679eec.10.2026.09.03.13.50.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 13:50:38 -0700 (PDT)
+ Thu, 03 Sep 2026 13:50:32 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -81,16 +81,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Helge Deller <deller@gmx.de>, Kyle Evans <kevans@freebsd.org>,
  Warner Losh <imp@bsdimp.com>, Joel Stanley <joel@jms.id.au>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 2/2] qom: pass TargetInfo to is_available
-Date: Fri,  4 Sep 2026 04:50:17 +0800
-Message-ID: <20260903205018.975-3-luoyonggang@gmail.com>
+Subject: [PATCH 1/2] target-info: move selection into QOM
+Date: Fri,  4 Sep 2026 04:50:16 +0800
+Message-ID: <20260903205018.975-2-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260903205018.975-1-luoyonggang@gmail.com>
 References: <20260903205018.975-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=luoyonggang@gmail.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,207 +113,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Change TypeInfo.is_available to take const TargetInfo *.
-- Pass target_info() from type_register_internal().
-- Add target_is_riscv64() and target_is_aarch64() so TypeInfo can use
-  them as is_available callbacks without wrappers.
-- Keep target_riscv64() and target_aarch64() as wrappers around the
-  current TargetInfo.
-- Point existing ARM machine is_available callbacks at
-  target_is_aarch64().
+- Move target_info() from target-info-qom.c into qom/object.c so QOM
+  can read the current TargetInfo without a target-info-qom cycle.
+- Add target_info_select() to install the TargetInfo once. Return NULL
+  from target_info() until it is called.
+- Keep TargetInfo as an incomplete type in object.h; define the struct
+  only in target-info-impl.h.
+- Select the sole user-mode TargetInfo from MODULE_INIT_TARGET_INFO
+  instead of defining target_info() in that binary.
+- Have target_info_qom_set_target() call target_info_select().
+- Call MODULE_INIT_TARGET_INFO before MODULE_INIT_QOM in linux-user
+  and bsd-user so target_info() is set before QOM class_init.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c  |  2 +-
- hw/arm/aspeed_ast27x0_evb.c |  4 ++--
- hw/arm/raspi.c              |  4 ++--
- hw/arm/raspi4b.c            |  2 +-
- include/qemu/target-info.h  | 18 ++++++++++++++++++
- include/qom/object.h        |  8 +++++---
- qom/object.c                |  2 +-
- target-info.c               | 14 ++++++++++++--
- 8 files changed, 42 insertions(+), 12 deletions(-)
+ bsd-user/main.c                 |  1 +
+ include/qemu/target-info-impl.h | 13 ++++---------
+ include/qemu/target-info-init.h | 18 ++++++++++--------
+ include/qom/object.h            | 18 ++++++++++++++++++
+ linux-user/main.c               |  1 +
+ qom/object.c                    | 13 +++++++++++++
+ target-info-qom.c               |  9 +--------
+ 7 files changed, 48 insertions(+), 25 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 73362b60d2a..8a7c6a116ac 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -234,7 +234,7 @@ static const TypeInfo ast2700fc_types[] = {
-         .parent         = TYPE_MACHINE,
-         .class_init     = ast2700fc_class_init,
-         .instance_size  = sizeof(Ast2700FCState),
--        .is_available   = target_aarch64,
-+        .is_available   = target_is_aarch64,
-     },
- };
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 694481ae3ec..592c04f1e79 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -285,6 +285,7 @@ int main(int argc, char **argv)
+     error_init(argv[0]);
+     module_call_init(MODULE_INIT_TRACE);
+     qemu_init_cpu_list();
++    module_call_init(MODULE_INIT_TARGET_INFO);
+     module_call_init(MODULE_INIT_QOM);
  
-diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
-index 460c9ff0d2e..02a8cff1d9d 100644
---- a/hw/arm/aspeed_ast27x0_evb.c
-+++ b/hw/arm/aspeed_ast27x0_evb.c
-@@ -75,13 +75,13 @@ static const TypeInfo aspeed_ast27x0_evb_types[] = {
-         .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2700a1_evb_class_init,
--        .is_available  = target_aarch64,
-+        .is_available  = target_is_aarch64,
-     },
-     {
-         .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2700a2_evb_class_init,
--        .is_available  = target_aarch64,
-+        .is_available  = target_is_aarch64,
-     }
- };
+     envlist = envlist_create();
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index cf42aabbc8b..61404baa4b5 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -9,10 +9,12 @@
+ #ifndef QEMU_TARGET_INFO_IMPL_H
+ #define QEMU_TARGET_INFO_IMPL_H
  
-diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
-index fadbacb2534..22b06c6ca22 100644
---- a/hw/arm/raspi.c
-+++ b/hw/arm/raspi.c
-@@ -403,12 +403,12 @@ static const TypeInfo raspi_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("raspi3ap"),
-         .parent         = TYPE_RASPI_MACHINE,
-         .class_init     = raspi3ap_machine_class_init,
--        .is_available   = target_aarch64,
-+        .is_available   = target_is_aarch64,
-     }, {
-         .name           = MACHINE_TYPE_NAME("raspi3b"),
-         .parent         = TYPE_RASPI_MACHINE,
-         .class_init     = raspi3b_machine_class_init,
--        .is_available   = target_aarch64,
-+        .is_available   = target_is_aarch64,
-     }, {
-         .name           = TYPE_RASPI_MACHINE,
-         .parent         = TYPE_RASPI_BASE_MACHINE,
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 7d3eed96304..b47081200e1 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -125,7 +125,7 @@ static const TypeInfo raspi4b_machine_type = {
-     .parent         = TYPE_RASPI_BASE_MACHINE,
-     .instance_size  = sizeof(Raspi4bMachineState),
-     .class_init     = raspi4b_machine_class_init,
--    .is_available   = target_aarch64,
-+    .is_available   = target_is_aarch64,
- };
++#include "qemu/target-info.h"
++#include "qom/object.h"
+ #include "qapi/qapi-types-common.h"
+ #include "qapi/qapi-types-machine.h"
  
- static void raspi4b_machine_register_type(void)
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index b23e5bc5865..5d8cd3439a3 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -9,6 +9,8 @@
- #ifndef QEMU_TARGET_INFO_H
- #define QEMU_TARGET_INFO_H
+-typedef struct TargetInfo {
++struct TargetInfo {
+     /* runtime equivalent of TARGET_NAME definition */
+     const char *target_name;
+     /* related to TARGET_ARCH definition */
+@@ -30,13 +32,6 @@ typedef struct TargetInfo {
+     unsigned page_bits_init;
+     /* runtime equivalent of TARGET_PAGE_BITS_VARY definition */
+     bool page_bits_vary;
+-} TargetInfo;
+-
+-/**
+- * target_info:
+- *
+- * Returns: The TargetInfo structure definition for this target binary.
+- */
+-const TargetInfo *target_info(void);
++};
+ 
+ #endif
+diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
+index b7024c9faef..2a19918ae08 100644
+--- a/include/qemu/target-info-init.h
++++ b/include/qemu/target-info-init.h
+@@ -12,6 +12,8 @@
+ #ifndef QEMU_TARGET_INFO_INIT_H
+ #define QEMU_TARGET_INFO_INIT_H
+ 
++#include "qom/object.h"
++
+ #define DEFINE_TARGET_INFO_TYPE(info)                                       \
+ static void do_qemu_init_target_info(void)                                  \
+ {                                                                           \
+@@ -23,19 +25,19 @@ module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)
+ #ifdef CONFIG_USER_ONLY
+ 
+ /*
+- * User mode does not support multiple targets in the same binary, so just
+- * define target_info().
++ * User mode does not support multiple targets in the same binary.
++ * Install the sole TargetInfo before MODULE_INIT_QOM.
+  */
+-#define target_info_init(ti_var)        \
+-const TargetInfo *target_info(void)     \
+-{                                       \
+-    return &ti_var;                     \
+-}
++#define target_info_init(ti_var)                                        \
++static void do_qemu_init_target_info(void)                              \
++{                                                                       \
++    target_info_select(&ti_var);                                        \
++}                                                                       \
++module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)
+ 
+ #else /* CONFIG_USER_ONLY */
+ 
+ #include "qemu/target-info-qom.h"
+-#include "qom/object.h"
+ 
+ #define target_info_init(ti_var)                                            \
+ static const TypeInfo target_info_qom_target_type_info = {                  \
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 7ecd0f210fb..49956388098 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -117,6 +117,24 @@ typedef void (ObjectUnparent)(Object *obj);
+  */
+ typedef void (ObjectFree)(void *obj);
  
 +typedef struct TargetInfo TargetInfo;
 +
- /**
-  * target_name:
-  *
-@@ -56,6 +58,14 @@ bool target_base_arm(void);
-  */
- bool target_arm(void);
- 
 +/**
-+ * target_is_aarch64:
-+ * @ti: TargetInfo to inspect
++ * target_info:
 + *
-+ * Returns whether @ti is Aarch64.
++ * Returns: The current TargetInfo, or NULL before target_info_select().
 + */
-+bool target_is_aarch64(const TargetInfo *ti);
++const TargetInfo *target_info(void);
 +
- /**
-  * target_aarch64:
-  *
-@@ -91,6 +101,14 @@ bool target_ppc64(void);
-  */
- bool target_s390x(void);
- 
 +/**
-+ * target_is_riscv64:
-+ * @ti: TargetInfo to inspect
++ * target_info_select:
++ * @ti: TargetInfo to select
 + *
-+ * Returns whether @ti is riscv64.
++ * Sets the TargetInfo returned by target_info(). Must be called only
++ * once. @ti must not be NULL.
 + */
-+bool target_is_riscv64(const TargetInfo *ti);
++void target_info_select(const TargetInfo *ti);
 +
+ #define OBJECT_CLASS_CAST_CACHE 4
+ 
  /**
-  * target_riscv64:
-  *
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 49956388098..08d47c632a0 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -487,8 +487,10 @@ struct Object
-  * @class_data: Data to pass to the @class_init,
-  *   @class_base_init. This can be useful when building dynamic
-  *   classes.
-- * @is_available: callback invoked at registration time, to dynamically check if
-- *   this type should be available or not.
-+ * @is_available: Optional callback. After target_info_select(), QOM
-+ *   calls it at registration with target_info() and skips the type if
-+ *   it returns false. Callers may also invoke it with a chosen
-+ *   TargetInfo.
-  * @interfaces: The list of interfaces associated with this type.  This
-  *   should point to a static array that's terminated with a zero filled
-  *   element.
-@@ -511,7 +513,7 @@ struct TypeInfo
-     void (*class_base_init)(ObjectClass *klass, const void *data);
-     const void *class_data;
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 60a695b7ca3..36d5c6ded4f 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -700,6 +700,7 @@ int main(int argc, char **argv, char **envp)
+     error_init(argv[0]);
+     module_call_init(MODULE_INIT_TRACE);
+     qemu_init_cpu_list();
++    module_call_init(MODULE_INIT_TARGET_INFO);
+     module_call_init(MODULE_INIT_QOM);
  
--    bool (*is_available)(void);
-+    bool (*is_available)(const TargetInfo *ti);
-     const InterfaceInfo *interfaces;
- };
- 
+     envlist = envlist_create();
 diff --git a/qom/object.c b/qom/object.c
-index c5a1bd74a38..5d959743169 100644
+index b1834a57cc9..c5a1bd74a38 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -176,7 +176,7 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
-         abort();
-     }
+@@ -15,6 +15,7 @@
+ #include "qom/compat-properties.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
++#include "qemu/target-info-impl.h"
+ #include "qemu/cutils.h"
+ #include "qemu/memalign.h"
+ #include "qapi/visitor.h"
+@@ -83,6 +84,18 @@ static GHashTable *type_table;
  
--    if (info->is_available && !info->is_available()) {
-+    if (info->is_available && !info->is_available(target_info())) {
-         return NULL;
-     }
+ static bool enumerating_types;
  
-diff --git a/target-info.c b/target-info.c
-index 012b384036d..84effb50ca9 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -58,9 +58,14 @@ bool target_arm(void)
-     return target_arch() == SYS_EMU_TARGET_ARM;
- }
- 
-+bool target_is_aarch64(const TargetInfo *ti)
++static const TargetInfo *target_info_ptr;
++
++const TargetInfo *target_info(void)
 +{
-+    return ti->target_arch == SYS_EMU_TARGET_AARCH64;
++    return target_info_ptr;
 +}
 +
- bool target_aarch64(void)
- {
--    return target_arch() == SYS_EMU_TARGET_AARCH64;
-+    return target_is_aarch64(target_info());
- }
- 
- bool target_base_ppc(void)
-@@ -89,7 +94,12 @@ bool target_s390x(void)
-     return target_arch() == SYS_EMU_TARGET_S390X;
- }
- 
-+bool target_is_riscv64(const TargetInfo *ti)
++void target_info_select(const TargetInfo *ti)
 +{
-+    return ti->target_arch == SYS_EMU_TARGET_RISCV64;
++    target_info_ptr = ti;
 +}
 +
- bool target_riscv64(void)
+ static void type_table_add(TypeImpl *ti)
  {
--    return target_arch() == SYS_EMU_TARGET_RISCV64;
-+    return target_is_riscv64(target_info());
+     assert(!enumerating_types);
+diff --git a/target-info-qom.c b/target-info-qom.c
+index 6965e4d1169..aba1f954496 100644
+--- a/target-info-qom.c
++++ b/target-info-qom.c
+@@ -33,13 +33,6 @@ static const TypeInfo target_info_parent_type = {
+ 
+ DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
+ 
+-static const TargetInfo *target_info_ptr;
+-
+-const TargetInfo *target_info(void)
+-{
+-    return target_info_ptr;
+-}
+-
+ void target_info_qom_set_target(void)
+ {
+     g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
+@@ -51,5 +44,5 @@ void target_info_qom_set_target(void)
+                                  "more than one target-info is available");
+     }
+ 
+-    target_info_ptr = TARGET_INFO_CLASS(targets->data)->target_info;
++    target_info_select(TARGET_INFO_CLASS(targets->data)->target_info);
  }
 -- 
 2.52.0.windows.1
