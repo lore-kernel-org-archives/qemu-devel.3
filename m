@@ -4,110 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF848C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 12:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00FCC624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 13:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2710-0001Rf-Qr; Thu, 03 Sep 2026 08:58:02 -0400
+	id 1x27BS-0004sU-Hp; Thu, 03 Sep 2026 09:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x270z-0001RF-D2
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:58:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hugo.komatsu@nutanix.com>)
+ id 1x27BQ-0004sI-Sc; Thu, 03 Sep 2026 09:08:48 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x270x-0005sP-LT
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 08:58:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788440279;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dFw4kmpiXgnJgYg/MdJcXbpa7WDv+OilNPqzeDo4f/c=;
- b=AaH+IgmLdgWYqBptl3CDT9Pc+ucrKSataOh02dLxKLuLOjnNPGXeM5gVKIlaLUHTekNRLQ
- 7ljGfyJJ9QLOANQTUqK3qMwT12P2xQSuWk8nQrZp1rGDR/tm9fZmfOEUu0Fipw8Uqgo3Jm
- dtyszQJPtZYTvMM4caiRy+ZUgdbHrLc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-KmE4jsOCPd-RSCFmgF8iMA-1; Thu, 03 Sep 2026 08:57:57 -0400
-X-MC-Unique: KmE4jsOCPd-RSCFmgF8iMA-1
-X-Mimecast-MFC-AGG-ID: KmE4jsOCPd-RSCFmgF8iMA_1788440276
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49cdc4080ddso6090775e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 05:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788440276; x=1789045076; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=dFw4kmpiXgnJgYg/MdJcXbpa7WDv+OilNPqzeDo4f/c=;
- b=Yzp6gIrci4l7w6SzigkMb8uhLrTKvOjHmTG7yhHH7eCIbI71PCaXM6jIMjlNuhWdWz
- RI1Ru878tbRHisny44vwppvsu8QwkoUVCf6P0Fq0aQKtdfrYnM42XxFfbT1wmBIoq1tg
- iNZnkp0AlGdJkdEfnH6iu95pPPYrqByJwsBneObWTeiRyPHr1R8+gDsda+TdlyKHB+IC
- MzH5nO/yenOPliWbMotqTMsnhkVv1xm54pZIIBhDemsmW6UPuNcA85enAIDntnbmEFhk
- 25XPIgvBp60QQqGK+vVroAEtt6SugXe3y9A0nhr3LYFGsYmIOz0cpyFq00o94kfUAfRQ
- ZW/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788440276; x=1789045076;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=dFw4kmpiXgnJgYg/MdJcXbpa7WDv+OilNPqzeDo4f/c=;
- b=f+m+mAfDrwOePbEC6jCCcSRojVnlRQdFiL7Gu/NIJMzjlr3ATG9XBCnqp5kmXfuqvR
- nsG7tUwrtfAuldXsPOpAUBaPW1+8dNAThiovMspyT9Tzs+IVd6QCLdhFCRdk17bNtI7G
- CnTfnaiWPN8C5PzmI3b79k/bVZwwmiy/d6a6ltmszsl3F+paoHvoLU0Gt/5r4LzHc6h3
- Mz/XCvAysaJachNru6uFUWwMQgthf1qzEc8Z6lffgVoGaVsEHWHZl3QLSZFisZqfHxhc
- 3+xZF8KL8b6El4vif6XQa3JFZXSs1DIIhqvm+i1812phtyfdgiO3CQ4dwsFLQ7BNqqHL
- c0MA==
-X-Gm-Message-State: AFuF++kLsuGZ9IK3RGx5C6cIS3rCfvKb0wz5N/lb+GBU3t+GYx2IcRD7
- YGtTXUd+2lt4ZxXdtKxdhFZok6M/lM9PWwwKf9z6F6WTKcNGvXoEg0XpxEtAPcwrmMoz409B58v
- EXpXzoTFMuw7yvIIqDGgjd/blUhwYFM+15vb0TW+wGubttJd/5Xh5CQ15
-X-Gm-Gg: AYBFou0rJejpqiBWz1aWgbL9gEbIGBbB6y9Evk4qxsisfPA4FnfX5i5d6DuQK691+ox
- q8YIi30BSuMTtCjL5Fv0bG1wMuyinsqiGCD9zKHQDxYd9p1nYw+ffAehIILHSMYIe7vF9jVSAv9
- E0YlOfxU7YLyEsgYYZlFhZaxebPDBmSeGM5+Jj++si/F5v7OyrtUE8Qj5yVV9Cf/MrW3xXLVy5b
- h8zkMR6Jujw2TkFg8wZ5lBTdEEwUw7NTaSXbPfOpzCFjW5Z4trLEwRn7RqjclSPA2wKpSvUxiuT
- A1fBjmLdAFq1gVApuT3FDDPwwXH46w0+vsvYe1YukDCZxleopNl08dcMxRA6ELlfJWv2ZJx/V9L
- Lh56IImNdjujrnD+TvBz+/TkK85URM7avLI7dY0YV467aeg==
-X-Received: by 2002:a05:600c:46c6:b0:49c:799a:177b with SMTP id
- 5b1f17b1804b1-49cf1576df1mr34980965e9.2.1788440276349; 
- Thu, 03 Sep 2026 05:57:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:46c6:b0:49c:799a:177b with SMTP id
- 5b1f17b1804b1-49cf1576df1mr34980545e9.2.1788440275769; 
- Thu, 03 Sep 2026 05:57:55 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce58da3acsm259684435e9.0.2026.09.03.05.57.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 05:57:55 -0700 (PDT)
-Date: Thu, 3 Sep 2026 14:57:44 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Luigi Leonardi <leonardi@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org
-Subject: Re: [PATCH 2/4] igvm: move set_id_block call into the SNP ID block
- directive handler
-Message-ID: <aplM8ZVCrsjuELHT@sgarzare-redhat>
-References: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
- <20260901-fix_igvm_policy-v1-2-e93a6cf8c5ac@redhat.com>
+ (Exim 4.90_1) (envelope-from <hugo.komatsu@nutanix.com>)
+ id 1x27BO-0007an-OH; Thu, 03 Sep 2026 09:08:48 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683AIfdA2645144; Thu, 3 Sep 2026 06:08:39 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=cI0bzIQaZWbjU
+ ZU+DBEbF11q8Vx6IYWMleiZ/tEisoo=; b=ypoNHMJeYq0rVJhqA/9gjrU4ca0Or
+ msfky7c+ibpsfkSdcFE4xaQJR8HwTF6yyb/Pewq3YKONtUe5vt1IjjpuS9rnwRiV
+ GUJgA/hnBRXJ/tUxtt96yBshIfzBrPw4z63mZOKxkjjZkFD3HI7R/E7jM3h+j9Ht
+ f/Hh3q9MmNkswCZCM3Lgd5gZwNW6SK+9oyW0pP/Qz3jxJxO8qCkbutO8rSrjJlAj
+ RLOrOy0T5Kwc74AWG9q42OIaqIM/m1UuPDOA86pErwklvIegNjACposHEih0k4eW
+ f/Ezp7jrXRM3fSnVUsMJm+PUpzaif3LD0mqCbG6JBAiwROlVH+UXqrjlw==
+Received: from ch4pr04cu002.outbound.protection.outlook.com
+ (mail-northcentralusazon11023080.outbound.protection.outlook.com
+ [40.107.201.80])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ges3b29g2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 06:08:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j2C+n5S9AyQrJ3OpygQ4unzQqtfK3zMsgMN/VYSeLKqth6M+ohL1a4uc2P7lQta+7ubZsM34FzD3Pybo4u8UlwXWVQER+eP8z1mkHPhQ49NziR9dYekTIvRYWGzzJicy0fBZON7AI+0NlWUflhxlek8eAzWHrXvLs0wnCx4HyEYFlyVta5rjYethDiymSy1Mf6+dKqumTAx/gUvaBlZLiiDyi9zdLdLHNkUlr75VKcTQnukE0o0m5J3BjZDBZfCI7/OWDksQcZOu6t1juKIKLw64JFF3zd9fOcxIMuoExCWDz8mw3eA9NOb1plPbpLnP8UvxbQdO/yMnmSTSpVAkgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cI0bzIQaZWbjUZU+DBEbF11q8Vx6IYWMleiZ/tEisoo=;
+ b=G8XgyEGXOtK0DV+U9atNYS2Y6+ccgZ+S13XQ98GXQrVyatq2gWSv67Iz3RFNcE9C5UliLZeb+TjLX0eUanobH26QPkSKy51Nb2JMgwG94ed59g86j0yc88Y2PiUIdkFet0ea+6b3r6N6lJBtJSedHc56xdsGZhZMUpWVrB05Ul0gNSQV6r1QDNCuBw+Hcu/6oSheh0td4bByU8qZIDrARvlWz5YVQWntGT8NouOpOYFX5A0mFxMV0Eye2bqj2EB4/5trNyfvj4W9mhS9x9ncH33NQJbNcIQGcSpY1iTYq98JgbOaoh8Bknim4nuw92HLM2LPKqorgt0PajlnyrHRtg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cI0bzIQaZWbjUZU+DBEbF11q8Vx6IYWMleiZ/tEisoo=;
+ b=ceNJX8GJMSEKyS1ClIPF7td7l4cAH1Ery2Aj5Y/qWi+79VwuBwvHXhQEcCUChbDDOQYHXL4Egh5vw9pCbQZcvIEjGHeCf2MVShGGc5QTaTR2JsRf9Q5OPySV0YYMEs9JquR9UJR3o0tN+OX0sFu9WmL1Ivp40N81ec4k3lPLaxMS3SxmUm5F8ZS4hTA6/eNE8jtkgM7eGwlfe5MfmijdAiFHuvPEMeQtjWvu/zrW13/Jv0WKdg81VNWExguFaKxHnueKyGKRMKuxjLguOUR7DZtznssn0jXtV9i7P+FsIUsx+ydptuaAGVdE4o+anKbooJldtxPk4tlox+bWFCvL3w==
+Received: from DM6PR02MB6172.namprd02.prod.outlook.com (2603:10b6:5:1fe::18)
+ by PH8PR02MB11926.namprd02.prod.outlook.com (2603:10b6:510:40a::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
+ 2026 13:08:37 +0000
+Received: from DM6PR02MB6172.namprd02.prod.outlook.com
+ ([fe80::39c3:beef:21c:b4bd]) by DM6PR02MB6172.namprd02.prod.outlook.com
+ ([fe80::39c3:beef:21c:b4bd%6]) with mapi id 15.21.0382.007; Thu, 3 Sep 2026
+ 13:08:36 +0000
+From: Hugo Komatsu <hugo.komatsu@nutanix.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, Alex Williamson
+ <alex@shazbot.org>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ John Levon <john.levon@nutanix.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, Rafael Castillo <rafael@trfs.me>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>
+Subject: [PATCH 0/8] vfio-user: live migration support
+Thread-Topic: [PATCH 0/8] vfio-user: live migration support
+Thread-Index: AQHdO6VUw0bceWEKj0WJC+q9Rq4pJg==
+Date: Thu, 3 Sep 2026 13:08:36 +0000
+Message-ID: <20260903130833.1437632-1-hugo.komatsu@nutanix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR02MB6172:EE_|PH8PR02MB11926:EE_
+x-ms-office365-filtering-correlation-id: 3b1f6647-17d3-4693-57bd-08df09bc76ed
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|366016|23010399003|56012099006|10067099003|6133799003|3023799007|18002099003|38070700021;
+x-microsoft-antispam-message-info: OD/bTYZoHwEquEW0Hra8Fj6YqEvV7NHVzp+SQQVuCbsXd1qf5Nda0Zx/K9wVXesnMJMGIqnPU6d7IZAHBZp9y0SRv0jvRIr51p6CEUINWtzftrAOuHSTSeIkMHUGcV1Ktm1zRQ8e9aUE/kUVBDnnFyD8Zl9NZeUPnUNrYWgNN5BTMc5MJuMhpi0f0lRatpqeE8pMgSIjXn4uuS0zi/0M0Srbv1llUwT+E6fH6n759y6mRPvB5NG2VF/wjnElArPCsiLTfhzXhDluOlsagJsAJKg8jijkef6iEYrlJtOTuFrY5xXlQHvZKO4Rm8UqsITVwepaLtUqHKHP7NW/STENy8T6bTTtNfqB6i2pBCHQPoYXeLtkJVemACrirCS8Ylq0oPKYZPkVfboVIgkhWjmKaedeQcQoKngdBOiAaJFd7A+wHgVk16u7mSoBnbghG0+lY79f+4uQTFs3b3we2ziW7XBX6Rw7MU7WBCM8/zchhJT21UzzmAwGkAyzGSz00ROZquxaD6M87HAL//ZYxRPQR0U/W07D6Iu8eu9iJp225XWR0F9joPKTws4CYg06rEwKcNmg+iIDPFAyyPuyY4+aKlVnvolYnblhVAJN3HKGsxMPW9cVnG9jjy89UC9B974yCBIk1CrAMs/GzEB3NpL3nfF6Dhhb9w4kvEEt6d+z0HM=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR02MB6172.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016)(23010399003)(56012099006)(10067099003)(6133799003)(3023799007)(18002099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?M1hRNzF3K3NPWGtFdHphWXliQW5LRFM2U25EbThjM0YxaVltSzBUUWVieGh1?=
+ =?utf-8?B?V2ZRSS8wRzNDdksweEkzSngrV0VXK0V5TmtDNUpIa1gva2tSMlYvOVQ2SG1z?=
+ =?utf-8?B?Ym9RZU9FUytueWdibEhiVWw3dHB3YzdublZKQzEyTXFiQVVPUTRFZ0NxQ1pX?=
+ =?utf-8?B?SWRGVmRTTEhHNDhBSFEzaUhjcDhrOTRwUVI1QmVqQkpoQkdRMHZ5WUVtUXBC?=
+ =?utf-8?B?OEUyQjJlcnd1b3lBcTFXZHZFVlVqUFlBUDF5R3BWdGY1WHd1cFk5MDVKN2Mv?=
+ =?utf-8?B?bDRRTEJEcTAvREdyM3ozTkRTWTEvaXFmdHI0MTFXdFZKa1dsL2JqTHU1YmFq?=
+ =?utf-8?B?cG9pOUlXdWpSanJCK1RyN3NuUmZwbjBUbDVNbW5nT2VzbHpvUGFaK3lYeHRF?=
+ =?utf-8?B?cXgvcHpXQm0zcVZ0VjJ5V3JXVkRNQktRTytHR2hPcXN3N0VJVUxEMWZSRG1T?=
+ =?utf-8?B?ampOVU9QRi8wVzB3V2FkNXRDVnFyd3Q1TDZFcmliZlNudEFCM1pYTitvZVpN?=
+ =?utf-8?B?NmI3S29rRkJyNlhtZjU2L3VuVHRCaVZtY1BKSk16THhkc21nZTlkSW5yZ05M?=
+ =?utf-8?B?NlVJaTRlVGhhdDRhWXMyQndpM2padWJMWmlNTGJ1eTZURTlHVURqbFEwUCs2?=
+ =?utf-8?B?dWVhdXZPcEM3S1hPZW4rRHpkeHNxdE5nNk9aTi91dUkwWkhlUVJBd2wzN3hP?=
+ =?utf-8?B?ODlxMjl4bXVQSzd3b28xaXY2cFRjSW9GQmwxWG05UTFHRTNwM253ajFha0sy?=
+ =?utf-8?B?UGU3c0VYMXlmTmt3azFyUTRSMzhNQlhGSFJDSXdjUkJJbnQ1cTdXdDViV20z?=
+ =?utf-8?B?Vi9BTnVoTWc5SGdiSVF4VTllTXhPeHU5SjVxT28zU2w5Mmo5bW1KcWtDMy93?=
+ =?utf-8?B?a1ZWNHUya3FpdFBjdnp4Y2Nhd1VGMVRNM0JYUVBqcXQ3WVVndnYvSFNydGVZ?=
+ =?utf-8?B?STIzU3NOVFJ6dGRrcy9MbDNmR3VZbWNRQkFGblExbW9SUzZnSkYzVTVHMkk1?=
+ =?utf-8?B?SHZ2dWp1TndHNndqaXEwYXQ4R3JNb3VzQ3l6eVpHVWM2b1lOR2FHK2hRa0l4?=
+ =?utf-8?B?VGVCSnBncTNKMzNJTmxZb1B3S01saHdFTDV4a1ZpTGZYOEQ0OTkwRXkwcjJN?=
+ =?utf-8?B?ck5LQThCNnF1UmcxQnVqdkQrT0c5Mm1oRHZScWtNaTIwbHhXc29LSzdNMlY4?=
+ =?utf-8?B?cVdVdXBKMTB1eVpjNkNrYzRxVE9qNWFTaVc5NE1uV1dnRnlUcVZ6cGtIU3hU?=
+ =?utf-8?B?RTk5MmtwYngyazZNa1RJd0EzUEZ2d0FaVUNyaHFPZjgvSkYvdXRRVUdrUE1l?=
+ =?utf-8?B?N1YzNUtuVDlUcm9PejhOUjBWc2xBTkpOWVpiU2RpVnhma2VUOXMrK2J2R3h0?=
+ =?utf-8?B?dVBNd0J5Y1NhOTlHL0lSUzEvWFFpdXlObTlqemxmNjhjMzhkUGROWFNpczYv?=
+ =?utf-8?B?U1JYeElwTFZySzh3czJEdnhzQTR0d3hzSXRXbXFLMDdjbEtTQzlxcnFKcTJX?=
+ =?utf-8?B?Y1hpanBhSXp3eE1xRzFGazdKWFBnSzNrUFp3aGpUQmMrY0QvNXVEMnhaVXho?=
+ =?utf-8?B?OVlFYzZRVHFRSUxUcWNzc0doYUl6WWgvdUlrV3BIS1FvYnoxT1RaaUtxZFhn?=
+ =?utf-8?B?bEhkUGlBVHhTU09wM04rM2RiOVBub3hac2xPOUdNWUZQa0FLaDlnTjFlb2d3?=
+ =?utf-8?B?ZEt1MDZVM1RueDF0NlBTVVBiUTNvYVhqZGdaUVFjUnlwZjN3MW1XMVllR2Rt?=
+ =?utf-8?B?YXZENGRHNkFSU0FRMFpCMVlGcDhmOWFwZkFrNDVJRjI3RlkrUmdJcmZsZCtv?=
+ =?utf-8?B?MXcweHlycVdMMEJVcXRYaStVL3lPa2luV01KdncrOG1JVlZCUFh5UURyOFdt?=
+ =?utf-8?B?bi8wVEF1emQwWFFDckZaVEJBYno4UWdtWEtjZC9KdnJWMnJqUFlTVDY4cWxs?=
+ =?utf-8?B?TlBxMWFjL2hPbzFMbnplK2tqeThJTmdLNUxYTmgvakZQTXBKQW5WUmZyS3RB?=
+ =?utf-8?B?RmFIRFFsZ3o0a2xrbytmNEN3UWk3ek95dzgyd3NiT083RGpBOFo4Q0UrKy85?=
+ =?utf-8?B?bVRieVRJTUNDbHY0VFZucUhONDFOVXRnTTAzcWIwRGtGV25sZDJVQXZ3U3BK?=
+ =?utf-8?B?TERBbEUwcWpEUzZ5VmdrdTk0b0pZemVKeGtPZitvWXhxSkNpeC9LZDhhWUM1?=
+ =?utf-8?B?NXl5TjN4cDRVYStLdU1pdGV6LzV6b2laazk2TGVabnBqUTBZeUkvd29KWWc2?=
+ =?utf-8?B?bVJIaDNoWElUMWVXQmJaaCsxa3FGSU1xYUJiTjRCVDh3ZERVbDhIOGJLc1BD?=
+ =?utf-8?B?NS95T2o0VFk1QlFQM3BRd1BmcHJ3SkhCTnRJVDBoSWdNbTkzYUxFdm5pZkps?=
+ =?utf-8?Q?2rgbMbinygaeGEIM=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260901-fix_igvm_policy-v1-2-e93a6cf8c5ac@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Exchange-RoutingPolicyChecked: i5iRwN+jn55jkJhV+Bm0wtHdF8mH1C3ywEEw7Wi3vzDi130wrNmGs2TldzweAi7XbQaPEMUAvDW4+xMuELgerjZ/6BkzMxcOCYjyQKrnCpWmiDiVD2Dje4np2v/c6ojlvEwfDDVk2ayiaPmfJgUp7p/7mW1GJUFri1N6cqZ1RahHet8+7OgPx4kwyc5Zroa8Z5poWeEB6xOwMdgFLO4VugRVrTA4/UqY0m6wQZYjxv1rsAyQsBRYI1HwKraUyGbGiRdYCmbQ/mYlh8jeIWCqaMOCGxlbqcWiTAtRfq523nWqURosCi+vnYcpJBm9tTK8C6VzGufXVpXxUr8IfnGhkg==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR02MB6172.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b1f6647-17d3-4693-57bd-08df09bc76ed
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2026 13:08:36.3497 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: QM+wdoHgDB7ZRx/xRMXUdbl3qDyCXW8Mlwuv2QZiauyqwtfhsFnsv420bxXsebZUxgOGLNZJA8t8/4+ghxyaA4hYtqhTnelJAT5T3KierBQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR02MB11926
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDExMyBTYWx0ZWRfX/9/trsrUPzH+
+ cBe1T1EdhLYZZXycwMY958Oq8cA9MPpRbtyXht+jMIU7ebF5LKPVFfJdz3QtVTqfrjuoh3dyvrm
+ ySPA8N446a154CB4W883hg50BWk5Cnc=
+X-Proofpoint-GUID: yG0piKOALUDTjrGrAZbsj3Bms2xA8cuj
+X-Authority-Analysis: v=2.4 cv=V8NNF+ni c=1 sm=1 tr=0 ts=6a997157 cx=c_pps
+ a=cfv+jupdUrUvkxZLjajzrw==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22 a=yLxAKQgpAAAA:8
+ a=F6zgZBJto0R1HZ2lA6AA:9 a=QEXdDO2ut3YA:10 a=pu3MsO4jS0LNTy4EJMSl:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDExMyBTYWx0ZWRfX4esxOwnllhOj
+ SgTMv/iA3mUN2+ybizG/25gDDulnZNNgjSWjP3HyKwkzioyaHAgdqdHxRMta9N+U9BT1NHutBLC
+ YJ2qSjEuXlaVS9hPGBCp18fqgv1Jcpty9uKPFAr6DiABfN2JK2zor2qyX6UTITZ4K8hgd9ycwvc
+ bATCKtJ1VE/X3fnMetzI96SjdFTUa7ctQXqvFTvgnF8JXMKWlVUsiicP3xST8y6+br2xsC5pvpb
+ rUqeJl0J14G6AcwLOi0e3VaFG1zLvfJ5UcIsLhA7cl0zdht/XHbuM2+djQ0J/NN0zf+WP0zP4vL
+ aLRjMlPkiLh8ooz1sPGNGJKgM6dRENJSUn+2hDWosFUz1TVk4h5O/uguJ9CUaICuTpOhKoNRdlu
+ 2uJgisuK3qZ6+5AepNTxJZiG1A+Dd5xMR2IEmGu6cCcfWScs1Sll1bEX9VDyrImZQkvH3exI4b3
+ eWxEhecu4LZ8KTlltyg==
+X-Proofpoint-ORIG-GUID: yG0piKOALUDTjrGrAZbsj3Bms2xA8cuj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=hugo.komatsu@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,164 +196,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 01, 2026 at 12:09:19PM +0200, Luigi Leonardi wrote:
->set_id_block only makes sense when the IGVM file contains an
->IGVM_VHT_SNP_ID_BLOCK directive. Move the call from the removed
->qigvm_handle_policy into qigvm_directive_snp_id_block, where the ID
->block and ID auth are populated. This avoids a no-op call to
->set_id_block when no ID block is present.
->
->The ID block embeds the guest policy, so the policy must be known by the
->time the directive is handled. Process the initialization section (which
->carries the GUEST_POLICY header) before the directive section, and
->copy ctx->sev_policy into the ID block in the directive handler.
->
->Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
->---
-> backends/igvm.c | 81 +++++++++++++++++++++++++++------------------------------
-> 1 file changed, 38 insertions(+), 43 deletions(-)
->
->diff --git a/backends/igvm.c b/backends/igvm.c
->index 85de0d54ec..6545382546 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -778,6 +778,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
->     ctx->id_block->version = IGVM_SEV_ID_BLOCK_VERSION;
->     memcpy(ctx->id_block->ld, igvm_id->ld, sizeof(ctx->id_block->ld));
->
->+    ctx->id_block->policy = ctx->sev_policy;
-
-Is it fine to copy the sev_policy in the id_block in any case?
-
-I mean, what happen if IGVM_VHT_GUEST_POLICY is not in the IGVM file, so 
-IIUC sev_policy is 0, but the user set the policy by the CLI?
-
-Maybe this was pre-existing and handled in the next patches.
-
-Thanks,
-Stefano
-
->+
->     ctx->id_auth->id_key_alg = igvm_id->id_key_algorithm;
->     assert(sizeof(igvm_id->id_key_signature) <=
->            sizeof(ctx->id_auth->id_block_sig));
->@@ -805,6 +807,14 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
->     memcpy(&ctx->id_auth->author_key[76], &igvm_id->author_public_key.qy,
->             72);
->
->+    if (ctx->cgsc) {
->+        return ctx->cgsc->set_id_block(ctx->id_block,
->+                                       sizeof(struct sev_id_block),
->+                                       ctx->id_auth,
->+                                       sizeof(struct sev_id_authentication),
->+                                       errp);
->+    }
->+
->     return 0;
-> }
->
->@@ -958,23 +968,6 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
->     return 0;
-> }
->
->-static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
->-{
->-    if (ctx->platform_type == IGVM_PLATFORM_TYPE_SEV_SNP) {
->-        int id_block_len = 0;
->-        int id_auth_len = 0;
->-        if (ctx->id_block) {
->-            ctx->id_block->policy = ctx->sev_policy;
->-            id_block_len = sizeof(struct sev_id_block);
->-            id_auth_len = sizeof(struct sev_id_authentication);
->-        }
->-
->-        return ctx->cgsc->set_id_block(ctx->id_block, id_block_len,
->-                                       ctx->id_auth, id_auth_len, errp);
->-    }
->-    return 0;
->-}
->-
-> IgvmHandle qigvm_file_init(char *filename, Error **errp)
-> {
->     IgvmHandle igvm;
->@@ -1032,6 +1025,34 @@ int qigvm_process_file(IgvmCfg *cfg, MachineState *machine_state,
->         goto cleanup;
->     }
->
->+    /*
->+     * Process the initialization section first so that the guest policy is
->+     * known before the directive section is handled. The SNP ID block
->+     * directive embeds the guest policy into the ID block, so the policy from
->+     * the guest policy initialization header must be available by then.
->+     */
->+    header_count =
->+        igvm_header_count(ctx.cfg->file, IGVM_HEADER_SECTION_INITIALIZATION);
->+    if (header_count < 0) {
->+        error_setg(
->+            errp,
->+            "Invalid initialization header count in IGVM file. Error code: %X",
->+            header_count);
->+        goto cleanup;
->+    }
->+
->+    for (ctx.current_header_index = 0;
->+         ctx.current_header_index < (unsigned)header_count;
->+         ctx.current_header_index++) {
->+        IgvmVariableHeaderType type =
->+            igvm_get_header_type(ctx.cfg->file,
->+                                 IGVM_HEADER_SECTION_INITIALIZATION,
->+                                 ctx.current_header_index);
->+        if (qigvm_handler(&ctx, type, errp) < 0) {
->+            goto cleanup;
->+        }
->+    }
->+
->     header_count = igvm_header_count(ctx.cfg->file,
->                                      IGVM_HEADER_SECTION_DIRECTIVE);
->     if (header_count <= 0) {
->@@ -1065,28 +1086,6 @@ int qigvm_process_file(IgvmCfg *cfg, MachineState *machine_state,
->         goto cleanup_parameters;
->     }
->
->-    header_count =
->-        igvm_header_count(ctx.cfg->file, IGVM_HEADER_SECTION_INITIALIZATION);
->-    if (header_count < 0) {
->-        error_setg(
->-            errp,
->-            "Invalid initialization header count in IGVM file. Error code: %X",
->-            header_count);
->-        goto cleanup_parameters;
->-    }
->-
->-    for (ctx.current_header_index = 0;
->-         ctx.current_header_index < (unsigned)header_count;
->-         ctx.current_header_index++) {
->-        IgvmVariableHeaderType type =
->-            igvm_get_header_type(ctx.cfg->file,
->-                                 IGVM_HEADER_SECTION_INITIALIZATION,
->-                                 ctx.current_header_index);
->-        if (qigvm_handler(&ctx, type, errp) < 0) {
->-            goto cleanup_parameters;
->-        }
->-    }
->-
->     /*
->      * Contiguous pages of data with compatible flags are grouped together in
->      * order to reduce the number of memory regions we create. Make sure the
->@@ -1094,10 +1093,6 @@ int qigvm_process_file(IgvmCfg *cfg, MachineState *machine_state,
->      */
->     retval = qigvm_process_mem_page(&ctx, NULL, errp);
->
->-    if (retval == 0) {
->-        retval = qigvm_handle_policy(&ctx, errp);
->-    }
->-
-> cleanup_parameters:
->     QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
->     {
->
->-- 
->2.55.0
->
-
+VGhpcyBwYXRjaCBzZXJpZXMgaW50cm9kdWNlcyBsaXZlIG1pZ3JhdGlvbiBzdXBwb3J0IGZvciB2
+ZmlvLXVzZXIgUENJCmRldmljZXMsIGJ1aWx0IG9uIHRvcCBvZiB0aGUgVkZJTyB2MiBtaWdyYXRp
+b24gaW50ZXJmYWNlLgoKVG8gYXZvaWQgZHVwbGljYXRpbmcgdGhlIGV4dGVuc2l2ZSBtaWdyYXRp
+b24gbG9naWMgYWxyZWFkeSBwcmVzZW50IGluClFFTVUsIHRoaXMgc2VyaWVzIHJldXNlcyB0aGUg
+Z2VuZXJpYyBWRklPIG1pZ3JhdGlvbiBpbmZyYXN0cnVjdHVyZQooaHcvdmZpby9taWdyYXRpb24u
+YykuIFdlIGFjaGlldmUgdGhpcyBieSBhYnN0cmFjdGluZyB0aGUgaGFyZGNvZGVkCmtlcm5lbCBp
+b2N0bCgpIGFuZCByZWFkKCkvd3JpdGUoKSBjYWxscyBiZWhpbmQgdGhlIGV4aXN0aW5nClZGSU9E
+ZXZpY2VJT09wcyB0YWJsZSwgYWxsb3dpbmcgdGhlIHZmaW8tdXNlciB0cmFuc3BvcnQgdG8gc3Vw
+cGx5IGl0cwpvd24gc29ja2V0LWJhc2VkIGltcGxlbWVudGF0aW9ucy4KCktlcm5lbCBWRklPIHRy
+YW5zZmVycyBkZXZpY2UgbWlncmF0aW9uIGRhdGEgdGhyb3VnaCBhIGRlZGljYXRlZCBkYXRhX2Zk
+Lgp2ZmlvLXVzZXIgaW5zdGVhZCB1c2VzIGl0cyBhbHJlYWR5LWVzdGFibGlzaGVkIFVOSVggc29j
+a2V0LiBXZSBpbnRyb2R1Y2UKdGhyZWUgbmV3IHdpcmUgY29tbWFuZHMgKFZGSU9fVVNFUl9NSUdf
+REFUQV9SRUFELCBWRklPX1VTRVJfTUlHX0RBVEFfV1JJVEUsCmFuZCBWRklPX1VTRVJfR0VUX1BS
+RUNPUFlfSU5GTykgZm9yIHN0cmVhbWluZyBtaWdyYXRpb24gZGF0YSBhbmQgcXVlcnlpbmcKcHJl
+LWNvcHkgaW5mb3JtYXRpb24uIFRoZSBwcm90b2NvbCBkb2N1bWVudGF0aW9uIGFuZCBkaXJ0eS1w
+YWdlIGxvZ2dpbmcKYmVoYXZpb3JzIGFyZSB1cGRhdGVkIGFjY29yZGluZ2x5LgoKVGhlIGNvcnJl
+c3BvbmRpbmcgU1BESyBkZXZpY2Utc2lkZSBpbXBsZW1lbnRhdGlvbiBpcyBhdmFpbGFibGUgYXMg
+YSBXSVAKc2VyaWVzOgoKaHR0cHM6Ly9yZXZpZXcuc3Bkay5pby9xL3RvcGljOnZmaW8tdXNlci1s
+aXZlLW1pZ3JhdGlvbi12MgoKQ3VycmVudCBsaW1pdGF0aW9uczoKMS4gUGVlci10by1QZWVyIChQ
+MlApIG1pZ3JhdGlvbiBzdGF0ZXMgYXJlIG5vdCBjdXJyZW50bHkgc3VwcG9ydGVkIGJ5CiAgIHRo
+ZSBsaWJ2ZmlvLXVzZXIgc2VydmVyLCBzbyBQMlAgc3VwcG9ydCBpcyBub3QgaW5jbHVkZWQuCjIu
+IERldmljZSBzdGF0ZSBwcmUtY29weSBpcyBub3QgeWV0IHN1cHBvcnRlZCBvdmVyIHZmaW8tdXNl
+ci4gVGhpcwogICBzZXJpZXMgZXhwbGljaXRseSBzdHJpcHMgdGhlIFBSRV9DT1BZIGJpdCBmcm9t
+IHRoZSBhZHZlcnRpc2VkCiAgIG1pZ3JhdGlvbiBmbGFncywgZm9yY2luZyB0aGUgZ2VuZXJpYyBt
+aWdyYXRpb24gY29kZSB0byBleGVjdXRlIGEKICAgc3RhbmRhcmQgc3RvcC1hbmQtY29weSBtaWdy
+YXRpb24uCjMuIEJhY2t3YXJkIG1pZ3JhdGlvbiB0byBvbGRlciBRRU1VIHZlcnNpb25zIGlzIG5v
+dCBleHBsaWNpdGx5IGhhbmRsZWQgd2l0aAogICBjb21wYXQgcHJvcGVydGllcyBpbiB0aGlzIHNl
+cmllcywgYXMgb2xkZXIgZGVzdGluYXRpb24gYmluYXJpZXMgbGFjayB0aGUKICAgdW5kZXJseWlu
+ZyBjYXBhYmlsaXR5IHRvIHJlY2VpdmUgdGhlIHZmaW8tdXNlciBtaWdyYXRpb24gc3RhdGUuCgpI
+dWdvIEtvbWF0c3UgKDcpOgogIGRvY3MvdmZpby11c2VyOiBjbGFyaWZ5IGRhdGFfZmQgYW5kIERN
+QSBsb2dnaW5nIGJlaGF2aW9ycwogIHZmaW86IHJvdXRlIGRldmljZV9mZWF0dXJlIHRocm91Z2gg
+aW9fb3BzCiAgdmZpbzogcm91dGUgZGV2aWNlX3Jlc2V0IHRocm91Z2ggaW9fb3BzCiAgdmZpbzog
+dXNlIGlvX29wcyBhYnN0cmFjdGlvbiBmb3IgbWlncmF0aW9uIHJlbGF0ZWQgaW9jdGxzCiAgdmZp
+by11c2VyOiBlbmFibGUgRE1BIGxvZ2dpbmcgZm9yIGRpcnR5IHBhZ2UgdHJhY2tpbmcKICB2Zmlv
+LXVzZXI6IGltcGxlbWVudCBtaWdfZGF0YSByZWFkL3dyaXRlIHNvY2tldCBvcGVyYXRpb25zCiAg
+dmZpby11c2VyOiBlbmFibGUgbGl2ZSBtaWdyYXRpb24gZm9yIHBjaSBkZXZpY2VzCgpXaWxsaWFt
+IEhlbmRlcnNvbiAoMSk6CiAgdmZpby11c2VyOiBhZGQgbGl2ZSBtaWdyYXRpb24gdG8gdmZpby11
+c2VyIHByb3RvY29sIHNwZWNpZmljYXRpb24KCiBkb2NzL2ludGVyb3AvdmZpby11c2VyLnJzdCAg
+ICB8IDEzMiArKysrKysrKysrKysrLS0tLS0tLS0tCiBody92ZmlvLXVzZXIvZGV2aWNlLmMgICAg
+ICAgICB8IDIwNiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystCiBody92ZmlvLXVz
+ZXIvcGNpLmMgICAgICAgICAgICB8ICAxMyArKy0KIGh3L3ZmaW8tdXNlci9wcm90b2NvbC5oICAg
+ICAgIHwgIDE5ICsrKysKIGh3L3ZmaW8tdXNlci90cmFjZS1ldmVudHMgICAgIHwgICAzICsKIGh3
+L3ZmaW8vYXAuYyAgICAgICAgICAgICAgICAgIHwgICA0ICstCiBody92ZmlvL2Njdy5jICAgICAg
+ICAgICAgICAgICB8ICAgMiArLQogaHcvdmZpby9kZXZpY2UuYyAgICAgICAgICAgICAgfCAgNDkg
+KysrKysrKy0KIGh3L3ZmaW8vbWlncmF0aW9uLmMgICAgICAgICAgIHwgIDc5ICsrKysrKy0tLS0t
+LS0KIGh3L3ZmaW8vcGNpLmMgICAgICAgICAgICAgICAgIHwgIDMxICsrKy0tCiBody92ZmlvL3Bj
+aS5oICAgICAgICAgICAgICAgICB8ICAgMyArCiBpbmNsdWRlL2h3L3ZmaW8vdmZpby1kZXZpY2Uu
+aCB8ICA1MCArKysrKysrKysKIDEyIGZpbGVzIGNoYW5nZWQsIDQ3OSBpbnNlcnRpb25zKCspLCAx
+MTIgZGVsZXRpb25zKC0pCgoKYmFzZS1jb21taXQ6IGVmMWU4NjY4YjlmM2FiNmQ2ZTc4MjY4MDZk
+YjFkZTUzMjZmOWRmN2QKLS0gCjIuMzkuMwoK
 
