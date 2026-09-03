@@ -4,141 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E50CC624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0008C624D7
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2DEa-0001LL-In; Thu, 03 Sep 2026 15:36:28 -0400
+	id 1x2DF6-0001ll-II; Thu, 03 Sep 2026 15:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2DEZ-0001JZ-7e
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2DEV-00047f-Hb
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:26 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G3fLw1209697
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 19:36:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- agcNxP5OLUcImCl9Hm4LtHNpLQGmCzfxliI0NLG2h+g=; b=BJE4DEhNjSOjfahp
- fdvEMavICdUMGbrUko0AAdRZooi/Nhuq+DgdA2eQ/g6G19pzkjHfdgjqxTPhPFzk
- tH+iuDNwVABdNRtQ+bwkkq7T0S5uJCFKqQBida2nmMzRUhpJBHiXvT1zcMEvNxSJ
- DEQQgAzZT+ahAMbUYfUrReY1q7dskucbEX0TwuYV9G7Ypk5krCNvFmzfTYyFn/t7
- +1cDBfTXtw2AwyDma8wdIIm5v3yM4Js84oHZeKyCaTgTQvGc2RSSkPkH00wtRk/K
- w79x6CupzOmpVCGP7V7Gm/mPSdKBTjzgU41RtrKfLLCsYvAOGviKwads4a5NCgUQ
- N5upWg==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf6p72kmw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 19:36:21 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-398e1fafe17so228256a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2DF5-0001lP-AC
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:59 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2DF3-0004RL-F8
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:58 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-398b3c37877so223509a91.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788464180; x=1789068980; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=agcNxP5OLUcImCl9Hm4LtHNpLQGmCzfxliI0NLG2h+g=;
- b=YEB1b1ZynynvCTcVJmW0WnRQ4/p203cnmMnP0xMktcyJ9/FBLREzenDRNZpWs/5pSL
- EkKloIoLxQM5BJMZRxCcqmxF/WTYumeQl0d09A54D9a/7vFO4ul1zPaA6tGyQcHTYwMb
- oV3Ymaz9yCj6Pnem+4nSdAjwUNvxM9GNSRxMOqhPe+McvjhDjbeBuqAF7x5YYRkM1JyN
- /SBE0wxB26ws2qZO0RgcKGlhhFzzHcC/F8Azlfe1WsgwlpR4t5SjFRmUHMFtSWUge8d5
- ZgNvjSnXaBlXEGepN5wsIUINQbqNB2ckTswz4ghFkt2dKkLYwFdivSUpQD7qLmNIMpuF
- EI5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788464180; x=1789068980;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1788464216; x=1789069016; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=agcNxP5OLUcImCl9Hm4LtHNpLQGmCzfxliI0NLG2h+g=;
- b=KwG1rPe9rZIcgUiP/BBNJXoVeDECLQYvVPHdsaIcdGjYsfyeSmaGRJP7/ORkm0vYIy
- GZzpnTvQawoBfbKm23su/dZ9n1Qxz9chrkctI9GfGOcdEF0qOG2EO/rf/kjNqmqSov4O
- zMuNNOZKj9OPGKsiqM1F8zRpr42OUBQ5ELKyEf26P8iDmGcQVXwrUjQUESbA6c8uoUij
- OhJqlK1XoPBw4mNSTvdNxaTeXu7O9lyt95fwX1CJmIGp34PxOQaJw7MIa3WGThll3hUx
- tn4JLYiHpzRUZJChlKCvK7gS5ZedetahfU9to2vemItXp9akBllxYwb8H3xErfq2wmrU
- CLXQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwfHh+GY9RSTpc5lvFuAVsFdMRZdYmttpTg5PVvoH1jS6Gc/t7pJAC6kArDx7FqeGxUx2IK/fPheqbD@nongnu.org
-X-Gm-Message-State: AFuF++nfSXBxOC+v8uJ7On/tbxYsDULOJ924JxmWnApfWh1Wg1VVGAI4
- rTTOq1tSbPhvMCarPy4nPEsYdJPqRR0TxKsGJ8YVQGh3wx6aLPQPl8vPvd2tflYCgu5y1kI/xre
- qwaSz9ni7gPebwAQx1rYeWqfH6uJzYYuEHmrkwKcboRu2Rumf8hC7iIPq7w==
-X-Gm-Gg: AYBFou1Jk2tFCqFS1IuwhnfJg9Ge/y8lvkx3wxXq3bU/5kh0fccqsFRDAgV+/V2/Kw5
- TzrHKP/53GU0zjWL1Q5f331otvPiTU0LmLP/4iPrqEipqQ2YgQ+2Ye3GIYqwiqy9Z0NMytoAyJe
- VesuzUivNbzBlpb4saUvU9jp5Kh6mE7HjGfYIJYgxhBK+V8Q/xcvdHW7HjhDlrcsWlmv1Qj+AuQ
- PTCG8y7Cmw7Y3pzETqiKJzz03hkCwguOuEJ42g+LealQiG8AnJNUWkgW+wYjZ44c2G9t5Ka7Iaj
- pp0fkrKbJLpna4QSqf3IXemMHGxLQH5Xob/cNAge2F5KHjAi9fCDVTLmyBLV9LoPFpb8fuknMJ+
- Bmn5mVdJq8GpEdT+2hNId2CK8lMae8tMjqfthBApN9fmG2mZVe3e+FN6pgC10674CK0ho
-X-Received: by 2002:a17:90b:1e03:b0:398:b17b:3bd2 with SMTP id
- 98e67ed59e1d1-39b260dda6emr966985a91.4.1788464180514; 
- Thu, 03 Sep 2026 12:36:20 -0700 (PDT)
-X-Received: by 2002:a17:90b:1e03:b0:398:b17b:3bd2 with SMTP id
- 98e67ed59e1d1-39b260dda6emr966943a91.4.1788464180098; 
- Thu, 03 Sep 2026 12:36:20 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3339c0ec914sm1128358eec.31.2026.09.03.12.36.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 12:36:19 -0700 (PDT)
-Message-ID: <01c05d32-c7ca-4b1c-8eb9-550de4c3eb94@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 12:36:18 -0700
+ bh=ECmgHwSv+GZ8NtYZYa9Wu8TZqcXs72gUdyc3woKQsHw=;
+ b=cbqCW/Aw6AkJSwlZQth8oxLEa0qdL6DTxpxRhyYo/sjAF/STyC80h5tVV9gfGPYkxm
+ iBGEP/LK4OjHcsS6COmXtEVb8YCN9gUID8bS+IGxQIe8v6Kmd0jjf2MtbAzL3YNKo1cR
+ 688KnijAveMbkEt0ExN0L8yMkS5F8VOWTzgekSaXhVcVXzlbTTc2GNQGCahbv0aRm1IY
+ jL5xHM/oXB5hRWec8obmm+cUJVIzRKRrDg389s5d/aTx/uUHBIAfGIXaF5LAFT801QRG
+ bwkgmTv6pY0aumK0UAiaQQCMaaR9+fLTnpmItwVslH4T1Yu8XMBYgstA2NLeRYKIRdoH
+ O6Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788464216; x=1789069016;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ECmgHwSv+GZ8NtYZYa9Wu8TZqcXs72gUdyc3woKQsHw=;
+ b=sdcwcahAg07T0ZO1nlk/EnTn5JYwwW2PEuE4fBVLPVTDd507yoDHJeyHCBOdTotyge
+ vzDEGP4J5epHpnWG7BjVPxwytz8KupluuXRyakt836PulaQaujdVXww9g9zaHkl1txjo
+ mmjoIbu2v+ykS5JgJodf/zTbXyQbIGKe5IwH8rqUgcJGlAWb69ne5VQcMYjQ8Ojo2+3x
+ dQrvhI2wakUOMZPEgebA3YQ/V7w8XyaL3ZVTaNoA4tTn1tdJKVrb1houaWGrcTFd1SrY
+ Wg5QSOvJlVHyqeopB9G8AaPKw36PhlBcXkdrTMyFC6tgmOOcDcj/L40FJli9wPBY+MCv
+ lZlg==
+X-Gm-Message-State: AFuF++ntdlTgn3oEit1Sa+FEcZlGiqhoOc8ObcobPUG0wwuLkRdIOb8m
+ 0zoUq1EVeBC1U0bhK5fWyeoQI2NKKoyb31UoEo7iKqSokrLzluNw8qzKz5h5QEnEBUA=
+X-Gm-Gg: AYBFou32TaImKJOsG/fgsu7r+mlz1kk+OcJDQzSBjzNQdREWnwGKJsgNmsHPjY9AKJX
+ q/RhhEyr8buor9IvcKN0GLgrQHxVMDhR5xbGFqBrg/lqoJHuVSz7wwZS3KarZBfVFc85kA5CE7O
+ rBqbxvPoFaIectfn/vKqhowfJx+IQW5krS/EJgeeddXnuJ/bJDmVvtZjEcwnmwG8uXZADCoVpJS
+ SPYN8HX9zgWUMuZ2K84llU8PGa8YbV3nivjczhQidr3PSmd98yRX52WGvdsV97NPAPuQ4JgyQ6I
+ WhgJkMgs687CtNd7iXAxEAioyQhrzbz9GWR+YjEyGHVCf56lvdkdz9/HQcn17TSRMqWQ+iS2lLP
+ /sBgu8etq7rAoY5cbahx5bVR3AG2B0F0cNFK08JOJRjMQezoEmUe6DsHoqOHuwgTcA8mcepctdB
+ U++4xG+ZV8P7i7EuHkO2xz9g6fdTGf57jnOFx+VbiIgpY3ebuWlU9QXSJfB5k7NvKn6ZDW9b2wh
+ SQ2WnJpgtIy/f4=
+X-Received: by 2002:a17:90b:5844:b0:398:dc16:3c29 with SMTP id
+ 98e67ed59e1d1-39b26101530mr1289326a91.7.1788464215941; 
+ Thu, 03 Sep 2026 12:36:55 -0700 (PDT)
+Received: from p14s.cg.shawcable.net
+ ([2604:3d09:148c:c800:40c0:ec33:6266:c275])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Sep 2026 12:36:55 -0700 (PDT)
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
+ armbru@redhat.com, lorenzo.pieralisi@linaro.org, gshan@redhat.com,
+ enju.kohei@fujitsu.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
+ mathieu.poirier@linaro.org
+Subject: [RFC v4 24/24] hw/arm/boot: Skip bootloader for confidential guests
+Date: Thu,  3 Sep 2026 13:36:11 -0600
+Message-ID: <20260903193611.1058589-25-mathieu.poirier@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/hexagon: register the V68N_1024 machine
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260903185622.3234171-1-brian.cain@oss.qualcomm.com>
- <20260903185622.3234171-2-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260903185622.3234171-2-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: JKIu2HhQU11lbooxu6FukAiZA4noq7WG
-X-Proofpoint-ORIG-GUID: JKIu2HhQU11lbooxu6FukAiZA4noq7WG
-X-Authority-Analysis: v=2.4 cv=OZyoyBTY c=1 sm=1 tr=0 ts=6a99cc35 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=5glRtx7Q3XNOfFeiq08A:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfX3zed/u85GpRU
- 5yQFoxPvvIr5Vkw7+ZbvnWp5D3esFEYKYppdtgty0kHo77ecxggqwrxWnvD5DEfdKmLAl5wEEY+
- kRjfaXcVERY7vH/Gmrebsjd6WdSR/yY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfX8f8BhNCsOixN
- Mn57CUrnDLBF24v9Jknw5QUr3o5QrYS83rz5dKjL/U+GOjoW0v0G6iIzqLeCTY+6JJ7uTHlbndE
- vm244OSVtjwzl6nwrC/AF+6cdZgF+KyiaqTqfWCfdvkBm8+snxXx3MOnX2PkBztTMhYCUggzCrd
- TqlGpOQxuuq7eWgQz4oqhbFuWUiK4zM2HEXEI1FZ2iOpZ/NxsBGHy1Yy3/IuhrQeuFlUNb5LfgU
- vd27KGqRXFkjYj1c1fVdpCUGif/5r3ufXF/pJZVRmOQhMLmplvkQmrsLcyBsaAa2Fcj4FM+XrGZ
- e3IJHpvkOuggl2u0Tgz8GqOGxmDGWosD7Cli8WkuC1bfVkNPYH9AfywaHy5N14LqG3nmmARYrss
- LjXPfMMUQB5eDhFcbAPKgCkdd7slb+6Tid/q2sF56Rq1E9yzuwUdIi1+5HS0Sq5nyPPlx6OIZip
- Z0+8KfCCRpZDNdhgjvA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- suspectscore=0 impostorscore=0 clxscore=1015 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030170
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,16 +106,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/2026 11:56 AM, Brian Cain wrote:
-> This DSP definition file was present but not referenced.  Also: add a
-> 'sim' alias for this machine to indicate a recent machine with
-> memory-map resembling that used by 'hexagon-sim'.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  hw/hexagon/hexagon_dsp.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+An independent verifier needs to reconstruct the content of guest memory
+in order to attest that it is running trusted code. To avoid having to
+reconstruct the bootloader generated by QEMU, skip this step and jump
+directly to the kernel, with the DTB address in x0 as specified by the
+Linux boot protocol [1].
+
+[1] https://docs.kernel.org/arch/arm64/booting.html
+
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+---
+ hw/arm/boot.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 9b3d3558bcbc..da4f399a3026 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -731,7 +731,13 @@ static void do_cpu_reset(void *opaque)
+             if (cpu == info->primary_cpu) {
+                 AddressSpace *as = arm_boot_address_space(cpu, info);
+ 
+-                cpu_set_pc(cs, info->loader_start);
++                if (info->confidential)  {
++                    assert(is_a64(env));
++                    env->xregs[0] = info->dtb_start;
++                    cpu_set_pc(cs, info->entry);
++                } else {
++                    cpu_set_pc(cs, info->loader_start);
++                }
+ 
+                 if (!have_dtb(info)) {
+                     set_kernel_args(info, as);
+@@ -821,7 +827,8 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
+ }
+ 
+ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
+-                                   hwaddr *entry, AddressSpace *as)
++                                   hwaddr *entry, AddressSpace *as,
++                                   bool confidential)
+ {
+     const size_t max_bytes = LOAD_IMAGE_MAX_DECOMPRESSED_BYTES;
+     hwaddr kernel_load_offset = KERNEL64_LOAD_ADDR;
+@@ -873,7 +880,8 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
+              * bootloader, we can just load it starting at 2MB+offset rather
+              * than 0MB + offset.
+              */
+-            if (kernel_load_offset < BOOTLOADER_MAX_SIZE) {
++            if (kernel_load_offset < BOOTLOADER_MAX_SIZE &&
++                !confidential) {
+                 kernel_load_offset += 2 * MiB;
+             }
+         }
+@@ -957,7 +965,8 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
+     }
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64) && kernel_size < 0) {
+         kernel_size = load_aarch64_image(info->kernel_filename,
+-                                         info->loader_start, &entry, as);
++                                         info->loader_start, &entry, as,
++                                         info->confidential);
+         is_linux = 1;
+         if (kernel_size >= 0) {
+             image_low_addr = entry;
+@@ -1098,8 +1107,11 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
+         fixupcontext[FIXUP_ENTRYPOINT_LO] = entry;
+         fixupcontext[FIXUP_ENTRYPOINT_HI] = entry >> 32;
+ 
+-        arm_write_bootloader("bootloader", as, info->loader_start,
+-                             primary_loader, fixupcontext);
++        /* Immediately jump to the kernel when guest is a Realm */
++        if (!info->confidential) {
++            arm_write_bootloader("bootloader", as, info->loader_start,
++                                 primary_loader, fixupcontext);
++        }
+ 
+         if (info->write_board_setup) {
+             info->write_board_setup(cpu, info);
+-- 
+2.43.0
+
 
