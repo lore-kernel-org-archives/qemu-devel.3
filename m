@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01E4AC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3494C624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28fL-0002zd-OF; Thu, 03 Sep 2026 10:43:47 -0400
+	id 1x28f6-0002j8-Sk; Thu, 03 Sep 2026 10:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28fI-0002wx-1s
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:44 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28ev-0002dX-1L
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:22 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28fF-00049V-Pr
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:43 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-482e067e908so2162692f8f.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28es-0003zR-8l
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:19 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-484374f54d0so1542499f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446620; x=1789051420; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788446597; x=1789051397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cwUTQMhe74SR6t67iKwOiGBl/CWJ7OZ0wscikZLVil4=;
- b=PqUDkrnlyzMXi2sL/WqZtEkvGQeJ2NVqXv02NBVl/RSBzJO+XkOlPJu67YjnJoD8ey
- jU/AJzkEJoORfr6lqxVQl9B/AqdQHRF/UBw+MryGDJJSx/ojRvT3S7LVz5xJfLhbbyw4
- DYpu218U2dUxxozBppF19RdTinSMVFzF1v7s44YtLRlL71tGP3MOvO2vzH9s4uqno08n
- EOcbqyiuB0gcEB/h7nkq2Fy2PXTV9Go5AWM3RXuSBDoRwgMwHpnVaqviMqEN84ySAOZ9
- uPPFCdny7MfSeCA85w6mVgzv0oEg3hr7+6Ckj9U+iM2feocUNyHJ+vmUcO8UuJVGYCmr
- McsQ==
+ bh=gOCgb/8qYTx3Tvjv6qT01WmwOcfq9B2Xk9PXWdyz6VY=;
+ b=YznJL2N3wiIuDJOb7eankpuwZQOoUuMilTenlIoHM1/vWXE1estpNTc3DvDlfrYSbV
+ qDAAtg35UcvSv5ljDIoFsaqzUR6dyPu5UmjijHG39tm2RSw3Im2Z6zf/mNDWo4FtU7tX
+ 5LAZOtRy7b5LatbDn+7NfcM4hFoqZEH0/H+gLtaWqWsDSL75x9TQr2UAdwjvYxR+KvLq
+ dHoiKHtZeh8aCsbFfoKbRF2g/MnC/UyThI9tnFolMdHUi0BkB7kWd8My8ch51bTlpanR
+ i2VyglMjahz3xRjsmmb9kMBMZfO1i+RhZZQe1cTOnZsQKPzNY2kE8lk1p27alp/HhaAM
+ oqew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446620; x=1789051420;
+ d=1e100.net; s=20251104; t=1788446597; x=1789051397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cwUTQMhe74SR6t67iKwOiGBl/CWJ7OZ0wscikZLVil4=;
- b=rVJAiCJcNzOsj0O3fq2m3mpddd51p6PgrFbwZgOzsS7nJfHO8v818SSs4iVKAyUNCl
- /qk9UnfIbhjej8+1XOXGQfEkf5baBvFjNIEI2EXPx8Ow1L8JITiNYiutwsqf71bdTb18
- 4dPv21W/dT42r72Vk6RviIQiapkUbI/UW0AiXq/gqLWU0SGjIkCGajqeNJA1o3AuA0aR
- n2lb+r65/2k9BoPwZ1mia9BnAl9IlExIt6JeJdMCC06SIGQxJI/CBJUiqoXk8QdK7l8X
- 0G2tEZLogK9zgQ/IPNG48OF18mcjd4dRTuYtsnOYf/9FPnUCrIgwivyNsVjHk6vm0JTY
- qH+w==
-X-Gm-Message-State: AFuF++msMoh8p1hr5Q0gkhZbcNFJbbo2w+D7+8qQ959eTk2k4Jee8KJs
- 0+siBIlVWOY9RUXEXt/u9j+ZzOty+fXumEUO9ZQ+Ex81xv4mHlopO+1tMSW6acL4c6BKAqkgUqU
- Q0jen
-X-Gm-Gg: AYBFou2kIoRsZvvdBuYr6qAIzqZi3Y4MIqR1st3u2vfCsCMtTao/UeA91n5tVpLOX5B
- tAa2XbJr4O8R+h2Y2OTbgE5FEv2qRSekiWfadjxK5iqI5gy3EBrqRpIb1LmkVnA9LJTzOYYLBZm
- 0esGIz8PhmludMpuCphD6ZRvGNSyXuqmWAWOmGIuMoUNi3PudxoNpJIefvmXK4QcC9jFBpn3Rv5
- qDFR5qQE7mGkX4FHPFLbbpWpZKpSmsv1G6yfQYIThCOadICDpV30swN0Ce3hhuYJMvB9dd66u7W
- 6R3rj8iOlnFcfGRLq9kcJ5YBTFcaxAv5wbr0JfZVHSFWfEizyoq/yDnTRgcKX9mvjDUpVt4EVDo
- ruWKnD3+QkxLyFLyCsIwd4e5icpf6u5VCAqkviqsWnk7LArL/aTpTPA9yURbHp8jNAksy1lwWY5
- xdtMgl/Y7fZtkkI+hYm6iolDI0BXYWEgr+00L6tHKgx2U0IPrbz3z663nNqu4+T+RbfNI=
-X-Received: by 2002:a05:6000:490e:b0:484:478e:e19f with SMTP id
- ffacd0b85a97d-4847b6266a6mr25383404f8f.0.1788446620095; 
- Thu, 03 Sep 2026 07:43:40 -0700 (PDT)
+ bh=gOCgb/8qYTx3Tvjv6qT01WmwOcfq9B2Xk9PXWdyz6VY=;
+ b=TqBNM2OvWtObQRiOwHzWv5zDwwpjzmmUbRpMzA97ESxyiBUKbPlkalmhHapoD38bhs
+ X9c+SCK0xj5KD7Cp+gCjLxSl3KhwBIxONTO7iGRvNsdF7DwO0tcytchcpa8H43hK3NDY
+ mwlm9Qtb+QDw0KzrfEUCzK8fUzJZ7V9KC6uQMp3Igg2ybxAzDRNYEFFjHNR8SzOkOSSB
+ 0CTgjtjsdicV/x34bhZ1lRAH4oNEzvzSh13Q0sln54vAIEs/gM3+aoDNfhDaKO33c1tT
+ ZIJlsiB8ju+DsshVrA8Et/Ik0BOn+Y8H/eZOe6eoxuxOZu/egmGJl+X5I2QWIfWv9de2
+ 0JjA==
+X-Gm-Message-State: AFuF++nbLiHdPjGI+38qjeaPfazeeY4/gAz+wQqYfFrrgPyG7KrGsz9f
+ 8lwjvLzjIENKtAmGdUYS6D1OAENv0oAUHyuYIC4YTqa/l9mDDFq7kbFtoVN5z8jUdBxvgSnFag8
+ iDXFU
+X-Gm-Gg: AYBFou1Xjjt6n8VBrJ02tkMx33suFx7TuHV/TrIVxlFEEjr1TLcxle3ZomipdtMeopQ
+ lW8xkHFkW1QnDCeHFWl4PPB2v9zs/4+uPrN5iCeAV+Smxy2Hdz08yN1IHFunLMV7FFhZv95dBKk
+ AMSeO5JX3x2D0tD+plZrqJniohkDjxEewkvXl8casgRSj0+LSkgu/0/f3uYRsdBy3Ppni/1ps8x
+ nyf4hixwlqzABv5eJiP6MTyGDEH+BzCWaIbXBpdMj0ZuFp35oOMoI8WuxbuPZUvspv0eTcpVFEm
+ Hit/bQ2tShh8gG3isHBEd0RTLTrI97mWSHGmET80X56Cp0XwZP+iLLFN708huQT4qKipUHGrflg
+ 49VfTFNvSG/0qLbbIL6q2AYnIODaBYB33McVd8kdMuQME33kNGXzDV/L2iuclPKxi3AlHj2AaoU
+ mCy5Dl38Ie/yAeoLluRi/a5qVTj6i9DJurQcXjWVNwoST1I8XnsUdsjOjI9A2D9k0JrMdM
+X-Received: by 2002:a05:6000:1a8c:b0:485:8330:64a with SMTP id
+ ffacd0b85a97d-485833009demr7000064f8f.6.1788446596798; 
+ Thu, 03 Sep 2026 07:43:16 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.39
+ ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:39 -0700 (PDT)
+ Thu, 03 Sep 2026 07:43:16 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v7 25/25] tests: Add parallels format support to image-fleecing
-Date: Thu,  3 Sep 2026 16:41:43 +0200
-Message-ID: <20260903144143.2328870-26-den@openvz.org>
+ Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Subject: [PATCH v7 04/25] parallels: Make mark_used() a global function
+Date: Thu,  3 Sep 2026 16:41:22 +0200
+Message-ID: <20260903144143.2328870-5-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
 References: <20260903144143.2328870-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=den@openvz.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=den@openvz.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,75 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
-Use a different bitmap name for parallels images, as the format has its
-own ID format and can not hold an arbitrary string.
-
-Replace the hardcoded 'qcow2' target format with iotests.imgfmt.
-
-Add 'parallels' to the supported formats.
-
-Based on the original work from Alexander Ivanov.
+We will need this function and a function for marking unused clusters (will
+be added in the next patch) in parallels-ext.c too. Let it be a global
+function parallels_mark_used().
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qemu-iotests/tests/image-fleecing | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ block/parallels.c | 14 ++++++++------
+ block/parallels.h |  3 +++
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/image-fleecing b/tests/qemu-iotests/tests/image-fleecing
-index b42aa6967f..0142289843 100755
---- a/tests/qemu-iotests/tests/image-fleecing
-+++ b/tests/qemu-iotests/tests/image-fleecing
-@@ -28,7 +28,7 @@ import iotests
- from iotests import log, qemu_img, qemu_io
+diff --git a/block/parallels.c b/block/parallels.c
+index f02ad7a0be..6f7a9911d7 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -187,8 +187,8 @@ static void parallels_set_bat_entry(BDRVParallelsState *s,
+     bitmap_set(s->bat_dirty_bmap, bat_entry_off(index) / s->bat_dirty_block, 1);
+ }
  
- iotests.script_initialize(
--    supported_fmts=['qcow2'],
-+    supported_fmts=['qcow2', 'parallels'],
-     supported_platforms=['linux'],
-     required_fmts=['copy-before-write'],
-     unsupported_imgopts=['compat'],
-@@ -62,12 +62,18 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
-     if push_backup:
-         assert use_cbw
- 
-+    # parallels stores a bitmap name as the UUID identifying it in the image
-+    if iotests.imgfmt == 'parallels':
-+        bitmap_name = '00000000-0000-0000-0000-000000000000'
-+    else:
-+        bitmap_name = 'bitmap0'
-+
-     log('--- Setting up images ---')
-     log('')
- 
-     qemu_img('create', '-f', iotests.imgfmt, base_img_path, '64M')
-     if bitmap:
--        qemu_img('bitmap', '--add', base_img_path, 'bitmap0')
-+        qemu_img('bitmap', '--add', base_img_path, bitmap_name)
- 
-     if use_snapshot_access_filter:
-         assert use_cbw
-@@ -76,7 +82,7 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
-         qemu_img('create', '-f', 'qcow2', fleece_img_path, '64M')
- 
-     if push_backup:
--        qemu_img('create', '-f', 'qcow2', target_img_path, '64M')
-+        qemu_img('create', '-f', iotests.imgfmt, target_img_path, '64M')
- 
-     for p in patterns:
-         qemu_io('-f', iotests.imgfmt,
-@@ -131,7 +137,7 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
+-static int mark_used(BlockDriverState *bs, unsigned long *bitmap,
+-                     uint32_t bitmap_size, int64_t off, uint32_t count)
++int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
++                        uint32_t bitmap_size, int64_t off, uint32_t count)
+ {
+     BDRVParallelsState *s = bs->opaque;
+     uint32_t cluster_index = host_cluster_index(s, off);
+@@ -241,7 +241,8 @@ static int GRAPH_RDLOCK parallels_fill_used_bitmap(BlockDriverState *bs)
+             continue;
          }
  
-         if bitmap:
--            fl_cbw['bitmap'] = {'node': src_node, 'name': 'bitmap0'}
-+            fl_cbw['bitmap'] = {'node': src_node, 'name': bitmap_name}
+-        err2 = mark_used(bs, s->used_bmap, s->used_bmap_size, host_off, 1);
++        err2 = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
++                                   host_off, 1);
+         if (err2 < 0 && err == 0) {
+             err = err2;
+         }
+@@ -375,7 +376,8 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
+         }
+     }
  
-         log(vm.qmp('blockdev-add', fl_cbw))
+-    ret = mark_used(bs, s->used_bmap, s->used_bmap_size, host_off, to_allocate);
++    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
++                              host_off, to_allocate);
+     if (ret < 0) {
+         /* Image consistency is broken. Alarm! */
+         return ret;
+@@ -840,7 +842,7 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
+             continue;
+         }
  
+-        ret = mark_used(bs, bitmap, bitmap_size, host_off, 1);
++        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
+         assert(ret != -E2BIG);
+         if (ret == 0) {
+             continue;
+@@ -900,7 +902,7 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
+          * considered, and the bitmap size doesn't change. This specifically
+          * means that -E2BIG is OK.
+          */
+-        ret = mark_used(bs, bitmap, bitmap_size, host_off, 1);
++        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
+         if (ret == -EBUSY) {
+             res->check_errors++;
+             goto out_repair_bat;
+diff --git a/block/parallels.h b/block/parallels.h
+index 423b2ad727..68077416b1 100644
+--- a/block/parallels.h
++++ b/block/parallels.h
+@@ -90,6 +90,9 @@ typedef struct BDRVParallelsState {
+     Error *migration_blocker;
+ } BDRVParallelsState;
+ 
++int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
++                        uint32_t bitmap_size, int64_t off, uint32_t count);
++
+ int GRAPH_RDLOCK
+ parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
+                                 Error **errp);
 -- 
 2.53.0
 
