@@ -4,74 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30215C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456FEC624DA
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24nd-0002Xn-G1; Thu, 03 Sep 2026 06:36:05 -0400
+	id 1x24rH-0004RU-LH; Thu, 03 Sep 2026 06:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x24nZ-0002Wg-3n
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:36:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x24rF-0004R2-PW
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:39:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x24nX-0005Sg-Jn
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:36:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788431758;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r0ZJZz6nbVmbWsxVoto8xEswVIifX0ib/coJwNdot8I=;
- b=KoyI68HOyTwttKn1euAFGH8F0ec6q5iAoex5HLTrQEUuQ/NA8oMtBDx7T/jDgY6XOvv4Pl
- kLt4I/vL7UyK0LB4694ugHjxVSm4k1Hqv+OFxH+VenpSIWgjk5x7FwnymU9F3PuYxNr/a4
- BipRl7Uv6NwYB4nK+bFNQyGAcZLSCY0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-P-FLny9wN8eh1Zpol4bFtw-1; Thu,
- 03 Sep 2026 06:35:57 -0400
-X-MC-Unique: P-FLny9wN8eh1Zpol4bFtw-1
-X-Mimecast-MFC-AGG-ID: P-FLny9wN8eh1Zpol4bFtw_1788431756
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41AE91829E23; Thu,  3 Sep 2026 10:35:56 +0000 (UTC)
-Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81A69180049F; Thu,  3 Sep 2026 10:35:54 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x24rE-00069I-3A
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:39:49 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683AHKsG162990
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:39:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ +hA21VIYFSsJ97/MLiNGmGBD+2APEfUHCnq5ULE3qWE=; b=JUlntdyZCkLGXPTT
+ N56PQaLT+vx3u5jkxQrvs5QkSW0Sb4OfiCOt90D/IdD94ffSaOwEwo2xhrZ40gol
+ rOTNAAZhHcFW+sOAD+R7vtWZhZGEuH9ezL4xzX3K3O/LUYlR+NziVsvWXuPJrT/d
+ yU8gBnnIyYrwK7MMzS0KxzOiHVeEIvBafGPSCVk4w9oAusYF52Xuzf2r+ZcuqC4c
+ yKAv4sKMwTQWPgTuSFunK0DSQPju3e/Mg1ZQkW6dhSs84qJgHaPSVNdGv7I+ydmw
+ W0CQXkXqdH05zsLbaf0r4oWNQjlN8gw3WkCT+woF9OiI1xWVjP/YNeejeL0fFViC
+ ibc/Ng==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf6tx049p-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:39:46 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-9393ac4961fso162327585a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788431986; x=1789036786; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+hA21VIYFSsJ97/MLiNGmGBD+2APEfUHCnq5ULE3qWE=;
+ b=LEHDs2L7BRiIMW+VEl0CLWGwa3xeXPYq8A/Bg1pLN+M9IvejjybeM/7MFFlvyrm4dp
+ jNFOwVdT+HGihYTkluvqmu43v12AwTVwbCznr/0ofq31Hyu439iAVQvOfPEHLsPDAYzn
+ GcFTFN88jOr1P7M3krptdI5rHEtztdSgj7qZ1vWZCR1Y2+TsiuHZYn+drqSgHFqxYppM
+ oN5zuSXjeaDIn/n/nbUt5rTf3M0h73e0aXkv8MgV/6j6JrzfbJFYgAzOpeuMj87GBBZy
+ yzMSAYy/bJfc2+tMEQUmUPpc9Uvms0XKKYZC9pdE2z3/7yCEidoN1FguTWY2QojZDLT0
+ saVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788431986; x=1789036786;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+hA21VIYFSsJ97/MLiNGmGBD+2APEfUHCnq5ULE3qWE=;
+ b=JoINxQEom9ZaL2h5nOiDFuVZ5ZEDc4P/55Xv+6QWek0Vz4fM5QTGwhv9S3f7joCfWy
+ 0F2NTTPP5cKTsJTgFrAXGil7LaZEGvP6W5wLA735xwvEhwXRF6xQadRsBKVuDx73/8lF
+ dCdEJcqwlJKx4lRkDDcTeF9mkDuyw3CDEMaQh6xeAcWrpo1m+Pu6A9e3TGkwGdvQxW5n
+ 3U/WKDBbB9q06c9x1to6blUuDXSoQXoN1kvs/NSfJ4r2FI4Lhr2Pt7KYhkaLS3dGAQSs
+ 0MiHC15esrdr+1L5gG8V5lrEu+x50lU6tTlYuekGRepP5LmvhIZWkMBfERlrklqQfuRa
+ qY+A==
+X-Gm-Message-State: AFuF++lN9dxVLa+tjtf7Hv410bRpBSrgoIBfpVyN8q/LnM1MdrBVNlWQ
+ HjeaCR/fXF9X3a+Kp/AGornHag9TzvcsDZG8W8LmrZrhA1vCFhk0euQvydMd1UeRiTrpyML/6gs
+ YMPSf0trYzqOQ8kWxWsJix0MuEPRvhbX84S7UCh2TSoBBHRmMAnkBd0kWJHi1RUaYdA==
+X-Gm-Gg: AYBFou3dbNgP7+unNY3tAmE8pIBe8CuCIDeGkfPQ6IHNPGOOBmPbdz5dTNqojnGzHME
+ NO8qa9fFsavOx/uqrqZA7Q/tsmgepi2AGu3nKUKFLbe/uW1YWJW5w0zYHTLAAQPjvcShxRGM37p
+ P8gy2G1R2FwEYltsQ7CXLBoVN2Cz7mvL2306expNY0dzfwtcFqDAkBvqmsVCOpG1v7jWBsQ9E2q
+ agUpMkKC3u7/K8P+F/Gh/Hfw9PsYHq/qnY6Myek1B2KlNXsoKID5VcTsP+ptDTSEZXy+0ZzoT2f
+ pFcp2EGpU+RIGwVpUZ1Y8aJNf5ujR8Lhnz9qOWVIbEV82/ag3plvMm+/GS/hI0KQ8pqKzdKTqfG
+ xXqZu+KKvBZ5Ax3mvghu+EaN9J6wFcpAaA7ehkBOa
+X-Received: by 2002:a05:620a:4151:b0:939:fa7:8df8 with SMTP id
+ af79cd13be357-93960de3a2bmr1289747985a.11.1788431986296; 
+ Thu, 03 Sep 2026 03:39:46 -0700 (PDT)
+X-Received: by 2002:a05:620a:4151:b0:939:fa7:8df8 with SMTP id
+ af79cd13be357-93960de3a2bmr1289744485a.11.1788431985780; 
+ Thu, 03 Sep 2026 03:39:45 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48448ed38cfsm11883102f8f.19.2026.09.03.03.39.43
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 03 Sep 2026 03:39:44 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 2/4] meson: bump min XCode CLang to 17.0
-Date: Thu,  3 Sep 2026 11:35:46 +0100
-Message-ID: <20260903103548.2142568-3-berrange@redhat.com>
-In-Reply-To: <20260903103548.2142568-1-berrange@redhat.com>
-References: <20260903103548.2142568-1-berrange@redhat.com>
+Subject: [PULL 01/51] hw/sd: give the RPMB vmstate subsection a name of its own
+Date: Thu,  3 Sep 2026 12:38:45 +0200
+Message-ID: <20260903103936.62355-2-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
+References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: Eba_l5JxiNfpPQ4_GeNIFsike51a7qI2
+X-Authority-Analysis: v=2.4 cv=TqjWQjXh c=1 sm=1 tr=0 ts=6a994e72 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=5RHtEPMUJtLrCEOe:21 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=6rqHouBjAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8
+ a=Oy2_cJ1RsVdzQtVqsEIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=Hx1yvPaMooE3kwe23bt7:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: Eba_l5JxiNfpPQ4_GeNIFsike51a7qI2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX4sUHN1vOhwmE
+ ps1jsvy3vINqxlI/5RJS5zFfPaIGidr36RN1loltqtRIsLC0E7xw9a2SjASDDpFLlggMIm1ahsX
+ IKER9QQvG/wkdJG1wV0QQfq8sk99ROcNsmDd6iPP3kzaWsWsmb3IUB6JSUxDb6MKWoyCIXf8Jpt
+ 369D+fCsJ7pBDKMCS8KzdHbcH/W9+cQFgyyAX6LWsCgdfEoOrturGYoB9cgZncVPFyrNAv+Q8mz
+ NzhEcgTY6H+K8O1Ov6PnvfT6RctG0ndCLNgvRNFXQssHdh9gw+DOn4scnvfs3mcyqUmYcXA4bV6
+ R2sjQyLdvfmZO+wJ60E8MxxbKX0HdzGZIhP1adcgdHtPdgcsWWAAcAn10g04IVGwE1qdZ7e8rnx
+ n5Iddr8UwGXoOwI0gu5jFWffUiFf1sCqt+vBTgDxIoRAf9iG0lMYAfPhBk3gqxSBi9x+Mgpygjx
+ +Ui5XDiTppMNiFyPj8g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX/2dX3nowF+3q
+ vZMaVP6TnLMKHhJgBD4iZF1HKAbbFcndODDRa7AFiuiA4kJjZf37PtzeVf4Onl8h8O2kmUkvEiD
+ IwDnAEPjxnsRVg4wI2uN2RETOlVkdQI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,45 +151,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current two latest macOS releases (Tahoe and Sequoia) support
-XCode 17.x, XCode 26.x and XCode 27.x is in Beta.
+From: "Denis V. Lunev" <den@openvz.org>
 
-XCode 17.x reported CLang 17.0.0, and this continued with XCode 26.0
-stream until XCode 26.4 switched to reporting CLang 21.0.0.
+emmc_rpmb_vmstate and emmc_extcsd_vmstate are both called
+"sd-card/ext_csd_modes-state" and both sit in sd_vmstate.subsections, so
+a card with an RPMB partition sends two subsections under one name:
+192 bytes of ext_csd_rw and 353 bytes of RPMB state.
 
-A min XCode CLang of 17.0.0 looks appropriate and matches our current
-CI job matrix.
+vmstate_get_subsection() returns the first entry whose name matches, so
+the destination parses both of them as emmc_extcsd_vmstate. The RPMB
+section is 161 bytes longer than the fields being loaded from it, the
+stream is left mid-section, and the load fails:
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+  (qemu) migrate file:vm.mig
+  ... on the destination:
+  load of migration failed: Invalid argument:
+  Section footer error, section_id: 38
+
+Reproduced with
+
+  qemu-system-x86_64 -M q35 -device sdhci-pci,id=mmc \
+    -drive if=none,id=d0,file=emmc.raw,format=raw \
+    -device emmc,bus=sd-bus,drive=d0,rpmb-partition-size=131072
+
+Name it "sd-card/rpmb-state". A stream written by an affected version
+cannot be loaded by any version, this one included, so there is no
+working format to stay compatible with.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 8ef4260a3f ("hw/sd/sdcard: Add basic support for RPMB partition")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260814183859.4034017-1-den@openvz.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- meson.build | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/sd/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 70e2755149..388423e4fd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -330,8 +330,8 @@ foreach lang : all_languages
-     # ok
-   elif compiler.get_id() == 'clang' and compiler.compiles('''
-       #ifdef __apple_build_version__
--      # if __clang_major__ < 15
--      #  error You need at least XCode Clang v15.0 to compile QEMU
-+      # if __clang_major__ < 17
-+      #  error You need at least XCode Clang v17.0 to compile QEMU
-       # endif
-       #else
-       # if __clang_major__ < 10
-@@ -342,7 +342,7 @@ foreach lang : all_languages
-   elif compiler.get_id() == 'emscripten'
-     # ok
-   else
--    error('You either need GCC v10.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
-+    error('You either need GCC v10.4 or Clang v10.0 (or XCode Clang v17.0) to compile QEMU')
-   endif
- endforeach
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a30c541df07..674ca09b49f 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1022,7 +1022,7 @@ static bool vmstate_needed_for_rpmb(void *opaque)
+ }
  
+ static const VMStateDescription emmc_rpmb_vmstate = {
+-    .name = "sd-card/ext_csd_modes-state",
++    .name = "sd-card/rpmb-state",
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .needed = vmstate_needed_for_rpmb,
 -- 
-2.55.0
+2.53.0
 
 
