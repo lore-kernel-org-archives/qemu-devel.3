@@ -4,163 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF1BC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE57C624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:43:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x29TL-00037A-4N; Thu, 03 Sep 2026 11:35:27 -0400
+	id 1x29aw-0005Go-Ow; Thu, 03 Sep 2026 11:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x29TJ-000365-0C
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:35:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x29TH-0002GU-CA
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:35:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788449722;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tGWlkfMh4lUXQJcpNT0UayHoyeI8k0ibX/W1XCnm79o=;
- b=RFzYzFHf35S2//0WliRcZcwKSyHLZPWwtc/vDY361Z+5kGdTZnAZfY91oRFVSbUZm9yEwZ
- 7e5DeufWXkNuO9jQ4aDNIbNfYPvUMKP1M02ajChQi5cWXA5/oiuH5ZdMulur2KYGzVp9L5
- fQmY9AAkU6bhJy0oH2/3U0UwHlcHF4w=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-368-nmTS4EbBNJ2WjIXNZ9Z-Hw-1; Thu, 03 Sep 2026 11:35:21 -0400
-X-MC-Unique: nmTS4EbBNJ2WjIXNZ9Z-Hw-1
-X-Mimecast-MFC-AGG-ID: nmTS4EbBNJ2WjIXNZ9Z-Hw_1788449720
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49ccf17d3b0so16282225e9.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:35:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x29au-0005FY-Pf
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:43:16 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x29as-0003Yc-Cd
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:43:16 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-86b03b75fecso393237b3.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:43:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788450193; cv=none;
+ d=google.com; s=arc-20260327;
+ b=AWNfjV149iSEjCe7iB4tgXyUpXJBp20z2AfuS7IgORTQ4uQKGYpHBnTK5UtVrtcr0R
+ fhr+lDeuZ04BLlsdAPv5rVsHOOn4F5T+ezfLjeERnX27YYOFSxL0UwxFY2Gvif3cWInF
+ UvPmyy9NUMJN81lRc/3yfEgkA5/qyseTBstlK0dxPgg0Ssw1D257rU0Sx+rMPuaTz4O5
+ giQCr6AG5ebEv0wGf7CYyK1ISQn2WpF1ie9gf4U8YN/C3bDZPBsR0ABqCVtpf9ngsUZH
+ iAgjlKiIsEFJs6XmhrOJJMj2Inl4oIvgfwPSmZFAsv5d7Dxy3btlY9104QAnYLqpMjKm
+ /64w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ZRxsOrmA5EDylYoiOGMb6qq9DTnFpUX7RipNDmZgIbw=;
+ fh=T+332A5ujRAvIM066VCGT/E6vI12MX14OsfX9lrtuRg=;
+ b=IfJ8RomN0iqUoj5IHfJ9/zOUj2FUHqUC/Fd/7ZUKNxYINJhcLu1hJyqrPaUb/YNrml
+ tKue/KY/IP39h70XMVXzloqYAA/XKaqWnycpaOUvv2MTVmgObLu25mweeviYtgorxl7c
+ 7HxfKbRWDEoVewJ1d8cc55rFzriGjUYJfQrGHe6CoG5V035yUqQdk8p16Kvkt9TTYW4U
+ Klx8eA6ph0FcxwOcN+2E7R7YY2cFQyyrxJelh+8ya3qabVCCDUf2dnR8aFRE1z9QSsn1
+ cXm8AW5j25B55HDsVih4pJu4HvYoQ1hwX+Gzd8SPfhs1F4mbg0M0Vap4MArPLvEquhR8
+ +K9A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788449720; x=1789054520; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=tGWlkfMh4lUXQJcpNT0UayHoyeI8k0ibX/W1XCnm79o=;
- b=K/soz6GK4SQOHa9y74S2WxEGlE9LTKXSZg/DoL+1DICZPWjFwHJ+VZN8rPtOFKM+JF
- iGIX2V7572SeM9uB9KXECFpsqoyj4s0NXEU/f0wfjmdqC//UfnFgmMcrynBDbCmf+vc1
- 4gAe59YAYIiOlmUre5HeQGY1yO/K20QYajFIWWAfzOCicfVYcIPN4HxEszNTr4ZKUgJu
- SVXk7P1jxSU4kyuA5UVm4DZKXfp9+Cn7WpAqKUWF77HZ9eQvNOyKjZBsTgof6q+d8l6C
- 25L37T6W2Q5JgTs8gwOHrtLsJtYCZL0bJJl34e/xdNqCIbLy0awK4tHXZ4y68vK905qQ
- HctA==
+ d=linaro.org; s=google; t=1788450193; x=1789054993; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ZRxsOrmA5EDylYoiOGMb6qq9DTnFpUX7RipNDmZgIbw=;
+ b=RJbmKF/yZCCp53jUqc+r5bDhHM9EkWaCJsCvU6PfFH57E+Glryx4/liFGzDpEwYuKc
+ rLx0dxCgHA40G2rnkldLOnayCFCAU3s0ETUtVZwknM7AtAQEtK7Vr9eiTLzcwX6jeC7O
+ rH383muRPv+H2hKY9LHB7phvyHi50f4HeDd9jr2ybMF+9ffQtP41EvFfwFV6wfVN968u
+ srJKomHzHTly7FYC+1LfKyUdaX/PKtTduXmW2MpStUqCqJuCsyElupdaDvWgChzcqY92
+ NvS5B1rzOT7E/QdP0eJyBdSRzKR1BwpAlm9jrbz39zubhi6ZJVcWCpwa8vU5I6QOXU0b
+ Of0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788449720; x=1789054520;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20251104; t=1788450193; x=1789054993;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=tGWlkfMh4lUXQJcpNT0UayHoyeI8k0ibX/W1XCnm79o=;
- b=Kaxlbm81hhPj+mKcqmbQpoUG1mlIL5aUHXzyZkiJ6zigTvJuasxVFFZnFFNwgvHdZw
- 1gI+Rd88dCgw4Ge7Go92Rmj61i4EwkJOo2OccCatYH1slWIHYdPduyvqeTBNMBugQS8x
- R+gLr+ZlzyJ7XzC8YN3GmTVkEk3sHF2jlTgefSltJZRgK4uJ5g8wm54bt6rPtRbNTI/d
- W0gqKSMZ4m4YddedGXL5lwcihE6M32D7J8jkDTsaZXXZO7iW+KIdAEYTxgUyZwi6+4MV
- bi9Vd8rQ5n5muXkQNzWS+Wld61KqawD/lUy/zJnIR+p2cYnj/LwwbyzWqLiwZky+5U4c
- zpRw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx25BYKgaq8XvlVN0W1ONseZm33cqfQCrwcsAygHx2EwP4BNPE80EPh8Ou0L/I82bqr/HIyasohIakJ@nongnu.org
-X-Gm-Message-State: AFuF++lsVwzTsEblICHEsLjkgDDRvkKfVTlz/9DhBE+jPrm9J7iJofGB
- 4qph/drSIrOB32IryW+7/j26Z/1qKSHVF0G8W06HDPbeGev7E0xmySerFDugZNFtwzkxVuhxeQz
- voN6Df19CY8lTxROvDooyhPWo12/paGNNVP5A3n9XVEUVmlkKz0FbCYSk
-X-Gm-Gg: AYBFou3FXSbZtDXtkj1Zl4xWx/qDf2btyH0oFTjBWBjr+ld1N18ff4RRumtvPmWThW6
- XqkVGLPGVmF0JexMgL1CJn2e6s9z5z8OP9GTZQO8h05Gzrm+qHl4X7L1dYBv2lMx2ifPi52JHzY
- dyzc8Dmfx2sKAjYI+ooUnW6c017YzuawontGCiNzDymrOoynuqAPof6D9g3cVHEw1PWK535ugUL
- 9zAIzciDGpR2sktBbF2skdjoyWgKoohmtO4PfCsxUKewJFgT6sCBzupLh5m6q9UUaGAUph4T0og
- R/XB8XGtA9tsO94wbEdG1cNE9dFbccJ3l2wY5lKMcyGiTVtVfklAMJi6EbGS0Ain7yPy7knCWmw
- Wsi4AmIrG1nrsZr6h+O4jeTQXBBBeV/KkImB/Cdc=
-X-Received: by 2002:a05:600c:8714:b0:499:b65d:1250 with SMTP id
- 5b1f17b1804b1-49ce580d869mr245356765e9.2.1788449719288; 
- Thu, 03 Sep 2026 08:35:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:8714:b0:499:b65d:1250 with SMTP id
- 5b1f17b1804b1-49ce580d869mr245355275e9.2.1788449718766; 
- Thu, 03 Sep 2026 08:35:18 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1292:d530:bf4:da16:e208:c6bd?
- ([2a01:e0a:1292:d530:bf4:da16:e208:c6bd])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5d5d12sm78028115e9.5.2026.09.03.08.35.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 08:35:16 -0700 (PDT)
-Message-ID: <d5791d48-b0fb-430c-b56c-f0e4dc0379dd@redhat.com>
-Date: Thu, 3 Sep 2026 17:35:15 +0200
+ bh=ZRxsOrmA5EDylYoiOGMb6qq9DTnFpUX7RipNDmZgIbw=;
+ b=S209tNvB2HTULoHglTXY79eZ+tAKWBkMRqL4G6RPOC43mu19jf6ydi7bQyKWtrd1Rr
+ gCTdBSNqadkvevphuSCTjZIiz0Y/2BUAR36SPJbs6adCAtkJn9QmMAMhA8VykfL5z2KH
+ 6MyK8/foOgT+XtCJNBncQ139SZuv96Ss6mi3K2deP3e1TwRgvSw1NtoYM7u1uPy5GdB/
+ uK1EPPG/DV6SUecamnVFhy7tCSNXXmvx0rmkKzAk18KBoysHvje90haQ3DmujrvOBG8p
+ rBO5neXpyerHPsNbivAEszXJi5WuQ0T+ioZlxvyEhNAF1AzmNqjmx6aJ8p2OJqJoxwOD
+ 7JXQ==
+X-Gm-Message-State: AFuF++l5oPJSQKCtCCjiT3gb2FK/H40vWvPF5gKciEJXgLVYGnD31nzB
+ Rn+JdvnSZZKrjGMI57t62+0G/170IAtwvbBAo29vNVJe5apUTlimAWJoQ9aET2N4fR/Shd8FrZS
+ QjphTcB1FVz8q0AaZlWl4lfBfRY1x3M8W8PV0NpS9Fxip4lnfVYhJ748=
+X-Gm-Gg: AYBFou2EitxOb7MVFPwvGTwFjpARUuGmel7nv2NqQ1YJNE6bZNzZ26bDT3M6/BdnwC5
+ R9IA2oggqp93+ELRag95a2NIzk2sjnu7sNQ6TjnU3vu1Du+43U+I6LPkYnNGxK0cU7EbweJQt4t
+ Y5Q0zbzOmJNsTEaUUgXZd7QjxZsEkYCD528bX0qmFqRRLa7rtUrdWq5yB9CESxD2TjCROuC9kQC
+ UMuVmTkUxL8VbZiPQzXC+OGP4ub0s9gJgm5U8V2TWXVym6GPjWL3m8CwdvDBB5bRiCArnBC3a0t
+ wnojK+o5gMYqbm7chl8/Rm/8hy/3AQJnNerNbbyUB4WhyiwtRKiVfDyoIJDL8Or5xwG52uXTlRv
+ rwJxseAs1mpvNGU9NIfsoxN8hkG06
+X-Received: by 2002:a05:690c:4f0e:b0:868:505e:b978 with SMTP id
+ 00721157ae682-86c4e209785mr55444067b3.7.1788450192830; Thu, 03 Sep 2026
+ 08:43:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] vfio: route device_feature through io_ops
-To: Hugo Komatsu <hugo.komatsu@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
- Alex Williamson <alex@shazbot.org>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, John Levon <john.levon@nutanix.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Rafael Castillo <rafael@trfs.me>, Thanos Makatos
- <thanos.makatos@nutanix.com>, Tony Krowiak <akrowiak@linux.ibm.com>
-References: <20260903130833.1437632-1-hugo.komatsu@nutanix.com>
- <20260903130833.1437632-4-hugo.komatsu@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260903130833.1437632-4-hugo.komatsu@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260902193551.582660-1-jsnow@redhat.com>
+In-Reply-To: <20260902193551.582660-1-jsnow@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Sep 2026 16:43:01 +0100
+X-Gm-Features: AcwNN1WKfKMd-iA8T5mfq-A0cV4oU1dCwR14toz8esetgqjqOiJZ2Ijr2_A2ptk
+Message-ID: <CAFEAcA-vEb4jq=-afegE2qP9G4pHj1vPKMc7wSVbdeggPkkpCg@mail.gmail.com>
+Subject: Re: [PULL 00/16] Python patches
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
+ Cleber Rosa <crosa@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Ed Maste <emaste@freebsd.org>, Kohei Tokunaga <ktokunaga.mail@gmail.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Yonggang Luo <luoyonggang@gmail.com>, 
+ Warner Losh <imp@bsdimp.com>, Reinoud Zandijk <reinoud@netbsd.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, 
+ Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,116 +132,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 15:08, Hugo Komatsu wrote:
-> The generic VFIO migration code in hw/vfio/migration.c issue kernel
-> ioctls directly for VFIO_DEVICE_FEATURE. Route these through the
-> existing VFIODeviceIOOps table so an alternate transport (vfio-user)
-> can supply its own implementation.
-> 
-> Implement the kernel version as a thin wrapper around the existing
-> ioctl() call. This is a pure preparatory refactor: the kernel path
-> is unchanged.
-> 
-> Co-authored-by: Rafael Castillo <rafael@trfs.me>
-> Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
-> ---
->   hw/vfio/migration.c | 29 ++++++++++++++---------------
->   1 file changed, 14 insertions(+), 15 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 73c49d8c24..ea6734823b 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -168,33 +168,30 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
->       feature->flags =
->           VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_DEVICE_STATE;
->       mig_state->device_state = new_state;
-> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
+On Wed, 2 Sept 2026 at 20:36, John Snow <jsnow@redhat.com> wrote:
+>
+> The following changes since commit a925240509d1b4b656cc480f1cc79ba4d7c8bc08:
+>
+>   Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2026-09-02 13:40:43 +0100)
+>
+> are available in the Git repository at:
+>
+>   git@gitlab.com:jsnow/qemu.git tags/python-pull-request
+>
+> for you to fetch changes up to 4061c0e95c6e2736926ab8723606cddf582f58e6:
+>
+>   sphinx: drop qapidoc back-compat overboiled spaghetti dinner (2026-09-02 15:02:58 -0400)
+>
+> ----------------------------------------------------------------
+> python
+>
+> upgrade to py312
+>
+> ----------------------------------------------------------------
 
 
-please use vfio_device_get_feature()
-
-Thanks,
-
-C.
 
 
-> +    if (ret) {
->           /* Try to set the device in some good state */
-> -        ret = -errno;
-> -
->           if (recover_state == VFIO_DEVICE_STATE_ERROR) {
-> -            error_setg_errno(errp, errno,
-> +            error_setg_errno(errp, -ret,
->                                "%s Recover state is ERROR. Resetting device",
->                                error_prefix);
-> -
->               goto reset_device;
->           }
->   
-> -        error_setg_errno(errp, errno,
-> +        error_setg_errno(errp, -ret,
->                            "%s Setting device in recover state %s",
->                            error_prefix, mig_state_to_str(recover_state));
->   
->           mig_state->device_state = recover_state;
-> -        if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-> -            ret = -errno;
-> +        int recover_ret = vbasedev->io_ops->device_feature(vbasedev, feature);
-> +        if (recover_ret) {
->               /*
->                * If setting the device in recover state fails, report
->                * the error here and propagate the first error.
->                */
->               error_report(
->                   "%s: Failed setting device in recover state, err: %s. Resetting device",
-> -                         vbasedev->name, strerror(errno));
-> -
-> +                         vbasedev->name, strerror(-recover_ret));
->               goto reset_device;
->           }
->   
-> @@ -347,13 +344,13 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
->       feature->flags =
->           VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIG_DATA_SIZE;
->   
-> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
-> +    if (ret) {
->           /*
->            * If getting pending migration size fails, VFIO_MIG_STOP_COPY_SIZE
->            * is reported so downtime limit won't be violated.
->            */
->           migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
-> -        ret = -errno;
->           warn_report_once("VFIO device %s ioctl(VFIO_DEVICE_FEATURE) on "
->                            "VFIO_DEVICE_FEATURE_MIG_DATA_SIZE failed (%d)",
->                            vbasedev->name, ret);
-> @@ -1094,11 +1091,13 @@ static int vfio_migration_query_flags(VFIODevice *vbasedev, uint64_t *mig_flags)
->       struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
->       struct vfio_device_feature_migration *mig =
->           (struct vfio_device_feature_migration *)feature->data;
-> +    int ret;
->   
->       feature->argsz = sizeof(buf);
->       feature->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIGRATION;
-> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-> -        return -errno;
-> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
-> +    if (ret) {
-> +        return ret;
->       }
->   
->       *mig_flags = mig->flags;
-> @@ -1137,7 +1136,7 @@ static bool vfio_dma_logging_supported(VFIODevice *vbasedev)
->       feature->flags = VFIO_DEVICE_FEATURE_PROBE |
->                        VFIO_DEVICE_FEATURE_DMA_LOGGING_START;
->   
-> -    return !ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
-> +    return !vbasedev->io_ops->device_feature(vbasedev, feature);
->   }
->   
->   static bool vfio_migration_init(VFIODevice *vbasedev, Error **errp)
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
+for any user-visible changes.
+
+-- PMM
 
