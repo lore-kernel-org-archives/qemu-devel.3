@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF2B2C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BBCC624DE
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2DEu-0001Xz-GB; Thu, 03 Sep 2026 15:36:48 -0400
+	id 1x2DEu-0001Xb-6Y; Thu, 03 Sep 2026 15:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x2DEr-0001Vl-VU
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:45 -0400
+ id 1x2DEt-0001Wh-5O
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:47 -0400
 Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x2DEp-0004IJ-RT
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:45 -0400
+ id 1x2DEr-0004Jc-8A
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:46 -0400
 Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-398b1e63c49so1360776a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:43 -0700 (PDT)
+ 98e67ed59e1d1-38ea87caafeso159141a91.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788464202; x=1789069002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788464204; x=1789069004; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yYE9pOet48lRlcAA3fKM0Js3n1ztODOyy6XvoWvQ26M=;
- b=SQPD9hWTFokx2hy45BNdd5KDBy+HmaAC8mJewjQRj74g0woobMpOqk3yC+Qng90wV9
- dY94An4kwKUV7K5C0Mo+FXYbhmAEISait84gi4kvzsucU0Kj5ARfMhM/qdTI4ZTTNg46
- AC12+hAqRWDJlAOV0jo0MkM0+0FlbBvDRPHur2BC+uV1TBsOSmaiESlN+by1AcdyQavN
- l/rd5z1hFVhCCvUEJBX8yffF4CPp/Q8B9/YWoT9/eJpH+p13gtYMRmLHv5sjH7w0uh7j
- /ZDGDQj90UIC5FylUglarDnPzah/lh+nbprCKF1MOzl+5dPE/fO2pagDJCEUcitItJiC
- V6Ow==
+ bh=Y7O2QFPzNWx332l2m0iFWMqO57jF7lDWROu5Spv39Uc=;
+ b=pgM3rZlGE+fILtvnRoyn/6Zzu3qkoTZUFPiHYVDIBWguTn8m7vU5Hs/1LxXQSOm4+U
+ bLZc+bDDptEYn6hM6zVaV7npqKeHpdTQYtizZin5eSzWyzLFiMp4mnoqR7EuoKmoaAK5
+ lnaXbShKRXqgbERIBHCj8LrWSF3+joKOfbgQ0c804f3fdSIg+kbXXoA6d4c44SC+sPLl
+ P6LegvVwDbf+ABwmq5JU99wg5xQvBmsDkFt4ZX1s0JpHRPYTXk3vE56C+u+ZPX6Gmwoq
+ UzzSoFNDfB9BbnZ3FrQoMqCpooGmBi0HPf9zJBsoS4l/WtBv+8orkrBz/guMloSXT274
+ AXuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788464202; x=1789069002;
+ d=1e100.net; s=20251104; t=1788464204; x=1789069004;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yYE9pOet48lRlcAA3fKM0Js3n1ztODOyy6XvoWvQ26M=;
- b=FGBFXpS2qTjZnr3yFVAP1fkScvtnhtXM9iEMNw/qCK6kwP7rc9shgA1VoHcd8EDZZs
- 4hw7DcZ/zkDI4bTn8Tr+O0zgA7Tfeysms0ETRiRCZHfnKDzNXR4UKLmntK/hS6Renkhr
- Oi91kxdxYjEDGI2YWbC1o/3xfZPHJzJT/dUQ21OzejlKOO8MmdOZBazkkyXRVJuRxjaT
- k33qKz1sRM0tcnM6hwpYw6wo4IhIfccTGhvOUf1JwHJxW2nu0dNc6rDwLMJ4gUREtOK9
- TLnSIU/cVYY0LzxNj0ZcjPhLaJgCHD33ClpNSH9J3pR/SpkcFqDcX73Lq4ri932K8Yb4
- V9fw==
-X-Gm-Message-State: AFuF++kZl5WrT1xzweN7WbMQaFI1L+RTXBirMslzxihvpNo/fMcXAbdR
- M7NPzQ9Qbp1XmQsM5ylx7plZDQ4hfQnJnD0dEZy8zQ52Ev03q5qWliB0OozH+55GzUo=
-X-Gm-Gg: AYBFou26X4W8o4JKZ/tVvuvBocOwfGpopNIwzCnE7Ry+pEK+G7rSiVTOEk/bTo9YpE/
- RF6ubq6ik3hYL3eUFP/h60Bu9/tGjXWqikxskDt6Vw/t8GgwkiQ2xsbNoqBlFxw+ccjtKRtQzLa
- VbHI+y8s2/mkSRIE0vCH3hOBvCEjRuwksaE1QfP+uXLsxFHtIdcrHEnf3kdUW70k6226SU9G2xy
- EJ5PCqs11lV2nU6CkqCm9fpmXLyCNRzrDIXtMqbNLjwPnnTcI/lNA+pyswoURDtuDsO/EY6v61J
- kN+ABjC09PAcfQI2wuITz2kb3g1ky1WgnO2APgmZWAAO1QifNju4TTC99WYo3UQDxOmh1AkMogQ
- XtevevbZ3/qudU6M+/ubd15eNCI3h8xONG7eDdxlwCIH9h+O7FwrWldLRdKLyZpEMdUo+EEu5zj
- 4be0mCPj73rsmmcF1wyL8zY5uq3ku9G9Gpnh+UZ5Mp6eZ+nRCJYC8zzM1MYVljoQSxayExezlW8
- VX68FMGKAxSWEM=
-X-Received: by 2002:a17:90b:5484:b0:384:927f:3db9 with SMTP id
- 98e67ed59e1d1-39b27c0fa43mr86643a91.1.1788464202333; 
- Thu, 03 Sep 2026 12:36:42 -0700 (PDT)
+ bh=Y7O2QFPzNWx332l2m0iFWMqO57jF7lDWROu5Spv39Uc=;
+ b=drTmbIqwcC9hZymluE7Vyt9GPY8fyCY9lJ2PzQZIvh789u8JIwwjk/10/6j0AyWZ1i
+ 6e5MZYtG7m/ooBSQyCtWXdszTaG1m0j16JKcXbN1PhAgUQsZlJ/A1WK61Qt+elE9ZHTK
+ LB5yfLA0xoB+k2jApfdVDXMVT3d0fbzm0LG8XHjYVu7PUQI/WNgeWip6O5H2aKghfLc4
+ JNuGD8SpngrekRUkw+jm9qTq/XB83hYV5xISwuFTlbJ+fgBnOkEW+cfV0uQNOJTUcIzN
+ U0jcPwPXz89vyo3saSk2u+WCyPZ/nLtRHr2B47P8OmN7GfK9qRGxHj5gqexE4MP04oql
+ toFQ==
+X-Gm-Message-State: AFuF++mGZUn/3rC0LsNw7jz4AudexZGAe06kgRxAgYc3UwQQLuAt503x
+ bfdXOuRrCe/bYVT73Jq9m5zr9th1XIGIrtqMEO/0WWeoCzlz3ciRlfVa3TxHjfMwgXw=
+X-Gm-Gg: AYBFou3KcV8MY9u0kNMbMxxaVaFJklFUb2OSwjIlfy/EbbMPa7wOo6qek2ILsuOxaYJ
+ 5tZHGMtXRPzSaSwoBPLK0qMbPHBE9S73IbsXpiFOLYmZswOfMgVYFrUQy2YDxD1rzdezO7OfbH8
+ ySWlWDUTuuCINrC/9mxk2k8OoRSXgPCzAmcuo7vc1flEk/PCRgRbmGw5kwvaNCiO+Ia6FIkdi6/
+ vu8bGRMO8yhjqmqcu94xqoCGWzZoP6x6ShTp3ga/+b9W93/AFyg5czDOSf5BAkLjTHWkGA9s8dh
+ pQvH1GrdsNSDCHPVOiSuKb1uPLAEk5GIKbNnYXYURoVYhe1PJzckPae5Dc7XNVxKknDcMNXiYIv
+ h9b9CBRP33QuOFbrpstTSJeSuqL0/9X3ElHjKsBO/jyOK5M6ENsXQqs9YJFRIfRJuG2MlJuSooS
+ bXkObIwuCDbOelTdrsuMb4VV75J1a19h31++xBVyISs/GCkYnTbwEcw6reopCEMjYRfKV7HRBOm
+ G9WQ3X7sKNT0jw=
+X-Received: by 2002:a17:90b:274c:b0:398:9be9:ab92 with SMTP id
+ 98e67ed59e1d1-39b2629b27fmr1266138a91.23.1788464203921; 
+ Thu, 03 Sep 2026 12:36:43 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:40c0:ec33:6266:c275])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.40
+ 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 12:36:41 -0700 (PDT)
+ Thu, 03 Sep 2026 12:36:43 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,9 +74,10 @@ To: berrange@redhat.com, kchamart@redhat.com,
  enju.kohei@fujitsu.com
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
  mathieu.poirier@linaro.org
-Subject: [RFC v4 16/24] hw/arm/virt: Embed Realm VM type with IPA address space
-Date: Thu,  3 Sep 2026 13:36:03 -0600
-Message-ID: <20260903193611.1058589-17-mathieu.poirier@linaro.org>
+Subject: [RFC v4 17/24] hw/arm/virt: Reserve one bit of guest physical address
+ for RME
+Date: Thu,  3 Sep 2026 13:36:04 -0600
+Message-ID: <20260903193611.1058589-18-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
 References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
@@ -90,7 +91,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,53 +109,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Set the Ream VM bit in the IPA address space size when needed.
+When RME is enabled, the upper GPA bit is used to distinguish protected
+from unprotected addresses. Reserve it when setting up the guest memory
+map.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- hw/arm/virt.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 37211bc81926..61751aa31e0d 100644
+index 61751aa31e0d..cf3a9320dc3a 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -97,6 +97,8 @@
- #include "qemu/guest-random.h"
- #include "hw/watchdog/sbsa_gwdt.h"
- 
-+#include <linux/kvm.h>
-+
- static GlobalProperty arm_virt_compat_defaults[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
- };
-@@ -4053,9 +4055,12 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+@@ -4054,17 +4054,27 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+ {
      VirtMachineState *vms = VIRT_MACHINE(ms);
      int max_vm_pa_size, requested_pa_size;
++    int rme_reserve_bit = 0;
      bool fixed_ipa;
-+    int vm_type;
+     int vm_type;
  
-     max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
+-    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
+-
+     vm_type = (ms->cgs ? KVM_VM_TYPE_ARM_REALM : KVM_VM_TYPE_ARM_NORMAL);
  
-+    vm_type = (ms->cgs ? KVM_VM_TYPE_ARM_REALM : KVM_VM_TYPE_ARM_NORMAL);
++    if (vm_type) {
++        /*
++         * With RME, the upper GPA bit differentiates Realm from NS memory.
++         * Reserve the upper bit to ensure that highmem devices will fit.
++         */
++        rme_reserve_bit = 1;
++    }
++
++    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa) -
++                     rme_reserve_bit;
 +
      /* we freeze the memory map to compute the highest gpa */
      virt_set_memmap(vms, max_vm_pa_size);
  
-@@ -4080,7 +4085,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-      * the implicit legacy 40b IPA setting, in which case the kvm_type
-      * must be 0.
-      */
--    return fixed_ipa ? 0 : requested_pa_size;
-+    if (fixed_ipa) {
-+        return 0;
-+    }
-+
-+    return requested_pa_size | vm_type;
- }
+-    requested_pa_size = 64 - clz64(vms->highest_gpa);
++    requested_pa_size = 64 - clz64(vms->highest_gpa) + rme_reserve_bit;
  
- static int virt_get_physical_address_range(MachineState *ms,
+     /*
+      * KVM requires the IPA size to be at least 32 bits.
+@@ -4073,11 +4083,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+         requested_pa_size = 32;
+     }
+ 
+-    if (requested_pa_size > max_vm_pa_size) {
++    if (requested_pa_size > max_vm_pa_size + rme_reserve_bit) {
+         error_report("-m and ,maxmem option values "
+                      "require an IPA range (%d bits) larger than "
+                      "the one supported by the host (%d bits)",
+-                     requested_pa_size, max_vm_pa_size);
++                     requested_pa_size, max_vm_pa_size + rme_reserve_bit);
+         return -1;
+     }
+     /*
 -- 
 2.43.0
 
