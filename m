@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3494C624D6
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347E4C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28f6-0002j8-Sk; Thu, 03 Sep 2026 10:43:32 -0400
+	id 1x28fD-0002sM-Fa; Thu, 03 Sep 2026 10:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28ev-0002dX-1L
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:22 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f9-0002oU-Qi
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:35 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28es-0003zR-8l
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:19 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-484374f54d0so1542499f8f.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f7-000460-Na
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:35 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-495437bb891so9081905e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446597; x=1789051397; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788446612; x=1789051412; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gOCgb/8qYTx3Tvjv6qT01WmwOcfq9B2Xk9PXWdyz6VY=;
- b=YznJL2N3wiIuDJOb7eankpuwZQOoUuMilTenlIoHM1/vWXE1estpNTc3DvDlfrYSbV
- qDAAtg35UcvSv5ljDIoFsaqzUR6dyPu5UmjijHG39tm2RSw3Im2Z6zf/mNDWo4FtU7tX
- 5LAZOtRy7b5LatbDn+7NfcM4hFoqZEH0/H+gLtaWqWsDSL75x9TQr2UAdwjvYxR+KvLq
- dHoiKHtZeh8aCsbFfoKbRF2g/MnC/UyThI9tnFolMdHUi0BkB7kWd8My8ch51bTlpanR
- i2VyglMjahz3xRjsmmb9kMBMZfO1i+RhZZQe1cTOnZsQKPzNY2kE8lk1p27alp/HhaAM
- oqew==
+ bh=JT9O3uxdl/4u+w7L1goAbIpPRjFt3fljeh9+YaQRlKg=;
+ b=Ye4LjipiAlxU/7HJLW95qJIIBzAmDlungSAZRZ6suSJ3pyiL4nkGVGR2/+AJzsLt3m
+ IHOPXfq9KUMkMNwholg3xoNEj7LtJz5PrOJgNz22SgIwTzUjyn/lJ71vVWWlILN5MdGt
+ PD2K5ppUb0k/ORvy2nFqQq77yIxi3G7wNmBArq1YZREaN5ArV3fTISkdBeh+8JlZu9Tz
+ di6jC/BCpWFDdMnZrNKnBkfnOOnSzdICyFCZBx2PtkOwRRA4g4iWKJwYfowG8rmd6h0j
+ lTOER97G4+/g29G2DWQiOocvNwrcM5Brj2vVx8QytJTKaEQ84+oWzcSS/svq9oFFbCTM
+ HuBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446597; x=1789051397;
+ d=1e100.net; s=20251104; t=1788446612; x=1789051412;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gOCgb/8qYTx3Tvjv6qT01WmwOcfq9B2Xk9PXWdyz6VY=;
- b=TqBNM2OvWtObQRiOwHzWv5zDwwpjzmmUbRpMzA97ESxyiBUKbPlkalmhHapoD38bhs
- X9c+SCK0xj5KD7Cp+gCjLxSl3KhwBIxONTO7iGRvNsdF7DwO0tcytchcpa8H43hK3NDY
- mwlm9Qtb+QDw0KzrfEUCzK8fUzJZ7V9KC6uQMp3Igg2ybxAzDRNYEFFjHNR8SzOkOSSB
- 0CTgjtjsdicV/x34bhZ1lRAH4oNEzvzSh13Q0sln54vAIEs/gM3+aoDNfhDaKO33c1tT
- ZIJlsiB8ju+DsshVrA8Et/Ik0BOn+Y8H/eZOe6eoxuxOZu/egmGJl+X5I2QWIfWv9de2
- 0JjA==
-X-Gm-Message-State: AFuF++nbLiHdPjGI+38qjeaPfazeeY4/gAz+wQqYfFrrgPyG7KrGsz9f
- 8lwjvLzjIENKtAmGdUYS6D1OAENv0oAUHyuYIC4YTqa/l9mDDFq7kbFtoVN5z8jUdBxvgSnFag8
- iDXFU
-X-Gm-Gg: AYBFou1Xjjt6n8VBrJ02tkMx33suFx7TuHV/TrIVxlFEEjr1TLcxle3ZomipdtMeopQ
- lW8xkHFkW1QnDCeHFWl4PPB2v9zs/4+uPrN5iCeAV+Smxy2Hdz08yN1IHFunLMV7FFhZv95dBKk
- AMSeO5JX3x2D0tD+plZrqJniohkDjxEewkvXl8casgRSj0+LSkgu/0/f3uYRsdBy3Ppni/1ps8x
- nyf4hixwlqzABv5eJiP6MTyGDEH+BzCWaIbXBpdMj0ZuFp35oOMoI8WuxbuPZUvspv0eTcpVFEm
- Hit/bQ2tShh8gG3isHBEd0RTLTrI97mWSHGmET80X56Cp0XwZP+iLLFN708huQT4qKipUHGrflg
- 49VfTFNvSG/0qLbbIL6q2AYnIODaBYB33McVd8kdMuQME33kNGXzDV/L2iuclPKxi3AlHj2AaoU
- mCy5Dl38Ie/yAeoLluRi/a5qVTj6i9DJurQcXjWVNwoST1I8XnsUdsjOjI9A2D9k0JrMdM
-X-Received: by 2002:a05:6000:1a8c:b0:485:8330:64a with SMTP id
- ffacd0b85a97d-485833009demr7000064f8f.6.1788446596798; 
- Thu, 03 Sep 2026 07:43:16 -0700 (PDT)
+ bh=JT9O3uxdl/4u+w7L1goAbIpPRjFt3fljeh9+YaQRlKg=;
+ b=BQaTnIoT/Trb/EhB0nhwgEs+hrHCYEww1HhixWbrRIDSz4dXnGrFJKN4gGZiJT22Ni
+ GQjlRK+oYD7LsY8G3+7l5MjbbO1RXQ3RdokXflE5MH+0BMAasmfrWkjFhgupkOjaa2xK
+ tv71jOxn+Kqk3klNDV6kEeVhfEq6WgDZwa8/EtU4VbBWkhZU9/Ng/ZXfsJTvWG3ofsME
+ Alqxxuq3jjk5WbWi5Elk7HKSbuDjk/EhQta8MmLvJD+zBMfyatgDlOjxiURcH8P7vUaM
+ DkgEwRxde269ZObVyalm7ZZVJOvx8KoSLWdsMuEwZ2WPlSgo441Uzbcen1JDZlFZ2Lmo
+ DgVQ==
+X-Gm-Message-State: AFuF++lTaYy01p3goRhjGiW8f2XW3rBdwT54GFEPHJSIwIB3UdzbVebA
+ jNGuF1FB+zflnie372jcVUUQ/db1GpU6Yk4h7pTdNU/IcJcYq69sjNNcaDey3IzrSKOG+CvKb5/
+ 6PRTS
+X-Gm-Gg: AYBFou2Rq/M7TG1p3sSguJ6EFiCHwXwTOJxNG6YkwOoSkOGe3MO30smfj33aDOOgU03
+ EMzjAs4nWd0tfwZhg9uq2kIfbaY+jsA1Z5LVbf7qI87195iY1EN6ZRfquMLhKM3ikEMhMmPzWYW
+ erOJtP4GkbEhQkdwZsqkkhkAgFQsNVUe4AXtcDjcDfR+6jz+Ej3rj1LGT+SDBcWoQN96S4LXSUt
+ JW1Hqp7yVN6hmXrtTY1SxMlKLy0i5lIhpIaMwzQKOb/jxWuTxtMHCSLw4Li6qq/bXkON1Q4i87N
+ 6ZKk10EZ08SrbHavN/fUjt8Gs1BtzB/uJ+9Lyf38kXqZNLu4SaDLJtfaBgXyAgDAWs67XeF0WxB
+ dw3hNm8noz8KG+4ofaepvVauGsioGj7Vb/QIWLEz8yblzBdlU5tsK4nFNuVRu+/wEM+Ug36RbhU
+ 7UxaWQ72F/FqS0KIbYi+hE9WW+ylBsyrP6fs7v/L3TK8eR9IRUxOKz/LUA7U7ZzTIbpdPh
+X-Received: by 2002:a05:600c:8608:b0:49b:920b:5704 with SMTP id
+ 5b1f17b1804b1-49cee5b75cbmr58458585e9.3.1788446612153; 
+ Thu, 03 Sep 2026 07:43:32 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.15
+ ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:16 -0700 (PDT)
+ Thu, 03 Sep 2026 07:43:31 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Subject: [PATCH v7 04/25] parallels: Make mark_used() a global function
-Date: Thu,  3 Sep 2026 16:41:22 +0200
-Message-ID: <20260903144143.2328870-5-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v7 18/25] parallels: implement removing a stored dirty bitmap
+Date: Thu,  3 Sep 2026 16:41:36 +0200
+Message-ID: <20260903144143.2328870-19-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
 References: <20260903144143.2328870-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=den@openvz.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=den@openvz.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,88 +99,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+From: Denis V. Lunev <den@openvz.org>
 
-We will need this function and a function for marking unused clusters (will
-be added in the next patch) in parallels-ext.c too. Let it be a global
-function parallels_mark_used().
+block-dirty-bitmap-remove leaves a parallels image alone. The driver has
+no bdrv_co_remove_persistent_dirty_bitmap(), and a missing handler means
+nothing to do, so the command reports success while the bitmap stays in
+the image until the node is inactivated. qcow2 updates its bitmap
+directory on the spot.
+
+Implement the handler. The Format Extension is written as a whole rather
+than edited in place, so the bitmap is dropped by clearing its
+persistence and storing what is left, and the header is updated to point
+at the new extension. Releasing the bitmap itself is up to the caller.
+The store runs under s->lock, as it allocates a cluster and a request
+can be in flight, unlike the inactivation path where the node is
+quiesced already.
+
+Removing a bitmap which was never stored is not an error, as
+bdrv_co_remove_persistent_dirty_bitmap() spells out, so a name which is
+not there, or is not persistent, is answered with success and no write.
+
+Write access is checked first. The extension is only rewritten while the
+node is writable, so on a read-only or an inactive node the request could
+not reach the image at all and reporting success would be a lie. The
+generic BDRV_BITMAP_RO check in block_dirty_bitmap_remove() hides this
+for a read-only node, but it does not cover an inactive one, and
+dropping a bitmap which was never stored needs no write access at all.
+
+Persistence is only dropped for the duration of the rewrite, so it goes
+back on when the rewrite fails. The bitmap is still in the image, and a
+bitmap which is no longer marked persistent would be dropped for good by
+the next inactivation, turning a removal the caller was told had failed
+into one which silently succeeded.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c | 14 ++++++++------
- block/parallels.h |  3 +++
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ block/parallels-ext.c | 47 +++++++++++++++++++++++++++++++++++++++++++
+ block/parallels.c     |  4 +++-
+ block/parallels.h     |  4 ++++
+ 3 files changed, 54 insertions(+), 1 deletion(-)
 
+diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+index b7fac2514a..f687f2da7c 100644
+--- a/block/parallels-ext.c
++++ b/block/parallels-ext.c
+@@ -689,3 +689,50 @@ bool coroutine_fn parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs,
+ 
+     return true;
+ }
++
++int coroutine_fn
++parallels_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
++                                            const char *name, Error **errp)
++{
++    BDRVParallelsState *s = bs->opaque;
++    BdrvDirtyBitmap *bitmap;
++    Error *err = NULL;
++    int ret;
++
++    if (bdrv_is_read_only(bs) || (bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
++        error_setg(errp, "Cannot remove persistent bitmap '%s': no write "
++                   "access to node '%s'", name, bdrv_get_node_name(bs));
++        return -EACCES;
++    }
++
++    bitmap = bdrv_find_dirty_bitmap(bs, name);
++    if (bitmap == NULL || !bdrv_dirty_bitmap_get_persistence(bitmap)) {
++        return 0;
++    }
++
++    /* The extension is written as a whole, so drop it from what goes in */
++    bdrv_dirty_bitmap_set_persistence(bitmap, false);
++
++    ret = 0;
++    WITH_QEMU_LOCK_GUARD(&s->lock) {
++        parallels_store_persistent_dirty_bitmaps(bs, &err);
++        if (err != NULL) {
++            error_propagate(errp, err);
++            ret = -EIO;
++            break;
++        }
++
++        ret = parallels_update_header(bs);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret, "Failed to update the image header");
++            break;
++        }
++    }
++
++    if (ret < 0) {
++        /* Nothing was removed, so the bitmap is as persistent as it was */
++        bdrv_dirty_bitmap_set_persistence(bitmap, true);
++    }
++
++    return ret;
++}
 diff --git a/block/parallels.c b/block/parallels.c
-index f02ad7a0be..6f7a9911d7 100644
+index 90b7f7c8de..2a5ceb8978 100644
 --- a/block/parallels.c
 +++ b/block/parallels.c
-@@ -187,8 +187,8 @@ static void parallels_set_bat_entry(BDRVParallelsState *s,
-     bitmap_set(s->bat_dirty_bmap, bat_entry_off(index) / s->bat_dirty_block, 1);
+@@ -1288,7 +1288,7 @@ static int parallels_probe(const uint8_t *buf, int buf_size,
+     return 0;
  }
  
--static int mark_used(BlockDriverState *bs, unsigned long *bitmap,
--                     uint32_t bitmap_size, int64_t off, uint32_t count)
-+int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-+                        uint32_t bitmap_size, int64_t off, uint32_t count)
+-static int GRAPH_RDLOCK parallels_update_header(BlockDriverState *bs)
++int GRAPH_RDLOCK parallels_update_header(BlockDriverState *bs)
  {
      BDRVParallelsState *s = bs->opaque;
-     uint32_t cluster_index = host_cluster_index(s, off);
-@@ -241,7 +241,8 @@ static int GRAPH_RDLOCK parallels_fill_used_bitmap(BlockDriverState *bs)
-             continue;
-         }
+     unsigned size = MAX(bdrv_opt_mem_align(bs->file->bs),
+@@ -1651,6 +1651,8 @@ static BlockDriver bdrv_parallels = {
+     .bdrv_inactivate            = parallels_inactivate,
+     .bdrv_co_can_store_new_dirty_bitmap =
+                                   parallels_co_can_store_new_dirty_bitmap,
++    .bdrv_co_remove_persistent_dirty_bitmap =
++                                  parallels_co_remove_persistent_dirty_bitmap,
+ };
  
--        err2 = mark_used(bs, s->used_bmap, s->used_bmap_size, host_off, 1);
-+        err2 = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
-+                                   host_off, 1);
-         if (err2 < 0 && err == 0) {
-             err = err2;
-         }
-@@ -375,7 +376,8 @@ allocate_clusters(BlockDriverState *bs, int64_t sector_num,
-         }
-     }
- 
--    ret = mark_used(bs, s->used_bmap, s->used_bmap_size, host_off, to_allocate);
-+    ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
-+                              host_off, to_allocate);
-     if (ret < 0) {
-         /* Image consistency is broken. Alarm! */
-         return ret;
-@@ -840,7 +842,7 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
-             continue;
-         }
- 
--        ret = mark_used(bs, bitmap, bitmap_size, host_off, 1);
-+        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
-         assert(ret != -E2BIG);
-         if (ret == 0) {
-             continue;
-@@ -900,7 +902,7 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
-          * considered, and the bitmap size doesn't change. This specifically
-          * means that -E2BIG is OK.
-          */
--        ret = mark_used(bs, bitmap, bitmap_size, host_off, 1);
-+        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
-         if (ret == -EBUSY) {
-             res->check_errors++;
-             goto out_repair_bat;
+ static void bdrv_parallels_init(void)
 diff --git a/block/parallels.h b/block/parallels.h
-index 423b2ad727..68077416b1 100644
+index 4684ba2890..27d8c3ac83 100644
 --- a/block/parallels.h
 +++ b/block/parallels.h
-@@ -90,6 +90,9 @@ typedef struct BDRVParallelsState {
-     Error *migration_blocker;
- } BDRVParallelsState;
+@@ -98,6 +98,7 @@ int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
  
-+int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-+                        uint32_t bitmap_size, int64_t off, uint32_t count);
-+
+ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
+                                                       int64_t *clusters);
++int GRAPH_RDLOCK parallels_update_header(BlockDriverState *bs);
+ 
  int GRAPH_RDLOCK
  parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
-                                 Error **errp);
+@@ -107,5 +108,8 @@ parallels_store_persistent_dirty_bitmaps(BlockDriverState *bs, Error **errp);
+ bool coroutine_fn GRAPH_RDLOCK
+ parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs, const char *name,
+                                         uint32_t granularity, Error **errp);
++int coroutine_fn GRAPH_RDLOCK
++parallels_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
++                                            const char *name, Error **errp);
+ 
+ #endif
 -- 
 2.53.0
 
