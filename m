@@ -4,143 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380C6C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9BBC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2AD5-0003Qs-8C; Thu, 03 Sep 2026 12:22:43 -0400
+	id 1x2AFP-0003vq-Nx; Thu, 03 Sep 2026 12:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2AD2-0003QX-GH
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 12:22:40 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1x2AFM-0003uW-2D; Thu, 03 Sep 2026 12:25:04 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2AD0-000605-7q
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 12:22:40 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G3WQK1430705
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 16:22:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- nsuCDlvjXox/Yb8yG9oUPUhuFAx9jF89pz7sLfgXnhE=; b=YohLl+M6BbK6J1dv
- UbZqTLF7zTcVtCV4BauQBZH95+ymyvfKDrwPE9szkh5/tpb3+x0MGmu4aN8hb0cI
- 1+EInupLxIaL7bGylP3vn74cZStQ9gZ1wUmrSmy+Z1RtpOQiZRs9vOAufQ8wYjVn
- 95lWx0svtcwLcuVVNfiL7fWT889EvYyn9fQsyJnt8OL+ExheuIXWIOY1SpC5FcaT
- 5ZeQuf7WovE1NU9Wk5AEyH2PF/iyja9TObx0bDfb3Uu6scy/lMv6FdycWtVdUbZu
- uuzuhCxjjRZDyhmwHLkCzy00IlH1C0HYFG5MNVgWVyKsq36a0a86i6rDNhszsb7D
- 1InayA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf1j4jv6p-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 16:22:35 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-396b9ef3070so403974a91.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 09:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788452555; x=1789057355; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=nsuCDlvjXox/Yb8yG9oUPUhuFAx9jF89pz7sLfgXnhE=;
- b=K2N+6yM5AHOSkpIJfEJ2RBZ13F4gy86Ad/JgcBgy0YZfu4IJKrFjtJkBKDhpKPLVEP
- csHgq+x0qcTjBmfyPybRIGFLuX096w7p+HQWJYsvBU+3zcVjhDaiNaCrMG/wdqtxeHb/
- mIH2rdmZc1DgQId1SNTci5mnFxRp5DUBZW0f/4tRZ1C0fOa5/Yxz6z/bPbFb756H20PH
- XmHkkE7+xQIEuslMnCZH/D/+BUwMyPjfxx54yr20akpalD63A01PGZqSy2L05Kh2wDGV
- QeIJV7S958vVBAuVLC3VLrko2KFKxisl8sXa6nRdkmg67GJbIwhjDyBSC0wRBNGFac3F
- l87w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788452555; x=1789057355;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nsuCDlvjXox/Yb8yG9oUPUhuFAx9jF89pz7sLfgXnhE=;
- b=cR4l1Fac3BJGFE0cBG5Ma4wRs/vaiJM3IzR7I1d1dX5F9qlislEcNn09tHFqPlMuBE
- baIlzvH4CsHhcUfEpOTotazBCJZnw4CFxM6PdS7nZJeZA6Am9yIk2TIumlnrdpiWoVMW
- 599Uwv+gQyEGMwan79f6UKorX17Yo5XNRCZ7MDTUddiYLVEycb8Aid0T2Pp7C3RkQLhA
- YWBBNjB3NrHtvp8EHDehdR9AgGeB526PcTbpKHs/VuC8wd8FdpGiHBbZJf6azYjsat8g
- x/NigvKOPVyqBEg7BLE2Ce3uhVh8SPVLOVXsHZ6dVSPGBijHNA5NZV4I2qUJjOiyKowW
- n6MA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx67bMgigL0KUl2fble5EFpxSg8Jw13gx0HZWQaDeAOI/S1HukeGPPOFplislts9iUTkRNX7t4FzzGC@nongnu.org
-X-Gm-Message-State: AFuF++mhL6q8C3gvSNfoYbUz5BUWvPZJAtA8m4q9Vqpp33SI+nmkB+sQ
- ljVqA3UOZK1dSjNAwx8Lo385gCD4H4JF6ISGLNGaMreY1wuIZgidHZ69VzDauOpuPgDFuuyMD52
- 3e5awdEzmkQDOIWJoxQ8wB7SEx9JiaKmDkrGSzvMI2GL1wxTMNjz4mze3GA==
-X-Gm-Gg: AYBFou0lojlRZMAJe8sX2VQ3ljvzH2t1dkgs9y8A2WsGElFvRfoV2irFZjoAvz7kcdP
- e8Mi2KadkAkNyybLY3q/NlR22ZXZv8cd2/3h72YIOufD7poYupb21QE5xUc+FhwD6rQpjKDFU9X
- M+mJemuNOv80YXxFlSrcxbu6orxlgVVSK99/CJx43ZOWntySkliYsacDX8EhzatYKsFic6muPms
- IZ64vtSc6ZR38WgNQ5FY0rwVNWY5bRs+Yh8JygubDS9xCCGCend7Nxmg8HjtGKkKty/6XjZfkZG
- BEVBlxlUPbDKHiZN7lXSu5cBEIl7mpN4Qnsyazc8EM5rH7gDizjSYpKiqTBzS/D6RN/lqKf6kk0
- nDBuZl9bCKigk4xShPBLsG2gJcVOTB6XP4jE3ZUIlwozZgL5Z4hOxz8X9HdjXPVQzYyRM
-X-Received: by 2002:a17:90b:4407:b0:398:9bd4:d13 with SMTP id
- 98e67ed59e1d1-39aee219427mr19650532a91.18.1788452554827; 
- Thu, 03 Sep 2026 09:22:34 -0700 (PDT)
-X-Received: by 2002:a17:90b:4407:b0:398:9bd4:d13 with SMTP id
- 98e67ed59e1d1-39aee219427mr19650446a91.18.1788452554268; 
- Thu, 03 Sep 2026 09:22:34 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3339aa31b24sm59704eec.13.2026.09.03.09.22.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 09:22:33 -0700 (PDT)
-Message-ID: <a5097863-f3ab-4ee9-b6fd-250058e6377f@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 09:22:32 -0700
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1x2AFK-0006W6-76; Thu, 03 Sep 2026 12:25:03 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683G2Q5j3425608; Thu, 3 Sep 2026 16:25:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=oF035lZWSOugjvxdi
+ pCuYzntpXytqybUreJPuzPgrdc=; b=UrZQCPty7wcDbKC831RKwCOMk3OcqYvE9
+ uaue2EFIvPKgjvu90QlMVpzJkVDlmoofeYCJogyAdIYTUvrTYCla5LfPjNS4Oyax
+ 4M2Cr3J2Vpk+/omoYSZggj7/L/dKud9NFi8B77aA3yf41oV9Kr8394sua7NNcrGj
+ zIM8rhanfWhY15EtOvjoeOE+ysF9iwQTKbDQiqmnERfAHwPJl9UWhasT2YHmkkZ/
+ 2KTIL9CPVUIG0MeriKXoeQ45dYpiMASIJMxrM+VlZvCY2a/2vh56NAbvWkUweU8U
+ lFrERrMZn0GxIaoB9NbV3IHbX4k3uB2GUNG6y2uS9WIXQx0SpqOOg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq555x3a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 16:25:00 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GBmIA006194;
+ Thu, 3 Sep 2026 16:24:59 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gecjartyj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 03 Sep 2026 16:24:59 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683GOvj226280464
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 3 Sep 2026 16:24:58 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A89875805D;
+ Thu,  3 Sep 2026 16:24:57 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A93C58059;
+ Thu,  3 Sep 2026 16:24:56 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.31.144])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  3 Sep 2026 16:24:56 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
+ borntraeger@linux.ibm.com, jjherne@linux.ibm.com, cohuck@redhat.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, pasic@linux.ibm.com,
+ farosas@suse.de, lvivier@redhat.com, jdaley@linux.ibm.com,
+ pbonzini@redhat.com
+Subject: [PATCH v2 3/7] pc-bios/s390-ccw: Introduce virtio_tswap helpers
+Date: Thu,  3 Sep 2026 12:24:45 -0400
+Message-ID: <20260903162449.2588271-4-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260903162449.2588271-1-zycai@linux.ibm.com>
+References: <20260903162449.2588271-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Bump min compiler versions again
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260903103548.2142568-1-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260903103548.2142568-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=dufrzVg4 c=1 sm=1 tr=0 ts=6a999ecb cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=7tLszpB8rurWp6AI2CkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: M63rUxcdHat9HF7OOwssfpzvrlQU2lUG
-X-Proofpoint-ORIG-GUID: M63rUxcdHat9HF7OOwssfpzvrlQU2lUG
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0MiBTYWx0ZWRfXzCbegOzMYroi
- 9sl8+DYcpDCsgjQi9H+wTWkMlaVaFugC/QYVSHo3V/C/hTQO38YqWhIX4/UZiGa7gIVD4j8g0Wu
- rxOMHM3I3P9ykewLQR3J8Po2yFfgLXA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0MiBTYWx0ZWRfXyBytIokgOw/z
- 272RpZO9O5LdgxG4s4Kd+Z2ORqfX1mXAWH/3dNavCE1ZRgG+ezTZyhT16ZVObZQSesgx3PDPa08
- 1ABb73Efk83KhSDvEiO4Wbv1fr6mRFhaWsa7LEV4SFyDN/HH0depD7YaoeQs3oEKXNBVQdON1sc
- eZ9SdZGk/rm1eQV9//gmX32HfpbQUvRfEQDp6/NuzMilIKQ68/mOWgMgQKgNOfEzfBq9BEprcId
- NOW24i7yUzMQ88RBgW9Svm+KcjjxyhLxlO7GNnnUvIQpWM8CNkU849sm/fVl4YSuY+UsOiL+8/4
- TSHIozPsOmh033n7hbtdMsqdPgI+stLcWfvs61AkC8jqVrsXv2JU6i3AsaHT2BC8i7UcYN6dd7a
- OjYs+jIrwEh+CQZ8BGnzYFbleCa7TuWWeCw4ZebYLwg1RiVwTk40XleVScaQsdOEXZvxVREd9aB
- yP+l+i7PViMocabFArg==
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0MCBTYWx0ZWRfX1wLAby29xgVu
+ R3VRyrZFqf75iM9H+W7mGtM0gPb4nfFK2uKwQXaWJ9ujiibVKInkgsrv82qadxZ7NM5sZs8UKGk
+ frwxRcovX2pFQAjlAexzSIOQLjolC/MjnrR/izMsrB7HQARc/hWSbKd03xZzAZMAqGo+I3UIlEe
+ JCGDHbmxcj6nX4PTXqnOPZE8oTR+7PogPT+Acq7eInO1ukRKwj8mgF54rdttUYkhLXQxeJhXgmN
+ m6xx8REvXsMelnQue17G9UTbM4Fhwd3aB+Gvl/Zv9UrtmihstF+rSPRTMS55rt6RZ1XN/dpeEAU
+ yDS28aeI3WGkFLoPPzvUcmCRNb6zFuaNxpkX9a0dn1cyNcTHMWJxZvAvBr7kH9BSvsYOdfqHnwP
+ RuIawICJ37SXnpyr2CZbrgN33ZLYQhwbTsIg/EzuQeyl0ZZybkGvvde/py6jcCVvOieX90HMIFI
+ 5MSwes6ELOoWxHW1IVw==
+X-Proofpoint-ORIG-GUID: DnudH2s4T7e2xTR1z8b19JgWnjp01X1W
+X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a999f5c cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=nmTm2IjeaI_QYA0BkewA:9
+X-Proofpoint-GUID: DnudH2s4T7e2xTR1z8b19JgWnjp01X1W
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0MCBTYWx0ZWRfXywTo8AdguKz+
+ tRnBzML0YFEg5+kHvPwbWoiV+exiXBQWPRJWZUL8Sqzoa0eH0ZdrPLLtI+KJQ3En8OPbsE5Cuab
+ og2sNWEu/RQWoOmA786ByfcJv2ge8Hs=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- clxscore=1015 spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030142
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030140
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,54 +122,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/2026 3:35 AM, Daniel P. Berrangé wrote:
-> With the security policy we want to rely on usage of
-> the -ftrivial-auto-var-init=zero flag to declare
-> bugs "not a CVE" if they rely on uninitialized stack
-> variables.
-> 
-> This arg is only supported by  CLang 17 or GCC 12 though,
-> both of which are beyond our current min versions.
-> 
-> This series bumps CLang to enable this, but we can't
-> bump GCC far enough due to the NetBSD constraint due to
-> its system GCC being 10.x. They do have newer GCC in the
-> pkg-src as non-default add-ons but we mostly stick with
-> default system versions.
-> 
-> We could bump to 12.x and force NetBSD users into use of
-> the non-default versions, but the last patch took the view
-> that we can just warn that use of old GCC versions takes
-> you outside the security policy.  If people prefer the
-> former though, I can respin.
-> 
-> Also historically the macOS XCode versions reported by
-> clang did not appear to align with upstream CLang versions
-> so we checked versions separately for macOS.
-> 
-> With this set of patches we happen to end up on 17.0 for
-> both upstream CLang and macOS Clang, and this makes me
-> wonder if we can rely on aligned versions going forward ?
-> 
-> Latest XCode 26.6 apparently reports clang 21.0.0 which
-> appears to be a match for a modern llvm release.
-> 
-> I'm no macOS expert though so looking for feedback from
-> people with more direct knowledge.
-> 
-> Daniel P. Berrangé (4):
->   meson: simplify clang version checks
->   meson: bump min XCode CLang to 17.0
->   meson: bump min upstream CLang to 17.0
->   meson: warn on GCC < 12.0 due to lack of -ftrivial-auto-var-init=zero
-> 
->  meson.build | 16 +++++++++++-----
->  1 file changed, 11 insertions(+), 5 deletions(-)
-> 
+Replace the repeated pattern:
 
-For the series:
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+    be_ipl() ? x : bswapN(x)
 
-Regards,
-Pierrick
+with helpers that conditionally byte-swap based on the virtio transport
+endianness.
+
+While only the 16-bit helper is used immediately, the 32-bit and 64-bit
+variants are added here for later use.
+
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+---
+ pc-bios/s390-ccw/virtio.c | 27 +++++++++++++++++++++------
+ pc-bios/s390-ccw/virtio.h |  4 ++++
+ 2 files changed, 25 insertions(+), 6 deletions(-)
+
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index a0d249db24..037c00a3e1 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -97,7 +97,7 @@ void vring_init(VRing *vr, VqInfo *info)
+     vr->avail->idx = 0;
+ 
+     /* We're running with interrupts off anyways, so don't bother */
+-    vr->used->flags = be_ipl() ? VRING_USED_F_NO_NOTIFY : bswap16(VRING_USED_F_NO_NOTIFY);
++    vr->used->flags = virtio_tswap16(VRING_USED_F_NO_NOTIFY);
+     vr->used->idx = 0;
+     vr->used_idx = 0;
+     vr->next_idx = 0;
+@@ -140,6 +140,22 @@ bool be_ipl(void)
+     }
+ }
+ 
++/* Conditionally byte-swap between virtio-endian and s390x native big-endian. */
++uint16_t virtio_tswap16(uint16_t x)
++{
++    return be_ipl() ? x : bswap16(x);
++}
++
++uint32_t virtio_tswap32(uint32_t x)
++{
++    return be_ipl() ? x : bswap32(x);
++}
++
++uint64_t virtio_tswap64(uint64_t x)
++{
++    return be_ipl() ? x : bswap64(x);
++}
++
+ /*
+  * Format the virtio ring descriptor endianness
+  * Return the available index increment in the appropriate endianness
+@@ -156,12 +172,11 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags)
+ {
+     uint16_t avail_idx;
+ 
+-    avail_idx = be_ipl() ? vr->avail->idx : bswap16(vr->avail->idx);
++    avail_idx = virtio_tswap16(vr->avail->idx);
+ 
+     /* For follow-up chains we need to keep the first entry point */
+     if (!(flags & VRING_HIDDEN_IS_CHAIN)) {
+-        vr->avail->ring[avail_idx % vr->num] = be_ipl() ? vr->next_idx :
+-                                                          bswap16(vr->next_idx);
++        vr->avail->ring[avail_idx % vr->num] = virtio_tswap16(vr->next_idx);
+     }
+ 
+     vr->desc[vr->next_idx].addr = (unsigned long)p;
+@@ -179,7 +194,7 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags)
+     /* Chains only have a single ID */
+     if (!(flags & VRING_DESC_F_NEXT)) {
+         avail_idx++;
+-        vr->avail->idx = be_ipl() ? avail_idx : bswap16(avail_idx);
++        vr->avail->idx = virtio_tswap16(avail_idx);
+     }
+ }
+ 
+@@ -187,7 +202,7 @@ int vr_poll(VRing *vr)
+ {
+     uint16_t used_idx;
+ 
+-    used_idx = be_ipl() ? vr->used->idx : bswap16(vr->used->idx);
++    used_idx = virtio_tswap16(vr->used->idx);
+     if (used_idx == vr->used_idx) {
+         vring_notify(vr);
+         yield();
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index aa307025e0..645dc288b1 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -287,6 +287,10 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
+ int virtio_reset(VDev *vdev);
+ int virtio_setup_ccw(VDev *vdev);
+ 
++uint16_t virtio_tswap16(uint16_t x);
++uint32_t virtio_tswap32(uint32_t x);
++uint64_t virtio_tswap64(uint64_t x);
++
+ /* virtio-net.c */
+ int virtio_net_init(void *mac_addr);
+ void virtio_net_deinit(void);
+-- 
+2.55.0
+
 
