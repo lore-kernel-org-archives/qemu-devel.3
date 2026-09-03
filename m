@@ -4,148 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10C5EC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CDBC624D7
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24xX-0005EF-OW; Thu, 03 Sep 2026 06:46:19 -0400
+	id 1x24yN-00063F-5S; Thu, 03 Sep 2026 06:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24xM-00057m-0C
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:46:11 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x24yL-000635-TZ
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:47:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24xI-0007f3-Us
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:46:07 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AHIoQ162960
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:46:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- h9RIWx6x6zRqaO0k/EMmEuPQdfhJn8c7lVHPbY/dtr0=; b=Ymu34p7NDVN4rETw
- q1e8WTEjA+NBxt2CmZ3vOvIY4EpXraN/EcCcbgHw7DiooOHXQ2uSr3o0WhKKHXCq
- rjOe87GLH64bpUNukq3Up5X3wvYS9dvIp19gcOxoQzB22SkOHq+08jlumcDNKukn
- 1DFLI2W5FJnC6+yrpjdzNItrsH8UUOeEOItw4CZUgZOOAHo/i7JKJDd6QE7yVrFT
- JM25XXWGuxrDrhrZuotLJ26SEUqREkSfAF4Q5HFxp0cXKHyT2iGvySXTRUq2EZl5
- 23LL80BtIooELRn7RBXgMYbeml8O9TbzM+toBd3ccv9Kc1WRPxvQzY8F72B/EEab
- K/yTJA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf6tx0532-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:46:03 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9396e0515dcso59117085a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:46:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x24yK-0007jg-22
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:47:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788432426;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hf8yu5d7GebbmHWi/7eHO3R3u498r/IQfuzDpLs9L7g=;
+ b=WT0S713WGK7UXUA9pO7Yy8MzsUT54BI+j2GTaMoyBgoziPUeM/toIUjWnNw2J4G34jC5P5
+ AGvt79uOKP99+VbxLhcjZhMqAWLXB6GZCr6JTxfybmG410QuNyp3fcbyuISp79Y78Ufyfn
+ P83n4qQQ1KpkB3yZXc5xvi8N9bm9/wQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-8-Kb4JCc5mOA6IFBvaa_mjgw-1; Thu, 03 Sep 2026 06:47:05 -0400
+X-MC-Unique: Kb4JCc5mOA6IFBvaa_mjgw-1
+X-Mimecast-MFC-AGG-ID: Kb4JCc5mOA6IFBvaa_mjgw_1788432424
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49cf4cc2125so1104585e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432363; x=1789037163; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=h9RIWx6x6zRqaO0k/EMmEuPQdfhJn8c7lVHPbY/dtr0=;
- b=jKlXJk2gy5P7fzpa++Aq/XuZAyRtveeFD2emwMPplrkfL+WZJP2XQiTimmpIT8BE8R
- OZmAzwyzJ/IjPAc6uFjo0BE40JeYPorX4iLwT5sdMAoRVD/L7df4Oh2LenTYPyi12G+B
- vKLbUyjYcva0O/Ei4Zjy/zWR4uLN/83Vztztmadsf1cPCFjTlCirlxEdxCg4iKU0y5OZ
- 3WaTDPkomJAIGLfN9EWRfVdbpNFuURF3h3Xj3tLeSMowOGcC4VaLO9D0U1pPvW3a1Vn2
- qgSGFIy0Xrp8co/Ry3agTscpkEiIMFrWn8GV9ZSdsHP7i+N/Ogo+vwHq2PiCKffJChXp
- 1vmg==
+ d=redhat.com; s=google; t=1788432424; x=1789037224; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hf8yu5d7GebbmHWi/7eHO3R3u498r/IQfuzDpLs9L7g=;
+ b=GsIOPD2Oj7xLZr8lwvgy/wDsjSvWSUBWf+F/DEGlTxG//7OqESbtCn1tzmRhOx+o6C
+ YP27jEYzm5ntK0lZZJ6Zh6kpTKGiw1mAjCv23FMPtiLg0Lt+CgH0rn27qo2TrHG2SiBW
+ +Mv32aCm/yZyC6bVpZ3DGzbOiqKC2oIIndCH32o6PvqzPIuLAwSC0JyJz4Ss0WEEG+Ft
+ VqozCXbX42c/YolwCh18EN5+p7aBFqC3dI/6ZyNqScJEKQMXycNgz4B7iRgmmbpS3ffP
+ LtufBfVSvvDGWqjA3nZFSATMsBuVVtfS/LpPiZA2Hton0vJyX8kdO319zz8LxqXBHXcX
+ vz+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432363; x=1789037163;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1788432424; x=1789037224;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=h9RIWx6x6zRqaO0k/EMmEuPQdfhJn8c7lVHPbY/dtr0=;
- b=HdHYhrcPNC320GHubk+ylp6gyYgmTT9gIyxTFqVHxLXr5Dfu3JSp0PhI1BaIX/VzA9
- imNE/Y51EqEl7iYn1aCO31GlXOhnmyl5zokPu+8/gMvyRTIHmyUg0BO23W31El76DCd/
- u3GAoOzR1Ulu7P8qamGEqvDnhzfZXPTBHm8HDY9/xjxABrmZ9A2ch2FYQqfc9gEZVfcD
- PWmoKkrySONO/ITm+w7vMJQF6Po3ymShhJ1lNo+drpTZ21/GIfcLEL1r3TdAwb9xY6eD
- laACjj0mekZcFzRI7cIoMD/sEmC4lrWPWbHqId7a9Pb1P6JD0NPSvamIsym2qqB+MPtO
- D43g==
-X-Gm-Message-State: AFuF++kJU5xQxsOhnzF+sQ6zPqjTjQpllThi+vrnkfSs7vwjLkzvvYf2
- phuz30fArXGvApHir2Zaz1kZ974lpegAJcz7Co6NVHGHMsG/5H2BS1/Qjtt4DB89bgwT2ACP1cP
- yKQU3z7EPGvpAtUmeNZucoLktWZ3gmEE2cFQ0rKYVvBWrgjWiWP787aS3woDPuL+XcA==
-X-Gm-Gg: AYBFou08TkkAm1g3VVaFjEVqbUKNg7OnMXfsJZHWfW+POc1X3kSbzzDJ/rTc5yReaP3
- CrUqY3sGYnS6PLs1oCalq07Iy0zML6spmC9+rVUYauhu8JneXZEXEOewbJw0bhHFxx9uCMGq+IT
- KOI8PyxZOO5D6CQy4lDTtor+7lU4sf3xdAPly6SBF8hqozqI91qbX5oytkMivMNGK1Nu7shLWrY
- 9lHOHfdmF/7v8qHhGuVfe+NQIDYoarSzarBI/0A+eKDNJSVLE065FujBfOJiPwHxwmGFNTekmRP
- sE0TDtUBOV0Gs4gI6XMO476wzkzZeGwXq7ZIKuKY9pQJ/eNfJ4YNy+2pGwNFAfgGMh1Eh03T208
- wnQGoIFnS9CCF6+LHogALwp+xWmIbW6xBJvFpRh4v
-X-Received: by 2002:a05:620a:a20e:b0:939:3b56:c416 with SMTP id
- af79cd13be357-93960ca35cfmr1270682185a.8.1788432363217; 
- Thu, 03 Sep 2026 03:46:03 -0700 (PDT)
-X-Received: by 2002:a05:620a:a20e:b0:939:3b56:c416 with SMTP id
- af79cd13be357-93960ca35cfmr1270678385a.8.1788432362638; 
- Thu, 03 Sep 2026 03:46:02 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ bh=hf8yu5d7GebbmHWi/7eHO3R3u498r/IQfuzDpLs9L7g=;
+ b=FNpmFE0lIASJn1wMvkS3O+nfhk+1XV27Exa5p2RwEOZZkUfKQO+eG/kYs/nAGABjCl
+ OjtGVB5rOcyJ6JB18d/kS3PmFK7zowWxcCc4kH3wEonqrGGPLMImYG2+lzfnZtN0vTFI
+ ymtC92W3Q1wQSD/DQfHIMGxIcoC761XaBUFbiEt8+DDKOs7Uy5/cFOr1weIw3eCtHDcC
+ 3ngXrRoq70b4qclnYglkPEG6mpERgbW0p9RddlPK3vICHd0jc5Xg6A/6er0DCkgyaacm
+ rvmsmWHwFX5vfrX5PELujsdsq5iX8S8Hn9biY9B4ptNDWsOqmxf3FmH6PmJDgEVnJlaC
+ Q0wg==
+X-Gm-Message-State: AFuF++nvXmJWRa42HWJLiXWnYdI6f22ALbE+JEffUq6FYwQgKw7xC89g
+ Ilr5fyZK/UVa+0HFXwA5L8EMRSVUqx+BTntxJ/N7nP+GU3YGG8QKTiMvjd//l6ZPF0Fbzqmt2z9
+ j0R1YR/8Eg3e54T+Qif8D4megZkTByrYgP7r3l4S+QGH+OvfmW7XZkByT
+X-Gm-Gg: AYBFou3rmKTBZIZr9kZF0/2mmLzRkq4YJwBqh6B7G3h+hLyrqz5OSWg1ZJiBM9WRorH
+ BrCNYTaVpirSNEEKNtaiJ2tv9Fk8zkYBFPEYbCNbjc87vnJld5ir4VHsitBq9aQ7PcNvZyH6uWg
+ 2QhHIQxlX0GOAtpNtxBHsJj+ggCa4CfgtTNpRZOHttQIFd3jkYZf641i6164tR9RA57fq2CLVFV
+ TpT08dDU5s0p9vtV022xLtvjHR8jetBBUou5U2sNPRPQMiol1I9zo5ofrphUWeFjClhiidtiqlu
+ G5jEgEF69p2DBLklCQyTUmi+1s2qN+k/AtBppYLTPk6p71g89QT8BeraSZf51sn9VXUax9/yrT4
+ Css+eJ2m22Izj66Yv/4cn8Vhzh7zVKWQ1E6M=
+X-Received: by 2002:a05:600c:8714:b0:499:b65d:1250 with SMTP id
+ 5b1f17b1804b1-49ce580d869mr204539285e9.2.1788432423982; 
+ Thu, 03 Sep 2026 03:47:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:8714:b0:499:b65d:1250 with SMTP id
+ 5b1f17b1804b1-49ce580d869mr204538535e9.2.1788432423542; 
+ Thu, 03 Sep 2026 03:47:03 -0700 (PDT)
+Received: from leonardi-redhat ([151.29.41.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce5533ffbsm88537205e9.3.2026.09.03.03.45.59
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:46:00 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 51/51] MAINTAINERS: Update PhilMD's email address
-Date: Thu,  3 Sep 2026 12:39:35 +0200
-Message-ID: <20260903103936.62355-52-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
-References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
+ 5b1f17b1804b1-49cee5d6029sm63445225e9.6.2026.09.03.03.47.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Sep 2026 03:47:02 -0700 (PDT)
+Date: Thu, 3 Sep 2026 12:47:00 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH 1/4] sev: rename set_guest_policy to set_id_block and
+ remove dead policy code
+Message-ID: <aplPIuIgLYKofjGq@leonardi-redhat>
+References: <20260901-fix_igvm_policy-v1-0-e93a6cf8c5ac@redhat.com>
+ <20260901-fix_igvm_policy-v1-1-e93a6cf8c5ac@redhat.com>
+ <aplMPpjG6X__JZeM@sgarzare-redhat>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 3XTfT3AHjt--JywAugLFfvtf6qfD09id
-X-Authority-Analysis: v=2.4 cv=TqjWQjXh c=1 sm=1 tr=0 ts=6a994feb cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=ID6ng7r3AAAA:8 a=p0WdMEafAAAA:8 a=NEAV23lmAAAA:8 a=S56xvJB5AAAA:8
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=69wJf7TsAAAA:8
- a=jqTOf7lJAAAA:8 a=hXZgYZo4AAAA:8 a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8
- a=QyXUC8HyAAAA:8 a=9u_AbM2CAAAA:8 a=up-X0YpDAAAA:8 a=K92WTf5yAAAA:8
- a=bgKrIEmzAAAA:8 a=gPJu0pBYAAAA:8 a=r_1tXGB3AAAA:8 a=v5NkL0kxAAAA:8
- a=FyogFE7hAAAA:8 a=Ixn1CAxRAAAA:8 a=ciZXtekWAAAA:8 a=lB0dNpNiAAAA:8
- a=-c9VzbpeAAAA:8 a=0FD05c-RAAAA:8 a=RBb6cmxZ0Hc3-IgbcVcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=AkheI1RvQwOzcTXhi5f4:22
- a=MH9Ivq0PDQRhlrFuIVvX:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=rFolWk1O-vXzQ6QHWabK:22 a=37BJPeUnzxYkbV1yBC-1:22 a=BKQHd7vISpuzHE4vo7dZ:22
- a=86FmjZgct7XXK6GGpxvI:22 a=X9ok8FpLfHEzVMsE4qxm:22 a=Ifulqbl_J-1aL42CD9IR:22
- a=AlIIF0cMT2hfDT4axODj:22 a=t8nPyN_e6usw4ciXM-Pk:22 a=KW0dtVGFZSnqoMbxR4e2:22
- a=p2WyBLmlf5vdw_nX_QRo:22
-X-Proofpoint-ORIG-GUID: 3XTfT3AHjt--JywAugLFfvtf6qfD09id
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX5kHOCnaf1v4g
- EeKTCnioXMGF3s6SIY4fVKT/2Io/fklgD6z025YhHqOqEq+FWx3R2tkmpntw2r8R2TqrAz2b6xn
- wWRS3k49fwEDFe+8U8sOt5GeGZMBFoOvBGnU/ZzovEYWeujMCDlvNIvR4SSLF+iVW83h0MPq2Ue
- mKwl6+wQ2YJX9WXuKbvrU0cV9HBqmquO33Xd3VFUAP9fcoOaJ9BxtiwGko1eEb+/FBtvk/QG58j
- X2Rmp4X38fRhJzpwDjn+mHrfydmKEUlKNMi7IKjWvxiPBGDWvZ7QV++jHrZmptLjUNr0jnb699k
- 7UwuqMHXxrrVtafN7ZxNUKrXY4OYcQ7zdA7l6Iuyb2/nyYWfl9roCMtDnKVgN4ac5y0MOyiFK8D
- gcCRSiff6O0E9LXgC33x3UAK4m8JnwSvDvj8oEhEQ6JKh5y64o4agT71EQJqLa+DQrepyhcWwLf
- t7qvkbZNvrLE37tEsbA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX/SbNPN2zhk6w
- bf5ERU6Nmwjs3F4HRg9+xu5fGyKgQuF6hcx0quLh9UX+ar0TfEZ7nYvoxufg5ik0gfuNAAr+GVU
- QJay6QFDccbdvY/MMeMDU/0Fl8h9vxg=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aplMPpjG6X__JZeM@sgarzare-redhat>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,294 +124,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@mailo.com>
+On Thu, Sep 03, 2026 at 12:32:21PM +0200, Stefano Garzarella wrote:
+>On Tue, Sep 01, 2026 at 12:09:18PM +0200, Luigi Leonardi wrote:
+>>The guest policy must be provided at guest launch start: LAUNCH_START for
+>>SEV/SEV-ES and SNP_LAUNCH_START for SEV-SNP. See the SEV API
+>>specification, chapter 3 (Guest Policy), and the SEV-SNP firmware ABI
+>>specification, section 4.3 (Guest Policy).
+>>
+>>The policy parameter in set_guest_policy was never effective: by the
+>>time this callback runs, LAUNCH_START has already been issued for both
+>>SEV/SEV-ES and SEV-SNP, so writing to kvm_start_conf.policy or
+>>sev_guest->policy has no effect. In practice the only thing this
+>>callback actually does is set the ID block and ID auth for SNP's
+>>LAUNCH_FINISH, so rename it to set_id_block to reflect its real
+>>purpose, remove the unused policy parameter, and drop the non-SNP code
+>>path which was entirely dead.
+>>
+>>This is preliminary work: actually forwarding the guest policy to the
+>>platform before LAUNCH_START is added in a later commit.
+>
+>IIUC the behaviour is the same after this patch, but IMO better to
+>clarify.
 
-My personal email free service doesn't scale with qemu-devel@
-mailing list traffic, returning distinct STMP errors. Dispatch
-to work email instead. Update mailmap accordingly.
+Yep, will do.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260902155211.32399-1-philmd@oss.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- MAINTAINERS | 56 ++++++++++++++++++++++++++---------------------------
- .mailmap    |  9 +++++----
- 2 files changed, 33 insertions(+), 32 deletions(-)
+>
+>>
+>>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>>---
+>>backends/confidential-guest-support.c       |  12 ++-
+>>backends/igvm.c                             |   6 +-
+>>include/system/confidential-guest-support.h |  28 ++++---
+>>target/i386/sev.c                           | 118 +++++++++++-----------------
+>>4 files changed, 67 insertions(+), 97 deletions(-)
+>>
+>>diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
+>>index 156dd15e66..a0b36d2da5 100644
+>>--- a/backends/confidential-guest-support.c
+>>+++ b/backends/confidential-guest-support.c
+>>@@ -38,14 +38,12 @@ static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+>>    return -1;
+>>}
+>>
+>>-static int set_guest_policy(ConfidentialGuestPolicyType policy_type,
+>>-                            uint64_t policy,
+>>-                            void *policy_data1, uint32_t policy_data1_size,
+>>-                            void *policy_data2, uint32_t policy_data2_size,
+>>-                            Error **errp)
+>>+static int set_id_block(void *id_block, uint32_t id_block_size,
+>>+                        void *id_auth, uint32_t id_auth_size,
+>>+                        Error **errp)
+>>{
+>>    error_setg(errp,
+>>-               "Setting confidential guest policy is not supported for this platform");
+>>+               "Setting ID block is not supported for this platform");
+>>    return -1;
+>>}
+>>
+>>@@ -64,7 +62,7 @@ static void confidential_guest_support_class_init(ObjectClass *oc,
+>>    ConfidentialGuestSupportClass *cgsc = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
+>>    cgsc->check_support = check_support;
+>>    cgsc->set_guest_state = set_guest_state;
+>>-    cgsc->set_guest_policy = set_guest_policy;
+>>+    cgsc->set_id_block = set_id_block;
+>>    cgsc->get_mem_map_entry = get_mem_map_entry;
+>>}
+>>
+>>diff --git a/backends/igvm.c b/backends/igvm.c
+>>index 7b7bdc72b7..85de0d54ec 100644
+>>--- a/backends/igvm.c
+>>+++ b/backends/igvm.c
+>>@@ -968,9 +968,9 @@ static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
+>>            id_block_len = sizeof(struct sev_id_block);
+>>            id_auth_len = sizeof(struct sev_id_authentication);
+>>        }
+>>-        return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV, 
+>>ctx->sev_policy,
+>>-                                          ctx->id_block, id_block_len,
+>>-                                          ctx->id_auth, id_auth_len, errp);
+>>+
+>>+        return ctx->cgsc->set_id_block(ctx->id_block, id_block_len,
+>>+                                       ctx->id_auth, id_auth_len, errp);
+>>    }
+>>    return 0;
+>>}
+>>diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
+>>index 5dca717308..6d35ddb97a 100644
+>>--- a/include/system/confidential-guest-support.h
+>>+++ b/include/system/confidential-guest-support.h
+>>@@ -128,21 +128,23 @@ typedef struct ConfidentialGuestSupportClass {
+>>                           uint16_t cpu_index, Error **errp);
+>>
+>>    /*
+>>-     * Set the guest policy. The policy can be used to configure the
+>>-     * confidential platform, such as if debug is enabled or not and can contain
+>>-     * information about expected launch measurements, signed verification of
+>>-     * guest configuration and other platform data.
+>>-     *
+>>-     * The format of the policy data is specific to each platform. For example,
+>>-     * SEV-SNP uses a policy bitfield in the 'policy' argument and provides an
+>>-     * ID block and ID authentication in the 'policy_data' parameters. The type
+>>-     * of policy data is identified by the 'policy_type' argument.
+>>+     * Set the guest policy for the confidential platform. The policy
+>>+     * configures properties of the guest, such as whether debug is
+>>+     * enabled. Its format is platform-specific; for SEV/SEV-ES and
+>>+     * SEV-SNP it is a policy bitfield. Must be called before LAUNCH_START
+>>+     * so the policy is in effect for launch.
+>>     */
+>>    int (*set_guest_policy)(ConfidentialGuestPolicyType policy_type,
+>
+>I'm confused, this commit says "rename set_guest_policy to set_id_block"
+>so why this callback is still here?
+>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2cff90141f7..f524d905236 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -68,7 +68,7 @@ Project policy and developer guides
- R: Alex Bennée <alex.bennee@linaro.org>
- R: Daniel P. Berrangé <berrange@redhat.com>
- R: Markus Armbruster <armbru@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- W: https://www.qemu.org/docs/master/devel/index.html
- S: Odd Fixes
- F: docs/devel/build-environment.rst
-@@ -132,7 +132,7 @@ T: git https://gitlab.com/cohuck/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- MIPS general architecture support
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Odd Fixes
- K: ^Subject:.*(?i)mips
-@@ -315,7 +315,7 @@ F: tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
- F: tests/functional/microblaze/
- 
- MIPS TCG CPUs
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Aurelien Jarno <aurelien@aurel32.net>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
-@@ -545,7 +545,7 @@ Guest CPU Cores (other accelerators)
- Overall CPUs other accelerators
- M: Richard Henderson <richard.henderson@linaro.org>
- R: Paolo Bonzini <pbonzini@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Maintained
- F: include/exec/cpu*.h
- F: include/exec/target_long.h
-@@ -707,7 +707,7 @@ F: qemu.nsi
- F: scripts/nsis.py
- 
- Darwin (macOS, iOS)
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Odd Fixes
- F: .gitlab-ci.d/macos*
- F: */*.m
-@@ -1013,7 +1013,7 @@ F: tests/functional/arm/test_quanta_gsj.py
- 
- Raspberry Pi
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/arm/raspi*.c
-@@ -1324,7 +1324,7 @@ F: include/hw/misc/avr_power.h
- F: hw/misc/avr_power.c
- 
- Arduino
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Maintained
- F: hw/avr/arduino.c
- F: tests/functional/avr/test_uno.py
-@@ -1473,7 +1473,7 @@ F: hw/microblaze/petalogix_ml605_mmu.c
- MIPS Machines
- -------------
- Overall MIPS Machines
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Odd Fixes
- F: configs/devices/mips*/*
- F: hw/mips/
-@@ -1490,7 +1490,7 @@ F: hw/dma/rc4030.c
- F: hw/nvram/ds1225y.c
- 
- Malta
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Aurelien Jarno <aurelien@aurel32.net>
- S: Odd Fixes
- F: hw/isa/piix.c
-@@ -1504,7 +1504,7 @@ F: tests/functional/mips*/test_tuxrun.py
- 
- Fuloong 2E
- M: Huacai Chen <chenhuacai@kernel.org>
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Odd Fixes
- F: hw/mips/fuloong2e.c
-@@ -1528,7 +1528,7 @@ F: include/hw/intc/loongson_liointc.h
- F: tests/functional/mips64el/test_loongson3v.py
- 
- Boston
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
- S: Odd Fixes
- F: hw/core/loader-fit.c
-@@ -2113,7 +2113,7 @@ F: include/hw/i386/nitro_enclave.h
- F: docs/system/i386/nitro-enclave.rst
- 
- Machine core
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Zhao Liu <zhao1.liu@intel.com>
- S: Maintained
- F: hw/core/cpu-internal.h
-@@ -2137,7 +2137,7 @@ F: tests/unit/test-smp-parse.c
- 
- TargetInfo API
- M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Supported
- F: include/qemu/target-info*.h
- F: target-info*.c
-@@ -2373,7 +2373,7 @@ F: docs/system/virtio-net-failover.rst
- T: git https://github.com/jasowang/qemu.git net
- 
- Parallel NOR Flash devices
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Maintained
- F: hw/block/pflash_cfi*.c
- F: include/hw/block/flash.h
-@@ -2408,7 +2408,7 @@ S: Maintained
- F: hw/ssi/xilinx_*
- 
- SD (Secure Card)
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- M: Bin Meng <bmeng.cn@gmail.com>
- L: qemu-block@nongnu.org
- S: Odd Fixes
-@@ -2890,14 +2890,14 @@ F: tests/qtest/launchupdate-test.c
- F: tests/data/igvm/*
- 
- LED
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Maintained
- F: include/hw/misc/led.h
- F: hw/misc/led.c
- 
- Unimplemented device
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Ani Sinha <ani@anisinha.ca>
- S: Maintained
- F: include/hw/misc/unimp.h
-@@ -2905,7 +2905,7 @@ F: hw/misc/unimp.c
- 
- Empty slot
- M: Artyom Tarasenko <atar4qemu@gmail.com>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Ani Sinha <ani@anisinha.ca>
- S: Maintained
- F: include/hw/misc/empty_slot.h
-@@ -2984,14 +2984,14 @@ F: hw/display/apple-gfx*
- 
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Maintained
- F: hw/isa/piix.c
- F: include/hw/southbridge/piix.h
- 
- VIA South Bridges (VT82C686B, VT8231)
- M: BALATON Zoltan <balaton@eik.bme.hu>
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Maintained
- F: hw/isa/vt82c686.c
-@@ -3056,13 +3056,13 @@ F: hw/intc/openpic.c
- F: include/hw/ppc/openpic.h
- 
- MIPS CPS
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Odd Fixes
- F: hw/misc/mips_*
- F: include/hw/misc/mips_*
- 
- MIPS GIC
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Odd Fixes
- F: hw/intc/mips_gic.c
- F: hw/timer/mips_gictimer.c
-@@ -3188,7 +3188,7 @@ F: audio/alsaaudio.c
- 
- Core Audio framework backend
- M: Gerd Hoffmann <kraxel@redhat.com>
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Christian Schoenebeck <qemu_oss@crudebyte.com>
- R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
- S: Odd Fixes
-@@ -3426,7 +3426,7 @@ F: scripts/coccinelle/errp-guard.cocci
- 
- GDB stub
- M: Alex Bennée <alex.bennee@linaro.org>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Maintained
- F: docs/system/gdb.rst
- F: gdbstub/*
-@@ -3440,7 +3440,7 @@ T: git https://gitlab.com/stsquad/qemu gdbstub/next
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
- M: Peter Xu <peterx@redhat.com>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Supported
- F: include/system/ioport.h
- F: include/exec/memop.h
-@@ -3503,7 +3503,7 @@ F: tests/functional/generic/test_vnc.py
- 
- Cocoa graphics
- M: Peter Maydell <peter.maydell@linaro.org>
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
- S: Odd Fixes
- F: ui/cocoa.m
-@@ -4067,7 +4067,7 @@ S: Maintained
- F: contrib/elf2dmp/
- 
- Overall sensors
--M: Philippe Mathieu-Daudé <philmd@mailo.com>
-+M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- S: Odd Fixes
- F: hw/sensor
- F: include/hw/sensor
-@@ -4620,7 +4620,7 @@ F: tests/vm/freebsd
- 
- Functional testing framework
- M: Thomas Huth <th.huth+qemu@posteo.eu>
--R: Philippe Mathieu-Daudé <philmd@mailo.com>
-+R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
- R: Daniel P. Berrange <berrange@redhat.com>
- S: Odd Fixes
- F: docs/devel/testing/functional.rst
-diff --git a/.mailmap b/.mailmap
-index 08f0fa9e118..bd8bf07feb7 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -113,10 +113,11 @@ Paul Burton <paulburton@kernel.org> <paul.burton@mips.com>
- Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
- Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
- Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
--Philippe Mathieu-Daudé <philmd@mailo.com> <f4bug@amsat.org>
--Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@redhat.com>
--Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@fungible.com>
--Philippe Mathieu-Daudé <philmd@mailo.com> <philmd@linaro.org>
-+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> <f4bug@amsat.org>
-+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> <philmd@redhat.com>
-+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> <philmd@fungible.com>
-+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> <philmd@linaro.org>
-+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> <philmd@mailo.com>
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> <pierrick.bouvier@linaro.org>
- Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
--- 
-2.53.0
+We will need this callback in a following patch, so I thought that removing
+it to then add it again was pointless. If you prefer I can go this
+route, or I can specify it in the commit message.
+
+Luigi
 
 
