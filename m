@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DD8C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C0DC624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2604-0003kf-1V; Thu, 03 Sep 2026 07:53:00 -0400
+	id 1x2602-0003iq-07; Thu, 03 Sep 2026 07:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x25zz-0003hw-SN; Thu, 03 Sep 2026 07:52:56 -0400
-Received: from mx1.catap.net ([162.55.82.72])
+ id 1x2600-0003hy-6n; Thu, 03 Sep 2026 07:52:56 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x25zy-0002h2-4B; Thu, 03 Sep 2026 07:52:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=PcsW2/r
- KJGro6qfT3w4RfpEaZeFaKvZhyozCRYxMDjWyytTqupz1Ep66PRC07IJaJAYNdHM+1jdUw
- nxlIT47n1sRCDukQU2/BIY9Zdb2vMuImaswgw3Zb1gKxqe+M9OHrY8xEQ17UBekIXBCXY8
- RA/kBqVYn7OAlfgMmDDLXTFWVXFo3Cb/ZTV1XH4C+3Smhqur8sglxNcQ36KcW4vwZ68hxc
- fg+GrmfKLuaEvtdJ5fWc5dnfwKeNUK2YaX2CIanJyTIb6wuIafRLyzJgA6sEqY0uAk0vMU
- dfD9AmFTU5ghGFTp0G+6JtYC7pXVxsHSpmHwGTNhQEMAOYPgcCLo3WA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=L
- 38mssKJShTqPMLPvNfwMyO1HAru0zAlCLDv1fhZDAs=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=LeG3ZikxumWJigEHkgb61RzkGd5BDwn2JbRDW6ly4Aa2fHiPvCCXEsWbYmdmPKoHZt+p
- gzy+5Ifs3oaY6WnCitUrdpZkIv0+4SBAekBTIFIPFZStxI0LpR54Uky4WuJyNiyJ7W0n6M
- Eue2K6YjXEL793nEmZ7/8DjuTDpi7+9OgF/gUzrnddjZQtWulS4g5OASvu3FUVPD5h+PIk
- Vm4qz6le6yERo2u0ORxLiZFXd91rNuh4Uy2GcZ6SW1+RiVNF5xCKMhfU9JoMTA7nCTjUbs
- 2S7ou4kQQkjxK509ZUXrclThtCifglT7v+l62YcehCvwzz+/uOkgKI6uspxe8oUA==
+ id 1x25zy-0002h1-GH; Thu, 03 Sep 2026 07:52:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=KibzkjB
+ 9dwC44tIAC3QtdWy4a6hsj7CF2jXy0VJreugNuxkJ+S+Xca5Pz+erJeKvsT5rflBcBajFS
+ ZJ9KX3FKPV2ddF6a2v2VTVSLPRrk2AeiNJ1aV+4ym6wMl29jq1huRlQ5BawVOmNQMNQS7Q
+ MCSnT3yTcOotKXf0ynJ1MQkrSYeAPPiphmhI4iyYlvAwHrGgxLmyGi+rf4OhFu1bc9xWZJ
+ Rtfu+ttnJWypRdesjD/utnO8V3tpfjCckfTcIEyVXqT0P1KUoY90ZBfh97ARVC6cLVkTou
+ Eohee6GXj1fCmyadeU4ZZ4ru+h8o7vd6BU5ufKVsF55dlB61/rUnegw==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=U
+ M9TIdNYpcJwpd//cCLt4Xnjxdqq6NNYIyTN07t6gwI=;
+ h=date:subject:cc:to:
+ from:dkim-signature:dkim-signature; d=mx.catap.net; b=hKfq2y4It4fZKlkg
+ 8rdMjOM8fsGQQJdMe7MKcNsK2Cr4Zk9xZjRdLA3+DvZRaqy/+nNZ8TXJnIaNhdvtshy3E+
+ 8212hfD9zCHRNfQu5zPfgcnN2KhN67BFuizonvkAiRAI85d5/+ct/upKD5+mpE7lmlsXcV
+ G4h4Fq61vzB0QjhOHSzvJ/3XauQLqe8duxLc7lISZrNpa9kQcFENRSLCYhXTbgO8atZoMz
+ MeWzcd1DApqI4NuAHopThoZ44zN0619I98TISTNIcJyLRkdoVKJdB8zyFlAkwsQEHBnosy
+ quvqSzkNSsLYOwR4tYLGfYDk0feqz09IhBQH3Xbfl0y97g==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=JNl7wiu+; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=qZQBEu0z;
+ header.b=dmr/oZSh; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=aHKF+6qC;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=L38mssKJ
- ShTqPMLPvNfwMyO1HAru0zAlCLDv1fhZDAs=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=JNl7wiu+UcKrs0S3Btf9saOKlGsGfLMY1uC
- WL03XZ1KBcsQqJXk/cz7Lsk37XA8WJtsCqy4+3cSrAL6QDMTBozhhT0puRCAVwmJRmXd5f
- f2N8ZsS/mWhOSvM6J1slgRvrQAbEaXlJhSU1N3NgaLj6fbKupXB2LyPTp/hPDpTLlDBjt9
- RvpfLK4+ysNQ2U3olaioHf1qRsWQEBjiZRmCgJ0ybcM6bUe7nJM+s2rvWhIrGzPcIIE/vo
- LO5MSpHXfx2zmIIlwMT+DMX7Uir+85/wcvobxe1cgp2SV4i+ubbCUDrcw9Be3BQwIPHd0D
- R/vtnmv0gievPReviKGi5rS/KFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=UM9TIdNY
+ pcJwpd//cCLt4Xnjxdqq6NNYIyTN07t6gwI=; h=date:subject:cc:to:from;
+ d=korins.ky; b=dmr/oZShCBXg4+rF+seTN89KFczjoDzAkjTQQm+3b7iEGqDh7cQZasx
+ kkBA5r7D0nS06ym3d7WGMXIYJLYYeQz7hy3GHZYGWJwRx5cNLVsV0i0rj/OPYi3tXFLpmV
+ Ljq3UCHEGd64vcYfGQBUEwX5sBWULN8SXDsaNCQ4fcBr/5H3UGs4r9h23H++pE/HWS8Co0
+ 4UA43nbC73/dD3Uep2v0xkBuQl6Nc80tQ7gytBvEs4+a0A2uB5lNEsyRNClHGyEdQtAW/d
+ TIDkFIuEpLZpwRzyPhvkX5miKPz4zM2pSzrusZpRlnAV2W0BJkgAsCjeGQ40kuVUnyLHC+
+ g2L3oKQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=L38mssKJShTqPMLPvNfwMyO1HAru0zAlCLDv1fhZDAs=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=qZQBEu0zJnUToy07Ec
- 4PPtxvhll9KVLSUF/m1SjdEZlHRKQ+9eeFU49gV/3QNeCXcFdaF9vsz4Jic9Ycya7WCA==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id facddbdd
+ bh=UM9TIdNYpcJwpd//cCLt4Xnjxdqq6NNYIyTN07t6gwI=; h=date:subject:cc:to:
+ from; d=korins.ky; b=aHKF+6qC5/38OX2oma7fMBNVFOpmbF896qkGUI6GutwbIE61A
+ 2rlt9esx61fZbun1yR8BmRS1Y3wi0roOitQBg==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 2b671b9b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 3 Sep 2026 13:52:50 +0200 (CEST)
+ Thu, 3 Sep 2026 13:52:49 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id ffec5fd8;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 075e6d37;
  Thu, 3 Sep 2026 13:52:47 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -66,16 +65,15 @@ To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 2/5] ppc: Raise decrementer IRQ on zero write
-Date: Thu,  3 Sep 2026 13:50:27 +0200
-Message-ID: <20260903115229.95811-3-kirill@korins.ky>
+Subject: [PATCH 0/5] mac99: Boot OpenBSD/macppc
+Date: Thu,  3 Sep 2026 13:50:25 +0200
+Message-ID: <20260903115229.95811-1-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260903115229.95811-1-kirill@korins.ky>
-References: <20260903115229.95811-1-kirill@korins.ky>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
- helo=mx1.catap.net
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -98,28 +96,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OpenBSD writes zero to an edge triggered decrementer, then enters idle
-expecting its interrupt. QEMU defers the already due edge to a timer at
-the current virtual time, leaving the guest stalled.
+Greetings,
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
----
- hw/ppc/ppc.c | 1 +
- 1 file changed, 1 insertion(+)
+OpenBSD/macppc does not complete early boot on mac99: OpenPIC can
+reassert an interrupt still masked by CTPR; the edge triggered
+decrementer does not raise on zero; successful CUDA ADB replies omit the
+original command; and the fixed CUDA shift register delay can stretch
+packet delivery past the guest timeout on hosts with coarse timers.
 
-diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
-index b123b4cc1c..d99e47d532 100644
---- a/hw/ppc/ppc.c
-+++ b/hw/ppc/ppc.c
-@@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
-      * an edge interrupt, so raise it here too.
-      */
-     if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
-+        ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0) ||
-         ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
-           && signed_decr >= 0)) {
-         (*raise_excp)(cpu);
--- 
-2.55.0
+This series corrects these four behaviours and adds a functional test
+which boots the official OpenBSD 7.9 macppc CD to the installer prompt.
+
+P.S. this is second third to send the same patch because previous one
+had missed maintainers.
 
 
