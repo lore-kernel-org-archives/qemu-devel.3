@@ -4,112 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FBCDC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF1BC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 15:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x29Mz-0002FA-40; Thu, 03 Sep 2026 11:28:53 -0400
+	id 1x29TL-00037A-4N; Thu, 03 Sep 2026 11:35:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1x29Mt-0002EQ-1T
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:28:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x29TJ-000365-0C
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:35:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1x29Mq-0000wL-EL
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:28:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x29TH-0002GU-CA
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 11:35:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788449322;
+ s=mimecast20190719; t=1788449722;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zZlgcpyErJlCEJFwxXWLl2G2MJ6RenYBs5jbw6Dpw5Q=;
- b=J4pXppy0naKn1dkwuqlIj/0B+3s1I+Pw1UypGQQQeXYLL9nLjNcKwD9Ij3bS/ArxDSRdwb
- c7+nyICpQoOzdHFwNfg8Kne2Ir3hzLXGmSpxQ7sp8d9ZYhD0AD9e+I+hdZUmY95WhAhYyw
- JGdcy5/cNGtFlwLZ5/uWVH98fekX4/w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tGWlkfMh4lUXQJcpNT0UayHoyeI8k0ibX/W1XCnm79o=;
+ b=RFzYzFHf35S2//0WliRcZcwKSyHLZPWwtc/vDY361Z+5kGdTZnAZfY91oRFVSbUZm9yEwZ
+ 7e5DeufWXkNuO9jQ4aDNIbNfYPvUMKP1M02ajChQi5cWXA5/oiuH5ZdMulur2KYGzVp9L5
+ fQmY9AAkU6bhJy0oH2/3U0UwHlcHF4w=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-dYNcHDelMrKPxKGsHayRWA-1; Thu, 03 Sep 2026 11:28:41 -0400
-X-MC-Unique: dYNcHDelMrKPxKGsHayRWA-1
-X-Mimecast-MFC-AGG-ID: dYNcHDelMrKPxKGsHayRWA_1788449320
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49b8c651ac0so29951355e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:28:41 -0700 (PDT)
+ us-mta-368-nmTS4EbBNJ2WjIXNZ9Z-Hw-1; Thu, 03 Sep 2026 11:35:21 -0400
+X-MC-Unique: nmTS4EbBNJ2WjIXNZ9Z-Hw-1
+X-Mimecast-MFC-AGG-ID: nmTS4EbBNJ2WjIXNZ9Z-Hw_1788449720
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49ccf17d3b0so16282225e9.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 08:35:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788449320; x=1789054120; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zZlgcpyErJlCEJFwxXWLl2G2MJ6RenYBs5jbw6Dpw5Q=;
- b=OxEs9d80mtAdkC1lcb2JK4Nh81fnofnQ7GUxDXMY+JpTakc7BLuE+fjN6tI0qydLbi
- 2d2kZSVhiOVrkeXCRxnBdHQ340rnHghJoJg+8A57wL65DvNkGjhG/GZY2hoK8BhEvUS1
- nURSRDqWtf6DA8B2uz7qoaP7W5rbIoMUL6gYfYAacJMnc29G6vBxtErRd6+aPIsqpVKa
- ZOgNFRdB2D/roJ7bKx+OHgXzn+3jUVXujdhoulsj/JSLXkJUAV4teXYKfTQymxbt31Df
- 4QWR63po9eQPmWdoXTQ3nvpKfqtTrk3oaZg9KsIvm3aVAd80RvjWVepdBX5g8J2BbZGs
- Y9nw==
+ d=redhat.com; s=google; t=1788449720; x=1789054520; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=tGWlkfMh4lUXQJcpNT0UayHoyeI8k0ibX/W1XCnm79o=;
+ b=K/soz6GK4SQOHa9y74S2WxEGlE9LTKXSZg/DoL+1DICZPWjFwHJ+VZN8rPtOFKM+JF
+ iGIX2V7572SeM9uB9KXECFpsqoyj4s0NXEU/f0wfjmdqC//UfnFgmMcrynBDbCmf+vc1
+ 4gAe59YAYIiOlmUre5HeQGY1yO/K20QYajFIWWAfzOCicfVYcIPN4HxEszNTr4ZKUgJu
+ SVXk7P1jxSU4kyuA5UVm4DZKXfp9+Cn7WpAqKUWF77HZ9eQvNOyKjZBsTgof6q+d8l6C
+ 25L37T6W2Q5JgTs8gwOHrtLsJtYCZL0bJJl34e/xdNqCIbLy0awK4tHXZ4y68vK905qQ
+ HctA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788449320; x=1789054120;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zZlgcpyErJlCEJFwxXWLl2G2MJ6RenYBs5jbw6Dpw5Q=;
- b=DMxDdrXD/8kqYJNCumHqF3yCJiiubQAHWy74t37xEBH6zn+/dHaJD+BGknS3t435ML
- UBO49eTL8BcH9Edg1c+3TOKWi8lkw0bMzc76lAFumBa1Lt7IydFdNxMNwzzTcagyVgkI
- UDm+HuTnbLuKAJXrQb3fVLK2+jd0of+NR4Q13wPt0sKOviuL4rudLrbT+uqrNhKdePBg
- 9KLJuZq+J7QCrF5JJBY1+l4unNrQxoWsYCeVzLuwYm8uo+re30Lkjyhk7F7qmJb2rkXF
- gS52/3IdtKZ0LEvPEYQRCYgitMuJk11gQC7wVzuOo/0gv1H61YmNZlSeS/2rY+RaoAfb
- 5gaQ==
+ d=1e100.net; s=20251104; t=1788449720; x=1789054520;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=tGWlkfMh4lUXQJcpNT0UayHoyeI8k0ibX/W1XCnm79o=;
+ b=Kaxlbm81hhPj+mKcqmbQpoUG1mlIL5aUHXzyZkiJ6zigTvJuasxVFFZnFFNwgvHdZw
+ 1gI+Rd88dCgw4Ge7Go92Rmj61i4EwkJOo2OccCatYH1slWIHYdPduyvqeTBNMBugQS8x
+ R+gLr+ZlzyJ7XzC8YN3GmTVkEk3sHF2jlTgefSltJZRgK4uJ5g8wm54bt6rPtRbNTI/d
+ W0gqKSMZ4m4YddedGXL5lwcihE6M32D7J8jkDTsaZXXZO7iW+KIdAEYTxgUyZwi6+4MV
+ bi9Vd8rQ5n5muXkQNzWS+Wld61KqawD/lUy/zJnIR+p2cYnj/LwwbyzWqLiwZky+5U4c
+ zpRw==
 X-Forwarded-Encrypted: i=1;
- AKwUvByzvDz2CH6yl3RMPO9tjGCS5vkqkDz9UBWtSnc/HZwzVnTFsNPzkISG6Y6mDY5A75SBjyGuWdo5E9h4@nongnu.org
-X-Gm-Message-State: AFuF++lJgd8KTzVEAbavM0N7gMHb//g6CqG5U+/UcsGibVmepmD01AmR
- Ta+ZVxJVo3YASsD2rYJWX9FTDhLuJy75ntXtX6AXzvPkkL9Fgmw5qr4+bGr7xywPTUWgU88pEzY
- Lp+7uf89JfM1FNOhnRzEWF2j7Jer+RWQ/fCYI8JmYhujdq+t2yVfWwY2S
-X-Gm-Gg: AYBFou2hcRvjQVVzOOTRa77Y3DFOOFE8qzofK5hdMm6GGq6k8a/juWb1C3VLVMHL9Il
- FmB94lY80ECzff9PtvFWcnYiwIxM7GTZTmneesKpvE2x7hy7kO7xR8bJ0UzKaDsQThV5gajsBdz
- bHftaVyAIsIXQAJBpNWvqoJyJdWrZRx9wYjjZjXiNnt9uCU41bZ7YuF5MGGus1UvaS2had7tVF2
- hfS87Rhk1ydKDUenVWRtEOhr7ZnrfKHsajFvKgDMdvj5oJKrYUAZr68U/8ByMNmB8yvxOczi6j4
- 8DruBgL1X76heNHp6sEKWGyU9+V4GQHjiQT/c7nu4L4/sCTw5T3oUUd0g8M=
-X-Received: by 2002:a05:600c:81c9:b0:49c:df2b:15fc with SMTP id
- 5b1f17b1804b1-49cf5b79c84mr17210115e9.8.1788449319974; 
- Thu, 03 Sep 2026 08:28:39 -0700 (PDT)
-X-Received: by 2002:a05:600c:81c9:b0:49c:df2b:15fc with SMTP id
- 5b1f17b1804b1-49cf5b79c84mr17209195e9.8.1788449319587; 
- Thu, 03 Sep 2026 08:28:39 -0700 (PDT)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5f9114sm76185195e9.5.2026.09.03.08.28.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 08:28:38 -0700 (PDT)
-Date: Thu, 3 Sep 2026 17:28:35 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, dave@treblig.org, mst@redhat.com,
- anisinha@redhat.com, philmd@mailo.com, aurelien@aurel32.net,
- mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, cohuck@redhat.com,
- alex@shazbot.org, clg@redhat.com, akrowiak@linux.ibm.com,
- jjherne@linux.ibm.com, sstabellini@kernel.org, anthony@xenproject.org,
- edgar.iglesias@gmail.com, pbonzini@redhat.com, eblake@redhat.com,
- armbru@redhat.com, joe.jin@oracle.com
-Subject: Re: [PATCH 0/8] Force detach PCI devices for ACPI-based and PCIe
- native hot-unplug
-Message-ID: <20260903172835.0e253a25@imammedo>
-In-Reply-To: <01ee4841-76d8-4749-a80e-eb945ab8799a@oracle.com>
-References: <20260824011420.752806-1-dongli.zhang@oracle.com>
- <aoxY4Rxst2qAyn5z@redhat.com>
- <01ee4841-76d8-4749-a80e-eb945ab8799a@oracle.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ AKwUvBx25BYKgaq8XvlVN0W1ONseZm33cqfQCrwcsAygHx2EwP4BNPE80EPh8Ou0L/I82bqr/HIyasohIakJ@nongnu.org
+X-Gm-Message-State: AFuF++lsVwzTsEblICHEsLjkgDDRvkKfVTlz/9DhBE+jPrm9J7iJofGB
+ 4qph/drSIrOB32IryW+7/j26Z/1qKSHVF0G8W06HDPbeGev7E0xmySerFDugZNFtwzkxVuhxeQz
+ voN6Df19CY8lTxROvDooyhPWo12/paGNNVP5A3n9XVEUVmlkKz0FbCYSk
+X-Gm-Gg: AYBFou3FXSbZtDXtkj1Zl4xWx/qDf2btyH0oFTjBWBjr+ld1N18ff4RRumtvPmWThW6
+ XqkVGLPGVmF0JexMgL1CJn2e6s9z5z8OP9GTZQO8h05Gzrm+qHl4X7L1dYBv2lMx2ifPi52JHzY
+ dyzc8Dmfx2sKAjYI+ooUnW6c017YzuawontGCiNzDymrOoynuqAPof6D9g3cVHEw1PWK535ugUL
+ 9zAIzciDGpR2sktBbF2skdjoyWgKoohmtO4PfCsxUKewJFgT6sCBzupLh5m6q9UUaGAUph4T0og
+ R/XB8XGtA9tsO94wbEdG1cNE9dFbccJ3l2wY5lKMcyGiTVtVfklAMJi6EbGS0Ain7yPy7knCWmw
+ Wsi4AmIrG1nrsZr6h+O4jeTQXBBBeV/KkImB/Cdc=
+X-Received: by 2002:a05:600c:8714:b0:499:b65d:1250 with SMTP id
+ 5b1f17b1804b1-49ce580d869mr245356765e9.2.1788449719288; 
+ Thu, 03 Sep 2026 08:35:19 -0700 (PDT)
+X-Received: by 2002:a05:600c:8714:b0:499:b65d:1250 with SMTP id
+ 5b1f17b1804b1-49ce580d869mr245355275e9.2.1788449718766; 
+ Thu, 03 Sep 2026 08:35:18 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:1292:d530:bf4:da16:e208:c6bd?
+ ([2a01:e0a:1292:d530:bf4:da16:e208:c6bd])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cee5d5d12sm78028115e9.5.2026.09.03.08.35.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Sep 2026 08:35:16 -0700 (PDT)
+Message-ID: <d5791d48-b0fb-430c-b56c-f0e4dc0379dd@redhat.com>
+Date: Thu, 3 Sep 2026 17:35:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/8] vfio: route device_feature through io_ops
+To: Hugo Komatsu <hugo.komatsu@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ Alex Williamson <alex@shazbot.org>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, John Levon <john.levon@nutanix.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Rafael Castillo <rafael@trfs.me>, Thanos Makatos
+ <thanos.makatos@nutanix.com>, Tony Krowiak <akrowiak@linux.ibm.com>
+References: <20260903130833.1437632-1-hugo.komatsu@nutanix.com>
+ <20260903130833.1437632-4-hugo.komatsu@nutanix.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260903130833.1437632-4-hugo.komatsu@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -117,7 +160,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,128 +176,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Aug 2026 09:15:47 -0700
-Dongli Zhang <dongli.zhang@oracle.com> wrote:
+On 9/3/26 15:08, Hugo Komatsu wrote:
+> The generic VFIO migration code in hw/vfio/migration.c issue kernel
+> ioctls directly for VFIO_DEVICE_FEATURE. Route these through the
+> existing VFIODeviceIOOps table so an alternate transport (vfio-user)
+> can supply its own implementation.
+> 
+> Implement the kernel version as a thin wrapper around the existing
+> ioctl() call. This is a pure preparatory refactor: the kernel path
+> is unchanged.
+> 
+> Co-authored-by: Rafael Castillo <rafael@trfs.me>
+> Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
+> ---
+>   hw/vfio/migration.c | 29 ++++++++++++++---------------
+>   1 file changed, 14 insertions(+), 15 deletions(-)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 73c49d8c24..ea6734823b 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -168,33 +168,30 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
+>       feature->flags =
+>           VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_DEVICE_STATE;
+>       mig_state->device_state = new_state;
+> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
 
-> On Mon, Aug 24, 2026 7:44:49AM -0700, Daniel P. Berrang=C3=A9 wrote:
-> > On Sun, Aug 23, 2026 at 06:13:30PM -0700, Dongli Zhang wrote: =20
-> >> Hot-unplugging a PCI device can require cooperation from the guest. For
-> >> ACPI PCI hotplug, QEMU notifies the guest through ACPI and the guest
-> >> eventually writes the ACPI PCI eject register. For PCIe native hotplug,
-> >> QEMU notifies the guest through the PCIe hotplug mechanism and waits f=
-or
-> >> the slot unplug flow to complete. Only after that completion does QEMU
-> >> unrealize the device and emit DEVICE_DELETED.
-> >>=20
-> >> This can leave a device stuck in the unplug pending state when the gue=
-st
-> >> does not cooperate. Examples include:
-> >>=20
-> >> 1. The guest has panicked, or the relevant ACPI/PCI hotplug driver is
-> >> unavailable.
-> >>=20
-> >> 2. The guest is stalled and cannot handle the hot-unplug event. For
-> >> example, stalling the Linux [irq/9-acpi] kernel thread can reproduce t=
-his
-> >> for ACPI-based hot-unplug.
-> >>=20
-> >> 3. The device was attached to a slot that the guest cannot use. For
-> >> example, a pcie-root-port only supports slot 0. If a device is added t=
-o a
-> >> non-zero slot below a pcie-root-port, the guest may never discover the
-> >> device and therefore may never complete the unplug request.
 
-all of above is actually expected, no (functioning) driver =3D> no hotplug/=
-unplug.
-it's the guest problem. Once device it exposed to guest its life-cycle
-not longer owned by QEMU.
+please use vfio_device_get_feature()
 
-That's what one would see in real hw as well, you press eject button
-but it will not do anything if OS doesn't process it.
-also see comment at the end.
+Thanks,
 
-> >>=20
-> >> The non-zero slot case has also been discussed in:
-> >>=20
-> >> hw/pci: warn when PCIe device is plugged into non-zero slot of downstr=
-eam port
-> >> https://gitlab.com/qemu-project/qemu/-/commit/ =20
-> > ca92eb5defcf9d1c2106341744a73a03cf26e824 =20
-> >>=20
-> >> hw/pci: add comment to explain checking for available function 0 in pc=
-i hotplug
-> >> https://gitlab.com/qemu-project/qemu/-/ =20
-> > commit/67d045a0ef5b9c5f871c3a1d87325a8a42d2b9d5 =20
-> >>=20
-> >> pci: don't skip function 0 occupancy verification for devfn auto assign
-> >> https://gitlab.com/qemu-project/qemu/-/commit/ =20
-> > e228d62b4af29bca698ec57efdceb46f392f5444 =20
-> >>=20
-> >> For example, if root-port.1 is a pcie-root-port, the following command=
- adds
-> >> a vhost-scsi-pci device to an invalid slot:
-> >>=20
-> >> (qemu) device_add vhost-scsi-pci,id=3Dscsi01,wwpn=3Dnaa.5001405324af09=
-85,bus=3Droot-port.1,addr=3D01.0
-> >> warning: PCI: slot 1 is not valid for vhost-scsi-pci, parent device on=
-ly allows plugging into slot 0. =20
-> >=20
-> > This rather looks like it should be a fatal error, not a mere warning.
-> >=20
-> > If I follow the commit ca92eb5def it links to https://bugzilla.redhat.c=
-om/show_bug.cgi?id=3D2128929
-> > which states that this configuration is going to lead to a crash in
-> > QEMU on guest OS shutdown. IMHO that crash is sufficient to justify
-> > making this a fatal error.
-> >=20
-> > If we actually wanted this to remain a warning, then that shutdown
-> > crash would need to be fixed.
-> >  =20
->=20
-> Thank you very much!
->=20
-> I see that the issue has been fixed. The ticket mentions the following.
->=20
-> "What I am observing is that it seems when the slot ID !=3D 0, the guest =
-OS seems
-> to ignore this and we never seem to hit ich9_pm_device_unplug_cb()."
->=20
-> Based on my experience and evaluation, ACPI-based hotplug is more likely =
-to
-> encounter an issue where the guest VM does not respond to an unplug opera=
-tion.
+C.
 
-I'm not sure it's a good idea to delete device when guest still thinks it's=
- there
-(you can make guesses on QEMU side if it's in use, how useful those are is =
-questionable).
 
-as far as I know, ACPI hotplug has no notion of surprise removal (pls educa=
-te me if it's not the case),
-so I wouldn't do what you are proposing here at all, it's basically asking =
-for disaster to happen.
-And all this is basically for dealing with abused qemu flexibility.
-
-Please (re)formulate usecase and make it more clear as what is eludes me
-no matter how many times i've read this cover letter.
-
-On positive note:
-
-What you can try to implement is native PCI-E support for surprise removal.
-How hard that would be I don't know. And I would well expect if one deviate=
-s from
-real hw expectations/configs (such as not 0 slot/partial func removal),
-one would quickly stumble upon issues as  that's not what what vendors writ=
-e/test
-drivers for.
-
-Even if it's not likely to be used in practice (guest still might not suppo=
-rt it),
-it may serve as test-bed for guest drivers.
-
-> Thank you very much!
->=20
-> Dongli Zhang
->=20
+> +    if (ret) {
+>           /* Try to set the device in some good state */
+> -        ret = -errno;
+> -
+>           if (recover_state == VFIO_DEVICE_STATE_ERROR) {
+> -            error_setg_errno(errp, errno,
+> +            error_setg_errno(errp, -ret,
+>                                "%s Recover state is ERROR. Resetting device",
+>                                error_prefix);
+> -
+>               goto reset_device;
+>           }
+>   
+> -        error_setg_errno(errp, errno,
+> +        error_setg_errno(errp, -ret,
+>                            "%s Setting device in recover state %s",
+>                            error_prefix, mig_state_to_str(recover_state));
+>   
+>           mig_state->device_state = recover_state;
+> -        if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> -            ret = -errno;
+> +        int recover_ret = vbasedev->io_ops->device_feature(vbasedev, feature);
+> +        if (recover_ret) {
+>               /*
+>                * If setting the device in recover state fails, report
+>                * the error here and propagate the first error.
+>                */
+>               error_report(
+>                   "%s: Failed setting device in recover state, err: %s. Resetting device",
+> -                         vbasedev->name, strerror(errno));
+> -
+> +                         vbasedev->name, strerror(-recover_ret));
+>               goto reset_device;
+>           }
+>   
+> @@ -347,13 +344,13 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>       feature->flags =
+>           VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIG_DATA_SIZE;
+>   
+> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
+> +    if (ret) {
+>           /*
+>            * If getting pending migration size fails, VFIO_MIG_STOP_COPY_SIZE
+>            * is reported so downtime limit won't be violated.
+>            */
+>           migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
+> -        ret = -errno;
+>           warn_report_once("VFIO device %s ioctl(VFIO_DEVICE_FEATURE) on "
+>                            "VFIO_DEVICE_FEATURE_MIG_DATA_SIZE failed (%d)",
+>                            vbasedev->name, ret);
+> @@ -1094,11 +1091,13 @@ static int vfio_migration_query_flags(VFIODevice *vbasedev, uint64_t *mig_flags)
+>       struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
+>       struct vfio_device_feature_migration *mig =
+>           (struct vfio_device_feature_migration *)feature->data;
+> +    int ret;
+>   
+>       feature->argsz = sizeof(buf);
+>       feature->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_MIGRATION;
+> -    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+> -        return -errno;
+> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
+> +    if (ret) {
+> +        return ret;
+>       }
+>   
+>       *mig_flags = mig->flags;
+> @@ -1137,7 +1136,7 @@ static bool vfio_dma_logging_supported(VFIODevice *vbasedev)
+>       feature->flags = VFIO_DEVICE_FEATURE_PROBE |
+>                        VFIO_DEVICE_FEATURE_DMA_LOGGING_START;
+>   
+> -    return !ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
+> +    return !vbasedev->io_ops->device_feature(vbasedev, feature);
+>   }
+>   
+>   static bool vfio_migration_init(VFIODevice *vbasedev, Error **errp)
 
 
