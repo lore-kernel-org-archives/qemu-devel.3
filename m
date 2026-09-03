@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7835C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6677DC624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 11:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x25aJ-0005Zw-Ph; Thu, 03 Sep 2026 07:26:23 -0400
+	id 1x25ab-0005lt-4R; Thu, 03 Sep 2026 07:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x25aH-0005Z8-If; Thu, 03 Sep 2026 07:26:21 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1x25aZ-0005lV-Ut; Thu, 03 Sep 2026 07:26:39 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x25aF-0006f9-32; Thu, 03 Sep 2026 07:26:21 -0400
+ id 1x25aY-0006k3-4z; Thu, 03 Sep 2026 07:26:39 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=H5wtvw2Zm3EhphL6fUinup89f+lWruBcmLLm891i6ieWNxY2zp+usRr5GXcoq89ds7xw1un7iwti0o7dJwl5wwAriUnRDLkrhFesta4qKErHrdqiYKXov8VIJxz5zNBxAZliEMpnkC/bQ4ZKOwBc4fiT44UyVwz+w7lC3UczNsmVgBCTzvwAMka1U4t1wTpzwD4GoE0LMU0c2rmiPIdMYDENKsy1Qeqg+p3gs40y9jCA92Mv+aMfhrPUSVDeF1suiK0iU+3xXE2li8sHqV0moYqYAwfKUo3tPCDw+TcLNX1LldKRhVkKsAoz16s+loIGKbrIdMyQ9xi08QQm8iIC8Q==
+ b=g32bTiW2dR2W2Yyo4aD1GZUiOMuURwmh2PNrmQf1ogksu1Ne5Q406Y1s4j3GdZr/nLGQvJDLnFRbzuK2cSU3ZPnRr8a/AJyty/PHfqA2NDcfSKU0MeBmKriL5ICeAW1COmlzf3keCUEZmn2Zv66sJsEWh4Jeg6eRISGRBl++aZXRoPJPBYjQwXvSXbAspvUdNaBiC8rlTmdEbhxkDPYIAKiBSzs4cQjbaAjOzpPsbDH/gdBMn5q6ZT8frDeUnxFl8cTwEWoEYE9uV+h5WC5g4wu27MGRXE5aQ2up8AcIYwl7r2a1DK70qMkA6cPfHsiCHphj50azgicMWp5+qbVCbg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RIXfz26wMs8qpMe+eyckF0vSRoNrJQKNNhNJMc0rPhE=;
- b=ssearvOJXfEYg8JZ4IBBfk28IQBNNxoFA60L8yyxd8L+dNGtMjCW6JIabodLafd99e+daMINqCKPEMMdAcQoEnv65t4IxO0dUt/kzAUr6qjA/YM3VIiJt25bW0b2E1v3cHbaZMhoPCiZT17sxoK5H9NNwq89sqqwMcIxOnLkQRo5dDSshulrizrs9lbZ7dpi3hWbpPAT2SfOcKVsTiL6EpGvYoP3IA6aiVVmNRZ+qehpD+0v1a5FlrBttHhei4H2PIfLcDcYfXbpp97vOzfn1Xr0iMfCHUXf2e8oeUXW/LiTM3PFvh6HH3rm606w5bUcnwGNdSq330v5bQUSuppmRg==
+ bh=ZR4Mjz48tSo4TuJBz765Fzw8es52vYe4v3Udzse/rSo=;
+ b=ABwmNKobWKke2DqiuRc4LgdAUDTIV1A+08zUeFPawSxTzOxEvAIOLzwFhqslXFq+9HkuE/Oel5rw38hFsBTItdbZW0XWQ2Ka1Dy1QaQUVNcvZDTiZrCOwG1o1xgyiyOampBqIfBZp9IlN5eDRjbrwAyemF4y37Dk46itNEofLuyNNjyuTUPOacAi+c2r4n3MFiEnFr6KrFmIoze7jfzCxo0bsGMvqSiViivLRM3VN8DFPGXsVvGDfCyHhFzpjH+UBgsFrFGCTkE9dkHwI8VCCGsyqnm3VblC+6AK53n3QtniB0zOfa7SqHV2f4QodOZZDPjcJf9zAT/8Vh1zZ73i1Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,28 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RIXfz26wMs8qpMe+eyckF0vSRoNrJQKNNhNJMc0rPhE=;
- b=VfZpve/xXCee5Z9pR5tAD+7GSaPx+QsHNk0eRkbGpQIbcDp7gQ/PHZr5PyRyTFQgMNm4GTBjMwv6dU1nepn+I6XkWnmsqWGqYfM/MmHleh3ltaJPD/py1QQ4fyQP0I00T+8EOP4Oow25b0A8xq1wubw2onV4Xaic4DVAPdqYL2/2S++U+obnrxulOAwEsEHBrnfUkSBmrY1SDCgEqaVkXVTeQbJlM/zom9+Asw0a31GgPD1sykh/MB+pPIWcR1nzb4H/gP9P2R6yd1muewKMzV6xWWqvmrRDGUrZHtVEROTljPsmbN0uad4bkBzgAl9Ylx71MtlxFmAkt2l6LE6npw==
+ bh=ZR4Mjz48tSo4TuJBz765Fzw8es52vYe4v3Udzse/rSo=;
+ b=aUBoBzYEkywqtf9/l/7+glXy38EDNTFw4YR6PD9av9TOGTX9KdxQ+XitfZnjZF5Zi7HyRBB5415vNeOBha8czJf7kFRmTQ4Y6WRtiF7LTjim3wbDKq1seeisw3lW58mJ+Z03iXGLTtHQNN6Sfa1U6DaGbp6BXHQlitgEiI9k5n58fNhQQQi+M2AXW3+3N89JXKz/JeMEYDVKwDI8kE7uTDlzGZx5Rjfsp3+3nFo72PWorTy4rsKIgpSUdUG+bYB3N253amxW/DQCf2JEHtFqz2pmPIdH6ybslmmfpYQnE26rcgfIXfmioFzpjyfQU2qql5qz4XFTmiVETFiL5qJ+lA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYZPR02MB6358.apcprd02.prod.outlook.com (2603:1096:400:419::9) with
+ by OSNPR02MB8962.apcprd02.prod.outlook.com (2603:1096:604:45b::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
- 2026 11:26:06 +0000
+ 2026 11:26:28 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Thu, 3 Sep 2026
- 11:26:06 +0000
+ 11:26:27 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- qemu-block@nongnu.org
-Subject: [PATCH 07/33] tests/qtest: Add Synopsys DesignWare MCI coverage
-Date: Thu,  3 Sep 2026 19:24:47 +0800
-Message-ID: <20260903112532.3276678-8-bin.meng@processmission.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-arm@nongnu.org
+Subject: [PATCH 19/33] hw/arm: phytium: Select the Phytium E2000 PBR boot
+ medium
+Date: Thu,  3 Sep 2026 19:24:59 +0800
+Message-ID: <20260903112532.3276678-20-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903112532.3276678-1-bin.meng@processmission.com>
 References: <20260903112532.3276678-1-bin.meng@processmission.com>
@@ -65,66 +64,67 @@ X-ClientProxiedBy: TY4P286CA0026.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYZPR02MB6358:EE_
-X-MS-Office365-Filtering-Correlation-Id: e69f1c2c-b608-4b58-fbb3-08df09ae24ed
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|OSNPR02MB8962:EE_
+X-MS-Office365-Filtering-Correlation-Id: 934f52c8-253d-431c-7042-08df09ae31f1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|1800799024|376014|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 3HqofjRaThmC9Q5JGtBXOhI8Ts+z/7xZO2xQjy0+10svOtHGR/u6YFauASP+o7NBBqc0WEIgxQcXD3ovqM7qRoe2KZdajPGSyWvyv1vgYFEzQNIplxn6g99asmMKYZVVTnq1bjIyrUDrxQGzkHCySNC1c8BoWCq8UQDpBTFaRUmGGFBLdQMKalPdkHeYI4q2mjNrVnZPuSNxCZi6r3FKAPsUfj3oka6LXU96AyRgLwOc5C2uiGgWVzszyr7N8B1iCTi71cvEML+dP1lO/qafMxURhdR/8yyHFiBPRpilFwS4NcZQeuhuE+gub+EW+EtKvXRV8LbbZSvJ9odNWZe0+uSgoGbTwVcAOCUncRBYQb0OUoP/vyQPdMj9LUtgM2zbVHPu1ihyKzYbGmQDt+4TZezRqP0dwa/aTuCGJb1tYupuJ5gLqGi6qBvAhcufG8mUPs/maTtw0OKYmXe/qOLnqjGzIl6xuAwvd/nJ+5d1ygjgevVtEv/vgZMc4T55jwB+6pdLcw5VNDJ1GI15v64d0+UMpdaP8z4NDwO9cIwHaHcFAm2k0cEIPq+sP87H+0WbUFhLWNEQ5dCnLqnNwDYL44PbAnZ79QvYYxVe9gWK3D4TZ90nERUvqxG4lpWb7qAcfqU3lKzuiwvOL8YzouePVCGn3r2T2mVXKA9BMJU27u8=
+ ARA:13230040|1800799024|376014|23010399003|366016|10067099003|22082099003|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: haSsvMUxLtnVXKcwne8k9ZvPJxcw99kgtqiyveF1pbXKjYU3Mgp4C/N3e2vGr9ZqmM072/M8QbLVJUHof8vcha5qrsnpIK+8m79JqeyJpDQSxQBr0FWgTZdbdSGtVtB6kdyXTJASMrxLLP4JDBqfdIHdAmg/2qIk1hqBLgduTZhHlLwr9qeTOuY1YWHq2l0JAC5KcJOsDqDXg4WXY4CrcVUes4Sxkz6sNR9Y7L/z5/bMuYYZNV5+Pdg2it70CZU4X1056fj5+1VAOLGvWmnPkYH/RtnS2xmtajYj911tuIvE0GhcgKjuoII8GqIW3UAk14+pOnzFxBL7ljER7QsyhHsyk/u66T4jQ1q8trc/eMw4D4FfczcmM4qub8CoF7c9GzQ+fLGm45v5h5GsfeSHCRCmWqoOlkodJ/nV/6iDt6kthZ8NZRjNiWMD3TrdHolue6lXuV2P26+JgSkkftBqC7in9HKqTpbyEWVCDUrIOm1ANCqd2j8rqlbSiuZ+TBtOFBavZfMmTsaWKvaVb6IPOIq6/Sx3w9Sra4Zwq8YK2+5nWKQcL9tkapOMQkoKHopJ9aczvhUM4RqzR2VTJ1CCckYOVLDg7VyX8DF3N1dwYtbN8mwOjp/njlkEswIwbsSdKIYIZwRjw3MJ5/pLaH3UgHXntWAJK0hZ+MYFxBHhrtA=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(56012099006)(10067099003)(22082099003)(18002099003);
+ SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(22082099003)(18002099003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?r2shJpYOdHg9XAgm7vsqS8wnoSHi1kaGLiDNUWznb8PQc2HFk79kM90aMAEk?=
- =?us-ascii?Q?sPzkaOqjceN7e0rXjau828jDN89I/Oh8xSDJFoG73ommfll3oGM/A/Klp3m4?=
- =?us-ascii?Q?TiSrBs1wBRQ3Xb+3vEeppYonL5ei5tjmDftdzpiVDXe3BgfiZQcywCOW/ePl?=
- =?us-ascii?Q?fpnqApSWs25zQqKSZDXv6tKgOc+b66ypmlMwvn2R40c8sRbkh2L1cyp8bbHs?=
- =?us-ascii?Q?zu9TJRkAZC0etoWi4Gq6nJfS10feH+KCHzYub7vC3U4XmCYTR3hFockAwT6U?=
- =?us-ascii?Q?ELX8jjlmQL32uMoj1InNVjIiqnrwJj1CDNHpuqND7s26oTOh11dhLL9DUl+o?=
- =?us-ascii?Q?p9yMqIsE64yFxeWuY5qK7GPtneXfkSX2ZaVFqneJyfYeUuf7H34nfyBzh81H?=
- =?us-ascii?Q?rc7dKGsJ8uvuKsUStq5dUQ05unf9FMBV6sZPTCoiRUAtSs+SxPphP/6TFvSw?=
- =?us-ascii?Q?mx1fpZ4KKBdNzwtmko9xvP9wMiX4iE4w6L0i/4uKRKkD87Mc4IkJ/aQTa2S8?=
- =?us-ascii?Q?BngSMvYIIaF/db3zIdQlSaKtHpHq6S0QiEP98K5FrvDbAtlBfG3BpbKKoR1l?=
- =?us-ascii?Q?kYXNXGszyuyUbT+JWO/rPQlcWvKVMTNsdgKtfhtS3Krzuh8bwZNiSdtyXptW?=
- =?us-ascii?Q?Vqu07mrBiyilQg0kGvbI3Vx9o1hcqwu31++ayQdq3SdzFVra7VmjkAGVkw7x?=
- =?us-ascii?Q?rvRNa1jO3Sh/aku8ywGZfTCPdH8WWdgeZGlNdqsBGCt6zD0TLhmP/l7qwCA+?=
- =?us-ascii?Q?GQG4/wMy6Y3n73BaMGSL3kQw0VCPLQdc+i9a0IHQC0NYnX72dre74NLq7Lj9?=
- =?us-ascii?Q?/arKXHF64DcaytoY8XrV965N9H13DIjKJaBXqttdQKREnPB7J6Pxi8vsJhl1?=
- =?us-ascii?Q?QJohT+gcx2rYpLmuTYINbGtbwLHkIFcooPHrsMVfhKkuropVKO9Z1ZF2Xyw0?=
- =?us-ascii?Q?n4aB+ARlp7+C32jbdZRmC46oA6RNhZWO/xVT8eTzIby3FGr/hx4+98WMkOzF?=
- =?us-ascii?Q?M7hM1ywIeObylaROZ9xQXClaljXINea5CQt3btc0v1sIa9KKHFXf0Ti/us8x?=
- =?us-ascii?Q?g9Scnzm6NKNVHtDZLAmmDQHyVxqirBzLX4woApWaeehZ+wGxkJotOLwFPUKo?=
- =?us-ascii?Q?5dVwPbUvx4uBUk+9hmncxEp/FfonKUyRtDjyRIkq2TjW4UaLd6GUqpBu1YPo?=
- =?us-ascii?Q?035Fh8ZYAc+tX7MelFq/dZZZe+WKJ+TG+FkiFbDh+1MtYSxvRd/4axZEOz52?=
- =?us-ascii?Q?2+bXgqWuzu81nR6xCnx4FDhHYFtllql0UkPc/Opfk/IQ4TiLQWI/bVkDg+BP?=
- =?us-ascii?Q?DCTZzR3IW3TvlGN/KbsHU0hWYWqUNPzzkvpxFRC7EVH8JyW8gQGy5dn0z+e4?=
- =?us-ascii?Q?oTP+2WLAc74zdp06HQHKfht/3W14HqlZZyX/8gVMuryZGsDCNSZvGGEq6LXM?=
- =?us-ascii?Q?iLNFKzTkuhkBa59ykLB6Cmb2RBC/Iiw5HSp4BC3Rpy4WFe8hb/HTlf0ncR4j?=
- =?us-ascii?Q?cH93DtZ5yfuJP5/R8U9X2pQCztFaq70Bxt97+3lN2xOt62ZxOoEiBdDWG87Z?=
- =?us-ascii?Q?OWXb/AvuhVBbx/bxay9jvaG/YyjcODS2zVAilwGY+OHmXIbbuoOEQlqajIZY?=
- =?us-ascii?Q?Ij6TVWS42BUpFDpV6oTTeGxvIQ0xJeULdK0/efv5erRHHHGdwifkdx7Gswze?=
- =?us-ascii?Q?WO5KPxHLq1N99tS21abaU57g3OsBEJ/HQx69tE6fVlfwR5jvK7bNFjyNrlS8?=
- =?us-ascii?Q?I4heH2NXyGP88PnmOAQ9RcJ0Ncj+vcI=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?rtZx/FQlN/hnbsx5B3NIB9qV8FC2AARhB5lFkA8zFyDMF0QlOe/OhVjqQidm?=
+ =?us-ascii?Q?aad7cFr2tU10/z1mpEgXWwbtdeSKQBhrzIoNLiZyTodWpWoz2s2B1RwGJ5Ev?=
+ =?us-ascii?Q?IQdX3EUfnYLr5PgZjqedv2sqd3KP83axh6dayfY1lMslx4fnwyPD0kuoOBiA?=
+ =?us-ascii?Q?GKS9g9RscoSJMoQKRDssGlNEX5e/U6iKmP0wmuyhIYV1Ncd6Agmj5xHntj+C?=
+ =?us-ascii?Q?zyWPUi7Od4QXzJAd8Ph5WKBxTm9vS2jrYm/B9t57SizvxZ8hBpLDE917VIEq?=
+ =?us-ascii?Q?DDVZFjYAQvet0XRgy2Uk/63sTySDo0tboi9xT+TUO/iq5Ujv3Jdk/xmQ8g1I?=
+ =?us-ascii?Q?bdsadEm89177YJP8nSBAsycOOPa/WZjJ7dXhwGzUyJYQ0q8CtWSnGxUN0gf3?=
+ =?us-ascii?Q?xC4Cds7yzxZ0P56T/11qf8FnSgT80l8WSIIW3asGjXM4JjbTyDnzkY7/bhOf?=
+ =?us-ascii?Q?jsAZEtKuVJsglRS0rSJ+KYeUdDbNmdxvNsF36nh4i1qIvHhSsTKQnYL9sVQR?=
+ =?us-ascii?Q?kJV/8p7icPDEkI3z2907BuVsDHP5rKWGIj/M+pyp7RdvZ2xvfHMSJvRGYPjh?=
+ =?us-ascii?Q?3c4gVaFTiOt4LqCDP2rSssWzK6UXyAxNnYYM58GEPEQxyzZVTR20/iGnSghl?=
+ =?us-ascii?Q?RkJpPuFJFBnSf8++aByHnYxAKRFeiQIW5zhYstDEcNHK36S8dEqJ4RAUYSRk?=
+ =?us-ascii?Q?YDHONyqQlmQmLj+9gBXSVtU9/QwE0VNDPLOD0gUr0JmR+11fp2XL9SkqvwnD?=
+ =?us-ascii?Q?J6UsBNiEMvTzQNjcF9ihR2k2YIAI2DmUDMkOQTHNT6rzAGT8LrRwEVAaRM9e?=
+ =?us-ascii?Q?hEo6hd6sP0/fK3IS6Ux23aYQGxKNcBMLiLX2RuhChAWOgKJtco3+XI69Zxb6?=
+ =?us-ascii?Q?ceAYgr7JJT3FW9Z+2WtmmlhtND6Ok5leheXu/IpEYZVOii4RGLs8znpyKu+A?=
+ =?us-ascii?Q?KTzd+1fq0gP8U+fpgCILTTzPR5kn7aNXkbAOm6TTgeZ6e39jeATQyjzn5AJe?=
+ =?us-ascii?Q?FsuV6uakteutj3jhsYH/Oltr/NPXZwzaYoINt5RmXL4YoZAjdYklm5mp3WQU?=
+ =?us-ascii?Q?XzXbFM7K06YCnIWWYmvnZSi2ClH//VQnt/Hvcva3IG9HWwNDtK7wvQLW54Gs?=
+ =?us-ascii?Q?c9dGDE3lmwUTm4o4dSAFts6Q8h7xIXj9mbR8KY8U1B2DgTIbdNZTtI9SMDe5?=
+ =?us-ascii?Q?CRZHG2903tcITg3mVGReWRPz0qc6i46HpEjaT0SQ102QlC7OiY1bwsUmKW4t?=
+ =?us-ascii?Q?vQ04Hef913ww3Yt/JCXEl7tOqNxf1n0/2hYQPh0MIxUsDCCD61B+/vHhwWCB?=
+ =?us-ascii?Q?RAufWEf4AjndxycZFvABeZKnEYpldLghNiroEF5OMzoMBI+l7VY8408DeaGQ?=
+ =?us-ascii?Q?Uj8rp7GQgG+Q/DO1r6XjI2dcGzEWCfqYwIKFgO9QhJHccr1wVIqwAbti6wm5?=
+ =?us-ascii?Q?56Srm+7uaxjgavP1BaGr9jKZkcnyy3Say8cJ+9oZTKVYAqp7Kn5L9ZwUxkjP?=
+ =?us-ascii?Q?KjHL05eTLtT0s8k5PXhkolI5G0jsbYTjrN4f1YDB6I2LqRgCkDmOFUugy//Q?=
+ =?us-ascii?Q?VMCZoU22KpCOvmNw87wLx6C5f8xnsDVka/bRNwNvYi8iwGIPnSI3uN/sykia?=
+ =?us-ascii?Q?yadsvR8o7+lGFEFtHc1cwvlN4HhITt4tO9Q6JB9/kMagHvLvrlNdRSdHdiFv?=
+ =?us-ascii?Q?Rt2kt2iQbVMAuUhL0oTC21RlNDgEja3afumnnt8hV2966SXPnLrsAAkba5OO?=
+ =?us-ascii?Q?UawepzWWbsQg4WiiHdqlgbLUFXf99Qk=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e69f1c2c-b608-4b58-fbb3-08df09ae24ed
+X-MS-Exchange-CrossTenant-Network-Message-Id: 934f52c8-253d-431c-7042-08df09ae31f1
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 11:26:06.0224 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 11:26:27.8935 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RVAMGS59wC9yTF3Z887iMz7sVpGgkaM7HQE8yBW7QrFhOuV0XYq2pqfbsTyl5OfaCaHK9wEHjBJ0SWMf3HNSYsbLqJDsEUP6GnA1wHj2C/s=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6358
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: kBg3dH1S5rATHEpOUNz09y8iW2rvUbZmlk0AVrWZFPtggEd6oFkqJ1iPZQObMW1K3kjWOJ8CxgOO0oTJ0qN/9ewD/XtH3CuMY/EPIdAAPZU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSNPR02MB8962
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,467 +141,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exercise the reusable DesignWare MCI behavior through the Phytium Pi
-board integration. Cover register reset and interrupt handling, 64-bit
-IDMAC write/read and suspend/resume paths, and FIFO PIO transfers
-against an SD image.
+Introduce an abstract E2000 machine class and keep the Phytium Pi
+board strap fixed to SD0. Pass the selected backend and boot-mode
+property to the PBR device so firmware-visible boot-media state is
+owned by PBR rather than a user-settable machine option.
+
+The class-level selection also provides the board-specific hook
+required by a later E2000Q COMe machine without allowing either
+board to change its physical boot strap.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- MAINTAINERS               |   1 +
- tests/qtest/dw_mci-test.c | 417 ++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build   |   1 +
- 3 files changed, 419 insertions(+)
- create mode 100644 tests/qtest/dw_mci-test.c
+ hw/arm/phytium_e2000.c | 84 +++++++++++++++++++++++++++++++-----------
+ 1 file changed, 62 insertions(+), 22 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1ea3af260f..c915c5f996 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2417,6 +2417,7 @@ F: hw/sd/core.c
- F: hw/sd/dw_mci.c
- F: hw/sd/sd*
- F: hw/sd/ssi-sd.c
-+F: tests/qtest/dw_mci-test.c
- F: tests/qtest/fuzz-sdcard-test.c
- F: tests/qtest/sdhci-test.c
+diff --git a/hw/arm/phytium_e2000.c b/hw/arm/phytium_e2000.c
+index 1f2642df13..fe362dd4bd 100644
+--- a/hw/arm/phytium_e2000.c
++++ b/hw/arm/phytium_e2000.c
+@@ -44,8 +44,12 @@
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/gtimer.h"
  
-diff --git a/tests/qtest/dw_mci-test.c b/tests/qtest/dw_mci-test.c
-new file mode 100644
-index 0000000000..c8c8b9be93
---- /dev/null
-+++ b/tests/qtest/dw_mci-test.c
-@@ -0,0 +1,417 @@
-+/*
-+ * QTests for the Synopsys DesignWare Multimedia Card Interface
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Author:
-+ *   Bin Meng <bin.meng@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++#define TYPE_PHYTIUM_E2000_MACHINE \
++    MACHINE_TYPE_NAME("phytium-e2000-base")
++OBJECT_DECLARE_TYPE(PhytiumE2000State, PhytiumE2000MachineClass,
++                    PHYTIUM_E2000_MACHINE)
 +
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "qemu/bswap.h"
-+#include "qemu/units.h"
-+#include "libqtest.h"
+ #define TYPE_PHYTIUM_PI MACHINE_TYPE_NAME("phytium-pi")
+-OBJECT_DECLARE_SIMPLE_TYPE(PhytiumE2000State, PHYTIUM_PI)
+ 
+ #define PHYTIUM_E2000_NUM_CPUS        4
+ #define PHYTIUM_E2000_NUM_IRQS        256
+@@ -100,7 +104,7 @@ enum {
+ };
+ 
+ struct PhytiumE2000State {
+-    MachineState parent;
++    MachineState parent_obj;
+     struct arm_boot_info bootinfo;
+     DeviceState *gic;
+     DeviceState *qspi;
+@@ -113,6 +117,13 @@ struct PhytiumE2000State {
+     MemoryRegion ram_high;
+ };
+ 
++struct PhytiumE2000MachineClass {
++    MachineClass parent_class;
 +
-+#define DW_MCI_BASE             0x28001000
++    const char *machine_name;
++    const char *pbr_boot_mode;
++};
 +
-+#define DW_MCI_CTRL             0x000
-+#define DW_MCI_PWREN            0x004
-+#define DW_MCI_TMOUT            0x014
-+#define DW_MCI_BLKSIZ           0x01c
-+#define DW_MCI_BYTCNT           0x020
-+#define DW_MCI_INTMASK          0x024
-+#define DW_MCI_CMDARG           0x028
-+#define DW_MCI_CMD              0x02c
-+#define DW_MCI_RESP0            0x030
-+#define DW_MCI_MINTSTS          0x040
-+#define DW_MCI_RINTSTS          0x044
-+#define DW_MCI_STATUS           0x048
-+#define DW_MCI_FIFOTH           0x04c
-+#define DW_MCI_CDETECT          0x050
-+#define DW_MCI_TCBCNT           0x05c
-+#define DW_MCI_TBBCNT           0x060
-+#define DW_MCI_DEBNCE           0x064
-+#define DW_MCI_VERID            0x06c
-+#define DW_MCI_HCON             0x070
-+#define DW_MCI_RST_N            0x078
-+#define DW_MCI_BMOD             0x080
-+#define DW_MCI_PLDMND           0x084
-+#define DW_MCI_DBADDRL          0x088
-+#define DW_MCI_DBADDRU          0x08c
-+#define DW_MCI_IDSTS            0x090
-+#define DW_MCI_IDINTEN          0x094
-+#define DW_MCI_DSCADDRL         0x098
-+#define DW_MCI_DSCADDRU         0x09c
-+#define DW_MCI_BUFADDRL         0x0a0
-+#define DW_MCI_BUFADDRU         0x0a4
-+#define DW_MCI_FIFO             0x200
-+
-+#define DW_MCI_CTRL_INT_ENABLE  BIT(4)
-+#define DW_MCI_CTRL_USE_IDMAC   BIT(25)
-+
-+#define DW_MCI_CMD_RESP_EXP     BIT(6)
-+#define DW_MCI_CMD_RESP_LONG    BIT(7)
-+#define DW_MCI_CMD_DAT_EXP      BIT(9)
-+#define DW_MCI_CMD_DAT_WR       BIT(10)
-+#define DW_MCI_CMD_UPD_CLK      BIT(21)
-+#define DW_MCI_CMD_START        BIT(31)
-+
-+#define DW_MCI_INT_CMD_DONE     BIT(2)
-+#define DW_MCI_INT_DATA_OVER    BIT(3)
-+#define DW_MCI_INT_RTO          BIT(8)
-+
-+#define DW_MCI_BMOD_ENABLE      BIT(7)
-+
-+#define DW_MCI_IDSTS_TI         BIT(0)
-+#define DW_MCI_IDSTS_RI         BIT(1)
-+#define DW_MCI_IDSTS_DU         BIT(4)
-+#define DW_MCI_IDSTS_NI         BIT(8)
-+#define DW_MCI_IDSTS_AI         BIT(9)
-+
-+#define DW_MCI_IDMAC_LD         BIT(2)
-+#define DW_MCI_IDMAC_FS         BIT(3)
-+#define DW_MCI_IDMAC_OWN        BIT(31)
-+
-+#define DW_MCI_DESC_ADDR        0x80010000
-+#define DW_MCI_DATA_ADDR        0x80011000
-+#define DW_MCI_READ_ADDR        0x80012000
-+#define DW_MCI_BLOCK_SIZE       512
-+#define DW_MCI_IMAGE_SIZE       (1 * MiB)
-+
-+static QTestState *dw_mci_start(const char *sd_path)
+ /*
+  * Keep the physical addresses used by the vendor firmware even before every
+  * device behind them is modeled. In particular, boot SRAM carries PBR/PBF
+@@ -436,11 +447,16 @@ static void phytium_e2000_create_pcie(PhytiumE2000State *s)
+     }
+ }
+ 
+-static void phytium_e2000_reject_legacy_firmware(MachineState *ms)
++static void phytium_e2000_reject_legacy_firmware(
++    MachineState *ms, PhytiumE2000MachineClass *pemc)
+ {
+     if (ms->firmware || drive_get(IF_PFLASH, 0, 0)) {
+-        error_report("phytium-pi: -bios and pflash firmware are not "
+-                     "supported; use an if=sd,index=0 image");
++        error_report("%s: -bios and pflash firmware are not supported; "
++                     "use an if=%s,index=0 image",
++                     pemc->machine_name,
++                     !strcmp(pemc->pbr_boot_mode,
++                             PHYTIUM_E2000_PBR_BOOT_MODE_QSPI) ?
++                         "mtd" : "sd");
+         exit(1);
+     }
+ }
+@@ -509,13 +525,17 @@ static void phytium_e2000_create_qspi(PhytiumE2000State *s)
+ static bool phytium_e2000_create_pbr(PhytiumE2000State *s)
+ {
+     MachineState *ms = MACHINE(s);
++    PhytiumE2000MachineClass *pemc =
++        PHYTIUM_E2000_MACHINE_GET_CLASS(s);
+     DeviceState *dev = qdev_new(TYPE_PHYTIUM_E2000_PBR);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+     BlockBackend *boot_blk = NULL;
+     uint64_t cpu_mpidrs[PHYTIUM_E2000_NUM_CPUS];
+     int i;
+ 
+-    if (!ms->kernel_filename) {
++    if (!ms->kernel_filename &&
++        !strcmp(pemc->pbr_boot_mode,
++                PHYTIUM_E2000_PBR_BOOT_MODE_SD0)) {
+         boot_blk = phytium_e2000_sd_blk(0);
+     }
+ 
+@@ -523,8 +543,7 @@ static bool phytium_e2000_create_pbr(PhytiumE2000State *s)
+         cpu_mpidrs[i] = phytium_e2000_cpu_mp_affinity(i);
+     }
+ 
+-    qdev_prop_set_string(dev, "boot-mode",
+-                         PHYTIUM_E2000_PBR_BOOT_MODE_SD0);
++    qdev_prop_set_string(dev, "boot-mode", pemc->pbr_boot_mode);
+     phytium_e2000_pbr_configure(PHYTIUM_E2000_PBR(dev), boot_blk,
+                                 phytium_e2000_memmap[
+                                     PHYTIUM_E2000_RAM].base,
+@@ -735,19 +754,21 @@ static void phytium_e2000_create_cpus(PhytiumE2000State *s,
+     }
+ }
+ 
+-static void phytium_pi_init(MachineState *ms)
++static void phytium_e2000_init(MachineState *ms)
+ {
+-    PhytiumE2000State *s = PHYTIUM_PI(ms);
++    PhytiumE2000State *s = PHYTIUM_E2000_MACHINE(ms);
++    PhytiumE2000MachineClass *pemc =
++        PHYTIUM_E2000_MACHINE_GET_CLASS(ms);
+     bool firmware_loaded;
+     int i;
+ 
+     if (kvm_enabled()) {
+-        error_report("phytium-pi: KVM is not supported");
++        error_report("%s: KVM is not supported", pemc->machine_name);
+         exit(1);
+     }
+ 
+     if (ms->smp.cpus > PHYTIUM_E2000_NUM_CPUS) {
+-        error_report("phytium-pi supports at most %d CPUs",
++        error_report("%s supports at most %d CPUs", pemc->machine_name,
+                      PHYTIUM_E2000_NUM_CPUS);
+         exit(1);
+     }
+@@ -755,11 +776,11 @@ static void phytium_pi_init(MachineState *ms)
+     if (ms->ram_size >
+         phytium_e2000_memmap[PHYTIUM_E2000_RAM].size +
+         phytium_e2000_memmap[PHYTIUM_E2000_RAM_HIGH].size) {
+-        error_report("phytium-pi supports at most 8 GiB RAM");
++        error_report("%s supports at most 8 GiB RAM", pemc->machine_name);
+         exit(1);
+     }
+ 
+-    phytium_e2000_reject_legacy_firmware(ms);
++    phytium_e2000_reject_legacy_firmware(ms, pemc);
+ 
+     phytium_e2000_create_ram(s);
+     phytium_e2000_create_unimplemented();
+@@ -822,7 +843,7 @@ static const CPUArchIdList *phytium_e2000_possible_cpu_arch_ids(MachineState *ms
+     return ms->possible_cpus;
+ }
+ 
+-static void phytium_pi_class_init(ObjectClass *oc, const void *data)
++static void phytium_e2000_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+     static const char * const valid_cpu_types[] = {
+@@ -831,8 +852,7 @@ static void phytium_pi_class_init(ObjectClass *oc, const void *data)
+         NULL,
+     };
+ 
+-    mc->init = phytium_pi_init;
+-    mc->desc = "Phytium Pi board (Phytium E2000Q)";
++    mc->init = phytium_e2000_init;
+     mc->default_cpu_type = ARM_CPU_TYPE_NAME("phytium-ftc664");
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->max_cpus = PHYTIUM_E2000_NUM_CPUS;
+@@ -844,22 +864,42 @@ static void phytium_pi_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_size = 2 * GiB;
+     mc->default_ram_id = "phytium-e2000.ram";
+     mc->minimum_page_bits = 12;
+-    mc->block_default_type = IF_SD;
+     mc->no_cdrom = 1;
+     mc->possible_cpu_arch_ids = phytium_e2000_possible_cpu_arch_ids;
+ }
+ 
++static void phytium_pi_class_init(ObjectClass *oc, const void *data)
 +{
-+    if (sd_path) {
-+        return qtest_initf("-machine phytium-pi -m 1G -display none "
-+                           "-drive file=%s,format=raw,if=sd,index=1",
-+                           sd_path);
-+    }
++    MachineClass *mc = MACHINE_CLASS(oc);
++    PhytiumE2000MachineClass *pemc =
++        PHYTIUM_E2000_MACHINE_CLASS(oc);
 +
-+    return qtest_init("-machine phytium-pi -m 1G -display none");
++    mc->desc = "Phytium Pi board (Phytium E2000Q)";
++    mc->block_default_type = IF_SD;
++    pemc->machine_name = "phytium-pi";
++    pemc->pbr_boot_mode = PHYTIUM_E2000_PBR_BOOT_MODE_SD0;
 +}
 +
-+static char *dw_mci_create_image(void)
-+{
-+    g_autoptr(GError) error = NULL;
-+    char *path = NULL;
-+    int fd;
-+    int ret;
++static const TypeInfo phytium_e2000_base_info = {
++    .name = TYPE_PHYTIUM_E2000_MACHINE,
++    .parent = TYPE_MACHINE,
++    .abstract = true,
++    .class_init = phytium_e2000_class_init,
++    .class_size = sizeof(PhytiumE2000MachineClass),
++    .instance_size = sizeof(PhytiumE2000State),
++};
 +
-+    fd = g_file_open_tmp("dw-mci-XXXXXX", &path, &error);
-+    g_assert_no_error(error);
-+    g_assert_cmpint(fd, >=, 0);
-+    ret = ftruncate(fd, DW_MCI_IMAGE_SIZE);
-+    g_assert_cmpint(ret, ==, 0);
-+    close(fd);
-+
-+    return path;
-+}
-+
-+static uint32_t dw_mci_command(QTestState *qts, uint32_t index,
-+                               uint32_t argument, uint32_t flags)
-+{
-+    uint32_t raw;
-+
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_RINTSTS, UINT32_MAX);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_CMDARG, argument);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_CMD,
-+                 DW_MCI_CMD_START | flags | index);
-+    raw = qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS);
-+    g_assert_cmphex(raw & DW_MCI_INT_CMD_DONE, ==, DW_MCI_INT_CMD_DONE);
-+    g_assert_cmphex(raw & DW_MCI_INT_RTO, ==, 0);
-+
-+    return qtest_readl(qts, DW_MCI_BASE + DW_MCI_RESP0);
-+}
-+
-+static void dw_mci_init_card(QTestState *qts)
-+{
-+    uint32_t rca;
-+
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_PWREN, 1);
-+    dw_mci_command(qts, 0, 0, 0);
-+    dw_mci_command(qts, 55, 0, DW_MCI_CMD_RESP_EXP);
-+    dw_mci_command(qts, 41, 0x41200000, DW_MCI_CMD_RESP_EXP);
-+    dw_mci_command(qts, 2, 0,
-+                   DW_MCI_CMD_RESP_EXP | DW_MCI_CMD_RESP_LONG);
-+    rca = dw_mci_command(qts, 3, 0, DW_MCI_CMD_RESP_EXP) & 0xffff0000;
-+    g_assert_cmphex(rca, !=, 0);
-+    dw_mci_command(qts, 7, rca, DW_MCI_CMD_RESP_EXP);
-+    dw_mci_command(qts, 16, DW_MCI_BLOCK_SIZE, DW_MCI_CMD_RESP_EXP);
-+}
-+
-+static void dw_mci_write_descriptor(QTestState *qts, uint32_t control,
-+                                    uint32_t buffer)
-+{
-+    qtest_writel(qts, DW_MCI_DESC_ADDR, control);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 4, 0);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 8, DW_MCI_BLOCK_SIZE);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 12, 0);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 16, buffer);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 20, 0);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 24, 0);
-+    qtest_writel(qts, DW_MCI_DESC_ADDR + 28, 0);
-+}
-+
-+static void dw_mci_prepare_idmac(QTestState *qts, uint32_t interrupts)
-+{
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_CTRL,
-+                 DW_MCI_CTRL_USE_IDMAC);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_BMOD,
-+                 DW_MCI_BMOD_ENABLE);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_BLKSIZ,
-+                 DW_MCI_BLOCK_SIZE);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_BYTCNT,
-+                 DW_MCI_BLOCK_SIZE);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_DBADDRL,
-+                 DW_MCI_DESC_ADDR);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_DBADDRU, 0);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_IDINTEN, interrupts);
-+}
-+
-+static void test_registers_and_irq(void)
-+{
-+    QTestState *qts = dw_mci_start(NULL);
-+
-+    qtest_irq_intercept_out_named(qts, "/machine/mci1", "sysbus-irq");
-+
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_CTRL), ==,
-+                    BIT(24));
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_STATUS) &
-+                    (BIT(1) | BIT(2)), ==, BIT(1) | BIT(2));
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_TMOUT), ==,
-+                    0xffffff40);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_BLKSIZ), ==,
-+                    DW_MCI_BLOCK_SIZE);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_BYTCNT), ==,
-+                    DW_MCI_BLOCK_SIZE);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_FIFOTH), ==,
-+                    0x01ff0000);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_CDETECT), ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DEBNCE), ==,
-+                    0x00ffffff);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_VERID), ==,
-+                    0x280a);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_HCON), ==,
-+                    0x08000080);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RST_N), ==, 1);
-+
-+    /* Exercise the 64-bit IDMAC layout selected by HCON.ADDR_CONFIG */
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_DBADDRL,
-+                 DW_MCI_DESC_ADDR + 3);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DBADDRL), ==,
-+                    DW_MCI_DESC_ADDR);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_DBADDRU, 1);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DBADDRU), ==, 1);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_IDINTEN,
-+                 DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_IDINTEN), ==,
-+                    DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DSCADDRU), ==, 0);
-+
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_RINTSTS, UINT32_MAX);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_CMD,
-+                 DW_MCI_CMD_START | DW_MCI_CMD_UPD_CLK);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS) &
-+                    DW_MCI_INT_CMD_DONE, ==, 0);
-+
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_CTRL,
-+                 DW_MCI_CTRL_INT_ENABLE);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_INTMASK,
-+                 DW_MCI_INT_CMD_DONE | DW_MCI_INT_RTO);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_CMD,
-+                 DW_MCI_CMD_START | DW_MCI_CMD_RESP_EXP);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_MINTSTS), ==,
-+                    DW_MCI_INT_CMD_DONE | DW_MCI_INT_RTO);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_RINTSTS,
-+                 DW_MCI_INT_CMD_DONE | DW_MCI_INT_RTO);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+
-+    qtest_system_reset(qts);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_CTRL), ==,
-+                    BIT(24));
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_BMOD), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DBADDRL), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DBADDRU), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_IDINTEN), ==, 0);
-+    qtest_quit(qts);
-+}
-+
-+static void test_idmac_write_and_read(void)
-+{
-+    g_autofree char *sd_path = dw_mci_create_image();
-+    uint8_t pattern[DW_MCI_BLOCK_SIZE];
-+    uint8_t actual[DW_MCI_BLOCK_SIZE];
-+    uint8_t zero[DW_MCI_BLOCK_SIZE] = { 0 };
-+    QTestState *qts = dw_mci_start(sd_path);
-+    uint32_t status;
-+    size_t i;
-+    ssize_t size;
-+    int fd;
-+
-+    qtest_irq_intercept_out_named(qts, "/machine/mci1", "sysbus-irq");
-+    dw_mci_init_card(qts);
-+
-+    for (i = 0; i < sizeof(pattern); i++) {
-+        pattern[i] = i ^ 0xa5;
-+    }
-+    qtest_memwrite(qts, DW_MCI_DATA_ADDR, pattern, sizeof(pattern));
-+    dw_mci_write_descriptor(qts,
-+                            DW_MCI_IDMAC_OWN | DW_MCI_IDMAC_FS |
-+                            DW_MCI_IDMAC_LD,
-+                            DW_MCI_DATA_ADDR);
-+    dw_mci_prepare_idmac(qts, DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI);
-+    dw_mci_command(qts, 24, 0,
-+                   DW_MCI_CMD_RESP_EXP | DW_MCI_CMD_DAT_EXP |
-+                   DW_MCI_CMD_DAT_WR);
-+
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_DESC_ADDR) &
-+                    DW_MCI_IDMAC_OWN, ==, 0);
-+    status = qtest_readl(qts, DW_MCI_BASE + DW_MCI_IDSTS);
-+    g_assert_cmphex(status & (DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI), ==,
-+                    DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DSCADDRL), ==,
-+                    DW_MCI_DESC_ADDR);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_DSCADDRU), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_BUFADDRL), ==,
-+                    DW_MCI_DATA_ADDR);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_BUFADDRU), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS) &
-+                    DW_MCI_INT_DATA_OVER, ==, DW_MCI_INT_DATA_OVER);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_IDSTS,
-+                 DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+
-+    qtest_memwrite(qts, DW_MCI_READ_ADDR, zero, sizeof(zero));
-+    dw_mci_write_descriptor(qts,
-+                            DW_MCI_IDMAC_OWN | DW_MCI_IDMAC_FS |
-+                            DW_MCI_IDMAC_LD,
-+                            DW_MCI_READ_ADDR);
-+    dw_mci_prepare_idmac(qts, DW_MCI_IDSTS_RI | DW_MCI_IDSTS_NI);
-+    dw_mci_command(qts, 17, 0,
-+                   DW_MCI_CMD_RESP_EXP | DW_MCI_CMD_DAT_EXP);
-+    qtest_memread(qts, DW_MCI_READ_ADDR, actual, sizeof(actual));
-+    g_assert_cmpmem(actual, sizeof(actual), pattern, sizeof(pattern));
-+    status = qtest_readl(qts, DW_MCI_BASE + DW_MCI_IDSTS);
-+    g_assert_cmphex(status & (DW_MCI_IDSTS_RI | DW_MCI_IDSTS_NI), ==,
-+                    DW_MCI_IDSTS_RI | DW_MCI_IDSTS_NI);
-+    qtest_quit(qts);
-+
-+    fd = open(sd_path, O_RDONLY);
-+    g_assert_cmpint(fd, >=, 0);
-+    size = read(fd, actual, sizeof(actual));
-+    close(fd);
-+    g_assert_cmpint(size, ==, sizeof(actual));
-+    g_assert_cmpmem(actual, sizeof(actual), pattern, sizeof(pattern));
-+    unlink(sd_path);
-+}
-+
-+static void test_idmac_suspend_and_resume(void)
-+{
-+    g_autofree char *sd_path = dw_mci_create_image();
-+    uint8_t pattern[DW_MCI_BLOCK_SIZE];
-+    QTestState *qts = dw_mci_start(sd_path);
-+    uint32_t status;
-+    size_t i;
-+
-+    qtest_irq_intercept_out_named(qts, "/machine/mci1", "sysbus-irq");
-+    dw_mci_init_card(qts);
-+
-+    for (i = 0; i < sizeof(pattern); i++) {
-+        pattern[i] = i ^ 0x69;
-+    }
-+    qtest_memwrite(qts, DW_MCI_DATA_ADDR, pattern, sizeof(pattern));
-+    dw_mci_write_descriptor(qts, 0, DW_MCI_DATA_ADDR);
-+    dw_mci_prepare_idmac(qts,
-+                         DW_MCI_IDSTS_TI | DW_MCI_IDSTS_DU |
-+                         DW_MCI_IDSTS_NI | DW_MCI_IDSTS_AI);
-+    dw_mci_command(qts, 24, 0,
-+                   DW_MCI_CMD_RESP_EXP | DW_MCI_CMD_DAT_EXP |
-+                   DW_MCI_CMD_DAT_WR);
-+
-+    status = qtest_readl(qts, DW_MCI_BASE + DW_MCI_IDSTS);
-+    g_assert_cmphex(status & (DW_MCI_IDSTS_DU | DW_MCI_IDSTS_AI), ==,
-+                    DW_MCI_IDSTS_DU | DW_MCI_IDSTS_AI);
-+    g_assert_cmphex((status >> 13) & 0xf, ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS) &
-+                    DW_MCI_INT_DATA_OVER, ==, 0);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_IDSTS,
-+                 DW_MCI_IDSTS_DU | DW_MCI_IDSTS_AI);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+    dw_mci_write_descriptor(qts,
-+                            DW_MCI_IDMAC_OWN | DW_MCI_IDMAC_FS |
-+                            DW_MCI_IDMAC_LD,
-+                            DW_MCI_DATA_ADDR);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_PLDMND, 0);
-+
-+    status = qtest_readl(qts, DW_MCI_BASE + DW_MCI_IDSTS);
-+    g_assert_cmphex(status & (DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI), ==,
-+                    DW_MCI_IDSTS_TI | DW_MCI_IDSTS_NI);
-+    g_assert_cmphex((status >> 13) & 0xf, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS) &
-+                    DW_MCI_INT_DATA_OVER, ==, DW_MCI_INT_DATA_OVER);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+
-+    qtest_quit(qts);
-+    unlink(sd_path);
-+}
-+
-+static void test_fifo_data_port(void)
-+{
-+    g_autofree char *sd_path = dw_mci_create_image();
-+    uint8_t pattern[DW_MCI_BLOCK_SIZE];
-+    uint8_t actual[DW_MCI_BLOCK_SIZE];
-+    QTestState *qts = dw_mci_start(sd_path);
-+    size_t i;
-+    ssize_t size;
-+    int fd;
-+
-+    dw_mci_init_card(qts);
-+    for (i = 0; i < sizeof(pattern); i++) {
-+        pattern[i] = i ^ 0x3c;
-+    }
-+
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_BLKSIZ, DW_MCI_BLOCK_SIZE);
-+    qtest_writel(qts, DW_MCI_BASE + DW_MCI_BYTCNT, DW_MCI_BLOCK_SIZE);
-+    dw_mci_command(qts, 24, 0,
-+                   DW_MCI_CMD_RESP_EXP | DW_MCI_CMD_DAT_EXP |
-+                   DW_MCI_CMD_DAT_WR);
-+    for (i = 0; i < sizeof(pattern); i += sizeof(uint32_t)) {
-+        qtest_writel(qts, DW_MCI_BASE + DW_MCI_FIFO + (i % 64),
-+                     ldl_le_p(pattern + i));
-+    }
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_TCBCNT), ==,
-+                    DW_MCI_BLOCK_SIZE);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_TBBCNT), ==,
-+                    DW_MCI_BLOCK_SIZE);
-+    g_assert_cmphex(qtest_readl(qts, DW_MCI_BASE + DW_MCI_RINTSTS) &
-+                    DW_MCI_INT_DATA_OVER, ==, DW_MCI_INT_DATA_OVER);
-+    qtest_quit(qts);
-+
-+    fd = open(sd_path, O_RDONLY);
-+    g_assert_cmpint(fd, >=, 0);
-+    size = read(fd, actual, sizeof(actual));
-+    close(fd);
-+    g_assert_cmpint(size, ==, sizeof(actual));
-+    g_assert_cmpmem(actual, sizeof(actual), pattern, sizeof(pattern));
-+    unlink(sd_path);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("dw-mci/registers-and-irq", test_registers_and_irq);
-+    qtest_add_func("dw-mci/idmac-write-and-read", test_idmac_write_and_read);
-+    qtest_add_func("dw-mci/idmac-suspend-and-resume",
-+                   test_idmac_suspend_and_resume);
-+    qtest_add_func("dw-mci/fifo-data-port", test_fifo_data_port);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 50a1a5272f..de47741ff1 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -279,6 +279,7 @@ qtests_aarch64 = \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
-   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
-+  (config_all_devices.has_key('CONFIG_PHYTIUM_E2000') ? ['dw_mci-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_ARM_VIRT') ?
-    ['iommu-smmuv3-test'] : []) + \
+ static const TypeInfo phytium_pi_info = {
+     .name = TYPE_PHYTIUM_PI,
+-    .parent = TYPE_MACHINE,
++    .parent = TYPE_PHYTIUM_E2000_MACHINE,
+     .class_init = phytium_pi_class_init,
+-    .instance_size = sizeof(PhytiumE2000State),
+     .interfaces = aarch64_machine_interfaces,
+ };
+ 
+-static void phytium_pi_machine_init(void)
++static void phytium_e2000_machine_init(void)
+ {
++    type_register_static(&phytium_e2000_base_info);
+     type_register_static(&phytium_pi_info);
+ }
+ 
+-type_init(phytium_pi_machine_init);
++type_init(phytium_e2000_machine_init);
 -- 
 2.53.0
 
