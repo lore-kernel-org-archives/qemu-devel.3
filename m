@@ -4,93 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CE0C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E42C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2DF0-0001cT-Ev; Thu, 03 Sep 2026 15:36:54 -0400
+	id 1x2DG0-0004Ch-Ry; Thu, 03 Sep 2026 15:37:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x2DEy-0001ba-OA
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:52 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1x2DEw-0004Mt-R9
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:52 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-398d2b28acfso144561a91.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x2DFz-00044Y-Ag
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:37:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x2DFx-0004Xu-Ji
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:37:55 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 683IChHq566352
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 19:37:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ KmpVMruxT6rvhDIfqh6o5p4BvGtD5b8Un4jGFcpxVOM=; b=SRon7OlwuFRBaz9m
+ j6jeZVaogMGpeAnLVLnFZKdKR2o+Itl+p860jSdzgZ0Ri266ffYkPohnWkEiLd0l
+ WXa8satQ4HWGHpoWCEXlrFLsyHhOxWpRLjMDItLS2P1zglIftDlucGE9S4Pj+ilz
+ idaCXPzcXGVaEQe8zIDiJ216KAFJ9OdpPrkPwsDuNiYsLIlfeHHjc6UtzfnquqdW
+ H0q28gsLIU03AnUSBwUB/LElOUpCVeshYoXgWRjUcfsPolxYqCYf1S6g3eRJmvqT
+ AalDQg4S5FIh7ZIlpRzNv7FNaqIBaLA/ueetiJvwaslngtjKVL6g/Vmx6s/7zexv
+ W8doCA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfdyp0bhb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 19:37:52 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-399311947f6so269890a91.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788464209; x=1789069009; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4s+gWx3Z7SGHYqFVsHJPwfsd2AZQGSH0lSxZmriyQ6E=;
- b=z2TReM3XDGxgrvHmqHMpDlXwOsP/F2/Sd+jj+4jKUXOV3Wcn9c4ft9KzlTVd+BLNQv
- 4kzqYiFgKdrzBn7L5tq5jEgAEipkJIitW74uAqhRc9TYQ6nwgw0WY+q0M/OOcLeU1oiE
- N/YiIfy4qscUf42jK24n9VaaTJQNm79Jm47tFDa/GqYR0xv1zDA0hufPduw4TnsWj10u
- lZ9/8GtYmNiLy0Jsga+F/WOmWnBUtUklCWk8QPUbcUSxQLQnOpk8k2omABJQNls3qUoT
- bmSKERtJQ7SKSCr8uDyUbPCQBa4phd6mOqqLGvrYpxkWwm/bkBmZGQj617g3NS0MvPeE
- llhA==
+ d=oss.qualcomm.com; s=google; t=1788464271; x=1789069071; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=KmpVMruxT6rvhDIfqh6o5p4BvGtD5b8Un4jGFcpxVOM=;
+ b=TS1v4SEhD93CibU26YkkLoYVwu8oW7ViZ9P8KmxfXW3n63B0Rqi3iO8A762AoHpzix
+ bj04mjVAJ9FMeFncy4P6BSTbhRFjvJZt+nEQ+t/H1StFaXGDKYfD4YFScpGD9d1pKjA9
+ vtZC4wKR2yc0So37MzzAGHZdeVUoxWC+yLQWFNZPb13lx3RWe5yMHwlhZgOm/LQX1Hhy
+ F9w/X155YB46LuQngqrn5v/PIKC5V0etqxnFGi4NT4xJJpoE5CN2DwNOwPRuUBfRPM9j
+ D/9yhGA95+tJqPo4AfyBzOJqGaJq1Ub9pmnbl/lUM1NlhILUD4QtLbpFvOtIR5FLkHe5
+ VyLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788464209; x=1789069009;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4s+gWx3Z7SGHYqFVsHJPwfsd2AZQGSH0lSxZmriyQ6E=;
- b=Ryt1tid2XeB54kds9UU+rlK00y+me3C8lsfqUyLRykBNvQvfnFMymgFrKsaA7OAslx
- 76XnvTON1b+nLPeVB5GVC4GQxjJ/rHA3P2QxBvFY5UdWs98caWWUxl+kiPDAyD+T3XSm
- c9vsLsqnySE+9X8YPqIrKmymi71ydDbrYCE8HW5FkMY0Gr3C46S8K1qHCNJhGc8QAtUE
- YZ2GUTLW0X3oo+UF3lKnKZsxZXpvSkrxuG8eaoQr2vPXLXOgbcYG6DmNEQy1TM7kUqLv
- 7k/MHntWAzpuH8awCt/LIkLISvvq0uRQX09XaMdtdw9xATD9VWIy/H5PHVNKWzenxbgM
- jIHw==
-X-Gm-Message-State: AFuF++nBPSkULR+h8dBeth+LaFYT8p8e47wqts1y4Fa3SvvFy4/Aak5m
- 58VL0rhY2PPlyQBOAQHiFvyFKQwvgLw9R/nyii5dHH1Do+3zZeP+qzBrlWJ1UWg2ElQ=
-X-Gm-Gg: AYBFou3AmD+Xp05649OtsqS/KKIvw7byW9DEZAUmSVyA39kFipj1OMOk9SfTiPWnD+V
- BC+sRQmNbHyeVrAGjsrknzO4FgF+dyp+q/pD5ZT80t+naLIDeOUC6FIp3iEKthmH6sJIe8x9ttQ
- 7K0OSAFIaSXAsUUR5Yl3zUbd/Xefr1MmCwSA6eArjqG5+PjLlMptN/9mwJL6gQYHCseFigwySNp
- mF6aAEdr3Q9fs7CaehlzoYsRsxOQN1YvUmJfJQNb/e0JbsNJktG6Lz/hu76VYoAvbj+xJhMCtKa
- /mp+pcDoeXDXZ8Zyyv8hg1WmZ38ZmSvVo7IYVcV8uaDpOqLGOldA2R8p19E8NTIRehlFR9sujzr
- s9VmnGQOD7YBXbM8re8BSWJaULmQ616raUPVW33wyK1/vV8jSuXLN5iOqRJYS1pB+OZLJ4pbenc
- pVZ6+0z2QKHHjkaEWItf0Xmbh6BoRP3VRm/1z229L2FI0dBq0bPDvkCkFhe3/fyUYkWTVw3dgmI
- sVXuCAYFwMXGI4=
-X-Received: by 2002:a17:90b:2e4b:b0:398:a145:5d3d with SMTP id
- 98e67ed59e1d1-39b26151b89mr1118745a91.6.1788464209329; 
- Thu, 03 Sep 2026 12:36:49 -0700 (PDT)
-Received: from p14s.cg.shawcable.net
- ([2604:3d09:148c:c800:40c0:ec33:6266:c275])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 12:36:48 -0700 (PDT)
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
- armbru@redhat.com, lorenzo.pieralisi@linaro.org, gshan@redhat.com,
- enju.kohei@fujitsu.com
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
- mathieu.poirier@linaro.org
-Subject: [RFC v4 20/24] hw/arm/virt: Use RAM instead of flash for confidential
- guest firmware
-Date: Thu,  3 Sep 2026 13:36:07 -0600
-Message-ID: <20260903193611.1058589-21-mathieu.poirier@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ d=1e100.net; s=20251104; t=1788464271; x=1789069071;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=KmpVMruxT6rvhDIfqh6o5p4BvGtD5b8Un4jGFcpxVOM=;
+ b=A2WJ6ww4uUwPNdwlTYypnP4ppQmNTcbECZVJakHD7Zd1FwTOUt2D9JlHf4rNp/jj5N
+ KYTQhNKpKAUf0YYttfG255UN30DgM4+36kQatWgmUmOHx+Q7hfQt40mGw0DyrapBINLP
+ 7oFmh2tf0DTnLNj+CV3UthZy7WlXSVZuhvmJ8sDjiXIH3DoTCqgNv55J/HZ3rkklbHBq
+ qKVDUPQfCcCy/XLJ3Ae/sNdgKJiYmtTOa/y74UMQ8G9Xt8apFpXvSixVULMX9k0imLeN
+ b56KXeXUnyLje80RUKvbB57dZCctdc8Z0rs9Tyr+s+gE2MpZxq7NONvE8uPKsWKnrh+Y
+ OboA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzy7x37QY5Ybwb5L7QeRT3iHqAxG0KrimBVDgJeqSnhRNZ5ingdoy80mUEerw1kmJA6aHQIbNBZRbhO@nongnu.org
+X-Gm-Message-State: AFuF++lYXd37FJBLtLAikDfC1AM3JjDIAqZizPdkkWkFQyNZHB9wkp02
+ h6nkiH1AUQSI5546rjn+GQWRAPGjInEUfF3C1FC2c7HD2x/7t+aFsYjtjSWsNewB6Jj1fDY/fhR
+ on7++DWTIa45d+G8azGUTf4yea2whOG7JT5ewhYxpGxR6Cxfqb9P+uphL7A==
+X-Gm-Gg: AYBFou0a3xissYogmtkazLXWfwuVlaEkp2+KIbK709KSbrlzGChtNmX4BdwEDywmRq+
+ eohApopho1u4gLQXWM/UZ84842l6ZlHwsNF/Sf99hNzE67hNN5exIhsYZJfYSQJqJoH8tcotCA4
+ caEIcpvnK5OvskKD6falSxmA4UjlTDBRMyi8BY9dPVnQ5dcFVsqrCBDZGNjpF/LlUO5eMFxr7Gk
+ SZM5Q98h0yDSzaKw1b1Lm6R3Y+yoF+uI5NOSt966RhSKZTJhSUbQrDI4IXilTENhHfSwqaIc1aH
+ o3K7rsoKGlA84kOseDr+zBxykPHBQCB/qrG2SQAwP38gjP19eK/ssXSHjgcYe/GM2dp1MHidq+G
+ y5mT8yLCGuwh+5bQjE1vzaVvKcZOm7Z3VFmyEf/0aR5EKQA5o7ERmpRtdxBJ4IIhHfLsf
+X-Received: by 2002:a17:90b:582d:b0:399:e97:8d5a with SMTP id
+ 98e67ed59e1d1-39b2627fe18mr1335937a91.25.1788464271475; 
+ Thu, 03 Sep 2026 12:37:51 -0700 (PDT)
+X-Received: by 2002:a17:90b:582d:b0:399:e97:8d5a with SMTP id
+ 98e67ed59e1d1-39b2627fe18mr1335866a91.25.1788464271027; 
+ Thu, 03 Sep 2026 12:37:51 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3339a534152sm977926eec.10.2026.09.03.12.37.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Sep 2026 12:37:50 -0700 (PDT)
+Message-ID: <f1f68463-810a-4374-9e65-fe6d2c5d9ecd@oss.qualcomm.com>
+Date: Thu, 3 Sep 2026 12:37:49 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/8] hexagon: raise imprecise exception for multi-TLB
+ matches
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260903185622.3234171-1-brian.cain@oss.qualcomm.com>
+ <20260903185622.3234171-7-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260903185622.3234171-7-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 5oePqGFA6PbACPK5x89zfWGxuUB4VpUV
+X-Proofpoint-GUID: 5oePqGFA6PbACPK5x89zfWGxuUB4VpUV
+X-Authority-Analysis: v=2.4 cv=Q5XiJY2a c=1 sm=1 tr=0 ts=6a99cc90 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=7y3qieyC2XAqVrXZidsA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfXzUoCz4jsaYcP
+ jyspk94sImzg2PYPeuSUmAEHhxWtUkd/o10CkmgZv7Nugem+o90ANFMF3NpkgYgdScSGaSRJvWo
+ BTPEtP/73Oti9B4lP3tiLEZO1MEJ6nhAMhQE360lG8tHu6YqVWEgITJaBublvYgjTugDl3qVXJw
+ zbcPcLPzBLIvlLOpzDLePU6v2XCQ4A9zkS+NEmuFzM7iN7j7J+0rVGeIWU6TpIaFnm0VLafULHN
+ ApnTp9iMONHRbS3BrIwREoLvRjB/WDBwXfxL7k6EQEFUD1Hvb0I6c6av9Z1luZylNwO7EuP0BMC
+ yYNvAsevHGwQ9mQwhKvEGfgr6oIMZw1Zz4+bw00RbTUJGl2UxNd+zBlnuMkrYpRRflTudtOM6r7
+ bRuNUCraUkhPpQBKyPQuoLdUo+DZfxC3HHRwKdzu4LLDVh9tJpjEIqlf1ff5bfwmCSdqg8CfoKv
+ K2LNAQNvtBRrM9LYKOg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfXxbl8wR99tnY9
+ 1SKjmwzElitE7kf+BmLdmx1nVriqFLk5xaASoAnrq8LGRNnY68eFRmw8Sbge6IKxsXy+M4DrOWh
+ ao15jaqhipG8/zGkuT081D9U4TJENRc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609030170
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,210 +157,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+On 9/3/2026 11:56 AM, Brian Cain wrote:
+> The TLB walk stopped at the first matching entry, so instruction and data
+> translations did not detect a second valid mapping for the same VA and ASID.
+> 
+> Scan the remaining entries after selecting the translation.  On a second
+> match, retain the first entry for the access but record
+> HEX_CAUSE_IMPRECISE_MULTI_TLB_MATCH as a pending imprecise exception.
+> 
+> Move that exception out of the synchronous TLB-fill result and check for it
+> after every packet, rather than only packets containing tlbp.  This delivers
+> the architectural imprecise exception after an ordinary memory access and
+> avoids treating it as a precise permission fault.  Clear the pending state
+> when starting a new translation and after delivering the exception.
+> 
+> The v0.2.14 mmu_multi_tlb systest uncovered this bug.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  hw/hexagon/hexagon_tlb.c   | 10 ++++++++++
+>  target/hexagon/hex_mmu.c   | 12 +++++++++---
+>  target/hexagon/hexswi.c    |  1 +
+>  target/hexagon/translate.c | 22 ++++++++--------------
+>  4 files changed, 28 insertions(+), 17 deletions(-)
+> 
 
-Use RAM instead of flash to store firmware image and boot information,
-including UEFI variables.  That way the firmware can be measured and
-included in the Realm's initial measurements.  It also prevents
-variable stored in flash and modified as part of the boot process to
-be leaked outside the Realm.
-
-Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
----
- hw/arm/boot.c         | 37 +++++++++++++++++++++++++--
- hw/arm/virt.c         | 58 +++++++++++++++++++++++++++++++++++++++++++
- include/hw/arm/boot.h |  9 +++++++
- 3 files changed, 102 insertions(+), 2 deletions(-)
-
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 9b7553dde5e1..1e8efada209f 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -1112,7 +1112,36 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
-     }
- }
- 
--static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
-+static void arm_setup_confidential_firmware_boot(ARMCPU *cpu,
-+                                                 struct arm_boot_info *info,
-+                                                 const char *firmware_filename)
-+{
-+    ssize_t fw_size;
-+    const char *fname;
-+    AddressSpace *as = arm_boot_address_space(cpu, info);
-+
-+    fname = qemu_find_file(QEMU_FILE_TYPE_BIOS, firmware_filename);
-+    if (!fname) {
-+        error_report("Could not find firmware image '%s'", firmware_filename);
-+        exit(1);
-+    }
-+
-+    /*
-+     * Load the firmware image in the Realm's address space.  Mapping of the
-+     * firmware area in the Realm's address space is done in function
-+     * virt_confidential_firmware_init().
-+     */
-+    fw_size = load_image_targphys_as(firmware_filename,
-+                                     info->firmware_base,
-+                                     info->firmware_max_size, as, NULL);
-+    if (fw_size <= 0) {
-+        error_report("could not load firmware '%s'", firmware_filename);
-+        exit(1);
-+    }
-+}
-+
-+static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info,
-+                                    const char *firmware_filename)
- {
-     /* Set up for booting firmware (which might load a kernel via fw_cfg) */
- 
-@@ -1168,6 +1197,10 @@ static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
-         }
-     }
- 
-+    if (info->confidential) {
-+        arm_setup_confidential_firmware_boot(cpu, info, firmware_filename);
-+    }
-+
-     /*
-      * We will start from address 0 (typically a boot ROM image) in the
-      * same way as hardware. Leave env->boot_info NULL, so that
-@@ -1212,7 +1245,7 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
- 
-     /* Load the kernel.  */
-     if (!info->kernel_filename || info->firmware_loaded) {
--        arm_setup_firmware_boot(cpu, info);
-+        arm_setup_firmware_boot(cpu, info, ms->firmware);
-     } else {
-         arm_setup_direct_kernel_boot(cpu, info);
-     }
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index f3ece746916a..b1f425f8935c 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1823,6 +1823,16 @@ static PFlashCFI01 *virt_flash_create1(VirtMachineState *vms,
- 
- static void virt_flash_create(VirtMachineState *vms)
- {
-+    /*
-+     * For Realms, the firmware image is placed directly in the guest's
-+     * RAM area.  The association between the final location in the
-+     * guest's RAM and the system memory is done in function
-+     * virt_confidential_firmware_init().
-+     */
-+    if (virt_machine_is_confidential(vms)) {
-+        return;
-+    }
-+
-     vms->flash[0] = virt_flash_create1(vms, "virt.flash0", "pflash0");
-     vms->flash[1] = virt_flash_create1(vms, "virt.flash1", "pflash1");
- }
-@@ -1873,6 +1883,16 @@ static void virt_flash_fdt(VirtMachineState *vms,
-     MachineState *ms = MACHINE(vms);
-     char *nodename;
- 
-+    /*
-+     * For Realms the firmware images are stored in the guest's address
-+     * space.  As such there is no need for flash configuration in the FDT.
-+     * See function virt_confidential_firmware_init() and
-+     * arm_setup_confidential_firmware_boot() for details.
-+     */
-+    if (virt_machine_is_confidential(vms)) {
-+        return;
-+    }
-+
-     if (sysmem == secure_sysmem) {
-         /* Report both flash devices as a single node in the DT */
-         nodename = g_strdup_printf("/flash@%" PRIx64, flashbase);
-@@ -1908,6 +1928,32 @@ static void virt_flash_fdt(VirtMachineState *vms,
-     }
- }
- 
-+static bool virt_confidential_firmware_init(VirtMachineState *vms,
-+                                            MemoryRegion *sysmem)
-+{
-+    MemoryRegion *fw_ram;
-+    hwaddr fw_base = vms->memmap[VIRT_FLASH].base;
-+    hwaddr fw_size = vms->memmap[VIRT_FLASH].size;
-+
-+    if (!MACHINE(vms)->firmware) {
-+        return false;
-+    }
-+
-+    assert(machine_require_guest_memfd(MACHINE(vms)));
-+
-+    fw_ram = g_new(MemoryRegion, 1);
-+    memory_region_init_ram_guest_memfd(fw_ram, NULL, "fw_ram", fw_size,
-+                                       &error_fatal);
-+    /*
-+     * Map the guest's firmware image directly in its address space.
-+     * Copying of the firmware image itself is done in function
-+     * arm_setup_confidential_firmware_boot().
-+     */
-+    memory_region_add_subregion(sysmem, fw_base, fw_ram);
-+
-+    return true;
-+}
-+
- static bool virt_firmware_init(VirtMachineState *vms,
-                                MemoryRegion *sysmem,
-                                MemoryRegion *secure_sysmem)
-@@ -1916,6 +1962,15 @@ static bool virt_firmware_init(VirtMachineState *vms,
-     const char *bios_name;
-     BlockBackend *pflash_blk0;
- 
-+    /*
-+     * For a confidential VM, the firmware image and any boot information,
-+     * including EFI variables, are stored in RAM in order to be measurable and
-+     * private. Create a RAM region and load the firmware image there.
-+     */
-+    if (virt_machine_is_confidential(vms)) {
-+        return virt_confidential_firmware_init(vms, sysmem);
-+    }
-+
-     /* Map legacy -drive if=pflash to machine properties */
-     for (i = 0; i < ARRAY_SIZE(vms->flash); i++) {
-         pflash_cfi01_legacy_drive(vms->flash[i],
-@@ -3278,7 +3333,10 @@ static void machvirt_init(MachineState *machine)
-     vms->bootinfo.get_dtb = machvirt_dtb;
-     vms->bootinfo.skip_dtb_autoload = true;
-     vms->bootinfo.firmware_loaded = firmware_loaded;
-+    vms->bootinfo.firmware_base = vms->memmap[VIRT_FLASH].base;
-+    vms->bootinfo.firmware_max_size = vms->memmap[VIRT_FLASH].size;
-     vms->bootinfo.psci_conduit = vms->psci_conduit;
-+    vms->bootinfo.confidential = virt_machine_is_confidential(vms);
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &vms->bootinfo);
- 
-     vms->machine_done.notify = virt_machine_done;
-diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
-index 94386fdbea6c..fe7e14e94651 100644
---- a/include/hw/arm/boot.h
-+++ b/include/hw/arm/boot.h
-@@ -113,6 +113,10 @@ struct arm_boot_info {
-      */
-     bool firmware_loaded;
- 
-+    /* Used when loading firmware into RAM */
-+    hwaddr firmware_base;
-+    hwaddr firmware_max_size;
-+
-     /* Address at which board specific loader/setup code exists. If enabled,
-      * this code-blob will run before anything else. It must return to the
-      * caller via the link register. There is no stack set up. Enabled by
-@@ -136,6 +140,11 @@ struct arm_boot_info {
- 
-     /* CPU having load the kernel and that should be the first to boot.  */
-     ARMCPU *primary_cpu;
-+
-+    /*
-+     * Confidential guest boot loads everything into RAM so it can be measured.
-+     */
-+    bool confidential;
- };
- 
- /**
--- 
-2.43.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
