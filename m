@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2793C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091EBC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 10:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x24rl-0004v7-Vn; Thu, 03 Sep 2026 06:40:22 -0400
+	id 1x24rZ-0004VS-Ec; Thu, 03 Sep 2026 06:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24rc-0004gv-1P
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:13 -0400
+ id 1x24rO-0004Rt-KT
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:39:59 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x24ra-0006P3-59
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:40:11 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1x24rM-0006AZ-ME
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 06:39:58 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683AH79B3203906
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:40:08 GMT
+ 683AHAs2212400
+ for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 10:39:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- dne/OGC4mh9pyhzlIkAn9W4ObefJYz0B+1JlIG0OZSY=; b=hInlDRKI7Z1maLlY
- ZeWZ017SS5jGTZV1K61zsk7IvlQHkY1QWzf2iyRpCbuUATWdCQTaVEh/PlNQfXE+
- SM5iqu1C7uC5X1JSzevzlYwwNuxYJfx87TMXNGTaZ4oU8ehHY2blZU78HP7MphHZ
- M+2xF9JmZb63E8aoeYLbJ0bPmnhLtXDkN8YtjwHTGpkhdpzkoRyZcAvK3KvQcNpi
- UCGawf2moqurd5hkO1ahKQ+jWS8XwGKlJ8z6BnO8fxPT23tWtYY48BvGjXg9Ih6x
- Y0WVqQFsf0bVftI/7yaV2HtHv7ENF+uOSqZQnNXbzgRtl/2hoAhkIe0bPyy6sI1/
- Bqy+lA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf5d10h6v-1
+ rj9HFNqOvL6W+iuHT3IkTS3/R63iSdtXObzNE9q86hI=; b=AuHn1PX1GFl0/QMN
+ 2k/YDsyG0qYYB9cNXVEOyvdp1G79mjX8kVU4OyihHa/QyjgUrnp+tVa6Rq33yba7
+ cISRN6pspSk0FpXHURfEbk4mqfa4n3+jQpJ2SMo8qlfyLDZEzDlQgO9DjjXjZFp1
+ OSZnkiuox2H40FjF2oMWw9CtJokuBWdRvOkecvWMCpRIuDrjTvakcUpPqDQUCtzr
+ nCU5uw92T9T2L/V891+B1E86Pkp3BW4R6Bu5tysXQWA2XQhPrLY3g7sA6NUjd+eG
+ 3wQWoAMLiZerjCrARGiiufdusrsmtwoVFMPJaX1mSJ6f+2h/bJZHMSXhhQ/bxU2f
+ 44wMWg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf1pyhfka-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:40:08 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e53b8a302so440549385a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:40:08 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:39:55 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-9390a2c895bso579064885a.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 03:39:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788432008; x=1789036808; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788431994; x=1789036794; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=dne/OGC4mh9pyhzlIkAn9W4ObefJYz0B+1JlIG0OZSY=;
- b=PNaB14/NmjXpwrw8696zC/ahV9Ez3tZIMOQHuRx/FIOMR/toNgeX8ia2gYT/x3FZPC
- Qsf6YgGAekOX3sw5o9uhbV6Au0BB3N/MtUfezKwiqkYzyPt8H8i7mn6Fynp1DwnVw3jJ
- zZkFWOOSHkejAvZREH52fJGZZvlwl/FpKHRVq8tMxD+3tWTkVZG2O5Ou6ue6Obn4/osk
- j/v7fFhsEYk9+20PQMzSCXIGl3bHd+u3hfO4ldS5LmZW1t0Y1T1/jkXbGvSPmB08IjCi
- 3iJ07qoI0kPayjZwlH79mp1C81Sq0+rKLmPu6XR0QHd/FhUQUyWxq6YSvgfiSgBdj85e
- KdSQ==
+ bh=rj9HFNqOvL6W+iuHT3IkTS3/R63iSdtXObzNE9q86hI=;
+ b=Esi3XnHeggb8ywL6u5m+HuvnSA1p7yhTgYDhDNJXJhZFzv1h3qAjP39mFjBeEM5cCp
+ V/hIoVpmjlwyDYWFsUxIrqyAg3c8ULuK5aF29dH+AWNJTb7hEVVWeYMdqyR3OyF0YwKI
+ R/+d/jQMSQqqIS0+bMRov+EF+D8CUImh71MoZfD0THPKB4rMsVTAmPTv6quiBYZgLDDH
+ y80ngOlmh43RBvPunyvd3tMFfKBvB4WMvWLiPOVuZ3yy2l9EPivkcEWSW9tUAD931l6W
+ 6Wf7iHiqHXx6bhQlUn0+Iw4YtxnGaAJLXKiRnvpI6I0CQFJcWxSXE5DDQAEJmhHi/uHt
+ 6axw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788432008; x=1789036808;
+ d=1e100.net; s=20251104; t=1788431994; x=1789036794;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=dne/OGC4mh9pyhzlIkAn9W4ObefJYz0B+1JlIG0OZSY=;
- b=PKWY905PObX6HdIkTRXZwrhEVVZ/07FAGqnfFAtcGytcYvyJGOhqIJ/jS6NDjjWdBL
- KTAIgBdUS4nBuY92fJPFbpG43jt7gGOFqcqG0rQRiBA4lz8Fc6q37lTcEeqMJmounD6B
- tAUt8DnLGGF2OGr1A2TIAMPabR1xZA88AaTcCB+8EzibcbWu2kdIXGD+P3gkFP6bQYIB
- LmYaDc8K2pLsugsMmweUFJYfaio7fV4N9g5XRfW0Xff91QXvtv+3nosmS6cSKGVFiy0g
- 32zc5F3aPF22tzL0+KKjQjb9CK5eJlGsB5PiZGtXdVYOy1gnOMqkA8QRWevZ+mIefLZA
- 0Quw==
-X-Gm-Message-State: AFuF++mf36fyRilNncwxvaZ7bPuU2VkqoR7fagCX3CmZeTety+lDk4Hn
- R+pSb9CXMjNCRIcTnjqmv/PXJeQXwwzwAmI5MblEfEzMjzLBrfgSWH1qSs60c02P3okdx7zfmyw
- zb4iiSZZw5wfjSFtuZGgdz1TinyWQvNwHepGpfkkxIKO6771m+XVZ7HNy+iTN2esYNA==
-X-Gm-Gg: AYBFou1lfPzbQszXhaZc/gQPyhPEgROe759pTYi7nwINv3OUscIvqyHv00HWOmdwTmT
- /2tiduZIK3jCUBXCklLt7TpfbpagX+lUQmSoEtdHo6iDcgHrttFv66OhmiV8Ha4AiZLnYog4IpG
- uHsBej85E3xYNOGcDzK0HwipMmFavzA9cuGXexhsn4bnxi+5YYl8tzOTKv8vh4lkH4qD/qj+xWi
- vcLeUdxf2mmH5oIQgiqtm4r2tiDx56NxFdS8bpYfbnMkSKrLeAnHswy+WSwfwpjF57+Zd7uNKHp
- IOAb/ml5n5swWDoVKmx/SquhCvrVyzKeKb8IuYnI8ktAoCQzd2MZgQl1EzdNXgaGW5hUGhRRpXJ
- wRsSKIQiOdm7wx9RVftbFv1vjq8cD/ubO5LgBoc1x
-X-Received: by 2002:a05:620a:4109:b0:92e:5f90:c0de with SMTP id
- af79cd13be357-93960f28e64mr1282459285a.22.1788432007668; 
- Thu, 03 Sep 2026 03:40:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:4109:b0:92e:5f90:c0de with SMTP id
- af79cd13be357-93960f28e64mr1282454285a.22.1788432007020; 
- Thu, 03 Sep 2026 03:40:07 -0700 (PDT)
+ bh=rj9HFNqOvL6W+iuHT3IkTS3/R63iSdtXObzNE9q86hI=;
+ b=RrW79H3HGZXc8ptiTjDuMvFzgm/SRZHaL6cX3gjOEFLHDwkD1g3dbi/hp8UaUc2Wjv
+ D1lvsZhV5MixcUo3QmgXj9hCovCVpedSC1lLSFcr2cuCVBRHS6oPMRyvDAYZiUydmoDt
+ Snl/u2Gr/0DSlEDC0/WeFtlDpE5zboquJTSOOQmLgZ8NwTwdzrZ3/mHHO6oP47QHmoem
+ RtTil34G9DNUC9TUUaMhNQa2M9O6KE75WWb1LBjpXyJ+oOlccEvD5rUls+1TDfeGM1tc
+ Uy4WvlIz8Sc5AajlrM38s6Knj/b+wd7G9UFB9wtRdelhjpVdJPma2WEzha03Sq2fAqEj
+ e7ag==
+X-Gm-Message-State: AFuF++mUcDU6aEifh/KQw+SUxlfR20ycNQ2VRwDaSbwW/N8iPQC0XOwT
+ t6IP8z40PbYd81kut3pdoH7L6ZOfzWOR2kksyGpxd/DDeyhdTVZ0kYdFcfqqvGcO3bbkzFRoh7B
+ 1VjFYJea46K6CQArnsbYIMkD2rHZeLTnxwABPmxSSXRDvBaiNHEyMx2rxkqq6hT86Ew==
+X-Gm-Gg: AYBFou3JPvZnuLONTCBN6RspAopQ4L5tBRFBVIhq+l/ES3Je+N3bPKbHxeAFsyar0Pw
+ ArmJOIzf5ayK4PoiYtcUzYCpVrUw6m38wyc5sG0vQKFPaKhkdkcfvC0FeBgeK9HB9IhyeV0Q5ca
+ HaKUUi7ha828MuWYQTUcbXsDWidCje2jv3DABdq0bpNVbN8OmQZRHZPY+HQEOtVjqake+4Pn8C8
+ QvhTTVTRV4hL5POFNH9TFe1de4WZhBUTWJbVyWBTzeOJjcx9jjeSHGqFdU+2GQWq+ONCKr2r+sk
+ d5CtOW7VaKCg5lmHTECrrVQqDsqmGkWQpLPhz61aZNLUSuSgX6sAvmEBoAXB3/EkEsMmPSb195Y
+ K4fVG8bmxZOODb/w/LJ7oa2dUH29n4Yt8ZFnRgJIq
+X-Received: by 2002:a05:620a:2992:b0:939:7835:8f87 with SMTP id
+ af79cd13be357-9397835926dmr134622085a.17.1788431994002; 
+ Thu, 03 Sep 2026 03:39:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:2992:b0:939:7835:8f87 with SMTP id
+ af79cd13be357-9397835926dmr134617485a.17.1788431993328; 
+ Thu, 03 Sep 2026 03:39:53 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee6024a8sm60064285e9.6.2026.09.03.03.40.06
+ ffacd0b85a97d-48448e72c28sm13900890f8f.6.2026.09.03.03.39.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Sep 2026 03:40:06 -0700 (PDT)
+ Thu, 03 Sep 2026 03:39:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/51] hw/sd: sdhci: Migrate the Host Control 2 register
-Date: Thu,  3 Sep 2026 12:38:48 +0200
-Message-ID: <20260903103936.62355-5-philmd@oss.qualcomm.com>
+Subject: [PULL 02/51] hw/sd: sdhci: Fix SDMA boundary bug
+Date: Thu,  3 Sep 2026 12:38:46 +0200
+Message-ID: <20260903103936.62355-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 References: <20260903103936.62355-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX7gEElIVCTfxX
- gtZ3f4FMMOeBfWbPn48z6qKMUvghUPyOnNjVdoZzhYvVyRT+ZhqugW0nT/5EmSrWDlxmv+QEw1I
- xodJeftgkWfYqhcrHh65tQ6c3AMZmas6zKoAnNicM6sClPmxI+Ha9aHcn2Dzc0YCuAAL5oYeKfD
- uK/yE3blY6BwQDDJlkJ7CLMdsmsysYYUlw2cRkWyS3VirP3Kwv3c6erd/4cG5f0kN+9F8/mo7fM
- DCxCPDB58WfUdaFg6X4Rhe7uI0Cm0YiRKDDkLUINJZlnuKHv+6/17HP6YtX9I5d28fFAq9+M9AU
- Iqq/oZoALKN+1jA1C64UPB5WScxL3smNswhx/dti4ER4oP2wUDgPPSiRd1oeyl4m/iThmQfOSbW
- 57sQs2mekTBjwBuepMamwL99ZQ7wv8he/CwVmd6EoI8DD6MmOrJxkgt0+T8kO+K4hM4jh0jIU2E
- gvolEUrElOsFo70IlVA==
-X-Proofpoint-ORIG-GUID: Rj0E6PwT7BMm3n_ln5AmlILBUjSO33Wt
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX/x4MDzwLf1zU
- hYsrbcMBKkdnI0HlUSkyoHYe6v2ovVrSEXObtHMGSz4ce5N5mrYhME+Ooagx9nh4ReYsbCOHvMo
- dgyyolsjR9XMIKPvyqGBNLa02CdhVGM=
-X-Proofpoint-GUID: Rj0E6PwT7BMm3n_ln5AmlILBUjSO33Wt
-X-Authority-Analysis: v=2.4 cv=J4GaKgnS c=1 sm=1 tr=0 ts=6a994e88 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX78akgPch3n55
+ OA4I7xfXn1wlkcr7QgDq3nKB5DzWR2dSPFQszBpW/ExkNrWNbISUzMzBSGMdJzo19sBQ/Z9o9XE
+ MbGGvOpg1AsHu4rTqsIugbx8x82lna7mcpba7xKQETyiz7dH1Yxe70pzVJiHsIT5Ap1Xe7NNn+H
+ Ho/miLfOn9LEJrXg5/dHke5S4vYt/4k8br3N+w2cpPYv96TQFCArGnqiPNNPVFVNhS3TRZIOPbS
+ qgM4eBmRgGU3VMXDPAT0j4UfZv2jt3E+kNif6OonqsN6WKRENybm200xgZtEosXa5ZnKXCyxlSi
+ +1ZYvv3SUtWllNcclvy19KRsLNiN9VwPHdlHyd5OpAlqjMbCHDmWui4u/NEy4LvjgIhUXPtt1/8
+ wuwly+ivSWm2MWub95iByJNnIQCs4UzHDwvfV3CdSXRYklrlfUGtVM1E7dGh+gIZT0Xwqeux7cr
+ 9udCMJU6haNycvFVLdQ==
+X-Proofpoint-ORIG-GUID: dnXmfqhdS1LbU7PIsy2HqXJkZ3ztWh_S
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDA5MiBTYWx0ZWRfX3zrT0I4PlMTG
+ hbU2Ub68tj8FiOe8uTJ/TkhnYk/roos3wXtOMLiCqD1cEJdX5fAC4xdfS1coEV89qwHae/bNSwL
+ 8LY0g7jydANim04ErEOtxv75VvtrEJY=
+X-Proofpoint-GUID: dnXmfqhdS1LbU7PIsy2HqXJkZ3ztWh_S
+X-Authority-Analysis: v=2.4 cv=DMO/JSNb c=1 sm=1 tr=0 ts=6a994e7b cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=pBWpA1RrDOO-fWdppnUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=H4N_Y-AU75W7NKDNhZlT:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=Byx-y9mGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=fbXbqCvtxzTOMWPQE0UA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_03,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030092
 Received-SPF: pass client-ip=205.220.168.131;
@@ -150,71 +150,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Tao Ding <dingtao0430@163.com>
 
-The Host Control 2 register has been part of SDHCIState since its
-initial implementation, but it was omitted from sdhci_vmstate.
-Migration therefore resets the register to zero and can change tuning,
-voltage, or DMA behavior.
+During SDMA transfers, the controller raises an interrupt at buffer boundaries
+to request a system address update. The host driver will rewrite the SDHC_SYSAD register.
+(according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
+However, the current code will ignore write operations to SDHC_SYSAD.
 
-Migrate nonzero values in an optional subsection. Clear the register
-before loading so older streams retain the reset default without
-changing the main stream version.
+To fix this bug, when SDMA encounters a boundary, a state is set to record it.
+In this state, SDHC_SYSAD can be written. In other cases, it is still protected by TRANSFERRING_DATA.
 
-Fixes: ea55a221bfc0 ("sdhci: implement the Host Control 2 register (tuning sequence)")
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260723151853.2143177-8-bin.meng@processmission.com>
+Meanwhile, a subsection has been added for migration.
+
+Suggested-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+Reviewed-by: Bin Meng <bmeng.cn@gmail.com>
+Message-ID: <20260715160731.29969-2-dingtao0430@163.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sd/sdhci.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ include/hw/sd/sdhci.h |  2 ++
+ hw/sd/sdhci.c         | 54 ++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index a9da6203fcb..c485277744e 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -103,6 +103,8 @@ struct SDHCIState {
+      * to be protected. Set wp_inverted to invert the signal.
+      */
+     bool wp_inverted;
++    /* Indicate that SDMA transfer is paused due to hitting the boundary */
++    bool sdma_boundary_paused;
+ };
+ typedef struct SDHCIState SDHCIState;
+ 
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 02f09187272..101fbcf2ff9 100644
+index e58a6103970..02f09187272 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -1470,6 +1470,24 @@ void sdhci_common_unrealize(SDHCIState *s)
-     s->fifo_buffer = NULL;
+@@ -307,6 +307,7 @@ static void sdhci_reset(SDHCIState *s)
+     s->data_count = 0;
+     s->stopped_state = sdhc_not_stopped;
+     s->pending_insert_state = false;
++    s->sdma_boundary_paused = false;
+     if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
+             object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
+         s->norintstsen = 0x013f;
+@@ -414,6 +415,7 @@ static void sdhci_end_transfer(SDHCIState *s)
+         s->norintsts |= SDHC_NIS_TRSCMP;
+     }
+ 
++    s->sdma_boundary_paused = false;
+     sdhci_update_irq(s);
  }
  
-+static bool sdhci_hostctl2_vmstate_needed(void *opaque)
+@@ -681,6 +683,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+     if (s->blkcnt == 0) {
+         sdhci_end_transfer(s);
+     } else {
++        s->sdma_boundary_paused = true;
+         sdhci_update_irq(s);
+     }
+ }
+@@ -717,6 +720,15 @@ static void sdhci_sdma_transfer(SDHCIState *s)
+     }
+ }
+ 
++static bool sdhci_sdma_transfer_active(SDHCIState *s)
++{
++    return TRANSFERRING_DATA(s->prnsts) &&
++            (s->trnmod & SDHC_TRNS_DMA) &&
++            s->blkcnt &&
++            (s->blksize & BLOCK_SIZE_MASK) &&
++            SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA;
++}
++
+ typedef struct ADMADescr {
+     hwaddr addr;
+     uint16_t length;
+@@ -1164,6 +1176,7 @@ static inline void sdhci_reset_write(SDHCIState *s, uint8_t value)
+                 SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE);
+         s->blkgap &= ~(SDHC_STOP_AT_GAP_REQ | SDHC_CONTINUE_REQ);
+         s->stopped_state = sdhc_not_stopped;
++        s->sdma_boundary_paused = false;
+         s->norintsts &= ~(SDHC_NIS_WBUFRDY | SDHC_NIS_RBUFRDY |
+                 SDHC_NIS_DMA | SDHC_NIS_TRSCMP | SDHC_NIS_BLKGAP);
+         break;
+@@ -1185,7 +1198,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+ 
+     switch (offset & ~0x3) {
+     case SDHC_SYSAD:
+-        if (!TRANSFERRING_DATA(s->prnsts)) {
++        if (!TRANSFERRING_DATA(s->prnsts) || s->sdma_boundary_paused) {
+             s->sdmasysad = (s->sdmasysad & mask) | value;
+             MASKED_WRITE(s->sdmasysad, mask, value);
+             /* Writing to last byte of sdmasysad might trigger transfer */
+@@ -1464,6 +1477,31 @@ static bool sdhci_pending_insert_vmstate_needed(void *opaque)
+     return s->pending_insert_state;
+ }
+ 
++static bool sdhci_sdma_boundary_paused_vmstate_needed(void *opaque)
 +{
 +    SDHCIState *s = opaque;
 +
-+    return s->hostctl2;
++    return s->sdma_boundary_paused;
 +}
 +
-+static const VMStateDescription sdhci_hostctl2_vmstate = {
-+    .name = "sdhci/hostctl2",
++static int sdhci_pre_load(void *opaque)
++{
++    SDHCIState *s = opaque;
++
++    s->sdma_boundary_paused = false;
++    return 0;
++}
++
++static int sdhci_post_load(void *opaque, int version_id)
++{
++    SDHCIState *s = opaque;
++
++    if (!s->sdma_boundary_paused) {
++        s->sdma_boundary_paused = sdhci_sdma_transfer_active(s);
++    }
++    return 0;
++}
++
+ static const VMStateDescription sdhci_pending_insert_vmstate = {
+     .name = "sdhci/pending-insert",
+     .version_id = 1,
+@@ -1475,10 +1513,23 @@ static const VMStateDescription sdhci_pending_insert_vmstate = {
+     },
+ };
+ 
++static const VMStateDescription sdhci_sdma_boundary_paused_vmstate = {
++    .name = "sdhci/sdma_boundary_paused",
 +    .version_id = 1,
 +    .minimum_version_id = 1,
-+    .needed = sdhci_hostctl2_vmstate_needed,
++    .needed = sdhci_sdma_boundary_paused_vmstate_needed,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(hostctl2, SDHCIState),
++        VMSTATE_BOOL(sdma_boundary_paused, SDHCIState),
 +        VMSTATE_END_OF_LIST()
 +    },
 +};
 +
- static bool sdhci_pending_insert_vmstate_needed(void *opaque)
- {
-     SDHCIState *s = opaque;
-@@ -1488,6 +1506,7 @@ static int sdhci_pre_load(void *opaque)
- {
-     SDHCIState *s = opaque;
- 
-+    s->hostctl2 = 0;
-     s->sdma_boundary_paused = false;
-     return 0;
- }
-@@ -1562,6 +1581,7 @@ const VMStateDescription sdhci_vmstate = {
-         VMSTATE_END_OF_LIST()
+ const VMStateDescription sdhci_vmstate = {
+     .name = "sdhci",
+     .version_id = 1,
+     .minimum_version_id = 1,
++    .pre_load = sdhci_pre_load,
++    .post_load = sdhci_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(sdmasysad, SDHCIState),
+         VMSTATE_UINT16(blksize, SDHCIState),
+@@ -1512,6 +1563,7 @@ const VMStateDescription sdhci_vmstate = {
      },
      .subsections = (const VMStateDescription * const []) {
-+        &sdhci_hostctl2_vmstate,
          &sdhci_pending_insert_vmstate,
-         &sdhci_sdma_boundary_paused_vmstate,
++        &sdhci_sdma_boundary_paused_vmstate,
          NULL
+     },
+ };
 -- 
 2.53.0
 
