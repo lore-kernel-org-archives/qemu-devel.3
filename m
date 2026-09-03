@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF572C61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48FCC624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Ahy-0006OH-Hn; Thu, 03 Sep 2026 12:54:38 -0400
+	id 1x2Aj3-0006w6-5C; Thu, 03 Sep 2026 12:55:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1x2Ahw-0006NW-O7; Thu, 03 Sep 2026 12:54:36 -0400
+ id 1x2Aj1-0006vl-LM; Thu, 03 Sep 2026 12:55:43 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1x2Aht-00006Y-5B; Thu, 03 Sep 2026 12:54:36 -0400
+ id 1x2Aiz-0000i2-9d; Thu, 03 Sep 2026 12:55:43 -0400
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G2ebZ3425918; Thu, 3 Sep 2026 16:54:29 GMT
+ 683G2RT53425633; Thu, 3 Sep 2026 16:55:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=tKeMcHi/Uv9BAK5xiJySxDg2wOd2aN
- 7HSzT83bTtap8=; b=C3OYzzRMLtNBEVmFQdJHR7BjEyJ5hP/5Iw8Hm9epyZEZoN
- gOQ6z0COYJQb6PT4y/qBFb5FtrOLV7Z7xAqChU6eznqO2WCw6eOyg0iu58GtlsLD
- HMmkQ+mgf34eDda62nsembSoGNHbQ0VK/VooOjTVlkMh8wEb0aLrHOtmYVKAefxx
- IHL4p83zXUrP3/UNY50IglIzrNuuivi+N5M2uhm+F0aTx9Pg8vMxE4DJmu/t0UFd
- v+GmMN++6/uCfPF9emik2ayaEOY5nSE2qDKh31ZaA6Nw8EUe+N14NjZGhkgm+xSh
- L/maW/rePhC5vjhkreKwV74RI6lJpNmDf2q/zovg==
+ :references:subject:to; s=pp1; bh=Pj6cI73SdgcCvvOrnHpcV2qjTR5MdX
+ r+YfbquU7WBnM=; b=iapabOHmeO7wO8A9+IxHHpffY4rSsxXScH51jGZf6LTi1Z
+ N6wP8ufZOSx8bhrjgONosdHLcpIQFmNCWNlkJ0fvW3hPltF0D3DUCRuf1ex5xZso
+ b7US0qPGtNCcTwd38jCF/0kKc7njPg2QAInDIJz9979AebbjOVPlbC98l6FDQvsT
+ yJbZAafZsQeYB1AqbWUZ6llJGCNIcYSiBiwzr3bvZaEkbsgL6icoppEOCaa79qkM
+ Cu6AKNXBtaWMd23YpXh8hXyrT+3oSXLQhNzsCCD4l6I289gkcy6kN0TxJk7rntZW
+ Vuit0oIfcbOXkcVKUIrXQDNuQ2EpH5oSaeMwIBYQ==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq5562p8-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbq5562tu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Sep 2026 16:54:28 +0000 (GMT)
+ Thu, 03 Sep 2026 16:55:31 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GfPcM009719;
- Thu, 3 Sep 2026 16:54:27 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gecjarxun-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GfRvJ009727;
+ Thu, 3 Sep 2026 16:55:29 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gecjarxyv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Sep 2026 16:54:27 +0000 (GMT)
+ Thu, 03 Sep 2026 16:55:29 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 683GsQ0T21496484
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683GtSIh22020654
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 3 Sep 2026 16:54:26 GMT
+ Thu, 3 Sep 2026 16:55:28 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E7675805E;
- Thu,  3 Sep 2026 16:54:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3EFBD58052;
+ Thu,  3 Sep 2026 16:55:28 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF54A58056;
- Thu,  3 Sep 2026 16:54:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C21D358045;
+ Thu,  3 Sep 2026 16:55:26 +0000 (GMT)
 Received: from [9.10.80.39] (unknown [9.10.80.39])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  3 Sep 2026 16:54:24 +0000 (GMT)
+ Thu,  3 Sep 2026 16:55:26 +0000 (GMT)
 Content-Type: multipart/alternative;
- boundary="------------qT2oyr3LrvgeBdTIFtfOLB9O"
-Message-ID: <c982c503-a27d-420b-ad61-84b587f0a330@linux.ibm.com>
-Date: Thu, 3 Sep 2026 11:54:23 -0500
+ boundary="------------6WlApM1jo3ZeqRQPRPNhVNon"
+Message-ID: <631db855-f13e-4dce-85cd-f5d06992e234@linux.ibm.com>
+Date: Thu, 3 Sep 2026 11:55:25 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/9] pnv/phb5: Implement read-only and write-only bits
- of registers
+Subject: Re: [PATCH v6 6/9] pnv/phb5: Set link-active status in HPSTAT and LMR
+ registers
 To: Saif Abrar <saif.abrar@linux.ibm.com>, qemu-ppc@nongnu.org,
  qemu-devel@nongnu.org
 Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
@@ -74,32 +74,32 @@ Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
  calebs@linux.ibm.com, milesg@linux.ibm.com, jishnuvw@linux.ibm.com,
  adityag@linux.ibm.com, amachhiw@linux.ibm.com
 References: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
- <20260831123005.1485518-5-saif.abrar@linux.ibm.com>
+ <20260831123005.1485518-7-saif.abrar@linux.ibm.com>
 Content-Language: en-US
 From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <20260831123005.1485518-5-saif.abrar@linux.ibm.com>
+In-Reply-To: <20260831123005.1485518-7-saif.abrar@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0NCBTYWx0ZWRfXyVH7OAJEvokU
- A5VPaftbRYa7tfYqVH9XGt9bf0lrgAiRBDS4LTdPXSgGJlqxd1yRDxkC72VL690QsgDUMReiq3z
- GhwJIO/7BZ+mgbTJx2JDkzxa3z1MuaLQdICXJ9KfJm/yvvh143zHwHLSFEzXsMt8i1f9yYbE7i0
- Fn0QNhwfPf00DGkpi04vw63PaDMYsCgDlWPOSYLCcQ867bODRCrS3chJ7U1uYE4hMsEfrW+AFvx
- U6qZ9uhp+7hOhQ+mv0sQ1X4M694xKF1vYDh7U2YX/f2TyVPBjyN+ApgM2B6oR+QkF4lqVS3XLPk
- RYKsVk8GgfgHpw1C2QGv9AqTbr8QdPndMrfzwrABG7VE4ID/g3mow+qpZJ7esf8wGbN8YA9+Fbz
- ay1X+WSeRqPv7zM4/8xTF2BFg8c0wpWjgULMAF+g2aGuG5ekkqVlmJZAjZT0yU58hUMu3KrU6CZ
- cNthIcuYH1uoekqUoZQ==
-X-Proofpoint-ORIG-GUID: HkP_LaFaaRl-LnsdFJQCI9-ee3r3L52Q
-X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a99a645 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0NCBTYWx0ZWRfX5/MQNMmMBcXi
+ jkm7bWm9dKWXe/5ezzXS5gekWWftCDD2tPNj/p2VnQDOA6BW3lbc4fRSIEI07t76m8Qwpp0DCKs
+ nTKRIj4H8GJaD1YEKYqcwuLubhFI4tTzYJuKclLZ0vhS4XKqZWr0hrr0YcZM97Y53YS4Fkg34+E
+ pQZ7xz4WIfK4marfhAdsY3QFFsMCfNdRuYZXm80D/z7F7sKNR2FJyPUlnZ3G5HfgMkatHIUXSjf
+ zzDXvnc0o1y4jr9+VnA4RbioHiM6CvXfpgbUX0zN+rOXr6SpqAsLmjy1aKKFkMOdv2TUtuveJ7H
+ haHzAGcjRmaNm8fuQtbT8O5yM6QtqC21ZoRunUZweeNSXCVZFUqxi+EUbehvjQtFyKlIY0DKxO6
+ UWID24SjQt69+US0Ty3ED2HluDsLdvrw4NYXfmZFzMcXuoiVp2L3fBlTLHepAiigxSxv0IREbWc
+ 7FkSJN0xtaP56b6LfCQ==
+X-Proofpoint-ORIG-GUID: jYUxG8fZle4G6yrCgeBwAj368QZkqS97
+X-Authority-Analysis: v=2.4 cv=CNgamxrD c=1 sm=1 tr=0 ts=6a99a683 cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
  a=U7nrCbtTmkRpXpFmAIza:22 a=r77TgQKjGQsHNAKrUKIA:9 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=20KFwNOVAAAA:8 a=zgl-kRkfpnqru_hbDOwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=spqkRnJvDzVpUhjNqlQA:9 a=OX0BzPGgKDHCWeDn:21
- a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: iNbi130AvCcedJTcEaiwCBM6x3PXg5Ri
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0NCBTYWx0ZWRfX6oJ9ezK3DTYI
- H8OE3To/Qqlp+tnqpJvlTcqubmqGh6Q0nBgijpJh4oPvWjyY4hrbWDnW2e8hsfNEH7iF0MHwPnG
- hFwJV/e37HDHf4cCExTs5FUoXNfFPtM=
+ a=20KFwNOVAAAA:8 a=4oHMkCvJoxaUTQewvasA:9 a=QEXdDO2ut3YA:10
+ a=0d8h__MqJP2C2wASEJEA:9 a=MUOrzm19kOOhfgvR:21 a=_W_S_7VecoQA:10
+ a=lqcHg5cX4UMA:10
+X-Proofpoint-GUID: PZit26jtzFzLz71TtX7ydtewYhBlUDvQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0NCBTYWx0ZWRfX5Cs2+L5Of+Rp
+ j2A7YeWkh1AsDZEMFP60Pomt1GLBDgpfIBs7aD/UAAhp2LBdb1DZClJO8EMzUzr1oVWiyxNk6/O
+ 2kYHJ4YPgDKqcfGy5DaO4Ga50KXyQ/s=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
@@ -133,9 +133,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is a multi-part message in MIME format.
---------------qT2oyr3LrvgeBdTIFtfOLB9O
+--------------6WlApM1jo3ZeqRQPRPNhVNon
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
@@ -145,363 +145,137 @@ Thanks, MAK
 On 8/31/2026 7:30 AM, Saif Abrar wrote:
 > From: Saif Abrar<saif.abrar@linux.vnet.ibm.com>
 >
-> SW cannot write the read-only(RO) bits of a register
-> and write-only(WO) bits of a register return 0 when read.
->
-> Added ro_mask[] for each register that defines which
-> bits in that register are RO.
-> When writing to a register, the RO-bits are not updated.
->
-> When reading a register, clear the WO bits and return the updated value.
->
-> Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
-> PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
-> by writing all 1's and reading back the value.
-> The WO bits in these registers should read back as 0.
->
-> Add .class_size in pnv_phb4_type_info.
+> Config-read the link-status register in the PCI-E macro,
+> Depending on the link-active bit, set the link-active status
+> in the HOTPLUG_STATUS and LINK_MANAGEMENT registers
+> Also, clear the Presence-status active low bit in HOTPLUG_STATUS reg
+> after config-reading the slot-status in the PCI-E macro.
 >
 > Signed-off-by: Saif Abrar<saif.abrar@linux.ibm.com>
-> Reviewed-by: Cédric Le Goater<clg@kaod.org>
-> Reviewed-by: "Michael S. Tsirkin"<mst@redhat.com>
+> Reviewed-by: Michael S. Tsirkin<mst@redhat.com>
 > Reviewed-by: Caleb Schlossin<calebs@linux.ibm.com>
 > Reviewed-by: Aditya Gupta<adityag@linux.ibm.com>
 > ---
->   hw/pci-host/pnv_phb4.c              | 79 ++++++++++++++++++++++++++---
->   include/hw/pci-host/pnv_phb4.h      | 13 ++++-
->   include/hw/pci-host/pnv_phb4_regs.h | 19 +++++--
->   tests/qtest/pnv-phb-test.c          | 63 ++++++++++++++++++++++-
->   4 files changed, 160 insertions(+), 14 deletions(-)
+>   hw/pci-host/pnv_phb4.c | 74 +++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 73 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-> index a91b8277d6..9730fd1f8a 100644
+> index b13165f84d..87446aedc8 100644
 > --- a/hw/pci-host/pnv_phb4.c
 > +++ b/hw/pci-host/pnv_phb4.c
-> @@ -654,6 +654,12 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
->           return;
->       }
+> @@ -508,6 +508,34 @@ uint32_t get_exp_offset(PCIDevice *pdev)
+>       return rpc->exp_offset;
+>   }
 >   
-> +    /* Update 'val' according to the register's RO-mask */
-> +    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
+> +/*
+> + * Config-read the link-status register in the PCI-E macro,
+> + * convert to LE and check the link-active bit.
+> + */
+> +static uint32_t is_link_active(PnvPHB4 *phb)
+> +{
+> +    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
+> +    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
+> +    uint32_t exp_offset = get_exp_offset(pdev);
 > +
-> +    val = (phb->regs[off >> 3] & k->ro_mask[off >> 3]) |
-> +            (val & ~(k->ro_mask[off >> 3]));
+> +    return (be16_to_cpu(pnv_phb4_rc_config_read(phb,
+> +                        exp_offset + PCI_EXP_LNKSTA, 4)) &
+> +                        PCI_EXP_LNKSTA_DLLLA);
+> +}
 > +
->       /* Record whether it changed */
->       changed = phb->regs[off >> 3] != val;
->   
-> @@ -729,7 +735,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
->       case PHB_TCE_TAG_ENABLE:
->       case PHB_INT_NOTIFY_ADDR:
->       case PHB_INT_NOTIFY_INDEX:
-> -    case PHB_DMARD_SYNC:
-> +    case PHB_DMA_SYNC:
->          break;
->   
->       /* Noise on anything else */
-> @@ -767,7 +773,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
->       case PHB_VERSION:
->           return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
->   
-> -        /* Read-only */
-> +    /* Read-only */
->       case PHB_PHB4_GEN_CAP:
->           return 0xe4b8000000000000ull;
->       case PHB_PHB4_TCE_CAP:
-> @@ -777,18 +783,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
->       case PHB_PHB4_EEH_CAP:
->           return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
->   
-> +    /* Write-only, read will return zeros */
-> +    case PHB_LEM_ERROR_AND_MASK:
-> +    case PHB_LEM_ERROR_OR_MASK:
-> +        return 0;
-> +    case PHB_PCIE_DLP_TRWCTL:
-> +        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
-> +        return val;
->       /* IODA table accesses */
->       case PHB_IODA_DATA0:
->           return pnv_phb4_ioda_read(phb);
->   
-> +    /*
-> +     * DMA sync: make it look like it's complete,
-> +     *           clear write-only read/write start sync bits.
-> +     */
-> +    case PHB_DMA_SYNC:
-> +        val = PHB_DMA_SYNC_RD_COMPLETE |
-> +            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
-> +        return val;
+> +/*
+> + * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
+> + * RC-config space values and masks are LE.
+> + * Method pnv_phb4_rc_config_read() returns BE, hence convert to LE.
+> + * Compute new value in LE domain.
+> + * New value computation using sticky-mask is in LE.
+> + * Convert the computed value from LE to BE before writing back.
+> + */
+> +#define RC_CONFIG_STICKY_RESET(a, v, s) \
+> +    (pci_set_word(conf + (a), be16_to_cpu( \
+> +                     (be16_to_cpu(pci_get_word(conf + (a))) & (s)) | \
+> +                     ((v) & ~(s)))))
 > +
-> +    /*
-> +     * PCI-E Stack registers
-> +     */
-> +    case PHB_PCIE_SCR:
-> +        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+>   void pnv_phb4_cfg_core_reset(PCIDevice *d)
+>   {
+>       uint8_t *conf = d->config;
+> @@ -680,6 +708,11 @@ void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>           val = 0;
+>           break;
+>   
+> +    case PHB_PCIE_HOTPLUG_STATUS:
+> +        /* For normal operations, Simspeed diagnostic bit is always zero */
+> +        val &= PHB_PCIE_HPSTAT_SIMDIAG;
 > +        break;
 > +
->       /* Link training always appears trained */
->       case PHB_PCIE_DLP_TRAIN_CTL:
->           /* TODO: Do something sensible with speed ? */
-> -        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> +        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> +        return val;
-> +
-> +    case PHB_PCIE_HOTPLUG_STATUS:
-> +        /* Clear write-only bit */
-> +        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
-> +        return val;
+>       /* Read only registers */
+>       case PHB_CPU_LOADSTORE_STATUS:
+>       case PHB_ETU_ERR_SUMMARY:
+> @@ -827,6 +860,10 @@ void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>   uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>   {
+>       PnvPHB4 *phb = PNV_PHB4(opaque);
+> +    /* Get the PCI-E capability offset from the root-port */
+> +    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
+> +    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
+> +    uint32_t exp_base = get_exp_offset(pdev);
+>       uint64_t val;
 >   
-> -    /* DMA read sync: make it look like it's complete */
-> -    case PHB_DMARD_SYNC:
-> -        return PHB_DMARD_SYNC_COMPLETE;
-> +    /* Link Management Register */
-> +    case PHB_PCIE_LMR:
-> +        /* These write-only bits always read as 0 */
-> +        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
-> +        return val;
+>       if ((off & 0xfffc) == PHB_CONFIG_DATA) {
+> @@ -895,8 +932,38 @@ uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>           val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+>           return val;
+>   
+> +    /*
+> +     * Read PCI-E registers and set status for:
+> +     * - Card present (active low bit 10)
+> +     * - Link active  (bit 12)
+> +     */
+>       case PHB_PCIE_HOTPLUG_STATUS:
+> -        /* Clear write-only bit */
+> +        /*
+> +         * Presence-status bit hpi_present_n is active-low, with reset value 1.
+> +         * Start by setting this bit to 1, indicating the card is not present.
+> +         * Then check the PCI-E register and clear the bit if card is present.
+> +         */
+> +        val |= PHB_PCIE_HPSTAT_PRESENCE;
+> +
+> +        /*
+> +         * Config-read the PCI-E macro register for slot-status.
+> +         * Method for config-read converts to BE value.
+> +         * To check actual bit in the PCI-E register,
+> +         * convert the value back to host format.
+> +         * Clear the Presence-status active low bit.
+> +         */
+> +        if (be16_to_cpu(pnv_phb4_rc_config_read(phb, exp_base + PCI_EXP_SLTSTA,
+> +                                                4))
+> +                    & PCI_EXP_SLTSTA_PDS) {
+> +            val &= ~PHB_PCIE_HPSTAT_PRESENCE;
+> +        }
+> +
+> +        /* Check if link is active and set the bit */
+> +        if (is_link_active(phb)) {
+> +            val |= PHB_PCIE_HPSTAT_LINKACTIVE;
+> +        }
+> +
+> +        /* Clear write-only resample-bit */
+>           val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
+>           return val;
+>   
+> @@ -904,6 +971,11 @@ uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>       case PHB_PCIE_LMR:
+>           /* These write-only bits always read as 0 */
+>           val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
+> +
+> +        /* Check if link is active and set the bit */
+> +        if (is_link_active(phb)) {
+> +            val |= PHB_PCIE_LMR_LINKACTIVE;
+> +        }
+>           return val;
 >   
 >       /* Silent simple reads */
->       case PHB_LSI_SOURCE_ID:
-> @@ -1633,6 +1670,30 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
->       .get_address_space = pnv_phb4_dma_iommu,
->   };
->   
-> +static void pnv_phb4_ro_mask_init(PnvPHB4Class *phb4c)
-> +{
-> +    /*
-> +     * Set register specific RO-masks
-> +     */
-> +
-> +    /* PBL - Error Injection Register (0x1910) */
-> +    phb4c->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
-> +        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
-> +        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
-> +
-> +    /* Reserved bits[60:63] */
-> +    phb4c->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
-> +    phb4c->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
-> +    /* Reserved bits[36:63] */
-> +    phb4c->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
-> +    phb4c->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
-> +    /* Reserved bits[40:63] */
-> +    phb4c->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
-> +    phb4c->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
-> +
-> +    /* TODO: Add more RO-masks as regs are implemented in the model */
-> +}
-> +
->   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
->   {
->       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-> @@ -1692,6 +1753,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
->       pnv_phb4_err_reg_reset(phb);
->       pnv_phb4_pcie_stack_reg_reset(phb);
->       pnv_phb4_regb_err_reg_reset(phb);
-> +    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
->   }
->   
->   static void pnv_phb4_instance_init(Object *obj)
-> @@ -1866,6 +1928,7 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       XiveNotifierClass *xfc = XIVE_NOTIFIER_CLASS(klass);
->       ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +    PnvPHB4Class *phb4c = PNV_PHB4_CLASS(klass);
->   
->       dc->realize         = pnv_phb4_realize;
->       device_class_set_props(dc, pnv_phb4_properties);
-> @@ -1874,6 +1937,9 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
->       xfc->notify         = pnv_phb4_xive_notify;
->   
->       rc->phases.enter = pnv_phb4_reset;
-> +
-> +    /* Initialize RO-mask of registers */
-> +    pnv_phb4_ro_mask_init(phb4c);
->   }
->   
->   static const TypeInfo pnv_phb4_type_info = {
-> @@ -1881,6 +1947,7 @@ static const TypeInfo pnv_phb4_type_info = {
->       .parent        = TYPE_DEVICE,
->       .instance_init = pnv_phb4_instance_init,
->       .instance_size = sizeof(PnvPHB4),
-> +    .class_size    = sizeof(PnvPHB4Class),
->       .class_init    = pnv_phb4_class_init,
->       .interfaces = (const InterfaceInfo[]) {
->               { TYPE_XIVE_NOTIFIER },
-> diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-> index 95ba26db53..567a3e6e95 100644
-> --- a/include/hw/pci-host/pnv_phb4.h
-> +++ b/include/hw/pci-host/pnv_phb4.h
-> @@ -19,7 +19,7 @@
->   
->   
->   #define TYPE_PNV_PHB4 "pnv-phb4"
-> -OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
-> +OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
->   
->   typedef struct PnvPhb4PecStack PnvPhb4PecStack;
->   
-> @@ -156,6 +156,17 @@ struct PnvPHB4 {
->       QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
->   };
->   
-> +typedef struct PnvPHB4Class {
-> +    DeviceClass parent_class;
-> +
-> +    /*
-> +     * Read-only bitmask for registers
-> +     * Bit value: 1 => RO bit
-> +     *            0 => RW bit
-> +     */
-> +    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
-> +} PnvPHB4Class;
-> +
->   void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
->   int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
->   PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
-> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-> index 59329068d3..d0962c1607 100644
-> --- a/include/hw/pci-host/pnv_phb4_regs.h
-> +++ b/include/hw/pci-host/pnv_phb4_regs.h
-> @@ -180,9 +180,11 @@
->   #define PHB_M64_AOMASK                  0x1d0
->   #define PHB_M64_UPPER_BITS              0x1f0
->   #define PHB_NXLATE_PREFIX               0x1f8
-> -#define PHB_DMARD_SYNC                  0x200
-> -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
-> -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
-> +#define PHB_DMA_SYNC                    0x200
-> +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
-> +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
-> +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
-> +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
->   #define PHB_RTC_INVALIDATE              0x208
->   #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
->   #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
-> @@ -387,8 +389,8 @@
->   #define PHB_PCIE_SCR                    0x1A00
->   #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
->   #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
-> +#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
->   #define PHB_PCIE_BNR                    0x1A08
-> -
->   #define PHB_PCIE_CRESET                 0x1A10
->   #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
->   #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
-> @@ -397,7 +399,14 @@
->   #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
->   #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
->   #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
-> +#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
-> +#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
->   #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
-> +#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
-> +#define PHB_PCIE_LMR                    0x1A30
-> +#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
-> +#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
-> +#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
->   
->   #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
->   #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
-> @@ -425,7 +434,7 @@
->   
->   #define PHB_PCIE_DLP_TRWCTL             0x1A80
->   #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
-> -
-> +#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
->   #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
->   #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
->   #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
-> diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
-> index 2294cf5525..23238f1582 100644
-> --- a/tests/qtest/pnv-phb-test.c
-> +++ b/tests/qtest/pnv-phb-test.c
-> @@ -76,7 +76,8 @@ static void phb5_sticky_rst_test(QTestState *qts)
->        * Sticky reset test of PHB_PBL_ERR_STATUS.
->        *
->        * Write all 1's to reg PHB_PBL_ERR_INJECT.
-> -     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
-> +     * RO-only bits will not be written and
-> +     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
->        *
->        * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
->        * Verify the sticky bits are still set.
-> @@ -84,7 +85,62 @@ static void phb5_sticky_rst_test(QTestState *qts)
->       PHB5_XSCOM_WRITE(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
->       PHB5_XSCOM_WRITE(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
->       val = PHB5_XSCOM_READ(PHB_PBL_ERR_STATUS);
-> -    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
-> +    g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
-> +                     PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
-> +                     PPC_BITMASK(52, 54)));
-> +
-> +}
-> +
-> +/* Check that write-only bits/regs return 0 when read */
-> +static void phb4_writeonly_read_test(QTestState *qts)
-> +{
-> +    uint64_t val;
-> +
-> +    /*
-> +     * Set all bits of PHB_DMA_SYNC,
-> +     * bits 0 and 2 are write-only and should be read as 0.
-> +     */
-> +    PHB5_XSCOM_WRITE(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
-> +    val = PHB5_XSCOM_READ(PHB_DMA_SYNC);
-> +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
-> +    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
-> +
-> +    /*
-> +     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
-> +     * bit 9 is write-only and should be read as 0.
-> +     */
-> +    PHB5_XSCOM_WRITE(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
-> +    val = PHB5_XSCOM_READ(PHB_PCIE_HOTPLUG_STATUS);
-> +    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
-> +
-> +    /*
-> +     * Set all bits of PHB_PCIE_LMR,
-> +     * bits 0 and 1 are write-only and should be read as 0.
-> +     */
-> +    PHB5_XSCOM_WRITE(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
-> +    val = PHB5_XSCOM_READ(PHB_PCIE_LMR);
-> +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
-> +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
-> +
-> +    /*
-> +     * Set all bits of PHB_PCIE_DLP_TRWCTL,
-> +     * write-only bit-1 should be read as 0.
-> +     */
-> +    PHB5_XSCOM_WRITE(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
-> +    val = PHB5_XSCOM_READ(PHB_PCIE_DLP_TRWCTL);
-> +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
-> +
-> +    /*
-> +     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
-> +     * both regs are write-only and should be read as 0.
-> +     */
-> +    PHB5_XSCOM_WRITE(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
-> +    val = PHB5_XSCOM_READ(PHB_LEM_ERROR_AND_MASK);
-> +    g_assert_cmpuint(val, ==, 0x0);
-> +
-> +    PHB5_XSCOM_WRITE(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
-> +    val = PHB5_XSCOM_READ(PHB_LEM_ERROR_OR_MASK);
-> +    g_assert_cmpuint(val, ==, 0x0);
->   }
->   
->   static void phb5_tests(void)
-> @@ -99,6 +155,9 @@ static void phb5_tests(void)
->       /* Check sticky reset of a register */
->       phb5_sticky_rst_test(qts);
->   
-> +    /* Check write-only logic */
-> +    phb4_writeonly_read_test(qts);
-> +
->       qtest_quit(qts);
->   }
->   
---------------qT2oyr3LrvgeBdTIFtfOLB9O
+--------------6WlApM1jo3ZeqRQPRPNhVNon
 Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 <!DOCTYPE html>
 <html>
@@ -523,368 +297,142 @@ Thanks, MAK
     <div class="moz-cite-prefix">On 8/31/2026 7:30 AM, Saif Abrar wrote:<br>
     </div>
     <blockquote type="cite"
-      cite="mid:20260831123005.1485518-5-saif.abrar@linux.ibm.com">
+      cite="mid:20260831123005.1485518-7-saif.abrar@linux.ibm.com">
       <pre wrap="" class="moz-quote-pre">From: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.vnet.ibm.com">&lt;saif.abrar@linux.vnet.ibm.com&gt;</a>
 
-SW cannot write the read-only(RO) bits of a register
-and write-only(WO) bits of a register return 0 when read.
-
-Added ro_mask[] for each register that defines which
-bits in that register are RO.
-When writing to a register, the RO-bits are not updated.
-
-When reading a register, clear the WO bits and return the updated value.
-
-Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
-PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
-by writing all 1's and reading back the value.
-The WO bits in these registers should read back as 0.
-
-Add .class_size in pnv_phb4_type_info.
+Config-read the link-status register in the PCI-E macro,
+Depending on the link-active bit, set the link-active status
+in the HOTPLUG_STATUS and LINK_MANAGEMENT registers
+Also, clear the Presence-status active low bit in HOTPLUG_STATUS reg
+after config-reading the slot-status in the PCI-E macro.
 
 Signed-off-by: Saif Abrar <a class="moz-txt-link-rfc2396E" href="mailto:saif.abrar@linux.ibm.com">&lt;saif.abrar@linux.ibm.com&gt;</a>
-Reviewed-by: Cédric Le Goater <a class="moz-txt-link-rfc2396E" href="mailto:clg@kaod.org">&lt;clg@kaod.org&gt;</a>
-Reviewed-by: "Michael S. Tsirkin" <a class="moz-txt-link-rfc2396E" href="mailto:mst@redhat.com">&lt;mst@redhat.com&gt;</a>
+Reviewed-by: Michael S. Tsirkin <a class="moz-txt-link-rfc2396E" href="mailto:mst@redhat.com">&lt;mst@redhat.com&gt;</a>
 Reviewed-by: Caleb Schlossin <a class="moz-txt-link-rfc2396E" href="mailto:calebs@linux.ibm.com">&lt;calebs@linux.ibm.com&gt;</a>
 Reviewed-by: Aditya Gupta <a class="moz-txt-link-rfc2396E" href="mailto:adityag@linux.ibm.com">&lt;adityag@linux.ibm.com&gt;</a>
 ---
- hw/pci-host/pnv_phb4.c              | 79 ++++++++++++++++++++++++++---
- include/hw/pci-host/pnv_phb4.h      | 13 ++++-
- include/hw/pci-host/pnv_phb4_regs.h | 19 +++++--
- tests/qtest/pnv-phb-test.c          | 63 ++++++++++++++++++++++-
- 4 files changed, 160 insertions(+), 14 deletions(-)
+ hw/pci-host/pnv_phb4.c | 74 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 73 insertions(+), 1 deletion(-)
 
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index a91b8277d6..9730fd1f8a 100644
+index b13165f84d..87446aedc8 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -654,6 +654,12 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-         return;
-     }
+@@ -508,6 +508,34 @@ uint32_t get_exp_offset(PCIDevice *pdev)
+     return rpc-&gt;exp_offset;
+ }
  
-+    /* Update 'val' according to the register's RO-mask */
-+    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
++/*
++ * Config-read the link-status register in the PCI-E macro,
++ * convert to LE and check the link-active bit.
++ */
++static uint32_t is_link_active(PnvPHB4 *phb)
++{
++    PCIHostState *pci = PCI_HOST_BRIDGE(phb-&gt;phb_base);
++    PCIDevice *pdev = pci_find_device(pci-&gt;bus, 0, 0);
++    uint32_t exp_offset = get_exp_offset(pdev);
 +
-+    val = (phb-&gt;regs[off &gt;&gt; 3] &amp; k-&gt;ro_mask[off &gt;&gt; 3]) |
-+            (val &amp; ~(k-&gt;ro_mask[off &gt;&gt; 3]));
++    return (be16_to_cpu(pnv_phb4_rc_config_read(phb,
++                        exp_offset + PCI_EXP_LNKSTA, 4)) &amp;
++                        PCI_EXP_LNKSTA_DLLLA);
++}
 +
-     /* Record whether it changed */
-     changed = phb-&gt;regs[off &gt;&gt; 3] != val;
- 
-@@ -729,7 +735,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-     case PHB_TCE_TAG_ENABLE:
-     case PHB_INT_NOTIFY_ADDR:
-     case PHB_INT_NOTIFY_INDEX:
--    case PHB_DMARD_SYNC:
-+    case PHB_DMA_SYNC:
-        break;
- 
-     /* Noise on anything else */
-@@ -767,7 +773,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-     case PHB_VERSION:
-         return PNV_PHB4_PEC_GET_CLASS(phb-&gt;pec)-&gt;version;
- 
--        /* Read-only */
-+    /* Read-only */
-     case PHB_PHB4_GEN_CAP:
-         return 0xe4b8000000000000ull;
-     case PHB_PHB4_TCE_CAP:
-@@ -777,18 +783,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-     case PHB_PHB4_EEH_CAP:
-         return phb-&gt;big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
- 
-+    /* Write-only, read will return zeros */
-+    case PHB_LEM_ERROR_AND_MASK:
-+    case PHB_LEM_ERROR_OR_MASK:
-+        return 0;
-+    case PHB_PCIE_DLP_TRWCTL:
-+        val &amp;= ~PHB_PCIE_DLP_TRWCTL_WREN;
-+        return val;
-     /* IODA table accesses */
-     case PHB_IODA_DATA0:
-         return pnv_phb4_ioda_read(phb);
- 
-+    /*
-+     * DMA sync: make it look like it's complete,
-+     *           clear write-only read/write start sync bits.
-+     */
-+    case PHB_DMA_SYNC:
-+        val = PHB_DMA_SYNC_RD_COMPLETE |
-+            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
-+        return val;
++/*
++ * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
++ * RC-config space values and masks are LE.
++ * Method pnv_phb4_rc_config_read() returns BE, hence convert to LE.
++ * Compute new value in LE domain.
++ * New value computation using sticky-mask is in LE.
++ * Convert the computed value from LE to BE before writing back.
++ */
++#define RC_CONFIG_STICKY_RESET(a, v, s) \
++    (pci_set_word(conf + (a), be16_to_cpu( \
++                     (be16_to_cpu(pci_get_word(conf + (a))) &amp; (s)) | \
++                     ((v) &amp; ~(s)))))
 +
-+    /*
-+     * PCI-E Stack registers
-+     */
-+    case PHB_PCIE_SCR:
-+        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+ void pnv_phb4_cfg_core_reset(PCIDevice *d)
+ {
+     uint8_t *conf = d-&gt;config;
+@@ -680,6 +708,11 @@ void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         val = 0;
+         break;
+ 
++    case PHB_PCIE_HOTPLUG_STATUS:
++        /* For normal operations, Simspeed diagnostic bit is always zero */
++        val &amp;= PHB_PCIE_HPSTAT_SIMDIAG;
 +        break;
 +
-     /* Link training always appears trained */
-     case PHB_PCIE_DLP_TRAIN_CTL:
-         /* TODO: Do something sensible with speed ? */
--        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-+        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-+        return val;
-+
-+    case PHB_PCIE_HOTPLUG_STATUS:
-+        /* Clear write-only bit */
-+        val &amp;= ~PHB_PCIE_HPSTAT_RESAMPLE;
-+        return val;
+     /* Read only registers */
+     case PHB_CPU_LOADSTORE_STATUS:
+     case PHB_ETU_ERR_SUMMARY:
+@@ -827,6 +860,10 @@ void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+ uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+ {
+     PnvPHB4 *phb = PNV_PHB4(opaque);
++    /* Get the PCI-E capability offset from the root-port */
++    PCIHostState *pci = PCI_HOST_BRIDGE(phb-&gt;phb_base);
++    PCIDevice *pdev = pci_find_device(pci-&gt;bus, 0, 0);
++    uint32_t exp_base = get_exp_offset(pdev);
+     uint64_t val;
  
--    /* DMA read sync: make it look like it's complete */
--    case PHB_DMARD_SYNC:
--        return PHB_DMARD_SYNC_COMPLETE;
-+    /* Link Management Register */
-+    case PHB_PCIE_LMR:
-+        /* These write-only bits always read as 0 */
-+        val &amp;= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
-+        return val;
+     if ((off &amp; 0xfffc) == PHB_CONFIG_DATA) {
+@@ -895,8 +932,38 @@ uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+         val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+         return val;
+ 
++    /*
++     * Read PCI-E registers and set status for:
++     * - Card present (active low bit 10)
++     * - Link active  (bit 12)
++     */
+     case PHB_PCIE_HOTPLUG_STATUS:
+-        /* Clear write-only bit */
++        /*
++         * Presence-status bit hpi_present_n is active-low, with reset value 1.
++         * Start by setting this bit to 1, indicating the card is not present.
++         * Then check the PCI-E register and clear the bit if card is present.
++         */
++        val |= PHB_PCIE_HPSTAT_PRESENCE;
++
++        /*
++         * Config-read the PCI-E macro register for slot-status.
++         * Method for config-read converts to BE value.
++         * To check actual bit in the PCI-E register,
++         * convert the value back to host format.
++         * Clear the Presence-status active low bit.
++         */
++        if (be16_to_cpu(pnv_phb4_rc_config_read(phb, exp_base + PCI_EXP_SLTSTA,
++                                                4))
++                    &amp; PCI_EXP_SLTSTA_PDS) {
++            val &amp;= ~PHB_PCIE_HPSTAT_PRESENCE;
++        }
++
++        /* Check if link is active and set the bit */
++        if (is_link_active(phb)) {
++            val |= PHB_PCIE_HPSTAT_LINKACTIVE;
++        }
++
++        /* Clear write-only resample-bit */
+         val &amp;= ~PHB_PCIE_HPSTAT_RESAMPLE;
+         return val;
+ 
+@@ -904,6 +971,11 @@ uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     case PHB_PCIE_LMR:
+         /* These write-only bits always read as 0 */
+         val &amp;= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
++
++        /* Check if link is active and set the bit */
++        if (is_link_active(phb)) {
++            val |= PHB_PCIE_LMR_LINKACTIVE;
++        }
+         return val;
  
      /* Silent simple reads */
-     case PHB_LSI_SOURCE_ID:
-@@ -1633,6 +1670,30 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
-     .get_address_space = pnv_phb4_dma_iommu,
- };
- 
-+static void pnv_phb4_ro_mask_init(PnvPHB4Class *phb4c)
-+{
-+    /*
-+     * Set register specific RO-masks
-+     */
-+
-+    /* PBL - Error Injection Register (0x1910) */
-+    phb4c-&gt;ro_mask[PHB_PBL_ERR_INJECT &gt;&gt; 3] =
-+        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
-+        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
-+
-+    /* Reserved bits[60:63] */
-+    phb4c-&gt;ro_mask[PHB_TXE_ERR_LEM_ENABLE &gt;&gt; 3] =
-+    phb4c-&gt;ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE &gt;&gt; 3] = PPC_BITMASK(60, 63);
-+    /* Reserved bits[36:63] */
-+    phb4c-&gt;ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE &gt;&gt; 3] =
-+    phb4c-&gt;ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE &gt;&gt; 3] = PPC_BITMASK(36, 63);
-+    /* Reserved bits[40:63] */
-+    phb4c-&gt;ro_mask[PHB_ERR_LEM_ENABLE &gt;&gt; 3] =
-+    phb4c-&gt;ro_mask[PHB_ERR_AIB_FENCE_ENABLE &gt;&gt; 3] = PPC_BITMASK(40, 63);
-+
-+    /* TODO: Add more RO-masks as regs are implemented in the model */
-+}
-+
- static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
- {
-     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-@@ -1692,6 +1753,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
-     pnv_phb4_err_reg_reset(phb);
-     pnv_phb4_pcie_stack_reg_reset(phb);
-     pnv_phb4_regb_err_reg_reset(phb);
-+    phb-&gt;regs[PHB_PCIE_CRESET &gt;&gt; 3] = 0xE000000000000000;
- }
- 
- static void pnv_phb4_instance_init(Object *obj)
-@@ -1866,6 +1928,7 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     XiveNotifierClass *xfc = XIVE_NOTIFIER_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    PnvPHB4Class *phb4c = PNV_PHB4_CLASS(klass);
- 
-     dc-&gt;realize         = pnv_phb4_realize;
-     device_class_set_props(dc, pnv_phb4_properties);
-@@ -1874,6 +1937,9 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
-     xfc-&gt;notify         = pnv_phb4_xive_notify;
- 
-     rc-&gt;phases.enter = pnv_phb4_reset;
-+
-+    /* Initialize RO-mask of registers */
-+    pnv_phb4_ro_mask_init(phb4c);
- }
- 
- static const TypeInfo pnv_phb4_type_info = {
-@@ -1881,6 +1947,7 @@ static const TypeInfo pnv_phb4_type_info = {
-     .parent        = TYPE_DEVICE,
-     .instance_init = pnv_phb4_instance_init,
-     .instance_size = sizeof(PnvPHB4),
-+    .class_size    = sizeof(PnvPHB4Class),
-     .class_init    = pnv_phb4_class_init,
-     .interfaces = (const InterfaceInfo[]) {
-             { TYPE_XIVE_NOTIFIER },
-diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-index 95ba26db53..567a3e6e95 100644
---- a/include/hw/pci-host/pnv_phb4.h
-+++ b/include/hw/pci-host/pnv_phb4.h
-@@ -19,7 +19,7 @@
- 
- 
- #define TYPE_PNV_PHB4 "pnv-phb4"
--OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
-+OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
- 
- typedef struct PnvPhb4PecStack PnvPhb4PecStack;
- 
-@@ -156,6 +156,17 @@ struct PnvPHB4 {
-     QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
- };
- 
-+typedef struct PnvPHB4Class {
-+    DeviceClass parent_class;
-+
-+    /*
-+     * Read-only bitmask for registers
-+     * Bit value: 1 =&gt; RO bit
-+     *            0 =&gt; RW bit
-+     */
-+    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
-+} PnvPHB4Class;
-+
- void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
- int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
- PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
-diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-index 59329068d3..d0962c1607 100644
---- a/include/hw/pci-host/pnv_phb4_regs.h
-+++ b/include/hw/pci-host/pnv_phb4_regs.h
-@@ -180,9 +180,11 @@
- #define PHB_M64_AOMASK                  0x1d0
- #define PHB_M64_UPPER_BITS              0x1f0
- #define PHB_NXLATE_PREFIX               0x1f8
--#define PHB_DMARD_SYNC                  0x200
--#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
--#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
-+#define PHB_DMA_SYNC                    0x200
-+#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
-+#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
-+#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
-+#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
- #define PHB_RTC_INVALIDATE              0x208
- #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
- #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
-@@ -387,8 +389,8 @@
- #define PHB_PCIE_SCR                    0x1A00
- #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
- #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
-+#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
- #define PHB_PCIE_BNR                    0x1A08
--
- #define PHB_PCIE_CRESET                 0x1A10
- #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
- #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
-@@ -397,7 +399,14 @@
- #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
- #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
- #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
-+#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
-+#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
- #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
-+#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
-+#define PHB_PCIE_LMR                    0x1A30
-+#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
-+#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
-+#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
- 
- #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
- #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
-@@ -425,7 +434,7 @@
- 
- #define PHB_PCIE_DLP_TRWCTL             0x1A80
- #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
--
-+#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
- #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
- #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
- #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
-diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
-index 2294cf5525..23238f1582 100644
---- a/tests/qtest/pnv-phb-test.c
-+++ b/tests/qtest/pnv-phb-test.c
-@@ -76,7 +76,8 @@ static void phb5_sticky_rst_test(QTestState *qts)
-      * Sticky reset test of PHB_PBL_ERR_STATUS.
-      *
-      * Write all 1's to reg PHB_PBL_ERR_INJECT.
--     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
-+     * RO-only bits will not be written and
-+     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
-      *
-      * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
-      * Verify the sticky bits are still set.
-@@ -84,7 +85,62 @@ static void phb5_sticky_rst_test(QTestState *qts)
-     PHB5_XSCOM_WRITE(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
-     PHB5_XSCOM_WRITE(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
-     val = PHB5_XSCOM_READ(PHB_PBL_ERR_STATUS);
--    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
-+    g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
-+                     PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
-+                     PPC_BITMASK(52, 54)));
-+
-+}
-+
-+/* Check that write-only bits/regs return 0 when read */
-+static void phb4_writeonly_read_test(QTestState *qts)
-+{
-+    uint64_t val;
-+
-+    /*
-+     * Set all bits of PHB_DMA_SYNC,
-+     * bits 0 and 2 are write-only and should be read as 0.
-+     */
-+    PHB5_XSCOM_WRITE(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
-+    val = PHB5_XSCOM_READ(PHB_DMA_SYNC);
-+    g_assert_cmpuint(val &amp; PPC_BIT(0), ==, 0x0);
-+    g_assert_cmpuint(val &amp; PPC_BIT(2), ==, 0x0);
-+
-+    /*
-+     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
-+     * bit 9 is write-only and should be read as 0.
-+     */
-+    PHB5_XSCOM_WRITE(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
-+    val = PHB5_XSCOM_READ(PHB_PCIE_HOTPLUG_STATUS);
-+    g_assert_cmpuint(val &amp; PPC_BIT(9), ==, 0x0);
-+
-+    /*
-+     * Set all bits of PHB_PCIE_LMR,
-+     * bits 0 and 1 are write-only and should be read as 0.
-+     */
-+    PHB5_XSCOM_WRITE(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
-+    val = PHB5_XSCOM_READ(PHB_PCIE_LMR);
-+    g_assert_cmpuint(val &amp; PPC_BIT(0), ==, 0x0);
-+    g_assert_cmpuint(val &amp; PPC_BIT(1), ==, 0x0);
-+
-+    /*
-+     * Set all bits of PHB_PCIE_DLP_TRWCTL,
-+     * write-only bit-1 should be read as 0.
-+     */
-+    PHB5_XSCOM_WRITE(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
-+    val = PHB5_XSCOM_READ(PHB_PCIE_DLP_TRWCTL);
-+    g_assert_cmpuint(val &amp; PPC_BIT(1), ==, 0x0);
-+
-+    /*
-+     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
-+     * both regs are write-only and should be read as 0.
-+     */
-+    PHB5_XSCOM_WRITE(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
-+    val = PHB5_XSCOM_READ(PHB_LEM_ERROR_AND_MASK);
-+    g_assert_cmpuint(val, ==, 0x0);
-+
-+    PHB5_XSCOM_WRITE(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
-+    val = PHB5_XSCOM_READ(PHB_LEM_ERROR_OR_MASK);
-+    g_assert_cmpuint(val, ==, 0x0);
- }
- 
- static void phb5_tests(void)
-@@ -99,6 +155,9 @@ static void phb5_tests(void)
-     /* Check sticky reset of a register */
-     phb5_sticky_rst_test(qts);
- 
-+    /* Check write-only logic */
-+    phb4_writeonly_read_test(qts);
-+
-     qtest_quit(qts);
- }
- 
 </pre>
     </blockquote>
   </body>
 </html>
 
---------------qT2oyr3LrvgeBdTIFtfOLB9O--
+--------------6WlApM1jo3ZeqRQPRPNhVNon--
 
 
