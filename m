@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9515C624DA
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C22C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28fG-0002vI-3i; Thu, 03 Sep 2026 10:43:42 -0400
+	id 1x28fK-0002zJ-Hd; Thu, 03 Sep 2026 10:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f2-0002gD-MJ
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:29 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28fH-0002wF-3c
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:43 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f0-00041h-GM
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:28 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-49b8f86c6deso15924995e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28fE-000491-JJ
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:42 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49b392ccaacso36637205e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446604; x=1789051404; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788446619; x=1789051419; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kJQhdOKNjR/0ShebFeeadPAu9Q3JSbfvQxQRJTWAOqo=;
- b=RZg/FO9p2Cq249A9pCcubu9RHvESgXksOVRXuzVOs2ZVo9zndOaYzvj7zJlPIde9/F
- S6d8sLoZCalTgUZwlpORF47lb1RsajPqk+h3C33czTZIZg8wf69V2hOx1YnuPwyWgILD
- QfA50Rba0jB1HLz8AcRRzQlg52KFuIOWiQyhLkVSoCu18HPMg8HMqdGwcneyQ2Rqxo6t
- 2mPXkAuta/lZWniFxHU7oRZxFmX7eIkPRSGLMfonxum9JaGlPyBCAkK1F9jYO8S1qTCx
- tbNi1W0CaCQ4v2Vjn6SrUOrLVdl+cDW9bKheTDnZbUzkosO7NCFlI3Td3eFchICs2vrI
- EDvg==
+ bh=WH4NtQS27vnM9CBskaa8A4wfHHtgS6Dz+fFxVJqp21Q=;
+ b=pfejoF+Ofi3GKurBUUMoHXgshxkkmbmy4FYjEYt395wEH7F4RQ+NEI0CuiVVzZRzdX
+ R2JPVmOiXIRPh/CvA+PqTPVCoaj2/lYcv4e3/sZS9lK5Xz+uLZbXfK7IhZBRGB2cprDg
+ 9rOTkouulYJQR70zpW02zo/hXUOppmhLcCqOQp2CjGEmV26XaWESDeaSFLDpL1Y+NwUZ
+ 1IQp//puch/hIgXKoknaOqfYTEJFRUaiEs3G5WUGOCTfBv47hiZEHKMcF0Bmt3kPOkBn
+ u+fSikDKCcnAFBwjNKH1dl2XCfTRkLdhqqs9rIvZ1e9PoSjI8Rmjb5/YoMf2uRFl78Df
+ 4FdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446604; x=1789051404;
+ d=1e100.net; s=20251104; t=1788446619; x=1789051419;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kJQhdOKNjR/0ShebFeeadPAu9Q3JSbfvQxQRJTWAOqo=;
- b=HxZNEAEhMHu91WF4Mkb4FWxTV+fZZXhG+y13nj3o/paCpwCiaHPPak+3AJ2SzT7dg1
- bDuTrYbgev0b342p3btp1VAEBH1S/j0RiauUiW2x3sOVOySH9b53Yu73vfOFpHIhSg6G
- 0Tlko9lGBD1+Pb8ZJIbW6teoLYAPT0MVEv1Tis3FJu0YE1ewtwM0I/Xva8D6BXWWT1G8
- 91Hy6lAADeglYbOKt7ieK4HmJ4OgU7CJsqWHOO9Ylr2wY8fUInWW0ehIG+BZfqR2DECT
- VwSQIowXmbCfHmpNTY6nkzBrxCqnrsQRBSBTMoTMruYjhLBRNbzRyfM3pLsrOeTEaHrn
- lsQg==
-X-Gm-Message-State: AFuF++n+lvEgKOyMbq2mI4Dx7EBYu+X3On//oIvIT5SlM4277eKhDhTs
- fO56pnG2YlRwExdUQieabKg5j3FBwGCx0zSjucmhZ3Vm9di0qtoAf5EvjKHlXv9SENYG8wlx2em
- sxh81
-X-Gm-Gg: AYBFou1R6ZlNXZ/GOhqlgygCt28xkmL3HQQnkBPgvrDcsXnZ/4W6VdGH9BV4z4+hzzX
- eP5GR0bsbARlvbCClawzYR16yiz98UtCKdO1PiPCojwK28gaUS0H+HN7rgs0wz6CIpUxuPXHIv4
- HXjg762KqcXEDKZPOjssFGb6zROmakJWuszWwBXuYaHu7evQB/PXHfZE5iY/G7FI6cZBTbbdM+E
- ujjEdDU8u+gMw3zuGm8p0CG9QRiePxxtAmSgiw/3N3cRfFOXY5Sbc+RXsg1MqiOropDiSvzNVlQ
- 657n0Eo6mTlvCfqV997S6EepZyRfjwGHdbzxCScYKz8mZSJRjd6lL2xOD0YGN27J8VdJRkYBJhk
- hjPi/uaNBk0jq1sblzcijmNfxiJW5WyIY59bL+WCcQE/NCE0TMEyu07WHVPvifUNzNsJIVS81/1
- sLRPUHspKmohO6DjI+DeuhwcM/g2qx7/EIb+kvhJ8YpC4qR8S5Tc9T/spB
-X-Received: by 2002:a05:600c:4592:b0:496:c1f3:e8f8 with SMTP id
- 5b1f17b1804b1-49ce5828104mr209531355e9.7.1788446603652; 
- Thu, 03 Sep 2026 07:43:23 -0700 (PDT)
+ bh=WH4NtQS27vnM9CBskaa8A4wfHHtgS6Dz+fFxVJqp21Q=;
+ b=bMzyRIUJ2mxa18BDJcVNhqD1X+kTmT8xvKxoLa6j6N3XaGed342cZgxt9oSD3TQ0Py
+ wYs4PmXI0uc536Nu1nhoH3cLmrP93hk48Mi/+5BG5S5A88gR4kgqFaIFTrexUA54RCGr
+ 1QQLml7QqYMEadkxkIsUKjl+oow48/znTTlYA7KOsnoJkklG9douwCzPWBtPYchDuu87
+ XDuNn40t+coeDQ6c9YzoiFpwQs83H8vqSrnIn4iIbMt/OHHSOI7ldBIPTUaWTg3qqCX0
+ LwDJkctWmFObmX42J9Xudz8+9SaTG9x2ucmjEes9bu/uAkKIY+uDIRpjlxuqtGW+a4Ya
+ zeIw==
+X-Gm-Message-State: AFuF++nbY6qkY+W3Ltz0gvUwA1tLvjQIKwwV+/BWPuMhMFwf1g1y7afS
+ Mm1YqiOPZP9hiEE2Wk0TQIPNhw4BFpcfvYlzZ8HGR/QI/OkkXyobtqVVI+JKWuXKHyp/VBOKDht
+ 5b7MF
+X-Gm-Gg: AYBFou0+olaEeMH5VCIy28aExsyhOnvXk1126yCwKyCcTP+r5ZbH1tPW9jvGM3TlPj+
+ sU/JVNHWe5/O7NYH+6qeMTAplza0PnsNg+eX9ixGCIQ87wItdAYxTeGTl0Y5tUm6eCM/7SCqgzI
+ 0xi1XEr/XjrmijTS/LLL5s+zAT8GkHyo1w/R7zaxfdtalTIB26PO5hjggVCj9p/cGM80/GikuLY
+ ffjQmfxREsVQzm9tmLtl3jB9VYjDgAOXXZ1PyeNrI0cnDu7T882HgmxhlfsEJxPfs+S4zrMDchr
+ OnltF0bc9bwLxpyQzZFbEEUD/XZhKJ9SgRZn+zP3yY4HP0aB3PpudBXopMyh/+mA4jN0By35PZg
+ hZHUVjinAXVeHOG08BjudMqJDpsuHZnqHWLAnNgncJI6mrATgtBBKZtRoU+VIoQwntuSOLqrZG9
+ Z1EOxV11/ZtIje32xVO7m3DexZaPnMYWBW0uYRkSzn5WUA59Dl7WkxaOwd
+X-Received: by 2002:a05:600c:6296:b0:499:621a:2ec2 with SMTP id
+ 5b1f17b1804b1-49ce581635bmr258106275e9.3.1788446618812; 
+ Thu, 03 Sep 2026 07:43:38 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.22
+ ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:23 -0700 (PDT)
+ Thu, 03 Sep 2026 07:43:38 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v7 10/25] parallels: Remove unnecessary data_end field
-Date: Thu,  3 Sep 2026 16:41:28 +0200
-Message-ID: <20260903144143.2328870-11-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Subject: [PATCH v7 24/25] tests: Turned on 256, 299,
+ 304 and block-status-cache for parallels format
+Date: Thu,  3 Sep 2026 16:41:42 +0200
+Message-ID: <20260903144143.2328870-25-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
 References: <20260903144143.2328870-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=den@openvz.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,203 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
-Since we have used bitmap, field data_end in BDRVParallelsState is
-redundant and can be removed.
-
-Add parallels_data_end() helper and remove data_end handling.
-
-The two are not equivalent, which is why this comes before the Format
-Extension is stored. data_end is the highest extent seen in the BAT,
-while the helper derives the end of the payload from the image file. A
-cluster which belongs to the image without being referenced by the BAT,
-as the Format Extension and its bitmap data clusters are, stays
-invisible to the field: parallels_allocate_host_clusters() appends at
-data_end, so it would hand out an offset which is already occupied and
-parallels_mark_used() would refuse it with -EBUSY, failing the guest
-write.
-
-seek_to_sector() validates a BAT entry against data_end, so it becomes
-a user of the new helper, which suits that check better as well: a
-cluster has to live inside the image file, while the field could grow
-to whatever extent a corrupted BAT entry claimed.
-
-The BAT scan in parallels_open() no longer tracks the maximum extent,
-but it keeps rejecting entries below data_start or beyond the end of the
-file, so need_check is still set when an entry is out of bounds. Nothing
-is accumulated any more, so the scan stops at the first such entry.
-high_off in parallels_check_outside_image() only fed the
-image_end_offset which the helper now provides, so it goes away with
-the field.
-
-The bdrv_pwrite_zeroes() of the branch which reuses a hole goes as well.
-It was guarded by data_end, and it is redundant: the space was already
-fallocated when the image grew over it. The 'bytes' variable goes with
-it, as the used bitmap grows by the preallocated size rather than the
-requested one.
-
-Based on the original work from Alexander Ivanov.
+These tests pass with parallels format. Add parallels to supporting
+formats for these tests.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c | 57 +++++++++++++----------------------------------
- block/parallels.h |  1 -
- 2 files changed, 15 insertions(+), 43 deletions(-)
+ tests/qemu-iotests/256                      | 2 +-
+ tests/qemu-iotests/299                      | 2 +-
+ tests/qemu-iotests/304                      | 2 +-
+ tests/qemu-iotests/tests/block-status-cache | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index 2be7c20338..ace79ad968 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -116,6 +116,13 @@ static uint32_t bat_entry_off(uint32_t idx)
-     return sizeof(ParallelsHeader) + sizeof(uint32_t) * idx;
- }
+diff --git a/tests/qemu-iotests/256 b/tests/qemu-iotests/256
+index f34af6cef7..1a4c9c6885 100755
+--- a/tests/qemu-iotests/256
++++ b/tests/qemu-iotests/256
+@@ -26,7 +26,7 @@ from iotests import log
  
-+static int64_t parallels_data_end(BDRVParallelsState *s)
-+{
-+    int64_t data_end = s->data_start * BDRV_SECTOR_SIZE;
-+    data_end += s->used_bmap_size * s->cluster_size;
-+    return data_end;
-+}
-+
- static int64_t seek_to_sector(BDRVParallelsState *s, int64_t sector_num)
- {
-     uint32_t index, offset;
-@@ -130,7 +137,8 @@ static int64_t seek_to_sector(BDRVParallelsState *s, int64_t sector_num)
-     }
+ iotests.verify_virtio_scsi_pci_or_ccw()
  
-     cluster_off = bat2sect(s, index);
--    if (cluster_off < s->data_start || cluster_off + s->tracks > s->data_end) {
-+    if (cluster_off < s->data_start ||
-+        cluster_off + s->tracks > parallels_data_end(s) >> BDRV_SECTOR_BITS) {
-         /* Cluster is outside of the image file or overlaps the header. */
-         return -1;
-     }
-@@ -284,15 +292,14 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
- {
-     BDRVParallelsState *s = bs->opaque;
-     int64_t first_free, next_used, host_off, prealloc_clusters;
--    int64_t bytes, prealloc_bytes;
-+    int64_t prealloc_bytes;
-     uint32_t new_usedsize;
-     int ret = 0;
+-iotests.script_initialize(supported_fmts=['qcow2'])
++iotests.script_initialize(supported_fmts=['qcow2', 'parallels'])
+ size = 64 * 1024 * 1024
  
-     first_free = find_first_zero_bit(s->used_bmap, s->used_bmap_size);
-     if (first_free == s->used_bmap_size) {
--        host_off = s->data_end * BDRV_SECTOR_SIZE;
-+        host_off = parallels_data_end(s);
-         prealloc_clusters = *clusters + s->prealloc_size / s->tracks;
--        bytes = *clusters * s->cluster_size;
-         prealloc_bytes = prealloc_clusters * s->cluster_size;
+ with iotests.FilePath('img0') as img0_path, \
+diff --git a/tests/qemu-iotests/299 b/tests/qemu-iotests/299
+index a7122941fd..d8c4399446 100755
+--- a/tests/qemu-iotests/299
++++ b/tests/qemu-iotests/299
+@@ -23,7 +23,7 @@ import iotests
  
-         /*
-@@ -323,27 +330,9 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
+ # The test is unrelated to formats, restrict it to qcow2 to avoid extra runs
+ iotests.script_initialize(
+-    supported_fmts=['qcow2'],
++    supported_fmts=['qcow2', 'parallels'],
+ )
  
-         /* Not enough continuous clusters in the middle, adjust the size */
-         *clusters = MIN(*clusters, next_used - first_free);
--        bytes = *clusters * s->cluster_size;
+ nbd_sock = iotests.file_path('nbd.sock', base_dir=iotests.sock_dir)
+diff --git a/tests/qemu-iotests/304 b/tests/qemu-iotests/304
+index d465a519a9..03c7c1cbe3 100755
+--- a/tests/qemu-iotests/304
++++ b/tests/qemu-iotests/304
+@@ -23,7 +23,7 @@
+ import iotests
+ from iotests import qemu_img_create, qemu_img_log, file_path
  
-         host_off = s->data_start * BDRV_SECTOR_SIZE;
-         host_off += first_free * s->cluster_size;
--
--        /*
--         * No need to preallocate if we are using tail area from the above
--         * branch. In the other case we are likely re-using hole. Preallocate
--         * the space if required by the prealloc_mode.
--         */
--        if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE &&
--                host_off < s->data_end * BDRV_SECTOR_SIZE) {
--            ret = bdrv_pwrite_zeroes(bs->file, host_off, bytes, 0);
--            if (ret < 0) {
--                return ret;
--            }
--        }
--    }
--
--    if (host_off + bytes > s->data_end * BDRV_SECTOR_SIZE) {
--        s->data_end = (host_off + bytes) / BDRV_SECTOR_SIZE;
-     }
+-iotests.script_initialize(supported_fmts=['qcow2'],
++iotests.script_initialize(supported_fmts=['qcow2', 'parallels'],
+                           supported_protocols=['file'],
+                           require_hmp=True)
  
-     ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
-@@ -749,7 +738,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
- {
-     BDRVParallelsState *s = bs->opaque;
-     uint32_t i;
--    int64_t off, high_off, size, data_start_off;
-+    int64_t off, size, data_start_off;
-     bool fixed = false;
- 
-     size = bdrv_co_getlength(bs->file->bs);
-@@ -759,7 +748,6 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
-     }
-     data_start_off = s->data_start << BDRV_SECTOR_BITS;
- 
--    high_off = 0;
-     for (i = 0; i < s->bat_size; i++) {
-         off = bat2sect(s, i) << BDRV_SECTOR_BITS;
-         if (off == 0) {
-@@ -774,10 +762,6 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
-                 res->corruptions_fixed++;
-                 fixed = true;
-             }
--            continue;
--        }
--        if (high_off < off) {
--            high_off = off;
-         }
-     }
- 
-@@ -792,14 +776,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
-         }
-     }
- 
--    if (high_off == 0) {
--        res->image_end_offset = s->data_end << BDRV_SECTOR_BITS;
--    } else {
--        res->image_end_offset = high_off + s->cluster_size;
--        s->data_end = res->image_end_offset >> BDRV_SECTOR_BITS;
--    }
--
--
-+    res->image_end_offset = parallels_data_end(s);
-     return 0;
- }
- 
-@@ -1466,8 +1443,7 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
-     }
- 
-     s->data_start = data_start;
--    s->data_end = s->data_start;
--    if (s->data_end < (s->header_size >> BDRV_SECTOR_BITS)) {
-+    if (s->data_start < (s->header_size >> BDRV_SECTOR_BITS)) {
-         /*
-          * There is not enough unused space to fit to block align between BAT
-          * and actual data. We can't avoid read-modify-write...
-@@ -1530,10 +1506,7 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
-         if (sector < data_start || sector + s->tracks > file_nb_sectors) {
-             /* Cluster is outside of the image file or overlaps the header. */
-             need_check = true;
--            continue;
--        }
--        if (sector + s->tracks > s->data_end) {
--            s->data_end = sector + s->tracks;
-+            break;
-         }
-     }
- 
-diff --git a/block/parallels.h b/block/parallels.h
-index 493c89e976..eb90aeea81 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -79,7 +79,6 @@ typedef struct BDRVParallelsState {
-     unsigned int bat_size;
- 
-     int64_t  data_start;
--    int64_t  data_end;
-     uint64_t prealloc_size;
-     ParallelsPreallocMode prealloc_mode;
- 
+diff --git a/tests/qemu-iotests/tests/block-status-cache b/tests/qemu-iotests/tests/block-status-cache
+index 5a7bc2c149..ade3d5b169 100755
+--- a/tests/qemu-iotests/tests/block-status-cache
++++ b/tests/qemu-iotests/tests/block-status-cache
+@@ -131,5 +131,5 @@ class TestBscWithNbd(iotests.QMPTestCase):
+ if __name__ == '__main__':
+     # The block-status cache only works on the protocol layer, so to test it,
+     # we can only use the raw format
+-    iotests.main(supported_fmts=['raw'],
++    iotests.main(supported_fmts=['raw', 'parallels'],
+                  supported_protocols=['file'])
 -- 
 2.53.0
 
