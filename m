@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691CFC61DD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 228C1C624D4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 16:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2AFL-0003tj-NU; Thu, 03 Sep 2026 12:25:03 -0400
+	id 1x2AFX-000432-GT; Thu, 03 Sep 2026 12:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x2AFJ-0003su-U9; Thu, 03 Sep 2026 12:25:01 -0400
+ id 1x2AFQ-0003wg-OR; Thu, 03 Sep 2026 12:25:08 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x2AFH-0006Ut-Ct; Thu, 03 Sep 2026 12:25:01 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1x2AFP-0006Z2-5L; Thu, 03 Sep 2026 12:25:08 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G37fV2293550; Thu, 3 Sep 2026 16:24:58 GMT
+ 683G2sHX3304765; Thu, 3 Sep 2026 16:25:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=+hMlmJY+J26UFND8N
- nuXaqfbWV3kHEmcb9fqKreviBA=; b=MKpFdB5Zci+1dy2qYl7BXowYnnW4kU7EX
- /m3KTUIk9cMTIeHCIt00eQ8+LVR9F4TQiApjg09gKkgwQ/HsIzvbanFXzCZHNq15
- tTN/AULK4rzK6/MRcKw13FkK5T8CKoy0j7EUVtN3ITUS0BzuKsBEAexvOOLCyxXd
- Ni/ugFYBzm4mgZd/x2EbBo3AuR0aoNXvtMXaM7Tvs9ashI6Mmy+lp3+husWfyvnw
- sC+kaKSEMrLaIX08xFpVO+tNdzCw4/8nWXpGV2+Req7oANXoJ+fjSZqD1qJEHyQj
- xFX2cu77DOwL4Cr9rWzYMzteO5dMdiGQ/VhayndgXpGB66llPnAjw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbnue5fcq-1
+ :mime-version:references:subject:to; s=pp1; bh=drmyZ3p3oUWb8jhPL
+ Go8lOYWeDHUXRL37N7zlYohvUM=; b=VNtrkIlzqtM8ApvlTpjtsquZ0Q7/0XlBi
+ 98cZQgc3EZHqhl2fpxydmOT7afQ6nAgi3YqO/YG/ynXFskKjcT4v9LyAHobhSbmE
+ 3IyImHbvtaSSVWJmUWjj4Eaz/5stVFz2IJmFLyyKGI1UJzrByPUr97CYqSXpD7DW
+ xYkYyhJKHbZ04WlX1TSjxOrhtBx0XWXbNsx/7YW0IySTxjl5HdWDm2w2SCqiml28
+ p7eSdiMQdD5LO6VHbSsEyzTDf00l/pBIAOCOQnClrqXkgQmVcBfIeJ0bxOCa/5Ny
+ vNtewfE0T4McreFomoRRUzvyRT4hZdvaj+S4e5gm/i2iKKGfzzOGw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gbmuj5kss-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Sep 2026 16:24:57 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GBcbx002709;
- Thu, 3 Sep 2026 16:24:57 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcceyg8bq-1
+ Thu, 03 Sep 2026 16:25:05 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 683GBkgP018205;
+ Thu, 3 Sep 2026 16:25:04 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gcbygr9ns-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Sep 2026 16:24:57 +0000 (GMT)
+ Thu, 03 Sep 2026 16:25:04 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 683GOuDu27722248
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 683GOLuN66257216
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 3 Sep 2026 16:24:56 GMT
+ Thu, 3 Sep 2026 16:24:22 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 02B1558043;
- Thu,  3 Sep 2026 16:24:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D94B45805D;
+ Thu,  3 Sep 2026 16:25:02 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BE495805D;
- Thu,  3 Sep 2026 16:24:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 55A8158053;
+ Thu,  3 Sep 2026 16:25:01 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.31.144])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  3 Sep 2026 16:24:54 +0000 (GMT)
+ Thu,  3 Sep 2026 16:25:01 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
@@ -64,41 +64,41 @@ Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
  farman@linux.ibm.com, mjrosato@linux.ibm.com, pasic@linux.ibm.com,
  farosas@suse.de, lvivier@redhat.com, jdaley@linux.ibm.com,
  pbonzini@redhat.com
-Subject: [PATCH v2 2/7] pc-bios/s390-ccw: Add dynamic net header size handling
-Date: Thu,  3 Sep 2026 12:24:44 -0400
-Message-ID: <20260903162449.2588271-3-zycai@linux.ibm.com>
+Subject: [PATCH v2 6/7] tests/qtest: Add s390x virtio net PCI test to
+ pxe-test.c
+Date: Thu,  3 Sep 2026 12:24:48 -0400
+Message-ID: <20260903162449.2588271-7-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260903162449.2588271-1-zycai@linux.ibm.com>
 References: <20260903162449.2588271-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: -_Y7AkZ6RXtdwV5Y5BXLzz6xx7dMK480
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0MCBTYWx0ZWRfX72jNzsNVm2RJ
- 2LXQYGn9VhNCBVSzbJVpAeSS+7820PZEwJnBS7y8N+VglWCFIUiIKT7CfoGP02knsQK09tUS7ir
- R83GMzT2jxUT64eNnA5XYoVLEwlYa0O6fModLesAlFxBtoWAzXAweFQOqLcPXcTUQDwTEQAEJZG
- JJfLYQ1OR11lCakwggUxRqnuphUmp61cqivDyYD/boOR3cuRBiqo6KolXv4PplrMimDp0Bjf4+6
- t2Luy1N6nDj7m3sgRDy2SrQ+bUUa7zwKFwFd6k/aen058abPZw6yZQw286BgrPj0M1CX32axuQc
- O21g45/BjsxtjhC7+0JfOS4/9XopmMQzgyLra0yLD/Aq8Wleyypy0JpO6Z2rxFLfJy/PLXdVBQf
- rJYcZLmCZDWky22iKo41/5WLGWU513zoHprBHecxjAJgy+eug8QxxWHiqB27w8F7GjdpA1lfN3P
- 4xSQlBAkaJHGoxmv51Q==
-X-Proofpoint-ORIG-GUID: -_Y7AkZ6RXtdwV5Y5BXLzz6xx7dMK480
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0MCBTYWx0ZWRfX69QePG3O7mm6
- ruORExGVp5MKfpirm6ERkoJ3TWSrZY2mS0sP20Mpu2s+F0uVXuTiN0VT0ygGewZQPQmiK9f8HWg
- eN9OdjzaHz5cCIbz8bBdNh0bUWJQVhs=
-X-Authority-Analysis: v=2.4 cv=B92JFutM c=1 sm=1 tr=0 ts=6a999f5a cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-GUID: Yt-ROsJHyKbBlRad5jBIWXxWpnfvAHvQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0MCBTYWx0ZWRfX6A55NGtNYvqt
+ SEfZv7RiZV6UII/kCSz0ce+udx3H/ap778Ev5XR2YXHJyHGIL2K1aAw1n+dXPiKuJoKXISBjW/i
+ gF5xp7hLJTlzgptfnz7At5eQiMZfCy2jS0IpM+cEM3tplAc5DlJ+1YPGSJdNnYr+mc9cg9K7mIu
+ bHTLi+rZ5HdYSzqD8qIZbwu0JLNxcZuQLDw/ejZvq1XHgd2fEVvxNMJUiD20YRoLzdLv9cTMUYG
+ 0ByNj3lohKM3bdYW2DXbAgyo2rhCdkYAq5LVFWxdqeky6OkCO0y3/m8jfzQk4rZLe0Llkd9MUAb
+ BQthYnGgvR3AKdJQKVW+elzllDIiyjbsZoyKkVWYxJQRZtx1JG04QKsReEPn+Nh8eEEkt9LLNxr
+ cfSJFQ/g1pnBQfIJUZai768jKOn1XRp15qNbm+gMYWRf9UUb3W559XJOW1Nb3/T41/LSSJhyrZy
+ pZruVQjtFQ8QrdIGYcQ==
+X-Authority-Analysis: v=2.4 cv=Osl/DS/t c=1 sm=1 tr=0 ts=6a999f61 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=b71jbalOAXEqY8vE3Q8A:9
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=PkLLOfym-WlFbigP99UA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0MCBTYWx0ZWRfXyutGpLnkdzp5
+ R+7Gv0T6TnAaZB27qmcB1AqWDj6pL9QdCQrBdaiTBSs1H/ve0hTQ4pFOpI0VpqEWfdxDA7DYYMc
+ qf3Qzp5cUgL8piscHxfkKTK7ieT2K/s=
+X-Proofpoint-ORIG-GUID: Yt-ROsJHyKbBlRad5jBIWXxWpnfvAHvQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609030140
+ spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030140
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -123,111 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio-net device used a fixed header size that did not account for
-the num_buffers field used in VirtIO 1.0 or for the mergeable receive
-buffers feature.
-
-Use dynamic header sizing: 10 bytes for legacy mode and 12 bytes for
-VirtIO 1.0 or when VIRTIO_NET_F_MRG_RXBUF is enabled. This ensures
-correct packet handling across different VirtIO configurations.
+Add test coverage for virtio-net-pci network booting on s390x by
+including it in the PXE test suite. The test verifies that PXE
+network booting works correctly with virtio-net-pci devices.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Tested-by: Joshua Daley <jdaley@linux.ibm.com>
 ---
- pc-bios/s390-ccw/virtio-net.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ tests/qtest/meson.build | 1 +
+ tests/qtest/pxe-test.c  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-index f58f7ffc55..afa728bc32 100644
---- a/pc-bios/s390-ccw/virtio-net.c
-+++ b/pc-bios/s390-ccw/virtio-net.c
-@@ -20,6 +20,7 @@
- #include "s390-ccw.h"
- #include "virtio.h"
- #include "virtio-ccw.h"
-+#include "virtio-pci.h"
- #include "s390-time.h"
- #include "helper.h"
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 50a1a5272f..654e145fbe 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -289,6 +289,7 @@ qtests_aarch64 = \
+    'migration-test']
  
-@@ -28,6 +29,7 @@
- #endif
+ qtests_s390x = \
++  (slirp.found() ? ['pxe-test'] : []) + \
+   qtests_filter + \
+   ['boot-serial-test',
+    'drive_del-test',
+diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
+index e85dec5a4e..bfa3b98cad 100644
+--- a/tests/qtest/pxe-test.c
++++ b/tests/qtest/pxe-test.c
+@@ -60,6 +60,7 @@ static testdef_t ppc64_tests_slow[] = {
  
- #define VIRTIO_NET_F_MAC_BIT  (1 << 5)
-+#define VIRTIO_NET_F_MRG_RXBUF_BIT (1 << 15)
- 
- #define VQ_RX 0         /* Receive queue */
- #define VQ_TX 1         /* Transmit queue */
-@@ -43,7 +45,18 @@ struct VirtioNetHdr {
+ static testdef_t s390x_tests[] = {
+     { "s390-ccw-virtio", "virtio-net-ccw" },
++    { "s390-ccw-virtio", "virtio-net-pci" },
+     { NULL },
  };
- typedef struct VirtioNetHdr VirtioNetHdr;
  
-+struct VirtioNetHdrMrgRxbuf {
-+    struct VirtioNetHdr hdr;
-+    uint16_t num_buffers; /* Only with VIRTIO_NET_F_MRG_RXBUF or VIRTIO1 */
-+};
-+typedef struct VirtioNetHdrMrgRxbuf VirtioNetHdrMrgRxbuf;
-+
-+/* Header sizes for different modes */
-+#define VIRTIO_NET_HDR_SIZE_LEGACY  sizeof(VirtioNetHdr)
-+#define VIRTIO_NET_HDR_SIZE_V1      sizeof(VirtioNetHdrMrgRxbuf)
-+
- static uint16_t rx_last_idx;  /* Last index in receive queue "used" ring */
-+static int virtio_net_hdr_size;
- 
- int virtio_net_init(void *mac_addr)
- {
-@@ -62,12 +75,17 @@ int virtio_net_init(void *mac_addr)
-         return -1;
-     }
- 
-+    virtio_net_hdr_size = ((vdev->guest_features[1] & VIRTIO_F_VERSION_1) ||
-+                           (vdev->guest_features[0] & VIRTIO_NET_F_MRG_RXBUF_BIT))
-+                          ? VIRTIO_NET_HDR_SIZE_V1
-+                          : VIRTIO_NET_HDR_SIZE_LEGACY;
-+
-     memcpy(mac_addr, vdev->config.net.mac, ETH_ALEN);
- 
-     for (i = 0; i < 64; i++) {
--        buf = malloc(ETH_MTU_SIZE + sizeof(VirtioNetHdr));
-+        buf = malloc(ETH_MTU_SIZE + virtio_net_hdr_size);
-         IPL_assert(buf != NULL, "Can not allocate memory for receive buffers");
--        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + sizeof(VirtioNetHdr),
-+        vring_send_buf(rxvq, buf, ETH_MTU_SIZE + virtio_net_hdr_size,
-                        VRING_DESC_F_WRITE);
-     }
-     vring_notify(rxvq);
-@@ -77,14 +95,14 @@ int virtio_net_init(void *mac_addr)
- 
- int send(int fd, const void *buf, int len, int flags)
- {
--    VirtioNetHdr tx_hdr;
-+    VirtioNetHdrMrgRxbuf tx_hdr;
-     VDev *vdev = virtio_get_device();
-     VRing *txvq = &vdev->vrings[VQ_TX];
- 
-     /* Set up header - we do not use anything special, so simply clear it */
-     memset(&tx_hdr, 0, sizeof(tx_hdr));
- 
--    vring_send_buf(txvq, &tx_hdr, sizeof(tx_hdr), VRING_DESC_F_NEXT);
-+    vring_send_buf(txvq, &tx_hdr, virtio_net_hdr_size, VRING_DESC_F_NEXT);
-     vring_send_buf(txvq, (void *)buf, len, VRING_HIDDEN_IS_CHAIN);
-     while (!vr_poll(txvq)) {
-         yield();
-@@ -108,13 +126,13 @@ int recv(int fd, void *buf, int maxlen, int flags)
-         return 0;
-     }
- 
--    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - sizeof(VirtioNetHdr);
-+    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
-     if (len > maxlen) {
-         puts("virtio-net: Receive buffer too small");
-         len = maxlen;
-     }
-     id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
--    pkt = (uint8_t *)(rxvq->desc[id].addr + sizeof(VirtioNetHdr));
-+    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
- 
- #if DEBUG_VIRTIO_NET   /* Dump packet */
-     int i;
 -- 
 2.55.0
 
