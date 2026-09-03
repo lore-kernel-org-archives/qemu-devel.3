@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F51C624DB
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4605EC624D6
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 14:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x28fC-0002rc-Or; Thu, 03 Sep 2026 10:43:38 -0400
+	id 1x28f9-0002mo-0z; Thu, 03 Sep 2026 10:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f8-0002n3-U4
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:34 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f6-0002j2-NN
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:32 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f6-00045J-Uf
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:34 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-48584dc164fso416328f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x28f2-00043U-MC
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 10:43:31 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4998b5a63e2so25167715e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 07:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1788446611; x=1789051411; darn=nongnu.org;
+ d=openvz.org; s=google; t=1788446607; x=1789051407; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IhBHv/IsAV3MCNTeGG0bhvIWIurVdnd2SebTco/6Ixo=;
- b=iGLoykumtWd8HxQtvCdZKoslAn8vBK2fVR4O8z02wap3GLvH1zcZZjjwVDNwvEWaeb
- Xh+qFdKD9v0xhXzGxsZAbydH8UNa8wPJOBn3ckuW4iDMXT9eKPMLPGOpAYuvwTd+fuk1
- AEpeV5OWLCAjHrcIsa3+xSzDdYs8bhW9TTH3zMsUTNAVDwZBaV8tT3+dzjAj2U03vkIp
- pr+NYwkQnL4lvC3NsE0+mIg+/WQnHFZxx4jZge4N37o7goqRNQLM+NxTq8Xmq8qP3Aft
- G/atTHwOn8VlCgaUtCpC3veVsbTfuS9o3mBGqGdVuSHE7+0DFEZHO0vA4fGK3nifmfHO
- 7BuQ==
+ bh=vF+6ndrGLXKQZTWxC6EFwxN5nkIplvn1xYCLbrS7Iiw=;
+ b=qIVdV4OKlQW34rGD5ibC87A02fhGYwWRg1qgi7Ey+8v+lZPN8ws/QSSN6n6ToZ6gJG
+ +oNF5pimNC1+cphmJCQ1Nbd8ad4Sw4ouTh/bQnNOWOMqJbKr4+9himslRRdEMHQwz9Y9
+ RLzT4FYaqMm8XiyzA/JVbilHf6BtPtM9BWg5tpWCTP1X3XWljbQpe6XGggaF5nvnz3+b
+ R+tc198qvaZyywuqsYfPrHIT/EATwkDCpmD9NcaVCheAE6Fnh8g/Vms5fs4QXrVzrRsh
+ c3vmWlkSAhO7d9BCPaQQ7fHB+8MPwfgP9SgKAvEsKDfA9iOoY354IueoYEUkElWxnzUn
+ 3ytQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788446611; x=1789051411;
+ d=1e100.net; s=20251104; t=1788446607; x=1789051407;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IhBHv/IsAV3MCNTeGG0bhvIWIurVdnd2SebTco/6Ixo=;
- b=mzid3uid9C2Mw1IgWJmPc+T6NJxuUnBCqX+3VbGouPSrl6L+XtPYfGVnkXJBwORdqu
- mCgwxkm1AR9KPeI+8qyt7/uzK3CJarbV/K8m/vWs/dQPvmrMUaiaYiRoZUEyf8DRJDwp
- xaioFxkddu8ckg198ZSyeayUbSYJapjqa5XhZdGw43OqH/BoQ6AoM6RjiFXLMWRfVBYf
- KfjB9CIUTbkPy0MF6jqaWjo9bGYnPvN8o0y/veIo9PMpDJnU/nntrm/8bVqjqQswXeXa
- VQUFAD1gsYK7VSMnYJhuc5utUddEq8PjJZKs9H9z6z9jn4PgMABBWevCFdGhdfKCTGhd
- GMPg==
-X-Gm-Message-State: AFuF++kSXFoelUa56PT/jHYqbyfR00nBNDhHTW0Ihov5YnCCtwZOnz8D
- KnKDvmC9FifBAJIpPMIVEXzbvJDj4XymaHlgXUyZtIq0ngFBGdmuS55HodIyMWygcK48rZO4qgP
- b8B3h
-X-Gm-Gg: AYBFou1KDNq7VCTHngpPrflGTfKkX10Qs9KNBXofJCGPj/7B56SbSqTz3qT1AMHfhcG
- aPHqjRw6/Bl5nb/ygZO8E7bVWEHrUzzzTBz/51/2KgYmXDpQRvP3aFqkBtyF4Tsw17B/pbIGtLi
- 779KzB3yAN6wadgiN0whj/fhTaYfLGm1m3lqGiPmloFBS/JRYJuJqqJRsRIu9OF7Kn5KDjXALJ9
- b01B7TQY4WsiL+2MVm9mfUxfODg5aRwENDBmk02UPG+uOWlo2IdoFBToP1A0WvfxCNY1GOchYA5
- iL5oizK2EcIkf10Nd7QQEuymUUugDxh8OUV/nmCRBaXDJxbVi6OupPib24Jtus2vfuEF4GLJfkH
- psbr4O8NzSlUBZl99HX08zSl1xNrzY1F5dRwBNNA9/R5cjYS7pQX5HTyoOlbWNz4N55Aii8OexD
- 8JoXUTGnGunDJUJC8AMKTLdPCQA0byYjqD7RVaPsK0iMvNRJelNhVIPjcq
-X-Received: by 2002:adf:e00e:0:20b0:485:85f3:7e47 with SMTP id
- ffacd0b85a97d-48585f380a0mr1768336f8f.13.1788446611167; 
- Thu, 03 Sep 2026 07:43:31 -0700 (PDT)
+ bh=vF+6ndrGLXKQZTWxC6EFwxN5nkIplvn1xYCLbrS7Iiw=;
+ b=Y71eITo7kjeO8IkbfdaW6gnH+3q5gBqQKdBcfKg5vajiRPaumkUI1DradsU+kUDtnS
+ svT2tVOzuayL4OjXmOjvuZ5CCZ4h4c+rE/NMNtUiENYhujKcKycvdsroHACrUhGJKEZ+
+ 4e4yWl8G3SVlavHibg+gqEFFR+AD5XXBetZtSBSA28zOPkVStuKwQiSbgGRThbmuaIcC
+ Ft7ywsp0yw4ViysDnT3PBjFnX6+Z6TF/841hxS0uQ42oBcVFuaHCYOAXEkupPRF7opEu
+ cAUAgRC00Iyo++OR0MZJXXqYdpQD0ZZvEGy2Apf5u+C2o/aU6C3FD/XTuzrAyOHKmlsX
+ /pjw==
+X-Gm-Message-State: AFuF++lAsXsviQgI+PeYkbcJ2JULF4PK8Q3EZG9bm8JSRoHK0ddqOpbE
+ sF56zRMJfbRxjjxcaP/555KqCQ+Ow2q9RLvJBCFNSopkQjGQU/wf/Pu3Sx3rMNKR7WaIT8bJ4B6
+ UGG/H
+X-Gm-Gg: AYBFou34FPiFlp8al8RRL/tyaHFesl4Np7Gx81FaaP0G50x+NvXBonk2S6k5aX6vVcG
+ cfg7GU4Sr2Zi/uT5JZFOYbOlwoP4wT1jxgttTA3WC/3/9pf2SM7+gNj4GZ/XB0/uHUpYEw2vzxJ
+ rvGMFE3+ehVW0H2CZ942AKnb1n1RwCv2f28DsVlkJZNK1cMy2NWo5/dq2RlPMiJ6Bl8JWct5DtQ
+ 2HWIeuOsraytdmkxlMCxuia27FGSxP28CRUsy5SaFpX5uJVY5uO2ZRHlye36RaPQC3z/LQcH/SE
+ hoA2yzjK7FvYpiUt/raNkrAnsbiaOC+fxae9Zv8/Vy7+L6yF2X2dLPmpowG0fGRKD8+jlGnW0pY
+ ywxgKr40rx4X0PQns0MEWA+wetavbN2dtrqNKtg2rLGHh306qnrqwQukL4aSAfLaTy1wW9JHJi1
+ rofcYHyPxMLzE7kc4j3vVKETk1U++Ew5k27KRChzcnHRsL9AsMfnWZ/VHpgfUPIE639cOm
+X-Received: by 2002:a05:600c:3f08:b0:49b:d45:703e with SMTP id
+ 5b1f17b1804b1-49cf5bbdbb1mr11054945e9.8.1788446607048; 
+ Thu, 03 Sep 2026 07:43:27 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:83cc:ab98:cda9:7dc])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.30
+ ffacd0b85a97d-48448ee9cf7sm15165483f8f.25.2026.09.03.07.43.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 07:43:30 -0700 (PDT)
+ Thu, 03 Sep 2026 07:43:26 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v7 17/25] parallels: do not trust the bitmaps of an image
- which was not closed
-Date: Thu,  3 Sep 2026 16:41:35 +0200
-Message-ID: <20260903144143.2328870-18-den@openvz.org>
+Subject: [PATCH v7 13/25] parallels: Handle L1 entries equal to one
+Date: Thu,  3 Sep 2026 16:41:31 +0200
+Message-ID: <20260903144143.2328870-14-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260903144143.2328870-1-den@openvz.org>
 References: <20260903144143.2328870-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=den@openvz.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=den@openvz.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,127 +101,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-The inuse magic in the header says that the image was not closed
-correctly. The bitmaps stored in the Format Extension are then stale by
-definition: they were written by the last inactivation, and every write
-which happened after it is missing from them. Nothing said so, the
-bitmaps were loaded and handed out as valid, and an incremental backup
-taken from one of them would silently miss the data written after the
-last clean close.
+If all the bits in a dirty bitmap cluster are ones, the cluster shouldn't
+be written. Instead the corresponding L1 entry should be set to 1.
 
-Mark them inconsistent, as qcow2 does for a bitmap whose in-use flag
-survived a crash. Using such a bitmap fails with an error naming it, so
-the loss is reported to whoever tries to rely on it instead of being
-discovered later in a backup.
+Ask bdrv_dirty_bitmap_next_zero() for a clean bit in the range the entry
+covers, and store the marker when there is none. Two things have to
+match the region rather than the cluster which serializes it: the search
+is bounded by the end of the region, as a count and not as an offset, and
+a missing clean bit is the answer we are looking for rather than a reason
+to give up. A dirty run is not a substitute for either. Its length says
+nothing about the region it lies in, so comparing it to the cluster size
+marks a chunk as all ones when only a cluster worth of it is dirty, and
+treating "no clean bit at all" as a failure leaves the entry at zero,
+which says the whole chunk is clean.
 
-parallels_save_bitmap() already skips an inconsistent bitmap, so it is
-not written back. The format has no per bitmap flag to record that the
-contents are unusable, so keeping it would present it as valid again on
-the next open. Say what happens, as the bitmap disappears from the image
-and 'qemu-img bitmap --remove' would report it as missing afterwards.
+Both directions are silent: a full disk overwrite comes back as a
+completely clean bitmap, and a single dirty cluster comes back as
+everything the entry covers being dirty. An incremental backup driven by
+the first one copies nothing.
 
-The image data itself is unaffected: it is repaired at open as before,
-and only the bitmaps are dropped.
+The marker goes through cpu_to_le64() like the cluster offsets below it,
+as the loading side reads the table with ldq_le_p(). The serialization
+moved behind the check, as there is nothing to write when the marker is
+stored.
+
+Based on the original work from Alexander Ivanov.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels-ext.c                         | 13 +++++++++--
- tests/qemu-iotests/tests/parallels-checks     | 23 +++++++++++++++++++
- tests/qemu-iotests/tests/parallels-checks.out | 15 ++++++++++++
- 3 files changed, 49 insertions(+), 2 deletions(-)
+ block/parallels-ext.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 17445d183b..b7fac2514a 100644
+index e89c489730..6a889d86fa 100644
 --- a/block/parallels-ext.c
 +++ b/block/parallels-ext.c
-@@ -335,6 +335,9 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
-                 goto fail;
-             }
-             bdrv_dirty_bitmap_set_persistence(bitmap, true);
-+            if (s->header_unclean) {
-+                bdrv_dirty_bitmap_set_inconsistent(bitmap);
-+            }
-             bitmaps = g_slist_append(bitmaps, bitmap);
-             break;
+@@ -439,12 +439,20 @@ static int GRAPH_RDLOCK parallels_save_bitmap(BlockDriverState *bs,
+     offset = 0;
+     while ((offset = bdrv_dirty_bitmap_next_dirty(bitmap, offset,
+                                                   bm_size)) >= 0) {
+-        int64_t cluster_off, end, write_size;
++        int64_t cluster_off, end, write_size, first_zero;
  
-@@ -417,8 +420,14 @@ static int GRAPH_RDLOCK parallels_save_bitmap(BlockDriverState *bs,
-     QemuUUID uuid;
-     int ret = 0;
+         idx = offset / limit;
  
--    if (!bdrv_dirty_bitmap_get_persistence(bitmap) ||
--        bdrv_dirty_bitmap_inconsistent(bitmap)) {
-+    if (!bdrv_dirty_bitmap_get_persistence(bitmap)) {
-+        return 0;
-+    }
+         offset = QEMU_ALIGN_DOWN(offset, limit);
+         end = MIN(bm_size, offset + limit);
 +
-+    /* The format has no way to mark a stored bitmap unusable */
-+    if (bdrv_dirty_bitmap_inconsistent(bitmap)) {
-+        warn_report("Dropping inconsistent bitmap %s",
-+                    bdrv_dirty_bitmap_name(bitmap));
-         return 0;
-     }
- 
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index 6f60fda62b..575b736e35 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -414,6 +414,29 @@ _check_test_img
- # Clear image
- _make_test_img $SIZE
- 
-+echo "== TEST BITMAP OF AN IMAGE WHICH WAS NOT CLOSED =="
++        first_zero = bdrv_dirty_bitmap_next_zero(bitmap, offset, end - offset);
++        if (first_zero < 0) {
++            l1_table[idx] = cpu_to_le64(1);
++            offset = end;
++            continue;
++        }
 +
-+INUSE_OFFSET=44
-+
-+echo "== add a persistent dirty bitmap and dirty it =="
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+{ $QEMU_IO -c "write -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+echo "== pretend the image was not closed correctly =="
-+poke_file "$TEST_IMG" "$INUSE_OFFSET" "\x59\x6e\x6f\x74"
-+
-+echo "== the bitmap is stale, so it can not be used and is dropped =="
-+$QEMU_IMG bitmap --clear -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+
-+echo "== the name is free again =="
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+
-+echo "== guest data was never in doubt =="
-+{ $QEMU_IO -r -c "read -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+# Clear image
-+_make_test_img $SIZE
-+
- echo "== TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY =="
- 
- echo "== write two clusters =="
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index d40f865868..f390ea90d4 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -268,6 +268,21 @@ read 65536/65536 bytes at offset 0
- file size: 2097152
- No errors were found on the image.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST BITMAP OF AN IMAGE WHICH WAS NOT CLOSED ==
-+== add a persistent dirty bitmap and dirty it ==
-+wrote 65536/65536 bytes at offset 0
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== pretend the image was not closed correctly ==
-+== the bitmap is stale, so it can not be used and is dropped ==
-+Repairing image was not closed correctly
-+qemu-img: Operation clear on bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45 failed: Bitmap 'b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45' is inconsistent and cannot be used
-+Try block-dirty-bitmap-remove to delete this bitmap from disk
-+qemu-img: warning: Dropping inconsistent bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
-+== the name is free again ==
-+== guest data was never in doubt ==
-+read 65536/65536 bytes at offset 0
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
- == TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
- == write two clusters ==
- wrote 1048576/1048576 bytes at offset 0
+         write_size = bdrv_dirty_bitmap_serialization_size(bitmap, offset,
+                                                           end - offset);
+         assert(write_size <= s->cluster_size);
 -- 
 2.53.0
 
