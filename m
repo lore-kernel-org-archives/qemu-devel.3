@@ -4,142 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F82C624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A29AC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2DF9-0001qu-3q; Thu, 03 Sep 2026 15:37:03 -0400
+	id 1x2DEa-0001Ki-8F; Thu, 03 Sep 2026 15:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2DF7-0001m6-GI
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:37:01 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2DF5-0004Rk-Qp
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:37:01 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683IDIgR1257104
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 19:36:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- aPNBDdEx8c8eJTqs/cXP0kYbK/MSZbQdUJcNoeD0TOc=; b=IE3+IAMoYFjge1ii
- hEWHWITV7tettjadLsFnFc9j+otnqd10IMn2PKA4qCJXBACB5PIJ7+R5eWPA1DNM
- FBlOR/EJbo7anrDye+Jan9mR3gpaFk1noJvGfACINTAvjGEzqQ9xNnhmQw32t6eW
- nL5PQJZSPAUwgzmy2jDh2aMkhrl3Dn4+uX/UledWPWubvu8f2PBggpRrAcucNqmA
- e1wytF93MSyvGAgdfTLowRvLVoJqPCgaRzPnYlMkAQPgwy7bm5QFqnI1nRrAz9QW
- mhYlnWq9h2SyJTRxX+dU7Zc0NumI0S02gpPu5SlB8sg2fFyBCJAiaSFFS4H3n4wd
- Mx3JTQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfdyxgbw5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 19:36:58 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38dbf293831so346460a91.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2DET-0001Fw-FT
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:23 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2DEP-00045x-Hl
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:20 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38ea87caafeso158763a91.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788464218; x=1789069018; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=aPNBDdEx8c8eJTqs/cXP0kYbK/MSZbQdUJcNoeD0TOc=;
- b=IGPe889jSNkfy1/dJp7h5WYYmjzUCWebl/rkfbF78kPCBCOoFCgboW26SVa9d7VVPo
- QVlVs3S4pxsmZN/oTwjxJtQ0QkS8zfX9thK+mU+08D8Fa5gUMjp4on6WGLDRCBSrJMvu
- kjm3rkgIPAx+nt9eqirI6Y+MMkJUZC6mwkIHS1tFrOsN70EFL1zyhraxGTgsO+t9jMbh
- 6+JUUFfPetPzj+h4UZTw6Ii7YWHF18m0ipQ6FbAFQznSPN1gyEwt6gpY4J76kCcpwJbY
- JwAM+ax2Tsa57uTYKUX19EgiWOINUmI5Dfkfb9M5ZNltmM+j2aq4nV6lXead3449QmAH
- 4XhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788464218; x=1789069018;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1788464175; x=1789068975; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aPNBDdEx8c8eJTqs/cXP0kYbK/MSZbQdUJcNoeD0TOc=;
- b=YvkZ58/Lk8adCUlNFafdfTkO/nIIXhKGtp7zgCUgeeMGVXjs5q7pjgqxjSxllsPAcm
- rJt6WfuQUGyEep75BIVJjNm2WSV3eyTAgYwYln+MD+nQvauVxZh0PXcIZsR5nzfE2CR6
- i6ts6BHOw0iAUBAE8wE2AdqRrReR6ozEHNMEMpVdK3Hsg/+0mIRpWCa2drVXRjUK54R5
- iN3MV/E/a6l+QQEputVER4rClhODzT0ix6CWlAPwCpjbA2WOwJJ3p+Ymw/cqB+/J+NV8
- wwyUhUWkOVc1JTJeXqwX5J8JSFg/Q0l+382ILq1a36A5+MoDf52C6lpfgXQgRJVN3mut
- vqcw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxSiPrpYLohmPDfXOdnD+VTYBgXNbAxxs3xwxFiCyf3jVlspQvsYJAmc9sI1Bve8YilbjntCHhWmvuq@nongnu.org
-X-Gm-Message-State: AFuF++nCqQbKfw316/EH/+vT1Vxd4340GxMgjJzcP6Octpb7OD85BMoq
- GTcZ2hbT6dyWY/PYEq8IKLyJUvaqv0Qp2ONmtk33W5KNKTCGyXIrd95cG0KSIfPUQI+SfSJ90fQ
- i+miVoHN6Kc7e+vqy6HMURgNvyriTLeG2HRn7htRDvIbq43U42rP5AnqiVw==
-X-Gm-Gg: AYBFou2U7P7Eu6pBQwcdTMDiVIzUWA92XXfuStqMtrJTGw5YOUk+CR3tXuwqmFEIuUm
- SUJHL0l0OhUdTKkK09j+DpUNHlrWUcDET797vg96kFU/qsX5gd1bE6DYZ9t5ilYa8X0j6buoeSQ
- OAxnW9EFAIVlrGsZbRlLP+uv7Ifk1V/e3wuwjyBuhNFSMf9xIbgQ6UwpBtx4z0C66tD5zLUxivA
- ABTTNd+cQ8Ot7E+JVafEWGBfzcR86icReXyZb4i5YxpXfswkG5llw0VtsErpun7vDxzwUzwAyuw
- 4Y1H6L4NDoz7Z+AVrZOuDFrBETnrZu6O92kdYqTw31fLdciXty5ifVhU5c8IHLgn3ekGlLpakPk
- I9APvoOyCl1/JnviMvsRAvMdTZcxuEd2SYGmBJ+fROdjUQrwn++GyljPc9k+L0hAgkQJ8
-X-Received: by 2002:a17:90a:e703:b0:398:d843:cad9 with SMTP id
- 98e67ed59e1d1-39b26226de8mr1262988a91.19.1788464217877; 
- Thu, 03 Sep 2026 12:36:57 -0700 (PDT)
-X-Received: by 2002:a17:90a:e703:b0:398:d843:cad9 with SMTP id
- 98e67ed59e1d1-39b26226de8mr1262921a91.19.1788464217420; 
- Thu, 03 Sep 2026 12:36:57 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3339bdf26c5sm942981eec.27.2026.09.03.12.36.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 12:36:57 -0700 (PDT)
-Message-ID: <a00f97de-de13-4b6a-a096-704ea7446e10@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 12:36:56 -0700
+ bh=f32IWeVjFPoScpLFlx02pOBXGIUqQvqEdKcNhwp+k0w=;
+ b=tCYxKihtpSwybewlAo5OAxjiNscJ8OT41dVNpzcQeplsBt6pOD1YOPLrpfK5xFOB4L
+ /yQUviDfIOPm77JZC6ygHF/440AQGDfDD09u0+AjDe0qvRMXrDxrv7FrAY0B/xjfVQW6
+ 0BPoWWJKYlA7pLSnNa20/sgV1ujD4dUtYFthun4SEAHHYl38vKriz4vDMxI492sfAgq7
+ fThlRCmTlvY5gCj9r3duetjp7PWVZ5zXwM17UqirAgr59potypgHANUaG3azziNThaX3
+ sTeBRQMsoI807t/xarvp6KMRHU9yAyGWzEaFcV78ZysjoUhn587LmjhMKkGj3uQXNt+9
+ JX+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788464175; x=1789068975;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=f32IWeVjFPoScpLFlx02pOBXGIUqQvqEdKcNhwp+k0w=;
+ b=RzIhB0lpDsrHFLqwE6jI+FhbCOrlsiRXZPvd2Y2B+YOMI/WyTCyvoGpHmSmyotP7jT
+ UGuQxT811mtT97Exi/G2Qp9MLfVapGvb+wa0s/46kLRY/JJziqWtG/v2iBZPR6JDFYvc
+ mDQG1oN5g7Ubchln4HGE1+4zBMLz19ImqMJ4GzTp31lhBhYDNeJECPLcjQ0XTOTED1t2
+ OHesmnqH11O0J81iJxjVeq2YdVHFfBuNOiv2fxfziPuuXYPSoAoUo5HAou2ojjq+OY2P
+ AzB87DCUb/WBpjiD/hmouvQaiZQk7Hjxj4p80eviEYCxgAzpm6uRBzFuxSSRQ+M7FjDe
+ xn1Q==
+X-Gm-Message-State: AFuF++ldOOL6nJ72b4Ip1J1BZQXonfDbuz2uvx4/pmXPDFh8bx1ZNtfx
+ FPo37vlq6cJVGPVbju8NLo6lZSAvTd/zpHnKs7cHRh4JzYv0oJU4ZZefO082GyYNtSk=
+X-Gm-Gg: AYBFou1HB+AW3P+1ppondrhZQkStkv2emPQg8hkEzX8LCxjSp0RZR2y1S8swyqSBJIX
+ 4P5RnZ6LKEd4P74OQ4zkuCyC/mGsxhElfTYRf75LpZmm0UL/NV505kC5eMO9o/qDlKKU2y1GxZz
+ R3fXMLHeVtgr/xHBClgSnaGmBZ/6D7En/L4Ioy/F80RJ4s5olegWK0+2QgJhBjQK94+ulu3s/AI
+ tawC0MImCBwMxf5RY4jlsLRavdQeQlsDdItoKzosfv3eUjTdaZL21yLZsU/MW4jveuqUOFrpDx9
+ JoYGMIbwoERLLYeOQAqCmkN78XqQqUkv/swtORPUvmhCGzJole3AUVQjlWXlor/U5qRxl7tVpnb
+ A6eFU1BEgZTkcqwRVpPQaM7K+PfP/Cfphydiyr79LyVdACj8AFil0SnOPp7TUY3hmR0G/jgPPPc
+ zzSZ3fDCh387vTTUpxJaD274FWeqv17SpWRxbPUFcKj4WHpkQl4rKFbOZPAZN0SIEJeSkAtwkgX
+ se95jOWqxhL0Z9UEqw0+bI9qg==
+X-Received: by 2002:a17:90b:5287:b0:38e:6a44:671b with SMTP id
+ 98e67ed59e1d1-39b25eeeef9mr1274489a91.0.1788464175209; 
+ Thu, 03 Sep 2026 12:36:15 -0700 (PDT)
+Received: from p14s.cg.shawcable.net
+ ([2604:3d09:148c:c800:40c0:ec33:6266:c275])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Sep 2026 12:36:14 -0700 (PDT)
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
+ armbru@redhat.com, lorenzo.pieralisi@linaro.org, gshan@redhat.com,
+ enju.kohei@fujitsu.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
+ mathieu.poirier@linaro.org
+Subject: [RFC v4 01/24] linux-headers: Add RME related definitions
+Date: Thu,  3 Sep 2026 13:35:48 -0600
+Message-ID: <20260903193611.1058589-2-mathieu.poirier@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] target/hexagon: kick vCPU when re-asserting interrupts
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260903185622.3234171-1-brian.cain@oss.qualcomm.com>
- <20260903185622.3234171-4-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260903185622.3234171-4-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 7tidL8uc1wgfRx5OdupVkFqoTGuWaWbg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfX/yRNkFFAZlnM
- dLJnATTyrjN28xp1eOckUv3MFFCcfhb5Ft25pbPFFBo77SgMrRKw5XILFr5/TYh7YI/v+tGeb/x
- 2Y5CItsi8ZGwZ5+nnY4e0738NJEmfyI=
-X-Proofpoint-GUID: 7tidL8uc1wgfRx5OdupVkFqoTGuWaWbg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfXw4zF2sAziL9g
- rQaNdlvo2yqypNNjB+Z4BbmHg/zueFsQg+QUOd+cxW4JBq1UIed6WfjPbT47U6YT1WZNTyh6RGY
- D8md7BJy62U8X4NDOd6XJ31kbWlz55vh7/2lIasS2lL6xODuIvOP2I1nryxLrgav4YCs6Mto85a
- YrQ9CdSMneQRcn+GBB5r+RIIptMSkj+R1eqKcVYC+t+O2DHrHwu9fDL8xy7oWyCHQDN89NQStV0
- iOJq6OpR+a4es0UAjWdOUIjpuTrulkuWf6HX6gR8wB6BxjN303MlWXIzYeZpS0NFuikXc92no/9
- 6XeLkqU2NcMWBY+pGRR+fBNIPXKnL6sC4P3OhPWXBGe9FUhtVwcv6k/nHzx0H5GSGChg3rsOLLR
- K28EY163VtNVnQN1AfiDFAklf3lbvkU0bjpGBgWiDgHYERO6SqxXeYn3aivEJmizkMRF7vB8O/Q
- Ch5atPf8w7ejL84JYoQ==
-X-Authority-Analysis: v=2.4 cv=X9Zi7mTe c=1 sm=1 tr=0 ts=6a99cc5a cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=b6kYv1u0gy0l810oL3gA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 suspectscore=0 priorityscore=1501 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030170
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,21 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/2026 11:56 AM, Brian Cain wrote:
-> hex_interrupt_update() used cpu_resume() to make a halted vCPU notice a
-> newly pending interrupt.  cpu_resume() is meant for a vCPU stopped by the
-> vm-state machinery: besides kicking the thread it clears cpu->stop and
-> cpu->stopped, and resets exception_index to -1.  Clearing the stop flags
-> can undo a pause requested via the monitor or by migration, and resetting
-> exception_index discards an exception the vCPU had already latched.
-> 
-> Only the kick is wanted here, so call qemu_cpu_kick() directly.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_interrupts.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+This is a temporary patch intended for testing purposes only. It provides
+definitions related to supporting Realms by the QEMU-VMM.
+
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+---
+ linux-headers/asm-arm64/kvm.h |  9 +++++++++
+ linux-headers/linux/kvm.h     | 10 +++++++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
+index 6aefe7973814..4c08631ec7d2 100644
+--- a/linux-headers/asm-arm64/kvm.h
++++ b/linux-headers/asm-arm64/kvm.h
+@@ -208,6 +208,15 @@ struct kvm_arm_counter_offset {
+ 	__u64 reserved;
+ };
+ 
++#define KVM_ARM_RMI_POPULATE_FLAGS_MEASURE     (1 << 0)
++struct kvm_arm_rmi_populate {
++	__u64 base;
++	__u64 size;
++	__u64 source_uaddr;
++	__u32 flags;
++	__u32 reserved;
++};
++
+ #define KVM_ARM_TAGS_TO_GUEST		0
+ #define KVM_ARM_TAGS_FROM_GUEST		1
+ 
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 29f81c05aca2..8b7627f11447 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -689,14 +689,19 @@ struct kvm_enable_cap {
+  * address size for the VM. Bits[7-0] are reserved for the guest
+  * PA size shift (i.e, log2(PA_Size)). For backward compatibility,
+  * value 0 implies the default IPA size, 40bits.
++ *
++ * Bits[30-31] are reserved for the VM type
+  */
+ #define KVM_VM_TYPE_ARM_IPA_SIZE_MASK	0xffULL
+ #define KVM_VM_TYPE_ARM_IPA_SIZE(x)		\
+ 	((x) & KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
+ 
++#define KVM_VM_TYPE_ARM_NORMAL		0
++#define KVM_VM_TYPE_ARM_REALM		(1UL << 30)
+ #define KVM_VM_TYPE_ARM_PROTECTED	(1UL << 31)
+ #define KVM_VM_TYPE_ARM_MASK		(KVM_VM_TYPE_ARM_IPA_SIZE_MASK | \
+-					 KVM_VM_TYPE_ARM_PROTECTED)
++					 KVM_VM_TYPE_ARM_PROTECTED | \
++					 KVM_VM_TYPE_ARM_REALM)
+ 
+ /*
+  * ioctls for /dev/kvm fds:
+@@ -719,6 +724,8 @@ struct kvm_enable_cap {
+ #define KVM_GET_EMULATED_CPUID	  _IOWR(KVMIO, 0x09, struct kvm_cpuid2)
+ #define KVM_GET_MSR_FEATURE_INDEX_LIST    _IOWR(KVMIO, 0x0a, struct kvm_msr_list)
+ 
++#define KVM_ARM_RMI_POPULATE	  _IOWR(KVMIO, 0xd7, struct kvm_arm_rmi_populate)
++
+ /*
+  * Extension capability list.
+  */
+@@ -988,6 +995,7 @@ struct kvm_enable_cap {
+ #define KVM_CAP_S390_HPAGE_2G 249
+ #define KVM_CAP_PPC_COMPAT_CAPS 250
+ #define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 251
++#define KVM_CAP_ARM_RMI 252
+ 
+ struct kvm_irq_routing_irqchip {
+ 	__u32 irqchip;
+-- 
+2.43.0
+
 
