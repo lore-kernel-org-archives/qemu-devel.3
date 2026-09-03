@@ -4,111 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B77C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8EAC61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 17:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2BWO-0006QP-A4; Thu, 03 Sep 2026 13:46:44 -0400
+	id 1x2BWY-0006RD-Hm; Thu, 03 Sep 2026 13:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namangulati@google.com>)
- id 1x2BWM-0006Q8-0o
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:42 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2BWW-0006Qx-77
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:52 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <namangulati@google.com>)
- id 1x2BWJ-0005a6-Vx
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:41 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cda5e048fso67085e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 10:46:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788457597; cv=none;
- d=google.com; s=arc-20260327;
- b=XoD3KlpGqbrB9V5v3wrMqa0DRwzB77kPW7tXbKAHTGX7sPu649z6XkeVMMUaxnHbq8
- MvT/d2dmXoVgCwkaw+RoKdjixoQpH7TVKZ/AY4N+2ylMDmUqEIHnI1Gg8+7M9rw3Myhn
- /7thYiHqC4kG17SjPOBx14stBHVdRwIYBuQwAljItfecvvzfQySGUc84Fo8TaMTXLdUp
- RYwY4BQXjAySZVWWd1qQkR9DPd4inU3kvyoSJ58U0yyQ0Wjz3TLfLnfMcdRXrp2kMi7P
- CQqRPCOd/wSk56oTMJmY1yaCbEhvbDs2VaBxKqoTFYDq9F+IAeRrkRR3ljmMbLMIWzTA
- uqmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=2fowOpZTxi+xe2ayPxtDnOLoCmD9y/rEJY815q5aK6o=;
- fh=nuYir6uzwHJ/v0JB8oZskGPFAnguCSG8KREUxLN9qAI=;
- b=K5R0exRsNbl51E1Y2kMnvfQCnlbpql8qVnfDIKKbwTZwV34PhnjpkwbiKrHXvAzTbm
- 642jOsA0gXDvzONwxg2fy1CFeN8WXHxBN1nf5FS5ra8gzCMsQDU1tf5TG0fvF/36BDV0
- t8cU8/RKV70K4MiZX/hu4mL7Qy25QgNAiMTRNcy523/Sbuk76XDSEHHAO0UsPx9NpkjU
- JQig4zdEvPaGZosj9tRcp/sRAHaVohzHDpulKKwPMmON5mYsNvEL1+9e7yQ41pFIrn/n
- pRkYYkZ7Pz9085Ldd9HKX5edbWIOUtU4Zzb1pGTtncxPuqv8YXWFndlSpjsdv21gRfV/
- qf1w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788457597; x=1789062397; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2fowOpZTxi+xe2ayPxtDnOLoCmD9y/rEJY815q5aK6o=;
- b=oHX/K0OfZ4UWoxxsiwRkZemLT+94X9StZP9yHYuMd6TW+/kERciwMT9IGX1KrdF3Lb
- RGKxEmHvQowuvnZP5MHc9XMCDEpwMo5s4BckvctoyMJz2z1myLdKb2E5jWVk83w1uZL/
- ZF3yf2L0ccD9J3lSOJz2b5JLAx+PNFMEEUHN8qEqc7tzsK53y+HTjaSpAEF3eL4UGEbI
- cy6ftvMl1sp7ea4vGo0r8+vGfITO4Q/QujU4z0mkZaa6ul0b/TiyTE1ezMQEw4yk2b6U
- DzHHy7cr02vI3nGFk9pw18lVxbXnH+cttHPVDhgIrUhZzfezjUHLBIXYwIZgih82vw01
- xnDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788457597; x=1789062397;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2fowOpZTxi+xe2ayPxtDnOLoCmD9y/rEJY815q5aK6o=;
- b=iXA7do2opFjgC9o6671dDjjn8TuckeaWu6ObwnsrrbjrM3zsIPWLCLXYIM4qsnRm7n
- X3gNHl1osU8X+EWnW0MxWLlv4wyC2H4+N86iaBiFKk4rd8uCDBb/AYqWAgnEmNxZ8STJ
- S4jx72QtETVpdii3ZWfVH0puYi/bC13X0QeoaN1URAd4xBLf035H52PscMyU0DiC25Lt
- aK262bM3xs/mVtALV4iuWhWpoZHy7/7w3drddnYstncKHy8b592ihVLUvUIUCy75Ddqr
- WAI24gS+++NLSplGtYYMfBFIzLa01zQ2E8vxpdLpyB1yIKzSF3ubdxBJ+DuZ+DTEnIYX
- Ey1g==
-X-Gm-Message-State: AFuF++m0DZPMbXp9hNeeE97MuXXkVzviqODSiC3uMQ481g+/FOoJ7i1B
- 3h1seNF80T9Cpjjg+rMPYSrcdw1vzddK301Nca+GjlVqu180BIz98GaMcvdCuP1jM1s7ktgXciA
- QoBfidhZpQJEe+hlom2FzScgNiDqpuYQuVP9yS+I0aUuvz5g82fZHWiY8
-X-Gm-Gg: AYBFou0G57vYoZ/nA2IuKbOCtGHI35o2NM4kCWkEpFCJgu55ul6/IhGYGWvoAwE5pUs
- lVuMwugWCmpXb56YRG/x51SDbA6hW6HDbde3SAV/dzZw3SeH8c+d0INRRyIwa9u0jZZCi1bAFtG
- oscFqzHr1OWFP28xdcPgNq82Erm2BAwMK13J4BAyIERzQAieofV+sO7SMu7ctdkmK94mH4peTt3
- EKekrHt1QQoEbI9A73auHgkF+Q2RColZEd6Cb0qWRnf9dKlvfv7w/dbDSB2VSEW1Kq6+lRrUCwZ
- xU7QIQuU10egFL9x6tO1jKR6buIZcVbplwjMYZ0pv40h9ybAg6IrJ6vz8a9ip3ToEUU/FvcS/tA
- =
-X-Received: by 2002:a05:600d:864f:20b0:49b:8f5e:51f6 with SMTP id
- 5b1f17b1804b1-49cf76fc502mr27305e9.3.1788457596932; Thu, 03 Sep 2026 10:46:36
- -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2BWU-0005b0-DB
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 13:46:51 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 1C36E1F7B4;
+ Thu,  3 Sep 2026 17:46:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1788457604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
+ b=mSAAWYFBhrPVg1qghAVP6WdFudkpa78nYLjL/7mu6iI85mfZ+k4dgLnfpOr03pu7NzCSuu
+ yrMm1IHnoZoNZ405etniuHyoi8grurTeVv7y475QOdvwimGQGfKBzcewpsEh+42aauPZo6
+ 1wsJC4WGspay3pwBdKVNYeFxQpsvtn8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1788457604;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
+ b=Ho1xJ5WwKCWVmVLV04ERwAJi8udR5bdaf+n33ZUf0Rbutt02a9VSIjjQ+TloA3mStBtDLn
+ 4CLS7HTHlbDadpBQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="CH/wYFs0";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VlOuoQ38
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1788457600; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
+ b=CH/wYFs0v4ntDOJpn8Afvtix1qKMiV3bNzyQMzggaoN1xNkc/XLNolyOuTLgGz1FQbzy0S
+ 6b/rk0ephWOPjRvtUbApF0jTWo3Ei/n/ZqN+rU8hRwdFOWD31QbNT3RESdzz6+AfGPCFor
+ LyKAZopdcbIA8JZDf6MeCQnhxYThAKo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1788457600;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aYjtSa9ryjc70qcKjVP9Mt4OPlrdie+lhWD2faQultc=;
+ b=VlOuoQ38GJnwRJLznSR6mrp1pgJB0AZ6HZP2Yd35tL6lbhtWJnywdo8cGmIuqdtNE+R+qV
+ wG2BkbBm//n4b/AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 76B18136E6;
+ Thu,  3 Sep 2026 17:46:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4LOREX+ymWpNWQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 03 Sep 2026 17:46:39 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>
+Subject: Re: [PATCH 01/18] checkpatch: Fix checking of newlines in error
+ messages
+In-Reply-To: <apmwZbSLZ46yvGmT@x1.local>
+References: <20260902221547.1812481-1-farosas@suse.de>
+ <20260902221547.1812481-2-farosas@suse.de> <apmwZbSLZ46yvGmT@x1.local>
+Date: Thu, 03 Sep 2026 14:46:37 -0300
+Message-ID: <87bjae8bya.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260826050039.2068138-1-namangulati@google.com>
-In-Reply-To: <20260826050039.2068138-1-namangulati@google.com>
-From: Naman Gulati <namangulati@google.com>
-Date: Thu, 3 Sep 2026 10:46:24 -0700
-X-Gm-Features: AcwNN1UdUr736Z_xW003M2B3Cgny2tMgbCnoT3w8AWCjVfYXNc9QJlK14Ejny-A
-Message-ID: <CAMP57yUuJUrpPtvf6Nf5SoDZ7Z+dfXFmHB-0AJ+vhzysjvgxYQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] vfio-user: support multiple FDs backing region
- mmaps
-To: qemu-devel@nongnu.org
-Cc: John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Alex Williamson <alex@shazbot.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Matt Evans <matt@ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=namangulati@google.com; helo=mail-wm2-x10.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 1C36E1F7B4
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,68 +127,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentle ping on this series incase it got lost in the noise :)
+Peter Xu <peterx@redhat.com> writes:
 
-On Tue, Aug 25, 2026 at 10:00=E2=80=AFPM Naman Gulati <namangulati@google.c=
-om> wrote:
+> On Wed, Sep 02, 2026 at 07:15:29PM -0300, Fabiano Rosas wrote:
+>> Using newlines in the g_test_message is fine. It automatically adds
+>> the '#' required by the TAP protocol to the start of each line.
 >
-> This series extends the vfio-user protocol specification to allow
-> servers to pass multiple file descriptors for different sparse memory
-> areas to be mmap'ed within a single device region.
+> IIUC we have such check not because TAP, but because all these functions
+> will append one newline at the end, hence it's not needed.  IOW, if it
+> applies to g_test_message(), I don't see why it doesn't apply to the rest.
+> But maybe there're other reasons?
 >
-> This extension is intended for exposing paravirtualized PCI devices via
-> a vfio-user server that may have multiple unique sub-regions in a BAR
-> backed by some mmap'able buffers sourced from distinct file descriptors.
+> To make it simpler, maybe we just call a few times g_test_message()?
 >
-> This change introduces a new capability:
->   VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
->
-> Unlike VFIO_REGION_INFO_CAP_SPARSE_MMAP (which maps all sparse areas
-> from a single open file descriptor), this new capability defines an
-> array of sparse mmap areas where each area contains an index into the
-> array of file descriptors.
->
-> When all sparse areas share a single file descriptor, servers may
-> continue to emit VFIO_REGION_INFO_CAP_SPARSE_MMAP and send exactly one
-> file descriptor in SCM_RIGHTS for backwards compatibility with older
-> clients.
->
-> The extensions in this series also lays the groundwork to make use of
-> the in-development series [1] extending vfio-pci to return distinct
-> dmabuf FDs for discrete regions of a device's BAR. A vfio-user server
-> may choose to return dmabuf FDs for various regions of a device's BAR to
-> map a vfio passthrough device into the guest, in order to retain control
-> of the device and be able to revoke mappings passed to the VM.
->
-> libvfio-user server side changes WIP on github [2].
->
->
-> [1] https://lore.kernel.org/all/20260715174737.15287-1-matt@ozlabs.org
-> [2] https://github.com/NamanGulati/libvfio-user/tree/multi-region-fd
->
-> ---
-> Changes from RFC:
->   - Refactored the get_region_info callback to keep vbasedev constant
->     and take in a VFIORegionFDs* out parameter to store the received fds.
->   - Link to RFC: https://lore.kernel.org/qemu-devel/20260811233930.401797=
--1-namangulati@google.com
-> ---
->
-> Naman Gulati (3):
->   vfio-user: add multi-fd region mmap capability
->   vfio: mmap sparse regions backed by multiple FDs
->   vfio-user: implement client support for multi-fd region mmap
->
->  docs/interop/vfio-user.rst    | 71 +++++++++++++++++++++++++++++++++--
->  hw/vfio-user/device.c         | 66 ++++++++++++++++++++++++++++++--
->  hw/vfio-user/protocol.h       | 20 ++++++++++
->  hw/vfio/device.c              | 49 ++++++++++++++----------
->  hw/vfio/region.c              | 41 ++++++++++++++++----
->  hw/vfio/vfio-region.h         |  8 ++++
->  include/hw/vfio/vfio-device.h | 32 ++++++++++++++--
->  7 files changed, 249 insertions(+), 38 deletions(-)
->
-> --
-> 2.55.0.860.g4b6b3295ed-goog
->
+
+Not sure I understand your point, Peter. I want to be able to print nice
+messages in patch 9:
+
+ g_test_message("expected vs. found:\n\n%s\n---\n%s:%s", str, t2[match], t2[match + 1]);
+
+ # HMP output mismatch for entry at line 55:
+ # expected vs. found:
+ #
+ # max-bandwidth: 10356305952768 bytes/hour
+ # ---
+ # max-bandwidth: 10356305952768 bytes/second
+
+What would be the issue of having newlines here?
+
+>> 
+>> Relax the regex for this function, but still forbid a trailing newline
+>> because it's added automatically and usually not what the user wants.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  scripts/checkpatch.pl | 11 +++++++++--
+>>  1 file changed, 9 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+>> index 03f35e75012..fd4534b3a1e 100755
+>> --- a/scripts/checkpatch.pl
+>> +++ b/scripts/checkpatch.pl
+>> @@ -3303,13 +3303,20 @@ sub process {
+>>  					 info_vreport|
+>>  					 error_report|
+>>  					 warn_report|
+>> -					 info_report|
+>> -					 g_test_message}x;
+>> +					 info_report}x;
+>>  
+>>  		if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
+>>  			ERROR("Error messages should not contain newlines\n" . $herecurr);
+>>  		}
+>>  
+>> +		# No newlines at the end
+>> +		my $trail_newline_error_funcs = qr{g_test_message}x;
+>> +
+>> +		if ($rawline =~ /\b(?:$trail_newline_error_funcs)\(.*\".*\\n\"/) {
+>> +		    ERROR("Error messages should not contain trailing " .
+>> +			  "newlines\n" . $herecurr);
+>> +		}
+>> +
+>>  		# Continue checking for error messages that contains newlines.
+>>  		# This check handles cases where string literals are spread
+>>  		# over multiple lines.
+>> -- 
+>> 2.53.0
+>> 
 
