@@ -4,141 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F9BC624D7
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DB8C61DD3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 19:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2DFL-00026f-8K; Thu, 03 Sep 2026 15:37:15 -0400
+	id 1x2DEf-0001Ns-Kb; Thu, 03 Sep 2026 15:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2DFJ-00025b-Rm
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:37:13 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2DFI-0004Su-64
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:37:13 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 683G2uSl1698763
- for <qemu-devel@nongnu.org>; Thu, 3 Sep 2026 19:37:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- RLU2Me016u71sW/Gciu/eLgifX4h0lAIitoZfYP/mdI=; b=Ho8/yQm1rqiNzPCe
- C0UMLIibfSVc9r0xTMWj9AZor6vfWnCK1pttQVyEAnNuMuyqeZm4Bb/e8Bl6pTLT
- EOyRRI6BPgjk3w6zMitwoTxU0Dilv0aTyOsIiFVslPB+4hGSL0t+vU4ncksyTFuL
- cj2+nuJLJFTSqQ8Q3xz6NHw51mP6lmJ6SB8B4oA/R6yRI+Yo+S0qdCZw+jBBOkbO
- uBafq20IyjinFiiiUoLNWUNv7kT3YzaqQ7DrM6uGSjBw2JfMvl2gUmZquKdyJ4+I
- EXjVTx2hiDRtvXS2D2/JX0R91gcuTR4VSTIKxrlPD5fOvTcHyUWXZNNOovU/yHFg
- hXrDpA==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfbyvh45s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 19:37:10 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-398e1f7d1a5so289120a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:37:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2DEZ-0001Jw-FN
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:27 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2DEW-00048M-Oz
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 15:36:27 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2d53197d8b5so1909395ad.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 12:36:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788464230; x=1789069030; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=RLU2Me016u71sW/Gciu/eLgifX4h0lAIitoZfYP/mdI=;
- b=Xd8SFHjLE+wwYFoqOfauj6iObcnuPAlYDr5hLnX4V/ppqiCXfAgPQYiHf6r6Prw2Un
- 0mx5lNkqN5ywgiBG9JM7JOsAUaYRXgHM0Rk1W7qztHPPjeyrIalFoRRM2t51/6qN1jhM
- MFu77/yY7dZKUyvdQrbrdDDVp8eKI7csWgRChkLxwobYaH83UfKs/JEam9esDzwI+RDj
- dCKL5Rxav8kgJfx8qcR7R9YaHTXnn3IjiiQvWOjLQTCO0vogbo3gpHNeCB7FvlVsnuWt
- t9WogWrYRgRuWRcREE0Y0leON8lGLZGbq87Ljvq5S/TF3obW5aseVZ5ixYjDujKOuELC
- rwSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788464230; x=1789069030;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1788464182; x=1789068982; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RLU2Me016u71sW/Gciu/eLgifX4h0lAIitoZfYP/mdI=;
- b=PJPkW6GCOph7lMWTgA+3UC/JqgC5NOSubH51d8e7qTX8KPpMXpO1RDc8qmZie9o+rT
- i+Gp38rxcXjN8ulgIrCN+yuKAQHJqo30YCyDosxd2853FZr3/OQWH6VuR8Wv/2JbtrXI
- LFVyi7EJgNOFtrKyyygej68NeEyncBOTwxf6mjqneeo3YB/SAcsp/Yzj/TxTUC8b4HKK
- wlCKFWwCvXpy3VzlcUtHaKXwVFUEBKu+AA9oyU/99gauG5KvlrJTyJQRWVjqjXePfZXY
- tM21Lwkdsbia6bYfjxOhjSNKNy8kyvrfbfBlmrMANwyF6wplEv5UC1ZNU0epyOty/zSy
- iMTw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxAdKTuUVYAXjNTXoiV1i/jiA8Dbh0aHlNzHd/nM8QJ4D/I5I9CcDVs+BVZYX/ANDm1OKCE01FYN63s@nongnu.org
-X-Gm-Message-State: AFuF++lmNaLupTZYcfic+DROnwp6FR9+yPx6MAwCzT4g3On+FQdUQTmk
- pdTXbSGFNBzGKlVbomxi/xuWE6CxUBg9MR1/5RtKQ4AV6WLj+BqYvwpCPXoMApuB+fYbVEZQcKQ
- s/bhC7bPtwEbK9Rgf27dboG8IHrQt7HTpXQKkCPBWJIhMv3tk2g6yoD6Low==
-X-Gm-Gg: AYBFou2xo2NWKaapd502DSlulpn40SR/WPygMuTTF0zP46vNtSuWQOrz0GDr/7Gzpqx
- 4qaqh9Zm1lCzWEl363I21l/ZeQQ0A4YjydTRhg3Kh2UzEsZhBUd1MiGEBlPIy1MLgAQPf9HYNNY
- 1AmM8H+LZJ1sTC8w93CZz245b28rRWAOTZgAFQ/3girWdQtEmBERhabpdsuH2GxYPQmeq6+dD95
- Tp/z7qaQIc+XHcS+MithhiGbsFyrcK9/35r230TNFlk4JKXZGmA/nr/Iwck4yyohDENlPNY3YpG
- fN9WI7l0cczdkrevCyR+SivP6aD6I8ksGvTard4lKGCiJ4YWI76VMm4lEFTsj+QLsdQtqlZ9k7a
- iTQ9IOHmEHWvFMEpN1RRIErwDf/AX9KlLQPCAB1zDx0nd7nJc447AXqfq1h44YzvbT4GH
-X-Received: by 2002:a17:90a:ec8d:b0:37d:f983:7b5 with SMTP id
- 98e67ed59e1d1-39b26101c08mr1212315a91.9.1788464229906; 
- Thu, 03 Sep 2026 12:37:09 -0700 (PDT)
-X-Received: by 2002:a17:90a:ec8d:b0:37d:f983:7b5 with SMTP id
- 98e67ed59e1d1-39b26101c08mr1212241a91.9.1788464229489; 
- Thu, 03 Sep 2026 12:37:09 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3339a62be87sm828618eec.6.2026.09.03.12.37.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 12:37:08 -0700 (PDT)
-Message-ID: <0b01032e-c594-4384-ad66-ffb7efa59c4a@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 12:37:08 -0700
+ bh=ZnODmfi9jlHeHZOeJx2IurnBfxwM7mGEa2KAs0ZmXME=;
+ b=HzvFmfN/BHxkDgOsnE/Xl5iQZYcQDTxu15Hq6pnLgR6anZZEgN9313BDAY2WyZ3sLr
+ B6H4OLhtah0KsCWXw0vXSaSD4X/D+FzI+61dhj1DvRiBViSx1f6604Nxjkd7VmxdcJAM
+ uvvMk9uCyVutFLkSOKYGpQ21VtGVFdgI717zcjyTvU7xWzNgeNc8PhBQS9pCT/xPY3oW
+ ec+dioL9YOjZLXHpEqyQA3tAcP95b0KJuJCFSRVbntaqC3FEx+n0HH4ouL9UmE50v/8T
+ SVdhBoG/8skB3B4bB5FxPQ4eQytWdk7ZNNt9zRFvIeARfM+xWZTQ10a9+EX6/nx7WAlh
+ LSoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788464182; x=1789068982;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZnODmfi9jlHeHZOeJx2IurnBfxwM7mGEa2KAs0ZmXME=;
+ b=oTu92KIKYafPF8L7vUvDGEcd0+EYpIAyzlArwcXUFDmNXEN38oT2Bu5Mvha0D91NtW
+ HRG0n9vbvE/A52o6jBTIirfy8y+Th0MyxIcUcnYepAP99iWNTx56bt3hKUSu+8T+WPYE
+ Patntdh+h4kvR1+3hMmvGV3muKnpSpV5jVkM7NjMakVWkEqQ+vFGOTfxIaViVKvUtFSM
+ ROAiSOQTG1/a6Ou85kZ+syqPATcTb8xF+7nvmG3ck6Ugwzw2zw5r2e9eoXgRKxweDnOR
+ LRWAfPO4L5vtz9Vi5/qgH21AeDPV0e0ayFPHhLy6mvGe64/cyl9G5lUkZEIRY6hSYMrh
+ fAdA==
+X-Gm-Message-State: AFuF++myszPf7/i20C2Fv3be+uedCjJyUMRBkuUh4Ba7d+WmcYaMMHcQ
+ oZUSuyZoZ1wydOxY1dqXY+5Ql4jRCMIuhhPp1380D8xRcfXY1pb5W0AN0of714WiWC8=
+X-Gm-Gg: AYBFou2kaVW8xCEZ8YNpDsfOlioWHuCW9LPpExcWmZ/htkrjVwM9hEoKoNUeJRCfq4z
+ 5oVek3QF8ijxy9OhpsYCeFSyWMDtrvq6bhaub4p7C1ui8eylY5gKrxD6I4ocznbWiCHeRgCj+4q
+ 8WZRokrnZQnny3vTFjdXNScdbEcgckQuKEa1gNPBxh3kYJuyzYmwow6Qoog/XcfGu/3wsGme8/T
+ h1FaqytdkiK2lnrg/vTkxSxbQGXmS4VhY7tEfC5iLCDpBB9vtNoQlwmryK2NxBcLywR7LqbI0yr
+ 7oGdXNvSIQYWc0N3Qvv1k+x3vb875OtZ+uuSNoyN/uWatKa6DypQjZwGO3NET05vdZ+mh8ptWNl
+ ItwT8jPAKFfSlMt3XiE2eCeuLMgKv6nH3JeIPsHNoZ0NmvLJmGHH+Urzd+CPjbtZAE6d0hfEsXZ
+ 1yHYjnLtAgOTjyksVfswVKKCjQQKOSapnotIKgKIyUzbF1ExHzkhOTccmE/9Z6MDobGRMynLb7b
+ 1at77qY08el0cg=
+X-Received: by 2002:a17:90b:2542:b0:38e:6aa7:68ad with SMTP id
+ 98e67ed59e1d1-39b26101402mr1172680a91.5.1788464182044; 
+ Thu, 03 Sep 2026 12:36:22 -0700 (PDT)
+Received: from p14s.cg.shawcable.net
+ ([2604:3d09:148c:c800:40c0:ec33:6266:c275])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39b083e4fafsm6836951a91.1.2026.09.03.12.36.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Sep 2026 12:36:21 -0700 (PDT)
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
+ armbru@redhat.com, lorenzo.pieralisi@linaro.org, gshan@redhat.com,
+ enju.kohei@fujitsu.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
+ mathieu.poirier@linaro.org
+Subject: [RFC v4 05/24] target/arm/kvm: Split kvm_arch_get/put_registers
+Date: Thu,  3 Sep 2026 13:35:52 -0600
+Message-ID: <20260903193611.1058589-6-mathieu.poirier@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] hw/intc: name the L2VIC edge trigger check
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260903185622.3234171-1-brian.cain@oss.qualcomm.com>
- <20260903185622.3234171-5-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260903185622.3234171-5-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: oovpsy-uaim0gNTZ_ad7C1iA32m4szbU
-X-Proofpoint-GUID: oovpsy-uaim0gNTZ_ad7C1iA32m4szbU
-X-Authority-Analysis: v=2.4 cv=C8vZDwP+ c=1 sm=1 tr=0 ts=6a99cc66 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gHPne6YqgEI5AgDLG5kA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfX6O+vFQBqxzSu
- hqzHD6B5uCRDe4UReyG39j7WGRznKOw2qJte+N8GW6VM1c+ZSE7Wbfa7ltEL4a1GtZvtvSX3Ct8
- QTU4vwUNfrXDmLBrPKBejwNz7umqCPBkL7stSPEJHenSPEdHHUEjVxvHEfEKqACguJI7XWaL0Ih
- vjHvox0BC8276zEblmI9puw9RKi663c+U7jUscb3qelRiO2+pgBp2H31urElRacy7xM4gxOkl6L
- qzyE2CXkDJY6nMz4qVHZ7ZPdEmJsBucwHhRA1PYqu1UyxYFYq0zi4LZvrqKY4m20pFZKL5liRnY
- AtSyNl49fx5JkbU+uuQrSjry4zzZ+KbKxlmk8n0cecHPuR13c1wQO4BcZlJ2tuBWkYEG2TYALqF
- 8bElkt5WemLy/BA6xoo2RllzluiKcLrrUxqqBMWKSyR3jwp87BUKKk5Cchb9/Ne4soVu+JxmoLm
- VxJ16erP5l6Ck65aVIA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE3MCBTYWx0ZWRfX6k4Zn/8IsY4l
- Ct/rWIeD8+AwUpabqN1rLLpiCWcvcPIwyF25P7neuk6qxcpF9+mv70q1bUkp8KIAAC4+C2Y+zlf
- HtsHL9LL0HX7/xjvTDZoDlB3cEVP2/g=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030170
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,14 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/2026 11:56 AM, Brian Cain wrote:
-> Link: https://lore.kernel.org/qemu-devel/c3f2f4e2-79e9-4b3f-8bae-88c669a34c0b@oss.qualcomm.com/
-> Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  hw/intc/hex-l2vic.c | 13 +++++++++----
->  1 file changed, 9 insertions(+), 4 deletions(-)
-> 
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+For a Realm, KVM is much more restrictive on the registers a VMM can
+initialize.  To prepare for Realm VM initialization, split the get/put
+register functions for a non-secure VM in their own function.
+
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+---
+ target/arm/kvm.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 401a6f669cbb..33c3763aebfa 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2169,7 +2169,7 @@ static int kvm_arch_put_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+     return 0;
+ }
+ 
+-int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
++static int kvm_arm_put_core_regs(CPUState *cs, Error **errp)
+ {
+     uint64_t val;
+     uint32_t fpr;
+@@ -2272,6 +2272,19 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+         return ret;
+     }
+ 
++    return 0;
++}
++
++int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
++{
++    int ret;
++    ARMCPU *cpu = ARM_CPU(cs);
++
++    ret = kvm_arm_put_core_regs(cs, errp);
++    if (ret) {
++        return ret;
++    }
++
+     write_cpustate_to_list(cpu, true);
+ 
+     if (!write_list_to_kvmstate(cpu, level)) {
+@@ -2354,7 +2367,7 @@ static int kvm_arch_get_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+     return 0;
+ }
+ 
+-int kvm_arch_get_registers(CPUState *cs, Error **errp)
++static int kvm_arm_get_core_regs(CPUState *cs, Error **errp)
+ {
+     uint64_t val;
+     unsigned int el;
+@@ -2457,6 +2470,19 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+     }
+     vfp_set_fpcr(env, fpr);
+ 
++    return 0;
++}
++
++int kvm_arch_get_registers(CPUState *cs, Error **errp)
++{
++    int ret;
++    ARMCPU *cpu = ARM_CPU(cs);
++
++    ret = kvm_arm_get_core_regs(cs, errp);
++    if (ret) {
++        return ret;
++    }
++
+     ret = kvm_get_vcpu_events(cpu);
+     if (ret) {
+         return ret;
+-- 
+2.43.0
+
 
