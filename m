@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2F6C624A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 586B3C624A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Sep 2026 04:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x1yeU-0003dA-Dm; Thu, 03 Sep 2026 00:02:14 -0400
+	id 1x1yeV-0003dW-1g; Thu, 03 Sep 2026 00:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1x1yeS-0003bO-DK
+ id 1x1yeS-0003bm-Mt
  for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:02:12 -0400
-Received: from mr-2004d-snip6-11.eps.apple.com ([2a01:b747:3000:203::29]
+Received: from mr-2004g-snip6-7.eps.apple.com ([2a01:b747:3000:203::44]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1x1yeP-0000Pi-72
+ id 1x1yeP-0000Pq-AX
  for qemu-devel@nongnu.org; Thu, 03 Sep 2026 00:02:12 -0400
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-10 (Postfix) with ESMTPS id
- 8E46C18001F9; Thu, 03 Sep 2026 04:02:02 +0000 (UTC)
-X-ICL-RepId: 01a0656e-4b97-73e7-9832-1e952f1905e3
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdDlsBQA1IAlgARQVED0oEQAZGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+ 82F47180009E; Thu, 03 Sep 2026 04:02:05 +0000 (UTC)
+X-ICL-RepId: 01a0656e-5849-7c13-9243-03418ca2bdfe
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdDlsBQA1IAlgARQVED0oEQARGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1788408124; x=1791000124;
- bh=x+M2JgY+E0VBkicEpenK8wSivQlKbCR6rgOkzuw3Uvs=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=h/6J6tbqXB5RltRUA/X6zkqlBRvuijQ5KDZL5caIVwmWzGmoBUPmPtSDOkdIIdQSlO1oKKl5Mgs0xmTPeZzXq9v2armm2PVV0UpvI5/tVzlfGVDrCLvgMa4xTRXycFMHwu/ij/sWYB99zyoTa40q2oQtx8ZyFAICzHbR2LEWDtR7d1g4X5DyuSRyMYNr7V8OFJahH4awhdH4RI0eVJ90nhKmZjrAl8UEngdQHCe5UbA2nAt7NHay6cp18dLatAMV+iwP+eTSFMvUhwATIGcwYOjzDzgXOcW0+FGlJ/Dzc+P1lKFqnO+Ip5VxTHZx9/Ub3AFL+hg+Y9p4ZHLtG3AOSA==
+ s=sig1; t=1788408126; x=1791000126;
+ bh=G0sCQVy5ZVMJ7d5IcnGa5M5Elqj0GnZy6UVJUHpnpX8=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=zQlXOq/j9pdGCsHfqgpigtJA8FhIfFgegWi0RyNPNUq26/9gBOuGC9TGDak2FVfeNnctIeTZEQRCspf8JYx10ykYt3U/jM+4GqjuvIOGrfnX8Iz9PRFP2kifiUKXuwtfWDZYkuvgf/ACTYA/vA8morHd+7jEiXSpalLNQhICXKmbgaXD6LvCN2R0VhqxUKZbVKYgN1DNHABP9R+ukJVWXNAQoc/J5ymNBS84YvzEs0drmY6WfbKjHS1GCg2xWm3Ll3DgS9cywK0Cu0pA7Ivtesw9E9PPEB4XrIKufMR1XnM795dYPVMRRT1oWTaFLExvxR0b3loaePewxOVSLyfh9A==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.156.200.36])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-10 (Postfix) with ESMTPSA id
- 5A6F0180009E; Thu, 03 Sep 2026 04:02:00 +0000 (UTC)
+ DF14D18001FF; Thu, 03 Sep 2026 04:02:03 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
  Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH 0/3] hvf: arm: add experimental VHE (x-vhe) toggle
-Date: Thu,  3 Sep 2026 06:01:54 +0200
-Message-ID: <20260903040157.74627-1-mohamed@unpredictable.fr>
+Subject: [PATCH 2/3] hvf: arm: add experimental VHE toggle
+Date: Thu,  3 Sep 2026 06:01:56 +0200
+Message-ID: <20260903040157.74627-3-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260903040157.74627-1-mohamed@unpredictable.fr>
+References: <20260903040157.74627-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDAzMyBTYWx0ZWRfXyq1hghdkt2U4
- Pp9RIS5HUzrAn44DDmbf8mJf0qkZ4NhRcG1Y7rvUdS8x5yJHylZAldXi6Upd7hvI30E2SoCMRw3
- 8uZiNS1cWLbzDUfiz+YHaQjPSVWVPxFQzDQhdI1ppcNDZVPa556Kbg2KOE+G5tnrG6mVNe9coqg
- JD0ALdXVnkDBqY8J+rRSCO7THKL4tPW2AHmk+GTrlPRzmhji89POGSMxVbI0wZQHrVzSfx+l6xo
- bANM5sKP1TVhqbd9Ig1K94GkJ1eF4vXIcGfSzdYnyJbr97zCt6kC7K1Wm2Ga3ZGyBjaQ3+uyVop
- zNvl1fQylB5VapR2/7HOFSAdKqo367/SVSuwRKS1HQuWT9Qz0IikwrwqFbhrII=
-X-Authority-Info-Out: v=2.4 cv=G7MR0tk5 c=1 sm=1 tr=0 ts=6a98f13b
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDAzMyBTYWx0ZWRfXz0Cypdgj2MX/
+ 0M0Ayrd/vJlVMoTJnDCRmO9ettO9H8hT0UWwOJsOvOECklI1vLj2iWtetdAv0QkIQAfjG3fo/1U
+ ycI04nTONLvaO7MjOQ2Pc/WFW++nJ+0R71COotFhtm2mURqDEAd17YiNltiak84mpreTnUoma1N
+ kuFBkINti13IRRyC6Sxmn5LPvsz0pW6/l+BofJn5vGyk89Pr9jj9FEU6YgRIW9aQPK0qoYiUzMG
+ GtRGQQGIRnNegcPBla8+r+HlSv0en/ar75Pq/BjKo9riUno89/nf074W1/xnH+JLBp/O2uMr2xs
+ w02jqmjo6BLl5t4vKfMDUnMP5ZvkkhfPDwjXk8ZvmACT6lzD+66s8j3Q1WbIF4=
+X-Proofpoint-ORIG-GUID: YUs0t38_egglKpYVHpGL_vsij_SHjWPq
+X-Authority-Info-Out: v=2.4 cv=JpD8bc4C c=1 sm=1 tr=0 ts=6a98f13d
  cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
- a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=5SVyW61FHS1u6yMifjoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: P39ck5cuE8uclz6hxREQCzKn6P31EEkQ
-X-Proofpoint-ORIG-GUID: P39ck5cuE8uclz6hxREQCzKn6P31EEkQ
-X-JNJ: AAAAAAABTI20XTqrueSm2e6n5zhzIQvuwSe0+PoQFF5voaOJay26Syiz1ttcYtMjg3qSxE4ND0lGUYQsR5Lpt+MgiZI+7iEAP96vMJBIi3H7T7w4qMmjMMCU44rBYy3S1O0ksjb62t9CXNfC1+jNdit0Q+9mk9BBlE3iLU72gbzAr51MCbUQjM7IssX3bIJXCu8jSNNZVthExiTjGFU/gsavfqs45HuvMNZk6bvM3j5TvxgllOGLZBnJaSiwFB0rxIp5TxwJaCsL9A5nsn/kIYczp2z1aQu1IPUgMrUVZQotEkFQnp5pNqFXdCobjreRE33UDWPzJ+mFt+jYgLzgK7hH9/lylFoEIOsZ5hlHPdJmPoIe3QPf4nIijvQCaLLlYkB0VuWkNWTkA/3J0MMY3uYLRAZePnkDCAtMTmndhIssgUocEjYJvmOqSQdM8TJg17Ne3lQFezPJID/lz9jLpEsDfwMN+RfU/vSHDStdPkh0EH3UU3qzjxmWh1ScMpmGCTvVbHfo0fFWbqH34LN6df911YIe5oWdknlIWHngIg/GRPUKHuk5wKpJNjga4XG0T2dj8nI+hLjns4fBAuhm9YC+b4G43kCNtaybwwy82KTZExTlpni1v9T06+GpGGtEg2pftF8uj8MVoANS0zF8wFildpCSEAVOqxOW/HVZYUMTHbK01n4/y5m1qneDHMRVPiKjHu73e7GEfQIVCjhPRMzo7OBoEIa7Ii7pOSwCOzcHVBD98XqX77lN11ZFJ8tJ7/8d4QbN5pi4kKINvjfvnDXtuxFpdr4mmAVsVZJCOLN8WlyH0rHm0Q0shZnkLp2JLVrwwuW05zzq3xPQK7GKGNhEiTLL0vyv+D4/zwl4DRUHax4f+MSyqhLeeJ5CuJtWBOyESTRtit75hYaXQKYx5iCq539evR75CylmX6R0HglVimR++72lWK2GxL3iGyNL12F0Bv8nTYXscmwqU+Tevuj/mQ2EfUj
- J2o83WCvnK6QNmnIe6VEatXBDmE+ihcSa2yBhi+9zBtlM92OlBHqqBn73DM67LQpoGp+e+/KLZLXQ5Th1UIbQfIixU02O5bKrEwSS/M+lpkcT3XNnlbnYVUBnDDfzYy79gK1U7qbIzt+O2Gu4/2FD3IhEfQaloQuelksHEDDkAyOI9pBN/dCswhGQE1zzxHOV4X1R4hwcmUAbWzIPSlaVZ/8Wc5D3p65pHxPRZD89Shx27j4HRdKGzZ0WJ3uO9vh6astgs/kSpgEJmCr1rDWo
-Received-SPF: pass client-ip=2a01:b747:3000:203::29;
+ a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Uy8BaTlr5CIEmbXmnWEA:9
+X-Proofpoint-GUID: YUs0t38_egglKpYVHpGL_vsij_SHjWPq
+X-JNJ: AAAAAAABeyo7MAwrMgwFU06vnOnGsUS9+PQy/Qf9mosR444BYnmSHMkKhJtkCkDgF+xTykXMgpS0fQhjzqO0h9fP7uNtLuOSJ7mq/P2Cf58hxjpN5WCKbJ1TxKWxDcfjqQdd6mtlSNZFGRZ9d0L/mOhYui+KNyROhHSuAHtS+YfmeGcxzAcl33iSK+lNF+Ny/dKt/d1HjJQH5O+0DBixihRjZnoi81XMFQppCDPu9zKNXhARMvmo+S0FH6koXDWpPadQOhUGBUnOP3+grBniUV+qs1WZfWpHVLCQE7P7aYpKUpbfB5vuFNF4zHQiz8SkbUrAMeBz08pKt1fb4cc6U8r44+BLCKpzA4ByekrRHocxqofZPIPR4Ph9aesMPzzshOrFm4U03aKH+7sahyYtxvjlwR6Au94EOeVm8Kc8WCkgObaG6dBDJz53WgYSRAmYe3mJ4xq5/T1VIKspTLD8H5hsBFoIiVZvj0rygJNkmVd4Q45WS6yT/P2V3HmaM1zQ4UoXXGudI1QyC4+X4keapKmv3TM/knNFI0O9ZlJ0rCq0Ctiz6PvnXNNgiCu+AQUyLRmzmle/Pxq2NgFOD2b+D9jjmeQ0M4f01sP7EGJ8L9k5/RnPS0eXPOwDSM7yf0PUbG2DTKr4DbYIxGr2x+CzsDnKGUN9ywfN4Z7w+dnQavwyXUzb3DZnU7zOpOapSrhbAFJJn/LUS9iEP42RZOlrGbrm3wH2u+7SkLDlGSobxWOgTsLGhv2CWCUzN52p+5qIwq2mfIlDKw==
+Received-SPF: pass client-ip=2a01:b747:3000:203::44;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,21 +85,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-macOS 27.0 has a pre-release VHE implementation. Add support for it in QEMU.
+macOS 27.0 ships with an experimental VHE enablement
+private API. Expose support for it as x-vhe.
 
-The first patch in the series is an independent bugfix that should be backported to QEMU 11.1 too.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ accel/hvf/hvf-all.c      |  2 +
+ include/system/hvf_int.h |  1 +
+ target/arm/hvf/hvf.c     | 89 ++++++++++++++++++++++++++++++++++++++++
+ target/i386/hvf/hvf.c    |  4 ++
+ 4 files changed, 96 insertions(+)
 
-Mohamed Mediouni (3):
-  hvf: arm: advertise ID_AA64PFR0_EL1.GIC
-  hvf: arm: add experimental VHE toggle
-  hvf: arm: advertise EL3 support when VHE is on
-
- accel/hvf/hvf-all.c      |   2 +
- include/system/hvf_int.h |   1 +
- target/arm/hvf/hvf.c     | 103 +++++++++++++++++++++++++++++++++++++++
- target/i386/hvf/hvf.c    |   4 ++
- 4 files changed, 110 insertions(+)
-
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 8bd9154a50..bbff3c6867 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -282,6 +282,8 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "kernel-irqchip",
+         "Configure HVF irqchip");
++
++    hvf_arch_accel_class_init(oc);
+ }
+ 
+ static const TypeInfo hvf_accel_type = {
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index a01691ce17..44ae2e7c4c 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -110,5 +110,6 @@ int hvf_update_guest_debug(CPUState *cpu);
+ bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
+ uint32_t hvf_arch_get_default_ipa_bit_size(void);
+ uint32_t hvf_arch_get_max_ipa_bit_size(void);
++void hvf_arch_accel_class_init(ObjectClass *oc);
+ 
+ #endif
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index f881d6cc67..b61554e108 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -22,6 +22,7 @@
+ #include "cpu-sysregs.h"
+ 
+ #include <mach/mach_time.h>
++#include <dlfcn.h>
+ 
+ #include "system/address-spaces.h"
+ #include "system/memory.h"
+@@ -39,6 +40,7 @@
+ #include "target/arm/trace.h"
+ #include "trace.h"
+ #include "migration/vmstate.h"
++#include "migration/blocker.h"
+ 
+ #include "gdbstub/enums.h"
+ 
+@@ -1132,6 +1134,60 @@ static void clamp_id_aa64mmfr0_parange_to_ipa_size(ARMISARegisters *isar)
+     SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
+ }
+ 
++bool hvf_vhe;
++
++static void hvf_set_vhe(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    OnOffAuto mode;
++
++    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
++        return;
++    }
++
++    switch (mode) {
++    case ON_OFF_AUTO_ON:
++        if (__builtin_available(macOS 27.0, *)) {
++            hvf_vhe = true;
++        } else {
++            error_report("VHE emulation not supported on this system.");
++        }
++        break;
++
++    case ON_OFF_AUTO_OFF:
++        hvf_vhe = false;
++        break;
++
++    case ON_OFF_AUTO_AUTO:
++        /* Experimental feature as of macOS 27.0 */
++        hvf_vhe = false;
++        break;
++    default:
++        /*
++         * The value was checked in visit_type_OnOffAuto() above. If
++         * we get here, then something is wrong in QEMU.
++         */
++        abort();
++    }
++}
++
++static bool hvf_get_vhe(void)
++{
++    return hvf_vhe;
++}
++
++void hvf_arch_accel_class_init(ObjectClass *oc)
++{
++    hvf_vhe = false;
++
++    object_class_property_add(oc, "x-vhe", "OnOffAuto",
++        NULL, hvf_set_vhe,
++        NULL, NULL);
++    object_class_property_set_description(oc, "x-vhe",
++        "Configure experimental VHE enablement");
++}
++
+ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ {
+     ARMISARegisters host_isar = {};
+@@ -1227,6 +1283,9 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     if (hvf_nested_virt_enabled()) {
+         /* SME is not implemented with nested virt on the Apple side */
+         FIELD_DP64_IDREG(&host_isar, ID_AA64PFR1, SME, 0);
++        if (hvf_get_vhe()) {
++            FIELD_DP64_IDREG(&host_isar, ID_AA64MMFR1, VH, 0x1);
++        }
+     }
+ 
+     /*
+@@ -1357,6 +1416,36 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+         }
+     }
+ 
++    if (hvf_get_vhe()) {
++        Error *vhe_migration_blocker = NULL;
++        Error* errp;
++
++        void* hvf = dlopen("/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor", RTLD_LOCAL);
++
++        if (!hvf) {
++            /* Unreachable. */
++            error_report("Failed to dlopen() Hypervisor.framework.");
++            goto cleanup;
++        }
++
++        /* Experimental API: might change before release. */
++        hv_return_t (*_hv_vm_config_set_vhe_enabled)(hv_vm_config_t cfg, bool vhe) = dlsym(hvf, "_hv_vm_config_set_vhe_enabled");
++        if (!_hv_vm_config_set_vhe_enabled) {
++            error_report("_hv_vm_config_set_vhe_enabled API not available.");
++            goto cleanup;
++        }
++        _hv_vm_config_set_vhe_enabled(config, true);
++
++        error_setg(&vhe_migration_blocker,
++        "Live migration disabled because VHE support is experimental");
++        if (migrate_add_blocker(&vhe_migration_blocker, &errp)) {
++            error_report("Failed to add migration blocker.");
++            goto cleanup;
++        }
++
++        dlclose(hvf);
++    }
++
+     ret = hv_vm_create(config);
+     if (hvf_irqchip_in_kernel()) {
+         if (__builtin_available(macOS 15.0, *)) {
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 150598418e..5a39a82492 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -1068,3 +1068,7 @@ void hvf_arch_remove_all_gdbstub_hw_breakpoints(void)
+ void hvf_arch_update_guest_debug(CPUState *cpu)
+ {
+ }
++
++void hvf_arch_accel_class_init(ObjectClass *oc)
++{
++}
 -- 
 2.54.0 (Apple Git-156)
 
