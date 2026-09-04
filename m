@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051A1C79F81
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E29C61DD6
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2LbD-0001Bo-Rh; Fri, 04 Sep 2026 00:32:23 -0400
+	id 1x2LbF-0001Cm-5V; Fri, 04 Sep 2026 00:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2Kmj-0004S5-0X; Thu, 03 Sep 2026 23:40:13 -0400
-Received: from mail-m49197.qiye.163.com ([45.254.49.197])
+ id 1x2Kmy-0004TH-35; Thu, 03 Sep 2026 23:40:28 -0400
+Received: from mail-m155101.qiye.163.com ([101.71.155.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2Kmh-000387-2x; Thu, 03 Sep 2026 23:40:12 -0400
+ id 1x2Kmv-00038f-So; Thu, 03 Sep 2026 23:40:27 -0400
 Received: from LAPTOP-99KJFSET (unknown [36.153.54.56])
- by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb79dd;
- Fri, 4 Sep 2026 11:30:55 +0800 (GMT+08:00)
+ by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb79e5;
+ Fri, 4 Sep 2026 11:31:13 +0800 (GMT+08:00)
 From: Hongyan Xu <getshell@seu.edu.cn>
 To: qemu-devel@nongnu.org
-Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>, qemu-stable@nongnu.org,
- Hongyan Xu <getshell@seu.edu.cn>
-Subject: [PATCH] chardev/baum: unregister the brlapi fd handler on finalize
-Date: Fri,  4 Sep 2026 11:30:55 +0800
-Message-ID: <20260904033055.413-1-getshell@seu.edu.cn>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>
+Subject: [PATCH] dump: reset guest_note_size when the guest note is discarded
+Date: Fri,  4 Sep 2026 11:31:12 +0800
+Message-ID: <20260904033113.1194-1-getshell@seu.edu.cn>
 X-Mailer: git-send-email 2.50.1.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa06a78272203a1kunm1f59f1f324014
+X-HM-Tid: 0aa06a786f8203a1kunm32f5d9e724039
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZHkMYVkkeH0hPSB1OTU8fHlYeHw
+ tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCSB9KVhpMGkNNHR5NTRpJTFYeHw
  5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VTk1ZV1kWGg8SFR0UWUFZT0tIVUpLSUhOQ0
  NVSktLVUtZBg++
 DKIM-Signature: a=rsa-sha256;
- b=GMdFjmalRyx7HRFVgxAzMwv05ylIPDxU8oNqY4pRX+zgU8VD0Ye2jDPQ+PRyQXZtPLDJgtvpFn5x4ObNPWAd017HS8RtqvF2J2yMnjuqrMUOOZWlFKp3g+YzJy2KFwHYSQZ4+cAQe2fXZCdmRFGd7nIfpg9GpPmmYnvcqNNqNNc=;
+ b=eZSOaVKSC4pKGaD+LJCGUwJqowHlTZyRPIJ2AVK7siXyw9Ncu2Tp8H+N8BevhjNcta5ovA6lPc+ws6tB/zSUV+oc40HLUDHOhnFhstdyVDjZ7Uyb/hVilgzydG/HUtzP6wJ5sXalGuAEqC5LdnT2+crIJwB60NOh1cagshvqEnI=;
  c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1; 
- bh=i4UF+zUntchigIYSg8PqU5rjlNCTdMQXlfUMw2DUtqY=;
+ bh=cEN3FPmkQR+mfyk0Hh7Q/XQ8BfLjMjCvjCsiEnuYpQ0=;
  h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=45.254.49.197; envelope-from=getshell@seu.edu.cn;
- helo=mail-m49197.qiye.163.com
+Received-SPF: pass client-ip=101.71.155.101; envelope-from=getshell@seu.edu.cn;
+ helo=mail-m155101.qiye.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -67,52 +67,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-baum_chr_open() registers baum->brlapi_fd with the main loop through a
-raw qemu_set_fd_handler() call.  The chardev base class does not know
-about this handler, and char_braille_finalize() only closes the brlapi
-connection and frees the handle; it never removes the fd handler.
+When dump_init() reads the guest VMCOREINFO note and decides the note
+header is invalid (oversized name/desc or note_size larger than the
+buffer read from the guest), it frees s->guest_note and sets it to NULL
+but leaves s->guest_note_size at its previous value.
 
-When the chardev is removed at runtime (QMP chardev-remove /
-object_unparent), BaumChardev is finalized and freed while the main loop
-still holds an fd handler whose opaque points to the freed object.  The
-next time brlapi_fd becomes readable (or the connection drops) the loop
-calls baum_chr_read() with a dangling opaque, dereferencing freed
-memory -> host use-after-free.
+dump_process() later dispatches on the requested format.  For
+DUMP_GUEST_MEMORY_FORMAT_WIN_DMP it calls create_win_dump(), which in
+dump/win_dump-x86.c dereferences s->guest_note unconditionally:
 
-Unregister the handler in char_braille_finalize() before tearing the
-connection down, using the same descriptor that baum_chr_open()
-registered, and NULL the handle afterwards as a belt-and-braces guard.
-Only do so while baum->brlapi is valid: baum_chr_open() sets
-baum->brlapi_fd from brlapi__openConnection(), which is
-BRLAPI_INVALID_FILE_DESCRIPTOR on failure, and that error path already
-g_free()s the handle and returns before any handler is installed.
+    WinDumpHeader *h = (void *)(s->guest_note + VMCOREINFO_ELF_NOTE_HDR_SIZE);
+
+so a NULL s->guest_note results in a NULL-pointer dereference (crash /
+host DoS) instead of the intended clean error.
+
+guest_note is only ever non-NULL when guest_note_size was set together
+with it, so make the two consistent: whenever the note is freed and
+reset to NULL, also reset guest_note_size to 0, and harden
+create_win_dump() to reject a missing note before dereferencing it.
 
 Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
 ---
- chardev/baum.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ dump/dump.c         | 1 +
+ dump/win_dump-x86.c | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/chardev/baum.c b/chardev/baum.c
-index ac1e535ba8..6d9df70c7e 100644
---- a/chardev/baum.c
-+++ b/chardev/baum.c
-@@ -671,8 +671,16 @@ static void char_braille_finalize(Object *obj)
+diff --git a/dump/dump.c b/dump/dump.c
+index 52be7258a5..a2073cea5d 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -1906,6 +1906,7 @@ static void dump_init(DumpState *s, int fd, bool has_format,
+                 warn_report("Invalid guest note header");
+                 g_free(s->guest_note);
+                 s->guest_note = NULL;
++                s->guest_note_size = 0;
+             } else {
+                 vmcoreinfo_update_phys_base(s);
+                 s->note_size += s->guest_note_size;
+diff --git a/dump/win_dump-x86.c b/dump/win_dump-x86.c
+index 0dd0c503c5..97c5e3e0da 100644
+--- a/dump/win_dump-x86.c
++++ b/dump/win_dump-x86.c
+@@ -445,6 +445,11 @@ bool win_dump_available(Error **errp)
  
-     timer_free(baum->cellCount_timer);
-     if (baum->brlapi) {
-+        /*
-+         * baum_chr_open() registered brlapi_fd with the main loop via
-+         * qemu_set_fd_handler(); unregister it before tearing the
-+         * connection down so a later chardev-remove cannot dispatch
-+         * baum_chr_read() with a dangling opaque.
-+         */
-+        qemu_set_fd_handler(baum->brlapi_fd, NULL, NULL, NULL);
-         brlapi__closeConnection(baum->brlapi);
-         g_free(baum->brlapi);
-+        baum->brlapi = NULL;
-     }
- }
- 
+ void create_win_dump(DumpState *s, Error **errp)
+ {
++    if (!s->guest_note) {
++        error_setg(errp, "win-dump: no vmcoreinfo note available");
++        return;
++    }
++
+     WinDumpHeader *h = (void *)(s->guest_note + VMCOREINFO_ELF_NOTE_HDR_SIZE);
+     X86CPU *first_x86_cpu = X86_CPU(first_cpu);
+     uint64_t saved_cr3 = first_x86_cpu->env.cr[3];
 -- 
 2.50.1.windows.1
 
