@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC94C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9B3C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2LbE-0001Ci-PN; Fri, 04 Sep 2026 00:32:24 -0400
+	id 1x2LbE-0001Cl-QF; Fri, 04 Sep 2026 00:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2KlI-0004Nc-3f
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:38:44 -0400
-Received: from mail-m49198.qiye.163.com ([45.254.49.198])
+ id 1x2KnQ-0004eN-0P
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:40:56 -0400
+Received: from mail-m49197.qiye.163.com ([45.254.49.197])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2KlF-00039J-7K
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:38:43 -0400
-Received: from LAPTOP-99KJFSET (unknown [36.153.54.109])
- by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb79f4;
- Fri, 4 Sep 2026 11:31:31 +0800 (GMT+08:00)
+ id 1x2KnO-0003C2-6D
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:40:55 -0400
+Received: from LAPTOP-99KJFSET (unknown [36.153.54.56])
+ by smtp.qiye.163.com (Hmail) with ESMTP id 4c80ae3a8;
+ Fri, 4 Sep 2026 11:33:46 +0800 (GMT+08:00)
 From: Hongyan Xu <getshell@seu.edu.cn>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hongyan Xu <getshell@seu.edu.cn>
-Subject: [RFC PATCH] migration/rdma: remove the dangling fd handler before
- re-entering loadvm
-Date: Fri,  4 Sep 2026 11:31:30 +0800
-Message-ID: <20260904033130.276-1-getshell@seu.edu.cn>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Hongyan Xu <getshell@seu.edu.cn>
+Subject: [RFC PATCH] virtio-gpu: drop scanouts and clear res->blob when
+ backing is detached
+Date: Fri,  4 Sep 2026 11:33:46 +0800
+Message-ID: <20260904033346.2-1-getshell@seu.edu.cn>
 X-Mailer: git-send-email 2.50.1.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa06a78b4cf03a1kunm7e0be8a224083
+X-HM-Tid: 0aa06a7ac3be03a1kunmea67113224206
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaQkhKVhhDGE9JTx4fGhpPTlYeHw
- 5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VSktCWVdZFhoPEhUdFFlBWU9LSFVKS0lITk
- NDVUpLS1VLWQY+
+ tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTRodVk0aSkJLGEgdHU0YGFYeHw
+ 5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VTk1ZV1kWGg8SFR0UWUFZT0tIVUpLSUhOQ0
+ NVSktLVUtZBg++
 DKIM-Signature: a=rsa-sha256;
- b=KLW/qLqs/nXxryC32U9omVjdAZAXYkj0y2ziN8lVce36ezspyN7JZb179sZfDOculw+H26uSWh+YP2d3vxhvUKwYiUSx20/yP146T8T6S1RX+l22OFV390peiFVEM9N8cKEqMWUAN1T8MGGzNiDJha1iX77sxVtAwUeEqTu8Lg0=;
+ b=jcnAqeUoB39K7tLg2HvXwsKld0tI3Lzha5KlNfsdWFmnhybeTQMy70WUPek+Gi0D4TkIBIp8unjf6Q7/7WlS9DW7mvOTGobXRAw5L1oXoIIU69TGIwjhVS/MvtZ0yWpKWvFMhj1ukpN9cgNytLaII1Q1RBfg63Ef+a4W/P/Nvh4=;
  c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1; 
- bh=v14I0uhvvc/poJ+OXiBQ/bwNrSetEMETBP/CF3on9P8=;
+ bh=ssTdha+mU4tTbzla/OzbtzpVKPAJ0UTLhozF3AhCiJs=;
  h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=45.254.49.198; envelope-from=getshell@seu.edu.cn;
- helo=mail-m49198.qiye.163.com
+Received-SPF: pass client-ip=45.254.49.197; envelope-from=getshell@seu.edu.cn;
+ helo=mail-m49197.qiye.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,103 +70,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The destination RDMA accept path runs the incoming migration coroutine
-(mis->loadvm_co).  While blocked waiting for an RDMA completion it parks
-itself in yield_until_fd_readable() (util/qemu-coroutine-io.c) on a
-completion-channel fd.  That helper registers an fd handler whose opaque
-is a stack object (FDYieldUntilData) and only removes the handler from
-inside its own fd_coroutine_enter() callback.
+virtio_gpu_resource_detach_backing() releases a resource's mapping
+through virtio_gpu_cleanup_mapping(), which for a blob resource unmaps
+and releases the udmabuf backing.  Two lifetime problems follow:
 
-rdma_cm_poll_handler() handles RDMA_CM_EVENT_DISCONNECTED /
-RDMA_CM_EVENT_DEVICE_REMOVAL by calling qemu_coroutine_enter() on the
-coroutine directly.  When the coroutine is parked in
-yield_until_fd_readable() at that moment, this bypasses
-fd_coroutine_enter(): the coroutine resumes and returns from the wait,
-but the fd handler stays registered with an opaque that points into the
-(now returned-from) stack frame.  A later event on that fd then calls
-fd_coroutine_enter() with a dangling pointer -> use-after-free.
+1. A blob resource may currently back a scanout: do_set_scanout()
+   creates a pixman surface that aliases res->blob memory
+   (scanout->ds -> data inside res->blob).  detach does not drop those
+   scanouts, so after cleanup_mapping() releases the backing, a later
+   display refresh reads freed memory (use-after-free).  Drop every
+   scanout that still references the resource before unmapping,
+   mirroring what virtio_gpu_resource_destroy() already does before it
+   frees a resource.
 
-Record, around the yield, the AioContext and fd the coroutine is parked
-on, and make rdma_cm_poll_handler() remove that fd handler before it
-re-enters the coroutine.
+2. cleanup_mapping() never clears res->blob after fini_udmabuf(), so
+   the resource keeps a dangling pointer to released memory while it
+   stays on reslist (detach does not remove the resource; the guest can
+   re-attach backing later).  NULL it out so code that consults
+   res->blob (e.g. cursor/scanout paths) cannot touch freed memory.
 
-This is an RFC: the coroutine/thread wake-up semantics in this area were
-also discussed by Peter Xu's 2025 series ("migration/rdma: Remove
-coroutine path in qemu_rdma_wait_comp_channel" / "Remove
-rdma_cm_poll_handler"); if that direction is preferred this patch should
-be reworked accordingly.
+RFC: this overlaps the upstream virtio-gpu blob/DETACH_BACKING fix
+series (CVE-2026-66020 family); confirm it does not duplicate an
+in-flight version before applying.
 
 Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
 ---
- migration/rdma.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ hw/display/virtio-gpu.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index e976739fad..66175aa60b 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -360,6 +360,17 @@ typedef struct RDMAContext {
-      */
-     int migration_started_on_destination;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 55a1c7f80f..d0d15deb28 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1030,6 +1030,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
  
-+    /*
-+     * While the incoming-migration coroutine is parked in
-+     * yield_until_fd_readable() on a completion channel we record the
-+     * fd and AioContext here.  The cm event handler uses this to remove
-+     * the fd handler before re-entering the coroutine; without that the
-+     * handler keeps pointing at the coroutine stack after the wait
-+     * returns, i.e. a dangling fd handler.
-+     */
-+    AioContext *wait_ctx;
-+    int wait_fd;
-+
-     int total_registrations;
-     int total_writes;
+     if (res->blob) {
+         virtio_gpu_fini_udmabuf(g, res);
++        res->blob = NULL;
+     }
+ }
  
-@@ -1248,7 +1259,21 @@ qemu_rdma_wait_comp_channel(RDMAContext *rdma,
-     struct rdma_cm_event *cm_event;
- 
-     if (qemu_in_coroutine()) {
-+        AioContext *ctx = qemu_get_current_aio_context();
-+
-+        /*
-+         * Record where the coroutine is parked so that
-+         * rdma_cm_poll_handler() can remove the fd handler before it
-+         * re-enters us (yield_until_fd_readable() only removes the
-+         * handler through its own fd_coroutine_enter() callback; a
-+         * direct qemu_coroutine_enter() would leave a handler whose
-+         * opaque points at our stack frame).
-+         */
-+        rdma->wait_ctx = ctx;
-+        rdma->wait_fd = comp_channel->fd;
-         yield_until_fd_readable(comp_channel->fd);
-+        rdma->wait_ctx = NULL;
-+        rdma->wait_fd = -1;
-     } else {
-         /* This is the source side, we're in a separate thread
-          * or destination prior to migration_fd_process_incoming()
-@@ -3024,6 +3049,21 @@ static void rdma_cm_poll_handler(void *opaque)
-         }
-         rdma_ack_cm_event(cm_event);
-         if (mis->loadvm_co) {
-+            /*
-+             * The incoming coroutine may be parked in
-+             * yield_until_fd_readable() on a completion channel.  Its
-+             * fd handler is normally removed by fd_coroutine_enter()
-+             * when that fd becomes readable.  If we re-enter the
-+             * coroutine directly we must remove the handler first,
-+             * otherwise it stays registered with an opaque pointing at
-+             * the (now returned-from) coroutine stack frame.
-+             */
-+            if (rdma->wait_fd >= 0 && rdma->wait_ctx) {
-+                aio_set_fd_handler(rdma->wait_ctx, rdma->wait_fd,
-+                                   NULL, NULL, NULL, NULL, NULL);
-+                rdma->wait_fd = -1;
-+                rdma->wait_ctx = NULL;
-+            }
-             qemu_coroutine_enter(mis->loadvm_co);
-         }
+@@ -1096,6 +1097,23 @@ virtio_gpu_resource_detach_backing(VirtIOGPU *g,
+     if (!res) {
          return;
+     }
++
++    /*
++     * A blob resource may be backing a scanout: the scanout's surface
++     * aliases res->blob memory (do_set_scanout).  cleanup_mapping()
++     * below unmaps/releases that memory, so drop every scanout that
++     * still references this resource first, mirroring what
++     * virtio_gpu_resource_destroy() does before it frees a resource.
++     */
++    if (res->scanout_bitmask) {
++        int i;
++
++        for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
++            if (res->scanout_bitmask & (1 << i)) {
++                virtio_gpu_disable_scanout(g, i);
++            }
++        }
++    }
+     virtio_gpu_cleanup_mapping(g, res);
+ }
+ 
 -- 
 2.50.1.windows.1
 
