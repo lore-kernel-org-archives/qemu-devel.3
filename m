@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A0CC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 06:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618BDC61DD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 06:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2NOO-0008Hz-KG; Fri, 04 Sep 2026 02:27:16 -0400
+	id 1x2NOP-0008IK-H7; Fri, 04 Sep 2026 02:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3vWSaagoKCkw67o1zsCxv8u22uzs.q204s08-rs9sz121u18.25u@flex--stanleyjhu.bounces.google.com>)
- id 1x2NOM-0008HA-Mv
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:27:14 -0400
-Received: from mail-pj1-x1046.google.com ([2607:f8b0:4864:20::1046])
+ <3v2SaagoKCk489q31uEzxAw44w1u.s426u2A-tuBu1343w3A.47w@flex--stanleyjhu.bounces.google.com>)
+ id 1x2NOO-0008Hv-ES
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:27:16 -0400
+Received: from mail-pj1-x1048.google.com ([2607:f8b0:4864:20::1048])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3vWSaagoKCkw67o1zsCxv8u22uzs.q204s08-rs9sz121u18.25u@flex--stanleyjhu.bounces.google.com>)
- id 1x2NOK-0005FV-Kn
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:27:14 -0400
-Received: by mail-pj1-x1046.google.com with SMTP id
- 98e67ed59e1d1-398e1fafe17so1024762a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 23:27:11 -0700 (PDT)
+ <3v2SaagoKCk489q31uEzxAw44w1u.s426u2A-tuBu1343w3A.47w@flex--stanleyjhu.bounces.google.com>)
+ id 1x2NOM-0005Fv-Gr
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:27:16 -0400
+Received: by mail-pj1-x1048.google.com with SMTP id
+ 98e67ed59e1d1-38dc085b0a7so1240729a91.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 23:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1788503230; x=1789108030; darn=nongnu.org;
+ d=google.com; s=20251104; t=1788503232; x=1789108032; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nCtO4gELwPq20yztFyVCinNc8WEEbXyTCynQ9QwGoZc=;
- b=JHx6gVfUVSx9qbNszNuMR26St47l44rxCSorjk9ypjdNdTMflt+JCkZe2EUo4ymLxq
- 1Ef77wLhK6SLXmsZbbPZwKCT2RHg6jwkzQT3D43vsF527pCFFclmAJNTPdlppsta/v9U
- pnz/9W49RiWA3et6U0MhgEENOw7YjVE0KL7Ra7lWBhulTul5+2IJaUSBCVJYJuEStaXp
- nc++Pb4ZLmpuh29ZH9CE5NA1b3kvX4/qQ0berQ8xNTK8V7Th7pZJcs+recU0g1futzJM
- 8EWNR0P1IYTRqltkeZ0zZ2uU0wNGB7150P+la90z9Ahza/5s1FSVdeIpbZsegcp3ikin
- gxLg==
+ :content-type; bh=BWI75te92WAOR10DOoSbgBN2CFVLAtdlPgPv1u+hVgo=;
+ b=Hv0BrAIhu0n5W1TQRqKFvpb+9HF9crF978y7pv0X+NFADFmnvmy8+l2OkQHjzpL2rP
+ k5urwaOzOo2mBoQx37kAExuI9WvkA7mFPNzUp34pnxtdEyOg7uqxaO03WAbcQeoRTQUF
+ JCHFMzcUAMQ+vmV162ak5Lw7OBWU0kqgrEkvClAyf5JVbpJJ0LHaHFBYwxrKCIVjj8rq
+ uaN+RpQiZwICWdB6MWAjV6vKUP/mulde/a5WOQjMwkhQbXHOuC1DYKfgT5BtYmR61mMp
+ zQV0FTwE2EW4EX6QztZcD1fNfFz2YCEH4eTjEdCmYH8qDiDMGR6sARrsDbfALCQuP/Pf
+ KZ2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788503230; x=1789108030;
+ d=1e100.net; s=20251104; t=1788503232; x=1789108032;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nCtO4gELwPq20yztFyVCinNc8WEEbXyTCynQ9QwGoZc=;
- b=G+9QvOYOJxvlvzD06xKugjBdqTWTpUTj6J9vCTw3EVMYUPuOq3W2dkuHdkt2u8gY0O
- Q/yoFbODggPEZvZHdKYKv2ZEztvY8va5wiGe0azOmLVBaCBY2hWpBoGsqQBHYfrKF/on
- GrQYQOGA2DbUnp2+2+BwN3LsPxmLb+0nQ6/B4kdZ8WYH3OhsS6wpjdLqdqVeZWy5VzCn
- E4jR86l8FOPt7AaqAXgKMwqsX4FkbZ4aRNizSVwVOeOh+rSNL9FC+mse+t0Oo/LZpDcS
- zr0T5ujLMEc55yelvd3ws6dvmvydZnpfmCtp1OU5EXnMz+mRB8gG8cvnVymXS5SBoJt3
- 0sag==
+ bh=BWI75te92WAOR10DOoSbgBN2CFVLAtdlPgPv1u+hVgo=;
+ b=NnCkI2mZxxBV2e4iWjo7wwJZCRqee828lJctgrNt4dwo+9ACmdB6vamUq50+IuYykl
+ rS9HNN8aBlYoG+yHQCUYegB6GodxLmgh8hVOv2I/LcW4uHLsjz6Kckzn6/xgCvd6Xte7
+ tyXv8IIO0w16rTzAu4D2ZernAvOFzdtO/EZDVb1JvBJcfIspxKZpVAF4OEQbOigLCQih
+ kwoxRC/j5Bo1leeK1MmjBgYH3ZRiLukwshA0CKteIynsqivN+oFEOS5Ud0BrbF5nWW9I
+ MtDJ8oaaSPV5iAydjbLhSXSKP9RTuLgJSlUC+eU9MPEZdyFCpoySWlZ+LmjUv188Tpr0
+ rISA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxL6jmggmBRWSuMatW21inILEUqHAeIdeTOGbQR7wGEZiBGZtwB3bVTLsKd5iwspy4/eYsg3UCunHtD@nongnu.org
-X-Gm-Message-State: AFuF++lEKrLaGxiTrN6nlvWtceYd7ruAnKWYJHstmhkbldTzbEKQielw
- TEaUlyejvcxRvHNaFI4aeyU5O09rNRrRJT0jfhmQdOnbFhZn7zTwDeawp5VAyF9tusEh2iw4CGS
- E7nBSTaa9bvxfxjDdu8QHTA==
-X-Received: from pjzb15.prod.google.com ([2002:a17:90a:e38f:b0:384:aeb6:624c])
+ AKwUvBw1hTKI90kIHg4XSXxXPi4967WpCRvdi10rRcbXOlviHRV6dwi19H0Tokag6u+rEVHVruSQglgxFetX@nongnu.org
+X-Gm-Message-State: AFuF++nJATSMeUz8GA4/jrHrdmyMh1GVwH1YhEoCVNYIqOwkIHMNC8AB
+ Kl4Boq/e5tT6a+g0LUsjc39tWTlKoRljKPLkTqwsaL1sVB+H+cxPE3Wf++ldF06j+SXogBa6Wfe
+ WtJWJENpY9Ot8uCMt4GrEXg==
+X-Received: from pjbbh6.prod.google.com ([2002:a17:90b:486:b0:38e:3cf9:2e8b])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:2f46:b0:398:9c39:520f with SMTP id
- 98e67ed59e1d1-39b261e763dmr6705198a91.15.1788503229802; 
- Thu, 03 Sep 2026 23:27:09 -0700 (PDT)
-Date: Fri,  4 Sep 2026 14:27:04 +0800
+ 2002:a17:90b:528e:b0:38e:ad9d:1161 with SMTP id
+ 98e67ed59e1d1-39b25ee67f0mr6138957a91.0.1788503231809; 
+ Thu, 03 Sep 2026 23:27:11 -0700 (PDT)
+Date: Fri,  4 Sep 2026 14:27:05 +0800
 In-Reply-To: <20260904062706.2684958-1-stanleyjhu@google.com>
 Mime-Version: 1.0
 References: <20260904062706.2684958-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.55.0.979.g7e5102b832-goog
-Message-ID: <20260904062706.2684958-2-stanleyjhu@google.com>
-Subject: [PATCH 1/3] hw/ufs: Support MCQ runtime interrupt and queue status
- registers
+Message-ID: <20260904062706.2684958-3-stanleyjhu@google.com>
+Subject: [PATCH 2/3] hw/ufs: Implement Task Management Request (TMR) handling
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, qemu-devel@nongnu.org
 Cc: Jeuk Kim <jeuk20.kim@gmail.com>, Jinyoung Choi <j-young.choi@samsung.com>, 
  qemu-block@nongnu.org, Stanley Jhu <stanleyjhu@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1046;
- envelope-from=3vWSaagoKCkw67o1zsCxv8u22uzs.q204s08-rs9sz121u18.25u@flex--stanleyjhu.bounces.google.com;
- helo=mail-pj1-x1046.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1048;
+ envelope-from=3v2SaagoKCk489q31uEzxAw44w1u.s426u2A-tuBu1343w3A.47w@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pj1-x1048.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,186 +95,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to JEDEC UFSHCI 5.2.1 and 5.6, Multi-Circular Queue (MCQ)
-architecture provides per-queue runtime control and interrupt registers.
-When Linux initializes MCQ via ufshcd_mcq_make_queues_operational(),
-it accesses SQnRTC, SQnCTI, SQnIS, SQnIE, CQnIS, CQnIE, and CQnIACR.
-Currently, QEMU logs "invalid register offset" warnings for these registers.
+According to JEDEC UFSHCI 5.2.1 (Section 7.3 "UTP Task Management"), the
+host controller processes Task Management Requests via the UTP Task
+Management Request List (UTMRL). When software writes to UTMRLDBR, the
+controller processes descriptors, dispatches the requested function
+(e.g., UFS_ABORT_TASK, UFS_QUERY_TASK), returns the completion code in the
+response UPIU, and triggers the UTMRCS interrupt.
 
-Implement handling for these operational registers:
-- Define REG32 and FIELD macros for SQRTC (STOP, ICU) and SQRTS (STS, CUS, RTC).
-- SQnRTC: Handle SQSTART (bit 0=0) and SQSTOP (bit 0=1) commands to update
-  SQnRTS (Run-Time Status), scheduling or cancelling the SQ bottom half.
-  Enforce SQSTOP in ufs_mcq_process_sq() to halt processing when stopped.
-- SQnRTC / SQnRTS: Handle SQ_ICU (bit 1=1) queue cleanup command, reporting
-  SQ_CUS (bit 1=1) and RTC completion code 0 in SQnRTS.
-- SQnCTI: Store Completion Timeout Interval configuration.
-- SQnIS: Handle Write-1-to-Clear interrupt status and invoke ufs_irq_check().
-- CQnIS: Handle Write-1-to-Clear interrupt status. Recalculate whether any
-  CQ has pending interrupts, and clear the global CQES (CQ Event Status) bit
-  in IS before calling ufs_irq_check() to prevent IRQ storms.
-- SQnIE / CQnIE: Store Interrupt Enable configuration.
-- CQnIACR: Store Interrupt Aggregation Control Register configuration.
-- In ufs_hce_reset(), reset operational registers (utriacr, utrlclr, ie,
-  utrlba/utrlbau) while preserving the Max Active Channels (MAC) capability
-  field in MCQCONFIG according to params.mcq.
-- Add trace_ufs_write_mcq_op_reg trace event with explicit offset cast.
+Currently, QEMU treats UTMRLDBR, UTMRLCLR, and UTMRLRSR as unsupported.
+Consequently, when Linux kernel SCSI error recovery invokes task aborts
+via ufshcd_abort() or ufshcd_mcq_abort(), requests time out and escalate
+unnecessarily to full device or host resets.
+
+Implement Task Management Request handling:
+- Add sreq tracking in UfsRequest and cancel pending SCSIRequests in
+  ufs_clear_req() to eliminate Use-After-Free hazards during abort.
+- Implement ufs_find_req_by_tag() supporting both legacy UTRL and MCQ
+  execution queues.
+- Implement ufs_process_tmr() to dispatch UFS_QUERY_TASK and UFS_ABORT_TASK,
+  releasing resources and returning completion response UPIU.
+- For UFS_QUERY_TASK, return UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED if the
+  task is pending in the controller/device, and return
+  UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL if the task does not exist.
+- Set both rsp_header.response and output_param1 to satisfy both JEDEC
+  and Linux kernel driver response validation.
+- Mask and preserve descriptor header dword_2 when updating OCS.
+- Connect A_UTMRLDBR, A_UTMRLCLR, and A_UTMRLRSR in ufs_write_reg.
+- Latch pending doorbell bits in u->reg.utmrldbr upon UTMRLDBR write.
+- In ufs_hce_reset(), reset task management operational registers (utmrlrsr,
+  utmrlclr, utmrlba/utmrlbau).
+- Add trace_ufs_process_tmr trace event.
 
 Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 ---
- hw/ufs/trace-events |  1 +
- hw/ufs/ufs.c        | 69 +++++++++++++++++++++++++++++++++++++++++++--
- include/block/ufs.h |  9 ++++++
- 3 files changed, 77 insertions(+), 2 deletions(-)
+ hw/ufs/lu.c         |   7 +++
+ hw/ufs/trace-events |   1 +
+ hw/ufs/ufs.c        | 122 +++++++++++++++++++++++++++++++++++++++++++-
+ hw/ufs/ufs.h        |   1 +
+ 4 files changed, 130 insertions(+), 1 deletion(-)
 
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index bdb1650851..fb7eaa99fb 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -173,6 +173,12 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
+     int16_t status = scsi_req->status;
+     uint32_t transfered_len = scsi_req->cmd.xfer - resid;
+ 
++    if (!req) {
++        return;
++    }
++
++    req->sreq = NULL;
++
+     /* WB / HID accounting should only happen for successful commands */
+     if (status == GOOD) {
+         ufs_wb_process_write_req(req, transfered_len);
+@@ -389,6 +395,7 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
+     SCSIRequest *scsi_req =
+         scsi_req_new(lu->scsi_dev, task_tag, lu->lun, req->req_upiu.sc.cdb,
+                      UFS_CDB_SIZE, req);
++    req->sreq = scsi_req;
+ 
+     uint32_t len = scsi_req_enqueue(scsi_req);
+     if (len) {
 diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 922293355b..d8173b12b6 100644
+index d8173b12b6..5e5a54a3fb 100644
 --- a/hw/ufs/trace-events
 +++ b/hw/ufs/trace-events
-@@ -14,6 +14,7 @@ ufs_process_uiccmd(uint32_t uiccmd, uint32_t ucmdarg1, uint32_t ucmdarg2, uint32
- ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
+@@ -15,6 +15,7 @@ ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
  ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t size) "mcq create sq sqid %"PRIu8", cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
  ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
-+ufs_write_mcq_op_reg(uint8_t qid, uint32_t offset, uint32_t data) "qid %"PRIu8", offset 0x%"PRIx32", data 0x%"PRIx32""
+ ufs_write_mcq_op_reg(uint8_t qid, uint32_t offset, uint32_t data) "qid %"PRIu8", offset 0x%"PRIx32", data 0x%"PRIx32""
++ufs_process_tmr(uint8_t func, uint32_t tag, uint8_t resp) "query_func 0x%"PRIx8", task_tag %"PRIu32", tm_resp 0x%"PRIx8""
  ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request lists"
  
  # error condition
 diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 3c4d7424da..5064878028 100644
+index 5064878028..c7064f1825 100644
 --- a/hw/ufs/ufs.c
 +++ b/hw/ufs/ufs.c
-@@ -446,13 +446,14 @@ static void ufs_mcq_process_sq(void *opaque)
- {
-     UfsSq *sq = opaque;
-     UfsHc *u = sq->u;
-+    UfsMcqOpReg *opr = &u->mcq_op_reg[sq->sqid];
-     UfsSqEntry sqe;
-     UfsRequest *req;
-     hwaddr addr;
-     uint16_t head = ufs_mcq_sq_head(u, sq->sqid);
-     int err;
- 
--    if (u->resetting) {
-+    if (u->resetting || FIELD_EX32(opr->sq.rts, SQRTS, STS)) {
-         return;
-     }
- 
-@@ -770,7 +771,17 @@ static void ufs_hce_reset(UfsHc *u)
+@@ -771,8 +771,10 @@ static void ufs_hce_reset(UfsHc *u)
      u->reg.utmrldbr = 0;
      u->reg.utrlcnr = 0;
      u->reg.utrlrsr = 0;
-+    u->reg.utriacr = 0;
-+    u->reg.utrlclr = 0;
-+    if (u->params.mcq) {
-+        u->reg.mcqconfig = FIELD_DP32(0, MCQCONFIG, MAC, 0x1f);
-+    } else {
-+        u->reg.mcqconfig = 0;
-+    }
-+    u->reg.ie = 0;
++    u->reg.utmrlrsr = 0;
+     u->reg.utriacr = 0;
+     u->reg.utrlclr = 0;
++    u->reg.utmrlclr = 0;
+     if (u->params.mcq) {
+         u->reg.mcqconfig = FIELD_DP32(0, MCQCONFIG, MAC, 0x1f);
+     } else {
+@@ -782,6 +784,8 @@ static void ufs_hce_reset(UfsHc *u)
      u->reg.is = 0;
-+    u->reg.utrlba = 0;
-+    u->reg.utrlbau = 0;
+     u->reg.utrlba = 0;
+     u->reg.utrlbau = 0;
++    u->reg.utmrlba = 0;
++    u->reg.utmrlbau = 0;
  
      /* 4. Free MCQ Queues and reset MCQ dynamic registers */
      if (u->params.mcq) {
-@@ -983,6 +994,9 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
+@@ -818,6 +822,111 @@ static void ufs_hce_reset(UfsHc *u)
+     ufs_irq_check(u);
+ }
  
-     opr = &u->mcq_op_reg[qid];
- 
-+    trace_ufs_write_mcq_op_reg(qid, (uint32_t)(offset % sizeof(UfsMcqOpReg)),
-+                               data);
-+
-     switch (offset % sizeof(UfsMcqOpReg)) {
-     case offsetof(UfsMcqOpReg, sq.tp):
-         if (opr->sq.tp != data) {
-@@ -990,6 +1004,38 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-         }
-         opr->sq.tp = data;
-         break;
-+    case offsetof(UfsMcqOpReg, sq.rtc):
-+        opr->sq.rtc = data;
-+        if (FIELD_EX32(data, SQRTC, ICU)) {
-+            /* SQ_ICU: Initiate Cleanup (SQ_CUS = 1, RTC = 0) */
-+            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, CUS, 1);
-+            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, RTC, 0);
++static UfsRequest *ufs_find_req_by_tag(UfsHc *u, uint32_t task_tag)
++{
++    if (task_tag < u->params.nutrs) {
++        UfsRequest *req = &u->req_list[task_tag];
++        if (req->state == UFS_REQUEST_RUNNING ||
++            req->state == UFS_REQUEST_READY) {
++            return req;
 +        }
-+        if (FIELD_EX32(data, SQRTC, STOP)) {
-+            /* SQ_STOP: Stop queue */
-+            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, STS, 1);
-+            if (u->sq[qid] && u->sq[qid]->bh) {
-+                qemu_bh_cancel(u->sq[qid]->bh);
-+            }
-+        } else {
-+            /* SQ_START: Start queue */
-+            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, STS, 0);
-+            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, CUS, 0);
-+            if (u->sq[qid] && u->sq[qid]->bh) {
-+                qemu_bh_schedule(u->sq[qid]->bh);
-+            }
-+        }
-+        break;
-+    case offsetof(UfsMcqOpReg, sq.cti):
-+        opr->sq.cti = data;
-+        break;
-+    case offsetof(UfsMcqOpReg, sq_int.is):
-+        opr->sq_int.is &= ~data;
-+        ufs_irq_check(u);
-+        break;
-+    case offsetof(UfsMcqOpReg, sq_int.ie):
-+        opr->sq_int.ie = data;
-+        break;
-     case offsetof(UfsMcqOpReg, cq.hp): {
-         UfsCq *cq = u->cq[qid];
- 
-@@ -1006,8 +1052,27 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-         ufs_mcq_update_cq_head(u, qid, data);
-         break;
-     }
--    case offsetof(UfsMcqOpReg, cq_int.is):
-+    case offsetof(UfsMcqOpReg, cq_int.is): {
-+        bool pending = false;
-+
-         opr->cq_int.is &= ~data;
-+        for (int i = 0; i < ARRAY_SIZE(u->mcq_op_reg); i++) {
-+            if (u->mcq_op_reg[i].cq_int.is) {
-+                pending = true;
-+                break;
-+            }
-+        }
-+        if (!pending) {
-+            u->reg.is = FIELD_DP32(u->reg.is, IS, CQES, 0);
-+        }
-+        ufs_irq_check(u);
-+        break;
 +    }
-+    case offsetof(UfsMcqOpReg, cq_int.ie):
-+        opr->cq_int.ie = data;
++
++    if (u->params.mcq) {
++        for (int q = 0; q < ARRAY_SIZE(u->sq); q++) {
++            UfsSq *sq = u->sq[q];
++            if (!sq) {
++                continue;
++            }
++            for (int i = 0; i < sq->size; i++) {
++                UfsRequest *req = &sq->req[i];
++                if (req->state == UFS_REQUEST_RUNNING &&
++                    req->req_upiu.header.task_tag == task_tag) {
++                    return req;
++                }
++            }
++        }
++    }
++
++    return NULL;
++}
++
++static void ufs_process_tmr(UfsHc *u, uint32_t val)
++{
++    hwaddr base_addr = (((hwaddr)u->reg.utmrlbau) << 32) + u->reg.utmrlba;
++    uint32_t completed_mask = 0;
++
++    u->reg.utmrldbr |= val;
++
++    for (int i = 0; i < u->params.nutmrs; i++) {
++        if (val & (1 << i)) {
++            uint64_t desc_addr = base_addr + i * sizeof(UtpTaskReqDesc);
++            UtpTaskReqDesc desc;
++            uint8_t tm_func, tm_resp;
++            uint32_t task_tag;
++
++            if (ufs_addr_read(u, desc_addr, &desc, sizeof(desc))) {
++                continue;
++            }
++
++            tm_func = desc.upiu_req.req_header.query_func;
++            task_tag = be32_to_cpu(desc.upiu_req.input_param2);
++
++            if (tm_func == UFS_QUERY_TASK) {
++                UfsRequest *req = ufs_find_req_by_tag(u, task_tag);
++
++                if (req) {
++                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED;
++                } else {
++                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
++                }
++            } else if (tm_func == UFS_ABORT_TASK) {
++                UfsRequest *req = ufs_find_req_by_tag(u, task_tag);
++
++                if (req) {
++                    ufs_clear_req(req);
++                    req->state = UFS_REQUEST_IDLE;
++                    if (ufs_mcq_req(req)) {
++                        QTAILQ_INSERT_TAIL(&req->sq->req_list, req, entry);
++                        qemu_bh_schedule(req->sq->bh);
++                    } else {
++                        u->reg.utrldbr &= ~(1 << req->slot);
++                    }
++                }
++                tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
++            } else {
++                tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_NOT_SUPPORTED;
++            }
++
++            memset(&desc.upiu_rsp, 0, sizeof(desc.upiu_rsp));
++            desc.header.dword_2 = cpu_to_le32(
++                (le32_to_cpu(desc.header.dword_2) & ~UFS_MASK_OCS) |
++                UFS_OCS_SUCCESS);
++            desc.upiu_rsp.rsp_header.trans_type =
++                UFS_UPIU_TRANSACTION_TASK_RSP;
++            desc.upiu_rsp.rsp_header.flags = 0;
++            desc.upiu_rsp.rsp_header.lun = desc.upiu_req.req_header.lun;
++            desc.upiu_rsp.rsp_header.task_tag =
++                desc.upiu_req.req_header.task_tag;
++            desc.upiu_rsp.rsp_header.response = tm_resp;
++            desc.upiu_rsp.output_param1 = cpu_to_be32(tm_resp);
++
++            if (ufs_addr_write(u, desc_addr, &desc, sizeof(desc))) {
++                continue;
++            }
++
++            trace_ufs_process_tmr(tm_func, task_tag, tm_resp);
++            u->reg.utmrldbr &= ~(1 << i);
++            completed_mask |= (1 << i);
++        }
++    }
++
++    if (completed_mask) {
++        u->reg.is = FIELD_DP32(u->reg.is, IS, UTMRCS, 1);
++        ufs_irq_check(u);
++    }
++}
++
+ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
+ {
+     switch (offset) {
+@@ -880,10 +989,16 @@ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
+     case A_MCQCONFIG:
+         u->reg.mcqconfig = data;
+         break;
+-    case A_UTRLCLR:
+     case A_UTMRLDBR:
++        ufs_process_tmr(u, data);
 +        break;
-+    case offsetof(UfsMcqOpReg, cq_int.iacr):
-+        opr->cq_int.iacr = data;
+     case A_UTMRLCLR:
++        u->reg.utmrldbr &= ~data;
++        break;
+     case A_UTMRLRSR:
++        u->reg.utmrlrsr = data;
++        break;
++    case A_UTRLCLR:
+         trace_ufs_err_unsupport_register_offset(offset);
          break;
      default:
-         trace_ufs_err_invalid_register_offset(offset);
-diff --git a/include/block/ufs.h b/include/block/ufs.h
-index d19b3c65ef..00591aa755 100644
---- a/include/block/ufs.h
-+++ b/include/block/ufs.h
-@@ -224,6 +224,15 @@ typedef struct QEMU_PACKED UfsMcqSqReg {
-     uint32_t rts;
- } UfsMcqSqReg;
+@@ -2286,6 +2401,11 @@ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result)
  
-+REG32(SQRTC, offsetof(UfsMcqSqReg, rtc))
-+    FIELD(SQRTC, STOP, 0, 1)
-+    FIELD(SQRTC, ICU, 1, 1)
+ static void ufs_clear_req(UfsRequest *req)
+ {
++    if (req->sreq != NULL) {
++        scsi_req_cancel(req->sreq);
++        req->sreq = NULL;
++    }
 +
-+REG32(SQRTS, offsetof(UfsMcqSqReg, rts))
-+    FIELD(SQRTS, STS, 0, 1)
-+    FIELD(SQRTS, CUS, 1, 1)
-+    FIELD(SQRTS, RTC, 4, 4)
-+
- typedef struct QEMU_PACKED UfsMcqCqReg {
-     uint32_t hp;
-     uint32_t tp;
+     if (req->sg != NULL) {
+         qemu_sglist_destroy(req->sg);
+         g_free(req->sg);
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index 6f2693b7ca..265a43faaa 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -60,6 +60,7 @@ typedef struct UfsRequest {
+     UtpUpiuRsp rsp_upiu;
+ 
+     /* for scsi command */
++    SCSIRequest *sreq;
+     QEMUSGList *sg;
+     uint32_t data_len;
+ 
 -- 
 2.55.0.979.g7e5102b832-goog
 
