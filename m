@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CA8C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778DDC61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJQ-0006Dm-UI; Fri, 04 Sep 2026 08:46:33 -0400
+	id 1x2TJQ-0006DC-7M; Fri, 04 Sep 2026 08:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJN-0006C3-P6
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1x2TJI-00069L-18
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:25 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJK-0006uq-5K
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-499b2981a7bso9440645e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:25 -0700 (PDT)
+ id 1x2TJE-0006rs-Ts
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:23 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so13333785e9.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525984; x=1789130784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525979; x=1789130779; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=tFpQ8psKfh/GfasFmr3B5G7VD9bDZo/cQLmAEF4vkwE=;
- b=cPNgP3MuOWIzIu66y2xO2ImizCFNbiy+l8e5KrzKHPRCaEHfCdHHIW6ICWGDMkjVdp
- H+8hTGaS9/ahMkxOId/FbSBufWte32eWPZoSHZds6SUjFSxjbeWqAtnRQsYfX3VoW6Q1
- kaZY6ARZkGsv6df+U2YIJjmUpMz6tgA/eS8Yf3L3GuAdzo3J814Kgs01I2/+rjZvYuQd
- JqWI2qZfojAFf8T2jqTOhdSQaPKkfdCL0gbzSnfMeYsIUnIGlAdrnIoGLCoED4jzkd+0
- kJ8Oy4oCR+HDqg+zF7v3Z85Z7o60WncbTz6LvAaA78ypvy2u6gWaQGAW4PxdKGvZMKGl
- y/aA==
+ bh=r+WY3scpMyBQywsEfZ38rZGwyTfrr1r4ukZ33K30QHM=;
+ b=syTqM9ROP97Qh7jlgX2Ny6JTv7Bl/ItK3V3QtdwRJMvOeMBr/z2/AteGBOT3i6BnZu
+ SNYSNpzBdsxklKQbzKsTtV3HzXZsdpxawOZjZtkGxckRKfoV0Rc+4dhV76f5Q7r6e6Ol
+ J5HFRGmRZXUR17Tx1VaPI0zgg7v6B+xu+wk/uXvJ2moIPRX0Yg0RVsOVG6WZF8tISN9b
+ f3pDAaixN1/PIF0ihzxe+jrVUlfHz9dJPe4HJGkSyzDzNC40dntVNkW04OkP5Wv7NNsH
+ 1a6+gqPdgm9Qovf62TYv3ulovMb7LbqJZl1Qb/gCbTXjUMBlWlO98RSS/Ya7UE5vlwBI
+ PGuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525984; x=1789130784;
+ d=1e100.net; s=20251104; t=1788525979; x=1789130779;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=tFpQ8psKfh/GfasFmr3B5G7VD9bDZo/cQLmAEF4vkwE=;
- b=mgtXbEu/eVK1BAy+St8q634qzw6gXXr95nEDZEgWc0t0KYqh7kIPSQiTA1v2vvq1EG
- A7UD/StlxKl7BhTRG6zjZ2RJVF+cvlg5KP6ieTyJ/xf/eqEylDFwsjadjPsoUqqfp6W0
- 0keFJLnV45jnyN9DDKZQTlGUAWzsLdB0YPr0gyyZwFX2BQLwzDUy3wg094iMwmXF7IZo
- /Ieeagp9Lxmj7qBR1cGwMIICzC2uX/e/uyP6ikMgn4wu6OkOlqpMr9yPELi19XCrbxD9
- vfZiZ8cfrc4vIFKeF8g7kYwu4kfERuPQVxQDS41p3/6Yb8toGOH0nIaDloJPcwZII+cl
- AzrA==
-X-Gm-Message-State: AFuF++mQiQx9bwN6HHNbNfY3wo5eh/S/JCT+GWedVqzW10iVp4vSP0mE
- vriQP4y+zCovQyJ1vtOZQZvR1taGzbSAQVlPIyYPu6DYHPaJomZrmX09+WEjKDK9idY=
-X-Gm-Gg: AYBFou0nQ1oKmiAst3AjGPVMijU2BfEI+sTtGWywgMfhsRMFkbbCBo1UwSAIo57nKMj
- 9eCpl9azwRlDNNF1PDQwJJYetB97lUi8Fy93vFv1F+Q265T4ZOmPOLO1BzpbE83LQ07wuLRSeUi
- 0C7MuioyZ/rRMTCezQz73p/IqurATzIcjYSaY04ZCUtmiXBwhFQhBfXExng4yXeEruOnN0DASmT
- 45d9ocvC4xD/U6FbdJKv83bFoTN9e2X0BEYTsVmFSL1tz5fknnBsR60jVeIaUAKBsE2G1bzGe4N
- p+mvsOqP2ykU4mGrXiowyxkFDjUT/ZzZUjeSdsk+RrFkbKgh2EmXNTeRCyknt9wXjxIP9ZbVM4x
- Rji3YnyFuvdA9XyE8Qvtoff7C2m6vyIb4lcz4D4e0Wrxx7qe18JoTyg6+MbexUqWg3CZ1S6y7Ei
- gg4t7T9hcyLTGmF8CC0Rh7xlg1CX0uMCczRA0tENTeCwDBpWBXD8KyqAlrHYTD3sj+jZmU9DMV1
- A==
-X-Received: by 2002:a05:600c:3b01:b0:49b:4d64:bbc4 with SMTP id
- 5b1f17b1804b1-49cf81f1592mr81758895e9.8.1788525984271; 
- Fri, 04 Sep 2026 05:46:24 -0700 (PDT)
+ bh=r+WY3scpMyBQywsEfZ38rZGwyTfrr1r4ukZ33K30QHM=;
+ b=OuFcxb5jyhKaIva2Y0na9PEHOcgzdBeZ0BDTWcfRMcIxAIi+KuP6Ys0Q/fg6ZuxKaw
+ XzthI91QcW7FFlTcTBEcSr5CUWyh9yIeiPp5feA512nEQivmXfR6SR6llqlPd5vh33qy
+ yewuE3XZuK5HZTMWSapT5WKjnbyTSztazjdDVAv46Rk2zmjTvylJd8lo0uahIVh8vFuO
+ GHhriZ9fe5xO13fC/HF4/H0RxbS+DsXTPJu4KB3n/FqAmQk7UkCknBDbdiu+Wo/oXGM+
+ +EzIuH3DK0KcDCw/njyy2ThFzhcWVN2V1VWxwd2EGHadYRew23arLvDTB7FNHvDSKwtn
+ 2Mpw==
+X-Gm-Message-State: AFuF++llV65OlHP78n8mS/DrnWcw9YH/+OaQ9+hgBMcMcatxe2TxR1tF
+ gOyrfdL18wXauiaOiYyVt53zxhDLSe/cgEKA8g0akT14IL9eBTHyvpXa1KtqMPjzHs4MfyYJ+Ed
+ aZ7+/tcU=
+X-Gm-Gg: AYBFou1o2QA1a8ytp2CdKhLa0vGrHB6wD4nvA4Fq/RaFBjmUOb5GXIeRbJx4sRLmSqN
+ pvuiUMpkSV99tXnFfiuqQo/teA9KLMtHqx/K5BiaOuOMpQLnZYr/GjIc6BhRSshxwmNhs7wrz9q
+ i8hQVJ5V4H+ksljQdf0GtuSJWYkC8bL2d8gGid9Th1fvDcxpvF7rfwus0tgJ97NTRWj9Yj9+RJp
+ gx2Px8tDyP8q0ecaJ/ki232hI27IZ8W3AdcLnnIfiZNChIFFvsShvxaz37a9CzMaw78VBT4wSCb
+ FV8onw2xgJGHA77k1bZppiazcokRdrYUIKJ8YQaiBzG4QuB4QU+wcLms5pctveYv8c9+Q6ULYCN
+ G1GXFz8tDl61hgYy+AAhI6nz14KYlJmlJjVLgQTBcYafg5LVlgQVypS9NM2wjsqLKjNVb/URlyh
+ SqiV9GXSZ5FK4NQLbldX74BGCK0RhFAVboLUC1k5f9ndDfMuAXKAG6fXJOYNG7
+X-Received: by 2002:a05:600c:1d01:b0:499:cd34:f7c with SMTP id
+ 5b1f17b1804b1-49cf81e6f87mr86994025e9.5.1788525978627; 
+ Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf75ce49esm117851625e9.1.2026.09.04.05.46.19
+ ffacd0b85a97d-4858d2693e8sm2434073f8f.3.2026.09.04.05.46.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
+ Fri, 04 Sep 2026 05:46:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0A65261E24;
- Fri, 04 Sep 2026 13:46:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 202AF615C9;
+ Fri, 04 Sep 2026 13:46:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 100/105] tests/tcg/meson.build: implement ./configure
- containers options
-Date: Fri,  4 Sep 2026 13:45:54 +0100
-Message-ID: <20260904124604.2207440-101-alex.bennee@linaro.org>
+ Aniket Sahu <asahu1x@linux.ibm.com>
+Subject: [PULL 018/105] tests/tcg/meson.build: add wrapper run_with_input
+Date: Fri,  4 Sep 2026 13:44:32 +0100
+Message-ID: <20260904124604.2207440-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,106 +109,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-./configure --disable-containers now skip containers build.
-./configure --container-command "/path/to/docker" can be used to
-override autodetection.
+Semihosting console tests require console interaction, and were flagged
+as manual because of this. This wrapper automates interaction, by
+sending a specific string on stdin.
 
-Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-101-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-19-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/configure b/configure
-index cec6f18f857..aa98cf39584 100755
---- a/configure
-+++ b/configure
-@@ -172,7 +172,6 @@ fi
- # some defaults, based on the host environment
- 
- # default parameters
--container_command=""
- cpu=""
- cross_compile="no"
- cross_prefix=""
-@@ -260,7 +259,6 @@ ninja=""
- python=
- download="enabled"
- skip_meson=no
--use_containers="yes"
- rust="disabled"
- rust_target_triple=""
- 
-@@ -727,11 +725,11 @@ for opt do
-   ;;
-   --disable-plugins) plugins="no"
-   ;;
--  --enable-containers) use_containers="yes"
-+  --enable-containers) # enabled by default
-   ;;
--  --disable-containers) use_containers="no"
-+  --disable-containers) meson_option_add -Dcontainers=false
-   ;;
--  --container-command=*) container_command="$optarg"
-+  --container-command=*) meson_option_add -Dcontainer_command="$optarg"
-   ;;
-   --rust-target-triple=*) rust_target_triple="$optarg"
-   ;;
-@@ -1718,9 +1716,6 @@ echo all: >> $config_host_mak
- 
- echo "SRC_PATH=$source_path" >> $config_host_mak
- echo "TARGET_DIRS=$target_list" >> $config_host_mak
--if test "$container_command" != ""; then
--    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
--fi
- echo "SUBDIRS=$subdirs" >> $config_host_mak
- echo "PYTHON=$python" >> $config_host_mak
- echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
-diff --git a/meson_options.txt b/meson_options.txt
-index a41ed64bc90..f9604a6c192 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -387,3 +387,7 @@ option('rust', type: 'feature', value: 'disabled',
-        description: 'Rust support')
- option('strict_rust_lints', type: 'boolean', value: false,
-        description: 'Enable stricter set of Rust warnings')
-+option('containers', type: 'boolean', value: true,
-+       description: 'use containers to cross compile tcg tests')
-+option('container_command', type: 'string',
-+       description: 'command to build/run containers')
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 144577fd94e..2458a231f5f 100644
+index c718555d257..f2c5d77bfe0 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -78,10 +78,23 @@ if gdb.found()
-   endforeach
- endif
- 
--docker_probe = run_command(docker_wrapper, 'probe', check: false)
--docker_supported = docker_probe.returncode() == 0
--if docker_supported
--  docker_wrapper = [docker_wrapper, '--command', docker_probe.stdout().strip()]
-+docker_supported = false
-+if get_option('containers')
-+  if get_option('container_command') != ''
-+    # make sure command is working
-+    cmd = get_option('container_command').split()
-+    run_command([cmd, 'info'], check: true)
-+    docker_supported = true
-+    docker_wrapper = [docker_wrapper, '--command',
-+                      get_option('container_command')]
-+  else
-+    docker_probe = run_command(docker_wrapper, 'probe', check: false)
-+    docker_supported = docker_probe.returncode() == 0
-+    if docker_supported
-+      docker_wrapper = [docker_wrapper, '--command',
-+                        docker_probe.stdout().strip()]
-+    endif
-+  endif
- endif
- 
- # plugins come first, as we need to build the list
+@@ -7,6 +7,7 @@ endif
+ gdb = find_program(gdb_progs, required: false)
+ prog_gdb_test = find_program('../guest-debug/run-test.py')
+ prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
++prog_run_with_input = find_program('./scripts/run_with_input.sh')
+ prog_run_and_check_forbidden_output = find_program(
+   './scripts/run_and_check_forbidden_output.sh'
+ )
+diff --git a/tests/tcg/scripts/run_with_input.sh b/tests/tcg/scripts/run_with_input.sh
+new file mode 100755
+index 00000000000..3d280547c3a
+--- /dev/null
++++ b/tests/tcg/scripts/run_with_input.sh
+@@ -0,0 +1,12 @@
++#!/usr/bin/env bash
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++set -euo pipefail
++
++if [ $# -lt 2 ]; then
++    echo "run_with_input: input_string cmd [args]..." 1>&2
++    exit 1
++fi
++input="$1";shift
++set -x
++echo "$input" | "$@"
 -- 
 2.47.3
 
