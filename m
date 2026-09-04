@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 323B2C61DD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A28C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MMh-0007ZJ-Mc; Fri, 04 Sep 2026 01:21:27 -0400
+	id 1x2MNW-0003a8-NK; Fri, 04 Sep 2026 01:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MMO-0007KP-Fz
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:11 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1x2MNS-0003IX-02
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:14 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MML-0001QO-Jo
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:07 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-853c401326eso307635b3a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:21:01 -0700 (PDT)
+ id 1x2MNP-0001VX-SS
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:13 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-853c947bfefso512296b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499260; x=1789104060; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=00DtHUCdr6tAoH2NitZ7oHGGDAYVNQlogbx7siUcG2U=;
- b=U6YQ/RGWrbnm/SW0OsjrJhIAhQFeml7+MvhBWeEuLgrhk8JmCG6SQocMONl5ahD2dq
- K+HnqbpyUs/onFh8yvHMvJhQG7o7StB9pGAgO+rWArLqP2TC4m6sQnhIy+dwgwVUkAMI
- 0XFuPtyPsAmvu+ZMeWOc56NIEtF5S85pCxYpOOpucJGrekEHKZb0L+Vg81BG3QyQhzsS
- hDgEPGrR5gjKqIYey3IP/uYoMiSqYufpN/04jL2wQ2Aequgk/fevLL78AlniIQL29HJ6
- Z2ZwC3Y1iWzbbP2EN0+ThWAyTJG6pcehyMnvkpknNEPtapY8Gzf2C0GRo+67jV2DVEHx
- 9f2Q==
+ d=gmail.com; s=20251104; t=1788499330; x=1789104130; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=JcqyT89XMLYEQdZ+Sp1u+vXlhJ/pCbVerWKVJ3eXiKw=;
+ b=PPJoph7EF4DvvqIFWA9h0u9Pj9eJ80ZrS3WTNrZFvAGYZUL/PATeoaE9VgtEcdIKma
+ IbuDhR9R4kLtf2QekFKF244j/aj9DlBLCoRqJscTmHSij3yEE+5A7r7EYv3t44+wDA+X
+ AzOCEVhz6npa4c2vMxKmsFfEYl8wvKYA6WeScd6vee1uEKtb39ibLjEnP/rRKcS3xg8b
+ FCWMG/RN0JtNUV8NUIft5fZ4lCMYpqyy1UpZDkrZVmJ6cECkgMghea2g9g0wtU7+g3sV
+ GsUBo/4dFVlASUNoBrYTIRSrGpP2IxGsrPr0/qA72uROyYifIFBwk4MXlHyRhyOMbLiv
+ BLug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499260; x=1789104060;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=00DtHUCdr6tAoH2NitZ7oHGGDAYVNQlogbx7siUcG2U=;
- b=AvBJzmvRoltpfd61iZ1LN1BCylMDbWcCut2+QVu7hN6thQrIY+GBusZc2G/JIf0wqN
- jtFt7klRWDtrLZd/AFUx38fgpdJ4wP1KffyBGyz+mJ/mt3eDvPAdMCUXe41OzHOqh6z2
- UHy4xgc7OrC4XwihylS5NlhGji99B/n0aKed091aFrqgswdvjn9FZkmc3/d1cE/P0dzd
- ZYcAhfYKKhoRcwwZSi5nzdYgxypL+HhYPgm4xjaiShnKJwnJMrF7ESLt1jb7Ue8xJWUb
- LFqaBZTAnovUPA4cIktZN6StbZSJyRMbOc7ySZ94d1gpp4Vt37K8n6AVXdSmVhFU2AYE
- VUyQ==
-X-Gm-Message-State: AFuF++kBGgRKjo4EgDMk+Ig7awhHiE8z1A3okDXp1nTTshxgMBjLDDNa
- 0cCLXk7f3ODD7GV/q9cCGpF7kOjLWm3B44c9QAR2MCbnqqCrnWYpu86uEUVPyw==
-X-Gm-Gg: AYBFou3CdUUFW35V+8Y3Z/+uaxj7Q4wxEXwDXWe1Xyo0n+9FeKM73QoJEiBTxWxNehE
- jqTbpEU++fPaMcfbkgbpB5XX11KIfEZmZcLyN4nk+0/kj1Md8m161+P+miLTfenOHd+YI1oQmWq
- 6Ot4UEDnZrEUYdyVZjiBLl57EBZTmeSFdmCrYbewSdvwBaH/3RvccpIF0wUgCkqLinjooVR56dQ
- 4AP/9FCHKp9qDJuXD/8nPDwAX5cYsYczob/4JE0n/CQT/lsAl7PacEiwlLQWgpQ+3V44/LqpEp4
- Y8Kykgv7gb8xOFDNnCRoQ5x8Al6L0dEwZ/boRtXdND3hH+U3NPAprx90ctreViSK07F8EVrP/TW
- hjr6TjODSFaoI7iRgsan+7Z6z8AvH5Ee2Wq25EORMQvxvMc62RGoePDFUtCV3wT1T4zRVWqTRh5
- rdGmHftBsDFPec5enzgihtkmzoo7annfR2aWatg0S/p205faTTKvXA0JYMkX2Foyasx2dJ9Q08D
- RIOaA==
-X-Received: by 2002:a05:6a20:9630:b0:3cd:9f0b:f7a2 with SMTP id
- adf61e73a8af0-3da39ee15d0mr5486222637.11.1788499260242; 
- Thu, 03 Sep 2026 22:21:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788499330; x=1789104130;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=JcqyT89XMLYEQdZ+Sp1u+vXlhJ/pCbVerWKVJ3eXiKw=;
+ b=f/I9mHedoC403wbfs6F4ttMK6IG1DyVIHez8pDZytsFl/Te3c7YKkMetyrS2sNouGZ
+ V68orPpqYMwixdww14SdhVxt9f0h+/k3HYb7rh7qCBclHK8bFB/tbVWZw0Q/0snetGkC
+ Juv1OLc6CADO/26OCcIT6tlfG+Y1ZlAc2j3kDCxdXhWOhJdQNPQuYe6Mh+gyrG8dHfGG
+ g0KjzV2slpeBHThbMBYT6wAWtwB7CEXBgUdfWrxzrEIg8jZeLV/tCnZy3QEtaESfWb1j
+ 8mXNEvPWjzUo5ySPwFwShFDFmZuD9EhMUNx+tlq0aR+yFgErjnl2IFncPZLBVE/zf6EJ
+ +XsQ==
+X-Gm-Message-State: AFuF++kvQn5DRVoZz6MZ6Y+21kVIGrbL0RIdcKw2Jmt+nEJ2dyVV3rfw
+ 7SOZOMdnp5rrVMP0KIRyytvcFMrSF/IJtqoBXXpPJxy3dAtWCzYGEySYRvjbEQ==
+X-Gm-Gg: AYBFou2BKxC2NTXt4WN3n3C0fALa0FSO2ArBie87Cczz4nNQts+Z0JoEPs/lElzRITS
+ szBZw1Q0VTl+5pDkrLUip+Qc1csl5wxhRxhJAH1f62N0XalzJNzpJsw6h3kb0VYMoyJmi+sR23Z
+ LoDzF+VFTpcu/iPqpxhuVGe4qJyFgNsaRKnQ+r8gC904zNX4zdIjk2Mr8x+hnWWaJ6EljYBMD/L
+ H1B/5CCilYu7uSYUf4oRrS3cXLLv+tADNVg8XnCARgbJMSEGFaVZnA0RDvxmlXTXpoOuAcVoqV9
+ EEODeyvrIINVRIVaYkpgiTdo+uo1sER7wy3gmkIbSELyOg+kKJjVtCfzMz1NBMRiB2Eb6Depi3f
+ 9TwTfICtnzoG4I1bdSJBykcZafR80ed86iDER+C71g9feJ5ZlyVPx/EaofFPxMqJmgEJld3Kkj2
+ fx3LOWkpDcyv5FNxYa8pO4AM3LvNHyYkeDulapkmT0DqiQnBX1PYSbIzRY3ZyeeIS+fudDhOrS3
+ puibw==
+X-Received: by 2002:a05:6a00:2996:b0:853:430e:6b60 with SMTP id
+ d2e1a72fcca58-85ffe10a136mr8830929b3a.14.1788499330238; 
+ Thu, 03 Sep 2026 22:22:10 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.20.57
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.22.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:20:59 -0700 (PDT)
+ Thu, 03 Sep 2026 22:22:09 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-stable@nongnu.org, Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 21/47] hw/riscv/virt.c: fix aclint soc/mtimer nodename
-Date: Fri,  4 Sep 2026 15:19:17 +1000
-Message-ID: <20260904051943.799041-22-alistair.francis@wdc.com>
+Cc: Joel Stanley <joel@jms.id.au>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 43/47] hw/riscv/atlantis: Decouple RAM size from MachineState
+Date: Fri,  4 Sep 2026 15:19:39 +1000
+Message-ID: <20260904051943.799041-44-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,55 +107,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Joel Stanley <joel@jms.id.au>
 
-Running 'dtc' to generate a readable fdt for the virt machine produce
-warnings:
+Keep a reference to the machine's RAM MemoryRegion in TTAtlantisState,
+and get the MemoryRegion's size where the configured RAM size is
+required.
 
- $ dtc -I dtb -O dts virt.dtb > virt.dts
-<stdout>: Warning (simple_bus_reg): /soc/mtimer@2000000: simple-bus unit address format error, expected "2007ff8"
-<stdout>: Warning (simple_bus_reg): /soc/mtimer@2008000: simple-bus unit address format error, expected "200fff8"
+This allows reading the RAM size without needing a pointer to
+MachineState, decoupling the memory layout setup from the machine.
 
-This happens because the 'reg' field does not match the address in the
-nodename.  The right fix, pointed out by Chao in [1], is to make the
-nodename match the reg value:
-
-"In the current QEMU implement, `addr` is the MTIMECMP base address,
-while the MTIME register is located at addr + RISCV_ACLINT_DEFAULT_MTIME."
-
-In other words, the 'reg' value is correct but the nodename isn't.
-
-We'll make the fix now, allowing the next patch to move the fixed version
-of aclint FDT to fdt-common.
-
-[1] https://lore.kernel.org/qemu-devel/apHH1upnh8udUUT-@ChaodeMacBook-Pro.local/
-
-Cc: qemu-stable@nongnu.org
-Suggested-by: Chao Liu <chao.liu@processmission.com>
-Fixes: 954886ea6d ("hw/riscv: virt: Add optional ACLINT support to virt machine")
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260828203918.350131-9-daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Message-ID: <20260903055131.257903-13-joel@jms.id.au>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/hw/riscv/tt_atlantis.h |  1 +
+ hw/riscv/tt_atlantis.c         | 20 ++++++++++++--------
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 63a32de3b4..840dd0e075 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -233,7 +233,8 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
-                (s->memmap[VIRT_CLINT].size * socket);
-         size = s->memmap[VIRT_CLINT].size - RISCV_ACLINT_SWI_SIZE;
+diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+index a29c67c1cf..2ec283d0fd 100644
+--- a/include/hw/riscv/tt_atlantis.h
++++ b/include/hw/riscv/tt_atlantis.h
+@@ -30,6 +30,7 @@ struct TTAtlantisState {
+     const MemMapEntry *memmap;
+ 
+     MemoryRegion *memory;
++    MemoryRegion *dram;
+     RISCVHartArrayState cpus;
+     DeviceState *irqchip;
+     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index 6555da02f0..4b4f5ff241 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -81,12 +81,13 @@ static uint32_t next_phandle(void)
+ 
+ static void create_fdt_memory(void *fdt, TTAtlantisState *s)
+ {
+-    hwaddr size_lo = MACHINE(s)->ram_size;
++    hwaddr ram_size = memory_region_size(s->dram);
++    hwaddr size_lo = ram_size;
+     hwaddr size_hi = 0;
+ 
+     if (size_lo > s->memmap[TT_ATL_DDR_LO].size) {
+         size_lo = s->memmap[TT_ATL_DDR_LO].size;
+-        size_hi = MACHINE(s)->ram_size - size_lo;
++        size_hi = ram_size - size_lo;
      }
--    name = g_strdup_printf("/soc/mtimer@%lx", addr);
-+    name = g_strdup_printf("/soc/mtimer@%"HWADDR_PRIx,
-+                           addr + RISCV_ACLINT_DEFAULT_MTIME);
-     qemu_fdt_add_subnode(ms->fdt, name);
-     qemu_fdt_setprop_string(ms->fdt, name, "compatible",
-         "riscv,aclint-mtimer");
+ 
+     riscv_create_fdt_socket_memory(fdt, s->memmap[TT_ATL_DDR_LO].base,
+@@ -485,11 +486,14 @@ static void tt_atlantis_machine_init(MachineState *machine)
+     MemoryRegion *ram_hi = g_new(MemoryRegion, 1);
+     MemoryRegion *ram_lo = g_new(MemoryRegion, 1);
+     MemoryRegion *bootrom = g_new(MemoryRegion, 1);
+-    ram_addr_t lo_ram_size;
++    ram_addr_t lo_ram_size, ram_size;
+     int hart_count = machine->smp.cpus;
+ 
+     s->memory = get_system_memory();
+ 
++    s->dram = machine->ram;
++    ram_size = memory_region_size(s->dram);
++
+     s->memmap = tt_atlantis_memmap;
+ 
+     object_initialize_child(OBJECT(machine), "soc", &s->cpus,
+@@ -532,20 +536,20 @@ static void tt_atlantis_machine_init(MachineState *machine)
+      * The high address is where RAM lives. It is always present and may be
+      * up to 64GB. The low address is an alias of the first 2GB of that RAM.
+      */
+-    if (machine->ram_size > s->memmap[TT_ATL_DDR_HI].size) {
++    if (ram_size > s->memmap[TT_ATL_DDR_HI].size) {
+         char *sz = size_to_str(s->memmap[TT_ATL_DDR_HI].size);
+         error_report("RAM size is too large, maximum is %s", sz);
+         g_free(sz);
+         exit(EXIT_FAILURE);
+     }
+ 
+-    memory_region_init_alias(ram_hi, OBJECT(machine), "ram.high", machine->ram,
+-                             0, machine->ram_size);
++    memory_region_init_alias(ram_hi, OBJECT(machine), "ram.high", s->dram,
++                             0, ram_size);
+     memory_region_add_subregion(s->memory,
+                                 s->memmap[TT_ATL_DDR_HI].base, ram_hi);
+ 
+-    lo_ram_size = MIN(machine->ram_size, s->memmap[TT_ATL_DDR_LO].size);
+-    memory_region_init_alias(ram_lo, OBJECT(machine), "ram.low", machine->ram,
++    lo_ram_size = MIN(ram_size, s->memmap[TT_ATL_DDR_LO].size);
++    memory_region_init_alias(ram_lo, OBJECT(machine), "ram.low", s->dram,
+                              0, lo_ram_size);
+     memory_region_add_subregion(s->memory,
+                                 s->memmap[TT_ATL_DDR_LO].base, ram_lo);
 -- 
 2.55.0
 
