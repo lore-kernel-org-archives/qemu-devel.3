@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35EEFC79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2963FC79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2VXI-0002g4-CV; Fri, 04 Sep 2026 11:09:00 -0400
+	id 1x2VZx-0003Ua-SP; Fri, 04 Sep 2026 11:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2VXH-0002fF-2Q
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:08:59 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2VZw-0003Tz-2z
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:11:44 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2VXF-0001ka-5Q
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:08:58 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2VZu-0002jP-7a
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:11:43 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 4342520398;
- Fri,  4 Sep 2026 15:08:47 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7444C21D3F;
+ Fri,  4 Sep 2026 15:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788534531; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788534694; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4yR/zF7xQUqL2IezJ5t5YUwUGRoJ9AK1Qh9ZIojktQg=;
- b=glO4i/G1/HbWr6f2dFEJJzjrl1Sti/lHZjH/u+UfTWKtioklqHKM6NetAGAdvQsg7dqk4w
- vd4uoag4WugYBTRjl4oz1Tkv8pcUqwUNJ/ZYg9dx/5FAVl5Emrw7/i4dbTb9+tnuq7eLTM
- S+NBgQeQq6ggLqOe3N9Pyi9hPQpHnAc=
+ bh=5wwxed4RAYOP6K1zGX8c9yybcHev5O24BqBMvVkTvsg=;
+ b=HyoEIJw2OD9W9Aa0AkQIRo+Vjc1VBg/DpiCO0pZ7/1M3Kf/AXUaj87Um8v4H1Up22xmCOC
+ S+75m96JsGXrXOoxQP9SCriLIJnq1n138X5rP1BVpJyiiBlkIfwOmiz4rfdIsP0dBuATFk
+ xwIdILynClm0AN6JiQ99X3L+Mm8uflk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788534531;
+ s=susede2_ed25519; t=1788534694;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4yR/zF7xQUqL2IezJ5t5YUwUGRoJ9AK1Qh9ZIojktQg=;
- b=GzI9oRhbuXbU5wMAlAXZTsefHdNm5SxDJDeK9inzu30A9map8tq6fjIs11PX45AORBCs7W
- Fx+Ra17lCn7JT5Aw==
-Authentication-Results: smtp-out2.suse.de;
+ bh=5wwxed4RAYOP6K1zGX8c9yybcHev5O24BqBMvVkTvsg=;
+ b=ewOXeWH1IH+w2Y7CdDZFexA1yV3bKgdygFoq4twCYpDqYtTlMT8Wq+mktIt9uwAU/Wp7/g
+ PgCP67lMnymq0fCg==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1788534527; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1788534690; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4yR/zF7xQUqL2IezJ5t5YUwUGRoJ9AK1Qh9ZIojktQg=;
- b=Wwk1Sa4Qyx6HB0C02qse8yD7s92sUAwyDLeYq26Wn/rnKhdQ/0NY9NaxIdc78JOtGySsib
- SC0cwhEQHZZDpTdswah5ZuPrKRX8Po8thb+lIHe3QIOadiaHPErENsLU3xUSZLPt4hlJYY
- S7qJpIOh+rClrkj3tNYgX/qn4z+YKwA=
+ bh=5wwxed4RAYOP6K1zGX8c9yybcHev5O24BqBMvVkTvsg=;
+ b=OsSoYKZ0cGlVXSrufEkTfavozN5dHWNdu5Pr9/fsDn7lrsNQ/olXJqUyHn5AyHBxoN2nrw
+ L6k+EuVx83mW6IEmPtP/I/4I5yE/Wi9gacQtlFcl8pCQFz1j5hSGhIo/Yxzd9fgdbT28Pv
+ 5fIhpCqAENxLj6rVdTjTYLUeW6ssB4k=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1788534527;
+ s=susede2_ed25519; t=1788534690;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4yR/zF7xQUqL2IezJ5t5YUwUGRoJ9AK1Qh9ZIojktQg=;
- b=9PSIVF+ypLBebVTX7OJ0SaZTIcnw6DOb2RwZZJ45THTDpiUiKCiEEZgjLXRqDqpqjerVig
- 8dwUI04tqBUsIjDw==
+ bh=5wwxed4RAYOP6K1zGX8c9yybcHev5O24BqBMvVkTvsg=;
+ b=3ZDjBWSZdYYssu+L+x11Ki0/0SZbxPFbKxnxECMGFjDyJMkouW9vn5/94K9o2VyZzvCrk9
+ 68/u9zlUwWZ76hDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AC69E13736;
- Fri,  4 Sep 2026 15:08:46 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F160213726;
+ Fri,  4 Sep 2026 15:11:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2i+rHP7emmpwcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 04 Sep 2026 15:08:46 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ry8MMKHfmmobdAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 04 Sep 2026 15:11:29 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 13/18] migration: Use output visitor in info command
-In-Reply-To: <aprbiKXh1WyHCWpN@x1.local>
+Subject: Re: [PATCH 10/18] migration: Validate that all params are set for
+ query
+In-Reply-To: <apnDfpdyAzo2Vuwc@x1.local>
 References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-14-farosas@suse.de> <apqzsh7pIkmKTYYg@x1.local>
- <87zexx6sn2.fsf@suse.de> <aprbiKXh1WyHCWpN@x1.local>
-Date: Fri, 04 Sep 2026 12:08:40 -0300
-Message-ID: <87o6ed6olj.fsf@suse.de>
+ <20260902221547.1812481-11-farosas@suse.de> <apnDfpdyAzo2Vuwc@x1.local>
+Date: Fri, 04 Sep 2026 12:11:27 -0300
+Message-ID: <87ld9h6ogw.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -90,15 +95,15 @@ X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,34 +122,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> On Fri, Sep 04, 2026 at 10:41:21AM -0300, Fabiano Rosas wrote:
->> >> +    case QTYPE_QBOOL: {
->> >> +        QBool *b = qobject_to(QBool, obj);
->> >> +        if (b) {
->> >
->> > Similarly, I'd drop "if" if it will always happen, making qbool_get_bool()
->> > assert itself by deref.
->> >
->> 
->> I'd rather not have such asserts in user-facing code. Even with testing,
->> it's hard to ensure this 'obj' will reach here in integrity.
+> On Wed, Sep 02, 2026 at 07:15:38PM -0300, Fabiano Rosas wrote:
+>> There are a couple of situations where all fields of a
+>> MigrationParameters object need to be marked as present: when cloning
+>> an entire object and when creating the transient object in
+>> qmp_query_migrate(). The query-migrate-parameters QMP command contract
+>> requires that all parameters, except block-bitmap-mapping, are present
+>> in the output.
+>>=20
+>> Validate that a given object has all has_* fields set to true.
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/options.c | 54 +++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 54 insertions(+)
+>>=20
+>> diff --git a/migration/options.c b/migration/options.c
+>> index bd7be8f9832..5d17acdd881 100644
+>> --- a/migration/options.c
+>> +++ b/migration/options.c
+>> @@ -12,6 +12,7 @@
+>>   */
+>>=20=20
+>>  #include "qemu/osdep.h"
+>> +#include "qemu/cutils.h"
+>>  #include "qemu/error-report.h"
+>>  #include "qemu/units.h"
+>>  #include "exec/target_page.h"
+>> @@ -23,8 +24,10 @@
+>>  #include "qapi/qmp/qerror.h"
+>>  #include "qapi/qobject-input-visitor.h"
+>>  #include "qapi/qobject-output-visitor.h"
+>> +#include "qobject/qbool.h"
+>>  #include "qobject/qdict.h"
+>>  #include "qobject/qnull.h"
+>> +#include "qobject/qstring.h"
+>>  #include "system/runstate.h"
+>>  #include "migration/colo.h"
+>>  #include "migration/cpr.h"
+>> @@ -1149,12 +1152,63 @@ static void migrate_mark_all_params_present(Migr=
+ationParameters *p)
+>>      }
+>>  }
+>>=20=20
+>> +static bool assert_all_params_present(MigrationParameters *params, Erro=
+r **errp)
+>> +{
+>> +    g_autoptr(QDict) d =3D migrate_params_to_dict(params, errp);
+>> +    const QDictEntry *e =3D NULL;
+>> +    int i =3D 0;
+>> +
+>> +    if (!d) {
+>> +        return false;
+>> +    }
+>> +
+>> +    for (e =3D qdict_first(d); e; e =3D qdict_next(d, e), i++) {
+>> +        const char *key =3D qdict_entry_key(e);
+>> +        const char *p;
+>> +
+>> +        if (strstart(key, "tls-", &p)) {
+>> +            QString *s =3D qobject_to(QString, qdict_entry_value(e));
+>> +
+>> +            if (!s) {
+>> +                break;
+>> +            }
+>> +        } else if (strstart(key, "has-", &p)) {
 >
-> Not a big deal here, but just for sake of pure discussion..
->
-> IMHO it's not the "user triggerable path" that we are avoiding assert()s,
-> but user input that may affect the result of the assert().
+> Does the qdict contain any has- field?=20=20
 >
 
-In this case, there should be none, agreed.
+=C2=AC=C2=AC
 
-> Here if we just checked obj type is QTYPE_QBOOL, I can't see anything that
-> can make this if not true.
+I guess that decides the fate of the MigrationParameter enum.
+
+> visit_type_MigrationParameters_members:
 >
-
-Thanks for saying it explicitly, I wasn't seeing the obvious redundancy
-there. You're right, I'll remove the checks.
-
-> I still think assert() good guarding programming errors.  Say, if something
-> we wanted to print here but skipped, I want it to crash hard, rather than
-> silently ignored.
+>     if (visit_optional(v, "announce-initial", &obj->has_announce_initial)=
+) {
+>         if (!visit_type_size(v, "announce-initial", &obj->announce_initia=
+l, errp)) {
+>             return false;
+>         }
+>     }
+>     ...
+>
+> It seems the has_* fields are only used to identify existance of objects,
+> not converted.
+>
+>> +            if (qdict_haskey(d, p)) {
+>> +                QBool *b =3D qobject_to(QBool, qdict_entry_value(e));
+>> +
+>> +                If (!b || !qbool_get_bool(b)) {
+>> +                    break;
+>> +                }
+>> +            }
+>> +        }
+>> +    }
+>> +
+>> +    if (i && !e) {
+>> +        return true;
+>> +    }
+>> +
+>> +    /*
+>> +     * Should never happen, but avoid asserting becase this is
+>> +     * reachable from QMP.
+>
+> IIUC as long as this fact shouldn't be changed by any possible user input,
+> we could still assert.  But I understand you want to be careful, maybe
+> either (1) directly assert, or (2) change the function name,
+> s/assert/check/?  I vote (1).
+>
+> Said that, if the qdict trick didn't work it beats the whole patch.. so
+> IMHO we can also leave this sanity check for later too.  Your call.
+>
+>> +     */
+>> +    error_setg(errp, "Missing parameter. Query output will be incomplet=
+e.");
+>> +    return false;
+>> +}
+>> +
+>>  MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>>  {
+>>      MigrationState *s =3D migrate_get_current();
+>>      MigrationParameters *params =3D QAPI_CLONE(MigrationParameters,
+>>                                               &s->parameters);
+>>=20=20
+>> +    /*
+>> +     * Validate all parameters have their has_* field set to true as
+>> +     * consequence of the initial migrate_mark_all_params_present().
+>> +     */
+>> +    if (!assert_all_params_present(params, errp)) {
+>> +        return NULL;
+>> +    }
+>> +
+>>      /*
+>>       * The block-bitmap-mapping breaks the expected API of
+>>       * query-migrate-parameters of having all members present. To keep
+>> --=20
+>> 2.53.0
+>>=20
 
