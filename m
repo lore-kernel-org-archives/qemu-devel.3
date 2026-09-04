@@ -4,142 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C28BC61DD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED541C61DD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 06:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MpL-0000Kr-Lw; Fri, 04 Sep 2026 01:51:03 -0400
+	id 1x2N5v-0002fY-4t; Fri, 04 Sep 2026 02:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2MpI-0000KM-DH
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:51:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1x2N5t-0002en-D4
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:08:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x2MpG-0005G3-EM
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:50:59 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6845Id032519483
- for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 05:50:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xgWC/X14fR5CMRgDDE6vpBhmIL7SRS7NdR3GBYpmyBw=; b=F/vNsSQgS9Yepx5p
- +pYmF+17aShZinL6ADLSoiCzkVkZqv8YD6iS/lByvAqeYwfp8IcfR0Ot62xZx0Re
- mHwWHXPI2ecXRE2I0tlOh9pucAgIGSOTdvVvbOnWCu17sJjfS1FJ/wJnUNNw9aCa
- TVK1Jfa1EMP9Orgd4PsJ/ZhvUoYCgejae9TbZAsuYPXjxkG3Qb2bmzHHuy8EGWA1
- PuNR43dMeYKMG2BHp0Tn3vkjgoKKdBg3MWtI0HS54BHNr8Xk6eCHrgO6XSrbnk0M
- EZpS9Ex0gswcKeFu0vjmDxnVnU5d4raW8YdKesGcimhGwvztmXFn8CILw73otkl/
- hWLVag==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfqqtr47n-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:50:56 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cf7dd9fd91so6728195ad.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:50:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1x2N5r-0001R2-Lx
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:08:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788502085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=J1L2vnFo353yjGYAyJ7gKR3siRLiMzHI6F79fs117Ik=;
+ b=LYgmjmvexuAflRQ4M+VHkqAtNexVM5jd+/veV1LHVxRATWmYw+uSshwSeMGf85etGTi5jx
+ UNfuPvOGY0iNoEqe9XPHOXnQbIcmiDB0Q3w6MFzHkwYUVUbB4n53exdBbaS4U+wroWhcla
+ 4DLQ+ihcl9OmsiGAacLx/l2s62Y7Co4=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-295-oAmzGI1pOSyfX3ZP5BeCYw-1; Fri, 04 Sep 2026 02:08:04 -0400
+X-MC-Unique: oAmzGI1pOSyfX3ZP5BeCYw-1
+X-Mimecast-MFC-AGG-ID: oAmzGI1pOSyfX3ZP5BeCYw_1788502083
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-398d0010cfaso1276482a91.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 23:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788501055; x=1789105855; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xgWC/X14fR5CMRgDDE6vpBhmIL7SRS7NdR3GBYpmyBw=;
- b=XMU6vgOn+OU00jTZWU9cUm/1qCcTxUUZNdCqN5YUf1TjKHKAJ7MT7dj6cs3vaONmT0
- bsiniGjqNTg3SPD9Arrqt9mqXL03qlcBv28L/YAsaRcVSBit2nuJE+CfoTHLVc2mQOlw
- QKqZEjEgqDrVmO8aqWQKaa4Goxpn84xVDaL2g1BW1aiH3eWtqOzymeDrHFTEfpffDmFZ
- fh2UDK8T7/J6NnBGgoDzPWvTyEhUb/22ZXD8WfZA/8sjn84TMT0UR6BrUxjjyLFagzrA
- DURYCGWCTwrWDjXpOZO/DXXObEfOLkutp80cS1Ft2rdn5SaYMovjsRyq+AmV1dnX4HRy
- nAlQ==
+ d=redhat.com; s=google; t=1788502083; x=1789106883; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=J1L2vnFo353yjGYAyJ7gKR3siRLiMzHI6F79fs117Ik=;
+ b=sH+CZTVgSJWM2rStDgf+VYW593gcO6P64Xxf3bal8306U7theL28ou6zgS9F/Otom9
+ veAqvumaYzjzVDcfoh4nhHT0sOV+tkFER8ejmfjuk+J2izuLVt2lHhn42xq6tw8Zh5YZ
+ geyGFnQj8z2kf/1g97SrINp6NbKQsjdRVFzSTuOGXxyInXwQ9L//mklMZGnqCrBA3P3p
+ uwz8RHgBcDKhi30RnDwvXe7hadGWvdOJbC9OXNrnzojop3oQalraBHQJLfIgMKQAvJTj
+ iF4SSkI14wf2G1Y4+RQceaRssBLnAgNufcLJGZ2NxhQY3WKQMLiR6XGK2jcgu8WtJ/If
+ GExA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788501055; x=1789105855;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=xgWC/X14fR5CMRgDDE6vpBhmIL7SRS7NdR3GBYpmyBw=;
- b=eAsebKrKkJTMtp+4c60CBuYRM0x3rCAxRzsYDa44PmrGp1ieyVkkGN4rBIxTw0NO5a
- 9qynWhJupGy1YEzaBah5ziSeKC65KoFlHDiq3X369jU1Tp97KUCG1zmc8xKIhguI0d6W
- KODfbHB64bL8hcYsqhnvkin+2eo85eXkf2u9SYPEA8cuzjSCir3KKnBpctERExARnDDr
- 4gW/Xq9FsrUCfaJ5A9T7FEXlbqTK1JNvZ+y5CeTopIWyTdLkfnJvuaT3Nk5MMWOVaZlx
- Xj9nVine+gS6L4eixoDJacd/ohw9h9qGvNDFJnAMrTTYlN633BJ3c05XA1QOfsns0jSV
- kx1w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzJGDRGnqipLYKoYxJOt6nyOZC18WXXnUY9FgHkuaqxOQIFhBAxYFmsaVPlCHlc5AdkA2ek8W6oV4si@nongnu.org
-X-Gm-Message-State: AFuF++mWb3lX4Pzh1ZMZtOar8RNx5VSRpgPeDOO76QHvpKdHdmpO1j+w
- UBWpvHPuKEZYMCluZFQGOhv7X+eCG2bP58jCzfcXuv5veoAS1OzzxXvjx+UQapv5nBsY3YhDEJQ
- oFnFk4gSFpKo6S9U7Z1WgE/rNN8w36wT+Vx7OSwFywDGLZfHw49OrBbeePg==
-X-Gm-Gg: AYBFou0sHTAsXv+Go1GhHDd9USO9SA1MBmBJLWBTuucVXBCzGbgZmu20bK7rfQiQGcG
- b/vrrkNo4hIRzmsGHuSgdJ2L0/uMthrUSIOo9/At0vPtrWBfa3EFRou9RTnbijBgVp6pyCUwPCO
- +WvGLG1cl/zfv1p3RukqAILWktP7x6qDaQXV1/abIODKGBptqC9XGvxLFh0A5Lx8nKYebm3v6y2
- JWquI1VSy3eySEoAqNcO6pMt1sm4iPMfDyR7vgiHFaYHO5mAYvg4hcLpCdYk72lG1ypESCNW3mO
- nA9bCurTy5x3FDc7KakifYncMFXJqtXEABudkd5VC8mF9sNimH+KRa+qorxm7ecYXyk3T+jkgIa
- xuwXi+JIQtKDKF3TyvN6N5AXmz3F6wQ0C65bFX8MaV+IO23pqL/VibOE=
-X-Received: by 2002:a17:902:b114:b0:2d9:1dee:43e3 with SMTP id
- d9443c01a7336-2db12757f17mr36089105ad.18.1788501055091; 
- Thu, 03 Sep 2026 22:50:55 -0700 (PDT)
-X-Received: by 2002:a17:902:b114:b0:2d9:1dee:43e3 with SMTP id
- d9443c01a7336-2db12757f17mr36088895ad.18.1788501054600; 
- Thu, 03 Sep 2026 22:50:54 -0700 (PDT)
-Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2db190f6fb0sm3131535ad.51.2026.09.03.22.50.54
+ d=1e100.net; s=20251104; t=1788502083; x=1789106883;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=J1L2vnFo353yjGYAyJ7gKR3siRLiMzHI6F79fs117Ik=;
+ b=rN9et6RvKPxuARB8vN4ej7ND+1C46Hwp3dSQI78BGv/LQOKiDgbcGaKB/IprDIIv9K
+ xVbZwuiprim0ioFdylMjstkA/jNGiCxI4HoaNXv6bGnfhgbAfEynYFh4s3PqX/uAetkH
+ Os2QnpjmR3pnvaJ6sdGXDme/K0tR1zZhSBfwg0kPOz/OZYflYDXfXOT2a+uxvt3hu3FF
+ co8Bt4FUaUPa2Gqg6jDGSn18i8BvlwMl5mG85nU5hCFqw78sNxGbmOltpmZxCcJuHlZV
+ 3WaUSIyezNYY1cQdA0zydFjsTgSAlN/UN6JDhc2DxHcx/Pw1iNrltJq/mfhHUW6dQfp9
+ Ie8Q==
+X-Gm-Message-State: AFuF++kYOGXJOXuVsDSfQoyosgZyfO52wG/iriQQ/Ok8Mg72b4SKJMIH
+ N/SjNhLXig9I2ONU2yvoojj3NnugXf6E/Q+Z3JLXvTkph4RP0ux7w8z16kR/dJvsVDOB2rXCN0u
+ cFlKe2FPYxbicsWUuf3VXigQ/jY74LUpcC9dKWKdeclvilf50fyMbKIDm
+X-Gm-Gg: AYBFou3eBHZ9Rk/oY8G7QTltWIXuI29BRmK08vZg2pEjviRpe4MPzOKdkK7/UQryi6x
+ jwTiVwLtz7rYLjWtNBgH7uL3ACMBn/SXhs5Jq+Y9YHRiDPj1rXm97WP4fZ6zf8t9B90uuaxpCfS
+ ab29iKA3BOOsdPCZZFbTvWxDfnsoBw61JC2y2NqxMkzuU2qESSz1xhuSKvUok4bj433Iz2Ceots
+ PN8alZXg1fgGKnfX0sYSy2qt/bRhIWR6lhAoPZSDmKx2tu2NRWY0k7QdqYS3rQxm365WpIfT0vg
+ AMz2QXswwBuBNN1p1/c7kxzBH074KlLCqYRnfqibB5rZQ4nFlrgDla4Y7lluykXl2DvOj+qN8cr
+ 0Eyh5NrkC1H2ColNYxOSTViL2IrvZ8OoGiQ+pVh5wqA==
+X-Received: by 2002:a17:90b:586c:b0:398:a2ed:7b5c with SMTP id
+ 98e67ed59e1d1-39b2623ef65mr6524581a91.24.1788502083064; 
+ Thu, 03 Sep 2026 23:08:03 -0700 (PDT)
+X-Received: by 2002:a17:90b:586c:b0:398:a2ed:7b5c with SMTP id
+ 98e67ed59e1d1-39b2623ef65mr6523936a91.24.1788502077992; 
+ Thu, 03 Sep 2026 23:07:57 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3339bdf26c5sm3852026eec.27.2026.09.03.23.07.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Sep 2026 22:50:54 -0700 (PDT)
-Message-ID: <dc915919-872b-47df-adac-d12b44251669@oss.qualcomm.com>
-Date: Thu, 3 Sep 2026 22:50:53 -0700
+ Thu, 03 Sep 2026 23:07:57 -0700 (PDT)
+Message-ID: <b06c933e-b8fd-4e03-8f50-9a9086542ccf@redhat.com>
+Date: Fri, 4 Sep 2026 16:07:49 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] tests/tcg/hexagon: add vgather/vscatter
- region-length tests
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-References: <20260904012233.3607547-1-brian.cain@oss.qualcomm.com>
- <20260904012233.3607547-4-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [RFC v4 01/24] linux-headers: Add RME related definitions
+To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-2-mathieu.poirier@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260904012233.3607547-4-brian.cain@oss.qualcomm.com>
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20260903193611.1058589-2-mathieu.poirier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=YtA/gYYX c=1 sm=1 tr=0 ts=6a9a5c40 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=q-r6SJLbOQhasUAek_IA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: jZxPL3VmXGyhABsFnnDOe0Zq9AeOb3r5
-X-Proofpoint-GUID: jZxPL3VmXGyhABsFnnDOe0Zq9AeOb3r5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDA1MiBTYWx0ZWRfXxw9Rftn/XpGX
- KhIZ+71xX7J4jNHuTdimlkEGEKuaKs7j+2JGsNeJltJVeMkLrS975nk2C0p832x+/0Hu6Tdm8pl
- 9zqUhrgDJA+E8OOAc7hHCfZlTX5SYsY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDA1MiBTYWx0ZWRfX+dbVhC3uZKow
- Psc3DitIMN6TzaEDcoGknhs8vlHbDfY7MVderhrPtSg7rIoS0gWgqKwr16OPdQ6uE/JOOKK7bRU
- 7t1h1Dysr5f2zmYtoD531+1vTTMizLm5RZEEJ4SLZYnYBFEZijKBuJAMZE0F/ITpn8pYRQ0yUlk
- hIZrz2iHQaZNMMEp12nXHcR5spdcOPLTQeZgOW8Kjjarh1Det4CaEaJqEazGSv7a8+5/rvGT5zK
- EmBlei81MXrFBPlJ5kKTBPm80iaezPw3pOx9B9WNx/7K21IzEMnUpen1vhTNWtlqyxQGq3ifZCg
- 0DgY9JhVcYPk+AcJQsqag2crKcFDiv0qamqk2NYTM2GcHxnVjBHb6qMWqQLxjPKqGnLnSf4enE8
- CsDvUH2pN1YKe52h3d1uw8s6bER0bj6muz5CBessYv3rq7kun6rznAgXlcZ0XP5AEtyq6/p0jlR
- CFy5jLo6z9SLd83u0Jw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-04_01,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040052
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,18 +124,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 6:22 PM, Brian Cain wrote:
-> Cover the case where an offset lies beyond the region length: it
-> must be dropped rather than read/written.
-> 
-> Place one dropped gather offset on a PROT_NONE page to verify that
-> the instruction does not access memory for that lane.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   tests/tcg/hexagon/scatter_gather.c | 137 ++++++++++++++++++++++++++++-
->   1 file changed, 136 insertions(+), 1 deletion(-)
-> 
+Hi Mathieu,
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On 9/4/26 5:35 AM, Mathieu Poirier wrote:
+> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> 
+> This is a temporary patch intended for testing purposes only. It provides
+> definitions related to supporting Realms by the QEMU-VMM.
+> 
+> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> ---
+>   linux-headers/asm-arm64/kvm.h |  9 +++++++++
+>   linux-headers/linux/kvm.h     | 10 +++++++++-
+>   2 files changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
+> index 6aefe7973814..4c08631ec7d2 100644
+> --- a/linux-headers/asm-arm64/kvm.h
+> +++ b/linux-headers/asm-arm64/kvm.h
+> @@ -208,6 +208,15 @@ struct kvm_arm_counter_offset {
+>   	__u64 reserved;
+>   };
+>   
+> +#define KVM_ARM_RMI_POPULATE_FLAGS_MEASURE     (1 << 0)
+> +struct kvm_arm_rmi_populate {
+> +	__u64 base;
+> +	__u64 size;
+> +	__u64 source_uaddr;
+> +	__u32 flags;
+> +	__u32 reserved;
+> +};
+> +
+>   #define KVM_ARM_TAGS_TO_GUEST		0
+>   #define KVM_ARM_TAGS_FROM_GUEST		1
+>   
+> diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+> index 29f81c05aca2..8b7627f11447 100644
+> --- a/linux-headers/linux/kvm.h
+> +++ b/linux-headers/linux/kvm.h
+> @@ -689,14 +689,19 @@ struct kvm_enable_cap {
+>    * address size for the VM. Bits[7-0] are reserved for the guest
+>    * PA size shift (i.e, log2(PA_Size)). For backward compatibility,
+>    * value 0 implies the default IPA size, 40bits.
+> + *
+> + * Bits[30-31] are reserved for the VM type
+>    */
+>   #define KVM_VM_TYPE_ARM_IPA_SIZE_MASK	0xffULL
+>   #define KVM_VM_TYPE_ARM_IPA_SIZE(x)		\
+>   	((x) & KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
+>   
+> +#define KVM_VM_TYPE_ARM_NORMAL		0
+> +#define KVM_VM_TYPE_ARM_REALM		(1UL << 30)
+>   #define KVM_VM_TYPE_ARM_PROTECTED	(1UL << 31)
+>   #define KVM_VM_TYPE_ARM_MASK		(KVM_VM_TYPE_ARM_IPA_SIZE_MASK | \
+> -					 KVM_VM_TYPE_ARM_PROTECTED)
+> +					 KVM_VM_TYPE_ARM_PROTECTED | \
+> +					 KVM_VM_TYPE_ARM_REALM)
+>   
+>   /*
+>    * ioctls for /dev/kvm fds:
+> @@ -719,6 +724,8 @@ struct kvm_enable_cap {
+>   #define KVM_GET_EMULATED_CPUID	  _IOWR(KVMIO, 0x09, struct kvm_cpuid2)
+>   #define KVM_GET_MSR_FEATURE_INDEX_LIST    _IOWR(KVMIO, 0x0a, struct kvm_msr_list)
+>   
+> +#define KVM_ARM_RMI_POPULATE	  _IOWR(KVMIO, 0xd7, struct kvm_arm_rmi_populate)
+> +
+>   /*
+>    * Extension capability list.
+>    */
+> @@ -988,6 +995,7 @@ struct kvm_enable_cap {
+>   #define KVM_CAP_S390_HPAGE_2G 249
+>   #define KVM_CAP_PPC_COMPAT_CAPS 250
+>   #define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 251
+> +#define KVM_CAP_ARM_RMI 252
+>   
+
+Both KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES and KVM_CAP_ARM_RMI aren't consistent to
+the definitions in Steven Price's (v16) host series [1]. They need corrections as
+below. Otherwise, realm VM can't be started and the following errors are raised by
+qemu.
+
+[1] https://lore.kernel.org/kvm/20260803134403.80630-14-steven.price@arm.com/
+
+root@host:~# qemu-system-aarch64 -enable-kvm                  \
+-object rme-guest,id=rme0,convert-in-place=on                 \
+-machine virt,gic-version=3,confidential-guest-support=rme0   \
+-m 2G -cpu host                                               \
+-smp maxcpus=4,cpus=4,sockets=1,clusters=1,cores=2,threads=2  \
+-object memory-backend-guest-memfd,id=mem0,size=2G,share=on   \
+-numa node,nodeid=0,cpus=0-3,memdev=mem0                      \
+-serial mon:stdio -monitor none -nographic -nodefaults        \
+-kernel /mnt/linux/arch/arm64/boot/Image                      \
+-initrd /mnt/buildroot/output/images/rootfs.cpio.xz           \
+-append earlycon=pl011,mmio,0x10009000000
+     :
+qemu-system-aarch64: VM doesn't support Realms
+qemu-system-aarch64: failed to initialize kvm: No such device
+
+
+-#define KVM_CAP_PPC_COMPAT_CAPS 250
+-#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 251
+-#define KVM_CAP_ARM_RMI 252
++#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 250
++#define KVM_CAP_ARM_RMI 251
+
+>   struct kvm_irq_routing_irqchip {
+>   	__u32 irqchip;
+
+Thanks,
+Gavin
+
 
