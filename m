@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 166B0C624DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BCDC79F82
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2az9-00039v-Cc; Fri, 04 Sep 2026 16:58:07 -0400
+	id 1x2az7-00039f-Vk; Fri, 04 Sep 2026 16:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x2az6-000399-Eu
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:58:04 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1x2az4-00038r-TV
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:58:02 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x2az2-0007y0-5B
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:58:04 -0400
+ id 1x2az1-0007xv-Au
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:58:02 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c11:43a8:0:640:574d:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id CC927807A6;
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 116A28065E;
  Fri, 04 Sep 2026 23:57:58 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:4d::1:17])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id rvQjs41YPqM0-sXWwhiev; Fri, 04 Sep 2026 23:57:58 +0300
+ id rvQjs41YPqM0-bhiDhsXJ; Fri, 04 Sep 2026 23:57:57 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1788555478;
- bh=d4dbH53MPfx1q2KRu2EkXixZG7sgb64R8Vc62UI24tE=;
+ s=default; t=1788555477;
+ bh=VCxyERGgPaGRWK8x8tRvFf5jF5AfliI97ZERz5vYK1g=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=GyPgqZ7MvXGQH7Gtor95cAcKddxNx/X1P3pEfHMxA5VU21Xmn0YmTgiiDegKmKvU5
- KIf8vsAV4eNJfo4zaoiSWzAci5XoV+KfQSiwfs5Rk9QzG1/LdODz4xlVswzmBp0mcY
- tDX8rkjuCZfR3g1e4dPRH9fA769FII9YIm+B1nj0=
+ b=beaRtdzNEqO5jfg1/lGWDlBDoTruNqcmu9ij5H3LGDKKq0UZpzv9HN/ryU+SaCZ1Q
+ G8iKwa+FApzs+uxXvq5FsPrCV5o/TJFZpGfvsszGXOuqKyWmLe0TF7pTXz80h6P9Lh
+ PMyIF4dIY8PNVyD9Eb673PURrVbzElqpDMLPIcZk=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,15 +47,15 @@ Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 6/6] runstate: make runstate actions private
-Date: Fri,  4 Sep 2026 23:57:49 +0300
-Message-ID: <20260904205749.510493-7-vsementsov@yandex-team.ru>
+Subject: [PATCH 5/6] runstate: separate forced and regular shutdown requests
+Date: Fri,  4 Sep 2026 23:57:48 +0300
+Message-ID: <20260904205749.510493-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260904205749.510493-1-vsementsov@yandex-team.ru>
 References: <20260904205749.510493-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,248 +78,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The action variables are now used only within system/runstate.c.
-Move them and qmp_set_action() there, make the variables static,
-and remove runstate-action.c and its header.
+QMP quit, host signals and UI shutdown requests force QEMU to exit
+by setting shutdown_action to SHUTDOWN_ACTION_POWEROFF.
+
+This can race with guest shutdown processing. With -no-shutdown,
+consider the following sequence:
+
+1. Management sends system_powerdown, then sends SIGTERM after
+   waiting for the guest to shut down.
+2. QEMU starts processing a guest shutdown request.
+3. SIGTERM arrives after qemu_kill_report(), while QEMU is sending
+   the guest SHUTDOWN event.
+4. The signal handler changes shutdown_action to POWEROFF, so QEMU
+   exits instead of pausing.
+
+Management receives SHUTDOWN with guest=true, but QEMU exits despite
+-no-shutdown, without reporting a host SHUTDOWN event or printing
+the signal diagnostic.
+
+Store forced and regular shutdown requests separately, and decide
+whether to exit based on the request being processed. Leave
+shutdown_action under user control. A forced request arriving while
+a regular request is being processed remains pending for the next
+main loop iteration.
+
+Keep qemu_shutdown_requested() checking both kinds of requests for
+its Xen caller.
+
+There is no need to clear shutdown_force_requested with qatomic_xchg():
+processing a forced shutdown request always exits the main loop.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- MAINTAINERS                      |  1 -
- include/system/runstate-action.h | 19 -------------
- monitor/qmp-cmds.c               |  1 -
- system/meson.build               |  1 -
- system/runstate-action.c         | 46 --------------------------------
- system/runstate.c                | 34 ++++++++++++++++++++++-
- system/vl.c                      |  2 +-
- ui/cocoa.m                       |  1 -
- ui/sdl2.c                        |  1 -
- 9 files changed, 34 insertions(+), 72 deletions(-)
- delete mode 100644 include/system/runstate-action.h
- delete mode 100644 system/runstate-action.c
+ monitor/qmp-cmds.c |  1 -
+ system/runstate.c  | 24 ++++++++++++++++--------
+ ui/cocoa.m         |  1 -
+ ui/sdl2.c          |  2 --
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7183babd6aa..2cee4c71b7a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3514,7 +3514,6 @@ M: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
- F: include/qemu/main-loop.h
- F: include/system/runstate.h
--F: include/system/runstate-action.h
- F: util/main-loop.c
- F: util/qemu-timer*.c
- F: system/vl.c
-diff --git a/include/system/runstate-action.h b/include/system/runstate-action.h
-deleted file mode 100644
-index db4e3099ae5..00000000000
---- a/include/system/runstate-action.h
-+++ /dev/null
-@@ -1,19 +0,0 @@
--/*
-- * Copyright (c) 2020 Oracle and/or its affiliates.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2.
-- * See the COPYING file in the top-level directory.
-- *
-- */
--
--#ifndef RUNSTATE_ACTION_H
--#define RUNSTATE_ACTION_H
--
--#include "qapi/qapi-commands-run-state.h"
--
--/* in system/runstate-action.c */
--extern RebootAction reboot_action;
--extern ShutdownAction shutdown_action;
--extern PanicAction panic_action;
--
--#endif /* RUNSTATE_ACTION_H */
 diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index 6d0ba75ff16..f89237eb238 100644
+index 7525a88e049..6d0ba75ff16 100644
 --- a/monitor/qmp-cmds.c
 +++ b/monitor/qmp-cmds.c
-@@ -22,7 +22,6 @@
- #include "system/system.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
--#include "system/runstate-action.h"
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qapi/qapi-init-commands.h"
-diff --git a/system/meson.build b/system/meson.build
-index 41e2e4a292d..dd4622ae08c 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -22,7 +22,6 @@ system_ss.add(files(
-   'qdev-monitor.c',
-   'qtest.c',
-   'rtc.c',
--  'runstate-action.c',
-   'runstate.c',
-   'watchpoint.c',
- ))
-diff --git a/system/runstate-action.c b/system/runstate-action.c
-deleted file mode 100644
-index f912bc837f2..00000000000
---- a/system/runstate-action.c
-+++ /dev/null
-@@ -1,46 +0,0 @@
--/*
-- * Copyright (c) 2020 Oracle and/or its affiliates.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2.
-- * See the COPYING file in the top-level directory.
-- *
-- */
--
--#include "qemu/osdep.h"
--#include "system/runstate-action.h"
--#include "system/watchdog.h"
--#include "qemu/config-file.h"
--#include "qapi/error.h"
--#include "qemu/option_int.h"
--
--RebootAction reboot_action = REBOOT_ACTION_RESET;
--ShutdownAction shutdown_action = SHUTDOWN_ACTION_POWEROFF;
--PanicAction panic_action = PANIC_ACTION_SHUTDOWN;
--
--/*
-- * Receives actions to be applied for specific guest events
-- * and sets the internal state as requested.
-- */
--void qmp_set_action(bool has_reboot, RebootAction reboot,
--                    bool has_shutdown, ShutdownAction shutdown,
--                    bool has_panic, PanicAction panic,
--                    bool has_watchdog, WatchdogAction watchdog,
--                    Error **errp)
--{
--    if (has_reboot) {
--        reboot_action = reboot;
--    }
--
--    if (has_panic) {
--        panic_action = panic;
--    }
--
--    if (has_watchdog) {
--        qmp_watchdog_set_action(watchdog, errp);
--    }
--
--    /* Process shutdown last, in case the panic action needs to be altered */
--    if (has_shutdown) {
--        shutdown_action = shutdown;
--    }
--}
-diff --git a/system/runstate.c b/system/runstate.c
-index 5d10ff0df99..a5f16da975e 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -2,6 +2,7 @@
-  * QEMU main system emulation loop
-  *
-  * Copyright (c) 2003-2020 QEMU contributors
-+ * Copyright (c) 2020 Oracle and/or its affiliates.
-  *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-  * of this software and associated documentation files (the "Software"), to deal
-@@ -58,7 +59,6 @@
- #include "system/replay.h"
- #include "system/reset.h"
- #include "system/runstate.h"
--#include "system/runstate-action.h"
- #include "system/confidential-guest-support.h"
- #include "system/system.h"
- #include "system/tpm.h"
-@@ -75,6 +75,10 @@ static RunState current_run_state = RUN_STATE_PRELAUNCH;
- static RunState vmstop_requested = RUN_STATE__MAX;
- static QemuMutex vmstop_lock;
+@@ -44,7 +44,6 @@ NameInfo *qmp_query_name(Error **errp)
  
-+static RebootAction reboot_action = REBOOT_ACTION_RESET;
-+static ShutdownAction shutdown_action = SHUTDOWN_ACTION_POWEROFF;
-+static PanicAction panic_action = PANIC_ACTION_SHUTDOWN;
-+
- typedef struct {
-     RunState from;
-     RunState to;
-@@ -277,6 +281,34 @@ StatusInfo *qmp_query_status(Error **errp)
-     return info;
+ void qmp_quit(Error **errp)
+ {
+-    shutdown_action = SHUTDOWN_ACTION_POWEROFF;
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_HOST_QMP_QUIT);
  }
  
-+/*
-+ * Receives actions to be applied for specific guest events
-+ * and sets the internal state as requested.
-+ */
-+void qmp_set_action(bool has_reboot, RebootAction reboot,
-+                    bool has_shutdown, ShutdownAction shutdown,
-+                    bool has_panic, PanicAction panic,
-+                    bool has_watchdog, WatchdogAction watchdog,
-+                    Error **errp)
-+{
-+    if (has_reboot) {
-+        reboot_action = reboot;
-+    }
-+
-+    if (has_panic) {
-+        panic_action = panic;
-+    }
-+
-+    if (has_watchdog) {
-+        qmp_watchdog_set_action(watchdog, errp);
-+    }
-+
-+    /* Process shutdown last, in case the panic action needs to be altered */
-+    if (has_shutdown) {
-+        shutdown_action = shutdown;
-+    }
-+}
-+
- bool qemu_vmstop_requested(RunState *r)
+diff --git a/system/runstate.c b/system/runstate.c
+index 2b28e2a30e2..5d10ff0df99 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -564,9 +564,9 @@ int vm_stop_force_state(RunState state)
+ 
+ static ShutdownCause reset_requested;
+ static ShutdownCause shutdown_requested;
++static ShutdownCause shutdown_force_requested;
+ static int shutdown_exit_code = EXIT_SUCCESS;
+ static int shutdown_signal;
+-static bool force_shutdown;
+ static pid_t shutdown_pid;
+ static int powerdown_requested;
+ static int debug_requested;
+@@ -584,12 +584,12 @@ static uint32_t wakeup_reason_mask = ~(1 << QEMU_WAKEUP_REASON_NONE);
+ 
+ bool qemu_shutdown_requested(void)
  {
-     qemu_mutex_lock(&vmstop_lock);
-diff --git a/system/vl.c b/system/vl.c
-index 9bd7664b85c..e1bb105514f 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -44,7 +44,6 @@
- #include "qemu/uuid.h"
- #include "system/reset.h"
- #include "system/runstate.h"
--#include "system/runstate-action.h"
- #include "system/seccomp.h"
- #include "system/tcg.h"
- #include "system/xen.h"
-@@ -136,6 +135,7 @@
- #include "qapi/qapi-commands-block-core.h"
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-commands-misc.h"
-+#include "qapi/qapi-commands-run-state.h"
- #include "qapi/qapi-visit-qom.h"
- #include "qapi/qapi-commands-ui.h"
- #include "block/qdict.h"
+-    return shutdown_requested;
++    return shutdown_requested || shutdown_force_requested;
+ }
+ 
+ bool qemu_force_shutdown_requested(void)
+ {
+-    return force_shutdown;
++    return shutdown_force_requested;
+ }
+ 
+ ShutdownCause qemu_reset_requested_get(void)
+@@ -972,11 +972,12 @@ bool qemu_wakeup_suspend_enabled(void)
+  */
+ static void qemu_system_shutdown_request_safe(ShutdownCause reason)
+ {
+-    shutdown_requested = reason;
+     if (reason == SHUTDOWN_CAUSE_HOST_QMP_QUIT ||
+         reason == SHUTDOWN_CAUSE_HOST_SIGNAL ||
+         reason == SHUTDOWN_CAUSE_HOST_UI) {
+-        force_shutdown = true;
++        shutdown_force_requested = reason;
++    } else {
++        shutdown_requested = reason;
+     }
+     qemu_notify_event();
+ }
+@@ -992,7 +993,6 @@ void qemu_system_killed(int signal, pid_t pid)
+ {
+     shutdown_signal = signal;
+     shutdown_pid = pid;
+-    shutdown_action = SHUTDOWN_ACTION_POWEROFF;
+     qemu_system_shutdown_request_safe(SHUTDOWN_CAUSE_HOST_SIGNAL);
+ }
+ 
+@@ -1042,6 +1042,7 @@ static bool main_loop_should_exit(int *status)
+ {
+     RunState r;
+     ShutdownCause request;
++    bool force = false;
+ 
+     if (qemu_debug_requested()) {
+         vm_stop(RUN_STATE_DEBUG);
+@@ -1049,11 +1050,18 @@ static bool main_loop_should_exit(int *status)
+     if (qemu_suspend_requested()) {
+         qemu_system_suspend();
+     }
+-    request = qatomic_xchg(&shutdown_requested, SHUTDOWN_CAUSE_NONE);
++
++    if (shutdown_force_requested) {
++        force = true;
++        request = shutdown_force_requested;
++    } else {
++        request = qatomic_xchg(&shutdown_requested, SHUTDOWN_CAUSE_NONE);
++    }
++
+     if (request) {
+         qemu_kill_report();
+         qemu_system_shutdown(request);
+-        if (shutdown_action == SHUTDOWN_ACTION_PAUSE) {
++        if (!force && shutdown_action == SHUTDOWN_ACTION_PAUSE) {
+             vm_stop(RUN_STATE_SHUTDOWN);
+         } else {
+             if (shutdown_exit_code != EXIT_SUCCESS) {
 diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 5447fb637ad..94bb094ff13 100644
+index 3751be37922..5447fb637ad 100644
 --- a/ui/cocoa.m
 +++ b/ui/cocoa.m
-@@ -37,7 +37,6 @@
- #include "ui/kbd-state.h"
- #include "system/system.h"
- #include "system/runstate.h"
--#include "system/runstate-action.h"
- #include "system/cpu-throttle.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-block.h"
+@@ -1221,7 +1221,6 @@ - (void)applicationWillTerminate:(NSNotification *)aNotification
+     COCOA_DEBUG("QemuCocoaAppController: applicationWillTerminate\n");
+ 
+     with_bql(^{
+-        shutdown_action = SHUTDOWN_ACTION_POWEROFF;
+         qemu_system_shutdown_request(SHUTDOWN_CAUSE_HOST_UI);
+     });
+ 
 diff --git a/ui/sdl2.c b/ui/sdl2.c
-index d647905a379..72ec8819fb1 100644
+index 1c97d23a47c..d647905a379 100644
 --- a/ui/sdl2.c
 +++ b/ui/sdl2.c
-@@ -30,7 +30,6 @@
- #include "ui/input.h"
- #include "ui/sdl2.h"
- #include "system/runstate.h"
--#include "system/runstate-action.h"
- #include "system/system.h"
- #include "qemu/log.h"
- #include "qemu-main.h"
+@@ -645,7 +645,6 @@ static void handle_windowevent(SDL_Event *ev)
+                 allow_close = false;
+             }
+             if (allow_close) {
+-                shutdown_action = SHUTDOWN_ACTION_POWEROFF;
+                 qemu_system_shutdown_request(SHUTDOWN_CAUSE_HOST_UI);
+             }
+         } else {
+@@ -692,7 +691,6 @@ void sdl2_poll_events(struct sdl2_console *scon)
+                 allow_close = false;
+             }
+             if (allow_close) {
+-                shutdown_action = SHUTDOWN_ACTION_POWEROFF;
+                 qemu_system_shutdown_request(SHUTDOWN_CAUSE_HOST_UI);
+             }
+             break;
 -- 
 2.43.0
 
