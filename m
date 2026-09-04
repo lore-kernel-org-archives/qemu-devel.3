@@ -4,103 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029E8C79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 14:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD44C624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 14:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2VJF-0006nz-Kz; Fri, 04 Sep 2026 10:54:29 -0400
+	id 1x2VJL-0006ou-98; Fri, 04 Sep 2026 10:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2VJD-0006nh-Ex
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 10:54:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2VJ3-0006IG-BX
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 10:54:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788533654;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qeup7lIFeKt+qmNA/WxigICq4PQyCa6KaSJKHGuBz5s=;
- b=AJB9NyMtXZNkWmzWzsyNcdAMsiOMIc1uxy1oALDitXh7ppSR6Gwm7Xo5GsZfLF5aGOehF8
- QgC9SbP3A1YLZbHvE5KnMPdVJw+ZWAhv38bbsEXcTL3x3VOFrx9Frc0NQsiXmtfoRLVV1p
- VJzxkzWgoOiZqM+MPxjBlGMYR9N2xAg=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-396-WhJ6r_dRP5WBBT8uAMVMDg-1; Fri, 04 Sep 2026 10:54:13 -0400
-X-MC-Unique: WhJ6r_dRP5WBBT8uAMVMDg-1
-X-Mimecast-MFC-AGG-ID: WhJ6r_dRP5WBBT8uAMVMDg_1788533652
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e5e38fbc5so182713585a.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 07:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788533652; x=1789138452; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qeup7lIFeKt+qmNA/WxigICq4PQyCa6KaSJKHGuBz5s=;
- b=pACZVbNAAXQom5NzCxmJdvT+FpEcojgLuFjl8sfxWfbpVtohsiSppS6RFKyH5qDeWD
- pHqvOpz7fE8wekofIDUIWaRU8GJK2y4jykcgcohQ15Up3zgj5dgPzvdPjFZbxY0ai5U2
- Lr71vq/IHgvlnEuL+oNNXbvrmsMvMu7ZtxaCFkhBT7TGkA7sHInmPe5eTFae2Osdzi8w
- peBpcnwFQ6/9NQ3C+dL9GN6w6h7hWYX7e2BGbzss7GV8i2OggIoExnaFsbrMkD0vIUj+
- N4lACKPsfUotnQ82nlu4poflaboivO9wOzhj5Du4cwv58eRzfl1b9i9KpcXY8PlSB4eA
- mPxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788533652; x=1789138452;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qeup7lIFeKt+qmNA/WxigICq4PQyCa6KaSJKHGuBz5s=;
- b=sIdOxjh8cL5dB0KpxHtd5PRZ1L8iE1/+jDKbLuAwy5lKaS7lFBg+PQuGZcCVYb1To+
- Eia6N3Htb2GpSfvtOFk4eZSjVtdFgkd+/+GnUTOrrT9VCEZAiyPeZsNGRobE8UmAGURx
- 6PbEya1DTEdanr+rGLlqL2j6E0TKUKs183l1ulH2Q8ftinXD9gU0sUtiZRr2Qu3onDQA
- TPOswBYsEPzc9X+mhSM2M0Z8D4S8ZKsQLH8b0zg4bYnbpdYqUdVo6IzPTVhOBtMYntu6
- cUtUbcFPA+EB6mIoF/8J90eBd1BKLy994/oFAzjq634zQq0nAjZd3BZbxmwXjEDYBz1V
- xGhw==
-X-Gm-Message-State: AFuF++lm77JT3+f7IoTrF0QZyuL3d41a/NbRxzyj8wcejr0mEeBSBQ49
- qZStTI/5Ov56pMNRxY1i86jEfrX70i5plNmnItdiYV7tNH/GVYI2LIyQuVLABP0v78EpEGhMF8r
- iCi9lqTNvvn4F8tYu18ikV0nQfzufH+dbX/0ZSCGe5uCyl4c+1LRhJ1v8
-X-Gm-Gg: AYBFou398Kc7qrY/Pj2bhfed/Eu7j4p1HSkmpw8Jh8JzXDguLZVMWzOzYcH2DtfCDav
- 9WHJSutMgtYdH7wEw9EV5KEcX6YZfP212++Ip6md84nNB+kBTbgdJOmxYDsYScH8TzAyHnXwfNe
- 3xjuM27FUe0jr8D1Ezmabnq8dmYHT6uG/6BLhem+MI67dXapQJ7xCyINiq8OrF7OvD/THn8tCMU
- lR+QCU8s9pN6WkdNCc1nP9ZDzviTqZCC80xkQIJIIApeLzd7Sezjj/s2ELXGgm2dOmx+LZfvsVg
- cQM76jH5uNkF04y0Yb7vUii0l992HyY/l7OCrRJz21CHoFITmZTcTSmMDxw1Ogb7rGSg
-X-Received: by 2002:ae9:ee06:0:b0:936:e938:b07a with SMTP id
- af79cd13be357-9398032898bmr490662185a.8.1788533652366; 
- Fri, 04 Sep 2026 07:54:12 -0700 (PDT)
-X-Received: by 2002:ae9:ee06:0:b0:936:e938:b07a with SMTP id
- af79cd13be357-9398032898bmr490657185a.8.1788533651808; 
- Fri, 04 Sep 2026 07:54:11 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9397fba6955sm226213585a.38.2026.09.04.07.54.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 07:54:11 -0700 (PDT)
-Date: Fri, 4 Sep 2026 10:54:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 13/18] migration: Use output visitor in info command
-Message-ID: <aprbiKXh1WyHCWpN@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-14-farosas@suse.de>
- <apqzsh7pIkmKTYYg@x1.local> <87zexx6sn2.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x2VJI-0006oM-9X; Fri, 04 Sep 2026 10:54:32 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x2VJ8-0006KO-Mw; Fri, 04 Sep 2026 10:54:32 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwBna7OU25pqIRY6AQ--.42156S2; 
+ Fri, 04 Sep 2026 22:54:12 +0800 (CST)
+Received: from [192.168.2.11] (unknown [113.246.117.39])
+ by mail (Coremail) with SMTP id AQAAf8DwwHST25pqT++6AA--.64174S2;
+ Fri, 04 Sep 2026 22:54:12 +0800 (CST)
+Message-ID: <2a6ae5cc-9e6e-4d5b-93f7-c2ecc0faa25c@phytium.com.cn>
+Date: Fri, 4 Sep 2026 22:54:10 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zexx6sn2.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v5 06/28] hw/arm/smmuv3: Plumb transaction attributes into
+ config helpers
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162446.2806393-1-tangtao1634@phytium.com.cn>
+ <e4dd7318-e498-46eb-8af7-ce138c3f0caf@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <e4dd7318-e498-46eb-8af7-ce138c3f0caf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8DwwHST25pqT++6AA--.64174S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAIBWqZyskIbAAAsY
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXr4kCr1fZr1xJFW3XF47urg_yoWrGw1xpa
+ y8GFs0kr4kKFyS9rZ3Xrsrua45ua95Gr1UGry7Kas3Ar1Yvr1fZr12kw1Y9FWDWr15Jrs2
+ vry0gr43uF1DJrJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,31 +77,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 04, 2026 at 10:41:21AM -0300, Fabiano Rosas wrote:
-> >> +    case QTYPE_QBOOL: {
-> >> +        QBool *b = qobject_to(QBool, obj);
-> >> +        if (b) {
-> >
-> > Similarly, I'd drop "if" if it will always happen, making qbool_get_bool()
-> > assert itself by deref.
-> >
-> 
-> I'd rather not have such asserts in user-facing code. Even with testing,
-> it's hard to ensure this 'obj' will reach here in integrity.
+Hi Eric,
 
-Not a big deal here, but just for sake of pure discussion..
+On 2026/8/27 17:07, Eric Auger wrote:
+> Hi Tao,
+>
+> On 8/13/26 6:24 PM, Tao Tang wrote:
+>> Introduce helpers that derive MemTxAttrs and select an AddressSpace from
+>> SEC_SID, then pass SEC_SID through the Stream Table and Context Descriptor
+>> fetch paths. This makes reads of SMMU configuration structures use the
+>> corresponding Non-secure or Secure memory context.
+>>
+>> To support these helpers, include hw/arm/arm-security.h from smmu-common.h,
+>> making the Arm security-space definitions available to the common SMMU code.
+>>
+>> The accelerated path remains Non-secure-only and therefore passes
+>> SMMU_SEC_SID_NS explicitly.
+>> For now, the configuration cache lookup key remains based solely on the
+>> SMMUDevice pointer. It is extended with SEC_SID in a later commit. Other
+>> SEC_SID-sensitive memory accesses that still use the Non-secure address
+>> space are converted in follow-up commits.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmu-common.c         | 30 +++++++++++++++++++++----
+>>   hw/arm/smmuv3-accel.c        |  2 +-
+>>   hw/arm/smmuv3-internal.h     |  3 ++-
+>>   hw/arm/smmuv3.c              | 43 ++++++++++++++++++++++--------------
+>>   include/hw/arm/smmu-common.h | 10 +++++++++
+> Please use
+> [diff]
+>          orderFile = scripts/git.orderfile
+> in your .gitconfig to have headers output first in the patch.
 
-IMHO it's not the "user triggerable path" that we are avoiding assert()s,
-but user input that may affect the result of the assert().
 
-Here if we just checked obj type is QTYPE_QBOOL, I can't see anything that
-can make this if not true.
+I have configured scripts/git.orderfile for the v6 export.
 
-I still think assert() good guarding programming errors.  Say, if something
-we wanted to print here but skipped, I want it to crash hard, rather than
-silently ignored.
 
--- 
-Peter Xu
+>
+>>   5 files changed, 65 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+>> index 54a6a9f4d62..89e1e2826d4 100644
+>> --- a/hw/arm/smmu-common.c
+>> +++ b/hw/arm/smmu-common.c
+>> @@ -30,6 +30,27 @@
+>>   #include "hw/arm/smmu-common.h"
+>>   #include "smmu-internal.h"
+>>   
+>> +ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid)
+>> +{
+>> +    switch (sec_sid) {
+>> +    case SMMU_SEC_SID_S:
+>> +        return ARMSS_Secure;
+>> +    case SMMU_SEC_SID_NS:
+>> +        return ARMSS_NonSecure;
+>> +    case SMMU_SEC_SID_NUM:
+>> +        g_assert_not_reached();
+>> +    }
+>> +    g_assert_not_reached();
+>> +}
+>> +
+>> +MemTxAttrs smmu_get_txattrs(SMMUSecSID sec_sid)
+>> +{
+>> +    return (MemTxAttrs) {
+>> +        .secure = smmu_sec_sid_is_secure(sec_sid) ? 1 : 0,
+>> +        .space = smmu_get_security_space(sec_sid),
+>> +    };
+>> +}
+>> +
+>>   AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
+>>   {
+>>       switch (sec_sid) {
+>> @@ -588,6 +609,7 @@ error:
+>>   /**
+>>    * smmu_ptw_64_s2 - VMSAv8-64 Walk of the page tables for a given ipa
+>>    * for stage-2.
+>> + * @bs: smmu state which includes TLB instance
+>>    * @cfg: translation config
+>>    * @ipa: ipa to translate
+>>    * @perm: access type
+>> @@ -599,7 +621,7 @@ error:
+>>    * Upon success, @tlbe is filled with translated_addr and entry
+>>    * permission rights.
+>>    */
+>> -static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+>> +static int smmu_ptw_64_s2(SMMUState *bs, SMMUTransCfg *cfg,
+>>                             dma_addr_t ipa, IOMMUAccessFlags perm,
+>>                             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
+>>   {
+>> @@ -636,7 +658,6 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+>>           uint64_t pte, gpa;
+>>           dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
+>>           uint8_t s2ap;
+>> -
+> unwanted change
+
+
+I'll drop this line.
+
+>>           if (get_pte(baseaddr, offset, &pte, info)) {
+>>                   goto error;
+>>           }
+>> @@ -690,6 +711,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+>>               goto error_ipa;
+>>           }
+>>   
+>> +        tlbe->entry.target_as = &bs->memory_as;
+> I don't understand why we do that change in this patch (also there is no
+> sumetrical change in smmu_ptw_64_s1)? It does not seem to relate to the
+> commit title/desc
+
+Agreed. The S2 bs/target_as changes are not part of the 
+configuration-fetch plumbing and should not be in this patch.
+
+I'll move this change to the later PTW patch, where get_pte() is changed 
+to take an AddressSpace and MemTxAttrs.
+
+Thanks,
+Tao
+
+
 
 
