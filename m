@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F65C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AD7C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2U4G-0004eI-Rp; Fri, 04 Sep 2026 09:34:56 -0400
+	id 1x2UAm-00064H-Ib; Fri, 04 Sep 2026 09:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2U4F-0004de-2L
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:34:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2U4C-0002Sg-LQ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:34:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788528890;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2UAk-00063w-J5
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:41:38 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x2UAi-0003pq-30
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:41:38 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DD21C1F79E;
+ Fri,  4 Sep 2026 13:41:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1788529289; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=zpNZ6lGqi2oWOrilbzigP8ELdcE+UQn7z/jXdGjezoc=;
- b=AmF4VZf3Aov9f7f0hryBAfcZEGbiBUf9TvvJ/1nRGFjKPbuk2ajDAOsEPcZNLmUAstIFal
- YVZ8Ouzx5d+P6GKRSwR2FYNt3abr6yJCP6oW96sC7TKT8pkgJfztcca+aavwNdaAHbOfcg
- OHsMAZ1KqTB89dEiPpstkgUGXtv9itE=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-kakPz378NK2q1ygvqSJPDw-1; Fri, 04 Sep 2026 09:34:47 -0400
-X-MC-Unique: kakPz378NK2q1ygvqSJPDw-1
-X-Mimecast-MFC-AGG-ID: kakPz378NK2q1ygvqSJPDw_1788528887
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c0e702df8so31527731cf.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788528887; x=1789133687; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zpNZ6lGqi2oWOrilbzigP8ELdcE+UQn7z/jXdGjezoc=;
- b=padELBn2ebNIzlohPz7nhcAZPhMPJPLUTU3sjEWvRb8G9YIzmDOF3UWUaEbLLefSS0
- 6c1pEr0eo4glvobGmGT6tiwZZ9f2Bfmal4mbbaC91F2gqMOMMxej3fd4xwxrH12NIjSx
- Pr8GWK9/Ai0/mGPbMgpaL6fjGRH4YbcnVHFQlzuET1cYPEk4KoX29wDRK5sFBUKRdaFo
- w3AHCu0Gp4zdXEVl/8cGo8PeLxOm+7oiccc+mVtiaGwZ9ZsDwyDPCPzrP3eXqYwaL/fd
- KEpZ2uW8rXw62VnndurPhB1tGGyrVMoaZDoO3Kq/h3cnMdubCpSnT63XHctLhkeE6p9q
- fL1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788528887; x=1789133687;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=zpNZ6lGqi2oWOrilbzigP8ELdcE+UQn7z/jXdGjezoc=;
- b=OwsaMuvcEp3+9VcKSmhwKL4k2p3lx8tP49PWSJmEyKumTkcHs0+7oYj1faQevF49tr
- jkajZcAKsHjWUuj4NU3CI+seXJlbmzKv94WOh/vVU2cqC9/AlI0gK1cVbjaXgWUw4NUX
- h9az6JjQKKpHgIwV0sM2bevTLO+hUqHHFNubG2WXu/pNdWuBoTWt9+1tP+gtmcc4h1El
- WQ0eImc/1RXxHQp/6Vejs7FbZuGziPzHQPs0HPTJcwnSCe/8kE578Y1jaVQbPCXjnWDb
- zEvotQ3fUmQH6xbmkcV3Oxm3SFy5S7Z5kn8CEtzevpNDJzxZ2zwfbRXSszg9etGHwUqA
- KAVw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxXMvQOcp9B9RPSaSoNxbVVrzeWPwE9C5ZFdNDdqAkD144PySzbDsg22p8zEc81MIM4Tb8unbXzIzT0@nongnu.org
-X-Gm-Message-State: AFuF++lmV+k9mpcrCsEf+u82pAnG1eWSxFG75y7d6x9KqWF9chho1aTs
- 9GIxXFycUa7YzhmkqrOFeMdbfkLsTFJJGIFZI6swMXNxsXZLcS5hr1nJv9nkLITrDyEUkXuX6Mw
- FdMHn0dc4mHCXs2zwgGJcsvEnYbl/C9Sf+gBUTakkKax6jS2xiiJ2T5E6
-X-Gm-Gg: AYBFou2vgFBIj6qo95lgsdmtCF0bqmCpCmBfcGIZFAPnk4rqtILQJgo5HrYIg5vG4RG
- di74N5HM0aG68uQhA+ri4FFctSGNf8byw3IcyC1vvsm3TGaB9sMRupsRnLeY+4YBkeRGSU17rbT
- c2xAUESkDhd54BPsErA7XsLe3Khm/XYwpD3DWrgYmSJBvn98afHdOzS2lKS1fZ1gLJCS3LeppQl
- LSO4qbDY4K5JyJnVJ+rByMiNYuTkAt4C9fyV1QkqUTUJpN+TuvOMzBIe0JXx6H1A0hMto7Ldo0u
- YG0USmRprlpWmmc+ORaHS723jOs+DoPc6a1QtRbEDMX2Xc6p8zgBy4RBBnrRmPRvvX8MPVR7
-X-Received: by 2002:a05:6214:f07:b0:90e:9408:b6b8 with SMTP id
- 6a1803df08f44-9103ef9f1ffmr72831756d6.14.1788528886994; 
- Fri, 04 Sep 2026 06:34:46 -0700 (PDT)
-X-Received: by 2002:a05:6214:f07:b0:90e:9408:b6b8 with SMTP id
- 6a1803df08f44-9103ef9f1ffmr72830856d6.14.1788528886285; 
- Fri, 04 Sep 2026 06:34:46 -0700 (PDT)
-Received: from localhost ([2605:8d80:6d61:1b95:5d7e:c15d:7429:70fd])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-910406af144sm20456376d6.40.2026.09.04.06.34.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 06:34:45 -0700 (PDT)
-Date: Fri, 4 Sep 2026 09:34:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: BillXiang <xiangwencheng@lanxincomputing.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
- pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: Re: [PATCH v2] virtio: Add aligned ld/st accessors for vring
-Message-ID: <aprI8xQIDCRTJOV1@x1.local>
-References: <20260821100856.1794011-1-xiangwencheng@lanxincomputing.com>
- <CAFEAcA_kLpaz0UQi3Q315kLVqvDtxKh77kU2meN9G1_evfKBeQ@mail.gmail.com>
- <bad5c8b3-668f-4893-974f-9dbca8dc6893@linaro.org>
- <02da9676-febf-4389-b09b-5e5d41c1084e@lanxincomputing.com>
- <aoxiBB2Wn8NiL5s6@x1.local>
- <5a2a8e0e-2fa6-4905-9752-b2ed0ab3f0ac@lanxincomputing.com>
+ bh=hbLCHgGxmw96/GCDg75qnAJr1+Ywjrtye1H0BkhHhHo=;
+ b=ZELbbRTIEz8TnVbds9SHyyAoY7Nd7IAh244KKuE61YM5Tz9tcH+fCtP9L0Rgt19kk8WVzv
+ f9+Q795KGLuEnYugEmpshve0eZ4X5mfE42ZabKRj7vc0YxfmqrT5/+PnTB2h2afYjzAFmM
+ K9epDi1JkWeMvc7TWJ+2Ht30WO1rw8o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1788529289;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hbLCHgGxmw96/GCDg75qnAJr1+Ywjrtye1H0BkhHhHo=;
+ b=9H2RowSr7EgbTbLB5TMnXFCpba9RDh4dRBfJydfVxWlSjYQ/NK1yQr4EohIbGSm0PFiBs7
+ BD6h/HNcoNfjcEDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1788529284; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hbLCHgGxmw96/GCDg75qnAJr1+Ywjrtye1H0BkhHhHo=;
+ b=cgN1hnViwm6lC0PILqe3pRbiN1TictbxoaRxWLwCZwhmxirDZ/m/svzDysQEvicMgfrm/S
+ /JbhSraeja8cCrNHhrZYTeUUofMKTdRNpNbBK5Rnxp8085HnT9ZA47Fkq79UprnpeXFGhT
+ /W0gpKjrzv2+OVsVriidIL0ueG6VDEU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1788529284;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hbLCHgGxmw96/GCDg75qnAJr1+Ywjrtye1H0BkhHhHo=;
+ b=L9JPIWL9OzQmbNTEV0PFJQnaSnssJaraMhLeFwD8g579aacKheVT2yYa5xoshZyWddAa+P
+ s/jWKQXtxzzoDUAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BE46F13678;
+ Fri,  4 Sep 2026 13:41:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id lzyKI4PKmmo1GAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 04 Sep 2026 13:41:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 13/18] migration: Use output visitor in info command
+In-Reply-To: <apqzsh7pIkmKTYYg@x1.local>
+References: <20260902221547.1812481-1-farosas@suse.de>
+ <20260902221547.1812481-14-farosas@suse.de> <apqzsh7pIkmKTYYg@x1.local>
+Date: Fri, 04 Sep 2026 10:41:21 -0300
+Message-ID: <87zexx6sn2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5a2a8e0e-2fa6-4905-9752-b2ed0ab3f0ac@lanxincomputing.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; MISSING_XM_UA(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,192 +115,370 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 01, 2026 at 10:44:13AM +0800, BillXiang wrote:
-> On 8/24/2026 11:23 PM, Peter Xu wrote:
-> > On Mon, Aug 24, 2026 at 12:19:15PM +0800, BillXiang wrote:
-> >> Hi Richard, I've read your code in accel/tcg/ldst_atomicity.c.inc. Do
-> >> you think it would be better to make the load/store_atomic* public?
-> > 
-> > They do not fit by default, as we need to still process unaligned cases?
-> 
-> You mentioned the use of guest CPU context in [1]. However, what I meant 
-> by load/store_atomic* is code like the following:
-> 
-> static inline uint16_t load_atomic2(void *pv)
-> {
->      uint16_t *p = __builtin_assume_aligned(pv, 2);
->      return qatomic_read(p);
-> }
-> 
-> static inline void store_atomic2(void *pv, uint16_t val)
-> {
->      uint16_t *p = __builtin_assume_aligned(pv, 2);
->      qatomic_set(p, val);
-> }
-> 
-> I consider these to be generic atomic load/store primitives.
+Peter Xu <peterx@redhat.com> writes:
 
-__builtin_assume_aligned() tells the compiler the address is aligned.  What
-if it is not?
+> On Wed, Sep 02, 2026 at 07:15:41PM -0300, Fabiano Rosas wrote:
+>> The hmp_info_migrate_parameters function currently open-codes the
+>> mon_printf calls for each migration parameter. As with the set command
+>> in the last patch, this should not be necessary as the QAPI
+>> infrastructure already has generated code that takes type and struct
+>> member names into account, including converting _ from C into the '-'
+>> character as part of parameter names strings.
+>> 
+>> The current code is also quite painful to rebase if a series has been
+>> carried for a long time while parameters have been added in master.
+>> 
+>> Replace all of this with a conversion from MigrationParameters to
+>> QDict using an output visitor and a loop over the QDict that prints
+>> per-QAPI-type formatted strings.
+>> 
+>> Modelled after block/qapi.c:dump_qobject, but with some changes to
+>> keep the migration command output formatting.
+>> 
+>> Note that this was not a for-free improvement, the HMP command format
+>> output was changed incompatibly in a previous patch. It doesn't output
+>> units anymore.
+>
+> IIUC both qlist and qdict are only used in BitmapMigrationNodeAlias only.
+> It would be nice to attach an example of HMP dump before/after the change
+> of these two patches, either in previous patch or here (assuming the layout
+> changed once).  In case HMP has some suggestion in general, I suggest copy
+> Dave when repost in case he has something to say.
+>
 
-> 
-> > 
-> > I wished we can use qemu_mem_move() directly that just got introduced.. but
-> > it does slightly more than wanted.  Maybe something like this?  Below diff
-> > dropped ldsw_he_p() alone the way as it's never used.
-> > 
-> > Thanks,
-> > 
-> > ===8<===
-> > 
-> > diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-> > index 387d65c0b0..04a0f63612 100644
-> > --- a/include/qemu/bswap.h
-> > +++ b/include/qemu/bswap.h
-> > @@ -1,6 +1,7 @@
-> >   #ifndef BSWAP_H
-> >   #define BSWAP_H
-> >   
-> > +#include "qemu/atomic.h"
-> >   #include "qemu/target-info.h"
-> >   #include "exec/memop.h"
-> >   
-> > @@ -238,62 +239,52 @@ static inline void stb_p(void *ptr, uint8_t v)
-> >       *(uint8_t *)ptr = v;
-> >   }
-> >   
-> > -/*
-> > - * Any compiler worth its salt will turn these memcpy into native unaligned
-> > - * operations.  Thus we don't need to play games with packed attributes, or
-> > - * inline byte-by-byte stores.
-> > - * Some compilation environments (eg some fortify-source implementations)
-> > - * may intercept memcpy() in a way that defeats the compiler optimization,
-> > - * though, so we use __builtin_memcpy() to give ourselves the best chance
-> > - * of good performance.
-> > - */
-> > -
-> > -static inline int lduw_he_p(const void *ptr)
-> > -{
-> > -    uint16_t r;
-> > -    __builtin_memcpy(&r, ptr, sizeof(r));
-> > -    return r;
-> > -}
-> > -
-> > -static inline int ldsw_he_p(const void *ptr)
-> > -{
-> > -    int16_t r;
-> > -    __builtin_memcpy(&r, ptr, sizeof(r));
-> > -    return r;
-> > -}
-> > +#define  LD_HE_P(type, size)                                \
-> > +    static inline type                                      \
-> > +    glue(glue(ld, size), _he_p)(const void *ptr)            \
-> > +    {                                                       \
-> > +        type v;                                             \
-> > +        if (unlikely((uintptr_t)ptr & (sizeof(v) - 1))) {   \
-> > +            __builtin_memcpy(&v, ptr, sizeof(v));           \
-> > +        } else {                                            \
-> > +            v = qatomic_read((type *)ptr);                  \
-> > +        }                                                   \
-> > +        return v;                                           \
-> > +    }
-> >   
-> > -static inline void stw_he_p(void *ptr, uint16_t v)
-> > -{
-> > -    __builtin_memcpy(ptr, &v, sizeof(v));
-> > -}
-> > +#define  ST_HE_P(type, size)                                \
-> > +    static inline void                                      \
-> > +    glue(glue(st, size), _he_p)(void *ptr, type v)          \
-> > +    {                                                       \
-> > +        if (unlikely((uintptr_t)ptr & (sizeof(v) - 1))) {   \
-> > +            __builtin_memcpy(ptr, &v, sizeof(v));           \
-> > +        } else {                                            \
-> > +            qatomic_set((type *)ptr, v);                    \
-> > +        }                                                   \
-> > +    }
-> >   
-> > -static inline void st24_he_p(void *ptr, uint32_t v)
-> > -{
-> > -    __builtin_memcpy(ptr, &v, 3);
-> > -}
-> > +LD_HE_P(uint16_t, 16)
-> > +LD_HE_P(uint32_t, 32)
-> > +LD_HE_P(uint64_t, 64)
-> > +ST_HE_P(uint16_t, 16)
-> > +ST_HE_P(uint32_t, 32)
-> > +ST_HE_P(uint64_t, 64)
-> >   
-> > -static inline int ldl_he_p(const void *ptr)
-> > -{
-> > -    int32_t r;
-> > -    __builtin_memcpy(&r, ptr, sizeof(r));
-> > -    return r;
-> > -}
-> > +#undef LD_HE_P
-> > +#undef ST_HE_P
-> > +#undef ADDR_ALIGNED
-> >   
-> > -static inline void stl_he_p(void *ptr, uint32_t v)
-> > -{
-> > -    __builtin_memcpy(ptr, &v, sizeof(v));
-> > -}
-> > +#define  lduw_he_p  ld16_he_p
-> > +#define  ldl_he_p  ld32_he_p
-> > +#define  ldq_he_p  ld64_he_p
-> >   
-> > -static inline uint64_t ldq_he_p(const void *ptr)
-> > -{
-> > -    uint64_t r;
-> > -    __builtin_memcpy(&r, ptr, sizeof(r));
-> > -    return r;
-> > -}
-> > +#define  stw_he_p  st16_he_p
-> > +#define  stl_he_p  st32_he_p
-> > +#define  stq_he_p  st64_he_p
-> >   
-> > -static inline void stq_he_p(void *ptr, uint64_t v)
-> > +static inline void st24_he_p(void *ptr, uint32_t v)
-> >   {
-> > -    __builtin_memcpy(ptr, &v, sizeof(v));
-> > +    __builtin_memcpy(ptr, &v, 3);
-> >   }
-> >   
-> >   static inline int lduw_le_p(const void *ptr)
-> 
-> IMO, your change serves as a good optimization for the original 
-> load/store by taking advantage of alignment. However, the real issue I'm 
-> trying to address is the atomicity of these operations—for use cases 
-> like avail_idx in virtio, and this should not limited to virtio alone. I 
-> still believe we should provide explicit atomic load/store interfaces 
-> for callers, rather than relying solely on aligned load/store. And I 
-> admit it was my mistake to use the aligned versions here in the first 
-> place. I'll send another version later and look forward to more feedback.
+Will do.
 
-Explicit atomic load/store maybe still make sense somewhere as API, but I
-think Peter Maydell also raised that this exact failure may not be the only
-one.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/migration-hmp-cmds.c | 243 ++++++++++++++-------------------
+>>  1 file changed, 100 insertions(+), 143 deletions(-)
+>> 
+>> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>> index 089c6d4ff46..dff69650a0c 100644
+>> --- a/migration/migration-hmp-cmds.c
+>> +++ b/migration/migration-hmp-cmds.c
+>> @@ -25,7 +25,12 @@
+>>  #include "qapi/qapi-commands-migration.h"
+>>  #include "qapi/qapi-visit-migration.h"
+>>  #include "qapi/qobject-input-visitor.h"
+>> +#include "qapi/qobject-output-visitor.h"
+>> +#include "qobject/qbool.h"
+>>  #include "qobject/qdict.h"
+>> +#include "qobject/qjson.h"
+>> +#include "qobject/qlist.h"
+>> +#include "qobject/qnum.h"
+>>  #include "qobject/qstring.h"
+>>  #include "qapi/string-input-visitor.h"
+>>  #include "qapi/string-output-visitor.h"
+>> @@ -316,170 +321,122 @@ void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict)
+>>      qapi_free_MigrationCapabilityStatusList(caps);
+>>  }
+>>  
+>> -static void monitor_print_cpr_exec_command(Monitor *mon, strList *args)
+>> +static QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp)
+>>  {
+>> -    monitor_printf(mon, "%s:",
+>> -        MigrationParameter_str(MIGRATION_PARAMETER_CPR_EXEC_COMMAND));
+>> +    QObject *obj = NULL;
+>> +    Visitor *v = qobject_output_visitor_new(&obj);
+>>  
+>> -    while (args) {
+>> -        monitor_printf(mon, " %s", args->value);
+>> -        args = args->next;
+>> +    if (visit_type_MigrationParameters(v, NULL, &p, errp)) {
+>> +        visit_complete(v, &obj);
+>>      }
+>> -    monitor_printf(mon, "\n");
+>> +    visit_free(v);
+>> +    return qobject_to(QDict, obj);
+>>  }
+>
+> This exact function also exists in options.c (with the same name and
+> impl).  Can reuse.
+>
 
-IMHO we could directly switch to aligned access automatically when it can,
-the only concern is we add one more test instruction in this path, but I
-expect it always hit the aligned case.  Also I expect callers of these host
-endian APIs to not loop over a range of addr.  So irrelevant of whether
-above change would make sense, we want to study more on the impact of the
-extra if on the callers.  The hope is it is minimum impact and in case
-there're corner cases we can switch to other API even if existed.
+Of course! I just forgot to do it. Thanks.
 
-Thanks,
+>>  
+>> -void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>> +static void hmp_migrate_print_qobject(Monitor *mon, const char *label,
+>> +                                      QObject *obj)
+>>  {
+>> -    MigrationParameters *params;
+>> -    MigrationState *s = migrate_get_current();
+>> +    const char *sep;
+>>  
+>> -    params = qmp_query_migrate_parameters(NULL);
+>> +    if (!obj) {
+>> +        return;
+>> +    }
+>>  
+>> -    if (params) {
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_INITIAL),
+>> -            params->announce_initial);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_MAX),
+>> -            params->announce_max);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_ROUNDS),
+>> -            params->announce_rounds);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_ANNOUNCE_STEP),
+>> -            params->announce_step);
+>> -        assert(params->has_throttle_trigger_threshold);
+>> -        monitor_printf(mon, "%s: %u\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_THROTTLE_TRIGGER_THRESHOLD),
+>> -            params->throttle_trigger_threshold);
+>> -        assert(params->has_cpu_throttle_initial);
+>> -        monitor_printf(mon, "%s: %u\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_INITIAL),
+>> -            params->cpu_throttle_initial);
+>> -        assert(params->has_cpu_throttle_increment);
+>> -        monitor_printf(mon, "%s: %u\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_INCREMENT),
+>> -            params->cpu_throttle_increment);
+>> -        assert(params->has_cpu_throttle_tailslow);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_TAILSLOW),
+>> -            params->cpu_throttle_tailslow ? "on" : "off");
+>> -        assert(params->has_max_cpu_throttle);
+>> -        monitor_printf(mon, "%s: %u\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
+>> -            params->max_cpu_throttle);
+>> -        assert(params->tls_creds);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_TLS_CREDS),
+>> -                       params->tls_creds->u.s);
+>> -        assert(params->tls_hostname);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
+>> -                       params->tls_hostname->u.s);
+>> -        assert(params->tls_authz);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+>> -                       params->tls_authz->u.s);
+>> -        assert(params->has_max_bandwidth);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
+>> -            params->max_bandwidth);
+>> -        assert(params->has_avail_switchover_bandwidth);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_AVAIL_SWITCHOVER_BANDWIDTH),
+>> -            params->avail_switchover_bandwidth);
+>> -        assert(params->has_max_postcopy_bandwidth);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH),
+>> -            params->max_postcopy_bandwidth);
+>> -        assert(params->has_downtime_limit);
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_DOWNTIME_LIMIT),
+>> -            params->downtime_limit);
+>> -        assert(params->has_x_checkpoint_delay);
+>> -        monitor_printf(mon, "%s: %u\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_X_CHECKPOINT_DELAY),
+>> -            params->x_checkpoint_delay);
+>> -        monitor_printf(mon, "%s: %u\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_CHANNELS),
+>> -            params->multifd_channels);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_COMPRESSION),
+>> -            MultiFDCompression_str(params->multifd_compression));
+>> -        assert(params->has_zero_page_detection);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_ZERO_PAGE_DETECTION),
+>> -            qapi_enum_lookup(&ZeroPageDetection_lookup,
+>> -                params->zero_page_detection));
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_XBZRLE_CACHE_SIZE),
+>> -            params->xbzrle_cache_size);
+>> +    /*
+>> +     * Put a space after labels
+>> +     * foo: bar
+>> +     *     ^
+>> +     */
+>> +    if (label && label[0] && label[strlen(label) - 1] == ':') {
+>> +        sep = " ";
+>> +    } else {
+>> +        sep = "";
+>> +    }
+>>  
+>> -        if (s->has_block_bitmap_mapping) {
+>> -            BitmapMigrationNodeAliasList *nal;
+>> -            BitmapMigrationNodeAlias *na;
+>> -            BitmapMigrationBitmapAliasList *bal;
+>> -            BitmapMigrationBitmapAlias *ba;
+>> -            BitmapMigrationBitmapAliasTransform *bat;
+>> +    switch (qobject_type(obj)) {
+>> +    case QTYPE_NONE:
+>> +        g_assert_not_reached();
+>> +    case QTYPE_QNULL:
+>> +        break;
+>
+> Shall we assert too if we don't expect it?
+>
 
-> 
-> Thanks,
-> 
-> --
-> BillXiang
-> 
-> [1] https://lore.kernel.org/qemu-devel/apW0SkNxWPCyvVV6@x1.local/
-> 
+Could be, I'll check.
 
--- 
-Peter Xu
+>> +    case QTYPE_QNUM: {
+>> +        int64_t i64;
+>>  
+>> -            monitor_printf(mon, "%s:",
+>> -                           MigrationParameter_str(
+>> -                               MIGRATION_PARAMETER_BLOCK_BITMAP_MAPPING));
+>> +        if (qnum_get_try_int(qobject_to(QNum, obj), &i64)) {
+>> +            monitor_printf(mon, "%s%s%" PRId64, label, sep, i64);
+>
+> Should we use qnum_to_string() like what dump_qobject() does?
+>
 
+I missed that helper, let me see.
+
+> Logically any size/u64 parameter (which may not be a normal use case..) can
+> be set larger than INT64_MAX, so qnum_get_try_int() may return false? Here
+> skipping to print anything is benign if it only happens with a malicious
+> monitor client, but I think we should try to capture all cases.
+>
+
+Yeah, makes sense.
+
+>> +        }
+>> +        break;
+>> +    }
+>> +    case QTYPE_QSTRING: {
+>> +        QString *str = qobject_to(QString, obj);
+>>  
+>> -            for (nal = params->block_bitmap_mapping; nal; nal = nal->next)
+>> -            {
+>> -                na = nal->value;
+>> -                monitor_printf(mon, " bitmaps:");
+>> -                for (bal = na->bitmaps; bal; bal = bal->next) {
+>> -                    ba = bal->value;
+>> -                    bat = ba->transform;
+>> +        if (str) {
+>
+> Any chance str==NULL here?
+>
+
+Yes. But I get your point, see below.
+
+>> +            monitor_printf(mon, "%s%s%s", label, sep, qstring_get_str(str));
+>> +        }
+>> +        break;
+>> +    }
+>> +    case QTYPE_QDICT: {
+>> +        QDict *d = qobject_to(QDict, obj);
+>> +        const QDictEntry *e;
+>> +        int i = 0;
+>>  
+>> -                    monitor_printf(mon, " name: %s", ba->name);
+>> -                    if (bat && bat->has_persistent) {
+>> -                        if (bat->persistent) {
+>> -                            monitor_printf(mon, " persistent: on");
+>> -                        } else {
+>> -                            monitor_printf(mon, " persistent: off");
+>> -                        }
+>> -                    }
+>> -                    monitor_printf(mon, " alias: %s", ba->alias);
+>> +        if (d) {
+>> +            for (e = qdict_first(d); e; e = qdict_next(d, e), i++) {
+>> +                g_autofree char *l = g_strdup_printf("%s:", qdict_entry_key(e));
+>> +                if (i) {
+>> +                    monitor_printf(mon, " ");
+>>                  }
+>> -                monitor_printf(mon, " node-name: %s alias: %s",
+>> -                               na->node_name, na->alias);
+>> +                hmp_migrate_print_qobject(mon, l, qdict_entry_value(e));
+>>              }
+>> -
+>> -            monitor_printf(mon, "\n");
+>>          }
+>> +        break;
+>> +    }
+>> +    case QTYPE_QLIST: {
+>> +        QList *l = qobject_to(QList, obj);
+>> +        const QListEntry *e;
+>>  
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -        MigrationParameter_str(MIGRATION_PARAMETER_X_VCPU_DIRTY_LIMIT_PERIOD),
+>> -        params->x_vcpu_dirty_limit_period);
+>> +        if (l) {
+>> +            monitor_printf(mon, "%s", label);
+>>  
+>> -        monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_VCPU_DIRTY_LIMIT),
+>> -            params->vcpu_dirty_limit);
+>> +            for (e = qlist_first(l); e; e = qlist_next(e)) {
+>> +                /*
+>> +                 * In the first iteration, this is the space after the
+>> +                 * colon, otherwise it's the space between list
+>> +                 * elements.
+>> +                 */
+>> +                monitor_printf(mon, " ");
+>> +                hmp_migrate_print_qobject(mon, "", e->value);
+>> +            }
+>> +        }
+>> +        break;
+>> +    }
+>> +    case QTYPE_QBOOL: {
+>> +        QBool *b = qobject_to(QBool, obj);
+>> +        if (b) {
+>
+> Similarly, I'd drop "if" if it will always happen, making qbool_get_bool()
+> assert itself by deref.
+>
+
+I'd rather not have such asserts in user-facing code. Even with testing,
+it's hard to ensure this 'obj' will reach here in integrity.
+
+>> +            monitor_printf(mon, "%s%s%s", label, sep,
+>> +                           qbool_get_bool(b) ? "on" : "off");
+>> +        }
+>> +        break;
+>> +    }
+>> +    default:
+>> +        g_assert_not_reached();
+>> +        break;
+>> +    }
+>> +}
+>>  
+>> -        assert(params->has_mode);
+>> -        monitor_printf(mon, "%s: %s\n",
+>> -            MigrationParameter_str(MIGRATION_PARAMETER_MODE),
+>> -            qapi_enum_lookup(&MigMode_lookup, params->mode));
+>> +void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>> +{
+>> +    MigrationParameters *params = qmp_query_migrate_parameters(NULL);
+>> +    g_autoptr(QDict) d;
+>> +    const QDictEntry *e;
+>>  
+>> -        if (params->has_direct_io) {
+>> -            monitor_printf(mon, "%s: %s\n",
+>> -                           MigrationParameter_str(
+>> -                               MIGRATION_PARAMETER_DIRECT_IO),
+>> -                           params->direct_io ? "on" : "off");
+>> -        }
+>> +    assert(params);
+>>  
+>> -        if (params->has_x_rdma_chunk_size) {
+>> -            monitor_printf(mon, "%s: %" PRIu64 "\n",
+>> -                           MigrationParameter_str(
+>> -                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
+>> -                           params->x_rdma_chunk_size);
+>> -        }
+>> +    d = migrate_params_to_dict(params, NULL);
+>> +    for (e = qdict_first(d); e; e = qdict_next(d, e)) {
+>> +        g_autofree char *label = g_strdup_printf("%s:", qdict_entry_key(e));
+>>  
+>> -        assert(params->has_cpr_exec_command);
+>> -        monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
+>> +        hmp_migrate_print_qobject(mon, label, qdict_entry_value(e));
+>> +        monitor_printf(mon, "\n");
+>>      }
+>>  
+>>      qapi_free_MigrationParameters(params);
+>> -- 
+>> 2.53.0
+>> 
 
