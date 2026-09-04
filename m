@@ -4,106 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219DFC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 06:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7161AC79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 06:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2NND-0007uC-Qr; Fri, 04 Sep 2026 02:26:03 -0400
+	id 1x2NOL-0008Fy-55; Fri, 04 Sep 2026 02:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x2NNC-0007u3-MT
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:26:02 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ (Exim 4.90_1) (envelope-from
+ <3u2SaagoKCko45mzxqAvt6s00sxq.o0y2qy6-pq7qxz0zsz6.03s@flex--stanleyjhu.bounces.google.com>)
+ id 1x2NOK-0008FK-65
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:27:12 -0400
+Received: from mail-pj1-x1046.google.com ([2607:f8b0:4864:20::1046])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x2NNA-0005BL-R1
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:26:02 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-6b132a5009eso502047eaf.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 23:26:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788503159; cv=none;
- d=google.com; s=arc-20260327;
- b=Z99kEX2KiZKQImMMXkXhcTx9aZPhtHjlTHLcxrvAdHdBHsNDJonspdaf8BImLOrnNa
- XU6KB8JzqCPDiB7NCiRriYt5ZkQjlsev4WBkO1auFqwjzM1TjZlBo/ZCkpUhprv4n31V
- hvlKUj1Bx+SJ1uodlgIfh2oooE57fn3QV+R6PDkD2Nd2x2g8/c4rYJ/ML330inu/c/9U
- rN+fL5THDeQ+Yz+ZK8Q3FmdSTi53zDz6mj7O0RryR5c8S1hehkO24ue6RXnEoZrBE+nx
- V0FxlJzHjqnMPi4degGyQg2iOV/7Moba8zNPa1Ld+ytvcSZuKucuXY6H5lCr6Q9P79ow
- whTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+NlTpS7s/PNLMQzu/ey6IpvpuXko14fxulDuFRhE5rA=;
- fh=6kJ3CohSxQ+7EgnARanNFMAgatAnP0uu5SOkx3O7QGs=;
- b=HX1/joYGfc13805hLCiM0pyOnrpb7ENIfdROCO/WEkEOx3DJnGi8+ZUxsWWbdZ6V5V
- uusMU6doT8cN9Orbzt+lY6y6/ETEVzZ9UPudi8l7BfvYM1eqB+g3Bg98qgzx6v2K8w1+
- yzR3HXx2LpIFWVEMwJ1L8V7+pghi/DhW2hOy0SJxLlCss1qn86knE4LplItf7Vtgs1wx
- 8bVie/Urwij/hnvOO3gKSWOlDhlCDdRnMqLILmhrR3CCS8SVTrJM0yWk9KJYwU14p9Ka
- dZs9QliRn/4RI612H+meCu20AeQbMqiSIzbRjGYIKRBl5TX/nVogkyrdMYQ6XgqQrgk0
- paEA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from
+ <3u2SaagoKCko45mzxqAvt6s00sxq.o0y2qy6-pq7qxz0zsz6.03s@flex--stanleyjhu.bounces.google.com>)
+ id 1x2NOI-0005FN-8t
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 02:27:11 -0400
+Received: by mail-pj1-x1046.google.com with SMTP id
+ 98e67ed59e1d1-399311947f6so1137004a91.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 23:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788503159; x=1789107959; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+NlTpS7s/PNLMQzu/ey6IpvpuXko14fxulDuFRhE5rA=;
- b=bV05qYhN0bNNUpZVqnW2EFMDajoU72Z6UdNUctdUDA5TxDM+oo+007lSfaD7QP7dRr
- WFYFCSABy1MI4CJKzayL7aTEU/JkiBc1QqA61gpqnsk6scH5nWd6oC/6jc2+qxSUWAue
- lxRBsQuTWGcM05LuPZ9+J5AarzupkprVywP310qu/SuvAys/7pQeRw+PIv8Jd4qjHIAS
- z+OUkmEBRQNfQ4LRzxqYef7UFRk5Ri/yNDzJD8lPwhCV3TUNO5It7j7VeQB4AdDW9O9F
- UyRI8aEBKLoyHLUpY2VNk0zZAgubYoVG4ZOIgIN7GX+iehZbgsLo0/odFnq36izkf+Ta
- 3FCA==
+ d=google.com; s=20251104; t=1788503228; x=1789108028; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZCAgkqfVivZbmEgVKbH7blMKkj6x3PGne6FqgaPuv6E=;
+ b=WMqQ8iF82Y7xfnoplTAvbQZ6Qd2E4ZgwZvsoC7qqPDY5H5ULV2Nntrx0AzkXddcwCS
+ QENWH2hho7oQpsE+ECEEdAX4BUxz8t39CfDnnGHv3kkgTSN4kVs3yXDOUdO9Bh6mG1tV
+ RgrsUo8Vxe7HB4/2AHNT0eJDvUf0XC3SoVkBIUhJlUnx/aTDPxka7nDvRGa8k6cD+FLT
+ cMZe73zm35CMm+HIdzNAPCt6V7++S7900nBX5yKVFM9hv5hM0xoVSULbQ0Ja0QyPx60z
+ IrSlGGHlAy+ccfYMxcHq/Dwg9IZ5XwG4wYVgwMPNEy4zu9Z1akV9gf0V9wrS6JSSa2QY
+ TWIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788503159; x=1789107959;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1788503228; x=1789108028;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=+NlTpS7s/PNLMQzu/ey6IpvpuXko14fxulDuFRhE5rA=;
- b=gPXLsufvVonbuRK+cdlJg/96AWvGCxtfgu+woWANQei9JCSUJMN803c6hzZ3ID6w78
- ApRTX6OlKlZbstbi40/yIc0vzo+sGmHIJKWqH5xG7XSpEBXILBK9w/2qpq22tYq2bXPq
- iq5Mm929dM4zFAekJpZwBdn36xBKliyAMXV5HD7EXjm7dJ2v3uG5DS2PDftEk5a7hjKl
- Vne9Uy3Vl38bCi2LK4g6m374ZYtqEPI9+e7Sy3ss13cl+6BY0YIQ251fbu+U8eRZhwCl
- /ErsfdWfma44tv+/dK0tKDAsXfRmUtVYfSOYsdFs4P+vKi4ET5zHD+/wD7pxJd5iZf1U
- 5I/A==
-X-Gm-Message-State: AFuF++n5mZSRCukoU6TMHXR917HmXqlTolPWTiMU6zvxU/2858mLZYmY
- JB0fVx2QtRueQiY3C0MfZl39mAfT7a9PAKHv9VuYaq5F00vkVBwJgHh+KM0yvX+NTN+oLoRHexw
- K+/kdIaqp+8Y1SKB4asyfIZ35TPRBQ8w=
-X-Gm-Gg: AYBFou2eKDia0dZC+j9Mgkc7Zvmqr88f0w8GP84PLtIArQRGYh1wYdBMunc0f+iu7KS
- h87mvEGyZwnPTVWjgaOsFx2VzgsynNdUfSO9UKDQ2Q6l56HTUj9dMXric4WX8cPb1fVNTLM2Bwv
- 0GSUrnuWCgcU0OPCyj4UHklHXrOPRlPDp9tlO95yOAQOdIa6xMFN4eeuLTg0Ca1ezqoXcYnjuuZ
- T/uuz/cs/6inyoNU73yJ+WzR5jiITkx+ACMu+cCsVOj4s5yIa0ThsQsO9vMnv2Coqfk9zoba9i9
- no/1VnXLiog1KXH76sSEpO++IFGSqbkQ064A+aRzfxt2zfzFK3ulG355SIcn8S104ezBlrbeWbo
- o
-X-Received: by 2002:a05:6820:2211:b0:6b7:46fa:169c with SMTP id
- 006d021491bc7-6b746fa1a60mr1255735eaf.49.1788503159537; Thu, 03 Sep 2026
- 23:25:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260903220523.2849019-1-farosas@suse.de>
- <20260903220523.2849019-3-farosas@suse.de>
-In-Reply-To: <20260903220523.2849019-3-farosas@suse.de>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 4 Sep 2026 10:25:47 +0400
-X-Gm-Features: AcwNN1UqxEktoRJvJAzbQ9FMw7hIIXtn8PdyVIzsx6fEYxQH6wfrVtwoHLQtUsc
-Message-ID: <CAJ+F1CLWCrMqNazT0mMpSzPQ45BnVbeKudbnLR0kfVzOSBZ3Pg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] migration: Drop iochannel reference during snapshot
- setup
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+ bh=ZCAgkqfVivZbmEgVKbH7blMKkj6x3PGne6FqgaPuv6E=;
+ b=BxguICxeCs/6suhE1fQl23ChStd6UX8hdWpSw/nvaRc59LRbfpFY/0oLbLq1CEsOpM
+ IWNlVYMXirnxSOSnWxRP4bNDpDRudxuqFWfldlNgzmITQnA79EfoB01b65+Z4EjfR3fc
+ Dx763xdUY3l5rmT4K788uUNNIVrUlJ/H523TBcQhSgO/yo0Ox2EtaMDQ5uwMs+jlHH2q
+ euf6aFm9TLG32tU+8S/b+qsEYbb+sGPat5TrVlZnPlZuhoAU5cfmY2MggTkq2A/oGmyO
+ v4r3rMKLnPk9sjKIeAMV1roSYs6OZrPtB/nVXot3dtGzIHvQSgo9sicHUTEF1symMrh0
+ rllw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwDfnndTvmlg2905fMoOWfFzErYKKoYa9BxsmmHpl17KH4PYW5XYhtoNTbOErX8DCBtuFoJAVvjnHu+@nongnu.org
+X-Gm-Message-State: AFuF++labETlQQv7Jf0WOup9Z6GKV8kNOqZnXSq0l5ujbMU3x0KXx5cG
+ leoAEclZcdgF3fUEepXeLKE1HUZBgbwLU7nZfd+BwGcLFKqvP7I4b73UPfAFzVQiWxonPH3iX8q
+ ucuwtLqkMp9cwiLbfz4zoJg==
+X-Received: from pjqs3.prod.google.com ([2002:a17:90a:ad83:b0:39b:2bd4:ced7])
+ (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:3809:b0:381:a766:efc9 with SMTP id
+ 98e67ed59e1d1-39b261014e2mr5300423a91.7.1788503227889; 
+ Thu, 03 Sep 2026 23:27:07 -0700 (PDT)
+Date: Fri,  4 Sep 2026 14:27:03 +0800
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.55.0.979.g7e5102b832-goog
+Message-ID: <20260904062706.2684958-1-stanleyjhu@google.com>
+Subject: [PATCH 0/3] hw/ufs: Support MCQ runtime registers, Task Management
+ (TMR), and fault injection
+From: Stanley Jhu <stanleyjhu@google.com>
+To: Jeuk Kim <jeuk20.kim@samsung.com>, qemu-devel@nongnu.org
+Cc: Jeuk Kim <jeuk20.kim@gmail.com>, Jinyoung Choi <j-young.choi@samsung.com>, 
+ qemu-block@nongnu.org, Stanley Jhu <stanleyjhu@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-oo1-xc31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1046;
+ envelope-from=3u2SaagoKCko45mzxqAvt6s00sxq.o0y2qy6-pq7qxz0zsz6.03s@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pj1-x1046.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,80 +94,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 4, 2026 at 2:06=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wrot=
-e:
->
-> During migration there are usually two references to the iochannel,
-> one from the channel creation itself and another from the ownership
-> transfer into QEMUFile.
->
-> - The reference from the QEMUFile is decremented at qemu_fclose.
->
-> - The original reference is decremented at migration_connect_outgoing()
-> for regular migration and not at all for snapshots.
->
-> The ide-test has recently added migration support and ASAN has
-> flagged:
->
-> Indirect leak of 32 byte(s) in 1 object(s) allocated from:
->     #0 0x55ca12aac0b9 in realloc
->     #1 0x7fd97d7e5a05 in g_realloc
->     #3 0x7fd97d7c98c6 in g_hash_table_new_full
->     #4 0x55ca14e186f1 in object_initialize_with_type ../qom/object.c:506:=
-23
->     #5 0x55ca14e1a590 in object_new_with_type ../qom/object.c:706:5
->     #6 0x55ca14e1a7e8 in object_new ../qom/object.c:722:12
->     #7 0x55ca12de896f in qio_channel_block_new ../migration/channel-block=
-.c:32:29
->     #8 0x55ca12ec8f2d in qemu_fopen_bdrv ../migration/savevm.c:172:49
->     #9 0x55ca12ec8b42 in save_snapshot ../migration/savevm.c:3375:9
->     #10 0x55ca12ee18e3 in hmp_savevm ../migration/migration-hmp-cmds.c:49=
-7:5
->
-> Change qemu_fopen_bdrv() to drop the original reference once the
-> QEMUFile has taken over the object. The xen code already does the
-> same.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+This patch series builds directly on top of the recently reviewed patch:
+"[PATCH v3] hw/ufs: Reset controller and MCQ state on HCE transition to 0"
+(Message-ID: <20260902081610.2290123-1-stanleyjhu@google.com>)
+Based-on: <20260902081610.2290123-1-stanleyjhu@google.com>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+### Background & Motivation
+When running upstream Linux kernel UFS driver error recovery and task aborts
+(e.g., ufshcd_abort() or ufshcd_mcq_abort()), Linux interacts with UFS Multi-
+Circular Queue (MCQ) runtime registers and issues UTP Task Management Requests
+(TMR) via UTMRLDBR. Currently in QEMU:
+1. Writing to MCQ operational registers (SQnRTC, SQnCTI, SQnIS, SQnIE, CQnIS,
+   CQnIE, CQnIACR) logs "invalid register offset" warnings.
+2. TMR registers (UTMRLDBR, UTMRLCLR, UTMRLRSR) are unsupported. Task aborts
+   time out and unnecessarily escalate to full device or host resets.
+3. When task abort cancels an in-flight command, lack of SCSIRequest tracking
+   presents Use-After-Free (UAF) hazards during asynchronous block AIO callbacks.
 
-> ---
->  migration/savevm.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 5b0e89ca7c..8d4bdc28ab 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -168,11 +168,16 @@ static bool qemu_loadvm_thread_pool_wait(MigrationS=
-tate *s,
->
->  static QEMUFile *qemu_fopen_bdrv(BlockDriverState *bs, int is_writable)
->  {
-> +    QIOChannel *ioc =3D QIO_CHANNEL(qio_channel_block_new(bs));
-> +    QEMUFile *f;
-> +
->      if (is_writable) {
-> -        return qemu_file_new_output(QIO_CHANNEL(qio_channel_block_new(bs=
-)));
-> +        f =3D qemu_file_new_output(ioc);
->      } else {
-> -        return qemu_file_new_input(QIO_CHANNEL(qio_channel_block_new(bs)=
-));
-> +        f =3D qemu_file_new_input(ioc);
->      }
-> +    object_unref(ioc);
-> +    return f;
->  }
->
->
-> --
-> 2.53.0
->
->
+### Series Overview
+- Patch 1 (hw/ufs: Support MCQ runtime interrupt and queue status registers):
+  Implements UFSHCI 5.2.1/5.6 per-queue runtime registers using QEMU REG32/FIELD
+  macros. Implements SQSTART/SQSTOP queue gating, SQ_ICU queue cleanup reporting,
+  and W1C interrupt handling. Dynamically recalculates active CQ interrupts to
+  clear global IS.CQES, preventing virtual interrupt storms. Cleans operational
+  registers during HCE 1 -> 0 while preserving MCQCONFIG.MAC capability.
 
+- Patch 2 (hw/ufs: Implement Task Management Request (TMR) handling):
+  Implements Task Management Request processing via UTMRLDBR. Tracks sreq in
+  UfsRequest and safely cancels pending SCSIRequests via scsi_req_cancel() to
+  eliminate UAF hazards. Supports dual-queue tag lookups across legacy UTRL and
+  MCQ queues. For UFS_QUERY_TASK, returns FUNCTION SUCCEEDED (0x08) if the
+  task is pending in the device/controller, and FUNCTION COMPLETE (0x00) if
+  the task does not exist, adhering strictly to SAM-5 and JEDEC specifications.
+  Latches pending doorbell bits in utmrldbr upon UTMRLDBR write per UFSHCI 5.2.1
+  Section 5.3.3. Preserves dword_2 header OCS masks and returns completion
+  codes in both response and output_param1 to satisfy both JEDEC specifications
+  and Linux kernel driver validation. Clears TMR registers during HCE reset.
 
---=20
-Marc-Andr=C3=A9 Lureau
+- Patch 3 (hw/ufs: Add experimental fault injection properties for task abort testing):
+  Adds experimental QOM properties x-hold-tag and x-hold-mode to ufs-pci and
+  ufs-sysbus devices. Decouples UFS_HOLD_TAG_NONE (0xffffffff) to preserve Tag 0
+  testing and UFS_HOLD_TAG_ANY (0xfffffffe) to automatically sniff target direct
+  I/O (READ_10/WRITE_10 with LBA >= 512) while allowing guest boot metadata
+  requests to proceed unimpeded. Supports runtime dynamic modification via QOM
+  (qom-set / qom-get) on realized devices, enabling continuous multi-case CI
+  testing in a single running VM without reboots.
+
+### CI/CD Closed-Loop & Regression Prevention Vision
+Together with the companion Linux kernel patch:
+  "[PATCH] scsi: ufs: core: Add fault injection for task abort failures"
+  Link: https://lore.kernel.org/r/20260903235308.1240963-1-stanleyjhu@google.com/
+these QEMU changes establish a deterministic closed-loop verification testbed
+for UFS exception cases (abort successes, abort rejections, transitions, and
+hardware timeouts). This provides a reliable foundation to set up regular
+automated CI/CD regression suites, ensuring long-term health and zero regressions
+for future Linux kernel UFS driver development as well as QEMU UFS emulation.
+
+### Testing & Verification
+- Style: 0 errors, 0 warnings across all patches via ./scripts/checkpatch.pl.
+- Emulation Matrix: Verified in ARM64 QEMU Linux kernel environment across 5
+  scenarios (Abort Success, Abort Failed, In-Transition, TMR Timeout, and
+  Normal I/O) in a single running VM session without rebooting. All cases
+  recovered cleanly according to spec, and subsequent direct I/O read/write data
+  comparisons passed with 100% binary integrity (cmp PASS on /dev/sda).
+
+Stanley Jhu (3):
+  hw/ufs: Support MCQ runtime interrupt and queue status registers
+  hw/ufs: Implement Task Management Request (TMR) handling
+  hw/ufs: Add experimental fault injection properties for task abort
+    testing
+
+ hw/ufs/lu.c         |   7 +
+ hw/ufs/trace-events |   5 +
+ hw/ufs/ufs-pci.c    |   4 +
+ hw/ufs/ufs-sysbus.c |   4 +
+ hw/ufs/ufs.c        | 450 +++++++++++++++++++++++++++++++++++++++++++-
+ hw/ufs/ufs.h        |  55 ++++++
+ include/block/ufs.h |   9 +
+ 7 files changed, 531 insertions(+), 3 deletions(-)
+
+-- 
+2.55.0.979.g7e5102b832-goog
+
 
