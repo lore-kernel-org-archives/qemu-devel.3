@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0005C79F87
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C310AC624DE
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WcJ-0000Tt-VG; Fri, 04 Sep 2026 12:18:15 -0400
+	id 1x2WcS-0000Wg-1z; Fri, 04 Sep 2026 12:18:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2WcI-0000Sz-M8; Fri, 04 Sep 2026 12:18:14 -0400
+ id 1x2WcQ-0000WJ-Nc; Fri, 04 Sep 2026 12:18:22 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2WcH-0001Hn-67; Fri, 04 Sep 2026 12:18:14 -0400
+ id 1x2WcP-0001Lg-0H; Fri, 04 Sep 2026 12:18:22 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 9030460211;
- Fri,  4 Sep 2026 16:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CADE1F00A3D;
- Fri,  4 Sep 2026 16:18:09 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0084360211;
+ Fri,  4 Sep 2026 16:18:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480EE1F00A3D;
+ Fri,  4 Sep 2026 16:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788538691;
- bh=TO+F2pc2vn4cH6gj+eUGA+TbOU46rfxX7z+qzRTHsOk=;
+ s=k20260515; t=1788538699;
+ bh=6In/0Mws2BMD9gkRJbFioNelwcbx/otmGgYGfdAxe4M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hbJUEgiojT1Qbh29+oBjqKlgngjidjQEFQhHErr7Uke3c7uWrms/4aQ+KbYFdygE1
- bYuMDav+uE5c/K6W1gPLvoABvg1Dq8ZJeOptpydqpbpEfhcAJ+9748LByQ8vj2gLsV
- WjGMdPLtM+uWV+6bXfef3wqQHxmyVyd6OyHh5vYnejupzioZiVxHbbX+nL1oCpnY8L
- 3CiN3PW+/Pw0BcVTrAahEOZXbf5Eq7cxF7/G3NdZOsgFAOCZhryfeqvBbf3u4OR8Hz
- 0f5I7HFsK9MSeiz5a1H0fdG4cIXPvTJRfBGfL/XcjOGx97egA30lbkN+T9TqBR6p7s
- RN1Gobfn9Unbg==
+ b=n+yLv51vUlYkUHt1p04HunZa7uweIQ5pJtqDVei/IZK9wv+1tWkq4vZZfpCQBAJ7o
+ Q73sY6/20JUAWeT659XKOWKl287XQtfz3Ttb8sIV+2f84MNIvjHsMuI81bwnGA4V2F
+ YbkIPDdunYiyUzDHReoThvKTghfJgYU22EeeDzKHD7629hSFoKv6Nx0YPSeG0GypkD
+ nSGN/EXTU/zSrDAFIJPF/YqLRRtruN9FJsooxzcovCsuBeX6VEpwtNkaM/MVrYw0Zu
+ BUKszN4bUbL6NUXhlGzzbs97E7SXhO7yhaK8KRV/m5i/T0NTNLpOd66TWOg6R6xIK1
+ majIPgdCsFEOA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 01/12] block: widen BlockLimits.zone_size to uint64_t
-Date: Fri,  4 Sep 2026 18:17:49 +0200
-Message-ID: <20260904161801.1568841-2-cassel@kernel.org>
+Subject: [PATCH v3 04/12] virtio-blk: report the effective zone write
+ granularity
+Date: Fri,  4 Sep 2026 18:17:52 +0200
+Message-ID: <20260904161801.1568841-5-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904161801.1568841-1-cassel@kernel.org>
 References: <20260904161801.1568841-1-cassel@kernel.org>
@@ -70,48 +72,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sam Li <faithilikerun@gmail.com>
+For ZBC/ZAC devices the write granularity is the physical block size, so
+a 512e SMR disk exposed through a host_device backend has a logical block
+size of 512 and a zone write granularity of 4096. We told the guest driver 512
+while raw_co_zone_append() rejects anything that is not 4096 byte
+aligned, so the driver saw a plain I/O error for a request it had been
+told was valid.
 
-The zone-size field in BlockLimits is currently uint32_t, capping
-expressible zone sizes at 4 GiB. Real zoned-device protocols
-like NVMe ZNS allow larger zones. Widen BlockLimits.zone_size to
-uint64_t to match.
+Report the larger of the backend granularity and the logical block size
+instead. The guest driver cannot issue writes finer than the logical
+size, so the larger of the two is the constraint that applies. This
+matches what a Linux guest derives for itself: blk_validate_zoned_limits()
+raises zone_write_granularity to the logical block size, and
+blk_stack_limits() stacks it with max().
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Add it as a helper next to blkconf_blocksizes(), since it is derived from
+a BlockConf and the limits of the backend below it, and use it for the
+zone append offset check in check_zoned_request(), which validated
+against bs->bl.write_granularity. The value reported to the driver and
+the value that requests are validated against then cannot drift apart.
+The helper cannot return zero because blkconf_blocksizes() always leaves
+a logical block size behind, so the check no longer needs to guard
+against an unset granularity.
+
+Fixes: 4f7366506a96 ("virtio-blk: add zoned storage emulation for zoned devices")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/file-posix.c               | 2 +-
- include/block/block_int-common.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/block/block.c         |  7 +++++++
+ hw/block/virtio-blk.c    | 13 +++++++------
+ include/hw/block/block.h |  8 ++++++++
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9aad156aad..c0d6ee30e4 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3598,7 +3598,7 @@ raw_co_zone_append(BlockDriverState *bs,
+diff --git a/hw/block/block.c b/hw/block/block.c
+index f187fa025d..1c3135843d 100644
+--- a/hw/block/block.c
++++ b/hw/block/block.c
+@@ -201,6 +201,13 @@ bool blkconf_blocksizes(BlockConf *conf, Error **errp)
+     return true;
+ }
  
-     if (*offset & zone_size_mask) {
-         error_report("sector offset %" PRId64 " is not aligned to zone size "
--                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
-+                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
-         return -EINVAL;
++uint32_t blkconf_zone_write_granularity(BlockConf *conf)
++{
++    BlockDriverState *bs = blk_bs(conf->blk);
++
++    return MAX(bs->bl.write_granularity, conf->logical_block_size);
++}
++
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp)
+ {
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 8c5b87793e..f6781ff5f6 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -520,11 +520,11 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
      }
  
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..7571ed9968 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -901,7 +901,7 @@ typedef struct BlockLimits {
-     BlockZoneModel zoned;
+     if (append) {
+-        if (bs->bl.write_granularity) {
+-            if ((offset % bs->bl.write_granularity) != 0) {
+-                *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
+-                return false;
+-            }
++        uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
++
++        if (offset & wg_mask) {
++            *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
++            return false;
+         }
  
-     /* zone size expressed in bytes */
--    uint32_t zone_size;
-+    uint64_t zone_size;
+         index = bdrv_zone_index(bs, offset);
+@@ -1274,7 +1274,8 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+                      bs->bl.max_active_zones);
+         virtio_stl_p(vdev, &blkcfg.zoned.max_open_zones,
+                      bs->bl.max_open_zones);
+-        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity, blk_size);
++        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
++                     blkconf_zone_write_granularity(conf));
+         virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
+                      bs->bl.max_append_sectors);
+     } else {
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index df941df19f..f98525c01a 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -114,6 +114,14 @@ bool blkconf_geometry(BlockConf *conf, int *trans,
+                       unsigned cyls_max, unsigned heads_max, unsigned secs_max,
+                       Error **errp);
+ bool blkconf_blocksizes(BlockConf *conf, Error **errp);
++/*
++ * The alignment constraint that applies to writes to a sequential zone. The
++ * medium may require a coarser granularity than the logical block size, while
++ * a guest cannot issue writes finer than the logical block size, so the
++ * constraint that applies is the larger of the two. A frontend must report this
++ * value to its guest and validate requests against it.
++ */
++uint32_t blkconf_zone_write_granularity(BlockConf *conf);
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp);
  
-     /* total number of zones */
-     uint32_t nr_zones;
 -- 
 2.55.0
 
