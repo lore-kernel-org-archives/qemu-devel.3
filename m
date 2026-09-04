@@ -4,103 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402C6C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8770C79F85
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2SpP-0006qd-1N; Fri, 04 Sep 2026 08:15:31 -0400
+	id 1x2StQ-0007RK-4c; Fri, 04 Sep 2026 08:19:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2SpM-0006qO-SJ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:15:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2StG-0007QP-7x
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:19:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2SpK-0006xn-L4
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:15:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2StA-0007YS-OJ
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:19:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788524122;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1788524363;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHwoYM+E2dA6E9QbMnNSR07EnnbRZuZkZPDUDnsuAk8=;
- b=WX+hWLA4LEeWIM2hmaEmY7GoHs3ZfDWeF633vwUc5dUAl+jv6T3oS2Rd0AEcSxsKPed98u
- vlZHeyRh9zfQ91DI6JC4i3/20+OhyjDxu2K+PdtjBV9TkGlTxtBr/dklsC4Z7WZJZ2xC8w
- LulvbfQRJuhB0jeAIIaXG5HocQCvdTg=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-BfM4bPrjPH2YPrVm7_OQYQ-1; Fri, 04 Sep 2026 08:15:21 -0400
-X-MC-Unique: BfM4bPrjPH2YPrVm7_OQYQ-1
-X-Mimecast-MFC-AGG-ID: BfM4bPrjPH2YPrVm7_OQYQ_1788524121
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e4f946461so186378985a.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:15:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788524121; x=1789128921; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GHwoYM+E2dA6E9QbMnNSR07EnnbRZuZkZPDUDnsuAk8=;
- b=RD75kqZ1C+67ip3xOs+lXglHbIzXEgX/YFLUZghzaS8xx5b7xPDgYC6lWaf122dHfO
- nKms0j/Ia+NH7hx1JS6wKFKAo/ErdzHm76bSG3g7bzY6WjpFjdcwSZBESJiWdWZ84k7/
- VVQjlqNpt0X2fGhxpiyAFyLabjxllokVBxtGpyw5xUC2/gWif1I7K9bWODzZ5vRRZH78
- EZiAW8dGToSYsTdJO+Iek4bCqzoYqfll4R8Mcas6H3k+OKbcG8sU19oIqHzQyINu5g3z
- Ap21PjZZIDbHVW5oxQwv2+rf5W+aeIjbLQzQbxjhN+mP/Tua0GE43b9i4RiWR1JHrhNd
- LmAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788524121; x=1789128921;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GHwoYM+E2dA6E9QbMnNSR07EnnbRZuZkZPDUDnsuAk8=;
- b=mtatHrY7JlV1YUfIvS0XxNMVbpdG/xY24lDF2LAT5hFwqCvI/l7hnT89IfRhVYyMgw
- KPnJnVCqXDbN94KsSOjJplUI+T46e+o5PBkMXb3Dk3Twyh9fLfY1Inid6S4mOngfrydO
- HwAA4PRhAYTMDsWugdbcHXjyuyyl1oBZuFVc+VezGhs+7aUrWdnbZzbmaLR36UaBEJuI
- /lwVr/CbcI5mZ9BvVffLPvx45B+IEBlFh7uHC5nC9YQ1UTVKfOPTH8U+cjOj6QUUCLVU
- tvWAUG1lYzWXoA2Ij0QP/W8I3dIeoOQGkn9VgjucvjELX9enqjYb2TKvAUrnmdMffm2J
- WY+w==
-X-Gm-Message-State: AFuF++nXDNA9xh480DclE8f1i8uQpkVJPY7xIieCoPPUurj1BBOrLm67
- Mq+Uy4BC4tzUTIGtCr+V7e3Pic/ZZ2aaKzs7JVR3EQ2CfAM6QfQ6wd/WM0kyAFOdlLVXBChlChu
- U3esIHLtfVh0z2p4zKTQP9W2DBXSWmF84KK+vsfOIurzZlrgM4MOwj31I
-X-Gm-Gg: AYBFou2o3ReV3Xp2c07rbUhYQRz6uM7oVEtFFhi4nasbn5j+HVGZ+ViAVU/+zDtEjBO
- 5sV0Y61ka2Q7vHzEueOYgLuZLC76jsNzShP5FM25gKutuQFVF/TzkNRzon0mgWgPTNI6pK0F5XQ
- pbLl8icXflWANyZOusYE18AKdxZ6IlwG84YLA/WPkrV+OLGHmREHjGWdfq+FplRlSwudw2duPiH
- PztNScYb1UCUjcVe3kHRUyhHCTy28YhzXh9wF2WsYNm+DGO17rHZyKddIXkoM83kDI95r35dHMt
- epbzWjtT1YARPYgqUkH37gTXwifEEZafIFnDpipGOEEzFc+vUjzS88BPPWz4PdaWyrLr
-X-Received: by 2002:a05:620a:3f0a:b0:934:9639:3a4 with SMTP id
- af79cd13be357-939804af893mr376636185a.41.1788524120564; 
- Fri, 04 Sep 2026 05:15:20 -0700 (PDT)
-X-Received: by 2002:a05:620a:3f0a:b0:934:9639:3a4 with SMTP id
- af79cd13be357-939804af893mr376629885a.41.1788524119967; 
- Fri, 04 Sep 2026 05:15:19 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9397fb62710sm201122685a.28.2026.09.04.05.15.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:15:19 -0700 (PDT)
-Date: Fri, 4 Sep 2026 08:15:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ bh=GdvFFz8K31jGlNCAphVSC3f9yCIuvX2BtFX8/uTvIl0=;
+ b=ImxLQiCFPCXR6FAw8vDLHCfhougMsXqC/RjKXJP7jkmZ2KToIzXbbcUCVEWnphBW2IzjR2
+ cjSL97fTyNZiVwEJbj2aFOdTWIxhuJClAj41qg8QfWRxJ7B1LHML/I0fdjlJ03tpBv0FgG
+ 9TU6Jr7u9fmIhucvCUS9q0hiULEakc8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-3CxZCXWmPuWl8sA5Wf6aBA-1; Fri,
+ 04 Sep 2026 08:19:20 -0400
+X-MC-Unique: 3CxZCXWmPuWl8sA5Wf6aBA-1
+X-Mimecast-MFC-AGG-ID: 3CxZCXWmPuWl8sA5Wf6aBA_1788524359
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1265E1944DCF; Fri,  4 Sep 2026 12:19:19 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A94D427; Fri,  4 Sep 2026 12:19:17 +0000 (UTC)
+Date: Fri, 4 Sep 2026 13:19:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ devel@lists.libvirt.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 17/18] migration: Remove s->capabilities
-Message-ID: <apq2S1GA2NO60Sir@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-18-farosas@suse.de>
+Subject: Re: [PULL 00/13] Misc fixes patches
+Message-ID: <apq3Qilmil1qJe8_@redhat.com>
+References: <20260904105929.3450663-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260902221547.1812481-18-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260904105929.3450663-1-berrange@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,24 +89,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 02, 2026 at 07:15:45PM -0300, Fabiano Rosas wrote:
-> @@ -1555,6 +1509,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->           !is_power_of_2(params->x_rdma_chunk_size))) {
->          error_setg(errp, "Option x_rdma_chunk_size expects "
->                     "a power of 2 in the range 1MiB to 1024MiB");
+Sorry, this one is going to fail on the msys2 job, due
+to the new websock test trying to use AF_UNIX which
+fails at runtime only. I'll re-spin changing the new
+test to skip Windows hosts.
 
-Miss a return here?  Can keep the R-b with this fixed.
+On Fri, Sep 04, 2026 at 11:59:16AM +0100, Daniel P. Berrangé wrote:
+> The following changes since commit 99e54ab5e7a6efc945af6d5661842155d1f3fc7a:
+> 
+>   Merge tag 'hw-misc-20260903' of https://github.com/philmd/qemu into staging (2026-09-03 16:43:24 +0100)
+> 
+> are available in the Git repository at:
+> 
+>   https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
+> 
+> for you to fetch changes up to a61ee2ff816bc2804f773cbcff45a6cd8d83330d:
+> 
+>   docs/system/security: exclude uninitialized stack variables as bugs (2026-09-04 11:17:00 +0100)
+> 
+> ----------------------------------------------------------------
+> Merge crypto, I/O and misc fixes
+> 
+>  * Deprecated the AF_ALG crypto backend
+>  * Improve checkpatch output in CI jobs
+>  * Fix --disable-containers arg handling in configure
+>  * Document security policy for uninitialized stack variables
+>  * Fix multiple denial of service flaws in websockets
+>  * Fix error handling in some x509 APIs
+> 
+> ----------------------------------------------------------------
+> 
+> Daniel P. Berrangé (4):
+>   crypto: deprecate the AF_ALG crypto backend
+>   gitlab: use --emacs --quiet for checkpatch.pl instead of --terse
+>   configure: correctly honour --disable-containers
+>   docs/system/security: exclude uninitialized stack variables as bugs
+> 
+> Denis V. Lunev (6):
+>   io/channel-socket: do not treat a zero length write as an error
+>   io/channel-websock: send an HTTP 400 when the greeting has no space
+>   io/channel-websock: handle a blocked write during the handshake
+>   tests/unit: add websock handshake test
+>   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
+>   tests/unit: cover blocked IO during the websock handshake
+> 
+> Evgeny Kolmakov (1):
+>   crypto: Use g_autofree
+> 
+> Marc-André Lureau (2):
+>   crypto/x509-utils: don't double set errp
+>   crypto/x509-utils: propagate the error
+> 
+>  .gitlab-ci.d/check-patch.py          |   6 +-
+>  configure                            |   1 +
+>  crypto/block.c                       |  17 +-
+>  crypto/hmac-gcrypt.c                 |  12 +-
+>  crypto/hmac-glib.c                   |  10 +-
+>  crypto/ivgen-essiv.c                 |  15 +-
+>  crypto/ivgen.c                       |   6 +-
+>  crypto/secret_keyring.c              |   5 +-
+>  crypto/x509-utils.c                  |   4 +-
+>  docs/about/deprecated.rst            |  21 +++
+>  docs/system/security.rst             |  10 ++
+>  io/channel-socket.c                  |   2 +-
+>  io/channel-websock.c                 |  10 +-
+>  meson.build                          |   6 +
+>  tests/unit/meson.build               |   1 +
+>  tests/unit/test-io-channel-websock.c | 249 +++++++++++++++++++++++++++
+>  16 files changed, 327 insertions(+), 48 deletions(-)
+>  create mode 100644 tests/unit/test-io-channel-websock.c
+> 
+> -- 
+> 2.55.0
+> 
 
-> +    }
-> +
-> +    if (!migrate_caps_check(params, errp)) {
->          return false;
->      }
-
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
