@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5D7C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D338C624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2QNM-0000Q2-82; Fri, 04 Sep 2026 05:38:24 -0400
+	id 1x2QQS-00010d-MO; Fri, 04 Sep 2026 05:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x2QNJ-0000Ps-FE
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:38:22 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x2QQR-00010O-AN
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:41:35 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x2QNH-0005Dd-AX
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:38:21 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6a5ebf75d62so1177354a12.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 02:38:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788514698; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x2QQP-0005ZO-Mo
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:41:35 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-86b03b75fecso13441417b3.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 02:41:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788514892; cv=none;
  d=google.com; s=arc-20260327;
- b=p84wT2pFm6kvWwLtzNUQ6jZGT0lQvrbWEFYSUNGuNRWDAjJ9i17nXkRpldhCN2GNSr
- 13u0vDPCP1jtpw+S8lAnH+ETL4hJzO3bjP65/yXhYxqX4IkZUrZcOmPautVHQiQSZZxe
- BypFarnGBZ4KofOVBCYwDgi9PKpBG2NuYpzojX4W0bD643CQh2+y8iHq/Zy2r2rejR+V
- g4CP4+6T9tW3zpDR2I3mb+WRYDRmbUu3mI3Rg+BVIo77fyfq7JJRVHxADjfbhA4q7Uwu
- rA76TcKdQCxsg6R1J7zQ31/iQF4YNhrPBZ7OgMosi82vayuc2u4bbX04fkr1gxOZ4FoC
- DhGw==
+ b=VoDoydSjJtVpcHQUldzQA8H4lzaDifjFvR9aikIxd+LqkD3fRCRSLkUCMlyCq9pZZu
+ kLkmGDpRm9LPS48IM3ho+aWMWw3EMCeiMmPs9ZIYaUKUUGMXr0knb2lD4LS4UUJ1kg7U
+ fn7Qo05E421/TjTABElqtH8sZFvw4PcGkifqmbA2eKKbG3acIHDbjBRDlIn2Y2NvRYr9
+ 7n42m1moGtCBydp/QYQZChGX67b3isEQK6cmd3UoCXC09BmmDw5Wgpwjx1c+/lkwPzVE
+ 7l+VpyDcg6kN1ESwyAx9wnUmYGR2hAjvfy+D202IMeBxm4qUPROU0adCkpivynpodVth
+ MN7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KuuCug3HHTEIsuAXB5NYvwn6sUbinDT56Oir6fzjZ3s=;
- fh=++v5ZdTrWEvmOA0hZ+M5Kkv+R215xTnLZagbbOGjP0g=;
- b=RGqvppt8hQX5eMW6gWzsKiEYp+RI9sPo7CnsulWpNIBUrBVI+NeqEVCEJDi0CJL/w2
- 49GCwB4ZNBenvLQECQwWHHLPqRFzey7ZVIr2ICdA693C119A7uVHJQyJTG9ymrvr9ZoK
- DTYZuHlLCReAQsTSrJD6iyWvBGiGWVrv4SxnxQsgTifTu+ViLdsuXO1guG9r7332lPpQ
- ZoMgzju5OSdHYx7nQj38BL/ztQEsQ3CsgVT4Ag6hd2fg/73cpva4x8n8fe50ixlIESNF
- rDMJOi+cFnkN4OCFaMUg4MwHlozO1Qc0UTIs92C1bl8QJmlypDIpre+/1AfBIM7XvuII
- px0g==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=p0VlP+BzK4Mn/ciijMswVLrKwto6qEsK/U5eLekulww=;
+ fh=OgXYGo0wXK9WFWROm5iEemULu6NnfCpnPhT/U/K1jPk=;
+ b=mAmRPrCJz+Fs8stz2SRgn+bw8xC96aTEgeIM6+X4d1hVjfJ+FEjz/GcFejBcuMNuYX
+ dv6aRkbSrHD5yYKq2j+C1D/yIQo8UlhUyZAEq9zw6Mebz2B1j+aqYw3dylT7ktYVyLYp
+ GO3EhPbW2uR49OqZgr334/bKWCMFL//APgr+Bj2GwbYtpBGFM8Ri4Pl3UOnwrpqAnT3A
+ qOnm/Jh+sIXYTBQbDd9JPiXBH8nLrPMrkuOWQswYL3FCpNvX6WAm3NNLiTm/B9yAgBCo
+ h2ToHEL8Hp7SJdiZjX/RFMpSUldaWY6URRECZ8uKgdt/NoP313W/2ld4zLWQIdK5psRv
+ 7xWg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788514698; x=1789119498; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KuuCug3HHTEIsuAXB5NYvwn6sUbinDT56Oir6fzjZ3s=;
- b=LmCBT5Gg1eTIGqtvCGIa6OSrCTEcoOmxmNqjByoU/W788/se4cYW5zPYEUWtYMpMPN
- xoP1ltvwe3cAWDBSeYifDlEDKRhG2EumnywPgea2mN1uplR5zQ/LPERyt1uRGXWJzcqv
- ii5qzjGyFli9nVtEVECJrVecrjhdBc2X9oAhBNFsa2YCtnPFg67X3jkYlezDW60SB1mJ
- KUqPUB4Bwt/sK9sSpevnC+AOu/DFBSsdxLw2Gy6dQJGh9JD6b6EPbrgJ3bdBO0C5gShf
- Ny7cXxmUCs8t2H0zpLqnHz9yJamW91Txfh4iA07eYVJnBE6KStHjQgz5nqRdvUk8R7qx
- EpZg==
+ d=linaro.org; s=google; t=1788514892; x=1789119692; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=p0VlP+BzK4Mn/ciijMswVLrKwto6qEsK/U5eLekulww=;
+ b=W90GZfYNJx8Z/bAXzjuFZywQRL1oX/e4eImudCDL7QiF4as5CYcqv2o/eg4Rndv9Xi
+ RF6g1OB0Iz3JKiDwnzWOcS0diaEGq3oRMJKT7NOYOXOTfggB+sjw0lKysH3r3xI7UWQa
+ tNfiZsapSFFROsU8zeM6nXB36CUGUzJC1nYwLGXoEzJ8FKOGhc2atJjRluo17EswYdXy
+ JtpuJgCRtpmblJiM9UciJ60Zg3a8Q8OxLq9dw5CVz77IoeE9HREUpk2WkTD5s4atbeVd
+ tWOUfHqb1DdLiz0RLz8m1CC4+rSC73KvAe+SW9gaiU+86rOkdvJvqhMsZdUdCd0zrri0
+ ItFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788514698; x=1789119498;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KuuCug3HHTEIsuAXB5NYvwn6sUbinDT56Oir6fzjZ3s=;
- b=PIjjVaYPLGV4EXSi/8zAavp6kvoOXrD1oPnvPk5XVvjB5E8eNPHsO5uRm5C4iHEO32
- GtgezUsJlzvyqiyPbmu6/X5/AA62YCebfIJNt5Qs9v/nH6poQtCj1SYqQhGkZDBlMfZJ
- z5bRWpD/LJbQ5eaXwmu2z+1+ezHeEDD/kK1SEGEeV3NVUQe0r3pRvPg5hUIDgWh3gkAg
- VfWwqQSMtBGEzv7wqIH0EPLGxDukomMML5TOLzpJk/GWm48jyKxByqWzRcdZeTyaDoB5
- Ey53lvHIyiBN1DDjkVIM7lgym8CYt+lz5iyOJGw85I8fFBymh4xXde6ysFTbx2v+GiHU
- pK2Q==
+ d=1e100.net; s=20251104; t=1788514892; x=1789119692;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=p0VlP+BzK4Mn/ciijMswVLrKwto6qEsK/U5eLekulww=;
+ b=XvkYpK+bIPv1qOI/3iHcKTnQsuIJM8Dlyo34E2SJ9Ob4UZghIcQyD0wOI/2jnheu+7
+ /uLW1xGs4kiCmcQF9qL2PSKSAjjt1148OacYGUie0fhkbCnIyB6+Fb/aMHjuHJ8eDgpD
+ p6XJMgKG+apCgoyeFf84COpkXIcSbs8SPY+Rm+fFD/4Dsno4JEhfOPAGwKxaWJ3HmQwi
+ AoeoMxYqy5SnhWymz7Ms+h9z7JUBYjeojmkWucJERsblnWqskO0581+P61eUt6TQii4d
+ OgIFc1sKAx7v7b3DuX4ZHfmHcau6hnXIqubV3qqJgEw2VVvSNGTs1UbSa2LzM/aUyoRn
+ 630g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx6P4yhlYRhx51+jU6VniTwS3G/et5X5YhOxYrp/8Nw93yn1oCRI9oMVOoWvgoatV9BjlfezsVBsLI+@nongnu.org
-X-Gm-Message-State: AFuF++k7X2qJQYDLw3MW4FhzpA3zfhoctO8bm4v+hjv4DBR+yL0BTTaJ
- OlVDfXppEWwEs5BDW29hqAn/L4LQ7I1FuT7xxY3Gc9qjPU9Yvw3pOQu79BIhGFsDVsyTRT3fmpm
- u+mp4dbhbfnuBfK7/2g/XxTzx5Med5y4=
-X-Gm-Gg: AYBFou1SEqN8hcfsjOBSpbQwreimD+7Lz3NKRyU0ue7YtbVuUOjuUOg0HObjqbZLFJn
- oOpnS+W3y0nB40fGCyGckxcMe/OPK0TJoaQR3aOr+MMiV0s1rc+ODLBOEidR/tmSKBBM6gWTrM9
- jQY7T4fXE4ffORKumwGQuFox2CjfAvP+RB2jW52odWQY+a/H/C4sRKye2nDMaLSmGqNTfHjnU9F
- MXyEURHAZyPq6CYmbYQKcqrII6F6jlW8tXNZT9Qjg0re3EoAS6CuvItdO9KEbgyCq0X2jy6RCnS
- 0nJOxY0j8gehed1MGHqy9L1DbaB9HmFSjctOyS61wTNNqg==
-X-Received: by 2002:a05:6402:460f:10b0:6a6:b2b9:7663 with SMTP id
- 4fb4d7f45d1cf-6a6b2b976f4mr2587595a12.16.1788514697316; Fri, 04 Sep 2026
- 02:38:17 -0700 (PDT)
+ AKwUvBxdsjoKTGOv5nnOLSTj64BKPxQsqGD/6DD9HRslXKHwBWsgPJTsTPohfnCoZgh4LaFMyHoCILt3B9Qw@nongnu.org
+X-Gm-Message-State: AFuF++m2nkncAZmU34ZdVeNTB9c+LODDr3GjpMONVzs/zExCqoJI1GAo
+ yz16aHiTvZwPDUDe79+MYxRnFibYw5RqPDSc7gUy9rqAh8acUYbfY3aIdhs1V73+d16wPnFtPfe
+ 1Bt5C945FBi9XAhlZjECFne5WTN7o/Axd/z/ghMjSKQ==
+X-Gm-Gg: AYBFou2LtsBtvBHeDUUDABmrgz4GCbC+JsNFa/XAh71k3yYnrdTmSvQTsGIfkl/z0l2
+ O0SxKj+jZG7YmQr4R0mv1ILJpcOI9vJ0tym1jqVU7xUEE6e50gMDqqLSWnXkmLlbhShuAJ/Hi3U
+ xU3WF8U2rj5XF4ru7F51KdZCBN9jyoWIMtqdsRJRnz5WR4KQRIsv3Gc19yrzYzgLDYbomZo+zgn
+ UamEMuucaFyrtJu5ubgpBfiPGxc1Vf/7vm+a1hzK5pVJ3aW1DMSOk/nltdBUARrNLtTgllb25sb
+ p890RijDrGM/7tSJ05Z+jxs1RE27/NxKBlrzTX9dofInF2AnK7IqvbZUDCrxrBzmeCJC1V+1N2f
+ S8b36Q5z8Gj/G9zf+b7Scy6u+cG4/
+X-Received: by 2002:a05:690c:571a:b0:81e:9f17:8050 with SMTP id
+ 00721157ae682-87125ef9985mr22738637b3.21.1788514892146; Fri, 04 Sep 2026
+ 02:41:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260831160038.221776-1-zhangckid@gmail.com>
- <20260831160038.221776-7-zhangckid@gmail.com>
- <8733vtbk16.fsf@pond.sub.org>
- <CAK3tnvLbaJ4b+gRhXC678cye-cHv+aP3FFwRvhPNjyfSHxL6MA@mail.gmail.com>
- <87qzjb3nf6.fsf@pond.sub.org> <apgONqZ4sWaenjVG@redhat.com>
- <87jyp31zyf.fsf@pond.sub.org> <aphL_rrAVYq8D7ie@redhat.com>
- <8733vph0vl.fsf@pond.sub.org> <apqIEAIVvouwxSQN@redhat.com>
-In-Reply-To: <apqIEAIVvouwxSQN@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 4 Sep 2026 17:37:39 +0800
-X-Gm-Features: AcwNN1UDk_upvxb4Z1YYVMPxrxb6sV5VESrQkRaiw3vG0Ds29OhuQRhcNIP_RKc
-Message-ID: <CAK3tnvLBboyOLgOFxd6vpS56-Jio2AWQ_6Mhm+RkdWnjP18eNw@mail.gmail.com>
-Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
+References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
+ <4b4f77ee-21e9-405e-a1da-21506afa1c5b@oss.qualcomm.com>
+ <app_CnHimOrOymMH@redhat.com>
+ <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
+ <CAFEAcA_4TZxYhFbHfJZCas7bvh_KZjNp2aKzx3LPaXTQFuoQYQ@mail.gmail.com>
+ <CAE2XoE8FTYQMDZFdjf=gayR7H0MJrO=thUcFXddRWBd3_2KQZA@mail.gmail.com>
+In-Reply-To: <CAE2XoE8FTYQMDZFdjf=gayR7H0MJrO=thUcFXddRWBd3_2KQZA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Sep 2026 10:41:20 +0100
+X-Gm-Features: AcwNN1Un6M_dtRvV0aWq0C6RXUHmJ6cbK0UZ0cxtWr8_q229c5VU4C-Z5L3HEgY
+Message-ID: <CAFEAcA9eLNLs7ZRaH=PS7tAK49WeJzc0PKfWVG3xKRdc-joU3w@mail.gmail.com>
+Subject: Re: [PATCH 00/47] single-binary: implement dynamic filtering for QOM
+ types
+To: luoyonggang@gmail.com
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ philmd@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,123 +126,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 4, 2026 at 4:58=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
+On Fri, 4 Sept 2026 at 10:34, Yonggang Luo <luoyonggang@gmail.com> wrote:
 >
-> On Fri, Sep 04, 2026 at 10:33:18AM +0200, Markus Armbruster wrote:
-> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-> >
-> > > On Wed, Sep 02, 2026 at 04:37:44PM +0200, Markus Armbruster wrote:
-> > >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-> > >>
-> > >> > On Wed, Sep 02, 2026 at 01:25:33PM +0200, Markus Armbruster wrote:
-> > >> >> Zhang Chen <zhangckid@gmail.com> writes:
-> > >> >>
-> > >> >> > On Tue, Sep 1, 2026 at 1:47=E2=80=AFPM Markus Armbruster <armbr=
-u@redhat.com> wrote:
-> > >> >> >>
-> > >> >> >> Zhang Chen <zhangckid@gmail.com> writes:
-> > >> >> >>
-> > >> >> >> > Monitors that require an IOThread share the internal mon_iot=
-hread.
-> > >> >> >> > Account for each monitor explicitly in IOThread holder track=
-ing, using
-> > >> >> >> > the monitor's canonical QOM path to distinguish holders.
-> > >> >> >> >
-> > >> >> >> > Acquire the shared monitor IOThread AioContext once, using t=
-he monitor
-> > >> >> >> > QOM path as the holder, and reuse the stored context for lat=
-er
-> > >> >> >> > operations.
-> > >> >> >> >
-> > >> >> >> > Release the holder from the Monitor ObjectClass::unparent ca=
-llback,
-> > >> >> >> > while the canonical QOM path is still available. This covers=
- every
-> > >> >> >> > object_unparent() path and avoids duplicating the cleanup in
-> > >> >> >> > monitor_cleanup() and monitor_qmp_prepare_delete().
-> > >> >> >> >
-> > >> >> >> > The internal mon_iothread remains hidden from query-iothread=
-s, as before.
-> > >> >> >> > Management applications therefore cannot use it to determine=
- which
-> > >> >> >> > monitors are using the IOThread. Nevertheless, track the mon=
-itor
-> > >> >> >> > holders so that they follow the same explicit holder and
-> > >> >> >> > IOThread reference lifecycle as other AioContext users.
-> > >> >> >> >
-> > >> >> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > >> >> >>
-> > >> >> >> I have a question for our QOM experts (Paolo and Daniel).
-> > >> >> >>
-> > >> >> >> This patch takes a reference in its UserCreatableClass method
-> > >> >> >> complete(), and relinquishes it in its ObjectClass unparent() =
-method.
-> > >> >> >> Is that correct and clean?  Or should complete() pair with
-> > >> >> >> prepare_delete()?
-> > >> >> >
-> > >> >> >
-> > >> >> > Add some background information in previous reviews for here:
-> > >> >> > https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05318.=
-html
-> > >> >>
-> > >> >> Aha, Stefan asked for monitor_finalize(), which doesn't exist.  Y=
-ou then
-> > >> >> moved it to the unparent() method.
-> > >> >
-> > >> > monitor_finalize() does exist as of about a month ago. It was
-> > >> > introduced as part of my series that turned Monitor into a QOM
-> > >> > object.
-> > >>
-> > >> I was on an old branch.  Sorry for the noise!
-> > >>
-> > >> >> My question for the QOM maintainers remains: is it okay to pair
-> > >> >> complete() with unparent(), or should it pair with prepare_delete=
-()?
-> > >> >
-> > >> > In general most things done in complete() can/should be undone in =
-the
-> > >> > finalize() callback IMHO.
-> > >>
-> > >> I can't see a finalize() callback, and I *am* on current master now.=
-  Do
-> > >> you mean unparent(), or do you mean monitor_finalize()?
-> > >
-> > > Sorry for the ambiguity. The latter.
-> > >
-> > > When I wrote "finalize()" I meant to say "instance_finalize()", as th=
-e
-> > > generic name of the callback field in the Type, which is
-> > > "monitor_finalize()" in the specific Monitor implementation.
-> >
-> > If I understand you correctly, the code this patch puts in
-> > monitor_unparent() should instead go into monitor_finalize().  Fair?
 >
-> Yes, unless there's some constraint I'm not aware of, it feels like
-> it could go in the existing monitor_finalize() method to avoid having
-> cleanup split across two callbacks.
-
-I chose unparent() to keep the implementation simpler. The canonical
-QOM path and mon_iothread are both still available there, so we don't
-need to store an additional IOThread pointer and a copy of the path in
-Monitor.
-
-Given the current teardown ordering, the monitor has already been
-quiesced or the IOThread stopped before unparenting, which is why I
-considered this a reasonable trade-off.
-
-However, if you prefer the stricter lifetime pairing between complete()
-and monitor_finalize(), I can change it accordingly.
-
-Thanks
-Chen
-
+> > I was wondering if maybe one way to approach that is some
+> > "disambiguation" syntax on the machine name; so one could write
+> > "-machine aarch64:virt" vs "-machine riscv64:virt" (or whatever) to
 >
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> That's the Proposal B: target only in -M or argv[0] (alternative)
+> Do not add -target. The target is always embedded in the machine
+> argument, or inferred from argv[0].
 >
+> - qemu-system-aarch64 -M virt: single-target from argv[0].
+> - qemu-system -M arm:virt: single-target from -M.
+> - qemu-system -M virt: error (heterogeneous not supported yet).
+>
+> There is no global option that selects TargetInfo before -M.
+> Early option parsing still has to read -M (and argv[0]) before
+> machines initialize, the same as proposal A reads -target.
+>
+>   qemu-system -M help
+>   qemu-system -M virt              # error: heterogeneous not supported
+
+This should be an error because it's ambiguous (and ideally
+the error could include listing the possible candidates, like
+"Did you mean 'riscv64:virt' or 'aarch64:virt' or 'arm:virt' ?"),
+not because of anything to do with heterogenous machines. For
+instance there's no reason
+    qemu-system -M vexpress-a9
+couldn't work without a "arm:" disambiguator, as there's only one
+"vexpress-a9" machine across all our target archs.
+
+>   qemu-system -M arm:virt ...
+>   qemu-system -M aarch64:virt,gic-version=3 ...
+>   qemu-system-riscv64 -M virt ...
+>
+> at:
+> https://lore.kernel.org/qemu-devel/CAE2XoE_-ewv3iC_MZ2sM1eKG=CUKM7MZa-ppJV0Vk1rE1h+19w@mail.gmail.com/
+>
+>
+> > disambiguate when just "-machine virt" would be ambiguous; but if
+> > there's only one machine of that name then just "-machine foo" would
+> > work. That extends nicely to truly heterogeneous machine names:
+> > "-machine my-mixed-machine" wouldn't need the user to explicitly
+> > give it a -target option or otherwise say that it includes aarch64
+>
+>
+> Seems this direction is fine, May I post experiment patches with this direction?
+> The machine-filtering is still needed. and when the target is not specified by machine parameter. The default TargetInfo will be target
+> SYS_EMU_TARGET_NONE. And it means emulating heterogeneous machines.
+
+I think we could also let the default (no target specified) work
+for non-heterogenous machines, as noted above.
+
+-- PMM
 
