@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464D5C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC1AC79F83
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2QTo-0001Ta-Er; Fri, 04 Sep 2026 05:45:04 -0400
+	id 1x2QUk-0001y1-Tp; Fri, 04 Sep 2026 05:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2QTn-0001TR-5x
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:45:03 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2QTl-0005i5-31
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:45:02 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-47de0093c42so688391f8f.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 02:45:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788515099; x=1789119899; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/+xXHI5IGeDrn3HjQrUc9gWs/zPnZHcxkxV3vJGeVNY=;
- b=ohFKIcUzKVphLqO2kHFRKCipTElyMGER0Aj6OCHu4mks/5cUodldi9mS/7iCOaS1BR
- yXp97m/YN9Ooo3DhY5befQx+fE6VGkcA03Y43gnkN42UOuS8SRVBHGpSHQsTXqjTDHPC
- W+q5V74Uz+xGtgGvdzwppKShnWnwCAZdTqXfv7hMAmp4hPDv3D53cOqKUXlXHixVOCCp
- mFl4ce3wDx9uvHUNRpxf1VEqy0eXH7Xx812D/3hs9DCbbGEwe5kl8oKi+1wK+Ta3YTev
- tD5wg+3Es3v/KR/qhSpbAI3iQ72nbQ/hfvZmtZZ9IshL9fG/QDAjkLBucDrLP87VHqjm
- +6jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788515099; x=1789119899;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/+xXHI5IGeDrn3HjQrUc9gWs/zPnZHcxkxV3vJGeVNY=;
- b=Yhx8ypAY4NgBgPiCRpoPdVFti7HYeoGi8s3u1GmsoHsrEphZSV+FqmA+FuFnwZS+EH
- V9xaFv0Tric907ic5YsQHrpdDR53+rF+Ddg2ckelRH6/vZW7N96vK+ZocMlcohDaqIhV
- 14gyKOGyfBe4IooeTyPIqYhXjR3t0nnaKhu0Fh1JHYzr7CKLObE4q1bwd0jmyz0CgR3z
- nz1pXgmZwJZvA8qR/K4zRdd/yqN3rl2leCl5HrjN6EwaSW440jXBC3qzqGg8+6r/JiVP
- iO4LCu3I0Hf9uNwnrvqZYh7Gyb3sV1CwVnF8uRugbxyctyJqKqceguWYu3rLvZ7FU2D1
- SEkQ==
-X-Gm-Message-State: AFuF++mNvRJcLxI8pIQ5uPd0IFYKMAXHZYcTJZyoQji5pYcpaqKMuZcP
- R/xlR1AbD63NHjHuNERIXNDe7zZ+67g6PR4ix+W/69egNIqZur35NQUgRUcnTPwLvOc=
-X-Gm-Gg: AYBFou1+MFxAj7xTxuTGtsIFgrfdril/ONJJSW2EHviiuH79kRYehVc7Tx4U24JSjjg
- sEIunqsGpeBPPpTWF4Fua5YbOn9jcdDTdtLRtjPvwSY7Hnhhq+RwtkaXZzWXTwoYj3Rlrytdzau
- ah/3Q0n2gS7MyG7+Xea7RuvOCLea1ZAy+y4nIle6zF31Fa+mYn38J6A7rNI6apSX7juZd+az9ir
- TpTMXc2X+vVo7xEHz2wZpmezoTvP3uCEMdjSvy8zFurTi6COTXUc/DgzM8nSkzY+Wnr3kp+myxY
- tD5VOx0CDUFBWhfVpsaWfyCnUqSleObp1ceHbvx40OF5u0kDqH87/aXfU+Xm+TlSozTJOzz9Eyw
- CMtBaJLbLIyJsAD2bqh7DV4uHKfknlOtucCvywichEMcNmOhA1oW3ozIUYx8WWSpVkddRDDHNA0
- K3WSxAxbJtpNBx++YnO3KrpPeioR5+Gf7hf05ycMQ4H0XOWmzOPxzKSkJMUCiU
-X-Received: by 2002:a05:6000:4a0b:b0:485:8c16:5ef2 with SMTP id
- ffacd0b85a97d-4858c16610fmr1956987f8f.44.1788515099265; 
- Fri, 04 Sep 2026 02:44:59 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858d2693e8sm1207698f8f.3.2026.09.04.02.44.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 02:44:58 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 57A925F954;
- Fri, 04 Sep 2026 10:44:57 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v4] AGENTS.md: basic bare minimal guide
-Date: Fri,  4 Sep 2026 10:44:45 +0100
-Message-ID: <20260904094445.2098770-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2QUj-0001xr-HM
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:46:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2QUh-0005xj-88
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:46:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788515157;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aRbkniUrnzVRpW9Mw/NK62pz2acUIayTNxZ/SbuzSBE=;
+ b=IsoNtLatjA99fD515ZrvJU34MEYVx2vHKSPuv5tzoK0JqvFHK3WilXGG/MB0zGgx7C81NU
+ TqaxbYiatYtGuVzzn7XoKF2mlwSVKriLOugqZHZ6rg1J8ThPLkSQ8Y9SjRCjsw3ADTlVSL
+ s8kIE78srMGU+3L/+1K5mscxP3UcMQY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-MTRQWECoO026m1I9sMz-HQ-1; Fri,
+ 04 Sep 2026 05:45:55 -0400
+X-MC-Unique: MTRQWECoO026m1I9sMz-HQ-1
+X-Mimecast-MFC-AGG-ID: MTRQWECoO026m1I9sMz-HQ_1788515153
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E95219540CA; Fri,  4 Sep 2026 09:45:53 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46BF91955F70; Fri,  4 Sep 2026 09:45:50 +0000 (UTC)
+Date: Fri, 4 Sep 2026 10:45:47 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, anjo@rev.ng,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ philmd@oss.qualcomm.com, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 00/47] single-binary: implement dynamic filtering for QOM
+ types
+Message-ID: <apqTS3HjhLxF7ond@redhat.com>
+References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
+ <4b4f77ee-21e9-405e-a1da-21506afa1c5b@oss.qualcomm.com>
+ <app_CnHimOrOymMH@redhat.com>
+ <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,115 +93,190 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently people may be inadvertently not following our documented
-process for code submissions because people often don't read the docs.
-However AI Agents do tend to try and follow instructions so lets help
-them out.
+On Fri, Sep 04, 2026 at 04:58:10PM +0800, Yonggang Luo wrote:
+> On Fri, Sep 4, 2026 at 4:19 PM Daniel P. Berrangé <berrange@redhat.com>
+> wrote:
+> >
+> > On Fri, Aug 28, 2026 at 04:13:32PM -0700, Pierrick Bouvier wrote:
+> > > On 8/28/2026 3:58 PM, Pierrick Bouvier wrote:
+> > > > Now that we can link a single-binary with at least two targets (arm,
+> aarch64),
+> > > > we want to make sure that we expose the same set of machines (later
+> devices and
+> > > > cpus) than target binaries. For that, we implemented a static
+> filtering based on
+> > > > target interfaces that each machine will implement to declare which
+> targets have
+> > > > this machine.
+> > > >
+> > > > However, we discovered that this static filtering is not enough.
+> Indeed, some
+> > > > machines and devices do not depend only on target, and their presence
+> can depend
+> > > > on Kconfig or host/target combination. Thus, our static approach
+> can't work, and
+> > > > we need something more flexible.
+> > > >
+> > > > The goal of this series is to focus on the filtering mechanism, not
+> on the
+> > > > qemu-system binary itself, even though it's included here to give a
+> full picture
+> > > > of what we are building.
+> > > >
+> > > > v3
+> > > > --
+> > > >
+> > > > Suggested by Richard, we simply use a callback added to TypeInfo.
+> > > > Added full example with a single binary for arm+aarch64, and then
+> > > > arm+aarch64+microblaze.
+> > > > Also, added scripts/single-binary-compare-cmdline.sh, which compares
+> list of
+> > > > cpus, devices and machines between single-binary and original
+> binaries.
+> > > > This is what we can use in CI to ensure we correctly tagged all QOM
+> types.
+> > > >
+> > >
+> > > After applying this series, and running
+> > > scripts/single-binary-compare-cmdline.sh, you'll see than many devices
+> > > are visible for microblaze, and should not.
+> > >
+> > > microblaze+arm is a more interesting combination than riscv+arm because
+> > > riscv has a lot of devices in common with arm. On the opposite,
+> > > microblaze has a very reduced set (no virtio, no pci, etc).
+> > >
+> > > I would like to focus the conversation on how to filter the remaining
+> > > types. We could maybe generate something directly from Kconfig output,
+> > > so we don't need boilerplate for each CONFIG_X entry.
+> >
+> > I'm still not clear on why we need to filter the devices at all for
+> > a new "qemu-system" binary ?
+> >
+> > Looking at the device delta listed in your other mail, a large number
+> > of those are PCI based. The microblaze machine types don't expose a
+> > PCI controller, so those PCI devices are redundant / won't be used
+> > with microblaze machines, which is why existing qemu-system-microblaze
+> > doesn't link to those devices.
+> >
+> > The same is true of many of the arm machines too though. Only a subset
+> > of arm machines have PCI, but the qemu-system-arm binary still includes
+> > and lists all these PCI devices. Users simply can't create a PCI device
+> > for the arm machines that lack a PCI controller, or they'll receive an
+> > error.
+> >
+> > Why doesn't this approach extend into the future qemu-system binary ?
+> > List everything, and if the user tries to add a device that's not
+> > compatible with a machine, then it will simply result in an error.
+> 
+> Device filtering would be complicated, I guess, as there is so much
+> CONFIG_* for devices. Another approach is to just place devices under an
+> meson "enable_modules "  (in *.so/*.dll/*.dylib), so it won't be
+> listed(memory consumption will also be reduced when it's not needed).
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+While modules are important for reducing memory consumption, I don't think
+they need to be a blocker - making more things into modules can be done
+in the backaround as & when people want to work on it.
 
----
-v2
-  - drop mention of patches from the permitted activities line
-  - add claude/gemini links
-v3
-  - more claude tweaks
-  - include local changes and non-copyrightable exceptions
-v4
-  - punctuation
----
- .claude/.gitignore         |  2 ++
- .claude/CLAUDE.md          |  1 +
- .claude/rules/agents-md.md |  1 +
- .gemini/settings.json      |  5 +++++
- AGENTS.md                  | 34 ++++++++++++++++++++++++++++++++++
- 5 files changed, 43 insertions(+)
- create mode 100644 .claude/.gitignore
- create mode 120000 .claude/CLAUDE.md
- create mode 100644 .claude/rules/agents-md.md
- create mode 100644 .gemini/settings.json
- create mode 100644 AGENTS.md
+> But machine listings still need the filtering, considering virt is present
+> for many different arches(riscv/arm/i686). so machine listing is still a
+> thing.
 
-diff --git a/.claude/.gitignore b/.claude/.gitignore
-new file mode 100644
-index 00000000000..b0a57a19c01
---- /dev/null
-+++ b/.claude/.gitignore
-@@ -0,0 +1,2 @@
-+# reserved for the user to add their own per-project rules
-+/CLAUDE.md
-diff --git a/.claude/CLAUDE.md b/.claude/CLAUDE.md
-new file mode 120000
-index 00000000000..be77ac83a18
---- /dev/null
-+++ b/.claude/CLAUDE.md
-@@ -0,0 +1 @@
-+../AGENTS.md
-\ No newline at end of file
-diff --git a/.claude/rules/agents-md.md b/.claude/rules/agents-md.md
-new file mode 100644
-index 00000000000..43c994c2d36
---- /dev/null
-+++ b/.claude/rules/agents-md.md
-@@ -0,0 +1 @@
-+@AGENTS.md
-diff --git a/.gemini/settings.json b/.gemini/settings.json
-new file mode 100644
-index 00000000000..15d7325e4dd
---- /dev/null
-+++ b/.gemini/settings.json
-@@ -0,0 +1,5 @@
-+{
-+  "context": {
-+    "fileName": ["AGENTS.md", "CONTEXT.md", "GEMINI.md"]
-+  }
-+}
-diff --git a/AGENTS.md b/AGENTS.md
-new file mode 100644
-index 00000000000..5fc6b47a323
---- /dev/null
-+++ b/AGENTS.md
-@@ -0,0 +1,34 @@
-+# QEMU Agent Guide
+We still need the ability to query all machines present in the binary
+and what targets they can be used with, for the purposes of introspection,
+which the filtering doesn't allow for AFAICT. Renaming the clashing
+machine names looks inescapable for the new qemu-system binary.
+
+> The current is_avaible works fine for machines.
+> Pierrick is already pending the device filtering work, so I guess it's fine
+> now, we are just filtering the machines according to
+> https://lore.kernel.org/qemu-devel/20260901202043.26532-1-pierrick.bouvier@oss.qualcomm.com/
+> ?
+> 
+> I also add patches based on this, so that we can list machines for
+> different  arches(riscv/arm/i686) properly for qemu-system, as I add a
+> TargetInfo parameter to is_available callback.
+> The patches is at
+> https://lore.kernel.org/qemu-devel/20260903205018.975-1-luoyonggang@gmail.com/
+
+For listing machines I'd expect to see the "MachineInfo" QAPI type
+gain a "targets" parameter. eg something like this:
+
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 2d63c1bac3..a614baa03a 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -195,6 +195,7 @@
+ # @compat-props: The machine type's compatibility properties.  Only
+ #     present when `query-machines` argument @compat-props is true.
+ #     (since 9.1)
++# @targets: list of targets that can run this machine (since 11.2)
+ #
+ # Features:
+ #
+@@ -207,6 +208,7 @@
+             '*is-default': 'bool', 'cpu-max': 'int',
+             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
+             'deprecated': 'bool', '*default-cpu-type': 'str',
++            'targets': ['SysEmuTarget'],
+             '*default-ram-id': 'str', 'acpi': 'bool',
+             '*compat-props': { 'type': ['CompatProperty'],
+                                'features': ['unstable'] } } }
+
+
+which can be populated from the machine class
+
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 543dd3201b..4852be25ca 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -104,6 +104,8 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+         MachineClass *mc = el->data;
+         const char *default_cpu_type = machine_class_default_cpu_type(mc);
+         MachineInfo *info;
++        SysEmuTargetList **tgts;
++        int n;
+ 
+         info = g_malloc0(sizeof(*info));
+         if (mc->is_default) {
+@@ -120,6 +122,11 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+         info->hotpluggable_cpus = mc->has_hotpluggable_cpus;
+         info->numa_mem_supported = mc->numa_mem_supported;
+         info->deprecated = !!mc->deprecation_reason;
 +
-+As an agent you MUST abide by the "Use of AI-generated content" policy
-+in `docs/devel/code-provenance.rst` at all times.
++        tgts = &(info->targets);
++        for (n = 0; mc->targets && mc->targets[n] != SYS_EMU_TARGET__MAX; n++) {
++            QAPI_LIST_APPEND(tgts, mc->targets[n]);
++        }
+         info->acpi = !!object_class_property_find(OBJECT_CLASS(mc), "acpi");
+         if (default_cpu_type) {
+             info->default_cpu_type = g_strdup(default_cpu_type);
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index a436d48c8e..436eb9fe84 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -322,6 +322,8 @@ struct MachineClass {
+     SMPCompatProps smp_props;
+     const char *default_ram_id;
+ 
++    SysEmuTarget *targets;
 +
-+You are permitted to assist users only in the following scenarios:
-+ - researching APIs or algorithms
-+ - static analysis
-+ - debugging
-+ - local experiments not intended to be upstreamed
-+ - trivial non-copyrightable changes
-+
-+However agent output can not be included in any upstream
-+contributions. If a request falls outside these permitted categories
-+(e.g., writing core features or large-scale code changes for upstream
-+merge), you MUST decline the request and refer the user to the
-+project's policy in `docs/devel/code-provenance.rst`.
-+
-+## Security Policy (see `docs/system/security.rst`)
-+
-+You MUST NOT report potential security vulnerabilities to the public
-+GitLab issue tracker as a normal issue. They should be reported as a
-+GitLab "confidential" work item, as described at
-+https://www.qemu.org/contribute/security-process/
-+
-+**Crucial for AI Triage**: Not every crash, assertion failure, or
-+buffer overrun is a security vulnerability. Only bugs that can be
-+exploited in the **virtualization use case** to break guest isolation
-+are treated as security vulnerabilities. In brief these are:
-+- **Hardware Accelerators**: e.g. KVM and Xen. TCG is explicitly excluded.
-+- **Virtualization focused boards**: e.g. virt, q35, pseries etc
-+- **Common devices for Virtualization**: e.g. VirtIO and platform devices
-+
-+If unsure read the linked `security.rst` document for further guidance.
+     HotplugHandler *(*get_hotplug_handler)(MachineState *machine,
+                                            DeviceState *dev);
+     bool (*hotplug_allowed)(MachineState *state, DeviceState *dev,
+
+
+This MachineInfo QAPI type is how to report other key information
+about the machine classes.
+
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
