@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0354DC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 07:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC2BC79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 07:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2OKh-00032t-3v; Fri, 04 Sep 2026 03:27:31 -0400
+	id 1x2ON5-0003cT-53; Fri, 04 Sep 2026 03:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1x2OKf-00032f-Pc; Fri, 04 Sep 2026 03:27:29 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1x2ON3-0003bs-4o; Fri, 04 Sep 2026 03:29:57 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1x2OKd-0007q4-Ms; Fri, 04 Sep 2026 03:27:29 -0400
+ id 1x2OMz-000814-5O; Fri, 04 Sep 2026 03:29:56 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VRqz0EEDXf0dsF2FAzI2lvbbcCeokomfauQkVRLTyUS5+AfxpyA7mjrjoU9/wYdQZcoyTgC0dajpIK3DLCEE22ipUIA5mgqgPTTZKVNIxXecEUkLaXMku0G5BKSP8tQi3qkaIbH8eEaHy/xyfIYa90nGpYsLE/FLT+AKsIrV5tUjuFjndR0m6EMV9rfEWVBNL29Ia+MNhE44zjYZaQydG+LA9SzyvOVOZARkzHgfMIKBFI8nwHWBnCc3wy0wxYdxaGqDXK3lKWyMVMYYkXuvLC30SpcujWPaIjEn9bZ+RZIPGXWocCF99H459RqYKYJXx5xJh2mVPdfokBMeW4Y5Lg==
+ b=ESEjUDnxlUjqtPHc+VXdLznih9dvunf+dKvbBsoIM1lr/aJ6AnxtNzKoR+i1JvuBHXCp9LuhtJKUD0smCCqp1xIFWx5Rk/+LgUpZB4OlHdo0JZ4MPOJvEl/GvkRO5t9EbIFvjtw9xarewjIBlMlp92pC90k3YNSpkFJvdpLyew8a6KSvJWFtN2tDP6LhWCHqhr9nnOMFp0OQ10URQqS4PPZHuGW1NUkX7f/SVv9I0Z7MTFPsJEMuTaK3g1D6JYag06CRRJQRHJ1OxEVYn9XhXTX4JjptGnU5Rw/htpaQrnUSbYEmHcSacJkrjXNM5EIP3cSDhrkIsj/l0P2iSa3W/g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=31NrxNb8Ah+4KAkyLRC1lrdg59FkM4bsCed8LDaBEms=;
- b=Taqs4uqq5Vq+kI0hGXNsjOJYkq6bTVGU+XlGAiJfOc40TzvSaj1Ih1gnt80LyUyQhmg2XeAZ5sStTQBhSfxYi/VHaExvfyRtcdA9ppiWwmkwoqmWcQAD7/ik3E0JPudbMEqvQOr+qMLt+oAvZ1o/yNMMhtlOF7UZJyaH+kGs6R58JmVhsbyikDxxlUVpcOYcShz3O0IA1yOcSqQSHK1mGdY1olrRh1cSiu/XzzKNs/I9JWJsTuiu9EJmJ0IXh+plb+HplwqKOAeTFiy/MuEqwfDX7MwOMdigO7D9A8WpixX7NZT/sdsj8vFGVOBUZf4Im9sYZ02LuUJxvWetyH3pnw==
+ bh=NKj8ugWy8xn/kzHmZjUDvYxsnTJl8BaEANgvzz2J+r8=;
+ b=anU+xdq58H6iITUN3XL1+266VREdRdmKhWKo4fz+GpIg98Gu+j1UVL3g+8A/dEvRTebkqNeJrzx1zbowslSgX0ZkDS50TTnVj8nZG8ufyGivZDqXi9jvpdNF39miZ3MK/aogDCbfZHZ+q4uvesLG+9Fau+Q79I2XS95F9qcsO9zFAqJUTamjUubzDN6dGOhi7lMdas24SOHQApvFrCanW/C2NUCkkInzLfymQ6Tem3h/qEaGRvcVZsSDOePaJUJOzS1WO+pHJjvJXte0XQyUqBz3vzfN9GNVBn9xj/WOoHLCET/+VblKwV5PJhqmGzw6MPPJAsN/cOD4fZ2ad3yCzQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,101 +33,100 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=31NrxNb8Ah+4KAkyLRC1lrdg59FkM4bsCed8LDaBEms=;
- b=nWLHbzI19id49qb2DqEGs/tbItz7Vk1PZm/Y7wmxhgpJ0A1kp8nf5xk0nIHjzYsx02es1d0wPH+MJCuxzc38TvN0W/SAdWRNo4/47Xxh7VvUA34LrSIy8HkPPLRbR6aIMyMD6lR7+SyBMnHsI0qhLazToC3cTofBqTXXXkAYmQNzNsU0dL9SCRurcFzWaFYBa4HsagGBbOxl/lpmIudG5nQMv4Lpyx7sLupQFoTIz6Y6gQmumjU0ZpxKdfa9BopF/ZjKM9e12/uA8iDEhfJbN3tfpt0Lu381Z0Y5JypOCXWlMmFELFgCY6Cnu8mliBlR230T1zN2drqRrgjW3lVnkA==
+ bh=NKj8ugWy8xn/kzHmZjUDvYxsnTJl8BaEANgvzz2J+r8=;
+ b=VJ7YNM5A26F4beaJkRdoBzFbQFcg7VtJ95rqLlyWoN4qjTDPQ6l8sVmm0YTZYkPu+6Px3CsrAxye7PltYNsqZ8fI8rcIF0WdSY4LH8z/xdTOAY6ztqmlIZUjHOIwP+pjSJB3hRu/7r3WuwGLrrDnd9mX+7eVO9IYaTxVAy0EJqIiLE4zYkaINIiQjgA7WYwU/b+z0I4Fr0VStSdVHat3stMDtOTxKL06Kd+Xm5J1lgPffkOHOrEd3IAp1Jcurx3xO3M5EvvlQDYBNkSYaU9Gr7xlRiLw+B0z9JsA71VDnkkAR1dM5MMF4TOOgtfiO3qk21f8YdrMcaxTxwJs8KaWOA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by TYZPR02MB6137.apcprd02.prod.outlook.com (2603:1096:400:286::14)
+ by TY2PPF458FD3D2D.apcprd02.prod.outlook.com (2603:1096:408::98f)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 07:27:21 +0000
+ 2026 07:29:46 +0000
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 07:27:21 +0000
-Date: Fri, 4 Sep 2026 15:27:17 +0800
+ 07:29:46 +0000
+Date: Fri, 4 Sep 2026 15:29:41 +0800
 From: Chao Liu <chao.liu@processmission.com>
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
  andrew.jones@oss.qualcomm.com, 
- leif.lindholm@oss.qualcomm.com, Icenowy Zheng <uwu@icenowy.me>, 
- Matheus Ferst <matheus.ferst@eldorado.org.br>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v9 2/5] target/riscv: add riscv-server-ref CPU
-Message-ID: <appyqYy0NpfzW9km@ChaodeMacBook-Pro.local>
+ leif.lindholm@oss.qualcomm.com, Nutty Liu <nutty.liu@hotmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v9 3/5] hw/riscv: server platform reference machine
+Message-ID: <appzVS8cAVHIr73r@ChaodeMacBook-Pro.local>
 References: <20260903183125.682865-1-daniel.barboza@oss.qualcomm.com>
- <20260903183125.682865-3-daniel.barboza@oss.qualcomm.com>
+ <20260903183125.682865-4-daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260903183125.682865-3-daniel.barboza@oss.qualcomm.com>
-X-ClientProxiedBy: BYAPR21CA0010.namprd21.prod.outlook.com
- (2603:10b6:a03:114::20) To TYNPR02MB9351.apcprd02.prod.outlook.com
+In-Reply-To: <20260903183125.682865-4-daniel.barboza@oss.qualcomm.com>
+X-ClientProxiedBy: SJ0PR13CA0221.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c1::16) To TYNPR02MB9351.apcprd02.prod.outlook.com
  (2603:1096:405:3d0::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TYZPR02MB6137:EE_
-X-MS-Office365-Filtering-Correlation-Id: 14becd3c-d08c-4b9b-2c4a-08df0a55f56e
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TY2PPF458FD3D2D:EE_
+X-MS-Office365-Filtering-Correlation-Id: f3f1c64a-9f52-484f-87a4-08df0a564b61
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|7416014|6133799003|18002099003|22082099003|56012099006|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info: 5Ts3KQ8Gm/hILQVur6gAeLRJU/wcMa2rl6pDJm7AODJdrtB1kiGXz0TsxbZkCZQOhxuCNzC3J5n0bITHEEFJytVZefLVl98eu+96dCce0RvJYZwcsZBlKosLJ5447Wz5JsNmMG1ZBL/NmIGHUjd4h8SbxKtqIJC1EDxdBvdsDUsHWCYL9yavc75qhCPRqYQNjL7pZ6UtNX0tDE0NKdbxKJnvNAbUrLob6CF6Mmvz+DH5e4ky+3dZU+dHqBVNaOnTXmVxJisrNGDnWenH9GI5Vb/hSlIeilxazG9c0GrB3TEYhlHMnKBPcVXdFsF+Kbep5t3SmoU+zkkbZifQUFhlBvvPuN8tJezv2ubTnuWbbjXEILVgzeczL+StQLh0KFcERzMEdrJUAvOrrHbrtheiKCmLZG4chKJMeWfc3pr3ZwoeGe3wevE/M6O367J6vQk1ZgDAZweXvA9PUdw5FcSyk6my25qH2hOus5BHkxvhIolKJ3vGtGsgKaUias+gL8DjL1kNi/wcie5t8gP3MuVPZBxaJiB3iqsbksuuEq6RG4/9BcUBOKUwwixKvJRsYmAXCJ1S5DibFQ4BukXaui80OBg+PzsaPdz9yxfRp0vpzXIPM6w7mxNNfHDKkzlLflSlBvGBsluLeATyOg+1DzYcwLolw/0e1buoYJyCukLmhRU=
+ ARA:13230040|7416014|376014|1800799024|23010399003|366016|6133799003|10067099003|4143699003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: GZ5Qeq5IvJKkNt4JOwWSXasS/LNfJDQrjBUrg7lwYUHm8Why1w4PudhIK85aIRyioysLkPnWMsJv2Cy3NwqsY1rRg6J0S1AblV8weVmin9cm7YjXDgUq6BcDtWmycB2aPnnbdUVQMA6mVxKF4A01jfVc7Q7UqA5o+NgWTA2boonNEuNM08pEdKMAjr7hPsFFhy88Xj7zdSLf9i1sHn0RTSKAytztaDMIqQBXfadSZ25842mz92cquInb3uIzrGo0L7vxd6zhRcnHUMN9uJ4qA9a/eFCa8AvZiMLOJefpNIM4ch6m2b8MRnnfx5rAdc5xJXQIqiHnaM7nlq5Z+mhuzIPZdwD5Hevno8QRCBNHXNBMApIsozVYXHrUdX7k5/hl97Q86sl/fV/1MT44/Mw3LRBWfZs3iL9Cthf3ujPiHocXQeQMYSmjazTyz+Mf7/KWyAapwfy8H6Qnnn1VGSoD1jZd9RCc/vefzJD9OwA5kCFWeQHJVW4cNSfnmUJmg9v82cLodZ1prtkUf1gRxhJnt9K39V7MtT6KK0wfBd5lH9ZVsG9xl7qAdYArpbYSm9a9Ck9b5O/Cx1M8+YsUZQpSqoCmVh6ELE/CK0FQW9oPi1I=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(7416014)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003)(10067099003);
+ SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(366016)(6133799003)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?5V1MohlAAssRJZXVEAQIt4y3eOg/hre0kaHcR0EuKC042igflhdXKUkFUfkZ?=
- =?us-ascii?Q?sO+KngGGHCI2ey2VXK6dEauVH3uv1XLbN3hVeHlb/vM8Efw0eQ1KVe/HNCCA?=
- =?us-ascii?Q?Z4L0ZQmI7jpc+YieH0d6HVA0BHfL4/ayhLaA1kMX0GWbzkMcXFwCAbJ+OLxK?=
- =?us-ascii?Q?evj/AZHgPyuSLWelwUmbU7GlTxZM+k6lBzJhZTwsr25i4GuBV6cuv/5QwVGc?=
- =?us-ascii?Q?T+wOV64kcvT8zwJGUdk7go6GaB+QkxNWcA08Ti5vSjhmjj7YMvHlSJ5HCDBW?=
- =?us-ascii?Q?p+/a/JngM788GUOKMvbxyTSP7JLllMEMjMEhMsQrCcZKH5wnpfpqHXA3iO2N?=
- =?us-ascii?Q?Ua4femExWQvMvInPwvD+Unb/Oya8jGRyJvrkyeI1XwyfySGJS3cO5E0g5B9m?=
- =?us-ascii?Q?0z6sZkAJEe9lOkZltQYkJ8pISNlk6kTQCBOkIhSLVQzrRDNlxg1SvCRKUL7v?=
- =?us-ascii?Q?mLqt41kD2HturfhAxtjOpkxzE6MWQeleNmlGddV1Z1nhs5qweNc8IuyTofwk?=
- =?us-ascii?Q?axv0l25kWqTPZvRm22Lt5a6eHT+5zihE59pR9l0jtQSAe4Zm7ApBZI5zOvQU?=
- =?us-ascii?Q?3y5VS/8sIvZj+rgPs6gLtcAYT5UI4G2cALDMGpQSj+oP6Ei171QX+6v+9+vN?=
- =?us-ascii?Q?BgxlMDzuusfuYi9xr03NEp+368GxkKakFG1VNacjmX4yU55lHVsGH+eRUu/S?=
- =?us-ascii?Q?21uuRPykxLrV/I7gK4xZPmN9xYmkaHmk7cK9Cxr6BIrT1DdFugvBwJoR38AW?=
- =?us-ascii?Q?ZHYWGwUQtUK56MZOKGYFlO+uqAr59B/fMi1YF4A0B3JPxr33qSEgEqh35b53?=
- =?us-ascii?Q?yr5Aujhzl+w0JUqoQSRm97AgFvRajaNoQb69fdmOUC0Nd/9gsdSf8eOTkj+5?=
- =?us-ascii?Q?jFUUJv7nziS2MzUAHbids4eLPhc6etZWiaS8m7RLuQdWpmZpavYIAkKO+igy?=
- =?us-ascii?Q?5XFriQgY5QCo7m16jmdagzOjbcyU341TEZwSD30ZT2Y7FJ3ECBq0kgdrWqKI?=
- =?us-ascii?Q?EVNrAFt3P9wuahRTVb7LjdGXbbF6V7eDrjvtEZoh+d9KAZArg2KP03rcjvFE?=
- =?us-ascii?Q?iN9PNj6hsgbUMk5tHo1Y7tdFIq5KmIhRi1a8OpbKz6vcMEMBY89Uxw3xOi3l?=
- =?us-ascii?Q?Q7gItJn7Jl5Wsy3sb2J+vAEjUdytDvZEJ0MfDSsmagnzzHzf6O6AkVGJb5XW?=
- =?us-ascii?Q?I6FCoWAuDn/t6Epg99jYNtRIhXO12DerOQjJ/9TFMtOPoy0XNXxZcpWCmofT?=
- =?us-ascii?Q?5X4YsMBJUU5LPzBRhP9KTVQXS+cUFJQhOU3uTkIH/4ddMJmYJUaD9jzNicCI?=
- =?us-ascii?Q?zI4UI+upQGaDtZz3l+DfY9WYS2kj7h4qVkiYhH2PUEipGXT9sBw+WaPxlALo?=
- =?us-ascii?Q?J7bhvFGwv+jH1mbEnaUOj9RMJWCcAxQJV1BtiGiZeHTcXSDHi2pRAcb+70Kz?=
- =?us-ascii?Q?ni/uXo71dVr4P3E7z3KTYfnuS/dasCAbqYQMXMwE7e4AwoYpQtSo6NsRmJKz?=
- =?us-ascii?Q?YkMU0uyNM/BGw8/TO+2221hh631+Hr2HbaTz8RTZCrb1iv07Ra8IR0Hv4p50?=
- =?us-ascii?Q?+V8GyqefTCXrNwJAyKBtVH0JjKeR6lvB4N2is7/wEneXYJb0S7OvTD/6bGgS?=
- =?us-ascii?Q?AY2Xp/WVOLh7XQJIkf36oG0El/4zZy/e7FoGTGa51Elw8vhu5cP80C5izLHm?=
- =?us-ascii?Q?SgIZ9xvX85q4baEUsCk6znSf4xxOjiRK6g6s/AWiaoWdMCI6KTmHUujf7go9?=
- =?us-ascii?Q?5kFfZaXEpFvhOe38eJ2O6h0owsjdPJQ=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?I5sQ2waAjJoL/MaO9lDLX7FbxDAWGJ9cUHQpizSI/BclGP5dgM53/y2qrgHc?=
+ =?us-ascii?Q?TQkyQA2+xidU4yPV4fsaSkLoDyOcuAW8YR02ozcedmli5QLQlYJ7onA/NTPd?=
+ =?us-ascii?Q?bUakE27M5/uBP3WqPuxGHd3ZLLxnWUxqyIn4CA5R5EC/BeDcTs8H9rYEyzOH?=
+ =?us-ascii?Q?9m5HOxhexkGqZIX+IKJT17b7t/m9u02GpFf9EJEEC1QHS3wWAzWZbR/fpB/Z?=
+ =?us-ascii?Q?qB9qV/zsHSp5aT32sN/KqNPwUYlBzl3fht5vakL7vQuvy+EMFz52vThtHfYZ?=
+ =?us-ascii?Q?+Xaf8QcmVWkl2nKX78zyv3XX+mkmDvR6JgDuDKMeaSIyTdKWPzLVnceNca93?=
+ =?us-ascii?Q?zKOiuBvDZUzSXMGxz1UQ9DQqNZLcaUA85wFkBdot6bbfiEmv5ZDSTCGCmBDG?=
+ =?us-ascii?Q?+KQtuvBBtvDk0UNjd7JGsPLAOuN8gHM0ZuFiqxG2OCS3x4g5XFrhDE9AZLCp?=
+ =?us-ascii?Q?f+I3SxONGN6ZDZ/8+URseug04wBphrjsXGy4SlmMB6JC03NbLoE1fpob3tzR?=
+ =?us-ascii?Q?ITrIJ1glVDW/j4vDjdH76+RxabkDb2IQKsSlr61+rB1QiPWTe+g9h12L/1xd?=
+ =?us-ascii?Q?K9QK9ELlrUf8Tk2zUUpd7mIHRfOvgBcxv/q6lVa5NmcZ+V5qZZRveDK+wa5A?=
+ =?us-ascii?Q?oDrYrNxLoQpR503IPCLMM7xJ4JV8bxiXXJuZ2LSwxBrWDBGQG9gesKA0mQHc?=
+ =?us-ascii?Q?xVsH6vjbUdsM2oiIlpqgtHQocltiB9X2mr6oL39jTzXH1vJsSE17/3XRyqV8?=
+ =?us-ascii?Q?qiRF80R8Jh5qZFmr/pyV2a/myWXG9fJ+3vh3U+YJQ5jxas2SjNhwKY7/FJUi?=
+ =?us-ascii?Q?YrNwSRumb7A85IJ8rhFn8k0ajvXnt4Nomdh9oWGLnvD1M5KeLWQF6i1r7AeS?=
+ =?us-ascii?Q?NyoyAUUV5sxbXa8JHUjmZFeIUVxlWrIZ/k4IXgWuikeIokNmQBZbOX2MIuBn?=
+ =?us-ascii?Q?03ERirhl1JTZTNgBpQCh+BxM0GBKo+mxu6wFsSjLEsyzGr/xIx9xdQ6iW5eS?=
+ =?us-ascii?Q?3i4IJY5mI9kUzaQrihRZq4MoM6emtCsKESIt8r9p/SdXsDAuRJ5gOHyd1OpU?=
+ =?us-ascii?Q?HQFEEMCRw2GomDx8PfgYv7lnomTHvu8SiRIhheViUMv8hCvL+vHom78JEZqz?=
+ =?us-ascii?Q?ETiIxqlNbduiTJKRzsL5YXAcbMcuvrKoEr5TmmS9elDzmAkuZOlJeJHNWbHo?=
+ =?us-ascii?Q?Lwws/hMQv4od7ssV6MZnKso/JamhKQAx+T+GDEBDrpL9X0pMoO1HnDAr88/G?=
+ =?us-ascii?Q?cYG0p2BGgQeqLJ4BMZ2YZhK6Hc4oVPEzgMBIGTW8EC9jUQ/J4KAebUsVdjfH?=
+ =?us-ascii?Q?MWreBJV84JuiGPXEKtPOpg7LrMc53s/ThRfOshTXP59YUcfk3c4Gm0nLFPdO?=
+ =?us-ascii?Q?W5ReYx/rnflykOukyNpzzhJBaQyAmb85ohf8wTpFNgcGbVVs/Jq6VNGwst2R?=
+ =?us-ascii?Q?P0W+g7UnBbsw1SXwx+1hVCGGhbT2/4ejKFoc2wKUwSrtdhgfwIoKrmokYsym?=
+ =?us-ascii?Q?AqntYcuP1cJrIz+cMoq330WZqvfSarZGWezXbnTuZTPfgBLXDfFOfrxzTHsJ?=
+ =?us-ascii?Q?GrEE5jUxiS2iynK/FgjsQUeRseaIIWAm0nGT81DXin2vOuq9LGrKytFzq982?=
+ =?us-ascii?Q?19gpCB+e3paE0FlUUIQIt1qlTV+L1beCGeaiiCyFyAavzvz+mQI8MkW0vPNc?=
+ =?us-ascii?Q?8UCTX0hJAFpqLFRz8KV+Lwe84l1PdfURY6oslN5rfyAki0T88PIyuxhV2Gpe?=
+ =?us-ascii?Q?NlD7dlLyVP6kvAPYwn3PnRlvqZ29Mp0=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 14becd3c-d08c-4b9b-2c4a-08df0a55f56e
+X-MS-Exchange-CrossTenant-Network-Message-Id: f3f1c64a-9f52-484f-87a4-08df0a564b61
 X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 07:27:21.6506 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 07:29:46.3079 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dW4MwcW7e/ksKOIzaXbDpk9gN0COEYEsuUDMXM4/YLqWhmVsEvIO1aJ+mnbLgvtdbbMl9KU+VMnSj7PoYdWz1yPI5bg+V1CLO+RvARvhY0o=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6137
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-UserPrincipalName: kvjp1SZn28PGZI3j2nUfnW5Svcl97PSoIjJkrRz0xaHVFGBq6MQcuE+BVWzkWhZ5i4r+DvMLe+BUE6lBDkmBQYJo9HKz1bFWjliWed0hvFQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPF458FD3D2D
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=chao.liu@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,112 +143,907 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 03, 2026 at 03:31:22PM +0800, Daniel Henrique Barboza wrote:
-> The harts requirements of RISC-V server platform [1] require RVA23 ISA
-> profile support and others.
+On Thu, Sep 03, 2026 at 03:31:23PM +0800, Daniel Henrique Barboza wrote:
+> The RISC-V Server Platform specification [1] defines a standardized set
+> of hardware and software capabilities, that portable system software,
+> such as OS and hypervisors can rely on being present in a RISC-V server
+> platform.
 > 
-> We're going for a profile-based implementation, instead of a regular CPU
-> that can inherit RVA23, to allow future CPUs to use it internally as a
-> starting base for their own extension sets.  There's also a new
-> 'rvserver-ref-1.0' flag that can be used to set the extensions in the
-> command line for other CPUs, which can be used for testing/debugging
-> purposes.
+> The main features included in this emulation are:
 > 
-> Note that for all intents and purposes "riscv-server-ref" is a regular
-> CPU and no, we're not trying to set a precedent of calling the riscv
-> server platform spec a profile.
+> - Based on riscv virt machine type;
+> - A new memory map as close as virt machine as possible;
+> - An always present IOMMU platform device (riscv-iommu-sys) that uses
+>   IRQs 36 to 39, one IRQ for queue, similar to the 'virt' board;
+> - AIA;
+> - PCIe AHCI;
+> - PCIe NIC;
+> - No virtio device;
+> - No fw_cfg device;
+> - No ACPI table provided;
+> - Only minimal device tree nodes;
+> - a platform bus for TPM support.
 > 
-> [1] defines in rule SEE_020 that we must support at least 11 debug
-> triggers (4 for insn address, 4 for insn load/store, 1 for icount,
-> one for int, one for excp).  We're going for the minimum.  If more
-> triggers are needed users can set any trigger amount with:
+> A note about TPM support:  TPM devices in QEMU comes usually in two
+> flavors - emulated or passthrough.  A passthrough device requires a host
+> TPM device that the QEMU process can borrow and it's usually coupled
+> with KVM acceleration.
 > 
-> -cpu riscv-server-ref,trigger-count=N
+> To use the TPM emulator we'll need help from an external TPM emulator
+> called swtpm.  More info can be found in [2].  For our purposes this is
+> a process that, if running Ubuntu, can be installed via 'swtpm' package.
+> We'll go back to it shortly.
 > 
-> Note that N must be <= 128.
+> For now, adding support for the emulated TPM device 'tpm-tis' (other TPM
+> flavors might work as well, 'tpm-tis' is the one tested with this work)
+> requires a platform bus.  Adding a platform bus will open the door for
+> more devices to be added in the board.  This is ok - a reference board
+> isn't a restricted board and users are free to add devices at their
+> leisure.
 > 
-> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+> Here's how to use tpm-tis with the riscv-server-ref board:
 > 
-> Suggested-by: Icenowy Zheng <uwu@icenowy.me>
+> - in a separated shell/term run 'swtpm' (--log is optional):
+> 
+> $ mkdir /tmp/mytpm1
+> $ swtpm socket --tpmstate dir=/tmp/mytpm1 \
+> 	--ctrl type=unixio,path=/tmp/mytpm1/swtpm-sock \
+> 	--tpm2 \
+> 	--log level=20
+> 
+> Then start QEMU with:
+> 
+> $ qemu-system-riscv64 -M riscv-server-ref (...) \
+> 	-chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
+> 	-tpmdev emulator,id=tpm0,chardev=chrtpm\
+> 	-device tpm-tis-device,tpmdev=tpm0
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform
+> [2] https://qemu-project.gitlab.io/qemu/specs/tpm.html
+> 
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Reviewed-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
+> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 Thanks,
 Chao
 
 > ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 31 +++++++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+)
+>  configs/devices/riscv64-softmmu/default.mak |   1 +
+>  hw/riscv/Kconfig                            |  16 +
+>  hw/riscv/meson.build                        |   1 +
+>  hw/riscv/server_platform_ref.c              | 771 ++++++++++++++++++++
+>  4 files changed, 789 insertions(+)
+>  create mode 100644 hw/riscv/server_platform_ref.c
 > 
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 1a28f1369c..61234842e3 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -42,6 +42,7 @@
->  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
->  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
->  #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
-> +#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
->  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
->  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
->  #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 4cc73de793..086bc945ba 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2417,11 +2417,35 @@ static RISCVCPUProfile RVA23S64 = {
->      }
->  };
+> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
+> index a8e4d0ab33..ae3f62e2d4 100644
+> --- a/configs/devices/riscv64-softmmu/default.mak
+> +++ b/configs/devices/riscv64-softmmu/default.mak
+> @@ -9,6 +9,7 @@
+>  # CONFIG_SIFIVE_E=n
+>  # CONFIG_SIFIVE_U=n
+>  # CONFIG_RISCV_VIRT=n
+> +# CONFIG_RISCV_SERVER_PLATFORM_REF=n
+>  # CONFIG_MICROCHIP_PFSOC=n
+>  # CONFIG_SHAKTI_C=n
+>  # CONFIG_XIANGSHAN_KUNMINGHU=n
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index d06ac26648..da59eb2155 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -69,6 +69,22 @@ config RISCV_VIRT
+>      select ACPI
+>      select ACPI_PCI
 >  
-> +/*
-> + * The riscv-server-ref spec isn't a profile per se but its
-> + * CPU definition can be modelled as a profile that extends
-> + * RVA23, with additional things on top of it, and allowing
-> + * future CPUs to derive from it via
-> + * ".profile = &RVServerRef1_0;".
-> + */
-> +static RISCVCPUProfile RVServerRef1_0 = {
-> +    .s_parent = &RVA23S64,
-> +    .name = "rvserver-ref-1.0",
-> +    .satp_mode = VM_1_10_SV48,
-> +    .ext_offsets = {
-> +        CPU_CFG_OFFSET(ext_zkr),
-> +        CPU_CFG_OFFSET(ext_sdtrig),
-> +        CPU_CFG_OFFSET(ext_ssaia),
-> +        CPU_CFG_OFFSET(ext_ssccfg),
-> +        /* ssstrict is always enabled for PRIV_VER_1_12 */
+> +config RISCV_SERVER_PLATFORM_REF
+> +    bool
+> +    default y
+> +    depends on RISCV64
+> +    imply TPM_TIS_SYSBUS
+> +    select RISCV_NUMA
+> +    select GOLDFISH_RTC
+> +    select PCI
+> +    select PCI_EXPRESS_GENERIC_BRIDGE
+> +    select PFLASH_CFI01
+> +    select SERIAL
+> +    select RISCV_ACLINT
+> +    select RISCV_APLIC
+> +    select RISCV_IMSIC
+> +    select RISCV_IOMMU
 > +
-> +        RISCV_PROFILE_EXT_LIST_END
-> +    }
+>  config SHAKTI_C
+>      bool
+>      default y
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index 7aa3c1578d..cc5a019f7c 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -7,6 +7,7 @@ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+>  riscv_ss.add(files('riscv_hart.c'))
+>  riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+>  riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+> +riscv_ss.add(when: 'CONFIG_RISCV_SERVER_PLATFORM_REF', if_true: files('server_platform_ref.c'))
+>  riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+>  riscv_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
+>  riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+> new file mode 100644
+> index 0000000000..e6b83baa8d
+> --- /dev/null
+> +++ b/hw/riscv/server_platform_ref.c
+> @@ -0,0 +1,771 @@
+> +/*
+> + * QEMU RISC-V Server Platform Reference Board (riscv-server-ref)
+> + *
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/guest-random.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qapi-visit-common.h"
+> +#include "hw/core/boards.h"
+> +#include "hw/core/platform-bus.h"
+> +#include "hw/core/loader.h"
+> +#include "hw/core/sysbus.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "hw/char/serial.h"
+> +#include "hw/block/flash.h"
+> +#include "hw/ide/pci.h"
+> +#include "hw/ide/ahci-pci.h"
+> +#include "hw/pci/pci.h"
+> +#include "hw/pci-host/gpex.h"
+> +#include "hw/core/sysbus-fdt.h"
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "hw/riscv/boot.h"
+> +#include "hw/riscv/device-common.h"
+> +#include "hw/riscv/fdt-common.h"
+> +#include "hw/riscv/machines-qom.h"
+> +#include "hw/riscv/numa.h"
+> +#include "hw/riscv/iommu.h"
+> +#include "hw/riscv/riscv-iommu.h"
+> +#include "hw/riscv/riscv-iommu-bits.h"
+> +#include "hw/intc/riscv_aclint.h"
+> +#include "hw/intc/riscv_aplic.h"
+> +#include "hw/intc/riscv_imsic.h"
+> +#include "chardev/char.h"
+> +#include "hw/char/serial-mm.h"
+> +#include "system/device_tree.h"
+> +#include "system/runstate.h"
+> +#include "system/system.h"
+> +#include "system/kvm.h"
+> +#include "system/tcg.h"
+> +#include "kvm/kvm_riscv.h"
+> +#include "system/tpm.h"
+> +#include "system/qtest.h"
+> +#include "target/riscv/cpu.h"
+> +#include "net/net.h"
+> +
+> +#include "aia.h"
+> +
+> +#define RVSERVER_CPUS_MAX_BITS             9
+> +#define RVSERVER_CPUS_MAX                  (1 << RVSERVER_CPUS_MAX_BITS)
+> +#define RVSERVER_SOCKETS_MAX_BITS          2
+> +#define RVSERVER_SOCKETS_MAX               (1 << RVSERVER_SOCKETS_MAX_BITS)
+> +
+> +#define RVSERVER_IRQCHIP_NUM_MSIS 255
+> +#define RVSERVER_IRQCHIP_NUM_SOURCES 96
+> +#define RVSERVER_IRQCHIP_NUM_PRIO_BITS 3
+> +#define RVSERVER_IRQCHIP_MAX_GUESTS_BITS 3
+> +#define RVSERVER_IRQCHIP_MAX_GUESTS \
+> +    ((1U << RVSERVER_IRQCHIP_MAX_GUESTS_BITS) - 1U)
+> +
+> +#define NUM_SATA_PORTS  6
+> +
+> +#define SYSCON_RESET     0x1
+> +#define SYSCON_POWEROFF  0x2
+> +
+> +#define RVSERVER_PLATFORM_BUS_NUM_IRQS 8
+> +
+> +#define TYPE_RISCV_SERVER_REF_MACHINE MACHINE_TYPE_NAME("riscv-server-ref")
+> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVServerRefMachineState, RISCV_SERVER_REF_MACHINE)
+> +
+> +struct RISCVServerRefMachineState {
+> +    /*< private >*/
+> +    MachineState parent;
+> +
+> +    /*< public >*/
+> +    Notifier machine_done;
+> +    RISCVHartArrayState soc[RVSERVER_SOCKETS_MAX];
+> +    DeviceState *irqchip[RVSERVER_SOCKETS_MAX];
+> +    PFlashCFI01 *flash[2];
+> +
+> +    int fdt_size;
+> +    int aia_guests;
+> +    const MemMapEntry *memmap;
+> +
+> +    DeviceState *platform_bus_dev;
 > +};
 > +
+> +enum {
+> +    RVSERVER_DEBUG,
+> +    RVSERVER_MROM,
+> +    RVSERVER_RESET_SYSCON,
+> +    RVSERVER_RTC,
+> +    RVSERVER_IOMMU_SYS,
+> +    RVSERVER_ACLINT,
+> +    RVSERVER_APLIC_M,
+> +    RVSERVER_APLIC_S,
+> +    RVSERVER_UART0,
+> +    RVSERVER_IMSIC_M,
+> +    RVSERVER_IMSIC_S,
+> +    RVSERVER_FLASH,
+> +    RVSERVER_DRAM,
+> +    RVSERVER_PCIE_MMIO,
+> +    RVSERVER_PCIE_PIO,
+> +    RVSERVER_PLATFORM_BUS,
+> +    RVSERVER_PCIE_ECAM,
+> +    RVSERVER_PCIE_MMIO_HIGH
+> +};
 > +
->  RISCVCPUProfile *riscv_profiles[] = {
->      &RVA22U64,
->      &RVA22S64,
->      &RVA23U64,
->      &RVA23S64,
-> +    &RVServerRef1_0,
->      NULL,
->  };
->  
-> @@ -3757,6 +3781,13 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->  #endif
->      ),
->  
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
-> +        .profile = &RVServerRef1_0,
-> +        .misa_mxl_max = MXL_RV64,
-> +        .cfg.max_satp_mode = VM_1_10_SV57,
-> +        .num_triggers = 11,
-> +    ),
+> +enum {
+> +    RVSERVER_UART0_IRQ = 10,
+> +    RVSERVER_RTC_IRQ = 11,
+> +    RVSERVER_PCIE_IRQ = 32, /* 32 to 35 */
+> +    IOMMU_SYS_IRQ = 36, /* 36 to 39 */
+> +    RVSERVER_PLATFORM_BUS_IRQ = 40, /* 40 to 48 */
+> +};
 > +
->  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
->      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
->          .cfg.max_satp_mode = VM_1_10_SV57,
+> +/*
+> + * The server soc reference machine physical address space used by some of the
+> + * devices namely ACLINT, APLIC and IMSIC depend on number of Sockets, number
+> + * of CPUs, and number of IMSIC guest files.
+> + *
+> + * Various limits defined by RVSERVER_SOCKETS_MAX_BITS, RVSERVER_CPUS_MAX_BITS,
+> + * and RVSERVER_IRQCHIP_MAX_GUESTS_BITS are tuned for maximum utilization of
+> + * server reference machine physical address space.
+> + */
+> +
+> +#define RVSERVER_IMSIC_GROUP_MAX_SIZE      (1U << IMSIC_MMIO_GROUP_MIN_SHIFT)
+> +#if RVSERVER_IMSIC_GROUP_MAX_SIZE < \
+> +    IMSIC_GROUP_SIZE(RVSERVER_CPUS_MAX_BITS, RVSERVER_IRQCHIP_MAX_GUESTS_BITS)
+> +#error "Can't accomodate single IMSIC group in address space"
+> +#endif
+> +
+> +#define RVSERVER_IMSIC_MAX_SIZE            (RVSERVER_SOCKETS_MAX * \
+> +                                        RVSERVER_IMSIC_GROUP_MAX_SIZE)
+> +#if 0x4000000 < RVSERVER_IMSIC_MAX_SIZE
+> +#error "Can't accomodate all IMSIC groups in address space"
+> +#endif
+> +
+> +static const MemMapEntry rvserver_ref_memmap[] = {
+> +    [RVSERVER_DEBUG] =          {        0x0,         0x100 },
+> +    [RVSERVER_MROM] =           {     0x1000,        0xf000 },
+> +    [RVSERVER_RESET_SYSCON] =   {   0x100000,        0x1000 },
+> +    [RVSERVER_RTC] =            {   0x101000,        0x1000 },
+> +    [RVSERVER_IOMMU_SYS] =      {   0x102000,        0x1000 },
+> +    [RVSERVER_ACLINT] =         {  0x2000000,       0x10000 },
+> +    [RVSERVER_PCIE_PIO] =       {  0x3000000,       0x10000 },
+> +    [RVSERVER_PLATFORM_BUS] =   {  0x4000000,     0x2000000 },
+> +    [RVSERVER_APLIC_M] =        {  0xc000000, APLIC_SIZE(RVSERVER_CPUS_MAX) },
+> +    [RVSERVER_APLIC_S] =        {  0xd000000, APLIC_SIZE(RVSERVER_CPUS_MAX) },
+> +    [RVSERVER_UART0] =          { 0x10000000,         0x100 },
+> +    [RVSERVER_FLASH] =          { 0x20000000,     0x4000000 },
+> +    [RVSERVER_IMSIC_M] =        { 0x24000000, RVSERVER_IMSIC_MAX_SIZE },
+> +    [RVSERVER_IMSIC_S] =        { 0x28000000, RVSERVER_IMSIC_MAX_SIZE },
+> +    [RVSERVER_PCIE_ECAM] =      { 0x30000000,    0x10000000 },
+> +    [RVSERVER_PCIE_MMIO] =      { 0x40000000,    0x40000000 },
+> +    [RVSERVER_DRAM] =           { 0x80000000, 0xff80000000ull },
+> +    [RVSERVER_PCIE_MMIO_HIGH] = { 0x10000000000ull, 0x10000000000ull },
+> +};
+> +
+> +#define RVSERVER_FLASH_SECTOR_SIZE (256 * KiB)
+> +
+> +static void rvserver_flash_maps(RISCVServerRefMachineState *s,
+> +                                MemoryRegion *sysmem)
+> +{
+> +    hwaddr flashsize = rvserver_ref_memmap[RVSERVER_FLASH].size / 2;
+> +    hwaddr flashbase = rvserver_ref_memmap[RVSERVER_FLASH].base;
+> +
+> +    riscv_init_flash_map(s->flash[0], flashbase, flashsize,
+> +                         sysmem, RVSERVER_FLASH_SECTOR_SIZE);
+> +    riscv_init_flash_map(s->flash[1], flashbase + flashsize, flashsize,
+> +                         sysmem, RVSERVER_FLASH_SECTOR_SIZE);
+> +}
+> +
+> +static void create_fdt_pmu(RISCVServerRefMachineState *s)
+> +{
+> +    g_autofree char *pmu_name = g_strdup_printf("/pmu");
+> +    MachineState *ms = MACHINE(s);
+> +    RISCVCPU *hart = &s->soc[0].harts[0];
+> +
+> +    qemu_fdt_add_subnode(ms->fdt, pmu_name);
+> +    qemu_fdt_setprop_string(ms->fdt, pmu_name, "compatible", "riscv,pmu");
+> +    riscv_pmu_generate_fdt_node(ms->fdt, hart->pmu_avail_ctrs, pmu_name);
+> +}
+> +
+> +static void create_fdt_sockets(RISCVServerRefMachineState *s,
+> +                               const MemMapEntry *memmap,
+> +                               uint32_t *phandle,
+> +                               uint32_t *irq_mmio_phandle,
+> +                               uint32_t *irq_pcie_phandle,
+> +                               uint32_t *msi_pcie_phandle)
+> +{
+> +    int socket, phandle_pos;
+> +    MachineState *ms = MACHINE(s);
+> +    uint32_t msi_m_phandle = 0, msi_s_phandle = 0;
+> +    uint32_t xplic_phandles[MAX_NODES];
+> +    g_autofree uint32_t *intc_phandles = NULL;
+> +    int socket_count = riscv_socket_count(ms);
+> +    bool numa_enabled = riscv_numa_enabled(ms);
+> +    bool is_32_bit = riscv_is_32bit(&s->soc[0]);
+> +    IMSICFdtProps imsic_fdt_props;
+> +    APLICFdtProps aplic_fdt_props;
+> +    ACLINTFdtProps aclint_props;
+> +
+> +    riscv_fdt_create_cpu_socket_subnode(ms->fdt,
+> +        kvm_enabled() ? kvm_riscv_get_timebase_frequency(&s->soc->harts[0])
+> +                        : RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
+> +
+> +    intc_phandles = g_new0(uint32_t, ms->smp.cpus);
+> +
+> +    aclint_props.clint = &memmap[RVSERVER_ACLINT];
+> +    aclint_props.aia_type = AIA_TYPE_APLIC_IMSIC;
+> +    aclint_props.numa_enabled = numa_enabled;
+> +
+> +    phandle_pos = ms->smp.cpus;
+> +    for (socket = (socket_count - 1); socket >= 0; socket--) {
+> +        hwaddr memaddr = s->memmap[RVSERVER_DRAM].base +
+> +                         riscv_socket_mem_offset(ms, socket);
+> +        uint64_t memsize = riscv_socket_mem_size(ms, socket);
+> +
+> +        phandle_pos -= s->soc[socket].num_harts;
+> +
+> +        riscv_create_fdt_socket_cpus(ms->fdt, (&s->soc[socket])->harts, socket,
+> +                                     s->soc[socket].num_harts,
+> +                                     s->soc[socket].hartid_base,
+> +                                     phandle, &intc_phandles[phandle_pos],
+> +                                     numa_enabled, is_32_bit);
+> +
+> +        riscv_create_fdt_socket_memory(ms->fdt, memaddr, memsize,
+> +                                       socket, riscv_numa_enabled(ms));
+> +
+> +        aclint_props.socket = socket;
+> +        aclint_props.num_harts = s->soc[socket].num_harts;
+> +        riscv_create_fdt_socket_aclint(ms->fdt, &aclint_props,
+> +                                       &intc_phandles[phandle_pos]);
+> +    }
+> +
+> +    imsic_fdt_props.soc = &s->soc;
+> +    imsic_fdt_props.socket_count = socket_count;
+> +    imsic_fdt_props.smp_cpus = ms->smp.cpus;
+> +    imsic_fdt_props.imsic_m_base = memmap[RVSERVER_IMSIC_M].base;
+> +    imsic_fdt_props.imsic_s_base = memmap[RVSERVER_IMSIC_S].base;
+> +    imsic_fdt_props.imsic_group_max_size = RVSERVER_IMSIC_GROUP_MAX_SIZE;
+> +    imsic_fdt_props.irqchip_num_msis = RVSERVER_IRQCHIP_NUM_MSIS;
+> +    imsic_fdt_props.aia_guests = s->aia_guests;
+> +
+> +    riscv_create_fdt_imsic(ms->fdt, &imsic_fdt_props, phandle, intc_phandles,
+> +                           &msi_m_phandle, &msi_s_phandle);
+> +    *msi_pcie_phandle = msi_s_phandle;
+> +
+> +    aplic_fdt_props.aplic_m = !kvm_enabled()
+> +                              ? &memmap[RVSERVER_APLIC_M] : NULL;
+> +    aplic_fdt_props.aplic_s = &memmap[RVSERVER_APLIC_S];
+> +    aplic_fdt_props.platform_bus = &memmap[RVSERVER_PLATFORM_BUS];
+> +    aplic_fdt_props.platform_bus_irq = RVSERVER_PLATFORM_BUS_IRQ;
+> +    aplic_fdt_props.num_harts = ms->smp.cpus;
+> +    aplic_fdt_props.numa_enabled = numa_enabled;
+> +    aplic_fdt_props.irqchip_num_sources = RVSERVER_IRQCHIP_NUM_SOURCES;
+> +    aplic_fdt_props.aia_type = AIA_TYPE_APLIC_IMSIC;
+> +
+> +    phandle_pos = ms->smp.cpus;
+> +    for (socket = (socket_count - 1); socket >= 0; socket--) {
+> +        phandle_pos -= s->soc[socket].num_harts;
+> +
+> +        aplic_fdt_props.socket = socket;
+> +        aplic_fdt_props.num_harts = s->soc[socket].num_harts;
+> +        riscv_create_fdt_socket_aplic(ms->fdt, &aplic_fdt_props,
+> +                                      msi_m_phandle, msi_s_phandle, phandle,
+> +                                      &intc_phandles[phandle_pos],
+> +                                      xplic_phandles);
+> +    }
+> +
+> +    for (socket = 0; socket < socket_count; socket++) {
+> +        if (socket == 0) {
+> +            *irq_mmio_phandle = xplic_phandles[socket];
+> +            *irq_pcie_phandle = xplic_phandles[socket];
+> +        }
+> +        if (socket == 1) {
+> +            *irq_pcie_phandle = xplic_phandles[socket];
+> +        }
+> +    }
+> +
+> +    riscv_socket_fdt_write_distance_matrix(ms);
+> +}
+> +
+> +static void finalize_fdt(RISCVServerRefMachineState *s)
+> +{
+> +    uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+> +    uint32_t irq_pcie_phandle = 1, iommu_sys_phandle;
+> +    g_autofree char *name = NULL;
+> +    MachineState *ms = MACHINE(s);
+> +
+> +    create_fdt_sockets(s, rvserver_ref_memmap, &phandle, &irq_mmio_phandle,
+> +                       &irq_pcie_phandle, &msi_pcie_phandle);
+> +
+> +    iommu_sys_phandle = riscv_create_fdt_riscv_iommu_sys(ms->fdt,
+> +                                         s->memmap[RVSERVER_IOMMU_SYS].base,
+> +                                         s->memmap[RVSERVER_IOMMU_SYS].size,
+> +                                         &phandle, irq_mmio_phandle,
+> +                                         msi_pcie_phandle, IOMMU_SYS_IRQ);
+> +
+> +    riscv_create_fdt_pcie(ms->fdt, AIA_TYPE_APLIC_IMSIC, true,
+> +                          &s->memmap[RVSERVER_PCIE_ECAM],
+> +                          &s->memmap[RVSERVER_PCIE_PIO],
+> +                          &s->memmap[RVSERVER_PCIE_MMIO],
+> +                          &s->memmap[RVSERVER_PCIE_MMIO_HIGH],
+> +                          irq_pcie_phandle, msi_pcie_phandle,
+> +                          iommu_sys_phandle, RVSERVER_PCIE_IRQ);
+> +
+> +    riscv_create_fdt_syscon(ms->fdt, &phandle,
+> +                            rvserver_ref_memmap[RVSERVER_RESET_SYSCON].base,
+> +                            rvserver_ref_memmap[RVSERVER_RESET_SYSCON].size,
+> +                            SYSCON_RESET, SYSCON_POWEROFF, false);
+> +
+> +    riscv_create_fdt_uart(ms->fdt, &rvserver_ref_memmap[RVSERVER_UART0],
+> +                          RVSERVER_UART0_IRQ, AIA_TYPE_APLIC_IMSIC,
+> +                          irq_mmio_phandle);
+> +    name = riscv_fdt_get_uart_nodename(rvserver_ref_memmap[RVSERVER_UART0].base);
+> +    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
+> +    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
+> +
+> +    riscv_create_fdt_rtc(ms->fdt, &rvserver_ref_memmap[RVSERVER_RTC],
+> +                         RVSERVER_RTC_IRQ, AIA_TYPE_APLIC_IMSIC,
+> +                         irq_mmio_phandle);
+> +}
+> +
+> +static void create_fdt(RISCVServerRefMachineState *s,
+> +                       const MemMapEntry *memmap)
+> +{
+> +    MachineState *ms = MACHINE(s);
+> +    uint8_t rng_seed[32];
+> +    g_autofree char *name = NULL;
+> +
+> +    ms->fdt = riscv_create_board_device_tree(MACHINE_GET_CLASS(s)->desc,
+> +                                             "qemu,riscv-server-ref",
+> +                                             &s->fdt_size);
+> +
+> +    /*
+> +     * This versioning scheme is for informing platform fw only. It is neither:
+> +     * - A QEMU versioned machine type; a given version of QEMU will emulate
+> +     *   a given version of the platform.
+> +     * - A reflection of level of server platform support provided.
+> +     *
+> +     * machine-version-major: updated when changes breaking fw compatibility
+> +     *                        are introduced.
+> +     * machine-version-minor: updated when features are added that don't break
+> +     *                        fw compatibility.
+> +     *
+> +     * It's the same as the scheme in arm sbsa-ref.
+> +     */
+> +    qemu_fdt_setprop_cell(ms->fdt, "/", "machine-version-major", 0);
+> +    qemu_fdt_setprop_cell(ms->fdt, "/", "machine-version-minor", 0);
+> +
+> +    /*
+> +     * The "/soc/pci@..." node is needed for PCIE hotplugs
+> +     * that might happen before finalize_fdt().
+> +     */
+> +    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIx,
+> +                           s->memmap[RVSERVER_PCIE_ECAM].base);
+> +    qemu_fdt_add_subnode(ms->fdt, name);
+> +
+> +    qemu_fdt_add_subnode(ms->fdt, "/chosen");
+> +    qemu_fdt_add_subnode(ms->fdt, "/aliases");
+> +
+> +    /* Pass seed to RNG */
+> +    qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
+> +    qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed",
+> +                     rng_seed, sizeof(rng_seed));
+> +
+> +    riscv_create_fdt_flash(ms->fdt, rvserver_ref_memmap[RVSERVER_FLASH].base,
+> +                           rvserver_ref_memmap[RVSERVER_FLASH].size / 2);
+> +    create_fdt_pmu(s);
+> +
+> +}
+> +
+> +static void rvserver_init_pci_devices(RISCVServerRefMachineState *s,
+> +                                      DeviceState *gpex_host)
+> +{
+> +    MachineClass *mc = MACHINE_GET_CLASS(s);
+> +    PCIHostState *pci = PCI_HOST_BRIDGE(gpex_host);
+> +    PCIDevice *pdev_ahci;
+> +    AHCIPCIState *ich9;
+> +    DriveInfo *hd[NUM_SATA_PORTS];
+> +
+> +    pci_init_nic_devices(pci->bus, mc->default_nic);
+> +
+> +    /* IDE disk setup.  */
+> +    pdev_ahci = pci_create_simple(pci->bus, -1, TYPE_ICH9_AHCI);
+> +    ich9 = ICH9_AHCI(pdev_ahci);
+> +    g_assert(ARRAY_SIZE(hd) == ich9->ahci.ports);
+> +    ide_drive_get(hd, ich9->ahci.ports);
+> +    ahci_ide_create_devs(&ich9->ahci, hd);
+> +}
+> +
+> +static uint64_t rvserver_reset_syscon_read(void *opaque, hwaddr addr,
+> +                                           unsigned size)
+> +{
+> +    return 0;
+> +}
+> +
+> +static void rvserver_reset_syscon_write(void *opaque, hwaddr addr,
+> +                                        uint64_t val64, unsigned int size)
+> +{
+> +    switch (val64) {
+> +    case SYSCON_POWEROFF:
+> +        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+> +        return;
+> +    case SYSCON_RESET:
+> +        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> +        return;
+> +    default:
+> +        break;
+> +    }
+> +}
+> +
+> +static const MemoryRegionOps rvserver_reset_syscon_ops = {
+> +    .read = rvserver_reset_syscon_read,
+> +    .write = rvserver_reset_syscon_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN
+> +};
+> +
+> +static void rvserver_ref_machine_done(Notifier *notifier, void *data)
+> +{
+> +    RISCVServerRefMachineState *s = container_of(
+> +        notifier, RISCVServerRefMachineState, machine_done);
+> +    const MemMapEntry *memmap = rvserver_ref_memmap;
+> +    MachineState *machine = MACHINE(s);
+> +    hwaddr start_addr = memmap[RVSERVER_DRAM].base;
+> +    target_ulong firmware_end_addr, kernel_start_addr;
+> +    const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
+> +    uint64_t fdt_load_addr;
+> +    uint64_t kernel_entry = 0;
+> +    BlockBackend *pflash_blk0;
+> +    RISCVBootInfo boot_info;
+> +
+> +    /*
+> +     * An user provided dtb must include everything, including
+> +     * dynamic sysbus devices. Our FDT needs to be finalized.
+> +     */
+> +    if (machine->dtb == NULL) {
+> +        finalize_fdt(s);
+> +    }
+> +
+> +    riscv_boot_info_init(&boot_info, &s->soc[0]);
+> +
+> +    firmware_end_addr = riscv_find_and_load_firmware(machine, &boot_info,
+> +                                                    firmware_name,
+> +                                                     &start_addr, NULL);
+> +
+> +    pflash_blk0 = pflash_cfi01_get_blk(s->flash[0]);
+> +    if (pflash_blk0) {
+> +        if (machine->firmware && !strcmp(machine->firmware, "none")) {
+> +            /*
+> +             * Pflash was supplied but bios is none and not KVM guest,
+> +             * let's overwrite the address we jump to after reset to
+> +             * the base of the flash.
+> +             */
+> +            start_addr = rvserver_ref_memmap[RVSERVER_FLASH].base;
+> +        } else {
+> +            /*
+> +             * Pflash was supplied but either KVM guest or bios is not none.
+> +             * In this case, base of the flash would contain S-mode payload.
+> +             */
+> +            riscv_setup_firmware_boot(machine);
+> +            kernel_entry = rvserver_ref_memmap[RVSERVER_FLASH].base;
+> +        }
+> +    }
+> +
+> +    if (machine->kernel_filename && !kernel_entry) {
+> +        kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
+> +                                                         firmware_end_addr);
+> +        riscv_load_kernel(machine, &boot_info, kernel_start_addr, true, NULL);
+> +        kernel_entry = boot_info.image_low_addr;
+> +    }
+> +
+> +    fdt_load_addr = riscv_compute_fdt_addr(memmap[RVSERVER_DRAM].base,
+> +                                           memmap[RVSERVER_DRAM].size,
+> +                                           machine, &boot_info);
+> +
+> +    riscv_load_fdt(fdt_load_addr, machine->fdt);
+> +
+> +    /* load the reset vector */
+> +    riscv_setup_rom_reset_vec(machine, &s->soc[0], start_addr,
+> +                              rvserver_ref_memmap[RVSERVER_MROM].base,
+> +                              rvserver_ref_memmap[RVSERVER_MROM].size,
+> +                              kernel_entry,
+> +                              fdt_load_addr);
+> +
+> +}
+> +
+> +static bool rvserver_aclint_allowed(void)
+> +{
+> +    return tcg_enabled() || qtest_enabled();
+> +}
+> +
+> +static void rvserver_ref_machine_init(MachineState *machine)
+> +{
+> +    const MemMapEntry *memmap = rvserver_ref_memmap;
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(machine);
+> +    MemoryRegion *system_memory = get_system_memory();
+> +    MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
+> +    MemoryRegion *reset_syscon_io = g_new(MemoryRegion, 1);
+> +    DeviceState *mmio_irqchip, *pcie_irqchip, *gpex_host;
+> +    int i, base_hartid, hart_count;
+> +    int socket_count = riscv_socket_count(machine);
+> +    int imsic_bits = imsic_num_bits(s->aia_guests + 1);
+> +
+> +    /* Check socket count limit */
+> +    if (RVSERVER_SOCKETS_MAX < socket_count) {
+> +        error_report("number of sockets/nodes should be less than %d",
+> +            RVSERVER_SOCKETS_MAX);
+> +        exit(1);
+> +    }
+> +
+> +    if (!rvserver_aclint_allowed()) {
+> +        error_report("'aclint' is only available with TCG acceleration");
+> +        exit(1);
+> +    }
+> +
+> +    s->memmap = rvserver_ref_memmap;
+> +
+> +    /* Initialize sockets */
+> +    mmio_irqchip = pcie_irqchip = NULL;
+> +    for (i = 0; i < socket_count; i++) {
+> +        g_autofree char *soc_name = g_strdup_printf("soc%d", i);
+> +
+> +        if (!riscv_socket_check_hartids(machine, i)) {
+> +            error_report("discontinuous hartids in socket%d", i);
+> +            exit(1);
+> +        }
+> +
+> +        base_hartid = riscv_socket_first_hartid(machine, i);
+> +        if (base_hartid < 0) {
+> +            error_report("can't find hartid base for socket%d", i);
+> +            exit(1);
+> +        }
+> +
+> +        hart_count = riscv_socket_hart_count(machine, i);
+> +        if (hart_count < 0) {
+> +            error_report("can't find hart count for socket%d", i);
+> +            exit(1);
+> +        }
+> +
+> +        object_initialize_child(OBJECT(machine), soc_name, &s->soc[i],
+> +                                TYPE_RISCV_HART_ARRAY);
+> +        object_property_set_str(OBJECT(&s->soc[i]), "cpu-type",
+> +                                machine->cpu_type, &error_abort);
+> +        object_property_set_int(OBJECT(&s->soc[i]), "hartid-base",
+> +                                base_hartid, &error_abort);
+> +        object_property_set_int(OBJECT(&s->soc[i]), "num-harts",
+> +                                hart_count, &error_abort);
+> +        sysbus_realize(SYS_BUS_DEVICE(&s->soc[i]), &error_fatal);
+> +
+> +        /* Per-socket ACLINT MTIMER */
+> +        riscv_aclint_mtimer_create(memmap[RVSERVER_ACLINT].base +
+> +                i * RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+> +            RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+> +            base_hartid, hart_count,
+> +            RISCV_ACLINT_DEFAULT_MTIMECMP,
+> +            RISCV_ACLINT_DEFAULT_MTIME,
+> +            RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
+> +
+> +        /* Per-socket interrupt controller */
+> +        s->irqchip[i] = riscv_create_aia(true, s->aia_guests,
+> +                                         IMSIC_HART_SIZE(0),
+> +                                         IMSIC_HART_SIZE(imsic_bits),
+> +                                         RVSERVER_IRQCHIP_NUM_SOURCES,
+> +                                         &s->memmap[RVSERVER_APLIC_M],
+> +                                         &s->memmap[RVSERVER_APLIC_S],
+> +                                         &s->memmap[RVSERVER_IMSIC_M],
+> +                                         &s->memmap[RVSERVER_IMSIC_S],
+> +                                         i, base_hartid, hart_count,
+> +                                         RVSERVER_IRQCHIP_NUM_MSIS,
+> +                                         RVSERVER_IRQCHIP_NUM_PRIO_BITS);
+> +
+> +        /* Try to use different IRQCHIP instance based device type */
+> +        if (i == 0) {
+> +            mmio_irqchip = s->irqchip[i];
+> +            pcie_irqchip = s->irqchip[i];
+> +        }
+> +        if (i == 1) {
+> +            pcie_irqchip = s->irqchip[i];
+> +        }
+> +    }
+> +
+> +    /* register system main memory (actual RAM) */
+> +    memory_region_add_subregion(system_memory, memmap[RVSERVER_DRAM].base,
+> +        machine->ram);
+> +
+> +    /* boot rom */
+> +    memory_region_init_rom(mask_rom, NULL, "riscv_rvserver_ref_board.mrom",
+> +                           memmap[RVSERVER_MROM].size, &error_fatal);
+> +    memory_region_add_subregion(system_memory, memmap[RVSERVER_MROM].base,
+> +                                mask_rom);
+> +
+> +    memory_region_init_io(reset_syscon_io, NULL, &rvserver_reset_syscon_ops,
+> +                          NULL, "reset_syscon_io",
+> +                          memmap[RVSERVER_RESET_SYSCON].size);
+> +    memory_region_add_subregion(system_memory,
+> +                                memmap[RVSERVER_RESET_SYSCON].base,
+> +                                reset_syscon_io);
+> +
+> +    gpex_host = riscv_gpex_pcie_init(system_memory, pcie_irqchip,
+> +                                     &rvserver_ref_memmap[RVSERVER_PCIE_ECAM],
+> +                                     &rvserver_ref_memmap[RVSERVER_PCIE_MMIO],
+> +                                     &rvserver_ref_memmap[RVSERVER_PCIE_MMIO_HIGH],
+> +                                     &rvserver_ref_memmap[RVSERVER_PCIE_PIO],
+> +                                     RVSERVER_PCIE_IRQ);
+> +
+> +    /* Init nic devices and ICH9 AHCI */
+> +    rvserver_init_pci_devices(s, gpex_host);
+> +
+> +    s->platform_bus_dev = riscv_create_platform_bus(mmio_irqchip,
+> +                                                    &s->memmap[RVSERVER_PLATFORM_BUS],
+> +                                                    RVSERVER_PLATFORM_BUS_IRQ,
+> +                                                    RVSERVER_PLATFORM_BUS_NUM_IRQS);
+> +
+> +    serial_mm_init(system_memory, memmap[RVSERVER_UART0].base,
+> +        0, qdev_get_gpio_in(mmio_irqchip, RVSERVER_UART0_IRQ), 399193,
+> +        serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> +
+> +    sysbus_create_simple("goldfish_rtc", memmap[RVSERVER_RTC].base,
+> +        qdev_get_gpio_in(mmio_irqchip, RVSERVER_RTC_IRQ));
+> +
+> +    for (i = 0; i < ARRAY_SIZE(s->flash); i++) {
+> +        /* Map legacy -drive if=pflash to machine properties */
+> +        pflash_cfi01_legacy_drive(s->flash[i],
+> +                                  drive_get(IF_PFLASH, 0, i));
+> +    }
+> +    rvserver_flash_maps(s, system_memory);
+> +
+> +    /* load/create device tree */
+> +    if (machine->dtb) {
+> +        machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
+> +        if (!machine->fdt) {
+> +            error_report("load_device_tree() failed");
+> +            exit(1);
+> +        }
+> +    } else {
+> +        create_fdt(s, memmap);
+> +    }
+> +
+> +    riscv_create_iommu_sys(mmio_irqchip, s->memmap[RVSERVER_IOMMU_SYS].base,
+> +                           IOMMU_SYS_IRQ, false);
+> +
+> +    s->machine_done.notify = rvserver_ref_machine_done;
+> +    qemu_add_machine_init_done_notifier(&s->machine_done);
+> +}
+> +
+> +static void rvserver_ref_machine_instance_init(Object *obj)
+> +{
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(obj);
+> +
+> +    s->flash[0] = riscv_flash_create(OBJECT(s), "riscv-server-ref.flash0",
+> +                                        "pflash0", RVSERVER_FLASH_SECTOR_SIZE);
+> +    s->flash[1] = riscv_flash_create(OBJECT(s), "riscv-server-ref.flash1",
+> +                                        "pflash1", RVSERVER_FLASH_SECTOR_SIZE);
+> +}
+> +
+> +static char *rvserver_ref_get_aia_guests(Object *obj, Error **errp)
+> +{
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(obj);
+> +    char val[32];
+> +
+> +    sprintf(val, "%d", s->aia_guests);
+> +    return g_strdup(val);
+> +}
+> +
+> +static void rvserver_ref_set_aia_guests(Object *obj, const char *val,
+> +                                        Error **errp)
+> +{
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(obj);
+> +
+> +    s->aia_guests = atoi(val);
+> +    if (s->aia_guests < 0 || s->aia_guests > RVSERVER_IRQCHIP_MAX_GUESTS) {
+> +        error_setg(errp, "Invalid number of AIA IMSIC guests");
+> +        error_append_hint(errp, "Valid values be between 0 and %d.\n",
+> +                          RVSERVER_IRQCHIP_MAX_GUESTS);
+> +    }
+> +}
+> +
+> +static HotplugHandler *rvserver_machine_get_hotplug_handler(MachineState *ms,
+> +                                                            DeviceState *dev)
+> +{
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+> +
+> +    if (device_is_dynamic_sysbus(mc, dev)) {
+> +        return HOTPLUG_HANDLER(ms);
+> +    }
+> +
+> +    return NULL;
+> +}
+> +
+> +static void rvserver_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+> +                                            DeviceState *dev, Error **errp)
+> +{
+> +    RISCVServerRefMachineState *s = RISCV_SERVER_REF_MACHINE(hotplug_dev);
+> +
+> +    if (s->platform_bus_dev) {
+> +        MachineClass *mc = MACHINE_GET_CLASS(s);
+> +
+> +        if (device_is_dynamic_sysbus(mc, dev)) {
+> +            platform_bus_link_device(PLATFORM_BUS_DEVICE(s->platform_bus_dev),
+> +                                     SYS_BUS_DEVICE(dev));
+> +        }
+> +    }
+> +}
+> +
+> +static void rvserver_ref_machine_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    char str[128];
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
+> +    static const char * const valid_cpu_types[] = {
+> +        TYPE_RISCV_CPU_RVSERVER_REF,
+> +    };
+> +
+> +    /* Note: this is used as /model in the FDT.  */
+> +    mc->desc = "RISC-V Server Platform Reference Board v1.0";
+> +    mc->init = rvserver_ref_machine_init;
+> +    mc->max_cpus = RVSERVER_CPUS_MAX;
+> +    mc->default_cpu_type = TYPE_RISCV_CPU_RVSERVER_REF;
+> +    mc->valid_cpu_types = valid_cpu_types;
+> +    mc->pci_allow_0_address = true;
+> +    mc->default_nic = "e1000e";
+> +    mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
+> +    mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
+> +    mc->get_default_cpu_node_id = riscv_numa_get_default_cpu_node_id;
+> +    mc->numa_mem_supported = true;
+> +    /* platform instead of architectural choice */
+> +    mc->cpu_cluster_has_numa_boundary = true;
+> +    mc->default_ram_id = "riscv_rvserver_ref_board.ram";
+> +
+> +    object_class_property_add_str(oc, "aia-guests",
+> +                                  rvserver_ref_get_aia_guests,
+> +                                  rvserver_ref_set_aia_guests);
+> +    sprintf(str, "Set number of guest MMIO pages for AIA IMSIC. Valid value "
+> +                 "should be between 0 and %d.", RVSERVER_IRQCHIP_MAX_GUESTS);
+> +    object_class_property_set_description(oc, "aia-guests", str);
+> +
+> +    assert(!mc->get_hotplug_handler);
+> +    mc->get_hotplug_handler = rvserver_machine_get_hotplug_handler;
+> +    hc->plug = rvserver_machine_device_plug_cb;
+> +#ifdef CONFIG_TPM
+> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+> +#endif
+> +}
+> +
+> +static const TypeInfo rvserver_ref_typeinfo = {
+> +    .name       = TYPE_RISCV_SERVER_REF_MACHINE,
+> +    .parent     = TYPE_MACHINE,
+> +    .class_init = rvserver_ref_machine_class_init,
+> +    .instance_init = rvserver_ref_machine_instance_init,
+> +    .instance_size = sizeof(RISCVServerRefMachineState),
+> +    .interfaces = (const InterfaceInfo[]) {
+> +         { TYPE_HOTPLUG_HANDLER },
+> +         { TYPE_TARGET_RISCV64_MACHINE },
+> +         { }
+> +    },
+> +};
+> +
+> +static void rvserver_ref_init_register_types(void)
+> +{
+> +    type_register_static(&rvserver_ref_typeinfo);
+> +}
+> +
+> +type_init(rvserver_ref_init_register_types)
 > -- 
 > 2.43.0
 > 
