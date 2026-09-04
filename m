@@ -4,125 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E89C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6279AC79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WKN-0006sU-6K; Fri, 04 Sep 2026 11:59:43 -0400
+	id 1x2WPt-0000rB-EU; Fri, 04 Sep 2026 12:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WKK-0006ia-Mp
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:59:40 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WKI-0004ae-BC
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:59:40 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PeTftw0t4iUxPnoPFDNR3eP75sx0q2ZtperBxjA58nM77f8Hu7DF6IW8FQumeu2AwBhUa5/IZc1WRIOKdsu3xmz8NOeNaWp7UExoXNbT5zixr6Wi1kKna5FmNw0Y0lXS0pUKVzLNUGOwfdH3v9XQbYMC8whKNkauFHWEmrUvfou1zH1vWSqPoJ5ysViMC7bqW0WHB9L+VpjhE1RLYEa5hSAQWY1bFI4NHFCR795l6zljzVnNMkrk3rEaqRlgEo7jL4YvKiS2SeJNiI53XuAnMD3qvX4kYdWjTn0tssAaxlBKvYqRSfMh02SDTuUS7ZOLP7AZKG4G7F3Fmnl8vYLGXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZH+6aCBKi454AsIqwVnF5k6uB/Rq9OmB20wKyKEMgV0=;
- b=yyqz2aqRhz+8R92QUX07NX89Ly0TqOXgoSKu/EM8J6BmmGz0+avqRqXypjoM+rjfqqObjSnQ5ByRbUcwggMp7j/pFP99swcjCUxBBYFyUl8UzaKWnlLpGVXYwiT5xUhKI/TeyO8MhZq/RUwUDtEMerydHdRuk8vnBiyEFwsLMxSTj86DuyS9xpWmaN2CI02XmmPmj4o7+izlt4Hihlje07j5ycj/tmRCcbC+Z2PGHoj5y9fLH/G7rZhvgVg8IQUZGWkQI7/a8vJWRCKoVLDXNv+QvcshFTNmb38+gjMuNuXkMqYiwwTuhW233rX8/RFXOsBAInXhS5/2s6XHTU1c0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZH+6aCBKi454AsIqwVnF5k6uB/Rq9OmB20wKyKEMgV0=;
- b=Xr+DUN+G0JG9JsPZ6RPZVvvxtHsoVI0eVZyLqnidkZY3MRhzn7BxWvoD5mwIKNytowYrdShvlERfpNjaicpszD6LsCBaSGtoHc4pzOcVZ9z5d5A7cUiSkxKjVXHduPjlqXt2psQQ2eEmrvAMsnrYg6bFqbbe+F2wE6jkTdeA8zz7E8djF1HYs2goQ8mHERLttRP165JUM1m3DncEn9XhjV6rYkn3LQC8NuDIuAws4uKae+OfxtU1+f3eeMZVeTpNWPx7IHweAt2gFgHAZWDItun7Sw83Pvgt6X8EUnYIP0UGr0+gqd87MgEuSDq+vdkNdrfYFX7XjM973gEY0jyl+g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYSPR02MB7490.apcprd02.prod.outlook.com (2603:1096:405:37::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 15:59:18 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
- 15:59:18 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor@kernel.org>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 23/24] MAINTAINERS: Add PolarFire SoC Icicle Kit maintainer
-Date: Fri,  4 Sep 2026 23:57:42 +0800
-Message-ID: <20260904155758.3833179-24-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260904155758.3833179-1-bin.meng@processmission.com>
-References: <20260904155758.3833179-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TY4P286CA0020.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:2b0::13) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1x2WPk-0000mM-7H
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:16 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1x2WPg-00063r-9t
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:15 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-c259e5c22ffso186671766b.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:05:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788537910; x=1789142710; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=1cvn3fubt0HS5qwzW/iu5vHt3JNvdQ6MqYhsjSQG8vg=;
+ b=Hcqk3+P/9fBI9odxDnSRml+UVYT7SeOJCML6TU4ulhCIHOOS7/tM5vgVV1H1n6kaQY
+ gsFZUCqJOfOmNkEqQ0Q/gJNCahOLb0gV9PZUFrpRONtW0GqGgYnQLIMSGccDm/N33CFQ
+ 9va0ptWwMaWKDlTwJPgocTdTX7d2kZfjGUFCxEnISB7pPxKJIcJm44BFH/KraKYUCGG8
+ UIK2kE/lmqWXEqmy32ZjpFwG//uF5Ez96j41aZSgkfbgvGJSdeQ3pWkmgOMoXL0HX8SS
+ CnX4EMnmzCr9wW7luxEMbZbLprrlLzCdzUZ1HOxy1QGfSRlfvVlUNjC60U6+TYK4L6kR
+ aTDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788537910; x=1789142710;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=1cvn3fubt0HS5qwzW/iu5vHt3JNvdQ6MqYhsjSQG8vg=;
+ b=PB2p2heU3E8ZI4SSNHYQgz0+aVNpo+Jp3ienycODnOI47WWLphgBu/LdSxqsjd9Fgw
+ ukgkrPr4nUFpbnMibvFF0crxmm4VT328bVmc35rssHnMcvL4jvpXIZf8xXpQkbMKHHh4
+ 5f1xwcx1PuFZSqKmY2aCj05n1Yr0B1wxin2Uwkra5DeCGnNJrCJX82bQe4NURl29jgdD
+ 1YZrlaF7LF9vDBEvpWKLeNrBm3MoEtKr+Ikg9ZFJ4zBC13E78oa+CvaTdr3cCxjTvN69
+ FpwD1TdSfIs8qPa22se4te+mkcRyBX3yDIbEqbNVlSaHefHUXscD3mRbOq4Qsdk1IhQE
+ DLWQ==
+X-Gm-Message-State: AFuF++kO/SzMfE40mP0Pu6I4y2PsLB1J9RrKyqgxqQIovJjbVlgNu5HP
+ LsnOJlyn1uYcKdRBPhOxukEJXLa9zTUzL2S+HdvY/aTLx0dBoOkOAapdKOA6CtByzNI=
+X-Gm-Gg: AYBFou355YQ1VAmeowcDPN89X3fiIS3otseUQzDitsRsWe9Npa1h41mUXZvlsQlekhX
+ M4A9EWwak9rgjgcNhrHnjDEnre2VrUvCGrIEtYJeKOi6GRXmiNgMGievJ1wo4rExgyfywPXIvPW
+ 8RCwKwFAgpZYAm6Ss7X2QAFqXyNehGOWHi/WjRQR+lx2IcSl5DXignUj3GFde6Eiu8+Uyvq49Rz
+ pp4q3GzZ00y6eRtuMe2598HtahVgpniU09lTN8cqQ4UCXaNieHMb6vfKr1JWRvb7YFgkNtY1BQA
+ KxWrLor4LCIcrgDjxdOvSa08cmP0Yvn7ZJlUZB8rvHLrn8B8QxXYvXwU+DiE5tu49FBb0JrJFQe
+ CHvde0+Z+Qz2kBdM1FPPqA++Roze7Fmpg0Z6jGQ1NVYv6sWRptxjUn9zQJRbkWE0kBVNXorMv8N
+ 1mcWj/5je7cr80nqLQMCjhbwQVVZehUL6fFnN1ChEys56zGC+gyVfIUO5Upa3QOpAwJnB4+efAq
+ xI=
+X-Received: by 2002:a17:907:1c9f:b0:c26:1691:b374 with SMTP id
+ a640c23a62f3a-c261691ba04mr203799166b.45.1788537909458; 
+ Fri, 04 Sep 2026 09:05:09 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:60d5:49d3:5d47:8dbd])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c260d036674sm133815966b.8.2026.09.04.09.05.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 09:05:09 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH v2 0/4] RME-DA preparatory work
+Date: Fri, 04 Sep 2026 17:05:00 +0100
+Message-Id: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYSPR02MB7490:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3de2c2e5-7856-4c4f-8c05-08df0a9d7a14
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|10067099003|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: XESt8q+SHRMJVFsjZcaRiKJQO6zCHTL+T+EVY0qhkCK0rgltCJYKGoL7woJO5ZpQd42BGEP71n4hbTIgxkdXgiPp0XZFXW8hILzfBER76uGoNCsZHve03gPBZf9OpLvc4I5D5DBTUCxJ7KUBfhOejeEwJrhSsDc7B/NLdytsAN4WZe/S/KdO0X7YnbQa53VP6ERCRIH1wVoqG6lvMgT5qN5yjCU8Z93MNg6WCUL1QHep7mdJF2fB9HJjmIbH67hq9enTR9qJhlzELgJ4itu3P0iqKT9l073P556b/NaEiLpslry6SlGYxM9JJZF3MEUQbE3D/XPP3CzH2SjI9uDkYZeQxueVeBJtAqle4EsL23bx+HFHlGLPLQx4v8TIOr1BegXWbZD7tHxjegVLJtNEqPQ5VH1nWIR0VXgy0tYXamgb/6UkmWL3sRum96QtgOj2+JyvmymzZAK3pcrYJcR9J8L0kPvo4JoTA3DhYHwYDWGl3DiHgGAIKvVVIIq7P8QL1uSgASPhKbH6L2I8wNpd1s3Fd8Mkjk+zZ/Z0krsJtmfZJkpNW2t8ArZ74sf0RDBw0ndOffy9aohwLrE70iiN+NhtjMM3mch0BsNbC7Dg9hGvbQ0HlufjEQVX6mAaDKG3pXzvTjs8kVMdeOFPcVAzxKBJyAoDKheD44BNz9ODUU8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(10067099003)(22082099003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?CLeQTwEfC8VZO2iv//S68QxWE//LFFxSlSZ6KDBxCtn139XKcbX/Lq/S3JwG?=
- =?us-ascii?Q?JXBg0OT6ojgXzyNGFWph0bIEp/ZQzEALQwR+pbIYVxnFaQi0oSG+9iFbmQEu?=
- =?us-ascii?Q?ql5xyin1AL4Vv/O0Ra31IxZcSzP16+u5Ltm4CZdkY48rwAKq1TOMMyFaIFpE?=
- =?us-ascii?Q?rle1WGPhX/wU0pm40k2tJQ5vUhDNugPYnN9TXoWL6xn0v3UvWygohwWl8DWn?=
- =?us-ascii?Q?9dlkGwPLprMkPYD8ySS4V+/GfbWnwb9V/+U3W3jQmwRjql4HkITdoxrogJFv?=
- =?us-ascii?Q?THkQybxO6/22YaH0ot/+vqteIyaBmEOiBjWrA+MNl1HhYHMopWLpTt4KnfLo?=
- =?us-ascii?Q?S5vui8197cIUhZjrY+S8/u8V7/xG4eZETknvbxWi3gxu8lXvvT9Y+wVleQNa?=
- =?us-ascii?Q?EVUR4T8ik2/KdyI1YW9qL8mwDMOsFe55/sTfLyaWm7znC1wO3EgKi2gRwWEe?=
- =?us-ascii?Q?pn24F93xPRAxwmim7Zc6Lp0mJ5qOyN/Oq+KnpCc5CeDOg4zmxAoqiZlZ8btd?=
- =?us-ascii?Q?6r4olRWvuEQaHq9BKXu6w/2KyUuzJzntB2ZYYguD9yjbZUbdBczC9A9e4beZ?=
- =?us-ascii?Q?0gArioMUqcM13N5rHkA8yxsa8kt3tVLwsCuvbGkMnFzqzo+5nqY1NAXyROjl?=
- =?us-ascii?Q?R9a+IdHJUCbOvwXHGOjNkHezQ6MQEt3PYWaDqHwWkV+5XzHMo2hwpHbEm9Cc?=
- =?us-ascii?Q?vwBP6X8mxJKJDsCml2P0McLUQnIHLIX+7F2poFcyaCdtd7yTCKDca4kkNumU?=
- =?us-ascii?Q?hAB/ZTflgpGiUrsmzonAFvtX+idcPrhPbjRAUQOjl/WRUnpG1vksKnSud4nX?=
- =?us-ascii?Q?mi1U+l2Qw4Wz/jJTBLHrRObs9D23u8hgkfihFrwEc7hQ8bifOLEc+M57PpXm?=
- =?us-ascii?Q?Hz0XujiOEHXxQWO1vNfaHz5Dezy9sFSfU3xzteLX8/omEzfpxkq3oeq935M0?=
- =?us-ascii?Q?cWLXSETtFwTZxhn7FPdz1BJaIamjuzH5AqJ7beJdh/ifPx2nsKYtzGUWT/o0?=
- =?us-ascii?Q?RLiq3oUTTw77RZhIKi1bB/shr2Q+FGMzjOJ92k8VGzT3ivwmEg8DyjLFEsxz?=
- =?us-ascii?Q?QDE4ouA7IfBe5rmR7MBpw4BEX6MOZbXrek8IH0sEd225SwJxzpoxGexXw0xS?=
- =?us-ascii?Q?EXo/tYMIYoKqdghVX3v+WGgV7ngugsOHt2a4rSXcTD+w9fsyhYvbvDCAGali?=
- =?us-ascii?Q?BSS4pxKzRqdwiVlrbVmXUKcYwVcwvGEXLpLd6zepB/MweRhdhvNWf4ZSiDbG?=
- =?us-ascii?Q?sQr5zQXSDuuRYqDDjAsEU7OTJMKMrIVHUZxTDaQT94BGzN+gQRcLvrd69lVN?=
- =?us-ascii?Q?D/8qhs8G2i4LLivKQRomiPhi+DyzV4glOqavmSQE1nUxwpRa2QDXk7EeAl4w?=
- =?us-ascii?Q?XxEkuoBeXwLa2XuusEKPz0/qdMQjvYYjkS5jyMEQbNtuZ/c7jCEx/i9ApjOV?=
- =?us-ascii?Q?wQ2+EuVQoi36i1xjFHcBpTC5X+n1j1r8L/VVVVr8rohp7wWU8WMi+Exafa33?=
- =?us-ascii?Q?1lBSOkgso+KlmhRgndDJ6p7eaeO8WOioBixq7SvwJb2J7F/ldjJItw1TYFOn?=
- =?us-ascii?Q?QCa1lSUHKpglsmGSAGjadIBgwPpx5+WrQ3ElPqCRYZe2Gvafz1arwrFMkDjh?=
- =?us-ascii?Q?2x8XsDssujDpy+rpczFpCZRwLwngJAylCIIRMqdJ1IRZURTBl9oyHvn6mehS?=
- =?us-ascii?Q?WzbC+ikQ91JsC7vUCmhAIzBhMLjP4Y+IOMkotLKVazmtNf9769v9Z136lWIp?=
- =?us-ascii?Q?cmh67uliZtZcSUzZfCJEi3Ivw+P7jFM=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3de2c2e5-7856-4c4f-8c05-08df0a9d7a14
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:59:18.6141 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LKHVuucEzzpji8M9opE9Nz4awk9hVAc/dR4ZeSVOeQ0Ry0zQJtvWs6ANd9MI21EuAr0HOJGo0aIa/3hWdRFXkvTbZ7OUzwtar10aDbm++Yg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7490
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACzsmmoC/32NQQ6CMBBFr0Jm7ZgWQy2uuIdhUcoUxgglU0M0h
+ LtbOYDL95L//gaJhCnBrdhAaOXEcc5Qngrwo5sHQu4zQ6lKo6y2+JicR5kIe4eL0IJW1SZ4qw0
+ RQZ5lGfh9JO9t5pHTK8rneFj1z/6JrRoVXlRwXV3pzl+r5smzk3iOMkC77/sXwtSqCLEAAAA=
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>, 
+ "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org, 
+ Jim MacArthur <jim.macarthur@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,41 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The preceding Icicle Kit updates restore HSS, U-Boot, and Linux
-boot. Functional test coverage is also added.
+This is a subset of patches from Gustavo Romero's SMMU DA branch work,
+featuring patches from Pierrick Bouvier and Viresh Kumar. These add
+capabilities to the PCIe root port and ICH9 SATA driver, and also refactor
+some code in hw/pci/msi.c for future use.
 
-Restore myself as a maintainer and mark the machine as 'Supported'
-to reflect its active maintenance.
+The goal here is to upstream work which is independent of Tao Tang's SMMU-V3
+patches, while those are being reviewed. If/when Tao Tang's patches are
+accepted, we can proceed with the remainder of the SMMU DA work.
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Acked-by: Conor Dooley <conor@kernel.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+I have spent some time understanding these patches and believe them to be
+sensible, but some parts of them may be outside my understanding. In 
+particular, we may be incorrectly advertising features here which are not
+actually implemented; although this doesn't cause any problems I can see
+with Linux or our test suites, I can quite easily set the feature flags to
+zero and keep the code structure if that's a problem.
+
+Jim
+
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+Changes in v2:
+- Removed RFC tag, rebased to current master. No other changes.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org
 
 ---
+Pierrick Bouvier (4):
+      hw/pci: add IDE + TEE capability to PCIe root port
+      sata: add SPDM + IDE + TEE pci support
+      hw/pci: add DVSEC RMEDA capability to PCIe root port
+      hw/pci/msi: extract msi_message_address_register
 
-(no changes since v1)
+ hw/ide/ich.c                       | 72 +++++++++++++++++++++++++++++++++++++-
+ hw/pci-bridge/gen_pcie_root_port.c | 38 ++++++++++++++++++++
+ hw/pci/msi.c                       | 19 ++++++----
+ hw/pci/pcie.c                      | 15 ++++++++
+ include/hw/pci/msi.h               |  1 +
+ include/hw/pci/pcie.h              |  3 ++
+ include/hw/pci/pcie_regs.h         |  8 +++++
+ 7 files changed, 149 insertions(+), 7 deletions(-)
+---
+base-commit: d2843fbf80260e4346c856819e8cea11768c9d0e
+change-id: 20260818-jmac-rme-da-prep-8096fc816eee
 
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 319b436480..e68e7eb12e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1786,10 +1786,11 @@ F: target/riscv/xlrbr.decode
- F: tests/tcg/riscv64/test-crc32.S
- 
- Microchip PolarFire SoC Icicle Kit
-+M: Bin Meng <bin.meng@processmission.com>
- M: Conor Dooley <conor@kernel.org>
- M: Sebastian Huber <sebastian.huber@embedded-brains.de>
- L: qemu-riscv@nongnu.org
--S: Odd Fixes
-+S: Supported
- F: docs/system/riscv/microchip-icicle-kit.rst
- F: hw/riscv/microchip_pfsoc.c
- F: hw/char/mchp_pfsoc_mmuart.c
+Best regards,
 -- 
-2.53.0
+Jim MacArthur <jim.macarthur@linaro.org>
 
 
