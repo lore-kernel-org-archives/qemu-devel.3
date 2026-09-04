@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D27C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CEAC624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WPw-0000yE-HZ; Fri, 04 Sep 2026 12:05:28 -0400
+	id 1x2WPz-00013U-0K; Fri, 04 Sep 2026 12:05:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1x2WPm-0000pj-GV
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:20 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1x2WPr-0000s8-46
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:24 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1x2WPi-0006Bm-3V
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:17 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-c25420fe973so199780966b.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:05:12 -0700 (PDT)
+ id 1x2WPk-0006FT-1e
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:22 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-c2544ff970dso158717966b.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788537911; x=1789142711; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788537912; x=1789142712; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kgrW8OZDk5QNSaiA2O4xvFjcLjIOIf5np0GuegvjZV0=;
- b=CPXbcQPIfafShko7ZTaD6NKWHvX1sJ2et8tW5RNpQkghUAiQOzcD77+fF9wVeuYscn
- JPEDndtVZ/0p+tdBtydbiyXdx3ZHSuzPFOtWcv+zc8t3tXGms+L7lTrk1CuQj9B1Fc+4
- SMERELuxmAM0e3gF9CpAMrWmyZN5fp3mObVOcSafIQxN4RxbIK4UwAbSDBFnWpufdMpr
- 2pj7CCg32onvX7aEMVFQmvoGGxmNZCs+6Jm8vcYF/2VB2ZgcEJIY6lkFLoUEp05baVxC
- BJzD8rhfOfT7M1T5FA+gyzMR6tw63fct+gmquDH8fxQr1PyK/oKbmxyZdIRQeNEpMvX5
- +T4g==
+ bh=W+jDim19iBFmebWRV3oEtOp0uuBONKIVk2nTBz2GCZ0=;
+ b=EoBTSDXqNGRB9HUy6rG8Bqn+5ROySjvPyRSYKgksR81G1MBuLCsjY16KUJqLgcSfDF
+ Rfr+McbthaM9Yk65VqZLVavyrEnfyb7kveHepGUTudW1fr10cM5pEKdy5KvPQwjtToEC
+ /mjPprf6tTFYpfSLQlwy984n3JwUgphmKnVgr1hEh00Vb9sCHqlXdqLOlrFJzN+7yZx1
+ MMdSvsxgfiNhbOHDWDQyzmFLKE/ezME1gvwtT58ZBdrBF0SiNnav9ZYaItD+wT+jyPR2
+ 3LfYIvtozzXSg/aAE4dfhdZwP5hW6o7aoY103sc+UPqOHEqCmmYXrU4Pkz2MV/393ATN
+ u/Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788537911; x=1789142711;
+ d=1e100.net; s=20251104; t=1788537912; x=1789142712;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kgrW8OZDk5QNSaiA2O4xvFjcLjIOIf5np0GuegvjZV0=;
- b=DwKpwddAcZhP4I56jDMcQR56NU2PltP+PweZHf1eC4B5SLRxL0hKiaT0/PIYZBszbq
- LEXGbcOb+YZijR5FZGL2ZcJmuaewOIDAu5vIp7YxyOf1zwO1VVXaAJj95cKh0iGB/tfL
- Yu4xsDBvqyvbvCe2qfrBhINXMCWdluFZEqmOelfyZ5eVte3PS2Dmel2yCP3wsagAGpqw
- /l8xvgLn3VH2rTsxF4MAdWy/0oQeRiSpFpP7nXlHBdbMJNSbnPDhgAAdCx462ZuI1dWU
- qBYuYhyEV01bmPs2IzalrsTx9F9ML1Kx79Za+F/mzdZ2WM0OKRKFvdETkUYAffsKEBLq
- hpAQ==
-X-Gm-Message-State: AFuF++ma+LpqRjVeW+u3EyI+vvrC4AsGm4uh1q6Fa7fOZPRpv0TAgJYR
- PQOhwl3hQoO7s/eLS4vlGjVk6R5OmTDWibE8cnWDCouLHLxWZjNFls4CfARquyFUPm8=
-X-Gm-Gg: AYBFou2iDE3kw4RCxQFt9L+5BLelmogCyRPBTNEa4U93lRXViCjcjCbl0JuUhHLA+jW
- wFL+TZevPkvwvYlGts9pK5cmb6pZgPwbBnKcZgfXBQG5DsS7CPeeBi32lqFeuAHEAI5dNu7Y61P
- eXrmaZ5tTHrjYnX2MbPqOa5M4xR0JwYPfuEtYjZ+VsmMK2lz5kalWcekB5ewEJHM8lny1zViDZe
- 1c3yXilS7J+rQtQ3f6jGa0DQCbC1U0uXseINgk+7FStltdIxKKWl3/vIqFIAhlbeQ90oEg9hEKE
- unRU+jyhXaxP8jBxBSI+1AEUZm23RZGdFZS26ueJy3xRZhhExQ51VapIFklXQqDcuaLvwgxY7b9
- bnTFMfh0ujmtpt3VSc+niH4SWkHO+vU7zbX3boagjUFwWjGfk1Edra8jZaEUNorsPQJTsRpVWSZ
- yvouSTSvLbImd+0KKcHfrlgWZuAm+h/VaeWVE+Z4LcNndDEBIOy5vz2leCnmrDVUsT
-X-Received: by 2002:a17:907:d01:b0:c26:19de:9138 with SMTP id
- a640c23a62f3a-c2619dea192mr169951066b.43.1788537911012; 
+ bh=W+jDim19iBFmebWRV3oEtOp0uuBONKIVk2nTBz2GCZ0=;
+ b=syXFwmdeTduS14LKXwk8EX71E4GLPOKgRlFtOzZSonP5tzwBQ+BrFFIaGtICOvjzP7
+ Pvyk4o/ZUclfBMo1SINpJML6JgeQkE8Z7Z9CWBw3DHXYPZ4wk0B/UzyJgBbwt92bWcCv
+ LFs9RaLAYPg616MsH9bAA6SCf/F2KoorijyIWuaQjKdcSWu8EQq8xZsQN45tMWF32KiT
+ GqbqFyIx7UWI/IZ4s5AoMPO+AQaocoxBiaJyq58ldTvBifvWpGITlLEiF3qVKCUF5K8J
+ N2hQI+ynXKmXZUWx+ORslROM0N3L2y0uCIDTk1qPPuGNDsgzKYvM0fK8TLY9ngXh8G54
+ W1Aw==
+X-Gm-Message-State: AFuF++msYzHgMTu+Hn06uEliyuEDPyC8wy+5seOaq/rQyJ3KbHSqCo2z
+ 6oIzji9NeagKwW87dRk/UdGugEZCOJ7UXUu75W8FecbDm1fCSFw5R3arEGTeG6Oqk0WgNfLl8V7
+ wnEn92Lo=
+X-Gm-Gg: AYBFou19XGMun8GvuJu9RIyUOiY4zY9BTMTVGlYC4hRHgS7cZQ8fZXLKE5v0Nlr0f9l
+ XtQ8KGDaPwEWSY+5t0+MS5CGZH4uuGV9rB6G+HSsd4Wj50/kG+/BELeq8QOgWd9gqlQ7fmj+g3o
+ 9Re63qvIR/dumd5IswZi1sbV91A1U7bKS+4hyixLaRK9mSy1MzAy0AzplhiR602F2VGKYXpTj9l
+ QSAWF97N3N+9TntJdmNb4HVJzTc+1CiaPPCjisWv+xnPK6C1ZWYvbwqhCYzuFB4s6aK60nPyUd+
+ YLRN1eYpWYpMCrpTfsQBiYhMILUDS5pPNUDnIWlLig2/w7keg2p3iLakGrAIfZWA84l7ouSbRSJ
+ 08G51iSmo6dDD2rK9AvfFSRK8Zwnf8f6laif7Fh61/VrHKLZbJJynlihinhJRhxX976vsh7fqGG
+ xrNVDlSTrgrecbp9TFFaDPQ9RSyveQTNytH1gpiyqPiVL9pG4yVpDX3TrlqYYfeki9
+X-Received: by 2002:a17:907:d18:b0:c25:4cff:5d01 with SMTP id
+ a640c23a62f3a-c260c9f4a3bmr279304266b.18.1788537911764; 
  Fri, 04 Sep 2026 09:05:11 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:60d5:49d3:5d47:8dbd])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c260d036674sm133815966b.8.2026.09.04.09.05.09
+ a640c23a62f3a-c260d036674sm133815966b.8.2026.09.04.09.05.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 09:05:09 -0700 (PDT)
+ Fri, 04 Sep 2026 09:05:11 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Fri, 04 Sep 2026 17:05:01 +0100
-Subject: [PATCH v2 1/4] hw/pci: add IDE + TEE capability to PCIe root port
+Date: Fri, 04 Sep 2026 17:05:02 +0100
+Subject: [PATCH v2 2/4] sata: add SPDM + IDE + TEE pci support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260904-jmac-rme-da-prep-v2-1-fb461d78bbb2@linaro.org>
+Message-Id: <20260904-jmac-rme-da-prep-v2-2-fb461d78bbb2@linaro.org>
 References: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
 In-Reply-To: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,15 +82,15 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,108 +108,152 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
+Replaces the ICH9 config_write/config_read which versions which will use
+DOE to write/read config if we have an SPDM port and DOE capability.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- hw/pci-bridge/gen_pcie_root_port.c |  8 ++++++++
- hw/pci/pcie.c                      | 15 +++++++++++++++
- include/hw/pci/pcie.h              |  3 +++
- include/hw/pci/pcie_regs.h         |  4 ++++
- 4 files changed, 30 insertions(+)
+ hw/ide/ich.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 71 insertions(+), 1 deletion(-)
 
-diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-index 5434d693d9..452ebf69b3 100644
---- a/hw/pci-bridge/gen_pcie_root_port.c
-+++ b/hw/pci-bridge/gen_pcie_root_port.c
-@@ -26,6 +26,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(GenPCIERootPort, GEN_PCIE_ROOT_PORT)
- #define GEN_PCIE_ROOT_PORT_AER_OFFSET           0x100
- #define GEN_PCIE_ROOT_PORT_ACS_OFFSET \
-         (GEN_PCIE_ROOT_PORT_AER_OFFSET + PCI_ERR_SIZEOF)
-+#define GEN_PCIE_ROOT_PORT_ACS_END \
-+        (GEN_PCIE_ROOT_PORT_ACS_OFFSET + PCI_ACS_SIZEOF)
+diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+index b00987f08d..d2731598ea 100644
+--- a/hw/ide/ich.c
++++ b/hw/ide/ich.c
+@@ -70,6 +70,7 @@
+ #include "hw/ide/pci.h"
+ #include "hw/ide/ahci-pci.h"
+ #include "ahci-internal.h"
++#include "system/spdm-socket.h"
  
- #define GEN_PCIE_ROOT_PORT_MSIX_NR_VECTOR       1
- #define GEN_PCIE_ROOT_DEFAULT_IO_RANGE          4096
-@@ -100,6 +102,12 @@ static void gen_rp_realize(DeviceState *dev, Error **errp)
-         d->wmask[PCI_IO_BASE] = 0;
-         d->wmask[PCI_IO_LIMIT] = 0;
-     }
-+
-+    uint32_t offset = GEN_PCIE_ROOT_PORT_ACS_END;
-+    pcie_ide_init(d, offset);
-+    offset += PCI_IDE_SIZEOF;
-+
-+    pcie_cap_tee_init(d);
- }
+ #define ICH9_MSI_CAP_OFFSET     0x80
+ #define ICH9_SATA_CAP_OFFSET    0xA8
+@@ -90,6 +91,10 @@ static const VMStateDescription vmstate_ich9_ahci = {
+     },
+ };
  
- static const VMStateDescription vmstate_rp_dev = {
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 4622c75e48..b9ead826ed 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -968,6 +968,12 @@ void pcie_cap_flr_write_config(PCIDevice *dev,
-     }
- }
- 
-+void pcie_cap_tee_init(PCIDevice *dev)
-+{
-+    pci_long_test_and_set_mask(dev->config + dev->exp.exp_cap + PCI_EXP_DEVCAP,
-+                               PCI_EXP_DEVCAP_TEE);
-+}
++static const Property ich_props[] = {
++    DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
++};
 +
- /* Alternative Routing-ID Interpretation (ARI)
-  * forwarding support for root and downstream ports
-  */
-@@ -1371,6 +1377,15 @@ uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev)
-     return pci_get_long(dev->config + dev->exp.pri_cap + PCI_PRI_ALLOC_REQ);
- }
- 
-+/* IDE */
-+void pcie_ide_init(PCIDevice *dev, uint16_t offset)
-+{
-+    pcie_add_capability(dev, PCI_EXT_CAP_ID_IDE, PCI_IDE_VER,
-+                        offset, PCI_IDE_SIZEOF);
-+    uint32_t cap = PCI_IDE_CAP_SELECTIVE;
-+    pci_set_byte(dev->config + offset + PCI_IDE_CAP, cap);
-+}
-+
- bool pcie_pri_enabled(const PCIDevice *dev)
+ static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int level)
  {
-     if (!pci_is_express(dev) || !dev->exp.pri_cap) {
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 71ba94874b..db66678252 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -123,6 +123,8 @@ void pcie_cap_flr_init(PCIDevice *dev);
- void pcie_cap_flr_write_config(PCIDevice *dev,
-                            uint32_t addr, uint32_t val, int len);
+     PCIDevice *pci_dev = opaque;
+@@ -120,6 +125,27 @@ static void pci_ich9_ahci_init(Object *obj)
+     d->ahci.irq = &d->irq;
+ }
  
-+void pcie_cap_tee_init(PCIDevice *dev);
++static bool pcie_doe_spdm_rsp(DOECap *doe_cap)
++{
++    void *req = pcie_doe_get_write_mbox_ptr(doe_cap);
++    uint32_t req_len = pcie_doe_get_obj_len(req) * 4;
++    void *rsp = doe_cap->read_mbox;
++    uint32_t rsp_len = SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE;
 +
- /* ARI forwarding capability and control */
- void pcie_cap_arifwd_init(PCIDevice *dev);
- void pcie_cap_arifwd_reset(PCIDevice *dev);
-@@ -161,6 +163,7 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-                      bool exec_perm, bool priv_mod);
- void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
-                    bool prg_response_pasid_req);
-+void pcie_ide_init(PCIDevice *dev, uint16_t offset);
- 
- uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev);
- bool pcie_pri_enabled(const PCIDevice *dev);
-diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index 33a22229fe..aa21177411 100644
---- a/include/hw/pci/pcie_regs.h
-+++ b/include/hw/pci/pcie_regs.h
-@@ -182,4 +182,8 @@ typedef enum PCIExpLinkWidth {
- #define PCI_DOE_VER                     0x1
- #define PCI_DOE_SIZEOF                  24
- 
-+/* IDE */
-+#define PCI_IDE_VER                     0x1
-+#define PCI_IDE_SIZEOF                  12
++    uint32_t recvd = spdm_socket_rsp(doe_cap->spdm_socket,
++                             SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
++                             req, req_len, rsp, rsp_len);
++    doe_cap->read_mbox_len += DIV_ROUND_UP(recvd, 4);
 +
- #endif /* QEMU_PCIE_REGS_H */
++    return recvd != 0;
++}
++
++static DOEProtocol doe_spdm_prot[] = {
++    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_CMA, pcie_doe_spdm_rsp },
++    { PCI_VENDOR_ID_PCI_SIG, PCI_SIG_DOE_SECURED_CMA, pcie_doe_spdm_rsp },
++    { }
++};
++
+ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+ {
+     AHCIPCIState *d;
+@@ -145,6 +171,8 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+     pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
+                      &d->ahci.mem);
+ 
++    pcie_endpoint_cap_init(dev, 0xa8 + 0x8); /* right after SATA */
++
+     sata_cap_offset = pci_add_capability(dev, PCI_CAP_ID_SATA,
+                                           ICH9_SATA_CAP_OFFSET, SATA_CAP_SIZE,
+                                           errp);
+@@ -165,6 +193,25 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+     /* Any error other than -ENOTSUP(board's MSI support is broken)
+      * is a programming error.  Fall back to INTx silently on -ENOTSUP */
+     assert(!ret || ret == -ENOTSUP);
++
++    uint16_t cap_offset = PCI_CONFIG_SPACE_SIZE;
++
++    if (dev->spdm_port) {
++        pcie_doe_init(dev, &dev->doe_spdm, cap_offset,
++                      doe_spdm_prot, true, 0);
++        cap_offset += PCI_DOE_SIZEOF;
++
++        dev->doe_spdm.spdm_socket = spdm_socket_connect(dev->spdm_port,
++                                                            errp);
++        assert(dev->doe_spdm.spdm_socket > 0);
++    }
++
++    /* ide */
++    pcie_ide_init(dev, cap_offset);
++    cap_offset += PCI_IDE_SIZEOF;
++
++    /* tee */
++    pcie_cap_tee_init(dev);
+ }
+ 
+ static void pci_ich9_uninit(PCIDevice *dev)
+@@ -176,18 +223,41 @@ static void pci_ich9_uninit(PCIDevice *dev)
+     ahci_uninit(&d->ahci);
+ }
+ 
++static uint32_t ich_read_config(PCIDevice *dev, uint32_t address, int len)
++{
++    uint32_t val;
++    if (dev->spdm_port && pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE)) {
++        if (pcie_doe_read_config(&dev->doe_spdm, address, len, &val)) {
++            return val;
++        }
++    }
++    return pci_default_read_config(dev, address, len);
++}
++
++static void ich_write_config(PCIDevice *dev, uint32_t address,
++                                  uint32_t val, int len)
++{
++    if (pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE)) {
++        pcie_doe_write_config(&dev->doe_spdm, address, val, len);
++    }
++    pci_default_write_config(dev, address, val, len);
++}
++
+ static void ich_ahci_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+ 
+     k->realize = pci_ich9_ahci_realize;
++    k->config_write = ich_write_config;
++    k->config_read = ich_read_config;
+     k->exit = pci_ich9_uninit;
+     k->vendor_id = PCI_VENDOR_ID_INTEL;
+     k->device_id = PCI_DEVICE_ID_INTEL_82801IR;
+     k->revision = 0x02;
+     k->class_id = PCI_CLASS_STORAGE_SATA;
+     dc->vmsd = &vmstate_ich9_ahci;
++    device_class_set_props(dc, ich_props);
+     device_class_set_legacy_reset(dc, pci_ich9_reset);
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+ }
+@@ -199,7 +269,7 @@ static const TypeInfo ich_ahci_info = {
+     .instance_init = pci_ich9_ahci_init,
+     .class_init    = ich_ahci_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++        { INTERFACE_PCIE_DEVICE },
+         { },
+     },
+ };
 
 -- 
 2.43.0
