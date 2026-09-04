@@ -4,98 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF2FC79F85
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EB9C624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2a7v-0006oS-UD; Fri, 04 Sep 2026 16:03:07 -0400
+	id 1x2aBD-0000Wv-BA; Fri, 04 Sep 2026 16:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a7b-0006Ky-Ok
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:02:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x2aB6-0000Wg-Us
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:06:25 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a7Z-0000Ei-Sa
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:02:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788552165;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mVgRY8FyaQprluWH3eLEEY/EI8+otfrYvvNCkmcu2Fc=;
- b=gDlEdl3cCqdkj+sD++2WScMh8jbHnXA+Ep7PnkR9dmpOcNz2LHqgwm3cLHDbyPSa2GtAkf
- LtNWQ9SqPJpm05EHUxSxJGybVNuxEz+R81K+5YbHm3op/A8xkzPItugY7gOyN7BDOuAx+5
- b++NOXf2xY5e2HrPxv1fRyz5ZE6EmE4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-i_pITgzUOguRRFW2HJYTxw-1; Fri,
- 04 Sep 2026 16:02:40 -0400
-X-MC-Unique: i_pITgzUOguRRFW2HJYTxw-1
-X-Mimecast-MFC-AGG-ID: i_pITgzUOguRRFW2HJYTxw_1788552159
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2104E188699A; Fri,  4 Sep 2026 20:02:39 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA1B6423; Fri,  4 Sep 2026 20:02:37 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 04 Sep 2026 23:58:55 +0400
-Subject: [PATCH v4 72/75] hw/i386: convert PCSouthBridgeOption to QAPI enum
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260904-qom-qapi-v4-72-a985f168e938@redhat.com>
-References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
-In-Reply-To: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x2aB4-0000q4-W0
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:06:24 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 684HI8sj314071
+ for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 20:06:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=MNlz4pfVw0BDTraf9fgY1Gpar2ofwBnFmk5
+ GZB4u5G0=; b=FxQhFR9EEp/k7KnB8HmV9MbkG6d88eqpsvj9EVf1nOt84UjcXIH
+ XqaeOaUgA+KRQHJidiwALo7H1pGyOzeLwxl2EzUuR8z1rYKz57+zGlV9tIZHgMxE
+ //enN2TE7uSYXAlQ6NzpRNlJTNRU95opw8DB3FyJ/KGDyEzzgorrOY7hM1k2N11F
+ Tg69F9WEZ9AIoTDXBAF4e//DqGiCtEQcrXn1vfAUJ3MLCALIruV+fzv5mLBeRfBb
+ /UNM1TTVLA9zNrMMSyxTthuo003DCRZTxWN0OX67TJelN+MEvBg4VFIMDIYvpYDI
+ yNb3Efzqb8HaVCcSBe8p++4ygW6og3Q1fGg==
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gg011hsr7-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 20:06:19 +0000 (GMT)
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-6b1c1538784so1662206eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 13:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788552378; x=1789157178; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MNlz4pfVw0BDTraf9fgY1Gpar2ofwBnFmk5GZB4u5G0=;
+ b=a9tslzMcEyE5LzcJGc8weSDZQXprxYED4woQdTP0TnfLXbXOAffexZd5vDqWiFjYAX
+ bYIBceyI/0Z3Gh5ItLLOcVpkrLlSdDXAKScCqbNWBib9xlK0sTSxaxGDEAFtpVepPUIm
+ w87G+A0uNETk9YxaT4ifLQIgZrKuT6t1mTqGpfZa32LMpTFBuj26pBpiZefIydaNutZ0
+ RmKSDXbLK8PA+HRz49R3qyHfGTFLWaVQsvzfMXSSDkB/hlrPnZpEj9bUqyBGXk0cgt18
+ UtvZ11IZ8rrtYx+BQbjrNh0kiS/qKl7iCaPHfNunBxs8jpJwj3q3hT/5Ph3GMm16Vk4C
+ Ln5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788552378; x=1789157178;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MNlz4pfVw0BDTraf9fgY1Gpar2ofwBnFmk5GZB4u5G0=;
+ b=DRkiu2+ajuzXzoWou0dLBtZww1CID0W3t2WneBBFG4d4IdJ2cXuTgruQlKvUxjgAB3
+ 61iK2sl2P/FSIKUaeQHN4YFBNN7XUY8OlArxcoD9p3TR72eCQMMdO0UXYBYUpjVpAgYY
+ PPh+WpveC8Bz/EllC3TRiwlh53+MzqC4MuYZgLzLbgG53IoWW0q1SmHfUdFQWVvtc9Hx
+ x2iHFEw+SGrl+eza6nB+gkP11DUU+d+KkwxnOOzy9koup/tTDy/brTVyBGAiCjDJOv2S
+ H+rax3yC3wkHsTFnrUSoetD1IU4rIW0E3eF1/yI3COo7EIKzH0FYQbL2l4ApR/3czLBl
+ FbIQ==
+X-Gm-Message-State: AFuF++k9oR3R/k93QaQ83PCZNXWB0FXoVhvRF8ICynKohtKaGct3ODR3
+ TI53AjS3vhdK3b/4Hcb+rXwSHNLEQe11K3jEGzJB8pDzb/ve82c+V8in4kPLxKeyQ629E9Nf5GF
+ qINZnSf7DORfkEbWIuZBE1L8Yz9P/RmKYWI+u0VxTyEnCZV4sqj/1K2QzmUGaiokU2Q==
+X-Gm-Gg: AYBFou2M8ubKOJjV+2/RJpcvy6/syj7fovtZD8wnFqAD14sedRXg7vi1Cc+zRVu3a0a
+ VGAtXojQ0s6vyDdy0W+uJ8yIE56ybdvkifeaPmEgLlLtXpJb4a63wbcS5oZFOY4BqAxdJY2aOdZ
+ T+rdHc6gLwy7D1Kaj0MLCvTxqOZ1P18SAmxbSzXD0j3jcbxEy+UJz6p5rsEgQnPtwfxLV0EgEPi
+ 5neZ5hZVrr8RWzAZQjbuATlqpLCsEsZ8CEUzh3soKtdQYjgLBIlWM3bJ3bB+ewB+uMLYZ+0errA
+ caAzFSSyEwwabUx332GFi+AGdBekD1iAsa3TdD/TJTdtifl/AqGZmr0qtHwT/KRIdxQVakHJZLy
+ LZVeut6MUeqxqAHvlTrwMIKeSB5dGnk90UICGBCcPE2wEwc6Or9cJbvXW4gI=
+X-Received: by 2002:a05:6820:f034:b0:6b7:46fa:16a0 with SMTP id
+ 006d021491bc7-6b746fa1a27mr4504517eaf.53.1788552378452; 
+ Fri, 04 Sep 2026 13:06:18 -0700 (PDT)
+X-Received: by 2002:a05:6820:f034:b0:6b7:46fa:16a0 with SMTP id
+ 006d021491bc7-6b746fa1a27mr4504487eaf.53.1788552378042; 
+ Fri, 04 Sep 2026 13:06:18 -0700 (PDT)
+Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3339befdefcsm7483479eec.29.2026.09.04.13.06.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 13:06:17 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Zhao Liu <zhao1.liu@intel.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5406;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=5rbqnyzNuiXenxsxKA8MfQROzgQKdBBd23brPgSs/+E=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLMV1UCL6xWqEU9t8e+npSGUWdm2jGxBSbSJ
- CBJ8va1smyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsizAAKCRDa6OEJdZac
- 5W4BD/wIx8zxD5Sk1Gp6YwsTmIfaU3WOGwT4KKqIzrmNcf8VmL4GfIUoHptBXzE3rZKgUfMwv3i
- Eo+LHtztmtaCK3TtEZsd6ii2uej25fAF9wZAqilHVzCXNNSeUzdESZsW4wOwCibwr4xEEbACaGJ
- kSxXvW3YgfhjMhZuRiyt+O8xRYrnoCfpTmTZloSbEPKZwxdg3gVfb2P3h4NcWEzfkFnho21rVJf
- Infndfp+GKfU/JUzENd74NUWIt8gejsFGSNE4EJjcSjEDHmLq1I8EGKIPn1rduXd0tq1+BUDLe5
- OLZcYdKi+ZE0xmZT74zwp+iMY/1QfetKOYHjXXmQMT1KVzienMnmgOdswc0M2XLEHTcWLKkzcl4
- 6e2pHWVbmoZ/5B4Zy28/gMopXSNkduvN7bAWbVXB95ExgBCfIWml6NRBvBpB0bUht07UrJO3KbP
- cDPUcdIRVAU/Act5lDhRJ54K3Xwpff+D/tqLI/sr3uxiOIDAeZ1X4Ta2FIV5BG/YhnMVz8cimNe
- rhwYc6I9uep84kzxZXVpcOS9rPj0pAsBeGsTDS7bVS9LL6C+EZFPqiKAauF4cXW/WooEIEiXiXP
- YjCKA5Zr2FdPkunAYiHzP7mfLEIHPD/ZmvrScA1tV+x4iKj1A2Tfxt9VwaydMy8OlKpdsQNRj+S
- zwLAYAe7CcFs6WA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] tests/tcg/meson.build: fix build_test_depends
+Date: Fri,  4 Sep 2026 13:06:14 -0700
+Message-ID: <20260904200614.2808877-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDE4NCBTYWx0ZWRfX0Y1L1uz3dIc0
+ eU+hx4mizDQpEF6vL0/PBUZJyDiNyarT/SkfeiDbccUF58wEc9FD99qJIZYTryzjjQ5CGsapjGv
+ h2Tf7gF9jwKxLYirMs5UEl3jhpwMDno6flWvWclsiuU7qjQ1cAe6vr72fP9oeo2lx7c75TM81Z1
+ GmyAXGiQ9wFxCur0f1+zbVvq17vekwPVNw8CM801ImUn5zrG6Q9rfLxkfipku8KUBv/Miin023n
+ MCOos3ZcVEXfTQS3cqOWIN+kFKAUPo/dne61A8p2ww4uGyMiDarkOh5NYQFheX0lO2JPyXhCj/c
+ 72aT7di3jttWlxKMLaOovs5mpolyv9Nl3eMAfW0tp+2gDlw0JyTn6C/fmKZh8JYhQxXPoM/2f+I
+ x9TmiAjlRgvaov2Wb2r8iwAWHdjdwgWe16K4xU3Ykp8II747q0jwixdMR3rRjVaMifHEGnlRtMb
+ w6gJ518d48yqR4+7JgA==
+X-Proofpoint-GUID: KsxxyylrbEK2M-ATSNJ2TyFt2Iozmdts
+X-Proofpoint-ORIG-GUID: KsxxyylrbEK2M-ATSNJ2TyFt2Iozmdts
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDE4NCBTYWx0ZWRfX6RxNQQe6gE+N
+ Qh587M90pBPhSGyVKKgLu+I5UpgnYeTLzZNIZ3uG8KD6KtRfRvAcgMFFj+Ptx+98kn25zDtE5pa
+ 68lTIg/GtX+5fcZrEof9D18pMa+gwpo=
+X-Authority-Analysis: v=2.4 cv=Ibi3n2qa c=1 sm=1 tr=0 ts=6a9b24bb cx=c_pps
+ a=V4L7fE8DliODT/OoDI2WOg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
+ a=qGe-MntRKviEIDiUTp4A:9 a=WZGXeFmKUf7gPmL3hEjn:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-04_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ phishscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040184
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,175 +145,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move PCSouthBridgeOption from a hand-rolled C enum with a manually
-constructed QAPITypeInfo to a proper QAPI enum in qapi/machine.json.
+build_test_depends is supposed to be an array, not a custom target. In
+case we go through this path, we have an error with following lines:
 
-This gives the x-south-bridge property a generated type_info with a
-valid masked_name, so it appears in query-qmp-schema introspection and
-the qapi-type field of qom-list-properties output.
+      exe_depends = build_test_depends
+      if 'depends' in setup
+        exe_depends += setup['depends']
+      endif
 
-The south_bridge/default_south_bridge fields change from const char *
-to PCSouthBridgeOption, with an explicit mapping table from enum value
-to QOM device type name.
+where meson complains that custom target has no += operator.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- hw/i386/pc_piix.c    | 53 +++++++++++-----------------------------------------
- include/hw/i386/pc.h |  4 ++--
- qapi/machine.json    | 14 ++++++++++++++
- 3 files changed, 27 insertions(+), 44 deletions(-)
+ tests/tcg/meson.build | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index dac2bee88a2e..02d0f2917705 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -47,6 +47,7 @@
- #include "hw/acpi/acpi.h"
- #include "hw/vfio/types.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-machine.h"
- #include "qemu/error-report.h"
- #include "system/xen.h"
- #ifdef CONFIG_XEN
-@@ -75,6 +76,11 @@ static GlobalProperty pc_piix_compat_defaults[] = {
- static const size_t pc_piix_compat_defaults_len =
-     G_N_ELEMENTS(pc_piix_compat_defaults);
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 243cdb5fc8c..d41a228fb3d 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -263,8 +263,8 @@ foreach target, plan: tcg_tests
+     endif
  
-+static const char *pc_south_bridge_type[] = {
-+    [PC_SOUTH_BRIDGE_OPTION_PIIX3] = TYPE_PIIX3_DEVICE,
-+    [PC_SOUTH_BRIDGE_OPTION_PIIX4] = TYPE_PIIX4_PCI_DEVICE,
-+};
-+
- /*
-  * Return the global irq number corresponding to a given device irq
-  * pin. We could also use the bus number to have a more precise mapping.
-@@ -236,7 +242,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
- 
-     gsi_state = pc_gsi_create(&x86ms->gsi, true);
- 
--    pci_dev = pci_new_multifunction(-1, pcms->south_bridge);
-+    pci_dev = pci_new_multifunction(-1,
-+                                    pc_south_bridge_type[pcms->south_bridge]);
-     object_property_set_bool(OBJECT(pci_dev), "has-usb",
-                              machine_usb(machine), &error_abort);
-     object_property_set_bool(OBJECT(pci_dev), "has-acpi",
-@@ -322,56 +329,18 @@ static void pc_init1(MachineState *machine, const char *pci_type)
-     }
- }
- 
--typedef enum PCSouthBridgeOption {
--    PC_SOUTH_BRIDGE_OPTION_PIIX3,
--    PC_SOUTH_BRIDGE_OPTION_PIIX4,
--    PC_SOUTH_BRIDGE_OPTION_MAX,
--} PCSouthBridgeOption;
--
--static const QEnumLookup PCSouthBridgeOption_lookup = {
--    .array = (const char *const[]) {
--        [PC_SOUTH_BRIDGE_OPTION_PIIX3] = TYPE_PIIX3_DEVICE,
--        [PC_SOUTH_BRIDGE_OPTION_PIIX4] = TYPE_PIIX4_PCI_DEVICE,
--    },
--    .size = PC_SOUTH_BRIDGE_OPTION_MAX
--};
--
--static const QAPITypeInfo PCSouthBridgeOption_type_info = {
--    .name = "PCSouthBridgeOption",
--    .lookup = &PCSouthBridgeOption_lookup,
--};
--
- static int pc_get_south_bridge(Object *obj, Error **errp)
- {
-     PCMachineState *pcms = PC_MACHINE(obj);
--    int i;
- 
--    for (i = 0; i < PCSouthBridgeOption_lookup.size; i++) {
--        if (g_strcmp0(PCSouthBridgeOption_lookup.array[i],
--                      pcms->south_bridge) == 0) {
--            return i;
--        }
--    }
--
--    error_setg(errp, "Invalid south bridge value set");
--    return 0;
-+    return pcms->south_bridge;
- }
- 
- static void pc_set_south_bridge(Object *obj, int value, Error **errp)
- {
-     PCMachineState *pcms = PC_MACHINE(obj);
- 
--    if (value < 0) {
--        error_setg(errp, "Value can't be negative");
--        return;
--    }
--
--    if (value >= PCSouthBridgeOption_lookup.size) {
--        error_setg(errp, "Value too big");
--        return;
--    }
--
--    pcms->south_bridge = PCSouthBridgeOption_lookup.array[value];
-+    pcms->south_bridge = value;
- }
- 
- #ifdef CONFIG_XEN
-@@ -408,7 +377,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
- {
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     ObjectClass *oc = OBJECT_CLASS(m);
--    pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
-+    pcmc->default_south_bridge = PC_SOUTH_BRIDGE_OPTION_PIIX3;
-     pcmc->pci_root_uid = 0;
-     pcmc->default_cpu_version = 1;
- 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index ac03da97b645..34806f16e6a6 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -42,7 +42,7 @@ typedef struct PCMachineState {
-     uint64_t max_ram_below_4g;
-     OnOffAuto vmport;
-     SmbiosEntryPointType smbios_entry_point_type;
--    const char *south_bridge;
-+    PCSouthBridgeOption south_bridge;
- 
-     bool acpi_build_enabled;
-     bool wdat_enabled;
-@@ -89,7 +89,7 @@ struct PCMachineClass {
- 
-     /* Device configuration: */
-     bool pci_enabled;
--    const char *default_south_bridge;
-+    PCSouthBridgeOption default_south_bridge;
- 
-     /* Compat options: */
- 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 0e0d85d0a76d..28ecb969bdb6 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -475,6 +475,20 @@
- { 'enum': 'Pca9554PinState',
-   'data': ['low', 'high'] }
- 
-+##
-+# @PCSouthBridgeOption:
-+#
-+# South bridge chipset option for PC i440FX machines.
-+#
-+# @piix3: Intel PIIX3 (default)
-+#
-+# @piix4: Intel PIIX4
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'PCSouthBridgeOption',
-+  'data': ['piix3', 'piix4'] }
-+
- ##
- # @inject-nmi:
- #
-
+     if not has_cc and has_docker
+-      build_test_depends = image_targets[cc_dockerfile]
+-      build_test_depend_files = dockerfile
++      build_test_depends += image_targets[cc_dockerfile]
++      build_test_depend_files += dockerfile
+       mount = meson.project_source_root()
+       mount = mount + ':' + mount
+       here = meson.project_build_root()
 -- 
-2.55.0.543.g5ebe2ebe4ea8
+2.47.3
 
 
