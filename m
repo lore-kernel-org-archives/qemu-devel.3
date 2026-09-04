@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19856C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1B3C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TQE-0001bA-1B; Fri, 04 Sep 2026 08:53:34 -0400
+	id 1x2TQK-0001gn-DN; Fri, 04 Sep 2026 08:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQA-0001Ys-LF
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:30 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1x2TQI-0001fn-Tp
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:38 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQ8-0000eb-Cs
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:30 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-482e4998d28so706270f8f.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:28 -0700 (PDT)
+ id 1x2TQF-0000hn-R5
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:38 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-47f96c5b722so653457f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788526407; x=1789131207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788526414; x=1789131214; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=zf7fGwfw3SJ42pxAXUZwss0DZND93n/SNZvyCRo8fZw=;
- b=U65uPL/M5V+lez1Zp+wAfnsDbzeSZ6jyg1UCjCXaVVRq20kyDDsF0Ck4bYiAFFnU46
- adQKIxQKxEuxhnOnncG4YCcEUfymnwfvVnqRWIU+9nY9R1VW6nE7efkPdZM5+r5fq7LB
- jKcqI7VFc2Gp3gTQezMAdf+Iz3sgPJnU0FbeyuDGIN5f7dmROCS2wwQHpi10x/W4OyFy
- k+Wrw+MajncyFMfSDPLu0nP+jQQg0BMCeIpmtTJDXzhqkpas2p6cyFICzE6iSUUCcnNz
- Q0AL9sV/KDPmgNi0ZSobSrVPXTEMK3bwbHnhOaM6K3QMV3RY9uYTQXQKYDgwMH0w7qsU
- D2DQ==
+ bh=XUkDyBtHnyENMgpO/P1nSAPBdpBC7ODMYbtYEBkq9vM=;
+ b=Hc2Nv1Ca7azc52qOhO+qBia+tFOEzXdoklbPz2GB4BcoprCASJl8Q0ilyclxtVj8R6
+ mKeaj8kgJAwzHHUDe2ch/wC5HJi8l3nwwmMEyCK+dnvmPmATAe9Z8uSKwEnAx/7c3I1K
+ BXPbG3eBg7QAx+mpNcZUKAuk918+9nmSfGtfU4aqu6XwXv4c+KqV1xmVSHbdG9Xan31Y
+ fNdqWO3MqOk7oqSODhYMFPzYbflJGu8lCqpPRnColo1hvu7ChMUC04uY8oP+hs/Ea+6u
+ 4Qdeda/r2ebT0XV5fxYawP2rzUBXxWXcWWaIoSb70lrOm1P+kqoV+ieic7LtD1S9S/Q8
+ ARzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526407; x=1789131207;
+ d=1e100.net; s=20251104; t=1788526414; x=1789131214;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=zf7fGwfw3SJ42pxAXUZwss0DZND93n/SNZvyCRo8fZw=;
- b=B+mRqK8XWaHGuRrNyISOyfd8e0eratF8YaglkvnNBYP8V6lJY434nlgWpeKTOPBu8J
- eCdHYxKWLxcVw+79BurvmWSlVNUS+124u/gptffFUOIyBAUYzgpzRoqh8YKK0hm5kQNV
- crsoNaxnG+rkaRDeMXZYSzMu5Y7fmzwXgkrbwhHk3CZ00nW1wBfxq4AwN1JYgZCBtbGz
- cCeN2XSvIoc9PegYNWblYtSLCRm1xTVmHg7wjCrAePZMwY5IER8+l4csmKPgcuLGw293
- jNFEYuQ2kNzYTsQKXNHUSRIs2/H/x3lI3ba9tK/luZFYOFzV0EhboOdBwTQvzrRU6AJD
- tPuw==
-X-Gm-Message-State: AFuF++mfz1h0695WXXcDBM5roj3vRLbRbzRDg4feT6DC0vQk/SnFwwN0
- ozOsCp0J72VMt2q+ubq2U8dOM7BOpb8klm+92wzwqC79BeLYmmSlO2YgfJD6QKVJu7U=
-X-Gm-Gg: AYBFou1/v4g0T9dclmJCGkGiVyjN9SeGx0yZLMoRA7OA3BKaC4zj/dfTrKGtTCfMQbG
- 3NAJZWBmIyINbqvqm4jbO3iL9/k/YfMX0ui97uSua6f5ENI94HsI2ilzGfidQJ1podtYF3i1jch
- Qr9VESzrs9F7mAG15B0I3bi9OGfRmrCaZet+UJRNR2W5uG42jqJro0a+o1HI1GpepgEUO8XiQPd
- ixPXJU3VCDLRBNAD08FrOps0fJ4bz0WqV7r5DqI4sfIY0UYEfvIidU/HF9HhwrHljiiutPlgMFf
- 4YYxUpMQ7TyO+1kd/emFlZDNpzq8/BKBt5bTEzbCFT4eAvMkOvjqctk5h3cT6Wn1pILRHVxF+wT
- /ZWk0ISlzIgxoqn6Fy0D7TmkTIWsuTrlaryxX7xTrkmTsmB0ig9QssJzpRvS7RItEdDfNMGgNZ4
- hLQhsTDD1uDF3rSF1G6XCFmTDdmLVDL0W9u7tVZ05Ca1IEjltX0BL3OnBlbIbW
-X-Received: by 2002:a05:600d:864a:10b0:49c:fc89:59cb with SMTP id
- 5b1f17b1804b1-49cfc8960ccmr23254945e9.5.1788526406851; 
- Fri, 04 Sep 2026 05:53:26 -0700 (PDT)
+ bh=XUkDyBtHnyENMgpO/P1nSAPBdpBC7ODMYbtYEBkq9vM=;
+ b=JjQT6n3op9mPbAHeypyvH1efYIruIiNpJiqwkYAJx/2RxCVmD5cw/j2XAxyfgDVopF
+ W4Qbbmdc4QL+3lH6Eiq0HhNZ9lD6zcB29z4V15DQFuTxFdNwMIEAJ6UnEvTgfYMSTn7z
+ PjEMWUxIZA58zSG4kJhCj7dsBwOfSgoCGoUIWnAfCHVUKQGRh/WiVtuP0GOh8x1AS6uo
+ OmRYUVWQT/17O6rPyPLa2rGMcNmX7gOWPbHVXLuA63RKfYA8/MzVZsK3E5MB0Tl5rLuK
+ bimtcMc5tTgA5SbgV7vBL+raQxAIzaOYR/TgFPZr/q52G1QrX4J2aRxU6r3O7qNCS7Te
+ ZgRA==
+X-Gm-Message-State: AFuF++lHzv7jWoi2XnWAVhLQ9tZ1ewOY4FIP5OlL+ZlulkDCBm6Fuu7S
+ aoMFt4KXTtB9kmADAsViP7aBE1BohAQgxFDEM0zfc29wKm9qJA198Yy9buyizLvOyxQ=
+X-Gm-Gg: AYBFou0d8xK6Vme7csu3okXwc5WFPHV+cjGWNHBJEJD9blQaaNpuNhzH/QfYebcK8IR
+ 0++Xr3w8KYqFZuY49xYvFN116IBO3YgRTjeWMWpHpsVEIYdL2rZ1bqTMLV376QQO4+jf4XqBnjW
+ koI86q6DSrOBQ+LeEKuCDGcDdJzvDEHMHE7mKBPoUzfb6cHwBN8aXspn6ce2pJOZiWpHf7UlazM
+ y4nYqTk2VRg8/S81ttzS9VyUyf/kWv8wRmDdonGNRTdtxqM9EPdbkSFYu5DkWKuCKcUFSTuFx0E
+ DHBz6o6GoJPD6kXmjmzxkLwBVLWnQHfWTmzFJJ5DHxbQr4yEAX7ApeLBCHFgQGDv+CSnyay5jSl
+ peMak7bMyIKkzH3/8K8BSyvRQ2raFX6PZ7ttkKgBBnuA151nBIqO14pn31ZEd/e5cuUrj4wyZlb
+ 5Zc/LK/WydALb4Ew5kjue2i2Tbf25q6h7e0J/pSvZv4tZLeM8K6jLKiJEjMSVB
+X-Received: by 2002:a05:6000:712:b0:485:7ca5:b870 with SMTP id
+ ffacd0b85a97d-4858707f19cmr7969482f8f.4.1788526414301; 
+ Fri, 04 Sep 2026 05:53:34 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce5941cb4sm89439825e9.4.2026.09.04.05.53.23
+ ffacd0b85a97d-4858bcefd59sm3457453f8f.19.2026.09.04.05.53.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:53:23 -0700 (PDT)
+ Fri, 04 Sep 2026 05:53:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5C5E761D76;
- Fri, 04 Sep 2026 13:46:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 771F76199F;
+ Fri, 04 Sep 2026 13:46:09 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
-Subject: [PULL 084/105] tests/tcg/s390x: user tests
-Date: Fri,  4 Sep 2026 13:45:38 +0100
-Message-ID: <20260904124604.2207440-85-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 051/105] tests/tcg/multiarch/sha1.c: fix big endian
+ implementation
+Date: Fri,  4 Sep 2026 13:45:05 +0100
+Message-ID: <20260904124604.2207440-52-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,305 +108,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Due to missing endian.h header, BYTE_ORDER, LITTLE_ENDIAN and BIG_ENDIAN
+were undefined. Thus, for following code, the first branch was always
+taken:
+ #if BYTE_ORDER == LITTLE_ENDIAN
+ #define blk0(i) (block->l[i] = (rol(block->l[i],24)&0xFF00FF00) \
+     |(rol(block->l[i],8)&0x00FF00FF))
+ #elif BYTE_ORDER == BIG_ENDIAN
+ ...
+
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-85-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-52-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 1a48b37f75c..6bc2829ba92 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -152,6 +152,7 @@ subdir('or1k')
- subdir('ppc64')
- subdir('ppc64le')
- subdir('riscv64')
-+subdir('s390x')
+diff --git a/tests/tcg/multiarch/sha1.c b/tests/tcg/multiarch/sha1.c
+index 0081bd76577..0fcbc3ed605 100644
+--- a/tests/tcg/multiarch/sha1.c
++++ b/tests/tcg/multiarch/sha1.c
+@@ -21,6 +21,7 @@ A million repetitions of "a"
  
- image_targets = {}
- exe_targets = []
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-deleted file mode 100644
-index 97c0f021902..00000000000
---- a/tests/tcg/s390x/Makefile.target
-+++ /dev/null
-@@ -1,129 +0,0 @@
--S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
--VPATH+=$(S390X_SRC)
--CFLAGS+=-march=zEC12 -m64
--
--%.o: %.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
--
--config-cc.mak: Makefile
--	$(quiet-@)( \
--	    $(call cc-option,-march=z14, CROSS_CC_HAS_Z14); \
--	    $(call cc-option,-march=z15, CROSS_CC_HAS_Z15)) 3> config-cc.mak
---include config-cc.mak
--
--TESTS+=hello-s390x
--TESTS+=csst
--TESTS+=ipm
--TESTS+=exrl-trt
--TESTS+=exrl-trtr
--TESTS+=pack
--TESTS+=mie3-compl
--TESTS+=mie3-mvcrl
--TESTS+=mie3-sel
--TESTS+=mvo
--TESTS+=mvc
--TESTS+=shift
--TESTS+=trap
--TESTS+=signals-s390x
--TESTS+=branch-relative-long
--TESTS+=noexec
--TESTS+=div
--TESTS+=clst
--TESTS+=long-double
--TESTS+=cdsg
--TESTS+=chrl
--TESTS+=rxsbg
--TESTS+=ex-relative-long
--TESTS+=ex-branch
--TESTS+=mxdb
--TESTS+=epsw
--TESTS+=larl
--TESTS+=mdeb
--TESTS+=cgebra
--TESTS+=clgebr
--TESTS+=clc
--TESTS+=laalg
--TESTS+=add-logical-with-carry
--TESTS+=lae
--TESTS+=cvd
--TESTS+=cvb
--TESTS+=ts
--TESTS+=ex-smc
--TESTS+=divide-to-integer
--TESTS+=stckf
--
--cdsg: CFLAGS+=-pthread
--cdsg: LDFLAGS+=-pthread
--
--# The following tests contain inline assembly that requires inlining,
--# and thus cannot be built with -O0.
--rxsbg: CFLAGS+=-O2
--divide-to-integer: CFLAGS+=-O2
--
--cgebra: LDFLAGS+=-lm
--clgebr: LDFLAGS+=-lm
--divide-to-integer: LDFLAGS+=-lm
--
--include $(S390X_SRC)/pgm-specification.mak
--$(PGM_SPECIFICATION_TESTS): pgm-specification-user.o
--$(PGM_SPECIFICATION_TESTS): LDFLAGS+=pgm-specification-user.o
--TESTS += $(PGM_SPECIFICATION_TESTS)
--
--Z13_TESTS=vistr
--Z13_TESTS+=lcbb
--Z13_TESTS+=locfhr
--Z13_TESTS+=vcksm
--Z13_TESTS+=vstl
--Z13_TESTS+=vrep
--Z13_TESTS+=precise-smc-user
--Z13_TESTS+=prno-trng
--$(Z13_TESTS): CFLAGS+=-march=z13 -O2
--TESTS+=$(Z13_TESTS)
--
--ifneq ($(CROSS_CC_HAS_Z14),)
--Z14_TESTS=fma vfminmax
--fma: float.h
--fma: LDFLAGS+=-lm
--vfminmax: LDFLAGS+=-lm
--vfminmax: float.h
--$(Z14_TESTS): CFLAGS+=-march=z14 -O2
--TESTS+=$(Z14_TESTS)
--endif
--
--ifneq ($(CROSS_CC_HAS_Z15),)
--Z15_TESTS=vxeh2_vs
--Z15_TESTS+=vxeh2_vcvt
--Z15_TESTS+=vxeh2_vlstr
--Z15_TESTS+=vxeh2_vstrs
--$(Z15_TESTS): CFLAGS+=-march=z15 -O2
--TESTS+=$(Z15_TESTS)
--endif
--
--ifneq ($(GDB),)
--GDB_SCRIPT=$(SRC_PATH)/tests/guest-debug/run-test.py
--
--run-gdbstub-signals-s390x: signals-s390x
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(S390X_SRC)/gdbstub/test-signals-s390x.py, \
--	mixing signals and debugging)
--
--hello-s390x-asm: CFLAGS+=-nostdlib
--
--run-gdbstub-svc: hello-s390x-asm
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(S390X_SRC)/gdbstub/test-svc.py, \
--	single-stepping svc)
--
--EXTRA_RUNS += run-gdbstub-signals-s390x run-gdbstub-svc
--endif
--
--# MVX versions of sha512
--sha512-mvx: CFLAGS=-march=z13 -mvx -O3
--sha512-mvx: sha512.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
--
--TESTS+=sha512-mvx
-diff --git a/tests/tcg/s390x/meson.build b/tests/tcg/s390x/meson.build
-new file mode 100644
-index 00000000000..dcbbb463c43
---- /dev/null
-+++ b/tests/tcg/s390x/meson.build
-@@ -0,0 +1,140 @@
-+cc = 's390x-linux-gnu-gcc'
-+cc_dockerfile = 'debian-all-test-cross'
-+cc_docker_host_arch = ['aarch64', 'x86_64']
-+
-+cc_feat_cflags = {
-+  'z14': '-march=z14',
-+  'z15': '-march=z15',
-+}
-+
-+tests_s390x_pgm = [
-+  'br-odd.S',
-+  'cgrl-unaligned.S',
-+  'clrl-unaligned.S',
-+  'crl-unaligned.S',
-+  'ex-odd.S',
-+  'lgrl-unaligned.S',
-+  'llgfrl-unaligned.S',
-+  'lpswe-unaligned.S',
-+  'lrl-unaligned.S',
-+  'stgrl-unaligned.S',
-+  'strl-unaligned.S',
-+]
-+
-+tests = []
-+
-+# Multi arch tests
-+tests += tcg_tests['multiarch-linux-user']['tests']
-+
-+tests += {
-+  # The following tests contain inline assembly that requires inlining,
-+  # and thus cannot be built with -O0.
-+  'rxsbg.c': {'cflags': ['-O2']},
-+  'divide-to-integer.c': {'cflags': ['-O2', '-lm']},
-+
-+  'hello-s390x.c': {},
-+  'hello-s390x-asm.S': {'cflags': ['-nostdlib']},
-+  'csst.c': {},
-+  'ipm.c': {},
-+  'exrl-trt.c': {},
-+  'exrl-trtr.c': {},
-+  'pack.c': {},
-+  'mie3-compl.c': {},
-+  'mie3-mvcrl.c': {},
-+  'mie3-sel.c': {},
-+  'mvo.c': {},
-+  'mvc.c': {},
-+  'shift.c': {},
-+  'trap.c': {},
-+  'signals-s390x.c': {},
-+  'branch-relative-long.c': {},
-+  'noexec.c': {},
-+  'div.c': {},
-+  'clst.c': {},
-+  'long-double.c': {},
-+  'cdsg.c': {},
-+  'chrl.c': {},
-+  'ex-relative-long.c': {},
-+  'ex-branch.c': {},
-+  'mxdb.c': {},
-+  'epsw.c': {},
-+  'larl.c': {},
-+  'mdeb.c': {},
-+  'cgebra.c': {'cflags': ['-lm']},
-+  'clgebr.c': {'cflags': ['-lm']},
-+  'clc.c': {},
-+  'laalg.c': {},
-+  'add-logical-with-carry.c': {},
-+  'lae.c': {},
-+  'cvd.c': {},
-+  'cvb.c': {},
-+  'stckf.c': {},
-+  'ts.c': {},
-+  'ex-smc.c': {'cflags': ['-Wl,--no-warn-rwx-segments']},
-+}
-+
-+foreach src: tests_s390x_pgm
-+  tests += {
-+    src: {'cflags': [files('pgm-specification-user.c'), '-Wa,--noexecstack']}
-+  }
-+endforeach
-+
-+setup_z13 = {'cflags': ['-O2', '-march=z13']}
-+tests += {
-+  'vistr.c': setup_z13,
-+  'lcbb.c': setup_z13,
-+  'locfhr.c': setup_z13,
-+  'vcksm.c': setup_z13,
-+  'vstl.c': setup_z13,
-+  'vrep.c': setup_z13,
-+  'precise-smc-user.c': setup_z13,
-+  'prno-trng.c': setup_z13,
-+  '../multiarch/sha512.c': {
-+    'exe_name': 'sha512-mvx',
-+    'cflags': setup_z13['cflags'] + ['-mvx', '-O3'],
-+  }
-+}
-+
-+setup_z14 = {
-+  'cc_feat': 'z14',
-+  'cflags': ['-O2', '-lm', '-Wl,--no-warn-rwx-segments']
-+}
-+tests += {
-+  'fma.c': setup_z14,
-+  'vfminmax.c': setup_z14,
-+}
-+
-+setup_z15 = {'cc_feat': 'z15', 'cflags': ['-O2']}
-+tests += {
-+  'vxeh2_vs.c': setup_z15,
-+  'vxeh2_vcvt.c': setup_z15,
-+  'vxeh2_vlstr.c': setup_z15,
-+  'vxeh2_vstrs.c': setup_z15,
-+}
-+
-+tests += {
-+  'signals-s390x.c': {
-+    'test_name': 'signals',
-+    'gdb_test': ['--test', files('gdbstub/test-signals-s390x.py')],
-+  },
-+  'hello-s390x-asm.S': {
-+    'test_name': 'svc',
-+    'gdb_test': ['--test', files('gdbstub/test-svc.py')],
-+  },
-+}
-+
-+if 'qemu-s390x' in emulators
-+  tcg_tests += {
-+    's390x-linux-user': {
-+      'cc': cc,
-+      'cc_dockerfile': cc_dockerfile,
-+      'cc_docker_host_arch': cc_docker_host_arch,
-+      'cc_feat_cflags': cc_feat_cflags,
-+      'folder': 's390x',
-+      'gdb_arch': 's390x',
-+      'gdb_feat_version': gdb_feat_version,
-+      'qemu': emulators['qemu-s390x'],
-+      'tests': tests,
-+    }
-+  }
-+endif
+ #define SHA1HANDSOFF
+ 
++#include <endian.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdint.h>
 -- 
 2.47.3
 
