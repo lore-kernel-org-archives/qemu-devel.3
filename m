@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C651C624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094A4C624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2ReI-0004ZD-I4; Fri, 04 Sep 2026 06:59:58 -0400
+	id 1x2Rkk-0003mg-3f; Fri, 04 Sep 2026 07:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2ReH-0004Yx-Ko
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:59:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x2Rki-0003mI-Kh
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:06:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2ReG-0007cr-1x
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:59:57 -0400
+ id 1x2Rkg-0000HP-Rt
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:06:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788519595;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/EJRWZ28A8Qn3vkd4YizCgEZKeGUYTHJKT3/AkklFjg=;
- b=OErZJDG5Und/DVUxQFTxJi+pUTE89p04y3mGdgQO3BsgSRitGOU1pkPxb/n/RoDPqj9ChV
- 6w8M2xfG2bhHedFkzBM4dMoVI2sKeU5r7a1fispPLR7hKkdHCGkcLVpb8sHarIVS0ojj6I
- PibcZEgJKlIewoxHwAclJSkBiVOAnDA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1788519993;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=ulfk5fZ2Eh1fmH0aKvvM5CsgXUmU+jZyugPeonsFqSM=;
+ b=Tk6yquxoT+BLsoBDpB+fnDiCKQ+lYdpLm09aZYQSgjtVGhWpGIHUEYa+Fsw7kVOfM3eYx5
+ PLJvwNonp9F+WHivbQIb6HaZekzs5zF0NDSq0Z6/0Lgx76kSfDGHwR4pAlor1j/TOY/BkT
+ rZe2mOVUlrjwIENO3X1ma8lF9KO/XXE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-MICaLqB4OT-J3HkmTivJPA-1; Fri,
- 04 Sep 2026 06:59:52 -0400
-X-MC-Unique: MICaLqB4OT-J3HkmTivJPA-1
-X-Mimecast-MFC-AGG-ID: MICaLqB4OT-J3HkmTivJPA_1788519591
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-IqgFVdePNOaZ-zKBc7oAbg-1; Fri,
+ 04 Sep 2026 07:06:30 -0400
+X-MC-Unique: IqgFVdePNOaZ-zKBc7oAbg-1
+X-Mimecast-MFC-AGG-ID: IqgFVdePNOaZ-zKBc7oAbg_1788519988
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D75D018D7258; Fri,  4 Sep 2026 10:59:50 +0000 (UTC)
-Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B9A6184AF86; Fri,  4 Sep 2026 11:06:28 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A8D2218005BD; Fri,  4 Sep 2026 10:59:48 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B43D9180059E; Fri,  4 Sep 2026 11:06:25 +0000 (UTC)
+Date: Fri, 4 Sep 2026 12:06:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, luoyonggang@gmail.com,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- devel@lists.libvirt.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>
-Subject: [PULL 07/13] tests/unit: add websock handshake test
-Date: Fri,  4 Sep 2026 11:59:23 +0100
-Message-ID: <20260904105929.3450663-8-berrange@redhat.com>
-In-Reply-To: <20260904105929.3450663-1-berrange@redhat.com>
-References: <20260904105929.3450663-1-berrange@redhat.com>
+ qemu-devel@nongnu.org, anjo@rev.ng,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ philmd@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 00/47] single-binary: implement dynamic filtering for QOM
+ types
+Message-ID: <apqmLiYJ54ArzzFb@redhat.com>
+References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
+ <4b4f77ee-21e9-405e-a1da-21506afa1c5b@oss.qualcomm.com>
+ <app_CnHimOrOymMH@redhat.com>
+ <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
+ <CAFEAcA_4TZxYhFbHfJZCas7bvh_KZjNp2aKzx3LPaXTQFuoQYQ@mail.gmail.com>
+ <87ld9h8emo.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ld9h8emo.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,152 +92,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+On Fri, Sep 04, 2026 at 01:01:03PM +0200, Markus Armbruster wrote:
+> Peter Maydell <peter.maydell@linaro.org> writes:
+> 
+> > I was wondering if maybe one way to approach that is some
+> > "disambiguation" syntax on the machine name; so one could write
+> > "-machine aarch64:virt" vs "-machine riscv64:virt" (or whatever) to
+> > disambiguate when just "-machine virt" would be ambiguous; but if
+> > there's only one machine of that name then just "-machine foo" would
+> > work. That extends nicely to truly heterogenous machine names:
+> > "-machine my-mixed-machine" wouldn't need the user to explicitly
+> > give it a -target option or otherwise say that it includes aarch64
+> > and microblaze CPUs. (We'd probably need to put something in to
+> > prevent future machine name clashes across targets, so that the
+> > only clashes are our existing legacy ones.)
+> 
+> Do we need new syntax?
+> 
+> Rename the clashing machine types, keeping the old name as alias.  When
+> getting a machine by name, require the name to be unambiguous.
 
-Check that malformed HTTP greetings are answered with an HTTP 400
-rather than an empty response. The no-space case is the one which used
-to leave the response buffer empty.
+This probably requires us to support more than 1 alias per machine.
 
-Fixes: CVE-2026-84788
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/unit/meson.build               |   1 +
- tests/unit/test-io-channel-websock.c | 105 +++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+)
- create mode 100644 tests/unit/test-io-channel-websock.c
+Specifically with aarch64 we have:
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 3a9866c1f2..6a11f07112 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -93,6 +93,7 @@ if have_block
-     'test-io-channel-command': ['io-channel-helpers.c', io],
-     'test-io-channel-buffer': ['io-channel-helpers.c', io],
-     'test-io-channel-null': [io],
-+    'test-io-channel-websock': [io],
-     'test-crypto-ivgen': [io],
-     'test-crypto-afsplit': [io],
-     'test-crypto-block': [io],
-diff --git a/tests/unit/test-io-channel-websock.c b/tests/unit/test-io-channel-websock.c
-new file mode 100644
-index 0000000000..2a55a4bcdf
---- /dev/null
-+++ b/tests/unit/test-io-channel-websock.c
-@@ -0,0 +1,105 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QEMU I/O channel websock test
-+ *
-+ * Copyright (c) 2026 Virtuozzo International GmbH
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "io/channel-websock.h"
-+#include "io/channel-socket.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "qemu/sockets.h"
-+
-+typedef struct {
-+    bool finished;
-+    bool failed;
-+} QIOChannelWebsockHandshake;
-+
-+static void test_websock_handshake_done(QIOTask *task, gpointer opaque)
-+{
-+    QIOChannelWebsockHandshake *res = opaque;
-+
-+    res->finished = true;
-+    res->failed = qio_task_propagate_error(task, NULL);
-+}
-+
-+/*
-+ * Drives a server-side handshake against @request and returns whatever
-+ * the server wrote back, NUL terminated. The handshake is expected to
-+ * fail; the point of the test is the HTTP response that goes with it.
-+ */
-+static char *test_websock_handshake_reply(const char *request)
-+{
-+    QIOChannelWebsockHandshake res = { false, false };
-+    QIOChannelSocket *cli, *srv;
-+    QIOChannelWebsock *wioc;
-+    GMainContext *mainloop;
-+    int channel[2];
-+    char *reply;
-+    ssize_t got;
-+
-+    g_assert(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, channel) == 0);
-+
-+    cli = qio_channel_socket_new_fd(channel[0], &error_abort);
-+    srv = qio_channel_socket_new_fd(channel[1], &error_abort);
-+    qio_channel_set_blocking(QIO_CHANNEL(srv), false, &error_abort);
-+    qio_channel_set_blocking(QIO_CHANNEL(cli), false, &error_abort);
-+
-+    wioc = qio_channel_websock_new_server(QIO_CHANNEL(srv));
-+    qio_channel_websock_handshake(wioc, test_websock_handshake_done,
-+                                  &res, NULL);
-+
-+    qio_channel_write_all(QIO_CHANNEL(cli), request, strlen(request),
-+                          &error_abort);
-+
-+    mainloop = g_main_context_default();
-+    while (!res.finished) {
-+        g_main_context_iteration(mainloop, TRUE);
-+    }
-+    g_assert(res.failed);
-+
-+    reply = g_malloc0(1024);
-+    got = qio_channel_read(QIO_CHANNEL(cli), reply, 1023, &error_abort);
-+    if (got > 0) {
-+        reply[got] = '\0';
-+    }
-+
-+    object_unref(OBJECT(wioc));
-+    object_unref(OBJECT(srv));
-+    object_unref(OBJECT(cli));
-+
-+    return reply;
-+}
-+
-+static void test_websock_bad_request(const void *opaque)
-+{
-+    const char *request = opaque;
-+    g_autofree char *reply = test_websock_handshake_reply(request);
-+
-+    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    module_call_init(MODULE_INIT_QOM);
-+    g_test_init(&argc, &argv, NULL);
-+
-+#define TEST_BAD_REQUEST(name, request)                         \
-+    g_test_add_data_func("/io/channel/websock/bad-request/" name, \
-+                         request, test_websock_bad_request)
-+
-+    /*
-+     * A greeting with no space at all used to leave the response buffer
-+     * empty, which drove the handshake into a zero length write.
-+     */
-+    TEST_BAD_REQUEST("no-space", "stats\r\nx\r\n\r\n");
-+    TEST_BAD_REQUEST("method-only", "GET\r\nx\r\n\r\n");
-+    TEST_BAD_REQUEST("no-version", "GET /\r\nx\r\n\r\n");
-+    TEST_BAD_REQUEST("bad-method", "POST / HTTP/1.1\r\nx: y\r\n\r\n");
-+    TEST_BAD_REQUEST("bad-version", "GET / HTTP/1.0\r\nx: y\r\n\r\n");
-+
-+    return g_test_run();
-+}
+  virt                 QEMU 11.2 ARM Virtual Machine (alias of virt-11.2)
+
+so we need to rename "virt-11.2" but have already used its "alias"
+feature for "virt", which would also need renaming
+
+ie we would need
+
+  arm-virt-11.2
+
+with aliases
+
+    virt-11.2
+    arm-virt
+    virt
+
+So is it better to extend the alias feature, or have the new -machine
+syntax ? 
+
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
