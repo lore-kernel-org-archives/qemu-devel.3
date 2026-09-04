@@ -4,125 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D64DFC79F83
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E38C624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:25:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Rzz-0000RR-J3; Fri, 04 Sep 2026 07:22:23 -0400
+	id 1x2S2G-0001GP-RY; Fri, 04 Sep 2026 07:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2Rzy-0000Qq-Qz
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:22:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x2S2F-0001Cv-3m
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:24:43 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2Rzw-0003XF-BX
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:22:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788520938;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DZtNHj4dJNQM8XNol7kcuN6tcN2rtdw5KbaZPWFxkZ8=;
- b=AIr/gL6OFTp1xK/r9Pgnw9sM2YdxfnZamYnlwwbTWSQpPGGIdP8fa+A7wISCxZoZRkil7N
- wFsveyohXqtYtKeLcPWTT7YmuTx5vOGMU1yIunG/Qn/3Cw4ctOT0EK0ZnxjQmbTw5/IXci
- oz5QTz6Z2PIGzHhmJ5BczirySKiAYno=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199-HmhwgVrGMYCUrad92udVNA-1; Fri, 04 Sep 2026 07:22:17 -0400
-X-MC-Unique: HmhwgVrGMYCUrad92udVNA-1
-X-Mimecast-MFC-AGG-ID: HmhwgVrGMYCUrad92udVNA_1788520936
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48436db95e1so595481f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 04:22:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x2S2C-0004MT-Nw
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:24:42 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 684AIEVl3442515
+ for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 11:24:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ vCNCErGJBDQg0SgwIeGV7UD2RNQTRO8/KeVBpqxsSBQ=; b=jZUsfC7rdnT9Efrq
+ A9Dgoe/1NtPvldhWzuubOld0kZoWiWQ8Jhx7zz7TsEyTOWx95B3lxMWLy5cw6V2x
+ DkAGwzuFxWK9WpMO9ZpwALQHCNj7QmMuVbYk6wcv/gLV2zBtU0ZHSgawQ9O4I/xB
+ ssA87Y8dXj4InfGYEquShCOQdahh7nwCxrC/a8+62Deq9+OSmB3MlBE6rVzo8d8h
+ cJHfvLeWSYG00IrplW83FMqAZkg4wbS/Syr+1HWyyodV8+pf03Tt5QdiGJ7Kvwrz
+ TMYzziBW9HWXQkdQffnNkpNxjtc/0ugzIzXKYLC7wBvuxw+f8TFQQa8r1MqbD2Y6
+ /m/tUg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfp781cs5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 11:24:38 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-939694871aaso157578985a.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 04:24:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788520936; x=1789125736; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=DZtNHj4dJNQM8XNol7kcuN6tcN2rtdw5KbaZPWFxkZ8=;
- b=IyySem2Slt/OxtUfAB55NFom328dSxt5Y8jltU5aKsyddNCmI4sn3gLDprel20k1RI
- 8wCpthdFCcEAQEZALZHbFVbv+hIn34lguwphbUSSXwS3yuxEbVmWVIutLZUWHhO1iY0W
- 4AikszHJ0IRRM97Wb5GR00D8o3NU0DiSug4Tzp9nqLeFXqYQgWGTGX+Bk3pX1+zd4vVS
- XTFq2H0XYuTx1LsqLklzoSzVoib2g9grUafsOz3x1/dBPfiVjzberue/UQuoCu3Itwmb
- 38rkx62V/bUt6BrXSYDZnHOG5guXPx3mdKNa2jgK9EWlmVQB7VAIDbEgWJMIZPVbEMA0
- e+ZQ==
+ d=oss.qualcomm.com; s=google; t=1788521078; x=1789125878; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vCNCErGJBDQg0SgwIeGV7UD2RNQTRO8/KeVBpqxsSBQ=;
+ b=IuP150yiTp33mmnWsKVPtqI0zmZVpnAq8vzG0r1qIv4lI48zf8iSM4Ea85oeLur1qV
+ NFPYLDVOP3mhpQ2o+MJChF5fBV3GtWeClKpdIc9FnvVdGbz6Ib6FEA14/DhFSWDY2htP
+ VmfzYmPybdSNDd+bAfAcJ49zo6TTSC4uMsJt9brqIL9B9RWmIUWI4IahtIxZmhtNpmmZ
+ d8rjeazXajqgTnQTZKDLQV5LgqeUdbB2LenPvX8/wKWKVjVbB3HSulPBWFxx+VN4xckG
+ pbmuErPNk1fluQXcSNMiRMUfCslfuFSc4LqYXIXE1rtwGT6DyVpeB1hyN9ySRjiKBhfP
+ IZgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788520936; x=1789125736;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=DZtNHj4dJNQM8XNol7kcuN6tcN2rtdw5KbaZPWFxkZ8=;
- b=kfygcht3q7DIkCv7Eb1JRBibYHQ0dsd0PcVTOowbFkTHzyoNsPsLAzzM3cPmYQwZ4y
- H3aGx/+XzrwffU7fTzNfjS9mjGUXZLTS85rwivbtymMAwRR4632l4Hh9TG9pmU9rdvQB
- C3QzPgZFOhawo6HMA7Lsw7wkUInB4t6O1B1DIJJ68/LXRMyGwxmBx1eCgy/HU+bSTWNE
- cSxqGcJxk91nHEVhHYjOcRuUkllkRC76PZVMJKiB52yKiKY8cp+7BdSUWPi/B8S7oK3K
- Yj7XgC4NZqLH3YvwU6FrO4mwaTSpBYLINZb4wfXdBTxKYhL/AlNbnbPn+IbpsTrL5BMB
- abew==
+ d=1e100.net; s=20251104; t=1788521078; x=1789125878;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=vCNCErGJBDQg0SgwIeGV7UD2RNQTRO8/KeVBpqxsSBQ=;
+ b=ruAV2vPFPdQiEPdnCqJ/0xIOERtmqD+YpBnY0CghWhTNRZ1KpMqNOaGy19YNn9voYf
+ SVJdMVjHGQxjfvRtetMlKO7UyOvSLQXS/GztrjQb2sJF8+H9Lhe4VSRtwS70lxOU33Ik
+ sLEr9/T13UhtJyZJIEcqPOSLlpMgwvQI5kMeCx8vqXteHPKn8hR8817TwOBZheOUiIYQ
+ kKVtjlR2FsT86eXXHQs5jO7qGeFA5NJecttYwBZ8tJshRhOy7MjTVZ54WqBlvRr194+4
+ Y8bG162FdETowNL5hqWLB7Pb1xxO+DXPMb6W2tpD2VoJKZCAIYxmMKQFzSCs6krEYaAz
+ HroQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwoQFIRM0EbLQ7RHsvtEIEQsQz1Xw3rr3A7ii0EuQR+qtG/Oeo9nnOM3dCwXUGKr7zLOHE+4q1J7OBu@nongnu.org
-X-Gm-Message-State: AFuF++lvJk3QYVTLNTu7/Agxpvr6OaFv4Ks19qZccOiLQ0xbwqymeX5n
- EoEVKgjqh+O5b9l7z6QD9r0spXBen21S8rbzA0khdk+VOG/DJUDRGgaXYxCh1Wox1y+XwzNTATl
- u7R/Xuhjk36SWE2AyNNEmfQ1wXFfMGKSV9pixfnS2FvMoGTHl09zS1OBp
-X-Gm-Gg: AYBFou2gWNwKF6AFIaqE62cJcY5aBG8f9G6paXb4ybMmEKZOBp4g6NFSQKLtwrAJB//
- k42rCdDpv4KsEx7c4KAiSh090vLAPAq/gChLkXyFkWg5+K2FZfPHWWfUY/PAqyf2WPlAxTPrBKB
- E6O/rL+xAfNzTXUqBBtTewBHeVVaqfvd1WRdzxXDfwTDCaMYYxSP+Oqz24MmtsvMTpR4c1QUtVH
- rkaXg5QjI06elJ3D+omSM2l5wjLfPMkiyGYvpSA6lbql0IaRltPQd4SqWRNxGEWQGPyTO0PcK9e
- HUuPmQDet3Pur08/DyQq+zWpiZ6lUPdp/nYosREBsCFLymCAb85k+A+bzf3Tl1ncYQ2IUJdAp/6
- +IKE4ac5poFl2YOU5YSdcZLU=
-X-Received: by 2002:a05:6000:38c:b0:484:3fce:6ad2 with SMTP id
- ffacd0b85a97d-485872cd602mr9297376f8f.15.1788520935762; 
- Fri, 04 Sep 2026 04:22:15 -0700 (PDT)
-X-Received: by 2002:a05:6000:38c:b0:484:3fce:6ad2 with SMTP id
- ffacd0b85a97d-485872cd602mr9297283f8f.15.1788520935123; 
- Fri, 04 Sep 2026 04:22:15 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ AKwUvBzR8yG3ZZPu2gipKzucijBZWxPLiYYas5YUnhvIg2d8NKDaojUtp4O7Dgxtyan1dv37L2Gq72AYFxk/@nongnu.org
+X-Gm-Message-State: AFuF++mJ9ww00fnN806/Xb+rAudRbLg3aBj4mA6drVuz4V4H7L5RVdu2
+ CJjnlkawS37GnYYhvBlCcx+VA74TALbEE6616TA3TmsFLzoIAdMjZeetnQPO++Rp/EXx8wuK96N
+ jmDbtzyUVHSETzVEtVEI5AJxtg8NpL8xitHICodIz19gpyDfBNP1oV2M3RQ==
+X-Gm-Gg: AYBFou2Xz3EeWmYo1kD3+cdb0Tjy88jna9DMu7B1n5i7zANmal1qNFr/J1Ug/O3TAMH
+ 1KxT8fGGaa42I17bNMWcZGwP1mSEZ+hHQG2hXqbPD3euh5XDZcv2a5mq2w+4pnEdd33/4LcviDF
+ uPiD7/sOe2P1RO8+40Zzri9dtBXuBs+Clo+KldOoCzJfEvyehZTAu97lp8eTkD/gPXCLP+Y3JdN
+ uPF+rOp/npou1GM3NCmdY7Rvb5iAlNBj2fT+BeZmXcdfgpeAr7XD23yAMLPad8FrQB3oT6cqx+5
+ 7hfAEXd8ysMK7tqsU/SrWTNcA+k+8iR0+wzLJlRcKEmipXDR5Za2xRe0ARG+vXzAhAeeONodJG1
+ ei168oBcF+0ibPMbaglkF33vUGm/vs0j3BA==
+X-Received: by 2002:a05:620a:7087:b0:939:7f87:ff22 with SMTP id
+ af79cd13be357-9398045fd75mr485295985a.36.1788521077801; 
+ Fri, 04 Sep 2026 04:24:37 -0700 (PDT)
+X-Received: by 2002:a05:620a:7087:b0:939:7f87:ff22 with SMTP id
+ af79cd13be357-9398045fd75mr485290985a.36.1788521077307; 
+ Fri, 04 Sep 2026 04:24:37 -0700 (PDT)
+Received: from [192.168.69.202] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885bfe14sm5761659f8f.35.2026.09.04.04.22.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 04:22:14 -0700 (PDT)
-Date: Fri, 4 Sep 2026 07:22:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Dongli Zhang <dongli.zhang@oracle.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, dave@treblig.org,
- anisinha@redhat.com, philmd@mailo.com, aurelien@aurel32.net,
- mjrosato@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, cohuck@redhat.com,
- alex@shazbot.org, clg@redhat.com, akrowiak@linux.ibm.com,
- jjherne@linux.ibm.com, sstabellini@kernel.org,
- anthony@xenproject.org, edgar.iglesias@gmail.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- joe.jin@oracle.com
-Subject: Re: [PATCH 0/8] Force detach PCI devices for ACPI-based and PCIe
- native hot-unplug
-Message-ID: <20260904072052-mutt-send-email-mst@kernel.org>
-References: <20260824011420.752806-1-dongli.zhang@oracle.com>
- <aoxY4Rxst2qAyn5z@redhat.com>
- <01ee4841-76d8-4749-a80e-eb945ab8799a@oracle.com>
- <20260903172835.0e253a25@imammedo>
- <20260903160401-mutt-send-email-mst@kernel.org>
- <20260904130709.6769caee@imammedo>
+ ffacd0b85a97d-4858bc74298sm3214831f8f.6.2026.09.04.04.24.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Sep 2026 04:24:36 -0700 (PDT)
+Message-ID: <a8ced3da-7dfa-49c1-b65e-c2290e0f6ca7@oss.qualcomm.com>
+Date: Fri, 4 Sep 2026 13:24:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/33] hw/arm: Add basic Phytium Pi machine
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Bernhard Beschow <shentey@gmail.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Yonggang Luo <luoyonggang@gmail.com>, Anton Johansson <anjo@rev.ng>
+References: <20260903112532.3276678-1-bin.meng@processmission.com>
+ <20260903112532.3276678-3-bin.meng@processmission.com>
+ <0795176d-4580-4acc-a3cf-c40f8d221661@oss.qualcomm.com>
+ <CAEUhbmW4h_-az5iBsztzy8Yuu06+WMjOYcrL51sW8VEgyAaSMw@mail.gmail.com>
+ <881be57e-5496-41f2-af0b-e21087fa5e54@oss.qualcomm.com>
+ <apqcmqpJEEyc7wGx@redhat.com>
+ <CAFEAcA-s+zsChqxYa258GOXdjniusdYeOCzGd6OiHWBQZV1Syg@mail.gmail.com>
+ <apqfJ58nhZZIH8Su@redhat.com>
+ <CAFEAcA_ZqLjPxo2GjW9vgvyVHw5iABphE91Dk7u+OAj3Ls3TMg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA_ZqLjPxo2GjW9vgvyVHw5iABphE91Dk7u+OAj3Ls3TMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260904130709.6769caee@imammedo>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDEwMiBTYWx0ZWRfXxvTMs6j9xmmM
+ vmM9RRKNZs5Gbrlflpry81ClXhKOq6gFcazV4LGkHya5ta8L47qG6Jzrx2YeGkhW4qAGd6YtCdM
+ +6CYsEH9OGpMTOYO5Wj7WWDj/pHOnEw=
+X-Proofpoint-ORIG-GUID: rjWG4DXjQH1jzDZ8MvS_N6XpZ7qW7YwF
+X-Authority-Analysis: v=2.4 cv=ab5RWxot c=1 sm=1 tr=0 ts=6a9aaa76 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=20KFwNOVAAAA:8 a=fHW3kyu9qVaIUP2XLrYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: rjWG4DXjQH1jzDZ8MvS_N6XpZ7qW7YwF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDEwMiBTYWx0ZWRfX6rkTlh7N6KcN
+ gNTZLOrP+XjFi/gJXnxFheny6GSHOwrbXmPmIPQtDboQ3FogxODHmyq4TYoScpjWVaHFsPhG4WF
+ xSIJfTu9jKY4edzdjHdLLgiLnE2C4I/aaW6cqyWyjA7Lc4Fu2M4+Rc84xySKbaVRXqbfE4N78Mv
+ oj1CVvdsT8vP8efrKH/GuCJLmyZKl82J1u345j6D1lO0QJcuufvvRh/uLSIjImEh87rGsLVXgzX
+ /fzRE6Sb1cvMYRALJMA41rFoGEpcUcUkY1F0qGTPs11rm/cmBdFxZWpotAIcsAEdnrbp5xax37L
+ 0M0lcSIXwwPdKhh5vqsbNEgPACrnuIl6gY8vAcGNY14Wcm3m62IWzDMvxR37uDqUpZ9NpjNJRLE
+ CJ5bQ2CdaF1hxM1OP7RYu3r9JP3sD/2k6ZtZllknofUqvQTarLgTZHRlx5jScRmXIztIQ5tUkO+
+ rNjOPWfNDvwrx+syxbw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-04_03,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040102
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,196 +168,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 04, 2026 at 01:07:09PM +0200, Igor Mammedov wrote:
-> On Thu, 3 Sep 2026 16:17:20 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
+On 4/9/26 12:47, Peter Maydell wrote:
+> On Fri, 4 Sept 2026 at 11:36, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>
+>> On Fri, Sep 04, 2026 at 11:28:35AM +0100, Peter Maydell wrote:
+>>> On Fri, 4 Sept 2026 at 11:25, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>>> We need to use QAPI MachineInfo / MachineClass to report to mgmt apps
+>>>> whether a machine is capable of using hardware acceleration or not in
+>>>> response to "query-machines".
+>>>>
+>>>> Currently if a target supports HW accel, then apps assume that all
+>>>> machines in that target can use acceleration. This was a convenient
+>>>> short cut assumption, but this new machine suggests we can no make
+>>>> do with that assumption, and need to explicitly report it per-machine.
+>>>
+>>> That assumption has never been true for Arm; this new machine
+>>> type is no different to any of our existing boards in that regard.
+>>> Support for KVM etc is only present for the 'virt' machine type and
+>>> one or two others. Most of the rest don't work with KVM because they
+>>> create a specific CPU type (not 'host' or 'max') and that won't work
+>>> with KVM, or (as with sbsa-ref) because they want EL3 support and
+>>> KVM doesn't provide that.
+>>
+>> Oh, then the problem is already way worse than I realized which
+>> really makes we think we should consider exposing whether
+>> machines can use HW acceleration or not.
 > 
-> > On Thu, Sep 03, 2026 at 05:28:35PM +0200, Igor Mammedov wrote:
-> > > On Wed, 26 Aug 2026 09:15:47 -0700
-> > > Dongli Zhang <dongli.zhang@oracle.com> wrote:
-> > >   
-> > > > On Mon, Aug 24, 2026 7:44:49AM -0700, Daniel P. Berrang� wrote:  
-> > > > > On Sun, Aug 23, 2026 at 06:13:30PM -0700, Dongli Zhang wrote:    
-> > > > >> Hot-unplugging a PCI device can require cooperation from the guest. For
-> > > > >> ACPI PCI hotplug, QEMU notifies the guest through ACPI and the guest
-> > > > >> eventually writes the ACPI PCI eject register. For PCIe native hotplug,
-> > > > >> QEMU notifies the guest through the PCIe hotplug mechanism and waits for
-> > > > >> the slot unplug flow to complete. Only after that completion does QEMU
-> > > > >> unrealize the device and emit DEVICE_DELETED.
-> > > > >> 
-> > > > >> This can leave a device stuck in the unplug pending state when the guest
-> > > > >> does not cooperate. Examples include:
-> > > > >> 
-> > > > >> 1. The guest has panicked, or the relevant ACPI/PCI hotplug driver is
-> > > > >> unavailable.
-> > > > >> 
-> > > > >> 2. The guest is stalled and cannot handle the hot-unplug event. For
-> > > > >> example, stalling the Linux [irq/9-acpi] kernel thread can reproduce this
-> > > > >> for ACPI-based hot-unplug.
-> > > > >> 
-> > > > >> 3. The device was attached to a slot that the guest cannot use. For
-> > > > >> example, a pcie-root-port only supports slot 0. If a device is added to a
-> > > > >> non-zero slot below a pcie-root-port, the guest may never discover the
-> > > > >> device and therefore may never complete the unplug request.  
-> > > 
-> > > all of above is actually expected, no (functioning) driver => no hotplug/unplug.
-> > > it's the guest problem. Once device it exposed to guest its life-cycle
-> > > not longer owned by QEMU.
-> > > 
-> > > That's what one would see in real hw as well, you press eject button
-> > > but it will not do anything if OS doesn't process it.
-> > > also see comment at the end.
-> > >   
-> > > > >> 
-> > > > >> The non-zero slot case has also been discussed in:
-> > > > >> 
-> > > > >> hw/pci: warn when PCIe device is plugged into non-zero slot of downstream port
-> > > > >> https://gitlab.com/qemu-project/qemu/-/commit/    
-> > > > > ca92eb5defcf9d1c2106341744a73a03cf26e824    
-> > > > >> 
-> > > > >> hw/pci: add comment to explain checking for available function 0 in pci hotplug
-> > > > >> https://gitlab.com/qemu-project/qemu/-/    
-> > > > > commit/67d045a0ef5b9c5f871c3a1d87325a8a42d2b9d5    
-> > > > >> 
-> > > > >> pci: don't skip function 0 occupancy verification for devfn auto assign
-> > > > >> https://gitlab.com/qemu-project/qemu/-/commit/    
-> > > > > e228d62b4af29bca698ec57efdceb46f392f5444    
-> > > > >> 
-> > > > >> For example, if root-port.1 is a pcie-root-port, the following command adds
-> > > > >> a vhost-scsi-pci device to an invalid slot:
-> > > > >> 
-> > > > >> (qemu) device_add vhost-scsi-pci,id=scsi01,wwpn=naa.5001405324af0985,bus=root-port.1,addr=01.0
-> > > > >> warning: PCI: slot 1 is not valid for vhost-scsi-pci, parent device only allows plugging into slot 0.    
-> > > > > 
-> > > > > This rather looks like it should be a fatal error, not a mere warning.
-> > > > > 
-> > > > > If I follow the commit ca92eb5def it links to https://bugzilla.redhat.com/show_bug.cgi?id=2128929
-> > > > > which states that this configuration is going to lead to a crash in
-> > > > > QEMU on guest OS shutdown. IMHO that crash is sufficient to justify
-> > > > > making this a fatal error.
-> > > > > 
-> > > > > If we actually wanted this to remain a warning, then that shutdown
-> > > > > crash would need to be fixed.
-> > > > >     
-> > > > 
-> > > > Thank you very much!
-> > > > 
-> > > > I see that the issue has been fixed. The ticket mentions the following.
-> > > > 
-> > > > "What I am observing is that it seems when the slot ID != 0, the guest OS seems
-> > > > to ignore this and we never seem to hit ich9_pm_device_unplug_cb()."
-> > > > 
-> > > > Based on my experience and evaluation, ACPI-based hotplug is more likely to
-> > > > encounter an issue where the guest VM does not respond to an unplug operation.  
-> > > 
-> > > I'm not sure it's a good idea to delete device when guest still thinks it's there
-> > > (you can make guesses on QEMU side if it's in use, how useful those are is questionable).
-> > > 
-> > > as far as I know, ACPI hotplug has no notion of surprise removal (pls educate me if it's not the case),  
-> > 
-> > why would it not?
-> > 
-> > how do you think you can pull a laptop out of a dock?
-> > I expect bus check + _STA and config space saying it is gone
-> > will do exactly that.
-> > 
-> > 
-> > Here's linux code:
-> > static void acpiphp_check_bridge(struct acpiphp_bridge *bridge)
-> > {       
-> >         struct acpiphp_slot *slot;
-> > 
-> >         /* Bail out if the bridge is going away. */
-> >         if (bridge->is_going_away)
-> >                 return;
-> > 
-> >         if (bridge->pci_dev)
-> >                 pm_runtime_get_sync(&bridge->pci_dev->dev);
-> >         
-> >         list_for_each_entry(slot, &bridge->slots, node) {
-> >                 struct pci_bus *bus = slot->bus;
-> >                 struct pci_dev *dev, *tmp;
-> > 
-> >                 if (slot_no_hotplug(slot)) {
-> >                         ; /* do nothing */
-> >                 } else if (device_status_valid(get_slot_status(slot))) {
-> >                         /* remove stale devices if any */
-> >                         list_for_each_entry_safe_reverse(dev, tmp,
-> >                                                          &bus->devices, bus_list)
-> >                                 if (PCI_SLOT(dev->devfn) == slot->device)
-> >                                         trim_stale_devices(dev);
-> > 
-> >                         /* configure all functions */
-> >                         enable_slot(slot, true);
-> >                 } else {
-> >                         disable_slot(slot);
-> >                 }
-> >         }
-> > 
-> >         if (bridge->pci_dev)
-> >                 pm_runtime_put(&bridge->pci_dev->dev);
-> > }
-> > 
-> > 
-> > so weirdly it wants bus check on a parent bus, otherwise it will
-> > not trim devices?  probably a bug, but easy to work around.
+> It also depends on the options to the machine, so for instance
+> this should always work with any of the hw accelerators:
+>   qemu-system-aarch64 -M virt -cpu host
+> but this wants nested virt, so only works with a hw accel
+> that supports that and a host kernel that has the KVM side support:
+>   qemu-system-aarch64 -M virt,virtualization=on -cpu host
+> and this wants EL3, which won't work in any hw accelerator
+>   qemu-system-aarch64 -M virt,secure=on -cpu host
 > 
-> Modern docks would use native pcie surprise removal path.
+> Similarly the interrupt controller choice matters, so this:
+>   qemu-system-aarch64 -M virt,gic-version=2 -cpu host
+> may or may not work depending on whether the host CPU has the
+> GICv2 back-compat support; and this:
+>   qemu-system-aarch64 -M virt,gic-version=x-5 -cpu host
+> is currently TCG-only. (But also it's experimental so you kind
+> of know you're off-piste here ;-))
 > 
-> As for ACPI, my old laptop, had an unlock button => _LCK
-> and that relied on OS processing ACPI events, not so surprise.
-> 
-> There might have been ACPI/hybrid docks that did surprise removal,
-> but then one need to find one and model after that instead of 
-> just blanket force removal. (likely out come would a doc device
-> support only, not an arbitrary device removal)
-> 
-> (not the case described in this series, though. hence my request to clarify usecase)
-> 
-> from what I see in spec there is _RMV method that says that device
-> supports surprise removal that can be used for devices that support it.
-> However I would hesitate very much to blank apply it to every PCI device.
-> (it's not even realistic to ask for proving safe tear down across various
-> drivers and OSes/versions)
-> 
-> Rather than a knee jerk treatment of misconfig consequences,
-> I'd rather see patches to prevent misconfig in the 1st place
-> (subj to deprecation but doable).
-> 
-> As for the cases where OS mis-behaves (apcihp thread starvation,...),
-> fixing guest to follow hotplug contract is a proper place to do it.
-> 
-> On QEMU side we have it covered as well. If unplug was not processed,
-> mgmt is free to repeat action.
+> If you try the things that won't work with -enable-kvm then they
+> should wind up causing QEMU to exit with a hopefully more or less
+> informative error message, but I don't think we have any mechanism
+> for introspection of the form "if I try this particular set of
+> QEMU options is it going to work?" short of actually trying.
+
+I recall some discussion with Markus / Paolo when brainstorming
+declarative dynamic machines, we'd need another MachinePhase
+iterating on all selected types to instantiate and check whether
+they can be instantiated, and returning impossible config error;
+way before a property is evaluated on an instance at Realize time.
 
 
-Sorry if I am unclear. I just meant that it looks like we
-can support surprise removal with ACPI just by reporting
-bus check events on the parent.
-
-
->  
-> > > so I wouldn't do what you are proposing here at all, it's basically asking for disaster to happen.
-> > > And all this is basically for dealing with abused qemu flexibility.
-> > > 
-> > > Please (re)formulate usecase and make it more clear as what is eludes me
-> > > no matter how many times i've read this cover letter.
-> > > 
-> > > On positive note:
-> > > 
-> > > What you can try to implement is native PCI-E support for surprise removal.
-> > > How hard that would be I don't know. And I would well expect if one deviates from
-> > > real hw expectations/configs (such as not 0 slot/partial func removal),
-> > > one would quickly stumble upon issues as  that's not what what vendors write/test
-> > > drivers for.
-> > > 
-> > > Even if it's not likely to be used in practice (guest still might not support it),
-> > > it may serve as test-bed for guest drivers.
-> > >   
-> > > > Thank you very much!
-> > > > 
-> > > > Dongli Zhang
-> > > >   
-> > 
-
+Here IMO accelerators should report whether a CPU model class
+requested is accelerable or not (then later we can double check
+with features updated on the model instances).
+The machine deciding is a shortcut, not scalable and hard to maintain.
 
