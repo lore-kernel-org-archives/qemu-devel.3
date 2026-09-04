@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA582C79F88
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13B2C79F87
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WJj-00054w-2b; Fri, 04 Sep 2026 11:59:03 -0400
+	id 1x2WJg-00052v-LC; Fri, 04 Sep 2026 11:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WJd-0004xq-FG; Fri, 04 Sep 2026 11:58:57 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1x2WJc-0004vh-NU; Fri, 04 Sep 2026 11:58:56 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WJb-0004Sx-WB; Fri, 04 Sep 2026 11:58:57 -0400
+ id 1x2WJb-0004Pg-1a; Fri, 04 Sep 2026 11:58:56 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gGyr09TEjTalw0azUA5JzKcrdqRLqmcuzAVuADt0tcFPbESc6KwL3FeesF/6Vo+ZahFsxFt+JQdHZQ75xBltHVhbKrh610BjeVvtPDnEH7NMBXIArR2Mb1hUPC7gdguEsOLwuvq5MCwohplDSLYJw1XPTcMHGBUD5BcER0XB+x/fJc4kbUe/hBTe62rWv6RVLIgcAjzVtlMYzdOF9CnmTyUX+pgLMUn4FLPgNYFdz2eYlqn16QWHDP0EmNFzCe4pZBejucqjinZLPJ4A6+Ywd4Gyz2XCbJRYoqd70VaicnIt1e2u6S4O7yOrehJouwPZKLUXephPjj2+GzRonecMKg==
+ b=PdkJOdwa0z3tg7+vgfmGb7V4shvljY5zLkqbkVS8ru/9/Mb3dUt8adcrKBSWUUwdsc3UVamIzyMdEXeZ+DTEAY4OjvRxDK1hbgA203stbU+wv/wailhsWbCVJMRgbPSjOxTkOXPFQPjBZac2qbOWaZWcxdGeKwslArkJ7EC3Okpqgg7ns0qQzSKO7Uev8z16sYg+5oSJDnnwCLdNapB0z4aIKMByU/gT+J8kOqaEKE+ngoP09V3MVSYH4LMx4VxLboul4Z9TtGiBeQuQiVeo6aZilxW6HxoFEoQ91Ctz9LF4nyVwQ8NH9S/uwLXPgtUdubDBJoC6GzpyNOZechcM9Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ul8g/TM2fc+nj7tcVEVqYZwpGgXr+FajkbAzPlMUSJ0=;
- b=jO/23WTkJ/vdsLiw7wD4Dc3XWkS0dxm5OYCJ6gjKxgrRD/Dz0BP+L82V/2Mi2quhbzZjJHbynogxfzM3qZx9Xs6PMQ44wuFBg7hjMlJX2hVeYBuWF1EY7i0iNzBBC4PCO+7/rbYeQTERXnFm8z7GfaA/4behr/ZLP0dQ7DMB+i939j0bwmcO7qMptYNv+oDd8SpL4EgKmlxlsy6/nrGGqE+PXIlDw3Lxx35WFyEOreKTG5Tlzp1hDFNt63MJAlnRlLw55NkfaI7A6ibIqJVnaf8LXJB2q1iVrsdNjgnpUj4U9Kr/utFTid4S7Y8BnogDHvb/0Y+Weeky6HlgYr/eOg==
+ bh=hbVRc9tgHEbDLK5fuOyRDEJKPHnncrA718MiTnOhY3I=;
+ b=V3J1+K3urMGTVRYAkBRKyLuukbB5rKW2dd+SJFaeAo6/udRe05ib5uAIowXqoZPGPpMcv5c63dB3S0IV9gkkDvwuaU9cQpIeyIyp6c45HoMV0Xmy5OoPzFgGg3D4xIRifrgnyxfc/62z32ggDg241uK97COzXfXrQTwbS9+ctDUimv3lxZ80F3k4swLQ9fAmsitToOGEwjqr0TfB+ljx/6tgT/BsgHo+8Y/xnjM4afrf+oSxQKNIillVagWDEncr+LxbYFGKx7AFjfDKjjcymSMHArsKUAJwBlZ1tA94m5ZbJIsXKdBmmOB99AtO1awgAyzqqxzSZuGdLb6qxQQVPA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,32 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ul8g/TM2fc+nj7tcVEVqYZwpGgXr+FajkbAzPlMUSJ0=;
- b=MUEO7qsjEB5BfODYZ5U1Xmo4/ALag5HJSzu9fgT6CTv98Ry7j94hW13dgoorsEDXIFoYBPhHA3RioKVuiM4ZxlDjI6VqlfQ+lTsR294Q2lGQmKEnnBtJzANF2+k6VEQq1tKzgUqiRekUf+gNiFuvXnBeyivpheSt8lAtkC4mRc1r78RmnDlnsZzwH3Qiu9Mhax+y3U2i9g7JFIDlbVlpws7xlr45qQwCQeWvBN2NhK+LjKRfPts5JCJRFYh8Es/sKqOfLBY/KEuG9CG4jc5bwFL8HLR934Y9nJg3YMCFZOmAVA/ukTZ8kI4U7lzyzULpYhGYTZRpDh4mMEbgZyGZWw==
+ bh=hbVRc9tgHEbDLK5fuOyRDEJKPHnncrA718MiTnOhY3I=;
+ b=Rrvea0X3kwXmsMF/PTodFh/r70681b7VwZPjkUnGx9DJ9uKaGlz31TcZacCekd4x8duN+0U+/Xl8PdnpTTVzJD9V4aDW+krA7q6Di5zMyKpdR05V6FMXJLbz3RaFZWz1DgCweObDXypuHBGwDpz1UxSjKHXwLa8JYVnVnfO5axu6CB67RMWMMApewOm2Mj+9dJLK8P6NAJiYGdBAZ6ubIT4I4t0R37HyD3cJaZgFI8JCdPyCqn9MFERsIuZrpkgsSfiiYaSAJheFeCjfYuv0Dy3hEE/JOgAx9yPbvRb/oRFQOJS1O7dbspO621wjZPWJ8iLBUDoy+m35g6rjKiQMeA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by TYPPR02MB9175.apcprd02.prod.outlook.com (2603:1096:405:394::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 15:58:47 +0000
+ 2026 15:58:44 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
- 15:58:47 +0000
+ 15:58:43 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v2 11/24] hw/riscv: pfsoc: Enable 64-bit SDHCI system bus
- support
-Date: Fri,  4 Sep 2026 23:57:30 +0800
-Message-ID: <20260904155758.3833179-12-bin.meng@processmission.com>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH v2 10/24] hw/sd: cadence: Add 64-bit system bus property
+Date: Fri,  4 Sep 2026 23:57:29 +0800
+Message-ID: <20260904155758.3833179-11-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260904155758.3833179-1-bin.meng@processmission.com>
 References: <20260904155758.3833179-1-bin.meng@processmission.com>
@@ -70,66 +65,65 @@ X-ClientProxiedBy: TY4P286CA0020.JPNP286.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB9175:EE_
-X-MS-Office365-Filtering-Correlation-Id: f70f320b-ce67-406f-2438-08df0a9d6735
+X-MS-Office365-Filtering-Correlation-Id: d8fdf228-d8da-494d-dff6-08df0a9d6569
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|23010399003|366016|1800799024|376014|6133799003|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: ++zUQ2Rb69DbvJNLnzXG/DUmR6dzqNFFJngz0MCUeZW2lGU/lsmCzw4jG9/FGS3L7Y4rTBw8Fh6b3ETnI7vCyxnzqviOADuPZKHn2O+ip4G9v3w3N/Jq3zkTQSIs8WyI7d3qZZMtcIO63S6vJyL38YKH7w3FAXeE0ExZmNQiYmbtQbkuYXaTcDnTisMbCi3kslBNjQiIWP37fiyeWjQMe9tHZhtLhIEr58hiwH7MYFTePTesKVhaicWpYi4eDk80egeQ7eMUmfcR9UDEMA6GTMZolESpEfnDUsB/HjxSVI21jFsatPHj24NpKKTLfiCReqzbnXwQOOdakFGY3we/ZHEkLeee4uMplu1WbLRu88muS5I90F1zR0G4LPQblPOqrqZWQRIkjmevzK21+mVeiIj8VXoP1nPH2neuhD9iL/zq2Rji93IbXka0RjCWwhN+5aFgTPS9AJF6LOG3p352O2rXtFsYljx0tR7rHdfDhtcX+TN+w+9y4/Uyp+Wv/WzQgxojlP2Y9SFQA3KyGGsdJzSmSOeZDCWLqEjqH+y5LKuwWD81IqNgybXul3DFKEKX30rXVn4n5gFZ0q2Fi2R/SnLihPNAFIeHN9i8VH2c7ff0VCX4vTjz4MTj1ainiXB0W7KgwepEHFPIQeBKdxLjeTyH0wdn6wSs9BgN+HOnX1g=
+X-Microsoft-Antispam-Message-Info: M6IQMlv1cI15LY4xdlcGkE1dPnGyxl/kqi4HvS5koDnujwpUh4XAZWnYj4pyWv5GM2zaLcE5pkh/9I7dgyi76GCYq6m9C0n67mE/40z5n9QXt0kECYBJQGIoAzkUPGogHsj9b8hSiexFodf6xTNp4+y/e7GUwStIBe4VJ+gjPB/FcCWJWmstx3MV0WhPcm/N3jCkL9Uvqd+BwQo2F/7oNFgkDU153LIXGTCKpE9AOqXp6zJb9B7jRNe0aAysJnp1IOyekYL9xiw4SFJfec3B5oFMzhbr5JcGh0fJtGQ8hM4xB0FrqOcFAyGkQqRyi0RDWot8Ohnzz4mHsR5QWXJ9+bEp6FGi79hY3exd37tBrfqBnWLkohPBaFJg0rzSqnyreJzD6uX75qf77qJwX2SZ/WCrmNJHdrDj5Q9DVkonFosmztBSlux8V+CSgHEmjsFdSIZ/xepQb0Iy7gHehzS0mA6urJR4j5cCrL9H2zMPIn/SvZ0M/diTurN3zf1LmEai4WPCHNT58R/2l3UovZlFz93fZRSxAOlx3hO69mCuWfe9xcsrRipwjJQqbloHbdmES0E5hkHhzDzgG7QXtwwBgdE9nIc3C9zn6U8puLqC57cBlL/rc+207K9iMnd1iEoAFiJ2yReQXZnHM9J5ozsD/BTd79CsdLEcozFp+VwXarI=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(56012099006)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?uvNGIjyP2XdhdjYS+DEwJuV1PgOlAUMtPeg1mpFQ2r0yJ7/fxw5gB3TOI3E8?=
- =?us-ascii?Q?iY5BccaoJ8y4Fq7Id4jAHHJ1cCFhcOdNFtjfrYFKWCOzs/DZLp6km1nkwZUF?=
- =?us-ascii?Q?6LQVtsVXBabTb+DIVd3TsTrqgoe0iC8Z6QIFVzIbuOuWoPW9QiOiZm29w3wT?=
- =?us-ascii?Q?p2DYR8moN5xs4v/isOwZAgyq+MIGYShXBPlfPI+YVkZGYpEHaRp5NK1XteC3?=
- =?us-ascii?Q?X7kh6GRcgLWqSFEDd96v8jYOQfSeBWjLuGFGMObqkDrDXyeuyoeOkL8ykfMy?=
- =?us-ascii?Q?3+IlyJZtF5SntI+Ji+/yNo0ybNci9Wp7fCJcKDdul3bvvJMDqBrWKPUFwjae?=
- =?us-ascii?Q?fDxwVbh+h45VD6tAm89XDEMkFvEIdhGHICEVNidXDC2cWZfGAoqTAImm2nK1?=
- =?us-ascii?Q?Lf+ecsKs+vs7vhWAIx67p1R+jyzHVzbouopvXIU8mfpLv9iWX6sws19W7SqY?=
- =?us-ascii?Q?Y1G3TcT6Tunu9lLX5A3NpYO5nWUvUm8V/8x6ZvwN3HXyBGEc9KH0j2gPPyos?=
- =?us-ascii?Q?uO12/+INday0TaW/19eKM2QFmfDTsCMlzFUuRKtjFnKTSIx7YE8yctq7uwMD?=
- =?us-ascii?Q?2CT0RUkxFnxxdWEwRAnQ9LO0I0Cixmk9HvmmdgwFZSHfVUkUiLXp0GckJxWb?=
- =?us-ascii?Q?mh8DNGfFf7/5dwalfKsAw4d1ZNjt4Xa01MGFiA416JoRWJI32NuVIq8YNV7H?=
- =?us-ascii?Q?HwWKfQNh4JiF9jTyEPi9c+eswU12PJFk6sFN8Qoj9G235ahOknb863qoCsm8?=
- =?us-ascii?Q?AYYHFIFzi/npQ1cMNRvwbtfP/kC23OthKwRcsI1p4OvHqHVxX/pDEanNjTkI?=
- =?us-ascii?Q?fE0BdO+2LEgUQ3vtrHoHZKTVAPLtypPEbu3R9SjawNvxATJv2DmfH0HWpHI2?=
- =?us-ascii?Q?8DTNndKUMUwfKabfOMj4uCwt4vTb0d1XZCvjtoe9nOvDlqEmrOUJ0+JOvMLO?=
- =?us-ascii?Q?OovTakXFasaCuVMTD8UTngTDl0wrF0HVGq5W6Sk7PuL1FahUl2FQX8D8VLhR?=
- =?us-ascii?Q?98mZ+UITTUf2euCKXUxXU1VFElT1cM2R2IWUjkcd31qSWPpxl5PF4IKd2yYZ?=
- =?us-ascii?Q?lFs4Ldzmb+ZtZ0FnqvOO2+qI09YSki+VZiBIpEOt1/HlBnDqu9H2RWL0w8TQ?=
- =?us-ascii?Q?DHbudoEPikEluV4WvIjEfxcjvRni2bppXxIqnJiuGYeZY4w6XobVDztLQZnj?=
- =?us-ascii?Q?1ipp/2+S2jwVpRWU5O/PhEGl0xaf8WT+/U9Q8aYFOI0kR3GBROZQZ88KeY+t?=
- =?us-ascii?Q?LfBaLuOSnBtazBhpSrvOyIO5yi8Vgp5UpMc7iuDIs1pkQmYY5VsucN2nSjZs?=
- =?us-ascii?Q?bPG2YcKiql9p8IKFSWcU/g5yp0tfJhHwItfQ/yPVEE2yNMZT58vXil9/smgF?=
- =?us-ascii?Q?r0LFv0dP0D5lVYsqs1soYWA69wpryD47SVxmSqfBDFQuUHRAiI9Z+iyI913X?=
- =?us-ascii?Q?vD1ACAo4cVXO2KZQ4RdAZN3o8WYl9OfVXReuTHpXuDa9BSqo9ezQcs0su39A?=
- =?us-ascii?Q?G1tnmhq+bCuNe3pVR6Q7tRaS0dZ863hiK06EFzoDOyFrOuxeL6vvAhdxHPIt?=
- =?us-ascii?Q?JRt3I0eN/S1i/seXr3egwtIsunBP8A+ir3gaop5BKg1RTBtbak84PXZEO1m8?=
- =?us-ascii?Q?obj6Ma+R27hljoEMIEHNp8nAk4XzRFWIlqdLpoU885OM0Jz+K+X6lhXpk9Q0?=
- =?us-ascii?Q?arSycAwlGh+HY6PV20r9UJnuO8bJFVVDYl906pZHTj72yyHrlzLs57Iq17Lt?=
- =?us-ascii?Q?b96MPrP/lilmcrgqNWabY1hx5QTUopg=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Wz/18nK784jNf2KU6g6bNimeSegK474LydtUvZw4YPKwobLSBfA1VI316Vl2?=
+ =?us-ascii?Q?HnLWN3PVOeP4+6eb+2JUmW2PBZsFBQzI7ciWEuo4NzuZtuGceWN5VeZ3FUCw?=
+ =?us-ascii?Q?wIjggo050wKi6PSj7XEn9Xnw6pFwF0pNAST0MiXJswiomn29l4vKysVa9LOC?=
+ =?us-ascii?Q?72b86XaZn1trZ1M/fwPsSMKec+XECatlzGget2M5JDiQMTt/qTfPhNH4xbwd?=
+ =?us-ascii?Q?/na4+e6JJP8+71JP+9JfLxQ3CR05yhzh9X/k6T2R8K9gj1c8LE3dYuhVYKWX?=
+ =?us-ascii?Q?LD0eVRKNe7nfoaIRNxKwT6xGowbHzElYMy6yEWYU39rhwyr+6l+zcmG66HEG?=
+ =?us-ascii?Q?p8ue8lEjlq0JahHeo+5w4dDc51jcf5UWKiJfFyJrOJrlYIGW2QBlvq8CmCcZ?=
+ =?us-ascii?Q?Oa5LjqSdMbtvPbW/afIArktkSw90+pTqOS+GNRRVzeUxEnS0As4D9rzMa643?=
+ =?us-ascii?Q?0Y7IQJqcx9ewH0Sr6eMyvx7oiMhMWqIndsPjQ/WfVJVhRWwWMSyaIzpUjZRD?=
+ =?us-ascii?Q?ZZ2+3NRShmw0PTa9bmWIzPbpnna6VreS4N/0PaEX8SB2gm6EuXjTliLCv+4N?=
+ =?us-ascii?Q?ZTdVXoXU3M5fo/J5Nrp3dZOc4+I4Ej2Lrv8DfDRJ9tJlmwM2cr7JrsJFNubn?=
+ =?us-ascii?Q?n3DlXePm0Fml2tyb/TvQwOq1pKmFVUUPrv/ukWocpGQ62FXhfD+PcuRTsG8l?=
+ =?us-ascii?Q?Vx6ACQh6UAkKc0KDyIP/ztDGmg+HtAzMH6pThVCaJOTzLbUPiyTH0oMkBxyA?=
+ =?us-ascii?Q?jAWXZXbHmyrgEV5zro6BdXmWtDu++Vlx2PwJcxCrod21QjfnK8K3tbF6i1pp?=
+ =?us-ascii?Q?8cuD0LIVRQdrCN/t4TE+KdrFbb81U8KdkoJgRhzbotYJweP7giIrd5K6/E3t?=
+ =?us-ascii?Q?vHK1/0elnY/m1YK+Zf8SJ/zxhJzSHhnVNEoJSnzqsOaGCKnl8qVSPhDd/vwr?=
+ =?us-ascii?Q?Lco9sdflYkLz+2Ml3tpCGb/+VJVVhrFkZ9ecotuMntmJyFmqDU9KPCoLZmkl?=
+ =?us-ascii?Q?E/gZPnajWnFl1MV23waSPGkxn3L73Yi/MN8vLzNHQ16MeXLhSwp5gwxDz02b?=
+ =?us-ascii?Q?8hlhkjpoe63YFMrXP3Mv9DqWSPT0hN7bruq15DXGsBxyooUXodrnG45rGQvp?=
+ =?us-ascii?Q?hbKYgcpWw2lIE4wwfoQQvTe5YX6V+iw576b7T1j/yo+BG2nBS41eA4rLDSwg?=
+ =?us-ascii?Q?FFyjizKqeaj/W0glncij/g3r87QdrSeI5er0fnQfG0fDUtqJH3+Q6ki4WQc1?=
+ =?us-ascii?Q?4tHHGk2piEEsMUAtwsBjv5DbTPwDEmWB0gkxrlxH6C4eda4oWOliebEHd12Y?=
+ =?us-ascii?Q?MmygZuXuUuqApyMruGqxqjdfJwco3gVy+tr4c1g8paDKHiTqlw/10JVAknmb?=
+ =?us-ascii?Q?KrfQrO5cUjgWq9uUkQu1nquTqPcjr3+h1CbjMjrxxJD5AKUcQi+7UaAR59FS?=
+ =?us-ascii?Q?JNUGhK2il+bSdAQ8AnYLSEBtmXXHMcOLThMiPUaLAQhGcjCXBgHppKm69FnY?=
+ =?us-ascii?Q?tCSFURBrnDmS1G6PjzdtDvDksks+po3wsVxm+M+/34ENqzrswlbA+rWiOWp9?=
+ =?us-ascii?Q?ZwS5EWqAzD1/y9cI0OHdxWRckhRRIpu7al3ozwOxPfqT5P3BqU1nJHom3Jpa?=
+ =?us-ascii?Q?BIL34QCYOU/jINJ0l9grQEOv8nEaLhGT3P2v+bDMJoPk8u7Ged1CC/wC3WMh?=
+ =?us-ascii?Q?+qkbPd4s5gfLKVnGhDptTEW5NnLWzm5MEl2CeoaWfS2qsQmHMfjn11d1sVcS?=
+ =?us-ascii?Q?SEo/ZnDKKMjbpWl5zdzgNmJKlm0Bq6Y=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f70f320b-ce67-406f-2438-08df0a9d6735
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8fdf228-d8da-494d-dff6-08df0a9d6569
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:58:46.9441 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:58:43.8869 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZKnkz2amFlsW1UN7WL+5aYwYFKHFfLVzNmBZcIN5C+BDJlmplupHKFs4S6RwyXZq36X1J10G508xFmgw2+MzmPcxZhLsbXq+VQ+IWfexoyo=
+X-MS-Exchange-CrossTenant-UserPrincipalName: YObO/091uxz27Mdq7317hXQIFY498LVwV8eIkzER0MvVPi5POrOq/oNknScc0vHXcwmlgiQFMMXQZhk3BuIG2+QkQjOCl02/bQwNmyLOqes=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB9175
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,36 +140,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PolarFire SoC software selects 64-bit ADMA descriptors for the Cadence
-SDHCI controller. The controller supports those descriptors, but the
-Cadence property remains disabled by default for other integrations.
+Cadence SDHCI integrations can differ in whether they provide a 64-bit
+system bus. Advertising the capability unconditionally could make a
+guest select unsupported ADMA descriptors.
 
-Enable the bus64bit property from the PolarFire SoC so the generic
-SDHCI descriptor engine can execute 64-bit ADMA transfers.
+Add a bus64bit property to the Cadence model and keep it disabled by
+default. When enabled, expose the corresponding capability through the
+generic SDHCI child.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
 ---
 
 Changes in v2:
-- New patch
+- Make 64-bit system bus support a device property
 
- hw/riscv/microchip_pfsoc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/hw/sd/cadence_sdhci.h |  1 +
+ hw/sd/cadence_sdhci.c         | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 114567867b..b1df852ddd 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -190,6 +190,8 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
+diff --git a/include/hw/sd/cadence_sdhci.h b/include/hw/sd/cadence_sdhci.h
+index cd8288b7d8..553fa73842 100644
+--- a/include/hw/sd/cadence_sdhci.h
++++ b/include/hw/sd/cadence_sdhci.h
+@@ -34,6 +34,7 @@ typedef struct CadenceSDHCIState {
+     MemoryRegion container;
+     MemoryRegion iomem;
+     BusState *bus;
++    bool bus64bit;
  
-     object_initialize_child(obj, "sd-controller", &s->sdhci,
-                             TYPE_CADENCE_SDHCI);
-+    object_property_set_bool(OBJECT(&s->sdhci), "bus64bit", true,
-+                             &error_abort);
+     uint32_t regs[CADENCE_SDHCI_NUM_REGS];
  
-     object_initialize_child(obj, "ioscb", &s->ioscb, TYPE_MCHP_PFSOC_IOSCB);
+diff --git a/hw/sd/cadence_sdhci.c b/hw/sd/cadence_sdhci.c
+index 8476baf67f..875823a50d 100644
+--- a/hw/sd/cadence_sdhci.c
++++ b/hw/sd/cadence_sdhci.c
+@@ -25,6 +25,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "migration/vmstate.h"
++#include "hw/core/qdev-properties.h"
+ #include "hw/sd/cadence_sdhci.h"
+ #include "sdhci-internal.h"
+ 
+@@ -147,6 +148,11 @@ static void cadence_sdhci_realize(DeviceState *dev, Error **errp)
+                           s, TYPE_CADENCE_SDHCI, CADENCE_SDHCI_REG_SIZE);
+     memory_region_add_subregion(&s->container, 0, &s->iomem);
+ 
++    if (s->bus64bit) {
++        object_property_set_uint(OBJECT(&s->sdhci), "capareg",
++                                 SDHC_CAPAB_REG_DEFAULT |
++                                 R_SDHC_CAPAB_BUS64BIT_MASK, &error_abort);
++    }
+     sysbus_realize(sbd_sdhci, errp);
+     memory_region_add_subregion(&s->container, CADENCE_SDHCI_SRS_BASE,
+                                 sysbus_mmio_get_region(sbd_sdhci, 0));
+@@ -165,6 +171,10 @@ static const VMStateDescription vmstate_cadence_sdhci = {
+     },
+ };
+ 
++static const Property cadence_sdhci_properties[] = {
++    DEFINE_PROP_BOOL("bus64bit", CadenceSDHCIState, bus64bit, false),
++};
++
+ static void cadence_sdhci_class_init(ObjectClass *classp, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(classp);
+@@ -172,6 +182,7 @@ static void cadence_sdhci_class_init(ObjectClass *classp, const void *data)
+     dc->desc = "Cadence SD/SDIO/eMMC Host Controller (SD4HC)";
+     dc->realize = cadence_sdhci_realize;
+     device_class_set_legacy_reset(dc, cadence_sdhci_reset);
++    device_class_set_props(dc, cadence_sdhci_properties);
+     dc->vmsd = &vmstate_cadence_sdhci;
  }
+ 
 -- 
 2.53.0
 
