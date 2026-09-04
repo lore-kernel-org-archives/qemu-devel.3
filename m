@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAA1C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5D7C79F81
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MMn-0008N4-FC; Fri, 04 Sep 2026 01:21:33 -0400
+	id 1x2MNa-0003lh-VL; Fri, 04 Sep 2026 01:22:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MMl-0008Dz-Vm
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:32 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1x2MNZ-0003iu-Jz
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:21 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MMj-0001Sa-VV
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:31 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-cbe827e3cb4so742396a12.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:21:29 -0700 (PDT)
+ id 1x2MNV-0001WQ-VH
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:19 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-854f8068301so358736b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499288; x=1789104088; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788499337; x=1789104137; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Xb7+AEbl+/oGGo3WOco6TNPjryYhUnA4NsnYmi8thy0=;
- b=p1liOXN6WcGNi8Oov3bCYA5k8UWCXS5/vIsMm25agabKXZauCLUQHyh9qxPCo1+Gg5
- BsuE7sf7vAaMfZEPduBFIeb6c3EaycJkcZQEBf426lrk/7jNkyG14UtorZ0OIdKosWpX
- +dT+qjYeW/Mx78n12hxdJGorGjsyEuKzW4WRkDCL69LFOzP3/+mnUmp8FV1xdGpzQp4Z
- yMQTkZNW2/b4fCjejbDUh6/FSrXDDRc9NePkkI4Ufal0AC45krTRI60xzKRFt4+68lcx
- CU1vaJTj2xsvBCAuLm/umdCeEfY/eY6zNsRWi9fahnLePViv5Lkimfy4KIQDXZZfP6AM
- LCnA==
+ bh=5P8Lf/t9f75aliMIc50V17Li5qLsVl/i2+hYndtJzqI=;
+ b=dk0dwVWqFiZJTIbiVhOp59XDuy4LM50tX+sWJ4IvY5XjMCNLp+VGx+wuyUMeWpolDk
+ oNoX3hH8QnPQUMDQXn57E5ZwP6axAhMTqTtyeTz+DnT4gOaPVKZGejBjYJLwVZ79Hl77
+ uxq+xKe+B3/eyWh/vK8d4Uqky5wC9c8HuCiFnYhGQ38RdgJduBzH4IS0ux5VtALJ0jFv
+ XeYarQBS3POiAXI8+Q9AEKQkvgShL1rFhg+dI9U4b8Q1W7n1kfON44EBQL1FNTXD3kup
+ L27Au4lA1D5ySdFjFv7sBeaX9svED599uyz5Rcs93Q6C0xtmJSAVtPt/zqVOkDyJIrVe
+ BMfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499288; x=1789104088;
+ d=1e100.net; s=20251104; t=1788499337; x=1789104137;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Xb7+AEbl+/oGGo3WOco6TNPjryYhUnA4NsnYmi8thy0=;
- b=EPRpeTqkCxn+suL5Vyfq8eW/C60Wk9+ew5rbbKwK8pW5jdjEkTsMhWl1UMgZpcadgo
- Nq5qXXgDjiHwl7kdgZ20mU6MXmhmY0K0Ejgu+cAvH688u3HHp7WUPhr1+hW3HE/YXhc6
- dIZqrWZ2vszn1/E7MChTveMN2o5bL6enna57VGma+7bdXDoLHi/wGGELsLpDnB04etXU
- prNOI3UxDz+azuDEmR5LGpMsW1ndfJrkhmcxKxxg2o3TJaQRxwc4FDOHEtK5WXZiNVRI
- R/gyX8nM8UsNocKWnGKel9hpjmBnN1i7Uq51fbyWAiGa/tXvK4Zl9Fcpj/UP2697r1hR
- tHHw==
-X-Gm-Message-State: AFuF++l4HOH6vbTaxjzLqxIVSfQcB/JLC+FJp2QrATlGQmKNhWoBPnNP
- vXLfVkcVZ/jEgtNtBISHJAElsTol88yJF/4GUc2eZ2jJalOmkQsiVh6PqIqaXQ==
-X-Gm-Gg: AYBFou3MQXpnGHmchk/qTyatmZ+QVaWAMgyRDW4QtyFAQOgFkpmMOui650C1V+boGGL
- isCfPtaFjUyXWfVs+8QzbzSkWR5/6aCd2mZ+K3U3tfnVthcEEtl09EvQKDMy9E+GH+11C38Zw5S
- NF6pOT3QX1c2bvpwRKeHDhdKgNB8fjI+Fd5plZH1V1tTsNO4+6izFaock+va3CzMbKVOiTAw+hv
- pTsMLrcDnq0bFIUsRGYoQULAA35K+2scDyCMkaBC0JKPz9oay8ZCpq7ceqh3xc+HaQLBrKkSIOi
- IwpBS5iDj6UMrb62RpgchMEab+Okyx8ils3Gm3FezqUy142xYiTCoCb6yYetPqlvxW+l8Dl78lH
- qnf1kNobgnVF2v1WfUb10MHRKPo/CAfijzjD+BKRTdw8j87QC7UueYf4v9xaUghtKRE+DwK1C6r
- O74zo9Dg5CtZGRZD5Jz7rbIBCKMetxE0wWzGJD0jOCnpqqfDYH97n6YhtB9Lu3tBXs9zw6K4h6E
- TFoDg==
-X-Received: by 2002:a05:6a20:db8e:b0:3d3:aec2:4dc9 with SMTP id
- adf61e73a8af0-3da3a0f6709mr5468324637.21.1788499288488; 
- Thu, 03 Sep 2026 22:21:28 -0700 (PDT)
+ bh=5P8Lf/t9f75aliMIc50V17Li5qLsVl/i2+hYndtJzqI=;
+ b=kQhfnyD8DPeh253F09JilsvbCTIMIsA7uIGguFx2hLZ79z1/cV2+hS7vamXVR5Omfg
+ ZhKu9Uoliwb6AzczCF41TUneIceheAfc8ZB37iGvwwzeOnxUcKASzXAqSNy6wDML/nyo
+ IV2ESiVD2NUV7jlS69RpAKsnpgPIIm+PCn5Xq4IeahCYeL8IC/XzBuwPnmKtAwGeZBVx
+ EYj9L3t/qD71V42z/CotU0bQYMRLJiTP9UBGMtXsqioqUYpaWJBZrp/gRGQtL1EKS27r
+ T/v75Vro3AF9dvaiCVdfv8uhZKGDEcrujMWJZ3GMS+IZQPKUh5BWg63U6fKx28kP5IAU
+ fxOw==
+X-Gm-Message-State: AFuF++nWuEb23pqCFtGdEi55NfSLeL53dBdX8YJr/B/9Opnvuu4YC3X2
+ QvNO/UfbpwMdZBzw0ItVzrGHggAQWynRb2kSRejo3Qw9BotfGrsiedxbn5UiGg==
+X-Gm-Gg: AYBFou1+HUi5RBFQZrNPfGzfvecbt4wKeRv/BY9RCo6ICd0c5GW7mzykFMbXlERkyoU
+ pwrG/bfrk1mnc2nDEZD1hFrDgrJZq1dmpNpiabMtHLrV/9A95Q0p8+S9W3S8+6zHKSrrAS1Pnk4
+ eT8eMSK0aCT4jSLbHeDYuSX33eFUEFj5I6hYx94UcbI8bZm66BCjNiFSi04NzytuSzSmdSd/Sgk
+ ILnnDsv3Uu8YturtWSGwYQdXRxPGcYCPpHpN3SqE9FoWPg/Kv4kOewUQGQ+cUcqwNnrQkV/Pjll
+ 7ZlsLhitScUp7EIbnIMC7nGZaOmmFxFfED/fNX/hnAF3/d/cXPMv9rdXH7Bv+yKxL5b7cVYvA/s
+ VUUK8lIJvA503XQLLvNOaQ2IZuA3O7wSfSS8kXjMhcJSj3w3XaP9y5N5rKg1p9b8RvZaOcd5aib
+ TM9A8I16UPCJByYgsoyhLYoTTJsnofVZNjW6kKTsc5Kc2wOUvrQ92IGkMFwcZvjyAGnBcCpFgVk
+ i9/zQ==
+X-Received: by 2002:a05:6a00:3021:b0:857:727c:a1f3 with SMTP id
+ d2e1a72fcca58-8616907fefamr5669796b3a.21.1788499336717; 
+ Thu, 03 Sep 2026 22:22:16 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.25
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.22.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:21:28 -0700 (PDT)
+ Thu, 03 Sep 2026 22:22:16 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>,
- Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 30/47] target/riscv: preserve vl on element-zero fault
-Date: Fri,  4 Sep 2026 15:19:26 +1000
-Message-ID: <20260904051943.799041-31-alistair.francis@wdc.com>
+Cc: Portia Stephens <portias@oss.tenstorrent.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>
+Subject: [PULL 45/47] hw/riscv: Add property to hart array to allow private
+ memory
+Date: Fri,  4 Sep 2026 15:19:41 +1000
+Message-ID: <20260904051943.799041-46-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,188 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zephyr Li <fritchleybohrer@gmail.com>
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
-A unit-stride fault-only-first load must leave vl unchanged when element
-zero raises a synchronous exception.
+There are platforms where CPUs have different mapping of system memory.
+The global system memory does not allow for this. This adds an optional
+property on the hart array to assign a specific memory region. The array
+passes the region to each hart it creates, so a machine can alias the
+harts' memory to system memory, while the harts view memory from their
+own memory region.
 
-The current implementation updates vl after probing the accesses but
-before performing the actual loads. For unassigned MMIO, the probe can
-succeed even though the subsequent device transaction raises an
-exception. If this happens for element zero, the trap handler observes
-a prematurely shortened vl.
-
-Keep the shortened value in a local bound until all loads complete, and
-only then update the architectural vl.
-
-Add a bare-metal RVV regression test using an unassigned MMIO address
-and check that vl remains unchanged in the trap handler.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3544
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260813025959.583-1-fritchleybohrer@gmail.com>
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Message-ID: <20260903055131.257903-15-joel@jms.id.au>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/vector_helper.c          | 23 +++++----
- tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
- tests/tcg/riscv64/test-vle32ff.S          | 58 +++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 9 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-vle32ff.S
+ include/hw/riscv/riscv_hart.h | 2 ++
+ hw/riscv/riscv_hart.c         | 8 ++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index e28d8a3d9f..0d1e4e0964 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -721,7 +721,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-           uint32_t desc, vext_ldst_elem_fn_tlb *ldst_tlb,
-           vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz, uintptr_t ra)
- {
--    uint32_t i, k, vl = 0;
-+    uint32_t i, k, vl = 0, load_vl;
-     uint32_t nf = vext_nf(desc);
-     uint32_t vm = vext_vm(desc);
-     uint32_t max_elems = vext_max_elems(desc, log2_esz);
-@@ -787,22 +787,24 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-         }
-     }
- ProbeSuccess:
--    /* load bytes from guest memory */
--    if (vl != 0) {
--        env->vl = vl;
--    }
-+    /*
-+     * Keep a shortened vl local until all loads complete. In particular,
-+     * an exception from element zero must leave the architectural vl alone.
-+     */
-+    load_vl = vl ? vl : env->vl;
+diff --git a/include/hw/riscv/riscv_hart.h b/include/hw/riscv/riscv_hart.h
+index 197fa16231..c3cd05a2c8 100644
+--- a/include/hw/riscv/riscv_hart.h
++++ b/include/hw/riscv/riscv_hart.h
+@@ -42,6 +42,8 @@ struct RISCVHartArrayState {
+     uint64_t *rnmi_irqvec;
+     uint32_t num_rnmi_excpvec;
+     uint64_t *rnmi_excpvec;
++    /* Optional private memory region for use instead of system memory */
++    MemoryRegion *memory;
+     RISCVCPU *harts;
+ };
  
--    if (env->vstart < env->vl) {
-+    if (env->vstart < load_vl) {
-         if (vm) {
-             /* Load/store elements in the first page */
-             if (likely(elems)) {
-+                elems = MIN(elems, load_vl - env->vstart);
-                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
-                                   log2_esz, true, mmu_index, ldst_tlb,
-                                   ldst_host, ra);
-             }
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index 747754be61..32fd39737f 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -53,6 +53,8 @@ static const Property riscv_harts_props[] = {
+     DEFINE_PROP_ARRAY("rnmi-exception-vector", RISCVHartArrayState,
+                       num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64,
+                       uint64_t),
++    DEFINE_PROP_LINK("memory", RISCVHartArrayState, memory,
++                     TYPE_MEMORY_REGION, MemoryRegion *),
+ };
  
-             /* Load/store elements in the second page */
--            if (unlikely(env->vstart < env->vl)) {
-+            if (unlikely(env->vstart < load_vl)) {
-                 /* Cross page element */
-                 if (unlikely(page_split % msize)) {
-                     for (k = 0; k < nf; k++) {
-@@ -815,7 +817,7 @@ ProbeSuccess:
+ static void riscv_harts_cpu_reset(void *opaque)
+@@ -117,6 +119,12 @@ static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
+     object_initialize_child(OBJECT(s), "harts[*]", &s->harts[idx], cpu_type);
+     qdev_prop_set_uint64(DEVICE(&s->harts[idx]), "resetvec", s->resetvec);
  
-                 addr = base + ((env->vstart * nf) << log2_esz);
-                 /* Get number of elements of second page */
--                elems = env->vl - env->vstart;
-+                elems = load_vl - env->vstart;
- 
-                 /* Load/store elements in the second page */
-                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
-@@ -823,7 +825,7 @@ ProbeSuccess:
-                                   ldst_host, ra);
-             }
-         } else {
--            for (i = env->vstart; i < env->vl; i++) {
-+            for (i = env->vstart; i < load_vl; i++) {
-                 k = 0;
-                 while (k < nf) {
-                     if (!vext_elem_mask(v0, i)) {
-@@ -841,6 +843,9 @@ ProbeSuccess:
-             }
-         }
-     }
-+    if (vl != 0) {
-+        env->vl = vl;
++    /* Use private memory instead of system_memory if provided */
++    if (s->memory) {
++        object_property_set_link(OBJECT(&s->harts[idx]), "memory",
++                                 OBJECT(s->memory), &error_abort);
 +    }
-     env->vstart = 0;
- 
-     vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 575571de90..f2c75abd57 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -80,5 +80,10 @@ EXTRA_RUNS += run-test-rv128-sstatus
- run-test-rv128-sstatus: test-rv128-sstatus
- 	$(call run-test, $<, $(QEMU) -cpu x-rv128 $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-test-vle32ff
-+run-test-vle32ff: test-vle32ff
-+	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true $(QEMU_OPTS)$<)
-+test-vle32ff: CFLAGS += -march=rv64gcv
 +
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-vle32ff.S b/tests/tcg/riscv64/test-vle32ff.S
-new file mode 100644
-index 0000000000..2cffe8659c
---- /dev/null
-+++ b/tests/tcg/riscv64/test-vle32ff.S
-@@ -0,0 +1,58 @@
-+/*
-+ * Verify that a fault-only-first load keeps vl unchanged when element zero
-+ * raises a synchronous exception.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+	.option norvc
-+
-+	.text
-+	.globl _start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+
-+	li	t0, (1 << 9)	/* Set mstatus.VS to Initial. */
-+	csrs	mstatus, t0
-+	li	t1, 4
-+	vsetvli	t2, t1, e32, m1, ta, ma
-+	/* Unassigned MMIO: probe succeeds, load faults. */
-+	li	t0, 0x18000000
-+	vle32ff.v	v1, (t0)
-+
-+	/* Element zero did not trap. */
-+	li	a0, 1
-+	j	_exit
-+
-+trap:
-+	csrr	t0, mcause
-+	li	t1, 5		/* Load access fault. */
-+	bne	t0, t1, trap_fail
-+
-+	csrr	t0, vl
-+	bne	t0, t2, trap_fail
-+
-+	li	a0, 0
-+	j	_exit
-+
-+trap_fail:
-+	li	a0, 1
-+
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
+     if (s->harts[idx].cfg.ext_smrnmi) {
+         if (idx < s->num_rnmi_irqvec) {
+             qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
 -- 
 2.55.0
 
