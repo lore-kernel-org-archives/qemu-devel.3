@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B57FC61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A30DC624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TtI-0005WM-LN; Fri, 04 Sep 2026 09:23:36 -0400
+	id 1x2TtF-0005Tu-J9; Fri, 04 Sep 2026 09:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TtH-0005Ux-Ab
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:35 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1x2TtD-0005Se-1H
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:31 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TtF-0008Ip-II
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:35 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-47de0093c42so859368f8f.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:23:32 -0700 (PDT)
+ id 1x2TtA-0008H2-IX
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:30 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48436216a98so640913f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788528212; x=1789133012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788528207; x=1789133007; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LnaNcBsuPzzVC+J4u2ifvjPYqL0A46gG+rLPxX/9Xzw=;
- b=Y2+VusiOX+rzj474tv+F/7fsBfi5y8Ofp/nq8YZAnpCo2Uj5mS+B8OHstqB+4FNLRH
- Mp/YsWJRIctiM8p9lU4gYTx8dzWdYZSCFVsHwDrVqpXq45ce917WSOwb7P2/gKgT3qzx
- mYesSbiu3bHeA59UAo08lipFVQBCSV+hYS+yBK3wAJzkVdYeoKrOBqXDdhcdQsJ7TE6S
- bpOr8m5gB26aW2mdwJuP2GwnOyJDgyL/ltUdq2vAqGZ2AqtuEwAQQs+1KxCW6HdhXMRD
- a5VKaMtQVGbmAQgdQv63D0fegUXn+QMDbl8+4Ktn02TUQvlP6y9SUxz9EAhMQmChUrdh
- Srbw==
+ bh=xBL1dwIo1O3Rm3Uk0d8syVkzhoSlMuc41jFN/JAGooo=;
+ b=K9KJHXf/EGwPytvCgdx0JmJgNLHOWX7Z3bytIDtWmJ4bhzXezaHE9miRgNyK4UwvfF
+ WkJzEUSK8auwmYVAzCk00Ycoj7BCl9mqcekWpR4bonCARwQF13mmQhltgpiT5TBPNs39
+ MoU7Q5lsgEJf4oE+ajhM7KG5DH6mLM2BlUvWrq3gektFQpBaKTFDsAUNX34kDZQGXSA8
+ nz0uyApXdZRt/CZjZnxcA3n8D9299UQIQ3HLZX8AuV+Dh98zafTjpe+hwaZxYe1WYkur
+ 70EUoAK5orJUlKocQ2jIe3wE63bdh36Cuj2srAn/7Wcu5/j+AtjxuIehcu4q+0GIf9Ow
+ eLvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788528212; x=1789133012;
+ d=1e100.net; s=20251104; t=1788528207; x=1789133007;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=LnaNcBsuPzzVC+J4u2ifvjPYqL0A46gG+rLPxX/9Xzw=;
- b=UdsC2n5S71G0bzCnc4axDPrCbQwujIOgEkqDNZqt3yc92lSCtbHfgIipOZjG4OyfYK
- JxgTSgg9g8+2gdajPBd4UvZEVdnY2UEyxdPX8P0kJ6x1LvU9xj9N2DqpYjgMK09qoHyS
- qCP//msRGiuebClJBm2QJ49+EQDnX//ob3HbL21qSdjT+/NQ1p5YSOSIOOIF5pMUzwx6
- 3jB3/2rGEmkGgnP87KC/kR4aLQQYTuhu95SjVZYSneAOLZdYHftI25bYVIDKQmwy6fsC
- qWu2Yhabl/+iwe9qVpRylwxPi+DFBwESDr6R2aWOqT9UMeGFF03FPu0udQ3jiZ9bXiYu
- Ttkg==
-X-Gm-Message-State: AFuF++mMyDXqUP1pyPB7MCCTUwHaeI8H2PzwNNIf2pzKJRIyLiT1v6/N
- rwgpblKjfQqzSrGq3yS7iayvFa+vMZZSgk9h864MET23KIDdjMNXAB4AGSGEmhtIi4dxh4vttiL
- kEBjJyYU=
-X-Gm-Gg: AYBFou26ZbpD3984zBE4+EQiCgyuClkiPe1Suiu9nYboABU5GsgSG/YWxpdubciNe63
- az51tlE7ItCecZ6f7tykBayFz59SCMEd/DKWpOwIAxsL6zFMHHFbb/A/LD+OSuZuIgWusZxyjFD
- O+IHb+P9pT056DUhuzJZuINjtWLHVNP5CtQhbxBU2uiEGKQYDuW9KjlBFCMlQZE5G9Cw1vCMaM0
- A/isvUWqSp/zyo+5c2LDh1D21gip114r8X7B+sqaZKCBUsXUa3mQCZVVdwY+z8YVMuTgncfnbPc
- XwdpU2njOAkF6ObXqXQAmXoiU06FWQ0JpArAjRnOiliH10xgmPKGUEbsZpYp4dOOXBwUVoVwzRw
- P6yglY4LQdCoM5rIdNBw44M9YcutVvRNBuwBapprCkJE7Ns2UsUpjUSSthgTvM8GiDULasBx9/n
- 6cNP5ZmwF0IeBKY9fQq9EpyK7m8SMnKAuMwsO956O17KKFCz8uyvp173EnJya6
-X-Received: by 2002:a05:6000:29d1:b0:47f:8b24:ef01 with SMTP id
- ffacd0b85a97d-48587091569mr6822633f8f.1.1788528211612; 
- Fri, 04 Sep 2026 06:23:31 -0700 (PDT)
+ bh=xBL1dwIo1O3Rm3Uk0d8syVkzhoSlMuc41jFN/JAGooo=;
+ b=hAJrG0FwxD8bdv6QqbNM4mqsY3yVEBQiFkM+T1AoFdREZI+8qVIRm4yB2+h8+8Ovn2
+ WY3aL8ZCoC7e+q4tz4uyzJa8T5neduHmvac6hW5oGfpAFwTN+Oduw9l5via0yTCgXPB5
+ YAYUTjP7/C2USWAie20TfQ/c9et/Nc84aE4vhsgHkd8MSCoqHB+CWTwWyXsDISI/cTJp
+ hO6Y+LOf+9JUQ6g01jjxRxE+AfCfHAbcpGl+ptcl7i9U3d04NxMbGJdkKaXMjlG1VvXD
+ mc1W4Vt5PIIelAwcoHYl+eOxqqHmQ7wo4OOkrgzASGvYx7DWikFp2eYOTuQtXjbhofp6
+ 9c9g==
+X-Gm-Message-State: AFuF++mcHVshaZF7ljzxx24qYy1ikgr1h61mkT+uO8rxaWKdHYIVU3wX
+ s2w5n9Dz1HZs80jVs5bQfkn0i5qNvONuq6fiKnZiD472FDrboKmXS0KP3ipYLK4dejY=
+X-Gm-Gg: AYBFou3PoG6h5CVXMwcNhLCwkG/63w0KhVadnRHmCNgJlbQUx5DPFI/Fju3Wu/+nAxG
+ wYfSCAysv2no74gVoQZfDTYA+PR2Zj8krYjbdq/qDgsOTEvs+7a2xIbwEF8AQV550VEgWsDU3gC
+ P/sxTFDgNB78xj098BhwKcm4YshKO4fUrJLuxIyZzljVFHKzyLyzVlwAjqw8hnZAZihmnlqi59M
+ bXkJZAngFeAVNlp67t+C7zSb1WES+oLv/UTgBAqqlI/Fsfm5pNJFIhG5cqo7KSZvYiYdCvIH/FR
+ vjFc6bdrpIDJxIxJHK1idI14YuLnaeax0h2wGDVoxAG3UZzElbYTWHumCU331x+0pSTUfNO2vIN
+ mC9tr4ae/9KIDN3Bqxc3agYC/KzV63FpstMrEZNCqbp3NewzvtGWa4dQR/Gd3QzukN9uOURXeTn
+ RS1nnoKgkXOMOUHatFFE7CR97nW2vfO7faDbYm9B4gAHEcCNdANhS4hWScr6nnNgwktHU8YkN++
+ g==
+X-Received: by 2002:a05:6000:1843:b0:485:8c17:9767 with SMTP id
+ ffacd0b85a97d-4858c179a7emr3481808f8f.41.1788528206504; 
+ Fri, 04 Sep 2026 06:23:26 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885b1320sm6412891f8f.27.2026.09.04.06.23.25
+ ffacd0b85a97d-485883953cfsm5413268f8f.13.2026.09.04.06.23.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 06:23:27 -0700 (PDT)
+ Fri, 04 Sep 2026 06:23:23 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C7D3D61D17;
- Fri, 04 Sep 2026 13:46:11 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6FDA761E55;
+ Fri, 04 Sep 2026 13:46:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Aniket Sahu <asahu1x@linux.ibm.com>, Stafford Horne <shorne@gmail.com>
-Subject: [PULL 070/105] tests/tcg/or1k/test_muli.c: remove set but unused
- variable
-Date: Fri,  4 Sep 2026 13:45:24 +0100
-Message-ID: <20260904124604.2207440-71-alex.bennee@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 104/105] docs/devel/testing/: update documentation
+Date: Fri,  4 Sep 2026 13:45:58 +0100
+Message-ID: <20260904124604.2207440-105-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,45 +111,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
+We document how to build and run tcg tests with new framework.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-71-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-105-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/or1k/test_muli.c b/tests/tcg/or1k/test_muli.c
-index f1042e98dec..cfb6b3df251 100644
---- a/tests/tcg/or1k/test_muli.c
-+++ b/tests/tcg/or1k/test_muli.c
-@@ -2,11 +2,10 @@
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 71331e64ac8..c64d40b42af 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -447,8 +447,8 @@ these sub-Makefiles, the resulting build is largely non-recursive.
+ Tests, whether defined in ``meson.build`` or not, are also ran by the
+ Makefile with the traditional ``make check`` phony target, while benchmarks
+ are run with ``make bench``.  Meson test suites such as ``unit`` can be ran
+-with ``make check-unit``, and ``make check-tcg`` builds and runs "non-Meson"
+-tests for all targets.
++with ``make check-unit``, and ``make check-tcg`` builds and runs tcg tests
++for all targets.
  
- int main(void)
- {
--    int a, b, c;
-+    int a, b;
-     int result;
+ If desired, it is also possible to use ``ninja`` and ``pyvenv/bin/meson test``,
+ respectively to build emulators and run tests defined in meson.build.
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index c6821a36d99..fadb376eaf0 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -13,7 +13,7 @@ Most (but not all) tests are also integrated as an automated test into
+ the meson build system so can be run directly from the build tree,
+ for example::
  
-     b = 0x4;
--    c = 0x1;
-     result = 0x4;
-     __asm
-     ("l.muli    %0, %1, 0x1\n\t"
-@@ -19,7 +18,6 @@ int main(void)
-     }
+-  [./pyvenv/bin/]meson test --suite qemu:softfloat
++  ./run meson test --suite qemu:softfloat
  
-     b = 0x1;
--    c = 0x0;
-     result = 0x0;
-     __asm
-     ("l.muli    %0, %1, 0x0\n\t"
-@@ -32,7 +30,6 @@ int main(void)
-     }
+ will run just the softfloat tests.
  
-     b = 0x1;
--    c = 0xff;
-     result = 0xff;
-     __asm
-     ("l.muli    %0, %1, 0xff\n\t"
+@@ -1035,29 +1035,40 @@ See :ref:`container-ref` for more details.
+ Running subset of tests
+ ~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-You can build the tests for one architecture::
++You can build the tcg tests using::
+ 
+-  make build-tcg-tests-$TARGET
++  make tcg-tests
+ 
+-And run with::
++And run them for one target with::
+ 
+-  make run-tcg-tests-$TARGET
++  make check-tcg-$TARGET
+ 
+ Adding ``V=1`` to the invocation will show the details of how to
+ invoke QEMU for the test which is useful for debugging tests.
+ 
++Tests can also be run using directly meson test::
++
++  ./run meson test --suite tcg
++  ./run meson test --suite tcg-$TARGET
++
++Tests can be listed using::
++
++  ./run meson test --suite tcg --list
++
+ Running individual tests
+ ~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-Tests can also be run directly from the test build directory. If you
+-run ``make help`` from the test build directory you will get a list of
+-all the tests that can be run. Please note that same binaries are used
+-in multiple tests, for example::
++Tests can also be run using directly meson test::
++
++  ./run meson test $TARGET-$TEST
++
++For instance::
++
++  ./run meson test aarch64-softmmu-hello
+ 
+-  make run-plugin-test-mmap-with-libinline.so
++Test command and output can be accessed by using verbose flag::
+ 
+-will run the mmap test with the ``libinline.so`` TCG plugin. The
+-gdbstub tests also re-use the test binaries but while exercising gdb.
++  ./run meson test aarch64-softmmu-hello --verbose
+ 
+ TCG test dependencies
+ ~~~~~~~~~~~~~~~~~~~~~
 -- 
 2.47.3
 
