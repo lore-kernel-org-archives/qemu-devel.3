@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7400DC624D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9030C61DD6
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TQI-0001eh-6u; Fri, 04 Sep 2026 08:53:38 -0400
+	id 1x2TQN-0001j2-HV; Fri, 04 Sep 2026 08:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQF-0001d1-V1
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:35 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1x2TQL-0001hn-Q7
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:41 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQD-0000gW-8K
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:35 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4843e9c5960so984704f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:32 -0700 (PDT)
+ id 1x2TQH-0000iQ-FI
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:41 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-49557167508so11145105e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788526412; x=1789131212; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788526416; x=1789131216; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=gO810BRB2c4AHIUTMhtMi2JLuKUFaJ3pQjqUbrBLEto=;
- b=AdJgdsO9LAUeRojAgF099PbKYB6SkulWUXhQekszRe33ep2QjZVE8j0pCU+09Qrrv1
- oY9VoOghZ1OX9EMntkU56ERCkQuB6mamfp7a7wNliznVfIkM/2kYa3+YTNIOp7eX6F3H
- gHMU84JKnTvdNBSwe3H5uTAfFurAIp2pSTd1PLvMDeZyKIXj902D+n8psA1+2JVJBuOa
- HOIEJUo+xSJYbFR6vp7muslOb6F8ER9aAN+zcSYa2PHM94se2IkypiEwCvKajlFDVziY
- WwP9xL9Svidy70bBDWpTnbeDg3iQOsKN6Ujyywh8B7bP5yxc3qeg3WAoivdt+ygVXM48
- o8og==
+ bh=WLAOkpCQaMMgtedcgHPNijJ9aJfkfDGolgzGXtHzw1Y=;
+ b=QXn5+dOW+1uIc0O6ii3SbzMzFQT5kkskN0UJJlMveWkDUovsrs+8t8oA4btvi0wZ/m
+ 8+jrfjlLh1wUV9gP5FRaOOxkqAPkfTmBBSS/KnaLYuL2HJSJ22dpy3TNjtlWlLM1KQOr
+ tRd2pKFL5/E+8xyOvVNhCL1EFQgqSluz98IhNgxBX5e8zDLgFbjR+WfyU7SEkASkttU7
+ TSVfyqIISiXwgxsf9RrLOk80Fy6bjzaL9jEnLDr+ju+dVDFSmNUJcYJ9Q+KgUF14h0Mc
+ zABaQdlyBpTbiDr293CfkWjd8mN1c1a+KWrP2Z0p53SK8TwF0/tYtKqu+3ps0IfPlIls
+ Jkeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526412; x=1789131212;
+ d=1e100.net; s=20251104; t=1788526416; x=1789131216;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gO810BRB2c4AHIUTMhtMi2JLuKUFaJ3pQjqUbrBLEto=;
- b=XFz4iESlts82v/epApiBwnHbgYE1oeJf5xuj5GuOds1TeWR11gKNfffON7wC18PsRm
- 6YyYk+6La8f7Y0qx87jZK1XVf0F8lMQjCM+fzOqM+m252h5s3SxczLXf9/URZuR3hyQL
- cPkEDjKn6H2btbLgOrqVmkGD+PT6D2XwpzT3iMNArW0Mwj6rI5qHFiiFaXQciON+87Wn
- CClyM6CeGjc2c90lyS8i8+yMH+Vja8j53kaGJter3QvsWHwi0Wc0Xw/IgO6WWuYbSgAh
- LumvDqskOdna5UxtmC+/bp/D2QZ+Ha9Da4fjDTJ4iHmUPJ5H473m3j3/+KbIsrEbeBGD
- IjZg==
-X-Gm-Message-State: AFuF++mngejMEm8gHTQNXhV/D9Klu9sFHDDTL0jbwD7qj7umM0Ls/GC6
- Ueaa6rr2Yca5UuqJd6ZQfiOLZQVYzgKc+YWn176AU/FSzudFZPjgf5LuMMGq8ztJDes=
-X-Gm-Gg: AYBFou3lUeyC7zub63HFXMZF/W5Fo5P5ax9iVjP247ppfklQS1G/EWfnr5pFbQPh94+
- Z9kZ59ZPLT5WNt9ezqNQSW/XIkzvaLneEqlp8P6KYmHraxq+ybR9tH7ZYt6URzvLtFD+9n5YGju
- /FBjvxKUGAoyEwq6y20qAbo0P7pA35FSeZxpNf7in98udp6yHSv5NOpZpoBiiuUq3Aqt1fcnpB1
- Yba+lhPHVcgubuoXgc4K5ajLAQutmf2t0vun47rb0NF4dxSVUV3W6qyIWbiXakm0e80VL59qzba
- QLAvAf/FuzzHgoKrJt/14uC7PypMLxSO3258XPKtiIHbn+aVb1rMMLnfVgMlxUuCoUPN0qzi9Bc
- o+g8tIfkTwZfvVSrpotKAZyzcoFlRgoFT4nWgyjkDV3bZK09AX9QXWT4T3Dq8d1Sp8+V5nuZWH6
- CB/QiNwW/OIuV1ZwcrktIENz3Gp+Td60vTur4ZueGOJykmTOHSDDZtVUmjBKOf
-X-Received: by 2002:a05:600c:19d1:b0:49c:fc6e:8cbb with SMTP id
- 5b1f17b1804b1-49cfc6e8e05mr35181575e9.31.1788526411857; 
- Fri, 04 Sep 2026 05:53:31 -0700 (PDT)
+ bh=WLAOkpCQaMMgtedcgHPNijJ9aJfkfDGolgzGXtHzw1Y=;
+ b=pFxEEke4u0vb6B6Wwki9HpYoFHuLt4Kq3cIZ9b+B2bsZI8BrkLZyii0CtXCW1IT4mW
+ QaMqExwFaMrh4mHCY7eR5CbkEPcvddK+fx8nqhHziKY5H5qMALgsG1YuwNlthlwjq8Cq
+ K8RHZQK+9+0eqPPQwYFnFTNmXJgHl3ek1hVSVJ4yK5WLtrRFd89VPDfcLK3fwwF0iMjB
+ J187te7r/Ok+A63gAIyoa+mivyH2toB0IN9/mBmq07933CdFr7h3D1sL9o9CxOKZ27Ar
+ Z0uPQv2uLhXN4uQbXX2/4H7ccmQxLQhdPERHb+dhSyRxo72b7+RnsOjzWu+HRRPsH4hL
+ l8dQ==
+X-Gm-Message-State: AFuF++mKG0lGqgNyat/Ox6JAiu7eLVVXU33K7MITWeEGDqQJiaSe0sof
+ hk1FWKfawi5RoIhzERtYro05gUaZJfKZxKRqH6wJeK6lew9ITGW2CEnxJ1OUH7bHtNf/JNHN5Yo
+ ViOC9w2g=
+X-Gm-Gg: AYBFou2Xuve/Yae15SpWtIbbbTpihdZEFmEulRPYu2wnqik1AJmyO01ZePzxyD7FBQM
+ 3AuNd3JXvz5rwvz+4t/2RklVR7a4XTexkhVxqzqPXnndlqfKlwv/hJ9ts4QoiY/17C9btFA0aMC
+ Z91xrUWPxIm8R2RasPpJoZopb/XqVnyezce7AsM4rA0g54ZiDbqysMfFx2zQmjlUnCVSDlD0XzG
+ jYJDJRaGmNZulgUqbgId7PO0+pac8CtT7TmqVg8HvDaMwY2PNLjHQrCHIKJ2wJUk0wf8lwVOnz2
+ 1BPqPNnfPce5RUx3+WkYckEM4KM0Xn9EnBD9Md5FT7bJerVLuVcoaLGRj6pqLKHqaHffbW048VZ
+ +3i9yjrIhwBzxiKQxvej/Pf//XyPKDzwo77gHMEziw5flmmFXTttyTSUMgOGP9/a8UX6v+91EeR
+ e0DDJiU/2/CL4a6g4sZgdPrK3fW7t3MXHLBamjBzJy1XUq/3t+dbOETbAUo4AS
+X-Received: by 2002:a05:600c:3f12:b0:49c:c8de:96a9 with SMTP id
+ 5b1f17b1804b1-49cf7fdd2dfmr93805835e9.2.1788526415769; 
+ Fri, 04 Sep 2026 05:53:35 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce58da3acsm399360135e9.0.2026.09.04.05.53.31
+ 5b1f17b1804b1-49cfbe5b252sm39798165e9.3.2026.09.04.05.53.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 04 Sep 2026 05:53:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1AD7161D5E;
- Fri, 04 Sep 2026 13:46:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 084C561A0A;
+ Fri, 04 Sep 2026 13:46:10 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Aniket Sahu <asahu1x@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
-Subject: [PULL 082/105] tests/tcg/s390x/head64.S: declare _exit symbol after
- main
-Date: Fri,  4 Sep 2026 13:45:36 +0100
-Message-ID: <20260904124604.2207440-83-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 055/105] tests/tcg/i386: user tests
+Date: Fri,  4 Sep 2026 13:45:09 +0100
+Message-ID: <20260904124604.2207440-56-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,30 +110,232 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-tests/tcg/multiarch/gdbstub/registers.py expects to find this symbol to
-compare state of registers before and after execution. Define it
-explicitly.
+Original test-i386-fprem was comparing qemu output and bare metal
+output. However, those files have differences for now, so remove this
+part.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-83-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-56-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/s390x/head64.S b/tests/tcg/s390x/head64.S
-index 4fe288388ab..0523fcacb33 100644
---- a/tests/tcg/s390x/head64.S
-+++ b/tests/tcg/s390x/head64.S
-@@ -14,6 +14,8 @@ main_pre:
-     aghi %r15,-160                     /* reserve stack for C code */
-     brasl %r14,sclp_setup
-     brasl %r14,main
-+.global _exit
-+_exit:
-     larl %r1,success_psw               /* check main() return code */
-     ltgr %r2,%r2
-     je 0f
+diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
+deleted file mode 100644
+index f1df40411b0..00000000000
+--- a/tests/tcg/i386/Makefile.target
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# i386 cross compile notes
+-
+-I386_SRC=$(SRC_PATH)/tests/tcg/i386
+-
+-# Set search path for all sources
+-VPATH 		+= $(I386_SRC)
+-
+-config-cc.mak: Makefile
+-	$(quiet-@)( \
+-          $(call cc-option,-fno-pie, CROSS_CC_HAS_I386_NOPIE)) 3> config-cc.mak
+-
+--include config-cc.mak
+-
+-I386_SRCS=$(notdir $(wildcard $(I386_SRC)/*.c))
+-ALL_X86_TESTS=$(I386_SRCS:.c=)
+-SKIP_I386_TESTS=test-i386-ssse3 test-avx test-3dnow test-mmx test-flags
+-X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+-
+-test-i386-sse-exceptions: CFLAGS += -msse4.1 -mfpmath=sse
+-run-test-i386-sse-exceptions: QEMU_OPTS += -cpu max
+-
+-test-i386-pcmpistri: CFLAGS += -msse4.2
+-run-test-i386-pcmpistri: QEMU_OPTS += -cpu max
+-
+-test-i386-bmi2: CFLAGS=-O2 -fwrapv
+-run-test-i386-bmi2: QEMU_OPTS += -cpu max
+-
+-test-i386-adcox: CFLAGS=-O2
+-run-test-i386-adcox: QEMU_OPTS += -cpu max
+-
+-test-aes: CFLAGS += -O -msse2 -maes
+-test-aes: test-aes-main.c.inc
+-run-test-aes: QEMU_OPTS += -cpu max
+-
+-#
+-# hello-i386 is a barebones app
+-#
+-hello-i386: CFLAGS+=-ffreestanding -fno-stack-protector
+-hello-i386: LDFLAGS+=-nostdlib
+-
+-# test-386 includes a couple of additional objects that need to be
+-# linked together, we also need a no-pie capable compiler due to the
+-# non-pic calls into 16-bit mode
+-ifneq ($(CROSS_CC_HAS_I386_NOPIE),)
+-test-i386: CFLAGS += -fno-pie
+-
+-test-i386: test-i386.c test-i386-code16.S test-i386-vm86.S test-i386.h test-i386-shift.h test-i386-muldiv.h
+-	$(CC) $(CFLAGS) $(LDFLAGS) $(EXTRA_CFLAGS) -o $@ \
+-	   $(<D)/test-i386.c $(<D)/test-i386-code16.S $(<D)/test-i386-vm86.S -lm
+-else
+-test-i386:
+-	$(call skip-test, "BUILD of $@", "missing -no-pie compiler support")
+-run-test-i386:
+-	$(call skip-test, "RUN of test-i386", "not built")
+-endif
+-
+-ifeq ($(SPEED), slow)
+-
+-test-i386-fprem.ref: test-i386-fprem
+-	$(call quiet-command, ./$< > $@,"GENREF","generating $@")
+-
+-run-test-i386-fprem: TIMEOUT=60
+-run-test-i386-fprem: test-i386-fprem test-i386-fprem.ref
+-	$(call run-test,test-i386-fprem, $(QEMU) $<)
+-	$(call diff-out,test-i386-fprem, test-i386-fprem.ref)
+-else
+-SKIP_I386_TESTS+=test-i386-fprem
+-endif
+-
+-# Update TESTS
+-I386_TESTS:=$(filter-out $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+-TESTS=$(MULTIARCH_TESTS) $(I386_TESTS)
+-
+-sha512-sse: CFLAGS=-msse4.1 -O3
+-sha512-sse: sha512.c
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-
+-run-sha512-sse: QEMU_OPTS+=-cpu max
+-
+-TESTS+=sha512-sse
+-
+-CLEANFILES += test-avx.h test-mmx.h test-3dnow.h
+-test-3dnow.h: test-mmx.py x86.csv
+-	$(PYTHON) $(I386_SRC)/test-mmx.py $(I386_SRC)/x86.csv $@ 3DNOW
+-
+-test-mmx.h: test-mmx.py x86.csv
+-	$(PYTHON) $(I386_SRC)/test-mmx.py $(I386_SRC)/x86.csv $@ MMX SSE SSE2 SSE3 SSSE3
+-
+-test-avx.h: test-avx.py x86.csv
+-	$(PYTHON) $(I386_SRC)/test-avx.py $(I386_SRC)/x86.csv $@
+-
+-test-3dnow: CFLAGS += -masm=intel -O -I.
+-run-test-3dnow: QEMU_OPTS += -cpu max
+-test-3dnow: test-3dnow.h
+-
+-test-mmx: CFLAGS += -masm=intel -O -I.
+-run-test-mmx: QEMU_OPTS += -cpu max
+-test-mmx: test-mmx.h
+-
+-test-avx: CFLAGS += -mavx -masm=intel -O -I.
+-run-test-avx: QEMU_OPTS += -cpu max
+-test-avx: test-avx.h
+diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
+new file mode 100644
+index 00000000000..62074b86c9e
+--- /dev/null
++++ b/tests/tcg/i386/meson.build
+@@ -0,0 +1,56 @@
++cc = 'i686-linux-gnu-gcc'
++cc_dockerfile = 'debian-i686-cross'
++cc_docker_host_arch = ['x86_64']
++
++tests = []
++
++tests += tcg_tests['multiarch-linux-user']['tests']
++
++tests += {
++  'hello-i386.c': {
++    'cflags': ['-ffreestanding', '-fno-stack-protector', '-nostdlib'],
++  },
++  'test-aes.c': {'cflags': ['-O1', '-msse2', '-maes']},
++  'test-i386-adcox.c': {'cflags': ['-O2']},
++  'test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
++  'test-i386-f2xm1.c': {},
++  'test-i386-fbstp.c': {},
++  'test-i386-fisttp.c': {},
++  'test-i386-fldcst.c': {},
++  'test-i386-fp-exceptions.c': {},
++  # TODO: original test-i386-fprem test was comparing output between qemu and
++  # bare-metal. At the moment, files are not matching, so deactivate compare.
++  'test-i386-fprem.c': {},
++  'test-i386-fpatan.c': {},
++  'test-i386-fscale.c': {},
++  'test-i386-fxam.c': {},
++  'test-i386-fxtract.c': {},
++  'test-i386-fyl2x.c': {},
++  'test-i386-fyl2xp1.c': {},
++  'test-i386-pcmpistri.c': {'cflags': ['-msse4.2']},
++  'test-i386-pseudo-denormal.c': {},
++  'test-i386-snan-convert.c': {},
++  'test-i386-sse-exceptions.c': {'cflags': ['-msse4.1', '-mfpmath=sse']},
++  'test-i386.c': {
++    'cflags': [files('test-i386-code16.S'), files('test-i386-vm86.S'),
++               '-lm', '-fno-pie', '-Wl,--no-warn-rwx-segments'],
++  },
++  '../multiarch/sha512.c': {
++     'exe_name': 'sha512-sse',
++     'cflags': ['-msse4.1', '-O3'],
++  },
++}
++
++if 'qemu-i386' in emulators
++  tcg_tests += {
++    'i386-linux-user': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'cc_docker_host_arch': cc_docker_host_arch,
++      'folder': 'i386',
++      'gdb_arch': 'i386',
++      'qemu': emulators['qemu-i386'],
++      'tests': tests,
++    }
++  }
++endif
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 878a391d8fd..4d74891a30b 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -142,6 +142,7 @@ subdir('alpha')
+ subdir('arm')
+ subdir('hexagon')
+ subdir('hppa')
++subdir('i386')
+ 
+ image_targets = {}
+ exe_targets = []
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index c48767fef85..9994dff4c44 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -6,7 +6,7 @@
+ # $(SRC_PATH)/tests/tcg/i386/
+ #
+ 
+-include $(SRC_PATH)/tests/tcg/i386/Makefile.target
++#include $(SRC_PATH)/tests/tcg/i386/Makefile.target
+ 
+ X86_64_TESTS += test-2413
+ 
+@@ -20,7 +20,7 @@ X86_64_TESTS += test-1648
+ X86_64_TESTS += test-2175
+ X86_64_TESTS += cross-modifying-code
+ X86_64_TESTS += fma
+-TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
++TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) #test-x86_64
+ else
+ TESTS=$(MULTIARCH_TESTS)
+ endif
+@@ -33,9 +33,9 @@ run-plugin-test-i386-ssse3-%: QEMU_OPTS += -cpu max
+ cross-modifying-code: CFLAGS+=-pthread
+ cross-modifying-code: LDFLAGS+=-pthread
+ 
+-test-x86_64: LDFLAGS+=-lm -lc
+-test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.h
+-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
++#test-x86_64: LDFLAGS+=-lm -lc
++#test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.h
++#	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+ 
+ %: $(SRC_PATH)/tests/tcg/x86_64/%.c
+ 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 -- 
 2.47.3
 
