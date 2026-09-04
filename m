@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C29FC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9CBC624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Wcl-00011V-J6; Fri, 04 Sep 2026 12:18:43 -0400
+	id 1x2Wcd-0000q4-C2; Fri, 04 Sep 2026 12:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2Wci-0000xH-JT; Fri, 04 Sep 2026 12:18:41 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1x2Wcb-0000pB-Fp; Fri, 04 Sep 2026 12:18:33 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2Wch-0001Se-3a; Fri, 04 Sep 2026 12:18:40 -0400
+ id 1x2WcZ-0001Qi-RF; Fri, 04 Sep 2026 12:18:33 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id DE4ED6020A;
- Fri,  4 Sep 2026 16:18:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60671F00A3D;
- Fri,  4 Sep 2026 16:18:35 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 5767E41297;
+ Fri,  4 Sep 2026 16:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603DE1F00A3E;
+ Fri,  4 Sep 2026 16:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788538717;
- bh=IAylABn7oLGfAoGAzMO/VfimbEFQhqIDJ1ttcIrqSqM=;
+ s=k20260515; t=1788538710;
+ bh=Yx5C83lxttjo1xtPxd6rW3sYU8fSUcmNaIoE8qmQGdE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZpeLS95gnl0vl4Z6vl9htRsOg/eEDdXHRGMEEIZke52frp7v6zExjWpqqjnPWBqSS
- aUxLA5W3kVEDl0q0XIUQxlO1kltdmGt9/VQsCfveLJpXc7SKmgtv2Vo8vnNpvV1tUM
- PrwjjcvPZe4nlkL/WZ7IgPtgQFcmzAUGnQoQ68OGD3+6NO1+G6oo8URnyifByNhicb
- PkvCzO0XD/3i8uuApybWlKHTHaI00SZAR3eJuDdiLCE/xnCbqf/IExh4FS0hpmnw4F
- Cs07DUWSANpx4ON7QJDhNW18g69OZJEza7vIVYlbfjFjgmKIXrSQedMUSk08kgsvbz
- KPEbzvDtZ0NNg==
+ b=Ren8vQ5PNmc8dUQMTnCyy9kFExH5XQliK//Hrvd/n8fTyO37j+fnFUExc0fkaVvbR
+ 6+e3Ka5LYurJqqIbKVYt+psF2SI5gPE3GcVF6A9z22oFeoVV83YBwMmJSoLsfCI+d+
+ wb1x5WOBtkqOe2zkITt/tLQiS/ysRwuRBSzlJL1mv8gkIGHpU6dcqenCm4EfEz69AD
+ DwATr8kq1oPPhuX4d1rdSm/Aqhbzly3WOFajEOEdLSUxiuIYlBd5WfiDcyoAsc0jm5
+ lHIGzqBWOl8rFJ/fQGEQs6q1EgiQ8w8GrmrDBVsyYRTUC3UlUgj5V8yGmVEjAmaTul
+ k9Of4MkDmHPRw==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 11/12] file-posix: reject a zone append past the device
- capacity
-Date: Fri,  4 Sep 2026 18:17:59 +0200
-Message-ID: <20260904161801.1568841-12-cassel@kernel.org>
+Subject: [PATCH v3 08/12] file-posix: remove the zone append write granularity
+ check
+Date: Fri,  4 Sep 2026 18:17:56 +0200
+Message-ID: <20260904161801.1568841-9-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904161801.1568841-1-cassel@kernel.org>
 References: <20260904161801.1568841-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,56 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raw_co_zone_append() checks that the offset it is given is aligned to the
-zone size, but not that it names a zone of the device. raw_co_prw() then
-derives a zone index from it and reads that entry of the write pointer
-array, so an offset past the end of the device reads past the end of the
-array.
+The check rejects a zone append whose individual iovec lengths are not
+multiples of the zone write granularity. That is stricter than the
+constraint it is meant to enforce, which applies to the size of the
+request as a whole. A request whose total is properly aligned but which
+is split across, say, a 512 byte and a 3584 byte iovec is refused here,
+even though the iovec boundaries do not survive into the scatter gather
+list that reaches the device.
 
-bdrv_co_zone_append() does not catch it either: bdrv_check_qiov_request()
-bounds the request against BDRV_MAX_LENGTH, which has nothing to do with
-the size of this device. A guest cannot reach it, because
-check_zoned_request() in virtio-blk rejects an out of range offset first,
-but qemu-io and any other caller of blk_co_zone_append() can:
+Nor is the driver the right place to enforce it. The kernel and the
+device validate writes to a sequential zone themselves, which is why the
+same function already passes the request length down without comparing it
+against BlockLimits.max_append_sectors. The sector granularity that holds
+for every backend is now checked once in bdrv_co_zone_append(), and a
+frontend enforces the granularity it advertises to its guest.
 
-  $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
-        -c "zap -p 0x100000000000 0x1000"
-  Segmentation fault
+Drop the check. BlockLimits.write_granularity is now set in one place, by
+this driver from the zone_write_granularity queue attribute, and read in
+one place, by the frontend that reports it.
 
-On a null_blk device with 1000 zones of 256 MiB, that offset yields zone
-index 65536 and reads 512 KiB beyond an 8000 byte allocation.
-
-Reject an offset that lies outside the device. That also bounds the
-zone index that raw_co_prw() derives from it, so its write pointer
-lookup stays inside the array.
-
-Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/file-posix.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ block/file-posix.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/block/file-posix.c b/block/file-posix.c
-index 0e92ff8414..0e8ffe91c4 100644
+index 00323f7a9f..c1ac49d23d 100644
 --- a/block/file-posix.c
 +++ b/block/file-posix.c
-@@ -3597,8 +3597,15 @@ raw_co_zone_append(BlockDriverState *bs,
-                    QEMUIOVector *qiov,
+@@ -3593,8 +3593,6 @@ raw_co_zone_append(BlockDriverState *bs,
                     BdrvRequestFlags flags) {
      assert(flags == 0);
-+    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
      int64_t zone_size_mask = bs->bl.zone_size - 1;
+-    int64_t iov_len = 0;
+-    int64_t len = 0;
  
-+    if (*offset >= capacity) {
-+        error_report("*offset %" PRId64 " is equal to or greater than the "
-+                     "device capacity %" PRId64 "", *offset, capacity);
-+        return -ENOSPC;
-+    }
-+
      if (*offset & zone_size_mask) {
          error_report("sector offset %" PRId64 " is not aligned to zone size "
-                      "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
+@@ -3602,20 +3600,8 @@ raw_co_zone_append(BlockDriverState *bs,
+         return -EINVAL;
+     }
+ 
+-    int64_t wg = bs->bl.write_granularity;
+-    int64_t wg_mask = wg - 1;
+-    for (int i = 0; i < qiov->niov; i++) {
+-        iov_len = qiov->iov[i].iov_len;
+-        if (iov_len & wg_mask) {
+-            error_report("len of IOVector[%d] %" PRId64 " is not aligned to "
+-                         "block size %" PRId64 "", i, iov_len, wg);
+-            return -EINVAL;
+-        }
+-        len += iov_len;
+-    }
+-
+     trace_zbd_zone_append(bs, *offset >> BDRV_SECTOR_BITS);
+-    return raw_co_prw(bs, offset, len, qiov, QEMU_AIO_ZONE_APPEND, 0);
++    return raw_co_prw(bs, offset, qiov->size, qiov, QEMU_AIO_ZONE_APPEND, 0);
+ }
+ #endif
+ 
 -- 
 2.55.0
 
