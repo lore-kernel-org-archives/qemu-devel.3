@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031B3C79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34CE2C79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Wca-0000nZ-OB; Fri, 04 Sep 2026 12:18:32 -0400
+	id 1x2WcO-0000Vg-Vq; Fri, 04 Sep 2026 12:18:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2WcY-0000hH-Rm; Fri, 04 Sep 2026 12:18:30 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1x2WcN-0000VQ-KI; Fri, 04 Sep 2026 12:18:19 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2WcX-0001Pu-5M; Fri, 04 Sep 2026 12:18:30 -0400
+ id 1x2WcL-0001KG-W6; Fri, 04 Sep 2026 12:18:19 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id ED29F40E17;
- Fri,  4 Sep 2026 16:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B111F00A3D;
- Fri,  4 Sep 2026 16:18:25 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 03B476020A;
+ Fri,  4 Sep 2026 16:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E561F00A3D;
+ Fri,  4 Sep 2026 16:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788538707;
- bh=PiicBwAq72HkDdAnMPdGC8GyvXZY0yDIQ/2KjOjW5YA=;
+ s=k20260515; t=1788538696;
+ bh=Vl9F/hDoAxFJfb47pT+Ws99N4unPk5C+HlgiMxsOiQY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HLANPp/R/3dv1nI9R3NGaIo9T17dThlUnlwMMURUExc8pk0FNYnx+q52jx2JCqbsI
- ua7ObrQ9Op9I6Fb82Tjv5qIF2b9frE59nOSSTQICM8ALKjLB1zRM43hPpiocLmAaqE
- /EfCuaCFpaEBpfzifLNevJ0J3GMaugBwGyuJRI2a7ifczip0p0M3BnIkiBlp9lGESY
- uNhhshHQlWN+EUI4ONryHh3jB5VExY6ZAChTv7kz+qZy0OyE/yii6gPmr4fuYC/hKn
- gTEw/5K2n6M8Lcl01IQ93rQVAbqSOsT5ZG8lcicMz+7mHg8rRmrHG53FB2O+iwayjI
- LyLV1vCBVtswA==
+ b=X3W/Er0HCxeS+l7eI9EuefqoKKov/Vmd+bU6LioTdFydqWbcQN7qf7EGgLGoLhbJ/
+ xijl0pWl98NROaM51FIhGnJF34AdbPVCdABGfBY7P+atzpKdr2pEwQUd5zItiy/FRa
+ oGaPWytSr9ntTpAaSTuvGcZ2FVaPSedyPf/+QmZZa0hxXKBpFAOk9IVled+6cwwTtn
+ ZhSzzgkFZaY1s+piiVQDZReUm8bWDoz12p93cCZkVWk14SK+9Cg+Uhibi002QQ/SQq
+ Fcnrn4uDjnaGaquaKgESBnaB1TCDsPvxFRMClXKG/u5axJyYrOjymGTaWEBt59sMKg
+ lHhN/k6v8A4FA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 07/12] block: reject zone appends that are not a multiple
- of the sector size
-Date: Fri,  4 Sep 2026 18:17:55 +0200
-Message-ID: <20260904161801.1568841-8-cassel@kernel.org>
+Subject: [PATCH v3 03/12] block: add a helper for the index of the zone an
+ offset falls in
+Date: Fri,  4 Sep 2026 18:17:51 +0200
+Message-ID: <20260904161801.1568841-4-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904161801.1568841-1-cassel@kernel.org>
 References: <20260904161801.1568841-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,59 +72,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zone write pointers are tracked and reported in units of
-BDRV_SECTOR_SIZE, so an append whose data size is not a multiple of it
-would leave a write pointer that cannot be represented, neither in a
-BlockZoneDescriptor nor in the virtio and NVMe zone reports derived from
-one.
+Deriving the zone that an offset belongs to is open coded in five places,
+in two files, as a division of the offset by BlockLimits.zone_size. The
+zone size of a zoned device is always a power of two, which Linux requires
+of every device it accepts, so the division is a shift.
 
-Nothing states that invariant. file-posix, the only driver that carries
-out an append itself, does enforce it, but only as a side effect of
-checking each iovec against BlockLimits.write_granularity, which is never
-smaller than the sector size. That conflates two constraints: the sector
-granularity holds for every driver, whereas write_granularity describes a
-coarser requirement of the medium below a driver, and only a driver that
-has such a medium should express it.
+Add bdrv_zone_index() and use it. No functional change; the count of zones
+that a management operation spans stays a division, since it is a length
+rather than an offset.
 
-Check the invariant once in bdrv_co_zone_append(), so that it no longer
-rests on a driver that happens to have a granularity of its own to
-report.
-
-This is a lower bound, not the alignment that a guest has to observe. The
-block layer cannot know that one, because it also depends on the logical
-block size the device is configured with, which is a property of the
-frontend. The alignment that applies to a guest is the larger of the two,
-and it is the frontend that reports it, that validates requests against
-it, and that has to refuse a device whose write pointers do not satisfy
-it.
-
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/io.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ block/file-posix.c       | 8 ++++----
+ block/io.c               | 7 +++++++
+ hw/block/virtio-blk.c    | 2 +-
+ include/block/block-io.h | 5 +++++
+ 4 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/block/io.c b/block/io.c
-index 497247b684..b59c7fdf3e 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3350,6 +3350,16 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
-         return ret;
+diff --git a/block/file-posix.c b/block/file-posix.c
+index c0d6ee30e4..00323f7a9f 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1359,7 +1359,7 @@ static int get_zones_wp(BlockDriverState *bs, int fd, int64_t offset,
+     size_t rep_size;
+     uint64_t sector = offset >> BDRV_SECTOR_BITS;
+     BlockZoneWps *wps = bs->wps;
+-    unsigned int j = offset / bs->bl.zone_size;
++    unsigned int j = bdrv_zone_index(bs, offset);
+     unsigned int n = 0, i = 0;
+     int ret;
+     rep_size = sizeof(struct blk_zone_report) + nrz * sizeof(struct blk_zone);
+@@ -2560,7 +2560,7 @@ raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
+         bs->bl.zoned != BLK_Z_NONE) {
+         qemu_co_mutex_lock(&bs->wps->colock);
+         if (type & QEMU_AIO_ZONE_APPEND) {
+-            int index = offset / bs->bl.zone_size;
++            int index = bdrv_zone_index(bs, offset);
+             offset = bs->wps->wp[index];
+         }
+     }
+@@ -2615,7 +2615,7 @@ out:
+         bs->bl.zoned != BLK_Z_NONE) {
+         BlockZoneWps *wps = bs->wps;
+         if (ret == 0) {
+-            uint64_t *wp = &wps->wp[offset / bs->bl.zone_size];
++            uint64_t *wp = &wps->wp[bdrv_zone_index(bs, offset)];
+             if (!BDRV_ZT_IS_CONV(*wp)) {
+                 if (type & QEMU_AIO_ZONE_APPEND) {
+                     *offset_ptr = *wp;
+@@ -3513,7 +3513,7 @@ static int coroutine_fn raw_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
+         return -EINVAL;
      }
  
-+    /*
-+     * Zone write pointers are kept and reported in units of BDRV_SECTOR_SIZE,
-+     * so an append that would leave a write pointer at a finer granularity
-+     * cannot be represented. Drivers may impose a coarser granularity of their
-+     * own, see BlockLimits.write_granularity.
-+     */
-+    if (!QEMU_IS_ALIGNED(qiov->size, BDRV_SECTOR_SIZE)) {
-+        return -EINVAL;
-+    }
+-    uint32_t i = offset / bs->bl.zone_size;
++    uint32_t i = bdrv_zone_index(bs, offset);
+     uint32_t nrz = len / bs->bl.zone_size;
+     uint64_t *wp = &wps->wp[i];
+     if (BDRV_ZT_IS_CONV(*wp) && len != capacity) {
+diff --git a/block/io.c b/block/io.c
+index a916b236c3..497247b684 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -3361,6 +3361,13 @@ out:
+     return co.ret;
+ }
+ 
++uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
++{
++    IO_CODE();
 +
-     bdrv_inc_in_flight(bs);
-     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
-         co.ret = -ENOTSUP;
++    return offset >> ctz64(bs->bl.zone_size);
++}
++
+ void *qemu_blockalign(BlockDriverState *bs, size_t size)
+ {
+     IO_CODE();
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index ffcd327803..8c5b87793e 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -527,7 +527,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+             }
+         }
+ 
+-        index = offset / bs->bl.zone_size;
++        index = bdrv_zone_index(bs, offset);
+         if (BDRV_ZT_IS_CONV(bs->wps->wp[index])) {
+             *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
+             return false;
+diff --git a/include/block/block-io.h b/include/block/block-io.h
+index d34d846bb2..71c8cdf2e1 100644
+--- a/include/block/block-io.h
++++ b/include/block/block-io.h
+@@ -126,6 +126,11 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
+                                                   int64_t *offset,
+                                                   QEMUIOVector *qiov,
+                                                   BdrvRequestFlags flags);
++/*
++ * The index of the zone that @offset falls in. A zoned device always has a
++ * zone size that is a power of two, so the division is a shift.
++ */
++uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
+ 
+ bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
+ 
 -- 
 2.55.0
 
