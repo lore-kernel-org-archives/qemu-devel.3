@@ -4,144 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB04C624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9F2C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TpW-0004ZZ-94; Fri, 04 Sep 2026 09:19:42 -0400
+	id 1x2TtD-0005T2-SL; Fri, 04 Sep 2026 09:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2TpS-0004Z3-AL
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:19:38 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2TpP-0007Ff-04
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:19:37 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 684AIAqU2094857
- for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 13:19:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ooexmYzr9QlTng9xMh8zj/GqVmvTdaKOOZFS/znyFdA=; b=AYzL8BwyEWr7xUHI
- +6KFIQsjNDSajl1SxLmljMgRuuKYYKNpDDoPJXOaYOr/Jo+6w+zDGeiAzywKTMrB
- JRdmod722KjVTqT6Vd5BlCxc6KA+7L56l8dAeVHah3n54srOyAsuZo8+ykdwL0+n
- 9iKXJNUU1vluw9zuu8dsSCLiK4uz+Ia/ndAnWmqng+yHWlmUTwhEKk+MntmbXdsl
- O8IbAKANw2k8jTSH3bcOFGVbtq/tSkv9MdDQ0bQGUJ/VjEdQSBf/ol8+XEBlgxLq
- S/rea72vM9aVdJ4W3obKJiSPwBwiinpn4raHMNNV2bPdSz34hf7n1J64HWrwb90Y
- Obf+ew==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfpmqss5w-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 13:19:31 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-9804eacbbefso78603241.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:19:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2TtB-0005SL-Gb
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:29 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2Tt8-0008GC-NK
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:29 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4957eefd361so7690915e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788527970; x=1789132770; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ooexmYzr9QlTng9xMh8zj/GqVmvTdaKOOZFS/znyFdA=;
- b=FC6NcIpO0j1TKBDOKTODUOnMEQRA1eRpwNvbsAmeX5oMw2hHhGz6/ypOplNIjfKu+H
- HXM8dv7esqJZOSu2rG/W8B0ZqFNIE8VD9mBUo0lgchARIjir3eKy4cqFm9HhzubhBMfl
- DjNsrGlERhTU1xcMLGugj/Bt7ThBkG3CzJR2bOkRJclp/SsE9fE9omr7ijhfbUI4F6py
- IbKqTKu6o+uyg7y5lx2BP4Sg3FrZXwuNVzxTeXb4nHvoOjOZjH2lZo2ncTPoPiR6cqLl
- W2JZBNnxwdQtFxqtBk2rtobNCvYt4MRDXJT7vaCV6+9G57IH7vj0nb9F+2L8L8ueFXIM
- w/1g==
+ d=linaro.org; s=google; t=1788528205; x=1789133005; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=cKQJGHQ+w7edigcXwLoHDig3QPQWeSds/1gr0aT4kEY=;
+ b=yc/x+NB0G7D9BfGWWThINCdDPyIA3ttGzrN0IG+Qxv+4kbBDF1mwLtxO4s/CxltZtC
+ cLBdj+U/U2nUlYCIPWN2ONbvMM/ilu8INwJfHQ5ed0V9Pz6f5vNxu2B1Yr286EN3HBWG
+ 1hnzEosRJA1r0iJyzWI0odN6a3gVG9G7yriX3EpCHrg+qBVa5u9p3fN8f3uv4BVaeZNf
+ Yt3nE7dRD70LnK7+5UxjW1WJhmsNNQMvBzElMvbtbPGCMl70xeh2OzhtCFStSbr7oiXb
+ IzQ7QtKcpf35hvjDi9ESBF520AI8sWMOfFkxgv2qQIr2vWUs+9khDUh7m4a7GAfnNsgL
+ cuRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788527970; x=1789132770;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ooexmYzr9QlTng9xMh8zj/GqVmvTdaKOOZFS/znyFdA=;
- b=QaOaSJaiMh9d9ltg8yfKDZJGJg/027P7g5i4NIIQy9ySeEvU3Rp/CsVwrM6wGdIVjG
- 4QfTBuhatHa24lcLHzbWpz3IEEcb4A05JtCRd2ksMOtnrGTIRaze8XWSorWh/3lArfBv
- RS32YypMa1N8WlFEjU6leH/mfTkwxoFwY9pKLGrPBEOuL+qbgFdE9v8SNl5B6OKsLrek
- Aj1CHhX0ydrgETefR4euVxuThI4U7pL6/w88OB916Iczmo0HKra8SbSGDEF0A05qzUhG
- gFKaelz6xdrwyUtXH20XDtRjeLRUrE5FCyMVbAtHV43jk6LDyuC2DUL2HgDd6HM1D472
- ccwg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzeXHfuyrq1JAo52XN64ulkfoPKxWKsRGt4XF5uUS4+1n4HE7mfz20DtJvnQscBKl2v3gM2kW2ed2pQ@nongnu.org
-X-Gm-Message-State: AFuF++m1Bn9dm+YVzD2PpywDb9sjxLbwVwx37KmjcsPXM9Ihtefhm879
- 6fUIhOI/s+PAjVNtK5CMEApeG+o9SF5tVn7uWLydeoA0P38bOoYCSZw2IEDE/Wns1EjttNzA3Zo
- r5mz0VWCHSPa0zmpIPQmdLJgHpJLEJaPVAHCq4TEee745gz68wsHKMKopnA==
-X-Gm-Gg: AYBFou2KESkRnUNduRveQ9U1HcTXHtDMxNjBHypaUQSlOitcW+caOm9SYggHYEAEMxG
- DTfVIbdiSVcSljpjitG9KZKRB8dzkmHsHqEP7FczC2dYXmcNrlcUw+eMBjETnFjl1IVopCosswu
- T5TEKjxSDIGyOt58pf1jJMJOh/uechdNlDCHodHNbtnQOSwM8snPXWlhZr7SvXBooab5Natx5sX
- HUF2YHtwclVQpa3Dsz6S/fJW9MCmvkMpOV9fbY1fJlV2XPcdAYMlEjEbX7xWj9duv+M6YA5mUJz
- Dfz9oRSqP0NvqsYeErFLJ1ZuIx5XjWZ6dk8bqhit7yu/b/OEY0m1ehL1HH6rWuunFbR0DPl4IiJ
- 4jl7spUFChKKA2x1veFBTimRbzwAKACJFlg==
-X-Received: by 2002:a05:6102:292b:b0:782:e19d:6f39 with SMTP id
- ada2fe7eead31-78a4a483c93mr1602143137.0.1788527969737; 
- Fri, 04 Sep 2026 06:19:29 -0700 (PDT)
-X-Received: by 2002:a05:6102:292b:b0:782:e19d:6f39 with SMTP id
- ada2fe7eead31-78a4a483c93mr1602132137.0.1788527969284; 
- Fri, 04 Sep 2026 06:19:29 -0700 (PDT)
-Received: from [192.168.69.202] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885be01bsm5845465f8f.31.2026.09.04.06.19.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Sep 2026 06:19:28 -0700 (PDT)
-Message-ID: <f6c3b52e-dac2-49a2-8f68-8deb2baacab4@oss.qualcomm.com>
-Date: Fri, 4 Sep 2026 15:19:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/11] target/hexagon: gate GPCYCLE guest register
- reads on SSR:CE
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+ d=1e100.net; s=20251104; t=1788528205; x=1789133005;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cKQJGHQ+w7edigcXwLoHDig3QPQWeSds/1gr0aT4kEY=;
+ b=k3tQDcI8eW86yFJxwklSP/g9zFEqSFpAx4jLNAkTn0epneX3Tm1mjCbd7W9Ovl64Zk
+ UYlKwoVAdCHSGvyHChszb8DGcSSHc0f/pfgw2JdaShprXrrDKdIVLMM25YXZoi2BIrRb
+ lA3TUN6eNmV31lDymExodUCu1/BqmjgDRtHdY3VgfxZ6/VXoYxcjneWMELDZTuPTNMRw
+ 8gTzFPGEYQNtasXCWdbB87eu0f2asTDVsZJRBJqhi3ZYhA2Hq7HS6SJKYvoz2zrD8wVP
+ XAjiO2lKVSus8JQiF0lCXnGQse74EouZeqsC1CGcAf3KJDtxI1I9chiXVxnMZu3yiuHQ
+ A8Kg==
+X-Gm-Message-State: AFuF++lsphNA3zZsgCJyvFtfcQ9nxYRaoeu3rigYjTLvwSLLNWHici61
+ VcLd7XpUHziuwV+AxH3dN2INFaYRPs4H+IKWCmRD0NdH4j837E1o4UaSWIfmI7tDKLg=
+X-Gm-Gg: AYBFou0p1Ekn85YG0cDBLMJs2cuEteW9lfFjP48CKplF5yr8vGoPh8UM9Zn4HzJvnmP
+ tBLqPWw3tRVAIei4oDGcyBMKWPiGyB4hdqL02rmqguWiez76tuwSlKfMZN6mBM07hks/3x6TKky
+ dI7feoK5igeFh5wVpySupsyV76TIJyVUMkg/Zki+RIC/gMwoQG5JD4yEm3l1XPsG10LTRyRkOqB
+ uF3tyhzNKqfYS3U3ZtilJ9/t7GsiGT/7BlXh7Bx4+g6glmwUQZNVQ+LYrBedo5uY7DJiJtNFM8F
+ 8o1SaQW33jGzukJ1oWL6oY8vYilD8+xB7MyH4qUvKkLUDZYHKTfih3Y3jyYLJCJu7TEqJQgKLeN
+ pBcSkMwP2WcJwniaBjmFS7RHPQo3BSw+ZfBorqnzAwrQNWgDhQGUVEabpU5wgo7hjZecCMzR3nX
+ 2JNcdYSk20b7t1lzcWwxLloO4wKdDxcDvU73xyPJPV8fK62pQUN4qGXGSiG7jv
+X-Received: by 2002:a05:600d:6501:10b0:49c:f2f4:edca with SMTP id
+ 5b1f17b1804b1-49cf825c891mr50597475e9.15.1788528204654; 
+ Fri, 04 Sep 2026 06:23:24 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cf772bd2asm64104485e9.11.2026.09.04.06.23.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 06:23:23 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6024E61996;
+ Fri, 04 Sep 2026 13:46:09 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
-References: <20260901173353.200474-1-brian.cain@oss.qualcomm.com>
- <20260901173353.200474-7-brian.cain@oss.qualcomm.com>
- <f7f34a43-c1cc-4dd8-a859-9ab72e1b015f@oss.qualcomm.com>
- <f06d81b1-35f8-4668-a92b-1d78c129d83c@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <f06d81b1-35f8-4668-a92b-1d78c129d83c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 050/105] tests/tcg/hexagon: user tests
+Date: Fri,  4 Sep 2026 13:45:04 +0100
+Message-ID: <20260904124604.2207440-51-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDExOSBTYWx0ZWRfXxOebAojnLz7E
- AoHerKjzOmjKiVzmFFoyO1dZeFCSqw8aUD4hq72MZ/slFlGbvHxQvjBNkZ79/szeqyOPXJ91yGf
- 4xDW5Yd4X2KpNo+odd/Vy9FkR1o/f/Y=
-X-Authority-Analysis: v=2.4 cv=eovvCIpX c=1 sm=1 tr=0 ts=6a9ac563 cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=ePHWwmZI0fW8Pd2OE1IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=o1xkdb1NAhiiM49bd1HK:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDExOSBTYWx0ZWRfX2KGGk7tSC6gS
- 7fHCutcUEt6xEY1TOHzIS9v+drsjeb+shnEKzMjm72fB0qa26cRo4lPlUaQtuLfLKR0BbwppQr9
- j29JohsohD4VHw1VYp3W8BaIA5tS25ZRPMgQObPXzRj4h6zRUyxXfSbccfxBXTEkX92x21FZ50v
- Vd1MqVtPDul413vzN9O6IYDgVssT5FrVstXbBqlN2/jpTRAj9sOtX6/NY2u2NjgR6NX87BlAiXX
- tnWlXl8oNZhQeTkz/LVODcJT0ULbMM3e8awz8H2kmEulRANDu18UxMRgu/uT25ZvMyBBwsUXbaY
- AbNsWY0PioUT0qTxHRCgZf8OLjPNlthr36mji9cxZkbgPmpm5U6daJTf6+utzAa123ek51xN2ck
- 3T69TXHwCn7kWkixae4Wj+FzX6z39t1KlhqyjbMie4Km7CjOFSBekeGc2gji7uV4NdMekS3iMMz
- QRzjElz52eX9DWOfosg==
-X-Proofpoint-ORIG-GUID: RpkZB-Zy5-z4-AgVRwbZfPfmLI24PvsK
-X-Proofpoint-GUID: RpkZB-Zy5-z4-AgVRwbZfPfmLI24PvsK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-04_03,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040119
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,58 +106,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 21:36, Brian Cain wrote:
-> 
-> On 9/2/2026 4:16 PM, Philippe Mathieu-Daudé wrote:
->> Hi Brian,
->>
->> On 1/9/26 19:33, Brian Cain wrote:
->>> GPCYCLELO/GPCYCLEHI read as zero unless the cycle counter is enabled
->>> (SSR:CE), matching the hardware.
->>>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>> ---
->>>   target/hexagon/cpu.c       | 7 +++++--
->>>   target/hexagon/op_helper.c | 9 ++-------
->>>   2 files changed, 7 insertions(+), 9 deletions(-)
->>
->>
->>> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
->>> index 23894ff3d28..2cea1927263 100644
->>> --- a/target/hexagon/op_helper.c
->>> +++ b/target/hexagon/op_helper.c
->>> @@ -1912,13 +1912,8 @@ uint64_t HELPER(greg_read_pair) 
->>> (CPUHexagonState *env, uint32_t reg)
->>>           return (uint64_t)(env->greg[reg]) |
->>>                  (((uint64_t)(env->greg[reg + 1])) << 32);
->>>       }
->>> -    switch (reg) {
->>> -    case HEX_GREG_GPCYCLELO:
->>> -        return hexagon_get_sys_pcycle_count(env);
->>> -    default:
->>> -        return (uint64_t)hexagon_greg_read(env, reg) |
->>> -               ((uint64_t)(hexagon_greg_read(env, reg + 1)) << 32);
->>> -    }
->>> +    return (uint64_t)hexagon_greg_read(env, reg) |
->>> +           ((uint64_t)(hexagon_greg_read(env, reg + 1)) << 32);
->>>   }
->>
->> Just curious, does greg_read_pair() work with impair %reg?
-> 
-> 
-> Not sure if I understand "impair %reg"?
-> 
-> But - if this refers to the odd-value pairs,
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Yes I meant 'odd' ;)
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-51-pierrick.bouvier@oss.qualcomm.com>
+[AJB: fix merge conflict]
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-> then no - they don't.  The 
-> guest reg encoding only has the "g{odd}:{even}" designated by the even 
-> reg's value.  Sent a follow up patch to assert this in greg_read_pair().
-> 
-> -Brian
-> 
-> 
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+deleted file mode 100644
+index f72bb8a6b45..00000000000
+--- a/tests/tcg/hexagon/Makefile.target
++++ /dev/null
+@@ -1,166 +0,0 @@
+-##
+-##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+-##
+-##  This program is free software; you can redistribute it and/or modify
+-##  it under the terms of the GNU General Public License as published by
+-##  the Free Software Foundation; either version 2 of the License, or
+-##  (at your option) any later version.
+-##
+-##  This program is distributed in the hope that it will be useful,
+-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-##  GNU General Public License for more details.
+-##
+-##  You should have received a copy of the GNU General Public License
+-##  along with this program; if not, see <http://www.gnu.org/licenses/>.
+-##
+-
+-# Hexagon doesn't support gdb, so skip the EXTRA_RUNS
+-EXTRA_RUNS =
+-
+-CFLAGS += -Wno-incompatible-pointer-types -Wno-undefined-internal
+-CFLAGS += -fno-unroll-loops -fno-stack-protector
+-
+-HEX_SRC=$(SRC_PATH)/tests/tcg/hexagon
+-VPATH += $(HEX_SRC)
+-
+-%: $(HEX_SRC)/%.S $(HEX_SRC)/crt.S
+-	$(CC) -static -mv67 -nostdlib $^ -o $@
+-
+-HEX_TESTS = first
+-HEX_TESTS += hex_sigsegv
+-HEX_TESTS += misc
+-HEX_TESTS += usr
+-HEX_TESTS += preg_alias
+-HEX_TESTS += dual_stores
+-HEX_TESTS += multi_result
+-HEX_TESTS += mem_noshuf
+-HEX_TESTS += mem_noshuf_exception
+-HEX_TESTS += circ
+-HEX_TESTS += brev
+-HEX_TESTS += load_unpack
+-HEX_TESTS += load_align
+-HEX_TESTS += atomics
+-HEX_TESTS += fpstuff
+-HEX_TESTS += overflow
+-HEX_TESTS += signal_context
+-HEX_TESTS += reg_mut
+-HEX_TESTS += read_write_overlap
+-HEX_TESTS += vector_add_int
+-HEX_TESTS += scatter_gather
+-HEX_TESTS += hvx_misc
+-HEX_TESTS += hvx_histogram
+-HEX_TESTS += fp_hvx
+-HEX_TESTS += fp_hvx_cvt
+-HEX_TESTS += fp_hvx_cmp
+-HEX_TESTS += fp_hvx_disabled
+-HEX_TESTS += invalid-slots
+-HEX_TESTS += valid-slots
+-HEX_TESTS += invalid-encoding
+-HEX_TESTS += multiple-writes
+-HEX_TESTS += privileged-insn
+-HEX_TESTS += unaligned_pc
+-HEX_TESTS += unaligned_data
+-HEX_TESTS += icinva
+-
+-HEX_TESTS += test_abs
+-HEX_TESTS += test_bitcnt
+-HEX_TESTS += test_bitsplit
+-HEX_TESTS += test_call
+-HEX_TESTS += test_clobber
+-HEX_TESTS += test_cmp
+-HEX_TESTS += test_dotnew
+-HEX_TESTS += test_ext
+-HEX_TESTS += test_fibonacci
+-HEX_TESTS += test_hl
+-HEX_TESTS += test_hwloops
+-HEX_TESTS += test_jmp
+-HEX_TESTS += test_lsr
+-HEX_TESTS += test_mpyi
+-HEX_TESTS += test_packet
+-HEX_TESTS += test_reorder
+-HEX_TESTS += test_round
+-HEX_TESTS += test_vavgw
+-HEX_TESTS += test_vcmpb
+-HEX_TESTS += test_vcmpw
+-HEX_TESTS += test_vlsrw
+-HEX_TESTS += test_vmaxh
+-HEX_TESTS += test_vminh
+-HEX_TESTS += test_vpmpyh
+-HEX_TESTS += test_vspliceb
+-
+-HEX_TESTS += check_rev_gating
+-HEX_TESTS += test_pnew_jump_loads
+-
+-HEX_TESTS += v68_scalar
+-HEX_TESTS += v68_hvx
+-HEX_TESTS += v69_hvx
+-HEX_TESTS += v73_scalar
+-
+-TESTS += $(HEX_TESTS)
+-
+-atomics: atomics.c hex_test.h
+-brev: brev.c hex_test.h
+-circ: circ.c hex_test.h
+-dual_stores: dual_stores.c hex_test.h
+-fpstuff: fpstuff.c hex_test.h
+-hex_sigsegv: hex_sigsegv.c hex_test.h
+-icinva: icinva.c hex_test.h
+-load_align: load_align.c hex_test.h
+-load_unpack: load_unpack.c hex_test.h
+-mem_noshuf_exception: mem_noshuf_exception.c hex_test.h
+-mem_noshuf: mem_noshuf.c hex_test.h
+-misc: misc.c hex_test.h
+-multi_result: multi_result.c hex_test.h
+-overflow: overflow.c hex_test.h
+-preg_alias: preg_alias.c hex_test.h
+-read_write_overlap: read_write_overlap.c hex_test.h
+-reg_mut: reg_mut.c hex_test.h
+-test_pnew_jump_loads: test_pnew_jump_loads.c hex_test.h
+-unaligned_data: unaligned_data.c hex_test.h
+-unaligned_pc: unaligned_pc.c
+-
+-# Compile for v66 so that the ELF selects a v66 CPU; the test then
+-# exercises revision gating by executing a v68 .word instruction.
+-run-check_rev_gating: QEMU_OPTS += -cpu v66
+-check_rev_gating: check_rev_gating.c
+-	$(CC) $(CFLAGS) -mv66 -O2 $< -o $@ $(LDFLAGS)
+-
+-# This test has to be compiled for the -mv67t target
+-usr: usr.c hex_test.h
+-	$(CC) $(CFLAGS) -mv67t -O2 -Wno-inline-asm -Wno-expansion-to-defined $< -o $@ $(LDFLAGS)
+-
+-# Build this test with -mv71 to exercise the CABAC instruction
+-misc: misc.c
+-	$(CC) $(CFLAGS) -mv71 -O2 $< -o $@ $(LDFLAGS)
+-scatter_gather: CFLAGS += -mhvx
+-vector_add_int: CFLAGS += -mhvx -fvectorize
+-hvx_misc: hvx_misc.c hvx_misc.h
+-hvx_misc: CFLAGS += -mhvx
+-hvx_histogram: CFLAGS += -mhvx -Wno-gnu-folding-constant
+-v68_hvx: v68_hvx.c hvx_misc.h v6mpy_ref.c.inc
+-v68_hvx: CFLAGS += -mhvx -Wno-unused-function
+-v69_hvx: v69_hvx.c hvx_misc.h
+-v69_hvx: CFLAGS += -mhvx -Wno-unused-function
+-v73_scalar: CFLAGS += -Wno-unused-function
+-fp_hvx: fp_hvx.c hvx_misc.h hex_test.h
+-fp_hvx: CFLAGS += -mhvx -mhvx-ieee-fp
+-fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h hex_test.h
+-fp_hvx_disabled: CFLAGS += -mhvx -mhvx-ieee-fp
+-fp_hvx_cvt: fp_hvx_cvt.c hvx_misc.h hex_test.h
+-fp_hvx_cvt: CFLAGS += -mhvx -mhvx-ieee-fp
+-fp_hvx_cmp: fp_hvx_cmp.c hvx_misc.h hex_test.h
+-fp_hvx_cmp: CFLAGS += -mhvx -mhvx-ieee-fp
+-
+-run-fp_hvx_disabled: QEMU_OPTS += -cpu v73,ieee-fp=false
+-
+-hvx_histogram: hvx_histogram.c hvx_histogram_row.S
+-	$(CC) $(CFLAGS) $(CROSS_CC_GUEST_CFLAGS) $^ -o $@ $(LDFLAGS)
+-
+-ifeq ($(CONFIG_PLUGIN),y)
+-# LLVM is way too aggressive with inlining and dead code elimination even at
+-# -O0, which interferes with the test. What looks like dead code in this test
+-# to the compiler isn't actually dead code, so we need to disable all potential
+-# LLVM optimization passes.
+-test-plugin-set-pc: CFLAGS += -Xclang -disable-llvm-passes
+-endif
+diff --git a/tests/tcg/hexagon/meson.build b/tests/tcg/hexagon/meson.build
+new file mode 100644
+index 00000000000..4a2826c4276
+--- /dev/null
++++ b/tests/tcg/hexagon/meson.build
+@@ -0,0 +1,120 @@
++tests = []
++
++cflags = ['-Wno-incompatible-pointer-types', '-Wno-undefined-internal',
++          '-fno-unroll-loops', '-fno-stack-protector']
++asmflags = [cflags, '-nostdlib', '-mv67', files('crt.S')]
++
++multi_src = []
++foreach t: tcg_tests['multiarch-linux-user']['tests']
++  foreach src, setup: t
++    if 'gdb_test' in setup
++      # gdb does not support hexagon, ignore test
++      continue
++    endif
++    new_cflags = []
++    if 'cflags' in setup
++      new_cflags += setup['cflags']
++    endif
++    new_cflags += cflags
++    if src not in multi_src
++      setup += {'cflags': [new_cflags]}
++      multi_src += src
++    endif
++    tests += {src: setup}
++  endforeach
++endforeach
++
++tests += {
++  'atomics.c': {'cflags': cflags},
++  'brev.c': {'cflags': cflags},
++  # Compile for v66 so that the ELF selects a v66 CPU; the test then
++  # exercises revision gating by executing a v68 .word instruction.
++  'check_rev_gating.c': {
++    'cflags': [cflags, '-mv66', '-O2'],
++    'qemu_args': ['-cpu', 'v66'],
++  },
++  'circ.c': {'cflags': cflags},
++  'first.S': {'cflags': asmflags},
++  'fpstuff.c': {'cflags': cflags},
++  'hex_sigsegv.c': {'cflags': cflags},
++  'fp_hvx.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp']},
++  'fp_hvx_disabled.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp'],
++                        'qemu_args': ['-cpu', 'v73,ieee-fp=false']},
++  'fp_hvx_cvt.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp']},
++  'fp_hvx_cmp.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp']},
++  'hvx_misc.c': {'cflags': [cflags, '-mhvx', '-mv69']},
++  'hvx_histogram.c': {
++    'cflags': [cflags, '-mhvx', '-Wno-gnu-folding-constant',
++               files('hvx_histogram_row.S')]
++  },
++  'invalid-encoding.c': {'cflags': cflags},
++  'invalid-slots.c': {'cflags': cflags},
++  'icinva.c': {'cflags': cflags},
++  'load_align.c': {'cflags': cflags},
++  'load_unpack.c': {'cflags': cflags},
++  # Build this test with -mv71 to exercise the CABAC instruction
++  'misc.c': {'cflags': [cflags, '-mv71', '-O2']},
++  'multiple-writes.c': {'cflags': cflags},
++  'overflow.c': {'cflags': cflags, 'exe_name': 'hex-overflow'},
++  'preg_alias.c': {'cflags': cflags},
++  'dual_stores.c': {'cflags': cflags},
++  'multi_result.c': {'cflags': cflags},
++  'mem_noshuf.c': {'cflags': cflags},
++  'mem_noshuf_exception.c': {'cflags': cflags},
++  'privileged-insn.c': {'cflags': cflags},
++  'read_write_overlap.c': {'cflags': cflags},
++  'reg_mut.c': {'cflags': cflags},
++  'scatter_gather.c': {'cflags': [cflags, '-mhvx']},
++  'signal_context.c': {'cflags': cflags},
++  'test_abs.S': {'cflags': asmflags},
++  'test_bitcnt.S': {'cflags': asmflags},
++  'test_bitsplit.S': {'cflags': asmflags},
++  'test_call.S': {'cflags': asmflags},
++  'test_clobber.S': {'cflags': asmflags},
++  'test_cmp.S': {'cflags': asmflags},
++  'test_dotnew.S': {'cflags': asmflags},
++  'test_ext.S': {'cflags': asmflags},
++  'test_fibonacci.S': {'cflags': asmflags},
++  'test_hl.S': {'cflags': asmflags},
++  'test_hwloops.S': {'cflags': asmflags},
++  'test_jmp.S': {'cflags': asmflags},
++  'test_lsr.S': {'cflags': asmflags},
++  'test_mpyi.S': {'cflags': asmflags},
++  'test_packet.S': {'cflags': asmflags},
++  'test_reorder.S': {'cflags': asmflags},
++  'test_round.S': {'cflags': asmflags},
++  'test_vavgw.S': {'cflags': asmflags},
++  'test_vcmpb.S': {'cflags': asmflags},
++  'test_vcmpw.S': {'cflags': asmflags},
++  'test_vlsrw.S': {'cflags': asmflags},
++  'test_vmaxh.S': {'cflags': asmflags},
++  'test_vminh.S': {'cflags': asmflags},
++  'test_vpmpyh.S': {'cflags': asmflags},
++  'test_vspliceb.S': {'cflags': asmflags},
++  'unaligned_pc.c': {'cflags': cflags},
++  'unaligned_data.c': {'cflags': cflags},
++  'usr.c': {
++    'cflags': [cflags, '-mv67t', '-O2',
++               '-Wno-inline-asm', '-Wno-expansion-to-defined']
++  },
++  'v68_scalar.c': {'cflags': [cflags, '-mv68']},
++  'v68_hvx.c': {'cflags': [cflags, '-mhvx', '-Wno-unused-function', '-mv68']},
++  'v69_hvx.c': {'cflags': [cflags, '-mhvx', '-Wno-unused-function', '-mv69']},
++  'v73_scalar.c': {'cflags': [cflags, '-Wno-unused-function', '-mv73']},
++  'valid-slots.c': {'cflags': cflags},
++  'vector_add_int.c': {'cflags': [cflags, '-mhvx', '-fvectorize']},
++}
++
++if 'qemu-hexagon' in emulators
++  tcg_tests += {
++    'hexagon-linux-user': {
++      'cc': 'hexagon-unknown-linux-musl-clang',
++      'cc_dockerfile': 'debian-hexagon-cross',
++      'cc_docker_host_arch': ['x86_64'],
++      'folder': 'hexagon',
++      'gdb_arch': 'hexagon_is_not_supported_by_gdb',
++      'qemu': emulators['qemu-hexagon'],
++      'tests': tests,
++    }
++  }
++endif
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 17f48bebf98..27d7aedb8b8 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -140,6 +140,7 @@ subdir('aarch64')
+ subdir('aarch64_be')
+ subdir('alpha')
+ subdir('arm')
++subdir('hexagon')
+ 
+ image_targets = {}
+ exe_targets = []
+-- 
+2.47.3
 
 
