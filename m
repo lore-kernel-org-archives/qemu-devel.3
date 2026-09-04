@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F697C79F85
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFE4C79F89
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2a6e-0000yO-Ph; Fri, 04 Sep 2026 16:01:50 -0400
+	id 1x2a6r-0002Ek-UK; Fri, 04 Sep 2026 16:02:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a6W-0000ss-39
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:01:40 -0400
+ id 1x2a6p-00020C-Re
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:01:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a6T-0008Sx-V3
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:01:39 -0400
+ id 1x2a6n-00005i-QV
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:01:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788552097;
+ s=mimecast20190719; t=1788552117;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tz/am8znVea0EH/I3yKmAvS/zTKGWDHDy5Io0oDOs84=;
- b=aJr/WBZYqmnvvrN1bq2dA2edmPM2rKFnQFksmyY9w85gNpyLCelf0rAPi7vSARPL628n2A
- JqqaUVPtqwELyqK3paGB+lW48tzkj0Ob6m7grbT4L51CQYceVUbuqPkd0fBbzMeaEOgdAA
- 8Ficc4VTmufBkaEq3gCVmBczrqC8dwc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=+U56nlsVf4mgf1W0GndZT5RbL9JsSUbkFD/AB+XKJsA=;
+ b=V1jMjEujZ1fAcAT4xHxDAh+98j0jj6mPMeh33zvud4JeQT6rEUUFSNAAAiPaevNXyBg2Z8
+ wFUDIQ8y20j2nZEZ3pdgxgS3WobI1eokowyHWH06MiucoXFSA/Z0RnjewK5Thf1iRAzqCa
+ 9zPIyc50RyR6mQnNSHPdjefKJ+hrzZ4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-xPEl46pCON6dOfEsoOvyGQ-1; Fri,
- 04 Sep 2026 16:01:31 -0400
-X-MC-Unique: xPEl46pCON6dOfEsoOvyGQ-1
-X-Mimecast-MFC-AGG-ID: xPEl46pCON6dOfEsoOvyGQ_1788552090
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-ZroAoxHDP2akBDOp8juxqg-1; Fri,
+ 04 Sep 2026 16:01:54 -0400
+X-MC-Unique: ZroAoxHDP2akBDOp8juxqg-1
+X-Mimecast-MFC-AGG-ID: ZroAoxHDP2akBDOp8juxqg_1788552113
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E7E11893EDE; Fri,  4 Sep 2026 20:01:30 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D98B219539AF; Fri,  4 Sep 2026 20:01:52 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 990A07DC; Fri,  4 Sep 2026 20:01:29 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D75641955D67; Fri,  4 Sep 2026 20:01:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 04 Sep 2026 23:58:37 +0400
-Subject: [PATCH v4 54/75] hw/ppc/spapr_drc: convert fdt property to
- QAPI-aware registration
+Date: Fri, 04 Sep 2026 23:58:43 +0400
+Subject: [PATCH v4 60/75] qdev: add qapi_type field to PropertyInfo with
+ fallback registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260904-qom-qapi-v4-54-a985f168e938@redhat.com>
+Message-Id: <20260904-qom-qapi-v4-60-a985f168e938@redhat.com>
 References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 In-Reply-To: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,38 +65,35 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1018;
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7097;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=p8JanILoeFCoElHoPfG5YjLfU2MyrEO5wI6M3UiSSaA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLLZYtliGOoNv149VyVVY7BeDlQV1sAdI+xg
- BB7aVQzG0iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiywAKCRDa6OEJdZac
- 5VdnD/9tZ0d70Ujucst6iT3VRYyt1b6f7KwLqU+mqUs1NDCmbfzFNPpmi43FG0AAwRVAGGLHjuy
- ahF9nBbquF3/VJJgd1FRlnFJcLzwlq0iFbrvB7gvD72d+vuMtmO7QmZDtOIJoRFwH/C7n+7wLyj
- kFinoewEM9mi3L7vr5pJ/NBf3NOv7Nf/29545HUem2YFrf5Ercoa4wLJxRWOcjvugfhoAZeDKTT
- sHFJXEJwoM94gcIRrY0V/h0TbVGsrpKPSWcaYnuXUZOTgMQkpfhDuz1btuXZH9rRiNaSjfiQtTD
- 7f73rKwEpCj+6Hk3UWdNLCNPjVVR96EGdI3b4eBSgsj6fzI9ORT3Dk3vf3BOeWoFaTW8VqaXnWR
- oZVQfx8vkxA7JC47DhijDqGRxP+6qoANPKKTzptlVINR249quUOiVoZ9oc74VhXLWob0i+g+IQt
- 5b6JQgZ+BO39/H+/QGXhYNGD5Lm2qm1GtPveOZ7FJeNgr3LguqKJT/DJGn+vF0w0ip4mwUR9AS6
- 9KjKLikCq2GVA/WAVSMPPWTrHEx681kRnWbWVlUg4nqAfz8TNF2KKs2Fai/YT3dS2nervCljGWL
- ZzYQDP2xeRIpF1Zw9D3LaX2n9bL5BBswNu5V/+sHfj9sFqSMRkdG90cgS7/Ctv901rcToXYy8GY
- sFeSkQSLgRwLvPg==
+ bh=rVgb3lPZcyuxYB6Idtqpd6v6VbibarNVb6IbHBysRPw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLL2X51JapQvlv1cvkPlIRBVKnp0IuPNeVx/
+ m1a7d0oCKaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiywAKCRDa6OEJdZac
+ 5RRkEAC0LYCthYbuoZ2gp56TVm6D/bCWPsEPWDZAFILciYrJ7r5iLq1eOgrMQ+AtjjFYrYMjje8
+ 7P08Q5GwWrqGR/LqEa1Lzn34T5B7s/a64qPZzZE2FekmoZAuKOX4k8aOeIFohy38IfUzNioH3Do
+ hD+vYnnHj+Pfwbz4rwGbW1uJm+r6vVl9N6p2CcMB5OGoFyJMnz+i6PJFmiIdQf907ERpKaKsR60
+ uSxss9iATeBEm7J4Bzu0tPsChAGxScyu4BiPOnpvTj19PVA4anI7N1KI1T73EjzK7kRVVEDGCki
+ wITs8VCJ2CFpZVnFkB4hMfI4LNPvaqBXytF50ABMJJqz08d2sMbzmLat8rynTsM84UWmRejbwF2
+ a4ErPVJ90h5/t608q+dLMXr6aBtvFvrd+R83zfGYfBKI2ty5i718fFr1ZX7bG8MOvCbvMJHluBL
+ qHelECyon+MLcMME6C5mfmgnoSNTu5jFJpl5GLQKM/l/TE0vMHIq195IBPMPrrMa6v/FFZrX6+l
+ y5yJTR1YCpFMPWiy6Fa7/KgiW5qseWUNCtSlefHRp+ORLiE8LQY+ET68WczbcuvVA0jXh5xeeuc
+ zBvUkXOvQZg6VSSKlit5mZnh/QP0XJ2BpRIv99sKAOaMzt9xSGYiroSGqkLG/3TVxDoU1jV87no
+ 0jGKCF2CBlr69Fw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,28 +109,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use object_property_add_qapi() with any_type_info for the "fdt"
-property, since the FDT structure is dynamically shaped at runtime and
-cannot be represented as a static QAPI type.
+Add a qapi_type field to PropertyInfo to prepare for the transition
+from string-based type metadata to QAPI type-info.
+
+Add a qdev_prop_qapi_type() helper that resolves the QAPI type for a
+property from .qapi_type. It will be later extended to cope with array
+types.
+
+Update qdev_property_add_static() and qdev_class_add_property() to
+prefer object_property_add_qapi() when a QAPI type is available, falling
+back to the old object_property_add() for unconverted properties.
+
+Update the shared enum accessor functions to prefer .qapi_type->lookup
+over .enum_table via a new qdev_propinfo_enum_lookup() helper.
+
+No PropertyInfo definitions are changed, all .qapi_type fields
+default to NULL, so the fallback paths are always taken. This patch
+is no-op for now.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/ppc/spapr_drc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/core/qdev-properties.c         | 67 +++++++++++++++++++++++++++++----------
+ include/hw/core/qdev-properties.h |  1 +
+ 2 files changed, 52 insertions(+), 16 deletions(-)
 
-diff --git a/hw/ppc/spapr_drc.c b/hw/ppc/spapr_drc.c
-index 64f9ca29b02e..740149ffdf3e 100644
---- a/hw/ppc/spapr_drc.c
-+++ b/hw/ppc/spapr_drc.c
-@@ -587,7 +587,7 @@ static void spapr_dr_connector_instance_init(Object *obj)
-     object_property_add_uint32_ptr(obj, "id", &drc->id, OBJ_PROP_FLAG_READ);
-     object_property_add_qapi(obj, "index", &uint32_type_info, prop_get_index,
-                         NULL, NULL, NULL);
--    object_property_add(obj, "fdt", "struct", prop_get_fdt,
-+    object_property_add_qapi(obj, "fdt", &any_type_info, prop_get_fdt,
-                         NULL, NULL, NULL);
-     drc->state = drck->empty_state;
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 34d7b26a7303..b3d5abd5053c 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -99,13 +99,22 @@ static ObjectPropertyAccessor *field_prop_setter(const PropertyInfo *info)
+     return info->set ? field_prop_set : NULL;
  }
+ 
++static const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
++{
++    if (info->qapi_type) {
++        assert(info->qapi_type->lookup);
++        return info->qapi_type->lookup;
++    }
++    return info->enum_table;
++}
++
+ void qdev_propinfo_get_enum(Object *obj, Visitor *v, const char *name,
+                             void *opaque, Error **errp)
+ {
+     const Property *prop = opaque;
+     int *ptr = object_field_prop_ptr(obj, prop);
+ 
+-    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
++    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
+ }
+ 
+ void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
+@@ -114,14 +123,14 @@ void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
+     const Property *prop = opaque;
+     int *ptr = object_field_prop_ptr(obj, prop);
+ 
+-    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
++    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
+ }
+ 
+ void qdev_propinfo_set_default_value_enum(ObjectProperty *op,
+                                           const Property *prop)
+ {
+     object_property_set_default_str(op,
+-        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
++        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), prop->defval.i));
+ }
+ 
+ /* Bit */
+@@ -941,8 +950,8 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
+ 
+     prop = qdev_prop_find(dev, name);
+     object_property_set_str(OBJECT(dev), name,
+-                            qapi_enum_lookup(prop->info->enum_table, value),
+-                            &error_abort);
++        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), value),
++        &error_abort);
+ }
+ 
+ void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values)
+@@ -1143,18 +1152,33 @@ const PropertyInfo qdev_prop_link = {
+     .set = set_link,
+ };
+ 
++static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
++{
++    /* this will be later extended to cope with QAPI array properties */
++    return prop->info->qapi_type;
++}
++
+ void qdev_property_add_static(DeviceState *dev, const Property *prop)
+ {
+     Object *obj = OBJECT(dev);
+     ObjectProperty *op;
++    const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
+ 
+     assert(!prop->info->create);
+ 
+-    op = object_property_add(obj, prop->name, prop->info->type,
+-                             field_prop_getter(prop->info),
+-                             field_prop_setter(prop->info),
+-                             prop->info->release,
+-                             (Property *)prop);
++    if (qapi_type) {
++        op = object_property_add_qapi(obj, prop->name, qapi_type,
++                                      field_prop_getter(prop->info),
++                                      field_prop_setter(prop->info),
++                                      prop->info->release,
++                                      (Property *)prop);
++    } else {
++        op = object_property_add(obj, prop->name, prop->info->type,
++                                 field_prop_getter(prop->info),
++                                 field_prop_setter(prop->info),
++                                 prop->info->release,
++                                 (Property *)prop);
++    }
+ 
+     object_property_set_description(obj, prop->name,
+                                     prop->info->description);
+@@ -1176,12 +1200,23 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
+     if (prop->info->create) {
+         op = prop->info->create(oc, name, prop);
+     } else {
+-        op = object_class_property_add(oc,
+-                                       name, prop->info->type,
+-                                       field_prop_getter(prop->info),
+-                                       field_prop_setter(prop->info),
+-                                       prop->info->release,
+-                                       (Property *)prop);
++        const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
++
++        if (qapi_type) {
++            op = object_class_property_add_qapi(oc,
++                                               name, qapi_type,
++                                               field_prop_getter(prop->info),
++                                               field_prop_setter(prop->info),
++                                               prop->info->release,
++                                               (Property *)prop);
++        } else {
++            op = object_class_property_add(oc,
++                                           name, prop->info->type,
++                                           field_prop_getter(prop->info),
++                                           field_prop_setter(prop->info),
++                                           prop->info->release,
++                                           (Property *)prop);
++        }
+     }
+     if (prop->set_default) {
+         prop->info->set_default_value(op, prop);
+diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
+index eba5436e53b1..1ea2ba66bb37 100644
+--- a/include/hw/core/qdev-properties.h
++++ b/include/hw/core/qdev-properties.h
+@@ -34,6 +34,7 @@ struct PropertyInfo {
+     const char *type;
+     const char *description;
+     const QEnumLookup *enum_table;
++    const QAPITypeInfo *qapi_type;
+     bool realized_set_allowed; /* allow setting property on realized device */
+     char *(*print)(Object *obj, const Property *prop);
+     void (*set_default_value)(ObjectProperty *op, const Property *prop);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
