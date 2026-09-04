@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B24AC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAA1C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MNe-00042r-HR; Fri, 04 Sep 2026 01:22:26 -0400
+	id 1x2MMn-0008N4-FC; Fri, 04 Sep 2026 01:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MNc-0003ok-K6
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:24 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1x2MMl-0008Dz-Vm
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:32 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MNZ-0001Wn-J2
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:24 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-ca7c1176317so625383a12.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:22:21 -0700 (PDT)
+ id 1x2MMj-0001Sa-VV
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:31 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-cbe827e3cb4so742396a12.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499340; x=1789104140; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788499288; x=1789104088; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5zxSoBFPieyj/Sbf0WOY/g9YtC/J/XNWOyvE7PScaKY=;
- b=PfdIKiDlQJF3kxwb4wKJaoHQh8eO4GgD2oM+tI/smSpf+T5HuzBgjtyR5Je1gmHWlC
- ds0D2ZW3Wa1HRzoFMHNxQPzK6Vz1ZczShFfWP/oV4j+8ndXkammJVLzbDaGe7rZeHmeG
- v8TrSu93J+JWwZVkpbtGdxeEuQjMgp6+c+F4ThGrMtqGgE9bjCwsVV2fikae3C3gafnK
- B8CDqR2wAxFgV8w0Bfp2vHtsbKvmebqgFyDV8SkyYYfgDl1Eb31hcf2UNt9LMCdJeCPH
- Y/4wvuHed5gt1tYrON7xGpTkiC1gPAvOTpQywCukxn8jVo/xLsGusq3aJDw+XEDnWg+w
- /gvQ==
+ bh=Xb7+AEbl+/oGGo3WOco6TNPjryYhUnA4NsnYmi8thy0=;
+ b=p1liOXN6WcGNi8Oov3bCYA5k8UWCXS5/vIsMm25agabKXZauCLUQHyh9qxPCo1+Gg5
+ BsuE7sf7vAaMfZEPduBFIeb6c3EaycJkcZQEBf426lrk/7jNkyG14UtorZ0OIdKosWpX
+ +dT+qjYeW/Mx78n12hxdJGorGjsyEuKzW4WRkDCL69LFOzP3/+mnUmp8FV1xdGpzQp4Z
+ yMQTkZNW2/b4fCjejbDUh6/FSrXDDRc9NePkkI4Ufal0AC45krTRI60xzKRFt4+68lcx
+ CU1vaJTj2xsvBCAuLm/umdCeEfY/eY6zNsRWi9fahnLePViv5Lkimfy4KIQDXZZfP6AM
+ LCnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499340; x=1789104140;
+ d=1e100.net; s=20251104; t=1788499288; x=1789104088;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5zxSoBFPieyj/Sbf0WOY/g9YtC/J/XNWOyvE7PScaKY=;
- b=D/eC6mA8N3Ad0kwtfA0qG1bI2cSs73+8AHFFJY/NMm74MPDXZYOUTGoqjQxt1N2yTM
- D+FZ1PizpBKZOA3ajSgc7hIq39eilAyxGYBCuiD7ylamSc/PGTq45Co3vY+qaC0LaJre
- ROB6m/ZtoePDWqGFzBaUUAk4eX2+wtQrZtHGPpMtBkNIbeh4mDC874G5bAbVR1Tt3cUT
- QlFsmRPXyjXnt3Dbew5uRZZ+f2qdQAYr8gJv10xZdSZI5Ft7irxzzEYHne+wZEOHbhNN
- LvRoGQAhoQvpsga1giR7KDYlOzecHuAfHLbknR7EY71aQM7eUnquYDt+s9fF76N8ENyu
- jFAw==
-X-Gm-Message-State: AFuF++l/x3ZiSdMJUAQ/33aaf75wLFe6F8Bpo69eIYRjcTGFO/L7hde0
- 3w3RtLA8YS0gqqSGfolO9Zs5BJfZYlTGCCoU8lSQvbGXXz6REqRrloiWndb6qg==
-X-Gm-Gg: AYBFou2vkv6ognZ7DlD468CDtvJQ6HLuboYeeyLFgWUVEzH96o2h4p2Cq3InSR1xGk3
- Nt/B4wWfrlg7Kf3c9ly/5iPuZHJ4k0Tdrqp2eyRD24xKV3uxqyVbvVSVzU1HNEeCqDTLC5w7z4A
- 4DX6pXsIKDTzfcZ0hjXC3syhR/5FRRKvbb42PhmXwjjZExssn0PIEhoMiAVQ0KXdguOWT+p25ku
- vqfZusTJnhkuGa+gcBR+o6bHNmGW4S7uhN1KrOM9E2BbNLiaucJYqVeoxh5salr92vSxakeLs8E
- 8YmeMHGv7hXOtuHJJec/gUKM44TjjkqO4UIw+l8f3cwbfk7xM1aswtk5VmRZWySsdrnDND6lz/6
- oIBbdkHlO+inKOobBS3fHRjIB/muBVFg677WgzHA0QiPXlDCefu6/a0BneO9J7wvDYFEIUgvkTH
- jSoOqXdhcXXy1+0l6Zyp4fNAy/5FR6jZddpoY729x5QQjQGXO1VUnrBFCWMAOFLjxd/sBYWmktt
- M/Nog==
-X-Received: by 2002:a05:6a21:3a85:b0:3d3:ae40:ab0f with SMTP id
- adf61e73a8af0-3da3a1f0a48mr5446819637.26.1788499339867; 
- Thu, 03 Sep 2026 22:22:19 -0700 (PDT)
+ bh=Xb7+AEbl+/oGGo3WOco6TNPjryYhUnA4NsnYmi8thy0=;
+ b=EPRpeTqkCxn+suL5Vyfq8eW/C60Wk9+ew5rbbKwK8pW5jdjEkTsMhWl1UMgZpcadgo
+ Nq5qXXgDjiHwl7kdgZ20mU6MXmhmY0K0Ejgu+cAvH688u3HHp7WUPhr1+hW3HE/YXhc6
+ dIZqrWZ2vszn1/E7MChTveMN2o5bL6enna57VGma+7bdXDoLHi/wGGELsLpDnB04etXU
+ prNOI3UxDz+azuDEmR5LGpMsW1ndfJrkhmcxKxxg2o3TJaQRxwc4FDOHEtK5WXZiNVRI
+ R/gyX8nM8UsNocKWnGKel9hpjmBnN1i7Uq51fbyWAiGa/tXvK4Zl9Fcpj/UP2697r1hR
+ tHHw==
+X-Gm-Message-State: AFuF++l4HOH6vbTaxjzLqxIVSfQcB/JLC+FJp2QrATlGQmKNhWoBPnNP
+ vXLfVkcVZ/jEgtNtBISHJAElsTol88yJF/4GUc2eZ2jJalOmkQsiVh6PqIqaXQ==
+X-Gm-Gg: AYBFou3MQXpnGHmchk/qTyatmZ+QVaWAMgyRDW4QtyFAQOgFkpmMOui650C1V+boGGL
+ isCfPtaFjUyXWfVs+8QzbzSkWR5/6aCd2mZ+K3U3tfnVthcEEtl09EvQKDMy9E+GH+11C38Zw5S
+ NF6pOT3QX1c2bvpwRKeHDhdKgNB8fjI+Fd5plZH1V1tTsNO4+6izFaock+va3CzMbKVOiTAw+hv
+ pTsMLrcDnq0bFIUsRGYoQULAA35K+2scDyCMkaBC0JKPz9oay8ZCpq7ceqh3xc+HaQLBrKkSIOi
+ IwpBS5iDj6UMrb62RpgchMEab+Okyx8ils3Gm3FezqUy142xYiTCoCb6yYetPqlvxW+l8Dl78lH
+ qnf1kNobgnVF2v1WfUb10MHRKPo/CAfijzjD+BKRTdw8j87QC7UueYf4v9xaUghtKRE+DwK1C6r
+ O74zo9Dg5CtZGRZD5Jz7rbIBCKMetxE0wWzGJD0jOCnpqqfDYH97n6YhtB9Lu3tBXs9zw6K4h6E
+ TFoDg==
+X-Received: by 2002:a05:6a20:db8e:b0:3d3:aec2:4dc9 with SMTP id
+ adf61e73a8af0-3da3a0f6709mr5468324637.21.1788499288488; 
+ Thu, 03 Sep 2026 22:21:28 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.22.17
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:22:19 -0700 (PDT)
+ Thu, 03 Sep 2026 22:21:28 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: Zephyr Li <fritchleybohrer@gmail.com>,
+ Chao Liu <chao.liu@processmission.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 46/47] hw/riscv/atlantis: Extract an Atlantis SoC device
-Date: Fri,  4 Sep 2026 15:19:42 +1000
-Message-ID: <20260904051943.799041-47-alistair.francis@wdc.com>
+Subject: [PULL 30/47] target/riscv: preserve vl on element-zero fault
+Date: Fri,  4 Sep 2026 15:19:26 +1000
+Message-ID: <20260904051943.799041-31-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,394 +104,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Zephyr Li <fritchleybohrer@gmail.com>
 
-Introduce TYPE_TT_ATLANTIS_SOC and move the hart array, AIA, ACLINT,
-boot ROM, UART and I2C controllers into the new TTAtlantisSoCState. The
-machine keeps ownership of RAM, device tree generation, firmware
-loading, and the board-level I2C slaves.
+A unit-stride fault-only-first load must leave vl unchanged when element
+zero raises a synchronous exception.
 
-This makes it easier to compose the SoC into a more complex machine in
-the future.
+The current implementation updates vl after probing the accesses but
+before performing the actual loads. For unassigned MMIO, the probe can
+succeed even though the subsequent device transaction raises an
+exception. If this happens for element zero, the trap handler observes
+a prematurely shortened vl.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Message-ID: <20260903055131.257903-16-joel@jms.id.au>
+Keep the shortened value in a local bound until all loads complete, and
+only then update the architectural vl.
+
+Add a bare-metal RVV regression test using an unassigned MMIO address
+and check that vl remains unchanged in the trap handler.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3544
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260813025959.583-1-fritchleybohrer@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/riscv/tt_atlantis.h |  21 ++++-
- hw/riscv/tt_atlantis.c         | 144 +++++++++++++++++++++++----------
- 2 files changed, 119 insertions(+), 46 deletions(-)
+ target/riscv/tcg/vector_helper.c          | 23 +++++----
+ tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
+ tests/tcg/riscv64/test-vle32ff.S          | 58 +++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 9 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-vle32ff.S
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 9ca98bfb84..5d4e4d133b 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -19,14 +19,16 @@
- #define TYPE_TT_ATLANTIS_MACHINE MACHINE_TYPE_NAME("tt-atlantis")
- OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisState, TT_ATLANTIS_MACHINE)
- 
-+#define TYPE_TT_ATLANTIS_SOC "tt-atlantis-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisSoCState, TT_ATLANTIS_SOC)
-+
- #define TT_ATL_NUM_I2C 5
- 
--struct TTAtlantisState {
-+struct TTAtlantisSoCState {
-     /*< private >*/
--    MachineState parent;
-+    DeviceState parent;
- 
-     /*< public >*/
--    Notifier machine_done;
-     const MemMapEntry *memmap;
- 
-     MemoryRegion *memory;
-@@ -39,6 +41,19 @@ struct TTAtlantisState {
-     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
-     UnimplementedDeviceState uart1;
-     MemoryRegion bootrom;
-+
-+    uint32_t num_harts;
-+    char *cpu_type;
-+};
-+
-+struct TTAtlantisState {
-+    /*< private >*/
-+    MachineState parent;
-+
-+    /*< public >*/
-+    Notifier machine_done;
-+
-+    TTAtlantisSoCState soc;
- };
- 
- enum {
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 2a46336674..c44fd8d6d0 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/guest-random.h"
-@@ -14,6 +15,7 @@
- 
- #include "hw/core/boards.h"
- #include "hw/core/loader.h"
-+#include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
- 
- #include "target/riscv/cpu.h"
-@@ -66,7 +68,7 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
- };
- 
--static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
-+static I2CBus *i2c_get_bus(TTAtlantisSoCState *s, unsigned busnr)
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index e28d8a3d9f..0d1e4e0964 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -721,7 +721,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+           uint32_t desc, vext_ldst_elem_fn_tlb *ldst_tlb,
+           vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz, uintptr_t ra)
  {
-     assert(busnr < TT_ATL_NUM_I2C);
- 
-@@ -79,7 +81,7 @@ static uint32_t next_phandle(void)
-     return fdt_phandle++;
- }
- 
--static void create_fdt_memory(void *fdt, TTAtlantisState *s)
-+static void create_fdt_memory(void *fdt, TTAtlantisSoCState *s)
- {
-     hwaddr ram_size = memory_region_size(s->dram);
-     hwaddr size_lo = ram_size;
-@@ -104,7 +106,7 @@ static void create_fdt_memory(void *fdt, TTAtlantisState *s)
+-    uint32_t i, k, vl = 0;
++    uint32_t i, k, vl = 0, load_vl;
+     uint32_t nf = vext_nf(desc);
+     uint32_t vm = vext_vm(desc);
+     uint32_t max_elems = vext_max_elems(desc, log2_esz);
+@@ -787,22 +787,24 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+         }
      }
- }
+ ProbeSuccess:
+-    /* load bytes from guest memory */
+-    if (vl != 0) {
+-        env->vl = vl;
+-    }
++    /*
++     * Keep a shortened vl local until all loads complete. In particular,
++     * an exception from element zero must leave the architectural vl alone.
++     */
++    load_vl = vl ? vl : env->vl;
  
--static void create_fdt_aclint(void *fdt, TTAtlantisState *s,
-+static void create_fdt_aclint(void *fdt, TTAtlantisSoCState *s,
-                               uint32_t *intc_phandles)
- {
-     g_autofree char *name = NULL;
-@@ -206,7 +208,7 @@ static void create_fdt_one_aplic(void *fdt,
-     qemu_fdt_setprop_cell(fdt, name, "phandle", aplic_phandle);
- }
+-    if (env->vstart < env->vl) {
++    if (env->vstart < load_vl) {
+         if (vm) {
+             /* Load/store elements in the first page */
+             if (likely(elems)) {
++                elems = MIN(elems, load_vl - env->vstart);
+                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
+                                   log2_esz, true, mmu_index, ldst_tlb,
+                                   ldst_host, ra);
+             }
  
--static void create_fdt_pmu(void *fdt, TTAtlantisState *s)
-+static void create_fdt_pmu(void *fdt, TTAtlantisSoCState *s)
- {
-     char pmu_name[] = "/pmu";
-     RISCVCPU *hart = &s->cpus.harts[0];
-@@ -216,7 +218,7 @@ static void create_fdt_pmu(void *fdt, TTAtlantisState *s)
-     riscv_pmu_generate_fdt_node(fdt, hart->pmu_avail_ctrs, pmu_name);
- }
+             /* Load/store elements in the second page */
+-            if (unlikely(env->vstart < env->vl)) {
++            if (unlikely(env->vstart < load_vl)) {
+                 /* Cross page element */
+                 if (unlikely(page_split % msize)) {
+                     for (k = 0; k < nf; k++) {
+@@ -815,7 +817,7 @@ ProbeSuccess:
  
--static void create_fdt_cpu(void *fdt, TTAtlantisState *s,
-+static void create_fdt_cpu(void *fdt, TTAtlantisSoCState *s,
-                            uint32_t aplic_s_phandle,
-                            uint32_t imsic_s_phandle)
- {
-@@ -313,7 +315,7 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
-     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
- }
+                 addr = base + ((env->vstart * nf) << log2_esz);
+                 /* Get number of elements of second page */
+-                elems = env->vl - env->vstart;
++                elems = load_vl - env->vstart;
  
--static void create_fdt_i2c_device(void *fdt, TTAtlantisState *s, int bus,
-+static void create_fdt_i2c_device(void *fdt, TTAtlantisSoCState *s, int bus,
-                                   const char *compat, int addr)
- {
-     hwaddr base = s->memmap[TT_ATL_I2C0 + bus].base;
-@@ -325,7 +327,7 @@ static void create_fdt_i2c_device(void *fdt, TTAtlantisState *s, int bus,
-     qemu_fdt_setprop_cell(fdt, name, "reg", addr);
- }
- 
--static void finalize_fdt(void *fdt, TTAtlantisState *s)
-+static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
- {
-     uint32_t aplic_s_phandle = next_phandle();
-     uint32_t imsic_s_phandle = next_phandle();
-@@ -359,9 +361,9 @@ static void finalize_fdt(void *fdt, TTAtlantisState *s)
-     create_fdt_i2c_device(fdt, s, 4, "ti,tmp105", 0x48);
- }
- 
--static void create_fdt(TTAtlantisState *s)
-+static void create_fdt(TTAtlantisState *ams)
- {
--    MachineState *ms = MACHINE(s);
-+    MachineState *ms = MACHINE(ams);
-     int fdt_size = 0;
- 
-     ms->fdt = riscv_create_board_device_tree("Tenstorrent Atlantis RISC-V Machine",
-@@ -373,12 +375,12 @@ static void create_fdt(TTAtlantisState *s)
- 
-     qemu_fdt_add_subnode(ms->fdt, "/aliases");
- 
--    create_fdt_pmu(ms->fdt, s);
-+    create_fdt_pmu(ms->fdt, &ams->soc);
- }
- 
--static void load_fdt(TTAtlantisState *s)
-+static void load_fdt(TTAtlantisState *ams)
- {
--    MachineState *ms = MACHINE(s);
-+    MachineState *ms = MACHINE(ams);
-     char **node_path;
-     Error *err = NULL;
-     int fdt_size = 0;
-@@ -404,7 +406,7 @@ static void load_fdt(TTAtlantisState *s)
-         g_strfreev(node_path);
+                 /* Load/store elements in the second page */
+                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
+@@ -823,7 +825,7 @@ ProbeSuccess:
+                                   ldst_host, ra);
+             }
+         } else {
+-            for (i = env->vstart; i < env->vl; i++) {
++            for (i = env->vstart; i < load_vl; i++) {
+                 k = 0;
+                 while (k < nf) {
+                     if (!vext_elem_mask(v0, i)) {
+@@ -841,6 +843,9 @@ ProbeSuccess:
+             }
+         }
      }
- 
--    create_fdt_memory(ms->fdt, s);
-+    create_fdt_memory(ms->fdt, &ams->soc);
- }
- 
- static void mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
-@@ -418,10 +420,11 @@ static void mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
-                                         sysbus_mmio_get_region(dev, 0), -1000);
- }
- 
--static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-+static void tt_atlantis_machine_done(Notifier *n, void *data)
- {
--    TTAtlantisState *s = container_of(notifier, TTAtlantisState, machine_done);
--    MachineState *machine = MACHINE(s);
-+    TTAtlantisState *ams = container_of(n, TTAtlantisState, machine_done);
-+    TTAtlantisSoCState *s = &ams->soc;
-+    MachineState *machine = MACHINE(ams);
-     hwaddr start_addr = s->memmap[TT_ATL_DDR_LO].base;
-     hwaddr mem_size;
-     target_ulong firmware_end_addr, kernel_start_addr;
-@@ -479,23 +482,39 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-                               fdt_load_addr);
- }
- 
--static void tt_atlantis_machine_init(MachineState *machine)
-+static void tt_atlantis_soc_init(Object *obj)
- {
--    TTAtlantisState *s = TT_ATLANTIS_MACHINE(machine);
-+    TTAtlantisSoCState *s = TT_ATLANTIS_SOC(obj);
-+
-+    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
-+
-+    object_initialize_child(obj, "uart1", &s->uart1,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
- 
-+    for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-+        object_initialize_child(obj, "i2c[*]", &s->i2c[i],
-+                                TYPE_DESIGNWARE_I2C);
++    if (vl != 0) {
++        env->vl = vl;
 +    }
-+}
+     env->vstart = 0;
+ 
+     vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 575571de90..f2c75abd57 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -80,5 +80,10 @@ EXTRA_RUNS += run-test-rv128-sstatus
+ run-test-rv128-sstatus: test-rv128-sstatus
+ 	$(call run-test, $<, $(QEMU) -cpu x-rv128 $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-vle32ff
++run-test-vle32ff: test-vle32ff
++	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true $(QEMU_OPTS)$<)
++test-vle32ff: CFLAGS += -march=rv64gcv
 +
-+static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
-+{
-+    TTAtlantisSoCState *s = TT_ATLANTIS_SOC(dev);
-     ram_addr_t lo_ram_size, ram_size;
--    int hart_count = machine->smp.cpus;
-+    int hart_count = s->num_harts;
- 
-     s->memory = get_system_memory();
- 
--    s->dram = machine->ram;
-+    if (!s->dram) {
-+        error_setg(errp, "'dram' link is not set");
-+        return;
-+    }
-     ram_size = memory_region_size(s->dram);
- 
-     s->memmap = tt_atlantis_memmap;
- 
--    object_initialize_child(OBJECT(machine), "soc", &s->cpus,
--                            TYPE_RISCV_HART_ARRAY);
--    object_property_set_str(OBJECT(&s->cpus), "cpu-type", machine->cpu_type,
-+    /* CPUs */
-+    object_property_set_str(OBJECT(&s->cpus), "cpu-type", s->cpu_type,
-                             &error_abort);
-     object_property_set_int(OBJECT(&s->cpus), "hartid-base", 0,
-                             &error_abort);
-@@ -504,7 +523,9 @@ static void tt_atlantis_machine_init(MachineState *machine)
-     object_property_set_int(OBJECT(&s->cpus), "resetvec",
-                             s->memmap[TT_ATL_BOOTROM].base,
-                             &error_abort);
--    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpus), errp)) {
-+        return;
-+    }
- 
-     s->irqchip = riscv_create_aia(s->memory,
-                                   true, TT_IMSIC_GUESTS,
-@@ -534,26 +555,27 @@ static void tt_atlantis_machine_init(MachineState *machine)
-      * up to 64GB. The low address is an alias of the first 2GB of that RAM.
-      */
-     if (ram_size > s->memmap[TT_ATL_DDR_HI].size) {
--        char *sz = size_to_str(s->memmap[TT_ATL_DDR_HI].size);
--        error_report("RAM size is too large, maximum is %s", sz);
--        g_free(sz);
--        exit(EXIT_FAILURE);
-+        g_autofree char *sz = size_to_str(s->memmap[TT_ATL_DDR_HI].size);
-+        error_setg(errp, "RAM size is too large, maximum is %s", sz);
-+        return;
-     }
- 
--    memory_region_init_alias(&s->ram_hi, OBJECT(machine), "ram.high", s->dram,
-+    memory_region_init_alias(&s->ram_hi, OBJECT(s), "ram.high", s->dram,
-                              0, ram_size);
-     memory_region_add_subregion(s->memory,
-                                 s->memmap[TT_ATL_DDR_HI].base, &s->ram_hi);
- 
-     lo_ram_size = MIN(ram_size, s->memmap[TT_ATL_DDR_LO].size);
--    memory_region_init_alias(&s->ram_lo, OBJECT(machine), "ram.low", s->dram,
-+    memory_region_init_alias(&s->ram_lo, OBJECT(s), "ram.low", s->dram,
-                              0, lo_ram_size);
-     memory_region_add_subregion(s->memory,
-                                 s->memmap[TT_ATL_DDR_LO].base, &s->ram_lo);
- 
-     /* Boot ROM */
--    memory_region_init_rom(&s->bootrom, NULL, "tt-atlantis.bootrom",
--                           s->memmap[TT_ATL_BOOTROM].size, &error_fatal);
-+    if (!memory_region_init_rom(&s->bootrom, OBJECT(s), "tt-atlantis.bootrom",
-+                                s->memmap[TT_ATL_BOOTROM].size, errp)) {
-+        return;
-+    }
-     memory_region_add_subregion(s->memory, s->memmap[TT_ATL_BOOTROM].base,
-                                 &s->bootrom);
- 
-@@ -570,26 +592,56 @@ static void tt_atlantis_machine_init(MachineState *machine)
-      * Create an unimplemented device region so writes don't fault
-      * and reads return zero, which keeps Linux happy.
-      */
--    object_initialize_child(OBJECT(s), "uart1", &s->uart1,
--                            TYPE_UNIMPLEMENTED_DEVICE);
-     mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->uart1),
-                            "tt-atlantis.uart1", s->memmap[TT_ATL_UART1].base,
-                            s->memmap[TT_ATL_UART1].size);
- 
-     /* I2C */
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
--        SysBusDevice *sbd;
-+        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->i2c[i]);
- 
--        object_initialize_child(OBJECT(s), "i2c[*]", &s->i2c[i],
--                                TYPE_DESIGNWARE_I2C);
--        sbd = SYS_BUS_DEVICE(&s->i2c[i]);
--        sysbus_realize(sbd, &error_fatal);
-+        if (!sysbus_realize(sbd, errp)) {
-+            return;
-+        }
-         memory_region_add_subregion(s->memory,
-                                     s->memmap[TT_ATL_I2C0 + i].base,
-                                     sysbus_mmio_get_region(sbd, 0));
-         sysbus_connect_irq(sbd, 0,
-                            qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
-     }
-+}
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-vle32ff.S b/tests/tcg/riscv64/test-vle32ff.S
+new file mode 100644
+index 0000000000..2cffe8659c
+--- /dev/null
++++ b/tests/tcg/riscv64/test-vle32ff.S
+@@ -0,0 +1,58 @@
++/*
++ * Verify that a fault-only-first load keeps vl unchanged when element zero
++ * raises a synchronous exception.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+static const Property tt_atlantis_soc_props[] = {
-+    DEFINE_PROP_STRING("cpu-type", TTAtlantisSoCState, cpu_type),
-+    DEFINE_PROP_UINT32("num-harts", TTAtlantisSoCState, num_harts, 8),
-+    DEFINE_PROP_LINK("dram", TTAtlantisSoCState, dram,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-+};
++	.option norvc
 +
-+static void tt_atlantis_soc_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
++	.text
++	.globl _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
 +
-+    dc->realize = tt_atlantis_soc_realize;
-+    device_class_set_props(dc, tt_atlantis_soc_props);
-+    /* The SoC can only be instantiated from the machine */
-+    dc->user_creatable = false;
-+}
++	li	t0, (1 << 9)	/* Set mstatus.VS to Initial. */
++	csrs	mstatus, t0
++	li	t1, 4
++	vsetvli	t2, t1, e32, m1, ta, ma
++	/* Unassigned MMIO: probe succeeds, load faults. */
++	li	t0, 0x18000000
++	vle32ff.v	v1, (t0)
 +
-+static void tt_atlantis_machine_init(MachineState *machine)
-+{
-+    TTAtlantisState *ams = TT_ATLANTIS_MACHINE(machine);
-+    TTAtlantisSoCState *s = &ams->soc;
++	/* Element zero did not trap. */
++	li	a0, 1
++	j	_exit
 +
-+    object_initialize_child(OBJECT(machine), "soc", &ams->soc,
-+                            TYPE_TT_ATLANTIS_SOC);
-+    object_property_set_str(OBJECT(&ams->soc), "cpu-type", machine->cpu_type,
-+                            &error_abort);
-+    object_property_set_int(OBJECT(&ams->soc), "num-harts", machine->smp.cpus,
-+                            &error_abort);
-+    object_property_set_link(OBJECT(&ams->soc), "dram", OBJECT(machine->ram),
-+                             &error_abort);
-+    qdev_realize(DEVICE(&ams->soc), NULL, &error_fatal);
- 
-     /* I2C peripherals: qemu specific */
-     i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
-@@ -597,13 +649,13 @@ static void tt_atlantis_machine_init(MachineState *machine)
- 
-     /* Load or create device tree */
-     if (machine->dtb) {
--        load_fdt(s);
-+        load_fdt(ams);
-     } else {
--        create_fdt(s);
-+        create_fdt(ams);
-     }
- 
--    s->machine_done.notify = tt_atlantis_machine_done;
--    qemu_add_machine_init_done_notifier(&s->machine_done);
-+    ams->machine_done.notify = tt_atlantis_machine_done;
-+    qemu_add_machine_init_done_notifier(&ams->machine_done);
- }
- 
- static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
-@@ -623,6 +675,12 @@ static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
- 
- static const TypeInfo tt_atlantis_types[] = {
-     {
-+        .name       = TYPE_TT_ATLANTIS_SOC,
-+        .parent     = TYPE_DEVICE,
-+        .instance_size = sizeof(TTAtlantisSoCState),
-+        .instance_init = tt_atlantis_soc_init,
-+        .class_init = tt_atlantis_soc_class_init,
-+    }, {
-         .name       = MACHINE_TYPE_NAME("tt-atlantis"),
-         .parent     = TYPE_MACHINE,
-         .class_init = tt_atlantis_machine_class_init,
++trap:
++	csrr	t0, mcause
++	li	t1, 5		/* Load access fault. */
++	bne	t0, t1, trap_fail
++
++	csrr	t0, vl
++	bne	t0, t2, trap_fail
++
++	li	a0, 0
++	j	_exit
++
++trap_fail:
++	li	a0, 1
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	8
++semiargs:
++	.space	16
 -- 
 2.55.0
 
