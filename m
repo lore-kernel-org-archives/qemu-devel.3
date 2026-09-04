@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9B3C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CAAC79F81
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2LbE-0001Cl-QF; Fri, 04 Sep 2026 00:32:24 -0400
+	id 1x2LbE-0001CH-PG; Fri, 04 Sep 2026 00:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2KnQ-0004eN-0P
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:40:56 -0400
+ id 1x2Koi-0004pe-6U; Thu, 03 Sep 2026 23:42:16 -0400
 Received: from mail-m49197.qiye.163.com ([45.254.49.197])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2KnO-0003C2-6D
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:40:55 -0400
+ id 1x2Kof-0003BI-IC; Thu, 03 Sep 2026 23:42:15 -0400
 Received: from LAPTOP-99KJFSET (unknown [36.153.54.56])
- by smtp.qiye.163.com (Hmail) with ESMTP id 4c80ae3a8;
- Fri, 4 Sep 2026 11:33:46 +0800 (GMT+08:00)
+ by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb7a24;
+ Fri, 4 Sep 2026 11:33:03 +0800 (GMT+08:00)
 From: Hongyan Xu <getshell@seu.edu.cn>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Hongyan Xu <getshell@seu.edu.cn>
-Subject: [RFC PATCH] virtio-gpu: drop scanouts and clear res->blob when
- backing is detached
-Date: Fri,  4 Sep 2026 11:33:46 +0800
-Message-ID: <20260904033346.2-1-getshell@seu.edu.cn>
+Cc: qemu-block@nongnu.org, Peter Lieven <pl@dlhnet.de>,
+ Hongyan Xu <getshell@seu.edu.cn>
+Subject: [RFC PATCH] nbd/server: hold an export reference during option
+ negotiation
+Date: Fri,  4 Sep 2026 11:33:02 +0800
+Message-ID: <20260904033302.1265-1-getshell@seu.edu.cn>
 X-Mailer: git-send-email 2.50.1.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa06a7ac3be03a1kunmea67113224206
+X-HM-Tid: 0aa06a7a1aba03a1kunm85b2304924174
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTRodVk0aSkJLGEgdHU0YGFYeHw
+ tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCTUtCVktKGEtCS05IHRhJS1YeHw
  5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VTk1ZV1kWGg8SFR0UWUFZT0tIVUpLSUhOQ0
  NVSktLVUtZBg++
 DKIM-Signature: a=rsa-sha256;
- b=jcnAqeUoB39K7tLg2HvXwsKld0tI3Lzha5KlNfsdWFmnhybeTQMy70WUPek+Gi0D4TkIBIp8unjf6Q7/7WlS9DW7mvOTGobXRAw5L1oXoIIU69TGIwjhVS/MvtZ0yWpKWvFMhj1ukpN9cgNytLaII1Q1RBfg63Ef+a4W/P/Nvh4=;
+ b=gnws+8SrZ9qh9el7URppVuBI381g16AED2PFo9yq6Dc5JdczrbK9M1O84PCwnD+YkBYPnx/er2nAGJq+ZtI3z8o3JgwSsYbf9/Lbs76i/dYVCTEh+NXOkVC8MERZZwh0oWq5OZHeCww32lNdCP2Bs9BY3CAcuhD6XdOe9C4k8lk=;
  c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1; 
- bh=ssTdha+mU4tTbzla/OzbtzpVKPAJ0UTLhozF3AhCiJs=;
+ bh=ShThp4Pj1WfDjUiolMJV9lM58fXo7OorA2sWdh8SrfE=;
  h=date:mime-version:subject:message-id:from;
 Received-SPF: pass client-ip=45.254.49.197; envelope-from=getshell@seu.edu.cn;
  helo=mail-m49197.qiye.163.com
@@ -70,68 +68,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_gpu_resource_detach_backing() releases a resource's mapping
-through virtio_gpu_cleanup_mapping(), which for a blob resource unmaps
-and releases the udmabuf backing.  Two lifetime problems follow:
+During NBD_OPT_GO / NBD_OPT_INFO negotiation the server runs in a
+coroutine that performs blocking I/O with the client.  The handlers call
+nbd_export_find(), which returns a raw NBDExport * with no reference
+taken (it is a plain QTAILQ lookup), and then dereference that pointer
+across multiple yields (nbd_write / nbd_negotiate_send_info etc.).
 
-1. A blob resource may currently back a scanout: do_set_scanout()
-   creates a pixman surface that aliases res->blob memory
-   (scanout->ds -> data inside res->blob).  detach does not drop those
-   scanouts, so after cleanup_mapping() releases the backing, a later
-   display refresh reads freed memory (use-after-free).  Drop every
-   scanout that still references the resource before unmapping,
-   mirroring what virtio_gpu_resource_destroy() already does before it
-   frees a resource.
+A client that is still negotiating is not yet on exp->clients, so it
+holds no reference.  If the management layer runs block-export-del
+(mode hard) while such a client is parked in I/O,
+nbd_export_request_shutdown() removes the export from the exports list
+and the BlockExport is freed; when the negotiating coroutine resumes it
+dereferences a dangling NBDExport * -> use-after-free of host memory.
 
-2. cleanup_mapping() never clears res->blob after fini_udmabuf(), so
-   the resource keeps a dangling pointer to released memory while it
-   stays on reslist (detach does not remove the resource; the guest can
-   re-attach backing later).  NULL it out so code that consults
-   res->blob (e.g. cursor/scanout paths) cannot touch freed memory.
+Take a reference right after the lookup succeeds in
+nbd_negotiate_handle_export_name() and nbd_negotiate_handle_info(), and
+drop it on every path that leaves the handler without having handed the
+export to the client (the client takes its own reference when it is
+inserted into exp->clients).  The success paths are unchanged so the
+client-owned reference is not double-counted.
 
-RFC: this overlaps the upstream virtio-gpu blob/DETACH_BACKING fix
-series (CVE-2026-66020 family); confirm it does not duplicate an
-in-flight version before applying.
+Known remaining spot, deliberately not changed here:
+nbd_export_meta_context() stores nbd_export_find()'s result into
+meta->exp (client->contexts.exp) which is expected to stay consistent
+with client->exp (see the assert in nbd_co_block_status_payload_read()).
+The reference semantics of contexts.exp deserve maintainer input before
+changing them; this patch only covers the two handlers that run before
+the client owns a reference.
+
+This is an RFC: the block/export reference-counting semantics should be
+confirmed with the NBD maintainers (notably whether a negotiating client
+should be tracked so that block-export-del SAFE mode reports the export
+as busy instead of racing with a hard delete).
 
 Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
 ---
- hw/display/virtio-gpu.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ nbd/server.c | 45 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 35 insertions(+), 10 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 55a1c7f80f..d0d15deb28 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1030,6 +1030,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
- 
-     if (res->blob) {
-         virtio_gpu_fini_udmabuf(g, res);
-+        res->blob = NULL;
+diff --git a/nbd/server.c b/nbd/server.c
+index e6c47f8c2e..8754236a9e 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -517,6 +517,14 @@ nbd_negotiate_handle_export_name(NBDClient *client, bool no_zeroes,
+         error_setg(errp, "export not found");
+         return -EINVAL;
      }
- }
- 
-@@ -1096,6 +1097,23 @@ virtio_gpu_resource_detach_backing(VirtIOGPU *g,
-     if (!res) {
-         return;
-     }
-+
 +    /*
-+     * A blob resource may be backing a scanout: the scanout's surface
-+     * aliases res->blob memory (do_set_scanout).  cleanup_mapping()
-+     * below unmaps/releases that memory, so drop every scanout that
-+     * still references this resource first, mirroring what
-+     * virtio_gpu_resource_destroy() does before it frees a resource.
++     * The export can be deleted by the management layer while we are
++     * blocked in the writes below (before the client is inserted into
++     * exp->clients and takes its own reference).  Hold a reference for
++     * the whole negotiation so a concurrent block-export-del cannot
++     * free the export under us.
 +     */
-+    if (res->scanout_bitmask) {
-+        int i;
++    blk_exp_ref(&client->exp->common);
+     nbd_check_meta_export(client, client->exp);
+ 
+     myflags = client->exp->nbdflags;
+@@ -533,11 +541,15 @@ nbd_negotiate_handle_export_name(NBDClient *client, bool no_zeroes,
+     ret = nbd_write(client->ioc, buf, len, errp);
+     if (ret < 0) {
+         error_prepend(errp, "write failed: ");
++        blk_exp_unref(&client->exp->common);
++        client->exp = NULL;
+         return ret;
+     }
+ 
+     QTAILQ_INSERT_TAIL(&client->exp->clients, client, next);
+     blk_exp_ref(&client->exp->common);
++    /* Drop the negotiation reference; the client owns one now. */
++    blk_exp_unref(&client->exp->common);
+ 
+     return 0;
+ }
+@@ -659,6 +671,13 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+                                           errp, "export '%s' not present",
+                                           sane_name);
+     }
++    /*
++     * Hold a reference across the whole info exchange: the export can
++     * be deleted by the management layer (block-export-del) while we
++     * are blocked sending replies below and before the client is
++     * inserted into exp->clients for NBD_OPT_GO.
++     */
++    blk_exp_ref(&exp->common);
+     if (client->opt == NBD_OPT_GO) {
+         nbd_check_meta_export(client, exp);
+     }
+@@ -668,7 +687,7 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+         rc = nbd_negotiate_send_info(client, NBD_INFO_NAME, namelen, name,
+                                      errp);
+         if (rc < 0) {
+-            return rc;
++            goto out;
+         }
+     }
+ 
+@@ -681,7 +700,7 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+         rc = nbd_negotiate_send_info(client, NBD_INFO_DESCRIPTION,
+                                      len, exp->description, errp);
+         if (rc < 0) {
+-            return rc;
++            goto out;
+         }
+     }
+ 
+@@ -707,7 +726,7 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+     rc = nbd_negotiate_send_info(client, NBD_INFO_BLOCK_SIZE,
+                                  sizeof(sizes), sizes, errp);
+     if (rc < 0) {
+-        return rc;
++        goto out;
+     }
+ 
+     /* Send NBD_INFO_EXPORT always */
+@@ -725,7 +744,7 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+     rc = nbd_negotiate_send_info(client, NBD_INFO_EXPORT,
+                                  sizeof(buf), buf, errp);
+     if (rc < 0) {
+-        return rc;
++        goto out;
+     }
+ 
+     /*
+@@ -736,17 +755,18 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+      */
+     if (client->opt == NBD_OPT_INFO && !blocksize &&
+         blk_get_request_alignment(exp->common.blk) > 1) {
+-        return nbd_negotiate_send_rep_err(client,
+-                                          NBD_REP_ERR_BLOCK_SIZE_REQD,
+-                                          errp,
+-                                          "request NBD_INFO_BLOCK_SIZE to "
+-                                          "use this export");
++        rc = nbd_negotiate_send_rep_err(client,
++                                        NBD_REP_ERR_BLOCK_SIZE_REQD,
++                                        errp,
++                                        "request NBD_INFO_BLOCK_SIZE to "
++                                        "use this export");
++        goto out;
+     }
+ 
+     /* Final reply */
+     rc = nbd_negotiate_send_rep(client, NBD_REP_ACK, errp);
+     if (rc < 0) {
+-        return rc;
++        goto out;
+     }
+ 
+     if (client->opt == NBD_OPT_GO) {
+@@ -756,6 +776,11 @@ nbd_negotiate_handle_info(NBDClient *client, Error **errp)
+         blk_exp_ref(&client->exp->common);
+         rc = 1;
+     }
++    blk_exp_unref(&exp->common);
++    return rc;
 +
-+        for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-+            if (res->scanout_bitmask & (1 << i)) {
-+                virtio_gpu_disable_scanout(g, i);
-+            }
-+        }
-+    }
-     virtio_gpu_cleanup_mapping(g, res);
++out:
++    blk_exp_unref(&exp->common);
+     return rc;
  }
  
 -- 
