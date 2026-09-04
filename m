@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F7DC61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCFCC61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TtK-0005XZ-Qi; Fri, 04 Sep 2026 09:23:38 -0400
+	id 1x2Tv2-0001QE-En; Fri, 04 Sep 2026 09:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TtF-0005Tv-IA
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:33 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1x2Tv0-0001H8-I1
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:25:22 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TtC-0008Hj-Nd
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:33 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so13881775e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:23:30 -0700 (PDT)
+ id 1x2Tuy-0000Km-Dd
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:25:22 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49a97714f5dso8388745e9.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788528209; x=1789133009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788528318; x=1789133118; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=8ZFr5zENPAKypAJEL02dWAYi3o/gkBVQ8dSHQ70VAF4=;
- b=QH5eLU6AT70QXSdM/ECr37vHE50g+cYVmMxoisjEqL8p++fZ8H++HpV9HFu6XD0Waf
- eZWmgSO5kUFvzw7SB57GCQVmhF2nMEP5t0Wv65amt9HtFdqrf8EH2FajcDVATDgAqMKV
- szQ4n+pgVVfgkz/uOYOsjBy9N3xv0b8Nz6GUV0b3i/pcyLOumvxQQpqCGphfAqifZU1s
- wJK8qQ6kwKk17hlS352cV4oZK5YySIHQUdVDHrApgucnKsZonD5mjkYT6N+sTq63Vz7P
- 3sIq2QuwwETfYoiSCBtbTRHS7jjvqSXgtdXaa96rGOBNMfxr8gNHZOLiO0kuWMQ9dD27
- 6m3A==
+ bh=+UQa1ns1sHzCFUp6MFDqHelt5+H0pjkEegp8/6YCHtM=;
+ b=vB+19xKFRiDVLnWm1beUSU8QaiJ//aHHin1I3cLg23vZier6wUJdQxXnsBywiHsKEr
+ Uf92KR3AZ7a0IanLRJ252gNouUVHslSZ2P5MUzh0WdVj3X6Pb/0ceqV5/zR2p8y5Ly0R
+ mljyOY4fOZ33tB6yKQA/hzM0e+H3wh3wAMFl8v7+lyVEdemzA2oJesYwHDazHJttf3VC
+ FVdAqgrTO38onYGOf/Jk5NAYizkAkAqjzH0CVm/3YtCto4Q2M4fHEP8Lv2yyWL18VgUL
+ 2egTujuMIk6TSTJPAhMHf2YY03hcyyf3CIerOdQtyJBdJkgNWC775R6oRJHx8TC75mb5
+ Awvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788528209; x=1789133009;
+ d=1e100.net; s=20251104; t=1788528318; x=1789133118;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8ZFr5zENPAKypAJEL02dWAYi3o/gkBVQ8dSHQ70VAF4=;
- b=TJM90ruJWu+X6o1J3Qx0C76AMTDG/TIxqqG8oKIZ5u9tOpCduGV8lXugpSW0xzcpxP
- BWCnI3SBk+vj6eA2ev9t0XNWAIEQcuNwRMowvmePIjaPXrehDv+WEIOxzLgJactlgZLv
- quv46jaOg+9YLMCftzR7aXCRfPATCzikV+9+fL5PTnCoMbHiM8rxDLBOZSUlYEEfUTOL
- A6pqbzbxR1QdEmXclajqGjhHflE9gAusd/WbUKU0A+62aV+kHt9vjIr8OjY1V6qhPylH
- 8HZDmUxMMm9A+S+ljVxo9kWDZQ81BzZSP9ydqbQhLNGJ8vUas9bIyEw6/9m6ktux9Fhi
- Dbpw==
-X-Gm-Message-State: AFuF++mPFJnW3k4mTAo4bD+MC7LuEQvv1oq6wATa/XQwdPYPpogu/T11
- O+ZtX/eTAV4pUrzYdUhTaiDQQsiDpzbdRgBf5K0cbzsqTwulUIKtvHATVe0bS0PO3bE/EYee2gA
- FFe/GCIM=
-X-Gm-Gg: AYBFou1s/+RtFO1Mzvz0UtYfYoZRwW9vHYjWzCI0mUJDV8ArtwCEPqKUuUlX8YnlZk6
- TESeWZXsuTlRvBP0XFxsAcbL6+f/yLAwRsmVGfh5Jn4gQ2MYZqE7wiU6A26W63hiVMANBJS71sp
- oulGZK5LYugkpXL75Ovc9ZojdXQA8rmmOXABtFdnkZV0LYWA41NJbzD9GxvhMpMVCC3H8iDokaO
- FEjwaNzaGh5ao0R0bDUTUu22Q1CRlIA7uARPBBaohWn6KlABwy7fycgkm4IZ49P7Fac96Q/vYla
- KCS6HD9xEq++VANcNkMVyQbOZ7dpRUiQMhpKjNmFv5LgCRcsYmAMCRkqyhq7zMX0kL6GLGcK6Rb
- UHKSD6CtUzGvWcGNow8NEsIpbaoMj3Hilfn23mgT0iDwsctCcjaiblLjZcJGwjr3ge660vJ6bow
- TRBrfaoOe8iXzoimSvjbL0cNK9niphNlcNCSIuGsqIgQzNgSg9BLiLzb8z3/88
-X-Received: by 2002:a05:6000:2312:b0:485:8d27:dbe7 with SMTP id
- ffacd0b85a97d-4858d27dccbmr4486169f8f.10.1788528208241; 
- Fri, 04 Sep 2026 06:23:28 -0700 (PDT)
+ bh=+UQa1ns1sHzCFUp6MFDqHelt5+H0pjkEegp8/6YCHtM=;
+ b=kgL/O16OMCGvTNYVRdzHBsTfbdifhKUu6tf4w46PvbTWv/bieyTgNHrU/dZfTML66N
+ TUHFXsUOaQafFV9tavUfAo4pPINAa0tdhOP6ZTHrZjy3MA2YPqiyIpC7wuvwC1zPY7k3
+ eUgOfZuZXfzUpyX3KTfZ6hxKOAj4hPl9jQGQ3mdhFlpKrwcfqQfJXPk+CL8z1zza0BwD
+ 9+ZHu+xQ4qmQXTWx0RXdx2eTY4+4ZGnSFXCScULVREYyoLW6aOpRhbSwiGwpMLRPkW+t
+ 6qUhgt/s3v+L6CqvhheBltaliCoKjc+FRe3iYqkQTStiMd9XxFbzLaRqyS07S+bGVnLw
+ XEQQ==
+X-Gm-Message-State: AFuF++lJfOqzIgg+9b8f8JKwSC9roLysqAYCuQXNhQafFkSRbgdgi3uO
+ FExAoH644iUUKu2nwTyHAATVloza5SIgvgMvUEJv+eqItP4GluHh6humI++0U7GhsSE7JImklev
+ 4vXQK1e0=
+X-Gm-Gg: AYBFou1vL1OQ8G37o7Yoi6pNmvtw1wpPP/heO9OB1WGiY/0vyz5XfNAHbX/RuGgryY/
+ IQPMD90tQocaAKn4KWn8JoDXvlPc1ENEUa+eFzVrPSX3bs+yJwsYXUR60gPXtH5AROJ8m3eBB28
+ w2G9s/5OrPS9oXj9IIxmeD2BQ4NC9CNsglGXToooV3hlo+ZDD54fz5tSqtEzQjEIHNe7pWVSd5R
+ hOlIJTPQ6kivpHe9ClnJmIWrMTgZ9S6nsFk410jHmmpud+hTqRi6+ImbyKbOR6ZNJwo+3IXuodr
+ 1i1z5B05pd62zTR2fRUx6wj5ZSBWgEEPBGXHwDwdi1NNnpI4jOHmrtV7liTreW2BoQlTcZL2q+L
+ CTZCoVLsIh/U75AQ2LYpgekhb5oqBPmkNodw2B79YWqVrLIXlsAqDhogofP2ll+feFVWgLvr6dx
+ h+MQ6G9jjgVcXlhLtx5otZzK78bEcULhj0kQPJK1q2R4U/Awlb0cxKGVXdoWBuJVXcBsbsvXY=
+X-Received: by 2002:a05:600c:6095:b0:493:f5bf:4dc6 with SMTP id
+ 5b1f17b1804b1-49cf81ff697mr49727065e9.7.1788528210206; 
+ Fri, 04 Sep 2026 06:23:30 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858ab73c2bsm4907379f8f.22.2026.09.04.06.23.25
+ 5b1f17b1804b1-49cf771de2fsm71922955e9.8.2026.09.04.06.23.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 04 Sep 2026 06:23:27 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B75216183C;
- Fri, 04 Sep 2026 13:46:07 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id EE87861BF2;
+ Fri, 04 Sep 2026 13:46:10 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 035/105] tests/tcg/multiarch/gdbstub/prot-none.py: detect if
- /proc/self/mem can be used to access PROT_NONE pages
-Date: Fri,  4 Sep 2026 13:44:49 +0100
-Message-ID: <20260904124604.2207440-36-alex.bennee@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PULL 063/105] test/tcg/mips: user tests
+Date: Fri,  4 Sep 2026 13:45:17 +0100
+Message-ID: <20260904124604.2207440-64-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,87 +112,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Recently (July 2026), this issue became reproducible on debian stable
-with kernel (7.1.3) from backports. I suspect it's a default hardening
-of kernel related to recent CVEs.
-
-By tracking error reported, we can see that /proc/self/mem pread from
-cpu_memory_rw_debug in accel/tcg/user-exec.c returns an error
-(Input/Output error).
-
-Detect this situation directly from our gdb python script, by trying the
-same thing from current process. If this operation fails, we can
-gracefully skip the test.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-36-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-64-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
-index e653bc697f6..e59ba58af86 100644
---- a/tests/tcg/multiarch/gdbstub/prot-none.py
-+++ b/tests/tcg/multiarch/gdbstub/prot-none.py
-@@ -5,6 +5,8 @@
- SPDX-License-Identifier: GPL-2.0-or-later
- """
- import ctypes
-+import ctypes.util
-+import mmap
- import os
- from test_gdbstub import gdb_exit, main, report
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index dc83b7447bf..3d7438245dc 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -145,6 +145,7 @@ subdir('hppa')
+ subdir('i386')
+ subdir('loongarch64')
+ subdir('m68k')
++subdir('mips')
  
-@@ -18,6 +20,36 @@ def probe_proc_self_mem():
-     except OSError:
-         return False
- 
-+def probe_proc_self_mem_access_prot_none():
-+    libc = ctypes.CDLL(ctypes.util.find_library("c"), use_errno=True)
-+    libc.mmap.restype = ctypes.c_void_p
-+    libc.mmap.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int,
-+                          ctypes.c_int, ctypes.c_int, ctypes.c_long]
-+    size = os.sysconf("SC_PAGESIZE")
-+    # mmap a PROT_NONE page
-+    PROT_NONE = 0
-+    addr = libc.mmap(None, size, PROT_NONE,
-+                     mmap.MAP_PRIVATE | mmap.MAP_ANONYMOUS, -1, 0)
-+    assert addr != ctypes.c_void_p(-1).value
-+    fd = os.open("/proc/self/mem", os.O_RDWR)
-+    try:
-+        # read it through /proc/self/mem
-+        # this is the fallback in cpu_memory_rw_debug
-+        data = os.pread(fd, size, addr)
-+    except Exception as e:
-+        print("/proc/self/mem pread error: " + str(e))
-+        return False
+ image_targets = {}
+ exe_targets = []
+diff --git a/tests/tcg/mips/Makefile.target b/tests/tcg/mips/Makefile.target
+deleted file mode 100644
+index 5d17c1706e4..00000000000
+--- a/tests/tcg/mips/Makefile.target
++++ /dev/null
+@@ -1,19 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# MIPS - included from tests/tcg/Makefile.target
+-#
+-
+-MIPS_SRC=$(SRC_PATH)/tests/tcg/mips
+-
+-# Set search path for all sources
+-VPATH 		+= $(MIPS_SRC)
+-
+-# hello-mips is 32 bit only
+-ifeq ($(findstring 64,$(TARGET_NAME)),)
+-MIPS_TESTS=hello-mips
+-
+-TESTS += $(MIPS_TESTS)
+-
+-hello-mips: CFLAGS+=-mno-abicalls -fno-PIC -fno-stack-protector -mabi=32
+-hello-mips: LDFLAGS+=-nostdlib
+-endif
+diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
+new file mode 100644
+index 00000000000..3c4f6ec482d
+--- /dev/null
++++ b/tests/tcg/mips/meson.build
+@@ -0,0 +1,25 @@
++tests = []
 +
-+    try:
-+        # write it through /proc/self/mem
-+        # this is the fallback in cpu_memory_rw_debug
-+        os.pwrite(fd, data, addr)
-+    except Exception as e:
-+        print("/proc/self/mem pwrite error: " + str(e))
-+        return False
++tests += tcg_tests['multiarch-linux-user']['tests']
 +
-+    return True
++tests += {
++  'hello-mips.c': {
++    'cflags': ['-mno-abicalls', '-fno-PIC', '-fno-stack-protector', '-mabi=32',
++               '-nostdlib']
++  }
++}
 +
- 
- def run_test():
-     """Run through the tests one by one"""
-@@ -26,10 +58,9 @@ def run_test():
-         print("SKIP: /proc/self/mem is not usable")
-         print("----------------------------------")
-         gdb_exit(77)
--    if "GITLAB_CI" in os.environ:
-+    if not probe_proc_self_mem_access_prot_none():
-         print("----------------------------------")
--        print("SKIP: fail on gitlab - " +
--              "https://gitlab.com/qemu-project/qemu/-/issues/3329")
-+        print("SKIP: /proc/self/mem can't be used to access PROT_NONE page")
-         print("----------------------------------")
-         gdb_exit(77)
-     gdb.Breakpoint("break_here")
++if 'qemu-mips' in emulators
++  tcg_tests += {
++    'mips-linux-user': {
++      'cc': 'mips-linux-gnu-gcc',
++      'cc_dockerfile': 'debian-all-test-cross',
++      'cc_docker_host_arch': ['aarch64', 'x86_64'],
++      'cc_feat_cflags': cc_feat_cflags,
++      'folder': 'mips',
++      'gdb_arch': 'mips',
++      'qemu': emulators['qemu-mips'],
++      'tests': tests,
++    }
++  }
++endif
 -- 
 2.47.3
 
