@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7885DC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56316C79F89
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WJU-0004OA-Lg; Fri, 04 Sep 2026 11:58:48 -0400
+	id 1x2WJL-0004Hn-Jk; Fri, 04 Sep 2026 11:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WJT-0004Nv-Gd; Fri, 04 Sep 2026 11:58:47 -0400
+ id 1x2WJJ-0004FL-FD; Fri, 04 Sep 2026 11:58:37 -0400
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WJR-0004Pg-BJ; Fri, 04 Sep 2026 11:58:47 -0400
+ id 1x2WJH-0004Pg-Rz; Fri, 04 Sep 2026 11:58:37 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=t8e+mlRwbYPYRebUziR0XUg4H2LS1vEyLHvi6nFw1bGcnQIAkkO11zRkuw0YK6Q4902UZiNXs+wPq6RR5EGDF0ZtAfqdBmJOvuQ9CjeUnWNAQjleanW1h4PcwI5Jx+01LQrTenHouGSNpJPd/Yes7iZG1+UT6s/PVUSuM7O7ekb6qXS1jf23Y+HAXWD/si1MsuWSuLaGQyaOeFBWQCJbmqVYKexE6JRZ+6jV72HJyEPR6c+oTK8gD1apytaopO8NU0doo6A249x5qpRqNiH5VYUFS1h+CvgWem+SbytjddZ8Vq7sinmPmhN54UPsTTnfh6uEilMrwP0QudLLxz7LfQ==
+ b=Z4CgwicNmN6rZKkVqap97sx7NcD7466TqMSqM8fKv9EeNzB1KcqT6uvcYdCs8+CRHDjOtUJ/Cp5+J58aIHUp5sTJXw7Urvq7U9fKqtUKzgJA7s0BgwRhRi5h5U+hIMe/JzwnN06TCvT0Qrax4tBznMItkOIjrG+YfvR9G6wWMaXK10xmOEvuKbBPtQORvqW45w9tTGjLDZysUNPN6xT4nLxzkw89KDM/N7+Gbv9S6CSixiNgM7isfhcWel57C6UW1G9gGcditI11Ih3a+2NqOekHTrK6Ip+JdwBPM0f5XWMjWtyYaXm14NmFBP9PYMoAASn9shBWjRC42jTaTWBKFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eZLhfhyvCFTWqYdNf8kxpgruLTaphHdfTraBUZx444Y=;
- b=W8mnXPH1F6bcOMb+lbcK15alrDQfYhVs1efZSxOWmLE7M8PZbjqRyEmI0NxUIX3JD6T7whlSbnq/Stfkvf+1UYAKLDkIJRQ8zo+581TsLpOWlGYyjApVntkeH0dahg1ganvfLKPUXyoAgg9ypk7QDqm5iwikZKNR0CR6dUF2e7C7GLjUAx9WwKRztGHxhJHdmaIuy8LzWgW1nyyYhebWHEBlmgQZKH/ogCHvBCEengAYh0f3H/l9YrRxdWPQLRm5yL78XK3djqHpw9dDfbET6ldApdhJ4U0uLySmj16k+Ddj2sV3JCiaCgGxACIyIQNgzpXUX/zOSJV/s3O1LRwMtg==
+ bh=zEsWQYphQK4WAq3lkx14st3oXtaoyagMGjEfpUxvuos=;
+ b=jnEcgF+q7enWFcTxjcyorsGFhDPX+UoYuyZqmEilB14uIfY20LcgkoUD6yls1di14isLKcNSfUxC58Vs5VGVACJo/fzCHBvbekw10UBdFaFIL7It2rgKDCKWGYD4y5u1h4u6Gazw2jA60aM4lRkl0bfZUJUfS4b5/ZbE4VR1Uc854u3f+FF2rT79xCTnUhG+W9jxVA24w0Zc0S0lekIsWwNfVtBH/PcRC0uxq5kvEwBLCvYloPm8YHg/QOs0q+2jXyJU2qEt12jrlhjNQ3CeSi3IyDu+xgd0d/PfKShjMqIMaN4mkteB50szLe01SWIY3t/Li+o5cRQYQmIfMfKC2g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,19 +33,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eZLhfhyvCFTWqYdNf8kxpgruLTaphHdfTraBUZx444Y=;
- b=FlWMJ0tMXV3u9LM040Z+WczBNNDVEO7fEacR+GTXVyjytJado05DuaWqXINIt7WOX08ABycZNEDhtNZ4VMeus1v6BXVnBi00UABeBXwTrXgEPWH7w/nktwXy3H8O770sab0KPU2nhakmAFhxBCEt1lgkKp29t93kvCrcSf77QumQxAAuca1NRQHvwRmYOgj8UzO5VC9OFHgPiwSRfh5VjGaYWGV5Mlr5cTH009eW/kD9BC1JMi92JRWuejxFKtbMVt3I/XrqASbPXupX4XqMKMpjRSmG10OLLdQBJ9jhXY0xL17EQs8vGaIW78vSbaAVU2edbn8iSJEmefXBnAvtVw==
+ bh=zEsWQYphQK4WAq3lkx14st3oXtaoyagMGjEfpUxvuos=;
+ b=bPpyuMVs/TPwUDi2BdRRTEZIV7IadAwUHxWrFcIbySFjjAQAjQkxJcIrratP9HD9fVt0KgsCWY8B3HdWDERJ+P5T4R83iUatBde6AgMappS1oUafuwOtmSlruQOJIbKr/7yWrwkfX/cPo8CoxJFiq+6ESejrQcx/4bYXPslY6G3HrMPTmUoCgeAaCf/n94r4DJ220T5dSTm23xxMDN8/7gdlw5FVp7IMq2IGf4ZVi5TPk26/rH/v12q/volM2HXN30sgKVBPheesNgO9P0dT4ADPmWkQQ9xbwKZLG9xeyAbTtL+ke/3cvWwOCh21mIkHkm0nShoy/ITisITHTfWPag==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by TYPPR02MB9175.apcprd02.prod.outlook.com (2603:1096:405:394::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 15:58:32 +0000
+ 2026 15:58:25 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
- 15:58:32 +0000
+ 15:58:25 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Chao Liu <chao.liu@processmission.com>,
@@ -53,12 +53,12 @@ Cc: Chao Liu <chao.liu@processmission.com>,
  Conor Dooley <conor@kernel.org>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
  Sebastian Huber <sebastian.huber@embedded-brains.de>,
  Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v2 05/24] hw/riscv: pfsoc: Couple L2CC to L2-LIM
-Date: Fri,  4 Sep 2026 23:57:24 +0800
-Message-ID: <20260904155758.3833179-6-bin.meng@processmission.com>
+Subject: [PATCH v2 02/24] hw/riscv: pfsoc: Map the L2 zero device window
+Date: Fri,  4 Sep 2026 23:57:21 +0800
+Message-ID: <20260904155758.3833179-3-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260904155758.3833179-1-bin.meng@processmission.com>
 References: <20260904155758.3833179-1-bin.meng@processmission.com>
@@ -70,56 +70,56 @@ X-ClientProxiedBy: TY4P286CA0020.JPNP286.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB9175:EE_
-X-MS-Office365-Filtering-Correlation-Id: 705bf99a-7131-4184-b8f1-08df0a9d5ea1
+X-MS-Office365-Filtering-Correlation-Id: 3fc8998c-1bd6-4a88-a05f-08df0a9d5a0f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|7416014|376014|6133799003|5023799004|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: r7IGd/6i9WYRPUh0lWJh7sywvfCpxtTqbmy8Eo4cxEkbYZtQDjQQY0RdKlSqj3S5MAZ+fHsDb4TIHmmQ37eB0oOgdSHO+oJlLczPU93EZJT1wgmkguuuDvwHHj17oeGwxZH2yOXb127H4D7LW1hfeYH5sghVHerMGAhOZQ/5VNODc2/XN9gsoGj4FahSBUk98Bmyo3hdvE18Ys6xCbJE/KgYO9VLN6DOcIpCsBlGMgh5Drnq5moSM29Dfg4m8NcBlzmTEOM7lu6TemRiX2PvmTgapRcAGsDL0IsxtyFhyN1tpUYTMQFBcdW2RUliF4yPsrSx/5rvivSI6JFLoMCg5ktqqanPCw747D68Jwj2TZTqwsvaDIH4Vy02pP3xO+kAu9aKp1C7rgzDj11FfpasKcqyv/lz7vpHAswZ9FZa7fs71RqyJOc8jozm+euMxJArwo7/4BkuLkP80l1pbX0mQHRqYTcOCbP2iAW1E611npd0j68bZZmVEbSgl1cRGwPkpdIEKLTewz8royfkvyDZCqugMAydoXzgizDrCVIkQvoVk8ygs5Lq8AAm81C30iAEXRjewWoIXuY/svNU28AM/6X1RYQqIcLQFCcfXjJSYG2rqEW4M/DG35A98MlK5+Iah5b2y4UoI+SQNxULkAndAKyeAgIrRKRUUbcIIDrTX2Q=
+ ARA:13230040|23010399003|366016|1800799024|376014|6133799003|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Lfud4MJFJpguJEjxabY/J9dI9gjemY6bD04AxYCaYcLFSRHsfbtRU0K7KTZAZxUiFeeyeZ0TnORno9InTYe2DiAkC6ggMQhA2BSF/eLpy07cx5ryZx/K7k8p0GDexbIY73Zv8Rz4TJSxcQgHT6MRnASbm1Cwqx58cZZOlkYXtRT8HzKL4Fm9sXxooYcrhKZZkbt3yxCYrEHZHzdIbikwEC64/w0gV/2jS8mqR+R29ghrw9aInVRi/VzAmel9kHOytCXLYnz3HuT0OV9yWa5h5XNFbAErmcw+k300VRshXxSlNhMhqMsSdaidmlJysgOZhDZh9xYUk8JZBBSkKOlApNRL9Dt0wTgcYCna7OppbDaQ7gDzKV2tW46bEtfQUE7Z9KaovVj/fSpxt57+uw+v65ij3Yz/3b1IvFNUY4SChgs5h0Vs0nYgYo9R/CyNxR4jQ40H4c7pILqYqlx/OxC3+Td14nKKBwFMZptA0O/Kv3WrJMNTbT7MfV7uRnSrmCaLEmV6lE6NvlsrxgSL72R8w99RoLyTEFrDp9a5AfyHvWUbFetj+vH7jKoDNSJ4NEICc/f3IMx0hIAxfpdoloOx7kypCCxoY/rxgFYg60FRpSw3PAK/ogC7sRGH4QXBPdz3UhwGjfu3AZhDJAQIM3TsiALfsIisghtxv89YH0lICBU=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(7416014)(376014)(6133799003)(5023799004)(56012099006)(10067099003)(22082099003)(18002099003);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(56012099006)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?89PXeqGG5EUp2u3km81hvugVOaMGrf/bBtmDuOER5clj68te8szvgo4p4UuZ?=
- =?us-ascii?Q?uMejvksyHFU1xy3QYVsheKsS60zTbvxHWaBHkMWi4S/CSC5qj1BNehDPPznK?=
- =?us-ascii?Q?2qTY91apAXAFSrY6F2U8xsmibUwbBGFg7+VpeTADmv02Eg39oB6kRgY8263d?=
- =?us-ascii?Q?9tt+trsresQL09Q3pXerH+P+c8zcy4JCMe2N+IQsu/wWtyG8yjDxBEpd98QK?=
- =?us-ascii?Q?Y5CC2Ngl0kQooBsymszodBBvb2Ygf9k5xmrdL5hgw+WCdcRX+hvdc+KiVw4M?=
- =?us-ascii?Q?uGCzYqxi1JV7LETrBGgL1lbHzcEb0Ice3yRPXmIirOv4rZdmZKAEUBuDhMY+?=
- =?us-ascii?Q?snSJNEkx8T6buIWHmXhKMEIbmvhO2kCS/tb3MYOBWsgGXPEg/i2G3kKobGSV?=
- =?us-ascii?Q?DWOoJRvRgpXMaB8743a3PJw55Tuqrd7MvpnAr9bM9cmPc6DDk6gcI1uBTBum?=
- =?us-ascii?Q?ET5BQ0PZCAaOf/7Sj3KjRbgXAi1lTLrGF0zavC6fSuIzHoGur/V3ZeZhGAZC?=
- =?us-ascii?Q?zcIsp3irufW02HKgVvZC3VtxsroAWGyIy7UbpxrdA/PVj2eDuho9IPFh5yLM?=
- =?us-ascii?Q?36Ey5VeE/Mfpw47DaH2NiPOtB3IeMdU/g+rpuB0/jITzoCGhgljGP3185Q6E?=
- =?us-ascii?Q?NQ74q2B/R4cfg4hYAmM1BttEgYPpIbz5qsf3TQFy7GaBoJ347wEvFoEwLY6u?=
- =?us-ascii?Q?eWPecNAJLncfZRPRB+81SEk4GGa/x41RQOFSanSdjshB1NJHBapHVziieIaa?=
- =?us-ascii?Q?SocfDPzxWACnrQmJrWQbvDi02mlf2Sg3Pl4PWUHfBf6VMHbcJ0ReDy/ie7T/?=
- =?us-ascii?Q?JFGWjKcWGzeT4y2HxkcA/C15UxvV0JZU4wfqVjLmAMn6sxq1lihuQ1AEjA8J?=
- =?us-ascii?Q?+q2+OPVB5XrG+sPe42/RVbIv8mgxNkEjPA1fWJ39HV12TDm10zP0PXuUsxkm?=
- =?us-ascii?Q?J/XtGuGgd4RDinKMtBxLRlyjkfYTKaG/nchX42WRZZS+Gud71WnLgad/WvWj?=
- =?us-ascii?Q?LwyTjFFq0r8rNPLsdDYyQx2IVYibPq8w4vR/0/dQum7C/5YkH313W3jjPVLb?=
- =?us-ascii?Q?Mj3oB1Pwrd+wbbdihA0XvUS1/TTreG1GjWpQ97QqN7AYkvBLIaE7BRvm+hKP?=
- =?us-ascii?Q?L+4pqXg3teMQS7bEegx6u0ccV+JvmXG2pPGqAVoe1A5HcQ4vplBXmnHZRcb2?=
- =?us-ascii?Q?0cWAmUDR6RHmEsCdjHVPv6AIe/cWlrw9TpWtb5D01sSBbVLUCj+zIHWoetN3?=
- =?us-ascii?Q?lDpKrMHJnTuq5d6mqpvRJDuJmhtiSwg3Y4LmNCiY+Qab+/daQwpctihcanWd?=
- =?us-ascii?Q?b+E8MmOrs2eKDEDJmYzfiCgpLsXAewWCx8iglH6zB1rqMCVb2LjHk1L3dLDj?=
- =?us-ascii?Q?C+aHhYB5YBP4h4qPpq2QDM/5ea/S4w3YoEUo168tLqvpop18j6EZ89Wgxanq?=
- =?us-ascii?Q?LIcIjRX1U9nmICYw9AzKP4VpaVfSFwpsKM+fdZbKaxyUazgvMa1Jk8O2f7dq?=
- =?us-ascii?Q?fqg4AmZGT5x1faJnmbm6OQn9QjklwTj2iXQzdA2T01fsPSSSwATNcdaUxEi+?=
- =?us-ascii?Q?KTDf6UZsuzVODnXgez5mDwun06gy7ipKSZw9h12yRLqJCLWnJDfDHUMtzjDP?=
- =?us-ascii?Q?s2q8+bmADJaUw5V7mjLdKLxTg14PdDaan3PJx9ELGeZ2MmU0kQFI+Fupx400?=
- =?us-ascii?Q?XZaIADF/A3ukZ5ELC7tme6Kj0EbEpuiPZi/QKn7d+XRTdx6iCK4RRTmvY0IB?=
- =?us-ascii?Q?L+/EraAnovSyiC15tz6B6MfZzbMwngc=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4lMkl4nJT5hCQGlW3K8rDeZ0X7eSHR0pp+v91u5ihN/zXI4+MlenLadJdsgK?=
+ =?us-ascii?Q?DS3Sb/wDnlljpqCAIAMMPTImh76LhypfKRFtSFVOApwp+3LZ8qppzY7H8uMU?=
+ =?us-ascii?Q?jPpgpOVgTaN3Ln4pWTMiDWM/TKFwByFxXcUcg3x9xQc2sFMAFJ/oL/+imZlb?=
+ =?us-ascii?Q?JUs73u9SygvFtFWqHW53KMjBNiWw7R0HM7hG4hiWddRNKdwWVyoPNlY2jqMJ?=
+ =?us-ascii?Q?UImdIkujRcJBfnHoe7luyzQEFHpKjsor+exWp4HDXR3ZEBUIQGJ75E/YlGG4?=
+ =?us-ascii?Q?kwqIK0nDPFtE5Bt2NOOWmRzkYJ73Mm86PLvW4w1im1yNM2+0FsFtub6Hu0kp?=
+ =?us-ascii?Q?X+TepC+pHBcB+8lwFutfbfQp7tccFYblbWzbmJ9h8dRRioTl6vuYtJmhHNqL?=
+ =?us-ascii?Q?BcAG9P2A7ScHpl3iFwTjTqlRjhVPK/r8H3kOqkLiNE7AAT+DSPi1519woMx1?=
+ =?us-ascii?Q?hKbRD4QOvLslPQ9IIm+gkYBgK//Wry/0y16ql6N9memJV+Spra1lI6puwp2X?=
+ =?us-ascii?Q?c2ewr2xxuAPvnMvE94YweWRN0aBZg3Hh3aL5mrYc+QPd0dG8tjP/kA0Fk0Hs?=
+ =?us-ascii?Q?ec4guNViiYFuaHZNVDrK2F09tZM4n8zoUyIr0n7TGCUjWZR8m5gGoUUZyw39?=
+ =?us-ascii?Q?wO4h8Dq9DbUX133mfNkDInxieh6OQeBhHvktsRd/gqF0EqqODsfIdrPH8usq?=
+ =?us-ascii?Q?Um7gPDKsXJLLFal3W70guNChcuy8arzCFFNSEUn1CCQYEEvQUdARN669CZDI?=
+ =?us-ascii?Q?ZdrRSe1xHPG8RdRCPUBiQDIxsiFEOynbk3rfsHQ4wNMdmy41t6XbtV3mR8Yn?=
+ =?us-ascii?Q?o2FprEd9qb591hXdjcd/8b9EPRZxYGTBRlnZNgjCA9U+e5cxwy8S4WMa2Hcw?=
+ =?us-ascii?Q?wP3koHWHGVPnUDkyIC+lP2EHMrnWhuz9ozn4hrnOw4ffKrCEh7JxQp1eVhtL?=
+ =?us-ascii?Q?z2zy5KnpnwiaQyUVlFvcD3VZXj9OYApbSgYpOVdTOVis84CYsl7hD1sTxIj4?=
+ =?us-ascii?Q?KtFu2ugG6Zhkasaue/vwGNe+Pt6e1D31sMAoMVCccccCbJLqG54vYfkKj29j?=
+ =?us-ascii?Q?DYNYGUgU8GCpbI4mepifJcIKALy4jodiCSfrYoTXC7bYH6KDpW98XqdDb2SV?=
+ =?us-ascii?Q?o8US3EUTWZpsj0cDscZReHgpmIQ/3l3Gzvmzshcf5GmJYwAvZq8A57VmKqS1?=
+ =?us-ascii?Q?GIxBYvq8OSiAtE57u92otjepUMULzLGHrT/E/RHZSuTJp4YrKBNbj0WGmiCF?=
+ =?us-ascii?Q?sIUW0bPip2AawzWe4a+0Z3Ftu45VpE6/8G1KfDjnMtLzePrfxUm2V1/Zx3CL?=
+ =?us-ascii?Q?3a3aDd61GAo/i7x2hSlUon/Vaqmbtb0xfNl5C2vNHtfo8JOFyG7Toav/3mLI?=
+ =?us-ascii?Q?Q+pCKh7EIYbPMKPiIvFDOLtCKCTTvejEfSI3FUygx+4eJ8kHmx6f+Ssnh8oY?=
+ =?us-ascii?Q?fBdkoCDNrcclVKpq7tOFrGptWUgvJnvs4LoPHRqd/2i7rrNqAYjaahpHjPb5?=
+ =?us-ascii?Q?Mj0eL7VA1xU3wdAP2c21ir9YbCsZUFMgxrccg2lTejhe/5IhczaSc/fRoSBP?=
+ =?us-ascii?Q?Q6LjC9azfMdNCK/EuN3stBExBv90BlWL1BDayzBeIovsDJrlEoJ1l2igx5j8?=
+ =?us-ascii?Q?7ZFPMihZZyFzX+VLHw5hWhHeWHunFifRsspO9eGa8OAgOjiNRP2G0ANEO9sM?=
+ =?us-ascii?Q?fIQU8ywl8WXhxDxpxgJvFLMVutEA7PIIoL5Za/1uLaI9YtJDZi2LW/3of+bP?=
+ =?us-ascii?Q?2ABrb3JWJ42ZBFw6Aj25UK8XgqVk6b0=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 705bf99a-7131-4184-b8f1-08df0a9d5ea1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3fc8998c-1bd6-4a88-a05f-08df0a9d5a0f
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:58:32.6139 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:58:24.9705 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Qb3qP4KD4nsm9mqb2bnKJGqN7VtLR7HdqER8dbLpR8J2SDfHXq2z/XV7CAOIjRMp5+9rjdI7wH4lHNMg2CE2j0lbPvlNK71iItD6iqPe16k=
+X-MS-Exchange-CrossTenant-UserPrincipalName: djWC9A0iE8wnmZDA3eUC3cW/OA71ZL2Tm8fzBgY7PyRrQt1zYh/BgcrUO4aSG3itA9puCnfaOvSFzpVBr+X++PLzUHsRAuHDrKYtBLSZvAo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB9175
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
@@ -145,214 +145,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instantiate the L2CC in the PolarFire SoC machine and connect its
-WayEnable register to the L2-LIM MemoryRegion. Back the complete 2 MiB
-aperture and shrink it by 128 KiB for each cache way enabled.
+HSS uses a window at 0x0a000000 while setting up the L2 cache,
+decompressing its runtime image, and executing that image.
+The missing mapping causes the E51 to trap before firmware can
+initialize its UART.
 
-Keep L2 Zero at its fixed aperture because it represents a cache
-allocation window rather than the remaining L2-LIM capacity.
+Represent the window with RAM to provide its persistent read,
+write, and execute effects without claiming to model the L2
+cache itself.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
 
 (no changes since v1)
 
- include/hw/misc/mchp_pfsoc_l2cc.h  |  1 +
- include/hw/riscv/microchip_pfsoc.h |  2 ++
- hw/misc/mchp_pfsoc_l2cc.c          | 51 ++++++++++++++++++++++++++++++
- hw/riscv/microchip_pfsoc.c         | 23 +++++++-------
- hw/riscv/Kconfig                   |  1 +
- 5 files changed, 67 insertions(+), 11 deletions(-)
+ include/hw/riscv/microchip_pfsoc.h |  1 +
+ hw/riscv/microchip_pfsoc.c         | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/include/hw/misc/mchp_pfsoc_l2cc.h b/include/hw/misc/mchp_pfsoc_l2cc.h
-index 1b5b3888d5..3a175a6340 100644
---- a/include/hw/misc/mchp_pfsoc_l2cc.h
-+++ b/include/hw/misc/mchp_pfsoc_l2cc.h
-@@ -22,6 +22,7 @@ typedef struct MchpPfSoCL2ccState {
-     SysBusDevice parent;
-     uint64_t regs[MCHP_PFSOC_L2CC_REG_NUM];
-     RegisterInfo regs_info[MCHP_PFSOC_L2CC_REG_NUM];
-+    MemoryRegion *l2lim;
- } MchpPfSoCL2ccState;
- 
- #define TYPE_MCHP_PFSOC_L2CC "mchp.pfsoc.l2cc"
 diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
-index 612fd2b69c..0aeccedf77 100644
+index a30b944afa..612fd2b69c 100644
 --- a/include/hw/riscv/microchip_pfsoc.h
 +++ b/include/hw/riscv/microchip_pfsoc.h
-@@ -27,6 +27,7 @@
- #include "hw/cpu/cluster.h"
- #include "hw/dma/sifive_pdma.h"
- #include "hw/misc/mchp_pfsoc_dmc.h"
-+#include "hw/misc/mchp_pfsoc_l2cc.h"
- #include "hw/misc/mchp_pfsoc_ioscb.h"
- #include "hw/misc/mchp_pfsoc_sysreg.h"
- #include "hw/net/cadence_gem.h"
-@@ -43,6 +44,7 @@ typedef struct MicrochipPFSoCState {
-     RISCVHartArrayState e_cpus;
-     RISCVHartArrayState u_cpus;
-     DeviceState *plic;
-+    MchpPfSoCL2ccState l2cc;
-     MchpPfSoCDdrSgmiiPhyState ddr_sgmii_phy;
-     MchpPfSoCDdrCfgState ddr_cfg;
-     MchpPfSoCIoscbState ioscb;
-diff --git a/hw/misc/mchp_pfsoc_l2cc.c b/hw/misc/mchp_pfsoc_l2cc.c
-index 979d904676..4b87c963fc 100644
---- a/hw/misc/mchp_pfsoc_l2cc.c
-+++ b/hw/misc/mchp_pfsoc_l2cc.c
-@@ -11,6 +11,9 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "hw/core/qdev-properties.h"
- #include "hw/core/register.h"
- #include "hw/core/registerfields.h"
- #include "hw/misc/mchp_pfsoc_l2cc.h"
-@@ -39,6 +42,25 @@ REG64(L2_WAY_MASK_HART4_DCACHE, 0x868)
- REG64(L2_WAY_MASK_HART4_ICACHE, 0x870)
- 
- #define L2_CONFIG_RESET         0x06091004
-+#define L2_LIM_WAY_COUNT        15
-+#define L2_WAY_SIZE             (128 * KiB)
-+
-+static void mchp_pfsoc_l2cc_update_l2lim(MchpPfSoCL2ccState *s,
-+                                         uint64_t way_enable)
-+{
-+    uint64_t l2lim_size;
-+
-+    if (way_enable >= L2_LIM_WAY_COUNT) {
-+        l2lim_size = 0;
-+    } else {
-+        l2lim_size = (L2_LIM_WAY_COUNT - way_enable) * L2_WAY_SIZE;
-+    }
-+
-+    memory_region_transaction_begin();
-+    memory_region_set_size(s->l2lim, l2lim_size);
-+    memory_region_set_enabled(s->l2lim, l2lim_size != 0);
-+    memory_region_transaction_commit();
-+}
- 
- static uint64_t mchp_pfsoc_l2cc_way_enable_pre_write(RegisterInfo *reg,
-                                                      uint64_t value)
-@@ -48,6 +70,14 @@ static uint64_t mchp_pfsoc_l2cc_way_enable_pre_write(RegisterInfo *reg,
-     return MAX(current, value);
- }
- 
-+static void mchp_pfsoc_l2cc_way_enable_post_write(RegisterInfo *reg,
-+                                                  uint64_t value)
-+{
-+    MchpPfSoCL2ccState *s = MCHP_PFSOC_L2CC(reg->opaque);
-+
-+    mchp_pfsoc_l2cc_update_l2lim(s, value);
-+}
-+
- #define WAY_MASK_REGISTER(_name)                \
-     {                                           \
-         .name = "WAY_MASK_" #_name,             \
-@@ -66,6 +96,7 @@ static const RegisterAccessInfo mchp_pfsoc_l2cc_regs_info[] = {
-         .addr = A_L2_WAY_ENABLE,
-         .rsvd = ~R_L2_WAY_ENABLE_VALUE_MASK,
-         .pre_write = mchp_pfsoc_l2cc_way_enable_pre_write,
-+        .post_write = mchp_pfsoc_l2cc_way_enable_post_write,
-     },
-     WAY_MASK_REGISTER(DMA),
-     WAY_MASK_REGISTER(AXI4_PORT_0),
-@@ -157,11 +188,31 @@ static void mchp_pfsoc_l2cc_init(Object *obj)
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &reg_array->mem);
- }
- 
-+static void mchp_pfsoc_l2cc_realize(DeviceState *dev, Error **errp)
-+{
-+    MchpPfSoCL2ccState *s = MCHP_PFSOC_L2CC(dev);
-+
-+    if (!s->l2lim) {
-+        error_setg(errp, TYPE_MCHP_PFSOC_L2CC ": 'l2-lim' link not set");
-+        return;
-+    }
-+
-+    mchp_pfsoc_l2cc_update_l2lim(s, s->regs[R_L2_WAY_ENABLE]);
-+}
-+
-+static const Property mchp_pfsoc_l2cc_properties[] = {
-+    DEFINE_PROP_LINK("l2-lim", MchpPfSoCL2ccState, l2lim,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-+};
-+
- static void mchp_pfsoc_l2cc_class_init(ObjectClass *klass, const void *data)
- {
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     rc->phases.hold = mchp_pfsoc_l2cc_reset_hold;
-+    device_class_set_props(dc, mchp_pfsoc_l2cc_properties);
-+    dc->realize = mchp_pfsoc_l2cc_realize;
- }
- 
- static const TypeInfo mchp_pfsoc_l2cc_info = {
+@@ -90,6 +90,7 @@ enum {
+     MICROCHIP_PFSOC_L2CC,
+     MICROCHIP_PFSOC_DMA,
+     MICROCHIP_PFSOC_L2LIM,
++    MICROCHIP_PFSOC_L2ZERO,
+     MICROCHIP_PFSOC_PLIC,
+     MICROCHIP_PFSOC_MMUART0,
+     MICROCHIP_PFSOC_WDOG0,
 diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 8106dbb3ad..114567867b 100644
+index cfba2990b6..8106dbb3ad 100644
 --- a/hw/riscv/microchip_pfsoc.c
 +++ b/hw/riscv/microchip_pfsoc.c
-@@ -174,6 +174,9 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
-     object_initialize_child(obj, "dma-controller", &s->dma,
-                             TYPE_SIFIVE_PDMA);
- 
-+    object_initialize_child(obj, "l2-cache-controller", &s->l2cc,
-+                            TYPE_MCHP_PFSOC_L2CC);
-+
-     object_initialize_child(obj, "sysreg", &s->sysreg,
-                             TYPE_MCHP_PFSOC_SYSREG);
- 
-@@ -260,18 +263,9 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-         RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
-         iks->clint_timebase_freq, false);
- 
--    /* L2 cache controller */
--    create_unimplemented_device("microchip.pfsoc.l2cc",
--        memmap[MICROCHIP_PFSOC_L2CC].base, memmap[MICROCHIP_PFSOC_L2CC].size);
--
-     /*
--     * Add L2-LIM at reset size.
--     * This should be reduced in size as the L2 Cache Controller WayEnable
--     * register is incremented. Unfortunately I don't see a nice (or any) way
--     * to handle reducing or blocking out the L2 LIM while still allowing it
--     * be re returned to all enabled after a reset. For the time being, just
--     * leave it enabled all the time. This won't break anything, but will be
--     * too generous to misbehaving guests.
-+     * Back the complete L2-LIM aperture. The L2 cache controller resizes
-+     * this MemoryRegion to 128 KiB for every way assigned to L2-LIM.
-      */
-     memory_region_init_ram(l2lim_mem, NULL, "microchip.pfsoc.l2lim",
-                            memmap[MICROCHIP_PFSOC_L2LIM].size, &error_fatal);
-@@ -279,6 +273,13 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+@@ -96,6 +96,7 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
+     [MICROCHIP_PFSOC_L2CC] =            {  0x2010000,       0x1000 },
+     [MICROCHIP_PFSOC_DMA] =             {  0x3000000,     0x100000 },
+     [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,     0x200000 },
++    [MICROCHIP_PFSOC_L2ZERO] =          {  0xa000000,     0x200000 },
+     [MICROCHIP_PFSOC_PLIC] =            {  0xc000000,    0x4000000 },
+     [MICROCHIP_PFSOC_MMUART0] =         { 0x20000000,       0x1000 },
+     [MICROCHIP_PFSOC_WDOG0] =           { 0x20001000,       0x1000 },
+@@ -200,6 +201,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+     MemoryRegion *rsvd0_mem = g_new(MemoryRegion, 1);
+     MemoryRegion *e51_dtim_mem = g_new(MemoryRegion, 1);
+     MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
++    MemoryRegion *l2zero_mem = g_new(MemoryRegion, 1);
+     MemoryRegion *envm_data = g_new(MemoryRegion, 1);
+     MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
+     char *plic_hart_config;
+@@ -277,6 +279,17 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
                                  memmap[MICROCHIP_PFSOC_L2LIM].base,
                                  l2lim_mem);
  
-+    /* L2 cache controller */
-+    object_property_set_link(OBJECT(&s->l2cc), "l2-lim",
-+                             OBJECT(l2lim_mem), &error_abort);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->l2cc), errp);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), 0,
-+                    memmap[MICROCHIP_PFSOC_L2CC].base);
++    /*
++     * HSS decompresses into the L2 zero-device window and executes there.
++     * Model it as RAM because QEMU does not model the backing L2 cache.
++     */
++    memory_region_init_ram(l2zero_mem, NULL, "microchip.pfsoc.l2zero",
++                           memmap[MICROCHIP_PFSOC_L2ZERO].size,
++                           &error_fatal);
++    memory_region_add_subregion(system_memory,
++                                memmap[MICROCHIP_PFSOC_L2ZERO].base,
++                                l2zero_mem);
 +
-     /*
-      * HSS decompresses into the L2 zero-device window and executes there.
-      * Model it as RAM because QEMU does not model the backing L2 cache.
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index d06ac26648..85b535c7cb 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -18,6 +18,7 @@ config MICROCHIP_PFSOC
-     select DEVICE_TREE
-     select MCHP_PFSOC_DMC
-     select MCHP_PFSOC_IOSCB
-+    select MCHP_PFSOC_L2CC
-     select MCHP_PFSOC_MMUART
-     select MCHP_PFSOC_SYSREG
-     select RISCV_ACLINT
+     /* create PLIC hart topology configuration string */
+     plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
+ 
 -- 
 2.53.0
 
