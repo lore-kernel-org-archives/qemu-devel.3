@@ -4,58 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA3AC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CAFC79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Wcm-00013H-Tu; Fri, 04 Sep 2026 12:18:44 -0400
+	id 1x2Wii-00085n-I1; Fri, 04 Sep 2026 12:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2Wcl-00012T-NP; Fri, 04 Sep 2026 12:18:43 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2Wcj-0001Tb-Mj; Fri, 04 Sep 2026 12:18:43 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4F2AA405D7;
- Fri,  4 Sep 2026 16:18:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EE31F00A3D;
- Fri,  4 Sep 2026 16:18:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788538720;
- bh=KSimXiGvv2sXCAqBPtLeCa7VJnYdKm5JKdHB/QGuEYg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ArNNcfqQmtleP3qCQNzZziqNR8f4IWPfmSYTnK16v5X8PgiuHaz2jUp3MqL7UZJud
- NcQsggvSwrwS+GJEJFw1qiTYNQwP3xWSOwWxuBOvSUWAS6FRys+NQtdh+6s5A4JMbe
- OzHQNoV/8aQcskJIeYqtvXee255EjcLjUIFo02Yga/7QJtGqbimlp0mZyaHd8rrxPj
- b1AaTR09f5WZRCBXGJ/qrYsZeGM2WwmRYCkmkxONy5XS5YVBqGGWvNJNhrVV/w6/ba
- fdrUSLo2SxufdnZCGQ6932PwITpvWFIAlQ7uROtb+6XTx8T9qfS44BNJSpPkGl6b8Q
- fqwnP6iOC0Y/g==
-From: Niklas Cassel <cassel@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>
-Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
- Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v3 12/12] file-posix: reject a zone append to a full or
- conventional zone
-Date: Fri,  4 Sep 2026 18:18:00 +0200
-Message-ID: <20260904161801.1568841-13-cassel@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260904161801.1568841-1-cassel@kernel.org>
-References: <20260904161801.1568841-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2WiY-000853-5w
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:24:42 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1x2WiU-0002r3-O5
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:24:41 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-848643382fcso1315941b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1788539077; x=1789143877; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=vUW7zAhH9a6+Eq1CxsZDjyjXnk3sjjEG4PIOkiEC1b4=;
+ b=WFktCP2TWsjtGk//JDr3vjJyVg8U5CGUQBKliyUmbSyBtDZkX+Kk4ciO7fmwLbeHt6
+ xbWP4a/AJstx5ljrW9EUYnNesm4BAU+zm4kamLIuVI/GuvhIGQnibc1fzey1tAyATKyw
+ n+PMvO9BVulJzESVWrzbhOIAFTSqvdNG5Cxu8VfyWP+/Et++9rTnafg9FNlCojq4iL17
+ ZYINNFEs+EsHalZwaHS4jbItlFEoRSmd0ZxaPBStvrnS5W6pnmtiNjWEjd3n0S/U6SPe
+ IQSPcafIN/ez8a0i5td5MyQV/DmMqviASD3tfwxv2zssE0PsISQS88L6dxlvt5gwGrG1
+ 2tZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788539077; x=1789143877;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=vUW7zAhH9a6+Eq1CxsZDjyjXnk3sjjEG4PIOkiEC1b4=;
+ b=C+nBCn/PtlBPHeL09owR2hibdA9iy+ygaFHpvpo6Ri3BR9PY1k0YkBvfEyrkfV4IvK
+ u0kJBRsHcb0lta52H7p/dW9ic1FzN3EXdjOVU511ez+ZOtTt2xAw/TZRLd6O6sdonkgI
+ 8CoMQEXL39yZ9whe3uoPwmGeML1B68BjOLr6LV36zhlyrRSI3qCOi1l/nomfONyHgOOz
+ pfhgnz76JjTp6VnD8KpbIGpLbXtvcamgI3TR0Fs8+lJyE0t5O472rtPTvVm4zE3QXAR8
+ vPFM0JEK6qQbqibhN04/aK0iV3OPXheltxtY2g6H+EZa71ogrL18Nqua9LgVHPsew5sa
+ c5ZA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByV0d0DP/dtrpq43xxdaRN+dkMRMVI8COHRMsdyUIzou8tkGBY0TDgyA2Qxag1PQhv58Mr7xLuXI0hh@nongnu.org
+X-Gm-Message-State: AFuF++k2Yemh94JCoetmN/arA4YdJKQUUZxVT4P0bcMFx3aS668EezRP
+ gU+Vcm/hV1Eg02bD6sX++XKRBxYAAgK28gEiumLMyGGSoxr1wkurMC+TefVX2A8IQNw=
+X-Gm-Gg: AYBFou3HknH0IfSwems0ieVW1kK4yKS3pvEdxDdDU8b58TKZCfAdX0gFM2UBmj/x1IO
+ D6zwLu5e+Yr7icXc2PH50temkbcPQsG4f+mwGmw7Ez141CtMhS+TxUBJ61Zwo7K3JL+48rbnA6f
+ UHxwHhnZXTMs/Jil+ikeVu7GVnM+w3MwFrOR0GI4ksJku1Sa3RooCcOcs6tYeeGp+vCgnkGW9B8
+ pw7HXzpqe/y8dqjMoqA5GY4Qrjm4VDATBreSZ7dImV1uV8RQ7c48rwtCisAdngxduJgZYmqglkp
+ rQz+iWKI9y6OOkNIu5GgELs3RZNCOiXyVn1IGOlhK2yOkYlPEoD+BH/gSV+mQPgLvIUjSZNPSPo
+ AqYhSRbNkaFjyKW11+Y/WGhgE+hV204Y1mdU2C6vTVEa/pJc1zcTAUop/LGgVTx8bmy/eef/A4C
+ OEH6QeVRCNXE92esdCZRBLjKwRVFz+/kfLMuN2SIs+yoUeknbfxk8oGxlnsV3aiQW2H2iufZGV3
+ fw=
+X-Received: by 2002:a05:6a00:3ccd:b0:847:9015:e68c with SMTP id
+ d2e1a72fcca58-8616ad5265dmr10153169b3a.17.1788539076507; 
+ Fri, 04 Sep 2026 09:24:36 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:f95f:75de:b3f0:3bf5])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-86152045f74sm1375802b3a.10.2026.09.04.09.24.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 09:24:35 -0700 (PDT)
+Date: Fri, 4 Sep 2026 10:24:33 -0600
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, lorenzo.pieralisi@linaro.org,
+ enju.kohei@fujitsu.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [RFC v4 01/24] linux-headers: Add RME related definitions
+Message-ID: <aprwwdhwkaDn9xo1@p14s>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-2-mathieu.poirier@linaro.org>
+ <b06c933e-b8fd-4e03-8f50-9a9086542ccf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b06c933e-b8fd-4e03-8f50-9a9086542ccf@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,119 +110,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raw_co_prw() replaces the offset of a zone append with the write pointer
-of the addressed zone, which assumes that the stored value names a
-position inside that zone. It does not in two cases.
+On Fri, Sep 04, 2026 at 04:07:49PM +1000, Gavin Shan wrote:
+> Hi Mathieu,
+> 
+> On 9/4/26 5:35 AM, Mathieu Poirier wrote:
+> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > 
+> > This is a temporary patch intended for testing purposes only. It provides
+> > definitions related to supporting Realms by the QEMU-VMM.
+> > 
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > ---
+> >   linux-headers/asm-arm64/kvm.h |  9 +++++++++
+> >   linux-headers/linux/kvm.h     | 10 +++++++++-
+> >   2 files changed, 18 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
+> > index 6aefe7973814..4c08631ec7d2 100644
+> > --- a/linux-headers/asm-arm64/kvm.h
+> > +++ b/linux-headers/asm-arm64/kvm.h
+> > @@ -208,6 +208,15 @@ struct kvm_arm_counter_offset {
+> >   	__u64 reserved;
+> >   };
+> > +#define KVM_ARM_RMI_POPULATE_FLAGS_MEASURE     (1 << 0)
+> > +struct kvm_arm_rmi_populate {
+> > +	__u64 base;
+> > +	__u64 size;
+> > +	__u64 source_uaddr;
+> > +	__u32 flags;
+> > +	__u32 reserved;
+> > +};
+> > +
+> >   #define KVM_ARM_TAGS_TO_GUEST		0
+> >   #define KVM_ARM_TAGS_FROM_GUEST		1
+> > diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+> > index 29f81c05aca2..8b7627f11447 100644
+> > --- a/linux-headers/linux/kvm.h
+> > +++ b/linux-headers/linux/kvm.h
+> > @@ -689,14 +689,19 @@ struct kvm_enable_cap {
+> >    * address size for the VM. Bits[7-0] are reserved for the guest
+> >    * PA size shift (i.e, log2(PA_Size)). For backward compatibility,
+> >    * value 0 implies the default IPA size, 40bits.
+> > + *
+> > + * Bits[30-31] are reserved for the VM type
+> >    */
+> >   #define KVM_VM_TYPE_ARM_IPA_SIZE_MASK	0xffULL
+> >   #define KVM_VM_TYPE_ARM_IPA_SIZE(x)		\
+> >   	((x) & KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
+> > +#define KVM_VM_TYPE_ARM_NORMAL		0
+> > +#define KVM_VM_TYPE_ARM_REALM		(1UL << 30)
+> >   #define KVM_VM_TYPE_ARM_PROTECTED	(1UL << 31)
+> >   #define KVM_VM_TYPE_ARM_MASK		(KVM_VM_TYPE_ARM_IPA_SIZE_MASK | \
+> > -					 KVM_VM_TYPE_ARM_PROTECTED)
+> > +					 KVM_VM_TYPE_ARM_PROTECTED | \
+> > +					 KVM_VM_TYPE_ARM_REALM)
+> >   /*
+> >    * ioctls for /dev/kvm fds:
+> > @@ -719,6 +724,8 @@ struct kvm_enable_cap {
+> >   #define KVM_GET_EMULATED_CPUID	  _IOWR(KVMIO, 0x09, struct kvm_cpuid2)
+> >   #define KVM_GET_MSR_FEATURE_INDEX_LIST    _IOWR(KVMIO, 0x0a, struct kvm_msr_list)
+> > +#define KVM_ARM_RMI_POPULATE	  _IOWR(KVMIO, 0xd7, struct kvm_arm_rmi_populate)
+> > +
+> >   /*
+> >    * Extension capability list.
+> >    */
+> > @@ -988,6 +995,7 @@ struct kvm_enable_cap {
+> >   #define KVM_CAP_S390_HPAGE_2G 249
+> >   #define KVM_CAP_PPC_COMPAT_CAPS 250
+> >   #define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 251
+> > +#define KVM_CAP_ARM_RMI 252
+> 
+> Both KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES and KVM_CAP_ARM_RMI aren't consistent to
+> the definitions in Steven Price's (v16) host series [1]. They need corrections as
+> below. Otherwise, realm VM can't be started and the following errors are raised by
+> qemu.
 
-A full zone has its write pointer recorded at the end of the zone, since
-get_zones_wp() stores start + len for BLK_ZONE_COND_FULL. That is the
-first sector of the following zone, so the append is submitted there. The
-kernel accepts it whenever that zone is empty, because it is a legal
-write at its write pointer, and the completion path advances the wrong
-zone because it recomputes the zone index from the replaced offset. The
-data is written to a zone that was never addressed and success is
-returned:
+The changelog is clear - numbers for those defines have been bumped up to keep
+pace with the definitions in the QEMU master branch.  RFC v3 had defines that
+were similar to Steven's v16 and as such used an older QEMU baseline, but Markus
+said it wasn't appropriate.     
 
-  zone 2 finished, then a 4 KiB append to zone 2:
-  After zap done, the append sector is 0x180000     <- zone 3
-  zone 2: wptr 0x180000, zcond:14 (full)
-  zone 3: wptr 0x180008                             <- advanced
-
-A conventional zone has no write pointer at all, and its array entry
-carries only the type marker in the top bit, so the offset becomes
-negative and the write fails with EINVAL. That is harmless but it reports
-nothing about the actual mistake.
-
-Reject both while the write pointer lock is held, since the state has to
-be read and acted on atomically. check_zoned_request() in virtio-blk
-refuses an append to a conventional zone, so that case needs a caller
-that goes to the driver directly, but nothing there examines whether a
-zone is full, so a guest can reach the misdirected write.
-
-Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- block/file-posix.c       | 27 +++++++++++++++++++++++++--
- block/io.c               |  9 +++++++++
- include/block/block-io.h |  6 ++++++
- 3 files changed, 40 insertions(+), 2 deletions(-)
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 0e8ffe91c4..2cd16f58a2 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2565,8 +2565,31 @@ raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
-         bs->bl.zoned != BLK_Z_NONE) {
-         qemu_co_mutex_lock(&bs->wps->colock);
-         if (type & QEMU_AIO_ZONE_APPEND) {
--            int index = bdrv_zone_index(bs, offset);
--            offset = bs->wps->wp[index];
-+            uint32_t index = bdrv_zone_index(bs, offset);
-+            uint64_t wp = bs->wps->wp[index];
-+
-+            /*
-+             * The write pointer of the addressed zone becomes the offset of
-+             * the write, so it has to name a position inside that zone. It
-+             * does not for a conventional zone, which has no write pointer and
-+             * stores a type marker in the top bit instead, and it does not for
-+             * a full zone, whose write pointer is reported at the zone end.
-+             * Either would send the data to a zone that was never addressed.
-+             */
-+            if (BDRV_ZT_IS_CONV(wp)) {
-+                error_report("zone append at offset 0x%" PRIx64 " addresses a "
-+                             "conventional zone", offset);
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                return -EINVAL;
-+            }
-+            if (bdrv_zone_is_full(bs, index)) {
-+                error_report("zone append at offset 0x%" PRIx64 " addresses a "
-+                             "full zone", offset);
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                return -ENOSPC;
-+            }
-+
-+            offset = wp;
-         }
-     }
- #endif
-diff --git a/block/io.c b/block/io.c
-index b59c7fdf3e..452254bc63 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3378,6 +3378,15 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
-     return offset >> ctz64(bs->bl.zone_size);
- }
- 
-+bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index)
-+{
-+    uint64_t zone_end = MIN((uint64_t)(index + 1) * bs->bl.zone_size,
-+                            (uint64_t)bs->total_sectors << BDRV_SECTOR_BITS);
-+    IO_CODE();
-+
-+    return bs->wps->wp[index] >= zone_end;
-+}
-+
- void *qemu_blockalign(BlockDriverState *bs, size_t size)
- {
-     IO_CODE();
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index 71c8cdf2e1..8514db648c 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -131,6 +131,12 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
-  * zone size that is a power of two, so the division is a shift.
-  */
- uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
-+/*
-+ * True when the write pointer of a zone has reached the end of the writable
-+ * part of that zone, so that nothing more can be written to it until it is
-+ * reset. The write pointer lock must be held when called.
-+ */
-+bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index);
- 
- bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
- 
--- 
-2.55.0
-
+> 
+> [1] https://lore.kernel.org/kvm/20260803134403.80630-14-steven.price@arm.com/
+> 
+> root@host:~# qemu-system-aarch64 -enable-kvm                  \
+> -object rme-guest,id=rme0,convert-in-place=on                 \
+> -machine virt,gic-version=3,confidential-guest-support=rme0   \
+> -m 2G -cpu host                                               \
+> -smp maxcpus=4,cpus=4,sockets=1,clusters=1,cores=2,threads=2  \
+> -object memory-backend-guest-memfd,id=mem0,size=2G,share=on   \
+> -numa node,nodeid=0,cpus=0-3,memdev=mem0                      \
+> -serial mon:stdio -monitor none -nographic -nodefaults        \
+> -kernel /mnt/linux/arch/arm64/boot/Image                      \
+> -initrd /mnt/buildroot/output/images/rootfs.cpio.xz           \
+> -append earlycon=pl011,mmio,0x10009000000
+>     :
+> qemu-system-aarch64: VM doesn't support Realms
+> qemu-system-aarch64: failed to initialize kvm: No such device
+> 
+> 
+> -#define KVM_CAP_PPC_COMPAT_CAPS 250
+> -#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 251
+> -#define KVM_CAP_ARM_RMI 252
+> +#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 250
+> +#define KVM_CAP_ARM_RMI 251
+> 
+> >   struct kvm_irq_routing_irqchip {
+> >   	__u32 irqchip;
+> 
+> Thanks,
+> Gavin
+> 
 
