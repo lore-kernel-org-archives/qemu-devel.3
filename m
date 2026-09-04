@@ -4,103 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17540C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EFCC79F83
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2PKj-0000wC-FU; Fri, 04 Sep 2026 04:31:37 -0400
+	id 1x2PMY-0001Pf-7K; Fri, 04 Sep 2026 04:33:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x2PKg-0000vY-RL
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:31:34 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x2PKe-0004PB-Uh
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:31:34 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-861f30636f9so10049087b3.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 01:31:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788510691; cv=none;
- d=google.com; s=arc-20260327;
- b=FlHKxq5L3k45vt7wN207RVfkqx8gyNz3Nii5lltqdX2/8jJhxEWBuSbBtP7bFP8GPm
- DKCAG50rD1vKjll3KfOry2ekVovw65BNJq6J0V1qkKmhWEXFIpoaU9HCNxUm6iuoS5PG
- zV1zfAPQ0AmyySl0mszSHkWf3hrghtC09lNQfEOGMZMTAp8atUtqkjlL0CV3Ft2RPoXA
- j6c0LGWMn5sCypf9500D/EVN4F5yNWptK+JY+tBPMyjWVlSqq9hK+FXcm1tBEBdBwLaF
- NQKK6zbiPaQDvoFg2iZR30AsTSrPgp1W76dfVMVAJP5tdWmFJhYd3KzwDI0hr5EaUFUj
- cAwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=fAbXHDqEuERG933sDQ4k5pM2Sa3mafMb/2uaWrd1rWQ=;
- fh=DhldD8VP9wlhRh0PlOZDeDuHvFo37InCKF722IBu3zg=;
- b=oz9T+Ylsre82XpsJd6UwX0ji6f5PB90lojER6eEjUWrdm00aofguTe7KpYgLP1Uu0a
- PqGV7kmn8RFem1KhgvXUONzth8jZTrpfEqrq1xK6GUDan1JlWZOemKL+F2XmWxcN58AN
- 7kpDT8DZ6GbhqqjqrdriLhhd4lvu1yz50Ytqtt8BrpkB0PFuebPjstwYU8qYTUnFg2p1
- Tpw8yEklHxlvKT/MeeMYa6H+XCZHyVEIVfpaKvtUnpxYM2ysNHxKcITNSyoNoZqG9qiq
- jixPiI54yd49yHD8AzT9C1bU05SuC9CbdZojWa3CEhXdQLep3mJVNzCg6rJ70fbTkg1o
- WYIA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788510691; x=1789115491; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=fAbXHDqEuERG933sDQ4k5pM2Sa3mafMb/2uaWrd1rWQ=;
- b=DY+pE07htUZlZXWuW+hf6j6XVWe+GMbKS4l7bmlKlnxsLUwyRivf3V2zbWGJ6EzcMY
- LUDZ4HhuyYy5e6oR8C+NzxFd1P5NDMKSFuCyjyvmaW7qmrv9GVNrMjB7VFpDjO3+qUOo
- 7HaVgkuLwRs1E2ztQW6a/35BwFYrbdaEmo5bwQXKJaGYpzYsWXqKfrIxBttSR2KxQFTp
- SpUE9ZaXchFFjbfqZrIFi1/YvdZ82oa2mMyXUMVLvoYgIJaw1VRwPzHj4PPrv4KYRxBG
- sMalLK0ntTqxhHMVy2ilgK19j6jOw6gGkOc5vkMn22BACxNJ7LTexnD3Y7ZXW5LWJqX/
- myOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788510691; x=1789115491;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=fAbXHDqEuERG933sDQ4k5pM2Sa3mafMb/2uaWrd1rWQ=;
- b=m7fM/AX4VLWXRRQbbfFkKSh4S9YQoeNSTRVqXNhOXGt4H9qTUP4xDw1xpaoC+ED6D3
- Ooir9Vpz54Twwz7PVv7Qji3uiVlMEcqM+5efa3bnZXAqYq/4DIgXtlOAh8cex+nLZ1mP
- 7l9CZ3YR6kWNesSNOyRXiusz9t/LEmpDLy1mNzUrpCtc7lSrjJQcnEfmQi7AZUCkPQ0f
- zBpSt8GOXTB/njrvK4S6CpAoeh0EGpVsxeBp6Sg624lS8o1w/7/J5ENHHCsdyWRkQMAM
- ighfiO8TcKoHVMy91Tlp2opuB/MIGlclPz8ud/VD3g5z1vyeiexW4dHVyZq7Dwifjv6z
- exxQ==
-X-Gm-Message-State: AFuF++mGojErz+355XkO4mYAMSB6CWKK0NyZg8v6syCpuaRL2Zdsm77M
- xWVc2AGs4UpbVHdMiF2HOB7QHsHtRPSWRkj1kpcvnlNDH5IIwOg9TR7zd/FX/0eO0YR1y8YY+Jm
- p4lC50byVrOsgd5Fl15Nusrr28YLNS+alcAWk6iswxg==
-X-Gm-Gg: AYBFou1R75f5yS58ToUFdV0UELXJjEDYFD+o+H5BpmPnNZG+t2jXYGD65AyW6pJV0QT
- MkFFWl42ohxjibCeFyhKvbUKint5SR7PkPoiH9tSMI1gh+vLB9h3NtgDlFdbiiM9dcFFnVVOn3a
- k2rzrywiFaZX5Ym8PzZNrzOop+4bLigI8domnQeD3L0ma3l3tLdFXmbczOnCr1yMoiDNZrVsX1O
- AXEJWJEfbjf3i5e2fIad0Qmb7PGB0gke29KqXScmUD0J9m6S/hM8TlT29JeIpXHpXwz8H+bUbiG
- lxTjRvusrx6ZFfmJRCzQmIlW99i10Gj68P3SiRlKL/i78VdUxvA4wb4X6sC/fAcvbu48nu6Onye
- KoEz3HEipuiZBGOeFFcafQaxagE4S
-X-Received: by 2002:a05:690c:3385:b0:861:5bb9:c171 with SMTP id
- 00721157ae682-871266c4d5emr28435007b3.16.1788510691150; Fri, 04 Sep 2026
- 01:31:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x2PMW-0001PS-48
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:33:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x2PMU-0004YB-AD
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:33:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788510804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kcId/ZUjTR6Q5fAC0GzuMYX+7iRvLcLcmQvuL+lRc2g=;
+ b=F5ZeeZCs+iF6tJ+MCvSZyEmNAjd/O+AX97E7/YBt8VMZ82uHD7NpbVPbpKcKFZswRCZmUO
+ oxWVNSyFWJoNAZWGxYQ/W5LIRlR6VOqhVkCLmi9FtJRWy7TAlWx5zQ9yYhRwqMTzmX7m4X
+ xVTyhf8sz5TNm4C8AaUxQL842+xe0/w=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-2ZCRg9WBNDCQjNI-nInS5g-1; Fri,
+ 04 Sep 2026 04:33:22 -0400
+X-MC-Unique: 2ZCRg9WBNDCQjNI-nInS5g-1
+X-Mimecast-MFC-AGG-ID: 2ZCRg9WBNDCQjNI-nInS5g_1788510801
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4310A1953976; Fri,  4 Sep 2026 08:33:21 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DAF3C30001A2; Fri,  4 Sep 2026 08:33:20 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8C18521E6A04; Fri, 04 Sep 2026 10:33:18 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>,  qemu-devel <qemu-devel@nongnu.org>,
+ Eric Blake <eblake@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
+In-Reply-To: <aphL_rrAVYq8D7ie@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 2 Sep 2026 17:17:02 +0100")
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-7-zhangckid@gmail.com>
+ <8733vtbk16.fsf@pond.sub.org>
+ <CAK3tnvLbaJ4b+gRhXC678cye-cHv+aP3FFwRvhPNjyfSHxL6MA@mail.gmail.com>
+ <87qzjb3nf6.fsf@pond.sub.org> <apgONqZ4sWaenjVG@redhat.com>
+ <87jyp31zyf.fsf@pond.sub.org> <aphL_rrAVYq8D7ie@redhat.com>
+Date: Fri, 04 Sep 2026 10:33:18 +0200
+Message-ID: <8733vph0vl.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260903220523.2849019-1-farosas@suse.de>
- <20260903220523.2849019-2-farosas@suse.de>
-In-Reply-To: <20260903220523.2849019-2-farosas@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Sep 2026 09:31:18 +0100
-X-Gm-Features: AcwNN1XzulNTTsaDY-hxG_4C2j_J2JytTF3HScqAf2AqpF6ZYXrHbqSiG-o9D-4
-Message-ID: <CAFEAcA8j8MYW-YtKJ1trVk2NureE0iUk+E17kX5-jW10x8HyGQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ahci: Fix leak of IRQState
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
- "Denis V. Lunev" <den@openvz.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,44 +95,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 3 Sept 2026 at 23:06, Fabiano Rosas <farosas@suse.de> wrote:
->
-> ASAN spotted an indirect leak in ahci-test:
->
-> Indirect leak of 576 byte(s) in 6 object(s) allocated from:
->     #0 0x556112a08ca0 in malloc
->     #1 0x7f21591e595d in g_malloc
->     #2 0x7f21591ffe38 in g_slice_alloc
->     #3 0x7f21591c988d in g_hash_table_new_full
->     #4 0x556114d756f1 in object_initialize_with_type ../qom/object.c:506:23
->     #5 0x556114d77590 in object_new_with_type ../qom/object.c:706:5
->     #6 0x556114d777e8 in object_new ../qom/object.c:722:12
->     #7 0x556114d6d2be in qemu_allocate_irq ../hw/core/irq.c:94:25
->     #8 0x556114d6d1bc in qemu_extend_irqs ../hw/core/irq.c:82:16
->     #9 0x556114d6d329 in qemu_allocate_irqs ../hw/core/irq.c:89:12
->     #10 0x5561135da9bd in ahci_realize ../hw/ide/ahci.c:1644:12
->     #11 0x55611360156a in pci_ich9_ahci_realize ../hw/ide/ich.c:132:5
->
-> Although ahci_realize() frees the return of qemu_allocate_irqs() right
-> away, the individual IRQStates are still left around.
->
-> Issue qemu_free_irq() at ahci_uninit().
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Classic leak resulting from qemu_allocate_irqs(). Ideally I
-would like to be able to remove that function exactly because
-it does tend to result in leaks, but we still have some users
-nobody's cared enough to try to rework yet.
+> On Wed, Sep 02, 2026 at 04:37:44PM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Wed, Sep 02, 2026 at 01:25:33PM +0200, Markus Armbruster wrote:
+>> >> Zhang Chen <zhangckid@gmail.com> writes:
+>> >>=20
+>> >> > On Tue, Sep 1, 2026 at 1:47=E2=80=AFPM Markus Armbruster <armbru@re=
+dhat.com> wrote:
+>> >> >>
+>> >> >> Zhang Chen <zhangckid@gmail.com> writes:
+>> >> >>
+>> >> >> > Monitors that require an IOThread share the internal mon_iothrea=
+d.
+>> >> >> > Account for each monitor explicitly in IOThread holder tracking,=
+ using
+>> >> >> > the monitor's canonical QOM path to distinguish holders.
+>> >> >> >
+>> >> >> > Acquire the shared monitor IOThread AioContext once, using the m=
+onitor
+>> >> >> > QOM path as the holder, and reuse the stored context for later
+>> >> >> > operations.
+>> >> >> >
+>> >> >> > Release the holder from the Monitor ObjectClass::unparent callba=
+ck,
+>> >> >> > while the canonical QOM path is still available. This covers eve=
+ry
+>> >> >> > object_unparent() path and avoids duplicating the cleanup in
+>> >> >> > monitor_cleanup() and monitor_qmp_prepare_delete().
+>> >> >> >
+>> >> >> > The internal mon_iothread remains hidden from query-iothreads, a=
+s before.
+>> >> >> > Management applications therefore cannot use it to determine whi=
+ch
+>> >> >> > monitors are using the IOThread. Nevertheless, track the monitor
+>> >> >> > holders so that they follow the same explicit holder and
+>> >> >> > IOThread reference lifecycle as other AioContext users.
+>> >> >> >
+>> >> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>> >> >>
+>> >> >> I have a question for our QOM experts (Paolo and Daniel).
+>> >> >>
+>> >> >> This patch takes a reference in its UserCreatableClass method
+>> >> >> complete(), and relinquishes it in its ObjectClass unparent() meth=
+od.
+>> >> >> Is that correct and clean?  Or should complete() pair with
+>> >> >> prepare_delete()?
+>> >> >
+>> >> >
+>> >> > Add some background information in previous reviews for here:
+>> >> > https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05318.html
+>> >>=20
+>> >> Aha, Stefan asked for monitor_finalize(), which doesn't exist.  You t=
+hen
+>> >> moved it to the unparent() method.
+>> >
+>> > monitor_finalize() does exist as of about a month ago. It was
+>> > introduced as part of my series that turned Monitor into a QOM
+>> > object.
+>>=20
+>> I was on an old branch.  Sorry for the noise!
+>>=20
+>> >> My question for the QOM maintainers remains: is it okay to pair
+>> >> complete() with unparent(), or should it pair with prepare_delete()?
+>> >
+>> > In general most things done in complete() can/should be undone in the
+>> > finalize() callback IMHO.
+>>=20
+>> I can't see a finalize() callback, and I *am* on current master now.  Do
+>> you mean unparent(), or do you mean monitor_finalize()?
+>
+> Sorry for the ambiguity. The latter.
+>
+> When I wrote "finalize()" I meant to say "instance_finalize()", as the
+> generic name of the callback field in the Type, which is
+> "monitor_finalize()" in the specific Monitor implementation.
 
-Another way to fix this would be to embed the IRQState into
-the AHCIDevice struct, and then use qemu_init_irq_child(),
-similarly to how b38859be76abf removed the qemu_allocate_irqs()
-use from hw/isa/piix.c.
+If I understand you correctly, the code this patch puts in
+monitor_unparent() should instead go into monitor_finalize().  Fair?
 
-But I have no objection to this "just fix the leak by calling
-the free function" patch.
-
-thanks
--- PMM
 
