@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E29C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC94C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2LbF-0001Cm-5V; Fri, 04 Sep 2026 00:32:25 -0400
+	id 1x2LbE-0001Ci-PN; Fri, 04 Sep 2026 00:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2Kmy-0004TH-35; Thu, 03 Sep 2026 23:40:28 -0400
-Received: from mail-m155101.qiye.163.com ([101.71.155.101])
+ id 1x2KlI-0004Nc-3f
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:38:44 -0400
+Received: from mail-m49198.qiye.163.com ([45.254.49.198])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2Kmv-00038f-So; Thu, 03 Sep 2026 23:40:27 -0400
-Received: from LAPTOP-99KJFSET (unknown [36.153.54.56])
- by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb79e5;
- Fri, 4 Sep 2026 11:31:13 +0800 (GMT+08:00)
+ id 1x2KlF-00039J-7K
+ for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:38:43 -0400
+Received: from LAPTOP-99KJFSET (unknown [36.153.54.109])
+ by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb79f4;
+ Fri, 4 Sep 2026 11:31:31 +0800 (GMT+08:00)
 From: Hongyan Xu <getshell@seu.edu.cn>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>
-Subject: [PATCH] dump: reset guest_note_size when the guest note is discarded
-Date: Fri,  4 Sep 2026 11:31:12 +0800
-Message-ID: <20260904033113.1194-1-getshell@seu.edu.cn>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hongyan Xu <getshell@seu.edu.cn>
+Subject: [RFC PATCH] migration/rdma: remove the dangling fd handler before
+ re-entering loadvm
+Date: Fri,  4 Sep 2026 11:31:30 +0800
+Message-ID: <20260904033130.276-1-getshell@seu.edu.cn>
 X-Mailer: git-send-email 2.50.1.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa06a786f8203a1kunm32f5d9e724039
+X-HM-Tid: 0aa06a78b4cf03a1kunm7e0be8a224083
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCSB9KVhpMGkNNHR5NTRpJTFYeHw
- 5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VTk1ZV1kWGg8SFR0UWUFZT0tIVUpLSUhOQ0
- NVSktLVUtZBg++
+ tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaQkhKVhhDGE9JTx4fGhpPTlYeHw
+ 5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VSktCWVdZFhoPEhUdFFlBWU9LSFVKS0lITk
+ NDVUpLS1VLWQY+
 DKIM-Signature: a=rsa-sha256;
- b=eZSOaVKSC4pKGaD+LJCGUwJqowHlTZyRPIJ2AVK7siXyw9Ncu2Tp8H+N8BevhjNcta5ovA6lPc+ws6tB/zSUV+oc40HLUDHOhnFhstdyVDjZ7Uyb/hVilgzydG/HUtzP6wJ5sXalGuAEqC5LdnT2+crIJwB60NOh1cagshvqEnI=;
+ b=KLW/qLqs/nXxryC32U9omVjdAZAXYkj0y2ziN8lVce36ezspyN7JZb179sZfDOculw+H26uSWh+YP2d3vxhvUKwYiUSx20/yP146T8T6S1RX+l22OFV390peiFVEM9N8cKEqMWUAN1T8MGGzNiDJha1iX77sxVtAwUeEqTu8Lg0=;
  c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1; 
- bh=cEN3FPmkQR+mfyk0Hh7Q/XQ8BfLjMjCvjCsiEnuYpQ0=;
+ bh=v14I0uhvvc/poJ+OXiBQ/bwNrSetEMETBP/CF3on9P8=;
  h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=101.71.155.101; envelope-from=getshell@seu.edu.cn;
- helo=mail-m155101.qiye.163.com
+Received-SPF: pass client-ip=45.254.49.198; envelope-from=getshell@seu.edu.cn;
+ helo=mail-m49198.qiye.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -67,59 +70,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When dump_init() reads the guest VMCOREINFO note and decides the note
-header is invalid (oversized name/desc or note_size larger than the
-buffer read from the guest), it frees s->guest_note and sets it to NULL
-but leaves s->guest_note_size at its previous value.
+The destination RDMA accept path runs the incoming migration coroutine
+(mis->loadvm_co).  While blocked waiting for an RDMA completion it parks
+itself in yield_until_fd_readable() (util/qemu-coroutine-io.c) on a
+completion-channel fd.  That helper registers an fd handler whose opaque
+is a stack object (FDYieldUntilData) and only removes the handler from
+inside its own fd_coroutine_enter() callback.
 
-dump_process() later dispatches on the requested format.  For
-DUMP_GUEST_MEMORY_FORMAT_WIN_DMP it calls create_win_dump(), which in
-dump/win_dump-x86.c dereferences s->guest_note unconditionally:
+rdma_cm_poll_handler() handles RDMA_CM_EVENT_DISCONNECTED /
+RDMA_CM_EVENT_DEVICE_REMOVAL by calling qemu_coroutine_enter() on the
+coroutine directly.  When the coroutine is parked in
+yield_until_fd_readable() at that moment, this bypasses
+fd_coroutine_enter(): the coroutine resumes and returns from the wait,
+but the fd handler stays registered with an opaque that points into the
+(now returned-from) stack frame.  A later event on that fd then calls
+fd_coroutine_enter() with a dangling pointer -> use-after-free.
 
-    WinDumpHeader *h = (void *)(s->guest_note + VMCOREINFO_ELF_NOTE_HDR_SIZE);
+Record, around the yield, the AioContext and fd the coroutine is parked
+on, and make rdma_cm_poll_handler() remove that fd handler before it
+re-enters the coroutine.
 
-so a NULL s->guest_note results in a NULL-pointer dereference (crash /
-host DoS) instead of the intended clean error.
-
-guest_note is only ever non-NULL when guest_note_size was set together
-with it, so make the two consistent: whenever the note is freed and
-reset to NULL, also reset guest_note_size to 0, and harden
-create_win_dump() to reject a missing note before dereferencing it.
+This is an RFC: the coroutine/thread wake-up semantics in this area were
+also discussed by Peter Xu's 2025 series ("migration/rdma: Remove
+coroutine path in qemu_rdma_wait_comp_channel" / "Remove
+rdma_cm_poll_handler"); if that direction is preferred this patch should
+be reworked accordingly.
 
 Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
 ---
- dump/dump.c         | 1 +
- dump/win_dump-x86.c | 5 +++++
- 2 files changed, 6 insertions(+)
+ migration/rdma.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/dump/dump.c b/dump/dump.c
-index 52be7258a5..a2073cea5d 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -1906,6 +1906,7 @@ static void dump_init(DumpState *s, int fd, bool has_format,
-                 warn_report("Invalid guest note header");
-                 g_free(s->guest_note);
-                 s->guest_note = NULL;
-+                s->guest_note_size = 0;
-             } else {
-                 vmcoreinfo_update_phys_base(s);
-                 s->note_size += s->guest_note_size;
-diff --git a/dump/win_dump-x86.c b/dump/win_dump-x86.c
-index 0dd0c503c5..97c5e3e0da 100644
---- a/dump/win_dump-x86.c
-+++ b/dump/win_dump-x86.c
-@@ -445,6 +445,11 @@ bool win_dump_available(Error **errp)
+diff --git a/migration/rdma.c b/migration/rdma.c
+index e976739fad..66175aa60b 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -360,6 +360,17 @@ typedef struct RDMAContext {
+      */
+     int migration_started_on_destination;
  
- void create_win_dump(DumpState *s, Error **errp)
- {
-+    if (!s->guest_note) {
-+        error_setg(errp, "win-dump: no vmcoreinfo note available");
-+        return;
-+    }
++    /*
++     * While the incoming-migration coroutine is parked in
++     * yield_until_fd_readable() on a completion channel we record the
++     * fd and AioContext here.  The cm event handler uses this to remove
++     * the fd handler before re-entering the coroutine; without that the
++     * handler keeps pointing at the coroutine stack after the wait
++     * returns, i.e. a dangling fd handler.
++     */
++    AioContext *wait_ctx;
++    int wait_fd;
 +
-     WinDumpHeader *h = (void *)(s->guest_note + VMCOREINFO_ELF_NOTE_HDR_SIZE);
-     X86CPU *first_x86_cpu = X86_CPU(first_cpu);
-     uint64_t saved_cr3 = first_x86_cpu->env.cr[3];
+     int total_registrations;
+     int total_writes;
+ 
+@@ -1248,7 +1259,21 @@ qemu_rdma_wait_comp_channel(RDMAContext *rdma,
+     struct rdma_cm_event *cm_event;
+ 
+     if (qemu_in_coroutine()) {
++        AioContext *ctx = qemu_get_current_aio_context();
++
++        /*
++         * Record where the coroutine is parked so that
++         * rdma_cm_poll_handler() can remove the fd handler before it
++         * re-enters us (yield_until_fd_readable() only removes the
++         * handler through its own fd_coroutine_enter() callback; a
++         * direct qemu_coroutine_enter() would leave a handler whose
++         * opaque points at our stack frame).
++         */
++        rdma->wait_ctx = ctx;
++        rdma->wait_fd = comp_channel->fd;
+         yield_until_fd_readable(comp_channel->fd);
++        rdma->wait_ctx = NULL;
++        rdma->wait_fd = -1;
+     } else {
+         /* This is the source side, we're in a separate thread
+          * or destination prior to migration_fd_process_incoming()
+@@ -3024,6 +3049,21 @@ static void rdma_cm_poll_handler(void *opaque)
+         }
+         rdma_ack_cm_event(cm_event);
+         if (mis->loadvm_co) {
++            /*
++             * The incoming coroutine may be parked in
++             * yield_until_fd_readable() on a completion channel.  Its
++             * fd handler is normally removed by fd_coroutine_enter()
++             * when that fd becomes readable.  If we re-enter the
++             * coroutine directly we must remove the handler first,
++             * otherwise it stays registered with an opaque pointing at
++             * the (now returned-from) coroutine stack frame.
++             */
++            if (rdma->wait_fd >= 0 && rdma->wait_ctx) {
++                aio_set_fd_handler(rdma->wait_ctx, rdma->wait_fd,
++                                   NULL, NULL, NULL, NULL, NULL);
++                rdma->wait_fd = -1;
++                rdma->wait_ctx = NULL;
++            }
+             qemu_coroutine_enter(mis->loadvm_co);
+         }
+         return;
 -- 
 2.50.1.windows.1
 
