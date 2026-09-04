@@ -4,74 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41839C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CD6C624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Pie-0007i8-Dq; Fri, 04 Sep 2026 04:56:20 -0400
+	id 1x2PkM-0008QJ-5Q; Fri, 04 Sep 2026 04:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x2Pic-0007hb-Hy
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:56:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2PkL-0008Q7-Ch
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:58:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x2Pib-0007v1-1a
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:56:18 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2PkJ-0008Aj-Cs
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:58:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788512176;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1788512282;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MQCXbWd/zqlulyBo0tQVR5Z4BjsuzdsGVVJ1mKzCz8k=;
- b=CMNPXxDXIyugxX1afxdT0/+VBLN27U7w2377Flksn9VfNMMKvPvdmP+QUUcakwtIM7JAHD
- eaA1KKm2Moot2J9gti2iDbNT4ApoBpUlTVuMrAhqkqGjaVDD72IYoMRVowTyiM6YKqWczG
- 0YA6x4lZgEItmc4u7bk0hpf+6lgV1M8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Pi50hsbUW9bNyciGsWeokM7D4EhYM7KrGGc/O93nfRA=;
+ b=eo/iEw/8C3JqBJ+h4/WmEWi+n0PtpUQ2OlX6RySTUxsPdamsK2kI0scEwaUBr+VBio/juA
+ 2HqmX/n13fstdC4Bxa1hcfg9DAGX4FsOwFccMblknlchh8ewguHgUWcZ5j33EgGB9wEVqd
+ uNnzTkO/KD6DG6dKtwLMZeuyExFKv9Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-iTd7stNIP2aQio8y3hWkIQ-1; Fri,
- 04 Sep 2026 04:56:13 -0400
-X-MC-Unique: iTd7stNIP2aQio8y3hWkIQ-1
-X-Mimecast-MFC-AGG-ID: iTd7stNIP2aQio8y3hWkIQ_1788512172
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-CTW8RJP1PSi6DswWlF-7nQ-1; Fri,
+ 04 Sep 2026 04:57:59 -0400
+X-MC-Unique: CTW8RJP1PSi6DswWlF-7nQ-1
+X-Mimecast-MFC-AGG-ID: CTW8RJP1PSi6DswWlF-7nQ_1788512278
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F182B1802173; Fri,  4 Sep 2026 08:56:11 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7DDDB3000223; Fri,  4 Sep 2026 08:56:11 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DC3F821E6A04; Fri, 04 Sep 2026 10:56:08 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,  qemu-devel@nongnu.org,  Chao Liu
- <chao.liu@processmission.com>
-Subject: Re: [PATCH 01/18] checkpatch: Fix checking of newlines in error
- messages
-In-Reply-To: <apm10EPO4vYlZLQZ@x1.local> (Peter Xu's message of "Thu, 3 Sep
- 2026 14:00:48 -0400")
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-2-farosas@suse.de> <apmwZbSLZ46yvGmT@x1.local>
- <87bjae8bya.fsf@suse.de> <apm10EPO4vYlZLQZ@x1.local>
-Date: Fri, 04 Sep 2026 10:56:08 +0200
-Message-ID: <87fqzp9yzb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BCE8184AF91; Fri,  4 Sep 2026 08:57:58 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A13C01955F10; Fri,  4 Sep 2026 08:57:55 +0000 (UTC)
+Date: Fri, 4 Sep 2026 09:57:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH V14 06/15] monitor: track IOThread users with QOM paths
+Message-ID: <apqIEAIVvouwxSQN@redhat.com>
+References: <20260831160038.221776-1-zhangckid@gmail.com>
+ <20260831160038.221776-7-zhangckid@gmail.com>
+ <8733vtbk16.fsf@pond.sub.org>
+ <CAK3tnvLbaJ4b+gRhXC678cye-cHv+aP3FFwRvhPNjyfSHxL6MA@mail.gmail.com>
+ <87qzjb3nf6.fsf@pond.sub.org> <apgONqZ4sWaenjVG@redhat.com>
+ <87jyp31zyf.fsf@pond.sub.org> <aphL_rrAVYq8D7ie@redhat.com>
+ <8733vph0vl.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8733vph0vl.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,61 +93,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, Sep 04, 2026 at 10:33:18AM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Wed, Sep 02, 2026 at 04:37:44PM +0200, Markus Armbruster wrote:
+> >> Daniel P. Berrangé <berrange@redhat.com> writes:
+> >> 
+> >> > On Wed, Sep 02, 2026 at 01:25:33PM +0200, Markus Armbruster wrote:
+> >> >> Zhang Chen <zhangckid@gmail.com> writes:
+> >> >> 
+> >> >> > On Tue, Sep 1, 2026 at 1:47 PM Markus Armbruster <armbru@redhat.com> wrote:
+> >> >> >>
+> >> >> >> Zhang Chen <zhangckid@gmail.com> writes:
+> >> >> >>
+> >> >> >> > Monitors that require an IOThread share the internal mon_iothread.
+> >> >> >> > Account for each monitor explicitly in IOThread holder tracking, using
+> >> >> >> > the monitor's canonical QOM path to distinguish holders.
+> >> >> >> >
+> >> >> >> > Acquire the shared monitor IOThread AioContext once, using the monitor
+> >> >> >> > QOM path as the holder, and reuse the stored context for later
+> >> >> >> > operations.
+> >> >> >> >
+> >> >> >> > Release the holder from the Monitor ObjectClass::unparent callback,
+> >> >> >> > while the canonical QOM path is still available. This covers every
+> >> >> >> > object_unparent() path and avoids duplicating the cleanup in
+> >> >> >> > monitor_cleanup() and monitor_qmp_prepare_delete().
+> >> >> >> >
+> >> >> >> > The internal mon_iothread remains hidden from query-iothreads, as before.
+> >> >> >> > Management applications therefore cannot use it to determine which
+> >> >> >> > monitors are using the IOThread. Nevertheless, track the monitor
+> >> >> >> > holders so that they follow the same explicit holder and
+> >> >> >> > IOThread reference lifecycle as other AioContext users.
+> >> >> >> >
+> >> >> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> >> >> >>
+> >> >> >> I have a question for our QOM experts (Paolo and Daniel).
+> >> >> >>
+> >> >> >> This patch takes a reference in its UserCreatableClass method
+> >> >> >> complete(), and relinquishes it in its ObjectClass unparent() method.
+> >> >> >> Is that correct and clean?  Or should complete() pair with
+> >> >> >> prepare_delete()?
+> >> >> >
+> >> >> >
+> >> >> > Add some background information in previous reviews for here:
+> >> >> > https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05318.html
+> >> >> 
+> >> >> Aha, Stefan asked for monitor_finalize(), which doesn't exist.  You then
+> >> >> moved it to the unparent() method.
+> >> >
+> >> > monitor_finalize() does exist as of about a month ago. It was
+> >> > introduced as part of my series that turned Monitor into a QOM
+> >> > object.
+> >> 
+> >> I was on an old branch.  Sorry for the noise!
+> >> 
+> >> >> My question for the QOM maintainers remains: is it okay to pair
+> >> >> complete() with unparent(), or should it pair with prepare_delete()?
+> >> >
+> >> > In general most things done in complete() can/should be undone in the
+> >> > finalize() callback IMHO.
+> >> 
+> >> I can't see a finalize() callback, and I *am* on current master now.  Do
+> >> you mean unparent(), or do you mean monitor_finalize()?
+> >
+> > Sorry for the ambiguity. The latter.
+> >
+> > When I wrote "finalize()" I meant to say "instance_finalize()", as the
+> > generic name of the callback field in the Type, which is
+> > "monitor_finalize()" in the specific Monitor implementation.
+> 
+> If I understand you correctly, the code this patch puts in
+> monitor_unparent() should instead go into monitor_finalize().  Fair?
 
-> On Thu, Sep 03, 2026 at 02:46:37PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Wed, Sep 02, 2026 at 07:15:29PM -0300, Fabiano Rosas wrote:
->> >> Using newlines in the g_test_message is fine. It automatically adds
->> >> the '#' required by the TAP protocol to the start of each line.
->> >
->> > IIUC we have such check not because TAP, but because all these functions
->> > will append one newline at the end, hence it's not needed.  IOW, if it
->> > applies to g_test_message(), I don't see why it doesn't apply to the rest.
->> > But maybe there're other reasons?
->> >
->> > To make it simpler, maybe we just call a few times g_test_message()?
->> >
->> 
->> Not sure I understand your point, Peter. I want to be able to print nice
->> messages in patch 9:
->> 
->>  g_test_message("expected vs. found:\n\n%s\n---\n%s:%s", str, t2[match], t2[match + 1]);
->> 
->>  # HMP output mismatch for entry at line 55:
->>  # expected vs. found:
->>  #
->>  # max-bandwidth: 10356305952768 bytes/hour
->>  # ---
->>  # max-bandwidth: 10356305952768 bytes/second
->> 
->> What would be the issue of having newlines here?
->
-> No issue here that I can see.  My question was, why you moved
-> g_test_message() out only, but not all?
->
-> My gut feeling is we check this because people forget that all these
-> functions includes a newline.
->
-> So if your point stands here that "newlines can be in the middle", they
-> should apply to all, not one.
+Yes, unless there's some constraint I'm not aware of, it feels like
+it could go in the existing monitor_finalize() method to avoid having
+cleanup split across two callbacks.
 
-I'm not sure I understand you correctly.  If you suggest to permit
-newlines in the middle of error_setg(), error_report() & friends, I
-disagree.  qapi/error.h:
-
- * The resulting message should be a single phrase, with no newline or
- * trailing punctuation.
-
-If you want to provide additional information, use error_append_hint() /
-error_printf().
-
-> But still, I also don't see why we can't invoke g_test_message() a few
-> times here too, if we want to avoid any global touch like this to land the
-> whole thing faster..
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
