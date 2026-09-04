@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 919F9C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99094C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TaU-0006j0-Qj; Fri, 04 Sep 2026 09:04:10 -0400
+	id 1x2TaP-0006cc-Gd; Fri, 04 Sep 2026 09:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2Ta8-0006VF-HG
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:49 -0400
+ id 1x2TZq-0006Nd-Qx
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:34 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TZw-00037Y-Ud
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:45 -0400
+ id 1x2TZo-00034P-8O
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:30 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-49b0d78a801so9334425e9.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:03:33 -0700 (PDT)
+ 5b1f17b1804b1-49557167508so11253725e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788527012; x=1789131812; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788527007; x=1789131807; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=2aEP2arVZ2FHdJqm5ubVDao88BgNS/POQfZZHvg0FCE=;
- b=T7GrNPRJZjageBtrNbE6EbJQt1IddtaVOhFuJSrXNcbDP3p2EUTei9kR9UTaEZjRbl
- vY3y62VJFY+GT/b2NrSHBcIr1/L+gXk/Rs1tk91edfxW6JsLeeXddC/ZUP+F7agrOVUK
- Ek5G6gyjY1OfImhTwf0LBAqV2RU7Tq6MK188kaelWsUiSxJnhJsHDD5LBzUxOUx2tKIz
- pfqwBH4mLZ7f6hbx5HlEgdzdBtKNCpztNHevaMK4of0+UvVSLKmPaOiZv5aCN9rnGPpA
- 11dHwaWWcCIFkHQntemOYmj3vHMj2Ns0g8a1XTxIoyHcjS7CTQ8A5AWp28Z2sPqEcJn8
- NvZg==
+ bh=ZV80QN3nIf03s825p734t5vAX2P3pOVwItQJeV7bCYU=;
+ b=mqh+nsE0ubShomlmvc5sDd6KKqm2cJ85esm6p2bAuMBgt9+WrZerCKpMx0AwJAletR
+ buKFG4IJQ/FgSpKMluBtXNn4qDkpQfuVBPuPBTa5fkXmCWI0+tJDE/titOTPVumAPYw9
+ QIN9Yi/usLYUNFt875+6pu82Vjdx0XGUXy/ZPoB438bFSWcltYj57wk50GDQceHArvUf
+ YFeftdruwKHeGDzGqhuFduJ9NlksS949LUnOwUnQ8lizSII60loz7reYxyrfM2Ohx/SJ
+ dEPzC4c4fAZKQZn4oFgRn7GuQ7l3rmmDVyVX6PVU0omZIctMNm86Ccs/QyYuRzvfJ0Qu
+ lE2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788527012; x=1789131812;
+ d=1e100.net; s=20251104; t=1788527007; x=1789131807;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=2aEP2arVZ2FHdJqm5ubVDao88BgNS/POQfZZHvg0FCE=;
- b=G8Q/nHxhVwCO2z5jJKwmLfxdJsIKCBhcB9soNgMoqdK5KKCwtXl0Iu9Uv9QKdleB3Z
- VTks5JIEBV3KMVu74v3LhUUnRgfTqJpbNjgFLsR7voBJm2p3mv7EkTdEGMizW6/+uzmq
- Nly8a193uQHYEnivM4tuq0seFcvpin7Z02/I4zYm2Mj/WMxeMcPX0bkIDzlRva9FCeTx
- SOFVTgHor0pGMidqsoTXTMLtItDEOHQOGiWoe4asirCf8kuYrvXZ9GujtUjtwUhBpVAF
- vUrrWR6lKERlvEr5XDoTTphOJUvrgkXuPcgWxCC6huTxGB0EDvqzndNkaSzjz/yaIDJd
- M0LQ==
-X-Gm-Message-State: AFuF++mvh1owdNAw3bToWQpaOGWgrChdf8kuXU7Xguv+5hh70AVAbjwx
- 3Ak377Gu+LvnCelw1y3GZCTcMgL9djrXAXlh8lWG/iaM1uzefCizMNFewb+dAqHfxL4=
-X-Gm-Gg: AYBFou33zEBrrY5YmvQHIY6XWAZTXb57ceRUY/iCgUisPBxWTmWYucRAkueIVDNEOS8
- wKuN61x6WwbpVehnNjgrkEGwCz3Ufd7HARUvAkYT+1P5/EZvs12c0TcbmS8050/f+ACA1qnJOFW
- EoB5QzA3L31WqiEup3uUix/hWVBUoXxRpDPDwD2baVQvtnqkrGEy3G4S3g09QPhp2ulQus6mOCy
- 3nMOH4X1oRMb9CdOCwyHBl+WIEN7N1m3IweB7I0n2b8tY9aM1oXRZq4jo90slTeS9AxIMbj/4b+
- 9YWTKHKRy45D8hweeLDJqQcu+m5CVuzbzxZzmEdr37pcPV5fkne5KNzWAS13aRETptdWiWQqaTm
- XRW/CORqgh68TGwfzRdRWrmKp18doffAQVgZZ3v57aCN626MA2vgfD4Li4f5LhzzhxKjQCpC5ML
- 74pMAh6C30Ej/o2B12np1WZrLsZ30MBsfMFYJIgCgFGRukKSXd4E0+NJP4Y2pR
-X-Received: by 2002:a05:600c:46d5:b0:49c:fc6c:be06 with SMTP id
- 5b1f17b1804b1-49cfc6cc142mr31704175e9.29.1788527012046; 
- Fri, 04 Sep 2026 06:03:32 -0700 (PDT)
+ bh=ZV80QN3nIf03s825p734t5vAX2P3pOVwItQJeV7bCYU=;
+ b=FHJxEtLqSm0A/phFJBemFwhvAs3hXc67nEUoGL42QHbCr6J45ycvDG+YH++Mfp0nU+
+ g09BZD2CbqJ5czX2j5wmB7RKfUPaApGFOo36zcmLndRemlkDdTiGLB2EUTXWVScptQOZ
+ sQsyIPjjEHLs5KTxP77sGL7L0Dkhkys31dWfm5rrRkBJrb1MsJ500THS4hAZq9i9Pvh4
+ kdfTQn3Z6rpqaEW4L5+XVAqnQALagZ8isCsN/dPuuSHxBAppGgEES1mDd4CjXRh1rX2q
+ MutcgsSsXea40UJ+/qOD0AsUZhW1k57XSlX2YfdHCKYQRCykGhHq6kcGkx7csX3x38BQ
+ W96Q==
+X-Gm-Message-State: AFuF++m4QXdqZHdYDmx5DUF0Fx2EpFAdDALFdpLAq1vqSdoUVXpFGh8q
+ lvoNZ5IH0XZ94MoqClImJjm06SXEm8NFKRSD9sDJGfglXeMKxu9gsE10pi985N3b9NQ=
+X-Gm-Gg: AYBFou2awzl4VLzsh+nSOag7hIpDV4Kr5AoWcJ/00jzAOnbN2x7Dj8K1qV2v1FMdUm4
+ tiQe1VDsuNfbY5NYFp3ZoqXmTMp9bIjYrIDGGrvHntlfbahJ3qtuxX02z2p4W7JoRiAvAF/xXXy
+ ZPAPImLTRR1tsQQcY+hCTcirXkaGtmyXqdbyb6Tkmz+rYCqSgjeRFEzY+9BOrSk6yitBH4J9Q3u
+ QCsMPcLUqbhiVdr8E6f/PNfCtyYNpCAW233pq3/uMaBuBDcWjQLch8nA6/xH5Tju9z7zrjiUrwL
+ a+BXlXzTCaAErClkXlZqIfU1vFs/bvDqCmN6thnYOLNzwagcSiE6ye5hT6vsxzsk/MIPwqBDUT5
+ im9j5jqVt+jrB83OINBikkKPpnQLbCVPLHTk9jk50H7CDEqX3OqwbxjMt83ieCvXci9NIlQDODX
+ KKIBLoicf3bwyWoHMIw5sjSrHM5tStHKPX9ehGkGgXeGhSUmgHgEAPFyaL0qVM
+X-Received: by 2002:a05:600d:8490:20b0:49c:f89b:f82 with SMTP id
+ 5b1f17b1804b1-49cf89b1bc2mr78563625e9.12.1788527005595; 
+ Fri, 04 Sep 2026 06:03:25 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ce5952560sm177216395e9.3.2026.09.04.06.03.27
+ 5b1f17b1804b1-49ce551bf7asm129287235e9.2.2026.09.04.06.03.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 06:03:30 -0700 (PDT)
+ Fri, 04 Sep 2026 06:03:23 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4454061982;
- Fri, 04 Sep 2026 13:46:09 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 832D661CFA;
+ Fri, 04 Sep 2026 13:46:11 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 049/105] tests/tcg/hexagon/overflow.c: add missing include
-Date: Fri,  4 Sep 2026 13:45:03 +0100
-Message-ID: <20260904124604.2207440-50-alex.bennee@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PULL 067/105] tests/tcg/mips64el: user tests
+Date: Fri,  4 Sep 2026 13:45:21 +0100
+Message-ID: <20260904124604.2207440-68-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
@@ -109,28 +111,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-../tests/tcg/hexagon/overflow.c:59:1: error: unknown type name 'bool'
-
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-50-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-68-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/hexagon/overflow.c b/tests/tcg/hexagon/overflow.c
-index 7b5b9ebdde6..9ac2d6eab62 100644
---- a/tests/tcg/hexagon/overflow.c
-+++ b/tests/tcg/hexagon/overflow.c
-@@ -15,6 +15,7 @@
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 0102e74e8a7..7aca685078f 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -147,6 +147,7 @@ subdir('loongarch64')
+ subdir('m68k')
+ subdir('mips')
+ subdir('mips64')
++subdir('mips64el')
  
-+#include <stdbool.h>
- #include <stdlib.h>
- #include <stdio.h>
- #include <stdint.h>
+ image_targets = {}
+ exe_targets = []
+diff --git a/tests/tcg/mips64el/Makefile.target b/tests/tcg/mips64el/Makefile.target
+deleted file mode 100644
+index 78c722a583d..00000000000
+--- a/tests/tcg/mips64el/Makefile.target
++++ /dev/null
+@@ -1,8 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# SPDX-License-Identifier: GPL-2.0-or-later
+-#
+-# MIPS64 little-endian - included from tests/tcg/Makefile.target
+-#
+-
+-#include $(SRC_PATH)/tests/tcg/mips64/Makefile.target
+diff --git a/tests/tcg/mips64el/meson.build b/tests/tcg/mips64el/meson.build
+new file mode 100644
+index 00000000000..f6c0fae7981
+--- /dev/null
++++ b/tests/tcg/mips64el/meson.build
+@@ -0,0 +1,14 @@
++if 'qemu-mips64el' in emulators
++  tcg_tests += {
++    'mips64el-linux-user': {
++      'cc': 'mips64el-linux-gnuabi64-gcc',
++      'cc_dockerfile': 'debian-all-test-cross',
++      'cc_docker_host_arch': ['aarch64', 'x86_64'],
++      'cc_feat_cflags': cc_feat_cflags,
++      'folder': 'mips64el',
++      'gdb_arch': 'mips64el',
++      'qemu': emulators['qemu-mips64el'],
++      'tests': tcg_tests_mips64,
++    }
++  }
++endif
 -- 
 2.47.3
 
