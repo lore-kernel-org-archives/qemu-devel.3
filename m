@@ -4,129 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA1DC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 07:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA146C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 07:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2OnO-0001K0-IZ; Fri, 04 Sep 2026 03:57:12 -0400
+	id 1x2Oo3-0001nd-BV; Fri, 04 Sep 2026 03:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1x2OnH-0001J7-8f; Fri, 04 Sep 2026 03:57:04 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1x2OnF-0005Oi-07; Fri, 04 Sep 2026 03:57:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dAFPwGvWBSpDeo4uea8wiAD8btLLohzGQKsRLfDqVACvXG81fo9h4An3CCawYawk1vhoxzgZ/yTG9QfHaeRRiHepD7mZepFpkDowqChOoSeN8bw8m+0FOCXXPX2ghl8P3CiMFCR71m/3AdI/Rx6ztwxiXAQ/CfBgkKq5qDopXs/qLBPJkOxUzbJGNrEmxZ6OZjdrcHyduRz4eY538cPScAfg3rgeLr/HDWtxKfl+hfGI55lpL2RJxnHRxyoOE7sxIrqau262cYo8xveKNnSGUD7lEqpeHM9dH9z9ygZmnoTDKMj+OSvhGPd1XGcX+FyZSP33z+D6bMy+j6JX5bsmKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oNBfHFCkV6Vz9q5SDzA3i3zsgdMgcDEmmkyVEae30GI=;
- b=S2aj73v8sBd0mB8RyLIDOxqmytbF9P2/rLzaytZ8tPz5c+1rTcnLVSboER6R8J2s6EwZvT2GXhhksD9d5M8hr/RB4iSIU6x9OzYNg4JEimsXAurD0HHeDThlEE7d4uP7M+WLn0ZSsgH3PX/1OH1Qx7eQOdtY3inQF/WZxX003duEMOZsRuGh/BU/axNs4q0GA4K6pW4OYc4odoN2ipYSHkKrdchPGFOO2Val1TsrKzDby3NatX5WJ73trT1vKqVKeheVsf9c/HjLtyaJ4TXQoG4keNALhYNWAtYDUt3SsMr/myXpIlqVsghIbXoNy73dpavTftmiH20F8BpvhfZPRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oNBfHFCkV6Vz9q5SDzA3i3zsgdMgcDEmmkyVEae30GI=;
- b=M5CuToxdnzMQeWzW8jz14+5gh5kKEk6aYQGr72BufD8Lfoslbb4CLQ3uDHihg9Y2/kSJligV7wiL9Hnjm5qdTGWtXmC9J0nsjyn9/4jMhRdWHIWteQFdmj8OKjv7rtzbygIQIGPrhQ/OmU895W7YXfYMJHaOoYMzYRiKl3SEu+1KDUM5zX2bp3nuTAE4wB/Quv6OqAZmxjRHAdI9MFbpk42s/MC10cpo7gxoHoscRi/uscCroLvKLUvB9Li97jwfmKqFI4TF5sk/wC7awlHoXtenUMlOFifdam4x1thQTTik5tLPMmjSc2rfogXeSijkyj9CU8WtBppSRok6BLAV0g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SG2PR02MB5482.apcprd02.prod.outlook.com (2603:1096:4:1c1::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Fri, 4 Sep 2026
- 07:56:53 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 07:56:53 +0000
-Date: Fri, 4 Sep 2026 15:56:48 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- andrew.jones@oss.qualcomm.com, leif.lindholm@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v9 5/5] docs: add riscv-server-ref.rst
-Message-ID: <app5tdclyWG1MlIu@ChaodeMacBook-Pro.local>
-References: <20260903183125.682865-1-daniel.barboza@oss.qualcomm.com>
- <20260903183125.682865-6-daniel.barboza@oss.qualcomm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260903183125.682865-6-daniel.barboza@oss.qualcomm.com>
-X-ClientProxiedBy: PH8P221CA0066.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:349::6) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1x2Onx-0001ls-Gl
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 03:57:45 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1x2Onv-0005R6-2Y
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 03:57:44 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-85a50f6a7f7so8515427b3.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 00:57:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788508661; cv=none;
+ d=google.com; s=arc-20260327;
+ b=JnfqsXSgq3/8UjrMbjWQlpXkUfPDZYZNmcbb+/mB5/Y/7u9VVltLMJgC8WEo+umbAb
+ kyvKUcJZRWb5RBioCuzNn5Kqg4ry1Xbe25xIqp/lNds0f2lzLz/K3/11ry93Opm4c4Jn
+ qGZI6KTmBXTx+cfE5c4PoEIxlLPJaOVtvpPnpR+QqbkAwiM4pLg4+ZMWuQK0LuFtkhdB
+ exTHS69jRIbdp8F0S3TFcVbluyvKdWaIWX4rs9d9vArLnAfztk23L96O55ogs/UD7s5J
+ mrgZozRzIedcC0Bjp5G2pFF4O5NegprUBgqDBro0luWZcEPcR4jRd2uapjiX51mEM1Qf
+ yCbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=F+fAQqv8Mtx05W/9+000N8Yv2TQC/wwSJn+qD/KqxRQ=;
+ fh=CvvL5RCgFYNqG83R1A72L4qg+I3onr61VzjGy6O5ygw=;
+ b=S1ypf6ZOTIj935EeQ804FJxszYMmuUZg6ZwSPw+2UHPkXx2Rm1YW64pbARZ6VpRby4
+ ZUNVGSfYD4sIuK1fUhF86wvc8oYgiWjdwuAuMA+bj5DkXuWO28WFpDHSFluchnXfei5x
+ 2GgEVBUcRiPSwjJkYHCz8K1nfE+syjCQ0NHw/ejnSRR33JFwljgFFfjHCFVcsa11tBf1
+ 14Uk7pWKhlpz0RLYsMghhyvCqCsBlztveacON9l6weqAZG6fHuwyld2+8HSFUkQv6Klf
+ l1rNIvOzofbGFCu3Ub+Kp26l41nwYYgPDnXFbhw+9FX0Y8lgCCIiSAxKa7kpoSrRQMGr
+ Y6xQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788508661; x=1789113461; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=F+fAQqv8Mtx05W/9+000N8Yv2TQC/wwSJn+qD/KqxRQ=;
+ b=m9LXvMQOH/TnMzu8d48E+GbKOTGYHGhNXvjiBv+pQSCFfI2mFZFZMJE20dSPMPn1d+
+ q5zk87cKCS6ed1HY8+UzNaSfpexqmuZs+zVUKJVixCU39QvHru0VeswKrOe58NcV5e71
+ MUvpbxy9JD/NSa2JuNjhmK5gNWiDrxP41IlxmcX9TeKAaXycaCiLDFMf+XKGsho/Iwtn
+ QANi148hCpVKfBvfLO8BJRDPyFtMMxfSzTDdxHBJz9e6UV7yUZnpKWa4a8LndAnu7zlN
+ agDG8l4Xpc0dY3QmExB61gRHMv8yzHneWYHl+pkXSQfWGLfvEX4h9/8btg9bTdgVCWwt
+ yXZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788508661; x=1789113461;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=F+fAQqv8Mtx05W/9+000N8Yv2TQC/wwSJn+qD/KqxRQ=;
+ b=WRXDuYm8HZIzbyhZAdyxkLFp6j+ocJPyK1B97ohw/bq8y8ZKlYIS9KN3FcNFd8qqNU
+ X0YysRnLBtZXhfaMkbt+PyASBrQ57dDCHq+JGPQcl1rftsxcGRBINqSUk1Wnz/0hdVUW
+ apFEvcxvNYwyoZQlrqM+tjBGwHOoanm8qEPTpFxx3voWAoZ/3+6DQ1Spx2fNgh3eNwYG
+ f2mrNNb/7okEMlQQhbUpA7nd856VN+e/vGu0deJd/qH5kdycR2iQDvj8nFdAwp9PH0ry
+ FVgGFvY6MOI/55p54ElDJubLH8DLktykmfEMoeibCgrZydj1nOcPIKrQkLXrua/f53eE
+ p4Jw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBycCNiC5MjAzYJTRIvbNOmAOTIv+rd4OckqThvV4jCsltB14v8I23e9gYkLJws4lc5ywEZBrBgI2R2K@nongnu.org
+X-Gm-Message-State: AFuF++kZByQVIsQ75HTWOU4p4qIVowvtGQvmyxDzW7MxgXdcnsFv4rHM
+ cBPYf+ISrlE3e00bmIBvtD7N1fYhBjdpdgzzHSiKlaFG/1aFTrTx/ubDc3TD3QClRtWfxRhxM1x
+ kE0ArRVu7MtO6aNgMh8rP+YNclGg9JhM=
+X-Gm-Gg: AYBFou0Ul+PwLSi24XsKfjiI6ACARTT4Qk5z41Amap1oLLoCUaNvyZyhSZsjrw4I12g
+ WHuP9O0Jg3Kasi4IRHR8Lmm0NcRgGYi/W8ZzKBorrPOKrS1PPZXudxaTWQ9mOE+fwS6jG2QqrwC
+ y1mpeAVRcz35afEp1SyyhteS3NT6GQ9BU96s+T1cTFtgkOGUsElytlSK0DFAKDIFULIzOhpUky9
+ fVEUbOPKiHCW+gx0TKx90Nj5BcDH71WWbABrP2OYaWNCzns/KqDWLUFNKiv74FZDhxmDFm9I/Wh
+ wWGd4IZ6XmMRRLGfzGjoswPtIdEYezRDGw5fcV/qmsd+
+X-Received: by 2002:a05:690c:28f:b0:870:107b:635d with SMTP id
+ 00721157ae682-87129f3cdbcmr25032387b3.31.1788508661198; Fri, 04 Sep 2026
+ 00:57:41 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SG2PR02MB5482:EE_
-X-MS-Office365-Filtering-Correlation-Id: 98a6eae8-9962-4f86-3872-08df0a5a1540
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|1800799024|7416014|10067099003|6133799003|22082099003|4143699003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: yHpS3rqPvBYujQqEXTd3Tuwk7wPE/U6SbgCc1HIqk8FCQG4lKm0OUxtU6tu5uxZ8aAVToG/T1v1Cpp1nH6R7DF4KPHEpbz3NcFvrt2OAUk7mCYm1GPdLdWVwKzUs3GDSafhF/KPRmpFxjAMaZVVuHeX28QYhfxo/BY2k0omE1s8pPrnoKPj1iYVSiekOjHfsGUQrZJM/FRvCTrVQHyfnErSaTcnMJY9NXRHA8pM/RTisUYHo6Ho6pm5yN/IhoONnSOQCqWaJUodMgEsCquWjIR9LI/X1s/PpHOY1z9250ZxB2/8RypxvPhbYUN7bVTW6XVC4MffK9CpSnxQPFog7DUvaH1DRu3hTrW8TXqJGxpVLnJRCzpvJ8Y+f1yxtAfqcBnZZT9ze0vbriEhUBSvN1J/AVjjzT6yUJogis0TQJaiN61/A7tiG1lq2DQUDUiFi7hHvuJTR1U1nwDpDSrDMvqQbFRMd+fzBq62wBCVvCa14IsgWfLuqelhXvIzemFJcfvSxyBa5x0uz6Bo0NniDAVMyXS+V96uUv5aqcaRW1uZ4Tos39d74k6VgO2FXhHVK9usXr+415XJ4/gTqTN6JnwT/y0egocarUcByv1r2BW4=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(7416014)(10067099003)(6133799003)(22082099003)(4143699003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?n0ErBk1rXhg7vO8VQUy5+zV3Ohbc45ScxK70fRV04nZDu9+UeDnj1NxbKPeA?=
- =?us-ascii?Q?WRGamiSsVJ4r65ZDm7NyfTKxp3626bdozB1Tl1HjtOyHh9wXYU326CfwKum1?=
- =?us-ascii?Q?s+7fzsAA5sq6jJMJ7E/QqhLitwd5ct0YGL8RrB1GT0wyR+kPQDS2yWxS4npu?=
- =?us-ascii?Q?YHz77is+YZ8WxJm0RkQh/oYHOcL8DRQMhKxp4vRbO6T7zB6eqe5dEIhLcl/h?=
- =?us-ascii?Q?YHKguFUwqrH7KfOY8S6NfymWIodBcvn8yJNh1kUy9tqGwm2O1UxOZnBJxDtE?=
- =?us-ascii?Q?Ond/2GtluK5JNZaR08uhNZ6xXjRSJ6X3/xbzvdBejW2/dtS8mU0RydhmoL+L?=
- =?us-ascii?Q?7b/kekMAAlCQEWRpaXENgoqYF/kCJsWRzmm2LnsZzdH4uZX43QP0+5YQinni?=
- =?us-ascii?Q?Xj3pDwgDbi3lls9+L7hPIdU9Vlh1GaaVA0gQk1g8zpMeaNBPc1pg0uQKt/Pd?=
- =?us-ascii?Q?rdof6y2HzMv35zb/7Scv/4/BWKChUuWuKRAYXmIz9WYLOPr08iRXZVuMw2Uw?=
- =?us-ascii?Q?1ZUSlgSAfvKsp8zYRgkbsRlOBUlmCrQbqqB/slVnm8g2sNCzbGEY4b48XBPw?=
- =?us-ascii?Q?LNBDl8klilPjrgoiai4mHZDtGj9fMc47SNhY+QGQSqsVqT2LpBXuvW7dtW8i?=
- =?us-ascii?Q?DuGaevA2i9BOD2g2PknobkPdbN+3jq30prLt4kZKCsOZZ/KjED1Z4bvtmQ6r?=
- =?us-ascii?Q?9FMYZWS9v1FIP+DSgRCzAmXR8nzFe9qLqOEGzPJqrulAFpbqPTNXPcXrXs70?=
- =?us-ascii?Q?vfEYjUIOQ+tU7XQGwvYzDS5YGg8m0t7WqPZMzjjIJzIK2MH7IF9bkR/A/vdQ?=
- =?us-ascii?Q?wBJnS2M9mAOH2Yw+c4JtqdPEV7pzfkWPPOjet4SFUhzTG6N/MhV+gzleLK3U?=
- =?us-ascii?Q?WKqcYJBPO/oh5Hcol1BBwP2MwHulOtg5hbZBetVuPc0/kPpPisKy90uyJNu+?=
- =?us-ascii?Q?orLiQsJRV36l03tjG5d+SDP88jc9zoqBXY3T4pBqsc7wl5MLum77m37zgp+w?=
- =?us-ascii?Q?KYUgzz3nM9F/zXeH2NyC3iamJtvpiAySxo9N7/7toBD6g+UM+KLuAI4ckc5S?=
- =?us-ascii?Q?OztPTgVug4XxY18X9GZqXt3bU1HcU8ZH00HPpnll7s2bSRnDXOiboLch5PGn?=
- =?us-ascii?Q?OqBu7xKAOdIBDfucQn7AwDVbdiiV9/jb5a+EdtGuGOZ+dMRRAI5LbIXm+obR?=
- =?us-ascii?Q?SbI0Xbjbipi14paodLgt3mVfcbZn3INfPnmJ22P5CnC824e/1/5gt9lEt6Rc?=
- =?us-ascii?Q?U7rBuoAj0Lwfnds4HLcE2W3WwZ7DLk3PL5mAtc6qaN2U5m/nLZVF+imrMVVb?=
- =?us-ascii?Q?jTqGyLDLTx8eH3/vOm0oKv7thDFXt11ToBUpYzLbiSAv4xb0GV/GLMnHQCAV?=
- =?us-ascii?Q?SjEUkQqsSBnBUu+30+dtevVy5DUh+JHNqFIFy96ZNlcNI8J6QEiRb/uLxaZL?=
- =?us-ascii?Q?tcNVD/fjq7ePCmXFHM0NTtTexHAkCYY1n1e/Qow/Y3MgvTuvCrsGA+ag530+?=
- =?us-ascii?Q?CxLmvdTHOARK1LuHRMflZPQFWI2++taDWfAwHEH/MKMIHGl4BuYNcliRcf22?=
- =?us-ascii?Q?evQrZ2gIYiWh/Dp+EmKI5rvcKrVmIfs8AcgLp15RkLyS1sMVRud9ABf+v/yF?=
- =?us-ascii?Q?zzCOxDDlBG1Ct1IQRnVIVXdOaq1iEhEtD/dvUpUKoMUjBTk2cukiDSCe6vc9?=
- =?us-ascii?Q?fXxgvRhLgXz7ZMELmWv3denFZm/QME65nvUap7BKzvFiuOXOTyw5gEtmBghA?=
- =?us-ascii?Q?6Tsf0D2482vwQEPM8bM1yr8Q5cNYxyQ=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 98a6eae8-9962-4f86-3872-08df0a5a1540
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 07:56:53.0426 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Tj/FXMnHu6sUMyvydIc9t7xYI2ijQAp6EQ2P12oxpGsgShQv1WTqWCS6uGWkp7BLrwVJGcDbPAi88JsyOWteBZfwj2bBBuWbB/5z1/7nJq0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB5482
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=chao.liu@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+References: <20260903112532.3276678-1-bin.meng@processmission.com>
+ <20260903112532.3276678-3-bin.meng@processmission.com>
+ <0795176d-4580-4acc-a3cf-c40f8d221661@oss.qualcomm.com>
+In-Reply-To: <0795176d-4580-4acc-a3cf-c40f8d221661@oss.qualcomm.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Fri, 4 Sep 2026 15:57:28 +0800
+X-Gm-Features: AcwNN1X4W_P2FJd-ORDICHFQUwr5Ot-Nj9d04bx9wdIHCfLRMjRg1Ifqon25950
+Message-ID: <CAEUhbmW4h_-az5iBsztzy8Yuu06+WMjOYcrL51sW8VEgyAaSMw@mail.gmail.com>
+Subject: Re: [PATCH 02/33] hw/arm: Add basic Phytium Pi machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,103 +122,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 03, 2026 at 03:31:25PM +0800, Daniel Henrique Barboza wrote:
-> Add documentation for the new riscv-server-ref board.
-> 
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Hi Philippe,
 
-Thanks,
-Chao
+On Fri, Sep 4, 2026 at 12:56=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 3/9/26 13:24, Bin Meng wrote:
+> > Add the base topology for the Phytium Pi board built around the
+> > E2000Q SoC, with two FTC310 and two FTC664 CPUs, RAM, GICv3/ITS,
+> > and PL011 UARTs.
+> >
+> > Describe the CPUs as three non-uniform clusters matching the vendor
+> > Linux device tree. Preserve the board CPU slot order so firmware
+> > MPIDR 0x200 maps to QEMU CPU index 2.
+> >
+> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > ---
+> >
+> >   hw/arm/Kconfig         |   8 +
+> >   hw/arm/meson.build     |   1 +
+> >   hw/arm/phytium_e2000.c | 406 ++++++++++++++++++++++++++++++++++++++++=
++
+> >   3 files changed, 415 insertions(+)
+> >   create mode 100644 hw/arm/phytium_e2000.c
+>
+>
+> > +struct PhytiumE2000State {
+> > +    MachineState parent;
+> > +    struct arm_boot_info bootinfo;
+> > +    DeviceState *gic;
+> > +    MemoryRegion ram_low;
+> > +    MemoryRegion ram_high;
+> > +};
+>
+>
+> > +static void phytium_e2000_create_gic(PhytiumE2000State *s)
+> > +{
+> > +    MachineState *ms =3D MACHINE(s);
+> > +    SysBusDevice *gicbusdev;
+> > +    QList *redist_region_count;
+> > +    int i;
+> > +
+> > +    s->gic =3D qdev_new(gicv3_class_name());
+> > +    qdev_prop_set_uint32(s->gic, "revision", 3);
+> > +    qdev_prop_set_uint32(s->gic, "num-cpu", ms->smp.cpus);
+> > +    qdev_prop_set_uint32(s->gic, "num-irq", PHYTIUM_E2000_NUM_IRQS + 3=
+2);
+> > +    qdev_prop_set_bit(s->gic, "has-security-extensions", true);
+> > +    qdev_prop_set_bit(s->gic, "has-lpi", true);
+> > +
+> > +    redist_region_count =3D qlist_new();
+> > +    qlist_append_int(redist_region_count, ms->smp.cpus);
+> > +    qdev_prop_set_array(s->gic, "redist-region-count", redist_region_c=
+ount);
+> > +
+> > +    object_property_set_link(OBJECT(s->gic), "sysmem",
+> > +                             OBJECT(get_system_memory()), &error_fatal=
+);
+> > +
+> > +    gicbusdev =3D SYS_BUS_DEVICE(s->gic);
+> > +    sysbus_realize_and_unref(gicbusdev, &error_fatal);
+> > +    sysbus_mmio_map(gicbusdev, 0,
+> > +                    phytium_e2000_memmap[PHYTIUM_E2000_GIC_DIST].base)=
+;
+> > +    sysbus_mmio_map(gicbusdev, 1,
+> > +                    phytium_e2000_memmap[PHYTIUM_E2000_GIC_REDIST].bas=
+e);
+> > +
+> > +    for (i =3D 0; i < ms->smp.cpus; i++) {
+> > +        DeviceState *cpudev =3D DEVICE(qemu_get_cpu(i));
+>
+> I'd rather you keep a reference in PhytiumE2000State when creating
+> in [*] and access the CPUs that way, not with qemu_get_cpu() (because
+> we plan to restrict it to accel/, as it is problematic on heterogeneous
+> emulation).
 
-> ---
->  docs/system/riscv/riscv-server-ref.rst | 62 ++++++++++++++++++++++++++
->  docs/system/target-riscv.rst           |  1 +
->  2 files changed, 63 insertions(+)
->  create mode 100644 docs/system/riscv/riscv-server-ref.rst
-> 
-> diff --git a/docs/system/riscv/riscv-server-ref.rst b/docs/system/riscv/riscv-server-ref.rst
-> new file mode 100644
-> index 0000000000..0573b4e07c
-> --- /dev/null
-> +++ b/docs/system/riscv/riscv-server-ref.rst
-> @@ -0,0 +1,62 @@
-> +.. SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +RISC-V Server Platform Reference board (``riscv-server-ref``)
-> +=============================================================
-> +
-> +The RISC-V Server Platform specification `spec`_ defines a standardized
-> +set of hardware and software capabilities that portable system software,
-> +such as OS and hypervisors, can rely on being present in a RISC-V server
-> +platform.  This machine aims to emulate this specification, providing
-> +an environment for firmware/OS development and testing.
-> +
-> +`spec`_ is version 1.0 at the introduction of this board.  New spec versions
-> +might trigger a revision of the emulation itself, which will strive to always
-> +match the latest version available.  In case the emulation changes aren't
-> +backwards compatible we'll introduce a versioning scheme, probably via
-> +a machine property, to allow older SW to run with older spec versions.
-> +
-> +The main features included in the riscv-server-ref board are:
-> +
-> +* IOMMU platform device (riscv-iommu-sys)
-> +* AIA
-> +* PCIe AHCI
-> +* PCIe NIC
-> +* No virtio mmio bus
-> +* No fw_cfg device
-> +* No ACPI table
-> +* Minimal device tree nodes
-> +
-> +There are multiple ways of using this reference board.  The spec compliant way
-> +is using an EDK2 image and a TPM device.  The board was tested with the TPM
-> +device ``tpm-tis`` that uses the external ``swtpm`` emulator.  More info on how
-> +to use this device can be found in `tpm`_.
-> +
-> +To use this board coupled with the tpm-tis device, first start the ``swtpm``
-> +process in a shell (the ``log`` parameter is optional):
-> +
-> +.. code-block:: bash
-> +
-> +    $ mkdir /tmp/mytpm1
-> +    $ swtpm socket --tpmstate dir=/tmp/mytpm1 \
-> +            --ctrl type=unixio,path=/tmp/mytpm1/swtpm-sock \
-> +            --tpm2 \
-> +            --log level=20
-> +
-> +And then start QEMU with:
-> +
-> +.. code-block:: bash
-> +
-> + qemu-system-riscv64 -M riscv-server-ref \
-> +     -bios fw_dynamic.bin \
-> +     -kernel EDK2.fd \
-> +     -drive file=nvme_disk.ext2,format=raw,id=hd0,if=none \
-> +     -device ahci,id=ahci \
-> +     -device ide-hd,drive=hd0,bus=ahci.0 \
-> +     -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
-> +     -tpmdev emulator,id=tpm0,chardev=chrtpm \
-> +     -device tpm-tis-device,tpmdev=tpm0 \
-> +     -nographic
-> +
-> +
-> +.. _spec: https://github.com/riscv-non-isa/riscv-server-platform
-> +.. _tpm: https://qemu-project.gitlab.io/qemu/specs/tpm.html
-> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-> index 2639866a3e..74e23fa64c 100644
-> --- a/docs/system/target-riscv.rst
-> +++ b/docs/system/target-riscv.rst
-> @@ -70,6 +70,7 @@ undocumented; you can get a complete list by running
->     riscv/microblaze-v-generic
->     riscv/microchip-icicle-kit
->     riscv/mips
-> +   riscv/riscv-server-ref
->     riscv/shakti-c
->     riscv/sifive_u
->     riscv/tt_atlantis
-> -- 
-> 2.43.0
-> 
+Will fix in v2.
+
+>
+> > +        int intidbase =3D PHYTIUM_E2000_NUM_IRQS + i * GIC_INTERNAL;
+> > +        static const int timer_irq[] =3D {
+> > +            [GTIMER_PHYS] =3D ARCH_TIMER_NS_EL1_IRQ,
+> > +            [GTIMER_VIRT] =3D ARCH_TIMER_VIRT_IRQ,
+> > +            [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
+> > +            [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
+> > +        };
+> > +
+> > +        for (int irq =3D 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+> > +            qdev_connect_gpio_out(cpudev, irq,
+> > +                qdev_get_gpio_in(s->gic, intidbase + timer_irq[irq]));
+> > +        }
+> > +        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interru=
+pt", 0,
+> > +            qdev_get_gpio_in(s->gic, intidbase + ARCH_GIC_MAINT_IRQ));
+> > +        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+> > +            qdev_get_gpio_in(s->gic, intidbase + VIRTUAL_PMU_IRQ));
+> > +
+> > +        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_=
+CPU_IRQ));
+> > +        sysbus_connect_irq(gicbusdev, i + ms->smp.cpus,
+> > +                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+> > +        sysbus_connect_irq(gicbusdev, i + 2 * ms->smp.cpus,
+> > +                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+> > +        sysbus_connect_irq(gicbusdev, i + 3 * ms->smp.cpus,
+> > +                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+> > +    }
+> > +
+> > +    phytium_e2000_create_its(s);
+> > +}
+>
+>
+> > +static void phytium_e2000_create_cpus(PhytiumE2000State *s)
+> > +{
+> > +    MachineState *ms =3D MACHINE(s);
+> > +    const CPUArchIdList *possible_cpus;
+> > +    int i;
+> > +
+> > +    possible_cpus =3D MACHINE_GET_CLASS(ms)->possible_cpu_arch_ids(ms)=
+;
+> > +
+> > +    for (i =3D 0; i < ms->smp.cpus; i++) {
+> > +        Object *cpuobj =3D object_new(possible_cpus->cpus[i].type);
+>
+> [*]
+>
+> > +        CPUState *cs;
+> > +
+> > +        object_property_set_int(cpuobj, "mp-affinity",
+> > +                                possible_cpus->cpus[i].arch_id,
+> > +                                &error_abort);
+> > +        object_property_set_int(cpuobj, "cntfrq", PHYTIUM_E2000_GTIMER=
+_HZ,
+> > +                                &error_abort);
+> > +        if (object_property_find(cpuobj, "has_el3")) {
+> > +            /*
+> > +             * The generic-loader U-Boot path starts after the EL3 fir=
+mware
+> > +             * stages that normally provide the Phytium SMC services.
+> > +             */
+> > +            object_property_set_bool(cpuobj, "has_el3", false, &error_=
+abort);
+> > +        }
+> > +        object_property_set_link(cpuobj, "memory", OBJECT(get_system_m=
+emory()),
+> > +                                 &error_abort);
+> > +        cs =3D CPU(cpuobj);
+> > +        cs->cpu_index =3D i;
+> > +        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
+> > +        object_unref(cpuobj);
+> > +    }
+> > +}
+> > +
+> > +static void phytium_pi_init(MachineState *ms)
+> > +{
+> > +    PhytiumE2000State *s =3D PHYTIUM_PI(ms);
+> > +    int i;
+> > +
+> > +    if (kvm_enabled()) {
+> > +        error_report("phytium-pi: KVM is not supported");
+>
+> Why is it relevant?
+
+This is because the machine relies on heterogeneous named
+FTC310/FTC664 TCG CPU models and Arm KVM generally requires the host
+CPU model. KVM is rejected explicitly instead of failing later during
+vCPU initialization.
+
+> > +        exit(1);
+> > +    }
+>
+> > +}
+> Conditional to not using qemu_get_cpu():
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+
+Thanks for the review!
+
+Regards,
+Bin
 
