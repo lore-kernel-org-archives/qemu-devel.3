@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D1DC79F87
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61998C79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WRr-0004Co-6c; Fri, 04 Sep 2026 12:07:27 -0400
+	id 1x2WSS-00057n-6f; Fri, 04 Sep 2026 12:08:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2WRW-00045C-6X
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:06 -0400
+ id 1x2WRq-0004Eh-1R
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2WRT-0006eg-6E
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:05 -0400
+ id 1x2WRo-0006i2-89
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788538022;
+ s=mimecast20190719; t=1788538042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=24q1MZ0ugZdhngBNFVmvW75PJPqXcwOs83tFjUN7CUc=;
- b=gZCwb34mylxpTq71yB6BxdNkV13JlQ6o5vpa7zWAUM5QeCedvYkDm0wJc5D44XeGPz8YOv
- Nu3C5sBo22MzpQeHP7xxaST43DS5+ihY92EEYKNG7HZ+Xwk40r/wH6m7+3n9lmYDD6wsbM
- EDBUv0oPvaTp7s02QQQuepa9jtVlNyY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FljOUZcrDxLcSEtdGZg2L7bnzs/rlfsiHLxsLO2MQAk=;
+ b=jAl5kdoaUB0wBen+fe2YWpi5XgFZ/WNNB2cUUojSBeuRXQNSX6+Anw7ns0DGsiVgHLzAqH
+ zMe0sC8KkyODO/1Fh0G0cfUihq+DNDomJ7DkIVsyiZDkw3JhIo6ImXQXhCZtu7v/6CvSCy
+ nRmvLZnXsJMZS71mpA6rI/kDnZ7i8gI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-yS6vEfXtPDmmsFk5M4d_rA-1; Fri,
- 04 Sep 2026 12:07:01 -0400
-X-MC-Unique: yS6vEfXtPDmmsFk5M4d_rA-1
-X-Mimecast-MFC-AGG-ID: yS6vEfXtPDmmsFk5M4d_rA_1788538020
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-Wp5P18CRPfyUUSV6BZpvcQ-1; Fri,
+ 04 Sep 2026 12:07:19 -0400
+X-MC-Unique: Wp5P18CRPfyUUSV6BZpvcQ-1
+X-Mimecast-MFC-AGG-ID: Wp5P18CRPfyUUSV6BZpvcQ_1788538038
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F265118DEBBC; Fri,  4 Sep 2026 16:06:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9AD4D1888F2E; Fri,  4 Sep 2026 16:07:18 +0000 (UTC)
 Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B401B3001D84; Fri,  4 Sep 2026 16:06:57 +0000 (UTC)
+ id E9A693001D37; Fri,  4 Sep 2026 16:07:16 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>
-Subject: [PULL v2 05/13] io/channel-websock: send an HTTP 400 when the
- greeting has no space
-Date: Fri,  4 Sep 2026 17:06:35 +0100
-Message-ID: <20260904160643.353833-6-berrange@redhat.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL v2 13/13] docs/system/security: exclude uninitialized stack
+ variables as bugs
+Date: Fri,  4 Sep 2026 17:06:43 +0100
+Message-ID: <20260904160643.353833-14-berrange@redhat.com>
 In-Reply-To: <20260904160643.353833-1-berrange@redhat.com>
 References: <20260904160643.353833-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -68,13 +67,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,46 +89,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+The -ftrivial-auto-var-init=zero usage guarantees implicit zero
+initializers for all stack variables. Thus most bug reports relying
+on undefined behaviour from lack of variable initialization will
+not be security issues, or even bugs.
 
-qio_channel_websock_extract_headers() returns 0 without queueing a
-response when the request line contains no space, unlike every sibling
-check which jumps to bad_request. encoutput stays empty, yet
-qio_channel_websock_handshake_read() still reports success and the
-caller arms a G_IO_OUT watch to flush nothing.
-
-Flushing that empty buffer is where QEMU crashes. Any client can
-trigger it before authentication on a VNC websocket port:
-
-  printf 'stats\r\nx\r\n\r\n' | nc $host $port
-
-Fixes: 07e95cd529af ("io: fully parse & validate HTTP headers for websocket protocol handshake")
-Fixes: f69a8bde2935 ("io: send proper HTTP response for websocket errors")
-Fixes: CVE-2026-84788
-Cc: qemu-stable@nongnu.org
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- io/channel-websock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/system/security.rst | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 1929abf56a..66c91ed2a2 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -230,7 +230,7 @@ qio_channel_websock_extract_headers(QIOChannelWebsock *ioc,
-     tmp = strchr(buffer, ' ');
-     if (!tmp) {
-         error_setg(errp, "Missing HTTP path delimiter");
--        return 0;
-+        goto bad_request;
-     }
-     *tmp = '\0';
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index af626a4230..8c42d1a6d8 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -143,6 +143,16 @@ an issue as a normal bug.
+   which case plain manipulation of the stream is not considered as
+   an attack vector.
  
++* **uninitialized stack variables**. If the bug scenario relies on
++  undefined behaviour from stack variables that lack explicit
++  initialization, it will not usually be considered a security flaw.
++  The build system adds '-ftrivial-auto-var-init=zero', which is
++  available in both the supported compilers (GCC and CLang) and
++  ensures all stack variables have implicit zero-initializers.
++  This eliminates undefined behaviour and usually gives the
++  correct desired initialization value, eliminating most of the
++  bug scenarios wrt uninitialized stack variables.
++
+ * **low severity impact**. As a catch all rule, issues which
+   are judged to have a "low" severity impact on the system will
+   usually not justify handling as security bugs, nor assignment
 -- 
 2.55.0
 
