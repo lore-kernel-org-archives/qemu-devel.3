@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222D0C624DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CA8C61DD6
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJP-0006Cp-OC; Fri, 04 Sep 2026 08:46:31 -0400
+	id 1x2TJQ-0006Dm-UI; Fri, 04 Sep 2026 08:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJH-00068f-5g
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:23 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1x2TJN-0006C3-P6
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJD-0006qt-FB
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:22 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49b8687630fso8923635e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
+ id 1x2TJK-0006uq-5K
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-499b2981a7bso9440645e9.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525978; x=1789130778; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525984; x=1789130784; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=nUIcJrjFJ80wCZeo0bUeHBBQhirzWNDdtOPABszpkkA=;
- b=h1r+KMTflS12OFpQWi6WzaBcO7m0fNlyUp1pIvIKiNcRuZKADcGboMUex3dBXhDS1P
- YFXOaKbAg+vu5eAwyb/I9p7myWtMLe/AWqJwGVreaDis4bOTjLKNOB1MDqhAV1N9t5Fs
- DrEVwiaXv9Mi0Gi6RK98MntS8TkchezwXdv6Thix1p1WmbuaKOCTAwEBwbCl9CfHvgi7
- dSJ/lB9lcm98e8s96r9en1HfxFWpTonqOyzOkYQ0ea4wyLwdOg+kwE/rzID5C3BeVjFN
- Qh9BJjSDCnOzWk52uWMkKWXY90enBtQCj87lbh2tTp5n+VEcyh2SnAelF+Ma43H3lMHM
- 8FiQ==
+ bh=tFpQ8psKfh/GfasFmr3B5G7VD9bDZo/cQLmAEF4vkwE=;
+ b=cPNgP3MuOWIzIu66y2xO2ImizCFNbiy+l8e5KrzKHPRCaEHfCdHHIW6ICWGDMkjVdp
+ H+8hTGaS9/ahMkxOId/FbSBufWte32eWPZoSHZds6SUjFSxjbeWqAtnRQsYfX3VoW6Q1
+ kaZY6ARZkGsv6df+U2YIJjmUpMz6tgA/eS8Yf3L3GuAdzo3J814Kgs01I2/+rjZvYuQd
+ JqWI2qZfojAFf8T2jqTOhdSQaPKkfdCL0gbzSnfMeYsIUnIGlAdrnIoGLCoED4jzkd+0
+ kJ8Oy4oCR+HDqg+zF7v3Z85Z7o60WncbTz6LvAaA78ypvy2u6gWaQGAW4PxdKGvZMKGl
+ y/aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525978; x=1789130778;
+ d=1e100.net; s=20251104; t=1788525984; x=1789130784;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=nUIcJrjFJ80wCZeo0bUeHBBQhirzWNDdtOPABszpkkA=;
- b=on+kxGRrduaf+3YhqFOX8oZCbYYpqVLwvSQJQM5Q7oyEhLIxEX1QG05RMGUIqbxJsD
- aXWXsN2zYzyJfB1x34zgGWRwkhG3ysM+T++ejnspqr469nh3PFGlpSt9VbCJ2ralTrfO
- fl0yL1+xdfg3tU4OWkcMmdZeBhNDDFS6na7X7a2ClypDtF8KFHVSo7ayw+bmqWLCt/3Y
- nBDqJVpfa72xYtFH+natThJp4+StaHD0u9EbbGooiQEEqcH4zMURZ22A5O6hQgxbeeOG
- sQt/dA56Ef1bkeyghgXBBe2Wsp+wh0p0eVVpaIsv4yXOilqwNMRYHr1hZk9uw9DOt5kH
- aBZg==
-X-Gm-Message-State: AFuF++kTfrzXFTQKoFXGojYKrW/yhd6f+Z/e6JPPmNGlSptICeVhjOK8
- obNGxXCFUV7p1PzF3emK6Jw8kxUNeicou4m6bNJ5L0rbSK27wIooGwSSZboF3yyYLio=
-X-Gm-Gg: AYBFou39WDrItH8NFYoaGO582hC64xZCH6wJaJs+dqMk5K1opnv91Dkd8Wrv4ALx803
- aB90Gq2yTgxZdtsKNY0tm25agMNkbwoS7rSXI8mFhWOL96d8Aj3LSt0xct1YcD5ozuKthTMCItz
- jZH0CdwXP/4fuxIRAOODweOfBxOKwgaMeSWgpJ3yOQZ3YYsPnl65wTLQnbmEWJM0mJ5Xfrupex+
- 5VJsZyqHCZqBJ/SZEZC7vYFIlCvVbq9ssb9XVwussiYQnAncjbpMnKD8mEJ2AOm+WfOfb5SSarE
- PGL3vijuJ73Kd/ZcOY8kNdf3EZiip2chTcaVAPdDUDkagHPt4zWAxV2Q9wuHPxEsViCV80wqXNa
- 1t63aS4+2hOiubDtajEOmQgdF9shZdH+VJdeg0dIdUka6CGRi9xEJgqHvXw+Z/VCedcgdI4ICQ5
- NOektYf8qOImNtdjXA0+E/527XuaWj22Yau9daHYbB6jpe0rUcwfE+xvG+KPTE
-X-Received: by 2002:a05:600c:6819:b0:49c:de80:b833 with SMTP id
- 5b1f17b1804b1-49cf81fb1acmr58690195e9.2.1788525977863; 
- Fri, 04 Sep 2026 05:46:17 -0700 (PDT)
+ bh=tFpQ8psKfh/GfasFmr3B5G7VD9bDZo/cQLmAEF4vkwE=;
+ b=mgtXbEu/eVK1BAy+St8q634qzw6gXXr95nEDZEgWc0t0KYqh7kIPSQiTA1v2vvq1EG
+ A7UD/StlxKl7BhTRG6zjZ2RJVF+cvlg5KP6ieTyJ/xf/eqEylDFwsjadjPsoUqqfp6W0
+ 0keFJLnV45jnyN9DDKZQTlGUAWzsLdB0YPr0gyyZwFX2BQLwzDUy3wg094iMwmXF7IZo
+ /Ieeagp9Lxmj7qBR1cGwMIICzC2uX/e/uyP6ikMgn4wu6OkOlqpMr9yPELi19XCrbxD9
+ vfZiZ8cfrc4vIFKeF8g7kYwu4kfERuPQVxQDS41p3/6Yb8toGOH0nIaDloJPcwZII+cl
+ AzrA==
+X-Gm-Message-State: AFuF++mQiQx9bwN6HHNbNfY3wo5eh/S/JCT+GWedVqzW10iVp4vSP0mE
+ vriQP4y+zCovQyJ1vtOZQZvR1taGzbSAQVlPIyYPu6DYHPaJomZrmX09+WEjKDK9idY=
+X-Gm-Gg: AYBFou0nQ1oKmiAst3AjGPVMijU2BfEI+sTtGWywgMfhsRMFkbbCBo1UwSAIo57nKMj
+ 9eCpl9azwRlDNNF1PDQwJJYetB97lUi8Fy93vFv1F+Q265T4ZOmPOLO1BzpbE83LQ07wuLRSeUi
+ 0C7MuioyZ/rRMTCezQz73p/IqurATzIcjYSaY04ZCUtmiXBwhFQhBfXExng4yXeEruOnN0DASmT
+ 45d9ocvC4xD/U6FbdJKv83bFoTN9e2X0BEYTsVmFSL1tz5fknnBsR60jVeIaUAKBsE2G1bzGe4N
+ p+mvsOqP2ykU4mGrXiowyxkFDjUT/ZzZUjeSdsk+RrFkbKgh2EmXNTeRCyknt9wXjxIP9ZbVM4x
+ Rji3YnyFuvdA9XyE8Qvtoff7C2m6vyIb4lcz4D4e0Wrxx7qe18JoTyg6+MbexUqWg3CZ1S6y7Ei
+ gg4t7T9hcyLTGmF8CC0Rh7xlg1CX0uMCczRA0tENTeCwDBpWBXD8KyqAlrHYTD3sj+jZmU9DMV1
+ A==
+X-Received: by 2002:a05:600c:3b01:b0:49b:4d64:bbc4 with SMTP id
+ 5b1f17b1804b1-49cf81f1592mr81758895e9.8.1788525984271; 
+ Fri, 04 Sep 2026 05:46:24 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee6024a8sm156765385e9.6.2026.09.04.05.46.13
+ 5b1f17b1804b1-49cf75ce49esm117851625e9.1.2026.09.04.05.46.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:46:17 -0700 (PDT)
+ Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0C395618BA;
- Fri, 04 Sep 2026 13:46:08 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0A65261E24;
+ Fri, 04 Sep 2026 13:46:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 038/105] tests/tcg/meson.build: add generic plugin tests
-Date: Fri,  4 Sep 2026 13:44:52 +0100
-Message-ID: <20260904124604.2207440-39-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 100/105] tests/tcg/meson.build: implement ./configure
+ containers options
+Date: Fri,  4 Sep 2026 13:45:54 +0100
+Message-ID: <20260904124604.2207440-101-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,72 +112,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-We add one test for each plugin by picking a different user and system
-multiarch test.
+./configure --disable-containers now skip containers build.
+./configure --container-command "/path/to/docker" can be used to
+override autodetection.
 
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-39-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-101-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
+diff --git a/configure b/configure
+index cec6f18f857..aa98cf39584 100755
+--- a/configure
++++ b/configure
+@@ -172,7 +172,6 @@ fi
+ # some defaults, based on the host environment
+ 
+ # default parameters
+-container_command=""
+ cpu=""
+ cross_compile="no"
+ cross_prefix=""
+@@ -260,7 +259,6 @@ ninja=""
+ python=
+ download="enabled"
+ skip_meson=no
+-use_containers="yes"
+ rust="disabled"
+ rust_target_triple=""
+ 
+@@ -727,11 +725,11 @@ for opt do
+   ;;
+   --disable-plugins) plugins="no"
+   ;;
+-  --enable-containers) use_containers="yes"
++  --enable-containers) # enabled by default
+   ;;
+-  --disable-containers) use_containers="no"
++  --disable-containers) meson_option_add -Dcontainers=false
+   ;;
+-  --container-command=*) container_command="$optarg"
++  --container-command=*) meson_option_add -Dcontainer_command="$optarg"
+   ;;
+   --rust-target-triple=*) rust_target_triple="$optarg"
+   ;;
+@@ -1718,9 +1716,6 @@ echo all: >> $config_host_mak
+ 
+ echo "SRC_PATH=$source_path" >> $config_host_mak
+ echo "TARGET_DIRS=$target_list" >> $config_host_mak
+-if test "$container_command" != ""; then
+-    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
+-fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
+ echo "PYTHON=$python" >> $config_host_mak
+ echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
+diff --git a/meson_options.txt b/meson_options.txt
+index a41ed64bc90..f9604a6c192 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -387,3 +387,7 @@ option('rust', type: 'feature', value: 'disabled',
+        description: 'Rust support')
+ option('strict_rust_lints', type: 'boolean', value: false,
+        description: 'Enable stricter set of Rust warnings')
++option('containers', type: 'boolean', value: true,
++       description: 'use containers to cross compile tcg tests')
++option('container_command', type: 'string',
++       description: 'command to build/run containers')
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 536def60b44..16292d4d7b0 100644
+index 144577fd94e..2458a231f5f 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -90,6 +90,51 @@ subdir('plugins')
- # multiarch comes second, so it can be referenced by other arch after
- subdir('multiarch')
+@@ -78,10 +78,23 @@ if gdb.found()
+   endforeach
+ endif
  
-+# Generic Plugin tests
-+# add a single test for each plugin in user/system multiarch set
-+plugin_tests_exclude = ['patch']
-+foreach target: ['multiarch-linux-user', 'multiarch-softmmu']
-+  plugin_tests = []
-+  tests = tcg_tests[target]['tests']
-+  normal_tests = []
-+
-+  # filter tests that are not plugin or gdb tests
-+  foreach t: tests
-+    foreach src, setup: t
-+      if 'plugin_test' in setup or 'gdb_test' in setup
-+        continue
-+      endif
-+      normal_tests += {src: setup}
-+    endforeach
-+  endforeach
-+
-+  idx = 0
-+  foreach plugin_name, _: test_plugins
-+    if plugin_name in plugin_tests_exclude
-+      continue
+-docker_probe = run_command(docker_wrapper, 'probe', check: false)
+-docker_supported = docker_probe.returncode() == 0
+-if docker_supported
+-  docker_wrapper = [docker_wrapper, '--command', docker_probe.stdout().strip()]
++docker_supported = false
++if get_option('containers')
++  if get_option('container_command') != ''
++    # make sure command is working
++    cmd = get_option('container_command').split()
++    run_command([cmd, 'info'], check: true)
++    docker_supported = true
++    docker_wrapper = [docker_wrapper, '--command',
++                      get_option('container_command')]
++  else
++    docker_probe = run_command(docker_wrapper, 'probe', check: false)
++    docker_supported = docker_probe.returncode() == 0
++    if docker_supported
++      docker_wrapper = [docker_wrapper, '--command',
++                        docker_probe.stdout().strip()]
 +    endif
-+
-+    # pick one different test for each plugin
-+    foreach src, setup: normal_tests[idx % normal_tests.length()]
-+      # copy existing setup and remove existing cflags
-+      new_setup = {}
-+      foreach key, val: setup
-+        if key == 'cflags'
-+          continue
-+        endif
-+        new_setup += {key: val}
-+      endforeach
-+      new_setup += {'plugin_test': {'plugin': plugin_name}}
-+      plugin_tests += {src: new_setup}
-+    endforeach
-+
-+    idx += 1
-+  endforeach
-+
-+  # replace list of tests with old and new ones
-+  tcg_tests += {target: {'tests': tests + plugin_tests}}
-+endforeach
-+
- image_targets = {}
- exe_targets = []
- # Finally, we can create all test executables and test targets
++  endif
+ endif
+ 
+ # plugins come first, as we need to build the list
 -- 
 2.47.3
 
