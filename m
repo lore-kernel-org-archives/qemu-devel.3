@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794EEC79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB56AC79F87
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WRv-0004Va-3x; Fri, 04 Sep 2026 12:07:31 -0400
+	id 1x2WRw-0004YR-Ck; Fri, 04 Sep 2026 12:07:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2WRf-00049h-0O
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x2WRq-0004EG-0g
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2WRY-0006fP-1O
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:09 -0400
+ id 1x2WRo-0006hm-7Q
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:07:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788538026;
+ s=mimecast20190719; t=1788538039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UMnbT3lrKNN1v0P6OiNnV9u3B7JZqFQBvQYeYiSjTh0=;
- b=X6BelGbJoSoVHCYjFk2G1t2YTEMsPB0DcPLJVYiFTGAxF8Y3qcdP7DAiRnYOx6jk4cpu8E
- rwXoeW51/YYPkYiMBv5sBb4S5iYIKpTnbdHGGfledxj4FR/+BfUYTFPd/8sHY3sSxGGcEm
- zA15o63wuXKyUdCbTQ9TcoSDOspWCXo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=1MdCL1TeiuZniAF4dAeTTEQaZ/1x7FpNm3vwXD/CmyM=;
+ b=BEsH8v9th/bBj/kxEXyzr/tX7GT1E/cM+peIP7x9JE38q073GbuB+c42nlq8nAliWvixnB
+ vgEmGw01uFyTNIUH7hULBRMdtgvMLfAVqnK9sjTZEuE+iNuJKTcv8W5W2hfPHzrJC3DWU2
+ XBSSbSW2rMfGGD22T9rzBzNq7aY7F0s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-0wd75MoYNkSt_N5_g81RPg-1; Fri,
- 04 Sep 2026 12:07:03 -0400
-X-MC-Unique: 0wd75MoYNkSt_N5_g81RPg-1
-X-Mimecast-MFC-AGG-ID: 0wd75MoYNkSt_N5_g81RPg_1788538022
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-M7P6rtFzNkOy0_LyYzWerg-1; Fri,
+ 04 Sep 2026 12:07:17 -0400
+X-MC-Unique: M7P6rtFzNkOy0_LyYzWerg-1
+X-Mimecast-MFC-AGG-ID: M7P6rtFzNkOy0_LyYzWerg_1788538036
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EF4D18CD2B3; Fri,  4 Sep 2026 16:07:02 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96F7319091DD; Fri,  4 Sep 2026 16:07:16 +0000 (UTC)
 Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5B4C43001D37; Fri,  4 Sep 2026 16:07:00 +0000 (UTC)
+ id EF8D43001D37; Fri,  4 Sep 2026 16:07:14 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>
-Subject: [PULL v2 06/13] io/channel-websock: handle a blocked write during the
- handshake
-Date: Fri,  4 Sep 2026 17:06:36 +0100
-Message-ID: <20260904160643.353833-7-berrange@redhat.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL v2 12/13] configure: correctly honour --disable-containers
+Date: Fri,  4 Sep 2026 17:06:42 +0100
+Message-ID: <20260904160643.353833-13-berrange@redhat.com>
 In-Reply-To: <20260904160643.353833-1-berrange@redhat.com>
 References: <20260904160643.353833-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,45 +89,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+The configure script originally only probed for 'runc' command
+in order to handle cross-compilation containers. The Makefile
+under tests/docker would then probe again when used.
 
-qio_channel_websock_handshake_send() treats every negative return from
-qio_channel_write() as fatal and passes err to error_get_pretty().
-QIO_CHANNEL_ERR_BLOCK is negative but leaves err NULL, so a socket
-which cannot take the response immediately crashes QEMU before the
-client has authenticated.
+In order to eliminate the additional probeing, we changed
+configure in commit c4ce04cfb7460d46c0262d437a7f35bb5c5fc449
+to always probe for 'runc', so the result could be passed
+along to tests/docker make rules.
 
-Keep the G_IO_OUT watch armed and retry instead.
+That commit overlooked that the 'probe_target_compiler' func
+was relying on '$runc' == 'no' as a proxy for the state of
+the --disable-containers arg.
 
-Fixes: 2d1d0e70cf3e ("io: add QIOChannelWebsock class")
-Fixes: CVE-2026-84788
-Cc: qemu-stable@nongnu.org
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+When we started unconditionally probing, that short cut no
+longer works and we must explicitly check "$use_containers"
+too.
+
+Fixes: c4ce04cfb7460d46c0262d437a7f35bb5c5fc449
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- io/channel-websock.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ configure | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 66c91ed2a2..8f27b1f12b 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -562,6 +562,11 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-                             wioc->encoutput.offset,
-                             &err);
+diff --git a/configure b/configure
+index 46cbcc085b..d3ad7d4062 100755
+--- a/configure
++++ b/configure
+@@ -1414,6 +1414,7 @@ probe_target_compiler() {
+   esac
  
-+    if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+        /* Socket buffer is full, the G_IO_OUT watch stays armed */
-+        return TRUE;
-+    }
-+
-     if (ret < 0) {
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
+   for host in $container_hosts; do
++    test "$use_containers" = "yes" || continue
+     test "$container_command" != "" || continue
+     test "$host" = "$cpu" || continue
+     case $target_arch in
 -- 
 2.55.0
 
