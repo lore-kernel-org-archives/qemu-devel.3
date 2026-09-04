@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF45EC79F85
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A1EC79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2QXb-0002n7-JT; Fri, 04 Sep 2026 05:48:59 -0400
+	id 1x2Qbn-0003pi-K5; Fri, 04 Sep 2026 05:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x2QXY-0002mu-Bo
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:48:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x2Qbl-0003pY-Lw
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:53:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x2QXW-00065h-TJ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:48:56 -0400
+ id 1x2Qbj-0006Wm-Tx
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:53:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788515333;
+ s=mimecast20190719; t=1788515594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QveTdcS9RCr8FRkBfObKnv3ivqK/kEBPZpcsZeyAwUI=;
- b=KFMrxFqDTBlslnG89IskSeKKG9OwyIAi+3pC/JRYgZujk8nFT6yBpLvY29yxXbWjHIO2cR
- 75lgrkGzQnTHWoXN2BTkJDEH/3/2gmFJhJ0yTsNvjHoLEsG14/lpR2vNAPXFHPjKV8suGP
- 4zYMVjQnZREkZUZpw6qihIJdmhBLZPg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=91b2olaNWJ97PiLWoKi1Xbl9BmB5Yg9nadYyeBoQKEk=;
+ b=JriOSxWf5ldPnJfNX5m4v+Hmpm88/xgT8Mmt0WCYRCFfs/NzX70FqvgpwoaQLrWoLbQd2y
+ +bU4Ozwg4R/wmt6aLfOGHIiLbw326B6QTlIJe43bun7KqDJWGmVCPEWmav5xxC2+9u4gmj
+ fKULMygTIJiK6LNRbI/SVojfrU/Wz7o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-3yxwwu4mMn-HHlyy5OjBeg-1; Fri,
- 04 Sep 2026 05:48:52 -0400
-X-MC-Unique: 3yxwwu4mMn-HHlyy5OjBeg-1
-X-Mimecast-MFC-AGG-ID: 3yxwwu4mMn-HHlyy5OjBeg_1788515331
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-s11eA5-SOKmL3BRhIv35ng-1; Fri,
+ 04 Sep 2026 05:53:10 -0400
+X-MC-Unique: s11eA5-SOKmL3BRhIv35ng-1
+X-Mimecast-MFC-AGG-ID: s11eA5-SOKmL3BRhIv35ng_1788515589
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E6EB91955D96; Fri,  4 Sep 2026 09:48:50 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 453CD180ABE8; Fri,  4 Sep 2026 09:53:09 +0000 (UTC)
 Received: from [100.90.56.12] (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF0FA1955F10; Fri,  4 Sep 2026 09:48:48 +0000 (UTC)
-Message-ID: <b3e58477-d06f-425b-973d-b3501b5c68b5@redhat.com>
-Date: Fri, 4 Sep 2026 11:48:47 +0200
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 12AD41955F70; Fri,  4 Sep 2026 09:53:06 +0000 (UTC)
+Message-ID: <c574454e-f379-4182-bb0b-58868c39c5d0@redhat.com>
+Date: Fri, 4 Sep 2026 11:53:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] AGENTS.md: basic bare minimal guide
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH 00/11] accel/tcg: Make halt-to-exec transition explicit
+ and remove cpu_exec_halt
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260904094445.2098770-1-alex.bennee@linaro.org>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
+ <11dc8cc9-cab2-47c2-ad5e-a63e293e0a43@oss.qualcomm.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -96,20 +99,19 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20260904094445.2098770-1-alex.bennee@linaro.org>
+In-Reply-To: <11dc8cc9-cab2-47c2-ad5e-a63e293e0a43@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,38 +127,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/26 11:44, Alex Bennée wrote:
-> Currently people may be inadvertently not following our documented
-> process for code submissions because people often don't read the docs.
-> However AI Agents do tend to try and follow instructions so lets help
-> them out.
+On 9/3/26 11:56, Philippe Mathieu-Daudé wrote:
+> On 19/8/26 16:56, Philippe Mathieu-DaudÃ© wrote:
 > 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> ---
-> v2
->    - drop mention of patches from the permitted activities line
->    - add claude/gemini links
-> v3
->    - more claude tweaks
->    - include local changes and non-copyrightable exceptions
-> v4
->    - punctuation
-> ---
->   .claude/.gitignore         |  2 ++
->   .claude/CLAUDE.md          |  1 +
->   .claude/rules/agents-md.md |  1 +
->   .gemini/settings.json      |  5 +++++
->   AGENTS.md                  | 34 ++++++++++++++++++++++++++++++++++
->   5 files changed, 43 insertions(+)
->   create mode 100644 .claude/.gitignore
->   create mode 120000 .claude/CLAUDE.md
+>> Philippe Mathieu-Daudé (11):
+>>    accel/tcg: Rename for exception codes named @ret as @excp
+>>    accel/tcg: Restrict EXCP_HALTED handling to system emulation
+>>    accel/tcg: Check %halted field in cpu_handle_halt() caller
+> Queueing uncontroversial first 3 patches (reviewed).
+No objections other than bikeshedding names:
 
-not needed (and actually ignored by .claude/.gitignore)
+- process_async_events -> poll_during_halt
 
-Fixed and queued, thanks.
+- transition_halt_to_exec -> leaving_halt
+
+?
+
+Thanks,
 
 Paolo
 
