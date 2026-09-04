@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889D6C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C1DC624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TgW-0003AJ-8P; Fri, 04 Sep 2026 09:10:24 -0400
+	id 1x2Tgd-0003C7-Uw; Fri, 04 Sep 2026 09:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2TgU-00039B-VL
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:10:22 -0400
+ id 1x2Tga-0003Be-G0
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:10:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2TgS-0004yQ-WB
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:10:22 -0400
+ id 1x2TgW-00050M-VS
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:10:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788527419;
+ s=mimecast20190719; t=1788527424;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=TeZur46BI+LshXAiGl63RIYYZ2iz5+BSYxTa8iNcifs=;
- b=XjHcVj7FWc5WY0EIXaSrYkgnLcLlNFkZ5BpT5iOuWZj4O2v5Ewszb8vOSsc+p0+FtFhVoZ
- KfhsU0KzO1iaYaGV6m1g/KeTA/EFMr3CbJ/2zqSW8QzTQI+QKxxzoSmOOIwH8eMXnZuoXP
- 3ZTB3mYEEMNX2PfuL0aSsYMqTPgo1UQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5HEkwSuzOhXmto7J4E5NF2/noKk26U+3km90AD2jdMc=;
+ b=VaGDJrmDFYSfe2v3BcRfFXLSuMDsHM5//bLm7pV0QYZST4Cdk+oyZgzWffeLe9EGd3WwHd
+ zaALmXqo83/wN6Z4G2PS1k9qe8/PP/VS/7wvdJxgDVu0idnkvqDcKrAX/2vupcSSaGhVUe
+ a3W5mLbn9TGgcgyvyEgI1vipovHT0dc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-coJ4zKrdMxG20F5dj_DTEg-1; Fri,
- 04 Sep 2026 09:10:15 -0400
-X-MC-Unique: coJ4zKrdMxG20F5dj_DTEg-1
-X-Mimecast-MFC-AGG-ID: coJ4zKrdMxG20F5dj_DTEg_1788527414
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-1QTPQ1Z1PqylOAn1xiyRIQ-1; Fri,
+ 04 Sep 2026 09:10:20 -0400
+X-MC-Unique: 1QTPQ1Z1PqylOAn1xiyRIQ-1
+X-Mimecast-MFC-AGG-ID: 1QTPQ1Z1PqylOAn1xiyRIQ_1788527419
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B09D9180AD5C; Fri,  4 Sep 2026 13:10:13 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5FD9195FDE8; Fri,  4 Sep 2026 13:10:18 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F9CF1955F10; Fri,  4 Sep 2026 13:10:10 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8EA831955F00; Fri,  4 Sep 2026 13:10:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 00/25] Various virtio-gpu/dmabuf related fixes
-Date: Fri, 04 Sep 2026 17:10:04 +0400
-Message-Id: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
+Date: Fri, 04 Sep 2026 17:10:05 +0400
+Subject: [PATCH v2 01/25] virtio-gpu: disable blob scanouts on mapping cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32Nyw6CMBBFf4XM2jG0BARX/odh0ccAY5SStjQaw
- r8LuHd5knPPXSCQZwpwzRbwlDiwGzeQpwzMoMaekO3GIHNZ5bUsMbGP7LCfZjRPUuM8oe201Er
- UZVNUsA0nTx2/j+i9/XGY9YNM3Eu7MXCIzn+O1yR27+9BEpijLbSuhNRNcylvnuyg4tm4F7Tru
- n4BKB9FHMcAAAA=
-X-Change-ID: 20260825-virtio-gpu-cleanup-dfb2ba185936
+Message-Id: <20260904-virtio-gpu-cleanup-v2-1-15b5ae6b0023@redhat.com>
+References: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
+In-Reply-To: <20260904-virtio-gpu-cleanup-v2-0-15b5ae6b0023@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
@@ -67,37 +65,36 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefano Garzarella <sgarzare@redhat.com>, 
  Alex Williamson <alex@shazbot.org>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- swing <swing@mail.exp.sh>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4381;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1301;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+iGOzfQSvZNAf6mEzZ4Mi7rpeQeIenP4TbNrypdbNcE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmsMvINb7zLw2wP/YBAoGVmoZW1sCigwVO6ZKE
- RMKt1vb5XqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaprDLwAKCRDa6OEJdZac
- 5TCpEACdmU9dUiA1tTMfYtHjr1hquTL2SbD7Hybm7sQycBj2LIiSOt1DpBbU288hOkyBiwRZrGx
- LCIzGV+NgESTd7fziJtGTy/KBjfR9T7V28AFgXJLPXD717MY97uak08VqL+y5mNBrgu8CB0iF5I
- mswEsZxO9VUGYHHjcN+i4Kl5eVPcNwCvld4kl6sykqqoRb+ie4i7HGEiSqJoigUWhS5wI/gNA7t
- HCKX1Ss5D1QdpUPn6tLm61fhF3IH5+5V6U1qHe7eOxVu0wT7CeQcWMO1hvKOBKN2aIApIISTqyo
- HQrdaR3YLe4sPoL7yVbZSQeG1t2i1OUO6VRskFHcZ05sX2dEQgKKErI69hNm2SrJNn3CYso0wX7
- TG8XXpUzhv9MNrLjsggtClVqRVcYhYWcF7XaqgcfkVbc2Z7dfIRGJKQYq3GX0SHsHbeuExdJdHs
- N3fLD7EoNCDPCr/ofAdai3AjK/7ozg7fjQRjge214pBHf8aQaEctff5U+oRBxaPKP7O35avvMfo
- lFCWG65+A3MdCkb72g5ggjxYRU4tIxswQuDf3uCXjxA8lAM3hpsVs68NF8Qz99udXVfr3K9JWoM
- UUaMPU/zv9EYiE4IXJwIVMfuVBrIa3oSwEzrMJjubBBhT7E7ozjEYmVA8yExhMp99Jh64qJEcae
- y37AmZHvg9rc0/Q==
+ bh=q3zv9zCNGeUcSlIz/E/RqZ/72w8TCNyB/dnNjsQxhws=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmsMvctzR/V5VSitPYL48MzD+laK/Xmf0K0ln5
+ Y2KkCwBCseJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaprDLwAKCRDa6OEJdZac
+ 5by6EAChuuk45bvy1SOENvf9nPKDgVGicwUqCLJLR9Xw0vlDUk4RUFGGuuOO6rMaV7ut7OjOxBs
+ U1zS8BIrYKoimeWT0DsQDhZ5DJYQx3MQR8gSDQ37m0HdJmhlVTmfMJJ9p9IGUI9Ejz81AKsiUMw
+ QEuuJdEzrkqRkowLJ3mMPgf61alGrV27o4imZM/klcoapimXjgEVg9KmYlQjTzkAgWNzVjQRCyt
+ PsXnfUrRnNkrcX9iHakod64u1qWKX4HzHD0jxXCazh8S0yfZUDaYcvoS3U3RyaYQC4C5HYa1jOd
+ Aw4FPGDvmkZ+rwTTDc1O9I4Zeu44KTZEA0SHTgIN0TBEBlt/5N0N/Iek19FRn53ZVt9hT2ayge/
+ fX34xsECQNfs1jrtatOpuweEt0ycU5cLcsbi6a7+GgQND/0L+UPH97SBK+3aADs0LHZzZICs3Kg
+ fn8uqgo2OqA2rFYmGwqXBSQnIhy43aSaZywMO7RsqGUmD4HhJoLV7M98zgayGUeG/k6rtxlkpSQ
+ C3idE2kqILwvEob6Dd+RFOmnKh6HlqerkkPY85g6581xPdilMnoHD/nDsCHH4T6F88NdhOhZmWA
+ F12qYHVAdkyK0ec7I8slYG1CX/LM2FMPen5cjDPh6x6X663IrG7OqoQqJdrO9rM68QzcouLDGNq
+ vcDjqGhAtT+paMA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,94 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+When a blob resource backing is cleaned up (for ex via detach_backing),
+any scanouts referencing it must be disabled first to prevent the
+dmabuf from outliving its backing memory.
 
-While working on CVE-2026-66020 (which had a few revision on list), I
-kept finding several places where virtio-gpu scanout and dmabuf
-ownership was unclear.
-
-The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
-unmapped its memory. Following that path also found stale dmabuf
-references, duplicated scanout bookkeeping, and inconsistent cleanup
-between display backends.
-
-Those changes touch a lot of area and I have done basic testing with the
-various backends. I would not recommend backporting them all to stable.
-The first 2 patches address CVE-2026-66020 in the general case and
-should be safe to backport.
-
-thanks
-
+Fixes: CVE-2026-66020
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Changes in v2: addresses Akihiko review
-- reorder to have CVE fix first, easily back-portable (but also more
-  limited fix)
-- include virtio_gpu_{simple,virgl}_resource_new() patch, and other sent
-  separately
-- move draw_submitted from QemuDmaBuf to VirtualGfxConsole
-- contrib/vhost-user-gpu: disable scanouts on resource unref
-- drop rfc, collect rb, adjust commit messages
-- Link to v1: https://lore.kernel.org/qemu-devel/20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com
+ hw/display/virtio-gpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
----
-Marc-André Lureau (25):
-      virtio-gpu: disable blob scanouts on mapping cleanup
-      virtio-gpu: fix use-after-free on blob cursor after detach
-      hw/display/virtio-gpu: introduce virtio_gpu_{simple,virgl}_resource_new()
-      virtio-gpu/virgl: free BHs and timers on renderer reset
-      hw/display/virtio-gpu: set share_handle for udmabuf blob resources
-      ui/gtk: move GL fence tracking from QemuDmaBuf to VirtualGfxConsole
-      ui/gtk: move draw_submitted from QemuDmaBuf to VirtualGfxConsole
-      ui/dbus: disable scanout iff dmabuf is current
-      virtio-gpu: store the scanout DMABUF in virtio_gpu_scanout
-      ui/console: disable GL scanout when dmabuf is the active one
-      ui/sdl2: clear guest_fb.dmabuf on release
-      ui/dmabuf: own and close fds on free
-      ui: make GL context current before releasing DMA-BUF textures
-      virtio-gpu: release the dmabuf when a scanout is disabled
-      contrib/vhost-user-gpu: drop scanout_bitmask bookkeeping
-      virtio-gpu-rutabaga: fix scanout handling
-      virtio-gpu: drop scanout_bitmask bookkeeping
-      virtio-gpu: release dmabuf when switching to a surface
-      virtio-gpu/virgl: release dmabuf when a texture replaces a scanout
-      virtio-gpu: consolidate disabling scanout
-      virtio-gpu: minor refactoring
-      virtio-gpu/virgl: disable scanouts on resource unref
-      virtio-gpu: extract virtio_gpu_disable_scanout_for_resource helper
-      vhost-user-gpu: release DMA-BUFs on scanout disable, reset and finalize
-      contrib/vhost-user-gpu: disable scanouts on resource unref
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 55a1c7f80fb8..5b63a292933a 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1022,6 +1022,16 @@ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+                                 struct virtio_gpu_simple_resource *res)
+ {
++    if (res->blob) {
++        int i, max_outputs = g->parent_obj.conf.max_outputs;
++
++        for (i = 0; i < max_outputs; i++) {
++            if (g->parent_obj.scanout[i].resource_id == res->resource_id) {
++                virtio_gpu_disable_scanout(g, i);
++            }
++        }
++    }
++
+     virtio_gpu_cleanup_mapping_iov(g, res->iov, res->iov_cnt);
+     res->iov = NULL;
+     res->iov_cnt = 0;
 
- contrib/vhost-user-gpu/vhost-user-gpu.c |  28 ++----
- contrib/vhost-user-gpu/virgl.c          |  12 +++
- hw/display/vhost-user-gpu.c             |  19 ++++-
- hw/display/virtio-gpu-rutabaga.c        |  38 ++++-----
- hw/display/virtio-gpu-udmabuf-stubs.c   |   2 +-
- hw/display/virtio-gpu-udmabuf.c         |  89 +++++++------------
- hw/display/virtio-gpu-virgl.c           | 131 +++++++++++++++++-----------
- hw/display/virtio-gpu.c                 | 147 +++++++++++++++++++++-----------
- hw/vfio/display.c                       |   1 -
- include/hw/virtio/virtio-gpu.h          |  31 ++++---
- include/ui/dmabuf.h                     |   7 --
- include/ui/egl-helpers.h                |   4 +-
- include/ui/gtk.h                        |  14 ++-
- ui/console.c                            |   3 +
- ui/dbus-listener.c                      |  69 ++++++++++-----
- ui/dmabuf.c                             |  64 ++------------
- ui/egl-headless.c                       |   2 +
- ui/egl-helpers.c                        |  15 ++--
- ui/gtk-egl.c                            |  55 +++++++-----
- ui/gtk-gl-area.c                        |  33 ++++---
- ui/gtk.c                                |  43 ++++++----
- ui/sdl2-gl.c                            |   6 ++
- ui/spice-display.c                      |   2 +
- 23 files changed, 449 insertions(+), 366 deletions(-)
----
-base-commit: 99e54ab5e7a6efc945af6d5661842155d1f3fc7a
-change-id: 20260825-virtio-gpu-cleanup-dfb2ba185936
-
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+-- 
+2.55.0.543.g5ebe2ebe4ea8
 
 
