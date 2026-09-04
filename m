@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA146C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 07:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8623BC624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Oo3-0001nd-BV; Fri, 04 Sep 2026 03:57:51 -0400
+	id 1x2P6a-0005Pt-Tm; Fri, 04 Sep 2026 04:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1x2Onx-0001ls-Gl
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 03:57:45 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1x2P6Z-0005Pc-JZ
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:16:59 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1x2Onv-0005R6-2Y
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 03:57:44 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-85a50f6a7f7so8515427b3.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 00:57:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788508661; cv=none;
+ id 1x2P6Y-0000y2-5N
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:16:59 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-867a943b149so13431387b3.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 01:16:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788509817; cv=none;
  d=google.com; s=arc-20260327;
- b=JnfqsXSgq3/8UjrMbjWQlpXkUfPDZYZNmcbb+/mB5/Y/7u9VVltLMJgC8WEo+umbAb
- kyvKUcJZRWb5RBioCuzNn5Kqg4ry1Xbe25xIqp/lNds0f2lzLz/K3/11ry93Opm4c4Jn
- qGZI6KTmBXTx+cfE5c4PoEIxlLPJaOVtvpPnpR+QqbkAwiM4pLg4+ZMWuQK0LuFtkhdB
- exTHS69jRIbdp8F0S3TFcVbluyvKdWaIWX4rs9d9vArLnAfztk23L96O55ogs/UD7s5J
- mrgZozRzIedcC0Bjp5G2pFF4O5NegprUBgqDBro0luWZcEPcR4jRd2uapjiX51mEM1Qf
- yCbQ==
+ b=jWQ/ARJBQwm3puNic2ErT5gY+hNzSk8NRgs2yK6EfJ4lPg7Jv6M0vlesNYMA7EbLgo
+ fGoxZeq91O+gR7Z80rohnGFgzgCLtb5ZXee3D5r0qCeDSk5z0uBMaH3/y/IHFabAO2FC
+ VIqXNr2XSd/YIIlqUbNgPXQDywVFO9aEZEYujtz2QQtjxOdXcZMgrkA98IbK96VoaR2a
+ 6VYemzQfwf1EC/bfxoKucAVpgbaiHt0iX5iaWqXi84Scryl44gi0g8E+TXRNOuWWatqk
+ 2RaC5AVtrYVNF3mCXIh6Xh+HPO2GRMQRxWBQ0Qh4lZfOOeb/1c7JQerfqxrWEf+9XH1q
+ VNhA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=F+fAQqv8Mtx05W/9+000N8Yv2TQC/wwSJn+qD/KqxRQ=;
- fh=CvvL5RCgFYNqG83R1A72L4qg+I3onr61VzjGy6O5ygw=;
- b=S1ypf6ZOTIj935EeQ804FJxszYMmuUZg6ZwSPw+2UHPkXx2Rm1YW64pbARZ6VpRby4
- ZUNVGSfYD4sIuK1fUhF86wvc8oYgiWjdwuAuMA+bj5DkXuWO28WFpDHSFluchnXfei5x
- 2GgEVBUcRiPSwjJkYHCz8K1nfE+syjCQ0NHw/ejnSRR33JFwljgFFfjHCFVcsa11tBf1
- 14Uk7pWKhlpz0RLYsMghhyvCqCsBlztveacON9l6weqAZG6fHuwyld2+8HSFUkQv6Klf
- l1rNIvOzofbGFCu3Ub+Kp26l41nwYYgPDnXFbhw+9FX0Y8lgCCIiSAxKa7kpoSrRQMGr
- Y6xQ==; darn=nongnu.org
+ bh=gDPorsHeR8rwd1cihZpzORhaWPZhCy76UXygT/KQXMc=;
+ fh=ZF7jCY669HysMP18HcFkfmHdyUOvKtASQdJ99ECflHs=;
+ b=PyxsQ06V7UETWj4PZAdrNUvpD+lZjhBFwGHS0kVbUZJvNB9k5s2vzK5EdsBHZk6IQP
+ 6QstYmihAxBCcMxjlV5zD76LtLXYCbsPhgsR4SV0FZcAxsZsTjYRuadGiX2b1P/BX7io
+ xYwAGERtcVjYx8RzwB/PPW0UCDkTbfbnLyzCkBH5/S/UYMxUGbdSgq2qAa8Po8S5hYBZ
+ yiCftHyk/Dj763p2O9vKgdruan8UpmeswOT691n8COS+siD8/EOKbqtpyhVnYBJ+DuQB
+ y3xZ4LO+lMGjaJBCGiKudAViJVyZc7FSAtP39lcZWtk1uSFakjU5nbStNsWPBjBQa+9q
+ Hh6A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788508661; x=1789113461; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788509817; x=1789114617; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=F+fAQqv8Mtx05W/9+000N8Yv2TQC/wwSJn+qD/KqxRQ=;
- b=m9LXvMQOH/TnMzu8d48E+GbKOTGYHGhNXvjiBv+pQSCFfI2mFZFZMJE20dSPMPn1d+
- q5zk87cKCS6ed1HY8+UzNaSfpexqmuZs+zVUKJVixCU39QvHru0VeswKrOe58NcV5e71
- MUvpbxy9JD/NSa2JuNjhmK5gNWiDrxP41IlxmcX9TeKAaXycaCiLDFMf+XKGsho/Iwtn
- QANi148hCpVKfBvfLO8BJRDPyFtMMxfSzTDdxHBJz9e6UV7yUZnpKWa4a8LndAnu7zlN
- agDG8l4Xpc0dY3QmExB61gRHMv8yzHneWYHl+pkXSQfWGLfvEX4h9/8btg9bTdgVCWwt
- yXZA==
+ bh=gDPorsHeR8rwd1cihZpzORhaWPZhCy76UXygT/KQXMc=;
+ b=ABjER+Heab9BbNELpxs+dAodAPAP25TyX7yCSrIgHuM/bJmMXN3Vev3IH/8lKO7kiX
+ ruBjyuS218uQzk7y5/uNS72PcsYFgHEMBHzI9QG+BUmIiIZTV7Pf0d7z3I1yGNqAM3u0
+ LGR5J7mVEsZX7D6GsGFtkbOurRhoIE9T0IwdX0fnGARYSHlHIx5/cstK1e6fsDU+fHeI
+ wbI2Td3Cwv2uKtyL0ioSdxdVNwa3ymJXsUo8aIS05H+lHe/IS625mEoTisM3D8PnGI9W
+ sElB98nXr8HnUQkDM2XVDYQIvcNe0dr+5tMZFuUWn6SHN36+xVrCy5bfkHIfQD4ZrGGt
+ e+Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788508661; x=1789113461;
+ d=1e100.net; s=20251104; t=1788509817; x=1789114617;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=F+fAQqv8Mtx05W/9+000N8Yv2TQC/wwSJn+qD/KqxRQ=;
- b=WRXDuYm8HZIzbyhZAdyxkLFp6j+ocJPyK1B97ohw/bq8y8ZKlYIS9KN3FcNFd8qqNU
- X0YysRnLBtZXhfaMkbt+PyASBrQ57dDCHq+JGPQcl1rftsxcGRBINqSUk1Wnz/0hdVUW
- apFEvcxvNYwyoZQlrqM+tjBGwHOoanm8qEPTpFxx3voWAoZ/3+6DQ1Spx2fNgh3eNwYG
- f2mrNNb/7okEMlQQhbUpA7nd856VN+e/vGu0deJd/qH5kdycR2iQDvj8nFdAwp9PH0ry
- FVgGFvY6MOI/55p54ElDJubLH8DLktykmfEMoeibCgrZydj1nOcPIKrQkLXrua/f53eE
- p4Jw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBycCNiC5MjAzYJTRIvbNOmAOTIv+rd4OckqThvV4jCsltB14v8I23e9gYkLJws4lc5ywEZBrBgI2R2K@nongnu.org
-X-Gm-Message-State: AFuF++kZByQVIsQ75HTWOU4p4qIVowvtGQvmyxDzW7MxgXdcnsFv4rHM
- cBPYf+ISrlE3e00bmIBvtD7N1fYhBjdpdgzzHSiKlaFG/1aFTrTx/ubDc3TD3QClRtWfxRhxM1x
- kE0ArRVu7MtO6aNgMh8rP+YNclGg9JhM=
-X-Gm-Gg: AYBFou0Ul+PwLSi24XsKfjiI6ACARTT4Qk5z41Amap1oLLoCUaNvyZyhSZsjrw4I12g
- WHuP9O0Jg3Kasi4IRHR8Lmm0NcRgGYi/W8ZzKBorrPOKrS1PPZXudxaTWQ9mOE+fwS6jG2QqrwC
- y1mpeAVRcz35afEp1SyyhteS3NT6GQ9BU96s+T1cTFtgkOGUsElytlSK0DFAKDIFULIzOhpUky9
- fVEUbOPKiHCW+gx0TKx90Nj5BcDH71WWbABrP2OYaWNCzns/KqDWLUFNKiv74FZDhxmDFm9I/Wh
- wWGd4IZ6XmMRRLGfzGjoswPtIdEYezRDGw5fcV/qmsd+
-X-Received: by 2002:a05:690c:28f:b0:870:107b:635d with SMTP id
- 00721157ae682-87129f3cdbcmr25032387b3.31.1788508661198; Fri, 04 Sep 2026
- 00:57:41 -0700 (PDT)
+ bh=gDPorsHeR8rwd1cihZpzORhaWPZhCy76UXygT/KQXMc=;
+ b=Mw8IrjcqlLvHov+EOqnmY1lD6Pk1J1EBueRu1NvoeTmBc1Oj7jqgYES5kvza7dNCw9
+ 9Des683PUY7WhhmEovX62+G/wrxgg+mD2fS6dicddY1vcNpNOTr9QpXBHYK1Iysv4lNq
+ MQ2czc66keG1JyubDwSEC+E3TlM5yxOg4zJzlitnXgoksQjgosIolfBZnC+4k3kr8AIp
+ MypSzhunmqBK2s9n/bpIaVvK6CsX8Cnm+7QUnvTxLx5uwO+Xmi36PsdnyY6kLiAZyt3V
+ TBzftwuxk72DFAS5NGAKbc/4yEdrkAqEByEGmXGmlTnx2nzAB18HvKiMOFkcfvMXbd2D
+ U4Rg==
+X-Gm-Message-State: AFuF++k+j9Ma4/58E7tDVT9kFTdQlPTypiH3oziVTtnE+yLdrysTVOfd
+ Xo7aICi24mLiJ53lBNvdZNAQ/kzthWSYuwlxecofKvWmThMuf/3iUYz3vLC5h1mLo5pa0JtHy7m
+ ryMtJ+iqgJmKx0ROHyHSKj4yavYhCg84=
+X-Gm-Gg: AYBFou1cvL4yBdPCozNLh2bzLrRc44CSad1Bv/FBXRD6Nw4QrvL61ortifNmbtekkUg
+ u/hsMppBh65NYhEE3wE1Z5/gVeTk5U1zfx0XtTnfkRoGgqaLcfiHuluiFovgrHdIlZKOzLgjNvN
+ ZDc9ugsRP5iVjujsBRGZcQPEGT3C2xKbgGGdsnRrsDtg5gbjd1TC9yH+KEdiohxN23R2lJ/uV0S
+ 45ISwU8SiWCF4QlX/AKhxKZsywOVx+z7FZrtIIJRUMi4Hy0ihEW5Ry2oqLeJViV+iI1W8qiaM9M
+ UBYyRbehxU55W5BWa7l/anBfmetfGqCFo9OIQahE3eSq
+X-Received: by 2002:a05:690c:e18c:10b0:86e:8abd:702a with SMTP id
+ 00721157ae682-8712820ca33mr18839077b3.32.1788509816874; Fri, 04 Sep 2026
+ 01:16:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260903112532.3276678-1-bin.meng@processmission.com>
- <20260903112532.3276678-3-bin.meng@processmission.com>
- <0795176d-4580-4acc-a3cf-c40f8d221661@oss.qualcomm.com>
-In-Reply-To: <0795176d-4580-4acc-a3cf-c40f8d221661@oss.qualcomm.com>
+References: <20260825084224.1827672-1-bin.meng@processmission.com>
+In-Reply-To: <20260825084224.1827672-1-bin.meng@processmission.com>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Fri, 4 Sep 2026 15:57:28 +0800
-X-Gm-Features: AcwNN1X4W_P2FJd-ORDICHFQUwr5Ot-Nj9d04bx9wdIHCfLRMjRg1Ifqon25950
-Message-ID: <CAEUhbmW4h_-az5iBsztzy8Yuu06+WMjOYcrL51sW8VEgyAaSMw@mail.gmail.com>
-Subject: Re: [PATCH 02/33] hw/arm: Add basic Phytium Pi machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
+Date: Fri, 4 Sep 2026 16:16:44 +0800
+X-Gm-Features: AcwNN1XiSJddNETTzkEQT6JpaW3cKF2BAyu3yXWlFnhs5mvZSsxHoGdWh3XDnds
+Message-ID: <CAEUhbmU+BQ=MErMdF1t8BHp-Xzwc2PbFY6pN3wtAgYKbO7jdaQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/net: cadence: Honor subword lanes in the GEM registers
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jason Wang <jasowangio@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,181 +119,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+On Tue, Aug 25, 2026 at 4:43=E2=80=AFPM Bin Meng <bin.meng@processmission.c=
+om> wrote:
+>
+> The GEM MMIO callbacks ignored the low address bits and access size.
+> Byte reads therefore always returned lane zero, causing guest driver
+> that reads the station address byte by byte to turn four unique MAC
+> addresses into the same value. Partial writes had the corresponding
+> lane-selection problem.
+>
+> Extract the requested little-endian read lane and merge partial writes
+> with the current register value. Preserve the existing read-clear,
+> write-clear, and command side effects, including dynamic queue
+> pointers.
+>
+> Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+>
+> ---
+>
+>  hw/net/cadence_gem.c | 94 ++++++++++++++++++++++++++++----------------
+>  1 file changed, 60 insertions(+), 34 deletions(-)
+>
 
-On Fri, Sep 4, 2026 at 12:56=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 3/9/26 13:24, Bin Meng wrote:
-> > Add the base topology for the Phytium Pi board built around the
-> > E2000Q SoC, with two FTC310 and two FTC664 CPUs, RAM, GICv3/ITS,
-> > and PL011 UARTs.
-> >
-> > Describe the CPUs as three non-uniform clusters matching the vendor
-> > Linux device tree. Preserve the board CPU slot order so firmware
-> > MPIDR 0x200 maps to QEMU CPU index 2.
-> >
-> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > ---
-> >
-> >   hw/arm/Kconfig         |   8 +
-> >   hw/arm/meson.build     |   1 +
-> >   hw/arm/phytium_e2000.c | 406 ++++++++++++++++++++++++++++++++++++++++=
-+
-> >   3 files changed, 415 insertions(+)
-> >   create mode 100644 hw/arm/phytium_e2000.c
->
->
-> > +struct PhytiumE2000State {
-> > +    MachineState parent;
-> > +    struct arm_boot_info bootinfo;
-> > +    DeviceState *gic;
-> > +    MemoryRegion ram_low;
-> > +    MemoryRegion ram_high;
-> > +};
->
->
-> > +static void phytium_e2000_create_gic(PhytiumE2000State *s)
-> > +{
-> > +    MachineState *ms =3D MACHINE(s);
-> > +    SysBusDevice *gicbusdev;
-> > +    QList *redist_region_count;
-> > +    int i;
-> > +
-> > +    s->gic =3D qdev_new(gicv3_class_name());
-> > +    qdev_prop_set_uint32(s->gic, "revision", 3);
-> > +    qdev_prop_set_uint32(s->gic, "num-cpu", ms->smp.cpus);
-> > +    qdev_prop_set_uint32(s->gic, "num-irq", PHYTIUM_E2000_NUM_IRQS + 3=
-2);
-> > +    qdev_prop_set_bit(s->gic, "has-security-extensions", true);
-> > +    qdev_prop_set_bit(s->gic, "has-lpi", true);
-> > +
-> > +    redist_region_count =3D qlist_new();
-> > +    qlist_append_int(redist_region_count, ms->smp.cpus);
-> > +    qdev_prop_set_array(s->gic, "redist-region-count", redist_region_c=
-ount);
-> > +
-> > +    object_property_set_link(OBJECT(s->gic), "sysmem",
-> > +                             OBJECT(get_system_memory()), &error_fatal=
-);
-> > +
-> > +    gicbusdev =3D SYS_BUS_DEVICE(s->gic);
-> > +    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-> > +    sysbus_mmio_map(gicbusdev, 0,
-> > +                    phytium_e2000_memmap[PHYTIUM_E2000_GIC_DIST].base)=
-;
-> > +    sysbus_mmio_map(gicbusdev, 1,
-> > +                    phytium_e2000_memmap[PHYTIUM_E2000_GIC_REDIST].bas=
-e);
-> > +
-> > +    for (i =3D 0; i < ms->smp.cpus; i++) {
-> > +        DeviceState *cpudev =3D DEVICE(qemu_get_cpu(i));
->
-> I'd rather you keep a reference in PhytiumE2000State when creating
-> in [*] and access the CPUs that way, not with qemu_get_cpu() (because
-> we plan to restrict it to accel/, as it is problematic on heterogeneous
-> emulation).
-
-Will fix in v2.
-
->
-> > +        int intidbase =3D PHYTIUM_E2000_NUM_IRQS + i * GIC_INTERNAL;
-> > +        static const int timer_irq[] =3D {
-> > +            [GTIMER_PHYS] =3D ARCH_TIMER_NS_EL1_IRQ,
-> > +            [GTIMER_VIRT] =3D ARCH_TIMER_VIRT_IRQ,
-> > +            [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
-> > +            [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
-> > +        };
-> > +
-> > +        for (int irq =3D 0; irq < ARRAY_SIZE(timer_irq); irq++) {
-> > +            qdev_connect_gpio_out(cpudev, irq,
-> > +                qdev_get_gpio_in(s->gic, intidbase + timer_irq[irq]));
-> > +        }
-> > +        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interru=
-pt", 0,
-> > +            qdev_get_gpio_in(s->gic, intidbase + ARCH_GIC_MAINT_IRQ));
-> > +        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
-> > +            qdev_get_gpio_in(s->gic, intidbase + VIRTUAL_PMU_IRQ));
-> > +
-> > +        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_=
-CPU_IRQ));
-> > +        sysbus_connect_irq(gicbusdev, i + ms->smp.cpus,
-> > +                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
-> > +        sysbus_connect_irq(gicbusdev, i + 2 * ms->smp.cpus,
-> > +                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
-> > +        sysbus_connect_irq(gicbusdev, i + 3 * ms->smp.cpus,
-> > +                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
-> > +    }
-> > +
-> > +    phytium_e2000_create_its(s);
-> > +}
->
->
-> > +static void phytium_e2000_create_cpus(PhytiumE2000State *s)
-> > +{
-> > +    MachineState *ms =3D MACHINE(s);
-> > +    const CPUArchIdList *possible_cpus;
-> > +    int i;
-> > +
-> > +    possible_cpus =3D MACHINE_GET_CLASS(ms)->possible_cpu_arch_ids(ms)=
-;
-> > +
-> > +    for (i =3D 0; i < ms->smp.cpus; i++) {
-> > +        Object *cpuobj =3D object_new(possible_cpus->cpus[i].type);
->
-> [*]
->
-> > +        CPUState *cs;
-> > +
-> > +        object_property_set_int(cpuobj, "mp-affinity",
-> > +                                possible_cpus->cpus[i].arch_id,
-> > +                                &error_abort);
-> > +        object_property_set_int(cpuobj, "cntfrq", PHYTIUM_E2000_GTIMER=
-_HZ,
-> > +                                &error_abort);
-> > +        if (object_property_find(cpuobj, "has_el3")) {
-> > +            /*
-> > +             * The generic-loader U-Boot path starts after the EL3 fir=
-mware
-> > +             * stages that normally provide the Phytium SMC services.
-> > +             */
-> > +            object_property_set_bool(cpuobj, "has_el3", false, &error_=
-abort);
-> > +        }
-> > +        object_property_set_link(cpuobj, "memory", OBJECT(get_system_m=
-emory()),
-> > +                                 &error_abort);
-> > +        cs =3D CPU(cpuobj);
-> > +        cs->cpu_index =3D i;
-> > +        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-> > +        object_unref(cpuobj);
-> > +    }
-> > +}
-> > +
-> > +static void phytium_pi_init(MachineState *ms)
-> > +{
-> > +    PhytiumE2000State *s =3D PHYTIUM_PI(ms);
-> > +    int i;
-> > +
-> > +    if (kvm_enabled()) {
-> > +        error_report("phytium-pi: KVM is not supported");
->
-> Why is it relevant?
-
-This is because the machine relies on heterogeneous named
-FTC310/FTC664 TCG CPU models and Arm KVM generally requires the host
-CPU model. KVM is rejected explicitly instead of failing later during
-vCPU initialization.
-
-> > +        exit(1);
-> > +    }
->
-> > +}
-> Conditional to not using qemu_get_cpu():
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-
-Thanks for the review!
-
-Regards,
-Bin
+Ping for review?
 
