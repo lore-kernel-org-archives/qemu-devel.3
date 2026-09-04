@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8F6C624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0473CC79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:00:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2a3q-0006OH-8c; Fri, 04 Sep 2026 15:58:54 -0400
+	id 1x2a4M-0008Bm-Bl; Fri, 04 Sep 2026 15:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a3j-0005rq-E7
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 15:58:49 -0400
+ id 1x2a4L-00087V-3j
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 15:59:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a3h-0007sq-Sv
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 15:58:47 -0400
+ id 1x2a4J-0007wu-C7
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 15:59:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788551925;
+ s=mimecast20190719; t=1788551962;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=K50ZWGwg+nOOOt1h7W1bQ4V8OqkzKi0lDblUcZD8UUs=;
- b=br2lvJM0PuzQQux93iKuLws2RfnUHr5srDhHG4Wyw7G3Q+EuXc51+SZLFnd3RxDcaoFDUv
- 7tbiKLLS8SgxQ0uyGYjGHJPjPae0z3aqI57Fw9x1fPqHzrB9pvMj+fHKWNfHwV4r1adxoy
- L1RtcgpF7Ar8d2x5m+MzlJ43gnkgK0Y=
+ bh=giWvSJES9Am74xj7Gxo9BvxGBNVPmhOKyYmXMRbmmxg=;
+ b=LFotlQhUoszxdmB3C9ER7awf8IsZh10KbNpKvZgiJtyoLGotJRSh99a/ipH4yDzNbKWrXI
+ yx+ddBKxd9jJhj9g4Lq3PU6fX1m7dDNi0+lUuFuUhIPVtq1IAVMSU4GWZt0kKSo/nBvPRt
+ 9T3BJ6ayc7C2OW7XXmaBikRRWR7PtHU=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-VYzJrZGrPDKXn91YIBLEqw-1; Fri,
- 04 Sep 2026 15:58:42 -0400
-X-MC-Unique: VYzJrZGrPDKXn91YIBLEqw-1
-X-Mimecast-MFC-AGG-ID: VYzJrZGrPDKXn91YIBLEqw_1788551921
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-cjExEn7bOL2XFJZIPy3VMw-1; Fri,
+ 04 Sep 2026 15:59:19 -0400
+X-MC-Unique: cjExEn7bOL2XFJZIPy3VMw-1
+X-Mimecast-MFC-AGG-ID: cjExEn7bOL2XFJZIPy3VMw_1788551958
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFF9E19C95C6; Fri,  4 Sep 2026 19:58:40 +0000 (UTC)
+ id 1F9E519114BB; Fri,  4 Sep 2026 19:59:18 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EFB5030002F5; Fri,  4 Sep 2026 19:58:39 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1E19418001CE; Fri,  4 Sep 2026 19:59:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 04 Sep 2026 23:57:52 +0400
-Subject: [PATCH v4 09/75] qom/qmp: populate qapi-type in QMP handlers
+Date: Fri, 04 Sep 2026 23:58:02 +0400
+Subject: [PATCH v4 19/75] microvm: convert OnOffAuto properties to
+ QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260904-qom-qapi-v4-9-a985f168e938@redhat.com>
+Message-Id: <20260904-qom-qapi-v4-19-a985f168e938@redhat.com>
 References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 In-Reply-To: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 To: qemu-devel@nongnu.org
@@ -64,25 +65,27 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3382;
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Sergio Lopez <slp@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5502;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+8tJKKMSqC8bFdqLXJxWJDTuj8Fy49U/fprYdWbqUWM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLIFidck6SdAYxe/wP6OOzoZEoRKMUuj9BXi
- bd/DT3I5KyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiyAAKCRDa6OEJdZac
- 5YcxD/4pDkBWkOy5ROro0eAmhtsQ2Qho7n3MwFgVo03+PTs+n52cTkLr/w0lJpZLlKbQcLncqID
- koxlRfh6dPj0NGFJcthCsXSZxoo1AVX50U28o8A9rRJZNV1YVMH32xH3nfYGJZoRJUiJXcu6bX8
- KHWyxu6t5SxzgGVdjAUpQJDBAFjKG/5EyK+lJljqUexOenwevcC0hap/m79FbeUVD0jpcnCpNw9
- wZNbbw22O23ZTHuqRbbGRK0wodcRKPTIzghXOm7NijWW6LaNedUcrEpG5MWWwIjKSD2Lh5jbRGg
- LTzLnC4cgzo1ygiyta3V8zXcBHFcK8nlDRA0ZRMouG4wkfuFAANLIJi3XCptFUXROElMsPf5g7Z
- a2MLOhb+5Mne6U+uV/UZWB0XTDisMuPJR0ML3EQx5QiKd2kWC0F2hy04dY3tql7OMyZpFgfa6V8
- ked1SZ5V/ykvDwWeRyXBgy5g+jikfLl79Ta9w6jxsUP4nkZ+9xMYSREzklFzB3TrS3UPEE9QgyD
- wn5h1GdEagK90wrMd/SK5Dt1rFQr5Q0saTZ+W55xIinbolp01Ir90VojAYGDNaaB4dWMsWxCYPC
- 6k5XBhrXxCrz2qZKt/jpkI4i+oh51Rg6F0QEaBrYdDQbYnEfpZSq8YlXmeEb5DkgD1TPfBN/2gp
- zS6q1i3p1s+iWbA==
+ bh=SY82PLEWc9Gc3m055Lm7iyiVVRaR86gDnyc0DsDmtbo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLJj7DQU0tYL6mz7aiQXHXbf8ej81i78FpTS
+ /qyh143EliJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiyQAKCRDa6OEJdZac
+ 5YGmEACFDLtlnoylhd6yMg6YMcfnme/3JW/TrOQoAQg+QFZ1KLZaYm0axADkYePvHrV3kjHSHvx
+ fITJqY+GK649PnWFWia6zm/Nx9O7WzQbG1yWTDFOT6aqK0FjWNCHIKn5iNVeFu2b4GcwJcCu9Ol
+ aRsRvkFwLIA3ZG0Mb5/kCjOLho8SrbMobf25HFnjADK5F/DvbbdDeGg1XcUVDV0/r9/KQSfjv06
+ QEpSpqIX05P/pL82qmBWW3vCpPiKWwl5wo70X9141fHuK0JEKor1LE1QFK2lhIXzLrWOj1PQQxO
+ jseQoOyA7KUHj067ZpsQPhb2P/IQ07NS2Ym3TgG1AufiWc6QY+PxtvFWdun5vL8pTNzBBCcllke
+ O2ySPuEUoekRvjHfECtOh4a3RZl9v3sc3v4bAcYdsxucB9DJ8WNZFeibogUPa/ef0IexoGO6PZL
+ 6pD9n0Wug7jsmaO8b6C0aYoy8LMM0fDM88ouu/rf9ZrlcXvrsRGVPOXtB2iW0zEarQIsB5C5j2F
+ s48J/FupYnf/03Cam5swjOfjcF22OOquGBWdlQ3X0fFnq/Y1PQverNvuUgHT8rX3MsYlUiqEmRR
+ RnsUXnmKPOKNfKaC8kEpHBjvYELLw1nHKWMrEoocY7YjK8fcDyAboSi+o7gXS2Dx9fQzFd55WI9
+ yCeoVnS5MqEq8cQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,97 +111,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up the new qapi-type field in all four QMP handlers that return
-ObjectPropertyInfo or ObjectPropertyValue: qom-list, qom-list-get,
-device-list-properties, and qom-list-properties.
+Convert the rtc, pcie, and ioapic2 OnOffAuto properties from
+manual visitor-based callbacks to property_add_qapi_enum().
 
-When an ObjectProperty has a qapi_type set, the masked QAPI type name
-is copied into the response, allowing clients to cross-reference with
-query-qmp-schema.
-
-No property has it yet, the following changes will populate it.
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qom/qom-qmp-cmds.c | 32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ hw/i386/microvm.c | 80 +++++++++++++++++++++++--------------------------------
+ 1 file changed, 34 insertions(+), 46 deletions(-)
 
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index 330895361d47..f9e6d4371cc5 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -25,9 +25,22 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qobject-output-visitor.h"
- #include "qemu/cutils.h"
-+#include "qapi/qapi-type-info.h"
- #include "qom/object_interfaces.h"
- #include "qom/qom-qobject.h"
- 
-+static ObjectPropertyInfo *qom_property_info(ObjectProperty *prop)
-+{
-+    ObjectPropertyInfo *info = g_new0(ObjectPropertyInfo, 1);
-+
-+    info->name = g_strdup(prop->name);
-+    info->type = g_strdup(prop->type);
-+    if (prop->qapi_type) {
-+        info->qapi_type = g_strdup(prop->qapi_type->masked_name);
-+    }
-+    return info;
-+}
-+
- static Object *qom_resolve_path(const char *path, Error **errp)
- {
-     bool ambiguous = false;
-@@ -58,12 +71,7 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
- 
-     object_property_iter_init(&iter, obj);
-     while ((prop = object_property_iter_next(&iter))) {
--        ObjectPropertyInfo *value = g_new0(ObjectPropertyInfo, 1);
--
--        QAPI_LIST_PREPEND(props, value);
--
--        value->name = g_strdup(prop->name);
--        value->type = g_strdup(prop->type);
-+        QAPI_LIST_PREPEND(props, qom_property_info(prop));
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index e7adab7d2ef7..3366f3b933f8 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -21,7 +21,7 @@
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "system/system.h"
+ #include "system/cpus.h"
+ #include "system/numa.h"
+@@ -519,55 +519,40 @@ static void microvm_machine_reset(MachineState *machine, ResetType type)
      }
- 
-     return props;
-@@ -78,6 +86,9 @@ static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
- 
-     item->name = g_strdup(prop->name);
-     item->type = g_strdup(prop->type);
-+    if (prop->qapi_type) {
-+        item->qapi_type = g_strdup(prop->qapi_type->masked_name);
-+    }
-     item->value = object_property_get_qobject(obj, prop->name, NULL);
  }
  
-@@ -218,9 +229,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
-             continue;
-         }
+-static void microvm_machine_get_rtc(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static int microvm_machine_get_rtc(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto rtc = mms->rtc;
+-
+-    visit_type_OnOffAuto(v, name, &rtc, errp);
++    return mms->rtc;
+ }
  
--        info = g_new0(ObjectPropertyInfo, 1);
--        info->name = g_strdup(prop->name);
--        info->type = g_strdup(prop->type);
-+        info = qom_property_info(prop);
-         info->description = g_strdup(prop->description);
-         info->default_value = qobject_ref(prop->defval);
+-static void microvm_machine_set_rtc(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static void microvm_machine_set_rtc(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->rtc, errp);
++    mms->rtc = value;
+ }
  
-@@ -261,11 +270,8 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
-         object_property_iter_init(&iter, obj);
-     }
-     while ((prop = object_property_iter_next(&iter))) {
--        ObjectPropertyInfo *info;
-+        ObjectPropertyInfo *info = qom_property_info(prop);
+-static void microvm_machine_get_pcie(Object *obj, Visitor *v, const char *name,
+-                                     void *opaque, Error **errp)
++static int microvm_machine_get_pcie(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto pcie = mms->pcie;
+-
+-    visit_type_OnOffAuto(v, name, &pcie, errp);
++    return mms->pcie;
+ }
  
--        info = g_malloc0(sizeof(*info));
--        info->name = g_strdup(prop->name);
--        info->type = g_strdup(prop->type);
-         info->description = g_strdup(prop->description);
-         info->default_value = qobject_ref(prop->defval);
+-static void microvm_machine_set_pcie(Object *obj, Visitor *v, const char *name,
+-                                     void *opaque, Error **errp)
++static void microvm_machine_set_pcie(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->pcie, errp);
++    mms->pcie = value;
+ }
  
+-static void microvm_machine_get_ioapic2(Object *obj, Visitor *v, const char *name,
+-                                        void *opaque, Error **errp)
++static int microvm_machine_get_ioapic2(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto ioapic2 = mms->ioapic2;
+-
+-    visit_type_OnOffAuto(v, name, &ioapic2, errp);
++    return mms->ioapic2;
+ }
+ 
+-static void microvm_machine_set_ioapic2(Object *obj, Visitor *v, const char *name,
+-                                        void *opaque, Error **errp)
++static void microvm_machine_set_ioapic2(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->ioapic2, errp);
++    mms->ioapic2 = value;
+ }
+ 
+ static bool microvm_machine_get_isa_serial(Object *obj, Error **errp)
+@@ -673,26 +658,29 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
+     hc->unplug_request = microvm_device_unplug_request_cb;
+     hc->unplug = microvm_device_unplug_cb;
+ 
+-    object_class_property_add(oc, MICROVM_MACHINE_RTC, "OnOffAuto",
+-                              microvm_machine_get_rtc,
+-                              microvm_machine_set_rtc,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_RTC,
+-        "Enable MC146818 RTC");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_RTC,
++        .description = "Enable MC146818 RTC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_rtc,
++        .set = microvm_machine_set_rtc,
++    ));
+ 
+-    object_class_property_add(oc, MICROVM_MACHINE_PCIE, "OnOffAuto",
+-                              microvm_machine_get_pcie,
+-                              microvm_machine_set_pcie,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_PCIE,
+-        "Enable PCIe");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_PCIE,
++        .description = "Enable PCIe",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_pcie,
++        .set = microvm_machine_set_pcie,
++    ));
+ 
+-    object_class_property_add(oc, MICROVM_MACHINE_IOAPIC2, "OnOffAuto",
+-                              microvm_machine_get_ioapic2,
+-                              microvm_machine_set_ioapic2,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_IOAPIC2,
+-        "Enable second IO-APIC");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_IOAPIC2,
++        .description = "Enable second IO-APIC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_ioapic2,
++        .set = microvm_machine_set_ioapic2,
++    ));
+ 
+     object_class_property_add_bool(oc, MICROVM_MACHINE_ISA_SERIAL,
+                                    microvm_machine_get_isa_serial,
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
