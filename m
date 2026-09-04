@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE88EC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D037EC61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJO-0006CN-CC; Fri, 04 Sep 2026 08:46:30 -0400
+	id 1x2TJL-0006B5-3M; Fri, 04 Sep 2026 08:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJH-000692-92
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:25 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1x2TJE-00067m-GA
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:20 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJD-0006qP-F2
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:22 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-49b0eab380eso8392965e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:17 -0700 (PDT)
+ id 1x2TJA-0006p8-02
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:17 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-490cf322ed0so10110955e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525976; x=1789130776; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525974; x=1789130774; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=JJRRLQKjYH6ftKXJglo+Wz+lGfOq+Ff93uY+8fVGf2U=;
- b=inJaY/yywpyfVZmnYx8R8GyxqQ3CVvpwOwdA12PEcpSZiffwnkDIAzRV9FfOdJzbZw
- uIsTRqkHplvBWKEEoWfHk+hSOcOH3k6WxTX5UN8wxAIRCr859bzkabIhiVLlGJM2BvwP
- UOLc74VZ+omKca917uBL8TL9LECQ+dDC/vj3NawucOzcUeQICiyXkkraAlb2OTvHrOsV
- 7SSABjfT1V1o/Saq7Ds/F7u6vc0mWRa2Oet3eEI9Z4oH7qy8CcNrtPOUHNNeNl2pMjHa
- 5EHfnIy53ijiVfDnPPRjnim+BI5zG8HilY/cNPHEpB2rD9Ti86RF2mBXNlDCQdztgzlH
- W+FA==
+ bh=Bc/0OXJZ9G0Iq44/4dsbLI+wb7zd3BSOeEUd6MJIas4=;
+ b=VZxRkidjNAc98iDI6x3cm4MGHiBe7c3IgPtKL8E/7LeoNUA0h+Wz3LNy0jC5hX9i+9
+ O3wHNFZojIvn8bcKH1IZLvP3/75rdx5Hn7NJW5J5ZOcsS81RXQc4Ch1+a/6YS7K5F/4M
+ wIFG8Q5NTJcNme1N7jpBH9QYrt0Kk/l7ih0iOChNCKkOSbryNcmTzJ5xF4oN46aHHVQi
+ AI2j8Z3v1AKRkhI9BVUd2b8Hnj5U1o94gEii7ubLFWg3zKe81lqsFfDJRIkrw8p+cZpm
+ gHpKoYzXASy5q9ZGETiXr51qz7icQS0obHruOww0xdqSGO90zybj4YbL8k2RrRIsLBPe
+ gW8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525976; x=1789130776;
+ d=1e100.net; s=20251104; t=1788525974; x=1789130774;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=JJRRLQKjYH6ftKXJglo+Wz+lGfOq+Ff93uY+8fVGf2U=;
- b=T4ZOX+1AW4k4zdAEKwl6JXJDEKZtguVzztIg7xHcRDAV72sBC35GcK4C/zh3m2dohr
- /D8t4rls9P+KEaubCuHm9KOoaFxo4i5Lw8+X8fW9d6YGaet6gqbm5W/VAp+1kvY2sayF
- TO83/AxaFLvY3Z3jY8vO2ymG7T63FsAXZGxnxYmtCdcZVPwH6tSEArSL4ommyRW02nPB
- FXCJiKkndOdGDzwEPHtIjMvtRILru6VIH8cHNhI007r97vELTdkUgjVCQA/41qlPuyda
- a0cN1PFq5dd7eQGt5hADNgufaxNZ4if3JZx6RBHjQqwynEEiJq5iO2+So2IjtxTvKMTf
- LL7Q==
-X-Gm-Message-State: AFuF++mX4gpMwBFyqfwNASj7JDWKUoWX6PO2EZlAkYLwj6V1ZGcgxfKi
- ibyiXX93AwbD6/SWooimwhmVYL59aNFCcAgyQBDw55aQbv8TGl/hGSwnbw2VMRle80E=
-X-Gm-Gg: AYBFou2e48U9Eom1SIs5fzemGeTT4hqrm1Wymm2mj0Eion8Esskni+1kMyBaiaKhiLC
- C++AmD1T+veiG3hLUL5DQyeJJJa/kwswg8t0AqtsSx6e/LZQdVY90UN6QYCme5TYUQPvBvON1KQ
- qwJ8Cafdj7ItDlH6OsF4wZncQ1dYh0hgqC1T5ehe30JIEuwZXLkSJaXjIDqp7E7wXhuQyOOerCV
- 2w5ClS4jtWZiHAeFols3BFmcNSJSGpLVsOVuRbOpUlMuIwob8yn+lkBQhQ9beK3H1lDpslm09Vc
- 1SZx3hxCbZY99j2ppoEiaxYo9mAm0NaBAneAR4FIrg7ibZgm5ufY1PkCMfuWsw4mau9Uh0EQwAr
- /UyTPJJ4bttTMzqNfgRnjToLIDntmhDno+sipJRQKeTlfbvjtXTM7slc5xomDmHknntfEj0bwaJ
- /uyIsNyWXAs8Upi8EEaJzoAgNu0dTFJj6OgDtcIHwAFjvTzsgnUG1HoowKAehhfgck4HJpOrOIJ
- Q==
-X-Received: by 2002:a05:600c:5247:b0:49c:ee3b:723d with SMTP id
- 5b1f17b1804b1-49cf81f69ddmr44820335e9.0.1788525976080; 
- Fri, 04 Sep 2026 05:46:16 -0700 (PDT)
+ bh=Bc/0OXJZ9G0Iq44/4dsbLI+wb7zd3BSOeEUd6MJIas4=;
+ b=GZ2C3RqTrZFWZOJiTzxc54DUhA2AAWKqCzG5tg/wtBX3x/cwGSE/KdJF830I2pifVq
+ gFYDR3235fRxEZLtuqI5zbt6vMMwIicpwCzkVWqYBUofmVafdp6e4iAQtW7THE7QINkW
+ 9+8176pukeuNxymZR9EHfAiQK2/rX62eNVEuqR9cOa7Cp2XHe+V4Bt696UfKcxwJH9nq
+ BUdsQ62YvtrruaecbYc0ltqrRe8K8nRXe8dvQbRotqC24VNTQ6cNSRwROoAxRh5c/64P
+ fWyEHBmclyY7/qazugowykk87fQwt98V08raC15C0SowLq4rOvQMd6KMVrWk84352uGG
+ /Vtg==
+X-Gm-Message-State: AFuF++lCpX2nF/8Ch57yrRCpoOLf4ppcmsz10N/FdQPgv0z0mfPOCdSs
+ RtWpAcPpTcT4Z87gou5VDbGSWVdah6MuM7tAg43ORIX+5M76rKo1aY1qWw1qq6ZFIol9ciETk0U
+ QhbKUG/c=
+X-Gm-Gg: AYBFou0B3A84k7f6az+xVKjQ9UczsFEFPR/whDYt/riI1BEzo2oGCMJwBH1Lo6uGeOi
+ wTtCgcpwI2yzhDDJp4nQgvk2gjXiSlUp2VxpYJoMpEBoiz6j2smEJRf+mNkx5/l63k1iXaIy5Ol
+ b1CXeVLxbFO+Dbsede3wiZVv8O8dxJlMkdRcqqx+QQruqhCKymtDS2/2djt2aPtNWTLRp/ofUsz
+ W9Jeu8K6/uBx8+YvgyK22dIjXYDZAR0g3Q4VE86K1AQjih7lSLD/KH+ou+7Ofk7NkUeMrEP+fJv
+ wIOEH25c9WFCStmdP5vreAimK6mfCBS5fF27X71z7akmk7EL191rgqwSA4g/sJLgNkp4r2LP5JX
+ IBZ9VHluEn4jryAGZX3EogU8m1v9NSJ4Bb2JXN1x2UsIx0vQkH4kNih4b+NBi15ATviLBt5WK1v
+ 1AyPopE405S1so8wLtbMy22+DUCPTsg1b0d0F8YSFEh22pwfyoDa2aBwhW6j3+13eOswkFnME=
+X-Received: by 2002:a05:600c:3e1a:b0:49c:fc6c:bdff with SMTP id
+ 5b1f17b1804b1-49cfc6cc078mr33297225e9.22.1788525974195; 
+ Fri, 04 Sep 2026 05:46:14 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee6158e9sm151816925e9.12.2026.09.04.05.46.09
+ 5b1f17b1804b1-49cf7739b7asm64194205e9.13.2026.09.04.05.46.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 04 Sep 2026 05:46:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 835E3613CA;
+ by draig.lan (Postfix) with ESMTP id 6F3A8613B5;
  Fri, 04 Sep 2026 13:46:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 012/105] tests/tcg/meson.build: introduce plugin_test
-Date: Fri,  4 Sep 2026 13:44:26 +0100
-Message-ID: <20260904124604.2207440-13-alex.bennee@linaro.org>
+ Aniket Sahu <asahu1x@linux.ibm.com>, Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PULL 011/105] tests/tcg/plugins: build list of test_plugins
+Date: Fri,  4 Sep 2026 13:44:25 +0100
+Message-ID: <20260904124604.2207440-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,96 +109,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-We add possibility to declare a test that is based on a plugin.
+We previously had list of test_plugins sources, but not the target
+themselves. Create this list, so tests can then reference a plugin by
+its name from there.
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-13-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-12-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 9940bae80a4..7b51750b016 100644
+index fbee86e6b4b..9940bae80a4 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -16,6 +16,10 @@ tcg_tests = {}
- #           'cflags': ['additional cflags to compile test', ...],
- #           'qemu_args': ['qemu command line flags', ...],
- #           'env_var': ['VAR=value', ...],
-+#           'plugin_test': {
-+#             'plugin': 'plugin_name',
-+#             'args': ['plugin_args', ...],
-+#           },
- #         }
- #       },
- #       ...
-@@ -59,13 +63,29 @@ foreach target, plan: tcg_tests
-     foreach src, setup: t
-       # return a clear error if user misspell a setup entry
-       foreach key, _ : setup
--        allowed = ['exe_name', 'env_var', 'cflags', 'qemu_args', 'test_name']
-+        allowed = ['exe_name', 'env_var', 'cflags', 'plugin_test',
-+                   'qemu_args', 'test_name']
-         if key not in allowed
-           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
-                 ' (possible: [' + ', '.join(allowed) + '])')
-         endif
-       endforeach
+@@ -31,6 +31,7 @@ tcg_tests = {}
+ # Default name is derived from src if 'exe_name' and 'test_name' are omitted.
  
-+      # return a clear error if user misspell a plugin entry
-+      if 'plugin_test' in setup
-+        foreach key, _ : setup['plugin_test']
-+          allowed = ['args', 'plugin']
-+          if key not in allowed
-+            error('unknown tcg plugin entry \'' + key + '\' for test ' + src +
-+                  ' (possible: [' + ', '.join(allowed) + '])')
-+          endif
-+        endforeach
-+      endif
-+
-+      if 'plugin_test' in setup and not get_option('plugins')
-+        continue
-+      endif
-+
-       # meson '/' operator drops left operand if right is an absolute path
-       src = folder / src
-       file = files(src)
-@@ -78,6 +98,12 @@ foreach target, plan: tcg_tests
-       if 'test_name' in setup
-         test_name = setup['test_name']
-       endif
-+      if 'plugin_test' in setup
-+        plugin = test_plugins[setup['plugin_test']['plugin']]
-+        # remove 'lib' prefix
-+        plugin_name = fs.stem(plugin).substring(3)
-+        test_name = 'plugin-' + plugin_name + '-with-' + test_name
-+      endif
+ # plugins come first, as we need to build the list
++test_plugins = {}
+ subdir('plugins')
  
-       exe_name = target + '-' + exe_name
-       test_name = target + '-' + test_name
-@@ -118,6 +144,21 @@ foreach target, plan: tcg_tests
-         qemu_args = setup['qemu_args']
-       endif
+ # Finally, we can create all test executables and test targets
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index d7f8f0ae0ad..2abc317d1e7 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -1,4 +1,4 @@
+-test_plugins = [
++test_plugins_src = [
+ 'bb.c',
+ 'discons.c',
+ 'empty.c',
+@@ -14,9 +14,12 @@ test_plugins = [
  
-+      if 'plugin_test' in setup
-+        plugin_setup = setup['plugin_test']
-+        plugin = test_plugins[plugin_setup['plugin']]
-+        plugin_args = []
-+        if 'args' in plugin_setup
-+          # add empty arg to generate an additional comma
-+          plugin_args = ['', plugin_setup['args']]
-+        endif
-+        plugin_args = ','.join(plugin_args)
-+
-+        # since we turn plugin into a string, add dependency explicitly
-+        depends += plugin
-+        qemu_args = ['-plugin', plugin.full_path() + plugin_args, qemu_args]
-+      endif
-+
-       exe = built_tests[exe_name]
-       cmd = [qemu, qemu_args, exe]
- 
+ t = []
+ if get_option('plugins')
+-  foreach i : test_plugins
+-    t += shared_module(fs.stem(i), files(i),
+-                       dependencies: plugins_deps)
++  foreach i : test_plugins_src
++    name = fs.stem(i)
++    plugin = shared_module(name, files(i),
++                           dependencies: plugins_deps)
++    t += plugin
++    test_plugins += {name: plugin}
+   endforeach
+ endif
+ if t.length() > 0
 -- 
 2.47.3
 
