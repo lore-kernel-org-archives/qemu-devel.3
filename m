@@ -4,102 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95DF9C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC13CC61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TL0-0001ed-8Z; Fri, 04 Sep 2026 08:48:10 -0400
+	id 1x2TJN-0006Bw-1G; Fri, 04 Sep 2026 08:46:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x2TKy-0001eI-NV
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:48:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x2TKx-0007CV-51
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:48:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788526085;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=lSllx6henKx+I8/uPcAW8ji7ADhy4lHNJbAj0EDO3vA=;
- b=JbDYibcob55vf9zHTYqLmJEh49d06d43zIWiL9mYY0Ro3YsBb218ioUfpeXxFRZS8O0Kjm
- OPrWuvyiCjuwXsIlcfOLYre9IVfVFNYqJ4HHgUT6hIGtKqHhjjYyrkBLfFgTeQIrnAHc+n
- mHIAiOU/lJ9D3ToVOIvsMagy8ZT2roc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199-D-tIzwJJMHqHFp4q6s0bdA-1; Fri, 04 Sep 2026 08:48:04 -0400
-X-MC-Unique: D-tIzwJJMHqHFp4q6s0bdA-1
-X-Mimecast-MFC-AGG-ID: D-tIzwJJMHqHFp4q6s0bdA_1788526083
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49cc9f5bee2so8063335e9.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:48:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2TJH-00069I-TN
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:25 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2TJE-0006rC-UB
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:23 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-485888b3c3dso872050f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788526083; x=1789130883; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=lSllx6henKx+I8/uPcAW8ji7ADhy4lHNJbAj0EDO3vA=;
- b=doQAGQ2WeRyvcKZ+DywYKGpOW9bw8TBEGjjzFGTPvfRIHDjfHy/I/w/zhL0sH90+qD
- I9KCMowOWat01R8U4bA2Iq0s34tCp7iHGPJ6Aj4ypAu2JvoXpqCDIM2p02aOguDLio6/
- m7rkFnlFyxx1puMOcqivwfoqpxPkfC3PTsQOarI+DAgvnIjbAlO67CILX6rHZK9JOzyw
- 4q5oTeUDWG0+f1SX8AGZ1xC+5nL+pMA7psAKJWz5PAk+E4zroIYZgA3dIMT9SVGaUx+U
- l+/nwD3VZp1+mmELYPQyFjQc/SoSlRMHI/qmulKVTyAqCmhqwprFEpPrHOFH7nacsT1c
- j11A==
+ d=linaro.org; s=google; t=1788525979; x=1789130779; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=g5//nCM3pmvphFdrXdMpuw8XsMrA3mZsffpPB3jrr14=;
+ b=H+4gA4W9QErtVPR1BZuVe8G4qm4gv8nDf6B0wu+dXBGQl2vaWWZ7fyBC3O7b7qqKL4
+ mMEDkRQYxBE5qYNztJxvWYXzcChNpnYeT1T62/KDTAhHLHdd4aDTzuw6UPe37911dqaO
+ tUmAajDMWrnUAlDZtevi794bS/yb6UCxt2mL5kgFKGdsfdi+Umce+aC/n2kdxxh26Bfc
+ USwAAgM9BaZC1LbKmFqHro6ns4KRmgL+h5N1xqxTcjGrV7tPtlONeEKRhdDrc/gCpYze
+ mzAi6htYTBNhhg0g6rlXKYx9Zsi5K9Dk7p2ac+I8/aIgfplSfaKA1pqCQ99SblY1Tplh
+ V8kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526083; x=1789130883;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lSllx6henKx+I8/uPcAW8ji7ADhy4lHNJbAj0EDO3vA=;
- b=AXvUN7NwQXcIz1kSsSHPa8TFOUvNmbcQ8ak0J1udgF6CvIGiLR+gSSfv7jbO198I1V
- wqxBLffM4x7mM0Cb9OQmXinN9qFmSx3s3hxbpdumY+406EEOWDH1qrisMEdkepVOjIij
- So1EcunKRG1YHX7tSzT3vXJu/V3CjVWb8Mmy4w/yisB9Z+XWlJJYnQnyjTczPuIybWeI
- 9iUDqwEpYX+IjuRE01wPQ3BaaA1cJNVZtTQwcy5+YW9STMxJTOFua4h9uFEjXFEbAsOk
- xCrCgpUEI2i2LaQDnNpVjqMIQOkqK8aXv7PU8BafmX8fyfQoW4+zPmQyjFxwwVU05+WT
- QWmA==
-X-Gm-Message-State: AFuF++lq8TCkFyXjjzh9nbvkK2MRLuuISw6EVtKEePGusBPeBjnqSagA
- J6X/jXePqthP9nLLbYBipT5pBCFilLrc7IhCTQO5JM58T26YsMwIeB760sYLdlW+SxIzO/y396l
- a1GsLgVM12GkeY1ujq//zJZCptIRPozhWQo5RTRoKtf18h8j1wEv7kwm9DL1g9Aq5CaIxC++HRW
- N5dqVygC0J+S0JPdJvdlOBW9FqgyoSk1muZMkTuUEC
-X-Gm-Gg: AYBFou009Hi5AyBfn71pIGal8+1sXqrWGPh1KoQQOj7UBfI3DAxCkTK8rryfLNqvEWG
- JFt9tTpTVNFWV7bs+QwFNFCXpDq6slRDJzL6lN9xmvTFUe7MMc3nBOP1IYfEuYPkANMF+h94NbN
- AiJe81oe8kbmH4KJsv2pXptsBsO1dAQAV0oFFiuB0baqKl02bG4exSttvJWr1zupZPduseCyc1X
- nXPoyrlJHSCpxbNEQSaG9jNw9aDRI7cmeUmoxAjdCFB2kGU+P5wfG/yki8WpnRlrbblelNiLSHP
- XyGKDv+ZWCpf+VA6aWgCwUOYEYMnOv3+ri4JRU0IcmHb9o3GteMHtSc0/kUD3/yg0WL1KhIlcj5
- 4NP/lEukHuirf+MEgwTdfCrV90/KPBAzgG5dj6UUHJxemo20ljFlZY6qalqBFU434seHUKnAP5Q
- RTRRp/
-X-Received: by 2002:a05:600c:1551:b0:49c:fa21:1c89 with SMTP id
- 5b1f17b1804b1-49cfa211d5fmr39915685e9.30.1788526083050; 
- Fri, 04 Sep 2026 05:48:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:1551:b0:49c:fa21:1c89 with SMTP id
- 5b1f17b1804b1-49cfa211d5fmr39915365e9.30.1788526082702; 
- Fri, 04 Sep 2026 05:48:02 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.232.249])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485883c6ba4sm6895039f8f.25.2026.09.04.05.48.01
+ d=1e100.net; s=20251104; t=1788525979; x=1789130779;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=g5//nCM3pmvphFdrXdMpuw8XsMrA3mZsffpPB3jrr14=;
+ b=an7Sj9kLS8ErQA3zm9q1EzPBQ0pG1WCz9OwGj8ZWLJwI/n/TXq5c+5Sn+Hc0XxJxYk
+ qlzup6tZgN47unV/gt0V8fnDd2y3VMwjUDFEsxMOPvSYM3gRQOhjnYnwGmCO6KIdYKPV
+ KGJTbkbFFOuu2SWmEkkXA75hMhb8otZC2O9kqIWiO3qFA5jSOPMZfa8JC1Aa7riM6hve
+ oRrWRwAZRxQJGaCLqqUGrkqcJRk18xYZueM9yBn8mYY7hfSs5WN+eDnKkExI9boS6LqI
+ Fj0jxt5J+yWwtaDJbckftJIBzZsclBbYcd1OprFz3JB6LBoTVMmEKMLgguzFpoUcPVGM
+ vCYQ==
+X-Gm-Message-State: AFuF++kt/iM9pJP6XWEPucLvgIjUW5V/qanDhfI8BJfcZAVZkT6sHjHW
+ u1Zvpf5du7jnAPANiTRqcCtnA5g1ri2gpPs3DoMzUFqzgUbvDPotqawlH1F6qkXfHls=
+X-Gm-Gg: AYBFou2hdSCJamD2osBIXacXXiJu/x8IZhERtie0h6Sg/kPWuqvfyVxqhE9k2djbDbH
+ yonD5AxpDy2iJ2Fl8AMzEnPFqv5eLFGkZuoUFD13eW24qZdCSD1OeTfcsTtFRMYG9g0Cz1zrjKE
+ dq4EWAzrnM0u8XBza4gtLl/eUIrX51aGK0OtKy2iZfN3kR8+yUBjkaIsim08xAor/3p3Rab7ZzE
+ eflBOSQ/TDXD4chij8dFnv1J0oDxVszBJ6YrCrRFuiejxrjK0efCKgRNHb33JqTGhuRIkXRBHLt
+ uWDB80ghkJqSCJBBEvqiciaIR+10tPwR8hY7lsmF0yAyab3DUY9ldOg7DNK2Vdz+Qe21vMFW4fx
+ sEuDbHoDhHJXybcxNUFDca/KLnMFBNC3UF6u7niKVYZrrqmDeIYAjeQgnH9b2+WAtfXhUtQxesa
+ QfGMas5eyeKm7fcNVLSwMLVnSx4B4lXsG9V4EuVOy3D/Adn2dKnbq+wokHIITK
+X-Received: by 2002:a05:6000:46c7:b0:485:847f:fd97 with SMTP id
+ ffacd0b85a97d-485870914ccmr6111641f8f.4.1788525978818; 
+ Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4858ac2b4cdsm4587385f8f.16.2026.09.04.05.46.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:48:02 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 262EE618C3;
+ Fri, 04 Sep 2026 13:46:08 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] rust: qemu-macros: remove redundant clone()
-Date: Fri,  4 Sep 2026 14:48:00 +0200
-Message-ID: <20260904124801.1144707-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 039/105] tests/tcg/arm/fcvt.c: use raw opcode for FPRCVT
+Date: Fri,  4 Sep 2026 13:44:53 +0100
+Message-ID: <20260904124604.2207440-40-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,29 +107,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is reported by Clippy in the latest nightly builds.  Take
-a reference instead of cloning.
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-macros/src/lib.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+fcvtzs d0,s31 requires fprcvt support in compiler, which is only
+available from gcc-16. Since our debian-all-test-cross container has
+gcc-aarch64-14, this test will never run in CI.
 
-diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
-index ee417bb4b4e..271125185ec 100644
---- a/rust/qemu-macros/src/lib.rs
-+++ b/rust/qemu-macros/src/lib.rs
-@@ -261,7 +261,7 @@ macro_rules! str_to_c_str {
-                 }
-             },
-         )?;
--        let field_ty = field.ty.clone();
-+        let field_ty = &field.ty;
-         let (qdev_prop, bitval) = if let Some(bitval) = bitnr {
-             (
-                 quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO },
+Replace the concerned instruction with raw opcode, obtained from:
+$ echo "fcvtzs d0, s31" | llvm-mc-22 -triple=aarch64 -mattr=fprcvt --show-encoding
+fcvtzs  d0, s31 // encoding: [0xe0,0x03,0x36,0x9e]
+
+Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20260827221506.91574-40-pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
+diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
+index 7c0cc4367e7..8c81ba8a1bc 100644
+--- a/tests/tcg/arm/fcvt.c
++++ b/tests/tcg/arm/fcvt.c
+@@ -173,9 +173,11 @@ static void convert_single_to_integer(void)
+         output = input;
+ #else
+ #ifdef FPRCVT
+-        asm("fcvtzs d0, %s1\r\n"
++        asm("fmov s31, %s1\n\t"
++            /* "fcvtzs d0, s31\n\t" */
++            ".byte 0xe0,0x03,0x36,0x9e\n\t"
+             "fmov %0, d0" :
+-            "=r" (output) : "w" (input));
++            "=r" (output) : "w" (input) : "s31", "d0");
+ #else
+         asm("fcvtzs %0, %s1" : "=r" (output) : "w" (input));
+ #endif
 -- 
-2.55.0
+2.47.3
 
 
