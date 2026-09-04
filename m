@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64891C624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 18:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D1AC79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 18:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2YFH-00026X-8l; Fri, 04 Sep 2026 14:02:35 -0400
+	id 1x2YGQ-0002Z8-ES; Fri, 04 Sep 2026 14:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2YFF-00025z-Fq
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:02:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2YFD-0001HK-Eo
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:02:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788544949;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xu7WipYE0vBrNVrbrQuBOrlI2YP7MfKt+pRTWpGeXu4=;
- b=MIZPpPp90ksfTGPi0G+bQKF7uATgQJ0p6MmDKtzdJsqUELXb0oTqkAKb8gPMO7tENPAhMK
- lufQroHTm3xjnenrJTmZ6r9+/735Hd8NULFPtQFXjwD6+Wd78Hy7a1oTNAjbY2s1pdj3L8
- Fo6n0mLLErwAZo7puxamiTk21zhOJvE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-539--OKwcoD-NEysFuDQCB8CWg-1; Fri, 04 Sep 2026 14:02:27 -0400
-X-MC-Unique: -OKwcoD-NEysFuDQCB8CWg-1
-X-Mimecast-MFC-AGG-ID: -OKwcoD-NEysFuDQCB8CWg_1788544946
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-484362cb000so880463f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 11:02:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x2YGO-0002WI-AC
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:03:44 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1x2YGL-0001Kl-Kl
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:03:43 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-81ecf499af9so19704357b3.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 11:03:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788545020; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ECOFXWvlTvHorcxfY+c3J56rS/Y5D0GCs13HyBcHPFElyj61A/ET5FwiexwP9dWfvN
+ Bh+4UbjGTGhC6rGw/VAHmE8xJ6vqu89snG40aPRpEnVTQV5HQKZdWiq9akdZcH0YlNVt
+ lbHpF9syxOcCAK5+B9QaReD+f+CJdUTcFinfF5JJS5RGaywTpIiquJ/iUwUyKtoDBV2m
+ ntgmKmiMeq10Hnl5hi7zfyPTr28pIKWmFtnpTr4yq7W7JMUKATmRcAEJKtw2P2bJuAPm
+ VixTMh4VNbGGapFaga6xS1YQQ94UZW4ynfcuru7fchIrfml2gO3xpLyq7ccsCP4mz7Zr
+ VQaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ecgHHHrX4VMS7aYZ2EpgZDXghXBbYqUZFhaZ0xetMrM=;
+ fh=axbB2bjiSokmisYx3H7DI5yUO3Z+Sykod4F4JR7lPwk=;
+ b=djJahITmE3url+xtB2X/4o2k4+fRsxW4pa3NyLXAsLyDmsD1lvyKBU/z0wTtutHU0m
+ hSeLFvhnI2aDJwltEuvgjhHrSGBeF19++LWUgmai9Cq5u6dFZkQZJqnW+AVXDVsJpJ3E
+ t2d6H0P97/7vcZLxVqrkaSbaO/AWY+kAj5hDOnKh+IgcNrDkmiujKfEcjPSKH9gH7ER1
+ M7xWXhWoBf1niSZ0mJPK8YzBOPO4bpAX5KOnu+7hr1fDNQ+cL7zPltRikrh/sazz50/T
+ QUEqzT69UhmwCxspeCzoq73jVXMfBCusyFAu/YT8o20OVZROsw+bLHMWI1kfkjVuiws+
+ 02Tg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788544946; x=1789149746; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=linaro.org; s=google; t=1788545020; x=1789149820; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xu7WipYE0vBrNVrbrQuBOrlI2YP7MfKt+pRTWpGeXu4=;
- b=flo6f2Zfb4QdendVIXpL103JBcNjRNlOB1NHwEtxkkULsQh3g2ujIBCkKB1H5XwQSn
- oyaJp1I1eRJrVDad6EvyZ0GP+esF1DGR5V+oc1zJNXck9yNo1+GlnVBP0KFTm4wZMqWn
- ExC13ClCozQbGzonUVFVhwWGm3pudBSTO1DupvvO3sI0dPIG/t6obuu4bH7NSbbi1Qle
- ZA3lTxKMFRF8X0ntoLl05NP9MEgpy7m2uzKON/3bfhs4w3xtZW43hyM0/2LnGh7ae1M9
- 9kMFQWXF9nK/Cttg8CrT84vHWDdLw291GmECYC8lAHNPI+jyo28xdxOtTsThXjspkCxA
- C/LQ==
+ bh=ecgHHHrX4VMS7aYZ2EpgZDXghXBbYqUZFhaZ0xetMrM=;
+ b=miqQrHnWiRU8ifEEtFdv7Ng5L68zp3raMxXK0NlXRuBR2BPwbynATOqoi8PiAFyfWv
+ DZnGtHd4WtbzrZYF2KANg/k7dlPk5G+uqNr2FwF1TyDESEqg9VQVSvUdvPbec8pj6ZpI
+ PUNbve7lTTQyhBvBCZkvaBdqtCPd3Isch1ut+b3rsFi5SRKs0oFJVdSRVfB7vIT2tkVh
+ zP7VQ8bIe+nFGSD2AW0y0hZQRdMZD3Wgpiruz6xE7JDxBPFPksHmzMCLeqd4wyc/POBK
+ Q6PUKUTrcz6UQxecPuKl2NTwxYQaciqURugTqvVSOU7OC/ejSdaytGPmkpjkgrqJlNaV
+ abww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788544946; x=1789149746;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788545020; x=1789149820;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xu7WipYE0vBrNVrbrQuBOrlI2YP7MfKt+pRTWpGeXu4=;
- b=GJgo+nP/sWY/xywlIWTfoDAQSRtM4xYr7mFxT5XbIw07WMNXgyfsaN5S9k5RQ79HYz
- uGotE79EUujzL9wn/S8DWK2I0s1083cYNr5Uw12BJ8WUA4RdcasAigecRgAIeiSHHVwU
- vyyl9jDnNqztgBcqNtGZDul6UXclu/kLCPls+7FXRR7wHrXA/d2nPSaK+lpH2BQUHyjO
- JZd4wjE9VbN67vtjPIBdXTHuwfMx5hIpqpqxFDkzuVyBbIgFHBjQtBO3YT9XCCSBVJF2
- Tp6C0qdm88afPXMqVvvhy3Vve9bMQCQRkDxaQwSOjxJphP81pLJ69amtC/XUGRIitPb2
- Ietw==
-X-Gm-Message-State: AFuF++mAbE1k2/Q29AmmTCKFD21VrGT+JXhaP7amXYVVtHYeqdiy1Pt1
- 2iS9OGa1tIhjsFy01AJCZ7R+upVvO6HEPd7niz4qbHotoPdYXg4T0krR7hL2zdReGVgz9N6AHem
- DRQ1XI2ZFDIKSnvZwZbRDZ96DapnhaU9iMMXFPI7f1Tndeb5stnl20rwe
-X-Gm-Gg: AYBFou3Vu7U00uuEpHwhuLBRbriv7YGkuUl6TcEN9MciKnBZmIExx3sNO0bRq7pRkPs
- yzvAON3dxX4ITT9bZ6oKTvCnJPcA9gObcAh/fillaCq4VqEGXSvz0sMxq6j5u/udEBp53Zppi6U
- 1XpL6fXAz47fPwcRkJ/5QM3Wc+cJpTviHjRCa6lZMwwXHe7ShlqsCrsnN+VMke6lCODJ9MBf1Nk
- 5IkulZlVj0kU89HNGu9PcF5uNUenUt2aAh/H4R0ECK4YNk2zkN0Qmop6FRdOnsC/WhyykD9OceR
- 7Ystxuz1vmgaNM3T1UHdAdU3Tle3kknLoVjxrKCzGW+SPScrAJlE6WP3aScjVwiKlFfztnhgwJg
- sROAYWO2ezVpctnQitjuabdQ=
-X-Received: by 2002:a05:6000:455c:b0:485:8df2:6460 with SMTP id
- ffacd0b85a97d-4858df26482mr2844230f8f.20.1788544946163; 
- Fri, 04 Sep 2026 11:02:26 -0700 (PDT)
-X-Received: by 2002:a05:6000:455c:b0:485:8df2:6460 with SMTP id
- ffacd0b85a97d-4858df26482mr2844138f8f.20.1788544945489; 
- Fri, 04 Sep 2026 11:02:25 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485881353e8sm8126195f8f.1.2026.09.04.11.02.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 11:02:24 -0700 (PDT)
-Date: Fri, 4 Sep 2026 14:02:21 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Weimin Xiong <xiongwm2026@163.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, qemu-trivial@nongnu.org,
- Xiong Weimin <xiongweimin@kylinos.cn>
-Subject: Re: [PATCH] net/tap-solaris: Fix resource leaks on error paths
-Message-ID: <20260904135600-mutt-send-email-mst@kernel.org>
-References: <20260724093809.810220-1-xiongwm2026@163.com>
+ bh=ecgHHHrX4VMS7aYZ2EpgZDXghXBbYqUZFhaZ0xetMrM=;
+ b=cwWyT2JYy3etYyahjmWl1U0JgCqf+vke877M2Hyn10tDvV6SYDWNtmCyIe2aIQN3b9
+ K0NK9hSvkOAPqq1VxkD4UpH64HkeOlyvgwl5t7pm2tcATEysiKJf2dQy4nDYowK4MOAw
+ QWFl1mGr8iNIvuyf38ygCYJT3fLDvY6/ntDx47MWyqKrSyvNAawKNxvg0trtDAvE6/ne
+ HLrSv9BiFQvz7g89PtJzaI3qEj4HY7HobTSeuFb6Gr0E38Y7tUmMDgBG92qTRoMHN+hK
+ o3KCj9/r37UyF6HhAnsGfCruZ1q6Ip1JfwYYD0nGXKB1s2R1+Zlsvi6HOOv3IYvE7Gza
+ Js7Q==
+X-Gm-Message-State: AFuF++n+P+VXqdtwMTDrLLq0gwkSNrqW0ZaBJspmfIqaKwdQATMi/BnE
+ X7D6jHngn8OciovHeWKRgv2YWIHpg8KsiPO944qLYyl0qIS3kh9iEqz+GbpkCWiApkLbWZymnCC
+ PBdOZ58Bdayt8ixDYpDjSXRcPR724cGRoPenOBCVfiFUOZhha+AitiVg=
+X-Gm-Gg: AYBFou1Efth7hOhDo17ZuA4Ji0X46M6Eiwk3ryObJxZDd03nliYSE1huE3L/aRkGuxj
+ 5mvClHwu2Yq2WX+dqV05GUUjMF7yt6Kg2uMs8SlTf0MwmWgyT0GW1gfk4lUM1NgShwsYnZygQ6n
+ u+qhHFY+F2YCVt6IqLKpcuQtXY0xZtAd/amCeFRMPbkJZ5tuBvRd1IZJUM6x+0bqCvoZpMLzZ9J
+ gWjq9purP5dfRqka/RS8oRQtmYojCDju6DDarAeGN72v4nU82X9xdcE1W3MH7ePMhmf+J8GV2MR
+ e+cPCm070yU+fQA6tNCnLko0Zd/CFgLsoNz63xWsd+IZvouIx3LaYHBzrvTigwMIQG6FdnFU6d+
+ yPWUfo2UEb30+LSQp9+57l6NgsA/Bsch+vV02M0jtpg==
+X-Received: by 2002:a05:690c:3385:b0:861:5bb9:c171 with SMTP id
+ 00721157ae682-871266c4d5emr48291387b3.16.1788545019790; Fri, 04 Sep 2026
+ 11:03:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260724093809.810220-1-xiongwm2026@163.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260904150826.2331577-1-alex.bennee@linaro.org>
+In-Reply-To: <20260904150826.2331577-1-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Sep 2026 19:03:28 +0100
+X-Gm-Features: AcwNN1W-bNbNHWRhpyV2xnX91FsQQUSw2H52HjJRnMKQvHYHyQ-lVxpi5Vu55ms
+Message-ID: <CAFEAcA9vZZmVPP3_P1xz-NX_sqWY0zrOC2LeGLTdnaK54XKQzQ@mail.gmail.com>
+Subject: Re: [PULL v2 000/105] move check-tcg into the meson build
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,188 +117,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 05:38:09PM +0800, Weimin Xiong wrote:
-> From: Xiong Weimin <xiongweimin@kylinos.cn>
-> 
-> The tap_alloc() function has multiple error paths where opened file
-> descriptors (tap_fd, if_fd, ip_fd) are not closed before returning
-> error. This leads to resource leaks.
-> 
-> Fix this by properly closing file descriptors before returning error
-> in all error paths.
-> 
-> Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
-> ---
->  net/tap-solaris.c | 47 +++++++++++++++++++++++++++++++++++----------
->  1 file changed, 37 insertions(+), 10 deletions(-)
-> 
-> diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-> index 1234567890ab..fedcba098765 4321006
-
-mode 4321006? this line seems corrupt, at least it confuses my git am
-
-
-> --- a/net/tap-solaris.c
-> +++ b/net/tap-solaris.c
-> @@ -60,8 +60,6 @@
->   */
->  static int tap_alloc(char *dev, size_t dev_size, Error **errp)
->  {
-> -    /* FIXME leaks like a sieve on error paths */
-> -    /* FIXME suspicious: many errors are reported, then ignored */
->      int tap_fd, if_fd, ppa = -1;
->      static int ip_fd = 0;
->      char *ptr;
-> @@ -102,18 +100,30 @@ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
->      strioc_ppa.ic_dp = (char *)&ppa;
->      if ((ppa = ioctl (tap_fd, I_STR, &strioc_ppa)) < 0) {
->          error_report("Can't assign new interface");
-> -        return -1;
-> +        goto fail_tap_fd;
->      }
->  
->      if_fd = RETRY_ON_EINTR(open("/dev/tap", O_RDWR, 0));
->      if (if_fd < 0) {
->          error_setg_file_open(errp, errno, "/dev/tap");
-> -        return -1;
-> +        goto fail_tap_fd;
->      }
->      if(ioctl(if_fd, I_PUSH, "ip") < 0){
->          error_setg(errp, "Can't push IP module");
-> -        return -1;
-> +        goto fail_if_fd;
-> +    }
-> +
-> +    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0) {
-> +        error_report("Can't get flags");
-> +        goto fail_if_fd;
-> +    }
-> +
-> +    snprintf(actual_name, 32, "tap%d", ppa);
-> +    pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
-> +
-> +    ifr.lifr_ppa = ppa;
-> +    if (ioctl(if_fd, SIOCSLIFNAME, &ifr) < 0) {
-> +        error_report("Can't set PPA %d", ppa);
-> +        goto fail_if_fd;
->      }
->  
-> -    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0)
-> -        error_report("Can't get flags");
-> +    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0) {
-> +        error_report("Can't get flags");
-> +        goto fail_if_fd;
-> +    }
->  
-> -    snprintf (actual_name, 32, "tap%d", ppa);
-> -    pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
-> -
-> -    ifr.lifr_ppa = ppa;
-> -    /* Assign ppa according to the unit number returned by tun device */
-> -
-> -    if (ioctl (if_fd, SIOCSLIFNAME, &ifr) < 0)
-> -        error_report("Can't set PPA %d", ppa);
-> -    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) <0)
-> -        error_report("Can't get flags");
->      /* Push arp module to if_fd */
-> -    if (ioctl (if_fd, I_PUSH, "arp") < 0)
-> +    if (ioctl(if_fd, I_PUSH, "arp") < 0) {
->          error_report("Can't push ARP module (2)");
-> +        goto fail_if_fd;
-> +    }
->  
->      /* Push arp module to ip_fd */
-> -    if (ioctl (ip_fd, I_POP, NULL) < 0)
-> +    if (ioctl(ip_fd, I_POP, NULL) < 0) {
->          error_report("I_POP failed");
-> -    if (ioctl (ip_fd, I_PUSH, "arp") < 0)
-> +        goto fail_if_fd;
-> +    }
-> +    if (ioctl(ip_fd, I_PUSH, "arp") < 0) {
->          error_report("Can't push ARP module (3)");
-> +        goto fail_if_fd;
-> +    }
->      /* Open arp_fd */
->      arp_fd = RETRY_ON_EINTR(open("/dev/tap", O_RDWR, 0));
-> -    if (arp_fd < 0)
-> +    if (arp_fd < 0) {
->          error_report("Can't open %s", "/dev/tap");
-> +        goto fail_if_fd;
-> +    }
->  
->      /* Set ifname to arp */
->      strioc_if.ic_cmd = SIOCSLIFNAME;
-> @@ -147,21 +172,37 @@ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
->      strioc_if.ic_dp = (char *)&ifr;
->      if (ioctl(arp_fd, I_STR, &strioc_if) < 0){
->          error_report("Can't set ifname to arp");
-> +        goto fail_arp_fd;
->      }
->  
->      if((ip_muxid = ioctl(ip_fd, I_LINK, if_fd)) < 0){
->          error_setg(errp, "Can't link TAP device to IP");
-> -        return -1;
-> +        goto fail_arp_fd;
->      }
->  
-> -    if ((arp_muxid = ioctl (ip_fd, link_type, arp_fd)) < 0)
-> +    if ((arp_muxid = ioctl(ip_fd, link_type, arp_fd)) < 0) {
->          error_report("Can't link TAP device to ARP");
-> +        goto fail_ip_muxid;
-> +    }
->  
->      close (if_fd);
-> +    close(ip_fd);
+On Fri, 4 Sept 2026 at 16:08, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> The following changes since commit d2843fbf80260e4346c856819e8cea11768c9d=
+0e:
+>
+>   Merge tag 'pull-riscv-to-apply-20260904' of https://github.com/alistair=
+23/qemu into staging (2026-09-04 09:43:27 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/stsquad/qemu.git tags/pull-11.1-check-tcg-meson-0409=
+26-2
+>
+> for you to fetch changes up to 7a485176838e6b6044e73f925d308bb4b3002597:
+>
+>   MAINTAINERS: add maintainer for tcg/tests meson infrastructure (2026-09=
+-04 16:06:22 +0100)
+>
+> ----------------------------------------------------------------
+> tests/tcg: conversion to meson
+>
+>   - remove unused variable from multiarch/memory
+>   - standardise checking plugin output
+>   - bump minimal meson to 1.6.0
+>   - introduce meson plumbing for check-tcg
+>   - return error code if docker probe fails
+>   - add CI/self/mem test to gdbstub prot-none tests
+>   - use raw opcode for fprcvt test in arm
+>   - remove unused variables from gpc-test
+>   - teach probe-gdb-support about mips
+>   - identify or1k pc register
+>   - port check-tcg logic to meson (all targets)
+>   - update documentation
+>   - add Pierrick as a maintainer for tests/tcg
+>
 
 
-so you close ip_fd here ...
 
->  
->      memset(&ifr, 0x0, sizeof(ifr));
->      pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
->      ifr.lifr_ip_muxid  = ip_muxid;
->      ifr.lifr_arp_muxid = arp_muxid;
->  
-> -    if (ioctl (ip_fd, SIOCSLIFMUXID, &ifr) < 0)
-> -    {
-> -      ioctl (ip_fd, I_PUNLINK , arp_muxid);
-> -      ioctl (ip_fd, I_PUNLINK, ip_muxid);
-> -      error_report("Can't set multiplexor id");
-> +    if (ioctl(ip_fd, SIOCSLIFMUXID, &ifr) < 0) {
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.2
+for any user-visible changes.
 
-and then try to do an ioctl on it?
-
-> +        ioctl(ip_fd, I_PUNLINK, arp_muxid);
-> +        ioctl(ip_fd, I_PUNLINK, ip_muxid);
-> +        error_report("Can't set multiplexor id");
-> +        goto fail_arp_muxid;
->      }
->  
->      snprintf(dev, dev_size, "tap%d", ppa);
->      return tap_fd;
-> +
-> +fail_arp_muxid:
-> +    close(arp_fd);
-
-arp_fd closed here
-
-> +fail_ip_muxid:
-> +    ioctl(ip_fd, I_PUNLINK, ip_muxid);
-> +fail_arp_fd:
-> +    close(arp_fd);
-
-then again here
-
-> +fail_if_fd:
-> +    close(if_fd);
-> +fail_tap_fd:
-> +    close(tap_fd);
-> +    if (ip_fd > 0) {
-> +        close(ip_fd);
-> +        ip_fd = 0;
-> +    }
-> +    return -1;
->  }
-
+-- PMM
 
