@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED6CC79F81
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08329C79F84
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MNh-0004P7-1n; Fri, 04 Sep 2026 01:22:29 -0400
+	id 1x2MLP-0005QL-QP; Fri, 04 Sep 2026 01:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MNe-00041N-4y
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:26 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1x2MLN-0005Q3-5B
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:05 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MNc-0001X4-C8
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:25 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-cc1bc88a20eso1057393a12.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:22:24 -0700 (PDT)
+ id 1x2MLL-00013S-Hl
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:04 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-8525efa7274so455349b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499343; x=1789104143; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788499202; x=1789104002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AVJ8uBQ1nukyOBYJXTfHthUrX35qgEzUAaW/F9BSQ/0=;
- b=huVaGA53OkL3fbboofwToC0J7K3mM6x70Ygs2UVEUYHOUnbqZKJADUd2S7f03JQAEF
- iPcM+PYkUJzMoWjWt1z887DqA0M8s2X1i+YfHViArqbXsNFSKVtrlAXaGStcF/C0CIlU
- V59QfK+loOKICy28/wgSIM1hu8Qdr3QVZO8wbYDZ5IMtB7wQhlLbcNroQgQgAe9o0lb2
- adF+DTpu2tflrR+e5D/cCXSephGozEI3wrQW0as9DL3ZEphfBZx97KZ1yeNcOKx16RC4
- 4cS9nZmRXNgCTBKuEikhOmAF30P1LWqvtyqP7GaavTd47KFYZM/DTlFIfxl9b/mgv86R
- 5hlw==
+ bh=+bb+95qH7qZRzLFgl4n5ClvvF8UbWewF7qWhEVC+emI=;
+ b=CdLWRTaYHTAb5XDUFBQ4+wMz0A3Ip5PoksNfSBKeB05c0XtEpV8K2XoNRynPXtZYwc
+ gZBGk7KGuIBMQM7X5WB3j/lUeZTezR636vFaCtFOLnIkMBg2XyloGxo/PnK17vOPs7jI
+ Ka0sav3f+bEl7ysFtE5KfYPfB44++w8mltQ58C71d2mx9n7aszzhbaiCZNA9iHas1HS/
+ qiBXBktRo3QujgkPmL4W32fakln/rKASZwssBbSiWuWjy7uZhIvsW22CR5FZ2L4W5wGE
+ ZM3ymTD2XqBSygeW/czS6HhpYAVHhcNPJpakm7+q6goiezATuGjicLUe8hPdc6VgRK99
+ KLvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499343; x=1789104143;
+ d=1e100.net; s=20251104; t=1788499202; x=1789104002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AVJ8uBQ1nukyOBYJXTfHthUrX35qgEzUAaW/F9BSQ/0=;
- b=GGAQAgBUDGg3Nfl7kBAoKd6ry4BhvG2GY0lWG9dRuq82KBEqS1pN8fx5iEzfSiS9ks
- 4KvEkU3UrpqWU53f0qOFRyKsmPaAxA9iWEEVJA+qJDm/RLsSSQx78vT7mbeV99ZOS/1l
- cBTrX7Pm0PCh3Ktswwjxp6B2C7iNlIsqV1TWZR/UxwwkK1+JjAm4bf0JjlhxeomW6Mkj
- GeXlz5kMhC9bCfncw2HGyM6tp6baw1ZmkSxCofP2ScrAtP+h78QiJusFrhJOiraHYvPi
- M6GBikOp33J0EKtI7e3i7RCZzq4/nwGPEfMNfgcEubVayh0LWImKdB42LessEow7+qtD
- uwdw==
-X-Gm-Message-State: AFuF++knpD8i/F5jsLThLVVx1nrOQ9jQM0rcTJlH8IG6Lyk8JVM3J1PX
- DH/5h7tXIOgsO1HYw/y85CVMLxSzwkxlNvvn/yt/SlkjisFBGDbM48xHwQ0hWw==
-X-Gm-Gg: AYBFou1wyBcw8UcCsfH2ERI4Bv9/KK492qUOwrmTyW/F06n798+Lj2H7WpBMZwZuR8r
- KqqXySYDtLdqSni5Zu9RJTEKwi3WAiA9gORWDwDyaMZE5j05CLcjrkt4LptAKA6tLXGxAgCrXHs
- HdG803q+axO5gnAx4NcuC6R/KHQ5jYg3P44MpSUlGA71pfQ3bjJH048Vy6nXeNbi1MrHlq8fdXx
- cCZ6Tbe2NPs/iZE6BOHfE+2Ma/48jzu4dp5MMlZqjVvHWutQIUDxMMbcn8TF5rVGM2YVYRXnz1p
- BEW5fk5hzB1IY32mdHo5O9Hx8RS4Tx5hsWN1k4f4ELWtF/+CGP5tpSVWYGJ2g74AFLhkZgnrFWJ
- /v4eW/yZxkcNnG8XDNFD9v8TUqgypatkUCtJk6d2y6KjWNeqbblhhNCU9WkbopMrNFwQdWsZLAV
- k5sDyf26rbhu5iIqXyVXnCm6PJy1pZSSpEROXwixy3ucpSKKaA41HX2mEzhMEz2x8Z5wPd2dbmZ
- rZkiw==
-X-Received: by 2002:a05:6a21:3a41:b0:3d3:ae50:97c8 with SMTP id
- adf61e73a8af0-3da3a16bb4bmr5319249637.21.1788499342792; 
- Thu, 03 Sep 2026 22:22:22 -0700 (PDT)
+ bh=+bb+95qH7qZRzLFgl4n5ClvvF8UbWewF7qWhEVC+emI=;
+ b=E7kcEeAmn5aPEM0d1H4JzRF0mJQ5acf0/t7KcVO12wDTNV1709CX+5JTE2fSVgL4lY
+ SaNvV7f9M0dhK3QeMwkO/pMf8M+GAX5fBR0n4koUZid55vVktwsmECASSY47Btiu9fKd
+ eQgcntf+t7niCBBlGclOdXNaZKzbBsTvsz3753W87wxC647sFpkLmbpgiji0QWjhPIwK
+ dL13W6kRMDhJ4ToWj9EB4OxJr3tq9LX67RJ8mCo1mQQTZwCIStU0Ha4HnpsDyOtU9Pc/
+ Y7JAPgUoWCo0namzZRjwk96WK1aCRnD2q4WHa8viQ0W6wbHx1NxPB5ij6nxQfpFIW5Vr
+ TdAA==
+X-Gm-Message-State: AFuF++mIjl2RyV2TihVmzDqvtywJgqjaieKZngHqp3e4B+0UVJlXKWWt
+ yt3Jj09MBTgawTwXlPeiMDb/roPKtDcC/QTidnNR90TB5kllZYdem0e+2aCz1w==
+X-Gm-Gg: AYBFou37xWphUTIcGgk/T0fd59KzHrIhu9jTjxbwTOD3H9KRXaRkLvDFkwvlyCrb8wA
+ 74IBDMyMxqueZV/xXBrZMk/KtR3qILQ4/EJ5Jy5aAqjvq+jrmNOPcFzaymgI7SUJ+WdRVwxXMwk
+ fZ7jps98ENQTO959VbAKKPOCOI8Z8l1pwfYIG2PDWLCsTgjwctezX8GH/EXuzRTcWXBw9EgZBGI
+ 7vRKYqO9ehSpnakH/z1+h+TqgE+kjBznH1suDpuS11TvABROBJhOFaw7Y3oU8LsYXUt5k1sorg7
+ GBmuxaryGWLG/1M1U/JerD46W/f295mJYBB/kPs4vHJIIYj9oa174cBh60VNHnF7OIPdMDENzS4
+ Mh1bJyf3GWn8mWttVQd9zOpggMBfKhU4BaxLZSfS4rTI7wD9HS7WsTHzK6MCnvwSHqNfSedMe0k
+ SYbjlYJZYoNlMDejUHAOOcl3+49b/+BdPGATn1vYBZ86u1wJkGpRlgMsOBC571An+8P+ZaLMfFd
+ rMaFA==
+X-Received: by 2002:a05:6a00:6c9c:b0:857:727c:a1f6 with SMTP id
+ d2e1a72fcca58-8616997ee79mr5765512b3a.24.1788499202015; 
+ Thu, 03 Sep 2026 22:20:02 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.22.20
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.19.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:22:22 -0700 (PDT)
+ Thu, 03 Sep 2026 22:20:01 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 47/47] hw/riscv/atlantis: Map the SoC through a memory container
-Date: Fri,  4 Sep 2026 15:19:43 +1000
-Message-ID: <20260904051943.799041-48-alistair.francis@wdc.com>
+Subject: [PULL 03/47] target/riscv/tcg/debug: adjust 'timing' bit for Debug 1.0
+Date: Fri,  4 Sep 2026 15:18:59 +1000
+Message-ID: <20260904051943.799041-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,96 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Give the Atlantis SoC a 'memory' link property. The machine creates a
-container MemoryRegion, maps it at address 0 of system memory, and
-passes it to the SoC together with the machine RAM. The SoC maps devices
-into the 'memory' container instead of system memory, allowing
-TTAtlantisSoCState to be composed together with other SoCs in the
-future.
+Version 1.0 changed the 'timing' bit.  It is now bit 18.
 
-This prepares the machine for adding other microcontrollers that share
-the memory bus with the Ascalon complex (aka the Atlantis SoC), but with
-their own view of the address map.
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Message-ID: <20260903055131.257903-17-joel@jms.id.au>
+Message-ID: <20260805182506.2943757-4-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/riscv/tt_atlantis.h |  1 +
- hw/riscv/tt_atlantis.c         | 17 +++++++++++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ target/riscv/tcg/debug.h | 3 ++-
+ target/riscv/tcg/debug.c | 7 ++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 5d4e4d133b..3923308b7c 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -53,6 +53,7 @@ struct TTAtlantisState {
-     /*< public >*/
-     Notifier machine_done;
+diff --git a/target/riscv/tcg/debug.h b/target/riscv/tcg/debug.h
+index a25d099b37..eb635bc277 100644
+--- a/target/riscv/tcg/debug.h
++++ b/target/riscv/tcg/debug.h
+@@ -98,7 +98,8 @@ typedef enum {
+ #define TYPE6_CHAIN     BIT(11)
+ #define TYPE6_ACTION    (0xf << 12)
+ #define TYPE6_SIZE      (0xf << 16)
+-#define TYPE6_TIMING    BIT(20)
++#define TYPE6_TIMING       BIT(18)
++#define TYPE6_TIMING_0_13  BIT(20)
+ #define TYPE6_SELECT    BIT(21)
+ #define TYPE6_HIT       BIT(22)
+ #define TYPE6_VU        BIT(23)
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index d40db381e6..9b2e5b19d8 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -584,10 +584,15 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+     warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+-    warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
+     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
  
-+    MemoryRegion soc_memory;
-     TTAtlantisSoCState soc;
- };
- 
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index c44fd8d6d0..8a219afef7 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -503,8 +503,10 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
-     ram_addr_t lo_ram_size, ram_size;
-     int hart_count = s->num_harts;
- 
--    s->memory = get_system_memory();
--
-+    if (!s->memory) {
-+        error_setg(errp, "'memory' link is not set");
-+        return;
++    if (debug_trigger_version_1_0(env)) {
++        warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
++    } else {
++        warn_always_zero_bit(ctrl, TYPE6_TIMING_0_13, "timing");
 +    }
-     if (!s->dram) {
-         error_setg(errp, "'dram' link is not set");
-         return;
-@@ -523,6 +525,8 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
-     object_property_set_int(OBJECT(&s->cpus), "resetvec",
-                             s->memmap[TT_ATL_BOOTROM].base,
-                             &error_abort);
-+    object_property_set_link(OBJECT(&s->cpus), "memory", OBJECT(s->memory),
-+                             &error_abort);
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpus), errp)) {
-         return;
-     }
-@@ -614,6 +618,8 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
- static const Property tt_atlantis_soc_props[] = {
-     DEFINE_PROP_STRING("cpu-type", TTAtlantisSoCState, cpu_type),
-     DEFINE_PROP_UINT32("num-harts", TTAtlantisSoCState, num_harts, 8),
-+    DEFINE_PROP_LINK("memory", TTAtlantisSoCState, memory,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-     DEFINE_PROP_LINK("dram", TTAtlantisSoCState, dram,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
- };
-@@ -633,12 +639,19 @@ static void tt_atlantis_machine_init(MachineState *machine)
-     TTAtlantisState *ams = TT_ATLANTIS_MACHINE(machine);
-     TTAtlantisSoCState *s = &ams->soc;
- 
-+    memory_region_init(&ams->soc_memory, OBJECT(machine),
-+                       "tt-atlantis.soc-memory", UINT64_MAX);
-+    memory_region_add_subregion(get_system_memory(), 0, &ams->soc_memory);
 +
-     object_initialize_child(OBJECT(machine), "soc", &ams->soc,
-                             TYPE_TT_ATLANTIS_SOC);
-     object_property_set_str(OBJECT(&ams->soc), "cpu-type", machine->cpu_type,
-                             &error_abort);
-     object_property_set_int(OBJECT(&ams->soc), "num-harts", machine->smp.cpus,
-                             &error_abort);
-+
-+    object_property_set_link(OBJECT(&ams->soc), "memory",
-+                             OBJECT(&ams->soc_memory), &error_abort);
-     object_property_set_link(OBJECT(&ams->soc), "dram", OBJECT(machine->ram),
-                              &error_abort);
-     qdev_realize(DEVICE(&ams->soc), NULL, &error_fatal);
+     /* validate size encoding */
+     size = extract32(ctrl, 16, 4);
+     if (access_size[size] == -1) {
 -- 
 2.55.0
 
