@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49CFAC79F85
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C223FC624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2a5c-0004VX-9r; Fri, 04 Sep 2026 16:00:44 -0400
+	id 1x2a5V-0003cj-6H; Fri, 04 Sep 2026 16:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a5Z-0004CH-Hw
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x2a5M-0003AX-FU
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a5X-0008JW-JU
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:41 -0400
+ id 1x2a5K-0008Ht-Lp
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788552038;
+ s=mimecast20190719; t=1788552026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rYUW7mTarKGtGHB/ejRnCer72Bim5gXX0iKigt43Ozg=;
- b=Av65GRyiRoeP8bprMuet3BJxlXYndv+R+2ML4xGsLAI9K6LnFVS/6+gs5TGiiE/ZIp4rm0
- ow9EQ+7MpRWpNuGJOkPKBPHlILOL/Wlj4PhCZnJpVTxG8I+0h1BJsn2LGg7SHmM0tZAXnr
- oJaTLeiYTWY54OT/HK6ab3JjkXZ0ljg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=WiZ7TZb3vfkr1iFesD5k1O2a5EjcMYTKUDmeoVZkZhE=;
+ b=fdrl1kGHoqd3oMjynqeVP6ngyBR8Fy8hD/6Y0qWX1ciFQEGwmMyvykMh7V/hEttd/am6kW
+ HdA1lHdHEGS/sbMH8he+wMPuygOVfyRNhYp8uGc+vNjzMa8rn4HFvpCDz8mi1o1C479QKO
+ +XtNqTEvKznCfFjhPIyOp95hUdMsVqI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-IE0eJQ6aP9i2C852AHkJ9Q-1; Fri,
- 04 Sep 2026 16:00:35 -0400
-X-MC-Unique: IE0eJQ6aP9i2C852AHkJ9Q-1
-X-Mimecast-MFC-AGG-ID: IE0eJQ6aP9i2C852AHkJ9Q_1788552034
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-OI9d2skKN5yLv1mWjik_VQ-1; Fri,
+ 04 Sep 2026 16:00:24 -0400
+X-MC-Unique: OI9d2skKN5yLv1mWjik_VQ-1
+X-Mimecast-MFC-AGG-ID: OI9d2skKN5yLv1mWjik_VQ_1788552023
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3E7918DA5CC; Fri,  4 Sep 2026 20:00:33 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ADA42188699A; Fri,  4 Sep 2026 20:00:23 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1EB421955F0D; Fri,  4 Sep 2026 20:00:32 +0000 (UTC)
+ id AFAE81955E72; Fri,  4 Sep 2026 20:00:22 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 04 Sep 2026 23:58:23 +0400
-Subject: [PATCH v4 40/75] ppc/pnv: fix phb-id and chip-id properties typename
+Date: Fri, 04 Sep 2026 23:58:20 +0400
+Subject: [PATCH v4 37/75] iothread: fix poll properties typename
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260904-qom-qapi-v4-40-a985f168e938@redhat.com>
+Message-Id: <20260904-qom-qapi-v4-37-a985f168e938@redhat.com>
 References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 In-Reply-To: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,38 +65,35 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>, 
- Glenn Miles <milesg@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4269;
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1853;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=HSkTvfNSirJIc6SiW+8atmYUto98Bd95oCUMIIDC048=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLKbG5aF8MftcPJE5LCqW1H0ulVHREG3uHG0
- 78ZIvzz3oGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiygAKCRDa6OEJdZac
- 5epdD/9OUpWstLrqTe3EqqoY4Uq7B5kLIz5m40Pkyajq0hxGn9972Oyo2cMhQ3/d64IxMThNlLx
- WLIzjh43z3T2JBOAN78WMtlOebNLA83BAAdNfbAb9ACV2nCrCWL7kde3+rO2ttmWWbgFZcXYdI2
- bOmd9ioiUOdgKAOdJeSqpciaaDQeODHCUIqd2u23XVFUraxRpT/QM2fuc0d7ObRb2rTjOJpMGrj
- uoTpXZr+YZX2wD1+OiBWalwi9aEN0G9bTxFoCE+wtAs69JzpiMfihofQcJNkEFqpF3pNI9yohJ1
- BYiwBChM53UzDt2zJ1MJo8tkMVFptnDbXNZnsfnuoraJoGKw4Tra66x8B8Yb3yRIhkHTTQZI82F
- +jroYPwBV6JKdR7tro6SiSoV2m03HR+vgr3MWD3Cr22Uh8h7r+U703JLt/jQCD6AaB9LyhYIsuz
- zj6sOmGdn4IdskoF/bKxPIKHsWG4WWF+pBgMWhlrU6C28ZDPa5YmmuU8ZwVIaLpNi/MSHwUUpCR
- WJf/JIk/CocnC3c+4mW3iOICW/qlr8UqeQdlKmvOyVpepjd/g8eHfl2v+vMD2mQM8MBQQM+ic55
- JQE2p5A+7BTd95v817fGtQmsBaVhCeuNwI1NcrA8Ob2APadp/zAyw43q/MI+Rfo9HcQ2dAEPoei
- Tan43nzlSIdsJNA==
+ bh=y5FNojlkLsAF0V5m9dch4w29DrjqN7eZD7tFamq7MSM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLKAf6RVglrzzT7k0IgoXpAqSg5C3T8R1lAK
+ SxFAbNaPwuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiygAKCRDa6OEJdZac
+ 5QGbD/wJ+Df1RVBcCUsdDXo51E0XEisOiK+sT0OceqOHWdfSGidX5wZ6aQ6IUrfDJzkovae6P5I
+ IWZbD0fsRS7ai3ypCwJ0O3W3+ir9ERyjO6LVqAmwhFTCSuQ24tdL4xK3yGsV3jG566HK3oti3oM
+ GP9oRN2zseRgpxi4sXRSdOUFC4VwmE5pt6EHYh0FVk1sDHv4WplZM1NmDPrYhTx7vpG9Jt/poJw
+ 02VUx59g89DsrGGMj1OBwrAcmgtJ+c/tFBhAgQ3PpbD5Bghd7KBKGSdZIrGpgb/awx2wz+o32Fl
+ 6ZPSo2RK2Jy3Ol85DcXIRFTDLIPUE5ydVUqAVp3REKpwSfgXgiHCUNHzQAaPRHUWeGxQm2MgXe3
+ h2PJJa5jxkJBFHQa3iM3sZpGnbsHYGllZ1BhqEyj6by3Tmb09Z5QZtA1BIXKe8lTh3wuTAdy4HY
+ aZ3dt6Ds3M040+2Sz9n5pCeFsXT1KnPW2YtIgY5ulublKBTrb9E1h+rzxy4sIbqQcyrZzzN+g7a
+ Ew2vhnWfqDeDN0UgqQsXnOVkjmg86prmoZ3pYRrenfoer7NDMaHjTMMySj8oZ2Ob0zo9840PRTl
+ 62i1/sVbND2/cXU7tMhSteqILzoXdxSbNo87+fRIOhE713oNwlVM+XiH/t2qlwhDsYwduTbIbrh
+ fcAh/UPxRs2uHuw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,116 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The getter and setter use visit_type_size, not visit_type_int.
-Since the underlying type is uint32, switch to that.
+The getter and setter use visit_type_int64, not visit_type_int.
 
-Fixes: 8ec1e4f1ef97 ("ppc/pnv: add phb-id/chip-id PnvPHB3RootBus properties")
-Fixes: b7c1750dc440 ("ppc/pnv: add phb-id/chip-id PnvPHB4RootBus properties")
+Fixes: 0d9d86fb4df4 ("iothread: add polling parameters")
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-host/pnv_phb3.c | 12 ++++++------
- hw/pci-host/pnv_phb4.c | 12 ++++++------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ iothread.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
-index 4ffdb4ce31ae..db061c134e95 100644
---- a/hw/pci-host/pnv_phb3.c
-+++ b/hw/pci-host/pnv_phb3.c
-@@ -1130,7 +1130,7 @@ static void pnv_phb3_root_bus_get_prop(Object *obj, Visitor *v,
-                                        void *opaque, Error **errp)
- {
-     PnvPHB3RootBus *bus = PNV_PHB3_ROOT_BUS(obj);
--    uint64_t value = 0;
-+    uint32_t value = 0;
+diff --git a/iothread.c b/iothread.c
+index 3558535b40f5..76eea6df3861 100644
+--- a/iothread.c
++++ b/iothread.c
+@@ -315,19 +315,19 @@ static void iothread_class_init(ObjectClass *klass, const void *class_data)
+     bc->init = iothread_init;
+     bc->update_params = iothread_set_aio_context_params;
  
-     if (strcmp(name, "phb-id") == 0) {
-         value = bus->phb_id;
-@@ -1138,7 +1138,7 @@ static void pnv_phb3_root_bus_get_prop(Object *obj, Visitor *v,
-         value = bus->chip_id;
-     }
- 
--    visit_type_size(v, name, &value, errp);
-+    visit_type_uint32(v, name, &value, errp);
- }
- 
- static void pnv_phb3_root_bus_set_prop(Object *obj, Visitor *v,
-@@ -1147,9 +1147,9 @@ static void pnv_phb3_root_bus_set_prop(Object *obj, Visitor *v,
- 
- {
-     PnvPHB3RootBus *bus = PNV_PHB3_ROOT_BUS(obj);
--    uint64_t value;
-+    uint32_t value;
- 
--    if (!visit_type_size(v, name, &value, errp)) {
-+    if (!visit_type_uint32(v, name, &value, errp)) {
-         return;
-     }
- 
-@@ -1164,12 +1164,12 @@ static void pnv_phb3_root_bus_class_init(ObjectClass *klass, const void *data)
- {
-     BusClass *k = BUS_CLASS(klass);
- 
--    object_class_property_add(klass, "phb-id", "int",
-+    object_class_property_add(klass, "phb-id", "uint32",
-                               pnv_phb3_root_bus_get_prop,
-                               pnv_phb3_root_bus_set_prop,
-                               NULL, NULL);
- 
--    object_class_property_add(klass, "chip-id", "int",
-+    object_class_property_add(klass, "chip-id", "uint32",
-                               pnv_phb3_root_bus_get_prop,
-                               pnv_phb3_root_bus_set_prop,
-                               NULL, NULL);
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 705a5bcf074f..9acaf4c0c2f5 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -1727,7 +1727,7 @@ static void pnv_phb4_root_bus_get_prop(Object *obj, Visitor *v,
-                                        void *opaque, Error **errp)
- {
-     PnvPHB4RootBus *bus = PNV_PHB4_ROOT_BUS(obj);
--    uint64_t value = 0;
-+    uint32_t value = 0;
- 
-     if (strcmp(name, "phb-id") == 0) {
-         value = bus->phb_id;
-@@ -1735,7 +1735,7 @@ static void pnv_phb4_root_bus_get_prop(Object *obj, Visitor *v,
-         value = bus->chip_id;
-     }
- 
--    visit_type_size(v, name, &value, errp);
-+    visit_type_uint32(v, name, &value, errp);
- }
- 
- static void pnv_phb4_root_bus_set_prop(Object *obj, Visitor *v,
-@@ -1744,9 +1744,9 @@ static void pnv_phb4_root_bus_set_prop(Object *obj, Visitor *v,
- 
- {
-     PnvPHB4RootBus *bus = PNV_PHB4_ROOT_BUS(obj);
--    uint64_t value;
-+    uint32_t value;
- 
--    if (!visit_type_size(v, name, &value, errp)) {
-+    if (!visit_type_uint32(v, name, &value, errp)) {
-         return;
-     }
- 
-@@ -1761,12 +1761,12 @@ static void pnv_phb4_root_bus_class_init(ObjectClass *klass, const void *data)
- {
-     BusClass *k = BUS_CLASS(klass);
- 
--    object_class_property_add(klass, "phb-id", "int",
-+    object_class_property_add(klass, "phb-id", "uint32",
-                               pnv_phb4_root_bus_get_prop,
-                               pnv_phb4_root_bus_set_prop,
-                               NULL, NULL);
- 
--    object_class_property_add(klass, "chip-id", "int",
-+    object_class_property_add(klass, "chip-id", "uint32",
-                               pnv_phb4_root_bus_get_prop,
-                               pnv_phb4_root_bus_set_prop,
-                               NULL, NULL);
+-    object_class_property_add(klass, "poll-max-ns", "int",
++    object_class_property_add(klass, "poll-max-ns", "int64",
+                               iothread_get_poll_param,
+                               iothread_set_poll_param,
+                               NULL, &poll_max_ns_info);
+-    object_class_property_add(klass, "poll-grow", "int",
++    object_class_property_add(klass, "poll-grow", "int64",
+                               iothread_get_poll_param,
+                               iothread_set_poll_param,
+                               NULL, &poll_grow_info);
+-    object_class_property_add(klass, "poll-shrink", "int",
++    object_class_property_add(klass, "poll-shrink", "int64",
+                               iothread_get_poll_param,
+                               iothread_set_poll_param,
+                               NULL, &poll_shrink_info);
+-    object_class_property_add(klass, "poll-weight", "int",
++    object_class_property_add(klass, "poll-weight", "int64",
+                               iothread_get_poll_param,
+                               iothread_set_poll_param,
+                               NULL, &poll_weight_info);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
