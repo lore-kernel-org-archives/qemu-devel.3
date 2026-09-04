@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E6CC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9413C79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2az6-00039V-Rc; Fri, 04 Sep 2026 16:58:04 -0400
+	id 1x2az7-00039Y-8G; Fri, 04 Sep 2026 16:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x2az4-00038b-Lv
+ id 1x2az4-00038f-Ow
  for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:58:02 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x2az1-0007w6-7o
+ id 1x2az1-0007x2-Eq
  for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:58:02 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c11:43a8:0:640:574d:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id ECE7E807AF;
- Fri, 04 Sep 2026 23:57:53 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 08FC880A61;
+ Fri, 04 Sep 2026 23:57:56 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:4d::1:17])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id rvQjs41YPqM0-SvX2MZuo; Fri, 04 Sep 2026 23:57:53 +0300
+ id rvQjs41YPqM0-UooXil1Y; Fri, 04 Sep 2026 23:57:55 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1788555473;
- bh=+5+A6406j+Bz42PIBkejajm8VKUilGcddlVcpYjxmsg=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=tJCNyyA4ujxotJQ8z1cbQMCQwgyay9UbCMIS8XCNpu0jWXVRpWE9lT0RETWvuIUBM
- gBMkuKKu/bC7Yn+qh05j303sFBSkC1InFjRRLI6TQxGR87X6IJd1qIcnEccmNszdak
- 23V4rcvAt5JNVgyVF1wUVCnAK8IDk6mMcaZKgyBk=
+ s=default; t=1788555475;
+ bh=Dlc3dK5WOaqmo7z+t9buAmX2gat8HcjIw965WO9A260=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=aFCJE6IQeVsZRJl6yv7vJPVyaDOeihMcE1i2xYJwRBLOy+OAqg25ttfEbdwewBfIl
+ GFcGpErcsRrKygFyU1ZvDJfl76GdFJBqnwlEodNaMHoTtAOQGP8UYOH++P+1PVc6ZV
+ vGgqWrgWzf0I5/gPfyq9LRJZN/4JewRXr29PMplM=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru
-Subject: [PATCH 0/6] runstate: fix race between guest shutdown and SIGTERM
-Date: Fri,  4 Sep 2026 23:57:43 +0300
-Message-ID: <20260904205749.510493-1-vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
+Subject: [PATCH 4/6] runstate: simplify qemu_shutdown_requested_get()
+Date: Fri,  4 Sep 2026 23:57:47 +0300
+Message-ID: <20260904205749.510493-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260904205749.510493-1-vsementsov@yandex-team.ru>
+References: <20260904205749.510493-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -72,41 +76,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all.
+The only caller needs to know whether a shutdown request is pending,
+not its reason. Return bool and rename the function to
+qemu_shutdown_requested().
 
-This series fixes a race between guest shutdown and SIGTERM handling.
-With -no-shutdown, a SIGTERM arriving while QEMU is processing a guest
-shutdown request can make QEMU exit after sending SHUTDOWN with guest=true,
-without sending a host SHUTDOWN event. This is unexpected for management
-software relying on -no-shutdown.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/xen/xen-hvm-common.c   | 2 +-
+ include/system/runstate.h | 2 +-
+ system/runstate.c         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Patch 5 contains the fix and a detailed description of the race. The
-preceding patches prepare for it, and patch 6 makes the runstate action
-variables private.
-
-Vladimir Sementsov-Ogievskiy (6):
-  runstate: introduce qemu_system_shutdown_request_safe() helper
-  runstate: treat SHUTDOWN_CAUSE_HOST_UI as force_shutdown
-  runstate: inline qemu_shutdown_requested()
-  runstate: simplify qemu_shutdown_requested_get()
-  runstate: separate forced and regular shutdown requests
-  runstate: make runstate actions private
-
- MAINTAINERS                      |   1 -
- hw/xen/xen-hvm-common.c          |   2 +-
- include/system/runstate-action.h |  19 ------
- include/system/runstate.h        |   2 +-
- monitor/qmp-cmds.c               |   2 -
- system/meson.build               |   1 -
- system/runstate-action.c         |  46 --------------
- system/runstate.c                | 103 +++++++++++++++++++++----------
- system/vl.c                      |   2 +-
- ui/cocoa.m                       |   2 -
- ui/sdl2.c                        |   3 -
- 11 files changed, 75 insertions(+), 108 deletions(-)
- delete mode 100644 include/system/runstate-action.h
- delete mode 100644 system/runstate-action.c
-
+diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+index 62d88804c43..4d01a12062d 100644
+--- a/hw/xen/xen-hvm-common.c
++++ b/hw/xen/xen-hvm-common.c
+@@ -610,7 +610,7 @@ static void cpu_handle_ioreq(void *opaque)
+         if (runstate_is_running()) {
+             ShutdownCause request;
+ 
+-            if (qemu_shutdown_requested_get()) {
++            if (qemu_shutdown_requested()) {
+                 destroy_hvm_domain(false);
+             }
+             request = qemu_reset_requested_get();
+diff --git a/include/system/runstate.h b/include/system/runstate.h
+index 929379adae4..3ed35921bb7 100644
+--- a/include/system/runstate.h
++++ b/include/system/runstate.h
+@@ -146,7 +146,7 @@ void qemu_system_debug_request(void);
+ void qemu_system_vmstop_request(RunState reason);
+ void qemu_system_vmstop_request_prepare(void);
+ bool qemu_vmstop_requested(RunState *r);
+-ShutdownCause qemu_shutdown_requested_get(void);
++bool qemu_shutdown_requested(void);
+ bool qemu_force_shutdown_requested(void);
+ ShutdownCause qemu_reset_requested_get(void);
+ void qemu_system_killed(int signal, pid_t pid);
+diff --git a/system/runstate.c b/system/runstate.c
+index 01f936649b4..2b28e2a30e2 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -582,7 +582,7 @@ static NotifierList shutdown_notifiers =
+     NOTIFIER_LIST_INITIALIZER(shutdown_notifiers);
+ static uint32_t wakeup_reason_mask = ~(1 << QEMU_WAKEUP_REASON_NONE);
+ 
+-ShutdownCause qemu_shutdown_requested_get(void)
++bool qemu_shutdown_requested(void)
+ {
+     return shutdown_requested;
+ }
 -- 
 2.43.0
+
 
