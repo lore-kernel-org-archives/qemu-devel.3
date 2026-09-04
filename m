@@ -4,58 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABBEC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC90C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 04:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2LbF-0001Cr-HV; Fri, 04 Sep 2026 00:32:25 -0400
+	id 1x2Lgb-0003kr-KF; Fri, 04 Sep 2026 00:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2Kn6-0004UD-UY
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:40:36 -0400
-Received: from mail-m49198.qiye.163.com ([45.254.49.198])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1x2LgZ-0003kC-S3
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 00:37:55 -0400
+Received: from pv-2001b-snip6-11.eps.apple.com ([2a01:b747:3003:200::15]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <getshell@seu.edu.cn>)
- id 1x2Kn2-0003BY-Nu
- for qemu-devel@nongnu.org; Thu, 03 Sep 2026 23:40:36 -0400
-Received: from LAPTOP-99KJFSET (unknown [36.153.54.56])
- by smtp.qiye.163.com (Hmail) with ESMTP id 4c7fb7a3b;
- Fri, 4 Sep 2026 11:33:24 +0800 (GMT+08:00)
-From: Hongyan Xu <getshell@seu.edu.cn>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1x2LgY-0003io-2C
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 00:37:55 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-11 (Postfix) with ESMTPS id
+ 7AF1D18000F0; Fri, 04 Sep 2026 04:37:47 +0000 (UTC)
+X-ICL-RepId: 01a06ab5-625d-7487-bc74-b7f955e5e5ef
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeSQ4dBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdDlsGQA1LBFkFRQtGD0kAQAZGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1788496670; x=1791088670;
+ bh=39BpP6uTQ4wGRzJBPL7IK8+8Y98o/LILsXct3jFUiSo=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=AxMZ5snZzStC+sp5dyB4rhZOQatbVGYl8Zl+5D8FxPIHb6OiOjWIWKV8dPlYijAHjZsQyK5PnENNEmuw/YHtNGFAgUIvYLVTJYn5FrtIFJml769WqlhlYMHJisTNQIctoEBfM+GnZxKSh/rxgkw+bBtW4GM4k9HNLbtKv1oYDa3lJBLeyMnbf0HIH5KJf0G1YXNFSBqzkcqEFD66baO2fweM1UplbV9iHoyj5L/qJBGnMRsrXYhlmWELroFlPNiWH7xKobfFHvokPgCDINJVES5OycN9LZcN7Bax3pfUbTcxZHOKrpi8twvRSghKOSDFEeETAo7Q4sKVc4DqYcD30A==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.156.192.29])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-11 (Postfix) with ESMTPSA id
+ 031C518000C6; Fri, 04 Sep 2026 04:37:44 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Hongyan Xu <getshell@seu.edu.cn>
-Subject: [RFC PATCH] virtio-gpu: guard BH scheduling against a late hostmem
- region finalize
-Date: Fri,  4 Sep 2026 11:33:24 +0800
-Message-ID: <20260904033324.1754-1-getshell@seu.edu.cn>
-X-Mailer: git-send-email 2.50.1.windows.1
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v2 0/5] hvf: arm: add experimental VHE (x-vhe) toggle
+Date: Fri,  4 Sep 2026 06:37:37 +0200
+Message-ID: <20260904043742.96613-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.54.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa06a7a6de203a1kunmc8190e32241bb
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCT0tLVh0eSR5DGRpLSU1IS1YeHw
- 5VEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKTkhVTk9VTk1ZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE
- 5VSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
- b=mHL8TOENSGooDIHHXUShT9dN9sEGAN9V8i+HIN2voRIrERQh+pQdIMAHLFI43a0hDyEHazRsnniZNK5wuzK7aV8kZeWaDKE5PLQmS1HMMOFR3PI6Lic/osAVVk4MPz7UWbQ1Z2eH/g5u8rKBYNDxsX0/m14aB+MtglLwcUffuJs=;
- c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1; 
- bh=6pPjq38Rl1B06uwZRdHLtZfA+MlrG39TWGjcdYU28xg=;
- h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=45.254.49.198; envelope-from=getshell@seu.edu.cn;
- helo=mail-m49198.qiye.163.com
+X-Authority-Info-Out: v=2.4 cv=O/o0fR9W c=1 sm=1 tr=0 ts=6a9a4b1c
+ cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
+ a=aW9mcIavGNWWFvFFKOxBSA==:17 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=1IkwwtD3tCKCoM6Zr9cA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 2h4OybaayhXuR-rAqC1kuck0nruRkh2q
+X-Proofpoint-ORIG-GUID: 2h4OybaayhXuR-rAqC1kuck0nruRkh2q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDA0MSBTYWx0ZWRfXz9Svseaor7s7
+ UZRvxUlTVzlKUNMG0+r+jN9lMMfFv3UZIm9Nry6jxNcunqCqLhBwduz0FxCw7+aJzCV1zTBJs7W
+ 5S6Nv8QkvBpoOy1ZJzJPaYmZfQxxhx7y78+rzCnbPRUc5KNzQyCWv/giEaNzlBEf0D9RXDfyBFo
+ G8oxjZ5kR6J2Pezkuor3Zv4wmpmgI86bxnfV9kny2rSjKajGY5OeCom1hTLUha/TCzCHldux85r
+ WlYYfzkvr2U0cQ2nJqE97vU3D+Izl+Zy3ML9FCevdkpP4ElJNHL4PMMjOvJWsd7L0KjH4Jwkkp7
+ 9/cT9/uqgTojdKBd/TjSwd0u0sPW1NGyttpnnow3MJ2frYKuEWEl4cjYovwzmk=
+X-JNJ: AAAAAAAB5IdNTBxKq1GO7WLH12bmmMSTLnwjcBmihVMKUv562APFrjKEeYoUh7/7b9THk59nt8ZO604MmhxYuuBTAbIoa2Bfau43U3lheDsKW4441ShTnEgvzryYjO8ngEhiXSdqKskraeq8VGVOxpifiYDvkkxbtBTMBsebOFMXaqfff8Uhl2WOcWWuiBnbsKX6fZA4WCkLEprA8kYTkeV5MNWKg0N9Yirrqu7mwOEFg+cbLV5lcSA7IbV/WNvol3ppzvuz/E6UaGJ0RDOaPJWeo9WTcQTxgaagR8p+gHwasB8em7hEIgfHhujIcfuwoAo8b0uBTwiuwHyO9OnImcP43x69lEhG5WC8eOo+3YYto+bWez9vUCBQhGTaXjpAu369gEtN7L8LdGXcfOCO1Pob+D+aCg0CRimVOmzAzh1+y5WSF+B7S30obUCqsNLz5bl6PFhBkWva0kJTwjFSLEiT7TVTaVwyrf8BBa3ME0doE63qt7q77T+modwxsjmwCv5UecLy104co8QQ/MXIrg67J4or+ZcTaPF4nxaxN8VYS16sQHdH6FwrNXpYwxDUacJ33+8tZeIAHegw6pS7Y2v/oPf/MzWijrVCMlmkWQl7PXdMFz/hg3Uaoj+MrvsvZhkc+vw632F5QW/gi1kweo4hlWY9K9yC+9sL2rCGI80N0J52gVVgFlthd+6nb9TZLHMfNPgkvg6sYWhhe3AOWM/IJ79h24Molj7XK16oQvXpebjeJREv/AH4oZ7/q+MkapKTHj6PTCdQYCqGtsQP6La04xbW5uhvS5R4TetDuyEShSMPB9mumRaJuiruLtdeKreZfA11n6De+cjTXuqakVa/D5DrzbIax3s9Lh2R45U1nrtHJBR2qTL1GPoggA58HQKM6kaCXZDvBnAyHBsm0ecgdW8SxMDRAKmyDCS4PghfnVkZZhFiB6iXBRosiwHfzbsZwzmTQeTp7KLkgmvsCFhMiGdiRAs
+ YlEi1pEeebvQwnIRHccso8t1LeIxqdm8yHo6wPp0iWzPZusUWz+o6T7wum+j0R722N5ivqhVRMD4bhjURZfuRl/+FGNS0KJ3CJNjhQnPuLojPyBnGjSel0g9OLxqmmHA2c9O1cZDHow14r+gkmriPesv7zUxzyIjhDKYR/KNvQoa1DqEvDWRjgUSvjui0AmsLmHeBvqH1LVpH7FoYbzhDmoWYq2uZdv5Da88o2hWo4VlLqlloW3H++Efu8YSaJ40JlBdf+rc2X9KWvTURFQ==
+Received-SPF: pass client-ip=2a01:b747:3003:200::15;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 04 Sep 2026 00:32:22 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,82 +85,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_gpu_gl_device_unrealize() deletes gl->cmdq_resume_bh (and, when
-present, gl->async_fence_bh).  As the comment in that function notes,
-hostmem memory regions are not guaranteed to be finalized during
-unrealize(): their finalize may be deferred (e.g. through an RCU /
-object reference lifetime) until after unrealize() has returned.
+macOS 27.0 has a pre-release VHE implementation. Add support for it in QEMU.
 
-virtio_gpu_virgl_hostmem_region_finalize() runs on that deferred path
-and calls qemu_bh_schedule(gl->cmdq_resume_bh).  If the finalize lands
-after unrealize() has deleted the BH, this schedules a deleted BH
-(a use-after-free / use-after-delete window on the BH object).
+The first patch in the series is an independent bugfix that should be backported to QEMU 11.1 too.
 
-NULL out both BHs after deleting them in unrealize(), and guard the two
-schedule sites in virtio-gpu-virgl.c with a NULL check so a late
-finalize (or a late async-fence callback) simply skips the wake-up
-instead of touching a deleted BH.
+v2:
 
-This is an RFC: this area overlaps Akihiko Odaki's "Fix memory region
-use-after-finalization" discussion series; if that series lands first
-this patch should be reworked to fit its lifetime model.
+Add:
+hvf: arm: expose E2H0
+hvf: arm: ignore accesses to CNTKCTL_EL12
 
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
----
- hw/display/virtio-gpu-gl.c    | 8 ++++++++
- hw/display/virtio-gpu-virgl.c | 8 ++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+This is to have working KVM under the VHE configuration.
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 2b7a41c466..2fd3f84a91 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -180,10 +180,18 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-     if (gl->renderer_state >= RS_INITED) {
- #if VIRGL_VERSION_MAJOR >= 1
-         qemu_bh_delete(gl->cmdq_resume_bh);
-+        /*
-+         * hostmem memory regions can be finalized after unrealize()
-+         * returns (see below); their finalize path schedules
-+         * cmdq_resume_bh, so NULL it out to let them detect that the
-+         * BH is gone instead of touching a deleted BH.
-+         */
-+        gl->cmdq_resume_bh = NULL;
- 
-         if (gl->async_fence_bh) {
-             virtio_gpu_virgl_reset_async_fences(g);
-             qemu_bh_delete(gl->async_fence_bh);
-+            gl->async_fence_bh = NULL;
-         }
- #endif
-         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 9bda572426..d38d8fe995 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -134,7 +134,9 @@ static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
-      * context.
-      */
-     gl = VIRTIO_GPU_GL(vmr->g);
--    qemu_bh_schedule(gl->cmdq_resume_bh);
-+    if (gl->cmdq_resume_bh) {
-+        qemu_bh_schedule(gl->cmdq_resume_bh);
-+    }
- }
- 
- static const TypeInfo virtio_gpu_virgl_hostmem_region_info = {
-@@ -1294,7 +1296,9 @@ virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
- 
-     QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
- 
--    qemu_bh_schedule(gl->async_fence_bh);
-+    if (gl->async_fence_bh) {
-+        qemu_bh_schedule(gl->async_fence_bh);
-+    }
- }
- 
- static void virgl_write_async_fence(void *opaque, uint32_t fence)
+Mohamed Mediouni (5):
+  hvf: arm: advertise ID_AA64PFR0_EL1.GIC
+  hvf: arm: add experimental VHE toggle
+  hvf: arm: advertise EL3 support when VHE is on
+  hvf: arm: expose E2H0
+  hvf: arm: ignore accesses to CNTKCTL_EL12
+
+ accel/hvf/hvf-all.c      |   2 +
+ include/system/hvf_int.h |   1 +
+ target/arm/hvf/hvf.c     | 114 +++++++++++++++++++++++++++++++++++++++
+ target/i386/hvf/hvf.c    |   4 ++
+ 4 files changed, 121 insertions(+)
+
 -- 
-2.50.1.windows.1
+2.54.0 (Apple Git-156)
 
 
