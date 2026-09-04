@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD44C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 14:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6066DC624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:03:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2VJL-0006ou-98; Fri, 04 Sep 2026 10:54:35 -0400
+	id 1x2VRX-0000u7-29; Fri, 04 Sep 2026 11:03:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x2VJI-0006oM-9X; Fri, 04 Sep 2026 10:54:32 -0400
+ id 1x2VRQ-0000tW-ED; Fri, 04 Sep 2026 11:02:57 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x2VJ8-0006KO-Mw; Fri, 04 Sep 2026 10:54:32 -0400
+ id 1x2VRO-0008Hy-Ah; Fri, 04 Sep 2026 11:02:56 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwBna7OU25pqIRY6AQ--.42156S2; 
- Fri, 04 Sep 2026 22:54:12 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwDX0amR3ZpqIhk6AQ--.42388S2; 
+ Fri, 04 Sep 2026 23:02:41 +0800 (CST)
 Received: from [192.168.2.11] (unknown [113.246.117.39])
- by mail (Coremail) with SMTP id AQAAf8DwwHST25pqT++6AA--.64174S2;
- Fri, 04 Sep 2026 22:54:12 +0800 (CST)
-Message-ID: <2a6ae5cc-9e6e-4d5b-93f7-c2ecc0faa25c@phytium.com.cn>
-Date: Fri, 4 Sep 2026 22:54:10 +0800
+ by mail (Coremail) with SMTP id AQAAf8DwfXOQ3Zpqy_C6AA--.4119S2;
+ Fri, 04 Sep 2026 23:02:40 +0800 (CST)
+Message-ID: <1a789512-1ddd-4e42-8f41-44e9ab91585e@phytium.com.cn>
+Date: Fri, 4 Sep 2026 23:02:39 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC v5 06/28] hw/arm/smmuv3: Plumb transaction attributes into
  config helpers
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
+To: Mostafa Saleh <smostafa@google.com>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Chao Liu <chao.liu@processmission.com>,
  Jim MacArthur <jim.macarthur@linaro.org>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
  <20260813162446.2806393-1-tangtao1634@phytium.com.cn>
- <e4dd7318-e498-46eb-8af7-ce138c3f0caf@redhat.com>
+ <apbaH93DHhCUx4K0@google.com>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <e4dd7318-e498-46eb-8af7-ce138c3f0caf@redhat.com>
+In-Reply-To: <apbaH93DHhCUx4K0@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwwHST25pqT++6AA--.64174S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAIBWqZyskIbAAAsY
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAf8DwfXOQ3Zpqy_C6AA--.4119S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAIBWqZyskIbAABsZ
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxXr4kCr1fZr1xJFW3XF47urg_yoWrGw1xpa
- y8GFs0kr4kKFyS9rZ3Xrsrua45ua95Gr1UGry7Kas3Ar1Yvr1fZr12kw1Y9FWDWr15Jrs2
- vry0gr43uF1DJrJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxGw43Kw1kZr13KF18ur1Dtrb_yoW5AF1xpa
+ ykCF90kr4kKFyxW3s3XF47ua45Wa95GF4UGr9Fkr95ur1qvrn3Zr4jkw1F9r9rury8Jw4I
+ vF12qrZ3uFn8JrJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -77,12 +78,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+Hi Mostafa,
 
-On 2026/8/27 17:07, Eric Auger wrote:
-> Hi Tao,
->
-> On 8/13/26 6:24 PM, Tao Tang wrote:
+On 2026/9/1 21:58, Mostafa Saleh wrote:
+> On Fri, Aug 14, 2026 at 12:24:42AM +0800, Tao Tang wrote:
 >> Introduce helpers that derive MemTxAttrs and select an AddressSpace from
 >> SEC_SID, then pass SEC_SID through the Stream Table and Context Descriptor
 >> fetch paths. This makes reads of SMMU configuration structures use the
@@ -93,6 +92,7 @@ On 2026/8/27 17:07, Eric Auger wrote:
 >>
 >> The accelerated path remains Non-secure-only and therefore passes
 >> SMMU_SEC_SID_NS explicitly.
+>>
 >> For now, the configuration cache lookup key remains based solely on the
 >> SMMUDevice pointer. It is extended with SEC_SID in a later commit. Other
 >> SEC_SID-sensitive memory accesses that still use the Non-secure address
@@ -105,16 +105,6 @@ On 2026/8/27 17:07, Eric Auger wrote:
 >>   hw/arm/smmuv3-internal.h     |  3 ++-
 >>   hw/arm/smmuv3.c              | 43 ++++++++++++++++++++++--------------
 >>   include/hw/arm/smmu-common.h | 10 +++++++++
-> Please use
-> [diff]
->          orderFile = scripts/git.orderfile
-> in your .gitconfig to have headers output first in the patch.
-
-
-I have configured scripts/git.orderfile for the v6 export.
-
-
->
 >>   5 files changed, 65 insertions(+), 23 deletions(-)
 >>
 >> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
@@ -146,57 +136,25 @@ I have configured scripts/git.orderfile for the v6 export.
 >> +    };
 >> +}
 >> +
->>   AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
->>   {
->>       switch (sec_sid) {
->> @@ -588,6 +609,7 @@ error:
->>   /**
->>    * smmu_ptw_64_s2 - VMSAv8-64 Walk of the page tables for a given ipa
->>    * for stage-2.
->> + * @bs: smmu state which includes TLB instance
->>    * @cfg: translation config
->>    * @ipa: ipa to translate
->>    * @perm: access type
->> @@ -599,7 +621,7 @@ error:
->>    * Upon success, @tlbe is filled with translated_addr and entry
->>    * permission rights.
->>    */
->> -static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
->> +static int smmu_ptw_64_s2(SMMUState *bs, SMMUTransCfg *cfg,
->>                             dma_addr_t ipa, IOMMUAccessFlags perm,
->>                             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
->>   {
->> @@ -636,7 +658,6 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
->>           uint64_t pte, gpa;
->>           dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
->>           uint8_t s2ap;
->> -
-> unwanted change
+> So that would be used instead of MEMTXATTRS_UNSPECIFIED previously
+> used. I am not sure if some other fields need to be set also as
+> memory, requester_id, address_type?
+>
+> If not, maybe it is worth adding a comment.
 
+This is intentional. These are SMMU-originated accesses(3.4.3 Address 
+sizes of SMMU-originated accesses), so they do not inherit the client 
+transaction's requester ID, PASID, or PCI address type.
 
-I'll drop this line.
+Only the security state is made explicit here. I leave MemTxAttrs.memory 
+clear to preserve the existing QEMU access behavior. In QEMU that bit is 
+a RAM-only access filter: setting it would reject accesses to non-RAM 
+MemoryRegions. It does not represent the full architectural 
+Normal-memory cacheability and shareability attributes.
 
->>           if (get_pte(baseaddr, offset, &pte, info)) {
->>                   goto error;
->>           }
->> @@ -690,6 +711,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
->>               goto error_ipa;
->>           }
->>   
->> +        tlbe->entry.target_as = &bs->memory_as;
-> I don't understand why we do that change in this patch (also there is no
-> sumetrical change in smmu_ptw_64_s1)? It does not seem to relate to the
-> commit title/desc
-
-Agreed. The S2 bs/target_as changes are not part of the 
-configuration-fetch plumbing and should not be in this patch.
-
-I'll move this change to the later PTW patch, where get_pte() is changed 
-to take an AddressSpace and MemTxAttrs.
+I will add a comment to make this explicit.
 
 Thanks,
 Tao
-
-
 
 
