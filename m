@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFBDC79F82
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BCBC624DE
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:54:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TQC-0001aS-Ly; Fri, 04 Sep 2026 08:53:32 -0400
+	id 1x2TQU-0001ng-2e; Fri, 04 Sep 2026 08:53:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQB-0001ZW-7a
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:31 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1x2TQS-0001mJ-9n
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:48 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQ9-0000ew-Gb
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:30 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-49b965570d7so10933195e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:29 -0700 (PDT)
+ id 1x2TQN-0000kj-P7
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:47 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-485843aeab8so1030015f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788526408; x=1789131208; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788526422; x=1789131222; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ilsum7WCP4JfV9DfKFlmxOu6x9pWUdaPIfh49tOZlDE=;
- b=D/ZMeS8E0rZgNMPpXBlGQJRpS4HbyP0wEyCcSSjxqjv/cjcRZzw5UE0wZkaRn7kzOw
- qfWnU4jFUqy2RXg5DBZL+naG2pqskHhwuarmrO9cU/1dcJIcklp0EJlB8kB7z1iI4EhX
- aiV0YAD6ok95o16gKtA+pj6gdex7s6IwDF3Uajsl38GaI0+fLU+4A3L4eIEUnWpYUWDN
- FFdJ5Uh1HSTItQqVv2nByyQJafAT6L72aOhETBMINWQjhJfvKcJp7fCKf8Z9MKNQ5IHt
- dc1C516ylaznLG4ic3YKslYDYA1hLH5mxJ61+gMXUXI5t/EoHWbQTooh87xtgLMSwxEM
- BJ2w==
+ bh=4wGLYV3KePdDq6Zowgbo8tsJ6w7EuActFvXEH4XlSyE=;
+ b=b8Y/FzRQmNMrUF8PztRu9jYgJ0FCfk3GOBi9jEQcr5hE/STavUQZauHniW2V1RCf/W
+ we+wKbe4gkVwN4TyrvjWQ0QOJEvC2ZGj7QaMtVYB4wHPpPqmVWk9mKDXIHRMyNqWdPus
+ pun+frBoRxmbNzqZVxPyLz1rg+m+u0u1kmYCLr/5w2cLN2XwvWUya9TXrTl/zE54+8LB
+ WSi0SBNkg8nBqOYGUzgXHVongShyRXFcXhn43XpzPpG1mOk93kIIETdwsULheOvTl89l
+ s60dK1PL9k7zwXfA0TYurHw1ZVSImdC5uSyvxP6WvoSgQAhu0pw37tvSHLKyaGoksRE9
+ V5ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526408; x=1789131208;
+ d=1e100.net; s=20251104; t=1788526422; x=1789131222;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ilsum7WCP4JfV9DfKFlmxOu6x9pWUdaPIfh49tOZlDE=;
- b=d6a1bucmeWjsEZY/KfcyurMCS78pVCkIBj7+aHydB1e+CA4f510ogmHPNBDVyRfBgT
- J1iKYTGOm7lNG0i3I0/OTApakOx+xj4eUtZE9/BEu9sHhUHJpCUfInxS4xDMtUC4zTfd
- k9BTZpx5/iqwhdlwtHHDnvzY8OrSQ2v9E3U5eNn9vi+ANXvXX8KXONskjgXTP58q7r5r
- kaPvdLrsgXWPV+pSHorhPx3DowGi3RErBpINY0fOHCA1ILupovaMHXSR3royJMzrlQ3N
- sXSTEuTMxxTZEh2KnsvkEZYwPEx3bXGjWtwm+7qAASbwOotIJ2Br/J20j1EoCfwVORgF
- ii9g==
-X-Gm-Message-State: AFuF++mCqdrFdgL+RWYf7IFToP36FhkL8ohpbwvvqrM+5F2A4Uzbl2fm
- SSxKY3tx2UJkPjPTB/P28fHZ9VozlbfWqmhnTyihPL9D9u40gF5guNfyjy3QIfkgbK0=
-X-Gm-Gg: AYBFou2GwvLGs/cVqXs8VtztaTSOwn5xiJCFHJQsDG4wBlVSGUoaG7uXymBPl7+pn5S
- 2j3xzNCBlWxQySp5LdoNRREYKaSZwsxPvxb/KEIKvoiyG7B7N3jXPktlcHTRShAPb/UzRqvKQKP
- AgorqMDv/BuTRrdLiV7F8GwewQUouSyu/4BiRQHrGQolxLLM44N9IqUFsdLVZpFbheILnjaqIf4
- diQISwYDgfOw6g/5Ks7vdF2EkPObiers1GkMCjJnjdvthMCqcAFZWrYyAt55af9rlEXb9JpJcZC
- /kxyDFcAd7DpyrbGPZGiX2xeKDddwkaH49qUrLhrcOVcmpjQRCkXkgJAqTpkWroHzkHt7b/BGg/
- HSTfnXcIEKnRlN3vH/mtr2dK5TjABxbaNqMpucq107RYObrRjWCU1go/kcHkKIWjT46SHTrANbS
- /hW6cE3jlNvXrbkLYNAn0i7/mSzFFXs+aQGiUl4Tu/zyF1TGS49apW9rcfeOx6
-X-Received: by 2002:a05:600c:4f48:b0:49c:fc6e:8cb7 with SMTP id
- 5b1f17b1804b1-49cfc6e90a2mr31553165e9.27.1788526407749; 
- Fri, 04 Sep 2026 05:53:27 -0700 (PDT)
+ bh=4wGLYV3KePdDq6Zowgbo8tsJ6w7EuActFvXEH4XlSyE=;
+ b=sK/I3GMWMXa9uHhRjPdyGdPY2qu5uUjBE1bh6Fq4wQajYwAwqvrWLe48UpYnJakmbq
+ 6nzxlBt3XumwDxf2QtZy8IGPasvCKADF5bj0ZM5ypI+J5lcTHjl3EicThH7dBRHNXOLT
+ 5Cm0l3uubFE9pUFYZCvcdobeAjyYCpcdtv11W7lhp+WJPp6tBR+Td/wpJ1NegVp8D5/3
+ zTgxKH0dW8of2tUba9ulBXX+poQL/fdznPetT47CZNdXCRixkBszJDoPIqrxWQ1iogbz
+ 9deDv5s3ZY94sKFAMH5krCucmyr7OSj2X2S/dHOSNKxMXb/bI1Q9YTdS9oxvn9OFmGoZ
+ 861Q==
+X-Gm-Message-State: AFuF++nV0sbHS2w5KqSb0DfeSNRVcepf7HIt7EmykbdMCgDb2Z0qLFhy
+ vDVhsk6LD+ThhERQt9/4Of3SaChhnSjXn6Xxjaxheyp1fejtuc55kYeybDKSEjRQi1M=
+X-Gm-Gg: AYBFou1VvybVQP1B4itSWfeuAPECKimCl4PA5p9eHFGB4Ui/VsTAWI+1BHySW3kAIsL
+ kRrI2FhKRrDceZ0A+PBU3v41xi43g4yMBKYIFc4vXXadWPp10Yme9CvwDDwgFoJh5nirXpxOyXT
+ 2+ri+eCoQRKxJkzZNJODyFu4LSYhIrClbXhuRFQakKDMYrtG8aK+IgEWd3lkP3HYY7OhZvDjg+s
+ 9Dec71Qn4n+4qaMlOTGiOU9gZyyZCVVLOWmaI6LwQwXFngEHYGXbUrRG6gfoYYDasxmVHhrSvEO
+ p8TdMZ8ClRHDqzZ8ugJchfW2I0BYFI9L+OYGPbpZiiIWNO4KvazjW14b2HkqgVxeMB4mpj0C2/I
+ cSRHM5uVD7bjFsUzKE9FXcbheEcoMWzXyTx6VahLo6NNjQrF9wRf24Noe0MvBAQL21djkFTCLLx
+ EWEd0oZqTypgt39D+oxUljKd8QgZ2Ms2Cowe69L9tonC5TaJRS3MAKKSuAaH07
+X-Received: by 2002:a05:6000:4703:b0:482:fbb5:ab56 with SMTP id
+ ffacd0b85a97d-48587085bc9mr13592130f8f.13.1788526421729; 
+ Fri, 04 Sep 2026 05:53:41 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf75ce49esm118469985e9.1.2026.09.04.05.53.25
+ ffacd0b85a97d-485885be01bsm5707718f8f.31.2026.09.04.05.53.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:53:26 -0700 (PDT)
+ Fri, 04 Sep 2026 05:53:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2C02261785;
- Fri, 04 Sep 2026 13:46:07 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id E1FE461D26;
+ Fri, 04 Sep 2026 13:46:11 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 029/105] tests/tcg/meson.build: check host cross cc is working
-Date: Fri,  4 Sep 2026 13:44:43 +0100
-Message-ID: <20260904124604.2207440-30-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Aniket Sahu <asahu1x@linux.ibm.com>, Stafford Horne <shorne@gmail.com>
+Subject: [PULL 071/105] tests/tcg/or1k: add float reference files
+Date: Fri,  4 Sep 2026 13:45:25 +0100
+Message-ID: <20260904124604.2207440-72-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,54 +107,665 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-On Fedora, cross compilers are provided without runtime or header files.
-Thus, even if program is present, it can't be used to compile files
-directly. Check this, and fallback on docker if not working.
+Makefiles were skipping the output compare when such files
+were not available. This results in arch being very inconsistent with
+some providing all files, some providing no files, and some providing
+some files. There was even one case of a misnamed file that result in a
+skipped check.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+For consistency, the current series adds all missing reference files for
+all arch, and make their presence mandatory
+
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-30-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-72-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/test_cc.c b/tests/tcg/test_cc.c
+diff --git a/tests/tcg/or1k/float_convd.ref b/tests/tcg/or1k/float_convd.ref
 new file mode 100644
-index 00000000000..d3614a01fe6
+index 00000000000..dbd5379c4d3
 --- /dev/null
-+++ b/tests/tcg/test_cc.c
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+/* Include a standard header to make sure cross compiler provides them */
-+#include <stdint.h>
-+
-+int main(void)
-+{
-+    return 0;
-+}
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index ab7090a62fe..9809695f3b8 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -109,6 +109,18 @@ foreach target, plan: tcg_tests
-   cc = find_program(plan['cc'], required : false)
-   cc_from_system = cc.found()
-   has_cc = cc.found()
-+  if has_cc
-+    check_flags = ['-static']
-+    if target.endswith('softmmu')
-+      check_flags = ['-nostdlib', '-ffreestanding', '-r']
-+    endif
-+
-+    cmd = run_command([cc, files('test_cc.c'), check_flags, '-o', '/dev/null'],
-+                      check: false)
-+    has_cc = cmd.returncode() == 0
-+    cc_from_system = has_cc
-+  endif
-+
-   build_test_depends = []
-   build_test_depend_files = []
- 
++++ b/tests/tcg/or1k/float_convd.ref
+@@ -0,0 +1,247 @@
++### Rounding to nearest
++from double: f64(nan:0x007ff4000000000000)
++  to single: f32(nan:0x7fe00000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(-nan:0x00fff8000000000000)
++  to single: f32(-nan:0xffc00000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-inf:0x00fff0000000000000)
++  to single: f32(-inf:0xff800000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
++  to single: f32(-inf:0xff800000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
++  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
++  to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
++  to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
++  to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
++  to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
++   to int32: -2 (OK)
++   to int64: -2 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
++  to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
++   to int32: -1 (OK)
++   to int64: -1 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
++  to single: f32(-0x0.00000000000000000000p+0:0x80000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(-0x1.00000000000000000000p-126:0x00b810000000000000)
++  to single: f32(-0x1.00000000000000000000p-126:0x80800000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x0.00000000000000000000p+0:00000000000000000000)
++  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.00000000000000000000p-126:0x003810000000000000)
++  to single: f32(0x1.00000000000000000000p-126:0x00800000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.00000001c5f680000000p-25:0x003e600000001c5f68)
++  to single: f32(0x1.00000000000000000000p-25:0x33000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.ffffe6cb2fa820000000p-25:0x003e6ffffe6cb2fa82)
++  to single: f32(0x1.ffffe600000000000000p-25:0x337ffff3) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.ff801a9af58a10000000p-15:0x003f0ff801a9af58a1)
++  to single: f32(0x1.ff801a00000000000000p-15:0x387fc00d) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.00000c06a1ef50000000p-14:0x003f100000c06a1ef5)
++  to single: f32(0x1.00000c00000000000000p-14:0x38800006) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
++  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
++   to int32: 1 (OK)
++   to int64: 1 (OK)
++  to uint32: 1 (OK)
++  to uint64: 1 (OK)
++from double: f64(0x1.00400000000000000000p+0:0x003ff0040000000000)
++  to single: f32(0x1.00400000000000000000p+0:0x3f802000) (OK)
++   to int32: 1 (OK)
++   to int64: 1 (OK)
++  to uint32: 1 (OK)
++  to uint64: 1 (OK)
++from double: f64(0x1.00000000000000000000p-1022:0x000010000000000000)
++  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.3d5054450ed000000000p-1023:0x000009ea82a2287680)
++  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.5731f750864200000000p-1023:0x00000ab98fba843210)
++  to single: f32(0x0.00000000000000000000p+0:0000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000)
++  to single: f32(0x1.00000000000000000000p+0:0x3f800000) (OK)
++   to int32: 1 (OK)
++   to int64: 1 (OK)
++  to uint32: 1 (OK)
++  to uint64: 1 (OK)
++from double: f64(0x1.00000000000000000000p+1:0x004000000000000000)
++  to single: f32(0x1.00000000000000000000p+1:0x40000000) (OK)
++   to int32: 2 (OK)
++   to int64: 2 (OK)
++  to uint32: 2 (OK)
++  to uint64: 2 (OK)
++from double: f64(0x1.5bf0a8b1457690000000p+1:0x004005bf0a8b145769)
++  to single: f32(0x1.5bf0a800000000000000p+1:0x402df854) (OK)
++   to int32: 2 (OK)
++   to int64: 2 (OK)
++  to uint32: 2 (OK)
++  to uint64: 2 (OK)
++from double: f64(0x1.921fb54442d180000000p+1:0x00400921fb54442d18)
++  to single: f32(0x1.921fb600000000000000p+1:0x40490fdb) (OK)
++   to int32: 3 (OK)
++   to int64: 3 (OK)
++  to uint32: 3 (OK)
++  to uint64: 3 (OK)
++from double: f64(0x1.ffbe0000000000000000p+15:0x0040effbe000000000)
++  to single: f32(0x1.ffbe0000000000000000p+15:0x477fdf00) (OK)
++   to int32: 65503 (OK)
++   to int64: 65503 (OK)
++  to uint32: 65503 (OK)
++  to uint64: 65503 (OK)
++from double: f64(0x1.ffc00000000000000000p+15:0x0040effc0000000000)
++  to single: f32(0x1.ffc00000000000000000p+15:0x477fe000) (OK)
++   to int32: 65504 (OK)
++   to int64: 65504 (OK)
++  to uint32: 65504 (OK)
++  to uint64: 65504 (OK)
++from double: f64(0x1.ffc20000000000000000p+15:0x0040effc2000000000)
++  to single: f32(0x1.ffc20000000000000000p+15:0x477fe100) (OK)
++   to int32: 65505 (OK)
++   to int64: 65505 (OK)
++  to uint32: 65505 (OK)
++  to uint64: 65505 (OK)
++from double: f64(0x1.ffbf0000000000000000p+16:0x0040fffbf000000000)
++  to single: f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) (OK)
++   to int32: 131007 (OK)
++   to int64: 131007 (OK)
++  to uint32: 131007 (OK)
++  to uint64: 131007 (OK)
++from double: f64(0x1.ffc00000000000000000p+16:0x0040fffc0000000000)
++  to single: f32(0x1.ffc00000000000000000p+16:0x47ffe000) (OK)
++   to int32: 131008 (OK)
++   to int64: 131008 (OK)
++  to uint32: 131008 (OK)
++  to uint64: 131008 (OK)
++from double: f64(0x1.ffc10000000000000000p+16:0x0040fffc1000000000)
++  to single: f32(0x1.ffc10000000000000000p+16:0x47ffe080) (OK)
++   to int32: 131009 (OK)
++   to int64: 131009 (OK)
++  to uint32: 131009 (OK)
++  to uint64: 131009 (OK)
++from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
++  to single: f32(0x1.00000000000000000000p+31:0x4f000000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 2147483647 (OK)
++  to uint32: 2147483647 (OK)
++  to uint64: 2147483647 (OK)
++from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
++  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
++  to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
++  to single: f32(inf:0x7f800000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(inf:0x007ff0000000000000)
++  to single: f32(inf:0x7f800000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(nan:0x007ff8000000000000)
++  to single: f32(nan:0x7fc00000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(nan:0x007ff0000000000001)
++  to single: f32(nan:0x7fc00000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from double: f64(nan:0x007ff4000000000000)
++  to single: f32(nan:0x7fe00000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
+diff --git a/tests/tcg/or1k/float_convs.ref b/tests/tcg/or1k/float_convs.ref
+new file mode 100644
+index 00000000000..ec7fdf975b1
+--- /dev/null
++++ b/tests/tcg/or1k/float_convs.ref
+@@ -0,0 +1,187 @@
++### Rounding to nearest
++from single: f32(-nan:0xffa00000)
++  to double: f64(-nan:0x00fffc000000000000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-nan:0xffc00000)
++  to double: f64(-nan:0x00fff8000000000000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-inf:0xff800000)
++  to double: f64(-inf:0x00fff0000000000000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
++  to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
++  to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
++  to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
++   to int32: -2147483648 (OK)
++   to int64: -9223372036854775808 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
++  to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-0x1.50544400000000000000p-66:0x9ea82a22)
++  to double: f64(-0x1.50544400000000000000p-66:0x00bbd5054440000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(-0x1.00000000000000000000p-126:0x80800000)
++  to double: f64(-0x1.00000000000000000000p-126:0x00b810000000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x0.00000000000000000000p+0:0000000000)
++  to double: f64(0x0.00000000000000000000p+0:00000000000000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x1.00000000000000000000p-126:0x00800000)
++  to double: f64(0x1.00000000000000000000p-126:0x003810000000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x1.00000000000000000000p-25:0x33000000)
++  to double: f64(0x1.00000000000000000000p-25:0x003e60000000000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x1.ffffe600000000000000p-25:0x337ffff3)
++  to double: f64(0x1.ffffe600000000000000p-25:0x003e6ffffe60000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x1.ff801a00000000000000p-15:0x387fc00d)
++  to double: f64(0x1.ff801a00000000000000p-15:0x003f0ff801a0000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x1.00000c00000000000000p-14:0x38800006)
++  to double: f64(0x1.00000c00000000000000p-14:0x003f100000c0000000) (OK)
++   to int32: 0 (OK)
++   to int64: 0 (OK)
++  to uint32: 0 (OK)
++  to uint64: 0 (OK)
++from single: f32(0x1.00000000000000000000p+0:0x3f800000)
++  to double: f64(0x1.00000000000000000000p+0:0x003ff0000000000000) (OK)
++   to int32: 1 (OK)
++   to int64: 1 (OK)
++  to uint32: 1 (OK)
++  to uint64: 1 (OK)
++from single: f32(0x1.00400000000000000000p+0:0x3f802000)
++  to double: f64(0x1.00400000000000000000p+0:0x003ff0040000000000) (OK)
++   to int32: 1 (OK)
++   to int64: 1 (OK)
++  to uint32: 1 (OK)
++  to uint64: 1 (OK)
++from single: f32(0x1.00000000000000000000p+1:0x40000000)
++  to double: f64(0x1.00000000000000000000p+1:0x004000000000000000) (OK)
++   to int32: 2 (OK)
++   to int64: 2 (OK)
++  to uint32: 2 (OK)
++  to uint64: 2 (OK)
++from single: f32(0x1.5bf0a800000000000000p+1:0x402df854)
++  to double: f64(0x1.5bf0a800000000000000p+1:0x004005bf0a80000000) (OK)
++   to int32: 2 (OK)
++   to int64: 2 (OK)
++  to uint32: 2 (OK)
++  to uint64: 2 (OK)
++from single: f32(0x1.921fb600000000000000p+1:0x40490fdb)
++  to double: f64(0x1.921fb600000000000000p+1:0x00400921fb60000000) (OK)
++   to int32: 3 (OK)
++   to int64: 3 (OK)
++  to uint32: 3 (OK)
++  to uint64: 3 (OK)
++from single: f32(0x1.ffbe0000000000000000p+15:0x477fdf00)
++  to double: f64(0x1.ffbe0000000000000000p+15:0x0040effbe000000000) (OK)
++   to int32: 65503 (OK)
++   to int64: 65503 (OK)
++  to uint32: 65503 (OK)
++  to uint64: 65503 (OK)
++from single: f32(0x1.ffc00000000000000000p+15:0x477fe000)
++  to double: f64(0x1.ffc00000000000000000p+15:0x0040effc0000000000) (OK)
++   to int32: 65504 (OK)
++   to int64: 65504 (OK)
++  to uint32: 65504 (OK)
++  to uint64: 65504 (OK)
++from single: f32(0x1.ffc20000000000000000p+15:0x477fe100)
++  to double: f64(0x1.ffc20000000000000000p+15:0x0040effc2000000000) (OK)
++   to int32: 65505 (OK)
++   to int64: 65505 (OK)
++  to uint32: 65505 (OK)
++  to uint64: 65505 (OK)
++from single: f32(0x1.ffbf0000000000000000p+16:0x47ffdf80)
++  to double: f64(0x1.ffbf0000000000000000p+16:0x0040fffbf000000000) (OK)
++   to int32: 131007 (OK)
++   to int64: 131007 (OK)
++  to uint32: 131007 (OK)
++  to uint64: 131007 (OK)
++from single: f32(0x1.ffc00000000000000000p+16:0x47ffe000)
++  to double: f64(0x1.ffc00000000000000000p+16:0x0040fffc0000000000) (OK)
++   to int32: 131008 (OK)
++   to int64: 131008 (OK)
++  to uint32: 131008 (OK)
++  to uint64: 131008 (OK)
++from single: f32(0x1.ffc10000000000000000p+16:0x47ffe080)
++  to double: f64(0x1.ffc10000000000000000p+16:0x0040fffc1000000000) (OK)
++   to int32: 131009 (OK)
++   to int64: 131009 (OK)
++  to uint32: 131009 (OK)
++  to uint64: 131009 (OK)
++from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
++  to double: f64(0x1.c0bab600000000000000p+99:0x00462c0bab60000000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
++  to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from single: f32(inf:0x7f800000)
++  to double: f64(inf:0x007ff0000000000000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from single: f32(nan:0x7fc00000)
++  to double: f64(nan:0x007ff8000000000000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
++from single: f32(nan:0x7fa00000)
++  to double: f64(nan:0x007ffc000000000000) (OK)
++   to int32: 2147483647 (OK)
++   to int64: 9223372036854775807 (OK)
++  to uint32: -1 (OK)
++  to uint64: -1 (OK)
+diff --git a/tests/tcg/or1k/float_madds.ref b/tests/tcg/or1k/float_madds.ref
+new file mode 100644
+index 00000000000..2c7c35c8b47
+--- /dev/null
++++ b/tests/tcg/or1k/float_madds.ref
+@@ -0,0 +1,192 @@
++### Rounding to nearest
++op : f32(-nan:0xffa00000) * f32(-nan:0xffc00000) + f32(-inf:0xff800000)
++res: f32(-nan:0xffe00000) flags=OK (0/0)
++op : f32(-nan:0xffc00000) * f32(-inf:0xff800000) + f32(-nan:0xffa00000)
++res: f32(-nan:0xffe00000) flags=OK (0/1)
++op : f32(-inf:0xff800000) * f32(-nan:0xffa00000) + f32(-nan:0xffc00000)
++res: f32(-nan:0xffc00000) flags=OK (0/2)
++op : f32(-nan:0xffc00000) * f32(-inf:0xff800000) + f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
++res: f32(-nan:0xffc00000) flags=OK (1/0)
++op : f32(-inf:0xff800000) * f32(-0x1.fffffe00000000000000p+127:0xff7fffff) + f32(-nan:0xffc00000)
++res: f32(-nan:0xffc00000) flags=OK (1/1)
++op : f32(-0x1.fffffe00000000000000p+127:0xff7fffff) * f32(-nan:0xffc00000) + f32(-inf:0xff800000)
++res: f32(-nan:0xffc00000) flags=OK (1/2)
++op : f32(-inf:0xff800000) * f32(-0x1.fffffe00000000000000p+127:0xff7fffff) + f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
++res: f32(inf:0x7f800000) flags=OK (2/0)
++op : f32(-0x1.fffffe00000000000000p+127:0xff7fffff) * f32(-0x1.1874b200000000000000p+103:0xf30c3a59) + f32(-inf:0xff800000)
++res: f32(-inf:0xff800000) flags=OK (2/1)
++op : f32(-0x1.1874b200000000000000p+103:0xf30c3a59) * f32(-inf:0xff800000) + f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
++res: f32(inf:0x7f800000) flags=OK (2/2)
++op : f32(-0x1.fffffe00000000000000p+127:0xff7fffff) * f32(-0x1.1874b200000000000000p+103:0xf30c3a59) + f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
++res: f32(inf:0x7f800000) flags=OK (3/0)
++op : f32(-0x1.1874b200000000000000p+103:0xf30c3a59) * f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) + f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
++res: f32(inf:0x7f800000) flags=OK (3/1)
++op : f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) * f32(-0x1.fffffe00000000000000p+127:0xff7fffff) + f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
++res: f32(inf:0x7f800000) flags=OK (3/2)
++op : f32(-0x1.1874b200000000000000p+103:0xf30c3a59) * f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) + f32(-0x1.31f75000000000000000p-40:0xab98fba8)
++res: f32(inf:0x7f800000) flags=OK (4/0)
++op : f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) * f32(-0x1.31f75000000000000000p-40:0xab98fba8) + f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
++res: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) flags=OK (4/1)
++op : f32(-0x1.31f75000000000000000p-40:0xab98fba8) * f32(-0x1.1874b200000000000000p+103:0xf30c3a59) + f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
++res: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) flags=OK (4/2)
++op : f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) * f32(-0x1.31f75000000000000000p-40:0xab98fba8) + f32(-0x1.50544400000000000000p-66:0x9ea82a22)
++res: f32(0x1.0c27fa00000000000000p+60:0x5d8613fd) flags=OK (5/0)
++op : f32(-0x1.31f75000000000000000p-40:0xab98fba8) * f32(-0x1.50544400000000000000p-66:0x9ea82a22) + f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
++res: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) flags=OK (5/1)
++op : f32(-0x1.50544400000000000000p-66:0x9ea82a22) * f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) + f32(-0x1.31f75000000000000000p-40:0xab98fba8)
++res: f32(0x1.26c46200000000000000p+34:0x50936231) flags=OK (5/2)
++op : f32(-0x1.31f75000000000000000p-40:0xab98fba8) * f32(-0x1.50544400000000000000p-66:0x9ea82a22) + f32(-0x1.00000000000000000000p-126:0x80800000)
++res: f32(0x1.91f94000000000000000p-106:0x0ac8fca0) flags=OK (6/0)
++op : f32(-0x1.50544400000000000000p-66:0x9ea82a22) * f32(-0x1.00000000000000000000p-126:0x80800000) + f32(-0x1.31f75000000000000000p-40:0xab98fba8)
++res: f32(-0x1.31f75000000000000000p-40:0xab98fba8) flags=OK (6/1)
++op : f32(-0x1.00000000000000000000p-126:0x80800000) * f32(-0x1.31f75000000000000000p-40:0xab98fba8) + f32(-0x1.50544400000000000000p-66:0x9ea82a22)
++res: f32(-0x1.50544400000000000000p-66:0x9ea82a22) flags=OK (6/2)
++op : f32(-0x1.50544400000000000000p-66:0x9ea82a22) * f32(-0x1.00000000000000000000p-126:0x80800000) + f32(0x0.00000000000000000000p+0:0000000000)
++res: f32(0x0.00000000000000000000p+0:0000000000) flags=OK (7/0)
++op : f32(-0x1.00000000000000000000p-126:0x80800000) * f32(0x0.00000000000000000000p+0:0000000000) + f32(-0x1.50544400000000000000p-66:0x9ea82a22)
++res: f32(-0x1.50544400000000000000p-66:0x9ea82a22) flags=OK (7/1)
++op : f32(0x0.00000000000000000000p+0:0000000000) * f32(-0x1.50544400000000000000p-66:0x9ea82a22) + f32(-0x1.00000000000000000000p-126:0x80800000)
++res: f32(-0x1.00000000000000000000p-126:0x80800000) flags=OK (7/2)
++op : f32(-0x1.00000000000000000000p-126:0x80800000) * f32(0x0.00000000000000000000p+0:0000000000) + f32(0x1.00000000000000000000p-126:0x00800000)
++res: f32(0x1.00000000000000000000p-126:0x00800000) flags=OK (8/0)
++op : f32(0x0.00000000000000000000p+0:0000000000) * f32(0x1.00000000000000000000p-126:0x00800000) + f32(-0x1.00000000000000000000p-126:0x80800000)
++res: f32(-0x1.00000000000000000000p-126:0x80800000) flags=OK (8/1)
++op : f32(0x1.00000000000000000000p-126:0x00800000) * f32(-0x1.00000000000000000000p-126:0x80800000) + f32(0x0.00000000000000000000p+0:0000000000)
++res: f32(-0x0.00000000000000000000p+0:0x80000000) flags=OK (8/2)
++op : f32(0x0.00000000000000000000p+0:0000000000) * f32(0x1.00000000000000000000p-126:0x00800000) + f32(0x1.00000000000000000000p-25:0x33000000)
++res: f32(0x1.00000000000000000000p-25:0x33000000) flags=OK (9/0)
++op : f32(0x1.00000000000000000000p-126:0x00800000) * f32(0x1.00000000000000000000p-25:0x33000000) + f32(0x0.00000000000000000000p+0:0000000000)
++res: f32(0x0.00000000000000000000p+0:0000000000) flags=OK (9/1)
++op : f32(0x1.00000000000000000000p-25:0x33000000) * f32(0x0.00000000000000000000p+0:0000000000) + f32(0x1.00000000000000000000p-126:0x00800000)
++res: f32(0x1.00000000000000000000p-126:0x00800000) flags=OK (9/2)
++op : f32(0x1.00000000000000000000p-126:0x00800000) * f32(0x1.00000000000000000000p-25:0x33000000) + f32(0x1.ffffe600000000000000p-25:0x337ffff3)
++res: f32(0x1.ffffe600000000000000p-25:0x337ffff3) flags=OK (10/0)
++op : f32(0x1.00000000000000000000p-25:0x33000000) * f32(0x1.ffffe600000000000000p-25:0x337ffff3) + f32(0x1.00000000000000000000p-126:0x00800000)
++res: f32(0x1.ffffe600000000000000p-50:0x26fffff3) flags=OK (10/1)
++op : f32(0x1.ffffe600000000000000p-25:0x337ffff3) * f32(0x1.00000000000000000000p-126:0x00800000) + f32(0x1.00000000000000000000p-25:0x33000000)
++res: f32(0x1.00000000000000000000p-25:0x33000000) flags=OK (10/2)
++op : f32(0x1.00000000000000000000p-25:0x33000000) * f32(0x1.ffffe600000000000000p-25:0x337ffff3) + f32(0x1.ff801a00000000000000p-15:0x387fc00d)
++res: f32(0x1.ff801a00000000000000p-15:0x387fc00d) flags=OK (11/0)
++op : f32(0x1.ffffe600000000000000p-25:0x337ffff3) * f32(0x1.ff801a00000000000000p-15:0x387fc00d) + f32(0x1.00000000000000000000p-25:0x33000000)
++res: f32(0x1.0007fe00000000000000p-25:0x330003ff) flags=OK (11/1)
++op : f32(0x1.ff801a00000000000000p-15:0x387fc00d) * f32(0x1.00000000000000000000p-25:0x33000000) + f32(0x1.ffffe600000000000000p-25:0x337ffff3)
++res: f32(0x1.0001f200000000000000p-24:0x338000f9) flags=OK (11/2)
++op : f32(0x1.ffffe600000000000000p-25:0x337ffff3) * f32(0x1.ff801a00000000000000p-15:0x387fc00d) + f32(0x1.00000c00000000000000p-14:0x38800006)
++res: f32(0x1.00000c00000000000000p-14:0x38800006) flags=OK (12/0)
++op : f32(0x1.ff801a00000000000000p-15:0x387fc00d) * f32(0x1.00000c00000000000000p-14:0x38800006) + f32(0x1.ffffe600000000000000p-25:0x337ffff3)
++res: f32(0x1.0ffbf400000000000000p-24:0x3387fdfa) flags=OK (12/1)
++op : f32(0x1.00000c00000000000000p-14:0x38800006) * f32(0x1.ffffe600000000000000p-25:0x337ffff3) + f32(0x1.ff801a00000000000000p-15:0x387fc00d)
++res: f32(0x1.ff801c00000000000000p-15:0x387fc00e) flags=OK (12/2)
++op : f32(0x1.ff801a00000000000000p-15:0x387fc00d) * f32(0x1.00000c00000000000000p-14:0x38800006) + f32(0x1.00000000000000000000p+0:0x3f800000)
++res: f32(0x1.00000000000000000000p+0:0x3f800000) flags=OK (13/0)
++op : f32(0x1.00000c00000000000000p-14:0x38800006) * f32(0x1.00000000000000000000p+0:0x3f800000) + f32(0x1.ff801a00000000000000p-15:0x387fc00d)
++res: f32(0x1.ffc01800000000000000p-14:0x38ffe00c) flags=OK (13/1)
++op : f32(0x1.00000000000000000000p+0:0x3f800000) * f32(0x1.ff801a00000000000000p-15:0x387fc00d) + f32(0x1.00000c00000000000000p-14:0x38800006)
++res: f32(0x1.ffc01800000000000000p-14:0x38ffe00c) flags=OK (13/2)
++op : f32(0x1.00000c00000000000000p-14:0x38800006) * f32(0x1.00000000000000000000p+0:0x3f800000) + f32(0x1.00400000000000000000p+0:0x3f802000)
++res: f32(0x1.00440000000000000000p+0:0x3f802200) flags=OK (14/0)
++op : f32(0x1.00000000000000000000p+0:0x3f800000) * f32(0x1.00400000000000000000p+0:0x3f802000) + f32(0x1.00000c00000000000000p-14:0x38800006)
++res: f32(0x1.00440000000000000000p+0:0x3f802200) flags=OK (14/1)
++op : f32(0x1.00400000000000000000p+0:0x3f802000) * f32(0x1.00000c00000000000000p-14:0x38800006) + f32(0x1.00000000000000000000p+0:0x3f800000)
++res: f32(0x1.00040200000000000000p+0:0x3f800201) flags=OK (14/2)
++op : f32(0x1.00000000000000000000p+0:0x3f800000) * f32(0x1.00400000000000000000p+0:0x3f802000) + f32(0x1.00000000000000000000p+1:0x40000000)
++res: f32(0x1.80200000000000000000p+1:0x40401000) flags=OK (15/0)
++op : f32(0x1.00400000000000000000p+0:0x3f802000) * f32(0x1.00000000000000000000p+1:0x40000000) + f32(0x1.00000000000000000000p+0:0x3f800000)
++res: f32(0x1.80400000000000000000p+1:0x40402000) flags=OK (15/1)
++op : f32(0x1.00000000000000000000p+1:0x40000000) * f32(0x1.00000000000000000000p+0:0x3f800000) + f32(0x1.00400000000000000000p+0:0x3f802000)
++res: f32(0x1.80200000000000000000p+1:0x40401000) flags=OK (15/2)
++op : f32(0x1.00400000000000000000p+0:0x3f802000) * f32(0x1.00000000000000000000p+1:0x40000000) + f32(0x1.5bf0a800000000000000p+1:0x402df854)
++res: f32(0x1.2e185400000000000000p+2:0x40970c2a) flags=OK (16/0)
++op : f32(0x1.00000000000000000000p+1:0x40000000) * f32(0x1.5bf0a800000000000000p+1:0x402df854) + f32(0x1.00400000000000000000p+0:0x3f802000)
++res: f32(0x1.9c00a800000000000000p+2:0x40ce0054) flags=OK (16/1)
++op : f32(0x1.5bf0a800000000000000p+1:0x402df854) * f32(0x1.00400000000000000000p+0:0x3f802000) + f32(0x1.00000000000000000000p+1:0x40000000)
++res: f32(0x1.2e23d200000000000000p+2:0x409711e9) flags=OK (16/2)
++op : f32(0x1.00000000000000000000p+1:0x40000000) * f32(0x1.5bf0a800000000000000p+1:0x402df854) + f32(0x1.921fb600000000000000p+1:0x40490fdb)
++res: f32(0x1.12804200000000000000p+3:0x41094021) flags=OK (17/0)
++op : f32(0x1.5bf0a800000000000000p+1:0x402df854) * f32(0x1.921fb600000000000000p+1:0x40490fdb) + f32(0x1.00000000000000000000p+1:0x40000000)
++res: f32(0x1.51458000000000000000p+3:0x4128a2c0) flags=OK (17/1)
++op : f32(0x1.921fb600000000000000p+1:0x40490fdb) * f32(0x1.00000000000000000000p+1:0x40000000) + f32(0x1.5bf0a800000000000000p+1:0x402df854)
++res: f32(0x1.200c0400000000000000p+3:0x41100602) flags=OK (17/2)
++op : f32(0x1.5bf0a800000000000000p+1:0x402df854) * f32(0x1.921fb600000000000000p+1:0x40490fdb) + f32(0x1.ffbe0000000000000000p+15:0x477fdf00)
++res: f32(0x1.ffcf1400000000000000p+15:0x477fe78a) flags=OK (18/0)
++op : f32(0x1.921fb600000000000000p+1:0x40490fdb) * f32(0x1.ffbe0000000000000000p+15:0x477fdf00) + f32(0x1.5bf0a800000000000000p+1:0x402df854)
++res: f32(0x1.91ed3c00000000000000p+17:0x4848f69e) flags=OK (18/1)
++op : f32(0x1.ffbe0000000000000000p+15:0x477fdf00) * f32(0x1.5bf0a800000000000000p+1:0x402df854) + f32(0x1.921fb600000000000000p+1:0x40490fdb)
++res: f32(0x1.5bc56000000000000000p+17:0x482de2b0) flags=OK (18/2)
++op : f32(0x1.921fb600000000000000p+1:0x40490fdb) * f32(0x1.ffbe0000000000000000p+15:0x477fdf00) + f32(0x1.ffc00000000000000000p+15:0x477fe000)
++res: f32(0x1.08edf000000000000000p+18:0x488476f8) flags=OK (19/0)
++op : f32(0x1.ffbe0000000000000000p+15:0x477fdf00) * f32(0x1.ffc00000000000000000p+15:0x477fe000) + f32(0x1.921fb600000000000000p+1:0x40490fdb)
++res: f32(0x1.ff7e0800000000000000p+31:0x4f7fbf04) flags=OK (19/1)
++op : f32(0x1.ffc00000000000000000p+15:0x477fe000) * f32(0x1.921fb600000000000000p+1:0x40490fdb) + f32(0x1.ffbe0000000000000000p+15:0x477fdf00)
++res: f32(0x1.08ee7a00000000000000p+18:0x4884773d) flags=OK (19/2)
++op : f32(0x1.ffbe0000000000000000p+15:0x477fdf00) * f32(0x1.ffc00000000000000000p+15:0x477fe000) + f32(0x1.ffc20000000000000000p+15:0x477fe100)
++res: f32(0x1.ff800800000000000000p+31:0x4f7fc004) flags=OK (20/0)
++op : f32(0x1.ffc00000000000000000p+15:0x477fe000) * f32(0x1.ffc20000000000000000p+15:0x477fe100) + f32(0x1.ffbe0000000000000000p+15:0x477fdf00)
++res: f32(0x1.ff840800000000000000p+31:0x4f7fc204) flags=OK (20/1)
++op : f32(0x1.ffc20000000000000000p+15:0x477fe100) * f32(0x1.ffbe0000000000000000p+15:0x477fdf00) + f32(0x1.ffc00000000000000000p+15:0x477fe000)
++res: f32(0x1.ff820800000000000000p+31:0x4f7fc104) flags=OK (20/2)
++op : f32(0x1.ffc00000000000000000p+15:0x477fe000) * f32(0x1.ffc20000000000000000p+15:0x477fe100) + f32(0x1.ffbf0000000000000000p+16:0x47ffdf80)
++res: f32(0x1.ff860800000000000000p+31:0x4f7fc304) flags=OK (21/0)
++op : f32(0x1.ffc20000000000000000p+15:0x477fe100) * f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) + f32(0x1.ffc00000000000000000p+15:0x477fe000)
++res: f32(0x1.ff820800000000000000p+32:0x4fffc104) flags=OK (21/1)
++op : f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) * f32(0x1.ffc00000000000000000p+15:0x477fe000) + f32(0x1.ffc20000000000000000p+15:0x477fe100)
++res: f32(0x1.ff800800000000000000p+32:0x4fffc004) flags=OK (21/2)
++op : f32(0x1.ffc20000000000000000p+15:0x477fe100) * f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) + f32(0x1.ffc00000000000000000p+16:0x47ffe000)
++res: f32(0x1.ff830800000000000000p+32:0x4fffc184) flags=OK (22/0)
++op : f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) * f32(0x1.ffc00000000000000000p+16:0x47ffe000) + f32(0x1.ffc20000000000000000p+15:0x477fe100)
++res: f32(0x1.ff7f8800000000000000p+33:0x507fbfc4) flags=OK (22/1)
++op : f32(0x1.ffc00000000000000000p+16:0x47ffe000) * f32(0x1.ffc20000000000000000p+15:0x477fe100) + f32(0x1.ffbf0000000000000000p+16:0x47ffdf80)
++res: f32(0x1.ff840800000000000000p+32:0x4fffc204) flags=OK (22/2)
++op : f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) * f32(0x1.ffc00000000000000000p+16:0x47ffe000) + f32(0x1.ffc10000000000000000p+16:0x47ffe080)
++res: f32(0x1.ff800800000000000000p+33:0x507fc004) flags=OK (23/0)
++op : f32(0x1.ffc00000000000000000p+16:0x47ffe000) * f32(0x1.ffc10000000000000000p+16:0x47ffe080) + f32(0x1.ffbf0000000000000000p+16:0x47ffdf80)
++res: f32(0x1.ff820800000000000000p+33:0x507fc104) flags=OK (23/1)
++op : f32(0x1.ffc10000000000000000p+16:0x47ffe080) * f32(0x1.ffbf0000000000000000p+16:0x47ffdf80) + f32(0x1.ffc00000000000000000p+16:0x47ffe000)
++res: f32(0x1.ff810800000000000000p+33:0x507fc084) flags=OK (23/2)
++op : f32(0x1.ffc00000000000000000p+16:0x47ffe000) * f32(0x1.ffc10000000000000000p+16:0x47ffe080) + f32(0x1.c0bab600000000000000p+99:0x71605d5b)
++res: f32(0x1.c0bab600000000000000p+99:0x71605d5b) flags=OK (24/0)
++op : f32(0x1.ffc10000000000000000p+16:0x47ffe080) * f32(0x1.c0bab600000000000000p+99:0x71605d5b) + f32(0x1.ffc00000000000000000p+16:0x47ffe000)
++res: f32(0x1.c0838000000000000000p+116:0x79e041c0) flags=OK (24/1)
++op : f32(0x1.c0bab600000000000000p+99:0x71605d5b) * f32(0x1.ffc00000000000000000p+16:0x47ffe000) + f32(0x1.ffc10000000000000000p+16:0x47ffe080)
++res: f32(0x1.c0829e00000000000000p+116:0x79e0414f) flags=OK (24/2)
++op : f32(0x1.ffc10000000000000000p+16:0x47ffe080) * f32(0x1.c0bab600000000000000p+99:0x71605d5b) + f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
++res: f32(inf:0x7f800000) flags=OK (25/0)
++op : f32(0x1.c0bab600000000000000p+99:0x71605d5b) * f32(0x1.fffffe00000000000000p+127:0x7f7fffff) + f32(0x1.ffc10000000000000000p+16:0x47ffe080)
++res: f32(inf:0x7f800000) flags=OK (25/1)
++op : f32(0x1.fffffe00000000000000p+127:0x7f7fffff) * f32(0x1.ffc10000000000000000p+16:0x47ffe080) + f32(0x1.c0bab600000000000000p+99:0x71605d5b)
++res: f32(inf:0x7f800000) flags=OK (25/2)
++op : f32(0x1.c0bab600000000000000p+99:0x71605d5b) * f32(0x1.fffffe00000000000000p+127:0x7f7fffff) + f32(inf:0x7f800000)
++res: f32(inf:0x7f800000) flags=OK (26/0)
++op : f32(0x1.fffffe00000000000000p+127:0x7f7fffff) * f32(inf:0x7f800000) + f32(0x1.c0bab600000000000000p+99:0x71605d5b)
++res: f32(inf:0x7f800000) flags=OK (26/1)
++op : f32(inf:0x7f800000) * f32(0x1.c0bab600000000000000p+99:0x71605d5b) + f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
++res: f32(inf:0x7f800000) flags=OK (26/2)
++op : f32(0x1.fffffe00000000000000p+127:0x7f7fffff) * f32(inf:0x7f800000) + f32(nan:0x7fc00000)
++res: f32(nan:0x7fc00000) flags=OK (27/0)
++op : f32(inf:0x7f800000) * f32(nan:0x7fc00000) + f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
++res: f32(nan:0x7fc00000) flags=OK (27/1)
++op : f32(nan:0x7fc00000) * f32(0x1.fffffe00000000000000p+127:0x7f7fffff) + f32(inf:0x7f800000)
++res: f32(nan:0x7fc00000) flags=OK (27/2)
++op : f32(inf:0x7f800000) * f32(nan:0x7fc00000) + f32(nan:0x7fa00000)
++res: f32(nan:0x7fe00000) flags=OK (28/0)
++op : f32(nan:0x7fc00000) * f32(nan:0x7fa00000) + f32(inf:0x7f800000)
++res: f32(nan:0x7fc00000) flags=OK (28/1)
++op : f32(nan:0x7fa00000) * f32(inf:0x7f800000) + f32(nan:0x7fc00000)
++res: f32(nan:0x7fc00000) flags=OK (28/2)
++op : f32(nan:0x7fc00000) * f32(nan:0x7fa00000) + f32(-nan:0xffa00000)
++res: f32(-nan:0xffe00000) flags=OK (29/0)
++op : f32(nan:0x7fa00000) * f32(-nan:0xffa00000) + f32(nan:0x7fc00000)
++res: f32(nan:0x7fc00000) flags=OK (29/1)
++op : f32(-nan:0xffa00000) * f32(nan:0x7fc00000) + f32(nan:0x7fa00000)
++res: f32(nan:0x7fe00000) flags=OK (29/2)
++op : f32(nan:0x7fa00000) * f32(-nan:0xffa00000) + f32(-nan:0xffc00000)
++res: f32(-nan:0xffc00000) flags=OK (30/0)
++op : f32(-nan:0xffa00000) * f32(-nan:0xffc00000) + f32(nan:0x7fa00000)
++res: f32(nan:0x7fe00000) flags=OK (30/1)
++op : f32(-nan:0xffc00000) * f32(nan:0x7fa00000) + f32(-nan:0xffa00000)
++res: f32(-nan:0xffe00000) flags=OK (30/2)
++# LP184149
++op : f32(0x0.00000000000000000000p+0:0000000000) * f32(0x1.00000000000000000000p-1:0x3f000000) + f32(0x0.00000000000000000000p+0:0000000000)
++res: f32(0x0.00000000000000000000p+0:0000000000) flags=OK (31/0)
++op : f32(0x1.00000000000000000000p-149:0x00000001) * f32(0x1.00000000000000000000p-149:0x00000001) + f32(0x1.00000000000000000000p-149:0x00000001)
++res: f32(0x1.00000000000000000000p-149:0x00000001) flags=OK (32/0)
 -- 
 2.47.3
 
