@@ -4,80 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A1EAC624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 18:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42BB7C79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 18:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2YqU-0006Wj-Du; Fri, 04 Sep 2026 14:41:02 -0400
+	id 1x2Ysf-0007eF-PO; Fri, 04 Sep 2026 14:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1x2YqR-0006WW-OL
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:40:59 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1x2YqO-0006wg-Pz
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:40:59 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 1EB6C41579
- for <qemu-devel@nongnu.org>; Fri,  4 Sep 2026 18:40:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1788547253;
- bh=uoI52og40fV4zCR/84AOL718ncNsejXnN0Bz3/O0lco=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=rG6ZGMI/Q+2OBHKadhmimI2z33QoXA6NunxvEBozLyk+/LaAVjCRxVQFdZ3vkhCYd
- xDnIX5NPyB4e1dPuegTb1N4Z/4x8NEKTWKR4+mbLifEyPJ1BOpw5ckm4hG6D68vHms
- 5lQaEK7CJfy5/w311rZSVZP0KxIx+PH8rzVDhgHtCfXA+5hJDxmo0Rbe1tHhqoL2Ag
- upqUBUeSQAg5uSXywq8QvI0mOvPTxHpDVD20I7rgeofGsxrHng38z+lxjkjnjzx13y
- 3NfbQ7a91B2DjKIaAuOFD7QlN/gWzJgWztX6fhEqWqvmUSqReqPdOKpc3lf5Jn6dXh
- 0ZxjS7HsIz8zw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id CBFD27E55C
- for <qemu-devel@nongnu.org>; Fri,  4 Sep 2026 18:40:52 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <tgamblin@baylibre.com>)
+ id 1x2Ysb-0007bW-Cn
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:43:15 -0400
+Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tgamblin@baylibre.com>)
+ id 1x2YsY-0007FE-Et
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 14:43:13 -0400
+Received: by mail-qv1-xf35.google.com with SMTP id
+ 6a1803df08f44-90e95a18c92so19802466d6.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 11:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=baylibre.com; s=google; t=1788547388; x=1789152188; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=E+pG4qBbSeUEKSM2bhtmJlr1wyo0TQnVA/1AeBtIvkg=;
+ b=OBQUKcq6vSncp62sYOnMSESylDYMLRWssNrkliOCDP7SqxBUUGrbWiHA7D2/qbJJDz
+ VsDRD6YM1iSPuCqI/1RkUcK5viwHMSauO0XpMyVyrTYIxS/cXH3Pw8gOQcZVpnyibuaI
+ QlHHy1AEj4SQZcH62a4a+T2banLTyDKOKmHt8DNX1qHvZRHTKeOLWLjaL+8OcX3SyOBV
+ 6z38sOCwFN87J0ewb1fnu8aKLGRUzYFjP1AJLWcvlOc8dQvzbRIVmyw9CGCerK+zAizB
+ 87VwMpE5Fper9nnWMz9nran7JtXi3EUwD+eQzLw7MFPuCG77minGt6QKRhgoJ63/dT2r
+ aCZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788547388; x=1789152188;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=E+pG4qBbSeUEKSM2bhtmJlr1wyo0TQnVA/1AeBtIvkg=;
+ b=K7BWZ4MdLvctRBQMMxzrLsTUeSwQ/MkbgZlyrJg6YgTZwJ4i1UPsJT4NfmkDTTr57q
+ KQDFbJdx1c82kxOjZoghJ6sz7AgxQwwkIzEv/9aF3f+Pui10g1NacWnpjeVxZMnzQWwd
+ qoOW4kw+D7F8ZaOa4jMSdC4XC34xwZwsDWb6trIB40Umie6KkF9nUy7JGXLgQPNs04xE
+ sjX5/Nv8xQYBeLi9rndbazQ/jNEedzmQs4OlORywB4+GSM2OlyM5WJuVnFfZlmtkfO3N
+ RbUiNY06hPgEqjTzPLcOf7x3NPbqcatwa/1YQs7VRXpSW3xCLMHFFhqXodhPfUVI17FD
+ Ys9A==
+X-Gm-Message-State: AFuF++l99UCffT1uERnO9fQAmYyJ+4PsGt31JQTyeGbd6WD/lMBXauyw
+ MFqk0M+moHlOrCCUPwP65KmRuLxGuYNH6RdPLwQrUj96Iw7lnK41YNW1LZxm4FdpBD8=
+X-Gm-Gg: AYBFou1yPwRmTfUS4ovGhOgUDhD4C81/p2vkh8s9M9zJPxa76m63qsbxknEXXtNV7sN
+ INKYhG9ZL1VKNO9MXmrJupy/tI5tLcsXCloww+ebUK8mrHjElAIQ9OdztHVMmFbRJdQXkIFDX3n
+ 8Kx3BkhrxW8TG+P7Cr+aI7SS3UFaIZP/AXG+pJuPju8dwjN08iVKsR5/cF7m6edkBOuxbgdYNfL
+ v/YuI4jcTtiw9pRIe4UpJ29CKzPXRQN1pCXAabuoQYb5amTjNa4mxywFf5DOnl09xYPjq6CWVk4
+ tEjthsBgYmthVHeOHAm72LilMgiuBUIdo7gRoRD9OEtrxLm6G/ykq3pHWmgcltP16teS9KVpNSK
+ DHC63ONdUTcF4+L6cCBhnOTDoK4k02vHpJxlYRTqZd7yHJy4yMebGreTN2WxjkdFMqbFb0ju4Uz
+ Xen8zaE4Wj4M01J2Gpo7bImHfiPFVDKSog5LqpTdo90SNfQ2hOt33K9osKkGCN5XYCDGs+ny/K
+X-Received: by 2002:a05:620a:8423:b0:938:fc91:91ce with SMTP id
+ af79cd13be357-9398036365cmr630114185a.20.1788547388181; 
+ Fri, 04 Sep 2026 11:43:08 -0700 (PDT)
+Received: from [192.168.40.230] ([2001:1970:3847:e000:1977:be2f:4a71:2892])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9397fb36129sm277111985a.19.2026.09.04.11.43.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 11:43:07 -0700 (PDT)
+From: Trevor Gamblin <tgamblin@baylibre.com>
+Date: Fri, 04 Sep 2026 14:43:04 -0400
+Subject: [PATCH v2 1/2] target/riscv: extract check_sfence_vma() from
+ helper_tlb_flush()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 04 Sep 2026 18:30:22 -0000
-From: Benjamin Wheeler <2166076@bugs.launchpad.net>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260904-riscv_tlb_page_flush-v2-1-defec3f29312@baylibre.com>
+References: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
+In-Reply-To: <20260904-riscv_tlb_page_flush-v2-0-defec3f29312@baylibre.com>
 To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Undecided; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux; component=main;
- status=Invalid; importance=Undecided; assignee=benjamin.wheeler@canonical.com;
-X-Launchpad-Bug-Tags: kernel-daily-bug
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: benjaminwheeler kim-naru
-X-Launchpad-Bug-Reporter: Kim Naru (kim-naru)
-X-Launchpad-Bug-Modifier: Benjamin Wheeler (benjaminwheeler)
-References: <178828093562.4133656.9431106140758891557.malonedeb@juju-98d295-prod-launchpad-54>
-Message-Id: <178854662254.1801621.12341844661460663508.malone@juju-98d295-prod-launchpad-55>
-Subject: [Bug 2166076] Re:  QEMU : ELIMINATION OF HYPERTRANSPORT MEMORY HOLE 
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="b0097495a28d09c3303dbd078ca616792464b9f2";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: f1b357e8a0d48ba68439b540ab0dc2cf9708a350
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Trevor Gamblin <tgamblin@baylibre.com>
+X-Mailer: b4 0.16.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
+ envelope-from=tgamblin@baylibre.com; helo=mail-qv1-xf35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -86,102 +105,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2166076 <2166076@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Kim, thanks for submitting a bug report. It sounds like this is an
-issue with qemu rather than the Ubuntu Linux kernel. Can you please open
-a bug with upstream qemu? https://gitlab.com/qemu-
-project/qemu/-/work_items
+Create a new function to encapsulate the privilege/hypervisor checks
+performed inside helper_tlb_flush(). The idea is to pass GETPC() as an
+argument directly to it inside the helper_tlb_flush() function. We'll
+use this function in the following patch for helper_tlb_flush_page().
 
-Thank you! Please let me know if I missed any information pertaining to
-Ubuntu.
+Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
+---
+ target/riscv/tcg/op_helper.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-** Also affects: qemu
-   Importance: Undecided
-       Status: New
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index 3e94005d2b..7f63f3ada5 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -588,21 +588,25 @@ void helper_wrs_nto(CPURISCVState *env)
+     }
+ }
+ 
+-void helper_tlb_flush(CPURISCVState *env)
++static void check_sfence_vma(CPURISCVState *env, uintptr_t ra)
+ {
+-    CPUState *cs = env_cpu(env);
+     if (!env->virt_enabled &&
+         (env->priv == PRV_U ||
+          (env->priv == PRV_S && get_field(env->mstatus, MSTATUS_TVM)))) {
+-        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
++        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
+     } else if (env->virt_enabled &&
+                (env->priv == PRV_U || get_field(env->hstatus, HSTATUS_VTVM))) {
+-        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
+-    } else {
+-        tlb_flush(cs);
++        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, ra);
+     }
+ }
+ 
++void helper_tlb_flush(CPURISCVState *env)
++{
++    CPUState *cs = env_cpu(env);
++    check_sfence_vma(env, GETPC());
++    tlb_flush(cs);
++}
++
+ void helper_tlb_flush_all(CPURISCVState *env)
+ {
+     CPUState *cs = env_cpu(env);
 
-** Changed in: linux (Ubuntu)
-       Status: New =3D> Invalid
-
-** Changed in: linux (Ubuntu)
-     Assignee: (unassigned) =3D> Benjamin Wheeler (benjaminwheeler)
-
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2166076
-
-Title:
-   QEMU : ELIMINATION OF HYPERTRANSPORT MEMORY HOLE
-
-Status in QEMU:
-  New
-Status in linux package in Ubuntu:
-  Invalid
-
-Bug description:
-  Historically, AMD processors reserved a=E2=80=AF1 TB memory hole=E2=80=AF=
-in the
-  physical address space around the 1 TB boundary (specifically from 1
-  TB to ~ 2 TB). This reservation was a legacy requirement from
-  the=E2=80=AFHyperTransport=E2=80=AFera to maintain compatibility with old=
-er IOMMU (I/O
-  Memory Management Unit) implementations that expected this address
-  space to be reserved for I/O devices and memory-mapped I/O operations.
-
-  ISSUE:
-
-  This 1 TB hole meant that:
-
-  Systems couldn't use physical memory addresses in that range for
-  actual DRAM
-
-  With large memory configurations (approaching/exceeding 1 TB), this
-  created inefficiencies in memory mapping
-
-  It limited the contiguous addressable memory space available to the OS
-  and applications
-
-  The reservation was maintained for legacy compatibility.
-
-  SOLUTION:=20
-  Starting with=E2=80=AFEPYC 9005 (Turin), AMD introduced the ability to=E2=
-=80=AFeliminate this legacy 1 TB IOMMU/HyperTransport memory hole. This fea=
-ture:=20
-
-  Reclaims the 1 TB address space=E2=80=AFpreviously reserved for legacy
-  compatibility
-
-  Allows systems to use=E2=80=AFmore contiguous physical memory addressing
-
-  Improves memory efficiency for large-memory configurations
-
-  Is controlled via BIOS/firmware settings
-
-  Represents a clean break from HyperTransport-era constraints
-
-
-  Pre-6.1 QEMU would report the host e820 to the guest. BUT QEMU did not
-  detect if the hole was present or not. QEMU IOMMU emulation had
-  assumptions about the hole. QEMU memory accounting didn=E2=80=99t properly
-  handle both cases. When the hole was absent, QEMU's internal
-  calculations were wrong.
-
- =20
-                                          QEMU Pre-6.1	                  QE=
-MU 6.1+
-  Legacy (with hole) + No pass-through	Works as expected	          Works as=
- expected
-  Legacy (with hole) + with pass-through	Works as expected	          Works =
-as expected
-  Modern (no hole) + No pass-through	Memory in the hole is STRANDED	  Works=
- as expected
-  Modern (no hole) + with pass-through	DMA to wrong memory system crash  Wo=
-rks as expected
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2166076/+subscriptions
+-- 
+2.55.0
 
 
