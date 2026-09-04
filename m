@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A82C79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D32C624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2a7E-0004iX-0x; Fri, 04 Sep 2026 16:02:24 -0400
+	id 1x2a6l-0001P0-JX; Fri, 04 Sep 2026 16:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a7B-0004T8-9m
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:02:21 -0400
+ id 1x2a6b-0000xq-FA
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:01:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a78-00008X-D5
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:02:20 -0400
+ id 1x2a6Y-0008Ts-2N
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:01:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788552137;
+ s=mimecast20190719; t=1788552101;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t43vVbAqt9a44+uxeyZhjiVCXGpQtyarxq5dgbrLkic=;
- b=MNbroCXXRGRSMGD3O9pKC0fmc6FviVptOzQ0f4sJVdYa+lvzrEtC07Tzulv8lsk6v55aOO
- OqD/BTTzURL0Z6zvSsFRuvjArRAZa4QjSUfuRZNRky/jxnz1W6em7tqJkpZWpRKfT6RZlE
- WckdV4xDyjOBHS08Fdr6ZqJKA8kZaow=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=qREL4rLqmsKjsuOlLljdIaMwFLp75inzgflxtWc4AuE=;
+ b=H0hwWyDnhkQHjM6YnQDFl3hCPlS3i69P9/wUTRWILGnR+JSr0solQy9VKlqH7B5VujYWZd
+ rpuepCLFdJ7Hm6yzUZWYEDN5LhVHk+WRal1tZoYztHcU1eZiPwQPQCsfMkAz8SNEf+dW/r
+ 4hpVSL0uIy0t4dR77bcdp5lxfGEabqg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-m-GKPx0sO2OwgKOSDNJIIw-1; Fri,
- 04 Sep 2026 16:02:14 -0400
-X-MC-Unique: m-GKPx0sO2OwgKOSDNJIIw-1
-X-Mimecast-MFC-AGG-ID: m-GKPx0sO2OwgKOSDNJIIw_1788552132
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-8wSSLrBWPhyX6ShCXb1oNg-1; Fri,
+ 04 Sep 2026 16:01:39 -0400
+X-MC-Unique: 8wSSLrBWPhyX6ShCXb1oNg-1
+X-Mimecast-MFC-AGG-ID: 8wSSLrBWPhyX6ShCXb1oNg_1788552098
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 04ADB195399B; Fri,  4 Sep 2026 20:02:12 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D71511893EDF; Fri,  4 Sep 2026 20:01:37 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 240001800641; Fri,  4 Sep 2026 20:02:10 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 10F1730002F5; Fri,  4 Sep 2026 20:01:36 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 04 Sep 2026 23:58:48 +0400
-Subject: [PATCH v4 65/75] target/riscv: fix incorrect QAPI types and u8 casting
+Date: Fri, 04 Sep 2026 23:58:39 +0400
+Subject: [PATCH v4 56/75] hw/gpio/pca955x: use QAPI enums for led and pin
+ properties
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260904-qom-qapi-v4-65-a985f168e938@redhat.com>
+Message-Id: <20260904-qom-qapi-v4-56-a985f168e938@redhat.com>
 References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 In-Reply-To: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,41 +66,37 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1696;
+ Glenn Miles <milesg@linux.ibm.com>, Eric Blake <eblake@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, qemu-ppc@nongnu.org, qemu-arm@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14925;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=YoOMy/B5EQPhqWBYY6y+EbIrpX6/2zs8Ep/p5YEq0BI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLLP0i09YeYpDmNiYmzFmy/4uyiSUfDgpti3
- ajYpXO9LSeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiywAKCRDa6OEJdZac
- 5cyuD/9oLJh4GPcQRNVwM8ScGpXhfLuHjw2Ku54eAV1mZpe3B2FSiHZ7BRH5F6Blgu+eOt5EqIk
- ZH6ZNYgwMR5zaJKHvzGv+d8V3beG6eydH4Lqw3MYY9k8AO2jk2b15hkXJBRP4SpI9teU1DnOte8
- YuOcxlVk601+7akhlYniWpy5+pqqBXjPFgNd+NvzktX0jaBZZTRdrPTuCsD2stgCezdQOdfmbsN
- 86J6Ch/U+zcv0he8WhQENo+XwcfJ1FXpU3Bp32Va57AnSbhbGw+iH8iImtWxn3IOifW3DSmV6A9
- l320ENHQX5F12gjXu2s0tAS1WWcxc3l0gPe13x393MLWpmgCUd6AOujg25jeIw8EQc9UwYcgIt9
- 6MI6ZBkZpdUCR5gPFREr11Auvy8pQjfV31ocpOYTFMNwnSHmmDkirveGFuuSYI/zVk+SebK6oQb
- AkGJ2O406NCtKvRiaTg1ZRyFR0fesCzcScIf8wV+7HMkoJNUsvL0bB1tA+mqCyXa0GSbK4ARhQF
- mfZy8xPtGrEtN02WcbPWZVSEHFUJYPYbLCWHuo00uFpb4JkZn3+m/pr8Rlbpr4Efmb87A2AQM5n
- X+pnIXexlUaR+760m5jaj6x0dUZt+eBPR1aSa1bRWfDoe4VlBdl9z0gMyeYz6Qn8yIdeqpIyHbC
- QNCgIR7fGXUAHyA==
+ bh=XlkmyZuB8ML4Dwyx9HhUYqfHoTK+rV9hfdym0B0GJhw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLLAp2XepBpJfPqJBydZ9UAuooyUlS+gadZu
+ T9fJMYGkJWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiywAKCRDa6OEJdZac
+ 5bIvD/9AtGyX1ry5GsuqgOJi06DNfelPCOdLdzk9Oilst/0NGeCEI4HAWz/bjeCsqfc4Psg1tvM
+ AKXCkqJFspZQV8tMxKzUS70gwRf04Hy3rOI/qDiegB/nyjtjfW5D2YQ1uPw7RmvUIMLHiSUfMfm
+ NgT0x66cPjZ2JKqgRVjSNVezcfUk7wxz51O87Mq5UYvJN98jUKzF/v5xJNdSl7qzvURCBulZoHp
+ f3bxixfQAoHRiOh5cCBWoZ2/fO2FkdHh8ChraFJIzUpuut5t63OL5xVw8TUUNB49HsXNyQN6JCh
+ GYkBgHUGSb0G43Qw/khOI6UcnNnfgo2ksb5KG0NxZTGkFvv5PfwOW/8YTzuPGNpG8nz4oICL8cA
+ T2EzvkGgp1NHm/4OLP+ldROvSM1BfD+gEnaFlHQWQyh9xTeFMtHvsY9zbMjmhtzzMkVxEs16W6c
+ +iSWDnbcfxBMtTsCF6CV/AZ7sU4Iw7x+F3TXhHMk4MucWGQksBRj6RyemjyDCjjhml6B4UPnQCQ
+ KwSmSewSQ/0e9DR4zy93f47WaWHaK1NGMSemZnks1mcnBGeYfQMJ4hOeVCh+2cMgTW0FsMJPg+n
+ pGlgLddyz+hl/AvHfoIgj/0hH13RpSy/3+HGyEb+e2+itm/gPEiVgGAHAvK0PJcbdNB05Rt6hxy
+ GpJaMTgCJlchLyQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,52 +112,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"pmu_num" is u8, "pmu_mask" is u32, so is "pmp-granularity"
+Replace hand-rolled string lookup tables with QAPI enums
+Pca9552LedState and Pca955{2,4}PinState for the led%d and pin%d QOM
+properties. This fixes the incorrect property type ("bool" for LEDs,
+"str" for pins) and lets QAPI handle string-to-enum conversion in the
+visitor, removing the manual string matching in the setters.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Add QEMU_BUILD_BUG_ON guards to ensure the QAPI-generated enum values
+stay in sync with the hardware register encoding.
+
+I kept Pca9552PinState & @Pca9554PinState separate types, because I
+don't know if they could diverge. We could eventually merge those.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/cpu.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/gpio/pca9552.c | 82 +++++++++++++++++++++----------------------------------
+ hw/gpio/pca9554.c | 39 ++++++++++----------------
+ qapi/machine.json | 46 +++++++++++++++++++++++++++++++
+ 3 files changed, 92 insertions(+), 75 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a1faea801d1d..0f25f0c8fb5f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1688,7 +1688,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
- }
+diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+index 719149b7174b..16741c22dea3 100644
+--- a/hw/gpio/pca9552.c
++++ b/hw/gpio/pca9552.c
+@@ -23,7 +23,8 @@
+ #include "hw/core/irq.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+-#include "qapi/visitor.h"
++#include "qapi/qapi-types-machine.h"
++#include "qapi/qapi-visit-machine.h"
+ #include "trace.h"
+ #include "qom/object.h"
  
- static const PropertyInfo prop_pmu_num = {
--    .type = "int8",
-+    .type = "uint8",
-     .description = "pmu-num",
-     .get = prop_pmu_num_get,
-     .set = prop_pmu_num_set,
-@@ -1724,13 +1724,13 @@ static void prop_pmu_mask_set(Object *obj, Visitor *v, const char *name,
- static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
-                              void *opaque, Error **errp)
+@@ -59,16 +60,15 @@ struct PCA955xClass {
+ /*
+  * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
+  *        chips are the reverse of the PCA953X family of chips.
++ *
++ * The QAPI enums must match the hardware register values.
+  */
+-#define PCA9552_LED_ON   0x0
+-#define PCA9552_LED_OFF  0x1
+-#define PCA9552_LED_PWM0 0x2
+-#define PCA9552_LED_PWM1 0x3
+-#define PCA9552_PIN_LOW  0x0
+-#define PCA9552_PIN_HIZ  0x1
+-
+-static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
+-static const char *pin_state[] = {"low", "high"};
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_ON != 0x0);
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_OFF != 0x1);
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM0 != 0x2);
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM1 != 0x3);
++QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_LOW != 0x0);
++QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_HIGH != 0x1);
+ 
+ static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
  {
--    uint8_t pmu_mask = RISCV_CPU(obj)->cfg.pmu_mask;
-+    uint32_t pmu_mask = RISCV_CPU(obj)->cfg.pmu_mask;
+@@ -142,24 +142,24 @@ static void pca955x_update_pin_input(PCA955xState *s)
+             uint8_t config = pca955x_pin_get_config(s, i);
  
--    visit_type_uint8(v, name, &pmu_mask, errp);
-+    visit_type_uint32(v, name, &pmu_mask, errp);
+             switch (config) {
+-            case PCA9552_LED_ON:
++            case PCA9552_LED_STATE_ON:
+                 /* Pin is set to 0V to turn on LED */
+                 s->regs[input_reg] &= ~bit_mask;
+                 break;
+-            case PCA9552_LED_OFF:
++            case PCA9552_LED_STATE_OFF:
+                 /*
+                  * Pin is set to Hi-Z to turn off LED and
+                  * pullup sets it to a logical 1 unless
+                  * external device drives it low.
+                  */
+-                if (s->ext_state[i] == PCA9552_PIN_LOW) {
++                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
+                     s->regs[input_reg] &= ~bit_mask;
+                 } else {
+                     s->regs[input_reg] |=  bit_mask;
+                 }
+                 break;
+-            case PCA9552_LED_PWM0:
+-            case PCA9552_LED_PWM1:
++            case PCA9552_LED_STATE_PWM0:
++            case PCA9552_LED_STATE_PWM1:
+                 /* TODO */
+             default:
+                 break;
+@@ -176,7 +176,7 @@ static void pca955x_update_pin_input(PCA955xState *s)
+              */
+             if (s->regs[config_reg] & bit_mask) {
+                 /* Input mode - reflect external state */
+-                if (s->ext_state[i] == PCA9552_PIN_LOW) {
++                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
+                     s->regs[input_reg] &= ~bit_mask;
+                 } else {
+                     s->regs[input_reg] |= bit_mask;
+@@ -360,7 +360,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int led, rc, reg;
+-    uint8_t state;
++    Pca9552LedState state;
+ 
+     rc = sscanf(name, "led%2d", &led);
+     if (rc != 1) {
+@@ -378,7 +378,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
+      */
+     reg = PCA9552_LS0 + led / 4;
+     state = (pca955x_read(s, reg) >> ((led % 4) * 2)) & 0x3;
+-    visit_type_str(v, name, (char **)&led_state[state], errp);
++    visit_type_Pca9552LedState(v, name, &state, errp);
  }
  
- static const PropertyInfo prop_pmu_mask = {
--    .type = "int8",
-+    .type = "uint32",
-     .description = "pmu-mask",
-     .get = prop_pmu_mask_get,
-     .set = prop_pmu_mask_set,
-@@ -1873,6 +1873,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
+ /*
+@@ -397,10 +397,9 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int led, rc, reg, val;
+-    uint8_t state;
+-    g_autofree char *state_str = NULL;
++    Pca9552LedState state;
+ 
+-    if (!visit_type_str(v, name, &state_str, errp)) {
++    if (!visit_type_Pca9552LedState(v, name, &state, errp)) {
+         return;
+     }
+     rc = sscanf(name, "led%2d", &led);
+@@ -413,16 +412,6 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    for (state = 0; state < ARRAY_SIZE(led_state); state++) {
+-        if (!strcmp(state_str, led_state[state])) {
+-            break;
+-        }
+-    }
+-    if (state >= ARRAY_SIZE(led_state)) {
+-        error_setg(errp, "%s invalid led state %s", __func__, state_str);
+-        return;
+-    }
+-
+     reg = PCA9552_LS0 + led / 4;
+     val = pca955x_read(s, reg);
+     val = pca955x_ledsel(val, led % 4, state);
+@@ -437,7 +426,8 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int pin, rc;
+-    uint8_t input_reg, state;
++    uint8_t input_reg;
++    Pca9552PinState state;
+ 
+     rc = sscanf(name, "pin%2d", &pin);
+     if (rc != 1) {
+@@ -455,7 +445,7 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
+      */
+     input_reg = PCA9535_INPUT0 + (pin / 8);
+     state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
+-    visit_type_str(v, name, (char **)&pin_state[state], errp);
++    visit_type_Pca9552PinState(v, name, &state, errp);
  }
  
- static const PropertyInfo prop_pmp_granularity = {
-+    .type = "uint32",
-     .description = "pmp-granularity",
-     .get = prop_pmp_granularity_get,
-     .set = prop_pmp_granularity_set,
+ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+@@ -464,10 +454,10 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int pin, rc;
+-    uint8_t state, config_reg;
+-    g_autofree char *state_str = NULL;
++    Pca9552PinState state;
++    uint8_t config_reg;
+ 
+-    if (!visit_type_str(v, name, &state_str, errp)) {
++    if (!visit_type_Pca9552PinState(v, name, &state, errp)) {
+         return;
+     }
+     rc = sscanf(name, "pin%2d", &pin);
+@@ -480,16 +470,6 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
+-        if (!strcmp(state_str, pin_state[state])) {
+-            break;
+-        }
+-    }
+-    if (state >= ARRAY_SIZE(pin_state)) {
+-        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
+-        return;
+-    }
+-
+     /* Only input-configured pins can be driven by an external device. */
+     config_reg = PCA9535_CONFIG0 + (pin / 8);
+     if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
+@@ -499,7 +479,7 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
++    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_STATE_LOW);
+ }
+ 
+ static const VMStateDescription pca9552_vmstate = {
+@@ -529,7 +509,7 @@ static void pca9552_reset_hold(Object *obj, ResetType type)
+     s->regs[PCA9552_LS2] = 0x55;
+     s->regs[PCA9552_LS3] = 0x55;
+ 
+-    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
++    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
+     pca955x_update_pin_input(s);
+ 
+     s->pointer = 0xFF;
+@@ -549,7 +529,7 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
+     s->regs[PCA9535_CONFIG0] = 0xFF;  /* All pins as inputs */
+     s->regs[PCA9535_CONFIG1] = 0xFF;  /* All pins as inputs */
+ 
+-    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
++    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
+     pca955x_update_pin_input(s);
+ 
+     s->pointer = 0xFF;
+@@ -567,12 +547,12 @@ static void pca955x_initfn(Object *obj)
+         if (k->has_led_support) {
+             /* LED variant: expose the LED selector state as led%d. */
+             name = g_strdup_printf("led%d", ix);
+-            object_property_add(obj, name, "bool",
++            object_property_add(obj, name, "Pca9552LedState",
+                                 pca955x_get_led, pca955x_set_led, NULL, NULL);
+         } else {
+             /* GPIO variant: expose the pin logic level as pin%d. */
+             name = g_strdup_printf("pin%d", ix);
+-            object_property_add(obj, name, "str",
++            object_property_add(obj, name, "Pca9552PinState",
+                                 pca955x_get_pin, pca955x_set_pin, NULL, NULL);
+         }
+         g_free(name);
+diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+index 904698cdce85..e4eddc829ef7 100644
+--- a/hw/gpio/pca9554.c
++++ b/hw/gpio/pca9554.c
+@@ -16,6 +16,8 @@
+ #include "hw/core/irq.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-types-machine.h"
++#include "qapi/qapi-visit-machine.h"
+ #include "qapi/visitor.h"
+ #include "trace.h"
+ #include "qom/object.h"
+@@ -32,10 +34,8 @@ typedef struct PCA9554Class PCA9554Class;
+ DECLARE_CLASS_CHECKERS(PCA9554Class, PCA9554,
+                        TYPE_PCA9554)
+ 
+-#define PCA9554_PIN_LOW  0x0
+-#define PCA9554_PIN_HIZ  0x1
+-
+-static const char *pin_state[] = {"low", "high"};
++QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_LOW != 0x0);
++QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_HIGH != 0x1);
+ 
+ static void pca9554_update_pin_input(PCA9554State *s)
+ {
+@@ -54,7 +54,7 @@ static void pca9554_update_pin_input(PCA9554State *s)
+              * Input: the pin is Hi-Z with a pull-up, so it reads high
+              * unless an external device drives it low.
+              */
+-            if (s->ext_state[i] == PCA9554_PIN_LOW) {
++            if (s->ext_state[i] == PCA9554_PIN_STATE_LOW) {
+                 s->regs[PCA9554_INPUT] &= ~bit_mask;
+             } else {
+                 s->regs[PCA9554_INPUT] |= bit_mask;
+@@ -156,7 +156,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+ {
+     PCA9554State *s = PCA9554(obj);
+     int pin, rc;
+-    uint8_t state;
++    Pca9554PinState state;
+ 
+     rc = sscanf(name, "pin%2d", &pin);
+     if (rc != 1) {
+@@ -175,7 +175,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+      * holds the wire level regardless of the configured direction.
+      */
+     state = (s->regs[PCA9554_INPUT] >> pin) & 0x1;
+-    visit_type_str(v, name, (char **)&pin_state[state], errp);
++    visit_type_Pca9554PinState(v, name, &state, errp);
+ }
+ 
+ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+@@ -183,10 +183,10 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+ {
+     PCA9554State *s = PCA9554(obj);
+     int pin, rc, val;
+-    uint8_t state, mask;
+-    g_autofree char *state_str = NULL;
++    uint8_t mask;
++    Pca9554PinState state;
+ 
+-    if (!visit_type_str(v, name, &state_str, errp)) {
++    if (!visit_type_Pca9554PinState(v, name, &state, errp)) {
+         return;
+     }
+     rc = sscanf(name, "pin%2d", &pin);
+@@ -199,16 +199,6 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
+-        if (!strcmp(state_str, pin_state[state])) {
+-            break;
+-        }
+-    }
+-    if (state >= ARRAY_SIZE(pin_state)) {
+-        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
+-        return;
+-    }
+-
+     if (s->hw_dir) {
+         /* Warn and ignore if the guest has configured this pin as output */
+         if (!((s->regs[PCA9554_CONFIG] >> pin) & 0x1)) {
+@@ -219,13 +209,13 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+             return;
+         }
+         /* Drive the external input level */
+-        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_LOW);
++        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_STATE_LOW);
+     } else {
+         /* Legacy behavior: force output mode and drive */
+         /* First, modify the output register bit */
+         val = pca9554_read(s, PCA9554_OUTPUT);
+         mask = 0x1 << pin;
+-        if (state == PCA9554_PIN_LOW) {
++        if (state == PCA9554_PIN_STATE_LOW) {
+             val &= ~(mask);
+         } else {
+             val |= mask;
+@@ -264,7 +254,7 @@ static void pca9554_reset(DeviceState *dev)
+     s->regs[PCA9554_POLARITY] = 0x0; /* No pins are inverted */
+     s->regs[PCA9554_CONFIG] = pin_mask; /* All pins are inputs */
+ 
+-    memset(s->ext_state, PCA9554_PIN_HIZ, pc->pin_count);
++    memset(s->ext_state, PCA9554_PIN_STATE_HIGH, pc->pin_count);
+     pca9554_update_pin_input(s);
+ 
+     s->pointer = 0x0;
+@@ -280,7 +270,8 @@ static void pca9554_initfn(Object *obj)
+         char *name;
+ 
+         name = g_strdup_printf("pin%d", pin);
+-        object_property_add(obj, name, "str", pca9554_get_pin, pca9554_set_pin,
++        object_property_add(obj, name, "Pca9554PinState",
++                            pca9554_get_pin, pca9554_set_pin,
+                             NULL, NULL);
+         g_free(name);
+     }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index d418b34a8643..0e0d85d0a76d 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -429,6 +429,52 @@
+ { 'enum': 'LostTickPolicy',
+   'data': ['discard', 'delay', 'slew' ] }
+ 
++##
++# @Pca9552LedState:
++#
++# LED state for PCA9552.
++#
++# @on: LED on
++#
++# @off: LED off
++#
++# @pwm0: LED controlled by PWM0
++#
++# @pwm1: LED controlled by PWM1
++#
++# Since: 11.2
++##
++{ 'enum': 'Pca9552LedState',
++  'data': ['on', 'off', 'pwm0', 'pwm1'] }
++
++##
++# @Pca9552PinState:
++#
++# Pin state for PCA9552.
++#
++# @low: Pin low
++#
++# @high: Pin high
++#
++# Since: 11.2
++##
++{ 'enum': 'Pca9552PinState',
++  'data': ['low', 'high'] }
++
++##
++# @Pca9554PinState:
++#
++# Pin state for PCA9554.
++#
++# @low: Pin low
++#
++# @high: Pin high
++#
++# Since: 11.2
++##
++{ 'enum': 'Pca9554PinState',
++  'data': ['low', 'high'] }
++
+ ##
+ # @inject-nmi:
+ #
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
