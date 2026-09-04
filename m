@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8DEC79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F19C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MMq-0000Mb-Ua; Fri, 04 Sep 2026 01:21:36 -0400
+	id 1x2MLq-0005tZ-Uj; Fri, 04 Sep 2026 01:20:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MMn-0008P8-VL
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:33 -0400
+ id 1x2MLh-0005fy-Gv
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:25 -0400
 Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MMm-0001Sq-CH
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:33 -0400
+ id 1x2MLf-0001Gg-E8
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:24 -0400
 Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-cc1bc88a20eso1056693a12.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:21:31 -0700 (PDT)
+ 41be03b00d2f7-cc1c3c90074so643046a12.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499291; x=1789104091; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=a0pef2g1uRhfRbIDzwGXwuR1il1zM+0FtwRR78VNneY=;
- b=sHIxUI3EL6P+D+gifEcuTahSlEGL9oiblw3slzkiKfmpN3SqBpqpEmWGD5MsoZ2QD4
- iyNJ/V33Ala4TaByKOPrL5uc/H/WI/QWNAtSxeQeZ9lejhlgudFz0t5S++yYoEWJo46m
- 1IPycJgxZLmBFoldA0kufQ+bsKxuItCwY1bIBrEkKp8vlJelOAoHgsivWl4pb/ZSAc7Z
- 5eXdHeOVTIfX8RYIb/Lwwx89X3WlLV1chrYhtUsmvBeeE49/UP8BiqXPZzLTQhO9K7jz
- JX0UoLPgXIrvfT1Idt/mZnTopRijfsMul1ipk177e94x/N+DeD07z5WfKAhwVVTdQd/X
- PX5w==
+ d=gmail.com; s=20251104; t=1788499222; x=1789104022; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pE3jSbysYufL9tVf8Fk9/z0nH7+2XoWlVhKnm6U3J3g=;
+ b=PL7TMO0XTUKVga3vKbVorQonliKzC+ZbQMhF/sLSLZ+RfeiaQVlg3oPQ462wkAifr9
+ g8Ck6MjH70lhivvPFB70kMb73XfY6ninUG0oPt1yVFZ7TUpTQg5SYf2FU2kdpOJutdDc
+ yX1dz0EwoMWGyKj5cdNZpeHbbL9xixJf2yh4XWdjjUiNCncjZGrEEPXEuY3xHNaWKZQt
+ DbaMoj0iskQNZP4wr4fqYgO6h3jT8qJbGOnuSpNKLFQu5bYkeuk2dYMes9c0JWc3C8Rj
+ yOliAgMVI7dYwbYxfCyo4ZYC+OhH9M7Z0YngUoa09R5rDkFs/vzC4mZNjr2a+3X+86nR
+ B/vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499291; x=1789104091;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=a0pef2g1uRhfRbIDzwGXwuR1il1zM+0FtwRR78VNneY=;
- b=bZNdALGDnMYRURuPyPmZtUSMd+Zz3KpZKw4WWc2UVpEBnrr4e84MtktKAgHUXaIoaY
- D6jUO8mph7u/2VX4x8tomIGX7je5fX90y2ZRARKSB+SVoGlxvuFC8mNwSft54qjkb0TP
- ovWqoOOYg7suSKZuWEm+4hKphm9dmsjz6PE9yCg/O1b77WLIYgf3ADJ9jZuDnZAyo5w/
- g38CP2itJZfw915+THEWGJMxVrCfdzQSG9mNIXnsSfdHuon+cOUgiCvqlJ76cdCWl/Z0
- PEPhychm9pd13iucLR/sSbbtEucU4cglv1V+9QePaOKyA115j8Zgz2VopenW9HOffP+Y
- xQyg==
-X-Gm-Message-State: AFuF++ldWPOizKPQUE3lssS0nBJsgRip4t17x/Vmw4tKfvvtdOKl0tL8
- ntrhVFwhMT9dQqLJgvHasirbZsrcnj5Vi0GsG3nI1CwmBqlO/vCBoQk1TMrdXA==
-X-Gm-Gg: AYBFou1bvTg07/0Q51p0QG9wQIQ6xEo/LQj7svE3nbhHnxDW/5aUh6F2Ux25NlcFPay
- YWbH/tbngKwRXihY+fJyDLaYa80+ikI5hDUI2kyiC0GEiF0Sr+ZkAR751Zp9fNHSaCQgjFpQHnS
- opEFK0tby6pwDaVb6zYKsyzi+XmGiQ4k2H/oDxMYzOnLodRAv8F8Hyu38ddfnMKQjAPybW0uh60
- 8YVQZ/dLmoAkBz1vHbjAPjUm9ldOPCMMM0tOJgMB1Ry+CQL5nacSjtyqYHzidpbydJSxX8d4c5l
- 5UBLSJozjwsUS4s3U7c9Nn57n2j3WEbP8/8GhAaTpcbrRf89AteV2CFVoV+Vh6yHSbFPUvKoydp
- VxxYBqShoDsnUGkYZP6k3FcHiAz8u+BJ9Cd4uwZJyoWjtQn46ku/+zMy++noK0uEUgchbQ+dhJL
- N0uokChqoU3ymWws7ZMClJ80ai+bFcZpw8McIPmPTwsofVWqzNBhyZu2yBXgohoioV7YCAC5MSu
- uv8/w==
-X-Received: by 2002:a05:6a21:6b02:b0:3da:3492:83d0 with SMTP id
- adf61e73a8af0-3da3a173d6cmr5931185637.23.1788499291137; 
- Thu, 03 Sep 2026 22:21:31 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788499222; x=1789104022;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pE3jSbysYufL9tVf8Fk9/z0nH7+2XoWlVhKnm6U3J3g=;
+ b=BWyqSSLjzw0e5dQsFLVkxo2W79f4N4C2Ff40x9xJdlK07xG0L5/rGbLgWF+X5csDfL
+ Wq8lD17WuFk7YGnAPNqwOIWuBvLbTaPTuyPKywQZQN77v0OT1+JvQG5O/KVxK8ACeeST
+ nXOKs1tlb+ZM3CtWXW+rTZw2s9+SLGnxCZhkTFVhAl2xwdDiw0AvBxMRnmR6Olff0yhJ
+ 4LPfQNPsMqBrdalsPON95h0+E9ifv9J/f7bAMPTPAaXc/I7dpAdIrULCBJgShHaOEcbH
+ Z4hLwB8OCRRNc2mUrJ45wxkvDEAO4FYmAskfn5Jc00B/E58x8ugt4h4sR6DUl7roTjXO
+ 34Pw==
+X-Gm-Message-State: AFuF++k9f1WIWgwAUvCrgD+lcYOemGo5JoQQ3ol3AsLar/9xOBxrLkmE
+ OE7JZwzYPfY2Wt3FwJ9Wl3o3+IhB1V2u8M4PTqmRnjzEkJCRZOkd5Qdcw/Anjg==
+X-Gm-Gg: AYBFou1T9TQpEx5qEJAUfkQ+raDyAv4q6nNZztXt28lqGNy2NmGRgSjoz04e8dR7G2U
+ fzuJ4je0Nd7aazZx2v1PEh596CCVunwzNZTkRlM9W5k4vvbpZ4Vk60u2Q9B14NqLmejS5jiV22t
+ ycxzVbGX5R8yFmligyDmaJn4cNK5uZvxFP2dJ/DyanIR6BrQ55bzyfNq2Z6n98UbsMo8xeQa+OF
+ YXmgOVdx99+AvlZ7yrZGkbB7ZnfF3A1iabcoUPY7yjD/4XazjkXGLjv0IEZBuAgwHae0fQYP+ff
+ cG9IAYuIIzX/fSMazLVBnB0395sXEbjwe79E2buQnWND3Y8prPNCdVrLNrWuLepA/HNysStBMwL
+ ZBMfsRAehzNHsx9pFv0+zOniUyNPAvb6sXMC++o977kbWXx3w6benjfk95yLuqA4aABATEcWfvn
+ eF3G4i+i54r/jG1cbA48E1v7PAlCYkzQDD3OBHcJTxQqmCI3dbkA//WHAWPhnkJSCbPyTNdgtSl
+ 6AN+g==
+X-Received: by 2002:a05:6a21:3989:b0:3d1:af47:5f80 with SMTP id
+ adf61e73a8af0-3da39f77bd4mr5362726637.11.1788499222013; 
+ Thu, 03 Sep 2026 22:20:22 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.28
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.20.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:21:30 -0700 (PDT)
+ Thu, 03 Sep 2026 22:20:21 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Abhigyan Kumar <314abh@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 31/47] target/riscv: prevent abrupt abortion on unassigned
- value write to tdata
-Date: Fri,  4 Sep 2026 15:19:27 +1000
-Message-ID: <20260904051943.799041-32-alistair.francis@wdc.com>
+Cc: Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 09/47] hw/riscv/atlantis: Document QEMU-only I2C device tree
+ nodes
+Date: Fri,  4 Sep 2026 15:19:05 +1000
+Message-ID: <20260904051943.799041-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
  envelope-from=alistair23@gmail.com; helo=mail-pg1-x52f.google.com
@@ -104,45 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Abhigyan Kumar <314abh@gmail.com>
+From: Joel Stanley <joel@jms.id.au>
 
-tdata_csr_write is approachable by guest programs. In case of unassigned
-values written to a tdata CSR in debug mode, the switch-case falls
-through straight to default causing an immediate abort. The risc-v spec
-says:
+The QEMU only I2C devices have a comment next to them, do the same for
+the corresponding device tree entries.
 
-    All tdata registers follow write-any-read-legal semantics. If a debugger
-    writes an unsupported configuration, the register will read back a value
-    that is supported (which may simply be a disabled trigger). This means
-    that a debugger must always read back values it writes to tdata
-    registers, unless it already knows what is supported.
-
-This fix correctly ensures that the WARL behaviour of tdata CSRs.
-
-Fixes: a42bd001 ("target/riscv: debug: Determine the trigger type from
-tdata1.type")
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260729230028.1797355-1-314abh@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260824055642.41098-5-joel@jms.id.au>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/debug.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/riscv/tt_atlantis.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-index 148201f3cb..e4d719a1da 100644
---- a/target/riscv/tcg/debug.c
-+++ b/target/riscv/tcg/debug.c
-@@ -951,7 +951,8 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
-                       trigger_type);
-         break;
-     default:
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d is unassigned\n",
-+                trigger_type);
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index 7d02868b22..4fd8679ae1 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -355,6 +355,7 @@ static void finalize_fdt(TTAtlantisState *s)
+                        aplic_s_phandle, periph_clk_phandle);
      }
- }
  
++    /* I2C peripherals: qemu specific */
+     create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
+     create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
+ }
 -- 
 2.55.0
 
