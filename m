@@ -4,140 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA159C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F65C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2U1Z-0003mn-Lr; Fri, 04 Sep 2026 09:32:09 -0400
+	id 1x2U4G-0004eI-Rp; Fri, 04 Sep 2026 09:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2U1Y-0003jo-Mi
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:32:08 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2U4F-0004de-2L
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:34:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2U1X-0001lO-0k
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:32:08 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 684AIr1j3566360
- for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 13:32:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- JFoc4gk/A9MgQwuNTvhE8Ju0+wbQT6MuAykNj+ZXqJM=; b=H2i0lkCivhQ0Q9Fx
- jduogeI2CfYPdz4+uHudQ2xrGws3nZTkxIggrWw9dM48g46r2m6UyLKYFnfYYDHR
- vYGGf3wUmw1Jh0le0q6RKJIIAEhvz1uMNsUc3DuXRF3e4Xeh1vxX9lT1eiVH9M5f
- EVRwQFRpM1xuTYWZtu5UMZQXg3v8Epog2oMuSdGNuxeepSjyZvRgeLyzQM1KgHvg
- lFIEs22XInsgxoD7ocd4Et0U55dwEDIwdurIajD6qQ6hpKWzLHZjF7XiXctp7cXr
- KgnOFM+FY8sgya9pb317PWBg5bc5p9QlphnUVaLtqpd8siVQKQ9/FKPOdKHHeOVb
- Yflg2w==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfp0r1yn5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 13:32:05 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-97e9909eeeaso85583241.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:32:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2U4C-0002Sg-LQ
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:34:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788528890;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zpNZ6lGqi2oWOrilbzigP8ELdcE+UQn7z/jXdGjezoc=;
+ b=AmF4VZf3Aov9f7f0hryBAfcZEGbiBUf9TvvJ/1nRGFjKPbuk2ajDAOsEPcZNLmUAstIFal
+ YVZ8Ouzx5d+P6GKRSwR2FYNt3abr6yJCP6oW96sC7TKT8pkgJfztcca+aavwNdaAHbOfcg
+ OHsMAZ1KqTB89dEiPpstkgUGXtv9itE=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-221-kakPz378NK2q1ygvqSJPDw-1; Fri, 04 Sep 2026 09:34:47 -0400
+X-MC-Unique: kakPz378NK2q1ygvqSJPDw-1
+X-Mimecast-MFC-AGG-ID: kakPz378NK2q1ygvqSJPDw_1788528887
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c0e702df8so31527731cf.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788528725; x=1789133525; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JFoc4gk/A9MgQwuNTvhE8Ju0+wbQT6MuAykNj+ZXqJM=;
- b=aCaOhKlR8WdKZMlQS448SPHjwv6q0SoYofvNBp0JCq1tUMxmnTBs5yuTfXKdHQUfR+
- hrLHU2mVOaS8w0p+wKnAGJnl0k4yI5iXuF29JPYnLjPGEgukWkXUuXT67SJPtXKe16xD
- NOr0wrqzGSLj+sZol5mzeIPpBE9NExI3sPAEBcerl1tHqCF8+ARwkfSfgqJMej2Ui6DG
- 10C9zez2xDmD7//EWwkUXu1BRB1zTs7HcOY8t1G5pRZ4EfdwsVHGyJUPqlIduRWRxNIk
- CReTXVj/g8m/goP6QUGsPu3WZyacrB6mDW/LCnXug5V91cIwMRei8fW471DsRDAocE9m
- pK4A==
+ d=redhat.com; s=google; t=1788528887; x=1789133687; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zpNZ6lGqi2oWOrilbzigP8ELdcE+UQn7z/jXdGjezoc=;
+ b=padELBn2ebNIzlohPz7nhcAZPhMPJPLUTU3sjEWvRb8G9YIzmDOF3UWUaEbLLefSS0
+ 6c1pEr0eo4glvobGmGT6tiwZZ9f2Bfmal4mbbaC91F2gqMOMMxej3fd4xwxrH12NIjSx
+ Pr8GWK9/Ai0/mGPbMgpaL6fjGRH4YbcnVHFQlzuET1cYPEk4KoX29wDRK5sFBUKRdaFo
+ w3AHCu0Gp4zdXEVl/8cGo8PeLxOm+7oiccc+mVtiaGwZ9ZsDwyDPCPzrP3eXqYwaL/fd
+ KEpZ2uW8rXw62VnndurPhB1tGGyrVMoaZDoO3Kq/h3cnMdubCpSnT63XHctLhkeE6p9q
+ fL1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788528725; x=1789133525;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=JFoc4gk/A9MgQwuNTvhE8Ju0+wbQT6MuAykNj+ZXqJM=;
- b=Q1jJGr5T9jHYSn1JhesIMs1f4oj12jY2EYBdt30ZfsxuRaw4kSNpIAgI2FVAC3ymtG
- UJ+Es5D2mNxPg6iRjaSusXLiPvQUShvRz4aNiaOqJBkGrk4F9Zs6ubTQofi4iACmZSuJ
- 4uRBR04bqLL/+uNF0podrtO8pUTadeFLD6TyjH88WH22BvF68q0nLcQy9NhZ0PNcxxGI
- nNxTlHu1W9+Y2x0VCCiHrXQ/NfEAt5E34NMGjcPh2qMMUp/O1BjqRlAUMQyA6W26k7nr
- GiEfM7d2yKoSi3adt+d/jes9h+9xUg80rzn843OQ6T5CFTn/SlOBM3VbndonYDvSIb37
- NOsQ==
+ d=1e100.net; s=20251104; t=1788528887; x=1789133687;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=zpNZ6lGqi2oWOrilbzigP8ELdcE+UQn7z/jXdGjezoc=;
+ b=OwsaMuvcEp3+9VcKSmhwKL4k2p3lx8tP49PWSJmEyKumTkcHs0+7oYj1faQevF49tr
+ jkajZcAKsHjWUuj4NU3CI+seXJlbmzKv94WOh/vVU2cqC9/AlI0gK1cVbjaXgWUw4NUX
+ h9az6JjQKKpHgIwV0sM2bevTLO+hUqHHFNubG2WXu/pNdWuBoTWt9+1tP+gtmcc4h1El
+ WQ0eImc/1RXxHQp/6Vejs7FbZuGziPzHQPs0HPTJcwnSCe/8kE578Y1jaVQbPCXjnWDb
+ zEvotQ3fUmQH6xbmkcV3Oxm3SFy5S7Z5kn8CEtzevpNDJzxZ2zwfbRXSszg9etGHwUqA
+ KAVw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxZwbaPTYcdEEyk27pi4AsND2gBv5cFDzKdwtJSXp4LQO3jWbkr4lkw66R4yyk5ox5ZHPmUY2mbVoLw@nongnu.org
-X-Gm-Message-State: AFuF++nftZXYFFn067XysHsCrecEXQuyugnz8ypkQn0mr7otL11u8dXa
- ryVO8eIvW3Ou2AXGJNj5dYEg256YlsMcfFkFQaIS/EgLlF+CmIxi7VOieOu0xPtfVcw3H92GbnP
- Ml/tjLTNky3XhbsNCHBVA2oj6r9wcE3rW9oJ6cNVWeRSDydbZg2a+c9FJtQ==
-X-Gm-Gg: AYBFou2D9OH1FW+wsPb/ucZ+EoaFYBmS27B3SY8FmjNkr5wvVuerQoa09HIDhbzcmyr
- XpgZRoI8hZMzoqoNbhndq9CKTc0Vob6UyalyZardAc/QSJnrbJJ0qZdzlHzAIiPZsvYSAXmbxWy
- AVxlMg0b/1dhpLC+K/Ygc53rhCENMEcCNjbYmsjCPjo/4B4YWGunhV0hh3c8HGr2ZEeFnhkfNID
- y9vLJV9EKIOftNPBWXBYoJYvgsQ9BCKh2jOi03ZYWO58kq4UMprFBKGqwqnT2CLSMo6Mg+nKNW0
- KKn/M+FSMfeBbJyT3KNYUAUc5ebEQzyHrB9CUtorb2Hvtou7lUS82rQ4gDfZWQlg9sJhRs0goi0
- h3hVYEpqKF7aQk146mMTYc9xO7KqdMHfICw==
-X-Received: by 2002:a05:6122:551:b0:5bf:a179:b2be with SMTP id
- 71dfb90a1353d-5c7ed4087bemr2110813e0c.7.1788528725280; 
- Fri, 04 Sep 2026 06:32:05 -0700 (PDT)
-X-Received: by 2002:a05:6122:551:b0:5bf:a179:b2be with SMTP id
- 71dfb90a1353d-5c7ed4087bemr2110764e0c.7.1788528724862; 
- Fri, 04 Sep 2026 06:32:04 -0700 (PDT)
-Received: from [192.168.69.202] (pmd666.hd.free.fr. [88.187.86.199])
+ AKwUvBxXMvQOcp9B9RPSaSoNxbVVrzeWPwE9C5ZFdNDdqAkD144PySzbDsg22p8zEc81MIM4Tb8unbXzIzT0@nongnu.org
+X-Gm-Message-State: AFuF++lmV+k9mpcrCsEf+u82pAnG1eWSxFG75y7d6x9KqWF9chho1aTs
+ 9GIxXFycUa7YzhmkqrOFeMdbfkLsTFJJGIFZI6swMXNxsXZLcS5hr1nJv9nkLITrDyEUkXuX6Mw
+ FdMHn0dc4mHCXs2zwgGJcsvEnYbl/C9Sf+gBUTakkKax6jS2xiiJ2T5E6
+X-Gm-Gg: AYBFou2vgFBIj6qo95lgsdmtCF0bqmCpCmBfcGIZFAPnk4rqtILQJgo5HrYIg5vG4RG
+ di74N5HM0aG68uQhA+ri4FFctSGNf8byw3IcyC1vvsm3TGaB9sMRupsRnLeY+4YBkeRGSU17rbT
+ c2xAUESkDhd54BPsErA7XsLe3Khm/XYwpD3DWrgYmSJBvn98afHdOzS2lKS1fZ1gLJCS3LeppQl
+ LSO4qbDY4K5JyJnVJ+rByMiNYuTkAt4C9fyV1QkqUTUJpN+TuvOMzBIe0JXx6H1A0hMto7Ldo0u
+ YG0USmRprlpWmmc+ORaHS723jOs+DoPc6a1QtRbEDMX2Xc6p8zgBy4RBBnrRmPRvvX8MPVR7
+X-Received: by 2002:a05:6214:f07:b0:90e:9408:b6b8 with SMTP id
+ 6a1803df08f44-9103ef9f1ffmr72831756d6.14.1788528886994; 
+ Fri, 04 Sep 2026 06:34:46 -0700 (PDT)
+X-Received: by 2002:a05:6214:f07:b0:90e:9408:b6b8 with SMTP id
+ 6a1803df08f44-9103ef9f1ffmr72830856d6.14.1788528886285; 
+ Fri, 04 Sep 2026 06:34:46 -0700 (PDT)
+Received: from localhost ([2605:8d80:6d61:1b95:5d7e:c15d:7429:70fd])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee5d4938sm154291325e9.2.2026.09.04.06.32.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Sep 2026 06:32:03 -0700 (PDT)
-Message-ID: <ad937267-9796-4ef4-83e6-cf1087f61d09@oss.qualcomm.com>
-Date: Fri, 4 Sep 2026 15:32:02 +0200
+ 6a1803df08f44-910406af144sm20456376d6.40.2026.09.04.06.34.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 06:34:45 -0700 (PDT)
+Date: Fri, 4 Sep 2026 09:34:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: BillXiang <xiangwencheng@lanxincomputing.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2] virtio: Add aligned ld/st accessors for vring
+Message-ID: <aprI8xQIDCRTJOV1@x1.local>
+References: <20260821100856.1794011-1-xiangwencheng@lanxincomputing.com>
+ <CAFEAcA_kLpaz0UQi3Q315kLVqvDtxKh77kU2meN9G1_evfKBeQ@mail.gmail.com>
+ <bad5c8b3-668f-4893-974f-9dbca8dc6893@linaro.org>
+ <02da9676-febf-4389-b09b-5e5d41c1084e@lanxincomputing.com>
+ <aoxiBB2Wn8NiL5s6@x1.local>
+ <5a2a8e0e-2fa6-4905-9752-b2ed0ab3f0ac@lanxincomputing.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] target/hexagon: assert guest register pair alignment
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260903185622.3234171-1-brian.cain@oss.qualcomm.com>
- <20260903185622.3234171-6-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260903185622.3234171-6-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: xU2S6ETS_pk8OEMfIlbA_X55oeqdyoGc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDEyMyBTYWx0ZWRfX5CAiTe5uNBWM
- GO+WB4Lp7XXSYFLr/Ce7IfIXJZJaObP6FpyPf9wQ2Vjf603cj0f1plVpxm+icc+ZKQvgi+oBn46
- doHJH39Kp4byvZaWlPBh2vHqKxsF9qE=
-X-Proofpoint-ORIG-GUID: xU2S6ETS_pk8OEMfIlbA_X55oeqdyoGc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDEyMyBTYWx0ZWRfX79FUYXiYg2aW
- p14BEKWqGqqqmaVGTi2+sXMQRltHOTYuWkylhFr3XHdcru0QT/dttYhRXjjFrtEb8lfXcyVPKHC
- lhLnD09gUOCZHKbGCckb3ctJKlUTaqCD7ek8DvJlA80Yxa2a0nJifiC4Ld7Tn46vVxrUxJD9sv3
- M6muXHsncp+CMr8NaYHCsOYih6Q0ZSYOjKmzl3eWkIysQN0ndLeGuOUdy8dfsm+kbzIZzEb1TNZ
- 0fZH43Dp5qsFvuIjTKrk611LLyRSWqsLM5SQEnxYwJxHNMk67jEOXmG8L2TP8UyLMLpTkskRNVD
- KKAJQ+AFfeI2lc7NlhTw0wauBhiBENMf0oypEdnmB9zxMYyk1MiOUhHa2w6G/FwvVkk2m8WP4Xk
- 8g1cB9rBNJuz6mGhcWngbVXyjT/Upw==
-X-Authority-Analysis: v=2.4 cv=T/S8ifKQ c=1 sm=1 tr=0 ts=6a9ac856 cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gHPne6YqgEI5AgDLG5kA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-04_03,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
- suspectscore=0 adultscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2609040123
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <5a2a8e0e-2fa6-4905-9752-b2ed0ab3f0ac@lanxincomputing.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,13 +127,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 20:56, Brian Cain wrote:
-> Link: https://lore.kernel.org/qemu-devel/f7f34a43-c1cc-4dd8-a859-9ab72e1b015f@oss.qualcomm.com/
-> Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   target/hexagon/op_helper.c | 2 ++
->   1 file changed, 2 insertions(+)
+On Tue, Sep 01, 2026 at 10:44:13AM +0800, BillXiang wrote:
+> On 8/24/2026 11:23 PM, Peter Xu wrote:
+> > On Mon, Aug 24, 2026 at 12:19:15PM +0800, BillXiang wrote:
+> >> Hi Richard, I've read your code in accel/tcg/ldst_atomicity.c.inc. Do
+> >> you think it would be better to make the load/store_atomic* public?
+> > 
+> > They do not fit by default, as we need to still process unaligned cases?
+> 
+> You mentioned the use of guest CPU context in [1]. However, what I meant 
+> by load/store_atomic* is code like the following:
+> 
+> static inline uint16_t load_atomic2(void *pv)
+> {
+>      uint16_t *p = __builtin_assume_aligned(pv, 2);
+>      return qatomic_read(p);
+> }
+> 
+> static inline void store_atomic2(void *pv, uint16_t val)
+> {
+>      uint16_t *p = __builtin_assume_aligned(pv, 2);
+>      qatomic_set(p, val);
+> }
+> 
+> I consider these to be generic atomic load/store primitives.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+__builtin_assume_aligned() tells the compiler the address is aligned.  What
+if it is not?
+
+> 
+> > 
+> > I wished we can use qemu_mem_move() directly that just got introduced.. but
+> > it does slightly more than wanted.  Maybe something like this?  Below diff
+> > dropped ldsw_he_p() alone the way as it's never used.
+> > 
+> > Thanks,
+> > 
+> > ===8<===
+> > 
+> > diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+> > index 387d65c0b0..04a0f63612 100644
+> > --- a/include/qemu/bswap.h
+> > +++ b/include/qemu/bswap.h
+> > @@ -1,6 +1,7 @@
+> >   #ifndef BSWAP_H
+> >   #define BSWAP_H
+> >   
+> > +#include "qemu/atomic.h"
+> >   #include "qemu/target-info.h"
+> >   #include "exec/memop.h"
+> >   
+> > @@ -238,62 +239,52 @@ static inline void stb_p(void *ptr, uint8_t v)
+> >       *(uint8_t *)ptr = v;
+> >   }
+> >   
+> > -/*
+> > - * Any compiler worth its salt will turn these memcpy into native unaligned
+> > - * operations.  Thus we don't need to play games with packed attributes, or
+> > - * inline byte-by-byte stores.
+> > - * Some compilation environments (eg some fortify-source implementations)
+> > - * may intercept memcpy() in a way that defeats the compiler optimization,
+> > - * though, so we use __builtin_memcpy() to give ourselves the best chance
+> > - * of good performance.
+> > - */
+> > -
+> > -static inline int lduw_he_p(const void *ptr)
+> > -{
+> > -    uint16_t r;
+> > -    __builtin_memcpy(&r, ptr, sizeof(r));
+> > -    return r;
+> > -}
+> > -
+> > -static inline int ldsw_he_p(const void *ptr)
+> > -{
+> > -    int16_t r;
+> > -    __builtin_memcpy(&r, ptr, sizeof(r));
+> > -    return r;
+> > -}
+> > +#define  LD_HE_P(type, size)                                \
+> > +    static inline type                                      \
+> > +    glue(glue(ld, size), _he_p)(const void *ptr)            \
+> > +    {                                                       \
+> > +        type v;                                             \
+> > +        if (unlikely((uintptr_t)ptr & (sizeof(v) - 1))) {   \
+> > +            __builtin_memcpy(&v, ptr, sizeof(v));           \
+> > +        } else {                                            \
+> > +            v = qatomic_read((type *)ptr);                  \
+> > +        }                                                   \
+> > +        return v;                                           \
+> > +    }
+> >   
+> > -static inline void stw_he_p(void *ptr, uint16_t v)
+> > -{
+> > -    __builtin_memcpy(ptr, &v, sizeof(v));
+> > -}
+> > +#define  ST_HE_P(type, size)                                \
+> > +    static inline void                                      \
+> > +    glue(glue(st, size), _he_p)(void *ptr, type v)          \
+> > +    {                                                       \
+> > +        if (unlikely((uintptr_t)ptr & (sizeof(v) - 1))) {   \
+> > +            __builtin_memcpy(ptr, &v, sizeof(v));           \
+> > +        } else {                                            \
+> > +            qatomic_set((type *)ptr, v);                    \
+> > +        }                                                   \
+> > +    }
+> >   
+> > -static inline void st24_he_p(void *ptr, uint32_t v)
+> > -{
+> > -    __builtin_memcpy(ptr, &v, 3);
+> > -}
+> > +LD_HE_P(uint16_t, 16)
+> > +LD_HE_P(uint32_t, 32)
+> > +LD_HE_P(uint64_t, 64)
+> > +ST_HE_P(uint16_t, 16)
+> > +ST_HE_P(uint32_t, 32)
+> > +ST_HE_P(uint64_t, 64)
+> >   
+> > -static inline int ldl_he_p(const void *ptr)
+> > -{
+> > -    int32_t r;
+> > -    __builtin_memcpy(&r, ptr, sizeof(r));
+> > -    return r;
+> > -}
+> > +#undef LD_HE_P
+> > +#undef ST_HE_P
+> > +#undef ADDR_ALIGNED
+> >   
+> > -static inline void stl_he_p(void *ptr, uint32_t v)
+> > -{
+> > -    __builtin_memcpy(ptr, &v, sizeof(v));
+> > -}
+> > +#define  lduw_he_p  ld16_he_p
+> > +#define  ldl_he_p  ld32_he_p
+> > +#define  ldq_he_p  ld64_he_p
+> >   
+> > -static inline uint64_t ldq_he_p(const void *ptr)
+> > -{
+> > -    uint64_t r;
+> > -    __builtin_memcpy(&r, ptr, sizeof(r));
+> > -    return r;
+> > -}
+> > +#define  stw_he_p  st16_he_p
+> > +#define  stl_he_p  st32_he_p
+> > +#define  stq_he_p  st64_he_p
+> >   
+> > -static inline void stq_he_p(void *ptr, uint64_t v)
+> > +static inline void st24_he_p(void *ptr, uint32_t v)
+> >   {
+> > -    __builtin_memcpy(ptr, &v, sizeof(v));
+> > +    __builtin_memcpy(ptr, &v, 3);
+> >   }
+> >   
+> >   static inline int lduw_le_p(const void *ptr)
+> 
+> IMO, your change serves as a good optimization for the original 
+> load/store by taking advantage of alignment. However, the real issue I'm 
+> trying to address is the atomicity of these operations—for use cases 
+> like avail_idx in virtio, and this should not limited to virtio alone. I 
+> still believe we should provide explicit atomic load/store interfaces 
+> for callers, rather than relying solely on aligned load/store. And I 
+> admit it was my mistake to use the aligned versions here in the first 
+> place. I'll send another version later and look forward to more feedback.
+
+Explicit atomic load/store maybe still make sense somewhere as API, but I
+think Peter Maydell also raised that this exact failure may not be the only
+one.
+
+IMHO we could directly switch to aligned access automatically when it can,
+the only concern is we add one more test instruction in this path, but I
+expect it always hit the aligned case.  Also I expect callers of these host
+endian APIs to not loop over a range of addr.  So irrelevant of whether
+above change would make sense, we want to study more on the impact of the
+extra if on the callers.  The hope is it is minimum impact and in case
+there're corner cases we can switch to other API even if existed.
+
+Thanks,
+
+> 
+> Thanks,
+> 
+> --
+> BillXiang
+> 
+> [1] https://lore.kernel.org/qemu-devel/apW0SkNxWPCyvVV6@x1.local/
+> 
+
+-- 
+Peter Xu
+
 
