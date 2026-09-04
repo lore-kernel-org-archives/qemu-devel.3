@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC13CC61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FE5C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJN-0006Bw-1G; Fri, 04 Sep 2026 08:46:29 -0400
+	id 1x2TJP-0006CZ-EI; Fri, 04 Sep 2026 08:46:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJH-00069I-TN
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:25 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1x2TJN-0006C4-Qp
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJE-0006rC-UB
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:23 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-485888b3c3dso872050f8f.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
+ id 1x2TJJ-0006ud-HJ
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-499b2981a7bso9440575e9.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525979; x=1789130779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525984; x=1789130784; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=g5//nCM3pmvphFdrXdMpuw8XsMrA3mZsffpPB3jrr14=;
- b=H+4gA4W9QErtVPR1BZuVe8G4qm4gv8nDf6B0wu+dXBGQl2vaWWZ7fyBC3O7b7qqKL4
- mMEDkRQYxBE5qYNztJxvWYXzcChNpnYeT1T62/KDTAhHLHdd4aDTzuw6UPe37911dqaO
- tUmAajDMWrnUAlDZtevi794bS/yb6UCxt2mL5kgFKGdsfdi+Umce+aC/n2kdxxh26Bfc
- USwAAgM9BaZC1LbKmFqHro6ns4KRmgL+h5N1xqxTcjGrV7tPtlONeEKRhdDrc/gCpYze
- mzAi6htYTBNhhg0g6rlXKYx9Zsi5K9Dk7p2ac+I8/aIgfplSfaKA1pqCQ99SblY1Tplh
- V8kw==
+ bh=dOSUepCPWAWiVnU7uqB1g6HY6ho0kwTrvzKaOUlf+Vo=;
+ b=PN/vBmS1WrOQzRHALOaprlsQWnApQKSSboGfKqxD2JPqxdF6VKHKLsA0pvz8sRExPh
+ 1FXpS9JxJBHkqpqKf/f/1dWt8iWw8bFCtrfHAN89M+E5OWo0DnraVqadMRqCmEh1BIHi
+ I7lGXJfrd+K7KyO+CPXnaKfqi+X6p42VAFTTX/CmddNeOmwG+HDYnISzOSoK7RSVTXAo
+ /JuII6/fNHt/U0F2M5PHVjqDEtmxFZxhEVbNR79jR5pwFTraSiJy2EHtaYyl3YIXwPKV
+ BP7MbzdZE4E0srKh1OvzRbQH86DntcgFP1LDudpnX6iXij7e42wIt09of7dTqMTqHYDl
+ 8V0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525979; x=1789130779;
+ d=1e100.net; s=20251104; t=1788525984; x=1789130784;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=g5//nCM3pmvphFdrXdMpuw8XsMrA3mZsffpPB3jrr14=;
- b=an7Sj9kLS8ErQA3zm9q1EzPBQ0pG1WCz9OwGj8ZWLJwI/n/TXq5c+5Sn+Hc0XxJxYk
- qlzup6tZgN47unV/gt0V8fnDd2y3VMwjUDFEsxMOPvSYM3gRQOhjnYnwGmCO6KIdYKPV
- KGJTbkbFFOuu2SWmEkkXA75hMhb8otZC2O9kqIWiO3qFA5jSOPMZfa8JC1Aa7riM6hve
- oRrWRwAZRxQJGaCLqqUGrkqcJRk18xYZueM9yBn8mYY7hfSs5WN+eDnKkExI9boS6LqI
- Fj0jxt5J+yWwtaDJbckftJIBzZsclBbYcd1OprFz3JB6LBoTVMmEKMLgguzFpoUcPVGM
- vCYQ==
-X-Gm-Message-State: AFuF++kt/iM9pJP6XWEPucLvgIjUW5V/qanDhfI8BJfcZAVZkT6sHjHW
- u1Zvpf5du7jnAPANiTRqcCtnA5g1ri2gpPs3DoMzUFqzgUbvDPotqawlH1F6qkXfHls=
-X-Gm-Gg: AYBFou2hdSCJamD2osBIXacXXiJu/x8IZhERtie0h6Sg/kPWuqvfyVxqhE9k2djbDbH
- yonD5AxpDy2iJ2Fl8AMzEnPFqv5eLFGkZuoUFD13eW24qZdCSD1OeTfcsTtFRMYG9g0Cz1zrjKE
- dq4EWAzrnM0u8XBza4gtLl/eUIrX51aGK0OtKy2iZfN3kR8+yUBjkaIsim08xAor/3p3Rab7ZzE
- eflBOSQ/TDXD4chij8dFnv1J0oDxVszBJ6YrCrRFuiejxrjK0efCKgRNHb33JqTGhuRIkXRBHLt
- uWDB80ghkJqSCJBBEvqiciaIR+10tPwR8hY7lsmF0yAyab3DUY9ldOg7DNK2Vdz+Qe21vMFW4fx
- sEuDbHoDhHJXybcxNUFDca/KLnMFBNC3UF6u7niKVYZrrqmDeIYAjeQgnH9b2+WAtfXhUtQxesa
- QfGMas5eyeKm7fcNVLSwMLVnSx4B4lXsG9V4EuVOy3D/Adn2dKnbq+wokHIITK
-X-Received: by 2002:a05:6000:46c7:b0:485:847f:fd97 with SMTP id
- ffacd0b85a97d-485870914ccmr6111641f8f.4.1788525978818; 
- Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
+ bh=dOSUepCPWAWiVnU7uqB1g6HY6ho0kwTrvzKaOUlf+Vo=;
+ b=qgLu4qWd4oe6KxAkqNsLnv3vyf0j1jPm7XHiTsvSvAeVtRvOvHYEAeplK8Hik81Lth
+ Py84hflGAubgPlwFppPIEhhzNiVTHFenHinak3NS42AcLJ2h9kKBNPp1d21zClLrFYZ3
+ K8UMFmxaCczQPPfd0m/FAB9Z8WPQnPVfzRfRLHDNP/ilFAwNgB7zzPPWlpwWUFY16KmX
+ d2A6xq8rFn0UZOl2O4bsUphkrsXRykNNawIznQjtGKwh9O8eaecfQsXqkh4pDyVEaOGI
+ jbG49w9nzhlI7Vy2gdKzscvCBPlmtWvA6t3vC6Ur2gg1bjW01z9qC4AyLEC1aaAG9pDe
+ FY9A==
+X-Gm-Message-State: AFuF++lfM40vhsGcQRjqg5SwhKyaWaL3Yr96SaWmORDjbp+KsT6SbxEj
+ JVvpEoCHfVaUvJDU6Rsdy9Xim44fzdjxVgKvQ7eJ2ggVnJdaVzkRBrccQd+bN0Q1Uo4=
+X-Gm-Gg: AYBFou38PMHErJbQUPWHMbBhlNg6fV1PDDurL8HQGMcrI/+ORbiKU7DdrM8LYLxdLbv
+ YTIRgEE4mBVj8cfjq7/ygdpXPKC8m4QlFkXXd0gLFmGXSmjX3tJa3ABxaPSQhgWw47NpnJB2BGS
+ znO2lRn1Jg/Yw5+i1TAMT4X7ytXYWUFKA1+3mPx8XBL9IUjnkYAl7/+EGIkI2dFPGpwDmN9x4EN
+ jIFvx+XJo6kuCvNFL0cLnZeQvsLbRuSragyIhCHGd0SwMRWg7iu31d/OuC4KSoo6tNWbXbez893
+ 2cT8NMDk5lcLkncNDgsHx36UL6VqUU5XljP2t+riE9rvgVrmdkN5cag6bgfyTgff6SptwnSZx/r
+ i/PygkU146zz3fSqVroMW9uUKq+dm/W64YnEAc0yHRGwcMdxgYQJfekGj2tpp0w9hlY7vRoK7uA
+ 7uXkCsfDTYybqJ0QX612gtm5igCnUFq8PIId8Xbc6FzuiwHA==
+X-Received: by 2002:a05:600c:3485:b0:49c:cee0:e7c1 with SMTP id
+ 5b1f17b1804b1-49cf825c119mr105479445e9.16.1788525982619; 
+ Fri, 04 Sep 2026 05:46:22 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858ac2b4cdsm4587385f8f.16.2026.09.04.05.46.13
+ 5b1f17b1804b1-49cee80eda4sm149526505e9.15.2026.09.04.05.46.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
+ Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 262EE618C3;
- Fri, 04 Sep 2026 13:46:08 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 9D60361D10;
+ Fri, 04 Sep 2026 13:46:11 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PULL 039/105] tests/tcg/arm/fcvt.c: use raw opcode for FPRCVT
-Date: Fri,  4 Sep 2026 13:44:53 +0100
-Message-ID: <20260904124604.2207440-40-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 068/105] tests/docker/dockerfiles/debian-all-test-cross.docker:
+ add or1k toolchain
+Date: Fri,  4 Sep 2026 13:45:22 +0100
+Message-ID: <20260904124604.2207440-69-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,38 +108,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-fcvtzs d0,s31 requires fprcvt support in compiler, which is only
-available from gcc-16. Since our debian-all-test-cross container has
-gcc-aarch64-14, this test will never run in CI.
-
-Replace the concerned instruction with raw opcode, obtained from:
-$ echo "fcvtzs d0, s31" | llvm-mc-22 -triple=aarch64 -mattr=fprcvt --show-encoding
-fcvtzs  d0, s31 // encoding: [0xe0,0x03,0x36,0x9e]
-
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20260827221506.91574-40-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-69-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
-index 7c0cc4367e7..8c81ba8a1bc 100644
---- a/tests/tcg/arm/fcvt.c
-+++ b/tests/tcg/arm/fcvt.c
-@@ -173,9 +173,11 @@ static void convert_single_to_integer(void)
-         output = input;
- #else
- #ifdef FPRCVT
--        asm("fcvtzs d0, %s1\r\n"
-+        asm("fmov s31, %s1\n\t"
-+            /* "fcvtzs d0, s31\n\t" */
-+            ".byte 0xe0,0x03,0x36,0x9e\n\t"
-             "fmov %0, d0" :
--            "=r" (output) : "w" (input));
-+            "=r" (output) : "w" (input) : "s31", "d0");
- #else
-         asm("fcvtzs %0, %s1" : "=r" (output) : "w" (input));
- #endif
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 6bc611b0e6c..9a71af0e41d 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -172,7 +172,19 @@ RUN apt update && \
+   clang\
+   dpkg-dev\
+   gdb-multiarch\
+-  libclang-rt-dev
++  libclang-rt-dev\
++  wget\
++  rsync
++
++# https://openrisc.io/2025/04/20/toolchainrootfsbins
++RUN if dpkg-architecture -e amd64; then \
++cd /tmp && \
++  wget -q https://github.com/stffrdhrn/or1k-toolchain-build/releases/download/or1k-16.1.0-20260614/or1k-none-linux-musl-16.1.0-20260614.tar.xz && \
++  tar --no-same-owner -xf *.tar.xz && \
++  rsync -a or1k-none-linux-musl/ /usr/ && \
++  rm -rf /tmp/*; \
++fi
++
+ ENV AVAILABLE_COMPILERS="\
+   gcc-aarch64-linux-gnu \
+   libc6-dev-arm64-cross \
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index 833185f6072..c0ab05a5ff3 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -61,7 +61,19 @@ RUN apt update && \
+   clang\
+   dpkg-dev\
+   gdb-multiarch\
+-  libclang-rt-dev
++  libclang-rt-dev\
++  wget\
++  rsync
++
++# https://openrisc.io/2025/04/20/toolchainrootfsbins
++RUN if dpkg-architecture -e amd64; then \
++cd /tmp && \
++  wget -q https://github.com/stffrdhrn/or1k-toolchain-build/releases/download/or1k-16.1.0-20260614/or1k-none-linux-musl-16.1.0-20260614.tar.xz && \
++  tar --no-same-owner -xf *.tar.xz && \
++  rsync -a or1k-none-linux-musl/ /usr/ && \
++  rm -rf /tmp/*; \
++fi
++
+ ENV AVAILABLE_COMPILERS="\
+   gcc-aarch64-linux-gnu \
+   libc6-dev-arm64-cross \
 -- 
 2.47.3
 
