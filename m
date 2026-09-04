@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8156FC61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD990C79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJQ-0006DF-7Z; Fri, 04 Sep 2026 08:46:32 -0400
+	id 1x2TJQ-0006Dk-Rz; Fri, 04 Sep 2026 08:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJE-00067l-FM
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:20 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1x2TJM-0006BI-8j
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:28 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJA-0006pC-5i
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:18 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so13332625e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:15 -0700 (PDT)
+ id 1x2TJH-0006tY-MU
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:27 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-48589798dbbso595942f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525974; x=1789130774; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525982; x=1789130782; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ur+ntwxX3eXj7Zio7Z0Blbehu4cxmDZiiM7xTvB3xTU=;
- b=RxoIPPFIpuo33h6edNTvC4vyhUr4EdGs1dRYQm7upL6fvK2VwhyWI8v9NdnxLXdMWq
- DqD2Iu7yUecbe2KG7+HLBCHtWth73T0UXUFyS0QVXswGCB1i0qIYwZWigEoD0d11AO5R
- AQye3kGasxAwl8Np2i52qevUnvyAo1u1jNrB5BE+yQ9d74mjBWqCLabbfi6waePZQ/wr
- zwrj/yjaEz85iMoiwHCNGhl7HRKLV4LBTEaTm2Y/nmsda2yAI5Bobvaib0VAg4QVhG2H
- ooyjaZLfhnYVa1HVvUegJDNdy2aYS+iX/PxWV0/O0xfYABB5OoV4w/VKi7bjrH0wnm9f
- ABuA==
+ bh=3dgVuutlV7hrgQvHehoq33u4nkPWd6zJN4Tj9pV47lc=;
+ b=XzLoBBhDbgd32U4e9QcVkm/KHj2QccZ2HRtjVP+o41gefahFR6IL8eOLkJQIKtKDEp
+ 5idbjOjY9VlqjIb6HNmDwQ6fHsxZsQDswmxinMrGxQC857a9lad+2N3wVT8VZT3eKlBm
+ NfcgTljbZJISn+CoPYOvjEU4eoOpgRDpcgRNkC8lGRxUuwovtYs2Zb/BsivFahGVS+ON
+ Y53ItSy08kUuPUTqPwBP4oDsjSMfqdcWh1zLkq/ZhVNk3kjE20PPYA6OnZW4NReHuO6C
+ m5Bay5yd5tK7siGoph0m4Bn/AEEm7IRB9XPAJPQ41vZFQajKU/uJ46Ny89ReOj+Z9L/L
+ jN9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525974; x=1789130774;
+ d=1e100.net; s=20251104; t=1788525982; x=1789130782;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ur+ntwxX3eXj7Zio7Z0Blbehu4cxmDZiiM7xTvB3xTU=;
- b=IsE9b5VMzqG7ClZjodZiuQg9pH/k5b8hTBeJlhUfTi6mycxr45TbtjyJ2/IC5IwOpy
- 0JcVkeVTZFwzjDv9Ls7FZfHAczPXDDLPTk751YQnUB0cGeHsmie3nL5IOmkjNw2+ZUJw
- vavnqFiIRdIcpMl1/H2Sk5F2QxxfTXmv9FUTddvvCmrP4rsgCSiBrPoSwOEBydir012D
- p5DB72konjSL/E/jUeS/NCQBErDeQIQHjkfUsowrA0dho7aqaciEATfPnP5KMeBWR0hZ
- FL1J3Q4B8cct/fa23vDqyP4Uk2SNYSczbg08zd4Y4px5oqYT7GthJaZTJZKYa//dm8Sr
- 7eLQ==
-X-Gm-Message-State: AFuF++k9XjVvbQFo3NAQdMNivn+08z0ghuamp5ioDtLYouWcF9vmy1+R
- aRCsxEs1fLqzT6qeTofSrMY7jLtuMHuwQKinEWMly9g8k1lfE2R8GIhgKUEszbniCL0=
-X-Gm-Gg: AYBFou07hhwGAGeocGNzIj+aKZxVwCGcXDydKrOS44gNs/zRZfElHC9jQh7ruQA/yu9
- e0mARpOPqEHj5iBE+05W6C5E7voA/KCwlPY64Cp6+Dzx5tezkJi514rZeQkaLbNp+g6ATqYH8kF
- dyH8jkopfxWYTDzkhSEDF9K0CmTYog2we3/wVAN433NPYa3Gs6OBd5N7ZiSIyWnWMuUE/MItuw5
- hOgSfjceY4syAdMj/kzlHxOSx5/JN5CrnxjOxdzBOLhdnOPsM/F4Tg2gK2yIQreHTQ+SJFQeX6u
- Uld0019rmd7sGnIfWBQN08SMMrGwL914CnYZ9UBdJku9W0tH5QlZfriQqZz6uJyieTZWmnhhzHl
- 9KPopkXSFX9DcG0R32teD3CQsRIhiFRCeOkiyU273pCxSvlCgAQmvG/dbGJcyOv2My+0REAwZPe
- FQ9D084oa6kuC7bigQzoIBPTt2XL5Qj0t60q4qbKce1TulnbkYXqnTCp1+g3Uv
-X-Received: by 2002:a05:600c:3496:b0:499:b65d:1250 with SMTP id
- 5b1f17b1804b1-49cf7fe62admr94138225e9.2.1788525972143; 
- Fri, 04 Sep 2026 05:46:12 -0700 (PDT)
+ bh=3dgVuutlV7hrgQvHehoq33u4nkPWd6zJN4Tj9pV47lc=;
+ b=gj1LroyT06p08Q5UnpAS6S0w63STpWWEnSd/mLg1hzTCD9C8lW/C8bCR6ChskpTwR7
+ GB81jvVuRyBe1Pc3JYFyc8PjBCiHWWGgYD1XS8wTare4ErvfCeVOQgFMD5yQKm9qgIbZ
+ bCNqL7OUdj/wcAwgJY77aVHhdh1QsW1/ZxlKN0qR/XOV22dWLUpg46RTouDhAW/+n6zd
+ cYtK1f8uYlPeytD8yaQVINtsO5uimydrZcTx1QvKsaX2Tf1kH8TR3icX2IvVfAwp1z58
+ IfJT+Fzj5JUMrmbAIhC7q6qFvhp+/fjNbZ0EAYSYLUiT0KbKfUdSf1LNc6o/3aZD8tpx
+ fJuA==
+X-Gm-Message-State: AFuF++nzr8RpBk9heuKVt0px4ppJUJK60F3cCBetFygRDybSamVm6WJw
+ M0+JMFBMxfjf3bmlBEvZpGXSbeWf4dkFMLLp65ha95why641EulZ1UotYH0wkRhBXQ1kR3gxIH8
+ NuqP4ZE0=
+X-Gm-Gg: AYBFou2cBIhKFOHY4e2M/Vf268Nzs9eV+ZToE4OBVuW1zFkcCYDVwtkD0EtSA0OqFGq
+ e3tLFttaeEvl5bOMZUvLZ1uSq774SgQokzNoo291NLBryo3yUtreGIBKAEjj9q7HkxiCymPaFwt
+ XvTp2bPs2qB7IqzocHZic7OTFa5C/pYHvyubX5cXSVsDPKWT+DssZXWTe+oW0jP1OF/jZPoDtER
+ +Qt9NcU5VQCL+k5gWwhUqv9EZxRLFGCEXG8UQGlZv9jgsWw2NI+mrOH2HvTSY9SlXswJ7+XRNW1
+ YTiPsUmKGu056TO4o+lrsnetllgX4tn7Sz9Jb9XitfNcJ//lH4nprNYLuoU3SiPcnkct+klINwS
+ 1qfTYsCkAsfgBuuiSfWCMJF07cn+DpjTYa13ks3BP5PcmDOBvzrGp4siiGN03ZEUvrYTJmmJQ4b
+ +QnjiFea2J6zqS2t/ldth72aclzM2GXOmFrWIiiGk/HVB/37fSNxRZJ7S4+J3G
+X-Received: by 2002:a05:6000:2408:b0:485:8a46:7067 with SMTP id
+ ffacd0b85a97d-4858a467280mr4974369f8f.57.1788525982082; 
+ Fri, 04 Sep 2026 05:46:22 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf7736132sm66126895e9.12.2026.09.04.05.46.08
+ ffacd0b85a97d-485885be1c1sm6033442f8f.32.2026.09.04.05.46.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:46:08 -0700 (PDT)
+ Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 562AE613A9;
- Fri, 04 Sep 2026 13:46:05 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0FEE261929;
+ Fri, 04 Sep 2026 13:46:09 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 010/105] tests/tcg/meson.build: introduce env_var
-Date: Fri,  4 Sep 2026 13:44:24 +0100
-Message-ID: <20260904124604.2207440-11-alex.bennee@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 047/105] tests/tcg/arm: user tests
+Date: Fri,  4 Sep 2026 13:45:01 +0100
+Message-ID: <20260904124604.2207440-48-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,49 +110,201 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-We add possibility to set an environment variable when running a test.
-An example of a test requiring this is
-tests/tcg/multiarch/linux/linux-sigrtminmax.c.
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-11-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-48-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+deleted file mode 100644
+index 613bbf0939a..00000000000
+--- a/tests/tcg/arm/Makefile.target
++++ /dev/null
+@@ -1,87 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# ARM - included from tests/tcg/Makefile
+-#
+-
+-ARM_SRC=$(SRC_PATH)/tests/tcg/arm
+-
+-# Set search path for all sources
+-VPATH 		+= $(ARM_SRC)
+-
+-config-cc.mak: Makefile
+-	$(quiet-@)( \
+-	    $(call cc-option,-fno-integrated-as, CROSS_CC_HAS_FNIA)) 3> config-cc.mak
+--include config-cc.mak
+-
+-float_madds: CFLAGS+=-mfpu=neon-vfpv4
+-
+-# Basic Hello World
+-ARM_TESTS = hello-arm
+-hello-arm: CFLAGS+=-marm -ffreestanding -fno-stack-protector
+-hello-arm: LDFLAGS+=-nostdlib
+-
+-# Float-convert Tests
+-ARM_TESTS += fcvt
+-fcvt: LDFLAGS += -lm
+-fcvt: CFLAGS += -march=armv8.2-a+fp16 -mfpu=neon-fp-armv8
+-run-fcvt: fcvt
+-	$(call run-test,fcvt,$(QEMU) $<)
+-	$(call diff-out,fcvt,$(ARM_SRC)/fcvt.ref)
+-
+-# PC alignment test
+-ARM_TESTS += pcalign-a32
+-pcalign-a32: CFLAGS+=-marm
+-
+-ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
+-
+-# Semihosting smoke test for linux-user
+-semihosting: CFLAGS += -mthumb
+-
+-ARM_TESTS += semihosting-arm
+-semihosting-arm: CFLAGS += -marm -I$(SRC_PATH)/tests/tcg/$(TARGET_NAME)
+-semihosting-arm: semihosting.c
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-
+-run-semihosting-arm: semihosting-arm
+-	$(call run-test,$<,$(QEMU) $< 2> $<.err)
+-
+-ARM_TESTS += semiconsole-arm
+-
+-semiconsole: CFLAGS += -mthumb
+-
+-semiconsole-arm: CFLAGS += -marm -I$(SRC_PATH)/tests/tcg/$(TARGET_NAME)
+-semiconsole-arm: semihosting.c
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-
+-run-semiconsole-arm: semiconsole-arm
+-	$(call skip-test, $<, "MANUAL ONLY")
+-
+-endif
+-
+-ARM_TESTS += commpage
+-
+-# Vector SHA1
+-# Work around compiler false-positive warning, as we do for the 'sha1' test
+-sha1-vector: CFLAGS=-O3 -Wno-stringop-overread
+-sha1-vector: sha1.c
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-run-sha1-vector: sha1-vector run-sha1
+-	$(call run-test, $<, $(QEMU) $(QEMU_OPTS) $<)
+-	$(call diff-out, sha1-vector, sha1.out)
+-
+-ARM_TESTS += sha1-vector
+-
+-# Vector versions of sha512 (-O3 triggers vectorisation)
+-sha512-vector: CFLAGS=-O3
+-sha512-vector: sha512.c
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-
+-ARM_TESTS += sha512-vector
+-
+-ifeq ($(CONFIG_PLUGIN),y)
+-# Require emitting arm32 instructions, otherwise the vCPU might accidentally
+-# try to execute Thumb instructions in arm32 mode after qemu_plugin_set_pc()
+-test-plugin-set-pc: CFLAGS+=-marm
+-endif
+-
+-TESTS += $(ARM_TESTS)
+diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
+new file mode 100644
+index 00000000000..08a863699fb
+--- /dev/null
++++ b/tests/tcg/arm/meson.build
+@@ -0,0 +1,78 @@
++cc = 'arm-linux-gnueabihf-gcc'
++cc_dockerfile = 'debian-all-test-cross'
++cc_docker_host_arch = ['aarch64', 'x86_64']
++
++tests = []
++
++# Multi arch tests
++multi_src = []
++foreach t: tcg_tests['multiarch-linux-user']['tests']
++  foreach src, setup: t
++    new_cflags = []
++    if 'cflags' in setup
++      new_cflags = setup['cflags']
++    endif
++    if fs.stem(src) == 'float_madds'
++      new_cflags += ['-mfpu=neon-vfpv4']
++    elif fs.stem(src) == 'test-plugin-set-pc'
++      # Require emitting arm32 insns, otherwise the vCPU might accidentally
++      # try to execute Thumb insns in arm32 mode after qemu_plugin_set_pc()
++      new_cflags += ['-marm']
++    endif
++    if src not in multi_src
++      setup += {'cflags': new_cflags}
++      multi_src += src
++    endif
++    tests += {src: setup}
++  endforeach
++endforeach
++
++tests += {
++  'commpage.c': {},
++  'hello-arm.c': {
++    'cflags': ['-marm', '-nostdlib', '-ffreestanding', '-fno-stack-protector'],
++  },
++  'fcvt.c': {
++    'cflags': ['-lm', '-march=armv8.2-a+fp16', '-mfpu=neon-fp-armv8'],
++    'expected_output': 'fcvt.ref',
++  },
++  'pcalign-a32.c': {'cflags': ['-marm']},
++}
++
++# Vector SHA1
++# Work around compiler false-positive warning, as we do for the 'sha1' test
++tests += {'../multiarch/sha1.c': {
++            'exe_name': 'sha1-vector',
++            'cflags': ['-O3', '-Wno-stringop-overread'],
++            'expected_output': '../multiarch/sha1.ref',
++         }}
++
++# Vector versions of sha512 (-O3 triggers vectorisation)
++tests += {'../multiarch/sha512.c': {
++            'exe_name': 'sha512-vector',
++            'cflags': ['-O3'],
++         }}
++
++# Semihosting tests
++semihosting_cflags = ['-marm', '-mthumb', '-I', meson.current_source_dir()]
++tests += {
++  '../multiarch/arm-compat-semi/semiconsole.c': {
++    'cflags': semihosting_cflags,
++    'wrapper': [prog_run_with_input, 'X'],
++  },
++  '../multiarch/arm-compat-semi/semihosting.c': {'cflags': semihosting_cflags},
++}
++
++if 'qemu-arm' in emulators
++  tcg_tests += {
++    'arm-linux-user': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'cc_docker_host_arch': cc_docker_host_arch,
++      'folder': 'arm',
++      'gdb_arch': 'arm',
++      'qemu': emulators['qemu-arm'],
++      'tests': tests,
++    }
++  }
++endif
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index a7699b7f62d..fbee86e6b4b 100644
+index e0789d9c1eb..17f48bebf98 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -15,6 +15,7 @@ tcg_tests = {}
- #           'test_name': ['provide an alternative test name'],
- #           'cflags': ['additional cflags to compile test', ...],
- #           'qemu_args': ['qemu command line flags', ...],
-+#           'env_var': ['VAR=value', ...],
- #         }
- #       },
- #       ...
-@@ -57,7 +58,7 @@ foreach target, plan: tcg_tests
-     foreach src, setup: t
-       # return a clear error if user misspell a setup entry
-       foreach key, _ : setup
--        allowed = ['exe_name', 'cflags', 'qemu_args', 'test_name']
-+        allowed = ['exe_name', 'env_var', 'cflags', 'qemu_args', 'test_name']
-         if key not in allowed
-           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
-                 ' (possible: [' + ', '.join(allowed) + '])')
-@@ -122,6 +123,10 @@ foreach target, plan: tcg_tests
-       # some tests expect QEMU env var to be set
-       cmd = ['QEMU=' + qemu.full_path(), cmd]
+@@ -139,6 +139,7 @@ endforeach
+ subdir('aarch64')
+ subdir('aarch64_be')
+ subdir('alpha')
++subdir('arm')
  
-+      if 'env_var' in setup
-+        cmd = [setup['env_var'], cmd]
-+      endif
-+
-       test(test_name, env, args: cmd,
-            depends: depends,
-            timeout: 120,
+ image_targets = {}
+ exe_targets = []
 -- 
 2.47.3
 
