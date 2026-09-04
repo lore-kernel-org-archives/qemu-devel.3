@@ -4,145 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B49C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93287C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:14:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WWB-0001eV-74; Fri, 04 Sep 2026 12:11:55 -0400
+	id 1x2WYo-0003Nt-Ce; Fri, 04 Sep 2026 12:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2WW5-0001dA-QT
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:11:49 -0400
+ id 1x2WYn-0003NT-3V
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:14:37 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2WW1-0007tv-Hh
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:11:48 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1x2WYl-0008MS-CG
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:14:36 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 684EjK7N4158892
- for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 16:11:42 GMT
+ 684EiXMT195986
+ for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 16:14:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 319RC2bK5JelNNshAyAdW1rnMQ1Dm5h0J3wBGe6Q/n8=; b=KyMa+m/FQpPXp1Hq
- fMQLyvVyyiWbhBz9cOOfUp7J/w76vQaOjJFT0S6gYIq8hSQX5hsuYnqZmIbyrafg
- XsSnpMDtmeHVnNHAxkxaoNB6T20UEkooCLs/H98VAPLPT+oTam+mZ3OwZfoG3vUw
- HHzNDPAutA1nA3MSt7QUk8z8rT6OnaHXMNkPxAEM8RtIvCEvPkYiiDFOSdHPeJuX
- E4xm/pthrS8FR3TeKmXBbyQ/ski/WRS3FLW4Hp53IAcQvQUs0d0uid2yTktfCG1Z
- 21oxr8DkZgKAJvbFWHabvJcHn+sYSoRSZgitXR6cwCm9nzra9A68GkcOsq1NHksf
- y3lGhQ==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gg011gnv5-1
+ 1HFPbKiE80mDQy8kEDQjv0PdzGlIQNYz+icz2F9PvRU=; b=onGqD46mQTNLK4Mv
+ zzvD0EzcVzT6xpZ4UQk7FEHEv01Qdvou4rlZQDD0VwrRyJiX0/L21zkKfTwD3gW4
+ fNhn9sIOBAeJ4cF/rMKfdK39j9VeG5Y2yLM1XnX+Ao9C8bVTHZ5zy+1ghoq8DbT7
+ 4/5wWqsraanAcCtyS+zWQmgXMMKOhjnaWMpe8uD/3U73oxI0XXRgwfjjYDj1KDrj
+ H7LKlmmsJFPItmx1CDZgUU/eyMfz3fk+l+FTzCrXzbZ97qxnnyzR3G/+VtbkoVnf
+ FZeGRASbBCbduUcP7UQwklGGQjGBsfmGUQ9nwnowWkTUUOh8wwewC8PVmjZIr9Vd
+ NeyEWw==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gg0120r46-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 16:11:42 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-785b66a7017so300033137.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:11:42 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 16:14:33 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-744e7890eceso254067137.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788538302; x=1789143102; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1788538473; x=1789143273; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=319RC2bK5JelNNshAyAdW1rnMQ1Dm5h0J3wBGe6Q/n8=;
- b=CTpMPUDr1t9L63xz275nsJHzk+gE7QVY4gJpO7MgBlS+LQYCdyo09oYnmW0aj/AzX2
- fXK+xQQzZSkRuJiqsMz5y2vlo9ldKjmRIt70+cTAcaBaoaANhFcQKJkbTK0dGjH//WJa
- KQBVZVfvwUuZ5ZX9acxP1QblYVju/WM+wzDPp6ed6CymRB118hh1sNLvfwQFFWZnVpHE
- vusMYHShLMUoRipHbp45EWXBUMK+X9PCwn8ea5Sk+u3ALE8zOLImYmEBEwMU+QLObqLf
- XPhH/4BXVdktqsDHHiCgcm2CaIXPWzxKO68VPJpBIRehUsh3OMX5/+813wu1sxZXvb4R
- ya8w==
+ bh=1HFPbKiE80mDQy8kEDQjv0PdzGlIQNYz+icz2F9PvRU=;
+ b=GZXsqMXZkw20Qbc63u5378pRxaJ2+4S+hbR+iEKxh78GuMW9jcTXs+M9aINAQMg4Pm
+ +mfn/aJ16GVYg8OoEkR22be+maT+pYamouW9p+r6K+51CXlY+v8weOz8bhwk4jWrwG++
+ G6RC9atuBc9xKPZWqgYIsoJKpgpgl+p5d+/i2arCoMFl9lrkNatd//dNE6Kp5k1Ic7Iz
+ GPbE2norPePxZhwpSzXbkfCoIcHRYuSWgEniH1cnJGR7HQPR9Gtinon0EdtSxZVGRh2k
+ 2BayQBdMHWESPoXkYqFu4KCwwHyqbCuROgjrcOjfZCFPxjWVT9GAklmL84GO6/X0B37S
+ 52Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788538302; x=1789143102;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20251104; t=1788538473; x=1789143273;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=319RC2bK5JelNNshAyAdW1rnMQ1Dm5h0J3wBGe6Q/n8=;
- b=K6XK2AE/UqJr2ytKBGvYu43BvdO4We5y+UjeIPUmHFnhyTVKbWdVVAg8FqNiNZ/ybh
- fAOlnvRA0Ea9nsZW7/8JQSr8cf9jwyZTeGPsaYgIqFFKM6EeSfAre5N6421aUVUeCRCV
- t0eFqFOyMULriANTMlez3KxIyfVUaLDmT9C18Ze21EJd5zko8MzyywBBFu33vXMCGq28
- 2DL8r7pNmxYNKhey9gZlN3NfACm5kl5Wv/dWotBrt3y3Y53CToO2lxpx8Qv8fjkQ7O9X
- etMKaaVXFzk+SCCJmd5LSs/XacFxDBPV4spRkdMSYdMnWYNqdtlpikGroHpBB9ZqVMNB
- DBrw==
+ bh=1HFPbKiE80mDQy8kEDQjv0PdzGlIQNYz+icz2F9PvRU=;
+ b=rwhUH9CNCMr1CoSsjBiLY1XUp+cVDHhEI7H3RiFJTxEyGnUk+RBHxmyJJPFMbZiyz9
+ iic6dGLPvV7WUFUHKt6jEehmOIsZHbcl26b9aUcCPPiubqnfZmRVyn55mLkLpFQpA66Z
+ pA204lMyPT4iL1GrqjQ0Gjs0N/V+dXdg5xEc9OSO7a1eIiURvIMc6akF606U2xXm0C7a
+ bBTxqzTeyBMN7QPx5PNLqm80qFODkRfyCdUxGDgTz1exdbfiZZYYBkZGUZd2rmixUrwt
+ XtB2yBOQ/SxgeRfSkphB7Nw2lpEOPWtBSstrgzvgFeEMLvFNVb3gODgmWsRaPTapBNws
+ 8T3w==
 X-Forwarded-Encrypted: i=1;
- AKwUvBz0L0NEKey36ZEAJEp8u6wtGHO1HiHd6HbK0fosVlu8jMNBV69GvWrF8g5rsieeFt8XVFZykmVHY5eB@nongnu.org
-X-Gm-Message-State: AFuF++mSobMXakt9G1ut2EMhFra1om2Xd6hq+fQBfGCuV4K6IuldzAZY
- iinE2binnSF8+FHOROjsfXtINhvOxidg67+otX5Zjfjq00gCyICaxkX84Y4j6JGqoYCeN2fWXkp
- cGVw7pjK5/Rb+RVLzPuUcMkW9Dw6UV/lfhSAt021BHPg1AoXehxDtQZSZRA==
-X-Gm-Gg: AYBFou2b8gMQsMZdKhTspkA7RBm3VFJOTN4S4CPHfzQDM4DMjWKlp1pBurJNp7Bak8E
- yR32IGR5VQF9CjV2ddJf9vf2R4I4BKkWT3bWiMuwmnh/Ae0zCDUDGVSRHKOKKFU+JtTPNa0SRw8
- DIUK6LDrPHHwOIZCkPCvgo6isP7JeZp1Hlp2py8MW4izpPkhI2jrJQNjGGOVT3zgRxVZOG4LXde
- puszo3LcKy8G4uxovlmN29Czj510zaJbhjlPzYL3V300yZ++DStGpBMQ3VwFbl9VeSUSea2Q1f1
- LE3t1ocsFkwrJAJL7/BLPFMlYIoArF3WCcvosLX2cpk9WBsfqM/KFw0Lc7Bx8VUYPJSEr985f+y
- 68aoSv12x57jK03d7ll9G6c1PW6VkegbZWQ==
-X-Received: by 2002:a05:6102:943:b0:782:de7b:eead with SMTP id
- ada2fe7eead31-78a4a68089bmr2218817137.1.1788538301572; 
- Fri, 04 Sep 2026 09:11:41 -0700 (PDT)
-X-Received: by 2002:a05:6102:943:b0:782:de7b:eead with SMTP id
- ada2fe7eead31-78a4a68089bmr2218793137.1.1788538301030; 
- Fri, 04 Sep 2026 09:11:41 -0700 (PDT)
+ AKwUvBxm4OP1ugymJF/cPODq/9UD0ZzcJCBxqJ06aP/nUt0o8wohJAqqSM5gMxrEPkIwnydv5qj+T1LzRlbJ@nongnu.org
+X-Gm-Message-State: AFuF++kxj+aa3CtdoZi3e4Rqqzxy5YsxRRHyj/ge24RknOXyDEy8ZxZg
+ YKwirNy9ucxpr8EqFwMXb+RnpFrjhRqAB/hfO531p7XVUIYL3CMo+ivTnyCRTnZgzjz86hMvTu3
+ dSeskS6SKQ75HwSZJWDQ+ZhT3+GoKdF99PF1jxL/iGoiHYtMTOq41ylNs6A==
+X-Gm-Gg: AYBFou1Wyi/0bo12LsbbvdB5bajYn7r6VhE0HXCuUoRcYyd+NkpWjgk6Gc69R4KrO1X
+ MgIefPEn2HTObNy3NMaO5p87JZbcIU5FpRe7teSx4LxfcmxvKJjAASpZ9oYxCbjbfkb0OArfCZi
+ bHNYDiUkLFXB2V1Ylpr3LOVg2hRrwO7x3gdTcvQAZ6fY+xHQXJq1WT2jmOy7ojk0DzoV7339q7r
+ I1U6jwYKiVJJfuxxBOHdB5BoeeJwIXKQACggO3XOFpqsq3P25YbkUWCynXm2LobjhN8ATe3IYgi
+ DpdIUq+mtfGyx473g4zXw12Enl74jy7Cny97BTThlKAGqTAP/PByjzS0DofWFBpQnUIy7FKM2X/
+ Ib4T68Ba+cYCOFB/e9yl1V2Rgtd/8gvmw0w==
+X-Received: by 2002:a05:6102:160f:b0:781:210d:28aa with SMTP id
+ ada2fe7eead31-78a4a8be7c5mr2390182137.2.1788538472993; 
+ Fri, 04 Sep 2026 09:14:32 -0700 (PDT)
+X-Received: by 2002:a05:6102:160f:b0:781:210d:28aa with SMTP id
+ ada2fe7eead31-78a4a8be7c5mr2390155137.2.1788538472508; 
+ Fri, 04 Sep 2026 09:14:32 -0700 (PDT)
 Received: from [192.168.69.202] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858ac2b4cdsm5738768f8f.16.2026.09.04.09.11.39
+ 5b1f17b1804b1-49ce5952560sm186017105e9.3.2026.09.04.09.14.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Sep 2026 09:11:40 -0700 (PDT)
-Message-ID: <7a6ef890-a630-46b3-aedf-a687fec487cc@oss.qualcomm.com>
-Date: Fri, 4 Sep 2026 18:11:38 +0200
+ Fri, 04 Sep 2026 09:14:31 -0700 (PDT)
+Message-ID: <f41f98ed-d33f-4863-a9d7-b9fc72220a20@oss.qualcomm.com>
+Date: Fri, 4 Sep 2026 18:14:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/24] hw/riscv: Restore Microchip PolarFire SoC Icicle
- Kit firmware boot
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Alistair Francis <alistair@alistair23.me>,
- Bin Meng <bmeng.cn@gmail.com>, Chao Liu <chao.liu@processmission.com>,
- Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Thomas Huth <thuth@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org
-References: <20260904155758.3833179-1-bin.meng@processmission.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v2 4/4] hw/pci/msi: extract msi_message_address_register
 Content-Language: en-US
-In-Reply-To: <20260904155758.3833179-1-bin.meng@processmission.com>
+To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
+ <20260904-jmac-rme-da-prep-v2-4-fb461d78bbb2@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260904-jmac-rme-da-prep-v2-4-fb461d78bbb2@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDE0NyBTYWx0ZWRfX+M+2wLJf/Joa
- yy03r4tEj7ArcvYkFRYRIfzNH5wbb/tO6MF9izzrSdhbdEsxAmbN+dhZfgjvxI871RBxFFdvXl/
- 6a9TFdGK0AiBsyMSxnevx7M/86ULvEj194jtUHJ2sBSv7x7kOjUx/VNiER+O51wkKxEMMpXxorP
- jV/ym8JCc2aZzJ2gGVrQCd/zgLS6DdLH36rnQhvSb7VVxrv5i49Bg3Omy95xq2QIcsRY7Fldvjc
- cVLPy9aWCFrZqtB2QAyxGr8OCKja66XD5vWAzreWDb8sCDt8xQuYVCY8dHRZ8UPcL0e8OF5zIjs
- x1W2h8uvUWT6kD4t14hJ5xgPZVaRV/QAWrfls/JjW6n8SuWPwo0hkaHrB4/UOxtQ8nXd7qO6Dog
- EgjnB12ivb58/kGoJN4VWjBZr9I+1nXEUSrxGRRUMe3tMyRJaCS87FGreHN0BW9UFXEoq6mwRHh
- dvw+EkBoa+/ARX6f/UA==
-X-Proofpoint-GUID: albAhsLJdlmRRIB4ojT-9LZ6uqv8Uqej
-X-Proofpoint-ORIG-GUID: albAhsLJdlmRRIB4ojT-9LZ6uqv8Uqej
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDE0NyBTYWx0ZWRfX9xwFALXnheEp
- WeCjYTS8WQR+6T74ibH+WlX7/YQYjC+Q9DNqzEZ8VXV1Wv3fufkeLP/NP5TBWUFBrg0ifodzG6Q
- emycpxdS2O4Z53UhCoXLqxysZ39o8F8=
-X-Authority-Analysis: v=2.4 cv=Ibi3n2qa c=1 sm=1 tr=0 ts=6a9aedbe cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDE0NyBTYWx0ZWRfX6JmntYHeNyRA
+ a7sCPiBh1FLj7cJiPvtfKpGEd3cuKT7MQfFgUwbQIaTlceK12KGNlh3jLP6//MzWBFADRLLPXLB
+ OtWBK102JE8FnkSmax/+SrZc1F5V2Tg=
+X-Proofpoint-GUID: mAaSRB_SHtmwMdGAWI1hri4He3dGZqbX
+X-Authority-Analysis: v=2.4 cv=LreiDHdc c=1 sm=1 tr=0 ts=6a9aee69 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=fSYeKqFsUNyXvTew9nkA:9 a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=cpUaK4s9aEvszEVTPDwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: mAaSRB_SHtmwMdGAWI1hri4He3dGZqbX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDE0NyBTYWx0ZWRfX8sh627BOzbuf
+ kAyDpWK+EbfMq+xuofIAZpo0WeHhcKitHorvD5LWZGaSZ9zQVeLGpds0XZLDIRXAiOEWLzPERa0
+ YMbPht1LiQ8UGdj16DQGl2jprKRq01kCJqRE2pJ1BW+Eplr4UVOyXg++8CtQ7pi6DGQ3LCIBCie
+ GpgHxEOUglwW+DBH4RKSw0J+hA4auAlQtk2YGfAS0UeuSQ882qyaDPZqPUR9qZadgFkCx85m6aY
+ VylgN2mSddJdDwO6bet4RuXZOqkfHUdhFx9wT2v7CpaWppiglbc5RGHJkjPwqNCkWGhYskjim2P
+ dD2LC6oWI+UspePvzxYrZWHvUjbZmxU8+xGMHEojJ2za7ZDU+VSvgWueDm1xGShxPdO0ans+qr5
+ 3CsRU2UmRmCS7OVfeGsKFcV0WjnlIfCsQoX8HAi/wjnKxAwFwn5NK5QhmoiiutkJCWBgyY0b5Jw
+ 2FNjdNTCyaA07S3pqWQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-04_04,2026-09-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- phishscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040147
+ suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609040147
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -151,7 +141,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,37 +157,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/26 17:57, Bin Meng wrote:
+Hi Jim,
 
-> Bin Meng (23):
->    hw/riscv: pfsoc: Correct the L2LIM maximum mapped size
->    hw/riscv: pfsoc: Map the L2 zero device window
->    hw/misc: pfsoc: Support DDR training with newer HSS
->    hw/misc: pfsoc: Model L2 cache controller registers
->    hw/riscv: pfsoc: Couple L2CC to L2-LIM
->    tests/qtest: Add PolarFire SoC L2CC coverage
->    hw/sd: sdhci: Run ADMA independently of MMIO
->    hw/sd: sd: Keep high-capacity memory blocks at 512 bytes
->    hw/sd: cadence: Add 64-bit system bus property
+On 4/9/26 18:05, Jim MacArthur wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> 
+> We need to access this address from smmu, to know if we are translating
+> an MSI.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> ---
+>   hw/pci/msi.c         | 19 +++++++++++++------
+>   include/hw/pci/msi.h |  1 +
+>   2 files changed, 14 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/pci/msi.c b/hw/pci/msi.c
+> index b9f5b45920..7361776ace 100644
+> --- a/hw/pci/msi.c
+> +++ b/hw/pci/msi.c
+> @@ -137,6 +137,18 @@ void msi_set_message(PCIDevice *dev, MSIMessage msg)
+>       pci_set_word(dev->config + msi_data_off(dev, msi64bit), msg.data);
+>   }
+>   
+> +uint64_t msi_message_address_register(
 
-FYI I tagged this series (in particular the SD/HCI patches)
-to review but won't be able to until Sept 21. Not a blocker
-although if Alistair think the series is ready.
+const
 
->    hw/riscv: pfsoc: Enable 64-bit SDHCI system bus support
->    hw/misc: pfsoc: Model PolarFire SoC serial number service
->    hw/rtc: Add PolarFire SoC RTC model
->    hw/riscv: pfsoc: Add PolarFire SoC RTC to Icicle Kit
->    tests/qtest: Add PolarFire SoC RTC coverage
->    hw/misc: pfsoc: Honor PolarFire service notification requests
->    hw/riscv: pfsoc: Correct PolarFire SoC DDR aliases
->    hw/riscv: pfsoc: Fix Icicle Kit RAM size at 2 GiB
->    hw/riscv: pfsoc: Fix Icicle Kit hart count at five
->    docs/system/riscv: Document Icicle Kit HSS boot
->    docs/system/riscv: pfsoc: Document CLINT topology for direct Linux
->      boot
->    tests/functional/riscv64: Add Icicle Kit firmware boot test
->    MAINTAINERS: Add PolarFire SoC Icicle Kit maintainer
->    MAINTAINERS: Move Conor Dooley to PolarFire SoC reviewer
+> PCIDevice *dev)
+> +{
+> +    uint16_t flags = pci_get_word(dev->config + msi_flags_off(dev));
+> +    bool msi64bit = flags & PCI_MSI_FLAGS_64BIT;
+> +
+> +    if (msi64bit) {
+> +        return pci_get_quad(dev->config + msi_address_lo_off(dev));
+> +    } else {
+> +        return pci_get_long(dev->config + msi_address_lo_off(dev));
+> +    }
+> +}
+> +
+>   static MSIMessage msi_prepare_message(PCIDevice *dev, unsigned int vector)
+>   {
+>       uint16_t flags = pci_get_word(dev->config + msi_flags_off(dev));
+> @@ -146,12 +158,7 @@ static MSIMessage msi_prepare_message(PCIDevice *dev, unsigned int vector)
+>   
+>       assert(vector < nr_vectors);
+>   
+> -    if (msi64bit) {
+> -        msg.address = pci_get_quad(dev->config + msi_address_lo_off(dev));
+> -    } else {
+> -        msg.address = pci_get_long(dev->config + msi_address_lo_off(dev));
+> -    }
+> -
+> +    msg.address = msi_message_address_register(dev);
+>       /* upper bit 31:16 is zero */
+>       msg.data = pci_get_word(dev->config + msi_data_off(dev, msi64bit));
+>       if (nr_vectors > 1) {
+> diff --git a/include/hw/pci/msi.h b/include/hw/pci/msi.h
+> index abcfd13925..6f0e02c0fb 100644
+> --- a/include/hw/pci/msi.h
+> +++ b/include/hw/pci/msi.h
+> @@ -32,6 +32,7 @@ extern bool msi_nonbroken;
+>   
+>   void msi_set_message(PCIDevice *dev, MSIMessage msg);
+>   MSIMessage msi_get_message(PCIDevice *dev, unsigned int vector);
+> +uint64_t msi_message_address_register(PCIDevice *dev);
+
+While this file lacks documentation, it would be good to start adding
+some for new methods ;)
+
+With doc+const:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 
