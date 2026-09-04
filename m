@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87044C79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6605FC61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TtL-0005Xe-Kl; Fri, 04 Sep 2026 09:23:39 -0400
+	id 1x2TtH-0005VL-P3; Fri, 04 Sep 2026 09:23:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TtI-0005WO-QW
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:36 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1x2TtE-0005TU-OQ
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:32 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TtG-0008JY-SQ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:36 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-485888b3c3dso912766f8f.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:23:34 -0700 (PDT)
+ id 1x2TtC-0008Hd-Cv
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:23:32 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-49b9320423cso10864755e9.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788528213; x=1789133013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788528209; x=1789133009; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=tOTYcu87ro6PtDq6th4kzuspvF4cJxXqC3d7gEkpF5A=;
- b=evBTZRTRxd+N/l3q3FoVtaUcDj6l306WZpmIOv31jE/P73XmaEe8fLXICm51ta0qcs
- ypDMZUuVGnE23/Pw0AEu37Eb7aYAl9eJIA/EaqutTPkkIb+60/wfffcHnfymtpnYOkoF
- xfagsyTD2tRtckMNTAL1Vk16jUFZC3UX+1QnvTXAWGXpKBlpiW8DiMlJkzFXuB7LnrOs
- FnSpW2blXfVCgaRYVoI1i0aYNx1+2f9fFpw2vILUMeOFHWVdQcrqTXW7VHKbggXDTUx/
- jQ16T0gz+OcDHkZa8rEAu7zmrL66eNcq53RrhoyMKQGnBAymH83KoF+CAmIO4xapMosg
- xQag==
+ bh=SvEt8Hf8LMw1pvtF6NguqXUPwe1nFKcM+ugRFAyNtFs=;
+ b=C1AXw3Jzgmy5/se5NnXk1fq2eM2lCB8na4Gu7CqGT5OqbPRxn+eIgtdIx4qfxs3zbA
+ SIc/GOj+n8M47MmhS16AiH5cEEqA9uVQlTRFtTbMTsugvRfxxX/gLNvtOI4BhlXMO3bw
+ myFeHgfi+RLBw45g0cwVOT+wqBoeP0TP6A7r+Z8FrAJ49BetQwnfRvNcjWqfON4mpmWN
+ +yXt+umpdUhkgcR5aAW3+SOqUxiun9w4tNlrhx6oL7TXaNCG+nAK+pXmLd+eJD4WzpiG
+ 9ED+/vd6hcFfhR8bKmaiRg+qBJp4EnPcdFCtup7vTsB4T9Z/oY4jr5hTisNjparZy9i3
+ J0Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788528213; x=1789133013;
+ d=1e100.net; s=20251104; t=1788528209; x=1789133009;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=tOTYcu87ro6PtDq6th4kzuspvF4cJxXqC3d7gEkpF5A=;
- b=WAAKPlyyPzRNEt6ChbZZyNgGaB2LDmS5/AZnpMAxtwvlUpaZ9M2Q0XXWnFP+SHbAsn
- g4qXl7Nos3kIPwbdGIGveh+E6Au97mRfpQbI6z3uKe36o3cwX1mBVyKUYL1KSLnWIaZu
- m+qiKMQ51BhhT/IbC54JyQAshD8j+RK8nbbaOV48z+BuBl3T+/54tEBgmtmOKM+hkMHw
- 9MSkU2h3CjVtF4AgnKoCaGYBtAAclbfmsaIrBLb8Q4fHWmzFkOmYiHr5qbiZ1/xVt6hF
- 05Pihru8Z8VlDYoW6I9LhF2eoHIf/ql0BIo9QvnPBMRAVvZ6LiXg8OVKKeTcc23S9yLj
- biBw==
-X-Gm-Message-State: AFuF++nhEmW/in0cvPpTY70d0dv48mQkVz6/R4hTt1KHQPLVMJPW6sdJ
- 4gvYmAo1saLzMNmvQhw7qLrBAqQe4XK3dIlkSM110jOhMrHi35KhFytYw7J7761LGgo=
-X-Gm-Gg: AYBFou31UQnuKvNhvijBy9Gh+1IrievytUZy+EKm8OSvtdeDtnLTNvS4RPZEDxKtZPY
- sNa3qO1e/Cui/iGIG627HSIODnBs3VPyrbk6AYxJfSqwikFTIGtxL+jqXAcLx+Qwfdn5QsksCdm
- 06WWP+G4ZORElbIlrdIMgQ9zt+WiPDZAJ4RwnnUkLGq/OzRZLhAQhHGikONtFNZPtnaHGxGjLeG
- /X2uq8ZXeQKRp966kF/Lrhq0ft5/EqSURDzpSqZONLwd99fEoKkfeeaiX8zA3GTdAF8H1GC4Ptj
- 58lL380grY0QT+AkAxyY7Gd0g/AERTPUgoIuy8pUzn2aMvqBOQ8D0Ru2b8OEuQpVkohlUsO/+IE
- lQAEiKm6hsTH3JtXiirLzaPMhyltSZ4GZzuLzPvs28nwRCHk0XTsfOdOglo5fTfG1WyJKxsCrI0
- VHicCOZE652HzqERlEyH59dDpY2z6pV8TS1GkVjRr2mhlwFI4FMly3gGvyGEl0
-X-Received: by 2002:a5d:5d83:0:b0:485:8c16:5eec with SMTP id
- ffacd0b85a97d-4858c166045mr3229425f8f.38.1788528213160; 
- Fri, 04 Sep 2026 06:23:33 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485883c81c3sm6051919f8f.26.2026.09.04.06.23.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=SvEt8Hf8LMw1pvtF6NguqXUPwe1nFKcM+ugRFAyNtFs=;
+ b=ilPI4sewbieegqj1I3D4K6wYOMVHA7wDGUYzbm2CEJCtNkm3DIQYRZZ6XFBTDVIf7c
+ x/DMBUtkOWm5c7nrWvm9B2vATdt4RRAAsUMquLWlSsejPVjam/8cJ4Raq+Nyq04jzlX8
+ WaOajrSUsAsM9jOcBUEcc43GmOE0seC8jkWhhWgLhGt08lOOsZOSyDyJgiYcYPSvN9wK
+ Cn55z5+5emC/tL7rB6j+1/koI2nHoWQwZrjuow4hh1IEHXT/uvcLbOEcxdTa9SfW1VaD
+ 2JmWGvbDemR98QHuxeWLlyzSWXpzCw8DZPmZYFQm1jFa8I4Q4tepZobh06EYYZc1Eyvc
+ jVlA==
+X-Gm-Message-State: AFuF++n7nytJUzbqo7pFMun/fN59YSUkGgvCJtX6Tj+hKUjK9a7/CHI8
+ ta6ImohRjFT9JqDhmM8kM9yGbQsyzGBkvtl7yhzLop9eLom8PTuhQBQvIYUKHF4PeIY=
+X-Gm-Gg: AYBFou1c176N5iLpbLnWugR/MMKN1AjdzHresX6mKFIxdZf1XkWRGd1E0C9fZgwyXtc
+ sbnfww8Z7DMBuv9oH4kDgQ5rXvmrFOffRb18mVQPjGh/XND3qSRjmZg5KW+ODOb9/eCuNsai+3b
+ eoy0lhPcCLU1T0IdS/tH5+3ueByHnu4pniZAFb1AKjtjcYrmiwKxtPhxYmnKhXQoHvPdRg4uDst
+ NEur5C11D3Kbm5qpTfZjQV35WiXGwzBmrIy3aRfn+0d2iHy4Ad08j4mGq0vsx7EtnFKfqIiBgbB
+ n9Wy86W7E8gzFvH5Wds/OWWwtQTIyjfiiqXT0so1xOEnwFHyP/4GMCW+fPTvFNZi5ugKkOGpCEh
+ zKwWGRiE7bePOyvPQpzCw1bvPScLKKhKBpoMVP+roub0oP/6+tyRDWZ/pdP5GJW/e29XaxJVujG
+ UUGtN5DdixpXCgG1sde5XeAli+XRWTtibx7+CbO5JRNy6+r0CaZ2y/PM2jBhLo
+X-Received: by 2002:a05:600d:4452:20b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-49cf81f1542mr78618725e9.7.1788528207426; 
  Fri, 04 Sep 2026 06:23:27 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cffdb2c40sm594215e9.1.2026.09.04.06.23.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 06:23:23 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EB5CE61891;
- Fri, 04 Sep 2026 13:46:07 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6B3D661DED;
+ Fri, 04 Sep 2026 13:46:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 037/105] tests/tcg/multiarch: declare system tests
-Date: Fri,  4 Sep 2026 13:44:51 +0100
-Message-ID: <20260904124604.2207440-38-alex.bennee@linaro.org>
+ Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PULL 094/105] tests/docker/dockerfiles/debian-xtensa-cross.docker:
+ add test_kc705_be toolchain for xtensaeb
+Date: Fri,  4 Sep 2026 13:45:48 +0100
+Message-ID: <20260904124604.2207440-95-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,83 +109,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-We now declare all multiarch system tests.
-
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-38-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-95-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/multiarch/meson.build b/tests/tcg/multiarch/meson.build
-index 99af41b3fcc..508fdb585b7 100644
---- a/tests/tcg/multiarch/meson.build
-+++ b/tests/tcg/multiarch/meson.build
-@@ -1,3 +1,5 @@
-+subdir('system')
-+
- tests = []
+diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+index d9130fc3378..0eb6d98cc75 100644
+--- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
++++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+@@ -19,7 +19,7 @@ RUN apt-get update && \
+         python3-minimal && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- float_helpers = files('libs/float_helpers.c')[0]
-diff --git a/tests/tcg/multiarch/system/meson.build b/tests/tcg/multiarch/system/meson.build
-new file mode 100644
-index 00000000000..f71c12db38e
---- /dev/null
-+++ b/tests/tcg/multiarch/system/meson.build
-@@ -0,0 +1,53 @@
-+tests = []
-+
-+# multiarch src path are written to be included from any other arch folder,
-+# so all arch can directly add those tests.
-+multiarch = meson.current_source_dir()
-+
-+tests += {
-+  multiarch/'hello.c': {},
-+  multiarch/'interrupt.c': {},
-+  multiarch/'memory.c': {},
-+}
-+
-+tests += {
-+  multiarch/'memory.c': {
-+    'gdb_test': ['--test', files('../gdbstub/memory.py')]
-+  },
-+  multiarch/'interrupt.c': {
-+    'gdb_test': ['--test', files('../gdbstub/interrupt.py')]
-+  },
-+  multiarch/'hello.c': {
-+    'test_name': 'untimely-packet',
-+    'gdb_test': ['--gdb-args',  '-ex \'set debug remote 1\'',
-+                 '--output', '/dev/stdout',
-+                 '--stderr', '/dev/stdout'],
-+    'wrapper': [prog_run_and_check_forbidden_output,
-+                'Packet instead of Ack, ignoring it']
-+  }
-+}
-+
-+tests += {
-+  multiarch/'memory.c': {
-+    'test_name': 'registers',
-+    'gdb_test': ['--test', files('../gdbstub/registers.py')]
-+  }
-+}
-+
-+tests += {
-+  multiarch/'memory.c': {
-+    'test_name': 'memory-access',
-+    'plugin_test': {
-+      'plugin': 'mem',
-+      'args': ['region-summary=true'],
-+    },
-+    'wrapper': [prog_check_plugin_output,
-+                find_program('./validate-memory-counts.py')]
-+  }
-+}
-+
-+tcg_tests += {
-+  'multiarch-softmmu': {
-+    'tests': tests
-+  }
-+}
+-ENV CPU_LIST="dc232b dc233c de233_fpu dsp3400"
++ENV CPU_LIST="dc232b dc233c de233_fpu dsp3400 test_kc705_be"
+ ENV TOOLCHAIN_RELEASE=2020.07
+ 
+ RUN for cpu in $CPU_LIST; do \
+@@ -27,7 +27,7 @@ RUN for cpu in $CPU_LIST; do \
+         | tar -xzC /opt; \
+     done
+ 
+-ENV PATH=$PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin
++ENV PATH=$PATH:/opt/$TOOLCHAIN_RELEASE/xtensa-dc232b-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dc233c-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-de233_fpu-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-dsp3400-elf/bin:/opt/$TOOLCHAIN_RELEASE/xtensa-test_kc705_be-elf/bin
+ ENV MAKE=/usr/bin/make
+ # As a final step configure the user (if env is defined)
+ ARG USER
 -- 
 2.47.3
 
