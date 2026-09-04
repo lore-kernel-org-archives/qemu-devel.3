@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6E2C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA0FC61DD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MNK-0002tq-HG; Fri, 04 Sep 2026 01:22:06 -0400
+	id 1x2MLP-0005QK-Pu; Fri, 04 Sep 2026 01:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MNI-0002pF-Eu
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:04 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1x2MLM-0005Ph-0g
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:04 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MNG-0001V0-GL
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:04 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-84830c774a0so645392b3a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:22:02 -0700 (PDT)
+ id 1x2MLG-00011n-0R
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:03 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-852c481415fso616160b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499321; x=1789104121; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9sMOYF1ngSVfF3aWfMq+nevCwVd0jeZEIkO6u84kKno=;
- b=b9Gy7Bb/Z005D0dwkyZWbAkgv/Dh8CGrc9lB/P6KAF1uubEIdIuTfn/Pb9DwXVYsX+
- hzKdV0opXjeq6/xj6T1VybC25sd6GAOjCMTc+WJOPJDWyammssGciiZRcVEJMSn2wEj+
- dIOdI3vMwKMR/v4UqnkjNUDogDpywF3qY/mf9WuK/YnWWaBwnMMvjn6puFpgbRGuGZVt
- Q5kFjdVoPrCCGkLjOXLyQB8bB1cKNLt7GYuPd/IeKTlkwdJqssmQiHo62247o1mSN2om
- iZSyoOseAbJeyIZMGknZ1TEUrLWF0ePXzg0ntWXuHLaQ5fuaH0hW+pZG2VA70iEJ3J2h
- ALWw==
+ d=gmail.com; s=20251104; t=1788499196; x=1789103996; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=R/bmbpHd5SjFAsmA8kAw5YlABsteWaUi9Gle/d6ZH6w=;
+ b=TsLYpcjE4iKAs8BGUkAZasaeKYOD3fyT0HEou+nQ8Q6IchmmvZn7Jby6zbygJ66Fkr
+ PXyuZA8a80E3BLyAJAPux1pxqLIMdAkbbY+eszQDN6fuIlGcDjm+E/BWjvKkIKJvV8vQ
+ a5gTfer/55LDsdmWZ/9pHieURO11S0F6iGUY6VNLf0w/mzCqeHKXiT6gacIX2xd9hZ5a
+ QPDs9+R1pPjvBLtyOTxp4XJKE76k1lnaHrs5uES7NdCnxeGXPmveAGlyAwKUvX8W7Kc0
+ 2eI8+MfoEQWzZoTQySb1+uo/3TKLyFvPxRXAYfUu4CiTp9J3pQdkzx4xmAzMfgGtk/tS
+ fcMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499321; x=1789104121;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9sMOYF1ngSVfF3aWfMq+nevCwVd0jeZEIkO6u84kKno=;
- b=g60qByEsKgpJj9FnAk5IC04fMfd0Txcby+Q+dJucACXzYqlRwP+bq1toECqx50Qn+U
- tElVih60K/5+lsK3BCwjpoJ434/taUOmih0zsJIbr4fQsWLr79fhjyW2FoBb8wSVcGor
- /7/t1qRFcwHzyGPxO2wAWIyT6gFvGE7DR1H9chxBwFyUG/9kT3Poh1gA6pf40Znd7tJI
- DnhazR39e1atg5beDf3xt3ccY/EL+PYhpJudUwLJ2o+QGIE7bnVYCyso1Xuq/eLoE0yE
- rdOmzPNOdWRnodS6xRiFR+fzzdLqHq3XbBTayuxRgkJPhClN+QOvU0jlirGRqhWoSyoc
- 1+5w==
-X-Gm-Message-State: AFuF++k/tqpcFAt+5Q110ztQT3ailEto/XJPj0pX5tsYnF6Gk5avbK1C
- n16L3+Bb+GW7VgPjvXu4gVau3s6GnCHLusYSCqPtzRJ65yurRJpmZr0vTW1AkA==
-X-Gm-Gg: AYBFou2hN5rh6ivcGZ1DgtIgnLEOsUM70HH5saMmmFIa/8EzQN/yjBBEw0VVpeUCMdO
- U5F3V3EZDpLyvP19hEcvKRdQ6P60DA/saN541OhSknQz1qiWJwqnSzjAj+3YCM4XP8yJDnBEUgZ
- zJXP0Xiu9dCAEM/nMiVC+fZZi9U+52xQDg4zNIJUIQqXo6EurjzayJACDR3bdHhwkCSTnYePYMb
- kTKG4xwT9QgU1ImvcSmI+ODh6oE7lb4RobRmPfQdvr1VmaDyK6eSC5nLuCF94rTD59EiAto4VwB
- zyCYlWen2iyXOxWEXObx+HIvOo+ko0QvEMZ7gOfo8Ju0ME7FJsWsxVDqhABsk5mZVcTIsejDlhK
- FbI+tidCbbh01ujQ1rW55LsyBMKwtyyi8AgVk886L3DO0SU72fe8tAK/SBZ02jtgCTDEkpFWRyI
- fWPuLP0bxkvrUp2wuWS7lLF6QPLFpMXuZ+FQ/q1q2dAI5ELSxf0dkT1sIgPWPOM1lUgjBzpAflH
- J66tnxjwa2byxdd
-X-Received: by 2002:a05:6a21:9d84:b0:3d3:af85:eb98 with SMTP id
- adf61e73a8af0-3da3a16a579mr5758156637.26.1788499321121; 
- Thu, 03 Sep 2026 22:22:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788499196; x=1789103996;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=R/bmbpHd5SjFAsmA8kAw5YlABsteWaUi9Gle/d6ZH6w=;
+ b=j1wUxgP7Cbubk/J51nMIahledLs2zhApIn9whI32OeM8PbpdUBGoCmc1pmrvHTHCrj
+ qBsNdC6Ppyho9ueDg1etmg52fAKL9THlONkEGO4W4VnKTJkcJyefEoiGeb4Dq+87Fkbh
+ LglFc/XbljYO4sSRPIun96TBuZy7jmZ80mxcP9ErA1Jz2UMdybCGxtGULgv6utIB5AhL
+ d4BO1aaa9FNvcDJRJm9or3VS7hUS0W5jXp/JQM3px2ogNCrTvpnkwLh+3SKdP22d++Rq
+ Z01m4mQ7P9l14EfFZI29o0i++qcXNAsUqMXFH5kEPA5uawBPmKa1PS4jH1e3+UbINjJc
+ gLlg==
+X-Gm-Message-State: AFuF++nTn3F/qo2wlqmohD8n00eM43Mupa8VSkJHE8cunQ+uGw5hmjkI
+ SHmSaLB4ZX0IogwZCXdxSAjmX0SNx/JhcbyIEJJ+NJPmt46QoUHq6U1ubCPLVQ==
+X-Gm-Gg: AYBFou0S7eS1d65v5JlNntn4zX037TiSq6RXxR0TenC7oZgf35AWSyjKM4+uWv+f3Qj
+ 6sRhQzyuUetwdIdAJnGzdnSw8IiSdTlEp2uwPZKYabatwAqrWwl0rVBiFdwXpFIMkRWhsn/cfG6
+ s8tfaYVDo5BQBcyDmr8ZB2bujnG6GUVxJZW87pJNTyktcil430J/aWVbxvVMQZjDHLo0hLLq/M4
+ Xi9SqeXHHjZDpc8yvEw+yS+nknTBCDsb16gmp9+AaeISK2CnoA0bho3PSoTsQ0Rev30e3u1M8mm
+ Fcv22GPyBCM1tk4ll3yAFM54VZl8La1VfNdt+QxmRDI43sLxR4tlpXU9RKCpYv9EG5n7ea4EDa5
+ bdOwGuS0FH5e3hXpvk7rE68+x8vtJewWKx80ba50mfWIpqexGReCUl+kIlmZ4tOTKSxX39EoYCv
+ 2KHwKQYVE3RRSXDPWndBBG8lgcaAm1QH7LjmLSNJSLy4GtzBRmNe8IeS0oOFHdBdpJVR+L4FJJH
+ x9lZA==
+X-Received: by 2002:a05:6a20:d10e:b0:3da:28b3:7c5a with SMTP id
+ adf61e73a8af0-3da3a08ed08mr5730582637.13.1788499196573; 
+ Thu, 03 Sep 2026 22:19:56 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.58
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.19.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:22:00 -0700 (PDT)
+ Thu, 03 Sep 2026 22:19:56 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 40/47] hw/riscv/atlantis: Rename hart array 'soc' to 'cpus'
-Date: Fri,  4 Sep 2026 15:19:36 +1000
-Message-ID: <20260904051943.799041-41-alistair.francis@wdc.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 01/47] target/riscv: split 'debug' and 'sdtrig' flags
+Date: Fri,  4 Sep 2026 15:18:57 +1000
+Message-ID: <20260904051943.799041-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,145 +103,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The RISCVHartArrayState member is named soc, but it's an array of cpus,
-not the entire SoC. Use cpus instead as an accurate description of the
-hart array.
+We need to support modern debug extensions that happens to be
+dependencies of other things that we want to support (e.g. a riscv
+server spec board).  These extensions, namely sdext, depends on Debug
+1.0.  At this moment we support Debug 0.13, and so it happens that 0.13
+and 1.0 aren't backwards compatible, i.e. we need design changes to
+support both.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+The easier way is to deprecate the Debug 0.13 support, together with its
+legacy 'debug' flag and call it a day.  But there's a demand to keep the
+0.13 support around and this idea got scrapped.
+
+We're going to support both 0.13 and 1.0, where the 'debug' flag will
+refer to 0.13 and 'sdtrig' to 1.0.  We need to split both in distinct
+flags first to handle the backend changes, so:
+
+- add a new cpu->cfg.ext_sdtrig flag;
+- all code that checks "if debug enabled" now checks for both debug and
+  ext_sdtrig;
+- amend riscv_isa_string_ext() to keep adding 'sdtrig' in riscv,isa if
+  we have just the 'debug' flag enabled.
+
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Message-ID: <20260903055131.257903-10-joel@jms.id.au>
+Message-ID: <20260805182506.2943757-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/riscv/tt_atlantis.h |  2 +-
- hw/riscv/tt_atlantis.c         | 34 +++++++++++++++++-----------------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ target/riscv/cpu.c                | 21 ++++++++++++++++-----
+ target/riscv/machine.c            |  2 +-
+ target/riscv/tcg/csr.c            |  2 +-
+ target/riscv/tcg/tcg-cpu.c        |  3 ++-
+ 5 files changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index d0cca3b024..642490d217 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -29,7 +29,7 @@ struct TTAtlantisState {
-     Notifier machine_done;
-     const MemMapEntry *memmap;
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index f8c27a574f..f91c780299 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -105,6 +105,7 @@ BOOL_FIELD(ext_zvfbfmin)
+ BOOL_FIELD(ext_zvfbfwma)
+ BOOL_FIELD(ext_zvfh)
+ BOOL_FIELD(ext_zvfhmin)
++BOOL_FIELD(ext_sdtrig)
+ BOOL_FIELD(ext_smaia)
+ BOOL_FIELD(ext_ssaia)
+ BOOL_FIELD(ext_smctr)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index fd1afbc7fe..a760ba3a52 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -248,7 +248,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+-    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
++    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
+     ISA_INTERNAL_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0,
+                                 has_priv_1_12),
+     ISA_INTERNAL_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+@@ -1091,7 +1091,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
  
--    RISCVHartArrayState soc;
-+    RISCVHartArrayState cpus;
-     DeviceState *irqchip;
-     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
-     UnimplementedDeviceState uart1;
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index c682bb6848..62e902f930 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -112,13 +112,13 @@ static void create_fdt_aclint(TTAtlantisState *s, uint32_t *intc_phandles)
-     uint32_t aclint_cells_size;
-     hwaddr addr;
- 
--    aclint_mtimer_cells = g_new0(uint32_t, s->soc.num_harts * 2);
-+    aclint_mtimer_cells = g_new0(uint32_t, s->cpus.num_harts * 2);
- 
--    for (int cpu = 0; cpu < s->soc.num_harts; cpu++) {
-+    for (int cpu = 0; cpu < s->cpus.num_harts; cpu++) {
-         aclint_mtimer_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
-         aclint_mtimer_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_M_TIMER);
+ #ifndef CONFIG_USER_ONLY
+ #ifdef CONFIG_TCG
+-    if (cpu->cfg.debug) {
++    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+         riscv_trigger_reset_hold(env);
      }
--    aclint_cells_size = s->soc.num_harts * sizeof(uint32_t) * 2;
-+    aclint_cells_size = s->cpus.num_harts * sizeof(uint32_t) * 2;
+ #endif
+@@ -1331,7 +1331,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+     riscv_cpu_register_gdb_regs_for_features(cs);
  
-     addr = s->memmap[TT_ATL_ACLINT].base;
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+-    if (cpu->cfg.debug) {
++    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+         riscv_trigger_realize(&cpu->env);
+     }
+ #endif
+@@ -1348,7 +1348,7 @@ static void riscv_cpu_unrealize(DeviceState *dev)
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     RISCVCPU *cpu = RISCV_CPU(dev);
  
-@@ -210,7 +210,7 @@ static void create_fdt_pmu(TTAtlantisState *s)
+-    if (cpu->cfg.debug) {
++    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+         riscv_trigger_unrealize(&cpu->env);
+     }
+ #endif
+@@ -2925,6 +2925,11 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+ };
+ 
+ static const Property riscv_cpu_properties[] = {
++    /*
++     * The 'debug' flag enables support for the legacy Debug
++     * 0.13 spec.  In case cpu->ext.ext_sdtrig is also enabled
++     * the CPU will enable Debug 1.0 instead.
++     */
+     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
+     DEFINE_PROP_BOOL("big-endian", RISCVCPU, cfg.big_endian, false),
+ 
+@@ -3146,7 +3151,13 @@ static void riscv_isa_string_ext(RISCVCPU *cpu, char **isa_str,
+     char *new = *isa_str;
+ 
+     for (edata = isa_edata_arr; edata && edata->name; edata++) {
+-        if (isa_ext_is_enabled(cpu, edata->ext_enable_offset)) {
++        if (isa_ext_is_enabled(cpu, edata->ext_enable_offset)
++            /*
++             * We've been adding 'sdtrig' in riscv,isa for
++             * Debug 0.13 for awhile.  Until we decide to
++             * move away from it we'll keep doing it.
++             */
++            || (!g_strcmp0(edata->name, "sdtrig") && cpu->cfg.debug)) {
+             new = g_strconcat(old, "_", edata->name, NULL);
+             g_free(old);
+             old = new;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index c3f5a25509..bf203bffce 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -268,7 +268,7 @@ static bool debug_needed(void *opaque)
  {
-     char pmu_name[] = "/pmu";
-     void *fdt = MACHINE(s)->fdt;
--    RISCVCPU *hart = &s->soc.harts[0];
-+    RISCVCPU *hart = &s->cpus.harts[0];
+     RISCVCPU *cpu = opaque;
  
-     qemu_fdt_add_subnode(fdt, pmu_name);
-     qemu_fdt_setprop_string(fdt, pmu_name, "compatible", "riscv,pmu");
-@@ -227,8 +227,8 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
- 
-     riscv_fdt_create_cpu_socket_subnode(fdt, TT_ACLINT_TIMEBASE_FREQ);
- 
--    riscv_create_fdt_socket_cpus(fdt, s->soc.harts, 0, s->soc.num_harts,
--                                 s->soc.hartid_base, &fdt_phandle,
-+    riscv_create_fdt_socket_cpus(fdt, s->cpus.harts, 0, s->cpus.num_harts,
-+                                 s->cpus.hartid_base, &fdt_phandle,
-                                  intc_phandles, false, false);
- 
-     create_fdt_memory(s);
-@@ -252,13 +252,13 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
-     create_fdt_one_aplic(fdt, &s->memmap[TT_ATL_MAPLIC],
-                          msi_m_phandle, intc_phandles,
-                          aplic_m_phandle, aplic_s_phandle,
--                         IRQ_M_EXT, s->soc.num_harts);
-+                         IRQ_M_EXT, s->cpus.num_harts);
- 
-     /* S-level APLIC node */
-     create_fdt_one_aplic(fdt, &s->memmap[TT_ATL_SAPLIC],
-                          imsic_s_phandle, intc_phandles,
-                          aplic_s_phandle, 0,
--                         IRQ_S_EXT, s->soc.num_harts);
-+                         IRQ_S_EXT, s->cpus.num_harts);
+-    return cpu->cfg.debug;
++    return cpu->cfg.debug || cpu->cfg.ext_sdtrig;
  }
  
- static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
-@@ -429,7 +429,7 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-     hwaddr start_addr = s->memmap[TT_ATL_DDR_LO].base;
-     hwaddr mem_size;
-     target_ulong firmware_end_addr, kernel_start_addr;
--    const char *firmware_name = riscv_default_firmware_name(&s->soc);
-+    const char *firmware_name = riscv_default_firmware_name(&s->cpus);
-     uint64_t fdt_load_addr;
-     uint64_t kernel_entry;
-     RISCVBootInfo boot_info;
-@@ -446,7 +446,7 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-     if (mem_size > s->memmap[TT_ATL_DDR_LO].size) {
-         mem_size = s->memmap[TT_ATL_DDR_LO].size;
+ static int debug_post_load(void *opaque, int version_id)
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 002f7e69c1..bd4b6dc114 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -804,7 +804,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
+ 
+ static RISCVException debug(CPURISCVState *env, int csrno)
+ {
+-    if (riscv_cpu_cfg(env)->debug) {
++    if (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig) {
+         return RISCV_EXCP_NONE;
      }
--    riscv_boot_info_init_discontig_mem(&boot_info, &s->soc,
-+    riscv_boot_info_init_discontig_mem(&boot_info, &s->cpus,
-                                        s->memmap[TT_ATL_DDR_LO].base,
-                                        mem_size);
  
-@@ -476,7 +476,7 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-     riscv_load_fdt(fdt_load_addr, machine->fdt);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 9e3cc87f8a..54f1b66216 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -182,7 +182,8 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+              ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
+     }
  
-     /* load the reset vector */
--    riscv_setup_rom_reset_vec(machine, &s->soc, start_addr,
-+    riscv_setup_rom_reset_vec(machine, &s->cpus, start_addr,
-                               s->memmap[TT_ATL_BOOTROM].base,
-                               s->memmap[TT_ATL_BOOTROM].size,
-                               kernel_entry,
-@@ -496,18 +496,18 @@ static void tt_atlantis_machine_init(MachineState *machine)
- 
-     s->memmap = tt_atlantis_memmap;
- 
--    object_initialize_child(OBJECT(machine), "soc", &s->soc,
-+    object_initialize_child(OBJECT(machine), "soc", &s->cpus,
-                             TYPE_RISCV_HART_ARRAY);
--    object_property_set_str(OBJECT(&s->soc), "cpu-type", machine->cpu_type,
-+    object_property_set_str(OBJECT(&s->cpus), "cpu-type", machine->cpu_type,
-                             &error_abort);
--    object_property_set_int(OBJECT(&s->soc), "hartid-base", 0,
-+    object_property_set_int(OBJECT(&s->cpus), "hartid-base", 0,
-                             &error_abort);
--    object_property_set_int(OBJECT(&s->soc), "num-harts", hart_count,
-+    object_property_set_int(OBJECT(&s->cpus), "num-harts", hart_count,
-                             &error_abort);
--    object_property_set_int(OBJECT(&s->soc), "resetvec",
-+    object_property_set_int(OBJECT(&s->cpus), "resetvec",
-                             s->memmap[TT_ATL_BOOTROM].base,
-                             &error_abort);
--    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
- 
-     s->irqchip = riscv_create_aia(system_memory,
-                                   true, TT_IMSIC_GUESTS,
+-    if (cpu->cfg.debug && !icount_enabled()) {
++    if ((cpu->cfg.debug || cpu->cfg.ext_sdtrig)
++        && !icount_enabled()) {
+         flags = FIELD_DP32(flags, TB_FLAGS, ITRIGGER, env->itrigger_enabled);
+     }
+ #endif
 -- 
 2.55.0
 
