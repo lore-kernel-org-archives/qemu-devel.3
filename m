@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60608C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FE8C624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WcZ-0000k1-Gr; Fri, 04 Sep 2026 12:18:31 -0400
+	id 1x2Wce-0000qW-Uy; Fri, 04 Sep 2026 12:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2WcW-0000ZZ-EF; Fri, 04 Sep 2026 12:18:28 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x2Wcd-0000q6-Kn; Fri, 04 Sep 2026 12:18:35 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x2WcU-0001Ns-GV; Fri, 04 Sep 2026 12:18:28 -0400
+ id 1x2Wcb-0001RV-SU; Fri, 04 Sep 2026 12:18:35 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 8972960211;
- Fri,  4 Sep 2026 16:18:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12A01F00A3D;
- Fri,  4 Sep 2026 16:18:22 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id B5FFB4113F;
+ Fri,  4 Sep 2026 16:18:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF03C1F00A3D;
+ Fri,  4 Sep 2026 16:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788538705;
- bh=SK2JBBjz+EZLOO1NbZL6Re9r4Fej7YKDQm5dLk+zWso=;
+ s=k20260515; t=1788538712;
+ bh=+7pxwgh6LD+wSfDu1pHYn5P69cuWbxjndwby/KCvoJY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Xcy8rRU78xTxL43iPwYrlAQR1u5qUVrTjI7d0wZlFq/Eie+eliqLb5y7ti0tm+lKK
- JnxWIXuUWgLKO8ghpFheaZMHwLivY6lM/wKmthOYznsT64ahXoTFiyeYAT7vOCo+AF
- P474MsoarlZbMemrudTVXSW+ZBpU4jDTU55bV5lZXVVfkKlAHCyg9uZJ4/0OambvaJ
- ZT5+TfOPVw9jjhTNAn6V7LT/RoxcYYJ6jQN5VDIhmcbys/xcUeKvAnIy231vaYlEUc
- pFm+dKe9G+l59LUEdyzCp2eBHJuFXXGULW0/D35IVWL+tle23GqkamNd8W0jxI4qBD
- 99XfRujX9afaw==
+ b=XDGExTQA79/LfAeYg4Lf5uFiVLDNqZsZXU7pqAc25xGbmd0EDMiG7FvQE60PPjdGG
+ aVytw+0x4ITs8O9S/srQMeVJNkJEF6rPoonAowahGVscPf8PloOXfTX216gQ3pm8QA
+ N3STuIA+OgSLoP43PLqXoM/XK8ABvAGy0Fe06COAs3xZmbug0tbrkvgy2Utm0pcunO
+ +MEQbtjWTUn7CkRpO5tOL0ID1GeLma/IIgPp0ObWSJlZidDT6ZdbqJfRaKwKIX6/QZ
+ P2TQktPQVrCv7JUIHSPb8u4dwp8NwnobeelUQ0M8U7Cm1bN2OyOfNkNTvxCO0HjZlr
+ 0+0M+t/Xm6gJA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 06/12] hw/block: reject a zoned device whose write pointers
- are unaddressable
-Date: Fri,  4 Sep 2026 18:17:54 +0200
-Message-ID: <20260904161801.1568841-7-cassel@kernel.org>
+Subject: [PATCH v3 09/12] file-posix: base the zone append limit on the
+ transfer limit
+Date: Fri,  4 Sep 2026 18:17:57 +0200
+Message-ID: <20260904161801.1568841-10-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904161801.1568841-1-cassel@kernel.org>
 References: <20260904161801.1568841-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,133 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The write pointers of a zoned device outlive any particular use of it,
-whether the device keeps them itself or a backend records them, while the
-logical block size is a property of the frontend and is chosen afresh
-every time the device is attached. Nothing ties the two together. A zone
-written while the device was configured with logical_block_size=512
-leaves a write pointer that is a multiple of 512, and attaching the same
-device with logical_block_size=4096 makes that pointer unaddressable.
+The zone_append_max_bytes queue attribute is the largest
+REQ_OP_ZONE_APPEND that the device accepts, and Linux has no interface
+for issuing one from userspace: include/uapi has no such operation, and
+every submitter of REQ_OP_ZONE_APPEND is in the kernel. Userspace writes
+to a sequential zone with an ordinary write at the write pointer.
 
-Such a pointer is not merely misaligned. The guest addresses the device
-in logical blocks, and a zone report expresses the write pointer in 512
-byte sectors, so the guest is told about a position that does not fall on
-a logical block boundary. It can neither read nor write there, and the
-zone can only be recovered by resetting it. The reverse direction is
-harmless: a pointer laid down with a larger logical block size is still a
-multiple of a smaller one.
+That is what this driver does. raw_co_zone_append() substitutes the write
+pointer of the zone for the offset and hands the request to raw_co_prw(),
+which reaches handle_aiocb_rw_vector() and issues a plain pwritev(). The
+kernel never sees a zone append, so the attribute describes a limit on an
+operation that is never issued.
 
-On a zoned null_blk device with a logical block size of 512, a 512 byte
-append to a sequential zone leaves the write pointer half a logical block
-into it:
+Nor is it a limit that this driver runs into. The kernel splits a write
+that exceeds the transfer limit rather than refusing it, so a larger
+append succeeds: on a null_blk device whose zone_append_max_bytes is
+130560, a 16 MiB append completes and advances the write pointer by
+16 MiB. Reporting the attribute only understates what the driver can do,
+because Linux derives it as a minimum that already includes max_sectors
+and chunk_sectors.
 
-  $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
-        -c "zap -p 0x20000000 0x200" -c "zrp 0x20000000 1"
-  start: 0x100000, len 0x80000, cap 0x80000, wptr 0x100001, zcond:2
+Report max_hw_transfer instead, the limit that governs the write the
+driver actually issues. There is no use in telling a guest that it may
+append more than the device carries in one command, and a frontend then
+does not have to reason about how this driver implements an append in
+order to bound the value it advertises.
 
-Attaching that disk with logical_block_size=4096 handed the guest a zone
-it could not write to.
+On a null_blk device with max_hw_sectors_kb of 127 and
+zone_append_max_bytes of 130560, virtio-blk reports 255 sectors before
+and after.
 
-Check at realize time that the zone size and every write pointer of a
-sequential zone are multiples of the write granularity that the device is
-about to report, and refuse to start otherwise. The write pointers are
-already held in memory by the driver, so this costs no I/O.
-
-The check uses blkconf_zone_write_granularity(), the same value that a
-frontend reports to its guest and validates requests against, so the
-three cannot disagree.
-
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- hw/block/block.c         | 46 ++++++++++++++++++++++++++++++++++++++++
- hw/block/virtio-blk.c    |  4 ++++
- include/hw/block/block.h |  1 +
- 3 files changed, 51 insertions(+)
+ block/file-posix.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/hw/block/block.c b/hw/block/block.c
-index 1c3135843d..7663e385ca 100644
---- a/hw/block/block.c
-+++ b/hw/block/block.c
-@@ -208,6 +208,52 @@ uint32_t blkconf_zone_write_granularity(BlockConf *conf)
-     return MAX(bs->bl.write_granularity, conf->logical_block_size);
- }
- 
-+bool blkconf_check_zoned_geometry(BlockConf *conf, Error **errp)
-+{
-+    BlockDriverState *bs = blk_bs(conf->blk);
-+    uint32_t wg;
-+
-+    if (bs->bl.zoned == BLK_Z_NONE) {
-+        return true;
-+    }
-+
-+    wg = blkconf_zone_write_granularity(conf);
-+
-+    if (!QEMU_IS_ALIGNED(bs->bl.zone_size, wg)) {
-+        error_setg(errp, "zone size %" PRIu64 " is not a multiple of the zone "
-+                   "write granularity %" PRIu32, bs->bl.zone_size, wg);
-+        return false;
-+    }
-+
-+    /*
-+     * A write pointer that is not a multiple of the write granularity does not
-+     * fall on a logical block boundary, so the guest can neither read nor write
-+     * at it and the zone can only be recovered by resetting it. A backend that
-+     * records its write pointers, rather than reading them back from a device,
-+     * can hand us such a pointer when the zones were written while the device
-+     * was configured with a smaller logical block size.
-+     */
-+    for (uint32_t i = 0; i < bs->bl.nr_zones; i++) {
-+        uint64_t wp = bs->wps->wp[i];
-+
-+        if (BDRV_ZT_IS_CONV(wp)) {
-+            continue;
-+        }
-+
-+        if (!QEMU_IS_ALIGNED(wp, wg)) {
-+            error_setg(errp, "write pointer 0x%" PRIx64 " of zone %" PRIu32
-+                       " is not a multiple of the zone write granularity %"
-+                       PRIu32, wp, i, wg);
-+            error_append_hint(errp, "The zones were written with a smaller "
-+                              "logical_block_size. Reset them, or keep using "
-+                              "the smaller size.\n");
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
- bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
-                                    bool resizable, Error **errp)
- {
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 7d5a02a42c..c2acf59c6d 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1834,6 +1834,10 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
-         return;
+diff --git a/block/file-posix.c b/block/file-posix.c
+index c1ac49d23d..0e92ff8414 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1488,10 +1488,15 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
      }
+     bs->bl.nr_zones = ret;
  
-+    if (!blkconf_check_zoned_geometry(&conf->conf, errp)) {
-+        return;
-+    }
-+
-     bs = blk_bs(conf->conf.blk);
-     if (bs->bl.zoned != BLK_Z_NONE) {
-         virtio_add_feature(&s->host_features, VIRTIO_BLK_F_ZONED);
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index f98525c01a..69b0a085f0 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -122,6 +122,7 @@ bool blkconf_blocksizes(BlockConf *conf, Error **errp);
-  * value to its guest and validate requests against it.
-  */
- uint32_t blkconf_zone_write_granularity(BlockConf *conf);
-+bool blkconf_check_zoned_geometry(BlockConf *conf, Error **errp);
- bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
-                                    bool resizable, Error **errp);
+-    ret = get_sysfs_long_val(st, "zone_append_max_bytes");
+-    if (ret > 0) {
+-        bs->bl.max_append_sectors = ret >> BDRV_SECTOR_BITS;
+-    }
++    /*
++     * raw_co_zone_append() carries out an append as an ordinary write at the
++     * write pointer, so the zone_append_max_bytes attribute, which bounds an
++     * operation that this driver never issues, does not apply. The kernel
++     * splits a write that is larger than the transfer limit rather than
++     * refusing it, but there is no use in telling a guest that it may append
++     * more than the device carries in one command.
++     */
++    bs->bl.max_append_sectors = bs->bl.max_hw_transfer >> BDRV_SECTOR_BITS;
  
+     ret = get_sysfs_long_val(st, "zone_write_granularity");
+     if (ret >= 0) {
 -- 
 2.55.0
 
