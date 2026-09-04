@@ -4,107 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF88C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D39C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 09:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Q1J-0004mq-Nt; Fri, 04 Sep 2026 05:15:37 -0400
+	id 1x2QJ5-0007Lc-W9; Fri, 04 Sep 2026 05:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x2Q1I-0004mg-VZ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:15:36 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x2Q1H-0001aQ-7X
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 05:15:36 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-836ce6cbe1eso7416477b3.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 02:15:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788513333; cv=none;
- d=google.com; s=arc-20260327;
- b=RIS+VCYmnK5epMu6Ghuh7nofPs/J+1haDAmu6N1BKsKwYGcbCA2CiimUv88kt1BuVq
- fDOyVEsKqgEXkstWbDksKTvuR56kajV2LDCUxB38TkHOeUStk2zRnHqP2DWYvu6egGjz
- U0DOlkcoy0+HW0jiL9/RhEGnS8H1E9IkCMsTDZla9p+b7VSRFCgcjyx16tsselhuQWM7
- U8+xQc5d9TwNy0yp+tZe70bvKMxo50aRAsXVwEYnfCOMnRyoKEiuFboNzksvJFERlD29
- 1CnHZiLtFts+a3CgA4Ykp6Nn7nuq/Ray4pS6gQfP3B3N8wtS55Rifqi8qy82K+W7e9Kb
- zygA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2Pf6JzldFyCcEKI+aEXpQhEuXKSo1Uk1RaFlSh3dN+0=;
- fh=ILU5lqw7vqxBdELzbxjWl6muK1VB0VK4Qr9OFCEqlCg=;
- b=Hi2A2/okTBfqWqMgxzaqUBUUQRCbNyzKyomW3epFIjqFE872qu579Qj/tv4LouRguK
- AunFCEcdQD3vuehx7qgiZ90k2PyJYMD3khsM3aeUWOm6Xk+enjW8Z3mXH+k2gn3fI+JR
- mA17vuFS/NCnRz2Dg5xepRRj1znE79aulxsoluH5XHZl3UwnKZhQMuy2vYBR2tm9KfJB
- BbZdSf3AEFUBh+oCketWb6vgMFXXtLvmuQB2Jwow8lVvQ1BWyZDWI38z74JxI+yZ+h/c
- 1M+MJ4YUMJkgmEcHOw0yTQl3BLnn7eKETzP/VxQyr4fsDLcaehQB6oEgPpHyv+Q7cjrN
- eK2g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788513333; x=1789118133; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=2Pf6JzldFyCcEKI+aEXpQhEuXKSo1Uk1RaFlSh3dN+0=;
- b=Ks1YasoJFFq8iG5AVQEcUG2cHVQi5EHEyfXAXAzi/vdUVJCY5+Wr1BuJQRQ7OuK5k7
- H1tiXcuxYbcFFgUJez3Ic58Gw4WNN9b35wG1tlhG+urN5V3RCQGsi7uCCEUfioA2+wq2
- vzDwC7AwjbaeKtHw5dg9c2Px9OrEWTYKjjZPsbs7TprqCiYNhedRx9dihWBPq/wGF2B+
- zvj45Ll1ZJr69365wXQlTibu741yQkT3Pd+Oncy/hBFb+RuWe5Eu8Jl13hmTORDJb/Rq
- jxdjZpJInBnUZGMvUCsvNCqAsRdJGbUGQEdibrl9UTptqBOL+z02wqVgVT2ouTQ9oybn
- EPiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788513333; x=1789118133;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=2Pf6JzldFyCcEKI+aEXpQhEuXKSo1Uk1RaFlSh3dN+0=;
- b=FGVrvuiqN5KpO/0Q2E9/ycNATAMQfpA9ibKJOo2G6rpTlkpdOEryxe0E24ZEIiRhtK
- +imCY3oD/eenn/le3IzYaQPZe4DNAG0q2wJ4Eb0ARywsPTYKnq8K0ETSOHMQF72bl9lx
- FYecLfITRUGT+gBqjz4rAXjwtzZWPXRFZpe08pxFW2Uoyz90K6nq4pHY2xKvo9PhrRIS
- jhipXdrXEFt7uZtMxnVwDwpbtwiOj6UkMCKjUGGlfw5LcyGXrAGEQRl3AGcs/O1vyHP2
- CWK7hMIaCSt/WMNOPnUUazECsu+UEZEGFXVaDLJwqClZz3RMuQLmcjJsPybx8L1Vu/bx
- bgkw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxrktud8YodrGAAI5Xd/+pw9asUHQiaCWvpTpzGLg/DVCGTJ53OVZsJpyGlibdYLAxyriGKKG0fknD6@nongnu.org
-X-Gm-Message-State: AFuF++lQXtEtc3Q2RTkis6vBKB27gSZkaTQJu2ZZWkh60rYiWFIFSNe1
- Pe3GcIzxM0ntZrJpgZKn7GGoZW7/3+2NALZgygidceCzS1URQ9HaNdHDEPD5Hy9clxS57+z2t0S
- n2CR9n3gHv5lBuuQhc+h+FPHG5ZwpBlErUnxCwgFPxg==
-X-Gm-Gg: AYBFou10S65jCmWpulhekWleRT+0lz8a3jI9NRF2u7iKPWc/znptFWWJu2IBcU8Xf99
- sNg2YVsremGMHzscXJzF9/MSLP1/9OKM7bjsY2p2EVgnWYmkMeGV6lSGW0f/SSR7qyCS65ZP8Wk
- skLxWNbrk01MJLJXoiLaUSoQNOkjsPi4hs4nCg6iXLZarVeiLpO49CFghpPSHPy9LXjCf/aHUSL
- MLxDjogcsdYvEu3IF35tnawB1hlENOaBocb5UhOCogwCQdtfo6H2M88nGXP82wDLILgD7OnYvOg
- 3KoHKn061dFQg1byJ1OhbOJZ/sSalBSeMueNL/P5jcRlAnnNVv0l/6qnIEMtqMA50K8x2H6bAGV
- VaWq2Wew7CyWcaFIKFCtb3nCnCYyh
-X-Received: by 2002:a05:690c:d8a:b0:854:27c3:5cd8 with SMTP id
- 00721157ae682-8712a22ab0cmr27034477b3.27.1788513332915; Fri, 04 Sep 2026
- 02:15:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-2-farosas@suse.de>
- <apmwZbSLZ46yvGmT@x1.local> <87bjae8bya.fsf@suse.de>
- <apm10EPO4vYlZLQZ@x1.local> <87fqzp9yzb.fsf@pond.sub.org>
-In-Reply-To: <87fqzp9yzb.fsf@pond.sub.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Sep 2026 10:15:21 +0100
-X-Gm-Features: AcwNN1XRJVbUyotbcb_XYSSxnIXIMLmY8VPdq6ntFqvlPEzK_P9rGvli5yqH3vU
-Message-ID: <CAFEAcA_N0NciFyg88rfweD_uYeFbtgrP1y3NhmXwhChZGMmxSw@mail.gmail.com>
-Subject: Re: [PATCH 01/18] checkpatch: Fix checking of newlines in error
- messages
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x2QJ2-0007Jv-Us; Fri, 04 Sep 2026 05:33:56 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x2QJ1-0004mt-5k; Fri, 04 Sep 2026 05:33:56 -0400
+Received: from smtp02.univ-lille.fr (smtp02.univ-lille.fr [194.254.129.96])
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hbrrH59Q8zBqmn;
+ Fri,  4 Sep 2026 11:33:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
+ s=dkim; t=1788514431;
+ bh=bYN4JOXAn3tvyLHrvX9UH/vUKSQEqs+FSDoZ+p8AqZk=;
+ h=From:Subject:Date:In-Reply-To:Cc:To:References:From;
+ b=wN0goBdkoDYi0qTebn5/MvZ2DWjoMQmbJAJJn++cKXVAZ8j+V4n3tp5WHQvU+pBWP
+ lXwmLRf0qAZxaoEpwYXWJQmXIXk1ElQ3tclPSVWYsja9xROIzVHgh9YdaYmv15uAat
+ qfvx+fhxyp9fDsx7CJ/fJE1OLg4IabhOdQyCKVtan/B8VX0F3tb0SFznY0F90bYhCS
+ OpeR4bOJ8OWmI5ovnncnL3ruxp7sIgk0Z4YfRFiuoD4tzz6s3UZ7AkpqFDAYQmT6us
+ HzL9fSqlYT4LSo1pUB3y75uXu1OkwfjCBRwvOwFI1Ai5tHsaDnwQb/yTQJS2kFMDMD
+ jYt8fayMlS6KA==
+Received: from smtpclient.apple (unknown [134.206.232.123])
+ (Authenticated sender: gilles.grimaud)
+ by smtp02.univ-lille.fr (Postfix) with ESMTPSA id 4hbrrH3JY0z6svZ;
+ Fri,  4 Sep 2026 11:33:51 +0200 (CEST)
+From: gilles grimaud <gilles.grimaud@univ-lille.fr>
+Message-Id: <2CDD378D-60E3-4028-B325-C472B5AEFE58@univ-lille.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_829E6C20-9F57-48AE-AE18-F1E11EC4E13A"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH RFC v2 07/30] hw/misc: add RP2040 TBMAN and voltage
+ regulator
+Date: Fri, 4 Sep 2026 11:33:41 +0200
+In-Reply-To: <87bjagrlyy.fsf@draig.linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260829234308.33725-1-gilles.grimaud@univ-lille.fr>
+ <20260829234308.33725-8-gilles.grimaud@univ-lille.fr>
+ <87bjagrlyy.fsf@draig.linaro.org>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,62 +77,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Sept 2026 at 09:56, Markus Armbruster <armbru@redhat.com> wrote:
->
-> Peter Xu <peterx@redhat.com> writes:
->
-> > On Thu, Sep 03, 2026 at 02:46:37PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >>
-> >> > On Wed, Sep 02, 2026 at 07:15:29PM -0300, Fabiano Rosas wrote:
-> >> >> Using newlines in the g_test_message is fine. It automatically adds
-> >> >> the '#' required by the TAP protocol to the start of each line.
-> >> >
-> >> > IIUC we have such check not because TAP, but because all these functions
-> >> > will append one newline at the end, hence it's not needed.  IOW, if it
-> >> > applies to g_test_message(), I don't see why it doesn't apply to the rest.
-> >> > But maybe there're other reasons?
-> >> >
-> >> > To make it simpler, maybe we just call a few times g_test_message()?
-> >> >
-> >>
-> >> Not sure I understand your point, Peter. I want to be able to print nice
-> >> messages in patch 9:
-> >>
-> >>  g_test_message("expected vs. found:\n\n%s\n---\n%s:%s", str, t2[match], t2[match + 1]);
-> >>
-> >>  # HMP output mismatch for entry at line 55:
-> >>  # expected vs. found:
-> >>  #
-> >>  # max-bandwidth: 10356305952768 bytes/hour
-> >>  # ---
-> >>  # max-bandwidth: 10356305952768 bytes/second
-> >>
-> >> What would be the issue of having newlines here?
-> >
-> > No issue here that I can see.  My question was, why you moved
-> > g_test_message() out only, but not all?
-> >
-> > My gut feeling is we check this because people forget that all these
-> > functions includes a newline.
-> >
-> > So if your point stands here that "newlines can be in the middle", they
-> > should apply to all, not one.
->
-> I'm not sure I understand you correctly.  If you suggest to permit
-> newlines in the middle of error_setg(), error_report() & friends, I
-> disagree.  qapi/error.h:
->
->  * The resulting message should be a single phrase, with no newline or
->  * trailing punctuation.
->
-> If you want to provide additional information, use error_append_hint() /
-> error_printf().
 
-Right. These functions have a genuinely different set of semantics
-from g_test_message(), which is why Fabiano's patch only changes
-how checkpatch handles that g_test_message(), not the various
-QEMU error/warning functions.
+--Apple-Mail=_829E6C20-9F57-48AE-AE18-F1E11EC4E13A
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
--- PMM
+
+> Le 2 sept. 2026 =C3=A0 12:23, Alex Benn=C3=A9e =
+<alex.bennee@linaro.org> a =C3=A9crit :
+>=20
+> Gilles Grimaud <gilles.grimaud@univ-lille.fr =
+<mailto:gilles.grimaud@univ-lille.fr>> writes:
+>=20
+>> From: gilles grimaud <gilles.grimaud@univ-lille.fr>
+
+<snip>
+
+> You don't need this duplication. qtest's can include QEMU headers.
+>=20
+> As an aside you might want to look at the hw/core/registerfields.h
+> helpers which are good for defining registers and their fields and
+> generate the helpers for you.
+
+Agreed. For v3 I will share the TBMAN and VREG register definitions
+through their device headers and use registerfields.h.
+
+>=20
+> --=20
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+
+--
+Gilles Grimaud - 2XS/SISE - CRIStAL/IRCICA - CNRS/Univ. Lille =20=
+
+--Apple-Mail=_829E6C20-9F57-48AE-AE18-F1E11EC4E13A
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br><div><blockquote type=3D"cite"><div>Le=
+ 2 sept. 2026 =C3=A0 12:23, Alex Benn=C3=A9e =
+&lt;alex.bennee@linaro.org&gt; a =C3=A9crit :</div><br =
+class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Gilles Grimaud &lt;</span><a =
+href=3D"mailto:gilles.grimaud@univ-lille.fr" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">gilles.grimaud@univ-lille.fr</a><span style=3D"caret-color: rgb(0, =
+0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">&gt; writes:</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
+none; text-decoration-thickness: auto; text-decoration-style: =
+solid;">From: gilles grimaud =
+&lt;gilles.grimaud@univ-lille.fr&gt;<br></blockquote></div></blockquote><b=
+r><div>&lt;snip&gt;</div><br><blockquote type=3D"cite"><div><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">You don't need this duplication. qtest's =
+can include QEMU headers.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">As an aside you might want to look at the =
+hw/core/registerfields.h</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">helpers which are good for defining =
+registers and their fields and</span><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">generate the helpers for you.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"></div></blockquote><div><br></div><div>Agreed. For v3 I will =
+share the TBMAN and VREG register definitions</div><div>through their =
+device headers and use registerfields.h.</div><div><br></div><blockquote =
+type=3D"cite"><div><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">--<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Alex Benn=C3=A9e</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Virtualisation Tech Lead @ =
+Linaro</span></div></blockquote></div><br><div>--<br>Gilles Grimaud - =
+2XS/SISE - CRIStAL/IRCICA -&nbsp;CNRS/Univ. Lille =
+&nbsp;</div></body></html>=
+
+--Apple-Mail=_829E6C20-9F57-48AE-AE18-F1E11EC4E13A--
 
