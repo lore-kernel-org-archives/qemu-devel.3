@@ -4,103 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9DCC79F87
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511E3C79F82
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 22:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2cJo-00036K-Ed; Fri, 04 Sep 2026 18:23:32 -0400
+	id 1x2cJS-0002xU-8s; Fri, 04 Sep 2026 18:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2cJm-00035j-7S
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 18:23:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x2cJQ-0002x5-JS
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 18:23:08 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2cJk-0000AP-I5
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 18:23:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788560607;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JZrwI7AcVfc7bjI/Pw68HHhS3g79z7lgO/lEvZhXNUM=;
- b=OrIHso0wxjNN0uD9ud2Dyl3VSydkabpr9FQGp6nCHm6NSpe8AUkBxonMwIT7EjJU3puJPO
- qHiVxVPId8wCuCaFYZ6FwWHZ0E6Skf49zomhQwxwSo7EecQirYSmQhNgsNYDlnZ5Iofn3K
- BkNvcQJpTDTIDWIH+i8HxcF+Ws5RaMo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-7MSbLDWKOia9PTTOZtIoDg-1; Fri, 04 Sep 2026 18:23:25 -0400
-X-MC-Unique: 7MSbLDWKOia9PTTOZtIoDg-1
-X-Mimecast-MFC-AGG-ID: 7MSbLDWKOia9PTTOZtIoDg_1788560604
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4843313047eso987817f8f.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 15:23:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1x2cJO-00009j-CV
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 18:23:08 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 684KbSeA1568687
+ for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 22:23:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ BretlBW4jlLRVrhRnmJ1EmWkSn8JgDHnIz9p+Zm70oE=; b=KJw3DHP9l9rr6fTd
+ tzCNI3iU3ZBcLXHBueGz93Zy0JEtyUs4VI9I4/cGfKk65JTTzKlOfwekbUwh+TST
+ BkNXMTVbjGF7h9Q8yPOfFmqN5SYkKkaYdzJ00ZCXCN6Az9cpcg3Cn1hSR9+cKobu
+ +rRsHWa1TuZTSwsjCNVUddfEcfdh9gSJOB/hMpH2lM9jrDNkdwBAQ90G48dZNVTR
+ lIJUNIYwofIOAUVLUwlxVldXslCVVZkqOjUzVZcP4fqaqN+wAy41Y/Dg2YJIJgDX
+ X+jfCqA2EZeahSVaxd4e9BwmoY3aWlhu9MsVFmqpOiP3k+Vpdq+6qLQtgb62bXSi
+ aPi2Eg==
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gg00yswgm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 22:23:03 +0000 (GMT)
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-7f582244e9eso28769687b3.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 15:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788560604; x=1789165404; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=JZrwI7AcVfc7bjI/Pw68HHhS3g79z7lgO/lEvZhXNUM=;
- b=JcMMM2r3cxkmgIuulICK5HCseMEhKpzco1y+i2dN2dyaWHLDo14LlqLsyNlvwl7inc
- UeuwowwlUEm2dBoMUWT3QLzDqv8Mq5+d0o6XOutjUedfNJPh6UtP0N2DzuSXZKPWHeql
- pdRKJLzmtjDSiyxNM08fdXMUhpgFOM1/+BKIX6+Cv9OX4ctHpcG793gc6anUW//Endl0
- Gs5f9VDqWVvF6E8NjWhZo5eT37o/2eTqkDNRtyp48058GwxNnPTgo+EAYSQ5NrYCXrzE
- 2gVmOxQkbxiGnjNaeH4vJQT1hyl6uZ3bJRigpIqWDYPilkFdaptc3q0dlROMxp7fIL9A
- 4XNQ==
+ d=oss.qualcomm.com; s=google; t=1788560582; x=1789165382; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=BretlBW4jlLRVrhRnmJ1EmWkSn8JgDHnIz9p+Zm70oE=;
+ b=i4hFCN2MNC0qIUY57zk4m+mhV45Vy9svfMP2Vgu69VKBMTuBwl+Lf0LS0FDXMTrq4z
+ GSODNLEgPU1xs278UC0ctgIVSuC7d9J4xaKcbUz4WrhAMI8u81++wZ4F9xPIOLjT1Laf
+ 3Xx3RlAIDNsEv26vQQunmOPhO1a4pNeq9XSsEEi/VHnWHpw4i4QgU58RnWnBd0LwOy71
+ SslysSZ5v449lJ/BeMrtYE+Uo3Fr+bMPGWVbT6KDlekVe1diNjv/gfujftofXzeb821Q
+ oyIrlvNE13eb+vavsoIIRshH6N3bQP87RiPU/uJMx7ONbD1nqwp3G/Jlaf2RBBOIPTho
+ SpcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788560604; x=1789165404;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=JZrwI7AcVfc7bjI/Pw68HHhS3g79z7lgO/lEvZhXNUM=;
- b=jWAooEOk49RHvB08b/eiEZRLk4n5k9F0GqGNu0gdcB2UcGQgjS6X2eYqaAckFhztwY
- Z8HuCNtv4pbehAXB6F1Qn5m8FdfkP0wcEUpXYMdebx4V6xVMX2JOocxV1F1yVM7wr/vp
- CftWRjvJN++LptsHgpWbaXUIyWZjXt2n10R/7CpQO8xkRdY9JHVinJGBqaWO8sBKmflW
- RuFfhWvOwl1ZC6QoZ3uoEymMegunSxAfzWUC73fz7m//BALH3l6pa4iGq657Kq+2sCjl
- Pw5yUx+oZN1QKSkeoM2OrYI2xf1fQ+fA4kvbJv2QjGhslIVkra7gYYkjhlyp6fHa7cqW
- OuYA==
-X-Gm-Message-State: AFuF++lniy8pNZ8yfBnUUAbQLkAYnzn9kPxRbqDd6m09BxoLMs5JO5nz
- opG1PPrReZ6SQ7LTo4oXJlr5e3/TvF9TUAB7zzbhHgQ1xuj321FaNjCoVnyUXmF+VF1GZh2GvI7
- z9DlzK2nxs78GnwrK7DD2EaYuuDV30VOk5nCGZLvCXxwgXII5gqmiwRAr
-X-Gm-Gg: AYBFou0yGa2wlRpvkCcQ0zkTo1rvtkGklUn+uiMZyJ5z4oZ3SdOegUSGWYFKFSXP7Rx
- 5kFEIy1QATshipz2dX8k68V7CanD2ji46NEp4SNnYNgVOBTwBAxlPY7LS1Czq/j+F6HFMh8Arhr
- /9Jpv5Nkt0Ylxx0P3m/7SL8OV5OQW9uTOCmPGYhpGz3CGgIsEuML1PvLigvj/sCEWAwL2HDO7es
- lmX+jPO5JIFgF+OSHxr4Trz+QBrBEIeL8lpOSZR25CuktPZvUnHr8pbE6WkHo0oNjMUylQpvqmz
- aImIqSSZmY9HqpakZea9HjEaRNZmZ+fHkGdKi6N3AOV8a/JeOf8CG25WfPMe0X/5EA+bz9hkqi/
- YiwW849OsYECHwWDB3ivGM8I=
-X-Received: by 2002:a05:6000:2282:b0:485:8a47:5b82 with SMTP id
- ffacd0b85a97d-4858a475d65mr8115508f8f.31.1788560604393; 
- Fri, 04 Sep 2026 15:23:24 -0700 (PDT)
-X-Received: by 2002:a05:6000:2282:b0:485:8a47:5b82 with SMTP id
- ffacd0b85a97d-4858a475d65mr8115480f8f.31.1788560603939; 
- Fri, 04 Sep 2026 15:23:23 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858d2693e8sm5904110f8f.3.2026.09.04.15.23.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 15:23:23 -0700 (PDT)
-Date: Fri, 4 Sep 2026 18:23:20 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: shenjiatong <yshxxsjt715@163.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-Subject: Re: [PATCH] rtc/mc146818rtc: fix QEMU crash when time runs backwards
-Message-ID: <20260904182057-mutt-send-email-mst@kernel.org>
-References: <20251113030211.6283-1-yshxxsjt715@163.com>
+ d=1e100.net; s=20251104; t=1788560582; x=1789165382;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BretlBW4jlLRVrhRnmJ1EmWkSn8JgDHnIz9p+Zm70oE=;
+ b=H9f7lxekPzqu6ZkdTYdwAfNffn6kBHzS+SR+UizmnW6XtHY+0+umKFuN3FJoOAbQPu
+ 2CrZ8+no/pvcHEN/Vp9Q1gGq32U/MRNLD2CybRTl/3xabyjeiJiByUnIqcVKKWkTtNWW
+ v04Z1HYZTUfPrhdFJaf/xzZn0CmoYWpWhJytRS6F2Z/teKJIbK+b6CTlWSlOImgnL1S1
+ Gy3fnG8hpXtgO0EhKrIvQieAUgCvwptCPQOn/7ikj8nqtRGbiTWIm90m+dy0/BydvTRD
+ Dr2wVJ7eeyVYnUteQUW7EHMv1C75qPO+byosKfeWRdcu7IbsdJBuiVViZQkyl4XEa0CM
+ NJIw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw7y1VNePxlza4Cg42OwLP7eaEXID0ROR4OBA/8Yh+O4oteW8wiEQZTOW3hfCPsFBXSpbpJy1RjwAqw@nongnu.org
+X-Gm-Message-State: AFuF++nya4FGQ5iPr5Vuc9lKPoW5zoFWxq9tI9hA02oNYhKi+5RynVhu
+ 6V4CwyDriddM6nBN5uJ58zWiDVH0RGnEJubtTX4YaYqXrcugB6pwDklCrwwIZAcEHKwNy1X8t2Q
+ OKHMWBjcmSVMHLBCiwRebCNM6WDrthi/SJrYOeRcd/4bTjdsyMnbGRiuEyA==
+X-Gm-Gg: AYBFou3y/XuYWiUApiXiOeFT2FC5aFhR60lIklMa7JfOsfO8PtcFDMOVBsxLY26gzjn
+ 11NqK5SMYkYdP0mujDkJuQID7q1reNBSyh7qP3EAK5wlEWrsw2ysKkKQ81CNmz9pyVOb4unZKiN
+ kQtUR0a4kIRY6MlDRlUiUmALfVp9gD1/NX+Jxp5Mkoq9Od6xuga3MPbjSeCuY0TItG517yZNyIF
+ LWiitqRb7uiqDiKkmhNCBDam57eFGut1q7X68gBkdvjn0L9WwiE2kJwqv7W7VpjCOdcX/70hQVg
+ qKpl+41Y3rnL87xjfqnxL5v6yo4MaHOXRP7kbZB4JL/EYHtxAKEsuscVQiQGFujYe6QXX248Ctj
+ UOh7AhT677fD4ckv+KEUBhLYFKyi3QCUCTJw9yIYwFSiPYhN31cf7B/9Et2uxTFeIlzXkEwJSy/
+ 3YKzyD
+X-Received: by 2002:a05:690c:a694:b0:80b:9f4e:a70 with SMTP id
+ 00721157ae682-8712a70a30cmr36642557b3.26.1788560582577; 
+ Fri, 04 Sep 2026 15:23:02 -0700 (PDT)
+X-Received: by 2002:a05:690c:a694:b0:80b:9f4e:a70 with SMTP id
+ 00721157ae682-8712a70a30cmr36640947b3.26.1788560577339; 
+ Fri, 04 Sep 2026 15:22:57 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-871439c4566sm28368627b3.4.2026.09.04.15.22.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Sep 2026 15:22:56 -0700 (PDT)
+Message-ID: <16bf2542-b9c8-4a1a-ae95-992c0e168ea6@oss.qualcomm.com>
+Date: Fri, 4 Sep 2026 17:22:55 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251113030211.6283-1-yshxxsjt715@163.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/5] target/hexagon: fix HVX scatter/gather
+ region-length check
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+References: <20260904012233.3607547-1-brian.cain@oss.qualcomm.com>
+ <20260904012233.3607547-3-brian.cain@oss.qualcomm.com>
+ <63513430-7bd1-486c-b693-49d1076562ed@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <63513430-7bd1-486c-b693-49d1076562ed@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=baFbluPB c=1 sm=1 tr=0 ts=6a9b44c7 cx=c_pps
+ a=g1v0Z557R90hA0UpD/5Yag==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=Bsm96ptRnNhaWsWVLtsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=MFSWADHSvvjO3QEy5MdX:22
+X-Proofpoint-ORIG-GUID: MDIAuPIEG7P_AjJiZD_zw_nWYYnMp6TI
+X-Proofpoint-GUID: MDIAuPIEG7P_AjJiZD_zw_nWYYnMp6TI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDIwNyBTYWx0ZWRfXygxx000iEAEt
+ ky94J+XHx/ZQkVJwtUtCv7RQhclGpkrvr7TZAhs0O8nXR4o+3pRRhBwcC/WpFVZWf2iVGIVSfL9
+ 6HPlwFownv8zQV1MqHTa9hIPU5j2uOQMP+f2sR2GkDxGRAj1R9jilJWsO32AUpb3BPKd8oGYO06
+ INr0Tnu175GrBhDTu4ydJLHjMSh0IYxplmwp/3fJSlF4O1wCT8UayTxTEg+LZFy2T2cT1i04CNf
+ jVNJnoD3IEmKEtYEPcd3dpczeasNIBH88hk69ck+PpT4oIRPLzWPHslvkvjtyITXl5d6v1EnlqQ
+ +1aS0FaMCQuIFIZRfoZ/VcHNqJ6lKOAL9Uo5j/C1T/eqbAjcShN+TfcuaZP5pVYDulcyhK4v1J8
+ l0jVT3YhfjelOKFLoDJkk2k/K0JbVah6FqDnrk7i57koddUiGUs9GQv7Iw5Yft9yc+SJhjvqZyD
+ Qck8bLhE55XdaYmjEWw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDIwNyBTYWx0ZWRfX/ZIOCqBjB0wC
+ 4a0V5n+FTNAEG7vSCe0Z+rRyPfyYHlxK59j1MI1WVsw1C05cD0qe6FyCNFGtMcgOU5cC/0G8opD
+ 2QcOaUpeRpCeA+hlt8T/0H+4HGlFKU0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-04_06,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 spamscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040207
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,52 +159,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 13, 2025 at 11:02:11AM +0800, shenjiatong wrote:
-> Loosen restriction on computed lost_tick. When QEMU's rtc_clock is set
-> to host, the walltime is used for mc146818rtc which requires computed
-> lost_tick to be strictly non-negative. But host walltime could possibly
-> run backwards, for example, configured by NTP service. Under such
-> circumstances QEMU process could crash unexpectly.
 
-could crash -> crashes on an assert
+On 9/4/2026 5:33 AM, Philippe Mathieu-Daudé wrote:
+> On 4/9/26 03:22, Brian Cain wrote:
+>> The region-length bounds check compared (EA + i0) <= (EA + LEN),
+>> which reduces to i0 <= LEN and never actually depends on the region
+>> base. This let vgather/vscatter keep elements whose offset was
+>> beyond the declared region instead of dropping them. Compare the
+>> offset to the region length directly instead.
+>>
+>> Only load bytes for gather lanes that are kept. A dropped or
+>> predicate-false lane must not access memory and raise an exception.
+>>
+>> Reviewed-by: Matheus Tavares Bernardino 
+>> <matheus.bernardino@oss.qualcomm.com>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/mmvec/macros.h | 31 +++++++++++++++++--------------
+>>   1 file changed, 17 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/target/hexagon/mmvec/macros.h 
+>> b/target/hexagon/mmvec/macros.h
+>> index e85beed3387..858afd995d9 100644
+>> --- a/target/hexagon/mmvec/macros.h
+>> +++ b/target/hexagon/mmvec/macros.h
+>> @@ -130,9 +130,9 @@
+>>       do { \
+>>           int log_byte = 0; \
+>>           target_ulong va = EA; \
+>> -        target_ulong va_high = EA + LEN; \
+>> +        int in_region = (OFFSET) <= (LEN); \
+>
+> I'm a bit confused here (and hopefully wrong), shouldn't it be
+> (OFFSET) < (LEN), otherwise the byte accessed is out of the limit?
 
-remove "unexpectly."
 
-> This situation is
-> easy to reproduce for Windows 2012/2016 guests.
-
-hmm what does it matter what is the guest?
+Yeah, it's confusing as-is.  I'll change the code to make it clearer.  
+s/LEN/OFFS_REG_END/ should make the code look more conventional, I think.
 
 
-Pls describe a fix shortly here.
+HVX PRM 
+https://docs.qualcomm.com/doc/80-N2040-54/80-N2040-54_REV_AB_Qualcomm_Hexagon_V73_HVX_Programmers_Reference_Manual.pdf
+
+Refer to section 5.3, "Scatter and Gather" Table 5-3 - "Mu: Byte offset 
+of last valid byte of the region (for example, region size - 1)" - the 
+Mu value is what's been interpreted here as "LEN."
 
 
-And please follow standard practice to submit changes,
-such as read and sign off on the DCO.
-
-
-> ---
->  hw/rtc/mc146818rtc.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-> index 8631386b9f..04185eb6e9 100644
-> --- a/hw/rtc/mc146818rtc.c
-> +++ b/hw/rtc/mc146818rtc.c
-> @@ -173,8 +173,7 @@ static void periodic_timer_update(MC146818RtcState *s, int64_t current_time,
->          next_periodic_clock = muldiv64(s->next_periodic_time,
->                                  RTC_CLOCK_RATE, NANOSECONDS_PER_SECOND);
->          last_periodic_clock = next_periodic_clock - old_period;
-> -        lost_clock = cur_clock - last_periodic_clock;
-> -        assert(lost_clock >= 0);
-> +        lost_clock = MAX(cur_clock - last_periodic_clock, 0);
->      }
->  
->      /*
-> -- 
-> 2.34.1
-> 
-> 
-> 
-
+>
+> (pattern used multiple times in this patch)
 
