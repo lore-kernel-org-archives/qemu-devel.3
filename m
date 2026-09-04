@@ -4,79 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8770C79F85
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B86C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2StQ-0007RK-4c; Fri, 04 Sep 2026 08:19:40 -0400
+	id 1x2SyC-000142-Gq; Fri, 04 Sep 2026 08:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2StG-0007QP-7x
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:19:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2SyB-00012j-0i
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:24:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2StA-0007YS-OJ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:19:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2Sy9-0000Ep-2U
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:24:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788524363;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1788524670;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=GdvFFz8K31jGlNCAphVSC3f9yCIuvX2BtFX8/uTvIl0=;
- b=ImxLQiCFPCXR6FAw8vDLHCfhougMsXqC/RjKXJP7jkmZ2KToIzXbbcUCVEWnphBW2IzjR2
- cjSL97fTyNZiVwEJbj2aFOdTWIxhuJClAj41qg8QfWRxJ7B1LHML/I0fdjlJ03tpBv0FgG
- 9TU6Jr7u9fmIhucvCUS9q0hiULEakc8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-3CxZCXWmPuWl8sA5Wf6aBA-1; Fri,
- 04 Sep 2026 08:19:20 -0400
-X-MC-Unique: 3CxZCXWmPuWl8sA5Wf6aBA-1
-X-Mimecast-MFC-AGG-ID: 3CxZCXWmPuWl8sA5Wf6aBA_1788524359
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1265E1944DCF; Fri,  4 Sep 2026 12:19:19 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A94D427; Fri,  4 Sep 2026 12:19:17 +0000 (UTC)
-Date: Fri, 4 Sep 2026 13:19:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- devel@lists.libvirt.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PULL 00/13] Misc fixes patches
-Message-ID: <apq3Qilmil1qJe8_@redhat.com>
-References: <20260904105929.3450663-1-berrange@redhat.com>
+ bh=Lvvb1j6cIdK8CqlZOpzUplsTLYOdSAVskczGJOqt/4U=;
+ b=RGjJ3V6NZoJDjvsDPUQBcLsap1UJ2RCG2C/rHSNbCVTh9pTMNpuHl/kpeNBk9d48v8QIq1
+ SAECIM7vtN0U73RmZX5zk9E+YKKFE/ImtgPnfNqKolN/cPDPfJPluhxFIZuHufhrt+6r9t
+ 4hsaT7JnZEffWruYoKNGGB9vhfkupRo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-279-Ne-ttKlzNgi65D2dA7Iudg-1; Fri, 04 Sep 2026 08:24:29 -0400
+X-MC-Unique: Ne-ttKlzNgi65D2dA7Iudg-1
+X-Mimecast-MFC-AGG-ID: Ne-ttKlzNgi65D2dA7Iudg_1788524668
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-910342dc2cfso11722446d6.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:24:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788524668; x=1789129468; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Lvvb1j6cIdK8CqlZOpzUplsTLYOdSAVskczGJOqt/4U=;
+ b=tglxQVNeRr9rAq/8gTSdjB7PlAb32FZhU08ZW9vTjrEE5Kbmde+JegCiQnHe0CVX8X
+ 0ldHsbfXBGv/wBXAggO0ciF7yfilwRSeSn7w1rXnQD8Aw+KMLshvxERPGilds2mtsHZo
+ 2Fh40w/XOumVaEwA9/or2QbGaMsOxmZZQqCW2zPOVzF4yIq58JvCwn06V0RH/z12LlSg
+ 65GGDP9geJKpZLaqMnK61V6J2WYmPa7kGsbogz7UfPUdDq0FjhAWagLU6NT8kfa8t0yf
+ 8QAfHuAUotbh5dc8OApmRNoE6yFwUaD9OZRcS7Ogg7H61MiOr69rZMUr7ftt+Xs6ZxN3
+ Ojkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788524668; x=1789129468;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Lvvb1j6cIdK8CqlZOpzUplsTLYOdSAVskczGJOqt/4U=;
+ b=ck7c99misFJHTqtitdSAp5WlFCF+q4V0ujBOAoQlQaXiRtGh++r8qSKDTlBj6WPpAM
+ RK9/Fsh/7zMbETzVDSuxy/or5bleojF19wSkAJaxazvHDJzHhhYS8Lwu5mmSvrXP2MX1
+ bKEsE9sTGXI81FoPKa9K+kMzRya0K5KvW4NlfdpeDaTGuSZcfqqHkP9ABBqpNu6CgQ+p
+ t9eE904iMvh8foEQbebLCCygQdvVXpo9jK+vbTv0r8bShSphbG8A6eXrNPMpp9CXqa8o
+ BCL0Io3SnssQb2yBprk1T6iBCm5TYzmXYdlPEbm6pLVH7ha+/yZ7OsHI6TsUWUFMZ95r
+ lxxw==
+X-Gm-Message-State: AFuF++nZvrwRKD+W9XcKlK4S4cMz6bzktwTg4yQbe/plDi2IgrvFxJAU
+ fyA02yvceZos1XYGfZ1mAinN6vFhr6MgOXPSDyHRVTSTSHN89mw5ydVdo/a2nEJgrqxNaaJgRy1
+ Vy7RPoD7ekZNSbTobSib46yE4EMX1P2pa80A+MVy7tqJs6NbIZ33oUs1V
+X-Gm-Gg: AYBFou1DI4Rkb8VlpTMm1Mh7ss20TwpmFhPwPhKlR/LNzr8DW9gFnt1pMMTIj7fF3f+
+ 1f7N/p0RNQd31rpIVgNIOBpMB5SNvzA/cKBCisnnyWGnXhNnEaAr7k4vvdP1l004Txq5w5UW4cf
+ F1/7EzlmxdVdJpj/f43YEjtLtMebC5BK9TpafVsdv+gRSzDlctCTa7sVYeLBUN6mXh0wqKCKxuu
+ TPc8vurLbgKnBpHOrw1z9Bt47smaKn6zx2xJJ22eOvIsz9fV/R377YDggwzrhi+v5UbXr2l2fpb
+ d2sCuLDn40DusNVzduJ+uBHXDc5MPRsih7YkMnKAl2pGZII04i8E1yvHr/6Hp4gYyoY8
+X-Received: by 2002:ad4:5d69:0:b0:910:321e:2ebb with SMTP id
+ 6a1803df08f44-9103eeee20bmr65673156d6.8.1788524668437; 
+ Fri, 04 Sep 2026 05:24:28 -0700 (PDT)
+X-Received: by 2002:ad4:5d69:0:b0:910:321e:2ebb with SMTP id
+ 6a1803df08f44-9103eeee20bmr65672536d6.8.1788524667802; 
+ Fri, 04 Sep 2026 05:24:27 -0700 (PDT)
+Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-910464bf898sm352576d6.7.2026.09.04.05.24.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 05:24:27 -0700 (PDT)
+Date: Fri, 4 Sep 2026 08:24:16 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 15/18] qapi/migration: Remove MigrationParameter
+Message-ID: <apq4cH0QTHoAG4-m@x1.local>
+References: <20260902221547.1812481-1-farosas@suse.de>
+ <20260902221547.1812481-16-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260904105929.3450663-1-berrange@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20260902221547.1812481-16-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,89 +113,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry, this one is going to fail on the msys2 job, due
-to the new websock test trying to use AF_UNIX which
-fails at runtime only. I'll re-spin changing the new
-test to skip Windows hosts.
+On Wed, Sep 02, 2026 at 07:15:43PM -0300, Fabiano Rosas wrote:
+> This enum is convenient in two ways (just how enums work):
+> 
+> 1- It provides the number of migration parameters as its __MAX member.
+> 
+> 2- It allows iterating over an integer range and get a migration
+>    parameter name string corresponding to that position in the enum.
+> 
+> The migration code doesn't have the need for (2) anymore.
+> 
+> Balancing the benefit of (1) versus the disadvantage of requiring
+> migration.json to be updated in two different places whenever a
+> parameter is added, experience shows that the latter churn is enough
+> to decide to remove the enum.
 
-On Fri, Sep 04, 2026 at 11:59:16AM +0100, Daniel P. Berrangé wrote:
-> The following changes since commit 99e54ab5e7a6efc945af6d5661842155d1f3fc7a:
+I may have a slightly different feeling, but that takes a few things into
+account, (1) we don't have issue duplicating docs for the two parameter
+names anymore, (2) the dup is only about adding the same string once more
+in qapi/, (3) we now have this migrate_mark_all_params_present() function
+that must set all has_* fields, which the __MAX did help to guard a bit..
+
+I think it's also fine to remove it completely, we just need to be more
+careful instead on migrate_mark_all_params_present() later.  Which one is
+easier to be forgotten?  I don't know..
+
+Acked-by: Peter Xu <peterx@redhat.com>
+
 > 
->   Merge tag 'hw-misc-20260903' of https://github.com/philmd/qemu into staging (2026-09-03 16:43:24 +0100)
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/options.c |  6 +-----
+>  qapi/migration.json | 36 ------------------------------------
+>  2 files changed, 1 insertion(+), 41 deletions(-)
 > 
-> are available in the Git repository at:
-> 
->   https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
-> 
-> for you to fetch changes up to a61ee2ff816bc2804f773cbcff45a6cd8d83330d:
-> 
->   docs/system/security: exclude uninitialized stack variables as bugs (2026-09-04 11:17:00 +0100)
-> 
-> ----------------------------------------------------------------
-> Merge crypto, I/O and misc fixes
-> 
->  * Deprecated the AF_ALG crypto backend
->  * Improve checkpatch output in CI jobs
->  * Fix --disable-containers arg handling in configure
->  * Document security policy for uninitialized stack variables
->  * Fix multiple denial of service flaws in websockets
->  * Fix error handling in some x509 APIs
-> 
-> ----------------------------------------------------------------
-> 
-> Daniel P. Berrangé (4):
->   crypto: deprecate the AF_ALG crypto backend
->   gitlab: use --emacs --quiet for checkpatch.pl instead of --terse
->   configure: correctly honour --disable-containers
->   docs/system/security: exclude uninitialized stack variables as bugs
-> 
-> Denis V. Lunev (6):
->   io/channel-socket: do not treat a zero length write as an error
->   io/channel-websock: send an HTTP 400 when the greeting has no space
->   io/channel-websock: handle a blocked write during the handshake
->   tests/unit: add websock handshake test
->   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
->   tests/unit: cover blocked IO during the websock handshake
-> 
-> Evgeny Kolmakov (1):
->   crypto: Use g_autofree
-> 
-> Marc-André Lureau (2):
->   crypto/x509-utils: don't double set errp
->   crypto/x509-utils: propagate the error
-> 
->  .gitlab-ci.d/check-patch.py          |   6 +-
->  configure                            |   1 +
->  crypto/block.c                       |  17 +-
->  crypto/hmac-gcrypt.c                 |  12 +-
->  crypto/hmac-glib.c                   |  10 +-
->  crypto/ivgen-essiv.c                 |  15 +-
->  crypto/ivgen.c                       |   6 +-
->  crypto/secret_keyring.c              |   5 +-
->  crypto/x509-utils.c                  |   4 +-
->  docs/about/deprecated.rst            |  21 +++
->  docs/system/security.rst             |  10 ++
->  io/channel-socket.c                  |   2 +-
->  io/channel-websock.c                 |  10 +-
->  meson.build                          |   6 +
->  tests/unit/meson.build               |   1 +
->  tests/unit/test-io-channel-websock.c | 249 +++++++++++++++++++++++++++
->  16 files changed, 327 insertions(+), 48 deletions(-)
->  create mode 100644 tests/unit/test-io-channel-websock.c
-> 
+> diff --git a/migration/options.c b/migration/options.c
+> index 5d17acdd881..f988b181f0e 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -1127,7 +1127,6 @@ static MigrationParameters *migrate_params_from_dict(QDict *d, Error **errp)
+>   */
+>  static void migrate_mark_all_params_present(MigrationParameters *p)
+>  {
+> -    int len, n_str_args = 3; /* tls-creds, tls-hostname, tls-authz */
+>      bool *has_fields[] = {
+>          &p->has_throttle_trigger_threshold, &p->has_cpu_throttle_initial,
+>          &p->has_cpu_throttle_increment, &p->has_cpu_throttle_tailslow,
+> @@ -1144,10 +1143,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
+>          &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
+>      };
+>  
+> -    len = ARRAY_SIZE(has_fields);
+> -    assert(len + n_str_args == MIGRATION_PARAMETER__MAX);
+> -
+> -    for (int i = 0; i < len; i++) {
+> +    for (int i = 0; i < ARRAY_SIZE(has_fields); i++) {
+>          *has_fields[i] = true;
+>      }
+>  }
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index b1eaf7b0545..78c6e933cf1 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -796,42 +796,6 @@
+>        'bitmaps': [ 'BitmapMigrationBitmapAlias' ]
+>    } }
+>  
+> -##
+> -# @MigrationParameter:
+> -#
+> -# Migration parameters enumeration.  The enumeration values mirror the
+> -# members of @MigrationParameters.
+> -#
+> -# Features:
+> -#
+> -# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+> -#     @x-vcpu-dirty-limit-period are experimental.
+> -#
+> -# Since: 2.4
+> -##
+> -{ 'enum': 'MigrationParameter',
+> -  'data': ['announce-initial', 'announce-max',
+> -           'announce-rounds', 'announce-step',
+> -           'throttle-trigger-threshold',
+> -           'cpu-throttle-initial', 'cpu-throttle-increment',
+> -           'cpu-throttle-tailslow',
+> -           'tls-creds', 'tls-hostname', 'tls-authz', 'max-bandwidth',
+> -           'avail-switchover-bandwidth', 'downtime-limit',
+> -           { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
+> -           'multifd-channels',
+> -           'xbzrle-cache-size', 'max-postcopy-bandwidth',
+> -           'max-cpu-throttle', 'multifd-compression',
+> -           'multifd-zlib-level', 'multifd-zstd-level',
+> -           'multifd-qatzip-level',
+> -           'block-bitmap-mapping',
+> -           { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstable'] },
+> -           'vcpu-dirty-limit',
+> -           'mode',
+> -           'zero-page-detection',
+> -           'direct-io',
+> -           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+> -           'cpr-exec-command'] }
+> -
+>  ##
+>  # @migrate-set-parameters:
+>  #
 > -- 
-> 2.55.0
+> 2.53.0
 > 
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Peter Xu
 
 
