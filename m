@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F92C79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A93FC624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WKM-0006pD-2J; Fri, 04 Sep 2026 11:59:42 -0400
+	id 1x2WJY-0004aq-Dm; Fri, 04 Sep 2026 11:58:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WKJ-0006b5-M2; Fri, 04 Sep 2026 11:59:39 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1x2WJX-0004Tj-0l; Fri, 04 Sep 2026 11:58:51 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WKH-0004Wv-H0; Fri, 04 Sep 2026 11:59:39 -0400
+ id 1x2WJU-0004Sx-No; Fri, 04 Sep 2026 11:58:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BG/HEWBjqBQhqIYS9e0HkakvcTjoC0mHNFc8JNccx02/rnhzEYnahu57CQNCEO/lqPzjHK11vsior8ugxTIqFVMG/q1gcQOyTayWbwElRajAn3nzxb2xCtOcNv1e9mdlw48Q40PqZci9hzMNjXVxZUnE3vPJbMzAWi2Xp9RsCwXb5xLk4h/maYqMf69kP4f4wU1j+rx7XXabK1LkKi5dcmj1X2R5oci0T823IpymKa7hkJNIBYnIUEZpflDkVA0NvFkwVEQeCDhsAwor9vdt4+cFxoYTBoI2zikyHFm0ehMNQEaVbQX/cEo4z2YMWdZIwUsZaMHStRvSLopYrksrVA==
+ b=OaRzWhxhoWOryZdLz61ncj0ZqmZz2du+FkOOai4byR5nOEOBJA/wB6ElyKwL1fg5RPA93A6GOfHU6ZoXkPRAYzP6Eao6BWvJ3bZceH8dt4HdTxyVqbE90Tyi5kKxcc0jOGuTcJL2ZNpW9tktj0KCLkS4eStKHNVZHgp9m5mVX99d1hq5v8pWUu9N8YKVyOMYf4EOmHEbmDbrJdEG/5P8ugH13m/cj0URR6m6Ca1dwJYZV54qxYzjqTyQJ+YGx5iLFzVhEpMDjXmgWZSSG+wanXzHclEA+0fILQFUAtvmV0uihtw6FoovMQi/W+J5OCTqESwIAs347c33YKcx+wpHWA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/TYbwZtCVwJ/rqnadG8uS2qTRWpTwKy0h3gteLBbTjM=;
- b=HJQhU9ItuKz0I4Ns7nlDVgouPwy/nL3QARkF8k8pN4yy9MZyqtyhd7uTaQFmdvZME7tXQ3MaQQDGbzB62yCjYsQCIb1jYknLMV7swE/28zhKLFNhZXRdvYxW+XxVNytr60hwTXf87adIXNBU1jHwLpeCOEwsYnMQSpR0T5+cglKtg5FwvaKoK4qIS2t1oWGK9zGHN5OCOxwY/Q+3zK060nXRF4gEVq2PkBVG+IZPu7/kooYQAHtylxO+NwJ/JeYj3WqDuKJb/0JOMZI4aX+d29YYTT3N3z6YXRpqLBc9o5U+L8TcPE7H9J/pwARtJetDwS1dZfzzgXUpOcQENqtRNw==
+ bh=dZ6PkmE1xPaCacyIMLdHc80AFnKiP2a+SpnsCK7Nf2Y=;
+ b=KcOuqMdZD2Ue7FyLDbj4/OH7TWwWtcvH3JeDIF8yXHa26iqQxEvp3MMB6GRgxwO1G4DhO3Nc/oS4lRR5cI81NfeL2jE7ULNPk3nA/Aegjlm6qtdPTGpMfLG10heEvCDGSJcKK3zkKnyiZUkoVpOBDjFhAqgzovS8Ea9sVv7ycbtXIqeQ4usXx+pWjNTCmK2pxFUQhB/6iMHSBKBRtVawWJW6esHLoP0VQo3+MMYyPC/3bDXeo9K+3WH3aN+GMEOJLNuf174Wj2ETcCpTpKZdC9vZCmVufzKxQ4cs+4dy7tjU4+1kfB2I+eEYlKL8VFwFMHbK+rHFsoYcO0tMmx8VTg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,33 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/TYbwZtCVwJ/rqnadG8uS2qTRWpTwKy0h3gteLBbTjM=;
- b=C3Z7IKxl86OlxxGvlpgsq/FuN+hsBPOidrATxAQmqZkW4eO1BMTp6TvJcMYsHuLO5Sr3b+C+Xnpkz4SPW72+O8JmETM2qEC+LWjqWxrgktPmhDX9Qfp8EKBpAfGHavcGrIWdm9r96GUuhAyyk004Xd1PXTN6/zMmpokvBHw2bLzbPhx3fUlfUAGOs8gkjfG0sGmB9fr6O1D77cofhJtW4uj8SpYGOgJc4osMLdxw8z7s1s0t44O2P5FAdfjuCzAkniB7IOnJUS0gHGzXCsj3kwD3l+Kd6NESsOFtIWg8LZ1PajSy2F4BQxGisAmVQs/F13BLF63rGcIdWTvaKmzvMQ==
+ bh=dZ6PkmE1xPaCacyIMLdHc80AFnKiP2a+SpnsCK7Nf2Y=;
+ b=guZqAl35WAZ2i413BjuN+bvOYsMFv8WBpcwX3DwCkIehAo0p8vR9mMh2mobyByr0yPcY43I6Sp2V7TU1CyL/vo6N37f4I4T97z5UFcD7ZVAezQfuEJRk7tJsRD856WlnYm/Ngh4s+miPfJnstFQD8arwV+8D6DYLj7yCjEh1twJ4QnTQky5+Po20KQumTlgQIStF0D315m7gDaIh1Un7Lj4VYrfjPCpKU/PsCrAT8QpSRpB0FoaPJP0b1d+FeOO3WrrEzR1ct86m95+QsHzNUtDaxYbSE6s2t8bROnSG7SWaEDPAOLCL7QdFAehIzHctMr9GJdOpFFYK/WT3IG1FcQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYSPR02MB7490.apcprd02.prod.outlook.com (2603:1096:405:37::14) with
+ by TYPPR02MB9175.apcprd02.prod.outlook.com (2603:1096:405:394::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 15:59:16 +0000
+ 2026 15:58:35 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
- 15:59:16 +0000
+ 15:58:35 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v2 22/24] tests/functional/riscv64: Add Icicle Kit firmware
- boot test
-Date: Fri,  4 Sep 2026 23:57:41 +0800
-Message-ID: <20260904155758.3833179-23-bin.meng@processmission.com>
+Cc: Conor Dooley <conor@kernel.org>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
+Subject: [PATCH v2 06/24] tests/qtest: Add PolarFire SoC L2CC coverage
+Date: Fri,  4 Sep 2026 23:57:25 +0800
+Message-ID: <20260904155758.3833179-7-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260904155758.3833179-1-bin.meng@processmission.com>
 References: <20260904155758.3833179-1-bin.meng@processmission.com>
@@ -70,66 +64,67 @@ X-ClientProxiedBy: TY4P286CA0020.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYSPR02MB7490:EE_
-X-MS-Office365-Filtering-Correlation-Id: 259c1587-3f89-425f-5786-08df0a9d789c
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB9175:EE_
+X-MS-Office365-Filtering-Correlation-Id: f042dc22-1608-40b6-7689-08df0a9d6028
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|3023799007|6133799003|10067099003|5023799004|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: L+JbuzHhvQe1sw+4cTQXdoPsef8TCoT9vxz377ro/tKMWyV1VAJ9jDGFh9Zcq8UH5WquvFtq+ov6qw8VLP9CBplyZif4NwVeNj6Wkq2v1gk6f5a96v4VS0bkaG7nqS161aec/j3qtFko+pd2mruQ9DP2fDDEqRFzPDaGAg3QqRGBTJHKkFGL6kihyDC/yT23uzIFeWSunj79vd3/NW69qOoBZjAJXROaQu/7AHteX4uXGwFvzpCK2F6EOkkt5xPsOtjS5r8pw669mSPEn/WtIk2QJKzQWbulhiKSjA6QHNsjG6Zx0cvp8mtSa+q5DsHl732MjdFdGZFVPbY0ZbzK+XLJmAi7D3n48jGJtl6lwHgulDOpgJpWnOsLlTn/L2yNsA5pWL92IdBcRbstUIj62WHTPvC2XzObPgTERQmUuQy79/w+v1A1MzuQoWndbSBJBpyDzMzzFhWvkzcoSet3HNq1Eksj/Vce2MeAhhIQJKzJ706qoaFI7E+BQrVo9pXL5F3t8UmkjurbIqrPaq45CzPbBEEizMQu849nyorO9Y0OgNBkq7GVyuQfcZJQVpM0y3yrPAZNPeIJjZCHUdkTs1XVCUeEYSzFwVUgMwytFGhH96kNqB9/vvF9NhNNbXzZEtUwetjoGWZoX5WAYszwn74R17GRQT987aa0McgkhQE=
+ ARA:13230040|23010399003|366016|1800799024|376014|5023799004|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: wPeOl0TbXo3D6K7zPdvFYd+CBcTNZy3lOU1s96TAym8WAC3Y2eYY7P1yOEiIzALLTQqgXco81QOAsvfQM+hq8pyB7fYP7Y+vB8q4+Pl9LcazOLkTNQkwLsC+Rj+HHtYlwpOkTR4XR07a7noGzE9zuWDm25pqtXTNGDzzNtNBn21D9OwhGtUUHy1Qgcm6UTIWlPx13jqLaUJhofEMDQBPtlXfvmzz1DcayVsq2MnfbV+DFUIbE6SRFHY14ZkpIfqB0A9LWv6uujpN73qjyCAj5/s4nFE+it67w+Uz0eNRmJUQxREpG3zg3wTmjfgwiPYbHaqXbVfYvAmIvPt/62ayeXYGbkIM9UHZBL11nVwFp/qGb9+iAYLtA0dX3zWtce0rMebUib0lIH+W1zG4mJ55JYRUR1WbeL2cWXB/X80F2Bwp4bAmqU5DEMk6Gv8lbL5ssAeiMMOIVF334fhtqpdQvmpheZnBedbBzzCe++WkAmU2hy45NNFJVct8ZdyeJlA0IRPNgeOqLToj2OO9lNi6NcB295bzoM5JBFC23wZRdUHTQrhXd5gm5yqgjnpAJ7ZiSERuXK+xil5+gdJ7VlRwlK68+hACIMLQORqDw8ZJzkVopG+7p3qKLmXWg1MZWDP+WXrcSG7jSq2+oBy14SLqqDRPlbH/KrtE6mdftsnxFuI=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(3023799007)(6133799003)(10067099003)(5023799004)(22082099003)(18002099003)(56012099006);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(5023799004)(56012099006)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Wol57RJhFXtqRBuBX9SHe8yZmKmpuU6sbSVNOpms1B0V7CD10Y2iJERP1Vvq?=
- =?us-ascii?Q?XZCUgg8XgnVMB9MjY4Pmrew/3ic5Jmft3HbrvGnEiQWvu8b1BDOO6TNiEDGD?=
- =?us-ascii?Q?Kg0nhiDfhGHEHdXYunFuuW6d3NHzaYlOaXOw9tmMdfixiKu2W0+VLFiH0LYq?=
- =?us-ascii?Q?AhlbQnKB8zu/jV+VUugkdiTnJFqljuHMd75qK+aLV5pANL0109Nzl16AX2me?=
- =?us-ascii?Q?xpWT7xUTZE+f0RYCCbbZGhaIaIPf83H2vzgTBKOkM6ranS0YSk86/7HdwsDN?=
- =?us-ascii?Q?4EIdkK9x2TZbulMSbrWoRz8rBsx7mY/mUy7xN7qO2bgTpdI5esexGr9df2Vl?=
- =?us-ascii?Q?jHpLE5EQUdeSQVvFL4MPWBVlRy+d6GiBwOZfofjdGHjsfK937baPxdQJ10jR?=
- =?us-ascii?Q?9t6mxBcsTkqCOp92RIC4pImGPQFStq/u49PHFb3tGA2T/skefZtKli10imiE?=
- =?us-ascii?Q?3dsFeHuAPMlLvZceJCosJ4U15y8kaUhiZf3BqCf+aLky7da6rXLFAplgTeGR?=
- =?us-ascii?Q?fzj11uYKUSnhRrut1bhYyAnK45ILYYNzGZOfDizyxWTb1R9QBRUTH2V8kCeG?=
- =?us-ascii?Q?3yAyB50t9kAs7P5ZzffRdWaWc0AFBxNa5k9frNMYI3m5lbutc7fl0d4+aZrK?=
- =?us-ascii?Q?u3oAqQ483oRL9+zRGDwBnEp+cRCv//leMDRTCNKnoew6TXj4PdF+TxcHdMdT?=
- =?us-ascii?Q?HLEh3azNbNRI/oYIBLIi4nTr5hR7/MSwb7TuQiDnuc6lvYdNmZ49DSk3Nvmb?=
- =?us-ascii?Q?WX1a6xe+mzSYx55mYpxsroCxwSLwUrNhN14nmLBlFrQJmoretCpbQpRrk7OE?=
- =?us-ascii?Q?2NX91Q47X00lM4ZBudzPl/haeQDX4bg0j+e1yN7BYEXTdmtZEZ/S5Ja0ocXe?=
- =?us-ascii?Q?ysh54B7r04rxknff/L3gD+p4HgWRVbICNyTmy/sY0eb3QjVJfxAtHNFPLBhu?=
- =?us-ascii?Q?5oKZB33fz9+xG3nN/TsJCenZ7Oir+SDKmJYSm6cP1uhTHSeY76LvnQ1A4Czi?=
- =?us-ascii?Q?hx35QwCxUfnREjL8u3kYgmHV6pmQMiktXh4r9lSONWDeQ8zY0V88PjTUhPII?=
- =?us-ascii?Q?uf957qD1U3ARjm3SZFjEuoDbGvvhPjnHaoyhO7yO7nwXQ2wTBgMg7lLONfkc?=
- =?us-ascii?Q?HISMwrmyUwe+4f7SyufjT53re9UnoCco8zEo48K3hmNW098uSCar69btPXbu?=
- =?us-ascii?Q?pz5zPU/1cpwuQBlk9ROZsI1vdUlxy8zikoFUA9aia4G/SnV7qyU4DzMasJn8?=
- =?us-ascii?Q?c54/PDyjuW5/bVcSrW4RP2Zq9Sj3lcqpaj9BaZQ/W9FuUpI6Ba8I/fDqYNLD?=
- =?us-ascii?Q?l0f/2hi/QDnP2Vj1+nwgyluWEySjCFIFhJjULfMsfjZ8Lt9g2KuslLw8eKe1?=
- =?us-ascii?Q?jxtyZKlKlB56Zydk+J+d3jTbumSyyBKn6Z7XHU38Go2XDdUORIZ8AK5AJ10P?=
- =?us-ascii?Q?QVa4yGJ2Mg39SrPO1/hIfgZagVy2iT9koSG/it71h8U1xN3gbHBpmbdw8hNA?=
- =?us-ascii?Q?ZeT4K79QmGV5NS1dABVRbEdcsQjUxWS6993IwVcnt8JltVZKEjpsZgcGDQwk?=
- =?us-ascii?Q?goz0FUol6VXJG9iGEy5GcqlXSkb887jlvl+oICPISGF70xZoWwC2VsAgd4oz?=
- =?us-ascii?Q?vnQaZBDEhh0Gb2xIoRjXyIceJNb5reGqdFkbX9OOSlWLbaeSj+663dy6Zfu9?=
- =?us-ascii?Q?BKyJUVJcvbOUU+C5l4GfVh7hDejX6N5igBZScAZNoGWWYbRMx3XCw94m+XYg?=
- =?us-ascii?Q?sskXY+9ZAByW2gU7btf58SRG1X8yORg=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LgiIUq1a7VTtMyZW9ntK0no2Wf0+MiLGFeaIDVqkYt5eA5A9zF38GNctnU1Z?=
+ =?us-ascii?Q?VsQINgWO/TM434t2kkAVkul0L6bin3dUj2LccflVQKUvyYVFtIFdAC/ryIpF?=
+ =?us-ascii?Q?uCAbXRHYdUMRJalGSv5r0EJe9KQNQgNwhIDgLVR3TaSoW4U21bWPejAgV3u7?=
+ =?us-ascii?Q?4Fnjj1M3ozONZG0lrIYkINWIRgNoeOx1Q/YR7FkRpDmikMUSE0l1F32qUKx5?=
+ =?us-ascii?Q?vwsckCMdlF1XWs4icvvi9L2hLBqIH3YJ4/NRRylgkIN/6MZX/LQv2zlwYlCb?=
+ =?us-ascii?Q?5e1vkaPDIRFkOuTuu+3xlG2msIM56fu5x/QtlGzXrpQWPPrMO7Py/KlVmx4J?=
+ =?us-ascii?Q?B33QFt2TfUt/fyASIpQtfKB8UVdqu4cGzuDIDs7XHFcrIjjEpfdXVXs9H3Mi?=
+ =?us-ascii?Q?9CNBBmw1QGQVbsgNGOUAjvxwaGSEFEUvM5bQLxmq0CvpNiyl3px7qY3K5taA?=
+ =?us-ascii?Q?XVNmiY8Bf/DFfec4okv+plcHRmnv14dxB4ny8qSeCtnszAuY92SjeZDY+aaG?=
+ =?us-ascii?Q?WU62EaLRBP4Mk9rEXAr6pV9faifYCOKa6NzL57eBOJOCGanu5py+Y+D3QeP5?=
+ =?us-ascii?Q?Ev2fWqnsD/nKdi7GLZR0M4SegoOgcOl1zf2fuuhDcpv9IYEnxTxT46ayLrvu?=
+ =?us-ascii?Q?dyDOYo+Omv27+JsICkWLcPsCODcNJQZLczKJllA2DElePcSnJ1c1GmJw5DbP?=
+ =?us-ascii?Q?f6wQv0UV8bJ2jyh6S4j3nWad2qhT9G8ey+xigpNYogTKyZyvB4SWHr601e5T?=
+ =?us-ascii?Q?wXxaY2dIBxbRQZ7SB86Te6PVBRh8cf4DJm+bVPhLxzyTUMGT0jUdO4EauHmt?=
+ =?us-ascii?Q?L8FnDPbdWYBrzBzjU5en2BK9m2q9qZbH94IcDG1dKY631c66bnpAWcT+A2Go?=
+ =?us-ascii?Q?ctaHK+NIdvz2IPsvW0TI3cu+lx1/wqmP6+6On5RDoTAr2nsno/MlaHo+SFlS?=
+ =?us-ascii?Q?975n17/ILTioVl2YXHx0A8QeyBWtgACbVCBxZyh9JLQYuC2Gb0JeOfCLWvMH?=
+ =?us-ascii?Q?2Uln0RiDEVmwcapMu+jB9aroh/YHKLWIBg84EEjx53WnIG38fo7G2jgfWD5b?=
+ =?us-ascii?Q?xEJ6ym3Ylux8I0XsmyuvGE0bnF7EwsX5RbNrN7yRhNpNER87nFIMHxACztYE?=
+ =?us-ascii?Q?99Tk6My/vOz1IfO3JowR1xcf4vEei9KbT80HzyJNsDIQol9mcNzLgt/QRU8u?=
+ =?us-ascii?Q?BvP6orFBVhy8Vp+P8UiFezRwx4A4QRUKPKwII7YZtMSz9dC29shhSuDjaJNr?=
+ =?us-ascii?Q?GjiIXMF7fj5uESGu4nrZevPZwc606rc1YM161VMf7QlH6oAGJivtEDMaaY2Q?=
+ =?us-ascii?Q?t70uahYbyE1ZhepUDpnsxVdK3LwmKruhjZAz9mkMaLUBU9DJiaO6U+Sizx51?=
+ =?us-ascii?Q?JAIUUbs/+g++EEuRg9xn8isTl+hxStPIYcGNz0yrEbcAcmj1nvR2aJbi4+FW?=
+ =?us-ascii?Q?YGMatv2RHTlLknawllX3MTq2JgpOldxa5/CRQjMQMMQUd0iTFLcUtGTvV2uf?=
+ =?us-ascii?Q?6aFXuJJGMj6qqBl1Es+IeekdQ3SytalBmTAIOb9Va4FldBejJGM+TgCkzbfs?=
+ =?us-ascii?Q?vCsJpulYYtRlEPB6QM/f0sIqmL/iUtuWVT6rjCHz/8Nc+XYHtj4xoYNzsjbC?=
+ =?us-ascii?Q?pAFNT0QHl3TjwJdKz9Het7emn6Hm/ZVtqxRrKzXm1XLuPE9EKOZpNofDypVG?=
+ =?us-ascii?Q?xF8sUDrpa/f0rPPWzbJMf55RTEy1epp6drqTAsSYrMUPmI1gyCURELJnA1c1?=
+ =?us-ascii?Q?V9zg+Z90F3LrbwVi03tUfffwUlzCxBs=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 259c1587-3f89-425f-5786-08df0a9d789c
+X-MS-Exchange-CrossTenant-Network-Message-Id: f042dc22-1608-40b6-7689-08df0a9d6028
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:59:16.0936 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:58:35.0686 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jgb/CIUO2+X8C+eskDc1Rlsb8yNuWuFSGFsn1nwp+yYUX2sfkoD2rz2ns6HTeLzTEBS0dmc0KZeJsnR3IBtN3H4BL7C0Kqp9XWY0sSc+u8U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7490
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: o09uaJWt9XP7fpiFwkkGCE5pbCbicrgm3/sIV/6FfgaT+N9uyEjRzryKq+eaNDpwaQqww+37rOEt3d1IK5WAT6VrIUwn6LtdimAZW0WstsQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB9175
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,125 +141,277 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add functional coverage using prebuilt HSS and SD card images.
+Add a dedicated qtest binary for L2CC register and memory-topology
+behavior.
 
-Boot HSS and U-Boot with five harts and 2 GiB of RAM. Connect
-the test console to MMUART1 and let U-Boot start Linux.
-
-The complete boot exercises the SDHCI controller in the DMA modes
-used at each stage. HSS uses Version 4 64-bit SDMA to load U-Boot.
-U-Boot uses ADMA2-64 to read the boot script and the large FIT
-image. Linux then selects 64-bit ADMA for SD card and rootfs I/O.
-
-Check the machine identity, kernel ADMA initialization, root
-filesystem mount, and login prompt.
+Exercise Config, WayEnable, and every WayMask register, including
+reset, monotonic writes, and unimplemented-register logging. Verify
+that WayEnable resizes the guest-visible L2-LIM region while L2 Zero
+remains fixed at the modeled 2 MiB size.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
 ---
 
 (no changes since v1)
 
- MAINTAINERS                                   |  1 +
- tests/functional/riscv64/meson.build          |  2 +
- .../riscv64/test_microchip_icicle_kit.py      | 56 +++++++++++++++++++
- 3 files changed, 59 insertions(+)
- create mode 100644 tests/functional/riscv64/test_microchip_icicle_kit.py
+ MAINTAINERS                        |   1 +
+ tests/qtest/mchp_pfsoc_l2cc_test.c | 221 +++++++++++++++++++++++++++++
+ tests/qtest/meson.build            |   2 +
+ 3 files changed, 224 insertions(+)
+ create mode 100644 tests/qtest/mchp_pfsoc_l2cc_test.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 1856c67feb..319b436480 100644
+index d7615b2c2c..8b7319d3d0 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1805,6 +1805,7 @@ F: include/hw/misc/mchp_pfsoc_ioscb.h
+@@ -1803,6 +1803,7 @@ F: include/hw/misc/mchp_pfsoc_dmc.h
+ F: include/hw/misc/mchp_pfsoc_ioscb.h
  F: include/hw/misc/mchp_pfsoc_l2cc.h
  F: include/hw/misc/mchp_pfsoc_sysreg.h
- F: include/hw/rtc/mchp_pfsoc_rtc.h
-+F: tests/functional/riscv64/test_microchip_icicle_kit.py
- F: tests/qtest/mchp_pfsoc_l2cc_test.c
- F: tests/qtest/mchp_pfsoc_rtc_test.c
++F: tests/qtest/mchp_pfsoc_l2cc_test.c
  
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index d1a3e6c2bf..cbf61d9535 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -3,6 +3,7 @@
- test_riscv64_timeouts = {
-   'boston' : 120,
-   'k230' : 120,
-+  'microchip_icicle_kit' : 180,
-   'tuxrun' : 120,
- }
- 
-@@ -15,6 +16,7 @@ tests_riscv64_system_thorough = [
-   'endianness',
-   'boston',
-   'k230',
-+  'microchip_icicle_kit',
-   'sifive_u',
-   'tt_atlantis',
-   'tuxrun',
-diff --git a/tests/functional/riscv64/test_microchip_icicle_kit.py b/tests/functional/riscv64/test_microchip_icicle_kit.py
+ Shakti C class SoC
+ L: qemu-riscv@nongnu.org
+diff --git a/tests/qtest/mchp_pfsoc_l2cc_test.c b/tests/qtest/mchp_pfsoc_l2cc_test.c
 new file mode 100644
-index 0000000000..559ae1f651
+index 0000000000..3401ce4300
 --- /dev/null
-+++ b/tests/functional/riscv64/test_microchip_icicle_kit.py
-@@ -0,0 +1,56 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots HSS, U-Boot, and Linux on an Icicle Kit.
-+#
-+# Copyright (c) 2026 Process Mission
-+#
-+# Author:
-+#   Bin Meng <bin.meng@processmission.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/tests/qtest/mchp_pfsoc_l2cc_test.c
+@@ -0,0 +1,221 @@
++/*
++ * QTest testcase for the Microchip PolarFire SoC L2 cache controller
++ *
++ * Copyright (c) 2026 Process Mission
++ *
++ * Author:
++ *   Bin Meng <bin.meng@processmission.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+from qemu_test import Asset, LinuxKernelTest, skipIfMissingCommands
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "libqtest.h"
 +
++#define L2CC_BASE                       0x02010000
++#define L2CC_CONFIG                     0x000
++#define L2CC_CONFIG_VALUE               0x06091004
++#define L2CC_WAY_ENABLE                 0x008
++#define L2CC_ECC_INJECT                 0x040
++#define L2CC_FLUSH64                    0x200
++#define L2CC_WAY_MASK_BASE              0x800
++#define L2CC_WAY_MASK_COUNT             15
++#define L2CC_WAY_MASK(n)                (L2CC_WAY_MASK_BASE + 8 * (n))
++#define L2CC_MASTER15                   L2CC_WAY_MASK(L2CC_WAY_MASK_COUNT)
++#define L2CC_WAY_ENABLE_RESET           0
++#define L2CC_WAY_MASK_RESET             UINT64_MAX
 +
-+class MicrochipIcicleKitMachine(LinuxKernelTest):
++#define L2_LIM_BASE                     0x08000000
++#define L2_WAY_SIZE                     (128 * KiB)
++#define L2_LIM_RESET_WAYS               15
++#define L2_ZERO_BASE                    0x0a000000
++#define L2_ZERO_SIZE                    (2 * MiB)
 +
-+    ASSET_IMAGES = Asset(
-+        ('https://github.com/processmission/qemu-machine-images/releases/'
-+         'download/v1.0.0/'
-+         'riscv64-microchip-icicle-kit-v1.0.0.tar.zst'),
-+        'fe7eb3ee737fd15d6d5a8480822b070923ae4d611b19ed03983e11f35b6aac04')
++static QTestState *mchp_pfsoc_l2cc_start(const char *firmware)
++{
++    return qtest_initf("-machine microchip-icicle-kit -smp 5 -m 2G "
++                       "-bios \"%s\"", firmware);
++}
 +
-+    @skipIfMissingCommands('zstd')
-+    def test_microchip_icicle_kit_boot(self):
-+        self.set_machine('microchip-icicle-kit')
++static char *mchp_pfsoc_l2cc_create_firmware(void)
++{
++    static const uint8_t firmware[] = {
++        0x13, 0x00, 0x00, 0x00,
++        0x6f, 0x00, 0x00, 0x00,
++    };
++    char *path;
++    int fd;
++    ssize_t written;
 +
-+        archive_path = self.uncompress(
-+            self.ASSET_IMAGES,
-+            target='microchip_icicle_kit_images.tar',
-+            format='zstd')
-+        self.archive_extract(archive_path, format='tar')
-+        firmware_path = self.scratch_file('images', 'hss.bin')
-+        sdcard_path = self.scratch_file('images', 'sdcard.img')
++    fd = g_file_open_tmp("mchp_pfsoc_l2cc_XXXXXX", &path, NULL);
++    g_assert_cmpint(fd, >=, 0);
 +
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args(
-+            '-smp', '5',
-+            '-m', '2G',
-+            '-display', 'none',
-+            '-bios', firmware_path,
-+            '-snapshot',
-+            '-drive', f'file={sdcard_path},format=raw,if=sd,index=0',
-+            '-no-reboot')
-+        self.vm.launch()
++    written = write(fd, firmware, sizeof(firmware));
++    g_assert_cmpint(written, ==, sizeof(firmware));
++    close(fd);
 +
-+        self.wait_for_console_pattern('U-Boot ')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern(
-+            'Machine model: Microchip PolarFire-SoC Icicle Kit')
-+        self.wait_for_console_pattern('using ADMA 64-bit')
-+        self.wait_for_console_pattern('VFS: Mounted root')
-+        self.wait_for_console_pattern('mpfs_icicle login:')
++    return path;
++}
 +
++static uint64_t l2cc_way_mask_test_value(unsigned int master)
++{
++    return UINT64_C(0xfedcba9876543201) + master;
++}
 +
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
++static void test_l2cc_registers(void)
++{
++    g_autofree char *firmware = mchp_pfsoc_l2cc_create_firmware();
++    QTestState *qts = mchp_pfsoc_l2cc_start(firmware);
++    unsigned int i;
++
++    unlink(firmware);
++
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++    qtest_writel(qts, L2CC_BASE + L2CC_CONFIG, UINT32_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xd);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xd);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 3);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xd);
++    qtest_writeq(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xf);
++    g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xf);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xe);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xf);
++
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++        qtest_writeq(qts, L2CC_BASE + L2CC_WAY_MASK(i),
++                     l2cc_way_mask_test_value(i));
++    }
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        l2cc_way_mask_test_value(i));
++    }
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_l2lim_topology(void)
++{
++    g_autofree char *firmware = mchp_pfsoc_l2cc_create_firmware();
++    uint32_t original[L2_LIM_RESET_WAYS];
++    const uint32_t poison = 0xdeadc0de;
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++    QTestState *qts = mchp_pfsoc_l2cc_start(firmware);
++    unsigned int i;
++
++    unlink(firmware);
++
++    /* Check the fixed aperture, not the RAM stand-in's eviction behavior */
++    qtest_writel(qts, zero_last, 0xa55a9669);
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++
++    for (i = 1; i <= L2_LIM_RESET_WAYS; i++) {
++        uint64_t l2lim_size = (L2_LIM_RESET_WAYS - i) * L2_WAY_SIZE;
++        uint64_t hidden = L2_LIM_BASE + l2lim_size;
++        uint32_t tail = 0x96000000 | i;
++
++        original[i - 1] = 0x69000000 | i;
++        qtest_writel(qts, hidden, original[i - 1]);
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, original[i - 1]);
++
++        if (l2lim_size) {
++            qtest_writel(qts, hidden - 4, tail);
++            g_assert_cmphex(qtest_readl(qts, hidden - 4), ==, tail);
++        }
++
++        qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, i);
++        g_assert_cmphex(qtest_readb(qts,
++                                   L2CC_BASE + L2CC_WAY_ENABLE), ==, i);
++        if (l2lim_size) {
++            g_assert_cmphex(qtest_readl(qts, hidden - 4), ==, tail);
++        }
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, 0);
++        qtest_writel(qts, hidden, poison);
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, 0);
++        g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++    }
++
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, UINT8_MAX);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    UINT8_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 3);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    UINT8_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    for (i = 1; i <= L2_LIM_RESET_WAYS; i++) {
++        uint64_t restored = L2_LIM_BASE +
++                            (L2_LIM_RESET_WAYS - i) * L2_WAY_SIZE;
++
++        g_assert_cmphex(qtest_readl(qts, restored), ==, original[i - 1]);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_l2cc_unimplemented(void)
++{
++    g_autofree char *firmware = mchp_pfsoc_l2cc_create_firmware();
++    g_autofree char *log_path = NULL;
++    g_autofree char *log = NULL;
++    QTestState *qts;
++    int fd;
++
++    fd = g_file_open_tmp("mchp_pfsoc_l2cc_unimp_XXXXXX", &log_path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++    close(fd);
++
++    qts = qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\" "
++        "-d unimp -D \"%s\"", firmware, log_path);
++    unlink(firmware);
++
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_ECC_INJECT), ==, 0);
++    qtest_writeq(qts, L2CC_BASE + L2CC_FLUSH64, 0x1234);
++    g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_MASTER15), ==, 0);
++    qtest_quit(qts);
++
++    g_assert_true(g_file_get_contents(log_path, &log, NULL, NULL));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device read (size 4, offset 0x40)"));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device write (size 8, value 0x1234, offset 0x200)"));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device read (size 8, offset 0x878)"));
++    unlink(log_path);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/mchp_pfsoc_l2cc/registers", test_l2cc_registers);
++    qtest_add_func("/mchp_pfsoc_l2cc/l2lim_topology",
++                   test_l2lim_topology);
++    qtest_add_func("/mchp_pfsoc_l2cc/unimplemented",
++                   test_l2cc_unimplemented);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 17870e339b..e7fea8c180 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -303,6 +303,8 @@ qtests_riscv32 = \
+ 
+ qtests_riscv64 = ['riscv-csr-test'] + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_MICROCHIP_PFSOC') ?
++   ['mchp_pfsoc_l2cc_test'] : []) + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
 -- 
 2.53.0
 
