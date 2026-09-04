@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ECAAC79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6E2C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MLP-0005QJ-AX; Fri, 04 Sep 2026 01:20:07 -0400
+	id 1x2MNK-0002tq-HG; Fri, 04 Sep 2026 01:22:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MLL-0005Pe-SI
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:03 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1x2MNI-0002pF-Eu
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:04 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MLK-000125-5p
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:20:03 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-cc1a4c62804so630756a12.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:20:00 -0700 (PDT)
+ id 1x2MNG-0001V0-GL
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:22:04 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-84830c774a0so645392b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499199; x=1789103999; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZdJY5rmNfeWnTZyHQ8pDn4ZCh0IJHklHS198JgYTqwI=;
- b=K7xqOVRFSRQ0lyMe2HKhyyrPNaiF/av09spE6x9wk86qC6oxAm50Kh1KDgSdOlQnXV
- XJ0qVv7EheTZjXKuMcIuF//LG8FHPBufvBcFswoKJ5fVzPI4Duk077g7Xao448s3icBP
- xGeJpScD43Gr3izUza8tRnGp4Hs9dxoiBjcrgA1HVCvh1g8dbuM0OHGcxhbO3RmTtLwO
- PvJuiPN8W6E0KVlEHXWjZPewymiipt3ImoshiMH/lwu7OpChLVUEcEPYCxncfq8r6kiK
- FiOAtd3ReiW/qQWLu9AHq4DsbH+k2TGcV0UAmA5UKTLyZ7ZCegUId5Tbx0pCKvEFqqLc
- c9pg==
+ d=gmail.com; s=20251104; t=1788499321; x=1789104121; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9sMOYF1ngSVfF3aWfMq+nevCwVd0jeZEIkO6u84kKno=;
+ b=b9Gy7Bb/Z005D0dwkyZWbAkgv/Dh8CGrc9lB/P6KAF1uubEIdIuTfn/Pb9DwXVYsX+
+ hzKdV0opXjeq6/xj6T1VybC25sd6GAOjCMTc+WJOPJDWyammssGciiZRcVEJMSn2wEj+
+ dIOdI3vMwKMR/v4UqnkjNUDogDpywF3qY/mf9WuK/YnWWaBwnMMvjn6puFpgbRGuGZVt
+ Q5kFjdVoPrCCGkLjOXLyQB8bB1cKNLt7GYuPd/IeKTlkwdJqssmQiHo62247o1mSN2om
+ iZSyoOseAbJeyIZMGknZ1TEUrLWF0ePXzg0ntWXuHLaQ5fuaH0hW+pZG2VA70iEJ3J2h
+ ALWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499199; x=1789103999;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZdJY5rmNfeWnTZyHQ8pDn4ZCh0IJHklHS198JgYTqwI=;
- b=odEg0uzwQKas8vugX1ur00MMxtt5HIeHnGZ0H2aB8U2/ESsEyPM1cV/MP2zU3erZXu
- 2ZtH6EfWFpPxSqIYWGpvhYFpXzykS0QvpBw0ukFn/TIFQtOJj1jLzQ9A5rzcIbZePLjo
- UpyTHB3iDPvzTIvtbVxigb6p22su8d6UpbZJ3ouSJTGjlgCMj7BMzAzb4jDIytJlb6Fi
- wzYPPJIW5QvOGW93JW5hkakHjhHpZb9ZwKwkvCM8/yWHN8+oXHC8U5h3erduJLSF+nI6
- JZsCTE3MM9ajvzTXqCONUs7YSCDNndsuT0tZH/mfRvsYf18exUONyogFHBn5kOGWyv/U
- bUgw==
-X-Gm-Message-State: AFuF++n3ZzMSNeePWq7Tgg+12B/u9dw2mJDD9OvdSpxqSBhTLnA+W37K
- l3YnIfA134nvO1+3tStuR9/M06OIB+f/faGrSydx3Ibi30EDmOsnbjwpi6HQvQ==
-X-Gm-Gg: AYBFou0sb36cxRezaVKWsQyavdLmC6vC7oNrEX4t/czEbh/kvw6JgwedPGDHdAvMbNX
- OYccgTBVPwRQfeyBhtGoPBkLmxcFl/p2ZSpOuMflZOqcNFfuSCU14hLLrS/ptIF8DxPmLYINiCB
- k14QC5U0PfTOR/oVcYD04Dd2qIg0GQLGUdpLxhVtYB88Luc4JrwKNtAJzqUymqd828GMtaIknIz
- 4JrKpUkNXPSpwZy5Y3gTkljMgX0YzNQMXKvoM96oxTzqQOwWVULNhdJ2YYjhlyeBdeyBGc2dpy6
- rTzeI7WB+fQIhinaQNiH4zBxUXvp+4SjWcXkNliRxRXOqlSjqwbaPnvDuWcS0DjrnPpIxUnydX5
- ddgcQ6tLGFUHzbV2VUvCcYrF1M9Q1wLLfybuAYLfoHDwMuwFhE1KEWorKyv2vmLdBiiukqDBkiR
- Tv6VyJfyxSqP31ibTgNVjMH9wtvySSREoQsGtjk9EqNC9ISU8aT/nHe3Ep+zPVqSCtHVKeny2o+
- GyPcw==
-X-Received: by 2002:a05:6a20:4306:b0:3d0:9590:7148 with SMTP id
- adf61e73a8af0-3da3a11f7a1mr4779589637.17.1788499199338; 
- Thu, 03 Sep 2026 22:19:59 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788499321; x=1789104121;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9sMOYF1ngSVfF3aWfMq+nevCwVd0jeZEIkO6u84kKno=;
+ b=g60qByEsKgpJj9FnAk5IC04fMfd0Txcby+Q+dJucACXzYqlRwP+bq1toECqx50Qn+U
+ tElVih60K/5+lsK3BCwjpoJ434/taUOmih0zsJIbr4fQsWLr79fhjyW2FoBb8wSVcGor
+ /7/t1qRFcwHzyGPxO2wAWIyT6gFvGE7DR1H9chxBwFyUG/9kT3Poh1gA6pf40Znd7tJI
+ DnhazR39e1atg5beDf3xt3ccY/EL+PYhpJudUwLJ2o+QGIE7bnVYCyso1Xuq/eLoE0yE
+ rdOmzPNOdWRnodS6xRiFR+fzzdLqHq3XbBTayuxRgkJPhClN+QOvU0jlirGRqhWoSyoc
+ 1+5w==
+X-Gm-Message-State: AFuF++k/tqpcFAt+5Q110ztQT3ailEto/XJPj0pX5tsYnF6Gk5avbK1C
+ n16L3+Bb+GW7VgPjvXu4gVau3s6GnCHLusYSCqPtzRJ65yurRJpmZr0vTW1AkA==
+X-Gm-Gg: AYBFou2hN5rh6ivcGZ1DgtIgnLEOsUM70HH5saMmmFIa/8EzQN/yjBBEw0VVpeUCMdO
+ U5F3V3EZDpLyvP19hEcvKRdQ6P60DA/saN541OhSknQz1qiWJwqnSzjAj+3YCM4XP8yJDnBEUgZ
+ zJXP0Xiu9dCAEM/nMiVC+fZZi9U+52xQDg4zNIJUIQqXo6EurjzayJACDR3bdHhwkCSTnYePYMb
+ kTKG4xwT9QgU1ImvcSmI+ODh6oE7lb4RobRmPfQdvr1VmaDyK6eSC5nLuCF94rTD59EiAto4VwB
+ zyCYlWen2iyXOxWEXObx+HIvOo+ko0QvEMZ7gOfo8Ju0ME7FJsWsxVDqhABsk5mZVcTIsejDlhK
+ FbI+tidCbbh01ujQ1rW55LsyBMKwtyyi8AgVk886L3DO0SU72fe8tAK/SBZ02jtgCTDEkpFWRyI
+ fWPuLP0bxkvrUp2wuWS7lLF6QPLFpMXuZ+FQ/q1q2dAI5ELSxf0dkT1sIgPWPOM1lUgjBzpAflH
+ J66tnxjwa2byxdd
+X-Received: by 2002:a05:6a21:9d84:b0:3d3:af85:eb98 with SMTP id
+ adf61e73a8af0-3da3a16a579mr5758156637.26.1788499321121; 
+ Thu, 03 Sep 2026 22:22:01 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.19.56
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:19:58 -0700 (PDT)
+ Thu, 03 Sep 2026 22:22:00 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 02/47] target/riscv/tcg/debug.c: add Debug 1.0 'pending' bit
-Date: Fri,  4 Sep 2026 15:18:58 +1000
-Message-ID: <20260904051943.799041-3-alistair.francis@wdc.com>
+Cc: Joel Stanley <joel@jms.id.au>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 40/47] hw/riscv/atlantis: Rename hart array 'soc' to 'cpus'
+Date: Fri,  4 Sep 2026 15:19:36 +1000
+Message-ID: <20260904051943.799041-41-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,82 +107,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Joel Stanley <joel@jms.id.au>
 
-We need to set the 'pending' bit when 'count' reaches 0, clearing it right
-after the trigger fires.
+The RISCVHartArrayState member is named soc, but it's an array of cpus,
+not the entire SoC. Use cpus instead as an accurate description of the
+hart array.
 
-This is 1.0 exclusive behavior so no changes are needed when running Debug
-0.13.
-
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260805182506.2943757-3-daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Message-ID: <20260903055131.257903-10-joel@jms.id.au>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/debug.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ include/hw/riscv/tt_atlantis.h |  2 +-
+ hw/riscv/tt_atlantis.c         | 34 +++++++++++++++++-----------------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-index 5ab29f6945..d40db381e6 100644
---- a/target/riscv/tcg/debug.c
-+++ b/target/riscv/tcg/debug.c
-@@ -77,6 +77,11 @@ static int access_size[SIZE_NUM] = {
-     [6 ... 15] = -1,
- };
+diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+index d0cca3b024..642490d217 100644
+--- a/include/hw/riscv/tt_atlantis.h
++++ b/include/hw/riscv/tt_atlantis.h
+@@ -29,7 +29,7 @@ struct TTAtlantisState {
+     Notifier machine_done;
+     const MemMapEntry *memmap;
  
-+static bool debug_trigger_version_1_0(CPURISCVState *env)
-+{
-+    return riscv_cpu_cfg(env)->ext_sdtrig;
-+}
-+
- static inline target_ulong extract_trigger_type(CPURISCVState *env,
-                                                 target_ulong tdata1)
- {
-@@ -684,6 +689,17 @@ itrigger_set_count(CPURISCVState *env, int index, int value)
-                                    ITRIGGER_COUNT, value);
- }
+-    RISCVHartArrayState soc;
++    RISCVHartArrayState cpus;
+     DeviceState *irqchip;
+     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
+     UnimplementedDeviceState uart1;
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index c682bb6848..62e902f930 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -112,13 +112,13 @@ static void create_fdt_aclint(TTAtlantisState *s, uint32_t *intc_phandles)
+     uint32_t aclint_cells_size;
+     hwaddr addr;
  
-+static inline void
-+itrigger_set_pending(CPURISCVState *env, int index, int val)
-+{
-+    if (!debug_trigger_version_1_0(env)) {
-+        return;
-+    }
-+
-+    env->tdata1[index] = set_field(env->tdata1[index],
-+                                   ITRIGGER_PENDING, val);
-+}
-+
- static bool check_itrigger_priv(CPURISCVState *env, int index)
- {
-     target_ulong tdata1 = env->tdata1[index];
-@@ -735,8 +751,25 @@ void helper_itrigger_match(CPURISCVState *env)
-         }
-         itrigger_set_count(env, i, count--);
-         if (!count) {
-+            /*
-+             * From the 1.0 spec: "When pending is set, the trigger
-+             * fires just before any further instructions are executed
-+             * in a mode where the trigger is enabled. As the trigger
-+             * fires, pending is cleared."
-+             *
-+             * And: "This bit becomes set when count is decremented
-+             * from 1 to 0. It is cleared when the trigger fires,
-+             * which will happen just before executing the next
-+             * instruction in one of the enabled modes".
-+             *
-+             * Note that itrigger_set_pending() is a no-op if we're
-+             * running debug 0.13.
-+             */
-+            itrigger_set_pending(env, i, 1);
-+
-             env->itrigger_enabled = riscv_itrigger_enabled(env);
-             do_trigger_action(env, i);
-+            itrigger_set_pending(env, i, 0);
-         }
+-    aclint_mtimer_cells = g_new0(uint32_t, s->soc.num_harts * 2);
++    aclint_mtimer_cells = g_new0(uint32_t, s->cpus.num_harts * 2);
+ 
+-    for (int cpu = 0; cpu < s->soc.num_harts; cpu++) {
++    for (int cpu = 0; cpu < s->cpus.num_harts; cpu++) {
+         aclint_mtimer_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
+         aclint_mtimer_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_M_TIMER);
      }
+-    aclint_cells_size = s->soc.num_harts * sizeof(uint32_t) * 2;
++    aclint_cells_size = s->cpus.num_harts * sizeof(uint32_t) * 2;
+ 
+     addr = s->memmap[TT_ATL_ACLINT].base;
+ 
+@@ -210,7 +210,7 @@ static void create_fdt_pmu(TTAtlantisState *s)
+ {
+     char pmu_name[] = "/pmu";
+     void *fdt = MACHINE(s)->fdt;
+-    RISCVCPU *hart = &s->soc.harts[0];
++    RISCVCPU *hart = &s->cpus.harts[0];
+ 
+     qemu_fdt_add_subnode(fdt, pmu_name);
+     qemu_fdt_setprop_string(fdt, pmu_name, "compatible", "riscv,pmu");
+@@ -227,8 +227,8 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
+ 
+     riscv_fdt_create_cpu_socket_subnode(fdt, TT_ACLINT_TIMEBASE_FREQ);
+ 
+-    riscv_create_fdt_socket_cpus(fdt, s->soc.harts, 0, s->soc.num_harts,
+-                                 s->soc.hartid_base, &fdt_phandle,
++    riscv_create_fdt_socket_cpus(fdt, s->cpus.harts, 0, s->cpus.num_harts,
++                                 s->cpus.hartid_base, &fdt_phandle,
+                                  intc_phandles, false, false);
+ 
+     create_fdt_memory(s);
+@@ -252,13 +252,13 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
+     create_fdt_one_aplic(fdt, &s->memmap[TT_ATL_MAPLIC],
+                          msi_m_phandle, intc_phandles,
+                          aplic_m_phandle, aplic_s_phandle,
+-                         IRQ_M_EXT, s->soc.num_harts);
++                         IRQ_M_EXT, s->cpus.num_harts);
+ 
+     /* S-level APLIC node */
+     create_fdt_one_aplic(fdt, &s->memmap[TT_ATL_SAPLIC],
+                          imsic_s_phandle, intc_phandles,
+                          aplic_s_phandle, 0,
+-                         IRQ_S_EXT, s->soc.num_harts);
++                         IRQ_S_EXT, s->cpus.num_harts);
  }
+ 
+ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
+@@ -429,7 +429,7 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
+     hwaddr start_addr = s->memmap[TT_ATL_DDR_LO].base;
+     hwaddr mem_size;
+     target_ulong firmware_end_addr, kernel_start_addr;
+-    const char *firmware_name = riscv_default_firmware_name(&s->soc);
++    const char *firmware_name = riscv_default_firmware_name(&s->cpus);
+     uint64_t fdt_load_addr;
+     uint64_t kernel_entry;
+     RISCVBootInfo boot_info;
+@@ -446,7 +446,7 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
+     if (mem_size > s->memmap[TT_ATL_DDR_LO].size) {
+         mem_size = s->memmap[TT_ATL_DDR_LO].size;
+     }
+-    riscv_boot_info_init_discontig_mem(&boot_info, &s->soc,
++    riscv_boot_info_init_discontig_mem(&boot_info, &s->cpus,
+                                        s->memmap[TT_ATL_DDR_LO].base,
+                                        mem_size);
+ 
+@@ -476,7 +476,7 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
+     riscv_load_fdt(fdt_load_addr, machine->fdt);
+ 
+     /* load the reset vector */
+-    riscv_setup_rom_reset_vec(machine, &s->soc, start_addr,
++    riscv_setup_rom_reset_vec(machine, &s->cpus, start_addr,
+                               s->memmap[TT_ATL_BOOTROM].base,
+                               s->memmap[TT_ATL_BOOTROM].size,
+                               kernel_entry,
+@@ -496,18 +496,18 @@ static void tt_atlantis_machine_init(MachineState *machine)
+ 
+     s->memmap = tt_atlantis_memmap;
+ 
+-    object_initialize_child(OBJECT(machine), "soc", &s->soc,
++    object_initialize_child(OBJECT(machine), "soc", &s->cpus,
+                             TYPE_RISCV_HART_ARRAY);
+-    object_property_set_str(OBJECT(&s->soc), "cpu-type", machine->cpu_type,
++    object_property_set_str(OBJECT(&s->cpus), "cpu-type", machine->cpu_type,
+                             &error_abort);
+-    object_property_set_int(OBJECT(&s->soc), "hartid-base", 0,
++    object_property_set_int(OBJECT(&s->cpus), "hartid-base", 0,
+                             &error_abort);
+-    object_property_set_int(OBJECT(&s->soc), "num-harts", hart_count,
++    object_property_set_int(OBJECT(&s->cpus), "num-harts", hart_count,
+                             &error_abort);
+-    object_property_set_int(OBJECT(&s->soc), "resetvec",
++    object_property_set_int(OBJECT(&s->cpus), "resetvec",
+                             s->memmap[TT_ATL_BOOTROM].base,
+                             &error_abort);
+-    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
+ 
+     s->irqchip = riscv_create_aia(system_memory,
+                                   true, TT_IMSIC_GUESTS,
 -- 
 2.55.0
 
