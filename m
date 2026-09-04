@@ -4,152 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E644C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963EBC624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:04:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TZj-0006Bi-GC; Fri, 04 Sep 2026 09:03:23 -0400
+	id 1x2TZp-0006LA-1D; Fri, 04 Sep 2026 09:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2TZb-00066P-Qk
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:16 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x2TZl-0006I6-Mp
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x2TZX-0002y5-Gl
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:15 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 684AJ3Pl3277324
- for <qemu-devel@nongnu.org>; Fri, 4 Sep 2026 13:03:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cZDwoyISOu5DsleId0iTDNy9xUnMUS+IBUlHEwYSxe8=; b=XfiBjIjvrSSsvMmA
- cOE4qLTVCidbeRvuGFlbdY2uWYrKYDJxtPUprqDFaXbVulutgvNAK1zy7V+Wgcax
- nFIb0u4rym2NeqoWGhtb90/rNzyUKRzubCgQSDpDGzyys1tp8h8v8EY/XaLbmWFN
- 34QY6pLe18T0fq1dgjJul+ESasGozotwcJ2SHspDwH+G+JHwfELfx1JMsmhB5Bs4
- Ny24I7O8af5G4WLOIfOIEUDp4f8XZDeB1s1INySBAFFNvS0DRAMCZ/Wf4n5Byoqg
- /leVOR00VBXfLQQgbSGEi/Zvgz7LnJlQkxDN6Ftd5mKVRMGow7pLSZAgegsn3SGE
- 2GkYxg==
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gfqqd1gsb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 13:03:06 +0000 (GMT)
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-836cfb589a3so18662887b3.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:03:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1x2TZj-00032k-NG
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788527000;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uk2rJ+DusDw+blnWhuuRKNBRvzysrXD8mtxFKv2Vyms=;
+ b=KF0CQ3oBiqFMzetcRYZiglRbSLwyFn7n5gCXyD8mepQEAj6a6pxEeYn6S1o9CIPxccaq2C
+ Vk8iT2u6xi1a46Lic1oV0EVAW70P0DXun/H6SL/pbOOkpirNqZ5DWW4wF1VCSGwPCOmWdR
+ PA/K1n7cFMBWuEyUAWDNyVcvztllNfg=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-iWVuJlGsPV2ij0w_A7bkeQ-1; Fri, 04 Sep 2026 09:03:19 -0400
+X-MC-Unique: iWVuJlGsPV2ij0w_A7bkeQ-1
+X-Mimecast-MFC-AGG-ID: iWVuJlGsPV2ij0w_A7bkeQ_1788526998
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-6a60c4a94e9so887886a12.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788526986; x=1789131786; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cZDwoyISOu5DsleId0iTDNy9xUnMUS+IBUlHEwYSxe8=;
- b=CeKtVfCfMsviTEDd3KxIovPjePdf/2pezdHqxc1/cwNJgng5UcAAnfZM+/a4N7fmvg
- vaOLYbGgLwPzi54hycxSf6DqOey04JLmsvI44e3+TdsCd5vjCynG4fT4Z70X9AnZlI5u
- +74ySG0IbNBHLIMeddfaQtC4Owd+0+IDqrcJoRepErXrlQZABtmHM+wb0OyQITzfR6mA
- u7txDom8iUKMKKZudqKivZ94+A3Sk48r6hDe4L435VEM2DP+uq45BwEG7VWKZNfJJG4N
- +EdbcZ8hdG8MmfxoEJsBn05tUyK/GEbDsf45AISLD5LGpeTOav5uh/TLaAqNxiMQ9qRR
- io4w==
+ d=redhat.com; s=google; t=1788526998; x=1789131798; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uk2rJ+DusDw+blnWhuuRKNBRvzysrXD8mtxFKv2Vyms=;
+ b=ffbhm6ByYWdj8Mv4Pv3O7jdiojHXsz7+HXw3QES2OIM+nFa8+56CGzUKf/oWkPU/Q5
+ oLYSO5Hcp2l00R3w7IF513KUh3mFEo+JBMFvzOr4NB7Fc5TlcKBAKhO3yZJlWfBjS1a8
+ 1UYF/fAw0Vvagv7c76/wxe7bGxvheeQshYF+8g1XaddicBIaxf/4KdqYfXSzdq1+f4jj
+ ZKLyAcwUsk0qOAskaPZev9A2nMZwEofTMkKiwQnxAHhx66fvCaYmX1khDN8wxayn5bPk
+ T7HpJcIP1qAhgzNsiWIzBpUaEpXqFyfbuewLjawzCiPrOAnK5jLmKex7pjsfStQ2leAX
+ 9zVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526986; x=1789131786;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cZDwoyISOu5DsleId0iTDNy9xUnMUS+IBUlHEwYSxe8=;
- b=rgkQ9lnc+Ziy608W/TvxQgVsZGxJXiateyroLcs83eLCFcQaLARTjhuyyYnH7jRh6+
- FcyjWBm0QMUiCsVyBjIMXbrZcx5JW6AI09eaTR3ZlzBABtcEEmDf5LOral2VSr5mRCQj
- 6J7fe8D8ZT3bFNsbE+GL6ju6ydY+3PIttE/nQ54FULsizXfulcvmZj98k02BYtevh55I
- Zk/64uF+Hs53XoQoh2GXh2tvYYe02JrD+SKVyQF2S/FClg5cBNohBh69+abgzdcD9X8H
- SGNX9Xgq1ei4W1+X+QyfUHvvCvMNUquKwpNtOjsCv5Rppg/iqL8AqZjXtsYf0aewBvUo
- mofA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBymbjjswH2s+8521jESWabKthY87tZQJFW6zZ9SJzaQTIfnFkVMYe87L0YPUCPnrudA/u6oYtPEm/SB@nongnu.org
-X-Gm-Message-State: AFuF++kOaS7l0Ug1/r54UpjZmGljzcgYiDrZfxAQtXgp+5ZyLmHMRgL4
- 4AcbnXYY62CSHF27CLGz0Bbcl6KGnF6WPbMZyWETRqytXVVX2yvhbR0ZSGEeyl6Ms4r1nKk2nNm
- iqDyN44QH8TZQx4gkYwe8ZyaNnxXCS6DT4scXckZKtKzILs+iZLCnYwyXNfrVMhycTg==
-X-Gm-Gg: AYBFou0/FNGWbxCR2BRzTZEyXMDoGg3qwk6uxuDW7nkoP2LwfNJBoXNdMxpq4nXVA3J
- 0PNUdf0I7+HyMx7fNLUBEaSg+XDZWdPggd2UiiHNT7/j3tPpDJUZHoGeAuxxQtdcYkRo0FWZe13
- 6GYfbHQ/TiCX8Nea1YxJ/JJBpRotDVAmA9oo2vvszqlpphUC4BXRmLs9k707piSJbR/GcRI0tna
- ezjugxMmb6brnxH2cxf6/qAx6kDYD2lhtfyQNePmUh5oZAzaxYjiufFyM0dx7qNkPy12vZUAB6I
- OeHWq6Gn/GR1wsFgCiIgoRthjiAspeFed7mwFYRvthdGgna09A/SGYBbuCONy7X6JaOD6qsbWO2
- G8fW0Y12/gqELGy1sjuXaQbvqD8oK1aIPHg==
-X-Received: by 2002:a05:690c:c3ef:b0:873:5bd1:98d1 with SMTP id
- 00721157ae682-8735bd1a0acmr1453537b3.67.1788526985742; 
- Fri, 04 Sep 2026 06:03:05 -0700 (PDT)
-X-Received: by 2002:a05:6123:2e9:b0:5bc:42be:f758 with SMTP id
- 71dfb90a1353d-5c7ed3c6dfamr2485452e0c.3.1788526966159; 
- Fri, 04 Sep 2026 06:02:46 -0700 (PDT)
-Received: from [192.168.69.202] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885be1c1sm6131741f8f.32.2026.09.04.06.02.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Sep 2026 06:02:45 -0700 (PDT)
-Message-ID: <8a282fc2-c583-49ea-a183-5934d0b3c3cc@oss.qualcomm.com>
-Date: Fri, 4 Sep 2026 15:02:44 +0200
+ d=1e100.net; s=20251104; t=1788526998; x=1789131798;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uk2rJ+DusDw+blnWhuuRKNBRvzysrXD8mtxFKv2Vyms=;
+ b=DIZeen0IMkoLSqcqRm9igP49l5ykIVpPMtmOUtW4vyDl1ihrGBlYRAi500qIM9tGGh
+ cd5tipi2VZIe5X4XplpjY3/xXYnPPvtDq2xhL0LqGyIGUGBz8u+/1cRy0qSdkbSpkvA5
+ fT/yfWd+ggvOO7HZF84DRvDfpVBv4QAlEHJmI14sggWCKvMN0+peRyemD5moRzayYlgZ
+ mm358dD3ZY39tv/CKGIO8nJdBk+qbquaeZhCqAHSimydn+T5ozuZxgWmA+/CU+AlAWxK
+ +Cy+hHl45B7Ydze22c8CU1LBNCfL2Yfeb72oHHjFH4Z/8JL1aHohsm5WQiZdPnPo0Tb9
+ W4JQ==
+X-Gm-Message-State: AFuF++mgun27e0n2KAPhbhTkKgrr9IFc4MFXMuIh9yFyn5JW6R+TF+HH
+ XObQVg1DiStJiUINh3/QexeTc524hyq87QeOIP9oX1W5XoTfMEbSaCE0+HmLKAcuVkNZPnDxIEw
+ fGjNt127pOB3EBkUNErNPMJXbnfp1o4UnGeWmIpku3Duv7AdwJM2nwD9p
+X-Gm-Gg: AYBFou1LsiLRa9DIWGtczBiKoVZpxz6ruPONQRVtH8JX0cgdFzMCMAH3EVqNBtz7i9I
+ fnMNaDJi3MIcdFQCmLjRtD5A/6YUssNxMC2Wcwie+qZpES43Bd1MmFYbErWEWM5++xZmMP4Cj2l
+ qobEmZ+bb30QuklOpE2CmsdFdJii2J5MuCEFT7/31CXx6JwRSuAgu6Dkp/q6tdHAUNcwvnvuyip
+ ypZY+QdzRRy6TTS8PI9DPecVxI7KnLbbWNQTHIB9fj2xroq9/lxo1wSWd3aH30+cjhjoKTN4Gf9
+ CEa+WbGKTttm5RmE8H3XrL8Aal9OTkEy7gKLqt6vEIbigXcRVATIgZ2wWgLG5jN7gomdeeT/2Gu
+ 2RuMTTjzKiNBIuVs+7ur4YdsX1aXfm7dtUkePnjbbbPFD5w==
+X-Received: by 2002:a05:6402:a0cc:b0:6a6:32f5:5572 with SMTP id
+ 4fb4d7f45d1cf-6a7e8f94ad0mr2196233a12.20.1788526998028; 
+ Fri, 04 Sep 2026 06:03:18 -0700 (PDT)
+X-Received: by 2002:a05:6402:a0cc:b0:6a6:32f5:5572 with SMTP id
+ 4fb4d7f45d1cf-6a7e8f94ad0mr2196199a12.20.1788526997427; 
+ Fri, 04 Sep 2026 06:03:17 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
+ [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48588133600sm6833352f8f.5.2026.09.04.06.03.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 06:03:16 -0700 (PDT)
+Date: Fri, 4 Sep 2026 15:02:56 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v2 2/2] igvm: honor byte_offset when writing memory map,
+ MADT and device tree
+Message-ID: <aprBZ4XguYCgUyNN@sgarzare-redhat>
+References: <20260904-fix_offset-v2-0-f5bb4cf6d4b0@redhat.com>
+ <20260904-fix_offset-v2-2-f5bb4cf6d4b0@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/47] single-binary: implement dynamic filtering for QOM
- types
-To: Peter Maydell <peter.maydell@linaro.org>, luoyonggang@gmail.com
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, anjo@rev.ng,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
- <4b4f77ee-21e9-405e-a1da-21506afa1c5b@oss.qualcomm.com>
- <app_CnHimOrOymMH@redhat.com>
- <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
- <CAFEAcA_4TZxYhFbHfJZCas7bvh_KZjNp2aKzx3LPaXTQFuoQYQ@mail.gmail.com>
- <CAE2XoE8FTYQMDZFdjf=gayR7H0MJrO=thUcFXddRWBd3_2KQZA@mail.gmail.com>
- <CAFEAcA9eLNLs7ZRaH=PS7tAK49WeJzc0PKfWVG3xKRdc-joU3w@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA9eLNLs7ZRaH=PS7tAK49WeJzc0PKfWVG3xKRdc-joU3w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: tPRPc2UtujcIK1xBsax3lg6vaMhHUCaP
-X-Proofpoint-ORIG-GUID: tPRPc2UtujcIK1xBsax3lg6vaMhHUCaP
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDExOCBTYWx0ZWRfX1oxfNgdKWETa
- P60i9aeE/iVql2z2nraXoeBsWuWK8eQOcLPXLuX5cm01R52kRyIKJzX1d/zwdG3NaKaKFViO6AM
- s2zRE/TjQk5pCQpoYWYroaO2b1V/ioU=
-X-Authority-Analysis: v=2.4 cv=XtnK/1F9 c=1 sm=1 tr=0 ts=6a9ac18a cx=c_pps
- a=0mLRTIufkjop4KoA/9S1MA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=lUiSEC1R9o1OYI5mJ9IA:9 a=QEXdDO2ut3YA:10
- a=WgItmB6HBUc_1uVUp3mg:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDExOCBTYWx0ZWRfX0UFlONCs5GHS
- A4SfnlTG0/cHw+728PtSdozyea48+yMOtXI3A/ZYcGIXeJzlYtYoFj0aNYL80c3Ch4452UL+Qb5
- CElq0xNLG5yu2uZiMy6u3bKFhOvxwJ1AS0GmYAj/0z4jQHrkgoDKioTOYN6UJTcAh+6JfpAWoic
- 3ONkBRWJzh/SxofMEbENhRBZUIqxhu79fqQmB8HYKofTNnk8U7v6HbvXzPDVU8ibGuc5v/F+84Y
- L/570UugCz+VqoEZv2ufRNH3lOeze20Ds9S6gNLyeEecJa4C0OJ0Ap8NGC8Uxi/dXI0DQ+Af3GZ
- AkqEe8gaOEdssnhrda/Nne9LkfxiC8ItE03O+07zFtp9JXEKyUK9DJeSOpoPJUD+cwaugDt2WnT
- GTnt+wd5xT8IBphX1O5kp/ns9wf2051nvpckDwVkQqpXU/j/jVXcO/shoQLXYeiIQ+5Ds+ZKpGl
- h/twy8NOn5uicsztDXg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-04_03,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609040118
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260904-fix_offset-v2-2-f5bb4cf6d4b0@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -166,75 +121,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/26 11:41, Peter Maydell wrote:
-> On Fri, 4 Sept 2026 at 10:34, Yonggang Luo <luoyonggang@gmail.com> wrote:
->>
->>
->>> I was wondering if maybe one way to approach that is some
->>> "disambiguation" syntax on the machine name; so one could write
->>> "-machine aarch64:virt" vs "-machine riscv64:virt" (or whatever) to
->>
->> That's the Proposal B: target only in -M or argv[0] (alternative)
->> Do not add -target. The target is always embedded in the machine
->> argument, or inferred from argv[0].
->>
->> - qemu-system-aarch64 -M virt: single-target from argv[0].
->> - qemu-system -M arm:virt: single-target from -M.
->> - qemu-system -M virt: error (heterogeneous not supported yet).
->>
->> There is no global option that selects TargetInfo before -M.
->> Early option parsing still has to read -M (and argv[0]) before
->> machines initialize, the same as proposal A reads -target.
->>
->>    qemu-system -M help
->>    qemu-system -M virt              # error: heterogeneous not supported
-> 
-> This should be an error because it's ambiguous (and ideally
-> the error could include listing the possible candidates, like
-> "Did you mean 'riscv64:virt' or 'aarch64:virt' or 'arm:virt' ?"),
-> not because of anything to do with heterogenous machines. For
-> instance there's no reason
->      qemu-system -M vexpress-a9
-> couldn't work without a "arm:" disambiguator, as there's only one
-> "vexpress-a9" machine across all our target archs.
-> 
->>    qemu-system -M arm:virt ...
->>    qemu-system -M aarch64:virt,gic-version=3 ...
+On Fri, Sep 04, 2026 at 01:42:56PM +0200, Luigi Leonardi wrote:
+>qigvm_directive_memory_map(), qigvm_directive_madt() and
+>qigvm_directive_device_tree() all wrote their data unconditionally at
+>the start of the parameter area's buffer, ignoring param->byte_offset
+>from the IGVM_VHS_PARAMETER header. This is harmless when a
+>directive's offset happens to be 0, but breaks for IGVM files that pack
+>multiple parameters into a single shared parameter area at different
+>offsets: a later directive would overwrite the data written by an earlier
+>one at the start of the buffer, corrupting it.
+>
+>Switch these handlers to qigvm_find_param_validate(), introduced in
+>the previous patch, and use the offset-adjusted data pointer and
+>remaining size it returns instead of writing at param_entry->data and
+>sizing checks against param_entry->size directly. This both honors
+>byte_offset and validates it against the parameter area size before
+>it is used.
 
-I don't understand why we are discussing the CLI options and machine
-names in qemu-system when nobody has a clue what qemu-system is for.
+Do we need a Fixes tag?
 
-The overall discussion gives the impression qemu-system will be
-helpful toward heterogenous emulation, but this is the opposite,
-it hinder our work. We have identified many core problems in
-QEMU APIs and planned to fixed them when needed (because too many
-issues) and only expose heterogeneous-able working machines.
-The current approach try to expose everything with core APIs
-totally broken. If we go this way -- which I don't object at
-all -- I don't plan to look at the issues reported, for my own
-mental health.
+The rest LGTM,
+Stefano
 
->>    qemu-system-riscv64 -M virt ...
->>
->> at:
->> https://lore.kernel.org/qemu-devel/CAE2XoE_-ewv3iC_MZ2sM1eKG=CUKM7MZa-ppJV0Vk1rE1h+19w@mail.gmail.com/
->>
->>
->>> disambiguate when just "-machine virt" would be ambiguous; but if
->>> there's only one machine of that name then just "-machine foo" would
->>> work. That extends nicely to truly heterogeneous machine names:
->>> "-machine my-mixed-machine" wouldn't need the user to explicitly
->>> give it a -target option or otherwise say that it includes aarch64
->>
->>
->> Seems this direction is fine, May I post experiment patches with this direction?
->> The machine-filtering is still needed. and when the target is not specified by machine parameter. The default TargetInfo will be target
->> SYS_EMU_TARGET_NONE. And it means emulating heterogeneous machines.
-> 
-> I think we could also let the default (no target specified) work
-> for non-heterogenous machines, as noted above.
-> 
-> -- PMM
-> 
+>
+>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>---
+> backends/igvm.c    | 24 ++++++++++++------------
+> target/i386/igvm.c | 12 ++++++------
+> 2 files changed, 18 insertions(+), 18 deletions(-)
+>
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index 8c07f2ce5e..4d622eac6a 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -638,7 +638,8 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+>     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
+>                              Error **errp) = NULL;
+>-    QIgvmParameterData *param_entry;
+>+    uint8_t *data;
+>+    uint32_t size;
+>     int max_entry_count;
+>     int entry = 0;
+>     IGVM_VHS_MEMORY_MAP_ENTRY *mm_entry;
+>@@ -659,14 +660,13 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+>     }
+>
+>     /* Find the parameter area that should hold the memory map */
+>-    param_entry = qigvm_find_param_entry(ctx,
+>-                                         param->parameter_area_index, errp);
+>-    if (param_entry == NULL) {
+>+    if (!qigvm_find_param_validate(ctx, param->parameter_area_index, param,
+>+                                   &data, &size, errp)) {
+>         return -1;
+>     }
+>
+>-    max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>-    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
+>+    max_entry_count = size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>+    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)data;
+>
+>     retval = get_mem_map_entry(entry, &cgmm_entry, errp);
+>     while (retval == 0) {
+>@@ -860,12 +860,12 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+> {
+>     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>     g_autofree void *fdt_packed = NULL;
+>-    QIgvmParameterData *param_entry;
+>+    uint8_t *data;
+>+    uint32_t size;
+>     uint32_t fdt_size;
+>
+>-    param_entry = qigvm_find_param_entry(ctx,
+>-                                         param->parameter_area_index, errp);
+>-    if (param_entry == NULL) {
+>+    if (!qigvm_find_param_validate(ctx, param->parameter_area_index, param,
+>+                                   &data, &size, errp)) {
+>         return -1;
+>     }
+>
+>@@ -883,14 +883,14 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+>     }
+>
+>     fdt_size = fdt_totalsize(fdt_packed);
+>-    if (fdt_size > param_entry->size) {
+>+    if (fdt_size > size) {
+>         error_setg(errp,
+>                    "IGVM: device tree size exceeds parameter area"
+>                    " defined in IGVM file");
+>         return -1;
+>     }
+>
+>-    memcpy(param_entry->data, fdt_packed, fdt_size);
+>+    memcpy(data, fdt_packed, fdt_size);
+>
+>     return 0;
+> }
+>diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+>index ad9bf87761..db365cb80e 100644
+>--- a/target/i386/igvm.c
+>+++ b/target/i386/igvm.c
+>@@ -187,20 +187,20 @@ void qigvm_x86_bsp_reset(CPUX86State *env)
+> int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+> {
+>     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>-    QIgvmParameterData *param_entry;
+>+    uint8_t *data;
+>+    uint32_t size;
+>     int result = 0;
+>
+>     /* Find the parameter area that should hold the MADT data */
+>-    param_entry = qigvm_find_param_entry(ctx,
+>-                                         param->parameter_area_index, errp);
+>-    if (param_entry == NULL) {
+>+    if (!qigvm_find_param_validate(ctx, param->parameter_area_index, param,
+>+                                   &data, &size, errp)) {
+>         return -1;
+>     }
+>
+>     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
+>
+>-    if (madt->len <= param_entry->size) {
+>-        memcpy(param_entry->data, madt->data, madt->len);
+>+    if (madt->len <= size) {
+>+        memcpy(data, madt->data, madt->len);
+>     } else {
+>         error_setg(
+>             errp,
+>
+>-- 
+>2.55.0
+>
 
 
