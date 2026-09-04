@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FE5C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8156FC61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJP-0006CZ-EI; Fri, 04 Sep 2026 08:46:31 -0400
+	id 1x2TJQ-0006DF-7Z; Fri, 04 Sep 2026 08:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJN-0006C4-Qp
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1x2TJE-00067l-FM
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:20 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJJ-0006ud-HJ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:29 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-499b2981a7bso9440575e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:24 -0700 (PDT)
+ id 1x2TJA-0006pC-5i
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:18 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so13332625e9.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525984; x=1789130784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525974; x=1789130774; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=dOSUepCPWAWiVnU7uqB1g6HY6ho0kwTrvzKaOUlf+Vo=;
- b=PN/vBmS1WrOQzRHALOaprlsQWnApQKSSboGfKqxD2JPqxdF6VKHKLsA0pvz8sRExPh
- 1FXpS9JxJBHkqpqKf/f/1dWt8iWw8bFCtrfHAN89M+E5OWo0DnraVqadMRqCmEh1BIHi
- I7lGXJfrd+K7KyO+CPXnaKfqi+X6p42VAFTTX/CmddNeOmwG+HDYnISzOSoK7RSVTXAo
- /JuII6/fNHt/U0F2M5PHVjqDEtmxFZxhEVbNR79jR5pwFTraSiJy2EHtaYyl3YIXwPKV
- BP7MbzdZE4E0srKh1OvzRbQH86DntcgFP1LDudpnX6iXij7e42wIt09of7dTqMTqHYDl
- 8V0w==
+ bh=Ur+ntwxX3eXj7Zio7Z0Blbehu4cxmDZiiM7xTvB3xTU=;
+ b=RxoIPPFIpuo33h6edNTvC4vyhUr4EdGs1dRYQm7upL6fvK2VwhyWI8v9NdnxLXdMWq
+ DqD2Iu7yUecbe2KG7+HLBCHtWth73T0UXUFyS0QVXswGCB1i0qIYwZWigEoD0d11AO5R
+ AQye3kGasxAwl8Np2i52qevUnvyAo1u1jNrB5BE+yQ9d74mjBWqCLabbfi6waePZQ/wr
+ zwrj/yjaEz85iMoiwHCNGhl7HRKLV4LBTEaTm2Y/nmsda2yAI5Bobvaib0VAg4QVhG2H
+ ooyjaZLfhnYVa1HVvUegJDNdy2aYS+iX/PxWV0/O0xfYABB5OoV4w/VKi7bjrH0wnm9f
+ ABuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525984; x=1789130784;
+ d=1e100.net; s=20251104; t=1788525974; x=1789130774;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=dOSUepCPWAWiVnU7uqB1g6HY6ho0kwTrvzKaOUlf+Vo=;
- b=qgLu4qWd4oe6KxAkqNsLnv3vyf0j1jPm7XHiTsvSvAeVtRvOvHYEAeplK8Hik81Lth
- Py84hflGAubgPlwFppPIEhhzNiVTHFenHinak3NS42AcLJ2h9kKBNPp1d21zClLrFYZ3
- K8UMFmxaCczQPPfd0m/FAB9Z8WPQnPVfzRfRLHDNP/ilFAwNgB7zzPPWlpwWUFY16KmX
- d2A6xq8rFn0UZOl2O4bsUphkrsXRykNNawIznQjtGKwh9O8eaecfQsXqkh4pDyVEaOGI
- jbG49w9nzhlI7Vy2gdKzscvCBPlmtWvA6t3vC6Ur2gg1bjW01z9qC4AyLEC1aaAG9pDe
- FY9A==
-X-Gm-Message-State: AFuF++lfM40vhsGcQRjqg5SwhKyaWaL3Yr96SaWmORDjbp+KsT6SbxEj
- JVvpEoCHfVaUvJDU6Rsdy9Xim44fzdjxVgKvQ7eJ2ggVnJdaVzkRBrccQd+bN0Q1Uo4=
-X-Gm-Gg: AYBFou38PMHErJbQUPWHMbBhlNg6fV1PDDurL8HQGMcrI/+ORbiKU7DdrM8LYLxdLbv
- YTIRgEE4mBVj8cfjq7/ygdpXPKC8m4QlFkXXd0gLFmGXSmjX3tJa3ABxaPSQhgWw47NpnJB2BGS
- znO2lRn1Jg/Yw5+i1TAMT4X7ytXYWUFKA1+3mPx8XBL9IUjnkYAl7/+EGIkI2dFPGpwDmN9x4EN
- jIFvx+XJo6kuCvNFL0cLnZeQvsLbRuSragyIhCHGd0SwMRWg7iu31d/OuC4KSoo6tNWbXbez893
- 2cT8NMDk5lcLkncNDgsHx36UL6VqUU5XljP2t+riE9rvgVrmdkN5cag6bgfyTgff6SptwnSZx/r
- i/PygkU146zz3fSqVroMW9uUKq+dm/W64YnEAc0yHRGwcMdxgYQJfekGj2tpp0w9hlY7vRoK7uA
- 7uXkCsfDTYybqJ0QX612gtm5igCnUFq8PIId8Xbc6FzuiwHA==
-X-Received: by 2002:a05:600c:3485:b0:49c:cee0:e7c1 with SMTP id
- 5b1f17b1804b1-49cf825c119mr105479445e9.16.1788525982619; 
- Fri, 04 Sep 2026 05:46:22 -0700 (PDT)
+ bh=Ur+ntwxX3eXj7Zio7Z0Blbehu4cxmDZiiM7xTvB3xTU=;
+ b=IsE9b5VMzqG7ClZjodZiuQg9pH/k5b8hTBeJlhUfTi6mycxr45TbtjyJ2/IC5IwOpy
+ 0JcVkeVTZFwzjDv9Ls7FZfHAczPXDDLPTk751YQnUB0cGeHsmie3nL5IOmkjNw2+ZUJw
+ vavnqFiIRdIcpMl1/H2Sk5F2QxxfTXmv9FUTddvvCmrP4rsgCSiBrPoSwOEBydir012D
+ p5DB72konjSL/E/jUeS/NCQBErDeQIQHjkfUsowrA0dho7aqaciEATfPnP5KMeBWR0hZ
+ FL1J3Q4B8cct/fa23vDqyP4Uk2SNYSczbg08zd4Y4px5oqYT7GthJaZTJZKYa//dm8Sr
+ 7eLQ==
+X-Gm-Message-State: AFuF++k9XjVvbQFo3NAQdMNivn+08z0ghuamp5ioDtLYouWcF9vmy1+R
+ aRCsxEs1fLqzT6qeTofSrMY7jLtuMHuwQKinEWMly9g8k1lfE2R8GIhgKUEszbniCL0=
+X-Gm-Gg: AYBFou07hhwGAGeocGNzIj+aKZxVwCGcXDydKrOS44gNs/zRZfElHC9jQh7ruQA/yu9
+ e0mARpOPqEHj5iBE+05W6C5E7voA/KCwlPY64Cp6+Dzx5tezkJi514rZeQkaLbNp+g6ATqYH8kF
+ dyH8jkopfxWYTDzkhSEDF9K0CmTYog2we3/wVAN433NPYa3Gs6OBd5N7ZiSIyWnWMuUE/MItuw5
+ hOgSfjceY4syAdMj/kzlHxOSx5/JN5CrnxjOxdzBOLhdnOPsM/F4Tg2gK2yIQreHTQ+SJFQeX6u
+ Uld0019rmd7sGnIfWBQN08SMMrGwL914CnYZ9UBdJku9W0tH5QlZfriQqZz6uJyieTZWmnhhzHl
+ 9KPopkXSFX9DcG0R32teD3CQsRIhiFRCeOkiyU273pCxSvlCgAQmvG/dbGJcyOv2My+0REAwZPe
+ FQ9D084oa6kuC7bigQzoIBPTt2XL5Qj0t60q4qbKce1TulnbkYXqnTCp1+g3Uv
+X-Received: by 2002:a05:600c:3496:b0:499:b65d:1250 with SMTP id
+ 5b1f17b1804b1-49cf7fe62admr94138225e9.2.1788525972143; 
+ Fri, 04 Sep 2026 05:46:12 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee80eda4sm149526505e9.15.2026.09.04.05.46.16
+ 5b1f17b1804b1-49cf7736132sm66126895e9.12.2026.09.04.05.46.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:46:19 -0700 (PDT)
+ Fri, 04 Sep 2026 05:46:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9D60361D10;
- Fri, 04 Sep 2026 13:46:11 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 562AE613A9;
+ Fri, 04 Sep 2026 13:46:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 068/105] tests/docker/dockerfiles/debian-all-test-cross.docker:
- add or1k toolchain
-Date: Fri,  4 Sep 2026 13:45:22 +0100
-Message-ID: <20260904124604.2207440-69-alex.bennee@linaro.org>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Aniket Sahu <asahu1x@linux.ibm.com>
+Subject: [PULL 010/105] tests/tcg/meson.build: introduce env_var
+Date: Fri,  4 Sep 2026 13:44:24 +0100
+Message-ID: <20260904124604.2207440-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,61 +108,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
+We add possibility to set an environment variable when running a test.
+An example of a test requiring this is
+tests/tcg/multiarch/linux/linux-sigrtminmax.c.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-69-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-11-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 6bc611b0e6c..9a71af0e41d 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -172,7 +172,19 @@ RUN apt update && \
-   clang\
-   dpkg-dev\
-   gdb-multiarch\
--  libclang-rt-dev
-+  libclang-rt-dev\
-+  wget\
-+  rsync
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index a7699b7f62d..fbee86e6b4b 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -15,6 +15,7 @@ tcg_tests = {}
+ #           'test_name': ['provide an alternative test name'],
+ #           'cflags': ['additional cflags to compile test', ...],
+ #           'qemu_args': ['qemu command line flags', ...],
++#           'env_var': ['VAR=value', ...],
+ #         }
+ #       },
+ #       ...
+@@ -57,7 +58,7 @@ foreach target, plan: tcg_tests
+     foreach src, setup: t
+       # return a clear error if user misspell a setup entry
+       foreach key, _ : setup
+-        allowed = ['exe_name', 'cflags', 'qemu_args', 'test_name']
++        allowed = ['exe_name', 'env_var', 'cflags', 'qemu_args', 'test_name']
+         if key not in allowed
+           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
+                 ' (possible: [' + ', '.join(allowed) + '])')
+@@ -122,6 +123,10 @@ foreach target, plan: tcg_tests
+       # some tests expect QEMU env var to be set
+       cmd = ['QEMU=' + qemu.full_path(), cmd]
+ 
++      if 'env_var' in setup
++        cmd = [setup['env_var'], cmd]
++      endif
 +
-+# https://openrisc.io/2025/04/20/toolchainrootfsbins
-+RUN if dpkg-architecture -e amd64; then \
-+cd /tmp && \
-+  wget -q https://github.com/stffrdhrn/or1k-toolchain-build/releases/download/or1k-16.1.0-20260614/or1k-none-linux-musl-16.1.0-20260614.tar.xz && \
-+  tar --no-same-owner -xf *.tar.xz && \
-+  rsync -a or1k-none-linux-musl/ /usr/ && \
-+  rm -rf /tmp/*; \
-+fi
-+
- ENV AVAILABLE_COMPILERS="\
-   gcc-aarch64-linux-gnu \
-   libc6-dev-arm64-cross \
-diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
-index 833185f6072..c0ab05a5ff3 100644
---- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-+++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-@@ -61,7 +61,19 @@ RUN apt update && \
-   clang\
-   dpkg-dev\
-   gdb-multiarch\
--  libclang-rt-dev
-+  libclang-rt-dev\
-+  wget\
-+  rsync
-+
-+# https://openrisc.io/2025/04/20/toolchainrootfsbins
-+RUN if dpkg-architecture -e amd64; then \
-+cd /tmp && \
-+  wget -q https://github.com/stffrdhrn/or1k-toolchain-build/releases/download/or1k-16.1.0-20260614/or1k-none-linux-musl-16.1.0-20260614.tar.xz && \
-+  tar --no-same-owner -xf *.tar.xz && \
-+  rsync -a or1k-none-linux-musl/ /usr/ && \
-+  rm -rf /tmp/*; \
-+fi
-+
- ENV AVAILABLE_COMPILERS="\
-   gcc-aarch64-linux-gnu \
-   libc6-dev-arm64-cross \
+       test(test_name, env, args: cmd,
+            depends: depends,
+            timeout: 120,
 -- 
 2.47.3
 
