@@ -4,30 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C19DC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6594C79F80
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WKN-0006sH-37; Fri, 04 Sep 2026 11:59:43 -0400
+	id 1x2WJc-0004vl-QT; Fri, 04 Sep 2026 11:58:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WKL-0006o7-Ox
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:59:41 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1x2WJb-0004pL-5n; Fri, 04 Sep 2026 11:58:55 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1x2WKK-0004Wv-7e
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:59:41 -0400
+ id 1x2WJY-0004Sx-Dt; Fri, 04 Sep 2026 11:58:54 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=g9MAEW2bMO9enfjl8ditLnLf1XAeDi/kB/bZGHiGygzeGJJqD6/pBL9jk/A5PnYnIH5RC2+4neZO3jmaXh37o05Mqt2MCVFvq3YEZIQT7r1/fraWTz5mMkpVfOwVtO8Q+/KaOyRu/8uRnoQfPPXVnx/KIL3sa77CQALJoaxAAshQxJqSjgRZEd04r3TiAkFVLy8v8k8oSPuVZqQOjzrOPk9ZApRQHsCfkkmMH1GTq+0jkcnStrcW48sOT7h2qQY1lsQpdiuYqNdaA8eRd7eHvkh3TkYTJmitYCKwDssSBBvkxeHC5aZInqkImIWNVrvz0X1S8TRP4QzmzkzIP6j95w==
+ b=G2oXHyMbDaHvfag+m3TMRzh7Q8LqIojx4KccRiq7VNWSBHCBK43OVrcz+DMMvzuULGXPnjsXN9+IvknobjHUp6LQvnQuywhHG3poOsqh5SmgKDrUTABiTetLnkTwkD8nxohiopz0iyVmEpuPggYd/u2ecv6NK7i32ElRXoQfHTVVvSLN5L7qQqZqsT0J+Qr6fN0bQG/KBNbN0h/gufMcbaiCtkK+0H8uc/ukHLCudgWAbqQd2+6SwzZjBpoY58XBLAGa2RXF3OQdMGzH7aRu/a65DP927vCkncoxvEhPCvh2r5aGNO9Kt2h9SSxFYjnoeJgPxhAN0UsMfKgThGOUtA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9m1R6JTJaDJvTaFYMihCBVljVWPVYaTUziVR474Mugc=;
- b=FptU6w4izGpsGwpLbqwwouiqE6qfrDAm8xeN40uJGoUhoPUgMZobn8q4uLEp7s0PgolWQ6nIcFpn/1djjDSx/Patm1zfZJo2pLaJQnXS72cIlAcGi0KO5wUaGIsbLEYi2l0d2DZHAOJ6rLiuvGEmGaBnsnF+EkcO+tKQ560OwRcbeINQZQ3yQDjiiLPdJCins2r8rCop7tUlkCB1jSzzeDPLDN54AdcAYcFF4i0aEPHmAJ/oB7J/pjscgSXrqBVgUxyeAKJUxUwMOAAvLQ9CStZTErtaGPYtnsplLdKyGHHWJVyme/icIVzpkeH9lbel2j+Izub76kkIsNyvhT292g==
+ bh=ao2NhYVZz69fcw3o3/8zWJ9KCibUchqA6HlQAhdzj1A=;
+ b=GZY6c2IglIBhI/izUj1lShfR3KwJk29vDwU1X6ELFygat2fyDyOTAAVO1ptcvTu2vEQAt0NJ6dElB2dxpW1wXLZ5MntoF+6Etu4ZzYBlbjnpkxsUnJ+1M9+33teQyOvTWw0Wbs6gWkpMWed5q4Z2q1FDaQXSY8BepFGamIHDurzdmvsmIe4Tj/AjGstCE6cFUlA6XOcJ5Zn5AAM0n/gu7sOVekOgsfvOuYQhsLTAKJJNHFrMUoFn0d3ZPMUPhCDFJDkUd4CRYpvxUE8jLqg1jb0nh/lbsMvNPpqzm8uwcAZb0uwhmS2gYcplKEWT9UbnLaI6NDv8/Mg6FAzskIZkRA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -35,30 +33,28 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9m1R6JTJaDJvTaFYMihCBVljVWPVYaTUziVR474Mugc=;
- b=ERLtdEWOdFli0V4C9p8ZpCc2JbP7F+AR9g4wsDfQlXbLgZuNY3ZX/4Tf691u4JVeWr58LqPll2bZqcqhhXwZ7xBGzE869j48D8dvzqMhvMiF1OkQzOICJiP1Lco0d+odKrGV+GUhEq7XblEXY2ADnVu4JWhsmEduT43T8/upT8H5wsYnIAhlHFw1TCEyrt2mOCcAgU0i1nVILThg5lw+TK28Qsa4Yvv9UpGTGHDUHTT/rjst4XL+JeqXJGJa3gaGjqKjtI0XuyDcfuRxIv1ck/CEtVNuc8UwtJqQaLU9v+x1jkAUXoM4k6VEQFufMvUTJ1XoTvgupo2E4IpZPVGVhQ==
+ bh=ao2NhYVZz69fcw3o3/8zWJ9KCibUchqA6HlQAhdzj1A=;
+ b=pL8ik0TW10L3ZSx+TXD7Q2oP71mj4aCZKhipa9NGJirDtqpEwwZ0ugEtaOMkgv83WZ7opblHelpGah9HOBUbbaJ334R/dBpRvZaq8aYO1oI7UuFt3vNwa+A+MqwqQsN2PnRs4dJogqohCgIhWYNBTPm7y6F7QjUNjRULcDYXDu1FoWABa2noMmIpP5O7gu104201ap8RgOxRoo/Nt59vBD7oAQiWbZxKNWPGicg5Re61qkySstXNiCDAvNYDJg45/NNBnrfPr7/k8rJp6Z3SplAg8lSwhCZW2knNMzv3vBIsDjJvxly5NIMgrZAn8Bv6tp72H2jKnBBpze6TyHVSEQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYSPR02MB7490.apcprd02.prod.outlook.com (2603:1096:405:37::14) with
+ by TYPPR02MB9175.apcprd02.prod.outlook.com (2603:1096:405:394::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 15:59:21 +0000
+ 2026 15:58:41 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
- 15:59:21 +0000
+ 15:58:41 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor@kernel.org>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 24/24] MAINTAINERS: Move Conor Dooley to PolarFire SoC
- reviewer
-Date: Fri,  4 Sep 2026 23:57:43 +0800
-Message-ID: <20260904155758.3833179-25-bin.meng@processmission.com>
+ qemu-block@nongnu.org
+Subject: [PATCH v2 09/24] hw/sd: sd: Keep high-capacity memory blocks at 512
+ bytes
+Date: Fri,  4 Sep 2026 23:57:28 +0800
+Message-ID: <20260904155758.3833179-10-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260904155758.3833179-1-bin.meng@processmission.com>
 References: <20260904155758.3833179-1-bin.meng@processmission.com>
@@ -69,66 +65,67 @@ X-ClientProxiedBy: TY4P286CA0020.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYSPR02MB7490:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2a0e5190-51d7-447b-10a2-08df0a9d7b92
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYPPR02MB9175:EE_
+X-MS-Office365-Filtering-Correlation-Id: c7e12166-b740-4095-f5cf-08df0a9d6429
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|10067099003|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: 2HvoBcr49V0o0e5KTym7O/5l9E9RHiDyUIo4dAXVBwD2dqGVBWyK4tt0QQLHbk6lwS+b4CRBuJVyS/ZxlDzAs5ZQwSZA4j2uGOgVP1iXHgbcde7L5V8jdnCNeVisN5VeXG10LpGa0zfe1hAbScsx/iJt4+rpYiHBh06uMJvMFzU3HUGoY1Gr217qCn7DGMCpMAlPIU6QcCpd7RM/4dD/NrSIhaB49tlNphp4+4YRfR/2/UExB4v7qwdd6KX9M3THiC4JBsj/DGcWi2IU5HGZpIl2KNYiHhnH5dDW/qZSYOi2bNHjluE8hUaZbGqqcM3kyy3nJuwZpPVgCueEXwAdGCEuDzcWdAOzkiczL+OytaM4cSU5UxCzQtOZ1VXve4k2iJZk7GG7A4hF80M0BTqc4XsBxvtA71hqsl8ol/hD0HgJLgxRpd3JMAeaE/Lq91zZOw+0IYQmLm4ykZlFOriP2qs7dggyNNYoAcwWabahGwa1JKzYdvYGV1YC7GzPslTe/R41RziPqxDQ5Vzxn8BCN+CYGlu7taiRmtGxNH4jwGZUMbjkjQAoeRvq1oCr+IQ47uFH/quoIuFlVdpmrFWES3Eiz+KbVbsoQwgkXYMjy9tOC/fqvveow5617KcP2SB9Qxp/E3bT++6SzSbivptPqCjsKj+CvJZS7R2w8bn9/Y8=
+ ARA:13230040|23010399003|366016|1800799024|376014|6133799003|5023799004|56012099006|10067099003|22082099003|3023799007|18002099003;
+X-Microsoft-Antispam-Message-Info: RgfgCTIyW8lilQhLi5yI0HOMHfWsuOoCGbzFRsGEN9qNaZgg1Zo8jGcKY0BQPx31bWwB2ePy3KOz6KulKslXWCwW1wGtF9U/UB9gE9UtFz9afl9uUhRRNOix+uyvOGtrUglvxYV34TAjVIgLdtKS7w1heyQVmMRpINxsrCrAlbdYRnURKIH+MRlPRFyTk9hFe5uc+9mj6nn/82p+V4/m67ZWg6hcqISjgbnux0VDLZ+8R4pqAQuQ6uvjAtmr6gIido9G56udXmjZTZ4YnuASBV0z88K24Z+WQ3h//3hJWIJ5a0VrkXi7mT7ymkm4/XSgIK3fIZqhCa5xLdbTLY72IBqFjvUTowJZBR7inpiyRZMoJ31kUgCh1UJMyurIfljbhbAhEmEsv5Tkz8iej91KoUqcn6Z3/1ZCHWPIsPluSTdeOBfr4gl+JCQGc1qNtGJY2M75pstIwRAYkUE41aiHpMiNJA/IiVGo57ndypQyzAR63rdiftistXP3gRtcGJLq8qgYt2GSK8PpgPKoiAI1Q/PZ40dU6dsu09p7e8er2J2rbHHouRjaPMRYY7EalrbT9i+ipgZhYeHy+j56LuSlQaDqGhhibxmFY+Bg4aulMrx4alKQj96rakKp2UpzN8rYUMd4jdLL0nYkIWqzaPy3xnqCKM6Ic6XtGa5i256Bm4Y=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(10067099003)(22082099003)(18002099003)(56012099006);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(5023799004)(56012099006)(10067099003)(22082099003)(3023799007)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?eb2khcNr8KykBhrBFnan6vASyVthhpEadRJ4Msjq0EkzL66o3XxsJ4Cqou3t?=
- =?us-ascii?Q?o7n0zALrMAbB71SsTuY/xtSobY5QA+0RdCoe/pSmk5xBA/+T17fatQRbj2mn?=
- =?us-ascii?Q?zc6WeN7jNGDUrhRpDVOaAnr6tkrGLBKels125LbroShR7tPbU/VFDpqiOJSF?=
- =?us-ascii?Q?6BPHnaEgGt+N4fUEEnlpJ+G7IvA8lCJnWsvu4+1TPQDrB+0jWUZ6USxqOohg?=
- =?us-ascii?Q?OeYvzXrkU45gEYnJbIM2I5cNgWBnyEF/RaixUjPgzCsiw2t34ZZWbM2Xgu8A?=
- =?us-ascii?Q?r+kD4E8+kOMXwePaESg2kSv+FrnVlh9HbOj04h9X7fjveM3kAaHhxAL2g/T6?=
- =?us-ascii?Q?cQmOK60Sbt2mCg2x7jsuMHvtMcQtAC8omCpIezFeSt8p+NMsnjiINfr40n0d?=
- =?us-ascii?Q?kvdJJYRj403WldPf41EA27ofJCW4VA2y681aVjCf+xmFo/zjX+2LqMzLxKCy?=
- =?us-ascii?Q?cljBkq3rMEJsuy0q0HAancobGEA+RFTjNR6BzH+m09vSh6xlbw6RrL/GdLBw?=
- =?us-ascii?Q?WfA02A1wZO+CE0vuDPbW7RX8NN73DNBYCUA+l/byDsUkNNhiizJhs0++7OU6?=
- =?us-ascii?Q?zdQIPGzkittTqd54QcpRQ6fcccR9UiaO7xtIrrlMSKtIcu4v27ZisqJWPQuu?=
- =?us-ascii?Q?SZTBgTEHXtrhch+2bHaIJtlE69RtjXp6P+Thf696DuW0qZDcXy4L04nBZeNE?=
- =?us-ascii?Q?wM1pkoWaJRO43Z/C/A51TOgtGqmUKGgveWMfx/M26mylD7iBsYHJUpU2qnES?=
- =?us-ascii?Q?nFS2P33trZt8ssVCXc1agOP5oKzlmZ/5jBqnhYn4m1sZCFEVWa2IAFcD+JT2?=
- =?us-ascii?Q?nXlaZ8HGrbqc64K92SqtXiuhLD5cEsQJRfvStoZ24J3tBO92VW2N/yZqibYr?=
- =?us-ascii?Q?X7D7iuyP16X5/KiSYOv6d1HaHdQpR9mXkY6Z+vgGH4aloHZbXYH8bTfhSjgy?=
- =?us-ascii?Q?cnXuSn4wR9MsqkpiSSH5iJrD6celpnGCUbV1au7x3VQg3Gk2CeLlI8NUkqcj?=
- =?us-ascii?Q?OzuMHYGPFrPLwKvfxXvOEyWk89pbjndLym+EYC2xWKY7AMbpjwOP+4W2QKWg?=
- =?us-ascii?Q?4NjU8xCsr5JhnVqo8hSVZrymrg84iX/h+ZY3MFdZeYJjNj408pYNtzbHYQ7J?=
- =?us-ascii?Q?hKAeQ1e7qjf0tjUD1JYDxfcDtM5iril/C4HMFzeMMA2gbCpDNoEC8uCNLxSV?=
- =?us-ascii?Q?cKNrFlvmKx3Y97bF38VxII7AJjNWCv4aenl+WS3Tbxi6/sC/3Uk0kcCbbRJc?=
- =?us-ascii?Q?7RS2O/TBTjBROAx+dLpw7t72p1NuiwrEPcwxVxPLqkzGaGnqu04DEj1sgpsp?=
- =?us-ascii?Q?zZZTo7ASXh+gVgYwCI+Be+EVSVupGwmcUxjsQIg1G8rULrSf7wZmO6MeTQmh?=
- =?us-ascii?Q?BBde7tMcJKaVg6l5qfzD2mSx8a3RM/v7ZCn5w6WOxgpViY5bp3U4U/yXnSAy?=
- =?us-ascii?Q?wmincVRhr+ezT4MIP8R2cBznNcUi2NktJzGZr4tBXw4QcV+3IMsyGAG5RAY0?=
- =?us-ascii?Q?xi6Dj/bX6DQfStTSYJTLy6wR6yITeuVstxNSIdF5rSS+8yufKWNlWX1zmnr3?=
- =?us-ascii?Q?Wm4guqdtAca16Yf9KWLVaub491Y9QOO7fnpC0vwHgUVEmzxLsw8A5ict8wll?=
- =?us-ascii?Q?W4M0icRirRZs0RdX3hdtyqtGMKxmauXFBQOq4Lgj5uMRTwz+oMA3ggbo56ig?=
- =?us-ascii?Q?AJXYyRKaadtO3Spz/5uSB8xisJswWA5t2UjV7O6F2OY+rEEI0ID4/sKBYeX5?=
- =?us-ascii?Q?5b1tK74wf0AsrDyFqQaFcOm8Ot5dYPE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?HpB7j6xwkeoabjnE7j6Mzsci3SwBfCa0VD3+8zXqzFabPJSyR5x2QatWlztM?=
+ =?us-ascii?Q?5ex0yPlh0rvIe+xjlR2zNoYy023WUvGtgXdyPLaBAnPDHV3VYF9BIj0EN3ih?=
+ =?us-ascii?Q?inFQEa6KtroOYyYyR/U9O1/VvpTtARfT/SOtkTsf1GTVG9Yn8eI8/lhbB2Mc?=
+ =?us-ascii?Q?2ZJHqOYwHzRJn20CeH/wqz/CtFQyXnvuQBGKFEHJHrh/bj7ddu4+tza7rD3u?=
+ =?us-ascii?Q?8gLs8wdmNhmpsHKczdAds5HoPc09NLWcKLLoe3ZzdFXQMb/bJD0zYf3s+rYB?=
+ =?us-ascii?Q?QVNuGPmw1WIWTJO/+yORNLmvtkt2YVzOhXPBdA+QZW1n4PiKzuZ+f5u5xKrt?=
+ =?us-ascii?Q?3H5Hc7ftPdbK/JVE6kLQJrrrgjl2sMCly9JC7BgWOPhCdfkiakX9N4o7VVRe?=
+ =?us-ascii?Q?UgSBX4i5EPcK2MzXlrxRDqesUY1TKAt/1u+z37pMKPxtriQ6a2Er1DwAuX+O?=
+ =?us-ascii?Q?ou38syxyfWDgVFanEuAPfk5E+RonaMegrY+Pl8jkZ7Tvy6yIvpKA0KLbyqLa?=
+ =?us-ascii?Q?960IE7ZkEBFRh2QUMremqV7sSnAEALL9Pc/gr3MP6/kEk72Mhxl2km4rHf36?=
+ =?us-ascii?Q?7NMgXYjnyDssPetaG+leNeWL6N4+tVPfQONdZGcOyuchq8I8Ms3joOK9wE5d?=
+ =?us-ascii?Q?87fEcuexsrMtvTLAPy4UavhqfyeYT0XtAuf0YlBGYdmhuazhvEUmXFOoR+lO?=
+ =?us-ascii?Q?G6q5Cw9AA4liHOAi0fFtXtOT5J0lvY+MQcM5sjbybYNHsoOzvg14vcmyvLqt?=
+ =?us-ascii?Q?3XjT9rrvpJsOw7a33pG5iEYEsNusDrkWtYELHW+9BZrPFV2sHZFP/kJlB0Br?=
+ =?us-ascii?Q?qmX7+y4nLcWJcqDoNDi/7ZSmsQVrwI6TzB/eUNJW7dK2edKL71URyKSbLoSu?=
+ =?us-ascii?Q?YRB8jAguf1nvGU89j+F+UjeCSJDLgSYa6xXeRcs9AHZGEnW3GVAGlbGPXPI/?=
+ =?us-ascii?Q?bD1/6qdoA53PQrhxUIt9bvbF3TI3k/NViH1hTq1r6xgCBvuyVr9lYlteeERX?=
+ =?us-ascii?Q?D7y8bnfddUSzoO5LAJ7ul788hQ/Uvami6nPXZAz6W97MIpykm1qRO6dtjZ03?=
+ =?us-ascii?Q?OpNht35B3GXu0bjyZx4MCK+c2nXaY2jWdEzV4JjZJbCKLeXv8J6TelCTqJEz?=
+ =?us-ascii?Q?AIBoHyPrX8aKSt6C5kNXJ68ustsKOCXqIKY+imHSkZ/Y2TuGYgfCINQCtoiD?=
+ =?us-ascii?Q?JE4ZocOoCcg+alS+Wm5RhVIe909bwX0UOjjAGNhWU8aLla8EmQfUkUrEb27+?=
+ =?us-ascii?Q?K+aU05XcL+JAmENJYaeUydWnHce+fG23Zcw4IegaBOqrVd8p8zobtv8s9j18?=
+ =?us-ascii?Q?Po1OJyDBV31YxihVxpifK7HmGhwLcnIz3QN41I+m/v3alAX4Q+iwSK7Kmu22?=
+ =?us-ascii?Q?zwezGTQECGqyAwxklXSGPxaoDGAefywK4l1x+TD/4weApAINq1HSr90e+hhD?=
+ =?us-ascii?Q?t9FXQ0TE3gAPllIMkJ8vUPqOKAKHk1U/mz1h/VHFvixw/MDIcHilJrftc7HB?=
+ =?us-ascii?Q?Wlfg3wcF8807we2L5mjLqmPmOgbvcmeH2wGWUeJs+qbTL/6NRZG55VJ+EpGE?=
+ =?us-ascii?Q?5d+99RNl4tPs/Dlt2nwm/OfxpGIFlJQzsM6Pd71B9IZeSlbQ2H65bI1PbE5r?=
+ =?us-ascii?Q?hLAGLrM2LfQnLFy3habEUl6GI4NKMeyh8ONgiKqCBy3lzvX4S77jC80nNTZL?=
+ =?us-ascii?Q?eY64cmstGR4PHccyMWec9Xuj/BWfR6F5NBOVtgq7owHMFp5IiEU3v83U+qOE?=
+ =?us-ascii?Q?3LoIr0vQs/dsFg3p/PjxWOG7ZRVOSQU=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2a0e5190-51d7-447b-10a2-08df0a9d7b92
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7e12166-b740-4095-f5cf-08df0a9d6429
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:59:21.1194 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:58:41.7831 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: D+sadr+q3b3p7HjWYI+Vr8L8AiSM6a+k/vn4c/uBEIsbGg0p1V1Tqh8MXrcCRabNvlxmMywK/IcLWlVzv+CokQfxOylNgJXNN0r4F5cLzug=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7490
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5VVPLTMntJRIVie5frDDAUGyBXjRH+88hTnEdwjn90cOD9urvIKbSYN7wI+7tppvWM2tx1y0FQy1uz6mp1Pgq8qm1nkB/lRTmhLFdGqSHRU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB9175
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,36 +142,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Conor asked not to be listed as a maintainer, since that could imply
-that Microchip sponsors his work on the platform.
+SDHC and SDXC memory commands always transfer 512-byte blocks regardless
+of the length selected by CMD16. QEMU stores that selected length for
+LOCK_UNLOCK but also used it directly for several memory command paths.
 
-Keep him listed as a reviewer so he continues to receive relevant
-patches without suggesting an active maintenance commitment.
+Route single- and multi-block memory sizing through the existing helper
+that distinguishes high-capacity cards from SDSC.
 
-Suggested-by: Conor Dooley <conor@kernel.org>
+This lets PolarFire SoC HSS validate the complete GPT header and locate
+its boot partition instead of receiving only the eight-byte signature.
+
+Fixes: 2d7adea4fe57 ("hw/sd: Support SDHC size cards")
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-
 ---
 
-Changes in v2:
-- New patch
+(no changes since v1)
 
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/sd/sd.c | 43 +++++++++++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 18 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e68e7eb12e..9590de2509 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1787,7 +1787,7 @@ F: tests/tcg/riscv64/test-crc32.S
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index b1b3b1226a..0083b8e064 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1975,18 +1975,20 @@ static sd_rsp_type_t sd_cmd_SET_BLOCKLEN(SDState *sd, SDRequest req)
+ static sd_rsp_type_t sd_cmd_READ_SINGLE_BLOCK(SDState *sd, SDRequest req)
+ {
+     uint64_t addr;
++    uint32_t blk_len;
  
- Microchip PolarFire SoC Icicle Kit
- M: Bin Meng <bin.meng@processmission.com>
--M: Conor Dooley <conor@kernel.org>
-+R: Conor Dooley <conor@kernel.org>
- M: Sebastian Huber <sebastian.huber@embedded-brains.de>
- L: qemu-riscv@nongnu.org
- S: Supported
+     if (sd->state != sd_transfer_state) {
+         return sd_invalid_state_for_cmd(sd, req);
+     }
+ 
++    blk_len = sd_blk_len(sd);
+     addr = sd_req_get_address(sd, req);
+-    if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, sd->blk_len)) {
++    if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, blk_len)) {
+         return sd_r1;
+     }
+ 
+-    sd_blk_read(sd, addr, sd->blk_len);
+-    return sd_cmd_to_sendingdata(sd, req, addr, NULL, sd->blk_len);
++    sd_blk_read(sd, addr, blk_len);
++    return sd_cmd_to_sendingdata(sd, req, addr, NULL, blk_len);
+ }
+ 
+ /* CMD19 */
+@@ -2025,13 +2027,15 @@ static sd_rsp_type_t sd_cmd_SET_BLOCK_COUNT(SDState *sd, SDRequest req)
+ static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
+ {
+     uint64_t addr;
++    uint32_t blk_len;
+ 
+     if (sd->state != sd_transfer_state) {
+         return sd_invalid_state_for_cmd(sd, req);
+     }
+ 
++    blk_len = sd_blk_len(sd);
+     addr = sd_req_get_address(sd, req);
+-    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, sd->blk_len)) {
++    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, blk_len)) {
+         return sd_r1;
+     }
+ 
+@@ -2045,7 +2049,7 @@ static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
+     }
+ 
+     sd->blk_written = 0;
+-    return sd_cmd_to_receivingdata(sd, req, addr, sd->blk_len);
++    return sd_cmd_to_receivingdata(sd, req, addr, blk_len);
+ }
+ 
+ /* CMD26 */
+@@ -2372,7 +2376,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         switch (sd->state) {
+         case sd_transfer_state:
+ 
+-            if (!address_in_range(sd, "READ_BLOCK", addr, sd->blk_len)) {
++            if (!address_in_range(sd, "READ_BLOCK", addr, sd_blk_len(sd))) {
+                 return sd_r1;
+             }
+ 
+@@ -2392,7 +2396,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         switch (sd->state) {
+         case sd_transfer_state:
+ 
+-            if (!address_in_range(sd, "WRITE_BLOCK", addr, sd->blk_len)) {
++            if (!address_in_range(sd, "WRITE_BLOCK", addr,
++                                  sd_blk_len(sd))) {
+                 return sd_r1;
+             }
+ 
+@@ -2662,6 +2667,7 @@ static void sdcard_write_data_dump(const char *proto, const char *cmd_desc,
+ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+ {
+     unsigned int partition_access;
++    uint32_t blk_len;
+     int i;
+     const uint8_t *value = buf;
+ 
+@@ -2678,6 +2684,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
+         return length;
+ 
++    blk_len = sd_blk_len(sd);
+     sdcard_write_data_dump(sd->proto->name,
+                            sd->last_cmd_name,
+                            sd->current_cmd, sd->data_offset, buf, length);
+@@ -2704,7 +2711,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         if (sd->data_offset == 0) {
+             /* Start of the block - let's check the address is valid */
+             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
+-                                  sd->data_start, sd->blk_len)) {
++                                  sd->data_start, blk_len)) {
+                 break;
+             }
+             if (sd->size <= SDSC_MAX_CAPACITY) {
+@@ -2715,7 +2722,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+             }
+         }
+         sd->data[sd->data_offset++] = value[0];
+-        if (sd->data_offset >= sd->blk_len) {
++        if (sd->data_offset >= blk_len) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+@@ -2726,7 +2733,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+                 sd_blk_write(sd, sd->data_start, sd->data_offset);
+             }
+             sd->blk_written++;
+-            sd->data_start += sd->blk_len;
++            sd->data_start += blk_len;
+             sd->data_offset = 0;
+             sd->csd[14] |= 0x40;
+ 
+@@ -2810,7 +2817,7 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+     /* TODO: Append CRCs */
+     const uint8_t dummy_byte = 0x00;
+     unsigned int partition_access;
+-    uint32_t io_len;
++    uint32_t blk_len;
+     uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+@@ -2830,11 +2837,11 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+         return length;
+     }
+ 
+-    io_len = sd_blk_len(sd);
++    blk_len = sd_blk_len(sd);
+ 
+     trace_sdcard_read_data(sd->proto->name,
+                            sd->last_cmd_name, sd->current_cmd,
+-                           sd->data_offset, sd->data_size, io_len);
++                           sd->data_offset, sd->data_size, blk_len);
+     switch (sd->current_cmd) {
+     case 6:  /* CMD6:   SWITCH_FUNCTION */
+     case 8:  /* CMD8:   SEND_EXT_CSD */
+@@ -2859,22 +2866,22 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+ 
+         if (sd->data_offset == 0) {
+             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
+-                                  sd->data_start, io_len)) {
++                                  sd->data_start, blk_len)) {
+                 *value = dummy_byte;
+                 return length;
+             }
+             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+                     & EXT_CSD_PART_CONFIG_ACC_MASK;
+             if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+-                emmc_rpmb_blk_read(sd, sd->data_start, io_len);
++                emmc_rpmb_blk_read(sd, sd->data_start, blk_len);
+             } else {
+-                sd_blk_read(sd, sd->data_start, io_len);
++                sd_blk_read(sd, sd->data_start, blk_len);
+             }
+         }
+         *value = sd->data[sd->data_offset++];
+ 
+-        if (sd->data_offset >= io_len) {
+-            sd->data_start += io_len;
++        if (sd->data_offset >= blk_len) {
++            sd->data_start += blk_len;
+             sd->data_offset = 0;
+ 
+             if (sd->multi_blk_cnt != 0) {
 -- 
 2.53.0
 
