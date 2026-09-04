@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D87C79F88
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A435BC79F83
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Re5-0004V6-Jn; Fri, 04 Sep 2026 06:59:45 -0400
+	id 1x2ReR-0004cu-Pq; Fri, 04 Sep 2026 07:00:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2Re3-0004Un-PV
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:59:43 -0400
+ id 1x2ReP-0004bL-7W
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:00:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2Re1-0007av-UZ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:59:43 -0400
+ id 1x2ReN-0007ej-E8
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:00:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788519581;
+ s=mimecast20190719; t=1788519602;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2J4h1MLwsa6v9AdSB/cjdqrcF7St+KHBYqO/t9Qy89c=;
- b=i0FVyyyp4XCz87Lp6YUyZD+NAKiyJnDq/on+JSbxiYcmsEAGbtSHDzk44fXo1C8ArZOTq3
- /JJGeTMggsAFBXq+q6vT1ihF91HZUN5GCYHVxN0gtKp1d0EDPU44V4aIy/4f7pbTKXwMpc
- DbsduzDlSrNQXbbXrvR4RKDzmxekQzQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7OqtPa5IWQzCCF4mhdR/76Y7LhvQRMYOaMH/8a+7eNc=;
+ b=jL43blDl01+Ah0V4D8VSsbn0rUGq/vuROKJpoHB/NcN2EAFkFKOo0HwKEBZev+7reyYZHX
+ jlyoZf8y021JfyuvYANgpZ/wgW4JYu8EOGlKYR2bzn0/0fUtKBSsMwWc/neWbaI92JA+Sf
+ K62klz3PGUPdjOAkTNhgz+URdwBz5gQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-i05ZrXZ2NRygvzk-bOdvcg-1; Fri,
- 04 Sep 2026 06:59:37 -0400
-X-MC-Unique: i05ZrXZ2NRygvzk-bOdvcg-1
-X-Mimecast-MFC-AGG-ID: i05ZrXZ2NRygvzk-bOdvcg_1788519576
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-aW9CbNLDP4WmtYw9YdpFzw-1; Fri,
+ 04 Sep 2026 06:59:59 -0400
+X-MC-Unique: aW9CbNLDP4WmtYw9YdpFzw-1
+X-Mimecast-MFC-AGG-ID: aW9CbNLDP4WmtYw9YdpFzw_1788519598
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2715519540CF; Fri,  4 Sep 2026 10:59:36 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A4441953994; Fri,  4 Sep 2026 10:59:58 +0000 (UTC)
 Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3163D18005BD; Fri,  4 Sep 2026 10:59:33 +0000 (UTC)
+ id F32FE1800640; Fri,  4 Sep 2026 10:59:55 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -56,10 +56,12 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Evgeny Kolmakov <randomjack94dev@gmail.com>
-Subject: [PULL 01/13] crypto: Use g_autofree
-Date: Fri,  4 Sep 2026 11:59:17 +0100
-Message-ID: <20260904105929.3450663-2-berrange@redhat.com>
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 10/13] crypto: deprecate the AF_ALG crypto backend
+Date: Fri,  4 Sep 2026 11:59:26 +0100
+Message-ID: <20260904105929.3450663-11-berrange@redhat.com>
 In-Reply-To: <20260904105929.3450663-1-berrange@redhat.com>
 References: <20260904105929.3450663-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,300 +93,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
+Linux 7.2 has deprecated the AF_ALG crypto backend:
 
-Use g_autofree attribute to reduce the amount
-of manual g_free() calls and 'goto out' code
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a67afb1884ba815079bd43d5c998e155e03b08b6
 
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+And has documented it to be always slower than userspace crypto:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5624ea54f3ba5c83d2e5503411a31a8be0278c1e
+
+as a result of dropping support for zero-copy and hardware
+accelerators:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7524070f26d8d347c26787dc297fb844baa26abf
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ffdd2bc378953b525aca61902534e753f1f8e734
+
+The main use case for the AF_ALG impl was to improve the performance
+of virtio-crypto with the cryptodev-backend-builtin driver. In
+practice this did not matter since 'cryptodev-backend-lkcf' can do
+offload to the kernel via the keyctl syscall, and 'cryptodev-vhost-user'
+can offload to an external process which can optionally integrate with
+hardware accelerators without kernel assistance.
+
+The AF_ALG backend has no user visible configuration options at runtime,
+it is unconditionally tried with any use of the cipher APIs. So it does
+not strictly have to go through the deprecation process, however, it is
+left available initially in case there was an unexpected use case that
+relies on it which may be faster with old kernels before the above Linux
+commits.
+
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/block.c          | 17 ++++++-----------
- crypto/hmac-gcrypt.c    | 12 ++++--------
- crypto/hmac-glib.c      | 10 +++-------
- crypto/ivgen-essiv.c    | 15 ++++-----------
- crypto/ivgen.c          |  6 ++----
- crypto/secret_keyring.c |  5 ++---
- 6 files changed, 21 insertions(+), 44 deletions(-)
+ docs/about/deprecated.rst | 21 +++++++++++++++++++++
+ meson.build               |  6 ++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/crypto/block.c b/crypto/block.c
-index 96c83e60b9..42558f3caf 100644
---- a/crypto/block.c
-+++ b/crypto/block.c
-@@ -55,7 +55,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-                                  unsigned int flags,
-                                  Error **errp)
- {
--    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-+    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 05e4ce8cf1..98c32991c9 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -434,6 +434,27 @@ ABI is long-obsolete. We are therefore deprecating both OABI support
+ and NWFPE emulation, and they will be removed in a future QEMU
+ release.
  
-     qemu_mutex_init(&block->mutex);
++Build features
++--------------
++
++Crypto AF_ALG backend (since 11.2)
++----------------------------------
++
++The use of the AF_ALG backend for cryptography has been deprecated
++with no replacement.
++
++The AF_ALG interface is deprecated by Linux 7.2 and all support
++for hardware accelerators has been removed. It will thus always be
++slower than userspace crypto due to the overhead of copying data
++to kernel space. The GNUTLS, Nettle and GCrypt libraries supported
++by QEMU all include a variety of hardware optimized crypto
++implementations which should suffice for typical needs.
++
++For the virtio-crypto device, the 'cryptodev-backend-lkcf' backend
++can offload some operations to the kernel via the keyctl syscall,
++and the 'cryptodev-vhost-user' backend can offload the device
++backend to an external process which can integrate with crypto
++accelerators.
  
-@@ -65,7 +65,6 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-         !qcrypto_block_drivers[options->format]) {
-         error_setg(errp, "Unsupported block driver %s",
-                    QCryptoBlockFormat_str(options->format));
--        g_free(block);
-         return NULL;
-     }
- 
-@@ -74,11 +73,10 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-     if (block->driver->open(block, options, optprefix,
-                             readfunc, opaque, flags, errp) < 0)
-     {
--        g_free(block);
-         return NULL;
-     }
- 
--    return block;
-+    return g_steal_pointer(&block);
- }
- 
- 
-@@ -90,7 +88,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-                                    unsigned int flags,
-                                    Error **errp)
- {
--    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-+    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
- 
-     qemu_mutex_init(&block->mutex);
- 
-@@ -100,7 +98,6 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-         !qcrypto_block_drivers[options->format]) {
-         error_setg(errp, "Unsupported block driver %s",
-                    QCryptoBlockFormat_str(options->format));
--        g_free(block);
-         return NULL;
-     }
- 
-@@ -109,11 +106,10 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
- 
-     if (block->driver->create(block, options, optprefix, initfunc,
-                               writefunc, opaque, errp) < 0) {
--        g_free(block);
-         return NULL;
-     }
- 
--    return block;
-+    return g_steal_pointer(&block);
- }
- 
- 
-@@ -185,17 +181,16 @@ int qcrypto_block_amend_options(QCryptoBlock *block,
- QCryptoBlockInfo *qcrypto_block_get_info(QCryptoBlock *block,
-                                          Error **errp)
- {
--    QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
-+    g_autofree QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
- 
-     info->format = block->format;
- 
-     if (block->driver->get_info &&
-         block->driver->get_info(block, info, errp) < 0) {
--        g_free(info);
-         return NULL;
-     }
- 
--    return info;
-+    return g_steal_pointer(&info);
- }
- 
- 
-diff --git a/crypto/hmac-gcrypt.c b/crypto/hmac-gcrypt.c
-index e428d17479..44631fb348 100644
---- a/crypto/hmac-gcrypt.c
-+++ b/crypto/hmac-gcrypt.c
-@@ -50,7 +50,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
- {
--    QCryptoHmacGcrypt *ctx;
-+    g_autofree QCryptoHmacGcrypt *ctx = NULL;
-     gcry_error_t err;
- 
-     if (!qcrypto_hmac_supports(alg)) {
-@@ -66,7 +66,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-     if (err != 0) {
-         error_setg(errp, "Cannot initialize hmac: %s",
-                    gcry_strerror(err));
--        goto error;
-+        return NULL;
-     }
- 
-     err = gcry_mac_setkey(ctx->handle, (const void *)key, nkey);
-@@ -74,14 +74,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-         error_setg(errp, "Cannot set key: %s",
-                    gcry_strerror(err));
-         gcry_mac_close(ctx->handle);
--        goto error;
-+        return NULL;
-     }
- 
--    return ctx;
--
--error:
--    g_free(ctx);
--    return NULL;
-+    return g_steal_pointer(&ctx);
- }
- 
- static void
-diff --git a/crypto/hmac-glib.c b/crypto/hmac-glib.c
-index b845133a05..1f17769c1c 100644
---- a/crypto/hmac-glib.c
-+++ b/crypto/hmac-glib.c
-@@ -46,7 +46,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
- {
--    QCryptoHmacGlib *ctx;
-+    g_autofree QCryptoHmacGlib *ctx = NULL;
- 
-     if (!qcrypto_hmac_supports(alg)) {
-         error_setg(errp, "Unsupported hmac algorithm %s",
-@@ -60,14 +60,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                             (const uint8_t *)key, nkey);
-     if (!ctx->ghmac) {
-         error_setg(errp, "Cannot initialize hmac and set key");
--        goto error;
-+        return NULL;
-     }
- 
--    return ctx;
--
--error:
--    g_free(ctx);
--    return NULL;
-+    return g_steal_pointer(&ctx);
- }
- 
- static void
-diff --git a/crypto/ivgen-essiv.c b/crypto/ivgen-essiv.c
-index 3d5a188795..d5fa269888 100644
---- a/crypto/ivgen-essiv.c
-+++ b/crypto/ivgen-essiv.c
-@@ -31,10 +31,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-                                     const uint8_t *key, size_t nkey,
-                                     Error **errp)
- {
--    uint8_t *salt;
-+    g_autofree uint8_t *salt = NULL;
-     size_t nhash;
-     size_t nsalt;
--    QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
-+    g_autofree QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
- 
-     /* Not necessarily the same as nkey */
-     nsalt = qcrypto_cipher_get_key_len(ivgen->cipher);
-@@ -46,8 +46,6 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-     if (qcrypto_hash_bytes(ivgen->hash, (const gchar *)key, nkey,
-                            &salt, &nhash,
-                            errp) < 0) {
--        g_free(essiv);
--        g_free(salt);
-         return -1;
-     }
- 
-@@ -57,13 +55,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-                                        salt, MIN(nhash, nsalt),
-                                        errp);
-     if (!essiv->cipher) {
--        g_free(essiv);
--        g_free(salt);
-         return -1;
-     }
- 
--    g_free(salt);
--    ivgen->private = essiv;
-+    ivgen->private = g_steal_pointer(&essiv);
- 
-     return 0;
- }
-@@ -75,7 +70,7 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
- {
-     QCryptoIVGenESSIV *essiv = ivgen->private;
-     size_t ndata = qcrypto_cipher_get_block_len(ivgen->cipher);
--    uint8_t *data = g_new(uint8_t, ndata);
-+    g_autofree uint8_t *data = g_new(uint8_t, ndata);
- 
-     sector = cpu_to_le64(sector);
-     memcpy(data, (uint8_t *)&sector, MIN(sizeof(sector), ndata));
-@@ -88,7 +83,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
-                                data,
-                                ndata,
-                                errp) < 0) {
--        g_free(data);
-         return -1;
-     }
- 
-@@ -99,7 +93,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
-     if (ndata < niv) {
-         memset(iv + ndata, 0, niv - ndata);
-     }
--    g_free(data);
-     return 0;
- }
- 
-diff --git a/crypto/ivgen.c b/crypto/ivgen.c
-index 6b7d24d889..9f1f7d7dca 100644
---- a/crypto/ivgen.c
-+++ b/crypto/ivgen.c
-@@ -33,7 +33,7 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
-                                 const uint8_t *key, size_t nkey,
-                                 Error **errp)
- {
--    QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
-+    g_autofree QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
- 
-     ivgen->algorithm = alg;
-     ivgen->cipher = cipheralg;
-@@ -51,16 +51,14 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
-         break;
-     default:
-         error_setg(errp, "Unknown block IV generator algorithm %d", alg);
--        g_free(ivgen);
-         return NULL;
-     }
- 
-     if (ivgen->driver->init(ivgen, key, nkey, errp) < 0) {
--        g_free(ivgen);
-         return NULL;
-     }
- 
--    return ivgen;
-+    return g_steal_pointer(&ivgen);
- }
- 
- 
-diff --git a/crypto/secret_keyring.c b/crypto/secret_keyring.c
-index 78d7f09b3b..3b332276ef 100644
---- a/crypto/secret_keyring.c
-+++ b/crypto/secret_keyring.c
-@@ -41,7 +41,7 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
-                                  Error **errp)
- {
-     QCryptoSecretKeyring *secret = QCRYPTO_SECRET_KEYRING(sec_common);
--    uint8_t *buffer = NULL;
-+    g_autofree uint8_t *buffer = NULL;
-     long retcode;
- 
-     *output = NULL;
-@@ -61,12 +61,11 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
- 
-     retcode = keyctl_read(secret->serial, buffer, retcode);
-     if (retcode < 0) {
--        g_free(buffer);
-         goto keyctl_error;
-     }
- 
-     *outputlen = retcode;
--    *output = buffer;
-+    *output = g_steal_pointer(&buffer);
-     return;
- 
- keyctl_error:
+ Backwards compatibility
+ -----------------------
+diff --git a/meson.build b/meson.build
+index 5c9de307b0..8528db72af 100644
+--- a/meson.build
++++ b/meson.build
+@@ -5070,3 +5070,9 @@ if not actually_reloc and (host_os == 'windows' or get_option('relocatable'))
+   message('QEMU will have to be installed under ' + get_option('prefix') + '.')
+   message('Use --disable-relocatable to remove this warning.')
+ endif
++
++if get_option('crypto_afalg').enabled()
++    warning('Use of the AF_ALG crypto backend is deprecated, ' +
++            'since Linux 7.2 has deprecated the AF_ALG interface ' +
++            'and removed its ability to use hardware accelerators.')
++endif
 -- 
 2.55.0
 
