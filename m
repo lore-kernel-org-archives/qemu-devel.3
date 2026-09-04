@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6279AC79F82
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37BA6C79F80
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 16:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2WPt-0000rB-EU; Fri, 04 Sep 2026 12:05:25 -0400
+	id 1x2WPy-0000yV-0w; Fri, 04 Sep 2026 12:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1x2WPk-0000mM-7H
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:16 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1x2WPo-0000r9-Tq
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:24 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1x2WPg-00063r-9t
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:15 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-c259e5c22ffso186671766b.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:05:11 -0700 (PDT)
+ id 1x2WPj-0006GA-Vj
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 12:05:20 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c262204cc80so40808166b.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 09:05:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788537910; x=1789142710; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=1cvn3fubt0HS5qwzW/iu5vHt3JNvdQ6MqYhsjSQG8vg=;
- b=Hcqk3+P/9fBI9odxDnSRml+UVYT7SeOJCML6TU4ulhCIHOOS7/tM5vgVV1H1n6kaQY
- gsFZUCqJOfOmNkEqQ0Q/gJNCahOLb0gV9PZUFrpRONtW0GqGgYnQLIMSGccDm/N33CFQ
- 9va0ptWwMaWKDlTwJPgocTdTX7d2kZfjGUFCxEnISB7pPxKJIcJm44BFH/KraKYUCGG8
- UIK2kE/lmqWXEqmy32ZjpFwG//uF5Ez96j41aZSgkfbgvGJSdeQ3pWkmgOMoXL0HX8SS
- CnX4EMnmzCr9wW7luxEMbZbLprrlLzCdzUZ1HOxy1QGfSRlfvVlUNjC60U6+TYK4L6kR
- aTDg==
+ d=linaro.org; s=google; t=1788537913; x=1789142713; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0bkQ7XcsLrO7GnW6QWyxFWLeTXrsnESl6attSVhp0hY=;
+ b=zAjXEIQmgWg2yDFTfYrP4bgtDisprGuUf+dyfjRcSDLzgVpSCEnnJiVqTr6H2ZWyZ2
+ 9KOXAOLb+CIgkiijDn0JRMZ7Q3SmEFnwRaY2H4+qzyxfaorbH3U443qSCr5/NvjUXGEz
+ sua0fk/tPIg/5kgXkEpfVQrC9Peouccx0urQpWhT3nDfUE502udsr4D7svR3NLZGB56o
+ xS26RzW6fnxHQm9BvwY19VReN9sFRxrSWtinJYrTeSgpWmUEeiE1UtkDbkrwACSJppys
+ f/VcdKuFgmL+PTf/HaMK7L0hIdb3r7KYGNp4P74jCx9kldpPQ1vrKwOPJ2pUE7/XNzwd
+ 0UuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788537910; x=1789142710;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=1cvn3fubt0HS5qwzW/iu5vHt3JNvdQ6MqYhsjSQG8vg=;
- b=PB2p2heU3E8ZI4SSNHYQgz0+aVNpo+Jp3ienycODnOI47WWLphgBu/LdSxqsjd9Fgw
- ukgkrPr4nUFpbnMibvFF0crxmm4VT328bVmc35rssHnMcvL4jvpXIZf8xXpQkbMKHHh4
- 5f1xwcx1PuFZSqKmY2aCj05n1Yr0B1wxin2Uwkra5DeCGnNJrCJX82bQe4NURl29jgdD
- 1YZrlaF7LF9vDBEvpWKLeNrBm3MoEtKr+Ikg9ZFJ4zBC13E78oa+CvaTdr3cCxjTvN69
- FpwD1TdSfIs8qPa22se4te+mkcRyBX3yDIbEqbNVlSaHefHUXscD3mRbOq4Qsdk1IhQE
- DLWQ==
-X-Gm-Message-State: AFuF++kO/SzMfE40mP0Pu6I4y2PsLB1J9RrKyqgxqQIovJjbVlgNu5HP
- LsnOJlyn1uYcKdRBPhOxukEJXLa9zTUzL2S+HdvY/aTLx0dBoOkOAapdKOA6CtByzNI=
-X-Gm-Gg: AYBFou355YQ1VAmeowcDPN89X3fiIS3otseUQzDitsRsWe9Npa1h41mUXZvlsQlekhX
- M4A9EWwak9rgjgcNhrHnjDEnre2VrUvCGrIEtYJeKOi6GRXmiNgMGievJ1wo4rExgyfywPXIvPW
- 8RCwKwFAgpZYAm6Ss7X2QAFqXyNehGOWHi/WjRQR+lx2IcSl5DXignUj3GFde6Eiu8+Uyvq49Rz
- pp4q3GzZ00y6eRtuMe2598HtahVgpniU09lTN8cqQ4UCXaNieHMb6vfKr1JWRvb7YFgkNtY1BQA
- KxWrLor4LCIcrgDjxdOvSa08cmP0Yvn7ZJlUZB8rvHLrn8B8QxXYvXwU+DiE5tu49FBb0JrJFQe
- CHvde0+Z+Qz2kBdM1FPPqA++Roze7Fmpg0Z6jGQ1NVYv6sWRptxjUn9zQJRbkWE0kBVNXorMv8N
- 1mcWj/5je7cr80nqLQMCjhbwQVVZehUL6fFnN1ChEys56zGC+gyVfIUO5Upa3QOpAwJnB4+efAq
- xI=
-X-Received: by 2002:a17:907:1c9f:b0:c26:1691:b374 with SMTP id
- a640c23a62f3a-c261691ba04mr203799166b.45.1788537909458; 
- Fri, 04 Sep 2026 09:05:09 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788537914; x=1789142714;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=0bkQ7XcsLrO7GnW6QWyxFWLeTXrsnESl6attSVhp0hY=;
+ b=V/0jdMKyzb6+PzYeVIUGksfw7j57WCMpF8fmuk327fHAbgMBmysg08EqgUROuvC4kQ
+ 5M5roQqeiCRw3j9WV/UQeD3FcwqHWEx2kcW3nozJECs040LeWxfSCIFVJtdHH+SjaU1u
+ UYYiVknGvIuUWSIpyn+3xbSgs2H/K0vzmPDSr1MdL0nBY3AsQhxt4Yp861Lb2jfuefjE
+ ye5kYXlOP7foRlSiEUpvEeCGSxLJvJ2m3yP96lxcxU/K9b2JH9wyqpuXZ2yHwFvnGhrk
+ 8O0TBgxXxGklv/j2pZ87MKwH50IWxMmdaNAmnRMCoz68qU4j0o/0RBEK875vKOOLGJTl
+ s3yw==
+X-Gm-Message-State: AFuF++lFqyhBoX/aNUdQuxCWlQjq3/1mEJ4QLb+W3M2IEqt73DRL2np8
+ KjUBUbZjnfCeerSDCYne8dWmIPOQVVnVzHIoEvegiVT+G3zUeDzssTKk/BlY5rJTcaI=
+X-Gm-Gg: AYBFou2ykSBw/wVhUKO8eff+va7UCVXl6BqTzDeWClMCE4GrDoFrzjCmfsF29e+Pgss
+ bJobF9jE2BnrMBCg4UF51o+ousf79+4lOsZXsFHympWvE9gkqYFtHaxGzpBAhf1cX88s3rLZ7U4
+ awKb+1YLq0t706l/t7HYcViGwau83tvKe6zcrzc3gsU4Ce4F176vWCVig59cMucZCETTzNBAXFO
+ 8ybzdLClLzYqZyePyPty567ABIHzw8C0NwwSfRG3Pm7GIy1I7OvXjguKXQ3rNDNKXxdsvzRFY6L
+ p32MQ1ViA2elYgQE1mCb2YgDekAt2qKocSy9m5MmENqETI9GvajNSzLkFK1nHANk36LZeg5hjxg
+ i7hG3dU8pzpr2E84TuApb/hiYvfq4m/5FqaibJ+Xu6RBISiiv0PS4mAD1jbPteg/9aTs4YwNY5o
+ 294hIGMc50TGtB3GLtVepV72XE6moAg1//v1m+DGMlskAjQ9/2Sw==
+X-Received: by 2002:a17:906:4fc5:b0:c26:22ec:db92 with SMTP id
+ a640c23a62f3a-c2622ecdcadmr45988166b.47.1788537913551; 
+ Fri, 04 Sep 2026 09:05:13 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:60d5:49d3:5d47:8dbd])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c260d036674sm133815966b.8.2026.09.04.09.05.08
+ a640c23a62f3a-c260d036674sm133815966b.8.2026.09.04.09.05.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 09:05:09 -0700 (PDT)
+ Fri, 04 Sep 2026 09:05:13 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH v2 0/4] RME-DA preparatory work
-Date: Fri, 04 Sep 2026 17:05:00 +0100
-Message-Id: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
+Date: Fri, 04 Sep 2026 17:05:04 +0100
+Subject: [PATCH v2 4/4] hw/pci/msi: extract msi_message_address_register
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACzsmmoC/32NQQ6CMBBFr0Jm7ZgWQy2uuIdhUcoUxgglU0M0h
- LtbOYDL95L//gaJhCnBrdhAaOXEcc5Qngrwo5sHQu4zQ6lKo6y2+JicR5kIe4eL0IJW1SZ4qw0
- RQZ5lGfh9JO9t5pHTK8rneFj1z/6JrRoVXlRwXV3pzl+r5smzk3iOMkC77/sXwtSqCLEAAAA=
+Message-Id: <20260904-jmac-rme-da-prep-v2-4-fb461d78bbb2@linaro.org>
+References: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
+In-Reply-To: <20260904-jmac-rme-da-prep-v2-0-fb461d78bbb2@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>, 
  "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org, 
  Jim MacArthur <jim.macarthur@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Viresh Kumar <viresh.kumar@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,51 +105,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a subset of patches from Gustavo Romero's SMMU DA branch work,
-featuring patches from Pierrick Bouvier and Viresh Kumar. These add
-capabilities to the PCIe root port and ICH9 SATA driver, and also refactor
-some code in hw/pci/msi.c for future use.
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-The goal here is to upstream work which is independent of Tao Tang's SMMU-V3
-patches, while those are being reviewed. If/when Tao Tang's patches are
-accepted, we can proceed with the remainder of the SMMU DA work.
+We need to access this address from smmu, to know if we are translating
+an MSI.
 
-I have spent some time understanding these patches and believe them to be
-sensible, but some parts of them may be outside my understanding. In 
-particular, we may be incorrectly advertising features here which are not
-actually implemented; although this doesn't cause any problems I can see
-with Linux or our test suites, I can quite easily set the feature flags to
-zero and keep the code structure if that's a problem.
-
-Jim
-
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
-Changes in v2:
-- Removed RFC tag, rebased to current master. No other changes.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org
+ hw/pci/msi.c         | 19 +++++++++++++------
+ include/hw/pci/msi.h |  1 +
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
----
-Pierrick Bouvier (4):
-      hw/pci: add IDE + TEE capability to PCIe root port
-      sata: add SPDM + IDE + TEE pci support
-      hw/pci: add DVSEC RMEDA capability to PCIe root port
-      hw/pci/msi: extract msi_message_address_register
+diff --git a/hw/pci/msi.c b/hw/pci/msi.c
+index b9f5b45920..7361776ace 100644
+--- a/hw/pci/msi.c
++++ b/hw/pci/msi.c
+@@ -137,6 +137,18 @@ void msi_set_message(PCIDevice *dev, MSIMessage msg)
+     pci_set_word(dev->config + msi_data_off(dev, msi64bit), msg.data);
+ }
+ 
++uint64_t msi_message_address_register(PCIDevice *dev)
++{
++    uint16_t flags = pci_get_word(dev->config + msi_flags_off(dev));
++    bool msi64bit = flags & PCI_MSI_FLAGS_64BIT;
++
++    if (msi64bit) {
++        return pci_get_quad(dev->config + msi_address_lo_off(dev));
++    } else {
++        return pci_get_long(dev->config + msi_address_lo_off(dev));
++    }
++}
++
+ static MSIMessage msi_prepare_message(PCIDevice *dev, unsigned int vector)
+ {
+     uint16_t flags = pci_get_word(dev->config + msi_flags_off(dev));
+@@ -146,12 +158,7 @@ static MSIMessage msi_prepare_message(PCIDevice *dev, unsigned int vector)
+ 
+     assert(vector < nr_vectors);
+ 
+-    if (msi64bit) {
+-        msg.address = pci_get_quad(dev->config + msi_address_lo_off(dev));
+-    } else {
+-        msg.address = pci_get_long(dev->config + msi_address_lo_off(dev));
+-    }
+-
++    msg.address = msi_message_address_register(dev);
+     /* upper bit 31:16 is zero */
+     msg.data = pci_get_word(dev->config + msi_data_off(dev, msi64bit));
+     if (nr_vectors > 1) {
+diff --git a/include/hw/pci/msi.h b/include/hw/pci/msi.h
+index abcfd13925..6f0e02c0fb 100644
+--- a/include/hw/pci/msi.h
++++ b/include/hw/pci/msi.h
+@@ -32,6 +32,7 @@ extern bool msi_nonbroken;
+ 
+ void msi_set_message(PCIDevice *dev, MSIMessage msg);
+ MSIMessage msi_get_message(PCIDevice *dev, unsigned int vector);
++uint64_t msi_message_address_register(PCIDevice *dev);
+ bool msi_enabled(const PCIDevice *dev);
+ void msi_set_enabled(PCIDevice *dev);
+ int msi_init(struct PCIDevice *dev, uint8_t offset,
 
- hw/ide/ich.c                       | 72 +++++++++++++++++++++++++++++++++++++-
- hw/pci-bridge/gen_pcie_root_port.c | 38 ++++++++++++++++++++
- hw/pci/msi.c                       | 19 ++++++----
- hw/pci/pcie.c                      | 15 ++++++++
- include/hw/pci/msi.h               |  1 +
- include/hw/pci/pcie.h              |  3 ++
- include/hw/pci/pcie_regs.h         |  8 +++++
- 7 files changed, 149 insertions(+), 7 deletions(-)
----
-base-commit: d2843fbf80260e4346c856819e8cea11768c9d0e
-change-id: 20260818-jmac-rme-da-prep-8096fc816eee
-
-Best regards,
 -- 
-Jim MacArthur <jim.macarthur@linaro.org>
+2.43.0
 
 
