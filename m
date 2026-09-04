@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778DDC61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 950ABC624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TJQ-0006DC-7M; Fri, 04 Sep 2026 08:46:32 -0400
+	id 1x2TJM-0006Br-VW; Fri, 04 Sep 2026 08:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJI-00069L-18
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:25 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1x2TJF-000680-6w
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:23 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TJE-0006rs-Ts
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:23 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so13333785e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:20 -0700 (PDT)
+ id 1x2TJB-0006qJ-Ev
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:46:20 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4998b5a63e2so10166015e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788525979; x=1789130779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788525976; x=1789130776; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=r+WY3scpMyBQywsEfZ38rZGwyTfrr1r4ukZ33K30QHM=;
- b=syTqM9ROP97Qh7jlgX2Ny6JTv7Bl/ItK3V3QtdwRJMvOeMBr/z2/AteGBOT3i6BnZu
- SNYSNpzBdsxklKQbzKsTtV3HzXZsdpxawOZjZtkGxckRKfoV0Rc+4dhV76f5Q7r6e6Ol
- J5HFRGmRZXUR17Tx1VaPI0zgg7v6B+xu+wk/uXvJ2moIPRX0Yg0RVsOVG6WZF8tISN9b
- f3pDAaixN1/PIF0ihzxe+jrVUlfHz9dJPe4HJGkSyzDzNC40dntVNkW04OkP5Wv7NNsH
- 1a6+gqPdgm9Qovf62TYv3ulovMb7LbqJZl1Qb/gCbTXjUMBlWlO98RSS/Ya7UE5vlwBI
- PGuw==
+ bh=2dX89X8BAFwj4lkrdRQoFyvJ/0+HE5JadftlOOhDSFw=;
+ b=Tqa1e4CqjM078wG9sD7QW6CvbNnqKftq1udDudSKvzJLLMrX+g5wH+nAzjD8WFErzw
+ o88i/ahihLSd7qkZlEo6W74jHwwQAZ8NhrfkzJ8pRebLgeFwFkpRyoNb8IAUva463hxh
+ nUomT9I06ABxfgrsXtdkcj8aZfHZPdlgeswy7nN75MtDWv6q4kK0y3VohUQivcgCqdJU
+ PIOaV5p1k+4y4LquAfqtsAa15w4UYhpm/BALMaerYGEA7adViBaZMBP98rCsPca78ncj
+ I4/+yIAAWbmAXI5H4hmqqIUWG/GiminRapNCzgXTW6VR5rUXQfq3QxJ2UZoR7JbmqNZm
+ LfLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788525979; x=1789130779;
+ d=1e100.net; s=20251104; t=1788525976; x=1789130776;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=r+WY3scpMyBQywsEfZ38rZGwyTfrr1r4ukZ33K30QHM=;
- b=OuFcxb5jyhKaIva2Y0na9PEHOcgzdBeZ0BDTWcfRMcIxAIi+KuP6Ys0Q/fg6ZuxKaw
- XzthI91QcW7FFlTcTBEcSr5CUWyh9yIeiPp5feA512nEQivmXfR6SR6llqlPd5vh33qy
- yewuE3XZuK5HZTMWSapT5WKjnbyTSztazjdDVAv46Rk2zmjTvylJd8lo0uahIVh8vFuO
- GHhriZ9fe5xO13fC/HF4/H0RxbS+DsXTPJu4KB3n/FqAmQk7UkCknBDbdiu+Wo/oXGM+
- +EzIuH3DK0KcDCw/njyy2ThFzhcWVN2V1VWxwd2EGHadYRew23arLvDTB7FNHvDSKwtn
- 2Mpw==
-X-Gm-Message-State: AFuF++llV65OlHP78n8mS/DrnWcw9YH/+OaQ9+hgBMcMcatxe2TxR1tF
- gOyrfdL18wXauiaOiYyVt53zxhDLSe/cgEKA8g0akT14IL9eBTHyvpXa1KtqMPjzHs4MfyYJ+Ed
- aZ7+/tcU=
-X-Gm-Gg: AYBFou1o2QA1a8ytp2CdKhLa0vGrHB6wD4nvA4Fq/RaFBjmUOb5GXIeRbJx4sRLmSqN
- pvuiUMpkSV99tXnFfiuqQo/teA9KLMtHqx/K5BiaOuOMpQLnZYr/GjIc6BhRSshxwmNhs7wrz9q
- i8hQVJ5V4H+ksljQdf0GtuSJWYkC8bL2d8gGid9Th1fvDcxpvF7rfwus0tgJ97NTRWj9Yj9+RJp
- gx2Px8tDyP8q0ecaJ/ki232hI27IZ8W3AdcLnnIfiZNChIFFvsShvxaz37a9CzMaw78VBT4wSCb
- FV8onw2xgJGHA77k1bZppiazcokRdrYUIKJ8YQaiBzG4QuB4QU+wcLms5pctveYv8c9+Q6ULYCN
- G1GXFz8tDl61hgYy+AAhI6nz14KYlJmlJjVLgQTBcYafg5LVlgQVypS9NM2wjsqLKjNVb/URlyh
- SqiV9GXSZ5FK4NQLbldX74BGCK0RhFAVboLUC1k5f9ndDfMuAXKAG6fXJOYNG7
-X-Received: by 2002:a05:600c:1d01:b0:499:cd34:f7c with SMTP id
- 5b1f17b1804b1-49cf81e6f87mr86994025e9.5.1788525978627; 
- Fri, 04 Sep 2026 05:46:18 -0700 (PDT)
+ bh=2dX89X8BAFwj4lkrdRQoFyvJ/0+HE5JadftlOOhDSFw=;
+ b=VQkVZDJFsy3bo+x6T7oy7GIPvIlc/mgmDltDThcXhf3oZzOlWNWP0dckUqi4Hl0q6R
+ jb1xUA+6Uf7fPJUhwZJZusdDzIvnjOKhTb8F7LgF8Z0mZ6mHsnsTGCzPAsH8UyBViN0F
+ 0HE9QWyaWMAbLvZXaLoFBN4i+PLqByyE4r2g13pUL25ZyRoCAdtAVngqcXkI7s9gpk5f
+ 6Lv9TcxUgaqfOKAjj5+s5GmbuJy/EHGZnDozUfeapq7sgLg7qJy7BtFl/6/mwLuxSI1N
+ Qqc/bJgGY1y7A7ADCyAPu2+24LIJ9tnI33HuMoWDnbsBIw2HQaqLDDADILJOZhxr7AaA
+ IMbA==
+X-Gm-Message-State: AFuF++n7PdnnEALte4LKUSNUYmi5GiUMYzH6w8Uxe4flTMjo4uEk/5AL
+ T6clAbMRuyDTDtYJgH3OinHkctX7jifiCi8ZHUAS/Ay3Aomkd15sfNqag6uVycv/VOA=
+X-Gm-Gg: AYBFou0+BGMznj86gUE1gkaMY5ro54HEQI12rlvxsym21IF5Q5EDYAt6/l/IckS3pzW
+ Cq8qfhj9DWI4uc7SHif76SMoOznp6Mp+jFpZ9H2WfzRPcfWlujDjfdYh4s2XbnlLjHUge2Cdjq9
+ avdEcOseX6FCdimCQFgFxukffdhC6QSftH0+2+9XSkWGlk8Lpx4KfmTNI0n4hIAky6se333QQcY
+ PlaUl8VGqnS+Hy6q1NWyt4mF4U29MIrNJuiQq9xmAJ/sMRW8w3NeBsMBXOB9Ya0b7KOcajPLU6x
+ 6kr2qayli+PI12bykR8j+xNvA3wC4mvbu9Kao9n3eZnnogEVorUJmDOUQTto6HKM9mG9eJwAchx
+ XrwVfdkHZ8pyuaBvWqV6jofFQ4hB+oWMqiPwzjjK3khVLrBP7yBu96sqkM2fJmaI6Yh9o/CZB5J
+ wlpVt/uyBOyV52uiEhSpycCu9VYF6W2lZeo4oVDFJXp1WxUUktov53TvvWGtFi
+X-Received: by 2002:a05:600c:4585:b0:49c:fc6c:be16 with SMTP id
+ 5b1f17b1804b1-49cfea09f08mr16961685e9.28.1788525975434; 
+ Fri, 04 Sep 2026 05:46:15 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858d2693e8sm2434073f8f.3.2026.09.04.05.46.11
+ 5b1f17b1804b1-49cf7740d44sm145467625e9.15.2026.09.04.05.46.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 04 Sep 2026 05:46:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 202AF615C9;
- Fri, 04 Sep 2026 13:46:06 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id B1AFF613E0;
+ Fri, 04 Sep 2026 13:46:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 018/105] tests/tcg/meson.build: add wrapper run_with_input
-Date: Fri,  4 Sep 2026 13:44:32 +0100
-Message-ID: <20260904124604.2207440-19-alex.bennee@linaro.org>
+Subject: [PULL 014/105] tests/tcg/meson.build: introduce gdb_test
+Date: Fri,  4 Sep 2026 13:44:28 +0100
+Message-ID: <20260904124604.2207440-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,47 +108,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Semihosting console tests require console interaction, and were flagged
-as manual because of this. This wrapper automates interaction, by
-sending a specific string on stdin.
+We can now declare a test requiring gdb interaction, based on
+tests/guest-debug/run-test.py.
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-19-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-15-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index c718555d257..f2c5d77bfe0 100644
+index 3714fe4dc0d..76375615d0b 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -7,6 +7,7 @@ endif
+@@ -5,6 +5,7 @@ if config_host.has_key('GDB')
+   gdb_progs = [config_host['GDB'], gdb_progs]
+ endif
  gdb = find_program(gdb_progs, required: false)
- prog_gdb_test = find_program('../guest-debug/run-test.py')
- prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
-+prog_run_with_input = find_program('./scripts/run_with_input.sh')
- prog_run_and_check_forbidden_output = find_program(
-   './scripts/run_and_check_forbidden_output.sh'
- )
-diff --git a/tests/tcg/scripts/run_with_input.sh b/tests/tcg/scripts/run_with_input.sh
-new file mode 100755
-index 00000000000..3d280547c3a
---- /dev/null
-+++ b/tests/tcg/scripts/run_with_input.sh
-@@ -0,0 +1,12 @@
-+#!/usr/bin/env bash
-+# SPDX-License-Identifier: GPL-2.0-or-later
++prog_gdb_test = find_program('../guest-debug/run-test.py')
+ 
+ tcg_tests = {}
+ # tcg_tests is a dictionary with following structure:
+@@ -22,6 +23,7 @@ tcg_tests = {}
+ #           'test_name': ['provide an alternative test name'],
+ #           'cflags': ['additional cflags to compile test', ...],
+ #           'qemu_args': ['qemu command line flags', ...],
++#           'gdb_test': ['gdb test args'],
+ #           'env_var': ['VAR=value', ...],
+ #           'plugin_test': {
+ #             'plugin': 'plugin_name',
+@@ -83,7 +85,7 @@ foreach target, plan: tcg_tests
+     foreach src, setup: t
+       # return a clear error if user misspell a setup entry
+       foreach key, _ : setup
+-        allowed = ['exe_name', 'env_var', 'cflags', 'plugin_test',
++        allowed = ['exe_name', 'env_var', 'cflags', 'gdb_test', 'plugin_test',
+                    'qemu_args', 'test_name']
+         if key not in allowed
+           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
+@@ -102,6 +104,10 @@ foreach target, plan: tcg_tests
+         endforeach
+       endif
+ 
++      if 'gdb_test' in setup and gdb_arch not in gdb_arch_supported
++        continue
++      endif
 +
-+set -euo pipefail
+       if 'plugin_test' in setup and not get_option('plugins')
+         continue
+       endif
+@@ -118,7 +124,9 @@ foreach target, plan: tcg_tests
+       if 'test_name' in setup
+         test_name = setup['test_name']
+       endif
+-      if 'plugin_test' in setup
++      if 'gdb_test' in setup
++        test_name = 'gdb-' + test_name
++      elif 'plugin_test' in setup
+         plugin = test_plugins[setup['plugin_test']['plugin']]
+         # remove 'lib' prefix
+         plugin_name = fs.stem(plugin).substring(3)
+@@ -182,6 +190,16 @@ foreach target, plan: tcg_tests
+       exe = built_tests[exe_name]
+       cmd = [qemu, qemu_args, exe]
+ 
++      if 'gdb_test' in setup
++        cmd = [prog_gdb_test,
++               '--gdb', gdb,
++               '--qemu', qemu,
++               '--qargs', ' '.join(qemu_args),
++               '--bin', exe,
++               setup['gdb_test'],
++              ]
++      endif
 +
-+if [ $# -lt 2 ]; then
-+    echo "run_with_input: input_string cmd [args]..." 1>&2
-+    exit 1
-+fi
-+input="$1";shift
-+set -x
-+echo "$input" | "$@"
+       # some tests expect QEMU env var to be set
+       cmd = ['QEMU=' + qemu.full_path(), cmd]
+ 
 -- 
 2.47.3
 
