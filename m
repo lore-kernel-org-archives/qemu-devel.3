@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69BDC624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA15BC79F82
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 15:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2Vo9-0005UZ-2Q; Fri, 04 Sep 2026 11:26:25 -0400
+	id 1x2W59-0000kE-Jv; Fri, 04 Sep 2026 11:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2Vo7-0005UO-GW
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:26:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x2Vo5-0007N8-So
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:26:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788535580;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v3JFa2v60Jmk3fffVpZ0Ca7xxrh4ECr2iAWlS3jlX2U=;
- b=MjapyH63pCJ00nlGCys+80QMaQ8JFlHEZwWY8BMa2+DEGLv2NIvqSdn9AIhdtMK6Q9idDl
- oBTTGnh5Du7f/DGcqOGlUlFZURtbAYGYT7B1ui2oxED6UYr/5omiOpYlioQq38mYhojmR4
- ZYXFygeR+rQdKOfMUneU9wYAO5Gh35k=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-oOg0TQW1MvaJv1jKcyP2rA-1; Fri, 04 Sep 2026 11:26:18 -0400
-X-MC-Unique: oOg0TQW1MvaJv1jKcyP2rA-1
-X-Mimecast-MFC-AGG-ID: oOg0TQW1MvaJv1jKcyP2rA_1788535578
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-90c8da50f8dso26238786d6.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 08:26:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2W58-0000jw-6U
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:43:58 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2W56-0002hp-AC
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 11:43:57 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-49ccfbe062eso9724305e9.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 08:43:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788535578; x=1789140378; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=v3JFa2v60Jmk3fffVpZ0Ca7xxrh4ECr2iAWlS3jlX2U=;
- b=KNPuYWihKHKR2mmjs3P8/RNXStYJ+PtmPiBI6Mib3nXeTzVgUpo4crUaYIgB2L1SbG
- QP9Zm+51vFZ2kVF0DcHTv5R5zzbhZly32X9+SF52Qg31Z35Xd5sWVOeeFAGrCKMQQWM5
- K8/4UmIw9jqLHZmZsz5F/z93YUNxN+jFRwTM75zC9X/DUcyrdj2GYXnLqgEx5MX7jKPL
- 0oDsZBlr7iuU5eLM5oy0blqwm2NhFvHw57sEc3Q7jQRiwfnPz1q2BX29iFgIvJVIb/WO
- CAuCa7DW3fDOBh5Go9aQHT0KD/NiiFO8lbT9EncOls4Haq90NmfpXLCUbF/JtT9Cot9L
- sL7w==
+ d=linaro.org; s=google; t=1788536634; x=1789141434; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ea9l8vCw3+MyUHczI6di830buXi9mqJ03YPN+mVWElU=;
+ b=GodTKf0V02Qy4oulJU4W7yY0mSCPeg/WEoHWI/+wdYfz5umoCnmYhztjF0QfsvYTsX
+ ZLuN65+UMpcmLICvFnAPWCRBy/mu0uCNZmvSyfCJEQ8jKFK3wr2qvlOg+ZCKrECvpdAh
+ uwZJsPIyVhS4BTaBV4kv0ogGuH0uCLww4lPqEjoIh+bEXH+IjjsG3VGQFUBJz4r6hRmb
+ 0J9IHoAovtfXKVGNP6asknb1uyFEPT6Hu5wAqD6Wcs6sziAdg/VjXn1pYNih9WaMSwFI
+ d6MtqEfFLbTZ6eI1YjTZLBEEEFB4cjXgOnZkEB5DfOkd3vfFZwLzDtBoP2ZCM3JaHRj8
+ 1lJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788535578; x=1789140378;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788536634; x=1789141434;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=v3JFa2v60Jmk3fffVpZ0Ca7xxrh4ECr2iAWlS3jlX2U=;
- b=tGBTISVo6DP5dPDRGObU5ESZRttXxHjZNhiJ/Vkf4o9UHbB4SAgGc3rGgVqn71xMi7
- Vq/YInItwlWIqZAPk6Hg4uHh/POIyFdjNxDpa5MnaDlXvF/1hOsqrpOHRFB4a/V0S04f
- TU9psgbwCCAEgRrGmJlwNhTksTnmAmF2IdoSiCunfDxKjAh8U3i1AuGRVhapeaKdZO3h
- 0L897oY9PvLnnd8BTeK0T9cZQ0rnzoDyq/QdDBzlT6uiCLV5+YeIDAqRS5OcdueUKTAo
- lk38ASnGg8PF9vhV589Scddlr+vUVGM8iXB9P5on0BRn5JMyK8clJUOogwK8UrafYB9O
- BN6g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw+HR3W2YZ0p5FQ4pzrjAsompU3wEShcJteixs5l4Cz31gkJWUa2Rp8MRHCkR+nwVHCkJWMXDUVZwLK@nongnu.org
-X-Gm-Message-State: AFuF++nTgo2mYWo5sDyK4J4PRRzyY3v68v8Dl5Fn7taDbRY/ppPAiBNU
- OGtonq4k2YSBj+VC4zDrd1fgVMlmYI5bnH0FRFif1Rtr6lNpwqP8q2Mi8KoyFoxhDQgfO+nm05F
- N30dM6IwiPrE2lekp5VjZEXRjBY7V2tLGyCrfOqsktS+j0gQoYxFBirPh
-X-Gm-Gg: AYBFou0lv2IhH6z8P/jxO8Gzo2LT1mULHk2Em8a/hMlZB3osOkh5UUK3huVKiQXSJuH
- /YcvBjaDEaYBBxDnm8++ZXMhIK65pev3QSSztWRwPqEiPVy61KWPilgEC8CgwZWD9O7AEnDqCrs
- Xnf5Tqhii/SZapPURejlOq9jMWulA1WnEl7q4wmpUIv9hFoa8eft1pp54ifd3FdDmcQG59ORkb3
- GCm3oVxbkOfUIacKZ9hyYhla64WL0hZ7cL8rU6rSITz522pMs4ZVSLP0hh4vylUzc35skUy9q83
- RySN45496b/lvOqU3XZFCrW47L5XFEd3rdDcM+WbPWNT4TDgNQMsAkCuZc8eVYiDYCBw
-X-Received: by 2002:a05:620a:4d3:b0:939:6de4:3e10 with SMTP id
- af79cd13be357-939804268cfmr486881485a.29.1788535578100; 
- Fri, 04 Sep 2026 08:26:18 -0700 (PDT)
-X-Received: by 2002:a05:620a:4d3:b0:939:6de4:3e10 with SMTP id
- af79cd13be357-939804268cfmr486876985a.29.1788535577519; 
- Fri, 04 Sep 2026 08:26:17 -0700 (PDT)
-Received: from localhost ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93988e9f80dsm101792285a.24.2026.09.04.08.26.16
+ bh=ea9l8vCw3+MyUHczI6di830buXi9mqJ03YPN+mVWElU=;
+ b=UBZqjIy5cQxRGtxZMKK8EZEHrxTm9zHMrRQEJDVkxStq0jN8AS7i+TK08Ev0sY6A20
+ P9kx+r6yJAbTb793vhBpZgHp/1QLNXb7RBTnmND2GBjpt4XN6WAtZAT5JQOyJ/lFzPdm
+ 0TBUBlcEj9eTZ/iEbSBIvPjTIoI2TeLLGCJJdmGwILVeiKbhS1XGrS8f+sEinuUun4YE
+ ETOB/idRQX3qq6MhAQNSAgE0sKsnR0BCXHP19lNvrFUbem70XHD9oFBZXv0Fy8aN9ccE
+ Pp10fyvW+6dyroCnRRj3aXJvz5s3z9tUG1fesnyG3LF8xDaM7ecyMCR13xonL2sMQtnY
+ BKKA==
+X-Gm-Message-State: AFuF++lPG73oiozaGMBykWw2ABMjY6A4KOuYe5kYbsSRl/ZilIXl50cZ
+ jhLEmujp9GpyNvezXpBBy8j4ji3bKa6fo4nkWbSRBjC2UNtFPGRPFntr37qY4IvjbfQ=
+X-Gm-Gg: AYBFou021JZBtslRwJBYnFt5Jj/KKN5dx5cgx7S4ZEu7G2qyMDiBSOjOgN+nbwYjN9p
+ tJBxhdQJYZs/z/bvvXKI6D/GXzW9X62swDkVgfjabdq02t522G6byNNiwWFLcDv91uDvgBqvgq9
+ rQTVhKdJUBKARklk+U3ULFLizYA+mdYP0CSo9ytbFE7SzRrvA5EgS19eiDKRiptgvUbbxd5mkef
+ S/Pq+wQyaB83NCxHv/df7O7vnrr+V24E1FKZi7i8I+t8NwS27mjo3OYRpFebLqvkqcPdR4Zccb4
+ ZtqJgJDzTHvdNOKBNHfudgMD4EQWrcqNrVwIPy3S0x02BA0vbFzrl+iIfptheBAtn5KIvYDpex3
+ vqW8u+Z8hppJRVPYI5yZvw+Vbvq4zYvCHrip/n+uYHZFoBEmqbEHNmJt7e5X/o1qArmU7iofdOq
+ /cWYiB2+i8r45ONLcUT84IDpEEWpiSty6Zji+EsoJdZXfUbv/oy4yW3JNbrOjn
+X-Received: by 2002:a05:600c:8b32:b0:49b:d03:8d3a with SMTP id
+ 5b1f17b1804b1-49cf8244878mr72180385e9.11.1788536634421; 
+ Fri, 04 Sep 2026 08:43:54 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cf7703cefsm105587085e9.5.2026.09.04.08.43.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 08:26:16 -0700 (PDT)
-Date: Fri, 4 Sep 2026 11:26:05 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 11/18] migration: Use keyval input visitor in HMP set
- command
-Message-ID: <aprjDbm4K687XYqN@x1.local>
-References: <20260902221547.1812481-1-farosas@suse.de>
- <20260902221547.1812481-12-farosas@suse.de>
- <apnOB4BfUEeOECU9@x1.local> <apnXdzc3q79KtDhv@gallifrey>
+ Fri, 04 Sep 2026 08:43:53 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 007B35F954;
+ Fri, 04 Sep 2026 16:43:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-riscv <qemu-riscv@nongnu.org>
+Subject: Re: [PULL 000/105] move check-tcg into the meson build
+In-Reply-To: <18f4fdf4-1e8a-449f-a003-3bff20499a29@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 4 Sep 2026
+ 15:46:43 +0200")
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
+ <18f4fdf4-1e8a-449f-a003-3bff20499a29@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Fri, 04 Sep 2026 16:43:51 +0100
+Message-ID: <87h5k5owco.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <apnXdzc3q79KtDhv@gallifrey>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,14 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 03, 2026 at 08:24:23PM +0000, Dr. David Alan Gilbert wrote:
-> Someone will have a test script somewhere that might depend on it
-> (I know I did when I was debugging migration - and I never remembered what
-> was MB or byte!)
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-Me too! :)
+> On 4/9/26 14:44, Alex Benn=C3=83=C2=A9e wrote:
+>> The following changes since commit 99e54ab5e7a6efc945af6d5661842155d1f3f=
+c7a:
+>>    Merge tag 'hw-misc-20260903' of https://github.com/philmd/qemu
+>> into staging (2026-09-03 16:43:24 +0100)
+>> are available in the Git repository at:
+>>    https://gitlab.com/stsquad/qemu.git
+>> tags/pull-11.1-check-tcg-meson-040926-1
+>> for you to fetch changes up to
+>> 26395b536c3ec0a857dffd6548d8ef49479dedad:
+>>    MAINTAINERS: add maintainer for tcg/tests meson infrastructure
+>> (2026-09-04 11:38:01 +0100)
+>> ----------------------------------------------------------------
+>> tests/tcg: conversion to meson
+>>    - remove unused variable from multiarch/memory
+>>    - standardise checking plugin output
+>>    - bump minimal meson to 1.6.0
+>>    - introduce meson plumbing for check-tcg
+>>    - return error code if docker probe fails
+>>    - add CI/self/mem test to gdbstub prot-none tests
+>>    - use raw opcode for fprcvt test in arm
+>>    - remove unused variables from gpc-test
+>>    - teach probe-gdb-support about mips
+>>    - identify or1k pc register
+>>    - port check-tcg logic to meson (all targets)
+>>    - update documentation
+>>    - add Pierrick as a maintainer for tests/tcg
+>> ----------------------------------------------------------------
+>> Pierrick Bouvier (105):
+>
+>>        tests/tcg/riscv64: add float reference files
+>>        tests/tcg/riscv64: user tests
+>>        tests/tcg/riscv64: system tests
+>
+> Some of these likely need to be updated for the latest RISCV merge:
+>
+> $ git diff --stat 99e54ab5e7a..d2843fbf802 tests/ | fgrep Makefile
+>  tests/tcg/riscv64/Makefile.softmmu-target |  14 ++++
+>
+> $ git log --oneline 99e54ab5e7a..d2843fbf802
+> tests/tcg/riscv64/Makefile.softmmu-target
+> 883a4d4da4d target/riscv: preserve vl on element-zero fault
+> bbdccc84fc3 tests/tcg/riscv64: Add tests for rv128 [ms]status
+>
+> (not sure if this can be done on top although)
 
--- 
-Peter Xu
+Merged inline, see v2:
 
+  Message-ID: <20260904150826.2331577-1-alex.bennee@linaro.org>
+  Date: Fri,  4 Sep 2026 16:08:26 +0100
+  Subject: [PULL v2 000/105] move check-tcg into the meson build
+  From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
