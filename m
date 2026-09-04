@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9267C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A096C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TQB-0001Zd-Gm; Fri, 04 Sep 2026 08:53:31 -0400
+	id 1x2TQB-0001ZS-2X; Fri, 04 Sep 2026 08:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQ9-0001YO-PV
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:29 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1x2TQ8-0001Xv-Ph
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:28 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQ7-0000eM-Ba
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:29 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-482f9309813so882498f8f.1
+ id 1x2TQ6-0000eG-Qn
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:28 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-485843aeab8so1029706f8f.1
  for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788526406; x=1789131206; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788526405; x=1789131205; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=YInPOfi+J5WbTMOr1WjVt/C35IoOaen+Lma3WkubtKY=;
- b=xXH4M9tmiNkHeMt6Ta2bOrei48zewtVtyzR97NaNi+/xHVxhd8hxwQIZVDpkgfMcqJ
- qStqA36KMuyu500LOLuW9MpqIn6vJBVGknXjqfS7qXcinrs0aabcU41r302dZbwpNCs6
- IRkQ66mpLdB63H1n6XvWMoKBWOD2wHK/lB1M9NlY7MqETjnxQwcjH8n9zcxMSR0qU/UQ
- EzoUOUR2opzzhr7Q/fL0czgCB2lJMsPmjm6fgEgnTWuZ6o9n+uub/XpZCYfWjexv2u3X
- kQonv3+0eapf+1mrdXTUetuPOkbMGtHHi6yv6JfdzJsIHg25sRpxp/S8YmYCbOkMaL+4
- meNQ==
+ bh=F0/wxzAZP3kHp8qnztiYWhe/t57dvgEiELFRAI7X1zY=;
+ b=PJo6LEN0tqkDnywuZD6mvYbj92dN7ulpcisXd8IkbENbRX7qRUepQG2O+YlxNxHffl
+ Ta8LcZP1YYKmVbC0YwbkZWFK+1u5s1/i1suUkAv1JDPtKzeGxo7a5FAOh92ebowqU7H/
+ WUShTY32gTERGYHxsDxwPW3L7r+6qFBnqKTZqiKERWu4qPMNlUsEP9Lewvc3aedCa1eV
+ vQu1DzBbi8Sd+Pa0+9a/q+/nxJT8EvR/JKih5a/tI2wGXfNmXXKZf0asVZHMLmChC1rA
+ JMHMjqjIUAX8fmduy1foQ1roNbvEaf8G3bl9eb0vmRdPjuuJDbDEPYMN3oe8pOngDthM
+ qFtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526406; x=1789131206;
+ d=1e100.net; s=20251104; t=1788526405; x=1789131205;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=YInPOfi+J5WbTMOr1WjVt/C35IoOaen+Lma3WkubtKY=;
- b=o3dHbfrmx3WNTGtH1238ZxDDIku+FTnjkoJeRjWhNPyMgsAZGY5p6eO4t7ue2jMZKN
- J6rz2SfyG8Qm8HrKJ2XMlQH71sxjFy+giL4AhEOWLU6x0SKnljCxKgmwobhGiSUbN35f
- e+pAOWu0ljcei5Atlq1ovun6MzhpGNvC21DJKaudg574dS2HqmuhYCXmODdg0/AR8JUa
- ipzS2zCRFAhn+j8nSVCPeYPuosWjhreCBEjVl4ebg3J+mc+CuqFJRxGf6PqrmzgQcgaG
- 8qBMnEtFA27WAt4Ab4wnO+/Ed1yhFcPIiOGNlEdVWKICvt7vCV6MWT+TqR3XZVu/MVV2
- /lXQ==
-X-Gm-Message-State: AFuF++ko9KaVC14G6fmOKtwzy5rRraOMYiJusNNSZP0SbEXMtxmDq/Lw
- glKeBaDZP6wiC7DtUhQa4lwnOFNIrhZj9S5ESd99rzS0rssm6PqUZfTGQVcZtfrt0iDwxb5RBZN
- vXmCpKQw=
-X-Gm-Gg: AYBFou3KVVa7988FxrJo7gPxGjHEnWD5giI/romHp1Nl5mXaDCEXeh/JHSknGsEH08a
- IOtQkQ6t+4D8mnBURM8+aZAXgHiENI4nOgUiLJDReVPiwl3FyE/o/1oZgC9fGPY3Iay+MrM6J8Y
- +yOXBDm71Yg79rbhAx63GNNiRtnc+1AVND0E7YmhGHsOCeHYIn4pnV0hhSxhS7eKhIssrrREpxc
- m/NHYWwNXV8AJjWnT5N1Qra9spmzKFKaTxNMuH/j7uQtm7+bcuvfIzksgWoVUiVFVtYz37+PC9r
- +Lzta3GLhMARy+4JlA+84DYdoNC9mObMvLTGAbm5D7qJJ2fDTPjYpfBSdRXrEnncTLq9dOJZ/rO
- JuG3Zf8+axniWzUC/zUZvzK+mop7ZMTU7JWYbLhQe+AhasmYQ4uH7XQJiQDMwGNm9pM7cxi5Yfl
- YtZbekfcHqxc+QSkbbJclomylfM7/3+rW+sy+JiB2VDHiz/QH9/7HmNASRsBp2yJBrMiwq8LwjN
- Q==
-X-Received: by 2002:a05:6000:29d1:b0:47f:8b24:ef01 with SMTP id
- ffacd0b85a97d-48587091569mr6638825f8f.1.1788526405585; 
+ bh=F0/wxzAZP3kHp8qnztiYWhe/t57dvgEiELFRAI7X1zY=;
+ b=qc+xQtDaDvXuTBYlJH3c7S2BkitX4xRO5J+9RJP3CnsTV9dwnvTE+eiwzSN3R7L9ky
+ fnaqCdLqe/Tv/x+0pXIskOFGhqXEVe59alBmlb/7RQxdlUes4U3WTk2H09UL82bUhxes
+ ewaBEriAz/yEQHTAYd9ypvdyuyCXBpHi1cUNeDjOrMUZ4TVsShX0bTk8qYQbGlC2z8JD
+ fu9t8Fi+FlCRfVbJje00Jh4c/aTq36gHYtvLswspCPqNXfmuwhuHLsfLBcZWZ+4qc+ht
+ OOAbBZM9VavXwpkXhj6qRfT+g2DWRJGqmZrAyxW/sFLpzae4xp5a9F5/sc8+yUgdRH8O
+ KTgA==
+X-Gm-Message-State: AFuF++nP7eDFxQqCZm0rKIgWue0awj1ZTmOkGMZenVo3+e35qS8xO5cI
+ 4EVdp80S4tanpQQOZBVU7oJnnSzz2l2+gKyR4TKSmypBRYof6DS701yDlAyNj/uouqc=
+X-Gm-Gg: AYBFou0eOTeujOdp0DjeGaGKYCxwrf4EdldwxjzfdKriOOISh1k5emIaAjZ0Seevx3s
+ Gi7SHQrATIlIv3npuOtlEGor7FvvejQyrMYHudrcmf46nrgm7P5TnagpyUIDoD8ylIJKbyQ8x0Q
+ 4tc7nCenm9hkmqoTzt3W5LsxhDD6BSJ0zFuQ9rS/blna1WfBklnoFjlgUcbZa5TLoZ0dCs5lQ5N
+ CVw/7O5Q2gDngFVJFdFtO4+ND+RCDPCeKYde77rmy+lw5d39TfMaPQMLale3y/VHlP+3bge3MrR
+ ndi7VIkasV3occdwYtFF8pzuU7t+em51e6hLDYEtbh4PBWpm5VZ8KYRpHRIu7wOqxq6gYqZcMZt
+ NJCMXnCTBMZYBn8P75YPjJuZJlkyacxvWSl+oq+4YW1tmID1eBxyzERv5h2EimHzVKz4BVG0hZN
+ YvBDmu29+QfaGo50BJKDk+vSHoi0dxgR+BlztfaevHERzw20W7ltWKI/dqrkWRszs1PlSVIAA=
+X-Received: by 2002:a05:6000:4b11:b0:485:8313:9f47 with SMTP id
+ ffacd0b85a97d-48587055d09mr12830712f8f.10.1788526405062; 
  Fri, 04 Sep 2026 05:53:25 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4858d2693e8sm2475317f8f.3.2026.09.04.05.53.23
+ ffacd0b85a97d-485883a9a56sm5209387f8f.15.2026.09.04.05.53.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 04 Sep 2026 05:53:23 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 57EFF61AF2;
- Fri, 04 Sep 2026 13:46:10 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 582D061E33;
+ Fri, 04 Sep 2026 13:46:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>, Song Gao <17746591750@163.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 058/105] tests/tcg/loongarch64: system tests
-Date: Fri,  4 Sep 2026 13:45:12 +0100
-Message-ID: <20260904124604.2207440-59-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 103/105] meson.build: add summary for TCG tests
+Date: Fri,  4 Sep 2026 13:45:57 +0100
+Message-ID: <20260904124604.2207440-104-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,118 +110,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
+Replacing existing summary that only contained information about
+existing cross compilers with a full summary for all targets.
+We add gdb and container information.
+We specify cc for each target (softmmu + linux-user) independently
+in case we would use different cc for bare metal vs user binaries.
+
+Users can query full command line for tests by building tests with
+tcg-tests target, so no need to repeat it here.
+
+Output before change:
+
+$ ./configure
+  Cross compilers
+    aarch64                         : /path/to/qemu/build/pyvenv/bin/python3 -B /path/to/qemu/tests/docker/docker.py --engine auto cc --cc aarch64-linux-gnu-gcc -i qemu/debian-arm64-cross -s /path/to/qemu --
+    aarch64_be                      : /path/to/qemu/build/pyvenv/bin/python3 -B /path/to/qemu/tests/docker/docker.py --engine auto cc --cc aarch64-linux-gnu-gcc -i qemu/debian-all-test-cross -s /path/to/qemu --
+    alpha                           : alpha-linux-gnu-gcc
+    ...
+
+Output after change:
+
+$ ./configure --disable-containers
+  TCG tests
+    gdb                             : /usr/bin/gdb-multiarch
+    container command               : NO
+    cc for aarch64-softmmu          : NO
+    cc for aarch64-linux-user       : NO
+    cc for aarch64_be-linux-user    : NO
+    cc for alpha-softmmu            : alpha-linux-gnu-gcc
+
+$ ./configure --gdb=gdb --container-command=podman
+  TCG tests
+    gdb                             : /usr/bin/gdb
+    container command               : podman
+    cc for aarch64-softmmu          : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for aarch64-linux-user       : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for aarch64_be-linux-user    : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for alpha-softmmu            : alpha-linux-gnu-gcc
+    ...
+
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-Reviewed-by: Song Gao <17746591750@163.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-59-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-104-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
-deleted file mode 100644
-index 6d4a20fde73..00000000000
---- a/tests/tcg/loongarch64/Makefile.softmmu-target
-+++ /dev/null
-@@ -1,33 +0,0 @@
--#
--# Loongarch64 system tests
--#
--
--LOONGARCH64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/loongarch64/system
--VPATH+=$(LOONGARCH64_SYSTEM_SRC)
--
--# These objects provide the basic boot code and helper functions for all tests
--CRT_OBJS=boot.o
--
--LOONGARCH64_TEST_SRCS=$(wildcard $(LOONGARCH64_SYSTEM_SRC)/*.c)
--LOONGARCH64_TESTS = $(patsubst $(LOONGARCH64_SYSTEM_SRC)/%.c, %, $(LOONGARCH64_TEST_SRCS))
--
--CRT_PATH=$(LOONGARCH64_SYSTEM_SRC)
--LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
--LDFLAGS=-Wl,-T$(LINK_SCRIPT)
--TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
--CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
--
--# building head blobs
--.PRECIOUS: $(CRT_OBJS)
--
--%.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
--
--# Build and link the tests
--%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
--
--memory: CFLAGS+=-DCHECK_UNALIGNED=0
--# Running
--QEMU_OPTS+=-serial chardev:output -kernel
-diff --git a/tests/tcg/loongarch64/meson.build b/tests/tcg/loongarch64/meson.build
-index 209179fd96c..1d62de64ed6 100644
---- a/tests/tcg/loongarch64/meson.build
-+++ b/tests/tcg/loongarch64/meson.build
-@@ -2,6 +2,8 @@ cc = 'loongarch64-unknown-linux-gnu-gcc'
- cc_dockerfile = 'debian-loongarch-cross'
- cc_docker_host_arch = ['x86_64']
+diff --git a/meson.build b/meson.build
+index 0a64bcfc6e9..2a022c4d85d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4610,6 +4610,7 @@ subdir('docs')
+ subdir('pyvenv')
+ # Tests are disabled on emscripten because they rely on host features that aren't
+ # supported by emscripten (e.g. fork and unix socket).
++tcg_tests_summary = {}
+ if host_os != 'emscripten'
+   subdir('tests')
+ endif
+@@ -4797,21 +4798,9 @@ summary_info += {'sparse':            sparse}
+ summary_info += {'mingw32 support':   host_os == 'windows'}
+ summary(summary_info, bool_yn: true, section: 'Compilation')
  
-+subdir('system')
-+
- tests = []
+-# snarf the cross-compilation information for tests
+-summary_info = {}
+-have_cross = false
+-foreach target: target_dirs
+-  tcg_mak = meson.current_build_dir() / 'tests/tcg' / target / 'config-target.mak'
+-  if fs.exists(tcg_mak)
+-    config_cross_tcg = keyval.load(tcg_mak)
+-    if 'CC' in config_cross_tcg
+-      summary_info += {config_cross_tcg['TARGET_NAME']: config_cross_tcg['CC']}
+-      have_cross = true
+-    endif
+-  endif
+-endforeach
+-if have_cross
+-  summary(summary_info, bool_yn: true, section: 'Cross compilers')
++# TCG tests configuration
++if tcg_tests_summary != {}
++  summary(tcg_tests_summary, bool_yn: true, section: 'TCG tests')
+ endif
  
- tests += tcg_tests['multiarch-linux-user']['tests']
-diff --git a/tests/tcg/loongarch64/system/meson.build b/tests/tcg/loongarch64/system/meson.build
-new file mode 100644
-index 00000000000..5bf4c56e385
---- /dev/null
-+++ b/tests/tcg/loongarch64/system/meson.build
-@@ -0,0 +1,48 @@
-+tests = []
-+
-+minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
-+minilib_printf = files(minilib_dir / 'printf.c')[0]
-+link_script = files('kernel.ld')[0]
-+boot = files('boot.S')[0]
-+cflags = ['-nostdlib',
-+          '-ffreestanding',
-+          '-Wa,--noexecstack',
-+          '-I', minilib_dir, minilib_printf, boot,
-+          '-Wl,-T', link_script,
-+          '-march=loongarch64',
-+          '-mabi=lp64d',
-+          '-Wl,--no-warn-rwx-segments',
-+          '-lgcc']
-+qemu_def_args = ['-display', 'none',
-+                 '-serial', 'stdio',
-+                 '-kernel']
-+
-+# Multi arch tests
-+multi_src = []
-+foreach t: tcg_tests['multiarch-softmmu']['tests']
-+  foreach src, setup: t
-+    new_cflags = cflags
-+    if fs.stem(src) == 'memory'
-+      new_cflags += '-DCHECK_UNALIGNED=0'
+ # Targets and accelerators
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 9cf632d2717..243cdb5fc8c 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -77,25 +77,30 @@ if gdb.found()
+     gdb_arch_supported += {arch: true}
+   endforeach
+ endif
++tcg_tests_summary += {'gdb': gdb}
+ 
+ docker_supported = false
++container_command = false
+ if get_option('containers')
+   if get_option('container_command') != ''
+     # make sure command is working
+-    cmd = get_option('container_command').split()
++    container_command = get_option('container_command')
++    cmd = container_command.split()
+     run_command([cmd, 'info'], check: true)
+     docker_supported = true
+     docker_wrapper = [docker_wrapper, '--command',
+-                      get_option('container_command')]
++                      container_command]
+   else
+     docker_probe = run_command(docker_wrapper, 'probe', check: false)
+     docker_supported = docker_probe.returncode() == 0
+     if docker_supported
++      container_command = docker_probe.stdout().strip()
+       docker_wrapper = [docker_wrapper, '--command',
+-                        docker_probe.stdout().strip()]
++                        container_command]
+     endif
+   endif
+ endif
++tcg_tests_summary += {'container command': container_command}
+ 
+ # plugins come first, as we need to build the list
+ test_plugins = {}
+@@ -270,6 +275,15 @@ foreach target, plan: tcg_tests
+     endif
+   endif
+ 
++  summary_cc = false
++  if has_cc
++    summary_cc = plan['cc']
++    if not cc_from_system
++      summary_cc += ' (from \'' + plan['cc_dockerfile'] + '\' container)'
 +    endif
-+    if src not in multi_src
-+      setup += {'cflags': [new_cflags]}
-+      multi_src += src
-+    endif
-+    tests += {src: setup + {'qemu_args': qemu_def_args}}
-+  endforeach
-+endforeach
++  endif
++  tcg_tests_summary += {'cc for ' + target: summary_cc}
 +
-+if 'qemu-system-loongarch64' in emulators
-+  tcg_tests += {
-+    'loongarch64-softmmu': {
-+      'cc': cc,
-+      'cc_dockerfile': cc_dockerfile,
-+      'cc_docker_host_arch': cc_docker_host_arch,
-+      'folder': 'loongarch64/system',
-+      'gdb_arch': 'loongarch64',
-+      'qemu': emulators['qemu-system-loongarch64'],
-+      'tests': tests,
-+    }
-+  }
-+endif
+   folder = plan['folder']
+   gdb_arch = plan['gdb_arch']
+   qemu = plan['qemu']
 -- 
 2.47.3
 
