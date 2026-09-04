@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBB9C624DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FE4C624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2S4v-00038B-KI; Fri, 04 Sep 2026 07:27:29 -0400
+	id 1x2S76-00043d-Ix; Fri, 04 Sep 2026 07:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2S4u-00037t-Cr
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:27:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x2S75-00043C-Oc
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:29:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2S4s-00050W-Nh
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:27:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x2S74-0005Xr-FD
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:29:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788521245;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1788521381;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n1iClS1gBHzvSLVyH+hmWNvJU7P0IY0m88uFzAkOhaM=;
- b=CvqNFsYCsUFbwSMVE0MBJ7zb5WpZfqp3jLQOAwJn2twzDg6oDvzg1OwYAWIAKp3NM1jFhf
- jbVLqr1Q4Fw7pO0P517PEbUxpccSGb6yH8qzruNI+18OGj+TLcyQn1xXDK70+pgWssyqtT
- RvSEhqScSrJz1YyEYCgVBpTkPJ04jGU=
+ bh=EHXrWWLN3hlVF8KDoe5CdBJNSRtGNqx5IuU+safCY2o=;
+ b=bfh+OcPulPIko+dCm4kFzRGTtsyZ0zVVIaorhjH90eHCpxEb54RckSFXvjCbiUQRu5zbPv
+ 8n8vWTw4UK1H8uZEl7MhLIGupfxTJG5dqqPnYpsgZuv6D9FCHXYiBR9YUZVCBS0Iwh7GkL
+ Rsw0o8GU7JGyPOWzHEj9k45TTQXGucY=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-Y8p1-bDjPduF0hNBVgYVQA-1; Fri,
- 04 Sep 2026 07:27:22 -0400
-X-MC-Unique: Y8p1-bDjPduF0hNBVgYVQA-1
-X-Mimecast-MFC-AGG-ID: Y8p1-bDjPduF0hNBVgYVQA_1788521241
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-BWDuqWg2OcGO6Od3eH7ncw-1; Fri,
+ 04 Sep 2026 07:29:40 -0400
+X-MC-Unique: BWDuqWg2OcGO6Od3eH7ncw-1
+X-Mimecast-MFC-AGG-ID: BWDuqWg2OcGO6Od3eH7ncw_1788521378
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52B8F191F5B8; Fri,  4 Sep 2026 11:27:20 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7FBE423; Fri,  4 Sep 2026 11:27:17 +0000 (UTC)
-Date: Fri, 4 Sep 2026 12:27:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, luoyonggang@gmail.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, anjo@rev.ng,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- philmd@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 00/47] single-binary: implement dynamic filtering for QOM
- types
-Message-ID: <apqrE4dj6WesobJv@redhat.com>
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
- <4b4f77ee-21e9-405e-a1da-21506afa1c5b@oss.qualcomm.com>
- <app_CnHimOrOymMH@redhat.com>
- <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
- <CAFEAcA_4TZxYhFbHfJZCas7bvh_KZjNp2aKzx3LPaXTQFuoQYQ@mail.gmail.com>
- <apqVhJrtMDECUb7I@redhat.com> <87h5k58ds8.fsf@pond.sub.org>
+ id 9C5E81955F16; Fri,  4 Sep 2026 11:29:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27F5E180034C; Fri,  4 Sep 2026 11:29:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AE3CF21E6A04; Fri, 04 Sep 2026 13:29:35 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,  armbru@redhat.com,  AlanoSong@163.com,
+ qemu-devel@nongnu.org,  laurent@vivier.eu,  zhao1.liu@intel.com,
+ atar4qemu@gmail.com
+Subject: Re: [PATCH v3] monitor: Refine 'info tlb' command
+In-Reply-To: <dff55838-6fd4-4345-8a04-dd62f46e317c@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 4 Sep 2026
+ 13:11:21 +0200")
+References: <20260818132519.186010-1-AlanoSong@163.com>
+ <CAJ+F1CJ7swW-JWMoRT8=v4hsdGk-O5eFsD=n8XBCirjBHJWAgA@mail.gmail.com>
+ <aoTl_9eaioevcOVM@gallifrey> <apncP_5e7fcofZL8@gallifrey>
+ <dff55838-6fd4-4345-8a04-dd62f46e317c@oss.qualcomm.com>
+Date: Fri, 04 Sep 2026 13:29:35 +0200
+Message-ID: <87v78l6yqo.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h5k58ds8.fsf@pond.sub.org>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -95,66 +90,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 04, 2026 at 01:19:19PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > Currently the QOM type name is directly derived from the machine
-> > type name, just with a "-machine" suffix attached. So if the
-> > machine name is not unique, then neither is the QOM type name.
-> >
-> > At the very least we need the QOM type name to be unique. We
-> > could de-couple the two to make this work though, which does
-> > not seem too hard.
-> 
-> [...]
-> 
-> > We don't have many examples of clashing machine names. Is there
-> > any beyond just the 'virt' boards ? Now that we know we want
-> > globally unique names, this feels easy enough to spot during
-> > review.
-> 
-> I checked -machine help for all qemu-system-T, and it seems to be just
-> "none", "virt" and "virt-VERSION", not counting duplicates between
-> architecture variants such as aarch64 and arm, x86_64 and i386, and so
-> forth.
-> 
-> >> This rests on the assumption that the only thing we need to
-> >> disambiguate is machine names, i.e. there aren't multiple
-> >> targets with user-facing (i.e. not easily renameable) device
-> >> names that are shared.
-> >
-> > IMHO it is best if our goal is to ensure type names are unique
-> > throughout the codebase, so hopefully we don't have clashing
-> > device names.
-> 
-> Yes.
-> 
-> Quick glance at type_new():
-> 
->     if (type_table_lookup(info->name) != NULL) {
->         fprintf(stderr, "Registering `%s' which already exists\n", info->name);
->         abort();
->     }
-> 
-> If we have duplicate type names, they won't survive being linked
-> together in a single binary.
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-If we want perfect testing coverage, then the main constraint here
-is how quickly we get to a point where 'qemu-system' can build with
-all targets. I don't that's a show stopper though, as the uniqueness
-only becomes a real problem as we enable each new target in the single
-binary. We don't appear to have many examples of existing clashes to
-suggest it is a major problem to solve any sooner.
+> On 3/9/26 22:44, Dr. David Alan Gilbert wrote:
+>> Hi Markus,
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+[...]
+
+>> Can you pick this one up please?
+>
+> Doesn't this series need a rebase on top of commit
+> 93b9a2436564a9df25a0b978c8245fed255264f2 (Make HMP optional)?
+
+It does.  Alano Song, would you mind doing that?
 
 
