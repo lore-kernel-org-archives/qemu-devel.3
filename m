@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19B9C61DD6
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9267C624DE
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TQC-0001aT-QH; Fri, 04 Sep 2026 08:53:32 -0400
+	id 1x2TQB-0001Zd-Gm; Fri, 04 Sep 2026 08:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQB-0001a5-SN
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:31 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1x2TQ9-0001YO-PV
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:29 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQ9-0000f7-V7
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:31 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-482dbe4d247so573149f8f.2
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:29 -0700 (PDT)
+ id 1x2TQ7-0000eM-Ba
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:29 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-482f9309813so882498f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788526408; x=1789131208; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788526406; x=1789131206; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=UnmKO2ob2L7C7bBg61d15470Yo2AiPl5MYNd4/DA6PM=;
- b=jXaz107/5Fahh+YunZ/DFrEzMfTBcZ3VLuxEVMovCluYlqOkSwFO8eq2iXBJ1mDxxi
- /G+eyAcur1UwHERwXiMsUnKgzab69DRVveqDTDM5TkEcy52aungtrd579a6jSKOLjILY
- 7VGGUAI+BTiAvcLgTkG26HHrldhW1lwLZwaedPfqm84HEpYoPPXQNaPF63HeRbCYr8tG
- xrR09SYCe9Exn7Z0iCskkYCpVeYjwhJvDtN4vcU2T9daN4Cs5ObV9wqrbkHOtU6QZgjh
- 4IBRoCUji1TS0OyfEwYMVszQuXBD2fsxuFrY7zfB+RF+LYHW4d9dYDp+bEig5/c1Axn3
- GK8w==
+ bh=YInPOfi+J5WbTMOr1WjVt/C35IoOaen+Lma3WkubtKY=;
+ b=xXH4M9tmiNkHeMt6Ta2bOrei48zewtVtyzR97NaNi+/xHVxhd8hxwQIZVDpkgfMcqJ
+ qStqA36KMuyu500LOLuW9MpqIn6vJBVGknXjqfS7qXcinrs0aabcU41r302dZbwpNCs6
+ IRkQ66mpLdB63H1n6XvWMoKBWOD2wHK/lB1M9NlY7MqETjnxQwcjH8n9zcxMSR0qU/UQ
+ EzoUOUR2opzzhr7Q/fL0czgCB2lJMsPmjm6fgEgnTWuZ6o9n+uub/XpZCYfWjexv2u3X
+ kQonv3+0eapf+1mrdXTUetuPOkbMGtHHi6yv6JfdzJsIHg25sRpxp/S8YmYCbOkMaL+4
+ meNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526408; x=1789131208;
+ d=1e100.net; s=20251104; t=1788526406; x=1789131206;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=UnmKO2ob2L7C7bBg61d15470Yo2AiPl5MYNd4/DA6PM=;
- b=iIttYCic0u+KXq4GtnKki4uwL3P/zNesBM8zuVtTa5XMHXW9PjJw+e9mRlBHxqDKZ4
- WHI+ZM87T6jQvjGaYVWw0HDxT4gtpebgsanUdxqZXyXvi3PI4o18IrX7Q7eu7RBdGy89
- jeW06CuuK7eRcFRJ2OP+DwiywFTtCLvdqAQD2zmTuhFP///gVn21nL7iWdjNGsw6so/V
- iggzRS9RhegKxGhs8mP++T2uhZkqagxwJ3VnPl+aKWb8DoYaO4dw5KTWKdLFcj61u1Mt
- 2EwU7fKYIfVZcXJVWi6dW6Hn8dpARIc2o09xWV/gxFPRacEOILhyRY7U5gLjSoFkkY00
- k8UQ==
-X-Gm-Message-State: AFuF++mmC/U6n0Jqx8tDbAriU2g+a/BDmvxoQWEpoV+mru9Y0tSUro+I
- zr6zUvXxceD7LU9anJ00dLG/1HNkdrxRbK7CxFRjoS+iFEkKOeFoWVyfZldNFgdZBng=
-X-Gm-Gg: AYBFou33Wy+UNslhHuzBU8azWHatpDfLcLVyahmaZdi4GVXMfvqAhOI4r0yInTMUpA8
- 0jOylS8sVPvUZflZNpHgyptKwUwPJzsNCJ2RVUBCviRX5YzN4Rf/gFPYd0rGWQzl8VDmsH+5Pfp
- kAICDOr7J3Afu8zyGNyS5+lUzIKTcKaF7wbNYV8FNejeUbxx24kaXgsuvwPvNSWGhTlq6R2cMOT
- 6AarT/lwpE/IoQn7OLvm6ynBlnPP5/j2f/Aqesbsn+ThkPH3xIFOTaAPkJWqCe5sWL4FdCGzIrh
- Ykb84QBlZR/aFR2u/XOQD4YdpEpNjOim5auiyaQ8u9ZE82fukmhPHz8rEGqREB1tyfY+H/PLHQT
- dSPZInrGZx78U6CIJiHbBfQbH8HOVFcUs/cjJ+APszvg3+rg/laytZeRq0oQPhS0NHfGdegGWqu
- 3jWeK6GS0RiVjFWn7dNZ/ct5tmsDOfHcS2v/9txbFbAQaGC1tsuDduuEM+QxLH
-X-Received: by 2002:a05:6000:29c9:b0:484:3314:eff6 with SMTP id
- ffacd0b85a97d-4858709b390mr8818158f8f.28.1788526408373; 
- Fri, 04 Sep 2026 05:53:28 -0700 (PDT)
+ bh=YInPOfi+J5WbTMOr1WjVt/C35IoOaen+Lma3WkubtKY=;
+ b=o3dHbfrmx3WNTGtH1238ZxDDIku+FTnjkoJeRjWhNPyMgsAZGY5p6eO4t7ue2jMZKN
+ J6rz2SfyG8Qm8HrKJ2XMlQH71sxjFy+giL4AhEOWLU6x0SKnljCxKgmwobhGiSUbN35f
+ e+pAOWu0ljcei5Atlq1ovun6MzhpGNvC21DJKaudg574dS2HqmuhYCXmODdg0/AR8JUa
+ ipzS2zCRFAhn+j8nSVCPeYPuosWjhreCBEjVl4ebg3J+mc+CuqFJRxGf6PqrmzgQcgaG
+ 8qBMnEtFA27WAt4Ab4wnO+/Ed1yhFcPIiOGNlEdVWKICvt7vCV6MWT+TqR3XZVu/MVV2
+ /lXQ==
+X-Gm-Message-State: AFuF++ko9KaVC14G6fmOKtwzy5rRraOMYiJusNNSZP0SbEXMtxmDq/Lw
+ glKeBaDZP6wiC7DtUhQa4lwnOFNIrhZj9S5ESd99rzS0rssm6PqUZfTGQVcZtfrt0iDwxb5RBZN
+ vXmCpKQw=
+X-Gm-Gg: AYBFou3KVVa7988FxrJo7gPxGjHEnWD5giI/romHp1Nl5mXaDCEXeh/JHSknGsEH08a
+ IOtQkQ6t+4D8mnBURM8+aZAXgHiENI4nOgUiLJDReVPiwl3FyE/o/1oZgC9fGPY3Iay+MrM6J8Y
+ +yOXBDm71Yg79rbhAx63GNNiRtnc+1AVND0E7YmhGHsOCeHYIn4pnV0hhSxhS7eKhIssrrREpxc
+ m/NHYWwNXV8AJjWnT5N1Qra9spmzKFKaTxNMuH/j7uQtm7+bcuvfIzksgWoVUiVFVtYz37+PC9r
+ +Lzta3GLhMARy+4JlA+84DYdoNC9mObMvLTGAbm5D7qJJ2fDTPjYpfBSdRXrEnncTLq9dOJZ/rO
+ JuG3Zf8+axniWzUC/zUZvzK+mop7ZMTU7JWYbLhQe+AhasmYQ4uH7XQJiQDMwGNm9pM7cxi5Yfl
+ YtZbekfcHqxc+QSkbbJclomylfM7/3+rW+sy+JiB2VDHiz/QH9/7HmNASRsBp2yJBrMiwq8LwjN
+ Q==
+X-Received: by 2002:a05:6000:29d1:b0:47f:8b24:ef01 with SMTP id
+ ffacd0b85a97d-48587091569mr6638825f8f.1.1788526405585; 
+ Fri, 04 Sep 2026 05:53:25 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485885bbb51sm6243212f8f.30.2026.09.04.05.53.25
+ ffacd0b85a97d-4858d2693e8sm2475317f8f.3.2026.09.04.05.53.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 05:53:26 -0700 (PDT)
+ Fri, 04 Sep 2026 05:53:23 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2050C61A5B;
+ by draig.lan (Postfix) with ESMTP id 57EFF61AF2;
  Fri, 04 Sep 2026 13:46:10 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>, Song Gao <17746591750@163.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 056/105] tests/tcg/i386: system tests
-Date: Fri,  4 Sep 2026 13:45:10 +0100
-Message-ID: <20260904124604.2207440-57-alex.bennee@linaro.org>
+ Bibo Mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>
+Subject: [PULL 058/105] tests/tcg/loongarch64: system tests
+Date: Fri,  4 Sep 2026 13:45:12 +0100
+Message-ID: <20260904124604.2207440-59-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,59 +111,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Reviewed-by: Song Gao <17746591750@163.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-57-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-59-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/i386/Makefile.softmmu-target b/tests/tcg/i386/Makefile.softmmu-target
+diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
 deleted file mode 100644
-index 4096a1cf31f..00000000000
---- a/tests/tcg/i386/Makefile.softmmu-target
+index 6d4a20fde73..00000000000
+--- a/tests/tcg/loongarch64/Makefile.softmmu-target
 +++ /dev/null
-@@ -1,37 +0,0 @@
+@@ -1,33 +0,0 @@
 -#
--# x86 system tests
--#
--# This currently builds only for i386. The common C code is built
--# with standard compiler flags however so we can support both by
--# adding additional boot files for x86_64.
+-# Loongarch64 system tests
 -#
 -
--I386_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/i386/system
--X64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+-LOONGARCH64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/loongarch64/system
+-VPATH+=$(LOONGARCH64_SYSTEM_SRC)
 -
 -# These objects provide the basic boot code and helper functions for all tests
 -CRT_OBJS=boot.o
 -
--CRT_PATH=$(I386_SYSTEM_SRC)
--LINK_SCRIPT=$(I386_SYSTEM_SRC)/kernel.ld
--LDFLAGS=-Wl,-T$(LINK_SCRIPT) -Wl,-melf_i386
--CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+-LOONGARCH64_TEST_SRCS=$(wildcard $(LOONGARCH64_SYSTEM_SRC)/*.c)
+-LOONGARCH64_TESTS = $(patsubst $(LOONGARCH64_SYSTEM_SRC)/%.c, %, $(LOONGARCH64_TEST_SRCS))
 -
--TESTS+=$(MULTIARCH_TESTS)
--EXTRA_RUNS+=$(MULTIARCH_RUNS)
+-CRT_PATH=$(LOONGARCH64_SYSTEM_SRC)
+-LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
+-LDFLAGS=-Wl,-T$(LINK_SCRIPT)
+-TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
+-CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
+-LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
 -
 -# building head blobs
 -.PRECIOUS: $(CRT_OBJS)
 -
 -%.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
 -
 -# Build and link the tests
 -%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
 -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
 -
--memory: CFLAGS+=-DCHECK_UNALIGNED=1
--
+-memory: CFLAGS+=-DCHECK_UNALIGNED=0
 -# Running
--QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
-diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index 62074b86c9e..5cda03655fa 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -2,6 +2,8 @@ cc = 'i686-linux-gnu-gcc'
- cc_dockerfile = 'debian-i686-cross'
+-QEMU_OPTS+=-serial chardev:output -kernel
+diff --git a/tests/tcg/loongarch64/meson.build b/tests/tcg/loongarch64/meson.build
+index 209179fd96c..1d62de64ed6 100644
+--- a/tests/tcg/loongarch64/meson.build
++++ b/tests/tcg/loongarch64/meson.build
+@@ -2,6 +2,8 @@ cc = 'loongarch64-unknown-linux-gnu-gcc'
+ cc_dockerfile = 'debian-loongarch-cross'
  cc_docker_host_arch = ['x86_64']
  
 +subdir('system')
@@ -170,12 +168,12 @@ index 62074b86c9e..5cda03655fa 100644
  tests = []
  
  tests += tcg_tests['multiarch-linux-user']['tests']
-diff --git a/tests/tcg/i386/system/meson.build b/tests/tcg/i386/system/meson.build
+diff --git a/tests/tcg/loongarch64/system/meson.build b/tests/tcg/loongarch64/system/meson.build
 new file mode 100644
-index 00000000000..d3f73997c7f
+index 00000000000..5bf4c56e385
 --- /dev/null
-+++ b/tests/tcg/i386/system/meson.build
-@@ -0,0 +1,49 @@
++++ b/tests/tcg/loongarch64/system/meson.build
+@@ -0,0 +1,48 @@
 +tests = []
 +
 +minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
@@ -187,13 +185,12 @@ index 00000000000..d3f73997c7f
 +          '-Wa,--noexecstack',
 +          '-I', minilib_dir, minilib_printf, boot,
 +          '-Wl,-T', link_script,
-+          '-Wl,-melf_i386',
++          '-march=loongarch64',
++          '-mabi=lp64d',
 +          '-Wl,--no-warn-rwx-segments',
 +          '-lgcc']
 +qemu_def_args = ['-display', 'none',
-+                 '-device', 'isa-debugcon,chardev=stdio',
-+                 '-chardev', 'stdio,id=stdio',
-+                 '-device', 'isa-debug-exit,iobase=0xf4,iosize=0x4',
++                 '-serial', 'stdio',
 +                 '-kernel']
 +
 +# Multi arch tests
@@ -202,7 +199,7 @@ index 00000000000..d3f73997c7f
 +  foreach src, setup: t
 +    new_cflags = cflags
 +    if fs.stem(src) == 'memory'
-+      new_cflags += '-DCHECK_UNALIGNED=1'
++      new_cflags += '-DCHECK_UNALIGNED=0'
 +    endif
 +    if src not in multi_src
 +      setup += {'cflags': [new_cflags]}
@@ -212,15 +209,15 @@ index 00000000000..d3f73997c7f
 +  endforeach
 +endforeach
 +
-+if 'qemu-system-i386' in emulators
++if 'qemu-system-loongarch64' in emulators
 +  tcg_tests += {
-+    'i386-softmmu': {
++    'loongarch64-softmmu': {
 +      'cc': cc,
 +      'cc_dockerfile': cc_dockerfile,
 +      'cc_docker_host_arch': cc_docker_host_arch,
-+      'folder': 'i386/system',
-+      'gdb_arch': 'i386',
-+      'qemu': emulators['qemu-system-i386'],
++      'folder': 'loongarch64/system',
++      'gdb_arch': 'loongarch64',
++      'qemu': emulators['qemu-system-loongarch64'],
 +      'tests': tests,
 +    }
 +  }
