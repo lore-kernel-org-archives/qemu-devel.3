@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B50C79F83
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C651C624D3
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 11:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2ReX-0004dj-JJ; Fri, 04 Sep 2026 07:00:13 -0400
+	id 1x2ReI-0004ZD-I4; Fri, 04 Sep 2026 06:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2ReW-0004dV-Aj
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:00:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x2ReH-0004Yx-Ko
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:59:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x2ReU-0007rE-P2
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 07:00:12 -0400
+ id 1x2ReG-0007cr-1x
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:59:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788519610;
+ s=mimecast20190719; t=1788519595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FljOUZcrDxLcSEtdGZg2L7bnzs/rlfsiHLxsLO2MQAk=;
- b=GHteN/mThCl/uVCxSm23RjA8Q/Uia5mxqBCt71w3404R957EcQe9HYtxtg0wVOo8JyBPqi
- THGH09DWYXvYnj06uZdUS4p2vZs9VUXM2mj5+VkLw5BMkWF6dk4TJ6wtzGsVZoeAt+miDY
- 94tkj+FT31mYIQw0UH13q3YKYLbQq1E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=/EJRWZ28A8Qn3vkd4YizCgEZKeGUYTHJKT3/AkklFjg=;
+ b=OErZJDG5Und/DVUxQFTxJi+pUTE89p04y3mGdgQO3BsgSRitGOU1pkPxb/n/RoDPqj9ChV
+ 6w8M2xfG2bhHedFkzBM4dMoVI2sKeU5r7a1fispPLR7hKkdHCGkcLVpb8sHarIVS0ojj6I
+ PibcZEgJKlIewoxHwAclJSkBiVOAnDA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-jsqfwCQgPES8Wa8pJuNL1Q-1; Fri,
- 04 Sep 2026 07:00:05 -0400
-X-MC-Unique: jsqfwCQgPES8Wa8pJuNL1Q-1
-X-Mimecast-MFC-AGG-ID: jsqfwCQgPES8Wa8pJuNL1Q_1788519604
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-MICaLqB4OT-J3HkmTivJPA-1; Fri,
+ 04 Sep 2026 06:59:52 -0400
+X-MC-Unique: MICaLqB4OT-J3HkmTivJPA-1
+X-Mimecast-MFC-AGG-ID: MICaLqB4OT-J3HkmTivJPA_1788519591
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66C54188698A; Fri,  4 Sep 2026 11:00:04 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D75D018D7258; Fri,  4 Sep 2026 10:59:50 +0000 (UTC)
 Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B952A1801AEA; Fri,  4 Sep 2026 11:00:02 +0000 (UTC)
+ id A8D2218005BD; Fri,  4 Sep 2026 10:59:48 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -55,26 +55,26 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  devel@lists.libvirt.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 13/13] docs/system/security: exclude uninitialized stack
- variables as bugs
-Date: Fri,  4 Sep 2026 11:59:29 +0100
-Message-ID: <20260904105929.3450663-14-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>
+Subject: [PULL 07/13] tests/unit: add websock handshake test
+Date: Fri,  4 Sep 2026 11:59:23 +0100
+Message-ID: <20260904105929.3450663-8-berrange@redhat.com>
 In-Reply-To: <20260904105929.3450663-1-berrange@redhat.com>
 References: <20260904105929.3450663-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,38 +90,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The -ftrivial-auto-var-init=zero usage guarantees implicit zero
-initializers for all stack variables. Thus most bug reports relying
-on undefined behaviour from lack of variable initialization will
-not be security issues, or even bugs.
+From: Denis V. Lunev <den@openvz.org>
 
+Check that malformed HTTP greetings are answered with an HTTP 400
+rather than an empty response. The no-space case is the one which used
+to leave the response buffer empty.
+
+Fixes: CVE-2026-84788
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/system/security.rst | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tests/unit/meson.build               |   1 +
+ tests/unit/test-io-channel-websock.c | 105 +++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
+ create mode 100644 tests/unit/test-io-channel-websock.c
 
-diff --git a/docs/system/security.rst b/docs/system/security.rst
-index af626a4230..8c42d1a6d8 100644
---- a/docs/system/security.rst
-+++ b/docs/system/security.rst
-@@ -143,6 +143,16 @@ an issue as a normal bug.
-   which case plain manipulation of the stream is not considered as
-   an attack vector.
- 
-+* **uninitialized stack variables**. If the bug scenario relies on
-+  undefined behaviour from stack variables that lack explicit
-+  initialization, it will not usually be considered a security flaw.
-+  The build system adds '-ftrivial-auto-var-init=zero', which is
-+  available in both the supported compilers (GCC and CLang) and
-+  ensures all stack variables have implicit zero-initializers.
-+  This eliminates undefined behaviour and usually gives the
-+  correct desired initialization value, eliminating most of the
-+  bug scenarios wrt uninitialized stack variables.
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 3a9866c1f2..6a11f07112 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -93,6 +93,7 @@ if have_block
+     'test-io-channel-command': ['io-channel-helpers.c', io],
+     'test-io-channel-buffer': ['io-channel-helpers.c', io],
+     'test-io-channel-null': [io],
++    'test-io-channel-websock': [io],
+     'test-crypto-ivgen': [io],
+     'test-crypto-afsplit': [io],
+     'test-crypto-block': [io],
+diff --git a/tests/unit/test-io-channel-websock.c b/tests/unit/test-io-channel-websock.c
+new file mode 100644
+index 0000000000..2a55a4bcdf
+--- /dev/null
++++ b/tests/unit/test-io-channel-websock.c
+@@ -0,0 +1,105 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * QEMU I/O channel websock test
++ *
++ * Copyright (c) 2026 Virtuozzo International GmbH
++ */
 +
- * **low severity impact**. As a catch all rule, issues which
-   are judged to have a "low" severity impact on the system will
-   usually not justify handling as security bugs, nor assignment
++#include "qemu/osdep.h"
++#include "io/channel-websock.h"
++#include "io/channel-socket.h"
++#include "qapi/error.h"
++#include "qemu/module.h"
++#include "qemu/sockets.h"
++
++typedef struct {
++    bool finished;
++    bool failed;
++} QIOChannelWebsockHandshake;
++
++static void test_websock_handshake_done(QIOTask *task, gpointer opaque)
++{
++    QIOChannelWebsockHandshake *res = opaque;
++
++    res->finished = true;
++    res->failed = qio_task_propagate_error(task, NULL);
++}
++
++/*
++ * Drives a server-side handshake against @request and returns whatever
++ * the server wrote back, NUL terminated. The handshake is expected to
++ * fail; the point of the test is the HTTP response that goes with it.
++ */
++static char *test_websock_handshake_reply(const char *request)
++{
++    QIOChannelWebsockHandshake res = { false, false };
++    QIOChannelSocket *cli, *srv;
++    QIOChannelWebsock *wioc;
++    GMainContext *mainloop;
++    int channel[2];
++    char *reply;
++    ssize_t got;
++
++    g_assert(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, channel) == 0);
++
++    cli = qio_channel_socket_new_fd(channel[0], &error_abort);
++    srv = qio_channel_socket_new_fd(channel[1], &error_abort);
++    qio_channel_set_blocking(QIO_CHANNEL(srv), false, &error_abort);
++    qio_channel_set_blocking(QIO_CHANNEL(cli), false, &error_abort);
++
++    wioc = qio_channel_websock_new_server(QIO_CHANNEL(srv));
++    qio_channel_websock_handshake(wioc, test_websock_handshake_done,
++                                  &res, NULL);
++
++    qio_channel_write_all(QIO_CHANNEL(cli), request, strlen(request),
++                          &error_abort);
++
++    mainloop = g_main_context_default();
++    while (!res.finished) {
++        g_main_context_iteration(mainloop, TRUE);
++    }
++    g_assert(res.failed);
++
++    reply = g_malloc0(1024);
++    got = qio_channel_read(QIO_CHANNEL(cli), reply, 1023, &error_abort);
++    if (got > 0) {
++        reply[got] = '\0';
++    }
++
++    object_unref(OBJECT(wioc));
++    object_unref(OBJECT(srv));
++    object_unref(OBJECT(cli));
++
++    return reply;
++}
++
++static void test_websock_bad_request(const void *opaque)
++{
++    const char *request = opaque;
++    g_autofree char *reply = test_websock_handshake_reply(request);
++
++    g_assert_true(g_str_has_prefix(reply, "HTTP/1.1 400 Bad Request\r\n"));
++}
++
++int main(int argc, char **argv)
++{
++    module_call_init(MODULE_INIT_QOM);
++    g_test_init(&argc, &argv, NULL);
++
++#define TEST_BAD_REQUEST(name, request)                         \
++    g_test_add_data_func("/io/channel/websock/bad-request/" name, \
++                         request, test_websock_bad_request)
++
++    /*
++     * A greeting with no space at all used to leave the response buffer
++     * empty, which drove the handshake into a zero length write.
++     */
++    TEST_BAD_REQUEST("no-space", "stats\r\nx\r\n\r\n");
++    TEST_BAD_REQUEST("method-only", "GET\r\nx\r\n\r\n");
++    TEST_BAD_REQUEST("no-version", "GET /\r\nx\r\n\r\n");
++    TEST_BAD_REQUEST("bad-method", "POST / HTTP/1.1\r\nx: y\r\n\r\n");
++    TEST_BAD_REQUEST("bad-version", "GET / HTTP/1.0\r\nx: y\r\n\r\n");
++
++    return g_test_run();
++}
 -- 
 2.55.0
 
