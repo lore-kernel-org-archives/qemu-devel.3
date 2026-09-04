@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8823FC79F82
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680B5C79F87
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 20:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2a5Y-00046s-Sd; Fri, 04 Sep 2026 16:00:40 -0400
+	id 1x2a5k-0005Cd-41; Fri, 04 Sep 2026 16:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a5V-0003fj-86
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:37 -0400
+ id 1x2a5i-00057t-Ca
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x2a5T-0008Io-FM
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:36 -0400
+ id 1x2a5g-0008Lp-RF
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 16:00:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788552034;
+ s=mimecast20190719; t=1788552048;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FJp1n1X4kEb9FVyTrLhFfNk3BbvcDbYF/4WsCIfyaaw=;
- b=Jf/KoPM3s2XR/68/257MQOfk+Op3wowkd+9zgkr18lwtn/AmzWHwNDW7PSZEMjeDOscZYk
- TCu1uGffhcmxdeIryRcY0wYXMj6TTG657OTkNsaZ/BSck1bPIvaVgrOdX/AfHFzRAqxiFP
- zLgO3VIlsx0cSh+24dhhQXIBAnQOhJE=
+ bh=ToLJhQPMRz6Q1MKU2Z1nPk0uHGyHQ2rzehLqFuMaRso=;
+ b=Br5YE4amf4P+8b2MHGRtWYlNIUB5K3Nc1MvLayvdMKFIoBllvpOGh/5tARIFZ15a35jhN5
+ uOHtLVTPqtBcYQ+uMGCO9hFf3Wfxf9KJ+WMkaAN26F6EyShFrCpKtcDP/RRXi0KU4C5hlj
+ EpPLssoTv0diMEWMWNvDHuWJU9DAehc=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-peOq2TIdObWWl3AVlu8z9Q-1; Fri,
- 04 Sep 2026 16:00:31 -0400
-X-MC-Unique: peOq2TIdObWWl3AVlu8z9Q-1
-X-Mimecast-MFC-AGG-ID: peOq2TIdObWWl3AVlu8z9Q_1788552030
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-DJWo_Y0uOWyVYDQmBCEMOw-1; Fri,
+ 04 Sep 2026 16:00:45 -0400
+X-MC-Unique: DJWo_Y0uOWyVYDQmBCEMOw-1
+X-Mimecast-MFC-AGG-ID: DJWo_Y0uOWyVYDQmBCEMOw_1788552044
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BF261893EC1; Fri,  4 Sep 2026 20:00:30 +0000 (UTC)
+ id 3909E1893ECB; Fri,  4 Sep 2026 20:00:44 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9856E1800577; Fri,  4 Sep 2026 20:00:29 +0000 (UTC)
+ id 2FE331800577; Fri,  4 Sep 2026 20:00:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 04 Sep 2026 23:58:22 +0400
-Subject: [PATCH v4 39/75] target/i386: fix CPUID version properties
- typename
+Date: Fri, 04 Sep 2026 23:58:26 +0400
+Subject: [PATCH v4 43/75] net/colo-compare: fix compare_timeout setter
+ visitor type
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260904-qom-qapi-v4-39-a985f168e938@redhat.com>
+Message-Id: <20260904-qom-qapi-v4-43-a985f168e938@redhat.com>
 References: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 In-Reply-To: <20260904-qom-qapi-v4-0-a985f168e938@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,23 +66,23 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Zhao Liu <zhao1.liu@intel.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1469;
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
+ Jason Wang <jasowangio@gmail.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=932;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=nGSAzw2abdBuzYrCnna+i4/DxV7ssuqypEQwO1YQiCc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqmyLKZ/eQ/Ati9HSVR/aZPmQfXwgy0CiehYh09
- 70PocVuZY6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCapsiygAKCRDa6OEJdZac
- 5eX4EACYmyesSmt8a0+jPV1Go+Ic4LNmPM9+h/PqEDO+LrvhLtU2AL5n9Ox+WaBMD/dRZcCHwJf
- HEUo1Q/9LGCPzFV7hzMDAyAQPdEy/Z/WZ2QVYR5iBtdeehAHxHihokMBTK2bPdrTEP93iq/7jiT
- tiPevQi45q5C7uJ2ryRYXuJeKT5Hs+hE6ebe8M3Wg9A/5lObN4G6WOe7NQ3Pq/NAkZi9KkiCwCp
- Uh/IMjOk9668VxIBOPl7v3DrQY0J2x7hziZYjbkyYBXOuScoMVVLR7YHb3ZqS8OH1SDoXO6G0h7
- CT0tORJ0NpXz+tyYmbZ6NXjeNJ+GTzivLES7yqf78QPer7gCIMfSX0kFTPsI2arysqX58god60d
- 7JbUk2YB3W8XmKVHqcVepZluAXSGwI/kkrOe7uJmCClNGKzH6YI13MVd8VguGvQxwmCAKP9MEbm
- SMrRKI9qwbzuitOK57ir7OTDoNPmIKHY/bfqQ1LzqfLx/l6CjamZaLv9zeYvjGfixdKsOiuMx2+
- teN5mmRdEOoafsG2A2GR2k2xgaTZ3qiatCKld0s733aEHGDQyrJ+msB81MyA3WsNR0X3T9NKQI4
- 96VTWofKc47vL4xgbjS8G1PelPT+U3pIcjtd7rESUEGYCaRx6S+y/eXH/tPfCfJiXCqfKOXzkru
- I8Zki0Wz899B/xA==
+ bh=rEFhsqDOs12Ay0m8ssGFoc+f7fZzJv5d/VfvFSaHnOw=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGqbIsqi+uiupJzcaS60keoudMTzPiIOsCdCpNpAeOcWTyLJ0
+ YkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJqmyLKAAoJENro4Ql1lpzlxKsP/A/J
+ 9HsKb0iEjHdnQTntRQes/kg1Kp/4DzJJhfgYvYnGKDWvv4/iSnDZd8NVesDcTFpKKNiQaeNe94X
+ yye1TX6MEtyW1yCsALpTZZdNgdI+11QUKG8A4Rtif+u37SabH6b1EWCg8MCq0y/2UNrnzVgdCHE
+ AN9uXcawKgKmQ7QYnaMUlp2IHEJJ88+H7EkxYwltDyC6W00cMdWKk5unecj6cH/44wOruQyeaeY
+ fv8M+P6j0Tb23CzRQRSxFWAwR7SPOWJjAdnWyrjW5IZNVa/K8SozWEt/O5c1wjjMf3zAp0kF9LJ
+ qadG0lo1fHL4qGrqZaecn7LH7B07SZKwJbWFreJxxR7+StZUw1tfcQvoG+o4u5B2Qlicpqy/YN6
+ mdnozx0ZJuS0wXoZpcH6MlYV6sV/W68M2bxohPds8qHkn4ztSG+MgEJ4OgLc7o8Ue56kxqx4lJP
+ yFvQLA+BVhinRfnQvgtSfBQD3MQN3aFD2/2GzCy9dYheBGYCOFCOGwLDS8Zo7ZJZMjzzYvoWkZH
+ 8q4Zvxw8vSh3XB2ut963nfr/34GvAGpf6Vv7InH+Zv9TEoWGCXkyvZOOGBv5OqA+sAMSarKGrw5
+ tsiAZWZpnpimIO8VI0W4PshUEicl3Jk0wTKNGPN9TVX/LAVf20OAV5aS2QvqEE+O+JBuw6iLZ7x
+ yUkCc
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
@@ -111,36 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The getter and setter use visit_type_uint64, not visit_type_int.
+The setter was using visit_type_uint32, truncating the value, while the
+getter and typename use uint64. Use visit_type_uint64 consistently.
 
-Fixes: 3e0dceaf9450 ("i386: Register most CPU properties as class properties")
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Fixes: 0c4266ef2690 ("net/colo-compare.c: Fix compare_timeout format issue")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/colo-compare.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 7c24eba3e0c3..8650ff6caecc 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10950,13 +10950,13 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index 5986fb1e8800..948a2f7f9e4b 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -1075,9 +1075,9 @@ static void compare_set_timeout(Object *obj, Visitor *v,
+                                 Error **errp)
+ {
+     CompareState *s = COLO_COMPARE(obj);
+-    uint32_t value;
++    uint64_t value;
  
-     dc->user_creatable = true;
- 
--    object_class_property_add(oc, "family", "int",
-+    object_class_property_add(oc, "family", "uint64",
-                               x86_cpuid_version_get_family,
-                               x86_cpuid_version_set_family, NULL, NULL);
--    object_class_property_add(oc, "model", "int",
-+    object_class_property_add(oc, "model", "uint64",
-                               x86_cpuid_version_get_model,
-                               x86_cpuid_version_set_model, NULL, NULL);
--    object_class_property_add(oc, "stepping", "int",
-+    object_class_property_add(oc, "stepping", "uint64",
-                               x86_cpuid_version_get_stepping,
-                               x86_cpuid_version_set_stepping, NULL, NULL);
-     object_class_property_add_str(oc, "vendor",
+-    if (!visit_type_uint32(v, name, &value, errp)) {
++    if (!visit_type_uint64(v, name, &value, errp)) {
+         return;
+     }
+     if (!value) {
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
