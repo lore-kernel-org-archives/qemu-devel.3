@@ -4,108 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBE5C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99360C79F83
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 08:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2PfT-0004rj-In; Fri, 04 Sep 2026 04:53:03 -0400
+	id 1x2Ph1-0005JW-V6; Fri, 04 Sep 2026 04:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1x2PfR-0004r2-T1
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:53:01 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1x2Ph0-0005In-Rf
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:54:38 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1x2PfQ-00077e-0f
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:53:01 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-836c4474028so8677767b3.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 01:52:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788511978; cv=none;
- d=google.com; s=arc-20260327;
- b=o4IEi0LxzvQNj1Dm7y7Y5Nc2KZ0Ay1+uEMJb7W0UpvKrHQGvpXW05JpbkaWNDvVIwA
- /Xj7RKZCe4oVo8lLxCm4Ha2U8tmIJbgvYNo1Zs8RJA24lIntwMuxeOUt/W46u4E/1w7n
- s6mcpR6XVlg8zk3+oQNhgWEphTab2L9hJWCvCjXuhXxJwBWBohVEh1okmBBX+fbyi0w1
- 5FO3n/x6bf4XvgH0Ar2ZQ1IpYscL6Wc09iKroeDk9qvygnHU7TqwL9yWmVypJuT+In9j
- rw7LM1Opuk18trLnLmJ7JB4zEsiSPlBU2IzQC7C91DomQcxSBk10i9/OPs9KLUvPt6/c
- xQKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=YU0H9nAuS37wxDxYALgdBEzrRf0vvgwOfz9NZINVtyk=;
- fh=PHFMoUamJdBOI2Ts8oQ7xUntPbB8kq8EKBfuZa376Xg=;
- b=XxqCMd/yg/WWDJ38JvneTTNUHokBAm7kdCqSLk2G15EgsjhRhiDLtK/P9ZvMmcJ6F1
- p4ulzI0coIF/sHhkwialOpUimo6wR745E/7sZo+4stLY78pUvx0el0OWH4Xd7vS5FY+e
- hyPBW2wf01QHy7cI5JIoc7rqyTF2A3A01xISENr9GeYSJ2wkx6F0esNEiAadRopqMaIg
- Mimg/rz6XfHmUpnwdZqh/rtEVPf4FtnkTzjbYLoS7D9UmJfqgd3ueB/wrs88LuA5uHGZ
- 2AW2JreRTG2Jph5Xgp7s425Wdnio96rWeww6TPZ0VEXZ3HG7mShaKhN1U/tPIo5JHSbo
- DPRg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1x2Pgz-0007Xy-Bp
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 04:54:38 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-398d2b28acfso562240a91.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 01:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788511978; x=1789116778; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=sifive.com; s=google; t=1788512076; x=1789116876; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=YU0H9nAuS37wxDxYALgdBEzrRf0vvgwOfz9NZINVtyk=;
- b=DXGBOySSRSOIshN16u9V8M9F4+PHjjj5AVAXcZhrJKLNmLmdaNtXOh1Go/0SvNBinZ
- J4tXZeBjZL4p2273vPhgqra/1oL7BpBeEdVtT5ArRnG67i7SE4kROVUGBpCW0wTGHUGZ
- qJcRyGryvbo/30Y2rRTbY25oAUdsruwzp1YB+c3uBqEd4E7TSQ6BvMy82VwPqM+TjFn3
- QRBC5mcwxrkKgmB5MYAvkE+z7z6yAcJBIJd/V0HYdUYWC9l0Q39O2f/SaYeaVAqlUq1O
- axGWnwDs9GijnBebPw9UwwauiIPa0oRYcOxlVBdmDNwm0CelMxT/4WbY8v8KbBJZSqj3
- WlbA==
+ bh=cKiuKxyyWJSuIyXVWzlv/wqmaebtjtdx2ZKx6moBL3s=;
+ b=RYT0FlQNJP46fqe03scRbKcEC9+0OBt6bJIRVblBS+Kv1EDmG4yL4ES5aS/mPEctnV
+ V+Y0KVC8G1cn44uSABooreoAs+aWS6kgCERHUIgaCktQ94D2dk5QSwBMG038HC4zx1V1
+ SrQM+Z0N1+aRdMdy+66ZwyHrs+Nq3e20ulX0IUXXBmRhI4j0DOPMYFiGhnVrt2HZyXtw
+ yn1zvvlgos8sVuviO/Zp9KdaZA9xgkNdq4OnAUuIB4eVf2IaJrJZmnBe/osIOQA6LLra
+ HaPtQqk7e7EP4tgHKWuKwHRBEoTLwmmkgSgps6Pk//Qear+0xxr+ov/FpRteDEs3xwED
+ AAIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788511978; x=1789116778;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1788512076; x=1789116876;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=YU0H9nAuS37wxDxYALgdBEzrRf0vvgwOfz9NZINVtyk=;
- b=lqJRog4vhM+b7SG4oq18mrbr4jrP55B1MW3x8fIifjySWuEZ9e0yaLAXk9lF86zHM3
- oN4xkMiGBTiZ76VzKTXcLdtWo5/pDxy/CYAoxxMDMWX8Ht1P8RlFROD74zuRT/P9cm4o
- +MAvFw8wJ+2nR02kiN9eYuYashYIsrX0BJiMy6OqzK6AAojYew0V2aWmPuSNFPWQuVzm
- u2o3zPubnp+AU8x7FQ9LWkeX5MdG7OkKJk0+XVicJ4lv3U0vNDSMvveHHi9jxue8vabC
- At45xC4cejrygiEomoPsoIlfhdD992BECbJp7w5xLGb1Dnq1fFqG1Pk421Ql8DfMbEUz
- opJA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwhxuVu8fdBpPgvBi5PhWc5raLmCqJ8lfVQ+bdcKJ51A1a7PXtkS6D4+MeHJZB3oOgQKm+12wJu9WR8@nongnu.org
-X-Gm-Message-State: AFuF++lee//rk6jW7j34lilPIhSrPIKplG8JcuhZsRBimBQ3IZp8kW6S
- WSpZ4zeVvGTg1krn4q6VjHcjgxSaqiz4k9nELD2NvF9//ucKMjDBKAvWI1V1+k3Wtn2PhP2OtnS
- GfWbt7Q516c+zIKUBr5NSUguH1NmwzHY=
-X-Gm-Gg: AYBFou1cEK05Si0o1io/9WSmYGz+dTqzcEnOE64j2G41BX7V50neznvP1AyfVjpUib3
- igZ9UXuRNvxBGoPYnR+GL22XZGZpD+Xai5vHnR9RCWZCERKIM8ZfEShSMJdVcsOc05iFC14z7O9
- lGGZsUFnyAavjbPoWS5zY8c7Ri7D7sgbClpGZ0F/Lw7y/mutFBQhE+oL6UWuCPUpbBLM68Fuu1G
- 3tj8XSpARjwPPKfGrLLmJ3K/z2ZV1ZJZEbVh5bANwfBSpgjfS9zgN6K+KtQzM1ksamZGZKZvlri
- y2ZDY/BheZZXbnax+SS07qLKq32ERVwYPPR/27sJZiCo
-X-Received: by 2002:a05:690c:c59f:b0:86a:5def:5f15 with SMTP id
- 00721157ae682-8712800debamr20165177b3.29.1788511978543; Fri, 04 Sep 2026
- 01:52:58 -0700 (PDT)
+ bh=cKiuKxyyWJSuIyXVWzlv/wqmaebtjtdx2ZKx6moBL3s=;
+ b=BXovTJxprOPQUlVvAEick32onOllo6Ic5wjKgTAo70weLxA+v46UFAJAzbni4nghaX
+ o/pgfrRI0d8b/DV7TbSJZhnrtutD2wn3cKyRO5dr6beoAfMo0Klxs88nffGj8oEbfHIW
+ rlIEzuCLCNLd5xYtFPqjSsfg+TI4thJ46WOOAexPCEoSA6bbv7QPApLDvmt2eIsCJqmJ
+ /HFZJ2u554VUEEGh1r0S6n6tYQUoGITXB9HvGka6Y3v52aXSk4wat8FrvQsRgylm4L34
+ HhRtU5YZZDUkKchb98bvD7nNoBm0FzxcyQc+KxwtCC1QHtF5GsZcsJ3UulSxvD5V+9IQ
+ jBSA==
+X-Gm-Message-State: AFuF++lllXMfWnElHsQ97Gq5EVCcgSd3jPchfuhktA60iKEpYswr6kWN
+ j9/XGjcNDykqYWeTrlvbBhqrAtrdi+bie009XmLp8IhPJKPWIx+HQdEjeONFsavMkZN575GKJez
+ DZ9MBksmIXZ48HsRk6E9Ca77qcwuDQnfjFe/9ZUSKcqnEYfhRu9uUS1Luw6ayBcNoIdFJS/DaSz
+ 6eFhsixw+61WyF8IcVGxPpKFRWJnIQyzQr+BFy3y5CNQ==
+X-Gm-Gg: AYBFou1YGwO45Gg1azE3dnyDiFFx/RTkAjPix3w8IbvQ59NoQde5eTiJjgHSyWr0oY0
+ qN10cwYkAcuiJ6gQtNDBPzFLF+sQMGFdzds5CXYYXCNjByOBQMVqHcukwLWcwUItq/hGa+bljOL
+ tR4zVq68NNnbeM4GHjut8Juuk5a+T7V3o5kTOXgPaGJaR/pgNZSgbdB81ouGHHQLQtRf+Bu7Ml6
+ swgKoFKu07EQpowA2KIsOS8yQ5RSo7RMp8Jf9pMFsj6b72t01yyVyijbnmHSWSmiz/a/VJuqGBV
+ iNG0cUSDhfyPsHiQXBxSE/8dk8Ju0oOckg3ZFTYrGjeRVNKrJ/96UM2EoY8tjmYnHcGFnUgFWVJ
+ qxUeD1I71CCKiIlDTZkNIB7FH05kXn7GXaB2wOiWlpSClkpkhZZmDK9Mv2JfFcmK+TyFCJ+ex4Z
+ 8mi/6UoRGve5bAhuWUfizqb/nZcyhseFPZ1ZRuX+9Rp/PwurGG+4DGaF8r7xRoH41Rr3JSPoNJA
+ Qn9/HEPcil76NOMy9tI4/Hd+wPV1/nmPPJvIjWl6aHPUKxLfz6Vn5teEyNs9pA=
+X-Received: by 2002:a17:90b:4c4e:b0:399:1b64:e0d7 with SMTP id
+ 98e67ed59e1d1-39b262aaf32mr7108644a91.19.1788512075489; 
+ Fri, 04 Sep 2026 01:54:35 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39ae8f1448esm4782912a91.4.2026.09.04.01.54.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Sep 2026 01:54:35 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Max Chou <max.chou@sifive.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 1/2] tcg/riscv64: Validate AUIPC relocation range
+Date: Fri,  4 Sep 2026 16:54:25 +0800
+Message-ID: <20260904085426.3686492-2-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260904085426.3686492-1-max.chou@sifive.com>
+References: <20260904085426.3686492-1-max.chou@sifive.com>
 MIME-Version: 1.0
-References: <20260903112532.3276678-1-bin.meng@processmission.com>
- <20260903112532.3276678-33-bin.meng@processmission.com>
- <87y0dipfhv.fsf@draig.linaro.org>
-In-Reply-To: <87y0dipfhv.fsf@draig.linaro.org>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Fri, 4 Sep 2026 16:52:46 +0800
-X-Gm-Features: AcwNN1XoRcVVUYWqSma1V2tDLFiFsRbYBEm6NwNA5exZ7fNtvan5tpjt_VFEeKI
-Message-ID: <CAEUhbmXDFwhJrdh6w3f9pwG29W_6-ixxNiR3-jRo+4KuEHGO+g@mail.gmail.com>
-Subject: Re: [PATCH 32/33] tests/functional/aarch64: Add Phytium Pi boot tests
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1133.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,196 +110,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+reloc_call splits a PC-relative offset into a signed 12-bit low
+immediate and an AUIPC contribution. When the low immediate carries into
+bit 31, the existing 32-bit arithmetic can accept an unencodable
+positive 0x80000000 AUIPC contribution.
 
-On Thu, Sep 3, 2026 at 10:38=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> Bin Meng <bin.meng@processmission.com> writes:
->
-> > The Phytium Pi machine supports both the board firmware flow from SD
-> > and direct Linux boot. Exercise both paths with an SDK image bundle so
-> > firmware handoff and kernel loading regressions are caught.
-> >
-> > Verify U-Boot, PBF relocation, the Linux handoff, and login for the
-> > firmware path. The Linux test loads the bundled kernel, DTB, and
-> > initramfs and waits for the same login prompt.
-> >
-> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > ---
-> >
-> >  tests/functional/aarch64/meson.build        |  2 +
-> >  tests/functional/aarch64/test_phytium_pi.py | 77 +++++++++++++++++++++
-> >  2 files changed, 79 insertions(+)
-> >  create mode 100644 tests/functional/aarch64/test_phytium_pi.py
-> >
-> > diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aa=
-rch64/meson.build
-> > index f0881bed16..71bf45e4ea 100644
-> > --- a/tests/functional/aarch64/meson.build
-> > +++ b/tests/functional/aarch64/meson.build
-> > @@ -7,6 +7,7 @@ test_aarch64_timeouts =3D {
-> >    'device_passthrough' : 720,
-> >    'imx8mm_evk' : 240,
-> >    'imx8mp_evk' : 240,
-> > +  'phytium_pi' : 600,
-> >    'raspi4' : 480,
-> >    'reverse_debug' : 180,
-> >    'rme_virt' : 1200,
-> > @@ -39,6 +40,7 @@ tests_aarch64_system_thorough =3D [
-> >    'imx8mp_evk',
-> >    'kvm',
-> >    'multiprocess',
-> > +  'phytium_pi',
-> >    'raspi3',
-> >    'raspi4',
-> >    'replay',
-> > diff --git a/tests/functional/aarch64/test_phytium_pi.py b/tests/functi=
-onal/aarch64/test_phytium_pi.py
-> > new file mode 100644
-> > index 0000000000..4ae0392bdd
-> > --- /dev/null
-> > +++ b/tests/functional/aarch64/test_phytium_pi.py
-> > @@ -0,0 +1,77 @@
-> > +#!/usr/bin/env python3
-> > +#
-> > +# Functional tests for the Phytium Pi machine
-> > +#
-> > +# Copyright (c) 2026 Process Mission
-> > +#
-> > +# Author:
-> > +#   Bin Meng <bin.meng@processmission.com>
-> > +#
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +from qemu_test import Asset, LinuxKernelTest
-> > +from qemu_test import skipBigDataTest, skipIfMissingCommands
-> > +
-> > +
-> > +class PhytiumPiMachine(LinuxKernelTest):
-> > +
-> > +    ASSET_BUILDROOT =3D Asset(
-> > +        ('https://github.com/processmission/qemu-machine-images/releas=
-es/'
-> > +         'download/v1.0.0/aarch64-phytium-pi-v1.0.0.tar.zst'),
-> > +
-> > '5219d52b862e1245b12f79ba72e9a6144f5e0cf1a50061f8fda2db0aeeb92428')
->
-> Nice ;-)
->
-> I've been looking into something similar to make it easy to set up
-> github projects that can build and host test assets:
->
->   https://github.com/stsquad/buildroot-asset
+Keep the split in pointer-width arithmetic and reject it unless the
+rounded upper contribution is representable as signed 32-bit. Factor
+this validation into split_auipc_offset so reloc_call retains its
+existing failure contract.
 
-This is actually very close to what I have been doing with
-https://github.com/processmission/qemu-machine-images. It is intended
-to be a common repository for QEMU machine test assets.
+Fixes: dfa8e74f9463 ("tcg/riscv: Add the relocation functions")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ tcg/riscv64/tcg-target.c.inc | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-Each machine has a small description under:
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 2ce9d47a633..76db0de94c3 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -641,14 +641,31 @@ static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
+     return false;
+ }
+ 
+-static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
++static bool split_auipc_offset(tcg_insn_unit *src_rw,
++                               const tcg_insn_unit *target,
++                               uint32_t *hi, uint32_t *lo)
+ {
+     const tcg_insn_unit *src_rx = tcg_splitwx_to_rx(src_rw);
+     intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
+-    int32_t lo = sextreg(offset, 0, 12);
+-    int32_t hi = offset - lo;
++    intptr_t low = sextreg(offset, 0, 12);
++    intptr_t high = offset - low;
++
++    /* AUIPC sign-extends its 20-bit immediate after shifting by 12. */
++    if (high != sextreg(high, 0, 32)) {
++        return false;
++    }
++
++    *hi = (uint32_t)high;
++    *lo = (uint32_t)low;
++
++    return true;
++}
++
++static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
++{
++    uint32_t hi, lo;
+ 
+-    if (offset == hi + lo) {
++    if (split_auipc_offset(src_rw, target, &hi, &lo)) {
+         src_rw[0] |= encode_uimm20(hi);
+         src_rw[1] |= encode_imm12(lo);
+         return true;
+-- 
+2.43.0
 
-  machine/<architecture>/<machine>/
-
-It selects the independently built components, required images and
-machine-specific QEMU launcher. The container builders, packaging,
-checksums, release manifest and GitHub Actions workflow are shared.
-The workflow also distinguishes between the main repository and forks.
-A fork can build selected machines and upload run-scoped Actions
-artifacts without publishing a release. It can optionally publish its
-own development prerelease, while the main repository publishes
-frozen, versioned assets.
-
->
-> although my builds seem to take quite a bit longer that yours.
-
-Yeah, as I only built the minimal busybox-based buildroot
-configuration, which is enough for QEMU boot testing :)
-
->
-> I wonder if there is a way to have a common repository set up but in a
-> way that the forks can just build their own images. Either that or a
-> core repository which everyone just forks adds their device and merges.
-
-So perhaps qemu-machine-images could serve as a starting point for the
-common repository you describe. I would be happy to accept machine
-definitions from other contributors and make the add-a-machine
-workflow simpler.
-
-Your buildroot-asset project also has useful ideas, particularly
-including enough Buildroot configuration and source metadata to
-reproduce an image manually. It would be good to align the two efforts
-instead of growing separate repositories for each maintainer or board.
-
->
-> Anyway, test looks sane:
->
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-Thanks for the review!
-
->
-> > +
-> > +    def _prepare_images(self):
-> > +        self.set_machine('phytium-pi')
-> > +
-> > +        archive_path =3D self.uncompress(
-> > +            self.ASSET_BUILDROOT,
-> > +            target=3D'aarch64-phytium-pi-v1.0.0.tar',
-> > +            format=3D'zstd')
-> > +        self.archive_extract(archive_path, format=3D'tar')
-> > +
-> > +        self.vm.set_console(console_index=3D1)
-> > +        self.vm.add_args('-smp', '4',
-> > +                         '-m', '4G',
-> > +                         '-display', 'none',
-> > +                         '-nic', 'none',
-> > +                         '-no-reboot')
-> > +
-> > +    @skipIfMissingCommands('zstd')
-> > +    @skipBigDataTest()
-> > +    def test_firmware_boot(self):
-> > +        self._prepare_images()
-> > +        sdcard =3D self.scratch_file('images', 'sdcard.img')
-> > +
-> > +        self.vm.add_args(
-> > +            '-snapshot',
-> > +            '-drive', f'file=3D{sdcard},format=3Draw,if=3Dsd,index=3D0=
-')
-> > +        self.vm.launch()
-> > +
-> > +        self.wait_for_console_pattern('U-Boot 2022.01')
-> > +        self.wait_for_console_pattern('PBF relocate done')
-> > +        self.wait_for_console_pattern('Starting kernel ...')
-> > +        self.wait_for_console_pattern('Phytium login:')
-> > +
-> > +    @skipIfMissingCommands('zstd')
-> > +    @skipBigDataTest()
-> > +    def test_linux_boot(self):
-> > +        self._prepare_images()
-> > +        kernel =3D self.scratch_file('images', 'Image.gz')
-> > +        dtb =3D self.scratch_file('images', 'phytiumpi_firefly.dtb')
-> > +        initrd =3D self.scratch_file('images', 'rootfs.cpio.gz')
-> > +
-> > +        self.vm.add_args(
-> > +            '-kernel', kernel,
-> > +            '-dtb', dtb,
-> > +            '-initrd', initrd,
-> > +            '-append', 'console=3DttyAMA1,115200 '
-> > +                       'earlycon=3Dpl011,mmio32,0x2800d000 rdinit=3D/i=
-nit')
-> > +        self.vm.launch()
-> > +
-> > +        self.wait_for_console_pattern('Booting Linux on physical CPU')
-> > +        self.wait_for_console_pattern('Machine model: Phytium Pi Board=
-')
-> > +        self.wait_for_console_pattern('Phytium login:')
-> > +
-> > +
-> > +if __name__ =3D=3D '__main__':
-> > +    LinuxKernelTest.main()
->
-> --
-
-Regards,
-Bin
 
