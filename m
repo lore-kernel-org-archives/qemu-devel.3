@@ -4,114 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA39C79F82
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2333C61DD6
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 14:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2UpH-0000Iq-64; Fri, 04 Sep 2026 10:23:31 -0400
+	id 1x2Upo-0000Ra-IO; Fri, 04 Sep 2026 10:24:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2UpF-0000IH-QF
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 10:23:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x2UpD-0005Fu-Vx
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 10:23:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788531807;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zlvAeZ5BVe+Clxx9SqJuL3MQ8UJUVicNHrhOy6P/WBQ=;
- b=LNxbKhlsQqe0dPBasaJmuaYXVbM4/1gLVSj43r3pyLHCki0S2Zt1Sm9qeXQIYMa+NXIecV
- 3bYMW/40oT3qY3fOGP1KNQMJrTLtar3TeCmT+W2N+ISEgFozApR/NOH7DqZqYUxn/ekxnb
- eBG1LYNmYj5Q02aQYHIjiax/C2TVhCc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-Rvj7UMatOliI9XfRDjokeg-1; Fri, 04 Sep 2026 10:23:26 -0400
-X-MC-Unique: Rvj7UMatOliI9XfRDjokeg-1
-X-Mimecast-MFC-AGG-ID: Rvj7UMatOliI9XfRDjokeg_1788531805
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49cf5bd2f12so14029495e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 07:23:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2Upm-0000QE-Dz
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 10:24:02 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x2Uph-0005Rn-I4
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 10:24:01 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-482dd6ee390so1067482f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 07:23:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788531805; x=1789136605; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zlvAeZ5BVe+Clxx9SqJuL3MQ8UJUVicNHrhOy6P/WBQ=;
- b=WKNktx4aopQtlxq3r6Jf2XPjUKHNiI/39uxZBdXhn+22TSqUHjD6KQsjTdgIJC64JD
- cK+hMvX65xZfoQk0eN9vrjJo1kL+I4bS5FDm4Jshf+FuEPveuQHYeNe+iPPP/R6Z67rF
- thr7IqIu1huqOxHOMVH3/BwpvirjRTkuKY7BhivXwO9JPLZjh4t4rRYLPbcWyEID8aKP
- VHn1bTzxeZHFTxjYHq0Jydm3KfLkd10Y0I4JT0TPLD9uV2q74r5KFH29S2YJxoGpHVak
- yrO1ZRhXcVtt89uX8SG436kDgwsoPDcsYBJSA7qCvZbBa6wSntL9D7qu/roIaDzjMQ+N
- Vimg==
+ d=linaro.org; s=google; t=1788531836; x=1789136636; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=FOHwcRT1ha8NxbaA7v7ojIm3nHwfpWFciO6qhEa6coQ=;
+ b=oiHaVz4VOBKcGpxL9dRIwxFRA/FzdA/tKeJ93dhyMzRdW4LZt+TbSuqu/f/HgsLi0X
+ Sb/iFZ3BULYIS9PX35yXva2jalE5ifbnQoc7zbyTifLmamJsyp8/es2fwW9GNhzd68aO
+ bQty1Unz4QT58FY1EE9cCQcdGykZWHNvbHybm1SK0mZrM8EzoepU7Tk8+07Gc+qFd5I8
+ OYngkLmY4D5s5+lyl8DMFL4zBeAI3cs9O3acQqOzHcmlELbh5Vwr4MxWYZgVW8nTGBsr
+ TsLSZ5J/3eLlamJzLv7duAyrodMR5jwmiCByllF/6ilgr9f2YEsnqizpdICCpum9YcfN
+ 4A/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788531805; x=1789136605;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=zlvAeZ5BVe+Clxx9SqJuL3MQ8UJUVicNHrhOy6P/WBQ=;
- b=msqvn6HgLgDOjchhyhC1wKkBMFjKF8FkbDUD0HeHfdhRV8YPBoGZufvyclGuBF+3gT
- GLZ8xMq69GP+XK0BWzyCe8ZR6rE0YoCOY/55ePkqbnAcWtT1SAsGfD3xklIp0nlflS9T
- swThuzYUS8u7Z+ARtHoX2whCP4F2xx7HiJ5ucmH12BGShrsOwsdWWWxkQ1BgNw0VkiLU
- U3h8fNDqO5kUhqOtEe7+Y91SpJ24VC3FrqzdYFKwhsI0Hfdwrd2PWX6PxjKHL/R3X6QS
- Ep8qPHIaVrBBFLwho7i3PudX+z+lIMJ39iIgOxAmOcChyLg4yzWbWdZogmcdyRCpqF+b
- 4k+g==
+ d=1e100.net; s=20251104; t=1788531836; x=1789136636;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=FOHwcRT1ha8NxbaA7v7ojIm3nHwfpWFciO6qhEa6coQ=;
+ b=IkXLG0U/9NSUQGa/qYIp9BmRzwOZ4WrI0/r2AHmOSGV46MTADJZandFM1uY8kTVdBN
+ 81RdZqNbVmav6D62QGXT0yOgeP/QFlpB3HHFikT+So44nr1gKVgV2flsQYyRxCAeNBq8
+ rpy9+lAT4StGP58lux6DfFEY3hxNxzmHGfAnPnlYELnCcspRb25R93ZQIWPAlTfih/Ut
+ SN7iBmajZWy+SAKA76nPxUR9FnbyB0ZPS1KIrhU0JQ0x5iC/jW9UiT8Uv+rZcQjiZXIY
+ ryhtkPCJSxWrk1OkvpK+P9i+932zwfTRsdeAVBzYknhOwEx3WEa45wY/O8wZfvjahC50
+ U5xA==
 X-Forwarded-Encrypted: i=1;
- AKwUvByMdcQV14hRgFPzIYIaWeM9OSw9FSwlyTGhdV4CGpyK6otSXgKkWeepufa1FsGS7l5yld75hnoEcu80@nongnu.org
-X-Gm-Message-State: AFuF++neffg3u+R846dVa2AmUVn8CftFR1ijZYs/wHJauwfkH/RDHCzj
- HZWHnnoEXMuKVrl1EjRuStO1jx5GttDOQ7sFl6xeDd80MdgT74P5LwjsZnZrZR10G10TOnbzACU
- 0bGlWo7vy3P0YqMXXNAmNkfX/Hz3bKSO4Du5ccd364RcQIHjvrsZqDuq7
-X-Gm-Gg: AYBFou1TjZZzTfmOYMG6OB+nYTgsVNZBr1vWo4IW7uaa3WSW09tCCv1JbieFjwyZkiQ
- o0OoF6zwvLSy1WUaa6O3yd7I8XQ74ATuVK9vST1bkm8ioeTM2L+8/LWNTpmePeNeqq9GfpExrYl
- UeWNgPHG4701Hv2kBfdtZwHPN/zAQpgc14aIHZMlaVS5ove7+hzKrOlvEV2357CbhR+y9lKB78U
- 8St3FU6Q3Hg71escLBN393NHVxB9JJAGmDMF9+oEKNHeC+iarJmFHTC9nH8xk4zGMWEcfu3FZCf
- sapo3cNzZRfkCc0v8XVO6sYyri4As35h1olzVK9hw7g3WgHpGICjh/gFsbSqvCSdubhD7AwyHS8
- EfhczoWSzCatbND5yXTiqGC8=
-X-Received: by 2002:a05:6000:2388:b0:485:8a46:7054 with SMTP id
- ffacd0b85a97d-4858a46714amr4918035f8f.38.1788531802952; 
- Fri, 04 Sep 2026 07:23:22 -0700 (PDT)
-X-Received: by 2002:a05:6000:2388:b0:485:8a46:7054 with SMTP id
- ffacd0b85a97d-4858a46714amr4917885f8f.38.1788531801396; 
- Fri, 04 Sep 2026 07:23:21 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485883bbcddsm6608413f8f.20.2026.09.04.07.23.19
+ AKwUvByiFdukoBuZAnfjsHNWAS0K+0LR2A9mVx9bq2q1c6+mIgHzv+JFLfTAdyAKVS1jTqerEYIAKC/ngju6@nongnu.org
+X-Gm-Message-State: AFuF++kw5ojIWfEqjAISYX3vv51jaatUkpFX1tQz48a2d74cJ+kqszqT
+ LlCBOTzRHiIBn47d8e4mU8lAFGMs3dtYbRb62Gg1qWTpW2MN6rybg+FXyf92yaZNOUM=
+X-Gm-Gg: AYBFou0LZ2eCXhLD3GLEiXwwbLKav1hhPzijrqC5X6uK/VRto5zHUJ7nOyTKe9qLpYN
+ uaWpPR72moVJsDXOe2Jm6rnmIG/1w0i9nxKKKWFE8prpHlblpQjdz5A5bxHD/SDrJo3JzgrPlce
+ ZlzN0CZ91DxK91666dGDBR2CeZyoXuwRfOoJde0MPLtyjyYY6xYWJU0pLdVdothg+MAOJ0IHPM0
+ 30CA2o6bilJcdi3PYhduu5mMl5oy1uszQDpWBoCLhSPtq1Jr7xPR/jOZiwtYAI30kz7gdXcXr+J
+ CGBfVz9zK4RjiB/YCq7X/q6IHS+24GalOIs6vzGiXC1LaN6EySrqnSqrfcHk9NkVKt9fuaZkQOi
+ 4YXe1rOHQSL9SSqTL3pHrzHgAlMvNxD2Hq7NS2+d20mWC09eOV4Dx18dpKmGoCxG5S+yzk3qWGt
+ B5E96NmWIdqjAdruMwQVVtLLhVhs9RbyDvZjv64HBBrufg1uSs0b+f3TkHvRf876wjKna3Eh4=
+X-Received: by 2002:a5d:588d:0:b0:485:8c16:a338 with SMTP id
+ ffacd0b85a97d-4858c16a615mr3941388f8f.45.1788531835477; 
+ Fri, 04 Sep 2026 07:23:55 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-485883a9234sm6680716f8f.14.2026.09.04.07.23.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 07:23:20 -0700 (PDT)
-Date: Fri, 4 Sep 2026 10:23:17 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Chen Pei <cp0613@linux.alibaba.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, imammedo@redhat.com,
- sunilvl@ventanamicro.com, jic23@kernel.org, pbonzini@redhat.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- anisinha@redhat.com, dave.jiang@intel.com,
- alison.schofield@intel.com, junjie.cao@intel.com, guoren@kernel.org,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v5 0/6] hw/riscv/virt: Add CXL support to the RISC-V virt
- machine
-Message-ID: <20260904074710-mutt-send-email-mst@kernel.org>
-References: <20260831132340.5345-1-cp0613@linux.alibaba.com>
+ Fri, 04 Sep 2026 07:23:54 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9218E5F954;
+ Fri, 04 Sep 2026 15:23:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: Bin Meng <bin.meng@processmission.com>,  QEMU <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH 32/33] tests/functional/aarch64: Add Phytium Pi boot tests
+In-Reply-To: <CAEUhbmXDFwhJrdh6w3f9pwG29W_6-ixxNiR3-jRo+4KuEHGO+g@mail.gmail.com>
+ (Bin Meng's message of "Fri, 4 Sep 2026 16:52:46 +0800")
+References: <20260903112532.3276678-1-bin.meng@processmission.com>
+ <20260903112532.3276678-33-bin.meng@processmission.com>
+ <87y0dipfhv.fsf@draig.linaro.org>
+ <CAEUhbmXDFwhJrdh6w3f9pwG29W_6-ixxNiR3-jRo+4KuEHGO+g@mail.gmail.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Fri, 04 Sep 2026 15:23:53 +0100
+Message-ID: <87mrtxp01y.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260831132340.5345-1-cp0613@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,148 +110,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 31, 2026 at 09:23:31PM +0800, Chen Pei wrote:
-> This series adds CXL support to the RISC-V virt machine, following the
-> approach used by the ARM virt machine: CXL host bridges (pxb-cxl) are
-> described as ACPI0016 devices, an ACPI0017 (CXLM) device is added to the
-> DSDT with a _DEP on the CXL host bridges, and a CEDT table is built. A
-> bios-tables test is added to pin down the generated ACPI tables.
+Bin Meng <bmeng.cn@gmail.com> writes:
 
+> Hi Alex,
+>
+> On Thu, Sep 3, 2026 at 10:38=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>>
+>> Bin Meng <bin.meng@processmission.com> writes:
+>>
+>> > The Phytium Pi machine supports both the board firmware flow from SD
+>> > and direct Linux boot. Exercise both paths with an SDK image bundle so
+>> > firmware handoff and kernel loading regressions are caught.
+>> >
+>> > Verify U-Boot, PBF relocation, the Linux handoff, and login for the
+>> > firmware path. The Linux test loads the bundled kernel, DTB, and
+>> > initramfs and waits for the same login prompt.
+>> >
+>> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+>> > ---
+>> >
+>> >  tests/functional/aarch64/meson.build        |  2 +
+>> >  tests/functional/aarch64/test_phytium_pi.py | 77 +++++++++++++++++++++
+>> >  2 files changed, 79 insertions(+)
+>> >  create mode 100644 tests/functional/aarch64/test_phytium_pi.py
+>> >
+>> > diff --git a/tests/functional/aarch64/meson.build b/tests/functional/a=
+arch64/meson.build
+>> > index f0881bed16..71bf45e4ea 100644
+>> > --- a/tests/functional/aarch64/meson.build
+>> > +++ b/tests/functional/aarch64/meson.build
+>> > @@ -7,6 +7,7 @@ test_aarch64_timeouts =3D {
+>> >    'device_passthrough' : 720,
+>> >    'imx8mm_evk' : 240,
+>> >    'imx8mp_evk' : 240,
+>> > +  'phytium_pi' : 600,
+>> >    'raspi4' : 480,
+>> >    'reverse_debug' : 180,
+>> >    'rme_virt' : 1200,
+>> > @@ -39,6 +40,7 @@ tests_aarch64_system_thorough =3D [
+>> >    'imx8mp_evk',
+>> >    'kvm',
+>> >    'multiprocess',
+>> > +  'phytium_pi',
+>> >    'raspi3',
+>> >    'raspi4',
+>> >    'replay',
+>> > diff --git a/tests/functional/aarch64/test_phytium_pi.py b/tests/funct=
+ional/aarch64/test_phytium_pi.py
+>> > new file mode 100644
+>> > index 0000000000..4ae0392bdd
+>> > --- /dev/null
+>> > +++ b/tests/functional/aarch64/test_phytium_pi.py
+>> > @@ -0,0 +1,77 @@
+>> > +#!/usr/bin/env python3
+>> > +#
+>> > +# Functional tests for the Phytium Pi machine
+>> > +#
+>> > +# Copyright (c) 2026 Process Mission
+>> > +#
+>> > +# Author:
+>> > +#   Bin Meng <bin.meng@processmission.com>
+>> > +#
+>> > +# SPDX-License-Identifier: GPL-2.0-or-later
+>> > +
+>> > +from qemu_test import Asset, LinuxKernelTest
+>> > +from qemu_test import skipBigDataTest, skipIfMissingCommands
+>> > +
+>> > +
+>> > +class PhytiumPiMachine(LinuxKernelTest):
+>> > +
+>> > +    ASSET_BUILDROOT =3D Asset(
+>> > +        ('https://github.com/processmission/qemu-machine-images/relea=
+ses/'
+>> > +         'download/v1.0.0/aarch64-phytium-pi-v1.0.0.tar.zst'),
+>> > +
+>> > '5219d52b862e1245b12f79ba72e9a6144f5e0cf1a50061f8fda2db0aeeb92428')
+>>
+>> Nice ;-)
+>>
+>> I've been looking into something similar to make it easy to set up
+>> github projects that can build and host test assets:
+>>
+>>   https://github.com/stsquad/buildroot-asset
+>
+> This is actually very close to what I have been doing with
+> https://github.com/processmission/qemu-machine-images. It is intended
+> to be a common repository for QEMU machine test assets.
+>
+> Each machine has a small description under:
+>
+>   machine/<architecture>/<machine>/
+>
+> It selects the independently built components, required images and
+> machine-specific QEMU launcher. The container builders, packaging,
+> checksums, release manifest and GitHub Actions workflow are shared.
+> The workflow also distinguishes between the main repository and forks.
+> A fork can build selected machines and upload run-scoped Actions
+> artifacts without publishing a release. It can optionally publish its
+> own development prerelease, while the main repository publishes
+> frozen, versioned assets.
+>
+>>
+>> although my builds seem to take quite a bit longer that yours.
+>
+> Yeah, as I only built the minimal busybox-based buildroot
+> configuration, which is enough for QEMU boot testing :)
+>
+>>
+>> I wonder if there is a way to have a common repository set up but in a
+>> way that the forks can just build their own images. Either that or a
+>> core repository which everyone just forks adds their device and merges.
+>
+> So perhaps qemu-machine-images could serve as a starting point for the
+> common repository you describe. I would be happy to accept machine
+> definitions from other contributors and make the add-a-machine
+> workflow simpler.
+>
+> Your buildroot-asset project also has useful ideas, particularly
+> including enough Buildroot configuration and source metadata to
+> reproduce an image manually. It would be good to align the two efforts
+> instead of growing separate repositories for each maintainer or board.
 
-I am guessing this will be merged by riscv maintainers?
+I agree.
 
-acpi things
+Let me see if I can port my vkmark test image to your repo and add the
+metadata export to the image type.=20
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>
+>>
+>> Anyway, test looks sane:
+>>
+>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> Thanks for the review!
+>
+>>
+>> > +
+>> > +    def _prepare_images(self):
+>> > +        self.set_machine('phytium-pi')
+>> > +
+>> > +        archive_path =3D self.uncompress(
+>> > +            self.ASSET_BUILDROOT,
+>> > +            target=3D'aarch64-phytium-pi-v1.0.0.tar',
+>> > +            format=3D'zstd')
+>> > +        self.archive_extract(archive_path, format=3D'tar')
+>> > +
+>> > +        self.vm.set_console(console_index=3D1)
+>> > +        self.vm.add_args('-smp', '4',
+>> > +                         '-m', '4G',
+>> > +                         '-display', 'none',
+>> > +                         '-nic', 'none',
+>> > +                         '-no-reboot')
+>> > +
+>> > +    @skipIfMissingCommands('zstd')
+>> > +    @skipBigDataTest()
+>> > +    def test_firmware_boot(self):
+>> > +        self._prepare_images()
+>> > +        sdcard =3D self.scratch_file('images', 'sdcard.img')
+>> > +
+>> > +        self.vm.add_args(
+>> > +            '-snapshot',
+>> > +            '-drive', f'file=3D{sdcard},format=3Draw,if=3Dsd,index=3D=
+0')
+>> > +        self.vm.launch()
+>> > +
+>> > +        self.wait_for_console_pattern('U-Boot 2022.01')
+>> > +        self.wait_for_console_pattern('PBF relocate done')
+>> > +        self.wait_for_console_pattern('Starting kernel ...')
+>> > +        self.wait_for_console_pattern('Phytium login:')
+>> > +
+>> > +    @skipIfMissingCommands('zstd')
+>> > +    @skipBigDataTest()
+>> > +    def test_linux_boot(self):
+>> > +        self._prepare_images()
+>> > +        kernel =3D self.scratch_file('images', 'Image.gz')
+>> > +        dtb =3D self.scratch_file('images', 'phytiumpi_firefly.dtb')
+>> > +        initrd =3D self.scratch_file('images', 'rootfs.cpio.gz')
+>> > +
+>> > +        self.vm.add_args(
+>> > +            '-kernel', kernel,
+>> > +            '-dtb', dtb,
+>> > +            '-initrd', initrd,
+>> > +            '-append', 'console=3DttyAMA1,115200 '
+>> > +                       'earlycon=3Dpl011,mmio32,0x2800d000 rdinit=3D/=
+init')
+>> > +        self.vm.launch()
+>> > +
+>> > +        self.wait_for_console_pattern('Booting Linux on physical CPU')
+>> > +        self.wait_for_console_pattern('Machine model: Phytium Pi Boar=
+d')
+>> > +        self.wait_for_console_pattern('Phytium login:')
+>> > +
+>> > +
+>> > +if __name__ =3D=3D '__main__':
+>> > +    LinuxKernelTest.main()
+>>
+>> --
+>
+> Regards,
+> Bin
 
-> Changes since v4
-> ----------------
->   - tests/qtest: DSDT.cxl regenerated against the in-tree
->     edk2-riscv-code.fd blob that the test boots (Junjie): the v4 golden
->     carried the window allocation of my local edk2-stable202602 build.
->     The 64-bit window is now 0x400100000..0x40010FFFF with the matching
->     PCI0 range shift; the AML fragment in the commit message is updated
->     accordingly.  CEDT.cxl is unchanged.
->   - hw/riscv/virt: pci_bus_add_fw_cfg_extra_pci_roots() moved out of
->     the cxl block (Junjie), so plain pxb-pcie expander bridges are also
->     advertised to firmware with cxl=off, in line with arm/virt, pc and
->     hppa.
->   - Collected review tags.
-> 
-> Changes since v3
-> ----------------
->   - The CXL host bridge resource handling is reworked, following Junjie
->     Cao's suggestion (and Igor Mammedov's earlier "fix UEFI" direction):
->     instead of reserving a fixed 256 MiB carve-out and simulating the
->     firmware PCI initialization in QEMU, the machine now advertises the
->     pxb-cxl expander root buses to firmware via the etc/extra-pci-roots
->     fw_cfg file (pci_bus_add_fw_cfg_extra_pci_roots(), as arm/virt and
->     x86 do).  EDK2's PciBusDxe then enumerates behind the CXL host
->     bridge and assigns the root-port window and bus numbers, and
->     build_crs() emits a correct _CRS for the ACPI0016 host bridge.
->     This keeps the machine code minimal (a single call, no carve-out),
->     scales to multiple pxb-cxl host bridges, and lets firmware size the
->     window to what is actually behind the bridge.
->   - The bios-tables test is split into the staged flow documented in
->     bios-tables-test.c, and ordered the same way the riscv64 goldens were
->     originally added upstream (Sunil V L's commit cc3ba2422554 et al.):
->     the feature code comes first, then three consecutive commits -- empty
->     golden files + allowed-diff.h, the test code, and the populated golden
->     master binaries with an emptied allowed-diff.h.
-> 
-> Changes since v2
-> ----------------
->   - hw/riscv/virt: The MMIO-window patch no longer touches the common
->     gpex code (Igor).  The gpex_cfg.cxl_mmio32 field and the is_cxl
->     static _CRS branch are dropped; the ACPI0016 _CRS now comes from the
->     generic build_crs() path.  Since EDK2 does not enumerate the pxb-cxl
->     expander bridge, riscv simulates the firmware PCI initialization
->     (reserved window + depth-first bridge bus numbers) and re-applies it
->     via a reset handler.
->   - hw/riscv/virt: Drops the machine-global window/bus-range synthesis
->     that did not scale past one pxb-cxl (Junjie).  The series targets a
->     single CXL host bridge for now, documented in the commit message and
->     a TODO.
->   - hw/riscv/virt: CXL host register region and FMW setup folded into a
->     single cxl_host_state_init() helper; redundant braces removed in
->     create_fdt_pcie() (Daniel).
->   - hw/riscv/virt-acpi-build: the _DEP commit message documents the
->     kernel-compatibility behaviour (Alistair).
->   - Carried review tags: Sunil V L's Reviewed-by on the _DEP patch and
->     Alistair Francis's Acked-by on the test.
-> 
-> Changes since v1
-> ----------------
->   - hw/riscv/virt: PCIBus *bus renamed to PCIBus *pci_bus (Jonathan).
->   - hw/riscv/virt: Dropped outer if (s->pci_bus) guard around
->     cxl_hook_up_pxb_registers(); the function already handles a NULL
->     bus internally (Jonathan).
->   - hw/riscv/virt-acpi-build: All s->bus references updated to
->     s->pci_bus; iasl -d decompiled DSDT fragment added to commit
->     message.
->   - hw/riscv/virt,gpex: Commit message expanded with PCI-to-PCI Bridge
->     Spec §3.2.5.8/9/10 citations (Jonathan).
->   - Original patch 4 ("Map committed HDM decoder ranges as RAM for
->     direct DMA") dropped; superseded by Alireza Sanaee's v8 series [1],
->     which is now merged upstream and thus no longer a prerequisite.
->   - New patch 4: RISC-V ACPI bios-tables test for CXL, with golden AML
->     files generated and included.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20260318171918.146-1-alireza.sanaee@huawei.com/
-> 
-> Test
-> ----
-> Built riscv64-softmmu and ran the new bios-tables test together with the
-> existing riscv64 ACPI tests; all pass.
-> 
-> Also booted an RVA22 guest with EDK2 firmware, using pxb-cxl + cxl-rp +
-> cxl-type3 + a CFMW: EDK2's PciBusDxe enumerates behind the CXL host
-> bridge (advertised via etc/extra-pci-roots), the root port and Type3
-> device show up (0000:0c:00.0 / 0000:0d:00.0), and 'cxl list' reports
-> the memdev (4 GiB) and the CFMWS root decoder.
-> 
-> QEMU invocation (CXL-relevant options shown):
-> 
->     qemu-system-riscv64 \
->         -M virt,aia=aplic-imsic,acpi=on,cxl=on \
->         -cpu rva22s64 -smp 2 -m 4G \
->         -object memory-backend-ram,id=vmem0,share=on,size=4G \
->         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
->         -device cxl-rp,port=0,bus=cxl.1,id=rp0,chassis=0,slot=2 \
->         -device cxl-type3,bus=rp0,volatile-memdev=vmem0 \
->         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G \
->         ...
-> 
-> Verification (total system memory grows by 4 GiB after onlining):
-> 
->     # cxl list
->     # cxl enable-memdev mem0
->     # cxl create-region -m -t ram -d decoder0.0 -w 1 mem0 -s 4G
->     # daxctl online-memory dax0.0
->     # free -h
-> 
-> Chen Pei (6):
->   hw/riscv/virt: Add CXL support to the RISC-V virt machine
->   hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for CXL host bridge
->     dependency
->   hw/riscv/virt: Advertise the CXL host bridge to firmware via
->     extra-pci-roots
->   tests/qtest: Prepare golden files for the RISC-V CXL ACPI test
->   tests/qtest: Add RISC-V ACPI bios tables test for CXL
->   tests/qtest: Update RISC-V CXL ACPI golden master binaries
-> 
->  hw/riscv/Kconfig                      |   2 +
->  hw/riscv/virt-acpi-build.c            |  52 +++++++++++++++++++++++++
->  hw/riscv/virt.c                       |  46 ++++++++++++++++++++++
->  include/hw/riscv/virt.h               |   3 ++
->  tests/data/acpi/riscv64/virt/CEDT.cxl | Bin 0 -> 108 bytes
->  tests/data/acpi/riscv64/virt/DSDT.cxl | Bin 0 -> 6331 bytes
->  tests/qtest/bios-tables-test.c        |  54 ++++++++++++++++++++++++++
->  7 files changed, 157 insertions(+)
->  create mode 100644 tests/data/acpi/riscv64/virt/CEDT.cxl
->  create mode 100644 tests/data/acpi/riscv64/virt/DSDT.cxl
-> 
-> -- 
-> 2.50.1
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
