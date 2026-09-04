@@ -4,116 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F0DC624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 10:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDC0C624D3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 10:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2R52-0003eA-QN; Fri, 04 Sep 2026 06:23:32 -0400
+	id 1x2R7C-0004GP-NR; Fri, 04 Sep 2026 06:25:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x2R51-0003dn-Kz
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:23:31 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1x2R50-0001Du-5D
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:23:31 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-66825847b2cso1114823d50.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 03:23:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788517409; cv=none;
- d=google.com; s=arc-20260327;
- b=A6pwaGHwMeHO43U89ZtPxi0tf1u8LKcAoUFzdV67FVg/BdAbOIIaPtzB3I1O/0cAim
- EssCvaUK62UVh8IbX+JHtOOTGQFNg5/PLTlKAYW+0FxHEyBzSVEOaSQ1VsCYV2c7mJ7F
- YhMDvHaINRa9Oya4v3HtyisdpawFQQH2plOdpjMK2NGkYBXR3iKhVa+Fven979+dnsjA
- s56D2Eku+i2n/yO0u1H6E7/htl/nBZQ/Chws3fGl0DUfzNPmEueU4FK4EkxGsNzkKLib
- wWyMYxqcW5ufCqM2lURtgwAGAbLL/jCiQyVCx9Z5c7dd4tTxWTODrlRgvVaNaHksnUUj
- +iyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6MjX5N9trcgMS+EO9tmx9KtGHdfTm948PsZ9Pq/YGuU=;
- fh=YJYgcE9GCApM+XSQj404OqRt6uwrB/ULhwaSZWtMlw8=;
- b=l6177sbk3wArU38uQPYjFPeiGYtmLSaqfX0c1g85g+7psKdGgaaBxJFbJ7x4QjWjnA
- aoip0uBukBLVvnyE1GgeKnWei+1nIWmcGg+diLDUV4vWJCvMKTC6tyR1Onji3dIJK7ZD
- xnZ1JIkx4vLWBGypFcvUV0SXpHeg572f9qJ6qikgVFydDUzpKFpXEzEVI2YmV7vTfWSK
- L7bnukFA61LoyoJO/rE+wdu+/eLkVTAzjD7EcJn6J1Le1yA2TigQmwm1vZ191NoMUKOF
- t/fUL5b2l5fzNtq3aD8WsQuQ1V7m+ErWi3zLgZz9NpxUoOWv2lX09rqoehbr0CNxijdP
- rLGw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788517409; x=1789122209; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6MjX5N9trcgMS+EO9tmx9KtGHdfTm948PsZ9Pq/YGuU=;
- b=EtsWQoZ0iEqFE0XOg0JUdSNIkInjfAAXf3W8p8oln6twEVUR6d6nMqsiU2kYMiI0Yx
- mmHodU0CVbo2yf3h72Uak0TD9u7HFMftmT+XNICZlkcabFrY5AVykMMYtT20Mpkp0LQ3
- cRGGJZzZALOo/1BhZqYmAgniTz6kgKCIc9/kRYX6dCNIEI7EAU2O9tNelBFEIHYKqmTv
- aWkKQTztVOKNdeANEu7uL9Ul8xGMnGUHBVnfFfDYIOWIet5owLpJ7UxEHKRAa0fwivou
- MVycSSUS6hGPwVHGeRBA8xn/i8ccThE62bstT9TCg/yngH/C6M9vQy1+9AdLBD9IvuMv
- yf3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788517409; x=1789122209;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6MjX5N9trcgMS+EO9tmx9KtGHdfTm948PsZ9Pq/YGuU=;
- b=XBObhvv6OwLmf7Sh2qYFizrjg8Pl1HhtmemPINFZRp6a1sTVO0Mi0vcf7QcYd2oA6j
- JCf2nRaYHYAXQd1UHOo8dTZ69V9fJJs5d6cBAr/RwX1aS1ACdZxVUAdveuQq4Ht7m0Lr
- IHm2je75afQQyKTkrbUvRYBy1lh6s1nDiEVfeXP9f7vKwaf38rmKNQUYlzK9xX5DS5kO
- TzNFRHVrPMx46M6NKxNWSAPb8iATQ7w330IvbsYWnUYuibTvvFS9PS+yAMIDIfn2slQG
- DEFkkRC1GtReavbN1f5sQGBuQXAhG/+GkEEWZFylmxg11w+ewgiQJWg3LP4oxBS/Z3Wh
- 6m/w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzX0DgNPGqvHDK02+pQhDs7yXGAzcrTy4dcAOjDGWTTagZHwyRToZibyVrw2D8umrj8r4TFL8sbI9bR@nongnu.org
-X-Gm-Message-State: AFuF++lj20DtlNVaKqvk8cSDkWIbPx55bc+HWmXwTg4qkHcd2A34ec+2
- xx9dS5kglcR5TJb/mcsyUMYYOHfwsqdpzBKuAR7FVTl2ld968RmSivc+m+QSG6sP4CVM1rkzTpE
- p8xnD3Nu3xkRyZCaWBB4gTEgHlRf+33WVDHOO00SwuQ==
-X-Gm-Gg: AYBFou3l0TEpCMX/hC0IiGFBgp6kV6fPsjbvRDkZltVlilT/nZ82U8z9eqxklAXdKdQ
- FsXZxQuug6RXHTErNw0xZOp78ferv5anGUqY4wyChQ+UD3gKEjT+pe4SESQKJcmK0wF47KtywtQ
- Fx8qV/PuwLOyCJ359E6gz3nSVXaH8dwJe2y72STyMHOyDDGTryrwVbNcC4fGMF3rNrg3mrw08zw
- WfVMaB6InMwuCXoujGpsikh1aOVGz8e8e5ggdTIc60kTnVBFsyRvgqHlhYdr+umQVxn0C2Zx542
- eIQYnciAyRRFcoDiweEGdoQoa/PVDLDSJWBztXd0U4HhYpm9hkLogNPBf8NqBzzzlx37VosFIi8
- 7aObPTKt+xVcXRZToAjjHfqCAuYqD
-X-Received: by 2002:a05:690c:a785:b0:855:f387:98c0 with SMTP id
- 00721157ae682-87127d27776mr24822697b3.29.1788517403794; Fri, 04 Sep 2026
- 03:23:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2R7A-0004G9-Ru
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:25:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x2R79-0001ea-3E
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 06:25:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788517541;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WQxIZaPvzzr1UlWVAO7ucNi03kPgxiIq3E36EUol7N0=;
+ b=UZBqsh6zlumescqml2CG0N8Bva/OiWRNiC0B9rUwQ7M1VnoLskPDhkvVOLOBkDRiMW98kx
+ hPhfEQIlAFeR7eZgkHWgedSWlStDWVh8S5ZpUEtL5C9ZugMbXFU6IsFNsLWOc3W9zK0Jr5
+ I7l53D13H+BXIal93xJteaSooSxE0is=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-BPzDg1AKMPC3JjF2Ra-xtA-1; Fri,
+ 04 Sep 2026 06:25:38 -0400
+X-MC-Unique: BPzDg1AKMPC3JjF2Ra-xtA-1
+X-Mimecast-MFC-AGG-ID: BPzDg1AKMPC3JjF2Ra-xtA_1788517536
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26F41195411C; Fri,  4 Sep 2026 10:25:36 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39D003000223; Fri,  4 Sep 2026 10:25:33 +0000 (UTC)
+Date: Fri, 4 Sep 2026 11:25:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Bin Meng <bin.meng@processmission.com>,
+ QEMU <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Yonggang Luo <luoyonggang@gmail.com>, Anton Johansson <anjo@rev.ng>
+Subject: Re: [PATCH 02/33] hw/arm: Add basic Phytium Pi machine
+Message-ID: <apqcmqpJEEyc7wGx@redhat.com>
+References: <20260903112532.3276678-1-bin.meng@processmission.com>
+ <20260903112532.3276678-3-bin.meng@processmission.com>
+ <0795176d-4580-4acc-a3cf-c40f8d221661@oss.qualcomm.com>
+ <CAEUhbmW4h_-az5iBsztzy8Yuu06+WMjOYcrL51sW8VEgyAaSMw@mail.gmail.com>
+ <881be57e-5496-41f2-af0b-e21087fa5e54@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com>
- <4b4f77ee-21e9-405e-a1da-21506afa1c5b@oss.qualcomm.com>
- <app_CnHimOrOymMH@redhat.com>
- <CAE2XoE9A1WzOe43-qd1v9i6K9kSru4R2kEE1-2TrztoM=8NZJw@mail.gmail.com>
- <CAFEAcA_4TZxYhFbHfJZCas7bvh_KZjNp2aKzx3LPaXTQFuoQYQ@mail.gmail.com>
- <apqVhJrtMDECUb7I@redhat.com>
-In-Reply-To: <apqVhJrtMDECUb7I@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Sep 2026 11:23:12 +0100
-X-Gm-Features: AcwNN1XxniBYqO66vALzNTyn9nFiyFVQBGIf09PFXUslOmeDhJt8Pgy7f5dvl2A
-Message-ID: <CAFEAcA8f15tCXn2Ut4ke2Q1PX6qWyAdMnxK5iK9pNXebw4Vncg@mail.gmail.com>
-Subject: Re: [PATCH 00/47] single-binary: implement dynamic filtering for QOM
- types
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: luoyonggang@gmail.com, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
- anjo@rev.ng, Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- philmd@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <881be57e-5496-41f2-af0b-e21087fa5e54@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,44 +94,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Sept 2026 at 10:55, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Fri, Sep 04, 2026 at 10:13:04AM +0100, Peter Maydell wrote:
-> >       That extends nicely to truly heterogenous machine names:
-> > "-machine my-mixed-machine" wouldn't need the user to explicitly
-> > give it a -target option or otherwise say that it includes aarch64
-> > and microblaze CPUs. (We'd probably need to put something in to
-> > prevent future machine name clashes across targets, so that the
-> > only clashes are our existing legacy ones.)
->
-> We don't have many examples of clashing machine names. Is there
-> any beyond just the 'virt' boards ? Now that we know we want
-> globally unique names, this feels easy enough to spot during
-> review.
+On Fri, Sep 04, 2026 at 12:15:26PM +0200, Philippe Mathieu-Daudé wrote:
+> On 4/9/26 09:57, Bin Meng wrote:
+> > Hi Philippe,
+> > 
+> > On Fri, Sep 4, 2026 at 12:56 AM Philippe Mathieu-Daudé
+> > <philmd@oss.qualcomm.com> wrote:
+> > > 
+> > > On 3/9/26 13:24, Bin Meng wrote:
+> > > > Add the base topology for the Phytium Pi board built around the
+> > > > E2000Q SoC, with two FTC310 and two FTC664 CPUs, RAM, GICv3/ITS,
+> > > > and PL011 UARTs.
+> > > > 
+> > > > Describe the CPUs as three non-uniform clusters matching the vendor
+> > > > Linux device tree. Preserve the board CPU slot order so firmware
+> > > > MPIDR 0x200 maps to QEMU CPU index 2.
+> > > > 
+> > > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > > > ---
+> > > > 
+> > > >    hw/arm/Kconfig         |   8 +
+> > > >    hw/arm/meson.build     |   1 +
+> > > >    hw/arm/phytium_e2000.c | 406 +++++++++++++++++++++++++++++++++++++++++
+> > > >    3 files changed, 415 insertions(+)
+> > > >    create mode 100644 hw/arm/phytium_e2000.c
+> 
+> 
+> > > > +static void phytium_pi_init(MachineState *ms)
+> > > > +{
+> > > > +    PhytiumE2000State *s = PHYTIUM_PI(ms);
+> > > > +    int i;
+> > > > +
+> > > > +    if (kvm_enabled()) {
+> > > > +        error_report("phytium-pi: KVM is not supported");
+> > > 
+> > > Why is it relevant?
+> > 
+> > This is because the machine relies on heterogeneous named
+> > FTC310/FTC664 TCG CPU models and Arm KVM generally requires the host
+> > CPU model. KVM is rejected explicitly instead of failing later during
+> > vCPU initialization.
 
-Yeah; but if it's easy to have it automatically detected during
-"make check" then that's more reliable than catching it by
-eye in code review, especially as most target-architecture
-reviewers are probably not very familiar with machine names used
-by other architectures.
+We have several other hardware accelerators for other platforms.
+It is right to be checking KVM specifically, or should we have
+general check that only passes for TCG/QTest ?
 
-> > This rests on the assumption that the only thing we need to
-> > disambiguate is machine names, i.e. there aren't multiple
-> > targets with user-facing (i.e. not easily renameable) device
-> > names that are shared.
->
-> IMHO it is best if our goal is to ensure type names are unique
-> throughout the codebase, so hopefully we don't have clashing
-> device names.
+> Hmm OK. Cc'ing Pierrick to add to our list of things to think about for
+> heterogenous emulation. I'd rather have this handled in a generic way,
+> not per-machine. Hopefully TypeInfo::is_available will be sufficient
+> to not expose the machine if KVM is not available. No need to think
+> about that now.
 
-Yes, that's certainly what I'd hope we have; but if you told
-me "actually it turns out that architectures foo and bar
-both have a simple interrupt controller they named 'intc'"
-I wouldn't be super surprised :-)
+We need to use QAPI MachineInfo / MachineClass to report to mgmt apps
+whether a machine is capable of using hardware acceleration or not in
+response to "query-machines".
 
--- PMM
+Currently if a target supports HW accel, then apps assume that all
+machines in that target can use acceleration. This was a convenient
+short cut assumption, but this new machine suggests we can no make
+do with that assumption, and need to explicitly report it per-machine.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
