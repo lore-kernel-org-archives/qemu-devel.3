@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07A9C79F80
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE49DC61DD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 05:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2MN9-0001yS-Uc; Fri, 04 Sep 2026 01:21:55 -0400
+	id 1x2MMm-0008KP-T8; Fri, 04 Sep 2026 01:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MN6-0001fP-1I
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:53 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1x2MMj-0007nU-3Y
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:29 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1x2MN3-0001Tz-UR
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:51 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-852c481415fso617219b3a.3
- for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:21:49 -0700 (PDT)
+ id 1x2MMg-0001SG-Rv
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 01:21:28 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-8518b3ff3e9so561192b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Sep 2026 22:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788499308; x=1789104108; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=1AJlQQl2lGGGEThdzd1vHf5VHQwoFN0axGoGG12sW6E=;
- b=VCoKhF9vAG5bF8X6Q2Qd1hb88vpTvw1AR3Nd5Uo6uMM8EY2kxMWKH0mu62xWCO9QmU
- Y7i5Psye5hy2x16ZHxTfFmfY2rO2VsElHjEpxFeYdAvPw4MvXVNK34ybOLE+0bk9NqvK
- 2r4u2/PJxAbBtqCYLOFgEi556/wn4HKtmbxNQKiuYdAoRnem4LBJeqFxDOwo9wIBHpqo
- 9700lzVPkiGuUOWr0cGdzl2onxO2n8JAcoHANxyoIskeMOxXbfvZsApYOpJhnJ2VKtjw
- acmc2doBid1di30IW3rE5op2IgcU/EOs7IwwYAnu+nlwcQIBhzcob9STCyZ3fEJa/n4W
- UMrA==
+ d=gmail.com; s=20251104; t=1788499285; x=1789104085; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=vcslFeOP012eH4+EAy6NfAnj8fM+0ewoRg4KYCFbUys=;
+ b=pFl1ork7yOTos7n/sxqar+Hyoqja/2Z7cQt3y/rmQ5lNPJeK2UDisC+1pmzQGP3kYu
+ eAFol0dSH32NQJRt4+3wHaCGYaeJcpKYEnFvHywiidJiTVTyv2jkwkz8nauOEvRUtLBU
+ gZmuph3F6eNRJDLJMTcK2y3hwvFkwYZLrfmfbq0y8Umo5ummywa611fKfMOu6pZHljgA
+ 4mweBHTSCuZqxs6SCaeYqHMJb6aA3oZSPa2e5HkdPLqNhmM+C3BxYwI8w4yiV416NAJx
+ cvDV8AdCu4WRbDlNrYrog+UR3HWnoRGAJ1AlqiV4+t0aoFMRwHXyQavaHcv631rbjCup
+ iyvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788499308; x=1789104108;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=1AJlQQl2lGGGEThdzd1vHf5VHQwoFN0axGoGG12sW6E=;
- b=m88W7XD4KdhUn/lYEQA1aVm9Lmer6eNLIrOIETznaGRAbSf6baKv0KJZywwR4ES5A3
- xBKGkwnuK0rTholoMNzuOspFfETFvlxG8efu088jUFQkfkl5wtRS4XyX1e+Ef8ANxxQE
- 2SRoFWPYblP12+lLS8qxLsYwJmIQ7PCnye29BOKf47fGRyd1Ky1/mNfAIpiZv+GFzVNw
- R/oO0jeJScKjgTEJj3vww6nun7ze0H+8Z3I8gUC0Vp13FPTvY5kHuHFRumOnQUS4QW4B
- qg8Jwy61egBdhFVCghSQvqA+wMJwbLuv+WsKRiVWK1KV8BNqlsf3J/U8oh2ct+3b7MFl
- Ckbg==
-X-Gm-Message-State: AFuF++lMH8T6IT8U+Fpxn6yxwqjvVCR/Iou/h/xPDKTza8zaJqSIG1cO
- bfqnyk6Kd6/YDXh9KCVo7vWd51LlTmftqymfoNt8Bu4KXVYug7gTfFVQhMDg+A==
-X-Gm-Gg: AYBFou0fCVqa3Zqj5UkcyHq96qyx/miSjvisJGI3ob1xsP8PvYNvAlVo6PAnUafnNFo
- C9+yZ8EaZBtn83foTN87m9EvN1M5bdopC08ftqythtctfePwoQBIYRUyNnfNstS1K0bimO2ravN
- Hus2kwlvgj6CM1FMRb7qm29HDJ6SScYbjnQNhbHXu0jZicrQ0zxVEMhEbUtI/itzGORj9RJCJnL
- FhwekY9AF3CUL+AAWWGVnCu6kw8NRnpYj+xWsuso8039JWsfSqCtgDzQ27uNjq/zThI8idgT6Wm
- RbSuDpmIbyJGoPUn2OMPBDYERj95NNyUuxmcedG1DeDFYlpJxCvHVLqG0uJ0OZHw4Q7QHcKd084
- hdMLTJpQ61yIkZhiKdgs9ncVqRlxIIOHpytKbluci/t7bfr0QpZhKI3lltU/bfXDAO2SBOpCHkq
- ULXhQUK4YBS7qRQfUByUCMu0L93qZpU3ZC7ZAVnvOTfs13B8dpsOYGEjsKR9qm/EUw2SFgOLFIj
- 8thsg==
-X-Received: by 2002:a05:6a00:4c96:b0:857:7337:5db8 with SMTP id
- d2e1a72fcca58-8616ae4e171mr5516928b3a.22.1788499308452; 
- Thu, 03 Sep 2026 22:21:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788499285; x=1789104085;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vcslFeOP012eH4+EAy6NfAnj8fM+0ewoRg4KYCFbUys=;
+ b=nYh3Y4tg5nXPQeMv3cSnSP5oT/XsSl72ZOKb9cIOLEc7RuZ2UA4Am8DMyryG0nP9ZZ
+ Q/e9kcNIMOrT27vlPXdAa7iSGAO6ht1q72L5jWukNE0Hz45MidoRfbxkdRqZ6nsCtL5V
+ huO6vn2VYqz8p0gaHMHS9hT4zRxlLDct2JtdRO8CS+S+yIItvwJYkDBaLUZsBjc9ozwL
+ oYZHJ+016+03uqq6TqKc1QTGUpPeQv9l+did+ikw3AyValSALdYDuRb6DG7ak7QFuPL4
+ g/lTabb059xT77QAveBeVyN861IFR/ayDo/eNyUK8hrJoFmp2v6v3iUgQINQabzU8bz2
+ dVBw==
+X-Gm-Message-State: AFuF++mPfm2gLa3eZTq2A05niXTA+IUZS3RWhsAm8Dl9kpFlGuXhFvcj
+ 6AEjLk5FUss9hSlTO4hzSSbHOhaLnFQNvnJKwQD21hD0uGW/b1Nie2Sd1xx1dQ==
+X-Gm-Gg: AYBFou1OIKRw7fHBwDRrW7UivI35ljdkAnxo5pA9BzBO3EIuDwUMJ/f3revdSy931Ek
+ djGorXltozaRmyde4wqotOAMkXurCTiErMLnsVVtDwQ4z9H7ERhelEEYPYcWy85CwKhIIJDRaEb
+ gu4SWmgtqSTY4rsLZfkz+k9fDPuhBDL7o8Owkq844N9AZkmMfM+MJ7hXiMlW56yfR0TeAfu4jcQ
+ 97R9OrqAbmzJSl416ZMtKFskpPssO2kargzqLudIqhNHaAbvJRcTRJqxvilVWHds95PLTRXKMPA
+ PjVXEn1spsC+JXm74cZfWwi0nbGpAz0OoRT3MBVPkZZHvwm2NJnBu+o3uNVDsXx151xuE40ZXUh
+ pycFKNABUN5jMWpBn2km46nfIPFC+CxBTqVuJeccq18J4j/k1Yg8/LB+iiyO2Osg71J4stJMsFv
+ kUITS7ETGTwnvr6qjC6od67FmbiqrGkVlwzS+bVL5rjwxjYPjDK1lr5kgBK8/Iot6fuO6h7Ba8A
+ lIj2LuM4Kkq1z7K
+X-Received: by 2002:a05:6a20:3ca7:b0:3c3:a3fd:db0a with SMTP id
+ adf61e73a8af0-3da39feac73mr6074667637.16.1788499285300; 
+ Thu, 03 Sep 2026 22:21:25 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.45
+ 41be03b00d2f7-cc455445e34sm402147a12.15.2026.09.03.22.21.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Sep 2026 22:21:47 -0700 (PDT)
+ Thu, 03 Sep 2026 22:21:24 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>
-Subject: [PULL 36/47] hw/intc/sifive_plic: Take a MemoryRegion for the created
- device
-Date: Fri,  4 Sep 2026 15:19:32 +1000
-Message-ID: <20260904051943.799041-37-alistair.francis@wdc.com>
+Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 29/47] target/riscv/tcg: fix user option hash table leaks
+Date: Fri,  4 Sep 2026 15:19:25 +1000
+Message-ID: <20260904051943.799041-30-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904051943.799041-1-alistair.francis@wdc.com>
 References: <20260904051943.799041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,155 +103,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-sifive_plic_create() maps the device it creates into system_memory,
-which prevents its use by SoCs that map devices into their own memory
-container.
+The misa_ext_user_opts and multi_ext_user_opts hash tables are global,
+but riscv_tcg_cpu_instance_init() recreates both for every CPU instance.
+Creating a second CPU overwrites the only references to the first CPU's
+tables. LeakSanitizer reports two direct and four indirect leaks, 320
+bytes in total, when a two-hart virt machine exits.
 
-Add a MemoryRegion parameter and map the device into it instead of
-calling sysbus_mmio_map(). All callers pass system_memory, so there is
-no change in behaviour.
+The option state belongs to a CPU instance, like user_options. Move both
+tables into RISCVCPU, pass the CPU to their access helpers, and free them
+from the existing instance finalizer. Keep the implied-rule tables global
+because those are initialized once and shared.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: 549cbf789ef8 ("target/riscv/cpu.c: introduce RISCVCPUMultiExtConfig")
+Fixes: 21915d16c6fb ("target/riscv/tcg: add MISA user options hash")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260903055131.257903-6-joel@jms.id.au>
+Message-ID: <20260831-b4-riscv-cpu-user-option-leak-v1-1-6b020c8b6964@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/intc/sifive_plic.h | 4 ++--
- hw/intc/sifive_plic.c         | 7 ++++---
- hw/riscv/k230.c               | 3 ++-
- hw/riscv/microchip_pfsoc.c    | 3 ++-
- hw/riscv/shakti_c.c           | 3 ++-
- hw/riscv/sifive_e.c           | 2 +-
- hw/riscv/sifive_u.c           | 3 ++-
- hw/riscv/virt.c               | 1 +
- 8 files changed, 16 insertions(+), 10 deletions(-)
+ target/riscv/cpu.h         |  2 ++
+ target/riscv/cpu.c         |  2 ++
+ target/riscv/tcg/tcg-cpu.c | 54 ++++++++++++++++++--------------------
+ 3 files changed, 30 insertions(+), 28 deletions(-)
 
-diff --git a/include/hw/intc/sifive_plic.h b/include/hw/intc/sifive_plic.h
-index 32973dbf28..064754c3f6 100644
---- a/include/hw/intc/sifive_plic.h
-+++ b/include/hw/intc/sifive_plic.h
-@@ -76,8 +76,8 @@ struct SiFivePLICState {
-     qemu_irq *s_external_irqs;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index b974c2f4b4..c2138dbd4b 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -582,6 +582,8 @@ struct ArchCPU {
+     /* Mapping of events to counters */
+     GHashTable *pmu_event_ctr_map;
+     GHashTable *user_options;
++    GHashTable *misa_ext_user_opts;
++    GHashTable *multi_ext_user_opts;
+     const GPtrArray *decoders;
  };
  
--DeviceState *sifive_plic_create(hwaddr addr, char *hart_config,
--    uint32_t num_harts,
-+DeviceState *sifive_plic_create(MemoryRegion *container,
-+    hwaddr addr, char *hart_config, uint32_t num_harts,
-     uint32_t hartid_base, uint32_t num_sources,
-     uint32_t num_priorities, uint32_t priority_base,
-     uint32_t pending_base, uint32_t enable_base,
-diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
-index 9c84ff06a9..90f17e6ee7 100644
---- a/hw/intc/sifive_plic.c
-+++ b/hw/intc/sifive_plic.c
-@@ -473,8 +473,8 @@ type_init(sifive_plic_register_types)
- /*
-  * Create PLIC device.
-  */
--DeviceState *sifive_plic_create(hwaddr addr, char *hart_config,
--    uint32_t num_harts,
-+DeviceState *sifive_plic_create(MemoryRegion *container,
-+    hwaddr addr, char *hart_config, uint32_t num_harts,
-     uint32_t hartid_base, uint32_t num_sources,
-     uint32_t num_priorities, uint32_t priority_base,
-     uint32_t pending_base, uint32_t enable_base,
-@@ -499,7 +499,8 @@ DeviceState *sifive_plic_create(hwaddr addr, char *hart_config,
-     qdev_prop_set_uint32(dev, "context-stride", context_stride);
-     qdev_prop_set_uint32(dev, "aperture-size", aperture_size);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-+    memory_region_add_subregion(container, addr,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a760ba3a52..652311ddef 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3279,6 +3279,8 @@ static void riscv_cpu_instance_finalize(Object *obj)
+     g_clear_pointer(&cpu->pmu_event_ctr_map, g_hash_table_destroy);
+ #endif
+     g_clear_pointer(&cpu->user_options, g_hash_table_destroy);
++    g_clear_pointer(&cpu->misa_ext_user_opts, g_hash_table_destroy);
++    g_clear_pointer(&cpu->multi_ext_user_opts, g_hash_table_destroy);
+ }
  
-     plic = SIFIVE_PLIC(dev);
+ static const TypeInfo riscv_cpu_type_infos[] = {
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 54f1b66216..b68160af83 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -41,34 +41,32 @@
+ #include "target/riscv/tcg/csr.h"
+ #endif
  
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 309619dabf..1e4ca38579 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -133,7 +133,8 @@ static DeviceState *k230_create_plic(int base_hartid, int hartid_count)
-     plic_hart_config = riscv_plic_hart_config_string(hartid_count);
+-/* Hash that stores user set extensions */
+-static GHashTable *multi_ext_user_opts;
+-static GHashTable *misa_ext_user_opts;
+-
+ static GHashTable *multi_ext_implied_rules;
+ static GHashTable *misa_ext_implied_rules;
  
-     /* Per-socket PLIC */
--    return sifive_plic_create(memmap[K230_DEV_PLIC].base,
-+    return sifive_plic_create(get_system_memory(),
-+                              memmap[K230_DEV_PLIC].base,
-                               plic_hart_config, hartid_count, base_hartid,
-                               K230_PLIC_NUM_SOURCES,
-                               K230_PLIC_NUM_PRIORITIES,
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index d34d8182b1..edd29626fa 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -281,7 +281,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-     plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
+-static bool cpu_cfg_ext_is_user_set(uint32_t ext_offset)
++static bool cpu_cfg_ext_is_user_set(RISCVCPU *cpu, uint32_t ext_offset)
+ {
+-    return g_hash_table_contains(multi_ext_user_opts,
++    return g_hash_table_contains(cpu->multi_ext_user_opts,
+                                  GUINT_TO_POINTER(ext_offset));
+ }
  
-     /* PLIC */
--    s->plic = sifive_plic_create(memmap[MICROCHIP_PFSOC_PLIC].base,
-+    s->plic = sifive_plic_create(system_memory,
-+        memmap[MICROCHIP_PFSOC_PLIC].base,
-         plic_hart_config, ms->smp.cpus, 0,
-         MICROCHIP_PFSOC_PLIC_NUM_SOURCES,
-         MICROCHIP_PFSOC_PLIC_NUM_PRIORITIES,
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 4f99d78327..3b6efd25be 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -113,7 +113,8 @@ static void shakti_c_soc_state_realize(DeviceState *dev, Error **errp)
+-static bool cpu_misa_ext_is_user_set(uint32_t misa_bit)
++static bool cpu_misa_ext_is_user_set(RISCVCPU *cpu, uint32_t misa_bit)
+ {
+-    return g_hash_table_contains(misa_ext_user_opts,
++    return g_hash_table_contains(cpu->misa_ext_user_opts,
+                                  GUINT_TO_POINTER(misa_bit));
+ }
  
-     sysbus_realize(SYS_BUS_DEVICE(&sss->cpus), &error_abort);
+-static void cpu_cfg_ext_add_user_opt(uint32_t ext_offset, bool value)
++static void cpu_cfg_ext_add_user_opt(RISCVCPU *cpu, uint32_t ext_offset,
++                                     bool value)
+ {
+-    g_hash_table_insert(multi_ext_user_opts, GUINT_TO_POINTER(ext_offset),
++    g_hash_table_insert(cpu->multi_ext_user_opts,
++                        GUINT_TO_POINTER(ext_offset),
+                         (gpointer)value);
+ }
  
--    sss->plic = sifive_plic_create(shakti_c_memmap[SHAKTI_C_PLIC].base,
-+    sss->plic = sifive_plic_create(system_memory,
-+        shakti_c_memmap[SHAKTI_C_PLIC].base,
-         (char *)SHAKTI_C_PLIC_HART_CONFIG, ms->smp.cpus, 0,
-         SHAKTI_C_PLIC_NUM_SOURCES,
-         SHAKTI_C_PLIC_NUM_PRIORITIES,
-diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
-index fa77f28152..35ed7f42a4 100644
---- a/hw/riscv/sifive_e.c
-+++ b/hw/riscv/sifive_e.c
-@@ -212,7 +212,7 @@ static void sifive_e_soc_realize(DeviceState *dev, Error **errp)
-         memmap[SIFIVE_E_DEV_MROM].base, &s->mask_rom);
+-static void cpu_misa_ext_add_user_opt(uint32_t bit, bool value)
++static void cpu_misa_ext_add_user_opt(RISCVCPU *cpu, uint32_t bit, bool value)
+ {
+-    g_hash_table_insert(misa_ext_user_opts, GUINT_TO_POINTER(bit),
++    g_hash_table_insert(cpu->misa_ext_user_opts, GUINT_TO_POINTER(bit),
+                         (gpointer)value);
+ }
  
-     /* MMIO */
--    s->plic = sifive_plic_create(memmap[SIFIVE_E_DEV_PLIC].base,
-+    s->plic = sifive_plic_create(sys_mem, memmap[SIFIVE_E_DEV_PLIC].base,
-         (char *)SIFIVE_E_PLIC_HART_CONFIG, ms->smp.cpus, 0,
-         SIFIVE_E_PLIC_NUM_SOURCES,
-         SIFIVE_E_PLIC_NUM_PRIORITIES,
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 0f0370b8c5..b7d5e7b4da 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -772,7 +772,8 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-     plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
+@@ -358,7 +356,7 @@ static void cpu_cfg_ext_auto_update(RISCVCPU *cpu, uint32_t ext_offset,
+         return;
+     }
  
-     /* MMIO */
--    s->plic = sifive_plic_create(memmap[SIFIVE_U_DEV_PLIC].base,
-+    s->plic = sifive_plic_create(system_memory,
-+        memmap[SIFIVE_U_DEV_PLIC].base,
-         plic_hart_config, ms->smp.cpus, 0,
-         SIFIVE_U_PLIC_NUM_SOURCES,
-         SIFIVE_U_PLIC_NUM_PRIORITIES,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 186d266b29..f3a1cc5ba3 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -560,6 +560,7 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
+-    if (cpu_cfg_ext_is_user_set(ext_offset)) {
++    if (cpu_cfg_ext_is_user_set(cpu, ext_offset)) {
+         return;
+     }
  
-     /* Per-socket PLIC */
-     return sifive_plic_create(
-+             get_system_memory(),
-              memmap[VIRT_PLIC].base + socket * memmap[VIRT_PLIC].size,
-              plic_hart_config, hart_count, base_hartid,
-              VIRT_IRQCHIP_NUM_SOURCES,
+@@ -491,7 +489,7 @@ static void riscv_cpu_validate_g(RISCVCPU *cpu)
+ {
+     const char *warn_msg = "RVG mandates disabled extension %s";
+     uint32_t g_misa_bits[] = {RVI, RVM, RVA, RVF, RVD};
+-    bool send_warn = cpu_misa_ext_is_user_set(RVG);
++    bool send_warn = cpu_misa_ext_is_user_set(cpu, RVG);
+ 
+     for (int i = 0; i < ARRAY_SIZE(g_misa_bits); i++) {
+         uint32_t bit = g_misa_bits[i];
+@@ -734,7 +732,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicntr))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_zicntr))) {
+             error_setg(errp, "zicntr requires zicsr");
+             return;
+         }
+@@ -742,7 +740,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zihpm && !cpu->cfg.ext_zicsr) {
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zihpm))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_zihpm))) {
+             error_setg(errp, "zihpm requires zicsr");
+             return;
+         }
+@@ -802,8 +800,8 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ 
+     if ((cpu->cfg.ext_smctr || cpu->cfg.ext_ssctr) &&
+         (!riscv_has_ext(env, RVS) || !cpu->cfg.ext_sscsrind)) {
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_smctr)) ||
+-            cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_ssctr))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_smctr)) ||
++            cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_ssctr))) {
+             error_setg(errp, "Smctr and Ssctr require S-mode and Sscsrind");
+             return;
+         }
+@@ -820,7 +818,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->cfg.ext_svpbmt && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
+         cpu->cfg.ext_svpbmt = false;
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svpbmt))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_svpbmt))) {
+             warn_report("svpbmt requires at least satp sv39, "
+                         "current satp mode: %s",
+                         satp_mode_str(cpu->cfg.max_satp_mode,
+@@ -830,7 +828,7 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+ 
+     if (cpu->cfg.ext_svnapot && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
+         cpu->cfg.ext_svnapot = false;
+-        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svnapot))) {
++        if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_svnapot))) {
+             warn_report("svnapot requires at least satp sv39, "
+                         "current satp mode: %s",
+                         satp_mode_str(cpu->cfg.max_satp_mode,
+@@ -1007,7 +1005,7 @@ static void cpu_enable_implied_rule(RISCVCPU *cpu,
+                      * If the user disabled the misa_bit do not re-enable it
+                      * and do not apply any implied rules related to it.
+                      */
+-                    if (cpu_misa_ext_is_user_set(misa_bits[i]) &&
++                    if (cpu_misa_ext_is_user_set(cpu, misa_bits[i]) &&
+                         !(env->misa_ext & misa_bits[i])) {
+                         continue;
+                     }
+@@ -1143,7 +1141,7 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
+     }
+ 
+     if (set_misa_c) {
+-        if (cpu_misa_ext_is_user_set(RVC)) {
++        if (cpu_misa_ext_is_user_set(cpu, RVC)) {
+             warn_report("RVC mandated by Zca/Zcf/Zcd extensions");
+             return;
+         }
+@@ -1285,7 +1283,7 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
+             continue;
+         }
+ 
+-        cpu_misa_ext_add_user_opt(bit, profile->enabled);
++        cpu_misa_ext_add_user_opt(cpu, bit, profile->enabled);
+         riscv_cpu_write_misa_bit(cpu, bit, profile->enabled);
+     }
+ 
+@@ -1296,7 +1294,7 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
+             cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
+         }
+ 
+-        cpu_cfg_ext_add_user_opt(ext_offset, profile->enabled);
++        cpu_cfg_ext_add_user_opt(cpu, ext_offset, profile->enabled);
+         isa_ext_update_enabled(cpu, ext_offset, profile->enabled);
+     }
+ }
+@@ -1356,7 +1354,7 @@ static void cpu_set_misa_ext_cfg(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_misa_ext_add_user_opt(misa_bit, value);
++    cpu_misa_ext_add_user_opt(cpu, misa_bit, value);
+ 
+     prev_val = env->misa_ext & misa_bit;
+ 
+@@ -1520,7 +1518,7 @@ static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_cfg_ext_add_user_opt(cfg_offset, value);
++    cpu_cfg_ext_add_user_opt(cpu, cfg_offset, value);
+ 
+     prev_val = isa_ext_is_enabled(cpu, cfg_offset);
+ 
+@@ -1684,8 +1682,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
+                             "riscv.cpu.rnmi", RNMI_MAX);
+ #endif
+ 
+-    misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+-    multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
++    cpu->misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
++    cpu->multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+ 
+     if (!misa_ext_implied_rules) {
+         misa_ext_implied_rules = g_hash_table_new(NULL, g_direct_equal);
 -- 
 2.55.0
 
