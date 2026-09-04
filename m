@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7CC4C624D3
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B95C61DD6
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 13:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TaW-0006lJ-2u; Fri, 04 Sep 2026 09:04:12 -0400
+	id 1x2TaW-0006m1-AG; Fri, 04 Sep 2026 09:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TZs-0006Oq-GJ
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:35 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1x2TaF-0006X0-Kh
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:55 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TZq-00035F-Hi
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:32 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-49a97714f5dso8202165e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:03:30 -0700 (PDT)
+ id 1x2Ta5-0003CW-2r
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 09:03:54 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-482e4998d28so715224f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 06:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788527009; x=1789131809; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788527024; x=1789131824; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=AQnB4DBnp/ONezfowOeBcimDo+tQTeuzUbKX5jP4jWY=;
- b=YXr2/1tf6spHLOFWuKymmE3MtDs9IaS92jzNueaVCQaadgjoqbBUFlHBzhr7GfmRgF
- 1zRgnKASut+dWArqIDm53mWJgG8oEvUjaL6qr6lTRNhl+2wZWt89ucx3GQJ9cJ9X/Amy
- m9c1vnzNHpGfiqqT3WKRsMzicxfaS6QwYJLRbkWE3vdxLjVEl0fTOAbvzrLWZqChWF6G
- z3kXYC2yID0F8X8u7taPx3S1JZu1EBClFHAjxFy3vIpUCsXTuz0G9anUPDf4GDvl8YTZ
- uOc7cXcvxQ38psStZQTV2KHfXBFG31C39I+Ndp5zTrRBsojtptIVoZ4ucBsEajAAsgsB
- 5rfQ==
+ bh=79ufYTClA2Zki0fcHzVVYb5ccPOkGeEIREeOR0gRlYQ=;
+ b=s7F+J74tu7YTI69bxDLkPWcVwguKwu0LvxrE1iMcJsf1UAoAlGZnwMspHDIQOEXIm3
+ NLxQ2fe67jFw3Z1ku9z5Lco1Z2vnE4AtcY/Z6j4A0iLfgWXAkHXktqFwPDEjKam49EbS
+ N1fF0PXc8wApHovMX7TYn8rcWM2EIfFHORwXdrkNfIltrc0oYIkedCl21LxFiM6+l1N8
+ hfNL14SCYtARp8YvVwKStDc8b5wYtC0h6wv9oDIZ6pQaJ0E4j2a8gxBX+CvamIXIuvrF
+ 9yRcNKiEf1eg19D0KMZwlHyc1v9MTIW9yAX6W34fo0Ejoz+lSFiOh2WwPuXU0Puz2hPH
+ QlRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788527009; x=1789131809;
+ d=1e100.net; s=20251104; t=1788527024; x=1789131824;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=AQnB4DBnp/ONezfowOeBcimDo+tQTeuzUbKX5jP4jWY=;
- b=P0QcqG4yECXWdIWhrj0nJdfx3HuS7HF6FhHWVCeUvRTyliTHuPcBIWQJ1wo12Y5j0Y
- s7tTxZIurPuezV3lwi+Jm68O8ZA6YhOfTDRnFllfNnPA5vayG1oiZAPAE60P9/yqp0nx
- h0kfdwmn5MBT5wzEayzrlg6qqWxiWpA6YQINZxzVlMH8vQvdBlIK78ldCf+fnEqV27I2
- De7Q5ZzaMDGGI1pizgbamEaq0qKxOZp3YWjrtAH7tCQ59pU3VLyApeBWADjWU3qqf7/1
- rjAMfEobDbA5dTWygVofjYIGqjHLxyduK/7O+KMSjDGIFqE42DvSVbQ3Q9FFBPce2j3W
- AbRA==
-X-Gm-Message-State: AFuF++ngJXEe4BRe5dA1yPvqpkiTO+1+s6RU3hkziwI1WIdLffhmwjlY
- ghZET6WBJh+AX30nmAkYVq5byxZLKntAmWOuTW8uuL7IN8XnuYPALjSIKH5twkwQ6E8=
-X-Gm-Gg: AYBFou0JsjXJBI/icKzb6jKiOiK1/lI+oWPJL5EJy3S9pUC+9sYkcfucU03p2M695gl
- eeebeOQzmzTPsSBPckapT9nLUAk9jopj1aJfSJaGoC6GJiaH75VfQPVxmi+EBXE6P4zEUd/5MiM
- uDMl0biISmU0GKgyg5lpuDiFrdrc5su5SXboCAVO1HqQXknkfBgIllzKJ6diwacoGZni/8gWfUN
- v0FCd3VUHDNATmSXDz/ZgOVbGBezJIFICCQfXwNMHXd3Hf6tt8XEWGPQt8OoQC8d5UM5uJavxnD
- iGzSjDkYw3lypSZCAtSkh4Gc8RI8hMgnMTfFA4ai2u523puX4owk+Yl2g2uuTc3uFL9kJAOZ+2o
- h+DhchjGlZQzq+Xo7cpBoHp288SsLhyrBZprQe5bU502kR8jWPGL9x8hgO7cDptAqNYAoFoywao
- t68I7vQ9MpFoQgbIrXtkVeZdJdzL/4X7okLMtTqvPjqUwznUHsJWUZrIT3lRq/
-X-Received: by 2002:a05:600c:348a:b0:49c:fa20:cc03 with SMTP id
- 5b1f17b1804b1-49cfa20ccedmr35285085e9.26.1788527008780; 
- Fri, 04 Sep 2026 06:03:28 -0700 (PDT)
+ bh=79ufYTClA2Zki0fcHzVVYb5ccPOkGeEIREeOR0gRlYQ=;
+ b=f27cz+Z19wJSwz0m5m5mMZ4bkS/fJlJy2YchT0W3EfTucfsfpfIiBFOItTdV2KFmGe
+ T8VgwCHYYYIEgSRHn1wzP9RgwIBFeO7qGJOKuQc+9VqWeUQ/9qUrZLKqNnHF0LcLWLIX
+ zf5VXw52zFLLWfKuM6anyAH6GU8fwsT/AYJCW6XLa/m/TFzT3IaxwOsRQA0+mrrnXp2v
+ 82VM9q2wtQWFnrPRrSlhrVvl0N89JYqGK/kMrZOIXCwguXfXeMcDPg+w343YLV83v+8c
+ oMjH2jCoKAZ2CAuoQLfvl2fU9CHZaPinsBQAENss+m8AwSgxS+yz3tijlfFGNABK960h
+ 5cEw==
+X-Gm-Message-State: AFuF++lQ6oVfw5Qu16C8UNWnjIz6kfVV67h8jYVriTnROtEjfkU1MyaW
+ zZHxNo3jLnxpsaZy6+cEomhjAUoxuiqROSLo6V1yTlVPsUrW1IsxTDi/x+trtm91IIo=
+X-Gm-Gg: AYBFou3ZLyAUifxCs7SLB9lSxTGbHM05Gh+8pFBCVnmcCo097Nob5kuZpvJS+ZaFqKD
+ i124Q+Wi7QGNKb7GG4gNIhS6IoFuupanLBsdAzKA9eekwoD4Z4hp0nQ8KhpsbiDtb9wubtt3fDd
+ xYpkBg/VMi675ZUUINRUrr989PupeMKsk+GIinPoH3uPLAjEpNx0LUyi2jVBkkixb/XOLnybGkI
+ E4carI5MKCqBMr7PS69T1jZM2PXts4dx0j1Xr2JJ3TEHsvSXLSjZ6NRttPv2VLSVcrF6HEi/QOx
+ JiygRt3n9u+5WyR4xPBgxpbGUNyRlxebstS5pFx2OGQ9sE72OFsyuRCU04QeIkBJIfsT9PssF6c
+ dLz4EOtICpVaom5QgW9bIsPaYL3WB10UhYYpHPSU9TXq6aA+6BrN6KEFrYWD9Ywx0w4aOrD17Br
+ Mmg70bGpTTgdO0m6MjtQFw6a/0Ttm5C/YxEMjkbKOQ4VmJw8VHEQ4epEIRvt5k
+X-Received: by 2002:a05:600c:4f43:b0:49c:fc6e:a3d9 with SMTP id
+ 5b1f17b1804b1-49cfc6ea7b4mr34576785e9.24.1788527022053; 
+ Fri, 04 Sep 2026 06:03:42 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf7740d44sm147380195e9.15.2026.09.04.06.03.25
+ 5b1f17b1804b1-49cee60bae6sm185291215e9.9.2026.09.04.06.03.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Sep 2026 06:03:26 -0700 (PDT)
+ Fri, 04 Sep 2026 06:03:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 15D2D5F9DA;
- Fri, 04 Sep 2026 13:46:07 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id E7DBE5F9CF;
+ Fri, 04 Sep 2026 13:46:08 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aniket Sahu <asahu1x@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 028/105] tests/tcg/meson.build: introduce cc_dockerfile and
- cc_docker_host_arch
-Date: Fri,  4 Sep 2026 13:44:42 +0100
-Message-ID: <20260904124604.2207440-29-alex.bennee@linaro.org>
+Subject: [PULL 046/105] tests/tcg/alpha: system tests
+Date: Fri,  4 Sep 2026 13:45:00 +0100
+Message-ID: <20260904124604.2207440-47-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,150 +108,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-We allow target to declare a dockerfile containing required cc. We reuse
-tests/docker/docker.py, and correctly set dependencies for tests on
-original dockerfile.
-
-We specify list of hosts for which image can be built and contains
-required cc, using cc_docker_host_arch.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-29-pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260827221506.91574-47-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 9c00d21f059..ab7090a62fe 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -1,5 +1,6 @@
- env = find_program('env')
+diff --git a/tests/tcg/alpha/Makefile.softmmu-target b/tests/tcg/alpha/Makefile.softmmu-target
+deleted file mode 100644
+index a944102a3ce..00000000000
+--- a/tests/tcg/alpha/Makefile.softmmu-target
++++ /dev/null
+@@ -1,34 +0,0 @@
+-#
+-# Alpha system tests
+-#
+-
+-ALPHA_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/alpha/system
+-VPATH+=$(ALPHA_SYSTEM_SRC)
+-
+-# These objects provide the basic boot code and helper functions for all tests
+-CRT_OBJS=boot.o
+-
+-ALPHA_TEST_SRCS=$(wildcard $(ALPHA_SYSTEM_SRC)/*.c)
+-ALPHA_TESTS = $(patsubst $(ALPHA_SYSTEM_SRC)/%.c, %, $(ALPHA_TEST_SRCS))
+-
+-CRT_PATH=$(ALPHA_SYSTEM_SRC)
+-LINK_SCRIPT=$(ALPHA_SYSTEM_SRC)/kernel.ld
+-LDFLAGS=-Wl,-T$(LINK_SCRIPT)
+-TESTS+=$(ALPHA_TESTS) $(MULTIARCH_TESTS)
+-CFLAGS+=-nostdlib -g -O1 -mcpu=ev6 $(MINILIB_INC)
+-LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+-
+-# building head blobs
+-.PRECIOUS: $(CRT_OBJS)
+-
+-%.o: $(CRT_PATH)/%.S
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+-
+-# Build and link the tests
+-%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-
+-memory: CFLAGS+=-DCHECK_UNALIGNED=0 -mbwx
+-
+-# Running
+-QEMU_OPTS+=-serial chardev:output -kernel
+diff --git a/tests/tcg/alpha/meson.build b/tests/tcg/alpha/meson.build
+index 08e371116c3..fe60ce2496a 100644
+--- a/tests/tcg/alpha/meson.build
++++ b/tests/tcg/alpha/meson.build
+@@ -2,6 +2,8 @@ cc = 'alpha-linux-gnu-gcc'
+ cc_dockerfile = 'debian-all-test-cross'
+ cc_docker_host_arch = ['aarch64', 'x86_64']
  
-+docker_wrapper = find_program('../docker/docker.py')
- gdb_progs = ['gdb-multiarch', 'gdb']
- if config_host.has_key('GDB')
-   gdb_progs = [config_host['GDB'], gdb_progs]
-@@ -20,6 +21,8 @@ tcg_tests = {}
- # {
- #   'name_of_target': {
- #     'cc': 'cross_compiler',
-+#     'cc_dockerfile': 'name_of_dockerfile',
-+#     'cc_docker_host_arch': ['host_arch_supported (meson cpu)', ...],
- #     'cc_feat_cflags': {
- #       'name': ['feature cflags'],
- #       ...
-@@ -74,10 +77,17 @@ if gdb.found()
-   endforeach
- endif
++subdir('system')
++
+ tests = []
  
-+docker_probe = run_command(docker_wrapper, 'probe', check: false)
-+docker_supported = docker_probe.returncode() == 0
-+if docker_supported
-+  docker_wrapper = [docker_wrapper, '--command', docker_probe.stdout().strip()]
+ # Multi arch tests
+diff --git a/tests/tcg/alpha/system/meson.build b/tests/tcg/alpha/system/meson.build
+new file mode 100644
+index 00000000000..b10f2c3e28d
+--- /dev/null
++++ b/tests/tcg/alpha/system/meson.build
+@@ -0,0 +1,47 @@
++tests = []
++
++minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
++minilib_printf = files(minilib_dir / 'printf.c')[0]
++link_script = files('kernel.ld')[0]
++boot = files('boot.S')[0]
++cflags = ['-nostdlib',
++          '-ffreestanding',
++          '-Wa,--noexecstack',
++          '-I', minilib_dir, minilib_printf, boot,
++          '-Wl,-T', link_script,
++          '-mcpu=ev6',
++          '-Wl,--no-warn-rwx-segments',
++          '-lgcc']
++qemu_def_args = ['-display', 'none',
++                 '-serial', 'stdio',
++                 '-kernel']
++
++# Multi arch tests
++multi_src = []
++foreach t: tcg_tests['multiarch-softmmu']['tests']
++  foreach src, setup: t
++    new_cflags = cflags
++    if fs.stem(src) == 'memory'
++      new_cflags += ['-DCHECK_UNALIGNED=0', '-mbwx']
++    endif
++    if src not in multi_src
++      setup += {'cflags': [new_cflags]}
++      multi_src += src
++    endif
++    tests += {src: setup + {'qemu_args': qemu_def_args}}
++  endforeach
++endforeach
++
++if 'qemu-system-alpha' in emulators
++  tcg_tests += {
++    'alpha-softmmu': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'cc_docker_host_arch': cc_docker_host_arch,
++      'folder': 'alpha/system',
++      'gdb_arch': 'alpha',
++      'qemu': emulators['qemu-system-alpha'],
++      'tests': tests,
++    }
++  }
 +endif
-+
- # plugins come first, as we need to build the list
- test_plugins = {}
- subdir('plugins')
- 
-+image_targets = {}
- # Finally, we can create all test executables and test targets
- foreach target, plan: tcg_tests
-   # Detect duplicated executables/tests, and report an error to force user to
-@@ -88,8 +98,8 @@ foreach target, plan: tcg_tests
- 
-   # return a clear error if user misspell a target entry
-   foreach key, _ : plan
--    allowed = ['cc', 'cc_feat_cflags', 'folder', 'gdb_arch', 'gdb_feat_version',
--               'qemu', 'tests']
-+    allowed = ['cc', 'cc_dockerfile', 'cc_docker_host_arch', 'cc_feat_cflags',
-+               'folder', 'gdb_arch', 'gdb_feat_version', 'qemu', 'tests']
-     if key not in allowed
-       error('unknown tcg test plan entry \'' + key + '\' for target ' + target +
-             ' (possible: [' + ', '.join(allowed) + '])')
-@@ -97,6 +107,46 @@ foreach target, plan: tcg_tests
-   endforeach
- 
-   cc = find_program(plan['cc'], required : false)
-+  cc_from_system = cc.found()
-+  has_cc = cc.found()
-+  build_test_depends = []
-+  build_test_depend_files = []
-+
-+  if 'cc_dockerfile' in plan
-+    cc_dockerfile = plan['cc_dockerfile']
-+    cc_docker_host_arch = plan['cc_docker_host_arch']
-+    allowed = ['aarch64', 'x86_64']
-+    foreach arch: cc_docker_host_arch
-+      if arch not in allowed
-+        error('incorrect docker arch ' + arch + ' for target ' +
-+              target + ' (possible: [' + ', '.join(allowed) + '])')
-+      endif
-+    endforeach
-+    docker_host_arch_supported = host_machine.cpu_family() in cc_docker_host_arch
-+    dockerfile = files('..'/'docker'/'dockerfiles'/cc_dockerfile + '.docker')
-+    image_name = 'image-' + cc_dockerfile
-+    has_docker = docker_host_arch_supported and docker_supported
-+    if cc_dockerfile not in image_targets and has_docker
-+      cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', cc_dockerfile]
-+      t = custom_target(image_name, command: cmd,
-+                        build_by_default: false,
-+                        output: 'no_output_' + image_name)
-+      image_targets += {cc_dockerfile: t}
-+    endif
-+
-+    if not has_cc and has_docker
-+      build_test_depends = image_targets[cc_dockerfile]
-+      build_test_depend_files = dockerfile
-+      mount = meson.project_source_root()
-+      mount = mount + ':' + mount
-+      here = meson.project_build_root()
-+      cc = [docker_wrapper, 'run', '--run-as-current-user',
-+            '-w', here, '-v', mount,
-+            cc_dockerfile, plan['cc']]
-+      has_cc = true
-+    endif
-+  endif
-+
-   folder = plan['folder']
-   gdb_arch = plan['gdb_arch']
-   qemu = plan['qemu']
-@@ -190,11 +240,15 @@ foreach target, plan: tcg_tests
-         cc_feat = setup['cc_feat']
-         if cc_feat not in cc_has_feat
-           avail = false
--          if cc.found()
-+          if cc_from_system
-+            # check flag for host cc
-             cmd = run_command([cc, '-xc', '/dev/null', '-o', '/dev/null', '-c',
-                                cc_feat_cflags[cc_feat]],
-                               check: false)
-             avail = cmd.returncode() == 0
-+          elif has_cc
-+            # docker cc always have feature
-+            avail = true
-           endif
-           cc_has_feat += {cc_feat: avail}
-         endif
-@@ -206,7 +260,7 @@ foreach target, plan: tcg_tests
-         cflags += cc_feat_cflags[cc_feat]
-       endif
- 
--      if not cc.found()
-+      if not has_cc
-         skip_test = 'compiler ' + plan['cc'] + ' not available'
-         built_tests += {exe_name: exe_name}
-       endif
-@@ -223,6 +277,8 @@ foreach target, plan: tcg_tests
-                                       cflags],
-                             depfile: exe_name + '.d',
-                             output: exe_name + '.test',
-+                            depends: build_test_depends,
-+                            depend_files: build_test_depend_files,
-                             build_by_default: false)
-         built_tests += {exe_name: exe}
-       endif
 -- 
 2.47.3
 
