@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E3AC79F88
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1012C79F87
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Sep 2026 12:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2TQM-0001iF-4J; Fri, 04 Sep 2026 08:53:42 -0400
+	id 1x2TQO-0001j6-04; Fri, 04 Sep 2026 08:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQK-0001gp-Cz
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:40 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1x2TQM-0001iM-Qz
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:42 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x2TQG-0000hw-D3
- for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:40 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-48431648f33so1443609f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:36 -0700 (PDT)
+ id 1x2TQK-0000jL-4B
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 08:53:42 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-48586861639so678901f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 05:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788526415; x=1789131215; darn=nongnu.org;
+ d=linaro.org; s=google; t=1788526419; x=1789131219; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=HTrZoXFUnOhw1apTHhMkKxBaxnocexlpyfkyOtxfvtg=;
- b=WP/ATxXPmOF3UmC01HmUm+5ev5KbrkeHZL35hzzGhZEAOHwVr+J+zkca4zazyctOQ9
- CDNfsWCkeRSJTXXHEWQfRif3jz35YjA57DKs0YMPa7wqp7K2I/xLWal8ysNfL/uZ95ND
- tFNre6A/gswJC+jYjWdUvfXlyCwIC5cJ6bygiGXEAKaEd9xSg5hUYoSoFzsvKAibDEqc
- h5NSZmhXrLPTGfbMY8gE4O8bH0l/w8n07zcZE3rwp7gVuE69GYGXs45ejyWLk6YtjLYT
- EhdTQ/+UMFYUnEIChMzELBq11pMSqvaGCwx2E8Gl5BcCbBqhsV2RbFIEyEcmvQJ5PjLO
- Sg2Q==
+ bh=Enfk34+BKXGXOBtsT5q8qTvUMCUcJJpAI3wkn48gKjY=;
+ b=HN4GOlTzlCnTwjoSqpi/UbcXmu6uPCkEr2mG9Gq+C5gQfqUywOirmd0iA2V5rBTZ2i
+ KYHzKNKIgfc12DwYRTd8mwvR/DVAw3+rnaeF6f42Usm0BNeRnJJ05IYxromvke4ieGP+
+ nw+M859pBgf8H8bXDouuh9Dc2V/kz+G3DQmUjWw8LJLkED+fD20pQSsocrt1JCWvYu0q
+ I8U+NcNEXfJrUlNNHMv0o+0d1ScK+l/bwFohbrAd4X26QdnvMnjkI89E9oB/FojsQHrm
+ 3IXW5KCrIXOvThARQYXvp2+b5D+9/Lp5FU/UtjRnXHsv3ksu7E7l9gOl2SJGCOUxnAFS
+ mb7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788526415; x=1789131215;
+ d=1e100.net; s=20251104; t=1788526419; x=1789131219;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=HTrZoXFUnOhw1apTHhMkKxBaxnocexlpyfkyOtxfvtg=;
- b=bzJcrG/VEohXg18wxf50IETHMKwk4GK4PqAXbmKomey/lFPO6Wp7CYAIY2ayUPfRg2
- lQHYpm0BqVRGmsbbFPYQ/7ZYTWDB7ueGpAC/3oe2qQc+NTkZQiAUUN6b0qf1rFKcQmMU
- IL3MP3VI4M+plKII/0/By6F7pn9c/F2oxRqk+qqt8fixUQ5vWdsR6DJW03zEqhpcivxH
- JrjAGdoeEtGwBCF68r0+iV9Mfi7I6rUEbdIfCjiJPK0aPqROKH/jYgAO4FVixWcmMcZx
- sV7ZyxiudadiAakIJwR7M5FWPJiJ295weAHT4+n0xPxCDas5XtboqIetjs4N/5Wg6RXh
- dSyg==
-X-Gm-Message-State: AFuF++m4EJqUhLJ5PMHa4X24WiEUVlRvokMMlpxKheGbuoF8wElZr3T9
- Z6gbxvupwb9mlrJvKIIxokrnZ45qEAp9O1xq/o+Grb1mRTMnL5DpKkJNLkiCCmsMJM8=
-X-Gm-Gg: AYBFou3hrR7rsLzItKCpimqaUvkOXp8mqNexbJWtntB1JD4j1VA3CJCHI6V8aFd/Fyn
- jorQY9gul5i/IblItpDpmHDOYNWIQKMPbtG0Rb3SDGzwXLZDP585bixP6mKfb7FxkMA6MdXCa8H
- sya85tUrcKphyrxMfJEHtiYKh8RmkAKiIoQKdJod/v3UX7OLTuQrreMsAZMrw9uIhxF5jbR59C/
- +IMerxBnEHwTfAmUh3XbkTdZuZ6wWhFTduuwiLtYiQeWTZzCBlCT3xRiySgxtlKGcgH5jbuax2E
- IyJn5rT0JI5JAQG2ldgaXBeak/I0hPXqEeE0aiPvjZ0wyx2e9mTDV0cWmR3bvkEfm9BzB65D3sn
- kJXOnFLCn7t9Tas6Pz7sen05daXZh1FmopuPJfuR07u0iLGeIPuueWj8F8DPaWjPld+ZpDpceML
- 8FRKIlCLm2vjZRDoNK6QWfExBXbaZkFgKs0EiGAVtMnEucHmLELExmP2I/QOoX
-X-Received: by 2002:a05:600c:5247:b0:49c:ee3b:723d with SMTP id
- 5b1f17b1804b1-49cf81f69ddmr45196585e9.0.1788526414957; 
- Fri, 04 Sep 2026 05:53:34 -0700 (PDT)
+ bh=Enfk34+BKXGXOBtsT5q8qTvUMCUcJJpAI3wkn48gKjY=;
+ b=XneKYDQPw6F1eKNJh97q+MsyPr77QxVgo9+pyup0l2DR8Wvd/0t3WO3m/WGZ1ZbV/S
+ eHxnXL6+CJ/Yq5pLcTgMA3s6uj7XDKRJw9pfEhrWJDBjMQzbnNF//n16LZMlzy5IeQvI
+ bXsQqPCCHscXduBszIVEegWaZmy53KWwJ8mkSCWKBeG+b7wO2K6oKmA+PVgUSoGrWSoq
+ A1VT22C6ieQtS632QOquo3DMp6tgLCLWx6PaAyQlFTaRrPjf5G4NW3FnA0WBX2DEMbWy
+ beS/m8c9xlJRAqq9ba0qN5DOkXP2rLvl5VVGjXTmon+Mzlh8Q2xcMDjNgX672LuS/xdY
+ /Yuw==
+X-Gm-Message-State: AFuF++lgdcXFmgD2+3MkJXNMDwjCci+OB7S1FNsW97jQnfijIZkaapt5
+ SV4bOymQWX0icmCVv10tMkyFA7kN78wa/rBx54dYP3OZiUp8v5xCuksrrOlAfooZhOk=
+X-Gm-Gg: AYBFou0JU11ET8bnXNYGCxiK6XlOscZWmtAfDE8eyEqhtPbWN6zljhjXGGfbF1KfZwc
+ 24UeYz8PsPCIj74UT0bxzMqJjYf8svwCuKqBlK4dxJ3jnd2mO4NRZUM6CXLeIhd16HblNYwvwcp
+ c/yLe/IYuZURbhBYXa3p7wLVAQGvspnwogv9CS5eY5MmWijox/SE+LwKJI5+2csKT2saF4qdJ8B
+ g8qLJNyUCpS5Bn04XQE9R6M/wsQ/YN2QFPm3nE9VsPGgyeQdEvXuKMIItrTr7fsjrrjPPURC7mc
+ tyaN+kIedRcIEyk5TtpwJGUpeZ16HyZGV/bdyiarFBiF8t3Qnvg8VR06q22ARLW5B4+Z4Bmdn2s
+ usSJL/AXPGDPkah4VwaGoV0VgdKbgN6BMHtpbEiS3K50lNEySHPPIxSQyPSk+/EY2Gw6fWvt19z
+ fIQDPjxCErMemwDCPIV7mq7zC99Yo/TOKLmIZNr0YWc3QwNXO7LlZsqr+nQzmW
+X-Received: by 2002:a5d:6d2b:0:b0:484:3600:35a9 with SMTP id
+ ffacd0b85a97d-4857e3ce195mr12951925f8f.3.1788526418624; 
+ Fri, 04 Sep 2026 05:53:38 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf771e9absm69128255e9.9.2026.09.04.05.53.27
+ ffacd0b85a97d-485883c5bc5sm6437586f8f.24.2026.09.04.05.53.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 04 Sep 2026 05:53:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 969C8616E3;
+ by draig.lan (Postfix) with ESMTP id 3691E615D4;
  Fri, 04 Sep 2026 13:46:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PULL 023/105] tests/tcg/meson.build: introduce gdb_feat and
- gdb_feat_version
-Date: Fri,  4 Sep 2026 13:44:37 +0100
-Message-ID: <20260904124604.2207440-24-alex.bennee@linaro.org>
+Subject: [PULL 019/105] tests/tcg/meson.build: add wrapper record_replay
+Date: Fri,  4 Sep 2026 13:44:33 +0100
+Message-ID: <20260904124604.2207440-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260904124604.2207440-1-alex.bennee@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,91 +107,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Similar to cc features, we declare the same for gdb. With both
-available, we can now declare all tests inconditionally.
+Runs a record and replay test, and make sure the output produced by
+both runs is the same.
 
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260827221506.91574-24-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260827221506.91574-20-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 4487d61ef6c..7384786f7f8 100644
+index f2c5d77bfe0..328592b28bc 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -26,6 +26,10 @@ tcg_tests = {}
- #     },
- #     'folder': 'folder_for_test_src_files',
- #     'gdb_arch': 'gdb architecture requirement',
-+#     'gdb_feat_version': {
-+#       'name': ['minimal gdb version supporting feature'],
-+#       ...
-+#     },
- #     'qemu': emulators['qemu-...'],
- #     'tests': [
- #       {
-@@ -37,6 +41,7 @@ tcg_tests = {}
- #           'qemu_args': ['qemu command line flags', ...],
- #           'expected_output': 'file_to_compare_output',
- #           'gdb_test': ['gdb test args'],
-+#           'gdb_feat': ['feature name, must be present in gdb_feat_version'],
- #           'env_var': ['VAR=value', ...],
- #           'wrapper': [program_to_launch_test, 'args'...],
- #           'plugin_test': {
-@@ -83,7 +88,8 @@ foreach target, plan: tcg_tests
- 
-   # return a clear error if user misspell a target entry
-   foreach key, _ : plan
--    allowed = ['cc', 'cc_feat_cflags', 'folder', 'gdb_arch', 'qemu', 'tests']
-+    allowed = ['cc', 'cc_feat_cflags', 'folder', 'gdb_arch', 'gdb_feat_version',
-+               'qemu', 'tests']
-     if key not in allowed
-       error('unknown tcg test plan entry \'' + key + '\' for target ' + target +
-             ' (possible: [' + ', '.join(allowed) + '])')
-@@ -98,6 +104,11 @@ foreach target, plan: tcg_tests
-   if 'cc_feat_cflags' in plan
-     cc_feat_cflags = plan['cc_feat_cflags']
-   endif
-+  gdb_feat_version = {}
-+  if 'gdb_feat_version' in plan
-+    gdb_feat_version = plan['gdb_feat_version']
-+  endif
+@@ -6,6 +6,7 @@ if config_host.has_key('GDB')
+ endif
+ gdb = find_program(gdb_progs, required: false)
+ prog_gdb_test = find_program('../guest-debug/run-test.py')
++prog_record_replay = find_program('./scripts/record_replay.sh')
+ prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
+ prog_run_with_input = find_program('./scripts/run_with_input.sh')
+ prog_run_and_check_forbidden_output = find_program(
+diff --git a/tests/tcg/scripts/record_replay.sh b/tests/tcg/scripts/record_replay.sh
+new file mode 100755
+index 00000000000..57775a2d4c1
+--- /dev/null
++++ b/tests/tcg/scripts/record_replay.sh
+@@ -0,0 +1,16 @@
++#!/usr/bin/env bash
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-   tests = plan['tests']
- 
-   foreach t : tests
-@@ -105,8 +116,8 @@ foreach target, plan: tcg_tests
-       # return a clear error if user misspell a setup entry
-       foreach key, _ : setup
-         allowed = ['exe_name', 'env_var', 'expected_output', 'cc_feat', 'cflags',
--                   'gdb_test', 'plugin_test', 'qemu_args', 'test_name',
--                   'wrapper']
-+                   'gdb_feat', 'gdb_test', 'plugin_test', 'qemu_args',
-+                   'test_name', 'wrapper']
-         if key not in allowed
-           error('unknown tcg setup entry \'' + key + '\' for test ' + src +
-                 ' (possible: [' + ', '.join(allowed) + '])')
-@@ -261,6 +272,18 @@ foreach target, plan: tcg_tests
-         cmd = [setup['env_var'], cmd]
-       endif
- 
-+      if 'gdb_feat' in setup
-+        if 'gdb_test' not in setup
-+          error('test ' + test_name + ' is not a gdb test, but it requires ' +
-+                'a gdb feature')
-+        endif
-+        gdb_feat = setup['gdb_feat']
++set -euo pipefail
 +
-+        if not gdb_version.version_compare('>=' + gdb_feat_version[gdb_feat])
-+          skip_test = 'gdb feature ' + gdb_feat + ' not supported'
-+        endif
-+      endif
-+
-       if skip_test != ''
-         # still declare test, but skip it and print reason
-         cmd = ['sh', '-c', 'echo "' + skip_test + '" && exit 77']
++if [ $# -lt 2 ]; then
++    echo "record_replay: qemu_bin [args]..." 1>&2
++    exit 1
++fi
++qemu="$1";shift
++tmp=$(mktemp -d)
++trap "rm -rf $tmp" EXIT
++set -x
++$qemu -icount shift=5,rr=record,rrfile=$tmp/rr.bin "$@" |& tee $tmp/record
++$qemu -icount shift=5,rr=replay,rrfile=$tmp/rr.bin "$@" |& tee $tmp/replay
++diff $tmp/record $tmp/replay
 -- 
 2.47.3
 
