@@ -4,87 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AD1C624D6
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 04:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE1AC624DB
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 04:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2hZ0-0001Ck-4T; Fri, 04 Sep 2026 23:59:34 -0400
+	id 1x2iSe-0001qY-70; Sat, 05 Sep 2026 00:57:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x2hYx-0001BL-5V; Fri, 04 Sep 2026 23:59:31 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x2iSa-0001p2-G0
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 00:57:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x2hYt-0004Yx-Mb; Fri, 04 Sep 2026 23:59:30 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6853wCMo046345
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 5 Sep 2026 12:58:12 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=3MEvziVPuMujDh3SwAupb1n5NFORY2lKjFbexBsqTCI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1788580693; v=1;
- b=kllNt8A8ZG9d2uWp5I2Z7iCtJaFc9Z8zdw1kYU0KiAi9k3eJlFkE0L/Pht+rjnpr
- AcnqUA9fH0+SGox8XYYNpbJ2cpbi/ZV4tqft/XYhSz5YUMlbYujUIWTQSMVaCtsH
- 9KaeGF43nydGPcrehD4Qn97ncJ4rzOXcB5OaNr2CPUUg+k/VaQQYRH/y0BOp3uAA
- PTsfnuggX5EuXq0QsLv6mEuHla9PoXR4N+v5vtuPqzVj7Znj+ZiQLBxfTVEzxu2U
- SSz1Nwl4B/iy7kO8lI73N1qPd3D+7JZiAE5SmI7WMnpOIIo/oMQhSfQQfb/eCraQ
- 8wx+fjs8/pJL61HJ2OtmOQ==
-Message-ID: <1ecb19ae-b882-4384-9395-d7161ec63701@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 5 Sep 2026 12:58:12 +0900
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x2iSY-0001xN-KQ
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 00:57:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788584216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ICY/KHLVUrj4fBQrE39y6DnVReGAdRdVl0IgfUVv1rQ=;
+ b=M1XB2omcxiizW9RbbuZm2XHjoHv3BuVbDd6jxOp+pxogIWccGHmY3jlQFkOkbidI27hplU
+ LgqNC8MgbHk5hMhupTyMSv3dMt2c4AXiPjhcwRRaPhVtT5RLE/aX+t6dp0GJLZpHpSNm5R
+ ddrVRdxSCX+rewB3OxhgJtrtVQz55AY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-348-atNIOJ8pOq6d42oDcIkTrw-1; Sat, 05 Sep 2026 00:56:54 -0400
+X-MC-Unique: atNIOJ8pOq6d42oDcIkTrw-1
+X-Mimecast-MFC-AGG-ID: atNIOJ8pOq6d42oDcIkTrw_1788584213
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-482e538ad9fso1468111f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 21:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788584213; x=1789189013; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ICY/KHLVUrj4fBQrE39y6DnVReGAdRdVl0IgfUVv1rQ=;
+ b=ox5EiGyig4klrskP8SjvJWuF1KGoiNIvIwKCx82IuTSkEI0YFUI8Uolk72VxL4aS8w
+ 17TTeu6O7N9FQOCS3bn6Zle9HykS439+wePrMo6Q8DL0O2G2IKxLflnAji+HEWAaiuPj
+ CAD7x4Ctq7BFr3jWkDbesF9+5fy20nq++bQXZfmvjH8OFDhz4H0NpHkkZ7MGl2oDnWEV
+ yeMw4MEVqWJ/UyBp2dk5qaxXeDFJm/XbcV0vlEIaxg5kONGUusIxKr3eNUwgnp9xWfNi
+ r5g8Al2BM0UMusneGtT6/PeHXhGE29Wy+u2NJB/YZOzZzmJg37l2EB8qFHwIeytV11V5
+ jHvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788584213; x=1789189013;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ICY/KHLVUrj4fBQrE39y6DnVReGAdRdVl0IgfUVv1rQ=;
+ b=G5XPL293X4VapOeD15ZAbBSL3lBuucWsEGt6zgIorstR4xCTtIJ7bDuZC3bPfwb8/C
+ riODZV7mCc/rh+5tDIB/g1GeNYHjOm7EuTfx0nwe+6VlbfgY0oR5p+iXrvqrTzU5AuAa
+ J8XkkWxx+0mk2eYXWTRlQ2OLgV2SGJC+1o2ZZHjBsrtCwGVSJHOPml/FtxunXd4wnyt8
+ lCDGbg2Z2FMUmLT7E3TJ9rZAzoMiZJxvVEWmH2eyecq3BW3uiazsqOslau5BsUCHwbAz
+ km2ksiU92mdV+jintz3AGzDOkJ8XpwzjLv/B9g+LCOzb4vOGkH4QMRjnuAxvxasJZPJ3
+ XIEQ==
+X-Gm-Message-State: AFuF++mkX6Os4MYUgBwQnBTef1Obvo454r0cah3PFsqf10FzXH1YEP72
+ ZUxhKNk2BMfaG779tkljO0wwcYQx/fx9/VQlM+Es2uduowcMdC49gdkiJsEa5tL1VCP6bSjJkXk
+ 8bBpbt/Yqc/aW0x7gfW9o27utUENJloEmSTBi9SUOQQxjO2AJlk1qH2jnXaXAsOgEwSiQcabLKK
+ sY2dzbyTwpBhUGp8sEbWdOzjmU4Ief3z4H2g==
+X-Gm-Gg: AYBFou1sGZYxH5J5ruuB19o08Ps/z45XxbyTxiipN8R+YBYnAZSmPVFVT1J82AJf+Tf
+ CPZCLM5J6pivlTB9URMt/YPN/a7f31kguaH1qbEK87+6Th/QAF+rVKBxtp9My6n+IKPqAk9qpLD
+ N3x2OEjgWOhIx+egGnh2+6mLsqjTy8MEqxL/XD0GA8tjX0IIVYTqDDnKaC3y21o3t8FWDxdvVW+
+ XRxdb33l/tLwBKvwY4dRtWR9xqmfvzasDgVuhlaPQqWpfFMdxeNjPtaf96RPbZi4e21mJ2aNFyy
+ QXKZhhBS8XZRCpVgd1/jktb1Jdf6cu5vxLJ6WZFraFjp+Pxk4eXCU2gtxasAJ/sp5LysKNVM6rh
+ VOQjtA6UCcUoTYnCGKIcRjVvXAh4KUzRxeNTvmdPQaUJNE3agrGBRrb6XDG0zr1Aj5rhWBpGDz8
+ VfsvNKbAJXonpz3H2dPX4WgUmU3hER
+X-Received: by 2002:a05:6000:24c8:b0:485:8c16:a33e with SMTP id
+ ffacd0b85a97d-4858c16a715mr7847488f8f.51.1788584213323; 
+ Fri, 04 Sep 2026 21:56:53 -0700 (PDT)
+X-Received: by 2002:a05:6000:24c8:b0:485:8c16:a33e with SMTP id
+ ffacd0b85a97d-4858c16a715mr7847469f8f.51.1788584212887; 
+ Fri, 04 Sep 2026 21:56:52 -0700 (PDT)
+Received: from ?IPV6:2a01:cb06:c059:ed21:e577:db2a:8fd7:fd5f?
+ (2a01cb06c059ed21e577db2a8fd7fd5f.ipv6.abo.wanadoo.fr.
+ [2a01:cb06:c059:ed21:e577:db2a:8fd7:fd5f])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-485883c81c3sm10354913f8f.26.2026.09.04.21.56.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Sep 2026 21:56:51 -0700 (PDT)
+Message-ID: <2bdc4c21-0f9f-4bb6-bec1-d44a6f6f1356@redhat.com>
+Date: Sat, 5 Sep 2026 06:56:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.2 v3 15/15] hw/qdev: Prevent devices from being
- realized more than once
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>,
- FangSheng Huang <FangSheng.Huang@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
- Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
- <20260721-qdev-v3-15-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
- <356ebc59-d2cb-4c47-867e-8fc693b3a593@oss.qualcomm.com>
- <a5597a0e-c18c-4649-bfd1-20d77897ff88@rsg.ci.i.u-tokyo.ac.jp>
- <8d979f89-374a-4b86-93c8-9d7dcc311ca6@oss.qualcomm.com>
- <3a1e6538-2669-4e73-9855-e4b7f33604e7@rsg.ci.i.u-tokyo.ac.jp>
- <a79f2ad8-d1ad-4536-85d1-0a01ad2f9513@oss.qualcomm.com>
- <7babc6ed-f537-41ca-8017-3a1c2c48d691@oss.qualcomm.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <7babc6ed-f537-41ca-8017-3a1c2c48d691@oss.qualcomm.com>
+Subject: Re: [PATCH v4] scripts/checkpatch: validate Fixes: tag format and
+ commit ancestry
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, Chao Liu <chao.liu@processmission.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20260806171333.328864-1-clg@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260806171333.328864-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,225 +171,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/03 19:24, Philippe Mathieu-Daudé wrote:
-> Hi Akihiko,
-> 
-> Are we still waiting for feedback from Igor?
++ Paolo, Marc-André fro possible Reviews,
 
-Yes, we are waiting, but mostly as a precaution. I am comfortable 
-landing this series now.
+Thanks,
 
-Regards,
-Akihiko Odaki
+C.
 
+On 8/6/26 19:13, Cédric Le Goater wrote:
+> Adapt the kernel's checkpatch Fixes: tag validation for QEMU.
 > 
-> On 22/7/26 14:05, Philippe Mathieu-DaudÃ© wrote:
->> On 22/7/26 13:08, Akihiko Odaki wrote:
->>> On 2026/07/22 18:57, Philippe Mathieu-Daudé wrote:
->>>> On 22/7/26 07:12, Akihiko Odaki wrote:
->>>>> On 2026/07/22 5:11, Philippe Mathieu-Daudé wrote:
->>>>>> Hi Akihiko,
->>>>>>
->>>>>> On 21/7/26 10:17, Akihiko Odaki wrote:
->>>>>>> qdev currently permits reentrant realization of the same device. 
->>>>>>> It also
->>>>>>> permits another realization attempt after a device has been 
->>>>>>> unrealized
->>>>>>> or a previous attempt has failed. Either path can invoke
->>>>>>> DeviceClass::realize() more than once. Supporting repeated 
->>>>>>> realization
->>>>>>> adds complexity to device implementations. It is untested and likely
->>>>>>> broken.
->>>>>>>
->>>>>>> Replace the bool DeviceState::realized field with the enum-valued
->>>>>>> DeviceState::phase field. The enum has four values:
->>>>>>>
->>>>>>> - initialized
->>>>>>> - realizing
->>>>>>> - realized
->>>>>>> - retired
->>>>>>
->>>>>> Excellent.
->>>>>>
->>>>>> I have been working on something similar.
->>>>>>
->>>>>> I'd start the first patch only including:
->>>>>>
->>>>>> DEVICE_PHASE_UNREALIZED (false)
->>>>>> DEVICE_PHASE_REALIZED (true)
->>>>>>
->>>>>> Then gradually rename DEVICE_PHASE_REALIZED -> DEVICE_PHASE_CREATED
->>>>>> and add the DEVICE_PHASE_REALIZING and DEVICE_PHASE_RETIRED phases,
->>>>>> so we can discuss them during the review process.
->>>>>
->>>>> A gradual conversion makes sense. I kept the "realized" phase as-is 
->>>>> because it maps exactly to the current external behavior. This 
->>>>> patch splits the internal "unrealized" state into three distinct 
->>>>> phases, but the external concept of being "realized" remains 
->>>>> unchanged. This allows us to avoid a tree-wide refactoring, which 
->>>>> is also why qdev_is_realized() is preserved.
->>>>>
->>>>>>
->>>>>>> Realization can start only in the initialized phase. It moves the 
->>>>>>> device
->>>>>>> to the realizing phase before invoking callbacks, preventing another
->>>>>>> realization attempt. Successful realization moves it to the realized
->>>>>>> phase; failure after realization has started moves it to the retired
->>>>>>> phase. Unrealization also moves a realized device to the retired 
->>>>>>> phase.
->>>>>>
->>>>>> So what is the difference between 'initialized' and 'retired'?
->>>>>
->>>>> The first statement in this paragraph differentiates 'initialized' 
->>>>> from everything else: realization can start only in the initialized 
->>>>> phase. A 'retired' device cannot be realized. This property avoids 
->>>>> re- entrancy.
->>>>
->>>> But we do use unrealize -> realize again, in hotplug path.
->>>>
->>>> So we need to be able to move from 'retired' to 'realizing'
->>>> again, thus my wonder what is the difference between 'realizing'
->>>> and 'initialized'.
->>>>
->>>> I.e. this test should pass:
->>>>
->>>> static void test_qdev_realize_hotplug(void)
->>>> {
->>>>      Object *mt = object_new(TYPE_MY_DEV);
->>>>
->>>>      /* plug */
->>>>      g_assert_false(qdev_realize(DEVICE(mt), NULL, NULL));
->>>>
->>>>      /* unplug */
->>>>      qdev_unrealize(DEVICE(mt));
->>>>
->>>>      /* re-plug */
->>>>      g_assert_false(qdev_realize(DEVICE(mt), NULL, NULL));
->>>>      qdev_unrealize(DEVICE(mt));
->>>>      object_unparent(mt);
->>>>      object_unref(mt);
->>>> }
->>>>
->>>> Maybe your 'retired' could be renamed as transient 'unrealizing',
->>>> similar to 'realizing' phase, then we could transition to the
->>>> 'unrealized' initial phase?
->>>
->>> I could not find an in-tree hotplug path that unrealizes and then
->>> realizes the same DeviceState.
->>>
->>> In the normal device_del path, the unplug handler unrealizes the 
->>> device, and completed unplug then unparents it. A later device_add 
->>> calls qdev_new(), so it realizes a new DeviceState. Reusing an ID or 
->>> slot does not reuse the object.
->>
->> Igor, could you provide your advices here?
->>
->>> The virtio-net failover path does retain and replug the same object, 
->>> but it deliberately keeps the device realized. The partial-unplug 
->>> path skips the unplug handler, and replug invokes the pre_plug and 
->>> plug callbacks directly instead of qdev_realize().
->>>
->>> More generally, I believe same-instance unrealize -> realize is 
->>> unsafe. Realize callbacks may create QOM children whose lifetime is 
->>> tied to the DeviceState rather than its realized state [1]. For 
->>> example, memory_region_init() initializes an embedded QOM object and 
->>> adds it as a child of the device. Unrealizing the device does not 
->>> generally finalize that MemoryRegion, so a second realization may try 
->>> to initialize the same object again.
->>
->> I totally concur here.
->>
->>>
->>> So introducing an unrealizing -> unrealized transition would require 
->>> every realize/unrealize pair to restore the state of a fresh 
->>> instance. That contract is not tested, and is the complexity this 
->>> series is meant to remove.
->>>
->>> [1] https://lore.kernel.org/qemu-devel/64bc4a38-f1d2-45ff-8f4c- 
->>> c941d6a41e18@rsg.ci.i.u-tokyo.ac.jp/
->>>
->>> Regards,
->>> Akihiko Odaki
->>>
->>>>
->>>>>
->>>>>>
->>>>>>> The QOM realized property is an internal lifecycle property, not for
->>>>>>> end users. Replace it with the enum-valued phase property.
->>>>>>>
->>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>>>> ---
->>>>>>>   qapi/common.json          |  19 ++++++++
->>>>>>>   include/hw/core/qdev.h    |  12 ++---
->>>>>>>   hw/core/qdev-clock.c      |   4 +-
->>>>>>>   hw/core/qdev-properties.c |   4 +-
->>>>>>>   hw/core/qdev.c            |  98 +++++++++++++++++++++++++ 
->>>>>>> +--------------
->>>>>>>   hw/scsi/scsi-bus.c        |   4 +-
->>>>>>>   qom/qom-qmp-cmds.c        |   2 +-
->>>>>>>   system/qdev-monitor.c     |   5 ++-
->>>>>>>   tests/unit/test-qdev.c    | 112 +++++++++++++++++++++++++++++++ 
->>>>>>> + + + + + +++++++++-
->>>>>>>   9 files changed, 212 insertions(+), 48 deletions(-)
->>>>>>>
->>>>>>> diff --git a/qapi/common.json b/qapi/common.json
->>>>>>> index af7e3d618a7c..88a308cbd172 100644
->>>>>>> --- a/qapi/common.json
->>>>>>> +++ b/qapi/common.json
->>>>>>> @@ -7,6 +7,25 @@
->>>>>>>   # *****************
->>>>>>>   ##
->>>>>>> +##
->>>>>>> +# @DevicePhase:
->>>>>>> +#
->>>>>>> +# An enumeration of the device phases
->>>>>>> +#
->>>>>>> +# @initialized: the initial phase
->>>>>>> +#
->>>>>>> +# @realizing: the phase during realization
->>>>>>> +#
->>>>>>> +# @realized: the phase after realization
->>>>>>> +#
->>>>>>> +# @retired: the terminal phase entered when unrealization begins or
->>>>>>> +#           realization fails after starting
->>>>>>> +#
->>>>>>> +# Since: 11.1
->>>>>>> +##
->>>>>>> +{ 'enum': 'DevicePhase',
->>>>>>> +  'data': [ 'initialized', 'realizing', 'realized', 'retired' ] }
->>>>>>> +
->>>>>>
->>>>>>
->>>>>>> @@ -477,10 +477,10 @@ bool qdev_unplug_blocked(DeviceState *dev, 
->>>>>>> Error **errp)
->>>>>>>       return false;
->>>>>>>   }
->>>>>>> -static bool device_get_realized(Object *obj, Error **errp)
->>>>>>> +static int device_get_phase(Object *obj, Error **errp)
->>>>>>
->>>>>> DevicePhase
->>>>>
->>>>> device_get_phase() must return int to match the getter type 
->>>>> required by
->>>>> object_class_property_add_enum():
->>>>>
->>>>>      int (*get)(Object *, Error **)
->>>>>
->>>>> Using DevicePhase there would not match the callback type.
->>>>
->>>> Ah right.
->>>>
->>>>>
->>>>>>
->>>>>>>   {
->>>>>>>       DeviceState *dev = DEVICE(obj);
->>>>>>> -    return dev->realized;
->>>>>>> +    return dev->phase;
->>>>>>>   }
->>>
->>>
->>
->>
+> Add a git_commit_info() helper to resolve commit hashes and validate
+> the Fixes: tag in commit messages. The canonical form is:
 > 
+>    Fixes: <12+ chars of sha1> ("<title line>")
+> 
+> The check validates capitalization, spacing, hash length, lowercase
+> hex, and quoted title. When the format is wrong and the commit can
+> be resolved, suggest the corrected Fixes: line.
+> 
+> When running inside a git repository, also verify that the referenced
+> commit is an ancestor of master.
+> 
+> Lines matching "Fixes: CVE-*" are skipped. The check can be disabled
+> with --no-fixes-tag.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+> 
+>   Changes in v4:
+>   - Added chomp to fix false positives
+>   
+>   Changes in v3:
+>   - Dropped $git_command
+>   - Modified git_commit_info() to use $! instead of parsing stderr when
+>     calling git log
+>   
+>   Changes in v2:
+>   - Introduced $git_command
+> 
+>   scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 66 insertions(+)
+> 
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 03f35e75012c8c7a00b67f036e4befb2ea162d4a..d9efade05386b3fb7647097cfe3b1256d7f24dda 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -21,6 +21,7 @@ use Getopt::Long qw(:config no_auto_abbrev);
+>   my $quiet = 0;
+>   my $tree = 1;
+>   my $chk_signoff = 1;
+> +my $chk_fixes_tag = 1;
+>   my $chk_patch = undef;
+>   my $chk_branch = undef;
+>   my $tst_only;
+> @@ -54,6 +55,7 @@ Options:
+>     -q, --quiet                quiet
+>     --no-tree                  run without a qemu tree
+>     --no-signoff               do not check for 'Signed-off-by' line
+> +  --no-fixes-tag             do not check for 'Fixes:' tag
+>     --patch                    treat FILE as patchfile
+>     --branch                   treat args as GIT revision list
+>     --emacs                    emacs compile window format
+> @@ -94,6 +96,7 @@ GetOptions(
+>   	'q|quiet+'		=> \$quiet,
+>   	'tree!'			=> \$tree,
+>   	'signoff!'		=> \$chk_signoff,
+> +	'fixes-tag!'		=> \$chk_fixes_tag,
+>   	'patch!'		=> \$chk_patch,
+>   	'branch!'		=> \$chk_branch,
+>   	'emacs!'		=> \$emacs,
+> @@ -441,6 +444,10 @@ sub build_types {
+>   build_types();
+>   
+>   $chk_signoff = 0 if ($file);
+> +$chk_fixes_tag = 0 if ($file);
+> +
+> +my $gitroot = $ENV{'GIT_DIR'};
+> +$gitroot = ".git" if !defined($gitroot);
+>   
+>   my @rawlines = ();
+>   my @lines = ();
+> @@ -561,6 +568,24 @@ sub which {
+>   	return "";
+>   }
+>   
+> +sub git_commit_info {
+> +	my ($commit, $id, $desc) = @_;
+> +
+> +	return ($id, $desc) if ((which("git") eq "") || !(-e "$gitroot"));
+> +
+> +	my $output = `git log --no-color --format='%H %s' -1 $commit 2>/dev/null`;
+> +	if ($? != 0) {
+> +		$id = undef;
+> +	} else {
+> +		chomp $output;
+> +		$output =~ s/^\s*//gm;
+> +		$id = substr($output, 0, 12);
+> +		$desc = substr($output, 41);
+> +	}
+> +
+> +	return ($id, $desc);
+> +}
+> +
+>   sub expand_tabs {
+>   	my ($str) = @_;
+>   
+> @@ -1811,6 +1836,47 @@ sub process {
+>   			}
+>   		}
+>   
+> +# Check Fixes: tag format and commit validity
+> +		if ($chk_fixes_tag &&
+> +		    $line =~ /^\s*(fixes:?)\s*(?:commit\s*)?([0-9a-f]{5,40})\s*(.*)?/i) {
+> +			my $tag = $1;
+> +			my $orig_commit = $2;
+> +			my $title = $3;
+> +
+> +			if ($line !~ /^\s*Fixes:\s+CVE/i) {
+> +				my $tag_case = not ($tag eq "Fixes:");
+> +				my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40}/i);
+> +				my $id_length = not ($orig_commit =~ /^[0-9a-f]{12,40}$/);
+> +				my $id_case = not ($orig_commit !~ /[A-F]/);
+> +
+> +				my $id = "0123456789ab";
+> +				my $description = "commit title";
+> +				my $has_quotes = 0;
+> +
+> +				if (defined $title && $title =~ /^\("(.*?)"\)$/) {
+> +					$description = $1 if ($1);
+> +					$has_quotes = 1;
+> +				} elsif (defined $title && $title =~ /^\(?(.*?)\)?$/) {
+> +					$description = $1 if ($1);
+> +				}
+> +
+> +				my ($cid, $ctitle) = git_commit_info($orig_commit, $id, $description);
+> +
+> +				if (defined($cid) && ($ctitle ne $description || $tag_case || $tag_space || $id_length || $id_case || !$has_quotes)) {
+> +					my $fixed = "Fixes: $cid (\"$ctitle\")";
+> +					WARN("Please use correct Fixes: style 'Fixes: <12+ chars of sha1> (\"<title line>\")'" .
+> +						" - ie: '$fixed'\n" . $herecurr);
+> +				}
+> +				if (which("git") ne "" && -e "$gitroot") {
+> +					my $hash = defined($cid) ? $cid : $orig_commit;
+> +					`git merge-base --is-ancestor $hash master 2>/dev/null`;
+> +					if ($? != 0) {
+> +						WARN("Fixes: commit $hash is not an ancestor of master\n" . $herecurr);
+> +					}
+> +				}
+> +			}
+> +		}
+> +
+>   # Check SPDX-License-Identifier references a permitted license
+>   		if (($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) &&
+>   			$rawline !~ /^-/) {
 
 
