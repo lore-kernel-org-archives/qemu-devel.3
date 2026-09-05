@@ -4,64 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8700C79F90
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 09:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC4FC624D3
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 12:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2mqg-0004qX-BX; Sat, 05 Sep 2026 05:38:10 -0400
+	id 1x2pLx-0004La-4I; Sat, 05 Sep 2026 08:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x2mqc-0004n1-L4; Sat, 05 Sep 2026 05:38:06 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x2mqY-0002d2-GQ; Sat, 05 Sep 2026 05:38:06 -0400
-Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-03 (Coremail) with SMTP id rQCowABHUT_u4ptqIsvvBg--.16071S2;
- Sat, 05 Sep 2026 17:37:51 +0800 (CST)
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: wangyang <wangyang25@otcaix.iscas.ac.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 0/5] target/riscv: fix privilege, PMP, CFI, envcfg checks
-Date: Sat,  5 Sep 2026 17:37:44 +0800
-Message-ID: <20260905093749.491-1-wangyang25@otcaix.iscas.ac.cn>
-X-Mailer: git-send-email 2.55.0.windows.2
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1x2pLv-0004Kr-Fv
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 08:18:35 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1x2pLt-00019p-QN
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 08:18:35 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd82be878so351815e9.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 05:18:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1788610712; x=1789215512; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7tRBabswupRFvrvdHEi0e+0gjy/CDJyaMjOCL1Iau54=;
+ b=UWGHAdsWx/FXfJYmYFpKZyPQhuh5UAaSVz92FOXV23E2UswJKqzKtLlTeNnxnM1Uba
+ eH/drE+Pp12iInN6oQaYye19eNsLLB4ZgJdMtUTCVh0Bgr2GoFlrJr5c7J50CmuEBwDz
+ kxa0mkI/GugO40hAKtDJ8fFAGo1eRoWCfOlqlhsn1Tn3XJI3AyWAEsUAme2Sm6bIsu9a
+ UyPn8sq0u6s9zRbWHk00M/n9JBI64b25u4c0ImnbIFngaQD5mTdf6tSzLdpQJ4H9+RBN
+ AjO1URbrxQWo5+xaA58yY72TjNV8s4Tp4OEbMkmo9zbYiSQHO97YURCZbyxinPjIbmqc
+ n4Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788610712; x=1789215512;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7tRBabswupRFvrvdHEi0e+0gjy/CDJyaMjOCL1Iau54=;
+ b=IjBM0jJR7aXFSjSsNNScUVOSZaTL3YRxKFU2CCdS1cEUWjonWZwDb0DCY8fDUWQ9wX
+ ggl47wXotUlI0HKfvz9/aus4q5iE+AdZ3iuz5c2CpCW9nthhBFb2vedZi9wzPWstaSIH
+ r9mpyVi/4vt/Tnu7bQuyA5KlW3SOLktZBjSqlNgjO26E8asWGFi845GP6M7FJPhdcdLj
+ Zx5QYu4Z5acnRLaDGlonLDSDmCZFBOc+LzXcH0MVpsILd/pmyLVenuo17VHp3Wv1HTvH
+ 0eOqWozFOXhRbdKAUDmzzqUjZS0i21xt2f6wcz2GFpipg0ApgHlaFI5T4YkfiLZpLvFU
+ wO0g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwnnjK/Zz0F6GruMtL/arBd2S/5wgx4cHtHFjQvmLUaDtldCXj81vlXD9MKPcQyssWzdvG/Z6NZ5XZn@nongnu.org
+X-Gm-Message-State: AFuF++lefJR3unESh5D7+jjbbaxuN0jkbMYch0HWXNeWkwZDXJ0T6nnV
+ v10HyyNZSBhp4EyJCAhd4WTy8dTokXmap8aU6z5nubuGC+Cy5ouBrExU
+X-Gm-Gg: AYBFou0t9dPPSbwiMvmKf8inmoL8EqnKF/pALRqUKn7mOVbVphA6NYyhI7eSHBUR3cr
+ Bjd4EWlUSKhfidP+wFgZgur1adOvRxFA55t6xvpDhrKq/Zy4ENVW1s9kgmfJRAHZ9qU3u4GaH1P
+ WVtKofWq+UBFxioWi75PemuGMJtKuT6kK4Fb9DBt406tyEl4k2Bsoa9dRoo0Axk3cQD6npi6PaY
+ /8U0Jj7zlW7/apeXt/gCdBcIbDbrAADYeUsTaxHP4zrpOhcYima8q0AiZgcd2FSEQTy/WM5G5hX
+ 9NfrTU0AJZbmmeScA5pZwCudWWsN1pte9SOvtm6PMbOxDu1yXhs9WcwGGe18SSsk9KZj+WQqS2j
+ w2XkbxLv6P+vqI7TNgQ6QIhRDZLu8Wefkh4expdEpghYRptP0sYfAatxBZOrLlscNFViAi9xJgC
+ J9iPKwxc/f/V3tsYHkJcCnbD4k92slNEGJoAajZt9xck/nxrz+mA8ibfzDBWt71sKv7llA
+X-Received: by 2002:a05:600c:c494:b0:499:d95a:41f with SMTP id
+ 5b1f17b1804b1-49d010c3969mr40290255e9.0.1788610711795; 
+ Sat, 05 Sep 2026 05:18:31 -0700 (PDT)
+Received: from AtiePC ([79.116.0.198]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cee5f912esm234546625e9.4.2026.09.05.05.18.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Sep 2026 05:18:31 -0700 (PDT)
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+To: Keith Busch <kbusch@kernel.org>,
+	Klaus Jensen <its@irrelevant.dk>
+Cc: Daniel Paziyski <danielpaziyski@gmail.com>, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Subject: [PATCH 0/2] hw/nvme: sr-iov hotunplug fixes (assertion failure,
+ memory leak)
+Date: Sat,  5 Sep 2026 14:18:10 +0200
+Message-ID: <20260905121812.47816-1-danielpaziyski@gmail.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowABHUT_u4ptqIsvvBg--.16071S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7uF1fGFyrKr15Ww1UCFy7Awb_yoW8trWfpF
- 4rCay3uFZ5Ga42yr4Sya1UZF15Wrs5Ga1UXFn7Xr1Fvay5AFWFqrs3Kw43X3W8JFyDWw1a
- 9Fyqkr109a4Yv3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9m14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
- 6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
- 4UJwAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
- 0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Jr0_Gr
- 1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IE
- rcIFxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GFWl42xK82IYc2Ij64vIr41l4I
- 8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
- xVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
- AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8I
- cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
- 1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUh6p9UUUUU=
-X-Originating-IP: [124.16.137.194]
-X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,57 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes five independent RISC-V emulation issues in the
-XTheadCmo, XTheadBb, HLVX/PMP, Zicfilp, and environment-configuration
-paths.
+As the subject suggests, in this series an assertion failure and a memory leak
+are fixed when hotunplugging a nvme controller with virtual functions.
 
-The first two patches correct XThead instruction handling. The third
-adds the missing final PMP read check for HLVX. The fourth fixes
-Zicfilp exception priority for tracked misaligned JALR targets. The
-fifth canonicalizes reserved CBIE encoding while preserving the
-defined CBIE=11 encoding.
+The patches are exactly the same as
+https://lore.kernel.org/qemu-devel/20260805124519.30054-2-danielpaziyski@gmail.com/
+("[PATCH 1/3] hw/nvme: fix assertion failure on sr-iov capable nvme controller removal")
+https://lore.kernel.org/qemu-devel/20260805124519.30054-3-danielpaziyski@gmail.com/
+("[PATCH 2/3] hw/nvme: fix memory leak on sr-iov capable nvme controller removal")
 
-Each patch is independently applicable and includes its own test
-description and Signed-off-by line. The corresponding public QEMU
-Work Items are linked in the commit messages:
+posted in the series at
+https://lore.kernel.org/qemu-devel/20260805124519.30054-1-danielpaziyski@gmail.com/
+("[PATCH 0/3] NVMe hotunplug and PCI SR-IOV fixes")
 
-  XTheadCmo U-mode privilege:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4412
-  XTheadBb RV32 th.srri:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4413
-  HLVX.WU execute-only PMP:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4414
-  Zicfilp misaligned JALR:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4415
-  CBIE reserved encoding:
-    https://gitlab.com/qemu-project/qemu/-/work_items/4416
+I split the patches here, as a separate series, since the other patch is
+unrelated to these ones and requires a fix, and it was a mistake on my part to
+put patches for different subsystems in the same series.
 
-The series is based on d2843fbf, the first parent of current upstream
-master ff1d2d19. No target/riscv path changed between those commits.
+Cc: qemu-block@nongnu.org
+Cc: qemu-stable@nongnu.org
 
-Validation performed:
+Daniel Paziyski (2):
+  hw/nvme: fix assertion failure on sr-iov capable nvme controller
+    removal
+  hw/nvme: fix memory leak on sr-iov capable nvme controller removal
 
-  - QEMU 11.1.1 baseline and patched witness replays passed.
-  - Every intermediate patch state built for qemu-system-riscv32,
-    qemu-system-riscv64, qemu-riscv32, and qemu-riscv64.
-  - The five patches pass checkpatch.pl and get_maintainer.pl review.
-
-wangyang (5):
-  target/riscv: enforce XTheadCmo U-mode privilege checks
-  target/riscv: mask RV32 XTheadBb th.srri shift amount
-  target/riscv: require read permission for HLVX accesses
-  target/riscv: prioritize Zicfilp checks for misaligned JALR
-  target/riscv: canonicalize reserved CBIE encoding
-
- target/riscv/internals.h                      |  6 ++++
- target/riscv/tcg/cpu_helper.c                 | 24 ++++++++++-----
- target/riscv/tcg/csr.c                        | 29 +++++++++++++++++++
- target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  9 +++++-
- .../riscv/tcg/insn_trans/trans_xthead.c.inc   |  5 ++--
- target/riscv/tcg/op_helper.c                  | 11 ++++---
- 6 files changed, 67 insertions(+), 17 deletions(-)
+ hw/nvme/ctrl.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 -- 
-2.55.0.windows.2
+2.55.0
 
 
