@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19640C624D3
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 09:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F34FC624DB
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 09:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2mqd-0004mx-AW; Sat, 05 Sep 2026 05:38:07 -0400
+	id 1x2mqg-0004qn-KK; Sat, 05 Sep 2026 05:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x2mqb-0004mZ-Eo; Sat, 05 Sep 2026 05:38:05 -0400
+ id 1x2mqc-0004my-Iq; Sat, 05 Sep 2026 05:38:06 -0400
 Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1x2mqY-0002d5-FL; Sat, 05 Sep 2026 05:38:05 -0400
+ id 1x2mqY-0002d4-MO; Sat, 05 Sep 2026 05:38:06 -0400
 Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-03 (Coremail) with SMTP id rQCowABHUT_u4ptqIsvvBg--.16071S5;
- Sat, 05 Sep 2026 17:37:53 +0800 (CST)
+ by APP-03 (Coremail) with SMTP id rQCowABHUT_u4ptqIsvvBg--.16071S4;
+ Sat, 05 Sep 2026 17:37:52 +0800 (CST)
 From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 To: qemu-devel@nongnu.org
 Cc: wangyang <wangyang25@otcaix.iscas.ac.cn>,
@@ -30,32 +30,32 @@ Cc: wangyang <wangyang25@otcaix.iscas.ac.cn>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 3/5] target/riscv: require read permission for HLVX accesses
-Date: Sat,  5 Sep 2026 17:37:47 +0800
-Message-ID: <20260905093749.491-4-wangyang25@otcaix.iscas.ac.cn>
+Subject: [PATCH 2/5] target/riscv: mask RV32 XTheadBb th.srri shift amount
+Date: Sat,  5 Sep 2026 17:37:46 +0800
+Message-ID: <20260905093749.491-3-wangyang25@otcaix.iscas.ac.cn>
 X-Mailer: git-send-email 2.55.0.windows.2
 In-Reply-To: <20260905093749.491-1-wangyang25@otcaix.iscas.ac.cn>
 References: <20260905093749.491-1-wangyang25@otcaix.iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowABHUT_u4ptqIsvvBg--.16071S5
-X-Coremail-Antispam: 1UD129KBjvJXoW3Jw4fCrWxZr13uw47Aw1xuFg_yoW7Cw43pr
- WrCrZIkw4kKFZrGayxtFyjyF15CF43GFWjg3Z7WwsY93Waq3yru3WkGa42gFs8GFWkWw1j
- ga1qyF1jk3WjqFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUmm14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
- x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
- Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
- ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vY
- z4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c
- 02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVWUJVW8JwAm72CE
- 4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7Mx
- kF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8uwCF04k20xvY0x0EwIxGrwCFx2IqxVCF
- s4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r
- 1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWU
- JVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r
- 1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1U
- YxBIdaVFxhVjvjDU0xZFpf9x0JUStCwUUUUU=
+X-CM-TRANSID: rQCowABHUT_u4ptqIsvvBg--.16071S4
+X-Coremail-Antispam: 1UD129KBjvdXoW7Xw4fGrW8Xr4kur4Uur15Jwb_yoWkCrX_KF
+ 18GFn7u395Xr47Ka9Fkr18CF1UCry5KFn0y39xtay3u3sxWF15uFn7WFn5A3WUCwn5Grs3
+ AwsrXa429r1Y9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUb9kFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+ 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUXwA2048vs2IY02
+ 0Ec7CjxVAFwI0_Gr0_Xr1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xv
+ wVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwA2z4
+ x0Y4vEx4A2jsIE14v26r1j6r4UM28EF7xvwVC2z280aVCY1x0267AKxVW8JVW8Jr1lnxkE
+ FVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I
+ 8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCF
+ s4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7
+ CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r4fMxAIw28IcxkI7VAKI48JMxC20s026xCa
+ FVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_Jr
+ Wlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j
+ 6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr
+ 0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUv
+ cSsGvfC2KfnxnUUI43ZEXa7VUU22NtUUUUU==
 X-Originating-IP: [124.16.137.194]
 X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
 Received-SPF: pass client-ip=159.226.251.81;
@@ -80,151 +80,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HLVX address translation uses execute permission, but the final PMP
-check on the supervisor physical address must also require read
-permission. Carry the HLVX operation through the MMU index and include
-PMP_READ in the final check so execute-only pages fault.
+The XTheadBb th.srri instruction uses the low log2(XLEN) bits of
+imm6. The generic shift helper rejects values greater than or equal to
+XLEN, which incorrectly rejects imm6 values 32 through 63 on RV32.
+Normalize the operand before calling the helper.
 
-Tested: RV32 system-mode RWX, HLV, and HLVX.WU PMP witness matrix.
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4414
+Tested: RV32 imm6 0, 31, 32, and 63 witnesses with XTheadBb
+enabled and disabled.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4413
 
 Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 ---
- target/riscv/internals.h      |  6 ++++++
- target/riscv/tcg/cpu_helper.c | 24 ++++++++++++++++--------
- target/riscv/tcg/op_helper.c  | 11 +++++------
- 3 files changed, 27 insertions(+), 14 deletions(-)
+ target/riscv/tcg/insn_trans/trans_xthead.c.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 5d84e4de96..832c6406bc 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -42,6 +42,7 @@
- #define MMUIdx_M            3
- #define MMU_2STAGE_BIT      (1 << 2)
- #define MMU_IDX_SS_WRITE    (1 << 3)
-+#define MMU_IDX_HLVX        (1 << 4)
- 
- static inline privilege_mode_t mmuidx_priv(int mmu_idx)
+diff --git a/target/riscv/tcg/insn_trans/trans_xthead.c.inc b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+index 681f70e5bc..34226b1be5 100644
+--- a/target/riscv/tcg/insn_trans/trans_xthead.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+@@ -141,6 +141,7 @@ GEN_TRANS_TH_ADDSL(3)
+ static bool trans_th_srri(DisasContext *ctx, arg_th_srri * a)
  {
-@@ -62,6 +63,11 @@ static inline bool mmuidx_2stage(int mmu_idx)
-     return mmu_idx & MMU_2STAGE_BIT;
+     REQUIRE_XTHEADBB(ctx);
++    a->shamt &= get_olen(ctx) - 1;
+     return gen_shift_imm_fn_per_ol(ctx, a, EXT_NONE,
+                                    tcg_gen_rotri_tl, gen_roriw, NULL);
  }
- 
-+static inline bool mmuidx_hlvx(int mmu_idx)
-+{
-+    return mmu_idx & MMU_IDX_HLVX;
-+}
-+
- /*
-  * Return the endianness for the current privilege
-  * level, based on the MSTATUS MBE/SBE/UBE bits.
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..ad41de9d06 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -905,6 +905,7 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
-  */
- static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-                                     int size, MMUAccessType access_type,
-+                                    pmp_priv_t extra_privs,
-                                     privilege_mode_t mode)
- {
-     pmp_priv_t pmp_priv;
-@@ -915,7 +916,8 @@ static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-         return TRANSLATE_SUCCESS;
-     }
- 
--    pmp_has_privs = pmp_hart_has_privs(env, addr, size, 1 << access_type,
-+    pmp_has_privs = pmp_hart_has_privs(env, addr, size,
-+                                       (1 << access_type) | extra_privs,
-                                        &pmp_priv, mode);
-     if (!pmp_has_privs) {
-         *prot = 0;
-@@ -1177,7 +1179,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         int pmp_prot;
-         int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-                                                sxlen_bytes,
--                                               MMU_DATA_LOAD, PRV_S);
-+                                               MMU_DATA_LOAD, 0, PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-         }
-@@ -1425,7 +1427,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         }
- 
-         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
--                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+                                           sxlen_bytes, MMU_DATA_STORE, 0,
-+                                           PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-         }
-@@ -1711,7 +1714,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-             if (ret == TRANSLATE_SUCCESS) {
-                 ret = get_physical_address_pmp(env, &prot_pmp, pa,
--                                               size, access_type, mode);
-+                                               size, access_type,
-+                                               mmuidx_hlvx(mmu_idx) ?
-+                                               PMP_READ : 0, mode);
-                 tlb_size = pmp_get_tlb_size(env, pa);
- 
-                 qemu_log_mask(CPU_LOG_MMU,
-@@ -1746,7 +1751,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-         if (ret == TRANSLATE_SUCCESS) {
-             ret = get_physical_address_pmp(env, &prot_pmp, pa,
--                                           size, access_type, mode);
-+                                           size, access_type,
-+                                           mmuidx_hlvx(mmu_idx) ?
-+                                           PMP_READ : 0, mode);
-             tlb_size = pmp_get_tlb_size(env, pa);
- 
-             qemu_log_mask(CPU_LOG_MMU,
-@@ -1786,9 +1793,10 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-                              wp_access, retaddr);
- 
--        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
--                            first_stage_error, two_stage_lookup,
--                            two_stage_indirect_error);
-+        raise_mmu_exception(env, address,
-+                            mmuidx_hlvx(mmu_idx) ? MMU_DATA_LOAD : access_type,
-+                            pmp_pma_violation, first_stage_error,
-+                            two_stage_lookup, two_stage_indirect_error);
-         cpu_loop_exit_restore(cs, retaddr);
-     }
- 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 3e94005d2b..060d97ee9c 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -650,7 +650,7 @@ static int check_access_hlsv(CPURISCVState *env, bool x, uintptr_t ra)
-     if (!x && mode == PRV_S && get_field(env->vsstatus, MSTATUS_SUM)) {
-         mode = MMUIdx_S_SUM;
-     }
--    return mode | MMU_2STAGE_BIT;
-+    return mode | MMU_2STAGE_BIT | (x ? MMU_IDX_HLVX : 0);
- }
- 
- target_ulong helper_hyp_hlv_bu(CPURISCVState *env, target_ulong addr)
-@@ -726,11 +726,10 @@ void helper_hyp_hsv_d(CPURISCVState *env, target_ulong addr, target_ulong val)
- }
- 
- /*
-- * TODO: These implementations are not quite correct.  They perform the
-- * access using execute permission just fine, but the final PMP check
-- * is supposed to have read permission as well.  Without replicating
-- * a fair fraction of cputlb.c, fixing this requires adding new mmu_idx
-- * which would imply that exact check in tlb_fill.
-+ * HLVX accesses are translated with execute permission (first stage),
-+ * but the final PMP check on the supervisor physical address must
-+ * require read permission as well.  The MMU_IDX_HLVX mmu_idx bit set
-+ * by check_access_hlsv() makes riscv_cpu_tlb_fill() enforce this.
-  */
- target_ulong helper_hyp_hlvx_hu(CPURISCVState *env, target_ulong addr)
- {
 -- 
 2.55.0.windows.2
 
