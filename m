@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E0DC79F82
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 00:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C542C79F82
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 00:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2eQC-00034F-Qb; Fri, 04 Sep 2026 20:38:16 -0400
+	id 1x2eUA-0003vf-QF; Fri, 04 Sep 2026 20:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1x2eQA-00033e-NN; Fri, 04 Sep 2026 20:38:14 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1x2eU8-0003vH-NY
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 20:42:20 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1x2eQ9-0008EZ-5W; Fri, 04 Sep 2026 20:38:14 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 6D974600E2;
- Sat,  5 Sep 2026 00:38:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC28F1F00A3D;
- Sat,  5 Sep 2026 00:38:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788568691;
- bh=jawrO9RQI5aekw18As+sD1SV4zeOkWBV0F+Sx6h56So=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=kZ53YqTiKXowkm5cH15Fl0W+Lh2muyONE4p/udDhCe3pseENPZQzaUbbxd1m2TkIK
- WIhJl4U33HDmQfO2kXCMJo0zjLW9+TCYp7GzHjqC3D7rjVd678H3a3K+6MgA1SZiU3
- rPTKsDyqqe6zBQRqhfhFQgfR5kyKM+R/VbbkQMczLqWDGhfJBwGVF/ts+hJdADKBEO
- KKfIgnYE+YQbs77mrYj9/cmafY19kPlJFmrMFIVKMZ1pBvdC7zl9JtEdiGUH731DrV
- 9ogXtFwZB9+qA+d5ruoXN+zzsF7yV5wvIyWhh2fZPrcoIeqmyGv4VO85cNlFAxw4WJ
- aK7Ts/CkOIhrg==
-Message-ID: <08401f4f-1bb6-4445-b157-9135458d32ea@kernel.org>
-Date: Sat, 5 Sep 2026 09:38:08 +0900
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1x2eU7-0000F2-3x
+ for qemu-devel@nongnu.org; Fri, 04 Sep 2026 20:42:20 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id CE11780796;
+ Sat, 05 Sep 2026 03:42:16 +0300 (MSK)
+Received: from i101646577.yandex-team.ru (unknown [2a02:6bf:8080:11b::1:22])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 7g79b72ad0U0-x8InsZv8; Sat, 05 Sep 2026 03:42:16 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1788568936;
+ bh=Hx1+gsMbkV2GOHLR1F+fYKz6TYxQ6TxaJs0th/N9c94=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=iClxAq0g15YPfCDMdbe27xpUz5TqL44MjEfyCe2HGOtMh8LSqTKDEouux4waYju8P
+ eN4M6yjx9Aez43+2MaKKT+6sOsEJygqnZxE90vRoQoeUUfXvMxuzqFnpzMjZZhWjI5
+ ukNtxe6U3LFDliGZlV6XS/XJpZlR5iGLJw9SRHo4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 2/2] target/i386: drop attempts to deliver an interrupt
+ without a vector
+Date: Sat,  5 Sep 2026 03:41:52 +0300
+Message-ID: <20260905004153.836866-3-d-tatianin@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260905004153.836866-1-d-tatianin@yandex-team.ru>
+References: <20260905004153.836866-1-d-tatianin@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/12] file-posix: reject a zone append to a full or
- conventional zone
-To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Fam Zheng <fam@euphon.net>
-Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260904161801.1568841-1-cassel@kernel.org>
- <20260904161801.1568841-13-cassel@kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260904161801.1568841-13-cassel@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=dlemoal@kernel.org;
- helo=tor.source.kernel.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,67 +76,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/5/26 01:18, Niklas Cassel wrote:
-> raw_co_prw() replaces the offset of a zone append with the write pointer
-> of the addressed zone, which assumes that the stored value names a
-> position inside that zone. It does not in two cases.
-> 
-> A full zone has its write pointer recorded at the end of the zone, since
-> get_zones_wp() stores start + len for BLK_ZONE_COND_FULL. That is the
-> first sector of the following zone, so the append is submitted there. The
-> kernel accepts it whenever that zone is empty, because it is a legal
-> write at its write pointer, and the completion path advances the wrong
-> zone because it recomputes the zone index from the replaced offset. The
-> data is written to a zone that was never addressed and success is
-> returned:
-> 
->   zone 2 finished, then a 4 KiB append to zone 2:
->   After zap done, the append sector is 0x180000     <- zone 3
->   zone 2: wptr 0x180000, zcond:14 (full)
->   zone 3: wptr 0x180008                             <- advanced
-> 
-> A conventional zone has no write pointer at all, and its array entry
-> carries only the type marker in the top bit, so the offset becomes
-> negative and the write fails with EINVAL. That is harmless but it reports
-> nothing about the actual mistake.
-> 
-> Reject both while the write pointer lock is held, since the state has to
-> be read and acted on atomically. check_zoned_request() in virtio-blk
-> refuses an append to a conventional zone, so that case needs a caller
-> that goes to the driver directly, but nothing there examines whether a
-> zone is full, so a guest can reach the misdirected write.
-> 
-> Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+cpu_get_pic_interrupt() returns -1 when neither PIC nor APIC has
+anything to deliver, and skipping this check produces a bogus #GP
+inside the guest with an error code of 0xFFFFFFFA
+(aka -1 * 8 | (1 << 1)) due to a failed IDT limit check in
+do_interrupt_x86_hardirq().
 
-Looks good, modulo the comment below that needs to be addressed.
-With that fixed, feel free to add:
+The KVM path already drops such interrupts in kvm_arch_pre_run(), so
+just do the same thing.
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+---
+ target/i386/tcg/system/seg_helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> diff --git a/block/io.c b/block/io.c
-> index b59c7fdf3e..452254bc63 100644
-> --- a/block/io.c
-> +++ b/block/io.c
-> @@ -3378,6 +3378,15 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
->      return offset >> ctz64(bs->bl.zone_size);
->  }
->  
-> +bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index)
-> +{
-> +    uint64_t zone_end = MIN((uint64_t)(index + 1) * bs->bl.zone_size,
-
-I think this should look at zone capacity, not size. For cases where we have
-zone cap < zone size, zone full condition is reached when the write pointer is
-at the zone capacity.
-
-> +                            (uint64_t)bs->total_sectors << BDRV_SECTOR_BITS);
-> +    IO_CODE();
-> +
-> +    return bs->wps->wp[index] >= zone_end;
-> +}
-
+diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
+index 8c7856be81..d1c626f120 100644
+--- a/target/i386/tcg/system/seg_helper.c
++++ b/target/i386/tcg/system/seg_helper.c
+@@ -204,6 +204,9 @@ bool x86_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+         cpu_svm_check_intercept_param(env, SVM_EXIT_INTR, 0, 0);
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD | CPU_INTERRUPT_VIRQ);
+         intno = cpu_get_pic_interrupt(env);
++        if (intno < 0) {
++            break;
++        }
+         qemu_log_mask(CPU_LOG_INT,
+                       "Servicing hardware INT=0x%02x\n", intno);
+         do_interrupt_x86_hardirq(env, intno, 1);
 -- 
-Damien Le Moal
-Western Digital Research
+2.43.0
+
 
