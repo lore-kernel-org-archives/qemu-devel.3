@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8366AC624D3
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 17:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FBDC624DB
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 17:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2uaL-0005H2-KT; Sat, 05 Sep 2026 13:53:49 -0400
+	id 1x2uaL-0005H6-Kj; Sat, 05 Sep 2026 13:53:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1x2uaH-0005EC-AE; Sat, 05 Sep 2026 13:53:45 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1x2uaF-0005Ds-Uu; Sat, 05 Sep 2026 13:53:44 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1x2uaF-0008I5-0a; Sat, 05 Sep 2026 13:53:45 -0400
+ id 1x2uaE-0008IF-1f; Sat, 05 Sep 2026 13:53:43 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id ECF6844507;
- Sat,  5 Sep 2026 17:53:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A531D1F00ACA;
+ by tor.source.kernel.org (Postfix) with ESMTP id 2B94F601DB;
+ Sat,  5 Sep 2026 17:53:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7491F00A3A;
  Sat,  5 Sep 2026 17:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
  s=k20260515; t=1788630812;
- bh=1Ap2AaEX7QZiIBIMnM0SlLinjnztzgM3LmFtkWcHmJQ=;
- h=From:To:Cc:Subject:Date;
- b=AZQ8y1kfimIF9IrBWDEkBZhtOB7J6rZHW2X0Ih8sr9vhhukIZdeHuQwJFkgkuEB9X
- 3nU1YqTO1/L1dFewb19akLFc66Qu/IHtPPAp+CnAgQXanzokQKimvYRN2AXxsBMUgA
- vCorgSVjQFgiNzv1uhUouUtCX0nb9qh3k6/l0Yy073XGzTXfSJiIWO9iMqesDjqFhg
- xhTOeSpnOKWIFNyWHn7HTLWHQFmHnA4kJ33mHpTAv9iW6Sh89pv+kxeWyKQrRTAHTj
- Dd9B0L1erQ65zWFZ+H3cEwCyPADbeeo3zStZ5hvZa0XZhQV05R+rL8eq+8cWPM7M3J
- 3pGaV1pN3aKXw==
+ bh=wQgyAR83act1RsCI64W0ZhW7znuJEWe5RJhFGqpIHYk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=E9Smco0sr8osi8vff1k/862N5+0EHe9XmUfcOTnEqXv0FhfFyzNYVfDsdbLtsv9MM
+ XrGWQzYsvTBIn50+2zojaJzvrJQ0K5VXBFFkoih+QW7TJQTzVSR29fVniExwpY16PC
+ RsEPCkqGRSN8oAafRLwMxp/jVGu1NYY037Mo2QWvvf9HkhOjKuYY8Y7mi0pf69wgzg
+ 4teTh9C8l3nsro2qDPReMBfPzgBWk3lhdAoruF+h2afCWW2UHs4HKSq/IayhcNlqix
+ z2AAHEsUWHO3lVucuVucqVjskJmbEDtjZKNWy6in9dzbhxPI3aldUiatQ7O27BMQXT
+ U9Ih5ino80VYQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99.5)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1x2ua2-0000000Bkre-2jlL; Sat, 05 Sep 2026 19:53:30 +0200
+ id 1x2ua2-0000000Bks1-3P5j; Sat, 05 Sep 2026 19:53:30 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Michael S Tsirkin <mst@redhat.com>,
-	Igor Mammedov <imammedo@redhat.com>
+To: Michael S Tsirkin <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-devel@nongnu.org,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-edac@vger.kernel.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 0/8] Add SCI support for APEI on x86
-Date: Sat,  5 Sep 2026 19:53:20 +0200
-Message-ID: <cover.1788630333.git.mchehab+huawei@kernel.org>
+ linux-edac@vger.kernel.org, qemu-arm@nongnu.org
+Subject: [PATCH 6/8] docs: acpi_hest_ghes: document notification mechanisms
+Date: Sat,  5 Sep 2026 19:53:26 +0200
+Message-ID: <ad5db180cbb52fe101c19edfcd1bf144e11fff76.1788630333.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <cover.1788630333.git.mchehab+huawei@kernel.org>
+References: <cover.1788630333.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,74 +75,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+Currently, the HEST spec mixes generic support with arch dependent
+notification mechanisms.
 
-After a long time, I finally found some time to finish x86 support
-for APEI. Right now, it supports only QMP error inject.
+Move the arm-specific notifications to a separate chapter and add
+a new one describing x86 mechanisms.
 
-I did local tests here with q35 and it works fine. I also added
-tests for both piix4 and q35 at tests/qtest/bios-tables-test.
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ docs/specs/acpi_hest_ghes.rst | 44 ++++++++++++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 9 deletions(-)
 
-My end goal is to do functional tests with:
-- upstream Kernel + QEMU + rasdaemon.
-
-I'm already working on a temporary tree to implement it.
-
-NOTE: this series is based on v11.1.1. I tried to base it on
-the top of master, but there's currently a problem with a
-docker.py script that it is causing compilation issues here:
-
-$ ./tests/docker/docker.py
-Traceback (most recent call last):
-  File "/new_devel/edac/qemu/./tests/docker/docker.py", line 657, in <module>
-    sys.exit(main())
-             ~~~~^^
-  File "/new_devel/edac/qemu/./tests/docker/docker.py", line 653, in main
-    return args.cmdobj.run(args, argv)
-           ^^^^^^^^^^^
-AttributeError: 'Namespace' object has no attribute 'cmdobj'
-
-As this is a separate problem, I'm opting for now to keep it
-based on v11.1.1, to make easier for you to review.
-
-There will be a couple of trivial conflicts to be solved when
-porting to upstream.
-
-Mauro Carvalho Chehab (8):
-  acpi_dev_interface: a ghes support state at AcpiDeviceIfClass
-  tests/acpi: virt: reserve expected tables for PC GHES SCI support
-  hw/i186: add support for HEST table with SCI
-  hw/i386: add GHES support at ICH9 and PIIX4 PM
-  tests/acpi: virt: add x86 DSDT and HEST tables
-  docs: acpi_hest_ghes: document notification mechanisms
-  tests: test GHES notifications on arm64 virt machine
-  tests: add GHES tests for x86 piix4 and q35
-
- docs/specs/acpi_hest_ghes.rst        |  44 +++++++--
- hw/acpi/acpi_interface.c             |   7 ++
- hw/acpi/generic_event_device.c       |   6 ++
- hw/acpi/ghes.c                       |  30 ++++---
- hw/acpi/ich9.c                       |  19 ++++
- hw/acpi/piix4.c                      |  25 ++++++
- hw/i386/Kconfig                      |   1 +
- hw/i386/acpi-build.c                 |  99 ++++++++++++++++++++
- hw/i386/pc.c                         |  41 +++++++++
- hw/isa/lpc_ich9.c                    |   6 ++
- include/hw/acpi/acpi_dev_interface.h |   6 ++
- include/hw/acpi/ich9.h               |   2 +
- include/hw/acpi/piix4.h              |   2 +
- include/hw/i386/pc.h                 |   5 ++
- tests/data/acpi/x86/pc/DSDT.ras      | Bin 0 -> 8818 bytes
- tests/data/acpi/x86/pc/HEST.ras      | Bin 0 -> 132 bytes
- tests/data/acpi/x86/q35/DSDT.ras     | Bin 0 -> 8647 bytes
- tests/data/acpi/x86/q35/HEST.ras     | Bin 0 -> 132 bytes
- tests/qtest/bios-tables-test.c       | 130 +++++++++++++++++++++++++++
- 19 files changed, 402 insertions(+), 21 deletions(-)
- create mode 100644 tests/data/acpi/x86/pc/DSDT.ras
- create mode 100644 tests/data/acpi/x86/pc/HEST.ras
- create mode 100644 tests/data/acpi/x86/q35/DSDT.ras
- create mode 100644 tests/data/acpi/x86/q35/HEST.ras
-
+diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+index aaf7b1ad11a5..1a32550ef3a1 100644
+--- a/docs/specs/acpi_hest_ghes.rst
++++ b/docs/specs/acpi_hest_ghes.rst
+@@ -7,6 +7,7 @@ APEI tables generating and CPER record
+    This work is licensed under the terms of the GNU GPL, version 2 or later.
+    See the COPYING file in the top-level directory.
+ 
++
+ Design Details
+ --------------
+ 
+@@ -105,14 +106,39 @@ Design Details
+     firmware will write back the start address of either "etc/hardware_errors"
+     or HEST table at the corresponding fw_cfg file.
+ 
+-(9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
+-    "Error Status Data Block", guest memory, and then injects platform specific
+-    interrupt (in case of arm/virt machine it's Synchronous External Abort) as a
+-    notification which is necessary for notifying the guest.
++.. note::
+ 
+-(10) This notification (in virtual hardware) will be handled by the guest
+-     kernel, on receiving notification, guest APEI driver could read the CPER error
+-     and take appropriate action.
++    GHES support requires ACPI and ``-machine ras=on``.
+ 
+-(11) kvm_arch_on_sigbus_vcpu() reports RAS errors via a SEA notifications,
+-     when a SIGBUS event is triggered.
++Notifications on ARM64
++----------------------
++
++The ARM64 ``virt`` machine supports two GHESv2 notification sources:
++
++* source 0: Synchronous External Abort (SEA);
++* source 1: GPIO notification delivered through a Generic Event Device (GED).
++
++Source 0 reports hardware-memory RAS events on the ``virt`` machine:
++
++* When QEMU receives a ``SIGBUS`` from the kernel, it writes the CPER into the
++  corresponding ``Error Status Data Block`` in guest memory and reports the
++  event through a Synchronous External Abort (SEA). The guest kernel handle
++  the SEA,
++
++* The guest APEI driver can read and process the CPER record.
++
++* ``kvm_arch_on_sigbus_vcpu()`` reports these RAS events through SEA.
++
++When source 1 is available, QEMU supports GHES error injection through the QMP
++interface.
++
++
++Notifications on x86
++--------------------
++
++The ``pc`` and ``q35`` machines support one GHESv2 source:
++
++* source 1: System Control Interrupt (SCI).
++
++When source 1 is available, QEMU supports GHES error injection through
++the QMP interface.
 -- 
 2.55.0
 
