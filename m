@@ -4,95 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA1BC624DB
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 06:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AC5C624DB
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 06:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2jdA-0005ZA-TC; Sat, 05 Sep 2026 02:12:00 -0400
+	id 1x2jie-0007vf-JA; Sat, 05 Sep 2026 02:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
- id 1x2jd9-0005Yo-5S
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 02:11:59 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
- id 1x2jd7-000403-ET
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 02:11:58 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3966791a6eeso2016190a91.3
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 23:11:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788588716; x=1789193516; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=+1/d3kD0E/jOB18xNpBAi6YRLu7VMIYAiNTe9XZa+lg=;
- b=Huf5qgFqtJDGhFRaaWwHcfmluqeTyH6H7SETVFUA+OWsVw7L0SIoqYJtnfI5EdtdfX
- VmtVDYQwVv2vy9/vlJzy6XvJTgSoSw7e9chsjznYVk+7vYP7DAv3ew9V0pUZ1XV0sGJf
- PqzvSPYOpUxKOnj0X7ypGl9nrEHZW3WbUltENxy7jI1NkJ69Cg6SWhfAjFdNljg3R8o3
- 57LxZ6fbA2EbSMdrbAG6ZpNATssadKp52RHo/IXZLvoD7Iu9Pn/LdgpN17D7Fg1iUnNw
- daPCWBRM998dh6g+k9OGb7JXowHOdFE6lTHpqy2Mif1SRhLnHh8QgwvlNp6HK+o2QzcC
- 4TGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788588716; x=1789193516;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+1/d3kD0E/jOB18xNpBAi6YRLu7VMIYAiNTe9XZa+lg=;
- b=nc9OnUnBl8SyLp5MNdWcRTFkPBbxBXtY+5+J+mxBo2g+FdJWzc50kMtLDNukijS40V
- wv2IGYxlLtzssbbNC3V9w0Dl6wapt/4Fwkup5mS8Tit1bQdxue/3vEt8KS44QFHP1hSI
- 99VOy12IQ1ilUzd+BkSjXiMSOZ9XJakytNNdtLM3+3PtHZBEyUB0Pfakaoa1ZczJY3Bk
- 8jagDuwJFGTVkpkzK5yMcoqaGEw9xps0bCpBudtlZ94CePx0X3W9IQDWgO9jx/BApAp5
- pi1A769oi2zeSPjUWsfG676W6URxXmlxquSRsDks+GzJrA/VToff/NXxBQ76udyDdCX8
- RlRg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBybC08mJw7wD0a1zQtUIemBM8Gybe10pVTI5WoUTO2FvATZIA1neRYA6iotVMZ0jSnq5YTnn+G/dv+Q@nongnu.org
-X-Gm-Message-State: AFuF++kEPlvFuD6oZ6uLwhsvpOzXL1qYVG9fKICwoJtS8r+wmc5HCLhF
- 8g1uUqGl6QuB7Vr817K5jXFnoer7RqvPpkNk7Sw8dmk0CQtXPLMNuK7i
-X-Gm-Gg: AYBFou1hmE/r7MAKgInPX9eC9/z0ClBLsMOds7ZB4Hwg7g7LZF3KCrsAqFoQ7EPXN1Z
- Xz8fhspFKoWjE6laVhrdt6qWXtWgUFWcB8Rof+R/o2bgm2SK7+7mY4qAeXYfPgSs0JMdO1Xg0+v
- TY5s/VJmjQoJ8XQvSjNqbbDL4JAxDpr6DOHH2byTccjTh8sHy5vw7GYPmxAk/GFwFGuUo0hJ4u1
- fvm6nNFbfAPHbat8+yli+tLBQ9T1McIkhh85LbS1ekZB9wCSs6qIesSramgResPE7YJz7h4qkPT
- PLXHZzFuP7ux9SG7ATlnwcBq4+i9Z+VSklhv0hLpCpSK3xd7sNt0/lqfwvpkQ+GyFLc9c0LpYVY
- 2ZNxzR3M42+7+N0FIxdb5HKgnWRK06h5L6GmqsqkVNlAhEfguilzNhoTWq9MwokB61VwGQlseR8
- 6kE6ZYhQnIjaEFWkwF/Mg5bXVnz9KC+z2gx2eVoNHP9gDNF1lOK+3dfQIASybxmEMM3aKusnls5
- acLm80=
-X-Received: by 2002:a17:90b:4ad1:b0:396:635a:9b10 with SMTP id
- 98e67ed59e1d1-39b2616ef8amr14297944a91.11.1788588715542; 
- Fri, 04 Sep 2026 23:11:55 -0700 (PDT)
-Received: from [10.254.177.78] ([139.177.225.238])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-143243767e1sm9731652c88.6.2026.09.04.23.11.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Sep 2026 23:11:55 -0700 (PDT)
-Message-ID: <b3eb97b7-f6a8-4cd6-9ae7-de98fe854f5a@gmail.com>
-Date: Sat, 5 Sep 2026 14:11:45 +0800
+ (Exim 4.90_1) (envelope-from <zakinko@snowrabbit.org>)
+ id 1x2eZj-0005ew-Qr; Fri, 04 Sep 2026 20:48:07 -0400
+Received: from bambi.snowrabbit.org ([182.48.54.220])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <zakinko@snowrabbit.org>)
+ id 1x2eZh-0000b9-Cc; Fri, 04 Sep 2026 20:48:07 -0400
+Received: by bambi.snowrabbit.org (Postfix, from userid 3001)
+ id 5B560C92F2; Sat,  5 Sep 2026 09:48:00 +0900 (JST)
+From: Showta Ishizaki <zakinko@snowrabbit.org>
+To: qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, zakinko@snowrabbit.org
+Subject: [PATCH] target/arm/hvf: implement MDCCSR_EL0 as RAZ
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] migration/rdma: send small control messages inline
-To: Jack Wang <jinpu.wang@ionos.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>, yanfei.xu@bytedance.com,
- Jack Wang <jinpu.wang@cloud.ionos.com>
-References: <20260901160333.29859-1-jinpu.wang@ionos.com>
- <20260901160333.29859-2-jinpu.wang@ionos.com>
-From: Yanfei Xu <isyanfei.xu@gmail.com>
-In-Reply-To: <20260901160333.29859-2-jinpu.wang@ionos.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=isyanfei.xu@gmail.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Message-Id: <20260905004800.5B560C92F2@bambi.snowrabbit.org>
+Date: Sat,  5 Sep 2026 09:48:00 +0900 (JST)
+Received-SPF: pass client-ip=182.48.54.220;
+ envelope-from=zakinko@snowrabbit.org; helo=bambi.snowrabbit.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 05 Sep 2026 02:17:37 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,99 +54,82 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2026/9/1 23:51, Jack Wang wrote:
-> From: Jack Wang <jinpu.wang@cloud.ionos.com>
->
-> Control-channel sends (registration requests, ram block replies, etc.)
-> are tiny, but the HCA still does a separate memory read to fetch them
-> before sending. Ask the QP for a little inline send space at creation
-> time, and use it whenever a message is small enough to fit, so the
-> HCA can just copy the bytes straight out of the work request instead.
->
-> Falls back to the old path if the provider grants less inline room
-> than we asked for, or none at all. No wire protocol change.
->
-> Signed-off-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-> ---
->   migration/rdma.c | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
->
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index e976739fad3c..08f3b901be4a 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -66,6 +66,14 @@ static inline uint64_t rdma_merge_max(void)
->   #define RDMA_CONTROL_MAX_BUFFER (512 * 1024)
->   #define RDMA_CONTROL_MAX_COMMANDS_PER_MESSAGE 4096
->   
-> +/*
-> + * Requested max_inline_data for the QP: enough for a control header
-> + * plus the largest fixed-size control payload, so small control
-> + * messages can be sent inline instead of via a separate HCA-side
-> + * memory read.
-> + */
-> +#define RDMA_CONTROL_MAX_INLINE_DATA 512
-> +
->   #define RDMA_CONTROL_VERSION_CURRENT 1
->   /*
->    * Capabilities for negotiation.
-> @@ -329,6 +337,7 @@ typedef struct RDMAContext {
->       struct ibv_context          *verbs;
->       struct rdma_event_channel   *channel;
->       struct ibv_qp *qp;                      /* queue pair */
-> +    uint32_t max_inline_data;               /* max size for inline sends */
->       struct ibv_comp_channel *recv_comp_channel;  /* recv completion channel */
->       struct ibv_comp_channel *send_comp_channel;  /* send completion channel */
->       struct ibv_pd *pd;                      /* protection domain */
-> @@ -936,6 +945,14 @@ static int qemu_rdma_alloc_qp(RDMAContext *rdma)
->       attr.cap.max_recv_wr = 3;
->       attr.cap.max_send_sge = 1;
->       attr.cap.max_recv_sge = 1;
-> +    /*
-> +     * Ask for enough inline data to cover a control header plus the
-> +     * largest fixed-size control payload (RDMARegister/RDMACompress),
-> +     * so those sends can skip a local memory read on the HCA.  The
-> +     * provider may grant less (or none); qemu_rdma_post_send_control()
+A guest that reads MDCCSR_EL0 under hvf is killed.  The register has no
+case in hvf_sysreg_read(), so it reaches the unhandled path and hvf
+injects an undefined instruction:
 
-Seems it's actually opposite? From my understanding, QP allocation will 
-failed if
-the required size is greater than provider's max inline cap.
+    trace_hvf_unhandled_sysreg_read(env->pc, reg, ...);
+    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
 
-Then just sharing some my findings after learning about the inline 
-feature: I
-found that requesting 512 bytes of inline data isn't free. Providers 
-generally
-size the SQ for the worst-case WQE, so allowing a 512-byte inline 
-payload may
-significantly increase both the maximum WQE size and the total SQ memory
-footprint.
+The TCG path does not do this.  debug_helper.c defines MDCCSR_EL0 as
+ARM_CP_CONST with resetvalue 0, and the comment on the neighbouring DCC
+registers gives the reason:
 
-Regards,
-Yanfei
+    However we implement RAZ/WI behaviour with trapping to prevent
+    spurious SIGILLs if the guest OS does access them as the support
+    cannot be probed for.
 
-> +     * checks the actual granted size before using IBV_SEND_INLINE.
-> +     */
-> +    attr.cap.max_inline_data = RDMA_CONTROL_MAX_INLINE_DATA;
->       attr.send_cq = rdma->send_cq;
->       attr.recv_cq = rdma->recv_cq;
->       attr.qp_type = IBV_QPT_RC;
-> @@ -945,6 +962,7 @@ static int qemu_rdma_alloc_qp(RDMAContext *rdma)
->       }
->   
->       rdma->qp = rdma->cm_id->qp;
-> +    rdma->max_inline_data = attr.cap.max_inline_data;
->       return 0;
->   }
->   
-> @@ -1447,6 +1465,10 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
->                                      .num_sge = 1,
->                                   };
->   
-> +    if (sge.length <= rdma->max_inline_data) {
-> +        send_wr.send_flags |= IBV_SEND_INLINE;
-> +    }
-> +
->       trace_rdma_post_send_control(control_desc(head->type));
->   
->       /*
+That argument holds for hvf as much as for TCG, so do the same there.
+
+The read only reaches QEMU since 37863fff59 ("hvf: arm: enable vGIC by
+default for virt-11.1 and later").  With -M virt,kernel-irqchip=off the
+trace point does not fire at all, so before that change the register was
+never trapped out.
+
+NetBSD/aarch64 hits this on every boot.  vmt(4) probes for the VMware
+backdoor, which on arm64 is a read of MDCCSR_EL0 with a magic value in
+x7, and the injected undefined instruction is fatal in kernel mode:
+
+    [   1.0000000] cpu0 at acpi0: unknown CPU (ID = 0x610f0000), id 0x0
+    [   1.0000000] panic: Trap: fatal Unknown Reason (Illegal Instruction):
+      pc=ffffc000003fa318 sp=ffffc000010262e0 esr=02000000
+    [   1.0000000] fp ffffc000010262f0 vmt_probe() at netbsd:vmt_probe+0x3c
+    [   1.0000000] fp ffffc00001026340 vmt_match() at netbsd:vmt_match+0x1c
+
+The pc in the panic is the same pc the trace point reports, and the
+encoding it reports is MDCCSR_EL0:
+
+    hvf_unhandled_sysreg_read unhandled sysreg read at pc=0xffffc000003fa318:
+      0x0020c002 (op0=2 op1=3 crn=0 crm=1 op2=0)
+
+With this patch the same image boots to login on -M virt -accel hvf, and
+the trace point does not fire.
+
+Fixes: 37863fff59e0 ("hvf: arm: enable vGIC by default for virt-11.1 and later")
+Signed-off-by: Showta Ishizaki <zakinko@snowrabbit.org>
+---
+ target/arm/hvf/hvf.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index da3ec521fc..b00a7e1a84 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -234,6 +234,7 @@ void hvf_arm_init_debug(void)
+ #define SYSREG_ICC_SRE_EL1       SYSREG(3, 0, 12, 12, 5)
+ 
+ #define SYSREG_MDSCR_EL1      SYSREG(2, 0, 0, 2, 2)
++#define SYSREG_MDCCSR_EL0     SYSREG(2, 3, 0, 1, 0)
+ #define SYSREG_DBGBVR0_EL1    SYSREG(2, 0, 0, 0, 4)
+ #define SYSREG_DBGBCR0_EL1    SYSREG(2, 0, 0, 0, 5)
+ #define SYSREG_DBGWVR0_EL1    SYSREG(2, 0, 0, 0, 6)
+@@ -1756,6 +1757,15 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+     case SYSREG_MDCCINT_EL1:
+         assert_hvf_ok(hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_MDCCINT_EL1, val));
+         return 0;
++    case SYSREG_MDCCSR_EL0:
++        /*
++         * The Debug Communications Channel is not implemented, so RAZ,
++         * which is what the TCG path in debug_helper.c does.  A guest
++         * cannot probe for DCC support, so injecting an undefined
++         * instruction here turns a legal read into a fatal trap.
++         */
++        *val = 0;
++        return 0;
+     case SYSREG_ICC_AP0R0_EL1:
+     case SYSREG_ICC_AP0R1_EL1:
+     case SYSREG_ICC_AP0R2_EL1:
+-- 
+2.50.1 (Apple Git-155)
+
 
