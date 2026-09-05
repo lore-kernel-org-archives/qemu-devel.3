@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148D1C79F82
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 00:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E0DC79F82
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 00:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2eMO-00027J-HF; Fri, 04 Sep 2026 20:34:20 -0400
+	id 1x2eQC-00034F-Qb; Fri, 04 Sep 2026 20:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1x2eMM-00026N-7T; Fri, 04 Sep 2026 20:34:18 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1x2eQA-00033e-NN; Fri, 04 Sep 2026 20:38:14 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1x2eMK-0007sO-OA; Fri, 04 Sep 2026 20:34:17 -0400
+ id 1x2eQ9-0008EZ-5W; Fri, 04 Sep 2026 20:38:14 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 7016242E78;
- Sat,  5 Sep 2026 00:34:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A491F00A3D;
- Sat,  5 Sep 2026 00:34:13 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6D974600E2;
+ Sat,  5 Sep 2026 00:38:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC28F1F00A3D;
+ Sat,  5 Sep 2026 00:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788568455;
- bh=kWPyQIPT8n/OhyIiTYG454zuQPoPbaEq+jZ7dxy7hgk=;
+ s=k20260515; t=1788568691;
+ bh=jawrO9RQI5aekw18As+sD1SV4zeOkWBV0F+Sx6h56So=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=RQdtLATRB0DkA3v8CciZkTW3b+HWdjbGrcuO7uhmdcgJa4rhwItmPP7QCzVSE4rdq
- nEEimtU/mbk8r27uZgjWSF9tFon3/BZbhwc468Zzrt1J8bquUvnRI/6jxOMyaUxbyL
- zs+WYvoJIGcTh1v8wca1U92A2n+M3wxiWYokkm+GlAG9F8oCofChM3jed2fpytgHsX
- NhahdYfwl4vpt02jqbj6rGBfZQEjAJPNZk2tWISgDRkxkNPMzxiEfao9XlrcH5w2Y1
- D7cK7EOIk/iSC8BVBYzoJF5MffLVDvBwmy8GOP0MoRmOF4yeksBn6Wpm8JTcjUcXEY
- 8GTnAQL7MszCA==
-Message-ID: <d27d262a-6504-4e18-8c7b-4a1bdd882e3d@kernel.org>
-Date: Sat, 5 Sep 2026 09:34:12 +0900
+ b=kZ53YqTiKXowkm5cH15Fl0W+Lh2muyONE4p/udDhCe3pseENPZQzaUbbxd1m2TkIK
+ WIhJl4U33HDmQfO2kXCMJo0zjLW9+TCYp7GzHjqC3D7rjVd678H3a3K+6MgA1SZiU3
+ rPTKsDyqqe6zBQRqhfhFQgfR5kyKM+R/VbbkQMczLqWDGhfJBwGVF/ts+hJdADKBEO
+ KKfIgnYE+YQbs77mrYj9/cmafY19kPlJFmrMFIVKMZ1pBvdC7zl9JtEdiGUH731DrV
+ 9ogXtFwZB9+qA+d5ruoXN+zzsF7yV5wvIyWhh2fZPrcoIeqmyGv4VO85cNlFAxw4WJ
+ aK7Ts/CkOIhrg==
+Message-ID: <08401f4f-1bb6-4445-b157-9135458d32ea@kernel.org>
+Date: Sat, 5 Sep 2026 09:38:08 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/12] hw/block: reject a zoned device whose write
- pointers are unaddressable
+Subject: Re: [PATCH v3 12/12] file-posix: reject a zone append to a full or
+ conventional zone
 To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Fam Zheng <fam@euphon.net>
 Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260904161801.1568841-1-cassel@kernel.org>
- <20260904161801.1568841-7-cassel@kernel.org>
+ <20260904161801.1568841-13-cassel@kernel.org>
 Content-Language: en-US
 From: Damien Le Moal <dlemoal@kernel.org>
 Organization: Western Digital Research
-In-Reply-To: <20260904161801.1568841-7-cassel@kernel.org>
+In-Reply-To: <20260904161801.1568841-13-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=dlemoal@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=dlemoal@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,48 +75,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/5/26 01:17, Niklas Cassel wrote:
-> The write pointers of a zoned device outlive any particular use of it,
-> whether the device keeps them itself or a backend records them, while the
-> logical block size is a property of the frontend and is chosen afresh
-> every time the device is attached. Nothing ties the two together. A zone
-> written while the device was configured with logical_block_size=512
-> leaves a write pointer that is a multiple of 512, and attaching the same
-> device with logical_block_size=4096 makes that pointer unaddressable.
+On 9/5/26 01:18, Niklas Cassel wrote:
+> raw_co_prw() replaces the offset of a zone append with the write pointer
+> of the addressed zone, which assumes that the stored value names a
+> position inside that zone. It does not in two cases.
 > 
-> Such a pointer is not merely misaligned. The guest addresses the device
-> in logical blocks, and a zone report expresses the write pointer in 512
-> byte sectors, so the guest is told about a position that does not fall on
-> a logical block boundary. It can neither read nor write there, and the
-> zone can only be recovered by resetting it. The reverse direction is
-> harmless: a pointer laid down with a larger logical block size is still a
-> multiple of a smaller one.
+> A full zone has its write pointer recorded at the end of the zone, since
+> get_zones_wp() stores start + len for BLK_ZONE_COND_FULL. That is the
+> first sector of the following zone, so the append is submitted there. The
+> kernel accepts it whenever that zone is empty, because it is a legal
+> write at its write pointer, and the completion path advances the wrong
+> zone because it recomputes the zone index from the replaced offset. The
+> data is written to a zone that was never addressed and success is
+> returned:
 > 
-> On a zoned null_blk device with a logical block size of 512, a 512 byte
-> append to a sequential zone leaves the write pointer half a logical block
-> into it:
+>   zone 2 finished, then a 4 KiB append to zone 2:
+>   After zap done, the append sector is 0x180000     <- zone 3
+>   zone 2: wptr 0x180000, zcond:14 (full)
+>   zone 3: wptr 0x180008                             <- advanced
 > 
->   $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
->         -c "zap -p 0x20000000 0x200" -c "zrp 0x20000000 1"
->   start: 0x100000, len 0x80000, cap 0x80000, wptr 0x100001, zcond:2
+> A conventional zone has no write pointer at all, and its array entry
+> carries only the type marker in the top bit, so the offset becomes
+> negative and the write fails with EINVAL. That is harmless but it reports
+> nothing about the actual mistake.
 > 
-> Attaching that disk with logical_block_size=4096 handed the guest a zone
-> it could not write to.
+> Reject both while the write pointer lock is held, since the state has to
+> be read and acted on atomically. check_zoned_request() in virtio-blk
+> refuses an append to a conventional zone, so that case needs a caller
+> that goes to the driver directly, but nothing there examines whether a
+> zone is full, so a guest can reach the misdirected write.
 > 
-> Check at realize time that the zone size and every write pointer of a
-> sequential zone are multiples of the write granularity that the device is
-> about to report, and refuse to start otherwise. The write pointers are
-> already held in memory by the driver, so this costs no I/O.
-> 
-> The check uses blkconf_zone_write_granularity(), the same value that a
-> frontend reports to its guest and validates requests against, so the
-> three cannot disagree.
-> 
+> Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
-Looks good.
+Looks good, modulo the comment below that needs to be addressed.
+With that fixed, feel free to add:
 
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+
+> diff --git a/block/io.c b/block/io.c
+> index b59c7fdf3e..452254bc63 100644
+> --- a/block/io.c
+> +++ b/block/io.c
+> @@ -3378,6 +3378,15 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
+>      return offset >> ctz64(bs->bl.zone_size);
+>  }
+>  
+> +bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index)
+> +{
+> +    uint64_t zone_end = MIN((uint64_t)(index + 1) * bs->bl.zone_size,
+
+I think this should look at zone capacity, not size. For cases where we have
+zone cap < zone size, zone full condition is reached when the write pointer is
+at the zone capacity.
+
+> +                            (uint64_t)bs->total_sectors << BDRV_SECTOR_BITS);
+> +    IO_CODE();
+> +
+> +    return bs->wps->wp[index] >= zone_end;
+> +}
 
 -- 
 Damien Le Moal
