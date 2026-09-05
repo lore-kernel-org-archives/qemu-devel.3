@@ -4,102 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F919C624D3
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 12:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE198C624DB
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 14:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2pmC-0003iZ-TN; Sat, 05 Sep 2026 08:45:44 -0400
+	id 1x2rBX-0002jC-FG; Sat, 05 Sep 2026 10:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x2pmA-0003hm-0q; Sat, 05 Sep 2026 08:45:42 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x2rBW-0002j2-2K
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 10:15:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x2pm6-0007c3-33; Sat, 05 Sep 2026 08:45:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=YkjcjKmiHVI2Nkv/26u3ssl/h0M5IaTbKeJMyDsJT/0=; b=A+xoInWv7cW5y+NumXglBKtskP
- SqV7pc+BMyEWdKkhj19wnidDTAjE9bSKOIZ8G9ei8zuNQl8sjhN3W2ifq6AbhbA8wmB9N0AwSG3pH
- t07jSPmCFjSAP41T6Rt1Za0q1qXFk7eRGCJ1E04bHHM/GLgjwBDQkqmRrHeStHfG6bsQ31AVG01Wg
- X7LoO3ajqXHUi8C1LOsYBB6ns5P86zcZNu5l+gonMT4ptJE8NE6r8+KjIRYGrG4mXbRXJ4fyjhyCE
- eXOPaG1lT2qax+Bwyk7cv5UUWAUL1GwzDrG2k7Rz8wJOAsWR18uz7gEsu7coyfIiJSH7a4AbimNT1
- 1gTxmc/gm5QXw76W6m1bjt1vt6m4RKJOs+DdQKsLdpofbJBOZN38Y24oPsBaLDl7Fdeww7pMTbXSf
- 7M7VyVvAxHcwNh9xDbrIis39NlBY7NeyrlenLLvWfFhGj4UckfBi59H1M+efCGPfxy1bnD5+v43Sw
- hwVn5MAE16Vu03qq/E8PEmP1/h+V+sLFVo80Vfc8InAH72+8zEMsFcokCpwLyr4x3jO9oaHCwt4Li
- 6ltVFW5q3AJbtxqaE/bbSCP9pRKNjR+tfjrpm9zjU0PNG7daS2v878xbkwSwWPaNZ0LbX73rJer9U
- UNC53w+KmvRP7/qZGLL7Lz+sZ5xZOGqk2CVLhxNX8=;
-Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x2plL-00CMJ3-VK; Sat, 05 Sep 2026 13:44:52 +0100
-Message-ID: <bdbdec6f-91a6-4c70-a818-ef2b1fbe4ad5@ilande.co.uk>
-Date: Sat, 5 Sep 2026 13:45:13 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x2rBT-0004o5-Tj
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 10:15:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788617754;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y257Mw8dXSVIqdbAEDYSvIagO+dCSVaWX+3e2nCVU8o=;
+ b=dl6HVhEet+nstZV+MhIrwqWrcTntT44L9O+uf5r2p864vOiuS64YP54T5lrttetfaIEq8/
+ Cbib0Ksqh7+K5vADDCOufZQTZX04iGykDYEdrgOYqaE2NBynQN2zUPdu4yH0lCFwsXNxqL
+ FHSJKWTS+4ipJXCu+Of8/1/JSNmzJpo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-453-Ci4tfWzgOTq6BIRHtkwDoQ-1; Sat, 05 Sep 2026 10:15:52 -0400
+X-MC-Unique: Ci4tfWzgOTq6BIRHtkwDoQ-1
+X-Mimecast-MFC-AGG-ID: Ci4tfWzgOTq6BIRHtkwDoQ_1788617751
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-484357599a4so1306035f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 07:15:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788617751; cv=none;
+ d=google.com; s=arc-20260327;
+ b=gML1g3wkL2pi7QOl9Ma69mVF8XgLcJ+17kRYn2mwpAxG/DGhzVpXLv/XjKRoL/BajI
+ 0AYxYocoybeUseT7VhZ2H4f0L+Hcy3W+S3odFqcWSkuNLSdTY3UkdRXWzhYoawfhWh+A
+ 1k7SKICJJPKrARrZZtSwcSqdlrljEUnVFlVBl5jpZkyQhX2Tz18aXdqhDHTbkJNJ94zu
+ EbYHTUIPoflJVfPSGnNbiFks9yD+FEJazIli/rK+2D8dfxWu0Qzq4KfkgqlFY2WZZBJB
+ SOQ2plPHTPFUHi9CZYWHJ3EQ21JeEfwCGMe6WccviWk04/mgX6qkaBN05DoggUv7G4do
+ x+TQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=y257Mw8dXSVIqdbAEDYSvIagO+dCSVaWX+3e2nCVU8o=;
+ fh=V9+71croMFy7g4qkDc9jmUXy3V+s2UVp5dMTtywG71c=;
+ b=XNq0hUKGUCz3+luikgf8kccXthaRlEnUaihzw7ZmTHxPQMGNCA7rIMbHR+TIy/qdxR
+ LuNg8j3A5BitSkh2DXqGwArS5OsuUG3CLxuL6svSqvQd0lzo/QZofhEuR40jDymmr+Uz
+ rLFsHP9wtFyKsLaGzMp9l6hUtZtKMC5gIpIv2MnXtfmOqfc6aED2a1wEi+Q6oJkY1ucw
+ gJUQ9P5rH2r6LxaFIJMzUSHgT3O782tokmTDnw7WiTIdIMFwzAN5avjxyty9rK9Ym67m
+ zg26R5jopEt5bHgPMOopgNDoVmLNtV3L2qyJ/C1ZSpn/P+Ng0307jBwzVe0Lroar9Zo/
+ OfTA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788617751; x=1789222551; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=y257Mw8dXSVIqdbAEDYSvIagO+dCSVaWX+3e2nCVU8o=;
+ b=HrnDyqXQDbrbDgBQCwJ934v4cno+sNzi7IiYl8yeiZZ/jQeLfxsXsLq/oPKA2RDiLW
+ zhmHY9+6aUf127L6EWvxTZU5dmGxeJ+6iM2mfs7Kmck40q2ip0V1U7321/AswwomZ0sp
+ VfRQ8SAlqGze/3uhlTXdWiualKRlXH32pscW5zYiRbX7aq2KLThQwTA/oJ2QuaIf4lg3
+ mhkRFfqkhP3t2slWPs7OwQVy/yWxKWYHkc4YID6gmg9IJ5CWDSAE6P2D4Cjo4dGTBdE7
+ vvV4qHPCdYVkB9HHjnLirjUifsFUeRa2GPsstTPyw1UjfGvujrnMeCB3fWXy5oBCzOfL
+ 6Z3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788617751; x=1789222551;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=y257Mw8dXSVIqdbAEDYSvIagO+dCSVaWX+3e2nCVU8o=;
+ b=DS/1P2QsNEAsvvsyU8imE7keDHjtTJEz4cmeml8t/WOb/g8LgNOyoVzTDvpYZ4iaqZ
+ DHo5EBSv0gU5CyqbnjorDiUQs4PGYmWv7R4JYiY2KIm4JZL/EgDfkwp2KRNIMdntu7ie
+ UhQGM0aUzhtWJcToQbB/RNQuoPAIhWiRfHUULexxBo9uUpBRHqT2Y084dubfbtFAmV1j
+ jo/mAvCvNMsaZuBSn0UNb17dDRN6bJrN5srWuK1pA4a56rusKoH0QGVsCtcjSCj86n1x
+ iLTfJB6YrVJePCibVp+GEesQH4R12UudroJwCeHdKSVItN0cQknLSHjb9b4Ebreg6w3W
+ mMiQ==
+X-Gm-Message-State: AFuF++niUGgXEIxp6RQVbj15YhrR5f0zwGst/tohOMGrFjIbm+g/m7F+
+ fANMgvLcBZkpafp44NMtrBaufF8Tsnou5zfFc4tKCfnQDEkma+Di0I2ETx/N6vOX6qHnVyJu9S+
+ GLEJV8gKlz3Zu6HLWhKd5lH1d/4sQYMle6Fp83d4N+tW1Nus4PZ085aUdi5fAoBTUMGjP4uddRJ
+ cfJHQsJThFRrhATljTFoseU1QbdeLb1o8=
+X-Gm-Gg: AYBFou0kS3qy9YKZhdfNMDkCOrJeCc+nWeChEr2El+Ufrf+aygsniAktZAIYm99ceFB
+ N5QFFOTaC0+egdscyKLqmzwrn2ySBn6ns4AluklMMJxQATf/Fc+1gKVhywkXZiSxf+64Jjt4F7q
+ AfmkdPbk7CqONx2Q005pBbwPg0wfEruf99CUO2Nfx+gZgyYxZ5d7ZiIT5wmZZA6JbOAr+6NeNfR
+ cU1G6OUM8ohVCKn0Uz8M5iwWj/t4EyNhBpc0VyW6dOk+P7so9K4lIu6cEQbtA==
+X-Received: by 2002:a05:6000:1acb:b0:485:8b5d:96d with SMTP id
+ ffacd0b85a97d-4858b5d0d2dmr18823763f8f.19.1788617751091; 
+ Sat, 05 Sep 2026 07:15:51 -0700 (PDT)
+X-Received: by 2002:a05:6000:1acb:b0:485:8b5d:96d with SMTP id
+ ffacd0b85a97d-4858b5d0d2dmr18823676f8f.19.1788617750650; Sat, 05 Sep 2026
+ 07:15:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Emmanuel Blot <eblot@meta.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
- <20260731-sanmiguel-bmc-locator-v2-18-1266926ba769@free.fr>
- <cb1b5ec3-d7ba-42fe-a8ab-da7c236b1660@kaod.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <cb1b5ec3-d7ba-42fe-a8ab-da7c236b1660@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: Adding /machines/labels (was Re: [PATCH v2 18/25]
- tests/functional: add a pure-Python device-locator resolver)
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+References: <20260905014629.991586-1-apolivodaa433@gmail.com>
+In-Reply-To: <20260905014629.991586-1-apolivodaa433@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sat, 5 Sep 2026 16:15:40 +0200
+X-Gm-Features: AcwNN1UrcJHf7rQRH2NLKgnAcjwZnBPTI0Zi4CBNC0rnLM9tHQYuBrCvLDgFBMw
+Message-ID: <CABgObfa4+CzMVN4xj=71cfJL6eMdMWqCoEvQ5RKvPNcR79XO4w@mail.gmail.com>
+Subject: Re: [PATCH] target/i386: ignore VEX.L when emitting VROUNDSS and
+ VROUNDSD
+To: Andrey Polivoda <apolivodaa433@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000aabbe6065abd052a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,129 +133,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2026 15:21, Cédric Le Goater wrote:
+--000000000000aabbe6065abd052a
+Content-Type: text/plain; charset="UTF-8"
 
-> On 7/31/26 12:45, Emmanuel Blot wrote:
->> Add DeviceLocator, a helper that addresses a device by its position on
->> the bus -- bus, address, type or index -- rather than by a QOM path. A
->> QOM path locates a device under the object that owns it, by enumeration
->> order, and so says nothing about where the device actually sits in the
->> bus topology. From a QOM anchor DeviceLocator instead walks the bus and
->> device hierarchy, alternating bus and device hops, to reach the target.
->>
->> It relies only on standard QOM queries over QMP, needing no custom
->> commands or changes to QEMU.
-> 
-> Let's recap first :
-> 
-> Several recent threads have touched the same topic: QOM
-> composition-tree paths encode ownership, but developers and tests
-> regularly need to identify devices by their position in the bus
-> topology. The threads in question:
-> 
->    - "[PATCH v5 0/8] hw/sensor: Add new device emulation for TI ADC128D818" [1]
->    - "Call to clean up QOM onboard devices lacking a parent" [2]
->    - "[PATCH RFC 001/134] qom: Introduce object_new_child()" [3]
->    - "[PATCH RFC v2 0/137] qom: Make composition-tree parenting mandatory" [4]
->    - "[PATCH v2 0/25] hw/arm: Facebook SanMiguel BMC and TMP75-family sensors" [5]
-> 
-> 
-> * The problem
-> 
-> QEMU has two device hierarchies serving different purposes:
-> 
->    - The QOM composition tree describes parent/child ownership.  Every
->      object has exactly one parent. Paths look like:
->      /machine/soc/i2c-controller/child-device.
->    - The bus topology describes electrical connectivity (visible
->      through "info qtree"). A device sits on a bus at an address.
-> 
-> Devices created without an explicit QOM parent fall into
-> /machine/unattached/device[N], the "orphanage", with names that depend
-> on enumeration order and are therefore unstable. Markus identified
-> 380+ such devices across all QEMU machines [2]. Even with a stable QOM
-> path, the path says nothing about where the device sits in the bus
-> topology or what purpose it serves.
-> 
-> 
-> * Three approaches on the table
-> 
->    1. Mandatory QOM parenting (Graf [3][4] / Armbruster [2])
->       object_new_child() and per-bus creators enforce parenting at
->       creation time. Deletes the orphanage. Scope: 440 files, 137
->       patches.
-> 
->    2. Bus-child parenting (Blot [1], rejected)
->       i2c_slave_create_simple() would parent slaves to their bus,
->       named by hex address (e.g. /machine/i2c[0]/i2c-bus/0x6f).
-> 
->    3. DeviceLocator (Blot [5])
->       Pure-Python helper that resolves devices by bus-position
->       descriptors like:
-> 
->         /machine/soc::aspeed.i2c-ast2600[0]~i2c[9]~tmp75@0x4b
-> 
->       It walks the bus/device hierarchy using only qom-list/qom-get
->       over QMP, no QEMU code changes needed. 600 lines of python.
-> 
-> 
-> * /machine/labels: DT-style alias container for QOM
-> 
-> The idea: add a flat container /machine/labels under the machine, where
-> board code registers link<> properties pointing to devices by
-> purpose name. Like device tree /aliases (serial0  > /soc/uart@9000000).
-> 
-> Container creation is one line in qemu_create_machine_containers().
-> QMP introspection works today: qom-get /machine/labels/rtc returns the
-> target's canonical path.
-> 
-> A small helper is all that is needed:
-> 
->    void machine_add_label(const char *label, Object *target)
->    {
->        object_property_add_const_link(
->            machine_get_container("labels"), label, target);
->    }
-> 
-> Board code registers one label per well-known device:
-> 
->    machine_add_label("rtc", OBJECT(dev));
->    machine_add_label("tmp75-bus9-0x4b", OBJECT(sensor));
-> 
-> Tests resolve devices with a single QMP call instead of walking
-> the bus hierarchy.  For the common case, functional tests targeting
-> specific board devices (SanMiguel TMP75s, Catalina PCA9555s, Anacapa
-> ADC128D818s), the board author already knows which devices matter.
-> 
-> Thoughts?
-> 
-> Thanks,
-> 
-> C.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20260701-i2c-adc128d818-anacapa-v5-6- 
-> fe8292d86b38@free.fr
-> [2] https://lore.kernel.org/qemu-devel/87se5scipx.fsf@pond.sub.org
-> [3] https://lore.kernel.org/qemu-devel/20260711223707.42139-1-graf@amazon.com
-> [4] https://lore.kernel.org/qemu-devel/20260718213652.37673-1-graf@amazon.com
-> [5] https://lore.kernel.org/qemu-devel/20260731-sanmiguel-bmc-locator- 
-> v2-0-1266926ba769@free.fr
+Il sab 5 set 2026, 03:46 Andrey Polivoda <apolivodaa433@gmail.com> ha
+scritto:
 
-I remember expressing a similar idea a while back in a private thread but as 
-/machine/aliases, possibly with Pierrick and Phil?
+> According to both Volume 2 of Intel 64 and IA-32 Architectures Software
+> Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
+> VEX.L is a "don't care" bit for `VROUNDSS` and `VROUNDSD`.
+>
+> Currently, QEMU has an assertion in `gen_VROUNDSS()` and `gen_VROUNDSD()`,
+> which checks that `s->vex_l` is not set. When either instruction is
+> encountered
+> with VEX.L bit set, the QEMU process crashes with an assertion failure.
+>
+> Not only does this behavior deviate from real hardware, but it also
+> allows unprivileged guest userspace to crash the QEMU process itself.
+>
 
-The problem I was trying to solve was how to access in-built PCI buses and NIC 
-devices from the command line consistently without resorting to various hacks such as 
-having to use -nic to connect an in-built NIC to a backend: instead expose the 
-frontend as an alias that can be referenced by the backend, so the exact QOM path is 
-fixed and doesn't matter.
-
-I'd certainly be interested to see the design fleshed out in more detail to explore 
-more potential use cases.
+Good catch - though, note that TCG is not considered a security boundary.
 
 
-ATB,
+>      case X86_SIZE_ps: /* SSE/AVX packed single precision */
+> -    case X86_SIZE_pd: /* SSE/AVX packed double precision */
+> -        *ot = s->vex_l ? MO_256 : MO_128;
+> +    case X86_SIZE_pd: { /* SSE/AVX packed double precision */
+> +            bool is_scalar = (e->s0 == X86_SIZE_ss || e->s0 ==
+> X86_SIZE_sd ||
+> +                              e->s1 == X86_SIZE_ss || e->s1 ==
+> X86_SIZE_sd ||
+> +                              e->s2 == X86_SIZE_ss || e->s2 ==
+> X86_SIZE_sd);
+> +            *ot = (s->vex_l && !is_scalar) ? MO_256 : MO_128;
+> +        }
+>
 
-Mark.
+Oh, this also applies to VMOVSS, VSQRTSS, etc. but that's actually correct
+- they're all VEX.LIG. It's worth listing these instructions above the
+declaration of is_scalar.
+
+Paolo
+
+         return true;
+>
+>      case X86_SIZE_xh: /* SSE/AVX packed half register */
+> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+> index c83ab80940..7e0d439f6d 100644
+> --- a/target/i386/tcg/emit.c.inc
+> +++ b/target/i386/tcg/emit.c.inc
+> @@ -4642,14 +4642,12 @@ static void gen_VPHMINPOSUW(DisasContext *s,
+> X86DecodedInsn *decode)
+>  static void gen_VROUNDSD(DisasContext *s, X86DecodedInsn *decode)
+>  {
+>      TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
+> -    assert(!s->vex_l);
+>      gen_helper_roundsd_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PTR2, imm);
+>  }
+>
+>  static void gen_VROUNDSS(DisasContext *s, X86DecodedInsn *decode)
+>  {
+>      TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
+> -    assert(!s->vex_l);
+>      gen_helper_roundss_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PTR2, imm);
+>  }
+>
+> --
+> 2.53.0
+>
+>
+
+--000000000000aabbe6065abd052a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il sab 5 set 2026, 03:46 Andrey =
+Polivoda &lt;<a href=3D"mailto:apolivodaa433@gmail.com">apolivodaa433@gmail=
+.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">According to both Volume 2 of Intel 64 and IA-32 Architectures S=
+oftware<br>
+Developer&#39;s Manual and Volume 4 of AMD64 Architecture Programmer&#39;s =
+Manual,<br>
+VEX.L is a &quot;don&#39;t care&quot; bit for `VROUNDSS` and `VROUNDSD`.<br=
+>
+<br>
+Currently, QEMU has an assertion in `gen_VROUNDSS()` and `gen_VROUNDSD()`,<=
+br>
+which checks that `s-&gt;vex_l` is not set. When either instruction is enco=
+untered<br>
+with VEX.L bit set, the QEMU process crashes with an assertion failure.<br>
+<br>
+Not only does this behavior deviate from real hardware, but it also<br>
+allows unprivileged guest userspace to crash the QEMU process itself.<br></=
+blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Good c=
+atch - though, note that TCG is not considered a security boundary.</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail=
+_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+=C2=A0 =C2=A0 =C2=A0case X86_SIZE_ps: /* SSE/AVX packed single precision */=
+<br>
+-=C2=A0 =C2=A0 case X86_SIZE_pd: /* SSE/AVX packed double precision */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 *ot =3D s-&gt;vex_l ? MO_256 : MO_128;<br>
++=C2=A0 =C2=A0 case X86_SIZE_pd: { /* SSE/AVX packed double precision */<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bool is_scalar =3D (e-&gt;s0 =3D=
+=3D X86_SIZE_ss || e-&gt;s0 =3D=3D X86_SIZE_sd ||<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;s1 =3D=3D X86_SIZE_ss || e-&gt;s1 =3D=
+=3D X86_SIZE_sd ||<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;s2 =3D=3D X86_SIZE_ss || e-&gt;s2 =3D=
+=3D X86_SIZE_sd);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *ot =3D (s-&gt;vex_l &amp;&amp; =
+!is_scalar) ? MO_256 : MO_128;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br></blockquote></div></div><div dir=3D"auto=
+"><br></div><div dir=3D"auto">Oh, this also applies to VMOVSS, VSQRTSS, etc=
+. but that&#39;s actually correct - they&#39;re all VEX.LIG. It&#39;s worth=
+ listing these instructions above the declaration of is_scalar.</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0case X86_SIZE_xh: /* SSE/AVX packed half register */<br=
+>
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc<br>
+index c83ab80940..7e0d439f6d 100644<br>
+--- a/target/i386/tcg/emit.c.inc<br>
++++ b/target/i386/tcg/emit.c.inc<br>
+@@ -4642,14 +4642,12 @@ static void gen_VPHMINPOSUW(DisasContext *s, X86Dec=
+odedInsn *decode)<br>
+=C2=A0static void gen_VROUNDSD(DisasContext *s, X86DecodedInsn *decode)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0TCGv_i32 imm =3D tcg_constant8u_i32(decode-&gt;immediat=
+e);<br>
+-=C2=A0 =C2=A0 assert(!s-&gt;vex_l);<br>
+=C2=A0 =C2=A0 =C2=A0gen_helper_roundsd_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PT=
+R2, imm);<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void gen_VROUNDSS(DisasContext *s, X86DecodedInsn *decode)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0TCGv_i32 imm =3D tcg_constant8u_i32(decode-&gt;immediat=
+e);<br>
+-=C2=A0 =C2=A0 assert(!s-&gt;vex_l);<br>
+=C2=A0 =C2=A0 =C2=A0gen_helper_roundss_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PT=
+R2, imm);<br>
+=C2=A0}<br>
+<br>
+-- <br>
+2.53.0<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000aabbe6065abd052a--
 
 
