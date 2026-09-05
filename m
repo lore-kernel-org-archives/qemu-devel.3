@@ -4,101 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE1AC624DB
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 04:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759F0C624DB
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 05:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2iSe-0001qY-70; Sat, 05 Sep 2026 00:57:04 -0400
+	id 1x2imA-0006Fi-IA; Sat, 05 Sep 2026 01:17:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x2iSa-0001p2-G0
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 00:57:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x2im8-0006FV-0k
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 01:17:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x2iSY-0001xN-KQ
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 00:57:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x2im6-00052p-KG
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 01:17:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788584216;
+ s=mimecast20190719; t=1788585427;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ICY/KHLVUrj4fBQrE39y6DnVReGAdRdVl0IgfUVv1rQ=;
- b=M1XB2omcxiizW9RbbuZm2XHjoHv3BuVbDd6jxOp+pxogIWccGHmY3jlQFkOkbidI27hplU
- LgqNC8MgbHk5hMhupTyMSv3dMt2c4AXiPjhcwRRaPhVtT5RLE/aX+t6dp0GJLZpHpSNm5R
- ddrVRdxSCX+rewB3OxhgJtrtVQz55AY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NYNfR20/FO3Fhd77hXXx1jeRfJFM5ldPgCh815IwWoM=;
+ b=gEVJLBpDWI6LHLD9BNVS1yX3vahBygjmF7yFWJU1zkT4Os7hy6QtDoCj1OwqF0mSe82u6h
+ MrHac3bbRz8Z3DpK4L8uxIr5cq5isZwbORpUfBaDrE747D86+tKGulI29BPLa233vb+pHE
+ iSDbMmjljPXdXb06HpOgGULP1pCPKSE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-atNIOJ8pOq6d42oDcIkTrw-1; Sat, 05 Sep 2026 00:56:54 -0400
-X-MC-Unique: atNIOJ8pOq6d42oDcIkTrw-1
-X-Mimecast-MFC-AGG-ID: atNIOJ8pOq6d42oDcIkTrw_1788584213
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-482e538ad9fso1468111f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 21:56:54 -0700 (PDT)
+ us-mta-182-iHKBktxJNJmvuJe_Vm26ew-1; Sat, 05 Sep 2026 01:17:05 -0400
+X-MC-Unique: iHKBktxJNJmvuJe_Vm26ew-1
+X-Mimecast-MFC-AGG-ID: iHKBktxJNJmvuJe_Vm26ew_1788585424
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49554715277so16335985e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Sep 2026 22:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788584213; x=1789189013; darn=nongnu.org;
+ d=redhat.com; s=google; t=1788585424; x=1789190224; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=ICY/KHLVUrj4fBQrE39y6DnVReGAdRdVl0IgfUVv1rQ=;
- b=ox5EiGyig4klrskP8SjvJWuF1KGoiNIvIwKCx82IuTSkEI0YFUI8Uolk72VxL4aS8w
- 17TTeu6O7N9FQOCS3bn6Zle9HykS439+wePrMo6Q8DL0O2G2IKxLflnAji+HEWAaiuPj
- CAD7x4Ctq7BFr3jWkDbesF9+5fy20nq++bQXZfmvjH8OFDhz4H0NpHkkZ7MGl2oDnWEV
- yeMw4MEVqWJ/UyBp2dk5qaxXeDFJm/XbcV0vlEIaxg5kONGUusIxKr3eNUwgnp9xWfNi
- r5g8Al2BM0UMusneGtT6/PeHXhGE29Wy+u2NJB/YZOzZzmJg37l2EB8qFHwIeytV11V5
- jHvA==
+ bh=NYNfR20/FO3Fhd77hXXx1jeRfJFM5ldPgCh815IwWoM=;
+ b=GbvnzCA/hJ/1wx7kOcjOQ3Skchz2UdIJNmzpT0VOaq/1YVrjD85VvV36zJm87pflk0
+ BbdwuYx2DweS/HO8gY6N5FfLs/fos/mv2zZ3KqZNrrbA0Bl9mVRM1nsiIn6Z5KgkS/3S
+ hbv8hCm8E6Q6kRgVPJKHMRMK1kuCnzpfQsG8InWi89axu8FqE7Yst2sSqbBiI0FgKfDF
+ 4rKeoUBjf9afoV5sVfVKMvsMcmCY0mG44mlYBCDEYTw5M+AasrGNmwc27q4zYsVrx2Ek
+ /fJ5GFZGcmAMSNPalWnmqks650vXF6oOwIAqxLU1si9ivqf3ZzUx3MyJOmDyOdkUZ6y7
+ UpLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788584213; x=1789189013;
+ d=1e100.net; s=20251104; t=1788585424; x=1789190224;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=ICY/KHLVUrj4fBQrE39y6DnVReGAdRdVl0IgfUVv1rQ=;
- b=G5XPL293X4VapOeD15ZAbBSL3lBuucWsEGt6zgIorstR4xCTtIJ7bDuZC3bPfwb8/C
- riODZV7mCc/rh+5tDIB/g1GeNYHjOm7EuTfx0nwe+6VlbfgY0oR5p+iXrvqrTzU5AuAa
- J8XkkWxx+0mk2eYXWTRlQ2OLgV2SGJC+1o2ZZHjBsrtCwGVSJHOPml/FtxunXd4wnyt8
- lCDGbg2Z2FMUmLT7E3TJ9rZAzoMiZJxvVEWmH2eyecq3BW3uiazsqOslau5BsUCHwbAz
- km2ksiU92mdV+jintz3AGzDOkJ8XpwzjLv/B9g+LCOzb4vOGkH4QMRjnuAxvxasJZPJ3
- XIEQ==
-X-Gm-Message-State: AFuF++mkX6Os4MYUgBwQnBTef1Obvo454r0cah3PFsqf10FzXH1YEP72
- ZUxhKNk2BMfaG779tkljO0wwcYQx/fx9/VQlM+Es2uduowcMdC49gdkiJsEa5tL1VCP6bSjJkXk
- 8bBpbt/Yqc/aW0x7gfW9o27utUENJloEmSTBi9SUOQQxjO2AJlk1qH2jnXaXAsOgEwSiQcabLKK
- sY2dzbyTwpBhUGp8sEbWdOzjmU4Ief3z4H2g==
-X-Gm-Gg: AYBFou1sGZYxH5J5ruuB19o08Ps/z45XxbyTxiipN8R+YBYnAZSmPVFVT1J82AJf+Tf
- CPZCLM5J6pivlTB9URMt/YPN/a7f31kguaH1qbEK87+6Th/QAF+rVKBxtp9My6n+IKPqAk9qpLD
- N3x2OEjgWOhIx+egGnh2+6mLsqjTy8MEqxL/XD0GA8tjX0IIVYTqDDnKaC3y21o3t8FWDxdvVW+
- XRxdb33l/tLwBKvwY4dRtWR9xqmfvzasDgVuhlaPQqWpfFMdxeNjPtaf96RPbZi4e21mJ2aNFyy
- QXKZhhBS8XZRCpVgd1/jktb1Jdf6cu5vxLJ6WZFraFjp+Pxk4eXCU2gtxasAJ/sp5LysKNVM6rh
- VOQjtA6UCcUoTYnCGKIcRjVvXAh4KUzRxeNTvmdPQaUJNE3agrGBRrb6XDG0zr1Aj5rhWBpGDz8
- VfsvNKbAJXonpz3H2dPX4WgUmU3hER
-X-Received: by 2002:a05:6000:24c8:b0:485:8c16:a33e with SMTP id
- ffacd0b85a97d-4858c16a715mr7847488f8f.51.1788584213323; 
- Fri, 04 Sep 2026 21:56:53 -0700 (PDT)
-X-Received: by 2002:a05:6000:24c8:b0:485:8c16:a33e with SMTP id
- ffacd0b85a97d-4858c16a715mr7847469f8f.51.1788584212887; 
- Fri, 04 Sep 2026 21:56:52 -0700 (PDT)
+ bh=NYNfR20/FO3Fhd77hXXx1jeRfJFM5ldPgCh815IwWoM=;
+ b=JNDyI4JhlNbjKadIwcVClf+yRzSMp8KLdY+LyoBrOVtsvO5VBRy3V3bIYh0Hzt2i3o
+ GaPcy2x+vrp/D8yyS+mVQpLMIybaTlUBMWtULAZqNTj/ziPYpXClp6xzUTQKJ6N7Q850
+ zAK8n+jfXxHJaJPtmDltoWgNQLzvtseRJU3JI/FGMBzsUMnqSGDWUQkyrMYl2u/jNd1J
+ FiVsCvPjJ+M2/f9XNxK+rieb6ElaXwUkngZOJUjALvlN8Nm+7g/I0wKPHQAQlwJisxx6
+ r0EfnB5XWUseIW9gOau+Gi7GwwQsD+RJqviNatdQ7KgUU3utgEDQ8JvycnzdsLNu/1Za
+ 3KjA==
+X-Gm-Message-State: AFuF++kqXnHfX1nheZ1hWEOl4HviRM/rQbrwq7mhCKkfUT9Zw82cP0Ng
+ YmAT5Q9WgPKYVxM02zJuXvj7QJWJhKd3uZxZXC7rpgbd7kwUzbbMp0aGHWYLmqxG7cXV66brD3Q
+ /CgUmnuKElEH+X8LWgacp8mW/JpvERt0dDytwthyn+T+knWmkcCO5sagT
+X-Gm-Gg: AYBFou2Kro95h/5lpDa+E2EJiRQgwF+yoWx/V+vIAO1SYo8/hSm035adP8Z4MWfVQU7
+ T243VbjSqRAx5Cw2op2qlgVmxlz1zkDFBYsbXzAD8B8vaipnygvU1emqhY2WNiuwG28QLI1l+wi
+ 7lH2A45Q20L5lYsHyjkhZTaD6SvvdkIa8WiuxFTJ4XVv2vr74jI+/lsAI29Wv8Q6iD9FZ8rTR2u
+ d9A1GnzoIm9IutdbfKXxYhPE5liY6+z1mQMHQRvGD9mW5nOQXIpZF2r8Nai8uaafToQdom/gyND
+ UpKBjQMzCx6PDjvX4VHNFbGoNv5sTcZmqpXKK7fg+lrmjWO54KNAk3D9SBPmc4tBEI5mHyEgEz7
+ MJsTgFUEKG+pwvwH6RkI0kBVEfMdxweBrkmH+OSJzOiAPJbKXQV41VQo4vo6O9jOLABQ3MagzDj
+ 3xGvRI0rVlkE9S+gFAqS/3/fk9TjVa
+X-Received: by 2002:a05:600c:8b6d:b0:499:a277:e8b5 with SMTP id
+ 5b1f17b1804b1-49cf7fdd67emr183062095e9.3.1788585424201; 
+ Fri, 04 Sep 2026 22:17:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b6d:b0:499:a277:e8b5 with SMTP id
+ 5b1f17b1804b1-49cf7fdd67emr183061735e9.3.1788585423837; 
+ Fri, 04 Sep 2026 22:17:03 -0700 (PDT)
 Received: from ?IPV6:2a01:cb06:c059:ed21:e577:db2a:8fd7:fd5f?
  (2a01cb06c059ed21e577db2a8fd7fd5f.ipv6.abo.wanadoo.fr.
  [2a01:cb06:c059:ed21:e577:db2a:8fd7:fd5f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485883c81c3sm10354913f8f.26.2026.09.04.21.56.48
+ 5b1f17b1804b1-49ce591f846sm113232415e9.1.2026.09.04.22.16.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Sep 2026 21:56:51 -0700 (PDT)
-Message-ID: <2bdc4c21-0f9f-4bb6-bec1-d44a6f6f1356@redhat.com>
-Date: Sat, 5 Sep 2026 06:56:46 +0200
+ Fri, 04 Sep 2026 22:17:02 -0700 (PDT)
+Message-ID: <887c7721-6c2b-45a6-8c12-d9f978f03551@redhat.com>
+Date: Sat, 5 Sep 2026 07:16:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] scripts/checkpatch: validate Fixes: tag format and
- commit ancestry
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>, Chao Liu <chao.liu@processmission.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20260806171333.328864-1-clg@redhat.com>
+Subject: Re: [PATCH v2 0/3] vfio-user: support multiple FDs backing region
+ mmaps
+To: Naman Gulati <namangulati@google.com>
+Cc: qemu-devel@nongnu.org, John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Alex Williamson <alex@shazbot.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matt Evans <matt@ozlabs.org>
+References: <20260826050039.2068138-1-namangulati@google.com>
+ <CAMP57yUuJUrpPtvf6Nf5SoDZ7Z+dfXFmHB-0AJ+vhzysjvgxYQ@mail.gmail.com>
+ <135d159a-2117-4595-ac6c-4d0ff4c843a9@redhat.com>
+ <CAMP57yXGDz+AM0C54MZKgYDCunWgZA2drCMaZddA5CGNsueDqA@mail.gmail.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,7 +147,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260806171333.328864-1-clg@redhat.com>
+In-Reply-To: <CAMP57yXGDz+AM0C54MZKgYDCunWgZA2drCMaZddA5CGNsueDqA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -171,158 +174,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Paolo, Marc-André fro possible Reviews,
+On 9/4/26 18:35, Naman Gulati wrote:
+> On Fri, Sep 4, 2026 at 5:38 AM Cédric Le Goater <clg@redhat.com> wrote:
+>>
+>> Hi Naman,
+>>
+>> Thanks for the series. However, the multiple FDs are a vfio-user
+>> transport detail. The core VFIO only needs to know "which fd to
+>> mmap for this subregion" and it doesn't need to manage arrays of
+>> FDs per region. So, I'd prefer :
+> 
+> Thanks for the review Cedric. That makes sense to me, I'll refactor accordingly.
+
+To help reviewers, please add to your .gitconfig :
+
+   [diff]
+       orderFile = /path/to/qemu/scripts/git.orderfile
 
 Thanks,
 
 C.
-
-On 8/6/26 19:13, Cédric Le Goater wrote:
-> Adapt the kernel's checkpatch Fixes: tag validation for QEMU.
-> 
-> Add a git_commit_info() helper to resolve commit hashes and validate
-> the Fixes: tag in commit messages. The canonical form is:
-> 
->    Fixes: <12+ chars of sha1> ("<title line>")
-> 
-> The check validates capitalization, spacing, hash length, lowercase
-> hex, and quoted title. When the format is wrong and the commit can
-> be resolved, suggest the corrected Fixes: line.
-> 
-> When running inside a git repository, also verify that the referenced
-> commit is an ancestor of master.
-> 
-> Lines matching "Fixes: CVE-*" are skipped. The check can be disabled
-> with --no-fixes-tag.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
-> 
->   Changes in v4:
->   - Added chomp to fix false positives
->   
->   Changes in v3:
->   - Dropped $git_command
->   - Modified git_commit_info() to use $! instead of parsing stderr when
->     calling git log
->   
->   Changes in v2:
->   - Introduced $git_command
-> 
->   scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 66 insertions(+)
-> 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 03f35e75012c8c7a00b67f036e4befb2ea162d4a..d9efade05386b3fb7647097cfe3b1256d7f24dda 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -21,6 +21,7 @@ use Getopt::Long qw(:config no_auto_abbrev);
->   my $quiet = 0;
->   my $tree = 1;
->   my $chk_signoff = 1;
-> +my $chk_fixes_tag = 1;
->   my $chk_patch = undef;
->   my $chk_branch = undef;
->   my $tst_only;
-> @@ -54,6 +55,7 @@ Options:
->     -q, --quiet                quiet
->     --no-tree                  run without a qemu tree
->     --no-signoff               do not check for 'Signed-off-by' line
-> +  --no-fixes-tag             do not check for 'Fixes:' tag
->     --patch                    treat FILE as patchfile
->     --branch                   treat args as GIT revision list
->     --emacs                    emacs compile window format
-> @@ -94,6 +96,7 @@ GetOptions(
->   	'q|quiet+'		=> \$quiet,
->   	'tree!'			=> \$tree,
->   	'signoff!'		=> \$chk_signoff,
-> +	'fixes-tag!'		=> \$chk_fixes_tag,
->   	'patch!'		=> \$chk_patch,
->   	'branch!'		=> \$chk_branch,
->   	'emacs!'		=> \$emacs,
-> @@ -441,6 +444,10 @@ sub build_types {
->   build_types();
->   
->   $chk_signoff = 0 if ($file);
-> +$chk_fixes_tag = 0 if ($file);
-> +
-> +my $gitroot = $ENV{'GIT_DIR'};
-> +$gitroot = ".git" if !defined($gitroot);
->   
->   my @rawlines = ();
->   my @lines = ();
-> @@ -561,6 +568,24 @@ sub which {
->   	return "";
->   }
->   
-> +sub git_commit_info {
-> +	my ($commit, $id, $desc) = @_;
-> +
-> +	return ($id, $desc) if ((which("git") eq "") || !(-e "$gitroot"));
-> +
-> +	my $output = `git log --no-color --format='%H %s' -1 $commit 2>/dev/null`;
-> +	if ($? != 0) {
-> +		$id = undef;
-> +	} else {
-> +		chomp $output;
-> +		$output =~ s/^\s*//gm;
-> +		$id = substr($output, 0, 12);
-> +		$desc = substr($output, 41);
-> +	}
-> +
-> +	return ($id, $desc);
-> +}
-> +
->   sub expand_tabs {
->   	my ($str) = @_;
->   
-> @@ -1811,6 +1836,47 @@ sub process {
->   			}
->   		}
->   
-> +# Check Fixes: tag format and commit validity
-> +		if ($chk_fixes_tag &&
-> +		    $line =~ /^\s*(fixes:?)\s*(?:commit\s*)?([0-9a-f]{5,40})\s*(.*)?/i) {
-> +			my $tag = $1;
-> +			my $orig_commit = $2;
-> +			my $title = $3;
-> +
-> +			if ($line !~ /^\s*Fixes:\s+CVE/i) {
-> +				my $tag_case = not ($tag eq "Fixes:");
-> +				my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40}/i);
-> +				my $id_length = not ($orig_commit =~ /^[0-9a-f]{12,40}$/);
-> +				my $id_case = not ($orig_commit !~ /[A-F]/);
-> +
-> +				my $id = "0123456789ab";
-> +				my $description = "commit title";
-> +				my $has_quotes = 0;
-> +
-> +				if (defined $title && $title =~ /^\("(.*?)"\)$/) {
-> +					$description = $1 if ($1);
-> +					$has_quotes = 1;
-> +				} elsif (defined $title && $title =~ /^\(?(.*?)\)?$/) {
-> +					$description = $1 if ($1);
-> +				}
-> +
-> +				my ($cid, $ctitle) = git_commit_info($orig_commit, $id, $description);
-> +
-> +				if (defined($cid) && ($ctitle ne $description || $tag_case || $tag_space || $id_length || $id_case || !$has_quotes)) {
-> +					my $fixed = "Fixes: $cid (\"$ctitle\")";
-> +					WARN("Please use correct Fixes: style 'Fixes: <12+ chars of sha1> (\"<title line>\")'" .
-> +						" - ie: '$fixed'\n" . $herecurr);
-> +				}
-> +				if (which("git") ne "" && -e "$gitroot") {
-> +					my $hash = defined($cid) ? $cid : $orig_commit;
-> +					`git merge-base --is-ancestor $hash master 2>/dev/null`;
-> +					if ($? != 0) {
-> +						WARN("Fixes: commit $hash is not an ancestor of master\n" . $herecurr);
-> +					}
-> +				}
-> +			}
-> +		}
-> +
->   # Check SPDX-License-Identifier references a permitted license
->   		if (($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) &&
->   			$rawline !~ /^-/) {
 
 
