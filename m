@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B60DC624D3
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 00:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148D1C79F82
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 00:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2eLN-0001Ir-1v; Fri, 04 Sep 2026 20:33:17 -0400
+	id 1x2eMO-00027J-HF; Fri, 04 Sep 2026 20:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1x2eLL-0001I1-8T; Fri, 04 Sep 2026 20:33:15 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1x2eMM-00026N-7T; Fri, 04 Sep 2026 20:34:18 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1x2eLJ-0007lT-Q1; Fri, 04 Sep 2026 20:33:15 -0400
+ id 1x2eMK-0007sO-OA; Fri, 04 Sep 2026 20:34:17 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 120A960229;
- Sat,  5 Sep 2026 00:33:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9134D1F00ACA;
- Sat,  5 Sep 2026 00:33:10 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 7016242E78;
+ Sat,  5 Sep 2026 00:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A491F00A3D;
+ Sat,  5 Sep 2026 00:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788568391;
- bh=EtiYYfM/EcQ2KnZhH1p8cbS/3nsIqanKx2W1nS5i9nc=;
+ s=k20260515; t=1788568455;
+ bh=kWPyQIPT8n/OhyIiTYG454zuQPoPbaEq+jZ7dxy7hgk=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=DHyLc6sjRIOUGuqAa7rboFxmMibhiyYIqxQBIq+8jw219NChgL6dn4fEEXyUkSWAq
- cpFVkTjIfTNjYVLWkV9P1FPE1NGX86yuam9UTgX2kuV+JT+sw/O0EoDKNL0f8SYOg/
- tEp5odXKX12yv4Ts1sZs/kvpLwSsSOEGYwWkGx7EGEhTuV8dEHjD3L0KCZqYj0RIdf
- MA8WLp6GmCm5HECamyMPPnVLEdO2ag7tQ5muAYfrQqYNQDEUWWLZl4oWsnSJKXc4jz
- 2M2hTOn5fj01l4EXAM7JjHAK616Do73NZe1Dr14isXan9K7dAITysoC00bNMtGEITy
- yY5H/MXb8yY7w==
-Message-ID: <822c1bcd-17c7-47d0-95df-4db9307916ef@kernel.org>
-Date: Sat, 5 Sep 2026 09:33:09 +0900
+ b=RQdtLATRB0DkA3v8CciZkTW3b+HWdjbGrcuO7uhmdcgJa4rhwItmPP7QCzVSE4rdq
+ nEEimtU/mbk8r27uZgjWSF9tFon3/BZbhwc468Zzrt1J8bquUvnRI/6jxOMyaUxbyL
+ zs+WYvoJIGcTh1v8wca1U92A2n+M3wxiWYokkm+GlAG9F8oCofChM3jed2fpytgHsX
+ NhahdYfwl4vpt02jqbj6rGBfZQEjAJPNZk2tWISgDRkxkNPMzxiEfao9XlrcH5w2Y1
+ D7cK7EOIk/iSC8BVBYzoJF5MffLVDvBwmy8GOP0MoRmOF4yeksBn6Wpm8JTcjUcXEY
+ 8GTnAQL7MszCA==
+Message-ID: <d27d262a-6504-4e18-8c7b-4a1bdd882e3d@kernel.org>
+Date: Sat, 5 Sep 2026 09:34:12 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/12] virtio-blk: check the write granularity of
- writes to sequential zones
+Subject: Re: [PATCH v3 06/12] hw/block: reject a zoned device whose write
+ pointers are unaddressable
 To: Niklas Cassel <cassel@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260904161801.1568841-1-cassel@kernel.org>
- <20260904161801.1568841-6-cassel@kernel.org>
+ <20260904161801.1568841-7-cassel@kernel.org>
 Content-Language: en-US
 From: Damien Le Moal <dlemoal@kernel.org>
 Organization: Western Digital Research
-In-Reply-To: <20260904161801.1568841-6-cassel@kernel.org>
+In-Reply-To: <20260904161801.1568841-7-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=dlemoal@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=dlemoal@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,22 +77,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/5/26 01:17, Niklas Cassel wrote:
-> All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
-> VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
-> that are multiples of the write granularity reported by the device
-> (virtio 1.4, 5.2.6.1), and a violation is reported as
-> VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
+> The write pointers of a zoned device outlive any particular use of it,
+> whether the device keeps them itself or a backend records them, while the
+> logical block size is a property of the frontend and is chosen afresh
+> every time the device is attached. Nothing ties the two together. A zone
+> written while the device was configured with logical_block_size=512
+> leaves a write pointer that is a multiple of 512, and attaching the same
+> device with logical_block_size=4096 makes that pointer unaddressable.
 > 
-> Neither request type was fully checked. Zone appends validated only the
-> offset, while writes were not checked at all.
+> Such a pointer is not merely misaligned. The guest addresses the device
+> in logical blocks, and a zone report expresses the write pointer in 512
+> byte sectors, so the guest is told about a position that does not fall on
+> a logical block boundary. It can neither read nor write there, and the
+> zone can only be recovered by resetting it. The reverse direction is
+> harmless: a pointer laid down with a larger logical block size is still a
+> multiple of a smaller one.
 > 
-> Check the size of the appended data, and both the offset and the size of
-> a write, against blkconf_zone_write_granularity(), so that every request the
-> device accepts is one that the guest driver was told is valid. Writes to
-> conventional zones keep no alignment constraint beyond the logical block
-> size. The write path performs the check after virtio_blk_sect_range_ok()
-> so that the zone index derived from the guest supplied sector is known to
-> be in range.
+> On a zoned null_blk device with a logical block size of 512, a 512 byte
+> append to a sequential zone leaves the write pointer half a logical block
+> into it:
+> 
+>   $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
+>         -c "zap -p 0x20000000 0x200" -c "zrp 0x20000000 1"
+>   start: 0x100000, len 0x80000, cap 0x80000, wptr 0x100001, zcond:2
+> 
+> Attaching that disk with logical_block_size=4096 handed the guest a zone
+> it could not write to.
+> 
+> Check at realize time that the zone size and every write pointer of a
+> sequential zone are multiples of the write granularity that the device is
+> about to report, and refuse to start otherwise. The write pointers are
+> already held in memory by the driver, so this costs no I/O.
+> 
+> The check uses blkconf_zone_write_granularity(), the same value that a
+> frontend reports to its guest and validates requests against, so the
+> three cannot disagree.
 > 
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
