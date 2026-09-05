@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03F3C624D3
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 17:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 412E3C79F94
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 17:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2uaN-0005J1-4S; Sat, 05 Sep 2026 13:53:51 -0400
+	id 1x2uaO-0005Jo-3a; Sat, 05 Sep 2026 13:53:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1x2uaJ-0005Ey-2B; Sat, 05 Sep 2026 13:53:47 -0400
+ id 1x2uaH-0005E1-4U; Sat, 05 Sep 2026 13:53:45 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1x2uaG-0008Jx-Vj; Sat, 05 Sep 2026 13:53:46 -0400
+ id 1x2uaE-0008I9-1h; Sat, 05 Sep 2026 13:53:44 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 0AA6C44793;
- Sat,  5 Sep 2026 17:53:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB64B1F00ADE;
+ by sea.source.kernel.org (Postfix) with ESMTP id CD6AF43E64;
+ Sat,  5 Sep 2026 17:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D53F1F00A3D;
  Sat,  5 Sep 2026 17:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
  s=k20260515; t=1788630812;
- bh=ai+qCKVGooyNyHPnec0n28qWkLpI/YR341Xh8tbfMVA=;
+ bh=nXZSXnMuGsLcEv+yuUu6nqHWYxfBU+FXG7tpegXc2q0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lN5bpN34Vo4ZAjzpDJ8XyoAHg0R12di3aeGoDmYSR1uNMg+dtCNlLTgUrNtd8YIPe
- 2WpsMTS14ojzZLeS1CmZqnaLxFGZot8AVJ7M8rhYuq86EnLwzvqpx4Evudl4G+kFCC
- YGGwz651Gc/i6DaVGvEvYbAcMyeZ6gsJEGhljnR6FTNipPl33381EoVTiGzG9KOLlf
- fSZ6AsFs5g9Vnr6XgXEFr8aMLXLmKplW1TlnRRZsPmip+ftojTLV+RJEPE1mYhl5F4
- 0uPC1rm7CoSY3MwjfWbXrNhFqjnXl7SUkg8tutiLmbQ9WZLROo4E2/y/flrdZRsxjg
- kq3qyyzyfpZpA==
+ b=HdFSPVFFh7WCXCORzRQ3WCtc+dEnY72RJI1VWbHZf0dmNc3/iqN40ZptjFT/F1fuS
+ BXSXI41qgKXQwDH3n4f34Jn9jW8CPGCRcB5KEZ4G91TTaw+KwNwy5tDEb+Ypgn5VIS
+ 8M/KZaRI6MpQSsOaxpwrvQDKjcWPp9yLqkhFK/EXtHtcUMWCDVkA8WuYpGo7yhTaM6
+ wyBh4pIuV9wHJpYjN9zxqgce6YVjTMW/HDwNaxxuUJoC2OATqLw+vRmNd/uFbBqhv4
+ DSxdMh4qDXjf8x4gvh0tpE9BkRScQtcGPlRPl6B1DPqy/lTHXP+uL4SRYB16rbCZ/P
+ 8iWredpcXujgw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99.5)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1x2ua2-0000000Bkrt-3BWb; Sat, 05 Sep 2026 19:53:30 +0200
+ id 1x2ua2-0000000Bkrh-2r4n; Sat, 05 Sep 2026 19:53:30 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>,
 	Igor Mammedov <imammedo@redhat.com>
@@ -43,11 +43,11 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-devel@nongnu.org,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  linux-edac@vger.kernel.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Ani Sinha <anisinha@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH 4/8] hw/i386: add GHES support at ICH9 and PIIX4 PM
-Date: Sat,  5 Sep 2026 19:53:24 +0200
-Message-ID: <b8649bce2afeef273880bac6c7a1dc4fa2d947d1.1788630333.git.mchehab+huawei@kernel.org>
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH 1/8] acpi_dev_interface: a ghes support state at
+ AcpiDeviceIfClass
+Date: Sat,  5 Sep 2026 19:53:21 +0200
+Message-ID: <28339fd62574150afe924b93c81f62bfaacb54b6.1788630333.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1788630333.git.mchehab+huawei@kernel.org>
 References: <cover.1788630333.git.mchehab+huawei@kernel.org>
@@ -77,180 +77,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enabling GHES support on x86 means that both PIIX4 and ICH9
-PM controllers need to expose ghes state.
+For x86, we'll need to have a way to detect if GHES is
+supported inside ICH9 and PIIX4 PM.
 
-Implement that, as suggested by Igor.
+Add an ancillary method at acpi_dev_interface to share
+information if ghes is supported on a common arch-independent
+place.
 
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250530164134.6c666b2e@imammedo.users.ipa.redhat.com/
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/ich9.c          | 19 +++++++++++++++++++
- hw/acpi/piix4.c         | 25 +++++++++++++++++++++++++
- hw/isa/lpc_ich9.c       |  6 ++++++
- include/hw/acpi/ich9.h  |  2 ++
- include/hw/acpi/piix4.h |  2 ++
- 5 files changed, 54 insertions(+)
+ hw/acpi/acpi_interface.c             |  7 +++++++
+ hw/acpi/generic_event_device.c       |  6 ++++++
+ hw/acpi/ghes.c                       | 30 +++++++++++++++++-----------
+ include/hw/acpi/acpi_dev_interface.h |  6 ++++++
+ 4 files changed, 37 insertions(+), 12 deletions(-)
 
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 5e8f8a7eafa3..7e2199891431 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -222,6 +222,24 @@ static const VMStateDescription vmstate_pcihp_state = {
-     }
- };
+diff --git a/hw/acpi/acpi_interface.c b/hw/acpi/acpi_interface.c
+index a44679017ead..bf11acfbb54b 100644
+--- a/hw/acpi/acpi_interface.c
++++ b/hw/acpi/acpi_interface.c
+@@ -3,6 +3,13 @@
+ #include "hw/acpi/acpi_aml_interface.h"
+ #include "qemu/module.h"
  
-+static bool ich9_hest_needed(void *opaque)
++AcpiGhesState *acpi_device_get_ghes_state(AcpiDeviceIf *adev)
 +{
-+    ICH9LPCPMRegs *pm = opaque;
++    AcpiDeviceIfClass *klass = ACPI_DEVICE_IF_GET_CLASS(adev);
 +
-+    return pm->ghes_state.hest_addr_le != 0;
++    return klass->get_ghes_state ? klass->get_ghes_state(adev) : NULL;
 +}
 +
-+static const VMStateDescription vmstate_ich9_hest = {
-+    .name = "ich9_pm/hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = ich9_hest_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(ghes_state.hest_addr_le, ICH9LPCPMRegs),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VMStateDescription vmstate_ich9_pm = {
-     .name = "ich9_pm",
-     .version_id = 1,
-@@ -244,6 +262,7 @@ const VMStateDescription vmstate_ich9_pm = {
-         &vmstate_tco_io_state,
-         &vmstate_cpuhp_state,
-         &vmstate_pcihp_state,
-+        &vmstate_ich9_hest,
-         NULL
-     }
- };
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index 9b7f50c7afac..48fa833c66ef 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -224,6 +224,24 @@ static bool vmstate_test_migrate_acpi_index(void *opaque, int version_id)
-            !s->not_migrate_acpi_index;
- }
- 
-+static bool piix4_hest_needed(void *opaque)
-+{
-+    PIIX4PMState *s = opaque;
-+
-+    return s->ghes_state.hest_addr_le != 0;
-+}
-+
-+static const VMStateDescription vmstate_piix4_hest = {
-+    .name = "piix4_pm/hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = piix4_hest_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(ghes_state.hest_addr_le, PIIX4PMState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- /* qemu-kvm 1.2 uses version 3 but advertised as 2
-  * To support incoming qemu-kvm 1.2 migration, change version_id
-  * and minimum_version_id to 2 below (which breaks migration from
-@@ -259,6 +277,7 @@ static const VMStateDescription vmstate_acpi = {
-     .subsections = (const VMStateDescription * const []) {
-          &vmstate_memhp_state,
-          &vmstate_cpuhp_state,
-+         &vmstate_piix4_hest,
-          NULL
-     }
- };
-@@ -551,6 +570,11 @@ static void piix4_ospm_status(AcpiDeviceIf *adev, ACPIOSTInfoList ***list)
+ static void register_types(void)
+ {
+     static const TypeInfo acpi_dev_if_info = {
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 9e9416d4067d..2c5abe2a54f5 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -322,6 +322,11 @@ static void acpi_ged_ospm_status(AcpiDeviceIf *adev, ACPIOSTInfoList ***list)
      acpi_cpu_ospm_status(&s->cpuhp_state, list);
  }
  
-+static AcpiGhesState *piix4_get_ghes_state(AcpiDeviceIf *adev)
++static AcpiGhesState *acpi_ged_get_ghes_state(AcpiDeviceIf *adev)
 +{
-+    return &PIIX4_PM(adev)->ghes_state;
++    return &ACPI_GED(adev)->ghes_state;
 +}
 +
- static void piix4_send_gpe(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
  {
-     PIIX4PMState *s = PIIX4_PM(adev);
-@@ -607,6 +631,7 @@ static void piix4_pm_class_init(ObjectClass *klass, const void *data)
-     hc->is_hotpluggable_bus = piix4_is_hotpluggable_bus;
-     adevc->ospm_status = piix4_ospm_status;
-     adevc->send_event = piix4_send_gpe;
-+    adevc->get_ghes_state = piix4_get_ghes_state;
+     AcpiGedState *s = ACPI_GED(adev);
+@@ -608,6 +613,7 @@ static void acpi_ged_class_init(ObjectClass *class, const void *data)
+ 
+     adevc->ospm_status = acpi_ged_ospm_status;
+     adevc->send_event = acpi_ged_send_event;
++    adevc->get_ghes_state = acpi_ged_get_ghes_state;
  }
  
- static const TypeInfo piix4_pm_info = {
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index edf9783ec8d4..00d940f16314 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -847,6 +847,11 @@ static const Property ich9_lpc_properties[] = {
-                      pm.periodic_timer_enabled, true),
+ static const TypeInfo acpi_ged_info = {
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index b2d5e3499320..3989fd4d7e91 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -24,7 +24,7 @@
+ #include "hw/acpi/ghes.h"
+ #include "hw/acpi/aml-build.h"
+ #include "qemu/error-report.h"
+-#include "hw/acpi/generic_event_device.h"
++#include "hw/acpi/acpi_dev_interface.h"
+ #include "hw/nvram/fw_cfg.h"
+ #include "qemu/uuid.h"
+ #include "exec/cpu-common.h"
+@@ -587,21 +587,27 @@ bool acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+                                    source_id, errp);
+ }
+ 
+-AcpiGhesState *acpi_ghes_get_state(void)
++static int acpi_ghes_find_state(Object *obj, void *opaque)
+ {
+-    AcpiGedState *acpi_ged_state;
++    Object *adev = object_dynamic_cast(obj, TYPE_ACPI_DEVICE_IF);
+     AcpiGhesState *ags;
+ 
+-    acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+-                                                       NULL));
+-
+-    if (!acpi_ged_state) {
+-        return NULL;
++    if (!adev) {
++        return 0;
+     }
+-    ags = &acpi_ged_state->ghes_state;
+-
+-    if (!ags->hw_error_le && !ags->hest_addr_le) {
+-        return NULL;
++    ags = acpi_device_get_ghes_state(ACPI_DEVICE_IF(adev));
++    if (!ags || (!ags->hw_error_le && !ags->hest_addr_le)) {
++        return 0;
+     }
++    *(AcpiGhesState **)opaque = ags;
++    return 1;
++}
++
++AcpiGhesState *acpi_ghes_get_state(void)
++{
++    AcpiGhesState *ags = NULL;
++
++    object_child_foreach_recursive(object_get_root(), acpi_ghes_find_state,
++                                   &ags);
+     return ags;
+ }
+diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+index 65debb90a8d4..644e0006ff6a 100644
+--- a/include/hw/acpi/acpi_dev_interface.h
++++ b/include/hw/acpi/acpi_dev_interface.h
+@@ -26,6 +26,7 @@ DECLARE_CLASS_CHECKERS(AcpiDeviceIfClass, ACPI_DEVICE_IF,
+                      TYPE_ACPI_DEVICE_IF)
+ 
+ typedef struct AcpiDeviceIf AcpiDeviceIf;
++typedef struct AcpiGhesState AcpiGhesState;
+ 
+ /**
+  * AcpiDeviceIfClass:
+@@ -33,6 +34,7 @@ typedef struct AcpiDeviceIf AcpiDeviceIf;
+  * ospm_status: returns status of ACPI device objects, reported
+  *              via _OST method if device supports it.
+  * send_event: inject a specified event into guest
++ * get_ghes_state: returns the controller's GHES state, if supported
+  * madt_cpu: fills @entry with Interrupt Controller Structure
+  *           for CPU indexed by @uid in @apic_ids array,
+  *           returned structure types are:
+@@ -50,5 +52,9 @@ struct AcpiDeviceIfClass {
+     /* <public> */
+     void (*ospm_status)(AcpiDeviceIf *adev, ACPIOSTInfoList ***list);
+     void (*send_event)(AcpiDeviceIf *adev, AcpiEventStatusBits ev);
++
++    AcpiGhesState *(*get_ghes_state)(AcpiDeviceIf *adev);
  };
- 
-+static AcpiGhesState *ich9_get_ghes_state(AcpiDeviceIf *adev)
-+{
-+    return &ICH9_LPC_DEVICE(adev)->pm.ghes_state;
-+}
 +
- static void ich9_send_gpe(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
- {
-     ICH9LPCState *s = ICH9_LPC_DEVICE(adev);
-@@ -911,6 +916,7 @@ static void ich9_lpc_class_init(ObjectClass *klass, const void *data)
-     hc->is_hotpluggable_bus = ich9_pm_is_hotpluggable_bus;
-     adevc->ospm_status = ich9_pm_ospm_status;
-     adevc->send_event = ich9_send_gpe;
-+    adevc->get_ghes_state = ich9_get_ghes_state;
-     amldevc->build_dev_aml = build_ich9_isa_aml;
- }
- 
-diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-index 30990fcef53f..772f1a8937d7 100644
---- a/include/hw/acpi/ich9.h
-+++ b/include/hw/acpi/ich9.h
-@@ -27,6 +27,7 @@
- #include "hw/acpi/memory_hotplug.h"
- #include "hw/acpi/acpi_dev_interface.h"
- #include "hw/acpi/ich9_tco.h"
-+#include "hw/acpi/ghes.h"
- #include "hw/acpi/cpu.h"
- 
- #define ACPI_PCIHP_ADDR_ICH9 0x0cc0
-@@ -38,6 +39,7 @@ typedef struct ICH9LPCPMRegs {
-      * PM1a_CNT_BLK = 2 in FADT so it is defined as uint16_t.
-      */
-     ACPIREGS acpi_regs;
-+    AcpiGhesState ghes_state;
- 
-     MemoryRegion io;
-     MemoryRegion io_gpe;
-diff --git a/include/hw/acpi/piix4.h b/include/hw/acpi/piix4.h
-index 863382a814ad..8732574e9c03 100644
---- a/include/hw/acpi/piix4.h
-+++ b/include/hw/acpi/piix4.h
-@@ -29,6 +29,7 @@
- #include "hw/i2c/pm_smbus.h"
- #include "hw/isa/apm.h"
- #include "hw/acpi/cpu.h"
-+#include "hw/acpi/ghes.h"
- 
- #define TYPE_PIIX4_PM "PIIX4_PM"
- OBJECT_DECLARE_SIMPLE_TYPE(PIIX4PMState, PIIX4_PM)
-@@ -43,6 +44,7 @@ struct PIIX4PMState {
- 
-     MemoryRegion io_gpe;
-     ACPIREGS ar;
-+    AcpiGhesState ghes_state;
- 
-     APMState apm;
- 
++AcpiGhesState *acpi_device_get_ghes_state(AcpiDeviceIf *adev);
+ #endif
 -- 
 2.55.0
 
