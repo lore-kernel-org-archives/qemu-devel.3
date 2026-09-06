@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA01C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32206C79F8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3FsY-0002tq-1T; Sun, 06 Sep 2026 12:38:02 -0400
+	id 1x3Fsd-0002yw-1c; Sun, 06 Sep 2026 12:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsW-0002rk-5K; Sun, 06 Sep 2026 12:38:00 -0400
-Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
+ id 1x3FsZ-0002wg-PY; Sun, 06 Sep 2026 12:38:03 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsQ-00034r-1T; Sun, 06 Sep 2026 12:37:59 -0400
+ id 1x3FsP-00033j-2o; Sun, 06 Sep 2026 12:38:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1788712661; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=viOOe7smLkpWORSnnyjZ7fkNNcWDtL6fhqM5XkykUVY=;
- b=iWT5ke6zr0qxKa9MuZX8WBjcuTl4Ec/ebltXWepFRbzXeJs2VcQsZMo7Kr3OuKx44GWDULzl77TQT0V4IqG2mP4UHGnFD1b2qS75HEGJ7rCZvN5VEFDkre0Iw5Wb/e0LL5z6CDB8GRsjPX/gMfVDsXkGvO2wTP4nUAHxTImofwM=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ t=1788712655; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=waY5yx8GQpkd/QlH6r0keWNmP1y1xKVsntWQ9/jG6as=;
+ b=CgPkvcHX6pdst/M0w3knMcTukODSoV6Gv/+IV2WQW4B9uEo9e1FRml0kq2gWNW6lk0CyhhMmSwze6lRaB68TqTv28oXdYsPjernw2tveGqu0Q44QFfa6W+eJoY5MhmLD1YdfBIgXrXn4UuRGIlIdB7k+JLN7TaE4n2e0N6K6XIk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R961e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XANKIKw_1788712659; 
+ TI=SMTPD_---0XANKIJ7_1788712653; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XANKIKw_1788712659 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 07 Sep 2026 00:37:39 +0800
+ fp:SMTPD_---0XANKIJ7_1788712653 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 07 Sep 2026 00:37:34 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Mon, 07 Sep 2026 00:37:30 +0800
-Subject: [PATCH 14/14] target/riscv: Preserve fixed PMU state across reset
+Date: Mon, 07 Sep 2026 00:37:22 +0800
+Subject: [PATCH 06/14] target/riscv: Fix RV32 accesses to delegated PMU
+ registers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-riscv-pmu-correctness-v1-14-5f1f41458989@linux.alibaba.com>
+Message-Id: <20260907-riscv-pmu-correctness-v1-6-5f1f41458989@linux.alibaba.com>
 References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
 In-Reply-To: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -52,17 +53,17 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=7074;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=20779;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=2enD98ZE6bl3nA0tsxaYMcS19QEg1Xx+ZgF2vOA5LYM=;
- b=R073xL1WvFir862XvJDQhJiTfXD07OyvVjhsl3n3xmUd63ApkQRcVFIX8EVV0y2oscdO9gOoT
- W4H0LKmiPbcBxZd9iQGnfTDP/g2BSrsG+VlOehCrFOGvGe7qp4SaKgc
+ bh=OdgJvva4rE/W6mRjxi/71pHc3YXppF1NxJk3kd8P5Mw=;
+ b=YXTIZhHrIvKll3MB0C8MkB7I+UB9J6FvcTXOMRazhvjQ/L3jd5FsC+jVWwDYxe2RaDVbas7sM
+ aiV3ItZRLgBBobMu2tDys/6N4AT/mmC4MhdY/3K/LNWPJVMI92iu/94
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
-Received-SPF: pass client-ip=115.124.30.110;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
  envelope-from=lyndra@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
+ helo=out30-111.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -86,216 +87,636 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Privilege filtering records cycle/instruction increments per mode. Reset
-overwrites privilege/V without adding the final interval to the old
-mode's total, so a counter filtering for that mode loses those counts.
+Delegated PMU writes compare the full-write mask with -1 in its C type,
+rejecting valid RV32 writes. Counter widths and high-half access checks
+also use MXLEN, so RV32 S-mode on an RV64 CPU cannot access the high half
+and low-half counter writes overwrite all 64 bits.
 
-Account for the old mode before entering M-mode with V=0 and rebuild the
-overflow timer after reset. On initial reset, only initialize baselines:
-no guest code has run, so pre-execution QEMU time must not count.
-Preserve architectural counter and selector state, as before.
+Use the current XLEN for delegated masks, counter widths and high-half
+checks, as required by Smcsrind. Keep MXLEN for direct counter accesses
+and retain the 64-bit selector merge mask to preserve the unwritten half.
 
-Test that a VS-only cycle counter retains its counts across reset.
+Test RV32 CPUs in both system emulators and RV32 S-mode on an RV64 CPU,
+including half preservation, machine MINH and RV64 M-mode alias accesses.
 
+Fixes: 6247dc2ef70b ("target/riscv: Add counter delegation/configuration support")
+Fixes: c9efdb7b63a4 ("target/riscv: Combine mhpmevent and mhpmeventh")
+Link: https://docs.riscv.org/reference/isa/v20260120/priv/indirect-csr.html
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/cpu.c                        |  16 +++++
- target/riscv/tcg/pmu.c                    |  11 ++++
- target/riscv/tcg/pmu.h                    |   1 +
- tests/tcg/riscv64/Makefile.softmmu-target |   6 ++
- tests/tcg/riscv64/pmu-reset-vs.S          | 102 ++++++++++++++++++++++++++++++
- 5 files changed, 136 insertions(+)
+ target/riscv/tcg/csr.c                    |  43 +++---
+ target/riscv/tcg/pmu.c                    |   6 +-
+ target/riscv/tcg/pmu.h                    |   3 +-
+ tests/tcg/riscv32/Makefile.softmmu-target |   8 ++
+ tests/tcg/riscv32/smcdeleg-counter-rv32.S |  84 ++++++++++++
+ tests/tcg/riscv32/smcdeleg-event-rv32.S   |  69 ++++++++++
+ tests/tcg/riscv64/Makefile.softmmu-target |  25 ++++
+ tests/tcg/riscv64/smcdeleg-sxl32.S        | 219 ++++++++++++++++++++++++++++++
+ 8 files changed, 434 insertions(+), 23 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index b7ce3ebd45d8467464654a8b8560e88deeea4ff9..4355f72cdfda41ab4e9678a066821c0f410fe17c 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -42,6 +42,9 @@
- #include "disas/capstone.h"
- #if !defined(CONFIG_USER_ONLY)
- #include "target/riscv/tcg/debug.h"
-+#ifdef CONFIG_TCG
-+#include "target/riscv/tcg/pmu.h"
-+#endif
- #endif
- 
- /* RISC-V CPU definitions */
-@@ -979,6 +982,16 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
-     }
- #ifndef CONFIG_USER_ONLY
-     env->misa_mxl = mcc->def->misa_mxl_max;
-+#ifdef CONFIG_TCG
-+    /* The initial reset has no guest execution to count. */
-+    if (tcg_enabled()) {
-+        if (qdev_is_realized(DEVICE(cpu))) {
-+            riscv_pmu_update_fixed_ctrs(env, PRV_M, false);
-+        } else {
-+            riscv_pmu_init_fixed_counter_baselines(env);
-+        }
-+    }
-+#endif
-     env->priv = PRV_M;
-     env->virt_enabled = false;
-     env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
-@@ -1092,6 +1105,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
- 
- #ifndef CONFIG_USER_ONLY
- #ifdef CONFIG_TCG
-+    if (tcg_enabled()) {
-+        riscv_pmu_rebuild_timer(env);
-+    }
-     if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
-         riscv_trigger_reset_hold(env);
-     }
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index df99b572a4c16cb1ac65c2f7cde35c6f8349e681..1d692a0a8e3f7759e033214d579103627d070b5b 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -171,6 +171,17 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
-     riscv_pmu_update_fixed_ctrs_snapshot(env, newpriv, new_virt, &snapshot);
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index f9f43a9c12e1afdbdf6c7202c167988389963c10..d72368ccb5a1bd5f26a20b8e4a3c214b842afba6 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1357,10 +1357,10 @@ static uint64_t riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
  }
  
-+void riscv_pmu_init_fixed_counter_baselines(CPURISCVState *env)
-+{
-+    RISCVPMUFixedSnapshot snapshot;
+ static RISCVException riscv_pmu_write_ctr(CPURISCVState *env, target_ulong val,
+-                                          uint32_t ctr_idx)
++                                          uint32_t ctr_idx, RISCVMXL xl)
+ {
+     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
+-    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
++    bool rv32 = xl == MXL_RV32;
+     int deposit_size = rv32 ? 32 : 64;
+     uint64_t ctr;
+ 
+@@ -1418,7 +1418,7 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
+ {
+     int ctr_idx = csrno - CSR_MCYCLE;
+ 
+-    return riscv_pmu_write_ctr(env, val, ctr_idx);
++    return riscv_pmu_write_ctr(env, val, ctr_idx, riscv_cpu_mxl(env));
+ }
+ 
+ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
+@@ -1430,10 +1430,11 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
+ }
+ 
+ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+-                                  bool upper_half, uint32_t ctr_idx)
++                                  bool upper_half, uint32_t ctr_idx,
++                                  RISCVMXL xl)
+ {
+     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
+-    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
++    bool rv32 = xl == MXL_RV32;
+     int start = upper_half ? 32 : 0;
+     int length = rv32 ? 32 : 64;
+     uint64_t ctr_val;
+@@ -1482,7 +1483,7 @@ static RISCVException read_hpmcounter(CPURISCVState *env, int csrno,
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
+-    return riscv_pmu_read_ctr(env, val, false, ctr_index);
++    return riscv_pmu_read_ctr(env, val, false, ctr_index, riscv_cpu_mxl(env));
+ }
+ 
+ static RISCVException read_hpmcounterh(CPURISCVState *env, int csrno,
+@@ -1498,21 +1499,23 @@ static RISCVException read_hpmcounterh(CPURISCVState *env, int csrno,
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
+-    return riscv_pmu_read_ctr(env, val, true, ctr_index);
++    return riscv_pmu_read_ctr(env, val, true, ctr_index, riscv_cpu_mxl(env));
+ }
+ 
+ static int rmw_cd_mhpmcounter(CPURISCVState *env, int ctr_idx,
+                               target_ulong *val, target_ulong new_val,
+                               target_ulong wr_mask)
+ {
+-    if (wr_mask != 0 && wr_mask != -1) {
++    uint64_t xlen_mask = env->xl == MXL_RV32 ? UINT32_MAX : UINT64_MAX;
 +
-+    riscv_pmu_take_fixed_snapshot(env, &snapshot);
-+    env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_CYCLE]
-+        .counter_prev[PRV_M] = snapshot.cycle;
-+    env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_INSTRET]
-+        .counter_prev[PRV_M] = snapshot.instret;
-+}
++    if (wr_mask != 0 && wr_mask != xlen_mask) {
+         return -EINVAL;
+     }
+ 
+     if (!wr_mask && val) {
+-        riscv_pmu_read_ctr(env, val, false, ctr_idx);
++        riscv_pmu_read_ctr(env, val, false, ctr_idx, env->xl);
+     } else if (wr_mask) {
+-        riscv_pmu_write_ctr(env, new_val, ctr_idx);
++        riscv_pmu_write_ctr(env, new_val, ctr_idx, env->xl);
+     } else {
+         return -EINVAL;
+     }
+@@ -1524,12 +1527,14 @@ static int rmw_cd_mhpmcounterh(CPURISCVState *env, int ctr_idx,
+                                target_ulong *val, target_ulong new_val,
+                                target_ulong wr_mask)
+ {
+-    if (wr_mask != 0 && wr_mask != -1) {
++    uint64_t xlen_mask = env->xl == MXL_RV32 ? UINT32_MAX : UINT64_MAX;
 +
- uint64_t
- riscv_pmu_ctr_get_fixed_value(CPURISCVState *env, uint32_t ctr_idx,
-                               const RISCVPMUFixedSnapshot *snapshot)
++    if (wr_mask != 0 && wr_mask != xlen_mask) {
+         return -EINVAL;
+     }
+ 
+     if (!wr_mask && val) {
+-        riscv_pmu_read_ctr(env, val, true, ctr_idx);
++        riscv_pmu_read_ctr(env, val, true, ctr_idx, env->xl);
+     } else if (wr_mask) {
+         riscv_pmu_write_ctrh(env, new_val, ctr_idx);
+     } else {
+@@ -1544,8 +1549,9 @@ static int rmw_cd_mhpmevent(CPURISCVState *env, int ctr_idx,
+                             uint64_t wr_mask)
+ {
+     uint64_t mhpmevt_val = env->mhpmevent_val[ctr_idx];
++    uint64_t xlen_mask = env->xl == MXL_RV32 ? UINT32_MAX : UINT64_MAX;
+ 
+-    if (wr_mask != 0 && wr_mask != -1) {
++    if (wr_mask != 0 && wr_mask != xlen_mask) {
+         return -EINVAL;
+     }
+ 
+@@ -1572,8 +1578,9 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, int ctr_idx,
+ {
+     uint64_t mhpmevt_val = env->mhpmevent_val[ctr_idx];
+     uint32_t mhpmevth_val = extract64(mhpmevt_val, 32, 32);
++    uint64_t xlen_mask = env->xl == MXL_RV32 ? UINT32_MAX : UINT64_MAX;
+ 
+-    if (wr_mask != 0 && wr_mask != -1) {
++    if (wr_mask != 0 && wr_mask != xlen_mask) {
+         return -EINVAL;
+     }
+ 
+@@ -1630,10 +1637,6 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
+ {
+     uint64_t cfgh;
+ 
+-    if (riscv_cpu_mxl(env) != MXL_RV32) {
+-        return RISCV_EXCP_ILLEGAL_INST;
+-    }
+-
+     switch (cfg_index) {
+     case 0:         /* CYCLECFGH */
+         cfgh = extract64(env->mcyclecfg, 32, 32);
+@@ -2809,9 +2812,9 @@ static int rmw_xireg_cd(CPURISCVState *env, int csrno,
+         goto done;
+     }
+ 
+-    /* sireg4 and sireg5 provides access RV32 only CSRs */
++    /* Delegated high halves are accessible only when the current XLEN is 32. */
+     if (((csrno == CSR_SIREG5) || (csrno == CSR_SIREG4)) &&
+-        (riscv_cpu_mxl(env) != MXL_RV32)) {
++        env->xl != MXL_RV32) {
+         ret = RISCV_EXCP_ILLEGAL_INST;
+         goto done;
+     }
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index ea0ffe41258d4dbef9dc952655e6301c14ba1d23..54fff2ba49c1034d5fa6db1c7b19ff59003cd1e1 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -372,10 +372,12 @@ static void pmu_timer_trigger_irq_counter(RISCVCPU *cpu, uint32_t ctr_idx)
+         return;
+     }
+ 
+-    riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctr_val, false, ctr_idx);
++    riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctr_val, false, ctr_idx,
++                        riscv_cpu_mxl(env));
+     ctr_val = counter->mhpmcounter_val;
+     if (riscv_cpu_mxl(env) == MXL_RV32) {
+-        riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctrh_val, true, ctr_idx);
++        riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctrh_val, true, ctr_idx,
++                            riscv_cpu_mxl(env));
+         curr_ctr_val = curr_ctr_val | (curr_ctrh_val << 32);
+     }
+ 
 diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
-index 1cfe6acf55b5468f5c00c4a136ece88981384341..fac84dbb1a8a6c637f7241ca27910e5e212223e9 100644
+index 339a4b3ac09c4a91cddd9250824284203b16b4fa..bf2e8373474d471d914f8801c55d2f6ffbb5cdd3 100644
 --- a/target/riscv/tcg/pmu.h
 +++ b/target/riscv/tcg/pmu.h
-@@ -53,6 +53,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
- void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
+@@ -38,6 +38,7 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
                                   bool new_virt);
-+void riscv_pmu_init_fixed_counter_baselines(CPURISCVState *env);
  void riscv_pmu_decr_instret(CPURISCVState *env);
  RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-                                   bool upper_half, uint32_t ctr_idx,
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index deb44ece5feeb13756f9f3abcd38258d75bd9ba1..ef7641b16deb449e3a84e429dfca998dbd63a54e 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -95,6 +95,12 @@ TESTS += pmu-cycle-controls
- run-pmu-cycle-controls: pmu-cycle-controls
- 	$(call run-test, $<, $(QEMU) -cpu max -icount shift=0 $(QEMU_OPTS)$<)
+-                                  bool upper_half, uint32_t ctr_idx);
++                                  bool upper_half, uint32_t ctr_idx,
++                                  RISCVMXL xl);
  
-+TESTS += pmu-reset-vs
-+run-pmu-reset-vs: pmu-reset-vs
-+	$(call run-test, $<, $(QEMU) -M virt -bios none -kernel $< \
-+		-display none -semihosting -cpu max$(COMMA)smcntrpmf=true \
-+		-icount shift=0)
+ #endif /* RISCV_PMU_H */
+diff --git a/tests/tcg/riscv32/Makefile.softmmu-target b/tests/tcg/riscv32/Makefile.softmmu-target
+index 43c162fd337f7b0d5d3e4dedb3f5b06b2821fd88..1316eadc033f15af819eae4416c0d37494fb3184 100644
+--- a/tests/tcg/riscv32/Makefile.softmmu-target
++++ b/tests/tcg/riscv32/Makefile.softmmu-target
+@@ -24,3 +24,11 @@ run-smcdeleg-minh-rv32: smcdeleg-minh-rv32
+ TESTS += pmu-minstretcfg-rv32
+ run-pmu-minstretcfg-rv32: pmu-minstretcfg-rv32
+ 	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
 +
- EXTRA_RUNS += run-plugin-doubletrap
- run-plugin-doubletrap: doubletrap
- 	$(call run-test, $<, \
-diff --git a/tests/tcg/riscv64/pmu-reset-vs.S b/tests/tcg/riscv64/pmu-reset-vs.S
++TESTS += smcdeleg-event-rv32
++run-smcdeleg-event-rv32: smcdeleg-event-rv32
++	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
++
++TESTS += smcdeleg-counter-rv32
++run-smcdeleg-counter-rv32: smcdeleg-counter-rv32
++	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
+diff --git a/tests/tcg/riscv32/smcdeleg-counter-rv32.S b/tests/tcg/riscv32/smcdeleg-counter-rv32.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..856ca003fa1115fdba5e789128aa1d6fd0f950b6
+index 0000000000000000000000000000000000000000..1f130f316e95dcbbb9aeee06001553a7fe8ae46d
 --- /dev/null
-+++ b/tests/tcg/riscv64/pmu-reset-vs.S
-@@ -0,0 +1,102 @@
++++ b/tests/tcg/riscv32/smcdeleg-counter-rv32.S
+@@ -0,0 +1,84 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/* RV32 delegated counter accesses must also work in the RV64 emulator. */
 +
 +	.option	norvc
 +	.option	norelax
 +
-+	.equ	MSTATUS_MPP_S,  (1 << 11)
-+	.equ	MSTATUS_MPP,    (3 << 11)
-+	.equ	MSTATUS_SPP,    (1 << 8)
-+	.equ	HSTATUS_SPV,    (1 << 7)
-+	.equ	SIFIVE_TEST,    0x100000
-+	.equ	MTIMECMP,       0x2004000
-+	.equ	FINISHER_RESET, 0x7777
++	.text
++	.global _start
++_start:
++	/* Unexpected exceptions report the current check number. */
++	li	t4, 1
++	lla	t0, fail
++	csrw	mtvec, t0
++	li	t0, 8			/* Stop HPM3 so reads are exact. */
++	csrw	mcountinhibit, t0
++	csrw	mcounteren, t0
++	li	t0, 1 << 28		/* menvcfgh.CDE */
++	csrw	0x31a, t0
++	li	t0, 0x43		/* siselect: counter 3 */
++	csrw	0x150, t0
++	li	t0, 0x12345678
++	csrw	0xb83, t0		/* mhpmcounter3h */
++	li	t0, 1			/* HW_CPU_CYCLES */
++	csrw	0x323, t0
++	li	t0, 0xc0000000		/* OF | MINH */
++	csrw	0x723, t0
++
++	/* sireg writes the low half without changing the high half. */
++	li	t0, 0x2468ace0
++	csrw	0x151, t0
++	csrr	t1, 0x151
++	bne	t0, t1, fail
++	csrr	t1, 0xb03
++	bne	t0, t1, fail
++	li	t0, 0x12345678
++	csrr	t1, 0xb83
++	bne	t0, t1, fail
++
++	/* sireg4 writes the high half without changing the low half. */
++	li	t4, 2
++	li	t0, 0xfedcba98
++	csrw	0x155, t0
++	csrr	t1, 0x155
++	bne	t0, t1, fail
++	csrr	t1, 0xb83
++	bne	t0, t1, fail
++	li	t0, 0x2468ace0
++	csrr	t1, 0xb03
++	bne	t0, t1, fail
++
++	/* sireg5 clears OF and sets SINH, but cannot change machine MINH. */
++	li	t4, 3
++	li	t0, 0x20000000		/* SINH */
++	csrw	0x156, t0
++	csrr	t1, 0x156
++	bne	t0, t1, fail
++	li	t0, 0x60000000		/* MINH | SINH */
++	csrr	t1, 0x723
++	bne	t0, t1, fail
++	li	t0, 1
++	csrr	t1, 0x323
++	bne	t0, t1, fail
++
++	/* sireg2 changes the event without changing those high-half bits. */
++	li	t4, 4
++	li	t0, 2			/* HW_INSTRUCTIONS */
++	csrw	0x152, t0
++	csrr	t1, 0x323
++	bne	t0, t1, fail
++	li	t0, 0x60000000
++	csrr	t1, 0x723
++	bne	t0, t1, fail
++
++	li	t0, 0x5555		/* FINISHER_PASS */
++	j	finish
++fail:
++	slli	t0, t4, 16
++	li	t1, 0x3333		/* FINISHER_FAIL with check number */
++	or	t0, t0, t1
++finish:
++	li	t1, 0x100000		/* virt test device */
++	sw	t0, 0(t1)
++	j	.
+diff --git a/tests/tcg/riscv32/smcdeleg-event-rv32.S b/tests/tcg/riscv32/smcdeleg-event-rv32.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..ee3063a7f5486e7fac53e6035f63fe2d9826611c
+--- /dev/null
++++ b/tests/tcg/riscv32/smcdeleg-event-rv32.S
+@@ -0,0 +1,69 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/* RV32 sireg2 writes replace only the low half of a delegated selector. */
++
++	.option	norvc
++	.option	norelax
 +
 +	.text
 +	.global _start
 +_start:
-+	/* MTIMECMP retains the marker and saved count across the RAM reload. */
-+	li	t0, MTIMECMP
-+	ld	t1, 0(t0)
-+	srli	t2, t1, 48
-+	li	t3, 0xa5a5
-+	beq	t2, t3, after_reset
++	/* Any unexpected exception fails with the current check number. */
++	li	t4, 1
++	lla	t0, exit
++	csrw	mtvec, t0
++	li	t0, 8			/* mcountinhibit.HPM3 */
++	csrs	mcountinhibit, t0
++	li	t0, 0xe0000000		/* OF | MINH | SINH */
++	csrw	0x723, t0		/* mhpmevent3h */
++	li	t0, 1			/* HW_CPU_CYCLES */
++	csrw	0x323, t0		/* mhpmevent3 */
 +
-+	/* Count VS only, then remember the value before entering VS-mode. */
-+	li	t0, 0x1d		/* MINH | SINH | UINH | VUINH */
-+	slli	t0, t0, 58
-+	csrw	0x321, t0		/* mcyclecfg */
-+	csrr	t1, mcycle
-+	slli	t1, t1, 16
-+	srli	t1, t1, 16
-+	li	t2, 0xa5a5
-+	slli	t2, t2, 48
-+	or	t1, t1, t2
-+	li	t0, MTIMECMP
-+	sd	t1, 0(t0)
-+	li	t0, -1
-+	csrw	pmpaddr0, t0
-+	li	t0, 0x1f		/* RWX, NAPOT */
-+	csrw	pmpcfg0, t0
++	li	t0, 1 << 28		/* menvcfgh.CDE */
++	csrw	0x31a, t0
++	li	t0, 8			/* Delegate counter 3. */
++	csrw	mcounteren, t0
++	li	t0, 0x43
++	csrw	0x150, t0		/* siselect: counter 3 */
 +
-+	/* Enter HS-mode first. */
-+	csrr	t0, mstatus
-+	li	t1, MSTATUS_MPP
-+	not	t1, t1
-+	and	t0, t0, t1
-+	li	t1, MSTATUS_MPP_S
-+	or	t0, t0, t1
-+	csrw	mstatus, t0
-+	lla	t0, hs_enter
-+	csrw	mepc, t0
-+	mret
++	/* Replace the event without changing OF or the privilege filters. */
++	li	t0, 2			/* HW_INSTRUCTIONS */
++	csrw	0x152, t0		/* sireg2: hpmevent3 */
++	li	t4, 2
++	csrr	t1, 0x323
++	bne	t0, t1, exit
++	li	t4, 3
++	li	t0, 0xe0000000
++	csrr	t1, 0x723
++	bne	t0, t1, exit
 +
-+hs_enter:
-+	li	t0, HSTATUS_SPV
-+	csrs	hstatus, t0
-+	li	t0, MSTATUS_SPP
-+	csrs	sstatus, t0
-+	lla	t0, vs_reset
-+	csrw	sepc, t0
-+	sret
++	/* Selecting event zero must also leave the high half unchanged. */
++	li	t4, 4
++	csrw	0x152, zero
++	li	t4, 5
++	csrr	t1, 0x323
++	bnez	t1, exit
++	li	t4, 6
++	csrr	t1, 0x723
++	bne	t0, t1, exit
++	li	t4, 0
 +
-+vs_reset:
-+	/* These VS-mode cycles must remain in mcycle after reset. */
-+	li	t0, 128
-+1:
-+	addi	t0, t0, -1
-+	bnez	t0, 1b
++	.balign	4
++exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sw	t0, 0(a1)
++	sw	t4, 4(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
 +
-+	li	t0, SIFIVE_TEST
-+	li	t1, FINISHER_RESET
-+	sw	t1, 0(t0)
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
 +	j	.
 +
-+after_reset:
-+	csrr	t0, mcycle
-+	slli	t1, t1, 16		/* Clear the MTIMECMP marker. */
-+	srli	t1, t1, 16
-+	addi	t1, t1, 128
-+	bgeu	t1, t0, fail
-+	li	t3, 0
++	.data
++	.balign	16
++semiargs:
++	.space	8
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index af6bc1aad8893726a3b26392da89f34319dd78a8..9f61da861a44881875457506c44bfc383560d1a9 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -40,6 +40,31 @@ run-test-mcycle-rv32: test-mcycle-rv32
+ 	$(call run-test, $<, \
+ 	  $(QEMU) -cpu rv32 -icount shift=1 $(QEMU_OPTS)$<)
+ 
++smcdeleg-counter-rv32: $(SRC_PATH)/tests/tcg/riscv32/smcdeleg-counter-rv32.S $(LINK_SCRIPT)
++	$(CC) $(CFLAGS) $(RV32_CFLAGS) $< -Wa,--noexecstack -c -o $@.o
++	$(LD) -m elf32lriscv $(LDFLAGS) $@.o -o $@
++
++TESTS += smcdeleg-counter-rv32
++run-smcdeleg-counter-rv32: smcdeleg-counter-rv32
++	$(call run-test, $<, \
++	  $(QEMU) -cpu rv32$(COMMA)smcdeleg=true$(COMMA)ssccfg=true$(COMMA)sscofpmf=true $(QEMU_OPTS)$<)
++
++TESTS += smcdeleg-sxl32 smcdeleg-sxl32-high smcdeleg-sxl32-cfg
++smcdeleg-sxl32-high: smcdeleg-sxl32.S $(LINK_SCRIPT)
++	$(CC) $(CFLAGS) -DTEST_HIGH_HALF $< -Wa,--noexecstack -c -o $@.o
++	$(LD) $(LDFLAGS) $@.o -o $@
++
++smcdeleg-sxl32-cfg: smcdeleg-sxl32.S $(LINK_SCRIPT)
++	$(CC) $(CFLAGS) -DTEST_CONFIG $< -Wa,--noexecstack -c -o $@.o
++	$(LD) $(LDFLAGS) $@.o -o $@
++
++run-smcdeleg-sxl32: smcdeleg-sxl32
++	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
++run-smcdeleg-sxl32-high: smcdeleg-sxl32-high
++	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
++run-smcdeleg-sxl32-cfg: smcdeleg-sxl32-cfg
++	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
++
+ TESTS += sscofpmf-overflow
+ run-sscofpmf-overflow: sscofpmf-overflow
+ 	$(call run-test, $<, $(QEMU) -cpu max -icount shift=0 $(QEMU_OPTS)$<)
+diff --git a/tests/tcg/riscv64/smcdeleg-sxl32.S b/tests/tcg/riscv64/smcdeleg-sxl32.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..45762ad662099a48a51591bc8a6eade7b08928ef
+--- /dev/null
++++ b/tests/tcg/riscv64/smcdeleg-sxl32.S
+@@ -0,0 +1,219 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/*
++ * Exercise delegated PMU registers with MXLEN=64 and SXLEN=32.
++ * Build separately for counter low halves, counter high halves and configs
++ * so a failure in one access path does not hide failures in the others.
++ */
++
++	.option	norvc
++	.option	norelax
++
++	/* RV64 'li' can emit ADDIW, which is illegal in the RV32 blocks. */
++	.macro	load32 reg, value
++	lui	\reg, %hi(\value)
++	addi	\reg, \reg, %lo(\value)
++	.endm
++
++	/* Enter RV32 S-mode; the ECALL trap below returns to M-mode. */
++	.macro	enter_s32 label
++	li	a0, 0
++	li	a5, 9			/* Expected exception: S-mode ECALL. */
++	li	t0, 3 << 11
++	csrc	mstatus, t0
++	li	t0, 1 << 11
++	csrs	mstatus, t0		/* MPP=S */
++	lla	t0, \label
++	csrw	mepc, t0
++	mret
++	.endm
++
++	/* Each alias must be 64-bit in M-mode, even while SXLEN is 32. */
++	.macro	check_m64_alias csr
++	li	t0, 0x1234567811223344
++	csrw	0x151, t0		/* sireg */
++	csrr	t1, \csr
++	bne	t0, t1, fail
++	csrr	t1, 0x151
++	bne	t0, t1, fail
++
++	/* High-half aliases must still trap when the current XLEN is 64. */
++	li	a0, 0
++	li	a5, 2			/* Expect illegal instruction. */
++	li	s9, 0
++	csrr	t0, 0x155		/* sireg4 */
++	csrr	t0, 0x156		/* sireg5 */
++	li	t0, 2
++	bne	s9, t0, fail		/* Both accesses must have trapped. */
++	.endm
++
++	.macro	check_counter index, csr
++	li	s10, \index + 1		/* Counter-specific failure code. */
++	li	t0, 0x40 + \index
++	csrw	0x150, t0		/* siselect */
++	check_m64_alias \csr
++	enter_s32 .Ls_counter\@
++.Ls_counter\@:
++#ifdef TEST_HIGH_HALF
++	csrr	t0, 0x155		/* sireg4: original high half */
++	load32 t1, 0x12345678
++	bne	t0, t1, .Ls_fail\@
++	load32 t0, 0x07654321
++	csrw	0x155, t0
++	csrr	t1, 0x155
++	bne	t0, t1, .Ls_fail\@
++	/* A high-half write must preserve the low half. */
++	csrr	t0, 0x151
++	load32 t1, 0x11223344
++#else
++	csrr	t0, 0x151		/* sireg: original low half */
++	load32 t1, 0x11223344
++	bne	t0, t1, .Ls_fail\@
++	load32 t0, 0x55667788
++	csrw	0x151, t0
++	csrr	t1, 0x151
++#endif
++	bne	t0, t1, .Ls_fail\@
++	li	a0, 0
++	j	.Ls_done\@
++.Ls_fail\@:
++	mv	a0, s10
++.Ls_done\@:
++	ecall
++
++	/* Read the complete machine counter to check the unwritten half. */
++	csrr	t0, \csr
++#ifdef TEST_HIGH_HALF
++	li	t1, 0x0765432111223344
++#else
++	li	t1, 0x1234567855667788
++#endif
++	bne	t0, t1, fail
++	.endm
++
++	.macro	check_config index, csr, old_low, new_low
++	li	s10, \index + 1
++	li	t0, 0x40 + \index
++	csrw	0x150, t0
++	li	t0, 0x6000000000000000 | \old_low /* MINH | SINH */
++	csrw	\csr, t0
++	enter_s32 .Ls_config\@
++.Ls_config\@:
++	csrr	t0, 0x152		/* sireg2: config/selector low half */
++	li	t1, \old_low
++	bne	t0, t1, .Lcfg_fail\@
++	li	t0, \new_low
++	csrw	0x152, t0
++	csrr	t1, 0x152
++	bne	t0, t1, .Lcfg_fail\@
++
++	/* Low-half writes preserve the high half; MINH reads as zero. */
++	csrr	t0, 0x156		/* sireg5 */
++	li	t1, 0x20000000		/* SINH, without MINH */
++	bne	t0, t1, .Lcfg_fail\@
++	li	t0, 0x10000000		/* Replace SINH with UINH. */
++	csrw	0x156, t0
++	csrr	t1, 0x156
++	bne	t0, t1, .Lcfg_fail\@
++	csrr	t0, 0x152
++	li	t1, \new_low
++	bne	t0, t1, .Lcfg_fail\@
++	li	a0, 0
++	j	.Lcfg_done\@
++.Lcfg_fail\@:
++	mv	a0, s10
++.Lcfg_done\@:
++	ecall
++
++	/* Both the low half and the machine-only MINH bit must be retained. */
++	csrr	t0, \csr
++	li	t1, 0x5000000000000000 | \new_low /* MINH | UINH */
++	bne	t0, t1, fail
++	.endm
++
++	.text
++	.global	_start
++_start:
++	li	s10, 31			/* Setup failure. */
++	lla	t0, trap
++	csrw	mtvec, t0
++	csrw	medeleg, zero
++	csrw	mie, zero
++	li	t0, -1
++	/* Freeze counters for exact comparisons. */
++	csrw	mcountinhibit, t0
++	csrw	mcounteren, t0
++	csrw	pmpaddr0, t0
++	li	t0, 0x1f		/* Allow S-mode access to RAM. */
++	csrw	pmpcfg0, t0
++	li	t0, 1 << 60
++	csrw	menvcfg, t0		/* CDE */
++	csrw	0x30c, t0		/* mstateen0: allow indirect CSRs. */
++
++	/* Select RV32 for lower privilege modes; M-mode remains RV64. */
++	csrr	t0, mstatus
++	li	t1, (3 << 34) | (3 << 32)
++	not	t1, t1
++	and	t0, t0, t1
++	li	t1, (1 << 34) | (1 << 32)
++	or	t0, t0, t1
++	csrw	mstatus, t0
++	csrr	t0, mstatus
++	srli	t0, t0, 34
++	andi	t0, t0, 3
++	li	t1, 1
++	bne	t0, t1, fail
++
++#ifdef TEST_CONFIG
++	check_config 0, 0x321, 0, 0	/* mcyclecfg */
++	check_config 2, 0x322, 0, 0	/* minstretcfg */
++	check_config 3, 0x323, 1, 2	/* mhpmevent3: cycles -> instructions */
++#else
++	li	t0, 1
++	csrw	0x323, t0		/* HPM3 counts cycles. */
++	li	t0, 2
++	csrw	0x324, t0		/* HPM4 counts instructions. */
++	csrw	0x325, zero		/* HPM5 has no selected event. */
++	check_counter 0, mcycle
++	check_counter 2, minstret
++	check_counter 3, 0xb03
++	check_counter 4, 0xb04
++	check_counter 5, 0xb05
++#endif
++	li	a0, 0
 +	j	exit
 +
-+fail:
-+	li	t3, 1
++	.balign	4
++trap:
++	csrr	t0, mcause
++	bne	t0, a5, fail
++	bnez	a0, exit
++	addi	s9, s9, 1
++	csrr	t0, mepc
++	/* Zero-extend the RV32 trap PC for physical addressing in M-mode. */
++	slli	t0, t0, 32
++	srli	t0, t0, 32
++	addi	t0, t0, 4
++	csrw	mepc, t0
++	li	t0, 3 << 11
++	csrs	mstatus, t0		/* Resume in M-mode. */
++	mret
 +
++fail:
++	mv	a0, s10
 +exit:
 +	lla	a1, semiargs
 +	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
 +	sd	t0, 0(a1)
-+	sd	t3, 8(a1)
++	sd	a0, 8(a1)
 +	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
-+
 +	.balign	16
 +	slli	zero, zero, 0x1f
 +	ebreak
