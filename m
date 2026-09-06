@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93EA5C79F8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B893BC79F8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Fsc-0002yo-Fr; Sun, 06 Sep 2026 12:38:06 -0400
+	id 1x3Fsa-0002xM-9s; Sun, 06 Sep 2026 12:38:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsZ-0002x5-VZ; Sun, 06 Sep 2026 12:38:04 -0400
-Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
+ id 1x3FsY-0002vH-R6; Sun, 06 Sep 2026 12:38:02 -0400
+Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsQ-00034R-Qr; Sun, 06 Sep 2026 12:38:03 -0400
+ id 1x3FsP-000339-4N; Sun, 06 Sep 2026 12:38:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1788712658; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=ksc6jpcXXgLeXQNaH+DYLymXmDnFTGRTvna+17U5yjo=;
- b=JGmcCm96QddXbpTI6znnrKMNOy0UZkc4QU7pKa4v5A9b0EjSSFGNGITqBf7yL7xitbz4k4YeRDi05gZAYNjeHb2oxfwCSizQvDrUorLb9lJY1NxxMSnjje8u5pzpKn0MsSnpyZsErb8dpKCLqg0vIh25EpKKNz6nM9t3FXnQztg=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ t=1788712650; h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To;
+ bh=Jnva7G+EKQXHvdzxR0/MqZrTxP+JeTB2Jf5wbbRBDQE=;
+ b=kpoSKHIUw2AunEvXqoovbH/BT9E4PgFgaq8n9tMoj8H/z4fmG4FWxtaTuhCz7/Rir299p2XkWog+a/kg2QvymDUvEqZbx7uzIcBPNvtAC/z0UwSDFOeZGFZT/Bmeiwri05N5FSiAx0Hr7BfjnlLblrFeHijqZFAnUrO1D2KfFZA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XANKIKQ_1788712657; 
+ TI=SMTPD_---0XANKIHK_1788712646; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XANKIKQ_1788712657 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 07 Sep 2026 00:37:37 +0800
+ fp:SMTPD_---0XANKIHK_1788712646 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 07 Sep 2026 00:37:29 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Mon, 07 Sep 2026 00:37:27 +0800
-Subject: [PATCH 11/14] target/riscv: Process PMU timer expiry on the owner vCPU
+Subject: [PATCH 00/14] RISC-V TCG PMU correctness fixes
+Date: Mon, 07 Sep 2026 00:37:16 +0800
+Message-Id: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-riscv-pmu-correctness-v1-11-5f1f41458989@linux.alibaba.com>
-References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
-In-Reply-To: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
+X-B4-Tracking: v=1; b=H4sIALyWnWoC/yWOXQrCMBAGr1LybCTdan6KiPeQPiTpxi6YVpMqS
+ vHuxvo4CzvzLSxjIsysrRaW8EmZprFAvamYH+x4QU59YQYCpNCgeKLsn/wWH9xPKaGfR8yZB6u
+ 1CL3xO92z8ntLGOi1es/dnxPeH0U//4/M2YxFESPNbeWgsRKUaqzSewnGeOcapQHlzkjtpDXgl
+ YHwU8fSs+uutjqss4zYCwO6FlspBa95SDT74YpvNw2le7pES9dtaR1Z9/l8ARWszUfzAAAA
+X-Change-ID: 20260827-riscv-pmu-correctness-fa880fd9c48d
 To: qemu-devel@nongnu.org
 Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
  Palmer Dabbelt <palmer@dabbelt.com>, 
@@ -52,17 +55,17 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=2433;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=4453;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=xGqFDfh9IR3JQbU7GQ/PgD80X6pKA6c3w5l7P5xkpoI=;
- b=DoM+dtGJuWp0nPnNOEJe1rcDJvDncluVdFxmKgN0heBacWbKCX2FX3WrDjdeCZ1K8ncKKgvyg
- 1pYRk4rnYUlDBPjaPlOLiPHAyEdXDXYXgbvr8CSKn/lYzwMppLxoXyR
+ bh=ez48eFypyBNYkMtPHDfDZicQdFpeKhfcge5jRt031xc=;
+ b=+JJO3xMZQKSByjy7vPV7rFLu/nGPB6USquuRt4CqgQGImOOa4dZGEMOkDPS1SCTteT7TaAtK8
+ oAB1N1POQmzAQKRsbrWnpBFyuVkdXvEZQTwGcrbAUdQovsc+hzTpTIj
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
-Received-SPF: pass client-ip=115.124.30.101;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
+Received-SPF: pass client-ip=115.124.30.124;
  envelope-from=lyndra@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
+ helo=out30-124.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -86,71 +89,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PMU timer callback can race MTTCG execution and CSR writes while
-reading the event map and updating counters, OF and MIP.
+This series fixes RISC-V TCG PMU accounting, overflow notification, and
+migration. It is based on Zephyr Li's "target/riscv: fix RV32 fixed
+counter accesses" [1], which is a prerequisite and is not included here.
 
-Queue counter checks on the owning vCPU. The callback atomically sets
-pmu_timer_work_pending and queues work only if it was previously false.
-The vCPU clears the flag before checking counters and rebuilding the
-timer. Earlier expiries are covered by that check; the first later expiry
-queues another check.
+The patches allow multiple HPM counters to select the same event and
+preserve counts across selector, privilege-filter, and inhibit writes.
+They use consistent cycle/instruction sources and compute the shared
+overflow deadline from all eligible counters. Timer callbacks queue
+checks on the owner vCPU instead of racing MTTCG execution.
+
+Migration saves counter values including pending increments and restores
+destination-local source baselines, event mappings, and overflow
+scheduling. A new cpu/pmu-fixed subsection carries mcyclecfg/minstretcfg
+and identifies this format. All TCG CPUs require the subsection; loading
+older TCG streams without it is rejected. Source and destination still
+need compatible CPU configurations. KVM PMU migration is unchanged.
+
+The reset changes preserve the final counts in the old privilege/V mode
+before entering M-mode with V=0.
+
+TCG tests cover RV32/RV64 counter accesses, delegated registers, selector
+and filter changes, multiple counters per event, overflow notification
+with and without Sscofpmf, instruction exceptions, and reset. The RV32
+HPM tests also cover full-width accesses through the shared counter path.
+
+[1] https://lore.kernel.org/qemu-devel/20260905092810.660-1-fritchleybohrer@gmail.com/
+Based-on: <20260905092810.660-1-fritchleybohrer@gmail.com>
 
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/cpu.h     |  1 +
- target/riscv/tcg/pmu.c | 18 ++++++++++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+TANG Tiancheng (14):
+      target/riscv: Preserve PMU state across event selector writes
+      target/riscv: Support multiple counters per PMU event
+      target/riscv: Use VM-elapsed sources for fixed PMU events
+      target/riscv: Preserve MINH on delegated config reads
+      target/riscv: Preserve minstretcfgh on RV32 minstretcfg writes
+      target/riscv: Fix RV32 accesses to delegated PMU registers
+      target/riscv: Preserve fixed counters across PMU state changes
+      target/riscv: Require Sscofpmf for non-fixed event overflow
+      target/riscv: Rebuild fixed-event PMU overflow deadlines
+      target/riscv: Apply minstret exception accounting to HPM counters
+      target/riscv: Process PMU timer expiry on the owner vCPU
+      target/riscv: Migrate fixed PMU counter state
+      target/riscv: Clear virtualization mode on reset
+      target/riscv: Preserve fixed PMU state across reset
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 17b9929785f668487d2ec851b736d588e025fd91..a4d33f55c4e5cb6052cea6bee4c0afa46372b5c5 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -583,6 +583,7 @@ struct ArchCPU {
-     QEMUTimer *pmu_timer;
-     uint64_t pmu_timer_instret_snapshot;
-     bool pmu_timer_stalled;
-+    bool pmu_timer_work_pending;
-     /* A bitmask of Available programmable counters */
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 08298010b6d06f5792fa14ff81fe2f7a28c6476f..6286552a4ebf614df0252f84ddfadbc25d8d2258 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -663,15 +663,29 @@ void riscv_pmu_rebuild_timer(CPURISCVState *env)
-     riscv_pmu_rebuild_timer_internal(env, false);
- }
- 
-+static void riscv_pmu_timer_work(CPUState *cs, run_on_cpu_data data)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+
-+    /*
-+     * An expiry before this exchange is covered by the following counter
-+     * check. The first expiry after it sets pmu_timer_work_pending and queues
-+     * another check.
-+     */
-+    qatomic_xchg(&cpu->pmu_timer_work_pending, false);
-+    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
-+}
-+
- /* Timer callback for instret and cycle counter overflow */
- void riscv_pmu_timer_cb(void *priv)
- {
-     RISCVCPU *cpu = priv;
- 
--    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
-+    if (!qatomic_xchg(&cpu->pmu_timer_work_pending, true)) {
-+        async_run_on_cpu(CPU(cpu), riscv_pmu_timer_work, RUN_ON_CPU_NULL);
-+    }
- }
- 
--
- void riscv_pmu_init(RISCVCPU *cpu, Error **errp)
- {
-     if (cpu->cfg.pmu_mask & (COUNTEREN_CY | COUNTEREN_TM | COUNTEREN_IR)) {
+ system/cpu-timers.c                         |   4 +-
+ system/cpus.c                               |   6 +-
+ target/riscv/cpu.c                          |  17 +
+ target/riscv/cpu.h                          |  14 +-
+ target/riscv/machine.c                      |  92 +++-
+ target/riscv/tcg/cpu_helper.c               |   2 +
+ target/riscv/tcg/csr.c                      | 281 +++-------
+ target/riscv/tcg/pmu.c                      | 793 +++++++++++++++++++---------
+ target/riscv/tcg/pmu.h                      |  29 +-
+ target/riscv/tcg/tcg-cpu.c                  |  10 +
+ tests/tcg/riscv32/Makefile.softmmu-target   |  42 ++
+ tests/tcg/riscv32/pmu-fixed-rv32.S          |  90 ++++
+ tests/tcg/riscv32/pmu-minstretcfg-rv32.S    |  48 ++
+ tests/tcg/riscv32/smcdeleg-counter-rv32.S   |  84 +++
+ tests/tcg/riscv32/smcdeleg-event-rv32.S     |  69 +++
+ tests/tcg/riscv32/smcdeleg-minh-rv32.S      |  70 +++
+ tests/tcg/riscv32/sscofpmf-event-rv32.S     |  91 ++++
+ tests/tcg/riscv64/Makefile.softmmu-target   |  63 ++-
+ tests/tcg/riscv64/pmu-cycle-controls.S      | 104 ++++
+ tests/tcg/riscv64/pmu-lpad.S                |  69 +++
+ tests/tcg/riscv64/pmu-reset-vs.S            | 102 ++++
+ tests/tcg/riscv64/smcdeleg-minh.S           |  70 +++
+ tests/tcg/riscv64/smcdeleg-sxl32.S          | 219 ++++++++
+ tests/tcg/riscv64/sscofpmf-cycle-overflow.S |  58 ++
+ tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++
+ tests/tcg/riscv64/sscofpmf-overflow.S       | 134 +++++
+ tests/tcg/riscv64/test-minstret-ecall.S     |  26 +
+ 27 files changed, 2223 insertions(+), 467 deletions(-)
+---
+base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
+change-id: 20260827-riscv-pmu-correctness-fa880fd9c48d
+prerequisite-message-id: <20260905092810.660-1-fritchleybohrer@gmail.com>
+prerequisite-patch-id: 3dfb379e910f47acaa9e94ac5766045f86e76799
 
+Best regards,
 -- 
-2.43.0
+TANG Tiancheng <lyndra@linux.alibaba.com>
 
 
