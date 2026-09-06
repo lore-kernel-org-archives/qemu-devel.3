@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF2EC79FA0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9B83C79F99
 	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 19:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Io1-0002cb-0L; Sun, 06 Sep 2026 15:45:33 -0400
+	id 1x3InQ-0002I9-Rz; Sun, 06 Sep 2026 15:44:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3Iny-0002bk-KZ; Sun, 06 Sep 2026 15:45:30 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ id 1x3InP-0002Ha-G8; Sun, 06 Sep 2026 15:44:55 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3Inw-0007Cm-Mw; Sun, 06 Sep 2026 15:45:30 -0400
+ id 1x3InN-0006xg-Kj; Sun, 06 Sep 2026 15:44:55 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdLJC4NTzz7xdV;
- Sun,  6 Sep 2026 21:44:43 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdLJ84XrNzBqYr;
+ Sun,  6 Sep 2026 21:44:40 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788723883;
- bh=j6ye2Nk/4dxRLyrMZ0BFmoNUuShdsEUr86ZjVRE00Xk=;
+ s=dkim; t=1788723880;
+ bh=5nHljIdPrCJuvJ91IvLCz3fRWW4+wFJPa3ERcaZZBtU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MpSB+aFj9Gcpdl3vtzp/hncuFURZPfF79Jdu0VZKohksSydvsZa85dApK3j49jqFz
- T/Fy1CgTVcdYVNGhPznGSS3Emu4ePNEP5q3K/2h8K1O9fjzBZL+QDr06iBIqWeMACU
- NjlnElxvvN7Baqq4NYfZdmolFqe+zkC0PnSHfggdnxUq4q1AoKD31zfEp2DtenIzpW
- QwRtKn1DSpJwCxtAEdiMxUU+59rwjWX1bWQwRGpjINNdoLLpNIt4Z5cJ64ll0VgFKE
- lbzpYnxc067RK18L9P1IjDyQ8W9fv/Qf9oMfjZ/9eTlLCY1TID/6WRU9gLOq/quEsn
- QkWpWucsvjyfA==
+ b=uAhXIlBBAEq/sBXdd5xH7y4ilcXBTqK0SM0nBRnNOQc48zkVnekuLIqMdhp6xv0/t
+ FJ159a3FxSzTOS5Z4BuI2ruCVGAAp6dcZOCyCZ1YwSFgHZD3G6+HpNjx1e5cVa7bpd
+ N3MuhU/Ee68swP1FEoCNKUwdUJegVCdOxB20CMJ+XCJtgrMeXIU4Gkx8gl9dxMp0xB
+ 7iT4qmu7Knd6SFOy73OQh+eB/g87yaYWCtCeXrR4kHL3iWejytM/QuCNt2cTDJgttK
+ GrxoSnmWuLCKiVTzB+ip6fCOhu/LjyBL8lR7TxVP6B3PoZW1xZuIqAPelM2Z9905Pe
+ jX+Bf5ooiE8Bg==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdLJC2Vgfz7wHs;
- Sun,  6 Sep 2026 21:44:43 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdLJ8356fz7wXp;
+ Sun,  6 Sep 2026 21:44:40 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 12/36] hw/misc: add RP2040 testbench manager
-Date: Sun,  6 Sep 2026 21:44:11 +0200
-Message-ID: <20260906194438.93046-13-gilles.grimaud@univ-lille.fr>
+ gilles grimaud <gilles.grimaud@univ-lille.fr>
+Subject: [PATCH v3 03/36] target/arm: support Cortex-M0+ MPU
+Date: Sun,  6 Sep 2026 21:44:02 +0200
+Message-ID: <20260906194438.93046-4-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -72,256 +71,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model the RP2040 testbench manager PLATFORM register.
+Cortex-M0+ implementations may provide an Armv6-M PMSA MPU with eight
+regions. QEMU uses its historical v7m/PMSAv7 naming for M-profile code
+shared by v6-M and v7-M, but currently exposes, allocates and migrates the
+existing region model only when ARM_FEATURE_V7 is set. This prevents a
+Cortex-M0+ board from enabling its optional MPU.
 
-Return the documented ASIC platform value.
+Allow non-v8 M-profile CPUs to use the existing PMSAv7 state, migration
+state and translation path. Restrict the shared register model to the v6-M
+layout: do not expose the v7-M alias registers or TEX bits, and reject
+region sizes below the v6-M minimum of 256 bytes.
 
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+The dedicated PMSAv8 path remains selected first for v8-M CPUs. Expose the
+pmsav7-dregion property and clear region state on reset.
+
+Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/rp2040.c                 |  6 +++
- hw/misc/meson.build             |  1 +
- hw/misc/rp2040_tbman.c          | 88 +++++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h         |  2 +
- include/hw/misc/rp2040_tbman.h  | 29 +++++++++++
- tests/qtest/meson.build         |  1 +
- tests/qtest/rp2040-tbman-test.c | 29 +++++++++++
- 7 files changed, 156 insertions(+)
- create mode 100644 hw/misc/rp2040_tbman.c
- create mode 100644 include/hw/misc/rp2040_tbman.h
- create mode 100644 tests/qtest/rp2040-tbman-test.c
+ hw/intc/armv7m_nvic.c | 27 ++++++++++++++++++++++++++-
+ target/arm/cpu.c      | 12 +++++++++---
+ target/arm/machine.c  |  3 ++-
+ target/arm/ptw.c      | 10 +++++++---
+ 4 files changed, 44 insertions(+), 8 deletions(-)
 
-diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 638c47612b..cd5a7b0a6d 100644
---- a/hw/arm/rp2040.c
-+++ b/hw/arm/rp2040.c
-@@ -143,6 +143,7 @@ static void rp2040_soc_init(Object *obj)
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index c1ceb7450f..a702bd0c38 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -1405,6 +1405,11 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+             return cpu->env.pmsav8.rbar[attrs.secure][region];
+         }
  
-     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_RP2040_SYSCFG);
-     object_initialize_child(obj, "sysinfo", &s->sysinfo, TYPE_RP2040_SYSINFO);
-+    object_initialize_child(obj, "tbman", &s->tbman, TYPE_RP2040_TBMAN);
-     object_initialize_child(obj, "vreg", &s->vreg, TYPE_RP2040_VREG);
++        if (offset != 0xd9c &&
++            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            goto bad_offset;
++        }
++
+         if (region >= cpu->pmsav7_dregion) {
+             return 0;
+         }
+@@ -1432,6 +1437,11 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+             return cpu->env.pmsav8.rlar[attrs.secure][region];
+         }
  
-     s->irq = qemu_allocate_irqs(rp2040_set_irq, s, RP2040_NUM_IRQS);
-@@ -277,6 +278,11 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
++        if (offset != 0xda0 &&
++            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            goto bad_offset;
++        }
++
+         if (region >= cpu->pmsav7_dregion) {
+             return 0;
+         }
+@@ -1919,6 +1929,11 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+             return;
+         }
+ 
++        if (offset != 0xd9c &&
++            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            goto bad_offset;
++        }
++
+         if (value & (1 << 4)) {
+             /* VALID bit means use the region number specified in this
+              * value and also update MPU_RNR.REGION with that value.
+@@ -1969,12 +1984,22 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+             return;
+         }
+ 
++        if (offset != 0xda0 &&
++            !arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            goto bad_offset;
++        }
++
+         if (region >= cpu->pmsav7_dregion) {
+             return;
+         }
+ 
+         cpu->env.pmsav7.drsr[region] = value & 0xff3f;
+-        cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x173f;
++        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x173f;
++        } else {
++            /* Armv6-M has XN, AP, S, C and B, but no TEX field. */
++            cpu->env.pmsav7.dracr[region] = (value >> 16) & 0x1707;
++        }
+         tlb_flush(CPU(cpu));
+         break;
      }
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysinfo), 0, RP2040_SYSINFO_BASE);
- 
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->tbman), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->tbman), 0, RP2040_TBMAN_BASE);
-+
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->vreg), errp)) {
-         return;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 77aa78f00e..f58a1db843 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -617,7 +617,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+                            sizeof(*env->pmsav8.rlar[M_REG_S])
+                            * cpu->pmsav7_dregion);
+                 }
+-            } else if (arm_feature(env, ARM_FEATURE_V7)) {
++            } else if (arm_feature(env, ARM_FEATURE_V7) ||
++                       arm_feature(env, ARM_FEATURE_M)) {
+                 memset(env->pmsav7.drbar, 0,
+                        sizeof(*env->pmsav7.drbar) * cpu->pmsav7_dregion);
+                 memset(env->pmsav7.drsr, 0,
+@@ -1656,7 +1657,11 @@ static void arm_cpu_post_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_PMSA)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_has_mpu_property);
+-        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++        /*
++         * QEMU's PMSAv7 state also models the Armv6-M MPU register layout.
++         */
++        if (arm_feature(&cpu->env, ARM_FEATURE_V7) ||
++            arm_feature(&cpu->env, ARM_FEATURE_M)) {
+             qdev_property_add_static(DEVICE(obj),
+                                      &arm_cpu_pmsav7_dregion_property);
+         }
+@@ -2332,7 +2337,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
      }
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 26ce30fb38..8e8b006ba4 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -100,6 +100,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_syscfg.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_sysinfo.c'))
-+system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_tbman.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_vreg.c'))
- system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
- system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
-diff --git a/hw/misc/rp2040_tbman.c b/hw/misc/rp2040_tbman.c
-new file mode 100644
-index 0000000000..f55a80e514
---- /dev/null
-+++ b/hw/misc/rp2040_tbman.c
-@@ -0,0 +1,88 @@
-+/*
-+ * RP2040 testbench manager emulation
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/misc/rp2040_tbman.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+
-+static uint64_t rp2040_tbman_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    hwaddr offset = addr & 0xfff;
-+    uint64_t value;
-+
-+    switch (offset) {
-+    case A_RP2040_TBMAN_PLATFORM:
-+        value = R_RP2040_TBMAN_PLATFORM_ASIC_MASK;
-+        break;
-+    default:
-+        value = 0;
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented read at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+        break;
-+    }
-+
-+    return value;
-+}
-+
-+static void rp2040_tbman_write(void *opaque, hwaddr addr,
-+                               uint64_t value64, unsigned size)
-+{
-+    qemu_log_mask(LOG_UNIMP,
-+                  "%s: unimplemented write at offset 0x%"
-+                  HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+}
-+
-+static const MemoryRegionOps rp2040_tbman_ops = {
-+    .read = rp2040_tbman_read,
-+    .write = rp2040_tbman_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void rp2040_tbman_init(Object *obj)
-+{
-+    RP2040TbmanState *s = RP2040_TBMAN(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &rp2040_tbman_ops, s,
-+                          "rp2040.tbman", RP2040_TBMAN_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+}
-+
-+static const VMStateDescription rp2040_tbman_vmstate = {
-+    .name = TYPE_RP2040_TBMAN,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void rp2040_tbman_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->vmsd = &rp2040_tbman_vmstate;
-+}
-+
-+static const TypeInfo rp2040_tbman_info = {
-+    .name          = TYPE_RP2040_TBMAN,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040TbmanState),
-+    .instance_init = rp2040_tbman_init,
-+    .class_init    = rp2040_tbman_class_init,
-+};
-+
-+static void rp2040_tbman_register_types(void)
-+{
-+    type_register_static(&rp2040_tbman_info);
-+}
-+type_init(rp2040_tbman_register_types)
-diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 4b6f7c2faa..e4370b90fd 100644
---- a/include/hw/arm/rp2040.h
-+++ b/include/hw/arm/rp2040.h
-@@ -15,6 +15,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/misc/rp2040_sysinfo.h"
- #include "hw/misc/rp2040_syscfg.h"
-+#include "hw/misc/rp2040_tbman.h"
- #include "hw/misc/rp2040_vreg.h"
- #include "qom/object.h"
  
-@@ -40,6 +41,7 @@ struct RP2040State {
-     PL011State uart[2];
-     RP2040SysCfgState syscfg;
-     RP2040SysInfoState sysinfo;
-+    RP2040TbmanState tbman;
-     RP2040VregState vreg;
+     if (arm_feature(env, ARM_FEATURE_PMSA) &&
+-        arm_feature(env, ARM_FEATURE_V7)) {
++        (arm_feature(env, ARM_FEATURE_V7) ||
++         arm_feature(env, ARM_FEATURE_M))) {
+         uint32_t nr = cpu->pmsav7_dregion;
  
-     MemoryRegion *board_memory;
-diff --git a/include/hw/misc/rp2040_tbman.h b/include/hw/misc/rp2040_tbman.h
-new file mode 100644
-index 0000000000..d89deb726c
---- /dev/null
-+++ b/include/hw/misc/rp2040_tbman.h
-@@ -0,0 +1,29 @@
-+/*
-+ * RP2040 testbench manager emulation
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MISC_RP2040_TBMAN_H
-+#define HW_MISC_RP2040_TBMAN_H
-+
-+#include "hw/core/registerfields.h"
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RP2040_TBMAN "rp2040-tbman"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040TbmanState, RP2040_TBMAN)
-+
-+#define RP2040_TBMAN_BASE 0x4006c000
-+#define RP2040_TBMAN_SIZE 0x4000
-+
-+REG32(RP2040_TBMAN_PLATFORM, 0x00)
-+    FIELD(RP2040_TBMAN_PLATFORM, ASIC, 0, 1)
-+
-+struct RP2040TbmanState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+};
-+
-+#endif
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 6596e93755..ca66dc40f4 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -265,6 +265,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_RP2040') ?
-    ['rp2040-syscfg-test',
-     'rp2040-sysinfo-test',
-+    'rp2040-tbman-test',
-     'rp2040-vreg-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
-   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
-diff --git a/tests/qtest/rp2040-tbman-test.c b/tests/qtest/rp2040-tbman-test.c
-new file mode 100644
-index 0000000000..d654aabba3
---- /dev/null
-+++ b/tests/qtest/rp2040-tbman-test.c
-@@ -0,0 +1,29 @@
-+/*
-+ * QTest testcase for the RP2040 testbench manager block.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/misc/rp2040_tbman.h"
-+#include "libqtest.h"
-+
-+static void test_tbman_platform(void)
-+{
-+    QTestState *qts = qtest_init("-machine raspi-pico");
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                    RP2040_TBMAN_BASE + A_RP2040_TBMAN_PLATFORM), ==,
-+                    R_RP2040_TBMAN_PLATFORM_ASIC_MASK);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/rp2040-tbman/platform", test_tbman_platform);
-+
-+    return g_test_run();
-+}
+         if (nr > 0xff) {
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 7005f4e5d7..53a2734d25 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -584,7 +584,8 @@ static bool pmsav7_needed(void *opaque)
+     CPUARMState *env = &cpu->env;
+ 
+     return arm_feature(env, ARM_FEATURE_PMSA) &&
+-           arm_feature(env, ARM_FEATURE_V7) &&
++           (arm_feature(env, ARM_FEATURE_V7) ||
++            arm_feature(env, ARM_FEATURE_M)) &&
+            !arm_feature(env, ARM_FEATURE_V8);
+ }
+ 
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index a29de0385f..6cb8a8394a 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2748,9 +2748,12 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+                 continue;
+             }
+ 
+-            if (!rsize) {
++            if (!rsize ||
++                (arm_feature(env, ARM_FEATURE_M) &&
++                 !arm_feature(env, ARM_FEATURE_V7) && rsize < 7)) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+-                              "DRSR[%d]: Rsize field cannot be 0\n", n);
++                              "DRSR[%d]: invalid Rsize field 0x%x\n",
++                              n, rsize);
+                 continue;
+             }
+             rsize++;
+@@ -3901,7 +3904,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+             /* PMSAv8 */
+             ret = get_phys_addr_pmsav8(env, ptw, address, access_type,
+                                        result, fi);
+-        } else if (arm_feature(env, ARM_FEATURE_V7)) {
++        } else if (arm_feature(env, ARM_FEATURE_V7) ||
++                   arm_feature(env, ARM_FEATURE_M)) {
+             /* PMSAv7 */
+             ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
+                                        result, fi);
 -- 
 2.55.0
 
