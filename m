@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4D4C79F9F
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 17:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B70BCC79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 17:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3GOq-0003h6-Nj; Sun, 06 Sep 2026 13:11:26 -0400
+	id 1x3GO4-0003KX-RD; Sun, 06 Sep 2026 13:10:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GOb-0003cU-9l
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GO3-0003K7-Nl
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:10:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GOZ-00008d-Hg
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GO1-0008UM-5W
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:10:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788714666;
+ s=mimecast20190719; t=1788714632;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UNTr1qNCE6jZQzSU89dpdX4vjNmRkzzji1cy5FhKr/Y=;
- b=GW1wOD9ZZRd6tMnX9/3uX+DNGevQd0GteTKLS2WWXcEr6mEoLUcyqU27UGnmbxpzTiJhVg
- YC5EIy1f88IX+KNJD8eloFIwzz+1sMbVTbH/e/3z/xmnmBLfFO6B5ktwwSbxNM1jnr1R8K
- t4+4NmaINS7U474YRaSC79jPQwe3xoY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JL544OwrSE8TOte04vzSmTrJlZeD0ZpTupY2T+oo860=;
+ b=DfvrGuSLOov21boVXQ282JkrDaa4oUV/82sXRj1exa6lgxlPl3Abrx/+md7tehRQuHHd91
+ cboUm0KXM5EJBtG9rwKWz+8VC39y4Dg4pd1WdOgOP9dUZCKtek/WfHkPlK8d1ZMc188DsH
+ K93PjApiO0M7EfxUfH+CGrHrnHsAHxw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-yt53WO-JNhCYYNd5bZcuRw-1; Sun,
- 06 Sep 2026 13:11:04 -0400
-X-MC-Unique: yt53WO-JNhCYYNd5bZcuRw-1
-X-Mimecast-MFC-AGG-ID: yt53WO-JNhCYYNd5bZcuRw_1788714663
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-Bo7-mT-7PcuF56WtfnHlcQ-1; Sun,
+ 06 Sep 2026 13:10:28 -0400
+X-MC-Unique: Bo7-mT-7PcuF56WtfnHlcQ-1
+X-Mimecast-MFC-AGG-ID: Bo7-mT-7PcuF56WtfnHlcQ_1788714628
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9234418001E6; Sun,  6 Sep 2026 17:11:03 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9FB81954AE7; Sun,  6 Sep 2026 17:10:27 +0000 (UTC)
 Received: from yukon.redhat.com (unknown [10.44.32.24])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EC2C01955F06; Sun,  6 Sep 2026 17:11:01 +0000 (UTC)
+ id 46E621955F06; Sun,  6 Sep 2026 17:10:25 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 16/40] hw/arm/aspeed_ast10x0: Remove obsolete unimplemented SBC
- mapping
-Date: Sun,  6 Sep 2026 19:09:57 +0200
-Message-ID: <20260906171021.26568-17-clg@redhat.com>
-In-Reply-To: <20260906171021.26568-1-clg@redhat.com>
-References: <20260906171021.26568-1-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 00/40] aspeed queue
+Date: Sun,  6 Sep 2026 19:09:41 +0200
+Message-ID: <20260906171021.26568-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,60 +79,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+The following changes since commit ff1d2d19d7e24893e2012d879f8e73077e17b9bd:
 
-The AST10x0 SoC now implements the SBC device model. However, the
-old unimplemented SBC mapping was left in place.
+  Merge tag 'pull-11.1-check-tcg-meson-040926-2' of https://gitlab.com/stsquad/qemu into staging (2026-09-04 16:52:58 +0100)
 
-Remove the obsolete mapping now that the SBC device is implemented.
+are available in the Git repository at:
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260901085238.995968-6-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/arm/aspeed_soc.h | 1 -
- hw/arm/aspeed_ast10x0.c     | 7 -------
- 2 files changed, 8 deletions(-)
+  https://github.com/legoater/qemu/ tags/pull-aspeed-20260906
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 8d80f1670587..cba8b7cdca58 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -92,7 +92,6 @@ struct AspeedSoCState {
-     AspeedSBCState sbc;
-     AspeedSLIState sli;
-     AspeedSLIState sliio;
--    UnimplementedDeviceState sbc_unimplemented;
-     AspeedSDMCState sdmc;
-     AspeedPWMState pwm;
-     AspeedWDTState wdt[ASPEED_WDTS_NUM];
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index 93c81195b56a..5165dcce5912 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -163,8 +163,6 @@ static void aspeed_soc_ast10x0_init(Object *obj, const char *socname)
-     object_initialize_child(obj, "hace", &s->hace, typename);
- 
-     object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "sbc-unimplemented", &s->sbc_unimplemented,
--                            TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "pwm", &s->pwm, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "espi", &s->espi, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "udc", &s->udc, TYPE_UNIMPLEMENTED_DEVICE);
-@@ -222,11 +220,6 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCState *a, Error **errp)
-                                   "aspeed.io",
-                                   sc->memmap[ASPEED_DEV_IOMEM],
-                                   ASPEED_SOC_IOMEM_SIZE);
--    aspeed_mmio_map_unimplemented(s->memory,
--                                  SYS_BUS_DEVICE(&s->sbc_unimplemented),
--                                  "aspeed.sbc", sc->memmap[ASPEED_DEV_SBC],
--                                  0x40000);
--
-     /* AST10x0 CPU Core */
-     armv7m = DEVICE(&a->armv7m);
-     qdev_prop_set_uint32(armv7m, "num-irq", 256);
--- 
-2.55.0
+for you to fetch changes up to 1c05d7e94da04129ea16147074fe73158fb85ff9:
+
+  tests/functional: aspeed: optionally check the device tree model on boot (2026-09-05 07:05:11 +0200)
+
+----------------------------------------------------------------
+aspeed queue:
+
+* Fixes AST2600 SCU protection key registers on reset
+* Fixes I2C byte latching for SMBus block reads
+* Hardens EHCI get_dwords()/put_dwords() with DMA error checking
+* Adds a second random number generator to the AST2600 SCU
+* Adds the ASPEED ACRY RSA accelerator model with ModExp qtest coverage
+* Adds ECDSA sign/verify support to the QEMU crypto akcipher layer
+  (gcrypt, nettle backends) with tests
+* Adds ECDSA verify command to the ASPEED SBC model with qtest  coverage
+* Adds the ASPEED UDC (USB Device Controller) with gadget device
+  and programmable endpoint DMA, wired on the AST2600
+* Reworks the TMP105 temperature sensor: Resettable reset, fault
+  queue enforcement, TMP75/TMP175/LM75B variants, and qtest coverage
+* Adds the Facebook SanMiguel BMC machine with EEPROM data
+* Uses real TMP75/LM75B models on the Catalina and Fuji boards
+* Adds optional device tree model checking to functional boot tests
+
+----------------------------------------------------------------
+Andrew Jeffery (1):
+      hw/misc/aspeed_scu: Set both AST2600 protection key registers on reset
+
+Emmanuel Blot (16):
+      hw/sensor: tmp105: make device state private to the implementation
+      hw/sensor: tmp105: name the parent object field parent_obj
+      hw/sensor: tmp105: implement Resettable reset
+      hw/sensor: tmp105: enforce the configurable fault queue
+      hw/sensor: tmp105: describe the temperature property
+      hw/arm: aspeed: guard board-local temperature-sensor aliases
+      hw/sensor: tmp105: add TMP75, TMP175 and LM75B variants
+      tests/qtest: tmp105: cover the ALERT fault queue
+      tests/qtest: tmp105: cover the TMP75, TMP175 and LM75B variants
+      tests/qtest: tmp105: cover one-shot and fault-queue write immunity
+      tests/qtest: tmp105: cover shutdown clearing the ALERT across variants
+      hw/arm: sanmiguel: add Facebook SanMiguel BMC machine
+      hw/arm: sanmiguel: populate EEPROM data
+      hw/arm: catalina: use the real TMP75 model
+      hw/arm: fuji: use the real TMP75 and LM75B temperature sensors
+      tests/functional: aspeed: optionally check the device tree model on boot
+
+Jamin Lin (23):
+      hw/i2c/aspeed_i2c: Latch received bytes for SMBus block reads
+      hw/usb/hcd-ehci: Check for DMA errors in get_dwords()/put_dwords()
+      hw/usb/hcd-ehci: Make get_dwords() return bool
+      hw/usb/hcd-ehci: Handle get_dwords() failures in async writeback
+      hw/misc/aspeed_scu: Support the second random number generator
+      tests/qtest/aspeed-hace-utils: Replace g_printerr() with g_test_skip()
+      hw/misc/aspeed_acry: Add ASPEED ACRY model
+      hw/arm/aspeed_ast2600: Introduce the ACRY SRAM
+      hw/arm/aspeed_ast2600: Wire up the ACRY model
+      tests/qtest/aspeed-acry-test: Add RSA ModExp tests
+      qapi/crypto: Add ECDSA algorithm and curve id
+      crypto/akcipher: Support ECDSA sign/verify with gcrypt
+      crypto/akcipher: Support ECDSA sign/verify with nettle
+      tests/crypto: Add ECDSA sign/verify tests
+      hw/arm/aspeed_ast10x0: Remove obsolete unimplemented SBC mapping
+      hw/misc/aspeed_sbc: Increase register space to 0x1000
+      hw/arm/aspeed_ast10x0: Wire SEC SRAM to the SBC model
+      hw/misc/aspeed_sbc: Support the ECDSA verify command
+      tests/qtest: Add ASPEED SBC ECDSA engine test
+      hw/usb/aspeed-udc: Add ASPEED UDC device controller
+      hw/usb/aspeed-udc: Add ASPEED UDC gadget USB device
+      hw/usb/aspeed-udc: Add programmable endpoint DMA transfers
+      hw/arm/aspeed_ast2600: Wire up the UDC
+
+ qapi/crypto.json                  |   33 +-
+ include/hw/arm/aspeed_soc.h       |    9 +-
+ include/hw/i2c/aspeed_i2c.h       |    3 +
+ include/hw/misc/aspeed_acry.h     |   39 ++
+ include/hw/misc/aspeed_sbc.h      |    6 +-
+ include/hw/sensor/tmp105.h        |   46 +-
+ include/hw/usb/aspeed-udc.h       |   85 +++
+ hw/arm/aspeed_ast10x0.c           |   14 +-
+ hw/arm/aspeed_ast2600.c           |   71 ++-
+ hw/arm/aspeed_ast2600_catalina.c  |    1 -
+ hw/arm/aspeed_ast2600_fuji.c      |   16 +-
+ hw/arm/aspeed_ast2600_sanmiguel.c |  403 ++++++++++++++
+ hw/i2c/aspeed_i2c.c               |   38 +-
+ hw/misc/aspeed_acry.c             |  481 +++++++++++++++++
+ hw/misc/aspeed_sbc.c              |  158 +++++-
+ hw/misc/aspeed_scu.c              |   21 +-
+ hw/sensor/tmp105.c                |  300 ++++++++---
+ hw/usb/aspeed-udc.c               | 1058 +++++++++++++++++++++++++++++++++++++
+ hw/usb/hcd-ehci.c                 |   90 ++--
+ tests/qtest/aspeed-acry-test.c    |  406 ++++++++++++++
+ tests/qtest/aspeed-hace-utils.c   |   24 +-
+ tests/qtest/aspeed-sbc-test.c     |  194 +++++++
+ tests/qtest/tmp105-test.c         |  359 +++++++++++++
+ tests/unit/test-crypto-akcipher.c |  236 +++++++++
+ crypto/akcipher-gcrypt.c.inc      |  340 +++++++++++-
+ crypto/akcipher-nettle.c.inc      |  272 ++++++++++
+ hw/arm/Kconfig                    |    1 +
+ hw/arm/meson.build                |    1 +
+ hw/misc/meson.build               |    1 +
+ hw/misc/trace-events              |    8 +
+ hw/usb/Kconfig                    |    4 +
+ hw/usb/meson.build                |    1 +
+ hw/usb/trace-events               |   16 +
+ tests/functional/aspeed.py        |    5 +-
+ tests/qtest/meson.build           |    7 +-
+ 35 files changed, 4552 insertions(+), 195 deletions(-)
+ create mode 100644 include/hw/misc/aspeed_acry.h
+ create mode 100644 include/hw/usb/aspeed-udc.h
+ create mode 100644 hw/arm/aspeed_ast2600_sanmiguel.c
+ create mode 100644 hw/misc/aspeed_acry.c
+ create mode 100644 hw/usb/aspeed-udc.c
+ create mode 100644 tests/qtest/aspeed-acry-test.c
+ create mode 100644 tests/qtest/aspeed-sbc-test.c
 
 
