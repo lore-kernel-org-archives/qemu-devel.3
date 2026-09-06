@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42FC5C79F9E
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 19:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26969C79F9E
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 19:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Ini-0002Wa-S5; Sun, 06 Sep 2026 15:45:14 -0400
+	id 1x3Ina-0002Mb-Pn; Sun, 06 Sep 2026 15:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3Ing-0002VY-M0; Sun, 06 Sep 2026 15:45:12 -0400
-Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
+ id 1x3InZ-0002LO-A6; Sun, 06 Sep 2026 15:45:05 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3Ine-0006zt-Ox; Sun, 06 Sep 2026 15:45:12 -0400
+ id 1x3InX-0006yh-83; Sun, 06 Sep 2026 15:45:05 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdLJ96SRNz7vmK;
- Sun,  6 Sep 2026 21:44:41 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdLJB1LxHzBqYv;
+ Sun,  6 Sep 2026 21:44:42 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788723881;
- bh=rq9LhWG0yBo9Ssls1Pr+s/K1bNr/V6OSuLGExjB50iw=;
+ s=dkim; t=1788723882;
+ bh=TVKZcpQtv/u3uNqIDM8XyVI/mY5xzdqkE/AT2tor87E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TGbkus7updEUNSf+KiBP5U42duM0F4avbJ5Zjmq6sld9Gj4bMrDL7abSy/OokT53J
- 7LGenciYIst0+8v91H4/stwXWZK06p5IEy44pJXJBFNMB7UzOcUM7qFKD8bc+0K2lc
- ZlFdMW6QjoaNeacLcqH+Mt1cF0wtflmUCQyBD4Q4bkQmArDjp5UCILmyNGEt8Q5aKG
- NeRSs9h/HtT02UKEhMPrqhmgKROmMGFe/hpin0C42YsDAdVKXqPWOoG8UH0CL2HrVd
- YuwXaCRmTwIWPzicak/Wdo+ccQJXQS3R4wIkIr1k4w9jPKkBEwbF0v+rafVse86s7+
- oo7oHEyS8t3Iw==
+ b=KBSwqjrvT43dVk5ihvDtK7Jr7QGFJumvy+AbmvJZ0/QpMkK5f6CMHnrVVOh06dp97
+ IaFzKhh4BnWe8DwQRncU2OwDXzhl2sYVNsDuhQFh5OXrHo/uggjcVaUMLOKxsyz92B
+ Gz667hqpyN1Bvs5Qtxl+yTzJ1vjwKOMVuqG7oSfz0P+eIDJ1t18CAME7QpqGA8Mhmq
+ H0BPXx53WJWP4sFxns1HADSuU7BTel+RnDYCDMvykyRuYIRmGDY4n6ZB3n7+GGiD2M
+ wTdTsyE8MtGZLocEZJJQbgKdF27VPAeJgStqQ6P8HcK4ypEB3IihCNwpBvW2wmDDt0
+ xAnVOgSZ+8InQ==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdLJ94jP1z7wXp;
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdLJ96kfhz7wHs;
  Sun,  6 Sep 2026 21:44:41 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
  gilles grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [PATCH v3 07/36] tests/tcg/arm: add Raspberry Pi Pico smoke tests
-Date: Sun,  6 Sep 2026 21:44:06 +0200
-Message-ID: <20260906194438.93046-8-gilles.grimaud@univ-lille.fr>
+Subject: [PATCH v3 08/36] tests/tcg/arm: test the RP2040 Cortex-M0+ MPU
+Date: Sun,  6 Sep 2026 21:44:07 +0200
+Message-ID: <20260906194438.93046-9-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.106;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -71,77 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Build Cortex-M0+ guest programs from assembly sources to exercise the
-minimal Pico boot path, UART0 output, and the Cortex-M0+ MPU. Keep the
-vector table at the XIP base so these tests match the initial synthetic
-boot stub without depending on boot2 or the later flash controller model.
+Add focused execution tests for the optional Armv6-M MPU exposed by the
+RP2040 Cortex-M0+ cores.
+
+Check register reset and readback, privileged and unprivileged accesses,
+the 256-byte minimum region size, overlapping-region priority, subregion
+disabling, and escalation of an MPU violation to HardFault.
+
+The test runs after the generic Armv6-M CONTROL.nPRIV prerequisite and the
+RP2040 machine have both been introduced.
 
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- MAINTAINERS                            |  1 +
- tests/tcg/arm/system/meson.build       | 14 +++++++
- tests/tcg/arm/system/rp2040-boot.S     | 30 +++++++++++++++
- tests/tcg/arm/system/rp2040-minimal.ld | 40 +++++++++++++++++++
- tests/tcg/arm/system/rp2040-uart.S     | 53 ++++++++++++++++++++++++++
- tests/tcg/arm/system/rp2040-uart.ref   |  1 +
- 6 files changed, 139 insertions(+)
- create mode 100644 tests/tcg/arm/system/rp2040-boot.S
- create mode 100644 tests/tcg/arm/system/rp2040-minimal.ld
- create mode 100644 tests/tcg/arm/system/rp2040-uart.S
- create mode 100644 tests/tcg/arm/system/rp2040-uart.ref
+ tests/tcg/arm/system/meson.build    |   5 +
+ tests/tcg/arm/system/rp2040-mpu.S   | 356 ++++++++++++++++++++++++++++
+ tests/tcg/arm/system/rp2040-mpu.ref |  10 +
+ 3 files changed, 371 insertions(+)
+ create mode 100644 tests/tcg/arm/system/rp2040-mpu.S
+ create mode 100644 tests/tcg/arm/system/rp2040-mpu.ref
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index caee8aa0cc..a03fb0575c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1033,6 +1033,7 @@ S: Maintained
- F: hw/*/rp2040*
- F: include/hw/*/rp2040*
- F: hw/arm/raspi_pico.c
-+F: tests/tcg/arm/system/rp2040*
- 
- Real View
- M: Peter Maydell <peter.maydell@linaro.org>
 diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index e92a83a8d5..42e7614a11 100644
+index 42e7614a11..a959830b1c 100644
 --- a/tests/tcg/arm/system/meson.build
 +++ b/tests/tcg/arm/system/meson.build
-@@ -15,6 +15,11 @@ qemu_base_args = ['-display', 'none',
-                   '-semihosting-config', 'enable=on',
-                   '-kernel']
- qemu_def_args = ['-M', 'virt', '-cpu', 'max', qemu_base_args]
-+rp2040_cflags = ['-mcpu=cortex-m0plus', '-mthumb', '-mfloat-abi=soft',
-+                 '-nostdlib', '-Wl,--build-id=none',
-+                 '-T', files('rp2040-minimal.ld')]
-+rp2040_qemu_args = ['-M', 'raspi-pico', '-monitor', 'none',
-+                    qemu_base_args]
- 
- # Multi arch tests
- multi_src = []
-@@ -51,6 +56,15 @@ tests += {
-                '-T', files('test-armv6m-undef.ld')],
-     'qemu_args': ['-M', 'microbit', qemu_base_args],
+@@ -65,6 +65,11 @@ tests += {
+     'qemu_args': ['-serial', 'stdio', rp2040_qemu_args],
+     'expected_output': 'rp2040-uart.ref',
    },
-+  'rp2040-boot.S': {
-+    'cflags': rp2040_cflags,
-+    'qemu_args': rp2040_qemu_args,
-+  },
-+  'rp2040-uart.S': {
++  'rp2040-mpu.S': {
 +    'cflags': rp2040_cflags,
 +    'qemu_args': ['-serial', 'stdio', rp2040_qemu_args],
-+    'expected_output': 'rp2040-uart.ref',
++    'expected_output': 'rp2040-mpu.ref',
 +  },
    'semiconsole.c': {
      'cflags': cflags,
      'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-diff --git a/tests/tcg/arm/system/rp2040-boot.S b/tests/tcg/arm/system/rp2040-boot.S
+diff --git a/tests/tcg/arm/system/rp2040-mpu.S b/tests/tcg/arm/system/rp2040-mpu.S
 new file mode 100644
-index 0000000000..0537a54d44
+index 0000000000..5cc98f3d0e
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-boot.S
-@@ -0,0 +1,30 @@
++++ b/tests/tcg/arm/system/rp2040-mpu.S
+@@ -0,0 +1,356 @@
 +/*
-+ * Raspberry Pi Pico boot smoke test.
++ * Raspberry Pi Pico Cortex-M0+ MPU test.
 + *
 + * Copyright 2026 Gilles Grimaud
 + * SPDX-License-Identifier: GPL-2.0-or-later
@@ -152,136 +124,366 @@ index 0000000000..0537a54d44
 +.thumb
 +
 +#define SRAM_END 0x20042000
++#define TEST_ADDRESS 0x20001000
++#define TEST_VALUE 0x12345678
++#define UART0_DR 0x40034000
++#define MPU_TYPE 0xe000ed90
++#define MPU_CTRL 0xe000ed94
++#define MPU_RNR 0xe000ed98
++#define MPU_RBAR 0xe000ed9c
++#define MPU_RASR 0xe000eda0
++#define MPU_TYPE_DREGION_MASK 0x0000ff00
++#define MPU_TYPE_DREGION_SHIFT 8
++#define MPU_CTRL_ENABLE_PRIVDEFENA 0x05
++#define MPU_RASR_SRAM_FULL_ACCESS 0x03000025
++#define MPU_RASR_XIP_READ_ONLY 0x06000039
++#define MPU_RASR_TEST_PRIV_RW 0x0100000f
++#define MPU_RASR_TEST_NO_ACCESS_32B 0x00000009
++#define MPU_RASR_TEST_NO_ACCESS_256B 0x0000000f
++#define MPU_RASR_TEST_SUBREGION0_OFF 0x0000010f
 +#define SYS_EXIT 0x18
 +#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR 0x20023
 +
 +.section .vectors, "a", %progbits
 +vector_table:
 +    .word SRAM_END
 +    .word reset_handler + 1
++    .word default_handler + 1
++    .word hardfault_handler + 1
 +
 +.section .text, "ax", %progbits
 +.thumb_func
 +.global reset_handler
 +reset_handler:
++    ldr r0, =start_message
++    bl puts
++
++    ldr r0, =MPU_TYPE
++    ldr r0, [r0]
++    ldr r1, =MPU_TYPE_DREGION_MASK
++    ands r0, r1
++    lsrs r0, r0, MPU_TYPE_DREGION_SHIFT
++    cmp r0, 8
++    beq 1f
++    b fail_type
++1:
++
++    ldr r0, =type_message
++    bl puts
++
++    ldr r0, =MPU_CTRL
++    ldr r1, [r0]
++    cmp r1, 0
++    beq 1f
++    b fail_reset
++1:
++    ldr r0, =MPU_RNR
++    ldr r1, [r0]
++    cmp r1, 0
++    beq 1f
++    b fail_reset
++1:
++    ldr r0, =MPU_RBAR
++    ldr r1, [r0]
++    cmp r1, 0
++    beq 1f
++    b fail_reset
++1:
++    ldr r0, =MPU_RASR
++    ldr r1, [r0]
++    cmp r1, 0
++    beq 1f
++    b fail_reset
++1:
++
++    ldr r0, =reset_message
++    bl puts
++
++    ldr r4, =TEST_ADDRESS
++    ldr r5, =TEST_VALUE
++    str r5, [r4]
++    ldr r0, [r4]
++    cmp r0, r5
++    beq 1f
++    b fail_plain
++1:
++
++    ldr r0, =plain_message
++    bl puts
++
++    movs r0, 0
++    ldr r1, =0x20000000
++    ldr r2, =MPU_RASR_SRAM_FULL_ACCESS
++    bl configure_region
++
++    movs r0, 1
++    movs r1, 0
++    ldr r2, =MPU_RASR_XIP_READ_ONLY
++    bl configure_region
++
++    movs r0, 2
++    ldr r1, =TEST_ADDRESS
++    ldr r2, =MPU_RASR_TEST_PRIV_RW
++    bl configure_region
++
++    ldr r0, =MPU_RNR
++    ldr r0, [r0]
++    cmp r0, 2
++    beq 1f
++    b fail_registers
++1:
++    ldr r0, =MPU_RBAR
++    ldr r0, [r0]
++    ldr r1, =(TEST_ADDRESS | 2)
++    cmp r0, r1
++    beq 1f
++    b fail_registers
++1:
++    ldr r0, =MPU_RASR
++    ldr r0, [r0]
++    ldr r1, =MPU_RASR_TEST_PRIV_RW
++    cmp r0, r1
++    beq 1f
++    b fail_registers
++1:
++
++    ldr r0, =registers_message
++    bl puts
++
++    ldr r0, =MPU_CTRL
++    movs r1, MPU_CTRL_ENABLE_PRIVDEFENA
++    str r1, [r0]
++    dsb
++    isb
++
++    ldr r0, [r4]
++    cmp r0, r5
++    beq 1f
++    b fail_privileged
++1:
++
++    ldr r0, =privileged_message
++    bl puts
++
++    movs r0, 3
++    ldr r1, =TEST_ADDRESS
++    ldr r2, =MPU_RASR_TEST_NO_ACCESS_32B
++    bl configure_region
++    dsb
++    isb
++    ldr r0, [r4]
++    cmp r0, r5
++    beq 1f
++    b fail_min_size
++1:
++
++    ldr r0, =min_size_message
++    bl puts
++
++    ldr r0, =fault_phase
++    movs r1, 1
++    str r1, [r0]
++    movs r0, 3
++    ldr r1, =TEST_ADDRESS
++    ldr r2, =MPU_RASR_TEST_NO_ACCESS_256B
++    bl configure_region
++    dsb
++    isb
++    ldr r0, [r4]
++    ldr r1, =fault_phase
++    ldr r1, [r1]
++    cmp r1, 0
++    beq 1f
++    b fail_priority
++1:
++
++    ldr r0, =priority_message
++    bl puts
++
++    movs r0, 3
++    ldr r1, =TEST_ADDRESS
++    ldr r2, =MPU_RASR_TEST_SUBREGION0_OFF
++    bl configure_region
++    dsb
++    isb
++    ldr r0, [r4]
++    cmp r0, r5
++    beq 1f
++    b fail_subregion
++1:
++
++    ldr r0, =subregion_message
++    bl puts
++
++    movs r0, 1
++    msr control, r0
++    isb
++
++    ldr r0, [r4]
++    ldr r0, =fail_no_fault_message
++    b test_failed
++
++.thumb_func
++configure_region:
++    ldr r3, =MPU_RNR
++    str r0, [r3]
++    ldr r3, =MPU_RBAR
++    str r1, [r3]
++    ldr r3, =MPU_RASR
++    str r2, [r3]
++    bx lr
++
++fail_type:
++    ldr r0, =fail_type_message
++    b test_failed
++
++fail_reset:
++    ldr r0, =fail_reset_message
++    b test_failed
++
++fail_registers:
++    ldr r0, =fail_registers_message
++    b test_failed
++
++fail_plain:
++    ldr r0, =fail_plain_message
++    b test_failed
++
++fail_privileged:
++    ldr r0, =fail_privileged_message
++    b test_failed
++
++fail_min_size:
++    ldr r0, =fail_min_size_message
++    b test_failed
++
++fail_priority:
++    ldr r0, =fail_priority_message
++    b test_failed
++
++fail_subregion:
++    ldr r0, =fail_subregion_message
++
++test_failed:
++    bl puts
 +    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
 +    bkpt 0xab
 +
 +1:
 +    b 1b
-diff --git a/tests/tcg/arm/system/rp2040-minimal.ld b/tests/tcg/arm/system/rp2040-minimal.ld
-new file mode 100644
-index 0000000000..ebfbac8cf2
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-minimal.ld
-@@ -0,0 +1,40 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-+ENTRY(reset_handler)
-+
-+MEMORY
-+{
-+    FLASH (rx) : ORIGIN = 0x10000000, LENGTH = 2M
-+    SRAM (rwx) : ORIGIN = 0x20000000, LENGTH = 264K
-+}
-+
-+SECTIONS
-+{
-+    .vectors ORIGIN(FLASH) :
-+    {
-+        KEEP(*(.vectors))
-+    } > FLASH
-+
-+    .text :
-+    {
-+        *(.text*)
-+        *(.rodata*)
-+    } > FLASH
-+
-+    .data :
-+    {
-+        *(.data*)
-+    } > SRAM AT > FLASH
-+
-+    .bss (NOLOAD) :
-+    {
-+        *(.bss*)
-+        *(COMMON)
-+    } > SRAM
-+
-+    /DISCARD/ :
-+    {
-+        *(.ARM.attributes)
-+        *(.comment)
-+    }
-+}
-diff --git a/tests/tcg/arm/system/rp2040-uart.S b/tests/tcg/arm/system/rp2040-uart.S
-new file mode 100644
-index 0000000000..bdb58cc7f2
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-uart.S
-@@ -0,0 +1,53 @@
-+/*
-+ * Raspberry Pi Pico UART boot smoke test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#define SRAM_END 0x20042000
-+#define UART0_DR 0x40034000
-+#define SYS_EXIT 0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+
-+.section .vectors, "a", %progbits
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
 +.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =UART0_DR
-+    ldr r1, =message
++hardfault_handler:
++    ldr r0, =fault_phase
++    ldr r1, [r0]
++    cmp r1, 0
++    beq hardfault_done
++    movs r1, 0
++    str r1, [r0]
++    ldr r0, =MPU_RNR
++    movs r1, 3
++    str r1, [r0]
++    ldr r0, =MPU_RASR
++    movs r1, 0
++    str r1, [r0]
++    dsb
++    isb
++    bx lr
 +
-+1:
-+    ldrb r2, [r1]
-+    cmp r2, 0
-+    beq 2f
-+    str r2, [r0]
-+    adds r1, 1
-+    b 1b
++hardfault_done:
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
 +
 +2:
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+3:
-+    b 3b
++    b 2b
 +
 +.thumb_func
 +default_handler:
-+    b default_handler
++    ldr r0, =fail_exception_message
++    b test_failed
++
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
++
++3:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 4f
++    str r1, [r2]
++    adds r0, 1
++    b 3b
++
++4:
++    bx lr
 +
 +.section .rodata, "a", %progbits
-+message:
-+    .asciz "PICO TCG UART OK\n"
-diff --git a/tests/tcg/arm/system/rp2040-uart.ref b/tests/tcg/arm/system/rp2040-uart.ref
++start_message:
++    .asciz "PICO TCG MPU START\n"
++type_message:
++    .asciz "PICO TCG MPU TYPE\n"
++reset_message:
++    .asciz "PICO TCG MPU RESET\n"
++plain_message:
++    .asciz "PICO TCG MPU PLAIN\n"
++registers_message:
++    .asciz "PICO TCG MPU REGISTERS\n"
++privileged_message:
++    .asciz "PICO TCG MPU PRIV\n"
++min_size_message:
++    .asciz "PICO TCG MPU MIN SIZE\n"
++priority_message:
++    .asciz "PICO TCG MPU PRIORITY\n"
++subregion_message:
++    .asciz "PICO TCG MPU SUBREGION\n"
++ok_message:
++    .asciz "PICO TCG MPU OK\n"
++fail_type_message:
++    .asciz "PICO TCG MPU FAIL: TYPE\n"
++fail_reset_message:
++    .asciz "PICO TCG MPU FAIL: RESET\n"
++fail_plain_message:
++    .asciz "PICO TCG MPU FAIL: PLAIN\n"
++fail_registers_message:
++    .asciz "PICO TCG MPU FAIL: REGISTERS\n"
++fail_privileged_message:
++    .asciz "PICO TCG MPU FAIL: PRIV\n"
++fail_min_size_message:
++    .asciz "PICO TCG MPU FAIL: MIN SIZE\n"
++fail_priority_message:
++    .asciz "PICO TCG MPU FAIL: PRIORITY\n"
++fail_subregion_message:
++    .asciz "PICO TCG MPU FAIL: SUBREGION\n"
++fail_no_fault_message:
++    .asciz "PICO TCG MPU FAIL: NOFAULT\n"
++fail_exception_message:
++    .asciz "PICO TCG MPU FAIL: EXCEPTION\n"
++
++.section .bss, "aw", %nobits
++.align 2
++fault_phase:
++    .word 0
+diff --git a/tests/tcg/arm/system/rp2040-mpu.ref b/tests/tcg/arm/system/rp2040-mpu.ref
 new file mode 100644
-index 0000000000..1ef16e8299
+index 0000000000..d3938add02
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-uart.ref
-@@ -0,0 +1 @@
-+PICO TCG UART OK
++++ b/tests/tcg/arm/system/rp2040-mpu.ref
+@@ -0,0 +1,10 @@
++PICO TCG MPU START
++PICO TCG MPU TYPE
++PICO TCG MPU RESET
++PICO TCG MPU PLAIN
++PICO TCG MPU REGISTERS
++PICO TCG MPU PRIV
++PICO TCG MPU MIN SIZE
++PICO TCG MPU PRIORITY
++PICO TCG MPU SUBREGION
++PICO TCG MPU OK
 -- 
 2.55.0
 
