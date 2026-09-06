@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C815C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 17:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45272C79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 17:13:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3GPB-00045C-BN; Sun, 06 Sep 2026 13:11:45 -0400
+	id 1x3GP0-0003mI-FA; Sun, 06 Sep 2026 13:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GP5-0003wV-BT
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GOe-0003dW-GB
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GP3-0000H4-PG
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GOd-00009O-1w
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788714697;
+ s=mimecast20190719; t=1788714669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h0cvcOMMXMIWk3qCx8ZaI/3Azr4XHQliMOdrysHZcf4=;
- b=Km8hlx/P/DvYTaAMf509/bcgd2ckIxZ1dLrsZRP+DzPrFo3MtkSYMx+OfylLMGIPLn7eUz
- c5dGeTXZ75j1IIwJvaAh+Chpo75X2CTpJTQwFQUOrLhBno2fWbh+ZWKrw2A6ohEomjyne3
- /yi8PT0GvDYHpcHCHgpzyRYg09vfPoo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KfE/DKFTY0eE+C8K2XBx523m0rfeC7/0AsRo3m2ghUE=;
+ b=du1PeNqMYXXW+1wnkNLeAGm99cQqfXrkxzQm05mSsk9hpT4nFFlqIN6m8JhWRNodFoLer5
+ CwTfFenSrEc6mgOkC8mzcmTlQXzMFfQPc9tqrORMpR6XpYM1eiOK0DWZoILAhWDdxBOsBd
+ 5CBJPSkvqQrlcv52RBVmKFc6dKskL6s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-KStbx4f2M6u96Ib1wxZAkw-1; Sun,
- 06 Sep 2026 13:11:35 -0400
-X-MC-Unique: KStbx4f2M6u96Ib1wxZAkw-1
-X-Mimecast-MFC-AGG-ID: KStbx4f2M6u96Ib1wxZAkw_1788714694
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-ESH2usrfPlS7n3pVp4Rxbw-1; Sun,
+ 06 Sep 2026 13:11:06 -0400
+X-MC-Unique: ESH2usrfPlS7n3pVp4Rxbw-1
+X-Mimecast-MFC-AGG-ID: ESH2usrfPlS7n3pVp4Rxbw_1788714665
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32F7D1805A2B; Sun,  6 Sep 2026 17:11:34 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D11A1801238; Sun,  6 Sep 2026 17:11:05 +0000 (UTC)
 Received: from yukon.redhat.com (unknown [10.44.32.24])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 966941955F06; Sun,  6 Sep 2026 17:11:32 +0000 (UTC)
+ id 0B20C1955F06; Sun,  6 Sep 2026 17:11:03 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Emmanuel Blot <emmanuel.blot@free.fr>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 32/40] tests/qtest: tmp105: cover the ALERT fault queue
-Date: Sun,  6 Sep 2026 19:10:13 +0200
-Message-ID: <20260906171021.26568-33-clg@redhat.com>
+Subject: [PULL 17/40] hw/misc/aspeed_sbc: Increase register space to 0x1000
+Date: Sun,  6 Sep 2026 19:09:58 +0200
+Message-ID: <20260906171021.26568-18-clg@redhat.com>
 In-Reply-To: <20260906171021.26568-1-clg@redhat.com>
 References: <20260906171021.26568-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,109 +83,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Emmanuel Blot <emmanuel.blot@free.fr>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Add two qgraph tests exercising the ALERT pin, the only way the TMP105
-exposes its alarm state. One checks the default single-fault behaviour;
-the other checks a deeper fault queue, including the running-count reset
-on an in-range conversion and its effect on both asserting and releasing
-the alarm.
+The SBC controller register space is 0x1000.
+Increase ASPEED_SBC_NR_REGS accordingly to cover the
+full register space.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+This changes the size of the VMState register array and
+therefore breaks migration compatibility with older QEMU
+versions. Simply bump the VMState version to 2,
+as Aspeed machines are not intended for
+virtualization use cases.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260731-sanmiguel-bmc-locator-v2-8-1266926ba769@free.fr
+Link: https://lore.kernel.org/qemu-devel/20260901085238.995968-7-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/qtest/tmp105-test.c | 63 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+ include/hw/misc/aspeed_sbc.h | 2 +-
+ hw/misc/aspeed_sbc.c         | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/tmp105-test.c b/tests/qtest/tmp105-test.c
-index 3b114a50f550..29a031fb7bfe 100644
---- a/tests/qtest/tmp105-test.c
-+++ b/tests/qtest/tmp105-test.c
-@@ -17,6 +17,11 @@
+diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
+index 07c7c22a86ab..eea6e2b27fbf 100644
+--- a/include/hw/misc/aspeed_sbc.h
++++ b/include/hw/misc/aspeed_sbc.h
+@@ -17,7 +17,7 @@
+ #define TYPE_ASPEED_AST10X0_SBC TYPE_ASPEED_SBC "-ast10x0"
+ OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
  
- #define TMP105_TEST_ID   "tmp105-test"
- #define TMP105_TEST_ADDR 0x49
-+#define TMP105_TEST_PATH "/machine/peripheral/" TMP105_TEST_ID
-+
-+#define TMP105_CONFIG_POL   (1 << 2)   /* ALERT active-high when set */
-+#define TMP105_CONFIG_FQ_1  (0 << 3)   /* fault queue: 1 consecutive fault */
-+#define TMP105_CONFIG_FQ_4  (2 << 3)   /* fault queue: 4 consecutive faults */
+-#define ASPEED_SBC_NR_REGS (0x93c >> 2)
++#define ASPEED_SBC_NR_REGS (0x1000 >> 2)
  
- static int qmp_tmp105_get_temperature(const char *id)
- {
-@@ -105,6 +110,62 @@ static void send_and_receive(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_T_HIGH), ==, 0x4230);
+ #define QSR_AES                     BIT(27)
+ #define QSR_RSA1024                 (0x0 << 12)
+diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+index 1dfcf14e5ba6..7397d9bbf066 100644
+--- a/hw/misc/aspeed_sbc.c
++++ b/hw/misc/aspeed_sbc.c
+@@ -307,15 +307,15 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
+-            TYPE_ASPEED_SBC, 0x1000);
++            TYPE_ASPEED_SBC, ASPEED_SBC_NR_REGS << 2);
+ 
+     sysbus_init_mmio(sbd, &s->iomem);
  }
  
-+/*
-+ * The TMP105 exposes its alarm state only through the ALERT pin.
-+ */
-+static void test_alert_single_fault(void *obj, void *data,
-+                                    QGuestAllocator *alloc)
-+{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-+
-+    qtest_irq_intercept_out(global_qtest, TMP105_TEST_PATH);
-+
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, TMP105_CONFIG_POL | TMP105_CONFIG_FQ_1);
-+    g_assert_false(get_irq(0));
-+
-+    qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
-+    g_assert_true(get_irq(0));
-+
-+    qmp_tmp105_set_temperature(TMP105_TEST_ID, 70000);
-+    g_assert_false(get_irq(0));
-+}
-+
-+static void test_fault_queue(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-+    int i;
-+
-+    qtest_irq_intercept_out(global_qtest, TMP105_TEST_PATH);
-+
-+    /* Comparator mode, active-high ALERT, fault queue of four. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, TMP105_CONFIG_POL | TMP105_CONFIG_FQ_4);
-+    g_assert_false(get_irq(0));
-+
-+    for (i = 0; i < 3; i++) {
-+        qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
-+        g_assert_false(get_irq(0));
-+    }
-+
-+    qmp_tmp105_set_temperature(TMP105_TEST_ID, 25000);
-+    g_assert_false(get_irq(0));
-+
-+    for (i = 0; i < 3; i++) {
-+        qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
-+        g_assert_false(get_irq(0));
-+    }
-+
-+    qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
-+    g_assert_true(get_irq(0));
-+
-+    for (i = 0; i < 3; i++) {
-+        qmp_tmp105_set_temperature(TMP105_TEST_ID, 70000);
-+        g_assert_true(get_irq(0));
-+    }
-+
-+    qmp_tmp105_set_temperature(TMP105_TEST_ID, 70000);
-+    g_assert_false(get_irq(0));
-+}
-+
- static void tmp105_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -116,5 +177,7 @@ static void tmp105_register_nodes(void)
-     qos_node_consumes("tmp105", "i2c-bus", &opts);
- 
-     qos_add_test("tx-rx", "tmp105", send_and_receive, NULL);
-+    qos_add_test("alert-single-fault", "tmp105", test_alert_single_fault, NULL);
-+    qos_add_test("fault-queue", "tmp105", test_fault_queue, NULL);
- }
- libqos_init(tmp105_register_nodes);
+ static const VMStateDescription vmstate_aspeed_sbc = {
+     .name = TYPE_ASPEED_SBC,
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32_ARRAY(regs, AspeedSBCState, ASPEED_SBC_NR_REGS),
+         VMSTATE_END_OF_LIST(),
 -- 
 2.55.0
 
