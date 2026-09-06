@@ -4,97 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27C4C79F8B
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 03:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94DCC79F9F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 04:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x33nV-0005OH-LN; Sat, 05 Sep 2026 23:44:01 -0400
+	id 1x34xx-0003zl-4P; Sun, 06 Sep 2026 00:58:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1x33nU-0005O3-C1
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 23:44:00 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1x34xq-0003zM-H2
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 00:58:49 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1x33nS-0006FY-Ok
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 23:44:00 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-398a5aad413so1735093a91.3
- for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 20:43:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788666237; cv=none;
- d=google.com; s=arc-20260327;
- b=Vubk/3urNmUaFHfRkYX7VvR8wcC3Fb7cZxbZmwhFgygfD2kCzlGnpQlZbdyh8evtcQ
- 1PIP2FcnWa0AUayDBb2Bs5YfS65OMUyy3p0+sUYfYvHCza/hAbi6C6YnXqqSpR+l5yAD
- UEjxWNceDQjn2CN8bm68NY+kobyu2/sIbwiJlBFNdcjEop8BDOwQhWJZ4CG5hS0neqGc
- sXFH8R6oZEYANJ7OBpGEV2ur6yanEIWfPbJ4gyq49SLCOj17jP6T22eR8/gHrCHlHt56
- uZIF4apF8DTxgmkSUqoR1OBCLhDrBLftxZf8Wb0+pCV7+QI27o+wPAVDdWlTJamatmjZ
- mmbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=xHO8pCk/PGul4WjK6pHwxopazczPugQYLb9RWHnDvXQ=;
- fh=9bZF49n7Ry20Puk4B4Mm8twO2cDLo0zOliqLKlB0dV0=;
- b=FvNaC9fci1PIjOq3vRg9i500cFMihvPb9gzjAkR9PUYtu8PiewEzk5FkJGNNpG/pY4
- mxtQ1uJ4J4Lq8jky4htFKBW+0XvAygJjxhY/ylPnvD3IapEdhipfA8WM2ZAQkI1W9fwH
- mwspi2ZzK3/SS2skJc6DyB3kN+8FuOmK8fPVXnikVLXLhs0DvNnu35HwadWlf2Qka2PX
- 2LyoU5ydUas8VJNhjfwuteAc7VwGZF90r2UfSjhJLNZd3rCJO50UFM7whlW0+vdRr+gV
- 9iMvhD3KS3+8leulUzUvWYS7K8OB6Vr7DgabsGAOlKmD84/KLXGpIqWzLUVzAN+QgB8G
- /yKQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1x34xo-0004nM-E4
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 00:58:46 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-5b4aa47bc97so1825317e87.2
+ for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 21:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788666237; x=1789271037; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xHO8pCk/PGul4WjK6pHwxopazczPugQYLb9RWHnDvXQ=;
- b=S3dXXm3wLEGvyVcuYFGD2SbA9VgougYBTXS0ExQp7epVN1jTKecxvN3p1LzJWN4T7S
- 9ZKx9zbSYa+4iHEA8Sgxp71/+YRuB7Jc4UTyn4uSkDiED4QafIKGkjR5j0MIxo3PlV4Q
- yZEBnuTQ+FM9IR5PamZ/vEZeGr44MarRRwNx6rzXscZ32CHNyvbWgZmT7jX1kwhJ3e0o
- Fm5Q3hdjHs2W3ntJy16xAkHiszg82Nzjbg/oRQBmilDCx5emJ19YEUiKuaHlsEgO9Y+o
- Nkn8na0GgP+2ht7WbBwDCrr3+WIfSKatbxXjhWyRc8oxUvuWdKu0Tz/vreYSRTrj+343
- DzmQ==
+ d=gmail.com; s=20251104; t=1788670722; x=1789275522; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lYfVkceP5S1HVyUvDod78U74pYKuDJC+6hEWu0Cwf2U=;
+ b=j6Ytu7nkXr6pfeWOP4EKNQj47KI9S/IiP2Zit3kqzS9TyBTnM30RYoGJww0dG+vnvf
+ 4AoKgYbMh+QUBU3eDOL1ypsiHj+AU9jIoLEvkUWPWF2XglOwsa/RVt3FtuScQlL+PLch
+ 8X5f2/fxH+rLdpA9SZtXKIUuoS3rvJo1KfIgu6JAzNI4DN5AIxp2tgYAS4XDqq/mId+X
+ Lr/0+/vgA+K6rvb7MZ+NuK9exgW85H1TaISVcY6IIkMwY4Sgm211omlI9zCBUvF74EWe
+ 0senuw/4ex7T/Uo3r6JFEZAkcYVSQs7S9Yyd7RsQPVj1cmHIYbtF/l4NNiYA1maUPH9l
+ VGMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788666237; x=1789271037;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=xHO8pCk/PGul4WjK6pHwxopazczPugQYLb9RWHnDvXQ=;
- b=dvdGot/59lxZodP6FU3V1xy5J+qXCo9AP/16nZaXVcjmrxPm+3I+RQ9FwFhWvYVTFU
- dCtpcfy8ZbstU/Qy+iIn7b+jONMqEma8i4qKF1CldGfFlALdmLszptkPoX6LxEtsPT7m
- K/ljEdujeU8ZwQyHmbqSOskLx08oSYS3nDNHOdBZy8t9ZYsISkS37fr5MOYFAI6U63ha
- STCrVp8HE1HfJmcurfJHV3fcYWgTgEz4vC8YxfavFXDA6Vg6ztpx75xvBjE9uk+FnpBv
- CfB6QMK9MiTKMhQFYLxaTmMokYA8QVmoQ7WPe1Nr7qe7Vsd/Xqn5gilBsYAFZRbiYT2j
- gBpQ==
-X-Gm-Message-State: AFuF++mh+TP4KYFZrqupcBB1ryFuEQAhbbf6klcqlApc6VRcXl/pU0EM
- W4H5YcrQkL+YIN4DTOeGPQe1TnTZDiRf9YjpC3+l7fdgJx2ZfqKsnY6Igaq/K1DoDbTECR0G9zL
- axKuA2WnDTe46r0ncD2pFCQS11Qw6Bn8=
-X-Gm-Gg: AYBFou2odYC1mS1tD6RZJ7rGX5gSwU+zUjiPxlXHO7JLeD3DsnsaN5VbQbZquM7a/Va
- DkXkkD14OOLqMHGSWnNMYjmgKwqzqqVQgxCeNjzp8TRVizKp4l47paqZvAbpjQpbXt+Ib7M2yAN
- WqSoqtW7KesuC4oZDaKYcJt+GlKrdRGihIFui8BUXlBVJCqdxrRQl2LbC6yxLcT5DzwceW+WMIf
- M1CN+brdao6t5MELZ4dIoq6klBRsZf0VJK/Car62CUzswF0CrEgb+3lgJM+w6VvDfnPglbaalO3
- pYQ8zHo5FR6f5zoOQ3+mlsh9vYHqlydVFsDqFazATZct1XRRlnK7jtN5I8Hx9SPZi5q4+f1yxTB
- w
-X-Received: by 2002:a17:90b:4e8f:b0:38e:5c6:4db9 with SMTP id
- 98e67ed59e1d1-39b261ba63bmr23938857a91.11.1788666236644; Sat, 05 Sep 2026
- 20:43:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260905014629.991586-1-apolivodaa433@gmail.com>
- <CABgObfa4+CzMVN4xj=71cfJL6eMdMWqCoEvQ5RKvPNcR79XO4w@mail.gmail.com>
-In-Reply-To: <CABgObfa4+CzMVN4xj=71cfJL6eMdMWqCoEvQ5RKvPNcR79XO4w@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1788670722; x=1789275522;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lYfVkceP5S1HVyUvDod78U74pYKuDJC+6hEWu0Cwf2U=;
+ b=KA8wO0xwaXxztud31QAtaBqZKogTqfR2DxwYp09BveDgr9o/5QKNxfJQICwlNyw1KF
+ kIDRRHhvr6UXucjk/8wW90b2ckc/HhsgHpTbaD03svAtmwjGy+JJeUuexyU1JX1gX14B
+ IOVaWvKgZdXXUXD0EUpVaZ5WK5Zz/Q6q5aFAQHixh53LWvxGk8VTimVrHSWsT+DwPtT9
+ XyAYXyPKrO0F5qfHEl2jDl33k8NK9QLfdALKAUdJUK4boIL+meTnW33K/aIs9uKFol3j
+ SOrNGcwF/++z1AGFQQCYJrrCSGO+YDb2Kom2CEv+21VKyuqbgMtQf2WC6q/1bbI1SpCC
+ DAgA==
+X-Gm-Message-State: AFuF++kE6ePSfhe/f2VP/gtv8xEN4V07xhQKE2UANzUuCB8qNTKm4r5X
+ 2qfcGqmK6cyBut4QUA3KLQRQu1X704HO4PP6DY017BnXdwOiyS94nLxZKUDLQ4ja
+X-Gm-Gg: AYBFou1bEcOSh5NA3GMkyxa8uJuXYZ+YRlA/NH6G+aDYA76ZnB9M0OT4P9ZGL7W4A7m
+ Sz43D1AeT7LBZdNZ6jXMsNc2+3uqrMOXNVCGZtUrMCHk2X04xLzG3dyjB2VSuJwi4eP9thdT53c
+ 5BrzF03+hdbC0FoIiySYS5cKF7NDzorVch4+KtCEDgIh/ASDrXuVBGrpDq3fOAoFWTI/Zgzbj76
+ 2z6XJWHh36rfPlE4efXVD6/CGtRocbNJyy0SKH4YYwCtAcOu0JvYwz9xkfKfSPWnaNa31NLmChN
+ sC+myFFRUEXK3L4uGaZ/OLSmNbRylKkcUlHBVwE/fdAYL3NJS5kNHvcEgMRnlfjl+UzqO8dItqD
+ xA+q3VNWsUuU5yDvVmd9iJOlnuGJl3gTpC72Cx5Aa56FFSHSypaHvxF7pxfSP5vZLtlsoJaWBjV
+ SXYY+JqDKDyzDhTBpgZHLppEO/+CyZ1xZV6x8g+NO72nDwPksqvhU1moc+XGISAu3bSIZDdvYY7
+ afwjzkEVYdwrUk=
+X-Received: by 2002:a05:6512:39d0:b0:5b6:183c:5c9d with SMTP id
+ 2adb3069b0e04-5b6183c5e63mr2256542e87.59.1788670722148; 
+ Sat, 05 Sep 2026 21:58:42 -0700 (PDT)
+Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5b6166ed098sm1443315e87.22.2026.09.05.21.58.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Sep 2026 21:58:41 -0700 (PDT)
 From: Andrey Polivoda <apolivodaa433@gmail.com>
-Date: Sun, 6 Sep 2026 13:43:44 +1000
-X-Gm-Features: AcwNN1U9Fq4BDCbGa03ZWh9b2fwYP773csg3Z23C_gWRPalWSpb8tsduUKJl-t4
-Message-ID: <CAGscdFt0cJOaB+5P4YcSEbC7zAw8ZCnnfFQWBki-P+KXVtW-gw@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: ignore VEX.L when emitting VROUNDSS and
- VROUNDSD
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=apolivodaa433@gmail.com; helo=mail-pj1-x1030.google.com
+Subject: [PATCH v2] target/i386: ignore VEX.L when emitting VROUNDSS, VROUNDSD,
+ VMOVSS and VMOVSD
+Date: Sun,  6 Sep 2026 14:58:36 +1000
+Message-ID: <20260906045836.1077269-1-apolivodaa433@gmail.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,61 +99,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>
->>      case X86_SIZE_ps: /* SSE/AVX packed single precision */
->> -    case X86_SIZE_pd: /* SSE/AVX packed double precision */
->> -        *ot = s->vex_l ? MO_256 : MO_128;
->> +    case X86_SIZE_pd: { /* SSE/AVX packed double precision */
->> +            bool is_scalar = (e->s0 == X86_SIZE_ss || e->s0 == X86_SIZE_sd ||
->> +                              e->s1 == X86_SIZE_ss || e->s1 == X86_SIZE_sd ||
->> +                              e->s2 == X86_SIZE_ss || e->s2 == X86_SIZE_sd);
->> +            *ot = (s->vex_l && !is_scalar) ? MO_256 : MO_128;
->> +        }
->
->
-> Oh, this also applies to VMOVSS, VSQRTSS, etc. but that's actually correct - they're all VEX.LIG. It's worth listing these instructions above the declaration of is_scalar.
->
-> Paolo
+According to both Volume 2 of Intel 64 and IA-32 Architectures Software
+Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
+VEX.L is a "don't care" bit for `VROUNDSS`, `VROUNDSD`, `VMOVSS`, `VMOVSD`.
 
-Checked which instructions are actually affected by this patch:
-```
-$ grep -Rn ',\s*s[sd]' | grep OP | grep -E ',\s*(x|ps|pd)'
-tcg/decode-new.c.inc:999:    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,
-H,x, W,ss, vex3 cpuid(SSE41) p_66),
-tcg/decode-new.c.inc:1000:    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,
-H,x, W,sd, vex3 cpuid(SSE41) p_66),
-tcg/decode-new.c.inc:1056:        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,
-      M,ss, vex5),
-tcg/decode-new.c.inc:1057:        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,
-      M,sd, vex5),
-tcg/decode-new.c.inc:1079:        X86_OP_ENTRY3(VMOVSS_st,  M,ss,
-None,None, V,x, vex5),
-tcg/decode-new.c.inc:1080:        X86_OP_ENTRY3(VMOVLPx_st, M,sd,
-None,None, V,x, vex5), /* MOVSD */
-tcg/decode-new.c.inc:1163:        X86_OP_ENTRY3(VMOVSS_st,  M,ss,
-None,None, V,x, vex4 cpuid(SSE4A)), /* MOVNTSS */
-tcg/decode-new.c.inc:1164:        X86_OP_ENTRY3(VMOVLPx_st, M,sd,
-None,None, V,x, vex4 cpuid(SSE4A)), /* MOVNTSD */
-$
-```
-After running some tests, it looks like the behavior of (V)ROUNDSS,
-(V)ROUNDSD, (V)MOVSS and (V)MOVSD is actually modified by this patch.
-(MOVNTSS and MOVNTSD do not generate different TCG ops with and
-without the patch applied. However, the VEX prefix
-is actually illegal for these two AMD-specific instructions (tested on
-AMD EPYC 7763; material for a different patch, I guess))
+Currently, QEMU handles VEX.L with these instructions differently:
+- In the VMOVSS and VMOVSD case, VEX.L allows to select the register size
+  (XMM or YMM), leading to differences between QEMU and the real hardware.
+- In `gen_VROUNDSS()` and `gen_VROUNDSD()`, there is an assert which checks
+  that `s->vex_l` is not set. When either instruction is encountered with VEX.L
+  bit set, the QEMU process crashes with an assertion failure.
 
-Also, VSQRTSS and VSQRTSD are actually raising an invalid opcode
-exception when VEX.L is set
-That's because:
-1. `vex_special` field of VSQRTSS/VSQRTSD opcode entries is set to
-`X86_VEX_REPScalar`
-2. For entries with `vex_special == X86_VEX_REPScalar`,
-`validate_vex()` raises the #UD
-    if `(s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) != 0` and `s->vex_l` is set
-Intel Core i3-6100 and AMD EPYC 7763 do not raise #UD when this
-happens. (looks like another patch material)
+These behaviors deviate from real hardware, and in VROUNDSS/VROUNDSD case,
+it also allows unprivileged guest userspace to crash the QEMU process itself.
 
-I will send a v2 with a comment listing (V)ROUNDSS, (V)ROUNDSD,
-(V)MOVSS, (V)MOVSD as the instructions affected by this change
+This patch fixes this by removing the incorrect asserts and ensuring
+that instructions with a `X86_SIZE_ss/sd` operand are always executed
+with 128-bit size to match the behavior of the real Intel and AMD hardware.
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 790684776861 ("target/i386: reimplement 0x0f 0x3a, add AVX")
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+---
+Hardware tested:
+Intel Core i3-6100
+Intel Xeon Platinum 8370C (GitHub Codespaces 2-core instance)
+AMD EPYC 7763 (GitHub Codespaces 4-core instance)
+
+ target/i386/tcg/decode-new.c.inc | 12 ++++++++++--
+ target/i386/tcg/emit.c.inc       |  2 --
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 459452b04e..f069f3d739 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2203,8 +2203,16 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
+         }
+         /* fall through */
+     case X86_SIZE_ps: /* SSE/AVX packed single precision */
+-    case X86_SIZE_pd: /* SSE/AVX packed double precision */
+-        *ot = s->vex_l ? MO_256 : MO_128;
++    case X86_SIZE_pd: { /* SSE/AVX packed double precision */
++            /*
++             * Force 128-bit size for some VEX.LIG scalar instructions
++             * (VROUNDSS, VROUNDSD, VMOVSS, VMOVSD)
++             */
++            bool is_scalar = (e->s0 == X86_SIZE_ss || e->s0 == X86_SIZE_sd ||
++                              e->s1 == X86_SIZE_ss || e->s1 == X86_SIZE_sd ||
++                              e->s2 == X86_SIZE_ss || e->s2 == X86_SIZE_sd);
++            *ot = (s->vex_l && !is_scalar) ? MO_256 : MO_128;
++        }
+         return true;
+ 
+     case X86_SIZE_xh: /* SSE/AVX packed half register */
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index c83ab80940..7e0d439f6d 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -4642,14 +4642,12 @@ static void gen_VPHMINPOSUW(DisasContext *s, X86DecodedInsn *decode)
+ static void gen_VROUNDSD(DisasContext *s, X86DecodedInsn *decode)
+ {
+     TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
+-    assert(!s->vex_l);
+     gen_helper_roundsd_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PTR2, imm);
+ }
+ 
+ static void gen_VROUNDSS(DisasContext *s, X86DecodedInsn *decode)
+ {
+     TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
+-    assert(!s->vex_l);
+     gen_helper_roundss_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PTR2, imm);
+ }
+ 
+-- 
+2.53.0
+
 
