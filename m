@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F362C79F85
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD135C79F99
 	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x38dU-0002BG-U4; Sun, 06 Sep 2026 04:54:00 -0400
+	id 1x38dj-0002I2-SC; Sun, 06 Sep 2026 04:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38dT-0002B2-Tt
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:53:59 -0400
+ id 1x38dh-0002HO-RQ
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38dR-0000jf-JH
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:53:59 -0400
+ id 1x38dg-0000lz-Fw
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788684836;
+ s=mimecast20190719; t=1788684851;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=smGZ3ZAQ/JpjeSt/eEgVOx+5vtwkcPyTuz6E6D+SaqY=;
- b=Y6YonU46PpIlOrfNt5oOcXCDjRF74uBgnOOq0DtF6cAhhAJlLUd+xrgN2iatXUJ5FLNTbH
- BmOFc5SlRwc/QN96bT6E99GbIQDVyTTgRJpVBSkJB4vmP6+/aj1q36hmOHDr8gvbwEpdHz
- P+tW7Ym8gbVfWSvlORmhYrNWBIxUol0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0km4qjkAFcD4lhaicMDtebzytg/5UCP+NpNlTDCWCO8=;
+ b=I9yT124Cqh6z2AXPD6e0DTGdXNjZZQwzMEtVcUhIeTmoZzu7DQniCrZJwgsSCm8Z1QYv/d
+ KKmR6VY+ygUF7zcmBo4hnSC2UuoWul5XxIE8m+U/R3Rf8wu+JFTVzPobzokmazIhEgF5Ga
+ zE5rhXQu/4PirKdKGYq/G9xqKffHiI8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-57Ijy12FO--QZ95M6Ymgfg-1; Sun,
- 06 Sep 2026 04:53:52 -0400
-X-MC-Unique: 57Ijy12FO--QZ95M6Ymgfg-1
-X-Mimecast-MFC-AGG-ID: 57Ijy12FO--QZ95M6Ymgfg_1788684830
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-w5NnExbfNNa-aBZFMRYcwg-1; Sun,
+ 06 Sep 2026 04:54:08 -0400
+X-MC-Unique: w5NnExbfNNa-aBZFMRYcwg-1
+X-Mimecast-MFC-AGG-ID: w5NnExbfNNa-aBZFMRYcwg_1788684846
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1291119541BD; Sun,  6 Sep 2026 08:53:50 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEFB11955DD4; Sun,  6 Sep 2026 08:54:05 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EBCEB180049F; Sun,  6 Sep 2026 08:53:47 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 193C730002EA; Sun,  6 Sep 2026 08:54:03 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 0/9] Various ASAN & tests fixes
-Date: Sun, 06 Sep 2026 12:53:32 +0400
-Message-Id: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
+Date: Sun, 06 Sep 2026 12:53:36 +0400
+Subject: [PATCH 4/9] tests/launchupdate-test: correct g_auto usage
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqAIBBA0avIrBNGF0VdJVqUjTlBFloRhHfPa
- vkW/98QKTBFaMQNgU6OvPoMVQgwrvcTSR6zQaMuscZS+tUtm/R07bKq1IC6NgathhxsgSxf36z
- tfsdjmMns7wFSegDlq7vybgAAAA==
-X-Change-ID: 20260906-nohmp-next-771b029cc0f2
+Message-Id: <20260906-nohmp-next-v1-4-2b21e63974f3@redhat.com>
+References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
+In-Reply-To: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Brian Cain <brian.cain@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
@@ -78,24 +77,24 @@ Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
  qemu-s390x@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1489;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1159;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=VzRRCytbT5/V3Kw+tgrUBk+fVgtBuwOkncMfdO34t+E=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSoY2RtFbqlpchb+yIRzVBq0ZoQWDi1HwadSW
- 8y/BkpF++mJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0qGAAKCRDa6OEJdZac
- 5dDhEACMyb5Iv4d/Lf5HNIYaO2/ongMxKwU9DtoDR8He4vyx+dyyOtWq5igs0gO4t6TWVn7N3qS
- N+kaPM0RVO9UjQU1ehjtcoc2RN3QG96B4O5gwOY9vsGH2VusYm18SR4XdpjxsM1UHqVH2nBVmNj
- 8vfspX9jl/45PN1uxQqUV6tkhzQgUK3F3fbdGW/xtfCv+3Wj9M/xEALqV8snCW2DvL1Oj1EsEtu
- YvPpM2/+iNsZiMgz9w5nsoSC7qPPyz7parU6znDAnyWpGu9dcI4Lq8D5FzVpAozCzsWWuzn5Kxz
- LO7VZp2pVJGR/j2nw7Puf0OfcFIzfFDq9SB1Hs4RJT4oHa1ofx1XAr8XCbnFWyf241miV5eFTvS
- 00dzXQY/ESQM0TeelaTaAvNMizz0b9qkMtqQyL1LjzNbSzWqb9j9NVBIcJHVrC+dosLpzeqkCAe
- tq6VKtsawDa013M7Vec33CrLSl6GttVwggr69/sfc9qJhrAQhYN1zrZl5o6Me/mcAUYuZv6UJQQ
- B5G9MXH+eQcT8kcChp6oXT4xIcT5/GSxS2lshLhNwCp0nXT2mIlbTIzR6/MIkRPFtUM20QgsMCJ
- PDFuaihXaJ+LdUyu1rCu1VFO9d4+I8fmGePK1c4DB2kDFDeoVs4vS2hd/N+KLCtAFaBCLPYZIbo
- 5DdvqxJCE4N9hBA==
+ bh=gdbpATPGnLOldGstBztdGH7CDvsOnIVMYXJ0fAL0KlI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSoYNG3KIJu29yJqCfs2RgASqkrv2dBAI987P
+ Zs1G67BmaSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0qGAAKCRDa6OEJdZac
+ 5X4gD/9WsoVvFff5maI6Sf/FqnPc3gvAMx4gq2QQSrhGiL3fdgyOPHMvP1RRvyNZCy53EGCzbkL
+ 7M/cDoCOi+zXHu4W1lVLb6fuWT8K11TaIflSr56YX9M18ozFgGjYwmD3ThLs7LjnrGUJDbb1KT+
+ e0GG2g6ZAdO2Sy2wBmNDjymANksOgD13b22geucUpjptJgfFFNL2+Mb6wpF/NwfaHOLyzeXBrSo
+ T9/KNsvqL+QZOJCcNa5uLkiKDZ31Ejrh7+jjiFTkLxzlodbsyvAhtZX6zXExeQ73KmMZhLlnHba
+ JfTcypHUiyQ44On+XTdbHjY573bxZM3BMjNCq+5w+jfTOwL9QqNeqkzANxg/hEDMS7YRL6sHXeE
+ TuntvSWbGIIPFYsvlYySykSGbYXmTrEzApEp8MxKVN9qtKlXNgxY6/RYTggAHMatFMourHmBOWw
+ MRskBjHs8F61J9xDBcHw5KYe4sKzXZWwIEOlU3qv9CLscy9hwUofad4pniNd6jEIvq4UGzyFDsD
+ MDt72tiVJyqT0sJqhXjn/g+zt8RB+BzNo4QS9Bac96HjEUtYQDJK8mNFgkRZMyC/+Gz8sQ219MF
+ AuFERsNMpDpZ5M4Y1edNzQ5rEMNwtzU3P6Fe+v4j1zKmFxp64Ss3E8b3Oo2qQ758ctpbcRKia8u
+ Z01+ZwRh0atVAXQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,40 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+g_free() isn't the appropriate way to release those types.
 
-Along with Fabiano
-fixes (https://patchew.org/QEMU/20260903220523.2849019-1-farosas@suse.de/)
-This clears the asan-enabled tests of reports in my build configurations.
-
+Fixes: 0b70c6ce7b31 ("Add functional and unit tests for the vm-launch-update device")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Marc-André Lureau (9):
-      tests: fix qemu:func-hexagon-linters
-      tests/test_vhost_user_bridge: skip when running ASAN
-      hw/misc/bcm2835_powermgt: free wdog timer on finalize
-      tests/launchupdate-test: correct g_auto usage
-      tests/launchupdate-test: correctly release qs
-      tests/launchupdate-test: fix fw_cfg leak
-      igvm: release found memory region on success
-      igvm: make IgvmMemoryRegion a QOM
-      hw/s390x/ipl: fix short SCSI loadparm buffer over-read
+ tests/qtest/launchupdate-test.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
- backends/igvm.c                                   | 99 ++++++++++++++---------
- hw/misc/bcm2835_powermgt.c                        |  8 ++
- hw/s390x/ipl.c                                    | 10 +--
- include/system/igvm-internal.h                    |  9 ++-
- tests/functional/hexagon/test_systests.py         |  6 +-
- tests/functional/x86_64/test_vhost_user_bridge.py | 13 +++
- tests/qtest/launchupdate-test.c                   | 20 ++---
- tests/qtest/libqos/libqos.h                       |  2 +
- 8 files changed, 104 insertions(+), 63 deletions(-)
----
-base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
-change-id: 20260906-nohmp-next-771b029cc0f2
+diff --git a/tests/qtest/launchupdate-test.c b/tests/qtest/launchupdate-test.c
+index 225c843df5b9..ed007cdce29f 100644
+--- a/tests/qtest/launchupdate-test.c
++++ b/tests/qtest/launchupdate-test.c
+@@ -192,8 +192,8 @@ static guint32 match_string(char *serial_f, const char *exp_out)
+ {
+     GError *error = NULL;
+     g_autofree gchar *f_contents = NULL;
+-    g_autofree GRegex *regex = NULL;
+-    g_autofree GMatchInfo *match_info = NULL;
++    g_autoptr(GRegex) regex = NULL;
++    g_autoptr(GMatchInfo) match_info = NULL;
+     gsize len;
+     guint32 count = 0;
+     gboolean ret;
+@@ -214,7 +214,6 @@ static guint32 match_string(char *serial_f, const char *exp_out)
+         g_match_info_next(match_info, &error);
+         count++;
+     }
+-    g_regex_unref(regex);
+     return count;
+ }
+ 
 
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+-- 
+2.55.0.543.g5ebe2ebe4ea8
 
 
