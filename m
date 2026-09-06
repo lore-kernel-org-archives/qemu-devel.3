@@ -4,70 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D55B9C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 17:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACB8C79FA0
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 19:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3GPR-0005u6-OL; Sun, 06 Sep 2026 13:12:01 -0400
+	id 1x3InW-0002K2-Bh; Sun, 06 Sep 2026 15:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GPP-0005nj-Jl
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x3InU-0002JN-F1; Sun, 06 Sep 2026 15:45:00 -0400
+Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GPN-0000Mo-Nz
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:11:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788714714;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WUxA5/qQPN5AJZY2D8e+vLynfT1bwKinpHHNt+5akDk=;
- b=QNBGo2d2Jd3xewcKTsbsUNcNGd4t3uC+sKWlOI0tYaVpmngDY4tVI3SQzJCFcrZR2XSKfv
- y0JS7vkgrgk9Tb6mOjDXqunQ45HNQoKOEEB+TT+7/Lu6AIZRTjyIyhHTvBDpa99v+cP/vh
- e52cWjG3apDNgLQsf0jtMWlE4jrJV6c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-l_EBx1P5PSeFg9DFpbiw9w-1; Sun,
- 06 Sep 2026 13:11:45 -0400
-X-MC-Unique: l_EBx1P5PSeFg9DFpbiw9w-1
-X-Mimecast-MFC-AGG-ID: l_EBx1P5PSeFg9DFpbiw9w_1788714701
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 914F81800D9D; Sun,  6 Sep 2026 17:11:41 +0000 (UTC)
-Received: from yukon.redhat.com (unknown [10.44.32.24])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2E5871955F06; Sun,  6 Sep 2026 17:11:39 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Emmanuel Blot <emmanuel.blot@free.fr>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 36/40] hw/arm: sanmiguel: add Facebook SanMiguel BMC machine
-Date: Sun,  6 Sep 2026 19:10:17 +0200
-Message-ID: <20260906171021.26568-37-clg@redhat.com>
-In-Reply-To: <20260906171021.26568-1-clg@redhat.com>
-References: <20260906171021.26568-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
+ id 1x3InR-0006y6-Rs; Sun, 06 Sep 2026 15:45:00 -0400
+Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdLJ94Mm9zBqYt;
+ Sun,  6 Sep 2026 21:44:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
+ s=dkim; t=1788723881;
+ bh=JPNVcXwd08Wob57hu2yiD+8d+trgyasSB21A0NSgPVQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Ep74xBqRQJEoxvomD2NauoR/gbVCZCAs33PQiLuJAI8EyOsvTatOYoWJksKnBktOl
+ zUZRfdZXdkukJxmQWef5hCN37MMgZeab5GM9NgtVTGNTDZqSlHV+zf0l4mXOeAtsJQ
+ xFcqm3ZJOrn9JKC9+i/aJ+Phztu8xloyO0lmpTFGOkVTbZP3Wmviw9NVTsAlhrpDJr
+ 8hzcdhfgSta92voB1DWsQSXiYZg3RcXDz1W2iYlp98tgxy+NEsFJIs/MX7BPK4xV4k
+ WYQpszKvaaM4wNtb1AGIqgHl3HN9nXSOT1iXNyLZ5WCGqWQrG7W/tUcmdm0b5pn4wJ
+ Li8U6DV/fTZvg==
+Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
+ [90.45.87.101]) (Authenticated sender: gilles.grimaud)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdLJ92RQtz7wHs;
+ Sun,  6 Sep 2026 21:44:41 +0200 (CEST)
+From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
+ gilles grimaud <gilles.grimaud@univ-lille.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v3 06/36] hw/arm: add RP2040 SoC and Raspberry Pi Pico machine
+Date: Sun,  6 Sep 2026 21:44:05 +0200
+Message-ID: <20260906194438.93046-7-gilles.grimaud@univ-lille.fr>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
+References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=194.254.129.82;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,183 +74,503 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Emmanuel Blot <emmanuel.blot@free.fr>
+Continue the Raspberry Pi Pico machine model introduced by Alex Bennée's
+2022 RFC on current QEMU APIs. Add the RP2040 QOM skeleton, internal ROM and
+SRAM map, the board XIP window, two PL011-backed UARTs, and explicit
+unimplemented-device placeholders for the remaining MMIO blocks.
 
-Add an AST2600-based machine for the Facebook SanMiguel BMC, derived
-from the aspeed-bmc-facebook-sanmiguel.dts device tree.
+Instantiate both Cortex-M0+ cores from the initial machine model. Give each
+core a separate memory container over the shared SoC address map so later
+patches can add per-core views for banked peripherals. Keep core 1 powered
+off until SIO and the boot ROM launch protocol are implemented.
 
-The board wires up three TMP75 temperature sensors across its I2C buses,
-alongside IO expanders, FRU EEPROMs, an I2C mux and an RTC, with 2 GiB
-RAM, dual FMC flash and RGMII networking.
-
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-Link: https://lore.kernel.org/qemu-devel/20260731-sanmiguel-bmc-locator-v2-12-1266926ba769@free.fr
-[ clg: - adjusted on upstream ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/aspeed_ast2600_sanmiguel.c | 140 ++++++++++++++++++++++++++++++
- hw/arm/meson.build                |   1 +
- 2 files changed, 141 insertions(+)
- create mode 100644 hw/arm/aspeed_ast2600_sanmiguel.c
+ MAINTAINERS                             |   1 +
+ configs/devices/arm-softmmu/default.mak |   1 +
+ hw/arm/Kconfig                          |  12 ++
+ hw/arm/meson.build                      |   2 +
+ hw/arm/raspi_pico.c                     |  83 ++++++++
+ hw/arm/rp2040.c                         | 263 ++++++++++++++++++++++++
+ include/hw/arm/rp2040.h                 |  49 +++++
+ 7 files changed, 411 insertions(+)
+ create mode 100644 hw/arm/raspi_pico.c
+ create mode 100644 hw/arm/rp2040.c
+ create mode 100644 include/hw/arm/rp2040.h
 
-diff --git a/hw/arm/aspeed_ast2600_sanmiguel.c b/hw/arm/aspeed_ast2600_sanmiguel.c
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 962988f94d..caee8aa0cc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1032,6 +1032,7 @@ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/*/rp2040*
+ F: include/hw/*/rp2040*
++F: hw/arm/raspi_pico.c
+ 
+ Real View
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
+index 22caa6a63e..11a5cac093 100644
+--- a/configs/devices/arm-softmmu/default.mak
++++ b/configs/devices/arm-softmmu/default.mak
+@@ -32,6 +32,7 @@
+ # CONFIG_OLIMEX_STM32_H405=n
+ # CONFIG_MPS2=n
+ # CONFIG_RASPI=n
++CONFIG_RASPI_PICO=y
+ # CONFIG_DIGIC=n
+ # CONFIG_SABRELITE=n
+ # CONFIG_EMCRAFT_SF2=n
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 5db7ce057f..aa6e38dfd4 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -352,6 +352,18 @@ config RASPI
+     select BCM2835_SPI
+     select BCM2835_I2C
+ 
++config RASPI_PICO
++    bool
++    default y
++    depends on TCG && ARM
++    select RP2040
++
++config RP2040
++    bool
++    select ARM_V7M
++    select PL011
++    select UNIMP
++
+ config STM32F100_SOC
+     bool
+     select ARM_V7M
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 78acb04c8b..971e72f192 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -31,6 +31,8 @@ arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'raspi.c',
+   'raspi4b.c'
+ ))
++arm_common_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040.c'))
++arm_common_ss.add(when: 'CONFIG_RASPI_PICO', if_true: files('raspi_pico.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
+diff --git a/hw/arm/raspi_pico.c b/hw/arm/raspi_pico.c
 new file mode 100644
-index 000000000000..ca07a0deaada
+index 0000000000..dff897085a
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_sanmiguel.c
-@@ -0,0 +1,140 @@
++++ b/hw/arm/raspi_pico.c
+@@ -0,0 +1,83 @@
 +/*
-+ * Facebook SanMiguel BMC
++ * Raspberry Pi Pico machine
 + *
-+ * Copyright (c) Meta Platforms, Inc. and affiliates.
++ * Copyright (c) 2021 Linaro Ltd
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/arm/aspeed.h"
-+#include "hw/arm/aspeed_soc.h"
-+#include "hw/i2c/i2c_mux_pca954x.h"
-+#include "hw/gpio/pca9552.h"
-+#include "hw/gpio/pca9554.h"
-+#include "hw/nvram/eeprom_at24c.h"
-+#include "hw/sensor/tmp105.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/rp2040.h"
++#include "hw/core/boards.h"
++#include "hw/core/qdev-properties.h"
++#include "system/address-spaces.h"
++#include "system/system.h"
++#include "qom/object.h"
 +
-+/* SanMiguel hardware values */
-+#define SANMIGUEL_BMC_HW_STRAP1 0x00002002
-+#define SANMIGUEL_BMC_HW_STRAP2 0x00000000
-+#define SANMIGUEL_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
++#define TYPE_RASPI_PICO_MACHINE MACHINE_TYPE_NAME("raspi-pico")
++OBJECT_DECLARE_SIMPLE_TYPE(RaspiPicoMachineState, RASPI_PICO_MACHINE)
 +
-+#define TYPE_DS1338 "ds1338"
++#define PICO_FLASH_SIZE (2 * MiB)
 +
-+static void sanmiguel_bmc_i2c_init(AspeedMachineState *bmc)
-+{
-+    /* Reference: aspeed-bmc-facebook-sanmiguel.dts */
++struct RaspiPicoMachineState {
++    MachineState parent_obj;
 +
-+    AspeedSoCState *soc = bmc->soc;
-+    I2CBus *i2c[16] = {};
-+
-+    for (unsigned idx = 0; idx < ARRAY_SIZE(i2c); idx++) {
-+        i2c[idx] = aspeed_i2c_get_bus(&soc->i2c, idx);
-+    }
-+
-+    /* &i2c0 */
-+    /* ssif-bmc@10 — no QEMU model */
-+
-+    /* &i2c1 — empty */
-+
-+    /* &i2c2 — HPM0 */
-+    /* hpm0_ioexp_20: pca9555@20 */
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9555, 0x20);
-+    /* hpm0_ioexp_21: pca9555@21 */
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9555, 0x21);
-+
-+    /* &i2c3 — empty */
-+    /* &i2c4 — empty */
-+
-+    /* &i2c5 — SMM */
-+    /* smm_ioexp_20: pca9555@20 */
-+    i2c_slave_create_simple(i2c[5], TYPE_PCA9555, 0x20);
-+    /* smm_ioexp_21: pca9555@21 */
-+    i2c_slave_create_simple(i2c[5], TYPE_PCA9555, 0x21);
-+    /* smm_temp: lm75@48 */
-+    i2c_slave_create_simple(i2c[5], TYPE_TMP75, 0x48);
-+    /* smm_fru: eeprom@50 (24c128 = 16 KiB) */
-+    at24c_eeprom_init(i2c[5], 0x50, 16 * KiB);
-+    /* rtc@6f — nct3018y (ds1338 stand-in) */
-+    i2c_slave_create_simple(i2c[5], TYPE_DS1338, 0x6f);
-+
-+    /* &i2c6 — HMC */
-+    /* hmc_ioexp: tca6408@20 (pca9554 stand-in) */
-+    i2c_slave_create_simple(i2c[6], TYPE_PCA9554, 0x20);
-+    /* i2c-mux@70 (PCA9546) — 4 channels (imux16-19), all empty */
-+    i2c_slave_create_simple(i2c[6], TYPE_PCA9546, 0x70);
-+
-+    /* &i2c7 — HPM1 */
-+    /* hpm1_ioexp_20: pca9555@20 */
-+    i2c_slave_create_simple(i2c[7], TYPE_PCA9555, 0x20);
-+    /* hpm1_ioexp_21: pca9555@21 */
-+    i2c_slave_create_simple(i2c[7], TYPE_PCA9555, 0x21);
-+
-+    /* &i2c8 — empty */
-+
-+    /* &i2c9 — PDB */
-+    /* mp5926@10-16, lm5066i@11-17 — no QEMU model (power monitors) */
-+    /* pdb_ioexp_20: pca9555@20 */
-+    i2c_slave_create_simple(i2c[9], TYPE_PCA9555, 0x20);
-+    /* pdb_temp: lm75@4e */
-+    i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4e);
-+    /* pdb_fru: eeprom@50 (24c128 = 16 KiB) */
-+    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
-+
-+    /* &i2c10 — SCM */
-+    /* scm_temp: lm75@48 */
-+    i2c_slave_create_simple(i2c[10], TYPE_TMP75, 0x48);
-+    /* scm_fru: eeprom@50 (24c128 = 16 KiB) */
-+    at24c_eeprom_init(i2c[10], 0x50, 16 * KiB);
-+
-+    /* &i2c11 — Switch Config */
-+    /* sw_config: eeprom@50 (24c64 = 8 KiB) */
-+    at24c_eeprom_init(i2c[11], 0x50, 8 * KiB);
-+
-+    /* &i2c12 — empty */
-+
-+    /* &i2c13 — SMM extension */
-+    /* mctp@10 — no QEMU model */
-+    /* smm_ext_ioexp: pca9554@38 */
-+    i2c_slave_create_simple(i2c[13], TYPE_PCA9554, 0x38);
-+    /* smm_ext_fru: eeprom@55 (24c128 = 16 KiB) */
-+    at24c_eeprom_init(i2c[13], 0x55, 16 * KiB);
-+
-+    /* &i2c14 — FIO */
-+    /* fio_ioexp: pca9555@20 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x20);
-+    /* fio_fru: eeprom@50 (24c64 = 8 KiB) */
-+    at24c_eeprom_init(i2c[14], 0x50, 8 * KiB);
-+
-+    /* &i2c15 — empty */
-+}
-+
-+static void aspeed_machine_sanmiguel_class_init(ObjectClass *oc,
-+                                                const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-+
-+    mc->desc       = "Facebook SanMiguel BMC (Cortex-A7)";
-+    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = SANMIGUEL_BMC_HW_STRAP1;
-+    amc->hw_strap2 = SANMIGUEL_BMC_HW_STRAP2;
-+    amc->fmc_model = "mx66l1g45g";
-+    amc->spi_model = "mx66l1g45g";
-+    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC0_ON;
-+    amc->i2c_init  = sanmiguel_bmc_i2c_init;
-+    mc->default_ram_size = SANMIGUEL_BMC_RAM_SIZE;
-+    aspeed_machine_class_init_cpus_defaults(mc);
-+}
-+
-+static const TypeInfo aspeed_ast2600_sanmiguel_types[] = {
-+    {
-+        .name          = MACHINE_TYPE_NAME("sanmiguel-bmc"),
-+        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_sanmiguel_class_init,
-+    }
++    RP2040State soc;
++    MemoryRegion flash;
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_sanmiguel_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 78acb04c8b9f..bcc068de0403 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -64,6 +64,7 @@ arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_fuji.c',
-   'aspeed_ast2600_gb200nvl.c',
-   'aspeed_ast2600_rainier.c',
-+  'aspeed_ast2600_sanmiguel.c',
-   'aspeed_ast10x0.c',
-   'aspeed_ast10x0_evb.c',
-   'aspeed_ast1040.c',
++static void raspi_pico_init(MachineState *machine)
++{
++    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(machine);
++    MemoryRegion *system_memory = get_system_memory();
++
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RP2040);
++    qdev_prop_set_chr(DEVICE(&s->soc), "serial0", serial_hd(0));
++    qdev_prop_set_chr(DEVICE(&s->soc), "serial1", serial_hd(1));
++    if (machine->firmware) {
++        qdev_prop_set_string(DEVICE(&s->soc), "bootrom-file",
++                             machine->firmware);
++    }
++    object_property_set_link(OBJECT(&s->soc), "memory",
++                             OBJECT(system_memory), &error_fatal);
++
++    memory_region_init_rom(&s->flash, NULL, "raspi-pico.flash",
++                           PICO_FLASH_SIZE, &error_fatal);
++    memory_region_add_subregion(system_memory, RP2040_XIP_BASE, &s->flash);
++
++    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
++
++    armv7m_load_kernel(s->soc.armv7m[0].cpu, machine->kernel_filename,
++                       RP2040_XIP_BASE, PICO_FLASH_SIZE);
++}
++
++static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Raspberry Pi Pico (Cortex-M0+)";
++    mc->init = raspi_pico_init;
++    mc->default_cpus = RP2040_NUM_CORES;
++    mc->min_cpus = RP2040_NUM_CORES;
++    mc->max_cpus = RP2040_NUM_CORES;
++    mc->default_ram_size = 0;
++    mc->no_parallel = 1;
++    mc->no_floppy = 1;
++    mc->no_cdrom = 1;
++}
++
++static const TypeInfo raspi_pico_machine_info = {
++    .name = TYPE_RASPI_PICO_MACHINE,
++    .parent = TYPE_MACHINE,
++    .instance_size = sizeof(RaspiPicoMachineState),
++    .class_init = raspi_pico_machine_class_init,
++};
++
++static void raspi_pico_machine_init(void)
++{
++    type_register_static(&raspi_pico_machine_info);
++}
++type_init(raspi_pico_machine_init)
+diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
+new file mode 100644
+index 0000000000..7844932e05
+--- /dev/null
++++ b/hw/arm/rp2040.c
+@@ -0,0 +1,263 @@
++/*
++ * RP2040 SoC emulation
++ *
++ * Copyright (c) 2021 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "hw/arm/rp2040.h"
++#include "hw/core/loader.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/misc/unimp.h"
++#include "qemu/datadir.h"
++#include "target/arm/cpu-qom.h"
++
++#define RP2040_SYSCLK_FRQ 125000000
++
++#define RP2040_UART0_BASE 0x40034000
++#define RP2040_UART0_IRQ  20
++#define RP2040_UART1_BASE 0x40038000
++#define RP2040_UART1_IRQ  21
++
++/*
++ * Temporary boot ROM used until the synthetic ROM is introduced. It loads
++ * the reset handler from a vector table at the base of the XIP window.
++ */
++static const uint8_t rp2040_bootrom[] = {
++    0x00, 0x20, 0x04, 0x20, /* initial SP: 0x20042000 */
++    0x09, 0x00, 0x00, 0x00, /* reset handler: 0x00000009 */
++    0x03, 0x48,             /* ldr r0, vtor */
++    0x04, 0x49,             /* ldr r1, xip_base */
++    0x01, 0x60,             /* str r1, [r0] */
++    0x04, 0x48,             /* ldr r0, xip_reset_vector */
++    0x01, 0x68,             /* ldr r1, [r0] */
++    0x08, 0x47,             /* bx r1 */
++    0xfe, 0xe7,             /* b . */
++    0xc0, 0x46,             /* nop */
++    0x08, 0xed, 0x00, 0xe0, /* VTOR: 0xe000ed08 */
++    0x00, 0x00, 0x00, 0x10, /* XIP base: 0x10000000 */
++    0x04, 0x00, 0x00, 0x10, /* XIP reset vector: 0x10000004 */
++};
++
++static const struct {
++    const char *name;
++    hwaddr base;
++    hwaddr size;
++} rp2040_unimplemented[] = {
++    { "rp2040.sysinfo",  0x40000000, 0x4000 },
++    { "rp2040.syscfg",   0x40004000, 0x4000 },
++    { "rp2040.clocks",   0x40008000, 0x4000 },
++    { "rp2040.resets",   0x4000c000, 0x4000 },
++    { "rp2040.psm",      0x40010000, 0x4000 },
++    { "rp2040.iobank0",  0x40014000, 0x4000 },
++    { "rp2040.ioqspi",   0x40018000, 0x4000 },
++    { "rp2040.padsbank0", 0x4001c000, 0x4000 },
++    { "rp2040.padsqspi", 0x40020000, 0x4000 },
++    { "rp2040.xosc",     0x40024000, 0x4000 },
++    { "rp2040.pll_sys",  0x40028000, 0x4000 },
++    { "rp2040.pll_usb",  0x4002c000, 0x4000 },
++    { "rp2040.busctrl",  0x40030000, 0x4000 },
++    { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
++    { "rp2040.uart1_aliases", 0x40039000, 0x3000 },
++    { "rp2040.spi0",     0x4003c000, 0x4000 },
++    { "rp2040.spi1",     0x40040000, 0x4000 },
++    { "rp2040.i2c0",     0x40044000, 0x4000 },
++    { "rp2040.i2c1",     0x40048000, 0x4000 },
++    { "rp2040.adc",      0x4004c000, 0x4000 },
++    { "rp2040.pwm",      0x40050000, 0x4000 },
++    { "rp2040.timer",    0x40054000, 0x4000 },
++    { "rp2040.watchdog", 0x40058000, 0x4000 },
++    { "rp2040.rtc",      0x4005c000, 0x4000 },
++    { "rp2040.rosc",     0x40060000, 0x4000 },
++    { "rp2040.vreg_and_chip_reset", 0x40064000, 0x4000 },
++    { "rp2040.tbman",    0x4006c000, 0x4000 },
++    { "rp2040.dma",      0x50000000, 0x1000 },
++    { "rp2040.usbctrl_dpram", 0x50100000, 0x10000 },
++    { "rp2040.usbctrl_regs",  0x50110000, 0x10000 },
++    { "rp2040.pio0",     0x50200000, 0x10000 },
++    { "rp2040.pio1",     0x50300000, 0x10000 },
++    { "rp2040.sio",      0xd0000000, 0x1000 },
++};
++
++static void rp2040_soc_init(Object *obj)
++{
++    RP2040State *s = RP2040(obj);
++    int i;
++
++    for (i = 0; i < RP2040_NUM_CORES; i++) {
++        g_autofree char *name = g_strdup_printf("proc%d", i);
++
++        object_initialize_child(obj, name, &s->armv7m[i], TYPE_ARMV7M);
++        qdev_prop_set_string(DEVICE(&s->armv7m[i]), "cpu-type",
++                             ARM_CPU_TYPE_NAME("cortex-m0"));
++        qdev_prop_set_uint32(DEVICE(&s->armv7m[i]), "num-irq",
++                             RP2040_NUM_IRQS);
++        qdev_prop_set_uint32(DEVICE(&s->armv7m[i]), "mpu-ns-regions", 8);
++    }
++    qdev_prop_set_bit(DEVICE(&s->armv7m[1]), "start-powered-off", true);
++
++    for (i = 0; i < ARRAY_SIZE(s->uart); i++) {
++        g_autofree char *name = g_strdup_printf("uart%d", i);
++        g_autofree char *property = g_strdup_printf("serial%d", i);
++
++        object_initialize_child(obj, name, &s->uart[i], TYPE_PL011);
++        object_property_add_alias(obj, property, OBJECT(&s->uart[i]),
++                                  "chardev");
++    }
++
++    s->sysclk = clock_new(obj, "sysclk");
++    clock_set_hz(s->sysclk, RP2040_SYSCLK_FRQ);
++}
++
++static bool rp2040_init_memory(RP2040State *s, Error **errp)
++{
++    int i;
++
++    if (!memory_region_init_rom(&s->rom, OBJECT(s), "rp2040.rom",
++                                RP2040_ROM_SIZE, errp)) {
++        return false;
++    }
++    memory_region_add_subregion(s->board_memory, RP2040_ROM_BASE, &s->rom);
++
++    for (i = 0; i < 4; i++) {
++        g_autofree char *name = g_strdup_printf("rp2040.sram%d", i);
++
++        if (!memory_region_init_ram(&s->sram[i], OBJECT(s), name,
++                                    RP2040_SRAM_BANK_SIZE, errp)) {
++            return false;
++        }
++        memory_region_add_subregion(s->board_memory,
++                                    RP2040_SRAM_BASE +
++                                    i * RP2040_SRAM_BANK_SIZE,
++                                    &s->sram[i]);
++    }
++
++    if (!memory_region_init_ram(&s->sram[4], OBJECT(s), "rp2040.sram4",
++                                RP2040_SRAM_HI_SIZE, errp)) {
++        return false;
++    }
++    memory_region_add_subregion(s->board_memory, RP2040_SRAM4_BASE,
++                                &s->sram[4]);
++
++    if (!memory_region_init_ram(&s->sram[5], OBJECT(s), "rp2040.sram5",
++                                RP2040_SRAM_HI_SIZE, errp)) {
++        return false;
++    }
++    memory_region_add_subregion(s->board_memory, RP2040_SRAM5_BASE,
++                                &s->sram[5]);
++
++    return true;
++}
++
++static bool rp2040_load_bootrom(RP2040State *s, Error **errp)
++{
++    g_autofree char *filename = NULL;
++
++    if (!s->bootrom_file) {
++        rom_add_blob_fixed("rp2040.bootrom", rp2040_bootrom,
++                           sizeof(rp2040_bootrom), RP2040_ROM_BASE);
++        return true;
++    }
++
++    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->bootrom_file);
++    if (!filename) {
++        error_setg(errp, "could not find RP2040 boot ROM image '%s'",
++                   s->bootrom_file);
++        return false;
++    }
++
++    return load_image_targphys(filename, RP2040_ROM_BASE,
++                               RP2040_ROM_SIZE, errp) >= 0;
++}
++
++static void rp2040_soc_realize(DeviceState *dev, Error **errp)
++{
++    RP2040State *s = RP2040(dev);
++    static const hwaddr uart_base[] = { RP2040_UART0_BASE, RP2040_UART1_BASE };
++    static const int uart_irq[] = { RP2040_UART0_IRQ, RP2040_UART1_IRQ };
++    Error *err = NULL;
++    int i;
++
++    if (!s->board_memory) {
++        error_setg(errp, "memory property was not set");
++        return;
++    }
++    if (!rp2040_init_memory(s, errp) || !rp2040_load_bootrom(s, errp)) {
++        return;
++    }
++
++    for (i = 0; i < ARRAY_SIZE(rp2040_unimplemented); i++) {
++        create_unimplemented_device(rp2040_unimplemented[i].name,
++                                    rp2040_unimplemented[i].base,
++                                    rp2040_unimplemented[i].size);
++    }
++
++    for (i = 0; i < RP2040_NUM_CORES; i++) {
++        g_autofree char *memory_name =
++            g_strdup_printf("rp2040.proc%d-memory", i);
++        g_autofree char *alias_name =
++            g_strdup_printf("rp2040.proc%d-board-memory", i);
++
++        memory_region_init(&s->cpu_memory[i], OBJECT(dev), memory_name,
++                           UINT64_C(1) << 32);
++        memory_region_init_alias(&s->cpu_board_alias[i], OBJECT(dev),
++                                 alias_name, s->board_memory, 0,
++                                 UINT64_C(1) << 32);
++        memory_region_add_subregion(&s->cpu_memory[i], 0,
++                                    &s->cpu_board_alias[i]);
++        qdev_connect_clock_in(DEVICE(&s->armv7m[i]), "cpuclk", s->sysclk);
++        object_property_set_link(OBJECT(&s->armv7m[i]), "memory",
++                                 OBJECT(&s->cpu_memory[i]), &err);
++        if (err) {
++            error_propagate(errp, err);
++            return;
++        }
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m[i]), errp)) {
++            return;
++        }
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->uart); i++) {
++        qdev_connect_clock_in(DEVICE(&s->uart[i]), "clk", s->sysclk);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
++            return;
++        }
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, uart_base[i]);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
++                           qdev_get_gpio_in(DEVICE(&s->armv7m[0]),
++                                            uart_irq[i]));
++    }
++}
++
++static const Property rp2040_soc_properties[] = {
++    DEFINE_PROP_LINK("memory", RP2040State, board_memory, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
++    DEFINE_PROP_STRING("bootrom-file", RP2040State, bootrom_file),
++};
++
++static void rp2040_soc_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = rp2040_soc_realize;
++    device_class_set_props(dc, rp2040_soc_properties);
++}
++
++static const TypeInfo rp2040_soc_info = {
++    .name = TYPE_RP2040,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RP2040State),
++    .instance_init = rp2040_soc_init,
++    .class_init = rp2040_soc_class_init,
++};
++
++static void rp2040_soc_types(void)
++{
++    type_register_static(&rp2040_soc_info);
++}
++type_init(rp2040_soc_types)
+diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
+new file mode 100644
+index 0000000000..ccab548275
+--- /dev/null
++++ b/include/hw/arm/rp2040.h
+@@ -0,0 +1,49 @@
++/*
++ * RP2040 SoC emulation
++ *
++ * Copyright (c) 2021 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_ARM_RP2040_H
++#define HW_ARM_RP2040_H
++
++#include "hw/arm/armv7m.h"
++#include "hw/char/pl011.h"
++#include "hw/core/clock.h"
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_RP2040 "rp2040"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040State, RP2040)
++
++#define RP2040_ROM_BASE       0x00000000
++#define RP2040_ROM_SIZE       (16 * KiB)
++#define RP2040_XIP_BASE       0x10000000
++#define RP2040_SRAM_BASE      0x20000000
++#define RP2040_SRAM_BANK_SIZE (64 * KiB)
++#define RP2040_SRAM4_BASE     0x20040000
++#define RP2040_SRAM5_BASE     0x20041000
++#define RP2040_SRAM_HI_SIZE   (4 * KiB)
++
++#define RP2040_NUM_CORES      2
++#define RP2040_NUM_IRQS       32
++
++struct RP2040State {
++    SysBusDevice parent_obj;
++
++    ARMv7MState armv7m[RP2040_NUM_CORES];
++    PL011State uart[2];
++
++    MemoryRegion *board_memory;
++    MemoryRegion cpu_memory[RP2040_NUM_CORES];
++    MemoryRegion cpu_board_alias[RP2040_NUM_CORES];
++    MemoryRegion rom;
++    MemoryRegion sram[6];
++    char *bootrom_file;
++
++    Clock *sysclk;
++};
++
++#endif
 -- 
 2.55.0
 
