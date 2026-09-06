@@ -4,145 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1B1C79F85
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Sep 2026 23:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27C4C79F8B
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 03:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x2zMv-0005lF-Od; Sat, 05 Sep 2026 19:00:17 -0400
+	id 1x33nV-0005OH-LN; Sat, 05 Sep 2026 23:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x2zMs-0005km-UL
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 19:00:15 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x2zMq-0006nu-Iu
- for qemu-devel@nongnu.org; Sat, 05 Sep 2026 19:00:14 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 685MoE1o2917447
- for <qemu-devel@nongnu.org>; Sat, 5 Sep 2026 23:00:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- t8oRNPl1cmk5i3RQNXZJ9dCwCbGbGERIPI2wNJp4lMI=; b=mWqGD94K56MZkc4X
- GELaQ50Xia3lmzdGddTSO8lcvP6p4G0YDINJfCPShLqUuyNQtSzxC1dTyRWNJVpT
- Ba3vb2V1tFAYe9iUUIOoAhvMT8p2phSR1nY19ftS3L4wmaqSbaJxvSCfYH3AnOuW
- f2EY0jYQBA7esTRKSbGD+vdj/ps8k5v04QgWpWpfXP4UDS9nHdddy1+LBNlCypxN
- Cc5GsJBy0t20HYPPw24Mlnd+mUUaSEjlhS/NN7/ePXxtgtqO1VRLsxxZzcaMlODE
- 4SIgwnUlNAEWKyosYd48i6CXJ57qfBnLG9pWJUdjl6gw2faWAcehAz1UDNP/4ZG9
- PhTM8w==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ggcca25ja-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 23:00:08 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e62e3459fso362634785a.0
- for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 16:00:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1x33nU-0005O3-C1
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 23:44:00 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1x33nS-0006FY-Ok
+ for qemu-devel@nongnu.org; Sat, 05 Sep 2026 23:44:00 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-398a5aad413so1735093a91.3
+ for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 20:43:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788666237; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Vubk/3urNmUaFHfRkYX7VvR8wcC3Fb7cZxbZmwhFgygfD2kCzlGnpQlZbdyh8evtcQ
+ 1PIP2FcnWa0AUayDBb2Bs5YfS65OMUyy3p0+sUYfYvHCza/hAbi6C6YnXqqSpR+l5yAD
+ UEjxWNceDQjn2CN8bm68NY+kobyu2/sIbwiJlBFNdcjEop8BDOwQhWJZ4CG5hS0neqGc
+ sXFH8R6oZEYANJ7OBpGEV2ur6yanEIWfPbJ4gyq49SLCOj17jP6T22eR8/gHrCHlHt56
+ uZIF4apF8DTxgmkSUqoR1OBCLhDrBLftxZf8Wb0+pCV7+QI27o+wPAVDdWlTJamatmjZ
+ mmbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xHO8pCk/PGul4WjK6pHwxopazczPugQYLb9RWHnDvXQ=;
+ fh=9bZF49n7Ry20Puk4B4Mm8twO2cDLo0zOliqLKlB0dV0=;
+ b=FvNaC9fci1PIjOq3vRg9i500cFMihvPb9gzjAkR9PUYtu8PiewEzk5FkJGNNpG/pY4
+ mxtQ1uJ4J4Lq8jky4htFKBW+0XvAygJjxhY/ylPnvD3IapEdhipfA8WM2ZAQkI1W9fwH
+ mwspi2ZzK3/SS2skJc6DyB3kN+8FuOmK8fPVXnikVLXLhs0DvNnu35HwadWlf2Qka2PX
+ 2LyoU5ydUas8VJNhjfwuteAc7VwGZF90r2UfSjhJLNZd3rCJO50UFM7whlW0+vdRr+gV
+ 9iMvhD3KS3+8leulUzUvWYS7K8OB6Vr7DgabsGAOlKmD84/KLXGpIqWzLUVzAN+QgB8G
+ /yKQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788649208; x=1789254008; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=t8oRNPl1cmk5i3RQNXZJ9dCwCbGbGERIPI2wNJp4lMI=;
- b=PXvPuG0fkm01FgXGLuMHQkh2+iFvia1wUyC7H8OLodk40UzpEhPpOV9GdydALc8cAs
- rY9mLfY6VOkXSyEe7ZdwH4+8npCXnE0thxIBb0VXGxdObBCXo8tnMa2xpGUCSaaVb+a2
- vu51F4PTskxtvJ+rTFctOjCIafXzT6rCxxyMZCJxzuD0+rqgeyW9DzFLdb7V1KrO10Pt
- fmlSO2h4+xc0OSRvQXwW9fqBlqCccIjxQujM3nUzHxLFTbvPY44GudgTmJGjuJDQuHHG
- /4uH7dp0NpH9qKy4izY/afnf7nZ0nf2Sou9TktQnkK0kjC8nQGWywCoTf5p1lEjf5CJi
- p9iw==
+ d=gmail.com; s=20251104; t=1788666237; x=1789271037; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xHO8pCk/PGul4WjK6pHwxopazczPugQYLb9RWHnDvXQ=;
+ b=S3dXXm3wLEGvyVcuYFGD2SbA9VgougYBTXS0ExQp7epVN1jTKecxvN3p1LzJWN4T7S
+ 9ZKx9zbSYa+4iHEA8Sgxp71/+YRuB7Jc4UTyn4uSkDiED4QafIKGkjR5j0MIxo3PlV4Q
+ yZEBnuTQ+FM9IR5PamZ/vEZeGr44MarRRwNx6rzXscZ32CHNyvbWgZmT7jX1kwhJ3e0o
+ Fm5Q3hdjHs2W3ntJy16xAkHiszg82Nzjbg/oRQBmilDCx5emJ19YEUiKuaHlsEgO9Y+o
+ Nkn8na0GgP+2ht7WbBwDCrr3+WIfSKatbxXjhWyRc8oxUvuWdKu0Tz/vreYSRTrj+343
+ DzmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788649208; x=1789254008;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=t8oRNPl1cmk5i3RQNXZJ9dCwCbGbGERIPI2wNJp4lMI=;
- b=PLhyDDbzuKD0+SANB7VuR9H5PT4ykJO9OHr8Q0nPu8a/dCEiSOezZpwf8wpAiuPjCy
- +RgiW+z4QDDpI4daWsSxXXf/CRBXDlt/N2UoiazC12DBkeBHrAstCtvngptSp2m2isva
- qTtFQWU0eXrV+VUhZ75KaDjcmsQ5l+KIwvyYq3kl++gH3ZdPKqrWVyvBnGq/xbpely2s
- NMecAp96KfnSQxsadUYOXY4TJja53h3LFeTwP4AgT8onmXpVGs//sYE+3EIcdxNlRYdL
- jnEJMvX92raUHgJXljdcoLq6FmLbqqpoFnnW0DNQbEdGFRORfSSeZHSjC4LYlzLGyMtN
- 9Ptg==
-X-Gm-Message-State: AFuF++nnvxbwakUBoGreZqeyBTrcno+sYx0/ztoTwyXToyb5yGDSmsFq
- svAJ+wz0e51nsf+4jTP3WyOfhedjQVZzCuF+5bp5H9y+A4D9wmRpmkQPCHUNk9xPXXAMVOOT1yk
- 8KFjJeIhunxU/0JMt1XHZKPufbPRBFGaCw/xvsP3zT6QT0MnmBiMBhyEqkg==
-X-Gm-Gg: AYBFou0WlHIICEDOGemwRZr4Phg8x4ife11YjH0rq8F4L21Fee6n9F9vgh22sjS5VMv
- /SFuQc0zKzA1jNwZBrW2IxxIOGqzX9O5xxwHhSvWxEFpMETSotpvkVpFgnk4wb4ui25xoFu+vuy
- FzSb1j/yWubrGmFhW+MrtTfzY/FDxbGTUPJrke4PGGhLd3mkJUea7WDS9zFyFnlMTiRXUWnwmHU
- MtaPbB44u0B9/xw0z+J8s6TRScuOGJ2vHtYiSu5nfkXrm1d90eDObnPeGWNBl0nQobOLOMqdFvK
- RkwhSBOVEvwezLsqwcfVVly1Lj3W/YAI2msYtSWWgoxnpzHPE9d95H+W6Xum3Fwjt4snzJkkoWG
- l79aAZoO8Nx7CyFPeOCQkmmw8u6k2f1X2jiosTe19PAFgL/d6tH00s7zM7iu1A4xrhxI5wXMf2T
- Py1PlK
-X-Received: by 2002:a05:620a:6086:b0:915:a953:4b9c with SMTP id
- af79cd13be357-93980324543mr1424820485a.3.1788649207759; 
- Sat, 05 Sep 2026 16:00:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:6086:b0:915:a953:4b9c with SMTP id
- af79cd13be357-93980324543mr1424814785a.3.1788649207203; 
- Sat, 05 Sep 2026 16:00:07 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9397fb36195sm530373385a.21.2026.09.05.16.00.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Sep 2026 16:00:06 -0700 (PDT)
-Message-ID: <2551b3fe-02fb-4966-8bab-cbad2ecce2c5@oss.qualcomm.com>
-Date: Sat, 5 Sep 2026 18:00:04 -0500
+ d=1e100.net; s=20251104; t=1788666237; x=1789271037;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xHO8pCk/PGul4WjK6pHwxopazczPugQYLb9RWHnDvXQ=;
+ b=dvdGot/59lxZodP6FU3V1xy5J+qXCo9AP/16nZaXVcjmrxPm+3I+RQ9FwFhWvYVTFU
+ dCtpcfy8ZbstU/Qy+iIn7b+jONMqEma8i4qKF1CldGfFlALdmLszptkPoX6LxEtsPT7m
+ K/ljEdujeU8ZwQyHmbqSOskLx08oSYS3nDNHOdBZy8t9ZYsISkS37fr5MOYFAI6U63ha
+ STCrVp8HE1HfJmcurfJHV3fcYWgTgEz4vC8YxfavFXDA6Vg6ztpx75xvBjE9uk+FnpBv
+ CfB6QMK9MiTKMhQFYLxaTmMokYA8QVmoQ7WPe1Nr7qe7Vsd/Xqn5gilBsYAFZRbiYT2j
+ gBpQ==
+X-Gm-Message-State: AFuF++mh+TP4KYFZrqupcBB1ryFuEQAhbbf6klcqlApc6VRcXl/pU0EM
+ W4H5YcrQkL+YIN4DTOeGPQe1TnTZDiRf9YjpC3+l7fdgJx2ZfqKsnY6Igaq/K1DoDbTECR0G9zL
+ axKuA2WnDTe46r0ncD2pFCQS11Qw6Bn8=
+X-Gm-Gg: AYBFou2odYC1mS1tD6RZJ7rGX5gSwU+zUjiPxlXHO7JLeD3DsnsaN5VbQbZquM7a/Va
+ DkXkkD14OOLqMHGSWnNMYjmgKwqzqqVQgxCeNjzp8TRVizKp4l47paqZvAbpjQpbXt+Ib7M2yAN
+ WqSoqtW7KesuC4oZDaKYcJt+GlKrdRGihIFui8BUXlBVJCqdxrRQl2LbC6yxLcT5DzwceW+WMIf
+ M1CN+brdao6t5MELZ4dIoq6klBRsZf0VJK/Car62CUzswF0CrEgb+3lgJM+w6VvDfnPglbaalO3
+ pYQ8zHo5FR6f5zoOQ3+mlsh9vYHqlydVFsDqFazATZct1XRRlnK7jtN5I8Hx9SPZi5q4+f1yxTB
+ w
+X-Received: by 2002:a17:90b:4e8f:b0:38e:5c6:4db9 with SMTP id
+ 98e67ed59e1d1-39b261ba63bmr23938857a91.11.1788666236644; Sat, 05 Sep 2026
+ 20:43:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 09/28] target/hexagon: add main arch-specific semihosting
- operations
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260902044231.843004-1-brian.cain@oss.qualcomm.com>
- <20260902044231.843004-10-brian.cain@oss.qualcomm.com>
- <CAFEAcA9MOs6VfHf2UHZ8z4cdvaB+7DY6hJb2emYZ2aLSe-t6iw@mail.gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA9MOs6VfHf2UHZ8z4cdvaB+7DY6hJb2emYZ2aLSe-t6iw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: InsA30FvXhfkEF0_4k36rfXyQozT4Ne7
-X-Authority-Analysis: v=2.4 cv=EJo2FVZC c=1 sm=1 tr=0 ts=6a9c9ef8 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=AkmwMN0QN9jAmoAwxQEA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: InsA30FvXhfkEF0_4k36rfXyQozT4Ne7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA1MDI1NSBTYWx0ZWRfX3VsQCjNTDwpt
- izDUyugP8aNMSVV50QPQ9iupxMcoP+f2taiYtfCMgUN+ExFKtoQftN9yw7TFR7tP1CESsKJc6M7
- RY7+u2PEHcXD+pfs/J3hZU9nFOaRoUUzgEYvu5IS5gNj+rtxUDg++QwdQ5fFJ9HNbCAyjigXQAj
- R5OFEtDwEvteB2sCAEj27yzu9gIDT/dKO8Gc+a4E2frTUzJpZO292ErKokqGQIczjGemoh7fOxs
- HHCjUBCqaEqu4xmMYDZyvD0dCCoeispLhNOGCHAmnUl7iAPErRb1odcGi/SJuj80ecedHu1YR8k
- Zp34UplbIssjTg6iGQDAkZzV4MGy0iC4Hvv0EocPl+qXlOZkwhEUl3RgahvJrztEQnmoHJQ2O+9
- Z/at6EI2XF8CtNn8r6Lyejkrd5SYymFSL9HZJLYYiUHPTpL1+k19jboNtwuRiZeVJsFKEd8WYBC
- Tgv7lHoXgU/Hsuojr2Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA1MDI1NSBTYWx0ZWRfX9ymoj1NEi/r2
- i5EbctG+Qi17C3B0OLRTYnRoKFI53Z6S3i3+Y68gLdXuynDU8KsSuk3APKm1IjbG8eP3qHcf2he
- mlX5RsC2Nyv+35aQv12/ZxvmY3qGR3U=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-05_07,2026-09-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 suspectscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2609050255
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260905014629.991586-1-apolivodaa433@gmail.com>
+ <CABgObfa4+CzMVN4xj=71cfJL6eMdMWqCoEvQ5RKvPNcR79XO4w@mail.gmail.com>
+In-Reply-To: <CABgObfa4+CzMVN4xj=71cfJL6eMdMWqCoEvQ5RKvPNcR79XO4w@mail.gmail.com>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+Date: Sun, 6 Sep 2026 13:43:44 +1000
+X-Gm-Features: AcwNN1U9Fq4BDCbGa03ZWh9b2fwYP773csg3Z23C_gWRPalWSpb8tsduUKJl-t4
+Message-ID: <CAGscdFt0cJOaB+5P4YcSEbC7zAw8ZCnnfFQWBki-P+KXVtW-gw@mail.gmail.com>
+Subject: Re: [PATCH] target/i386: ignore VEX.L when emitting VROUNDSS and
+ VROUNDSD
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,107 +118,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/3/2026 2:55 PM, Peter Maydell wrote:
-> On Wed, 2 Sept 2026 at 05:43, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->> From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 >>
->> The Hexagon semihosting ABI extends the arm-compatible set with
->> operations like OPEN, WRITECREG, WRITE0, ISTTY, STAT, FSTAT, FTELL,
->> SEEK, FTRUNC, ACCESS, and GETCWD. Implement these trap0 handlers so
->> that baremetal programs using the standard Hexagon simulator ABI can
->> perform file I/O when running on qemu-system-hexagon.
-> Hi; Coverity points out an issue in the filename buffer handling
-> in this code.
->
->> -    /* TODO: implement other hexagon-specific semihosting calls */
->> +    case HEX_SYS_OPEN:
->> +    {
->> +        char filename[BUFSIZ];
->> +        target_ulong physical_filename_addr;
->> +        unsigned int filemode;
->> +        int length;
->> +        int real_openmode;
->> +        int ret, err = 0;
->> +        int i = 0;
->> +
->> +        hexagon_read_memory(env, swi_info, 4, &physical_filename_addr, retaddr);
->> +        hexagon_read_memory(env, swi_info + 4, 4, &filemode, retaddr);
->> +        hexagon_read_memory(env, swi_info + 8, 4, &length, retaddr);
->> +
->> +        if (length >= BUFSIZ) {
->> +            qemu_log_mask(LOG_GUEST_ERROR,
->> +                          "%s: filename too large (%d)\n",
->> +                          __func__, length);
->> +            common_semi_cb(cs, -1, ENAMETOOLONG);
->> +            break;
+>>      case X86_SIZE_ps: /* SSE/AVX packed single precision */
+>> -    case X86_SIZE_pd: /* SSE/AVX packed double precision */
+>> -        *ot = s->vex_l ? MO_256 : MO_128;
+>> +    case X86_SIZE_pd: { /* SSE/AVX packed double precision */
+>> +            bool is_scalar = (e->s0 == X86_SIZE_ss || e->s0 == X86_SIZE_sd ||
+>> +                              e->s1 == X86_SIZE_ss || e->s1 == X86_SIZE_sd ||
+>> +                              e->s2 == X86_SIZE_ss || e->s2 == X86_SIZE_sd);
+>> +            *ot = (s->vex_l && !is_scalar) ? MO_256 : MO_128;
 >> +        }
->> +
->> +        do {
->> +            hexagon_read_memory(env, physical_filename_addr + i, 1,
->> +                                &filename[i], retaddr);
->> +            i++;
->> +        } while (filename[i - 1]);
-> Coverity didn't notice this one, but I did. We read into a local
-> buffer from guest memory, so we can't trust that the guest actually
-> put a NUL byte terminator in. If it doesn't, then we'll happily
-> keep loading from guest memory and overflow the filename[] array.
-> This needs a termination check involving sizeof(filename).
 >
->> +    case HEX_SYS_STAT:
->> +    case HEX_SYS_FSTAT:
->> +    {
->> +        struct stat st_buf;
->> +        uint8_t *st_bufptr = (uint8_t *)&sys_stat;
->> +        int rc, err = 0;
->> +        char filename[BUFSIZ];
->> +        target_ulong physical_filename_addr;
->> +        target_ulong statBufferAddr;
->> +        hexagon_read_memory(env, swi_info, 4, &physical_filename_addr, retaddr);
->> +
->> +        if (what_swi == HEX_SYS_STAT) {
->> +            int i = 0;
->> +            do {
->> +                hexagon_read_memory(env, physical_filename_addr + i, 1,
->> +                                    &filename[i], retaddr);
->> +                i++;
->> +            } while ((i < BUFSIZ) && filename[i - 1]);
-> This one does have a check on BUFSIZ, but if we terminate the
-> loop because of that then filename[] won't be NUL terminated
-> and stat() might blow up when we pass it.
 >
->> +            rc = stat(filename, &st_buf);
->> +            err = errno;
->> +    case HEX_SYS_ACCESS:
->> +    {
->> +        char filename[BUFSIZ];
->> +        uint32_t FileNameAddr;
->> +        uint32_t BufferMode;
->> +        int rc;
->> +
->> +        int i = 0;
->> +
->> +        hexagon_read_memory(env, swi_info, 4, &FileNameAddr, retaddr);
->> +        do {
->> +            hexagon_read_memory(env, FileNameAddr + i, 1, &filename[i],
->> +                                retaddr);
->> +            i++;
->> +        } while ((i < BUFSIZ) && (filename[i - 1]));
->> +        filename[i] = 0;
-> This one is wrong in yet a third way: we do check against
-> BUFSIZ, and we try to add in a possible missing NUL terminator,
-> but if we stopped the loop because i == BUFSIZ, then we will
-> write the NUL terminator off the end of the array.
-> (This is the one Coverity found: CID 1685942.)
+> Oh, this also applies to VMOVSS, VSQRTSS, etc. but that's actually correct - they're all VEX.LIG. It's worth listing these instructions above the declaration of is_scalar.
 >
-> Better still, can't we use the lock_user_string() handling that
-> the common-semihosting code does? That avoids all this need
-> for tedious manual byte-at-a-time looping and fixed sized buffers
-> and potential for bugs.
+> Paolo
 
+Checked which instructions are actually affected by this patch:
+```
+$ grep -Rn ',\s*s[sd]' | grep OP | grep -E ',\s*(x|ps|pd)'
+tcg/decode-new.c.inc:999:    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,
+H,x, W,ss, vex3 cpuid(SSE41) p_66),
+tcg/decode-new.c.inc:1000:    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,
+H,x, W,sd, vex3 cpuid(SSE41) p_66),
+tcg/decode-new.c.inc:1056:        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,
+      M,ss, vex5),
+tcg/decode-new.c.inc:1057:        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,
+      M,sd, vex5),
+tcg/decode-new.c.inc:1079:        X86_OP_ENTRY3(VMOVSS_st,  M,ss,
+None,None, V,x, vex5),
+tcg/decode-new.c.inc:1080:        X86_OP_ENTRY3(VMOVLPx_st, M,sd,
+None,None, V,x, vex5), /* MOVSD */
+tcg/decode-new.c.inc:1163:        X86_OP_ENTRY3(VMOVSS_st,  M,ss,
+None,None, V,x, vex4 cpuid(SSE4A)), /* MOVNTSS */
+tcg/decode-new.c.inc:1164:        X86_OP_ENTRY3(VMOVLPx_st, M,sd,
+None,None, V,x, vex4 cpuid(SSE4A)), /* MOVNTSD */
+$
+```
+After running some tests, it looks like the behavior of (V)ROUNDSS,
+(V)ROUNDSD, (V)MOVSS and (V)MOVSD is actually modified by this patch.
+(MOVNTSS and MOVNTSD do not generate different TCG ops with and
+without the patch applied. However, the VEX prefix
+is actually illegal for these two AMD-specific instructions (tested on
+AMD EPYC 7763; material for a different patch, I guess))
 
-I'll investigate and fix the issues raised - thanks for pointing them 
-out, Peter.
+Also, VSQRTSS and VSQRTSD are actually raising an invalid opcode
+exception when VEX.L is set
+That's because:
+1. `vex_special` field of VSQRTSS/VSQRTSD opcode entries is set to
+`X86_VEX_REPScalar`
+2. For entries with `vex_special == X86_VEX_REPScalar`,
+`validate_vex()` raises the #UD
+    if `(s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) != 0` and `s->vex_l` is set
+Intel Core i3-6100 and AMD EPYC 7763 do not raise #UD when this
+happens. (looks like another patch material)
 
-
+I will send a v2 with a comment listing (V)ROUNDSS, (V)ROUNDSD,
+(V)MOVSS, (V)MOVSD as the instructions affected by this change
 
