@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FD3C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A73C79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:45:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x38TD-0004P3-8M; Sun, 06 Sep 2026 04:43:23 -0400
+	id 1x38Sx-00049o-7i; Sun, 06 Sep 2026 04:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38TC-0004Od-CV
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:43:22 -0400
+ id 1x38Sv-00048q-PO
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:43:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38TA-0008BB-W9
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:43:22 -0400
+ id 1x38Ss-00085h-Or
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:43:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788684200;
+ s=mimecast20190719; t=1788684181;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZLEJavX+CYl5URxiAxOIrkjtvTfg2pt7Qx+aNxGhous=;
- b=GlKpLZwj0Ef94Q5RRwBVxGfGBkCbj+8100tk6S4eogjIzxDPAFem8+89vQJMRGwvs6MAi6
- PP1T6IHrqlK1y6Kj7OxXliG6A1ntn7FcytX7VDx9QTLC7pTDUnfFNFT4zkEiri0lhuzYcO
- Lu27fqjgnVh9jSnr9xwszhAoN37OcBM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=M14ZvGPaLzlE8Fg8EGzxYLG+xEb3zc779TfIX9KCdno=;
+ b=YN8SxrD0kHkXjzvVy1Q/emCGcKhYdQyy0bkCJ6xzUGPz2ay+bWXZSYz3OIbat8EujEZzCt
+ XXKIcEHACyVW37FLzbQmI0NpJNRjZgDLFGpqPm/x0cd1Fy1E6oEpHZnbZWfEU9v1VvO+Ig
+ ZCgPHDXDz69BVKFXWLA5XGDGX5dXdss=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-2IDeIHMyN9WFpR7xZ2RZ2Q-1; Sun,
- 06 Sep 2026 04:43:17 -0400
-X-MC-Unique: 2IDeIHMyN9WFpR7xZ2RZ2Q-1
-X-Mimecast-MFC-AGG-ID: 2IDeIHMyN9WFpR7xZ2RZ2Q_1788684195
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-TNZTv6_rMW2-m1kbwlsXCA-1; Sun,
+ 06 Sep 2026 04:42:58 -0400
+X-MC-Unique: TNZTv6_rMW2-m1kbwlsXCA-1
+X-Mimecast-MFC-AGG-ID: TNZTv6_rMW2-m1kbwlsXCA_1788684176
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83FEE1955DCB; Sun,  6 Sep 2026 08:43:15 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1C491954234; Sun,  6 Sep 2026 08:42:55 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BCB191800348; Sun,  6 Sep 2026 08:43:13 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C7AF41956042; Sun,  6 Sep 2026 08:42:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 06 Sep 2026 12:42:40 +0400
-Subject: [PATCH 9/9] tests/functional: fix some tests that require HMP
+Date: Sun, 06 Sep 2026 12:42:35 +0400
+Subject: [PATCH 4/9] tests/qtest: add qtest_qmp_job_wait()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260906-nohmp-v1-9-daee96491c43@redhat.com>
+Message-Id: <20260906-nohmp-v1-4-daee96491c43@redhat.com>
 References: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
 In-Reply-To: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
 To: qemu-devel@nongnu.org
@@ -72,24 +72,24 @@ Cc: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1473;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2703;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=3OofPbadkMI9D2wQEsOueK3/Wbpgib4zDKoUa7tcwDk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSd5vJ/74g1y2az4tJkUWDTcDt51fE5IcjAQp
- jDgUKcFfuaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0neQAKCRDa6OEJdZac
- 5UAJD/4yPrXD+IwoOZaaUijKLcx1qlZmr1KX6qA66KuJERoKxrxWFbxpH38uo+kDURhX+IeLsGI
- BO1HeI7zQ/iH3I9cppFBhBYRoUDwzyKo4pAqpWAVXQur8Ee5vbtnftQfk7ektWzUdCSRhrkqKK2
- HSnZa43VJU7P63naDHnwb815t9LrxAfRtwlElQORpbBwDqEDZxkXE0L0GIy1BvCRI9/E9Cl0/Vo
- TnqDZ5A4juBwNC43ToOmMuLiVnW6tapBAGJydZ7uQuMTOPhu7nm9yMZEnUlcNwUnE2s6lWVPCXA
- Y5N0Wfrc54maJQ3twRp9oTJ6pUjiXT+9zbQoR36D87beG+yz4uDkA4nS4GqPQPacIOPqujUyzIa
- 17Z7W/Z7pj897AoJNP4amBUvOfRaFuPbLQGkXZXo5PPFe354v/9cuZwIsKJ/G5ejLXRbsfiVE0r
- HV6ZxDgmeEsKc39IgeMnDnuBybxSuc495ZOkJkMrNBu+4oT6PmDuHNhhN5f6j3cB+k+Dq6M8nhd
- PfaaR2n8DsW1KJ7Wn6nNVR+ZxWjYXXcx8hBdRrI7VORpIPwvLN8fXRaYLuvRpYIS3i9F7McUXi2
- ZQpFBaJuam78fnV8/fL+cKpurhpDuF9ZrV8IB/poRFSqinVsDfxTcu1hLjYU5vX1h6KQkmtHUJF
- Lf6KpJNjpmQIk4Q==
+ bh=vMUZqjDWeGCv7rylFTtKHn8cBAXxiSSUDpyTUJ14zWE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSd5Cdw7aCylKX3h92bvG3av3WbIbDk+NPC57
+ 9T8CB99l/aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0neQAKCRDa6OEJdZac
+ 5ee/D/4h+damfCDzjmprRq5c2aBGd0bWDcHq7iRN3/A30bqYvmftWC0ssn04dB5WYae1cftV6al
+ MXnX17z4iXI9u9pQ/cU/cJNqqYNeM1Z2JmugyMZmtN8W1Z/R+FXhHjLgU9ycqIVPBM3+whFkNU8
+ aazfN2aPM0RfADqj7XGHw9gVSV3EgaEtI5achGR5rDwM4fU3uMlvKLfL5nwjWEffnMxyb8GRVs8
+ 8UY2QyXkpdCLL5how/ojegN/7rpfAVC0fjNuyJF4W59jQWVVf7Yd3oFxFhJ4Zu0J3GMuMlr62eF
+ jeHcu8d+3CGHcTLMH4KUUaV1Mgn1sd0xHxMcnzP02oOGg/+E3SRLEjp9F5OqR2Nm83WDIChPDY2
+ e4SoFp4wnymu2RuL9JzWB9M+r4LwoDwqtGqTSliJfGu+9uOusLTeaWkqu6bnm8NFWgPJdeAMzbP
+ qyLlrdgwe6lyrZfO3v2+sqnW++Or24KrH6IqgxbF2dsY1gjizq4OirJKVOuY/Sv5lfvYA2opf0o
+ vMa0Qajq8sAbfskzqYzekPhAOz/NrpXEcJMyHWIVFYhN1SVdOcvCOpUXl6Wa+lHjMWqhhWyCt0n
+ B6lU1m7UHX2RwfvbHYvHcrgK4E8PWjk2rP/wOzS5dT7xw/WXcPVon0cDnm91g8ngQ6RLB6yZx9f
+ 6aP2q6Sr+n7wtyg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -116,39 +116,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those tests use "info registers" command and connot be converted
-easily, for now skip them
+Add a helper to wait for job conclusion, used in next changes.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/m68k/test_nextcube.py | 1 +
- tests/functional/ppc/test_ppe42.py     | 1 +
- 2 files changed, 2 insertions(+)
+ tests/qtest/libqtest.c | 37 +++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.h | 11 +++++++++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
-index dc99962eb75c..b0c0b653a7d0 100755
---- a/tests/functional/m68k/test_nextcube.py
-+++ b/tests/functional/m68k/test_nextcube.py
-@@ -27,6 +27,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 28bb72bfaecf..370f79a3b6fb 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -984,6 +984,43 @@ void qtest_qmp_eventwait(QTestState *s, const char *event)
+     qobject_unref(response);
+ }
  
-         self.vm.add_args('-bios', rom_path)
-         self.vm.launch()
-+        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
++void qtest_qmp_job_wait(QTestState *s, const char *job_id)
++{
++    QDict *response, *data, *error;
++    QList *jobs;
++    const QListEntry *entry;
++
++    for (;;) {
++        response = qtest_qmp_eventwait_ref(s, "JOB_STATUS_CHANGE");
++        data = qdict_get_qdict(response, "data");
++        if (!strcmp(qdict_get_str(data, "id"), job_id) &&
++            !strcmp(qdict_get_str(data, "status"), "concluded")) {
++            qobject_unref(response);
++            break;
++        }
++        qobject_unref(response);
++    }
++
++    response = qtest_qmp(s, "{ 'execute': 'query-jobs' }");
++    g_assert(qdict_haskey(response, "return"));
++    jobs = qobject_to(QList, qdict_get(response, "return"));
++    g_assert(jobs);
++    QLIST_FOREACH_ENTRY(jobs, entry) {
++        QDict *job = qobject_to(QDict, qlist_entry_obj(entry));
++        if (!strcmp(qdict_get_str(job, "id"), job_id)) {
++            g_assert_null(qdict_get_try_str(job, "error"));
++            break;
++        }
++    }
++    qobject_unref(response);
++
++    response = qtest_qmp(s,
++        "{ 'execute': 'job-dismiss', 'arguments': { 'id': %s } }", job_id);
++    error = qdict_get_qdict(response, "error");
++    g_assert_null(error);
++    qobject_unref(response);
++}
++
+ char *qtest_vhmp(QTestState *s, const char *fmt, va_list ap)
+ {
+     char *cmd;
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index 58491ca53ab7..f06e061d214b 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -398,6 +398,17 @@ QDict *qtest_qmp_eventwait_ref(QTestState *s, const char *event);
+  */
+ QDict *qtest_qmp_event_ref(QTestState *s, const char *event);
  
-         self.log.info('VM launched, waiting for display')
-         # Wait for the FPU test to finish, then the display is available, too:
-diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/test_ppe42.py
-index 53958a7938d1..a9c154f67328 100755
---- a/tests/functional/ppc/test_ppe42.py
-+++ b/tests/functional/ppc/test_ppe42.py
-@@ -72,6 +72,7 @@ def test_ppe42_instructions(self):
-         self.vm.add_args('-device', 'loader,addr=0xfff80040,cpu-num=0')
-         self.vm.add_args('-action', 'panic=pause')
-         self.vm.launch()
-+        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
-         self._wait_pass_fail(self.timeout)
- 
- if __name__ == '__main__':
++/**
++ * qtest_qmp_job_wait:
++ * @s: #QTestState instance to operate on.
++ * @job_id: job identifier to wait for.
++ *
++ * Wait for a QMP job to reach "concluded" status by consuming
++ * JOB_STATUS_CHANGE events, then dismiss the job.
++ * Asserts that the job completed without error.
++ */
++void qtest_qmp_job_wait(QTestState *s, const char *job_id);
++
+ /**
+  * qtest_hmp:
+  * @s: #QTestState instance to operate on.
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
