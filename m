@@ -4,65 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A4EC79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 15:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FB4C79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3F0o-00055M-BQ; Sun, 06 Sep 2026 11:42:30 -0400
+	id 1x3FsU-0002qK-Ia; Sun, 06 Sep 2026 12:37:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x3F0n-000557-3a; Sun, 06 Sep 2026 11:42:29 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x3F0l-0008Kq-Cg; Sun, 06 Sep 2026 11:42:28 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwB3f1PgiZ1qMdagBQ--.4343S2;
- Sun, 06 Sep 2026 23:42:24 +0800 (CST)
-Received: from [192.168.2.11] (unknown [113.246.116.29])
- by mail (Coremail) with SMTP id AQAAf8DwSnPfiZ1q7fzGAA--.16612S2;
- Sun, 06 Sep 2026 23:42:23 +0800 (CST)
-Message-ID: <e3ef0d36-58dd-406a-8e46-d01d0379ddf4@phytium.com.cn>
-Date: Sun, 6 Sep 2026 23:42:22 +0800
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1x3FsS-0002pR-FK; Sun, 06 Sep 2026 12:37:56 -0400
+Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1x3FsP-00033N-4f; Sun, 06 Sep 2026 12:37:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1788712652; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=B8tlVV5kyWP7b4zffdRFbJapfjKKslEj+tNfnE2hutg=;
+ b=Up14WDmAtuSBvQ+zvMtAjcQYIcETv7Kft8c0+y55R6IFvmTFho9ix4mjrWWGum56f3UXW1HBzL0LlASNCprPoi3kj2BmIFoCDZWiB5kM4//anOLAUmdxhbhVNkMSiOt2sXOrbNqjD8J8oDcf1Fut1dxvc2sWSvyXuuceYNRCxqI=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R431e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
+ TI=SMTPD_---0XANKIID_1788712651; 
+Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0XANKIID_1788712651 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 07 Sep 2026 00:37:31 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Mon, 07 Sep 2026 00:37:19 +0800
+Subject: [PATCH 03/14] target/riscv: Use VM-elapsed sources for fixed PMU
+ events
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 11/28] hw/arm/smmu-common: Implement secure state
- handling in ptw
-To: Mostafa Saleh <smostafa@google.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162512.2807281-1-tangtao1634@phytium.com.cn>
- <apbctpZhmRAzRia1@google.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <apbctpZhmRAzRia1@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8DwSnPfiZ1q7fzGAA--.16612S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAKBWqcbcoCZAABs4
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxCw4xAF1Utry3Xr1xKry3Arb_yoWrGFyrpa
- 97GFZIgw4ktFyIvrs2vr4UZ3W5A395Ga15GrZrGF9Yk3Z8tr18AF1jk345KFZ0gr1rGay0
- v3Wj9rZxWF4jv3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260907-riscv-pmu-correctness-v1-3-5f1f41458989@linux.alibaba.com>
+References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
+In-Reply-To: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=9498;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=B3cVD38Jnpx5LXHlCGbC2pwe8lMbluVAHffi2wkGHRU=;
+ b=TU5JB/8uEYhCe+iFzHONIvgEjQHweLpTm6/TWMIy1ZYtRy7v1UAb06lg+cTrFaLrzM2BDn2Ho
+ /ynmVt2Xge5AGvH7Nsjxie+udx2gXJJb5VRLoH//bjT5ftcnXdZclCT
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
+Received-SPF: pass client-ip=115.124.30.110;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-110.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,96 +87,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+Raw host ticks keep advancing while the VM is stopped. Use
+cpus_get_elapsed_ticks() for cycles and non-icount instruction counting,
+and retain icount_get_raw() for instructions under icount. Document that
+cpu_get_ticks() returns its stored value while VM ticks are disabled.
 
-On 2026/9/1 22:09, Mostafa Saleh wrote:
-> On Fri, Aug 14, 2026 at 12:25:08AM +0800, Tao Tang wrote:
->> Enhance the page table walker to correctly handle secure and non-secure
->> memory accesses. This change introduces logic to select the appropriate
->> address space and enforce architectural security policies during walks.
->>
->> The page table walker now correctly processes Secure Stage 1
->> translations. Key changes include:
->>
->> - The get_pte() function now uses the effective security state to fetch
->> page-table entries from either the Secure or Non-secure address space,
->> with explicit transaction attributes matching that address space.
->>
->> - The stage 1 walker tracks the security state, respecting the NSCFG
->> and NSTable attributes. It correctly handles the hierarchical security
->> model: if a table descriptor in a secure walk has NSTable=1, all
->> subsequent lookups for that walk are forced into the Non-secure space.
->> This is a one-way transition, as specified by the architecture.
->>
->> - The final TLB entry is tagged with the correct output address space,
->> ensuring proper memory isolation.
->>
->> Note: We do not yet support secure stage 2 translations. This patch
->> only implements Secure stage 1 page-table walks. Baseline propagation
->> of the incoming NS attribute for stage 1 bypass is handled separately
->> in this series with ATTR_PERMS_OVR == 0. Full ATTR_PERMS_OVR support
->> is left for a separate series.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmu-common.c         | 73 +++++++++++++++++++++++++++++-------
->>   hw/arm/smmuv3.c              | 19 ++++++----
->>   include/hw/arm/smmu-common.h |  7 ++--
->>   3 files changed, 74 insertions(+), 25 deletions(-)
->>
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index 63c36329a98..317cfafded2 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -408,13 +408,13 @@ void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
->>    * @base_addr[@index]
->>    */
->>   static int get_pte(dma_addr_t baseaddr, uint32_t index, uint64_t *pte,
->> -                   SMMUPTWEventInfo *info)
->> +                   SMMUPTWEventInfo *info, AddressSpace *as, MemTxAttrs attrs)
->>   {
->>       int ret;
->>       dma_addr_t addr = baseaddr + index * sizeof(*pte);
->>   
->>       /* TODO: guarantee 64-bit single-copy atomicity */
->> -    ret = ldq_le_dma(&address_space_memory, addr, pte, MEMTXATTRS_UNSPECIFIED);
->> +    ret = ldq_le_dma(as, addr, pte, attrs);
->>   
->>       if (ret != MEMTX_OK) {
->>           info->type = SMMU_PTW_ERR_WALK_EABT;
->> @@ -488,7 +488,8 @@ SMMUTransTableInfo *select_tt(SMMUTransCfg *cfg, dma_addr_t iova)
->>   static inline int translate_table_addr_ipa(SMMUState *bs,
->>                                              dma_addr_t *table_addr,
->>                                              SMMUTransCfg *cfg,
->> -                                           SMMUPTWEventInfo *info)
->> +                                           SMMUPTWEventInfo *info,
->> +                                           SMMUSecSID sec_sid)
->>   {
->>       dma_addr_t addr = *table_addr;
->>       SMMUTLBEntry *cached_entry;
->> @@ -501,7 +502,7 @@ static inline int translate_table_addr_ipa(SMMUState *bs,
->>       asid = cfg->asid;
->>       cfg->stage = SMMU_STAGE_2;
->>       cfg->asid = -1;
->> -    cached_entry = smmu_translate(bs, cfg, addr, IOMMU_RO, info);
->> +    cached_entry = smmu_translate(bs, cfg, addr, IOMMU_RO, info, sec_sid);
-> Should we have an assertion instead as it is not possible to reach
-> this path with the secure bit?
->
-> Thanks,
-> Mostafa
+Under icount, cycles are already virtual nanoseconds. Convert only raw
+instruction counts when scheduling overflow, avoiding a second scaling
+of cycle distances. Add a cycle-overflow regression with icount shift=3.
 
+Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg00668.html
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+---
+ system/cpu-timers.c                         |  4 +-
+ system/cpus.c                               |  6 +--
+ target/riscv/tcg/csr.c                      |  8 +---
+ target/riscv/tcg/pmu.c                      | 52 +++++++++++++++-----------
+ target/riscv/tcg/pmu.h                      |  1 +
+ tests/tcg/riscv64/Makefile.softmmu-target   |  4 ++
+ tests/tcg/riscv64/sscofpmf-cycle-overflow.S | 58 +++++++++++++++++++++++++++++
+ 7 files changed, 100 insertions(+), 33 deletions(-)
 
-Thanks for the suggestion! Eric suggested avoiding the extra sec_sid 
-plumbing while Secure stage 2 is unsupported, so in v6 I want to remove 
-the sec_sid parameter from translate_table_addr_ipa() and explicitly 
-pass SMMU_SEC_SID_NS to smmu_translate() inside the helper. Since 
-decode_ste() already returns C_BAD_STE for Secure STEs with stage 2 
-enabled, including nested translation, could we omit this assertion for 
-now? What do you think?
+diff --git a/system/cpu-timers.c b/system/cpu-timers.c
+index 9919b46230f1caf8be1a1b6ef00acd94678437ce..0415636aff3f774f0de61fdac3969f5b45ae6993 100644
+--- a/system/cpu-timers.c
++++ b/system/cpu-timers.c
+@@ -118,8 +118,8 @@ void cpu_enable_ticks(void)
+ }
+ 
+ /*
+- * disable cpu_get_ticks() : the clock is stopped. You must not call
+- * cpu_get_ticks() after that.
++ * Freeze VM ticks. While disabled, cpu_get_ticks() returns the stored tick
++ * value instead of sampling the advancing host counter.
+  * Caller must hold BQL which serves as mutex for vm_clock_seqlock.
+  */
+ void cpu_disable_ticks(void)
+diff --git a/system/cpus.c b/system/cpus.c
+index e11a5aab6a696962d94ad30ac38acd8867b1bf88..f61639ae78277fd90cbddb0b9f75b134e3cc1a17 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -237,9 +237,9 @@ void cpus_set_virtual_clock(int64_t new_time)
+ }
+ 
+ /*
+- * return the time elapsed in VM between vm_start and vm_stop.  Unless
+- * icount is active, cpus_get_elapsed_ticks() uses units of the host CPU cycle
+- * counter.
++ * Return VM-elapsed ticks. While VM ticks are disabled, passage of host time
++ * does not advance the returned value. Unless icount is active, the units are
++ * those of the host CPU cycle counter.
+  */
+ int64_t cpus_get_elapsed_ticks(void)
+ {
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index d15a2d096cb6e13cd123ff9ae82ee7c643c2a961..60caee32dc0cf5b6a8492e0cf8ff15f71acc2087 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1327,13 +1327,7 @@ static uint64_t riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+     }
+ 
+     if (!cfg_val) {
+-        if (icount_enabled()) {
+-                curr_val = inst ? icount_get_raw() : icount_get();
+-        } else {
+-            curr_val = cpu_get_host_ticks();
+-        }
+-
+-        return curr_val;
++        return riscv_pmu_read_fixed_source(env, inst);
+     }
+ 
+     /* Update counter before reading. */
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index f19f417e90e33a94d00007ef132ef4e154175b19..ea0ffe41258d4dbef9dc952655e6301c14ba1d23 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -24,8 +24,14 @@
+ #include "pmu.h"
+ #include "exec/icount.h"
+ #include "system/device_tree.h"
++#include "system/cpu-timers.h"
+ 
+-#define RISCV_TIMEBASE_FREQ 1000000000 /* 1Ghz */
++/*
++ * cpu_get_ticks() does not expose the host tick frequency.  Use a 1 GHz
++ * approximation only when scheduling non-icount overflow checks; fixed
++ * counter values remain in host-tick units.
++ */
++#define RISCV_PMU_HOST_TICK_HZ_ASSUMED 1000000000
+ 
+ static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
+ {
+@@ -75,6 +81,19 @@ static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
+             (cfg & MHPMEVENT_BIT_UINH));
+ }
+ 
++/*
++ * VM-elapsed ticks stop advancing while VM ticks are disabled.  Under
++ * icount, instruction events retain raw instruction-count units.
++ */
++uint64_t riscv_pmu_read_fixed_source(CPURISCVState *env, bool instret)
++{
++    if (instret && icount_enabled()) {
++        return icount_get_raw();
++    }
++
++    return cpus_get_elapsed_ticks();
++}
++
+ /*
+  * Information needed to update counters:
+  *  new_priv, new_virt: To correctly save starting snapshot for the newly
+@@ -96,11 +115,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+     uint64_t *counter_arr;
+     uint64_t delta;
+ 
+-    if (icount_enabled()) {
+-        current_icount = icount_get_raw();
+-    } else {
+-        current_icount = cpu_get_host_ticks();
+-    }
++    current_icount = riscv_pmu_read_fixed_source(env, true);
+ 
+     if (env->virt_enabled) {
+         g_assert(env->priv <= PRV_S);
+@@ -137,11 +152,7 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
+     uint64_t *counter_arr;
+     uint64_t delta;
+ 
+-    if (icount_enabled()) {
+-        current_ticks = icount_get();
+-    } else {
+-        current_ticks = cpu_get_host_ticks();
+-    }
++    current_ticks = riscv_pmu_read_fixed_source(env, false);
+ 
+     if (env->virt_enabled) {
+         g_assert(env->priv <= PRV_S);
+@@ -286,17 +297,15 @@ static bool riscv_pmu_event_supported(uint32_t event_idx)
+     }
+ }
+ 
+-static int64_t pmu_icount_ticks_to_ns(int64_t value)
++static int64_t pmu_ticks_to_ns(CPURISCVState *env, uint32_t ctr_idx,
++                               int64_t value)
+ {
+-    int64_t ret = 0;
+-
+-    if (icount_enabled()) {
+-        ret = icount_to_ns(value);
+-    } else {
+-        ret = (NANOSECONDS_PER_SECOND / RISCV_TIMEBASE_FREQ) * value;
++    if (icount_enabled() &&
++        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
++        return icount_to_ns(value);
+     }
+ 
+-    return ret;
++    return (NANOSECONDS_PER_SECOND / RISCV_PMU_HOST_TICK_HZ_ASSUMED) * value;
+ }
+ 
+ void riscv_pmu_rebuild_event_map(CPURISCVState *env)
+@@ -448,8 +457,9 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
+ 
+     if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+         riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        overflow_ns = pmu_icount_ticks_to_ns((int64_t)overflow_delta);
+-        overflow_left = pmu_icount_ticks_to_ns(overflow_left) ;
++        overflow_ns = pmu_ticks_to_ns(env, ctr_idx,
++                                      (int64_t)overflow_delta);
++        overflow_left = pmu_ticks_to_ns(env, ctr_idx, overflow_left);
+     } else {
+         return -1;
+     }
+diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
+index 910091690290cac9f77855f479bb9d90b2762efe..339a4b3ac09c4a91cddd9250824284203b16b4fa 100644
+--- a/target/riscv/tcg/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -26,6 +26,7 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
+                                         uint32_t target_ctr);
+ bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env,
+                                   uint32_t target_ctr);
++uint64_t riscv_pmu_read_fixed_source(CPURISCVState *env, bool instret);
+ void riscv_pmu_timer_cb(void *priv);
+ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+ void riscv_pmu_rebuild_event_map(CPURISCVState *env);
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 97978c6707247bb786f41549ada69e12aab619ce..677244e8b187435b09fc6b7616e269992543587c 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -44,6 +44,10 @@ TESTS += sscofpmf-overflow
+ run-sscofpmf-overflow: sscofpmf-overflow
+ 	$(call run-test, $<, $(QEMU) -cpu max -icount shift=0 $(QEMU_OPTS)$<)
+ 
++TESTS += sscofpmf-cycle-overflow
++run-sscofpmf-cycle-overflow: sscofpmf-cycle-overflow
++	$(call run-test, $<, $(QEMU) -cpu max -icount shift=3 $(QEMU_OPTS)$<)
++
+ EXTRA_RUNS += run-plugin-doubletrap
+ run-plugin-doubletrap: doubletrap
+ 	$(call run-test, $<, \
+diff --git a/tests/tcg/riscv64/sscofpmf-cycle-overflow.S b/tests/tcg/riscv64/sscofpmf-cycle-overflow.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..1acf61ee54ab9b8dc6e5228a6bce3c013fe7201c
+--- /dev/null
++++ b/tests/tcg/riscv64/sscofpmf-cycle-overflow.S
+@@ -0,0 +1,58 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++	.option	norelax
++
++	.text
++	.global _start
++_start:
++	/* UINT64_MAX - 4095 leaves 4096 cycle increments until overflow. */
++	csrw	0x323, zero		/* mhpmevent3 */
++	li	t0, -4096
++	csrw	0xb03, t0		/* mhpmcounter3 */
++	li	t0, 1
++	csrw	0x323, t0		/* mhpmevent3: cycles */
++	csrr	t1, mcycle
++
++1:
++	csrr	t0, 0x323
++	beqz	t0, fail
++	li	t2, 1
++	slli	t2, t2, 63
++	and	t0, t0, t2
++	bnez	t0, pass
++
++	/*
++	 * Allow 16384 cycles for OF to become visible. With shift=3, scaling
++	 * the 4096-cycle distance twice would delay it to about 32768 cycles.
++	 */
++	csrr	t0, mcycle
++	sub	t0, t0, t1
++	li	t2, 16384
++	bltu	t0, t2, 1b
++
++fail:
++	li	a0, 1
++	j	exit
++
++pass:
++	li	a0, 0
++
++exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 
-Best regards,
-Tao
-
+-- 
+2.43.0
 
 
