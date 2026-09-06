@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22CD0C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A78EEC79F9E
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x38dY-0002Cx-Ko; Sun, 06 Sep 2026 04:54:04 -0400
+	id 1x38dc-0002Eo-Sy; Sun, 06 Sep 2026 04:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38dW-0002Bv-RN
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x38db-0002DU-Do
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38dV-0000k6-DG
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:02 -0400
+ id 1x38dZ-0000kh-SK
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788684840;
+ s=mimecast20190719; t=1788684845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4f5Z2LkVc6py1w60vXSvnjw7X6VX7rH9O/0eXx9/3+4=;
- b=PKrFbrHkaAJ2yS/atOagjevcVvfeq4BJdnk5h+OYnCSP2Di0NDBm48a8fwaPGvPY6Afe7W
- UqnIhCAQGCaAzUzgkIGN+PBINZsbxujFqkD+NllBGYk4A14RH4p2y/IjNZb62Avu7dQMsZ
- 7PzhqYBRntr1MaB+YGUit+S1pcp42sU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=TGP6x3h6YYJwclrpDRPnifXfRsYBwd4ztRbxKciLjog=;
+ b=c3vKIhHCNjJLJYiF0eKIKU1tWcvFrpI8CAB9rSJ1m8SyHnWJYA+luyZKfrMtvzGFOXjs3g
+ pi7MUcMHehSef5LrQirvYrWBtOZNWlbZmlpiwuQ8806jPB2oFaWgNKNfQ2VZdlTgCqODhD
+ W/mczoQPlDsSxtQOaf/EQAc+vkwYr0k=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-t8cS4YIfO-SKGlMhtZ-bnA-1; Sun,
- 06 Sep 2026 04:53:57 -0400
-X-MC-Unique: t8cS4YIfO-SKGlMhtZ-bnA-1
-X-Mimecast-MFC-AGG-ID: t8cS4YIfO-SKGlMhtZ-bnA_1788684834
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-757ye2BWNxKPaMNEbZrdhg-1; Sun,
+ 06 Sep 2026 04:54:00 -0400
+X-MC-Unique: 757ye2BWNxKPaMNEbZrdhg-1
+X-Mimecast-MFC-AGG-ID: 757ye2BWNxKPaMNEbZrdhg_1788684838
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F0891956040; Sun,  6 Sep 2026 08:53:54 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3CB1F18052FC; Sun,  6 Sep 2026 08:53:58 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 657E81956042; Sun,  6 Sep 2026 08:53:52 +0000 (UTC)
+ id 3EF341956042; Sun,  6 Sep 2026 08:53:56 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 06 Sep 2026 12:53:33 +0400
-Subject: [PATCH 1/9] tests: fix qemu:func-hexagon-linters
+Date: Sun, 06 Sep 2026 12:53:34 +0400
+Subject: [PATCH 2/9] tests/test_vhost_user_bridge: skip when running ASAN
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260906-nohmp-next-v1-1-2b21e63974f3@redhat.com>
+Message-Id: <20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
 References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
 In-Reply-To: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
 To: qemu-devel@nongnu.org
@@ -77,35 +77,34 @@ Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
  qemu-s390x@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1664;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1854;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=NLhLcoKyivTY8mRtFMa1LO0BDK310UULp9uJ4cn/vqc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSoYqTwrsZS++8CPlP07v7ShliTIgOUzU7/d8
- Z7NtY8NWQqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0qGAAKCRDa6OEJdZac
- 5dJRD/9X4KOJTJCqrnkaCQ39svDlUdvMb87z4tI70g0NBjvIjPMxSwib+yPECuKkd90483BibGV
- AW1SPLqgTnZ1x4+JOfT7xC5IWS76D5Uu1Nrku/k2KQj9ugkVHUJDONpSc7kSswipj1KP/YGC8wU
- 4zpjhLliwuAD6ijaEbUrYBRVEDkSe91CZJcfd1Ot320W+8W2Fj1P5bTrjzzHJ9r+PLkGGVrhQjQ
- 37w5k8uSFMvqjaERSgEZ36NSjGB+TbDnTvztqBPrEmV03g9V8Fk/WdRNXcuI1v7AlZ/l6e/8fZZ
- fA4WRh5QoBetzun6l2tMKNie2WK9c43ZN17zO6AcaykJ0qgkaC10g6DieLy9nei3vGAncohpdCO
- 5FMxrvZDlNKtBp/STuq8kU3cYLWzW5YBCEmvV4rlcHLClEvOhtADKnktEm/Fh2oHSzLIIyLzBzm
- 3lHZJC2yOISJVjc2lh0uDRbZuL5UOKzqLnWJIEwprFF3g7ZEdl4OCHswYnLpUll2wN6ZvA2zPfi
- dsLS+ncEEV1YjWu2WETORujZklE2EKHEFrpRgjHzEIUxWM/j23GdBk64oVIkk1fkRCek6cc652M
- pe0drBztNWEffVzNJdY2muhZ5DsEYAlb1si4zn/a7nfuiSiRolQE22QARcDzHF0CsIkZ7PM3VTP
- hVw7NJuJn/nG7QQ==
+ bh=d3v8wDpl6ZpnpLjDUpJFM+2TuIyDJb7L4WPUBwqWyqM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSoY9/k9w5PImLk+LNUNu1WVYh96sp1l3/KU6
+ UkrsdNS3xiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0qGAAKCRDa6OEJdZac
+ 5cjSD/9NiuPcABUIDCCnz8FfEvP7DWl5GvKODFUcbf58XQyPSXcDzyorEcg5bBSuZtMEQgfk+0E
+ jQfihJfjG2z34XFLotlvXZw2jY+35pZWlNsk423YkdEaZA5xCaZ84X1UcsaUKY4pFwGEWfWXj4i
+ dLe5SGg2b/LsmpXHk6KsG9ACX1ZTiILC+byTaKWn/MGux5+P+ZNe0x5ozKf82lKnwHVWO1HeBcw
+ +6GvU2peDFqv7YdEa04eBaYVELxycZOjUVHD+iHjaa3i9L2H6KxqzgygfNARfyq5zIzFDQqcHwp
+ 51RpbnOig+2Cp/dtC5KohddckgCzwIhHIjka6BkSAfZ5E5wZVKAYI3OEOwe8NsVEVvWGh6aD1vZ
+ xziNm/6US+LE/APpUBOtNT0sIKvdcnBnbaDYaBgFyDsIz4vjU6O3qkAWT88BvSon0UWnlaIj3Ls
+ NGi4L9vsLbnjnzj+zy7TV4U+0uYICmVsnLIKMjEsLMsAIR217GCGW7mkJWEsEA1U4UT9L/e/wgc
+ +PMiErYHQOm/OTIAB4AmoPfN2YzO5cuYHm8a7yBfS02NpSrB7EmiWFS7eu/0+TCXzhCSP/ZenPT
+ EYJIwx2ZYNUlfusg/Rw4CM8wNrKSrFe2kUJavmgjZOPhabm1Zj+6Zt5do7fySH2kV0S4WtMKS95
+ kYqH0G9J9qElkDQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,42 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix pylint W1514: unspecified-encoding
+Running vhost-user-bridge built with ASAN with stdbuf dies:
+==2431898==ASan runtime does not come first in initial library list; you
+should either link runtime to your application or manually preload it
+with LD_PRELOAD.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/hexagon/test_systests.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tests/functional/x86_64/test_vhost_user_bridge.py | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tests/functional/hexagon/test_systests.py b/tests/functional/hexagon/test_systests.py
-index f36e015f5021..4b0546e7ad30 100755
---- a/tests/functional/hexagon/test_systests.py
-+++ b/tests/functional/hexagon/test_systests.py
-@@ -65,14 +65,14 @@ def test_fopen(self):
-         import tempfile
-         # The fopen binary has a short cmdline buffer; use a short path.
-         dummy = os.path.join(tempfile.gettempdir(), "qemu_fopen_test.so")
--        with open(dummy, "w") as f:
-+        with open(dummy, "w", encoding="utf-8") as f:
-             f.write("valid\n")
-         self.run_exit_zero("fopen", "-append", dummy)
+diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py b/tests/functional/x86_64/test_vhost_user_bridge.py
+index c36c62542053..5fedf61c5e72 100755
+--- a/tests/functional/x86_64/test_vhost_user_bridge.py
++++ b/tests/functional/x86_64/test_vhost_user_bridge.py
+@@ -73,12 +73,25 @@ def configure_vm(self, ud_socket_path, lport, rport, hostfwd_port, tftpdir):
+             "-netdev",   "hubport,id=hub1,hubid=0,netdev=user0"
+         )
  
-     def test_ftrunc(self):
-         """ftrunc truncates _testfile_ftrunc from 6 bytes to 1 byte."""
-         ftrunc_path = self.scratch_file("_testfile_ftrunc")
--        with open(ftrunc_path, "w") as f:
-+        with open(ftrunc_path, "w", encoding="utf-8") as f:
-             f.write("valid\n")
-         # Sleep 1 s so mtime change is observable
-         time.sleep(1)
-@@ -83,7 +83,7 @@ def test_ftrunc(self):
-     def test_access(self):
-         """access checks R_OK|W_OK on _testfile_access."""
-         testfile = self.scratch_file("_testfile_access")
--        with open(testfile, "w") as f:
-+        with open(testfile, "w", encoding="utf-8") as f:
-             f.write("valid\n")
-         self.run_exit_zero("access", "-append", testfile)
++    @staticmethod
++    def _is_asan_linked(binary_path):
++        try:
++            output = subprocess.check_output(
++                ["ldd", binary_path], stderr=subprocess.DEVNULL, text=True)
++            return "libasan" in output
++        except (subprocess.CalledProcessError, FileNotFoundError):
++            return False
++
+     def assemble_vubr_args(self, vubr_path, ud_socket_path, lport, rport):
+         vubr_args = []
+ 
+         if (stdbuf_path := which("stdbuf")) is None:
+             self.log.info("Could not find stdbuf: vhost-user-bridge "
+                           "log lines may appear out of order")
++        elif self._is_asan_linked(vubr_path):
++            self.log.info("vhost-user-bridge is ASan-linked: skipping "
++                          "stdbuf to avoid LD_PRELOAD conflict, "
++                          "log lines may appear out of order")
+         else:
+             vubr_args += [stdbuf_path, "-o0", "-e0"]
  
 
 -- 
