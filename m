@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94DCC79F9F
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 04:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBCD7C79F99
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:43:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x34xx-0003zl-4P; Sun, 06 Sep 2026 00:58:54 -0400
+	id 1x38Sn-00044L-OH; Sun, 06 Sep 2026 04:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1x34xq-0003zM-H2
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 00:58:49 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1x34xo-0004nM-E4
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 00:58:46 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5b4aa47bc97so1825317e87.2
- for <qemu-devel@nongnu.org>; Sat, 05 Sep 2026 21:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788670722; x=1789275522; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=lYfVkceP5S1HVyUvDod78U74pYKuDJC+6hEWu0Cwf2U=;
- b=j6Ytu7nkXr6pfeWOP4EKNQj47KI9S/IiP2Zit3kqzS9TyBTnM30RYoGJww0dG+vnvf
- 4AoKgYbMh+QUBU3eDOL1ypsiHj+AU9jIoLEvkUWPWF2XglOwsa/RVt3FtuScQlL+PLch
- 8X5f2/fxH+rLdpA9SZtXKIUuoS3rvJo1KfIgu6JAzNI4DN5AIxp2tgYAS4XDqq/mId+X
- Lr/0+/vgA+K6rvb7MZ+NuK9exgW85H1TaISVcY6IIkMwY4Sgm211omlI9zCBUvF74EWe
- 0senuw/4ex7T/Uo3r6JFEZAkcYVSQs7S9Yyd7RsQPVj1cmHIYbtF/l4NNiYA1maUPH9l
- VGMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788670722; x=1789275522;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lYfVkceP5S1HVyUvDod78U74pYKuDJC+6hEWu0Cwf2U=;
- b=KA8wO0xwaXxztud31QAtaBqZKogTqfR2DxwYp09BveDgr9o/5QKNxfJQICwlNyw1KF
- kIDRRHhvr6UXucjk/8wW90b2ckc/HhsgHpTbaD03svAtmwjGy+JJeUuexyU1JX1gX14B
- IOVaWvKgZdXXUXD0EUpVaZ5WK5Zz/Q6q5aFAQHixh53LWvxGk8VTimVrHSWsT+DwPtT9
- XyAYXyPKrO0F5qfHEl2jDl33k8NK9QLfdALKAUdJUK4boIL+meTnW33K/aIs9uKFol3j
- SOrNGcwF/++z1AGFQQCYJrrCSGO+YDb2Kom2CEv+21VKyuqbgMtQf2WC6q/1bbI1SpCC
- DAgA==
-X-Gm-Message-State: AFuF++kE6ePSfhe/f2VP/gtv8xEN4V07xhQKE2UANzUuCB8qNTKm4r5X
- 2qfcGqmK6cyBut4QUA3KLQRQu1X704HO4PP6DY017BnXdwOiyS94nLxZKUDLQ4ja
-X-Gm-Gg: AYBFou1bEcOSh5NA3GMkyxa8uJuXYZ+YRlA/NH6G+aDYA76ZnB9M0OT4P9ZGL7W4A7m
- Sz43D1AeT7LBZdNZ6jXMsNc2+3uqrMOXNVCGZtUrMCHk2X04xLzG3dyjB2VSuJwi4eP9thdT53c
- 5BrzF03+hdbC0FoIiySYS5cKF7NDzorVch4+KtCEDgIh/ASDrXuVBGrpDq3fOAoFWTI/Zgzbj76
- 2z6XJWHh36rfPlE4efXVD6/CGtRocbNJyy0SKH4YYwCtAcOu0JvYwz9xkfKfSPWnaNa31NLmChN
- sC+myFFRUEXK3L4uGaZ/OLSmNbRylKkcUlHBVwE/fdAYL3NJS5kNHvcEgMRnlfjl+UzqO8dItqD
- xA+q3VNWsUuU5yDvVmd9iJOlnuGJl3gTpC72Cx5Aa56FFSHSypaHvxF7pxfSP5vZLtlsoJaWBjV
- SXYY+JqDKDyzDhTBpgZHLppEO/+CyZ1xZV6x8g+NO72nDwPksqvhU1moc+XGISAu3bSIZDdvYY7
- afwjzkEVYdwrUk=
-X-Received: by 2002:a05:6512:39d0:b0:5b6:183c:5c9d with SMTP id
- 2adb3069b0e04-5b6183c5e63mr2256542e87.59.1788670722148; 
- Sat, 05 Sep 2026 21:58:42 -0700 (PDT)
-Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b6166ed098sm1443315e87.22.2026.09.05.21.58.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Sep 2026 21:58:41 -0700 (PDT)
-From: Andrey Polivoda <apolivodaa433@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2] target/i386: ignore VEX.L when emitting VROUNDSS, VROUNDSD,
- VMOVSS and VMOVSD
-Date: Sun,  6 Sep 2026 14:58:36 +1000
-Message-ID: <20260906045836.1077269-1-apolivodaa433@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x38Sm-000447-OX
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:42:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x38Sl-00083n-2o
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:42:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788684174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=N2rvNY4HfCB1s4nnNqgZ4NoEePPcvl+BRZFxlaqR058=;
+ b=Z0DxE6Hv/ObI4/v7kJwI4LvBOjaWZhBqAzCp9EkH6dW4nGAZyQiFBU6wECivWSEptu8zOB
+ VsOeewD6/gAKX8R38X0wvyQFhBXhDJY8hjGmYI0dVNlGFyd0FXh3hMbZCY1kkZEQ1JgN6W
+ 00sk7IOL1YmYfBiXDfT4NK12q7/Gj+0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-cXCFcQdXPX-B-vTCcP6OSw-1; Sun,
+ 06 Sep 2026 04:42:51 -0400
+X-MC-Unique: cXCFcQdXPX-B-vTCcP6OSw-1
+X-Mimecast-MFC-AGG-ID: cXCFcQdXPX-B-vTCcP6OSw_1788684169
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0336318011EC; Sun,  6 Sep 2026 08:42:49 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9D5F11956056; Sun,  6 Sep 2026 08:42:46 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Sun, 06 Sep 2026 12:42:33 +0400
+Subject: [PATCH 2/9] tests/functional: replace HMP with QMP
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=apolivodaa433@gmail.com; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Message-Id: <20260906-nohmp-v1-2-daee96491c43@redhat.com>
+References: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
+In-Reply-To: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org, 
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2972;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=Z9E2BtIcfNeU3QgCE1FrbeWBRNl/CIXdaah4L/q8HCQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSd5HItaQuLUuAZp0v0yNhJFPj0OLP7xgsltb
+ mOnASQ8TW+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0neQAKCRDa6OEJdZac
+ 5fUeD/9xln3vdFSeHglaMAN4U8ldyCbSomNhwG/XdRk3rEgagp8n13S08wblOp7tKDxvf07MWwO
+ bgbO+9LwGJGHJOFT5a3w3wnVwwyuf3AeF3YeUwHCeEVDXBCFf5+OhWbiHCFjkOr7eH8vvDBAZlL
+ +TwMgfqgxW7Ul9yGV1WdTRS4cpojCduPLH09OihzAq82HPdZjKK+UWgenCo50ZR8bbtjORdZTL3
+ n9fV17uaHT7Hznl7uQ01mhH2Kakjye9mua804qmc1hpl8qskW3eqQ5WnwltDJQT4f3Xvi1F4Tsr
+ AkGBHscUDjL0oKJXuCpnhkHg/LTxF0o+LtRZgAGFIND6yVX5kaudB1fu27qCwoeOXAou7H4O1zn
+ ljyVrl7O6wM9Z40Nk2CP6u0HBc21h7LJz4ME8RB5v2g0NfPRvFCKUr8D7MXFzoZ0w5Dx29Gl1bi
+ 7k6W7+O3gOSLFcXV7cgDBRm/GkLXGimKuhHtX3/pg+tPr/2AK3e+tMryUjZBrxZ+f1ejnJjsiP1
+ 5g04gJKwFhrkNBFcgzH5W6ZHCu9KA7tc8S6vxYYEuQ8euEJWgPn0/EAHQyJ6M3w5ikJyGoHgC5p
+ lp+wu8nfRIUanPr7LS8DHkaToP558HgSq4LCxLezYmAE6is2b74LBvNsr97NHtPwRQqFGO4XT9n
+ 3q0fPaJW5C03kaw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,81 +115,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to both Volume 2 of Intel 64 and IA-32 Architectures Software
-Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
-VEX.L is a "don't care" bit for `VROUNDSS`, `VROUNDSD`, `VMOVSS`, `VMOVSD`.
+Replace HMP with QMP equivalent.
 
-Currently, QEMU handles VEX.L with these instructions differently:
-- In the VMOVSS and VMOVSD case, VEX.L allows to select the register size
-  (XMM or YMM), leading to differences between QEMU and the real hardware.
-- In `gen_VROUNDSS()` and `gen_VROUNDSD()`, there is an assert which checks
-  that `s->vex_l` is not set. When either instruction is encountered with VEX.L
-  bit set, the QEMU process crashes with an assertion failure.
-
-These behaviors deviate from real hardware, and in VROUNDSS/VROUNDSD case,
-it also allows unprivileged guest userspace to crash the QEMU process itself.
-
-This patch fixes this by removing the incorrect asserts and ensuring
-that instructions with a `X86_SIZE_ss/sd` operand are always executed
-with 128-bit size to match the behavior of the real Intel and AMD hardware.
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 790684776861 ("target/i386: reimplement 0x0f 0x3a, add AVX")
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Hardware tested:
-Intel Core i3-6100
-Intel Xeon Platinum 8370C (GitHub Codespaces 2-core instance)
-AMD EPYC 7763 (GitHub Codespaces 4-core instance)
+ tests/functional/arm/test_integratorcp.py | 7 ++-----
+ tests/functional/m68k/test_nextcube.py    | 5 +----
+ tests/functional/mips64el/test_malta.py   | 7 ++-----
+ 3 files changed, 5 insertions(+), 14 deletions(-)
 
- target/i386/tcg/decode-new.c.inc | 12 ++++++++++--
- target/i386/tcg/emit.c.inc       |  2 --
- 2 files changed, 10 insertions(+), 4 deletions(-)
+diff --git a/tests/functional/arm/test_integratorcp.py b/tests/functional/arm/test_integratorcp.py
+index 23ae919359d5..fefed26266f4 100755
+--- a/tests/functional/arm/test_integratorcp.py
++++ b/tests/functional/arm/test_integratorcp.py
+@@ -72,11 +72,8 @@ def test_framebuffer_tux_logo(self):
+         self.boot_integratorcp()
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+         wait_for_console_pattern(self, framebuffer_ready)
+-        self.vm.cmd('human-monitor-command', command_line='stop')
+-        res = self.vm.cmd('human-monitor-command',
+-                          command_line='screendump %s' % screendump_path)
+-        if 'unknown command' in res:
+-            self.skipTest('screendump not available')
++        self.vm.cmd('stop')
++        self.vm.cmd('screendump', filename=screendump_path)
+ 
+         cpu_count = 1
+         match_threshold = 0.92
+diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
+index d917cf5424fe..dc99962eb75c 100755
+--- a/tests/functional/m68k/test_nextcube.py
++++ b/tests/functional/m68k/test_nextcube.py
+@@ -39,10 +39,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
+                 break
+             time.sleep(0.1)
+ 
+-        res = self.vm.cmd('human-monitor-command',
+-                          command_line=f"screendump {screenshot_path}")
+-        if 'unknown command' in res:
+-            self.skipTest('screendump not available')
++        self.vm.cmd('screendump', filename=screenshot_path)
+ 
+     @skipIfMissingImports("PIL")
+     def test_bootrom_framebuffer_size(self):
+diff --git a/tests/functional/mips64el/test_malta.py b/tests/functional/mips64el/test_malta.py
+index 163bbaf5ca36..ba966d1bf9f4 100755
+--- a/tests/functional/mips64el/test_malta.py
++++ b/tests/functional/mips64el/test_malta.py
+@@ -154,11 +154,8 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+         self.vm.launch()
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+         self.wait_for_console_pattern(framebuffer_ready)
+-        self.vm.cmd('human-monitor-command', command_line='stop')
+-        res = self.vm.cmd('human-monitor-command',
+-                          command_line=f'screendump {screendump_path}')
+-        if 'unknown command' in res:
+-            self.skipTest('screendump not available')
++        self.vm.cmd('stop')
++        self.vm.cmd('screendump', filename=screendump_path)
+ 
+         match_threshold = 0.95
+         screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 459452b04e..f069f3d739 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2203,8 +2203,16 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
-         }
-         /* fall through */
-     case X86_SIZE_ps: /* SSE/AVX packed single precision */
--    case X86_SIZE_pd: /* SSE/AVX packed double precision */
--        *ot = s->vex_l ? MO_256 : MO_128;
-+    case X86_SIZE_pd: { /* SSE/AVX packed double precision */
-+            /*
-+             * Force 128-bit size for some VEX.LIG scalar instructions
-+             * (VROUNDSS, VROUNDSD, VMOVSS, VMOVSD)
-+             */
-+            bool is_scalar = (e->s0 == X86_SIZE_ss || e->s0 == X86_SIZE_sd ||
-+                              e->s1 == X86_SIZE_ss || e->s1 == X86_SIZE_sd ||
-+                              e->s2 == X86_SIZE_ss || e->s2 == X86_SIZE_sd);
-+            *ot = (s->vex_l && !is_scalar) ? MO_256 : MO_128;
-+        }
-         return true;
- 
-     case X86_SIZE_xh: /* SSE/AVX packed half register */
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index c83ab80940..7e0d439f6d 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -4642,14 +4642,12 @@ static void gen_VPHMINPOSUW(DisasContext *s, X86DecodedInsn *decode)
- static void gen_VROUNDSD(DisasContext *s, X86DecodedInsn *decode)
- {
-     TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
--    assert(!s->vex_l);
-     gen_helper_roundsd_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PTR2, imm);
- }
- 
- static void gen_VROUNDSS(DisasContext *s, X86DecodedInsn *decode)
- {
-     TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
--    assert(!s->vex_l);
-     gen_helper_roundss_xmm(tcg_env, OP_PTR0, OP_PTR1, OP_PTR2, imm);
- }
- 
 -- 
-2.53.0
+2.55.0.543.g5ebe2ebe4ea8
 
 
