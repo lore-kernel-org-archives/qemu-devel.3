@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96117C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 14:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F37FC79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 15:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3EDQ-00072U-Jl; Sun, 06 Sep 2026 10:51:28 -0400
+	id 1x3ExI-0004Cv-8r; Sun, 06 Sep 2026 11:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x3EDO-000723-Je
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 10:51:26 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x3EDM-0005VO-7R
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 10:51:25 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-47f96c5b722so1712169f8f.0
- for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 07:51:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1788706280; x=1789311080; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=NjW6iH71z9IEDqcLjRaoQPAVtTriQV699MDNdwsGh4c=;
- b=tSH55BZhYfCEyYkV7bZYvh+iBYSWfSvzCnLJb6kEHJmpWxJ5psOHfuSyR5yyYWxLev
- In1p+TtM1A0SSAERIP2PZnaePVQYf8EjgxOQxfrQzkLWe1jdXf7G7yoc2+PsG7zrDzHK
- jVpimiK992XGhW/ngnKZVKecwOWyVOATrxAjuLcvKKWLOOoxmPs1LJ0//bO3UxCUA+E4
- XPJbqJ0cR2Sw+udk2TvMf5C7e7QlnOARQSlheVtCCYMlQpNpuRn9j6J0izzkCIoyT6bm
- 6GaQtVV7dibNf6dSDrYb/AHIcFjr9mOg56JxFbLs39mM5SJu52/Zk12BwnHPQWckroMm
- 80wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788706280; x=1789311080;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NjW6iH71z9IEDqcLjRaoQPAVtTriQV699MDNdwsGh4c=;
- b=s64NYLTcuh1mGP74+X+AyC3FtnxJCfgy0BbF/akL1ufzY0bYuVVVp5o4/vTayLnGlj
- 00b0PlQ1dQVqkdjhyIQ86wv6jE1xve98Jqre+DZo/d8dkRF11e2cLeSeOj8L1pJZ60Pv
- m25FlwBuMwOAUbB509uOKqHe3XaHxbpSrGGnF4xTocSLX1ckmR6fU9xFXnrCva5N6oaS
- VrVA24c91mX0XEm+2kR0b69XGB+JxL5y2jKiZ6IBKEwChAnLjeQzqIvu1A+WQQzQIYh4
- PBLfbNbKAQbglyXobHd5eyFRpRRZLsyKhtEu3E+CwQYvC9B2rGqSDY9PbzjgWWYcbefW
- uyvQ==
-X-Gm-Message-State: AFuF++m4P5/5U0IPNqA5BuSnV6pCP77sd19aeX8N+A0GafCqz09V0sQV
- D+RoIHI72RP2OKbBjLqleJPZiLwSCKRN9Bk1DnJj3609+4Td9W/1toHTJkEm84Vw1BTUQgNEEc2
- 3FLw1G0w=
-X-Gm-Gg: AYBFou1WIh8roTuVQZ/hI5PMqlYxyH48+sYAzb+Cp5x+K4tClQvuLSJzSBtgc6ORTfh
- BZb8WvNwjQeG4/K46gOmqLNIlJz4tU9iOO4UotvCzvNFbCB2SXqGW9PEHgte7idKDGB7R2qr1jb
- G3baJv1DI04jS14C8lcKWFKCf5H3mqHL37n7aI/9pDAadhLULFBRwuUL7FE6Eg4wWoNXuS0FqQV
- SLw+1dTs4aKzZ9yBD96C5hGNvWpRpOxgdz7uh15lDPeoFho34ySKZi24q+9HljFr/JZ0cecErz9
- bSq2Po4Tsqwc72gv6sAJH8A2GTcqqhPUS5yZZyj5ZtdlJGjGtdF7oiLelTswifylpDmTF/j3XVW
- RGFCtkbGvLb0DAazQVni7ad9D0+E6oMCF3MEwaSU7m/elKZspOTvm4paf4xA32JF9ZUeB/3ENGl
- r6ZpR/odXaDvsruK4nA/BocFDiKqTotF09fTUEdi5kEDBhFbmZG6ZgJO+2lxfv
-X-Received: by 2002:a05:6000:4a16:b0:485:8a47:5b98 with SMTP id
- ffacd0b85a97d-4858a475d20mr15712736f8f.53.1788706280502; 
- Sun, 06 Sep 2026 07:51:20 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-485883c81c3sm21799373f8f.26.2026.09.06.07.51.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 06 Sep 2026 07:51:19 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4CCD25F8B4;
- Sun, 06 Sep 2026 15:51:18 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Stuart Marshall <Stuart-J-Marshall@outlook.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: submitting code for QEMU
-In-Reply-To: <AM7PR08MB53831A09C35366C17A229BB0A7B32@AM7PR08MB5383.eurprd08.prod.outlook.com>
- (Stuart Marshall's message of "Sun, 6 Sep 2026 11:02:44 +0000")
-References: <AM7PR08MB53831A09C35366C17A229BB0A7B32@AM7PR08MB5383.eurprd08.prod.outlook.com>
-User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Sun, 06 Sep 2026 15:51:18 +0100
-Message-ID: <871pb6e8m1.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x3ExD-0004CZ-F9; Sun, 06 Sep 2026 11:38:48 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1x3Ex9-00074c-PL; Sun, 06 Sep 2026 11:38:47 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwBnbFD2iJ1qrM6gBQ--.4705S2;
+ Sun, 06 Sep 2026 23:38:30 +0800 (CST)
+Received: from [192.168.2.11] (unknown [113.246.116.29])
+ by mail (Coremail) with SMTP id AQAAf8Dwn3PziJ1q2O7GAA--.17462S2;
+ Sun, 06 Sep 2026 23:38:28 +0800 (CST)
+Message-ID: <59d39fd3-e6b4-4156-bc16-b8434e3c19e4@phytium.com.cn>
+Date: Sun, 6 Sep 2026 23:38:26 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v5 11/28] hw/arm/smmu-common: Implement secure state
+ handling in ptw
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162512.2807281-1-tangtao1634@phytium.com.cn>
+ <e41fdd64-7cb5-4cf4-9529-e1ae5e6b4c63@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <e41fdd64-7cb5-4cf4-9529-e1ae5e6b4c63@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Dwn3PziJ1q2O7GAA--.17462S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAKBWqcbcoCZAAAs5
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvAXoWfGr17Zw4fCFyxJw15Xr13urg_yoW8JFy5Xo
+ WSkr4aq3W09w13C3Wjkw18Ja9rZF9Yqw4Fqr4rCwsI9anrJ345GFyUJw4rXa9aqa4UXrs7
+ Gas5Jw40vF10yFn5n29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+ J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+ UUUUUUU==
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,47 +77,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stuart Marshall <Stuart-J-Marshall@outlook.com> writes:
+Hi Eric,
 
-> Hello,
+On 2026/8/27 23:13, Eric Auger wrote:
 >
-> I have been developing an x64 OS with USB support, and noticed that, ever=
-y time I introduced a bug into my xHCI driver, QEMU would
-> often silently continue successfully where real hardware that I tested wo=
-uld error.
+> On 8/13/26 6:25 PM, Tao Tang wrote:
+>> Enhance the page table walker to correctly handle secure and non-secure
+>> memory accesses. This change introduces logic to select the appropriate
+>> address space and enforce architectural security policies during walks.
+>>
+>> The page table walker now correctly processes Secure Stage 1
+>> translations. Key changes include:
+>>
+>> - The get_pte() function now uses the effective security state to fetch
+>> page-table entries from either the Secure or Non-secure address space,
+>> with explicit transaction attributes matching that address space.
+>>
+>> - The stage 1 walker tracks the security state, respecting the NSCFG
+>> and NSTable attributes. It correctly handles the hierarchical security
+>> model: if a table descriptor in a secure walk has NSTable=1, all
+>> subsequent lookups for that walk are forced into the Non-secure space.
+>> This is a one-way transition, as specified by the architecture.
+>>
+>> - The final TLB entry is tagged with the correct output address space,
+>> ensuring proper memory isolation.
+>>
+>> Note: We do not yet support secure stage 2 translations. This patch
+>> only implements Secure stage 1 page-table walks. Baseline propagation
+>> of the incoming NS attribute for stage 1 bypass is handled separately
+>> in this series with ATTR_PERMS_OVR == 0. Full ATTR_PERMS_OVR support
+>> is left for a separate series.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmu-common.c         | 73 +++++++++++++++++++++++++++++-------
+>>   hw/arm/smmuv3.c              | 19 ++++++----
+>>   include/hw/arm/smmu-common.h |  7 ++--
+>>   3 files changed, 74 insertions(+), 25 deletions(-)
+>>
+>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+>> index 63c36329a98..317cfafded2 100644
+>> --- a/hw/arm/smmu-common.c
+>> +++ b/hw/arm/smmu-common.c
+>> @@ -408,13 +408,13 @@ void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
+>>    * @base_addr[@index]
+>>    */
+>>   static int get_pte(dma_addr_t baseaddr, uint32_t index, uint64_t *pte,
+>> -                   SMMUPTWEventInfo *info)
+>> +                   SMMUPTWEventInfo *info, AddressSpace *as, MemTxAttrs attrs)
+>>   {
+>>       int ret;
+>>       dma_addr_t addr = baseaddr + index * sizeof(*pte);
+>>   
+>>       /* TODO: guarantee 64-bit single-copy atomicity */
+>> -    ret = ldq_le_dma(&address_space_memory, addr, pte, MEMTXATTRS_UNSPECIFIED);
+>> +    ret = ldq_le_dma(as, addr, pte, attrs);
+>>   
+>>       if (ret != MEMTX_OK) {
+>>           info->type = SMMU_PTW_ERR_WALK_EABT;
+>> @@ -488,7 +488,8 @@ SMMUTransTableInfo *select_tt(SMMUTransCfg *cfg, dma_addr_t iova)
+>>   static inline int translate_table_addr_ipa(SMMUState *bs,
+>>                                              dma_addr_t *table_addr,
+>>                                              SMMUTransCfg *cfg,
+>> -                                           SMMUPTWEventInfo *info)
+>> +                                           SMMUPTWEventInfo *info,
+>> +                                           SMMUSecSID sec_sid)
+> do we need that change given secure S2 is not implemented yet. Can't we
+> focus on secure S1 first?
+
+
+Yes. Since decode_ste() rejects Secure STEs with stage 2 enabled, 
+reaching the nested path implies that the original sec_sid is 
+Non-secure. I will keep translate_table_addr_ipa unchanged and use 
+Non-secure explicitly inside this function.
+
+
+>>   {
+>>       dma_addr_t addr = *table_addr;
+>>       SMMUTLBEntry *cached_entry;
+>> @@ -501,7 +502,7 @@ static inline int translate_table_addr_ipa(SMMUState *bs,
+>>       asid = cfg->asid;
+>>       cfg->stage = SMMU_STAGE_2;
+>>       cfg->asid = -1;
+>> -    cached_entry = smmu_translate(bs, cfg, addr, IOMMU_RO, info);
+>> +    cached_entry = smmu_translate(bs, cfg, addr, IOMMU_RO, info, sec_sid);
+>>       cfg->asid = asid;
+>>       cfg->stage = SMMU_NESTED;
+>>   
+>> @@ -524,6 +525,7 @@ static inline int translate_table_addr_ipa(SMMUState *bs,
+>>    * @perm: access type
+>>    * @tlbe: SMMUTLBEntry (out)
+>>    * @info: handle to an error info
+>> + * @sec_sid: StreamID Security state
+>>    *
+>>    * Return 0 on success, < 0 on error. In case of error, @info is filled
+>>    * and tlbe->perm is set to IOMMU_NONE.
+>> @@ -532,12 +534,16 @@ static inline int translate_table_addr_ipa(SMMUState *bs,
+>>    */
+>>   static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>>                             dma_addr_t iova, IOMMUAccessFlags perm,
+>> -                          SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
+>> +                          SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info,
+>> +                          SMMUSecSID sec_sid)
+>>   {
+>>       dma_addr_t baseaddr, indexmask;
+>>       SMMUStage stage = cfg->stage;
+>>       SMMUTransTableInfo *tt = select_tt(cfg, iova);
+>>       uint8_t level, granule_sz, inputsize, stride;
+>> +    int nscfg, current_ns, new_nstable;
+>> +    bool sid_is_ns = sec_sid == SMMU_SEC_SID_NS;
+> prefer !smmu_sec_sid_is_secure()?
+
+
+Agreed.
+
+>> +    SMMUSecSID table_sec_sid;
+>>   
+>>       if (!tt || tt->disabled) {
+>>           info->type = SMMU_PTW_ERR_TRANSLATION;
+>> @@ -552,6 +558,7 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>>   
+>>       baseaddr = extract64(tt->ttb, 0, cfg->oas);
+>>       baseaddr &= ~indexmask;
+>> +    nscfg = tt->nscfg;
+>>   
+>>       while (level < VMSA_LEVELS) {
+>>           uint64_t subpage_size = 1ULL << level_shift(level, granule_sz);
+>> @@ -560,8 +567,19 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>>           uint64_t pte, gpa;
+>>           dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
+>>           uint8_t ap;
+>> +        AddressSpace *pte_as;
+>> +        MemTxAttrs pte_attrs;
+>> +        SMMUSecSID cur_sec_sid;
+>>   
+>> -        if (get_pte(baseaddr, offset, &pte, info)) {
+>> +        /*
+>> +         * Start in NS for Non-secure streams or CD.NSCFGx == 1.
+> May I suggest something like:
 >
-> Would it be helpful if I were to try and add warning messages into QEMU l=
-ogs for incorrect but recoverable usage of xHCI? This could
-> aid other OS & driver developers, without breaking drivers that rely on t=
-he permissiveness of QEMU, but I'm not sure that it is the
-> mission of QEMU to have conformance warnings.
+> at starting level we start fetching CD/TTBx in NS if non-secure SIDs of
+> if CD.NSCFGx == 1. Once we start fetching in NS space, then we continue
+> the PTW in next levels in NS space.
 
-The biggest problem the USB models have is their MAINTAINERS state:
 
-  USB
-  S: Orphan
-  F: hw/usb/*
-  F: tests/qtest/usb-*-test.c
-  F: docs/system/devices/usb.rst
-  F: include/hw/usb/usb.h
-  F: include/hw/usb/
+I'll change it in V6.
 
-so no one is actively reviewing or cleaning up the code. So I'm not
-surprised the current state of the emulation is lax compared to real
-hardware.
+>> +         * Once walk is in NS, NSTable is ignored on subsequent levels.
+>> +         */
+>> +        current_ns = sid_is_ns || nscfg;
+>> +        table_sec_sid = current_ns ? SMMU_SEC_SID_NS : sec_sid;
+>> +        pte_as = smmu_get_address_space(bs, table_sec_sid);
+>> +        pte_attrs = smmu_get_txattrs(table_sec_sid);
+>> +        if (get_pte(baseaddr, offset, &pte, info, pte_as, pte_attrs)) {
+>>                   goto error;
+>>           }
+>>           trace_smmu_ptw_level(stage, level, iova, subpage_size,
+>> @@ -582,10 +600,25 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>>               }
+>>               baseaddr = get_table_pte_address(pte, granule_sz);
+>>               if (cfg->stage == SMMU_NESTED) {
+>> -                if (translate_table_addr_ipa(bs, &baseaddr, cfg, info)) {
+>> +                if (translate_table_addr_ipa(bs, &baseaddr, cfg,
+>> +                                             info, table_sec_sid)) {
+>>                       goto error;
+>>                   }
+>>               }
+>> +
+>> +            /*
+>> +             * NSTable can switch the walk to NS only while the current walk
+>> +             * level is Secure. Once switched to NS, NSTable is ignored according
+>> +             * to hierarchical control of Secure/Non-secure accesses:
+>> +             * (IHI 0070G.b)13.4.1 Stage 1 page permissions and
+>> +             * (DDI 0487H.a)D8.4.2 Control of Secure or Non-secure memory access
+>> +             */
+> above suggested comment may be sufficient
+>> +            if (!current_ns) {
+>> +                new_nstable = PTE_NSTABLE(pte);
+> not sure you need new_nstable local variable
+>> +                nscfg = new_nstable ? 1 : 0;
+> and I think you can directly assign nscfg to PTE_NSTABLE(pte), no?
 
-We do use the log message qemu_log_mask(LOG_GUEST_ERROR, ... where we
-detect the guest doing something weird but its by no means comprehensive
-and mostly there to aid with debug logs. For actual analytics we have
-trace points.=20
 
-If your interested in helping as a reviewer or fixing issues in the
-emulation there is a long backlog of issues to look at.
+I'll update it as you suggested.
 
->
-> From Stuart
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>> +            } else {
+>> +                nscfg = 1;
+>> +            }
+>>               level++;
+>>               continue;
+>>           } else if (is_page_pte(pte, level)) {
+>> @@ -628,6 +661,12 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
+>>               goto error;
+>>           }
+>>   
+>> +        if (current_ns) {
+>> +            cur_sec_sid = SMMU_SEC_SID_NS;
+>> +        } else {
+>> +            cur_sec_sid = PTE_NS(pte) ? SMMU_SEC_SID_NS : SMMU_SEC_SID_S;
+>> +        }
+>> +        tlbe->entry.target_as = smmu_get_address_space(bs, cur_sec_sid);
+>>           tlbe->entry.translated_addr = gpa;
+>>           tlbe->entry.iova = iova & ~mask;
+>>           tlbe->entry.addr_mask = mask;
+>> @@ -697,7 +736,10 @@ static int smmu_ptw_64_s2(SMMUState *bs, SMMUTransCfg *cfg,
+>>           uint64_t pte, gpa;
+>>           dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
+>>           uint8_t s2ap;
+>> -        if (get_pte(baseaddr, offset, &pte, info)) {
+>> +        AddressSpace *pte_as = &bs->memory_as;
+>> +        MemTxAttrs pte_attrs = MEMTXATTRS_UNSPECIFIED;
+> same question here, why do we care about smmu_ptw_64_s() atm
+
+
+The caller in smmu_ptw_64_s2() still needs updating because get_pte() is 
+shared by both walkers and its interface changes in this patch.
+
+I'll pass &bs->memory_as and MEMTXATTRS_UNSPECIFIED directly, without 
+the extra local variables. The AddressSpace needs to come from the SMMU 
+instance, so the bs parameter is still needed. I'll also move the 
+associated S2 plumbing from the config-helper patch into this patch  as 
+mentioned in #6 patch.
+
+
+>> +
+>> +        if (get_pte(baseaddr, offset, &pte, info, pte_as, pte_attrs)) {
+>>                   goto error;
+>>           }
+>>           trace_smmu_ptw_level(stage, level, ipa, subpage_size,
+>> @@ -792,7 +834,7 @@ static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
+>>   }
+>>   
+>>   /**
+>> - * smmu_ptw - Walk the page tables for an IOVA, according to @cfg
+>> + * smmu_ptw - Walk the page tables for an IOVA, according to @cfg and @sec_sid
+>>    *
+>>    * @bs: smmu state which includes TLB instance
+>>    * @cfg: translation configuration
+>> @@ -800,18 +842,20 @@ static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
+>>    * @perm: tentative access type
+>>    * @tlbe: returned entry
+>>    * @info: ptw event handle
+>> + * @sec_sid: StreamID Security state
+>>    *
+>>    * return 0 on success
+>>    */
+>>   int smmu_ptw(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t iova,
+>> -             IOMMUAccessFlags perm, SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
+>> +             IOMMUAccessFlags perm, SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info,
+>> +             SMMUSecSID sec_sid)
+>>   {
+>>       int ret;
+>>       SMMUTLBEntry tlbe_s2;
+>>       dma_addr_t ipa;
+>>   
+>>       if (cfg->stage == SMMU_STAGE_1) {
+>> -        return smmu_ptw_64_s1(bs, cfg, iova, perm, tlbe, info);
+>> +        return smmu_ptw_64_s1(bs, cfg, iova, perm, tlbe, info, sec_sid);
+>>       } else if (cfg->stage == SMMU_STAGE_2) {
+>>           /*
+>>            * If bypassing stage 1(or unimplemented), the input address is passed
+>> @@ -830,7 +874,7 @@ int smmu_ptw(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t iova,
+>>       }
+>>   
+>>       /* SMMU_NESTED. */
+>> -    ret = smmu_ptw_64_s1(bs, cfg, iova, perm, tlbe, info);
+>> +    ret = smmu_ptw_64_s1(bs, cfg, iova, perm, tlbe, info, sec_sid);
+>>       if (ret) {
+>>           return ret;
+>>       }
+>> @@ -846,7 +890,8 @@ int smmu_ptw(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t iova,
+>>   }
+>>   
+>>   SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
+>> -                             IOMMUAccessFlags flag, SMMUPTWEventInfo *info)
+>> +                             IOMMUAccessFlags flag, SMMUPTWEventInfo *info,
+>> +                             SMMUSecSID sec_sid)
+>>   {
+>>       SMMUTLBEntry *cached_entry = NULL;
+>>       SMMUTransTableInfo *tt;
+>> @@ -888,7 +933,7 @@ SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
+>>       }
+>>   
+>>       cached_entry = g_new0(SMMUTLBEntry, 1);
+>> -    status = smmu_ptw(bs, cfg, addr, flag, cached_entry, info);
+>> +    status = smmu_ptw(bs, cfg, addr, flag, cached_entry, info, sec_sid);
+>>       if (status) {
+>>               g_free(cached_entry);
+>>               return NULL;
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 6b34f76f11b..cc5d3ab696c 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -394,7 +394,8 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+>>                                                    SMMUEventInfo *event,
+>>                                                    IOMMUAccessFlags flag,
+>>                                                    SMMUTLBEntry **out_entry,
+>> -                                                 SMMUTranslationClass class);
+>> +                                                 SMMUTranslationClass class,
+>> +                                                 SMMUSecSID sec_sid);
+>>   /* @ssid > 0 not supported yet */
+>>   static int smmu_get_cd(SMMUv3State *s, STE *ste, SMMUTransCfg *cfg,
+>>                          uint32_t ssid, CD *buf, SMMUEventInfo *event,
+>> @@ -411,7 +412,7 @@ static int smmu_get_cd(SMMUv3State *s, STE *ste, SMMUTransCfg *cfg,
+>>   
+>>       if (cfg->stage == SMMU_NESTED) {
+>>           status = smmuv3_do_translate(s, addr, cfg, event,
+>> -                                     IOMMU_RO, &entry, SMMU_CLASS_CD);
+>> +                                     IOMMU_RO, &entry, SMMU_CLASS_CD, sec_sid);
+>>   
+>>           /* Same PTW faults are reported but with CLASS = CD. */
+>>           if (status != SMMU_TRANS_SUCCESS) {
+>> @@ -796,7 +797,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event,
+>>   }
+>>   
+>>   static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+>> -                     CD *cd, SMMUEventInfo *event)
+>> +                     CD *cd, SMMUEventInfo *event, SMMUSecSID sec_sid)
+>>   {
+>>       int ret = -EINVAL;
+>>       int i;
+>> @@ -869,7 +870,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+>>           /* Translate the TTBx, from IPA to PA if nesting is enabled. */
+>>           if (cfg->stage == SMMU_NESTED) {
+>>               status = smmuv3_do_translate(s, tt->ttb, cfg, event, IOMMU_RO,
+>> -                                         &entry, SMMU_CLASS_TT);
+>> +                                         &entry, SMMU_CLASS_TT, sec_sid);
+> in the context secure S2 is not supported, can sec_sid be set here? In
+> other words, do we really need to add sed_sid arg to decode_cd() at that
+> stage or can we just invoke with ns and add a comment?
+
+
+I'll handle decode_cd() the same way as translate_table_addr_ipa(), 
+keeping its signature unchanged and using SMMU_SEC_SID_NS explicitly 
+inside it.
+
+
+Best regards,
+
+Tao
+
 
