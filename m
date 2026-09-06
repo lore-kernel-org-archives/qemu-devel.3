@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12AAC79F99
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 11:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E680AC79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 11:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Ajp-00040W-BG; Sun, 06 Sep 2026 07:08:41 -0400
+	id 1x3Alb-0004pH-Qp; Sun, 06 Sep 2026 07:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
- id 1x3Ajl-0003rQ-Lo
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:08:37 -0400
-Received: from mout02.posteo.de ([185.67.36.66])
+ id 1x3Ala-0004oh-A2
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:10:30 -0400
+Received: from mout01.posteo.de ([185.67.36.65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
- id 1x3Aji-0006o0-GH
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:08:35 -0400
+ id 1x3AlX-0007DR-CR
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:10:29 -0400
 Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 5AD95240103
- for <qemu-devel@nongnu.org>; Sun,  6 Sep 2026 13:08:33 +0200 (CEST)
+ by mout01.posteo.de (Postfix) with ESMTPS id E172624002A
+ for <qemu-devel@nongnu.org>; Sun,  6 Sep 2026 13:10:25 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
- s=1984.8680eb; t=1788692913;
- bh=T609RS/e+7zlTIokq4TP2rk84u81oCaTo3eg5TIuQUs=;
+ s=1984.8680eb; t=1788693025;
+ bh=ETB4YPbw4egXES0p2enWRkiq+/OVLJvDfb3Eotwyml4=;
  h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
  Content-Transfer-Encoding:From;
- b=eP2214ZpVyb522IfJCVSixUAGJiPGxSAYdERkZK7N2uCnLTHdBswitG08okB2d+bz
- eWbNeiExn1l3xJy5ItE0Kr3GTykxMegjFjOY1AxmpRU+3V774FzIlw2mrV0ABMkXym
- DhbQnVRLlinZWWv0Y6wF8ee40zvMDbzWD6ER5WMoCkl89TiD7ieAkYxjyJk3/a9rR6
- DLJqK180WrbpjLAcKcFBE6Grg6QUw1qGC+NsuD7E7cutyzfC2yII43Bkc56IQ4r+Ih
- SQnrxmmMRZ8KeMQIfwp5NesaJukvn6qKU1XGsZZSKI20GPN44RnxSXqrEImj3/zTwB
- Z7yZr3Tv3Z35g==
+ b=eJJcucOp4xeJKD9OyMGR3bPVGqk2QenNGL+axlFaE8UhgSKc9K2LfKQ9ee4yNkDpX
+ esUnon1ubafUdx4IJYrxF3nLeowPhML2gqTc1xypK8v7E7GDJI7nRRqMyG/Mv3iWH0
+ cWkhrHqQ/mOvqzh/ZqA0B9b8QhTBAA5o2GGldxlhg8q6XbbHRcZTXEMe4ucDsSVobX
+ dMMm3uAAWgDpSbZ1bbFKQCIoXbkkvKcbb4SeUyJuRmgM+TjR4OPoGqJh2/60pY1TwE
+ rQTZCeJCb/+HwHtXNlJf1GjsfrThfR0tlOu5ZGWZ4pEDdIpBka1Grf2BIlY1CKJV5S
+ Z9zbxkHQ9Sq0g==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4hd6rZ1pRCz9rxh;
- Sun,  6 Sep 2026 13:08:30 +0200 (CEST)
-Date: Sun, 06 Sep 2026 11:08:32 +0000
+ by submission (posteo.de) with ESMTPSA id 4hd6tk6nxpz9rxc;
+ Sun,  6 Sep 2026 13:10:22 +0200 (CEST)
+Date: Sun, 06 Sep 2026 11:10:25 +0000
 From: Thomas Huth <th.huth+qemu@posteo.eu>
 To: =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, "Denis V. Lunev"
@@ -52,23 +52,23 @@ Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, "Denis V. Lunev"
  qemu-s390x@nongnu.org, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
  <berrange@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
  qemu-ppc@nongnu.org
-Subject: Re: [PATCH 8/9] tests/functional: add skipTestIfNoHMP() helper
-Message-ID: <20260906130829.5926f44d@tpx1>
-In-Reply-To: <20260906-nohmp-v1-8-daee96491c43@redhat.com>
+Subject: Re: [PATCH 9/9] tests/functional: fix some tests that require HMP
+Message-ID: <20260906131022.6302e9e0@tpx1>
+In-Reply-To: <20260906-nohmp-v1-9-daee96491c43@redhat.com>
 References: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
- <20260906-nohmp-v1-8-daee96491c43@redhat.com>
+ <20260906-nohmp-v1-9-daee96491c43@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.67.36.66; envelope-from=th.huth+qemu@posteo.eu;
- helo=mout02.posteo.de
+Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth+qemu@posteo.eu;
+ helo=mout01.posteo.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,34 +84,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Sun, 06 Sep 2026 12:42:39 +0400
+Am Sun, 06 Sep 2026 12:42:40 +0400
 schrieb Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>:
 
+> Those tests use "info registers" command and connot be converted
+
+s/connot/cannot/
+
+> easily, for now skip them
+>=20
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->  tests/functional/qemu_test/testcase.py | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  tests/functional/m68k/test_nextcube.py | 1 +
+>  tests/functional/ppc/test_ppe42.py     | 1 +
+>  2 files changed, 2 insertions(+)
 >=20
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qe=
-mu_test/testcase.py
-> index 69d3d06cc0e3..bf2dc1dc101c 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -369,6 +369,12 @@ def require_accelerator(self, accelerator):
->              self.skipTest("%s accelerator does not seem to be "
->                            "available" % accelerator)
+> diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m6=
+8k/test_nextcube.py
+> index dc99962eb75c..b0c0b653a7d0 100755
+> --- a/tests/functional/m68k/test_nextcube.py
+> +++ b/tests/functional/m68k/test_nextcube.py
+> @@ -27,6 +27,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
 > =20
-> +    def skipTestIfNoHMP(self):
-> +        commands =3D self.vm.cmd('query-commands')
-> +        if not any(cmd['name'] =3D=3D 'human-monitor-command'
-> +                   for cmd in commands):
-> +            self.skipTest('HMP support is not available')
-> +
->      def require_netdev(self, netdevname):
->          helptxt =3D run([self.qemu_bin, '-M', 'none', '-netdev', 'help'],
->                        capture_output=3DTrue, check=3DTrue, encoding=3D'u=
-tf8').stdout
->=20
+>          self.vm.add_args('-bios', rom_path)
+>          self.vm.launch()
+> +        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
+> =20
+>          self.log.info('VM launched, waiting for display')
+>          # Wait for the FPU test to finish, then the display is available=
+, too:
+> diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/te=
+st_ppe42.py
+> index 53958a7938d1..a9c154f67328 100755
+> --- a/tests/functional/ppc/test_ppe42.py
+> +++ b/tests/functional/ppc/test_ppe42.py
+> @@ -72,6 +72,7 @@ def test_ppe42_instructions(self):
+>          self.vm.add_args('-device', 'loader,addr=3D0xfff80040,cpu-num=3D=
+0')
+>          self.vm.add_args('-action', 'panic=3Dpause')
+>          self.vm.launch()
+> +        self.skipTestIfNoHMP() # FIXME: QMP x-query-registers
+>          self._wait_pass_fail(self.timeout)
 
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
+Why don't you use these as a decorator (with @) instead?
+
+ Thomas
 
