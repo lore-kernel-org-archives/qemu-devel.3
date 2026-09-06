@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B3A5C79F99
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB86BC79F99
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 08:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x38e4-0002Zj-3N; Sun, 06 Sep 2026 04:54:36 -0400
+	id 1x38dw-0002V9-TS; Sun, 06 Sep 2026 04:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38e3-0002YP-35
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:35 -0400
+ id 1x38dv-0002Ug-Os
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x38e1-0000oT-Ky
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:34 -0400
+ id 1x38dt-0000o0-Sn
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 04:54:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788684873;
+ s=mimecast20190719; t=1788684865;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MlOzefOMyFIYin8lnPxCAKgI3I17CqTz3mHT4Btd4VQ=;
- b=UQaTkPIWsMUXkRNtPaBMnUQ9bwmYGhplicmVR+lhDF2+6dG4glb5cCj6HMDFMqU6JjhGwh
- QJmPJ6UimkCwe/FwoXRqvQcxv7c3YYLy+/CQtY5VItzZVoHEuH6U3Yjs6Q+/aVKMpHwTCg
- /2fsdvCjjaWOHVKSNbQQwOLuXeBxrpY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=uo1vyG+VFq3hO/+8bOAZhuY/jMoCwIibajRfx3GTxbM=;
+ b=QbNITsqEuKZbsDkhFzFFA0FlpQ4nXOPtVNRFceS7PohwAt314rDF/RB/wMYqXNm6fAKx3s
+ JGYo+pIHGEUCeetuLx9Gs0KKiQvf58CTl577N4TxQJX5vFcL/67RIj/ZUv9apAoD6hodMd
+ hMLQtZo23PJmzbLsifxeVyy3RBB9eC4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-CM2PUJlxMcOYobfVR1V-Wg-1; Sun,
- 06 Sep 2026 04:54:29 -0400
-X-MC-Unique: CM2PUJlxMcOYobfVR1V-Wg-1
-X-Mimecast-MFC-AGG-ID: CM2PUJlxMcOYobfVR1V-Wg_1788684866
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-ITnTRN5iOh2hRsihoY2kcA-1; Sun,
+ 06 Sep 2026 04:54:21 -0400
+X-MC-Unique: ITnTRN5iOh2hRsihoY2kcA-1
+X-Mimecast-MFC-AGG-ID: ITnTRN5iOh2hRsihoY2kcA_1788684859
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8AD2918011EA; Sun,  6 Sep 2026 08:54:26 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1442E1805A20; Sun,  6 Sep 2026 08:54:19 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1ADE230002EF; Sun,  6 Sep 2026 08:54:24 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 14ED61800767; Sun,  6 Sep 2026 08:54:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 06 Sep 2026 12:53:41 +0400
-Subject: [PATCH 9/9] hw/s390x/ipl: fix short SCSI loadparm buffer over-read
+Date: Sun, 06 Sep 2026 12:53:39 +0400
+Subject: [PATCH 7/9] igvm: release found memory region on success
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260906-nohmp-next-v1-9-2b21e63974f3@redhat.com>
+Message-Id: <20260906-nohmp-next-v1-7-2b21e63974f3@redhat.com>
 References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
 In-Reply-To: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
  qemu-s390x@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1774;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=821;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bIdpGVAkPWhL6iCZ6lwgkzBd3NrpzsxJLuDajQEJb08=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSoZ9BWKtdg14kuD7L52A3Yq38D3WnaWC8RzL
- 6Nv+J+eKl6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0qGQAKCRDa6OEJdZac
- 5SNIEACwDQ7QCTE+tiPha8vJ+E1Sh6Tu4NLwIAwOJgAd0kWAJVxiDXazng7m43jX4e1DRuRrs/e
- g8YX7sAoj6aPpEkB0Zc7JBAC3sHcq0QzOsKK1sKaCGwiJinKwa337eXRUOMhixmGiXgRTqVC6dB
- RNQg9z4jZWWL3zFsPfqZDjLbno7dftad0e0R0sLiwD7rxrb5kezqafZO6uOT0QR3Lz382z4HgR2
- a+YX0woMlrq++Q9tIdf/tGKIhMR95l6UnzFhHw2btgQDvN1bw3TLznqcZKHSzGTLhFdZxwOj/cm
- O5y++S3C719rR9TnSI4zrjy5hCneyobWpYr9He3sSl2tEnvs1ajlmJ5VOAly2MTXrEBGS/w3J/s
- 6GqnpwzeGiMUe6PXdpjL0DAnEz5W6dSLK66Dr2UMZQ2zLIvpwFrCn+FP9Qc0JvvZ4CZ6jFPuZhv
- U4cXBf0vZkbBuI2DXo42hBUhMtBRJ26Ofwm5uZeVJ6hMQFZ+DEWnNuS2fJeJSiqwmdneo0EUXUr
- TiZhlpPEYevJNWS+aBH0cwgXa8JCamUFptxRGg617eylXPVGvCvEVK2+jcsLtENN+14xttamvbm
- OlyXV0Zabl8jGE51SOHksqqcypYep4lJwUU8s42ul20k9MQ/9G86Hrv7geu/iorvcdxUHFJ3Y7m
- ydKm2ygW5/dtGrQ==
+ bh=nyQcpX2O2JaBarZgpXAo4ALUM2REr/Vy7wrbwXQjNBc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnSoZv5Ptq2a/g08nt+tp4yi2WH6V8BkJT3mCc
+ V9ZLjhaHLaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap0qGQAKCRDa6OEJdZac
+ 5Ve3D/915jbscrwaxltqZJ5WmWsXTcy5Mf9/x2rRx4SLVYOH2vGknFhI/LJUwQ57PhQsOyJEwHT
+ XoZw8k93odPRlSSOKz1stT0XKTIlakDKeUlq7WHVaZrkXP2lvuOW+NECPDBCmCEcKdG3gCayqpW
+ sSEqHOzUCxVxFZsZowfw3K9OKNavuadBschHBbvJboX4dkccgvdekP9BfbU0NXux/pQSHG24dYq
+ I44BUfoUme2f+uY/JbDQCgUlx0jI+/SFa+CDNL/G6h+sgfR4fvWveCXxDZBX5R6iHJ65deOO3GP
+ KJAEllWCAUuEqqZpju06SwrI5MliaILHhxRxtne3rMzhkLGZO1eNYXz8foas6MC5AYiGz6X2jBm
+ PZdpVNDyiic0w8Y+HV74yBJ/Ck05Kr6fa7oyroQBCiW0SMBy9l2XfobMZ+yycrsUjVbQoIMiHx1
+ k3Esi1KGHoK5MCEShoOwiHc4nHfksbLlLDX8T7KtcfKi202LTJQ9jOABanDSqcdGYkX9fGdcP1a
+ MavOIn6VkJuJj6GyeUu7fe3/K5tXX8ohbZ+xRdkGsa1z1ab6Yg3/BCaDyDu1h3zDwpw7ij6fg6z
+ DaEj8Z9DmqZFKaoGd2zbCSBIy3+HBpxbiJGWyQPQgQ8WjAs+JD/Qc4VK3B3huj+uAnSEAzxwtfg
+ z6L/0b56FvxuSYQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,51 +120,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-s390_build_iplb() initially points lp at the eight-byte CCW loadparm
-array. For SCSI devices, it can replace lp with a variable-length string
-returned by object_property_get_str().
+Not only in error paths must the mrs.mr be released.
 
-The following memcmp() still reads eight bytes. ASan reports
-buffer-overflow on value "3", when running test_scsi_loadparm
-func-s390x-boot_4k test.
-
-Check the fixed-size CCW loadparm for the 8-zero before the SCSI
-property can replace lp.
-
-Fixes: 429442e52d94 ("hw: Add "loadparm" property to scsi disk devices for booting on s390x")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/s390x/ipl.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ backends/igvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index d59ed36c7839..e249d50b1ce3 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -549,6 +549,11 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-     if (ccw_dev) {
-         lp = ccw_dev->loadparm;
- 
-+        /* If the device loadparm is empty use the global machine loadparm */
-+        if (memcmp(lp, NO_LOADPARM, 8) == 0) {
-+            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-+        }
-+
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
-@@ -583,11 +588,6 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-             break;
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 7b7bdc72b75b..784a56504e77 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -236,9 +236,9 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+             return NULL;
          }
  
--        /* If the device loadparm is empty use the global machine loadparm */
--        if (memcmp(lp, NO_LOADPARM, 8) == 0) {
--            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
--        }
--
-         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-         iplb->flags |= DIAG308_FLAGS_LP_VALID;
- 
++        memory_region_unref(mrs.mr);
+         gpa_region_size = int128_make64(size);
+         if (int128_lt(mrs.size, gpa_region_size)) {
+-            memory_region_unref(mrs.mr);
+             error_setg(
+                 errp,
+                 "Processing of IGVM file failed: Could not prepare memory "
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
