@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B24C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 11:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B52C79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 11:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3AiL-0002zZ-J7; Sun, 06 Sep 2026 07:07:11 -0400
+	id 1x3Aj9-0003K6-7H; Sun, 06 Sep 2026 07:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
- id 1x3AiE-0002xQ-Fy
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:07:02 -0400
+ id 1x3Aj0-0003HL-PF
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:07:52 -0400
 Received: from mout02.posteo.de ([185.67.36.66])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
- id 1x3AiB-0006WH-2I
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:07:02 -0400
+ id 1x3Aix-0006kx-HH
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 07:07:49 -0400
 Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 00A7B240104
- for <qemu-devel@nongnu.org>; Sun,  6 Sep 2026 13:06:54 +0200 (CEST)
+ by mout02.posteo.de (Postfix) with ESMTPS id 1A7AC240103
+ for <qemu-devel@nongnu.org>; Sun,  6 Sep 2026 13:07:46 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
- s=1984.8680eb; t=1788692813;
- bh=Dlr2orpzpAgAVyJXul7eEkywX/xV8rw30gZcV165DV8=;
+ s=1984.8680eb; t=1788692866;
+ bh=pkr0KyrXyQqY5IYxL6uPTSNyEQeo0RAn8NujI9pcKt8=;
  h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
  Content-Transfer-Encoding:From;
- b=ImJKqidEo3lRMpaYvWtXzPtSt9QkqO01EntcvwjAc05XQncuy+7feGYUlpWnikWAL
- 6v6jLfjBvRXZkZc/iIACZ3AhgcHP5CRBAg/bziE1T+MzVAnhQ8FsLPewYVNVMYdm9h
- 0x1MWxekQ7qzNlgsEbc6thsX9O+sXikQDbYX97cafo8UTLFGjduLiBJX0cOwEhWf8c
- VRVp5F3Gv3uKd9pvIK7CB8kJg5fcVGfMuNdSQfsD2khfoDYqzmpNBaEfihlsRTG0+j
- KkRI62dvVlglijjBakuEOCeKe+H0LAYW5VtINZ5TsA4F7+gvT2mbweeL/uv5AhCPkE
- FYE3WfrwOo1Ew==
+ b=MkN3FS/G4EpbYq4n7eZ/L+4i7Jzb7yEhLRBcF/M8aTlFZS9X44ilo373nVvkPZRPN
+ V5pjZ3rbZJdO2+C0cbpfwPhS/qTJLrMMdMW8mpsigZMhoWgMzaMi1S3oNGQVpcIMzH
+ txfRb4ayekVr+p2vlU7PV5mMd/Re8haKWJ7ZGhz8GkD2Nqkc+NRzMpFt6YQ1T8Iqza
+ 7fTZe4j2+PtV5WmEW19qcqD2qPsDdNZtoUq5MbHOEKZPk9/xuDY3/W4GaWalxWAuZ8
+ ABeoAaox038EN8k/0yQpoSlKJnWbl321OoE4oUnPeZoh/t3Wl0UrM74Dj7SRpiyruK
+ mq9ifZJmtnFmA==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4hd6pd6Gw7z9rxV;
- Sun,  6 Sep 2026 13:06:49 +0200 (CEST)
-Date: Sun, 06 Sep 2026 11:06:53 +0000
+ by submission (posteo.de) with ESMTPSA id 4hd6qf4zdPz9rxc;
+ Sun,  6 Sep 2026 13:07:42 +0200 (CEST)
+Date: Sun, 06 Sep 2026 11:07:45 +0000
 From: Thomas Huth <th.huth+qemu@posteo.eu>
 To: =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>
-Cc: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>, Fabiano
- Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-block@nongnu.org, Peter Maydell
- <peter.maydell@linaro.org>, Thomas Huth <th.huth+qemu@posteo.eu>, Philippe
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, "Denis V. Lunev"
+ <den@openvz.org>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, Philippe
  =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>, Aurelien Jarno
  <aurelien@aurel32.net>, qemu-arm@nongnu.org, Halil Pasic
  <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -51,13 +51,12 @@ Cc: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>, Fabiano
  <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  qemu-s390x@nongnu.org, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
  <berrange@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
- qemu-ppc@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/9] tests/functional: replace HMP with QMP
-Message-ID: <20260906130649.6fafc3c4@tpx1>
-In-Reply-To: <20260906-nohmp-v1-2-daee96491c43@redhat.com>
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH 3/9] tests/functional/s390x: use QMP for balloon
+Message-ID: <20260906130740.51d91c22@tpx1>
+In-Reply-To: <20260906-nohmp-v1-3-daee96491c43@redhat.com>
 References: <20260906-nohmp-v1-0-daee96491c43@redhat.com>
- <20260906-nohmp-v1-2-daee96491c43@redhat.com>
+ <20260906-nohmp-v1-3-daee96491c43@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -69,7 +68,7 @@ X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,40 +84,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Sun, 06 Sep 2026 12:42:33 +0400
+Am Sun, 06 Sep 2026 12:42:34 +0400
 schrieb Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>:
 
-> Replace HMP with QMP equivalent.
+> Unit is changed from megabytes to bytes.
 >=20
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->  tests/functional/arm/test_integratorcp.py | 7 ++-----
->  tests/functional/m68k/test_nextcube.py    | 5 +----
->  tests/functional/mips64el/test_malta.py   | 7 ++-----
->  3 files changed, 5 insertions(+), 14 deletions(-)
+>  tests/functional/s390x/test_ccw_virtio.py | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >=20
-> diff --git a/tests/functional/arm/test_integratorcp.py b/tests/functional=
-/arm/test_integratorcp.py
-> index 23ae919359d5..fefed26266f4 100755
-> --- a/tests/functional/arm/test_integratorcp.py
-> +++ b/tests/functional/arm/test_integratorcp.py
-> @@ -72,11 +72,8 @@ def test_framebuffer_tux_logo(self):
->          self.boot_integratorcp()
->          framebuffer_ready =3D 'Console: switching to colour frame buffer=
- device'
->          wait_for_console_pattern(self, framebuffer_ready)
-> -        self.vm.cmd('human-monitor-command', command_line=3D'stop')
-> -        res =3D self.vm.cmd('human-monitor-command',
-> -                          command_line=3D'screendump %s' % screendump_pa=
-th)
-> -        if 'unknown command' in res:
-> -            self.skipTest('screendump not available')
-> +        self.vm.cmd('stop')
-> +        self.vm.cmd('screendump', filename=3Dscreendump_path)
+> diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional=
+/s390x/test_ccw_virtio.py
+> index 1d4958bbe293..f816b1e201a1 100755
+> --- a/tests/functional/s390x/test_ccw_virtio.py
+> +++ b/tests/functional/s390x/test_ccw_virtio.py
+> @@ -162,10 +162,10 @@ def test_s390x_devices(self):
+>          # test the virtio-balloon device
+>          exec_command_and_wait_for_pattern(self, 'head -n 1 /proc/meminfo=
+',
+>                                            'MemTotal:         115640 kB')
+> -        self.vm.cmd('human-monitor-command', command_line=3D'balloon 96')
+> +        self.vm.cmd('balloon', value=3D96 * 1024 * 1024)
+>          exec_command_and_wait_for_pattern(self, 'head -n 1 /proc/meminfo=
+',
+>                                            'MemTotal:          82872 kB')
+> -        self.vm.cmd('human-monitor-command', command_line=3D'balloon 128=
+')
+> +        self.vm.cmd('balloon', value=3D128 * 1024 * 1024)
+>          exec_command_and_wait_for_pattern(self, 'head -n 1 /proc/meminfo=
+',
+>                                            'MemTotal:         115640 kB')
+> =20
+>=20
 
-screendump is an optional command - it is only available if CONFIG_PIXMAN
-is enabled. That's why there was a check for "unknown command" here.
-Does your new code still works if pixman is disabled?
-
- Thomas
+Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
 
