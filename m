@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB73C79F85
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB8D9C79F85
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 17:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3FsX-0002t6-7K; Sun, 06 Sep 2026 12:38:01 -0400
+	id 1x3GOL-0003Px-LM; Sun, 06 Sep 2026 13:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsV-0002qs-5E; Sun, 06 Sep 2026 12:37:59 -0400
-Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GOK-0003Pn-DG
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:10:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsO-00034C-7f; Sun, 06 Sep 2026 12:37:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1788712657; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=q/GwFzMFGFkF35V6csq21/leImRbvW7pVYqM4X6u5Uk=;
- b=FYCDbWU5Sfg7e935JrtKdjLecwjy4XtqxIixKQWV+9rxI4N392FZZykNucC1SGLtHhM5JHW4E+J/nCNxp7YekKjWdUX5lsQxycsn7R5kP/hlgGpFJXLQTvgQcPQmoGLOpixFct5LJLzfD38qkqg4g8FZrf6yxfC2yYRSoEu3fVk=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XANKIJk_1788712655; 
-Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XANKIJk_1788712655 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 07 Sep 2026 00:37:36 +0800
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Mon, 07 Sep 2026 00:37:25 +0800
-Subject: [PATCH 09/14] target/riscv: Rebuild fixed-event PMU overflow deadlines
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1x3GOD-00004w-Bf
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 13:10:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788714644;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4W9Uw0wDBGCWcD4nSX/roQoCQn+LXdkKvx9ioSHNXQc=;
+ b=fp5kIMySKg7LHrpvPqCKEIhJE5rcate1wXv8MWIXyUMTlYdjhOR7XE5DkTsVWHOvC95sHH
+ 96SGmsYNJVnCOXkYcU8EPPhLIjr6tQoN+6efOhLbv4uwrnGt9yEq8YL08PqKBbB3Y4WxON
+ bIsBPPRs34XSWIH4f/LzLaH+afJ/sRw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-4pE8IDPjPA6yGX7kqULMXw-1; Sun,
+ 06 Sep 2026 13:10:43 -0400
+X-MC-Unique: 4pE8IDPjPA6yGX7kqULMXw-1
+X-Mimecast-MFC-AGG-ID: 4pE8IDPjPA6yGX7kqULMXw_1788714642
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE7DC1955BD0; Sun,  6 Sep 2026 17:10:41 +0000 (UTC)
+Received: from yukon.redhat.com (unknown [10.44.32.24])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CA2F31955F06; Sun,  6 Sep 2026 17:10:39 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 06/40] hw/misc/aspeed_scu: Support the second random number
+ generator
+Date: Sun,  6 Sep 2026 19:09:47 +0200
+Message-ID: <20260906171021.26568-7-clg@redhat.com>
+In-Reply-To: <20260906171021.26568-1-clg@redhat.com>
+References: <20260906171021.26568-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-riscv-pmu-correctness-v1-9-5f1f41458989@linux.alibaba.com>
-References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
-In-Reply-To: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- TANG Tiancheng <lyndra@linux.alibaba.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=18550;
- i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=HLjpg0UUYTyWedU3pFOTKs920Z10qHrMp5Yns3RRc/0=;
- b=D9ueqn0zI7oIGXfxj8BAqfOZNEuEYercmaeN6Xj6BEeYr6IXVNZHRNJQAvrzh7u5gSW3lEKHy
- rn9n0F7P/dVC3YYwAMqxpkfVaOA1VvC5iLK+ZSceshqCH2Jq6RuwL/6
-X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
- pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RDNS_NONE=0.793,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
- USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,499 +85,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-timer_mod_anticipate_ns() cannot postpone the shared overflow timer when
-a counter is stopped or reconfigured. Recompute the earliest deadline
-from all eligible counters after PMU changes and timer expiry. Check for
-an actual counter wrap before setting OF or LCOFIP.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Keep counter arithmetic in source units. For timer scheduling, convert
-only raw icount instruction counts to nanoseconds. Check how many fit
-within INT64_MAX - now nanoseconds before conversion, using INT64_MAX as
-the deadline if the count is larger. Recompute the remaining count at
-expiry instead of keeping irq_overflow_left.
+Implement SCU530 and SCU534, the control and data registers of the
+AST2600 second random number generator.
 
-Icount time warp can expire the timer without executing instructions.
-If the instruction source has not advanced, defer its next deadline
-until execution resumes to avoid an endless warp/rearm loop.
+Per the AST2600 datasheet, only SCU530[5:0] are writable and the
+read-only SCU530[31] reports that random data is valid, which is only
+meaningful while SCU530[4] is set. Report it as set whenever SCU530[4]
+is, and initialise SCU530 to its datasheet reset value.
 
-Extend the cycle-control test to cover selector writes while CY is set
-and resuming mcycle after CY is cleared.
-
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Link: https://lore.kernel.org/qemu-devel/20260821080408.2503092-1-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- target/riscv/cpu.h                     |   4 +-
- target/riscv/tcg/cpu_helper.c          |   2 +
- target/riscv/tcg/pmu.c                 | 239 +++++++++++++--------------------
- target/riscv/tcg/pmu.h                 |   3 +-
- target/riscv/tcg/tcg-cpu.c             |  10 ++
- tests/tcg/riscv64/pmu-cycle-controls.S |  27 ++++
- 6 files changed, 139 insertions(+), 146 deletions(-)
+ hw/misc/aspeed_scu.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index f7b1bfc9cf5069125bc22dc2674d8e67431c5970..17b9929785f668487d2ec851b736d588e025fd91 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -236,8 +236,6 @@ typedef struct PMUCTRState {
-     uint64_t mhpmcounter_val;
-     /* Snapshot value of a counter */
-     uint64_t mhpmcounter_prev;
--    /* Value beyond INT64_MAX before overflow interrupt trigger */
--    uint64_t irq_overflow_left;
- } PMUCTRState;
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+index 1e3db6d03f91..77f9af2ae50e 100644
+--- a/hw/misc/aspeed_scu.c
++++ b/hw/misc/aspeed_scu.c
+@@ -130,6 +130,10 @@
+ #define AST2600_HW_STRAP2_PROT    TO_REG(0x518)
+ #define AST2600_RNG_CTRL          TO_REG(0x520)
+ #define AST2600_RNG_DATA          TO_REG(0x524)
++#define AST2600_RNG2_CTRL         TO_REG(0x530)
++#define AST2600_RNG2_CTRL_MASK    0x3F
++#define AST2600_RNG2_CTRL_VLD     BIT(31)
++#define AST2600_RNG2_DATA         TO_REG(0x534)
+ #define AST2600_CHIP_ID0          TO_REG(0x5B0)
+ #define AST2600_CHIP_ID1          TO_REG(0x5B4)
  
- typedef enum {
-@@ -583,6 +581,8 @@ struct ArchCPU {
-     RISCVSATPModes satp_modes;
- 
-     QEMUTimer *pmu_timer;
-+    uint64_t pmu_timer_instret_snapshot;
-+    bool pmu_timer_stalled;
-     /* A bitmask of Available programmable counters */
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d92226527d85da93b8810e526d044e64fa4e3d..89751cdbf29f5bbd46d0d6b8c9d23eac5e3accac 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -889,6 +889,8 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
-             riscv_cpu_update_mip(env, 0, 0);
-         }
-     }
-+
-+    riscv_pmu_rebuild_timer(env);
- }
- 
- /*
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 2f600c5a0fc2d7ba380ef34f89af6366e3e27884..f88f6ae671d877ed874d22c9d4b840edb6f433a5 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -26,13 +26,6 @@
- #include "system/device_tree.h"
- #include "system/cpu-timers.h"
- 
--/*
-- * cpu_get_ticks() does not expose the host tick frequency.  Use a 1 GHz
-- * approximation only when scheduling non-icount overflow checks; fixed
-- * counter values remain in host-tick units.
-- */
--#define RISCV_PMU_HOST_TICK_HZ_ASSUMED 1000000000
--
- static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
- {
-     if (ctr_idx < 3 || ctr_idx >= RV_MAX_MHPMCOUNTERS ||
-@@ -324,7 +317,6 @@ void riscv_pmu_write_event(CPURISCVState *env, uint32_t ctr_idx,
-                            uint64_t value, uint64_t wr_mask)
- {
-     RISCVPMUFixedSnapshot snapshot;
--    PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
- 
-     riscv_pmu_take_fixed_snapshot(env, &snapshot);
-     if (riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
-@@ -337,10 +329,7 @@ void riscv_pmu_write_event(CPURISCVState *env, uint32_t ctr_idx,
-     if (riscv_pmu_fixed_ctr_enabled(env, ctr_idx)) {
-         riscv_pmu_set_fixed_baseline(env, ctr_idx, &snapshot);
-     }
--
--    if (riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
--        riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
--    }
-+    riscv_pmu_rebuild_timer(env);
- }
- 
- void riscv_pmu_write_counter(CPURISCVState *env, uint32_t ctr_idx,
-@@ -349,23 +338,19 @@ void riscv_pmu_write_counter(CPURISCVState *env, uint32_t ctr_idx,
-     RISCVPMUFixedSnapshot snapshot;
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-     bool rv32 = xl == MXL_RV32;
--    bool running;
-     int start = upper_half ? 32 : 0;
-     int length = rv32 ? 32 : 64;
- 
-     g_assert(rv32 || !upper_half);
- 
-     riscv_pmu_take_fixed_snapshot(env, &snapshot);
--    running = riscv_pmu_fixed_ctr_running(env, ctr_idx);
--    if (running) {
-+    if (riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
-         riscv_pmu_accumulate_fixed_delta(env, ctr_idx, &snapshot);
-     }
-     counter->mhpmcounter_val = deposit64(counter->mhpmcounter_val,
-                                          start, length, value);
-     /* mhpmcounter_prev tracks the source, not the written counter value. */
--    if (running && ctr_idx > 2) {
--        riscv_pmu_setup_timer(env, counter->mhpmcounter_val, ctr_idx);
--    }
-+    riscv_pmu_rebuild_timer(env);
- }
- 
- void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value)
-@@ -396,11 +381,8 @@ void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value)
-         if (riscv_pmu_fixed_ctr_enabled(env, ctr_idx)) {
-             riscv_pmu_set_fixed_baseline(env, ctr_idx, &snapshot);
-         }
--        if (ctr_idx > 2 && riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
--            riscv_pmu_setup_timer(env, env->pmu_ctrs[ctr_idx].mhpmcounter_val,
--                                  ctr_idx);
--        }
-     }
-+    riscv_pmu_rebuild_timer(env);
- }
- 
- void riscv_pmu_decr_instret(CPURISCVState *env)
-@@ -512,17 +494,6 @@ static bool riscv_pmu_event_supported(uint32_t event_idx)
-     }
- }
- 
--static int64_t pmu_ticks_to_ns(CPURISCVState *env, uint32_t ctr_idx,
--                               int64_t value)
--{
--    if (icount_enabled() &&
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        return icount_to_ns(value);
--    }
--
--    return (NANOSECONDS_PER_SECOND / RISCV_PMU_HOST_TICK_HZ_ASSUMED) * value;
--}
--
- void riscv_pmu_rebuild_event_map(CPURISCVState *env)
- {
-     uint32_t ctr_idx, ctr_mask, event_idx;
-@@ -551,148 +522,132 @@ void riscv_pmu_rebuild_event_map(CPURISCVState *env)
-     }
- }
- 
--static bool pmu_hpmevent_set_of_if_clear(CPURISCVState *env, uint32_t ctr_idx)
--{
--    if (!get_field(env->mhpmevent_val[ctr_idx], MHPMEVENT_BIT_OF)) {
--        env->mhpmevent_val[ctr_idx] |= MHPMEVENT_BIT_OF;
--        return true;
--    } else {
--        return false;
--    }
--}
--
--static void pmu_timer_trigger_irq_counter(RISCVCPU *cpu, uint32_t ctr_idx)
-+static int64_t riscv_pmu_overflow_delay_ns(CPURISCVState *env,
-+                                           uint32_t ctr_idx,
-+                                           uint64_t value, int64_t now)
- {
--    CPURISCVState *env = &cpu->env;
--    PMUCTRState *counter;
--    int64_t irq_trigger_at;
--    uint64_t curr_ctr_val, curr_ctrh_val;
--    uint64_t ctr_val;
-+    uint64_t remaining;
-+    uint64_t max_delay = INT64_MAX - now;
- 
--    if (!riscv_pmu_counter_enabled(cpu, ctr_idx)) {
--        return;
-+    if (!value) {
-+        /* A complete 64-bit wrap is beyond the signed timer horizon. */
-+        return max_delay;
-     }
-+    remaining = -value;
- 
--    /* Generate interrupt only if OF bit is clear */
--    if (get_field(env->mhpmevent_val[ctr_idx], MHPMEVENT_BIT_OF)) {
--        return;
--    }
--
--    counter = &env->pmu_ctrs[ctr_idx];
--    if (counter->irq_overflow_left > 0) {
--        irq_trigger_at = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--                        counter->irq_overflow_left;
--        timer_mod_anticipate_ns(cpu->pmu_timer, irq_trigger_at);
--        counter->irq_overflow_left = 0;
--        return;
--    }
-+    if (icount_enabled() &&
-+        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
-+        /* Use one adaptive-shift sample for both bounds and conversion. */
-+        uint64_t ns_per_tick = icount_to_ns(1);
-+        uint64_t max_ticks = max_delay / ns_per_tick;
- 
--    riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctr_val, false, ctr_idx,
--                        riscv_cpu_mxl(env));
--    ctr_val = counter->mhpmcounter_val;
--    if (riscv_cpu_mxl(env) == MXL_RV32) {
--        riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctrh_val, true, ctr_idx,
--                            riscv_cpu_mxl(env));
--        curr_ctr_val = curr_ctr_val | (curr_ctrh_val << 32);
-+        if (remaining > max_ticks) {
-+            return max_delay;
-+        }
-+        return remaining * ns_per_tick;
+@@ -679,13 +683,14 @@ static uint64_t aspeed_ast2600_scu_read(void *opaque, hwaddr offset,
+         /* PLLs are always "locked" */
+         return s->regs[reg] | BIT(31);
+     case AST2600_RNG_DATA:
++    case AST2600_RNG2_DATA:
+         /*
+          * On hardware, RNG_DATA works regardless of the state of the
+          * enable bit in RNG_CTRL
+          *
+          * TODO: Check this is true for ast2600
+          */
+-        s->regs[AST2600_RNG_DATA] = aspeed_scu_get_random();
++        s->regs[reg] = aspeed_scu_get_random();
+         break;
      }
  
-     /*
--     * We can not accommodate for inhibited modes when setting up timer. Check
--     * if the counter has actually overflowed or not by comparing current
--     * counter value (accommodated for inhibited modes) with software written
--     * counter value.
-+     * Cycle under icount is already virtual ns.  Non-icount fixed events
-+     * retain QEMU's existing one-host-tick-per-ns deadline approximation.
-      */
--    if (curr_ctr_val >= ctr_val) {
--        riscv_pmu_setup_timer(env, curr_ctr_val, ctr_idx);
--        return;
--    }
--
--    if (cpu->pmu_avail_ctrs & BIT(ctr_idx)) {
--        if (pmu_hpmevent_set_of_if_clear(env, ctr_idx)) {
--            riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
--        }
--    }
-+    return MIN(remaining, max_delay);
- }
- 
--static void pmu_timer_trigger_irq(RISCVCPU *cpu,
--                                  enum riscv_pmu_event_idx evt_idx)
-+static void riscv_pmu_rebuild_timer_internal(CPURISCVState *env,
-+                                             bool timer_expired)
- {
-+    RISCVCPU *cpu = env_archcpu(env);
-+    RISCVPMUFixedSnapshot snapshot;
-     uint32_t ctr_idx;
-     uint32_t ctr_mask;
-+    int64_t deadline = INT64_MAX;
-+    int64_t now;
-+    bool have_deadline = false;
-+    bool timer_horizon_exhausted;
-+    bool stalled = false;
- 
--    if (evt_idx != RISCV_PMU_EVENT_HW_CPU_CYCLES &&
--        evt_idx != RISCV_PMU_EVENT_HW_INSTRUCTIONS) {
-+    if (!cpu->pmu_timer) {
+@@ -756,6 +761,7 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
          return;
+ 
+     case AST2600_RNG_DATA:
++    case AST2600_RNG2_DATA:
+     case AST2600_SILICON_REV:
+     case AST2600_SILICON_REV2:
+     case AST2600_CHIP_ID0:
+@@ -765,6 +771,14 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+                       "%s: Write to read-only offset 0x%" HWADDR_PRIx "\n",
+                       __func__, offset);
+         return;
++    case AST2600_RNG2_CTRL:
++        data &= AST2600_RNG2_CTRL_MASK;
++        if (data & BIT(4)) {
++            data |= AST2600_RNG2_CTRL_VLD;
++        } else {
++            data &= ~AST2600_RNG2_CTRL_VLD;
++        }
++        break;
      }
  
--    ctr_mask = riscv_pmu_event_counter_mask(cpu, evt_idx);
-+    riscv_pmu_take_fixed_snapshot(env, &snapshot);
-+    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    /* No future absolute timer deadline is representable at this point. */
-+    timer_horizon_exhausted = now == INT64_MAX;
-+
-+    ctr_mask = riscv_pmu_event_counter_mask(
-+        cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
-+    ctr_mask |= riscv_pmu_event_counter_mask(
-+        cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
+     s->regs[reg] = data;
+@@ -803,6 +817,7 @@ static const uint32_t ast2600_a3_resets[ASPEED_AST2600_SCU_NR_REGS] = {
+     [AST2600_HUARTCLK]          = 0x000145C0,
+     [AST2600_CHIP_ID0]          = 0x1234ABCD,
+     [AST2600_CHIP_ID1]          = 0x88884444,
++    [AST2600_RNG2_CTRL]         = 0x8000000E,
+ };
  
-     while (ctr_mask) {
-+        PMUCTRState *counter;
-+        int64_t candidate;
-+
-         ctr_idx = ctz32(ctr_mask);
-         ctr_mask &= ~BIT(ctr_idx);
--        pmu_timer_trigger_irq_counter(cpu, ctr_idx);
--    }
--}
-+        counter = &env->pmu_ctrs[ctr_idx];
- 
--/* Timer callback for instret and cycle counter overflow */
--void riscv_pmu_timer_cb(void *priv)
--{
--    RISCVCPU *cpu = priv;
-+        if (!riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
-+            continue;
-+        }
-+        riscv_pmu_accumulate_fixed_delta(env, ctr_idx, &snapshot);
-+        if ((env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_OF) ||
-+            riscv_pmu_counter_filtered(env,
-+                                       env->mhpmevent_val[ctr_idx])) {
-+            continue;
-+        }
- 
--    /* Timer event was triggered only for these events */
--    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
--    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
--}
-+        /*
-+         * Settle current deltas and overflows even when no future deadline is
-+         * representable.
-+         */
-+        if (timer_horizon_exhausted) {
-+            continue;
-+        }
- 
--int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
--{
--    uint64_t overflow_delta, overflow_at, curr_ns;
--    int64_t overflow_ns, overflow_left = 0;
--    RISCVCPU *cpu = env_archcpu(env);
--    PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-+        if (timer_expired && icount_enabled() &&
-+            riscv_pmu_ctr_monitor_instructions(env, ctr_idx) &&
-+            snapshot.instret == cpu->pmu_timer_instret_snapshot) {
-+            /*
-+             * Icount can warp QEMU_CLOCK_VIRTUAL to this deadline without
-+             * executing an instruction. Re-arming the unchanged instruction
-+             * distance would create a warp/rearm loop; defer it until this
-+             * CPU enters execution again.
-+             */
-+            stalled = true;
-+            continue;
-+        }
- 
--    /* No need to setup a timer if LCOFI is disabled when OF is set */
--    if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->cfg.ext_sscofpmf ||
--        get_field(env->mhpmevent_val[ctr_idx], MHPMEVENT_BIT_OF)) {
--        return -1;
-+        candidate = now + riscv_pmu_overflow_delay_ns(
-+                              env, ctr_idx, counter->mhpmcounter_val, now);
-+        if (!have_deadline || candidate < deadline) {
-+            deadline = candidate;
-+            have_deadline = true;
-+        }
-     }
- 
--    if (value) {
--        overflow_delta = UINT64_MAX - value + 1;
-+    cpu->pmu_timer_instret_snapshot = snapshot.instret;
-+    cpu->pmu_timer_stalled = stalled;
-+    if (have_deadline) {
-+        timer_mod_ns(cpu->pmu_timer, deadline);
-     } else {
--        overflow_delta = UINT64_MAX;
--    }
--
--    /*
--     * QEMU supports only int64_t timers while RISC-V counters are uint64_t.
--     * Compute the leftover and save it so that it can be reprogrammed again
--     * when timer expires.
--     */
--    if (overflow_delta > INT64_MAX) {
--        overflow_left = overflow_delta - INT64_MAX;
-+        timer_del(cpu->pmu_timer);
-     }
-+}
- 
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        overflow_ns = pmu_ticks_to_ns(env, ctr_idx,
--                                      (int64_t)overflow_delta);
--        overflow_left = pmu_ticks_to_ns(env, ctr_idx, overflow_left);
--    } else {
--        return -1;
--    }
--    curr_ns = (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    overflow_at =  curr_ns + overflow_ns;
--    if (overflow_at <= curr_ns)
--        overflow_at = UINT64_MAX;
-+void riscv_pmu_rebuild_timer(CPURISCVState *env)
-+{
-+    riscv_pmu_rebuild_timer_internal(env, false);
-+}
- 
--    if (overflow_at > INT64_MAX) {
--        overflow_left += overflow_at - INT64_MAX;
--        counter->irq_overflow_left = overflow_left;
--        overflow_at = INT64_MAX;
--    }
--    timer_mod_anticipate_ns(cpu->pmu_timer, overflow_at);
-+/* Timer callback for instret and cycle counter overflow */
-+void riscv_pmu_timer_cb(void *priv)
-+{
-+    RISCVCPU *cpu = priv;
- 
--    return 0;
-+    riscv_pmu_rebuild_timer_internal(&cpu->env, true);
+ static void aspeed_ast2600_scu_reset_hold(Object *obj, ResetType type)
+@@ -1123,6 +1138,7 @@ static void aspeed_ast1030_scu_reset_hold(Object *obj, ResetType type)
+     s->regs[AST2600_HW_STRAP1] = s->hw_strap1;
+     s->regs[AST2600_HW_STRAP2] = s->hw_strap2;
+     s->regs[PROT_KEY] = s->hw_prot_key;
++    s->regs[AST2600_RNG2_CTRL] = 0x8000000E;
  }
  
- 
-diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
-index 1494fbc21f53137a90c1338f6ca8e3c3e750276a..d9238ae680f5e67031511db4f9afc2884212c5c2 100644
---- a/target/riscv/tcg/pmu.h
-+++ b/target/riscv/tcg/pmu.h
-@@ -44,12 +44,11 @@ void riscv_pmu_write_counter(CPURISCVState *env, uint32_t ctr_idx,
-                              target_ulong value, bool upper_half, RISCVMXL xl);
- void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value);
- void riscv_pmu_timer_cb(void *priv);
-+void riscv_pmu_rebuild_timer(CPURISCVState *env);
- void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
- void riscv_pmu_rebuild_event_map(CPURISCVState *env);
- int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
- void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
--int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
--                          uint32_t ctr_idx);
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
-                                  bool new_virt);
- void riscv_pmu_decr_instret(CPURISCVState *env);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b68160af8307c1e46d3f200c5313823d240eb7b3..cdcb94f3bcaf0526512f1994e9f7127209e1adcb 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -247,6 +247,15 @@ static void riscv_restore_state_to_opc(CPUState *cs,
- }
- 
- #ifndef CONFIG_USER_ONLY
-+static void riscv_cpu_exec_enter(CPUState *cs)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+
-+    if (cpu->pmu_timer_stalled) {
-+        riscv_pmu_rebuild_timer(&cpu->env);
-+    }
-+}
-+
- static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
-                                 vaddr result, vaddr base)
- {
-@@ -283,6 +292,7 @@ const TCGCPUOps riscv_tcg_ops = {
-     .mmu_index = riscv_cpu_mmu_index,
- 
- #ifndef CONFIG_USER_ONLY
-+    .cpu_exec_enter = riscv_cpu_exec_enter,
-     .tlb_fill = riscv_cpu_tlb_fill,
-     .pointer_wrap = riscv_pointer_wrap,
-     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
-diff --git a/tests/tcg/riscv64/pmu-cycle-controls.S b/tests/tcg/riscv64/pmu-cycle-controls.S
-index cda477f6699899e4fd625a301aa146fa9fdac344..9de8d128ee2a99e1183c91c5bd555c49e67b1f48 100644
---- a/tests/tcg/riscv64/pmu-cycle-controls.S
-+++ b/tests/tcg/riscv64/pmu-cycle-controls.S
-@@ -14,6 +14,8 @@ _start:
- 	 * 1: mcycle changes while M-mode is filtered
- 	 * 2: disabling MINH adds the filtered interval
- 	 * 3: mcycle does not resume after disabling MINH
-+	 * 4: writing mhpmevent3 advances mcycle while CY is set
-+	 * 5: mcycle does not resume after clearing CY
- 	 */
- 	li	t4, 0
- 	csrw	mcountinhibit, zero
-@@ -58,6 +60,31 @@ _start:
- 	slli	t1, t1, 3
- 	or	t4, t4, t1
- 
-+	/* Changing HPM3's event must leave mcycle stopped while CY is set. */
-+	li	t0, 1			/* mcountinhibit.CY */
-+	csrw	mcountinhibit, t0
-+	csrr	s4, mcycle
-+	.rept	128
-+	nop
-+	.endr
-+	li	t0, 1			/* HW_CPU_CYCLES */
-+	csrw	0x323, t0		/* mhpmevent3; rebuilds PMU timer */
-+	csrr	s5, mcycle
-+	xor	t1, s4, s5
-+	sltu	t1, zero, t1
-+	slli	t1, t1, 4
-+	or	t4, t4, t1
-+	csrw	mcountinhibit, zero
-+	csrr	s6, mcycle
-+	.rept	128
-+	nop
-+	.endr
-+	csrr	t1, mcycle
-+	sltu	t1, s6, t1
-+	xori	t1, t1, 1
-+	slli	t1, t1, 5
-+	or	t4, t4, t1
-+	csrw	0x323, zero
- 	lla	a1, semiargs
- 	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
- 	sd	t0, 0(a1)
-
+ static void aspeed_1030_scu_class_init(ObjectClass *klass, const void *data)
 -- 
-2.43.0
+2.55.0
 
 
