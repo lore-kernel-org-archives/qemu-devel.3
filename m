@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 352C5C79F8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E83C79F9F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Sep 2026 16:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3FsW-0002ra-Fy; Sun, 06 Sep 2026 12:38:00 -0400
+	id 1x3Fsc-0002yn-Bb; Sun, 06 Sep 2026 12:38:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsU-0002qM-Hp; Sun, 06 Sep 2026 12:37:58 -0400
-Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
+ id 1x3FsZ-0002vr-7a; Sun, 06 Sep 2026 12:38:03 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1x3FsP-00033q-3p; Sun, 06 Sep 2026 12:37:58 -0400
+ id 1x3FsQ-00034b-8v; Sun, 06 Sep 2026 12:38:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1788712656; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=m3wUYFgSVvglMEd51r/8qFafUu1CfPU9Xj4xomSW6JM=;
- b=THeo2qF/w2N+8i/KqeSiYjIM6FhlNPBR5RPC+tr+P2FXlEURxcGLPK6tPcnDcoC4HeOYf3H5+OkvCeR4gQI9jK5SQlnm4wNEJTRXl6oVTCX/JH55sPdeGc/ZBSuEDmhTrh36BVJ18KuSjsnfDuA0tr9XgpeyZWTVlJz0stHvxTw=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1788712660; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=Dtl4329WIGQ6KdAb3x+7Thktvshec+Ih2mo5b0zZkOM=;
+ b=YzJ//z/jRzoH1PoU53jEir8B55Bh5ND0M+J5OiCkIDD5N5SKX8hIf+XJekTyIpYV7oiuUXjLjX/i4PKclPbnUNJvQbWjTygCUWo/cKL4iUbc9/F02/7wlYEDVJ2C6MypyRciRfbi1GOqXr8gL9xwV4viHti5yaQTsHTnZE8mlww=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XANKIJQ_1788712655; 
+ TI=SMTPD_---0XANKIKY_1788712658; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XANKIJQ_1788712655 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 07 Sep 2026 00:37:35 +0800
+ fp:SMTPD_---0XANKIKY_1788712658 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 07 Sep 2026 00:37:38 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Mon, 07 Sep 2026 00:37:24 +0800
-Subject: [PATCH 08/14] target/riscv: Require Sscofpmf for non-fixed event
- overflow
+Date: Mon, 07 Sep 2026 00:37:28 +0800
+Subject: [PATCH 12/14] target/riscv: Migrate fixed PMU counter state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-riscv-pmu-correctness-v1-8-5f1f41458989@linux.alibaba.com>
+Message-Id: <20260907-riscv-pmu-correctness-v1-12-5f1f41458989@linux.alibaba.com>
 References: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
 In-Reply-To: <20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -53,17 +52,16 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=5025;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788712649; l=10473;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=SWLDZaobL2cuTdxkuNJsKTxxt0qUm6tEdzPQvavnhhQ=;
- b=rO4zGoUZJA7WCO8O0biP8tGvwHXuMqBm2xYWjc1idI9fCcyQTC6xmPeglGP5WO/RT4a5Uh0bG
- aA6h5/X7yTjDIHBmKK68EfE8QU04UuSkVySXdtjClnqU+YLOhMLorFJ
+ bh=43yGLmw8GE/tnk472DUOQecx2s1MH5MfpKcrsqIdibs=;
+ b=w7gPkOAg+e/LpZlqlHx4aV4F21lHbnaOHthMh+h2c+24JfcNTpfqD7NAhrrQ+nWODMNwlrtrY
+ gT1rI0BPYvtDL+9lXpmx0xErni6cRVaoriyMH9ZrvdtIpQ+Y77LF2VN
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
-Received-SPF: pass client-ip=115.124.30.130;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -87,168 +85,295 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_pmu_incr_ctr() sets OF and LCOFIP on wrap even when Sscofpmf is
-disabled. Use the shared overflow helper to require Sscofpmf and suppress
-notifications while OF is set without stopping the counter.
+Migration saves fixed-source baselines but not the per-mode totals they
+refer to, nor mcyclecfg/minstretcfg. TCG can therefore subtract an
+unrelated baseline or apply the wrong privilege filter after loading.
 
-Test DTLB overflow with Sscofpmf enabled and disabled, including
-notification suppression and continued counting.
+Before saving, add pending increments allowed by the current filters to
+each enabled fixed-source counter, including HPM cycle/instruction
+counters. The per-mode totals then need not migrate.
 
-Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
+On load, clear those totals and establish destination-local baselines.
+Inhibited counters get a new baseline when enabled; other event counters
+get one when switched to a fixed source. This excludes migration downtime
+and avoids using the source QEMU's saved baselines.
+
+Rebuild the event map and overflow timer. Recompute interrupt requests
+because pre-save can set LCOFIP after cpu_common saved CPU_INTERRUPT_HARD.
+
+Keep the existing main-section fields and add cpu/pmu-fixed to carry
+mcyclecfg/minstretcfg and identify values that include pending increments.
+All TCG CPUs send and require it because mcycle/minstret exist even
+without Zicntr, Zihpm or HPM counters. Reject older TCG streams, whose
+counter values cannot be reconstructed reliably. KVM PMU migration is
+unchanged.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4422
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4425
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/tcg/pmu.c                      |   6 +-
- tests/tcg/riscv64/Makefile.softmmu-target   |  10 +++
- tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++++++++++++++++++++++++++
- 3 files changed, 114 insertions(+), 5 deletions(-)
+ target/riscv/cpu.h     |  1 +
+ target/riscv/machine.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++----
+ target/riscv/tcg/pmu.c | 79 ++++++++++++++++++++++++++++++++++++++++++++
+ target/riscv/tcg/pmu.h |  2 ++
+ 4 files changed, 163 insertions(+), 7 deletions(-)
 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index a4d33f55c4e5cb6052cea6bee4c0afa46372b5c5..788d5a3ced45b32be05e29eaeb9ea3af0c0ccd6d 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -584,6 +584,7 @@ struct ArchCPU {
+     uint64_t pmu_timer_instret_snapshot;
+     bool pmu_timer_stalled;
+     bool pmu_timer_work_pending;
++    bool pmu_fixed_subsection_present;
+     /* A bitmask of Available programmable counters */
+     uint32_t pmu_avail_ctrs;
+     /* Mapping of events to counters */
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index b0ff2fc7f2ac10fab1f2ff845a953649091e1f43..7aa38b739cfd4d9274fe249eb914411e8a65b91f 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -267,6 +267,30 @@ static const VMStateDescription vmstate_kvm_mp_state = {
+ };
+ #endif
+ 
++static int riscv_cpu_pre_load(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++
++    cpu->pmu_fixed_subsection_present = false;
++#ifdef CONFIG_KVM
++    return riscv_cpu_kvm_pre_load(opaque);
++#else
++    return 0;
++#endif
++}
++
++static int riscv_cpu_pre_save(void *opaque)
++{
++#ifdef CONFIG_TCG
++    RISCVCPU *cpu = opaque;
++
++    if (tcg_enabled()) {
++        riscv_pmu_prepare_save(&cpu->env);
++    }
++#endif
++    return 0;
++}
++
+ static bool debug_needed(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+@@ -308,16 +332,25 @@ static const VMStateDescription vmstate_debug = {
+     }
+ };
+ 
+-static int riscv_cpu_post_load(void *opaque, int version_id)
++static bool riscv_cpu_post_load(void *opaque, int version_id, Error **errp)
+ {
+     RISCVCPU *cpu = opaque;
+     CPURISCVState *env = &cpu->env;
+ 
+     env->xl = cpu_recompute_xl(env);
+ #ifdef CONFIG_TCG
+-    riscv_pmu_rebuild_event_map(env);
++    if (tcg_enabled()) {
++        if (!cpu->pmu_fixed_subsection_present) {
++            error_setg(errp,
++                       "missing RISC-V fixed-counter PMU migration state");
++            return false;
++        }
++        riscv_pmu_complete_load(env);
++        /* PMU pre-save can raise an interrupt after cpu_common was saved. */
++        riscv_cpu_interrupt(env);
++    }
+ #endif
+-    return 0;
++    return true;
+ }
+ 
+ static bool smstateen_needed(void *opaque)
+@@ -404,6 +437,42 @@ static const VMStateDescription vmstate_pmu_ctr_state = {
+     }
+ };
+ 
++static int pmu_fixed_post_load(void *opaque, int version_id)
++{
++    RISCVCPU *cpu = opaque;
++
++    /* Let the outer post-load distinguish this format from a legacy stream. */
++    cpu->pmu_fixed_subsection_present = true;
++    return 0;
++}
++
++static bool pmu_fixed_needed(void *opaque)
++{
++    /*
++     * KVM keeps PMU state in the kernel, not in the TCG counter model.
++     * TCG implements mcycle/minstret even without Zicntr, Zihpm or
++     * programmable counters.
++     */
++    return tcg_enabled();
++}
++
++/*
++ * This subsection identifies TCG streams whose fixed-source counter values
++ * include pending deltas. It also carries mcyclecfg and minstretcfg.
++ */
++static const VMStateDescription vmstate_pmu_fixed = {
++    .name = "cpu/pmu-fixed",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = pmu_fixed_needed,
++    .post_load = pmu_fixed_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(env.mcyclecfg, RISCVCPU),
++        VMSTATE_UINT64(env.minstretcfg, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool jvt_needed(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+@@ -505,10 +574,9 @@ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+     .version_id = 12,
+     .minimum_version_id = 12,
+-#ifdef CONFIG_KVM
+-    .pre_load = riscv_cpu_kvm_pre_load,
+-#endif
+-    .post_load = riscv_cpu_post_load,
++    .pre_load = riscv_cpu_pre_load,
++    .pre_save = riscv_cpu_pre_save,
++    .post_load_errp = riscv_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64_ARRAY(env.gpr, RISCVCPU, 32),
+         VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
+@@ -554,6 +622,11 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+         VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
+         VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
++        /*
++         * TCG includes pending fixed-source deltas in mhpmcounter_val
++         * before saving. After loading, it ignores mhpmcounter_prev and
++         * rebuilds the baseline from the destination source.
++         */
+         VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
+                              vmstate_pmu_ctr_state, PMUCTRState),
+         VMSTATE_UINT64_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+@@ -582,6 +655,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_ctr,
+         &vmstate_sstc,
+         &vmstate_mseccfg,
++        &vmstate_pmu_fixed,
+         NULL
+     }
+ };
 diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 16942e53489cd5a2d2dd055fdffef07d04d59465..2f600c5a0fc2d7ba380ef34f89af6366e3e27884 100644
+index 6286552a4ebf614df0252f84ddfadbc25d8d2258..df99b572a4c16cb1ac65c2f7cde35c6f8349e681 100644
 --- a/target/riscv/tcg/pmu.c
 +++ b/target/riscv/tcg/pmu.c
-@@ -448,11 +448,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-         counter = &env->pmu_ctrs[ctr_idx];
-         if (counter->mhpmcounter_val == max_val) {
-             counter->mhpmcounter_val = 0;
--            /* Generate interrupt only if OF bit is clear */
--            if (!(env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_OF)) {
--                env->mhpmevent_val[ctr_idx] |= MHPMEVENT_BIT_OF;
--                riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
--            }
-+            riscv_pmu_set_overflow(env, ctr_idx);
-         } else {
-             counter->mhpmcounter_val++;
-         }
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 5a94a90c40f838e4e78268f8cedc480d5e2ff3bf..b100f7a9ddf8e31fb104aa834b28aa64fc31f50e 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -69,6 +69,16 @@ TESTS += sscofpmf-overflow
- run-sscofpmf-overflow: sscofpmf-overflow
- 	$(call run-test, $<, $(QEMU) -cpu max -icount shift=0 $(QEMU_OPTS)$<)
+@@ -663,6 +663,85 @@ void riscv_pmu_rebuild_timer(CPURISCVState *env)
+     riscv_pmu_rebuild_timer_internal(env, false);
+ }
  
-+sscofpmf-event-overflow-off: sscofpmf-event-overflow.S $(LINK_SCRIPT)
-+	$(CC) $(CFLAGS) -DEXPECT_SSCOFPMF=0 $< -Wa,--noexecstack -c -o $@.o
-+	$(LD) $(LDFLAGS) $@.o -o $@
++static uint32_t riscv_pmu_fixed_source_counter_mask(CPURISCVState *env)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++    uint32_t mask = COUNTEREN_CY | COUNTEREN_IR;
 +
-+TESTS += sscofpmf-event-overflow sscofpmf-event-overflow-off
-+run-sscofpmf-event-overflow: sscofpmf-event-overflow
-+	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
-+run-sscofpmf-event-overflow-off: sscofpmf-event-overflow-off
-+	$(call run-test, $<, $(QEMU) -cpu max$(COMMA)sscofpmf=false $(QEMU_OPTS)$<)
++    mask |= riscv_pmu_event_counter_mask(
++        cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
++    mask |= riscv_pmu_event_counter_mask(
++        cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
++    return mask;
++}
 +
- TESTS += sscofpmf-cycle-overflow
- run-sscofpmf-cycle-overflow: sscofpmf-cycle-overflow
- 	$(call run-test, $<, $(QEMU) -cpu max -icount shift=3 $(QEMU_OPTS)$<)
-diff --git a/tests/tcg/riscv64/sscofpmf-event-overflow.S b/tests/tcg/riscv64/sscofpmf-event-overflow.S
-new file mode 100644
-index 0000000000000000000000000000000000000000..5bbcb060ae87124349151a14c6db815755c6e58d
---- /dev/null
-+++ b/tests/tcg/riscv64/sscofpmf-event-overflow.S
-@@ -0,0 +1,103 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++static void riscv_pmu_accumulate_fixed_source_counters(
++    CPURISCVState *env, const RISCVPMUFixedSnapshot *snapshot)
++{
++    uint32_t mask = riscv_pmu_fixed_source_counter_mask(env);
 +
-+/* Non-fixed event overflow with and without Sscofpmf. */
++    while (mask) {
++        uint32_t ctr_idx = ctz32(mask);
 +
-+#ifndef EXPECT_SSCOFPMF
-+#define EXPECT_SSCOFPMF 1
-+#endif
++        mask &= ~BIT(ctr_idx);
++        if (riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
++            riscv_pmu_accumulate_fixed_delta(env, ctr_idx, snapshot);
++        }
++    }
++}
 +
-+	.option	norvc
-+	.option	norelax
++void riscv_pmu_prepare_save(CPURISCVState *env)
++{
++    RISCVPMUFixedSnapshot snapshot;
 +
-+	.text
-+	.global _start
-+_start:
-+	/* Unexpected exceptions report the current check number. */
-+	li	t4, 1
-+	lla	t0, exit
-+	csrw	mtvec, t0
-+	csrw	mie, zero
-+	csrw	mip, zero
-+	csrw	mcountinhibit, zero
-+	csrw	0x323, zero		/* mhpmevent3 */
-+	li	t0, -1
-+	csrw	0xb03, t0		/* mhpmcounter3 */
-+	li	t0, 0x10019		/* DTLB read miss */
-+	csrw	0x323, t0
++    riscv_pmu_take_fixed_snapshot(env, &snapshot);
++    riscv_pmu_accumulate_fixed_source_counters(env, &snapshot);
++}
 +
-+	/* One load after flushing the TLB must wrap the counter to zero. */
-+	sfence.vma
-+	lla	t0, first_page
-+	lw	t1, 0(t0)
-+	csrr	t0, 0xb03
-+	bnez	t0, exit
++static void riscv_pmu_rebase_fixed_source_counters(
++    CPURISCVState *env, const RISCVPMUFixedSnapshot *snapshot)
++{
++    uint32_t mask;
 +
-+	/* Only Sscofpmf turns that wrap into OF and LCOFIP. */
-+	li	t4, 2
-+	csrr	t0, 0x323
-+	srli	t0, t0, 63
-+	li	t1, EXPECT_SSCOFPMF
-+	bne	t0, t1, exit
-+	li	t4, 3
-+	csrr	t0, mip
-+	srli	t0, t0, 13
-+	andi	t0, t0, 1
-+	bne	t0, t1, exit
++    memset(env->pmu_fixed_ctrs, 0, sizeof(env->pmu_fixed_ctrs));
++    if (env->virt_enabled) {
++        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_CYCLE]
++            .counter_virt_prev[env->priv] = snapshot->cycle;
++        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_INSTRET]
++            .counter_virt_prev[env->priv] = snapshot->instret;
++    } else {
++        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_CYCLE]
++            .counter_prev[env->priv] = snapshot->cycle;
++        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_INSTRET]
++            .counter_prev[env->priv] = snapshot->instret;
++    }
 +
-+	/* Clearing LCOFIP alone must not re-enable overflow notification. */
-+	li	t0, 1 << 13
-+	csrc	mip, t0
-+	li	t0, -1
-+	csrw	0xb03, t0
-+	sfence.vma
-+	lla	t0, second_page
-+	lw	t1, 0(t0)
-+	li	t4, 4
-+	csrr	t0, 0xb03
-+	bnez	t0, exit
-+	li	t4, 5
-+	csrr	t0, 0x323
-+	srli	t0, t0, 63
-+	li	t1, EXPECT_SSCOFPMF
-+	bne	t0, t1, exit
-+	li	t4, 6
-+	csrr	t0, mip
-+	li	t1, 1 << 13
-+	and	t0, t0, t1
-+	bnez	t0, exit
++    mask = riscv_pmu_fixed_source_counter_mask(env);
++    while (mask) {
++        uint32_t ctr_idx = ctz32(mask);
 +
-+	/* Overflow notification must not stop event counting. */
-+	sfence.vma
-+	lla	t0, third_page
-+	lw	t1, 0(t0)
-+	li	t4, 7
-+	csrr	t0, 0xb03
-+	li	t1, 1
-+	bne	t0, t1, exit
-+	li	t4, 0
++        mask &= ~BIT(ctr_idx);
++        if (riscv_pmu_fixed_ctr_enabled(env, ctr_idx)) {
++            riscv_pmu_set_fixed_baseline(env, ctr_idx, snapshot);
++        }
++    }
++}
 +
-+exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	t4, 8(a1)
-+	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
++void riscv_pmu_complete_load(CPURISCVState *env)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++    RISCVPMUFixedSnapshot snapshot;
 +
-+	.data
-+	.balign	4096
-+first_page:
-+	.word	0
-+	.balign	4096
-+second_page:
-+	.word	0
-+	.balign	4096
-+third_page:
-+	.word	0
-+	.balign	16
-+semiargs:
-+	.space	16
++    riscv_pmu_rebuild_event_map(env);
++    riscv_pmu_take_fixed_snapshot(env, &snapshot);
++    riscv_pmu_rebase_fixed_source_counters(env, &snapshot);
++
++    qatomic_set(&cpu->pmu_timer_work_pending, false);
++    cpu->pmu_timer_stalled = false;
++    cpu->pmu_timer_instret_snapshot = snapshot.instret;
++    riscv_pmu_rebuild_timer(env);
++}
++
+ static void riscv_pmu_timer_work(CPUState *cs, run_on_cpu_data data)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
+index d9238ae680f5e67031511db4f9afc2884212c5c2..1cfe6acf55b5468f5c00c4a136ece88981384341 100644
+--- a/target/riscv/tcg/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -45,6 +45,8 @@ void riscv_pmu_write_counter(CPURISCVState *env, uint32_t ctr_idx,
+ void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value);
+ void riscv_pmu_timer_cb(void *priv);
+ void riscv_pmu_rebuild_timer(CPURISCVState *env);
++void riscv_pmu_prepare_save(CPURISCVState *env);
++void riscv_pmu_complete_load(CPURISCVState *env);
+ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+ void riscv_pmu_rebuild_event_map(CPURISCVState *env);
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
 
 -- 
 2.43.0
