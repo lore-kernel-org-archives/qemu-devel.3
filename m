@@ -4,122 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B36C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD9FC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3ZJO-0002MX-TV; Mon, 07 Sep 2026 09:23:02 -0400
+	id 1x3ZMe-0003aG-3G; Mon, 07 Sep 2026 09:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x3ZJN-0002M0-Qh
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:23:01 -0400
-Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x3ZMd-0003a8-5K
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:26:23 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1x3ZJK-0007cy-UE
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:23:01 -0400
-Received: by mail-oo1-xc2c.google.com with SMTP id
- 006d021491bc7-6b8e2d8df4fso1478356eaf.1
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:22:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788787376; cv=none;
- d=google.com; s=arc-20260327;
- b=SNS9xVuVzXVU0bMbgslBdFZk0RNbh+V3IZQWD0QnJM2yVMs02iqdKrm+dj3t5SJMUa
- iwvSsEDrGa3vgv6CCpgFgJ2T6GZvB748G4UAy+HJamEJvw9hArf5nx4eHRHRsK1dSKts
- XMYyTuk5yaxrH/G2jKQHe78BwTfb7l8pQkmn3j/gfBQvg5H50Z6tg12EzOTk4gfYjbZU
- WX+Fmn257GJKPD/+3SM0Sbgr3g6OBEZpWCLVhb8nVulVFytzn2yDfHy1saLT5tRGzfnd
- 7jpYw3P+ht56BM8eBYPJR32yHy6vATmYXR5bs6REpNvqa8nDJcl7sPwNYjq4pVaYynro
- AXXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=UlmXn5XFwHuu5bAKOSvrcrxBAOgoLVaDqZUm5RWuyMU=;
- fh=bESEkXVLjj/7bpl4lhS4i+Tq8j5rICT1VkoPAENe9+Y=;
- b=lMUZpV0bX4gAkwlmZoehlMmy3YcSWEUipTl2c9+ng9f/yUMNznH4kNoVDEeDWIEV8o
- sUlgTcGZzhfLjriAZa4OHYoemjam5OQwg2uylkU77tUVfhxLKUr5XivRhIOsr5mCtw4Q
- aXi9wpWw6xCkZSUvSJ2PjEbEu1pvLiEE3d7zdKnUqBJ4JTNAJ8j4cEWVNTEcKJINA+jc
- wzFN5aT4IoHoQ2T9W1vbwOkRBB8IrnpklwuIag+iwhPhvKcN7qsj7typmdFNYHzypE48
- V9swpKXEDNoBfVDoxl4dmYfN9hNtLjaAqjXzZPqLZXHoaC5zvVBPU2ZjuTFiB1Hy4GI6
- NXRg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x3ZMa-00083O-Ga
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:26:22 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-49b0dd3c9a0so34209275e9.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788787376; x=1789392176; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UlmXn5XFwHuu5bAKOSvrcrxBAOgoLVaDqZUm5RWuyMU=;
- b=HbkN4irLTsJN0Ke/lC0VWmSNMB2WfmnQMDpoD1gYChrjvJEwtgBj2TD0B/6jP+8W7A
- ayT4fJ4DhzhXKeh0TmqwQQEU9S71279+gL8dt1ZpRPBy37oLjg6fljzqMk7sXADHy8qx
- lx8joO6QgIN+iTGq2ptbLEmYe6c4RcfbsS24zzM/rxWWroyHmCGJOypk+FzVFlc1EtDe
- ivUbuspy6trU7DkWx5WN0AekaitW5l06oiiycFC1t+yixtl+pPOW7QuKutZKyjfkzmgL
- PEVIW97aktRaGp1z31cubHt73ZMx+M/oG3RLJdn+eT6GgtT+5ihfhhc7STb20Ahez6aY
- EV2g==
+ d=linaro.org; s=google; t=1788787578; x=1789392378; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=qlEMIPKj6pLrGitAzEdKk6clfrYN8Rs3KryQqPJZwOw=;
+ b=vgLv5Jzq7gfmFQcBsPiRvP6iswj5ufSg6OUxeE6yMlxCDWZ5B3Bkfwjxhuuv5/TUqf
+ DHk8+fdhuoWTywPJc4cS7ZMPFeW7a4RBo+ueeUAZljHJgC3i9fjEUp3NPNNk7KZKmCkF
+ l98oM0vdZoQUkZjwHC9GD+Yllk0E2X+7NFP1xgjwRAZFkHO4yozgy1HyURNFOMkFvL2Y
+ ooZEp+xVWtOS1KwD9VCR/yWcs2gWQctzZmJp9N1id2XyAX8/aQM0+MW43N8mnBhBVfJ/
+ wgM+qHtuqyGykYmmwzrOG3kLNhFG+uYs+MJ2Hlm2UDbYB30v/nVURE6n8nhn2Cnzejsc
+ HknA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788787376; x=1789392176;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1788787578; x=1789392378;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=UlmXn5XFwHuu5bAKOSvrcrxBAOgoLVaDqZUm5RWuyMU=;
- b=q0vjS5UZnBooXv1+Lxn1QLmL891JNj2kivteVoyGuNoYKSgNVc5/hyxFZCT0fgtLa+
- XO24Kq6n+o7idP54X7n1IVjt341xI1YbDVZg+E5dn3+MIelMRZqSXWBCXG/YYP9NTUn1
- fxqBOHmjwV3qxePD2KO3oElHV6yysAinnuVDSB4s0yZ5vyVxEHt1P6D/UmB5+3n4DM2l
- dZ5mBeGcEggfzMUdZPhWHQTyi8pTtSXbl2afJZLJAnRGV7pLKNvWHYq2Wl8gKOuS8LeU
- KHj83Zkxqp5Gs63rN56NecKQqZT571FG/KaFlZkumR1kDrEDRqGtK5lIkI4heSKTE89I
- NGJg==
-X-Gm-Message-State: AFuF++k8UQJ7dIWKcC9SGNSreQKDiT0V6hTpMBlIiNUiIVqpF8YXGMhV
- YL4SqSbEHVGsm19+RCBV6UAR9A4Ovn94qQJRO8fTQCQ51aKnJbDDEA9Mak8d+Jq/wcgtYQSAdDT
- TK9Nq41sHfSGyyJf0pd+Y1Iyr9GD5c1s=
-X-Gm-Gg: AYBFou0/oFRxrqoQZxBXaR75ATNAxa4R7fv65UBjnEnP4m0AT2fREJ6rw+KX4lCM1xU
- Muz2m3p9es4klZntSDyYzEoWWwBX2XrbY6HU+LRbf4QJqpnncqPcXa0hDMOLznrjspry2dbwQ5B
- vRN0918TtBAExOuUxWIRhBDJ7O/FocDIZcHXnZmjEOy0NYS57NemPS+AiLzp83AfRkSFb3KXjvz
- OEQER3jaIYNY6XQmlGVpbS/Qbv5PPJlPRMnPcXV+MpVrwh1SZWzQtSDjoet8tl5RnVc9wvey+uU
- KoY5RTROrQ2DX0iNNRb6UwpSSqZF6iu1hb719InI+0JzYDjgTIjyeG5e2uKvLa8xQr93RvAzVDZ
- k
-X-Received: by 2002:a05:6820:1798:b0:6b7:46fa:16a3 with SMTP id
- 006d021491bc7-6b746fa1addmr11834654eaf.56.1788787376091; Mon, 07 Sep 2026
- 06:22:56 -0700 (PDT)
+ bh=qlEMIPKj6pLrGitAzEdKk6clfrYN8Rs3KryQqPJZwOw=;
+ b=VX93XJQgOHv/sBnURFkG+HHgOlDJzb6rd8CYLKpzRgnFKDTvJxJFOSl5vC7GQHGonj
+ ySqRbR8PCfrjfiBxWTny0DF0PkTGvnNYvTPHgmD1GiRxcGnM05i4I/sKDz0/VfI03HZH
+ op8cs3OTnnYcUMxNc4n/P6rpvG5Ojpcmy9z8g2NDBwydLPGIkeGdPiLfaQ4kMH7Zn51H
+ E1h4AS7ZKUXJSR6bFxk+oVrd55xRsqRVv/H+y2XWMGJfe5czIwckm7CHHXVMdoFh3cg/
+ WURw2echlGAEY70tK4le29TvCso81hVLhLmSxqRKGmKBNFleeNaprRRiFasOSH9Atzu7
+ gCHQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxvPhOmsZFMRk9iT0VyIxEoWCTggBk4ZnKKEPUtDF6D3IP//7kW26EDbSClmLPPBJfxLY8UAoFLwfAJ@nongnu.org
+X-Gm-Message-State: AFuF++n6ev2K6fGnPChADr+Cj9Z1rIz10Yb67TBM+ThtZ+klM8oVQ3xg
+ zCVOD83rERBMbr//XisjcSacnFC+sj6sG3gCZ04OWGGY1ydZhZiZKuDwK6AVEQuaqa0=
+X-Gm-Gg: AYBFou0jLdVmxycwF9qV2c3pTWNBDtPZ1w5PI4pP61PJ1Gx8o0WUHsFaZBR8Riv6/W9
+ DoIQilYXBPxt/MISf0SkGRttvmmOZjpTDi015+D8aaDQuOsKG4ElUuVdaWowGBX2ac7ROwRek8f
+ HPjq2i3DCaVjnQd97fW4PTt2oPmOJF8b3FmXUefenakQcKv54UtAQ3xzy0+/gCDQxNKjkZdKO9j
+ mchAS/GiuXJnbA5NvkJ+U+U5x4GlxK2TQrpIlrrsglCVPMrX5FJ6buiK3d6D7f+37IEsaz47i9N
+ Dlfqa0VmZ8qBfyV3galrZdf6E8nJTwiBtQXcrDeDHMiQzMoL/BKL/1hraCQlnf+33/h6yEQHAio
+ BeJqDmv1G8/S/NOwTuAbguLYWagPp3asF3fj04R3QREF53tLcdK0ilHE9P1m9vvyOyRLy3DYovI
+ 7gmbYpi6jDbWz2TYqHqdldrDohGhfoNy3zOgDJ09akSb9WoK6T3/xEti7qjTrN
+X-Received: by 2002:a05:600c:3d92:b0:49d:726:cc9f with SMTP id
+ 5b1f17b1804b1-49d0726cd2emr269820265e9.5.1788787578150; 
+ Mon, 07 Sep 2026 06:26:18 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cff81c9b5sm200141185e9.4.2026.09.07.06.26.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Sep 2026 06:26:16 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C10AA5F870;
+ Mon, 07 Sep 2026 14:26:15 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Aniket Sahu
+ <asahu1x@linux.ibm.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PULL 101/105] tests/tcg/meson.build: implement ./configure
+ -cross-cc-* options
+In-Reply-To: <ap60TwXjoICGsvKz@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 7 Sep 2026 13:55:43 +0100")
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
+ <20260904124604.2207440-102-alex.bennee@linaro.org>
+ <ap60TwXjoICGsvKz@redhat.com>
+User-Agent: mu4e 1.14.4-pre2; emacs 30.1
+Date: Mon, 07 Sep 2026 14:26:15 +0100
+Message-ID: <87a4ptb3bc.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
- <20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
- <20260907075640-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260907075640-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 7 Sep 2026 17:22:43 +0400
-X-Gm-Features: AcwNN1XnN-2oQKhD7NPPvTaTB_Rq_yBoi6aT19bR1t2Pdi1NvCovgqYOfupJBS4
-Message-ID: <CAJ+F1CJfjvYWRW1Az=1Q2vUMM+RS56-_a5ugLbepeznHm8pvxw@mail.gmail.com>
-Subject: Re: [PATCH 2/9] tests/test_vhost_user_bridge: skip when running ASAN
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-oo1-xc2c.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,95 +113,295 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-On Mon, Sep 7, 2026 at 4:03=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
+> This commit changes meson_options.txt, but did not refresh the
+> scripts/meson-buildoptions.sh file, so it is sometimes showing
+> up dirty when doing a build.
 >
-> does not look like this patch skips any tests?
->
+> Paolo, I feel like there must be some bug in the logic for triggering
+> a rebuild of scripts/meson-buildoptions.sh as contributors frequently
+> miss this change. With the current git HEAD, sometimes when I do a
+> build it'll refresh the file leaving it dirty, but if I discard all
+> local changes and do another build, then it doesn't refresh the file.
 
-true, I will update the commit title
-
-> On Sun, Sep 06, 2026 at 12:53:34PM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Running vhost-user-bridge built with ASAN with stdbuf dies:
-> > =3D=3D2431898=3D=3DASan runtime does not come first in initial library =
-list; you
-> > should either link runtime to your application or manually preload it
-> > with LD_PRELOAD.
->
-> so it dies but why? judging by below because of stdbuf?
->
-> pls describe the fix not just the problem.
-
-Running vhost-user-bridge built with ASAN with stdbuf dies:
-=3D=3D2431898=3D=3DASan runtime does not come first in initial library
-
-The fix skip using stdbuf when the binary is built with ASAN, since it
-seems optional anyway
+If it is refreshing automatically then should it be in git?
 
 >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  tests/functional/x86_64/test_vhost_user_bridge.py | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> >
-> > diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py b/tests/=
-functional/x86_64/test_vhost_user_bridge.py
-> > index c36c62542053..5fedf61c5e72 100755
-> > --- a/tests/functional/x86_64/test_vhost_user_bridge.py
-> > +++ b/tests/functional/x86_64/test_vhost_user_bridge.py
-> > @@ -73,12 +73,25 @@ def configure_vm(self, ud_socket_path, lport, rport=
-, hostfwd_port, tftpdir):
-> >              "-netdev",   "hubport,id=3Dhub1,hubid=3D0,netdev=3Duser0"
-> >          )
-> >
-> > +    @staticmethod
-> > +    def _is_asan_linked(binary_path):
-> > +        try:
-> > +            output =3D subprocess.check_output(
-> > +                ["ldd", binary_path], stderr=3Dsubprocess.DEVNULL, tex=
-t=3DTrue)
-> > +            return "libasan" in output
 >
+> On Fri, Sep 04, 2026 at 01:45:55PM +0100, Alex Benn=C3=A9e wrote:
+>> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>=20
+>> When a user set explicit cross cc, we ensure it's available and working.
+>> When a user set explicit cross cflags, we ensure they work with default
+>> or overriden cross_cc.
+>>=20
+>> Made the first implementation with a single meson option (array), which
+>> proved to be absolutely unreadable.
+>> By having one option per target, we directly detect issue at configure
+>> time, either for user, or when iterating on all our targets. This
+>> ensures user can't mispell any target name, and that we can't forget any
+>> new one in the future.
+>> Also, it shows them in the configuration summary, which is a bonus.
+>>=20
+>> Since we now only need to know compiler to write tcg tests, we can
+>> simply alias -cross-prefix-* options to compiler override.
+>>=20
+>> Examples
+>> --------
+>>=20
+>> wrong architecture:
+>> $ ./configure --cross-cc-bad=3D'cc'
+>> ../meson.build:1:0: ERROR: Unknown option: "tcg_tests_cross_cc_bad"
+>>=20
+>> wrong option:
+>> $ ./configure --cross-cc-cflags-aarch64=3D'-bad-option'
+>> ../tests/tcg/meson.build:228:10: ERROR: Command `/usr/bin/aarch64-linux-=
+gnu-gcc /home/pbouvier/.work/qemu/tests/tcg/test_cc.c -bad-option -static -=
+nostdlib -r -o /dev/null` failed with status 1.
+>> A full log can be found at /qemu/build/meson-logs/meson-log.txt
+>>=20
+>> cross compile with clang (fails at the moment, since some tests have
+>> compilation errors with it):
+>> $ ./configure --target-list=3Daarch64-linux-user --cross-cc-aarch64=3D'c=
+lang' --cross-cc-cflags-aarch64=3D'-target aarch64-linux-gnu'
+>>   User defined options
+>>   ...
+>>     tcg_tests_cross_cc_aarch64      : clang
+>>     tcg_tests_cross_cflags_aarch64  : -target aarch64-linux-gnu
+>>=20
+>> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> Message-ID: <20260827221506.91574-102-pierrick.bouvier@oss.qualcomm.com>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>=20
+>> diff --git a/configure b/configure
+>> index aa98cf39584..1973f023b1e 100755
+>> --- a/configure
+>> +++ b/configure
+>> @@ -227,19 +227,6 @@ for opt do
+>>    ;;
+>>    --extra-ldflags=3D*) EXTRA_LDFLAGS=3D"$EXTRA_LDFLAGS $optarg"
+>>    ;;
+>> -  --cross-cc-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-cc-FO=
+O option"
+>> -  ;;
+>> -  --cross-cc-cflags-*) cc_arch=3D${opt#--cross-cc-cflags-}; cc_arch=3D$=
+{cc_arch%%=3D*}
+>> -                      eval "cross_cc_cflags_${cc_arch}=3D\$optarg"
+>> -  ;;
+>> -  --cross-cc-*) cc_arch=3D${opt#--cross-cc-}; cc_arch=3D${cc_arch%%=3D*}
+>> -                eval "cross_cc_${cc_arch}=3D\$optarg"
+>> -  ;;
+>> -  --cross-prefix-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-p=
+refix-FOO option"
+>> -  ;;
+>> -  --cross-prefix-*) cc_arch=3D${opt#--cross-prefix-}; cc_arch=3D${cc_ar=
+ch%%=3D*}
+>> -                    eval "cross_prefix_${cc_arch}=3D\$optarg"
+>> -  ;;
+>>    --without-default-features) default_feature=3D"no"
+>>    ;;
+>>    --wasm64-32bit-address-limit) wasm64_memory64=3D"2"
+>> @@ -631,9 +618,19 @@ for opt do
+>>    ;;
+>>    --extra-ldflags=3D*)
+>>    ;;
+>> -  --cross-cc-*)
+>> +  --cross-cc-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-cc-FO=
+O option"
+>> +  ;;
+>> +  --cross-cc-cflags-*) arch=3D${opt#--cross-cc-cflags-}; arch=3D${arch%=
+%=3D*}
+>> +                       meson_option_add "-Dtcg_tests_cross_cflags_${arc=
+h}=3D${optarg}"
+>> +  ;;
+>> +  --cross-cc-*) arch=3D${opt#--cross-cc-}; arch=3D${arch%%=3D*}
+>> +                meson_option_add "-Dtcg_tests_cross_cc_${arch}=3D${opta=
+rg}"
+>> +  ;;
+>> +  --cross-prefix-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-p=
+refix-FOO option"
+>>    ;;
+>> -  --cross-prefix-*)
+>> +  # cross-prefix is just used as a syntactic sugar for -cross-cc.
+>> +  --cross-prefix-*) arch=3D${opt#--cross-prefix-}; arch=3D${arch%%=3D*}
+>> +                    meson_option_add "-Dtcg_tests_cross_cc_${arch}=3D${=
+optarg}gcc"
+>>    ;;
+>>    --enable-docs) docs=3Denabled
+>>    ;;
+>> diff --git a/meson_options.txt b/meson_options.txt
+>> index f9604a6c192..292625af08a 100644
+>> --- a/meson_options.txt
+>> +++ b/meson_options.txt
+>> @@ -391,3 +391,92 @@ option('containers', type: 'boolean', value: true,
+>>         description: 'use containers to cross compile tcg tests')
+>>  option('container_command', type: 'string',
+>>         description: 'command to build/run containers')
+>> +
+>> +option('tcg_tests_cross_cc_aarch64', type: 'string',
+>> +       description: 'cc for aarch64 tcg tests')
+>> +option('tcg_tests_cross_cflags_aarch64', type: 'string',
+>> +       description: 'cflags for aarch64 tcg tests')
+>> +option('tcg_tests_cross_cc_aarch64_be', type: 'string',
+>> +       description: 'cc for aarch64_be tcg tests')
+>> +option('tcg_tests_cross_cflags_aarch64_be', type: 'string',
+>> +       description: 'cflags for aarch64_be tcg tests')
+>> +option('tcg_tests_cross_cc_alpha', type: 'string',
+>> +       description: 'cc for alpha tcg tests')
+>> +option('tcg_tests_cross_cflags_alpha', type: 'string',
+>> +       description: 'cflags for alpha tcg tests')
+>> +option('tcg_tests_cross_cc_arm', type: 'string',
+>> +       description: 'cc for arm tcg tests')
+>> +option('tcg_tests_cross_cflags_arm', type: 'string',
+>> +       description: 'cflags for arm tcg tests')
+>> +option('tcg_tests_cross_cc_hexagon', type: 'string',
+>> +       description: 'cc for hexagon tcg tests')
+>> +option('tcg_tests_cross_cflags_hexagon', type: 'string',
+>> +       description: 'cflags for hexagon tcg tests')
+>> +option('tcg_tests_cross_cc_hppa', type: 'string',
+>> +       description: 'cc for hppa tcg tests')
+>> +option('tcg_tests_cross_cflags_hppa', type: 'string',
+>> +       description: 'cflags for hppa tcg tests')
+>> +option('tcg_tests_cross_cc_i386', type: 'string',
+>> +       description: 'cc for i386 tcg tests')
+>> +option('tcg_tests_cross_cflags_i386', type: 'string',
+>> +       description: 'cflags for i386 tcg tests')
+>> +option('tcg_tests_cross_cc_loongarch64', type: 'string',
+>> +       description: 'cc for loongarch64 tcg tests')
+>> +option('tcg_tests_cross_cflags_loongarch64', type: 'string',
+>> +       description: 'cflags for loongarch64 tcg tests')
+>> +option('tcg_tests_cross_cc_m68k', type: 'string',
+>> +       description: 'cc for m68k tcg tests')
+>> +option('tcg_tests_cross_cflags_m68k', type: 'string',
+>> +       description: 'cflags for m68k tcg tests')
+>> +option('tcg_tests_cross_cc_mips', type: 'string',
+>> +       description: 'cc for mips tcg tests')
+>> +option('tcg_tests_cross_cflags_mips', type: 'string',
+>> +       description: 'cflags for mips tcg tests')
+>> +option('tcg_tests_cross_cc_mips64', type: 'string',
+>> +       description: 'cc for mips64 tcg tests')
+>> +option('tcg_tests_cross_cflags_mips64', type: 'string',
+>> +       description: 'cflags for mips64 tcg tests')
+>> +option('tcg_tests_cross_cc_mips64el', type: 'string',
+>> +       description: 'cc for mips64el tcg tests')
+>> +option('tcg_tests_cross_cflags_mips64el', type: 'string',
+>> +       description: 'cflags for mips64el tcg tests')
+>> +option('tcg_tests_cross_cc_or1k', type: 'string',
+>> +       description: 'cc for or1k tcg tests')
+>> +option('tcg_tests_cross_cflags_or1k', type: 'string',
+>> +       description: 'cflags for or1k tcg tests')
+>> +option('tcg_tests_cross_cc_ppc64', type: 'string',
+>> +       description: 'cc for ppc64 tcg tests')
+>> +option('tcg_tests_cross_cflags_ppc64', type: 'string',
+>> +       description: 'cflags for ppc64 tcg tests')
+>> +option('tcg_tests_cross_cc_ppc64le', type: 'string',
+>> +       description: 'cc for ppc64le tcg tests')
+>> +option('tcg_tests_cross_cflags_ppc64le', type: 'string',
+>> +       description: 'cflags for ppc64le tcg tests')
+>> +option('tcg_tests_cross_cc_riscv64', type: 'string',
+>> +       description: 'cc for riscv64 tcg tests')
+>> +option('tcg_tests_cross_cflags_riscv64', type: 'string',
+>> +       description: 'cflags for riscv64 tcg tests')
+>> +option('tcg_tests_cross_cc_s390x', type: 'string',
+>> +       description: 'cc for s390x tcg tests')
+>> +option('tcg_tests_cross_cflags_s390x', type: 'string',
+>> +       description: 'cflags for s390x tcg tests')
+>> +option('tcg_tests_cross_cc_sh4', type: 'string',
+>> +       description: 'cc for sh4 tcg tests')
+>> +option('tcg_tests_cross_cflags_sh4', type: 'string',
+>> +       description: 'cflags for sh4 tcg tests')
+>> +option('tcg_tests_cross_cc_tricore', type: 'string',
+>> +       description: 'cc for tricore tcg tests')
+>> +option('tcg_tests_cross_cflags_tricore', type: 'string',
+>> +       description: 'cflags for tricore tcg tests')
+>> +option('tcg_tests_cross_cc_x86_64', type: 'string',
+>> +       description: 'cc for x86_64 tcg tests')
+>> +option('tcg_tests_cross_cflags_x86_64', type: 'string',
+>> +       description: 'cflags for x86_64 tcg tests')
+>> +option('tcg_tests_cross_cc_xtensa', type: 'string',
+>> +       description: 'cc for xtensa tcg tests')
+>> +option('tcg_tests_cross_cflags_xtensa', type: 'string',
+>> +       description: 'cflags for xtensa tcg tests')
+>> +option('tcg_tests_cross_cc_xtensaeb', type: 'string',
+>> +       description: 'cc for xtensaeb tcg tests')
+>> +option('tcg_tests_cross_cflags_xtensaeb', type: 'string',
+>> +       description: 'cflags for xtensaeb tcg tests')
+>> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+>> index 2458a231f5f..9cf632d2717 100644
+>> --- a/tests/tcg/meson.build
+>> +++ b/tests/tcg/meson.build
+>> @@ -180,6 +180,8 @@ foreach target, plan: tcg_tests
+>>      continue
+>>    endif
+>>=20=20
+>> +  cc_arch =3D target.replace('-linux-user', '').replace('-softmmu', '')
+>> +
+>>    # Detect duplicated executables/tests, and report an error to force u=
+ser to
+>>    # choose how to deal with it.
+>>    built_tests =3D {}
+>> @@ -197,16 +199,35 @@ foreach target, plan: tcg_tests
+>>    endforeach
+>>=20=20
+>>    cc =3D find_program(plan['cc'], required : false)
+>> +  cc_cflags =3D []
+>> +
+>> +  check_flags =3D []
+>> +  check_required =3D false
+>> +  cross_cc =3D get_option('tcg_tests_cross_cc_' + cc_arch)
+>> +  if cross_cc !=3D ''
+>> +    # we make sure cross cc exists
+>> +    cc =3D find_program(cross_cc, required: true)
+>> +    check_required =3D true
+>> +  endif
+>> +  cross_cflags =3D get_option('tcg_tests_cross_cflags_' + cc_arch)
+>> +  if cross_cflags !=3D ''
+>> +    cc_cflags =3D cross_cflags.split()
+>> +    # and that cross cc can compile programs
+>> +    check_flags =3D cc_cflags
+>> +    check_required =3D true
+>> +  endif
+>> +
+>>    cc_from_system =3D cc.found()
+>>    has_cc =3D cc.found()
+>>    if has_cc
+>> -    check_flags =3D ['-static']
+>>      if target.endswith('softmmu')
+>> -      check_flags =3D ['-nostdlib', '-ffreestanding', '-r']
+>> +      check_flags +=3D ['-nostdlib', '-ffreestanding', '-r']
+>> +    else
+>> +      check_flags +=3D ['-static']
+>>      endif
+>>=20=20
+>>      cmd =3D run_command([cc, files('test_cc.c'), check_flags, '-o', '/d=
+ev/null'],
+>> -                      check: false)
+>> +                      check: check_required)
+>>      has_cc =3D cmd.returncode() =3D=3D 0
+>>      cc_from_system =3D has_cc
+>>    endif
+>> @@ -333,9 +354,9 @@ foreach target, plan: tcg_tests
+>>          endif
+>>        endif
+>>=20=20
+>> -      cflags =3D []
+>> +      cflags =3D cc_cflags
+>>        if 'cflags' in setup
+>> -        cflags =3D setup['cflags']
+>> +        cflags +=3D setup['cflags']
+>>        endif
+>>=20=20
+>>        if 'cc_feat' in setup
+>> --=20
+>> 2.47.3
+>>=20
 >
-> this is quite a hack
+> With regards,
+> Daniel
 
-yeah
-
->
-> > +        except (subprocess.CalledProcessError, FileNotFoundError):
-> > +            return False
-> > +
-> >      def assemble_vubr_args(self, vubr_path, ud_socket_path, lport, rpo=
-rt):
-> >          vubr_args =3D []
-> >
-> >          if (stdbuf_path :=3D which("stdbuf")) is None:
-> >              self.log.info("Could not find stdbuf: vhost-user-bridge "
-> >                            "log lines may appear out of order")
-> > +        elif self._is_asan_linked(vubr_path):
-> > +            self.log.info("vhost-user-bridge is ASan-linked: skipping =
-"
-> > +                          "stdbuf to avoid LD_PRELOAD conflict, "
-> > +                          "log lines may appear out of order")
-> >          else:
-> >              vubr_args +=3D [stdbuf_path, "-o0", "-e0"]
-> >
->
->
-> maybe just avoid stdbuf completely.
-> i don't remember why we use it, but it looks like merely to
-> disable buffering for stdout?
->
-> If so:
->
-> setvbuf(stdout, NULL, _IONBF, 0);
->
-> will do just that with no asan issues.
->
-
-That requires modifying vhost-user-bridge, not sure that's what we want.
-
-thanks
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
