@@ -4,137 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A2CCC79FA0
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D4AC79FA1
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:48:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3XoR-0002tD-Pb; Mon, 07 Sep 2026 07:46:59 -0400
+	id 1x3XoQ-0002sa-Pd; Mon, 07 Sep 2026 07:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x3XoF-0002jl-Bh
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:46:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1x3XoG-0002kQ-Up
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:46:49 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1x3XoD-0003Ge-Mi
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:46:47 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1x3XoD-0003GO-M6
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:46:48 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 687AnMLr3777326
- for <qemu-devel@nongnu.org>; Mon, 7 Sep 2026 11:46:44 GMT
+ 687AvPjl496297
+ for <qemu-devel@nongnu.org>; Mon, 7 Sep 2026 11:46:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=1LQc3MHagbs
- qNP6Gfy/bvJe0yknu38X5VO+oSaaO4w8=; b=Pvl8E5oD9/g4FGMGdre9JP9oP51
- bvaOokE2xRslFkZxkbdHvbikuQb6HOMVli4/eora0VO656azj5eywm5yiSZVTGDn
- O7xZsPx0NAEcQ229Vb+u+4wODEYhQttVJkZIhBOiSeAnS1C268pHexoEGX8d4sHD
- FydK/jvw+jMPox9l6arYfm+HJReS93qVuvUcZCRrmMi8O1PnPT75AQSZ7cgfj0Gd
- C4oY6bZQAmqDmNuRjrbVD5hFIySl0hs6wrVB++tBGt7Ib4yPEoe5dxZsMdaDAmGy
- SMNvg6hodWv0o2JiAlpa1UTGEje8E0LpuZQTi/SpBLrm4sgNz5zf6fvhE+Q==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghsfygwnq-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=agsb+31+gBT
+ rXzGhEiv94ST7wrQa2woGkjbFulwC/V4=; b=L/Pt6BmR+X4FieKjpHs3HPZg8ln
+ +CmIY1rdEBuj7K8FcXs8eFtzDi4eV7TZy320CqneeDiSI75x+kBfCSbfb+Ji5Y1a
+ byKICAcev9ZIPApNr0tXeOhjVCeRg9YWzbTvUQrbGrEYu82T3/n+7qSw44OISSxa
+ OZuoRaDwk07MbrYUXDUR1IObhLStcTPDTBjyQ2Rtnk4bBeed9yNywyTmmU6e3irI
+ eyZYc7vnJWBU+hArIpGznpJjiyLfAHcVYUapAmSM4HZci0Pw7E7jmzvnfkk584ON
+ JuCwEINnU0LWXaLvar5ItbQuF7i9a/akVSwO3lwESX2DRXw4/igHg8WxsBg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghuyk853f-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 11:46:43 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-936e393061dso462227985a.2
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 04:46:43 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 11:46:41 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-530256c61b4so62608101cf.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 04:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1788781603; x=1789386403; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1788781600; x=1789386400; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1LQc3MHagbsqNP6Gfy/bvJe0yknu38X5VO+oSaaO4w8=;
- b=A8aNQVk67dyoHgc0b8Ez7cFH8kmnnlmXCCbYH4TWbOz+mhgMPxBlz5TE7wYPss8yqC
- +tMCObS6F/rsl/ZbRwpiVxs3nhUJgjwB4hRjYviB9C8GwEJkGfUnYODpO4w958nNATLP
- 244FBylN1iyjZRuCJliN8OgyIOe/hd84TQpiBmD/mf7BXNcpE91YTAKlefxOoqYsjnO9
- /nkWy/781FdSEiRUdGW9n2+8VDcz9oElT/k6Y2xVAwNa4o0vZHqqz7Njgz5WRSWSGWL7
- 7fNNNN6UkET8s4xADBfndbQtB+8Ljgv8j6blXAQ5FXBqVxwKPjgs8KQoJM5R1laNItaE
- FsUg==
+ bh=agsb+31+gBTrXzGhEiv94ST7wrQa2woGkjbFulwC/V4=;
+ b=E34RoUzkhrEw/vMLifp80ybBNk0RQMKnfSvQ0LE/FhgGMroKKWvaOZ0a6SjvxdkqWR
+ 6sCmpI2g26wH2C1GSRUakTTWvBjg5JMdmJgV3mkG6yhSJWwiKesGbwOhw1EzxMRoQUd4
+ aeY8aJeOFAU12b0+F3O0CU60os/2JHjXDwIR69wea508FgiyJftoHnmbBCE19M7rC7GQ
+ zxb9KbB4NIh12cULVz1RsFC5pDAMiDhHVOev/XsRq9ppwMQ/ydogoyJUjpRR3Ajp5BWC
+ SMzeJJ2mBi1DPWq2Ad2UzLRYMGMLU+WaxDlWEQEeQeAubEQCZNwSNVNQ+ERJpPzkzDu2
+ P/VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788781603; x=1789386403;
+ d=1e100.net; s=20251104; t=1788781600; x=1789386400;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1LQc3MHagbsqNP6Gfy/bvJe0yknu38X5VO+oSaaO4w8=;
- b=EmKxNnFyew6SiRKB/v0mmbMrdoaIMAGmS2w5iP8g57LrteFOWoo1Z5Uz4r6+28Zd+g
- U0ONBsSrlGQJclhhOUdH1YscO4OHvaLtqDbQ15uJhZzQaqpI80oiCLPYTtrSVldr/G3E
- 2V6WrIjRcDMAZxdA+cVGhUbQE4iM9ZL2QHjhdyPpGLIW6U+iYvPJIQn5bM6yvYwBfHEF
- Tt2Mv/cdDhyhJ+CWeHpxrRZfjXU/epc8u9FJsCssZi+33ebDH+TfSGNzXYr2pyJzkOFi
- nBzt02a0B6/BD3+G1th0Rm3Gpy3NplnD4s+JEkluGCCGek3iurT1wWmOQxchRwsCiWqs
- M/PA==
-X-Gm-Message-State: AFuF++ldjJQi7zIfeIe4DDs9FK6AQLwW509tH6oKrtdXMWI9gvl59LbL
- rhN7Iod54XbvVgXwRFfDMadXavRBVq65LjGWhcqr6nk7DXbJEN5lai7CqN20pISiux9c6Q3r4ry
- 9ojGgnNMZAgBRz8Z4mi0rdEmjH/C13kJBqf1XRZu6uLQh9mkQ60Xorm2T41CrVSyxug==
-X-Gm-Gg: AYBFou3swpe82lQSqXXFJf9HjSNlKDBv6nDZSmJDfy6/u2rtNphJsyyQ3rCcy0+1oQH
- wt0Qtn7p5LKFCmsuOKNkIIIxwqGhR3uiiqRUANiZvRvbBv2E89oR/iVXpbkalbCCuLx4IlNcnOe
- a9JyPcyQMWjKnggqSpKOPNqt3wCG0hBOX/VVd8d9nctagUjZIg3Lv3dCpiOajDpRiJvn0RzqOCm
- ZYhTVcHTCPoJD6jsEB4q1qxwrMaDRzraCjSewKGQUaCjFo+5hp/VY4RKMzAH4kjEVHhRZxoNNfX
- KCdQ7RyMyNbFvAzLcU7CPayUzIC0kntfp5SsbQ2tHcTJBtdHCUfsxchPwXC7yLHF/fcpcP28GHw
- XoPgJ87bpneihO+CYfhmyOrH7s/2SW+mcRJpL
-X-Received: by 2002:a05:620a:5229:b0:936:afa0:3661 with SMTP id
- af79cd13be357-939804a386cmr1758001985a.36.1788781602942; 
- Mon, 07 Sep 2026 04:46:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:5229:b0:936:afa0:3661 with SMTP id
- af79cd13be357-939804a386cmr1757996185a.36.1788781602375; 
- Mon, 07 Sep 2026 04:46:42 -0700 (PDT)
+ bh=agsb+31+gBTrXzGhEiv94ST7wrQa2woGkjbFulwC/V4=;
+ b=Ymdi4tWVly4f4sNCN96ZNNxcGZ7ZgPECAnMswzSZcnfTSodIqhgCfjvmf8xLHtkeDn
+ eaHCEnLW9uK/JcSY7nPaUkmIQsoLxf13Tw7Om9huC7v52Si9wpyCwAjN/T4Rbfd8jFs4
+ fkH/oEpaYTkivufWeHzJ6IaUoimak2CntgPneXV0daK8oq+eUt+szYyf8281WMRyI8Oh
+ BqPvDiXDArpuIvVM/2CZsgrI9ovypfN3alb6u9lFR1CcaRzehvsuVZpNL49jbDWZGbjk
+ hsbpjU+PCZh7VqBDlQ8WyAJmAUl14L7jLR3OrSFYsDE1BNIksU/ANOATlTmYriCiybdB
+ Q7YQ==
+X-Gm-Message-State: AFuF++nYFbvQVcr74PG0XJ2OMzecSJ7tkDZP2911Bt6lh8UzvDE3ek7r
+ 7DKSfxPdJ97ENtNkuBxkvUHFDnnyMvGn8mQwzl+h0zeUXREfYkVp7PnCTn+Z1R4E6/bGCWqruBT
+ wLeueKnHiLtH+mQRC2O0GgBke1kr1nMe83L1/6CD1oa+pC3C5LS/0O0pk/J9Fjii/nw==
+X-Gm-Gg: AYBFou0uW6/fqYk483HfLKVNSsAsCfGSWKvp8IiUfELdK4Iz/wbbf9exX5zGBzp8mXB
+ 9GndHm5OzCcKQ6BBl+FCBHwlCCfvyqvlqRfcgMae8jiFB5IoOzEEfuR2cN2ii/3E6AZHT4R/VU8
+ FC8OGN0IKwQwqPi2/sd7p6/B/l2UmqKzVA/PJzXyffAE+HG9xOJ1U8ALYGgLtrN9MEfjPuIGkpN
+ tkipTpe3AH2CAeIcRq11O4vtHHRu1VnLLFYtFnN3HfUoiVZo92lLWniyLc88WsGyTOVdZ91CMfG
+ omwmAM4IEPWnY/NyCiZPzASHShgLCX7zplMCbwzzXPs8eGjr1wXMEZQHTnnOuQnmACUDpV2vw/9
+ Q5gHvDUiKVUXgXddEf3ax26D5/HmvlJFiYLng
+X-Received: by 2002:a05:622a:17cb:b0:52f:a0b3:bcb9 with SMTP id
+ d75a77b69052e-530546cfd29mr225688111cf.10.1788781600351; 
+ Mon, 07 Sep 2026 04:46:40 -0700 (PDT)
+X-Received: by 2002:a05:622a:17cb:b0:52f:a0b3:bcb9 with SMTP id
+ d75a77b69052e-530546cfd29mr225687701cf.10.1788781599892; 
+ Mon, 07 Sep 2026 04:46:39 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.18.66.131])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91040679e13sm89834876d6.26.2026.09.07.04.46.40
+ 6a1803df08f44-91040679e13sm89834876d6.26.2026.09.07.04.46.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 04:46:41 -0700 (PDT)
+ Mon, 07 Sep 2026 04:46:39 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v8 7/7] tests/tcg/riscv64: add sdext "not on Debug mode"
- sigill tests
-Date: Mon,  7 Sep 2026 08:46:14 -0300
-Message-ID: <20260907114615.1609913-8-daniel.barboza@oss.qualcomm.com>
+ Tao Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH v8 6/7] target/riscv: add sdtrig trigger action=debug mode
+Date: Mon,  7 Sep 2026 08:46:13 -0300
+Message-ID: <20260907114615.1609913-7-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907114615.1609913-1-daniel.barboza@oss.qualcomm.com>
 References: <20260907114615.1609913-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: whEr0IrSxe4eI1Zeuz7u2n6qlaW7V4qf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDEzMCBTYWx0ZWRfX8tZsmii/eGOk
- ZLNPVOhGEIt3OYuLv4+rCqD6Ok+aVr+HC+byITZBdljkKwOBLMPNJV7lKQxsCmksYYmlitSer+z
- RYZNx/iSD5jRz4A+XhFSm+e4wrEtuvAITsp5ofdNQuivGwdGRzMQxvGvOO6jT0romxOum01yvyy
- agngBo3Xpr3XjIvA+zGRUEt1tnqb84FMlkMrxDiyYqoKlJc/nHjmtDc49j9p/G9IlkU1rjUzd2r
- E/jjJ0R2MgC+JIIBD4DVFclRyHPyxVIzxrwTsl9Re5+WIq2HGG3pNKnbODQWCCUpgSbcJYB9txS
- Qzv/F/5/L5oVe24DOy5NQWqO4yMIvGPPtTma/tZRCjBJG9NGQxKxru7O3lguUMhkKnDJz5ra9sk
- 8N2pqPTWe3fJWoH5UJmH5OrrrkqpfogPSDBi9zX+5QLX00rVnx424I4E9bvxxHM9iFkBBZpW9TH
- 4lSIRMEsgL4Jb1O9img==
-X-Proofpoint-GUID: whEr0IrSxe4eI1Zeuz7u2n6qlaW7V4qf
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDEzMCBTYWx0ZWRfX+FRDKqmdsnBS
- Y/cJCUH+IOKYGA2kBM9ST1b1u8xEzxbpVrZNA0qBXutvDSP6CG2nB5ktuzZpkg46BZvDp8TUXtp
- Yq9Y/1M3ANqKB1EbHP87p21pTATQ0TY=
-X-Authority-Analysis: v=2.4 cv=AduB2XXG c=1 sm=1 tr=0 ts=6a9ea423 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDEzMCBTYWx0ZWRfX4JitsXKFXa8Y
+ on1c9WpDfteEUi6uKZ1cKeDzxqWE76QzbKVbl+fkw9SiTaoxk6IVb3pA5aPwF0elWMjEgnedELT
+ cN47vmjlKs00ERllxnFXsbht3dNhg9Q=
+X-Proofpoint-GUID: -i3MtNASy9H7x7HUBy896rgsI7vg6p9G
+X-Authority-Analysis: v=2.4 cv=ObSoyBTY c=1 sm=1 tr=0 ts=6a9ea421 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=FibE5N0eoUlo320SlN0A:9 a=PEH46H7Ffwr30OY-TuGO:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=xvfqbYfxAAAA:20
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=fgrLqfBXAAAA:8 a=jq8im54kr7_wP6Zmv5cA:9
+ a=kacYvNCVWA4VmyqE58fU:22 a=_Ge82aPy-h_wFa7gWU4u:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: -i3MtNASy9H7x7HUBy896rgsI7vg6p9G
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDEzMCBTYWx0ZWRfX0crn2lyfAGGl
+ LTAOZDeQfNke84Zb34F+JaC7j+oqmh4E9yXBwzRVDTmYcev/npp16bsor8dvt+c67kWeTZnx32N
+ 848m+v+qpdDYxaacfoEor4F/Q/O2h6r1N6qpSw+avQF/pTadK6FbzwCKRTBFRKL8BcNVuD1tdyA
+ UyMJDKUSBH4QNB4mGKt8gyIHGxW8L1oJqzVh3hW9td7t7t1RMjETz10GJw+GFOoXzLIxYLdpCnv
+ +YK7U7tLPKLWTqSwqPc6LU5HuhBz9xoU6bL6nLBYvhd5uXvpL/IMbBcokeU22o1tSBpkxgPCcyX
+ qWydNS0eOAiPhdLWXSxIWETfi3N57cNCtziPPDOJmAyMTR8sTKShKy8/KKGTD4J+Xb/wtzdoSzS
+ 4+Ul9S1TFCeiYuI+ayt9SfnM22WQkJ0iyCgMjLTqHkQLRE7tV/vZaE/I3g1OQJDj/TxYRhjrXYS
+ dZslr6LQjLNk4ELoE8Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-07_03,2026-09-07_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
- phishscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 bulkscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609070130
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,129 +151,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding proper TCG automated tests to sdext CSRs requires enabling
-gdbstub support for riscv64, which we don't have, since the nature of
-the CSRs added is that they run in a higher privilege than M mode.
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-DCSR has bits to allow for context switching from other modes to Debug
-mode, but those bits must be set via an external entity (e.g. gdb)
-beforehand.
+RISC-V Debug Specification:
+https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 
-What we can do for now is a "negative" TCG test to ensure that we'll
-throw illegal insn traps when trying to write sdext CSRs in machine
-mode.
+Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
+trigger hits, enter Debug Mode with cause=trigger and stop with
+EXCP_DEBUG.
 
+Also report inst-count triggers in tinfo and read their action field.
+
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
- tests/tcg/riscv64/test-sdext-sigill.S     | 83 +++++++++++++++++++++++
- 2 files changed, 88 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-sdext-sigill.S
+ target/riscv/tcg/debug.c | 54 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index f2c75abd57..0a36376f85 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -85,5 +85,10 @@ run-test-vle32ff: test-vle32ff
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true $(QEMU_OPTS)$<)
- test-vle32ff: CFLAGS += -march=rv64gcv
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 2537515f54..aaf2dca17e 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -34,6 +34,7 @@
+ #include "exec/watchpoint.h"
+ #include "system/cpu-timers.h"
+ #include "exec/icount.h"
++#include "accel/tcg/cpu-loop.h"
  
-+EXTRA_RUNS += run-test-sdext-sigill
-+SDEXT_CPU = rv64$(comma)sdtrig=true$(comma)sdext=true
-+run-test-sdext-sigill: test-sdext-sigill
-+	$(call run-test, $<, $(QEMU) -cpu $(SDEXT_CPU) $(QEMU_OPTS)$<)
+ /*
+  * The following M-mode trigger CSRs are implemented:
+@@ -117,6 +118,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+         action = (tdata1 & TYPE6_ACTION) >> 12;
+         break;
+     case TRIGGER_TYPE_INST_CNT:
++        action = tdata1 & ITRIGGER_ACTION;
++        break;
+     case TRIGGER_TYPE_INT:
+     case TRIGGER_TYPE_EXCP:
+     case TRIGGER_TYPE_EXT_SRC:
+@@ -287,6 +290,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
+ 
+ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+ {
++    CPUState *cs = env_cpu(env);
+     trigger_action_t action = get_trigger_action(env, trigger_index);
+ 
+     switch (action) {
+@@ -296,6 +300,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+         riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+         break;
+     case DBG_ACTION_DBG_MODE:
++        if (!env_archcpu(env)->cfg.ext_sdext) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
++        }
++        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
++        /*
++         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
++         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
++         */
++        if (cs->exception_index != EXCP_DEBUG) {
++            cs->exception_index = EXCP_DEBUG;
++            cpu_loop_exit_restore(cs, GETPC());
++        }
++        break;
+     case DBG_ACTION_TRACE0:
+     case DBG_ACTION_TRACE1:
+     case DBG_ACTION_TRACE2:
+@@ -448,6 +467,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+ {
+     target_ulong val;
+     uint32_t size;
++    uint32_t action;
+ 
+     /* validate the generic part first */
+     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
+@@ -455,11 +475,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+     /* validate unimplemented (always zero) bits */
+     warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
+-    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
+     warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
+     warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
+ 
++    action = (ctrl & TYPE2_ACTION) >> 12;
++    if (action == DBG_ACTION_BP) {
++        val |= ctrl & TYPE2_ACTION;
++    } else if (action == DBG_ACTION_DBG_MODE) {
++        if (env_archcpu(env)->cfg.ext_sdext) {
++            val |= ctrl & TYPE2_ACTION;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++        }
++    } else {
++        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
++                      action);
++    }
 +
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-sdext-sigill.S b/tests/tcg/riscv64/test-sdext-sigill.S
-new file mode 100644
-index 0000000000..80a6c06465
---- /dev/null
-+++ b/tests/tcg/riscv64/test-sdext-sigill.S
-@@ -0,0 +1,83 @@
-+/*
-+ * RISC-V sdext extension "SIGILL" test: check if sdext CSRs
-+ * and 'dret' will throw SIGILLs outside of Debug Mode.
-+ *
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+     /* validate size encoding */
+     size = type2_breakpoint_size(env, ctrl);
+     if (access_size[size] == -1) {
+@@ -576,6 +610,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+ {
+     target_ulong val;
+     uint32_t size;
++    uint32_t action;
+ 
+     /* validate the generic part first */
+     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
+@@ -583,7 +618,6 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+     /* validate unimplemented (always zero) bits */
+     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+-    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
+ 
+@@ -593,6 +627,21 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+         warn_always_zero_bit(ctrl, TYPE6_TIMING_0_13, "timing");
+     }
+ 
++    action = (ctrl & TYPE6_ACTION) >> 12;
++    if (action == DBG_ACTION_BP) {
++        val |= ctrl & TYPE6_ACTION;
++    } else if (action == DBG_ACTION_DBG_MODE) {
++        if (env_archcpu(env)->cfg.ext_sdext) {
++            val |= ctrl & TYPE6_ACTION;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++        }
++    } else {
++        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
++                      action);
++    }
 +
-+.equ CSR_DCSR,      0x7b0
-+.equ CSR_DPC,       0x7b1
-+.equ CSR_DSCRATCH0, 0x7b2
-+
-+	.option norvc
-+	.text
-+
-+	.global _start
-+
-+_start:
-+	la t0, trap_handler
-+	csrw mtvec, t0
-+
-+	dret
-+	j _fail
-+
-+	li t0, 1
-+	csrw CSR_DPC, t0
-+	j _fail
-+
-+	li t0, 1
-+	csrw CSR_DSCRATCH0, t0
-+	j _fail
-+
-+	li t0, 1
-+	csrw CSR_DCSR, t0
-+	j _fail
-+
-+	li a0, 0
-+	j _exit
-+
-+_fail:
-+	li a0, 1
-+
-+/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
-+_exit:
-+	la	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+
-+	.balign	4
-+trap_handler:
-+	csrr	t4, mcause
-+	la	t5, trap_mcause
-+	sd	t4, 0(t5)
-+	csrr	t4, mtval
-+	la	t5, trap_mtval
-+	sd	t4, 0(t5)
-+	csrr	t4, mepc
-+
-+	/*
-+	 * Skip 2 insns (8 increment in mepc) to skip both the
-+	 * insn that caused the trap and the "j  _fail" insn
-+	 * that follows it.
-+	 */
-+	addi	t4, t4, 8
-+	csrw	mepc, t4
-+	mret
-+
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
-+trap_mcause:
-+	.space	8
-+trap_mtval:
-+	.space	8
+     /* validate size encoding */
+     size = extract32(ctrl, 16, 4);
+     if (access_size[size] == -1) {
+@@ -959,6 +1008,7 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+ target_ulong tinfo_csr_read(CPURISCVState *env)
+ {
+     target_ulong val = BIT(TRIGGER_TYPE_AD_MATCH) |
++                       BIT(TRIGGER_TYPE_INST_CNT) |
+                        BIT(TRIGGER_TYPE_AD_MATCH6);
+ 
+     if (debug_trigger_version_1_0(env)) {
 -- 
 2.43.0
 
