@@ -4,67 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF70C79FA0
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 18:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A66C79F99
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 19:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3dyH-0007Gl-Po; Mon, 07 Sep 2026 14:21:33 -0400
+	id 1x3f52-0005Xr-EL; Mon, 07 Sep 2026 15:32:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x3dyE-0007GH-Pg
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 14:21:31 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x3f4y-0005XI-Pg
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 15:32:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x3dyC-0000aA-Bb
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 14:21:30 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:118b:0:640:b49:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 819B680765;
- Mon, 07 Sep 2026 21:21:21 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:4d::1:17] (unknown [2a02:6bf:8080:4d::1:17])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id JLRTX95eIuQ0-jkX7UH6x; Mon, 07 Sep 2026 21:21:20 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1788805280;
- bh=0nJb0cyOwiIfDaJI16b95Ox+wwNjcjXusPIzY9Sjq14=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=1k7hRP/a/hBHN8LKNfR+hIK1NjWTMrVx9mVcoai0f5DPYOrCxqv6jux274+N6IWVQ
- H0BeXcJ7W8qpiQXN/ghZDfTEqTqiMQa7TlVHgyyBjz+5HfPoD4A8FvGZsHqQMF0yyL
- 1ZljUyPI0giVWY3KdQeVHlt9JSviH4wu6Nl2ibEA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <1dfc6e19-86ff-4b68-8fb6-530c3159994f@yandex-team.ru>
-Date: Mon, 7 Sep 2026 21:21:19 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x3f4v-0007WU-KY
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 15:32:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1788809542;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qjho0rRY/k67yl+VptRb3Shy5rRI4XWmPaVmtyHqyr0=;
+ b=YsBAK1HotQBtOUHA6wdg3cm981zNa1lOCuUu8ao0meo1yKnd/w2X2z7o8DALyVWPV51d3R
+ FQ85Rxgxz1A0J/y7DJD0bFRdJDZIL0yOqaVaUw+z2OytjhqccqLrw2LLvo/eek/kkrGzEy
+ PqqEvxhh+hJRld9qPRd1s1QRmZmmirY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-7Jeaw5o1N9y9avYsMcTrqQ-1; Mon, 07 Sep 2026 15:32:21 -0400
+X-MC-Unique: 7Jeaw5o1N9y9avYsMcTrqQ-1
+X-Mimecast-MFC-AGG-ID: 7Jeaw5o1N9y9avYsMcTrqQ_1788809540
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49b8c651ac0so55960625e9.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 12:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1788809540; x=1789414340; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Qjho0rRY/k67yl+VptRb3Shy5rRI4XWmPaVmtyHqyr0=;
+ b=qW5kfsY28a/ufX66QqOkNsobejmizJOZ4ywkbSbGyCIJSjvDiniBFYmEcq87qgoxJs
+ ZA3YmA5+dJqrj4VBZECL1vpAqpGbAtdExY1d03LMjB1cBiHM/2c9DdaiKs2bp7Wm4qC4
+ bnmteR8to5sfSkSiYW8+fraTGFP5T/U+DH2Y69XAERP8V9HW2U4iaKDMDIy76NAzofGU
+ k1i6w6/frqH9IDaaAe3ocDXhhVXMGOo6QzRTYzkUc44wmnUyHOoRTiu5j3Dv+srqk8Nd
+ MQSsTeWWlnv0DXXYFzNKD+53W5T+PF/mU8aLcVhbKW4tXy+CR2quZtkeedVTXDjEBkQH
+ jrrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788809540; x=1789414340;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Qjho0rRY/k67yl+VptRb3Shy5rRI4XWmPaVmtyHqyr0=;
+ b=IoLLbkPIMz6ANOowxvGb7m/SiYZzwa24LCHp77GZPtiy0hnDhW3z+pa7FNY84kUV5m
+ zQitJAFr1NDHH32R3HOQZu7xDMPLLoaR4vtTp6Qyi4grOf059inmQh9AcSkHpvXxtd6S
+ L1Ho3HJxvd+UvIFgFP2dPRlOAJ4tbomU9UqJo5n3HFVqTf2N2O5olg0IqbEnVB+SCwSS
+ eqzY01l22CpqV1t8pOrSQJROi4qJ0R5XBC4rbbWjEUTnjlK2+1HqPEiwF+mKs11xVHJ5
+ vJoB9ke5iPrGdbJa5myeNbrvP7LWpV0Xnp8chFRXzcej2vYqd3aoJ1+oDDIdzSEIzZ2v
+ yZCw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzg3vIfJFmZhGtbCqYLainxOuOEOrXOuy7stdx0U+F4nx3RSV09l6iKOOzVnvFNQ91DsKCTfFtiQGuK@nongnu.org
+X-Gm-Message-State: AFuF++lC2sDK5wtIj47bt6o3OG65Ru/hY2yVYBRd4WOR3154XUmJjVJs
+ qumQZJBc1iVwC4N/OpBh+BwDBRigfe8Fac0jS2D/SjzJKPldGAGR/HXzntYWcLBvsUEf85LPyAe
+ 3Hm81Pn//Zq2OzD5cyx1UzTuR6IqnfFYNBwGKbY6nelohDlVCgd9hXZkg
+X-Gm-Gg: AYBFou03T01LtszY9mL14sPMGf8Mbh45i3p3GDmms8D7tE1LtKCNvewQU5VtGIX8GqT
+ 8B3bccZ3U0Ykz9/ObpFa/bzU8I1JqDYAo9cok+5+Zlbt9zhjwMq055TmHkjpC+QSvAETp4asneI
+ jJnBN1LRFu1yPIIwoqmCczR6tEQGRQYSayOWpcEXAyXMSzTjVevc119PSHJmiYDprdamaQP7pK/
+ 3GMmjcSMRNu6OJ1JLV266qD+iK9IysubV5ltbhXbT47e5GO5KybJhsKbSvlGb8ebVwQHXdRJFFV
+ VaciajYXgQqfCgTt5l45Em7OCUNl6Y+CN9j4kR4e/+LG51InVdXKIlgyw1gyMeNTWDDl9tk6V9q
+ ++RN1Q6AbaD3YnMUD1zDao3k=
+X-Received: by 2002:a05:600c:8707:b0:49c:fc6e:8caf with SMTP id
+ 5b1f17b1804b1-49cfc6e8efdmr218191865e9.19.1788809539920; 
+ Mon, 07 Sep 2026 12:32:19 -0700 (PDT)
+X-Received: by 2002:a05:600c:8707:b0:49c:fc6e:8caf with SMTP id
+ 5b1f17b1804b1-49cfc6e8efdmr218191585e9.19.1788809539456; 
+ Mon, 07 Sep 2026 12:32:19 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49cf75ce49esm576175705e9.1.2026.09.07.12.32.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Sep 2026 12:32:18 -0700 (PDT)
+Date: Mon, 7 Sep 2026 15:32:16 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/9] tests/test_vhost_user_bridge: skip when running ASAN
+Message-ID: <20260907152927-mutt-send-email-mst@kernel.org>
+References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
+ <20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
+ <20260907075640-mutt-send-email-mst@kernel.org>
+ <CAJ+F1CJfjvYWRW1Az=1Q2vUMM+RS56-_a5ugLbepeznHm8pvxw@mail.gmail.com>
+ <20260907093319-mutt-send-email-mst@kernel.org>
+ <CAJ+F1CKiUFGqJbWuxNM54bPJg1AicBKK_i+AuXttSCy-JRr8xg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] kvm: skip tsc synchronization on shutdown
-To: mst@redhat.com
-Cc: marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20260127201831.179237-1-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260127201831.179237-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CKiUFGqJbWuxNM54bPJg1AicBKK_i+AuXttSCy-JRr8xg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,35 +125,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
-
-On 27.01.26 23:18, Vladimir Sementsov-Ogievskiy wrote:
-> That doesn't make real sense, but may take much time when
-> there are a lot of vCPUs. Let's just skip it.
+On Mon, Sep 07, 2026 at 06:18:39PM +0400, Marc-André Lureau wrote:
+> Hi
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   hw/i386/kvm/clock.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+> On Mon, Sep 7, 2026 at 5:35 PM Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Mon, Sep 07, 2026 at 05:22:43PM +0400, Marc-André Lureau wrote:
+> > > > maybe just avoid stdbuf completely.
+> > > > i don't remember why we use it, but it looks like merely to
+> > > > disable buffering for stdout?
+> > > >
+> > > > If so:
+> > > >
+> > > > setvbuf(stdout, NULL, _IONBF, 0);
+> > > >
+> > > > will do just that with no asan issues.
+> > > >
+> > >
+> > > That requires modifying vhost-user-bridge, not sure that's what we want.
+> > >
+> > > thanks
+> >
+> > why not? it's not like it's a facility useful outside of testing qemu.
+> > If we were we'd probably disable stdout printout completely.
 > 
-> diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-> index aba6842a22..46efdbed14 100644
-> --- a/hw/i386/kvm/clock.c
-> +++ b/hw/i386/kvm/clock.c
-> @@ -207,7 +207,9 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
->   
->           s->runstate_paused = runstate_check(RUN_STATE_PAUSED);
->   
-> -        kvm_synchronize_all_tsc();
-> +        if (!runstate_check(RUN_STATE_SHUTDOWN)) {
-> +            kvm_synchronize_all_tsc();
-> +        }
->   
->           kvm_update_clock(s);
->           /*
+> Since the test redirects stderr to stdout, I guess the log is
+> fully-buffered for stdout and unbuffered for stderr, and we see stderr
+> log lines in the file log before the others. If we call
+> setvbuf(stdout, NULL, _IONBF, 0) early, we probably will get
+> interleaved stream output, but probably broken lines...
 
+We can also just change that macro to write to stderr.
 
--- 
-Best regards,
-Vladimir
+> Tbh, I don't
+> have much motivation to check or fix this, I would just like the test
+> to be green or skipped when built with ASAN. The current workaround is
+> quite ok. If you prefer setvbuf() in vhost-user-bridge.c, I am okay
+> too.
+> 
+> Yodel, wdyt?
+
 
