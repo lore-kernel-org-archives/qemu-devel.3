@@ -4,108 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619C9C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 13:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2E6C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 14:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3ZrZ-00013U-Up; Mon, 07 Sep 2026 09:58:21 -0400
+	id 1x3aBU-0003lf-5z; Mon, 07 Sep 2026 10:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x3ZrY-000136-Ki
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:58:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1x3ZrW-0003dA-Sd
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 09:58:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788789496;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eZZA+KZeA94FHg0PXloEGzz5CXdo+SMdeb8dMTmmeQM=;
- b=Gf36mPXIoR9c5aLrybIlb+Oa2O+XPSOWqhkizkiTu2cbx3J8cwsv7XAZ178ZWxr/jkLqOy
- hpXK3f+G+FScs4DLtfjHdt6x/v36fLWUr/pJCRk61z3w7FuzkmhRHrYGmRmgzBrSUDt4e1
- seLzBD0YMh6PpSzCre9cm3atSExtTk8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-96-ePhYPNcUMxyL4LKd_6miVQ-1; Mon, 07 Sep 2026 09:58:12 -0400
-X-MC-Unique: ePhYPNcUMxyL4LKd_6miVQ-1
-X-Mimecast-MFC-AGG-ID: ePhYPNcUMxyL4LKd_6miVQ_1788789491
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4994aebe932so45980555e9.3
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 06:58:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x3aBS-0003lP-7F
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 10:18:54 -0400
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1x3aBQ-0006CE-Ph
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 10:18:53 -0400
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-46ac24346b1so1851269fac.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 07:18:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788790731; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TrUKME1ix0kHrbdlCFqYlXVmssgdBFp0RG913//axATWKwAuemuU36b0naJGNkwx07
+ WKysYPMn5JV2QFunm8Lk0bOXvQN4xIgQeLct4ZWPupe1HlkhlqbAmOFadSFW302xPDs9
+ rKs7kQE7KiJbdYVuLiHguMO2cWy4ZISSHhl3PX3znY3ZMnY05y41bJy0dfzAND9PHBR1
+ nK2XIQfPZO/nWLnY2fKs4ew4qj6XBjPe6yXXbdaOcOp73dJg6cZzSjH+5gFSgkP6VWBu
+ GCB8nqzSO7nwDp/zCAmRsLdtCT2wwt1ogFGnvQIgFZFNHjzea5k8DYtoaqTEpMo/UuOi
+ 6MGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3ouYeEiLceIoH/4GedoqJUwHuwYoX+5AWsjtNoIjyN0=;
+ fh=6zHZlHg5avvrGU2k4EamLTgQ89WZNPR6HUrDbm/nC6Y=;
+ b=IHb3W5HOujSUElu1UWdJrSomnkDSybYQy7KoRnjlVPVX6QqArFmhW1MhzkxVc3Ek+Q
+ i/B1uywVMJw4zdW6s+ZfbdVuhKkAiVL6FSkLRJSzsuSP3gR91XjMxI6NXEZyJYN8tMCZ
+ qOoYHAU6E9de5r7+zTtNwbEVJ4QCKNT2wnQG+k7rNm3clffO+z9y/wRdIbAe48ONa5JR
+ Vh7ti5kZWvUyg3AcoNHM2HCx6lp2CTfiFEpqvGE3LENaXhfafQiGI2xuUJWBgHguxaLV
+ XYDSJaaynMVnZQF0HfwFSk45M9LThAl5LcW2Q3HwT6ZPnGkwq+Fuw5gLGtImZ/lSIebM
+ EaDQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788789491; x=1789394291; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1788790731; x=1789395531; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=eZZA+KZeA94FHg0PXloEGzz5CXdo+SMdeb8dMTmmeQM=;
- b=DaGCnKxLjqpihyRPulKSLeES+8Qh/UmeNxkf1ILPlPrE9Vrsr6kB1HCDdtj8vNWCkl
- iCPc2a1OgarBRJzi7W25735tUAkCX7UkBXrlMsU5hko06KeZXIszS+T1x9A/mDYwpF9H
- ZyTctriW8kyzquVQn49CO43p/3NyTZlx9bVg7Iiode6xrVx2tKHoyklXPp644gPYVHTt
- KPj3Dfacrb7cvAWuXuvAIUZT41ItjeuuHqmYlojvMB1zLEJxq/eTO7D3KE/xtPAyRrOS
- Xa7bgINpZj8gmeDxNUjBZsMq4zfWlvbX+myW75w815EPv8QnAo5o6ucVmPH3GMZH5QNp
- lnFg==
+ bh=3ouYeEiLceIoH/4GedoqJUwHuwYoX+5AWsjtNoIjyN0=;
+ b=t/Q4f3UF79nni4B4k5Le4l0SB0DZfi5hqoTJVEnun8pq2Yih2/K5efEyz/sIRFIjQR
+ 64TdT/OCd28gP9GyElaJGQj2k/XJgbjQ0uVI7GnSAjUbbSf8jYYgM8a4/JkDd1oAFHn4
+ jtYVVUtOg/y9LDld5jhhdW9M9v6M5YzJQKuut6WoVDWArvLrc9KRmw2UqZNBprvu+4eo
+ wjK2bAt7I3Z3XOiIXqPAEDcBALEIAlNQRNk5lVf3+X/oTBQ/Ib+/eKjvJY1SkF0hR3GX
+ RM7Ml/khYoJ+mGq9vrvXlqqVbQs/rQJqlWQSJ4FMQcjfnVhWoG2hKSVHJz4sRYNSMowO
+ kRhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788789491; x=1789394291;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1788790731; x=1789395531;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=eZZA+KZeA94FHg0PXloEGzz5CXdo+SMdeb8dMTmmeQM=;
- b=TVL7Cnh64mZH6JwZUmi39C1YgCXiD4jkyzKJJtnwRbUHZZeRy3hPkyrnD/0OWLfBTP
- OniJSAtUhcIkxzweEsT7B3FmytY4pZp5emw6gRHrF/h5HZ1pBOw/F1z31Ny4hBqOBVoI
- 9G45TreiGyu8Ndy0AlpYxB6SDC9YsFFDgyp/avcv2++X3XdanwBgDLhpucOf59fA5vBq
- Pxqr1t5dPPGjnikeJeRh4HsuJ5HgrwJ57HLwIMLsd1j/svX0Z+EzmI56lRnhrlHF89/x
- yy5QrmAVcuJ43ssDTHahOXU5Xdz4HEna9YxoCeVyL9prtdFQ8m4rAl45Nk2szP+lyC7a
- or5w==
-X-Gm-Message-State: AFuF++kCL3/7wXWn58u6kMKsbIb6eRAAQofQTt3z3LH8nCjWaxBRcu+g
- QdynicNqXpksxQ/ILVuypx8VlXOqyY3b01pphrErSlXGI63k4oh2sZm9vCdikIGDxVZZeX1atAn
- c3FQ/miYrWQ98aAdPrLCP/tXv0YR8Mf1wc5FNj8eCmJZgLWyvjrdmJ/Le
-X-Gm-Gg: AYBFou0k8RbVrttWXRe3mt45ploQov/NPruZn0Ncm7FCaOmz1srQl0o7RKd1vcQoiQQ
- eqa7R8quo4lhe0MvRupLMYjU5/ksF+gGWtlB0xPJ2RKlTW3/o3XIKVR1/QXpBsqJVE5N5M2Z5SX
- PMStdt6UnUsC3IYUHdszrSbr+mDNmrTedoOwxpY9Wcj2s/5PHNKPJ7U0O0TfhI8BwRTXV5A7WbD
- Yoq2kNyjKmLUFmplU008EvcoOoNjoulHT1WTk7mx7M/Icbbzqs2wwIFy4mbNSIzU6rtMiy+Wji5
- gMgqwLszsvePpje/Cx8nKY9HYi2ACZqu4StWQIfFDlv7Btacj6kaF5e0UijZPUKuLTgUaZt1dO/
- f88vjCCdrju5jgVeAqleFyCY2iRfVawpXbC20IJlc8nR4vw==
-X-Received: by 2002:a05:600c:1990:b0:49c:f512:2361 with SMTP id
- 5b1f17b1804b1-49cf82524a2mr342861975e9.14.1788789491444; 
- Mon, 07 Sep 2026 06:58:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:1990:b0:49c:f512:2361 with SMTP id
- 5b1f17b1804b1-49cf82524a2mr342861355e9.14.1788789491019; 
- Mon, 07 Sep 2026 06:58:11 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-53-30-11.retail.telecomitalia.it.
- [79.53.30.11]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee6158e9sm398706535e9.12.2026.09.07.06.58.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 06:58:10 -0700 (PDT)
-Date: Mon, 7 Sep 2026 15:58:08 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, farosas@suse.de, 
- peterx@redhat.com, dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, 
- bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
-Subject: Re: [PATCH v4 02/10] vhost: add vhost_reset_owner op
-Message-ID: <ap6p_XeJ9NAXpuPn@sgarzare-redhat>
-References: <20260820113955.509478-1-andrey.drobyshev@virtuozzo.com>
- <20260820113955.509478-3-andrey.drobyshev@virtuozzo.com>
+ bh=3ouYeEiLceIoH/4GedoqJUwHuwYoX+5AWsjtNoIjyN0=;
+ b=bAKMP1h/r9oWu1mRGJkYTFqq0C6sBz10BhRqPjrNaTy/x5iIElATANor2WKIhtxRTA
+ H0768GjSP5c3ifpJs812sp9KdbPF4vv0ua3xN/bdfw0mLyPDTdYByfPbtuPvccb1Rrvl
+ dJH1k+debcaV1EkH4JzGYcPRV0qjgwtuYhSn6SyBl1nwk12+iV7JqjwYe+zUHOKMyRst
+ ZYIv/WHBtXGjd9pcfxSzy1Go9mreZqDpa8rNAi3k1tWaZINgQo8eFw7jBtv+S7lFFbuS
+ bFprJhuylRpGLkTP+SVlh33dnfkfybDseRWQX5GPMnCkrApVB1ATkElwCd1OEP8Q6DuJ
+ x1GQ==
+X-Gm-Message-State: AFuF++nkL1213QhmMHdSEAxU5yKDTTAPD84Se5Af6aTFyUq9ShZh7jV5
+ IesEjfkoMZvWIgE14ESEMGaz65HFj3IjIChRcmwmLP4NHWA+/xHIez/DgQPdlXggjU2cxdyXA06
+ zOWDF30NAJ0wRQPaj1lUMM18v+XFLS4c=
+X-Gm-Gg: AYBFou0kQvDaXmdbcmCdBWhHtByCEBWsS2uHCR+wIPLvwS2ldk4d43CC7WXnVSvZ2h6
+ YqL1Ct0h1c4kenppRibGaTDwG+5HMMSUtEcD7P8/ryq5R6AU0o9NOYVrieJxnh2RII4SOseW5Ev
+ yo+6GPuKgvrBZZSxv8DGrnJ1/TdAW/0gALDWsBwHGhys63kE0v/37C3MnUbhVCJuh2fKUFDWzGI
+ h96iTxgqbHdPNLnurWQGsy1nkEXFW8goQSEla+3EXbbbVyG5Tz0MPh1UEqJ0+oPJdO2N2vQOOZ0
+ Az1iZHGDjepwQDfmYMnR6VLRIOZMH0ngVSlS04o2XrUymN5+d7evR0fCumKFp+bEZL+aPsZjSZz
+ x
+X-Received: by 2002:a05:6820:f034:b0:6b7:46fa:16a0 with SMTP id
+ 006d021491bc7-6b746fa1a27mr12596936eaf.53.1788790731111; Mon, 07 Sep 2026
+ 07:18:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260820113955.509478-3-andrey.drobyshev@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com>
+ <20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
+ <20260907075640-mutt-send-email-mst@kernel.org>
+ <CAJ+F1CJfjvYWRW1Az=1Q2vUMM+RS56-_a5ugLbepeznHm8pvxw@mail.gmail.com>
+ <20260907093319-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260907093319-mutt-send-email-mst@kernel.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 7 Sep 2026 18:18:39 +0400
+X-Gm-Features: AcwNN1VP_yBlofHT6lqkFb-QdWaVMCUy9kOXjpmtbgfCrRwPwqxxf1FpOsTqeOU
+Message-ID: <CAJ+F1CKiUFGqJbWuxNM54bPJg1AicBKK_i+AuXttSCy-JRr8xg@mail.gmail.com>
+Subject: Re: [PATCH 2/9] tests/test_vhost_user_bridge: skip when running ASAN
+To: "Michael S. Tsirkin" <mst@redhat.com>, Yodel Eldar <yodel.eldar@yodel.dev>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-oa1-x2b.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,64 +122,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 20, 2026 at 02:39:47PM +0300, Andrey Drobyshev wrote:
->Add a VhostOps callback issuing VHOST_RESET_OWNER, wired up for the kernel
->backend.  The CPR (checkpoint-restore) path uses it to release device
->ownership on the source so the destination can reclaim it later with
->VHOST_SET_OWNER.
->
->Originally-by: Mark Kanda <mark.kanda@oracle.com>
->Originally-by: Steve Sistare <steven.sistare@oracle.com>
->Originally-by: Ben Chaney <bchaney@akamai.com>
->Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->---
-> hw/virtio/vhost-kernel.c          | 6 ++++++
-> include/hw/virtio/vhost-backend.h | 1 +
-> 2 files changed, 7 insertions(+)
->
->diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
->index 3390b48c6f1..55d316b88e9 100644
->--- a/hw/virtio/vhost-kernel.c
->+++ b/hw/virtio/vhost-kernel.c
->@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
->     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
-> }
->
->+static int vhost_kernel_reset_owner(struct vhost_dev *dev)
->+{
->+    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
->+}
->+
-> static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
-> {
->     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
->@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
->         .vhost_get_features_ex = vhost_kernel_get_features,
->         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
->         .vhost_set_owner = vhost_kernel_set_owner,
->+        .vhost_reset_owner = vhost_kernel_reset_owner,
->         .vhost_get_vq_index = vhost_kernel_get_vq_index,
->         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
->         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
->diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
->index d878d7b733a..6c949e6a38d 100644
->--- a/include/hw/virtio/vhost-backend.h
->+++ b/include/hw/virtio/vhost-backend.h
->@@ -204,6 +204,7 @@ typedef struct VhostOps {
->     vhost_get_features_op vhost_get_features;
->     vhost_set_backend_cap_op vhost_set_backend_cap;
->     vhost_set_owner_op vhost_set_owner;
->+    vhost_set_owner_op vhost_reset_owner;
+Hi
 
-Should we introduce `vhost_reset_owner_op` ?
-
-Stefano
-
->     vhost_reset_device_op vhost_reset_device;
->     vhost_get_vq_index_op vhost_get_vq_index;
->     vhost_set_vring_enable_op vhost_set_vring_enable;
->-- 
->2.47.1
+On Mon, Sep 7, 2026 at 5:35=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
+wrote:
 >
+> On Mon, Sep 07, 2026 at 05:22:43PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > > maybe just avoid stdbuf completely.
+> > > i don't remember why we use it, but it looks like merely to
+> > > disable buffering for stdout?
+> > >
+> > > If so:
+> > >
+> > > setvbuf(stdout, NULL, _IONBF, 0);
+> > >
+> > > will do just that with no asan issues.
+> > >
+> >
+> > That requires modifying vhost-user-bridge, not sure that's what we want=
+.
+> >
+> > thanks
+>
+> why not? it's not like it's a facility useful outside of testing qemu.
+> If we were we'd probably disable stdout printout completely.
 
+Since the test redirects stderr to stdout, I guess the log is
+fully-buffered for stdout and unbuffered for stderr, and we see stderr
+log lines in the file log before the others. If we call
+setvbuf(stdout, NULL, _IONBF, 0) early, we probably will get
+interleaved stream output, but probably broken lines... Tbh, I don't
+have much motivation to check or fix this, I would just like the test
+to be green or skipped when built with ASAN. The current workaround is
+quite ok. If you prefer setvbuf() in vhost-user-bridge.c, I am okay
+too.
+
+Yodel, wdyt?
 
