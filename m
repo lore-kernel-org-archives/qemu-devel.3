@@ -4,110 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AD6C79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 21:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4ECC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 21:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3hEq-0005w6-Aa; Mon, 07 Sep 2026 17:50:52 -0400
+	id 1x3hLK-0006g7-Jl; Mon, 07 Sep 2026 17:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x3hEo-0005vq-Fd
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 17:50:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x3hLI-0006ev-Hw; Mon, 07 Sep 2026 17:57:32 -0400
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x3hEl-0003cS-D7
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 17:50:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788817846;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1bXZu3ukZwEduMjwXyjn7XuKyhVQhsO0c28APPnREHU=;
- b=EbdDj0/4wxoaFb9YEdBYFuQ6AiuyRidJOKGDWJxfHfEzLSVNHM8ROeJjq9glDw9vsnl0iF
- E2d4RDkkOqh3iwBJshZMF/d8LyZXwxFsE5jOVI4OKVBFLFbLV3isippXPxaGHNZuk0n/Xn
- 24+N4VqYuKbNhLLt4vj0JSZoL0e2LOw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-4WCUN2XwMaKZTun0OLFujA-1; Mon,
- 07 Sep 2026 17:50:44 -0400
-X-MC-Unique: 4WCUN2XwMaKZTun0OLFujA-1
-X-Mimecast-MFC-AGG-ID: 4WCUN2XwMaKZTun0OLFujA_1788817843
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1563418009D0; Mon,  7 Sep 2026 21:50:43 +0000 (UTC)
-Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 018921955F06; Mon,  7 Sep 2026 21:50:41 +0000 (UTC)
-Message-ID: <1ed52f1a-2231-4d24-a769-813f81d14e97@redhat.com>
-Date: Mon, 7 Sep 2026 23:50:40 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1x3hLG-0004D1-Bd; Mon, 07 Sep 2026 17:57:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ry2SnqvY7bb4x6/tCEx02S7I4ZODiZ43sSEzZkxxK3PWy8Ak7OarZ6Y0HTMTQTuGgHwBkoFcyKkYit2EzMg7Mm0o1RQC4GsihnPfV9w1YdSrMVHeJPzXLO4+SRYpVPZx031JRz31F7koutAxxNVYQO27wHkRQkLlMTslMlhR9MWhArlyA/6grYFj2ixOssa2e2cG4l21rQojQ2RH0F7Qky5ZI8Nkwcexx2JHKk835hE1JEBGykOL33OzmKllD7x9qJfPqkX3R6bVnJceyGaS68eF296IS2x3MbvNgGplH1DLJqmH5Nv5ELd/ARTb6tToWHtvX98p+7O7qvJVYSlZYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zSzccNyvDkrM43rIetwftMTFPEWg50As66SuEOXUR6U=;
+ b=nm+sfA/bf1cmu93gmEOfH+H4cF08VY9VFNjx7IY09OKd2HMf0Oxc53BM/tzLSlQi/P4ZCnwWsQPhSvtzqEokWMqJ1YV2W2l+xpNS0pd1Wp9ErOo1D8JcwCGglW6IXaFez+4sjxOkqAe2B955tb50SpLS7sYoyk4eygWWZihGmMfIoo+uwa4JDr47AL3wEdqgiTa78WAf0o+Bh/DYkFbf2SlcZebIPgIET/BO5Gui1ACePlqGGI6XzO3gHNGrXY52WyPCY2XEaDrvJRhezf4HTU5nhGXLI4DF+xHhgEQtgv8ZZ2i+r5jttUwpr/aP7jWCjdgP51AToXKxl8wzxPfYew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zSzccNyvDkrM43rIetwftMTFPEWg50As66SuEOXUR6U=;
+ b=ygSfWx12oF5h7O3PuDTYQBjioJYHzaDq3e00abUsDIpqjM5gTal0pu+iu6HEJwZUJmviD/8vV7Yfb1hBMRNAQLhaynAA12WzOqiYntOj3xN9e/HO/1Jyckly7KNURsXNTjGxbtdp1LCoga9oJHtp0TYuAwy3EsrqQKos6YnbPgOqRcxP5OeTiCfVT8s3CGUEyLoqAb8HaTPpeazUk3xkU9fnzfyKRiCWD3fHmQac+7TpPK4lcmyZxqSrS6ruavVa+e2DzGqBo304AyW+mssfvvc+2GgtjNUxty++hPxdkk+xmWiJuQxZIemhv+yOqdJ4W6nyF0IYzlz0rOqNOhLvkg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DBAPR08MB5733.eurprd08.prod.outlook.com (2603:10a6:10:1b3::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.6; Mon, 7 Sep 2026
+ 21:57:24 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0406.005; Mon, 7 Sep 2026
+ 21:57:24 +0000
+Message-ID: <872dde4c-8850-4c8e-bd8f-1cebc3671044@virtuozzo.com>
+Date: Mon, 7 Sep 2026 23:57:22 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] agents: Add a skill for finding your way around QEMU
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260904074314.896384-1-pbonzini@redhat.com>
- <apqheL090KYVRRBJ@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 1/9] tests/functional: replace HMP with QMP
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org
+References: <20260907-nohmp-v3-0-c11e7d0d3d7d@redhat.com>
+ <20260907-nohmp-v3-1-c11e7d0d3d7d@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <apqheL090KYVRRBJ@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260907-nohmp-v3-1-c11e7d0d3d7d@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ClientProxiedBy: VI6PEPF00000234.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8f0) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DBAPR08MB5733:EE_
+X-MS-Office365-Filtering-Correlation-Id: decc7a1f-cbeb-49a4-86a5-08df0d2affbe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|23010399003|10070799003|6133799003|10067099003|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: P7mTTHpK8CBaS+6/3tvURvH67Ex73HwI3bCP5XEjcTNnpB4Ui9BTL0ez8iBj0UFfdYy/HaT637OaWgmczgeoKmfdd+v/ZmKRo/HKbDfxWyP6QLq4Vbkgdlhj9Satbq/UXdkAQBISDcgNyLCzo9nGi2OxN9Q6i4m93+6t4m1OQmhz0wLIBPcZOH4RjYYP76RSsI+lkVBTlWiws3OFhgh4Jiyu+zC3yUKE/qIrq0Y/F3iqzoPlU3V3qpXGuUzTTYYnxtUdzlsxQZLQu9lGRRNnqyVIfGgC0AdyznVJCa1SuNAR96FQtESTyvzD42KpxipCFErEeudCiYWjVBNxujQRMLNRizgf651rZb4IjTB6c+2JKYFFhkKNJ6xxbX1Z9cPP2ZUT+9cN4w7ZhVM2PPfjtwQzsQn0l/f/xzdyeL0pZYL8kmXF4n4nwqMNegd+DbQn6gio5bLitUfnGP8rJGsZ8mUyxTYFU9gS2WnLrFGdZAeZV9WpFdPXmMQFAg3eDc98zm39xUe8dGxtRUv7M9lZz6Sfw8ylIMaqMqd9Gud12x52y0xUc5Qfs8naKg3aKx99enalNgpDwp2PiYy6KC8QeaWEmAgh2Eb1Y1T0jckj9mcnKVLvc5AwRlfK8ceBz4GXxCvH2wEdWFqVQbDWUQZOwA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(23010399003)(10070799003)(6133799003)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N2VQdDdvS0kxT3pzR0FXdll5MkgwdkJtbDgrR2poQmthMm14S2lFOTlwRi90?=
+ =?utf-8?B?TThPYVRWbnV5MmJJc1U5RzJyOFZ2UzFNMFpGRUVFb0RBOS9QYWc3aVFpSXV6?=
+ =?utf-8?B?eTIvVTlWMzEzNjdXdGg3bXV4dFJaYmVndTBFMjZraWlLUzdUTk5EMmt5Z052?=
+ =?utf-8?B?UklaNVB1S21FRUN4L0NoZkhTem80dW0zS2sxVnM2Nmt6cnZnSTQzdW00Zzl2?=
+ =?utf-8?B?TXpFOW8rM1N1WEcrTzVoTUdNNXJoYjBlZjJrcXBpcWFMSUtyNk5BcE9MZGpB?=
+ =?utf-8?B?YjU5UDBTaDJYMk9Ia09iWGRKZFNIdjUzNFZtTzZtVzZibnRSVDYwS2NjMXFr?=
+ =?utf-8?B?WHVsajZIZFMycXQreVZQYWt1MU1qcS9DR25FN083MmxFdHVROTFVVDFHRFNv?=
+ =?utf-8?B?cDBQZ2pGMlBjQmVCeFJsa0crakVvL2JJb3lQekNLenZMdE9BR1RiVjd5QlQ0?=
+ =?utf-8?B?cGRFNGZ0UTVMSzE2M0xMSjRGV0MyVytjQ3Y0T1hQbkQ2WkFUR3F1Z215bGNH?=
+ =?utf-8?B?QVNrQXJRNDlGV3hGVlJob3lPUmVvb1V5aEpXY3A4NTdEY09uMEFJeWQwZVE1?=
+ =?utf-8?B?d2lPTk5pT0pzREVQdlZheEY4Z0tCaGx1d2czYzkzSnFUUldpdUdsalpFT2dL?=
+ =?utf-8?B?Rk9NQmJONUhhMHNPbFN4Mktack5YRTZFR3c2NlIyU0x5YXhzbjRJd1pZYSs4?=
+ =?utf-8?B?R0hxV1ZJS21Dc1RmU2VFNXFRMERhWmtKdjRiN1N5TWRRUDlUWTZPOXVrSzlz?=
+ =?utf-8?B?aVdxUkg3SHVUQmczajFTTyt2NVBKMDk1dlpRV1BONFlmWGM2Z0dZMCs3YVAy?=
+ =?utf-8?B?RWFyOGxmaDVxWWYwT1gxd2xUU1ZtQVErVHpuRCs2OHlKVUpNVDhJN1FhV0h1?=
+ =?utf-8?B?UnQwR1Vad0xPNDhzeTIyQVhxdWs2eXRISjh1QWJnYjNvaXpVZTRNdEpMWFhu?=
+ =?utf-8?B?SzNENDJ0SlI1ZFI4cHdWSzhlTmc1OXllMm1MYlJ3ZjY5dTBPcDMwTnBWQzY3?=
+ =?utf-8?B?clpIcUMzdzVEUmpHYm9FTitPelhtVW10NTBaYVhTaG9aMTcwRTJsY2ZuRnpP?=
+ =?utf-8?B?OGlkNUJjbTR5VlRmQXVxNmU2Y2xqamZrTzNuTTEvdWg3QmR2em9LNW5mSjBX?=
+ =?utf-8?B?eTh4V3VRZjhyUS9GLzNZWGNGNysvRkdoN2c4Smk1WEhtbm1nWS9yT1g4L1ha?=
+ =?utf-8?B?R25GVUNXbjBzaWVaYUtSS1M2VGs0RFBOanpDWGpKakt5bVZWZkx0SmxBaUZx?=
+ =?utf-8?B?aWl2L25TQmZrLysxSlVhUkg0WldMbGJtL0s1NEUxRmEvK1lXR1NELzNlWjR0?=
+ =?utf-8?B?NGw1UW5Gay9TY3NzaXlQckdFS09wK1QwZWVEQkl4MXpLT081dUVkZnkxbFk5?=
+ =?utf-8?B?cFZybzQrT3NETjhLOWtIckwrRXRES2R0WWU2MFFWVDRDSHovb3UvY01nS2hK?=
+ =?utf-8?B?cWdRamRad09JY1AvWGVCWVBoS3I0RjJJSnFmUXN4dER4bDF3UGFmZVlzWlF2?=
+ =?utf-8?B?MkNtOW9zRHVOSy8ydnBnbEppV2tUR2hLQ0o1WmpnMEx5cHhvK0ZhSFozU3dZ?=
+ =?utf-8?B?QjZZSVE2aUQxaHM2bGRMWk9jMENuVlY0eWRoVnZadlJRTUNsZFE0d1dFRGxZ?=
+ =?utf-8?B?dTlCN2ZFckdCTHpveksrUXNHZ3hpYU1ycFpyVDRTZFN1bEl2SWlvaFdMeE5y?=
+ =?utf-8?B?d0E4UFdJQzh3WEZoRXNYVm51TlJqQjRIajl5TElLenc4ZEg2YlVpd2FteWVV?=
+ =?utf-8?B?N250SXovWkI1d21kcFdkWi80SVdLdDVwWWpVUDFmdGlESG8vLzVSTy9wZlJS?=
+ =?utf-8?B?Zjh6WkdPZTJqdngwYURtOFJOK3orZ3FTVnhyNkMwSExqUzkzWC9OZDRydGdp?=
+ =?utf-8?B?dnZJU3p3dWxMUTRlajBpZlRsNnRZNGdRYWNubEVJTUU3OGJzNWlJdk1tVmdY?=
+ =?utf-8?B?SFJhTytiQTFXNjRoSDczSTBvT1RTS3lVMjNjWWJNSmFGcFd0SHh1Rm9pWnFT?=
+ =?utf-8?B?dmNYV05HME9xSWNOZXZSdTBkQTBuVElLcFpsaW9DVTFBSjE1UStkaEw2UUhR?=
+ =?utf-8?B?OWUwNU9DVVhNVGhKSE1nL01kRms1dVBHL0hEVUR5aHl5Ukprc25DUFY5N3lX?=
+ =?utf-8?B?SDdTTFNaYkxQOG5mSWdSdzJwam4wMG1aaHdvVmZTa3NQY1ZtSjVwY3QxTHcz?=
+ =?utf-8?B?V1BUUGhyWSthdnpFazJqaXJ2cE9mSVUvS3FCeS8xc1BHd2hYcHkyL3FEZ016?=
+ =?utf-8?B?dW1VT0FGQUxoUGxRNytXMEVaZWd3OExJM1NRUW9pQVlCK3lVUHQ4NjJTa0cx?=
+ =?utf-8?B?ZDFBY0hQMkMzdU9IQlJwUnFXdkp4b3RJTVZFenp0dTRENzNHMkVCbklmcHVo?=
+ =?utf-8?Q?8/i/l8+EialgGg4LehKEWdB7syB+PMaHjDvDX/BapwzOo?=
+X-MS-Exchange-AntiSpam-MessageData-1: g1speeJ3Z+Sl6g==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: decc7a1f-cbeb-49a4-86a5-08df0d2affbe
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 21:57:24.1474 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 25dOteRN4PWWMw8XpapBz1y3frJgEkdjXNKBFqhfSrHSS0u7g2xtRyTggiy2LwtscGM3ZqqGuejSEp23RBgFJA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR08MB5733
+Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+ envelope-from=den@virtuozzo.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,190 +164,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/26 12:46, Daniel P. Berrangé wrote:
-> On Fri, Sep 04, 2026 at 09:43:13AM +0200, Paolo Bonzini wrote:
->> As a side effect, establish scaffolding for the .agents/.claude/.gemini
->> directories, as a base for future patches to build on.
-> 
-> FWIW, While researching the AGENTS.md stuff I came across this
-> 
->    https://arxiv.org/pdf/2602.11988
-> 
-> which suggests that providing code tree overviews may not be as
-> helpful as people suspect, while causing the agents to consume
-> more tokens in their work.
+On 9/7/26 15:13, Marc-André Lureau wrote:
+> Replace HMP with QMP equivalent.
+>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  tests/functional/arm/test_integratorcp.py | 13 ++++++++-----
+>  tests/functional/m68k/test_nextcube.py    | 11 +++++++----
+>  tests/functional/mips64el/test_malta.py   | 13 ++++++++-----
+>  3 files changed, 23 insertions(+), 14 deletions(-)
+[...] eaten a bit
 
-I found the... skill creator skill, which suggests: "assume the agent 
-can navigate code, keep discovery cheap, and load documentation only 
-when it changes a decision."  It does seem like it should be possible to 
-shorten this.
+> diff --git a/tests/functional/mips64el/test_malta.py b/tests/functional/mips64el/test_malta.py
+> index 163bbaf5ca36..3b6d53799616 100755
+> --- a/tests/functional/mips64el/test_malta.py
+> +++ b/tests/functional/mips64el/test_malta.py
+> @@ -11,6 +11,7 @@
+>  
+>  import os
+>  
+> +from qemu.qmp.qmp_client import ExecuteError
+>  from qemu_test import LinuxKernelTest, Asset
+>  from qemu_test import exec_command_and_wait_for_pattern
+>  from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
+> @@ -154,11 +155,13 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+>          self.vm.launch()
+>          framebuffer_ready = 'Console: switching to colour frame buffer device'
+>          self.wait_for_console_pattern(framebuffer_ready)
+> -        self.vm.cmd('human-monitor-command', command_line='stop')
+> -        res = self.vm.cmd('human-monitor-command',
+> -                          command_line=f'screendump {screendump_path}')
+> -        if 'unknown command' in res:
+> -            self.skipTest('screendump not available')
+> +        self.vm.cmd('stop')
+> +        try:
+> +            self.vm.cmd('screeandump', filename=screendump_path)
+Typo here :-) screeandump.
 
-Thanks!
-
-Paolo
-
-> It is pretty hard to benchmark / evaluate this, but it does
-> suggest the "Finding things" / "Core abstractions" sections
-> might be overkill/counterproductive. Aspects that are less
-> discoverable or describing QEMU specific policies/practices
-> ought to remain valuable.
-> 
->>
->> Some parts of this skill are based on
->> https://lore.kernel.org/r/20260529101437.410181-4-alex.bennee@linaro.org/.
->>
->> Co-authored-by: Alex Bennée <alex.bennee@linaro.org>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->> v1->v2: add .claude/.gitignore.  Suggest using get_maintainer.pl and ./run.
->>          Fix thinko around build/source directory
->>
->>
->>   .agents/skills/qemu-codebase/SKILL.md | 100 ++++++++++++++++++++++++++
->>   .claude/.gitignore                    |   2 +
->>   .claude/skills                        |   1 +
->>   .gemini/skills                        |   1 +
->>   4 files changed, 104 insertions(+)
->>   create mode 100644 .agents/skills/qemu-codebase/SKILL.md
->>   create mode 100644 .claude/.gitignore
->>   create mode 120000 .claude/skills
->>   create mode 120000 .gemini/skills
->>
->> diff --git a/.agents/skills/qemu-codebase/SKILL.md b/.agents/skills/qemu-codebase/SKILL.md
->> new file mode 100644
->> index 00000000000..17fb55b5289
->> --- /dev/null
->> +++ b/.agents/skills/qemu-codebase/SKILL.md
->> @@ -0,0 +1,100 @@
->> +---
->> +name: qemu-codebase
->> +description: Orientation for QEMU — tree structure, build system, documentation pointers
->> +---
->> +
->> +# Useful reminders for working on QEMU
->> +
->> +## Finding things
->> +
->> +`MAINTAINERS` is the authoritative list of subsystems.  You can
->> +use it and `scripts/get_maintainer.pl --nogit` to query it, for example
->> +
->> +```
->> +$ scripts/get_maintainer.pl --nogit -f block/
->> +```
->> +
->> +`docs/devel/codebase.rst` is a guided tour of every top-level directory.
->> +Here are some important ones:
->> +
->> +- **target/** holds CPU models and the TCG frontends
->> +- **tcg/** holds the backends and the IR. See `docs/devel/tcg.rst`,
->> +  `docs/devel/tcg-ops.rst`.
->> +- **hw/** is devices and boards, categorized by type.
->> +- **linux-user/** and **bsd-user/** are almost entirely separate, and only
->> +  have parts of **hw/core/** and **accel/**'s CPU emulation infrastructure
->> +  in common with system emulation
->> +
->> +Other directories include the back-end subsystems, for example **`block/`**
->> +for the block layer.
->> +
->> +The `include/` tree mostly mirrors the top-level tree.
->> +
->> +## Build layout
->> +
->> +Build is always out-of-tree; the build directory is created by
->> +`configure` and a checkout can have several. Determine it from context
->> +(`ls */meson-info`) rather than assuming.
->> +
->> +The `run` script in the root of the build dir wraps `meson devenv` and
->> +should be used to execute commands in the build directory.  It activates
->> +the build tree's venv `pyvenv/`, adds various Python modules from
->> +the source tree to `PYTHONPATH`, and defines a `MESON_BUILD_ROOT`
->> +variable for general use.
->> +
->> +`make` at the top level forwards to `ninja` in the configured build
->> +directory, and any `build.ninja` target can be invoked that way.
->> +
->> +## Build & Test
->> +- **Build**: `ninja` or `make -jN` from build directory
->> +- **Test All**: `make check`
->> +- **Suites**: `make check-unit`, `make check-qtest`, `make check-functional`, `make check-rust`
->> +- **Single Test**: `./run meson test <testname>` (e.g., `./run meson test qtest-x86_64/boot-serial-test`)
->> +- **Debug**: Append `V=1` for verbose output or `DEBUG=1` for interactive test debugging.
->> +
->> +## Code Style
->> +- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
->> +- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
->> +- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
->> +- **C Comments**: Use `/* ... */` only. No `//` comments.
->> +- **Naming**: `snake_case` for variables and functions; `CamelCase` for types and enums.
->> +- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`) APIs. No `malloc`.
->> +- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
->> +- **Lints**: Run `./scripts/checkpatch.pl`.  On top, `make clippy` and `make rustfmt` for Rust.
->> +
->> +# Documentation pointers
->> +
->> +Developer docs live in `docs/devel`.  A `kernel-doc::` directive includes
->> +documentation comments from source files when Sphinx builds the documentation.
->> +These comments be consulted just as easily in the source tree without going
->> +through e.g. `make html`.
->> +
->> +Here are some useful pointers.
->> +
->> +## Core abstractions
->> +
->> +- **QOM** (`qom/`, `include/qom/`) is the type/object system underneath
->> +  everything.  It includes class and interface hierarchies, properties, and
->> +  the object composition tree.  See `docs/devel/qom.rst`.
->> +- **qdev** builds devices on top of QOM, adding for example buses, the
->> +  realize/unrealize lifecycle (including hot-plug/unplug), and reset.  See
->> +  `docs/devel/qdev-api.rst` and `docs/devel/reset.rst`.
->> +- **MemoryRegion** (`system/memory.c`, `include/system/memory.h`) is the
->> +  guest address-space model: regions, aliases, address spaces, dirty tracking,
->> +  load/store and map/unmap operations, etc.  See `docs/devel/memory.rst`.
->> +
->> +## Concurrency
->> +
->> +Getting the threading model wrong is a common source of subtle bugs here.
->> +
->> +- The **BQL** (big QEMU lock) protects most device emulation; vCPU threads
->> +  hold it when exiting to emulation.  See `include/qemu/main-loop.h`.
->> +  Memory regions can (carefully) opt out of the BQL.
->> +- **AioContext**/iothreads: block devices and their virtio front-ends can run
->> +  outside the BQL.  See `docs/devel/multiple-iothreads.rst`.
->> +- The **block layer** is coroutine-based.  `co_` prefixes and `coroutine_fn`
->> +  annotations are advisory but relevant for reviewers.  Coroutines have their
->> +  own locking primitives.
->> +- **RCU** is used for hot, rarely-modified structures such as memory maps.
->> +  Because of the BQL, RCU is mostly used with `call_rcu()` rather than
->> +  `synchronize_rcu()`.  See `docs/devel/rcu.rst` and `docs/devel/atomics.rst`.
->> diff --git a/.claude/.gitignore b/.claude/.gitignore
->> new file mode 100644
->> index 00000000000..b0a57a19c01
->> --- /dev/null
->> +++ b/.claude/.gitignore
->> @@ -0,0 +1,2 @@
->> +# reserved for the user to add their own per-project rules
->> +/CLAUDE.md
->> diff --git a/.claude/skills b/.claude/skills
->> new file mode 120000
->> index 00000000000..a7540c24423
->> --- /dev/null
->> +++ b/.claude/skills
->> @@ -0,0 +1 @@
->> +.agents/skills/
->> \ No newline at end of file
->> diff --git a/.gemini/skills b/.gemini/skills
->> new file mode 120000
->> index 00000000000..a7540c24423
->> --- /dev/null
->> +++ b/.gemini/skills
->> @@ -0,0 +1 @@
->> +.agents/skills/
->> \ No newline at end of file
->> -- 
->> 2.55.0
->>
-> 
-> With regards,
-> Daniel
-
+Den
 
