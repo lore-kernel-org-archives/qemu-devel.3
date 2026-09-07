@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF10C79F8C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 02:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A18C79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 02:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3PGI-0000ew-N3; Sun, 06 Sep 2026 22:39:10 -0400
+	id 1x3PJl-0002Oe-SB; Sun, 06 Sep 2026 22:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x3PGG-0000eM-VS
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:39:09 -0400
+ id 1x3PJj-0002OG-O9
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:42:43 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x3PGE-0007vf-Qu
- for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:39:08 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x3PJh-0008KJ-Cq
+ for qemu-devel@nongnu.org; Sun, 06 Sep 2026 22:42:43 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxztLCI55qBUsJAA--.26489S3;
- Mon, 07 Sep 2026 10:38:58 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bx79KUJJ5qYksJAA--.26969S3;
+ Mon, 07 Sep 2026 10:42:28 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJBxpMy8I55qtj0cAA--.33287S2;
- Mon, 07 Sep 2026 10:38:53 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxPs+TJJ5qET4cAA--.60089S2;
+ Mon, 07 Sep 2026 10:42:27 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 0/3] target/loongarch: Add CPUTimerState structure
-Date: Mon,  7 Sep 2026 10:40:09 +0800
-Message-ID: <20260907024012.2992255-1-maobibo@loongson.cn>
+Subject: [PATCH] target/loongarch: Remove CSR registers relative MERR
+Date: Mon,  7 Sep 2026 10:43:46 +0800
+Message-ID: <20260907024346.2992355-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpMy8I55qtj0cAA--.33287S2
+X-CM-TRANSID: qMiowJCxPs+TJJ5qET4cAA--.60089S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrZrW7GF15Jw18Cr43Ww18Xrc_yoWfurX_WF
- WxJF1DCrsrWas5JFWak3y5X3s8Jr4vkFnayFyDXFsrJFyaqF4Yyr4DKan5CryYvF4rZFn0
- kFW3try5uF1jyosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbxkYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UU
- UUU==
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFyrtFWDGr4rWr1furWrCrX_yoW8KF1xpr
+ ZrZrWDKF48WryDCw1rJas0934DXF4xK3y2qa1fC340vrZ8A3yjgr48tFyvgFyrJay5JrW0
+ 9F1kZrZ2vF4xJ3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8CztUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -76,27 +75,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set rename function name and filename constant_timer_xxx
-with timer_xxx, also timer object structure CPUTimerState is added,
-so that multiple timer objects can be easily added.
+Registers relative with MERR are used for HW error handling, such as CPU
+cache etc now both KVM and TCG do not support MERR. Remove these CSR
+registers, vmstate keeps unchanged for compatibility.
 
-Bibo Mao (3):
-  target/loongarch: Rename function name constant_timer with timer
-  target/loongarch: Rename filename constant_timer.c with timer.c
-  target/loongarch: Add CPUTimerState structure
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.c   | 6 ------
+ target/loongarch/csr.c   | 6 ------
+ target/loongarch/disas.c | 6 ------
+ 3 files changed, 18 deletions(-)
 
- target/loongarch/cpu.c                        | 10 +++++--
- target/loongarch/cpu.h                        | 14 ++++++++-
- target/loongarch/internals.h                  |  9 +++---
- target/loongarch/tcg/csr_helper.c             |  7 ++---
- target/loongarch/tcg/meson.build              |  2 +-
- target/loongarch/tcg/op_helper.c              |  3 +-
- .../tcg/{constant_timer.c => timer.c}         | 30 ++++++++-----------
- 7 files changed, 42 insertions(+), 33 deletions(-)
- rename target/loongarch/tcg/{constant_timer.c => timer.c} (65%)
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 84a130956d..9d51a0297c 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -140,12 +140,6 @@ static void loongarch_la464_init_csr(DeviceState *dev)
+         }
+         set_csr_flag(LOONGARCH_CSR_IMPCTL1, CSRFL_UNUSED);
+         set_csr_flag(LOONGARCH_CSR_IMPCTL2, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRCTL, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRINFO1, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRINFO2, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRENTRY, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRERA, CSRFL_UNUSED);
+-        set_csr_flag(LOONGARCH_CSR_MERRSAVE, CSRFL_UNUSED);
+         set_csr_flag(LOONGARCH_CSR_CTAG, CSRFL_UNUSED);
+ 
+         for (i = env->perf_event_num; i < MAX_PERF_EVENTS; i++) {
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 309b826ca9..d2ac39dee9 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -82,12 +82,6 @@ static CSRInfo csr_info[] = {
+     CSR_OFF(TLBRELO1),
+     CSR_OFF(TLBREHI),
+     CSR_OFF(TLBRPRMD),
+-    CSR_OFF(MERRCTL),
+-    CSR_OFF(MERRINFO1),
+-    CSR_OFF(MERRINFO2),
+-    CSR_OFF(MERRENTRY),
+-    CSR_OFF(MERRERA),
+-    CSR_OFF(MERRSAVE),
+     CSR_OFF(CTAG),
+     CSR_OFF_ARRAY(DMW, 0),
+     CSR_OFF_ARRAY(DMW, 1),
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 3249ab7ac6..928b8b94c2 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -98,12 +98,6 @@ static const char * const csr_names[] = {
+     CSR_NAME(TLBRELO1),
+     CSR_NAME(TLBREHI),
+     CSR_NAME(TLBRPRMD),
+-    CSR_NAME(MERRCTL),
+-    CSR_NAME(MERRINFO1),
+-    CSR_NAME(MERRINFO2),
+-    CSR_NAME(MERRENTRY),
+-    CSR_NAME(MERRERA),
+-    CSR_NAME(MERRSAVE),
+     CSR_NAME(CTAG),
+     CSR_NAME(DMW(0)),
+     CSR_NAME(DMW(1)),
 
-
-base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+base-commit: eb710c255642cd7dc947f25c9a06c9fc8191e98d
 -- 
 2.54.0
 
