@@ -4,179 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB7BC79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 12:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C756C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 12:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Y8F-0002Yw-Sc; Mon, 07 Sep 2026 08:07:30 -0400
+	id 1x3Y9Z-0002xs-9P; Mon, 07 Sep 2026 08:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x3Y89-0002YU-Qq
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 08:07:22 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x3Y9T-0002wc-In
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 08:08:44 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1x3Y86-0006NA-O8
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 08:07:21 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 687AmdND2351157; Mon, 7 Sep 2026 05:07:14 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1x3Y9R-0006Rz-6B
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 08:08:43 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 687An9GB004092
+ for <qemu-devel@nongnu.org>; Mon, 7 Sep 2026 12:08:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=CpHp+fmR7fdAR2gXafaamKm9mmO8/T0KeoesqD+yb
- Qw=; b=AMd/kwsqKPBrDNcsTc/CNSd5BSKzZG0G+0nZB9DSJ70JRD5H8vWQAD9vY
- jpYQLBh3V7zxoEBcRt5jHFFmAafn8YaMF1kKfcHLyvKzWTuaF2/KKGRaSzLAn2E/
- +TPxtlfOgkhqGIHsaRF6xXaxyzJw8SB7uxiPNu0UX2BQHQ4mTiFs1gCwCcdv989p
- E6B9yIUKWHf850Tmw2sg9xwirA5/FA1wAzr6Hnb+lffWwYH1Tz/1fedK7aN74MHs
- gXd2+eQqQFaQvbutXyZqOQwAaiZvhWq8L2n2114dvoGjLtxfJnJ9BHQAF7d+zOdN
- QnmDKaQj49rKNVi4fvdsQOT+Jla8g==
-Received: from dm5pr21cu001.outbound.protection.outlook.com
- (mail-centralusazon11021114.outbound.protection.outlook.com [52.101.62.114])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ggjddb2uu-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 07 Sep 2026 05:07:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nzhlH+BSmkWFVG5kwWD2icQjZkLMkdb+5ertHdbmDYumM75tZOZdcHFZkIU5F5L94pY1UNZf+TQMq2wL/4di+ZpEIQiXlCe3EbEHYXa2ZuYFSdWn2NMmZR9f1/UsHcIVVL9bGzAzC2Y4q7uNXuwhPip2Y3Te74/BhDK9Iuc/EfezHsjllsS0kesEHxx8T/7PA/jj2KfZhk3Jx5nc6ODDF71hs3EznT3TTtorh7Ol1BQ/PQMd1noBGnBAO6HSYnpSHVav0UbqifxLF07vbihAFo8wzNL9N8vaiGCRgSgCxytvyDFtD+oOQvY+D180vPLhH0zCFekUQAAIAKbsgyecKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CpHp+fmR7fdAR2gXafaamKm9mmO8/T0KeoesqD+ybQw=;
- b=wDSxH96G022R0me3dcdotIipA6YkYlVM8ImBGAXIq9bfPF0c58C7TIMUpCDoAzcnJDcy5nd8Xwo2mU0AnF4+qesdSF0zJye45bLiYeHxbe8q3pMVmDUdn8xc4Bw9/xR07modFUhRmSZfeQ8/Wh+OxNCjt++z6L6r8Pp4somBWFdEjYwCTox37/3NyZBWYRJzM/BMCtl06mPOGPzT/CKvigNfKTIALA8CAcrba7dJYxu6nYfCRvSxdZjSBQ2rGPL7Z/evefxVechjnNsm6xXyb0midhGW83M0koUIB2iOdHgE4NA/eaP+3c1QwXxV7GLeSTOv/RhjvdpIAwh1ahXgNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CpHp+fmR7fdAR2gXafaamKm9mmO8/T0KeoesqD+ybQw=;
- b=CYqpiFBG0C8APOGt4ts/ZtqcFpO1O2/3pe3B7/wIVGWkEbgpPtQUfDY7jxd1RK9dy1ZI9EwAai6YgG+5vh4LZGbsQmuqoW864CLA8nA+shXnOxMsha5+FwFtpupvcBydaB8CQzr+Go3vQznt1YKHh7TlG8x6xqnXX2ShqoAeIghswSQuakVc4VYM3gMbmprXg0cwVu/OUPSJ+gpL/E15UmrWS2wvTdkC12pR4GZvms6Bj8eaNCXak6iGPv0BG/QkryNW+rHEyP9Fa6Shs+siRAL83GdNbvRPOAanLULdW7llatKy3eymySAeb1bxp1aRP0L0SIW2V7d90WPBlTDJuA==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by BY5PR02MB6963.namprd02.prod.outlook.com (2603:10b6:a03:236::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
- 2026 12:07:11 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0382.014; Mon, 7 Sep 2026
- 12:07:10 +0000
-Message-ID: <4d2d0c34-121f-4439-abf4-4b2da3fbf6f3@nutanix.com>
-Date: Mon, 7 Sep 2026 13:07:07 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 14/16] sphinx: require sphinx 7.2.6
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-References: <20260902193551.582660-1-jsnow@redhat.com>
- <20260902193551.582660-15-jsnow@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-In-Reply-To: <20260902193551.582660-15-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BY1P220CA0049.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:59e::15) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ qq34gpx7Eb+vlU4KFfkllXw0X/b2NXp6YbLA2DpH2jo=; b=VfyOObVC7GL/vcDa
+ njTktKsxZ0k51EvgL6rg0AJfQfup66Jjep5q0hzmbruDrJiLILAs2T87tMFsWe1K
+ j14mZn8GYftJLjY6kYisBUFKte7NcA/Xm9Pd5P4KX7GDGEh0AJiHCN2NXMJVbkJH
+ 3wmJHSLG/nW+LXxZdJYR8F1Qb5oD+mRXRguqzIFgqawmxmIsVbEYL6Yem8eh8TGV
+ T6cZaSjwUp8p1hXbi8dfFp+ua5R8Ww7RhbCXGfXSVstFoX2A0yECTZG911zr2lCp
+ M9wv5XKICnqMmR0jWpe0tZvzNcsepHccaF+ZByDiGTd3YUD+Enb5azxhWVa0mE8g
+ MMjZ1A==
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghssg0wrv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 12:08:39 +0000 (GMT)
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-86617faa2b2so45800757b3.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 05:08:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1788782919; x=1789387719; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qq34gpx7Eb+vlU4KFfkllXw0X/b2NXp6YbLA2DpH2jo=;
+ b=QivmKrRQ/s7fn9J2Fpjk1hOBKXE4jl6pHqsXNqXVwC1hZVZq9W9ROYiM++3PF2H/RP
+ ikPEt7yzmZtTMHEUl92O2hISYCq18FSDJ0jPaP1Vf0pxo1ooMMc6bkzQ76/a2Y0s/f3j
+ XkfY4WPakN7VKY47WxTwQJE6vrY96csQjbsNLNxX7731MO8R2jt59xgzytRGuXCATwIe
+ l9ZIQbhSudAsi2JlxbdCAOFZJ7t2IRztnPtwLDwfUx6m24Gq7f9bG2zG54rZ5qZb2viP
+ 57phrB76nMPDpp2wwCUuVS7SPGXULeIhWI2ZeloSOrdWFVKSXOpQXx0mhfK1sOEw5upF
+ gj5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1788782919; x=1789387719;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=qq34gpx7Eb+vlU4KFfkllXw0X/b2NXp6YbLA2DpH2jo=;
+ b=I+UsPp6eVhGiLlPVgvRzQLNjNiCtZyDzeACztE8L6zPqpBnckp3WXpLFnimvm9IdV0
+ k1r9NVgS3PZCSm9z5Pk9zqhfYwVFd3JJVL8r+uCl05X5v5fLPhjGGxdQ0eXVlaPPq0St
+ nBjl9fADGQiFaKXqsThn1VrjFLBVni1I5xGZb1XglVjyvql4VQ7X6KrToJDtxxTmMtEY
+ 6lV/kOVaubLY0NLqJZC2jOxuL3R6I8FHcHAAlEmlwzgM6bKh/129gUFahBcvbKT0+Y8b
+ wWmExQ10HqRU1qBzvBbO5dv/ZIvNfdZCOdi0Xdyz9UAM4S8+cmMMR9fDjIEevIhOgMAN
+ w8Xw==
+X-Gm-Message-State: AFuF++mjTbRQNIpHqkz45y/lwLu2kLt3Hzd0jcrziVm0PhHtWurQDJd9
+ isAz5gJKj1e2+BNjynd2FbjM8IbjzxyP5rnITZUQ9iOAerBQu1+s0gMtxeNRxkjARc3YR/gugn+
+ 8y19KvIcNIC9PKfEmwpKk55MgSjHFCRQHc2hyf98g3XyTY5kgRiEgNzVMZQ==
+X-Gm-Gg: AYBFou2qwwIz8yH6fPrRxOyWe0R9zb8cr+1acyvV3XZyg7cdSAMAsa4cw2sRQGb71PF
+ ldiLkBNMOFDG1RaESCypOcKJAyc+Qq7jcHjDZBZSj/0pbarPIBbxTxWOpd+RswCxSROPnwykk54
+ yKQrq8VE6vKzF55cR2XklhiWW8Wotq0/8bavOLtJ1tIr93RMTVC9XHg16vHsgBtB1UfjszrdJu1
+ NiqeHm1i3ND1Z8IlUpQmwb+8kOLj3Q81CRD75oA1EuhANv4fC7JU7mY7P1xWFAslZqP1TUqht0v
+ IRTCjGfWNXTT50DeIzoI4HVBVeTYxb6bBezrS3MXJ13modGUwYRyN3nbgI7lPWuSiJPORuyFPZf
+ /rjrMhk3Er1GUG43dFguHec+FqpIfGoPdRKo=
+X-Received: by 2002:a05:690c:7483:b0:868:505e:b935 with SMTP id
+ 00721157ae682-87127843468mr93428497b3.13.1788782919024; 
+ Mon, 07 Sep 2026 05:08:39 -0700 (PDT)
+X-Received: by 2002:a05:690c:7483:b0:868:505e:b935 with SMTP id
+ 00721157ae682-87127843468mr93427807b3.13.1788782918500; 
+ Mon, 07 Sep 2026 05:08:38 -0700 (PDT)
+Received: from [192.168.68.102] ([177.18.66.131])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-8714a979199sm70821517b3.29.2026.09.07.05.08.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Sep 2026 05:08:37 -0700 (PDT)
+Message-ID: <87c05cee-b435-4c48-a441-9804d3b448a0@oss.qualcomm.com>
+Date: Mon, 7 Sep 2026 09:08:34 -0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BY5PR02MB6963:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25fa8104-61cc-4be1-9bd8-08df0cd88b95
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|23010399003|366016|3023799007|10067099003|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: IvMwI7NIRqJwiwARhwQlQUVI/iY73WlQwLaGjbLf8Y6PcLEAqShTk9vRyLriu4/ONvGnKxddZn2egPIDDTQTY+69tZ2EwQGGqokzE7QUojkBQbQ4yEsUtZp1ZLiIda3CqqAugBHsOrcbnWbpDN/iQImWpccQg9aNxdLZrULMADIDOMBSxMLNOmc4lLFwBSd5yqiP7E6jpnpqyvbLJ+fnIZUdejtmUavF7nFXU5Im2jOYG/WfBxRlQSdRNQtVeR0PBqBGxRc6R3TqL0nnLq5kYuDZf/59pMl34zxMqMICieAqDlS0EeaOYpyilTtt7iRDFZL8RD3fS6MAJ9A2IUujB4V3sa6rYDwb2gD2XfkhLzct8XE0bRmLbM8amoFKK1F4Fy0Pz3PJHgUntGYgVHtiQc3TGUpr51MHgpE6Ij4a2IBXLPMnX9MrEW9wQ2jRJWxA2Sh2ijtHNUHd0A0h1miHe6b7rUXvywAyGgxnwyaHIWDbE2VWvl8rCZkCWjGLj0MHfj/6i2AfJkMpXWhFMkWv1tqTJz0nt1tiDMGCVGEKV4iBs0W2EZnPXGXMKIjiQAZpl1YV0pg78Kb755TuffAi/n/Uu3tGmplcuylvz7b4dm4NhEQEj+EA6W8eVvMrofFJ
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(3023799007)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RllGYitFbVJvRlIxZytvVjR1OE5qYWFkTEk1NjZyZEpIY1FRd1NzSThZOFhQ?=
- =?utf-8?B?VVpuNHEzRWVXY2c1L3htdnZtL01KMDQwaElpZE10WDVwZEgrVVhxWjJaVSs1?=
- =?utf-8?B?NmEzeWs0WDc0RXFJbnErYUtjSlZXS1I4ck55VW5zL0hwVG5LSVpGRVVzeGt1?=
- =?utf-8?B?cEN0YzhaNVlWTTZlR1FSWjk4SFo5MWZ6NElyckN3cThtUUJIelRxaXo1TytN?=
- =?utf-8?B?eWRXTTlTV0dlQlh5MWdjYmgvcXMySk8rUkx6RTV6c3lIWUEvMHRNWlRzKy95?=
- =?utf-8?B?NnNJelIvV0ZiVWNEK05kdWtzd2cyQzU5aktUNjRzTExQMHVJL1BvVCs0M0pp?=
- =?utf-8?B?N0l0dGpxMFFnbk96dmpyaXRNZVZHS1FiM1V3b1p0TEZTWnA0eXN5ajJoNUw3?=
- =?utf-8?B?MHFidlN2cXpQbG0ydVYyYlZ3bFB3RUg5NnJ3KzBQQXl5MGM4QkZkMGhZME1w?=
- =?utf-8?B?NVBxSnNuYW1JdmY1ZGFIVHRvT3VFaTFyMU5FYlBsanp0OGpjWTIxWnd3UVEx?=
- =?utf-8?B?NEVVeWh4cjF4blZ1N3pRQmNEZVVvSGE4d2JvaGdna1IzWGc2TThHZ2dkSFRY?=
- =?utf-8?B?SVJ1VDFzMHNvajFVQm5DWGxZSllKTjBNeWhWTjYyNmw2SWVGS0xsQ21qL2Jy?=
- =?utf-8?B?bERXTmJxWjBqVzBPSnBWdEhJR1lsYWl4REFNY1ZSaEVaUE5VR0Q5Slh2N1cy?=
- =?utf-8?B?bG5KL09WUzdIbkt5dmNoUUtUY1pIZjRaczlod0h2UVp6UXdRMGZxOGlxTzB3?=
- =?utf-8?B?VnFwUkZ3TUFHN2xoVVJ5Q2FlZ1c4dXFLQUZoSXlFY2hUOTl3ZjRLTC9FSGFm?=
- =?utf-8?B?M0RUb0V5a3pFcVozSEJPa0V2VHhlakNTbmVxWXlXVjZ5ZkErY0dURVA1OGFL?=
- =?utf-8?B?Y29lOUhvMGNsaWdqcDhLZk13dUNHYmY1WHYxdVh6Um5Wd2tzK2JMTml6Z1dQ?=
- =?utf-8?B?U0k4WDRMdU5UT1ZxOUpxSThITTJRMnRNeDVYanZmVzYzZW0zbTVnM3FUOFZS?=
- =?utf-8?B?OUZPKzB1cVkweU1sWlRudW5VUkhvZVdRL1hCLzlDclZKUzllSjVDYjJqbExZ?=
- =?utf-8?B?R09XNUhwNVVzUjRTbWpjVkRYYzNLVlo1aDVScUxCbC9vM2RxMElHRWEvYlNh?=
- =?utf-8?B?Ty9Mc1ptenJPNVdZRDhra3NXNEd3cnI2RkZkdmh5VCs0bDU4N0hHRDJFdi94?=
- =?utf-8?B?R2ZCaENqYWRyYk1YV2ZnSDFuckZ0T1dlOFMvYzlRbE1ZbzcxV3lWVTd2NFNH?=
- =?utf-8?B?ZjREeVZwb29URGtvYzloRmZ4RElGVUt6OEtWQ0NIN2VWa1NmaW14OUtTVkZR?=
- =?utf-8?B?OFc1ckJ5bU9qYlAxNThiUER3L0lxOGdrc1VjTzJvRGxCbzR3L28wVDVPaFBi?=
- =?utf-8?B?YzRPa2thN3VDV2ZyMFFMdHhKQjB2cUdLRzdCb3crTjNxMXA5K3pXVnFoVEVv?=
- =?utf-8?B?aGtSS3NabkRWWnpsRElidjVaclg1L2tUejhvRVdOd3RmWFpjK21xcXVqZHhC?=
- =?utf-8?B?RFFJb05zZkVDVTVScitFMlBpS01VeVBSSjJTNXd6UmxUYXZjRm40MlVuMHR5?=
- =?utf-8?B?eUNhbllKS3JQTlBPRmYyTGlkVy9VZzczRHJEM3JlUDFMaVdpbWsydjZldGsv?=
- =?utf-8?B?Zkl6dmgrYkJmekJzK2xDT2NqOFYrQmtaRFE2Yk5HVjcyOHEydTBKQ0p3OXFY?=
- =?utf-8?B?bUxTKytxYzdPMEFyYXdBZ0F0U2JwblZpRVdIK09lTjExTlFPQ2sxOXdXR3BX?=
- =?utf-8?B?clljSTljNEkxVC84VFk5L0YyUzVTTnhMNG0ydy9KejRUeTF3eDhPNGFzeWI1?=
- =?utf-8?B?SmpqemhDZk9Cd0dSNVJwRTRxdndEUmZxV0dqSU80TlhCWG1DbHVXc2oxUTNV?=
- =?utf-8?B?NEpUL3hyaUpIN21nR2dCaWlFNkcvSlFnYk9vVGZySUl6TWJTa2VYMnI0RlNW?=
- =?utf-8?B?Z01EK1lhRHRId2R6bThnWmdDMGIwZ0haUUFhZ3VoQnVyK1o3U2kzWEhOaWlw?=
- =?utf-8?B?VkVZc3ZsdWl2KzNjVzZuSkJiK3lLeUs3QTg2ME1vbXA3NFJ5S0xlcG04Z0hM?=
- =?utf-8?B?T3N0Y2F3NktoREx6ZkVBOWdkdFFheVFWSUk2Z0FHNG1MZmY4Sndub1hBMCtk?=
- =?utf-8?B?RUZZV2RLazlmU2JlRXBNbmo2ZGU2clcwTmxJT3ZqeW53MkhLYVZYSXprYmlH?=
- =?utf-8?B?T3hKenQzTHlKdVFQK0RPdVZlS3UwOVZnWXJRaEhCSnhFL2d2N2FsYzBGZ3lW?=
- =?utf-8?B?bVozL3RJY3RnOGJIeTJuWkE2MW9CTmtwSDJPSkxUV1hpVFduK3ZpQzdOQ2sy?=
- =?utf-8?B?b21TY3c1dFVrUWhKK2JPbjdxQXZkTmp3NDhzUzhqVGhrb2NoeUw3WXZ2UkpX?=
- =?utf-8?Q?/GWvShqonGbprtbQ=3D?=
-X-Exchange-RoutingPolicyChecked: ZF33UacWUZpcf82ykVB6dygz4Y1Ux9wr2yccoWQ2bgMEssyDg6jBBbXykx3Resx0V2xSF3lOsiIsFAsluXRbTNhxwHu5qhUDkCda0PGJStTM7sA7pGxi+TkJ6QKd/oOgHml7/2Lt3j3+MDANJTb4MHA1aY06IJ79/JRaELi335t8TKTkQtcE9DsuUhOY77qqVBVYlBtuuvUxWeiYpTnnPiO8QthQ74CB91eGA59XCoTsUbc2m4Oh/nfzmtF+iEH6eDb09oPKUHOvgBaDnNzsQdTY3M6w3BiAKbnGA5SWEldGVtc5GBNiTfz5y5HAkgIi78LwcvFtIyzs0l8GIQWXsA==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25fa8104-61cc-4be1-9bd8-08df0cd88b95
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 12:07:10.5368 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ftBLCmho/7Ps6rMZyksJEc+/9ZZVKt2aVXnR2UgUlrfuYB38u+QL+zWhYtxbRPuPyd+rxYuhB8BZnOHiJ1ESw46cFkdPYP57PJg+U5PBF5I=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6963
-X-Proofpoint-ORIG-GUID: LvRDaJN0pqRiqONzNjZKC0GCVkeWwbcE
-X-Authority-Analysis: v=2.4 cv=OdWoyBTY c=1 sm=1 tr=0 ts=6a9ea8f2 cx=c_pps
- a=dLe9bA1IkfUV2ft16lzHdA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
- a=dXvAoEkxAAAA:8 a=20KFwNOVAAAA:8 a=bl8DKJq5AmuJocqa2v4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=iJ39DRKJB4kz2P1Iyp3E:22
-X-Proofpoint-GUID: LvRDaJN0pqRiqONzNjZKC0GCVkeWwbcE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDEzMyBTYWx0ZWRfX2/RGsXYd0nb7
- JxJNNHKjgXVbmPFK0rTQJu7benS1lAFOaEeXUIKoBjxXI4nNoaWjnRAAvE5JR2Kj8X34MEMxw5X
- ua+EyZzC6KdKCgV8CBRKk8PHp+cEeAMsw2aR3nPkjp2BaQbleLd7ZxAupwpaER6+yKS0AVsHk/6
- XxW8G1hExnCvo+Add7cH18SVcp6FArdyGH6LzGKbs2uojRWz794ZyDeh03dglQL/OLzBW7ttzjU
- 1jC5ghjHWpMgBM+xTJ40FanVT7l1zmzl5rzqRgXJGakFljVN81OEAf9aI6l1fKmSA+o1sjhQPUb
- +nDgSzSjuBrKVgfXxD6AmUpkbFh/D+jUmkdiFW0mtAMYZWQCIyrZjFQlU/TA4rl1jJdPxycXfiT
- zuVPMXIZOUbx5iankgnZ3QKnYs0TpYz9H1SE0Fu4bA1vklC+z4WAELw5Co7PQ64hrwXz8LTdF5F
- dkNC+rDRWjlEH9mDpCw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDEzMyBTYWx0ZWRfX5+EgacDzmnBY
- kaGeu8nkZ86Zdaq12c6BYrkIkkyH9PEM9D9CH0h0a0cdCH3MeThXq1xvfXBxwF8LsHAEEet+e0g
- N3T/PAu4KNI9iA+m5Oe5dYm6jVKaM0c=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis
+ model
+To: Joel Stanley <joel@jms.id.au>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+References: <20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com>
+ <20260817-atlantis_prcm-v2-2-ffba0b944419@oss.tenstorrent.com>
+ <CACPK8XcEk4xXDYnY_FSZ7Wud0RQqyLzX_VVA3vXT2q27Z2dn8g@mail.gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CACPK8XcEk4xXDYnY_FSZ7Wud0RQqyLzX_VVA3vXT2q27Z2dn8g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDEzNCBTYWx0ZWRfX6a+0XgZ77jia
+ 0pfPFIU/KgwWylttMhU4u+bhhlYXFZEfPGWdUKaopFB39+ILsYpEJ8BXTu6hDxRFJ6trV+L+Flv
+ 2FkFF+QnoOoUq4EfgGADooWWmluNRnRvMXhqXWzlWSjamoZHaxJeg1xSzhB3wBDz07BRWAuWg6q
+ OI6Rp3eT5sHqoq5dAMiAOAwA6brl2YIZDLUIpfDZMeZw9JreFbL1jN5s9byZlUF7OPN0ItXS8S+
+ B2aTljaQHDsDfjq6HtDRmWbBXyV4bGeT5y6VA6mkSKamNGZZHlX4XgnMafrxWAr5fedtUL/ozPZ
+ SymtxEHw0/5GjVUkxWGd82OipS6xcXfdqGIzHgrg5wyj/kkm6SYp+gSn2JLJTdgTByWgvjuZXNb
+ RtKL1slrLEsEStXgdqMagT8sUCDbl9goEFHR7nNaOz8E0DWmp3jysGrLa3+Q/CdUtOec3EkvcZC
+ HBzrfvg/yH5LXcrFIVw==
+X-Authority-Analysis: v=2.4 cv=MrJiLWae c=1 sm=1 tr=0 ts=6a9ea947 cx=c_pps
+ a=0mLRTIufkjop4KoA/9S1MA==:117 a=CQQxcbsX5Byh3TlVSSGwig==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=t9496tuAAAAA:8 a=FRSEYCzRAAAA:8 a=BpZ-QL2r-Ufmruuip1YA:9
+ a=QEXdDO2ut3YA:10 a=WgItmB6HBUc_1uVUp3mg:22 a=4wQ91nGE5lQcD7eh5OX0:22
+ a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-ORIG-GUID: 2DF1EjFOMtsv29LLBqA2CvZWGdO3Dm5t
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDEzNCBTYWx0ZWRfXzESdHXFxfLEB
+ 7VhxsMsEw7UIcYDVMfWpOxSNjiZbORccv1x0O0pGvF6kZF2pc1ejC2emTHxMq0/3zNeo8bFGMg0
+ vq1jSSipp9ar+kaiGDHwCtAoYcxacu8=
+X-Proofpoint-GUID: 2DF1EjFOMtsv29LLBqA2CvZWGdO3Dm5t
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-07_03,2026-09-07_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609070134
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -192,207 +164,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/09/2026 20:35, John Snow wrote:
 
-> Make the extraordinary leap from Sphinx 3.4.3 to Sphinx
-> 7.2.6. Simplifications and cleanup will follow in subsequent patches.
+
+On 8/31/2026 4:06 AM, Joel Stanley wrote:
+> On Tue, 18 Aug 2026 at 00:13, Anirudh Srinivasan
+> <asrinivasan@oss.tenstorrent.com> wrote:
+>>
+>> Atlantis has 4 PRCMs that are visible from S mode by the Ascalon Core
+>> (RCPU, HSIO, PCIe and MM). This commit adds these 4 PRCM blocks to the
+>> tt-atlantis model, along with necessary device tree nodes for them.
+>>
+>> Reviewed-by: Chao Liu <chao.liu@processmission.com>
+>> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+>> ---
+>>   docs/system/riscv/tt_atlantis.rst |  1 +
+>>   hw/riscv/tt_atlantis.c            | 94 +++++++++++++++++++++++++++++++++++++++
+>>   include/hw/riscv/tt_atlantis.h    | 19 ++++++++
+>>   3 files changed, 114 insertions(+)
+>>
+>> diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
+>> index 1f2880d617..539c22354f 100644
+>> --- a/docs/system/riscv/tt_atlantis.rst
+>> +++ b/docs/system/riscv/tt_atlantis.rst
+>> @@ -14,6 +14,7 @@ tt-atlantis QEMU model features
+>>   * 8-core Ascalon-X CPU Cluster
+>>   * RISC-V compliant Advanced Interrupt Architecture
+>>   * 16550A compatible UART
+>> +* 4 PRCMs (Clock and Reset Controllers)
+>>
+>>   Known limitations
+>>   -----------------
+>> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+>> index d808bcc11c..9ebba07703 100644
+>> --- a/hw/riscv/tt_atlantis.c
+>> +++ b/hw/riscv/tt_atlantis.c
+>> @@ -26,6 +26,7 @@
+>>   #include "hw/char/serial-mm.h"
+>>   #include "hw/intc/riscv_aclint.h"
+>>   #include "hw/misc/unimp.h"
+>> +#include "hw/misc/tt_atlantis_prcm.h"
+>>
+>>   #include "system/system.h"
+>>   #include "system/device_tree.h"
+>> @@ -59,6 +60,10 @@ static const MemMapEntry tt_atlantis_memmap[] = {
+>>       [TT_ATL_I2C3] =             { 0xd4070000,       0x10000 },
+>>       [TT_ATL_I2C4] =             { 0xd4080000,       0x10000 },
+>>       [TT_ATL_UART1] =            { 0xd4110000,       0x10000 },
+>> +    [TT_ATL_PRCM_RCPU] =        { 0xd0000000,       0x10000 },
+>> +    [TT_ATL_PRCM_PCIE] =        { 0xd8000000,         0x100 },
+>> +    [TT_ATL_PRCM_MM] =          { 0xdc000000,        0x1000 },
+>> +    [TT_ATL_PRCM_HSIO] =        { 0xe00c0000,         0x510 },
+>>       [TT_ATL_SAPLIC] =           { 0xe8000000,     0x4000000 },
+>>       [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
+>>   };
+>> @@ -328,11 +333,35 @@ static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
+>>       qemu_fdt_setprop_cell(fdt, name, "reg", addr);
+>>   }
+>>
+>> +static char *create_fdt_prcm(void *fdt, const MemMapEntry *mem,
+>> +                             const char *prcm_name)
+>> +{
+>> +    hwaddr base = mem->base;
+>> +    hwaddr size = mem->size;
+>> +    char *name = g_strdup_printf("/soc/prcm_%s@%" PRIx64,
+>> +                                 prcm_name, mem->base);
 > 
-> Note that CentOS Stream 9 only ships a version of Sphinx that runs on
-> Python 3.9, so regardless of the version of Sphinx we require, if we
-> require Python 3.10+, CentOS Stream 9 will be unable to build QEMU
-> documentation in an isolated offline build environment.
+> Use the locals, or drop them and use mem->base both times.
 > 
-> CentOS Stream 9 continues to be able to build documentation so long as
-> PyPI access is permitted during configure, or if the requisite PyPI
-> packages are installed prior to configure time.
+>> +    g_autofree char *compatible =
+>> +        g_strdup_printf("tenstorrent,atlantis-prcm-%s", prcm_name);
+>> +
+>> +    qemu_fdt_add_subnode(fdt, name);
+>> +    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
+>> +    qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, base, 2, size);
+>> +    qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
+>> +    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+>> +    qemu_fdt_setprop_cell(fdt, name, "#clock-cells", 1);
+>> +    qemu_fdt_setprop_cell(fdt, name, "#reset-cells", 1);
+>> +    qemu_fdt_setprop_cell(fdt, name, "phandle", next_phandle());
 > 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Message-ID: <20260825215851.1780608-15-jsnow@redhat.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   docs/conf.py             |  4 ++--
->   docs/requirements.txt    |  2 +-
->   python/setup.cfg         |  2 +-
->   python/tests/minreqs.txt | 29 ++++++++++++++++-------------
->   pythondeps.toml          |  4 ++--
->   5 files changed, 22 insertions(+), 19 deletions(-)
+> If a phandle falls in the woods and nobody...
 > 
-> diff --git a/docs/conf.py b/docs/conf.py
-> index 7e35d2158d3..cded047b539 100644
-> --- a/docs/conf.py
-> +++ b/docs/conf.py
-> @@ -51,9 +51,9 @@
->   
->   # If your documentation needs a minimal Sphinx version, state it here.
->   #
-> -# 3.4.3 is the oldest version of Sphinx that ships on a platform we
-> +# 7.2.6 is the oldest version of Sphinx that ships on a platform we
->   # pledge build support for.
-> -needs_sphinx = '3.4.3'
-> +needs_sphinx = '7.2.6'
->   
->   # Add any Sphinx extension module names here, as strings. They can be
->   # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-> diff --git a/docs/requirements.txt b/docs/requirements.txt
-> index 87f7afcb2e7..c10c4cf7c91 100644
-> --- a/docs/requirements.txt
-> +++ b/docs/requirements.txt
-> @@ -1,5 +1,5 @@
->   # Used by readthedocs.io
->   # Should be in sync with the "installed" key of pythondeps.toml
->   
-> -sphinx==6.2.1
-> +sphinx==7.2.6
->   sphinx_rtd_theme==1.2.2
-> diff --git a/python/setup.cfg b/python/setup.cfg
-> index ebb4230899c..927f72a46f6 100644
-> --- a/python/setup.cfg
-> +++ b/python/setup.cfg
-> @@ -41,7 +41,7 @@ devel =
->       pylint >= 2.17.3
->       pytest >= 6.2.4
->       tox >= 3.18.0
-> -    sphinx >= 3.4.3
-> +    sphinx >= 7.2.6
->   
->   # Provides qom-fuse functionality
->   fuse =
-> diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-> index 85cfa08cf76..7154ad40040 100644
-> --- a/python/tests/minreqs.txt
-> +++ b/python/tests/minreqs.txt
-> @@ -12,7 +12,7 @@
->   # on PyPI that allows the test suite to pass.
->   
->   # Dependencies for qapidoc/qapi_domain et al
-> -sphinx==3.4.3
-> +sphinx==7.2.6
->   
->   # Dependencies for qemu.machine
->   qemu.qmp==0.0.6
-> @@ -48,23 +48,26 @@ platformdirs==2.2.0
->   tomlkit==0.10.1
->   
->   # Transitive sphinx dependencies
-> -Jinja2==2.7
-> -MarkupSafe==1.1.0
->   alabaster==0.7.1
-> -babel==1.3
-> -docutils==0.12
-> -imagesize==0.5.0
-> -packaging==14.0
-> -Pygments==2.0
-> -pytz==2014.9
-> -requests==2.5.0
-> -snowballstemmer==1.1
-> +babel==2.9
-> +certifi==2023.5.7
-> +charset-normalizer==2.0.0
-> +docutils==0.18.1
-> +idna==2.5
-> +imagesize==1.3
-> +Jinja2==3.0.0
-> +MarkupSafe==2.0
-> +packaging==21.0
-> +Pygments==2.14
-> +requests==2.25.0
-> +snowballstemmer==2.0
->   sphinxcontrib-applehelp==1.0.0
->   sphinxcontrib-devhelp==1.0.0
-> -sphinxcontrib-htmlhelp==1.0.0
-> +sphinxcontrib-htmlhelp==2.0.0
->   sphinxcontrib-jsmath==1.0.0
->   sphinxcontrib-qthelp==1.0.0
-> -sphinxcontrib-serializinghtml==1.0.0
-> +sphinxcontrib-serializinghtml==1.1.9
-> +urllib3==1.26
->   
->   # Transitive pytest dependencies
->   attrs==19.2.0
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index b1879c1a4da..f0f3af915a1 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -28,8 +28,8 @@ meson = { accepted = ">=1.12.0", installed = "1.12.0", canary = "meson" }
->   
->   [docs]
->   # Please keep the installed versions in sync with docs/requirements.txt
-> -sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
-> -sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
-> +sphinx = { accepted = ">=7.2.6", installed = "7.2.6", canary = "sphinx-build" }
-> +sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "1.2.2" }
->   
->   # This test group is for dependencies required to run various tooling
->   # and tests that should always be installed at configure time. It should
+> If you're not saving this value anywhere, is there any need to set one?
 
-Hi John,
+The code is retrieving this value down below:
 
-This patch appears to break configure with --enable-docs in a fresh 
-build/ output directory:
-
-../docs/meson.build:25: WARNING: 
-/home/mca/src/upstream/qemu/build/pyvenv/bin/sphinx-build:
-Sphinx version error:
-This project needs at least Sphinx v7.2.6 and therefore cannot be built 
-with this version.
+ >> +    g_autofree char *rcpu_name = create_fdt_prcm(fdt,
+ >> +        &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
+ >> +    prcm_rcpu_phandle = qemu_fdt_get_phandle(fdt, rcpu_name);
 
 
-../docs/meson.build:27:6: ERROR: Problem encountered: Install a Python 3 
-version of python-sphinx and the readthedoc theme
+This is a suggestion I made in v1 to avoid having to carry a pre-generated
+phandle value when one can be autogenerated when needed.
 
-A full log can be found at 
-/home/mca/src/upstream/qemu/build/meson-logs/meson-log.txt
+Note that this suggestion was made before "next_phandle()" was introduced.
 
-ERROR: meson setup failed
+> 
+>> +
+>> +    return name;
+>> +}
+>> +
+>>   static void finalize_fdt(TTAtlantisState *s)
+>>   {
+>>       uint32_t aplic_s_phandle = next_phandle();
+>>       uint32_t imsic_s_phandle = next_phandle();
+>>       uint32_t periph_clk_phandle = next_phandle();
+>> +    uint32_t osc_24m_phandle = next_phandle();
+>> +    uint32_t prcm_rcpu_phandle;
+>>       void *fdt = MACHINE(s)->fdt;
+>>
+>>       create_fdt_cpu(s, s->memmap, aplic_s_phandle, imsic_s_phandle);
+>> @@ -348,6 +377,34 @@ static void finalize_fdt(TTAtlantisState *s)
+>>                       aplic_s_phandle);
+>>
+>>       create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
+>> +    create_fdt_clk(fdt, "osc_24m", 24000000, osc_24m_phandle);
+> 
+> With the PRCM enabled the UART and I2C can get a real clock? So we can
+> drop the periph-clk node and modify create_fdt_i2c as well as
+> create_fdt_uart to use the real PRCM phandles. This will shake out any
+> issues with how you're wiring up the device tree too.
+> 
+>> +
+>> +    g_autofree char *rcpu_name = create_fdt_prcm(fdt,
+>> +        &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
+>> +    prcm_rcpu_phandle = qemu_fdt_get_phandle(fdt, rcpu_name);
+> 
+> This is a great function that I didn't know of when I wrote
+> next_phandle(). I'm all for using it, but lets swap the entire file
+> over at once.
 
-Digging in with a bit more detail we can see that Sphinx 6.2.1 is still 
-being installed in the pyvenv:
+They're not the same thing though.  qemu_fdt_get_phandle(fdt, nodename)
+retrieves the already assigned phandle value for nodename.  It doesn't do
+the same as next_phandle().  I believe you're thinking about
+qemu_fdt_alloc_phandle(fdt) instead.
 
-$ ./build/pyvenv/bin/sphinx-build --version
-sphinx-build 6.2.1
-
-And with even more debugging:
-
-$ ./build/pyvenv/bin/python3 -B ./python/scripts/mkvenv.py ensuregroup 
---online ./pythondeps.toml docs
-mkvenv: checking for sphinx>=7.2.6
-mkvenv: checking for sphinx_rtd_theme>=1.2.2
-mkvenv: installing sphinx==7.2.6, sphinx_rtd_theme==1.2.2
-ERROR: Cannot install sphinx-rtd-theme==1.2.2 and sphinx==7.2.6 because 
-these package versions have conflicting dependencies.
-ERROR: ResolutionImpossible: for help visit 
-https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
-
-*** Ouch! ***
-
-Could not provide build dependency 'sphinx==7.2.6':
-  • Python package 'sphinx' version '6.2.1' was found, but isn't suitable.
-  • A suitable version could not be obtained from PyPI.
-
-If I remove installed = "1.2.2" from pythondeps.toml then that allows 
-configure to succeed with sphinx_rtd_theme version 3.1.0 installed, so 
-my current workaround is to use the patch below:
-
-diff --git a/pythondeps.toml b/pythondeps.toml
-index e4c10d4a9f..84c444ffe8 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -29,7 +29,7 @@ meson = { accepted = ">=1.12.0", installed = "1.12.0", 
-canary = "meson" }
-  [docs]
-  # Please keep the installed versions in sync with docs/requirements.txt
-  sphinx = { accepted = ">=7.2.6", installed = "7.2.6", canary = 
-"sphinx-build" }
--sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "1.2.2" }
-+sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "3.1.0" }
-
-  # This test group is for dependencies required to run various tooling
-  # and tests that should always be installed at configure time. It should
+And yes, ideally the board would either do the phandle management by its own,
+i.e. what next_phandle() is doing and what other boards like 'virt' do, or
+rely on alloc_phandle + get_phandle.  Mixing and matching them can work as
+long as you're doing alloc_phandle last - otherwise the manual phandle
+counter can collide with alloc_phandle.
 
 
-ATB,
+Thanks,
+Daniel
 
-Mark.
+
+
+> 
+>> +    qemu_fdt_setprop_cells(fdt, rcpu_name, "clocks", osc_24m_phandle);
+>> +    qemu_fdt_setprop_cells(fdt, rcpu_name, "assigned-clocks",
+>> +                           prcm_rcpu_phandle, TT_ATL_CLK_RCPU_ROOT,
+>> +                           prcm_rcpu_phandle, TT_ATL_CLK_NOCC_CLK);
+>> +    qemu_fdt_setprop_cells(fdt, rcpu_name, "assigned-clock-parents",
+>> +                           prcm_rcpu_phandle, TT_ATL_CLK_RCPU_PLL,
+>> +                           prcm_rcpu_phandle, TT_ATL_CLK_NOC_PLL);
+> 
+>> @@ -545,6 +602,43 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>>       serial_mm_init(system_memory, s->memmap[TT_ATL_UART1].base, 2,
+>>                      qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ),
+>>                      115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+>> +
+>> +    /* Add rcpu prcm block */
+>> +    object_initialize_child(OBJECT(s), "prcm-rcpu", &s->prcm[0],
+>> +                            TYPE_TT_ATLANTIS_PRCM_RCPU);
+>> +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[0]), &error_fatal);
+>> +    memory_region_add_subregion(system_memory,
+> 
+> Since you're already sending a v3, can you rebase it on this series please:
+> 
+>   https://lore.kernel.org/qemu-riscv/20260831021500.82565-1-joel@jms.id.au/
+> 
+> Aside from code shuffling, you will pass s->memory to
+> memory_region_add_subregion, the _realize calls go in
+> tt_atlantis_soc_realize, and the initalise calls go in
+> tt_atlantis_soc_init.
+> 
+>> +                                s->memmap[TT_ATL_PRCM_RCPU].base,
+>> +                                sysbus_mmio_get_region(
+>> +                                    SYS_BUS_DEVICE(&s->prcm[0]), 0));
+>> +
+> 
+>> diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+>> index 7f7d4a5a59..20bcdfeb52 100644
+>> --- a/include/hw/riscv/tt_atlantis.h
+>> +++ b/include/hw/riscv/tt_atlantis.h
+> 
+>> @@ -59,6 +62,22 @@ enum {
+>>       TT_ATL_SAPLIC,
+>>       TT_ATL_SIMSIC,
+>>       TT_ATL_UART1,
+>> +    TT_ATL_PRCM_RCPU,
+>> +    TT_ATL_PRCM_HSIO,
+>> +    TT_ATL_PRCM_PCIE,
+>> +    TT_ATL_PRCM_MM,
+>> +};
+>> +
+>> +/* RCPU PRCM Clock IDs */
+> 
+> Do these come from
+> include/dt-bindings/clock/tenstorrent,atlantis-prcm-rcpu.h in linux?
+> Add a comment.
+> 
+>> +enum {
+>> +    TT_ATL_CLK_RCPU_PLL = 0,
+>> +    TT_ATL_CLK_RCPU_ROOT = 1,
+>> +    TT_ATL_CLK_NOC_PLL = 25,
+>> +    TT_ATL_CLK_NOCC_CLK = 26,
+>> +    TT_ATL_CLK_HSIO_PLL = 54,
+>> +    TT_ATL_CLK_PCIE_PLL = 55,
+>> +    TT_ATL_CLK_MM_PLL0 = 56,
+>> +    TT_ATL_CLK_MM_PLL1 = 57,
+>>   };
+>>
+>>   #endif
+>>
+>> --
+>> 2.43.0
+>>
 
 
