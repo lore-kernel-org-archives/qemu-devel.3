@@ -4,119 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79549C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839ADC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3XPP-00055n-Jy; Mon, 07 Sep 2026 07:21:07 -0400
+	id 1x3Xfi-0007xg-Et; Mon, 07 Sep 2026 07:37:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1x3XPN-000501-Jc
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:21:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1x3Xfh-0007xQ-7v
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:37:57 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1x3XPL-0007aS-1g
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:21:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788780062;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qfZdPc4grxKQpmIi+aRvCq6eXKlYGW2NCnVnPWY+eUo=;
- b=GDZXFfvV4GmTWxTUqH7qp2JC7Pf6pBB9v7F7hAqWtG4ErkbT2n1IxMRdog+v0eHJ/Qgx6i
- nb8FubqFNHaLOeVcA6PLedVyI8BgWiseLyL6iplu7Aheo5DrVhjY0VSHTeEX4Ylz7D7BAc
- eItKTamlKYzfqbT7r+yStL6JeaLJpl0=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-ab0ysy2-P4C05z5l8D5UZQ-1; Mon, 07 Sep 2026 07:21:00 -0400
-X-MC-Unique: ab0ysy2-P4C05z5l8D5UZQ-1
-X-Mimecast-MFC-AGG-ID: ab0ysy2-P4C05z5l8D5UZQ_1788780060
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-9103c9c0b34so77194066d6.1
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 04:21:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788780060; cv=none;
- d=google.com; s=arc-20260327;
- b=Mm5FmBgr45dwrj2j5W9gzyq8EpFQHR/dQJAazPIIoaWPY1ugbfVgV6mBaWg0gB2kbj
- 8RUCLXHow9zvXUd0Z/L+9qHOiMCtx9e/GCdD6V/iiCi8XnbLULkWRFzBVr86U+AbfFSN
- E67J7g9Pi8GktMMnF45bGw8L382Z/7AVhjUw8d08ZKeUrzF1XqxqJ3Xx0gCAhypFbmVM
- iFol/Z6hFPlsSa2ryZ7VNwfXlMJmYxxoJ0uQYIvoN4hKJhp6A1h8MPgYKul4IJuJJAaY
- FOTI0BLIHwJhnX9Otf3Q8TeML1fFKPr5qSfEo4SfLRgxEOXv87dfWrml5coE8PSVET7Q
- 7VZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=qfZdPc4grxKQpmIi+aRvCq6eXKlYGW2NCnVnPWY+eUo=;
- fh=2UZlmMdSzD3+f507HMdukLRvlcEDzodjJVY4NLN3tLg=;
- b=BYzit06Eg7DKAC8e0EXAv3qzQ4tjn5OgPsuXwKA3W3NDFl3xPCgCzpP7KLjExMxlGd
- orfbE+DERXqyZHEhvNPED0cyw0nT2sbF9+JtPEaVxiXHRVUu9o161OLFGPkYLiRZjBqc
- A6pnnxnXIV7+5yrOqkxebG7s8zJAChORUwMlR9YzfsCmwzNtgtfST/DUJt0GWgyUZh06
- rch1GDelnvDDWhCqjrMm7fvy6tZDE49sxbFAhzpDGBTMa2Q04nBGqccBUSuK6rnsTA0g
- +7xRylwmqWWjga596XCqMqcc6APEdK4APP447snECuzzfkJ8q5dNRH1xGvPDAal4aHDV
- wrMQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1x3Xfe-0001gm-P9
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 07:37:56 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 687Ammwh3180532
+ for <qemu-devel@nongnu.org>; Mon, 7 Sep 2026 11:37:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=wbz+NUyX1mcY6m3RPT/McHzeKi8bAyxsRjF
+ xkx87UlY=; b=HgLwJUzVEXwHUQh2WKDDb5BkCPiNsXkgG468CHVYa6IcUCSj58a
+ aQpzRr7FU6gEWXlJFEvXkLgDZY+h4w7PPaE1OGVHLAqWiK3eT7e67H5tJliCzfiX
+ 7NO+OtCc3gBrfq6Cdl7fGn117RJHwWZQ17taJjI1+riM8GbRRhQucbfv34JFm3Gs
+ rwZmMqEPpozXQuFARaOg1P+yWZ6RJcXLmFA7bFLtrpTAPPK5HE6JAdBxAdbXdnFI
+ yRMoFjFiXjS41dKIJYOxslAg5WAT9303YH7Omp610GMLs/6DBn7n3mb2NGzSf8It
+ 8/Dp1JtcfjQfcFbuUtsFFWvawPPg3z5Ar7A==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ghsw20re5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 11:37:49 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-38e8d1600b3so898789a91.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 04:37:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788780060; x=1789384860; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=qfZdPc4grxKQpmIi+aRvCq6eXKlYGW2NCnVnPWY+eUo=;
- b=kWnWzLo9dV2OasESZ6ZMmPrbjPQHjIUBM6qhSKp0XwKGE6Aq17eVQY+m798f6e1nJG
- ELQv8snoj98oWujihYCjm777gjT8q5bimf4GCkdhchd+bOPxhO2f/CcyqaQkG8/6+w5W
- jwS6Kv7wI0sMTKJKpRIVjVoZe1Erw+mawQJSrC2bf21PhmUFBUYicP+leADPRLqlPMRU
- /Us2ff77iuK998ERfXRTHZ9h9FSPVbw+KCox5iCLRKGx7WICccjMB7mIDxIPjWKSe0br
- yQNzFjYNDBgSoeJA8v6/JhCC18DLiYCLj5085sfWypXUK7SqdKy1hAgEj1khUdfe3Qk5
- ee8A==
+ d=oss.qualcomm.com; s=google; t=1788781069; x=1789385869; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=wbz+NUyX1mcY6m3RPT/McHzeKi8bAyxsRjFxkx87UlY=;
+ b=QwMGrrg7c6QMSx9Ms7dHQV2/Pi3YYPseb3+BTZqquKmn+X6+wnqUOVY+IlqWYpqdGC
+ IMHh5MHIpfgpwI6/wui70DiYgjSeMCcuzX0MUnYuU3/krTyOuHMa0zangd1u7noK8jFX
+ neSm7Tal8YRK1SxvzoEoGQVBgzCkVF3RPCHoqQHEhx2RTvJSl8YFGvEZQzcZLYDpELhX
+ SlKRUd47PgVOt/QF58CdjlIgI3Mq6ecyrEMk8LZEyOEKq8pp0EBuu2vlTTdVgVOQgviK
+ eD4s2tBmFzH2o5XUwYQvSzAUFwaXBvXYToElmlcHGwEGWYwsurMgSgo2f6V5x2PidG00
+ rnDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788780060; x=1789384860;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=qfZdPc4grxKQpmIi+aRvCq6eXKlYGW2NCnVnPWY+eUo=;
- b=MUvZCv2WMKVawYVYAvH9CCtVlNOeXR6n25z0SmeRhWwtHD3a4+7Ou1CQklb4LZEBi7
- gkLtU7v9idOLITYPuWlU6LK+EKHFuJBguXCsXTVdFrYJgv4T8NL41Jp2iS2wIUl5FUY9
- RyQIiY9GzqlPlDcMau77xFvflfpXnLhDzax+jaFVaP0BPCahvbTTU2ZeW7fJ4CjVN7D1
- wgFDGRvgCHQ5zSsNfib77zt92+Jba+yWKmFAKXK6tYb5dXYfFIA5C/oSXYcK/yybTC4B
- aJTHPzXIsLXcpppqJva/ozik49Wnd3YV5ammfzTm/bRDWQwDMOulls9l095A2hIIhgNL
- /V5g==
-X-Gm-Message-State: AFuF++mYliJK8dxCbPxQa7TDnvNstPZq48DA5aE87cY4e4m9uVcH2MfA
- 3RdELezFeY3lJgpZfoOIPosHU666jLCWrU58IPMSZ/TODMOb65+bQOZ1UMnA//Rly0uljA6TGVH
- rJtXSIqdD4pMZdCHufvhAQ+6armIqLE8uByWkyAsd5sHIUzoa1GIvqbjcyx3dix8C2pfFUXg7Zs
- gpkEATCdn9qHyo/uw+blSVfSHV4+wvTQM=
-X-Gm-Gg: AYBFou1pS606uFR5sa6zHgNDkp5i8ICgnREqiF7V3jHqO5Z5lwRRPWJFv/uSadNqIJ2
- 004G703Nl7OAZJc4qBVw1RKqO7OQvHeVtkxcTXYWxYO2OBAG+AuOGCthwS1HJ2qvZdj/a1JR+Wz
- f9gy4M3Ac/91KWDsOb4Kr256bbCHCU/GLbfWQSL2D5FmSF3M5FVlpKLWba3ao=
-X-Received: by 2002:a05:6214:daa:b0:910:4b24:a936 with SMTP id
- 6a1803df08f44-9104b24aa14mr144876206d6.6.1788780060219; 
- Mon, 07 Sep 2026 04:21:00 -0700 (PDT)
-X-Received: by 2002:a05:6214:daa:b0:910:4b24:a936 with SMTP id
- 6a1803df08f44-9104b24aa14mr144870146d6.6.1788780055015; Mon, 07 Sep 2026
- 04:20:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788781069; x=1789385869;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=wbz+NUyX1mcY6m3RPT/McHzeKi8bAyxsRjFxkx87UlY=;
+ b=eRQuo3D1/1eLq8dZVCBSJ8k3F7qIRarmeLC9Le6BfNSn99Kt4DiWuUI+NxYrqy+sYl
+ tqqxZDBq3E5OctfUA4afXewF1Foz7LxF7AymIYdjYkiyQRQD8O50DIpfYrI5oEy+MMm1
+ MsW4Cr3/338Jml/GBT+gE+54NOjr2n1tS603LzqvhxnIZk4SDsH44sOWotJoHN1jEv9s
+ Dfj99q9JnV1SatxfkTcrtJCqwcve2X7WhPECeEgoH7Add7MVj90AjsFkAvIGXfbDWdSV
+ /BRca5RLet365sdaAFm7x3uV0OQbJSP+m0rMKll8rRdt5Yl3oo9bOq7sCcA0OGdOV8SV
+ NCJw==
+X-Gm-Message-State: AFuF++lYfN9vPSxWXVAUNjyRj0463oDYTkVQgwYUDCipGsVFTULHK+JQ
+ +nRFv6p4gGmRSuC1kYAL1lOgsgVuv+L88A+Y6gz6jMZlvfiHx6akB0djba3nDclQ/RzrsHivI9d
+ HXEQpwCHBHz/x45Vz8ctzZL9JQNM3VE1ISBjVRYxS+DrYOjxuscSBvPSdvhD9vdv7qg==
+X-Gm-Gg: AYBFou3NWZqIlKSo88A5JZe4CIxuh7Q3PrfOapINMNqZDhgNlAUgaZGpQot8lE6OCYa
+ EVNYkGtbgd9R7qUJXjk1O28pUQpdEPyt/0VVYBpxVTQF6vN2aj4epKAt0PLSwaTIn0QG7i4O7le
+ TMBJCrtClLYAx/nmWcrBpbzRaVPxESGXLUu7vSj1TVJf4BKf64qJ289bx75db+o3u3/Ljezp6PS
+ q4IVIMYIlkRY5MqweDW1M6P/r2eQzM7hUbVfdCxAruEG1Q7JPsDWjzBY6Qqik1nH/TQC1gtLpL7
+ 33N0KOwF6UXBW5f49TXANMLAJ5Sx60VjYzexVC07eDNb6cuDeQk+QOQGtUbucN/UACPfHxhbReA
+ Z7tYLxn9q0ib9aNd1q3hKvRgNhLLTOZPn3aHT6jOy74DoMh7cq/paD35yYfr5WdUn82XgLLpka7
+ Y4vuf1KNxquPPv+lGrbAPA7xlTOvV0Vw0=
+X-Received: by 2002:a17:90b:384d:b0:398:bac0:238e with SMTP id
+ 98e67ed59e1d1-39b3d8377camr16468452a91.6.1788781069108; 
+ Mon, 07 Sep 2026 04:37:49 -0700 (PDT)
+X-Received: by 2002:a17:90b:384d:b0:398:bac0:238e with SMTP id
+ 98e67ed59e1d1-39b3d8377camr16468399a91.6.1788781068497; 
+ Mon, 07 Sep 2026 04:37:48 -0700 (PDT)
+Received: from hu-slingapp-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33517b57ac8sm17169507eec.28.2026.09.07.04.37.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Sep 2026 04:37:48 -0700 (PDT)
+From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org,
+ Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+Subject: [PATCH v1 0/2] riscv: add RPMI support for server reference platform
+Date: Mon,  7 Sep 2026 17:07:13 +0530
+Message-ID: <20260907113715.1219775-1-subrahmanya.lingappa@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260907-qga-v1-0-86456ad356e2@redhat.com>
- <20260907-qga-v1-9-86456ad356e2@redhat.com>
-In-Reply-To: <20260907-qga-v1-9-86456ad356e2@redhat.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 7 Sep 2026 14:20:43 +0300
-X-Gm-Features: AcwNN1USb1oldLY_Koa-RveruSHhbPC23VmsaaAcCKCUPzIymyjH8PajXW0WHe8
-Message-ID: <CAPMcbCr-OfoEEwoBPc553NQE1RiWvpxvxV0WXmVpykVg33neCw@mail.gmail.com>
-Subject: Re: [PATCH 09/17] qga/vss-win32: use GetLastError() after
- FindFirstVolumeW failure
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000c2ca46065ae2cf0b"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: ZvaTR0PLSMbhJlHvAWedq0mrPTZSIz4P
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA3MDEyOCBTYWx0ZWRfXyjJxfOiZrbmo
+ j38KlXtlOBhrPaY0EDiHgh0eLiWoIXGTF1nw8oub81Wouij2rAYRs2FtRrl0oj8+6I6dVZW2tCn
+ zMoodVpqJY8dYzK0EjKy/IPJiW3nPns=
+X-Authority-Analysis: v=2.4 cv=eKwjSnp1 c=1 sm=1 tr=0 ts=6a9ea20d cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=NEAV23lmAAAA:8 a=D1dBp2MNxbUKwEfqZIUA:9
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDEyOCBTYWx0ZWRfX/n6IGPOXXEKp
+ daf+EWlOCDNojXiR/XYLOsG+QJ0z+L89oi+vbS6yWTRWJqANRORSeD/916ku/X1H9KaOaSnLJwr
+ xlOieC5wGcMpiP4dQkOdWhZIZaW3WykNR/MieSf0lIb0vuHkbdddZ9CKZVFBfojvcX0zQz5/mrK
+ rUSWs6O8KCOfvmzLrGkFvfHYUSCwQ3cycZi6ZIRU4q0CbJQZyB0wB0HXshMTqzPi0pmDp07o7ln
+ vCcQZ2KMOI7JBY9r1tDEVkKUfJ0QUCV1umF7qvU/LrrSKFr7Zj92svJfXZ50z7sFJEuGLxfsCRl
+ iNdLTjWGpy3q9f7P6tBfgL5uPhKzrzoyxdhDduSTulq/bgR8F9vJx9TnGjeM1YylW/VzcmBT8fE
+ 93Sv+0FbUcs0ldQm65UaenEGG9zW9+2L16fe8kAAsHljoGDL3cTWgIos+icDs4IpsTdC6yV8bAq
+ PBdJjbP5MsWTJt9TUug==
+X-Proofpoint-GUID: ZvaTR0PLSMbhJlHvAWedq0mrPTZSIz4P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-07_03,2026-09-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 adultscore=0 spamscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2609070128
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,95 +149,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c2ca46065ae2cf0b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Add RPMI support for the RISC-V server reference platform by wiring the
+existing RISC-V RPMI device and FDT helpers into the riscv-server-ref
+machine.
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+The series enables Base, System Reset, HSM, and System Suspend service
+groups for riscv-server-ref.  When QEMU is built with librpmi support,
+the riscv-server-ref machine always advertises reset, shutdown, HSM, and
+suspend through RPMI and has no rpmi=on|off machine option.
 
-On Mon, Sep 7, 2026 at 1:50=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
-marcandre.lureau@redhat.com> wrote:
+If librpmi is not enabled in a default riscv64-softmmu build, configure
+warns that riscv-server-ref will be built without RPMI support and
+continues so RISC-V machines that do not require RPMI still build without
+librpmi.  Booting riscv-server-ref from such a build also emits a warning
+that RPMI support is not compiled in.
 
-> When FindFirstVolumeW fails, the error was reported using a stale
-> HRESULT from a prior SetContext call instead of the actual Windows
-> error. Use GetLastError() to report the correct failure reason.
->
-> Fixes: 0692b03ee135 ("qga-win: add support for
-> qmp_guest_fsfreeze_freeze_list")
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  qga/vss-win32/requester.cpp | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-> index 1fd73312bab2..d7907c230656 100644
-> --- a/qga/vss-win32/requester.cpp
-> +++ b/qga/vss-win32/requester.cpp
-> @@ -434,7 +434,7 @@ void requester_freeze(int *num_vols, void
-> *mountpoints, ErrorSet *errset)
->      if (!mountpoints) {
->          volume =3D FindFirstVolumeW(short_volume_name,
-> ARRAYSIZE(short_volume_name));
->          if (volume =3D=3D INVALID_HANDLE_VALUE) {
-> -            err_set(errset, hr, "failed to find first volume");
-> +            err_set(errset, GetLastError(), "failed to find first
-> volume");
->              goto out;
->          }
->
->
-> --
-> 2.55.0.543.g5ebe2ebe4ea8
->
->
+Dependencies:
+- Daniel Henrique Barboza's prerequisite server reference board series:
+  [PATCH v9 0/5] hw/riscv: Server Platform Reference Board
+  https://lore.kernel.org/qemu-devel/20260903183125.682865-1-daniel.barboza@oss.qualcomm.com/
+- RPMI virt prerequisite:
+  [PATCH v10 00/10] riscv: add initial RPMI virt support
+  https://lore.kernel.org/qemu-devel/20260828112803.86636-1-subrahmanya.lingappa@oss.qualcomm.com/
 
---000000000000c2ca46065ae2cf0b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Public branch for this exact stack:
+https://github.com/slingappa/qemu/tree/server-ref-platform
 
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
-uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, S=
-ep 7, 2026 at 1:50=E2=80=AFPM Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:=
-marcandre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt; wrote:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">When FindFirstVolum=
-eW fails, the error was reported using a stale<br>
-HRESULT from a prior SetContext call instead of the actual Windows<br>
-error. Use GetLastError() to report the correct failure reason.<br>
-<br>
-Fixes: 0692b03ee135 (&quot;qga-win: add support for qmp_guest_fsfreeze_free=
-ze_list&quot;)<br>
-Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lurea=
-u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/vss-win32/requester.cpp | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp<br>
-index 1fd73312bab2..d7907c230656 100644<br>
---- a/qga/vss-win32/requester.cpp<br>
-+++ b/qga/vss-win32/requester.cpp<br>
-@@ -434,7 +434,7 @@ void requester_freeze(int *num_vols, void *mountpoints,=
- ErrorSet *errset)<br>
-=C2=A0 =C2=A0 =C2=A0if (!mountpoints) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0volume =3D FindFirstVolumeW(short_volume_=
-name, ARRAYSIZE(short_volume_name));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (volume =3D=3D INVALID_HANDLE_VALUE) {=
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err_set(errset, hr, &quot;failed=
- to find first volume&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err_set(errset, GetLastError(), =
-&quot;failed to find first volume&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-<br>
--- <br>
-2.55.0.543.g5ebe2ebe4ea8<br>
-<br>
-</blockquote></div>
+The PR/review branch is based on a replay of the RPMI virt support on
+top of Daniel's server-ref v9 branch:
+https://github.com/slingappa/qemu/tree/server-ref-platform-base
 
---000000000000c2ca46065ae2cf0b--
+Testing:
+- Built riscv64-softmmu with librpmi.
+- Ran focused RPMI qtests:
+  - qemu:qtest-riscv64/riscv-rpmi-virt-test: 18 subtests passed
+  - qemu:qtest-riscv64/riscv-rpmi-server-ref-test: 15 subtests passed
+- Built riscv64-softmmu without librpmi.
+- Checked that riscv-server-ref boots from the no-librpmi build and
+  reports that RPMI support is not compiled in.
+- Booted riscv-server-ref Linux guest and checked OpenSBI, Linux, board
+  model, e1000e, and init startup console messages.
+- Booted riscv-server-ref Linux guest to login prompt and validated
+  RPMI-backed poweroff, reboot, and suspend/wakeup from the guest console.
 
+Subrahmanya Lingappa (2):
+  hw/riscv: add RPMI support for server reference platform
+  tests/qtest: split RISC-V RPMI tests by machine
+
+ MAINTAINERS                              |   2 +-
+ docs/system/riscv/riscv-server-ref.rst   |  41 ++
+ hw/riscv/Kconfig                         |   1 +
+ hw/riscv/server_platform_ref.c           | 146 ++++++-
+ meson.build                              |   4 +
+ tests/qtest/meson.build                  |   4 +-
+ tests/qtest/riscv-rpmi-server-ref-test.c |  36 ++
+ tests/qtest/riscv-rpmi-test.c            | 476 ++++++++++++-----------
+ tests/qtest/riscv-rpmi-test.h            | 131 +++++++
+ tests/qtest/riscv-rpmi-virt-test.c       |  45 +++
+ 10 files changed, 659 insertions(+), 227 deletions(-)
+ create mode 100644 tests/qtest/riscv-rpmi-server-ref-test.c
+ create mode 100644 tests/qtest/riscv-rpmi-test.h
+ create mode 100644 tests/qtest/riscv-rpmi-virt-test.c
+
+
+base-commit: 8e3bcd4648eea7e4f38781308eff13cbf828ae82
+-- 
+2.43.0
 
