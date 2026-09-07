@@ -4,114 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A5FC79FA1
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 15:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC94CC79FA1
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 16:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3bii-0006qt-SO; Mon, 07 Sep 2026 11:57:20 -0400
+	id 1x3bl7-0000WM-0D; Mon, 07 Sep 2026 11:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x3bid-0006qE-GV
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:57:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x3bl5-0000W5-7S
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:59:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1x3bib-0000v6-Dy
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:57:15 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x3bkr-0001W7-H0
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 11:59:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788796632;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1788796772;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fQaiA+qhLoVzKtGnL0lSxJUvzGHQNtKK5icFkRaD4Dg=;
- b=Hq7OvWiqusThkDC+G1yOuDZOXWPx5kMio3YDiFctc3LZUpIMxaxBcVv3BrFo7cZzahcOk/
- c3bxK2qvPiYUxUbw0f9vXyKtEfAY5O5IUUlK9g6wJ+oPnUBRjFsR2fg8NjO5ZxLVQKk9HJ
- BzjpLizgi8ZtdsBe575WtBB6WE4rbIA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sYTkenoHwL/Q6hsEzZgbdCVIP12Bm+MkrzNE+422XfU=;
+ b=O+EuJkfZ+qC+5l78uQlCdcmdETz4VG0JrLc6vRdmuZ2U3Jyv+lg7vntfmFLSSF2VGcz7Xm
+ 1/2ra7+pYFaFZX6cIkn87DwT/HXqZs1zpg/VWP77i4iBESRnDs5QiHh0ixekD508KqSWlH
+ WgoK7wY0rU6C2o5YqZwPIcMFzHEih0s=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-155-aTis1ks3OAC2Jf-ni7VoiQ-1; Mon, 07 Sep 2026 11:57:11 -0400
-X-MC-Unique: aTis1ks3OAC2Jf-ni7VoiQ-1
-X-Mimecast-MFC-AGG-ID: aTis1ks3OAC2Jf-ni7VoiQ_1788796630
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490a767c7dcso27378245e9.2
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 08:57:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1788796630; x=1789401430; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=fQaiA+qhLoVzKtGnL0lSxJUvzGHQNtKK5icFkRaD4Dg=;
- b=iY7YFGyiecXgoU1eFfx4gtZQLTc7FjPA60/YBk1jy9w6AERUOm97Rq/eNVKITuPAtY
- yMPA+3KBsCgUF5VWgfUPI/4QMkPUW7f33suxTreYFwhNWPHSMwWTuxIpsb6CcEJi5NZf
- heVF45tza89pHG9jb/0EZwPPvkPpWN8KpM0HkOBij6invoqsMlx1Cu/n0KYMJTmav+lF
- CKiVD28oTEV4FOcRM5RnQPxfi3rPkuJoNcM3INW2f9cknI4lCBj724fivo/YxqiFuv3N
- SrsxLO7xM/V9ji5qIQYb7uYqLekaPpuUfF4330qy190X5beCi7FUyfyVO4aveDWYNVFI
- W9kQ==
+ us-mta-630-BztBLoz0NzqU-xsyHWwoDA-1; Mon, 07 Sep 2026 11:59:31 -0400
+X-MC-Unique: BztBLoz0NzqU-xsyHWwoDA-1
+X-Mimecast-MFC-AGG-ID: BztBLoz0NzqU-xsyHWwoDA_1788796770
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49cd55ee2f7so31177475e9.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 08:59:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788796630; x=1789401430;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fQaiA+qhLoVzKtGnL0lSxJUvzGHQNtKK5icFkRaD4Dg=;
- b=GDnr/KB964e5ndDrZPJ15NO1r/vxixp/6Q50HIO79Kn7st6xt25RovkK3D1/mGDJSm
- Zqb67CX46cZ9cFTBN40pUNOgZdG9Vwti03UTTXmGZieciEp0/2XzEpyf0x64kqW8VnJG
- r++OLTcFAZsuTWFDbePHrTasg6CehK2n8YWMhxAu1NoJH4fuRLtrdOZs0z1H0xhGAWa/
- tRtsLr9ePU87/sAIQgmVeHyEX1a/OMsR1Z27a78eE1z4SJRgPnayZKnmdD+eg5cZQL4f
- 6m1qB39/utAR1bAu5uKRmWQKepwesvAgnP3K36wIyvD0QMQZB08isVS9WzAZQ5P6tZzD
- fkNA==
-X-Gm-Message-State: AFuF++nEtsqRXmHpGIKD5D8yr3XjNoYRvfvNoc6nDwLMdfUFVn/ru4KY
- c76+GS9lITN10Z3pWNHPy/oegB4Goc0Eljhs0Alhq3+teYHWy6JAFwu19DXFXLdMQ1w6nDmUFFr
- CDas52f7ExYWBO9JjUOpbjsGH3FNLckvSabL6IKbWsRnIns93rjVJo81X6oT8ZOFsQbYfzjy1Tj
- 4naB3xYh78UxyD/VzKsQHOrhgz1wb7mIXwTPQ8ZZJG3Dw=
-X-Gm-Gg: AYBFou3tJiV4uG0s/f3dQBfJT6CPYFApLjR26EQxx+21nJNChfu0Bm/cpoa4uYi2WvF
- mBtmifedrX+sg8NFrSDS/7gP44364JNdkxIzfXFFaCjc/p1Fe61+XNnThyTjV7EiXUsz5bryjd7
- K5tLQjV7nP6XqVNUqNaW4R/CL0WYyGa6V2WMRNnOsFZ0JeFvozosfExC1tccYpxAkaEugAnq1O/
- 1j3ML5YaSyR+2gfvpfD4hvbt4yokRg7h84SwnsD9dSgywajGpfiwBhjUeYGxFbF2Kgi5+xdLKTp
- vQ2TVayeeADAcSYljN9e3Rs1Axv5Pe7Qwv2DhJwAf0jwiUB5a1b6mHv+Dme8u66JdYDDM8jl1ig
- iVbITO5IAbJ2CrNw5YRmocabzHxynYSnhU4qpfnMnG1Zyg4Fc6husB+IYMPP+uzUXu21z
-X-Received: by 2002:a05:600c:46d5:b0:49c:fc6c:be04 with SMTP id
- 5b1f17b1804b1-49cfc6cc091mr196552065e9.27.1788796630337; 
- Mon, 07 Sep 2026 08:57:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:46d5:b0:49c:fc6c:be04 with SMTP id
- 5b1f17b1804b1-49cfc6cc091mr196551635e9.27.1788796629803; 
- Mon, 07 Sep 2026 08:57:09 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
+ d=1e100.net; s=20251104; t=1788796770; x=1789401570;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=sYTkenoHwL/Q6hsEzZgbdCVIP12Bm+MkrzNE+422XfU=;
+ b=Mhu8BoN6+d4wNN0kipLQ3crOOL1viu2gY/TrmefD0nfwfEB3v8Pxcu9VSy/pcdcpZZ
+ Kno43jFQQsfyWtjTVmm9WqHV+BhH7hE1wIg28zXnjIwkTQRwxwVtufAW4eAOyjtLgHD6
+ JTfOIMPG7MhpNre1VM4esDt+RgDJ4arW5VEt8u5rQmnujnJ0sgy8IazPx9SbRA+FgK49
+ dNVatR/AW4RQ5hnMp+1EXGAtivYg7qvjTnodhOWprnzhpQ7nHAegWJiDBMAwEjYuLIwm
+ KQVIWt2ZH6izr8y9vagMxvtb4N72qn3Vy2PGsskalsdLvw01OJRw4pRl+geOTdzCpVlH
+ R+8w==
+X-Gm-Message-State: AFuF++m3SoliDjkLpZYFSfpyE6r8kZGjeZ0D3Zq+XdhveI0O47eghNoa
+ gn3gXNV287k010KejPeN0tuE/EsRDWcxrtQP1YUrq+xgZCbyaZmEK5E+JzgdKnUTn0VZ9QXqxDD
+ VvWRxOuMisL4qUr/kaTs3ndcWQiJh0EfG0njDj7JkoTQb3QMl8a4e9WvE
+X-Gm-Gg: AYBFou3Sw5JycBFbm4WJi1Ehpmsq0MfijqBjEc5uYsOGelKt+7Wuto7mspaKj9DIYpV
+ oo/86K8B+9B4JefF0eZocGKxpR+zpzdcJ8gKAbUP918TnEToOSZZZsMBzMiBDsXa5qpRnJZnvAs
+ gIUnttXMUxwQCtzG3Pr7l1xn94rzDlh2wZoVDBcgCwGQWiqeSVR4TspdKDl+UCTrFYS+Or/461d
+ sXysqez9iapmNd+xnYKT0JIRtd/OKpnLs5G2YzQpfATXVBZC5+JW3wPOy9y0gbVqqyz6OH0LlM3
+ toSIkq3N27XwcUYy4JTw9Ns49sH4zGnZdw571xovH1k38D01JS5lz6EYqBFzo6VZB8iu7TmWPcC
+ xw4u4PcWjU5owFl9/75zjhHeyaSK2QLJRMQPUegGjzf6xolD1
+X-Received: by 2002:a05:600c:a01:b0:499:7219:122f with SMTP id
+ 5b1f17b1804b1-49cf8222d53mr233767055e9.4.1788796770232; 
+ Mon, 07 Sep 2026 08:59:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:a01:b0:499:7219:122f with SMTP id
+ 5b1f17b1804b1-49cf8222d53mr233766785e9.4.1788796769889; 
+ Mon, 07 Sep 2026 08:59:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cf755c22esm320477955e9.0.2026.09.07.08.57.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 08:57:09 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Mon, 07 Sep 2026 17:57:01 +0200
-Subject: [PATCH v2 5/5] igvm/sev: forward the IGVM guest policy to the
- platform before launch
+ 5b1f17b1804b1-49cee5d476esm444060935e9.1.2026.09.07.08.59.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Sep 2026 08:59:29 -0700 (PDT)
+Message-ID: <81aebdfa-b550-4ef9-8c7e-1009ff1d9bb9@redhat.com>
+Date: Mon, 7 Sep 2026 17:59:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-fix_igvm_policy-v2-5-c8c50f1dbfda@redhat.com>
-References: <20260907-fix_igvm_policy-v2-0-c8c50f1dbfda@redhat.com>
-In-Reply-To: <20260907-fix_igvm_policy-v2-0-c8c50f1dbfda@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>, kvm@vger.kernel.org, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v5 23/28] hw/pci: Add sec-sid property to PCIDevice
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162145.2800835-1-tangtao1634@phytium.com.cn>
+ <d39ce149-8479-40bc-8411-a52a635c7a0a@redhat.com>
+ <a5cad895-37ff-4bf5-baae-cc9fdb708a02@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <a5cad895-37ff-4bf5-baae-cc9fdb708a02@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,216 +118,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-set_guest_policy was called from qigvm_handle_policy at the end of
-qigvm_process_file, after LAUNCH_START had already been issued for both
-SEV/SEV-ES and SEV-SNP. The guest was therefore launched with whatever
-policy was already configured (the command-line value, or the platform
-default if none was given) instead of the one requested by the IGVM
-file, quietly breaking attestation since the policy is part of the
-attestation report.
 
-Move the call into qigvm_initialization_guest_policy, which runs while
-the initialization section is processed. Because that section is now
-handled during the pre-launch pass (see previous patch), the call
-happens before LAUNCH_START, so the policy is in effect for launch. Drop
-qigvm_handle_policy, whose only remaining job was that misplaced call.
-cgs_set_guest_policy no longer special-cases SEV_STATE_UNINIT: that
-guard used to skip the pre-processing pass so the policy was applied
-later, but forwarding it during pre-processing, before LAUNCH_START, is
-now precisely the point. The 'policy == 0 means unset' guard is dropped
-too, since the call site now only fires when the IGVM file actually
-provides a GUEST_POLICY header.
 
-The command line can also set a policy. It now takes precedence: if it
-differs from the IGVM one, print a warning and keep the command-line
-value instead of silently overriding it. Also reject a policy that
-doesn't fit in the 32-bit SEV/SEV-ES policy field instead of truncating
-it.
+On 9/3/26 6:07 PM, Tao Tang wrote:
+> Hi Eric,
+>
+> On 2026/8/31 14:03, Eric Auger wrote:
+>> Hi Tao,
+>>
+>> On 8/13/26 6:21 PM, Tao Tang wrote:
+>>> Arm SMMUv3 uses a SEC_SID (StreamID Security state) to determine the
+>>> security state of the programming interface that controls a
+>>> transaction.
+>>> The architecture explicitly states that the association between a
+>>> device
+>>> and its SEC_SID is a system-defined property, not something derived
+>>> from
+>>> the physical address space.
+>>>
+>>> We need a way to represent this system-defined SEC_SID for PCI devices
+>>> if we want to implement SMMU's Secure state. So that SMMUv3 can select
+>>> the correct register bank and configuration when handling their
+>>> streams.
+>>>
+>>> This patch adds a new char *sec_sid field to PCIDevice, together with
+>>> a "sec-sid" QOM property. The property is intended to carry the
+>>> platform-defined SEC_SID for the device; for now only Non-secure and
+>>> Secure security states are supported.
+>> You shall add PCI maintainers in cc.
+>>
+>> Is it only SMMU intended? I mean if you set this property, the PCI
+>> device shall send DMA requests with secure attributes too?
+>
+>
+> Yes, the current consumer is Arm SMMUv3 only. The property represents
+> the system-defined SEC_SID presented to the SMMU, selecting its
+> programming interface and Stream table. It does not make the PCI
+> function issue DMA with Secure MemTxAttrs; that per-transaction
+> attribute is passed separately through attrs_to_index(). Some code
+> pieces: 
+yes you're right. Those are different. But how do you tell a device to
+send DMA transactions with attrs.secure (-> iommu_idx). That's what I am
+confused about. Do we plan to have a prop for that or will it be
+hardcoded such as in hw/misc/tz-mpc.c?
 
-Finally, use the get_guest_policy callback added by the previous patch
-to populate the SNP ID block's policy field. The command line sets its
-policy directly into the SEV/SNP guest's own struct, bypassing IGVM
-entirely, so ctx->sev_policy only ever reflects a GUEST_POLICY header
-and is 0 otherwise, causing SNP_LAUNCH_FINISH to reject the ID block
-whenever the file relies on a command-line policy. Reading the policy
-back from the platform instead always gets the value actually in
-effect, regardless of its source. ctx->sev_policy is now unused and
-removed.
+>
+> ```
+> static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>                                       IOMMUAccessFlags flag, int
+> iommu_idx)
+> {
+> .....
+>     SMMUv3State *s = sdev->smmu;
+>     SMMUSecSID sec_sid = sdev->sec_sid;
+>     SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> .....
+>     entry.target_as = smmuv3_bypass_target_as(s, sec_sid, iommu_idx);
+> ......
+>     if (!smmu_enabled(s, sec_sid)) {
+>         if (FIELD_EX32(bank->gbpa, GBPA, ABORT)) {
+>             status = SMMU_TRANS_ABORT;
+>         } else {
+>             status = SMMU_TRANS_DISABLE;
+>         }
+>         goto epilogue;
+>     }
+> .....
+> }
+> ```
+>
+> We use the device-inherent `PCIDevice->sec_sid` to select the SMMU
+> Programming Interface. The actual per-transaction attribute, on the
+> other hand, is passed to `smmuv3_translate()` through the `int
+> iommu_idx` parameter for each transaction.
+>
+> And Michael is already included in To: for both the cover letter and
+> this patch. I agree that this needs PCI maintainer review. 
+OK fine, sorry fo the noise. 
 
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4189
-Fixes: 915b47078d ("backends/igvm: Handle policy for SEV guests")
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- backends/igvm.c                | 27 +++++++++++----------------
- include/system/igvm-internal.h |  3 ---
- target/i386/sev.c              | 37 +++++++++++++++++++++++++------------
- 3 files changed, 36 insertions(+), 31 deletions(-)
-
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 521560822a..5360a2575b 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -778,8 +778,6 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-     ctx->id_block->version = IGVM_SEV_ID_BLOCK_VERSION;
-     memcpy(ctx->id_block->ld, igvm_id->ld, sizeof(ctx->id_block->ld));
- 
--    ctx->id_block->policy = ctx->sev_policy;
--
-     ctx->id_auth->id_key_alg = igvm_id->id_key_algorithm;
-     assert(sizeof(igvm_id->id_key_signature) <=
-            sizeof(ctx->id_auth->id_block_sig));
-@@ -808,6 +806,13 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-             72);
- 
-     if (ctx->cgsc) {
-+        uint64_t policy;
-+
-+        if (ctx->cgsc->get_guest_policy(GUEST_POLICY_SEV, &policy, errp) < 0) {
-+            return -1;
-+        }
-+        ctx->id_block->policy = policy;
-+
-         return ctx->cgsc->set_id_block(ctx->id_block,
-                                        sizeof(struct sev_id_block),
-                                        ctx->id_auth,
-@@ -867,7 +872,10 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
-         (const IGVM_VHS_GUEST_POLICY *)header_data;
- 
-     if (guest->compatibility_mask & ctx->compatibility_mask) {
--        ctx->sev_policy = guest->policy;
-+        if (ctx->cgsc) {
-+            return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV,
-+                                               guest->policy, errp);
-+        }
-     }
-     return 0;
- }
-@@ -968,15 +976,6 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
-     return 0;
- }
- 
--static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
--{
--    if (ctx->platform_type == IGVM_PLATFORM_TYPE_SEV_SNP) {
--        return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV, ctx->sev_policy,
--                                           errp);
--    }
--    return 0;
--}
--
- IgvmHandle qigvm_file_init(char *filename, Error **errp)
- {
-     IgvmHandle igvm;
-@@ -1102,10 +1101,6 @@ int qigvm_process_file(IgvmCfg *cfg, MachineState *machine_state,
-      */
-     retval = qigvm_process_mem_page(&ctx, NULL, errp);
- 
--    if (retval == 0) {
--        retval = qigvm_handle_policy(&ctx, errp);
--    }
--
- cleanup_parameters:
-     QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
-     {
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index 9e9fa1d9af..041f77586a 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -64,9 +64,6 @@ struct QIgvm {
-     struct sev_id_block *id_block;
-     struct sev_id_authentication *id_auth;
- 
--    /* Define the guest policy for SEV guests */
--    uint64_t sev_policy;
--
-     /* These variables keep track of contiguous page regions */
-     IGVM_VHS_PAGE_DATA region_prev_page_data;
-     uint64_t region_start;
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index f11fdb6590..11072b00dc 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -128,6 +128,8 @@ struct SevCommonState {
-     bool kernel_hashes;
-     uint64_t sev_features;
-     uint64_t supported_sev_features;
-+    /* whether the guest policy was explicitly set on the command line */
-+    bool policy_set;
- 
-     /* runtime state */
-     uint8_t api_major;
-@@ -2729,10 +2731,6 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
-                                 uint64_t policy, Error **errp)
- {
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
--    if (sev_common->state == SEV_STATE_UNINIT) {
--        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
--        return 0;
--    }
- 
-     if (policy_type != GUEST_POLICY_SEV) {
-         error_setg(errp, "SEV: Invalid guest policy type provided for SEV: %d",
-@@ -2740,18 +2738,31 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
-         return -1;
-     }
- 
--    /* do not reset existing policy if policy was not set in IGVM  */
--    if (policy == 0) {
--        return 0;
--    }
--
-     if (sev_snp_enabled()) {
--        SevSnpGuestState *sev_snp_guest =
--            SEV_SNP_GUEST(MACHINE(qdev_get_machine())->cgs);
-+        SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
-+
-+        if (sev_common->policy_set &&
-+            sev_snp_guest->kvm_start_conf.policy != policy) {
-+            warn_report_once("SNP: policy mismatch between IGVM and CLI, "
-+                             "keeping the command-line policy");
-+            return 0;
-+        }
- 
-         sev_snp_guest->kvm_start_conf.policy = policy;
-     } else {
--        SevGuestState *sev_guest = SEV_GUEST(MACHINE(qdev_get_machine())->cgs);
-+        SevGuestState *sev_guest = SEV_GUEST(sev_common);
-+
-+        if (sev_common->policy_set && sev_guest->policy != policy) {
-+            warn_report_once("SEV: policy mismatch between IGVM and CLI, "
-+                             "keeping the command-line policy");
-+            return 0;
-+        }
-+
-+        if (policy > UINT32_MAX) {
-+            error_setg(errp, "SEV: policy 0x%" PRIx64 " does not fit in the "
-+                       "32-bit SEV/SEV-ES guest policy field", policy);
-+            return -1;
-+        }
- 
-         sev_guest->policy = policy;
-     }
-@@ -3034,6 +3045,7 @@ sev_guest_set_policy(Object *obj, Visitor *v, const char *name,
-     if (!visit_type_uint32(v, name, &SEV_GUEST(obj)->policy, errp)) {
-         return;
-     }
-+    SEV_COMMON(obj)->policy_set = true;
- }
- 
- static void
-@@ -3091,6 +3103,7 @@ sev_snp_guest_set_policy(Object *obj, Visitor *v, const char *name,
-                            errp)) {
-         return;
-     }
-+    SEV_COMMON(obj)->policy_set = true;
- }
- 
- static char *
-
--- 
-2.55.0
+Eric
+>
+> @Michael, Could you please help review this patch?
+>
+> Thanks,
+> Tao
+>
+>
+>>
+>> Eric
+>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>   hw/pci/pci.c                | 7 +++++++
+>>>   include/hw/pci/pci_device.h | 3 +++
+>>>   2 files changed, 10 insertions(+)
+>>>
+>>>
+>
 
 
