@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59854C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 06:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 713E3C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 06:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Szn-0005tJ-1w; Mon, 07 Sep 2026 02:38:23 -0400
+	id 1x3Szx-00060I-Hu; Mon, 07 Sep 2026 02:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x3Szm-0005nU-4r
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:22 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1x3Szv-0005zR-Gx
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:31 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1x3Szk-00069d-KV
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:21 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2cace91f112so26032235ad.0
- for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 23:38:20 -0700 (PDT)
+ id 1x3Szu-0006AC-3C
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 02:38:31 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2d715f4a587so45944335ad.2
+ for <qemu-devel@nongnu.org>; Sun, 06 Sep 2026 23:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788763099; x=1789367899; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1788763109; x=1789367909; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mf9E5O+vpQ3XA+Jie+/p9nC3sGIPSjge6K4hjAZVK9U=;
- b=CnN/ScZqkJbEbr/QT3byAXnuMt8tQPWdjXwHQX7MKCcgNng+U/h5QarB9SXZr93xA7
- GRskhy9roV4K81xu2nhLD1uwYH2F0EOPWikoo8gi51AV3UwUI129wV3RIzzIXQpsAZaa
- VaW4e1W3VaGP/EP6KaIrUCRU2W0T9Uf2wlZXjKGcvoABKII4r2J00hSrI8e2koJgCuSj
- saFrJRB03yANYACVe0ySlLueAPB3gv7ap8LA1p0ckcv978fGiw2/vz3hZj3aItECXq0l
- yb9clhyiTsvKrukWOFXJGlqvh4ePa4mxiy5ARF8hV8j4nDnP+tgcSeW/v98JxwWte7Zs
- yZsQ==
+ bh=F8RfjQjVOX1tJDdARKFAxVYWhrl5wDLHiadJICm/sXU=;
+ b=WUtReERJa/M0MP4mkeq0uJti6Dmr67bF1XkcZ5XUCRnDopEsSGD5Iru8hQmAxeNt9v
+ PnNBcdoLKRiN8P2z/LVunz49sK7WZTR1/MHlhG/svXaj7KYWctS2R17kAfCha9CInrMp
+ 5jdLL082XnizM3b8fOzwr7C8mQdlAgiX4Ly7w/e8T/MvCgbk/WAWclEx2/0yGYjt9Q9v
+ ePpZaGZaQkb0iuOYOZS61PVJ/w256b1rWrjCU3jxziocuXUX8KfmPtptLCxoVOQ4rrUq
+ 9k5knH/hGDq8uXa+EtiAB7ARfPWscwRiwSQJQvv8x3xuQ9rrBnAril0iTP5l5EE70752
+ 6eLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788763099; x=1789367899;
+ d=1e100.net; s=20251104; t=1788763109; x=1789367909;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=mf9E5O+vpQ3XA+Jie+/p9nC3sGIPSjge6K4hjAZVK9U=;
- b=L8VFf65IV00zQd/TJoTxdPoflm9viWgwIUBwvzConDMO+x+g/DAnMD9C7k5QRuCA5y
- vSjETrXMpB3H5ILhUJZPt3aWWNoaEDGNzGNyLN1XRRsxsDHAWSi3M4g1mvov2Yuq7cB5
- Cm8QX+BXb9e/8cAhfDOipaaVtydme9dEhddQ83pjDW6cU/FQackrQiiBQYUlCpRFvj2q
- YEDXYgpMnfAJp9vZJM7Huw0jlqohKcxIk+lNePY84n5aOP4oZ9N01vZufkZHRTFRGvOX
- ka1YPF86hCUNO/H4W3CnXzWV9xobf3mrG0gAXcOf51K/yQOv3HdB/DNPwbY/NgTPf9Ys
- dHaQ==
-X-Gm-Message-State: AFuF++moWAD3JZ3y6QYlresdoxmbIzV6m4C8zWVRy8qEBlMlurbPDuVv
- oT5h0MsUKU0LTQlOcHBXM043PzDGpsahGMXzN06XKP3/upfweN0iRUdDXxHUuNVjj62hug==
-X-Gm-Gg: AYBFou1IHjOTCvIdibtk6ul532MaHpLCtVqiyfMvy5cYRERQB3k8E9MhAiUDsB/+gLF
- nWjyZtD7jKUR9VvQ2M7X5kxbgxIk5FSIq0ZSjQGQzVVHkW6eiCSnnE2lNo5W1RK0ecCqazfIxOC
- ww9h3qc2sQDzkxj1/Zo+2Iy9zURJuP6fWs/zoF1n6DWXfLGW3w/9CgRIBZh/6io4kfbcChuIec4
- tzBFaq6L80fLP2mEgTctX0LpbI1cx/qmWdUJ6LFB1rIIX4idQ8OF4c86/o4QmgMsfx+icFIfEyO
- IMqEaRHatIE46ek8wYx1xOi8VOXHouH8cYc7tC40XLEbiU/5edz6Wddfx1KimG4FLUqth7SigzR
- dUKY5LJN6u6x1ZZEzrBtK3A4tGOekkFPYC5OCMW6u8+ggb9TcxUMFITAH1srKhhCHWPZjeaLLsE
- D262t4WbRmAx0Wn31vLsAS3EsnrsPgMGz/xnV+syKHOSs2l+kjp8gppQb/hcyPbXpaFWPWCLP04
- QihJ5ZFJbSAXvgc
-X-Received: by 2002:a17:903:3c24:b0:2db:479a:5127 with SMTP id
- d9443c01a7336-2db479a55c8mr89297985ad.19.1788763099063; 
- Sun, 06 Sep 2026 23:38:19 -0700 (PDT)
+ bh=F8RfjQjVOX1tJDdARKFAxVYWhrl5wDLHiadJICm/sXU=;
+ b=SJdelPbHs/YZgeNdIaa7OqUGQm7EWwCc6V3BWXfpqesekUrYR1NoPZPRXWG2LMmIdA
+ 18i7pqmC/KhLSYgpMlrrYJBO2fRLqn3LA0BLgL21e/pgBc2SXGuNNCSdmSm5aWrlScTF
+ qpcJTozsV2UdZnKy/+0QfUMsGrJvwEvy2j3F7/296+yOmXjdfovOF6kwFdqVTwpVSAg7
+ SHhGLfL4eLVTXdnUoVs7ay1jshwVFJKO7HIDSL01+eMUGLRHsCRJQyvc6ipgrEDxSgNx
+ iw4mJV2A46MdUvB6o8idd0k9glLiCfI8xKjy15rdPZkuG0BcLkX38v8CDz7Os0b5VmCN
+ B0Pw==
+X-Gm-Message-State: AFuF++niZO4ncWki7HskcaWpGhcLGXFxeUTqrYX1sYyFNojHwmxvdmrC
+ uk1zdhzHV1l5zTx7axjzSZQF0AUkFVvbWM5yJkW4L4rsba4n9b0n38rTmyK2WYw82Vx2Eg==
+X-Gm-Gg: AYBFou1JS4fx0yEKLXv/UHOzGkFVqBMDMc2OtWSepD1gcd8N/i54C0U7hqAlnGREJWY
+ p66aJa84Vt4vxhmfa3hT/hM39UyecZbqVYNGmvoXNgP19R+hV/ZzaVcsF6aneM7l2zzs+qm566t
+ 136tLEkniVapsI03GwvOocOJAD3MqHqSPN9mLzWLLhqDLHOv0k1W5oF2xSu9LuWpzkDID7NMNlX
+ Bnq5wDugWX0ejCjsaRWXL60nKxz+g+b+0yRKtGrw2WzLEENTHjoQyuBB4fC3xo6Vyoo+nIJtFLs
+ 972gWJY8qhm5PAL5vjYEAcQig/M5FQMTAW5cZ3LJ9+a0GGOOTRmEcHrX27/pms2jYLHflpq/nr+
+ baAIujO6pgcn9SUHfPojCPnesf1AgwgDYQZHhK0CKGij6JdrFQ2DgbyBBdPBKjQvyJ7XdHM+N6T
+ itaa6lfd7DmJEQnNe7L2cAEXX4lN9owCln6TbVMS+PbrDYd6vhuhtkdp5G79IUx2xPOZWOSOAgt
+ rOt7Wqyoyin4uBD
+X-Received: by 2002:a17:903:198e:b0:2d9:383a:30f1 with SMTP id
+ d9443c01a7336-2db125ce07cmr357668705ad.4.1788763108763; 
+ Sun, 06 Sep 2026 23:38:28 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2db1499f06fsm38502555ad.54.2026.09.06.23.38.15
+ d9443c01a7336-2db1499f06fsm38502555ad.54.2026.09.06.23.38.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 06 Sep 2026 23:38:18 -0700 (PDT)
+ Sun, 06 Sep 2026 23:38:27 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,17 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V15 09/14] virtio-balloon: Update tracking iothread users with
- holder
-Date: Mon,  7 Sep 2026 14:37:20 +0800
-Message-ID: <20260907063725.626685-10-zhangckid@gmail.com>
+Subject: [PATCH V15 11/14] xen-block: Update tracking iothread users with
+ holder name
+Date: Mon,  7 Sep 2026 14:37:22 +0800
+Message-ID: <20260907063725.626685-12-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260907063725.626685-1-zhangckid@gmail.com>
 References: <20260907063725.626685-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,55 +111,47 @@ iothread_ref_and_get/unref_and_put_aio_context.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- hw/virtio/virtio-balloon.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ hw/block/dataplane/xen-block.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 4c5f486ba2..7c9c8d2a41 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -892,14 +892,20 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-     s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
+diff --git a/hw/block/dataplane/xen-block.c b/hw/block/dataplane/xen-block.c
+index 48c2e315f3..9dfe06e1be 100644
+--- a/hw/block/dataplane/xen-block.c
++++ b/hw/block/dataplane/xen-block.c
+@@ -621,9 +621,15 @@ XenBlockDataPlane *xen_block_dataplane_create(XenDevice *xendev,
+     QLIST_INIT(&dataplane->freelist);
  
-     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
+     if (iothread) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(xendev));
 +        const IOThreadHolder io_holder = {
 +            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
 +            .u.qom_object.qom_path = path,
 +        };
 +
-         s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
-                                            virtio_balloon_handle_free_page_vq);
-         precopy_add_notifier(&s->free_page_hint_notify);
- 
--        object_ref(OBJECT(s->iothread));
--        s->free_page_bh = aio_bh_new_guarded(iothread_get_aio_context(s->iothread),
--                                             virtio_ballloon_get_free_page_hints, s,
--                                             &dev->mem_reentrancy_guard);
-+        s->free_page_bh = aio_bh_new_guarded(
-+                      iothread_ref_and_get_aio_context(s->iothread, &io_holder),
-+                      virtio_ballloon_get_free_page_hints, s,
-+                      &dev->mem_reentrancy_guard);
+         dataplane->iothread = iothread;
+-        object_ref(OBJECT(dataplane->iothread));
+-        dataplane->ctx = iothread_get_aio_context(dataplane->iothread);
++        dataplane->ctx = iothread_ref_and_get_aio_context(dataplane->iothread,
++                                                          &io_holder);
+     } else {
+         dataplane->ctx = qemu_get_aio_context();
      }
+@@ -652,7 +658,14 @@ void xen_block_dataplane_destroy(XenBlockDataPlane *dataplane)
  
-     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_REPORTING)) {
-@@ -919,9 +925,15 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
- 
-     qemu_unregister_resettable(OBJECT(dev));
-     if (s->free_page_bh) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
+     qemu_bh_delete(dataplane->bh);
+     if (dataplane->iothread) {
+-        object_unref(OBJECT(dataplane->iothread));
++        g_autofree char *path = object_get_canonical_path(
++                                        OBJECT(dataplane->xendev));
 +        const IOThreadHolder io_holder = {
 +            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
 +            .u.qom_object.qom_path = path,
 +        };
 +
-         qemu_bh_delete(s->free_page_bh);
--        object_unref(OBJECT(s->iothread));
-         virtio_balloon_free_page_stop(s);
-+        iothread_unref_and_put_aio_context(s->iothread, &io_holder);
-         precopy_remove_notifier(&s->free_page_hint_notify);
++        iothread_unref_and_put_aio_context(dataplane->iothread, &io_holder);
      }
-     balloon_stats_destroy_timer(s);
+ 
+     g_free(dataplane);
 -- 
 2.43.0
 
