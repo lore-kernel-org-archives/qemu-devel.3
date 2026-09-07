@@ -4,117 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9C8C79FA0
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 07:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8772C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 07:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3Taz-0007UP-3U; Mon, 07 Sep 2026 03:16:49 -0400
+	id 1x3Tih-0000Kw-Oj; Mon, 07 Sep 2026 03:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x3Tax-0007Tv-B2
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 03:16:47 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1x3Tau-0001B8-TD
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 03:16:47 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-66d1447e2b1so2245382d50.0
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 00:16:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788765403; cv=none;
- d=google.com; s=arc-20260327;
- b=XgNYv7eXOwhXc3ljAh6S28QUTqHwsSGdGDuidDry0Zj4WwJZN+tYlecIxdSSba6khg
- JDy02jb+8KzQijq97xhMwWPKD3NAdm+d04Ia+MRHrR0q05F+0oiVPecTpF9A0MnTnNIF
- vUoa8pXYn/Me92xcd0IWm0eMg9sOF04enlVtb3b6Bug6xLAISUlZxj8mz1/AMWvTKAwV
- RGXsqAOpJASSOnuAArIxqZ/QK0IJ0T8KBEdxNmY4qW3CkJtFuinNIFsnggA94p/bxJO4
- EbfbqfJepe7skju0UUn12y0t6UbazvLo20ilKsfhaTctW2CDsCY7U0STQMXVv1aX3Yri
- qaHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QCti3rgeZN1YIm9TfGLPl2KhexTOFxw/SKTwmPEtp6A=;
- fh=Zw1R+2IUdXUcdZtqWXVsel7142xFHupQLV52fZ/f5qs=;
- b=cjxjWaHbwd8l9xZ3AIbnep5l8LJt3CcefIuIVGBgHfZtiYMgMtLfgbu4Eh+BXQjAwg
- IrBOVRpqTcD+Qpt3juo7Q4UuWuInguVoVgbB7dJNQh7gLUF0ueQAHNjiS4N8mT2Lvg7U
- 2x/KXHyZOLSI1SqXTklUGz/htAL2tZPPFCaBe3KTuYdYmNfUG3b5lazque+eaXUGHYXo
- 0RjGv6cvxWt76vykkzstG1x4SlmHrk0hd3XPeTXLxEM4VH9ft05L5Stt3z1HAZkUQYWa
- 1l39a8AKUmgnx6+P1oJkDrqjb4B+FlO9WKxdyL0eUMs/l15ohR5plRwhornGtFc2zXPA
- cN1g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1788765403; x=1789370203; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QCti3rgeZN1YIm9TfGLPl2KhexTOFxw/SKTwmPEtp6A=;
- b=Wl/nNtMYIJfudq/VboAi7rx4VReWTRJ9fVOZCbraBRThdjhB72/SnsIqufmsh1D9oL
- k/nBewySlYg7BLwM68crPg1ZzCJeHxhiQ/kswiXjA0wSu+s+teCGt2sVFdTCuiJShjw5
- rxTJ7eB84jqAb/BFX/8CnjXBScPvEzaGwA3To=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788765403; x=1789370203;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QCti3rgeZN1YIm9TfGLPl2KhexTOFxw/SKTwmPEtp6A=;
- b=gMVZREceuFhK6yvdJCnxUFkkSqM7wHi3PemwbVCtmW9nmaUFs2qSDb4hRul49AaNVV
- T6Oa0kI67EtTwncqMewQpAmaNk64PwluPTmRqfnkXzIGj/maMTzJ7+2ZQIKt55z4dyPz
- XJ8+0bPIvIZAAVMV5RIkUgbSwc7WgZ1R/l21pjCuG1Z5kNp9bPH8rY3JJAt9EwXolVIS
- /2/GRqZ4jOBE3Cza9VHuT+tYL4sAKsPYu7XtGRzgo3idG0DfFEZCEbtM4Gl6WIEr6B1X
- gc7pDSAa6Oe48/Pr9d2R93xSy8iXs7O0pqoZzGb+JIOMmlqnUsYxa2X5jnO2qeLu9UMN
- 9zog==
-X-Forwarded-Encrypted: i=1;
- AKwUvByMI23FlaZQQRTv3XpL2oNPKVy1ZZ+twFgJlvelXhOK2dHNRXc9G12/hBg+V9GBKrP9z7xHbGqBIPc7@nongnu.org
-X-Gm-Message-State: AFuF++m7SaTZogL0vxgAWnK3ZBxW2PO1w6M7ZK1vOF34YNzqlqh6rvsq
- pFT8DMJtIzVXgcgunEHboWNYnUUV+NL6G63tvwEKAgKDbSlFeWkJohsZcUARadAcry0kBew/IXd
- bFI+P26IGJtvDVQqEhbhbAHfrjOSDW3Y=
-X-Gm-Gg: AYBFou3z8QjWEFRUZt4lchRdiaauLOis9SxNwzEmzhJ/Y6RuF5szKGipwM/qqF5CwgH
- 4flgTq2bipToV82eS6Q+ORccl96Ts6YHoKEATayE126gTDzRsUjsV6glGluhdeF943lpcBtfAAP
- PSgrBxArxCdY3wlyKOiHwdLSnWzeLQRj8K36YeQJcdUf2JnjEn52HwdvTDTV5qAtpJG6Cq4YHhA
- ToDJvkJpsg0hOFHFwinvwqAcIVONkbQqCrmoJe/vFaxhhjnp5o7QHiDYLZsjblFra3VMDyG7CqA
- 8F00HzD5GkHUfuhP1kJo+ExsWoX/2JyMiOJctn/Syg7xD45mG8Sff6a+Freo9fkFeYRFfolnA38
- hEHJOpMC5LFlPcVsCl6ET8YWgvRiATZxSNEnHvFWAVEHN+6fHoUTzg2fsGlZWTX0aeDCz+TjRx3
- Q5Nxmcf/lyxSMZcWmaEmUrr4NnZ50=
-X-Received: by 2002:a05:690e:42cf:b0:66f:c1bc:4058 with SMTP id
- 956f58d0204a3-66fc1bc4289mr1725167d50.32.1788765403506; Mon, 07 Sep 2026
- 00:16:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x3Tig-0000KQ-5g; Mon, 07 Sep 2026 03:24:46 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1x3Tid-0001x2-Tx; Mon, 07 Sep 2026 03:24:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1788765856; bh=XYEpqqpHVv/RtpomFf0RuS+1ZWcSgym38qwxWnxvzcM=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=CBLmLAVycDQdvYxjBr5X7wIcJY4ZDDrA5XW7v3HUM60XOeTPaAKro87/1fhIl+uJa
+ ai24cK+dS1hAsGoJqTXy9DYXuotgRIwyj+WICEqnhwh0Ryf1SNN0zEiwDJ1BE8VSjP
+ P1q3YvUi2n6nDOr8lTf68c9d3qpjOGhpQWk6eCCGLd7DM9fuTGGAfwPu9+peLotfEK
+ K9Z9oJWCNospsxTVMaq4eW1BXhXasbmfAWaOvMAKhX7IjGJTziXBKZ8IdDHGneGdy3
+ qCy7kBe7/pJXY3rl0+QqQEWt8RHcIFkh6wIxWXbxF2ebNNc5Vnk5KEZDjlFU4zjqSu
+ EI6UPTlwOC1YA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9BD091D2339;
+ Mon, 07 Sep 2026 10:24:16 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E7B5E4227FD;
+ Mon, 07 Sep 2026 10:24:40 +0300 (MSK)
+Message-ID: <5ffaa368-e962-4fed-ac4e-62a8469d9cb2@tls.msk.ru>
+Date: Mon, 7 Sep 2026 10:24:40 +0300
 MIME-Version: 1.0
-References: <20260903055131.257903-1-joel@jms.id.au>
- <20260903055131.257903-16-joel@jms.id.au>
- <5d681d59-4a2f-4068-b36d-4ca40ab7b921@oss.qualcomm.com>
-In-Reply-To: <5d681d59-4a2f-4068-b36d-4ca40ab7b921@oss.qualcomm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 7 Sep 2026 16:46:31 +0930
-X-Gm-Features: AcwNN1UcYx2HqbMD2LOa_8r0qgM2x62xIoq0t9zrFPpADh8wMPNrLIavJiosD5I
-Message-ID: <CACPK8Xf6Lot-Vs1-=iF+UoLZ=qBoRHhao6Z1FR8JC382qKLXBA@mail.gmail.com>
-Subject: Re: [PATCH v3 15/16] hw/riscv/atlantis: Extract an Atlantis SoC device
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-riscv@nongnu.org, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V15 01/14] qapi/misc: Fix missed query-iothreads items
+To: Zhang Chen <zhangckid@gmail.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?=27Daniel_P_=2E_Berrang=C3=A9=27?= <berrange@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Cc: qemu-stable@nongnu.org
+References: <20260907063725.626685-1-zhangckid@gmail.com>
+ <20260907063725.626685-2-zhangckid@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20260907063725.626685-2-zhangckid@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,39 +75,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Sept 2026 at 20:17, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 3/9/26 07:51, Joel Stanley wrote:
-> > Introduce TYPE_TT_ATLANTIS_SOC and move the hart array, AIA, ACLINT,
-> > boot ROM, UART and I2C controllers into the new TTAtlantisSoCState. The
-> > machine keeps ownership of RAM, device tree generation, firmware
-> > loading, and the board-level I2C slaves.
-> >
-> > This makes it easier to compose the SoC into a more complex machine in
-> > the future.
-> >
-> > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> > ---
-> >   include/hw/riscv/tt_atlantis.h |  21 ++++-
-> >   hw/riscv/tt_atlantis.c         | 144 +++++++++++++++++++++++---------=
--
-> >   2 files changed, 119 insertions(+), 46 deletions(-)
->
->
-> > -struct TTAtlantisState {
-> > +struct TTAtlantisSoCState {
-> >       /*< private >*/
->
-> While here please drop these legacy private/public comments (QOM
-> style doesn't want them anymore).
+On 9/7/26 09:37, Zhang Chen wrote:
+> The example is incomplete: it misses members @poll-max-ns, @poll-grow,
+> @poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
+> (monitor: add poll-* properties into query-iothreads result) and
+> commit 1793ad0247c (iothread: add aio-max-batch parameter).
+> 
+> cc: qemu-stable@nongnu.org
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 
-Thanks, TIL. I might send a cleanup for the risc-v tree to set an
-example for new code.
 
-Cheers,
+This is not technically a part of "iothread: Support tracking and querying
+IOThread holder" series, it's a bugfix by its own.  Can we apply this one
+without the rest?  I can do it through the trivial-patches tree but it
+looks like it should go to the qapi tree.
 
-Joel
+Thanks,
+
+/mjt
 
