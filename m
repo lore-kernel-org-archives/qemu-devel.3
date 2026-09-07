@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB9C5C79FA0
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 16:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E177C79FA1
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 16:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3cS1-00015i-RB; Mon, 07 Sep 2026 12:44:09 -0400
+	id 1x3cRh-0007w7-3v; Mon, 07 Sep 2026 12:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1x3cRz-0000yH-MK
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 12:44:07 -0400
-Received: from mail-wm2-f12.google.com ([74.125.225.140])
+ id 1x3cRf-0007tS-Fc
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 12:43:47 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1x3cRy-00033R-4N
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 12:44:07 -0400
-Received: by mail-wm2-f12.google.com with SMTP id
- 5b1f17b1804b1-49cd6185db7so2436555e9.1
- for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 09:44:05 -0700 (PDT)
+ id 1x3cRd-0002uA-Cw
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 12:43:47 -0400
+Received: by mail-wm1-f52.google.com with SMTP id
+ 5b1f17b1804b1-49d036e0e99so12792905e9.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Sep 2026 09:43:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788799444; x=1789404244;
+ d=1e100.net; s=20251104; t=1788799420; x=1789404220;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=+nb48/mqPn7+bPDRAaLkgFFQLPP5yyaURUgKFTQWIgU=;
- b=KyfrfKaFo2ma0pYLeSya/FSEtJLLJniPY+Sz+TakBVS+Q/7aVU76eFlYI59wvcnpS2
- 3DabTIMoKK77V9xVf/9owh5XvpFd900Hc/TIji7lbwJGjPxbTrUZxOVX/9l3QpAokD4X
- 245e+8rUjPAjctrLGlo+KPowcD9hxgUS0WYgSPXhUzWBhmtkR5+WdTMIhszUxmIjGpy/
- 7lSEbDYHWECNq31CVJInVuI+BnmdH8y/QDVcFZe2OUhmEDuVcbOXy/FTjNA7oSe7Cti6
- ZZs43UufThHhwGik7mCJ0cDh5Jp1TO6YSciFa4f22JhL38eAIpurBLPSd30roK6jxfEm
- w37A==
-X-Gm-Message-State: AFuF++mOppiL19brNQoesvAZjBwIgf6zxFciRiQrfokrqrnm+CodlySS
- X5y27Eufh1S1MRZyjfNaYJP5hGl4ZYevYQoVrlFz/l+eozyKYbzWfCL6ZYiI6mJy
-X-Gm-Gg: AYBFou1k4pC7YOTvpfMYiLkUZ9vp8YsHmV55GGuj4r9gdf5jw8agZe7/vfx39ROXcrl
- qUyjaLZPzKQnQo48R0xqiGdyvEEWNC1JidVqWo7cMybShHU+Ch0En/2Klwz/tPhFbkBem/e+CJd
- 2R0mhaeThnRm/lpCewC8SP3fn09HxhdNRboBWtbCUxnD6FXmJSg+d6UU43tXEs3u79wWKeZqkk7
- Z3tkIrdupYiA6AKgJ2nmpFwkdbIaFV8IVNInojwYyRMigmoWMvUC7XuWiFvci+1rN3c2ydI/ueq
- I9/GeLKNN4qNuQityAmNGysi6DhxT7Our/59Lz5KhLyiESzQ+uL/1sLI437dMD2ZM6W+OkQywub
- K8Ry61HoE8mkFkYE+GEyrrLZ4clrgyro7kRqQFupxtwz9Xeo0VkmU0oDnNq+NqJj7I4yNmZVKVe
- mCbuUFi4MGwMJViePgUatyt3NgprNiZoW70pRqq5+IHXCt06QGnBUT5XgoD5cS0BjQVGYGKC8LP
- 2sY+5Tv0QCcZWdqlGipew5WZtep3syzraw=
-X-Received: by 2002:a05:600c:b8d:b0:49c:e37e:4389 with SMTP id
- 5b1f17b1804b1-49d1754e950mr23261705e9.4.1788799444266; 
- Mon, 07 Sep 2026 09:44:04 -0700 (PDT)
+ bh=cBS24KyVkFdx9K1mrb9mnaPLSyXbJlcPXKfV6TpuYbc=;
+ b=ZQmSSBixt8PZKoi+RWOmkj1lKhpyyTLZNjpG1f3yCF/tijy5r6xUAHMBYeJIaN2Lar
+ 9sQCjZ5BUXaoBxeS7wunDfWPst0PZG7u8b5D1FI8d2s8JM2b1AxH1VnsTsAag9L7xyMO
+ 461cc4G//OzdQUUOUHu0vlysR3xJMYizuaL5tM8INbRuLqNJjRrDjRRDe92PpuLq7mj7
+ KFuh2Yp7mn2fBloCEpA3Ypo77FR1Hw6nAiPTxVRykHKjQzRv38SEkwJvTdYCeuJVRngA
+ zivsiqDd8+NYn1JggdwyQCMUWKGtcTUBeWv0RujxPsakEElI3kXiJg8Jnci6GHy+05mn
+ iIgA==
+X-Gm-Message-State: AFuF++kbYpPcoSHrWTeN7VN6SrIySjIavp9rFNtHGBUEKSfkGggl/6Fu
+ ZXh4v3QCt1TcKUgsjmbQsogtI4GEamM0Verd+bOPMoOFBIFoGMKad9pelUKsklpn
+X-Gm-Gg: AYBFou1DQ9WUwPwRjg/5/Rlu8HK71jWskcJXmt1M33pSEinpluAbrHK/TUxeJxDPr0u
+ U57yDeMGNztt8hCq9GDmAiqAysk/B9QipOrPbHhvA2g9OUhZW1UNyomA/lLIv12VLhIqifz4MED
+ 9QzvqXWVpZOGJuRdyt+XBEUxcf0cbqJlp9LGj303tgfKe/HMddIEXBfCe8pW5tu/Pb6SQuiyE0t
+ ZmTOts3mroTYGNjY8wdOOHBy0d6Dme2/eG/330OF2sx4/dtAFYEi166uv4/VMoeJWTq6wMMmPcw
+ hhqkS3/HO7k3UwD2a77zSFKtC9/JA6BWnIcE8bUBZDd7+7MJ+Q/5NIfclHwgEindrN7Dj70YxVH
+ 2ozsSacHBj7UBM/Isa1Nrcsj4bixE65PwTXCb7WVpzXE8JfntJv0F8c6ojntZwJL2sk70KuVPHV
+ 2UTFhB1eeAICiC+dnBnGulPwhbKJsU1Oww0LplJMSruIvCZlNBF9vmoywIxFi2OjPRx+N9EWO+A
+ eYVePvBvM11XmdSN3aaztWz1zT6MqhMbWQ=
+X-Received: by 2002:a05:600c:474a:b0:49c:e42b:a4ac with SMTP id
+ 5b1f17b1804b1-49cf823f60amr211651975e9.11.1788799420181; 
+ Mon, 07 Sep 2026 09:43:40 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49cee6024a8sm423469295e9.6.2026.09.07.09.44.02
+ 5b1f17b1804b1-49ce5563c6csm349072185e9.4.2026.09.07.09.43.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Sep 2026 09:44:02 -0700 (PDT)
-Date: Mon, 07 Sep 2026 18:41:58 +0200
-Subject: [PATCH 08/50] hw/rtc: ds1338: move TYPE_DS1338 to a public header
+ Mon, 07 Sep 2026 09:43:39 -0700 (PDT)
+Date: Mon, 07 Sep 2026 18:41:56 +0200
+Subject: [PATCH 06/50] hw/i2c: pca954x: migrate mux state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-bmc-minerva-v1-8-0d83ad610c3b@free.fr>
+Message-Id: <20260907-bmc-minerva-v1-6-0d83ad610c3b@free.fr>
 References: <20260907-bmc-minerva-v1-0-0d83ad610c3b@free.fr>
 In-Reply-To: <20260907-bmc-minerva-v1-0-0d83ad610c3b@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +75,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788799319; l=1555;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788799319; l=1912;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=rDiuDaI9O+3b6OvM3HVMevuI7PTOL9dpbkK/b/AU00Y=;
- b=TJjwhDYORc6vDrt5LIRvQ49PiDCLxbk25KlMDreMqTb/SaS2ALuZeVzGwRczc7nwjNk6xjWFO
- Xs5RyVKQbsdCjmEo9KNgOnszVkOpUgnFQj3sNDNtvSUMi8Tgqx6NHgP
+ bh=6X3qtF5y9bDFv2QNu2TGa306El/FnP4ElGjKxh8N7cM=;
+ b=RiY+touNeouJPHPg0XaLz54f1yFoRxrHYeecw6h5+E0u9TudjvUcFTHm+cxKznm1V2R++OJcC
+ WWf1JvKmu5fD9TJJYF0+bv84pS8EjMvOlHxF49uXBu7d64srbnWoc5A
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=74.125.225.140; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm2-f12.google.com
+Received-SPF: pass client-ip=209.85.128.52; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f52.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,62 +109,66 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the TYPE_DS1338 type name definition from ds1338.c into a new
-include/hw/rtc/ds1338.h header so that boards instantiating the device
-no longer need to redefine the type name string locally.
+The pca954x model had no VMStateDescription, so neither the channel
+selection nor the PCA9545 interrupt status survived a migration.
+
+This changes the migration stream of the pre-existing PCA9546 and
+PCA9548, which an older QEMU rejects.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/rtc/ds1338.c         |  2 +-
- include/hw/rtc/ds1338.h | 20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ hw/i2c/i2c_mux_pca954x.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-index 5f1ee2e410a..f8b3340bf0f 100644
---- a/hw/rtc/ds1338.c
-+++ b/hw/rtc/ds1338.c
-@@ -12,6 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/i2c/i2c.h"
-+#include "hw/rtc/ds1338.h"
- #include "migration/vmstate.h"
- #include "qemu/bcd.h"
+diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
+index 4bb078a03c..597e57d99a 100644
+--- a/hw/i2c/i2c_mux_pca954x.c
++++ b/hw/i2c/i2c_mux_pca954x.c
+@@ -28,6 +28,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev.h"
+ #include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
+ #include "qemu/log.h"
+ #include "qemu/queue.h"
  #include "qom/object.h"
-@@ -29,7 +30,6 @@
- #define HOURS_PM   0x20
- #define CTRL_OSF   0x20
+@@ -270,6 +271,28 @@ static void pca954x_init(Object *obj)
+     }
+ }
  
--#define TYPE_DS1338 "ds1338"
- OBJECT_DECLARE_SIMPLE_TYPE(DS1338State, DS1338)
++static int pca954x_post_load(void *opaque, int version_id)
++{
++    Pca954xState *s = PCA954X(opaque);
++
++    pca954x_enable_channel(s, s->control);
++    qemu_set_irq(s->int_out, s->int_status == 0);
++    return 0;
++}
++
++static const VMStateDescription vmstate_pca954x = {
++    .name = "pca954x",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = pca954x_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_SMBUS_DEVICE(parent, Pca954xState),
++        VMSTATE_UINT8(control, Pca954xState),
++        VMSTATE_UINT8(int_status, Pca954xState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static const Property pca954x_props[] = {
+     DEFINE_PROP_STRING("name", Pca954xState, name),
+ };
+@@ -287,6 +310,7 @@ static void pca954x_class_init(ObjectClass *klass, const void *data)
  
- struct DS1338State {
-diff --git a/include/hw/rtc/ds1338.h b/include/hw/rtc/ds1338.h
-new file mode 100644
-index 00000000000..f4cfe6a8e76
---- /dev/null
-+++ b/include/hw/rtc/ds1338.h
-@@ -0,0 +1,20 @@
-+/*
-+ * MAXIM DS1338 I2C RTC+NVRAM
-+ *
-+ * Copyright (c) 2009 CodeSourcery.
-+ * Written by Paul Brook
-+ *
-+ * This code is licensed under the GNU GPL v2.
-+ *
-+ * Contributions after 2012-01-13 are licensed under the terms of the
-+ * GNU GPL, version 2 or (at your option) any later version.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_RTC_DS1338_H
-+#define HW_RTC_DS1338_H
-+
-+#define TYPE_DS1338 "ds1338"
-+
-+#endif
+     dc->desc = "Pca954x i2c-mux";
+     dc->realize = pca954x_realize;
++    dc->vmsd = &vmstate_pca954x;
+ 
+     k->write_data = pca954x_write_data;
+     k->receive_byte = pca954x_read_byte;
 
 -- 
 2.50.1
