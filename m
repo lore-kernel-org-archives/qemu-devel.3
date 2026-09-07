@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B38FAC79F99
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5CDC79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3WTp-0007zO-Ky; Mon, 07 Sep 2026 06:21:37 -0400
+	id 1x3WUJ-00085z-Nz; Mon, 07 Sep 2026 06:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3WTn-0007yW-LJ; Mon, 07 Sep 2026 06:21:35 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1x3WUH-00083r-F6; Mon, 07 Sep 2026 06:22:05 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3WTk-00025K-EW; Mon, 07 Sep 2026 06:21:35 -0400
+ id 1x3WUF-00026k-Ez; Mon, 07 Sep 2026 06:22:05 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdjls638XzBqWv;
- Mon,  7 Sep 2026 12:21:29 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdjlt4BJ9z83Yc;
+ Mon,  7 Sep 2026 12:21:30 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788776489;
- bh=oIW/gYq+b+6DHHgxAI1IguyZKIjL7ohsZG1rrnecv2E=;
+ s=dkim; t=1788776490;
+ bh=8jgUyOJWeE4yIYKvLmnqvK4Juj9Um97Fa/tpeKxGvuo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=InpzH3sVcy1IBRKH7LIXXRa9Ys441TUf/yvdoHtAHpPJQsmgHsu4KCeHvqPUIdesj
- plZ9C60EeftMOUwmjScHhB1EA/PqzCfrYGk9VeD6i1dvkRLAX1H8ChvjGm3qM41IyN
- ZpTFzlJ2jLG2Jm3vOW5jkcW0Q/UIxflpQEhLlE7xHyv+najR+xik55CPM++/FoUQAr
- kCe+Cpe2yQanCv/ynvHG64ptBlLndPV+Dvkht/n3Kjx/HSLx4XArTP5fGyt74pojeJ
- Bs0cc86U4HC7Of7+n8ugI/Zv0UPAVHgzcnAub44loSBjZ7s4zCel8OBUidu3LXx8FG
- vmU6HQqbPQWOg==
+ b=ymdG1kwb9GSxgGFUiSlThog6vJi4wfxIjrYmiMTmluyPEd92UE3+SWGQ7m5GcqKkY
+ PGbHV0Jt6tk275++9mcIL5soEpDSGwxvQBrXQ6Xuy9Bs25Ob2uKzgtduCw4SeZR4Hn
+ v/DSkuDMhR5vxFpS24q4p0Oz9xqlbZuTj7Ia9HxZy8xiHXPF/SrMFtWrsfKsIboSDs
+ +yU29u/UsBupUKMvtxnhK91jKetSPvzYjgovMPQjxlaLuVL92EB+FFjVKhQFmNdJZ5
+ ORfJ5evkwF4WyLuowDRlbOUKNvjeB5ZQWuTRSwPPP9shmUHpcRcZa94kOiFjB88I0r
+ kKI2ZU2SLunyw==
 Received: from localhost.localdomain (unknown [134.206.232.123])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdjls4wtxz7wpK;
- Mon,  7 Sep 2026 12:21:29 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdjlt2VTnz7wpD;
+ Mon,  7 Sep 2026 12:21:30 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [PATCH v3 32/36] hw/arm: add RP2040 synthetic boot ROM service tables
-Date: Mon,  7 Sep 2026 12:21:24 +0200
-Message-ID: <20260907102128.55676-2-gilles.grimaud@univ-lille.fr>
+ Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 35/36] hw/arm: route RP2040 banked interrupts per core
+Date: Mon,  7 Sep 2026 12:21:27 +0200
+Message-ID: <20260907102128.55676-5-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907102128.55676-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
  <20260907102128.55676-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -72,642 +74,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
+IO_BANK0, IO_QSPI and SIO expose interrupt state separately for each
+processor. Preserve that distinction in the SoC instead of feeding the
+banked outputs through the shared interrupt path.
+
+Add the missing IO_QSPI outputs and exercise both processor interrupt lines
+in qtest. Keep all banked sources behind the per-core SYSCFG NMI routing.
+
+Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/rp2040.c                               | 290 +++++++++++++++++-
- include/hw/arm/rp2040.h                       |   3 +
- tests/tcg/arm/system/meson.build              |   5 +
- tests/tcg/arm/system/rp2040-bootrom-helpers.S | 235 ++++++++++++++
- .../tcg/arm/system/rp2040-bootrom-helpers.ref |   5 +
- 5 files changed, 534 insertions(+), 4 deletions(-)
- create mode 100644 tests/tcg/arm/system/rp2040-bootrom-helpers.S
- create mode 100644 tests/tcg/arm/system/rp2040-bootrom-helpers.ref
+ hw/arm/rp2040.c                  | 42 ++++++++++++++++++++++++++------
+ hw/misc/rp2040_ioqspi.c          | 18 ++++++++++++++
+ include/hw/arm/rp2040.h          |  3 ++-
+ include/hw/misc/rp2040_ioqspi.h  |  2 ++
+ tests/qtest/rp2040-ioqspi-test.c | 22 +++++++++++++++++
+ 5 files changed, 79 insertions(+), 8 deletions(-)
 
 diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 1b632be0b6..a3ad360462 100644
+index 572fff0c7d..b093ad32f1 100644
 --- a/hw/arm/rp2040.c
 +++ b/hw/arm/rp2040.c
-@@ -44,6 +44,24 @@
+@@ -34,6 +34,7 @@
+ #define RP2040_DMA_IRQ_0  11
+ #define RP2040_DMA_IRQ_1  12
+ #define RP2040_IO_IRQ_BANK0 13
++#define RP2040_IO_IRQ_QSPI 14
+ #define RP2040_SIO_IRQ_PROC0 15
+ #define RP2040_SIO_IRQ_PROC1 16
  
- #define RP2040_PROC1          1
+@@ -1474,8 +1475,8 @@ static void rp2040_update_nmi(RP2040State *s)
+             bool route_to_nmi = nmi_mask & BIT(irq);
  
-+#define RP2040_BOOTROM_FUNC_TABLE_PTR_OFFSET 0x14
-+#define RP2040_BOOTROM_DATA_TABLE_PTR_OFFSET 0x16
-+#define RP2040_BOOTROM_TABLE_LOOKUP_PTR_OFFSET 0x18
-+#define RP2040_BOOTROM_LOOKUP_OFFSET 0x0100
-+#define RP2040_BOOTROM_STUBS_OFFSET 0x0120
-+#define RP2040_BOOTROM_FUNC_TABLE_OFFSET 0x0300
-+#define RP2040_BOOTROM_DATA_TABLE_OFFSET 0x0340
-+#define RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET 0x0360
-+#define RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET 0x0380
-+#define RP2040_BOOTROM_FLOAT_TABLE_OFFSET 0x03c0
-+#define RP2040_BOOTROM_DOUBLE_TABLE_OFFSET 0x0460
-+#define RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE 4
-+#define RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE 4
-+#define RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET 20
-+#define RP2040_BOOTROM_ROM_VERSION_OFFSET 0x13
-+#define RP2040_BOOTROM_SYNTHETIC_ROM_VERSION 2
-+#define RP2040_BOOTROM_FLOAT_TABLE_WORDS 32
-+
- /*
-  * Temporary boot ROM used until a faithful RP2040 boot ROM is requested.  It
-  * uses SIO_CPUID to split core behavior: core 0 copies the 256-byte XIP
-@@ -166,6 +184,222 @@ static const struct {
-     { "rp2040.pio1",     0x50300000, 0x10000 },
- };
- 
-+typedef struct RP2040BootromFunction {
-+    uint16_t code;
-+    const char *name;
-+    const uint8_t *impl;
-+    size_t impl_size;
-+} RP2040BootromFunction;
-+
-+typedef struct RP2040BootromData {
-+    uint16_t code;
-+    uint16_t offset;
-+} RP2040BootromData;
-+
-+#define RP2040_ROM_TABLE_CODE(c1, c2) ((uint16_t)(c1) | ((uint16_t)(c2) << 8))
-+
-+static const uint8_t rp2040_bootrom_clz32[] = {
-+    0x00, 0x21, 0x00, 0x28, 0x01, 0xd1, 0x20, 0x20,
-+    0x70, 0x47, 0x00, 0x28, 0x02, 0xd4, 0x40, 0x00,
-+    0x01, 0x31, 0xfa, 0xe7, 0x08, 0x46, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_ctz32[] = {
-+    0x00, 0x21, 0x00, 0x28, 0x01, 0xd1, 0x20, 0x20,
-+    0x70, 0x47, 0x01, 0x22, 0x10, 0x42, 0x02, 0xd1,
-+    0x40, 0x08, 0x01, 0x31, 0xf9, 0xe7, 0x08, 0x46,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_popcount32[] = {
-+    0x00, 0x21, 0x00, 0x28, 0x04, 0xd0, 0x01, 0x22,
-+    0x02, 0x40, 0x89, 0x18, 0x40, 0x08, 0xf8, 0xe7,
-+    0x08, 0x46, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_reverse32[] = {
-+    0x00, 0x21, 0x20, 0x22, 0x49, 0x00, 0x01, 0x23,
-+    0x03, 0x40, 0x19, 0x43, 0x40, 0x08, 0x01, 0x3a,
-+    0xf8, 0xd1, 0x08, 0x46, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memcpy[] = {
-+    0x10, 0xb4, 0x03, 0x46, 0x00, 0x2a, 0x05, 0xd0,
-+    0x0c, 0x78, 0x04, 0x70, 0x01, 0x31, 0x01, 0x30,
-+    0x01, 0x3a, 0xf7, 0xe7, 0x18, 0x46, 0x10, 0xbc,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memset[] = {
-+    0x03, 0x46, 0x00, 0x2a, 0x03, 0xd0, 0x01, 0x70,
-+    0x01, 0x30, 0x01, 0x3a, 0xf9, 0xe7, 0x18, 0x46,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memcpy44[] = {
-+    0x10, 0xb4, 0x03, 0x46, 0x00, 0x2a, 0x05, 0xd0,
-+    0x0c, 0x68, 0x04, 0x60, 0x04, 0x31, 0x04, 0x30,
-+    0x04, 0x3a, 0xf7, 0xe7, 0x18, 0x46, 0x10, 0xbc,
-+    0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_memset4[] = {
-+    0x10, 0xb4, 0x03, 0x46, 0xc9, 0xb2, 0x0c, 0x46,
-+    0x24, 0x02, 0x21, 0x43, 0x0c, 0x46, 0x24, 0x04,
-+    0x21, 0x43, 0x00, 0x2a, 0x03, 0xd0, 0x01, 0x60,
-+    0x04, 0x30, 0x04, 0x3a, 0xf9, 0xe7, 0x18, 0x46,
-+    0x10, 0xbc, 0x70, 0x47,
-+};
-+
-+#define RP2040_BOOTROM_IMPL(_code, _name, _impl) \
-+    { _code, _name, _impl, sizeof(_impl) }
-+#define RP2040_BOOTROM_NYI(_code, _name) \
-+    { _code, _name, NULL, 0 }
-+
-+static const RP2040BootromFunction rp2040_bootrom_functions[] = {
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('C', 'X'),
-+                       "flash_enter_cmd_xip"),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('E', 'X'), "flash_exit_xip"),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('F', 'C'),
-+                       "flash_flush_cache"),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('I', 'F'),
-+                       "connect_internal_flash"),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('R', 'E'),
-+                       "flash_range_erase"),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('R', 'P'),
-+                       "flash_range_program"),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('C', '4'), "memcpy44",
-+                        rp2040_bootrom_memcpy44),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('L', '3'), "clz32",
-+                        rp2040_bootrom_clz32),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('M', 'C'), "memcpy",
-+                        rp2040_bootrom_memcpy),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('M', 'S'), "memset",
-+                        rp2040_bootrom_memset),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('P', '3'), "popcount32",
-+                        rp2040_bootrom_popcount32),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('R', '3'), "reverse32",
-+                        rp2040_bootrom_reverse32),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('S', '4'), "memset4",
-+                        rp2040_bootrom_memset4),
-+    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('T', '3'), "ctz32",
-+                        rp2040_bootrom_ctz32),
-+    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('U', 'B'), "reset_usb_boot"),
-+};
-+
-+static const RP2040BootromData rp2040_bootrom_data[] = {
-+    { RP2040_ROM_TABLE_CODE('S', 'F'), RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 },
-+    { RP2040_ROM_TABLE_CODE('S', 'D'), RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 },
-+};
-+
-+static const uint8_t rp2040_bootrom_lookup[] = {
-+    0x02, 0x88, 0x00, 0x2a, 0x05, 0xd0, 0x91, 0x42,
-+    0x01, 0xd0, 0x04, 0x30, 0xf8, 0xe7, 0x40, 0x88,
-+    0x70, 0x47, 0x5f, 0x22, 0x12, 0x06, 0xff, 0x23,
-+    0x1b, 0x04, 0x1a, 0x43, 0x11, 0x60, 0x00, 0xbe,
-+    0x00, 0x20, 0x70, 0x47,
-+};
-+
-+static const uint8_t rp2040_bootrom_nyi_stub[] = {
-+    0x04, 0x49, 0x5f, 0x20, 0x00, 0x06, 0xff, 0x22,
-+    0x12, 0x04, 0x10, 0x43, 0x01, 0x60, 0x00, 0xbe,
-+    0xfe, 0xe7, 0xc0, 0x46, 0x00, 0x00, 0x00, 0x00,
-+};
-+
-+static void rp2040_store_hword(uint8_t *rom, uint32_t offset, uint16_t value)
-+{
-+    rom[offset] = value;
-+    rom[offset + 1] = value >> 8;
-+}
-+
-+static void rp2040_store_word(uint8_t *rom, uint32_t offset, uint32_t value)
-+{
-+    rom[offset] = value;
-+    rom[offset + 1] = value >> 8;
-+    rom[offset + 2] = value >> 16;
-+    rom[offset + 3] = value >> 24;
-+}
-+
-+static void rp2040_install_synthetic_bootrom(void)
-+{
-+    g_autofree uint8_t *rom = g_malloc0(RP2040_ROM_SIZE);
-+    uint32_t func_base = RP2040_BOOTROM_STUBS_OFFSET;
-+    uint32_t func_table = RP2040_BOOTROM_FUNC_TABLE_OFFSET;
-+    uint32_t data_table = RP2040_BOOTROM_DATA_TABLE_OFFSET;
-+    uint32_t float_nyi = RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET | 1;
-+    uint32_t double_nyi = RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET | 1;
-+    int i;
-+
-+    memcpy(rom, rp2040_bootrom, sizeof(rp2040_bootrom));
-+    rom[RP2040_BOOTROM_ROM_VERSION_OFFSET] =
-+        RP2040_BOOTROM_SYNTHETIC_ROM_VERSION;
-+    memcpy(rom + RP2040_BOOTROM_LOOKUP_OFFSET, rp2040_bootrom_lookup,
-+           sizeof(rp2040_bootrom_lookup));
-+    rp2040_store_hword(rom, RP2040_BOOTROM_FUNC_TABLE_PTR_OFFSET,
-+                       RP2040_BOOTROM_FUNC_TABLE_OFFSET);
-+    rp2040_store_hword(rom, RP2040_BOOTROM_DATA_TABLE_PTR_OFFSET,
-+                       RP2040_BOOTROM_DATA_TABLE_OFFSET);
-+    rp2040_store_hword(rom, RP2040_BOOTROM_TABLE_LOOKUP_PTR_OFFSET,
-+                       RP2040_BOOTROM_LOOKUP_OFFSET | 1);
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_functions); i++) {
-+        const RP2040BootromFunction *func = &rp2040_bootrom_functions[i];
-+        uint32_t entry = func_base | 1;
-+
-+        if (func->impl) {
-+            memcpy(rom + func_base, func->impl, func->impl_size);
-+            func_base += ROUND_UP(func->impl_size, 4);
-+        } else {
-+            memcpy(rom + func_base, rp2040_bootrom_nyi_stub,
-+                   sizeof(rp2040_bootrom_nyi_stub));
-+            rp2040_store_word(rom,
-+                              func_base +
-+                              RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
-+                              func->code);
-+            func_base += ROUND_UP(sizeof(rp2040_bootrom_nyi_stub), 4);
-+        }
-+        rp2040_store_hword(rom, func_table +
-+                           i * RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE,
-+                           func->code);
-+        rp2040_store_hword(rom, func_table +
-+                           i * RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE + 2,
-+                           entry);
-+    }
-+
-+    memcpy(rom + RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET, rp2040_bootrom_nyi_stub,
-+           sizeof(rp2040_bootrom_nyi_stub));
-+    rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET +
-+                      RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
-+                      RP2040_ROM_TABLE_CODE('S', 'F'));
-+    memcpy(rom + RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET, rp2040_bootrom_nyi_stub,
-+           sizeof(rp2040_bootrom_nyi_stub));
-+    rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET +
-+                      RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
-+                      RP2040_ROM_TABLE_CODE('S', 'D'));
-+    rom[RP2040_BOOTROM_FLOAT_TABLE_OFFSET] = RP2040_BOOTROM_FLOAT_TABLE_WORDS;
-+    rom[RP2040_BOOTROM_DOUBLE_TABLE_OFFSET] = RP2040_BOOTROM_FLOAT_TABLE_WORDS;
-+    for (i = 0; i < RP2040_BOOTROM_FLOAT_TABLE_WORDS; i++) {
-+        rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 +
-+                          i * sizeof(uint32_t), float_nyi);
-+        rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 +
-+                          i * sizeof(uint32_t), double_nyi);
-+    }
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_data); i++) {
-+        const RP2040BootromData *data = &rp2040_bootrom_data[i];
-+
-+        rp2040_store_hword(rom, data_table +
-+                           i * RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE,
-+                           data->code);
-+        rp2040_store_hword(rom, data_table +
-+                           i * RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE + 2,
-+                           data->offset);
-+    }
-+
-+    rom_add_blob_fixed("rp2040.bootrom", rom, RP2040_ROM_SIZE,
-+                       RP2040_ROM_BASE);
-+}
-+
- static uint64_t rp2040_usbctrl_regs_read(void *opaque, hwaddr addr,
-                                          unsigned size)
- {
-@@ -194,8 +428,8 @@ static uint64_t rp2040_usbctrl_regs_read(void *opaque, hwaddr addr,
-         } else {
-             value = 0;
-             qemu_log_mask(LOG_UNIMP,
--                      "%s: unimplemented read at offset 0x%"
--                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+                          "%s: unimplemented read at offset 0x%"
-+                          HWADDR_PRIx "\n", __func__, addr & 0xfff);
+             qemu_set_irq(s->cpu_irq[core][irq],
+-                         s->irq_level[irq] && !route_to_nmi);
+-            nmi_level |= s->irq_level[irq] && route_to_nmi;
++                         s->irq_level[core][irq] && !route_to_nmi);
++            nmi_level |= s->irq_level[core][irq] && route_to_nmi;
          }
-         break;
+         qemu_set_irq(s->nmi_irq[core], nmi_level);
      }
-@@ -233,6 +467,48 @@ static const MemoryRegionOps rp2040_usbctrl_regs_ops = {
-     },
- };
+@@ -1491,7 +1492,26 @@ static void rp2040_set_irq(void *opaque, int irq, int level)
+     RP2040State *s = opaque;
  
-+static const char *rp2040_bootrom_function_name(uint16_t code)
-+{
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_functions); i++) {
-+        if (rp2040_bootrom_functions[i].code == code) {
-+            return rp2040_bootrom_functions[i].name;
-+        }
-+    }
-+    return NULL;
+     assert(irq >= 0 && irq < RP2040_NUM_IRQS);
+-    s->irq_level[irq] = level;
++    s->irq_level[0][irq] = level;
++    s->irq_level[1][irq] = level;
++    rp2040_update_nmi(s);
 +}
 +
-+static void rp2040_synthetic_rom_dbg_write(void *opaque, hwaddr addr,
-+                                           uint64_t value, unsigned size)
++static void rp2040_set_core0_irq(void *opaque, int irq, int level)
 +{
-+    uint16_t code = value;
-+    const char *name = rp2040_bootrom_function_name(code);
-+    qemu_log_mask(LOG_UNIMP,
-+                  "%s: unimplemented boot ROM function '%c%c' (%s)\n",
-+                  __func__, code & 0xff, (code >> 8) & 0xff,
-+                  name ? name : "unknown lookup code");
++    RP2040State *s = opaque;
++
++    assert(irq >= 0 && irq < RP2040_NUM_IRQS);
++    s->irq_level[0][irq] = level;
++    rp2040_update_nmi(s);
 +}
 +
-+static uint64_t rp2040_synthetic_rom_dbg_read(void *opaque, hwaddr addr,
-+                                              unsigned size)
++static void rp2040_set_core1_irq(void *opaque, int irq, int level)
 +{
-+    qemu_log_mask(LOG_UNIMP,
-+                  "%s: read from write-only synthetic register\n",
-+                  __func__);
-+    return 0;
-+}
++    RP2040State *s = opaque;
 +
-+static const MemoryRegionOps rp2040_synthetic_rom_dbg_ops = {
-+    .read = rp2040_synthetic_rom_dbg_read,
-+    .write = rp2040_synthetic_rom_dbg_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
- static void rp2040_update_nmi(RP2040State *s)
- {
-     unsigned core;
-@@ -498,6 +774,13 @@ static bool rp2040_init_memory(RP2040State *s, Error **errp)
-     memory_region_add_subregion(s->board_memory, RP2040_USBCTRL_REGS_BASE,
-                                 &s->usbctrl_regs);
- 
-+    memory_region_init_io(&s->synthetic_rom_dbg, OBJECT(s),
-+                          &rp2040_synthetic_rom_dbg_ops, s,
-+                          "rp2040.synthetic-rom-dbg",
-+                          RP2040_SYNTHETIC_ROM_DBG_SIZE);
-+    memory_region_add_subregion(s->board_memory,
-+                                 RP2040_SYNTHETIC_ROM_DBG_BASE,
-+                                 &s->synthetic_rom_dbg);
-     return true;
++    assert(irq >= 0 && irq < RP2040_NUM_IRQS);
++    s->irq_level[1][irq] = level;
+     rp2040_update_nmi(s);
  }
  
-@@ -506,8 +789,7 @@ static bool rp2040_load_bootrom(RP2040State *s, Error **errp)
-     g_autofree char *filename = NULL;
+@@ -1671,6 +1691,10 @@ static void rp2040_soc_init(Object *obj)
+     object_initialize_child(obj, "xosc", &s->xosc, TYPE_RP2040_XOSC);
  
-     if (!s->bootrom_file) {
--        rom_add_blob_fixed("rp2040.bootrom", rp2040_bootrom,
--                           sizeof(rp2040_bootrom), RP2040_ROM_BASE);
-+        rp2040_install_synthetic_bootrom();
-         return true;
+     s->irq = qemu_allocate_irqs(rp2040_set_irq, s, RP2040_NUM_IRQS);
++    s->core_irq[0] = qemu_allocate_irqs(rp2040_set_core0_irq, s,
++                                        RP2040_NUM_IRQS);
++    s->core_irq[1] = qemu_allocate_irqs(rp2040_set_core1_irq, s,
++                                        RP2040_NUM_IRQS);
+ 
+     s->sysclk = clock_new(obj, "sysclk");
+ }
+@@ -1882,7 +1906,7 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
      }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->sio), 0, RP2040_SIO_BASE);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sio), 0,
+-                       s->irq[RP2040_SIO_IRQ_PROC0]);
++                       s->core_irq[0][RP2040_SIO_IRQ_PROC0]);
  
+     for (i = 0; i < RP2040_NUM_CORES; i++) {
+         g_autofree char *memory_name =
+@@ -1938,9 +1962,9 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->iobank0), 0, RP2040_IOBANK0_BASE);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 0,
+-                       s->irq[RP2040_IO_IRQ_BANK0]);
++                       s->core_irq[0][RP2040_IO_IRQ_BANK0]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->iobank0), 1,
+-                       s->cpu_irq[RP2040_PROC1][RP2040_IO_IRQ_BANK0]);
++                       s->core_irq[1][RP2040_IO_IRQ_BANK0]);
+     qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 0,
+                                 qdev_get_gpio_in_named(dev, "uart-pin", 0));
+     qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart0-pin", 1,
+@@ -1950,7 +1974,7 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+     qdev_connect_gpio_out_named(DEVICE(&s->iobank0), "uart1-pin", 1,
+                                 qdev_get_gpio_in_named(dev, "uart-pin", 3));
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sio), 1,
+-                       s->cpu_irq[RP2040_PROC1][RP2040_SIO_IRQ_PROC1]);
++                       s->core_irq[1][RP2040_SIO_IRQ_PROC1]);
+ 
+     object_property_set_link(OBJECT(&s->ioqspi), "xip", OBJECT(&s->xip),
+                              &err);
+@@ -1962,6 +1986,10 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioqspi), 0, RP2040_IOQSPI_BASE);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->ioqspi), 0,
++                       s->core_irq[0][RP2040_IO_IRQ_QSPI]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->ioqspi), 1,
++                       s->core_irq[1][RP2040_IO_IRQ_QSPI]);
+ 
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rosc), errp)) {
+         return;
+diff --git a/hw/misc/rp2040_ioqspi.c b/hw/misc/rp2040_ioqspi.c
+index d8fd98934c..59ff24e32b 100644
+--- a/hw/misc/rp2040_ioqspi.c
++++ b/hw/misc/rp2040_ioqspi.c
+@@ -54,6 +54,16 @@ static uint32_t rp2040_ioqspi_ints(uint32_t intr, uint32_t inte,
+     return (intr & inte) | intf;
+ }
+ 
++static void rp2040_ioqspi_update_irq(RP2040IoQspiState *s)
++{
++    qemu_set_irq(s->proc0_irq,
++                 rp2040_ioqspi_ints(s->intr, s->proc0_inte,
++                                    s->proc0_intf) != 0);
++    qemu_set_irq(s->proc1_irq,
++                 rp2040_ioqspi_ints(s->intr, s->proc1_inte,
++                                    s->proc1_intf) != 0);
++}
++
+ static void rp2040_ioqspi_update_ss(RP2040IoQspiState *s)
+ {
+     uint32_t outover;
+@@ -148,26 +158,31 @@ static void rp2040_ioqspi_write(void *opaque, hwaddr addr,
+         switch (offset) {
+         case IOQSPI_INTR:
+             s->intr &= ~(value & IOQSPI_INTR_EDGE_MASK);
++            rp2040_ioqspi_update_irq(s);
+             break;
+         case IOQSPI_PROC0_INTE:
+             s->proc0_inte =
+                 rp2040_atomic_update(s->proc0_inte, value, alias) &
+                 IOQSPI_IRQ_MASK;
++            rp2040_ioqspi_update_irq(s);
+             break;
+         case IOQSPI_PROC0_INTF:
+             s->proc0_intf =
+                 rp2040_atomic_update(s->proc0_intf, value, alias) &
+                 IOQSPI_IRQ_MASK;
++            rp2040_ioqspi_update_irq(s);
+             break;
+         case IOQSPI_PROC1_INTE:
+             s->proc1_inte =
+                 rp2040_atomic_update(s->proc1_inte, value, alias) &
+                 IOQSPI_IRQ_MASK;
++            rp2040_ioqspi_update_irq(s);
+             break;
+         case IOQSPI_PROC1_INTF:
+             s->proc1_intf =
+                 rp2040_atomic_update(s->proc1_intf, value, alias) &
+                 IOQSPI_IRQ_MASK;
++            rp2040_ioqspi_update_irq(s);
+             break;
+         case IOQSPI_DORMANT_INTE:
+             s->dormant_wake_inte =
+@@ -222,6 +237,7 @@ static void rp2040_ioqspi_reset(DeviceState *dev)
+     s->proc1_intf = 0;
+     s->dormant_wake_inte = 0;
+     s->dormant_wake_intf = 0;
++    rp2040_ioqspi_update_irq(s);
+ }
+ 
+ static void rp2040_ioqspi_init(Object *obj)
+@@ -231,6 +247,8 @@ static void rp2040_ioqspi_init(Object *obj)
+     memory_region_init_io(&s->iomem, obj, &rp2040_ioqspi_ops, s,
+                           "rp2040.ioqspi", RP2040_IOQSPI_SIZE);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->proc0_irq);
++    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->proc1_irq);
+ }
+ 
+ static const VMStateDescription rp2040_ioqspi_vmstate = {
 diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 0daa7d6ba1..17235827c4 100644
+index 498d36dd5c..2d9a0abc88 100644
 --- a/include/hw/arm/rp2040.h
 +++ b/include/hw/arm/rp2040.h
-@@ -52,6 +52,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(RP2040State, RP2040)
- #define RP2040_USBCTRL_DPRAM_SIZE (4 * KiB)
- #define RP2040_USBCTRL_REGS_BASE  0x50110000
- #define RP2040_USBCTRL_REGS_SIZE  0x4000
-+#define RP2040_SYNTHETIC_ROM_DBG_BASE 0x5fff0000
-+#define RP2040_SYNTHETIC_ROM_DBG_SIZE 0x1000
- 
- #define RP2040_NUM_CORES      2
- #define RP2040_NUM_IRQS       32
-@@ -90,6 +92,7 @@ struct RP2040State {
-     MemoryRegion sram[6];
-     MemoryRegion usbctrl_dpram;
-     MemoryRegion usbctrl_regs;
-+    MemoryRegion synthetic_rom_dbg;
-     uint32_t usbctrl_reg[0x100 / sizeof(uint32_t)];
+@@ -103,9 +103,10 @@ struct RP2040State {
      char *bootrom_file;
  
-diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index a12aed74fa..9e1024cf11 100644
---- a/tests/tcg/arm/system/meson.build
-+++ b/tests/tcg/arm/system/meson.build
-@@ -157,6 +157,11 @@ tests += {
-     'qemu_args': rp2040_uart1_qemu_args,
-     'expected_output': 'rp2040-dma-uart1.ref',
-   },
-+  'rp2040-bootrom-helpers.S': {
-+    'cflags': rp2040_cflags,
-+    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-bootrom-helpers.ref',
-+  },
-   'semiconsole.c': {
-     'cflags': cflags,
-     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-diff --git a/tests/tcg/arm/system/rp2040-bootrom-helpers.S b/tests/tcg/arm/system/rp2040-bootrom-helpers.S
-new file mode 100644
-index 0000000000..e48230a875
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-bootrom-helpers.S
-@@ -0,0 +1,235 @@
-+/*
-+ * Raspberry Pi Pico boot ROM integer and memory helper test.
-+ *
-+ * Copyright 2026 Gilles Grimaud
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+     qemu_irq *irq;
++    qemu_irq *core_irq[RP2040_NUM_CORES];
+     qemu_irq cpu_irq[RP2040_NUM_CORES][RP2040_NUM_IRQS];
+     qemu_irq nmi_irq[RP2040_NUM_CORES];
+-    bool irq_level[RP2040_NUM_IRQS];
++    bool irq_level[RP2040_NUM_CORES][RP2040_NUM_IRQS];
+     bool strict_uart_pins;
+     bool uart0_tx_pin_enabled;
+     bool uart0_rx_pin_enabled;
+diff --git a/include/hw/misc/rp2040_ioqspi.h b/include/hw/misc/rp2040_ioqspi.h
+index eae63588e6..0ab8acfbf0 100644
+--- a/include/hw/misc/rp2040_ioqspi.h
++++ b/include/hw/misc/rp2040_ioqspi.h
+@@ -30,6 +30,8 @@ struct RP2040IoQspiState {
+     uint32_t proc1_intf;
+     uint32_t dormant_wake_inte;
+     uint32_t dormant_wake_intf;
++    qemu_irq proc0_irq;
++    qemu_irq proc1_irq;
+     RP2040XipState *xip;
+ };
+ 
+diff --git a/tests/qtest/rp2040-ioqspi-test.c b/tests/qtest/rp2040-ioqspi-test.c
+index 4f94b5f3a2..31dd85686f 100644
+--- a/tests/qtest/rp2040-ioqspi-test.c
++++ b/tests/qtest/rp2040-ioqspi-test.c
+@@ -15,6 +15,8 @@
+ #define IOQSPI_PROC0_INTE       0x34
+ #define IOQSPI_PROC0_INTF       0x38
+ #define IOQSPI_PROC0_INTS       0x3c
++#define IOQSPI_PROC1_INTF       0x44
++#define IOQSPI_PROC1_INTS       0x48
+ 
+ #define IOQSPI_CTRL_RESET       0x1f
+ #define IOQSPI_SD1_CTRL_SET     0x201c
+@@ -58,11 +60,31 @@ static void test_ioqspi_interrupt_force_status(void)
+ {
+     QTestState *qts = rp2040_start();
+ 
++    qtest_irq_intercept_in(qts, "/machine/soc/proc0");
++    g_assert_false(qtest_get_irq(qts, 14));
 +
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
+     qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC0_INTE, BIT(1));
+     qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC0_INTF, BIT(2));
+ 
+     g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_PROC0_INTS), ==,
+                     BIT(2));
++    g_assert_true(qtest_get_irq(qts, 14));
++    qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC0_INTF + 0x3000, BIT(2));
++    g_assert_false(qtest_get_irq(qts, 14));
 +
-+#define SRAM_END               0x20042000
-+#define UART0_DR               0x40034000
-+#define ROM_FUNC_TABLE_PTR     0x00000014
-+#define ROM_TABLE_LOOKUP_PTR   0x00000018
-+#define ROM_FUNC_POPCOUNT32    0x3350
-+#define ROM_FUNC_CLZ32         0x334c
-+#define ROM_FUNC_CTZ32         0x3354
-+#define ROM_FUNC_REVERSE32     0x3352
-+#define ROM_FUNC_MEMSET        0x534d
-+#define ROM_FUNC_MEMCPY        0x434d
-+#define ROM_FUNC_MEMSET4       0x3453
-+#define ROM_FUNC_MEMCPY44      0x3443
-+#define TEST_BUFFER            0x20000000
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++    qtest_quit(qts);
++    qts = rp2040_start();
 +
-+.macro lookup code
-+    ldr r0, =\code
-+    bl rom_func_lookup
-+    cmp r0, 0
-+    bne 0f
-+    b fail_lookup
-+0:
-+    mov r4, r0
-+.endm
++    qtest_irq_intercept_in(qts, "/machine/soc/proc1");
++    g_assert_false(qtest_get_irq(qts, 14));
 +
-+.macro fail_if_ne reg, expected, target
-+    ldr r2, =\expected
-+    cmp \reg, r2
-+    beq 0f
-+    b \target
-+0:
-+.endm
++    qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC1_INTF, BIT(3));
++    g_assert_cmphex(qtest_readl(qts, IOQSPI_BASE + IOQSPI_PROC1_INTS), ==,
++                    BIT(3));
++    g_assert_true(qtest_get_irq(qts, 14));
 +
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl puts
-+
-+    lookup ROM_FUNC_POPCOUNT32
-+    ldr r0, =0xf0f00f0f
-+    blx r4
-+    fail_if_ne r0, 16, fail_bits
-+
-+    lookup ROM_FUNC_CLZ32
-+    ldr r0, =0x00f00000
-+    blx r4
-+    fail_if_ne r0, 8, fail_bits
-+
-+    lookup ROM_FUNC_CTZ32
-+    ldr r0, =0x00008000
-+    blx r4
-+    fail_if_ne r0, 15, fail_bits
-+
-+    lookup ROM_FUNC_REVERSE32
-+    ldr r0, =0x80000001
-+    blx r4
-+    fail_if_ne r0, 0x80000001, fail_bits
-+
-+    ldr r0, =bits_ok_message
-+    bl puts
-+
-+    lookup ROM_FUNC_MEMSET
-+    ldr r0, =TEST_BUFFER
-+    movs r1, 0x5a
-+    movs r2, 4
-+    blx r4
-+    ldr r5, =TEST_BUFFER
-+    ldrb r0, [r5]
-+    fail_if_ne r0, 0x5a, fail_byte_memory
-+    ldrb r0, [r5, 3]
-+    fail_if_ne r0, 0x5a, fail_byte_memory
-+
-+    ldr r5, =TEST_BUFFER + 0x20
-+    ldr r0, =0x11223344
-+    str r0, [r5]
-+    lookup ROM_FUNC_MEMCPY
-+    ldr r0, =TEST_BUFFER + 0x10
-+    ldr r1, =TEST_BUFFER + 0x20
-+    movs r2, 4
-+    blx r4
-+    ldr r5, =TEST_BUFFER + 0x10
-+    ldr r0, [r5]
-+    fail_if_ne r0, 0x11223344, fail_byte_memory
-+
-+    ldr r0, =byte_memory_ok_message
-+    bl puts
-+
-+    lookup ROM_FUNC_MEMSET4
-+    ldr r5, =TEST_BUFFER + 0x30
-+    ldr r0, =0xdeadbeef
-+    str r0, [r5, 8]
-+    ldr r0, =TEST_BUFFER + 0x30
-+    movs r1, 0x5a
-+    movs r2, 8
-+    blx r4
-+    ldr r5, =TEST_BUFFER + 0x30
-+    ldr r0, [r5]
-+    fail_if_ne r0, 0x5a5a5a5a, fail_word_memory
-+    ldr r0, [r5, 4]
-+    fail_if_ne r0, 0x5a5a5a5a, fail_word_memory
-+    ldr r0, [r5, 8]
-+    fail_if_ne r0, 0xdeadbeef, fail_word_memory
-+
-+    ldr r5, =TEST_BUFFER + 0x40
-+    ldr r0, =0x55667788
-+    str r0, [r5]
-+    ldr r0, =0x99aabbcc
-+    str r0, [r5, 4]
-+    ldr r5, =TEST_BUFFER + 0x50
-+    ldr r0, =0xdeadbeef
-+    str r0, [r5, 8]
-+    lookup ROM_FUNC_MEMCPY44
-+    ldr r0, =TEST_BUFFER + 0x50
-+    ldr r1, =TEST_BUFFER + 0x40
-+    movs r2, 8
-+    blx r4
-+    ldr r5, =TEST_BUFFER + 0x50
-+    ldr r0, [r5]
-+    fail_if_ne r0, 0x55667788, fail_word_memory
-+    ldr r0, [r5, 4]
-+    fail_if_ne r0, 0x99aabbcc, fail_word_memory
-+    ldr r0, [r5, 8]
-+    fail_if_ne r0, 0xdeadbeef, fail_word_memory
-+
-+    ldr r0, =word_memory_ok_message
-+    bl puts
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+fail_lookup:
-+    ldr r0, =fail_lookup_message
-+    b test_failed
-+
-+fail_bits:
-+    ldr r0, =fail_bits_message
-+    b test_failed
-+
-+fail_byte_memory:
-+    ldr r0, =fail_byte_memory_message
-+    b test_failed
-+
-+fail_word_memory:
-+    ldr r0, =fail_word_memory_message
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+2:
-+    b 2b
-+
-+.thumb_func
-+rom_func_lookup:
-+    push {r4, lr}
-+    mov r1, r0
-+    ldr r0, =ROM_FUNC_TABLE_PTR
-+    ldrh r0, [r0]
-+    ldr r4, =ROM_TABLE_LOOKUP_PTR
-+    ldrh r4, [r4]
-+    blx r4
-+    pop {r4, pc}
-+
-+.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+    b test_failed
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+3:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 4f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 3b
-+
-+4:
-+    bx lr
-+
-+.section .rodata, "a", %progbits
-+start_message:
-+    .asciz "PICO TCG BOOTROM HELPERS START\n"
-+bits_ok_message:
-+    .asciz "PICO TCG BOOTROM HELPERS BITS OK\n"
-+byte_memory_ok_message:
-+    .asciz "PICO TCG BOOTROM HELPERS BYTE MEMORY OK\n"
-+word_memory_ok_message:
-+    .asciz "PICO TCG BOOTROM HELPERS WORD MEMORY OK\n"
-+ok_message:
-+    .asciz "PICO TCG BOOTROM HELPERS OK\n"
-+fail_lookup_message:
-+    .asciz "PICO TCG BOOTROM HELPERS FAIL: LOOKUP\n"
-+fail_bits_message:
-+    .asciz "PICO TCG BOOTROM HELPERS FAIL: BITS\n"
-+fail_byte_memory_message:
-+    .asciz "PICO TCG BOOTROM HELPERS FAIL: BYTE MEMORY\n"
-+fail_word_memory_message:
-+    .asciz "PICO TCG BOOTROM HELPERS FAIL: WORD MEMORY\n"
-+fail_exception_message:
-+    .asciz "PICO TCG BOOTROM HELPERS FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-bootrom-helpers.ref b/tests/tcg/arm/system/rp2040-bootrom-helpers.ref
-new file mode 100644
-index 0000000000..b1b4346bf4
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-bootrom-helpers.ref
-@@ -0,0 +1,5 @@
-+PICO TCG BOOTROM HELPERS START
-+PICO TCG BOOTROM HELPERS BITS OK
-+PICO TCG BOOTROM HELPERS BYTE MEMORY OK
-+PICO TCG BOOTROM HELPERS WORD MEMORY OK
-+PICO TCG BOOTROM HELPERS OK
++    qtest_writel(qts, IOQSPI_BASE + IOQSPI_PROC1_INTF + 0x3000, BIT(3));
++    g_assert_false(qtest_get_irq(qts, 14));
+ 
+     qtest_quit(qts);
+ }
 -- 
 2.55.0
 
