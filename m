@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF86C79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BE5C79F9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 09:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3VWi-0002fI-Cc; Mon, 07 Sep 2026 05:20:32 -0400
+	id 1x3VWh-0002ep-70; Mon, 07 Sep 2026 05:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x3VWg-0002eT-8Q; Mon, 07 Sep 2026 05:20:30 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1x3VWe-0002dq-5m; Mon, 07 Sep 2026 05:20:28 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1x3VWe-0001gr-K4; Mon, 07 Sep 2026 05:20:29 -0400
+ id 1x3VWb-0001gO-V5; Mon, 07 Sep 2026 05:20:27 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ht92euiEqIs3GRICQmmMHa5E3hLLNyJnT5/5fCLPui0CfUfyV9FnbJU1u5gkFkwa51y1JPk0zDvLPPIvCv7JV3oQ4zSbOdfkgg7wHU4vSsQhW09HLhCmAqBdSZgeiWPk0kGtGpCdDBRSWam2ryTIAxTSkkrzkDumqr4UQWWpFfe+2I4+vDleXgBZtXvQJ92pdFcx8S9U7AAV/JOkKldUroWMtiBpWB4FxWvV2spF8kd6AbWPbR5xFAvlzhNvW2yR+tr9ufR2IhX4qgCdgsewK+OP1Obc736DzTwYjMbk1n/GTA6K/HtWG/sgSG/ZKgGd2QJKpWQlRKiiU1eIg27PBw==
+ b=Xp1Bv+ls9W8OjD5jcMzxvVcQDEOQ/SOyiMLd5DiMm5tB3JD2/SWA8xT8tGNEXoOgFhskgjIZAL0oG2SpMDt9JVDpG1nnM/EsYXAKxi38jwFPSvvX4x30/N3V3tcSwQb18rdqBqzI4BBV5/GCIzr+ZZQ4/bdkdmvijEcXkdfarvL12UUw1fzhXPHIICRbGYlreRI23MkfaaBrsCllrYCGTGednPrOchSTDQniVty2FNJuapryDl7mPFREtwKUrjmswlDHXf+D5wK2req2fy7e9mn8HJBb7eSpnnoNlqHIGpKW8gfLxaOPvVajBMaIXm/6nneYihXcmfaITNiC0VKORQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pAsaKbEcunvWuo5wSwV0RR29y2iDU96EA6RdZBfDK4I=;
- b=vsEghU5TohzgmXaDoYjh0TSu6fNtIrD66wz9BpLn/Y8GeeXINsVmErcm2C2joY7XhnM7jr1wHoDlrn07Ur4pDk0hbbtGpgBnkNHJ6irFuDajFbcpEMjjt3eZp7iyFc1FiQSMk5TmiYWZdc6z+9rXGhh3kZdoFyI1jupKC8n1dF91MOxnjaA9rY9Th4VlqScn8angOBDA++2WuSNi0jlHCW3t1GPJQ/oUE5rd4YejCnlpqjzxsT5IhRNPRuKCU2Kcxqc+518c3G+YATUEdUie1Wkw/JlOaR0uY+e9JUTHHCj2eX2u0q6asENGUAH1jtGnysaXamOYaoUzi4bcTRn3Nw==
+ bh=3liQ3hHHBdA+EIZPiml/oGvhNx2U1CCWuMWl7gzSGU4=;
+ b=nLm9ms0FP/kEOZbdMOZJzTAT4H8AuFzcjR/oozWa9TejoHomwjQ4JhgjRouoH6+tsg1tAQvs1gPPdjPGwl36sbf/v1M0BZ5izbDbvOK6AMSM7bsfmbVyK/PBdTqmxKAk/lQH22Ieq9OQZZwSyRK1vJuZG+/7H1q5ZxLgn78xari5PWx3pzmQwIPhawUGAzvqy9R719yLyhj1PkXKm5p7tk000gAMAYZIcCiUR9MvQmau4+OaSD6w6NU51gtXTqDV106tTOkVsjl+XNpD2nSb8go1Q7hEi1XoVe8+0aTqIATmyOjeM9975fbyj+6GyykV625nopK9d8r9rbgmONW6hA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pAsaKbEcunvWuo5wSwV0RR29y2iDU96EA6RdZBfDK4I=;
- b=Hrkl17vHmDytbq+UDTe0iIxvgfehhIpZSwd/GPMM6ARDGxvt5jU9y5DjoLniQbP+0HIxrvPhOhUGe7IkqF/XGG+4d9vXtNqVHvV5ROFTvF0llogG3g4VsEWTnQSje9CK1z24E4tXIosH9QIYOKsmrEBhVi+jJ3NZh+gy3lKwKV3HLbChfUBqH5lYLpmnrYUbHJ9blNRpslleRLfqExaEcmxDGn2HOJJrdM0Vo0YDx25LSfoaSHRQbkDP7OXAuE8ijRZIXW9ncGLm+WJSjNeP7plJoRJy5xN7PGa/VygTWqWz37VO7JOf8nuPrpzX+6fnWEjqcAeXsFb9C5RrXekKnQ==
+ bh=3liQ3hHHBdA+EIZPiml/oGvhNx2U1CCWuMWl7gzSGU4=;
+ b=Th/LIWV3j2eIs/jlDxGhZ1wqoHgYBdKwhrkZnW6cO677c+VkBd+IX2phbwWJYahEIhN95iG83k8vmuZp0nqzbaR2hIpZZMWl5QKlakrbluo2LOKuF4vmeZp2S8oMGz7RXdLiOkU8El/9wEDw5GG8oL2/bgqtU76rQ7doVwwdhtMiKTd9QhvvV7+imTiVF5ntSM/afgKfLr8WK4gx7AjsWmgqvJZaKwgvCL/3w5O4fcXbpkJmKPFb2VyGJYUgFkZW3P4oCC+zIE0kMcPX1jWZ1aTKPW9wLJEbTXBOUlxB8LnG457fBk5wfeNL5RzO26RUHi7byxMYz/m1bgLQSXQqkw==
 Received: from SEYPR06MB4989.apcprd06.prod.outlook.com (2603:1096:101:3d::12)
  by SEYPR06MB5301.apcprd06.prod.outlook.com (2603:1096:101:82::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
- 2026 09:20:14 +0000
+ 2026 09:20:12 +0000
 Received: from SEYPR06MB4989.apcprd06.prod.outlook.com
  ([fe80::e4df:26cb:6609:971c]) by SEYPR06MB4989.apcprd06.prod.outlook.com
  ([fe80::e4df:26cb:6609:971c%6]) with mapi id 15.21.0382.012; Mon, 7 Sep 2026
- 09:20:14 +0000
+ 09:20:12 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -53,13 +53,11 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  Tsirkin" <mst@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 7/7] docs/system/arm/aspeed: Document the VGA display
- controller
-Thread-Topic: [PATCH v1 7/7] docs/system/arm/aspeed: Document the VGA display
- controller
-Thread-Index: AQHdPqoWJQpnQv3bZk6Yrj5r1vNoWw==
-Date: Mon, 7 Sep 2026 09:20:13 +0000
-Message-ID: <20260907092004.2590015-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 6/7] hw/display/aspeed-vga: Add the 2D graphics engine
+Thread-Topic: [PATCH v1 6/7] hw/display/aspeed-vga: Add the 2D graphics engine
+Thread-Index: AQHdPqoVWZoyi+A33U6J2kqoASfUaQ==
+Date: Mon, 7 Sep 2026 09:20:12 +0000
+Message-ID: <20260907092004.2590015-7-jamin_lin@aspeedtech.com>
 References: <20260907092004.2590015-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260907092004.2590015-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -70,70 +68,71 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SEYPR06MB4989:EE_|SEYPR06MB5301:EE_
-x-ms-office365-filtering-correlation-id: cfcfe19f-fbce-4b34-7637-08df0cc13955
+x-ms-office365-filtering-correlation-id: e7d1f7a2-c7bd-4185-2b43-08df0cc13852
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|23010399003|366016|921020|38070700021|3023799007|10067099003|56012099006|18002099003|22082099003;
-x-microsoft-antispam-message-info: KNQ/fbs1D8h8Raxzv/X3Q+Z3b/YE/6+pruAZCU7oTTs4CkDcYsDCPOr5UQvMYFOyvY22j034EaUXtyVHVX+d8K9xELHjWdW+FWf7NlkVqVbNfCLidLGut4VQJI9rdceabxy8t3tPUxchPaAcAAaANhGHjyGr/dsHA18C9TDz3hhsDwQfxGZPoWUPS+yONGYV704ufk+IyOs0O76m1tJoLqZYS9Y2T8yrE6BbZvbUwO4hHLKQqHLga+nid+w5zOOhxmmKAFM1PWcn5AOh5vbmm+xV7Q6SEmxOXFdgxXbR3rXj5r0Q3JASSG3EUdDdVBdTA0kLGvWOSZNXLfG0jx3mOrlLNQuAtv/sWeRe7awTxoh0id5YKSictO8XlW6gN+7jVufR3gZmtSO1zez/AELiqGiHEISchu8qv3mW7iA1OAGCYQ9aKmbEc9ypVtFlUmvLsL0tSmx3yYVx4gB8XgcPgAZviCb7Pjj+P9j7GMfmcQyRPAWNXSfgHlhp4qDjzX7QuWk11CcY3pp5vh39S5ZUizVw6PfB6ZS0hGuC/HLXyKpffiEMecj7i+M+zinXqmQYTiDE6x57WMjDg25qXhPB/Fq+spaQp3k651lX95cyp6/zdTD9Wf5pyzLqmDrmj3A+JWcM7IatFgq6U42ljS1+QGj+u1Cc4jKvVcP30umapB8xOiIqyXKJ7NkrFqbq9KFk
+ ARA:13230040|1800799024|7416014|376014|23010399003|366016|921020|38070700021|6133799003|10067099003|5023799004|56012099006|18002099003|22082099003;
+x-microsoft-antispam-message-info: p7OxN21bmZKdI18/6Z7opxMhjj3+EV09o7q4TRKoKTkEVEKrWnYTX7YDEiI8rhlbo95MX/swhuUww6YUsREOqoh/EheVIpOtWJVqvel7zKiHg8ekxHnV4r5lrOKeXd/k/v6xKFvQqVbHlN11zzcJWlKeqMAOU3nTsW2E8dNBTBqGBZ6E85l4iI7PZMfMPuFh6S288kwVhRGhXCABZsXhs1k+X9b6Z5NhhSmqdHmhV3K8j/h6F+IIPbPzZn8Ii4osVUGZZXOy5FVz9FmHUDwokWahKx05xovUQ+6aVaxOWt43m/i95evWwLF047lVkbRqro4wSTHLUuz+2Ox3YGDQVD3DbrpohnX+3Pz5IfH37fNXTu60fbVShluolY8LUTX25t5/KZBJO7D3nfJiykZA4MFhW29fqtJx8qxTi4xKzYkyMwT3LfAIRGO/kQnUeeCIst+9UIHY0MHM5aHTRY6G6uT2FVG3dy5TU59xGy6x94dhuY0JqxfULtyAOEwgzrV9yxVN5wCrzsV5/dDEh+JHOA/77IwTab9Mb0LQLUieycXJ0OtNpbDKbkpF2iFHV2w7J/cx0PpIKTMnXvwR7R6PT1xVK/hdB7TfwjvLdVziBYGEw8WtZ5Wr04yEZwjjwajFHqlNC1WtJgJkF7KKz1rJr3LKFB7mFqkU/mfnXv3hQ+039tdszAid0nrIXNByEVKdUUvQbw2iBpb2kvcXsyxVdhm2ywBpwr0RKtYpLVJvLh0=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEYPR06MB4989.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(921020)(38070700021)(3023799007)(10067099003)(56012099006)(18002099003)(22082099003);
+ SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(921020)(38070700021)(6133799003)(10067099003)(5023799004)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Kq9r5eTcFD+Qfpgny8n50i5QmigPXYx7/dXuskJOO0MY1jjL36DGdKtZFT?=
- =?iso-8859-1?Q?zEkP/dYhqUxqR78FoFJOKjOdgPjpXrHgbPPdHpGdqknnp5JxxEvXyN1+9p?=
- =?iso-8859-1?Q?s0hEY/xXiukpeJGZhB5ov3tUtIg5xnHZGix2QcgKhQzPEuQtiAoFENnAK1?=
- =?iso-8859-1?Q?jT5lP7O+BS6EM+s5Uv0aF4EM1LPsy2Vy5NUImSz544Q42Y9I/tWuqnuFOE?=
- =?iso-8859-1?Q?rez0/7DqPDFlv6upTEgDxjdj68iR0C6aaaKYGgCEH0kB0y/9udAZDvyUx+?=
- =?iso-8859-1?Q?pcO9nphG6PMB8pHFi1A1FMHmSFRSaAIJWolHXBUa502795PPvvinuUdM8i?=
- =?iso-8859-1?Q?1x3T48eO2X91m9Gfod+dbbAWauqDD8vUYEqi6Rty0kKNtXJUqTWxjYjfO7?=
- =?iso-8859-1?Q?PKZDRnsaAHPu3qTuPP82lumVintPOpQ0VOjm33KlVvGIk3PC8T6zZMN/yf?=
- =?iso-8859-1?Q?rln8Y4t8WC3k0NquDBdBF9sxa1noCXaKyfYmy/TYROzUyW55NLylLF4Zcb?=
- =?iso-8859-1?Q?Gyd6bHSPfw+GsuM3DQ3L71dGxE/lLqSPbJAZYvL1OJILAcN+M8jgwZnFtx?=
- =?iso-8859-1?Q?l60AhyC0YvFGJzrQW27bEz320p/zJNjHbJ1MEgjas8wr7St2Q4OHxlD8+J?=
- =?iso-8859-1?Q?6T8D9E6rl7vtH+jFu2MIHGaWi9DJ012kT9InNuTNOoRTsNZODMRV4I/Mju?=
- =?iso-8859-1?Q?M/9f9a9NZvbULgQQBR3FTiXaJ2TRDT2oMhyqm3AIuUMuetLTrkfLbCyfYE?=
- =?iso-8859-1?Q?wVIj4X5NmMtMYL3v2SzJFMbB3VjiZDwAxP1RZhu2HsAycGpN+bNkLEXqSK?=
- =?iso-8859-1?Q?Vnwg+zLfw8uSi3r73ZEBx1w33KPnsoVdt5LPfQxco3YMq/aYSbOkxA3YtP?=
- =?iso-8859-1?Q?tUI669riLFij6O6DXbjCf1lTJJGIR1xQl/Pd83z5lgkMOCZYcdU6ETlbYN?=
- =?iso-8859-1?Q?DMtsFuy4IFWl/KY/d9ETawob7PGBY1piGZuHVqNzosmDLpVuc9Lp27PRN9?=
- =?iso-8859-1?Q?mNXWkolMMtABIunab06uP/X/lk8a+Sbs7m/qlyiuBf2UzGxfHj4Q7YM34O?=
- =?iso-8859-1?Q?aiwmAWWRB3qmQHr9xObXnoCeNKW04DFPuXGwf4AjWLcmCV6uxq4FYYpVb2?=
- =?iso-8859-1?Q?g19ttq1Pt3z0GH+4t42nAYmmAc4I7S1EQvrKh1nRwZJQKUFtNTXIi9GZjw?=
- =?iso-8859-1?Q?m1tKSxP5n//HWODZIVl0phZHwGADulCE3Y4nJW6rZyfhHagvzeP0BaY0bU?=
- =?iso-8859-1?Q?P5ccWwfogHbqdLzF167pD7K4FIbI/g49kLo5cEQDZYn4x46UyL4b2Ax7/7?=
- =?iso-8859-1?Q?1UXGvpKbq9d/oaXJ+a6RJPblDGxIvBj/BHO5kwpi/7KphyPlEKCTvHESy6?=
- =?iso-8859-1?Q?07Anwx9QmoTPbRLfVEh5GJHcGt6doBcGZsfJbTr3C8DK4BUjFEo+fOK/dF?=
- =?iso-8859-1?Q?jbl/QqVuhFmliJ5zItpk8NTzwrAznD/wdWd9sGujdiiOflfKPsVJbXfavS?=
- =?iso-8859-1?Q?cKY48/pDdoOIrzwjpxIS3bbyOlznSEskA2NBhB1lepf/dIlLf450X0xFDp?=
- =?iso-8859-1?Q?qIUqKDLXsFuMCDuFHX96g68Y/VgpPexU+7FCvUIOUU2yl3EOx9rJhHY6Z2?=
- =?iso-8859-1?Q?phqYtcYlQJzc9i9l9rTbTOodGHhqa3SlO6/oB0Kpu79MwtUuaOke7VkJuw?=
- =?iso-8859-1?Q?m+LUVHoaNBr51pDqux1RQ2PpVPfwjDBI+QnP9TtJF98XO6umdaJGsbiqJ9?=
- =?iso-8859-1?Q?t8xQZRBeN2IsU2peZt7Rfrwkf0jym87x8V0UGfI4G5sCjsv8PC4YACjKdI?=
- =?iso-8859-1?Q?+4+YeZFDIw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rLV3KmZZrFEPWs7mS9iWdi3KWb60WCQTa/CcZnvbspd55rnWCUBao9Agun?=
+ =?iso-8859-1?Q?D6nuczE84whaT84Y0ledUZDAkrlNzdHYsG0jG5235CtbxpBoljCAco1CNY?=
+ =?iso-8859-1?Q?TRBzO3yUe1V3bh+Z8sx4ryPk6fGVvKN6VXBR/UKIwY4Us0Qsb+uL9Lq1NC?=
+ =?iso-8859-1?Q?JmQHlTUzyb68ifL8tmeYbq/Qbeat8Kr2rgzNaTME0gOQxnlTO831jpgu2S?=
+ =?iso-8859-1?Q?kMPq4EP6k7tME6fKln8+iBDkWjmmQRszseJQwXtdqZpq0Kg9eTRzw4mGT3?=
+ =?iso-8859-1?Q?kpD56NQQNHfHuBwyzRhd4DJFBbjjtaDxJEltq6Ffp30Ax3xNe13TV60C7r?=
+ =?iso-8859-1?Q?SJ1/Qb4FSZDpmFl/X6A024R26ZyqbVjNcgNMY2kEu4rLCJMZ4v9ZIN0mAF?=
+ =?iso-8859-1?Q?FWrFHsz2FzdsAiPa89tzlT/iBs/h72Lx/0gwXFQCs5odYK3XuTF0+Ohla+?=
+ =?iso-8859-1?Q?ZiAm5UHwiMJADuQ/MzXe+/AFJDMWzftQl1BMnFNwmfXGDTHfRBEXcjQbLq?=
+ =?iso-8859-1?Q?J74lUSOkwLzotgf5jx3KhwLfZRIa0zLiWsrfneLIW1Pwsag91ar8mFFVeN?=
+ =?iso-8859-1?Q?BJ7RyztVg/2zTHyTLjESNZt0lV6UxqC1T+3UKztjxw9VW2RoUGEXZ8BpkH?=
+ =?iso-8859-1?Q?ZWLLErWLKuwPbdiR90Hvwnw6bQDd948dqImqg5ECNw3NbkVphpgJy3AT6S?=
+ =?iso-8859-1?Q?j1lT5ZaFPnRMQEZEcU0SficKRfVXvijOY0DeTpZbPRBNDdJtaPhyBgizDH?=
+ =?iso-8859-1?Q?KZlXCPAkgJvx97EJCho1wQ9cnK/jcMgJa6xpDdasoE7pUhz0GXvsfjNtOM?=
+ =?iso-8859-1?Q?FzpJ6zgrGUiFUJre9LqcSABr8Jzjnu1qNwgHEAKGHtsn3HSvui7SwvZQfw?=
+ =?iso-8859-1?Q?msJYHet40kJrOU517mCYSAFNI4KlQDJ3gv6RKMqod/crq5G9Kb5AV3gewE?=
+ =?iso-8859-1?Q?yxx91FPm8WqrWo/dwPRXpSK/6ElB+8a47WpPlKKEGU7ztHwPE47w8xnb6R?=
+ =?iso-8859-1?Q?mmyyYs+JiLF+TJ7EfafjSpvZnj0Ho/aWHVJlA+n5cMSgEsZke0f0LxxOQI?=
+ =?iso-8859-1?Q?deCj/B7cMXpw42XwZpVK+KXuTNavCIy4rkYlyTDs2LfSGWXx/bIc1zd2jl?=
+ =?iso-8859-1?Q?gWVPNUSYSNb4E6xNywvG+McUSfYwpobAY1GN+/Yx0CxUygZfgWxK4VJygE?=
+ =?iso-8859-1?Q?YvfIFWSTPcYrHi9DqzQZBqdyRfvVYcPzdU0pDJWURkxOAMDZ+3HzfeK8Md?=
+ =?iso-8859-1?Q?YXtklOWDii5aKeBOizSD9v97qRK4rfEZCioczxncJhJlUvffr6aO2pTaC+?=
+ =?iso-8859-1?Q?Ov++Zl7pIonPUX614tXRqX7QYb7OaFZXcKklvE0kq/btYnM6hNjf03ofCk?=
+ =?iso-8859-1?Q?wBibbVQME+P2Sp+rt6dkjvRDw+qfi+eTJ6dVkuEBnaQzNIZdeN6u91r7MZ?=
+ =?iso-8859-1?Q?2tPe75W40YZN3F8CKKRhjsqev/Ce8iqwxgElKhJ2F8eGQ3Kl5Y0GyjY26e?=
+ =?iso-8859-1?Q?Gjdu3KSlnrgmGekgxczI5TmIBzqAWrxwP+R6U24DnMaZqXPhQ0BwTz9SqV?=
+ =?iso-8859-1?Q?N61ybRaFomMLDRa9xzH0s/bLA2eQU3AAnpCp1s9gDEHbNFfwSt4bSFLMEy?=
+ =?iso-8859-1?Q?k3UF4Uyqzci6S1y6HLgWSdV/DdCunt6AnkUafMy1WEKpJK0iSNDHkjSgvO?=
+ =?iso-8859-1?Q?wJf7J0rsyFtZBRh3+MtJhAVf24eDIbLWUr2NOvzVgT5Oy91iUNyHS+peNJ?=
+ =?iso-8859-1?Q?Oum/g3Xyl2t1NWHV595FG0GO9Xn1+UMcvuyVwGS8tN4Gkk2Gsi3aI0Ljl1?=
+ =?iso-8859-1?Q?90EQiNviYg=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: tqVVF5e7FA477sjj9yS0yZAgqp2Cfdvfa5tRqbD4tLoE8qXYwZwWLiM2CzvjVAlVUt6klK+ifCcKsvzVIeHq7jkLXnkPwcLB9eTlOit1YLQIKpUKCeoI/IgLa8GAKCzN7yTB+2jdW0Aa8PRB+NlRqkucyOoH6qmhZldtur+6y40pxTvMVfCsO8dzjnKa61OMHDgoNnEBjsyU8YdVRLd3NTDDLbmO7/mRYHGx7FWqSGbdDa95cWaanzBHgV3zD8cG5M0zCNTGSJ615XRXIrKT5V9Xes+EUHkWTAHuNdxD0MP5CtOtYGEM0IJ0j8u/1NWdr+coa3G+MQcPNp9O0vaTkA==
+X-Exchange-RoutingPolicyChecked: 02JLeDkYAClOquxpug7RB1oueHgp1RK/+4HEp0D2ZHz6UZg+maFwuhxp18oVi89wub7SNrdz2BPGF9Fn3UGIpqASSFrho+ZVQCezJKs0Ft9QfJxb0wrVx14ypAtnqJME4Ao0Slh6vybPMLQ3y6jKO1qCkXIkZDu8+9ZIqTfic/3abzRL6Nr9zbY4/SjI6h94ALRqKo6UXoYDP6mUnQ1nnmyod2c4F8KP4ryZY7d/eFKOnbUC/1FBbeRLn0A12cwS8XLTl1VWIxdM9/PfBln9j5QpXlbzrcKBEUgExfEZL4iO0P6IPwUZ/Unc3m4z5gIkF6a7091bb4tSWsVn4tXHnQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB4989.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cfcfe19f-fbce-4b34-7637-08df0cc13955
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2026 09:20:13.3159 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e7d1f7a2-c7bd-4185-2b43-08df0cc13852
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2026 09:20:12.2324 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: s1GmT/v+j4UdT/08bHxpRkXSmusjtAH2v/XQ30CVpegb9UAy4lCFn6dYW3LlwnP7Z7Ca3qkLBm5YAHOBWApPLF8JIKirKK3DUgo2DQOZbZM=
+X-MS-Exchange-CrossTenant-userprincipalname: Bz9gJObD3waAC5kKoQc7pHhE2EVigIuyIyQ9zKi1JFoNxJ//M41dgxy0VRMrO2SDkQBzIQ2/OvgZ9Wm6WXy7QaZWxb8isVMr4qJNQG3VnGM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5301
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,85 +149,402 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The display controller was listed as missing, which it no longer is. It=0A=
-does not belong with the rest of the machines' devices though: the host=0A=
-reaches it as a PCI VGA endpoint, so it is plugged into whichever machine=
+The display controller has a 2D engine at BAR 1 + 0x8000. It was not=0A=
+modelled, so its status register read back as all ones, which bit 31=0A=
+defines as a busy engine. ASPEED's UEFI driver waits for it and stops=0A=
+when it tries to scroll the console.=0A=
 =0A=
-stands in for the host rather than being part of the BMC machine.=0A=
+Add the engine as a second subregion of BAR 1 and model the BitBLT=0A=
+command, which is the one the firmware uses. Only the source copy=0A=
+raster operation is done; other operations, clipping, patterns and the=0A=
+transparent monochrome mask are logged and nothing is drawn. A=0A=
+rectangle that does not fit in the framebuffer is rejected rather than=0A=
+half copied.=0A=
 =0A=
-Describe it that way, with the two flavours, the property that sizes the=0A=
-framebuffer aperture, the option ROM, and how to reach the screen.=0A=
+The command carries a direction for each axis. When one is negative the=0A=
+coordinates are the last row or column, so an overlapping copy starts=0A=
+from that end and a scroll does not smear.=0A=
+=0A=
+The status register reads as idle after reset, a write of one clears=0A=
+that bit, and it is set again when a command finishes.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- docs/system/arm/aspeed.rst | 37 +++++++++++++++++++++++++++++++++++--=0A=
- 1 file changed, 35 insertions(+), 2 deletions(-)=0A=
+ hw/display/aspeed-vga.h |  10 ++=0A=
+ hw/display/aspeed-vga.c | 261 ++++++++++++++++++++++++++++++++++++++++=0A=
+ hw/display/trace-events |   3 +=0A=
+ 3 files changed, 274 insertions(+)=0A=
 =0A=
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst=0A=
-index 2d51ceeb84..0900b4202d 100644=0A=
---- a/docs/system/arm/aspeed.rst=0A=
-+++ b/docs/system/arm/aspeed.rst=0A=
-@@ -75,7 +75,6 @@ Missing devices=0A=
-  * Slave GPIO Controller=0A=
-  * Super I/O Controller=0A=
-  * PCI-Express 1 Controller=0A=
-- * Graphic Display Controller=0A=
-  * MCTP Controller=0A=
-  * Mailbox Controller=0A=
-  * Virtual UART=0A=
-@@ -319,7 +318,6 @@ Missing devices=0A=
-  * Slave GPIO Controller=0A=
-  * Super I/O Controller=0A=
-  * PCI-Express 1 Controller=0A=
-- * Graphic Display Controller=0A=
-  * MCTP Controller=0A=
-  * Mailbox Controller=0A=
-  * Virtual UART=0A=
-@@ -512,3 +510,38 @@ To boot a kernel directly from a Zephyr build tree:=0A=
+diff --git a/hw/display/aspeed-vga.h b/hw/display/aspeed-vga.h=0A=
+index 55dcc57108..625e513115 100644=0A=
+--- a/hw/display/aspeed-vga.h=0A=
++++ b/hw/display/aspeed-vga.h=0A=
+@@ -25,13 +25,23 @@ OBJECT_DECLARE_TYPE(AspeedVGAState, AspeedVGAClass, ASP=
+EED_VGA)=0A=
+ #define ASPEED_VGA_IOPORT_OFFSET    0x380=0A=
+ #define ASPEED_VGA_IOPORT_SIZE      0x80=0A=
  =0A=
-   $ qemu-system-arm -M ast1030-evb -nographic \=0A=
-         -kernel zephyr.bin=0A=
++/*=0A=
++ * 2D Graphics Engine (G2D)=0A=
++ *=0A=
++ * Offset 0x8000 from the BAR 1 register base=0A=
++ */=0A=
++#define ASPEED_VGA_G2D_OFFSET    0x8000=0A=
++#define ASPEED_VGA_G2D_NR_REGS   (0x200 >> 2)=0A=
 +=0A=
-+VGA display controller=0A=
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=0A=
+ struct AspeedVGAState {=0A=
+     PCIDevice parent_obj;=0A=
+ =0A=
+     VGACommonState vga;=0A=
+     MemoryRegion mmio;=0A=
+     MemoryRegion ioport;=0A=
++    MemoryRegion g2d;=0A=
+ =0A=
++    uint32_t g2d_regs[ASPEED_VGA_G2D_NR_REGS];=0A=
+     uint8_t vgaer;=0A=
+     uint32_t last_cursor_y;=0A=
+     bool last_cursor_on;=0A=
+diff --git a/hw/display/aspeed-vga.c b/hw/display/aspeed-vga.c=0A=
+index a859c9da0a..bb9e8705ed 100644=0A=
+--- a/hw/display/aspeed-vga.c=0A=
++++ b/hw/display/aspeed-vga.c=0A=
+@@ -104,6 +104,259 @@ REG8(AST_CR_SOC_SCRATCH0, 0xd0)=0A=
+ #define CURSOR_MONO_AND 0x8000=0A=
+ #define CURSOR_MONO_XOR 0x4000=0A=
+ =0A=
++/*=0A=
++ * 2D Graphics Engine (G2D)=0A=
++ *=0A=
++ * Offset 0x8000 from the BAR 1 register base=0A=
++ */=0A=
++REG32(GER_SRC_BASE, 0x00)=0A=
++    FIELD(GER_SRC_BASE, ADDR, 3, 27)=0A=
++REG32(GER_SRC_PITCH, 0x04)=0A=
++    FIELD(GER_SRC_PITCH, PITCH, 19, 11)=0A=
++REG32(GER_DST_BASE, 0x08)=0A=
++    FIELD(GER_DST_BASE, ADDR, 3, 27)=0A=
++REG32(GER_DST_PITCH, 0x0c)=0A=
++    FIELD(GER_DST_PITCH, PITCH, 19, 11)=0A=
++REG32(GER_DST_XY, 0x10)=0A=
++    FIELD(GER_DST_XY, X, 16, 12)=0A=
++    FIELD(GER_DST_XY, Y, 0, 12)=0A=
++REG32(GER_SRC_XY, 0x14)=0A=
++    FIELD(GER_SRC_XY, X, 16, 12)=0A=
++    FIELD(GER_SRC_XY, Y, 0, 12)=0A=
++REG32(GER_DIMENSION, 0x18)=0A=
++    FIELD(GER_DIMENSION, WIDTH, 16, 12)=0A=
++    FIELD(GER_DIMENSION, HEIGHT, 0, 12)=0A=
++REG32(GER_CMD, 0x3c)=0A=
++    FIELD(GER_CMD, NEG_X, 21, 1)=0A=
++    FIELD(GER_CMD, NEG_Y, 20, 1)=0A=
++    FIELD(GER_CMD, PATTERN, 16, 2)=0A=
++    FIELD(GER_CMD, ROP, 8, 8)=0A=
++    FIELD(GER_CMD, MONO_TRANSPARENT, 7, 1)=0A=
++    FIELD(GER_CMD, SRC_FROM_QUEUE, 6, 1)=0A=
++    FIELD(GER_CMD, COLOR, 4, 2)=0A=
++    FIELD(GER_CMD, CLIP, 3, 1)=0A=
++    FIELD(GER_CMD, TYPE, 0, 3)=0A=
++#define GER_CMD_TYPE_BITBLT     0=0A=
++#define GER_CMD_COLOR_TRUE      2=0A=
++#define GER_CMD_COLOR_HIGH      1=0A=
++#define GER_CMD_COLOR_256       0=0A=
++/*=0A=
++ * A ROP3 code: an 8 bit truth table for a boolean function of source,=0A=
++ * destination and pattern. 0xcc is the one that leaves the destination=0A=
++ * equal to the source, and is the only one modelled.=0A=
++ */=0A=
++#define GER_CMD_ROP_SRCCOPY     0xcc=0A=
++REG32(GER_STATUS, 0x4c)=0A=
++    FIELD(GER_STATUS, IDLE, 24, 1)=0A=
++    FIELD(GER_STATUS, CMDQ_SPACE, 20, 1)=0A=
 +=0A=
-+The display controller of the Aspeed SoCs is reached by the host as a PCI=
++/*=0A=
++ * Copy a rectangle. Only the source copy raster operation is modelled,=0A=
++ * which is all the firmware needs to scroll and clear the console.=0A=
++ */=0A=
++static void aspeed_g2d_bitblt(AspeedVGAState *s)=0A=
++{=0A=
++    uint32_t src_x =3D FIELD_EX32(s->g2d_regs[R_GER_SRC_XY], GER_SRC_XY, X=
+);=0A=
++    uint32_t src_y =3D FIELD_EX32(s->g2d_regs[R_GER_SRC_XY], GER_SRC_XY, Y=
+);=0A=
++    uint32_t dst_x =3D FIELD_EX32(s->g2d_regs[R_GER_DST_XY], GER_DST_XY, X=
+);=0A=
++    uint32_t dst_y =3D FIELD_EX32(s->g2d_regs[R_GER_DST_XY], GER_DST_XY, Y=
+);=0A=
++    uint32_t src_pitch =3D FIELD_EX32(s->g2d_regs[R_GER_SRC_PITCH],=0A=
++                                    GER_SRC_PITCH, PITCH) * 8;=0A=
++    uint32_t dst_pitch =3D FIELD_EX32(s->g2d_regs[R_GER_DST_PITCH],=0A=
++                                    GER_DST_PITCH, PITCH) * 8;=0A=
++    uint32_t src_base =3D FIELD_EX32(s->g2d_regs[R_GER_SRC_BASE],=0A=
++                                   GER_SRC_BASE, ADDR) << 3;=0A=
++    uint32_t dst_base =3D FIELD_EX32(s->g2d_regs[R_GER_DST_BASE],=0A=
++                                   GER_DST_BASE, ADDR) << 3;=0A=
++    uint32_t height =3D FIELD_EX32(s->g2d_regs[R_GER_DIMENSION],=0A=
++                                 GER_DIMENSION, HEIGHT);=0A=
++    uint32_t width =3D FIELD_EX32(s->g2d_regs[R_GER_DIMENSION],=0A=
++                                GER_DIMENSION, WIDTH);=0A=
++    uint32_t cmd =3D s->g2d_regs[R_GER_CMD];=0A=
++    uint64_t src_offset;=0A=
++    uint64_t dst_offset;=0A=
++    uint32_t bytes_pp;=0A=
++    bool right_to_left;=0A=
++    bool bottom_up;=0A=
++    uint32_t color;=0A=
++    uint64_t line;=0A=
++    uint32_t i;=0A=
++    uint32_t y;=0A=
++=0A=
++    right_to_left =3D FIELD_EX32(cmd, GER_CMD, NEG_X);=0A=
++    bottom_up =3D FIELD_EX32(cmd, GER_CMD, NEG_Y);=0A=
++    color =3D FIELD_EX32(cmd, GER_CMD, COLOR);=0A=
++=0A=
++    switch (color) {=0A=
++    case GER_CMD_COLOR_256:=0A=
++        bytes_pp =3D 1;=0A=
++        break;=0A=
++    case GER_CMD_COLOR_HIGH:=0A=
++        bytes_pp =3D 2;=0A=
++        break;=0A=
++    case GER_CMD_COLOR_TRUE:=0A=
++        bytes_pp =3D 4;=0A=
++        break;=0A=
++    default:=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: 2D command 0x%08x has an invalid color mode\n",=
 =0A=
-+VGA endpoint, so it is modelled as a device to be plugged into whichever=
++                      __func__, cmd);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    if (FIELD_EX32(cmd, GER_CMD, ROP) !=3D GER_CMD_ROP_SRCCOPY) {=0A=
++        qemu_log_mask(LOG_UNIMP, "%s: unimplemented raster operation 0x%02=
+x\n",=0A=
++                      __func__, FIELD_EX32(cmd, GER_CMD, ROP));=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    if (FIELD_EX32(cmd, GER_CMD, SRC_FROM_QUEUE)) {=0A=
++        qemu_log_mask(LOG_UNIMP,=0A=
++                      "%s: source from the command queue is not implemente=
+d\n",=0A=
++                      __func__);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    if (FIELD_EX32(cmd, GER_CMD, CLIP)) {=0A=
++        qemu_log_mask(LOG_UNIMP,=0A=
++                      "%s: rectangular clipping is not implemented\n",=0A=
++                      __func__);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    if (FIELD_EX32(cmd, GER_CMD, MONO_TRANSPARENT)) {=0A=
++        qemu_log_mask(LOG_UNIMP,=0A=
++                      "%s: a transparent monochrome mask is not implemente=
+d\n",=0A=
++                      __func__);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    if (FIELD_EX32(cmd, GER_CMD, PATTERN)) {=0A=
++        qemu_log_mask(LOG_UNIMP, "%s: unimplemented pattern source %u\n",=
 =0A=
-+machine plays that host rather than as part of the BMC machines above:=0A=
++                      __func__, FIELD_EX32(cmd, GER_CMD, PATTERN));=0A=
++        return;=0A=
++    }=0A=
 +=0A=
-+- ``ast2600-vga``          Aspeed AST2600 VGA=0A=
-+- ``ast2700-vga``          Aspeed AST2700 VGA=0A=
-+=0A=
-+The size of the framebuffer aperture is set with ``vgamem_mb``, 32 MiB by=
++    if (!width || !height || !src_pitch || !dst_pitch) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: 2D command 0x%08x has nothing to copy: "=0A=
++                      "width %u, height %u, src pitch %u, dst pitch %u\n",=
 =0A=
-+default. The device comes up with the standard VGA BIOS; pass ``romfile``=
++                      __func__, cmd, width, height, src_pitch, dst_pitch);=
 =0A=
-+to use Aspeed's own option ROM instead, which can be downloaded from=0A=
-+https://www.aspeedtech.com/support_driver/=0A=
++        return;=0A=
++    }=0A=
 +=0A=
-+To plug one into an ``aarch64`` guest standing in for the host:=0A=
++    trace_aspeed_g2d_bitblt(cmd, width, height, src_x, src_y, dst_x, dst_y=
+,=0A=
++                            bytes_pp);=0A=
 +=0A=
-+.. code-block:: bash=0A=
-+=0A=
-+  $ qemu-system-aarch64 \=0A=
-+        -M virt \=0A=
-+        -cpu neoverse-n1 -smp 8 -m 4G \=0A=
-+        -bios edk2-aarch64-code.fd \=0A=
-+        -device ast2700-vga,vgamem_mb=3D32,romfile=3Duefi_arm_2700_vga.rom=
- \=0A=
-+        -drive file=3Dnoble-server-cloudimg-arm64.img,format=3Dqcow2 \=0A=
-+        -device qemu-xhci,id=3Dxhci \=0A=
-+        -device usb-kbd,bus=3Dxhci.0 \=0A=
-+        -device usb-tablet,bus=3Dxhci.0 \=0A=
-+        -display vnc=3D0.0.0.0:0=0A=
-+=0A=
-+The disk image is an Ubuntu cloud image from=0A=
-+https://cloud-images.ubuntu.com/. The output goes to the VNC backend on=0A=
-+display 0, which listens on TCP port 5900, so point a VNC viewer at that=
++    /*=0A=
++     * The engine renders away from the given corner, so when a direction =
+is=0A=
++     * negative that corner is the last row or column. Step back to the to=
+p=0A=
++     * left one, which the rest of this function works from.=0A=
++     */=0A=
++    if (bottom_up) {=0A=
++        if (src_y + 1 < height || dst_y + 1 < height) {=0A=
++            qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                          "%s: 2D command 0x%08x runs off the top of the "=
 =0A=
-+port to see the screen.=0A=
++                          "framebuffer\n", __func__, cmd);=0A=
++            return;=0A=
++        }=0A=
++        src_y -=3D height - 1;=0A=
++        dst_y -=3D height - 1;=0A=
++    }=0A=
++=0A=
++    if (right_to_left) {=0A=
++        if (src_x + 1 < width || dst_x + 1 < width) {=0A=
++            qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                          "%s: 2D command 0x%08x runs off the left of the =
+"=0A=
++                          "framebuffer\n", __func__, cmd);=0A=
++            return;=0A=
++        }=0A=
++        src_x -=3D width - 1;=0A=
++        dst_x -=3D width - 1;=0A=
++    }=0A=
++=0A=
++    line =3D (uint64_t)width * bytes_pp;=0A=
++=0A=
++    src_offset =3D (uint64_t)src_base +=0A=
++                 (uint64_t)(src_y + height - 1) * src_pitch +=0A=
++                 (uint64_t)src_x * bytes_pp;=0A=
++    dst_offset =3D (uint64_t)dst_base +=0A=
++                 (uint64_t)(dst_y + height - 1) * dst_pitch +=0A=
++                 (uint64_t)dst_x * bytes_pp;=0A=
++=0A=
++    if (src_offset + line > s->vga.vram_size ||=0A=
++        dst_offset + line > s->vga.vram_size) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: 2D command 0x%08x reaches past the framebuffer\=
+n",=0A=
++                      __func__, cmd);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    for (i =3D 0; i < height; i++) {=0A=
++        /* NEG_Y says which end to start from, so an overlap does not smea=
+r */=0A=
++        y =3D bottom_up ? height - 1 - i : i;=0A=
++        src_offset =3D (uint64_t)src_base +=0A=
++                     (uint64_t)(src_y + y) * src_pitch +=0A=
++                     (uint64_t)src_x * bytes_pp;=0A=
++        dst_offset =3D (uint64_t)dst_base +=0A=
++                     (uint64_t)(dst_y + y) * dst_pitch +=0A=
++                     (uint64_t)dst_x * bytes_pp;=0A=
++=0A=
++        memmove(s->vga.vram_ptr + dst_offset, s->vga.vram_ptr + src_offset=
+,=0A=
++                line);=0A=
++        memory_region_set_dirty(&s->vga.vram, dst_offset, line);=0A=
++    }=0A=
++}=0A=
++=0A=
++static uint64_t aspeed_g2d_read(void *opaque, hwaddr addr, unsigned size)=
+=0A=
++{=0A=
++    AspeedVGAState *s =3D opaque;=0A=
++    uint32_t reg =3D addr >> 2;=0A=
++    uint32_t val =3D s->g2d_regs[reg];=0A=
++=0A=
++    trace_aspeed_g2d_read(reg, val);=0A=
++    return val;=0A=
++}=0A=
++=0A=
++static void aspeed_g2d_write(void *opaque, hwaddr addr, uint64_t val,=0A=
++                             unsigned size)=0A=
++{=0A=
++    AspeedVGAState *s =3D opaque;=0A=
++    uint32_t reg =3D addr >> 2;=0A=
++=0A=
++    trace_aspeed_g2d_write(reg, val);=0A=
++=0A=
++    switch (reg) {=0A=
++    case R_GER_STATUS:=0A=
++        s->g2d_regs[reg] &=3D ~(val & (R_GER_STATUS_IDLE_MASK |=0A=
++                                     R_GER_STATUS_CMDQ_SPACE_MASK));=0A=
++        break;=0A=
++    case R_GER_CMD:=0A=
++        s->g2d_regs[reg] =3D val;=0A=
++        if (FIELD_EX32(val, GER_CMD, TYPE) =3D=3D GER_CMD_TYPE_BITBLT) {=
+=0A=
++            aspeed_g2d_bitblt(s);=0A=
++        } else {=0A=
++            qemu_log_mask(LOG_UNIMP, "%s: unimplemented 2D command type %u=
+\n",=0A=
++                          __func__, FIELD_EX32(val, GER_CMD, TYPE));=0A=
++        }=0A=
++        s->g2d_regs[R_GER_STATUS] |=3D R_GER_STATUS_IDLE_MASK;=0A=
++        break;=0A=
++    default:=0A=
++        s->g2d_regs[reg] =3D val;=0A=
++        break;=0A=
++    }=0A=
++}=0A=
++=0A=
++static const MemoryRegionOps aspeed_g2d_ops =3D {=0A=
++    .read =3D aspeed_g2d_read,=0A=
++    .write =3D aspeed_g2d_write,=0A=
++    .valid.min_access_size =3D 4,=0A=
++    .valid.max_access_size =3D 4,=0A=
++    .impl.min_access_size =3D 4,=0A=
++    .impl.max_access_size =3D 4,=0A=
++    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
++};=0A=
++=0A=
+ /*=0A=
+  * The ast driver writes a color format to CRA3 when it switches to the=0A=
+  * extended mode. Until then CRA3 is zero and the device behaves like a=0A=
+@@ -517,6 +770,9 @@ static void aspeed_vga_reset_hold(Object *obj, ResetTyp=
+e type)=0A=
+         R_AST_CR_SOC_SCRATCH0_VRAM_INIT_BY_BMC_MASK |=0A=
+         R_AST_CR_SOC_SCRATCH0_VRAM_INIT_READY_MASK |=0A=
+         R_AST_CR_SOC_SCRATCH0_IKVM_WIDESCREEN_MASK;=0A=
++=0A=
++    memset(s->g2d_regs, 0, sizeof(s->g2d_regs));=0A=
++    s->g2d_regs[R_GER_STATUS] =3D R_GER_STATUS_IDLE_MASK;=0A=
+ }=0A=
+ =0A=
+ /*=0A=
+@@ -592,6 +848,10 @@ static void aspeed_vga_realize(PCIDevice *dev, Error *=
+*errp)=0A=
+     memory_region_add_subregion(&s->mmio, ASPEED_VGA_IOPORT_OFFSET,=0A=
+                                 &s->ioport);=0A=
+ =0A=
++    memory_region_init_io(&s->g2d, OBJECT(dev), &aspeed_g2d_ops, s,=0A=
++                          "aspeed-vga.g2d", ASPEED_VGA_G2D_NR_REGS << 2);=
+=0A=
++    memory_region_add_subregion(&s->mmio, ASPEED_VGA_G2D_OFFSET, &s->g2d);=
+=0A=
++=0A=
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &vga->vram);=
+=0A=
+     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mmio);=0A=
+ }=0A=
+@@ -612,6 +872,7 @@ static const VMStateDescription vmstate_aspeed_vga =3D =
+{=0A=
+         VMSTATE_STRUCT(vga, AspeedVGAState, 0, vmstate_vga_common,=0A=
+                        VGACommonState),=0A=
+         VMSTATE_UINT8(vgaer, AspeedVGAState),=0A=
++        VMSTATE_UINT32_ARRAY(g2d_regs, AspeedVGAState, ASPEED_VGA_G2D_NR_R=
+EGS),=0A=
+         VMSTATE_END_OF_LIST()=0A=
+     }=0A=
+ };=0A=
+diff --git a/hw/display/trace-events b/hw/display/trace-events=0A=
+index fd4289d755..0e2adc2b80 100644=0A=
+--- a/hw/display/trace-events=0A=
++++ b/hw/display/trace-events=0A=
+@@ -141,6 +141,9 @@ vga_cirrus_bitblt_start(uint8_t blt_rop, uint8_t blt_mo=
+de, uint8_t blt_modeext,=0A=
+ # aspeed-vga.c=0A=
+ aspeed_vga_read_byte(uint32_t port, uint8_t val) "port 0x%03x, val 0x%02x"=
+=0A=
+ aspeed_vga_write_byte(uint32_t port, uint8_t val) "port 0x%03x, val 0x%02x=
+"=0A=
++aspeed_g2d_read(uint32_t reg, uint32_t val) "reg 0x%02x, val 0x%08x"=0A=
++aspeed_g2d_write(uint32_t reg, uint32_t val) "reg 0x%02x, val 0x%08x"=0A=
++aspeed_g2d_bitblt(uint32_t cmd, uint32_t w, uint32_t h, uint32_t sx, uint3=
+2_t sy, uint32_t dx, uint32_t dy, uint32_t bpp) "cmd 0x%08x, %ux%u, src %u,=
+%u dst %u,%u, %u bytes/pixel"=0A=
+ =0A=
+ # sii9022.c=0A=
+ sii9022_read_reg(uint8_t addr, uint8_t val) "addr 0x%02x, val 0x%02x"=0A=
 -- =0A=
 2.53.0=0A=
 
