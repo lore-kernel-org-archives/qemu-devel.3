@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3ACAC79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448F9C79F9E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 05:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3RrD-0005U8-Pl; Mon, 07 Sep 2026 01:25:28 -0400
+	id 1x3RqM-0004qm-MQ; Mon, 07 Sep 2026 01:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3Rr2-0005CG-MK; Mon, 07 Sep 2026 01:25:16 -0400
+ id 1x3RqL-0004qG-Fc; Mon, 07 Sep 2026 01:24:33 -0400
 Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3Rr0-00086z-5I; Mon, 07 Sep 2026 01:25:16 -0400
+ id 1x3RqI-0007s8-5v; Mon, 07 Sep 2026 01:24:33 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdb9C301zz7vQq;
- Mon,  7 Sep 2026 07:24:31 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4hdb972W22z7vDZ;
+ Mon,  7 Sep 2026 07:24:27 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788758671;
- bh=iJAd8xK1wbVjEJStVw35E2Sq0UVDnS9fGGQAa4fj0Xg=;
+ s=dkim; t=1788758667;
+ bh=q/xFF68O3Q4c38tlX+8R1kh/Z8QA3Fhr0Vv7twa5lww=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=CQr8QdzHSLtU/6/jiQDDmBg/AhFquKpqFpjkgfSTSX7ROzexZ167S9+PmuqjAWaU/
- O5PIQDY6yhpSFIRR5J+IZ7zTOacXCGKHgadzF5g2ACibL3s4j+ONh0Jm8Tzd5jme2z
- LXPIZL0yWvrnxFbM9ptOVGsaeuE/DCS4ut6JdDzb60vGX0EfwMR2axEDeF3jDmoubj
- XLMHW4nvEBlFDAoTBlPrwET6wui8XGB9V8ZeOr7B7F+vSewyjtRc+8VeLv7yf04iU8
- QBibHawUufWrmRrl3+V+8RKG4Yr3TJtVB4btMWDxYhG5pbTzZqfntJrWhrKkdE/CHl
- e+qRZukFXVjSw==
+ b=aULRSZ2Fc48IVWrcR96eS8p+1JsuEVETTP5Kl7y7cGQAGf/Lmh1FjLsSFM/1oWJ1O
+ iML9FozwNDUQvMh3z2RQ6/OspshMg3ddmejLVEKP/t8+SEVT4/88lyoIm5wP/4vhnL
+ 7jG0dq/jxZR/HtsZ74v9JnSQKA12RgRv7YOQm4756Ub52KqtdEEejJsdKlbeINhDA9
+ wfOOAX+ZTRNu5woLGLsjgCVOUfUvemIb34PXpJ4u9aZk+McBmPUrTBVGJcwuwGTqYu
+ TcWp56dfalamob1wh3tdygUjAmXN4MgoYW+pLB6qvshNAzlYA0gN67JZtBEk/t4hi3
+ +k5fTIz03mFoA==
 Received: from mac.home (lfbn-lil-1-243-101.w90-45.abo.wanadoo.fr
  [90.45.87.101]) (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb9C1W2bz7xqd;
- Mon,  7 Sep 2026 07:24:31 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdb9673sMz7xqd;
+ Mon,  7 Sep 2026 07:24:26 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [PATCH v3 28/36] tests/tcg/arm: test RP2040 DMA transfers
-Date: Mon,  7 Sep 2026 07:24:16 +0200
-Message-ID: <20260907052426.24849-12-gilles.grimaud@univ-lille.fr>
+ Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 17/36] hw/misc: add RP2040 pad controls
+Date: Mon,  7 Sep 2026 07:24:05 +0200
+Message-ID: <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
+In-Reply-To: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
- <20260907052426.24849-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=194.254.129.106;
@@ -72,576 +73,586 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add source-built bare-metal tests for memory copy and fill transfers,
-completion status and interrupt acknowledgement.
-
-Exercise UART0 and UART1 transmit and receive pacing through their DMA
-request lines. Each UART test waits for DMA IRQ completion and validates
-looped-back input before reporting success.
+Model the RP2040 PADS_BANK0 and PADS_QSPI register banks, including
+documented reset values, writable masks and atomic aliases. Wire both
+blocks into the SoC and add focused qtests for their reset and update
+behavior.
 
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- tests/tcg/arm/system/meson.build           |  25 ++
- tests/tcg/arm/system/rp2040-dma-memory.S   | 198 +++++++++++++++
- tests/tcg/arm/system/rp2040-dma-memory.ref |   4 +
- tests/tcg/arm/system/rp2040-dma-uart.S     | 267 +++++++++++++++++++++
- tests/tcg/arm/system/rp2040-dma-uart0.ref  |   3 +
- tests/tcg/arm/system/rp2040-dma-uart1.ref  |   3 +
- 6 files changed, 500 insertions(+)
- create mode 100644 tests/tcg/arm/system/rp2040-dma-memory.S
- create mode 100644 tests/tcg/arm/system/rp2040-dma-memory.ref
- create mode 100644 tests/tcg/arm/system/rp2040-dma-uart.S
- create mode 100644 tests/tcg/arm/system/rp2040-dma-uart0.ref
- create mode 100644 tests/tcg/arm/system/rp2040-dma-uart1.ref
+ hw/arm/rp2040.c                |  18 +-
+ hw/misc/meson.build            |   1 +
+ hw/misc/rp2040_pads.c          | 303 +++++++++++++++++++++++++++++++++
+ include/hw/arm/rp2040.h        |   3 +
+ include/hw/misc/rp2040_pads.h  |  42 +++++
+ tests/qtest/meson.build        |   9 +-
+ tests/qtest/rp2040-pads-test.c | 102 +++++++++++
+ 7 files changed, 472 insertions(+), 6 deletions(-)
+ create mode 100644 hw/misc/rp2040_pads.c
+ create mode 100644 include/hw/misc/rp2040_pads.h
+ create mode 100644 tests/qtest/rp2040-pads-test.c
 
-diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index c57bf5f0d0..a12aed74fa 100644
---- a/tests/tcg/arm/system/meson.build
-+++ b/tests/tcg/arm/system/meson.build
-@@ -24,6 +24,9 @@ rp2040_qemu_args = ['-M', 'raspi-pico', '-monitor', 'none',
- rp2040_uart_qemu_args = ['-M', 'raspi-pico,strict-uart-pins=off',
-                          '-monitor', 'none', '-serial', 'stdio',
-                          qemu_base_args]
-+rp2040_uart1_qemu_args = ['-M', 'raspi-pico,strict-uart-pins=off',
-+                          '-monitor', 'none', '-serial', 'null',
-+                          '-serial', 'stdio', qemu_base_args]
- rp2040_flash_persist = find_program('rp2040-flash-persist.sh')
+diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
+index 140c73ae78..15a5cb0d3f 100644
+--- a/hw/arm/rp2040.c
++++ b/hw/arm/rp2040.c
+@@ -50,8 +50,6 @@ static const struct {
+ } rp2040_unimplemented[] = {
+     { "rp2040.iobank0",  0x40014000, 0x4000 },
+     { "rp2040.ioqspi",   0x40018000, 0x4000 },
+-    { "rp2040.padsbank0", 0x4001c000, 0x4000 },
+-    { "rp2040.padsqspi", 0x40020000, 0x4000 },
+     { "rp2040.busctrl",  0x40030000, 0x4000 },
+     { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
+     { "rp2040.uart1_aliases", 0x40039000, 0x3000 },
+@@ -132,6 +130,10 @@ static void rp2040_soc_init(Object *obj)
+     }
  
- # Multi arch tests
-@@ -132,6 +135,28 @@ tests += {
-     'qemu_args': rp2040_uart_qemu_args,
-     'expected_output': 'rp2040-core1-xip-fault.ref',
-   },
-+  'rp2040-dma-memory.S': {
-+    'cflags': rp2040_cflags,
-+    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-dma-memory.ref',
-+  },
-+  'rp2040-dma-uart.S': {
-+    'exe_name': 'rp2040-dma-uart0',
-+    'test_name': 'rp2040-dma-uart0',
-+    'cflags': rp2040_cflags + ['-DUART_INDEX=0'],
-+    'qemu_args': rp2040_uart_qemu_args,
-+    'expected_output': 'rp2040-dma-uart0.ref',
-+  },
+     object_initialize_child(obj, "clocks", &s->clocks, TYPE_RP2040_CLOCKS);
++    object_initialize_child(obj, "pads-bank0", &s->pads_bank0,
++                            TYPE_RP2040_PADS_BANK0);
++    object_initialize_child(obj, "pads-qspi", &s->pads_qspi,
++                            TYPE_RP2040_PADS_QSPI);
+ 
+     object_initialize_child(obj, "pll-sys", &s->pll_sys, TYPE_RP2040_PLL);
+     qdev_prop_set_string(DEVICE(&s->pll_sys), "trace-name",
+@@ -333,6 +335,18 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->vreg), 0, RP2040_VREG_BASE);
+ 
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pads_bank0), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pads_bank0), 0,
++                    RP2040_PADS_BANK0_BASE);
++
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pads_qspi), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pads_qspi), 0,
++                    RP2040_PADS_QSPI_BASE);
++
+     qdev_connect_clock_in(DEVICE(&s->watchdog), "clk-ref",
+                           qdev_get_clock_out(DEVICE(&s->clocks), "clk-ref"));
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->watchdog), errp)) {
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index e03f45d667..0c5f8f2b4a 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -99,6 +99,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'bcm2835_powermgt.c',
+ ))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_clocks.c'))
++system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_pads.c'))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_pll.c'))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_psm.c'))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_resets.c'))
+diff --git a/hw/misc/rp2040_pads.c b/hw/misc/rp2040_pads.c
+new file mode 100644
+index 0000000000..d2a02530a7
+--- /dev/null
++++ b/hw/misc/rp2040_pads.c
+@@ -0,0 +1,303 @@
++/*
++ * RP2040 pad control emulation
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/misc/rp2040_pads.h"
++#include "hw/misc/rp2040.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++
++#define PADS_BANK0_VOLTAGE_SELECT 0x00
++#define PADS_BANK0_GPIO0          0x04
++#define PADS_BANK0_GPIO29         0x78
++#define PADS_BANK0_SWCLK          0x7c
++#define PADS_BANK0_SWD            0x80
++
++#define PADS_QSPI_VOLTAGE_SELECT 0x00
++#define PADS_QSPI_SCLK           0x04
++#define PADS_QSPI_SS             0x18
++
++#define PADS_VOLTAGE_SELECT_MASK BIT(0)
++#define PADS_PAD_MASK            0xff
++#define PADS_BANK0_GPIO_RESET     0x56
++#define PADS_BANK0_SWD_RESET      0x5a
++#define PADS_QSPI_SCLK_RESET     0x56
++#define PADS_QSPI_SD_RESET       0x52
++#define PADS_QSPI_SS_RESET       0x5a
++
++static bool rp2040_pads_bank0_gpio_offset(hwaddr offset, unsigned *index)
++{
++    if (offset < PADS_BANK0_GPIO0 || offset > PADS_BANK0_GPIO29 ||
++        (offset & 0x3)) {
++        return false;
++    }
++
++    *index = (offset - PADS_BANK0_GPIO0) / sizeof(uint32_t);
++    return *index < ARRAY_SIZE(((RP2040PadsBank0State *)0)->gpio);
 +}
 +
-+tests += {
-+  'rp2040-dma-uart.S': {
-+    'exe_name': 'rp2040-dma-uart1',
-+    'test_name': 'rp2040-dma-uart1',
-+    'cflags': rp2040_cflags + ['-DUART_INDEX=1'],
-+    'qemu_args': rp2040_uart1_qemu_args,
-+    'expected_output': 'rp2040-dma-uart1.ref',
-+  },
-   'semiconsole.c': {
-     'cflags': cflags,
-     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-diff --git a/tests/tcg/arm/system/rp2040-dma-memory.S b/tests/tcg/arm/system/rp2040-dma-memory.S
++static bool rp2040_pads_qspi_pad_offset(hwaddr offset, unsigned *index)
++{
++    if (offset < PADS_QSPI_SCLK || offset > PADS_QSPI_SS ||
++        (offset & 0x3)) {
++        return false;
++    }
++
++    *index = (offset - PADS_QSPI_SCLK) / sizeof(uint32_t);
++    return *index < ARRAY_SIZE(((RP2040PadsQspiState *)0)->pad);
++}
++
++static uint64_t rp2040_pads_bank0_read(void *opaque, hwaddr addr,
++                                       unsigned size)
++{
++    RP2040PadsBank0State *s = opaque;
++    hwaddr offset = addr & 0xfff;
++    unsigned index;
++    uint64_t value;
++
++    switch (offset) {
++    case PADS_BANK0_VOLTAGE_SELECT:
++        value = s->voltage_select;
++        break;
++    case PADS_BANK0_SWCLK:
++        value = s->swclk;
++        break;
++    case PADS_BANK0_SWD:
++        value = s->swd;
++        break;
++    default:
++        if (rp2040_pads_bank0_gpio_offset(offset, &index)) {
++            value = s->gpio[index];
++        } else {
++            value = 0;
++            qemu_log_mask(LOG_UNIMP,
++                      "%s: unimplemented read at offset 0x%"
++                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
++        }
++        break;
++    }
++
++    return value;
++}
++
++static void rp2040_pads_bank0_write(void *opaque, hwaddr addr,
++                                    uint64_t value64, unsigned size)
++{
++    RP2040PadsBank0State *s = opaque;
++    hwaddr alias = addr & RP2040_ATOMIC_ALIAS_MASK;
++    hwaddr offset = addr & 0xfff;
++    unsigned index;
++    uint32_t value = value64;
++
++    switch (offset) {
++    case PADS_BANK0_VOLTAGE_SELECT:
++        s->voltage_select =
++            rp2040_atomic_update(s->voltage_select, value, alias) &
++            PADS_VOLTAGE_SELECT_MASK;
++        break;
++    case PADS_BANK0_SWCLK:
++        s->swclk = rp2040_atomic_update(s->swclk, value, alias) &
++                   PADS_PAD_MASK;
++        break;
++    case PADS_BANK0_SWD:
++        s->swd = rp2040_atomic_update(s->swd, value, alias) &
++                 PADS_PAD_MASK;
++        break;
++    default:
++        if (rp2040_pads_bank0_gpio_offset(offset, &index)) {
++            s->gpio[index] = rp2040_atomic_update(s->gpio[index], value,
++                                                     alias) & PADS_PAD_MASK;
++        } else {
++            qemu_log_mask(LOG_UNIMP,
++                      "%s: unimplemented write at offset 0x%"
++                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
++        }
++        break;
++    }
++}
++
++static uint64_t rp2040_pads_qspi_read(void *opaque, hwaddr addr,
++                                      unsigned size)
++{
++    RP2040PadsQspiState *s = opaque;
++    hwaddr offset = addr & 0xfff;
++    unsigned index;
++    uint64_t value;
++
++    switch (offset) {
++    case PADS_QSPI_VOLTAGE_SELECT:
++        value = s->voltage_select;
++        break;
++    default:
++        if (rp2040_pads_qspi_pad_offset(offset, &index)) {
++            value = s->pad[index];
++        } else {
++            value = 0;
++            qemu_log_mask(LOG_UNIMP,
++                      "%s: unimplemented read at offset 0x%"
++                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
++        }
++        break;
++    }
++
++    return value;
++}
++
++static void rp2040_pads_qspi_write(void *opaque, hwaddr addr,
++                                   uint64_t value64, unsigned size)
++{
++    RP2040PadsQspiState *s = opaque;
++    hwaddr alias = addr & RP2040_ATOMIC_ALIAS_MASK;
++    hwaddr offset = addr & 0xfff;
++    unsigned index;
++    uint32_t value = value64;
++
++    switch (offset) {
++    case PADS_QSPI_VOLTAGE_SELECT:
++        s->voltage_select =
++            rp2040_atomic_update(s->voltage_select, value, alias) &
++            PADS_VOLTAGE_SELECT_MASK;
++        break;
++    default:
++        if (rp2040_pads_qspi_pad_offset(offset, &index)) {
++            s->pad[index] = rp2040_atomic_update(s->pad[index], value,
++                                                    alias) & PADS_PAD_MASK;
++        } else {
++            qemu_log_mask(LOG_UNIMP,
++                      "%s: unimplemented write at offset 0x%"
++                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
++        }
++        break;
++    }
++}
++
++static const MemoryRegionOps rp2040_pads_bank0_ops = {
++    .read = rp2040_pads_bank0_read,
++    .write = rp2040_pads_bank0_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static const MemoryRegionOps rp2040_pads_qspi_ops = {
++    .read = rp2040_pads_qspi_read,
++    .write = rp2040_pads_qspi_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void rp2040_pads_bank0_reset(DeviceState *dev)
++{
++    RP2040PadsBank0State *s = RP2040_PADS_BANK0(dev);
++    unsigned i;
++
++    s->voltage_select = 0;
++    for (i = 0; i < ARRAY_SIZE(s->gpio); i++) {
++        s->gpio[i] = PADS_BANK0_GPIO_RESET;
++    }
++    s->swclk = PADS_BANK0_SWD_RESET;
++    s->swd = PADS_BANK0_SWD_RESET;
++}
++
++static void rp2040_pads_qspi_reset(DeviceState *dev)
++{
++    RP2040PadsQspiState *s = RP2040_PADS_QSPI(dev);
++
++    s->voltage_select = 0;
++    s->pad[0] = PADS_QSPI_SCLK_RESET;
++    s->pad[1] = PADS_QSPI_SD_RESET;
++    s->pad[2] = PADS_QSPI_SD_RESET;
++    s->pad[3] = PADS_QSPI_SD_RESET;
++    s->pad[4] = PADS_QSPI_SD_RESET;
++    s->pad[5] = PADS_QSPI_SS_RESET;
++}
++
++static void rp2040_pads_bank0_init(Object *obj)
++{
++    RP2040PadsBank0State *s = RP2040_PADS_BANK0(obj);
++
++    memory_region_init_io(&s->iomem, obj, &rp2040_pads_bank0_ops, s,
++                          "rp2040.padsbank0", RP2040_PADS_BANK0_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static void rp2040_pads_qspi_init(Object *obj)
++{
++    RP2040PadsQspiState *s = RP2040_PADS_QSPI(obj);
++
++    memory_region_init_io(&s->iomem, obj, &rp2040_pads_qspi_ops, s,
++                          "rp2040.padsqspi", RP2040_PADS_QSPI_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static const VMStateDescription rp2040_pads_bank0_vmstate = {
++    .name = TYPE_RP2040_PADS_BANK0,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(voltage_select, RP2040PadsBank0State),
++        VMSTATE_UINT32_ARRAY(gpio, RP2040PadsBank0State, 30),
++        VMSTATE_UINT32(swclk, RP2040PadsBank0State),
++        VMSTATE_UINT32(swd, RP2040PadsBank0State),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription rp2040_pads_qspi_vmstate = {
++    .name = TYPE_RP2040_PADS_QSPI,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(voltage_select, RP2040PadsQspiState),
++        VMSTATE_UINT32_ARRAY(pad, RP2040PadsQspiState, 6),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void rp2040_pads_bank0_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    device_class_set_legacy_reset(dc, rp2040_pads_bank0_reset);
++    dc->vmsd = &rp2040_pads_bank0_vmstate;
++}
++
++static void rp2040_pads_qspi_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    device_class_set_legacy_reset(dc, rp2040_pads_qspi_reset);
++    dc->vmsd = &rp2040_pads_qspi_vmstate;
++}
++
++static const TypeInfo rp2040_pads_bank0_info = {
++    .name          = TYPE_RP2040_PADS_BANK0,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RP2040PadsBank0State),
++    .instance_init = rp2040_pads_bank0_init,
++    .class_init    = rp2040_pads_bank0_class_init,
++};
++
++static const TypeInfo rp2040_pads_qspi_info = {
++    .name          = TYPE_RP2040_PADS_QSPI,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RP2040PadsQspiState),
++    .instance_init = rp2040_pads_qspi_init,
++    .class_init    = rp2040_pads_qspi_class_init,
++};
++
++static void rp2040_pads_register_types(void)
++{
++    type_register_static(&rp2040_pads_bank0_info);
++    type_register_static(&rp2040_pads_qspi_info);
++}
++type_init(rp2040_pads_register_types)
+diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
+index c3c6419613..42eb3c8fca 100644
+--- a/include/hw/arm/rp2040.h
++++ b/include/hw/arm/rp2040.h
+@@ -14,6 +14,7 @@
+ #include "hw/core/clock.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/misc/rp2040_clocks.h"
++#include "hw/misc/rp2040_pads.h"
+ #include "hw/misc/rp2040_pll.h"
+ #include "hw/misc/rp2040_psm.h"
+ #include "hw/misc/rp2040_resets.h"
+@@ -47,6 +48,8 @@ struct RP2040State {
+     ARMv7MState armv7m[RP2040_NUM_CORES];
+     PL011State uart[2];
+     RP2040ClocksState clocks;
++    RP2040PadsBank0State pads_bank0;
++    RP2040PadsQspiState pads_qspi;
+     RP2040PllState pll_sys;
+     RP2040PllState pll_usb;
+     RP2040PsmState psm;
+diff --git a/include/hw/misc/rp2040_pads.h b/include/hw/misc/rp2040_pads.h
 new file mode 100644
-index 0000000000..015c7241dc
+index 0000000000..3fc6cd54bb
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-dma-memory.S
-@@ -0,0 +1,198 @@
++++ b/include/hw/misc/rp2040_pads.h
+@@ -0,0 +1,42 @@
 +/*
-+ * Raspberry Pi Pico DMA memory transfer test.
++ * RP2040 pad control emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
++#ifndef HW_MISC_RP2040_PADS_H
++#define HW_MISC_RP2040_PADS_H
 +
-+#define SRAM_END               0x20042000
-+#define UART0_DR               0x40034000
-+#define DMA_BASE               0x50000000
-+#define DMA_READ_ADDR          0x000
-+#define DMA_WRITE_ADDR         0x004
-+#define DMA_TRANS_COUNT        0x008
-+#define DMA_CTRL_TRIG          0x00c
-+#define DMA_INTR               0x400
-+#define DMA_CTRL_WORD_COPY     0x001f8039
-+#define DMA_CTRL_WORD_FILL     0x001f8029
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
 +
-+.macro fail_if_ne reg, expected, target
-+    ldr r2, =\expected
-+    cmp \reg, r2
-+    beq 0f
-+    b \target
-+0:
-+.endm
++#define TYPE_RP2040_PADS_QSPI "rp2040-pads-qspi"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040PadsQspiState, RP2040_PADS_QSPI)
 +
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
++#define TYPE_RP2040_PADS_BANK0 "rp2040-pads-bank0"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040PadsBank0State, RP2040_PADS_BANK0)
 +
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    ldr r0, =start_message
-+    bl puts
++#define RP2040_PADS_BANK0_BASE 0x4001c000
++#define RP2040_PADS_BANK0_SIZE 0x4000
++#define RP2040_PADS_QSPI_BASE 0x40020000
++#define RP2040_PADS_QSPI_SIZE 0x4000
 +
-+    ldr r5, =copy_source
-+    ldr r0, =0x11223344
-+    str r0, [r5, #0]
-+    ldr r0, =0xaabbccdd
-+    str r0, [r5, #4]
-+    ldr r0, =0x01020304
-+    str r0, [r5, #8]
-+    ldr r0, =0xfeedc0de
-+    str r0, [r5, #12]
-+    ldr r5, =fill_source
-+    ldr r0, =0x55aa55aa
-+    str r0, [r5]
++struct RP2040PadsBank0State {
++    SysBusDevice parent_obj;
 +
-+    ldr r4, =DMA_BASE
++    MemoryRegion iomem;
++    uint32_t voltage_select;
++    uint32_t gpio[30];
++    uint32_t swclk;
++    uint32_t swd;
++};
 +
-+    ldr r0, =copy_source
-+    str r0, [r4, DMA_READ_ADDR]
-+    ldr r0, =copy_destination
-+    str r0, [r4, DMA_WRITE_ADDR]
-+    movs r0, 4
-+    str r0, [r4, DMA_TRANS_COUNT]
-+    ldr r0, =DMA_CTRL_WORD_COPY
-+    str r0, [r4, DMA_CTRL_TRIG]
++struct RP2040PadsQspiState {
++    SysBusDevice parent_obj;
 +
-+    ldr r5, =copy_source
-+    ldr r6, =copy_destination
-+    movs r3, 4
++    MemoryRegion iomem;
++    uint32_t voltage_select;
++    uint32_t pad[6];
++};
 +
-+copy_check_loop:
-+    ldr r0, [r5]
-+    ldr r1, [r6]
-+    cmp r0, r1
-+    bne fail_copy
-+    adds r5, 4
-+    adds r6, 4
-+    subs r3, 1
-+    bne copy_check_loop
-+
-+    ldr r6, =DMA_BASE + DMA_INTR
-+    ldr r0, [r6]
-+    movs r1, 1
-+    tst r0, r1
-+    beq fail_irq
-+    str r1, [r6]
-+    ldr r0, [r6]
-+    tst r0, r1
-+    bne fail_irq
-+
-+    ldr r0, =copy_ok_message
-+    bl puts
-+
-+    ldr r0, =fill_source
-+    str r0, [r4, DMA_READ_ADDR]
-+    ldr r0, =fill_destination
-+    str r0, [r4, DMA_WRITE_ADDR]
-+    movs r0, 4
-+    str r0, [r4, DMA_TRANS_COUNT]
-+    ldr r0, =DMA_CTRL_WORD_FILL
-+    str r0, [r4, DMA_CTRL_TRIG]
-+
-+    ldr r5, =fill_destination
-+    ldr r1, =0x55aa55aa
-+    movs r3, 4
-+
-+fill_check_loop:
-+    ldr r0, [r5]
-+    cmp r0, r1
-+    bne fail_fill
-+    adds r5, 4
-+    subs r3, 1
-+    bne fill_check_loop
-+
-+    ldr r0, =fill_ok_message
-+    bl puts
-+    ldr r0, =ok_message
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+fail_copy:
-+    ldr r0, =fail_copy_message
-+    b test_failed
-+
-+fail_fill:
-+    ldr r0, =fail_fill_message
-+    b test_failed
-+
-+fail_irq:
-+    ldr r0, =fail_irq_message
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+2:
-+    b 2b
-+
-+.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+    b test_failed
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART0_DR
-+
-+3:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 4f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 3b
-+
-+4:
-+    bx lr
-+
-+.section .bss, "aw", %nobits
-+.align 2
-+copy_source:
-+    .space 16
-+copy_destination:
-+    .space 16
-+fill_source:
-+    .space 4
-+fill_destination:
-+    .space 16
-+
-+.section .rodata, "a", %progbits
-+start_message:
-+    .asciz "PICO TCG DMA MEMORY START\n"
-+copy_ok_message:
-+    .asciz "PICO TCG DMA MEMORY COPY OK\n"
-+fill_ok_message:
-+    .asciz "PICO TCG DMA MEMORY FILL OK\n"
-+ok_message:
-+    .asciz "PICO TCG DMA MEMORY OK\n"
-+fail_copy_message:
-+    .asciz "PICO TCG DMA MEMORY FAIL: COPY\n"
-+fail_fill_message:
-+    .asciz "PICO TCG DMA MEMORY FAIL: FILL\n"
-+fail_irq_message:
-+    .asciz "PICO TCG DMA MEMORY FAIL: IRQ\n"
-+fail_exception_message:
-+    .asciz "PICO TCG DMA MEMORY FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-dma-memory.ref b/tests/tcg/arm/system/rp2040-dma-memory.ref
-new file mode 100644
-index 0000000000..5960220ead
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-dma-memory.ref
-@@ -0,0 +1,4 @@
-+PICO TCG DMA MEMORY START
-+PICO TCG DMA MEMORY COPY OK
-+PICO TCG DMA MEMORY FILL OK
-+PICO TCG DMA MEMORY OK
-diff --git a/tests/tcg/arm/system/rp2040-dma-uart.S b/tests/tcg/arm/system/rp2040-dma-uart.S
-new file mode 100644
-index 0000000000..36972bbc98
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-dma-uart.S
-@@ -0,0 +1,267 @@
-+/*
-+ * Raspberry Pi Pico UART-paced DMA transfer test.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+.syntax unified
-+.cpu cortex-m0plus
-+.thumb
-+
-+#ifndef UART_INDEX
-+#error UART_INDEX must select UART0 or UART1
-+#elif UART_INDEX == 0
-+#define UART_BASE              0x40034000
-+#define DREQ_UART_TX           20
-+#define DREQ_UART_RX           21
-+#define UART_NAME              "UART0"
-+#elif UART_INDEX == 1
-+#define UART_BASE              0x40038000
-+#define DREQ_UART_TX           22
-+#define DREQ_UART_RX           23
-+#define UART_NAME              "UART1"
-+#else
-+#error Unsupported UART_INDEX
 +#endif
-+
-+#define SRAM_END               0x20042000
-+#define UART_LCR_H             0x2c
-+#define UART_CR                0x30
-+#define UART_DMACR             0x48
-+#define UART_CR_ENABLED        0x301
-+#define UART_CR_LOOPBACK       0x381
-+#define DMA_BASE               0x50000000
-+#define DMA_READ_ADDR          0x000
-+#define DMA_WRITE_ADDR         0x004
-+#define DMA_TRANS_COUNT        0x008
-+#define DMA_CTRL_TRIG          0x00c
-+#define DMA_INTR               0x400
-+#define DMA_INTE0              0x404
-+#define DMA_CTRL_EN            0x00000001
-+#define DMA_CTRL_INCR_R        0x00000010
-+#define DMA_CTRL_INCR_W        0x00000020
-+#define DMA_CTRL_TX            (DMA_CTRL_EN | DMA_CTRL_INCR_R | \
-+                                (DREQ_UART_TX << 15))
-+#define DMA_CTRL_RX            (DMA_CTRL_EN | DMA_CTRL_INCR_W | \
-+                                (DREQ_UART_RX << 15))
-+#define DMA_IRQ_0              11
-+#define NVIC_ISER              0xe000e100
-+#define NVIC_ICER              0xe000e180
-+#define NVIC_ICPR              0xe000e280
-+#define SYS_EXIT               0x18
-+#define ADP_STOPPED_APPLICATION_EXIT 0x20026
-+#define ADP_STOPPED_RUNTIME_ERROR    0x20023
-+
-+.section .vectors, "a", %progbits
-+.global vector_table
-+vector_table:
-+    .word SRAM_END
-+    .word reset_handler + 1
-+    .word default_handler + 1
-+    .word default_handler + 1
-+    .rept 12
-+    .word default_handler + 1
-+    .endr
-+    .rept DMA_IRQ_0
-+    .word default_handler + 1
-+    .endr
-+    .word dma_irq_handler + 1
-+
-+.section .text, "ax", %progbits
-+.thumb_func
-+.global reset_handler
-+reset_handler:
-+    cpsid i
-+    ldr r0, =UART_BASE
-+    movs r1, 0x10
-+    str r1, [r0, UART_LCR_H]
-+    ldr r1, =UART_CR_ENABLED
-+    str r1, [r0, UART_CR]
-+    movs r1, 3
-+    str r1, [r0, UART_DMACR]
-+
-+    ldr r0, =NVIC_ICER
-+    movs r2, 0
-+    mvns r2, r2
-+    str r2, [r0]
-+    ldr r0, =NVIC_ICPR
-+    str r2, [r0]
-+    ldr r0, =NVIC_ISER
-+    ldr r1, =(1 << DMA_IRQ_0)
-+    str r1, [r0]
-+    cpsie i
-+
-+    ldr r0, =start_message
-+    movs r1, START_MESSAGE_LEN
-+    bl dma_tx
-+
-+    ldr r0, =UART_BASE
-+    ldr r1, =UART_CR_LOOPBACK
-+    str r1, [r0, UART_CR]
-+    ldr r0, =hello_message
-+    movs r1, 5
-+    bl dma_tx
-+    ldr r0, =UART_BASE
-+    ldr r1, =UART_CR_ENABLED
-+    str r1, [r0, UART_CR]
-+    ldr r0, =newline_message
-+    bl puts
-+
-+    ldr r0, =rx_buffer
-+    movs r1, 5
-+    bl dma_rx
-+
-+    ldr r0, =rx_buffer
-+    ldr r1, =hello_message
-+    movs r2, 5
-+
-+check_loop:
-+    ldrb r3, [r0]
-+    ldrb r4, [r1]
-+    cmp r3, r4
-+    bne fail_data
-+    adds r0, 1
-+    adds r1, 1
-+    subs r2, 1
-+    bne check_loop
-+
-+    ldr r0, =ok_message
-+    movs r1, OK_MESSAGE_LEN
-+    bl dma_tx
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
-+    bkpt 0xab
-+
-+1:
-+    b 1b
-+
-+fail_data:
-+    ldr r0, =fail_data_message
-+    b test_failed
-+
-+fail_irq:
-+    ldr r0, =fail_irq_message
-+    b test_failed
-+
-+.thumb_func
-+default_handler:
-+    ldr r0, =fail_exception_message
-+
-+test_failed:
-+    bl puts
-+    movs r0, SYS_EXIT
-+    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
-+    bkpt 0xab
-+
-+2:
-+    b 2b
-+
-+.thumb_func
-+dma_tx:
-+    push {r4, lr}
-+    mov r4, r1
-+    bl clear_dma_irq
-+    ldr r2, =DMA_BASE
-+    str r0, [r2, DMA_READ_ADDR]
-+    ldr r3, =UART_BASE
-+    str r3, [r2, DMA_WRITE_ADDR]
-+    str r4, [r2, DMA_TRANS_COUNT]
-+    ldr r3, =DMA_CTRL_TX
-+    str r3, [r2, DMA_CTRL_TRIG]
-+    bl wait_dma_irq
-+    pop {r4, pc}
-+
-+.thumb_func
-+dma_rx:
-+    push {r4, lr}
-+    mov r4, r1
-+    bl clear_dma_irq
-+    ldr r2, =DMA_BASE
-+    ldr r3, =UART_BASE
-+    str r3, [r2, DMA_READ_ADDR]
-+    str r0, [r2, DMA_WRITE_ADDR]
-+    str r4, [r2, DMA_TRANS_COUNT]
-+    ldr r3, =DMA_CTRL_RX
-+    str r3, [r2, DMA_CTRL_TRIG]
-+    bl wait_dma_irq
-+    pop {r4, pc}
-+
-+.thumb_func
-+clear_dma_irq:
-+    ldr r2, =irq_flag
-+    movs r3, 0
-+    str r3, [r2]
-+    ldr r2, =DMA_BASE + DMA_INTR
-+    movs r3, 1
-+    str r3, [r2]
-+    ldr r2, =DMA_BASE + DMA_INTE0
-+    str r3, [r2]
-+    bx lr
-+
-+.thumb_func
-+wait_dma_irq:
-+    ldr r2, =irq_flag
-+
-+3:
-+    ldr r3, [r2]
-+    movs r4, 1
-+    tst r3, r4
-+    bne 4f
-+    b 3b
-+
-+4:
-+    bx lr
-+
-+.thumb_func
-+dma_irq_handler:
-+    ldr r0, =DMA_BASE + DMA_INTR
-+    ldr r1, [r0]
-+    movs r2, 1
-+    tst r1, r2
-+    beq fail_irq
-+    str r1, [r0]
-+    ldr r0, =irq_flag
-+    str r1, [r0]
-+    bx lr
-+
-+.thumb_func
-+puts:
-+    ldr r2, =UART_BASE
-+
-+5:
-+    ldrb r1, [r0]
-+    cmp r1, 0
-+    beq 6f
-+    str r1, [r2]
-+    adds r0, 1
-+    b 5b
-+
-+6:
-+    bx lr
-+
-+.section .bss, "aw", %nobits
-+.align 2
-+irq_flag:
-+    .word 0
-+rx_buffer:
-+    .space 8
-+
-+.section .rodata, "a", %progbits
-+start_message:
-+    .ascii "PICO TCG DMA " UART_NAME " START\n"
-+start_message_end:
-+hello_message:
-+    .ascii "HELLO"
-+newline_message:
-+    .asciz "\n"
-+ok_message:
-+    .ascii "PICO TCG DMA " UART_NAME " TX/RX OK\n"
-+ok_message_end:
-+.equ START_MESSAGE_LEN, start_message_end - start_message
-+.equ OK_MESSAGE_LEN, ok_message_end - ok_message
-+fail_data_message:
-+    .asciz "PICO TCG DMA " UART_NAME " FAIL: DATA\n"
-+fail_irq_message:
-+    .asciz "PICO TCG DMA " UART_NAME " FAIL: IRQ\n"
-+fail_exception_message:
-+    .asciz "PICO TCG DMA " UART_NAME " FAIL: EXCEPTION\n"
-diff --git a/tests/tcg/arm/system/rp2040-dma-uart0.ref b/tests/tcg/arm/system/rp2040-dma-uart0.ref
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 18120f17bf..26ed04bc51 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -264,10 +264,11 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_RP2040') ?
+    ['rp2040-syscfg-test',
+-    'rp2040-sysinfo-test',
+-     'rp2040-clocks-test',
+-     'rp2040-resets-test',
+-     'rp2040-rosc-test',
++     'rp2040-sysinfo-test',
++    'rp2040-clocks-test',
++    'rp2040-pads-test',
++    'rp2040-resets-test',
++    'rp2040-rosc-test',
+     'rp2040-tbman-test',
+     'rp2040-vreg-test',
+     'rp2040-watchdog-test'] : []) + \
+diff --git a/tests/qtest/rp2040-pads-test.c b/tests/qtest/rp2040-pads-test.c
 new file mode 100644
-index 0000000000..5cb57c56cc
+index 0000000000..f606e60dec
 --- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-dma-uart0.ref
-@@ -0,0 +1,3 @@
-+PICO TCG DMA UART0 START
-+HELLO
-+PICO TCG DMA UART0 TX/RX OK
-diff --git a/tests/tcg/arm/system/rp2040-dma-uart1.ref b/tests/tcg/arm/system/rp2040-dma-uart1.ref
-new file mode 100644
-index 0000000000..1509dc034a
---- /dev/null
-+++ b/tests/tcg/arm/system/rp2040-dma-uart1.ref
-@@ -0,0 +1,3 @@
-+PICO TCG DMA UART1 START
-+HELLO
-+PICO TCG DMA UART1 TX/RX OK
++++ b/tests/qtest/rp2040-pads-test.c
+@@ -0,0 +1,102 @@
++/*
++ * QTest testcase for the RP2040 pad controls.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "hw/misc/rp2040.h"
++
++#define PADS_BANK0_BASE       0x4001c000
++#define PADS_BANK0_VOLTAGE    0x00
++#define PADS_BANK0_GPIO0      0x04
++#define PADS_BANK0_GPIO29     0x78
++#define PADS_BANK0_SWCLK      0x7c
++#define PADS_BANK0_SWD        0x80
++
++#define PADS_QSPI_BASE        0x40020000
++#define PADS_QSPI_VOLTAGE     0x00
++#define PADS_QSPI_SCLK        0x04
++#define PADS_QSPI_SD0         0x08
++#define PADS_QSPI_SD3         0x14
++#define PADS_QSPI_SS          0x18
++
++static QTestState *rp2040_pads_start(void)
++{
++    return qtest_init("-machine raspi-pico");
++}
++
++static void test_bank0(void)
++{
++    QTestState *qts = rp2040_pads_start();
++
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE +
++                                PADS_BANK0_VOLTAGE), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_GPIO0),
++                    ==, 0x56);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_GPIO29),
++                    ==, 0x56);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_SWCLK),
++                    ==, 0x5a);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_SWD),
++                    ==, 0x5a);
++
++    qtest_writel(qts, PADS_BANK0_BASE + PADS_BANK0_VOLTAGE, 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE +
++                                PADS_BANK0_VOLTAGE), ==, 1);
++
++    qtest_writel(qts, PADS_BANK0_BASE + PADS_BANK0_GPIO0, 0x12);
++    qtest_writel(qts, PADS_BANK0_BASE + RP2040_ATOMIC_SET + PADS_BANK0_GPIO0,
++                 0x81);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_GPIO0),
++                    ==, 0x93);
++    qtest_writel(qts, PADS_BANK0_BASE + RP2040_ATOMIC_CLR + PADS_BANK0_GPIO0,
++                 0x11);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_GPIO0),
++                    ==, 0x82);
++    qtest_writel(qts, PADS_BANK0_BASE + RP2040_ATOMIC_XOR + PADS_BANK0_GPIO0,
++                 0x03);
++    g_assert_cmphex(qtest_readl(qts, PADS_BANK0_BASE + PADS_BANK0_GPIO0),
++                    ==, 0x81);
++
++    qtest_quit(qts);
++}
++
++static void test_qspi(void)
++{
++    QTestState *qts = rp2040_pads_start();
++
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_VOLTAGE),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SCLK),
++                    ==, 0x56);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SD0),
++                    ==, 0x52);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SD3),
++                    ==, 0x52);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SS),
++                    ==, 0x5a);
++
++    qtest_writel(qts, PADS_QSPI_BASE + PADS_QSPI_SS, 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SS),
++                    ==, 0xff);
++    qtest_writel(qts, PADS_QSPI_BASE + RP2040_ATOMIC_CLR + PADS_QSPI_SS, 0x0f);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SS),
++                    ==, 0xf0);
++    qtest_writel(qts, PADS_QSPI_BASE + RP2040_ATOMIC_XOR + PADS_QSPI_SS, 0x33);
++    g_assert_cmphex(qtest_readl(qts, PADS_QSPI_BASE + PADS_QSPI_SS),
++                    ==, 0xc3);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/rp2040-pads/bank0", test_bank0);
++    qtest_add_func("/rp2040-pads/qspi", test_qspi);
++
++    return g_test_run();
++}
 -- 
 2.55.0
 
