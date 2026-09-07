@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4854BC79F9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B38FAC79F99
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3WTv-00080f-FA; Mon, 07 Sep 2026 06:21:43 -0400
+	id 1x3WTp-0007zO-Ky; Mon, 07 Sep 2026 06:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3WTt-0007zx-Vl; Mon, 07 Sep 2026 06:21:41 -0400
+ id 1x3WTn-0007yW-LJ; Mon, 07 Sep 2026 06:21:35 -0400
 Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1x3WTp-00025k-QC; Mon, 07 Sep 2026 06:21:41 -0400
+ id 1x3WTk-00025K-EW; Mon, 07 Sep 2026 06:21:35 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdjlt5bTSzBqYF;
- Mon,  7 Sep 2026 12:21:30 +0200 (CEST)
+ by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4hdjls638XzBqWv;
+ Mon,  7 Sep 2026 12:21:29 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1788776490;
- bh=+/PdvJLxL2DnZ/T/iCsPOMUZXwO7d2phUmTSCvu1H1I=;
+ s=dkim; t=1788776489;
+ bh=oIW/gYq+b+6DHHgxAI1IguyZKIjL7ohsZG1rrnecv2E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=vfmIWKmomKyHEImx4/im2Fqp5GDIjdVsnF6aSy777zEvEXpGReG77S9UWcIC19zC7
- HK0Kmpk8vWlsa9LcqOAIJYZUVm+v5Uo1XhgT4SvySYK9bpf0BLu+9J4wwJlMH3df1m
- oeKjz69RJ/LqPfI6foZ1792AYUONX/lqgIDVSYSduVYcscwumathEFo2pqFwSDXHLE
- qrd0IC44W40vesfvaJiHT/jfgNMpWWCLqHxMmlNcuMcMZJwbq9gHJU6muYuCXy+WJ7
- 975Mi7VlXzcZo9iRUoArXmU21+TwP/Y+dZkjulEfdQdIUGGdvE8K10LwNF/VNtiMCh
- L33FI+3WccIew==
+ b=InpzH3sVcy1IBRKH7LIXXRa9Ys441TUf/yvdoHtAHpPJQsmgHsu4KCeHvqPUIdesj
+ plZ9C60EeftMOUwmjScHhB1EA/PqzCfrYGk9VeD6i1dvkRLAX1H8ChvjGm3qM41IyN
+ ZpTFzlJ2jLG2Jm3vOW5jkcW0Q/UIxflpQEhLlE7xHyv+najR+xik55CPM++/FoUQAr
+ kCe+Cpe2yQanCv/ynvHG64ptBlLndPV+Dvkht/n3Kjx/HSLx4XArTP5fGyt74pojeJ
+ Bs0cc86U4HC7Of7+n8ugI/Zv0UPAVHgzcnAub44loSBjZ7s4zCel8OBUidu3LXx8FG
+ vmU6HQqbPQWOg==
 Received: from localhost.localdomain (unknown [134.206.232.123])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdjlt4H8Sz7wpK;
- Mon,  7 Sep 2026 12:21:30 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4hdjls4wtxz7wpK;
+ Mon,  7 Sep 2026 12:21:29 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org,
- Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v3 36/36] docs/system/arm: document Raspberry Pi Pico
-Date: Mon,  7 Sep 2026 12:21:28 +0200
-Message-ID: <20260907102128.55676-6-gilles.grimaud@univ-lille.fr>
+ Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Subject: [PATCH v3 32/36] hw/arm: add RP2040 synthetic boot ROM service tables
+Date: Mon,  7 Sep 2026 12:21:24 +0200
+Message-ID: <20260907102128.55676-2-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907102128.55676-1-gilles.grimaud@univ-lille.fr>
 References: <20260906194438.93046-1-gilles.grimaud@univ-lille.fr>
@@ -73,701 +72,642 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the RP2040 machine lineage, supported and shallow devices, boot
-ROM profiles, ELF/UF2/raw loading, persistent flash, serial backends,
-machine properties, flash policy, Pico SDK exit compatibility, and known
-limitations.
-
-Add the board page to the Arm system manual and its ownership entry to
-MAINTAINERS.
-
 Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- MAINTAINERS                    |   1 +
- docs/system/arm/raspi-pico.rst | 649 +++++++++++++++++++++++++++++++++
- docs/system/target-arm.rst     |   1 +
- 3 files changed, 651 insertions(+)
- create mode 100644 docs/system/arm/raspi-pico.rst
+ hw/arm/rp2040.c                               | 290 +++++++++++++++++-
+ include/hw/arm/rp2040.h                       |   3 +
+ tests/tcg/arm/system/meson.build              |   5 +
+ tests/tcg/arm/system/rp2040-bootrom-helpers.S | 235 ++++++++++++++
+ .../tcg/arm/system/rp2040-bootrom-helpers.ref |   5 +
+ 5 files changed, 534 insertions(+), 4 deletions(-)
+ create mode 100644 tests/tcg/arm/system/rp2040-bootrom-helpers.S
+ create mode 100644 tests/tcg/arm/system/rp2040-bootrom-helpers.ref
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 05ee44de37..0101159069 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1034,6 +1034,7 @@ F: hw/*/rp2040*
- F: include/hw/*/rp2040*
- F: hw/arm/raspi_pico.c
- F: scripts/uf2-to-flash.py
-+F: docs/system/arm/raspi-pico.rst
- F: tests/qtest/rp2040*
- F: tests/tcg/arm/system/rp2040*
+diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
+index 1b632be0b6..a3ad360462 100644
+--- a/hw/arm/rp2040.c
++++ b/hw/arm/rp2040.c
+@@ -44,6 +44,24 @@
  
-diff --git a/docs/system/arm/raspi-pico.rst b/docs/system/arm/raspi-pico.rst
+ #define RP2040_PROC1          1
+ 
++#define RP2040_BOOTROM_FUNC_TABLE_PTR_OFFSET 0x14
++#define RP2040_BOOTROM_DATA_TABLE_PTR_OFFSET 0x16
++#define RP2040_BOOTROM_TABLE_LOOKUP_PTR_OFFSET 0x18
++#define RP2040_BOOTROM_LOOKUP_OFFSET 0x0100
++#define RP2040_BOOTROM_STUBS_OFFSET 0x0120
++#define RP2040_BOOTROM_FUNC_TABLE_OFFSET 0x0300
++#define RP2040_BOOTROM_DATA_TABLE_OFFSET 0x0340
++#define RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET 0x0360
++#define RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET 0x0380
++#define RP2040_BOOTROM_FLOAT_TABLE_OFFSET 0x03c0
++#define RP2040_BOOTROM_DOUBLE_TABLE_OFFSET 0x0460
++#define RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE 4
++#define RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE 4
++#define RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET 20
++#define RP2040_BOOTROM_ROM_VERSION_OFFSET 0x13
++#define RP2040_BOOTROM_SYNTHETIC_ROM_VERSION 2
++#define RP2040_BOOTROM_FLOAT_TABLE_WORDS 32
++
+ /*
+  * Temporary boot ROM used until a faithful RP2040 boot ROM is requested.  It
+  * uses SIO_CPUID to split core behavior: core 0 copies the 256-byte XIP
+@@ -166,6 +184,222 @@ static const struct {
+     { "rp2040.pio1",     0x50300000, 0x10000 },
+ };
+ 
++typedef struct RP2040BootromFunction {
++    uint16_t code;
++    const char *name;
++    const uint8_t *impl;
++    size_t impl_size;
++} RP2040BootromFunction;
++
++typedef struct RP2040BootromData {
++    uint16_t code;
++    uint16_t offset;
++} RP2040BootromData;
++
++#define RP2040_ROM_TABLE_CODE(c1, c2) ((uint16_t)(c1) | ((uint16_t)(c2) << 8))
++
++static const uint8_t rp2040_bootrom_clz32[] = {
++    0x00, 0x21, 0x00, 0x28, 0x01, 0xd1, 0x20, 0x20,
++    0x70, 0x47, 0x00, 0x28, 0x02, 0xd4, 0x40, 0x00,
++    0x01, 0x31, 0xfa, 0xe7, 0x08, 0x46, 0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_ctz32[] = {
++    0x00, 0x21, 0x00, 0x28, 0x01, 0xd1, 0x20, 0x20,
++    0x70, 0x47, 0x01, 0x22, 0x10, 0x42, 0x02, 0xd1,
++    0x40, 0x08, 0x01, 0x31, 0xf9, 0xe7, 0x08, 0x46,
++    0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_popcount32[] = {
++    0x00, 0x21, 0x00, 0x28, 0x04, 0xd0, 0x01, 0x22,
++    0x02, 0x40, 0x89, 0x18, 0x40, 0x08, 0xf8, 0xe7,
++    0x08, 0x46, 0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_reverse32[] = {
++    0x00, 0x21, 0x20, 0x22, 0x49, 0x00, 0x01, 0x23,
++    0x03, 0x40, 0x19, 0x43, 0x40, 0x08, 0x01, 0x3a,
++    0xf8, 0xd1, 0x08, 0x46, 0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_memcpy[] = {
++    0x10, 0xb4, 0x03, 0x46, 0x00, 0x2a, 0x05, 0xd0,
++    0x0c, 0x78, 0x04, 0x70, 0x01, 0x31, 0x01, 0x30,
++    0x01, 0x3a, 0xf7, 0xe7, 0x18, 0x46, 0x10, 0xbc,
++    0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_memset[] = {
++    0x03, 0x46, 0x00, 0x2a, 0x03, 0xd0, 0x01, 0x70,
++    0x01, 0x30, 0x01, 0x3a, 0xf9, 0xe7, 0x18, 0x46,
++    0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_memcpy44[] = {
++    0x10, 0xb4, 0x03, 0x46, 0x00, 0x2a, 0x05, 0xd0,
++    0x0c, 0x68, 0x04, 0x60, 0x04, 0x31, 0x04, 0x30,
++    0x04, 0x3a, 0xf7, 0xe7, 0x18, 0x46, 0x10, 0xbc,
++    0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_memset4[] = {
++    0x10, 0xb4, 0x03, 0x46, 0xc9, 0xb2, 0x0c, 0x46,
++    0x24, 0x02, 0x21, 0x43, 0x0c, 0x46, 0x24, 0x04,
++    0x21, 0x43, 0x00, 0x2a, 0x03, 0xd0, 0x01, 0x60,
++    0x04, 0x30, 0x04, 0x3a, 0xf9, 0xe7, 0x18, 0x46,
++    0x10, 0xbc, 0x70, 0x47,
++};
++
++#define RP2040_BOOTROM_IMPL(_code, _name, _impl) \
++    { _code, _name, _impl, sizeof(_impl) }
++#define RP2040_BOOTROM_NYI(_code, _name) \
++    { _code, _name, NULL, 0 }
++
++static const RP2040BootromFunction rp2040_bootrom_functions[] = {
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('C', 'X'),
++                       "flash_enter_cmd_xip"),
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('E', 'X'), "flash_exit_xip"),
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('F', 'C'),
++                       "flash_flush_cache"),
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('I', 'F'),
++                       "connect_internal_flash"),
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('R', 'E'),
++                       "flash_range_erase"),
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('R', 'P'),
++                       "flash_range_program"),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('C', '4'), "memcpy44",
++                        rp2040_bootrom_memcpy44),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('L', '3'), "clz32",
++                        rp2040_bootrom_clz32),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('M', 'C'), "memcpy",
++                        rp2040_bootrom_memcpy),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('M', 'S'), "memset",
++                        rp2040_bootrom_memset),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('P', '3'), "popcount32",
++                        rp2040_bootrom_popcount32),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('R', '3'), "reverse32",
++                        rp2040_bootrom_reverse32),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('S', '4'), "memset4",
++                        rp2040_bootrom_memset4),
++    RP2040_BOOTROM_IMPL(RP2040_ROM_TABLE_CODE('T', '3'), "ctz32",
++                        rp2040_bootrom_ctz32),
++    RP2040_BOOTROM_NYI(RP2040_ROM_TABLE_CODE('U', 'B'), "reset_usb_boot"),
++};
++
++static const RP2040BootromData rp2040_bootrom_data[] = {
++    { RP2040_ROM_TABLE_CODE('S', 'F'), RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 },
++    { RP2040_ROM_TABLE_CODE('S', 'D'), RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 },
++};
++
++static const uint8_t rp2040_bootrom_lookup[] = {
++    0x02, 0x88, 0x00, 0x2a, 0x05, 0xd0, 0x91, 0x42,
++    0x01, 0xd0, 0x04, 0x30, 0xf8, 0xe7, 0x40, 0x88,
++    0x70, 0x47, 0x5f, 0x22, 0x12, 0x06, 0xff, 0x23,
++    0x1b, 0x04, 0x1a, 0x43, 0x11, 0x60, 0x00, 0xbe,
++    0x00, 0x20, 0x70, 0x47,
++};
++
++static const uint8_t rp2040_bootrom_nyi_stub[] = {
++    0x04, 0x49, 0x5f, 0x20, 0x00, 0x06, 0xff, 0x22,
++    0x12, 0x04, 0x10, 0x43, 0x01, 0x60, 0x00, 0xbe,
++    0xfe, 0xe7, 0xc0, 0x46, 0x00, 0x00, 0x00, 0x00,
++};
++
++static void rp2040_store_hword(uint8_t *rom, uint32_t offset, uint16_t value)
++{
++    rom[offset] = value;
++    rom[offset + 1] = value >> 8;
++}
++
++static void rp2040_store_word(uint8_t *rom, uint32_t offset, uint32_t value)
++{
++    rom[offset] = value;
++    rom[offset + 1] = value >> 8;
++    rom[offset + 2] = value >> 16;
++    rom[offset + 3] = value >> 24;
++}
++
++static void rp2040_install_synthetic_bootrom(void)
++{
++    g_autofree uint8_t *rom = g_malloc0(RP2040_ROM_SIZE);
++    uint32_t func_base = RP2040_BOOTROM_STUBS_OFFSET;
++    uint32_t func_table = RP2040_BOOTROM_FUNC_TABLE_OFFSET;
++    uint32_t data_table = RP2040_BOOTROM_DATA_TABLE_OFFSET;
++    uint32_t float_nyi = RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET | 1;
++    uint32_t double_nyi = RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET | 1;
++    int i;
++
++    memcpy(rom, rp2040_bootrom, sizeof(rp2040_bootrom));
++    rom[RP2040_BOOTROM_ROM_VERSION_OFFSET] =
++        RP2040_BOOTROM_SYNTHETIC_ROM_VERSION;
++    memcpy(rom + RP2040_BOOTROM_LOOKUP_OFFSET, rp2040_bootrom_lookup,
++           sizeof(rp2040_bootrom_lookup));
++    rp2040_store_hword(rom, RP2040_BOOTROM_FUNC_TABLE_PTR_OFFSET,
++                       RP2040_BOOTROM_FUNC_TABLE_OFFSET);
++    rp2040_store_hword(rom, RP2040_BOOTROM_DATA_TABLE_PTR_OFFSET,
++                       RP2040_BOOTROM_DATA_TABLE_OFFSET);
++    rp2040_store_hword(rom, RP2040_BOOTROM_TABLE_LOOKUP_PTR_OFFSET,
++                       RP2040_BOOTROM_LOOKUP_OFFSET | 1);
++
++    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_functions); i++) {
++        const RP2040BootromFunction *func = &rp2040_bootrom_functions[i];
++        uint32_t entry = func_base | 1;
++
++        if (func->impl) {
++            memcpy(rom + func_base, func->impl, func->impl_size);
++            func_base += ROUND_UP(func->impl_size, 4);
++        } else {
++            memcpy(rom + func_base, rp2040_bootrom_nyi_stub,
++                   sizeof(rp2040_bootrom_nyi_stub));
++            rp2040_store_word(rom,
++                              func_base +
++                              RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
++                              func->code);
++            func_base += ROUND_UP(sizeof(rp2040_bootrom_nyi_stub), 4);
++        }
++        rp2040_store_hword(rom, func_table +
++                           i * RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE,
++                           func->code);
++        rp2040_store_hword(rom, func_table +
++                           i * RP2040_BOOTROM_FUNC_TABLE_ENTRY_SIZE + 2,
++                           entry);
++    }
++
++    memcpy(rom + RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET, rp2040_bootrom_nyi_stub,
++           sizeof(rp2040_bootrom_nyi_stub));
++    rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_NYI_STUB_OFFSET +
++                      RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
++                      RP2040_ROM_TABLE_CODE('S', 'F'));
++    memcpy(rom + RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET, rp2040_bootrom_nyi_stub,
++           sizeof(rp2040_bootrom_nyi_stub));
++    rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_NYI_STUB_OFFSET +
++                      RP2040_BOOTROM_NYI_CODE_LITERAL_OFFSET,
++                      RP2040_ROM_TABLE_CODE('S', 'D'));
++    rom[RP2040_BOOTROM_FLOAT_TABLE_OFFSET] = RP2040_BOOTROM_FLOAT_TABLE_WORDS;
++    rom[RP2040_BOOTROM_DOUBLE_TABLE_OFFSET] = RP2040_BOOTROM_FLOAT_TABLE_WORDS;
++    for (i = 0; i < RP2040_BOOTROM_FLOAT_TABLE_WORDS; i++) {
++        rp2040_store_word(rom, RP2040_BOOTROM_FLOAT_TABLE_OFFSET + 2 +
++                          i * sizeof(uint32_t), float_nyi);
++        rp2040_store_word(rom, RP2040_BOOTROM_DOUBLE_TABLE_OFFSET + 2 +
++                          i * sizeof(uint32_t), double_nyi);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_data); i++) {
++        const RP2040BootromData *data = &rp2040_bootrom_data[i];
++
++        rp2040_store_hword(rom, data_table +
++                           i * RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE,
++                           data->code);
++        rp2040_store_hword(rom, data_table +
++                           i * RP2040_BOOTROM_DATA_TABLE_ENTRY_SIZE + 2,
++                           data->offset);
++    }
++
++    rom_add_blob_fixed("rp2040.bootrom", rom, RP2040_ROM_SIZE,
++                       RP2040_ROM_BASE);
++}
++
+ static uint64_t rp2040_usbctrl_regs_read(void *opaque, hwaddr addr,
+                                          unsigned size)
+ {
+@@ -194,8 +428,8 @@ static uint64_t rp2040_usbctrl_regs_read(void *opaque, hwaddr addr,
+         } else {
+             value = 0;
+             qemu_log_mask(LOG_UNIMP,
+-                      "%s: unimplemented read at offset 0x%"
+-                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
++                          "%s: unimplemented read at offset 0x%"
++                          HWADDR_PRIx "\n", __func__, addr & 0xfff);
+         }
+         break;
+     }
+@@ -233,6 +467,48 @@ static const MemoryRegionOps rp2040_usbctrl_regs_ops = {
+     },
+ };
+ 
++static const char *rp2040_bootrom_function_name(uint16_t code)
++{
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(rp2040_bootrom_functions); i++) {
++        if (rp2040_bootrom_functions[i].code == code) {
++            return rp2040_bootrom_functions[i].name;
++        }
++    }
++    return NULL;
++}
++
++static void rp2040_synthetic_rom_dbg_write(void *opaque, hwaddr addr,
++                                           uint64_t value, unsigned size)
++{
++    uint16_t code = value;
++    const char *name = rp2040_bootrom_function_name(code);
++    qemu_log_mask(LOG_UNIMP,
++                  "%s: unimplemented boot ROM function '%c%c' (%s)\n",
++                  __func__, code & 0xff, (code >> 8) & 0xff,
++                  name ? name : "unknown lookup code");
++}
++
++static uint64_t rp2040_synthetic_rom_dbg_read(void *opaque, hwaddr addr,
++                                              unsigned size)
++{
++    qemu_log_mask(LOG_UNIMP,
++                  "%s: read from write-only synthetic register\n",
++                  __func__);
++    return 0;
++}
++
++static const MemoryRegionOps rp2040_synthetic_rom_dbg_ops = {
++    .read = rp2040_synthetic_rom_dbg_read,
++    .write = rp2040_synthetic_rom_dbg_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
+ static void rp2040_update_nmi(RP2040State *s)
+ {
+     unsigned core;
+@@ -498,6 +774,13 @@ static bool rp2040_init_memory(RP2040State *s, Error **errp)
+     memory_region_add_subregion(s->board_memory, RP2040_USBCTRL_REGS_BASE,
+                                 &s->usbctrl_regs);
+ 
++    memory_region_init_io(&s->synthetic_rom_dbg, OBJECT(s),
++                          &rp2040_synthetic_rom_dbg_ops, s,
++                          "rp2040.synthetic-rom-dbg",
++                          RP2040_SYNTHETIC_ROM_DBG_SIZE);
++    memory_region_add_subregion(s->board_memory,
++                                 RP2040_SYNTHETIC_ROM_DBG_BASE,
++                                 &s->synthetic_rom_dbg);
+     return true;
+ }
+ 
+@@ -506,8 +789,7 @@ static bool rp2040_load_bootrom(RP2040State *s, Error **errp)
+     g_autofree char *filename = NULL;
+ 
+     if (!s->bootrom_file) {
+-        rom_add_blob_fixed("rp2040.bootrom", rp2040_bootrom,
+-                           sizeof(rp2040_bootrom), RP2040_ROM_BASE);
++        rp2040_install_synthetic_bootrom();
+         return true;
+     }
+ 
+diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
+index 0daa7d6ba1..17235827c4 100644
+--- a/include/hw/arm/rp2040.h
++++ b/include/hw/arm/rp2040.h
+@@ -52,6 +52,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(RP2040State, RP2040)
+ #define RP2040_USBCTRL_DPRAM_SIZE (4 * KiB)
+ #define RP2040_USBCTRL_REGS_BASE  0x50110000
+ #define RP2040_USBCTRL_REGS_SIZE  0x4000
++#define RP2040_SYNTHETIC_ROM_DBG_BASE 0x5fff0000
++#define RP2040_SYNTHETIC_ROM_DBG_SIZE 0x1000
+ 
+ #define RP2040_NUM_CORES      2
+ #define RP2040_NUM_IRQS       32
+@@ -90,6 +92,7 @@ struct RP2040State {
+     MemoryRegion sram[6];
+     MemoryRegion usbctrl_dpram;
+     MemoryRegion usbctrl_regs;
++    MemoryRegion synthetic_rom_dbg;
+     uint32_t usbctrl_reg[0x100 / sizeof(uint32_t)];
+     char *bootrom_file;
+ 
+diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+index a12aed74fa..9e1024cf11 100644
+--- a/tests/tcg/arm/system/meson.build
++++ b/tests/tcg/arm/system/meson.build
+@@ -157,6 +157,11 @@ tests += {
+     'qemu_args': rp2040_uart1_qemu_args,
+     'expected_output': 'rp2040-dma-uart1.ref',
+   },
++  'rp2040-bootrom-helpers.S': {
++    'cflags': rp2040_cflags,
++    'qemu_args': rp2040_uart_qemu_args,
++    'expected_output': 'rp2040-bootrom-helpers.ref',
++  },
+   'semiconsole.c': {
+     'cflags': cflags,
+     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
+diff --git a/tests/tcg/arm/system/rp2040-bootrom-helpers.S b/tests/tcg/arm/system/rp2040-bootrom-helpers.S
 new file mode 100644
-index 0000000000..f78afb4ce7
+index 0000000000..e48230a875
 --- /dev/null
-+++ b/docs/system/arm/raspi-pico.rst
-@@ -0,0 +1,649 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+Raspberry Pi Pico board (``raspi-pico``)
-+========================================
-+
-+The ``raspi-pico`` machine models a minimal Raspberry Pi Pico 1 board based
-+on the RP2040 microcontroller.  The current model is intended for bare-metal
-+bring-up and tests that execute code from the RP2040 external flash XIP
-+window.
-+
-+RFC lineage
-+-----------
-+
-+This machine starts from Alex Bennee's 2022 RP2040/Pico RFC patch series.
-+The RP2040 SoC skeleton, Pico machine, and memory map are adapted from that
-+series to the current QEMU tree.  The RFC ``pc-bios/pipico.rom`` image was
-+used for bring-up experiments, but it is not installed as a QEMU firmware
-+blob by this machine.
-+
-+RFC patch 0005's mask ROM loading logic is adapted for the current machine:
-+an external boot ROM can be supplied explicitly with ``-bios``.  QEMU still
-+uses a small synthetic boot ROM for direct XIP bring-up, so existing firmware
-+tests remain stable without requiring an external firmware image.
-+
-+Supported devices
-+-----------------
-+
-+ * Two Cortex-M0+ cores. With QEMU's synthetic ROM, core 1 starts in ROM and
-+   waits for the SDK FIFO launch sequence. With an external ROM image, the
-+   modeled ``PSM.FRCE_OFF.PROC1`` path can release core 1 at the ROM reset
-+   vector, but the external-ROM multicore flow remains a bring-up path.
-+ * Cortex-M0+ MPU with eight protection regions
-+ * 16 KiB boot ROM window
-+ * 264 KiB SRAM
-+ * 2 MiB external flash contents mapped through the XIP window and XIP alias
-+   windows
-+ * XIP/SSI flash command path for read, page program, sector erase, unique ID,
-+   XIP stream and SDK-style SSI RX DMA reads
-+ * Clock generator, crystal oscillator, ring oscillator, PLL_SYS and PLL_USB
-+   programmer-visible registers
-+ * Reset controller, PSM, watchdog, timer, SYSINFO, SYSCFG, TBMAN and
-+   VREG_AND_CHIP_RESET programmer-visible registers
-+ * BUSCTRL priority registers and shallow performance counters
-+ * SIO core ID, inter-core FIFO, spinlocks, divider and interpolators
-+ * DMA engine with memory, UART, XIP stream, XIP/SSI RX and timer DREQ support
-+ * IO_BANK0, IO_QSPI, PADS_BANK0 and PADS_QSPI shallow pin-control models
-+ * UART0 and UART1 through QEMU serial backends
-+ * USB DPRAM and shallow USB controller register storage
-+
-+Unsupported or shallow devices
-+------------------------------
-+
-+This machine is not a complete RP2040 model.  The following blocks are not
-+implemented, or are only present as shallow register storage:
-+
-+ * PIO state machines, instruction execution, FIFOs, IRQs and DMA pacing are
-+   not implemented.
-+ * USB device and host transactions, endpoint state machines and BOOTSEL
-+   mass-storage programming are not implemented.  USB DPRAM and the basic
-+   controller register window exist for firmware probing only.
-+ * SPI0, SPI1, I2C0, I2C1, PWM, ADC and the temperature sensor are not
-+   implemented.
-+ * BUSCTRL does not model arbitration.  Its performance counters are
-+   deterministic programmer-visible counters, not measurements of actual bus
-+   events.
-+ * The RTC block is not implemented.
-+ * General GPIO electrical behaviour, pad-level input sampling, edge
-+   detection, external pin wiring and alternate UART pin mappings are not
-+   implemented.  IO_BANK0 is sufficient for function-select storage and for
-+   gating the supported UART0/UART1 pins.
-+ * The XIP cache is not modeled.  XIP aliases are functional views of the same
-+   flash storage, but cache hit/miss counters and cache allocation behaviour
-+   are not timing-accurate.
-+ * QEMU's normal gdbstub can debug the emulated Cortex-M0+ CPUs.  The RP2040
-+   SWD/debug fabric itself is not implemented: debug pause inputs and
-+   ``DBGFORCE``-style registers are stored where useful, but they do not model
-+   an external SWD probe connected to the chip.
-+ * DMA is implemented for the paths listed above, but DREQ sources belonging
-+   to unimplemented peripherals do not transfer data.
-+ * The synthetic ROM provides a useful subset of the RP2040 function and data
-+   tables, including memory and bit helpers, floating-point helpers and
-+   accelerated flash operations.  Missing table entries report an explicit
-+   not-implemented diagnostic.  The external mask ROM path is available
-+   through ``-bios`` for user-provided RP2040 ROM images such as
-+   ``pipico.rom``; QEMU does not ship that ROM image, and USB BOOTSEL
-+   mass-storage mode is not implemented.
-+
-+Boot options
-+------------
-+
-+For direct bring-up, a firmware image can be loaded into the XIP window with
-+``-kernel``.  ELF images linked at ``0x10000000`` and Pico 1 UF2 images are
-+accepted, with raw images loaded at ``0x10000000`` as a fallback:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico -kernel firmware.elf -serial stdio
-+
-+The same option accepts the UF2 image normally copied to the Pico's BOOTSEL
-+USB mass-storage device:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico -kernel firmware.uf2 -serial stdio
-+
-+QEMU does not emulate the Pico BOOTSEL USB mass-storage programming mode.  A
-+UF2 file is loaded directly by ``-kernel``; guest firmware cannot receive a
-+UF2 through an emulated USB drive.
-+
-+The machine also accepts a raw initial flash image:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico,flash-file=flash.bin -serial stdio
-+
-+Bytes not provided by the raw flash image are initialized to the NOR erased
-+state, ``0xff``.
-+
-+If both ``flash-file`` and ``-kernel`` are specified, the raw flash file is
-+loaded first, then the ``-kernel`` image is overlaid into the emulated XIP
-+flash.  Only the flash ranges covered by the ELF, UF2 or raw image are
-+replaced; the rest of the existing raw flash contents are preserved.  The
-+complete emulated flash image is written back to the raw file, so a later run
-+with only ``flash-file`` restarts from the overlaid image.
-+Successful guest sector erase and page program commands are also written back
-+to the raw file.
-+
-+The Pico SDK uses the external SPI NOR flash unique ID as the Pico 1 board
-+identifier.  The emulated flash reports the stable default ID
-+``3eb8a7493fcc0608``.  Tests that need a different board identity can override
-+it with:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico,flash-uid=0011223344556677 \
-+      -kernel firmware.elf -serial stdio
-+
-+The flash UID is not stored in, nor appended to, ``flash-file``; that file
-+remains the raw bytes of the guest-addressable flash array.
-+
-+The ring oscillator ``RANDOMBIT`` stream is backed by QEMU's guest-visible
-+random source by default.  For reproducible tests, a deterministic stream can
-+be requested with:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico,rosc-random-seed=0x1234 \
-+      -kernel firmware.elf -serial stdio
-+
-+Debugging with GDB uses QEMU's normal gdbstub.  For example:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico -kernel firmware.elf \
-+      -serial stdio -S -gdb tcp::1234
-+
-+Then connect an ARM embedded GDB:
-+
-+.. code-block:: bash
-+
-+  (gdb) target remote :1234
-+
-+This debugs the emulated Cortex-M0+ CPU through QEMU.  It does not emulate
-+the RP2040 SWD debug port or an external SWD probe.
-+
-+By default, guest ``BKPT`` instructions retain their architectural Cortex-M
-+behaviour.  In particular, ``BKPT #0`` used by the Pico SDK ``_exit()`` path
-+is delivered through the normal DebugMonitor/HardFault rules; merely running
-+under QEMU does not turn it into a process exit.
-+
-+Automated tests that deliberately use the Pico SDK exit convention can opt
-+in to a machine-local compatibility path:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico,pico-sdk-exit=on \
-+      -kernel firmware.elf -serial stdio
-+
-+When enabled, QEMU overlays the initial application HardFault vector at
-+``0x1000010c`` with a trampoline.  A HardFault caused by ``BKPT #0`` requests
-+guest shutdown using the stacked ``r0`` value as the exit status.  Other
-+HardFaults are forwarded to the application's original handler.  This option
-+is disabled by default, requires a valid Thumb HardFault vector in the loaded
-+XIP image, and does not modify ``flash-file``.  It is a Pico SDK test
-+convenience rather than an RP2040 hardware feature.  Standard Arm semihosting
-+remains available independently with ``-semihosting-config``.
-+
-+Pico UF2 images can be converted to this raw flash format with:
-+
-+.. code-block:: bash
-+
-+  $ scripts/uf2-to-flash.py firmware.uf2 flash.bin
-+
-+An RP2040 boot ROM image can be supplied explicitly with ``-bios``:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico -bios pipico.rom -serial stdio
-+
-+The file name is resolved through QEMU's BIOS search path, the same mechanism
-+used by other machines for firmware blobs.  QEMU does not ship an RP2040 boot
-+ROM image for this machine; use ``-bios`` with a user-provided ROM image when
-+testing the external mask-ROM path.  Direct XIP bring-up keeps using the
-+synthetic boot ROM described above, and explicit ``-bios`` still overrides the
-+synthetic ROM.
-+
-+Mask ROM bring-up tracing
-+-------------------------
-+
-+The real mask ROM path can be explored with QEMU's unimplemented-device log:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico,flash-file=flash.bin \
-+      -bios pipico.rom -display none -serial none \
-+      -d unimp,guest_errors -D rp2040-bios-mmio.log
-+
-+The RP2040 model names unimplemented MMIO blocks in the log and includes the
-+absolute address, register offset, access size and write value.  The XIP/SSI
-+register block also logs APB register accesses through the same ``unimp`` log
-+mask, without logging every normal XIP instruction fetch.
-+
-+Most early boot polls that were useful during bring-up are now handled by
-+the corresponding shallow device models: clocks, XOSC, PLLs, reset
-+controller, watchdog scratch registers, XIP control aliases, SYSINFO,
-+SYSCFG, VREG_AND_CHIP_RESET, TBMAN, PSM, SIO and the QSPI IO path.  New
-+``LOG_UNIMP`` messages from this command are therefore a
-+signal that the external mask-ROM path has reached a peripheral or register
-+that is still outside the modeled subset.
-+
-+The external ``-bios`` path is intended for hardware-compatibility bring-up
-+and for comparing the synthetic ROM against the real RP2040 boot ROM flow.
-+It is more sensitive to missing low-level hardware details than the synthetic
-+ROM path, and QEMU does not ship the ``pipico.rom`` image.
-+
-+The in-tree qtests and ``check-tcg`` programs keep coverage self-contained by
-+reproducing important hardware and SDK sequences without depending on the
-+Pico SDK or on a user-provided mask ROM image.
-+
-+Clock and XOSC model
-+--------------------
-+
-+The RP2040 datasheet describes clock generator ``SELECTED`` registers as
-+one-hot status registers for glitchless muxes, and notes that software should
-+poll them until a source switch completes.  See datasheet pages 203 to 216.
-+The current QEMU model returns stable one-hot selected values immediately and
-+updates QEMU ``Clock`` outputs for ``clk-ref``, ``clk-sys``, ``clk-peri``,
-+``clk-usb``, ``clk-adc`` and ``clk-rtc``.  It models frequencies and software
-+visible register state, not analog transition latency.
-+
-+The crystal oscillator model follows the XOSC programmer-visible behaviour
-+described by the datasheet: XOSC starts disabled, firmware writes the enable
-+code to ``CTRL``, and then polls ``STATUS.STABLE`` until the oscillator is
-+usable.  See datasheet pages 217 to 220.  QEMU asserts ``STABLE``
-+immediately once XOSC is enabled and awake, keeps ``BADWRITE`` sticky until
-+cleared, and implements the documented ``STARTUP``, ``DORMANT`` and
-+``COUNT`` registers at the level needed by early boot.
-+
-+The ring oscillator model follows the programmer-visible register layout
-+described by the datasheet: ``CTRL``, ``FREQA``, ``FREQB``, ``DORMANT``,
-+``DIV``, ``PHASE``, ``STATUS``, ``RANDOMBIT`` and ``COUNT``.  See datasheet
-+pages 221 to 227.  QEMU models a stable nominal ROSC and updates a QEMU
-+``Clock`` output from the visible enable/dormant/divider state.  ``COUNT`` is
-+derived from QEMU virtual time rather than CPU cycles; in normal execution
-+this follows elapsed host time, while in ``icount`` mode it follows QEMU's
-+deterministic virtual clock.  ``RANDOMBIT`` is not an analog oscillator model:
-+without ``rosc-random-seed`` it refills from QEMU's guest-visible random
-+source, and with ``rosc-random-seed`` it uses a deterministic pseudo-random
-+stream for repeatable tests.  The model does not emulate analog frequency
-+variation with process, voltage or temperature.
-+
-+The QSPI IO bank model implements the documented IO_QSPI register layout for
-+the six QSPI pins.  It stores each pin's ``CTRL`` register, returns stable
-+zero ``STATUS`` values, implements shallow interrupt enable/force/status
-+registers, supports the RP2040 atomic aliases, and forwards forced
-+``GPIO_QSPI_SS`` output changes to the XIP/SSI flash model.  This is enough
-+for boot firmware to configure the QSPI pin muxing and to bracket serial flash
-+commands around the XIP/SSI controller.  It does not emulate pad electrical
-+behaviour or serial flash transfers; those belong to the pad and XIP/SSI
-+models.
-+
-+Reset controller model
-+----------------------
-+
-+The RP2040 datasheet describes the reset controller at ``0x4000c000`` with
-+``RESET``, ``WDSEL`` and ``RESET_DONE`` registers.  ``RESET`` holds a
-+peripheral in reset while its bit is set, and ``RESET_DONE`` reports that the
-+peripheral's registers are ready once reset is deasserted.  See datasheet
-+pages 175 to 177.
-+
-+The current QEMU model stores ``RESET`` and ``WDSEL`` for documented bits
-+0..24, implements the RP2040 atomic alias windows, and derives
-+``RESET_DONE`` immediately as the inverse of ``RESET`` for those bits.  It
-+does not yet propagate resets into the individual peripheral models or model
-+reset completion delays.
-+
-+VREG and chip reset model
-+-------------------------
-+
-+The RP2040 datasheet describes the shared ``VREG_AND_CHIP_RESET`` register
-+window at ``0x40064000`` with ``VREG``, ``BOD`` and ``CHIP_RESET`` registers.
-+``CHIP_RESET`` records chip-level reset sources: power-on/brown-out, RUN pin,
-+and Rescue Debug Port.  See datasheet pages 157 to 158 and 167.
-+
-+The current QEMU model stores the writable ``VREG`` and ``BOD`` fields,
-+reports ``VREG.ROK`` as stable when the regulator is enabled and not in high
-+impedance mode, and stores the software-visible Rescue Debug Port flag in
-+``CHIP_RESET``.  Watchdog reset cause is reported by the watchdog block's
-+``REASON`` register; it is not reflected in ``CHIP_RESET`` because the
-+documented ``CHIP_RESET`` source fields do not include watchdog reset.
-+
-+TBMAN model
-+-----------
-+
-+The RP2040 datasheet describes ``TBMAN`` as a testbench manager used during
-+chip development simulations.  On real hardware it only exposes a
-+``PLATFORM`` register indicating that the platform is ASIC; this is duplicated
-+by ``SYSINFO.PLATFORM``.  See datasheet pages 309 to 310.
-+
-+The current QEMU model implements this real-chip subset and returns
-+``TBMAN.PLATFORM.ASIC`` set.  It deliberately does not expose testbench
-+simulation controls, because those controls would imply a simulation
-+environment outside the RP2040 SoC model.
-+
-+PSM model
-+---------
-+
-+The RP2040 datasheet describes the power-on state machine at ``0x40010000``
-+with ``FRCE_ON``, ``FRCE_OFF``, ``WDSEL`` and ``DONE`` registers.  The Pico
-+SDK uses ``FRCE_OFF.PROC1`` in ``multicore_reset_core1()`` to hold core 1 off
-+and then release it before the ROM FIFO launch protocol.  See datasheet pages
-+179 to 182.
-+
-+The current QEMU model stores the documented bits 0..16, implements the
-+RP2040 atomic alias windows, and derives ``DONE`` immediately as the inverse
-+of ``FRCE_OFF``.  On reset, ``FRCE_OFF`` is clear.  Setting
-+``FRCE_OFF.PROC1`` powers off proc1 in the QEMU model; clearing it powers
-+proc1 back on at the ROM reset vector.
-+
-+PLL model
-+---------
-+
-+The RP2040 datasheet describes ``PLL_SYS`` and ``PLL_USB`` at ``0x40028000``
-+and ``0x4002c000``.  Each PLL exposes ``CS``, ``PWR``, ``FBDIV_INT`` and
-+``PRIM`` registers; firmware powers the PLL, waits for ``CS.LOCK``, and then
-+enables the post dividers.  The documented output frequency is
-+``(FREF / REFDIV) * FBDIV / (POSTDIV1 * POSTDIV2)``.  See datasheet pages
-+228 to 233.
-+
-+The current QEMU model is intentionally shallow.  It stores the visible
-+registers, implements atomic alias writes, reports ``CS.LOCK`` immediately
-+when the PLL core is powered, and publishes a calculated QEMU ``Clock``
-+output.  This does not change instruction execution speed directly.  In QEMU,
-+``Clock`` objects describe the modeled hardware clock tree; TCG execution
-+rate is not a cycle-accurate function of the guest PLL.  The RP2040 clock
-+generator model still uses fixed PLL_SYS/PLL_USB frequencies, so dynamic PLL
-+output wiring is left for a later fidelity step.
-+
-+RP2040 flash and XIP model
-+--------------------------
-+
-+The RP2040 datasheet describes a 16 KiB mask ROM at ``0x00000000``, 264 KiB
-+of SRAM starting at ``0x20000000``, and external flash accessed through the
-+QSPI execute-in-place hardware.  See the RP2040 datasheet pages 120 to 122.
-+
-+The flash is not directly attached as an ordinary parallel memory.  System
-+bus reads to the 16 MiB XIP window starting at ``0x10000000`` are translated
-+by the XIP hardware into external serial flash transfers.  The XIP block also
-+contains a 16 KiB cache and several aliases with different cache behaviour.
-+See datasheet pages 122 to 124.  The current QEMU model implements the main
-+XIP window and the ``NOALLOC``, ``NOCACHE`` and ``NOCACHE_NOALLOC`` aliases as
-+functional views of the same flash storage, while leaving cache timing for
-+later work.
-+
-+The RP2040 XIP path is backed by the SSI controller.  The datasheet describes
-+the SSI as a Synopsys DW_apb_ssi controller connected to the QSPI pins and
-+forming part of the XIP block.  It can be configured to issue common serial
-+flash read sequences, including the standard ``0x03`` read command with a
-+24-bit address and the continuation-read path used by the Pico SDK
-+``flash/ssi_dma`` example.  The SSI DMA registers are modeled sufficiently for
-+RX DMA pacing from ``SSI_DR0`` through ``DREQ_XIP_SSIRX``.  See datasheet
-+pages 567 to 569.
-+
-+The synthetic boot ROM provides the minimum startup path required by this
-+machine.  Core 0 copies the 256-byte boot2 image from XIP into SRAM and runs
-+it there.  Core 1 waits in ROM for the SDK-compatible FIFO launch sequence,
-+echoes each word, installs the requested ``VTOR`` and stack pointer, and
-+branches to the requested entry point.  Higher-level multicore lockout and
-+flash protocols remain firmware responsibilities.
-+
-+The synthetic ROM also publishes RP2040-compatible lookup, function and data
-+tables.  It implements ``memcpy``, ``memset``, their word-oriented variants,
-+count/reverse helpers, and the floating-point and double-precision entries
-+covered by the in-tree tests.  These routines call a private QEMU service
-+region to provide the same functional result more efficiently; they do not
-+model ROM instruction timing.
-+
-+The synthetic flash table entries similarly accelerate connect, XIP mode,
-+cache-flush, erase and program operations through the QEMU flash model.  Page
-+program and sector erase still enforce the modeled NOR rules.  These helpers
-+bypass the guest-visible SSI command sequence and complete atomically from the
-+CPUs' point of view, so they belong to the synthetic-ROM execution profile,
-+not to the RP2040 hardware model.  Firmware tested with an external
-+``pipico.rom`` instead exercises the modeled SIO lockout and SSI/XIP paths.
-+Unsupported ROM lookups, including ``reset_usb_boot``, retain an explicit
-+not-implemented diagnostic.
-+
-+The external ``pipico.rom`` mask ROM path executes a user-provided RP2040
-+boot ROM image through ``-bios``.  It is useful when validating behaviour
-+that depends on real ROM hardware interactions, provided those interactions
-+stay within the modeled peripheral subset.  It is not a USB BOOTSEL
-+emulation path.
-+
-+Firmware intended to terminate QEMU in a test can use standard Arm
-+semihosting ``SYS_EXIT`` or ``SYS_EXIT_EXTENDED`` with ``bkpt #0xab`` when
-+semihosting is enabled.  Ordinary ``bkpt`` instructions otherwise retain
-+their architectural Cortex-M exception behaviour unless the explicit
-+``pico-sdk-exit`` compatibility option described above is enabled.
-+
-+The lower-level SSI/XIP command path remains responsible for modelling serial
-+flash command state and for raising the documented QEMU HardFault policy when
-+guest code executes from XIP while the flash model is busy.  Tests for that
-+busy/fault behaviour target the SSI/XIP model directly, or the ``pipico.rom``
-+path once the relevant ROM/hardware interaction is supported, rather than the
-+synthetic ROM's atomic helper shortcuts.
-+
-+For software-driven flash operations, firmware programs the SSI through its
-+APB register interface at ``XIP_SSI_BASE``.  The important registers for the
-+initial emulation are ``CTRLR0``, ``CTRLR1``, ``SSIENR``, ``SER``, ``BAUDR``,
-+``SR`` and the data register window beginning at ``DR0``.  The data register
-+window feeds the transmit FIFO on writes and pops the receive FIFO on reads.
-+See datasheet pages 597 to 602.
-+
-+Flash programming policy
-+------------------------
-+
-+The emulation models guest-visible flash programming through the RP2040
-+XIP/SSI path rather than as a board-private back door.  The implemented
-+command set is:
-+
-+ * ``0x01`` write status
-+ * ``0x06`` write enable
-+ * ``0x05`` read status
-+ * ``0x35`` read status register 2
-+ * ``0x03`` read
-+ * ``0x4b`` read unique ID
-+ * ``0xeb`` quad I/O read
-+ * ``0xa0`` continuation read
-+ * ``0x02`` page program
-+ * ``0x20`` sector erase
-+
-+The flash contents follow NOR semantics:
-+
-+ * the erased state is ``0xff``;
-+ * programming can only clear bits, equivalent to ``old & new``;
-+ * page program is limited to 256-byte pages;
-+ * sector erase operates on 4096-byte sectors.
-+
-+Unsupported flash commands are currently ignored.  Out-of-range page program
-+and sector erase commands have no effect.  If such a command consumed write
-+enable state, the emulation clears write enable and does not enter the busy
-+state.
-+
-+The datasheet notes that software must consider XIP cache coherence around
-+flash programming operations, and describes ROM routines that reconfigure the
-+SSI for erase/program flows before restoring a slow XIP read configuration.
-+It also notes that, between parts of that call sequence, the SSI is not in a
-+state where it can handle XIP accesses.  See datasheet pages 122 to 124 and
-+the boot ROM flash routine discussion on pages 134 to 135.
-+
-+QEMU therefore uses the following deterministic policy: while an emulated
-+flash page program or sector erase is in progress, any access through the XIP
-+memory window to the same flash produces a bus error.  On the Cortex-M0+,
-+unsuitable instruction fetches or faulting memory accesses are reported via
-+HardFault; the RP2040 datasheet describes the Cortex-M0+ default memory map
-+and HardFault behaviour on pages 71 to 72.  This is an emulation policy chosen
-+to make incorrect execute-from-XIP-while-programming behaviour visible and
-+testable.  It is not intended to model precise flash timing.
-+
-+UART models
-+-----------
-+
-+The RP2040 datasheet states that each UART instance is based on ARM PrimeCell
-+UART PL011 revision r1p5, with 32-byte transmit and receive FIFOs.  It also
-+states that PL011 modem mode and IrDA mode are not supported by RP2040.  See
-+datasheet pages 417 to 419.
-+
-+The current QEMU model therefore wires UART0 at ``0x40034000`` and UART1 at
-+``0x40038000`` to QEMU's existing PL011 device.  The register list and flag
-+register layout match the RP2040 UART programmer's model: ``UARTDR`` is at
-+offset ``0x000``, ``UARTRSR/UARTECR`` at ``0x004`` and ``UARTFR`` at
-+``0x018``.  See datasheet pages 429 to 431.
-+
-+The RP2040 APB atomic alias windows for both UARTs are also mapped, because
-+the Pico SDK uses them when configuring UART registers.  ``UARTDMACR`` drives
-+UART0 and UART1 TX/RX DREQ lines into the RP2040 DMA model.
-+
-+The console path uses QEMU's standard serial backends, so the host side can
-+still be selected with the usual ``-serial`` or ``-chardev`` options.  UART0
-+uses the first serial backend and UART1 uses the second one, for example:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -machine raspi-pico -kernel firmware.elf \
-+      -serial stdio -serial tcp:127.0.0.1:1234,server,nowait
-+
-+By default, the Pico machine requires the guest to route UARTs through
-+``IO_BANK0`` first: GPIO0/GPIO1 must have ``FUNCSEL=UART`` before UART0 host
-+serial transmit/receive is connected, and GPIO4/GPIO5 do the same for UART1.
-+This catches firmware that writes UART registers but forgets the Pico GPIO
-+function select.
-+
-+For compatibility with very small bring-up payloads, this check can be
-+disabled with ``-machine raspi-pico,strict-uart-pins=off``.  ``PADS_BANK0``
-+stores the documented pad-control registers separately from this UART path.
-+
-+For the initial console use case, the documented stable status behaviour is:
-+
-+ * ``UARTFR.TXFE`` and ``UARTFR.RXFE`` follow QEMU PL011 FIFO state.
-+ * ``UARTFR.TXFF`` and ``UARTFR.RXFF`` follow QEMU PL011 FIFO fullness.
-+ * ``UARTFR.BUSY`` is not modeled with RP2040 transmission timing.
-+ * ``UARTFR.RI``, ``UARTFR.DCD`` and ``UARTFR.DSR`` are treated as absent
-+   modem-status inputs and remain deasserted.
-+ * ``UARTFR.CTS`` has no GPIO-backed CTS input yet and remains deasserted
-+   unless a future RP2040 UART shim connects it to the GPIO model.
-+
-+This is sufficient for polling transmit firmware that waits for ``TXFF`` to
-+clear before writing ``UARTDR``.  A dedicated RP2040 UART wrapper can be added
-+later if firmware needs GPIO-backed CTS/RTS flow control, precise ``BUSY``
-+timing, or stricter masking of unsupported PL011 modem/IrDA features.
-+
-+Known limitations
-+-----------------
-+
-+ * Core 0 runs normally.  Core 1 starts in the synthetic ROM, echoes the
-+   SDK-compatible FIFO launch sequence, installs the provided ``VTOR``/stack,
-+   and branches to the provided entry point.  With an external mask ROM,
-+   ``PSM.FRCE_OFF.PROC1`` can release core 1 at the ROM reset vector, but the
-+   external-ROM core1 boot flow is not yet covered by an in-tree regression.
-+ * UART0 and UART1 currently use QEMU's PL011 model with the RP2040
-+   compatibility policy documented above.  The strict pin check currently
-+   covers the Pico GPIO0/GPIO1 UART0 path and GPIO4/GPIO5 UART1 path only;
-+   alternate RP2040 UART pin mappings remain future work.
-+ * ``IO_BANK0`` stores GPIO function-select, override and interrupt registers,
-+   implements RP2040 atomic aliases, and gates UART host serial I/O for the
-+   GPIO0/GPIO1 UART0 path and GPIO4/GPIO5 UART1 path.  It is still a
-+   simplified routing model: it does not yet derive pad input levels from
-+   ``PADS_BANK0`` electrical state, does not route general SIO GPIO outputs to
-+   external pins, and does not connect arbitrary peripheral functions through
-+   the GPIO matrix.  Edge detection and full interrupt source modelling remain
-+   future work.
-+ * SIO divider and interpolator results are computed immediately when their
-+   registers are accessed.  QEMU does not model the RP2040 single-cycle timing,
-+   divider latency, or cycle-accurate pipeline effects for these datapaths.
-+ * ``PADS_BANK0`` and ``PADS_QSPI`` store documented pad-control registers and
-+   implement RP2040 atomic aliases.  They do not model electrical pad
-+   behaviour and do not currently gate UART or XIP operation.
-+ * The XIP cache and detailed timing are not yet modeled.  ``XIP_FLUSH`` is
-+   treated as immediately complete, and ``XIP_CTR_HIT``/``XIP_CTR_ACC`` do not
-+   report real cache hit/miss behaviour.  The Pico SDK ``cache_perfctr``
-+   example is therefore expected to remain a partial validation: ordinary XIP
-+   execution works, but cache-performance measurements are not meaningful in
-+   this emulation.  The XIP streaming FIFO is modeled functionally for direct
-+   reads and DMA from ``XIP_AUX_BASE``, but without flash idle-cycle timing.
-+   The SSI bulk RX path used by the SDK ``ssi_dma`` example is also modeled
-+   functionally, including the 32-bit byte order expected with DMA ``BSWAP``,
-+   but it does not model serial-clock throughput or FIFO refill latency.
-+   The SSI transmit FIFO is simplified: writes to the ``DR`` window are
-+   retained while ``SSIENR`` is clear or no slave is selected, then consumed
-+   together when the controller and flash become active.  Disabling the
-+   controller clears the simplified FIFOs.  The model does not represent FIFO
-+   depth, serial-clock throughput or incremental draining.
-+   The XIP control and SSI APB register blocks do handle the RP2040 atomic
-+   ``XOR``/``SET``/``CLR`` aliases.
-+ * The external flash unique ID is modeled as an 8-byte QEMU property exposed
-+   through the SPI NOR ``0x4b`` RUID command.  It is stable by default and can
-+   be overridden with ``flash-uid``; it is not persisted in ``flash-file``.
-+ * ``IO_QSPI`` stores pin-control and interrupt registers and forwards forced
-+   ``GPIO_QSPI_SS`` changes to the XIP/SSI model.  It does not emulate the
-+   electrical QSPI pads or a separate serial bus.
-+ * The ROSC model exposes stable register behaviour, a nominal clock and a
-+   QEMU-backed ``RANDOMBIT`` stream.  It does not model analog frequency
-+   variation or physical oscillator entropy.
-+ * The synthetic ROM supports direct boot2/application launch, the core1 FIFO
-+   launch sequence, a subset of the ROM function/data tables, and accelerated
-+   floating-point and flash helpers.  These helpers are functionally tested
-+   but intentionally bypass ROM instruction timing and, for flash operations,
-+   the low-level SSI command sequence.  The external ``-bios`` path can run a
-+   user-provided real RP2040 mask ROM image, but it is limited by the same
-+   missing peripheral models as the rest of the machine, notably USB BOOTSEL
-+   mass-storage mode.
-+ * ``pico-sdk-exit`` is disabled by default.  When enabled it overlays only
-+   the initial XIP HardFault vector at ``0x1000010c``.  Faults not caused by
-+   ``BKPT #0`` are chained to the handler found there when the image was
-+   loaded.  It does
-+   not follow a later guest ``VTOR`` relocation or a runtime replacement of
-+   that vector, and should therefore be used only as a test convenience for
-+   the Pico SDK exit convention.
-+ * QEMU does not emulate the Pico BOOTSEL USB mass-storage programming mode.
-+   UF2 images are accepted only as host-loaded ``-kernel`` inputs.
-+ * The USB model provides DPRAM, stable VBUS detection, register storage,
-+   atomic aliases and interrupt mask/force/status calculation.  It does not
-+   implement packet transactions, endpoint state machines, host mode or a
-+   BOOTSEL mass-storage device.  PIO and most other peripherals are not yet
-+   implemented.  DMA supports memory-to-memory transfers, XIP stream and
-+   XIP/SSI RX DREQ pacing, UART0/UART1 TX/RX DREQ pacing, DMA timer pacing
-+   from QEMU virtual time, read/write ring wrapping,
-+   the documented sniff accumulator modes, immediate channel abort, and
-+   bus-error status reporting through ``CTRL_TRIG``, ``INTR`` and ``INTS0/1``.
-+   UART DREQs are exposed through the current PL011-backed UART models and
-+   follow the PL011
-+   FIFO occupancy plus ``UARTDMACR`` enable bits; fine-grained UART timing is
-+   not modeled.  DMA timer pacing uses the documented ``X/Y`` fractional timer
-+   registers and the Pico's nominal 125 MHz system clock as the virtual source.
-+   DMA bus errors are reported with the documented
-+   ``READ_ERROR`` or ``WRITE_ERROR`` plus ``AHB_ERROR`` bits, clear ``BUSY``,
-+   keep the remaining transfer count, and raise the raw channel interrupt.
-+   QEMU does not model DMA pipeline latency: abort status self-clears
-+   immediately, and the reported fault address is the exact attempted address
-+   rather than a delayed approximate address.  The DMA controller is currently
-+   non-migratable because active channels, pacing timers and pending DREQ state
-+   cannot yet be restored consistently.
-+ * BUSCTRL stores bus priority and acknowledges updates immediately.  Its four
-+   performance selectors and counters are programmer-visible, but selected
-+   counters advance deterministically when read rather than counting actual
-+   crossbar events.  Bus arbitration priority does not affect memory timing.
-+ * ``SYSINFO`` and ``SYSCFG`` expose the documented register layout used by
-+   early firmware.  ``PROC0_NMI_MASK`` is wired for interrupt sources routed
-+   through the RP2040 IRQ shim, currently including UART0, and
-+   ``MEMPOWERDOWN`` is retained as register state but does not change memory
-+   accessibility.  ``DBGFORCE`` is stored but not connected to an SWD/debug
-+   fabric model.
-+ * ``VREG_AND_CHIP_RESET`` stores the voltage-regulator and brown-out detector
-+   control fields and exposes stable chip reset status.  Analog regulator and
-+   brown-out behaviour is not modeled.
-+ * ``TBMAN`` exposes only the documented real-chip ``PLATFORM`` register.
-+ * ``PSM`` stores force-on, force-off and watchdog-select bits.  ``DONE`` is
-+   derived immediately from ``FRCE_OFF``; analog power sequencing delays are
-+   not modeled.
-+ * The watchdog models ``CTRL``, ``LOAD``, ``REASON``, ``SCRATCH`` and
-+   ``TICK``, including ``CTRL.TRIGGER`` and the RP2040-E1 double-decrement
-+   behaviour.  ``REASON`` survives the reset requested by the watchdog and
-+   is cleared by a subsequent hardware reset.  Debug pause inputs are stored
-+   but not connected to a debug fabric model.
-+ * The TIMER block models the microsecond counter, ``ALARM0`` through
-+   ``ALARM3``, ``ARMED``, ``DBGPAUSE``, ``PAUSE`` and the interrupt
-+   registers.  Alarm outputs are connected to RP2040 IRQs 0 through 3.  The
-+   counter advances on QEMU virtual time rather than CPU-cycle timing, and
-+   debug pause inputs have no external debug-fabric side effects.
-diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-index 260cd7e4d6..fe0ab1040e 100644
---- a/docs/system/target-arm.rst
-+++ b/docs/system/target-arm.rst
-@@ -96,6 +96,7 @@ Board-specific documentation
-    arm/imx8m
-    arm/orangepi
-    arm/raspi
-+   arm/raspi-pico
-    arm/collie
-    arm/sx1
-    arm/stellaris
++++ b/tests/tcg/arm/system/rp2040-bootrom-helpers.S
+@@ -0,0 +1,235 @@
++/*
++ * Raspberry Pi Pico boot ROM integer and memory helper test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#define SRAM_END               0x20042000
++#define UART0_DR               0x40034000
++#define ROM_FUNC_TABLE_PTR     0x00000014
++#define ROM_TABLE_LOOKUP_PTR   0x00000018
++#define ROM_FUNC_POPCOUNT32    0x3350
++#define ROM_FUNC_CLZ32         0x334c
++#define ROM_FUNC_CTZ32         0x3354
++#define ROM_FUNC_REVERSE32     0x3352
++#define ROM_FUNC_MEMSET        0x534d
++#define ROM_FUNC_MEMCPY        0x434d
++#define ROM_FUNC_MEMSET4       0x3453
++#define ROM_FUNC_MEMCPY44      0x3443
++#define TEST_BUFFER            0x20000000
++#define SYS_EXIT               0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++#define ADP_STOPPED_RUNTIME_ERROR    0x20023
++
++.macro lookup code
++    ldr r0, =\code
++    bl rom_func_lookup
++    cmp r0, 0
++    bne 0f
++    b fail_lookup
++0:
++    mov r4, r0
++.endm
++
++.macro fail_if_ne reg, expected, target
++    ldr r2, =\expected
++    cmp \reg, r2
++    beq 0f
++    b \target
++0:
++.endm
++
++.section .vectors, "a", %progbits
++.global vector_table
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =start_message
++    bl puts
++
++    lookup ROM_FUNC_POPCOUNT32
++    ldr r0, =0xf0f00f0f
++    blx r4
++    fail_if_ne r0, 16, fail_bits
++
++    lookup ROM_FUNC_CLZ32
++    ldr r0, =0x00f00000
++    blx r4
++    fail_if_ne r0, 8, fail_bits
++
++    lookup ROM_FUNC_CTZ32
++    ldr r0, =0x00008000
++    blx r4
++    fail_if_ne r0, 15, fail_bits
++
++    lookup ROM_FUNC_REVERSE32
++    ldr r0, =0x80000001
++    blx r4
++    fail_if_ne r0, 0x80000001, fail_bits
++
++    ldr r0, =bits_ok_message
++    bl puts
++
++    lookup ROM_FUNC_MEMSET
++    ldr r0, =TEST_BUFFER
++    movs r1, 0x5a
++    movs r2, 4
++    blx r4
++    ldr r5, =TEST_BUFFER
++    ldrb r0, [r5]
++    fail_if_ne r0, 0x5a, fail_byte_memory
++    ldrb r0, [r5, 3]
++    fail_if_ne r0, 0x5a, fail_byte_memory
++
++    ldr r5, =TEST_BUFFER + 0x20
++    ldr r0, =0x11223344
++    str r0, [r5]
++    lookup ROM_FUNC_MEMCPY
++    ldr r0, =TEST_BUFFER + 0x10
++    ldr r1, =TEST_BUFFER + 0x20
++    movs r2, 4
++    blx r4
++    ldr r5, =TEST_BUFFER + 0x10
++    ldr r0, [r5]
++    fail_if_ne r0, 0x11223344, fail_byte_memory
++
++    ldr r0, =byte_memory_ok_message
++    bl puts
++
++    lookup ROM_FUNC_MEMSET4
++    ldr r5, =TEST_BUFFER + 0x30
++    ldr r0, =0xdeadbeef
++    str r0, [r5, 8]
++    ldr r0, =TEST_BUFFER + 0x30
++    movs r1, 0x5a
++    movs r2, 8
++    blx r4
++    ldr r5, =TEST_BUFFER + 0x30
++    ldr r0, [r5]
++    fail_if_ne r0, 0x5a5a5a5a, fail_word_memory
++    ldr r0, [r5, 4]
++    fail_if_ne r0, 0x5a5a5a5a, fail_word_memory
++    ldr r0, [r5, 8]
++    fail_if_ne r0, 0xdeadbeef, fail_word_memory
++
++    ldr r5, =TEST_BUFFER + 0x40
++    ldr r0, =0x55667788
++    str r0, [r5]
++    ldr r0, =0x99aabbcc
++    str r0, [r5, 4]
++    ldr r5, =TEST_BUFFER + 0x50
++    ldr r0, =0xdeadbeef
++    str r0, [r5, 8]
++    lookup ROM_FUNC_MEMCPY44
++    ldr r0, =TEST_BUFFER + 0x50
++    ldr r1, =TEST_BUFFER + 0x40
++    movs r2, 8
++    blx r4
++    ldr r5, =TEST_BUFFER + 0x50
++    ldr r0, [r5]
++    fail_if_ne r0, 0x55667788, fail_word_memory
++    ldr r0, [r5, 4]
++    fail_if_ne r0, 0x99aabbcc, fail_word_memory
++    ldr r0, [r5, 8]
++    fail_if_ne r0, 0xdeadbeef, fail_word_memory
++
++    ldr r0, =word_memory_ok_message
++    bl puts
++    ldr r0, =ok_message
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
++
++fail_lookup:
++    ldr r0, =fail_lookup_message
++    b test_failed
++
++fail_bits:
++    ldr r0, =fail_bits_message
++    b test_failed
++
++fail_byte_memory:
++    ldr r0, =fail_byte_memory_message
++    b test_failed
++
++fail_word_memory:
++    ldr r0, =fail_word_memory_message
++
++test_failed:
++    bl puts
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_RUNTIME_ERROR
++    bkpt 0xab
++
++2:
++    b 2b
++
++.thumb_func
++rom_func_lookup:
++    push {r4, lr}
++    mov r1, r0
++    ldr r0, =ROM_FUNC_TABLE_PTR
++    ldrh r0, [r0]
++    ldr r4, =ROM_TABLE_LOOKUP_PTR
++    ldrh r4, [r4]
++    blx r4
++    pop {r4, pc}
++
++.thumb_func
++default_handler:
++    ldr r0, =fail_exception_message
++    b test_failed
++
++.thumb_func
++puts:
++    ldr r2, =UART0_DR
++
++3:
++    ldrb r1, [r0]
++    cmp r1, 0
++    beq 4f
++    str r1, [r2]
++    adds r0, 1
++    b 3b
++
++4:
++    bx lr
++
++.section .rodata, "a", %progbits
++start_message:
++    .asciz "PICO TCG BOOTROM HELPERS START\n"
++bits_ok_message:
++    .asciz "PICO TCG BOOTROM HELPERS BITS OK\n"
++byte_memory_ok_message:
++    .asciz "PICO TCG BOOTROM HELPERS BYTE MEMORY OK\n"
++word_memory_ok_message:
++    .asciz "PICO TCG BOOTROM HELPERS WORD MEMORY OK\n"
++ok_message:
++    .asciz "PICO TCG BOOTROM HELPERS OK\n"
++fail_lookup_message:
++    .asciz "PICO TCG BOOTROM HELPERS FAIL: LOOKUP\n"
++fail_bits_message:
++    .asciz "PICO TCG BOOTROM HELPERS FAIL: BITS\n"
++fail_byte_memory_message:
++    .asciz "PICO TCG BOOTROM HELPERS FAIL: BYTE MEMORY\n"
++fail_word_memory_message:
++    .asciz "PICO TCG BOOTROM HELPERS FAIL: WORD MEMORY\n"
++fail_exception_message:
++    .asciz "PICO TCG BOOTROM HELPERS FAIL: EXCEPTION\n"
+diff --git a/tests/tcg/arm/system/rp2040-bootrom-helpers.ref b/tests/tcg/arm/system/rp2040-bootrom-helpers.ref
+new file mode 100644
+index 0000000000..b1b4346bf4
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-bootrom-helpers.ref
+@@ -0,0 +1,5 @@
++PICO TCG BOOTROM HELPERS START
++PICO TCG BOOTROM HELPERS BITS OK
++PICO TCG BOOTROM HELPERS BYTE MEMORY OK
++PICO TCG BOOTROM HELPERS WORD MEMORY OK
++PICO TCG BOOTROM HELPERS OK
 -- 
 2.55.0
 
