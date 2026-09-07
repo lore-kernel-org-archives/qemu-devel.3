@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BAFC79F89
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A056C79F9E
 	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 11:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3XDM-0003zc-6u; Mon, 07 Sep 2026 07:08:40 -0400
+	id 1x3XDR-0004Ja-7O; Mon, 07 Sep 2026 07:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x3XDD-0003bh-Ka; Mon, 07 Sep 2026 07:08:33 -0400
+ id 1x3XDO-000494-0U; Mon, 07 Sep 2026 07:08:42 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x3XDB-0003ys-Uc; Mon, 07 Sep 2026 07:08:31 -0400
+ id 1x3XDM-00041S-B0; Mon, 07 Sep 2026 07:08:41 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id B7A47435B4;
- Mon,  7 Sep 2026 11:08:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B281F00A3A;
- Mon,  7 Sep 2026 11:08:26 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id F1C5743A97;
+ Mon,  7 Sep 2026 11:08:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2B71F00A3A;
+ Mon,  7 Sep 2026 11:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1788779308;
- bh=ZPierz8DjsI6hbxFJ1qeP847aE7YBpeXin+QKb0us7U=;
+ s=k20260515; t=1788779318;
+ bh=+7pxwgh6LD+wSfDu1pHYn5P69cuWbxjndwby/KCvoJY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NIpX9SrCdEuoJXgnp9qJjOYiq4KqIKOrFhrNT/1Bzu9lNm82ANrp0An0I0jlT5SPC
- wC3skSnhQYVq717QPsMSRr5sy+XcmG1OJv/5vwRV/nk1MzbbDbsKk2nFxxcNaeEvW9
- FtOSSPrPhohp6pS99/JShJD42WLg3QakhdXZbUe5sftekzMaEEiIkZvcff0fVg6njG
- 2gaLW+4O8g9jt08zn4Eyz2uU/YaoUW3/JyK+MouZr3ra8Db5ukUC9YHD6KVTxCAD+p
- eaHeY+MEaLEvwFHMw056th4tRojUGZ/sn7RAOEUJBaPacxbEyOUNri7j6uzbKr5Wj4
- Rl3QzjT3JMi0g==
+ b=V3pX+O+zBLqwqNDOiHtPi2svEETq4Nk09kWJ79xLDo7d0XI2s/ESFp3Pr1F4YOj/R
+ rfHzc/QHKItEQk/zRJWdfSqoZKHxp/tWNmUfSAcJ6pFS7kciSy4uA9agfcEAx6SpGC
+ oq8j79bjkOxWxN4cq/nYMCVsodKIAlftY4BtnW8gb9RXjz/fWIl/5tiNWxCdfcBzrj
+ 38Qo3v4ueFTa64jUVwf6vl7cXctlo122GhY/zLz9puAOlizVActZz6+KqIBK5JuNda
+ KUUaivz7nETuWiJQSPg5WIqbxmUC0hguuMUeF0Pfqae4Cnw4v30tUoLBolFRsSV6Go
+ 6iJt2wAxn2bEA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 05/12] virtio-blk: check the write granularity of writes to
- sequential zones
-Date: Mon,  7 Sep 2026 13:07:40 +0200
-Message-ID: <20260907110748.1868714-6-cassel@kernel.org>
+Subject: [PATCH v4 09/12] file-posix: base the zone append limit on the
+ transfer limit
+Date: Mon,  7 Sep 2026 13:07:44 +0200
+Message-ID: <20260907110748.1868714-10-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260907110748.1868714-1-cassel@kernel.org>
 References: <20260907110748.1868714-1-cassel@kernel.org>
@@ -71,92 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
-VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
-that are multiples of the write granularity reported by the device
-(virtio 1.4, 5.2.6.1), and a violation is reported as
-VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
+The zone_append_max_bytes queue attribute is the largest
+REQ_OP_ZONE_APPEND that the device accepts, and Linux has no interface
+for issuing one from userspace: include/uapi has no such operation, and
+every submitter of REQ_OP_ZONE_APPEND is in the kernel. Userspace writes
+to a sequential zone with an ordinary write at the write pointer.
 
-Neither request type was fully checked. Zone appends validated only the
-offset, while writes were not checked at all.
+That is what this driver does. raw_co_zone_append() substitutes the write
+pointer of the zone for the offset and hands the request to raw_co_prw(),
+which reaches handle_aiocb_rw_vector() and issues a plain pwritev(). The
+kernel never sees a zone append, so the attribute describes a limit on an
+operation that is never issued.
 
-Check the size of the appended data, and both the offset and the size of
-a write, against blkconf_zone_write_granularity(), so that every request the
-device accepts is one that the guest driver was told is valid. Writes to
-conventional zones keep no alignment constraint beyond the logical block
-size. The write path performs the check after virtio_blk_sect_range_ok()
-so that the zone index derived from the guest supplied sector is known to
-be in range.
+Nor is it a limit that this driver runs into. The kernel splits a write
+that exceeds the transfer limit rather than refusing it, so a larger
+append succeeds: on a null_blk device whose zone_append_max_bytes is
+130560, a 16 MiB append completes and advances the write pointer by
+16 MiB. Reporting the attribute only understates what the driver can do,
+because Linux derives it as a minimum that already includes max_sectors
+and chunk_sectors.
+
+Report max_hw_transfer instead, the limit that governs the write the
+driver actually issues. There is no use in telling a guest that it may
+append more than the device carries in one command, and a frontend then
+does not have to reason about how this driver implements an append in
+order to bound the value it advertises.
+
+On a null_blk device with max_hw_sectors_kb of 127 and
+zone_append_max_bytes of 130560, virtio-blk reports 255 sectors before
+and after.
 
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- hw/block/virtio-blk.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ block/file-posix.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index f6781ff5f6..7d5a02a42c 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -398,6 +398,33 @@ static bool virtio_blk_sect_range_ok(VirtIOBlock *dev,
-     return true;
- }
+diff --git a/block/file-posix.c b/block/file-posix.c
+index c1ac49d23d..0e92ff8414 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1488,10 +1488,15 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
+     }
+     bs->bl.nr_zones = ret;
  
-+/*
-+ * Both the offset and the size of a write to a sequential zone must be a
-+ * multiple of the write granularity that the device reports. Conventional
-+ * zones are not constrained. The zone index is derived from a guest supplied
-+ * sector, so this must only be called once virtio_blk_sect_range_ok() has
-+ * bounded it.
-+ */
-+static bool virtio_blk_zone_write_granularity_ok(VirtIOBlock *dev,
-+                                                 uint64_t sector, size_t size)
-+{
-+    BlockDriverState *bs = blk_bs(dev->blk);
-+    uint64_t offset = sector << BDRV_SECTOR_BITS;
-+    uint32_t wg_mask;
-+
-+    if (bs->bl.zoned == BLK_Z_NONE) {
-+        return true;
-+    }
-+
-+    if (BDRV_ZT_IS_CONV(bs->wps->wp[bdrv_zone_index(bs, offset)])) {
-+        return true;
-+    }
-+
-+    wg_mask = blkconf_zone_write_granularity(&dev->conf.conf) - 1;
-+
-+    return !(offset & wg_mask) && !(size & wg_mask);
-+}
-+
- static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
-     struct virtio_blk_discard_write_zeroes *dwz_hdr, bool is_write_zeroes)
- {
-@@ -522,7 +549,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-     if (append) {
-         uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
+-    ret = get_sysfs_long_val(st, "zone_append_max_bytes");
+-    if (ret > 0) {
+-        bs->bl.max_append_sectors = ret >> BDRV_SECTOR_BITS;
+-    }
++    /*
++     * raw_co_zone_append() carries out an append as an ordinary write at the
++     * write pointer, so the zone_append_max_bytes attribute, which bounds an
++     * operation that this driver never issues, does not apply. The kernel
++     * splits a write that is larger than the transfer limit rather than
++     * refusing it, but there is no use in telling a guest that it may append
++     * more than the device carries in one command.
++     */
++    bs->bl.max_append_sectors = bs->bl.max_hw_transfer >> BDRV_SECTOR_BITS;
  
--        if (offset & wg_mask) {
-+        if (offset & wg_mask || len & wg_mask) {
-             *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
-             return false;
-         }
-@@ -911,6 +938,15 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-             return 0;
-         }
- 
-+        if (is_write &&
-+            !virtio_blk_zone_write_granularity_ok(s, req->sector_num,
-+                                                  req->qiov.size)) {
-+            virtio_blk_req_complete(req, VIRTIO_BLK_S_ZONE_UNALIGNED_WP);
-+            block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
-+            g_free(req);
-+            return 0;
-+        }
-+
-         block_acct_start(blk_get_stats(s->blk), &req->acct, req->qiov.size,
-                          is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
- 
+     ret = get_sysfs_long_val(st, "zone_write_granularity");
+     if (ret >= 0) {
 -- 
 2.55.0
 
