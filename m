@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21CCC79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15C1C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Sep 2026 10:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x3WwD-0007oG-5L; Mon, 07 Sep 2026 06:50:57 -0400
+	id 1x3Ww6-0007b3-DL; Mon, 07 Sep 2026 06:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3Ww7-0007gI-Nt
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:50:54 -0400
+ id 1x3Wvx-0007VL-KE
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:50:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x3Ww6-00081z-6D
- for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:50:51 -0400
+ id 1x3Wvv-00080L-Rd
+ for qemu-devel@nongnu.org; Mon, 07 Sep 2026 06:50:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1788778249;
+ s=mimecast20190719; t=1788778239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ST0fyxzJrNhhEnLARHNRMF08O5d8Q0ORWVDRaq2tVSY=;
- b=gF5FP71A6DCXdWPMQD6gqktLZxxMCQTx6k/hpZ3L7TLkCmh45ULd/niP9cY9VsWHWfXb0J
- 8hry0Y2M3qHCqEiEAskptEaCHiz6ZX115c5m1R4hEvOV/Rh+6CGWUY9jlCtnAxlYH0Z6Fo
- 2WlvprEtuEmbJv8kzlEbC7X5eRbaiHI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=9SDEgsKrneUTjzP9rpa9htRqpgtiaPsTwDGZ0OeRxWY=;
+ b=J9j4SItHNNVVQWtn6JlpwHCJI8B/Mo7Es3N/ytSdYI68fNGOqA4IFCs4Mbnu3HRUYIxh3o
+ bUdOEAM34tk0gOpRj2ocyX40s7v5LJbENfkDKK37rFKDVtGxFJj9RlevEtMCBji+R2xhdS
+ iBAE1tczMLiQm4Tbetx1jQEqaI9X+sw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-aY9AYc7LOWq-lYKFlDuDqw-1; Mon,
- 07 Sep 2026 06:50:48 -0400
-X-MC-Unique: aY9AYc7LOWq-lYKFlDuDqw-1
-X-Mimecast-MFC-AGG-ID: aY9AYc7LOWq-lYKFlDuDqw_1788778247
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-eecZnx3wM7Ct-G-HQCo7Vw-1; Mon,
+ 07 Sep 2026 06:50:38 -0400
+X-MC-Unique: eecZnx3wM7Ct-G-HQCo7Vw-1
+X-Mimecast-MFC-AGG-ID: eecZnx3wM7Ct-G-HQCo7Vw_1788778237
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C8C218052C1; Mon,  7 Sep 2026 10:50:47 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 189711954AE4; Mon,  7 Sep 2026 10:50:37 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 321FE1800348; Mon,  7 Sep 2026 10:50:45 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 199F83000223; Mon,  7 Sep 2026 10:50:35 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 07 Sep 2026 14:50:09 +0400
-Subject: [PATCH 11/17] qga/vss-win32: avoid CRT calls in DllMain debug logging
+Date: Mon, 07 Sep 2026 14:50:06 +0400
+Subject: [PATCH 08/17] qga/vss-win32: return an interface pointer for
+ IID_IUnknown
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260907-qga-v1-11-86456ad356e2@redhat.com>
+Message-Id: <20260907-qga-v1-8-86456ad356e2@redhat.com>
 References: <20260907-qga-v1-0-86456ad356e2@redhat.com>
 In-Reply-To: <20260907-qga-v1-0-86456ad356e2@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
  Michael Roth <michael.roth@amd.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1198;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1119;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=64B+Bikb2SGpjZ5/w751HOhMYINM9fWlaj0840TMvBI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnpbjxC8GjeDh8/r6d/kfMN2KBvl3mxko8n64f
- nxEfSWxhKWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap6W4wAKCRDa6OEJdZac
- 5U9BD/0dkfDj1FXwJBiYzXvqbBiZUR9RIq+dDLYpkiwZrwj4HctrDlFkgAm8aAGWPqh3tcJnxFd
- kFzYxblfo0tqoMqm1R0swMfOQKI6VedoHiXZzpq8NzKDp455Qn2vKxGSww2UQxrJHeEdtnsvJ+8
- 036o65e87IvFvz+5yKOVz6Z32L1Z4dxXEYNVsb4ayFUklFtvW/qFulhIaNw9ckW4WjQbnAQgEi4
- m4fmRYyOaQgnNd+K9U/UBDHKtZ17jQx6rm4Uv4tpzd3pYhH0mowFQvbq4D6oxgIya5XQ1PTl3/A
- LIo3+f5SIhabuRLZrirmlGaD6x8fpSzNg3Rstp/Ud5kP26OkE6b50JboSPcKTBeCVRQszcBzJzH
- ZlYIkn/NKGMXkzL5xYsNeqBP4GsokxtA5HFmq13WWb8LqY3/N4xgYMMxUTuObWKkE0E2QhEJaRb
- Rv+4jvakPyntPJSQVt9Z15acEB6D4xomAEBMPn+LubQTdz/k9uiaWDum7MARF9naGLC9wP+BsQ2
- 9ggyD3zvcLskGVLm/CfdaA1BoCqIAPjqqLp7gNGNDV9Ii7CsE2oymtALf73QZMcfNqGjuINqEPR
- jn500p42Iu2oS48nIkvXbiCmiUZy73EIVti/Zxgo3uGx45/ZfCMybReFX2owyDvRnnLwQI6RnTT
- yQ72g8ZlJa9Wupg==
+ bh=0aYrIKGtm/kXJExFjJ3h2ZPtuJa9+ErLTo3d1cGeSh4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqnpbjLM2ZhsRJt+kJhNTMBEpWXcMYeujqLSC6O
+ iMD34dh02aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCap6W4wAKCRDa6OEJdZac
+ 5dx+D/4qHdXewMfi51+VmxXyYXeZzUgQNkTLcW/7fDJ2e1ImQlVSlPCCY3qlVXUWqwOFVevNVCQ
+ pzLUTtcioFuz1jxcKi5bwOS3iQ6W64/BxavvvXZkFXeYxzpudXkDXAxeO4FufU8MdA2WI+FoJoV
+ qq3ZjxnusCKoM87SozkZgCc5m5JXM9h+W955ViJEe6Du6oDDPvHbh76dCnT4RLj25iRaPewPhvp
+ FlWb3yCER9HbFPQn2/ogfjW7P5ptW5sLcoXUN+8wDcEm2lSKqiUBLZigkxsrGoyRNOcsQKLU8O+
+ g0Kkrfwh1duf1vvQzybsS7bvCqOAlw1c7uxT52al3/5+7OjMa9lfZGQq7C4nvnw0lu+JYO+3L08
+ pwTp/K0V0quEVzN+2vsm0JV3GlSaHJFAl1LpubAM1XwAOYZIMYUQgwXOhmEk3WheeVaJqwZb2NB
+ rsjCrd7yUSVJ1Rsf/mM09mxDv9tHxLZ3mzr1ypdZumKVXEcB8MsoLNjL20crikclgDGsHGyTiMH
+ 21SwE0nEtyNYOckOm3wd9qc9NVCbsRe4SNTfHquzHlNzqyWzIeO3WL5f4I/qiYSbkI4UFDhR54h
+ 1n+VLckGn+J8ULM7Xi4AdgPhld1McBxMh/qkCv0hBe3+MQ9mCIrX1VYtKCHXittde/p+a4Eq3cN
+ 9J8IX0n0Kdb25Zg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qga_debug() uses vsnprintf, snprintf and fputs while DllMain holds the
-loader lock. CRT I/O can deadlock under the loader lock. Replace with
-direct OutputDebugStringA calls, which are safe to call from DllMain.
+CQGAVssProvider implements three COM interfaces, each with its own
+IUnknown base subobject. Returning the complete object address for
+IID_IUnknown relies on IVssSoftwareSnapshotProvider remaining the first
+base class.
 
-Fixes: 61df91b33caf ("QGA VSS: Add log in functions begin/end")
+Return the IVssSoftwareSnapshotProvider subobject instead. This selects
+the canonical IUnknown identity without relying on the complete-object
+layout.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qga/vss-win32/provider.cpp | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ qga/vss-win32/provider.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
-index 44c3c74bd2f2..1c8eb236e57f 100644
+index 377571b94881..44c3c74bd2f2 100644
 --- a/qga/vss-win32/provider.cpp
 +++ b/qga/vss-win32/provider.cpp
-@@ -536,11 +536,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved);
- EXTERN_C
- BOOL WINAPI DllMain(HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved)
+@@ -212,7 +212,8 @@ CQGAVssProvider::~CQGAVssProvider()
+ STDMETHODIMP CQGAVssProvider::QueryInterface(REFIID riid, void **ppObj)
  {
--    qga_debug("begin, reason = %lu", dwReason);
-+    OutputDebugStringA(QGA_PROVIDER_NAME ": DllMain begin\n");
-     if (dwReason == DLL_PROCESS_ATTACH) {
-         g_hinstDll = hinstDll;
-         DisableThreadLibraryCalls(hinstDll);
+     if (riid == IID_IUnknown) {
+-        *ppObj = static_cast<void*>(this);
++        *ppObj = static_cast<void*>(
++            static_cast<IVssSoftwareSnapshotProvider*>(this));
+         AddRef();
+         return S_OK;
      }
--    qga_debug_end;
-+    OutputDebugStringA(QGA_PROVIDER_NAME ": DllMain end\n");
-     return TRUE;
- }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
